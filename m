@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0908C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151CEC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSeY-0005CZ-LY; Mon, 14 Jul 2025 19:32:13 -0400
+	id 1ubSfA-0006Fm-4F; Mon, 14 Jul 2025 19:32:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ubSdR-0004Sa-OY
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:31:02 -0400
-Received: from mail-vk1-xa42.google.com ([2607:f8b0:4864:20::a42])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubSde-0004bs-DB
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:31:18 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ubSdO-0001eQ-GJ
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:31:00 -0400
-Received: by mail-vk1-xa42.google.com with SMTP id
- 71dfb90a1353d-535ae7eeebeso4347101e0c.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:30:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubSdY-0001fi-CT
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:31:12 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-608acb0a27fso6718034a12.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752535854; x=1753140654; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X75wJIItq4OqbIAPklTwtODvxkpfw/gyst8okQEwAP4=;
- b=DbjC8u70spIao9LMU2W849rNF7Z6NW2ypCMk0zVCUD5WLIq5qBLUfB6UTusW2nMONT
- 1hjHWzs4k46pn2LxAZeLn8TZOFpp76wEzVbxM9V6HftHRps5CfhXEgszVGwAkocJKYrS
- jdvU4uAvIjLriDxJAkFXl35Z6CLc/UswKLiHkjUgFlERcZA4qGT+9ilx2Ou/9jS6nb3/
- ZarMVaeOKL/dzCe+WJfvUd2hq3fQeEeaa41UJkUwMxouf9mAKu7aR786Q8houzQfrmdn
- g5foXxd+CmSm4HpSJZAIcNoOPuwivY6bG9qEbsS2FNCDsHztbWt1fyy2l4krbPXaUI2K
- oP2A==
+ d=linaro.org; s=google; t=1752535866; x=1753140666; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=p+q6JDKW6ffOwKsdLKOn7mz7nOnnpKSBfqn0q4Cb+uI=;
+ b=E/jzN32oajcypK+Kd0+X8yD2bS7C7iEDcxbpLpHeBLDG8IAjfS82AghuN6ZgP5VpBx
+ gzS3rQVXRsDIzPgsa532r68GHnGGakpQ0JQOcoiInLhIvGO2VFkbKvQ0wKX4K6hfk9C5
+ oOMOtYbkc3c8YJZLUN2j6Zcp3REMELKewrnZYXYw/aMLMqxP5JgbAm3PvUz/0xxrk0tI
+ 44iq9f/FahkOOlcqmjuS3QxseRJHYukCIlQotBk3UAxyHpNBD+gh+/t4AhRX80pCYcwt
+ gr5KzBETwqsE6YubwKF45FdaVlvmoKvNQfhKKO3x60mneApecLuqBCIbsA+mbZlsfvCT
+ PCmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752535854; x=1753140654;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X75wJIItq4OqbIAPklTwtODvxkpfw/gyst8okQEwAP4=;
- b=SiPCxmocD5A8pV56OPoorM/CaGc7Fj8PfKbIVqYhDLWIR7zEQZftC4TRMlSiPitYrr
- tPqqFHbWt5JwmKpAixIfuGsuUxxJDUM0Zyl/06YiA6TVkAta3jWdNaDgtjo67OI7NIo+
- im761yVKNUs8Vsxm7nPs+grx30kWD4nYmjonNDmdAyUOFz3vCgBQasE2LjQkn1jZl91m
- 8Whd0SsHsXUFsKsLHc1obsKsbTUGC79HBEc3J7xg1HPZkg1w3twKmYUpF3I0BccNjdGf
- +q0PqO7yVPotyZ9YDMuz8pprk6V+hc9jiKjmr4wuuMJez0jo1HkbOmwgBHSo9vGzdvnd
- jK3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCValuiHIxx/ug+QbfDZ6E9XxKrIyCl1v8dwQeCZb459TpoO/nRhZmaJqr2sQX6bxWZVqqf2vM+0dbhU@nongnu.org
-X-Gm-Message-State: AOJu0YxWpEUR2xtMCHD5MwWB7+Kl1R5Q8p0JEaPh39tpMTOptUGmMJRJ
- 9EcypuvWyE7LC8GpTWXgaFPNFwQZPPTXIwDMl/Wd8LfB6Rtz+9T58l+6xJAiW+H+vqA=
-X-Gm-Gg: ASbGncvXj9DgMHrdZl3wPPhCxIDUlyU0PhyriCLifnv/s+iM1x1lhgNP/tBHvxJTkRS
- FVIJEdvWVybSErlF5SbnBbS6JUDUNwkJ8BwGBBvbqbFn95MxyFw73actpOcWYHFEH4I7+u7w9Fv
- OoxmtPv3Pv+P2q8+CwTofWi+BsUvRz0QKfhkOEResBH40hp+egsi6N/WCKBMxX7lTx9Ysi5nQ/M
- d/leB5uWy7sGR+DNVAEu8YHj0T2/V1RZAUu1v7Hi3+2ESUOaI7Ar5VtKdI2ZDLUu/yAZnkjMKXf
- rb1gJltac6HWNK6nlKixLDycAEB+K1DS/+p1ZLcyCUkxgGJD4h4522RnwGTRncSOVVq7mcXWGm1
- QzU79XjX6OV0yYyNcStLuHh0YuYQERSa6pvb3oenq8bZcVGp/dC5hgbICDNa890bT
-X-Google-Smtp-Source: AGHT+IGc+MFaR1v0MiVIFZcsUipBslOF+8lH7n0MDixoBhL8lZ7FRP7Kz4oQngH5Z1HpOSGv10yCLA==
-X-Received: by 2002:a05:6122:8ca:b0:523:dd87:fe95 with SMTP id
- 71dfb90a1353d-5373247a137mr258702e0c.9.1752535853873; 
- Mon, 14 Jul 2025 16:30:53 -0700 (PDT)
-Received: from [192.168.0.102] (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
- by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-535e73dbae0sm1971061e0c.46.2025.07.14.16.30.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 16:30:53 -0700 (PDT)
-Message-ID: <f984d041-5d23-41c8-b2d5-c79217a7f77b@linaro.org>
-Date: Mon, 14 Jul 2025 20:31:42 -0300
+ d=1e100.net; s=20230601; t=1752535866; x=1753140666;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=p+q6JDKW6ffOwKsdLKOn7mz7nOnnpKSBfqn0q4Cb+uI=;
+ b=kc/Tz2CV46Q3egu1WfOoPU79OBkJpGwbyjKSPXGkKjwu2GVbX1JPeYGfgv0EyiFVB9
+ FtmNt2daokb8sZxl4dP/nh3OiFtc+9VdUusPWlymiJd3mZ+N0kEw66w4xJ1ebwdLRCxN
+ VfbQCex/BmJRYPX0OUE3w0laFU1AkdTk7EVCrn3QZOg2hvztrMOkaIEX7TTwlUwtABI9
+ ipuMIn+HEg2FwSeEljH377NPJg4JMPcohVGN8v22VNlnVkdLgA7cEVFNYdqPkw17Wusq
+ vGw5Oyam8zIa9jiX6yPCq6t54PMhx9LpLLVy7/KW10mvEkXxPjkWQ6YNVuICan6wHIn2
+ w9Bg==
+X-Gm-Message-State: AOJu0YzvQd6PXpdEUfxYtP2X4fig4ONr7FEWibHHoqz2x+mR/SVXPE8z
+ G/O/CP5Yy22vcJBcZXO0j058UwZS5zgX/hKD+kaoLHVCugLhc6SjVrIcMWCwzo2c27T31yoIOHI
+ HzNuFjke6XZ0zEhXuj7ZHfm3KOonsGjR6Hbcbt9Wt6A==
+X-Gm-Gg: ASbGncsObREx34KfFr8FK+KpBqzx47oaEnEsbt+xIqCbjol5OgM0D7FasJ0KQoIAUMs
+ oQrt8nuzsv54gNS4t0hXbNu8k9MDkZrtEorcawzQ1KL5VylU7F6Fw8dFdR3M9Auguw4XjFobKSA
+ flDrBTFObBxOlKykg3rSYVELACtM2LxROTvfucuMXfBiQXw59HaCXXGVkFikzVPqtAXZqokQKkv
+ wm9pVU=
+X-Google-Smtp-Source: AGHT+IHcmk0rQdoqrVFraBYv8z31RPYVHHKuvgAH8P8RlwzX5g2sEwJcIdcx/psu7vAbzMnV+G76mAdoKFj8NB7fMts=
+X-Received: by 2002:a05:6402:909:b0:609:9115:60f8 with SMTP id
+ 4fb4d7f45d1cf-611e847f9e0mr12086347a12.21.1752535866191; Mon, 14 Jul 2025
+ 16:31:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/4] target/arm: Add FEAT_MEC to max cpu
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250714155836.1514748-1-richard.henderson@linaro.org>
- <97292e35-b7f2-40ca-aed6-34ef39396433@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <97292e35-b7f2-40ca-aed6-34ef39396433@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a42;
- envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa42.google.com
+References: <cover.1752534227.git.mst@redhat.com>
+ <04130b3dc5af620213a90d300933517b39f43bba.1752534227.git.mst@redhat.com>
+In-Reply-To: <04130b3dc5af620213a90d300933517b39f43bba.1752534227.git.mst@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 15 Jul 2025 02:30:40 +0300
+X-Gm-Features: Ac12FXwXkhQG4WaUD4BKsRX_QTxHaJLBMpYUF5zCdV8wz0-5eENAQ2dqUkSRLsU
+Message-ID: <CAAjaMXb5khPeO5bXGZ_2EALVWRg3i+GPimJygrik83f12JvFjw@mail.gmail.com>
+Subject: Re: [PULL 28/97] rust: bindings: allow any number of params
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,41 +96,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
+On Tue, Jul 15, 2025 at 2:07=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> We are going to be adding more parameters, and this makes
+> rust unhappy:
+>     Functions with lots of parameters are considered bad style and reduce
+>     readability (=E2=80=9Cwhat does the 5th parameter mean?=E2=80=9D). Co=
+nsider grouping
+>     some parameters into a new type.
+>
+> Specifically:
+>
+> error: this function has too many arguments (8/7)
+>     --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/=
+structured/bindings.inc.rs:3840:5
+>      |
+> 3840 | /     pub fn new_bitfield_1(
+> 3841 | |         secure: std::os::raw::c_uint,
+> 3842 | |         space: std::os::raw::c_uint,
+> 3843 | |         user: std::os::raw::c_uint,
+> ...    |
+> 3848 | |         address_type: std::os::raw::c_uint,
+> 3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+>      | |____________________________________________^
+>      |
+>      =3D help: for further information visit https://rust-lang.github.io/=
+rust-clippy/master/index.html#too_many_arguments
+>      =3D note: `-D clippy::too-many-arguments` implied by `-D warnings`
+>      =3D help: to override `-D warnings` add `#[allow(clippy::too_many_ar=
+guments)]`
+>
+> I didn't want to disable this globally, so I just shut it off for this
+> file.
+>
+> Message-Id: <a4c65fb2b735740bda2874c86de31d29a5ae24d2.1752530758.git.mst@=
+redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  rust/qemu-api/src/bindings.rs | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+>
+> diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.r=
+s
+> index 057de4b646..b4692f9b4b 100644
+> --- a/rust/qemu-api/src/bindings.rs
+> +++ b/rust/qemu-api/src/bindings.rs
+> @@ -18,11 +18,15 @@
+>
+>  //! `bindgen`-generated declarations.
+>
+> -#[cfg(MESON)]
+> -include!("bindings.inc.rs");
+> +#[allow(clippy::too_many_arguments)]
+> +mod gen {
+> +    #[cfg(MESON)]
+> +    include!("bindings.inc.rs");
+>
+> -#[cfg(not(MESON))]
+> -include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
+> +    #[cfg(not(MESON))]
+> +    include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
+> +}
+> +pub use gen::*;
+>
+>  // SAFETY: these are implemented in C; the bindings need to assert that =
+the
+>  // BQL is taken, either directly or via `BqlCell` and `BqlRefCell`.
+> --
+> MST
+>
 
-Richard, thanks for v8. Pierrick, thanks for testing it. :)
+Hi Michael,
 
-On 7/14/25 14:09, Pierrick Bouvier wrote:
-> On 7/14/25 8:58 AM, Richard Henderson wrote:
->> Changes for v8:
->>    - Re-order SCTLR2 and TCR2 so that they are independent of MEC.
->>    - Enable the SCTLR2 and TCR2 enable bits.
->>    - Squash 3 smaller MEC patches together.
->>
->> This still fails the RME tests, because we still need TF-A rebuilt
->> with ENABLE_FEAT_SCTLR2 and ENABLE_FEAT_TCR2.  Pierrick, since you
->> have just done such a build, could you re-test with this series?
->>
-> 
-> I tested that on my local Realm enabled setup and I can confirm this solved the issue and current series works.
-> Both flags are needed in TF-A. ENABLE_FEAT_TCR2 is needed to boot host, and ENABLE_FEAT_SCTLR2 is needed to boot nested guest.
+This patch does not seem to have been reviewed.
 
-I'm a bit confused because the QEMU RME tests, afaics, uses OP-TEE, not TF-A. I've built TF-A
-using the scripts in [0], enabling ENABLE_FEAT_TCR2 and ENABLE_FEAT_SCTLR2, but no way to get
-it booting. I understand we can embed a OP-TEE into the TF_A via BL32=<optee_image> when
-building TF-A. Is that what you're using?
-
-Thanks.
-
-
-Cheers,
-Gustavo
-
-[0] https://github.com/pbo-linaro/qemu-linux-stack.git
-
-> As I'm off today, I'll update that properly tomorrow when I have time, and not rush things. I'll update RME images for sbsa and virt tests + device passthrough test, and post associated patches.
-> 
-> Thanks,
-> Pierrick
-
+The clippy allows are in the top of the file, not above the
+`include!`. This should be a one line change and the `mod gen` wrap is
+unnecessary.
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
