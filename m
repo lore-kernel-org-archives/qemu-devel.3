@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5C6C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF44FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 09:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubFLt-0003cT-DD; Mon, 14 Jul 2025 05:20:01 -0400
+	id 1ubFNR-0005FC-JH; Mon, 14 Jul 2025 05:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubF7b-0003DU-VG
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:05:16 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1ubFC2-0005LC-EU
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:09:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubF7Z-0006wR-Kh
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:05:15 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1ubFC0-0007Ub-Bj
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 05:09:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752483911;
+ s=mimecast20190719; t=1752484185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S3kR6AprqenTMfhoWDA+lFCsBWj2eHNgKoPQx1lOdUk=;
- b=ZU08YYuOrNDJBVdvG9mI4T+A897fbVPY8Q+bvZTg02aXuQNfLkhzgzYB4D/kydIPJ3ypwx
- 5apNGoQGnGHobPSu/2JNUO78x8GGeDqV5MQ0S5ny2gkyatU4QkTUXXRsPk5f9YyOVUYWbl
- v76ME4NM3d27cmNX+Y0H3Bzedp/CEAE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VYAahEFsu1YjaAsH0kAZkyaJ37ljMI1GGfFqPH8qPh4=;
+ b=c/aBguOQEuoQ6WY8uBdi/cakWZZV9OLTgXWEiKepeciJilZNvvjeFFKW5AU00cxLosia64
+ ymEYyOhTI8SE/FTGi5GkXV1sl/vSDAwoxfdTsnTLZXzuXHOko3n92OpNJ2ehqdCHsV6/WZ
+ HAHggENqfEwsZ9FEgi03s90bXJmaoPA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375--gBHF0fJOoava2XFx2Zpag-1; Mon, 14 Jul 2025 05:05:09 -0400
-X-MC-Unique: -gBHF0fJOoava2XFx2Zpag-1
-X-Mimecast-MFC-AGG-ID: -gBHF0fJOoava2XFx2Zpag_1752483908
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-451d30992bcso31249495e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 02:05:09 -0700 (PDT)
+ us-mta-407-T79eqSMcOziamfowHsM0Tw-1; Mon, 14 Jul 2025 05:09:42 -0400
+X-MC-Unique: T79eqSMcOziamfowHsM0Tw-1
+X-Mimecast-MFC-AGG-ID: T79eqSMcOziamfowHsM0Tw_1752484182
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-acb94dbd01fso401664866b.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 02:09:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752483908; x=1753088708;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S3kR6AprqenTMfhoWDA+lFCsBWj2eHNgKoPQx1lOdUk=;
- b=o81oAvYjva1fruKA3MAOQCAbcLXPnGwhzCbQ5sJbYFCGsOHWUPLVFvgyL7+eIvpMO6
- qQS7DOGYASwEzgTS2WBYGGBiJucAxskhYkCaZDChy2n/a9i0lYpUrXvWUB7p1aGBgQG9
- D5Ma48y6AJvqYbuZEPn1QRkV+VGKDt5tWhBx/VZ/9/GStWjh0XDHPs6Od550Rpr8TeiC
- Rxrz08nArVw23EmIaQC24XeOos9YFMXHGZoz0WMYMXcHq7JEPRm2T0t8BQqfuKw1/UH3
- UtzclLWYPAQ0AgcAyF0EoH0Psy/0y9GD21FqS2jODiyu26EMpZzp8f92CphUGjG8G6Iu
- ZZog==
-X-Gm-Message-State: AOJu0YwnVtkxifVSQwOHe5KUUv3J2O5wk9+hpHl34uJNheKwinGC56Rs
- P45urCZxCJ8O7LqP9u1shtgCeZ+Gai2J0zw0blx53wBd99lHiKPLeiWSiMCEWdW+TgwZyr/Gzvm
- t8u+vAzPI31AT7Nzg2ed5S231rooqFrpNJ5Upmk7AvDEiDnux9a+VnbF5
-X-Gm-Gg: ASbGncuVjmWgrxlBZRLEZA2AFdtLWGjJwEzB3By+f/tquQX46QCoiOHznKb5SH905Vq
- 3j3xGLk0vshvyGQJI7YzlcCX32ypJGd/qdcGr846llPLeha7dy3N6MrQEdYMV8dwlRFhMJt6awx
- b/X18WWSPUlaKUjIZ4fFkznUowAy17gNw36YRo4UqBxDC9xhwurPWiuAZN7u2yfHXJNRHa40Z5h
- BB/dDIOtHi185+6/FcMEVWh5BbDQfk5tgwHU7ZhUnFQ53F7dfq51JU0HwnkMhsX9DGIhswY1l3i
- 1i5bf0O2AbD34lfThXKTAMP7whvP2UbeaJy6/dFtAwE=
-X-Received: by 2002:a05:600c:3155:b0:454:ab87:a0a0 with SMTP id
- 5b1f17b1804b1-454f4257f20mr124091925e9.17.1752483907938; 
- Mon, 14 Jul 2025 02:05:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkbz6uXPs7gRwumu+oXnhywRFmZssnK+9l+dRhoRg4fij/TNvrG1p+a03pPIjsrexl0/fVMw==
-X-Received: by 2002:a05:600c:3155:b0:454:ab87:a0a0 with SMTP id
- 5b1f17b1804b1-454f4257f20mr124091515e9.17.1752483907406; 
- Mon, 14 Jul 2025 02:05:07 -0700 (PDT)
-Received: from [192.168.0.115] ([212.105.155.228])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d5easm11719286f8f.48.2025.07.14.02.05.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 02:05:06 -0700 (PDT)
-Message-ID: <b745cfee-5e29-431a-8a3d-070c47e3f0a3@redhat.com>
-Date: Mon, 14 Jul 2025 11:05:05 +0200
+ d=1e100.net; s=20230601; t=1752484181; x=1753088981;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VYAahEFsu1YjaAsH0kAZkyaJ37ljMI1GGfFqPH8qPh4=;
+ b=EpsGAgxaeBxiuXg5vuY3dwUpZz5UwKneguinIqicaerVWz8fl6B8d6D++nshsLX8nO
+ 3HQIYahf+D3yNQxwG0zljiST/nCKlDMQHIPLeSYnKHFbwD8IXdiiSdQgF6NUPJ32sKjM
+ rwdKrGG+0dIfFfiFvlgQxL2YDQgnTm2U9zqdnPGNMLXnWPSfChv8zONw+ZLe3Lv6s7Wa
+ FoXEreG1SCgqWTB7fUzIvwRjFK+B0zCQJm52lOznFGjtwBQYLkVmzLtApotjD4dj7MEV
+ gJgmV70jfeCu1+ZWB4Ei3QmavOKlqWGciFMAPEhEglrWTWdFKMa42GsMGLyKvrqlVyrm
+ bO4A==
+X-Gm-Message-State: AOJu0YzmKWTQczTn4U+0zmKzXP0mqqciyl4/i5fW4bFuny8dqgMahF2E
+ Kj1vWxqFtk1niquJ7eDJnBDubZc6sXBBr59dCMpfsRGEtEtpXnPQX4hllaMUqt+d6xrMaK+FyTm
+ WQXXTmFAaRG++R9fTgHfqaROHg5cm91wuLDk5f0kzL0mXpp7xT3PSb0rTj/+btwRPNvP/kd+KXw
+ FXcTzWsjSv4fDuKvmc4nSx10W6rCTOUco=
+X-Gm-Gg: ASbGncvk9jXCqfDMwk2chT4k2L50+Q1gmvz89vNLfalfoIBr77DwClUz3lrw06fpMjM
+ tG0G1X0jxLe3XT2wUyQiR1oXtK1AISjuiwkY7yaNVhqRpJw3egEgX8CThBXyULRF3JWyxu+ojtS
+ ZFLCdWtx3NpqmShUQ42H9Svw==
+X-Received: by 2002:a17:907:928c:b0:ae3:67c7:54a6 with SMTP id
+ a640c23a62f3a-ae6fc1204bcmr1201989266b.34.1752484181400; 
+ Mon, 14 Jul 2025 02:09:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNGBUwv/aiEvCa1RxRFbJbCehc94t0sATx8zkIESSdwr5uhJxus3IYPQcvCzUWH2iVkLv5Hk9Ny0KHdI5O9f8=
+X-Received: by 2002:a17:907:928c:b0:ae3:67c7:54a6 with SMTP id
+ a640c23a62f3a-ae6fc1204bcmr1201986866b.34.1752484180940; Mon, 14 Jul 2025
+ 02:09:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 00/13] virtio: introduce support for GSO over UDP
- tunnel
-To: Lei Yang <leiyang@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- kvm@vger.kernel.org
 References: <cover.1752229731.git.pabeni@redhat.com>
  <CAPpAL=y4e=+H2rxHwwgbGvU+x10aTDVZ7ix+2YqVC3e6hd6L7g@mail.gmail.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CAPpAL=y4e=+H2rxHwwgbGvU+x10aTDVZ7ix+2YqVC3e6hd6L7g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+ <b745cfee-5e29-431a-8a3d-070c47e3f0a3@redhat.com>
+In-Reply-To: <b745cfee-5e29-431a-8a3d-070c47e3f0a3@redhat.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Mon, 14 Jul 2025 17:09:03 +0800
+X-Gm-Features: Ac12FXxhyQRKX4WxuMyNz5ss6U4wn9FTUq40s1TfdmsWZMa_uJqbL9A9zKVVstk
+Message-ID: <CAPpAL=xBfCXgT13k+h4oLsuEdm-FQ0_VO47kcgx050B40-oVOw@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 00/13] virtio: introduce support for GSO over UDP
+ tunnel
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -119,140 +114,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/25 10:43 AM, Lei Yang wrote:
-> Does the compile of this series of patches require support for a
-> special kernel environment? I hit a compile issue after applied you
-> patches:
-> [1440/2928] Compiling C object libsystem.a.p/hw_virtio_vhost.c.o
-> FAILED: libsystem.a.p/hw_virtio_vhost.c.o
-> cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/dtc/libfdt
-> -I../subprojects/dtc/libfdt -Isubprojects/libvduse
-> -I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader
-> -I/usr/include/pixman-1 -I/usr/include/glib-2.0
-> -I/usr/lib64/glib-2.0/include -I/usr/include/libmount
-> -I/usr/include/blkid -I/usr/include/sysprof-6
-> -I/usr/include/gio-unix-2.0 -I/usr/include/slirp
-> -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O0 -g
-> -fstack-protector-strong -Wempty-body -Wendif-labels
-> -Wexpansion-to-defined -Wformat-security -Wformat-y2k
-> -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self
-> -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
-> -Wold-style-declaration -Wold-style-definition -Wredundant-decls
-> -Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
-> -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
-> -Wno-shift-negative-value -isystem
-> /mnt/tests/distribution/command/qemu/linux-headers -isystem
-> linux-headers -iquote . -iquote /mnt/tests/distribution/command/qemu
-> -iquote /mnt/tests/distribution/command/qemu/include -iquote
-> /mnt/tests/distribution/command/qemu/host/include/x86_64 -iquote
-> /mnt/tests/distribution/command/qemu/host/include/generic -iquote
-> /mnt/tests/distribution/command/qemu/tcg/i386 -pthread -mcx16 -msse2
-> -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
-> -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero
-> -fzero-call-used-regs=used-gpr -fPIE -DWITH_GZFILEOP -DCONFIG_SOFTMMU
-> -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_virtio_vhost.c.o
-> -MF libsystem.a.p/hw_virtio_vhost.c.o.d -o
-> libsystem.a.p/hw_virtio_vhost.c.o -c ../hw/virtio/vhost.c
-> ../hw/virtio/vhost.c: In function ‘vhost_dev_set_features’:
-> ../hw/virtio/vhost.c:38:9: error: ‘r’ may be used uninitialized
-> [-Werror=maybe-uninitialized]
->    38 |         error_report(fmt ": %s (%d)", ## __VA_ARGS__, \
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    39 |                      strerror(-retval), -retval); \
->       |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../hw/virtio/vhost.c:1006:9: note: in expansion of macro ‘VHOST_OPS_DEBUG’
->  1006 |         VHOST_OPS_DEBUG(r, "extended features without device support");
->       |         ^~~~~~~~~~~~~~~
-> ../hw/virtio/vhost.c:989:9: note: ‘r’ was declared here
->   989 |     int r;
->       |         ^
-> cc1: all warnings being treated as errors
-> ninja: build stopped: subcommand failed.
-> make[1]: *** [Makefile:168: run-ninja] Error 1
-> make[1]: Leaving directory '/mnt/tests/distribution/command/qemu/build'
-> make[1]: Entering directory '/mnt/tests/distribution/command/qemu/build'
-> [1/1493] Generating subprojects/dtc/version_gen.h with a custom command
-> [2/1493] Generating qemu-version.h with a custom command (wrapped by
-> meson to capture output)
-> [3/1492] Compiling C object libsystem.a.p/hw_virtio_vhost.c.o
-> FAILED: libsystem.a.p/hw_virtio_vhost.c.o
-> cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/dtc/libfdt
-> -I../subprojects/dtc/libfdt -Isubprojects/libvduse
-> -I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader
-> -I/usr/include/pixman-1 -I/usr/include/glib-2.0
-> -I/usr/lib64/glib-2.0/include -I/usr/include/libmount
-> -I/usr/include/blkid -I/usr/include/sysprof-6
-> -I/usr/include/gio-unix-2.0 -I/usr/include/slirp
-> -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O0 -g
-> -fstack-protector-strong -Wempty-body -Wendif-labels
-> -Wexpansion-to-defined -Wformat-security -Wformat-y2k
-> -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self
-> -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
-> -Wold-style-declaration -Wold-style-definition -Wredundant-decls
-> -Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
-> -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
-> -Wno-shift-negative-value -isystem
-> /mnt/tests/distribution/command/qemu/linux-headers -isystem
-> linux-headers -iquote . -iquote /mnt/tests/distribution/command/qemu
-> -iquote /mnt/tests/distribution/command/qemu/include -iquote
-> /mnt/tests/distribution/command/qemu/host/include/x86_64 -iquote
-> /mnt/tests/distribution/command/qemu/host/include/generic -iquote
-> /mnt/tests/distribution/command/qemu/tcg/i386 -pthread -mcx16 -msse2
-> -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
-> -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero
-> -fzero-call-used-regs=used-gpr -fPIE -DWITH_GZFILEOP -DCONFIG_SOFTMMU
-> -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_virtio_vhost.c.o
-> -MF libsystem.a.p/hw_virtio_vhost.c.o.d -o
-> libsystem.a.p/hw_virtio_vhost.c.o -c ../hw/virtio/vhost.c
-> ../hw/virtio/vhost.c: In function ‘vhost_dev_set_features’:
-> ../hw/virtio/vhost.c:38:9: error: ‘r’ may be used uninitialized
-> [-Werror=maybe-uninitialized]
->    38 |         error_report(fmt ": %s (%d)", ## __VA_ARGS__, \
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    39 |                      strerror(-retval), -retval); \
->       |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../hw/virtio/vhost.c:1006:9: note: in expansion of macro ‘VHOST_OPS_DEBUG’
->  1006 |         VHOST_OPS_DEBUG(r, "extended features without device support");
->       |         ^~~~~~~~~~~~~~~
-> ../hw/virtio/vhost.c:989:9: note: ‘r’ was declared here
->   989 |     int r;
->       |         ^
-> cc1: all warnings being treated as errors
-> ninja: build stopped: subcommand failed.
-> make[1]: *** [Makefile:168: run-ninja] Error 1
-> make[1]: Leaving directory '/mnt/tests/distribution/command/qemu/build'
+On Mon, Jul 14, 2025 at 5:05=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wro=
+te:
+>
+> On 7/14/25 10:43 AM, Lei Yang wrote:
+> > Does the compile of this series of patches require support for a
+> > special kernel environment? I hit a compile issue after applied you
+> > patches:
+> > [1440/2928] Compiling C object libsystem.a.p/hw_virtio_vhost.c.o
+> > FAILED: libsystem.a.p/hw_virtio_vhost.c.o
+> > cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/dtc/libfdt
+> > -I../subprojects/dtc/libfdt -Isubprojects/libvduse
+> > -I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader
+> > -I/usr/include/pixman-1 -I/usr/include/glib-2.0
+> > -I/usr/lib64/glib-2.0/include -I/usr/include/libmount
+> > -I/usr/include/blkid -I/usr/include/sysprof-6
+> > -I/usr/include/gio-unix-2.0 -I/usr/include/slirp
+> > -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O0=
+ -g
+> > -fstack-protector-strong -Wempty-body -Wendif-labels
+> > -Wexpansion-to-defined -Wformat-security -Wformat-y2k
+> > -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
+> > -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
+> > -Wold-style-declaration -Wold-style-definition -Wredundant-decls
+> > -Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
+> > -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
+> > -Wno-shift-negative-value -isystem
+> > /mnt/tests/distribution/command/qemu/linux-headers -isystem
+> > linux-headers -iquote . -iquote /mnt/tests/distribution/command/qemu
+> > -iquote /mnt/tests/distribution/command/qemu/include -iquote
+> > /mnt/tests/distribution/command/qemu/host/include/x86_64 -iquote
+> > /mnt/tests/distribution/command/qemu/host/include/generic -iquote
+> > /mnt/tests/distribution/command/qemu/tcg/i386 -pthread -mcx16 -msse2
+> > -D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE
+> > -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero
+> > -fzero-call-used-regs=3Dused-gpr -fPIE -DWITH_GZFILEOP -DCONFIG_SOFTMMU
+> > -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_virtio_vhost.c.o
+> > -MF libsystem.a.p/hw_virtio_vhost.c.o.d -o
+> > libsystem.a.p/hw_virtio_vhost.c.o -c ../hw/virtio/vhost.c
+> > ../hw/virtio/vhost.c: In function =E2=80=98vhost_dev_set_features=E2=80=
+=99:
+> > ../hw/virtio/vhost.c:38:9: error: =E2=80=98r=E2=80=99 may be used unini=
+tialized
+> > [-Werror=3Dmaybe-uninitialized]
+> >    38 |         error_report(fmt ": %s (%d)", ## __VA_ARGS__, \
+> >       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >    39 |                      strerror(-retval), -retval); \
+> >       |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > ../hw/virtio/vhost.c:1006:9: note: in expansion of macro =E2=80=98VHOST=
+_OPS_DEBUG=E2=80=99
+> >  1006 |         VHOST_OPS_DEBUG(r, "extended features without device su=
+pport");
+> >       |         ^~~~~~~~~~~~~~~
+> > ../hw/virtio/vhost.c:989:9: note: =E2=80=98r=E2=80=99 was declared here
+> >   989 |     int r;
+> >       |         ^
+> > cc1: all warnings being treated as errors
+> > ninja: build stopped: subcommand failed.
+> > make[1]: *** [Makefile:168: run-ninja] Error 1
+> > make[1]: Leaving directory '/mnt/tests/distribution/command/qemu/build'
+> > make[1]: Entering directory '/mnt/tests/distribution/command/qemu/build=
+'
+> > [1/1493] Generating subprojects/dtc/version_gen.h with a custom command
+> > [2/1493] Generating qemu-version.h with a custom command (wrapped by
+> > meson to capture output)
+> > [3/1492] Compiling C object libsystem.a.p/hw_virtio_vhost.c.o
+> > FAILED: libsystem.a.p/hw_virtio_vhost.c.o
+> > cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/dtc/libfdt
+> > -I../subprojects/dtc/libfdt -Isubprojects/libvduse
+> > -I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader
+> > -I/usr/include/pixman-1 -I/usr/include/glib-2.0
+> > -I/usr/lib64/glib-2.0/include -I/usr/include/libmount
+> > -I/usr/include/blkid -I/usr/include/sysprof-6
+> > -I/usr/include/gio-unix-2.0 -I/usr/include/slirp
+> > -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O0=
+ -g
+> > -fstack-protector-strong -Wempty-body -Wendif-labels
+> > -Wexpansion-to-defined -Wformat-security -Wformat-y2k
+> > -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
+> > -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
+> > -Wold-style-declaration -Wold-style-definition -Wredundant-decls
+> > -Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
+> > -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
+> > -Wno-shift-negative-value -isystem
+> > /mnt/tests/distribution/command/qemu/linux-headers -isystem
+> > linux-headers -iquote . -iquote /mnt/tests/distribution/command/qemu
+> > -iquote /mnt/tests/distribution/command/qemu/include -iquote
+> > /mnt/tests/distribution/command/qemu/host/include/x86_64 -iquote
+> > /mnt/tests/distribution/command/qemu/host/include/generic -iquote
+> > /mnt/tests/distribution/command/qemu/tcg/i386 -pthread -mcx16 -msse2
+> > -D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE
+> > -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero
+> > -fzero-call-used-regs=3Dused-gpr -fPIE -DWITH_GZFILEOP -DCONFIG_SOFTMMU
+> > -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_virtio_vhost.c.o
+> > -MF libsystem.a.p/hw_virtio_vhost.c.o.d -o
+> > libsystem.a.p/hw_virtio_vhost.c.o -c ../hw/virtio/vhost.c
+> > ../hw/virtio/vhost.c: In function =E2=80=98vhost_dev_set_features=E2=80=
+=99:
+> > ../hw/virtio/vhost.c:38:9: error: =E2=80=98r=E2=80=99 may be used unini=
+tialized
+> > [-Werror=3Dmaybe-uninitialized]
+> >    38 |         error_report(fmt ": %s (%d)", ## __VA_ARGS__, \
+> >       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >    39 |                      strerror(-retval), -retval); \
+> >       |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > ../hw/virtio/vhost.c:1006:9: note: in expansion of macro =E2=80=98VHOST=
+_OPS_DEBUG=E2=80=99
+> >  1006 |         VHOST_OPS_DEBUG(r, "extended features without device su=
+pport");
+> >       |         ^~~~~~~~~~~~~~~
+> > ../hw/virtio/vhost.c:989:9: note: =E2=80=98r=E2=80=99 was declared here
+> >   989 |     int r;
+> >       |         ^
+> > cc1: all warnings being treated as errors
+> > ninja: build stopped: subcommand failed.
+> > make[1]: *** [Makefile:168: run-ninja] Error 1
+> > make[1]: Leaving directory '/mnt/tests/distribution/command/qemu/build'
+>
+> Thank you for reporting the problem.
+>
+> No special kernel requirement to build the series, the above is just a
+> gross mistake on my side in patch 7/13. If you want to test the series,
+> please apply incrementally the following diff.
+>
+> What baffles me is that gcc 14.3.1 and 11.5.0 are not raising the
+> warning (that looks legit/correct) here.
+>
+> I'll fix the above in the next revision.
+>
+> Note that you need a running kernel based on current net-next tree in
+> both the hypervisor and the guest to actually leverage the new feature.
 
-Thank you for reporting the problem.
+Ok, I will test this series again and update the test results.
 
-No special kernel requirement to build the series, the above is just a
-gross mistake on my side in patch 7/13. If you want to test the series,
-please apply incrementally the following diff.
-
-What baffles me is that gcc 14.3.1 and 11.5.0 are not raising the
-warning (that looks legit/correct) here.
-
-I'll fix the above in the next revision.
-
-Note that you need a running kernel based on current net-next tree in
-both the hypervisor and the guest to actually leverage the new feature.
-
-Thanks,
-
-Paolo
----
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 2eee9b0886..c4eab5ce08 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1003,8 +1003,8 @@ static int vhost_dev_set_features(struct vhost_dev
-*dev,
-
-     if (virtio_features_use_extended(features) &&
-         !dev->vhost_ops->vhost_set_features_ex) {
--        VHOST_OPS_DEBUG(r, "extended features without device support");
-         r = -EINVAL;
-+        VHOST_OPS_DEBUG(r, "extended features without device support");
-         goto out;
-     }
+Thanks
+Lei
+>
+> Thanks,
+>
+> Paolo
+> ---
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 2eee9b0886..c4eab5ce08 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1003,8 +1003,8 @@ static int vhost_dev_set_features(struct vhost_dev
+> *dev,
+>
+>      if (virtio_features_use_extended(features) &&
+>          !dev->vhost_ops->vhost_set_features_ex) {
+> -        VHOST_OPS_DEBUG(r, "extended features without device support");
+>          r =3D -EINVAL;
+> +        VHOST_OPS_DEBUG(r, "extended features without device support");
+>          goto out;
+>      }
+>
 
 
