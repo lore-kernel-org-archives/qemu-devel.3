@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC17C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11E6C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSFk-0001Mn-6I; Mon, 14 Jul 2025 19:06:32 -0400
+	id 1ubSG4-0002us-H4; Mon, 14 Jul 2025 19:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFi-0001LI-EV
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFy-0002d8-Mg
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFg-0005Kl-HU
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFw-0005O9-TE
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534387;
+ s=mimecast20190719; t=1752534404;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=51WLhhtzvQLDx2fwDZYEvf7ij4Zz6Yv1oK4TX/67LF8=;
- b=NpEMj4XMro9+DdCu2JzcOuIbwRF8OP+AmJ01Q9hTIkIzOAIDF3JJe1KL19fgG04xz8zZBO
- E6lCRmsV/KOHG1XknKkTaa0kbwaHLRn3Shi8m2G18BVbLyothUdwuQ5yX7jwRg8B6NKvwR
- dxZVM/iYtSCyVDushXPzPJ1na+fRowY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+UAUxfm7ZZjTGEuMkx1MXZIZiceR06VrUrTJFA1Ndo0=;
+ b=gG3gdj8Lk6SwUFBb4qptt5bqOU2IvrQ9EhpSH1cPzlhKH47c61O20otuabb/tB83Jd7+Aj
+ YBoyhHkRKtg1g/0jDUpoICrzpNmV3SCzBh3UfvRucP2mFoKNoKhdEX92+wSLLcoIl5EqjE
+ J6rrfLvf3ENQoVw94koSpFTsGGwM8Rc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-151-a3r1MvJdMxSoH6ndY6VILQ-1; Mon, 14 Jul 2025 19:06:25 -0400
-X-MC-Unique: a3r1MvJdMxSoH6ndY6VILQ-1
-X-Mimecast-MFC-AGG-ID: a3r1MvJdMxSoH6ndY6VILQ_1752534383
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4538a2f4212so27817205e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:24 -0700 (PDT)
+ us-mta-638-cE9b8KFWOyWsRU2HegzBpg-1; Mon, 14 Jul 2025 19:06:43 -0400
+X-MC-Unique: cE9b8KFWOyWsRU2HegzBpg-1
+X-Mimecast-MFC-AGG-ID: cE9b8KFWOyWsRU2HegzBpg_1752534402
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451d2037f1eso30875725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534383; x=1753139183;
+ d=1e100.net; s=20230601; t=1752534401; x=1753139201;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=51WLhhtzvQLDx2fwDZYEvf7ij4Zz6Yv1oK4TX/67LF8=;
- b=eiYYfNX82pQV3w4VyfVnpzJlfzdso7SuWsQJ6MBALi9eDjUtFdk1wXLidJTM+WeyFP
- bvyeHysqxZkyw9lvN9xp5VgWpJswpMxXgrnpYAc210hIC+hpnkUoaviTK/ilR6Y4K8xJ
- f2Trmp/0Da0KMGMsAV/ARPU3q7Dv2D+nuixIE9F/eKrAtCLunR4L9O928kNEAInhPv6+
- nP+Q49TX+4s02zs2bm8+0K4UGZw/BfltM7Eqmp3f3hXd4+iaqv1jHvz4ttwZmbXCcsge
- Wp2MCMOUpCvYfKLCk0QaKJLdo9/z648P0tTXTeZ76XNY+Mgb0rmHW9QYDyumgq1cp9qt
- wnJA==
-X-Gm-Message-State: AOJu0YyPRi1XlAMpfl+qNOdi6BEvS0Kx2umEtUdtWdXqvxMgFuc7pW60
- JTbkKXcEn3ChMY0zMlhtnU+ykdtnAXy0CDjfF7u6LeKshUVzGWX97lIUSU4Y1i5pbjGkn+bgvPQ
- tnh3Ieu3HoSZhZ4XD2lC15my6QU7P9HLCkgR5DY+Fxg5iu0H9oXo0coV3/X0gIU75MjahsrAb4C
- 7PPS6xAPJ4xHReFJnretRMKf8TBeLeK1FduQ==
-X-Gm-Gg: ASbGncvTRvxKDEq4TIuu4kKCiUOMoVEviLxfEl6dUWlR0uJS1pS/vIVyDp0JfjoWDUn
- bkHauNdp+nNS/tv0nCybfvyd+VNRDeOFeoSzEIrvzLBkH8XAd4gqizBAaY+ogOzYc1ExZW0xHLf
- bhkOvh9Mw5pN555CB/fWiGt1WORk+sEXeogk1WOeJc8esBwcmXgCL87FUyNNnaE07I0Su4UfPBt
- 1i6ixC9yOPgxTGLsC27Sw/4KVFPVTno1S9fUdvbCD+h3R1XOdXb4qlJuIWJn8on93KBYuW7Q86o
- hEYWBJtocZr9MK7IVyJfIP18J0CVcPBA
-X-Received: by 2002:a05:600c:1913:b0:442:c993:6f94 with SMTP id
- 5b1f17b1804b1-4561a16064fmr59346005e9.12.1752534382936; 
- Mon, 14 Jul 2025 16:06:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFlJEJlotEdZvsKfQW76HJh35RNxj9rvToIlF86iMr+ngxUkyhPPkHcqwf18jXjPSzi4PJsQ==
-X-Received: by 2002:a05:600c:1913:b0:442:c993:6f94 with SMTP id
- 5b1f17b1804b1-4561a16064fmr59345735e9.12.1752534382415; 
- Mon, 14 Jul 2025 16:06:22 -0700 (PDT)
+ bh=+UAUxfm7ZZjTGEuMkx1MXZIZiceR06VrUrTJFA1Ndo0=;
+ b=JzzX75GiVBqkGM6k2V2ciSOXNUybv0I/vJptvHqt1q2xCxvu6gZ7GFuXDU+niGcKfx
+ CXEvb2bsR5NOMm6YkuU+IH2ZkaN3gUCAbH3Hkkr7ww0AwoVuN74oAsCcRy6MLt/WpHhS
+ Zl4rNSFLLEU69JvHvd13QBxQaLObe0fRVXDXgIsyWryLYF1v3bCvAczYwCLOfPf3pbx4
+ 1ReFV3P0J6GeNujWTaoDWjQAEpJu4aPHtYJJkf9SIuVioPToD/tlf+j6jTkslZ+3V+yx
+ E0vEjHnAUYcyP2cPq7TulZcZgQ7u3DUdrlwwEHHHJQcnpa+MQo7SzuywByZYiPPE/0Wc
+ vx+w==
+X-Gm-Message-State: AOJu0YxgsIXvi7AUZVVGoFvd6jldNzXduldMsDSmKfqiDzOZ4x3aK+HS
+ YwJKBSLf93Xngo3TwekcWMkc6dJq/qUA0n7Ld34eiYiRf7H7CUq1mPaltVcGk3l1gGSz11Zpz1/
+ HdOdiv96MAHNSMmIEYx22tLv/VtrYNEMkC+k9Fc2WBr3Iw55ZcEANfMV5ZJ6QS7NywMmyZI8ajN
+ Yt1mLimP9XtPHCfkrl+W4dmvbQpXshd6MMLA==
+X-Gm-Gg: ASbGncs3ffvpF7vLsEfRFYGrtSa/aCvs1Jboli/wnz94lvwqd2rreBcz31k6vsKWiGZ
+ F2mAVnD6uVXx14kBWgCG4gZU4NHwXhMPMyIzmHnjQTzoVK4cQAFX2AEvZ4IlQWFYGuH0RUfUy+5
+ Z6BUgI4uF7PZC9FYUkjQMiTsGaA/wREUda0rn3lLP5p0G99x5gr5A9xO9+FIuevcTJ9EJLQ+8eG
+ 2yY6jBDjIUUH2OVLOKffEyWSdj4ZWaEumnWjmcpxbjumV1WOV5coP8spoCHtoxIGNN3em6NM1wR
+ jyBxVTZMCEH3IL8/uk33VUzu4AgyROd7
+X-Received: by 2002:a05:600c:4e54:b0:456:43d:118d with SMTP id
+ 5b1f17b1804b1-456043d13bbmr112229085e9.17.1752534401406; 
+ Mon, 14 Jul 2025 16:06:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGe28pTxY70ufHHhSwpNiT9fKZKxgxvkHsnFoY3BXvolLfI93WchNoM6NVdMVKc8neh9COEJA==
+X-Received: by 2002:a05:600c:4e54:b0:456:43d:118d with SMTP id
+ 5b1f17b1804b1-456043d13bbmr112228795e9.17.1752534400893; 
+ Mon, 14 Jul 2025 16:06:40 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4561323a488sm62228555e9.1.2025.07.14.16.06.21
+ ffacd0b85a97d-3b5e8e1e1a5sm13316857f8f.74.2025.07.14.16.06.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:06:22 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:06:20 -0400
+ Mon, 14 Jul 2025 16:06:39 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:06:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 02/97] net/vhost-vdpa: Report hashing capability
-Message-ID: <14f521f491063136bb4aa282c9d29735c78ee433.1752534227.git.mst@redhat.com>
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 10/97] vhost-user-blk: add an option to skip GET_VRING_BASE
+ for force shutdown
+Message-ID: <07fde5901b5254d3b9706df22dbb16cfacf966d5.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -83,7 +89,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,7 +98,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,122 +114,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-Report hashing capability so that virtio-net can deliver the correct
-capability information to the guest.
+If we have a server running disk requests that is for whatever reason
+hanging or not able to process any more IO requests but still has some
+in-flight requests previously issued by the guest OS, QEMU will still
+try to drain the vring before shutting down even if it was explicitly
+asked to do a "force shutdown" via SIGTERM or QMP quit. This is not
+useful since the guest is no longer running at this point since it was
+killed by QEMU earlier in the process. At this point, we don't care
+about whatever in-flight IO it might have pending, we just want QEMU
+to shut down.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20250530-vdpa-v1-2-5af4109b1c19@daynix.com>
+Add an option called "skip-get-vring-base-on-force-shutdown" to allow
+SIGTERM/QMP quit() to actually act like a "force shutdown" at least
+for vhost-user-blk devices since those require the drain operation
+to shut down gracefully unlike, for example, network devices.
+
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Message-Id: <20250609212547.2859224-4-d-tatianin@yandex-team.ru>
+Acked-by: Raphael Norwitz <raphael@enfabrica.net>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/net/net.h |  3 +++
- net/net.c         |  9 +++++++++
- net/vhost-vdpa.c  | 28 ++++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+)
+ include/hw/virtio/vhost-user-blk.h | 2 ++
+ hw/block/vhost-user-blk.c          | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index cdd5b109b0..545f4339ce 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -60,6 +60,7 @@ typedef bool (HasVnetHdrLen)(NetClientState *, int);
- typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
- typedef int (GetVnetHdrLen)(NetClientState *);
- typedef void (SetVnetHdrLen)(NetClientState *, int);
-+typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
- typedef int (SetVnetLE)(NetClientState *, bool);
- typedef int (SetVnetBE)(NetClientState *, bool);
- typedef struct SocketReadState SocketReadState;
-@@ -89,6 +90,7 @@ typedef struct NetClientInfo {
-     SetVnetHdrLen *set_vnet_hdr_len;
-     SetVnetLE *set_vnet_le;
-     SetVnetBE *set_vnet_be;
-+    GetVnetHashSupportedTypes *get_vnet_hash_supported_types;
-     NetAnnounce *announce;
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-@@ -189,6 +191,7 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
-                       int ecn, int ufo, int uso4, int uso6);
- int qemu_get_vnet_hdr_len(NetClientState *nc);
- void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
-+bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types);
- int qemu_set_vnet_le(NetClientState *nc, bool is_le);
- int qemu_set_vnet_be(NetClientState *nc, bool is_be);
- void qemu_macaddr_default_if_unset(MACAddr *macaddr);
-diff --git a/net/net.c b/net/net.c
-index 39d6f28158..d0ae3db0d8 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -573,6 +573,15 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
-     nc->info->set_vnet_hdr_len(nc, len);
- }
+diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+index ea085ee1ed..a10f785672 100644
+--- a/include/hw/virtio/vhost-user-blk.h
++++ b/include/hw/virtio/vhost-user-blk.h
+@@ -50,6 +50,8 @@ struct VHostUserBlk {
+     bool connected;
+     /* vhost_user_blk_start/vhost_user_blk_stop */
+     bool started_vu;
++
++    bool skip_get_vring_base_on_force_shutdown;
+ };
  
-+bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types)
-+{
-+    if (!nc || !nc->info->get_vnet_hash_supported_types) {
-+        return false;
-+    }
-+
-+    return nc->info->get_vnet_hash_supported_types(nc, types);
-+}
-+
- int qemu_set_vnet_le(NetClientState *nc, bool is_le)
- {
- #if HOST_BIG_ENDIAN
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 58d738945d..cb63e09453 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -252,6 +252,32 @@ static bool vhost_vdpa_has_vnet_hdr(NetClientState *nc)
-     return true;
- }
+ #endif
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 0eebbcd80d..c0cc5f6942 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -210,6 +210,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     int ret;
++    bool force_stop = false;
  
-+static bool vhost_vdpa_get_vnet_hash_supported_types(NetClientState *nc,
-+                                                     uint32_t *types)
-+{
-+    assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
-+    VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
-+    uint64_t features = s->vhost_vdpa.dev->features;
-+    int fd = s->vhost_vdpa.shared->device_fd;
-+    struct {
-+        struct vhost_vdpa_config hdr;
-+        uint32_t supported_hash_types;
-+    } config;
+     if (!s->started_vu) {
+         return 0;
+@@ -220,7 +221,11 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+         return 0;
+     }
+ 
+-    ret = vhost_dev_stop(&s->dev, vdev, true);
++    force_stop = s->skip_get_vring_base_on_force_shutdown &&
++                 qemu_force_shutdown_requested();
 +
-+    if (!virtio_has_feature(features, VIRTIO_NET_F_HASH_REPORT) &&
-+        !virtio_has_feature(features, VIRTIO_NET_F_RSS)) {
-+        return false;
-+    }
-+
-+    config.hdr.off = offsetof(struct virtio_net_config, supported_hash_types);
-+    config.hdr.len = sizeof(config.supported_hash_types);
-+
-+    assert(!ioctl(fd, VHOST_VDPA_GET_CONFIG, &config));
-+    *types = le32_to_cpu(config.supported_hash_types);
-+
-+    return true;
-+}
-+
- static bool vhost_vdpa_has_ufo(NetClientState *nc)
- {
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
-@@ -428,6 +454,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .stop = vhost_vdpa_net_client_stop,
-         .cleanup = vhost_vdpa_cleanup,
-         .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
-+        .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
-         .has_ufo = vhost_vdpa_has_ufo,
-         .set_vnet_le = vhost_vdpa_set_vnet_le,
-         .check_peer_type = vhost_vdpa_check_peer_type,
-@@ -1284,6 +1311,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
-     .stop = vhost_vdpa_net_cvq_stop,
-     .cleanup = vhost_vdpa_cleanup,
-     .has_vnet_hdr = vhost_vdpa_has_vnet_hdr,
-+    .get_vnet_hash_supported_types = vhost_vdpa_get_vnet_hash_supported_types,
-     .has_ufo = vhost_vdpa_has_ufo,
-     .check_peer_type = vhost_vdpa_check_peer_type,
-     .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
++    ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
++                       vhost_dev_stop(&s->dev, vdev, true);
+ 
+     if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+         error_report("vhost guest notifier cleanup failed: %d", ret);
+@@ -584,6 +589,8 @@ static const Property vhost_user_blk_properties[] = {
+                       VIRTIO_BLK_F_DISCARD, true),
+     DEFINE_PROP_BIT64("write-zeroes", VHostUserBlk, parent_obj.host_features,
+                       VIRTIO_BLK_F_WRITE_ZEROES, true),
++    DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
++                     skip_get_vring_base_on_force_shutdown, false),
+ };
+ 
+ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
 -- 
 MST
 
