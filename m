@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC75C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8B3C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSJA-000549-KI; Mon, 14 Jul 2025 19:10:04 -0400
+	id 1ubSG0-0002hV-Rr; Mon, 14 Jul 2025 19:06:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHp-0008UE-0H
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFu-0002Fp-WB
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHm-0005kK-TE
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFt-0005NZ-9H
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534518;
+ s=mimecast20190719; t=1752534400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=i1YFz09Xgb5Qd/+4ZY+2j8LQRJgSizS8EitDV6gI6vE=;
- b=Np5cXhr2V+Lbek2Tm44UphUj69n2rhG66XXJkkCCRQaveoEsTQppwRzg9pReDpFDTKkqgs
- rSH91UkFLxNExDi9Fm8uR2tA9YH4VMWn/mPJCzOLmCnTVAzQyfCu5o8qrAy26qTk/FVwQD
- VDsYuAsaviGQiwL9NOB04xE5m1eM1bg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jIH1CkCCFSXcgs6SwD/lkBtxMtFMYESPhTMyWu2YSEw=;
+ b=TWkaqVjNg3KtfMFt0WrzOqt0U6S1heptWdBQGrqqSESAQt0oV2cDzZxGpMegW4vNeZztpM
+ NEBy5jzC1mMZCeUanHnW1RRNVoKEegO6AlKs8aA6VYfDKZA1F7I6LrSrJYwANYVFzCC+4V
+ dra8q67ZLpsf7t+7en4LvLUfahcz+AI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-1T0wSP9gOguQ_SIkSslaUg-1; Mon, 14 Jul 2025 19:08:36 -0400
-X-MC-Unique: 1T0wSP9gOguQ_SIkSslaUg-1
-X-Mimecast-MFC-AGG-ID: 1T0wSP9gOguQ_SIkSslaUg_1752534516
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-455e918d690so15703035e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:36 -0700 (PDT)
+ us-mta-526-DFyKStcbNAC0RLdd1Z8HKw-1; Mon, 14 Jul 2025 19:06:39 -0400
+X-MC-Unique: DFyKStcbNAC0RLdd1Z8HKw-1
+X-Mimecast-MFC-AGG-ID: DFyKStcbNAC0RLdd1Z8HKw_1752534398
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45359bfe631so29214725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534515; x=1753139315;
+ d=1e100.net; s=20230601; t=1752534398; x=1753139198;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i1YFz09Xgb5Qd/+4ZY+2j8LQRJgSizS8EitDV6gI6vE=;
- b=Lr0Z6RvrMTtHc8qXhNdW6IDa3SIMJs0eGLABDzs2PAPOb1hQgUe90yXu2N0W+lbgnO
- la3VRCM5qWsSSkN502asCk2i1dL8YNm//DgIEcEdJBjSyB+WtNearKziTc/JSIaY8JuV
- bHJ9yTTNxAUf2t3kf28q0bIgLZoP/b6Y+qxx941Y1iL2xDfcJiGmUKbBst7TzB6nZpyv
- 5WJmrxVhyiUKfUvjc57RavmvObaU3i7R1jF8zFzTuc3duTmWMy4lX9YEHWifmJfxL8pU
- KXGC+h0pSrJUYnvZZ1ClVfTmOQd1FWQwcfl350QX1QOFqx5nuyhiBEdgGdX6Fuy2zKSO
- WyjA==
-X-Gm-Message-State: AOJu0YzOsSLevT58uUf5Hgxlmi2zO2WE/Dd0YL0fJF8+xpNQ0IpxKzNl
- wqexBi/4RZz/xiZ45S/PWwPYp9cSp1wvL6B2pFxQIJ1yW02Gld7YEv3X1FLgslkDPzSFTApubxw
- /bvMrk79rEUwdmkGHEnC9DcMrtThRiBmpVfq1wKYNuDsz/GPs8KcBZ6RQp5AMJFqGYbyMLTo88z
- Pw/vitnq6+tKeLg+koAbmMUrngFDjy1Omk3A==
-X-Gm-Gg: ASbGnctHL+Q2HfZs4bxAA6SeVWPKS41xVcw1EeLr8QEYzBAujrX12wWUgxDXBY83stO
- rcCXQoKFugPhRSi6qd630rcf67vNDAn2r0J9jyLtqOM/D97d2z42d4ZFWE3wCzc6Vh/lVyMBuN6
- xeXfhFL1C+LZGUF2PXdi0wTPpuyYQzZoQtyPOpZpwvBmxaE9pz0Nc4weuU5V0iWInhsieeDr4dF
- 1t1KUAo3AczZEMUKPLJtzku5doGkO0TvZH+Nv8VzxGUV7zhVHtszp2uaedHVp+CoBotrqzFR4W6
- MrdI94oVAPmImEmrTbvhRJ4Y1uNNJIng
-X-Received: by 2002:a05:600c:4f93:b0:456:1a79:49a0 with SMTP id
- 5b1f17b1804b1-45625e5fb81mr11304235e9.8.1752534515235; 
- Mon, 14 Jul 2025 16:08:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlTbd09g7q/TjVU6+NhwOMPmUAvdYAC1Jh/y+uJmNyVud0hXluddzQg2zjk/EYuTPA5drGag==
-X-Received: by 2002:a05:600c:4f93:b0:456:1a79:49a0 with SMTP id
- 5b1f17b1804b1-45625e5fb81mr11303985e9.8.1752534514656; 
- Mon, 14 Jul 2025 16:08:34 -0700 (PDT)
+ bh=jIH1CkCCFSXcgs6SwD/lkBtxMtFMYESPhTMyWu2YSEw=;
+ b=LSWAVKqly2yh3coiumfXVJPhtZxoX8h36GJxGr3++zP7/kAJVP7Ap5dcbqr6T1npP6
+ QcMshRV4Jdc1zKPnobVVIWtYOZnTAQGySLhz4CVb/M4Gd9BUKkxXYx95U1BvbSdeu1wK
+ 9PCmY6sgaNPS2rTqLj4JQ4mdp+XVcJH5Qq2qUzOKK7c/JrTYlMUJlzgFApJ5OwrtG1vW
+ bnE4cLLKDWRreUy+kKF919hjJevS0q7MvNt0ceoEqK6PHbOg1lQQt1jimsA4Asaz3lPV
+ L2SWMBAV5qA6MomB2GZYQ5wBPwfrwGSeknyy3Iizs78E79ZWedPT9etv85Cr6gsjcgsD
+ YISQ==
+X-Gm-Message-State: AOJu0YwtzxPTIe+6eXd8Dt6/ABHflV48OQyEyTf1PZm+cwk9EdysE1kk
+ XULD/t0+5QY4Z6TcrEbDEKOvaOyHsaE1p6Q2qtxWcXnVdvzJI1KpvSafA/zPvRY9ZHdvUzZJnyZ
+ 8OMAHHEYeQ9AKwY/BbAcR9aHEw8kusK3TK7O5bwoJvd+u0+w7Mv76iNtSTGLf5QZZ4ggeLkcOEJ
+ 80AXOinWavURgQe4uXvF3hof2mLJ6vpiuGhg==
+X-Gm-Gg: ASbGncuWbNPe8CozvJwN65G2I2loRTBfdlHnvaTb0HHpHiXlHVpFLtcbK5huldNfT31
+ hQbFZGPR575Ve1A3EtKrbfR6yTrTlkHms+BZgMUd6g1J/6deUXdpUODqzfw9ab1r6G1vht8H3z2
+ 37vFBYkkXeWh4ppdq9Z9kcLjL3sm80NgUXwdDFLFR/363TK3smUJdtmXSj2EuBWm8rafTakLmwi
+ uP/bx4m7Vyaw0Pc6b2eLdyPqfZyumJrR7i/kirnbYt40VRrSkGy5jZd+MinAyJv3yWn9bY/GOQ5
+ 75/jc/5BZoCYB5INBONuH7ChGhSidND8
+X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
+ 5b1f17b1804b1-454f427c7a3mr147535745e9.8.1752534397872; 
+ Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEN8SfCBdNXDgKWYDMwQdzn82ZtYJ6VggooxMWqvitHxa9yFK5df/3iCQaRkYLeVks4Wlxggg==
+X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
+ 5b1f17b1804b1-454f427c7a3mr147535485e9.8.1752534397398; 
+ Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d872sm13731943f8f.60.2025.07.14.16.08.32
+ ffacd0b85a97d-3b5e8e0d785sm13819909f8f.59.2025.07.14.16.06.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:08:34 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:08:32 -0400
+ Mon, 14 Jul 2025 16:06:37 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:06:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 54/97] hw/i386/acpi-build: Turn build_q35_osc_method into a
- generic method
-Message-ID: <2cf1e6ff63b11c1e47c80b893d64db0d52a811d7.1752534227.git.mst@redhat.com>
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 09/97] vhost: add a helper for force stopping a device
+Message-ID: <2f527fff460a2c67fd37298dbd7fe42fffdb738b.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -90,7 +85,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -115,175 +110,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-GPEX acpi_dsdt_add_pci_osc() does basically the same as
-build_q35_osc_method().
+This adds an ability to skip GET_VRING_BASE during device stop entirely,
+and thus the expensive drain operation that this call entails as well,
+which may be useful during a non-graceful shutdown in case the guest
+operating system hangs or refuses to react to a previously requested
+ACPI shutdown for whatever reason.
 
-Rename build_q35_osc_method() into build_pci_host_bridge_osc_method()
-and move it into hw/acpi/pci.c. In a subsequent patch we will
-use this later in place of acpi_dsdt_add_pci_osc().
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-9-eric.auger@redhat.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Message-Id: <20250609212547.2859224-3-d-tatianin@yandex-team.ru>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/pci.h |  2 ++
- hw/acpi/pci.c         | 50 +++++++++++++++++++++++++++++++++++++++
- hw/i386/acpi-build.c  | 54 ++-----------------------------------------
- 3 files changed, 54 insertions(+), 52 deletions(-)
+ include/hw/virtio/vhost.h | 15 +++++++++++
+ hw/virtio/vhost.c         | 52 +++++++++++++++++++++++++++++----------
+ 2 files changed, 54 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-index ab0187a894..8a328b580c 100644
---- a/include/hw/acpi/pci.h
-+++ b/include/hw/acpi/pci.h
-@@ -42,4 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 38800a7156..eb3dd7616b 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -237,6 +237,21 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
+  */
+ int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
  
- void build_srat_generic_affinity_structures(GArray *table_data);
- 
-+Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
++/**
++ * vhost_dev_force_stop() - force stop the vhost device
++ * @hdev: common vhost_dev structure
++ * @vdev: the VirtIODevice structure
++ * @vrings: true to have vrings disabled in this call
++ *
++ * Force stop the vhost device. After the device is stopped the notifiers
++ * can be disabled (@vhost_dev_disable_notifiers) and the device can
++ * be torn down (@vhost_dev_cleanup). Unlike @vhost_dev_stop, this doesn't
++ * attempt to flush in-flight backend requests by skipping GET_VRING_BASE
++ * entirely.
++ */
++int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
++                         bool vrings);
 +
- #endif
-diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-index d511a85029..2228f1245e 100644
---- a/hw/acpi/pci.c
-+++ b/hw/acpi/pci.c
-@@ -301,3 +301,53 @@ void build_srat_generic_affinity_structures(GArray *table_data)
-     object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
-                                    table_data);
- }
-+
-+Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug)
-+{
-+    Aml *if_ctx;
-+    Aml *if_ctx2;
-+    Aml *else_ctx;
-+    Aml *method;
-+    Aml *a_cwd1 = aml_name("CDW1");
-+    Aml *a_ctrl = aml_local(0);
-+
-+    method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
-+    aml_append(method, aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
-+
-+    if_ctx = aml_if(aml_equal(
-+        aml_arg(0), aml_touuid("33DB4D5B-1FF7-401C-9657-7441C03DD766")));
-+    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(4), "CDW2"));
-+    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(8), "CDW3"));
-+
-+    aml_append(if_ctx, aml_store(aml_name("CDW3"), a_ctrl));
-+
-+    /*
-+     * Always allow native PME, AER (no dependencies)
-+     * Allow SHPC (PCI bridges can have SHPC controller)
-+     * Disable PCIe Native Hot-plug if ACPI PCI Hot-plug is enabled.
-+     */
-+    aml_append(if_ctx, aml_and(a_ctrl,
-+        aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)), a_ctrl));
-+
-+    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(1))));
-+    /* Unknown revision */
-+    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x08), a_cwd1));
-+    aml_append(if_ctx, if_ctx2);
-+
-+    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_name("CDW3"), a_ctrl)));
-+    /* Capabilities bits were masked */
-+    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x10), a_cwd1));
-+    aml_append(if_ctx, if_ctx2);
-+
-+    /* Update DWORD3 in the buffer */
-+    aml_append(if_ctx, aml_store(a_ctrl, aml_name("CDW3")));
-+    aml_append(method, if_ctx);
-+
-+    else_ctx = aml_else();
-+    /* Unrecognized UUID */
-+    aml_append(else_ctx, aml_or(a_cwd1, aml_int(4), a_cwd1));
-+    aml_append(method, else_ctx);
-+
-+    aml_append(method, aml_return(aml_arg(3)));
-+    return method;
-+}
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 4f8572eebe..91945f716c 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1111,56 +1111,6 @@ static Aml *build_q35_dram_controller(const AcpiMcfgInfo *mcfg)
-     return dev;
+ /**
+  * DOC: vhost device configuration handling
+  *
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c87861b31f..c30ea1156e 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1354,25 +1354,30 @@ fail_alloc_desc:
+     return r;
  }
  
--static Aml *build_q35_osc_method(bool enable_native_pcie_hotplug)
--{
--    Aml *if_ctx;
--    Aml *if_ctx2;
--    Aml *else_ctx;
--    Aml *method;
--    Aml *a_cwd1 = aml_name("CDW1");
--    Aml *a_ctrl = aml_local(0);
--
--    method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
--    aml_append(method, aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
--
--    if_ctx = aml_if(aml_equal(
--        aml_arg(0), aml_touuid("33DB4D5B-1FF7-401C-9657-7441C03DD766")));
--    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(4), "CDW2"));
--    aml_append(if_ctx, aml_create_dword_field(aml_arg(3), aml_int(8), "CDW3"));
--
--    aml_append(if_ctx, aml_store(aml_name("CDW3"), a_ctrl));
--
--    /*
--     * Always allow native PME, AER (no dependencies)
--     * Allow SHPC (PCI bridges can have SHPC controller)
--     * Disable PCIe Native Hot-plug if ACPI PCI Hot-plug is enabled.
--     */
--    aml_append(if_ctx, aml_and(a_ctrl,
--        aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)), a_ctrl));
--
--    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(1))));
--    /* Unknown revision */
--    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x08), a_cwd1));
--    aml_append(if_ctx, if_ctx2);
--
--    if_ctx2 = aml_if(aml_lnot(aml_equal(aml_name("CDW3"), a_ctrl)));
--    /* Capabilities bits were masked */
--    aml_append(if_ctx2, aml_or(a_cwd1, aml_int(0x10), a_cwd1));
--    aml_append(if_ctx, if_ctx2);
--
--    /* Update DWORD3 in the buffer */
--    aml_append(if_ctx, aml_store(a_ctrl, aml_name("CDW3")));
--    aml_append(method, if_ctx);
--
--    else_ctx = aml_else();
--    /* Unrecognized UUID */
--    aml_append(else_ctx, aml_or(a_cwd1, aml_int(4), a_cwd1));
--    aml_append(method, else_ctx);
--
--    aml_append(method, aml_return(aml_arg(3)));
--    return method;
--}
--
- static void build_acpi0017(Aml *table)
+-int vhost_virtqueue_stop(struct vhost_dev *dev,
+-                         struct VirtIODevice *vdev,
+-                         struct vhost_virtqueue *vq,
+-                         unsigned idx)
++static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
++                                   struct VirtIODevice *vdev,
++                                   struct vhost_virtqueue *vq,
++                                   unsigned idx, bool force)
  {
-     Aml *dev, *scope, *method;
-@@ -1231,7 +1181,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A08")));
-         aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
-         aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
--        aml_append(dev, build_q35_osc_method(!pm->pcihp_bridge_en));
-+        aml_append(dev, build_pci_host_bridge_osc_method(!pm->pcihp_bridge_en));
-         aml_append(dev, aml_pci_edsm());
-         aml_append(sb_scope, dev);
-         if (mcfg_valid) {
-@@ -1353,7 +1303,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-                 aml_append(dev, aml_name_decl("_CID", aml_eisaid("PNP0A03")));
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_state state = {
+         .index = vhost_vq_index,
+     };
+-    int r;
++    int r = 0;
  
-                 /* Expander bridges do not have ACPI PCI Hot-plug enabled */
--                aml_append(dev, build_q35_osc_method(true));
-+                aml_append(dev, build_pci_host_bridge_osc_method(true));
-             } else {
-                 aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
-             }
+     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
+         /* Don't stop the virtqueue which might have not been started */
+         return 0;
+     }
+ 
+-    r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
+-    if (r < 0) {
+-        VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
++    if (!force) {
++        r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "vhost VQ %u ring restore failed: %d", idx, r);
++        }
++    }
++
++    if (r < 0 || force) {
+         /* Connection to the backend is broken, so let's sync internal
+          * last avail idx to the device used idx.
+          */
+@@ -1401,6 +1406,14 @@ int vhost_virtqueue_stop(struct vhost_dev *dev,
+     return r;
+ }
+ 
++int vhost_virtqueue_stop(struct vhost_dev *dev,
++                         struct VirtIODevice *vdev,
++                         struct vhost_virtqueue *vq,
++                         unsigned idx)
++{
++    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false);
++}
++
+ static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
+                                                 int n, uint32_t timeout)
+ {
+@@ -2119,7 +2132,8 @@ fail_features:
+ }
+ 
+ /* Host notifiers must be enabled at this point. */
+-int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
++static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
++                             bool vrings, bool force)
+ {
+     int i;
+     int rc = 0;
+@@ -2141,10 +2155,11 @@ int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+         vhost_dev_set_vring_enable(hdev, false);
+     }
+     for (i = 0; i < hdev->nvqs; ++i) {
+-        rc |= vhost_virtqueue_stop(hdev,
+-                                   vdev,
+-                                   hdev->vqs + i,
+-                                   hdev->vq_index + i);
++        rc |= do_vhost_virtqueue_stop(hdev,
++                                      vdev,
++                                      hdev->vqs + i,
++                                      hdev->vq_index + i,
++                                      force);
+     }
+     if (hdev->vhost_ops->vhost_reset_status) {
+         hdev->vhost_ops->vhost_reset_status(hdev);
+@@ -2164,6 +2179,17 @@ int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+     return rc;
+ }
+ 
++int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
++{
++    return do_vhost_dev_stop(hdev, vdev, vrings, false);
++}
++
++int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
++                         bool vrings)
++{
++    return do_vhost_dev_stop(hdev, vdev, vrings, true);
++}
++
+ int vhost_net_set_backend(struct vhost_dev *hdev,
+                           struct vhost_vring_file *file)
+ {
 -- 
 MST
 
