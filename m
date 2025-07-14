@@ -4,109 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA00C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5EAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 17:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubNJ9-0002ZP-OL; Mon, 14 Jul 2025 13:49:45 -0400
+	id 1ubNM0-0004tN-5J; Mon, 14 Jul 2025 13:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
- id 1ubMHM-00052G-Ja
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:43:48 -0400
-Received: from quyllur.org ([185.247.226.42])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <unisono@quyllur.org>)
- id 1ubMHE-0007GJ-PT
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:43:48 -0400
-Received: from quyllur.org (localhost [127.0.0.1])
- by quyllur.org (OpenSMTPD) with ESMTP id 5d56e144;
- Mon, 14 Jul 2025 19:43:10 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=quyllur.org; h=message-id
- :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; s=dkimselector; bh=MdF3
- wVOdcBXE3vSbImY9UKHk2Ko=; b=qDjs9HEHxNnuT86z7yIvgQ2Vjxd4NrPx/3LI
- sR9PYPYN677Q54MU3S6F6m+QH9wFsBB9L9aL7mOJZOBHXBDxYiks7J9q+Fkklca8
- tF8mVPEnqss3gIJD5vCYU1fSukFp2S7d7P4RsbWzu7cQV1zALREWxbST07uCoQKk
- IlFul1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=quyllur.org; h=message-id
- :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; q=dns; s=dkimselector; b=
- uCd8G+4X7GVs3GMNkbT4MzBQ5cWIUW0dKPjzJCNl1x2UE5Jt4cqVlDUj8RnBBhb3
- r5jEu6C+fiAI+zKQfqehV0DxZ72nPaWRD3XOl0vQ9IRBLCrKBiRBeuFhCIuIYmvd
- JlCqoj7NLPlORNTuElyrHoafk3/OReUVzLV0eoi9xkI=
-Received: from [10.137.0.79] (<unknown> [194.127.199.89])
- by quyllur.org (OpenSMTPD) with ESMTPSA id fa988e73
- (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO); 
- Mon, 14 Jul 2025 19:43:00 +0300 (EEST)
-Message-ID: <4a0810b7-9fa1-48f9-9cae-fc72376e2fe6@quyllur.org>
-Date: Mon, 14 Jul 2025 11:42:53 -0500
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1ubMJB-0006mB-SX
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:45:42 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1ubMJ9-0007oL-Ko
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 12:45:41 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7481600130eso5176314b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 09:45:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752511535; x=1753116335; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ncCyV0aoZ/6qo09uLJz5eMmCg2hr2we7Tu7Iid9x4is=;
+ b=C7+K9B71ZCfi3wzidlz3RvkVUH6G3m+hWbAdHiFLhtkDDyYAKFBdEcywfwr1pNbHBF
+ WJryn+0Z2wBHlYHogBZrjKXH7sdr/H2mgZt1fJRn4p6O6b/reD8XxSxoQQn1JupaJm0Q
+ LFOe6hAz7W4c8ZhdmZSy9XQga4bt9IJ85kSawj1Bh2MbJORb2TBc3zO7lR59d+lCmcIN
+ iirrvqivfJKTdiU93RCVpP7zVzO6tUWSVr+BfOCJXi0E1dVzYqsb1KGO9AOnrytrD4fC
+ 0l6QIs1jaJ/WiXKsAKCQ7fqxkO8P5fKH8FEtFUJV7gy/x71xnB7Yii6fPnKvUg09zSgb
+ gj9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752511535; x=1753116335;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ncCyV0aoZ/6qo09uLJz5eMmCg2hr2we7Tu7Iid9x4is=;
+ b=PAjRzmsS9RGUXolTJfDKp0ZJPyF5Ew4d43qkdCCkKmwywmg540zcFJCKqVfLOIz/xl
+ XAj6NfQuyl3I9sO3nRbuoxhGyLwlc2v05tD+72LlbRAQgjjjwumTFEaJ9o3x8uZwmvaR
+ 7dYhixY+VXF/wq8cgLhX3Zc62GtBu+s654pDQZW3HuVh7Jq/qZiC+/JKyjxTs3ej8ceV
+ 8+Kxky3ciuefkI5Qks9fhjCIY17V9OxP12ScKfQ1CtnXJbh6u8uUAlD//BQg7ZbYsFVh
+ TRVuuQ0ybqo2ZMe1RRCtRi8GC6UT3MCzq4tt1GClfPzWoCj5Kk234Z4YLFfAyOxHu2ew
+ Io1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWD/xQLzHgXPZl82X6/re0PTU2rH8AIoIpep76fnYLDC2Qei4SXMJw+jzw5oJxcVYAxITLNgrhL+bbZ@nongnu.org
+X-Gm-Message-State: AOJu0YyqTHUJ+2anJJhjHsFqMpmBWDoYszRtXXQIw8IXbCSIU2E+0xqI
+ MQUVhmqBcPWCbHHW/XgRVeBHrZNp1UDGGzdMh8YVY+oBM6rP5lh4WQav
+X-Gm-Gg: ASbGnctErrMPHar2/7LWGmJ5WxtH6Rou5ENd++WALNp0I7K/qmcC7PKhqVX3RVKS3I3
+ 4TRkeeYbqlq48fDvgqeTSdioPIf+LSQmQtv8LDJ2OsVHLJ5tF2gYQ+zfiV0DsXVt8GUd3An6ioL
+ GKKIeEdZW4u8xuoX2Jg/FoV+gReUvDrQKj8U3OkMOzt64Lq4PLe41tVS8hJfS5jDTXJEaj7vm4v
+ VBhDmE+LYc1CrPOajXsoSJMNGHUgfE4f+BvJS7UUZl8c5gK8mKWEteAuQkNJkgNUo0v+HOJwXUk
+ owPuSUQLNT8WSk73nIOS7P8qqc64Wjd3/TzBH5ENk7GUDzxvqeoM1YWcC1Un3+5PmSl4PF6lW9+
+ FqP9duQDsMok3KPUx3//uMjQ=
+X-Google-Smtp-Source: AGHT+IFJVe7YMzCa6bbCexww2jlzcc1c8cj0MKXOGeuxUdKTtEKzyTlxvUPzIaawdf+MnCiLeW3RYA==
+X-Received: by 2002:a05:6a00:3d47:b0:746:24c9:c92e with SMTP id
+ d2e1a72fcca58-74ee09ae484mr22673386b3a.8.1752511535251; 
+ Mon, 14 Jul 2025 09:45:35 -0700 (PDT)
+Received: from lg ([2600:1010:b0b9:68c0:c4fb:1c2c:4273:7950])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74eb9dd5ccesm10752144b3a.27.2025.07.14.09.45.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 09:45:34 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Mon, 14 Jul 2025 09:45:31 -0700
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH qemu 07/11] hw/cxl: mailbox-utils: 0x5602 - FMAPI Set DC
+ Region Config
+Message-ID: <aHU0K4bXbPLsed5t@lg>
+References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
+ <20250702160219.989731-8-Jonathan.Cameron@huawei.com>
+ <20250714052757-mutt-send-email-mst@kernel.org>
+ <20250714150218.00006c95@huawei.com>
+ <20250714151512.00000a2a@huawei.com>
+ <20250714151638.000038ac@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Reformatted Sparc GDB XML patches.
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, atar4qemu@gmail.com, laurent@vivier.eu,
- mark.cave-ayland@ilande.co.uk, philmd@linaro.org
-References: <20250711155141.62916-1-unisono@quyllur.org>
- <87h5zf11jf.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Rot127 <unisono@quyllur.org>
-Autocrypt: addr=unisono@quyllur.org; keydata=
- xsFNBGeCh0MBEADGyk5aZAtJIltY9y/JeTBmM7l1ImcTt0e8u+s2v3SzZLtOJGPz9GPZixYh
- 83jMIr2lK6mD3r37X7O3sjohBDuxJOUwHLH4mw4wTI6uGBkn8q18uyNx/uZtj28LXMTDJ875
- HpWPaGZhsf4at+F9ai4jgxHq16BPWZcQhQFHQz6TSW1jcdn4/rtmC4aJ1TEbApScvri3eStu
- w/E6o5GcCInsq4UzQm8ToEg4Y/DhQgrZLzw5OYx9NOmRqvVDkiTbdpaNW2KFunSPcBjRx2in
- SBYKo3wgzcYjd1Lrs2roQdFo/5AcOpuXx6w+fnoJekv3BRk1GVCNkZIhyBheF15bv4WqXE+o
- JpQs42xpiiy979XXR0XENR8JfjAXuOmp8u/M6d/bp2btVijiysDNLjblsQYd/Y7AilzDnyDp
- HYx2lFOVsGMUZTF+U+WXdIyJ3OXwrJXI/lS239Ajznqa3MdTSJ20siBF/Y4nQCznMkYOKsBQ
- cKYU0huTq+/wW4iavamXZ5BasXmJzHUFEg4+LGF4X0ucpjEWERrF4QXrOHFX7WRi1PS54q37
- eyG9uTvi26bNVUPKqxhkkpc6rFSyAsCbkZDLpkkO4WgPokEfpwd1BKCpcbi9X/QRelcIej9U
- T+0ReXPl8UEs21opktdOcn35uGP3RfRjx7rmm24V6lVSuAinrwARAQABzRxSb3QxMjcgPHVu
- aXNvbm9AcXV5bGx1ci5vcmc+wsGXBBMBCABBFiEE4ZygqHNkaoeIzUr38t+vk4gFnHgFAmeC
- h0MCGwMFCQWjmoAFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQ8t+vk4gFnHgu/g/9
- HWP2R2wC8Mn3F3qLxNL9zvCRQycQtZF+s+fSSRIgQ8kOYIz2iFfHUJG/rFJsLDorWDETBZcn
- r0MEsLtLmE3eA7t5sqCfAWzDeSdTvPyXT/dfkGhz37y2FlZnt7DG/60vY12tYbU7vEzs0J3A
- 5f5u3j4HstnkMDRW4sXMiERLhpzN1MKOLx2x6aZJLZ5mK7T2zyeNliywz+dKdL3hsRt97rHv
- CJkJNwbWVjey/8lEgChuLk8MrJG6JiE85RSxD9aDhnIxlBnKNhlfV7xZyNTG9Nprzqt+scj+
- JhvvpeS3sLzY2FNENmZ2bJLA1zBcLFN7xWG4vYxBj9r0HXn6IWyjV+gVV5dgd0t7TkoKC0aK
- vd1PjE20SmccAjh/octpGIRpyjuMhT8QvMDDbCDeTCX0xnFOXUk3wdtn5qrQX4oxZpA10MDK
- Hk3RWCcF4l6CYRprhCptjmP26Sd3kjXZAoKDN78jd5dHGDS/c5EyKQyCpCZJDCzL1kzN3qPy
- GExGfv7/CI6SBdufaXamfUxc2OUHyJYAB4o8rm8tiQnSorYiwJm+YgOdfYzJMp8A2qxBOCjP
- U/IIt0x8hsTIRFQT+BXNImJIc+qwOUJcLyVmpRPTBh+XMexP64Cs+Z0ZsuXcFVPlhwzCZ/ZK
- LDuNWZ1KEqitKYlj63hhMsXesBC7pam/xBLOwU0EZ4KHQwEQAKtqfCKBMqUuzFsJfTLdX+HP
- XhunY62H4qYgZnoizqp9+lMtoriJ3jgyCg3tQ/wYJ7dXxXKSIOmwNj95gTDvyJRPGcLTBUNv
- E4/H0VMVkpqmv00W7QoqXQAaKwlO0NDmNWzfyzihUR+9Ue7ICekxX7ACrNjnJyDDTCeISSrf
- Xyw8pnQhbg6DUepXLng2O6LxTjKgpI12bMS79OYvvpvLJmkCxvgkSXyTQvpxPh91Zm5UmU/u
- eM1QFWTEUMtrMSlDPqRCbN6Y5BPc8B7wYOadCO9R5h806A7/3+VixTw4mczOy8QvJtH1QKvR
- wXFSXwdGF+K9pv1bmoG31yMs1nXEgNQ/NIEJuxCmD31wHjv3nzAm8G73UbWpoDmlI78OgzT1
- evxHbrBtXKHm89t4QQLNiSVX89mMjxhKM6GTseerzdqu54j6edabIr87UKSCFyY0ktmDq4+Q
- 3nyBJJvmyYF1dO8vdD3Ba68sx15UvZcLyA4P1vo3p2S+ol+vqPm85+od+G0US4ePbMqFqF/z
- /k2c9r3tnw1W2t3C+a/aGA60iv27VadK8e5wYwBDWiL23PIdDp9VNBPjKs4kKVAVN64WRe0e
- dNZRGOtZq0MgZ7+7EXJSU6QZpWiS05dhohLUjZhMqrQwfJpF0TAWVCJmCVjJPWH29tDtrDpQ
- OgnA6opRJWhLABEBAAHCwXwEGAEIACYWIQThnKCoc2Rqh4jNSvfy36+TiAWceAUCZ4KHQwIb
- DAUJBaOagAAKCRDy36+TiAWceGC+EACZMwCT8BnmmFwuFokr+x/YBwRt8pHPEkC7OgBoPFrL
- yXBz0/6fmCyEjD3sUyQpa3AVq+yxFxxsWT6Jo6sgowGR/KtXNCj/kFJm9SPhglr+aWBW5L/0
- SSH7KTlPDQL6DTVa6gaQ7JeAgC5k1QV+8GDFs1I85sOEkQlH+WnevuRFzokLqgaL7eOZ6Z0o
- 6pooY7WUo0tQWo6IMyavi1WSe4ZGvvGoMDZXE6+1yKDXu1KVIhmtdklHUGd1ORDGOLlyWGWX
- ns2y0ezQOJlbPN+R+NpkPTRKLbjA+XOkLL4YRFadDn8FDLZMTkMEynkoXv0H7lTETEmK6VNX
- 56+Z/cVQLMHo7reml9bbf3vaiT8zpb5c9tcOa23yleIG4CdMaGr9A9b1I3/NvC/QxO+mZ26h
- dRvuoP+bPiqH/QI83HGGFjjUsQ2CGdzm3k5P/6a3eJIxk7ThhTscpemp23FLkOe9WYt1GbUo
- 9U28wMzUiAk3V/JEnDPemEpJETsiHk4a4a0xQ3DgLTzf5ys5UxbyuRjgdNAAY+mJKA3OHnWR
- 1Z4uav2jqMUzMI0OicGOEYCy2/hOrHnM96jWUfxhh09WusC2vFoX/6zC1eP2oIIQ4a9+QPKw
- Lhwaz13ZKb2tvHxX0F8gnI3aVLDz0HKTxbDjf5/7da3zAyOVqvkTCIdnY2j9muECTA==
-In-Reply-To: <87h5zf11jf.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.247.226.42; envelope-from=unisono@quyllur.org;
- helo=quyllur.org
+In-Reply-To: <20250714151638.000038ac@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,48 +111,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- > What testing have you done with these two?
-
-None with Sparc32 and Sparc32plus. Also because I don't have immediate 
-access to a toolchain. But I have to do Sparc32 eventually as well and 
-can report back then.
-
-For Sparc64 I use it in a the TCG plugin as described.
-And it works as expected.
-
-But haven't tested more unfortunately.
-I wanted to get the patches out early, so you can consider adding it 
-into v10.1.
-
-On 7/14/25 05:59, Alex Bennée wrote:
-> unisono@quyllur.org writes:
+On Mon, Jul 14, 2025 at 03:16:38PM +0100, Jonathan Cameron wrote:
+> On Mon, 14 Jul 2025 15:15:12 +0100
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 > 
->> From: Rot127 <unisono@quyllur.org>
->>
->> Adds Sparc XML register files from GDB.
-> <snip>
->>    Adds the GDB register XML files for Sparc32.
->>    Assign the GDB register XML files of Sparc64 to Sparc32plus.
+> > On Mon, 14 Jul 2025 15:02:18 +0100
+> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> > 
+> > > On Mon, 14 Jul 2025 05:32:19 -0400
+> > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> > >   
+> > > > On Wed, Jul 02, 2025 at 05:02:13PM +0100, Jonathan Cameron wrote:    
+> > > > > From: Anisa Su <anisa.su@samsung.com>
+> > > > > 
+> > > > > FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Section 7.6.7.6.3
+> > > > > 
+> > > > > Reviewed-by: Fan Ni <fan.ni@samsung.com>
+> > > > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> > > > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>    
+> > > 
+> > >   
+> > > > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > > > > index bf1710b251..1fc453f70d 100644
+> > > > > --- a/hw/cxl/cxl-mailbox-utils.c
+> > > > > +++ b/hw/cxl/cxl-mailbox-utils.c    
+> > >   
+> > > > > +/* CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opcode 5602) */
+> > > > > +static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
+> > > > > +                                              uint8_t *payload_in,
+> > > > > +                                              size_t len_in,
+> > > > > +                                              uint8_t *payload_out,
+> > > > > +                                              size_t *len_out,
+> > > > > +                                              CXLCCI *cci)
+> > > > > +{
+> > > > > +    struct {
+> > > > > +        uint8_t reg_id;
+> > > > > +        uint8_t rsvd[3];
+> > > > > +        uint64_t block_sz;
+> > > > > +        uint8_t flags;
+> > > > > +        uint8_t rsvd2[3];
+> > > > > +    } QEMU_PACKED *in = (void *)payload_in;
+> > > > > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > > > > +    CXLEventDynamicCapacity dcEvent = {};
+> > > > > +    CXLDCRegion *region = &ct3d->dc.regions[in->reg_id];
+> > > > > +
+> > > > > +    /*
+> > > > > +     * CXL r3.2 7.6.7.6.3: Set DC Region Configuration
+> > > > > +     * This command shall fail with Unsupported when the Sanitize on Release
+> > > > > +     * field does not match the region’s configuration... and the device
+> > > > > +     * does not support reconfiguration of the Sanitize on Release setting.
+> > > > > +     *
+> > > > > +     * Currently not reconfigurable, so always fail if sanitize bit (bit 0)
+> > > > > +     * doesn't match.
+> > > > > +     */
+> > > > > +    if ((in->flags & 0x1) != (region->flags & 0x1)) {
+> > > > > +        return CXL_MBOX_UNSUPPORTED;
+> > > > > +    }
+> > > > > +
+> > > > > +    if (in->reg_id >= DCD_MAX_NUM_REGION) {
+> > > > > +        return CXL_MBOX_UNSUPPORTED;
+> > > > > +    }
+> > > > > +
+> > > > > +    /* Check that no extents are in the region being reconfigured */
+> > > > > +    if (!bitmap_empty(region->blk_bitmap, region->len / region->block_size)) {
+> > > > > +        return CXL_MBOX_UNSUPPORTED;
+> > > > > +    }
+> > > > > +
+> > > > > +    /* Check that new block size is supported */
+> > > > > +    if (!test_bit(BIT((int) log2(in->block_sz)),
+> > > > > +                  &region->supported_blk_size_bitmask)) {
+> > > > > +        return CXL_MBOX_INVALID_INPUT;
+> > > > > +    }      
+> > > > 
+> > > > This does not work: test_bit works on unsigned long, while
+> > > > supported_blk_size_bitmask is uint64_t.
+> > > > 
+> > > > Why so funky? what is wrong with:
+> > > > 
+> > > > if (!(BIT_ULL(log2(in->block_sz)) & region->supported_blk_size_bitmask))
+> > > > 
+> > > > And BTW why cast to int here?    
+> > This became obvious when your suggestion didn't build :(
+> > 
+> > ./../hw/cxl/cxl-mailbox-utils.c: In function ‘cmd_fm_set_dc_region_config’:
+> > /home/jic23/src/qemu/include/qemu/bitops.h:25:39: error: invalid operands to binary << (have ‘long long unsigned int’ and ‘double’)
+> >    25 | #define BIT_ULL(nr)             (1ULL << (nr))
+> >       |                                       ^~ ~~~~
+> > ../../hw/cxl/cxl-mailbox-utils.c:3436:11: note: in expansion of macro ‘BIT_ULL’
+> >  3436 |     if (!(BIT_ULL(log2(in->block_sz)) & region->supported_blk_size_bitmask)) {
+> >       |           ^~~~~~~
+> > 
+> > Now I look again, this is effectively 2**(log_2(x)) or x. So
+> > if (in->block_sz & region->supporte_blk_size_bitmask)
 > 
-> I'm holding of these two until I can get sparc32-linux-user tested. Our
-> coverage isn't currently great due to not having cross compilers. For
-> sparc32plus specifically is the sparc64 xml going to work given it is
-> using a 32 bit ABI.
+> it (!(in->block_sz & region->supports_blk_size_bitmask))
 > 
-> What testing have you done with these two?
+> I mean.
+
+Make sense to me. 
+
+The only thing is how to detect the violation if the passed in block_sz
+is not power of 2.
+Or who will do the check if not in qemu?
+
+Fan
+
 > 
->>
->>   configs/targets/sparc-linux-user.mak       |  1 +
->>   configs/targets/sparc-softmmu.mak          |  1 +
->>   configs/targets/sparc32plus-linux-user.mak |  1 +
->>   configs/targets/sparc64-linux-user.mak     |  1 +
->>   configs/targets/sparc64-softmmu.mak        |  1 +
->>   gdb-xml/sparc32-core.xml                   | 84 ++++++++++++++++++
->>   gdb-xml/sparc64-core.xml                   | 99 ++++++++++++++++++++++
->>   target/sparc/cpu.c                         |  2 +
->>   8 files changed, 190 insertions(+)
->>   create mode 100644 gdb-xml/sparc32-core.xml
->>   create mode 100644 gdb-xml/sparc64-core.xml
+> 
+> > Should work as long as we know block_size is a power of 2 (which the specification
+> > says it must be).
+> > 
+> > Anisa?
+> > 
+> > > 
+> > > Change looks fine to me, so I'll prepare an updated set with this
+> > > and the missing semi colon.  Anisa if you can have a look at this
+> > > that would be great. 
+> > > 
+> > > Sorry I seem to have missed Anisa off the cc for this!
+> > > 
+> > > Jonathan
+> > >   
+> > 
 > 
 
+-- 
+Fan Ni
 
