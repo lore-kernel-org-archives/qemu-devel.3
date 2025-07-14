@@ -4,47 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C1B5C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 01:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81EB1C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 02:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ub8PS-0001GN-58; Sun, 13 Jul 2025 21:55:16 -0400
+	id 1ub8gU-0004uh-8N; Sun, 13 Jul 2025 22:12:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ub8PH-0001C1-Gv; Sun, 13 Jul 2025 21:55:05 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1ub8PE-0004rl-D1; Sun, 13 Jul 2025 21:55:02 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxaWpqY3RoR+YoAQ--.23660S3;
- Mon, 14 Jul 2025 09:54:50 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAxvsFpY3Ro8zIWAA--.15935S2;
- Mon, 14 Jul 2025 09:54:49 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org,
-	qemu-stable@nongnu.org
-Subject: [PATCH] target/loongarch: Fix valid virtual address checking
-Date: Mon, 14 Jul 2025 09:54:46 +0800
-Message-Id: <20250714015446.746163-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ub8gJ-0004pR-2B
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:12:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ub8gG-00079o-VS
+ for qemu-devel@nongnu.org; Sun, 13 Jul 2025 22:12:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752459155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=c1jYc9smeyo7EeooRqNPFsCI0KnfvamMk31E3P62jrg=;
+ b=Rw9ZM9DutWLVBtSvgi3DmOavYFHe+ZnvBHrbzLbjtHwxLEWnlaZmHH2Bh7YcZVyj2sDLTP
+ kB+1q7+ZI6kt98k6HyApvOODnMOqin5CxW2DTSRSrnSxogonqKnOXiMg99o6Fhg9DKg0nH
+ iwhTwEVrfVhIVzQOGBMROmDmELGwa5E=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-121-k2JNKAaRM8OPhxyuiegQBg-1; Sun, 13 Jul 2025 22:12:33 -0400
+X-MC-Unique: k2JNKAaRM8OPhxyuiegQBg-1
+X-Mimecast-MFC-AGG-ID: k2JNKAaRM8OPhxyuiegQBg_1752459153
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-31215090074so7274753a91.0
+ for <qemu-devel@nongnu.org>; Sun, 13 Jul 2025 19:12:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752459152; x=1753063952;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=c1jYc9smeyo7EeooRqNPFsCI0KnfvamMk31E3P62jrg=;
+ b=u3whZd5r0icd6H+85eHMflxpel2bNZA+p4X5L7+iAen0iKiZUZqJNatSY88DQoe6Mk
+ 7t8YGV0Yh/mcwQNril+RWCsHqZRk8OmWHxPdDzsTTWv/D0ERX+j8l7T1sRy/7iMllPSz
+ 2Wie5QlC8mxwweLFoUMwnZq4WmF3CL8zoTNYx3EaD5LQo7LqE6fn/y8C+q8HtiqmQtOD
+ mHSxbZlxQYrH7mC+tLlGBWPFyE0ouk4QkogPxq5fbkPflHizbUS973isCM/lejJIFljo
+ hRzJdKzzTuZT/H6EuKyedf/b3UwCX3IVXS7aAD4MxblYl8r/h8+Gau18h0nGylf40SG1
+ n8/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8lu2j8Hh4NlPnATO4eeedQz8vIBZsq3re80UQHFovauk34GCmWLrUoNjFDlNaO5YguJu656Q+1dEb@nongnu.org
+X-Gm-Message-State: AOJu0YzxpuUlsxorS14ZFQAe3WcMm7qtat4z9LWGrigvFIrN327XbOJ7
+ c3YQtb2o+Yj4KI4H0XOFLjc25YuX368u2pDPPZZqGDJELJ0iRpjsylUsd8+6mgWbLTJEw3n6FTV
+ YzR3VdfTs+v6/MSOWsy6zW6DfPAyLb10l1QTuGeM6M55evFtmx0jh6g7UJ6b1JgMjeWRnzvympo
+ RMobMx+qyHE1DfRhMQ4+4HXxO+JCfOQXCbU1+3nH50WQ==
+X-Gm-Gg: ASbGncv2Ae1kUl40iEibyiziupUKSlXvPoOyLJbojMifXzfMCf4eRAfK8JAFx8pPHTH
+ VOtdamLd+kJOdGZ/owWSW184B5vEVYo6tBRNtEPY+aZ+k/gGatJZ4lQPIt1AI/0nTCgVryHhg8d
+ aNiP+A2VgYx4fUmKSOni9E
+X-Received: by 2002:a17:90b:5710:b0:312:e731:5a66 with SMTP id
+ 98e67ed59e1d1-31c4f4b56b7mr16247756a91.3.1752459152359; 
+ Sun, 13 Jul 2025 19:12:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUd9L24/naFtX3s4qi7gU/2Vu95uSTWo6po91q1JtdHAbg/7nT3+a6at2WXiDVZDZw3e2BpURfbAS0+co7Pa4=
+X-Received: by 2002:a17:90b:5710:b0:312:e731:5a66 with SMTP id
+ 98e67ed59e1d1-31c4f4b56b7mr16247721a91.3.1752459151885; Sun, 13 Jul 2025
+ 19:12:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxvsFpY3Ro8zIWAA--.15935S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+References: <20250703105508.2380494-1-vsementsov@yandex-team.ru>
+ <d7a66374-12d3-4b4b-975f-90202d83cbdf@yandex-team.ru>
+ <CACGkMEv8rvoDS3PHKjBQeA4qi35BVZF0__FP04EwEeM3frPUnw@mail.gmail.com>
+ <40114688-ffc6-4f33-9928-a383d69c9320@yandex-team.ru>
+In-Reply-To: <40114688-ffc6-4f33-9928-a383d69c9320@yandex-team.ru>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 14 Jul 2025 10:12:19 +0800
+X-Gm-Features: Ac12FXz5F0-zeDJR7KYuvQszrKBlI6Jmw38OsLUo-CuqqvREnMa8KXV5ZnaNFg4
+Message-ID: <CACGkMEt8cFEc_sv=TLcCARNjAUsQm6p=Hz_ihBy19yKk9DoZjA@mail.gmail.com>
+Subject: Re: [PATCH] net/tap: drop too small packets
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -62,53 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch64 system, the high 32 bit of 64 bit virtual address should be
-0x00000[0-7]yyy or 0xffff8yyy. The bit from 47 to 63 should be all 0 or
-all 1.
+On Wed, Jul 9, 2025 at 10:43=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 07.07.25 06:49, Jason Wang wrote:
+> > On Thu, Jul 3, 2025 at 10:59=E2=80=AFPM Daniil Tatianin
+> > <d-tatianin@yandex-team.ru> wrote:
+> >>
+> >> On 7/3/25 1:55 PM, Vladimir Sementsov-Ogievskiy wrote:
+> >>
+> >>> Theoretically tap_read_packet() may return size less than
+> >>> s->host_vnet_hdr_len, and next, we'll work with negative size
+> >>> (in case of !s->using_vnet_hdr). Let's avoid it.
+> >>>
+> >>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.r=
+u>
+> >>> ---
+> >>>    net/tap.c | 5 +++++
+> >>>    1 file changed, 5 insertions(+)
+> >>>
+> >>> diff --git a/net/tap.c b/net/tap.c
+> >>> index ae1c7e39832..20d0dc2eb35 100644
+> >>> --- a/net/tap.c
+> >>> +++ b/net/tap.c
+> >>> @@ -172,6 +172,11 @@ static void tap_send(void *opaque)
+> >>>                break;
+> >>>            }
+> >>>
+> >>> +        if (s->host_vnet_hdr_len && size < s->host_vnet_hdr_len) {
+>
+> Should it be better to s/</<=3D/ here? To skip size =3D=3D s->host_vnet_h=
+dr_len as well?
 
-Function get_physical_address() only checks bit 48 to 63, there will be
-problem with the following test case. On physical machine, there is bus
-error report and program exits abnormally. However on qemu TCG system
-emulation mode, the program runs normally. The virtual address
-0xffff000000000000ULL + addr and addr are treated the same on TLB entry
-checking. This patch fixes this issue.
+It would be better.
 
-void main()
-{
-        void *addr, *addr1;
-        int val;
+Thanks
 
-        addr = malloc(100);
-        *(int *)addr = 1;
-        addr1 = 0xffff000000000000ULL + addr;
-        val = *(int *)addr1;
-        printf("val %d \n", val);
-}
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index e172b11ce1..b5f732f15b 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -196,8 +196,8 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
-     }
- 
-     /* Check valid extension */
--    addr_high = sextract64(address, TARGET_VIRT_ADDR_SPACE_BITS, 16);
--    if (!(addr_high == 0 || addr_high == -1)) {
-+    addr_high = (int64_t)address >> (TARGET_VIRT_ADDR_SPACE_BITS - 1);
-+    if (!(addr_high == 0 || addr_high == -1ULL)) {
-         return TLBRET_BADADDR;
-     }
- 
-
-base-commit: 9a4e273ddec3927920c5958d2226c6b38b543336
--- 
-2.39.3
+>
+> >>> +            /* Invalid packet */
+> >>> +            break;
+> >>> +        }
+> >>> +
+> >>>            if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
+> >>>                buf  +=3D s->host_vnet_hdr_len;
+> >>>                size -=3D s->host_vnet_hdr_len;
+> >>
+> >> Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> >
+> > Queued.
+> >
+> > Thanks
+> >
+> >>
+> >>
+> >
+>
+> --
+> Best regards,
+> Vladimir
+>
 
 
