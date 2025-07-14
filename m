@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F4FC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31747C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKqq-0007W6-2b; Mon, 14 Jul 2025 11:12:20 -0400
+	id 1ubKz2-0004ku-PY; Mon, 14 Jul 2025 11:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUY-0000HR-Cq
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUQ-0003aw-BK
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500704;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=juzUW62R8TpRjR/jEGfYP/h1Mwy1vXGFAXuuafm8cMc=;
- b=PEVnLoRopslVIu1v34emDl/nLnrXoPMlwShC73wjz9jYXQsdR5zcNWSt9r4UxFif3B3rQl
- wN39DJNs+HG8ua67FY/t66fcacBdJHXSkv/xRxOVTcXI5XJ03vPV1XGUXBU9O/mLQLP/TT
- HmpXkKF6zuyuDamsFEL6mgJUBqOg1/o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-nEgFxJ08NIm6dJrDR8qf4g-1; Mon,
- 14 Jul 2025 09:45:03 -0400
-X-MC-Unique: nEgFxJ08NIm6dJrDR8qf4g-1
-X-Mimecast-MFC-AGG-ID: nEgFxJ08NIm6dJrDR8qf4g_1752500702
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CEFA19560B4
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9623A19560B0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:01 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C737321E6768; Mon, 14 Jul 2025 15:44:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 04/32] docs/sphinx: remove special parsing for freeform sections
-Date: Mon, 14 Jul 2025 15:44:30 +0200
-Message-ID: <20250714134458.2991097-5-armbru@redhat.com>
-In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
-References: <20250714134458.2991097-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ubJbC-0003LD-3x
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:52:06 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ubJb4-0004dS-V0
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:52:05 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-455e6fb8057so30281615e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:51:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752501114; x=1753105914; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=b65ck84coYQ3QVG+RekMC+HihY4/9ws56nByYyrZvco=;
+ b=a6PxOUe4MBsAojRB4NzDWOysBc7zPi9KrVvsD84Qr+AbvF3SjgmuVxDOZIiKJ+qvnm
+ 36HmoDwnOCWFEs6vZCF479873ZadAFv9N8MO3h74evFdjQQsnellYapyKnPKoKEpYhoO
+ +DGK95UHrRmI3nPnF3UBzxHCjFOcE/+66kBdXxobgAeyqaiO7UxL/wSaDPPR5yqJDPCM
+ Aa52OFiJQ2MZLS9s5WkxCDyH71ulj+KuMfqwipNyBUMmMwhwL+5s62kuzfCkd067Mxa4
+ UkTjjK1UhyG0QethXqIlgW8Eo5ti3wFNxmnwCsYXEcs8AbGUkSCBGfqpwhkAebADEdR0
+ Ol4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752501114; x=1753105914;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b65ck84coYQ3QVG+RekMC+HihY4/9ws56nByYyrZvco=;
+ b=fOTECSHr7qNXf9bLFQnMmjVe08OQmKQ08CK++CchLELkNjL8WJ8Qgr0DGkKihgYtlG
+ 0LGXJNhHL8I5SwjhGpdOW+DejagaqWMBdjdfAQtha4pw3+elq2CkZtjKhaG3AV6xKIxM
+ t7Cph/fkmKtRc6BCam5yEQ/DUwTArpdEdYXzRsUctwCLOGuSYwps5cbN4z+FqMvrb3+O
+ DymCOAvCODPODqB54oeCKRhR3Uwr5KA3WPJf6QYxvAwPcbvg5w1Vvl46NiPcwoLIO8yG
+ j+YyDH8LbR01O483ac60I9QzLjQcJGfLw3zqaQ3/K8tdFmB0XRR6dCMa0kDPB/sVo0mR
+ swbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhPBREaCn2QJc5MfR/+QqLRmmxt4jg/CU1lQmouJY7CNGoI76H1Zjl8bGd2LkzjjAb94SNuR4avGZF@nongnu.org
+X-Gm-Message-State: AOJu0YziR97/rQm70E3P/7PqzXK5KWjLBN1TZWviS9NQJnVUt975qEaK
+ 0htllh32pqsYJqYtXYpEQQGWrTxcL19U9SqzNSGaDnStX03KMItxo6kH0TkOXHNHidk=
+X-Gm-Gg: ASbGncu3zpUNq/40afr8WXc9L3CxzIvFlVImKQaz+d+OhUGN7kanT7DMINGVpXZknGd
+ pTEJQdgu56GcQX3kWSH+Bjyj/I/Sxqh8rW3pnE9KKm1LnQ6znXlG14FL8MtFOe41j+tzb6vl/+f
+ zsYNVp4aLYsZx2DiOmIRRE0I20buSQhYoUXMFbR3PnONkeeSDMkYZO1e2lZe46WwUoqoKQcY+jX
+ gOtjIG+dsPVge03cv54lRuzQzwe0mCZKKnExqY+CrvRuuToErJHjihPFMdIo4Kz/+8Klq7CgPab
+ kLmbwy6Woub/tzvlbThQwvUAI4geSzy4Wz2XYLFKfso/ouOIZJR/6hNPK+brp1n8jQT63kQiT6x
+ kZyIl88Gkh5l9ZAF/DrDOIbGqfubR
+X-Google-Smtp-Source: AGHT+IG7iG1QXdEZwJdk/HjuWlgUWeDp+HeaB1P3r29bzysD4RutNf6hE2ET8sMqk42vCQi1oMdhhg==
+X-Received: by 2002:a05:600c:8209:b0:456:1dd2:4e3a with SMTP id
+ 5b1f17b1804b1-4561dd252femr24989915e9.3.1752501114276; 
+ Mon, 14 Jul 2025 06:51:54 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e1e1d5sm12547760f8f.78.2025.07.14.06.51.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 06:51:53 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] target/arm: Provide always-false kvm_arm_*_supported() stubs
+ for usermode
+Date: Mon, 14 Jul 2025 14:51:52 +0100
+Message-ID: <20250714135152.1896214-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,961 +101,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+If you try to build aarch64-linux-user with clang and --enable-debug then it
+fails to compile:
 
-Remove the QAPI doc section heading syntax, use plain rST section
-headings instead.
+ ld: libqemu-aarch64-linux-user.a.p/target_arm_cpu64.c.o: in function `cpu_arm_set_sve':
+ ../../target/arm/cpu64.c:321:(.text+0x1254): undefined reference to `kvm_arm_sve_supported'
 
-Tests and documentation are updated to match.
+This is a regression introduced in commit f86d4220, which switched
+the kvm-stub.c file away from being built for all arm targets to only
+being built for system emulation binaries.  It doesn't affect gcc,
+presumably because even at -O0 gcc folds away the always-false
+kvm_enabled() condition but clang does not.
 
-Interestingly, Plain rST headings work fine before this patch, except
-for over- and underlining with '=', which the doc parser rejected as
-invalid QAPI doc section heading in free-form comments.
+We would prefer not to build kvm-stub.c once for usermode and once
+for system-emulation binaries, and we can't build it just once for
+both because it includes cpu.h.  So instead provide always-false
+versions of the five functions that are valid to call without KVM
+support in kvm_arm.h.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250618165353.1980365-5-jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Add more detail to commit message]
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Fixes: f86d42205c2eba ("target/arm/meson: accelerator files are not needed in user mode")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3033
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/devel/qapi-code-gen.rst         | 28 ++++++++++++++-------
- docs/interop/firmware.json           |  4 ++-
- docs/interop/vhost-user.json         |  4 ++-
- docs/sphinx/qapidoc.py               | 37 +---------------------------
- qapi/acpi.json                       |  4 ++-
- qapi/audio.json                      |  4 ++-
- qapi/authz.json                      |  4 ++-
- qapi/block-core.json                 |  3 ++-
- qapi/block-export.json               |  3 ++-
- qapi/block.json                      |  7 ++++--
- qapi/char.json                       |  4 ++-
- qapi/common.json                     |  4 ++-
- qapi/compat.json                     |  4 ++-
- qapi/control.json                    |  4 ++-
- qapi/crypto.json                     |  4 ++-
- qapi/cryptodev.json                  |  4 ++-
- qapi/cxl.json                        |  4 ++-
- qapi/dump.json                       |  4 ++-
- qapi/ebpf.json                       |  4 ++-
- qapi/error.json                      |  4 ++-
- qapi/introspect.json                 |  4 ++-
- qapi/job.json                        |  4 ++-
- qapi/machine-common.json             |  4 ++-
- qapi/machine.json                    |  4 ++-
- qapi/migration.json                  |  4 ++-
- qapi/misc.json                       |  4 ++-
- qapi/net.json                        |  4 ++-
- qapi/pci.json                        |  4 ++-
- qapi/qapi-schema.json                |  4 ++-
- qapi/qdev.json                       |  4 ++-
- qapi/qom.json                        |  4 ++-
- qapi/replay.json                     |  4 ++-
- qapi/rocker.json                     |  4 ++-
- qapi/run-state.json                  |  4 ++-
- qapi/sockets.json                    |  4 ++-
- qapi/stats.json                      |  4 ++-
- qapi/tpm.json                        |  4 ++-
- qapi/trace.json                      |  4 ++-
- qapi/transaction.json                |  4 ++-
- qapi/uefi.json                       |  4 ++-
- qapi/ui.json                         | 14 ++++++++---
- qapi/vfio.json                       |  4 ++-
- qapi/virtio.json                     |  4 ++-
- qapi/yank.json                       |  4 ++-
- scripts/qapi/parser.py               |  7 ------
- storage-daemon/qapi/qapi-schema.json |  8 ++++--
- tests/qapi-schema/doc-good.json      | 10 +++++---
- tests/qapi-schema/doc-good.out       | 10 +++++---
- 48 files changed, 173 insertions(+), 106 deletions(-)
+I'm never sure when we prefer to use stub-functions in separate C files
+vs when we prefer to have ifdeffed stubs in headers. There are several
+ways we could fix this compile error, so I just picked one...
+---
+ target/arm/kvm_arm.h | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index 231cc0fecf..dfdbeac5a5 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -876,25 +876,35 @@ structuring content.
- Headings and subheadings
- ~~~~~~~~~~~~~~~~~~~~~~~~
- 
--A free-form documentation comment containing a line which starts with
--some ``=`` symbols and then a space defines a section heading::
-+Free-form documentation does not start with ``@SYMBOL`` and can contain
-+arbitrary rST markup. Headings can be marked up using the standard rST
-+syntax::
- 
-     ##
--    # = This is a top level heading
-+    # *************************
-+    # This is a level 2 heading
-+    # *************************
-     #
-     # This is a free-form comment which will go under the
-     # top level heading.
-     ##
- 
-     ##
--    # == This is a second level heading
-+    # This is a third level heading
-+    # ==============================
-+    #
-+    # Level 4
-+    # _______
-+    #
-+    # Level 5
-+    # ^^^^^^^
-+    #
-+    # Level 6
-+    # """""""
-     ##
- 
--A heading line must be the first line of the documentation
--comment block.
--
--Section headings must always be correctly nested, so you can only
--define a third-level heading inside a second-level heading, and so on.
-+Level 1 headings are reserved for use by the generated documentation
-+page itself, leaving level 2 as the highest level that should be used.
- 
- 
- Documentation markup
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 745d21d822..f46fdedfa8 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -11,7 +11,9 @@
- # later. See the COPYING file in the top-level directory.
- 
- ##
--# = Firmware
-+# ********
-+# Firmware
-+# ********
- ##
- 
- { 'pragma': {
-diff --git a/docs/interop/vhost-user.json b/docs/interop/vhost-user.json
-index b6ade9e493..095eb99cf7 100644
---- a/docs/interop/vhost-user.json
-+++ b/docs/interop/vhost-user.json
-@@ -10,7 +10,9 @@
- # later. See the COPYING file in the top-level directory.
- 
- ##
--# = vhost user backend discovery & capabilities
-+# *******************************************
-+# vhost user backend discovery & capabilities
-+# *******************************************
- ##
- 
- ##
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index d5d2b5eeb5..b794cde697 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -399,44 +399,9 @@ def visit_module(self, path: str) -> None:
-         self.ensure_blank_line()
- 
-     def visit_freeform(self, doc: QAPIDoc) -> None:
--        # TODO: Once the old qapidoc transformer is deprecated, freeform
--        # sections can be updated to pure rST, and this transformed removed.
--        #
--        # For now, translate our micro-format into rST. Code adapted
--        # from Peter Maydell's freeform().
--
-         assert len(doc.all_sections) == 1, doc.all_sections
-         body = doc.all_sections[0]
--        text = self.reformat_arobase(body.text)
--        info = doc.info
--
--        if re.match(r"=+ ", text):
--            # Section/subsection heading (if present, will always be the
--            # first line of the block)
--            (heading, _, text) = text.partition("\n")
--            (leader, _, heading) = heading.partition(" ")
--            # Implicit +1 for heading in the containing .rst doc
--            level = len(leader) + 1
--
--            # https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#sections
--            markers = ' #*=_^"'
--            overline = level <= 2
--            marker = markers[level]
--
--            self.ensure_blank_line()
--            # This credits all 2 or 3 lines to the single source line.
--            if overline:
--                self.add_line(marker * len(heading), info)
--            self.add_line(heading, info)
--            self.add_line(marker * len(heading), info)
--            self.ensure_blank_line()
--
--            # Eat blank line(s) and advance info
--            trimmed = text.lstrip("\n")
--            text = trimmed
--            info = info.next_line(len(text) - len(trimmed) + 1)
--
--        self.add_lines(text, info)
-+        self.add_lines(self.reformat_arobase(body.text), doc.info)
-         self.ensure_blank_line()
- 
-     def visit_entity(self, ent: QAPISchemaDefinition) -> None:
-diff --git a/qapi/acpi.json b/qapi/acpi.json
-index 2d53b82365..90f8f564fd 100644
---- a/qapi/acpi.json
-+++ b/qapi/acpi.json
-@@ -6,7 +6,9 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- ##
--# = ACPI
-+# ****
-+# ACPI
-+# ****
- ##
- 
- ##
-diff --git a/qapi/audio.json b/qapi/audio.json
-index 16de231f6d..6a22ca384a 100644
---- a/qapi/audio.json
-+++ b/qapi/audio.json
-@@ -7,7 +7,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Audio
-+# *****
-+# Audio
-+# *****
- ##
- 
- ##
-diff --git a/qapi/authz.json b/qapi/authz.json
-index 7fc6e3032e..ad1b4b3af0 100644
---- a/qapi/authz.json
-+++ b/qapi/authz.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = User authorization
-+# ******************
-+# User authorization
-+# ******************
- ##
- 
- ##
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1df6644f0d..8b413946ff 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2,7 +2,8 @@
- # vim: filetype=python
- 
- ##
--# == Block core (VM unrelated)
-+# Block core (VM unrelated)
-+# =========================
- ##
- 
- { 'include': 'common.json' }
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index ed4deb54db..2241bfecf2 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -2,7 +2,8 @@
- # vim: filetype=python
- 
- ##
--# == Block device exports
-+# Block device exports
-+# ====================
- ##
- 
- { 'include': 'sockets.json' }
-diff --git a/qapi/block.json b/qapi/block.json
-index 1490a1a17f..2d54a81c36 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -2,13 +2,16 @@
- # vim: filetype=python
- 
- ##
--# = Block devices
-+# *************
-+# Block devices
-+# *************
- ##
- 
- { 'include': 'block-core.json' }
- 
- ##
--# == Additional block stuff (VM related)
-+# Additional block stuff (VM related)
-+# ===================================
- ##
- 
- ##
-diff --git a/qapi/char.json b/qapi/char.json
-index df6e325e2e..f38d04986d 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Character devices
-+# *****************
-+# Character devices
-+# *****************
- ##
- 
- { 'include': 'sockets.json' }
-diff --git a/qapi/common.json b/qapi/common.json
-index 0e3a0bbbfb..af7e3d618a 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = Common data types
-+# *****************
-+# Common data types
-+# *****************
- ##
- 
- ##
-diff --git a/qapi/compat.json b/qapi/compat.json
-index 42034d9368..90b8d51cf2 100644
---- a/qapi/compat.json
-+++ b/qapi/compat.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = Compatibility policy
-+# ********************
-+# Compatibility policy
-+# ********************
- ##
- 
- ##
-diff --git a/qapi/control.json b/qapi/control.json
-index 34b733f63b..ab0b3a3bbe 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = QMP monitor control
-+# *******************
-+# QMP monitor control
-+# *******************
- ##
- 
- ##
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 9ec6301e18..21006de36c 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Cryptography
-+# ************
-+# Cryptography
-+# ************
- ##
- 
- ##
-diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-index b13db26403..1f49e1822c 100644
---- a/qapi/cryptodev.json
-+++ b/qapi/cryptodev.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Cryptography devices
-+# ********************
-+# Cryptography devices
-+# ********************
- ##
- 
- ##
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index 8f2e9237b1..52cc5d4f33 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = CXL devices
-+# ***********
-+# CXL devices
-+# ***********
- ##
- 
- ##
-diff --git a/qapi/dump.json b/qapi/dump.json
-index d0ba1f0596..0642ca157b 100644
---- a/qapi/dump.json
-+++ b/qapi/dump.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Dump guest memory
-+# *****************
-+# Dump guest memory
-+# *****************
- ##
- 
- ##
-diff --git a/qapi/ebpf.json b/qapi/ebpf.json
-index db19ae850f..d45054e666 100644
---- a/qapi/ebpf.json
-+++ b/qapi/ebpf.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = eBPF Objects
-+# ************
-+# eBPF Objects
-+# ************
- #
- # eBPF object is an ELF binary that contains the eBPF program and eBPF
- # map description(BTF).  Overall, eBPF object should contain the
-diff --git a/qapi/error.json b/qapi/error.json
-index 135c1e8231..54cb02fb88 100644
---- a/qapi/error.json
-+++ b/qapi/error.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = QMP errors
-+# **********
-+# QMP errors
-+# **********
- ##
- 
- ##
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index e9e0297282..26d8839f19 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -10,7 +10,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = QMP introspection
-+# *****************
-+# QMP introspection
-+# *****************
- ##
- 
- ##
-diff --git a/qapi/job.json b/qapi/job.json
-index 126fa5ce60..16b280f52f 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = Background jobs
-+# ***************
-+# Background jobs
-+# ***************
- ##
- 
- ##
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index 298e51f373..0f01599130 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Common machine types
-+# ********************
-+# Common machine types
-+# ********************
- ##
- 
- ##
-diff --git a/qapi/machine.json b/qapi/machine.json
-index f712e7da6d..af00a20b1f 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Machines
-+# ********
-+# Machines
-+# ********
- ##
- 
- { 'include': 'common.json' }
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 2d39a8f748..3bf97df5d8 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Migration
-+# *********
-+# Migration
-+# *********
- ##
- 
- { 'include': 'common.json' }
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 4b9e601cfa..a180c16db2 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Miscellanea
-+# ***********
-+# Miscellanea
-+# ***********
- ##
- 
- { 'include': 'common.json' }
-diff --git a/qapi/net.json b/qapi/net.json
-index 97ea183981..3b03843c16 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Net devices
-+# ***********
-+# Net devices
-+# ***********
- ##
- 
- { 'include': 'sockets.json' }
-diff --git a/qapi/pci.json b/qapi/pci.json
-index dc85a41d28..a8671cd9ac 100644
---- a/qapi/pci.json
-+++ b/qapi/pci.json
-@@ -6,7 +6,9 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- ##
--# = PCI
-+# ***
-+# PCI
-+# ***
- ##
- 
- ##
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-index a8f66163cb..49b9a0267d 100644
---- a/qapi/qapi-schema.json
-+++ b/qapi/qapi-schema.json
-@@ -1,7 +1,9 @@
- # -*- Mode: Python -*-
- # vim: filetype=python
- ##
--# = Introduction
-+# ************
-+# Introduction
-+# ************
- #
- # This manual describes the commands and events supported by the QEMU
- # Monitor Protocol (QMP).
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index 32c7d10046..441ed518b8 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -5,7 +5,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Device infrastructure (qdev)
-+# ****************************
-+# Device infrastructure (qdev)
-+# ****************************
- ##
- 
- { 'include': 'qom.json' }
-diff --git a/qapi/qom.json b/qapi/qom.json
-index b133b06447..f68f72fbbc 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -10,7 +10,9 @@
- { 'include': 'crypto.json' }
- 
- ##
--# = QEMU Object Model (QOM)
-+# ***********************
-+# QEMU Object Model (QOM)
-+# ***********************
- ##
- 
- ##
-diff --git a/qapi/replay.json b/qapi/replay.json
-index 35e0c4a692..e46c5c1d3f 100644
---- a/qapi/replay.json
-+++ b/qapi/replay.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Record/replay
-+# *************
-+# Record/replay
-+# *************
- ##
- 
- { 'include': 'common.json' }
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 0c7ef1f77c..e494964952 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = Rocker switch device
-+# ********************
-+# Rocker switch device
-+# ********************
- ##
- 
- ##
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index fd09beb35c..083a3c5eb3 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = VM run state
-+# ************
-+# VM run state
-+# ************
- ##
- 
- ##
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index f9f559daba..b5f4a8fecd 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -2,7 +2,9 @@
- # vim: filetype=python
- 
- ##
--# = Socket data types
-+# *****************
-+# Socket data types
-+# *****************
- ##
- 
- ##
-diff --git a/qapi/stats.json b/qapi/stats.json
-index 8902ef94e0..78b88881ea 100644
---- a/qapi/stats.json
-+++ b/qapi/stats.json
-@@ -9,7 +9,9 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- ##
--# = Statistics
-+# **********
-+# Statistics
-+# **********
- ##
- 
- ##
-diff --git a/qapi/tpm.json b/qapi/tpm.json
-index a16a72edb9..e66b107f1d 100644
---- a/qapi/tpm.json
-+++ b/qapi/tpm.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = TPM (trusted platform module) devices
-+# *************************************
-+# TPM (trusted platform module) devices
-+# *************************************
- ##
- 
- ##
-diff --git a/qapi/trace.json b/qapi/trace.json
-index eb5f63f513..d08c9c6a88 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -7,7 +7,9 @@
- # See the COPYING file in the top-level directory.
- 
- ##
--# = Tracing
-+# *******
-+# Tracing
-+# *******
- ##
- 
- ##
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index 9d9e7af26c..927035f5a7 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Transactions
-+# ************
-+# Transactions
-+# ************
- ##
- 
- { 'include': 'block-core.json' }
-diff --git a/qapi/uefi.json b/qapi/uefi.json
-index 6592183d6c..a206c2e953 100644
---- a/qapi/uefi.json
-+++ b/qapi/uefi.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = UEFI Variable Store
-+# *******************
-+# UEFI Variable Store
-+# *******************
- #
- # The QEMU efi variable store implementation (hw/uefi/) uses this to
- # store non-volatile variables in json format on disk.
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 514fa159b1..f5e77ae19d 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Remote desktop
-+# **************
-+# Remote desktop
-+# **************
- ##
- 
- { 'include': 'common.json' }
-@@ -200,7 +202,8 @@
-   'if': 'CONFIG_PIXMAN' }
- 
- ##
--# == Spice
-+# Spice
-+# =====
- ##
- 
- ##
-@@ -461,7 +464,8 @@
-   'if': 'CONFIG_SPICE' }
- 
- ##
--# == VNC
-+# VNC
-+# ===
- ##
- 
- ##
-@@ -794,7 +798,9 @@
-   'if': 'CONFIG_VNC' }
- 
- ##
--# = Input
-+# *****
-+# Input
-+# *****
- ##
- 
- ##
-diff --git a/qapi/vfio.json b/qapi/vfio.json
-index b53b7caecd..a1a9c5b673 100644
---- a/qapi/vfio.json
-+++ b/qapi/vfio.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = VFIO devices
-+# ************
-+# VFIO devices
-+# ************
- ##
- 
- ##
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 73df718a26..3cac0774f7 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Virtio devices
-+# **************
-+# Virtio devices
-+# **************
- ##
- 
- ##
-diff --git a/qapi/yank.json b/qapi/yank.json
-index 30f46c97c9..d13a8e9117 100644
---- a/qapi/yank.json
-+++ b/qapi/yank.json
-@@ -3,7 +3,9 @@
- #
- 
- ##
--# = Yank feature
-+# ************
-+# Yank feature
-+# ************
- ##
- 
- ##
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 949d9e8bff..aad7e249f8 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -597,22 +597,15 @@ def get_doc(self) -> 'QAPIDoc':
-             # Free-form documentation
-             doc = QAPIDoc(info)
-             doc.ensure_untagged_section(self.info)
--            first = True
-             while line is not None:
-                 if match := self._match_at_name_colon(line):
-                     raise QAPIParseError(
-                         self,
-                         "'@%s:' not allowed in free-form documentation"
-                         % match.group(1))
--                if line.startswith('='):
--                    if not first:
--                        raise QAPIParseError(
--                            self,
--                            "'=' heading must come first in a comment block")
-                 doc.append_line(line)
-                 self.accept(False)
-                 line = self.get_doc_line()
--                first = False
- 
-         self.accept()
-         doc.end()
-diff --git a/storage-daemon/qapi/qapi-schema.json b/storage-daemon/qapi/qapi-schema.json
-index 0427594c98..478e7a92b2 100644
---- a/storage-daemon/qapi/qapi-schema.json
-+++ b/storage-daemon/qapi/qapi-schema.json
-@@ -14,7 +14,9 @@
- # storage daemon.
- 
- ##
--# = Introduction
-+# ************
-+# Introduction
-+# ************
- #
- # This manual describes the commands and events supported by the QEMU
- # storage daemon QMP.
-@@ -51,7 +53,9 @@
- { 'include': '../../qapi/job.json' }
- 
- ##
--# = Block devices
-+# *************
-+# Block devices
-+# *************
- ##
- { 'include': '../../qapi/block-core.json' }
- { 'include': '../../qapi/block-export.json' }
-diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
-index 14b808f909..fac13425b7 100644
---- a/tests/qapi-schema/doc-good.json
-+++ b/tests/qapi-schema/doc-good.json
-@@ -8,7 +8,9 @@
-     'documentation-exceptions': [ 'Enum', 'Variant1', 'Alternate', 'cmd' ] } }
- 
- ##
--# = Section
-+# *******
-+# Section
-+# *******
- ##
- 
- ##
-@@ -16,7 +18,8 @@
- ##
- 
- ##
--# == Subsection
-+# Subsection
-+# ==========
- #
- # *with emphasis*
- # @var {in braces}
-@@ -144,7 +147,8 @@
-   'if': { 'not': { 'any': [ 'IFONE', 'IFTWO' ] } } }
- 
- ##
--# == Another subsection
-+# Another subsection
-+# ==================
- ##
- 
- ##
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index dc8352eed4..04a5507264 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -55,13 +55,16 @@ event EVT_BOXED Object
-     feature feat3
- doc freeform
-     body=
--= Section
-+*******
-+Section
-+*******
- doc freeform
-     body=
- Just text, no heading.
- doc freeform
-     body=
--== Subsection
-+Subsection
-+==========
- 
- *with emphasis*
- @var {in braces}
-@@ -155,7 +158,8 @@ description starts on the same line
- a feature
- doc freeform
-     body=
--== Another subsection
-+Another subsection
-+==================
- doc symbol=cmd
-     body=
- 
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index b4cad051551..6a9b6374a6d 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -161,6 +161,14 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
+  */
+ void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp);
+ 
++/*
++ * These "is some KVM subfeature enabled?" functions may be called
++ * when KVM support is not present, including in the user-mode
++ * emulators. The kvm-stub.c file is only built into the system
++ * emulators, so for user-mode emulation we provide "always false"
++ * stubs here.
++ */
++#ifndef CONFIG_USER_ONLY
+ /**
+  * kvm_arm_aarch32_supported:
+  *
+@@ -197,6 +205,33 @@ bool kvm_arm_mte_supported(void);
+  * Returns true if KVM can enable EL2 and false otherwise.
+  */
+ bool kvm_arm_el2_supported(void);
++#else
++
++static inline bool kvm_arm_aarch32_supported(void)
++{
++    return false;
++}
++
++static inline bool kvm_arm_pmu_supported(void)
++{
++    return false;
++}
++
++static inline bool kvm_arm_sve_supported(void)
++{
++    return false;
++}
++
++static inline bool kvm_arm_mte_supported(void)
++{
++    return false;
++}
++
++static inline bool kvm_arm_el2_supported(void)
++{
++    return false;
++}
++#endif
+ 
+ /**
+  * kvm_arm_get_max_vm_ipa_size:
 -- 
-2.49.0
+2.43.0
 
 
