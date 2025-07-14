@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3091C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85527C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSKv-0008BF-Dk; Mon, 14 Jul 2025 19:11:55 -0400
+	id 1ubSMX-0003c1-C2; Mon, 14 Jul 2025 19:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIa-0004R8-Ky
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJX-00061r-Px
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSIY-0005sG-U6
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:09:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSJV-00063x-5H
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:10:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534564;
+ s=mimecast20190719; t=1752534624;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nWTgx9OOmQrzNpl+Eee6xG0XRq2aOUUPbQTx1jMMcO4=;
- b=i/8aXuZiK3K6Aa9WURxKo56QYQG/hmAH1r6AeSgkMkGV+pZmuQdES7hW9loXvXoUOnZUAm
- e75aTVgXO7Twn5tfU4xpkxwrhoc577BGuwNeHXEFi6jc9Vh7ESnOXF2zAlbjEyo8tRAepv
- rVJOTSeHxljQeGsNtKo+fa1irbflulQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0emX3foBSaMfgiHljy/XlvaxHB8yz/2mJJkSgtv0EAA=;
+ b=Z+DWzhXsoURcVKOACl9Z+CwMz6j8gumSrp3ztHrnmxlnWY8YVpDcZr5mFznG0j14/fjn2k
+ slHDtoDRoWenXSu+ao0qBttjzTvXVzlfbcWcGAEnaCLLwyzqRLYv61xqGqYCrgqL5BpqQE
+ m/MGRS+Q0Oiq5VGalTT9mIHNkIdfWtw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-BKABEcG_MJqv_qQ0C6ikaA-1; Mon, 14 Jul 2025 19:09:23 -0400
-X-MC-Unique: BKABEcG_MJqv_qQ0C6ikaA-1
-X-Mimecast-MFC-AGG-ID: BKABEcG_MJqv_qQ0C6ikaA_1752534561
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451ecc3be97so25170285e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:09:22 -0700 (PDT)
+ us-mta-664-E2FnStoYMW2rkYELmxUqBQ-1; Mon, 14 Jul 2025 19:10:23 -0400
+X-MC-Unique: E2FnStoYMW2rkYELmxUqBQ-1
+X-Mimecast-MFC-AGG-ID: E2FnStoYMW2rkYELmxUqBQ_1752534622
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eee2398bso2324268f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:10:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534561; x=1753139361;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nWTgx9OOmQrzNpl+Eee6xG0XRq2aOUUPbQTx1jMMcO4=;
- b=AP5zeV3aD7Xn+DqewXI0LqlamcmtcGpbJiZ81LGQm5fwM8jKNqCSIHuH9FOI2KdvUP
- nns3wGuBs9mUvZce2d/rdApBtEaumYM+AB2w7pjR1PVns2ABrwjfGqmXjb4/+Eq9geWw
- x664HSOXL5lKOgTffuFZ6gCjpCWWeguitc8skUsst/d746zY6Mq/qcGX2AIdbTgvj0JT
- L8rflCQLh7iLpRkaCXuzM7tSvbemiT1wQ7Mvgac2r2UKioYBc1nt0FExWEcMaR/cM1bk
- wzz4iIHuAvXWEwYB1kMRN6E8Gy9h1w94UeLYUOr7t4vTUr/qgfo5+DMmAau+VDUAIArT
- xnPA==
-X-Gm-Message-State: AOJu0Yy2ifw/+VJil+15LV+WglG4SnpK6CKdvUu+m8gn81Ml7SfpvkLA
- iD82h3EXfTIAoGRR+OLFsdFC73xQzCWogc3FYt2WNg435XzPYpCxw+q09m7adDUtRl9h3f9pRks
- YeURr/ZGiJlHAq24AAQ8JT93GioLx/cRnyIbtZfn4uaXzBYFOZfeHi+JlfthF2PJcQtzjaVGSIf
- bkubqAE87gcVrKKUjwt7+GQqVfng67FLzYhA==
-X-Gm-Gg: ASbGncufSh4bkowfq+Cw0J8NE2Iog+OcV4X1Iy5unA8J4T+dqEV1KXnaMGktU49gVAX
- PU98UNgOToLkTauTmrv54lg2lJip7nmlatzXaq1SV2WoTIBXU3YAE86L3UglFfpw+tjb12ZyWcU
- tQk9xNI9z4CfO8bfI7SAlQvw9jVy7L3v4qo/VfBtvsL4K7ga07BCxV1N3ksOwmcaxwgiJGEZTif
- 24B9t4dmvHaksrPbBrpviJG61LZdD3cK5kKl2S0AqxFEFwhMTx4J6SbYncOfnIYcY1uM2IrVJjs
- n/HdHYliGug7YV6WDJSiGCyh+gSS7oHu
-X-Received: by 2002:a05:600c:4ecf:b0:456:24aa:958e with SMTP id
- 5b1f17b1804b1-45624aa9786mr19627175e9.0.1752534561343; 
- Mon, 14 Jul 2025 16:09:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGa/OVUbHxTW5QCZ8VAm3s4vhGBi/pvLBF02n0N6fAUc1zCjvIlOrw1NmHrzTAiGoovUfsBBw==
-X-Received: by 2002:a05:600c:4ecf:b0:456:24aa:958e with SMTP id
- 5b1f17b1804b1-45624aa9786mr19626955e9.0.1752534560887; 
- Mon, 14 Jul 2025 16:09:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534622; x=1753139422;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0emX3foBSaMfgiHljy/XlvaxHB8yz/2mJJkSgtv0EAA=;
+ b=hMnUaxJxSDtpTJ2pqrKsaLoB2LZHOoVGO0Obzu9QkmgvEBsXBVl0svxMGlGGOaQvMJ
+ ABDeI6wGWhT/lRfiDYmiYwlvlL+PjrBztKdO2QVK+KKduT9Ak9vsyLpMF2vIeLZ1/NDW
+ Rz5awvk1pf4zR8MEWX7jT1JjnOV34zbpQEjOaejv1Qs2x7qS/HQzRArcvOpeWamgYQlU
+ wZDkr1mnkk+uGwqKL1kxVKlZMi8jv+uqxytXmQbKzxYN+U+k4r6PSwAlbZH5ulo87S3U
+ tqziBmFQVZVRHjuT/2PJM5Jm18gpn6taXKEALx46NOYSEtpQVVux8RK1jklOjjNDuhQy
+ X+HQ==
+X-Gm-Message-State: AOJu0Yz8+QbfUVU6DrwUtx6znIxKwqtfOoTar0r3FCQgsKEydzYY8nll
+ GfOY+FnObgBfSqLmG9fHTosSJ1Pi4CQjZg7uOuCROEDv8zBrv7yzu7qZSg36N2LZLIgio0/jQW5
+ JsQ9QMXZBYHih+HtOxoLbw56cKBa3WkduJpD30SbXVKhXoBSg25Jq1MqKd2+ROJpn+NjkxfLC0R
+ t+cEng0D/wTluah/TXGuwZIepjvq5C6VeqDQ==
+X-Gm-Gg: ASbGncshZMofSajnxXmbL81eCatmmJhhhDt8jZrgf2PfRHHjMGSnhy2veHzsVhkOSmQ
+ dDkEWJtGCwstPFKyfZaYwUuEiNOd+LZxgzRcOTHiMIbb8sbZ1+8eKQuZx8Bn1GrtuLkpZNvKsrH
+ 0CeVLlXSrakMPiD8plJVOz4anlH4CJ7vEq+Jmu7wseHxqhI1NJag8S0tEFDKMUd+kvMDbH/LUNa
+ Bo00f5S015asQJBnuSq5jOyGdAGzcmxt9sik+RhhbuZnzbHFR7dWejchYjFj/10eIbVLaQN7RoF
+ z1NGSWull1HwKUtEPJw09QxyxdYVlkvc
+X-Received: by 2002:a05:6000:4025:b0:3b4:9b82:d432 with SMTP id
+ ffacd0b85a97d-3b5f338ff26mr11358435f8f.0.1752534621722; 
+ Mon, 14 Jul 2025 16:10:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESPjNHlATpk2d0DtlU8n6DPaL1vZPayEsym3jQBjtV47SLr7rFPm62KmGXjS/O4t81D0mr3A==
+X-Received: by 2002:a05:6000:4025:b0:3b4:9b82:d432 with SMTP id
+ ffacd0b85a97d-3b5f338ff26mr11358408f8f.0.1752534621196; 
+ Mon, 14 Jul 2025 16:10:21 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560ceb1337sm81503405e9.13.2025.07.14.16.09.19
+ ffacd0b85a97d-3b5e8e26938sm13407891f8f.89.2025.07.14.16.10.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:09:20 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:09:19 -0400
+ Mon, 14 Jul 2025 16:10:20 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:10:19 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org
-Subject: [PULL 71/97] hw/arm/virt: Pass the bus on the ged creation
-Message-ID: <c919cff502f6c149d7cf38576ccbf8a7e044ad44.1752534227.git.mst@redhat.com>
+ Anisa Su <anisa.su@samsung.com>, Fan Ni <fan.ni@samsung.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 93/97] hw/cxl: mailbox-utils: 0x5602 - FMAPI Set DC Region
+ Config
+Message-ID: <15239e2f76f262d6692aa651cafdd1f77a8970c9.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -94,7 +96,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,32 +112,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Anisa Su <anisa.su@samsung.com>
 
-The bus will be needed on ged realize for acpi pci hp setup.
+FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Section 7.6.7.6.3
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20250714080639.2525563-26-eric.auger@redhat.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Anisa Su <anisa.su@samsung.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20250714174509.1984430-8-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/arm/virt.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/hw/cxl/cxl_device.h  |  3 ++
+ include/hw/cxl/cxl_mailbox.h |  6 +++
+ hw/cxl/cxl-mailbox-utils.c   | 87 ++++++++++++++++++++++++++++++++++++
+ hw/mem/cxl_type3.c           |  6 +--
+ 4 files changed, 99 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 817adedb31..41b5086b55 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -701,6 +701,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 42ae5b7479..c836fc17f0 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -721,4 +721,7 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                    uint64_t len);
+ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                   uint64_t len);
++void cxl_assign_event_header(CXLEventRecordHdr *hdr,
++                             const QemuUUID *uuid, uint32_t flags,
++                             uint8_t length, uint64_t timestamp);
+ #endif
+diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+index 9008402d1c..a05d7cb5b7 100644
+--- a/include/hw/cxl/cxl_mailbox.h
++++ b/include/hw/cxl/cxl_mailbox.h
+@@ -8,6 +8,7 @@
+ #ifndef CXL_MAILBOX_H
+ #define CXL_MAILBOX_H
  
-     dev = qdev_new(TYPE_ACPI_GED);
-     qdev_prop_set_uint32(dev, "ged-event", event);
-+    object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++#define CXL_MBOX_CONFIG_CHANGE_COLD_RESET (1)
+ #define CXL_MBOX_IMMEDIATE_CONFIG_CHANGE (1 << 1)
+ #define CXL_MBOX_IMMEDIATE_DATA_CHANGE (1 << 2)
+ #define CXL_MBOX_IMMEDIATE_POLICY_CHANGE (1 << 3)
+@@ -15,5 +16,10 @@
+ #define CXL_MBOX_SECURITY_STATE_CHANGE (1 << 5)
+ #define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
+ #define CXL_MBOX_BACKGROUND_OPERATION_ABORT (1 << 7)
++#define CXL_MBOX_SECONDARY_MBOX_SUPPORTED (1 << 8)
++#define CXL_MBOX_REQUEST_ABORT_BACKGROUND_OP_SUPPORTED (1 << 9)
++#define CXL_MBOX_CEL_10_TO_11_VALID (1 << 10)
++#define CXL_MBOX_CONFIG_CHANGE_CONV_RESET (1 << 11)
++#define CXL_MBOX_CONFIG_CHANGE_CXL_RESET (1 << 12)
  
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
+ #endif
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index bf1710b251..b4a0f7d664 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -18,6 +18,7 @@
+ #include "hw/pci/pci.h"
+ #include "hw/pci-bridge/cxl_upstream_port.h"
+ #include "qemu/cutils.h"
++#include "qemu/host-utils.h"
+ #include "qemu/log.h"
+ #include "qemu/units.h"
+ #include "qemu/uuid.h"
+@@ -121,6 +122,7 @@ enum {
+     FMAPI_DCD_MGMT = 0x56,
+         #define GET_DCD_INFO    0x0
+         #define GET_HOST_DC_REGION_CONFIG   0x1
++        #define SET_DC_REGION_CONFIG        0x2
+ };
+ 
+ /* CCI Message Format CXL r3.1 Figure 7-19 */
+@@ -3390,6 +3392,84 @@ static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
+ 
++/* CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opcode 5602) */
++static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
++                                              uint8_t *payload_in,
++                                              size_t len_in,
++                                              uint8_t *payload_out,
++                                              size_t *len_out,
++                                              CXLCCI *cci)
++{
++    struct {
++        uint8_t reg_id;
++        uint8_t rsvd[3];
++        uint64_t block_sz;
++        uint8_t flags;
++        uint8_t rsvd2[3];
++    } QEMU_PACKED *in = (void *)payload_in;
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    CXLEventDynamicCapacity dcEvent = {};
++    CXLDCRegion *region = &ct3d->dc.regions[in->reg_id];
++
++    /*
++     * CXL r3.2 7.6.7.6.3: Set DC Region Configuration
++     * This command shall fail with Unsupported when the Sanitize on Release
++     * field does not match the region’s configuration... and the device
++     * does not support reconfiguration of the Sanitize on Release setting.
++     *
++     * Currently not reconfigurable, so always fail if sanitize bit (bit 0)
++     * doesn't match.
++     */
++    if ((in->flags & 0x1) != (region->flags & 0x1)) {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
++    if (in->reg_id >= DCD_MAX_NUM_REGION) {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
++    /* Check that no extents are in the region being reconfigured */
++    if (!bitmap_empty(region->blk_bitmap, region->len / region->block_size)) {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
++    /* Check that new block size is supported */
++    if (!is_power_of_2(in->block_sz) ||
++        !(in->block_sz & region->supported_blk_size_bitmask)) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    /* Return success if new block size == current block size */
++    if (in->block_sz == region->block_size) {
++        return CXL_MBOX_SUCCESS;
++    }
++
++    /* Free bitmap and create new one for new block size. */
++    qemu_mutex_lock(&region->bitmap_lock);
++    g_free(region->blk_bitmap);
++    region->blk_bitmap = bitmap_new(region->len / in->block_sz);
++    qemu_mutex_unlock(&region->bitmap_lock);
++    region->block_size = in->block_sz;
++
++    /* Create event record and insert into event log */
++    cxl_assign_event_header(&dcEvent.hdr,
++                            &dynamic_capacity_uuid,
++                            (1 << CXL_EVENT_TYPE_INFO),
++                            sizeof(dcEvent),
++                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
++    dcEvent.type = DC_EVENT_REGION_CONFIG_UPDATED;
++    dcEvent.validity_flags = 1;
++    dcEvent.host_id = 0;
++    dcEvent.updated_region_id = in->reg_id;
++
++    if (cxl_event_insert(&ct3d->cxl_dstate,
++                         CXL_EVENT_TYPE_DYNAMIC_CAP,
++                         (CXLEventRecordRaw *)&dcEvent)) {
++        cxl_event_irq_assert(ct3d);
++    }
++    return CXL_MBOX_SUCCESS;
++}
++
+ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+         cmd_infostat_bg_op_abort, 0, 0 },
+@@ -3508,6 +3588,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+         cmd_fm_get_dcd_info, 0, 0 },
+     [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
+         cmd_fm_get_host_dc_region_config, 4, 0 },
++    [FMAPI_DCD_MGMT][SET_DC_REGION_CONFIG] = { "SET_DC_REGION_CONFIG",
++        cmd_fm_set_dc_region_config, 16,
++        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
++         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
++         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
++         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
++         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+ };
+ 
+ /*
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index a7a1857a0c..4a45b4510e 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1590,9 +1590,9 @@ void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
+     pcie_aer_inject_error(PCI_DEVICE(obj), &err);
+ }
+ 
+-static void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+-                                    const QemuUUID *uuid, uint32_t flags,
+-                                    uint8_t length, uint64_t timestamp)
++void cxl_assign_event_header(CXLEventRecordHdr *hdr,
++                             const QemuUUID *uuid, uint32_t flags,
++                             uint8_t length, uint64_t timestamp)
+ {
+     st24_le_p(&hdr->flags, flags);
+     hdr->length = length;
 -- 
 MST
 
