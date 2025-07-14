@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0244C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD50C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHVv-0008Hl-IC; Mon, 14 Jul 2025 07:38:44 -0400
+	id 1ubHbk-0004hJ-79; Mon, 14 Jul 2025 07:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1t-0002Ix-Ht
+ id 1ubH1t-0002Iz-JJ
  for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1n-0002Hy-6h
+ id 1ubH1r-0002Ii-H4
  for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491242;
+ s=mimecast20190719; t=1752491246;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X6w/O8DUMjDwJGRTT3NN93h6bgPpbT9nKbZqZ0VqM/4=;
- b=DYplQBEJYyrAPVknzTWJZn06dHtpy29wdR/P0yeg2OyW7vnZ5TcdjVXoDUJrvNUpWKVB26
- g9SwanUIzTtMGv0RY1R7ajOQXLKTGyJ4X5NIvOPtSQuoxOHaA0RV3KryoSD4nF1efukiJT
- 9gn25stT0hP0R2lhtqAr3XWhtC4FvqY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K7ivlVK8LeaiN4yE6sBu0n/7LdVsgXH72+awvNRHcSA=;
+ b=cWcHp2H9DGuiEhwSBMFfa91v/1R2Q+xA1Mlxw1WRlih6o3PaJm725v8pCpkyWvgzn6z3sG
+ XHstjBzghNiiLpdgGb24d67CJUTwEs9vS7ZFGdCXB3fVfjWNHuEfCkr7Ke5/qQIpjR4qyG
+ 5fxRsEUzfDWvgm0ckxi0dl+qeFAtG4Y=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-AYbC0D4pNpOzd-b48XSbZw-1; Mon, 14 Jul 2025 07:07:19 -0400
-X-MC-Unique: AYbC0D4pNpOzd-b48XSbZw-1
-X-Mimecast-MFC-AGG-ID: AYbC0D4pNpOzd-b48XSbZw_1752491238
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b20f50da27so2494650f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:19 -0700 (PDT)
+ us-mta-491-iDch3j22NOigMsAX0XG6dA-1; Mon, 14 Jul 2025 07:07:25 -0400
+X-MC-Unique: iDch3j22NOigMsAX0XG6dA-1
+X-Mimecast-MFC-AGG-ID: iDch3j22NOigMsAX0XG6dA_1752491244
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a6d1394b07so2934839f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491238; x=1753096038;
+ d=1e100.net; s=20230601; t=1752491244; x=1753096044;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X6w/O8DUMjDwJGRTT3NN93h6bgPpbT9nKbZqZ0VqM/4=;
- b=M1qhGgFhGCMzy/RIlAM4pn0rwLCe04KnwA2EYP7cPrWtFwxwnAnYIVlOD6fyQ9z78r
- wHLxQfx4AUh4VLdjpJcXWBAnUxkHIVunlQBt/8O+lwu0WG0+SIUQxr1KdZw1q7jmu2k1
- GvXG8usMCAqy67i3lOk3SaIqkpLP248AMxJbpQkK/+GEnGYgleVwbDOPrVKyP2fhmNqE
- FuFTZSGKuB4gYhE/YSv7nROs7tTniv+1/a3+7wBjlDo1td7kAbw+2wP5FvJ7zYJWiQUK
- krRXiPDOr8KQix3jweWHnT4aGFU5YsED/6kOSmeSbR3WGbQj58G95cMFR5jbyvEJ2SFD
- mzqQ==
-X-Gm-Message-State: AOJu0YxotDbpSU9SHon3kqEc3oZfws9CNQxEAZbK597BNV47I/nRyF+h
- Wa6QN6k2QjkMIbveEl59Eq7julCDq267h+xFdmgT0LyLBxP4U7QnFJanspp0cL3J93IPXqhG21w
- K1FwjpXUjJc3djH+Gp869XQ86t4lUIzyKMNegzNG1jTDslPyG9EtP3Sk8URTlgIxLDy96Na91U4
- iqXH2OIV53+dnNEZ09nNqPTcPCCvAddUYVF6BGruxx
-X-Gm-Gg: ASbGncsrXnRUyEeaRG0LxR/No4w9/hd4DUdUPvxhZbiFHfdeYoYND7tX4VOhS0TjJWD
- XB3WNF9x5CvpFl6YbzR4l582lH4TKJcNUq5WNH8Y52GhUOhawlUmZ2A1QzARUA0VyzP4jVMZVF5
- x0T2ees7XOa8hDm40c9fQBaP/Xj0MNjg3RjvMmXvEMP9JzRyA01VEgYs7UGXPUJUQtt9eidsrCc
- L9hgl1IghJ7eYUq3xlUlXYgBFN4cIXxOQTt4EqQyG80hIt2DrMJouwvoEA0lFCgzHl4aVJJaRa/
- 0eDFlATn4tNA0KQcEonrW9wrzfWTozYOdj60fKQ4adk=
-X-Received: by 2002:a05:6000:642:b0:3a4:da0e:517a with SMTP id
- ffacd0b85a97d-3b5e7f34e49mr14461016f8f.23.1752491237763; 
- Mon, 14 Jul 2025 04:07:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaO/Bviye0gYD4qsJFPYwbD23m4B5O57FcePslOpsQMTLobrSRkA03oP4Z76xk1dD3Pi0s4w==
-X-Received: by 2002:a05:6000:642:b0:3a4:da0e:517a with SMTP id
- ffacd0b85a97d-3b5e7f34e49mr14460985f8f.23.1752491237289; 
- Mon, 14 Jul 2025 04:07:17 -0700 (PDT)
+ bh=K7ivlVK8LeaiN4yE6sBu0n/7LdVsgXH72+awvNRHcSA=;
+ b=vpeWJ+3A06/Or6tDimv3unxHJNELUzM/FvTTC8Hoed5GqMiNPAv+87RpdX+W9yM6s4
+ SiUgHQwOVFobQ2bgQdBeNCkaq9+htxnsUwRuzc/VWhZ1H3Ge7+mIOsESwuFvpKUen/0q
+ 7AgEWC6zJu684P6GGbRMTygkB35k9voftCOSQVFX6jcjErBohg4SlWR3SHOgyyrs8Pjz
+ SuqH9EjfSkoYcCTiuqGw1WVI8MF3XqpdKpGfSzXD98GIWwBXjsR5BWhsWbi38DN31fKH
+ Te0KQ1V+y3WUJ/twMYEFn9UlFdSApmVdavWicPS30ScZNXEJKyqVZAMas7efL5KslVvw
+ gdHQ==
+X-Gm-Message-State: AOJu0YxXEttOfL1TefGQd1PLsoDzD/X/j8qBFoBUILqA0YrY2hV4z71Q
+ XNgmIwiQiFsj3VjlL2e+Kp/y+blFiZ0IBhWZST02GROuBXggN7CSZFh/GdMQ95izZPtZLWFG1Es
+ cDs1vtjkTW+l045Q1Gdg4M6U6v7tvKRQOjUvHPOxsSc6gU6QSpRQpuKmt7R35QGXXEno5+f7Z3E
+ dZachT9DLaBf2zmCFAPkp3aoey/E36ASmdlY1CJTPj
+X-Gm-Gg: ASbGncu1p+vZsuPjWZEMS2hf5MK6flfprOUPnrlrpoHohI5OzStxOu2v09WunBXM5OU
+ c5wvF+b0JYnAlUXl/if5mVGedRkVioZJS+a3dbykZHEMA/okZfDyam1QCE+pOfKNotWP6IHvT1U
+ KlLag29AS6ad+OhBCRYHzVOvfsEWxjmXZe5M/fJjo1YUp+153dvi1Ygi4vsdxHfpW6T+OUpEotD
+ Uy80ZHJcNplNj0dQI6kVl6QRGpv9CwLyK0zMiDG448eqMKWTKW3Qg01LwwhIuZj+3bx/sV/bW7j
+ vPmiS4ds78WiVuGLQY/DrlQDyG15zce6g5GDjn43Bfk=
+X-Received: by 2002:adf:b650:0:b0:3a4:d722:5278 with SMTP id
+ ffacd0b85a97d-3b5f1895d50mr9146919f8f.39.1752491243544; 
+ Mon, 14 Jul 2025 04:07:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEORH0RXW9jtd69kPa62/b5ZeVctH+2Slc5bUIjw63vmz7pBn7nztYSbvBhRRGvcVQ4fEkd3A==
+X-Received: by 2002:adf:b650:0:b0:3a4:d722:5278 with SMTP id
+ ffacd0b85a97d-3b5f1895d50mr9146886f8f.39.1752491242953; 
+ Mon, 14 Jul 2025 04:07:22 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd4b32d8sm129140415e9.17.2025.07.14.04.07.14
+ ffacd0b85a97d-3b5e8dc21e7sm12141494f8f.36.2025.07.14.04.07.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:07:14 -0700 (PDT)
+ Mon, 14 Jul 2025 04:07:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, Zhao Liu <zhao1.liu@intel.com>,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-Subject: [PULL 74/77] i386/cpu: Fix number of addressable IDs field for
- CPUID.01H.EBX[23:16]
-Date: Mon, 14 Jul 2025 13:04:03 +0200
-Message-ID: <20250714110406.117772-75-pbonzini@redhat.com>
+Cc: Qian Wen <qian.wen@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 76/77] i386/cpu: Fix overflow of cache topology fields in
+ CPUID.04H
+Date: Mon, 14 Jul 2025 13:04:05 +0200
+Message-ID: <20250714110406.117772-77-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,74 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chuang Xu <xuchuangxclwt@bytedance.com>
+From: Qian Wen <qian.wen@intel.com>
 
-When QEMU is started with:
--cpu host,migratable=on,host-cache-info=on,l3-cache=off
--smp 180,sockets=2,dies=1,cores=45,threads=2
+According to SDM, CPUID.0x4:EAX[31:26] indicates the Maximum number of
+addressable IDs for processor cores in the physical package. If we
+launch over 64 cores VM, the 6-bit field will overflow, and the wrong
+core_id number will be reported.
 
-On Intel platform:
-CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
-logical processors in the physical package".
+Since the HW reports 0x3f when the intel processor has over 64 cores,
+limit the max value written to EAX[31:26] to 63, so max num_cores should
+be 64.
 
-When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
-CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
-executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
-CPUID.04H.EAX[31:26], which matches the expected result.
+For EAX[14:25], though at present Q35 supports up to 4096 CPUs, by
+constructing a specific topology, the width of the APIC ID can be
+extended beyond 12 bits. For example, using `-smp threads=33,cores=9,
+modules=9` results in a die level offset of 6 + 4 + 4 = 14 bits, which
+can also cause overflow.  check and honor the maximum value for
+EAX[14:25] as well.
 
-As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
-it's necessary to round up CPUID.01H.EBX[23:16] to the nearest power-of-2
-integer too. Otherwise there would be unexpected results in guest with
-older kernel.
+In addition, for host-cache-info case, also apply the same checks and
+fixes.
 
-For example, when QEMU is started with CLI above and xtopology is disabled,
-guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
-calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
-as the result, even though threads-per-core should actually be 2.
-
-And on AMD platform:
-CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
-result meets our expectation.
-
-So round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer only
-for Intel platform to solve the unexpected result.
-
-Use the "x-vendor-cpuid-only-v2" compat option to fix this issue.
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Qian Wen <qian.wen@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250714080859.1960104-5-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20250714080859.1960104-7-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3b7c22e5d38..12e719e9957 100644
+index 608fdcf7578..fdc677614d8 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7871,7 +7871,17 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
--            *ebx |= threads_per_pkg << 16;
-+            /*
-+             * For CPUID.01H.EBX[Bits 23-16], AMD requires logical processor
-+             * count, but Intel needs maximum number of addressable IDs for
-+             * logical processors per package.
-+             */
-+            if (cpu->vendor_cpuid_only_v2 &&
-+                (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
-+                *ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
-+            } else {
-+                *ebx |= threads_per_pkg << 16;
-+            }
-         }
-         break;
-     case 2: { /* cache info: needed for Pentium Pro compatibility */
+@@ -349,11 +349,17 @@ static void encode_cache_cpuid4(CPUCacheInfo *cache,
+     assert(cache->size == cache->line_size * cache->associativity *
+                           cache->partitions * cache->sets);
+ 
++    /*
++     * The following fields have bit-width limitations, so consider the
++     * maximum values to avoid overflow:
++     * Bits 25-14: maximum 4095.
++     * Bits 31-26: maximum 63.
++     */
+     *eax = CACHE_TYPE(cache->type) |
+            CACHE_LEVEL(cache->level) |
+            (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0) |
+-           (max_core_ids_in_package(topo_info) << 26) |
+-           (max_thread_ids_for_cache(topo_info, cache->share_level) << 14);
++           (MIN(max_core_ids_in_package(topo_info), 63) << 26) |
++           (MIN(max_thread_ids_for_cache(topo_info, cache->share_level), 4095) << 14);
+ 
+     assert(cache->line_size > 0);
+     assert(cache->partitions > 0);
+@@ -7930,13 +7936,13 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+ 
+                 *eax &= ~0xFC000000;
+-                *eax |= max_core_ids_in_package(topo_info) << 26;
++                *eax |= MIN(max_core_ids_in_package(topo_info), 63) << 26;
+                 if (host_vcpus_per_cache > threads_per_pkg) {
+                     *eax &= ~0x3FFC000;
+ 
+                     /* Share the cache at package level. */
+-                    *eax |= max_thread_ids_for_cache(topo_info,
+-                                CPU_TOPOLOGY_LEVEL_SOCKET) << 14;
++                    *eax |= MIN(max_thread_ids_for_cache(topo_info,
++                                CPU_TOPOLOGY_LEVEL_SOCKET), 4095) << 14;
+                 }
+             }
+         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
 -- 
 2.50.0
 
