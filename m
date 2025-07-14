@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC2BC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816A5C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHYd-00019d-DS; Mon, 14 Jul 2025 07:41:19 -0400
+	id 1ubHdF-000787-4G; Mon, 14 Jul 2025 07:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1P-0001uO-2i
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH67-0006Wr-1x
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1I-0002BD-Kc
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:54 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ubH65-0003HT-6Q
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:11:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491211;
+ s=mimecast20190719; t=1752491508;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oOKJ7k5EUKjWP5vYqwIlq0vfh3oRU4VVY5lSk531NFs=;
- b=eUvP5iOGh37E0nCxF8sTq4PYNddrV16x425fjS79n/FjG8P9BHwQbOXKnhWn93dQFwmuX3
- E/pdJztcYvXOgXGh6/JLbjXbm78Cpwn60oTKnyacFVMT82qsLI2qixdPuzWD7TUoxNsg+Z
- hli/iieqG9EMqei7UKQ1kom40svMs84=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-382-qzVnPUrdMsGGRBEFTP7dKg-1; Mon, 14 Jul 2025 07:06:48 -0400
-X-MC-Unique: qzVnPUrdMsGGRBEFTP7dKg-1
-X-Mimecast-MFC-AGG-ID: qzVnPUrdMsGGRBEFTP7dKg_1752491207
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-451d2037f1eso27403585e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491206; x=1753096006;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oOKJ7k5EUKjWP5vYqwIlq0vfh3oRU4VVY5lSk531NFs=;
- b=BjoV8+LasCelEF85ucRs9TNd9bMK7JYlJNrGZnVdy113M7An5RzO3v6TkdztJVlGLf
- tF1E4TOy+NLSl9o4a+ZFGeRGfk2EGuN8vN1fP2ZHViHjCtdFH88TZWcb2CeXuf5PNktR
- iZzKkuA9UvlJiEu+TV87jZ8KDjUlkwHHp6uhyssvQCDLU0tQV844JVSxgNR6mhG20r+X
- AysjMJ/r8JKLbTNLuUwv3yLI2n2srTs0JByxt041l0sI9AIjeCnKDKnUTi8QqpAdfxiV
- 6RJfROXvnw8bh2yVWe5+4SMsJQVDId+2tfPhocy9RGmNkWGq5qxKXpeqUQhX0r+XAcQI
- YNnA==
-X-Gm-Message-State: AOJu0Yzg2GsAaGiza0+lXngjcXYGcGLH28w9kZBf8CsKnDt8/ssDprWy
- pDiRXi3yqrL8LNJ8L4QASdCZX77sVeu2TkZgukUt6pZpK2SMb/9xL5gAQVgeNl8bTSSv5JEtIxv
- EuJB4tKYlHsI+kONN9grr5lyga7cvQx3PNUojO5wGB2pUJhZhRxujl4VDEBXd9sAj21kWkaGZPA
- cxmZUvSpT2xWx7WN41TcyuYq4JYeUPkSgLkM0/Lv5k
-X-Gm-Gg: ASbGncuxe4zY6tZxwZGv9lsOsdt8+EPRTHBPRXxxcBZ5aLHYCDgUgxP2WtbUNLZ4oqP
- 7uVXCmHcdWCOnYyXIbY+ZgGcbuDdmBfXlPTbU94VeFO66nBGVdPDRPtZPINw+PY4ynBoSxt8jI2
- gXwupLCOBirgbXeZMs4uSs/Df1hXNqIOTMyplY5gxwHhzQL6d4x+bmOn0BYI2VsS1j4vAhLgvYz
- qa0MePbk+mOIlT4jKsNTuWNDrjrN+TZTXjz2WfOBPwP+/1SV2yYiT3KE38AxjwMZfcs+Ln2H0DH
- paxj304B1go5QO6OEdpMjt3sy0mWv4rVGjgfGHJlh+I=
-X-Received: by 2002:a05:6000:1a87:b0:3a5:3930:f57 with SMTP id
- ffacd0b85a97d-3b5f2e3722amr9638637f8f.51.1752491205992; 
- Mon, 14 Jul 2025 04:06:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpN4ER/MVc3ocntOVAK91nIlJUFPtS9McML9XrvTW/0Wli85ksa13lGcv/9TPQLO7TYEPjVQ==
-X-Received: by 2002:a05:6000:1a87:b0:3a5:3930:f57 with SMTP id
- ffacd0b85a97d-3b5f2e3722amr9638596f8f.51.1752491205405; 
- Mon, 14 Jul 2025 04:06:45 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.73.155])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-455f2d3a1b5sm86609585e9.30.2025.07.14.04.06.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:06:44 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=/DKBN3+7PHd5LpCAXXeTGQanR81sYEgVkI6B9fYUCVQ=;
+ b=igtnETdx4AXZEIoF6gcapg/8PrBRg+/DS60qyBpZJIMoRQqJZupKRVYWE/PbABpP/XznzP
+ BPZ1akSks1PSe3O7P9jNv4wW8Jhc0my4eMyHI9reYT7OiFZJObgdhfkSGmJxLUbzA7EeIM
+ E+xxOXMqG0LiipLEu+wTXD4a8Y4A5Qw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-W2ZyASOPOMa5pM16q6dCJw-1; Mon,
+ 14 Jul 2025 07:11:42 -0400
+X-MC-Unique: W2ZyASOPOMa5pM16q6dCJw-1
+X-Mimecast-MFC-AGG-ID: W2ZyASOPOMa5pM16q6dCJw_1752491501
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B82C1800268; Mon, 14 Jul 2025 11:11:41 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6689330001A1; Mon, 14 Jul 2025 11:11:38 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Yi Lai <yi1.lai@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 61/77] i386/cpu: Introduce cache model for YongFeng
-Date: Mon, 14 Jul 2025 13:03:50 +0200
-Message-ID: <20250714110406.117772-62-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
-References: <20250714110406.117772-1-pbonzini@redhat.com>
+Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Subject: [PULL 09/13] ui/spice: Blit the scanout texture if its memory layout
+ is not linear
+Date: Mon, 14 Jul 2025 15:10:32 +0400
+Message-ID: <20250714111039.4150419-10-marcandre.lureau@redhat.com>
+In-Reply-To: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,215 +91,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-Add the cache model to YongFeng (v3) to better emulate its
-environment.
+In cases where the scanout buffer is provided as a texture (e.g. Virgl)
+we need to check to see if it has a linear memory layout or not. If
+it doesn't have a linear layout, then blitting it onto the texture
+associated with the display surface (which already has a linear layout)
+seems to ensure that there is no corruption seen regardless of which
+encoder or decoder is used.
 
-Note, although YongFeng v2 was added after v10.0, it was also back
-ported to v10.0.2. Therefore, the new version (v3) is needed to avoid
-conflict.
-
-The cache model is as follows:
-
-      --- cache 0 ---
-      cache type                         = data cache (1)
-      cache level                        = 0x1 (1)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x0 (0)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x8 (8)
-      number of sets                     = 0x40 (64)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 64
-      (size synth)                       = 32768 (32 KB)
-      --- cache 1 ---
-      cache type                         = instruction cache (2)
-      cache level                        = 0x1 (1)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x0 (0)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x10 (16)
-      number of sets                     = 0x40 (64)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = false
-      complex cache indexing             = false
-      number of sets (s)                 = 64
-      (size synth)                       = 65536 (64 KB)
-      --- cache 2 ---
-      cache type                         = unified cache (3)
-      cache level                        = 0x2 (2)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x0 (0)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x8 (8)
-      number of sets                     = 0x200 (512)
-      WBINVD/INVD acts on lower caches   = false
-      inclusive to lower caches          = true
-      complex cache indexing             = false
-      number of sets (s)                 = 512
-      (size synth)                       = 262144 (256 KB)
-      --- cache 3 ---
-      cache type                         = unified cache (3)
-      cache level                        = 0x3 (3)
-      self-initializing cache level      = true
-      fully associative cache            = false
-      maximum IDs for CPUs sharing cache = 0x0 (0)
-      maximum IDs for cores in pkg       = 0x0 (0)
-      system coherency line size         = 0x40 (64)
-      physical line partitions           = 0x1 (1)
-      ways of associativity              = 0x10 (16)
-      number of sets                     = 0x2000 (8192)
-      WBINVD/INVD acts on lower caches   = true
-      inclusive to lower caches          = true
-      complex cache indexing             = false
-      number of sets (s)                 = 8192
-      (size synth)                       = 8388608 (8 MB)
-      --- cache 4 ---
-      cache type                         = no more caches (0)
-
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711104603.1634832-5-zhao1.liu@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Frediano Ziglio <freddy77@gmail.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Message-Id: <20250617043546.1022779-8-vivek.kasireddy@intel.com>
 ---
- target/i386/cpu.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ include/ui/spice-display.h |  3 ++
+ ui/spice-display.c         | 81 +++++++++++++++++++++++++++++++++++---
+ 2 files changed, 78 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b3b29f69666..40f3b5eac88 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -3156,6 +3156,105 @@ static const CPUCaches xeon_srf_cache_info = {
-     },
+diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
+index 9bdde78266..690ece7380 100644
+--- a/include/ui/spice-display.h
++++ b/include/ui/spice-display.h
+@@ -132,6 +132,9 @@ struct SimpleSpiceDisplay {
+     egl_fb guest_fb;
+     egl_fb blit_fb;
+     egl_fb cursor_fb;
++    bool backing_y_0_top;
++    bool blit_scanout_texture;
++    bool new_scanout_texture;
+     bool have_hot;
+ #endif
  };
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 854a97c198..9ce622cefc 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -1086,7 +1086,7 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
+ {
+     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
+     EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourcc = 0;
+-    int fd[DMABUF_MAX_PLANES], num_planes;
++    int fd[DMABUF_MAX_PLANES], num_planes, i;
+     uint64_t modifier;
  
-+static const CPUCaches yongfeng_cache_info = {
-+    .l1d_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x0.EAX */
-+        .type = DATA_CACHE,
-+        .level = 1,
-+        .self_init = true,
+     assert(tex_id);
+@@ -1098,11 +1098,26 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
+ 
+     trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
+ 
+-    /* note: spice server will close the fd */
+-    spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
+-                            (uint32_t *)offset, (uint32_t *)stride, num_planes,
+-                            fourcc, modifier, y_0_top);
+-    qemu_spice_gl_monitor_config(ssd, x, y, w, h);
++    if (spice_remote_client && modifier != DRM_FORMAT_MOD_LINEAR) {
++        egl_fb_destroy(&ssd->guest_fb);
++        egl_fb_setup_for_tex(&ssd->guest_fb,
++                             backing_width, backing_height,
++                             tex_id, false);
++        ssd->backing_y_0_top = y_0_top;
++        ssd->blit_scanout_texture = true;
++        ssd->new_scanout_texture = true;
 +
-+        /* CPUID 0x4.0x0.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
++        for (i = 0; i < num_planes; i++) {
++            close(fd[i]);
++        }
++    } else {
++        /* note: spice server will close the fd */
++        spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
++                                (uint32_t *)offset, (uint32_t *)stride,
++                                num_planes, fourcc, modifier, y_0_top);
++        qemu_spice_gl_monitor_config(ssd, x, y, w, h);
++    }
 +
-+        /* CPUID 0x4.0x0.ECX */
-+        .sets = 64,
+     ssd->have_surface = false;
+     ssd->have_scanout = true;
+ }
+@@ -1168,6 +1183,50 @@ static void qemu_spice_gl_release_dmabuf(DisplayChangeListener *dcl,
+     egl_dmabuf_release_texture(dmabuf);
+ }
+ 
++static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
++                                          egl_fb *scanout_tex_fb)
++{
++    uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
++    int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
++    uint64_t modifier;
++    bool ret;
 +
-+        /* CPUID 0x4.0x0.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
++    egl_fb_destroy(scanout_tex_fb);
++    egl_fb_setup_for_tex(scanout_tex_fb,
++                         surface_width(ssd->ds), surface_height(ssd->ds),
++                         ssd->ds->texture, false);
++    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
++    glFlush();
 +
-+        /* CPUID 0x80000005.ECX */
-+        .lines_per_tag = 1,
-+        .size = 32 * KiB,
++    if (!ssd->new_scanout_texture) {
++        return true;
++    }
 +
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x1.EAX */
-+        .type = INSTRUCTION_CACHE,
-+        .level = 1,
-+        .self_init = true,
++    ret = egl_dmabuf_export_texture(ssd->ds->texture,
++                                    fds,
++                                    (EGLint *)offsets,
++                                    (EGLint *)strides,
++                                    &fourcc,
++                                    &num_planes,
++                                    &modifier);
++    if (!ret) {
++        error_report("spice: failed to get fd for texture");
++        return false;
++    }
 +
-+        /* CPUID 0x4.0x1.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 16,
++    spice_server_gl_scanout(&ssd->qxl, fds,
++                            surface_width(ssd->ds),
++                            surface_height(ssd->ds),
++                            (uint32_t *)offsets, (uint32_t *)strides,
++                            num_planes, fourcc, modifier,
++                            ssd->backing_y_0_top);
++    qemu_spice_gl_monitor_config(ssd, 0, 0,
++                                 surface_width(ssd->ds),
++                                 surface_height(ssd->ds));
++    ssd->new_scanout_texture = false;
++    return true;
++}
 +
-+        /* CPUID 0x4.0x1.ECX */
-+        .sets = 64,
+ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
+                                  uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+ {
+@@ -1175,6 +1234,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
+     EGLint fourcc = 0;
+     bool render_cursor = false;
+     bool y_0_top = false; /* FIXME */
++    bool ret;
+     uint32_t width, height, texture;
+ 
+     if (!ssd->have_scanout) {
+@@ -1269,6 +1329,15 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
+         glFlush();
+     }
+ 
++    if (spice_remote_client && ssd->blit_scanout_texture) {
++        egl_fb scanout_tex_fb;
 +
-+        /* CPUID 0x4.0x1.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = false,
-+        .complex_indexing = false,
++        ret = spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
++        if (!ret) {
++            return;
++        }
++    }
 +
-+        /* CPUID 0x80000005.EDX */
-+        .lines_per_tag = 1,
-+        .size = 64 * KiB,
-+
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x2.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 2,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x2.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 8,
-+
-+        /* CPUID 0x4.0x2.ECX */
-+        .sets = 512,
-+
-+        /* CPUID 0x4.0x2.EDX */
-+        .no_invd_sharing = false,
-+        .inclusive = true,
-+        .complex_indexing = false,
-+
-+        /* CPUID 0x80000006.ECX */
-+        .size = 256 * KiB,
-+
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l3_cache = &(CPUCacheInfo) {
-+        /* CPUID 0x4.0x3.EAX */
-+        .type = UNIFIED_CACHE,
-+        .level = 3,
-+        .self_init = true,
-+
-+        /* CPUID 0x4.0x3.EBX */
-+        .line_size = 64,
-+        .partitions = 1,
-+        .associativity = 16,
-+
-+        /* CPUID 0x4.0x3.ECX */
-+        .sets = 8192,
-+
-+        /* CPUID 0x4.0x3.EDX */
-+        .no_invd_sharing = true,
-+        .inclusive = true,
-+        .complex_indexing = false,
-+
-+        .size = 8 * MiB,
-+        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    },
-+};
-+
- /* The following VMX features are not supported by KVM and are left out in the
-  * CPU definitions:
-  *
-@@ -6435,6 +6534,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ }
-                 }
-             },
-+            {
-+                .version = 3,
-+                .note = "with the cache model",
-+                .cache_info = &yongfeng_cache_info,
-+            },
-             { /* end of list */ }
-         }
-     },
+     trace_qemu_spice_gl_update(ssd->qxl.id, w, h, x, y);
+     qemu_spice_gl_block(ssd, true);
+     glFlush();
 -- 
 2.50.0
 
