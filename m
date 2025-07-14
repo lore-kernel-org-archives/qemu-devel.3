@@ -4,148 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A012C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4D3C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubM8U-0002wg-8x; Mon, 14 Jul 2025 12:34:38 -0400
+	id 1ubMES-00012K-JH; Mon, 14 Jul 2025 12:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubLCR-00036L-T3
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:34:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubLCP-0004VO-Q8
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:34:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752507274;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qMUktZ3W6Hd9R0RM2Dxyy7jk9fiFT3p5cT6jYvg5Vcs=;
- b=GmLHtYkhyMI17C1hbo7eRCEWto6C45RuhLSk5LzdX4JZtUnpGiZehVzEtUHWxGunOZMSpV
- c1efl2lK9S4MLkm+ck1D4lTePXkUNviXijy3pw6p/rmqT8AEjeOJRR1zb+xDQrcXQTfr1M
- Y1UhoRIcqmQJFyyLI3PkJJsZhFIBJlU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-A-7PF9lQPiK-JonZU5oayA-1; Mon, 14 Jul 2025 11:34:33 -0400
-X-MC-Unique: A-7PF9lQPiK-JonZU5oayA-1
-X-Mimecast-MFC-AGG-ID: A-7PF9lQPiK-JonZU5oayA_1752507272
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f7ebfd00so1743224f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:34:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ubLIm-0001QV-3k
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:41:12 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ubLIj-0005QL-4W
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:41:11 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7490acf57b9so3158825b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:41:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752507667; x=1753112467; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WaMSdvDqUwH+ccr+EoYDri+v+MWm3qoOo8/ZPe03Y4A=;
+ b=LAJ3CN0KmIUlIWwOGUw8ADXsYe2NovEi5PZPG9Dwwq3BuixUCx/SAxF7T8Lda2NPO/
+ UeH7rSdMerMZw9+zmpnIYr1S2JNnDUB9tbkIz3vp8Y19G5qlxewV9GjyNpJgBAS35eha
+ ce4uIEQkhD5qGY39pDetSXRe7r954ElV8kJIIrn4yI2Ij53xgYK2CEK+mmC5CT/RJUkh
+ wPYZO3yjEqvHJjKgP6YOhxAYiniw+Azln3Es6noNuzbJ4nc5474ZNU1UZgoDLzQkGvxM
+ vIa2Bk0MFpW2tWb3+0fxdiHAOQHA6hH+WikBcqdB3nHDZKggunxGWYaqUSz4v/jUJLES
+ EtxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752507272; x=1753112072;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qMUktZ3W6Hd9R0RM2Dxyy7jk9fiFT3p5cT6jYvg5Vcs=;
- b=Heay+XGj172aoDjt1kxl6c5IqOnxuoyPta9yzGBinMbPEBsYjHPCBMFOir4CpQyST8
- dypdsQQKUM3cOmgrvhttJciBTl/YkLbtjtzRLTuG4I6C1KQdVlSFMov+AAjOpcgJmhs5
- I42dsjosFu+SykXhNQU4zDQ8n2e0OToMoSLJ4wnI/CLvL5ELJY+erRO/r1qvmWNG2V2P
- 22P3GfQt8DfrqVK/kzp+M6jSnEmpZM0e7NRN8ePKa5hyK/UF4HQy9HKVxHfqucJmn+yy
- JNZZ3HRddVXqpk4Ymym9zIeDtI5lzNZRmcNp+ZMbqAFY9Fk7WcXSq6CDrS2BBKDT3KNU
- /Ocg==
+ d=1e100.net; s=20230601; t=1752507667; x=1753112467;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WaMSdvDqUwH+ccr+EoYDri+v+MWm3qoOo8/ZPe03Y4A=;
+ b=MMHQ/kZD570g/Mom0p2t2IbV750oYfLwwqbGOhfmVGPmhNRAZs8RzCJsbG0Te3Xnpb
+ xaaUqOHGakGfLquiTsfXi/iCssKs6qWU/fF6B0McIorFNFjP0+u1qNPCDAJiZ11XARjF
+ 17KOM1YbfC9VytuqzlaSFiQlkYHWNMyziS3E/N5gjmC6eFI1R/CEWa2jj+TelBdK58HW
+ fCa59EUNhrEJUfH5ZPF7o3QuKtNUVVPtcC4v2loMVLPhOm51Hp6JgB3p37Fv8TOVieYx
+ Yruc3D8tw8c9lW6HOQd2X2DzgQrS4xopD2+jxuA27pomn08IKGmvPO3e4SbtlH7Wcgrd
+ DnKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIQSSbZ9LoJhOg8zvKh1gvigVq9+Qurzk4+vSIGz72PYBEF6CwHWxNbY/0rjGb/9QxO/MaRLC57e1t@nongnu.org
-X-Gm-Message-State: AOJu0YzI88m9Cv4mU8ikG7aJARKnwjwDQ8vktioLJnmC6gDeasEctLr6
- j1qRaGN5/eBy7xdwZclcA2nIufwS+FjrKgABbxu/EEzVTXJGH1EO99OyFGla6HyYWyJysB6YE+G
- NohaGM1zKB7HPIcxeDOHmdd9aHWkifUUEceDXsEq0gAN9xMWYA1hBmGzC
-X-Gm-Gg: ASbGncvZx73KpaqYro/qq1vU9CnSXJnN3XZjxfokGCQEieqqOSOwQH4kfdnzkPr50id
- FCBxyExlSxU+Aah8VALyihh0wkCKpAHOjTBlDJwq6uH/UVva8I1J9Q+Lw1PO/JDw7+I67wPLdNO
- FhPPK3AgIRAAy0OpocuEonUyNvWt3PkFvYr6dZfarD2yknDk6zI19BHn80GAsvB7eH2C3xQzL8W
- CNZHoXkqzV+GZf/+oAsO4YCj452VkECAH/YNNkGqnzLYcVrZZtl2tEU4oSjVJcVIxJrNg8uxZDM
- tcrdBMayAvwW7prFA3+3PnsfupjiQ4UrC43DXcMEX+WYxdVFx2Y3SEfGHHBm1DKkRDy3LxOZcoO
- TH/bn
-X-Received: by 2002:a5d:5f55:0:b0:3a4:dcfb:3118 with SMTP id
- ffacd0b85a97d-3b5f187599dmr11139975f8f.10.1752507272203; 
- Mon, 14 Jul 2025 08:34:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRPPEQ/O+nx8slrLBlbNmLGWnscMamlItdS9EG5HUKNtZb2/UyPTTv5o1gQtS9yv9Rx1dfpg==
-X-Received: by 2002:a5d:5f55:0:b0:3a4:dcfb:3118 with SMTP id
- ffacd0b85a97d-3b5f187599dmr11139953f8f.10.1752507271739; 
- Mon, 14 Jul 2025 08:34:31 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-114-106.pools.arcor-ip.net.
- [47.64.114.106]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45617dc1fccsm45392655e9.5.2025.07.14.08.34.30
+ AJvYcCX+tn4KEegVQ5EiKogcQ1einjtOdWhS0o/R4MS4lxN2ZX3FZxtw79OOJgE09GaV/WBTwR49Nb3O0Btj@nongnu.org
+X-Gm-Message-State: AOJu0YzloQhARv2Ww/NHTd7YA+DEMhmaOlcR/krzk2O/6eB6AZpmFKUB
+ c4C82ilNXCfwW2BXQeecKAKwH2Kiu91E+2Q4MYqg3PePqQ0KAWl1gfWjjx/LLy3RwWY=
+X-Gm-Gg: ASbGncsk68Nf5tcYI7cpAJdzDZSUGI38VgQWSvfQwV+BYG+wo7vYFTXfRwl81bcuk+u
+ Z59k2ogt4ichX4cxsRV1AmyIy2LI3Qrm+UnaoSQeR9GITMvPbi/3JWLt9fKJBCeC9FmPLiRYjO7
+ zPUECkDHM3lPbtT/PYqTaONQiGj18c2E8pbVm4QihV7YxA+7Nt9iKppdo4DFmcjUCTUqJqpfQk4
+ WOSKBj+vtFjbY13EKKDMhJVUEzTji+s071CFTu37ziMDi1JEq6NvDS0erZ7wrUTY8fK2IsU0cd4
+ izQNYn3wiGnyTmu32FWBy68RDaE/JNDq1nhC4jPd519CMwLVuEOuL5Twr5y9FtgdOdV3F5Vx1Lz
+ WSGiVIVEo4UgUj4oTd+wYvPIPudly8QbidAM=
+X-Google-Smtp-Source: AGHT+IGQC4jAxZPo6q0j+cKIoSGM+SwMsKnoEpi//37hllrFLHqtMnfPmkQ0u8+GT7D5t5qEABhZAw==
+X-Received: by 2002:a05:6a00:39a0:b0:749:456:4082 with SMTP id
+ d2e1a72fcca58-74ee0aa6980mr18948929b3a.1.1752507667341; 
+ Mon, 14 Jul 2025 08:41:07 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74eb9f8b990sm10865681b3a.153.2025.07.14.08.41.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 08:34:31 -0700 (PDT)
-Message-ID: <2c1bd3f0-731c-4ca7-9f43-50c3c572aaa6@redhat.com>
-Date: Mon, 14 Jul 2025 17:34:29 +0200
+ Mon, 14 Jul 2025 08:41:06 -0700 (PDT)
+Message-ID: <95b00393-bdd2-4db3-ac39-02a09f83b4d7@linaro.org>
+Date: Mon, 14 Jul 2025 08:41:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 20/28] pc-bios/s390-ccw: Add signature verification for
- secure IPL in audit mode
-To: Jared Rossi <jrossi@linux.ibm.com>, Collin Walling
- <walling@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-21-zycai@linux.ibm.com>
- <eccbac31-7c1d-4b75-a284-a46ad98675db@linux.ibm.com>
- <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] target/arm: Provide always-false kvm_arm_*_supported()
+ stubs for usermode
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <80ebd632-5b56-4391-b60d-f6a64f311e7f@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20250714135152.1896214-1-peter.maydell@linaro.org>
+ <0b438773-01b9-42e1-8edf-2330e50387f8@linaro.org>
+In-Reply-To: <0b438773-01b9-42e1-8edf-2330e50387f8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,42 +106,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/07/2025 16.54, Jared Rossi wrote:
+On 7/14/25 8:31 AM, Pierrick Bouvier wrote:
+> On 7/14/25 6:51 AM, Peter Maydell wrote:
+>> If you try to build aarch64-linux-user with clang and --enable-debug then it
+>> fails to compile:
+>>
+>>    ld: libqemu-aarch64-linux-user.a.p/target_arm_cpu64.c.o: in function `cpu_arm_set_sve':
+>>    ../../target/arm/cpu64.c:321:(.text+0x1254): undefined reference to `kvm_arm_sve_supported'
+>>
+>> This is a regression introduced in commit f86d4220, which switched
+>> the kvm-stub.c file away from being built for all arm targets to only
+>> being built for system emulation binaries.  It doesn't affect gcc,
+>> presumably because even at -O0 gcc folds away the always-false
+>> kvm_enabled() condition but clang does not.
+>>
+>> We would prefer not to build kvm-stub.c once for usermode and once
+>> for system-emulation binaries, and we can't build it just once for
+>> both because it includes cpu.h.  So instead provide always-false
+>> versions of the five functions that are valid to call without KVM
+>> support in kvm_arm.h.
+>>
+>> Fixes: f86d42205c2eba ("target/arm/meson: accelerator files are not needed in user mode")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3033
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>> I'm never sure when we prefer to use stub-functions in separate C files
+>> vs when we prefer to have ifdeffed stubs in headers. There are several
+>> ways we could fix this compile error, so I just picked one...
+>> ---
+>>    target/arm/kvm_arm.h | 35 +++++++++++++++++++++++++++++++++++
+>>    1 file changed, 35 insertions(+)
+>>
 > 
-> [snip...]
->>> +
->>> +        entry++;
->>> +
->>> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
->>> +            puts("Wrong entry value");
->>> +            return -EINVAL;
->>> +        }
->> Can someone who is more informed than I am of the IPL process please
->> explain to me what is the purpose of the above check?  Why does it check
->> if the next entry, the one which isn't going to be inspected/loaded, is
->> within the bounds of tmp_sec?  This has been here since this file's
->> inception and I can't find any documentation or mention that supports it.
->>
->> This code precludes any of the secure IPL changes.
->>
->> Was this actually meant to be entry[0] to ensure the actual entry we
->> want to work on is not outside the bounds of tmp_sec?  Or perhaps it was
->> meant to be done before the increment to entry?
->>
+> Thanks Peter, clang with --enable-debug is indeed a combination I didn't
+> try. I'll test this too now. Going through this topic, yes I noticed
+> that gcc always folds the any if (0) condition, and, based on a Richard
+> comment (I can't find now) it seems that we used to rely on that for
+> other parts of the code.
 > 
-> I noticed that as well and came to the same conclusions as you, which is to 
-> say,
-> it has always been that way and it is not clear what the purpose is, but it 
-> does
-> not appear to have any impact on the proposed secure IPL functionality.
+> The fix you propose works well (initial goal was just to remove
+> CONFIG_KVM, so having CONFIG_USER_ONLY is ok), but I wonder if there is
+> something specific affecting clang in this case and preventing the folding.
+> 
 
-I think it's meant as a check for the *end* of entry[0], so it's likely just 
-a quirky way of saying:
+Indeed, clang does not fold the condition "value && kvm_enabled() && 
+!kvm_arm_sve_supported()". Looks like a missing case.
+This code compiles with gcc -O0, but not clang -O0.
 
-    if (((uint8_t *)entry) + sizeof(*entry) > tmp_sec + MAX_SECTOR_SIZE)
+extern int f(void);
+int main(int argc) {
+     if (argc && 0)
+         f();
+}
 
-?
+As folding is not guaranteed by C standard, I'm not sure it's really 
+possible to file a bug. However, since we rely on this behaviour in 
+other parts, maybe it would be better to rewrite the condition on our side.
 
-  Thomas
+By changing the code to this, the folding happens as expected.
+
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 26cf7e6dfa2..af5788dafab 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -318,9 +318,11 @@ static void cpu_arm_set_sve(Object *obj, bool 
+value, Error **errp)
+  {
+      ARMCPU *cpu = ARM_CPU(obj);
+
+-    if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
+-        error_setg(errp, "'sve' feature not supported by KVM on this 
+host");
+-        return;
++    if (value) {
++        if (kvm_enabled() && !kvm_arm_sve_supported()) {
++            error_setg(errp, "'sve' feature not supported by KVM on 
+this host");
++            return;
++        }
+      }
+
+      FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
+
+If you prefer keeping your patch, I'm ok, but fixing the condition looks 
+better to me (as we already rely on constant folding in other places).
+
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Thanks,
+> Pierrick
 
 
