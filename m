@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5A1DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93ADC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSGv-0005Gw-QE; Mon, 14 Jul 2025 19:07:45 -0400
+	id 1ubSHn-0008FL-A8; Mon, 14 Jul 2025 19:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGe-0003rj-6D
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:28 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGj-0004CM-O7
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGc-0005WX-Lb
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSGh-0005XW-OI
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534445;
+ s=mimecast20190719; t=1752534451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=RJv/YmIjonHQlMT0SQkrle2ZJPKdQ/3itH7NXNzClac=;
- b=JbQ+OFXrcePBTJAWUbofyoPPq7rfuJCxtwLEoNargBjnfXyoGWUazq267GKWGCWy7PIxhN
- rOYLsqBHao76y5KZDcQYXjOhIAs1teROxOPwk1561Iu+RqfFBcyD7teZwwmLpRng+PJeJj
- rJd5Yp94yFuaHAVAUvV8XyHsTwqJ5AU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uhGqUwTLjS2ARoAcmn4Djkgcyrtq4txVik2vc56G05k=;
+ b=cJTwncFh601yLWTZGET6bb3k0LJX47g8g33XAAZ6Z+ilvkIC+h53wFJb1q5U7oYj7aQCbq
+ j5uW/KHsCCAK/qhkyxRinBW36gMoO7peniSuOqR37nx32+gbk0R3MgkBL5F+PQ85YugFlA
+ cEc0J00I/SpgR6xNH5W8PSoXPIPhQD0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-2yLOjqqGNXmcWIpdLyNn5A-1; Mon, 14 Jul 2025 19:07:24 -0400
-X-MC-Unique: 2yLOjqqGNXmcWIpdLyNn5A-1
-X-Mimecast-MFC-AGG-ID: 2yLOjqqGNXmcWIpdLyNn5A_1752534443
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4561dbbcc7eso4644795e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:23 -0700 (PDT)
+ us-mta-634-KVjk3MX0Ntqf1OhhiI6OHA-1; Mon, 14 Jul 2025 19:07:30 -0400
+X-MC-Unique: KVjk3MX0Ntqf1OhhiI6OHA-1
+X-Mimecast-MFC-AGG-ID: KVjk3MX0Ntqf1OhhiI6OHA_1752534449
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45626e0d3e1so1101335e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534442; x=1753139242;
+ d=1e100.net; s=20230601; t=1752534448; x=1753139248;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RJv/YmIjonHQlMT0SQkrle2ZJPKdQ/3itH7NXNzClac=;
- b=ThXw3XsZhFfeA/1/5srtcLX3O0/C31fmUVzj1YLuxd8ScrTGTHlpMCxCrzvhCp9lFP
- alabTpMyIFDijUqH+GZWg79sapf8E7kw6yBbO+Dna0k5MmcVBnveVbGWNfVXIE7JfnOH
- 5zP+1KZCjnLVixkS987zdYBsl5rgTgv8J3QHzUibyPK0nDJs1vKpFkW109g8TunE6kDd
- LrJS/SFF3mYFh6Srr8mTIrsOMxdyS4fg5ogq6A3d6zZ9CkpoTxhyvBbG+8F0fADB7IBz
- YhZskETWliAXyDL0TPL4/x6y3T2QB8X1jfnieS1KiAvKst7+kv/UE/DvFhqGUKfQpoh+
- nxOQ==
-X-Gm-Message-State: AOJu0Yy+0GeTxnCrL8vBYr28Yl0BTwEJPPPCo9ebh4Y1YOmdWUkDd20v
- GuIydwWiYbvgjoZgK2cmpaPwIQS4UMuwLXo1I0TFw0cb8gX30ZjExZ/IincRismrZyheQIRSMv5
- 9Egu7PjgLJRwdGydkxuU8obZbOPhLIJjhGAULpKY9xJMze002N6olnENQ9Gtxqoh6i0Kdm23fT3
- UVu8GvHpj/cR+PJP0SAxo5eCVXAZKkWc8B6A==
-X-Gm-Gg: ASbGncsIb+npcPYiYEf7Po2S98TNSybg90NKm24MM6T8RIa1441/FhvoEXUAaRf9T6J
- yqgHCpNPEtk1/ko1Gll8VZQvdfHqmQSg4X6Zg196F+NflC6U4eoJsWB4pXp/WHk1rleYFI2hfLX
- XJSUjg2qHRzHYUjCuOmm5YTbCcaktrWMQEsLRIQTvBzZp9N0Cwp0/K9Oq3PEprQ6UHLC4UzLRIX
- nQIXyGcK72VbU2jfe2uR2kiI+L+xQ16KtvG7gG7YJLDmZgWnU0QPCppbSmD8BFZmjN6z1Oaqtci
- w4XzhB6AQryPF7QV3X/CjejAI0hKUb+B
-X-Received: by 2002:a05:600c:3595:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-454ec15e5c5mr131981795e9.11.1752534442271; 
- Mon, 14 Jul 2025 16:07:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdTOtbZq8Kx063i3ZxrpbYGmrMGCPGdabNJ/KZtaCZbC5wZWtRq4ZwiSKHHRZjmaXGYnyaEw==
-X-Received: by 2002:a05:600c:3595:b0:442:f8e7:25ef with SMTP id
- 5b1f17b1804b1-454ec15e5c5mr131981625e9.11.1752534441827; 
- Mon, 14 Jul 2025 16:07:21 -0700 (PDT)
+ bh=uhGqUwTLjS2ARoAcmn4Djkgcyrtq4txVik2vc56G05k=;
+ b=TWbddBdMMh+6KEv0BQxKWrQLMvOAYg5IW0oR0hVtWjCWfCL8BGeeuLBFk0k9NjFrHD
+ KjzgVED+tsk8V1fcHdumPWjF6Anwa6s7T+t+z5ORE3foQRWYGexdiYBV5ExH/DNAV/qa
+ dqQ8S0pppuiWhNPql4qqV2O8CoOGYu7JRQl3qjOah4k6fcf9j8jP8e/OKjhIoQr61+VJ
+ EzPpgTMkIXKCNnqb4yPu6SunkTQtmSRKVUrzwT2/gVqMG2U6Zf0ebtMTvoQpKPpL1I/Q
+ jfJA+6+MiF/mZ2xXs3URwMoodgJ9te1fKmArtpFFvD6x44TTm1hKldtlJ61L/s/gcZ+U
+ dMwQ==
+X-Gm-Message-State: AOJu0Yw8N9mo8u60Q82xbMMqhFDlK3dQJfQ18hqLNjyFVu3oPwytk/G8
+ NkfRd4mAJB5iJFJ90/F6+QHwO/l1t8UZtzF8xQxLOlvRFRPyrnU0T7HFz9p/ggSTF4if3hS4zjU
+ Tlhyelwn84idTkpyy58BQPFQZ97Xhc/zPdPnTBdjrkUq6595TX22QzJiaDgMa7RVWYi84Vq6HEI
+ uUyMA8RAFbwfgpTBlLaxCeXiX+38mZuY0OIA==
+X-Gm-Gg: ASbGncsWTUEqRoF0F2l3CuNYN7YaV3UYIV0gZIS2KhpoQa7gJp/D+21xc5hBjS+21Bx
+ 8mscbvK0i4TvRKojuWbTMIIVdATHBKVMoE8GuB55gyom4zwegQkhGAOLHexIT6h78vzgKKxmsnO
+ Xv9WZlgSnGqsw45loyGSTB/p+7nalNdoELf0TLa5zA4JEfYheLQZ0ocscmiuw4haJJ83bdg5/sp
+ oupNaNzcogWlnT1YeB/XwDnxzb0hRoxFIioiV1nmu90Q2gx+Wr35hEWRgENUGsWs5vJnjbqXYmo
+ ue/bJLOLt5Ya9ju4hkT18vas475QqZ82
+X-Received: by 2002:a05:6000:41fa:b0:3b2:fe84:a10 with SMTP id
+ ffacd0b85a97d-3b5f181c283mr13773558f8f.0.1752534448436; 
+ Mon, 14 Jul 2025 16:07:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQ/M/8T5iJmS75P7VdxU06uufMVT8mkEnTxNK8jVZlna9ATE0cbVNsGVnyjGz94oN5NDa69g==
+X-Received: by 2002:a05:6000:41fa:b0:3b2:fe84:a10 with SMTP id
+ ffacd0b85a97d-3b5f181c283mr13773535f8f.0.1752534447991; 
+ Mon, 14 Jul 2025 16:07:27 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4561a052729sm48139675e9.33.2025.07.14.16.07.20
+ 5b1f17b1804b1-45626c9ac1dsm3528435e9.0.2025.07.14.16.07.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:21 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:19 -0400
+ Mon, 14 Jul 2025 16:07:27 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:26 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Li Chen <chenl311@chinatelecom.cn>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 26/97] tests/qtest/bios-tables-test: Add test for disabling
- SPCR on AArch64
-Message-ID: <9ce87106c7bcb1c2ada17e578db87f13ac29ae92.1752534227.git.mst@redhat.com>
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 29/97] pci: Add a memory attribute for pre-translated DMA
+ operations
+Message-ID: <2dd51fc52a8b85e6f39d1297f338344ed03dc5b1.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -110,56 +110,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Chen <chenl311@chinatelecom.cn>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-Add ACPI SPCR table test case for ARM when SPCR was off.
+The address_type bit will be set to PCI_AT_TRANSLATED by devices that
+use cached addresses obtained via ATS.
 
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Message-Id: <20250528105404.457729-3-me@linux.beauty>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Message-Id: <20250628180226.133285-2-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/exec/memattrs.h | 3 +++
+ include/hw/pci/pci.h    | 9 +++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index f41e638014..c84cf1070d 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1789,6 +1789,24 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
-     free_test_data(&data);
- }
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index 8db1d30464..52ee955249 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -54,6 +54,9 @@ typedef struct MemTxAttrs {
+      */
+     unsigned int pid:8;
  
-+static void test_acpi_aarch64_virt_tcg_acpi_spcr(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+        .variant = ".acpispcr",
-+    };
++    /* PCI - IOMMU operations, see PCIAddressType */
++    unsigned int address_type:1;
 +
-+    test_acpi_one("-cpu cortex-a57 "
-+                  " -machine spcr=off", &data);
-+    free_test_data(&data);
-+}
- static void test_acpi_tcg_acpi_hmat(const char *machine, const char *arch)
- {
-     test_data data = {};
-@@ -2672,6 +2690,8 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
-             qtest_add_func("acpi/virt/oem-fields",
-                            test_acpi_aarch64_virt_oem_fields);
-+            qtest_add_func("acpi/virt/acpispcr",
-+                           test_acpi_aarch64_virt_tcg_acpi_spcr);
-             if (qtest_has_device("virtio-iommu-pci")) {
-                 qtest_add_func("acpi/virt/viot", test_acpi_aarch64_virt_viot);
-             }
+     /*
+      * Bus masters which don't specify any attributes will get this
+      * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index df3cc7b875..6b7d3ac8a3 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -134,6 +134,15 @@ struct PCIHostDeviceAddress {
+     unsigned int function;
+ };
+ 
++/*
++ * Represents the Address Type (AT) field in a PCI request,
++ * see MemTxAttrs.address_type
++ */
++typedef enum PCIAddressType {
++    PCI_AT_UNTRANSLATED = 0, /* Default when no attribute is set */
++    PCI_AT_TRANSLATED = 1,
++} PCIAddressType;
++
+ typedef void PCIConfigWriteFunc(PCIDevice *pci_dev,
+                                 uint32_t address, uint32_t data, int len);
+ typedef uint32_t PCIConfigReadFunc(PCIDevice *pci_dev,
 -- 
 MST
 
