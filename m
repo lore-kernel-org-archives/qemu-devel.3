@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71298C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 22:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6254C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 22:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubRiB-0006XE-Em; Mon, 14 Jul 2025 18:31:52 -0400
+	id 1ubRiO-0006vD-I6; Mon, 14 Jul 2025 18:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1ubRQi-00060C-3V; Mon, 14 Jul 2025 18:13:48 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1ubRQg-0001bB-7C; Mon, 14 Jul 2025 18:13:47 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56EIYoEq002333;
- Mon, 14 Jul 2025 22:13:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=fex3dh
- 6Qdzr0L44ELvj+dpfCgsdruk0y8LcLsBPsbAY=; b=nRF7rDZieeKmmIwtVtUspe
- Dfghi4ZpF44g5ED3fAzV5v98w9ttlqggBt4R6WC8U4+SAYC1T6Z011FjC29MJdN7
- Lyt7tacnh9BWp9mbehfM397K7sTORhnQS5autUChUdblTNvRrfEgS3Ct6qCHPxjB
- j4qb9OTR2hlP4UQhkiIQsif5Vk6rBvjl/EGGrB9r4RrFN7JGbPvx7yY6U/A60WB6
- 7bToGa8HPqbH8Jre5F2nzL+OSiqDK+N6sME9j+uGU6Sfpcp+/Tmk9bfmLLsSxQEg
- IWP8YgHaupWg0sqRsARK72flgpmJIdwXQPvERBVPThR+rmHdJm1REqjoOAhhgbQA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47ue4tuvkj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Jul 2025 22:13:44 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56EIkUMO008941;
- Mon, 14 Jul 2025 22:13:43 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47v3hmfp02-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Jul 2025 22:13:43 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56EMDgoX23396998
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Jul 2025 22:13:42 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F167158043;
- Mon, 14 Jul 2025 22:13:41 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AF3F58059;
- Mon, 14 Jul 2025 22:13:40 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 14 Jul 2025 22:13:40 +0000 (GMT)
-Message-ID: <c331ce40-2f77-4636-8cb2-4cd3a34ccd12@linux.ibm.com>
-Date: Mon, 14 Jul 2025 18:13:39 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubRWx-0005i2-Dh
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 18:20:16 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubRWt-0002vK-Ch
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 18:20:14 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4537edf2c3cso49942675e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 15:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752531609; x=1753136409; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7MREfJTnMiCwLWnp7lb9ARgJpNsELprk/Ykka5WjB7o=;
+ b=ulFsIA9hOs7ZjLlayO7AEiw5xiZ7lyCbnwafZsoLjuufDn3KWDw8UzuJftbNtkmZj8
+ YiVS/LtBkoyxAtcuYkp8v4ZKwg3xSQ0fHlV5n10zjOvytMC5RHClpvJ/+LfHtEkCW++7
+ RwblBWlZUZtqY8CnfrMAlNEWUKvaMK2Uj9ceSAef6P/xiJtfzd338NQ504eF6b3bgfRJ
+ RiyjZjP7lCE12cOLgirrP6+x5FAKWDetLsVBUugCykOb36ognNRiFEF4yOaVhANvdSEk
+ JdldWhmj7Or1V1C3lcek8RXU5jRExmhHeUdvfPamA3ydb0aFrYgNkQ1OlAVgj0xQzlFz
+ ik9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752531609; x=1753136409;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7MREfJTnMiCwLWnp7lb9ARgJpNsELprk/Ykka5WjB7o=;
+ b=rJMBw786sWPZdzohFCtsTEM3IxIHd5JDHS/tc3u8WpxPWWjonnNWm+99cWbXfOk67v
+ O2fF4uTuk+iUn0Aab70j/ca+5wzEZd7T58XLWLby+iPuTZisJXsU8Ew7fqsdy1CLExmT
+ U8sgnJlutYI97WiYow9w7LqlUCZjM/fTeiUrpM+GIVzlqlNb2jW5V9DGS5JrmeIsly2j
+ wodGt0MHOifopLQAZgQ2CJ6D27BA7WQt5lJX8VhS8vNyu+ssM5qMKq5wc55kHUN8v/PF
+ NawLiNufWTfBzTQDkDWGql8b9d9cnu0FgrTGafoQQV6VcGa2lTNyUefacwU1Y92BmbAQ
+ octw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSeWFBn7GDstSx0p6tOD4zKGjNk+IA0Z7Tc79JC8rI7DrOjUBU4eqJhdzaYGxMcNtRkMFcVkdktYQ0@nongnu.org
+X-Gm-Message-State: AOJu0YzYBGbRWBhSFUBTDfBlePlZ0JCFTZmV+DFAwXezvw/pyTfhjNBF
+ GLl5BzpYWkMrn3yovwgLQDp6AMJkBJwJDFCvJCmdaobDQmVGOfbDVy5XMjAIdXaVFhM=
+X-Gm-Gg: ASbGncvzddjiFEoF9Upqp+FduY7AB5SiceJnpi+vjNX0ZnJ38YtYYiGW580LmOjQksx
+ lKEGl8NtNLueei+FUXvqNL6xc9UzcrnWMEzz/l9GUHN3/m3qG2pHCtPLQ9OiVMlDaII183aei3Q
+ hzQUkLdvhB+gUBkP+LBD9u9cATYQay4lRJZl2lVMAdI2CpEtvMnsLWLZlkc1HNsQitqNKuk1w9N
+ H2k0ZB59zszG3q6uXYzIN5Ou2BtoivO2iB2qAs88ZeedTdjfBQOStyNinF8yZvPK+R9NkTjyfP3
+ xNTFqHNPlFNLCX2wWWm/ObpL4i1To1sMvgIJ5UTFU5K4K7x9NRM61gbWOtV2cLnvunvx6kId19P
+ 7JYXLfzMWPetpXGoJ6Yt/bhGc4pCJTtmtt7qCLFXtgHLQczaUtC5+sDMEpfOZ+2j54Pf4gO0=
+X-Google-Smtp-Source: AGHT+IE3IdTd1iakBVfrjpKMEavVGQtF9WkU2f88OlCTRgypq4Gr281unmQE7dPXd01wBT1ToBdVCA==
+X-Received: by 2002:a05:600c:620f:b0:453:8bc7:5cbb with SMTP id
+ 5b1f17b1804b1-4562751b34bmr2485185e9.25.1752531608772; 
+ Mon, 14 Jul 2025 15:20:08 -0700 (PDT)
+Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8bd18a2sm13347770f8f.20.2025.07.14.15.20.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 15:20:08 -0700 (PDT)
+Message-ID: <f6d3416d-6a16-4685-ba63-a4ea83ea486b@linaro.org>
+Date: Tue, 15 Jul 2025 00:20:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 21/28] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-22-zycai@linux.ibm.com>
+Subject: Re: [PATCH for-5.1 V4 2/4] target/mips: Add Loongson-3 CPU definition
+To: Huacai Chen <zltjiangshi@gmail.com>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>
+Cc: Huacai Chen <chenhuacai@gmail.com>, Huacai Chen <chenhc@lemote.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@rt-rk.com>, qemu-devel@nongnu.org,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <1591065557-9174-1-git-send-email-chenhc@lemote.com>
+ <1591065557-9174-3-git-send-email-chenhc@lemote.com>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20250711211105.439554-22-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1591065557-9174-3-git-send-email-chenhc@lemote.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=baBrUPPB c=1 sm=1 tr=0 ts=68758118 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=hxafNF8EEUUuVJEmDPgA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Zt7aoUIQc9zzgAUA6cDBPObWEGEmVX7S
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE0MDE0OSBTYWx0ZWRfX77VbXmQldx9F
- qa4bTZPMmxijyYpikpMTs2lL8dUqb039noAuOz9weIRJOb/W8K9Zb9RP2mUuxX647mNA49C3vgj
- a5Eu/nymKQRbOUJnN2kzIwkLLkkfmZuFLQNCyZIpDyFrZsTmbRmzaf6bkpNKAGbrvDXF4tb8mzk
- Y0mYI3zQrlsS5kXKl0rGH/41Wd5FgCCuZQlcSF4fp0CXSPOkxydyswJv3q5kWbF9VZO8Z4Ck2TW
- lIiKkgHftQRC/PNCYijGTOwR0KkHMAIGMLGv24yFFCyvrX1uVde1SFUIudmnVANi5FK8FcTdiul
- GcA78zE8/F9elpEGkddhfYyxOKUgjEdVE7zzxSUuPUCoRXRlP/q7oycDnUzo7qILxBX75/ytq+Q
- LmkUR1e0V07YtbCjdT22nW8Qy+9hfNtz8aGjX+qorFm3SGV07ITW0i5mHMiRQ3sYozsycKfb
-X-Proofpoint-ORIG-GUID: Zt7aoUIQc9zzgAUA6cDBPObWEGEmVX7S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-07-14_02,2025-07-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
- malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507140149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,109 +106,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 5:10 PM, Zhuoying Cai wrote:
-> The secure-IPL-code-loading-attributes facility (SCLAF)
-> provides additional security during IPL.
+(this is now commit af868995e1b7641577300d1342ede452ef0c5565)
+
+On 2/6/20 04:39, Huacai Chen wrote:
+> Loongson-3 CPU family include Loongson-3A R1/R2/R3/R4 and Loongson-3B
+> R1/R2. Loongson-3A R1 is the oldest and its ISA is the smallest, while
+> Loongson-3A R4 is the newest and its ISA is almost the superset of all
+> others. To reduce complexity, we just define two CPU types:
+> 1, "Loongson-3A1000" CPU which is corresponding to Loongson-3A R1. It is
+>     suitable for TCG because Loongson-3A R1 has fewest ASE.
+> 2, "Loongson-3A4000" CPU which is corresponding to Loongson-3A R4. It is
+>     suitable for KVM because Loongson-3A R4 has the VZ ASE.
 > 
-> Availability of SCLAF is determined by byte 136 bit 3 of the
-> SCLP Read Info block.
+> Loongson-3A has CONFIG6 and CONFIG7, so add their bit-fields as well.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-
-Aside from the comment I made in patch 17, LGTM.
-
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-
+> Signed-off-by: Huacai Chen <chenhc@lemote.com>
+> Co-developed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
->  target/s390x/cpu_features.c         | 1 +
->  target/s390x/cpu_features_def.h.inc | 1 +
->  target/s390x/cpu_models.c           | 3 +++
->  target/s390x/gen-features.c         | 2 ++
->  target/s390x/kvm/kvm.c              | 3 +++
->  5 files changed, 10 insertions(+)
+>   target/mips/cpu.h                | 28 +++++++++++++
+>   target/mips/internal.h           |  2 +
+>   target/mips/mips-defs.h          |  7 +++-
+>   target/mips/translate.c          |  2 +
+>   target/mips/translate_init.inc.c | 86 ++++++++++++++++++++++++++++++++++++++++
+>   5 files changed, 123 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-> index 3f3d6a80af..8d5614fa59 100644
-> --- a/target/s390x/cpu_features.c
-> +++ b/target/s390x/cpu_features.c
-> @@ -151,6 +151,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
->          break;
->      case S390_FEAT_TYPE_SCLP_FAC_IPL:
->          clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
-> +        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
->          break;
->      default:
->          return;
-> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-> index 956bd8a123..2e91817d75 100644
-> --- a/target/s390x/cpu_features_def.h.inc
-> +++ b/target/s390x/cpu_features_def.h.inc
-> @@ -142,6 +142,7 @@ DEF_FEAT(DIAG_320, "cstore", SCLP_FAC134, 5, "Provide Certificate Store function
->  
->  /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
->  DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
-> +DEF_FEAT(SCLAF, "sclaf", SCLP_FAC_IPL, 3, "Secure-IPL-code-loading-attributes facility")
->  
->  /* Features exposed via SCLP CPU info. */
->  DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
-> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-> index ab46204d9e..cb1c6b5350 100644
-> --- a/target/s390x/cpu_models.c
-> +++ b/target/s390x/cpu_models.c
-> @@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
->          case S390_FEAT_SIE_PFMFI:
->          case S390_FEAT_SIE_IBS:
->          case S390_FEAT_SIPL:
-> +        case S390_FEAT_SCLAF:
->          case S390_FEAT_CONFIGURATION_TOPOLOGY:
->              return false;
->              break;
-> @@ -509,6 +510,8 @@ static void check_consistency(const S390CPUModel *model)
->          { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
->          { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
->          { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
-> +        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
-> +        { S390_FEAT_SCLAF, S390_FEAT_SIPL },
->          { S390_FEAT_NNPA, S390_FEAT_VECTOR },
->          { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
->          { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-> index 6ee9bad4c6..987e291cf9 100644
-> --- a/target/s390x/gen-features.c
-> +++ b/target/s390x/gen-features.c
-> @@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
->      S390_FEAT_UV_FEAT_AP_INTR,
->      S390_FEAT_DIAG_320,
->      S390_FEAT_SIPL,
-> +    S390_FEAT_SCLAF,
->  };
->  
->  static uint16_t full_GEN17_GA1[] = {
-> @@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
->      S390_FEAT_EXTENDED_LENGTH_SCCB,
->      S390_FEAT_DIAG_320,
->      S390_FEAT_SIPL,
-> +    S390_FEAT_SCLAF,
->  };
->  
->  /****** END FEATURE DEFS ******/
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index fc9cad32a1..be3ad7316d 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -2523,6 +2523,9 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
->      /* Secure-IPL facility is handled entirely within QEMU */
->      set_bit(S390_FEAT_SIPL, model->features);
->  
-> +    /* Secure-IPL-code-loading-attributes facility is handled entirely within QEMU */
-> +    set_bit(S390_FEAT_SCLAF, model->features);
+> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+> index 94d01ea..0b3c987 100644
+> --- a/target/mips/cpu.h
+> +++ b/target/mips/cpu.h
+> @@ -940,7 +940,35 @@ struct CPUMIPSState {
+>   #define CP0C5_UFR          2
+>   #define CP0C5_NFExists     0
+>       int32_t CP0_Config6;
+> +    int32_t CP0_Config6_rw_bitmask;
+> +#define CP0C6_BPPASS          31
+> +#define CP0C6_KPOS            24
+> +#define CP0C6_KE              23
+> +#define CP0C6_VTLBONLY        22
+> +#define CP0C6_LASX            21
+> +#define CP0C6_SSEN            20
+> +#define CP0C6_DISDRTIME       19
+> +#define CP0C6_PIXNUEN         18
+> +#define CP0C6_SCRAND          17
+> +#define CP0C6_LLEXCEN         16
+> +#define CP0C6_DISVC           15
+> +#define CP0C6_VCLRU           14
+> +#define CP0C6_DCLRU           13
+> +#define CP0C6_PIXUEN          12
+> +#define CP0C6_DISBLKLYEN      11
+> +#define CP0C6_UMEMUALEN       10
+> +#define CP0C6_SFBEN           8
+> +#define CP0C6_FLTINT          7
+> +#define CP0C6_VLTINT          6
+> +#define CP0C6_DISBTB          5
+> +#define CP0C6_STPREFCTL       2
+> +#define CP0C6_INSTPREF        1
+> +#define CP0C6_DATAPREF        0
+>       int32_t CP0_Config7;
+> +    int64_t CP0_Config7_rw_bitmask;
+> +#define CP0C7_NAPCGEN       2
+> +#define CP0C7_UNIMUEN       1
+> +#define CP0C7_VFPUCGEN      0
+>       uint64_t CP0_LLAddr;
+>       uint64_t CP0_MAAR[MIPS_MAAR_MAX];
+>       int32_t CP0_MAARI;
+> diff --git a/target/mips/internal.h b/target/mips/internal.h
+> index 1bf274b..7853cb1 100644
+> --- a/target/mips/internal.h
+> +++ b/target/mips/internal.h
+> @@ -36,7 +36,9 @@ struct mips_def_t {
+>       int32_t CP0_Config5;
+>       int32_t CP0_Config5_rw_bitmask;
+>       int32_t CP0_Config6;
+> +    int32_t CP0_Config6_rw_bitmask;
+>       int32_t CP0_Config7;
+> +    int32_t CP0_Config7_rw_bitmask;
+>       target_ulong CP0_LLAddr_rw_bitmask;
+>       int CP0_LLAddr_shift;
+>       int32_t SYNCI_Step;
+> diff --git a/target/mips/mips-defs.h b/target/mips/mips-defs.h
+> index a831bb4..c2c96db 100644
+> --- a/target/mips/mips-defs.h
+> +++ b/target/mips/mips-defs.h
+> @@ -51,8 +51,9 @@
+>    */
+>   #define INSN_LOONGSON2E   0x0001000000000000ULL
+>   #define INSN_LOONGSON2F   0x0002000000000000ULL
+> -#define INSN_VR54XX       0x0004000000000000ULL
+> -#define INSN_R5900        0x0008000000000000ULL
+> +#define INSN_LOONGSON3A   0x0004000000000000ULL
+> +#define INSN_VR54XX       0x0008000000000000ULL
+> +#define INSN_R5900        0x0010000000000000ULL
+>   /*
+>    *   bits 56-63: vendor-specific ASEs
+>    */
+> @@ -94,6 +95,8 @@
+>   /* Wave Computing: "nanoMIPS" */
+>   #define CPU_NANOMIPS32  (CPU_MIPS32R6 | ISA_NANOMIPS32)
+>   
+> +#define CPU_LOONGSON3A  (CPU_MIPS64R2 | INSN_LOONGSON3A)
 > +
->      /* Test for Ultravisor features that influence secure guest behavior */
->      query_uv_feat_guest(model->features);
->  
+>   /*
+>    * Strictly follow the architecture standard:
+>    * - Disallow "special" instruction handling for PMON/SPIM.
+> diff --git a/target/mips/translate.c b/target/mips/translate.c
+> index 25b595a..2caf4cb 100644
+> --- a/target/mips/translate.c
+> +++ b/target/mips/translate.c
+> @@ -31206,7 +31206,9 @@ void cpu_state_reset(CPUMIPSState *env)
+>       env->CP0_Config5 = env->cpu_model->CP0_Config5;
+>       env->CP0_Config5_rw_bitmask = env->cpu_model->CP0_Config5_rw_bitmask;
+>       env->CP0_Config6 = env->cpu_model->CP0_Config6;
+> +    env->CP0_Config6_rw_bitmask = env->cpu_model->CP0_Config6_rw_bitmask;
+>       env->CP0_Config7 = env->cpu_model->CP0_Config7;
+> +    env->CP0_Config7_rw_bitmask = env->cpu_model->CP0_Config7_rw_bitmask;
+>       env->CP0_LLAddr_rw_bitmask = env->cpu_model->CP0_LLAddr_rw_bitmask
+>                                    << env->cpu_model->CP0_LLAddr_shift;
+>       env->CP0_LLAddr_shift = env->cpu_model->CP0_LLAddr_shift;
+> diff --git a/target/mips/translate_init.inc.c b/target/mips/translate_init.inc.c
+> index 6d145a9..a31f229 100644
+> --- a/target/mips/translate_init.inc.c
+> +++ b/target/mips/translate_init.inc.c
+> @@ -802,6 +802,92 @@ const mips_def_t mips_defs[] =
+>           .mmu_type = MMU_TYPE_R4000,
+>       },
+>       {
+> +        .name = "Loongson-3A1000",
+> +        .CP0_PRid = 0x6305,
+> +        /* 64KB I-cache and d-cache. 4 way with 32 bit cache line size.  */
+> +        .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
+> +                       (MMU_TYPE_R4000 << CP0C0_MT),
+> +        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) | (63 << CP0C1_MMU) |
+> +                       (3 << CP0C1_IS) | (4 << CP0C1_IL) | (3 << CP0C1_IA) |
+> +                       (3 << CP0C1_DS) | (4 << CP0C1_DL) | (3 << CP0C1_DA) |
+> +                       (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+> +        .CP0_Config2 = MIPS_CONFIG2 | (7 << CP0C2_SS) | (4 << CP0C2_SL) |
+> +                       (3 << CP0C2_SA),
+> +        .CP0_Config3 = MIPS_CONFIG3 | (1 << CP0C3_LPA),
+> +        .CP0_LLAddr_rw_bitmask = 0,
+> +        .SYNCI_Step = 32,
+> +        .CCRes = 2,
+> +        .CP0_Status_rw_bitmask = 0x74D8FFFF,
+> +        .CP0_PageGrain = (1 << CP0PG_ELPA),
+> +        .CP0_PageGrain_rw_bitmask = (1 << CP0PG_ELPA),
+> +        .CP1_fcr0 = (0x5 << FCR0_PRID) | (0x1 << FCR0_REV) | (0x1 << FCR0_F64) |
+> +                    (0x1 << FCR0_PS) | (0x1 << FCR0_L) | (0x1 << FCR0_W) |
+> +                    (0x1 << FCR0_D) | (0x1 << FCR0_S),
+> +        .CP1_fcr31 = 0,
+> +        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
+> +        .SEGBITS = 42,
+> +        .PABITS = 48,
+> +        .insn_flags = CPU_LOONGSON3A,
+> +        .mmu_type = MMU_TYPE_R4000,
+> +    },
+> +    {
+> +        .name = "Loongson-3A4000",
+> +        .CP0_PRid = 0x14C000,
+> +        /* 64KB I-cache and d-cache. 4 way with 32 bit cache line size.  */
+> +        .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
+> +                       (MMU_TYPE_R4000 << CP0C0_MT),
+> +        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) | (63 << CP0C1_MMU) |
+> +                       (2 << CP0C1_IS) | (5 << CP0C1_IL) | (3 << CP0C1_IA) |
+> +                       (2 << CP0C1_DS) | (5 << CP0C1_DL) | (3 << CP0C1_DA) |
+> +                       (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+> +        .CP0_Config2 = MIPS_CONFIG2 | (5 << CP0C2_SS) | (5 << CP0C2_SL) |
+> +                       (15 << CP0C2_SA),
+> +        .CP0_Config3 = MIPS_CONFIG3 | (1U << CP0C3_M) | (1 << CP0C3_MSAP) |
+> +                       (1 << CP0C3_BP) | (1 << CP0C3_BI) | (1 << CP0C3_ULRI) |
+> +                       (1 << CP0C3_RXI) | (1 << CP0C3_LPA) | (1 << CP0C3_VInt),
+> +        .CP0_Config4 = MIPS_CONFIG4 | (1U << CP0C4_M) | (2 << CP0C4_IE) |
+> +                       (1 << CP0C4_AE) | (0x1c << CP0C4_KScrExist),
+> +        .CP0_Config4_rw_bitmask = 0,
+> +        .CP0_Config5 = MIPS_CONFIG5 | (1 << CP0C5_CRCP) | (1 << CP0C5_NFExists),
 
+I note for Loongson-3A4000 we expose CP0C5_CRCP (CRC32 present) but
+since then this feature is not implemented. This is hard to track;
+a comment would have been welcomed.
 
--- 
 Regards,
-  Collin
+
+Phil.
+
+> +        .CP0_Config5_rw_bitmask = (1 << CP0C5_K) | (1 << CP0C5_CV) |
+> +                                  (1 << CP0C5_MSAEn) | (1 << CP0C5_UFE) |
+> +                                  (1 << CP0C5_FRE) | (1 << CP0C5_SBRI),
+> +        .CP0_Config6 = (1 << CP0C6_VCLRU) | (1 << CP0C6_DCLRU) |
+> +                       (1 << CP0C6_SFBEN) | (1 << CP0C6_VLTINT) |
+> +                       (1 << CP0C6_INSTPREF) | (1 << CP0C6_DATAPREF),
+> +        .CP0_Config6_rw_bitmask = (1 << CP0C6_BPPASS) | (0x3f << CP0C6_KPOS) |
+> +                                  (1 << CP0C6_KE) | (1 << CP0C6_VTLBONLY) |
+> +                                  (1 << CP0C6_LASX) | (1 << CP0C6_SSEN) |
+> +                                  (1 << CP0C6_DISDRTIME) | (1 << CP0C6_PIXNUEN) |
+> +                                  (1 << CP0C6_SCRAND) | (1 << CP0C6_LLEXCEN) |
+> +                                  (1 << CP0C6_DISVC) | (1 << CP0C6_VCLRU) |
+> +                                  (1 << CP0C6_DCLRU) | (1 << CP0C6_PIXUEN) |
+> +                                  (1 << CP0C6_DISBLKLYEN) | (1 << CP0C6_UMEMUALEN) |
+> +                                  (1 << CP0C6_SFBEN) | (1 << CP0C6_FLTINT) |
+> +                                  (1 << CP0C6_VLTINT) | (1 << CP0C6_DISBTB) |
+> +                                  (3 << CP0C6_STPREFCTL) | (1 << CP0C6_INSTPREF) |
+> +                                  (1 << CP0C6_DATAPREF),
+> +        .CP0_Config7 = 0,
+> +        .CP0_Config7_rw_bitmask = (1 << CP0C7_NAPCGEN) | (1 << CP0C7_UNIMUEN) |
+> +                                  (1 << CP0C7_VFPUCGEN),
+> +        .CP0_LLAddr_rw_bitmask = 1,
+> +        .SYNCI_Step = 16,
+> +        .CCRes = 2,
+> +        .CP0_Status_rw_bitmask = 0x7DDBFFFF,
+> +        .CP0_PageGrain = (1 << CP0PG_ELPA),
+> +        .CP0_PageGrain_rw_bitmask = (1U << CP0PG_RIE) | (1 << CP0PG_XIE) |
+> +                    (1 << CP0PG_ELPA) | (1 << CP0PG_IEC),
+> +        .CP1_fcr0 = (0x5 << FCR0_PRID) | (0x1 << FCR0_REV) | (0x1 << FCR0_F64) |
+> +                    (0x1 << FCR0_PS) | (0x1 << FCR0_L) | (0x1 << FCR0_W) |
+> +                    (0x1 << FCR0_D) | (0x1 << FCR0_S),
+> +        .CP1_fcr31 = 0,
+> +        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
+> +        .SEGBITS = 48,
+> +        .PABITS = 48,
+> +        .insn_flags = CPU_LOONGSON3A,
+> +        .mmu_type = MMU_TYPE_R4000,
+> +    },
+> +    {
+>           /* A generic CPU providing MIPS64 DSP R2 ASE features.
+>              FIXME: Eventually this should be replaced by a real CPU model. */
+>           .name = "mips64dspr2",
+
 
