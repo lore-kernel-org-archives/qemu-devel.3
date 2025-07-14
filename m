@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2AAC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EB1C83F1B
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHCO-0005Do-8r; Mon, 14 Jul 2025 07:18:23 -0400
+	id 1ubHLW-00067a-Fp; Mon, 14 Jul 2025 07:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0c-0001WF-9C
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:10 -0400
+ id 1ubH07-0001FJ-1t
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH0V-00022R-D8
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:09 -0400
+ id 1ubH04-0001vK-RY
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491162;
+ s=mimecast20190719; t=1752491135;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hOyq8vxRGWTrMc2U4FZhuFke/jjaHE1X37zP4eIBRDQ=;
- b=F2D+q8scJXOULPuWgEHU26luWF9EHhv7914VL0Yrmq6FBCuuYRw01DjKuAFEiafgYh6JLO
- nzFflNYj47nQkJnfdWE4ejW2XMFQJcqYoCD8xcjCQRDGSc9pK4BD7nQaUnfYP34+BucVTJ
- oBCeK5xRCp6GJCv/IGqe3W3PYWm5ZAg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uS8ovijzu/++v9gkFCTWnhU+isxUyJNb+e5pEgTtM48=;
+ b=Kcs6BTtaroutoIZsuQKnJp8LskoX6MUy3mAG3aUqvB3GC66hwE9kp9mfX/U1tTx3eHZWLj
+ cfCesF80TUEPkJ3J874eBm0fZ/rwmsm0cqCUNPopQBEXWCTsrc6QTCToGLfUNR8MCW3c1E
+ +/QlerzOXepDEhGWkrmpVa1pY/kcSzI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-403-px6NXlZoOLWXp9OVyCV1RQ-1; Mon, 14 Jul 2025 07:06:01 -0400
-X-MC-Unique: px6NXlZoOLWXp9OVyCV1RQ-1
-X-Mimecast-MFC-AGG-ID: px6NXlZoOLWXp9OVyCV1RQ_1752491160
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-453018b4ddeso21341285e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:06:00 -0700 (PDT)
+ us-mta-587-aJmgu4DTN3iPK-Az2UqXaA-1; Mon, 14 Jul 2025 07:05:34 -0400
+X-MC-Unique: aJmgu4DTN3iPK-Az2UqXaA-1
+X-Mimecast-MFC-AGG-ID: aJmgu4DTN3iPK-Az2UqXaA_1752491133
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451ac1b43c4so22964835e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491159; x=1753095959;
+ d=1e100.net; s=20230601; t=1752491132; x=1753095932;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hOyq8vxRGWTrMc2U4FZhuFke/jjaHE1X37zP4eIBRDQ=;
- b=EdyNLnttqWtXK19BnWWB3g3U2lM+7j9UNW9BDONFwZbK+vt+njkR28HFysclD8NfwL
- MSsCdtAnLxOsiqgw7hd04hCUqMB6IuCl39GE3zFU5YaJ3kfP8iwpizBjRv1GaAQQv1F1
- DemJ/Cfq7kWhQ0hD6pBgLYj3tGHKbGS+LRkgZ8e/tS1oZ3nhB4I0ahUQ8Dmkrj0d2Um6
- XE2VV8cvPx4QIHUZB/JQiQnXedPxb3LnkVCj+mA0fy/1crYvm5UI/AXPquro+2wByt74
- 9/cT2taAVQltx8Q3uicIn0wnj0tXM7cxwFJXKTI7u1mxFjdfzvTw048Vtz8GFcEAdEKk
- Z6XA==
-X-Gm-Message-State: AOJu0Yzi0ipWVeUhTw9Ah2jetMWV94qLwbMziWfk1jvLCp/MghcTASUO
- pUy95NFZz5rhZ6RqTmxc3Cxcfm11xG75Sbgxr1h3ArqAlBSfF54Y8Bao78ZNLO2vA1L/1HpwGjc
- YDBvCPzj8Wa12XHQuWwWLbcJmIN/07GyFUmS7jQO77SsMBaLMX5YAmUt/06Fnwyhotp3GrP+hu0
- 1/eDNDLXq7ZArGCLOipX691n+tOFJol0aSYhyieOF/
-X-Gm-Gg: ASbGnctFXkGweuYbMLDVhohpKW1hwxB/2t4+TDnKT6wc5MNqc3l1SofHD0K193aEmie
- nss0J9oM1q70Zrgd/hx0uYtdcpTfOt/xzozAtXMIQ2/ShJQVSKo39STLhBHKkfYZfBH0cA7Koa7
- V2VCQjM+qUK6FWhVhPxlk0d8JmVJwQmjcj3a1wIjeeI47XtjsWP5GwO0O6k03SgdEZtDyoucSci
- lVg6F4+6NoPVifw/jvRYjmlXP7Wj+DLdiOoumJDQ3Bn6zWTyOrK4Xf1luScSNCORd38m3ZUlVjl
- 9wN+7pGS9xxibdemvVVrQCya7hLMPY9EBnWMhwSvQ7M=
-X-Received: by 2002:a05:600c:138d:b0:453:697:6f08 with SMTP id
- 5b1f17b1804b1-45565edcb1emr93713475e9.26.1752491158887; 
- Mon, 14 Jul 2025 04:05:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHs+7nFgTyFsmAr6M2C+Wq+plja+UHVi9aZXmfI9hZ/uwk7nMcfanYgZMG6i6tNSTPiv5qhWA==
-X-Received: by 2002:a05:600c:138d:b0:453:697:6f08 with SMTP id
- 5b1f17b1804b1-45565edcb1emr93713165e9.26.1752491158301; 
- Mon, 14 Jul 2025 04:05:58 -0700 (PDT)
+ bh=uS8ovijzu/++v9gkFCTWnhU+isxUyJNb+e5pEgTtM48=;
+ b=MSHJsH/mNSbfNksXPM8c73hc5acIyaoPGk/Cga+kF3A62ft1W7wF1rF1kGvydDZbXH
+ y0Ydqth261nT2kJEDfKT6fWmomzS0GlFSWAis72WhMr8Xnyn3klJWczwPDVbQ+k//Y+/
+ jpFfmYw+WAcbEJkmGohA7PxvuRKJ+8n/klYd1lNSMa/xGAdNDUVJ0Eg7EuQtiXKsrqhG
+ 436gOAsMmNzeZK27Lv3NVFh9F4yFjxzAWPHbxWuxdET9gZi6wPEbyC/vR+HmHADN7QON
+ xv/KXU3TYn67QUcTEG4Nn5CCLp/r7iSlFEXpwDf6NLYk4fv91WyR40MzMlirYxEMSJs/
+ 47rA==
+X-Gm-Message-State: AOJu0Yz8l6fr+GMj2m4NrYhlLWIb4IkxrnzKDL71JkB8RlXa2Eqmn9vm
+ rvsjQy+fV2NVkz4mgKiSfkNdTZZpDjfsz5udi/VdbikhGZFa3T7H1Sf2oZg0uM712Ko1ViodUj+
+ 5bJOKqYME8X9yaUGRAWe75TCz7bDTyuJZQZV+n9zdhH8IDnnxs9wcvVw0uSwv63GqvY3PYEbAUO
+ jR32Yrd8CQQJO/OrfuEemfG908BU+eb/L5PfcNGCWh
+X-Gm-Gg: ASbGnctp+zwGLm41sVKCJeUruhjZ/O+LKTKDghbaBH8XuJn14I09ur6SCFvaNN6jRjM
+ ifhFz3/3f0Xd4RoDsDjJLdh9HH+z/hrA14sFxnWr2a28sD2mX/sxFTRr+DHs+1TtT2DDwibdaH8
+ 0PZ3b9GfM4ZSnQ/7v9MFAe1bRUfB00lP2xnc05XL5pgOxlPYgZQ+gXUF8I+sGfS2/r9tyRG+8Xz
+ 7eleesE6Y3UpMAAD0ZjYZbnmL1Ucs1IQ68aiuyVuY2WE7mxvZpcsAWwk5Lg9woK97+yYoeeHD3y
+ BpCSzRBorlbHqIY6Jv+sXfsZwbXc/IZKPwMvyrnaajo=
+X-Received: by 2002:a05:600c:190b:b0:456:2020:165d with SMTP id
+ 5b1f17b1804b1-45620201844mr15127605e9.31.1752491131889; 
+ Mon, 14 Jul 2025 04:05:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUnNoiXUV4oqzj25YhC7f5sPbYBd33GBSnilDaJTKPeddJhQOKPtyyx7uaKG/dwuMK+XL27Q==
+X-Received: by 2002:a05:600c:190b:b0:456:2020:165d with SMTP id
+ 5b1f17b1804b1-45620201844mr15127285e9.31.1752491131383; 
+ Mon, 14 Jul 2025 04:05:31 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1741sm12284801f8f.18.2025.07.14.04.05.56
+ 5b1f17b1804b1-4560f22cd29sm58737245e9.34.2025.07.14.04.05.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:05:57 -0700 (PDT)
+ Mon, 14 Jul 2025 04:05:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
-	Yi Lai <yi1.lai@intel.com>
-Subject: [PULL 42/77] i386/cpu: Add default cache model for Intel CPUs with
- level < 4
-Date: Mon, 14 Jul 2025 13:03:31 +0200
-Message-ID: <20250714110406.117772-43-pbonzini@redhat.com>
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 31/77] i386/sev: Add implementation of CGS set_guest_policy()
+Date: Mon, 14 Jul 2025 13:03:20 +0200
+Message-ID: <20250714110406.117772-32-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
@@ -92,7 +93,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,154 +111,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 
-Old Intel CPUs with CPUID level < 4, use CPUID 0x2 leaf (if available)
-to encode cache information.
+The new cgs_set_guest_policy() function is provided to receive the guest
+policy flags, SNP ID block and SNP ID authentication from guest
+configuration such as an IGVM file and apply it to the platform prior to
+launching the guest.
 
-Introduce a cache model "legacy_intel_cpuid2_cache_info" for the CPUs
-with CPUID level < 4, based on legacy_l1d_cache, legacy_l1i_cache,
-legacy_l2_cache_cpuid2 and legacy_l3_cache. But for L2 cache, this
-cache model completes self_init, sets, partitions, no_invd_sharing and
-share_level fields, referring legacy_l2_cache, to avoid someone
-increases CPUID level manually and meets assert() error. But the cache
-information present in CPUID 0x2 leaf doesn't change.
+The policy is used to populate values for the existing 'policy',
+'id_block' and 'id_auth' parameters. When provided, the guest policy is
+applied and the ID block configuration is used to verify the launch
+measurement and signatures. The guest is only successfully started if
+the expected launch measurements match the actual measurements and the
+signatures are valid.
 
-This new cache model makes it possible to remove legacy_l2_cache_cpuid2
-in X86CPUState and help to clarify historical cache inconsistency issue.
-
-Furthermore, apply this legacy cache model to all Intel CPUs with CPUID
-level < 4. This includes not only "pentium2" and "pentium3" (which have
-0x2 leaf), but also "486" and "pentium" (which only have 0x1 leaf, and
-cache model won't be presented, just for simplicity).
-
-A legacy_intel_cpuid2_cache_info cache model doesn't change the cache
-information of the above CPUs, because they just depend on 0x2 leaf.
-
-Only when someone adjusts the min-level to >=4 will the cache
-information in CPUID leaf 4 differ from before: previously, the L2
-cache information in CPUID leaf 0x2 and 0x4 was different, but now with
-legacy_intel_cpuid2_cache_info, the information they present will be
-consistent. This case almost never happens, emulating a CPUID that is
-not supported by the "ancient" hardware is itself meaningless behavior.
-
-Therefore, even though there's the above difference (for really rare
-case) and considering these old CPUs ("486", "pentium", "pentium2" and
-"pentium3") won't be used for migration, there's no need to add new
-versioned CPU models
-
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250711102143.1622339-4-zhao1.liu@intel.com
+Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/99e82ddec4ad2970c790db8bea16ea3f57eb0e53.1751554099.git.roy.hopkins@randomman.co.uk
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+ target/i386/sev.h | 12 +++++++
+ target/i386/sev.c | 83 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4386b60ff6c..3278d5de5a7 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -712,6 +712,67 @@ static CPUCacheInfo legacy_l3_cache = {
-     .share_level = CPU_TOPOLOGY_LEVEL_DIE,
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index d2eb06db321..9db1a802f6b 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -167,6 +167,18 @@ struct QEMU_PACKED sev_es_save_area {
+     uint8_t fpreg_ymm[256];
  };
  
-+/*
-+ * Only used for the CPU models with CPUID level < 4.
-+ * These CPUs (CPUID level < 4) only use CPUID leaf 2 to present
-+ * cache information.
-+ *
-+ * Note: This cache model is just a default one, and is not
-+ *       guaranteed to match real hardwares.
-+ */
-+static const CPUCaches legacy_intel_cpuid2_cache_info = {
-+    .l1d_cache = &(CPUCacheInfo) {
-+        .type = DATA_CACHE,
-+        .level = 1,
-+        .size = 32 * KiB,
-+        .self_init = 1,
-+        .line_size = 64,
-+        .associativity = 8,
-+        .sets = 64,
-+        .partitions = 1,
-+        .no_invd_sharing = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache = &(CPUCacheInfo) {
-+        .type = INSTRUCTION_CACHE,
-+        .level = 1,
-+        .size = 32 * KiB,
-+        .self_init = 1,
-+        .line_size = 64,
-+        .associativity = 8,
-+        .sets = 64,
-+        .partitions = 1,
-+        .no_invd_sharing = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache = &(CPUCacheInfo) {
-+        .type = UNIFIED_CACHE,
-+        .level = 2,
-+        .size = 2 * MiB,
-+        .self_init = 1,
-+        .line_size = 64,
-+        .associativity = 8,
-+        .sets = 4096,
-+        .partitions = 1,
-+        .no_invd_sharing = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l3_cache = &(CPUCacheInfo) {
-+        .type = UNIFIED_CACHE,
-+        .level = 3,
-+        .size = 16 * MiB,
-+        .line_size = 64,
-+        .associativity = 16,
-+        .sets = 16384,
-+        .partitions = 1,
-+        .lines_per_tag = 1,
-+        .self_init = true,
-+        .inclusive = true,
-+        .complex_indexing = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    },
++struct QEMU_PACKED sev_snp_id_authentication {
++    uint32_t id_key_alg;
++    uint32_t auth_key_algo;
++    uint8_t reserved[56];
++    uint8_t id_block_sig[512];
++    uint8_t id_key[1028];
++    uint8_t reserved2[60];
++    uint8_t id_key_sig[512];
++    uint8_t author_key[1028];
++    uint8_t reserved3[892];
 +};
 +
- /* TLB definitions: */
+ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
  
- #define L1_DTLB_2M_ASSOC       1
-@@ -3045,6 +3106,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             I486_FEATURES,
-         .xlevel = 0,
-         .model_id = "",
-+        .cache_info = &legacy_intel_cpuid2_cache_info,
-     },
-     {
-         .name = "pentium",
-@@ -3057,6 +3119,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             PENTIUM_FEATURES,
-         .xlevel = 0,
-         .model_id = "",
-+        .cache_info = &legacy_intel_cpuid2_cache_info,
-     },
-     {
-         .name = "pentium2",
-@@ -3069,6 +3132,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             PENTIUM2_FEATURES,
-         .xlevel = 0,
-         .model_id = "",
-+        .cache_info = &legacy_intel_cpuid2_cache_info,
-     },
-     {
-         .name = "pentium3",
-@@ -3081,6 +3145,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             PENTIUM3_FEATURES,
-         .xlevel = 0,
-         .model_id = "",
-+        .cache_info = &legacy_intel_cpuid2_cache_info,
-     },
-     {
-         .name = "athlon",
+ int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 1296f4feb62..3e5722ba657 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -2518,6 +2518,88 @@ static int cgs_get_mem_map_entry(int index,
+     return 0;
+ }
+ 
++static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
++                                uint64_t policy, void *policy_data1,
++                                uint32_t policy_data1_size, void *policy_data2,
++                                uint32_t policy_data2_size, Error **errp)
++{
++    if (policy_type != GUEST_POLICY_SEV) {
++        error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
++        __func__, policy_type);
++        return -1;
++    }
++    /*
++     * SEV-SNP handles policy differently. The policy flags are defined in
++     * kvm_start_conf.policy and an ID block and ID auth can be provided.
++     */
++    if (sev_snp_enabled()) {
++        SevSnpGuestState *sev_snp_guest =
++            SEV_SNP_GUEST(MACHINE(qdev_get_machine())->cgs);
++        struct kvm_sev_snp_launch_finish *finish =
++            &sev_snp_guest->kvm_finish_conf;
++
++        /*
++         * The policy consists of flags in 'policy' and optionally an ID block
++         * and ID auth in policy_data1 and policy_data2 respectively. The ID
++         * block and auth are optional so clear any previous ID block and auth
++         * and set them if provided, but always set the policy flags.
++         */
++        g_free(sev_snp_guest->id_block);
++        g_free((guchar *)finish->id_block_uaddr);
++        g_free(sev_snp_guest->id_auth);
++        g_free((guchar *)finish->id_auth_uaddr);
++        sev_snp_guest->id_block = NULL;
++        finish->id_block_uaddr = 0;
++        sev_snp_guest->id_auth = NULL;
++        finish->id_auth_uaddr = 0;
++
++        if (policy_data1_size > 0) {
++            struct sev_snp_id_authentication *id_auth =
++                (struct sev_snp_id_authentication *)policy_data2;
++
++            if (policy_data1_size != KVM_SEV_SNP_ID_BLOCK_SIZE) {
++                error_setg(errp, "%s: Invalid SEV-SNP ID block: incorrect size",
++                           __func__);
++                return -1;
++            }
++            if (policy_data2_size != KVM_SEV_SNP_ID_AUTH_SIZE) {
++                error_setg(errp,
++                           "%s: Invalid SEV-SNP ID auth block: incorrect size",
++                           __func__);
++                return -1;
++            }
++            assert(policy_data1 != NULL);
++            assert(policy_data2 != NULL);
++
++            finish->id_block_uaddr =
++                (__u64)g_memdup2(policy_data1, KVM_SEV_SNP_ID_BLOCK_SIZE);
++            finish->id_auth_uaddr =
++                (__u64)g_memdup2(policy_data2, KVM_SEV_SNP_ID_AUTH_SIZE);
++
++            /*
++             * Check if an author key has been provided and use that to flag
++             * whether the author key is enabled. The first of the author key
++             * must be non-zero to indicate the key type, which will currently
++             * always be 2.
++             */
++            sev_snp_guest->kvm_finish_conf.auth_key_en =
++                id_auth->author_key[0] ? 1 : 0;
++            finish->id_block_en = 1;
++        }
++        sev_snp_guest->kvm_start_conf.policy = policy;
++    } else {
++        SevGuestState *sev_guest = SEV_GUEST(MACHINE(qdev_get_machine())->cgs);
++        /* Only the policy flags are supported for SEV and SEV-ES */
++        if ((policy_data1_size > 0) || (policy_data2_size > 0) || !sev_guest) {
++            error_setg(errp, "%s: An ID block/ID auth block has been provided "
++                             "but SEV-SNP is not enabled", __func__);
++            return -1;
++        }
++        sev_guest->policy = policy;
++    }
++    return 0;
++}
++
+ static void
+ sev_common_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -2556,6 +2638,7 @@ sev_common_instance_init(Object *obj)
+     cgs->check_support = cgs_check_support;
+     cgs->set_guest_state = cgs_set_guest_state;
+     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
++    cgs->set_guest_policy = cgs_set_guest_policy;
+ 
+     QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
 -- 
 2.50.0
 
