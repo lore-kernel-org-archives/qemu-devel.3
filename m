@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C974DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4405C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 16:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubMKx-0007pb-Fu; Mon, 14 Jul 2025 12:47:31 -0400
+	id 1ubMRR-0003yi-BE; Mon, 14 Jul 2025 12:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubLO4-0001lS-Ld
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:46:40 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubLVV-0003IX-7v
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:54:22 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubLO2-00068n-2y
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:46:40 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7481600130eso5104323b3a.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:46:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ubLVT-000771-Of
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 11:54:21 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7426c44e014so4262268b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 08:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752507996; x=1753112796; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+IDvBEmV+Lzihs6gqqtoeHh/iFwCnyYUNSldXE8MxgI=;
- b=bw/8tKaUFlBPW9jRhBLMlZPsqmXkFdonfKdHfg6QFSosFVRxqu3KZ5C6jlpk6TyYor
- tn6bZc9q0wVU9NRahJwxzb5GBDj53gYwxJ0vvI4jv4wXGuEN8aw3yqgaWOsBKkBCU9jD
- ZoVY8Y06IN9V2gpzArIvy7+EcjFLEd4IdoIQlvdSamtj4ttYGiihQ6/jSvUEo7YGsX2w
- GEX+yqAQec+UBOTs7rQh1WC4oENRImgnAMpUqqsaEyRmsTQ6mYe8kd4frzAknLks4S/i
- fr58rqgIiV7AkCS9HbVzD6drrTAjGXy3uBNIDoqf+SngG9MdJ+bfV2w8WXSuGt91Pir6
- Mslg==
+ d=linaro.org; s=google; t=1752508458; x=1753113258; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OkC3rNYoVJo0EaWuNbUfG9cVGCYaTYcoWc1Wldc65SQ=;
+ b=xg0f/nmIFvaTaj6M40eEdOVa6lc1G0c5OTRKcSEAR7rL7bmSTcL2ovSzr2m60+lhNW
+ 6Mhl6DbI7CRdsjxqxkzblMNzEZ+4aFip5gJtUpZtzzOCnEBS8WqDZ3e4hkZiMm/LS+3C
+ iXN8LY3U4k5ccXPM1ZR1KPplQL7YpkUWeX9av1JxcyUlpsIeFTSaWrrkW5ayi8IBSPDR
+ nBHufALnp3QCIxGhFYh2Q2pGIgLy+CXJtN6HRLXGgNe8MEVJNiywa+jDMlJUZ636O4uY
+ e11C6Ytiw3KXo5NHE0kv3KAMZYvZYp7ING+BWjyBI1KLYaYNY+mCJq28WSa9+MTuhla7
+ h6hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752507996; x=1753112796;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1752508458; x=1753113258;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+IDvBEmV+Lzihs6gqqtoeHh/iFwCnyYUNSldXE8MxgI=;
- b=mTFIEpWh8iCQtkHz8GNqA6dp/gEd0DqYSNnASb6ZujAPmuuYcfaYToHyg7PcooX0RI
- KC9sHD87ogfcY7ycYI5HCnCH2p1GCJYr9yiSWcbdgTRrQmizC9PSzPWey65zeMyA31il
- J8lUNA0g9OV0Xf8H6SDQhjlFCDjyuluiAJpwrv2si4M3jPeokdEBnoFSSee7pPxhJGKH
- E3FJQ47YlH/fy1qKQLxEUjUmvCu4yh3VW+A0wDioCBTgGxjZOpavDwhKUBqwQbs6bYhl
- jH0GoAYXKnM2nnf8KzN7romAmjnNFPRo/U3Et1ANnbcZolTNEmVE/EScKbDYsY5xoVtj
- sY0w==
-X-Gm-Message-State: AOJu0Ywr95jOKfwXGTGlZ6Gci4YftxtDk5ZPR62lwAJrfk0bJrmA/dTR
- gEu8iZxblhrMUDhIlfXASFu11PSNAnH/uXKs80dCHCDHgUFBC1NyE38YEA1bjTq9Mlk=
-X-Gm-Gg: ASbGnctxWHuYfbJhMUYc0swba/PU8t9YmaHOmYp294l0toB4S/IMM6F7+axwczD9FY/
- unJENBeCxpSi9+8fPA8pHfIe0dIJGE9PmCH3Gw+00kNrPJZlBHR84mkWYg2CKsLY7WOHUfmOH0e
- Uxl21a6ihm7EJ/bSv9R36Q9/xzyLeR2ldYc2TJZhsig4Wrz2UAY87jgFQfOLXR/bKyMdTEEY+qS
- paDntfYO4j4JpHIs4FK/BxXQ17DJxlqEtLUV/MRmbWKasMtLtGGell9QZUiSGJBDBixH4b7RKOG
- /7TD3wvie6NWibTjbv1lOGSfL1ewDx7aIZ0h3ghFuKxg4VosHS4MHRf6PrDrMH/9XRRNmazh5Xo
- G/F18Cm2vNkP17XlODqhh2FmCfU+Y72qkDMR9KhqDVbzwGw==
-X-Google-Smtp-Source: AGHT+IGg8P/it84LX/wj/a8NB7leTLCQbehdmwijsf3a1Vwrhji4eSM4vSncTNX7gSMgk22Cy3IPCg==
-X-Received: by 2002:a05:6a00:2352:b0:740:9e87:9625 with SMTP id
- d2e1a72fcca58-74ee04ade9cmr21578864b3a.4.1752507995641; 
- Mon, 14 Jul 2025 08:46:35 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ bh=OkC3rNYoVJo0EaWuNbUfG9cVGCYaTYcoWc1Wldc65SQ=;
+ b=t4L2xrEQmSN/ziOmCababJFEpMaD10kPLzsed8ZZ9m2Adso4vP8YXSszyukv4GUAxz
+ EOYbGNsrZUmGyPcM2fuhD18POVhEX0YklL6zN3oVU6oITGfySxOljfh6mEuWLccuc63S
+ p1DaqGs3IvLObH8m+novnNAWoWoPu1xFdOQJqdY36t6p2sNMqGbep8meqxwQa80Xir9+
+ YIVkAq1PJWACYjQf8xy1vL8ZXpS5hL4m/1VEafwL6H2O0hDVM0rd2R1LQRCsF5vzi3zr
+ cBXWj7XEXKOBKdoQ1LkPwp/MooE31s5qHmnoGTykapm8VmSaEXySOKUgFonxoCmMFiVS
+ /3Kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYZbBxHW0cGc+rGMNe8NAwfar/B/LRMu70ticagvZqOZx74wreMTgZHVUg2VHcOyTKnj6gjNjrjmPl@nongnu.org
+X-Gm-Message-State: AOJu0YyA1Pi8MH+ktL57oYl6OsRDVKYR+ODu7/72djuM0gCzAxucoV+x
+ spg6QdxE812A5yXihD2d/sCWZ72MT1jHdHn3rmNnosgAb+aR5U+iQiKvrGtrPfwOBHo=
+X-Gm-Gg: ASbGnctkfx/VkJSylVuS+aGOjAFyAnOUCTtJIwCcTHT/U9OSnpV07Sq1Oo2ij0G+dO6
+ C5Vt0ZleavWrKJcf7kj0HdRIwhv5I+6XVnQY0UQr+jRuP5NUGX7I6In+/jAO7FUDPWd1v7djoxz
+ C29WVYB2bz19cxW1D716Xifkod5RuaREcd6jMrmi5DjilwpfJSm9xXzFLKz/i80RuRPAGVXleWb
+ Cdi3rO9PYJV9iVC8MW1IbGhNPcbPTIe1LjyC7Ww/VJt23OrQyWnMwKo4lnAIyZUihj1fcAfCOtC
+ 0089wFRNSlxC/jltP5EEe3wCC7KVtoH+lANMfSOG3tK+B4QWAEsl3d4H3LWj6D6lrrtMp44wRLr
+ Dc+8J1eWnXKCqvwd2bq4WKdlldg0OHkmVq0qp7Fz0QAmezbfU7w82Tlv12dBEr/I=
+X-Google-Smtp-Source: AGHT+IEn+gLq96LdhuIAnZC/mbTFqusBtzvRU7mZzMo5N/Rb+ZVJC+IsBdYO9E6P6B3ENSby2aDB5Q==
+X-Received: by 2002:a05:6a20:1596:b0:222:c922:e33 with SMTP id
+ adf61e73a8af0-2317dbd4e60mr21008862637.6.1752508457991; 
+ Mon, 14 Jul 2025 08:54:17 -0700 (PDT)
+Received: from [10.113.99.227] ([172.56.179.167])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9f4cb57sm10995934b3a.136.2025.07.14.08.46.34
+ 41be03b00d2f7-b3bbe72912asm10374528a12.71.2025.07.14.08.54.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 08:46:35 -0700 (PDT)
-Message-ID: <eabfd320-5efd-4a0a-807e-10aca82ca27b@linaro.org>
-Date: Mon, 14 Jul 2025 08:46:34 -0700
+ Mon, 14 Jul 2025 08:54:17 -0700 (PDT)
+Message-ID: <6f0cd2fd-2152-4c28-8dd1-ca7271e686f4@linaro.org>
+Date: Mon, 14 Jul 2025 09:52:28 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/6] target/arm: Add FEAT_TCR2
+Subject: Re: [PATCH] target/arm: Provide always-false kvm_arm_*_supported()
+ stubs for usermode
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250714135152.1896214-1-peter.maydell@linaro.org>
+ <0b438773-01b9-42e1-8edf-2330e50387f8@linaro.org>
+ <95b00393-bdd2-4db3-ac39-02a09f83b4d7@linaro.org>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20250711140828.1714666-1-gustavo.romero@linaro.org>
- <20250711140828.1714666-5-gustavo.romero@linaro.org>
- <21bfbfaa-f0df-413d-bad6-b69688ac381a@linaro.org>
- <65e20340-e164-4424-bc60-52d78b9a17b8@linaro.org>
- <f18a652e-b64c-4a33-bd60-63dfa93ffdbd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <f18a652e-b64c-4a33-bd60-63dfa93ffdbd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <95b00393-bdd2-4db3-ac39-02a09f83b4d7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,45 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/25 5:58 AM, Richard Henderson wrote:
-> On 7/14/25 00:21, Pierrick Bouvier wrote:
->> On 7/13/25 2:59 PM, Richard Henderson wrote:
->>> On 7/11/25 08:08, Gustavo Romero wrote:
->>>> Add FEAT_TCR2, which introduces the TCR2_EL1 and TCR2_EL2 registers.
->>>> These registers are extensions of the TCR_ELx registers and provide
->>>> top-level control of the EL10 and EL20 translation regimes.
->>>>
->>>> Since the bits in these registers depend on other CPU features, and only
->>>> FEAT_MEC is supported at the moment, the FEAT_TCR2 only implements the
->>>> AMEC bits for now.
->>>>
->>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->>> This causes a regression in tests/functional/test_aarch64_device_passthrough.py, by
->>> continually trapping on an access to TCR2_EL1 while the HCRX_EL2 enable bit is not set.
->>>
->>> Unlike the similar SCTRL2 failure, it's not 100% clear to me how the guest and nested
->>> guest kernels are related.  But it is clear that the outer kernel does not does not
->>> support TCR2_EL1 (and also doesn't manipulate ID_AA64MMFR3_EL1 to hide FEAT_TCR2), but the
->>> nested guest kernel does support TCR2_EL1.
->>>
->>
->> The same kernel is used for host and guest.
->> Maybe it's related to kvm support?
+On 7/14/25 09:41, Pierrick Bouvier wrote:
+> Indeed, clang does not fold the condition "value && kvm_enabled() && ! 
+> kvm_arm_sve_supported()". Looks like a missing case.
+> This code compiles with gcc -O0, but not clang -O0.
 > 
-> Oops, no, the patch fails to enable HCRX_TCR2EN in hcrx_write or SCR_TCR2EN in scr_write.
-> The same is true for the previous patch with HCRX_SCTLR2EN and SCR_SCTLR2EN.
+> extern int f(void);
+> int main(int argc) {
+>      if (argc && 0)
+>          f();
+> }
 > 
+> As folding is not guaranteed by C standard, I'm not sure it's really possible to file a 
+> bug. However, since we rely on this behaviour in other parts, maybe it would be better to 
+> rewrite the condition on our side.
 
-Thanks for the investigation. Indeed, building TF-A with 
-ENABLE_FEAT_TCR2 and ENABLE_FEAT_SCTRL2 didn't change anything.
+It's probably worth filing a missed-optimization type bug, if that's available in clang's 
+reporting system.
 
-It's possible that it's still needed to update test images though, so 
-I'll try when Gustavo will post v8.
+With my compiler hat on, I suspect that GCC generates IR like
 
-Thanks,
-Pierrick
+   if (argc) {
+     if (0) {
+       f();
+     }
+   }
 
-> 
-> r~
+in order to get the short-circuting part of && correct, which Just So Happens to fold away 
+exactly as we wish.
 
+I'm not sure how clang expands the expression such that (x && 0) doesn't fold away, but (0 
+&& x) does, as evidenced by
+
+> +        if (kvm_enabled() && !kvm_arm_sve_supported()) { 
+
+
+r~
 
