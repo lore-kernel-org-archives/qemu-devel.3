@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC20C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DF3C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 11:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubHGR-0001nO-HI; Mon, 14 Jul 2025 07:22:48 -0400
+	id 1ubHMh-0007pP-Ak; Mon, 14 Jul 2025 07:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1b-0001zY-Ms
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ubH0G-0001LB-UO
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:06:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ubH1Z-0002Dv-N7
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:07:11 -0400
+ id 1ubH0F-0001xH-0e
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 07:05:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752491227;
+ s=mimecast20190719; t=1752491145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eoimDhc5l0wVHOgJ1eysYl454HfMabPmsqsHxip4lQg=;
- b=LTekUaOpwkNhFCHsiFvfo+bd83UhDBmrCFqMARIhLZonVD243LQCmJPjvVpwi9zMWDp1JU
- 9MWr5qhyX8gZTLXTB+yp1kXvo2GzHmwjNGPU624+dZ2Qr5qHZXlQ+ExGXg1IhHY7I6qtgG
- u12mVmqWp1LdqKDM7QoVYzrchCrhLDw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CQzDH1V4w6eVY3mbdjPDXzkRBHvX/RGaS5hAPHtGK8A=;
+ b=dTrOgc5dZqijAE9M4wv1F2+5JoKaoweqk9cejiMuD4gLPT1ZinzvYbduLQhu48pnLFFunH
+ SQnSSc+V7XqDjAXOnfWdqQA2rUXudYw5avbFVh8bm8LWEXdYyxx1xpKFy/XkGeV3GvNlrW
+ HZgVEyLuzZ9mwjGG2Z29NSQ7D1CXFJE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-b7P0X1cUMnuxNfR21EL4-A-1; Mon, 14 Jul 2025 07:07:06 -0400
-X-MC-Unique: b7P0X1cUMnuxNfR21EL4-A-1
-X-Mimecast-MFC-AGG-ID: b7P0X1cUMnuxNfR21EL4-A_1752491225
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-456175dba68so8249865e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:07:06 -0700 (PDT)
+ us-mta-625-TncvK3AeNsqFMSrVHtOYGg-1; Mon, 14 Jul 2025 07:05:44 -0400
+X-MC-Unique: TncvK3AeNsqFMSrVHtOYGg-1
+X-Mimecast-MFC-AGG-ID: TncvK3AeNsqFMSrVHtOYGg_1752491143
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4561c67daebso2042295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 04:05:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752491224; x=1753096024;
+ d=1e100.net; s=20230601; t=1752491143; x=1753095943;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eoimDhc5l0wVHOgJ1eysYl454HfMabPmsqsHxip4lQg=;
- b=XiSNay2p2td08OWXekB22OMMn3TPjSuYUIz70qSve/tADv5Y5U42T7l3beuI9AACqd
- RZavRyQrGPzutrfu1zPMwGnXGZbCGBycK1/WSBzrjN05eJsSgkhwIiGVdhzjG6Ijn4eG
- 48m7o7EPr8cr2QcDvQpGSpg3mQhxt16whUW7dqIp6h8SjtaT8fQya7p3vC4MvIN4Pamr
- v+oSWYuLqg3X7BTZTM1+MZ/ONo7M/F8RKK/eW4AYy1bjQK6y1hOaNjN+ph06uQr/s0Wv
- rdod5+EyedRqUhGrdTFn0TJLyXm856t4K6PCL1xaIkM/+O79KXt5g4mu9X84e7eROSuW
- 6Hww==
-X-Gm-Message-State: AOJu0Yyoh3PaKO+OXoNiNHv+jOBZigwxyKowcuA2lWiIaBSRXAM9t8ou
- Tp1mJcODKIarA4OGshkRJSAWHKSsRab8nf1Rt1vZMrB9MxpdZQY23CWkoJv0On62oMSI9HiYO5D
- btClZxRC01ej7YbYIdcRLq3pS91+XzTnq+4HoNnIPZ03IsVQS4MyL2YIMb0KAZVxT/vUlbtzDFi
- DDmwTIwvm5TOUoKmBU2421NgFHQcneRsXTtWYWUROz
-X-Gm-Gg: ASbGnctvXeqU/QnIxLgN1FSUl72tEZQn79ZcxfzvPiS28x2TUjY+QuR6RY0P1PTWwRH
- iVo0PRG+Lj0i5iANCULWlAfgA0A+RmfKB61sfNGEbCc6i03ESzLzajkcJnRi+4i/QNIifpcoSTI
- kGQDJq1zzPfPPC2MDonIemSsRbky2LD2icDzXYlqtg/U0vel58RerMdqPWuKjJWOgAlsZkZm5nk
- oayKUHCCoYIPL29xOuo2E3+8hLD+b0JLnO33pl+bNToQZtXif/z1rJfxP18tCq3JE6LyKBDaWMl
- 0vTiW7EKbtyg+boSKYYB77wgWxUdWUxhWaxETmUM4Fw=
-X-Received: by 2002:a05:600c:4e51:b0:455:eda0:8a8e with SMTP id
- 5b1f17b1804b1-455eda08c8dmr89470205e9.27.1752491224243; 
- Mon, 14 Jul 2025 04:07:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZbyNgVFefir52iWnM2DErV6Xh7OJJ9HWLIGYkGB98qDWZHSRYPuBTJmZLre/jKF1S91GeMQ==
-X-Received: by 2002:a05:600c:4e51:b0:455:eda0:8a8e with SMTP id
- 5b1f17b1804b1-455eda08c8dmr89469925e9.27.1752491223816; 
- Mon, 14 Jul 2025 04:07:03 -0700 (PDT)
+ bh=CQzDH1V4w6eVY3mbdjPDXzkRBHvX/RGaS5hAPHtGK8A=;
+ b=MCLCYdY/Bbh0fmLuB76YYceOgIch4C+/ExO3csjbvoykfkgAz+xvPI0hVPVzbznVGT
+ 9+HoslWncZmN0TwIOGYiOfpY9+Jhxm+fM7SCxE/7UOV1+k6Fo+H+K8+4SjpAHXN5Uh8w
+ I4yGuOHtBMBQpqsz6TVSROJE1pTlz3WdGejCyFRcmlT3t7/qJt7e5hB6xpKs/J2qJbaO
+ Ec/12wym+rHZ+GXXtC0bIuHaDpkMvpZ+YfYNra9kC7+UDm2Q2f7WBvPXkIhe2NwwlJW2
+ MViOfVO0ZE/eiRejrqgmeY/qyKoxD3eK9647hcRTU4bXwNFUrD7Zou8IBEmw0lYIK8eF
+ k2fw==
+X-Gm-Message-State: AOJu0Yyc2VWcoYVW+KeYlZcsARwcu5KYpx2HZjZjpFCyKsvOhTcM5G4k
+ C6LOuZYM3CDBcA2PAWMdU8r2PfcHaTdAoQPS8rpE+sXj0oLM0lN0f/wNmwDHQ7Nzg/4FhhRIPiL
+ YgYMnzOFvgmGan43XZNFldtBOQSR3luud3AC6UqnGiyWaPa5rJI/UCTSczWxEV+uZb+hAR/E2iy
+ nNiHrF12NSBY6zjQ+spkeu8zUsFRfT7U8oYxyt2rk3
+X-Gm-Gg: ASbGnctpxysYMyIlpqVc2eRpoNpI6R0HyH5GoR7Ep2XksiwrFAQeWTsHJZtGLfwk4Pe
+ ExAMj2SjZ5p/8+XRapcCSLV+06xdciTIR0Z8w9CTpOrkiVHYrVzb4/+HUJVs03gq5FLo0zkKZMU
+ grPsUvnqmLRnDHKdcyC7/g8zt3TtNtNV5YcdXtZQP4OgYjVi1Ui8b4AW4kZk48t0GCLgNSy+94C
+ 3tNq+MJvvFCic+oabm9PVuAGeb6O6QrSugVPj+Dx8s9xPOH6MQNSQXd7Shk236CsvIgcJurg5L2
+ jS9pQs47wnZtdUSNbQrHNOmIR1Wic4s1C6ruGvCr2y8=
+X-Received: by 2002:a05:600c:5022:b0:456:1281:f8dd with SMTP id
+ 5b1f17b1804b1-4561281fc0dmr46043795e9.12.1752491142634; 
+ Mon, 14 Jul 2025 04:05:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/i1joJjKHQdVeA51bGJrmR0fd4lmxgJshWvIulSYTWabOLmt+EDoNoFh6zLwZt4g99z0Chg==
+X-Received: by 2002:a05:600c:5022:b0:456:1281:f8dd with SMTP id
+ 5b1f17b1804b1-4561281fc0dmr46043405e9.12.1752491142069; 
+ Mon, 14 Jul 2025 04:05:42 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560ddf5e0esm63678815e9.18.2025.07.14.04.07.02
+ ffacd0b85a97d-3b5e8e1e285sm11945093f8f.76.2025.07.14.04.05.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 04:07:02 -0700 (PDT)
+ Mon, 14 Jul 2025 04:05:39 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
-	Tao Su <tao1.su@linux.intel.com>
-Subject: [PULL 68/77] i386/cpu: Mark EBX/ECX/EDX in CPUID 0x80000000 leaf as
- reserved for Intel
-Date: Mon, 14 Jul 2025 13:03:57 +0200
-Message-ID: <20250714110406.117772-69-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 35/77] i386: Cleanup the usage of CPUID_VENDOR_INTEL_1
+Date: Mon, 14 Jul 2025 13:03:24 +0200
+Message-ID: <20250714110406.117772-36-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250714110406.117772-1-pbonzini@redhat.com>
 References: <20250714110406.117772-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,49 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Per SDM,
+There are code using "env->cpuid_vendor1 == CPUID_VENDOR_INTEL_1" to
+check if it is Intel vcpu. Cleanup them to just use IS_INTEL_CPU()
 
-80000000H EAX Maximum Input Value for Extended Function CPUID Information.
-          EBX Reserved.
-          ECX Reserved.
-          EDX Reserved.
-
-EBX/ECX/EDX in CPUID 0x80000000 leaf are reserved. Intel is using 0x0
-leaf to encode vendor.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Tao Su <tao1.su@linux.intel.com>
-Link: https://lore.kernel.org/r/20250627035129.2755537-2-zhao1.liu@intel.com
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250630080610.3151956-3-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ target/i386/cpu.c                | 2 +-
+ target/i386/tcg/decode-new.c.inc | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4f0c9734461..ae508fa962d 100644
+index 70b742fcdeb..d3d13b14726 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -8280,9 +8280,15 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x80000000:
-         *eax = env->cpuid_xlevel;
--        *ebx = env->cpuid_vendor1;
--        *edx = env->cpuid_vendor2;
--        *ecx = env->cpuid_vendor3;
-+
-+        if (cpu->vendor_cpuid_only_v2 &&
-+            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
-+            *ebx = *ecx = *edx = 0;
-+        } else {
-+            *ebx = env->cpuid_vendor1;
-+            *edx = env->cpuid_vendor2;
-+            *ecx = env->cpuid_vendor3;
-+        }
-         break;
-     case 0x80000001:
-         *eax = env->cpuid_version;
+@@ -7761,7 +7761,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *ecx = env->features[FEAT_8000_0001_ECX];
+         *edx = env->features[FEAT_8000_0001_EDX];
+ 
+-        if (tcg_enabled() && env->cpuid_vendor1 == CPUID_VENDOR_INTEL_1 &&
++        if (tcg_enabled() && IS_INTEL_CPU(env) &&
+             !(env->hflags & HF_LMA_MASK)) {
+             *edx &= ~CPUID_EXT2_SYSCALL;
+         }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 55216e0d249..853b1c8bf95 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2722,14 +2722,14 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+             if (decode.e.check & X86_CHECK_i64) {
+                 goto illegal_op;
+             }
+-            if ((decode.e.check & X86_CHECK_i64_amd) && env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1) {
++            if ((decode.e.check & X86_CHECK_i64_amd) && !IS_INTEL_CPU(env)) {
+                 goto illegal_op;
+             }
+         } else {
+             if (decode.e.check & X86_CHECK_o64) {
+                 goto illegal_op;
+             }
+-            if ((decode.e.check & X86_CHECK_o64_intel) && env->cpuid_vendor1 == CPUID_VENDOR_INTEL_1) {
++            if ((decode.e.check & X86_CHECK_o64_intel) && IS_INTEL_CPU(env)) {
+                 goto illegal_op;
+             }
+         }
 -- 
 2.50.0
 
