@@ -4,109 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B36C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 19:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3362C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 19:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubPKD-00085s-Ur; Mon, 14 Jul 2025 15:58:58 -0400
+	id 1ubPKo-0000uT-LB; Mon, 14 Jul 2025 15:59:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubOBL-0007xE-UN
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 14:45:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1ubO6P-00023A-JX; Mon, 14 Jul 2025 14:40:37 -0400
+Received: from mail-mw2nam10on20610.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::610]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubOBJ-0006qw-3B
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 14:45:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752518739;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IC+y8Ts8tvKgDcEp7zaqafgWzmW1YusiFlMT1mEZamc=;
- b=PWHv0ycg967Y+wgWFRf69eM0c48N64AFSNjzq7o5xQpY1EJ6vdK3yPEAZ1iYgPsp449IgU
- KL6mM93AEjXKF40AN1lPOlJpljrA9w0YiX2b0h1lSda0DLQefVGUo0lOpkE+SC6CFpv8wr
- 9Gqx//TBls6XWOvVcKXCqycw725vUlM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-Hpuk7DNJO0y1D-II2MUteA-1; Mon, 14 Jul 2025 14:45:37 -0400
-X-MC-Unique: Hpuk7DNJO0y1D-II2MUteA-1
-X-Mimecast-MFC-AGG-ID: Hpuk7DNJO0y1D-II2MUteA_1752518736
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eeed54c2so2546283f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 11:45:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752518736; x=1753123536;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IC+y8Ts8tvKgDcEp7zaqafgWzmW1YusiFlMT1mEZamc=;
- b=f6hGpvQdN/+kXqCJDparxordpWxXyXjpt2LuBXdW3fzUpaEq/3Cjv3cgaB9ks/IRuW
- mbBS55VOiuGcWYyl7Qhcx4tfE+UjAPGoaxTPyvGeTLFLUyCtiOds3Dm3f21OIlCoxDTW
- cNvdLxCKcwIn+zfuwcg7mK5hRTeCdG76W/myi+Cu3BBnJonfGjzb4QVrVBBmJaJqY488
- DkkZkEik9kt99YNpjj2lpOPyDeAgYD0g2O7AQ5RIUQMKDDiPDf5P1TMOl9tDrYRAXSN2
- ayZOZN4AcqzJJBQ6npy+VAyPRMXna51/gi7woyV0CVfHZe1aL9UxLOZGtkWJLMxBqtr1
- oq7A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAtV5o29REQebh84TcCXj2lf/mzg89eVayJdSBEX/ziXpE8uuFV2P3hug6T+5ok4ruMeO8k8ylq4px@nongnu.org
-X-Gm-Message-State: AOJu0YwlzhkkAhRSRAQi7lU8HDugyjF134FIhqVrfQU/8exfra5/Fbn+
- tDK5gFJ/rglUZfuQQmK3eZcsodRwZOkzNL42JhHe/AjMFI/oPH85ZjxadSHVW7xRwXhUxZHjeEf
- xk7U0bGph8RtpLZs2S3vF7oKb+ItNJTOirqfINXG0c4lS+Qyq8Z6IXM+I
-X-Gm-Gg: ASbGnctMhnlpCV5I0uCpTDX2bZRmRwvyt4hyK0SipbsAe6GDSkVs1iuug08Kq1/GALQ
- SFRwDnPRKwBJzf1G7zCj9eTgebxT7YWn369hcDuBB/F4L3SOPElfFU7qsZ+xEYno8is4nPP+9hV
- E3P9AYXEuKoO/jQWdxi8cl1bktsAq9mO8c0Juq8K++f/7p+rxY0WlkDWLRmJ1Ihv03h3sykpGKi
- n1oUS5bW12uWBUOV/UZPyAfv6wlJYb1eQQwEXAJSxUJ3qOtR2QxsmuaMC8sdKj8ZiFrXTlQ7dsr
- rGCZbVK/GZ1rhgR4ecEFb0gQEm4AjJhOmw==
-X-Received: by 2002:a05:6000:4405:b0:3a5:8d08:6239 with SMTP id
- ffacd0b85a97d-3b5f188e6a2mr8404276f8f.21.1752518735782; 
- Mon, 14 Jul 2025 11:45:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXK7Sx2g4Y03ZTrtj7qHrRREIe7XEb8ZQLOG2mObH5V1YWfr0zAN0O9S3VhIYNWkhCPMUVeg==
-X-Received: by 2002:a05:6000:4405:b0:3a5:8d08:6239 with SMTP id
- ffacd0b85a97d-3b5f188e6a2mr8404253f8f.21.1752518735278; 
- Mon, 14 Jul 2025 11:45:35 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e2710bsm13070306f8f.99.2025.07.14.11.45.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 11:45:34 -0700 (PDT)
-Date: Mon, 14 Jul 2025 14:45:31 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Li Chen <me@linux.beauty>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>,
- Li Chen <chenl311@chinatelecom.cn>
-Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
- when guest has no serial hardware
-Message-ID: <20250714144303-mutt-send-email-mst@kernel.org>
-References: <20250528105404.457729-1-me@linux.beauty>
- <20250528105404.457729-5-me@linux.beauty>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1ubNyE-0004sF-Oz; Mon, 14 Jul 2025 14:32:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mWB/4EovKfQ+T60dIy0KJ1YSm2K4bsEplqBUg4f0GXkO1Z8AVpYDvcIDPmIeLG7ARBoK6NI7wK2rzOfdA2FBkI71y0wFvOtP4czm/ZQjYszh7PzHz6cfdUPkJTNrU39hao+R3J49DA63AV0K1BEFG/THeVa30o5/zb/GNyzy1WPV3bD5xM/cjRU2Hg190Jo99KYQP0GcWjTMmEVhSp742BMHkb2s8SWgNtgwLTdEV6FEaC3Kk+9oxto0tI3+zcF+CzwqTcX631ymN4gNRhrNuUWYInBPJG6PZ9rMoguH2ugHosCbEgn3PqikkzWbssioFcS0lU3y5MxJ0kAKySKp+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FQaGA2PZ/Y5vNEuP8r4953CKW1nFOy72wsMFdfz/Kd4=;
+ b=TQ7VtA2aM9Hy0F/EINmnSXGn9U7K7UYIx94v5C7WdFc/fHXY6fl96sokR5VOraw4BSXvV2N7LzoUwN9LsaUcOpzDPIAes183L201mg6vjjxBmnadhzSj72bbheex4WkUm3OD/g5yf4/doocZqURAo8FLRFWMlkvX0m3xOyfICdT9r0HFpzJCb46dHQDnDLG57bXSFP0tV+AChHjepeh6s3yGpY25S+iVOIjV6+zT9eIxqhbeBMq4WJERz67+Uy2PDFCe7Z7omCJY+uYf7MUMCzuOec1z0p9uHoFDRYV067gUntXja/VJvhd/b1iopodXV4uX0b0TwhtgqZ94mFy/+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FQaGA2PZ/Y5vNEuP8r4953CKW1nFOy72wsMFdfz/Kd4=;
+ b=aYJooKOxO2+TDNl2si58hdz4d8c1hqIqpNZjnD5LWo18Cmh3vpctZv3R166dIQGl7kzBJovqRU0Iye5eCGGYgFYMLdOmdONUO4wnkJupExZs6Lpbn1vhhzARlGekfT3sG4gd1me/EjaulT1IHYAoCehMXKWZW95VSM9UFLitRBXiEj28FRRHxEEU8ERPbwAriAawPy8e/nK0kTW7D/H2dCee1wUphpble0O6kfvXRDmG8i2Uzn2oVUK03M+BA9eDchd570qVB4f8O9ZBrx3D+wMqIV0jvUpqLopAgfzUrL5p4PuzLPls31hhlp2AknAlvIoatHLlF4n6//e6FEkP5w==
+Received: from CY5PR13CA0041.namprd13.prod.outlook.com (2603:10b6:930:11::27)
+ by BN5PR12MB9510.namprd12.prod.outlook.com (2603:10b6:408:2ac::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.26; Mon, 14 Jul
+ 2025 18:32:04 +0000
+Received: from DS2PEPF0000343C.namprd02.prod.outlook.com
+ (2603:10b6:930:11:cafe::f2) by CY5PR13CA0041.outlook.office365.com
+ (2603:10b6:930:11::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.15 via Frontend Transport; Mon,
+ 14 Jul 2025 18:32:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS2PEPF0000343C.mail.protection.outlook.com (10.167.18.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8922.22 via Frontend Transport; Mon, 14 Jul 2025 18:32:02 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 14 Jul
+ 2025 11:31:45 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 14 Jul
+ 2025 11:31:45 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 14 Jul 2025 11:31:44 -0700
+Date: Mon, 14 Jul 2025 11:31:42 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
+ <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 07/15] hw/arm/smmuv3: Implement get_viommu_cap()
+ callback
+Message-ID: <aHVNDujZgP6BaKLO@Asurada-Nvidia>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-8-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250528105404.457729-5-me@linux.beauty>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250714155941.22176-8-shameerali.kolothum.thodi@huawei.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF0000343C:EE_|BN5PR12MB9510:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9c26ad99-5499-4e92-4808-08ddc304ba0e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|82310400026|36860700013|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MIRQ6HpyPatvvlTQy3OPog/ViEDPIZwv7goRYNyl0HeZJxUNmttnsMLc4+VO?=
+ =?us-ascii?Q?DzW/Z/E06OK7+vogZ9SeiBYYeFJyVwg0t1y/+Nn9bkgpaJwKUeDkfEXr1FjR?=
+ =?us-ascii?Q?XdsxrgyRMSey3JjQVl3VFqu3MYl210IG86E2fKpD7GNunExtiOkyIiwcdTaz?=
+ =?us-ascii?Q?HDkAR4gPyj1O3rEQOXHLwePL5BzRD4POvp0UzgddRB3puUChQiCZ8Dr2VSmW?=
+ =?us-ascii?Q?0L4jVvnYfk0jppkf2ljkZiCqNPVCUKVAJ5Ga7Ar4E/bUoTvihWQe8kenIJbx?=
+ =?us-ascii?Q?1eimm/I9veJiVOeOOOWpUZhdeKWW7YebHmuITwksnTEOglGXifpBExviYqVf?=
+ =?us-ascii?Q?n5U6FvxKMHAyqQ9LE7hWK9bMO2LLwPm3QnOL2hSzQR8wLSx/Vk2vlqzNqq5f?=
+ =?us-ascii?Q?wBO0ORcUXzMItptyL6Flsu2nKVcnocJve10R4T+UarajX81oiBjbPnyVl40a?=
+ =?us-ascii?Q?9Cup3Ak1wsSXRldFoHaFPIfqTvSvOJgIGzy9IH37bCqWhkRimhvdAArVllua?=
+ =?us-ascii?Q?JYbaFM68C+LCzbmIrvRYkrUzv+D+P3gK6VJoKtPlzsEiDm9ztmf3O+DiwgPM?=
+ =?us-ascii?Q?lFyEVwaRYgpSnxXv62m98dQ2yCQQgYniB+BQaugiGoMfAWeUo+4BzSsw4Qrq?=
+ =?us-ascii?Q?yh8cPwiPmn7BzZSRRiNevEddD3Wvo6HKbREg6Cyd/RF7p29fstK5/7oGAFBP?=
+ =?us-ascii?Q?c7MlW/LeHQg4foK28pZD4xob+OnklwfwfwSd3Jio4HXAhUSKCkCYZtNuHK5Q?=
+ =?us-ascii?Q?lIDQEzmEfLrerEWxJhRO+qtwh++0j8QWMQYvDUmExTEbzIj+n8+VSxE9A2NN?=
+ =?us-ascii?Q?3QJnLlk0PH8WJHAOMA8GDrJ9X3Iu4SnNcHDUG1JM7Rk2yKOwromJNleL7OyD?=
+ =?us-ascii?Q?FCt+aSAfT3dTnWHj1V5XEu7fS44V0eyDReoiWNCBFPAI8LWqZNdeB11WoDER?=
+ =?us-ascii?Q?JMx0AiNT5y2odAKiVOycugt3wKV5xw9ItKYGk8Mm9eTCfPr+qDcBE3dIhKk8?=
+ =?us-ascii?Q?jEvQrYblY6Y5zWbo9zaW69a0+RiIr/q22/WsYV+UUVFcXx/5RyIwTbsMJUfa?=
+ =?us-ascii?Q?jwDOzKBL72Ro4CjjCfpEobmJlmmJdgEng2W3+vQAqiZTa+R9Rg5wc9/AHt7+?=
+ =?us-ascii?Q?Nzo5yWUdEbU4Ty1dorvnudxvFMKtE3u5abGAOl2GQUgkg9x4rgyfApjpZxGB?=
+ =?us-ascii?Q?8VwJn1xmWD1PqS9VuaaUv+hlzUzf3jRORxIwxR07URNNTN4lHx1bazWsIp4H?=
+ =?us-ascii?Q?9ucYP0xJte8BTv17si2z9rgT5quyngIukctAKGuJIzdL9apA45ZUpJ0S3057?=
+ =?us-ascii?Q?56NnMeK5Wr5kiI+ztCRVq1PRIh6AyODzxpECT8QBTNiZNjVb9aBYiWGmAL6/?=
+ =?us-ascii?Q?1SbaD5mshxSlA++7nHQXsTx812yew/T6Ig9pn8k5vGWWkGBU5J+vWqJ2d0m+?=
+ =?us-ascii?Q?G1i1Z4HT9GomrsR45sr4B0VB0PbP3mdt+77/WtnWnuYIrPtNLE3c0i78DhLr?=
+ =?us-ascii?Q?d2FODzKLeN406yv7N7h/+dtMqZwT9GIYTvOC?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2025 18:32:02.3716 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c26ad99-5499-4e92-4808-08ddc304ba0e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF0000343C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9510
+Received-SPF: permerror client-ip=2a01:111:f403:2412::610;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,187 +161,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 06:53:38PM +0800, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
+On Mon, Jul 14, 2025 at 04:59:33PM +0100, Shameer Kolothum wrote:
+> For accelerated SMMUv3, we need nested parent domain creation. Add the
+> callback support so that VFIO can create a nested parent.
 > 
-> The virt machines always instantiate a PL011/16550 at UART0 and
-> describe it in ACPI (DSDT device node plus optional SPCR table).  When
-> the command line contains “-serial none” there is no backend attached to
-> that UART, yet the guest still discovers it via ACPI and may try to use
-> it as a console, causing unexpected results.
+> Since 'accel=on' for SMMUv3 requires the guest SMMUv3 to be configured
+> in Stage 1 mode, ensure that the 'stage' property is explicitly set to
+> Stage 1.
 > 
-> And also explicitly add "-serial stdio" in bios-tables-test.c to allow
-> serial device creation, otherwise DSDT assert would get failure because
-> "-nodefaults" will not create uart device by default:
-> 
-> ```
-> stderr:
-> acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-BMOL72], Expected [aml:tests/data/acpi/aarch64/virt/DSDT].
-> See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
-> acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-RNOL72.dsl, aml:/tmp/aml-BMOL72], Expected [asl:/tmp/asl-ZVQL72.dsl, aml:tests/data/acpi/aarch64/virt/DS
-> DT].
-> ```
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-> Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-will need to be rebased updating loongarch too, now.
-
-
-> ---
-> 
-> Notes:
->     Changes since v3: 1. Add Reviewed-by from Sunil V L <sunilvl@ventanamicro.com>
->                       2. Explicitly add "-serial stdio" to pass DSDT assert
-> 
->  hw/arm/virt-acpi-build.c       | 15 +++++++++------
->  hw/riscv/virt-acpi-build.c     |  7 +++++--
->  include/system/system.h        |  2 ++
->  system/vl.c                    |  5 +++++
->  tests/qtest/bios-tables-test.c |  5 +++--
->  5 files changed, 24 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index d77d16cbd3..c26aedb1b1 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -59,6 +59,7 @@
->  #include "hw/acpi/viot.h"
->  #include "hw/virtio/virtio-acpi.h"
->  #include "target/arm/multiprocessing.h"
-> +#include "system/system.h"
->  
->  #define ARM_SPI_BASE 32
->  
-> @@ -821,11 +822,13 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->       */
->      scope = aml_scope("\\_SB");
->      acpi_dsdt_add_cpus(scope, vms);
-> -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
-> -                       (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-> -    if (vms->second_ns_uart_present) {
-> -        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-> -                           (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-> +    if (serial_exist()) {
-> +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
-> +                           (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-> +        if (vms->second_ns_uart_present) {
-> +            acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-> +                               (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-> +        }
+> @@ -81,8 +82,22 @@ static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
 >      }
->      if (vmc->acpi_expose_flash) {
->          acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
-> @@ -937,7 +940,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->  
->      acpi_add_table(table_offsets, tables_blob);
->  
-> -    if (ms->acpi_spcr_enabled) {
-> +    if (ms->acpi_spcr_enabled && serial_exist()) {
->          spcr_setup(tables_blob, tables->linker, vms);
->      }
->  
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index ee1416d264..80bf3c3cec 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -39,6 +39,7 @@
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
->  #include "system/reset.h"
-> +#include "system/system.h"
->  
->  #define ACPI_BUILD_TABLE_SIZE             0x20000
->  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
-> @@ -474,7 +475,9 @@ static void build_dsdt(GArray *table_data,
->                                   memmap[VIRT_APLIC_S].size, "RSCV0002");
->      }
->  
-> -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-> +    if (serial_exist())
-> +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-> +
-
-coding style violation
-
->      if (virt_is_iommu_sys_enabled(s)) {
->          acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
->      }
-> @@ -895,7 +898,7 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->  
->      acpi_add_table(table_offsets, tables_blob);
->  
-> -    if (ms->acpi_spcr_enabled) {
-> +    if (ms->acpi_spcr_enabled && serial_exist()) {
->          spcr_setup(tables_blob, tables->linker, s);
->      }
->  
-> diff --git a/include/system/system.h b/include/system/system.h
-> index a7effe7dfd..ca1af38432 100644
-> --- a/include/system/system.h
-> +++ b/include/system/system.h
-> @@ -75,6 +75,8 @@ extern unsigned int nb_prom_envs;
->  /* Return the Chardev for serial port i, or NULL if none */
->  Chardev *serial_hd(int i);
->  
-> +bool serial_exist(void);
-> +
->  /* parallel ports */
->  
->  #define MAX_PARALLEL_PORTS 3
-> diff --git a/system/vl.c b/system/vl.c
-> index fd402b8ff8..e340ee3a95 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1485,6 +1485,11 @@ Chardev *serial_hd(int i)
->      return NULL;
 >  }
 >  
-> +bool serial_exist(void)
+> +static uint64_t smmuv3_accel_get_viommu_cap(void *opaque)
 > +{
-> +    return serial_hd(0) ? true : false;
-> +}
-> +
+> +    /*
+> +     * Accelerated smmuv3 support only allowes Guest S1
 
-serial_exists
+s/allowes/allows
 
+> +     * configuration. Hence report VIOMMU_CAP_STAGE1
+> +     * so that VFIO can create nested parent domain.
 
->  static bool parallel_parse(const char *devname, Error **errp)
->  {
->      static int index = 0;
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 44de152a36..452566fa86 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -824,10 +824,11 @@ static char *test_acpi_create_args(test_data *data, const char *params)
->          /*
->           * TODO: convert '-drive if=pflash' to new syntax (see e33763be7cd3)
->           * when arm/virt boad starts to support it.
-> +         * NOTE: Explicitly add "-serial stdio" to enable uart in DSDT.
->           */
->          if (data->cd) {
->              args = g_strdup_printf("-machine %s%s %s -accel tcg "
-> -                "-nodefaults -nographic "
-> +                "-nodefaults -serial stdio -nographic "
->                  "-drive if=pflash,format=raw,file=%s,readonly=on "
->                  "-drive if=pflash,format=raw,file=%s,snapshot=on -cdrom %s %s",
->                  data->machine, data->machine_param ?: "",
-> @@ -835,7 +836,7 @@ static char *test_acpi_create_args(test_data *data, const char *params)
->                  data->uefi_fl1, data->uefi_fl2, data->cd, params ? params : "");
->          } else {
->              args = g_strdup_printf("-machine %s%s %s -accel tcg "
-> -                "-nodefaults -nographic "
-> +                "-nodefaults -serial stdio -nographic "
->                  "-drive if=pflash,format=raw,file=%s,readonly=on "
->                  "-drive if=pflash,format=raw,file=%s,snapshot=on %s",
->                  data->machine, data->machine_param ?: "",
+Aligning with the kernel uAPI docs:
 
+s/nested/a nesting
 
+> +     * The real nested support should be reported from host
 
+"The real HW nested stage-1 translation must be supported by the .."
 
-> -- 
-> 2.49.0
+> +     * SMMUv3 and if it doesn't, the nested parent allocation
 
+s/nested/nesting
+
+> +     * will fail anyway.
+> +     */
+
+And I think the lines are wrapped a bit too early. Should QEMU allow
+up-to-80 characters?
+
+Thanks
+Nicolin
 
