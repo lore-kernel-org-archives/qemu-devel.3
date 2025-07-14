@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA59C83F21
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A12C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSG8-00037R-GN; Mon, 14 Jul 2025 19:06:56 -0400
+	id 1ubSIS-0003T8-Vc; Mon, 14 Jul 2025 19:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSG0-0002hc-Ee
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHG-0006B1-9M
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSFy-0005OL-N6
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:06:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHE-0005e4-OE
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534406;
+ s=mimecast20190719; t=1752534484;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ByXh3NCy3hfu/AZyGeZDrs8lL0yTfXk7SeuVflPlt2k=;
- b=MTr5a3MJZIMnpkGs0hVrXpT2F+wnj3EmKqaTGAaRKAGNUUjuuo8I436ZmaAE+eIc2x5zZO
- axXmp+sbHI6vHkVEpQVlXryQuvS0WWC5VjfCq5eNKYcNb/dgZR53TOxYfsu3LOdChn+GKs
- ZeY8YPUyfsoFiKzUNdhwHDHo9ZWh2fA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZUQMsD0OTjK6NSdPR5fnk3SR/AQMl7B+vWC0iuHgWB4=;
+ b=cogMnvdcaWVyHeMNoCgFJi4DHsi7UzfQjDr3G1zg7HEz+dOriLJ2td+VJPjEsEwXHzQ7HF
+ enRciG1DvZdtSx/XVmJXTZHKtkOhJqH71nwz1VQlltD2cxl+u6+lu7DGKQfWLprm/9MR9Y
+ Y8vjpSKMlaw3U9j7/AfG5M0FaXlUtUw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-m0GwcmVwNYixzpmnIARp4w-1; Mon, 14 Jul 2025 19:06:44 -0400
-X-MC-Unique: m0GwcmVwNYixzpmnIARp4w-1
-X-Mimecast-MFC-AGG-ID: m0GwcmVwNYixzpmnIARp4w_1752534403
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43e9b0fd00cso27926455e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:06:44 -0700 (PDT)
+ us-mta-231-iTchXHfUOym9GeJQJTYONQ-1; Mon, 14 Jul 2025 19:08:02 -0400
+X-MC-Unique: iTchXHfUOym9GeJQJTYONQ-1
+X-Mimecast-MFC-AGG-ID: iTchXHfUOym9GeJQJTYONQ_1752534481
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a503f28b09so3030293f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534403; x=1753139203;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ByXh3NCy3hfu/AZyGeZDrs8lL0yTfXk7SeuVflPlt2k=;
- b=wwVOIGMunwNvdvGu4LZdi1+zab/sJe0rn9UM0Gfxh2dj9I9fukrKRS+1iXfLmcNDep
- dKDoEIZXjTS2ANqlBrLowKzTS6zaJELjRSNINvge5UpYIKS6hmK103YduKqD7K6apn0o
- INlvr+DzGCzDegcIPccUyV8pW+wTqZYp2mCBnYGEORqqlvshC8HgxWHNpDguNaqQrWcY
- Nfl1N9AGF8k8HpRyAl7SL3WV6Yi8WRl9eSfePv9tghz2jRXzYBX4HHsyYoJjFHNuFbiL
- zLWXLLBkaaPz4RGFen7QUT7t8R4rojpeLnZGDP5C4MHUIzEG99Xz9xwVTG2JLmwZCJpy
- gJVQ==
-X-Gm-Message-State: AOJu0YyjkqVvghLFqqaHnB88m2Zn8R8A09MCXdDeezeagODhArimKOdk
- DURrijTSBaT84ll5MWrB7Y+R0BOAD/DKbnCbSdq7N4IyyEOKiAFFXvX1gvIbqWjZb4r/QAW5icm
- cYWChjYCXliGt3JGFJy6MEw+KBbMM5jBMV661cZ9g3oFiTW0IZESfXi/V82sYkvR2ADY7MeXcmI
- HnWM5c+K5s+TA1WyfegM5NpWsxH15qoATOTA==
-X-Gm-Gg: ASbGncvmvvTcLJltKCEHJaD+mG9uwdH8/zcoXDKt2LsBeyklen/v0K6z4vnWDpJqFjJ
- P1PqDH4iIk6jDTRR1IlnX+DNwqugJUNTc0hTaFNV28lrJNo/2mSQ9WSb7uIFDFitZJkwzUJ73RN
- fzm3r6Er9vS1SqujY9ikPP0fsxTmFvq8K1kD2vkgpzOqPf53iaTnLiowqZR6bdRUbZqeozEYEiO
- AMjdRpR7VT7ijJ0Qf0EjZ3//ix+GU78un4j+qCp/M8gZ+FIzINIR5EtNxTn0czhefD/6l0cQgMY
- kIn8N7kIQILJmS3mdk7VoizhvNG7Ftro
-X-Received: by 2002:a05:600c:6d1:b0:455:efd7:17dc with SMTP id
- 5b1f17b1804b1-45625e663dbmr7614055e9.11.1752534403164; 
- Mon, 14 Jul 2025 16:06:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK5E9vRMNGmVy0x30xqTSrFP4Fc2xO1YmZHrZVTJ4tjQP8Gou7fmaZmHW6rOBrNhMoB7QWBg==
-X-Received: by 2002:a05:600c:6d1:b0:455:efd7:17dc with SMTP id
- 5b1f17b1804b1-45625e663dbmr7613945e9.11.1752534402748; 
- Mon, 14 Jul 2025 16:06:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752534481; x=1753139281;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZUQMsD0OTjK6NSdPR5fnk3SR/AQMl7B+vWC0iuHgWB4=;
+ b=H3H/eLWzmKZENkXvesWRWwx+9rPQdFVrJ18OOx69Y5t+JJUWr6qNM1Szx06R2pynvh
+ Po4szUsk9wulNzS4ce8VZGzDbHmsOJ0p778xbBPo8vFsjbr+yz7anBAqtZNn5kRFj+xq
+ 9a2NzL7ZzqALW1lScpWOtzwhbFu2xFzY9xhoO/5IyKwoNEiaOpDKa0Ld3ssclIi/2kVx
+ mCgjhLlm58OGyBOlEkrEgrX/rVi7aGNevrhX5/4Fwc+Rpv9Y8XVPxZk8RSUmOJN9vC14
+ 4kqsZ6rfBMWApOtufrCfbT6xZDAGof6YMtDzFCPo+kS7jMzVsezkGCUiKXjoQvOdxy4w
+ 47Kg==
+X-Gm-Message-State: AOJu0YxcKYdSRBAaDewdX6OSck9VuIN9Q65v0tcHwztqk3xZxGEAExfR
+ FLv4yeXdaNt5MXf017rKSrBrnRi8qWJnuRqEVctInI3oDaWkAfUUNHJsfx3/KArVxZn8VCiZQaJ
+ XfE+A1IHtaZ9bCLQx5pqEF88AsRlMdysmgz07AhO3+Am4QD1/Auf4OONzEyJLzbOhx05VAf7Xmv
+ YQblYWrCgP1WEIkMY3L50cFcc0/JwC9XM43A==
+X-Gm-Gg: ASbGnctrNw4HO1X6iwKiRADOGlj+p+FzPHC2BtJ8jxHcYd0gcPDN4B6uTemCS+6j9I9
+ 0xVPdiu8xPONai8sA14PUdmeZ2l3XNw9iEQNpR3aOmlsFx6nY/d4vzw2fBJfpiqZAtGL1z3Ez9a
+ eWhh0dTtQ8J/xcC0MnbBPJj1MdHT+LGAQbZvZKhNe+TWUShXoe2DA8jVS3BZtAfQgvx509bkclX
+ iPRAfQPg9kME5FlhnQbmXXjRoSV4UVUaOwtqLuKxDtFZ3PwYiU7cE+wGf4+FlHtRtCDVFmuIA2q
+ TB1mRkSWg4AMEDytnfUia6Ekcl3iJDkb
+X-Received: by 2002:a05:6000:4813:b0:3a5:6860:f47f with SMTP id
+ ffacd0b85a97d-3b609522266mr1202418f8f.6.1752534481298; 
+ Mon, 14 Jul 2025 16:08:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEicwywIXnry2MwhM5a+JDwbJ7HFqb3x8zLJNA30KZVGdw5vXOlaDU+Fp4g2weqKjwAsKKD8A==
+X-Received: by 2002:a05:6000:4813:b0:3a5:6860:f47f with SMTP id
+ ffacd0b85a97d-3b609522266mr1202397f8f.6.1752534480906; 
+ Mon, 14 Jul 2025 16:08:00 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45626c7cbe8sm3910705e9.0.2025.07.14.16.06.41
+ ffacd0b85a97d-3b5e8e1e1a5sm13318956f8f.74.2025.07.14.16.07.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:06:42 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:06:41 -0400
+ Mon, 14 Jul 2025 16:07:59 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:07:58 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 11/97] tests/acpi: Add empty ACPI data files for LoongArch
-Message-ID: <f3bc2c3f33cc875a3b7e5349aa4141ea6789a01d.1752534227.git.mst@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 41/97] qemu/target-info: Add %target_arch field to TargetInfo
+Message-ID: <6d60578759b0fb09a3435c16837b7ecf48c56fed.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,73 +112,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Add empty acpi table for LoongArch virt machine, it is only empty
-file and there is no data in these files.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20250612090321.3416594-2-maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20250708215320.70426-4-philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 8 ++++++++
- tests/data/acpi/loongarch64/virt/APIC       | 0
- tests/data/acpi/loongarch64/virt/DSDT       | 0
- tests/data/acpi/loongarch64/virt/FACP       | 0
- tests/data/acpi/loongarch64/virt/MCFG       | 0
- tests/data/acpi/loongarch64/virt/PPTT       | 0
- tests/data/acpi/loongarch64/virt/SLIT       | 0
- tests/data/acpi/loongarch64/virt/SPCR       | 0
- tests/data/acpi/loongarch64/virt/SRAT       | 0
- 9 files changed, 8 insertions(+)
- create mode 100644 tests/data/acpi/loongarch64/virt/APIC
- create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
- create mode 100644 tests/data/acpi/loongarch64/virt/FACP
- create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
- create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
- create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
- create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
- create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+ include/qemu/target-info-impl.h | 4 +++-
+ target-info-stub.c              | 1 +
+ target-info.c                   | 9 +++++++--
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..bad1380eec 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,9 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/loongarch64/virt/APIC",
-+"tests/data/acpi/loongarch64/virt/DSDT",
-+"tests/data/acpi/loongarch64/virt/FACP",
-+"tests/data/acpi/loongarch64/virt/MCFG",
-+"tests/data/acpi/loongarch64/virt/PPTT",
-+"tests/data/acpi/loongarch64/virt/SLIT",
-+"tests/data/acpi/loongarch64/virt/SPCR",
-+"tests/data/acpi/loongarch64/virt/SRAT",
-diff --git a/tests/data/acpi/loongarch64/virt/APIC b/tests/data/acpi/loongarch64/virt/APIC
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/FACP b/tests/data/acpi/loongarch64/virt/FACP
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/MCFG b/tests/data/acpi/loongarch64/virt/MCFG
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/PPTT b/tests/data/acpi/loongarch64/virt/PPTT
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/SLIT b/tests/data/acpi/loongarch64/virt/SLIT
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/data/acpi/loongarch64/virt/SRAT b/tests/data/acpi/loongarch64/virt/SRAT
-new file mode 100644
-index 0000000000..e69de29bb2
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index 1b51cbcfe1..a8b34d150a 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -9,11 +9,13 @@
+ #ifndef QEMU_TARGET_INFO_IMPL_H
+ #define QEMU_TARGET_INFO_IMPL_H
+ 
+-#include "qemu/target-info.h"
++#include "qapi/qapi-types-machine.h"
+ 
+ typedef struct TargetInfo {
+     /* runtime equivalent of TARGET_NAME definition */
+     const char *target_name;
++    /* related to TARGET_ARCH definition */
++    SysEmuTarget target_arch;
+     /* runtime equivalent of TARGET_LONG_BITS definition */
+     unsigned long_bits;
+     /* runtime equivalent of CPU_RESOLVING_TYPE definition */
+diff --git a/target-info-stub.c b/target-info-stub.c
+index fecc0e7128..2e4407ff04 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -14,6 +14,7 @@
+ 
+ static const TargetInfo target_info_stub = {
+     .target_name = TARGET_NAME,
++    .target_arch = SYS_EMU_TARGET__MAX,
+     .long_bits = TARGET_LONG_BITS,
+     .cpu_type = CPU_RESOLVING_TYPE,
+     .machine_typename = TYPE_MACHINE,
+diff --git a/target-info.c b/target-info.c
+index 9ebabec988..8e29553b4e 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -24,8 +24,13 @@ unsigned target_long_bits(void)
+ 
+ SysEmuTarget target_arch(void)
+ {
+-    return qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+-                           &error_abort);
++    SysEmuTarget arch = target_info()->target_arch;
++
++    if (arch == SYS_EMU_TARGET__MAX) {
++        arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
++                               &error_abort);
++    }
++    return arch;
+ }
+ 
+ const char *target_cpu_type(void)
 -- 
 MST
 
