@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A97BC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E62C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 14:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKPs-0002zj-LU; Mon, 14 Jul 2025 10:44:28 -0400
+	id 1ubKQj-0003v7-ME; Mon, 14 Jul 2025 10:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1ubIr3-0000MZ-HD
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:04:26 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubIvt-0004ex-Ej
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:09:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1ubIqy-0004sW-Hw
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:04:25 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20250714130410epoutp01911e61e4ce5cee2bdc8bcba2929c5076~SH9_27UIu2341823418epoutp01V
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:04:10 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20250714130410epoutp01911e61e4ce5cee2bdc8bcba2929c5076~SH9_27UIu2341823418epoutp01V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1752498250;
- bh=STj9hqclOjcRpIvcs4IUPY0vGcojEPv3/KD0z0+QD1A=;
- h=From:To:Cc:Subject:Date:References:From;
- b=Nb53fn8vg+qIVkETt8KDWZjOo+qZSHREBxDV+dWWbFA6YzofATY/+POGvRQSkpBoZ
- 1IIwaxWFIxul0lcwaXctVXjcQkAbVdb9pSRpEUxxSrrNAFw3BDCI/Zq3UMs298H/dO
- xYjRYtl6atb8ocT9S+P0miIKLx5NlgCVAx8fTwW0=
-Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
- 20250714130410epcas5p2237911c82560ad16b15dd351641dc6b4~SH9_dp04U0632306323epcas5p21;
- Mon, 14 Jul 2025 13:04:10 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.86]) by
- epsnrtp01.localdomain (Postfix) with ESMTP id 4bgjFP2Dzqz6B9m4; Mon, 14 Jul
- 2025 13:04:09 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
- 20250710144348epcas5p1842ad24e3de24dd7048b0db9dfbe6455~Q6v1XAbYH2661926619epcas5p1D;
- Thu, 10 Jul 2025 14:43:48 +0000 (GMT)
-Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
- by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250710144347epsmtip23509616a42021b0f9572e7496c31a534~Q6vz3acz81607016070epsmtip2y;
- Thu, 10 Jul 2025 14:43:47 +0000 (GMT)
-From: Arpit Kumar <arpit1.kumar@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
- dave@stgolabs.net, Jonathan.Cameron@huawei.com, vishak.g@samsung.com,
- krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com,
- cpgs@samsung.com, Arpit Kumar <arpit1.kumar@samsung.com>
-Subject: [PATCH v2 0/2] FM-API Physical switch command set support
-Date: Thu, 10 Jul 2025 20:13:36 +0530
-Message-Id: <20250710144338.2839512-1-arpit1.kumar@samsung.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubIvq-0005WH-E7
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:09:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752498557;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d9N0wITcK5nFg/kSgon6hwyI1m1FIJrWlz9I+YSu+kE=;
+ b=PXIiL3xHw4kAfdhNhXB/CbXkoPypLlU78sarMsyTNDdTpc0QCTD+/6bQ41i9fdENnjTSRm
+ QVg9noOcsqhUtVKem1XhDe7MyT2L9Xa6XhAhu8lNCQIN/jje8Jro6iUZZmyY4UNdYHEPDK
+ 6iHEN4MmbgD26uODK+EiMgJ2GnHvnkQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-267-uxumEz_iPyO7L4SfG_E39w-1; Mon, 14 Jul 2025 09:09:15 -0400
+X-MC-Unique: uxumEz_iPyO7L4SfG_E39w-1
+X-Mimecast-MFC-AGG-ID: uxumEz_iPyO7L4SfG_E39w_1752498555
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a52bfda108so2163966f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 06:09:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752498554; x=1753103354;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d9N0wITcK5nFg/kSgon6hwyI1m1FIJrWlz9I+YSu+kE=;
+ b=syEtA0JEoMPd8LcPN52dQdz3XVKrQWc3uTvqZDlt+FwH264JeEuh6tqm4zO6fVP8Kr
+ z2jRfOaKWVnFtmx+AZquQq4j85a2zhtpUg+7YvLWV3Ll0qRMWwUzva4+v/WCkbe+Ccsl
+ RRMznyAVZ/lj5v99q68t++GBYXNeiicyTd3pWePdAjdu940bKmrov9jC2TndJWA2QVJS
+ WcUSjwxaPADQPI5P3iOn2W4YOwSku12Ut/suifRXTj8N2dwjmc+46BeQa+bbmWzbu1G4
+ KWs3gFTMcD1rvTnwjUgJXjir5nZRY5wJog/ABj5XyG62lTZbkrzK6zUFHF1kbfAWsjJW
+ 9nvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXq25ZWHwNJ+2Uct3BdQXAwuPWKoOnw3r7+020JFjWxRKPFU02XlVOs5oQPf2jF35omVPuq1JBCaA0j@nongnu.org
+X-Gm-Message-State: AOJu0Yy2SwPMfXBBoANdrSQuoA0kkJ9gsPny9AAiQimvaaWsgLdAsIxG
+ Qe5SsQ32d5ko8WFBZXDPgsGQhGcT8ucgQVQPy5lL6HjbdABUNlxis0nXJNhG0g0K2yq4soFxcVC
+ F4KuUmKFgB7YyiRfqcJAHGB4jrfGYAQCSc0M3+9O4BLQtvo7E1xk3dh7N
+X-Gm-Gg: ASbGncv7cR+RHKdBCi32z9SfTuBS9ICLAdIuphFwfsb/FH5Ebpxxra2sXajQfHgSySV
+ ZWpLKHv9tH7tLB4byUj4zMc6utReoqhj1db5YoYcaqSo0hBTTz5IaUQIp4jQWzFXsdS663Gvwoh
+ 5WR/CpMOXLUjhxqRrptWGwQqEvYCskeehJzOzC+bLozeC4dq0lDzSD2YvkoVQ9ohNh0WWUlqc8F
+ iUnfbwC16lS7twXftxp7SqbWcDsjyySz39zgRfuOubdTLiCmyMzpNhjtOSGJ9CdLrGvio2/BUIN
+ 1DbM2xWwC1uGYUO0uHEbnZqLrCGuK1+1
+X-Received: by 2002:a05:6000:144b:b0:3b2:ef53:5818 with SMTP id
+ ffacd0b85a97d-3b5f351e561mr10086504f8f.5.1752498554359; 
+ Mon, 14 Jul 2025 06:09:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoQD9Ho3k1I73zw5t5mB19KW2sR6IMwILqGPakeR1nAQlcLLjYOj1XSNqX+jCnF2w/W+FRLQ==
+X-Received: by 2002:a05:6000:144b:b0:3b2:ef53:5818 with SMTP id
+ ffacd0b85a97d-3b5f351e561mr10086480f8f.5.1752498553876; 
+ Mon, 14 Jul 2025 06:09:13 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45624651a09sm1472665e9.12.2025.07.14.06.09.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 06:09:13 -0700 (PDT)
+Date: Mon, 14 Jul 2025 09:09:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: anisinha@redhat.com, imammedo@redhat.com, jonathan.cameron@huawei.com,
+ linuxarm@huawei.com, peter.maydell@linaro.org,
+ prime.zeng@hisilicon.com, qemu-devel@nongnu.org,
+ shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
+ yangyicong@hisilicon.com, maobibo@loongson.cn, gaosong@loongson.cn,
+ jiaxun.yang@flygoat.com
+Subject: Re: [PATCH v6 3/4] hw/acpi/aml-build: Build a root node in the PPTT
+ table
+Message-ID: <20250714090807-mutt-send-email-mst@kernel.org>
+References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
+ <20250604115233.1234-4-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250710144348epcas5p1842ad24e3de24dd7048b0db9dfbe6455
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250710144348epcas5p1842ad24e3de24dd7048b0db9dfbe6455
-References: <CGME20250710144348epcas5p1842ad24e3de24dd7048b0db9dfbe6455@epcas5p1.samsung.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250604115233.1234-4-alireza.sanaee@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,95 +113,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series refactor existing support for Identify Switch Device
-and Get Physical Port State by utilizing physical ports (USP & DSP)
-information stored during enumeration. Additionally, it introduces new
-support for Physical Port Control of FM-API based physical switch
-command set as per CXL spec r3.2 Table 8-230:Physical Switch.
+On Wed, Jun 04, 2025 at 12:52:32PM +0100, Alireza Sanaee wrote:
+> From: Yicong Yang <yangyicong@hisilicon.com>
+> 
+> Currently we build the PPTT starting from the socket node and each
+> socket will be a separate tree. For a multi-socket system it'll
+> be hard for the OS to know the whole system is homogeneous or not
+> (actually we're in the current implementation) since no parent node
+> to telling the identical implementation informentation. Add a
+> root node for indicating this.
+> 
+> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> ---
+>  hw/acpi/aml-build.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 560cee12a2..76a4157a18 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>      int64_t socket_id = -1, cluster_id = -1, core_id = -1;
+>      uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+>      uint32_t pptt_start = table_data->len;
+> +    uint32_t root_offset;
+>      int n;
+>      AcpiTable table = { .sig = "PPTT", .rev = 2,
+>                          .oem_id = oem_id, .oem_table_id = oem_table_id };
+>  
+>      acpi_table_begin(&table, table_data);
+>  
+> +    /*
+> +     * Build a root node for all the processor nodes. Otherwise when
+> +     * building a multi-socket system each socket tree is separated
+> +     * and will be hard for the OS like Linux to know whether the
+> +     * system is homogeneous.
+> +     */
+> +    root_offset = table_data->len - pptt_start;
+> +    build_processor_hierarchy_node(table_data,
+> +        (1 << 0) | /* Physical package */
+> +        (1 << 4), /* Identical Implementation */
+> +        0, 0, NULL, 0);
+> +
+>      /*
+>       * This works with the assumption that cpus[n].props.*_id has been
+>       * sorted from top to down levels in mc->possible_cpu_arch_ids().
+> @@ -2175,7 +2188,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+>              build_processor_hierarchy_node(table_data,
+>                  (1 << 0) | /* Physical package */
+>                  (1 << 4), /* Identical Implementation */
+> -                0, socket_id, NULL, 0);
+> +                root_offset, socket_id, NULL, 0);
+>          }
+>  
+>          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
 
-This v2 patch series addresses feedback from v1 and incorporates some 
-new changes. It merges [PATCH 1/3] and [PATCH 2/3] from the v1 series,
-resulting in total of two patches in this patch series.
 
-Change log [PATCH v2 1/2]:
--namespace defines intead of enum for current_port_config_state.
--Relocates all defines & enums to include/hw/cxl/cxl_device.h for
- improved readibility.
--Total number of unique physical ports defined as 256 since the length
- of number of physical ports given in CXL r3.2 Table 7-16 is 1 byte. Thus,
- dropping any dependencies on virtual heirarchy throughout the implementation
- as the request is per switch.
--Moves struct phy_port to CXLUpstreamPort avoiding cci specific handling of
- physical ports hence making it more reasonable.
--Utilizes pci_for_each_device_under_bus() to store downstream ports info.
--Declarations at the beginning of the function.
+This function is also used by loongarch64, but you do not update the
+loongarch64 expected files:
+https://gitlab.com/mstredhat/qemu/-/jobs/10672661860
 
-Change log [PATCH v2 2/2]:
--cxl_find_port_dev() now locates device objects for both USP and DSP as physical
- port control request includes all physical ports.
--Replaces qemu_mutex_lock with QEMU_LOCK_GUARD.
--Holding reset phase for 100ms added as backgroung operation using qemu_thread_create().
--Updates naming function/variables names as suggested by using lower_case style
- wherever apt.
--Removes CCI sepcific implementation for Assert-Deassert PERST & Reset as it is port
- wise and utilize struct phy_port stored in CXLUpstreamPort as per [PATCH 1/2].
--Changes made does not lock up other emulations.
-
-Logic behind physical port control request:
--Assert-Deassert PERST: Assert PERST involves physical port to be in hold reset phase
- for minimum 100ms. No other physical port control request are entertained until Deassert
- PERST command for the given port is issued.
--Reset PPB: cold reset of physical port (completing enter->hold->exit phases).
-
-The Physcial port control request is tested through libcxl-mi interface. It tests 
-all active ports and all opcodes per active port. Since it does not support run time input,
-all other possible edge cases were tested manually:
-https://github.com/computexpresslink/libcxlmi/pull/31
-
-Qemu Topology used and it's results:
--without any devices connected to downstream ports - success
--with virtio-rng-pci devices connected to downstream ports - success
--with CXLType3 devices connected to downstream ports - failure
--with different unique values of ports (both upstream and downstream) - success
-
-Below given topology is an example topology with 3 downstream ports and 1 upstream port.
-It has one virtio-rng-pci device connected to downstream port 4.
-FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
-    -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
-    -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=16M \
-    -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=1M \
-    -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
-    -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
-    -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
-    -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
-    -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
-    -device cxl-downstream,port=4,bus=us0,id=swport1,chassis=0,slot=5 \
-    -device cxl-downstream,port=8,bus=us0,id=swport2,chassis=0,slot=6 \
-    -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
-    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
-    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=us0 \
-    -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=us0 \
-    -device virtio-rng-pci,bus=swport1"
-   
-Observation/Finding:
-The assert-deassert and reset PPB operation fails when downstream ports are connected
-to a CXLType3 device as it would mean device reset instead of switch port reset.
-
-The patches are generated against the Johnathan's tree
-https://gitlab.com/jic23/qemu.git and branch cxl-2025-03-20.
-
-Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
-
-Arpit Kumar (2):
-  hw/cxl: Refactored Identify Switch Device & Get Physical Port State
-  hw/cxl: Add Physical Port Control (Opcode 5102h)
-
- hw/cxl/cxl-mailbox-utils.c                | 364 +++++++++++++++-------
- include/hw/cxl/cxl_device.h               |  92 ++++++
- include/hw/pci-bridge/cxl_upstream_port.h |   4 +
- 3 files changed, 352 insertions(+), 108 deletions(-)
-
--- 
-2.34.1
+> -- 
+> 2.43.0
 
 
