@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A6BC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19917C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 12:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubIgK-0000rO-A5; Mon, 14 Jul 2025 08:53:20 -0400
+	id 1ubIgm-00015J-Do; Mon, 14 Jul 2025 08:53:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtP-000772-QU
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:48 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1ubHzH-00042a-3L
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:08:56 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtL-0003rf-Hw
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:47 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ae0dd7ac1f5so877734966b.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1ubHz5-0004f3-VF
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:08:48 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-234f17910d8so42573945ad.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752494558; x=1753099358; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8sj9iVmDpEf+chfg1RrFtaVPsqCvpCBDEdTqoin79mM=;
- b=xDp2P9MpUe6bevc0CQqbAs9mFOQFHNZxkmsiIfzN9PaWqRma7Qx0YPIR7TEqIV9VAS
- YrwZyM/EEfb/OxXkqRhWZ7dPkghieuBB532Q7sDBRYcJBLKuqOJrtqRoz+oQfBx71Upr
- v1dqACQtzsrolyHADkQOvsiOaJUJSXI5yfLr38X82/D4fnrrratU62NQAIZEIsx+7T6+
- Z3tDxkvaaZAUbZjJkwptcm/z4tYR6G5PF09fXD/e6PPT9mCyT1WDjwa7BvRlYf0tgav2
- 7BIeHFtdWMC9ja/0Urn9AGCyxV6ABqfW07yU1KESZ0w2lW6OV2M5pGcut9WNdMU42wui
- 4vCA==
+ d=ventanamicro.com; s=google; t=1752494913; x=1753099713; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Wl8gfbM6N7ds9hzF8aCIKvoOCjkpEJPMwCp3ZCChH0=;
+ b=PlZ8hMa6mmpRVL7M63PuOCbK1hPrrBU7+Zd7P9YQJviIvx4f+ZLfjvY0UCAvLACEPA
+ flvCi9sOMtyuhpHuDHG0P+WblZjxnrMmkHcnzp+332AKw78FRm96ZwdtzAvK5gc+x4L+
+ GZsWBMU0bDTbsVSOrkrUy8ZFUEvLv8T8d/y+iOYoEBIob2ZvdSgHwNroiIiMzTYCypwZ
+ 6SG91fD61Gk9Ii9iYgY96153TDNUhphu2dMW1ITLTQ+nJN/Vq7KInLusX6F6FgCzRDfd
+ G0nzQrh1UDY/SE9yhdOLnloAn8OHnwl4WO13BgZiGhOmkBqlzmMbh4OQgKptqQ0RE0Lg
+ Q6mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752494558; x=1753099358;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8sj9iVmDpEf+chfg1RrFtaVPsqCvpCBDEdTqoin79mM=;
- b=PaY2MNtVX7tTZGMQseCFED9HtP3mqRX9UnHYHvHiK2H2SsT89I/1Y0sXjHN7nZMTNQ
- +L3iUoz20+3an/XRypA6K1oLYxaJR7T3cSiMhLIBY3Z7NwyBItrsuaOJiYpSv8hCYfZQ
- JgUJcXH8vW+SgAZDsYkGfZJl0LTzVjHP42dQMsuz/AWohTM0tQJzqZr1r9qwDakkqd+N
- 0HGJtoBI3Q5AW8rGJ23nM4tAqqsmMOWpPbbal+gZngZr+3N7nM/qkBrhdRFpOvoNhfPs
- SOlygpkz9YoYrduetl0mLuzu4Vf2ij/WQFeguQE1Xhdt2JJnxo0iVzsHGt+lpiQQNs3x
- MlCA==
-X-Gm-Message-State: AOJu0YzNP7kKDiETFa0HLvA2z52veSZsOc0oLb81ZWkUkBmx5OCAHOs+
- hp6B47CaV5isTI7SmxcbtjJZfcsg8JDPbS47o4vD+w+FfcsaHItRxdZ+fKphjFiDoi0=
-X-Gm-Gg: ASbGnctl7V6l3GtIpYlCbWXMFdiJdWeyWOTmt1KmuaW9TdNjQ9g5CWlyL2BxH+46l0v
- cxvcP5naMwj/dB+Q/INxSYDQYEXPSVkBzGMHQL7yMea6E2MFEI93DtJVvrVP4F+4ZpS9F+1KHua
- IcmNWk68GrfUWaehsqHRFZIHY9DUdvfPMa2Qjo9nZ7tr+vCeEYyYnr+7AOwff7cQduuAtvTrHXq
- zptFe4q5I1rGXvc+UwgE+4C45OVRdkLMeYtwLAnaiSr+bFqVMw5KVX2rdFcJfd+h/MG9uIWI73I
- Ky6NfT2n5CBjLVEDiUxELEdlVI7pWGutOAapk7dlOX4gI/uZh+wjo3HQymTjkXe/BYuFemtc1qA
- vAFlkNQ4LEaLU9n6GpQ7hqR0=
-X-Google-Smtp-Source: AGHT+IEVaGKdoJJic6qKtm9BhXBkLMSjcg4IVYuFlNOwRIJn+wLGGuc8I9PxmKQa1fJFCuwBau26WA==
-X-Received: by 2002:a17:907:bd94:b0:ae3:b2b7:7f2f with SMTP id
- a640c23a62f3a-ae6fc0f31demr1421381466b.40.1752494558362; 
- Mon, 14 Jul 2025 05:02:38 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e829629dsm815882266b.138.2025.07.14.05.02.35
+ d=1e100.net; s=20230601; t=1752494913; x=1753099713;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3Wl8gfbM6N7ds9hzF8aCIKvoOCjkpEJPMwCp3ZCChH0=;
+ b=dfshsmbIIUORjteVe2zNn/E8cK8CGSXD4KPbZ0QdcVPItyA6M9oO3BldwjIq6zZ8g0
+ +nZnmTAV4RhSzolrKcdHb9Q8M1Msqo0C9f0P+lIhZlZz+IOM7kQmJQyDAVHE/f4byLyx
+ k+7HUvs8o1eZE0cEmrzMR7M2whQM6sQ1s4crXVvY2OdY1cXUFhGWn/nXyntKZEP3ALA9
+ 6jPrkJpFJ1aJOwHB3zkc4ZMkOZP2dMmEglGxt89+T5wMIp9hWNlAEGyZrljViaLPGRpP
+ fcUhlReIvWM9fErb64roqW1AN93Q+KPefxoaCVsBq/I0S9YBA4d+/sfxvaJLtN4t+AZi
+ LFzg==
+X-Gm-Message-State: AOJu0YxbNv+yi64OKQnDXZn03bHpyQmRDFXciWyJgqdPHsLwllJEvBM4
+ cQB9LN7f0EiEKQKyAjyeHv0UQv2zJ44TcB5f74cfVYjvkV6bBJe/SqBKJ1rJ4JB5gE/ikZfFvte
+ t/veS
+X-Gm-Gg: ASbGnctu+n+g4LF8eJUCzforWLcrHXX7JaynfHT8rLZ5DxsMOx22XUltUY7mmvCvVGf
+ xUtWvhVhAfWuN7h78HrF7twl0jBXXlBIlKBC1PXn9THaJ/wFjQUHt7QPgJZrBUbFuh06HZr1g7/
+ 2AcGpDecfq0d2k76+pwinBTBiyx5RW4vhNVPe8dqqRya7657W482mXBnH8tSv5cN7eXUeR7sCX+
+ OVNXa0WY7bNQyTx/BgsMNiYKO3comnYDQvsf0tn5JI7AS55xu2aaxrw7Okewn0QfLSf8uzlMAYl
+ cyO9PDlXZxdMNxKHfYZDI2a47bhFdhxq9vSrCTpFGzHt4SKoVAO6A5XuqMUOXgMIdrUU44c4+LD
+ M7RoBhl2Qpqt2m77lP/BX1YwHVxEgI+eXFA==
+X-Google-Smtp-Source: AGHT+IG/TxzQUdv6+hH7SEM7Ia/rglKxTAoNk1dGmkOBWhEgVwTamASoXIAGAn2GYgNhYIIy8N8RJw==
+X-Received: by 2002:a17:903:11c9:b0:235:2e0:aa9 with SMTP id
+ d9443c01a7336-23dede456d7mr195630975ad.14.1752494912721; 
+ Mon, 14 Jul 2025 05:08:32 -0700 (PDT)
+Received: from grind ([177.170.118.252]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23de4286b4asm97720765ad.46.2025.07.14.05.08.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 05:02:35 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C97CA5F89A;
- Mon, 14 Jul 2025 13:02:34 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Mon, 14 Jul 2025 05:08:32 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 1/8] gitlab: use argparse in check-units script
-Date: Mon, 14 Jul 2025 13:02:27 +0100
-Message-ID: <20250714120234.1524401-2-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250714120234.1524401-1-alex.bennee@linaro.org>
-References: <20250714120234.1524401-1-alex.bennee@linaro.org>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ richard.henderson@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH] target/riscv: set mtval = 0 for illegal_inst if no opcode
+ avail
+Date: Mon, 14 Jul 2025 09:08:22 -0300
+Message-ID: <20250714120822.1243870-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modernise the argument parsing so we can easily add to the script.
+There is no guarantee that we'll able to get a proper opcode to put into
+mtval for illegal inst exceptions, as demonstrated in [1].
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250710104531.3099313-2-alex.bennee@linaro.org>
+The 'proper opcode' would be retrieved via unwinding the CPU state (via
+cpu_restore_state(), down to riscv_restore_state_to_opc()) after
+riscv_raise_exception(). There are cases where that doesn't happen:
+we'll see a failure in cpu_restore_state(), where in_code_gen_buffer()
+will return 'false' even for a 'host_pc' that is retrieved via GETPC()
+and not in an instruction fetch context.
 
-diff --git a/.gitlab-ci.d/check-units.py b/.gitlab-ci.d/check-units.py
-index 268a4118d5..cdc62ae5ee 100755
---- a/.gitlab-ci.d/check-units.py
-+++ b/.gitlab-ci.d/check-units.py
-@@ -8,8 +8,10 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+Hopefully we don't have to always provide mtval in these cases. The
+RISC-V priv ISA says that mtval for illegal_inst exceptions are
+optional, and the faulting instruction address will be reported in
+env->mepc.
+
+The ISA also says that we can set mtval to ILEN/MXLEN bits of the
+faulting insn address, and we could do that when we're not able to fetch
+the opcode. But that would add inconsistency in how we behave since
+mtval would have either the opcode or the insn addr, and no easy way of
+knowing which one we have, and software would need to check it with mepc
+regardless. Zeroing mtval when we don't have the opcode is clearer.
+
+And yes, zeroing mtval due to an unwind failure isn't ideal either, but
+it's less worse than reporting a wrong mtval. Until we figure out a way
+to fix the unwinding in this case, let's clear mtval and let software
+know that it must find the faulting opcode via other means.
+
+[1] https://gitlab.com/qemu-project/qemu/-/issues/3020
+
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu_helper.c |  5 +++++
+ target/riscv/op_helper.c  | 21 +++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 3479a62cc7..1cd1849a1d 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2243,6 +2243,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             break;
+         case RISCV_EXCP_ILLEGAL_INST:
+         case RISCV_EXCP_VIRT_INSTRUCTION_FAULT:
++            /*
++             * Note: we'll set tval = 0 for illegal_inst cases
++             * where we failed to unwind and to get the proper
++             * opcode. See riscv_raise_exception() for more info.
++             */
+             tval = env->bins;
+             break;
+         case RISCV_EXCP_BREAKPOINT:
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 15460bf84b..930981a076 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -40,6 +40,27 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+                           env->pc);
  
- from os import access, R_OK, path
--from sys import argv, exit
-+from sys import exit
- import json
-+import argparse
-+from pathlib import Path
- from collections import Counter
- 
- 
-@@ -51,16 +53,17 @@ def analyse_units(build_units):
- 
- 
- if __name__ == "__main__":
--    if len(argv) != 2:
--        script_name = path.basename(argv[0])
--        print(f"Usage: {script_name} <path_to_compile_commands.json>")
--        exit(1)
-+    parser = argparse.ArgumentParser(
-+        description="analyse number of build units in compile_commands.json")
-+    parser.add_argument("cc_path", type=Path, default=None,
-+                        help="Path to compile_commands.json")
+     cs->exception_index = exception;
 +
-+    args = parser.parse_args()
++    /*
++     * There is no guarantee that we'll be able to unwind
++     * and set env->bins (the opcode for the current PC)
++     * properly via the cpu_restore_state() path. The RISC-V
++     * priv ISA says that:
++     *
++     * "The mtval register can optionally also be used to return
++     * the faulting instruction bits on an illegal-instruction
++     * exception (mepc points to the faulting instruction in
++     * memory)."
++     *
++     * It's not ideal to set mtval != 0 in some cases and zero
++     * in others due to unwind failures, but it's way better
++     * than to set mtval to a bogus env->bins opcode from
++     * the last successful unwinding.
++     */
++    if (cs->exception_index == RISCV_EXCP_ILLEGAL_INST) {
++        env->bins = 0;
++    }
++
+     cpu_loop_exit_restore(cs, pc);
+ }
  
--    cc_path = argv[1]
--    if path.isfile(cc_path) and access(cc_path, R_OK):
--        units = extract_build_units(cc_path)
-+    if path.isfile(args.cc_path) and access(args.cc_path, R_OK):
-+        units = extract_build_units(args.cc_path)
-         analyse_units(units)
-         exit(0)
-     else:
--        print(f"{cc_path} doesn't exist or isn't readable")
-+        print(f"{args.cc_path} doesn't exist or isn't readable")
-         exit(1)
 -- 
-2.47.2
+2.50.1
 
 
