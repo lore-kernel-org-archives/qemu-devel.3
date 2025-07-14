@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6F0C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC1BC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubSHg-0007Sq-RS; Mon, 14 Jul 2025 19:08:32 -0400
+	id 1ubSIY-0003wF-CI; Mon, 14 Jul 2025 19:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSH7-00064E-Ph
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHb-0006jk-9U
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSH5-0005cH-P8
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:07:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubSHZ-0005hh-7P
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:08:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752534474;
+ s=mimecast20190719; t=1752534504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XprGgK2MBOB8+UJMgMLEb0m5O0TZWRbGViPuc5uwIx8=;
- b=ZdfGMS7Bk8PiuCWGnA6bRLoxqJZN+eToIwnTy9CsRlTVb7Vgcahcjzr866XCz/D33Esv1p
- 55RbyLgKCE3nn6vH1LIC/qtLGik3cwlPZGiq4S+9Eoyo70+1//tyGl/pvPdF3ZJPyHV4hJ
- eCC9kJRvYcw0SGXOPFC3sBaBMG9jmwA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6/OhfZLKBwpQCNEpQVAmadE4Z6ccjSU0gbMdCkgwst8=;
+ b=FK7ee7MrGKBgzNKzC3nLWetl7p53pH72zWeqiAwdVxKvHaEovJwxSoCiELSqEGAsml+txX
+ o0tH2DiJ9dPk7I9J7dkFychWmwOVLqPPgVavhld4f2Ai9v47c4gb2I9d4Z4N+5cuiDW+re
+ a/Z+WLJN6rr7X4NPbweTBvFysxB4IDQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-v_NTOkiaPeSoihPDCi9Qag-1; Mon, 14 Jul 2025 19:07:52 -0400
-X-MC-Unique: v_NTOkiaPeSoihPDCi9Qag-1
-X-Mimecast-MFC-AGG-ID: v_NTOkiaPeSoihPDCi9Qag_1752534471
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-455ea9cb0beso26554925e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:07:52 -0700 (PDT)
+ us-mta-658-zvgi3xthNjmVKtvpWNX9ew-1; Mon, 14 Jul 2025 19:08:23 -0400
+X-MC-Unique: zvgi3xthNjmVKtvpWNX9ew-1
+X-Mimecast-MFC-AGG-ID: zvgi3xthNjmVKtvpWNX9ew_1752534502
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-455e9e09afeso16525125e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:08:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752534471; x=1753139271;
+ d=1e100.net; s=20230601; t=1752534502; x=1753139302;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XprGgK2MBOB8+UJMgMLEb0m5O0TZWRbGViPuc5uwIx8=;
- b=hiEbLBb1xOZ8KvDJ9YXWfOrL0OLiSB/Zc1WGCbAbHCAluI/Zt6F4FfOZOG2eZ4z/Jg
- SAZ+g8B9vbHbqojSp9uKrFLHJQOEZTOR/1i7MHNAOlWsgkdoj+NV4R9vTeogP9DCn5WB
- WoxZqDfofty9W91y8JRquXHBd6vXZNcyjaN4gyULoT+lIUn9PBrJVoG6wHQ2gXJFO2uQ
- eW8xOWCUhWePD27lqCcwOSaqVufDiLsbZLypQeTzmg4yvAkJA69GoX+ZxWj4LjLEyBE9
- z8oojhbNeDAiV9HOO3gSdPGKpHefZW8CRqHq5NSnntvzlSs1HV9ul9q6Gou8pYgZy2fF
- mz2Q==
-X-Gm-Message-State: AOJu0YxJjTyKn7Xmt6UctV7LHucWF6kr/7twe05RI+OA6JMWP3O+5WMT
- u2MJUBWzLKxOCsh8I5IjLIKrrMOGeys7NgtBStTycQn4NSKD2gtRm89m26jcSc1OyxAQK/33KSQ
- CMPjcRvWRkqp8kkL1oTwI23JS61FwScu2A5T1HpRJVCtBlfJQTgaF55MHkpb3QbdeEOmif55wJB
- 79fznav/UiHZxFAI9Q/kfvSQPjaFcLiVdHbw==
-X-Gm-Gg: ASbGncsg+PwKn7MhzRZkNq2V0g7ymx1sQDzQ4/k3s2CiH0pPhFL8jeTeJhUnjMjuRYD
- O0pw/clvycju89ab6GaDn1XiDLdePJYoie902CGAyApMhmc3ezbIgxwM3xLsI+wqq5SA5yMnVev
- HtLVbIxlMGT6lMaCcip7jpTPIubRqt/UMzyskp2M11tme6ivKHZSoPB5Q5MAeyiRn/4C9xB8qAD
- IKL8qyB892q8KehyJukq3DS08QllUwXN9bMth5riOOZ6hJq6aF+gHAReaX2ENY7UZQKyIj0Xb9W
- 3oP5JNNHr23NJwrpE+YeposCzvagOHSq
-X-Received: by 2002:a05:600c:4f52:b0:43d:3df:42d8 with SMTP id
- 5b1f17b1804b1-454ec14a5ebmr145453645e9.6.1752534471234; 
- Mon, 14 Jul 2025 16:07:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdD0ZXD1NFDfHr54aO1LMhl3gRpQn2xa9zINZsX8G+lZZXrjrinX9Ijrzdz1wdAlu6iVXtIg==
-X-Received: by 2002:a05:600c:4f52:b0:43d:3df:42d8 with SMTP id
- 5b1f17b1804b1-454ec14a5ebmr145453395e9.6.1752534470755; 
- Mon, 14 Jul 2025 16:07:50 -0700 (PDT)
+ bh=6/OhfZLKBwpQCNEpQVAmadE4Z6ccjSU0gbMdCkgwst8=;
+ b=o8e4dqkfUJVo31Kn2kr0jG59KidBRV/winhFFHtbTE/2llAHqpzURd1lwy89dbPMgN
+ 3zWgK0iWKidj+rxHfPSCrAUZ/dnTLQt9y98Zsi73IS57cUwpxqGjiaHDaRJxnXbEIqNu
+ FQFIv1dYg7XdxTraKNtpX2LgrWvGBxmMXhZSv1/+IPrVDJg5YhXLOBCVkxTE8mlVlRb0
+ uS3HA22n86nCDUTamFvG81y8VcRhjcK8BGISZaTPwoANi6WghxDgsqrtQON4df5nBibj
+ ZUDaHTek2xTrlbABBY1p06k+XqUT7BicOTkpk00Yo9c60n3HF2LnFSweHYPufTYENH3b
+ eQug==
+X-Gm-Message-State: AOJu0YzoenyE59qgCwvoDfsX//oxLykinIAi0XVXlfE/8WO0pI4cZ97I
+ A5VAUJRyJJN30NcBuSrrY4BNneQJOJTqBOsSY8POBrq3dGBu8oY2bZ3D8I+thVBknTjwqsfvSc9
+ 3rb1bPEfxDFo17iXbCYKV2z205OQe7krI9UAQwkyGYyMCS9Oz31Uny580iUWIZJg6vxPM/dBSoz
+ EtjcnSJ3ZDdYawpEwkIDF0PFd/5/9b3JdfkQ==
+X-Gm-Gg: ASbGnctHUf1Y4j1TRk0Z6qkF8ah7fpxU5lXErAVokeXZZ9Dto0f+vmFP9wNl11MSF+c
+ i/4PJMFyiPSR6uEHCJTDdZvfkkUmECR+3LXOa3mJI8uiVEVYaz6nqCJRQfTe2iDqmPEpiXC1/xP
+ DqCwmDRT7OVVZP2zYDz5QLDVFTY+/8zXSnUI9W1u25sp7Z/dynSAaKWQQeOjvBln3oHd8AGN5Gc
+ OiYXK7gmuSigAPuPqWnvlUR1PUMaBInwBHjWBt/woQuf+YRTM+iJDKvlZ++w6QBYJG4FkbX96ej
+ aaj0aib5QB4FMGvpvL4tRS2uVe96BijM
+X-Received: by 2002:a05:600c:4713:b0:450:ceb2:67dd with SMTP id
+ 5b1f17b1804b1-454f427985emr130106075e9.33.1752534501814; 
+ Mon, 14 Jul 2025 16:08:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5lSilpg5VmNcVVXqHek7z6XkJ4Ehxy457Be+BA/lzQFLEG4FIUj+uFoHoy/aCSLW31eHtmw==
+X-Received: by 2002:a05:600c:4713:b0:450:ceb2:67dd with SMTP id
+ 5b1f17b1804b1-454f427985emr130105875e9.33.1752534501337; 
+ Mon, 14 Jul 2025 16:08:21 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc21e7sm13562742f8f.36.2025.07.14.16.07.48
+ 5b1f17b1804b1-45610a39cacsm69264855e9.38.2025.07.14.16.08.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:07:49 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:07:47 -0400
+ Mon, 14 Jul 2025 16:08:21 -0700 (PDT)
+Date: Mon, 14 Jul 2025 19:08:19 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 37/97] intel_iommu: Set address mask when a translation fails
- and adjust W permission
-Message-ID: <74b9d1654d0eb89e7052d21bc861dc807a06b562.1752534227.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 49/97] hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
+ acpi_dsdt_add_pci_osc
+Message-ID: <7e0f0871641a0a1b77180da67505c81f8e825900.1752534227.git.mst@redhat.com>
 References: <cover.1752534227.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -89,7 +88,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1752534227.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,55 +113,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Implements the behavior defined in section 10.2.3.5 of PCIe spec rev 5.
-This is needed by devices that support ATS.
+Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
+native pci hotplug.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250628180226.133285-10-clement.mathieu--drif@eviden.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Message-Id: <20250714080639.2525563-4-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/intel_iommu.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ hw/pci-host/gpex-acpi.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index bff307b9bc..1b1b0b5632 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2091,7 +2091,8 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     uint8_t bus_num = pci_bus_num(bus);
-     VTDContextCacheEntry *cc_entry;
-     uint64_t pte, page_mask;
--    uint32_t level, pasid = vtd_as->pasid;
-+    uint32_t level = UINT32_MAX;
-+    uint32_t pasid = vtd_as->pasid;
-     uint16_t source_id = PCI_BUILD_BDF(bus_num, devfn);
-     int ret_fr;
-     bool is_fpd_set = false;
-@@ -2250,14 +2251,19 @@ out:
-     entry->iova = addr & page_mask;
-     entry->translated_addr = vtd_get_pte_addr(pte, s->aw_bits) & page_mask;
-     entry->addr_mask = ~page_mask;
--    entry->perm = access_flags;
-+    entry->perm = (is_write ? access_flags : (access_flags & (~IOMMU_WO)));
-     return true;
- 
- error:
-     vtd_iommu_unlock(s);
-     entry->iova = 0;
-     entry->translated_addr = 0;
--    entry->addr_mask = 0;
-+    /*
-+     * Set the mask for ATS (the range must be present even when the
-+     * translation fails : PCIe rev 5 10.2.3.5)
-+     */
-+    entry->addr_mask = (level != UINT32_MAX) ?
-+                       (~vtd_pt_level_page_mask(level)) : (~VTD_PAGE_MASK_4K);
-     entry->perm = IOMMU_NONE;
-     return false;
+diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+index 0aba47c71c..f34b7cf25e 100644
+--- a/hw/pci-host/gpex-acpi.c
++++ b/hw/pci-host/gpex-acpi.c
+@@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
+     }
  }
+ 
+-static void acpi_dsdt_add_pci_osc(Aml *dev)
++static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
+ {
+     Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
+ 
+@@ -77,11 +77,12 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
+     aml_append(ifctx, aml_store(aml_name("CDW3"), aml_name("CTRL")));
+ 
+     /*
+-     * Allow OS control for all 5 features:
+-     * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
++     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
++     * and PCIeHotplug depending on enable_native_pcie_hotplug
+      */
+-    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
+-                              aml_name("CTRL")));
++    aml_append(ifctx, aml_and(aml_name("CTRL"),
++               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)),
++               aml_name("CTRL")));
+ 
+     ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
+     aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
+@@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+             if (is_cxl) {
+                 build_cxl_osc_method(dev);
+             } else {
+-                acpi_dsdt_add_pci_osc(dev);
++                acpi_dsdt_add_pci_osc(dev, true);
+             }
+ 
+             aml_append(scope, dev);
+@@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+     }
+     aml_append(dev, aml_name_decl("_CRS", rbuf));
+ 
+-    acpi_dsdt_add_pci_osc(dev);
++    acpi_dsdt_add_pci_osc(dev, true);
+ 
+     Aml *dev_res0 = aml_device("%s", "RES0");
+     aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
 -- 
 MST
 
