@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA31BC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B8FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEVZ-0002TT-V5; Mon, 14 Jul 2025 04:26:00 -0400
+	id 1ubEZ0-0008Rz-2X; Mon, 14 Jul 2025 04:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEF7-00082L-Uv
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:57 -0400
+ id 1ubEFp-0001nW-4I
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:09:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubEF5-0003Vp-St
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:08:57 -0400
+ id 1ubEFn-0003kN-Hw
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:09:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752480535;
+ s=mimecast20190719; t=1752480578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gui6+S19PIPTP0HqJYWTL54xHSgeFPP1n+ZMQjEgGiQ=;
- b=fuvvuflW5Hx5IWeLtjVBVkioKerGVvumzl6rRmVDQ5/jmRqMHVo7lM+MtRBxXKagdOKzIt
- oSj4MwaEDnUjFfK6bLL8mOozfsAmp6kvcfOFFNUtff5RlBpvIi0y9iYkCBJROmmzrOkI6M
- sw5LNRRp0OMaUla5mXB7ag6vQ5O6vO8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ZM7FJPWPYYBPC6cZV+qAuScRyJFX1T9kGmgFgXjE5Sw=;
+ b=gxTGr63CsE8xs/j014lnGOPjz4dkNK1oRLH2nSBy7HCWlHkfhga4qk8r4Fm7heh9zF4tJo
+ LQsuNySrtJFIQ0ENeiVs3fc3KTCU+rtJCY5G6fFoyvMTclN1cQayPg0FFUOq2McyqEj8rO
+ ZJ8hcIyaPVPgc06gHPHHYpPcQiraHQY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-msxjhdIiNtWR41iPwssbCA-1; Mon,
- 14 Jul 2025 04:08:51 -0400
-X-MC-Unique: msxjhdIiNtWR41iPwssbCA-1
-X-Mimecast-MFC-AGG-ID: msxjhdIiNtWR41iPwssbCA_1752480529
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-eL-VEuloN8Ked5dklEcZaA-1; Mon,
+ 14 Jul 2025 04:09:35 -0400
+X-MC-Unique: eL-VEuloN8Ked5dklEcZaA-1
+X-Mimecast-MFC-AGG-ID: eL-VEuloN8Ked5dklEcZaA_1752480574
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 877011800368; Mon, 14 Jul 2025 08:08:49 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6C7C195609E; Mon, 14 Jul 2025 08:09:33 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.221])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6537E1977029; Mon, 14 Jul 2025 08:08:44 +0000 (UTC)
+ id 758931977000; Mon, 14 Jul 2025 08:09:29 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -55,9 +55,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: pbonzini@redhat.com,
 	philmd@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH v7 24/36] hw/acpi/ged: Add a bus link property
-Date: Mon, 14 Jul 2025 10:05:08 +0200
-Message-ID: <20250714080639.2525563-25-eric.auger@redhat.com>
+Subject: [PATCH v7 33/36] tests/qtest/bios-tables-test: Prepare for addition
+ of acpi pci hp tests
+Date: Mon, 14 Jul 2025 10:05:17 +0200
+Message-ID: <20250714080639.2525563-34-eric.auger@redhat.com>
 In-Reply-To: <20250714080639.2525563-1-eric.auger@redhat.com>
 References: <20250714080639.2525563-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -88,37 +89,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This property will be set by the machine code on the object
-creation. It will be used by acpi pcihp hotplug code.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
+Soon we will introduce new tests related to ACPI PCI hotplug and
+acpi-index that will use a new reference blob:
+
+tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
----
- hw/acpi/generic_event_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 7831db412b..ef1c1ec51f 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/generic_event_device.h"
-+#include "hw/pci/pci.h"
- #include "hw/irq.h"
- #include "hw/mem/pc-dimm.h"
- #include "hw/mem/nvdimm.h"
-@@ -320,6 +321,8 @@ static const Property acpi_ged_properties[] = {
-     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-     DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, AcpiGedState,
-                      pcihp_state.use_acpi_hotplug_bridge, 0),
-+    DEFINE_PROP_LINK("bus", AcpiGedState, pcihp_state.root,
-+                     TYPE_PCI_BUS, PCIBus *),
- };
- 
- static const VMStateDescription vmstate_memhp_state = {
+---
+
+v3 -> v4:
+- switch Sign-off's (Jonathan)
+---
+ tests/qtest/bios-tables-test-allowed-diff.h      | 2 ++
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | 0
+ tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | 0
+ 3 files changed, 2 insertions(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..02f4f0b29f 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,3 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
++"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 2.49.0
 
