@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2F8C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 13:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2442DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 13:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubIqP-0008JU-6c; Mon, 14 Jul 2025 09:03:45 -0400
+	id 1ubIqS-0008Mk-GP; Mon, 14 Jul 2025 09:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtT-0007AF-Oj
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:53 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1ubHtY-0007NA-Fu
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:57 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubHtM-0003rz-80
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:51 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6088d856c6eso7909881a12.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:42 -0700 (PDT)
+ id 1ubHtN-0003sU-36
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 08:02:56 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-ae04d3d63e6so834903366b.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 05:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752494560; x=1753099360; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752494563; x=1753099363; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BiRpZlbPIOoFEj6iYHlDTcy2zJQpuVJMb5R6Mh4QsuA=;
- b=bI/DJ+3Q/T1Mkm25lHY35VWamh4iI+Ms3BAvO8yZpfdbIk13qcPZ9jZlWMB62wsoNq
- LU8aVtp+ZBoN/XWj0/uxxK204Sv2NfQBOLmn1pVDsvlYG9pktmE5FLIEcOCCeVBD81c7
- wJBDTk4JaewhzGed1OK4KFMwOQO8AS+Gr6TmffrFd6L45EiZ0tFuwXUrkYmcZMrzNdPb
- +fgtFLuAfn80IFTnrYV///Uab4NmG1o9op8lxvS0LWqfNgjI18M97dorwl5vthoCMfJE
- BBwhybarT0vrQu8opSoO0R2Hpa4VXFsErE58i4tmeeCBqg/1BLQekJGxZfNRpXbiVWEY
- zUXw==
+ bh=T5v8OdxmzrjgwOi1V8ZOJSO/d9q/kYU1/NXLZZAou+A=;
+ b=kZLFTi+3akDoEeINK2wSxeMPqMkv8SFQb3kjm+RBh8TxNQyCMc7whTUE1wM7PZkXSI
+ cA4mniRue1gO/BPIclHENQ2auoEcXTOgRQOrNL9amEPiWRZjySg+GYEtFjqiGyLbSsHI
+ GNvZWmvMASiltbTa7vhsnFZA/JE87AV0s1zLI92UxtP8ddh0MXOSeZWKIQmN9f6ggGVL
+ niAMPLAC4Mk01pmfjYjm5T/1QpANmCXjPLWuNoiY1hv4XM3ZuwMdGoTvVTqLShYjLaCY
+ 6bzLHUpgIo6MpF3/D655DpJyu9Cb/z49zLmmyQU2T4iAy019GGfUjZ3BygxnTI5Z5UKn
+ C6kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752494560; x=1753099360;
+ d=1e100.net; s=20230601; t=1752494563; x=1753099363;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BiRpZlbPIOoFEj6iYHlDTcy2zJQpuVJMb5R6Mh4QsuA=;
- b=d+vZCUXnzu5AwRraqpuwbJ3l+rXb1JGD+K9EZtMQx6u6YKr6JPabtskxtnMaT1Fyqk
- KZZ34UUWpcLxa0yfZnAj9QcdtjZ9WfJaT1XIEqhho6jZ34snc/lyzelw3kYS96m13iNV
- N1MZJzRbqEC0DPWR327LDcOf3wR8PVJ/1GJtPfcgPpvG5pBd4rLgmwZhPPtfnlHiqBMV
- xbHxdq+hG8kLJCmuUuInNRk86uOeeiscHWDjqL3uUF2kO52ffTfcOSYLcjON5alBpSCK
- h7UU5e64Jc4pz4V6qN7bAe1jk7oN4qV67Kvr4uQHm2VVAPrvKlw20E6oLV0R60PgCtmR
- b+BA==
-X-Gm-Message-State: AOJu0YyC1UYy1EWZOnpfj5YnlYJtzbftuMGvwoOGJ5ZPaTwEuHOmt51C
- NDqK7niwUF6TI4LHL4MhZBQKp/2DhTXD3OBjSdTqwBntp/AEpIZP33Of2dGLPX28LmmkmueKo39
- gLwnXlnE=
-X-Gm-Gg: ASbGncvVpu4j8bWR1HYpgLgYHF417G3gtWp2WKSIEJbhw6N6pvJ+9U0ko2O7/DWu1vv
- MWpaLxA4atEljbLonSyUFLaKe42Ln05QonoKNKnktijb3SIBLrqkXx1l8Xmultygj8HGT6348oq
- OGq8SKheZdnK0ckPXfUnz6n0+S7PwyR9gdhcmaU9Q8KQHaD5xVkE6YY3nH51V9XPbxJJb9WgQl5
- Y6BhhoTbqZSPx5GXkA/LPXlA60jbefTkbIqsWlrpSEKBOyQ4A+Yk32P+kFKYJP2fd8RfDJwlMHb
- 30YLCg4ZLLa+l8CL4VNf0MitmXIkGceFAcmF89XNCwWu3Et46wErUrNQZ9MyIsRlAF8I0ltXsJ+
- J1YER1ZB0pvDlAZogaojeUMk=
-X-Google-Smtp-Source: AGHT+IGK/sG2ZiphqscgNya2lAFzsfFtfraCLdcqgYqXGnm4qrQbv3ArBGB/KEENND9VqorKPcamnw==
-X-Received: by 2002:a17:907:9715:b0:ae3:b654:165b with SMTP id
- a640c23a62f3a-ae70117eb3cmr1149381166b.24.1752494560130; 
- Mon, 14 Jul 2025 05:02:40 -0700 (PDT)
+ bh=T5v8OdxmzrjgwOi1V8ZOJSO/d9q/kYU1/NXLZZAou+A=;
+ b=ZjEjTppsNcoRYU5rtSlzfUO36Yx6ftVt7i8CFlzjfFeNPg5h1ZxeVBjysfyeAwu85+
+ 8dPFk8LpZ5eNxCMTzB1p0qRmH2vXOU2JLcEVbVpHwPY0VH3pr8khzSaLtjBx2VY+c1XE
+ ZUJx2Xub+bloCqexO6Jql6mIrLxpxHycUfwYLZC2v9hVIxYStn0JEwPqPABNYFpN8lHs
+ WqmcbZ93K4fEK0KJ5ut6RAk2W/O1FZTK7cT3RXhuozNxI+AAMIE53lZ3CO0xbfTBnllw
+ ic/IjzK/BDwb5nn87QLzU8S8S9NL7Of3gOD7g8y0otWUpf68nWRZLHAyT7iu8Ngngp7H
+ 8o7A==
+X-Gm-Message-State: AOJu0YzhY1dJv9f0Qeerzzd11YDqkzzcPwzfU0ytZ97wSbzabWbB1Uy9
+ yARemL8b3+2Hto+QQ66IkVsW2bL8cv+/f1DuOjZA6noRONizhZmLnie8R+aRde4Kpmw=
+X-Gm-Gg: ASbGnctD6JqTfRaabniSvU4y7jVF18jYYlKw4A/HTZ8w1rnO2eMOZUePaQ2vv1n1PsM
+ F+xv6EetJGTSMLa5EV3qPZXNyVu4IiB4iHf2oixZKy0/BVLXHE9rWzTa2n3ppjAg2AfwhxdaR3U
+ TKaIGjD5E6VU9zR+MxckD6VdNDGsM9UB42vhrWbgb4hri6KWjLrh4MPux3YZffSwoT05Efy3UKM
+ aOMaBeONRnl5uom4bdPbXjq3sZBxdvo6VQ10r98/Ho2e9/HFHh8ETD0ja8Yuo/54giHS/zmMomt
+ goHJ2fdNRePCosNEj72eJqNWHhdb0gBNlQdF6Gws7OypYABUBpZlICvnpLNT7mYzqJfFY7PdubR
+ Ylo7PHBAXNjDZx9yA4z2yAcUzIlReqNVzsQ==
+X-Google-Smtp-Source: AGHT+IF2pHp10QssnRsFCaTjz94XN9989zxU4tILODRi+Ref9jRPb5xYP3ekZ6fMMxqiNyDs1lQo5Q==
+X-Received: by 2002:a17:907:9627:b0:ae3:6028:e4d0 with SMTP id
+ a640c23a62f3a-ae6fbc13b26mr1329290066b.7.1752494562484; 
+ Mon, 14 Jul 2025 05:02:42 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e7c09dfdsm808837366b.0.2025.07.14.05.02.37
+ a640c23a62f3a-ae6e7e90a07sm811640066b.6.2025.07.14.05.02.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 14 Jul 2025 05:02:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 329E75F8BD;
+ by draig.lan (Postfix) with ESMTP id 7D25B5F8E1;
  Mon, 14 Jul 2025 13:02:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 5/8] plugins: fix inclusion of user-mode APIs
-Date: Mon, 14 Jul 2025 13:02:31 +0100
-Message-ID: <20250714120234.1524401-6-alex.bennee@linaro.org>
+Cc: Rot127 <unisono@quyllur.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 8/8] gdbstub: add the GDB register XML files for sparc64.
+Date: Mon, 14 Jul 2025 13:02:34 +0100
+Message-ID: <20250714120234.1524401-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250714120234.1524401-1-alex.bennee@linaro.org>
 References: <20250714120234.1524401-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: 16
+X-Spam_score: 1.6
 X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,58 +106,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 903e870f24 (plugins/api: split out binary path/start/end/entry
-code) we didn't actually enable the building of the new plugin helper.
-However this was missed because only contrib plugins like drcov
-actually used the helpers.
+From: Rot127 <unisono@quyllur.org>
 
-With that fixed we discover we also need some more includes to be able
-to extract the relevant data from TaskState.
-
-Fixes: 903e870f24 (plugins/api: split out binary path/start/end/entry code)
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3014
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Rot127 <unisono@quyllur.org>
+Message-ID: <20250711155141.62916-2-unisono@quyllur.org>
+[AJB: clean up commit msg]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250710104531.3099313-6-alex.bennee@linaro.org>
 
-diff --git a/linux-user/plugin-api.c b/linux-user/plugin-api.c
-index 66755df526..8d6fbb60e0 100644
---- a/linux-user/plugin-api.c
-+++ b/linux-user/plugin-api.c
-@@ -12,4 +12,5 @@
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index 64ea04e3e2..7c2ecb7be0 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -4,4 +4,5 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index 2504e31ae3..d9d51d21e5 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=sparc64
+ TARGET_BASE_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
++TARGET_XML_FILES=gdb-xml/sparc64-core.xml
+ TARGET_LONG_BITS=64
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index ed7701b02f..245caf2de0 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1090,6 +1090,7 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->disas_set_info = cpu_sparc_disas_set_info;
  
- #include "qemu/osdep.h"
- #include "qemu.h"
-+#include "loader.h"
- #include "common-user/plugin-api.c.inc"
-diff --git a/common-user/plugin-api.c.inc b/common-user/plugin-api.c.inc
-index 5b8a1396b6..63f3983271 100644
---- a/common-user/plugin-api.c.inc
-+++ b/common-user/plugin-api.c.inc
-@@ -13,6 +13,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/plugin.h"
-+#include "accel/tcg/vcpu-state.h"
- #include "qemu.h"
- 
- /*
-diff --git a/linux-user/meson.build b/linux-user/meson.build
-index f47a213ca3..efca843369 100644
---- a/linux-user/meson.build
-+++ b/linux-user/meson.build
-@@ -27,7 +27,10 @@ linux_user_ss.add(libdw)
- linux_user_ss.add(when: 'TARGET_HAS_BFLT', if_true: files('flatload.c'))
- linux_user_ss.add(when: 'TARGET_I386', if_true: files('vm86.c'))
- linux_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING', if_true: files('semihost.c'))
--linux_user_ss.add(when: 'CONFIG_TCG_PLUGINS', if_true: files('plugin-api.c'))
+ #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
++    cc->gdb_core_xml_file = "sparc64-core.xml";
+     cc->gdb_num_core_regs = 86;
+ #else
+     cc->gdb_num_core_regs = 72;
+diff --git a/gdb-xml/sparc64-core.xml b/gdb-xml/sparc64-core.xml
+new file mode 100644
+index 0000000000..375b9bb0cc
+--- /dev/null
++++ b/gdb-xml/sparc64-core.xml
+@@ -0,0 +1,99 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2013-2025 Free Software Foundation, Inc.
 +
-+if get_option('plugins')
-+  linux_user_ss.add(files('plugin-api.c'))
-+endif
- 
- syscall_nr_generators = {}
- 
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.sparc.core">
++  <reg name="g0" bitsize="64" type="uint64" regnum="0"/>
++  <reg name="g1" bitsize="64" type="uint64" regnum="1"/>
++  <reg name="g2" bitsize="64" type="uint64" regnum="2"/>
++  <reg name="g3" bitsize="64" type="uint64" regnum="3"/>
++  <reg name="g4" bitsize="64" type="uint64" regnum="4"/>
++  <reg name="g5" bitsize="64" type="uint64" regnum="5"/>
++  <reg name="g6" bitsize="64" type="uint64" regnum="6"/>
++  <reg name="g7" bitsize="64" type="uint64" regnum="7"/>
++  <reg name="o0" bitsize="64" type="uint64" regnum="8"/>
++  <reg name="o1" bitsize="64" type="uint64" regnum="9"/>
++  <reg name="o2" bitsize="64" type="uint64" regnum="10"/>
++  <reg name="o3" bitsize="64" type="uint64" regnum="11"/>
++  <reg name="o4" bitsize="64" type="uint64" regnum="12"/>
++  <reg name="o5" bitsize="64" type="uint64" regnum="13"/>
++  <reg name="sp" bitsize="64" type="uint64" regnum="14"/>
++  <reg name="o7" bitsize="64" type="uint64" regnum="15"/>
++  <reg name="l0" bitsize="64" type="uint64" regnum="16"/>
++  <reg name="l1" bitsize="64" type="uint64" regnum="17"/>
++  <reg name="l2" bitsize="64" type="uint64" regnum="18"/>
++  <reg name="l3" bitsize="64" type="uint64" regnum="19"/>
++  <reg name="l4" bitsize="64" type="uint64" regnum="20"/>
++  <reg name="l5" bitsize="64" type="uint64" regnum="21"/>
++  <reg name="l6" bitsize="64" type="uint64" regnum="22"/>
++  <reg name="l7" bitsize="64" type="uint64" regnum="23"/>
++  <reg name="i0" bitsize="64" type="uint64" regnum="24"/>
++  <reg name="i1" bitsize="64" type="uint64" regnum="25"/>
++  <reg name="i2" bitsize="64" type="uint64" regnum="26"/>
++  <reg name="i3" bitsize="64" type="uint64" regnum="27"/>
++  <reg name="i4" bitsize="64" type="uint64" regnum="28"/>
++  <reg name="i5" bitsize="64" type="uint64" regnum="29"/>
++  <reg name="fp" bitsize="64" type="uint64" regnum="30"/>
++  <reg name="i7" bitsize="64" type="uint64" regnum="31"/>
++
++  <reg name="f0" bitsize="32" type="ieee_single" regnum="32"/>
++  <reg name="f1" bitsize="32" type="ieee_single" regnum="33"/>
++  <reg name="f2" bitsize="32" type="ieee_single" regnum="34"/>
++  <reg name="f3" bitsize="32" type="ieee_single" regnum="35"/>
++  <reg name="f4" bitsize="32" type="ieee_single" regnum="36"/>
++  <reg name="f5" bitsize="32" type="ieee_single" regnum="37"/>
++  <reg name="f6" bitsize="32" type="ieee_single" regnum="38"/>
++  <reg name="f7" bitsize="32" type="ieee_single" regnum="39"/>
++  <reg name="f8" bitsize="32" type="ieee_single" regnum="40"/>
++  <reg name="f9" bitsize="32" type="ieee_single" regnum="41"/>
++  <reg name="f10" bitsize="32" type="ieee_single" regnum="42"/>
++  <reg name="f11" bitsize="32" type="ieee_single" regnum="43"/>
++  <reg name="f12" bitsize="32" type="ieee_single" regnum="44"/>
++  <reg name="f13" bitsize="32" type="ieee_single" regnum="45"/>
++  <reg name="f14" bitsize="32" type="ieee_single" regnum="46"/>
++  <reg name="f15" bitsize="32" type="ieee_single" regnum="47"/>
++  <reg name="f16" bitsize="32" type="ieee_single" regnum="48"/>
++  <reg name="f17" bitsize="32" type="ieee_single" regnum="49"/>
++  <reg name="f18" bitsize="32" type="ieee_single" regnum="50"/>
++  <reg name="f19" bitsize="32" type="ieee_single" regnum="51"/>
++  <reg name="f20" bitsize="32" type="ieee_single" regnum="52"/>
++  <reg name="f21" bitsize="32" type="ieee_single" regnum="53"/>
++  <reg name="f22" bitsize="32" type="ieee_single" regnum="54"/>
++  <reg name="f23" bitsize="32" type="ieee_single" regnum="55"/>
++  <reg name="f24" bitsize="32" type="ieee_single" regnum="56"/>
++  <reg name="f25" bitsize="32" type="ieee_single" regnum="57"/>
++  <reg name="f26" bitsize="32" type="ieee_single" regnum="58"/>
++  <reg name="f27" bitsize="32" type="ieee_single" regnum="59"/>
++  <reg name="f28" bitsize="32" type="ieee_single" regnum="60"/>
++  <reg name="f29" bitsize="32" type="ieee_single" regnum="61"/>
++  <reg name="f30" bitsize="32" type="ieee_single" regnum="62"/>
++  <reg name="f31" bitsize="32" type="ieee_single" regnum="63"/>
++
++  <reg name="f32" bitsize="64" type="ieee_double" regnum="64"/>
++  <reg name="f34" bitsize="64" type="ieee_double" regnum="65"/>
++  <reg name="f36" bitsize="64" type="ieee_double" regnum="66"/>
++  <reg name="f38" bitsize="64" type="ieee_double" regnum="67"/>
++  <reg name="f40" bitsize="64" type="ieee_double" regnum="68"/>
++  <reg name="f42" bitsize="64" type="ieee_double" regnum="69"/>
++  <reg name="f44" bitsize="64" type="ieee_double" regnum="70"/>
++  <reg name="f46" bitsize="64" type="ieee_double" regnum="71"/>
++  <reg name="f48" bitsize="64" type="ieee_double" regnum="72"/>
++  <reg name="f50" bitsize="64" type="ieee_double" regnum="73"/>
++  <reg name="f52" bitsize="64" type="ieee_double" regnum="74"/>
++  <reg name="f54" bitsize="64" type="ieee_double" regnum="75"/>
++  <reg name="f56" bitsize="64" type="ieee_double" regnum="76"/>
++  <reg name="f58" bitsize="64" type="ieee_double" regnum="77"/>
++  <reg name="f60" bitsize="64" type="ieee_double" regnum="78"/>
++  <reg name="f62" bitsize="64" type="ieee_double" regnum="79"/>
++
++  <reg name="pc" bitsize="64" type="code_ptr" regnum="80"/>
++  <reg name="npc" bitsize="64" type="code_ptr" regnum="81"/>
++  <reg name="state" bitsize="64" type="uint64" regnum="82"/>
++  <reg name="fsr" bitsize="64" type="uint64" regnum="83"/>
++  <reg name="fprs" bitsize="64" type="uint64" regnum="84"/>
++  <reg name="y" bitsize="64" type="uint64" regnum="85"/>
++</feature>
 -- 
 2.47.2
 
