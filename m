@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06175C83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 06:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2236EC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 07:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubD0Y-0006Em-Ns; Mon, 14 Jul 2025 02:50:05 -0400
+	id 1ubDzS-0001Rl-4w; Mon, 14 Jul 2025 03:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubCrm-0007K9-HM
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 02:40:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubDY6-0002KF-Ig
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:24:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubCrk-0005eR-Pg
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 02:40:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubDY0-0003Xj-T7
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 03:24:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752475243;
+ s=mimecast20190719; t=1752477863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3pg2Y/MUlo9Xib/lZN//N9DYnVgxf8k32BwCWsxsiQY=;
- b=FqJ8OlO5MrsPZoFGLId/qIyZarTIIp/HSSFbofxJ9NcgD2jDb7xVAP3jS+sNSFMUnTLW9i
- sW2+IrHUvo83XCOJ1GjVavGf9napxGsDX4hU3UIt0RzrAOuYTxco0e+N/jqgMkvzyY2Vw+
- hrdViTiGFRt0wYlhJS53X4/ns7QUxEg=
+ bh=HFYOTv2pMawm/vn1VT2v6XN5uoKPu/5bWgkkq6i4eqY=;
+ b=P9AdMsOnUg38eKDQbqK5CMKk+dZFPhW6UloDf/9XLY55EMcN1wn09EEyxYwWDA0FJB64Pe
+ mFpajje3EX/e3eKjVCLYEKSFyTteo4rEDF/ezCuUr2VR3G/lMqyAv3qv88tyXaiErMO0aD
+ 8G2ZsPxVPDnlihRkfJJyvl40JDMagWA=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-LXxT8z1cOUqHOwAxf-VG5A-1; Mon,
- 14 Jul 2025 02:40:37 -0400
-X-MC-Unique: LXxT8z1cOUqHOwAxf-VG5A-1
-X-Mimecast-MFC-AGG-ID: LXxT8z1cOUqHOwAxf-VG5A_1752475235
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-_LuO1VpyNma58raG9jUdUA-1; Mon,
+ 14 Jul 2025 03:24:18 -0400
+X-MC-Unique: _LuO1VpyNma58raG9jUdUA-1
+X-Mimecast-MFC-AGG-ID: _LuO1VpyNma58raG9jUdUA_1752477856
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8D1819560B6; Mon, 14 Jul 2025 06:40:32 +0000 (UTC)
+ id 620D319560B6; Mon, 14 Jul 2025 07:24:15 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 869101956094; Mon, 14 Jul 2025 06:40:30 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D590819560A3; Mon, 14 Jul 2025 07:24:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DBEC921E6A27; Mon, 14 Jul 2025 08:40:27 +0200 (CEST)
+ id 542C921E6A27; Mon, 14 Jul 2025 09:24:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Jiri Pirko <jiri@resnulli.us>,  Peter Maydell
- <peter.maydell@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Peter Xu <peterx@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>,  Jason Wang <jasowang@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  qemu-trivial@nongnu.org,  Stefan
- Hajnoczi <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Lukas
- Straub <lukasstraub2@web.de>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,  Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Michael Tokarev
- <mjt@tls.msk.ru>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Zhenwei Pi <pizhenwei@bytedance.com>,  Stefan
- Berger <stefanb@linux.vnet.ibm.com>,  Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 4/4] qapi: rephrase return docs to avoid type name
-In-Reply-To: <877c0eygpn.fsf@pond.sub.org> (Markus Armbruster's message of
- "Fri, 11 Jul 2025 15:55:48 +0200")
-References: <20250711051045.51110-1-jsnow@redhat.com>
- <20250711051045.51110-5-jsnow@redhat.com>
- <877c0eygpn.fsf@pond.sub.org>
-Date: Mon, 14 Jul 2025 08:40:27 +0200
-Message-ID: <87wm8b6zs4.fsf@pond.sub.org>
+Cc: qemu-devel@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Fan Ni
+ <fan.ni@samsung.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Michael
+ Roth <michael.roth@amd.com>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fabiano Rosas <farosas@suse.de>,  Kashyap Chamarthy
+ <kchamart@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Ani
+ Sinha <anisinha@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Alex Williamson <alex.williamson@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,  Jason Wang <jasowang@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>
+Subject: Re: [PATCH v3 1/5] docs/sphinx: adjust qapidoc to cope with
+ same-line error sections
+In-Reply-To: <87cyala04r.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Mon, 30 Jun 2025 14:23:48 +0200")
+References: <20250618165353.1980365-1-jsnow@redhat.com>
+ <20250618165353.1980365-2-jsnow@redhat.com>
+ <87cyala04r.fsf@pond.sub.org>
+Date: Mon, 14 Jul 2025 09:24:11 +0200
+Message-ID: <87a5576xr8.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -111,36 +116,22 @@ Markus Armbruster <armbru@redhat.com> writes:
 
 > John Snow <jsnow@redhat.com> writes:
 >
->> Well, I tried. Maybe not very hard. Sorry!
->
-> Recommend to explain *why* we want to avoid the type name.
->
->   "Returns: <description>" is rendered like "Return: <Type> =E2=80=93
->   <description>".  Mentioning the type in the description again is
->   commonly redundant.  Rephrase such descriptions not to.
->
 >> Signed-off-by: John Snow <jsnow@redhat.com>
-
-[...]
-
-> I need to stop here to take care of another series.  Gut feeling so far:
-> right direction, doesn't go far enough.
 >
-> Choices:
->
-> * Go far enough.  Too close to the freeze for that, I'm afraid.
->
-> * Merge it basically as is, come back later to finish the job.
+> Let's mention the reproducer: "# Errors: some" in doc-good.json with
+> :transmogrify:.
 
-Let's pick this one, then try to improve on top.
+I'm adding
 
-> * Drop it for now, adjust your "QAPI: add cross-references to qapi docs"
->   to enclose the type names not removed in `backquotes`.
->
-> Thoughts?
->
-> [...]
+    Without this, the line the new QAPI doc generator chokes on
+    
+        # Errors: some
+    
+    in doc-good.json.  We still use the old doc generator for the tests,
+    but we're about to correct that.
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
+and
+
+    Fixes: e9fbf1a0c6c2 (docs/qapidoc: add visit_errors() method)
 
 
