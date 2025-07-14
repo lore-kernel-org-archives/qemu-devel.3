@@ -4,75 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A0FBC83F1B
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4378DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 15:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubKqo-0007Sr-RS; Mon, 14 Jul 2025 11:12:19 -0400
+	id 1ubL6v-0005iB-Jg; Mon, 14 Jul 2025 11:29:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUa-0000IX-Rv
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubJlT-0000WT-Cr
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:02:45 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubJUU-0003bc-4O
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 09:45:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752500708;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RqyqnGFyQnvq7sX2524kZSsjnQQSwOQe+Q3tvKbYFEQ=;
- b=IolPY4nNTKY5Nr2PKgKKAHdEY9QXCpToSPSFUmdp8r0dtWNrq4P1AVNOksnfmkcMgrpB+f
- 47/5DGLDy6yD8+xdQI94O5kB2cLUyrO7MEz7nBEuzotY/IDBjIgzppWp1OK9hjkFS9tqOi
- eZ1VBijLjw1RPo0tIBNgt3bmEfrsNP0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-wPHNHk-zPUqH-Q9tTDojFw-1; Mon,
- 14 Jul 2025 09:45:06 -0400
-X-MC-Unique: wPHNHk-zPUqH-Q9tTDojFw-1
-X-Mimecast-MFC-AGG-ID: wPHNHk-zPUqH-Q9tTDojFw_1752500705
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE7D21809C8A
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 356381800264
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:45:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DB23A21E6779; Mon, 14 Jul 2025 15:44:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 09/32] qapi: Fix undocumented return values by generating
- something
-Date: Mon, 14 Jul 2025 15:44:35 +0200
-Message-ID: <20250714134458.2991097-10-armbru@redhat.com>
-In-Reply-To: <20250714134458.2991097-1-armbru@redhat.com>
-References: <20250714134458.2991097-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubJlP-000671-2z
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 10:02:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bgkWH6Ddvz6L5dP;
+ Mon, 14 Jul 2025 22:01:15 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 81282140370;
+ Mon, 14 Jul 2025 22:02:20 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 14 Jul
+ 2025 16:02:20 +0200
+Date: Mon, 14 Jul 2025 15:02:18 +0100
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, Anisa Su
+ <anisa.su@samsung.com>
+Subject: Re: [PATCH qemu 07/11] hw/cxl: mailbox-utils: 0x5602 - FMAPI Set DC
+ Region Config
+Message-ID: <20250714150218.00006c95@huawei.com>
+In-Reply-To: <20250714052757-mutt-send-email-mst@kernel.org>
+References: <20250702160219.989731-1-Jonathan.Cameron@huawei.com>
+ <20250702160219.989731-8-Jonathan.Cameron@huawei.com>
+ <20250714052757-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,156 +72,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+On Mon, 14 Jul 2025 05:32:19 -0400
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-Generated command documentation lacks information on return value in
-several cases, e.g. query-tpm.
+> On Wed, Jul 02, 2025 at 05:02:13PM +0100, Jonathan Cameron wrote:
+> > From: Anisa Su <anisa.su@samsung.com>
+> >=20
+> > FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Section =
+7.6.7.6.3
+> >=20
+> > Reviewed-by: Fan Ni <fan.ni@samsung.com>
+> > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-The obvious fix would be to require a Returns: section when a command
-returns something.
 
-However, note that many existing Returns: sections are pretty useless:
-the description is basically the return type, which then gets rendered
-like "Return: <Type> – <basically the return type>".  This suggests
-that a description is often not really necessary, and requiring one
-isn't useful.
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index bf1710b251..1fc453f70d 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
 
-Instead, generate the obvious minimal thing when Returns: is absent:
-"Return: <Type>".
+> > +/* CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opcod=
+e 5602) */
+> > +static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cm=
+d,
+> > +                                              uint8_t *payload_in,
+> > +                                              size_t len_in,
+> > +                                              uint8_t *payload_out,
+> > +                                              size_t *len_out,
+> > +                                              CXLCCI *cci)
+> > +{
+> > +    struct {
+> > +        uint8_t reg_id;
+> > +        uint8_t rsvd[3];
+> > +        uint64_t block_sz;
+> > +        uint8_t flags;
+> > +        uint8_t rsvd2[3];
+> > +    } QEMU_PACKED *in =3D (void *)payload_in;
+> > +    CXLType3Dev *ct3d =3D CXL_TYPE3(cci->d);
+> > +    CXLEventDynamicCapacity dcEvent =3D {};
+> > +    CXLDCRegion *region =3D &ct3d->dc.regions[in->reg_id];
+> > +
+> > +    /*
+> > +     * CXL r3.2 7.6.7.6.3: Set DC Region Configuration
+> > +     * This command shall fail with Unsupported when the Sanitize on R=
+elease
+> > +     * field does not match the region=E2=80=99s configuration... and =
+the device
+> > +     * does not support reconfiguration of the Sanitize on Release set=
+ting.
+> > +     *
+> > +     * Currently not reconfigurable, so always fail if sanitize bit (b=
+it 0)
+> > +     * doesn't match.
+> > +     */
+> > +    if ((in->flags & 0x1) !=3D (region->flags & 0x1)) {
+> > +        return CXL_MBOX_UNSUPPORTED;
+> > +    }
+> > +
+> > +    if (in->reg_id >=3D DCD_MAX_NUM_REGION) {
+> > +        return CXL_MBOX_UNSUPPORTED;
+> > +    }
+> > +
+> > +    /* Check that no extents are in the region being reconfigured */
+> > +    if (!bitmap_empty(region->blk_bitmap, region->len / region->block_=
+size)) {
+> > +        return CXL_MBOX_UNSUPPORTED;
+> > +    }
+> > +
+> > +    /* Check that new block size is supported */
+> > +    if (!test_bit(BIT((int) log2(in->block_sz)),
+> > +                  &region->supported_blk_size_bitmask)) {
+> > +        return CXL_MBOX_INVALID_INPUT;
+> > +    } =20
+>=20
+> This does not work: test_bit works on unsigned long, while
+> supported_blk_size_bitmask is uint64_t.
+>=20
+> Why so funky? what is wrong with:
+>=20
+> if (!(BIT_ULL(log2(in->block_sz)) & region->supported_blk_size_bitmask))
+>=20
+> And BTW why cast to int here?
 
-This auto-generated Return documentation is placed is as follows:
+Change looks fine to me, so I'll prepare an updated set with this
+and the missing semi colon.  Anisa if you can have a look at this
+that would be great.=20
 
-1. If we have arguments, return goes right after them.
-2. Else if we have errors, return goes right before them.
-3. Else if we have features, return goes right before them.
-4. Else return goes right after the intro
+Sorry I seem to have missed Anisa off the cc for this!
 
-To facilitate this algorithm, a "TODO:" hack line is used to separate
-the intro from the remainder of the documentation block in cases where
-there are no other sections to separate the intro from e.g. examples and
-additional detail meant to appear below the key sections of interest.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20250711051045.51110-3-jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[_insert_near_kind() code replaced by something simpler, commit
-message amended to explain why we're doing this]
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/sphinx/qapidoc.py | 14 ++++++++------
- qapi/machine.json      |  2 ++
- scripts/qapi/parser.py | 37 +++++++++++++++++++++++++++++++++++++
- scripts/qapi/schema.py |  3 +++
- 4 files changed, 50 insertions(+), 6 deletions(-)
-
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index b794cde697..c2f09bac16 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -258,16 +258,18 @@ def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
-     def visit_returns(self, section: QAPIDoc.Section) -> None:
-         assert isinstance(self.entity, QAPISchemaCommand)
-         rtype = self.entity.ret_type
--        # q_empty can produce None, but we won't be documenting anything
--        # without an explicit return statement in the doc block, and we
--        # should not have any such explicit statements when there is no
--        # return value.
-+        # return statements will not be present (and won't be
-+        # autogenerated) for any command that doesn't return
-+        # *something*, so rtype will always be defined here.
-         assert rtype
- 
-         typ = self.format_type(rtype)
-         assert typ
--        assert section.text
--        self.add_field("return", typ, section.text, section.info)
-+
-+        if section.text:
-+            self.add_field("return", typ, section.text, section.info)
-+        else:
-+            self.add_lines(f":return-nodesc: {typ}", section.info)
- 
-     def visit_errors(self, section: QAPIDoc.Section) -> None:
-         # If the section text does not start with a space, it means text
-diff --git a/qapi/machine.json b/qapi/machine.json
-index af00a20b1f..2d6a137f21 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1303,6 +1303,8 @@
- # Return the amount of initially allocated and present hotpluggable
- # (if enabled) memory in bytes.
- #
-+# TODO: This line is a hack to separate the example from the body
-+#
- # .. qmp-example::
- #
- #     -> { "execute": "query-memory-size-summary" }
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index d43a123cd7..2529edf81a 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -804,6 +804,43 @@ def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
-                                % feature.name)
-         self.features[feature.name].connect(feature)
- 
-+    def ensure_returns(self, info: QAPISourceInfo) -> None:
-+
-+        def _insert_near_kind(
-+            kind: QAPIDoc.Kind,
-+            new_sect: QAPIDoc.Section,
-+            after: bool = False,
-+        ) -> bool:
-+            for idx, sect in enumerate(reversed(self.all_sections)):
-+                if sect.kind == kind:
-+                    pos = len(self.all_sections) - idx - 1
-+                    if after:
-+                        pos += 1
-+                    self.all_sections.insert(pos, new_sect)
-+                    return True
-+            return False
-+
-+        if any(s.kind == QAPIDoc.Kind.RETURNS for s in self.all_sections):
-+            return
-+
-+        # Stub "Returns" section for undocumented returns value
-+        stub = QAPIDoc.Section(info, QAPIDoc.Kind.RETURNS)
-+
-+        if any(_insert_near_kind(kind, stub, after) for kind, after in (
-+                # 1. If arguments, right after those.
-+                (QAPIDoc.Kind.MEMBER, True),
-+                # 2. Elif errors, right *before* those.
-+                (QAPIDoc.Kind.ERRORS, False),
-+                # 3. Elif features, right *before* those.
-+                (QAPIDoc.Kind.FEATURE, False),
-+        )):
-+            return
-+
-+        # Otherwise, it should go right after the intro. The intro
-+        # is always the first section and is always present (even
-+        # when empty), so we can insert directly at index=1 blindly.
-+        self.all_sections.insert(1, stub)
-+
-     def check_expr(self, expr: QAPIExpression) -> None:
-         if 'command' in expr:
-             if self.returns and 'returns' not in expr:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index cbe3b5aa91..3abddea352 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -1062,6 +1062,9 @@ def connect_doc(self, doc: Optional[QAPIDoc] = None) -> None:
-             if self.arg_type and self.arg_type.is_implicit():
-                 self.arg_type.connect_doc(doc)
- 
-+            if self.ret_type and self.info:
-+                doc.ensure_returns(self.info)
-+
-     def visit(self, visitor: QAPISchemaVisitor) -> None:
-         super().visit(visitor)
-         visitor.visit_command(
--- 
-2.49.0
-
+Jonathan
 
