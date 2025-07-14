@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CA9C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 21:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A41C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 21:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubR5s-0006lq-S9; Mon, 14 Jul 2025 17:52:16 -0400
+	id 1ubR87-0000QG-LK; Mon, 14 Jul 2025 17:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubPS1-0008C2-Qz
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 16:07:03 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubPT8-0000ou-PC
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 16:08:10 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubPS0-0006OZ-2Q
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 16:07:01 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a575a988f9so2723767f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:06:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubPT7-0006WR-1y
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 16:08:10 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a536ecbf6fso2957051f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 13:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752523618; x=1753128418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752523687; x=1753128487; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=HnGuHvjonix1TgErAzlhDeOfGgZDuvfIQJU1S3KJiag=;
- b=PU7n7AdWLVpfUJQSnRSbaarumIXl2vDT0gfYi92UVgpBQWlWw05PyAeHXwnUwPR6lI
- GSKXFKddIJnDtd6RiSjxqsbKEPCshQcBgyevPRqOBwU6ehBUNsMuIZy6xR4LVu+9nxdu
- GZdKde3afa3MakJCTivFKZcpAFyNvWmEQexa6SNI9Y08Qz+o0Am2cxoDxcl0PxLQU0lx
- YqXEXdjg3JH8wILs5Nm64j8JukF6H8P+R6heSkZZDHkpUwMLaw0OwHTkFqZ5j9MUc7wb
- cBL15TdX3q4ZaMhnQq4Hc60AVyoOcCaekbtVlcfNV8nADkU4j1k7+Xc4C8E9kW0izMnC
- ukIQ==
+ bh=0ERVhG4+19VK8uLTMl2gB0Pc+pWnwUVPvUP3CACLwt0=;
+ b=F8dp9Plr46fyYX0V+s2ZgvmZJQJWAsaFU0IH3zf0oYoGhP7D+i+GPXTk1AmMtdLAIw
+ SL72LknVNJoZHunOrdU7LH99wq6S0eroY1XEssl3q/0hQ9ZO8LeDsGFxoE9HCxPdenmP
+ mdZO7m9Xo/35pbTz5+pPB4zrtdfjbpnUlaQ7+M4csblP1dzRkGKvteh/IwKTNKacQw2H
+ eLGYrrbbhRq9DGnOeK4q4VX1lyQU+v5L1VGTV4MDDCz9D+S5e9ORx9/86Oza+PtChY72
+ PKSt9dS60aOKZQYNUBRkOk/6N9eS9cuu371jVJOX7u9CH9sRMzLo3qRu/WNkvA0ZZSQc
+ tmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752523618; x=1753128418;
+ d=1e100.net; s=20230601; t=1752523687; x=1753128487;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HnGuHvjonix1TgErAzlhDeOfGgZDuvfIQJU1S3KJiag=;
- b=MfM/ZRulUaaMPP3dyQnyhciM5+k7hydvXZtGvhNKooDIMueBqfJgVCGTgz7kAg5XF4
- 06wkPaRL+rApcDUqbJyc+bhXh40XBF/RoVclS3uJgyqvKmrit6V0iVAZKzSLcRFKv4iP
- y0nXtcTstVbWTBne+OBt43dYDF2RaGHiBi21iplhiD294QL22gVayuLv+mGBZmDEWF9c
- Xez7mzgvmTd7n+p1q9Oh2p7QpF/ph00o8cBbwDQmcIOmjvp5k1RzOWneQR0HlqPEbAYS
- B+yw+dunPsm/Uf+Oe01syjiettgiiLu5jYlOUG+GzmTUSlDo7BdAyCGCV7OxykI1E1kF
- zelg==
+ bh=0ERVhG4+19VK8uLTMl2gB0Pc+pWnwUVPvUP3CACLwt0=;
+ b=GeNmgWBmHbU0uSjUUqApp4J6wDaE5yVlPwzfU4tA0ZMl1hrZ7FkGd9ODQWOfRutDrr
+ /XYm+eTfrEtGk8ANsELELdz8PSIG02Q7Cfi0chRxraGGLLWs7wm++sqfirxdGmczOCY7
+ 8JHPjhs7af5ZuXgmREBE5mwpPAbeQtkIj6aV2lv83xfS4osZRpWYQFZAjXXe9qE9ByBn
+ Cbw+QghZXL1VvYk3ms4hF5kJW23/qRmnN8B6Oi87gBjyy/+ppGsR62c17uHw5ZBWdc8r
+ 7Q7DDsq4Y0FKPNeoAgIAj40tYBcwjELBCTO1ha3pKMiOycQqwCRIP/VTjKfr7wwUudjo
+ GSvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBkrVbEuSqhhmA2Tr6XXY4QFvqZNjaqlaJ3GS+T5dW73hzFG3Kp6Kdq/gSfg7KvJPfufXAl7oK+3f9@nongnu.org
-X-Gm-Message-State: AOJu0YwJb2+a0emL3Jx2G142wvY4t3kMzFR/1lzAY7sg4HIOdjzMI6RA
- 00CxhlXE9SKjPkD+a+MRQTQEKC+yd8Wf8510NUlDl3SyyqiMmOf1v4NHf8AQznrRZKw=
-X-Gm-Gg: ASbGncvcyc71+Ljq6MvzY3K+q2YKNq6u37QlUy3fTG06jMSdTWRftPxJs6YH2uMDX90
- UVsWkO9mr9Y5Rj4yd4tQfNKE6aGngdKJw9WWxz0MGoKdt4NQiEaWoKvS7Of34Be/CX4pLNSU5oG
- lep8B1OVBRXHZdO4XlybLizwUkYHJFtC9eutQnMh4V/kfSbWlGGj9N4ET/r/nEVtP0ZETeOrzVd
- 2hV2nDJYmPbCJrEHGxvymF1xcwxp2XAAoBeRevpzGEpNv1cqqRrDI6V0ZxFZ7z7OFuSUsyIWwct
- AWfezjO94MrY31e4lpC7S3Xj4Pco9qDDcu3oLmS1OffIWlRBCC1S2Z7zk0a++l9O9mB4gYFz6fW
- F3S79C+/Jic/FVlnJoIWLlEraTp0ec5tuarXT48AlITZbrBm3USAfikGEGOvLL3y8Fg==
-X-Google-Smtp-Source: AGHT+IHvvkxTfUYFzjGFZYZThFJQ0Fo+kLEO5mtI6Cz1NsTYN6C3+cPekXTGxz0L3Js4DxK/n3cBYw==
-X-Received: by 2002:a5d:54c1:0:b0:3b5:def6:4e4 with SMTP id
- ffacd0b85a97d-3b5f18dc957mr10427699f8f.46.1752523618024; 
- Mon, 14 Jul 2025 13:06:58 -0700 (PDT)
+ AJvYcCV6BSpAU75xh5Q0ZErlIkon9qC55aiq2g3CJ0xrF8pANxJC9KBolLs/Oc5iUjvRRgiWiTsuuVUGlrDN@nongnu.org
+X-Gm-Message-State: AOJu0YybL/bV/BES1pcVyM4Abwr/7MaaJrKXu7CTUkjKgB388zmxAnaI
+ 4hF7zFEnN1jjdFWjPO+3HKkJVGAjSI6kA96gKgNkTohhd6ZwsVgBNKzf6o2V41oz0Ya681NP1tL
+ q9Fpa
+X-Gm-Gg: ASbGncsK+krF8jcMBPcWZ6J64nZIXfyi515P7Hj1k7Aj/IQoIsHONsxyK8V2/6jt94U
+ 9b//EuQjc6MJN9Lk8IVApIddxKGtkxXn+kpHkgr/q3X+fFvxwByZJ6bOvsI+d38w5gtDgq2Lim5
+ 4/bxbzQrHJDes98QOcBAVeFYfCVQzkjRjynvDtKMzxpDdPjjoLaumIuVHWaAcbeNwQtrGCLbpEC
+ roP5aCnAwV/uI2e/JWCAqfK3i2ZVFwtqFz/oPeUf/MTCrDelOXxx6gElz5MZTFC20Bsw7edFExo
+ mK7kp7/JKN7RgP6cWrh02I8c/Z5c4oBN7UOgiV8pifzOt9o2pzqkmI/wBjGoMceYII6/XwI3DLT
+ Jmbm4RR8IX1y4FoJAf/28qotHsUta6/zf4vgPCsl1PMBQK0Tt0Tu6FdCv2yaXJgQNJnOXW5CbnO
+ S6
+X-Google-Smtp-Source: AGHT+IHSlmOHR4/fgg/BkNfrqBUBdulpUUL5qzN3x6n5EZLyd0qDCF831ReBetRBd4pwDpRqxF03GQ==
+X-Received: by 2002:a05:6000:4819:b0:3a4:e844:745d with SMTP id
+ ffacd0b85a97d-3b5f18debb9mr12957796f8f.56.1752523687147; 
+ Mon, 14 Jul 2025 13:08:07 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26ee3sm13491852f8f.96.2025.07.14.13.06.57
+ 5b1f17b1804b1-454dd241210sm142789715e9.0.2025.07.14.13.08.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 13:06:57 -0700 (PDT)
-Message-ID: <9f73dd64-5fd9-4b92-b146-74e94408d437@linaro.org>
-Date: Mon, 14 Jul 2025 22:06:56 +0200
+ Mon, 14 Jul 2025 13:08:06 -0700 (PDT)
+Message-ID: <3138a372-7649-404a-8e8e-53b097c33094@linaro.org>
+Date: Mon, 14 Jul 2025 22:08:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/net/npcm_gmac.c: Drop 'buf' local variable
+Subject: Re: [PATCH 3/4] hw/net/npcm_gmac.c: Correct test for when to
+ reallocate packet buffer
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
  Jason Wang <jasowang@redhat.com>
 References: <20250714165523.1956235-1-peter.maydell@linaro.org>
- <20250714165523.1956235-5-peter.maydell@linaro.org>
+ <20250714165523.1956235-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250714165523.1956235-5-peter.maydell@linaro.org>
+In-Reply-To: <20250714165523.1956235-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,20 +108,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 14/7/25 18:55, Peter Maydell wrote:
-> We use the local variable 'buf' only when we call dma_memory_read(),
-> and it is always set to &tx_send_buffer[prev_buf_size] immediately
-> before both of those calls.  So remove the variable and pass
-> tx_send_buffer + prev_buf_size to dma_memory_read().
+> In gmac_try_send_next_packet() we have code that does "if this block
+> of data won't fit in the buffer, reallocate it".  However, the
+> condition it uses is
+>    if ((prev_buf_size + tx_buf_len) > sizeof(buf))
+> where buf is a uint8_t *.
 > 
-> This fixes in passing a place where we set buf = tx_send_buffer
-> but never used that value because we always updated buf to
-> something else later before using it.
+> This means that sizeof(buf) is always 8 bytes, and the condition will
+> almost always be true, so we will reallocate the buffer more often
+> than we need to.
 > 
-> Coverity: CID 1534027
+> Correct the condition to test against tx_buffer_size, which is
+> where we track how big the allocated buffer is.
+> 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/net/npcm_gmac.c | 12 ++++--------
->   1 file changed, 4 insertions(+), 8 deletions(-)
+>   hw/net/npcm_gmac.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
