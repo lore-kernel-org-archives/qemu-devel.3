@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD1AC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9367DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 08:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubEvz-0006Hn-4G; Mon, 14 Jul 2025 04:53:15 -0400
+	id 1ubEz9-0000AZ-NN; Mon, 14 Jul 2025 04:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubEX2-0004Ms-Ea
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:27:29 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1ubEYp-0007U3-9Y
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:29:19 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubEX0-0007YO-7W
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:27:28 -0400
+ id 1ubEYm-00081l-Sj
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 04:29:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752481646; x=1784017646;
+ t=1752481757; x=1784017757;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=ulxwXnCarJ/lEri4I9QD+wDA4PxCaZqW3dZhn2Jg+Qw=;
- b=FmAVkrHHMBueIuwjZKwHsda3ODvtxJmlzMPY2Zz7c0W3C5FBrrTfNMVQ
- CMpm6+is6mxFmFMKRHglAdcpA0rTFXD3lCWp9n/m94P0fT3hLlczur4L8
- nFSBZc4nIwTDLmuPimYmf3lctUcj8hUI+gq6r5/4aAPkykeIV4qectjCQ
- B8R7YRPzgZUGuSroao5wFQbB0Bd/ydNp10zze9ZJKscCjKTY3tEp3FXpz
- EWlP5EZl6qqeZV9lgQMpMQAFSw3rDG0gIb3v/YQ55V8G4gJorVEeEf4Lr
- k+XdySu60b+PQPDCnJaUlPSbdv52dRqnRC+NdPsuj3cPG+vG0MKYfvjVq A==;
-X-CSE-ConnectionGUID: BBFQsTz8SLy2IkswBoEPeg==
-X-CSE-MsgGUID: BVBXZULSQImIpRH9NQdj5Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54525289"
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="54525289"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 01:27:24 -0700
-X-CSE-ConnectionGUID: Q6VCSHHtTjuZLjh9OyYkqg==
-X-CSE-MsgGUID: V/MSKFOGSlSS31jYDDA7Ew==
+ bh=cq/C9VCzD/tKIV2Oog5RSseyAu2LNEh6e9pImor808I=;
+ b=dFDXzbxl7bwjLBeuJR5IqCjTgqEprEkis0xQGwetFqfEpG5hr/mi6/Eb
+ pqYgkRDpx2vzvDaYp/OVI+L2Bm9tXyGMvm2iBN8JcqYO31xjeP3PodnXR
+ bgjSUM+X2SPB4cCwIfr5WWFdHOl9iSCeceqH2DZrnn3BbFPg5jGi/dW2N
+ bmD2JRcw8ygIlTxEnHd9p+Ahet2t0+entRq6nv7XwbyyyvoVAn/LrZKgT
+ dnGJRCegj+exhbRY1fJ+OINfsUQZKrSNUbtgctKOzf5xZj5CmjHZXPyjr
+ VNgt5NLqayn0mX1yc1TLZI/q6KxbxRdffmcPPDIblan08QDEi1H9DWcg9 g==;
+X-CSE-ConnectionGUID: Y77N57qLQcS8PigzaozmyA==
+X-CSE-MsgGUID: NF9yOcYcSeSzaddnzLz/SQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54636594"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="54636594"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2025 01:29:15 -0700
+X-CSE-ConnectionGUID: fEu5Krt4ShuIKgUI/DDRjQ==
+X-CSE-MsgGUID: SG2ioqUxTLqtOijSZxZk5A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="157431131"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; d="scan'208";a="194078662"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 01:27:20 -0700
-Message-ID: <42817b7d-445f-4940-9070-e3c939a6e90f@intel.com>
-Date: Mon, 14 Jul 2025 16:27:16 +0800
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jul 2025 01:29:12 -0700
+Message-ID: <2cc840fb-53b4-44b9-a05c-3edace80abb5@intel.com>
+Date: Mon, 14 Jul 2025 16:29:08 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/7] i386/cpu: Mark CPUID 0x80000008 ECX bits[0:7] &
- [12:15] as reserved for Intel/Zhaoxin
+Subject: Re: [PATCH v2 4/7] i386/cpu: Fix number of addressable IDs field for
+ CPUID.01H.EBX[23:16]
 To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>
 Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Tao Su <tao1.su@intel.com>,
  Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- qemu-devel@nongnu.org, Tao Su <tao1.su@linux.intel.com>
+ qemu-devel@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
 References: <20250714080859.1960104-1-zhao1.liu@intel.com>
- <20250714080859.1960104-3-zhao1.liu@intel.com>
+ <20250714080859.1960104-5-zhao1.liu@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250714080859.1960104-3-zhao1.liu@intel.com>
+In-Reply-To: <20250714080859.1960104-5-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -92,87 +94,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/14/2025 4:08 PM, Zhao Liu wrote:
-> Per SDM,
+> From: Chuang Xu <xuchuangxclwt@bytedance.com>
 > 
-> 80000008H EAX Linear/Physical Address size.
->                Bits 07-00: #Physical Address Bits*.
->                Bits 15-08: #Linear Address Bits.
->                Bits 31-16: Reserved = 0.
->            EBX Bits 08-00: Reserved = 0.
->                Bit 09: WBNOINVD is available if 1.
->                Bits 31-10: Reserved = 0.
->            ECX Reserved = 0.
->            EDX Reserved = 0.
+> When QEMU is started with:
+> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+> -smp 180,sockets=2,dies=1,cores=45,threads=2
 > 
-> ECX/EDX in CPUID 0x80000008 leaf are reserved.
+> On Intel platform:
+> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+> logical processors in the physical package".
 > 
-> Currently, in QEMU, only ECX bits[0:7] and ECX bits[12:15] are encoded,
-> and both are emulated in QEMU.
+> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
+> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+> CPUID.04H.EAX[31:26], which matches the expected result.
 > 
-> Considering that Intel and Zhaoxin are already using the 0x1f leaf to
-> describe CPU topology, which includes similar information, Intel and
-> Zhaoxin will not implement ECX bits[0:7] and bits[12:15] of 0x80000008.
+> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+> it's necessary to round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+> integer too. Otherwise there would be unexpected results in guest with
+> older kernel.
 > 
-> Therefore, mark these two fields as reserved and clear them for Intel
-> and Zhaoxin guests.
+> For example, when QEMU is started with CLI above and xtopology is disabled,
+> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+> as the result, even though threads-per-core should actually be 2.
 > 
-> Reviewed-by: Tao Su <tao1.su@linux.intel.com>
-> Tested-by: Yi Lai <yi1.lai@intel.com>
+> And on AMD platform:
+> CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
+> result meets our expectation.
+> 
+> So round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer only
+> for Intel platform to solve the unexpected result.
+> 
+> Use the "x-vendor-cpuid-only-v2" compat option to fix this issue.
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
-> Changes Since v1:
->   * Consider Zhaoxin (Ewan).
->   * Only clear ECX bits[0:7] and bits[12:15] for Intel/Zhaoxin, and do
->     not cover other bits.
-> ---
->   target/i386/cpu.c | 22 ++++++++++++++++------
->   1 file changed, 16 insertions(+), 6 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 37e4bf51d890..abd529d587ba 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8387,15 +8387,25 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->                *eax |= (cpu->guest_phys_bits << 16);
->           }
->           *ebx = env->features[FEAT_8000_0008_EBX];
-> +
->           if (threads_per_pkg > 1) {
->               /*
-> -             * Bits 15:12 is "The number of bits in the initial
-> -             * Core::X86::Apic::ApicId[ApicId] value that indicate
-> -             * thread ID within a package".
-> -             * Bits 7:0 is "The number of threads in the package is NC+1"
-> +             * Don't emulate Bits [7:0] & Bits [15:12] for Intel/Zhaoxin, since
-> +             * they're using 0x1f leaf.
->                */
-> -            *ecx = (apicid_pkg_offset(topo_info) << 12) |
-> -                   (threads_per_pkg - 1);
-> +            if (cpu->vendor_cpuid_only_v2 &&
-> +                (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
-> +                    *ecx = 0;
-> +            } else {
-> +                /*
-> +                 * Bits 15:12 is "The number of bits in the initial
-> +                 * Core::X86::Apic::ApicId[ApicId] value that indicate
-> +                 * thread ID within a package".
-> +                 * Bits 7:0 is "The number of threads in the package is NC+1"
-> +                 */
-> +                *ecx = (apicid_pkg_offset(topo_info) << 12) |
-> +                       (threads_per_pkg - 1);
-> +            }
->           } else {
->               *ecx = 0;
->           }
 
-I prefer below:
-
-	if ((cpu->vendor_cpuid_only_v2 &&
-	    (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) ||
-	    threads_per_pkg < 2) {
-		*ecx = 0;
-	} else {
-		...
-	}
-
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
