@@ -4,64 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DDDC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 841CEC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubbxA-0005mq-TL; Tue, 15 Jul 2025 05:28:01 -0400
+	id 1ubbzf-0007Z6-Vn; Tue, 15 Jul 2025 05:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubbwz-0005k7-TG; Tue, 15 Jul 2025 05:27:49 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubbzX-0007R1-LM
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:30:27 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubbwv-00057e-MH; Tue, 15 Jul 2025 05:27:49 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhDK63pJ4z6L5BN;
- Tue, 15 Jul 2025 17:24:10 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id EA0561402ED;
- Tue, 15 Jul 2025 17:27:39 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 11:27:39 +0200
-Date: Tue, 15 Jul 2025 10:27:37 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 03/15] hw/arm/smmu-common: Factor out common
- helper functions and export
-Message-ID: <20250715102737.0000576a@huawei.com>
-In-Reply-To: <20250714155941.22176-4-shameerali.kolothum.thodi@huawei.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-4-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ubbzS-0005cn-Qn
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:30:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752571823; x=1784107823;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=mP0q4YqqaiGLIAwiuXkkrUZ/nN99pTLywY45wJu2+S4=;
+ b=Fa1TUHVw4YYmgd7MflLyfmcFDQzX1lNjKw4BgtoDu60O597xlBgVOJA3
+ uB91DsfoXM1ZTYbQsZRDwA2yQ+7sV/IlKCmds8G4jLYcRdxFkhVZqiGAs
+ 2xZ3iAPDrxwngQhUczveIF+4gJBZpynX7Zxh51Dqu1B4IXWqYYH2ZfXW5
+ 7U41QtAYSUOTu7sDy8uvjQh/O3JGgQrjsQOfn5l6E8bO7/Ib3PK7Y+QwR
+ fcvwkMUs5wsQDZU7nd3tG/7hJp1NHVZoFL0oWyjYALe5P8qQUL/9iCHz1
+ oe3Na8uvv6I2SbO+irptaTrwsEookPOe93eVXHY59B2JCUpp/CasP+tm8 Q==;
+X-CSE-ConnectionGUID: +QfO6TDpRN6E0tSmrOdM2Q==
+X-CSE-MsgGUID: jabu5E3DTICrmOga/TgaSw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54655820"
+X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; d="scan'208";a="54655820"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2025 02:30:19 -0700
+X-CSE-ConnectionGUID: H7HkxjUyQEuo+VYXkbBp6g==
+X-CSE-MsgGUID: dAqX6n9pT/mqL7w8yv3wqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; d="scan'208";a="156835507"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2025 02:30:16 -0700
+Message-ID: <aa44356d-7f1b-4718-bff0-e5bfad88bf26@intel.com>
+Date: Tue, 15 Jul 2025 17:30:11 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v7 1/2] qapi/machine: Add @qom-type field to
+ CpuInfoFast structure
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eric Blake
+ <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250715090624.52377-1-philmd@linaro.org>
+ <20250715090624.52377-2-philmd@linaro.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250715090624.52377-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,137 +89,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 16:59:29 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
-
-> Subsequent patches for smmuv3 accel support will make use of this.
+On 7/15/2025 5:06 PM, Philippe Mathieu-Daudé wrote:
+> Knowing the QOM type name of a CPU can be useful,
+> in particular to infer its model name.
 > 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Various trivial things inline.  In general looks fine.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-J
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 > ---
->  hw/arm/smmu-common.c         | 48 ++++++++++++++++++++++--------------
->  include/hw/arm/smmu-common.h |  6 +++++
->  2 files changed, 36 insertions(+), 18 deletions(-)
+>   qapi/machine.json          | 3 +++
+>   hw/core/machine-qmp-cmds.c | 1 +
+>   2 files changed, 4 insertions(+)
 > 
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index ab920717cf..0f1a06cec2 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -847,12 +847,28 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
->      return NULL;
->  }
->  
-> -static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
-> +void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev,
-> +                    PCIBus *bus, int devfn)
-
-It's trivial Tuesday.  Fits on one line.  Maybe fine to keep it like this if you
-are going to modify this in later patches and this reduces the churn.
-
-
->  {
-> -    SMMUState *s = opaque;
-> -    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
-> -    SMMUDevice *sdev;
->      static unsigned int index;
-> +    char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
-> +
-> +    sdev->smmu = s;
-> +    sdev->bus = bus;
-> +    sdev->devfn = devfn;
-> +
-> +    memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
-> +                             s->mrtypename,
-> +                             OBJECT(s), name, UINT64_MAX);
-Wrap was odd on original code, might as well tidy it up though as have a
-little more width now.
-
-    memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
-                             s->mrtypename, OBJECT(s), name, UINT64_MAX);
-
-> +    address_space_init(&sdev->as,
-> +                       MEMORY_REGION(&sdev->iommu), name);
-And this one.
-
-    address_space_init(&sdev->as, MEMORY_REGION(&sdev->iommu), name);
-
-> +    trace_smmu_add_mr(name);
-> +    g_free(name);
-
-Use g_autofree perhaps.
-
-> +}
-> +
-> +SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus)
-> +{
-> +    SMMUPciBus *sbus = g_hash_table_lookup(s->smmu_pcibus_by_busptr, bus);
->  
->      if (!sbus) {
->          sbus = g_malloc0(sizeof(SMMUPciBus) +
-> @@ -861,23 +877,19 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
->          g_hash_table_insert(s->smmu_pcibus_by_busptr, bus, sbus);
->      }
->  
-> +    return sbus;
-> +}
-> +
-> +static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
-> +{
-> +    SMMUDevice *sdev;
-
-Why have this first?  Original order had it last.  I don't really care but
-some sort of system is nicer than none.
-
-> +    SMMUState *s = opaque;
-> +    SMMUPciBus *sbus = smmu_get_sbus(s, bus);
-> +
->      sdev = sbus->pbdev[devfn];
->      if (!sdev) {
-> -        char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
-> -
->          sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
-> -
-> -        sdev->smmu = s;
-> -        sdev->bus = bus;
-> -        sdev->devfn = devfn;
-> -
-> -        memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
-> -                                 s->mrtypename,
-> -                                 OBJECT(s), name, UINT64_MAX);
-> -        address_space_init(&sdev->as,
-> -                           MEMORY_REGION(&sdev->iommu), name);
-> -        trace_smmu_add_mr(name);
-> -        g_free(name);
-> +        smmu_init_sdev(s, sdev, bus, devfn);
->      }
->  
->      return &sdev->as;
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index 80d0fecfde..c6f899e403 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -180,6 +180,12 @@ OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
->  /* Return the SMMUPciBus handle associated to a PCI bus number */
->  SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
->  
-> +/* Return the SMMUPciBus handle associated to a PCI bus */
-> +SMMUPciBus *smmu_get_sbus(SMMUState *s, PCIBus *bus);
-> +
-> +/* Initialize SMMUDevice handle associated to a SMMUPCIBus */
-> +void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn);
-> +
->  /* Return the stream ID of an SMMU device */
->  static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
->  {
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index f712e7da6d6..a3f6fcec4d3 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -76,6 +76,8 @@
+>   #
+>   # @cpu-index: index of the virtual CPU
+>   #
+> +# @qom-type: QOM type name of the CPU (since 10.1)
+> +#
+>   # @qom-path: path to the CPU object in the QOM tree
+>   #
+>   # @thread-id: ID of the underlying host thread
+> @@ -89,6 +91,7 @@
+>   ##
+>   { 'union'         : 'CpuInfoFast',
+>     'base'          : { 'cpu-index'    : 'int',
+> +                      'qom-type'     : 'str',
+>                         'qom-path'     : 'str',
+>                         'thread-id'    : 'int',
+>                         '*props'       : 'CpuInstanceProperties',
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index d82043e1c68..5655bfcfee4 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -47,6 +47,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
+>           value->cpu_index = cpu->cpu_index;
+>           value->qom_path = object_get_canonical_path(OBJECT(cpu));
+>           value->thread_id = cpu->thread_id;
+> +        value->qom_type = g_strdup(object_get_typename(OBJECT(cpu)));
+>   
+>           if (mc->cpu_index_to_instance_props) {
+>               CpuInstanceProperties *props;
 
 
