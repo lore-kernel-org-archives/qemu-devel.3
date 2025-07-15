@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2942DC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 237C0C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubYbD-0004L7-Fv; Tue, 15 Jul 2025 01:53:07 -0400
+	id 1ubYb7-0004IP-IC; Tue, 15 Jul 2025 01:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYb8-0004Il-TT
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:53:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYaz-0004Eu-Mv
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:52:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYb7-0005iO-5E
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:53:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYaw-0005gJ-W9
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:52:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752558779;
+ s=mimecast20190719; t=1752558770;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=v3xigmgM8ytoSmUEVRkdJqLYA7Sad2hnQEzItXbx6E8=;
- b=ZUGa3X0WzCFm3gv1xPjFdmp5XMPWON/EIKv7pws1jCxdgywqKPJMsDTsIvCN8Zm52IuRe7
- Kkg19Y58wbVtdnDI+zeZdtLcs9WdLaa/WDHc5RHTnlz61BYFWqnZcQcw0RCOGHkmxQJtHe
- 4L7m/n1aHhJQR0YTwj6fMjiW9SW+zFU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pnNc1URRzn2V1cZZTOxV0Y823iKjSkXvDR7vxYl4e2s=;
+ b=iD3ByBJsEIK3r/oMdkVq0ZuyfBld7wW0swHl0HMbMfqpU5XIYdDEPC/9OirPoH76xXe/nn
+ ApLMzZjwauxDWxIYslEYCOK3NjH3jOrNMUaExOlhLbiMi1B3HJoQyjxScLXN4fITW2PBdM
+ qBw7eV3vjLetrHyznTnQ4J3t60EyUtg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-fZt-HaOnNAOX3mv8KOGtVQ-1; Tue, 15 Jul 2025 01:52:58 -0400
-X-MC-Unique: fZt-HaOnNAOX3mv8KOGtVQ-1
-X-Mimecast-MFC-AGG-ID: fZt-HaOnNAOX3mv8KOGtVQ_1752558777
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4560b81ff9eso16958245e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:52:58 -0700 (PDT)
+ us-mta-170-UV4INdDjMLiXYdpeslQo8g-1; Tue, 15 Jul 2025 01:52:47 -0400
+X-MC-Unique: UV4INdDjMLiXYdpeslQo8g-1
+X-Mimecast-MFC-AGG-ID: UV4INdDjMLiXYdpeslQo8g_1752558766
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4fac7fa27so1836169f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:52:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752558777; x=1753163577;
+ d=1e100.net; s=20230601; t=1752558766; x=1753163566;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v3xigmgM8ytoSmUEVRkdJqLYA7Sad2hnQEzItXbx6E8=;
- b=OhoSOUAcrJfpflclglZ2FOfPlBCij4eQC8IRfeFezXomPdc4d2fPVRyBD4e///bP4p
- y/GAw3jyHg+shGPfc95ZGlBFLljQ9m80wzRzD3XWrP+UdM9ouXjmNiGInSWd06QtQ7tO
- 6m0f5fAX07zDeOWBBG0wkg16ZFLTLOZV0/sxJOKWFCQ6SvIdIb+emX3CjKjjlrs8MBv/
- +yYC82kCSOKGjzqoBwSh7Cnon02JTLfWx0kXvitgs2RykZSfcoiBVmZdPnu8BD4S8We9
- q4j5lpmcgxNLkG3U1d5MsfSg6ghdHz8/V+3XEtsJr6rvJFRmvXaKL9/XSlz4y3S6N0RW
- 84Fw==
+ bh=pnNc1URRzn2V1cZZTOxV0Y823iKjSkXvDR7vxYl4e2s=;
+ b=kbHL2P3//R845b9aio4iMdAaTmNgKvg0JO8lpf195/NQTC9bul5TuNSD82jnv3WrsP
+ gO+lsSk9ZaHQ5KX1tnVtZJxcunD0vUj7AQX0pMcmvgY5mJC8GtsitRtu8vk7BfDaQch+
+ h9bv7Ha+vO3zmjL/ukrVPGrkKPTi4Eqmo1C0IbPIJeUgod3Wm2WkoXRJmehoEyRFQMHY
+ PCKTDUc2bxzOePeIin4ty/0Q6F3Kzb+YF2fi4cIvThlFGWzaIVNO2RuJJEbdqEusOOdQ
+ CewNeA+3oijaI3L4cJAlphQltPovQcmBZpyT8eQg5LtOqZE9JEy0EyuKhyS/dAgbg3RB
+ uBkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULVsGjir4RNeg8T0nZCpfzU59R6c8MoJLFpNdkamsbsz71lvkZKNLYX4wsSpkb3OcrHOff8lHn+16/@nongnu.org
-X-Gm-Message-State: AOJu0Yyj+gqRBHiRHoqgjgknZKgt+17YgW3RnVq4nDz9mVyn0uDmDmQ5
- Iv0+rfl5AEdw1nYsQgz44zB9ntP65HESxVwkjCG8DBTTiPoRTJ7jhLo/JkJMttV/xoV7DIO9cfI
- Tt8oG+4sr3i5UMFL2gNeal0Hvup2UwrWFiKBJuS93zaDoNYx79iicp01K
-X-Gm-Gg: ASbGnctr53d88z4TZCT+X3KbSqsALmxz/32wtJExKsnwNKXJLQ9NxMsoG1CKiEIy7qX
- 6FN8Bw6AFVrqR91NdoqzmZ85xiB4okcDRkQ9sojv1Gia5WoQ87sWCDu1WFuLo1IQo0+JRHzcNmV
- ao9Ibx2EQ7WfEeJHRmp07oXWETsCgum4LtBYGqoGJeOC3bf5E1ex1ZeRAsm6TrK/9hCPeEHC01V
- 2BjIqs8rAoFi15R3KneSXfLuckN8oKMEhwlC11lmedJFZ2QdB6wcGCuoZxIVEy7VJ6vfXLuy3zg
- sv29sLdK6MlJ5zLjLNPyBddBbw9kBYWd4uVh5ckpejDjcUIyPGStlZSGo2h0UaFFWo3g68J8HWg
+ AJvYcCXPC69w4PHJa+zYjyrCHNHaGlAKc5oi/6UHC5G29+Tuo/pLGDWR2EFhLIz+c+/rmyZiJY2nNdVotBVQ@nongnu.org
+X-Gm-Message-State: AOJu0YyAm/Ne3ARQaikZfmOl8bZFHIFUPCFNi4BfEgiUF/3h9SGMNUpa
+ SBC6sJzBpRAw5uk82E91jJQoK+1h5ZhmXcX4a9ed2cJ+ezBGuW7/j7JEXgZudL4T7ku8WoYcXIg
+ PV6ScuQP4ahcx5U3perJc1lRR/BbqGhoGzaxWDlU5u8eWGRyRmhtfmwQU
+X-Gm-Gg: ASbGnctMfmu2NxS07fuvaXoGr7kNEWOiT/BjdP5xjJzCK3qEwq1I2xW9ZLhBuIkXhke
+ Lm3tKyX3rcrmNHxRWzqwbNhc0vK0RPb+YEdvtBDtC0BsTHGemWyea7v3hnqM1uRP0cW3+4FC0C/
+ Ox9bE6rKRn2cVBIgzmizY6tryq3hY8uOuM4jdXE4hzwVNNZMAmUucLKYEfRq0vP+iwV6tR/4w0p
+ hSNg0Z6pJVzHjlL0obPHg7XXxhZIrsfMmEgEuePnWdmrs+3xQnox5WPY5joqeG2Ft2ezNQK+abg
+ Ucgdox/BKdrYKPwPs0bRoMxLs3O8ymmOb0YfEm9UOa3Jes/YXv3SYNh4nP6ovyh6axvKvJ3oXaM
  =
-X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
- 5b1f17b1804b1-454f427c7a3mr154731375e9.8.1752558777007; 
- Mon, 14 Jul 2025 22:52:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4L5oZckRmFrqlLtscbR5H/FpQin2BlvLg00zQRniZeynJ1eo9FIgAR3WA/cCfyOEAfNkM4g==
-X-Received: by 2002:a05:600c:8b21:b0:43d:42b:e186 with SMTP id
- 5b1f17b1804b1-454f427c7a3mr154731225e9.8.1752558776626; 
- Mon, 14 Jul 2025 22:52:56 -0700 (PDT)
+X-Received: by 2002:a05:6000:2085:b0:3a4:f900:21c4 with SMTP id
+ ffacd0b85a97d-3b5f2dd4e12mr12676222f8f.26.1752558766384; 
+ Mon, 14 Jul 2025 22:52:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1rWqRJlqbxOC7aCL9G50sXnUeZexjRyFItRm3079mO7m6Tr135YEJeCGtws0A5yDUKVJgrg==
+X-Received: by 2002:a05:6000:2085:b0:3a4:f900:21c4 with SMTP id
+ ffacd0b85a97d-3b5f2dd4e12mr12676207f8f.26.1752558765979; 
+ Mon, 14 Jul 2025 22:52:45 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
  ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e3bdsm13995593f8f.81.2025.07.14.22.52.55
+ ffacd0b85a97d-3b5e8e0d70csm14432082f8f.62.2025.07.14.22.52.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 22:52:56 -0700 (PDT)
-Message-ID: <6fa745d7-25af-46e5-a143-5a419098b162@redhat.com>
-Date: Tue, 15 Jul 2025 07:52:55 +0200
+ Mon, 14 Jul 2025 22:52:45 -0700 (PDT)
+Message-ID: <205c69d8-468e-4984-b27a-4a5fd619f4c6@redhat.com>
+Date: Tue, 15 Jul 2025 07:52:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/vfio-user: fix use of uninitialized variable
+Subject: Re: [PATCH] hw/vfio: fix region fd initialization
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20250708154948.483480-1-john.levon@nutanix.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250710154842.1267253-1-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,10 +127,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250708154948.483480-1-john.levon@nutanix.com>
+In-Reply-To: <20250710154842.1267253-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -155,27 +155,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/25 17:49, John Levon wrote:
-> Coverity reported:
+On 7/10/25 17:48, John Levon wrote:
+> We were not initializing the region fd array to -1, so we would
+> accidentally try to close(0) on cleanup for any region that is not
+> referenced.
 > 
-> CID 1611805:         Uninitialized variables
-> 
-> in vfio_user_dma_map(). This can occur in the happy path when
-> ->async_ops was not set; as this doesn't typically happen, it wasn't
-> caught during testing.
-> 
-> Align both map and unmap implementations to initialize ret the same way
-> to resolve this.
-
-This is not a strict rule, but a trailer like the one below is
-usually added for Coverity fixes :
-
-   Resolves: Coverity CID 1611805
-
-In case you resend, please do so.
-
-
-> Reported-by: Cédric Le Goater <clg@redhat.com>
+> Fixes: 95cdb024 ("vfio: add region info cache")
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 
 
@@ -187,39 +172,39 @@ C.
 
 
 > ---
->   hw/vfio-user/container.c | 6 +-----
->   1 file changed, 1 insertion(+), 5 deletions(-)
+>   hw/vfio/device.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-> index d318e6a339..d589dd90f5 100644
-> --- a/hw/vfio-user/container.c
-> +++ b/hw/vfio-user/container.c
-> @@ -64,8 +64,6 @@ static int vfio_user_dma_unmap(const VFIOContainerBase *bcontainer,
->                                 0, &local_err)) {
->               error_report_err(local_err);
->               ret = -EFAULT;
-> -        } else {
-> -            ret = 0;
->           }
->       } else {
->           if (!vfio_user_send_wait(container->proxy, &msgp->hdr, NULL,
-> @@ -92,7 +90,7 @@ static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->                                                   bcontainer);
->       int fd = memory_region_get_fd(mrp);
->       Error *local_err = NULL;
-> -    int ret;
-> +    int ret = 0;
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 96cf21462c..52a1996dc4 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -463,6 +463,8 @@ void vfio_device_detach(VFIODevice *vbasedev)
+>   void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>                            struct vfio_device_info *info)
+>   {
+> +    int i;
+> +
+>       vbasedev->num_irqs = info->num_irqs;
+>       vbasedev->num_regions = info->num_regions;
+>       vbasedev->flags = info->flags;
+> @@ -477,6 +479,9 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>                                  vbasedev->num_regions);
+>       if (vbasedev->use_region_fds) {
+>           vbasedev->region_fds = g_new0(int, vbasedev->num_regions);
+> +        for (i = 0; i < vbasedev->num_regions; i++) {
+> +            vbasedev->region_fds[i] = -1;
+> +        }
+>       }
+>   }
 >   
->       VFIOUserFDs *fds = NULL;
->       VFIOUserDMAMap *msgp = g_malloc0(sizeof(*msgp));
-> @@ -135,8 +133,6 @@ static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->                                 0, &local_err)) {
->               error_report_err(local_err);
->               ret = -EFAULT;
-> -        } else {
-> -            ret = 0;
+> @@ -489,7 +494,6 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+>           if (vbasedev->region_fds != NULL && vbasedev->region_fds[i] != -1) {
+>               close(vbasedev->region_fds[i]);
 >           }
->       } else {
->           VFIOUserFDs local_fds = { 1, 0, &fd };
+> -
+>       }
+>   
+>       g_clear_pointer(&vbasedev->reginfo, g_free);
 
 
