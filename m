@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DF1C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D856C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublQF-0001su-3G; Tue, 15 Jul 2025 15:34:39 -0400
+	id 1ublQw-0005SE-PE; Tue, 15 Jul 2025 15:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkyA-0004fq-MN
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1ubl87-00023w-Ah
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:15:57 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubky8-0001mQ-MA
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606335;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RIw6lN3VR9AGDzYGEU+yhTDe/xM0MVxTUdBYuPo+K04=;
- b=IOg++eACpWgaZ67/5kTC05LP04a/Y+kncYwPvAhuPABCxcpkEGgVrhwe9NpXNmXZiZWA7p
- wkt2+gONfO4i9ZFk4TrAo/n4ADuAC3Z7PLp/XwS2af7h+U/d+vkN7FDEAxTQvqdyksKkKj
- FF4Js7+HFnl6h5Ou69gaIXFnzNJRmwY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-e2DNWBeGOHuH8qMIFjebTw-1; Tue,
- 15 Jul 2025 15:05:27 -0400
-X-MC-Unique: e2DNWBeGOHuH8qMIFjebTw-1
-X-Mimecast-MFC-AGG-ID: e2DNWBeGOHuH8qMIFjebTw_1752606327
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1ubl84-0003VU-Hi
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:15:55 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01BE518002A8; Tue, 15 Jul 2025 19:05:27 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.34.84])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 76BC5197702B; Tue, 15 Jul 2025 19:05:25 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 52/57] qemu-img: bench: refresh options/--help
-Date: Tue, 15 Jul 2025 21:03:25 +0200
-Message-ID: <20250715190330.378764-53-kwolf@redhat.com>
-In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
-References: <20250715190330.378764-1-kwolf@redhat.com>
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 8217F3F412
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 19:15:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1752606949;
+ bh=4dblcXqKLHTGAGmcqiKTs/evyLcOqwfNiyLtAlOKjRY=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=fbJmJzmfnV6rBbGL8ZJsT1yVh2qaEKVjb4noXNrCryDIUSuo81OG6E7pcsBBo+wCJ
+ i6p2a98LuCXvLU8p//sSpEE2lkGt+0Nzd6wodwSBgiq6xH3aexJ33fFw2+NG3EOYWl
+ Bpqg+K+BHPB/nZ7EnNHmi8gtXSnOvrIDTwsCq5Ajfr9+Y69/jJfRBl4XPiUT6d+WIu
+ J0Tb8Cpw+iOXh1v02ED9sBgC0E20bL+XmnZYI7IX+XXaLHqNeNF9rPJpshLgHGUaWp
+ EBvbEIg3r20SifJsh51QHb5EOv86Tc+rfqAv9UIy03iipRdqAEi5ma2NkFsT5fzRvH
+ sblJ/UNjoSB+g==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 630CD7E139
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 19:15:49 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 15 Jul 2025 19:06:10 -0000
+From: Jiaxun Yang <1926277@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Invalid; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug-Tags: dvpe evpe mips mt
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: flygoat hansni philmd
+X-Launchpad-Bug-Reporter: Hansni Bu (hansni)
+X-Launchpad-Bug-Modifier: Jiaxun Yang (flygoat)
+References: <161951518027.9817.15696784713381088226.malonedeb@soybean.canonical.com>
+ <20210427133343.159718-1-f4bug@amsat.org>
+Message-Id: <970fe4bd-e0a0-4488-8db2-a581568bf090@app.fastmail.com>
+Subject: [Bug 1926277] Re: [PATCH v2] target/mips: Only update MVPControl.EVP
+ bit if executed by master VPE
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="2d6e9435c2df831e66deb7fcbe9f03f78dd14743";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 4ce2637f95a22e0a569ca49aa381e6992a92f233
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,194 +88,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 1926277 <1926277@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+=E5=9C=A82021=E5=B9=B44=E6=9C=8827=E6=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=
+=8D=882:33=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
+> According to the 'MIPS MT Application-Speci=EF=AC=81c Extension' manual:
+>
+>   If the VPE executing the instruction is not a Master VPE,
+>   with the MVP bit of the VPEConf0 register set, the EVP bit
+>   is unchanged by the instruction.
+>
+> Modify the DVPE/EVPE opcodes to only update the MVPControl.EVP bit
+> if executed on a master VPE.
+>
+> Reported-by: Hansni Bu <https://launchpad.net/%7Ehansni/+contactuser>
+> Buglink: https://bugs.launchpad.net/qemu/+bug/1926277
+> Fixes: f249412c749 ("mips: Add MT halting and waking of VPEs")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <f4bug@amsat.org>
 
-Add missing long options and --help output,
-reorder options for consistency.
+Confirmed with uarch behaviour.
 
-Add missing --object option.
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250531171609.197078-23-mjt@tls.msk.ru>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qemu-img.c | 112 +++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 84 insertions(+), 28 deletions(-)
+Thanks
+Jiaxun
 
-diff --git a/qemu-img.c b/qemu-img.c
-index bb10569372..17f7516a68 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4864,28 +4864,93 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-     for (;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"cache", required_argument, 0, 't'},
-+            {"count", required_argument, 0, 'c'},
-+            {"depth", required_argument, 0, 'd'},
-+            {"offset", required_argument, 0, 'o'},
-+            {"buffer-size", required_argument, 0, 's'},
-+            {"step-size", required_argument, 0, 'S'},
-+            {"write", no_argument, 0, 'w'},
-             {"pattern", required_argument, 0, OPTION_PATTERN},
-+            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-             {"no-drain", no_argument, 0, OPTION_NO_DRAIN},
-+            {"aio", required_argument, 0, 'i'},
-+            {"native", no_argument, 0, 'n'},
-             {"force-share", no_argument, 0, 'U'},
-+            {"quiet", no_argument, 0, 'q'},
-+            {"object", required_argument, 0, OPTION_OBJECT},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":hc:d:f:ni:o:qs:S:t:wU", long_options,
--                        NULL);
-+        c = getopt_long(argc, argv, "hf:t:c:d:o:s:S:wi:nUq",
-+                        long_options, NULL);
-         if (c == -1) {
-             break;
-         }
- 
-         switch (c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
-+        case 'h':
-+            cmd_help(ccmd, "[-f FMT | --image-opts] [-t CACHE]\n"
-+"        [-c COUNT] [-d DEPTH] [-o OFFSET] [-s BUFFER_SIZE] [-S STEP_SIZE]\n"
-+"        [-w [--pattern PATTERN] [--flush-interval INTERVAL [--no-drain]]]\n"
-+"        [-i AIO] [-n] [-U] [-q] FILE\n"
-+,
-+"  -f, --format FMT\n"
-+"     specify FILE format explicitly\n"
-+"  --image-opts\n"
-+"     indicates that FILE is a complete image specification\n"
-+"     instead of a file name (incompatible with --format)\n"
-+"  -t, --cache CACHE\n"
-+"     cache mode for FILE (default: " BDRV_DEFAULT_CACHE ")\n"
-+"  -c, --count COUNT\n"
-+"     number of I/O requests to perform\n"
-+"  -d, --depth DEPTH\n"
-+"     number of requests to perform in parallel\n"
-+"  -o, --offset OFFSET\n"
-+"     start first request at this OFFSET\n"
-+"  -s, --buffer-size BUFFER_SIZE[bkKMGTPE]\n"
-+"     size of each I/O request, with optional multiplier suffix\n"
-+"     (powers of 1024, default is 4K)\n"
-+"  -S, --step-size STEP_SIZE[bkKMGTPE]\n"
-+"     each next request offset increment, with optional multiplier suffix\n"
-+"     (powers of 1024, default is the same as BUFFER_SIZE)\n"
-+"  -w, --write\n"
-+"     perform write test (default is read)\n"
-+"  --pattern PATTERN\n"
-+"     write this pattern byte instead of zero\n"
-+"  --flush-interval FLUSH_INTERVAL\n"
-+"     issue flush after this number of requests\n"
-+"  --no-drain\n"
-+"     do not wait when flushing pending requests\n"
-+"  -i, --aio AIO\n"
-+"     async-io backend (threads, native, io_uring)\n"
-+"  -n, --native\n"
-+"     use native AIO backend if possible\n"
-+"  -U, --force-share\n"
-+"     open images in shared mode for concurrent access\n"
-+"  -q, --quiet\n"
-+"     quiet mode (produce only error messages if any)\n"
-+"  --object OBJDEF\n"
-+"     defines QEMU user-creatable object\n"
-+"  FILE\n"
-+"     name of the image file, or option string (key=value,..)\n"
-+"     with --image-opts, to operate on\n"
-+);
-             break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
-+        case 'f':
-+            fmt = optarg;
-             break;
--        case 'h':
--            help();
-+        case OPTION_IMAGE_OPTS:
-+            image_opts = true;
-+            break;
-+        case 't':
-+            ret = bdrv_parse_cache_mode(optarg, &flags, &writethrough);
-+            if (ret < 0) {
-+                error_report("Invalid cache mode");
-+                ret = -1;
-+                goto out;
-+            }
-             break;
-         case 'c':
-         {
-@@ -4909,9 +4974,6 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-             depth = res;
-             break;
-         }
--        case 'f':
--            fmt = optarg;
--            break;
-         case 'n':
-             flags |= BDRV_O_NATIVE_AIO;
-             break;
-@@ -4932,9 +4994,6 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-             break;
-         }
-             break;
--        case 'q':
--            quiet = true;
--            break;
-         case 's':
-         {
-             int64_t sval;
-@@ -4959,21 +5018,10 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-             step = sval;
-             break;
-         }
--        case 't':
--            ret = bdrv_parse_cache_mode(optarg, &flags, &writethrough);
--            if (ret < 0) {
--                error_report("Invalid cache mode");
--                ret = -1;
--                goto out;
--            }
--            break;
-         case 'w':
-             flags |= BDRV_O_RDWR;
-             is_write = true;
-             break;
--        case 'U':
--            force_share = true;
--            break;
-         case OPTION_PATTERN:
-         {
-             unsigned long res;
-@@ -4999,9 +5047,17 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_NO_DRAIN:
-             drain_on_flush = false;
-             break;
--        case OPTION_IMAGE_OPTS:
--            image_opts = true;
-+        case 'U':
-+            force_share = true;
-             break;
-+        case 'q':
-+            quiet = true;
-+            break;
-+        case OPTION_OBJECT:
-+            user_creatable_process_cmdline(optarg);
-+            break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
--- 
-2.50.1
+
+> ---
+> Supersedes: <20210427103555.112652-1-f4bug@amsat.org>
+> v2: Check VPEConf0.MVP bit (hansni)
+> ---
+>  target/mips/cp0_helper.c | 32 ++++++++++++++++++--------------
+>  1 file changed, 18 insertions(+), 14 deletions(-)
+>
+> diff --git a/target/mips/cp0_helper.c b/target/mips/cp0_helper.c
+> index aae2af6eccc..d5f274f5cdf 100644
+> --- a/target/mips/cp0_helper.c
+> +++ b/target/mips/cp0_helper.c
+> @@ -1635,12 +1635,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
+>      CPUState *other_cs =3D first_cpu;
+>      target_ulong prev =3D env->mvp->CP0_MVPControl;
+>=20
+> -    CPU_FOREACH(other_cs) {
+> -        MIPSCPU *other_cpu =3D MIPS_CPU(other_cs);
+> -        /* Turn off all VPEs except the one executing the dvpe.  */
+> -        if (&other_cpu->env !=3D env) {
+> -            other_cpu->env.mvp->CP0_MVPControl &=3D ~(1 << CP0MVPCo_EVP);
+> -            mips_vpe_sleep(other_cpu);
+> +    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
+> +        CPU_FOREACH(other_cs) {
+> +            MIPSCPU *other_cpu =3D MIPS_CPU(other_cs);
+> +            /* Turn off all VPEs except the one executing the dvpe.  */
+> +            if (&other_cpu->env !=3D env) {
+> +                other_cpu->env.mvp->CP0_MVPControl &=3D ~(1 << CP0MVPCo_=
+EVP);
+> +                mips_vpe_sleep(other_cpu);
+> +            }
+>          }
+>      }
+>      return prev;
+> @@ -1651,15 +1653,17 @@ target_ulong helper_evpe(CPUMIPSState *env)
+>      CPUState *other_cs =3D first_cpu;
+>      target_ulong prev =3D env->mvp->CP0_MVPControl;
+>=20
+> -    CPU_FOREACH(other_cs) {
+> -        MIPSCPU *other_cpu =3D MIPS_CPU(other_cs);
+> +    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
+> +        CPU_FOREACH(other_cs) {
+> +            MIPSCPU *other_cpu =3D MIPS_CPU(other_cs);
+>=20
+> -        if (&other_cpu->env !=3D env
+> -            /* If the VPE is WFI, don't disturb its sleep.  */
+> -            && !mips_vpe_is_wfi(other_cpu)) {
+> -            /* Enable the VPE.  */
+> -            other_cpu->env.mvp->CP0_MVPControl |=3D (1 << CP0MVPCo_EVP);
+> -            mips_vpe_wake(other_cpu); /* And wake it up.  */
+> +            if (&other_cpu->env !=3D env
+> +                /* If the VPE is WFI, don't disturb its sleep.  */
+> +                && !mips_vpe_is_wfi(other_cpu)) {
+> +                /* Enable the VPE.  */
+> +                other_cpu->env.mvp->CP0_MVPControl |=3D (1 << CP0MVPCo_E=
+VP);
+> +                mips_vpe_wake(other_cpu); /* And wake it up.  */
+> +            }
+>          }
+>      }
+>      return prev;
+> --=20
+> 2.26.3
+
+--=20
+- Jiaxun
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/1926277
+
+Title:
+  MIPS MT dvpe does not regard VPEConf0.MVP
+
+Status in QEMU:
+  Invalid
+
+Bug description:
+  Hi,
+
+  According to MIPS32=C2=AE Architecture for Programmers VolumeIV-f: The
+  MIPS=C2=AE MT Application-Speci=EF=AC=81c Extension to the MIPS32=C2=AE A=
+rchitecture,
+  for instruction: dvpe, evpe:
+
+  If the VPE executing the instruction is not a Master VPE, with the MVP
+  bit of the VPEConf0 register set, the EVP bit is unchanged by the
+  instruction.
+
+  The pseudo code is:
+
+  data =E2=86=90  MVPControl
+  GPR[rt] =E2=86=90  data
+  if(VPEConf0.MVP =3D 1) then
+    MVPControl.EVP =E2=86=90  sc
+  endif
+
+  However the helper functions of dvpe, evpe does not regard the
+  VPEConf0.MVP bit, namely, it does not check if the VPE is a master
+  VPE. Code is copied below as:
+
+  target_ulong helper_dvpe(CPUMIPSState *env)
+  {
+      CPUState *other_cs =3D first_cpu;
+      target_ulong prev =3D env->mvp->CP0_MVPControl;
+
+      CPU_FOREACH(other_cs) {
+          MIPSCPU *other_cpu =3D MIPS_CPU(other_cs);
+          /* Turn off all VPEs except the one executing the dvpe.  */
+          if (&other_cpu->env !=3D env) {
+              other_cpu->env.mvp->CP0_MVPControl &=3D ~(1 << CP0MVPCo_EVP);
+              mips_vpe_sleep(other_cpu);
+          }
+      }
+      return prev;
+  }
+
+  Is this a bug?
+
+  QEMU head commit: 0cef06d18762374c94eb4d511717a4735d668a24 is checked.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/1926277/+subscriptions
 
 
