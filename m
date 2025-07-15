@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA699C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107E1C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubYOI-00067r-JE; Tue, 15 Jul 2025 01:39:49 -0400
+	id 1ubYXk-0002GM-H5; Tue, 15 Jul 2025 01:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYO6-00064j-Eu
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:39:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYXb-0002Dl-Ut
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:49:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYO2-0000Qp-A4
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:39:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYXY-0003y6-6y
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:49:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752557965;
+ s=mimecast20190719; t=1752558558;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bnQAscRg1NwBR+YPyERR6kmm7pjilE9AFMdH+WRg0E8=;
- b=bW1zGfW2J5Mwr1+B9iA9QoZSbPaJe0WpuncdgQL9sEeZ+5HYYmCL6pYTMPqbSMA+lFr92R
- vcoHXFOAmGIbAHnUdha2PpAwbqvxukwZYXZoLda9TtIFgxfqfMbHZQmwiB+MCbaHo9M5ED
- KHoMo0sYkjzRnakelxwMz9D9E2VPALI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fo46b5+UjCMfv2rA1zAYNoTilvuWbqd/pMx37ppzMOI=;
+ b=EzIW5HJxzz225zwTu70QnDd8un/Lt0yTuH0vKwhMYydV5O/+DV3OsVO9s+XfZgMJXzkC+d
+ ymOoSbRxJE2lY4JZNbHsusAhMahBLnpBGT9FCV4MRtc3tW6HeH91QJGorSAYZQyyYfCZzq
+ zz6Zeee5a4+SuXSZHLNR2mACxdYXJ5M=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-zeM3o4AKNCKIALEZNjm3PA-1; Tue, 15 Jul 2025 01:39:22 -0400
-X-MC-Unique: zeM3o4AKNCKIALEZNjm3PA-1
-X-Mimecast-MFC-AGG-ID: zeM3o4AKNCKIALEZNjm3PA_1752557961
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45611579300so14710555e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:39:22 -0700 (PDT)
+ us-mta-148-LOW_z48bPESE7TisPuAwwQ-1; Tue, 15 Jul 2025 01:49:17 -0400
+X-MC-Unique: LOW_z48bPESE7TisPuAwwQ-1
+X-Mimecast-MFC-AGG-ID: LOW_z48bPESE7TisPuAwwQ_1752558556
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f6ff23ccso2635728f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:49:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752557961; x=1753162761;
+ d=1e100.net; s=20230601; t=1752558556; x=1753163356;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bnQAscRg1NwBR+YPyERR6kmm7pjilE9AFMdH+WRg0E8=;
- b=lUuI7KmEXsSLIFKAJmIMrV60OdXKE2w05viCdXXtMu1tRSz+Yh3i9X6HkxHqyxqQuL
- xG7yW9/4SGX9eXTSITViwD8peY0GmwWTSR2bZ4MXS8gsDpNIV2x8BiE2VY8Ybo33fyYt
- 4aQshCC366Mx+NUygwYQ0KmRUFB72D951eFsL44H4IQkBpa+uhiLjRJ5kW6rD9KhvxYs
- mE/jv7sYGMX21X4QEEokA+WEFzyDrNTLjc8qVLUMWNEZ6shfTsRPW9so1mZ/mwDxa0Eh
- sP1pTYGvlhRootGyB1flkiT59aAZR68gvVbxi+yVR41b3ubqqoghefhWVUCtZnX6yCbL
- t+7w==
+ bh=Fo46b5+UjCMfv2rA1zAYNoTilvuWbqd/pMx37ppzMOI=;
+ b=mtwNlyV+CAaABONMepEUWqA7wqM7lESUK9JosThcAjMBOTmyb93MzxplDUmpn7+SI6
+ JwLiCfoW06a612gQ2u9EP8YRL4IjtKLOH64oZqSTtSfN54r9DK5BBk5uuY+aJZG6lrsN
+ xzv9Ym4ROV2t3WlED6CgzxbuEe0ixALJzxVjZw28ngZR0sFFi4RTec5ea801v2AihEba
+ Au5uNWZBjT+TP9qpK+4fa3LfRbkBcQqJeY1vowuj3SV3Vzm0mVUu2gkCilOI5hELelc7
+ R2pTt8bkTTM0c9qF2nUGP0b0/dUwILvMyYWcP/H8Zf/seWG5PjbhR8rGeZiAnNOM308R
+ qVSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPXiV+R7P++o6WXvzK4fPlL6LRFEvmf0Nekvd9Zo0sLJRVKDfSgAhqZz71ukeNyQsah/4j92MNOsvC@nongnu.org
-X-Gm-Message-State: AOJu0YyKIkuoFsF0Zg5fM02gBcsrAYTg2RE0QzwiCkenY0kVAUyal/AL
- LWizhVTdkh+LOsymkVn9v/HzLM/aZvx6e0+f8/hg8OMwVVrA3z1fh+j7cJ39wLdtgAM5staJ2+j
- lHfF3UmznVl2kH87bAY6qX6so3h3As9KNFfsgrDrD5MwnXUZ7AtU6XdVE
-X-Gm-Gg: ASbGnct13lGRCU2/aBg7jCQG6wmPc/1C4DdacZHFN6W31b+jLS72oHAKKlcZhAIWSZl
- Oc/+Umf08zSo5MqlawNtHxQlQqoQn1q9OJTujbvf/F4rWhBwzlqQb+UtlNs1ro3zEcupnruQ5ed
- 4jOOP8zo1fos9AQKDPGAYpw4WlekL25QuITTNBpnQ2RhgsKDWqGMXAV4LIXee0ixlOf6ZvPbp0M
- n5cIy3Jv5cCOEqIi0jd7kXpZTPLujHErBbXo0w66dIO+Pjn8vbozqd3kkWTuhfrW0Gjg9PHK5UQ
- 754zWY/VESbnfFghPBAXJM+wnc5q7FMMj96oL0hZaEjNUvv+NRgfCew8PxvnvbK2lsOez2+QO7w
+ AJvYcCWiH9ClvlhjSCDtBRI3eGwvW8aIJ9LnekiBTcDEBOnwscCs2DL4q+xUtCADmOFXXReWMGDBjbC4o7cS@nongnu.org
+X-Gm-Message-State: AOJu0YzYZwLk7dZCU+tTDdiV7nPVSCXeEybdbobwzuDIJhk3kMTTEr8m
+ t6s8BqLVW/fBxwnaXeYPkhzHDJT8m9Znj+QkXmmEfj3ytbREQWZh+RHAgH1psicxy2urjNhSe8/
+ J3JU2wZD0RMApoFjQ2w2oIbuab1CnpJWfgZxLmmJBKFoXUT6hYFZeuPl1
+X-Gm-Gg: ASbGncsieGqSsfJIJ4/HuCRCJG9sGs6ocVLDvCj+DIKpaQxIuDE5iRtMmvIwqDdv5Zq
+ zKwCnl+2FLf9Br4aDW8MeKo0I6O6J/904fm3WEerJbp5IyhCL9aBbGJJHGAyOFgLjYozTCm0+6j
+ 4/1u34+os1jYr1qnfjr+H0qfL1bcAu5I9MsPKa0XFht8AQuKotWZJRMXBsrozM6v964MV4cqGDF
+ 7EnP69e/D4PK+F5Oe3y7Qjmo0LU7z9vCjh0eD8d1xzEUAdEU3eFHd7c6zhHMx/dgJ/w7Eqt6bIP
+ BloKVBIyavL2n7/Q5YvVQCuky23+YMkO0NoPPXi79mdojw0Ziy0b6hT91eC8+4Js02VFzaT76yE
  =
-X-Received: by 2002:a05:600c:548b:b0:456:11cc:360d with SMTP id
- 5b1f17b1804b1-45611cc3924mr79734145e9.9.1752557961335; 
- Mon, 14 Jul 2025 22:39:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2Slx+mPaqPSdCB2nhjThU4g1uE/5ykjumH163QINsaB/g5KAsFIjEsBxue5/yAPn3bu3TwQ==
-X-Received: by 2002:a05:600c:548b:b0:456:11cc:360d with SMTP id
- 5b1f17b1804b1-45611cc3924mr79733985e9.9.1752557960908; 
- Mon, 14 Jul 2025 22:39:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:2c10:b0:3b3:a0f6:e8d0 with SMTP id
+ ffacd0b85a97d-3b60a1bae46mr846956f8f.54.1752558555979; 
+ Mon, 14 Jul 2025 22:49:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/Phaah38sGvYPhpo/I/bzS68w5QjFtL1N08o3Ol1serUoDsDQULEv6Yd8koOXqcFlzKjUGA==
+X-Received: by 2002:a05:6000:2c10:b0:3b3:a0f6:e8d0 with SMTP id
+ ffacd0b85a97d-3b60a1bae46mr846942f8f.54.1752558555501; 
+ Mon, 14 Jul 2025 22:49:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
  ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc2464sm14473367f8f.38.2025.07.14.22.39.20
+ ffacd0b85a97d-3b5e8e0d587sm13941149f8f.46.2025.07.14.22.49.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 22:39:20 -0700 (PDT)
-Message-ID: <d34d1ce2-e48f-41ff-8d92-f1b424689aa7@redhat.com>
-Date: Tue, 15 Jul 2025 07:39:19 +0200
+ Mon, 14 Jul 2025 22:49:14 -0700 (PDT)
+Message-ID: <cc3be6c4-82c5-4152-8206-f475e8762616@redhat.com>
+Date: Tue, 15 Jul 2025 07:49:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/vfio/vfio-migration: Remove unnecessary
- 'qemu/typedefs.h' include
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Stefan Weil <sw@weilnetz.de>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250708085859.7885-1-philmd@linaro.org>
- <20250708085859.7885-3-philmd@linaro.org>
+Subject: Re: [PATCH] hw/vfio-user: wait for proxy close correctly
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20250710154731.1266732-1-john.levon@nutanix.com>
+ <cdf4931c-cf7b-4849-8aff-0f73fc3d1189@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +129,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250708085859.7885-3-philmd@linaro.org>
+In-Reply-To: <cdf4931c-cf7b-4849-8aff-0f73fc3d1189@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -160,26 +157,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/25 10:58, Philippe Mathieu-Daudé wrote:
-> "qemu/typedefs.h" is already included by "qemu/osdep.h".
+On 7/11/25 13:38, Mark Cave-Ayland wrote:
+> On 10/07/2025 16:47, John Levon wrote:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/vfio/vfio-migration-internal.h | 1 -
->   1 file changed, 1 deletion(-)
+> (added Cedric)
+
+ah. Thanks Mark.
+
+This reminds me that we should have maintainers/reviewers
+that can send PRs for the vfio-user component.
+
+John,
+
+Could you please send a patch adding me and Mark may be ?
+
 > 
-> diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
-> index a8b456b239d..00e2badd889 100644
-> --- a/hw/vfio/vfio-migration-internal.h
-> +++ b/hw/vfio/vfio-migration-internal.h
-> @@ -13,7 +13,6 @@
->   #include <linux/vfio.h>
->   #endif
->   
-> -#include "qemu/typedefs.h"
->   #include "qemu/notify.h"
->   
->   /*
+>> Coverity reported:
+>>
+>> CID 1611806: Concurrent data access violations (BAD_CHECK_OF_WAIT_COND)
+
+Please prefer :
+
+   Resolves: Coverity CID 1611805
+
+>>
+>> A wait is performed without a loop. If there is a spurious wakeup, the
+>> condition may not be satisfied.
+>>
+>> Fix this by checking ->state for VFIO_PROXY_CLOSED in a loop.
+>>
+>> Signed-off-by: John Levon <john.levon@nutanix.com>
+>> ---
+>>   hw/vfio-user/proxy.c | 10 ++++++----
+>>   1 file changed, 6 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+>> index c418954440..2275d3fe39 100644
+>> --- a/hw/vfio-user/proxy.c
+>> +++ b/hw/vfio-user/proxy.c
+>> @@ -32,7 +32,6 @@ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
+>>   static void vfio_user_recv(void *opaque);
+>>   static void vfio_user_send(void *opaque);
+>> -static void vfio_user_cb(void *opaque);
+>>   static void vfio_user_request(void *opaque);
+>> @@ -492,7 +491,7 @@ static void vfio_user_send(void *opaque)
+>>       }
+>>   }
+>> -static void vfio_user_cb(void *opaque)
+>> +static void vfio_user_close_cb(void *opaque)
+>>   {
+>>       VFIOUserProxy *proxy = opaque;
+>> @@ -984,8 +983,11 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+>>        * handler to run after the proxy fd handlers were
+>>        * deleted above.
+>>        */
+>> -    aio_bh_schedule_oneshot(proxy->ctx, vfio_user_cb, proxy);
+>> -    qemu_cond_wait(&proxy->close_cv, &proxy->lock);
+>> +    aio_bh_schedule_oneshot(proxy->ctx, vfio_user_close_cb, proxy);
+>> +
+>> +    while (proxy->state != VFIO_PROXY_CLOSED) {
+>> +        qemu_cond_wait(&proxy->close_cv, &proxy->lock);
+>> +    }
+>>       /* we now hold the only ref to proxy */
+>>       qemu_mutex_unlock(&proxy->lock);
+> 
+> It think it is worth mentioning the function rename in the commit message, otherwise looks good to me:
+> 
+> Reviewed-by: Mark Cave-Ayland <markcaveayland@nutanix.com>
+
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
