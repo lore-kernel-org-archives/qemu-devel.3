@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BDBC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 00:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00F3C83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 00:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubT6N-0001o7-55; Mon, 14 Jul 2025 20:00:55 -0400
+	id 1ubT6R-00027q-ED; Mon, 14 Jul 2025 20:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1ubT6L-0001id-GH
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:53 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ id 1ubT6P-0001zb-An
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:57 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
- id 1ubT6J-00083t-7B
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:53 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-6fafdd322d3so41848386d6.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 17:00:50 -0700 (PDT)
+ id 1ubT6N-00086p-NE
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:57 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6facacf521eso41914786d6.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 17:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752537650; x=1753142450; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1752537654; x=1753142454; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Px7t8brrBviy8Oywd6W4qdgyY63BPA8hyi3wDsiNDks=;
- b=anczbVXRvRUyxY/Xn8ITSirWvEOaJs8LmG7m9IiSDUbwxONJGBXZKUjiQVqJCN4FhP
- 7PGvUzJY7AlNEA5tQwvns5yrab25SCgMmBwZkbxsjUWs9RR3Tim/SeUjlrqFS3/5rVob
- tkXEqEBNNqNvnNEje9Ljep1xIq7bpC0nfCUR6bb0b/UKDJX/g3PBEPNEFdeQ7Cfp8E82
- fG8kWwKHBFl02kaYNUKHGq3K9IfSuSBE+01xuHlY+Ot0HkMC1U+TYNEYFAbeW5HwdPaa
- ev3mF47hSy+Sev1zqy5uEieaAEFTJClbKTq+qYIlhm9DqlF8jsEYGb2OzF5Wn5wRqGlx
- N51g==
+ bh=D2NjSCv/D8nQj3W7MaWmKI3+JaIJyj9xNLbEBg6C4/k=;
+ b=gt6t6Z2t7JO/8mHP1aSbMnGQB6z+VH7+sYXz1sgZGdtA8vri3joKGwpV/0wrGJedqS
+ Uohg5n1SmovfkoXqAYTvCuQLmIw92NZT93AzJmn0XX6VYeCMZ8yHyq8+I5qo1z1myvKR
+ JKo2+OIYonu1moEnr3zzPJ+yVHoSbZ9l5c5KlwWjQVaBZqcGSO57dfxwAc5vJOPJprLP
+ +pdfdqIT1COqpMWJzP+pgTtID4wIPZ1rpvkD2oCDJnef3UpzhLwKs+XLGoVViVBspFV9
+ 2wFvupFL4e0L0N2tZqth8PsxtoDCPQ2MbWvn5J43u4eHxyXMMqIeegnJJVa1ynusEGP8
+ y7VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752537650; x=1753142450;
+ d=1e100.net; s=20230601; t=1752537654; x=1753142454;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Px7t8brrBviy8Oywd6W4qdgyY63BPA8hyi3wDsiNDks=;
- b=SonO8K9sCzoBrur3f4Kiyu57JXHBMkS/kj3xyb2rs5haSgO+YvSRTeObSJok4IEUpe
- EgdVmORcnO2cyZggC71Is7UDHtpldz+8ufBpPvvxE7J24Y3oN3lc2f1YdIBUjf8moPoD
- FqWjNs99TcEFbmVWfQlnwsr7JOj97s8dJZ3AVFdhYvNa9cyak6A3ce+KoOk+DiwC1KSp
- mKl9INV6U3BnkYDG/QDkdLVP9Bu4NlS5zHZLRaUbwF5OgKFwiffmk1cx51ckQAKtcfbn
- 8MqniPKghBSE1OBotmu90UiCsbCuE2wMc/d2deCv1GrxiZJL4VjUGIh+3Udk1Fj/ib1X
- sefQ==
-X-Gm-Message-State: AOJu0Yx356hKLAFf3JTOeOLCAqvmHfYQWlbrXjPUSrz0Kp/tF89K8GfZ
- dkVCOGuNZCP1biLefQ423eN+W9NpBg10S2ZC5MR4FoCnS5d0AWxVcZfUMnrR/w==
-X-Gm-Gg: ASbGncuJwE51KZd2TmFVKnWqt8uBJrN+R6t91fFspuaqdvoma9q9D+SoKj1eFGsqlNo
- 2WD6ou/U3+9oZOw403sEuO5VBjT3d0iqz3tkNl7pTHOvKKtfdNLNAbAf4A4zp7gpUcdm9EF233T
- dstILpQ9n8bnztNgdrBZh4dc6hdaGFbgOpIz9eO51J5NB7sIocEVSg5/qaCcR/rxFWmLWNEyLhM
- 67VCKo6cusNcQgAwz9IKxeZaawJk6HivgMrR7yHLbhA95n0GrPJcYdZx5x+QULc71W5/61UEDQg
- HWc6ZqyCz5QI+5EHiQvVKoDq+W/WXPL8TEoOpWGjNMGlZTljyA45dyFoq9ZHgYXTmipb1P5FuSk
- yITzUFJ0rEoWubSFeKw03iem8/nhmuj6rjOZ4zgjtVaSS400=
-X-Google-Smtp-Source: AGHT+IGuNHudgEbfsicZ7DH/EklYTSenc2Bqy8L4yzgJmanPHN600VhuYmPw5T3UeByMVazLjavu+A==
-X-Received: by 2002:a05:6214:2c08:b0:704:9077:e0c8 with SMTP id
- 6a1803df08f44-704a4083edemr296398736d6.3.1752537649669; 
- Mon, 14 Jul 2025 17:00:49 -0700 (PDT)
+ bh=D2NjSCv/D8nQj3W7MaWmKI3+JaIJyj9xNLbEBg6C4/k=;
+ b=GcSeWfAEFN6b8I0UpynoUri7etn7Igj9XkPiPE3uGicpzNGCtUOPiBYSTrXbbUl/+F
+ K7soVvkF74ILbOUia0omRmCHDm7itf/maoBh6p2+qkmfLBn3lFGIZBuIk4KWuYGkEvGA
+ +s4lkm3xFqJihCM9wzOR2+Al9mhS3yM+ArBB4NzmP+OywGQsyljm3wP4oYR9vI9a9dDO
+ cTjVm73QRkjE4YVXMzvXdOvySXgOjIcggGiZQJgy8FSyeDnbAiDNb2+Gb+69eGW8HrLU
+ DhDojaVM2OwQnORHlDO4ZA82JYZjIPyuq3VKJh7T9IxYoQL1qiHZt14qzaKHnKovX3Bz
+ ZzkQ==
+X-Gm-Message-State: AOJu0YwCWH5XjuHXjd3Qq4xqcjFvInE+8ReF61ye1HXgrLRCqPQMLZLg
+ /RsAO20e0Fv18TaFDrwoGYbZ8BKzvYCLS2Z1KDtBnppT6DNeSYamYf9d97Hs4w==
+X-Gm-Gg: ASbGncveAj8x/vpZFCb+tMmMDjvvMt5aG0DK0WdnVeMtf9cJTNYGvYe0taaUoM+Z5P0
+ xrXp0URAWFkKmtT02mXxbu2qyp3IX0Vktiby9D99xCuqMTRu0/jTBHBBjsIGjYC5BVfVmIP0mi9
+ zFt1w2/es8s51qGeUSvC/5JuhPf4D8PiYyX+4PIZ6NZg3CAcjMQ+2ygVOrRDlZ1f4GE0Hl6ElhU
+ LLAu0R2V+Qm4Va4saKdTAIyxRDyCIx4bvxZgwK5dvzCT/NHpSSGq70MMw3YWbuKgMsESjYBNS50
+ WPWnQOirUslYPGRZumUW6kHrPwXWBHfWD57egRYNIUUCPmOnId8wxDKHMJtXDVaxOxJLlXD2nST
+ HnD3Y4Kz4gH4trpWBT1oLpxK3hNOcO/9DgTP9zzkywp0ZmPs=
+X-Google-Smtp-Source: AGHT+IExNj9tpYd2LvMt7nK2YHsP5UWHOnlk/1EzSJFovJkG4GcB3m/ssG8GYToUPnOsI3kMiAw+OA==
+X-Received: by 2002:ad4:576c:0:b0:700:c46f:3bd with SMTP id
+ 6a1803df08f44-704a38c8131mr290116816d6.25.1752537654075; 
+ Mon, 14 Jul 2025 17:00:54 -0700 (PDT)
 Received: from user-jcksn.mynetworksettings.com
  ([2600:4040:b51a:4200:2f17:e99b:e0cd:fdf7])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70497d8eee2sm52296276d6.97.2025.07.14.17.00.49
+ 6a1803df08f44-70497d8eee2sm52296276d6.97.2025.07.14.17.00.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 17:00:49 -0700 (PDT)
+ Mon, 14 Jul 2025 17:00:53 -0700 (PDT)
 From: Jackson Donaldson <jackson88044@gmail.com>
 X-Google-Original-From: Jackson Donaldson <jcksn@duck.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v5 03/11] MAX78000: Add ICC to SOC
-Date: Mon, 14 Jul 2025 20:00:37 -0400
-Message-Id: <20250715000045.57332-4-jcksn@duck.com>
+Subject: [PATCH v5 09/11] MAX78000: Add TRNG to SOC
+Date: Mon, 14 Jul 2025 20:00:43 -0400
+Message-Id: <20250715000045.57332-10-jcksn@duck.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250715000045.57332-1-jcksn@duck.com>
 References: <20250715000045.57332-1-jcksn@duck.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=jackson88044@gmail.com; helo=mail-qv1-xf34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=jackson88044@gmail.com; helo=mail-qv1-xf29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,106 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds the instruction cache controller
-to max78000_soc
+This commit adds TRNG to max78000_soc
 
 Signed-off-by: Jackson Donaldson <jcksn@duck.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/max78000_soc.c         | 20 ++++++++++++++++----
- include/hw/arm/max78000_soc.h |  6 ++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ hw/arm/max78000_soc.c         | 10 +++++++++-
+ include/hw/arm/max78000_soc.h |  2 ++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
-index 9676ada6a2..0c83b08eca 100644
+index 45c6088312..3f2069fb03 100644
 --- a/hw/arm/max78000_soc.c
 +++ b/hw/arm/max78000_soc.c
-@@ -17,12 +17,20 @@
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
+@@ -43,6 +43,8 @@ static void max78000_soc_initfn(Object *obj)
+                                 TYPE_MAX78000_UART);
+     }
  
-+static const uint32_t max78000_icc_addr[] = {0x4002a000, 0x4002a800};
-+
- static void max78000_soc_initfn(Object *obj)
- {
-     MAX78000State *s = MAX78000_SOC(obj);
-+    int i;
- 
-     object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
- 
-+    for (i = 0; i < MAX78000_NUM_ICC; i++) {
-+        g_autofree char *name = g_strdup_printf("icc%d", i);
-+        object_initialize_child(obj, name, &s->icc[i], TYPE_MAX78000_ICC);
-+    }
++    object_initialize_child(obj, "trng", &s->trng, TYPE_MAX78000_TRNG);
 +
      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
  }
  
-@@ -30,8 +38,9 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
- {
-     MAX78000State *s = MAX78000_SOC(dev_soc);
-     MemoryRegion *system_memory = get_system_memory();
--    DeviceState *armv7m;
-+    DeviceState *dev, *armv7m;
-     Error *err = NULL;
-+    int i;
- 
-     if (!clock_has_source(s->sysclk)) {
-         error_setg(errp, "sysclk clock must be wired up by the board code");
-@@ -74,6 +83,12 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
-         return;
+@@ -124,6 +126,13 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+                                                        max78000_uart_irq[i]));
      }
  
-+    for (i = 0; i < MAX78000_NUM_ICC; i++) {
-+        dev = DEVICE(&(s->icc[i]));
-+        sysbus_realize(SYS_BUS_DEVICE(dev), errp);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, max78000_icc_addr[i]);
-+    }
++    dev = DEVICE(&s->trng);
++    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x4004d000);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(armv7m, 4));
 +
-     create_unimplemented_device("globalControl",        0x40000000, 0x400);
-     create_unimplemented_device("systemInterface",      0x40000400, 0x400);
-     create_unimplemented_device("functionControl",      0x40000800, 0x400);
-@@ -107,9 +122,6 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
-     create_unimplemented_device("standardDMA",          0x40028000, 0x1000);
-     create_unimplemented_device("flashController0",     0x40029000, 0x400);
++    object_property_set_link(OBJECT(gcrdev), "trng", OBJECT(dev), &err);
++
+     dev = DEVICE(&s->gcr);
+     sysbus_realize(SYS_BUS_DEVICE(dev), errp);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x40000000);
+@@ -166,7 +175,6 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+     create_unimplemented_device("semaphore",            0x4003e000, 0x1000);
  
--    create_unimplemented_device("icc0",                 0x4002a000, 0x800);
--    create_unimplemented_device("icc1",                 0x4002a800, 0x800);
--
-     create_unimplemented_device("adc",                  0x40034000, 0x1000);
-     create_unimplemented_device("pulseTrainEngine",     0x4003c000, 0xa0);
-     create_unimplemented_device("oneWireMaster",        0x4003d000, 0x1000);
+     create_unimplemented_device("spi1",                 0x40046000, 0x2000);
+-    create_unimplemented_device("trng",                 0x4004d000, 0x1000);
+     create_unimplemented_device("i2s",                  0x40060000, 0x1000);
+     create_unimplemented_device("lowPowerControl",      0x40080000, 0x400);
+     create_unimplemented_device("gpio2",                0x40080400, 0x200);
 diff --git a/include/hw/arm/max78000_soc.h b/include/hw/arm/max78000_soc.h
-index 97bf4099c9..27b506d6ee 100644
+index 919aca0855..528598cfcb 100644
 --- a/include/hw/arm/max78000_soc.h
 +++ b/include/hw/arm/max78000_soc.h
-@@ -11,6 +11,7 @@
- 
- #include "hw/or-irq.h"
- #include "hw/arm/armv7m.h"
-+#include "hw/misc/max78000_icc.h"
+@@ -14,6 +14,7 @@
+ #include "hw/misc/max78000_gcr.h"
+ #include "hw/misc/max78000_icc.h"
+ #include "hw/char/max78000_uart.h"
++#include "hw/misc/max78000_trng.h"
  #include "qom/object.h"
  
  #define TYPE_MAX78000_SOC "max78000-soc"
-@@ -21,6 +22,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(MAX78000State, MAX78000_SOC)
- #define SRAM_BASE_ADDRESS 0x20000000
- #define SRAM_SIZE (128 * 1024)
+@@ -39,6 +40,7 @@ struct MAX78000State {
+     Max78000GcrState gcr;
+     Max78000IccState icc[MAX78000_NUM_ICC];
+     Max78000UartState uart[MAX78000_NUM_UART];
++    Max78000TrngState trng;
  
-+/* The MAX78k has 2 instruction caches; only icc0 matters, icc1 is for RISC */
-+#define MAX78000_NUM_ICC 2
-+
- struct MAX78000State {
-     SysBusDevice parent_obj;
- 
-@@ -29,6 +33,8 @@ struct MAX78000State {
-     MemoryRegion sram;
-     MemoryRegion flash;
- 
-+    Max78000IccState icc[MAX78000_NUM_ICC];
-+
      Clock *sysclk;
  };
- 
 -- 
 2.34.1
 
