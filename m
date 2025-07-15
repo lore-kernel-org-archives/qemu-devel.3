@@ -4,149 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9D3C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 17:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CB7C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 17:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubjsC-00034w-5i; Tue, 15 Jul 2025 13:55:24 -0400
+	id 1ubjwD-0007I2-3U; Tue, 15 Jul 2025 13:59:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubjNI-00029R-CV; Tue, 15 Jul 2025 13:23:29 -0400
-Received: from mail-bn8nam12on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:2418::61a]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubjRB-0006Y6-H4
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 13:27:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubjNF-0007K2-Tv; Tue, 15 Jul 2025 13:23:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=C/EjgiPPG6eGeVkBdwGogemstQHcd98FAuknBB70PrVEKJDoSrBbDrIRq0sjIxzD1FCewAm1axxgdeBAzkeyDMM+EmHJgoz2upNGYNhrbvKdDdHvn48Ixqt4bOStrD1wcMuHZ0AFOjgqKx02XAr7TFAvXPpMim3crsWoPO6p5cvN8MTrov7N5W86JEBnFh3yNZGlMJG8SkX7eSZsT2mcDSpcoZ7PlTbkukFs1ytcTt9q3Pto9KHA8Mh8uMA02V01EyWvRV9hcdQvN5U4F/M/uU4gmGdN5wMBg2vQn3sutvnvPHR/Z5zPfleh/dMu41cjZnG68d1ysGaCHDUvoXkXOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Gz/5p71SpYB+m3UT7BXVUZMZzdSTe+2CzL+PFgMcQrY=;
- b=hqYaa13d2ccGp5CpQyNE5DpZ1kWU7v6uqe/0YXKV1RS460MfBNqf92whcLVeDYtLLXyI4hyzCNfSUUG8Y2ixNQTUnmSBnJQcVnMdy3ROU0h4G5DHpU23bg9Q2OOQ2ypkNiTS//1u3UWeVQkvNjtO/Ru5/0dAGUNl9T31Kxf26GDAXMu83uNanl61CadaxqT/zCXFAvdJDIRA/WyQxLb7RcuKOXfugnakxHRQ767DBT+Ag1q8zhBKuOkCUGOOJzt+rvwcZSC4ZPVMnr1sZFjaeSPv9/D2TUus7OcvmIDFR5gbjW2Vtm/JAjqGsq+0x3nIjNW4O/HdYmCaDmnNjrq7IQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gz/5p71SpYB+m3UT7BXVUZMZzdSTe+2CzL+PFgMcQrY=;
- b=MsYLfN3L1iEgmYLKxqWBlCHlG4fs59NKLywQC8FJHN4irX4QqN6bYdkZFU+MzeHAikwQyYgB9eVitbAsa5WE2OokIaHhVizKxWgSsCrFfSuOtjZstAJQHZDJ+uSql7sj3f3C3ZSQeshnpChCbSZzbt4RkC5alxwic3u+4o/0mHeiSehPeo2aJJkByoYZ8zf/PfSWjoY7jQ3ZtFtK7rFZbLHBcmdZJ+Nh45rxyUJrSSjy/65DWpJb2sItzw4yqxJvEKd4MLgoNjVujA2rbHRrFBRJyQjIe4gytmxG78qrzV1bV3NvvNSnuBzwiqeqWl5wMnjmF5sMmc0PVxffu+vtEQ==
-Received: from SJ0PR13CA0017.namprd13.prod.outlook.com (2603:10b6:a03:2c0::22)
- by DS7PR12MB5863.namprd12.prod.outlook.com (2603:10b6:8:7a::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.27; Tue, 15 Jul
- 2025 17:23:17 +0000
-Received: from MWH0EPF000989E6.namprd02.prod.outlook.com
- (2603:10b6:a03:2c0:cafe::c1) by SJ0PR13CA0017.outlook.office365.com
- (2603:10b6:a03:2c0::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.16 via Frontend Transport; Tue,
- 15 Jul 2025 17:23:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- MWH0EPF000989E6.mail.protection.outlook.com (10.167.241.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.22 via Frontend Transport; Tue, 15 Jul 2025 17:23:16 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 15 Jul
- 2025 10:23:00 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 15 Jul
- 2025 10:23:00 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 15 Jul 2025 10:22:58 -0700
-Date: Tue, 15 Jul 2025 10:22:57 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 13/15] hw/arm/smmuv3: Forward invalidation
- commands to hw
-Message-ID: <aHaOcd5FKOjsWR/p@Asurada-Nvidia>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-14-shameerali.kolothum.thodi@huawei.com>
- <20250715114609.00004e4d@huawei.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubjR7-0001w6-Ju
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 13:27:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752600440;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dQpyIpg2nEn3xeo7P2Ii4Wow/2lXCsk1HJhDeBQtdqE=;
+ b=WDAKWizmZEZd/byvcVNM8iE/MnDPrDkXU8w/WrcHkzs79exA/sFYUk1Zee6aO/agDgVHHf
+ LspMR3pxy/FUySWopfX98J/r6tWFEiIBFavcQ6Jq7Bf7H7cxaEXyGX0QxjpZwhGmmMeYSU
+ uxD4eaG5wTJuz8pWfiGMcm7Fcj30W2k=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-319-3sbYrCDUOmSqiWg1giKUFA-1; Tue, 15 Jul 2025 13:27:19 -0400
+X-MC-Unique: 3sbYrCDUOmSqiWg1giKUFA-1
+X-Mimecast-MFC-AGG-ID: 3sbYrCDUOmSqiWg1giKUFA_1752600438
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2369dd58602so54969385ad.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 10:27:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752600438; x=1753205238;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dQpyIpg2nEn3xeo7P2Ii4Wow/2lXCsk1HJhDeBQtdqE=;
+ b=E2rLaJ3PExhN54qwL8pXS++YXW1ETy/Bys6assZRNMhWYyQ7N1fR/tNR7ja85jHji+
+ ttjEaOUEBzxB9fjzaJe+0zaXJO9Qzn6zHAh4CQqoCOFiHM5t+HFPj7r7uvfJQ6pmAkoX
+ 12jAJpsEuYRJXUPWD2n7CM9iKjz03uG5RTBnVBlyci/xiJUiGWV2h6/BNlKRYPFULq+/
+ LVR1zJ6+H6pohEkl36XWqdma7DKY1cfQrOiUigSSO4VA3cJLLPSCcihqXgo+APGNk+49
+ lnHmYQGORyYKGQ9n/N4HHfk79I48sektNFhTAf6WypjGivScwloIKfYVQ34GhJENh5Sz
+ GJrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWRR9arADrDy+p/ECgMe7Gzwece/A2oQGFasUdXCYWELHaJkKVbdA7gS3H6dSSVkSr7Sq/M/y+yTL4@nongnu.org
+X-Gm-Message-State: AOJu0YzVQX9gNQXicwC77Vpj76PqWCAQiJVtHtweQg55etQNKfRkGP35
+ h/GMqR3u02TNnaUBExPfE5Drzzbz/AUEJQzVG+Ddfr01DkxxC9IhEjnpEbk0P70lXKFHNfiBNq3
+ 9kxPDqBYAnSmBFnxM1F4eP3r2S4et0pnwUAiy5NQUIKOXBQ2cD9WflE3z3QH1uR/iCEVRfoPOF1
+ zZfmj+vfyz49OluRYWzaYoAMSSisCvFM0=
+X-Gm-Gg: ASbGnculDr/NEERKlcFaJlVLqPlrlSyuDKnRRc3DJmbgE3sOveAibc9lJzTyGbMuuP4
+ tYRhWL1RKbmewoeUHl2DA/5cbdmdDYv/8fwOeQ9Vg8zqBJjdJxysivombbOiA/by21Av8EsTwPk
+ e8STKTLbgSzh9cwX733nP/5ZUDc3oDYwjmWiNRK8Azlfn8fxGz6+XA
+X-Received: by 2002:a17:902:c408:b0:235:eb8d:800b with SMTP id
+ d9443c01a7336-23dee26def9mr258948795ad.26.1752600437757; 
+ Tue, 15 Jul 2025 10:27:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqO2YrM+WHcgmcq5kMhq9qWB3WLziIKgDGU7dkUNNuHtSQZ88hJeBLg2mZmkgDUhlp+68XBwJACtxfDZJHmRM=
+X-Received: by 2002:a17:902:c408:b0:235:eb8d:800b with SMTP id
+ d9443c01a7336-23dee26def9mr258948195ad.26.1752600437169; Tue, 15 Jul 2025
+ 10:27:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250715114609.00004e4d@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000989E6:EE_|DS7PR12MB5863:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d7bfa0d-6674-4cbf-cf04-08ddc3c4492d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|7416014|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?xEYHEyvhmR1Ie8xLHHSoufX+dre7RVvaeC2IdHXtfRugtS1JzletQL+Duy8y?=
- =?us-ascii?Q?6xaqWGxvK1qdRml8Le+d2Yh49WT1Y4Vv5TbBLNo8F2nrJZb3O3ksLK9p0U6K?=
- =?us-ascii?Q?8wPfvEirmFJnAeNWPP10JbYszYVhRG99ZcwQKwmdVBO1zHA6hMc8vqZ+QW9m?=
- =?us-ascii?Q?sQKLf2elLb1clac3RF+hwGJGzp8VrO9lxI2rH7ki0hhdXTARYXGQc6CXKyQr?=
- =?us-ascii?Q?hIJocuSPjUDVyB7tmwG2R29VfwQkm69WVP7EA94svcB4ZQjV2YcLBvpbzoFn?=
- =?us-ascii?Q?BJctNlfXe7qdGlcTeFL+fP7m5Hf4JNBvknyiF34Hs+0u8askiUxElnPlmSql?=
- =?us-ascii?Q?HKSDjNZKdNXaXv+t0VlMIpTBs/19NoPGA/9v5afrdIEVvRJKqSBC/KVRt1Fe?=
- =?us-ascii?Q?Z2s4iJ566bvkt4heZM3/Q0YJG29wp1s2BuGfLB6rwSESdD9CoEXheCxNixdG?=
- =?us-ascii?Q?DbmDv0AGBl4gu6IR/rmJANpoA/UhIP6hqikC25zGC6DTa6PT8xh4mlpZJrAb?=
- =?us-ascii?Q?/oFYMRvQN5IvFvsXW0yrhpXHlQfSabH1m1RQVs6asqATFUJLpmJffl1A+R/W?=
- =?us-ascii?Q?HCJhaRHy6Ajlk40ecUVOKWzNVP6IY1/FiPgXb8OmtIa0lFMlgGX8c3ZOn27W?=
- =?us-ascii?Q?6x4qkEiTCZv8DpHinL7U64Dx3lh5jpIPNOoXmAvqRk9XnAXAbzCWluJI8zcO?=
- =?us-ascii?Q?5JctuSQAqd2fE+rIx8j1bwptyFVFIrqFczOESJJOxYVSbPweA0MnBMXs5t7V?=
- =?us-ascii?Q?/8/1mnrnzIC+WpVUN8suyGH8tirJIYQLOi4h+jkWrUExGAgj49dLIklsTvJD?=
- =?us-ascii?Q?PfCyl8YxDuji1kb0SZdGyURMYevCh3osWxm6YljJ3xaSPuPuc2oxyuVKjeaF?=
- =?us-ascii?Q?qlLKcGvpNETT655s2AyFg/LeH1iOJ5HD6l9KNilizxRDLhbFz7DwzXcB+2X1?=
- =?us-ascii?Q?XP+s9N1cQtHOvEcpXF0Mygj0HjeEfrA+TCjFvz792WU+Oy9AnH+ApWafECEK?=
- =?us-ascii?Q?Fi2dvfXRBuRw9HJ+NYXJNqkG7JKDedAmXdxwrOysnfV8QA3/EEAqUNN6VO7i?=
- =?us-ascii?Q?5m7ToR5H8I5qthQ68koaECRCZh9A83tI9h+Qi3QlyC/uuD84HF7cnNdBYhmj?=
- =?us-ascii?Q?GMuit4AN8Ay9t1hS9FRXp6JJSmsahVEsdU7K2IR+pVLfvXUd382rZddkEtPZ?=
- =?us-ascii?Q?+uu/KDBztlQGQJGaGx2JJ/h0GgZxcOu1SoNIVT9q5Gha7jFWRj9ciMwEX/wq?=
- =?us-ascii?Q?Djt7GwM0Gua8CpxnkN4Q/BzVnHoRNytDG90YSz8tJs8VuaiREc7YSSPloxio?=
- =?us-ascii?Q?Awo7x+3pGublA76bRS1C5psazbJoVdEtB1nadZ79FOEBUVz/o/JAxFinhQWn?=
- =?us-ascii?Q?UQITTMWOO/mb3Tgs3q+Jlyg/yVBrsatkd+1GL2zgzFRt7wC6p5L22T9x5/4w?=
- =?us-ascii?Q?96XRo4rVFS40qyhHrLrHaTvdPF5QUJ0yDchn29/JZsIdeULI63h//C9pV6tt?=
- =?us-ascii?Q?y4xwNX2kUbJGk4iQUqYloSAfUg+My4esm2OF?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(7416014)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 17:23:16.3249 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d7bfa0d-6674-4cbf-cf04-08ddc3c4492d
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000989E6.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5863
-Received-SPF: permerror client-ip=2a01:111:f403:2418::61a;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
+ <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+ <871pqmwzqr.fsf@pond.sub.org>
+In-Reply-To: <871pqmwzqr.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 15 Jul 2025 13:27:05 -0400
+X-Gm-Features: Ac12FXyZd4p6SZz3b0TzlZVkAESRQDKTQmPzwq50P4wnJbU6MpFgPycPQAuJk6Y
+Message-ID: <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
+Subject: Re: [PATCH V4 2/3] python: use qom-list-get
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Philippe Mathieu-Daude <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000007dcf520639fb1620"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,52 +108,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 11:46:09AM +0100, Jonathan Cameron wrote:
-> >      SMMUCmdError cmd_error = SMMU_CERROR_NONE;
-> >      SMMUQueue *q = &s->cmdq;
-> >      SMMUCommandType type = 0;
-> > +    SMMUCommandBatch batch = {};
-> > +    uint32_t ncmds;
-> >  
-> >      if (!smmuv3_cmdq_enabled(s)) {
-> >          return 0;
-> >      }
-> > +
-> > +    ncmds = smmuv3_q_ncmds(q);
-> > +    batch.cmds = g_new0(Cmd, ncmds);
-> > +    batch.cons = g_new0(uint32_t, ncmds);
-> 
-> Where is batch.ncmds set?  It is cleared but I'm missing it being set to anything.
+--0000000000007dcf520639fb1620
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-smmuv3_accel_batch_cmd() internally sets that, every time it's
-invoked to add a new command in the batch.
+On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-Shameer, let's add some comments explaining the batch function.
+> Steve Sistare <steven.sistare@oracle.com> writes:
+>
+> > Use qom-list-get to speed up the qom-tree command.
+> >
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>
+> Quick test...  Differences in output before and after match expectations
+> (see appended diff).
+>
+> New version:
+>
+>     real    0m0.446s
+>     user    0m0.062s
+>     sys     0m0.017s
+>
+> Old version barfs a stack backtrace (appended), and is ~18x slower:
+>
+>     real    0m8.176s
+>     user    0m0.395s
+>     sys     0m0.126s
+>
+> Did you see the stack backtrace, too?
+>
+> Regardless
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+>
+>
+>
+> $ diff old new
+> 59c59
+> <   rtc-time: {'tm_year': 125, 'tm_sec': 24, 'tm_hour': 14, 'tm_min': 39,
+> 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+> ---
+> >   rtc-time: {'tm_year': 125, 'tm_sec': 28, 'tm_hour': 14, 'tm_min': 40,
+> 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+> 486c486
+> <   date: {'tm_year': 125, 'tm_sec': 25, 'tm_hour': 14, 'tm_min': 39,
+> 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+> ---
+> >   date: {'tm_year': 125, 'tm_sec': 28, 'tm_hour': 14, 'tm_min': 40,
+> 'tm_mon': 6, 'tm_mday': 11} (struct tm)
+> 832c832
+> <   legacy-memory: <EXCEPTION: Property 'qemu64-x86_64-cpu.legacy-memory'
+> is not readable> (str)
+> ---
+> >   legacy-memory: <EXCEPTION: property could not be read> (str)
+> 1109c1109
+> <   crash-information: <EXCEPTION: No crash occurred>
+> (GuestPanicInformation)
+> ---
+> >   crash-information: <EXCEPTION: property could not be read>
+> (GuestPanicInformation)
+> 1554c1554
+> <   legacy-i8042: <EXCEPTION: Property 'vmmouse.legacy-i8042' is not
+> readable> (str)
+> ---
+> >   legacy-i8042: <EXCEPTION: property could not be read> (str)
+> 2436c2436
+> <   legacy-iothread: <EXCEPTION: Property
+> 'virtio-blk-device.legacy-iothread' is not readable> (str)
+> ---
+> >   legacy-iothread: <EXCEPTION: property could not be read> (str)
+> 2493c2493
+> <   legacy-iothread: <EXCEPTION: Property
+> 'virtio-blk-device.legacy-iothread' is not readable> (str)
+> ---
+> >   legacy-iothread: <EXCEPTION: property could not be read> (str)
+>
+>
+> Exception ignored in: <function QEMUMonitorProtocol.__del__ at
+> 0x7fcfcd080d60>
+> Traceback (most recent call last):
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+> line 310, in __del__
+>     self.close()
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+> line 281, in close
+>     self._sync(
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+> line 102, in _sync
+>     return self._aloop.run_until_complete(
+>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in
+> run_until_complete
+>     return future.result()
+>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
+>     return await fut
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+> line 399, in disconnect
+>     await self._wait_disconnect()
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+> line 719, in _wait_disconnect
+>     await all_defined_tasks  # Raise Exceptions from the bottom half.
+>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+> line 870, in _bh_loop_forever
+>     await async_fn()
+> RuntimeError: cannot reuse already awaited coroutine
+>
 
-> > +
-> 
-> > +    qemu_mutex_lock(&s->mutex);
-> > +    if (!cmd_error && batch.ncmds) {
-> > +        if (!smmuv3_accel_issue_cmd_batch(bs, &batch)) {
-> > +            if (batch.ncmds) {
-> > +                q->cons = batch.cons[batch.ncmds - 1];
-> > +            } else {
-> > +                q->cons = batch.cons[0]; /* FIXME: Check */
-> > +            }
-> 
-> Totally non obvious that a return of false from the issue call means
-> illegal command type.  Maybe that will be obvious form comments
-> requested in previous patch review.
+Curious about this backtrace. It looks like something has gone
+fundamentally wrong in the internals and the error is being raised by the
+garbage collector which is not ideal.
 
-That's a good point. Shameer, I think we need some fine-grinding
-here, validating the return value from the ioctl, for which the
-kernel will only return -EIO or -ETIMEOUT on failure, indicating
-either an SMMU_CERROR_ILL or an SMMU_CERROR_ATC_INV_SYNC.
- 
-> > +            qemu_log_mask(LOG_GUEST_ERROR, "Illegal command type: %d\n",
-> > +                          CMD_TYPE(&batch.cmds[batch.ncmds]));
-> > +            cmd_error = SMMU_CERROR_ILL;
+Can you help me reproduce this? Even if it's old/bad code, I don't want
+python-qemu-qmp faulting like this.
 
-Thanks
-Nicolin
+>
+
+--0000000000007dcf520639fb1620
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 11, 2025, 10:47=E2=
+=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@=
+redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Steve Si=
+stare &lt;<a href=3D"mailto:steven.sistare@oracle.com" target=3D"_blank" re=
+l=3D"noreferrer">steven.sistare@oracle.com</a>&gt; writes:<br>
+<br>
+&gt; Use qom-list-get to speed up the qom-tree command.<br>
+&gt;<br>
+&gt; Signed-off-by: Steve Sistare &lt;<a href=3D"mailto:steven.sistare@orac=
+le.com" target=3D"_blank" rel=3D"noreferrer">steven.sistare@oracle.com</a>&=
+gt;<br>
+<br>
+Quick test...=C2=A0 Differences in output before and after match expectatio=
+ns<br>
+(see appended diff).<br>
+<br>
+New version:<br>
+<br>
+=C2=A0 =C2=A0 real=C2=A0 =C2=A0 0m0.446s<br>
+=C2=A0 =C2=A0 user=C2=A0 =C2=A0 0m0.062s<br>
+=C2=A0 =C2=A0 sys=C2=A0 =C2=A0 =C2=A00m0.017s<br>
+<br>
+Old version barfs a stack backtrace (appended), and is ~18x slower:<br>
+<br>
+=C2=A0 =C2=A0 real=C2=A0 =C2=A0 0m8.176s<br>
+=C2=A0 =C2=A0 user=C2=A0 =C2=A0 0m0.395s<br>
+=C2=A0 =C2=A0 sys=C2=A0 =C2=A0 =C2=A00m0.126s<br>
+<br>
+Did you see the stack backtrace, too?<br>
+<br>
+Regardless<br>
+Acked-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" target=
+=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br>
+<br>
+<br>
+<br>
+$ diff old new<br>
+59c59<br>
+&lt;=C2=A0 =C2=A0rtc-time: {&#39;tm_year&#39;: 125, &#39;tm_sec&#39;: 24, &=
+#39;tm_hour&#39;: 14, &#39;tm_min&#39;: 39, &#39;tm_mon&#39;: 6, &#39;tm_md=
+ay&#39;: 11} (struct tm)<br>
+---<br>
+&gt;=C2=A0 =C2=A0rtc-time: {&#39;tm_year&#39;: 125, &#39;tm_sec&#39;: 28, &=
+#39;tm_hour&#39;: 14, &#39;tm_min&#39;: 40, &#39;tm_mon&#39;: 6, &#39;tm_md=
+ay&#39;: 11} (struct tm)<br>
+486c486<br>
+&lt;=C2=A0 =C2=A0date: {&#39;tm_year&#39;: 125, &#39;tm_sec&#39;: 25, &#39;=
+tm_hour&#39;: 14, &#39;tm_min&#39;: 39, &#39;tm_mon&#39;: 6, &#39;tm_mday&#=
+39;: 11} (struct tm)<br>
+---<br>
+&gt;=C2=A0 =C2=A0date: {&#39;tm_year&#39;: 125, &#39;tm_sec&#39;: 28, &#39;=
+tm_hour&#39;: 14, &#39;tm_min&#39;: 40, &#39;tm_mon&#39;: 6, &#39;tm_mday&#=
+39;: 11} (struct tm)<br>
+832c832<br>
+&lt;=C2=A0 =C2=A0legacy-memory: &lt;EXCEPTION: Property &#39;qemu64-x86_64-=
+cpu.legacy-memory&#39; is not readable&gt; (str)<br>
+---<br>
+&gt;=C2=A0 =C2=A0legacy-memory: &lt;EXCEPTION: property could not be read&g=
+t; (str)<br>
+1109c1109<br>
+&lt;=C2=A0 =C2=A0crash-information: &lt;EXCEPTION: No crash occurred&gt; (G=
+uestPanicInformation)<br>
+---<br>
+&gt;=C2=A0 =C2=A0crash-information: &lt;EXCEPTION: property could not be re=
+ad&gt; (GuestPanicInformation)<br>
+1554c1554<br>
+&lt;=C2=A0 =C2=A0legacy-i8042: &lt;EXCEPTION: Property &#39;vmmouse.legacy-=
+i8042&#39; is not readable&gt; (str)<br>
+---<br>
+&gt;=C2=A0 =C2=A0legacy-i8042: &lt;EXCEPTION: property could not be read&gt=
+; (str)<br>
+2436c2436<br>
+&lt;=C2=A0 =C2=A0legacy-iothread: &lt;EXCEPTION: Property &#39;virtio-blk-d=
+evice.legacy-iothread&#39; is not readable&gt; (str)<br>
+---<br>
+&gt;=C2=A0 =C2=A0legacy-iothread: &lt;EXCEPTION: property could not be read=
+&gt; (str)<br>
+2493c2493<br>
+&lt;=C2=A0 =C2=A0legacy-iothread: &lt;EXCEPTION: Property &#39;virtio-blk-d=
+evice.legacy-iothread&#39; is not readable&gt; (str)<br>
+---<br>
+&gt;=C2=A0 =C2=A0legacy-iothread: &lt;EXCEPTION: property could not be read=
+&gt; (str)<br>
+<br>
+<br>
+Exception ignored in: &lt;function QEMUMonitorProtocol.__del__ at 0x7fcfcd0=
+80d60&gt;<br>
+Traceback (most recent call last):<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legac=
+y.py&quot;, line 310, in __del__<br>
+=C2=A0 =C2=A0 self.close()<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legac=
+y.py&quot;, line 281, in close<br>
+=C2=A0 =C2=A0 self._sync(<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legac=
+y.py&quot;, line 102, in _sync<br>
+=C2=A0 =C2=A0 return self._aloop.run_until_complete(<br>
+=C2=A0 File &quot;/usr/lib64/python3.13/asyncio/base_events.py&quot;, line =
+719, in run_until_complete<br>
+=C2=A0 =C2=A0 return future.result()<br>
+=C2=A0 File &quot;/usr/lib64/python3.13/asyncio/tasks.py&quot;, line 507, i=
+n wait_for<br>
+=C2=A0 =C2=A0 return await fut<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/proto=
+col.py&quot;, line 399, in disconnect<br>
+=C2=A0 =C2=A0 await self._wait_disconnect()<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/proto=
+col.py&quot;, line 719, in _wait_disconnect<br>
+=C2=A0 =C2=A0 await all_defined_tasks=C2=A0 # Raise Exceptions from the bot=
+tom half.<br>
+=C2=A0 File &quot;/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/proto=
+col.py&quot;, line 870, in _bh_loop_forever<br>
+=C2=A0 =C2=A0 await async_fn()<br>
+RuntimeError: cannot reuse already awaited coroutine<br></blockquote></div>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">Curious about this back=
+trace. It looks like something has gone fundamentally wrong in the internal=
+s and the error is being raised by the garbage collector which is not ideal=
+.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Can you help me reprod=
+uce this? Even if it&#39;s old/bad code, I don&#39;t want python-qemu-qmp f=
+aulting like this.=C2=A0</div><div dir=3D"auto"><div class=3D"gmail_quote g=
+mail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0=
+ 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--0000000000007dcf520639fb1620--
+
 
