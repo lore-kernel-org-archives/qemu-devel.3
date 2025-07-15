@@ -4,58 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AA9C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127D4C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubgQh-0001CO-2t; Tue, 15 Jul 2025 10:14:47 -0400
+	id 1ubgVu-00064x-Jc; Tue, 15 Jul 2025 10:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ubfp4-0003tU-FZ; Tue, 15 Jul 2025 09:35:55 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubfyQ-0006WP-M2
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:45:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1ubfp1-0004kS-GC; Tue, 15 Jul 2025 09:35:53 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2119B55D23A;
- Tue, 15 Jul 2025 15:35:45 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id pAYOvAYW3-am; Tue, 15 Jul 2025 15:35:43 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 247DC55BC04; Tue, 15 Jul 2025 15:35:43 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1FFB0745682;
- Tue, 15 Jul 2025 15:35:43 +0200 (CEST)
-Date: Tue, 15 Jul 2025 15:35:43 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-cc: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com, 
- mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org, 
- david@redhat.com, iii@linux.ibm.com, john.levon@nutanix.com, 
- thanos.makatos@nutanix.com, alex.williamson@redhat.com, clg@redhat.com, 
- steven.sistare@oracle.com, tomitamoeko@gmail.com, qemu-ppc@nongnu.org, 
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 11/22] vfio-user/pci.c: update VFIOUserPCIDevice
- declaration
-In-Reply-To: <20250715093110.107317-12-mark.caveayland@nutanix.com>
-Message-ID: <63286625-82b9-63aa-0741-81525a250e62@eik.bme.hu>
-References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-12-mark.caveayland@nutanix.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubfyH-0008Gy-4L
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:45:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752587121;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aTW8qMA6yJ5dKDsJQewntc/vkKJ4BF9oBjmoMbW7+6k=;
+ b=byk/K+ZNCAiOAl/Vt6yMMQxMxF8fV0zeiRpBJyr6AWcIEH7KZ3Fyr9GxR8aE3DLeXR3QkR
+ 0J3CyahLGCHZiviC2gf4Z6UnQHl7NAV0BesM27RporKoNgtmweC0PFJniF6hdQ4Nixls7e
+ EWCo8XtlAiODi2AuNIpAsnjLKrcDFko=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-CL4G__hgOJuYSbyrnPYjug-1; Tue,
+ 15 Jul 2025 09:45:17 -0400
+X-MC-Unique: CL4G__hgOJuYSbyrnPYjug-1
+X-Mimecast-MFC-AGG-ID: CL4G__hgOJuYSbyrnPYjug_1752587116
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C49D518001FE; Tue, 15 Jul 2025 13:45:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.173])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26BC2180035E; Tue, 15 Jul 2025 13:45:12 +0000 (UTC)
+Date: Tue, 15 Jul 2025 14:45:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
+Message-ID: <aHZbZN4MIKL7-pu6@redhat.com>
+References: <20250617203435.41490-1-shentey@gmail.com>
+ <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+ <aHDuyBl4rc4eWvIn@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aHDuyBl4rc4eWvIn@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,35 +89,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Jul 2025, Mark Cave-Ayland wrote:
-> Update the VFIOUserPCIDevice declaration so that it is closer to our coding
-> guidelines: add a blank line after the parent object.
->
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
-> hw/vfio-user/pci.c | 1 +
-> 1 file changed, 1 insertion(+)
->
-> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-> index be71c77729..da6fe51809 100644
-> --- a/hw/vfio-user/pci.c
-> +++ b/hw/vfio-user/pci.c
-> @@ -21,6 +21,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
->
-> struct VFIOUserPCIDevice {
->     VFIOPCIDevice device;
-> +
+On Fri, Jul 11, 2025 at 12:00:24PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Jul 11, 2025 at 11:45:08AM +0100, Peter Maydell wrote:
+> > On Tue, 17 Jun 2025 at 21:35, Bernhard Beschow <shentey@gmail.com> wrote:
+> > >
+> > > When compiling QEMU against fuse3-3.17.1 with --enable-werror the build fails
+> > > with:
+> > >
+> > >   In file included from ../src/block/export/fuse.c:33:
+> > >   /usr/include/fuse3/fuse.h:959:5: error: redundant redeclaration of ‘fuse_main_real_versioned’ [-Werror=redundant-decls]
+> > >     959 | int fuse_main_real_versioned(int argc, char *argv[],
+> > >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+> > >   /usr/include/fuse3/fuse.h:885:5: note: previous declaration of ‘fuse_main_real_versioned’ with type ‘int(int,  char **, const struct fuse_operations *, size_t,  struct libfuse_version *, void *)’ {aka ‘int(int,  char **, const struct fuse_operations *, long unsigned int,  struct libfuse_version *, void *)’}
+> > >     885 | int fuse_main_real_versioned(int argc, char *argv[],
+> > >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+> > >   cc1: all warnings being treated as errors
+> > >
+> > > That is, a fuse header triggers a warning within itself. Since QEMU adds the
+> > > fuse3 include path via `-I`, the compiler thinks that the header is part of the
+> > > QEMU project, and thus raises a warning. The compiler can be told to ignore
+> > > warnings within 3rd party headers by adding these paths via `-isystem`. Fix the
+> > > above build failure by marking fuse as system dependency. While at it mark
+> > > every 3rd-party dependency as system dependency to prevent similar issues in the
+> > > future but skip glib since that results in glib include paths to be omitted from
+> > > bindgen in case of a Rust build.
+> > 
+> > The problem with this is that -isystem does not only do "suppress
+> > warnings in these headers" -- it also alters the search order
+> > for includes, in a way that can sometimes cause problems:
+> > https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70129
+> > So this isn't completely risk-free, though I think meson tries to
+> > avoid some of this by doing something a bit more complex than a
+> > pure 's/-I/-isystem/'.
+> > 
+> > We would also lose the warnings about e.g. use of deprecated
+> > functions in our dependencies.
+> > 
+> > All that said, this might still be the best tradeoff.
+> 
+> FWIW, the actual bug mentioned here is a clear regression & mistake in
+> libfuse3 3.17.1 only, that they really should fix. I've filed this:
+> 
+>   https://github.com/libfuse/libfuse/issues/1282
+> 
+> and will likely send a PR too later.
 
-This isn't worth a separate patch. Can be squashed in patch 13.
+The issue turned out to already be fixed in libfuse git master. So given
+that the problem only appears in one single release, IMHO, the best thing
+is to ignore it. Any distro which ships the broken libfuse should either
+update it, or cherry-pick the trivial header file bugfix from git.
 
-Regards,
-BALATON Zoltan
 
->     SocketAddress *socket;
->     bool send_queued;   /* all sends are queued */
->     uint32_t wait_time; /* timeout for message replies */
->
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
