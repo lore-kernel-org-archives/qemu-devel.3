@@ -4,67 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7F0C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 01:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E79FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 01:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubU5l-0002Sk-Da; Mon, 14 Jul 2025 21:04:21 -0400
+	id 1ubUJ4-0000j8-OU; Mon, 14 Jul 2025 21:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ubU5h-0002SS-AB
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 21:04:17 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ubU5d-0006cj-Nt
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 21:04:17 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxLGsGqXVofMopAQ--.21905S3;
- Tue, 15 Jul 2025 09:04:07 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxH8IDqXVo4J8XAA--.9572S3;
- Tue, 15 Jul 2025 09:04:05 +0800 (CST)
-Subject: Re: [PATCH v5 02/11] hw/loongarch: add virt feature avecintc support
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250711085915.3042395-1-gaosong@loongson.cn>
- <20250711085915.3042395-3-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <e7f42f9d-498a-e930-570a-c7173400b991@loongson.cn>
-Date: Tue, 15 Jul 2025 09:02:25 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ubUIr-0000ZB-Uu
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 21:17:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ubUIp-0001hR-1c
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 21:17:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752542268;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/NTm9Hr72gL7PKYU2IeB3MF9Zqo8lCFkvy/pWG+vfaI=;
+ b=aSIZniPY+Ca4Oe/WObURshkkFSiFdMPxeYCpyLUYyGsYRybwSqPwJVQZv0/BlB0QU/NFus
+ gE11cN804X3U2XEN4ZffW01FmsWtzPO+tZUDse4QcdwIjbDWrZhopeIHj5+IPCADhLmSnE
+ UNVUGuCQSLD4TU1QMr1okLOS6xPTGrk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-ce9iRVbeOnKW2-7ykVGRRQ-1; Mon, 14 Jul 2025 21:17:47 -0400
+X-MC-Unique: ce9iRVbeOnKW2-7ykVGRRQ-1
+X-Mimecast-MFC-AGG-ID: ce9iRVbeOnKW2-7ykVGRRQ_1752542266
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-31218e2d5b0so8741579a91.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 18:17:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752542266; x=1753147066;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/NTm9Hr72gL7PKYU2IeB3MF9Zqo8lCFkvy/pWG+vfaI=;
+ b=pi5HyFQg4CjfJYFy9K8fVCP1XJQH1P+sCM+79TXWViqOJtY/Y10zT8eNwBNP6D9UY6
+ 2qI50gAQu1oWYTosDh77ete9rVRPvz7j3nZ5wDRIv12ZkCwjjinDB8QGmc3mEXFUEBp7
+ j7v3LZ+h2ya4DmQwvc4Gcq8jW+FGD2e43gAN3AeHCw+WD0DEfZA+mjzOiZPw0KBOpaKh
+ Lf215hd0DJYYGKnrwbWBwXvDSPsYAn71V7Wk7p1+avgYsnl7h7NBmi/CNLmxtGhhKoIX
+ zgrlJzXQnIZM+sutwsZBI3avcps/nN301dOglKDu5jmoPNEeXQue+IXOMmj2sOSuYn40
+ Z29w==
+X-Gm-Message-State: AOJu0YzjQRrBDgHv8oqlYrVbqJ1/aHKCHAt51kqh/47DIxERJ8RNuE+3
+ auTv68p/brehH5Dkzbg3ZZX8zhsZd2cmPSPMYXB8eZHY4H1N25b/G15qeCrtmrgayJFdB2soozW
+ NETSBvyO3amDmUu8SaI9LqWuK8ZC3CLkvUumZILuCJ0gXkH1DoK5Ic155Yp0lr3uent0F0W6rYT
+ R3l71ofyCwTxm1XKgWMmjn4hnCAGFExn7CUVJTLb/Ylg==
+X-Gm-Gg: ASbGnctp1fFWZzCKkFKpIXKde6HypDeQBv9LH4G60oY8zRUhPUOhgxvXF3kD+HDPDLF
+ MjTSoJMR1cVDhp4RzzJiRtQ8Gjqg/+nT6Q2vFgzhvMAsl553CwANCtzNIjI67q81u8Cc8RggfPI
+ BbxrLRHtPMiZdjDJjzGeRH
+X-Received: by 2002:a17:90b:1651:b0:311:da03:3437 with SMTP id
+ 98e67ed59e1d1-31c4ccf0c7fmr22485167a91.27.1752542265815; 
+ Mon, 14 Jul 2025 18:17:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsgftE/OYotkk/KF2GkVdzT95J3RtTNONkhAAcVSpf39LbEFH55E2VAXxK2fiEwKkda0mcxN1uuF2b0Zw4FTk=
+X-Received: by 2002:a17:90b:1651:b0:311:da03:3437 with SMTP id
+ 98e67ed59e1d1-31c4ccf0c7fmr22485136a91.27.1752542265282; Mon, 14 Jul 2025
+ 18:17:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250711085915.3042395-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxH8IDqXVo4J8XAA--.9572S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCFy3Cw47JryxZr1ktrWkGrX_yoWruFW5pa
- y5AFZ5uF1UJr4Ig3sxK3Z8uF15Aws7Ka4agF43urW0kF1DWr18urn8CwsxtFWkA3ykZFW0
- v3WkGr47uFsrZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.933,
+References: <20250714101156.30024-1-sgarzare@redhat.com>
+In-Reply-To: <20250714101156.30024-1-sgarzare@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 15 Jul 2025 09:17:34 +0800
+X-Gm-Features: Ac12FXz2CT4LKlifXOmwaHhb9Obv37OsjJuSuiAn2Z6paG_NXuwOPLx_JairxEY
+Message-ID: <CACGkMEtqnm3FAdPjptB7DLTgWmP=rM9JPS+JgKnEHn+85uMvHA@mail.gmail.com>
+Subject: Re: [PATCH] net/vdpa: fix potential fd leak in net_init_vhost_vdpa()
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,135 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/7/11 下午4:59, Song Gao wrote:
-> Avecintc feature is added in LoongArchVirtMachinState, and it is used
-> to check whether virt machine supports the advanced interrupt controller
-> and by default set avecintc with ON_OFF_AUTO_ON.
-> LoongArchVirtMachineState adds misc_feature and misc_status for misc
-> features and status. and set the default avec feature bit.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+On Mon, Jul 14, 2025 at 6:12=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
+>
+> From: Stefano Garzarella <sgarzare@redhat.com>
+>
+> Coverity reported a file descriptor leak (CID 1490785) that happens if
+> `vhost_vdpa_get_max_queue_pairs()` returns 0, since in that case
+> net_host_vdpa_init(), which should take ownership of the fd, is never
+> called.
+>
+> vhost_vdpa_get_max_queue_pairs() returns 1 if VIRTIO_NET_F_MQ is not
+> negotiated, or a negative error if the ioctl() fails, or the maximum
+> number of queue pairs exposed by the device in the config space in the
+> `max_virtqueue_pairs` field. In the VIRTIO spec we have:
+>      The device MUST set max_virtqueue_pairs to between 1 and 0x8000
+>      inclusive, if it offers VIRTIO_NET_F_MQ.
+>
+> So, if `vhost_vdpa_get_max_queue_pairs()` returns 0, it's really an
+> error since the device is violating the VIRTIO spec.
+>
+> Treat also `queue_pairs =3D=3D 0` as an error, and jump to the `err` labe=
+l,
+> to return a negative value to the caller in any case.
+>
+> Coverity: CID 1490785
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 > ---
->   hw/loongarch/virt.c         | 30 ++++++++++++++++++++++++++++++
->   include/hw/loongarch/virt.h | 14 ++++++++++++++
->   2 files changed, 44 insertions(+)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index b15ada2078..112cf9a9db 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -47,6 +47,27 @@
->   #include "hw/virtio/virtio-iommu.h"
->   #include "qemu/error-report.h"
->   
-> +static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
-> +                             void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    OnOffAuto avecintc = lvms->avecintc;
-> +
-> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
-> +
-> +}
-> +static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +
-> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
-> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
-> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
-> +    }
-> +}
-> +
->   static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
->                                 void *opaque, Error **errp)
->   {
-> @@ -846,6 +867,9 @@ static void virt_initfn(Object *obj)
->       if (tcg_enabled()) {
->           lvms->veiointc = ON_OFF_AUTO_OFF;
->       }
-> +
-> +    lvms->misc_feature = BIT(IOCSRF_AVEC);
-> +    lvms->avecintc = ON_OFF_AUTO_ON;
->       lvms->acpi = ON_OFF_AUTO_AUTO;
->       lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
->       lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-> @@ -1238,6 +1262,12 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->           NULL, NULL);
->       object_class_property_set_description(oc, "v-eiointc",
->                               "Enable Virt Extend I/O Interrupt Controller.");
-> +#ifdef CONFIG_TCG
-I think it will be better if tcg_enabled() is used here, since 
-CONFIG_TCG and CONFIG_KVM is enabled by default. It should be supported 
-in KVM mode now. It is suggested in V4 review process :)
+>  net/vhost-vdpa.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 58d738945d..9dc7d2cb23 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -1813,9 +1813,8 @@ int net_init_vhost_vdpa(const Netdev *netdev, const=
+ char *name,
+>
+>      queue_pairs =3D vhost_vdpa_get_max_queue_pairs(vdpa_device_fd, featu=
+res,
+>                                                   &has_cvq, errp);
+> -    if (queue_pairs < 0) {
+> -        qemu_close(vdpa_device_fd);
+> -        return queue_pairs;
+> +    if (queue_pairs <=3D 0) {
+> +        goto err;
+>      }
+>
+>      r =3D vhost_vdpa_get_iova_range(vdpa_device_fd, &iova_range);
+> --
+> 2.50.1
+>
 
-Regards
-Bibo Mao
-> +    object_class_property_add(oc, "avecintc", "OnOffAuto",
-> +        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
-> +    object_class_property_set_description(oc, "avecintc",
-> +                            "Enable Advance Interrupt Controller.");
-> +#endif
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->   #ifdef CONFIG_TPM
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index 7120b46714..68b8e92e99 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -23,6 +23,7 @@
->   #define IOCSRF_DVFSV1           7
->   #define IOCSRF_GMOD             9
->   #define IOCSRF_VM               11
-> +#define IOCSRF_AVEC             15
->   
->   #define VERSION_REG             0x0
->   #define FEATURE_REG             0x8
-> @@ -31,6 +32,7 @@
->   #define MISC_FUNC_REG           0x420
->   #define IOCSRM_EXTIOI_EN        48
->   #define IOCSRM_EXTIOI_INT_ENCODE 49
-> +#define IOCSRM_AVEC_EN          51
->   
->   #define LOONGARCH_MAX_CPUS      256
->   
-> @@ -69,6 +71,7 @@ struct LoongArchVirtMachineState {
->       Notifier     powerdown_notifier;
->       OnOffAuto    acpi;
->       OnOffAuto    veiointc;
-> +    OnOffAuto    avecintc;
->       char         *oem_id;
->       char         *oem_table_id;
->       DeviceState  *acpi_ged;
-> @@ -84,6 +87,8 @@ struct LoongArchVirtMachineState {
->       DeviceState *extioi;
->       struct memmap_entry *memmap_table;
->       unsigned int memmap_entries;
-> +    uint64_t misc_feature;
-> +    uint64_t misc_status;
->   };
->   
->   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
-> @@ -91,6 +96,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
->   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
->   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
->   
-> +static inline bool virt_has_avecintc(LoongArchVirtMachineState *lvms)
-> +{
-> +    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
->   {
->       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
-> 
+Acked-by: Jason Wang <jasowang@redhat.com>
+
+Thanks
 
 
