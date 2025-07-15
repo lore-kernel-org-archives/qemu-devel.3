@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E214C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE45C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublcq-0006e0-4W; Tue, 15 Jul 2025 15:47:40 -0400
+	id 1ublZ4-0004WY-Jn; Tue, 15 Jul 2025 15:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublHv-0006uE-27
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:26:20 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublHr-0007RF-TU
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:26:01 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-45618ddd62fso26800865e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:25:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752607557; x=1753212357; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZKhCPr5YjI/Ci5CHnyjBRTjG0SEjgGthCbWh+QDUAuw=;
- b=WYAMtr0wWYwYtkEV//EosIv4+2v+9xfcx8Va3lzldXOBs815QdyK4OKU/0Ln+UBnA9
- NEDmwZ1hwHp0GuGt9CYJucMllSwnmuPCJtFnQ/kYhfyCR33GtyAvF/sLgOEDZic6TXdq
- iKNI1PWI6mWH9bf/Qlc7tuSPSz7/j5Z0+dspW94qsy5MpZi5HLtT5lMO9TE2QSK+x/XR
- 2o6Bl9z1kbU/9OyUsAVRZTLHABGNipXsRJKNKDOrwvxGvJXe8E+S4cHSk6Xdchnr/mpF
- RBHTiI5vly4SX4FkPUWeevFTmjoUTlSjXqXD+M+a5I6ys7qo9Ozw5fX03z2V0HP1fT/R
- AZiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752607557; x=1753212357;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZKhCPr5YjI/Ci5CHnyjBRTjG0SEjgGthCbWh+QDUAuw=;
- b=n0pqTHhFQq7YHBEd1bt/jAHVVEk8sdR/fmc2QdQE/qW4DvnGDdG2gSAkNeKYWr3AEA
- bZNp8PHjqhQ85JYvVef1+WzkS5tOl4ytCO2eoCvV16rpRIRXVh8lTB6xWMuwhw8lyQ64
- ih35wu+WPABl73nlzAmBRTy64fZLj4MbPyxFrJmL5Bz5+EcT98A62y1tQIYub9V6pSu3
- z9YAayUGyJW3cghUslIFxKWDLWmiyCGWBy9DucxutyC24W8QsH4VBznLUjPXO3M29HNv
- iP46UXcxYRCTwrV+nTThpw9K2KE6v7cuNJ4ovBxQqDEpzxyu2rh34eEj+X6pvxG7nLV4
- faPw==
-X-Gm-Message-State: AOJu0YwE9BhYU0UtDhROWpIOTbUfA3Xe2170oeXdovTxFlSfxQAUg+w7
- p518x4R3KAmoF3gt116mL+6dUJ/+K6OYqywsSji9kssv1RQCgitq3kqTXoX9u5IHWKjL0QONBgP
- SsIEe
-X-Gm-Gg: ASbGnctDPOF2rG/8Adb8QnwCwDG97UsCPhsBv93h9vNPcyZ1UIDpS0Ut8db4PwQjhJI
- f1oc9eRIbsi7t2pldtRk7IntJSh3l/q9G5qSnWgGRc9rovZxgeQvpEzIaHefV87cp/d5g1+FLsk
- iahYQtBud2phWRJxYHDAw/093XQAwm2p35ODOvEKRANr+LSBcmgQT2r2PZ4C+Gf4FXJSIlAKzTD
- vpYIo3+vx3LR5AOjieDuFZAhutlbFZqZElLQ41/Z/WLDcrjm/7N+/CizLhKG5masNpqjqjlVRLW
- iFOgO3u1HSfyqDLDzevaEx8w1LRuyC9H+Aff9u+Z3q6A3A1tp6mBPLuIM2rJVMWcNXEFAdG1nXV
- Lik++p/zSbMOg6tpP55qeL3zvVA4tnrAZR5Rw200ulbrW1pnD7IT1q+IHtjJxOdvAbzCYg+M=
-X-Google-Smtp-Source: AGHT+IGv53aFY/smpgFXW/oCSTDYePapi7m1QyfIY3Vehuu2Sb23CG8TNHwz9smozWCA7Gl/gnLoeQ==
-X-Received: by 2002:a05:600c:3b94:b0:456:1611:cea5 with SMTP id
- 5b1f17b1804b1-4562e3b9a23mr134365e9.18.1752607557447; 
- Tue, 15 Jul 2025 12:25:57 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560d019f1esm106171085e9.10.2025.07.15.12.25.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 12:25:56 -0700 (PDT)
-Message-ID: <d384b96e-c705-41c1-9990-81755d2f850f@linaro.org>
-Date: Tue, 15 Jul 2025 21:25:55 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkxF-00049D-Gb
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:04:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkxD-0001PQ-LB
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:04:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752606278;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RKUdoz6mS/MZpsOs9CYOwTTbuQUWMaH4GdV7/2+2JT0=;
+ b=At82nx/8EvyJ1gn04qq1Dk/rlyKgpG40sgJYLhjfO9RR0LJ7Ji0EgOpxVv5XPosWPeIU5u
+ meJjKTA0JvoMj5ncLP7CiI57TSTTpWUPcJj++cg/1Wjeky/TWdsnmMzTlPdPdhUJTRazri
+ mk/FXmLq0Pd6hezf/h9F2V8DzpAUv2g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-NUZYEn5eOPSIOknUwPYm7g-1; Tue,
+ 15 Jul 2025 15:04:35 -0400
+X-MC-Unique: NUZYEn5eOPSIOknUwPYm7g-1
+X-Mimecast-MFC-AGG-ID: NUZYEn5eOPSIOknUwPYm7g_1752606274
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B204818001E2; Tue, 15 Jul 2025 19:04:34 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.44.34.84])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 327B6197702B; Tue, 15 Jul 2025 19:04:32 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	stefanha@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL 27/57] block/qapi: include child references in block device info
+Date: Tue, 15 Jul 2025 21:03:00 +0200
+Message-ID: <20250715190330.378764-28-kwolf@redhat.com>
+In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
+References: <20250715190330.378764-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h'
- header
-To: qemu-devel@nongnu.org
-Cc: Anthony PERARD <anthony@xenproject.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>, Peter Maydell
- <peter.maydell@linaro.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
- xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-References: <20250715071528.46196-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250715071528.46196-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,18 +83,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/25 09:15, Philippe Mathieu-Daudé wrote:
-> "hw/xen/arch_hvm.h" only declares the arch_handle_ioreq() and
-> arch_xen_set_memory() prototypes, which are not used by xen-pvh.c.
-> Remove the unnecessary header inclusion.
-> 
-> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20250513171737.74386-1-philmd@linaro.org>
-> ---
->   hw/arm/xen-pvh.c | 1 -
->   1 file changed, 1 deletion(-)
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-Queued, thanks.
+In combination with using a throttle filter to enforce IO limits for
+a guest device, knowing the 'file' child of a block device can be
+useful. If the throttle filter is only intended for guest IO, block
+jobs should not also be limited by the throttle filter, so the
+block operations need to be done with the 'file' child of the top
+throttle node as the target. In combination with mirroring, the name
+of that child is not fixed.
+
+Another scenario is when unplugging a guest device after mirroring
+below a top throttle node, where the mirror target is added explicitly
+via blockdev-add. After mirroring, the target becomes the new 'file'
+child of the throttle node. For unplugging, both the top throttle node
+and the mirror target need to be deleted, because only implicitly
+added child nodes are deleted automatically, and the current 'file'
+child of the throttle node was explicitly added (as the mirror
+target).
+
+In other scenarios, it could be useful to follow the backing chain.
+
+Note that iotests 191 and 273 use _filter_img_info, so the 'children'
+information is filtered out there.
+
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20250702123204.325470-2-f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ qapi/block-core.json       | 16 ++++++++++++++++
+ block/qapi.c               | 10 ++++++++++
+ tests/qemu-iotests/184.out |  8 ++++++++
+ 3 files changed, 34 insertions(+)
+
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 1df6644f0d..3e720af5ad 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -461,6 +461,19 @@
+             'direct': 'bool',
+             'no-flush': 'bool' } }
+ 
++##
++# @BlockdevChild:
++#
++# @child: The name of the child, for example 'file' or 'backing'.
++#
++# @node-name: The name of the child's block driver node.
++#
++# Since: 10.1
++##
++{ 'struct': 'BlockdevChild',
++  'data': { 'child': 'str',
++            'node-name': 'str' } }
++
+ ##
+ # @BlockDeviceInfo:
+ #
+@@ -486,6 +499,8 @@
+ # @backing_file_depth: number of files in the backing file chain
+ #     (since: 1.2)
+ #
++# @children: Information about child block nodes. (since: 10.1)
++#
+ # @active: true if the backend is active; typical cases for inactive backends
+ #     are on the migration source instance after migration completes and on the
+ #     destination before it completes.  (since: 10.0)
+@@ -560,6 +575,7 @@
+ { 'struct': 'BlockDeviceInfo',
+   'data': { 'file': 'str', '*node-name': 'str', 'ro': 'bool', 'drv': 'str',
+             '*backing_file': 'str', 'backing_file_depth': 'int',
++            'children': ['BlockdevChild'],
+             'active': 'bool', 'encrypted': 'bool',
+             'detect_zeroes': 'BlockdevDetectZeroesOptions',
+             'bps': 'int', 'bps_rd': 'int', 'bps_wr': 'int',
+diff --git a/block/qapi.c b/block/qapi.c
+index 2c50a6bf3b..e08a1e970f 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -51,6 +51,8 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
+     ImageInfo *backing_info;
+     BlockDriverState *backing;
+     BlockDeviceInfo *info;
++    BlockdevChildList **children_list_tail;
++    BdrvChild *child;
+ 
+     if (!bs->drv) {
+         error_setg(errp, "Block device %s is ejected", bs->node_name);
+@@ -77,6 +79,14 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
+         info->node_name = g_strdup(bs->node_name);
+     }
+ 
++    children_list_tail = &info->children;
++    QLIST_FOREACH(child, &bs->children, next) {
++        BlockdevChild *child_ref = g_new0(BlockdevChild, 1);
++        child_ref->child = g_strdup(child->name);
++        child_ref->node_name = g_strdup(child->bs->node_name);
++        QAPI_LIST_APPEND(children_list_tail, child_ref);
++    }
++
+     backing = bdrv_cow_bs(bs);
+     if (backing) {
+         info->backing_file = g_strdup(backing->filename);
+diff --git a/tests/qemu-iotests/184.out b/tests/qemu-iotests/184.out
+index 52692b6b3b..ef99bb2e9a 100644
+--- a/tests/qemu-iotests/184.out
++++ b/tests/qemu-iotests/184.out
+@@ -41,6 +41,12 @@ Testing:
+             },
+             "iops_wr": 0,
+             "ro": false,
++            "children": [
++                {
++                    "node-name": "disk0",
++                    "child": "file"
++                }
++            ],
+             "node-name": "throttle0",
+             "backing_file_depth": 1,
+             "drv": "throttle",
+@@ -69,6 +75,8 @@ Testing:
+             },
+             "iops_wr": 0,
+             "ro": false,
++            "children": [
++            ],
+             "node-name": "disk0",
+             "backing_file_depth": 0,
+             "drv": "null-co",
+-- 
+2.50.1
+
 
