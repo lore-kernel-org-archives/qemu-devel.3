@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB82C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2719C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublg3-00067F-TR; Tue, 15 Jul 2025 15:50:59 -0400
+	id 1ublh4-0007yM-0B; Tue, 15 Jul 2025 15:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublJF-0007mf-DW
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:27:30 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublIR-00070l-Bj
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:26:40 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublJD-0007Vu-Jr
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:27:24 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-455fdfb5d04so20512055e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:27:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublIP-0007T3-Ps
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:26:35 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45600581226so38127215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752607641; x=1753212441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752607590; x=1753212390; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RWyg+Ehk1e5V5aTN2Vl3fSDH4/If/KaffC0DMsVW1cs=;
- b=ZKg274sBeEr7AMjqEvLhs7P7VEsGQ3kH2uBmat7sJjyPts5eyHTdDjpgDMcW+h0gWb
- 6afs23mm6unipwWiZtUcnbGNkQJkIRb09C2CZIVccro6E1R8Mh90lIBYVSI6Yli7qp0c
- g5sPcNXwS0UzZ/emvLqnpZoYo7CPtM9289hznZ8XilFzi7Hk7iZnqNGBHDpWJTqIUB5I
- Vz/xkPYLxQvFzVh98nFKgBqozjy9w7HMJZ3gPEPbGYnPbkR4z0rkLRFCxPq/qCF+yrW4
- 4sKQn9n+3xwPAhL6BGIMjp54c7pYtSsY0xtu67UhUlNQAfApLQs5Yrz4gJUs1/v6nYkY
- R84A==
+ bh=/MsqpTOtu6WQLcNEE41UXu5Adkjh+bLwBmP6Of7vKbs=;
+ b=UFWn34gw0ZmL9iy/Fozqc10y1LwmlPwJ5nMeFmqEz7uCKoe3pVgnOSHgFZ7poEE5q5
+ YCo4xsrr0AlXHgOfP3noSr09Dp/WkMrywKOZEgROf2CWD6ZOqtdUOylRKGCvduWtula3
+ HJYziAFNFb1F1HN7BZRHzSWKN9S4xRSRf7bDWkCc4omHNyG3wVpSdUcBnl8xja+mkgXY
+ SXa4b6kT1D16fT3M3HU+8E7joAqkaw6oJ39iZeP90nTJEktFYFMk7JtbXHJXlEM8GXo+
+ EAXXREaryu6+SWCMcvaGav+yAdaJ6Q6LGsJ16bJ6hiLmjRitPSNNQ0R7bDLv4NkhWCpT
+ qSog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752607641; x=1753212441;
+ d=1e100.net; s=20230601; t=1752607590; x=1753212390;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RWyg+Ehk1e5V5aTN2Vl3fSDH4/If/KaffC0DMsVW1cs=;
- b=HjfBjKKlvFIEe6c7M812XzSC9sLKamcGm2DoXZU85ZuG+juBikTtGD2CVVw4eUYe7H
- ApqZXO9OQAKK/0kH6/TqlF8ZtOt0Y51Hp8CBndGt2fPsrUHPy/WSTeeJ3p+w+PQ/y47w
- FPbBjWpkTKgXZiwJ232p+LGCRsPVxNImTCar6azYvmHwEN7N5FAcyl1oQ4EipHUZSBNs
- h/UnxM905iC44BrjkGucQ7xbqQReKuFP0MuteKoMBG0JkDD69/PbFcybXFgNuW7CKfgx
- fv7Lrkgknlgp2uR8a6UZ2GTcAv4f5lzU5PRkFX4SeMzh7CoJe4pXPD8uRBslfXyVmD9C
- DUew==
-X-Gm-Message-State: AOJu0YwZog6QfFHZa+sg1CZDYGmETFlJdcmiMKc55WYe7ZDIK7pqAEZi
- uCYK7pWq6sldWzUXF4mzAN8u8qN+a42CFaINof7Lu27PguwaztE1jZZrWKRaEa5yrUBIM0S0+hT
- VMhRR
-X-Gm-Gg: ASbGncswxdY1t4AlX8O5b5QWT1gf+7wS9dKgKyn9LVwgFj4cd6/sNdqZvQaPYB2HHXN
- mlgkBKos/7EGphLvmdHtES0tkvnYgKDMK035m/9TKm48vImvqtI5GdrXmx9dW8tsClR48dHEcZM
- srBXk4MdiJwKYJ3FsjKRYPB5P2yLu97Rcw2gdS6n3bI89rO0XcrUiEwAPIri9GuepJCtglDosOy
- dAo3VghGipnJ8vz6vLjr73oq+XStdsh5pSCXx9kajNPrBPAveakMgfgmOakpb5nrbvf0RJW+0EO
- 8td77m3ftuhO5LkrhisDIu9g6sY/YBziGNDvTaVWwij8DozuBG04sIlno/6yC1obJKWsr08Lcav
- jBUDUZ5G6DTurZCiTjfXgrhyfeChrlpQZNOwt9PIpAOmfg1sDknNYX3twzQpsDWct+jOI5jc=
-X-Google-Smtp-Source: AGHT+IFFBtd2gFF/9ipMPzQIo0ql554yrHrdptr7Ga3Ynm3/I3umoV+LE8A76bn+N7h3UVNQHRazew==
-X-Received: by 2002:a05:600c:1c81:b0:456:161c:3d6f with SMTP id
- 5b1f17b1804b1-4562dfe78dfmr1584495e9.11.1752607641406; 
- Tue, 15 Jul 2025 12:27:21 -0700 (PDT)
+ bh=/MsqpTOtu6WQLcNEE41UXu5Adkjh+bLwBmP6Of7vKbs=;
+ b=LtywJPpWYTUrPSmPGh9tNUULOZg24N4NYHqgQQ5ajofv7h6FSpXJfofrW5WJ3IxwNS
+ WOUaP6j7b4SEN9YSudby9jkZQid8IKMXXGamnFL7P2tzZ+nUgtgF2lEXreoVNygLB+re
+ yfKsygUzXBU2Zl84Gkdy8ul8yCUz2K9iO9CfBP0t7kF/4EmSqI5HP9JDFYlIfACv2EV2
+ ZGMZkDVfOV+JIRV5tS90u5rrQGot/k+nreMQXt58epu1WD4HuQKsZUx6qXshHWgK/IN9
+ oaaiI5COf7BslVqv75GY5cRS+p1J4uN7VUU1340NISJXX5qeOtLKUa+lvkpYGt01vI+j
+ Mr/A==
+X-Gm-Message-State: AOJu0Yx1BN7nbm4H8b6BaxkXFYe0USIXkN/ZUy2jwgFYf0wD72tNcYUx
+ VClOvn0yaYJpeLoKOhswdFIghdyV3xz59hltvZKPBLCiK+D/PDkdzJZCwppFLNTNsw0yLlyQLyE
+ yl7rc
+X-Gm-Gg: ASbGncsITey17srfAWVGV5mv0Uxs39ftzI10r0Tc47Ej2eOUGSR5u/7L+ESsyblCkpD
+ OSheKV0jBIQhyNJgQIkp4963xsOWIgt/7m4OAhDhEw+7da3S1gSixg6Soz1M0M7esOAHNPDtTJ5
+ qv2cW1Ef8Z3lKeUaMokZJwJWpJA90gsXjdcYBBZifbgUyXWLGphidrb+cJDoObyzUERzGqqcZKf
+ OWKaXKOy0RzIoCEmGOc9D8YiEWUs1G6No+1ciM1SA6OUrPYj0fNYO3YOs/7AC4bMoLMPDXamUMj
+ WZA41BHSM4W5mC4DQvZxf4pjDn0w7FTH2IRJbBY9adLsSRmsqB2sT2QzATsK8jgptUEkAui9UxD
+ C9GfVmHykYMAmqDCZ7C06kU3BrLxmEiLRNmj4Z9jsz7L4OyExsBGbLyHmBMwgz1Z9obtjOzk=
+X-Google-Smtp-Source: AGHT+IEWeI6awE6R84XlKZgHhqWg3E4vAjcD0I460V1pGEqmL5abXovNa5Q0C+M/Lrg6w8PHPi6sfA==
+X-Received: by 2002:a05:600c:3491:b0:439:9b2a:1b2f with SMTP id
+ 5b1f17b1804b1-4562e039d93mr1393845e9.3.1752607590023; 
+ Tue, 15 Jul 2025 12:26:30 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560ddf5e0esm104155455e9.18.2025.07.15.12.27.20
+ 5b1f17b1804b1-4560eb98a40sm99725735e9.27.2025.07.15.12.26.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 12:27:20 -0700 (PDT)
-Message-ID: <40504aaa-7772-46d7-872f-eacb6d17f121@linaro.org>
-Date: Tue, 15 Jul 2025 21:27:20 +0200
+ Tue, 15 Jul 2025 12:26:29 -0700 (PDT)
+Message-ID: <61a8bd94-c99c-4d8d-9781-3786e3cdd071@linaro.org>
+Date: Tue, 15 Jul 2025 21:26:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Do not dump NaN statistics
+Subject: Re: [PATCH-for-10.1 v7 0/2] hw/core/machine: Display CPU model name
+ in 'info cpus' command
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
-References: <20250710111303.8917-1-philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Eric Blake
+ <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20250715090624.52377-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250710111303.8917-1-philmd@linaro.org>
+In-Reply-To: <20250715090624.52377-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,11 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/25 13:13, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   accel/tcg/monitor.c | 22 +++++++++++++++-------
->   1 file changed, 15 insertions(+), 7 deletions(-)
+On 15/7/25 11:06, Philippe Mathieu-Daudé wrote:
+
+> Philippe Mathieu-Daudé (2):
+>    qapi/machine: Add @qom-type field to CpuInfoFast structure
+>    hw/core/machine: Display CPU model name in 'info cpus' command
 
 Queued, thanks.
 
