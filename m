@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF81EC83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEBACC83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublke-0002oi-0m; Tue, 15 Jul 2025 15:55:44 -0400
+	id 1ublkj-00030Y-62; Tue, 15 Jul 2025 15:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublam-0001r1-9o
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:36 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublbN-0003AX-BF
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:46:25 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublaj-0002fV-Sl
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:31 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a588da60dfso3934228f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:45:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublbL-0002j9-7p
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:46:09 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a52874d593so4657758f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752608728; x=1753213528; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752608765; x=1753213565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FurVbd1eLbO1skSsA8qBStYsslRinQbnXVcbQqhp0RM=;
- b=QWrTxN11eSApbM/CODGrrK9EAJJ3R9UifVRr+CCXamYYzUFwAw5JEM6Db8vB4EIv7C
- FNbne3xB2+fFR2PAuxKEKAGs9NdKrbw7Dozw1IT1PL4dDPLVyDwKzWyBhf3A4XqsMJ7p
- A9tUH8xNO/dAL5BoRSFWhcGA9vp5jemj30nYB4opJQZDxFVyZoX0hsZ1LRIlVBikFpox
- i6jcJrxLuWBrfQxvsXLuNgg445mURCtzXYpxl5H/EasoKH4CiSZ5fJvSFUPSbsS1H9+/
- 8uisZH6GVLQ5+HBLnor+1SqGXfExbFZGxUooo82ne52mTmgf6XqWMYbV+o5yH8umNVWA
- hwcQ==
+ :reply-to; bh=IbiqYat6kh5gVkuB+6mqM5XRDlpnNaNJ+QLnyUJ4G1o=;
+ b=xVzdqQ1jJ0dG6VeNs2ilrOUrIWk4FnYIJsMX5Iu+BzYK7upjXMACKjbSQt8Qr4bMJF
+ BdA9rT53BWfbjEqZo2hD5ZuP9YcvRY/eIT0zGyThp8NChn7Pocj/h7+tjfuZwmyjlBzv
+ uyextj6PyQCrkxhJLLRZ0IpfpHqlcL7zcPECRCXCcaCQxgoqmrBUr5oXEJbxuHwH414K
+ Sre3KJoYOfFQ+oSBM+D3r97mL87NLkSVg2EVSMc0gPOWlGFkWcJhhyrQ5HWCMNAiMyCx
+ 3oNJSOSY1hMuxGO3tkiG1vs0h7NMrHYCbRofPUucdFf333QldV5w2+cDNrnvK53cCk2F
+ VrZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752608728; x=1753213528;
+ d=1e100.net; s=20230601; t=1752608765; x=1753213565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FurVbd1eLbO1skSsA8qBStYsslRinQbnXVcbQqhp0RM=;
- b=oaTJyhENqm41Udd4FKh5I1JrrwskszrSYiI3Ec8R9Eq1dqPeRg0G1ee+G9e/UFpT6c
- 5MumjSciYPUeI3jhhh6XMJYOotZAFlsgq6MHADD4yQYd/ihA/DtdOgUCTtvWz1apSzgR
- OCe+84Tcr9QHirevLZk9hGycIWejMOu1AVWnFA5Ftq59HJqTYa9yDn6CRyhjLBzeX0rt
- gnLYH8qS0Br1nYRo9IMbzfTaOONGh64Jqu6tu7sfW4pfrTis8WPoy2X8fr/ZodC6aEN6
- XLxcKlTeaNvQWiDy2ynQDszE4K2GW4MGyz/6s7Bt4UIvbMHRTQGyCzipKT6eG4mDCj4L
- HR7Q==
-X-Gm-Message-State: AOJu0Yw4rbc0oTmN6BJOO6HcxfCGfsQ1w8c+XRABJaVm+W2TggJHy0I9
- jdGjtP6XyGYIEzn+IEE/xoDvJA67VzY7aGAdIHcRra1b3ePGjRhGcEykgIcgE50IdFM1cTLvP+p
- +egu2
-X-Gm-Gg: ASbGnctx8cRWRBaPFJK8KaPMuJDWo9PFabo3EQyNhfUKjGGKLN/2yIoiMXSZlOde1ZU
- N6RtQRfcsr/Sa+ciDie4lUDuWYkav/DAy7K1qcUesPa0i+fA8UL02B5xHUUYyA2hTBpBvwEWWyy
- Swc3TWmbuBSdAdoWIfvuuYjK9SnrDuoj8waMLTazEJwtlXqqfaqQvJuaznnF9Rk9zZdX64Nc8aX
- 55XEvFc7AEGHwYotiGv1Lf0cC0tpROkoHVVKToSIn5K4CCF6sLJI7gd9P1ph5cLjxln7Nwn8xi0
- kjgAoBqfswIv3aoLzuKpmq/+AvLvacbPl6cIFvrtuYlE786bd6i0Twi2BOttBnao39YMIzPCcf/
- k1XS+WF09OulL66orX58B6WjH0X27mZ91iSmfa/Vr7WcOrxmsNoXFaoT8kIpjZw0PDFpoR061SU
- mD9g==
-X-Google-Smtp-Source: AGHT+IEQYtnVSLRBKU5Sclkp9o8ExlijViyfXcFDm5GFUk6F9O6+VqJN2NXWJI6X18Pa7/r/4+9wWQ==
-X-Received: by 2002:a05:6000:40ca:b0:3b6:938:86b7 with SMTP id
- ffacd0b85a97d-3b60dd780b9mr377900f8f.35.1752608727773; 
- Tue, 15 Jul 2025 12:45:27 -0700 (PDT)
+ bh=IbiqYat6kh5gVkuB+6mqM5XRDlpnNaNJ+QLnyUJ4G1o=;
+ b=BBd/LwlrcYTzs9TcIzqhvyXunVjle2IixfiPQGVhuTBimspi63NjiG3CUjU38UOWFY
+ mhhYwboK7RkjHSBG//Iq+bwNCVhvlGkR0maqZBSaolqgbhlCgpKEKF1ynGs4eGUGJHAa
+ Kz7xoboxxzQFCBSfkOyPjisumLh3e7YoBKNAlUX0zX1Vf+qs41OHhzAv9Xk1JFnE1ykR
+ JomdDXWrJDyUz5g7+HpZnaf2fEVtAQHdxodkvwFlgvVGQjmhgP8FOo4oNPaonUUJoeR9
+ bldkpPR2C/VpqLptO8cEQwLyemK8QHvE9dHpFlQIUuSHShprXUdQ1PYMWWURy0b4wlLI
+ 4DZQ==
+X-Gm-Message-State: AOJu0YybiEBuRe2uoc2wNBCbDXDAf4Rjpk5vEpg8cKSrbOZy8qQpVdUn
+ fp9K+aiofOdlTjYjcXs6UfNJbeHoobdH8QTU97KyA2sK6HZd+/IEm2hw6c6bzNt/w+JCNHAgni4
+ iT+Y+
+X-Gm-Gg: ASbGnctNHuLcDcrAAJkAVn5AzpuWltmwsP9V/sbByOI/vRp0BaF508d6lHm3dXHilO8
+ w/giu6BC4SmmiI9ncxwHw53d9O84uTnUoD7fZVbReGOtZy9ntwMhVkuyyeEW2eN7nkfQDBmHQcO
+ lnkNV0r6m1pqUYP8spsfiKXkLUIyQktSOnJ0tUFbO+m3OzdcIrQ8cI44vPb6vkyes1zw1rjkc60
+ H/F+Ht4PKa5VEfmHT1tkaGuSo4zcR8c+HPq7Aye9sKxM13PkL63tr6wRvrDRkLrnwyqqSVbAXxs
+ mHTBgmh3lXZLnr+yjfoOw8nt9PLIFTkJQoq5Vc3UjATCE/aTinVO7Ux9NUKlagvQIJpelJ0/4+t
+ GY5A3S7SbRJFvHD4EW5N2Pp4XYRIGmiR772TzR0iUfnfoicNvsIoN0auRjnFIdslvKKIqFsex43
+ q3rw==
+X-Google-Smtp-Source: AGHT+IHkIV3rYRWjgbFKcaWuIBuaqVKEbjbJpzB1StG0ubeWMXu8cBfvyhP8D1wkRwxujhGvlJ1XiA==
+X-Received: by 2002:a05:6000:23c7:b0:3a4:f8fa:8a3a with SMTP id
+ ffacd0b85a97d-3b60dd555b6mr236015f8f.18.1752608765082; 
+ Tue, 15 Jul 2025 12:46:05 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1997sm16190703f8f.10.2025.07.15.12.45.27
+ ffacd0b85a97d-3b5e8e1e135sm16018805f8f.72.2025.07.15.12.46.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 12:45:27 -0700 (PDT)
+ Tue, 15 Jul 2025 12:46:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/17] hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h'
- header
-Date: Tue, 15 Jul 2025 21:45:01 +0200
-Message-ID: <20250715194516.91722-3-philmd@linaro.org>
+Subject: [PULL 09/17] Revert "accel/tcg: Unregister the RCU before exiting RR
+ thread"
+Date: Tue, 15 Jul 2025 21:45:08 +0200
+Message-ID: <20250715194516.91722-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715194516.91722-1-philmd@linaro.org>
 References: <20250715194516.91722-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"hw/xen/arch_hvm.h" only declares the arch_handle_ioreq() and
-arch_xen_set_memory() prototypes, which are not used by xen-pvh.c.
-Remove the unnecessary header inclusion.
+This reverts commit bc93332fe460211c2d2f4ff50e1a0e030c7b5159,
+which was merged prematurely, re-introducing Coverity CID 1547782
+(unreachable code).
 
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20250715071528.46196-1-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250715104015.72663-2-philmd@linaro.org>
 ---
- hw/arm/xen-pvh.c | 1 -
- 1 file changed, 1 deletion(-)
+ accel/tcg/tcg-accel-ops-rr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-index 4b26bcff7a5..1a9eeb01c8e 100644
---- a/hw/arm/xen-pvh.c
-+++ b/hw/arm/xen-pvh.c
-@@ -10,7 +10,6 @@
- #include "hw/boards.h"
- #include "system/system.h"
- #include "hw/xen/xen-pvh-common.h"
--#include "hw/xen/arch_hvm.h"
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index a578698d071..6eec5c9eee9 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -302,8 +302,6 @@ static void *rr_cpu_thread_fn(void *arg)
+         rr_deal_with_unplugged_cpus();
+     }
  
- #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
+-    rcu_unregister_thread();
+-
+     g_assert_not_reached();
+ }
  
 -- 
 2.49.0
