@@ -4,73 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CABCC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB89FC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubiuL-0008U9-AE; Tue, 15 Jul 2025 12:53:40 -0400
+	id 1ubitx-0008Fq-C9; Tue, 15 Jul 2025 12:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubibQ-0001ro-3t
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:34:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ubiaH-0000S7-A2
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:32:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubibO-00024z-1m
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:33:59 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ubiaE-0001oX-Jq
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:32:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752597236;
+ s=mimecast20190719; t=1752597164;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2IiM6oOq3bf8NGqHVqQwL/vI+ZcohsPzarKDhi0MFxw=;
- b=IxnR51z5otMn6Pg3ZooHKqk9gcxjfKsLJab7diZQF2feNa5i3WKXHkVv+gxGek75YKnOWO
- 1Kl7tmGAECQTfzfi0KP9672Mgi1eQX5iMWyYgGSbgbh4Plc1EmlxxSMJGn1aL3en+0hQs+
- 1WelNWvBhkz+KskCVzOjGxXs2hPKrAM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-e5Db-tDDOrKLfTbk-qmheQ-1; Tue,
- 15 Jul 2025 12:33:53 -0400
-X-MC-Unique: e5Db-tDDOrKLfTbk-qmheQ-1
-X-Mimecast-MFC-AGG-ID: e5Db-tDDOrKLfTbk-qmheQ_1752597233
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5BAF1800247
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 16:33:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.173])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B947B19560AF; Tue, 15 Jul 2025 16:33:50 +0000 (UTC)
-Date: Tue, 15 Jul 2025 17:33:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] watchdog: generic name for i6300esb
-Message-ID: <aHaC6_2vdXJqdxLo@redhat.com>
-References: <20250610143259.1056400-1-cohuck@redhat.com>
- <20250610143259.1056400-3-cohuck@redhat.com>
- <aEhnbN1pSYgdi4EZ@redhat.com>
- <CABJz62O3FKYfUOyCLMotgYgckWV1frSUb=MtTW2J4fDTEg_==g@mail.gmail.com>
- <877c09792e.fsf@redhat.com> <aHZ7rpYFMWai-7RL@redhat.com>
- <CABJz62P+p_uYiatXroauLkG2AH2TnjS8drbHxLPsgY+=QSB8Lw@mail.gmail.com>
+ bh=kTq7bVNHOWGoAGHx8Gz1rQmpRWFQFi8ecsyAHowojaw=;
+ b=E3GEkX0idXz+jvwWl/nQ7gqQCpN0A7HDzwltVBL/NrLdSADaTqgG91JIgCUvafHT0mJLlI
+ ez60DOzNYc8fmFM0lFrtGNqePnG9EbbqZ8MMuJNrDfEB7R9lEgCglq6QfIiOZUgUDW7xx+
+ ki3EudtyVuWplvQ/NlgRFSq7sWeQCw4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588--56BjbIwOyqqktYi-XkHyw-1; Tue, 15 Jul 2025 12:32:43 -0400
+X-MC-Unique: -56BjbIwOyqqktYi-XkHyw-1
+X-Mimecast-MFC-AGG-ID: -56BjbIwOyqqktYi-XkHyw_1752597162
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4eb6fcd88so3748341f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 09:32:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752597162; x=1753201962;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kTq7bVNHOWGoAGHx8Gz1rQmpRWFQFi8ecsyAHowojaw=;
+ b=JinKIK8J2I9W4tUlxyCXXdpsWt7Ni2OeIL+3rBDaFbcp3DVUD2PJITYzLZaI/Cwvz8
+ jPEdI3AHGyDn4uK6jtqaNtyGN6bF0A86Yb+DudumXB1e4Tj65Hh2bF8ZfoOPbAkihAZI
+ IVusggf4EgcCFUbyCfloStLkm2PpTIQ6rUDRv7XWDszjV/kN7wH9sXBn+ctF2JaBNFD4
+ Y0HjS4CcVSpYuyXyxFM8rMW2tyalx3ll4ppZncjy4mQ1NZCuaBdVRA0T2F/a18ffYNQW
+ xf8HTtjSx9/Hc2BtoNlhK7Vlh+g3Qrkwc2ttyaHhKmkxEgxwUnrVAWQbp0nfnal66T2s
+ /WJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0nlcdHpDlA29w2qf4Cv6RfpUCnui19utWetX0ZH9b7nKGfYybFabarCidXCXmCMnTrOjBq1yEp6lD@nongnu.org
+X-Gm-Message-State: AOJu0YxvEWX7Osxz/FB5Q1YpME2xGlirQiFf+kD8t3yoLCwo4bKsjltW
+ BYC3VF82xggQnBAk2LyHHWJhHyPFNALl9QS2oX0TeZQd68y/ZQSHLRFF18UpBPQguIL+9pAFoK9
+ cxnl+/VUQjCQ4p/+svhxfv/DvS42xeFi4OH03ce0Rtc/7SKbAckQjj1CA
+X-Gm-Gg: ASbGncuOQgihEo66ZCbnajH/KR2uJ+loqepIiXqe440o2U56gDZ50Vx14at5iCVYE47
+ T3I0oykNxQ7i/RfDgK0v6U8foX8Kxim2B0lVUGnVG6vT82zDG2CIrrcbDsLg+8159CUsTrsYcV2
+ NowFuQuE8EN7yyA25b8YpYIYpXPMTrooLssy+AR+xPLP268QkZ4WlHXgYxSgKzEDbMwuNeYDsLK
+ uWqBadYwjDjii0ItuQ3AE7DzIJBJJ5F7zUnBG0WaZKdwwQnPs78jejB9GPxQETZ554/ilBeKLs/
+ OtaZf5Rl3Wt4Db5iMXlfSldKTVPrtOWDjm+lPXAH7womDgoWJusIq0f0sZXvOMHwbrkrjy6Dyno
+ yhJyKx3G23UM=
+X-Received: by 2002:a05:6000:290b:b0:3a4:eb92:39b6 with SMTP id
+ ffacd0b85a97d-3b5f2e3a4cemr13815821f8f.54.1752597162349; 
+ Tue, 15 Jul 2025 09:32:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwTpJ2azlTSmrNOO+Au0S5WywKcGyeTbLN+9Oq2VnDj4/cIxApwwFxkFX2RBxTeWmmKzuEvw==
+X-Received: by 2002:a05:6000:290b:b0:3a4:eb92:39b6 with SMTP id
+ ffacd0b85a97d-3b5f2e3a4cemr13815790f8f.54.1752597161881; 
+ Tue, 15 Jul 2025 09:32:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e1e3bdsm15327796f8f.81.2025.07.15.09.32.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Jul 2025 09:32:41 -0700 (PDT)
+Message-ID: <ca4a9fc0-162f-44a4-9f3b-86f0020bb483@redhat.com>
+Date: Tue, 15 Jul 2025 18:32:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABJz62P+p_uYiatXroauLkG2AH2TnjS8drbHxLPsgY+=QSB8Lw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/20] intel_iommu: Implement get_viommu_cap() callback
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ <20250708110601.633308-4-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250708110601.633308-4-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,72 +117,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 09:16:24AM -0700, Andrea Bolognani wrote:
-> On Tue, Jul 15, 2025 at 05:02:54PM +0100, Daniel P. Berrangé wrote:
-> > On Tue, Jul 15, 2025 at 05:44:25PM +0200, Cornelia Huck wrote:
-> > > Hmm. So
-> > > - request a new PCI id (probably in the PCI_DEVICE_ID_REDHAT_* space)
-> > > - restructure to have two devices base off the same core functionality
-> > > - teach guest operating systems about the new device
-> > > - teach management software like libvirt about the new device
-> > >
-> > > Not sure how fast we can get an ID (or even how to go about it.) The
-> > > second step should be reasonably easy. The third step is the most
-> > > complex one, but at least teaching Linux should hopefully be easy
-> > > enough, and existing guest operating systems could continue to use the
-> > > existing device. The last step is probably not that bad.
-> > >
-> > > I can start down that path, if we have some consensus that this is the
-> > > right way to handle this.
-> > >
-> > > I'd still argue that patch 1 should be applied regardless :)
-> >
-> > This sounds like a hell of alot of busy work to fix a problem that, IIUC,
-> > does not actually exist from a functional POV - it is merely a perception
-> > issue that people might be put off by the "Intel 6300ESB" names.
-> >
-> > IMHO a better use of time is to expand documentation to clarify this is
-> > just fine for all PCI architectures, and change nothing in either QEMU
-> > or guest kernels.
-> 
-> Agreed that it's not the most high-reward endeavor, but IIRC users
-> were getting genuinely confused and annoyed by the string "Intel"
-> showing up in their aarch64 guests.
+Hi,
 
-So be it, that's far from the only wierd thing in virt.
-
-> You can point them to documentation over and over again, or you can
-> work to prevent the confusion/annoyance from showing up in the first
-> place. Which of the two approaches is a better use of anyone's time
-> is up for debate.
-> 
-> I for one am grateful that someone put the time in all those years
-> ago and, as a result, PCI and USB controllers don't suffer from the
-> problem today. Ultimately it's up to Connie though.
-
-The PCI/USB controller situation is not the same tradeoff though.
-Those guest kernel drivers will identify and attach to these two
-controllers regardless of their PCI vendor/product, via the PCI
-class property. In that case changing the PCI ID and other device
-metadata in QEMU is cheap as it has no negative impact on guest OS
-driver compibility.
-
-In the case of 6300ESB though the guest driver is tied directly to
-the currently used PCI device product/vendor ID.
-
-If we change this then we have actually created new functional
-problems with guest/QEMU compatibility, in order to placate a
-non-functional problem. That is not a good thing.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On 7/8/25 1:05 PM, Zhenzhong Duan wrote:
+> Implement get_viommu_cap() callback and expose stage-1 capability for now.
+>
+> VFIO uses it to create nested parent domain which is further used to create
+> nested domain in vIOMMU. All these will be implemented in following patches.
+>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/i386/intel_iommu.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index f0b1f90eff..702973da5c 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -24,6 +24,7 @@
+>  #include "qemu/main-loop.h"
+>  #include "qapi/error.h"
+>  #include "hw/sysbus.h"
+> +#include "hw/iommu.h"
+>  #include "intel_iommu_internal.h"
+>  #include "hw/pci/pci.h"
+>  #include "hw/pci/pci_bus.h"
+> @@ -4412,6 +4413,16 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+>      vtd_iommu_unlock(s);
+>  }
+>  
+> +static uint64_t vtd_get_viommu_cap(void *opaque)
+> +{
+> +    IntelIOMMUState *s = opaque;
+> +    uint64_t caps;
+> +
+> +    caps = s->flts ? VIOMMU_CAP_STAGE1 : 0;
+with CAP_HW_NESTED
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Eric
+> +
+> +    return caps;
+> +}
+> +
+>  /* Unmap the whole range in the notifier's scope. */
+>  static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+>  {
+> @@ -4734,6 +4745,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
+>      .get_address_space = vtd_host_dma_iommu,
+>      .set_iommu_device = vtd_dev_set_iommu_device,
+>      .unset_iommu_device = vtd_dev_unset_iommu_device,
+> +    .get_viommu_cap = vtd_get_viommu_cap,
+>  };
+>  
+>  static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 
 
