@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4959DC83F22
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43381C83F1D
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ13-0002H1-Ld; Tue, 15 Jul 2025 02:19:49 -0400
+	id 1ubZ1T-0002gR-IM; Tue, 15 Jul 2025 02:20:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubYz7-0000gs-M4
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:17:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubYz4-0006jB-U2
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:17:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752560264;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ceOromvJJ90nMcwqW2sUYMFaY4IlqDlN3dcUsydUqRc=;
- b=QNKvR3ir/h8R4QLGBcx5RDJiZ+7wtRf8tI3nlWOWhq/ILlRtc+n68wL7UkLlvSfL5gCr0X
- 1GRMDksneu2zdGLV4hDwl3StPGwkyr6Q/S/OiUsjOqipSdjLRmHdvBUMwOFY1rNB8uqK1/
- lNGexhgTqb8bxi8vkuF1aHZpmwXxgXA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-391--e-0tp-cPs-MNVp5kRTUpw-1; Tue, 15 Jul 2025 02:17:43 -0400
-X-MC-Unique: -e-0tp-cPs-MNVp5kRTUpw-1
-X-Mimecast-MFC-AGG-ID: -e-0tp-cPs-MNVp5kRTUpw_1752560262
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43e9b0fd00cso29450655e9.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:17:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1J-0002Uj-Fe
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:06 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1H-00077E-0b
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:04 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a6cdc27438so4184325f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752560401; x=1753165201; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cuDzbbwm2kJEj0yYBiGbuSIbCM9/3TFQdYicUYRD+Aw=;
+ b=db9iws1+3pd+XR1Uplo6GtO9PTR7wI9gYJqGOuuWDzyRua4PJezdlSXIr7vGUf1v1m
+ ilqaNw7xLXvcI4VfqTqTH6xi6sQZ2WbFENbgzbZzJxumlDJQ4ZY4o3PFvOVobB5HZM7D
+ mqY2qjaVWWJXnU8Q7LjQeIhu6q1tMPhPdQFtBC1Lc4xRUvoHmiXoxKvhQS/iyZeYrx5H
+ AY2aZHhygVKMesLDqpqM/BIe7b+5Sq1srYB1QYj1WQQ/A0mMeUXP6aEP8F7pq/0BwGg1
+ xze1RlZ6tM8nCmMGHEuGhaUa8RlQnDwHkfWt3L/vph4Ja457sNmqGBFvddB355sRrRa+
+ 4cqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560262; x=1753165062;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ceOromvJJ90nMcwqW2sUYMFaY4IlqDlN3dcUsydUqRc=;
- b=todW3GkYr5MQj8YVUxngjxWd5cKNrvq83XavNzjoX97Ehd3sLfHVrsiLn90aNxYNb7
- G79HWYom/rNDi9Y3oVnlb98jLkpueYdeJtaJccen/5PzS9Q9xuiJSvawWZGvXENuvrpQ
- hnswcazvkzN7tHO2ubrlF2Xp11uEnazyaTDMXwWtdMOGXcmbLOTaFDWhLzk25jf/zVsS
- QEncG9Xi6Wd6/ZsuFH+keLQF0z+iHPsq5ma2J8s4pKPKbVs25MIC2MPXCCIqbwcNnKIu
- L5ezfcIdlf0M9G2A7ZSt/R/n0s2TImeOhl6HP8DzTrnseC0lmWHw4DrKSeCJDVqj9MXx
- TCzw==
-X-Gm-Message-State: AOJu0Yyt5ySWeS8VWOTYtGdzEvCmTcXjPYW7Sgv5Ewyl1+Ifn/fUwW9C
- g4+w7V8RYM0t/QhwPUnMZFAWL/6DAyCj995R9HQTGp/r99O4ZkPXf1v17aO5HGAAZ/SLzvh3r4q
- 3/SRgT7ehSq5pi3nyyxpB9dHdvUkxg9p46S6Z1eyKl+QnbJaFjHbumKYE
-X-Gm-Gg: ASbGncu4YJG3ZmMq+EP8X4bYchU4kdM4Myk7XLsyWshlBQW5Fvo/RxM9FzOVZ2dy0Bt
- boBFyye17TvrmL5sSGJKaP4tAGG+LsYJTcQqxkfA4xiGJIZgenK5AaNsgzhNz64fSvVtrVlZVVA
- aGPAiyuKRPgY0TEm8ZbdXGxSEDdFjC/ipE/QUHPjPzEs25DqWe66aHtPt7Xl+FfQ62GHcBTxESP
- aev8c6/dKyqydqrWFnxenYWuKFmEz0U6BOHxWPlbaA3XkqmJV9PR3Du2de+jxCgfOFV00Cp9k7o
- o3IF462xTun4DAD3TnxfJ5BE3bxsU0+j
-X-Received: by 2002:a05:600c:3b11:b0:456:1157:59ac with SMTP id
- 5b1f17b1804b1-45625e57b96mr21085335e9.7.1752560261630; 
- Mon, 14 Jul 2025 23:17:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrlYLaJz3zmcZkJrRgyfYIbFQI7MmY6arJUjIjXX/KuoFlMtcxIdMbCArWhQ8OUW6S4eJdFA==
-X-Received: by 2002:a05:600c:3b11:b0:456:1157:59ac with SMTP id
- 5b1f17b1804b1-45625e57b96mr21085015e9.7.1752560261011; 
- Mon, 14 Jul 2025 23:17:41 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45626c7b1a9sm7602835e9.0.2025.07.14.23.17.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 23:17:40 -0700 (PDT)
-Date: Tue, 15 Jul 2025 02:17:38 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-rust@nongnu.org
-Subject: Re: [PULL 28/97] rust: bindings: allow any number of params
-Message-ID: <20250715021556-mutt-send-email-mst@kernel.org>
-References: <cover.1752534227.git.mst@redhat.com>
- <04130b3dc5af620213a90d300933517b39f43bba.1752534227.git.mst@redhat.com>
- <CAAjaMXb5khPeO5bXGZ_2EALVWRg3i+GPimJygrik83f12JvFjw@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1752560401; x=1753165201;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cuDzbbwm2kJEj0yYBiGbuSIbCM9/3TFQdYicUYRD+Aw=;
+ b=dRR08b/1r5GjSMSOma4t03TQdKJFwCDbDKwyJjDnTKn+JN2Gu8HEOfBf/TkelFzL+t
+ wEUSMT26bf0owtuiuMHsAhPySLegyNNh8tCipzn3fBM5oblqWpZkLQyd0U53RAEdAjTO
+ AoeRUcXjWt7oDIhCy5+K6hCdSGpr0zcGwpoc8COZ36MS5nzI4/j1FpNxD5ecJBo6x1qn
+ Pp12AChgZ9UZmJlb9FlIEb2Do/fX3PmblYxbUpBqbv3LI2nkjb3jE7H7Li3YFcCiW1mB
+ 6TXCprDGamk/yn7dLS6uAAAGe9hyBM5FNvVUkYk45dhqBZYRiH7ycsYaZ+ICgItN96/g
+ T+Bg==
+X-Gm-Message-State: AOJu0YyVX/GxDivZNVdEcL6AZmZO0/ZuryRfWZXHk2+odaHTAGZKy/Kr
+ j0NXHK/ikKPDvfOdFqDV+HKXVY75jSXNt4eHTXrP1t31PqLjX8Ia+1J7uo5fqPSKpkgTZM106WQ
+ /EHW5
+X-Gm-Gg: ASbGncsxyos6ow69nVZZQzWKNFRgggKbcaMPnkn6LggbEid/1sHqdosBkkIrAcluM34
+ sDKT/1qduN/oRT3saSOupZ7CQxJ9pvX117/HGHjLS5kSfX5ba3ftGN5D7gfwA+vckGsO7rP2qP5
+ sLKv43IT719NF2Gy+wQjFXbRIUgdf9XViFhHmfVDdI5Oxe+b/TaDRDiJnr58H5ekSfsO3KwDbSj
+ RXuumtg4rmZLDu76Tr16z85p6vTzDU7UqBWTpxsPH/G5UYW945BxARsv6q/UW2pRPE1h07MbUJb
+ /T+rKbeIagNtxzxA3hNO3Ts55hQ0Bh8ewFM3euqcFCeS7XFGJk+8a3+Bl0h+bAqjsnlisK9vKj3
+ L6V3kCOdLPqWrHYTZpHRpoD3zS6/UPfYJF3dwU32rhG5Sx5hEbHjx8qVdqLng1b87wrNW1Ds0
+X-Google-Smtp-Source: AGHT+IH803WUgSzhwZmoBVziYExZUFLo7kt21Qg3JYwpUOp8Dq+pGXMaoNAfdekHb9avXTUDhLvYvg==
+X-Received: by 2002:a05:6000:2410:b0:3b5:f0af:4bb0 with SMTP id
+ ffacd0b85a97d-3b5f2dd1547mr11682036f8f.23.1752560400824; 
+ Mon, 14 Jul 2025 23:20:00 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454dd43912dsm153473015e9.2.2025.07.14.23.20.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 14 Jul 2025 23:20:00 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PULL 08/17] hw/mips: Restrict ITU to TCG
+Date: Tue, 15 Jul 2025 08:19:08 +0200
+Message-ID: <20250715061918.44971-9-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
+References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAjaMXb5khPeO5bXGZ_2EALVWRg3i+GPimJygrik83f12JvFjw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,88 +101,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 02:30:40AM +0300, Manos Pitsidianakis wrote:
-> On Tue, Jul 15, 2025 at 2:07 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > We are going to be adding more parameters, and this makes
-> > rust unhappy:
-> >     Functions with lots of parameters are considered bad style and reduce
-> >     readability (“what does the 5th parameter mean?”). Consider grouping
-> >     some parameters into a new type.
-> >
-> > Specifically:
-> >
-> > error: this function has too many arguments (8/7)
-> >     --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/structured/bindings.inc.rs:3840:5
-> >      |
-> > 3840 | /     pub fn new_bitfield_1(
-> > 3841 | |         secure: std::os::raw::c_uint,
-> > 3842 | |         space: std::os::raw::c_uint,
-> > 3843 | |         user: std::os::raw::c_uint,
-> > ...    |
-> > 3848 | |         address_type: std::os::raw::c_uint,
-> > 3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
-> >      | |____________________________________________^
-> >      |
-> >      = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
-> >      = note: `-D clippy::too-many-arguments` implied by `-D warnings`
-> >      = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
-> >
-> > I didn't want to disable this globally, so I just shut it off for this
-> > file.
-> >
-> > Message-Id: <a4c65fb2b735740bda2874c86de31d29a5ae24d2.1752530758.git.mst@redhat.com>
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >  rust/qemu-api/src/bindings.rs | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-> > index 057de4b646..b4692f9b4b 100644
-> > --- a/rust/qemu-api/src/bindings.rs
-> > +++ b/rust/qemu-api/src/bindings.rs
-> > @@ -18,11 +18,15 @@
-> >
-> >  //! `bindgen`-generated declarations.
-> >
-> > -#[cfg(MESON)]
-> > -include!("bindings.inc.rs");
-> > +#[allow(clippy::too_many_arguments)]
-> > +mod gen {
-> > +    #[cfg(MESON)]
-> > +    include!("bindings.inc.rs");
-> >
-> > -#[cfg(not(MESON))]
-> > -include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-> > +    #[cfg(not(MESON))]
-> > +    include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-> > +}
-> > +pub use gen::*;
-> >
-> >  // SAFETY: these are implemented in C; the bindings need to assert that the
-> >  // BQL is taken, either directly or via `BqlCell` and `BqlRefCell`.
-> > --
-> > MST
-> >
-> 
-> Hi Michael,
-> 
-> This patch does not seem to have been reviewed.
-> 
-> The clippy allows are in the top of the file, not above the
-> `include!`. This should be a one line change and the `mod gen` wrap is
-> unnecessary.
-> -- 
-> Manos Pitsidianakis
-> Emulation and Virtualization Engineer at Linaro Ltd
+MIPS Inter-Thread Communication Unit is implemented using
+TCG. Check for TCG both in Kconfig and CPS source.
 
-Yea sorry - I really wanted the API changes in and I tried to be
-as conservative as possible.
+Fixes: 2321d971b6f ("hw/mips: Add dependency MIPS_CPS -> MIPS_ITU")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250702164953.18579-1-philmd@linaro.org>
+---
+ hw/mips/cps.c   | 4 ++--
+ hw/mips/Kconfig | 2 +-
+ hw/misc/Kconfig | 1 +
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-I'll send a revert and the one-liner on top, is that
-ok with you?
-
+diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+index 2a3ba3f58d2..e47695e2b0a 100644
+--- a/hw/mips/cps.c
++++ b/hw/mips/cps.c
+@@ -24,7 +24,7 @@
+ #include "hw/mips/mips.h"
+ #include "hw/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+-#include "system/kvm.h"
++#include "system/tcg.h"
+ #include "system/reset.h"
+ 
+ qemu_irq get_cps_irq(MIPSCPSState *s, int pin_number)
+@@ -59,7 +59,7 @@ static bool cpu_mips_itu_supported(CPUMIPSState *env)
+ {
+     bool is_mt = (env->CP0_Config5 & (1 << CP0C5_VP)) || ase_mt_available(env);
+ 
+-    return is_mt && !kvm_enabled();
++    return is_mt && tcg_enabled();
+ }
+ 
+ static void mips_cps_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index b09c89a0175..f84fffcd323 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -76,7 +76,7 @@ config LOONGSON3V
+ 
+ config MIPS_CPS
+     bool
+-    select MIPS_ITU
++    select MIPS_ITU if TCG
+ 
+ config MIPS_BOSTON
+     bool
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index c27285b47ab..4e35657468b 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -119,6 +119,7 @@ config STM32L4X5_RCC
+ 
+ config MIPS_ITU
+     bool
++    depends on TCG
+ 
+ config MPS2_FPGAIO
+     bool
 -- 
-MST
+2.49.0
 
 
