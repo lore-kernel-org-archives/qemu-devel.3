@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D724C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD97C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ3Q-0005AV-I7; Tue, 15 Jul 2025 02:22:16 -0400
+	id 1ubZ2s-0004BL-CD; Tue, 15 Jul 2025 02:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ21-0003an-Nq
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ21-0003aT-Gr
  for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:21:01 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1z-0007UU-BA
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1w-0007TA-GY
  for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:49 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a4fb9c2436so3046744f8f.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:46 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a528243636so2737483f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560445; x=1753165245; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752560440; x=1753165240; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BIsVxfdtLnNina7X6rS10zd6t1LjrmBkXjEYQ2rhc7I=;
- b=uU/m+cNUlLlf+0qxjUrGSdgIXWb3MttdVhqf1MvJMdV4cn4nmvkb7y4fYBztYKiLjY
- xVNTDdePZn3UD7Z9TOsi7R50iDMwwljpwtiRA/1B01XOb2jdeAFz2GxtAwCPqFOn+5sC
- 1JO/vZzpO5uhOFKF/BqVZyNbLkqmnP0mg3w7CvuSRokh9Kvxwf6TIrRQ/eJFGEtv5wRC
- qwdhK8KQsxA65+dUxMGvq4L6fLVglrWX/UKGtO78r2NXkPX0Az9u/MGzuqYYHu9Y5p12
- KUgnAdsTsiHs2lhLMyYGRFB9XklMpSLl7YkX0Rcl3s93pFu5qBTTiLe9FaInrOdmIn+o
- n1Ww==
+ bh=W2AWFB5Pyqah58zjvyeLVbkHACcax2vJ0ewRGYfkQd8=;
+ b=TukdXiaMJY4RBPOxrm54+aFfT39csaxfEQnjepRKYLOjvFvlg5jURFMwQzuxg99a7V
+ qPTGlPj67AsozNIKEuwnFkuPNs0XhZ3MQxA+Dc347h67yAyfC7ansWi/R9rqbOKTlCEi
+ O15bHvEQ2N0hRmxD0ChTpPMbkduhy6NKRwHuXkjXUhuVtzOhntD9D4rqEQfBNIQPyAkq
+ 8SHbJEt4UJTOZT/rKwSzRMQ40UZ8sZZggRCBehGy+LqDnrk/9CUBCpAEBSfii/ecm/t0
+ udViYdLrUZ5wIV0B8QTwVrydUkppnF7PFzFeMgSE9cYXaU8dQVS92nqeAzBvu1Eg+f7B
+ 0f2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560445; x=1753165245;
+ d=1e100.net; s=20230601; t=1752560440; x=1753165240;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BIsVxfdtLnNina7X6rS10zd6t1LjrmBkXjEYQ2rhc7I=;
- b=OIACVnx2h9P2bQGcnII9oSxvLZbttEDJh1u+tajfJrX5ytjma0OVyw9qUzdJg9dpFz
- CqO87n39XzcCzaDzSGakZZO/7tQgQFoU+zLN0hBd2ztXpy0mSwcpuYbu8zVH+KMk5Qws
- DiEmDmZSeUmuWnKnDpOHNyiF1xftgB7ZYwiOUS51pPYjxYMcTFaijhHaEJeI9ZbrK1kN
- OnQKK1R/clmr6swv5ceryKdBxCgPbhJy4r8ItalrEK0/LqqsbyP/CgFoalO76GvqXQpo
- d5z5l6/nwsGv/fTDjEB1zoaCvQ2b2GiSWWju3dB6tf4CXwJpn/XArgw3DFUNWvvfXh7T
- YR0Q==
-X-Gm-Message-State: AOJu0YxjPjn25e9Nv84f79wMjh1R3pUXNbs+ANaRu2FhgJTp04s+2WkH
- YrjH4xfKYJRfUYNPM569SslEZ0mF1s9l5UqxVAaYMm0Iyl7pBCrG6EYZAKsmjMOVhG1C49nfGQJ
- dnQNj
-X-Gm-Gg: ASbGncueiyLgkez/oj/u/wkPxZ6Am8K8pBBJftZ83wDZMoob2Y2JSO/7mR3t2QFizMX
- m/kUdfSSyCj1En1sLyfLh4g8LfB7kqYc3HbM33qV+K5nVxmJcRNmfg7QCV7ANjO9FaluEHRbSL5
- lnvxxyuKd1oq+b413mjF6GHhFWSdvov675zmp4cCHedybC1oaSa+zFjK++fB+z5Qs1QcwRoC99r
- 6Rz6pOLWzwovBpaUgpa/cjsCF458gBLMoSn5y7ls87umIAlqD87ipX+iAjXE5butVgLgmLegDek
- B4tzJ/nXymT88v18LiT+K2ySf4KQlIYKYoonPrxV8kxB6r4BC7sQqehiX4qyM5M3P5F2WsvUooG
- pijbVNJ1eXkuAD0uCKkMtHcq+oZYkuoUE18ifNB6y4G7wCnUFtIdmnOo9MB4TSqpOqNFw3HWz
-X-Google-Smtp-Source: AGHT+IEFuks1Xz6P49FNSHJAROS6iMPU36yD3aASuS6vf1g13WxY3XRgVEt2QtDDuWvNfyewRwzfEg==
-X-Received: by 2002:a05:6000:42c1:b0:3a5:7991:ff6 with SMTP id
- ffacd0b85a97d-3b5f187b268mr9374758f8f.1.1752560444747; 
- Mon, 14 Jul 2025 23:20:44 -0700 (PDT)
+ bh=W2AWFB5Pyqah58zjvyeLVbkHACcax2vJ0ewRGYfkQd8=;
+ b=QYEqptSlcmrZdsftXPhsPFEnsfV0TX79PhR2Litz8oe3IxDHs8rFnRNiRqYRezqjM3
+ eGbtgCx0azfEDo1SiJMJUeodUtCuCuCrTacGMp6VUwUksuM0PM/yR62I6Bqnk3nbuS4k
+ bnvYWGsAv8Dx8jhZGQTvJpRLk9OR240iXlFVzoilQ/uCXmLgTPLBSChhYJnJwmma6tkz
+ 07iA+O5ccnEJil6cXkcum3mEXSgdMoosit+mTXI8s9bplBgNThRfIWHy+X91c03VaBJE
+ zceLJMRGYv49KJWgnItcDzZlHsxVvitdmj1lytLm8X1csa+6WY3Hpc//BweYT8Jnm3V3
+ NLHg==
+X-Gm-Message-State: AOJu0YyUoPqt6mLzTRH4YtaQTqvNfTI0afmN/XRUzMLCQY5FGERTI5j4
+ +I8fvdrjIvya+67YMbWAdncTEgodRJko6L3Vppo2DK0snMcuV6A3Bryb45cGp820WnRplESUuJ6
+ dIaVL
+X-Gm-Gg: ASbGncvZnC9mciTnvHLKZ+FC4o1OvWchaLdHXISt7JamTw3q8CNtLRciTyeHZoxi8VM
+ qgjZIRgBrkUtiJbLNAoOW4LZs6o5Qvl+On1qX17WYLfc4rVRFPZVdwJv77s/P0qgDvnJNiW5THZ
+ Jq+yrgwbkasLC8iN0Od5+5CqRTtnMjYiF5NJYy3gQG/BQLIIZIDZ8d4f7AoudR6E33g5l7WCnzL
+ /1LPV6ssVtCueQS5daMdeVqrdrL//u9nmQ/1hTYbpEUml2vEZhbFUDN4+oLPUUph+nvtLpphqzX
+ 4Om3NfZ8wYN2hR9XqG6jBft18ohVcWF6u76B5SadGFxfwozs+axm5KZDdej+z+r23JRAT2o2wta
+ 791MUgsHHENeINlMCs7VW5Z9ifV24FF7V/BwprKtVPxCKaJPSwLShJgYboI1U7tIB8szISTVeSr
+ F5Fsvlufg=
+X-Google-Smtp-Source: AGHT+IH2njBaVNZQOwFvE3Wq0RqZ+qCbBD9uRBscHqX9O9Z7FHe7Bx/nXB7qRK/pRO4kV/VqEU5b4g==
+X-Received: by 2002:adf:ea45:0:b0:3a8:38b3:1aa1 with SMTP id
+ ffacd0b85a97d-3b5f18cf218mr10693915f8f.27.1752560439711; 
+ Mon, 14 Jul 2025 23:20:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e1a5sm14004594f8f.74.2025.07.14.23.20.43
+ ffacd0b85a97d-3b5e8dc2025sm14502765f8f.31.2025.07.14.23.20.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:20:43 -0700 (PDT)
+ Mon, 14 Jul 2025 23:20:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: [PULL 17/17] esp.c: only allow ESP commands permitted in the current
- asc_mode
-Date: Tue, 15 Jul 2025 08:19:17 +0200
-Message-ID: <20250715061918.44971-18-philmd@linaro.org>
+Subject: [PULL 16/17] esp.c: add asc_mode property to indicate the current ESP
+ mode
+Date: Tue, 15 Jul 2025 08:19:16 +0200
+Message-ID: <20250715061918.44971-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
 References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,120 +105,134 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-If an ESP command is issued in an incorrect mode then an illegal command
-interrupt should be generated. Add a new esp_cmd_is_valid() function to
-indicate whether the ESP command is valid for the current mode, and if not
-then raise the illegal command interrupt.
+Add a new asc_mode property to ESPState which indicates the current mode of
+the ESP and update the ESP state machine accordingly.
 
-This fixes WinNT MIPS which issues ICCS after a Chip Reset which is not
-permitted, but will fail with an INACCESSIBLE_BOOT_DEVICE error unless an
-interrupt is generated.
+Bump the vmstate version and include migration logic to ensure that asc_mode
+is set to initiator mode such that any commands in progress will always
+continue.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Fixes: 83428f7a97 ("esp.c: move write_response() non-DMA logic to esp_do_nodma()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2464
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250711204636.542964-8-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20250711204636.542964-7-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/scsi/esp.h |  8 ++++++++
- hw/scsi/esp.c         | 37 +++++++++++++++++++++++++++++++++++++
- hw/scsi/trace-events  |  1 +
- 3 files changed, 46 insertions(+)
+ include/hw/scsi/esp.h |  7 +++++++
+ hw/scsi/esp.c         | 21 ++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/include/hw/scsi/esp.h b/include/hw/scsi/esp.h
-index 6327060c7c7..3526bad7464 100644
+index c9afcb7cac0..6327060c7c7 100644
 --- a/include/hw/scsi/esp.h
 +++ b/include/hw/scsi/esp.h
-@@ -111,6 +111,13 @@ struct SysBusESPState {
- #define CMD_DMA 0x80
- #define CMD_CMD 0x7f
+@@ -14,6 +14,12 @@ typedef void (*ESPDMAMemoryReadWriteFunc)(void *opaque, uint8_t *buf, int len);
+ #define ESP_FIFO_SZ 16
+ #define ESP_CMDFIFO_SZ 32
  
-+#define CMD_GRP_MASK 0x70
++enum ESPASCMode {
++    ESP_ASC_MODE_DIS = 0,    /* Disconnected */
++    ESP_ASC_MODE_INI = 1,    /* Initiator */
++    ESP_ASC_MODE_TGT = 2     /* Target */
++};
 +
-+#define CMD_GRP_MISC 0x00
-+#define CMD_GRP_INIT 0x01
-+#define CMD_GRP_TRGT 0x02
-+#define CMD_GRP_DISC 0x04
-+
- #define CMD_NOP      0x00
- #define CMD_FLUSH    0x01
- #define CMD_RESET    0x02
-@@ -145,6 +152,7 @@ struct SysBusESPState {
- #define INTR_FC 0x08
- #define INTR_BS 0x10
- #define INTR_DC 0x20
-+#define INTR_IL 0x40
- #define INTR_RST 0x80
+ #define TYPE_ESP "esp"
+ OBJECT_DECLARE_SIMPLE_TYPE(ESPState, ESP)
  
- #define SEQ_0 0x0
+@@ -38,6 +44,7 @@ struct ESPState {
+     uint8_t cmdfifo_cdb_offset;
+     uint8_t lun;
+     uint32_t do_cmd;
++    uint8_t asc_mode;
+ 
+     bool data_ready;
+     int dma_enabled;
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 4aa58f9e485..1d264c40e57 100644
+index 1c7bad8fc02..4aa58f9e485 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -1129,6 +1129,38 @@ static void parent_esp_reset(ESPState *s, int irq, int level)
-     }
+@@ -275,6 +275,7 @@ static int esp_select(ESPState *s)
+     if (!s->current_dev) {
+         /* No such drive */
+         s->rregs[ESP_RSTAT] = 0;
++        s->asc_mode = ESP_ASC_MODE_DIS;
+         s->rregs[ESP_RINTR] = INTR_DC;
+         esp_raise_irq(s);
+         return -1;
+@@ -284,6 +285,7 @@ static int esp_select(ESPState *s)
+      * Note that we deliberately don't raise the IRQ here: this will be done
+      * either in esp_transfer_data() or esp_command_complete()
+      */
++    s->asc_mode = ESP_ASC_MODE_INI;
+     return 0;
  }
  
-+static bool esp_cmd_is_valid(ESPState *s, uint8_t cmd)
+@@ -308,6 +310,7 @@ static void do_command_phase(ESPState *s)
+     if (!current_lun) {
+         /* No such drive */
+         s->rregs[ESP_RSTAT] = 0;
++        s->asc_mode = ESP_ASC_MODE_DIS;
+         s->rregs[ESP_RINTR] = INTR_DC;
+         s->rregs[ESP_RSEQ] = SEQ_0;
+         esp_raise_irq(s);
+@@ -1102,6 +1105,7 @@ void esp_hard_reset(ESPState *s)
+     fifo8_reset(&s->cmdfifo);
+     s->dma = 0;
+     s->dma_cb = NULL;
++    s->asc_mode = ESP_ASC_MODE_DIS;
+ 
+     s->rregs[ESP_CFG1] = 7;
+ }
+@@ -1170,6 +1174,7 @@ static void esp_run_cmd(ESPState *s)
+         break;
+     case CMD_MSGACC:
+         trace_esp_mem_writeb_cmd_msgacc(cmd);
++        s->asc_mode = ESP_ASC_MODE_DIS;
+         s->rregs[ESP_RINTR] |= INTR_DC;
+         s->rregs[ESP_RSEQ] = 0;
+         s->rregs[ESP_RFLAGS] = 0;
+@@ -1337,6 +1342,14 @@ static bool esp_is_between_version_5_and_6(void *opaque, int version_id)
+     return version_id >= 5 && version_id <= 6;
+ }
+ 
++static bool esp_is_version_8(void *opaque, int version_id)
 +{
-+    uint8_t cmd_group = (cmd & CMD_GRP_MASK) >> 4;
++    ESPState *s = ESP(opaque);
 +
-+    /* Always allow misc commands */
-+    if (cmd_group == CMD_GRP_MISC) {
-+        return true;
-+    }
-+
-+    switch (s->asc_mode) {
-+    case ESP_ASC_MODE_DIS:
-+        /* Disconnected mode: only allow disconnected commands */
-+        if (cmd_group == CMD_GRP_DISC) {
-+            return true;
-+        }
-+        break;
-+
-+    case ESP_ASC_MODE_INI:
-+        /* Initiator mode: allow initiator commands */
-+        if (cmd_group == CMD_GRP_INIT) {
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    trace_esp_invalid_cmd(cmd, s->asc_mode);
-+    return false;
++    version_id = MIN(version_id, s->mig_version_id);
++    return version_id >= 8;
 +}
 +
- static void esp_run_cmd(ESPState *s)
+ int esp_pre_save(void *opaque)
  {
-     uint8_t cmd = s->rregs[ESP_CMD];
-@@ -1285,6 +1317,11 @@ void esp_reg_write(ESPState *s, uint32_t saddr, uint64_t val)
-         break;
-     case ESP_CMD:
-         s->rregs[saddr] = val;
-+        if (!esp_cmd_is_valid(s, s->rregs[saddr])) {
-+            s->rregs[ESP_RSTAT] |= INTR_IL;
-+            esp_raise_irq(s);
-+            break;
-+        }
-         esp_run_cmd(s);
-         break;
-     case ESP_WBUSID ... ESP_WSYNO:
-diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index f0f2a98c2ee..6c2788e2026 100644
---- a/hw/scsi/trace-events
-+++ b/hw/scsi/trace-events
-@@ -198,6 +198,7 @@ esp_mem_writeb_cmd_ensel(uint32_t val) "Enable selection (0x%2.2x)"
- esp_mem_writeb_cmd_dissel(uint32_t val) "Disable selection (0x%2.2x)"
- esp_mem_writeb_cmd_ti(uint32_t val) "Transfer Information (0x%2.2x)"
- esp_set_phase(const char *phase) "setting bus phase to %s"
-+esp_invalid_cmd(uint8_t cmd, uint8_t asc_mode) "command 0x%x asc_mode 0x%x"
+     ESPState *s = ESP(object_resolve_path_component(
+@@ -1368,13 +1381,18 @@ static int esp_post_load(void *opaque, int version_id)
+         }
+     }
  
- # esp-pci.c
- esp_pci_error_invalid_dma_direction(void) "invalid DMA transfer direction"
++    if (version_id < 8) {
++        /* Assume initiator mode to allow all commands to continue */
++        s->asc_mode = ESP_ASC_MODE_INI;
++    }
++
+     s->mig_version_id = vmstate_esp.version_id;
+     return 0;
+ }
+ 
+ const VMStateDescription vmstate_esp = {
+     .name = "esp",
+-    .version_id = 7,
++    .version_id = 8,
+     .minimum_version_id = 3,
+     .post_load = esp_post_load,
+     .fields = (const VMStateField[]) {
+@@ -1406,6 +1424,7 @@ const VMStateDescription vmstate_esp = {
+                            esp_is_between_version_5_and_6),
+         VMSTATE_UINT8_TEST(lun, ESPState, esp_is_version_6),
+         VMSTATE_BOOL(drq_state, ESPState),
++        VMSTATE_UINT8_TEST(asc_mode, ESPState, esp_is_version_8),
+         VMSTATE_END_OF_LIST()
+     },
+ };
 -- 
 2.49.0
 
