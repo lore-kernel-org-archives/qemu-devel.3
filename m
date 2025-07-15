@@ -4,155 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAE2C83F2D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 18:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E136C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 18:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubk2N-0004YD-Ni; Tue, 15 Jul 2025 14:05:55 -0400
+	id 1ubk98-00036L-W6; Tue, 15 Jul 2025 14:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubjTE-0008Am-Rk; Tue, 15 Jul 2025 13:29:36 -0400
-Received: from mail-dm6nam12on2060c.outbound.protection.outlook.com
- ([2a01:111:f403:2417::60c]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubja4-0005lY-Mt
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 13:36:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubjTB-00023U-DY; Tue, 15 Jul 2025 13:29:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dskVgyAi4LcvHt6LDkgFOB5wbGKBbmmv0sfr+A9z79WUQGBhGiciA0+0x306jE+PArL0MqBGdnmFlm1bGPVoI+1PSORv1sHSi3+VQbHkQDAqhHWpzDSGtl9prrJJBg3NWHz6ttqa81fKy74xSg7tieYvn21h47cZ1T0OqbC5HOoqzhDrshgsgHmFsh+Q8n19d0b1sInTb4mVHtrpg7nXQ/voZ+1wyNWSay2OpgQ463nXeZ7sGgmEZu9eEEWwGWAO024vn9+RxEuGzFQRReX/QxgJuPWaXZrUlaEVxl4P3kXx04/Fi6xnHnAQgFG9S+RK6aIlEWXQizsYjosQ9M8/kQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GOa4oOPzi4HncXe++APvtmjbVRwSRukwk+2y46DTsYM=;
- b=VlMTjxnjiRqi7oBFoFDrXtyR3uosmA+c4LBaSPDUiCpRnQV5KKyIkJ40rzis6FLmg4UJs3Sc+1xR+c/m+Z3CxJdBTip+qoxJA3qNTsF2EDom4P8SXLflpCVsalUcCKaht3d6qybgBHwW0ZJwd39vBwhz/9xj7qHUVhfI7582jBnQk40FJjIunTZ/e9n+xb1bGcWlR46qE9hPiBMzDpRBt2rZPZu53OMA879xTC1KoPQwoOJ3SqXrXmTAgGzjONp8H1bctjoHM4feXz0xxUDwoMaYn1N660zzeDW14A3SngDcTn5ezafP7MD7UmaNSlH7J+PjvylKd2q0y6SA2NCi3A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GOa4oOPzi4HncXe++APvtmjbVRwSRukwk+2y46DTsYM=;
- b=cnpEO6aXADUx1tXyQFlvR7YAOm5TKXJe54k/TPrWt7Jwko5KT+XQMLvWWqQRKv3LSRsv0vMVGN3vpJrqp1oBU6Z2YMtA7kXtrDN3C9/h+KtF7aqeMoWpvrNmlr1OxhuwAt8lfSPLuu707mwnP/WVr64KNkLKaSftdcQWsD8TtEDweFce/khxEhguq61t/e2V89CZ6xY7abLujs3JGHuYjhGlx086pw/pEZcFm1427P4OGE9BvOKo8YYAqORaC6HO/rukhuD/mHwmdiba9X1H8YrGeN49wlPBipRe2LN6hBcZrN+orVJADfY1qjxaVp0ZQarSi3d2nSSYRvrVLv3h2A==
-Received: from CH0PR04CA0092.namprd04.prod.outlook.com (2603:10b6:610:75::7)
- by MW4PR12MB6897.namprd12.prod.outlook.com (2603:10b6:303:20a::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.25; Tue, 15 Jul
- 2025 17:29:24 +0000
-Received: from CH1PEPF0000AD76.namprd04.prod.outlook.com
- (2603:10b6:610:75:cafe::1e) by CH0PR04CA0092.outlook.office365.com
- (2603:10b6:610:75::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.17 via Frontend Transport; Tue,
- 15 Jul 2025 17:29:24 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH1PEPF0000AD76.mail.protection.outlook.com (10.167.244.53) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.22 via Frontend Transport; Tue, 15 Jul 2025 17:29:23 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 15 Jul
- 2025 10:29:04 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 15 Jul
- 2025 10:29:03 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 15 Jul 2025 10:29:02 -0700
-Date: Tue, 15 Jul 2025 10:29:01 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, "linuxarm@huawei.com"
- <linuxarm@huawei.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce smmuv3 accel
- device
-Message-ID: <aHaP3ULG90gGqWHJ@Asurada-Nvidia>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-6-shameerali.kolothum.thodi@huawei.com>
- <IA3PR11MB9136ACFB4721D47304A9885C9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubja1-00031V-Sq
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 13:36:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752600994;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=day658YKIQbW8r75aOdYjZTSiajvic/kfG8T2N/ZV/k=;
+ b=O8zj+lySUYbIiI0+j91U+K+s8YNgLkXUTeTG/PGp7Z2jHP30yH/76E73lJqa3Zeudh8qfZ
+ QZ011t1e/d1pDTJdH7mLnHdTaQWxzj60GkmChT0oZ/ZNwLc0OIj78l/IVMO50Pf30xfKYo
+ INBL9eV3v6U8oTpoXZ1CQkModV+h5to=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-sQWdTwpePGqBEVl8r8ZgCA-1; Tue, 15 Jul 2025 13:36:32 -0400
+X-MC-Unique: sQWdTwpePGqBEVl8r8ZgCA-1
+X-Mimecast-MFC-AGG-ID: sQWdTwpePGqBEVl8r8ZgCA_1752600991
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4561dbbcc7eso8359975e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 10:36:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752600991; x=1753205791;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=day658YKIQbW8r75aOdYjZTSiajvic/kfG8T2N/ZV/k=;
+ b=o1t/1kn1jjpwTfkXuGeX9TX2ltSmrEhkV5/wL22WzfQ+fC27tc053VMNEGSblMedRw
+ LZHa6pf1hIaRTnNIMCw5EQWmDiXUHwVLajjvRMvS/z3AfhM+AWxy/8SefMh6CcJ2nhRl
+ 2wIveG6DfRW4DV2AzrJ9Vz62gRRvA9RBQ2Mfqw9QqPNd0NpxfYu03w6MBO9p0Ak/Pnmi
+ QSJOqu9gxh6jP3F21PvR8P+i7lJlQsI26Ymvck46h/+TVY55dro04Ebcll5TsPVwFKC7
+ Sort5haCHFEPHM0roI+VNizQKZpnuxhbjRK5pctn5ssUVW7WrbL/vcyuL9HAioMTseIx
+ NhOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRJVqwE1qHIhepqWnL6bDVWakx4+U44BARhEfegzp/0ozGWzKgGaxY3FmESk1Q7p8ju+35Xuxc1bbl@nongnu.org
+X-Gm-Message-State: AOJu0Yw3KQZVC80uv9dygIrVFTXPR8vDPL7mrUeuZcBlTyYNLkGRoHIS
+ BbwYO5wnQDYsGzAgSflz9jxQDB6+QzHKGO+cdlV0ZYSA2yhyX1rxJsW3wvIBYM8yZHJ2wQhD220
+ svq3YUU9+xYNUIeDMhe4MPmMzbNBfHB6EZVCCvRMVQlTS+cAHed2/64BH
+X-Gm-Gg: ASbGncu27zNqVwWlIEb599KLlRxY9IPy0fXV6zCv783fVCZ1css8N9JlFDZXvu3Ttv8
+ csld8503mujJmtU2EwykiCiZFcIL19M6elrIZ8080TxodxpnbYsh1V2yzWa+01xEgZT1i827Jg0
+ bypq8p3fv0bwDgs4mAVjxoIXpr/LKCz9fWfjIqezP2QW7ReOIuG7hnQDr3S6naybwskvbF+rbRF
+ /Eij/TEVpAKC8m305UMXcV+JoeFEtGqbnGDICPzSHf7Rey6qyR+o5Rg/u13N7Ayxw657WHILmxx
+ UZSkQu1IB8lyagHjbm722XIA2cmCeFgG
+X-Received: by 2002:a05:600c:1e8a:b0:456:18ca:68db with SMTP id
+ 5b1f17b1804b1-45618ca6fbcmr88881425e9.8.1752600991235; 
+ Tue, 15 Jul 2025 10:36:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF16b3YOx+Ogh7UeyDcMz2z8ZoA+/bnGN8dm1xA14v40A4+mY6qroqciY4O+dckrPLW3UsPBA==
+X-Received: by 2002:a05:600c:1e8a:b0:456:18ca:68db with SMTP id
+ 5b1f17b1804b1-45618ca6fbcmr88881085e9.8.1752600990658; 
+ Tue, 15 Jul 2025 10:36:30 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45624651a09sm36942335e9.12.2025.07.15.10.36.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Jul 2025 10:36:30 -0700 (PDT)
+Date: Tue, 15 Jul 2025 13:36:26 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ kvm@vger.kernel.org, Cleber Rosa <crosa@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 (RESEND) 00/20] Change ghes to use HEST-based offsets
+ and add support for error inject
+Message-ID: <20250715133423-mutt-send-email-mst@kernel.org>
+References: <cover.1749741085.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <IA3PR11MB9136ACFB4721D47304A9885C9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD76:EE_|MW4PR12MB6897:EE_
-X-MS-Office365-Filtering-Correlation-Id: d420197f-8ee5-4c17-c99e-08ddc3c5244c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|7416014|376014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?J0+bETXl5nl2gTQNJ/TuVhvuUxNXTzTJJV4GDI14iISaWihdRIYQeyL0k7GE?=
- =?us-ascii?Q?HQKrpHWqA/QgMod9iTMMTBTVINj2AFfa14GsT6iqQW+rw5DYiHHANbzdmnQ2?=
- =?us-ascii?Q?+0s3EPvbiWt6BVpqyoiH/w18O/X2p7ybXeJN6NRJAhmmS4ZsmDOY1pUU3coW?=
- =?us-ascii?Q?Xs9F33+Rl0ppO4Hj/VLZzebzRdUPixgdpB2jl7rAyfRbN5UPoVwzivByq9ME?=
- =?us-ascii?Q?/SvZ3nOTjjkxlVHDtZUGhKUQuFzAfuk6uA+ljNH3KU2DAX1Uh3yS0vSUTetO?=
- =?us-ascii?Q?6O78q6g49u9CypVHo9KfrV6ei265qD20NPTFCJvS34P5Quo7LI9BNAlYvT0o?=
- =?us-ascii?Q?K4uV3lZXIAYZnTckehsZEdmRr1CnD5/EjXA5h4jr+itavHhFx8aEtTiVQLKF?=
- =?us-ascii?Q?ki6WSKwk7ixBTL1XvDL1WhbcQncNqV8xh4hZ+zrA5/AHvudy2m8PIVMXRGi7?=
- =?us-ascii?Q?pW/maND86DpMm+ckssHUF14Ik2iY0FZgLNHSky12HZiUjEBFpUCGkhYAXWO/?=
- =?us-ascii?Q?hwz1H3SZwegu+MFE/kXLfPon76t/Sswz3ccp9csQRwZFSsnMpIbU9flGH99/?=
- =?us-ascii?Q?ZbaFAIkTpXa/x9l/NWKI7AqMfe6SGq5PFMKfvpFTpnDAInALJBAULcY19E+a?=
- =?us-ascii?Q?D79CphZN1I7ZBnbnoPcXIV+FBLXORLL6qUpojZdc8kGaze8Yx5vFmqKW7Xfm?=
- =?us-ascii?Q?L5LUQ0oWFZFN7vcXSitDo3ZyE9P2xzvVOW1f+clPxOdkp39Xr1P8ShRWKAQz?=
- =?us-ascii?Q?Bw2tV7xaRBTSIsU8kGY4SREimPEtl+LcKDUhaR0EafM8P34wafNsZ9RbxQl8?=
- =?us-ascii?Q?1NYeGHJhSY0pzk9oYbNT8OFLQUvEN+db6QpsoGp4OloPXkQwn7yybPQjMMwS?=
- =?us-ascii?Q?uJ3+GG1z5iCBjP/a6QcAKnsd+cbVqGSJfRHdUqZ2N6kLm5vmXf8KIQUoks8y?=
- =?us-ascii?Q?jLgfx+oOt9yuM8cHWzfIIpBPk/nlH18RBYzu/2nKhIovsqHquPdME94vjghw?=
- =?us-ascii?Q?yqU/GSeOmMnLMP1lh7KVv3BEprmetHRY7OwnscFgNnjmUFx9tq4rdgk1X0rb?=
- =?us-ascii?Q?+LAaYc/wmC8TeQN1KhdyX86gRboqmnJibEqvOAT7OGHrOJTmz3pvErzTrn3M?=
- =?us-ascii?Q?+4fKmppqWwPdxsly/rMTjFUfImacge0YRg2QGuo5UBbGbYksfPA0hTP5z+DE?=
- =?us-ascii?Q?yeGRureS6lbIo8OG/bV8l8ngi3yO+jaVWjoOy/Gf0+Sgwa58VQ0p6AVzFyJf?=
- =?us-ascii?Q?qfVPr6R1aJcjTQEBSstnTAISKl5kO3jmFQ/dJ4IzCLa86TdpMkqdZfM+/5k2?=
- =?us-ascii?Q?v1YN5/P/uPPmQf1xsgonUpphvK9jUCJO7BtZsHle36qxHq7IWCbv/vE6/zb/?=
- =?us-ascii?Q?ZSRMpaS42GXpq0mSA5Jjny3sZf157iCJ+Aj5LucZW6lV5MVtKcA3LEKU3BRY?=
- =?us-ascii?Q?q4EkmtB+30Wu5lGl1N3Q0ZwHsw89e1mwLKeqVcY5ImhDkd+rRN+zhSAm5I+s?=
- =?us-ascii?Q?FbdgiFWEZL0GqTmIQ0FtPwOhgttB+sE/7HaE?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(7416014)(376014)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 17:29:23.9762 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d420197f-8ee5-4c17-c99e-08ddc3c5244c
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD76.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6897
-Received-SPF: permerror client-ip=2a01:111:f403:2417::60c;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+In-Reply-To: <cover.1749741085.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,35 +122,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 10:48:31AM +0000, Duan, Zhenzhong wrote:
-> >+static const TypeInfo types[] = {
-> >+    {
-> >+        .name = TYPE_ARM_SMMUV3_ACCEL,
-> >+        .parent = TYPE_ARM_SMMUV3,
-> >+        .class_init = smmuv3_accel_class_init,
-> >+    }
+On Thu, Jun 12, 2025 at 05:17:24PM +0200, Mauro Carvalho Chehab wrote:
+> Hi Michael,
 > 
-> In cover-letter, I see "-device arm-smmuv3", so where is above accel device
-> created so we could use smmuv3_accel_ops?
+> This is v10 of the patch series, rebased to apply after release
+> 10.0. The only difference against v9 is a minor confict resolution.
 
-The smmu-common.c is the shared file between accel and non-accel
-instances. It has a module property:
-    DEFINE_PROP_BOOL("accel", SMMUState, accel, false),
+Unfortunately, this needs a rebase on top of latest PCIHP
+changes in my tree.  The changes are non trivial, too.
+I should have let you know more early, sorry :(
 
-where it directs to different iommu_ops:
-937 static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState *s)                                                                                                                                                                                                                                                                                          
-938 {                                                                                                                                                                                                                                                                                                                                                       
-939     SMMUBaseClass *sbc;                                                                                                                                                                                                                                                                                                                                 
-940                                                                                                                                                                                                                                                                                                                                                         
-941     if (s->accel) {                                                                                                                                                                                                                                                                                                                                     
-942         sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMUV3_ACCEL));                                                                                                                                                                                                                                                                              
-943     } else {                                                                                                                                                                                                                                                                                                                                            
-944         sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));                                                                                                                                                                                                                                                                                      
-945     }                                                                                                                                                                                                                                                                                                                                                   
-946     assert(sbc->iommu_ops);                                                                                                                                                                                                                                                                                                                             
-947                                                                                                                                                                                                                                                                                                                                                         
-948     return sbc->iommu_ops;                                                                                                                                                                                                                                                                                                                              
-949 }   
 
-Nicolin
+> I sent already the patch with conflicts, but, as you didn't pick,
+> I'm assuming you're opting to see the entire series again, as it
+> could make easier for you to use b4 or some other script you may
+> use to pick patches. So, let me resend the entire series.
+> 
+> It is nearly identical to v9 which addressed 3 issues:
+> 
+> - backward compatibility logic moved to version 10.0;
+> - fixed a compilation issue with target/arm/kvm.c (probably
+>   caused by some rebase - funny enough, incremental 
+>   compilation was fine here);
+> - added two missing SPDX comments.
+> 
+> As ghes_record_cper_errors() was written since the beginning
+> to be public and used by ghes-cper.c. It ended being meged
+> earlier because the error-injection series become too big,
+> so it was decided last year to split in two to make easier for
+> reviewers and maintainers to discuss.
+> 
+> This series change the way HEST table offsets are calculated,
+> making them identical to what an OSPM would do and allowing
+> multiple HEST entries without causing migration issues. It open
+> space to add HEST support for non-arm architectures, as now
+> the number and type of HEST notification entries are not
+> hardcoded at ghes.c. Instead, they're passed as a parameter
+> from the arch-dependent init code.
+> 
+> With such issue addressed, it adds a new notification type and
+> add support to inject errors via a Python script. The script
+> itself is at the final patch.
+> 
+> ---
+> 
+> v10:
+> - rebased on the top of current upstream:
+>   d9ce74873a6a ("Merge tag 'pull-vfio-20250611' of https://github.com/legoater/qemu into staging")
+> - solved a minor conflict
+> 
+> v9:
+> - backward compatibility logic moved to version 10.0;
+> - fixed a compilation issue with target/arm/kvm.c (probably
+>   caused by some rebase - funny enough, incremental 
+>   compilation was fine here);
+> - added two missing SPDX comments.
+> 
+> v8:
+>   - added a patch to revert recently-added changeset causing a
+>     conflict with these. All remaining patches are identical.
+> 
+> v7:
+>   - minor editorial change at the patch updating HEST doc spec
+>    with the new workflow
+> 
+> v6:
+> - some minor nits addressed:
+>    - use GPA instead of offset;
+>    - merged two patches;
+>    - fixed a couple of long line coding style issues;
+>    - the HEST/DSDT diff inside a patch was changed to avoid troubles
+>      applying it.
+> 
+> v5:
+> - make checkpatch happier;
+> - HEST table is now tested;
+> - some changes at HEST spec documentation to align with code changes;
+> - extra care was taken with regards to git bisectability.
+> 
+> v4:
+> - added an extra comment for AcpiGhesState structure;
+> - patches reordered;
+> - no functional changes, just code shift between the patches in this series.
+> 
+> v3:
+> - addressed more nits;
+> - hest_add_le now points to the beginning of HEST table;
+> - removed HEST from tests/data/acpi;
+> - added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
+> 
+> v2:
+> - address some nits;
+> - improved ags cleanup patch and removed ags.present field;
+> - added some missing le*_to_cpu() calls;
+> - update date at copyright for new files to 2024-2025;
+> - qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
+> - added HEST and DSDT tables after the changes to make check target happy.
+>   (two patches: first one whitelisting such tables; second one removing from
+>    whitelist and updating/adding such tables to tests/data/acpi)
+> 
+> Mauro Carvalho Chehab (20):
+>   tests/acpi: virt: add an empty HEST file
+>   tests/qtest/bios-tables-test: extend to also check HEST table
+>   tests/acpi: virt: update HEST file with its current data
+>   Revert "hw/acpi/ghes: Make ghes_record_cper_errors() static"
+>   acpi/ghes: Cleanup the code which gets ghes ged state
+>   acpi/ghes: prepare to change the way HEST offsets are calculated
+>   acpi/ghes: add a firmware file with HEST address
+>   acpi/ghes: Use HEST table offsets when preparing GHES records
+>   acpi/ghes: don't hard-code the number of sources for HEST table
+>   acpi/ghes: add a notifier to notify when error data is ready
+>   acpi/generic_event_device: Update GHES migration to cover hest addr
+>   acpi/generic_event_device: add logic to detect if HEST addr is
+>     available
+>   acpi/generic_event_device: add an APEI error device
+>   tests/acpi: virt: allow acpi table changes at DSDT and HEST tables
+>   arm/virt: Wire up a GED error device for ACPI / GHES
+>   qapi/acpi-hest: add an interface to do generic CPER error injection
+>   acpi/generic_event_device.c: enable use_hest_addr for QEMU 10.x
+>   tests/acpi: virt: update HEST and DSDT tables
+>   docs: hest: add new "etc/acpi_table_hest_addr" and update workflow
+>   scripts/ghes_inject: add a script to generate GHES error inject
+> 
+>  MAINTAINERS                                   |  10 +
+>  docs/specs/acpi_hest_ghes.rst                 |  28 +-
+>  hw/acpi/Kconfig                               |   5 +
+>  hw/acpi/aml-build.c                           |  10 +
+>  hw/acpi/generic_event_device.c                |  44 ++
+>  hw/acpi/ghes-stub.c                           |   7 +-
+>  hw/acpi/ghes.c                                | 233 ++++--
+>  hw/acpi/ghes_cper.c                           |  39 +
+>  hw/acpi/ghes_cper_stub.c                      |  20 +
+>  hw/acpi/meson.build                           |   2 +
+>  hw/arm/virt-acpi-build.c                      |  35 +-
+>  hw/arm/virt.c                                 |  19 +-
+>  hw/core/machine.c                             |   2 +
+>  include/hw/acpi/acpi_dev_interface.h          |   1 +
+>  include/hw/acpi/aml-build.h                   |   2 +
+>  include/hw/acpi/generic_event_device.h        |   1 +
+>  include/hw/acpi/ghes.h                        |  51 +-
+>  include/hw/arm/virt.h                         |   2 +
+>  qapi/acpi-hest.json                           |  35 +
+>  qapi/meson.build                              |   1 +
+>  qapi/qapi-schema.json                         |   1 +
+>  scripts/arm_processor_error.py                | 476 ++++++++++++
+>  scripts/ghes_inject.py                        |  51 ++
+>  scripts/qmp_helper.py                         | 703 ++++++++++++++++++
+>  target/arm/kvm.c                              |   7 +-
+>  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5240 bytes
+>  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5326 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6601 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7723 bytes
+>  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5442 bytes
+>  tests/data/acpi/aarch64/virt/HEST             | Bin 0 -> 224 bytes
+>  tests/qtest/bios-tables-test.c                |   2 +-
+>  32 files changed, 1697 insertions(+), 90 deletions(-)
+>  create mode 100644 hw/acpi/ghes_cper.c
+>  create mode 100644 hw/acpi/ghes_cper_stub.c
+>  create mode 100644 qapi/acpi-hest.json
+>  create mode 100644 scripts/arm_processor_error.py
+>  create mode 100755 scripts/ghes_inject.py
+>  create mode 100755 scripts/qmp_helper.py
+>  create mode 100644 tests/data/acpi/aarch64/virt/HEST
+> 
+> -- 
+> 2.49.0
+
 
