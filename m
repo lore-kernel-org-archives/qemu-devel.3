@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F712C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494BDC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ1t-0002zU-6r; Tue, 15 Jul 2025 02:20:42 -0400
+	id 1ubZ4y-00070O-VU; Tue, 15 Jul 2025 02:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1Y-0002to-1O
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:21 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ3x-0006cb-Kw
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:22:57 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1W-0007NX-5a
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:19 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a54700a463so2779182f8f.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ3v-0007rU-IL
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:22:49 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4555f89b236so35290965e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560416; x=1753165216; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7S4k+1sCMPbW4jtmuj8Za9v8Er4TEjQFuXvwHmkJEF8=;
- b=RSX3zvOeBJKdL7G2vc6sOSq7Z9d5pjUmj3b0NvC+jjTAgzYREus5J5EhXvwGXcc5c6
- UGQsTqK7sN1UTbH6n2U9huKhzsg+ycxn2tWTjda+kTrI3Le50OOrCDB4XsmRY3CrAHU/
- K5HiEYO6WqJrb4jCjBnia4qf9HO0pSlnbhqcffc+tASIqcWy5EXHIRcTvBhBTn0ejVJS
- m36qhSToY5iR8NbOnqQeYHJIVC24+f+Z6U2QYGDxzpcFaG8hP/faxHdgkRM+3sqxTuaC
- ktygxzbych88RbwYyb8znpawdwFHOpJ6gNkFh7tm69a1IQ4qs9UH+EDOreGJuwPaZjGs
- xmJA==
+ d=linaro.org; s=google; t=1752560566; x=1753165366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LEfmCgjfW5wdBi3tdD6kVKoEdzvru15ZdSgTN0/l8fE=;
+ b=xWxZAU+ZsEnVbM0hcZdqf6/dfmNZYhnN/WTb9/RTh9/kDpKM6d4BdufqhrA3UPwu/2
+ 7jTTDt37+/Zu1FARqJAoylFTyHyTdLxoNthnlPkGKR3fYkavm9QkmjEcArpsJv4r+TP3
+ ZVLquwM4c7HBBIpIMMB5YQkj2cERL9+3fI8kXjYNPPntMgxGNSn+sNsWl/Ap+LCkJQe6
+ PpF50JbzS2L9HCmYUtpW30tvE8M8zHAL4fGGxTlzA/Sqds4CU0jfEIXz0qq8/qMD+Hed
+ SCZJunNS/uq2M71wwaAGfP6ybIo3ZY0hywkBvumI9a5gvJtFxgWSxjV8KLIna6Se84B2
+ kMNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560416; x=1753165216;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7S4k+1sCMPbW4jtmuj8Za9v8Er4TEjQFuXvwHmkJEF8=;
- b=m+kCriuCthCZHVhumcqpxcx9tI7gi+qBlR9pTEoeWJDJEujFklGSWIHXCoBDr+YZx6
- 6Zu63ZlS2WgRwBBT5zAOF3gpDXTEF0Q7y05nc3QwGnmV2V3cyzF5cBUvpH26ijqGMtKs
- IfU/5axrgq6aQCt68otpxA9NjW6ck46R01Qb89fxIY26iOqVyFqe1W2tLSTzP2Hl7H9q
- g3Stc9YFJ1D2tb6SPFgZKZDfCzrlqYDokMBX5w2HIh1JE8/uG4QK/uLb4dsnh/LDYD2O
- oB7DDU1Tgn2jXMbBCJ+VStj8VtOFONFRHCVxbekf/4tKTiDsEJDyj+XNu33IFQJVOF68
- t5SQ==
-X-Gm-Message-State: AOJu0YxjY5vMvLQpaqRLvogW/Y8axvgTg/ipmhngcaAOAxEioRFm21Rw
- x66Ost3EdSz01247594CM1CJUemhI4E1IDcuZiwoT6KvQdaik3LRa+pE1oZxZ/3F2jMZF7oR7xZ
- ZB70/
-X-Gm-Gg: ASbGncsxAF3qrmpjVDLDfQth5oi8Wi8amJdrUmKlopLPZJR3P9ViH3nX7Of62qrrjlJ
- J+bCx4IwdBDb+ejEFWcBMaW3bwMwxlSLCDLTaYO93yo8x9sRp4PegVbkRP/5b4PGLOXh6JQHukq
- ZV9Y3jgwmJFkM0bWtkgw6ELi2Vd86UpZ8UIZ+H/pfMG6W8zO/x43NgvHjQ61WhPg3qgySGFerqE
- 4MWF/v9EpsDgMUaWzQcjXUuOD6QxjiowT0YQ5LhdBSaprWAuxypIk8Yqk7v39R/FD7wlUGfPiCl
- EWZZnHjS18zBZKbR1g70o02xJsHW0+6foMtSt3GHrYh2phVHmc8EfhajKL++dBtuscIWJWBXuxz
- Lf6iUqjEJnofmAjNk6KlSRN4ZukLO4SxUW08nrLLnbLo5x9lwbl4tpnlcANlUqQovDiWPUqna4M
- +hnXbynH4=
-X-Google-Smtp-Source: AGHT+IE13DRpDAZHNWNLqC33BuyPYsxffkUHmNlJ7fn3LlYk/Wav1o1g7jLoeHvFsMgbUYv/e6Gmuw==
-X-Received: by 2002:a05:6000:144a:b0:3a4:da0e:517a with SMTP id
- ffacd0b85a97d-3b60953f5b3mr1848784f8f.23.1752560415969; 
- Mon, 14 Jul 2025 23:20:15 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1752560566; x=1753165366;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LEfmCgjfW5wdBi3tdD6kVKoEdzvru15ZdSgTN0/l8fE=;
+ b=SayCBWR4L3gIxD/RTPRv6I/p0bZ8ZW9Legt1EG5goXCIlWWtuXhUqyLpflwHbB1K2d
+ DmgOTd5HqZwqweZJMYv/QfcTEQHYvUryyTSLL8pwUZc7uGA2q2vZnqgIXo+lBO6PRFHH
+ g7I2Y/a2u+3HvwPNcqZjBVhBvm2BGYq3FeSnATn8CKutMK1bXw2TqJxTsI/kl17ZRXMY
+ Hz8rze11pt+gewqza3dXOfpE/VcwfHs+d2gWDmOLfKJUW7YJk4UlOGvL4+CeV0/gEk8s
+ S7ABxz6cNXK1pxPd6AlYPGl/KFHZHQkjIiwNV8Al0+PErLI11sSKMwA/Pi8hHHJddKkQ
+ aV/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzMoHByCRpb8VMntuSXG5E5iSFgcOG0BinXQzooFjdeyB1Yo4IP1Xyb+jR6Injy6i9193q/XG5+NAt@nongnu.org
+X-Gm-Message-State: AOJu0Yy01I1DJvLf82gRNqfYmIdi6IQBi9pVpSwB3EnXSrH7YI0DJDJc
+ +GyihYEk21OSiyt3wCHW/r1upfembt2uOq8seK16IyXvKmXf8CrUX5kgFwIlynI4ndE=
+X-Gm-Gg: ASbGncsq6Znj0/lHfhMvydq42ivaMLSrT7x2cE4jkpsPVQXckz8uRAPuaN3TJkakBd7
+ ElVno5ar6731TxG0bEfkRYA3Ys8Yo1wWniTpZhrpyOUcnkQSdkf4ZXwdXxAQfCGNvLNnvdEhjv8
+ IpM7NXLgjRJRMtTdnZYw2Km3muSMcVD9veDQCdquLehPY50xpJFXSI1tZjgOOt2ONQ9oPn1Pat7
+ KREsVX2jjdZUN/boFuoZj2zemjltfyjukKabEPIZAuCoV1ydLU3FCGjGY15B3Jqc08SxWD9bxpf
+ 7Lr8VcMc9Dl0G4P3ovJkG4dyB08847PiclhLirNOwcplFkLbZJX0flML1y7qvNd2xuAYuHKHGHv
+ gkLy+ip2lUVk1U+AvFI/c9Vr4p1T+R0R9rkqqwJ6wDKVqetjvKJWt9SYnilGSwS6JSg==
+X-Google-Smtp-Source: AGHT+IGcbRN37pQ3lyhmlHU4NIojc3p8RHRP9Yaz5oLyPoNY6lSiZXt4zbW8kZ5GbcYBGUvgOQVJJA==
+X-Received: by 2002:a05:600c:358f:b0:456:7cf:527a with SMTP id
+ 5b1f17b1804b1-45607cf57cbmr84097065e9.28.1752560565673; 
+ Mon, 14 Jul 2025 23:22:45 -0700 (PDT)
+Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc9268sm14141612f8f.41.2025.07.14.23.20.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:20:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: [PULL 11/17] esp.c: only raise IRQ in esp_transfer_data() for CMD_SEL,
- CMD_SELATN and CMD_TI commands
-Date: Tue, 15 Jul 2025 08:19:11 +0200
-Message-ID: <20250715061918.44971-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
-References: <20250715061918.44971-1-philmd@linaro.org>
+ 5b1f17b1804b1-4561a052729sm55173695e9.33.2025.07.14.23.22.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Jul 2025 23:22:45 -0700 (PDT)
+Message-ID: <61709016-a8f9-4670-b5bd-3fb7f6105074@linaro.org>
+Date: Tue, 15 Jul 2025 08:22:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] rust: bindings: allow any number of params
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+References: <e41344bd22248b0883752ef7a7c459090a3d9cfc.1752560127.git.mst@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e41344bd22248b0883752ef7a7c459090a3d9cfc.1752560127.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,54 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+On 15/7/25 08:15, Michael S. Tsirkin wrote:
+> We are going to be adding more parameters, and this makes
+> rust unhappy:
+>      Functions with lots of parameters are considered bad style and reduce
+>      readability (“what does the 5th parameter mean?”). Consider grouping
+>      some parameters into a new type.
+> 
+> Specifically:
+> 
+> error: this function has too many arguments (8/7)
+>      --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/structured/bindings.inc.rs:3840:5
+>       |
+> 3840 | /     pub fn new_bitfield_1(
+> 3841 | |         secure: std::os::raw::c_uint,
+> 3842 | |         space: std::os::raw::c_uint,
+> 3843 | |         user: std::os::raw::c_uint,
+> ...    |
+> 3848 | |         address_type: std::os::raw::c_uint,
+> 3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+>       | |____________________________________________^
+>       |
+>       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
+>       = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+>       = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>   rust/qemu-api/src/bindings.rs | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-Clarify the logic in esp_transfer_data() to ensure that the deferred interrupt code
-can only be triggered for CMD_SEL, CMD_SELATN and CMD_TI commands. This should already
-be the case, but make it explicit to ensure the logic isn't triggered unexpectedly.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250711204636.542964-2-mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/scsi/esp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index f24991fd16d..9181c8810fb 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -1012,6 +1012,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
-              */
-              s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
-              s->rregs[ESP_RSEQ] = SEQ_CD;
-+             esp_raise_irq(s);
-              break;
- 
-         case CMD_SELATNS | CMD_DMA:
-@@ -1022,6 +1023,7 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
-              */
-              s->rregs[ESP_RINTR] |= INTR_BS;
-              s->rregs[ESP_RSEQ] = SEQ_MO;
-+             esp_raise_irq(s);
-              break;
- 
-         case CMD_TI | CMD_DMA:
-@@ -1032,10 +1034,9 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
-              */
-             s->rregs[ESP_CMD] = 0;
-             s->rregs[ESP_RINTR] |= INTR_BS;
-+            esp_raise_irq(s);
-             break;
-         }
--
--        esp_raise_irq(s);
-     }
- 
-     /*
--- 
-2.49.0
 
 
