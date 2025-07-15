@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03015C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDFCC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubd5g-0004kh-Sx; Tue, 15 Jul 2025 06:40:53 -0400
+	id 1ubd5s-0004xl-Pe; Tue, 15 Jul 2025 06:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5Z-0004iV-P9
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:47 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5e-0004k1-DB
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:50 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5V-0005nO-0c
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-451d41e1ad1so37469185e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5b-0005o4-Qo
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:50 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45610582d07so17679325e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752576039; x=1753180839; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752576045; x=1753180845; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HlnnQVYR7UDi9FQuqtljHTy9JqrOVxDZXhuwIJFwMtU=;
- b=m5OyBd0IcXQ6ypUcJnesDvr4fcnkDicnchkDQCdvlt/pXfX0+in7rwv4l9GDzYLaV/
- SHRXSwzpq8syU1hRTzBBhsNTA3DyvGeGwoGU5Qz8eSPJzd5aYDLA5s7wCqNEkSeMINSg
- 9K0Fg8jkLq4J46C/smQfQH2kmhUUW/3E3gsBGjCEgbnwpXjEtqBKvFn/m7890EchUjKZ
- tK++bGrQZmudm52j7+OZosuzLyz+6HAeclxMi14fmNIMtPtFqBBzpC/9FGoPCjVbQhY2
- ruig1rDczoJViCbLprPOMfzBVQ+C8x/X/YR50l469ce2BMIi51ZX88Iei/+7/uPnuuKK
- xInQ==
+ bh=SHOAoC4vQEuBjIRxFlKZabNqqoxfUsSgKzK47tojwcc=;
+ b=oh89euifpMufQ5UX1/eucitqyPGL7RRrqlS95vXNHhblLhHC+jYsNTVdsABBSC+FLf
+ izLvn31Jcqa8CpSKfFVSvlVQI3hGvRtljf41Mj/Gm9j7Gc6PdVH8+wthKHDJij6rIVIX
+ SqErYj5b0uBbTqoVabD36QUq4enbGbxzznmeG174mCKPavFOPewTlT3GEHubKjYtZVYN
+ k5HV810zZFRX+7sKO+yO6fLtr5jRMYZ4sigkehT51vJEm7cBJhdzxdDrc6FaXU9npzty
+ 92vYvyAIrFne5tLG4tjJXcFZmEEahLmaoF/QYT0g70HvQzXy0wxBGpB37IOtlMO1J4We
+ xAxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752576039; x=1753180839;
+ d=1e100.net; s=20230601; t=1752576045; x=1753180845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HlnnQVYR7UDi9FQuqtljHTy9JqrOVxDZXhuwIJFwMtU=;
- b=nrQJHJzBYXEuWrYGLme8mtPOfQOOC0yLba+Qo5mKt5NGT220IeqMEOJi1gLe5YR+IT
- y+B0WuMS9X21Og3WPKd8YSYWmgE6fQ/FxUZsXlmd1NAaJDJDRALGhPF5dGUrfE8RRphl
- ehUZC6uL47WUmz2xRU20Mc4R3TFFhUeuqdC3dNLK3/wCd7b0Vw8kBOCiR2NCsOkgmGcf
- kB9b09AVx+9OAEHY6LKI6LsMirTExA2EmsGOuc5YA1CFPdCLKzF2BPlO35X0jd5h5QRm
- HjbJMhpTFvLTxEQVB14pqHQajYCy23xukg2Cfowxa/Zq/TM2jNru23OFFif6FqS6giEC
- BP1Q==
-X-Gm-Message-State: AOJu0Yw5C50zUSs0PpLzJRBKWIYWQUBBCwjPo80waB4zmTZg1FtDieSJ
- CKD8quO+o0a7DLCKFZC0MlYQu6/YkMCHsIfffjU0i6a4skOU2xp6dd8z6GuFlbOtq1WGD1U8Xnk
- 3kTPm
-X-Gm-Gg: ASbGncvrJRCKNwzFFYwixQIrRuK9vVYCuY6P2nNbIVuIDiMuWg71sWDewqodYto9EsJ
- 1iy5JGCsCSp8CRTH4iTtFOhfPb3pB9LQMl4iJvap6cuFIQp7EideEmTW5t6oKc9UmmffRpelCXU
- ZFafrqZu4UbneWCzJKejZiyn6Vlpl/bGDK8q3Pxh+7gj6RPorJNbjLi8FcUHk50hzQ5NQ2C022b
- Gn6aMTQxW33FCRj1Iu351dnXlao8B8J6dkpXRPfaM+ElnW2JeyzewFoU/fKn/fUkHqybtC5s/qT
- xWhzS6CNlU6Hn373OwHr8iWwcY/5DLiZFa6PfIO34Vmy6zsmh/MzNbsv3kdX6H+HcrJGoL+9uEc
- HGwuJSMc32xTbQhQ6UWgcvNTmSOiCCtTJSpRH7p1qR1N1aLK0AhO5H3dawjaancwK5h5lltpkfc
- oKSUQ5vUaqmfie
-X-Google-Smtp-Source: AGHT+IEfiKtUlY2NC3T23b6YhD2TXornCw2N7iQ9AKSkfMpzVs7HgdyMgnjHsiNkknOiZcS6N1s+cg==
-X-Received: by 2002:a05:600c:154c:b0:456:1824:4808 with SMTP id
- 5b1f17b1804b1-456182448e1mr58815025e9.32.1752576039051; 
- Tue, 15 Jul 2025 03:40:39 -0700 (PDT)
+ bh=SHOAoC4vQEuBjIRxFlKZabNqqoxfUsSgKzK47tojwcc=;
+ b=Eb7BUz3VS+JAcdXXBP7D9/3pvGL9OeLDyO+t7wEiL2kLg8TqVXZh+vZSizCtY6QYZu
+ r/CyRq8lXy2clnTAp2SlXgNRJo5wbu6a6QDVF6vZ2iLZhWxdvdz93xNf2t8rVBWMiSab
+ RuqKohi1tz217TgYvpm41LlxdGAKrw0WirmLkHanBrihlKkdodT9HXSo+K+EPgGLpbzQ
+ jaYGLLvn5uzqoHuuHeXC4BcSJgEAvskt6bumklxJeCNV1e70Tn28qeQEwISFouG/JehQ
+ YD++1KPZUWcaRXj8uXYrxp8iGPKWt0AofonFaVTnv/Eo6etX6EPOnVRx0uCQQy2tauhC
+ Rwaw==
+X-Gm-Message-State: AOJu0YzNFaWtWQgGHW+e73x5MdsqNvEK3CDsa3nl8C11LixrSfA09c+i
+ +vEsKe8C8POg1zlBpxrIIn2VgGMO6pZ4I0fiDF9AVN3xWARJiOo/Y/7otvuI/AWIiotLsvOTKZb
+ K7d3r
+X-Gm-Gg: ASbGncsCVH72hfAHFz8ZFcKo2Qj5gLjmnx01AlUo0kkMrbla4BmTuZNgsahI5CHQbcZ
+ LQZVdn78fufvJnzw+auY4sbJDpCeeTR5ywMFHs/J23nShn+tRbuLChqraFLOnZ8wKRGGIP7BrqX
+ +/Ij0SoL206+v2bQYfnMbU0G3RUzqTay9QZEzbllFGVNhOi00nRY7u/A8pGnTwehdHBuzZcaL94
+ 7JXRCASLEsaHUr/Dnvi1Gpe3lRnu/qLXmcM2OcNJcl1dQws1CEo+IAja8isQTSsogWDVQ9BCw9P
+ RtlnP47R5nsFF1Jy8FjqGkl/nafIGjxzWw13Uou+CUsZkcfIwoxA1HL38acA9MJy810raqS96Xt
+ 80z5OxA6rCAvfPVTeBnd764eJgtqtD6C7i8WI1pOb+xHIIpVhkymikbVPPtilT4qTpKhCwfNoyC
+ p/jQ==
+X-Google-Smtp-Source: AGHT+IF9dRkKJlkTsKAxnF9quZwSF+B01ym/ys9PnW7Ym6xsHElUqVsgfxa9Do+l9RkZHTrrUB46rQ==
+X-Received: by 2002:a05:600c:a48:b0:43c:f0ae:da7 with SMTP id
+ 5b1f17b1804b1-454f4272c71mr156379575e9.7.1752576044851; 
+ Tue, 15 Jul 2025 03:40:44 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d5f5sm14910909f8f.56.2025.07.15.03.40.37
+ 5b1f17b1804b1-4560eb98a40sm88485115e9.27.2025.07.15.03.40.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 03:40:38 -0700 (PDT)
+ Tue, 15 Jul 2025 03:40:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -77,18 +77,18 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH-for-10.1 v5 4/7] accel/system: Add 'info accel' on human
- monitor
-Date: Tue, 15 Jul 2025 12:40:12 +0200
-Message-ID: <20250715104015.72663-5-philmd@linaro.org>
+Subject: [PATCH-for-10.1 v5 5/7] accel/tcg: Propagate AccelState to
+ tcg_dump_stats()
+Date: Tue, 15 Jul 2025 12:40:13 +0200
+Message-ID: <20250715104015.72663-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715104015.72663-1-philmd@linaro.org>
 References: <20250715104015.72663-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,71 +111,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'info accel' dispatches to the AccelOpsClass::get_stats()
-and get_vcpu_stats() handlers.
+Next commit will register tcg_dump_stats() as AccelClass::get_stats
+handler. Since we want this handler to be called with the correct
+accelerator state, propagate it along.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- accel/accel-system.c |  8 ++++++++
- hmp-commands-info.hx | 12 ++++++++++++
- 2 files changed, 20 insertions(+)
+ accel/tcg/internal-common.h | 2 +-
+ accel/tcg/monitor.c         | 3 ++-
+ accel/tcg/tcg-stats.c       | 7 +++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 76cf4e7ef7a..1e97c64fdca 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -25,6 +25,8 @@
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 77a3a0684a5..847ae3914f5 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -139,6 +139,6 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+ void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
+ 
+-void tcg_dump_stats(GString *buf);
++void tcg_dump_stats(AccelState *accel, GString *buf);
+ 
+ #endif
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index adb9de5a1c6..97626da2f1f 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -7,6 +7,7 @@
+  */
  
  #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "qapi/qapi-commands-accelerator.h"
-+#include "monitor/monitor.h"
- #include "hw/boards.h"
- #include "hw/core/cpu.h"
- #include "accel/accel-ops.h"
-@@ -103,11 +105,17 @@ void accel_init_ops_interfaces(AccelClass *ac)
-     cpus_register_accel(ops);
++#include "qemu/accel.h"
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "qapi/qapi-commands-machine.h"
+@@ -23,7 +24,7 @@ HumanReadableText *qmp_x_query_jit(Error **errp)
+         return NULL;
+     }
+ 
+-    tcg_dump_stats(buf);
++    tcg_dump_stats(current_accel(), buf);
+ 
+     return human_readable_text_from_str(buf);
+ }
+diff --git a/accel/tcg/tcg-stats.c b/accel/tcg/tcg-stats.c
+index eb6e20ae985..02795570b5c 100644
+--- a/accel/tcg/tcg-stats.c
++++ b/accel/tcg/tcg-stats.c
+@@ -37,9 +37,8 @@ static void dump_drift_info(GString *buf)
+     }
  }
  
-+static void accel_ops_class_init(ObjectClass *oc, const void *data)
-+{
-+    monitor_register_hmp_info_hrt("accel", qmp_x_accel_stats);
-+}
-+
- static const TypeInfo accel_ops_type_info = {
-     .name = TYPE_ACCEL_OPS,
-     .parent = TYPE_OBJECT,
-     .abstract = true,
-     .class_size = sizeof(AccelOpsClass),
-+    .class_init = accel_ops_class_init,
- };
+-static void dump_accel_info(GString *buf)
++static void dump_accel_info(AccelState *accel, GString *buf)
+ {
+-    AccelState *accel = current_accel();
+     bool one_insn_per_tb = object_property_get_bool(OBJECT(accel),
+                                                     "one-insn-per-tb",
+                                                     &error_fatal);
+@@ -207,9 +206,9 @@ static void dump_exec_info(GString *buf)
+     tcg_dump_flush_info(buf);
+ }
  
- static void accel_system_register_types(void)
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index d7979222752..6142f60e7b1 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -267,6 +267,18 @@ ERST
-         .cmd        = hmp_info_sync_profile,
-     },
- 
-+    {
-+        .name       = "accel",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "show accelerator info",
-+    },
-+
-+SRST
-+  ``info accel``
-+    Show accelerator info.
-+ERST
-+
- SRST
-   ``info sync-profile [-m|-n]`` [*max*]
-     Show synchronization profiling info, up to *max* entries (default: 10),
+-void tcg_dump_stats(GString *buf)
++void tcg_dump_stats(AccelState *accel, GString *buf)
+ {
+-    dump_accel_info(buf);
++    dump_accel_info(accel, buf);
+     dump_exec_info(buf);
+     dump_drift_info(buf);
+ }
 -- 
 2.49.0
 
