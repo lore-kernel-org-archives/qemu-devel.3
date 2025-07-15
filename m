@@ -4,70 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6782FC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E81EEC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublV7-0004sU-Mh; Tue, 15 Jul 2025 15:39:42 -0400
+	id 1ublX1-0008NY-Bu; Tue, 15 Jul 2025 15:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubky4-0004cP-R2
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1ubl2n-0007Y9-B8
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:10:25 -0400
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubky1-0001kR-EE
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606327;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7uCRQHqcaIupLbmBWoiFd2iNSs6s7kpg5Vp92ZSuOuY=;
- b=LxbQb8oTRvnt13FenoIW+pl4nvLzG+49Q1bchWbrpTqkXvIfZr8DufGdCPekXs35XtnNQn
- qKGxBD4++nqFyzNv6Xr3BoF9BRVGnExV8XfxUDqGKZ3VYcu/N22VKJkTw0WwxWHF21yv0G
- U3b6gI/zIZ5AYGzTWmJQs7OqmXtg1Mc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-pAkKV5qzNqqY-YBUYroUxQ-1; Tue,
- 15 Jul 2025 15:05:25 -0400
-X-MC-Unique: pAkKV5qzNqqY-YBUYroUxQ-1
-X-Mimecast-MFC-AGG-ID: pAkKV5qzNqqY-YBUYroUxQ_1752606325
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02CF41956087; Tue, 15 Jul 2025 19:05:25 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.34.84])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75B8E197702F; Tue, 15 Jul 2025 19:05:23 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 51/57] qemu-img: amend: refresh options/--help
-Date: Tue, 15 Jul 2025 21:03:24 +0200
-Message-ID: <20250715190330.378764-52-kwolf@redhat.com>
-In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
-References: <20250715190330.378764-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1ubl2l-0002Gp-Cs
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:10:24 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 3F39514002DD;
+ Tue, 15 Jul 2025 15:10:21 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+ by phl-compute-06.internal (MEProxy); Tue, 15 Jul 2025 15:10:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1752606621;
+ x=1752693021; bh=RPtF1g5C2CuUdiTxaNPOm74cUCy+x7CnlQHfmQKa0Y0=; b=
+ B+iBeWjofw7hrcW1oUL5PXYvU/2ehoplhsAMok+7TxOWAgVwIO6MVEY8pnnAwmxN
+ 5L/rhDALHjHTQA33ekj5xkuxuuZUQcdgTYdIFa6VqeQo6mi+3JScfJ4t1tQ484WQ
+ f0yFOPvu+P+EraT4JSqmTENXtC3zgqcaj6VHtNmAe8KRPFm2BCM4DLV7KtyOqGtv
+ ukwojWRnnqQrePPT6K71irBrGwIYPK4ZeomkSqv5msbEPTtD/QycVST5KmG9Yyv4
+ 7pEWYVRgUM1R66Pk+ZORqaUT04rtV/Xg4TtkR63hSNCnfMGSbSsCDV8mpE8BlS9F
+ 44UuXG9AJxPVyt1G5aArLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752606621; x=
+ 1752693021; bh=RPtF1g5C2CuUdiTxaNPOm74cUCy+x7CnlQHfmQKa0Y0=; b=C
+ zos33v8Rc8MVjVDZtPEaMD7s8UZAeXe8LfmjJwJunJvXbYz9u7IkS5PgRkmyQ3XX
+ MLmxbcx0rnCCC3+IpauE4H7NhLaNHwYMg86oqbHG7bRvHE739pAYKtxPOVo89BH4
+ Bk4szDAzqs3FNrKXLS8RXHcqNebC4TxNXiJSHEVEsctnkxmxUXJMaQM9v4iyUrDp
+ 6oExcup97m72oZeTIny51UdIPkqC9TwSTKigUTvqAlJHXHJuqMBgCRiraShW4d1A
+ c0Z0vdj9b7aS4aQt2KkMJ2U4UO46/2OrmbTgnvcN81M1xZPoseLHyMrbkHGKAFKQ
+ 0jl15U3FSDH+AW8TIyT2A==
+X-ME-Sender: <xms:nKd2aA6hSziXfqwel7FEO7CCNqFCmkWcos4HoqpFjhyiHLO2iIsBbA>
+ <xme:nKd2aB5DxM9_g0VMdCm7s75fqJsI8jpcuyilDOTm4PpBN3tpoMfW9IRgW7v6bnYgj
+ JjwQ02kxalFTF9bbW4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeigecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdflihgrgihu
+ nhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenuc
+ ggtffrrghtthgvrhhnpeejheefuddvtdfggfdvffekteehhfelgfdvvedvkeeuffefkeeh
+ heegvefhveetjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+ hrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsggprhgtphht
+ thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhgvnhhhuhgrtggrih
+ eskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhr
+ ghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:nad2aBDEAKS9TEhfv2wnnH08gpekEOCHko6SjBpQSOStdaH8P0hnGg>
+ <xmx:nad2aCzjt1chNuPpYdRmk2EOkoiyS_5bMuJF0_jxDXjeT1kymPOrAg>
+ <xmx:nad2aGDFvwxfydgxgS30gdyM6Etb_ZgzbdG-zw-Cm-27SGbj6YaNCg>
+ <xmx:nad2aHbF3FddiGkQr7KHXNTEIKwNl9RWI3t8RnNw5gvem_ZlxnQFLg>
+ <xmx:nad2aES3urvcAQ_Bpc0GXsJriIwX0ozQbK23boQF6881bfU3qnWFIUtF>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id E3AEC2CE0071; Tue, 15 Jul 2025 15:10:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ThreadId: T86cbbd2d33d83f19
+Date: Tue, 15 Jul 2025 20:09:58 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Message-Id: <a972b6c1-5e66-41a9-b3ae-094fd98d6388@app.fastmail.com>
+In-Reply-To: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+References: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+Subject: Re: [PATCH 0/5] hw/pci-host/bonito: Improve various emulation
+ functions
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.157;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,152 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
 
-Add missing long options and --help output,
-reorder options for consistency.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250531171609.197078-22-mjt@tls.msk.ru>
-[kwolf: Fixed up qemu-iotests]
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qemu-img.c                 | 54 +++++++++++++++++++++++++++-----------
- tests/qemu-iotests/153.out | 12 ++++-----
- 2 files changed, 45 insertions(+), 21 deletions(-)
+=E5=9C=A82025=E5=B9=B45=E6=9C=888=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=
+=8D=883:46=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+> Hi all,
+>
+> This series addressed a couple of missing Bonito functionalities
+> I found when I was trying to test NetBSD against QEMU.
+>
+> Please review.
 
-diff --git a/qemu-img.c b/qemu-img.c
-index c16de265e0..bb10569372 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4564,26 +4564,48 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
-     for (;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"object", required_argument, 0, OPTION_OBJECT},
-+            {"options", required_argument, 0, 'o'},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"cache", required_argument, 0, 't'},
-             {"force", no_argument, 0, OPTION_FORCE},
-+            {"progress", no_argument, 0, 'p'},
-+            {"quiet", no_argument, 0, 'q'},
-+            {"object", required_argument, 0, OPTION_OBJECT},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":ho:f:t:pq",
-+        c = getopt_long(argc, argv, "ho:f:t:pq",
-                         long_options, NULL);
-         if (c == -1) {
-             break;
-         }
- 
-         switch (c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-         case 'h':
--            help();
-+            cmd_help(ccmd, "-o FMT_OPTS [-f FMT | --image-opts]\n"
-+"        [-t CACHE] [--force] [-p] [-q] [--object OBJDEF] FILE\n"
-+,
-+"  -o, --options FMT_OPTS\n"
-+"     FMT-specfic format options (required)\n"
-+"  -f, --format FMT\n"
-+"     specify FILE format explicitly (default: probing is used)\n"
-+"  --image-opts\n"
-+"     treat FILE as an option string (key=value,..), not a file name\n"
-+"     (incompatible with -f|--format)\n"
-+"  -t, --cache CACHE\n"
-+"     cache mode for FILE (default: " BDRV_DEFAULT_CACHE ")\n"
-+"  --force\n"
-+"     allow certain unsafe operations\n"
-+"  -p, --progres\n"
-+"     show operation progress\n"
-+"  -q, --quiet\n"
-+"     quiet mode (produce only error messages if any)\n"
-+"  --object OBJDEF\n"
-+"     defines QEMU user-creatable object\n"
-+"  FILE\n"
-+"     name of the image file, or option string (key=value,..)\n"
-+"     with --image-opts, to operate on\n"
-+);
-             break;
-         case 'o':
-             if (accumulate_options(&options, optarg) < 0) {
-@@ -4594,9 +4616,15 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
-         case 'f':
-             fmt = optarg;
-             break;
-+        case OPTION_IMAGE_OPTS:
-+            image_opts = true;
-+            break;
-         case 't':
-             cache = optarg;
-             break;
-+        case OPTION_FORCE:
-+            force = true;
-+            break;
-         case 'p':
-             progress = true;
-             break;
-@@ -4606,12 +4634,8 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_OBJECT:
-             user_creatable_process_cmdline(optarg);
-             break;
--        case OPTION_IMAGE_OPTS:
--            image_opts = true;
--            break;
--        case OPTION_FORCE:
--            force = true;
--            break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
-diff --git a/tests/qemu-iotests/153.out b/tests/qemu-iotests/153.out
-index ac3e340e15..28e1a22952 100644
---- a/tests/qemu-iotests/153.out
-+++ b/tests/qemu-iotests/153.out
-@@ -120,8 +120,8 @@ _qemu_img_wrapper compare -U TEST_DIR/t.qcow2 TEST_DIR/t.qcow2
- _qemu_img_wrapper map -U TEST_DIR/t.qcow2
- 
- _qemu_img_wrapper amend -o size=32M -U TEST_DIR/t.qcow2
--qemu-img: unrecognized option '-U'
--Try 'qemu-img --help' for more information
-+qemu-img amend: invalid option -- 'U'
-+Try 'qemu-img amend --help' for more information
- 
- _qemu_img_wrapper commit -U TEST_DIR/t.qcow2
- qemu-img commit: invalid option -- 'U'
-@@ -244,8 +244,8 @@ _qemu_img_wrapper compare -U TEST_DIR/t.qcow2 TEST_DIR/t.qcow2
- _qemu_img_wrapper map -U TEST_DIR/t.qcow2
- 
- _qemu_img_wrapper amend -o size=32M -U TEST_DIR/t.qcow2
--qemu-img: unrecognized option '-U'
--Try 'qemu-img --help' for more information
-+qemu-img amend: invalid option -- 'U'
-+Try 'qemu-img amend --help' for more information
- 
- _qemu_img_wrapper commit -U TEST_DIR/t.qcow2
- qemu-img commit: invalid option -- 'U'
-@@ -349,8 +349,8 @@ _qemu_img_wrapper compare -U TEST_DIR/t.qcow2 TEST_DIR/t.qcow2
- _qemu_img_wrapper map -U TEST_DIR/t.qcow2
- 
- _qemu_img_wrapper amend -o size=32M -U TEST_DIR/t.qcow2
--qemu-img: unrecognized option '-U'
--Try 'qemu-img --help' for more information
-+qemu-img amend: invalid option -- 'U'
-+Try 'qemu-img amend --help' for more information
- 
- _qemu_img_wrapper commit -U TEST_DIR/t.qcow2
- qemu-img commit: invalid option -- 'U'
--- 
-2.50.1
+Another ping :-)
 
+Thanks
+Jiaxun
+
+>
+> Thanks
+> Jiaxun
+>
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+> Jiaxun Yang (5):
+>       hw/pci-host/bonito: Implement ICU
+>       hw/pci-host/bonito: Implement PCIMAP register
+>       hw/pci-host/bonito: Implement DMA address translation
+>       hw/pci-host/bonito: Rework PCI config space accessor
+>       hw/pci-host/bonito: Add comments about documentation
+>
+>  hw/pci-host/bonito.c     | 453 +++++++++++++++++++++++++++++---------=
+---------
+>  hw/pci-host/trace-events |   3 -
+>  2 files changed, 284 insertions(+), 172 deletions(-)
+> ---
+> base-commit: c5e2c4042e3c50b96cc5eaa9683325c5a96913b0
+> change-id: 20250507-bonito-482759b2b52f
+>
+> Best regards,
+> --=20
+> Jiaxun Yang <jiaxun.yang@flygoat.com>
+
+--=20
+- Jiaxun
 
