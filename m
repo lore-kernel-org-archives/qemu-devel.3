@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79A1C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9080EC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ17-0002K4-PS; Tue, 15 Jul 2025 02:19:54 -0400
+	id 1ubZ14-0002I6-ME; Tue, 15 Jul 2025 02:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ14-0002I5-Ep
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:50 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0h-0001tT-0v
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ12-00073r-Eb
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:50 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a6cdc27438so4184210f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:19:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0e-0006yK-3u
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:26 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45610582d07so15535885e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560386; x=1753165186; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0oLj9I136vA6ZJns/MpzluU+zNCyNhpu0U3nlVsQVbc=;
- b=C7Pm0/GsizP4CRVleM8cCEHpDlYhbpqXNa0Ukh80UjEOXy613cd1ZsbuZquzD2SY+h
- JryUVAYWhNNi1LeaOHU5Tuz6xUlX24xVS9CMiXmPLJOwazmwBNiDyA3ZtJZw2G08Myt7
- +3daW1oA3A/mboQQtHDTkiZKDMSfKX/g6Y/gTUyhGpRZ73Cab7mhlv93Jkt+noUWcStm
- sbg0KDvT+j6baVhV51MySghUWV6+LfiaSN4yik0hQliMvnSmf/i5+iWX5JRoWhl7Cuc3
- HxUbXjtmGwBKUx7UyLiwQwxo1eOt28TDcG705QHn1bXEY36Ti6nig80rLs9W9aipfPJA
- Zm7A==
+ d=linaro.org; s=google; t=1752560361; x=1753165161; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=g0sqOibqSPdGl3WuMtWvTYtbXoOWs5R7ZoQJ2IshoJo=;
+ b=iuUQkKTSN6FkuX8kvILcL7YnJYEjadr0IIHHu1BTvlZIEXvzIsEoiTCt6k8n4aHAWC
+ VTIms1qp2tVR+32x6xDBgtPGCfdPTJnJwxURwFeu189bM/ifnY1qwEYwRmMIVNrlwOdf
+ paQAh1NVBzTytncBGlkLcYcGUILfz3GeCtSj1JveWfvMpTWo9BUmZ9gsHBetSuiKj59u
+ YBlQXdPQ5ryy+tFZFScbC7xmZjYcto2PehmFuyUugLdLtxcwn8wQsdtShBXsJsXTWWS4
+ hB4y4XUyPmnZ0v+y647zPeTH0oKNwo1slSkNUsnBNq0AGKl24U115pJqVSoltniS8DTj
+ kBgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560386; x=1753165186;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0oLj9I136vA6ZJns/MpzluU+zNCyNhpu0U3nlVsQVbc=;
- b=oeCw5i8w0lVUNMvaGCJ8pWin1IsyvCG5TY+jOq6pzhlyeoSFmnCPvhjTA7kHvt0XDH
- eapFTAy2mpIdyCcC4ixVB3bVJMsoR3C8yDlZTK0mHu/E5RU3cuw96fEmfvT75EJ3Rzpl
- RfRGzg7UrXrvaYTenkp2Ynt5qPUlAzW5z2uwdplCd70Ms5YATmZ8aQM32w8Pa9g2BgT6
- 20zMgJCWL2ZXlbXda619kdjy+BP+pvu+YityN4mo+kz0WvlBQM2bqIb/roeez1UhjwVH
- 5fdvnGl6tuddkG1G5YvCB+2CBbxQ0vCJd3y08tOHmTChRuDdwG5l1aEUCT47u2twKDgF
- GsLQ==
-X-Gm-Message-State: AOJu0Yy7SNYyB6KXamg3hvPu/2lfNlpL6EsksqHskyFUvedFMnp8meiu
- 4j24QbsoFrDLcPHIgZa8bDDenkIWD1pUEKAdKF1KojkyMUUArGWCfaT0qrIu+cx1phvknyKCYpI
- OctQa
-X-Gm-Gg: ASbGncsjjX6jH0Pv6YF6NoLJy6kLLm/g6p4aBNLpi8Kv0O2OBrIDjnfYDAVNKBGLEiZ
- suoJ9hxyrNad1J8q//kgn4WJMalesxos1H9hunMpZBwiMyg/qK4uuHGLMYwIDq7BPbyyt5uJ+1o
- Tpu815Q5KtKHAQ8sjRkKjmxWVNBi4wc7XKZZTUlp9Ue/GH29HTr0niLdAepeJkSmNcw5t6T2ofc
- 7bam17YDGAa7JiuTuwCe91I5UbSFL29B6l/qxjhudsYA174Nv+57Ax4AASpIA8GhDGLVihrDAc8
- WxRYEcIErLNJO7Ci5PIcC+vNBMMgwYIoBxUdS24YndoVIJi/5YE0eFcWskmy8O550eBp9l//1BX
- OGruavoKiiWfRjWmR09W9Zp5uotUKLJ931t91h+ZYUxHReB2u7VlZ9D1sbeTBOLHgZbQj1gCc
-X-Google-Smtp-Source: AGHT+IHkq1ccNKUzGMehQoWdsomNsA7HAMbw1ngTaheYWlB4DZdtgMTDOMIFvfWLf/hPt8DPdjNBlg==
-X-Received: by 2002:a05:6000:144b:b0:3b4:9721:2b13 with SMTP id
- ffacd0b85a97d-3b5f2dbef03mr12739369f8f.14.1752560386117; 
- Mon, 14 Jul 2025 23:19:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752560361; x=1753165161;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=g0sqOibqSPdGl3WuMtWvTYtbXoOWs5R7ZoQJ2IshoJo=;
+ b=kevA14BgAM2wEN/Ju9mP6FD6xaspY08FXOtAGBXlAkAyvAM4DheQ6yNzfJMdEp4IqG
+ THlFWqOXLsoV9u7fuMme/fDot5p4ipBZtTpZtv8/uArUtqmgTHXcsELEojrAgZGhxrkR
+ aQe77aoWAzHorW7C3N+bCms277OQqRUMHq9uUifK/D0T7l+eM9d/6Vyk4gxj+WhXSXtj
+ gnI1rVhxdgBIdxMbOOlIHEjZAmcaI4QeBreW9Eb697nqVap5MaUmM7HGB8Q2hqXt4sip
+ Av22r9IKfqqBRF+mH1PHe5PPdHaz/LjGRJ8UquUhEeu+Ks8+4x78mPC+iqZ/VOsSH9K8
+ Re6A==
+X-Gm-Message-State: AOJu0Yx4ILMQd2MbPd/jRZ7MdCFWkTeTkdf5dsjNhFBYyKkRA/xC7vyp
+ JTRtmjZBWkMJ9aKuwcmWllxm1kI9En6nn7rkkI7mkW4OtjQZmhP0z7N/aSiOLoUSLaHdCIMBssl
+ NSnkC
+X-Gm-Gg: ASbGncuIe/UwVqZSrRwWhQcatrR1P6AmrGSEtysSkgLuiN6/S0mn0nsyXiqlmbwWX0s
+ HPpfNY2ux420Zv9gJITBzrDqNQcAESvMuIIL+jam0eRTIptaOUkL08wDNILGOTS2xe5G8Y3ND6O
+ lDUxSQLuT1g3AvkVb1wzl2w8E1WvNQAuiK4RegvdzvNMgCwPqlnETnwvX4MWcaJrn4xDM4vXJL+
+ hPLAX3OoP0n7fLHQfByO77v1okGZT8aUOzIkCTf6giDCl5R5Xv3kDT4hWlcVdKl96epp154zeZE
+ RblKj3eeG7XnbNbrONQoOhpxQP2yY5SD4C9xQ0GrLbXrBl7ne1j0m0GpGeXDxh+AXxM2WdHix+X
+ mmLEl/K6crQ2jMJY2JEAJjjCY5Fb/Gh7GZOvIAY/Xb06KXg4D959RbMxQ7qbKZKfrCSe2d0N9CH
+ AUEEQz2s0=
+X-Google-Smtp-Source: AGHT+IHeqU/X92XMMD7lPZGL+kjHsO3B8ZBarN1K1rlimVaRELx3y722Uq/z54UdzfYWdCPEhp6VbQ==
+X-Received: by 2002:a05:600c:a216:b0:450:d386:1afb with SMTP id
+ 5b1f17b1804b1-45555e4c191mr98453515e9.9.1752560361304; 
+ Mon, 14 Jul 2025 23:19:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e135sm14338578f8f.72.2025.07.14.23.19.45
+ 5b1f17b1804b1-45627962384sm6015875e9.2.2025.07.14.23.19.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:19:45 -0700 (PDT)
+ Mon, 14 Jul 2025 23:19:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PULL 05/17] target/mips: Have gen_[d]lsa() callers add 1 to shift
- amount argument
-Date: Tue, 15 Jul 2025 08:19:05 +0200
-Message-ID: <20250715061918.44971-6-philmd@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PULL 00/17] MIPS & Co. patches for 2025-07-15
+Date: Tue, 15 Jul 2025 08:19:00 +0200
+Message-ID: <20250715061918.44971-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
-References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,118 +98,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having the callee add 1 to shift amount is misleading (see the
-NM_LSA case in decode_nanomips_32_48_opc() where we have to
-manually substract 1). Rather have the callers pass a modified
-$sa.
+The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b543336:
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241112172022.88348-4-philmd@linaro.org>
----
- target/mips/tcg/msa_translate.c           | 4 ++--
- target/mips/tcg/rel6_translate.c          | 4 ++--
- target/mips/tcg/translate_addr_const.c    | 4 ++--
- target/mips/tcg/micromips_translate.c.inc | 2 +-
- target/mips/tcg/nanomips_translate.c.inc  | 7 +------
- 5 files changed, 8 insertions(+), 13 deletions(-)
+  Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into staging (2025-07-13 01:46:04 -0400)
 
-diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 75cf80a20ed..82b149922fa 100644
---- a/target/mips/tcg/msa_translate.c
-+++ b/target/mips/tcg/msa_translate.c
-@@ -780,7 +780,7 @@ TRANS_DF_iv(ST, trans_msa_ldst, gen_helper_msa_st);
- 
- static bool trans_LSA(DisasContext *ctx, arg_r *a)
- {
--    return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
-+    return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa + 1);
- }
- 
- static bool trans_DLSA(DisasContext *ctx, arg_r *a)
-@@ -788,5 +788,5 @@ static bool trans_DLSA(DisasContext *ctx, arg_r *a)
-     if (TARGET_LONG_BITS != 64) {
-         return false;
-     }
--    return gen_dlsa(ctx, a->rd, a->rt, a->rs, a->sa);
-+    return gen_dlsa(ctx, a->rd, a->rt, a->rs, a->sa + 1);
- }
-diff --git a/target/mips/tcg/rel6_translate.c b/target/mips/tcg/rel6_translate.c
-index 89335063977..4c056621c97 100644
---- a/target/mips/tcg/rel6_translate.c
-+++ b/target/mips/tcg/rel6_translate.c
-@@ -23,7 +23,7 @@ bool trans_REMOVED(DisasContext *ctx, arg_REMOVED *a)
- 
- static bool trans_LSA(DisasContext *ctx, arg_r *a)
- {
--    return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
-+    return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa + 1);
- }
- 
- static bool trans_DLSA(DisasContext *ctx, arg_r *a)
-@@ -31,7 +31,7 @@ static bool trans_DLSA(DisasContext *ctx, arg_r *a)
-     if (TARGET_LONG_BITS != 64) {
-         return false;
-     }
--    return gen_dlsa(ctx, a->rd, a->rt, a->rs, a->sa);
-+    return gen_dlsa(ctx, a->rd, a->rt, a->rs, a->sa + 1);
- }
- 
- static bool trans_CRC32(DisasContext *ctx, arg_special3_crc *a)
-diff --git a/target/mips/tcg/translate_addr_const.c b/target/mips/tcg/translate_addr_const.c
-index 6f4b39f715b..1d140e918da 100644
---- a/target/mips/tcg/translate_addr_const.c
-+++ b/target/mips/tcg/translate_addr_const.c
-@@ -26,7 +26,7 @@ bool gen_lsa(DisasContext *ctx, int rd, int rt, int rs, int sa)
-     t1 = tcg_temp_new();
-     gen_load_gpr(t0, rs);
-     gen_load_gpr(t1, rt);
--    tcg_gen_shli_tl(t0, t0, sa + 1);
-+    tcg_gen_shli_tl(t0, t0, sa);
-     tcg_gen_add_tl(cpu_gpr[rd], t0, t1);
-     tcg_gen_ext32s_tl(cpu_gpr[rd], cpu_gpr[rd]);
-     return true;
-@@ -47,7 +47,7 @@ bool gen_dlsa(DisasContext *ctx, int rd, int rt, int rs, int sa)
-     t1 = tcg_temp_new();
-     gen_load_gpr(t0, rs);
-     gen_load_gpr(t1, rt);
--    tcg_gen_shli_tl(t0, t0, sa + 1);
-+    tcg_gen_shli_tl(t0, t0, sa);
-     tcg_gen_add_tl(cpu_gpr[rd], t0, t1);
-     return true;
- }
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index c479bec1081..8fda7c8a214 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -1795,7 +1795,7 @@ static void decode_micromips32_opc(CPUMIPSState *env, DisasContext *ctx)
-             return;
-         case LSA:
-             check_insn(ctx, ISA_MIPS_R6);
--            gen_lsa(ctx, rd, rt, rs, extract32(ctx->opcode, 9, 2));
-+            gen_lsa(ctx, rd, rt, rs, extract32(ctx->opcode, 9, 2) + 1);
-             break;
-         case ALIGN:
-             check_insn(ctx, ISA_MIPS_R6);
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index 1e274143bbd..9d4e0bee81f 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -3626,12 +3626,7 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
-                 gen_p_lsx(ctx, rd, rs, rt);
-                 break;
-             case NM_LSA:
--                /*
--                 * In nanoMIPS, the shift field directly encodes the shift
--                 * amount, meaning that the supported shift values are in
--                 * the range 0 to 3 (instead of 1 to 4 in MIPSR6).
--                 */
--                gen_lsa(ctx, rd, rt, rs, extract32(ctx->opcode, 9, 2) - 1);
-+                gen_lsa(ctx, rd, rt, rs, extract32(ctx->opcode, 9, 2));
-                 break;
-             case NM_EXTW:
-                 gen_ext(ctx, 32, rd, rs, rt, extract32(ctx->opcode, 6, 5));
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/mips-20250715
+
+for you to fetch changes up to 6f8ce26bb00db66e6cec632f16df3cd13e4df934:
+
+  esp.c: only allow ESP commands permitted in the current asc_mode (2025-07-15 00:25:21 +0200)
+
+----------------------------------------------------------------
+MIPS patches queue
+
+- Implement CRC32[c] (Release 6) instructions
+- Convert Octeon LX instructions to decodetree
+- Restrict ITU to TCG
+- Fix ESP issue affecting WinNT (INACCESSIBLE_BOOT_DEVICE BSOD)
+- Add missing FDT dependency for some MicroBlaze machines
+- Remove execute bit on hppa-firmware blobs
+
+----------------------------------------------------------------
+
+Aleksandar Rakic (1):
+  tests/tcg/mips: Add tests for MIPS CRC32[c] instructions
+
+Bernhard Beschow (1):
+  hw/microblaze: Add missing FDT dependency
+
+Cole Robinson (1):
+  roms: re-remove execute bit from hppa-firmware*
+
+Mark Cave-Ayland (7):
+  esp.c: only raise IRQ in esp_transfer_data() for CMD_SEL, CMD_SELATN
+    and CMD_TI commands
+  esp.c: improve comment in esp_transfer_data()
+  esp.h: remove separate ESPState typedef
+  esp.c: only call dma_memory_read function if transfer length is
+    non-zero
+  esp.c: only call dma_memory_write function if transfer length is
+    non-zero
+  esp.c: add asc_mode property to indicate the current ESP mode
+  esp.c: only allow ESP commands permitted in the current asc_mode
+
+Philippe Mathieu-Daudé (6):
+  target/mips: Extract gen_base_index_addr() helper
+  target/mips: Extract generic gen_lx() helper
+  target/mips: Convert Octeon LX instructions to decodetree
+  target/mips: Have gen_[d]lsa() callers add 1 to shift amount argument
+  hw/mips: Restrict ITU to TCG
+  hw/intc/loongarch_extioi: Remove unnecessary 'qemu/typedefs.h' include
+
+Yongbok Kim (1):
+  target/mips: Add support for emulation of CRC32 instructions
+
+ include/hw/scsi/esp.h                         |  15 +-
+ target/mips/helper.h                          |   2 +
+ target/mips/tcg/translate.h                   |   4 +
+ tests/tcg/mips/include/wrappers_mips64r6.h    |  32 ++++
+ target/mips/tcg/octeon.decode                 |   8 +
+ target/mips/tcg/rel6.decode                   |   5 +
+ hw/intc/loongarch_extioi_kvm.c                |   1 -
+ hw/mips/cps.c                                 |   4 +-
+ hw/scsi/esp.c                                 |  94 ++++++++++--
+ target/mips/tcg/msa_translate.c               |   4 +-
+ target/mips/tcg/octeon_translate.c            |  12 ++
+ target/mips/tcg/op_helper.c                   |  26 ++++
+ target/mips/tcg/rel6_translate.c              |  16 +-
+ target/mips/tcg/translate.c                   | 102 +++++++------
+ target/mips/tcg/translate_addr_const.c        |   4 +-
+ .../isa/mips64r6/crc/test_mips64r6_crc32b.c   | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32cb.c  | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32cd.c  | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32ch.c  | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32cw.c  | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32d.c   | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32h.c   | 142 ++++++++++++++++++
+ .../isa/mips64r6/crc/test_mips64r6_crc32w.c   | 142 ++++++++++++++++++
+ target/mips/cpu-defs.c.inc                    |  10 +-
+ target/mips/tcg/micromips_translate.c.inc     |   2 +-
+ target/mips/tcg/nanomips_translate.c.inc      |   7 +-
+ hw/microblaze/Kconfig                         |   4 +-
+ hw/mips/Kconfig                               |   2 +-
+ hw/misc/Kconfig                               |   1 +
+ hw/scsi/trace-events                          |   1 +
+ pc-bios/hppa-firmware.img                     | Bin
+ pc-bios/hppa-firmware64.img                   | Bin
+ target/mips/meson.build                       |   1 +
+ tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  40 +++++
+ 34 files changed, 1447 insertions(+), 86 deletions(-)
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32b.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cb.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cd.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32ch.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cw.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32d.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32h.c
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32w.c
+ mode change 100755 => 100644 pc-bios/hppa-firmware.img
+ mode change 100755 => 100644 pc-bios/hppa-firmware64.img
+ create mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+
 -- 
 2.49.0
 
