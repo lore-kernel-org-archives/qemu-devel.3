@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF322C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D704C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZNZ-0004zN-RH; Tue, 15 Jul 2025 02:43:06 -0400
+	id 1ubZQB-0000Qv-L5; Tue, 15 Jul 2025 02:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZF6-0003PN-RX
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZF4-0003k5-H3
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752561257;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s0DW657PuEuVKjB0hxciKKT0eQfi++HEcWHyzhRvOag=;
- b=UTZqpFQITpJ5z3dN8pqS08tXyiTqN4cP7Z4NcGqT5/AZqMPYtB70fmfajunWcZtLjduCTq
- dISQajGXAo95ZrnBsJndQCxrutm6kwVPvJexOkzjXiRKAOk9fJhIyy0uXVQSbADZCerJjy
- Tzs5z51A0CFoxMKfaGhrgsajiN6YJxk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-W0PiTg1TN9WL6WsNCFBEEA-1; Tue,
- 15 Jul 2025 02:34:14 -0400
-X-MC-Unique: W0PiTg1TN9WL6WsNCFBEEA-1
-X-Mimecast-MFC-AGG-ID: W0PiTg1TN9WL6WsNCFBEEA_1752561253
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9B0818011FB; Tue, 15 Jul 2025 06:34:12 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C64CA180045B; Tue, 15 Jul 2025 06:34:10 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Andrew Keesler <ankeesler@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v2 10/13] hw/display: Allow injection of virtio-gpu EDID name
-Date: Tue, 15 Jul 2025 10:32:56 +0400
-Message-ID: <20250715063301.145191-11-marcandre.lureau@redhat.com>
-In-Reply-To: <20250715063301.145191-1-marcandre.lureau@redhat.com>
-References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ubZJg-0008ES-0E
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:39:04 -0400
+Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ubZJd-00068L-2o
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:39:03 -0400
+Received: by mail-qk1-x729.google.com with SMTP id
+ af79cd13be357-7dfc604107eso302724785a.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752561539; x=1753166339; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tPfKo5E1qPErVZaYej0Iezyzjt90QQhxo5HOOiHcGFM=;
+ b=WEeIhOQAJ943npwf0lj8tVnTinaWpNReFPOwnqbSpiJMISblqSQKXtdRXjmei8JK89
+ IyQHGBT18lmC5dPIWpCumbU+K5yNZDyqaVomIb9ASTKLFXx3RFTJtwsN6mGS3NmzNqBS
+ epjcKI/p/beQz4X38IQWbOYJKrSSNAoiBaRJQVKYNAw5feYZ9G3XwzWCv5R/qJe4/JXX
+ 98eHf3yQBUq3ZNuwOCJwBS59jD94SwlD8kWVzDAtk/a0thFzh7HRjcKcysRvnid2ECrw
+ K94KjtJXUz1rjeQpiQmVPOwPkQ/BxxiBya6XIr5RZWYbxF4SCYz1nQPHX0XOaS3anWZQ
+ VTuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752561539; x=1753166339;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tPfKo5E1qPErVZaYej0Iezyzjt90QQhxo5HOOiHcGFM=;
+ b=Pl8xHm/xOKy0ctYxQZOnTp7x9DSv+X3nXpv2x9/45XpM3oSYs9Gp6eXvRvFNGZV1yQ
+ 3f7/2aEl3oXsyvF8KzvRGU9ihtzQ2IlnN7XIMu7xK4tYdwIn9l2NsRhCHBKw+3l+jgs9
+ IHSEqCZA3zUH/UCz+ZZ2IUCI6elNOf9ontyde7OQNsIhhwlVmKnqdBtded586oCR0OWP
+ 03qPlzX6YLnpzRuAqUAAD8VnxHdIcMbbUD4kC4C1sjtZShAza9SSZfXQ3rpUHmgjczVt
+ 4JIc18IXuhXbNrJb5dyqDK/gRpgctFUJSzIqs6mF22TO0rSu6xlZuivRoESQnJOMAxJn
+ cCBg==
+X-Gm-Message-State: AOJu0YzCTqtNpsjTydPUsLrUXJLMDZ/00p+al92dgjKXZAS08H3K/ZyU
+ 1UABKztj+rjrIpDgKwn+PbtwYOCNfJn6UMQPAnKqqFKPUwRVXpOsPvKYaZJIVf0Fx8EQ1xy6tOK
+ OjxgE/Adf1VKYTeFs92Qmfn+fiWPiMR4Mb/5wutozcg==
+X-Gm-Gg: ASbGncu1XDJF9QTRX/Q6e1Vh2O+vBWf3wmM6iJ+fdpJM1YaoswHAcjRuSfBA0ejaImV
+ l62rGYDz+4LgPXaNjBX/DCgqKDOV0+XxgFHVl4J1BIz5e5eq1O5mg7ehEkjzUpQ8Div+zYBxYxR
+ PZtUphOIBrQhZWf8nZbehFIg6IrLz8gSAzphHldK1zBgqX7bzqU7tL5apOgKu6ff1MeFt8whI/x
+ ezPhYat
+X-Google-Smtp-Source: AGHT+IEIrfjQchYGTaYdJ9fDueopOflKyM/Fy9SUEIESjjgHj/yL9jnusxk4yqVXVousMxRaFS2fMjCUR3+PgAl8F40=
+X-Received: by 2002:a05:620a:4489:b0:7e3:33e9:9d36 with SMTP id
+ af79cd13be357-7e333e9aa0bmr515427485a.50.1752561539187; Mon, 14 Jul 2025
+ 23:38:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20250715063301.145191-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 15 Jul 2025 10:38:47 +0400
+X-Gm-Features: Ac12FXx8uPq_qiGJqWcAi_8EI_cRDwe9jo9Ghxz32vXNoeGq_tg7HJgzLqA86kk
+Message-ID: <CAJ+F1CL+qD=ahzoH1rsq7xhSYViR6PsHZJzQYnWHV-WMPpZrZQ@mail.gmail.com>
+Subject: Re: [PULL v2 00/13] Ui patches
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x729.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,277 +94,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Keesler <ankeesler@google.com>
+Hi
 
-Thanks to 72d277a7, 1ed2cb32, and others, EDID (Extended Display
-Identification Data) is propagated by QEMU such that a virtual display
-presents legitimate metadata (e.g., name, serial number, preferred
-resolutions, etc.) to its connected guest.
+On Tue, Jul 15, 2025 at 10:36=E2=80=AFAM <marcandre.lureau@redhat.com> wrot=
+e:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b5433=
+36:
+>
+>   Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into s=
+taging (2025-07-13 01:46:04 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+>
+> for you to fetch changes up to df892b3954e5b2782165e6c59e5ffd55c2f7ec5a:
+>
+>   tpm: "qemu -tpmdev help" should return success (2025-07-15 10:22:33 +04=
+00)
+>
+> ----------------------------------------------------------------
+> UI-related for 10.1
+>
+> - [PATCH v3 0/2] ui/vnc: Do not copy z_stream
+> - [PATCH v6 0/7] ui/spice: Enable gl=3Don option for non-local or remote =
+clients
+> - [PATCH v6 0/1] Allow injection of virtio-gpu EDID name
+> - [PATCH 0/2] ui/gtk: Add keep-aspect-ratio and scale option
+>
+> ----------------------------------------------------------------
+>
+> Akihiko Odaki (2):
+>   ui/vnc: Do not copy z_stream
+>   ui/vnc: Introduce the VncWorker type
 
-This change adds the ability to specify the EDID name for a particular
-virtio-vga display. Previously, every virtual display would have the same
-name: "QEMU Monitor". Now, we can inject names of displays in order to test
-guest behavior that is specific to display names. We provide the ability to
-inject the display name from the frontend since this is guest visible
-data. Furthermore, this makes it clear where N potential display outputs
-would get their name from (which will be added in a future change).
+Checkpatch complains with a false positive here:
+ERROR: spaces required around that '*' (ctx:WxB)
+#250: FILE: ui/vnc-enc-tight.c:356:
++        data =3D (uint##bpp##_t *)tight->tight.buffer;                    =
+\
+                               ^
 
-Note that we have elected to use a struct here for output data for
-extensibility - we intend to add per-output fields like resolution in a
-future change.
+ERROR: spaces required around that '*' (ctx:WxV)
+#327: FILE: ui/vnc-enc-tight.c:614:
++                               uint##bpp##_t *buf, int w, int h) {      \
+                                              ^
 
-It should be noted that EDID names longer than 12 bytes will be truncated
-per spec (I think?).
+total: 2 errors, 0 warnings, 1790 lines checked
 
-Testing: verified that when I specified 2 outputs for a virtio-gpu with
-edid_name set, the names matched those that I configured with my vnc
-display.
+Please ignore
 
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA"
-              },
-              {
-                 "name":"BBB"
-              }
-            ]}'
+>
+> Andrew Keesler (1):
+>   hw/display: Allow injection of virtio-gpu EDID name
+>
+> Marc-Andr=C3=A9 Lureau (1):
+>   tpm: "qemu -tpmdev help" should return success
+>
+> Vivek Kasireddy (7):
+>   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+>   ui/spice: Enable gl=3Don option for non-local or remote clients
+>   ui/spice: Add an option for users to provide a preferred video codec
+>   ui/spice: Add an option to submit gl_draw requests at fixed rate
+>   ui/console-gl: Add a helper to create a texture with linear memory
+>     layout
+>   ui/spice: Create a new texture with linear layout when gl=3Don is
+>     specified
+>   ui/spice: Blit the scanout texture if its memory layout is not linear
+>
+> Weifeng Liu (2):
+>   ui/gtk: Add keep-aspect-ratio option
+>   ui/gtk: Add scale option
+>
+>  qapi/ui.json                        |  15 +-
+>  qapi/virtio.json                    |  18 +-
+>  include/hw/display/edid.h           |   2 +
+>  include/hw/qdev-properties-system.h |   5 +
+>  include/hw/virtio/virtio-gpu.h      |   3 +
+>  include/ui/console.h                |   3 +
+>  include/ui/gtk.h                    |   2 +
+>  include/ui/spice-display.h          |   5 +
+>  include/ui/surface.h                |   1 +
+>  ui/vnc.h                            |  49 +--
+>  hw/core/qdev-properties-system.c    |  44 +++
+>  hw/display/virtio-gpu-base.c        |  27 ++
+>  system/tpm.c                        |   5 +-
+>  ui/console-gl.c                     |  54 ++++
+>  ui/egl-helpers.c                    |   6 +
+>  ui/gtk.c                            |  58 ++--
+>  ui/spice-core.c                     |  32 ++
+>  ui/spice-display.c                  | 226 +++++++++++++-
+>  ui/vnc-enc-tight.c                  | 456 +++++++++++++++-------------
+>  ui/vnc-enc-zlib.c                   |  47 +--
+>  ui/vnc-enc-zrle.c                   | 122 ++++----
+>  ui/vnc-jobs.c                       |  13 +-
+>  ui/vnc.c                            |  83 +++--
+>  ui/vnc-enc-zrle.c.inc               |  20 +-
+>  qemu-options.hx                     |  13 +
+>  25 files changed, 883 insertions(+), 426 deletions(-)
+>
+> --
+> 2.50.0
+>
+>
 
-Signed-off-by: Andrew Keesler <ankeesler@google.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20250709121126.2946088-2-ankeesler@google.com>
----
- qapi/virtio.json                    | 18 ++++++++++--
- include/hw/display/edid.h           |  2 ++
- include/hw/qdev-properties-system.h |  5 ++++
- include/hw/virtio/virtio-gpu.h      |  3 ++
- hw/core/qdev-properties-system.c    | 44 +++++++++++++++++++++++++++++
- hw/display/virtio-gpu-base.c        | 27 ++++++++++++++++++
- 6 files changed, 97 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 73df718a26..5e658a7033 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -963,17 +963,31 @@
- { 'struct': 'IOThreadVirtQueueMapping',
-   'data': { 'iothread': 'str', '*vqs': ['uint16'] } }
- 
-+##
-+# @VirtIOGPUOutput:
-+#
-+# Describes configuration of a VirtIO GPU output.
-+#
-+# @name: the name of the output
-+#
-+# Since: 10.1
-+##
-+
-+{ 'struct': 'VirtIOGPUOutput',
-+  'data': { 'name': 'str' } }
-+
- ##
- # @DummyVirtioForceArrays:
- #
- # Not used by QMP; hack to let us use IOThreadVirtQueueMappingList
--# internally
-+# and VirtIOGPUOutputList internally
- #
- # Since: 9.0
- ##
- 
- { 'struct': 'DummyVirtioForceArrays',
--  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'] } }
-+  'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'],
-+            'unused-virtio-gpu-output': ['VirtIOGPUOutput'] } }
- 
- ##
- # @GranuleMode:
-diff --git a/include/hw/display/edid.h b/include/hw/display/edid.h
-index 520f8ec202..91c0a428af 100644
---- a/include/hw/display/edid.h
-+++ b/include/hw/display/edid.h
-@@ -1,6 +1,8 @@
- #ifndef EDID_H
- #define EDID_H
- 
-+#define EDID_NAME_MAX_LENGTH 12
-+
- typedef struct qemu_edid_info {
-     const char *vendor; /* http://www.uefi.org/pnp_id_list */
-     const char *name;
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index b921392c52..9601a11a09 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -32,6 +32,7 @@ extern const PropertyInfo qdev_prop_cpus390entitlement;
- extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
- extern const PropertyInfo qdev_prop_endian_mode;
- extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
-+extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
- 
- #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
-@@ -110,4 +111,8 @@ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
-                          qdev_prop_vmapple_virtio_blk_variant, \
-                          VMAppleVirtioBlkVariant)
- 
-+#define DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST(_name, _state, _field) \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_virtio_gpu_output_list, \
-+                VirtIOGPUOutputList *)
-+
- #endif
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index a42957c4e2..9f16f89a36 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -20,6 +20,7 @@
- #include "hw/virtio/virtio.h"
- #include "qemu/log.h"
- #include "system/vhost-user-backend.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- #include "standard-headers/linux/virtio_gpu.h"
- #include "standard-headers/linux/virtio_ids.h"
-@@ -128,6 +129,7 @@ struct virtio_gpu_base_conf {
-     uint32_t xres;
-     uint32_t yres;
-     uint64_t hostmem;
-+    VirtIOGPUOutputList *outputs;
- };
- 
- struct virtio_gpu_ctrl_command {
-@@ -167,6 +169,7 @@ struct VirtIOGPUBaseClass {
- 
- #define VIRTIO_GPU_BASE_PROPERTIES(_state, _conf)                       \
-     DEFINE_PROP_UINT32("max_outputs", _state, _conf.max_outputs, 1),    \
-+    DEFINE_PROP_VIRTIO_GPU_OUTPUT_LIST("outputs", _state, _conf.outputs), \
-     DEFINE_PROP_BIT("edid", _state, _conf.flags, \
-                     VIRTIO_GPU_FLAG_EDID_ENABLED, true), \
-     DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 24e145d870..1f810b7ddf 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -1299,3 +1299,47 @@ const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
-     .set   = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
-+
-+/* --- VirtIOGPUOutputList --- */
-+
-+static void get_virtio_gpu_output_list(Object *obj, Visitor *v,
-+    const char *name, void *opaque, Error **errp)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+
-+    visit_type_VirtIOGPUOutputList(v, name, prop_ptr, errp);
-+}
-+
-+static void set_virtio_gpu_output_list(Object *obj, Visitor *v,
-+    const char *name, void *opaque, Error **errp)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+    VirtIOGPUOutputList *list;
-+
-+    if (!visit_type_VirtIOGPUOutputList(v, name, &list, errp)) {
-+        return;
-+    }
-+
-+    qapi_free_VirtIOGPUOutputList(*prop_ptr);
-+    *prop_ptr = list;
-+}
-+
-+static void release_virtio_gpu_output_list(Object *obj,
-+    const char *name, void *opaque)
-+{
-+    VirtIOGPUOutputList **prop_ptr =
-+        object_field_prop_ptr(obj, opaque);
-+
-+    qapi_free_VirtIOGPUOutputList(*prop_ptr);
-+    *prop_ptr = NULL;
-+}
-+
-+const PropertyInfo qdev_prop_virtio_gpu_output_list = {
-+    .type = "VirtIOGPUOutputList",
-+    .description = "VirtIO GPU output list [{\"name\":\"<name>\"},...]",
-+    .get = get_virtio_gpu_output_list,
-+    .set = set_virtio_gpu_output_list,
-+    .release = release_virtio_gpu_output_list,
-+};
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 9eb806b71f..7269477a1c 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -19,6 +19,7 @@
- #include "qemu/error-report.h"
- #include "hw/display/edid.h"
- #include "trace.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- void
- virtio_gpu_base_reset(VirtIOGPUBase *g)
-@@ -56,6 +57,8 @@ void
- virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
-                               struct virtio_gpu_resp_edid *edid)
- {
-+    size_t output_idx;
-+    VirtIOGPUOutputList *node;
-     qemu_edid_info info = {
-         .width_mm = g->req_state[scanout].width_mm,
-         .height_mm = g->req_state[scanout].height_mm,
-@@ -64,6 +67,14 @@ virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
-         .refresh_rate = g->req_state[scanout].refresh_rate,
-     };
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         output_idx <= scanout && node; output_idx++, node = node->next) {
-+        if (output_idx == scanout && node->value && node->value->name) {
-+            info.name = node->value->name;
-+            break;
-+        }
-+    }
-+
-     edid->size = cpu_to_le32(sizeof(edid->edid));
-     qemu_edid_generate(edid->edid, sizeof(edid->edid), &info);
- }
-@@ -172,6 +183,8 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-                                VirtIOHandleOutput cursor_cb,
-                                Error **errp)
- {
-+    size_t output_idx;
-+    VirtIOGPUOutputList *node;
-     VirtIODevice *vdev = VIRTIO_DEVICE(qdev);
-     VirtIOGPUBase *g = VIRTIO_GPU_BASE(qdev);
-     int i;
-@@ -181,6 +194,20 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-         return false;
-     }
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node; output_idx++, node = node->next) {
-+        if (output_idx == g->conf.max_outputs) {
-+            error_setg(errp, "invalid outputs > %d", g->conf.max_outputs);
-+            return false;
-+        }
-+        if (node->value && node->value->name &&
-+            strlen(node->value->name) > EDID_NAME_MAX_LENGTH) {
-+            error_setg(errp, "invalid output name '%s' > %d",
-+                       node->value->name, EDID_NAME_MAX_LENGTH);
-+            return false;
-+        }
-+    }
-+
-     if (virtio_gpu_virgl_enabled(g->conf)) {
-         error_setg(&g->migration_blocker, "virgl is not yet migratable");
-         if (migrate_add_blocker(&g->migration_blocker, errp) < 0) {
--- 
-2.50.0
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
