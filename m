@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2403C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 15:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC12CC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubi2T-0005yr-2W; Tue, 15 Jul 2025 11:57:53 -0400
+	id 1ubiG9-0006l5-Kf; Tue, 15 Jul 2025 12:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubhab-00056O-9L
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:29:05 -0400
+ id 1ubhhW-0004cT-MH
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:36:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ubhaY-00009Q-6R
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:29:04 -0400
+ id 1ubhhU-0001i6-5E
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:36:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752593339;
+ s=mimecast20190719; t=1752593770;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZKDy3efrhe0J40LzuaKh+SohJ0Z00blG7sNZI7sfpxU=;
- b=dt6JJ/PZtxTdHoKmbzPAQeMRj8oMMf+QQ3ZXT+dyZezJokG8Qe8LACPFoL2U1w+J4bz6Ji
- Ue//derUYzAGZBow5zmbnA7bFRXsgjZDoNVdK35ZHu+BOnzwABj7NYNLvtY0hn47sP02HS
- BJvdpEN1k2GPiOw2ll+TNU1Wb0NsE6M=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gulOM/aKBwqJKOM/Hzj1YiaMRbz5qh9GcNlafnLutSQ=;
+ b=T4Yn0yAOl96JG9Dm6gUP7UizdchWLn0ZAd/0115Mze9oaES4dyzoDmHI2L5Dtl8EWi+F8l
+ S3nVvPoFb5/ZVPw7pjyi65MFxr7EZnSRGtKU7GtccPLWgVY2DKDIwL6bfBsxx7VLJyR8VF
+ MhMq4tFDdh/HKSbVpYuaitIWoBOfM/4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-RDXOmnAGOiKfFPTAD7o6mQ-1; Tue, 15 Jul 2025 11:28:58 -0400
-X-MC-Unique: RDXOmnAGOiKfFPTAD7o6mQ-1
-X-Mimecast-MFC-AGG-ID: RDXOmnAGOiKfFPTAD7o6mQ_1752593337
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so32559005e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:28:58 -0700 (PDT)
+ us-mta-169-D0F_FmfxMkK0Ck3l_vuwfw-1; Tue, 15 Jul 2025 11:36:08 -0400
+X-MC-Unique: D0F_FmfxMkK0Ck3l_vuwfw-1
+X-Mimecast-MFC-AGG-ID: D0F_FmfxMkK0Ck3l_vuwfw_1752593768
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45617e7b82fso13540755e9.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:36:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752593337; x=1753198137;
+ d=1e100.net; s=20230601; t=1752593767; x=1753198567;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZKDy3efrhe0J40LzuaKh+SohJ0Z00blG7sNZI7sfpxU=;
- b=FeZOzI35BuDzZU/K3iFwC1SONQd9bACRhEfWrY9JTTxaHFzP/qgJ/7TOPMD/srwJB4
- ZF8WuyvUNMoZ76qAVVzZwTQi48IShThtGHDlddDmmJNnuUHiVWrgmdBrJerQk6FC8n0e
- 18baL+MnhXlpUYc6f/Jau4216QxmKIklBIj+iJ1qBl1qdn7k9HufoWjpwhMRCrPtGtxd
- JQXtB6yyY5emIfgLTiUIrmR+z4Di7UCvWlEkJNmOE0uzID7neXVKyB6u3EkCnwj1XIek
- Io14AhjAqAUdB0AMFt7fTSWbUX/ijMZeZ7hDt+822/aIhUPArOhZP+jwbznpkhN4fD8v
- r0GA==
+ bh=gulOM/aKBwqJKOM/Hzj1YiaMRbz5qh9GcNlafnLutSQ=;
+ b=skuheIF18LB+oj4/+ZbndDAs/9Q/9MjK0JDv/TNspNJ7yX00zO+wk/oKMRG/7V7yzp
+ Oabi7tNiUVgFFeb5tFPqlBkZsSOMvH2/h6DMfbrqFvi7T4EQKGtcfogdaIkEVz8cEXT+
+ XYB9my9TZKVGKPHrFfo+lYb3yCCY4ThLXAukda315CUuJAAU5k6wLFRYtwkXi2/1nldu
+ dLEW1bogoU0Is2JD2t/4qsmLLXXccJ6Zrmsa7FVOWwy5ZSkWbv5psJPcQ8hTOYPg/30R
+ fQtJcndGMZYtcFUH6eLZUXYefLfInmgjqKtOBcc1Gc9eUlDligcP4bmTHcEXbhxFLmKn
+ Lc3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGa2q9uBU6Nwa06fZ6HoOdjSQwmOp3/LkWMNIsGIzdIcuW6weQJH20NNWiyuNmkQ1a5jAtVV8kSjHT@nongnu.org
-X-Gm-Message-State: AOJu0Ywd3dMqyz+ghf83cq7NelFVAxc5tYPmGNqZJbyZisKFHL54HtwT
- bGAeKLef36qvXYBJ3hU3oSDd5TOqnR1AjSKgrsv/IUVp5CTNWu08zVBHL8rexZteda6jPJAA8Sx
- WUyP9ZHIVEJbqHfQvKkJCiyU5X41adPNQzxkPHGqIVimGajKhznTcIL0G
-X-Gm-Gg: ASbGncvQg/9vA7tmbwxWipylM81zbVpUp5dvQFVKoxToBinaxcKSZBzQ+/UDvtgeuPv
- /RQ6Nde9QlC2DEIJWqFSj+iRSs9VgXN66A8vSJnHMONIiE06Hme86s/u9PHZ5SFgny34aJQyQbA
- SZgW9pOEmpc/h+4eW+VD3gYMkgyPJs+pRoyrvQSuLmGAJpWnF3pVgRefd0Vp+RPg5cvoFFn2GdM
- E43Y6aaOqnngrsynLMnlvx3zapmHrY3pcgbdHS7YDKYN5Pq9SGq/j9/v4A5DTKOl7QF1Rc2yUZS
- l5iaWEnwqsj8lbjptVdhC2Oj0/mVVgg9sqFBl/JrSve1KUjRs93MueHrqXpdZK90vDwcfFL98Bw
- sfCN+e1FHjCs=
-X-Received: by 2002:a05:600c:8b0c:b0:442:dc75:5625 with SMTP id
- 5b1f17b1804b1-45623a67c65mr57101225e9.5.1752593336882; 
- Tue, 15 Jul 2025 08:28:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVbv95JX5W3Ly+xS7UGkxuBtCFjWzali2O8BFpQdyG92hFVcRpAR78ziVf6CMk8kpEMlBTig==
-X-Received: by 2002:a05:600c:8b0c:b0:442:dc75:5625 with SMTP id
- 5b1f17b1804b1-45623a67c65mr57100945e9.5.1752593336462; 
- Tue, 15 Jul 2025 08:28:56 -0700 (PDT)
+ AJvYcCVQCWlbVpLVzkW9qjsLUH4+GKm1+DWldhCEM3DTs9G3lzd4FUBD4dr9tWM/VvT0YLxSnNuGTQ9SEqpN@nongnu.org
+X-Gm-Message-State: AOJu0Yxmicr2Zk4XVuYodzXCm30atwY7q+GJ7xjrKz11dKzXx8GsA4bT
+ Qj9vKsedeAmjEtoVFHiBdKNQDHGH0qokZ0C/17fU/aFGN/50zf+a8uhuhxYfAYABRSz0+UZ21vm
+ 9nkEF13zbZqEYMOabsT0a1Lbie5zDjM6H+lcBLk3u5XUmQwEA1Na6p4hp
+X-Gm-Gg: ASbGncttIhnrKZg5q+eaDK0hZO8AHUYGN+EzHePgXJwiq5UbzHNvqLuLeiLRjfZkc3B
+ rwee7SnboAWw9ORLqtfyuSh3FQQsVwG5HMPq5iJ76bClT7mW5hu9DsxAkhEzV98A9wfzfV+3zIB
+ 6pFmQ1bn41zsxzhrYlsaK0i+lpAQlzF2BF2jnmnQ81mwcMrsYsL4Cjj34bzivr6bjcmiSRWAYK2
+ jNXIGzbu+fheI3EWfB0QAZbRKD4eumSNS976XAA1mEm0tkmFROUYjb+H+p6ZuoqVSbPua7QbSU4
+ DPkzdhgVWyUcWdeyxGfOlp7AFn0N87+E9ml/XCbYrs2quZ1C9WnarRAzFIeJMkD/a6rKQeY1kuJ
+ WIO3g0PZiM5I=
+X-Received: by 2002:a05:6000:210a:b0:3b5:e6f3:ac9b with SMTP id
+ ffacd0b85a97d-3b5f187ec93mr13836868f8f.5.1752593767586; 
+ Tue, 15 Jul 2025 08:36:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkRUSnhPYYKUZxFOC61y1DMpFSrYJnOo9tP7R3buhRy0qZUGDWjxNTCXycaYVyp4oaEoElVw==
+X-Received: by 2002:a05:6000:210a:b0:3b5:e6f3:ac9b with SMTP id
+ ffacd0b85a97d-3b5f187ec93mr13836829f8f.5.1752593767072; 
+ Tue, 15 Jul 2025 08:36:07 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45627962384sm12528495e9.2.2025.07.15.08.28.54
+ 5b1f17b1804b1-4562360c989sm38862355e9.37.2025.07.15.08.36.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 08:28:55 -0700 (PDT)
-Message-ID: <b8c3b228-953f-4364-b78f-2702ae2bd183@redhat.com>
-Date: Tue, 15 Jul 2025 17:28:54 +0200
+ Tue, 15 Jul 2025 08:36:06 -0700 (PDT)
+Message-ID: <4d51e561-dc39-44d5-b52e-6b4dc1ce8603@redhat.com>
+Date: Tue, 15 Jul 2025 17:36:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
 Content-Language: en-US
-To: Donald Dutile <ddutile@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, jgg@nvidia.com,
- shameerali.kolothum.thodi@huawei.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
 References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
  <20250708110601.633308-3-zhenzhong.duan@intel.com>
- <aG26VBqzOnLAWC5z@Asurada-Nvidia>
- <01584206-e2c0-4881-aaf5-d6c552a30873@redhat.com>
- <aG7A8hxd1R4iVhGT@Asurada-Nvidia>
- <0c99b6aa-440a-44df-b875-a34e64465a04@redhat.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <0c99b6aa-440a-44df-b875-a34e64465a04@redhat.com>
+In-Reply-To: <20250708110601.633308-3-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -126,71 +121,132 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Zhenzhong,
 
-On 7/10/25 3:22 AM, Donald Dutile wrote:
+On 7/8/25 1:05 PM, Zhenzhong Duan wrote:
+> pci_device_get_viommu_cap() call pci_device_get_iommu_bus_devfn()
+> to get iommu_bus->iommu_ops and call get_viommu_cap() callback to
+> get a bitmap with each bit represents a vIOMMU exposed capability.
+Suggesting:
+Introduce a new PCIIOMMUOps optional callback, get_viommu_cap() which
+allows to retrieve capabilities exposed by a vIOMMU. The first planned
+capability is VIOMMU_CAP_HW_NESTED that advertises the support of HW
+nested stage translation scheme. pci_device_get_viommu_cap is a wrapper
+that can be called on a PCI device potentially protected by a vIOMMU.
 >
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  MAINTAINERS          |  1 +
+>  hw/pci/pci.c         | 11 +++++++++++
+>  include/hw/iommu.h   | 16 ++++++++++++++++
+>  include/hw/pci/pci.h | 23 +++++++++++++++++++++++
+>  4 files changed, 51 insertions(+)
+>  create mode 100644 include/hw/iommu.h
 >
-> On 7/9/25 3:20 PM, Nicolin Chen wrote:
->> On Wed, Jul 09, 2025 at 01:55:46PM -0400, Donald Dutile wrote:
->>>>> +enum {
->>>>> +    VIOMMU_CAP_STAGE1 = BIT_ULL(0),  /* stage1 page table
->>>>> supported */
->>>>> +};
->>>>
->>>> Thanks for this work. I am happy to see that we can share the
->>>> common code that allocates a NESTING_PARENT in the core using
->>>> this flag.
->>>>
->>>> Yet on ARM, a STAGE1 page table isn't always a nested S1, the
->>>> hardware accelerated one. More often, it can be just a regular
->>>> 1-stage translation table via emulated translation code and an
->>>> emulated iotlb.
->>>>
->>> Because the user-created smmuv3 started as 'accelerated smmuv3',
->>> and had been 'de-accelerated' to simply 'user created smmuv3',
->>> I'm looking for some clarification in the above statement/request.
->>>
->>> Is the above suppose to reflect that a nested IOMMU has some
->>> hw-acceleration
->>> in its Stage1 implementation?
->>> If so, then call it that: STAGE1_ACCEL.
->>> If it's suppose to represent that an IOMMU has nested/2-stage support,
->>> then the above is a valid cap;  -but-, having a nested/2-stage
->>> support IOMMU
->>> doesn't necessarily mean its accelerated.
->>
->> Well, there are an emulated "nested" mode and an hw-accelerated
->> "nested" mode in the smmuv3 code, so we had to choose something
->> like "accel" over "nested".
->>
->> Here, on the other hand, I think the core using this CAP would
->> unlikely care about an emulated "nested" mode in the individual
->> vIOMMU..
->>
->> So I suggested:
->>       /* hardware-accelerated nested stage-1 page table support */
->>      VIOMMU_CAP_NESTED_S1 = BIT_ULL(0),
->>
->> which it should be clear IMHO.
->>
->> If not, maybe go a bit further like "VIOMMU_CAP_HW_NESTED_S1"?
->>
->> Thanks
->> Nicolin
->>
-> If the distinction is hw-based s1 vs emulated-based s1, than
-> I'd prefer the use of VIOMMU_CAP_HW_NESTED_S1, and avoid the use
-VIOMMU_CAP_HW_NESTED_S1 or even VIOMMU_CAP_HW_NESTED look good to me too
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 1842c3dd83..d9fc977b81 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2302,6 +2302,7 @@ F: include/system/iommufd.h
+>  F: backends/host_iommu_device.c
+>  F: include/system/host_iommu_device.h
+>  F: include/qemu/chardev_open.h
+> +F: include/hw/iommu.h
+>  F: util/chardev_open.c
+>  F: docs/devel/vfio-iommufd.rst
+>  
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index c70b5ceeba..df1fb615a8 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2992,6 +2992,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
+>      }
+>  }
+>  
+> +uint64_t pci_device_get_viommu_cap(PCIDevice *dev)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_cap) {
+> +        return iommu_bus->iommu_ops->get_viommu_cap(iommu_bus->iommu_opaque);
+> +    }
+> +    return 0;
+> +}
+> +
+>  int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+>                           bool exec_req, hwaddr addr, bool lpig,
+>                           uint16_t prgi, bool is_read, bool is_write)
+> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
+> new file mode 100644
+> index 0000000000..e80aaf4431
+> --- /dev/null
+> +++ b/include/hw/iommu.h
+> @@ -0,0 +1,16 @@
+> +/*
+> + * General vIOMMU capabilities, flags, etc
+> + *
+> + * Copyright (C) 2025 Intel Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_IOMMU_H
+> +#define HW_IOMMU_H
+> +
+> +enum {
+> +    VIOMMU_CAP_STAGE1 = BIT_ULL(0),  /* stage1 page table supported */
+with the enum name change,
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 Thanks
 
 Eric
-> of 'accel'/'ACCEL' unless it is an explicitly stated 'acceleration'
-> feature/option in the SMMU spec.
->
-> Thanks,
-> - Don
->
+> +};
+> +
+> +#endif /* HW_IOMMU_H */
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index df3cc7b875..a11ab14bdc 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -453,6 +453,19 @@ typedef struct PCIIOMMUOps {
+>       * @devfn: device and function number of the PCI device.
+>       */
+>      void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+> +    /**
+> +     * @get_viommu_cap: get vIOMMU capabilities
+> +     *
+> +     * Optional callback, if not implemented, then vIOMMU doesn't
+> +     * support exposing capabilities to other subsystem, e.g., VFIO.
+> +     * vIOMMU can choose which capabilities to expose.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * Returns: 64bit bitmap with each bit represents a capability emulated
+> +     * by VIOMMU_CAP_* in include/hw/iommu.h
+> +     */
+> +    uint64_t (*get_viommu_cap)(void *opaque);
+>      /**
+>       * @get_iotlb_info: get properties required to initialize a device IOTLB.
+>       *
+> @@ -633,6 +646,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+>                                   Error **errp);
+>  void pci_device_unset_iommu_device(PCIDevice *dev);
+>  
+> +/**
+> + * pci_device_get_viommu_cap: get vIOMMU capabilities.
+> + *
+> + * Returns a 64bit bitmap with each bit represents a vIOMMU exposed
+> + * capability, 0 if vIOMMU doesn't support esposing capabilities.
+> + *
+> + * @dev: PCI device pointer.
+> + */
+> +uint64_t pci_device_get_viommu_cap(PCIDevice *dev);
+> +
+>  /**
+>   * pci_iommu_get_iotlb_info: get properties required to initialize a
+>   * device IOTLB.
 
 
