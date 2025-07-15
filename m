@@ -4,64 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CB0C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B405FC83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubdEa-0008M6-GE; Tue, 15 Jul 2025 06:50:07 -0400
+	id 1ubdFx-0001tC-Hu; Tue, 15 Jul 2025 06:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubdEL-00087Y-IW; Tue, 15 Jul 2025 06:49:51 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ubdFu-0001rL-JW
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:51:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubdEI-0007s1-Nz; Tue, 15 Jul 2025 06:49:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhG7p0WyHz6L5Bv;
- Tue, 15 Jul 2025 18:46:14 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 9EF8C140277;
- Tue, 15 Jul 2025 18:49:43 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 12:49:42 +0200
-Date: Tue, 15 Jul 2025 11:49:40 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 15/15] hw/arm/smmu-common: Add accel property for
- SMMU dev
-Message-ID: <20250715114924.00004f22@huawei.com>
-In-Reply-To: <20250714155941.22176-16-shameerali.kolothum.thodi@huawei.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-16-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1ubdFr-000108-Q9
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:51:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752576680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=F3pUEAKHBTm51ScYwWZq6IWDUG0QpF+3akRoei7RYdw=;
+ b=Fc2FbPxZR7LeSv6kI/4o7V4sxjy/u9OET6YQ9j9NKCLxnVNzdhpKNiqwQYz99e+b30reF3
+ 8XgxCFXbfMZe5KJko1JMdbFHj4VMGFRC2Juqqee0sx1pUxEhQjEKd1+/3bwuCC0iCABWr7
+ wBmRQFiKyAv1xTiazfGzqIXswk5XdEU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-gCJSC9EEPA2zAUB83h7vlw-1; Tue,
+ 15 Jul 2025 06:51:18 -0400
+X-MC-Unique: gCJSC9EEPA2zAUB83h7vlw-1
+X-Mimecast-MFC-AGG-ID: gCJSC9EEPA2zAUB83h7vlw_1752576677
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CFCD18002EC
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 10:51:17 +0000 (UTC)
+Received: from cash.home.annexia.org (unknown [10.44.32.10])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 65FA0180045B; Tue, 15 Jul 2025 10:51:15 +0000 (UTC)
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: jsnow@redhat.com
+Cc: crosa@redhat.com, qemu-devel@nongnu.org, berrange@redhat.com,
+ mhroncok@redhat.com
+Subject: [PATCH] python: Replace asyncio.get_event_loop for Python 3.14
+Date: Tue, 15 Jul 2025 11:51:10 +0100
+Message-ID: <20250715105113.623604-1-rjones@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,37 +78,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 16:59:41 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+In Python 3.14, no asyncio event loop gets generated automatically.
+Instead create one when we need it.  This should work with Python 3.13
+as well.  This is a mechanical change as suggested here:
 
-> Now user can set "accel=on". Have fun!
-> 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+https://bugzilla.redhat.com/show_bug.cgi?id=2375004#c4
 
-Hard to argue with this one ;)
+See-also: https://docs.python.org/3.14/whatsnew/3.14.html#id7
+Thanks: Miro Hrončok
+Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+---
+ python/qemu/qmp/legacy.py  | 5 ++++-
+ python/qemu/qmp/qmp_tui.py | 5 ++++-
+ python/qemu/qmp/util.py    | 5 ++++-
+ python/tests/protocol.py   | 5 ++++-
+ 4 files changed, 16 insertions(+), 4 deletions(-)
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-> ---
->  hw/arm/smmu-common.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 6a58f574d3..3e8783670a 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -1022,6 +1022,7 @@ static const Property smmu_dev_properties[] = {
->      DEFINE_PROP_BOOL("smmu_per_bus", SMMUState, smmu_per_bus, false),
->      DEFINE_PROP_LINK("primary-bus", SMMUState, primary_bus,
->                       TYPE_PCI_BUS, PCIBus *),
-> +    DEFINE_PROP_BOOL("accel", SMMUState, accel, false),
->  };
->  
->  static void smmu_base_class_init(ObjectClass *klass, const void *data)
+diff --git a/python/qemu/qmp/legacy.py b/python/qemu/qmp/legacy.py
+index 22a2b5616e..e11d05afbd 100644
+--- a/python/qemu/qmp/legacy.py
++++ b/python/qemu/qmp/legacy.py
+@@ -86,7 +86,10 @@ def __init__(self,
+                 "server argument should be False when passing a socket")
+ 
+         self._qmp = QMPClient(nickname)
+-        self._aloop = asyncio.get_event_loop()
++        try:
++            self._aloop = asyncio.get_event_loop()
++        except RuntimeError:
++            self._aloop = asyncio.new_event_loop()
+         self._address = address
+         self._timeout: Optional[float] = None
+ 
+diff --git a/python/qemu/qmp/qmp_tui.py b/python/qemu/qmp/qmp_tui.py
+index 2d9ebbd20b..84c5da4e66 100644
+--- a/python/qemu/qmp/qmp_tui.py
++++ b/python/qemu/qmp/qmp_tui.py
+@@ -377,7 +377,10 @@ def run(self, debug: bool = False) -> None:
+         screen = urwid.raw_display.Screen()
+         screen.set_terminal_properties(256)
+ 
+-        self.aloop = asyncio.get_event_loop()
++        try:
++            self.aloop = asyncio.get_event_loop()
++        except RuntimeError:
++            self.aloop = asyncio.new_event_loop()
+         self.aloop.set_debug(debug)
+ 
+         # Gracefully handle SIGTERM and SIGINT signals
+diff --git a/python/qemu/qmp/util.py b/python/qemu/qmp/util.py
+index ca6225e9cd..8f9f849a5f 100644
+--- a/python/qemu/qmp/util.py
++++ b/python/qemu/qmp/util.py
+@@ -160,7 +160,10 @@ def asyncio_run(coro: Coroutine[Any, Any, T], *, debug: bool = False) -> T:
+         return asyncio.run(coro, debug=debug)
+ 
+     # Python 3.6
+-    loop = asyncio.get_event_loop()
++    try:
++        loop = asyncio.get_event_loop()
++    except RuntimeError:
++        loop = asyncio.new_event_loop()
+     loop.set_debug(debug)
+     ret = loop.run_until_complete(coro)
+     loop.close()
+diff --git a/python/tests/protocol.py b/python/tests/protocol.py
+index 56c4d441f9..aa7c0e4397 100644
+--- a/python/tests/protocol.py
++++ b/python/tests/protocol.py
+@@ -228,7 +228,10 @@ def async_test(async_test_method):
+         Decorator; adds SetUp and TearDown to async tests.
+         """
+         async def _wrapper(self, *args, **kwargs):
+-            loop = asyncio.get_event_loop()
++            try:
++                loop = asyncio.get_event_loop()
++            except RuntimeError:
++                loop = asyncio.new_event_loop()
+             loop.set_debug(True)
+ 
+             await self._asyncSetUp()
+-- 
+2.50.1
 
 
