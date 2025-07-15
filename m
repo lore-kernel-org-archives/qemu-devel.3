@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12772C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03015C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubd5J-0004RR-Jj; Tue, 15 Jul 2025 06:40:30 -0400
+	id 1ubd5g-0004kh-Sx; Tue, 15 Jul 2025 06:40:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5G-0004Pt-Sz
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:26 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5Z-0004iV-P9
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:47 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5F-0005lL-Cn
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:26 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45629703011so2433645e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5V-0005nO-0c
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:45 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-451d41e1ad1so37469185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752576023; x=1753180823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752576039; x=1753180839; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DUXxa+xP+Ej2YS3GTVa8ELdM0Yk7DkoIG4cYz8Z0G9Q=;
- b=eQ0QZrXXsncpYfCm6Irtxl4kP9mw+mmkzXywdqRmdjrtQPUn9Qsmc6OQiqJ2LbHYVV
- J8HGU7LxDB+2IH5DxLmjDDZYjdD9CJDq0r7+5/rLsD/GIeZzn57o2FODUdzH0jb7m3P3
- pPcOlhcukn340lh8d/sPxJES28bNgVbUFrIWwgcwRgIbwxOSaqMO0fbUN+N/QlN3ouat
- WanseawJPlMbu3C/G7R+l76D6Hp7uI4xh3w6fHZA6BuIrqY7QfGqkZEJwpt/QR5WOlWI
- nEISROua8Cf1m9muNezb/uvj0SJ2lQv8P5BFrc5Vh5Nkk6pFzst3+GHwQWGDSmvH9pCm
- J8Sw==
+ bh=HlnnQVYR7UDi9FQuqtljHTy9JqrOVxDZXhuwIJFwMtU=;
+ b=m5OyBd0IcXQ6ypUcJnesDvr4fcnkDicnchkDQCdvlt/pXfX0+in7rwv4l9GDzYLaV/
+ SHRXSwzpq8syU1hRTzBBhsNTA3DyvGeGwoGU5Qz8eSPJzd5aYDLA5s7wCqNEkSeMINSg
+ 9K0Fg8jkLq4J46C/smQfQH2kmhUUW/3E3gsBGjCEgbnwpXjEtqBKvFn/m7890EchUjKZ
+ tK++bGrQZmudm52j7+OZosuzLyz+6HAeclxMi14fmNIMtPtFqBBzpC/9FGoPCjVbQhY2
+ ruig1rDczoJViCbLprPOMfzBVQ+C8x/X/YR50l469ce2BMIi51ZX88Iei/+7/uPnuuKK
+ xInQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752576023; x=1753180823;
+ d=1e100.net; s=20230601; t=1752576039; x=1753180839;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DUXxa+xP+Ej2YS3GTVa8ELdM0Yk7DkoIG4cYz8Z0G9Q=;
- b=gHK1Hx5+F8sYrNCFBF0f2wEhse9/V+Wnx5UmFcKQ1vREN7RlMHNCKmIi9CJft7t+99
- ysybsx/Is6S8qAHEbmY6nmWFP+klvdnarnPyV52u5ERMpfbFg93Jd9NreNe16yH7G8SJ
- f6FAXw0RMonj2H6mE17nEKTchjE52mBQdnI3T9+pH2lCQ7M2NURKqjiLF2GGYdXK3Cy9
- DAHlOkYmE4vKkOFZNi51zHV9bjBiEWA6tyUDD49jsCCPjYwFGsuVvZRis205z5tYLQBG
- 9zcyyeyWPEL+YNDQIUEnnWHOHpCdfEmkIEvtspLBs9iGLgYcgQB5s4YWasmYj5rj977V
- cOXA==
-X-Gm-Message-State: AOJu0YwSuska4eZjo2DtcilEPRcjcM7lNLji7tRVWfqR/c+56L5JfX7M
- gZSyt17uthbYKW79mG24w+hIgsxGJ5Nxg9xMvoQ9jHqbJe3RvIpLlMEOxigefzSoX06NYavPeOn
- DgAgZ
-X-Gm-Gg: ASbGnctZGlDkQzwk9via/oUZ9qQR9eh43Rn5hs5+D1YpXsxUMKgfzePbY9ajyFjXwXx
- 10PbEspgqnAzIwbGN+V7GWMeNTyzACikOfYFWS9TdWVqT8yCfah31ve4/Ogj+qR3NvQmZtMulqu
- zDQBmuTA80y2L+hZ68NM443JcrfmpquaKAnuQ3eVa1WqLXZlgN8eSGrRzQ9xzzA0G6CsU5sqnUb
- 9dsAr4GvmtY15mtoI5PVMql+tfQT6WD7RdeP1/nFekBQKAc/Mx9/15Mm9ZmP9yyQrr4MKlrB1Wu
- cH1tyXQgEf9PWENsKXJwg3iwMyv1Srqtx/Q8zgG0dtR1wq7cG8wEoePFX8NwIktQYgo1Q1J5shr
- c4nfDnnQ0sDLSib7q6QxCLE7NmBnTlvTZxQz1r5XXnOSbVsWQtqs9CBQXB/gX+Akj3RkQuQCCbk
- wRsA==
-X-Google-Smtp-Source: AGHT+IFaelI3Y/OhaoirXt/g1U6//WLMrAmUFQs26iVTfbxt72am3vV4E2e7/Gk8FjFHwusZI1gS2A==
-X-Received: by 2002:a05:6000:23c3:b0:3b5:f7a9:7f5e with SMTP id
- ffacd0b85a97d-3b5f7a97fa4mr8679778f8f.7.1752576022945; 
- Tue, 15 Jul 2025 03:40:22 -0700 (PDT)
+ bh=HlnnQVYR7UDi9FQuqtljHTy9JqrOVxDZXhuwIJFwMtU=;
+ b=nrQJHJzBYXEuWrYGLme8mtPOfQOOC0yLba+Qo5mKt5NGT220IeqMEOJi1gLe5YR+IT
+ y+B0WuMS9X21Og3WPKd8YSYWmgE6fQ/FxUZsXlmd1NAaJDJDRALGhPF5dGUrfE8RRphl
+ ehUZC6uL47WUmz2xRU20Mc4R3TFFhUeuqdC3dNLK3/wCd7b0Vw8kBOCiR2NCsOkgmGcf
+ kB9b09AVx+9OAEHY6LKI6LsMirTExA2EmsGOuc5YA1CFPdCLKzF2BPlO35X0jd5h5QRm
+ HjbJMhpTFvLTxEQVB14pqHQajYCy23xukg2Cfowxa/Zq/TM2jNru23OFFif6FqS6giEC
+ BP1Q==
+X-Gm-Message-State: AOJu0Yw5C50zUSs0PpLzJRBKWIYWQUBBCwjPo80waB4zmTZg1FtDieSJ
+ CKD8quO+o0a7DLCKFZC0MlYQu6/YkMCHsIfffjU0i6a4skOU2xp6dd8z6GuFlbOtq1WGD1U8Xnk
+ 3kTPm
+X-Gm-Gg: ASbGncvrJRCKNwzFFYwixQIrRuK9vVYCuY6P2nNbIVuIDiMuWg71sWDewqodYto9EsJ
+ 1iy5JGCsCSp8CRTH4iTtFOhfPb3pB9LQMl4iJvap6cuFIQp7EideEmTW5t6oKc9UmmffRpelCXU
+ ZFafrqZu4UbneWCzJKejZiyn6Vlpl/bGDK8q3Pxh+7gj6RPorJNbjLi8FcUHk50hzQ5NQ2C022b
+ Gn6aMTQxW33FCRj1Iu351dnXlao8B8J6dkpXRPfaM+ElnW2JeyzewFoU/fKn/fUkHqybtC5s/qT
+ xWhzS6CNlU6Hn373OwHr8iWwcY/5DLiZFa6PfIO34Vmy6zsmh/MzNbsv3kdX6H+HcrJGoL+9uEc
+ HGwuJSMc32xTbQhQ6UWgcvNTmSOiCCtTJSpRH7p1qR1N1aLK0AhO5H3dawjaancwK5h5lltpkfc
+ oKSUQ5vUaqmfie
+X-Google-Smtp-Source: AGHT+IEfiKtUlY2NC3T23b6YhD2TXornCw2N7iQ9AKSkfMpzVs7HgdyMgnjHsiNkknOiZcS6N1s+cg==
+X-Received: by 2002:a05:600c:154c:b0:456:1824:4808 with SMTP id
+ 5b1f17b1804b1-456182448e1mr58815025e9.32.1752576039051; 
+ Tue, 15 Jul 2025 03:40:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc1fd7sm14565314f8f.26.2025.07.15.03.40.21
+ ffacd0b85a97d-3b5e8e0d5f5sm14910909f8f.56.2025.07.15.03.40.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 03:40:22 -0700 (PDT)
+ Tue, 15 Jul 2025 03:40:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -76,20 +76,19 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH-for-10.1 v5 1/7] Revert "accel/tcg: Unregister the RCU before
- exiting RR thread"
-Date: Tue, 15 Jul 2025 12:40:09 +0200
-Message-ID: <20250715104015.72663-2-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
+Subject: [PATCH-for-10.1 v5 4/7] accel/system: Add 'info accel' on human
+ monitor
+Date: Tue, 15 Jul 2025 12:40:12 +0200
+Message-ID: <20250715104015.72663-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715104015.72663-1-philmd@linaro.org>
 References: <20250715104015.72663-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,29 +111,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit bc93332fe460211c2d2f4ff50e1a0e030c7b5159,
-which was merged prematurely, re-introducing Coverity CID 1547782
-(unreachable code).
+'info accel' dispatches to the AccelOpsClass::get_stats()
+and get_vcpu_stats() handlers.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- accel/tcg/tcg-accel-ops-rr.c | 2 --
- 1 file changed, 2 deletions(-)
+ accel/accel-system.c |  8 ++++++++
+ hmp-commands-info.hx | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index a578698d071..6eec5c9eee9 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -302,8 +302,6 @@ static void *rr_cpu_thread_fn(void *arg)
-         rr_deal_with_unplugged_cpus();
-     }
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 76cf4e7ef7a..1e97c64fdca 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -25,6 +25,8 @@
  
--    rcu_unregister_thread();
--
-     g_assert_not_reached();
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
++#include "qapi/qapi-commands-accelerator.h"
++#include "monitor/monitor.h"
+ #include "hw/boards.h"
+ #include "hw/core/cpu.h"
+ #include "accel/accel-ops.h"
+@@ -103,11 +105,17 @@ void accel_init_ops_interfaces(AccelClass *ac)
+     cpus_register_accel(ops);
  }
  
++static void accel_ops_class_init(ObjectClass *oc, const void *data)
++{
++    monitor_register_hmp_info_hrt("accel", qmp_x_accel_stats);
++}
++
+ static const TypeInfo accel_ops_type_info = {
+     .name = TYPE_ACCEL_OPS,
+     .parent = TYPE_OBJECT,
+     .abstract = true,
+     .class_size = sizeof(AccelOpsClass),
++    .class_init = accel_ops_class_init,
+ };
+ 
+ static void accel_system_register_types(void)
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index d7979222752..6142f60e7b1 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -267,6 +267,18 @@ ERST
+         .cmd        = hmp_info_sync_profile,
+     },
+ 
++    {
++        .name       = "accel",
++        .args_type  = "",
++        .params     = "",
++        .help       = "show accelerator info",
++    },
++
++SRST
++  ``info accel``
++    Show accelerator info.
++ERST
++
+ SRST
+   ``info sync-profile [-m|-n]`` [*max*]
+     Show synchronization profiling info, up to *max* entries (default: 10),
 -- 
 2.49.0
 
