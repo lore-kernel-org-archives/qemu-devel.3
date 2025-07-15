@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2ECFC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 15:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB67C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 15:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubhGV-0005bI-Hf; Tue, 15 Jul 2025 11:08:19 -0400
+	id 1ubhGx-0005yS-V7; Tue, 15 Jul 2025 11:08:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubghX-0003wy-DT
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 10:32:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ubghZ-0003zM-PL
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 10:32:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubghS-0006b4-5q
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 10:32:11 -0400
+ id 1ubghT-0006bW-8Q
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 10:32:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752589922;
+ s=mimecast20190719; t=1752589924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7C9TDfjv0fk+Q560faBXLH2CfJ8fnSy6oFTIz7jMlPI=;
- b=Gni1Sw9fKk19DKTahCdlws2q0q3oRUtW0LHqPUHRgBQ6uQEFSPcsFo7yyBBJBwhSc2zg4x
- 1C32qGbPY8LOgYpg3DyHNlJK73rlyUb8ykVyRQhNxMks+JJqaTr4yf15pmHtLNiKeT++Sb
- 754mcKVem2BLrMEr2eNs6ssFvMV2NXk=
+ bh=IZ3foe1ZhYVOU+EUTtxX2+V2nOzECffCYWtzlONizqo=;
+ b=hkO4ue4UqruV6mE4/sx46fiCMFxt91mzaaN7/xSEpCvRpxdbbrPQ0le9ZseU6UpxAJ+zBu
+ CQwv1MuucjofVV2tRgOfKiQtoc5NE9E52QWcjUcCpIoChhcYivernZjgMJYqCTzdBm9kl5
+ NacTTEXr6OlPisk79VryjgUskSl4nPM=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-i09sd1zNM_KEaWA-emlsRg-1; Tue,
- 15 Jul 2025 10:31:57 -0400
-X-MC-Unique: i09sd1zNM_KEaWA-emlsRg-1
-X-Mimecast-MFC-AGG-ID: i09sd1zNM_KEaWA-emlsRg_1752589916
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-1t56j7CSPpGy3ragLQ2WbQ-1; Tue,
+ 15 Jul 2025 10:32:01 -0400
+X-MC-Unique: 1t56j7CSPpGy3ragLQ2WbQ-1
+X-Mimecast-MFC-AGG-ID: 1t56j7CSPpGy3ragLQ2WbQ_1752589920
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B47C7180ACC1; Tue, 15 Jul 2025 14:31:50 +0000 (UTC)
+ id 4063F18001DF; Tue, 15 Jul 2025 14:32:00 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.173])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BBC1918002B3; Tue, 15 Jul 2025 14:31:42 +0000 (UTC)
+ id BAA34180045B; Tue, 15 Jul 2025 14:31:51 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Jagannathan Raman <jag.raman@oracle.com>,
@@ -56,16 +56,16 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Jagannathan Raman <jag.raman@oracle.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 07/14] iotests: drop compat for old version context manager
-Date: Tue, 15 Jul 2025 15:30:16 +0100
-Message-ID: <20250715143023.1851000-8-berrange@redhat.com>
+Subject: [PATCH 08/14] functional: ensure log handlers are closed
+Date: Tue, 15 Jul 2025 15:30:17 +0100
+Message-ID: <20250715143023.1851000-9-berrange@redhat.com>
 In-Reply-To: <20250715143023.1851000-1-berrange@redhat.com>
 References: <20250715143023.1851000-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,79 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our minimum python is now 3.9, so back compat with prior
-python versions is no longer required.
+This avoids a resource leak warning from python when the
+log handler is garbage collected.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/testenv.py    | 7 ++-----
- tests/qemu-iotests/testrunner.py | 9 ++-------
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ tests/functional/qemu_test/testcase.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
-index 6326e46b7b..29caaa8a34 100644
---- a/tests/qemu-iotests/testenv.py
-+++ b/tests/qemu-iotests/testenv.py
-@@ -22,15 +22,12 @@
- from pathlib import Path
- import shutil
- import collections
-+import contextlib
- import random
- import subprocess
- import glob
- from typing import List, Dict, Any, Optional
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2082c6fce4..71c7160adc 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -232,6 +232,7 @@ def tearDown(self):
+             self.socketdir = None
+         self.machinelog.removeHandler(self._log_fh)
+         self.log.removeHandler(self._log_fh)
++        self._log_fh.close()
  
--if sys.version_info >= (3, 9):
--    from contextlib import AbstractContextManager as ContextManager
--else:
--    from typing import ContextManager
- 
- DEF_GDB_OPTIONS = 'localhost:12345'
- 
-@@ -58,7 +55,7 @@ def get_default_machine(qemu_prog: str) -> str:
-     return default_machine
- 
- 
--class TestEnv(ContextManager['TestEnv']):
-+class TestEnv(contextlib.AbstractContextManager['TestEnv']):
-     """
-     Manage system environment for running tests
- 
-diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
-index 2e236c8fa3..14cc8492f9 100644
---- a/tests/qemu-iotests/testrunner.py
-+++ b/tests/qemu-iotests/testrunner.py
-@@ -30,11 +30,6 @@
- from typing import List, Optional, Any, Sequence, Dict
- from testenv import TestEnv
- 
--if sys.version_info >= (3, 9):
--    from contextlib import AbstractContextManager as ContextManager
--else:
--    from typing import ContextManager
--
- 
- def silent_unlink(path: Path) -> None:
-     try:
-@@ -57,7 +52,7 @@ def file_diff(file1: str, file2: str) -> List[str]:
-         return res
- 
- 
--class LastElapsedTime(ContextManager['LastElapsedTime']):
-+class LastElapsedTime(contextlib.AbstractContextManager['LastElapsedTime']):
-     """ Cache for elapsed time for tests, to show it during new test run
- 
-     It is safe to use get() at any time.  To use update(), you must either
-@@ -112,7 +107,7 @@ def __init__(self, status: str, description: str = '',
-         self.interrupted = interrupted
- 
- 
--class TestRunner(ContextManager['TestRunner']):
-+class TestRunner(contextlib.AbstractContextManager['TestRunner']):
-     shared_self = None
- 
-     @staticmethod
+     def main():
+         path = os.path.basename(sys.argv[0])[:-3]
+@@ -399,4 +400,5 @@ def tearDown(self):
+         for vm in self._vms.values():
+             vm.shutdown()
+         logging.getLogger('console').removeHandler(self._console_log_fh)
++        self._console_log_fh.close()
+         super().tearDown()
 -- 
 2.49.0
 
