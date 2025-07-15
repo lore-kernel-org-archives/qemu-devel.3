@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD37C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47363C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublZS-0006VM-SD; Tue, 15 Jul 2025 15:44:11 -0400
+	id 1ublae-0001dd-KA; Tue, 15 Jul 2025 15:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkxi-0004TN-9x
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkxf-0001gA-SH
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606306;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=834C0oDXKZn6AI4lUTo5/qab+PV2c+RGK0C5HaB+c0Q=;
- b=cWoSrSXuKEbwD3pzI4UYFkfSwKMalmn86Mh93ikAbEROzxwIFDd2HO/66sCJYb4kDk3KCa
- ZLW4jCZeRDcPBSVErTmLOq5RT5GufEE8K7f/pLXqW6tk4R0VKRQ+Pg7DgoXN50jOK/eVuH
- nQi3/W5XzcsUGXRyHvoHlF8wZ9BFBzU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-6mSjq-sgMuetMvgw-8JgFw-1; Tue,
- 15 Jul 2025 15:05:02 -0400
-X-MC-Unique: 6mSjq-sgMuetMvgw-8JgFw-1
-X-Mimecast-MFC-AGG-ID: 6mSjq-sgMuetMvgw-8JgFw_1752606302
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0855A195608E; Tue, 15 Jul 2025 19:05:02 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.34.84])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 19C00197702B; Tue, 15 Jul 2025 19:04:59 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 40/57] qemu-img: compare: use helper function for --object
-Date: Tue, 15 Jul 2025 21:03:13 +0200
-Message-ID: <20250715190330.378764-41-kwolf@redhat.com>
-In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
-References: <20250715190330.378764-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublHe-0006p2-SU
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:25:50 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublHb-00075C-K1
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:25:45 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3a6e2d85705so3387541f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:25:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752607541; x=1753212341; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=epbtau3mfk9DJMdMl9jVXDpnXezgjmAx1/t4HCFUui4=;
+ b=qYhXzhGbHiNhlvI5cnfoaVbLpmVAqEHbVmrMWJLwrXZmPT6eWLtnOVsoQwJDb3VEEF
+ 3yHYB7Lksppm0rQhhALzJzMkyqRBWXxdHyhqwBjZ9hbtShEqNpiPJarDnb3Ih8faQKVe
+ J6bn364VeJ88yllqd1bic422IjHmC9+P3LOGt+YZKRBlD75OrkLeX0qxmGLOKvN/Q/pt
+ 5QrzhRVdQsDyq9wZdd6gbC5cHKlJf9uky1CD6cVP5VIFZFo2LDmLq6L5522ZMAShKhtd
+ iKGzYBWD9qmcCX8CFYctawWZ4r2dsNXhnXKu5tyHU/5Qf4dQXS4cFnLmQjDC0/TXDx6/
+ qlJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752607541; x=1753212341;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=epbtau3mfk9DJMdMl9jVXDpnXezgjmAx1/t4HCFUui4=;
+ b=W1363nWMcyxlxiMzHkNBo/XfIsb8TZaQYTqfNHE902FkERw384aa55d/m45yzIwOxx
+ 2YYZt0hYTbLrP7kO09LbEVGbMg1+QOTPm4LIq6jtRGbDWuNaNILkN2wHwEv+LV0pxJWE
+ UeUAu4irPhL/X1B0l1yTPKlXutm2sQdhil4tEcuEQ1XLOw0eKxpvWRejw+/bf14dZXJJ
+ qXPotbbcIBWHBjJYMVkgDj/cRMyvhBV2quHwKo9vUDOH9SgodYCx5EwabArqBDjB7PY2
+ 7qhBLXF+/PFs5M6jZh511p4nMtyiIDPc77kof/72bp3AhcptnptZxc4Cc9DMSwzCJZOS
+ uGig==
+X-Gm-Message-State: AOJu0YyvyMIXST9OojC0nhcMjGsmXSk0PCY9f2bzxVI7VvSw83nZFjge
+ 1AEiZEjKZV9fTxmLihxe+js10YEZZC7aeJ36PL7yB6OpjDydbVZeqvOlAXkHbd0CXPn6EPe8mzV
+ Bc6cf
+X-Gm-Gg: ASbGncvU4cltuldqiyZXVNzo0Fi72DrbOb0cOtzP2BMJ8qfmwNaW5CIKOd3r4+mijmi
+ VNdbrbaD2jrcfENzM9Ma/EbNmkwJCAJuH3jXKvf+pbGyjoayN+NV2D4QuWQssiDoqDXN5nZ4G3T
+ WyIykcPigPTYmH5slV+DvtHTJRIGjvFjWsvjVRyxXdJ2Y0BFfE8RayiWYWZXTcUMQ1YCDAd3pjD
+ MSwPh5uaWPAnS3sYyHkQ6fOY0tYNnBS0vnOJxRKuOaQzwRcg62Ds99PdkYZtaEWEzXfzE7O/xFC
+ pw2r8yrdg7CrTTYcnETYvVI/HxByq0faoxFQxGG6l/fK1wGhoIFnvwUtG1r/Yi4eGgfUtNLlIB0
+ s27YDUzxOiLJqlKK2Ezuw3mwAzd1GMgiZHup4+l92usSC3dOfChyTKcJkcmMDgICs5AFHETA=
+X-Google-Smtp-Source: AGHT+IFpze0b7WsXfdePVDOr1+gg0YPpVi33rfy6T+pguMPneExVvnAdiPASoy/Fln+H+OoB9yKF3g==
+X-Received: by 2002:a5d:5e8a:0:b0:3b5:e6bf:5e0c with SMTP id
+ ffacd0b85a97d-3b60dd95baemr277349f8f.31.1752607541370; 
+ Tue, 15 Jul 2025 12:25:41 -0700 (PDT)
+Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454d5032e9esm208334115e9.3.2025.07.15.12.25.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Jul 2025 12:25:40 -0700 (PDT)
+Message-ID: <98715ba8-a2b2-4a07-9cac-cc6a40a9f7aa@linaro.org>
+Date: Tue, 15 Jul 2025 21:25:39 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/xen/arch_hvm: Unify x86 and ARM variants
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, Anthony PERARD <anthony@xenproject.org>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
+ Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250513171737.74386-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250513171737.74386-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,47 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
+On 13/5/25 19:17, Philippe Mathieu-Daudé wrote:
+> As each target declares the same prototypes, we can
+> use a single header, removing the TARGET_XXX uses.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/arm/xen_arch_hvm.h  |  9 ---------
+>   include/hw/i386/xen_arch_hvm.h | 11 -----------
+>   include/hw/xen/arch_hvm.h      | 14 ++++++++++----
+>   hw/arm/xen-pvh.c               |  1 -
+>   4 files changed, 10 insertions(+), 25 deletions(-)
+>   delete mode 100644 include/hw/arm/xen_arch_hvm.h
+>   delete mode 100644 include/hw/i386/xen_arch_hvm.h
 
-Use the same function to parse --object as used by all
-other qemu-img subcommands.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250531171609.197078-11-mjt@tls.msk.ru>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qemu-img.c | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
-
-diff --git a/qemu-img.c b/qemu-img.c
-index 9d2eba3b36..a7a07ed4bc 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -1529,20 +1529,8 @@ static int img_compare(const img_cmd_t *ccmd, int argc, char **argv)
-             force_share = true;
-             break;
-         case OPTION_OBJECT:
--            {
--                Error *local_err = NULL;
--
--                if (!user_creatable_add_from_str(optarg, &local_err)) {
--                    if (local_err) {
--                        error_report_err(local_err);
--                        exit(2);
--                    } else {
--                        /* Help was printed */
--                        exit(EXIT_SUCCESS);
--                    }
--                }
--                break;
--            }
-+            user_creatable_process_cmdline(optarg);
-+            break;
-         case OPTION_IMAGE_OPTS:
-             image_opts = true;
-             break;
--- 
-2.50.1
-
+Queued, thanks.
 
