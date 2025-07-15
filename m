@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3557C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 08:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CDDDC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 08:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubajI-0005dQ-2j; Tue, 15 Jul 2025 04:09:36 -0400
+	id 1ubakl-0001Lb-2X; Tue, 15 Jul 2025 04:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ubajC-0005bb-5O
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 04:09:30 -0400
+ id 1ubaki-0001Eq-OM
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 04:11:04 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ubaj8-0002Pg-Db
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 04:09:29 -0400
+ id 1ubakf-0002r6-S6
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 04:11:04 -0400
 Received: from [10.105.8.218] ([192.51.222.130]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56F87tWT033093
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56F85KO3032018
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 15 Jul 2025 17:07:56 +0900 (JST)
+ Tue, 15 Jul 2025 17:05:20 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=HiQ/pSw7l2j0DIryjxyCnwtVk0l52eZq68BJAAQ1Xtk=; 
+DKIM-Signature: a=rsa-sha256; bh=JyViDsh1eXEiM4hte2yquPE81rIabYAJdGz71WuDofU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1752566876; v=1;
- b=ENxKpLZ3f1fk5RuPvkVPiiHz8tP0w0IbdEretBBICh9UBIZEC7aoKrWFd1l0hY7d
- ryWI0uxxXY1r1wsfVujr2DR9z1OUzlGvDSOoOEW2Wgy7iISbzm0LidgGXc44Qtnb
- Zzu4kEDUvhy0j1VOc/plL1dO6/nHFIhASt3mpM2GxIWGmYkTC4SEc7+cEgZupMrE
- QIqLdExgNBHfvSCZWAddGLp7hrPt3bSdkxUm4FV/x6xcsIjY1K9U1tQC+3lv1rIe
- tHL4e1vzShs18CG2J0xVZCTxvw98cAFH+rF4DUhouAcoM7zX8zac4/KJcuADHtjz
- EP9r0WNtbB1kkKWq/u+T+g==
-Message-ID: <f266ffe9-f601-46cc-85be-515475cbfe12@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 15 Jul 2025 17:07:55 +0900
+ s=rs20250326; t=1752566720; v=1;
+ b=TpN9mnV2UZAoSBBF9Stds2knCpZspcJxU+R8g8bnji0OzxczkiRpUc3XCMjrUchb
+ qmoLge3Z5NA8qcX3dVNDq8Gj2c7J2q/5bPZ517XDm9I4NIUeuDIOraS65mccmeW8
+ 1upK9xiNMobBI8VyM9vUem47eg1xkEq3Iy4yWO74fc5nbk+Cai7rCWsWOmLBZXWq
+ +9lMGF+LTiJqcCWQew6WzAPZBw6HFDWu/oEiAf1yQgqZr9/lySfpc/T1dVTwzFtT
+ j6fpgeDHk+JYxEfTj5sBvXuAZBvRwN7tDnC/HFIOeLAhKBgkdWU1YUTP6DPQVjgL
+ Kg4+pB5prCwFjJuRjMnjEw==
+Message-ID: <93de161a-3867-46aa-bfc0-2da951981bcf@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 15 Jul 2025 17:05:20 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 13/13] net: implement UDP tunnel features offloading
+Subject: Re: [PATCH RFC v2 12/13] net: implement tunnel probing
 To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
@@ -52,10 +52,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  kvm@vger.kernel.org
 References: <cover.1752229731.git.pabeni@redhat.com>
- <509e49207e4dc4a10ef36492a2ee1f90f3c2c237.1752229731.git.pabeni@redhat.com>
+ <94ffdec876d61f22a90e63d6a79ff5517d1c727c.1752229731.git.pabeni@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <509e49207e4dc4a10ef36492a2ee1f90f3c2c237.1752229731.git.pabeni@redhat.com>
+In-Reply-To: <94ffdec876d61f22a90e63d6a79ff5517d1c727c.1752229731.git.pabeni@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -83,197 +83,305 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/07/11 22:02, Paolo Abeni wrote:
-> When any host or guest GSO over UDP tunnel offload is enabled the
-> virtio net header includes the additional tunnel-related fields,
-> update the size accordingly.
+> Tap devices support GSO over UDP tunnel offload. Probe for such
+> feature in a similar manner to other offloads.
 > 
-> Push the GSO over UDP tunnel offloads all the way down to the tap
-> device extending the newly introduced NetFeatures struct, and
-> eventually enable the associated features.
+> GSO over UDP tunnel needs to be enabled in addition to  a "plain"
+> offload (TSO or USO).
 > 
-> As per virtio specification, to convert features bit to offload bit,
-> map the extended features into the reserved range.
-> 
-> Finally, make the vhost backend aware of the exact header layout, to
-> copy it correctly. The tunnel-related field are present if either
-> the guest or the host negotiated any UDP tunnel related feature:
-> add them to host kernel supported features list, to allow qemu
-> transfer to such backend the needed information.
-
-Please also update: hw/virtio/virtio-qmp.c
-
+> No need to check separately for the outer header checksum offload:
+> the kernel is going to support both of them or none.
 > 
 > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 > ---
 > v1 -> v2:
->    - squashed vhost support into this patch
->    - dropped tun offload consistency checks; they are implemented in
->      the kernel side
->    - virtio_has_tnl_hdr ->virtio_has_tunnel_hdr
+>    - peer_has_tunnel return a bool
+>    - move TUN_F definition in net/tun-linux.h
 > ---
->   hw/net/vhost_net.c  |  2 ++
->   hw/net/virtio-net.c | 34 ++++++++++++++++++++++++++--------
->   include/net/net.h   |  2 ++
->   net/net.c           |  3 ++-
->   net/tap-linux.c     |  6 ++++++
->   5 files changed, 38 insertions(+), 9 deletions(-)
+>   hw/net/virtio-net.c | 37 +++++++++++++++++++++++++++++++++++++
+>   include/net/net.h   |  3 +++
+>   net/net.c           |  9 +++++++++
+>   net/tap-bsd.c       |  5 +++++
+>   net/tap-linux.c     | 11 +++++++++++
+>   net/tap-linux.h     |  9 +++++++++
+>   net/tap-solaris.c   |  5 +++++
+>   net/tap-stub.c      |  5 +++++
+>   net/tap.c           | 11 +++++++++++
+>   net/tap_int.h       |  1 +
+>   10 files changed, 96 insertions(+)
 > 
-> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> index bae595607a..a15dc51d84 100644
-> --- a/hw/net/vhost_net.c
-> +++ b/hw/net/vhost_net.c
-> @@ -52,6 +52,8 @@ static const int kernel_feature_bits[] = {
->       VIRTIO_F_NOTIFICATION_DATA,
->       VIRTIO_NET_F_RSC_EXT,
->       VIRTIO_NET_F_HASH_REPORT,
-> +    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-> +    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
->       VHOST_INVALID_FEATURE_BIT
->   };
->   
 > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 8ed1cad363..ff2f34d98a 100644
+> index 09d5ef1ece..8ed1cad363 100644
 > --- a/hw/net/virtio-net.c
 > +++ b/hw/net/virtio-net.c
-> @@ -103,6 +103,12 @@
->   #define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
->                                          VIRTIO_NET_FEATURES_MAP_MIN + 64)
+> @@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
+>       return qemu_has_uso(qemu_get_queue(n->nic)->peer);
+>   }
 >   
-> +static bool virtio_has_tunnel_hdr(const uint64_t *features)
+> +static bool peer_has_tunnel(VirtIONet *n)
 > +{
-> +    return virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
-> +           virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> +    if (!peer_has_vnet_hdr(n)) {
+> +        return 0;
+
+Please return "false" for type consistency.
+
+> +    }
+> +
+> +    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
 > +}
 > +
->   static const VirtIOFeature feature_sizes[] = {
->       {.flags = 1ULL << VIRTIO_NET_F_MAC,
->        .end = endof(struct virtio_net_config, mac)},
-> @@ -659,7 +665,8 @@ static bool peer_has_tunnel(VirtIONet *n)
->   }
->   
 >   static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
-> -                                       int version_1, int hash_report)
-> +                                       int version_1, int hash_report,
-> +                                       int tunnel)
+>                                          int version_1, int hash_report)
 >   {
->       int i;
->       NetClientState *nc;
-> @@ -667,9 +674,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->       n->mergeable_rx_bufs = mergeable_rx_bufs;
+> @@ -791,6 +800,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+>           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
 >   
->       if (version_1) {
-> -        n->guest_hdr_len = hash_report ?
-> -            sizeof(struct virtio_net_hdr_v1_hash) :
-> -            sizeof(struct virtio_net_hdr_mrg_rxbuf);
-> +        n->guest_hdr_len = tunnel ?
-> +            sizeof(struct virtio_net_hdr_v1_hash_tunnel) :
-> +            (hash_report ?
-> +             sizeof(struct virtio_net_hdr_v1_hash) :
-> +             sizeof(struct virtio_net_hdr_mrg_rxbuf));
->           n->rss_data.populate_hash = !!hash_report;
->       } else {
->           n->guest_hdr_len = n->mergeable_rx_bufs ?
-> @@ -886,6 +895,10 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
->          .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
->          .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
->          .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
-> +       .tnl  = !!(n->curr_guest_offloads &
-> +                  (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED)),
-> +       .tnl_csum = !!(n->curr_guest_offloads &
-> +                      (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED)),
->       };
->   
->       qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
-> @@ -907,7 +920,9 @@ virtio_net_guest_offloads_by_features(const uint64_t *features)
->           (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
->           (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
->           (1ULL << VIRTIO_NET_F_GUEST_USO4) |
-> -        (1ULL << VIRTIO_NET_F_GUEST_USO6);
-> +        (1ULL << VIRTIO_NET_F_GUEST_USO6) |
-> +        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED) |
-> +        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED);
->   
->       return guest_offloads_mask & virtio_net_features_to_offload(features);
->   }
-> @@ -1020,7 +1035,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
->                                  virtio_has_feature_ex(features,
->                                                     VIRTIO_F_VERSION_1),
->                                  virtio_has_feature_ex(features,
-> -                                                  VIRTIO_NET_F_HASH_REPORT));
-> +                                                  VIRTIO_NET_F_HASH_REPORT),
-> +                               virtio_has_tunnel_hdr(features));
->   
->       n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
->           virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-> @@ -3132,13 +3148,15 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
->       VirtIONet *n = opaque;
->       VirtIODevice *vdev = VIRTIO_DEVICE(n);
->       int i, link_down;
-> +    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_array);
->   
->       trace_virtio_net_post_load_device();
->       virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
->                                  virtio_vdev_has_feature(vdev,
->                                                          VIRTIO_F_VERSION_1),
->                                  virtio_vdev_has_feature(vdev,
-> -                                                       VIRTIO_NET_F_HASH_REPORT));
-> +                                                      VIRTIO_NET_F_HASH_REPORT),
-> +                               has_tunnel_hdr);
->   
->       /* MAC_TABLE_ENTRIES may be different from the saved image */
->       if (n->mac_table.in_use > MAC_TABLE_ENTRIES) {
-> @@ -3945,7 +3963,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->   
->       n->vqs[0].tx_waiting = 0;
->       n->tx_burst = n->net_conf.txburst;
-> -    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0);
-> +    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0, 0);
->       n->promisc = 1; /* for compatibility */
->   
->       n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
-> diff --git a/include/net/net.h b/include/net/net.h
-> index c71d7c6074..5049d293f2 100644
-> --- a/include/net/net.h
-> +++ b/include/net/net.h
-> @@ -43,6 +43,8 @@ typedef struct NetOffloads {
->       bool ufo;
->       bool uso4;
->       bool uso6;
-> +    bool tnl;
-> +    bool tnl_csum;
->   } NetOffloads;
->   
->   #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
-> diff --git a/net/net.c b/net/net.c
-> index 5a2f00c108..eb98c8a8b9 100644
-> --- a/net/net.c
-> +++ b/net/net.c
-> @@ -575,7 +575,8 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
->   
->       assert(len == sizeof(struct virtio_net_hdr_mrg_rxbuf) ||
->              len == sizeof(struct virtio_net_hdr) ||
-> -           len == sizeof(struct virtio_net_hdr_v1_hash));
-> +           len == sizeof(struct virtio_net_hdr_v1_hash) ||
-> +           len == sizeof(struct virtio_net_hdr_v1_hash_tunnel));
->   
->       nc->vnet_hdr_len = len;
->       nc->info->set_vnet_hdr_len(nc, len);
-> diff --git a/net/tap-linux.c b/net/tap-linux.c
-> index 4ec638add6..5e6c2d3cbd 100644
-> --- a/net/tap-linux.c
-> +++ b/net/tap-linux.c
-> @@ -279,6 +279,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
->           if (ol->uso6) {
->               offload |= TUN_F_USO6;
->           }
-> +        if (ol->tnl) {
-> +            offload |= TUN_F_UDP_TUNNEL_GSO;
-> +        }
-> +        if (ol->tnl_csum) {
-> +            offload |= TUN_F_UDP_TUNNEL_GSO_CSUM;
-> +        }
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +
+>           virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
 >       }
 >   
->       if (ioctl(fd, TUNSETOFFLOAD, offload) != 0) {
+> @@ -805,6 +821,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+>       }
+>   
+> +    if (!peer_has_tunnel(n)) {
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +    }
+> +
+>       if (!get_vhost_net(nc->peer)) {
+>           return;
+>       }
+> @@ -4087,6 +4112,10 @@ static const VMStateDescription vmstate_virtio_net = {
+>       .dev_unplug_pending = dev_unplug_pending,
+>   };
+>   
+> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
+> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_DWORD(_bit)],    \
+> +                      _bit & 0x3f, _defval)
+> +
+>   static const Property virtio_net_properties[] = {
+>       DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
+>                       VIRTIO_NET_F_CSUM, true),
+> @@ -4159,6 +4188,14 @@ static const Property virtio_net_properties[] = {
+>                         VIRTIO_NET_F_GUEST_USO6, true),
+>       DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+>                         VIRTIO_NET_F_HOST_USO, true),
+> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_array,
+> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
+> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_array,
+> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
+> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_array,
+> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
+> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_array,
+> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
+>   };
+>   
+>   static void virtio_net_class_init(ObjectClass *klass, const void *data)
+> diff --git a/include/net/net.h b/include/net/net.h
+> index 5edea7671a..c71d7c6074 100644
+> --- a/include/net/net.h
+> +++ b/include/net/net.h
+> @@ -65,6 +65,7 @@ typedef void (NetClientDestructor)(NetClientState *);
+>   typedef RxFilterInfo *(QueryRxFilter)(NetClientState *);
+>   typedef bool (HasUfo)(NetClientState *);
+>   typedef bool (HasUso)(NetClientState *);
+> +typedef bool (HasTunnel)(NetClientState *);
+>   typedef bool (HasVnetHdr)(NetClientState *);
+>   typedef bool (HasVnetHdrLen)(NetClientState *, int);
+>   typedef void (SetOffload)(NetClientState *, const NetOffloads *);
+> @@ -93,6 +94,7 @@ typedef struct NetClientInfo {
+>       NetPoll *poll;
+>       HasUfo *has_ufo;
+>       HasUso *has_uso;
+> +    HasTunnel *has_tunnel;
+>       HasVnetHdr *has_vnet_hdr;
+>       HasVnetHdrLen *has_vnet_hdr_len;
+>       SetOffload *set_offload;
+> @@ -193,6 +195,7 @@ void qemu_set_info_str(NetClientState *nc,
+>   void qemu_format_nic_info_str(NetClientState *nc, uint8_t macaddr[6]);
+>   bool qemu_has_ufo(NetClientState *nc);
+>   bool qemu_has_uso(NetClientState *nc);
+> +bool qemu_has_tunnel(NetClientState *nc);
+>   bool qemu_has_vnet_hdr(NetClientState *nc);
+>   bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
+>   void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
+> diff --git a/net/net.c b/net/net.c
+> index 053db7c314..5a2f00c108 100644
+> --- a/net/net.c
+> +++ b/net/net.c
+> @@ -522,6 +522,15 @@ bool qemu_has_uso(NetClientState *nc)
+>       return nc->info->has_uso(nc);
+>   }
+>   
+> +bool qemu_has_tunnel(NetClientState *nc)
+> +{
+> +    if (!nc || !nc->info->has_tunnel) {
+> +        return false;
+> +    }
+> +
+> +    return nc->info->has_tunnel(nc);
+> +}
+> +
+>   bool qemu_has_vnet_hdr(NetClientState *nc)
+>   {
+>       if (!nc || !nc->info->has_vnet_hdr) {
+> diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+> index 86b6edee94..e7de0672f4 100644
+> --- a/net/tap-bsd.c
+> +++ b/net/tap-bsd.c
+> @@ -217,6 +217,11 @@ int tap_probe_has_uso(int fd)
+>       return 0;
+>   }
+>   
+> +int tap_probe_has_tunnel(int fd)
+
+This should return bool for consistency.
+
+> +{
+> +    return 0;
+> +}
+> +
+>   void tap_fd_set_vnet_hdr_len(int fd, int len)
+>   {
+>   }
+> diff --git a/net/tap-linux.c b/net/tap-linux.c
+> index a1c58f74f5..4ec638add6 100644
+> --- a/net/tap-linux.c
+> +++ b/net/tap-linux.c
+> @@ -196,6 +196,17 @@ int tap_probe_has_uso(int fd)
+>       return 1;
+>   }
+>   
+> +int tap_probe_has_tunnel(int fd)
+> +{
+> +    unsigned offload;
+> +
+> +    offload = TUN_F_CSUM | TUN_F_TSO4 | TUN_F_UDP_TUNNEL_GSO;
+> +    if (ioctl(fd, TUNSETOFFLOAD, offload) < 0) {
+> +        return 0;
+> +    }
+> +    return 1;
+> +}
+> +
+>   void tap_fd_set_vnet_hdr_len(int fd, int len)
+>   {
+>       if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+> diff --git a/net/tap-linux.h b/net/tap-linux.h
+> index 9a58cecb7f..8cd6b5874b 100644
+> --- a/net/tap-linux.h
+> +++ b/net/tap-linux.h
+> @@ -53,4 +53,13 @@
+>   #define TUN_F_USO4    0x20    /* I can handle USO for IPv4 packets */
+>   #define TUN_F_USO6    0x40    /* I can handle USO for IPv6 packets */
+>   
+> +/* I can handle TSO/USO for UDP tunneled packets */
+> +#define TUN_F_UDP_TUNNEL_GSO       0x080
+> +
+> +/*
+> + * I can handle TSO/USO for UDP tunneled packets requiring csum offload for
+> + * the outer header
+> + */
+> +#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
+> +
+>   #endif /* QEMU_TAP_LINUX_H */
+> diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+> index 833c066bee..ac09ae03c0 100644
+> --- a/net/tap-solaris.c
+> +++ b/net/tap-solaris.c
+> @@ -222,6 +222,11 @@ int tap_probe_has_uso(int fd)
+>       return 0;
+>   }
+>   
+> +int tap_probe_has_tunnel(int fd)
+> +{
+> +    return 0;
+> +}
+> +
+>   void tap_fd_set_vnet_hdr_len(int fd, int len)
+>   {
+>   }
+> diff --git a/net/tap-stub.c b/net/tap-stub.c
+> index 67d14ad4d5..66abbbc392 100644
+> --- a/net/tap-stub.c
+> +++ b/net/tap-stub.c
+> @@ -52,6 +52,11 @@ int tap_probe_has_uso(int fd)
+>       return 0;
+>   }
+>   
+> +int tap_probe_has_tunnel(int fd)
+> +{
+> +    return 0;
+> +}
+> +
+>   void tap_fd_set_vnet_hdr_len(int fd, int len)
+>   {
+>   }
+> diff --git a/net/tap.c b/net/tap.c
+> index 13e19130ce..c7612fb91b 100644
+> --- a/net/tap.c
+> +++ b/net/tap.c
+> @@ -58,6 +58,7 @@ typedef struct TAPState {
+>       bool using_vnet_hdr;
+>       bool has_ufo;
+>       bool has_uso;
+> +    bool has_tunnel;
+>       bool enabled;
+>       VHostNetState *vhost_net;
+>       unsigned host_vnet_hdr_len;
+> @@ -223,6 +224,14 @@ static bool tap_has_uso(NetClientState *nc)
+>       return s->has_uso;
+>   }
+>   
+> +static bool tap_has_tunnel(NetClientState *nc)
+> +{
+> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> +
+> +    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+> +    return s->has_tunnel;
+> +}
+> +
+>   static bool tap_has_vnet_hdr(NetClientState *nc)
+>   {
+>       TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> @@ -339,6 +348,7 @@ static NetClientInfo net_tap_info = {
+>       .cleanup = tap_cleanup,
+>       .has_ufo = tap_has_ufo,
+>       .has_uso = tap_has_uso,
+> +    .has_tunnel = tap_has_tunnel,
+>       .has_vnet_hdr = tap_has_vnet_hdr,
+>       .has_vnet_hdr_len = tap_has_vnet_hdr_len,
+>       .set_offload = tap_set_offload,
+> @@ -367,6 +377,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+>       s->using_vnet_hdr = false;
+>       s->has_ufo = tap_probe_has_ufo(s->fd);
+>       s->has_uso = tap_probe_has_uso(s->fd);
+> +    s->has_tunnel = tap_probe_has_tunnel(s->fd);
+>       s->enabled = true;
+>       tap_set_offload(&s->nc, &ol);
+>       /*
+> diff --git a/net/tap_int.h b/net/tap_int.h
+> index f8bbe1cb0c..327d10f68b 100644
+> --- a/net/tap_int.h
+> +++ b/net/tap_int.h
+> @@ -38,6 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
+>   int tap_probe_vnet_hdr(int fd, Error **errp);
+>   int tap_probe_has_ufo(int fd);
+>   int tap_probe_has_uso(int fd);
+> +int tap_probe_has_tunnel(int fd);
+>   void tap_fd_set_offload(int fd, const NetOffloads *ol);
+>   void tap_fd_set_vnet_hdr_len(int fd, int len);
+>   int tap_fd_set_vnet_le(int fd, int vnet_is_le);
 
 
