@@ -4,97 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA24AC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C14AC83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubcDZ-00055k-9G; Tue, 15 Jul 2025 05:44:57 -0400
+	id 1ubcEY-00066r-A0; Tue, 15 Jul 2025 05:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubcDX-0004wz-8N
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:44:55 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubcDV-0001yY-7V
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:44:54 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-451d6ade159so37651905e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 02:44:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752572691; x=1753177491; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aot4+u9RJ7G5jt+NRvKicHl331+pWGgdDV/FQfND0wQ=;
- b=hZAq+XODzGVaQhYvOqP51pmaUQPnRqyGCCxGFVPlJMDsA57nnfGXBW97KDQC0FBDlf
- Q+opRDa47dsclwio8sSWFpQC/nR/2bJUhkOYw6byQSZ3fwAm9GKBi8IZP9WOlUaOkhCM
- mTeTLfdpTx+3bpuaFeTmYTrf0W5vbSn2OQR5bvc8BeZSQfnbEuID3+jN7yqezUZdO16U
- sXuI9mxvvYNZBtWoj1cTlDR6BDk0taKCT9AT64k5wxMj03BCDJZuqMukXjaM6upcl7kS
- BBPTX58oqNQ1V+Y72szK0MJHOx69l42qtudeeCSczbRTde7puoPYULUNONMoBMXsW4Zv
- 5v/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752572691; x=1753177491;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aot4+u9RJ7G5jt+NRvKicHl331+pWGgdDV/FQfND0wQ=;
- b=vqXUktNH5X8D07VBaRQKxgfAbC61tqW1K2N9cDI6m5DEy+gLaX5CWJ5JxBEbkKoNpY
- 2WrpsmKE7Lt3567g2QgB3C/3IO83yjhGjXHaOg8WhqeYUPBQxbm5M0E5TJkNzDwI7Qoq
- L09lmrGHhj51faFtMr4IdrmGficEW7fLeOB38YhwOBy1d+i7Dl54SSsy6t0RRKXk9uQO
- QyjnHTvhpjxnVe2yGL93iXNs+/9fuz3q9X6X5dncJo7Xoo8QtgeNhZpsFc6S6U4ZUyIv
- kpr5HnU1Z+99T0gkhB8PLZpdNARCGgwcvV+V5g/6j2mpqYAxRLini9pD+KT+zP0kmkaW
- B8Lg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeTvVuWJRHLHetIawFjLJmb9asbc/a9k/DleUQKCLizADA2/JaO/RgtXV0voI0A1ws/fk3jx/cqmpm@nongnu.org
-X-Gm-Message-State: AOJu0YzecJlFoj/eAqS8i1v3FT0eiynAbCrrqE6mra2moVXWAjfM7CnW
- FEv3rx5HNs0T4YjKy2Lxw3SvyZh5VZ6AI1klVZ7iYAtc6gmDsVaNcV7nbSfdVqOpNdM=
-X-Gm-Gg: ASbGncuPWEE5f+YuX7BTz7JnblfjwuONiVyr8JYQP4G1KGJm4NTveVSnZhJPLIrVtLv
- Mmyl1Ay5CtLvsBHjSCvqs5nZgpAyeNN4ChWykA8Jo7WaYPSz9eblZP505DXfc49hvn5g9vdwm6H
- dJlsfrchD7Ki2SrY6t6lwXjKvW4mcBgiCbZPgEvOo840V8jztCUKfslBz1N7qD+cbNnC2p2Nmvn
- 7esk/EqQzckFybBrWCDbHWBLEB6/c+f+v7OG4g0b5VRcB9Wp0jafF/32fNk3p+VxAtJXY7NIElW
- mgjB/kaltpLI9qzhv1fuhb049F05J4Jsq0P33DzZlWGWUzVkGnLngFxw4cC7WUlgXkgzUIXciKl
- s9OdnJGc1xvASu3ToK5BJtqKwu9boyC04bDvxQhiQuZHvBeNkvbxxWzuwOkA29d4ykZEldyp/WH
- IGeWAVxA==
-X-Google-Smtp-Source: AGHT+IHGsDMEBCHWt8LGUJhyB7mipFuTgSO0zYQeBWntjtV59rjm6/7UW1LlIi3f0Ds8z4EM9IDURA==
-X-Received: by 2002:a05:600c:6290:b0:456:1f89:2483 with SMTP id
- 5b1f17b1804b1-4561f892ed3mr45179715e9.26.1752572691396; 
- Tue, 15 Jul 2025 02:44:51 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4560f22cd14sm86684675e9.30.2025.07.15.02.44.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 02:44:50 -0700 (PDT)
-Message-ID: <fa255125-b989-4c52-9596-db22aaa3ebc8@linaro.org>
-Date: Tue, 15 Jul 2025 11:44:48 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubcEH-00063m-FF; Tue, 15 Jul 2025 05:45:47 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubcE7-0002Gx-VJ; Tue, 15 Jul 2025 05:45:41 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhDjY6l1Kz6L5CL;
+ Tue, 15 Jul 2025 17:41:53 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 63AA21402EB;
+ Tue, 15 Jul 2025 17:45:23 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
+ 2025 11:45:22 +0200
+Date: Tue, 15 Jul 2025 10:45:20 +0100
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <linuxarm@huawei.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
+ <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce smmuv3
+ accel device
+Message-ID: <20250715104520.00000c37@huawei.com>
+In-Reply-To: <20250714155941.22176-6-shameerali.kolothum.thodi@huawei.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-6-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/22] vfio/pci.h: rename VFIOPCIDevice pdev field to
- parent_obj
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
- danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com, john.levon@nutanix.com, thanos.makatos@nutanix.com,
- alex.williamson@redhat.com, clg@redhat.com, steven.sistare@oracle.com,
- tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-23-mark.caveayland@nutanix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250715093110.107317-23-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,20 +74,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/25 11:26, Mark Cave-Ayland wrote:
-> Now that nothing accesses the pdev field directly, rename pdev to
-> parent_obj as per our current coding guidelines.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->   hw/vfio/cpr.c | 4 ++--
->   hw/vfio/pci.c | 4 ++--
->   hw/vfio/pci.h | 2 +-
->   3 files changed, 5 insertions(+), 5 deletions(-)
+On Mon, 14 Jul 2025 16:59:31 +0100
+Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Also setup specific PCIIOMMUOps for accel SMMUv3 as accel
+> SMMUv3 will have different handling for those ops callbacks
+> in subsequent patches.
+> 
+> The "accel" property is not yet added, so users cannot set it at this
+> point. It will be introduced in a subsequent patch once the necessary
+> support is in place.
+> 
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> new file mode 100644
+> index 0000000000..2eac9c6ff4
+> --- /dev/null
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -0,0 +1,66 @@
+> +/*
+> + * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
+> + * Copyright (C) 2025 NVIDIA
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/arm/smmuv3.h"
+> +#include "smmuv3-accel.h"
+> +
+> +static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
+> +                                                PCIBus *bus, int devfn)
+> +{
+> +    SMMUDevice *sdev = sbus->pbdev[devfn];
+> +    SMMUv3AccelDevice *accel_dev;
+> +
+> +    if (sdev) {
+> +        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+
+Nicolin made good point on early return being nicer here.
+
+> +    } else {
+> +        accel_dev = g_new0(SMMUv3AccelDevice, 1);
+> +        sdev = &accel_dev->sdev;
+> +
+> +        sbus->pbdev[devfn] = sdev;
+> +        smmu_init_sdev(bs, sdev, bus, devfn);
+> +    }
+> +
+> +    return accel_dev;
+> +}
+> +
+> +static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
+> +                                              int devfn)
+> +{
+> +    SMMUState *bs = opaque;
+
+Why bs? (other than for giggles)  If that is standard naming already then
+fair enough.
+
+> +    SMMUPciBus *sbus;
+> +    SMMUv3AccelDevice *accel_dev;
+> +    SMMUDevice *sdev;
+
+Maybe tidy up the ordering to some scheme. 
+
+> +
+> +    sbus = smmu_get_sbus(bs, bus);
+> +    accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
+> +    sdev = &accel_dev->sdev;
+> +
+> +    return &sdev->as;
+
+Not a lot of point in having local sdev unless you add more
+stuff here that uses it later.
+
+> +}
+
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> new file mode 100644
+> index 0000000000..4cf30b1291
+> --- /dev/null
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -0,0 +1,19 @@
+> +/*
+> + * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
+> + * Copyright (C) 2025 NVIDIA
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_ARM_SMMUV3_ACCEL_H
+> +#define HW_ARM_SMMUV3_ACCEL_H
+> +
+> +#include "hw/arm/smmu-common.h"
+> +#include CONFIG_DEVICES
+> +
+> +typedef struct SMMUv3AccelDevice {
+> +    SMMUDevice  sdev;
+
+Bonus space.
+
+> +} SMMUv3AccelDevice;
+> +
+> +#endif /* HW_ARM_SMMUV3_ACCEL_H */
+
 
 
