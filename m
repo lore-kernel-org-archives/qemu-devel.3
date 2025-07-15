@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43381C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5030EC83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ1T-0002gR-IM; Tue, 15 Jul 2025 02:20:16 -0400
+	id 1ubZ1Q-0002di-EU; Tue, 15 Jul 2025 02:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1J-0002Uj-Fe
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:06 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1F-0002RR-Gg
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:01 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1H-00077E-0b
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:04 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a6cdc27438so4184325f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1D-00075r-Bb
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:00 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45600581226so29984625e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560401; x=1753165201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752560396; x=1753165196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cuDzbbwm2kJEj0yYBiGbuSIbCM9/3TFQdYicUYRD+Aw=;
- b=db9iws1+3pd+XR1Uplo6GtO9PTR7wI9gYJqGOuuWDzyRua4PJezdlSXIr7vGUf1v1m
- ilqaNw7xLXvcI4VfqTqTH6xi6sQZ2WbFENbgzbZzJxumlDJQ4ZY4o3PFvOVobB5HZM7D
- mqY2qjaVWWJXnU8Q7LjQeIhu6q1tMPhPdQFtBC1Lc4xRUvoHmiXoxKvhQS/iyZeYrx5H
- AY2aZHhygVKMesLDqpqM/BIe7b+5Sq1srYB1QYj1WQQ/A0mMeUXP6aEP8F7pq/0BwGg1
- xze1RlZ6tM8nCmMGHEuGhaUa8RlQnDwHkfWt3L/vph4Ja457sNmqGBFvddB355sRrRa+
- 4cqQ==
+ bh=S2++15hJzvyf/oh1q0RtDm/VcHzR4ITOplPRpy1k7FQ=;
+ b=ukDjIMrT9KKKD7dSmQY0F+tm/6bBQ7Sqb/yURqxFDL7vGdbkaDqdjroiLKZ71O1FNk
+ z5TRgObWrmCziIRnFUka2sKVbtzT+Or3NyqTc2+KRJq8153EeF0k4DBO6peQjUhYsH3H
+ 1GEDS8QiIlipKXYFsdEx8/+bF9jFJS58tkaBpe99uRdhtNjRkfrNn6RlGkhC3B3FF08E
+ pCepd5FMKkBfbv7/BQeshxfzn0p0yLmrqJ0Ua6KWPnV5GNVDHb5njgbgmotx79st1194
+ CTKCPdtABel37yWNU4RcjkxihN3rpbgShTjKgMhILf8kCIWUhJ2IIs5VCxs+zJClw2xl
+ y2Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560401; x=1753165201;
+ d=1e100.net; s=20230601; t=1752560396; x=1753165196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cuDzbbwm2kJEj0yYBiGbuSIbCM9/3TFQdYicUYRD+Aw=;
- b=dRR08b/1r5GjSMSOma4t03TQdKJFwCDbDKwyJjDnTKn+JN2Gu8HEOfBf/TkelFzL+t
- wEUSMT26bf0owtuiuMHsAhPySLegyNNh8tCipzn3fBM5oblqWpZkLQyd0U53RAEdAjTO
- AoeRUcXjWt7oDIhCy5+K6hCdSGpr0zcGwpoc8COZ36MS5nzI4/j1FpNxD5ecJBo6x1qn
- Pp12AChgZ9UZmJlb9FlIEb2Do/fX3PmblYxbUpBqbv3LI2nkjb3jE7H7Li3YFcCiW1mB
- 6TXCprDGamk/yn7dLS6uAAAGe9hyBM5FNvVUkYk45dhqBZYRiH7ycsYaZ+ICgItN96/g
- T+Bg==
-X-Gm-Message-State: AOJu0YyVX/GxDivZNVdEcL6AZmZO0/ZuryRfWZXHk2+odaHTAGZKy/Kr
- j0NXHK/ikKPDvfOdFqDV+HKXVY75jSXNt4eHTXrP1t31PqLjX8Ia+1J7uo5fqPSKpkgTZM106WQ
- /EHW5
-X-Gm-Gg: ASbGncsxyos6ow69nVZZQzWKNFRgggKbcaMPnkn6LggbEid/1sHqdosBkkIrAcluM34
- sDKT/1qduN/oRT3saSOupZ7CQxJ9pvX117/HGHjLS5kSfX5ba3ftGN5D7gfwA+vckGsO7rP2qP5
- sLKv43IT719NF2Gy+wQjFXbRIUgdf9XViFhHmfVDdI5Oxe+b/TaDRDiJnr58H5ekSfsO3KwDbSj
- RXuumtg4rmZLDu76Tr16z85p6vTzDU7UqBWTpxsPH/G5UYW945BxARsv6q/UW2pRPE1h07MbUJb
- /T+rKbeIagNtxzxA3hNO3Ts55hQ0Bh8ewFM3euqcFCeS7XFGJk+8a3+Bl0h+bAqjsnlisK9vKj3
- L6V3kCOdLPqWrHYTZpHRpoD3zS6/UPfYJF3dwU32rhG5Sx5hEbHjx8qVdqLng1b87wrNW1Ds0
-X-Google-Smtp-Source: AGHT+IH803WUgSzhwZmoBVziYExZUFLo7kt21Qg3JYwpUOp8Dq+pGXMaoNAfdekHb9avXTUDhLvYvg==
-X-Received: by 2002:a05:6000:2410:b0:3b5:f0af:4bb0 with SMTP id
- ffacd0b85a97d-3b5f2dd1547mr11682036f8f.23.1752560400824; 
- Mon, 14 Jul 2025 23:20:00 -0700 (PDT)
+ bh=S2++15hJzvyf/oh1q0RtDm/VcHzR4ITOplPRpy1k7FQ=;
+ b=uui73O9Bsx1MUD1wntXRyCdKgH1oalztTBSXf98TeRGjoeXyPn5Zw1PAIoS96go7SF
+ mJszCDmkQo6W9X0JX9GrH3y0z/WRM2v0VQoC52A4KbzikmIz1Foo+W83CZ3egsBY/HEu
+ HC/uhvkCVdxiDvOtsU4Iv2JGAJoKhxoFcDpVQJK2wiXY45EKCxLDWY2dH3Laf9/jssp/
+ plnLBD1Fg7voJubcfM1IbA55Pe8i0zfzmUamcMxyedRrwPNbDkni6z9fGn4QJlkcmomp
+ JQtOAUA5HGifwH30DNxgIJurDOgxtNLYw7mWCxUrHkkJ6xYG0tMU64GNAiwCnzNAUHTv
+ D9Sg==
+X-Gm-Message-State: AOJu0YypiOK3FMuPMQc5bDcALAFsIbPBTMAfqcVdGX3AkxPeVgr7h0dJ
+ 3t7slWCfPhaBXMG0nH0whLdtWTi7j9Jc5WyFY9x+Fnh0vQIoIAcPQlBROe9hAkp5/rk2Tq88hu1
+ O+Ysc
+X-Gm-Gg: ASbGncuhWV7l8XdoLctZU9D1d6+cQCavLy4GVeD6sQTeG8N+I+ruHAf82lYfNhNrgct
+ Tqz/U6qwLhDBoCxLOk0sKpmr2zkfo55XXTPk+yI13oatF3MavWwX12ccDJGzEmNV/6TI5JrQNGf
+ Q62Nnote3MULsBtrc0LyDbEbY/hm6sdPxxsReChKrYPa7K5NPMY3bJQ+XnRBYQUN+d8j/acqK0e
+ zRPJuKNxNwmDFPGEQ89cB0WcmDJ6GvJSJLeNDq48RyOxZymYNS69z+F6WHMwZOHiux+XAR+3Cp+
+ xm1xwdpcavGoRIX86B6bgHKs1sCRYacKoWpQ4yvXXqVGqzGT8CAlYMuC0RWhsS/pfaSPJUdJKuF
+ /vf4IInhqlWGnhH81+6WsM5iP+aOmqvjB8B28itUu/uXErffuR6WAmS/j2fE7UcSpXftGSgrE
+X-Google-Smtp-Source: AGHT+IEGby7bns0UgwBuSb6fXgaxpe/aW6Jt7wqCS2A6VIAcfwo1n5Xtpl+uif1jDJtPmPvJ/PDc/g==
+X-Received: by 2002:a05:600c:3507:b0:441:a715:664a with SMTP id
+ 5b1f17b1804b1-4562741795bmr9891065e9.20.1752560396090; 
+ Mon, 14 Jul 2025 23:19:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd43912dsm153473015e9.2.2025.07.14.23.20.00
+ ffacd0b85a97d-3b5e8bd1776sm14452975f8f.12.2025.07.14.23.19.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:20:00 -0700 (PDT)
+ Mon, 14 Jul 2025 23:19:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 08/17] hw/mips: Restrict ITU to TCG
-Date: Tue, 15 Jul 2025 08:19:08 +0200
-Message-ID: <20250715061918.44971-9-philmd@linaro.org>
+Cc: Cole Robinson <crobinso@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 07/17] roms: re-remove execute bit from hppa-firmware*
+Date: Tue, 15 Jul 2025 08:19:07 +0200
+Message-ID: <20250715061918.44971-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
 References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,66 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MIPS Inter-Thread Communication Unit is implemented using
-TCG. Check for TCG both in Kconfig and CPS source.
+From: Cole Robinson <crobinso@redhat.com>
 
-Fixes: 2321d971b6f ("hw/mips: Add dependency MIPS_CPS -> MIPS_ITU")
+This was fixed in c9d77526bddba0803a1fa982fb59ec98057150f9 for
+9.2.0 but regressed in db34be329162cf6b06192703065e6c1010dbe3c5 in
+10.0.0
+
+When the bit is present, rpmbuild complains about missing ELF build-id
+
+Signed-off-by: Cole Robinson <crobinso@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-ID: <52d0edfbb9b2f63a866f0065a721f3a95da6f8ba.1747590860.git.crobinso@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250702164953.18579-1-philmd@linaro.org>
 ---
- hw/mips/cps.c   | 4 ++--
- hw/mips/Kconfig | 2 +-
- hw/misc/Kconfig | 1 +
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ pc-bios/hppa-firmware.img   | Bin
+ pc-bios/hppa-firmware64.img | Bin
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100755 => 100644 pc-bios/hppa-firmware.img
+ mode change 100755 => 100644 pc-bios/hppa-firmware64.img
 
-diff --git a/hw/mips/cps.c b/hw/mips/cps.c
-index 2a3ba3f58d2..e47695e2b0a 100644
---- a/hw/mips/cps.c
-+++ b/hw/mips/cps.c
-@@ -24,7 +24,7 @@
- #include "hw/mips/mips.h"
- #include "hw/qdev-clock.h"
- #include "hw/qdev-properties.h"
--#include "system/kvm.h"
-+#include "system/tcg.h"
- #include "system/reset.h"
- 
- qemu_irq get_cps_irq(MIPSCPSState *s, int pin_number)
-@@ -59,7 +59,7 @@ static bool cpu_mips_itu_supported(CPUMIPSState *env)
- {
-     bool is_mt = (env->CP0_Config5 & (1 << CP0C5_VP)) || ase_mt_available(env);
- 
--    return is_mt && !kvm_enabled();
-+    return is_mt && tcg_enabled();
- }
- 
- static void mips_cps_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index b09c89a0175..f84fffcd323 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -76,7 +76,7 @@ config LOONGSON3V
- 
- config MIPS_CPS
-     bool
--    select MIPS_ITU
-+    select MIPS_ITU if TCG
- 
- config MIPS_BOSTON
-     bool
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index c27285b47ab..4e35657468b 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -119,6 +119,7 @@ config STM32L4X5_RCC
- 
- config MIPS_ITU
-     bool
-+    depends on TCG
- 
- config MPS2_FPGAIO
-     bool
+diff --git a/pc-bios/hppa-firmware.img b/pc-bios/hppa-firmware.img
+old mode 100755
+new mode 100644
+diff --git a/pc-bios/hppa-firmware64.img b/pc-bios/hppa-firmware64.img
+old mode 100755
+new mode 100644
 -- 
 2.49.0
 
