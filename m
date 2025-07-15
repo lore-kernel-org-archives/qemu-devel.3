@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3865C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA166C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublQ5-000162-CX; Tue, 15 Jul 2025 15:34:29 -0400
+	id 1ublQA-0001Vf-6N; Tue, 15 Jul 2025 15:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubky8-0004eU-Uc
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkyG-0004hn-JT
  for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubky4-0001lQ-Ou
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:35 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkyE-0001oA-ET
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606332;
+ s=mimecast20190719; t=1752606341;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xeqGBdSIo1Kezt99V2b6a5nLGVaHJEmc+IWu5aa0NyQ=;
- b=AHc/uc0cZI1T15cj2Ml8X224aDYsSKUGjM1NN2E3yYGq1AHep21Iszrl/9al1l15oGt1/A
- 5ecuYx+RNMyzr6eR4TjUsQsy5J7ujJiex5UWGzPPLkAksPZZ/kShaMaK15nm+3usJ2mG+A
- TYg7i3FyUauTfnw2ktOdJvyuPnOpiko=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1Qy9Tix5Uw1YpHnQdQLk8iYBh0aW/alhW9midwgBcck=;
+ b=hTnm7LfV9mRREsMYC6fIM79amOjh57Npk8a41dnShkaTsNK1SgS8I4dSjkM7+SfBSdgm23
+ XUHMG7PlY92ifWLT/SqUCvsWrrMZICCIKsfMej8Dj46d5b2qMha4Evl5gvxxQNoZ37ufy3
+ ESzDxGKbl6PAwts3cchzU1+GHKndxMw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-oYyfQ9VyMICZGLfrWliUng-1; Tue,
- 15 Jul 2025 15:05:29 -0400
-X-MC-Unique: oYyfQ9VyMICZGLfrWliUng-1
-X-Mimecast-MFC-AGG-ID: oYyfQ9VyMICZGLfrWliUng_1752606329
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-ANPtvm_0OeiCn8WOrYHOEQ-1; Tue,
+ 15 Jul 2025 15:05:38 -0400
+X-MC-Unique: ANPtvm_0OeiCn8WOrYHOEQ-1
+X-Mimecast-MFC-AGG-ID: ANPtvm_0OeiCn8WOrYHOEQ_1752606337
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 028C118002AB; Tue, 15 Jul 2025 19:05:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 775F31800BCB; Tue, 15 Jul 2025 19:05:37 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.34.84])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 77223197702C; Tue, 15 Jul 2025 19:05:27 +0000 (UTC)
+ id D47FB197702B; Tue, 15 Jul 2025 19:05:35 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 53/57] qemu-img: bitmap: refresh options/--help
-Date: Tue, 15 Jul 2025 21:03:26 +0200
-Message-ID: <20250715190330.378764-54-kwolf@redhat.com>
+Subject: [PULL 57/57] qemu-img: extend cvtnum() and use it in more places
+Date: Tue, 15 Jul 2025 21:03:30 +0200
+Message-ID: <20250715190330.378764-58-kwolf@redhat.com>
 In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
 References: <20250715190330.378764-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,146 +86,347 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Michael Tokarev <mjt@tls.msk.ru>
 
-Add missing long options and --help output,
-reorder options for consistency.
+cvtnum() expects input string to specify some sort of size
+(optionally with KMG... suffix).  However, there are a lot
+of other number conversions in there (using qemu_strtol &Co),
+also, not all conversions which use cvtnum, actually expects
+size, - like dd count=nn.
+
+Add bool is_size argument to cvtnum() to specify if it should
+treat the argument as a size or something else, - this changes
+conversion routine in use and error text.
+
+Use the new cvtnum() in more places (like where strtol were used),
+since it never return negative number in successful conversion.
+When it makes sense, also specify upper or lower bounds at the
+same time.  This simplifies option processing in multiple places,
+removing the need of local temporary variables and longer error
+reporting code.
+
+While at it, fix errors, like depth in measure must be >= 1,
+while the previous code allowed it to be 0.
+
+In a few places, change unsigned variables (like of type size_t)
+to be signed instead, - to avoid the need of temporary conversion
+variable.  All these variables are okay to be signed, we never
+assign <0 value to them except of the cases of conversion error,
+where we return immediately.
+
+While at it, remove allowed size suffixes from the error message
+as it makes no sense most of the time (should be in help instead).
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250531171609.197078-24-mjt@tls.msk.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250531171609.197078-28-mjt@tls.msk.ru>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qemu-img.c | 80 ++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 56 insertions(+), 24 deletions(-)
+ qemu-img.c                 | 111 +++++++++++++------------------------
+ tests/qemu-iotests/049.out |   9 +--
+ 2 files changed, 40 insertions(+), 80 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 17f7516a68..d7f69c4bfb 100644
+index b34b1390bb..7a162fdc08 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -5184,48 +5184,69 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-     for (;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-             {"add", no_argument, 0, OPTION_ADD},
-+            {"granularity", required_argument, 0, 'g'},
-             {"remove", no_argument, 0, OPTION_REMOVE},
-             {"clear", no_argument, 0, OPTION_CLEAR},
-             {"enable", no_argument, 0, OPTION_ENABLE},
-             {"disable", no_argument, 0, OPTION_DISABLE},
-             {"merge", required_argument, 0, OPTION_MERGE},
--            {"granularity", required_argument, 0, 'g'},
-             {"source-file", required_argument, 0, 'b'},
-             {"source-format", required_argument, 0, 'F'},
-+            {"object", required_argument, 0, OPTION_OBJECT},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":b:f:F:g:h", long_options, NULL);
-+        c = getopt_long(argc, argv, "hf:g:b:F:",
-+                        long_options, NULL);
-         if (c == -1) {
-             break;
-         }
+@@ -398,18 +398,16 @@ static int add_old_style_options(const char *fmt, QemuOpts *opts,
+     return 0;
+ }
  
-         switch (c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-         case 'h':
--            help();
--            break;
--        case 'b':
--            src_filename = optarg;
-+            cmd_help(ccmd, "[-f FMT | --image-opts]\n"
-+"        ( --add [-g SIZE] | --remove | --clear | --enable | --disable |\n"
-+"          --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
-+"        [--object OBJDEF] FILE BITMAP\n"
-+,
-+"  -f, --format FMT\n"
-+"     specify FILE format explicitly (default: probing is used)\n"
-+"  --image-opts\n"
-+"     treat FILE as an option string (key=value,..), not a file name\n"
-+"     (incompatible with -f|--format)\n"
-+"  --add\n"
-+"     creates BITMAP in FILE, enables to record future edits\n"
-+"  -g, --granularity SIZE[bKMGTPE]\n"
-+"     sets non-default granularity for the bitmap being added,\n"
-+"     with optional multiplier suffix (in powers of 1024)\n"
-+"  --remove\n"
-+"     removes BITMAP from FILE\n"
-+"  --clear\n"
-+"     clears BITMAP in FILE\n"
-+"  --enable, --disable\n"
-+"     starts and stops recording future edits to BITMAP in FILE\n"
-+"  --merge SOURCE\n"
-+"     merges contents of the SOURCE bitmap into BITMAP in FILE\n"
-+"  -b, --source-file SRC_FILE\n"
-+"     select alternative source file for --merge\n"
-+"  -F, --source-format SRC_FMT\n"
-+"     specify format for SRC_FILE explicitly\n"
-+"  --object OBJDEF\n"
-+"     defines QEMU user-creatable object\n"
-+"  FILE\n"
-+"     name of the image file, or option string (key=value,..)\n"
-+"     with --image-opts, to operate on\n"
-+"  BITMAP\n"
-+"     name of the bitmap to add, remove, clear, enable, disable or merge to\n"
-+);
+-static int64_t cvtnum_full(const char *name, const char *value, int64_t min,
+-                           int64_t max)
++static int64_t cvtnum_full(const char *name, const char *value,
++                           bool is_size, int64_t min, int64_t max)
+ {
+     int err;
+     uint64_t res;
+ 
+-    err = qemu_strtosz(value, NULL, &res);
++    err = is_size ? qemu_strtosz(value, NULL, &res) :
++                    qemu_strtou64(value, NULL, 0, &res);
+     if (err < 0 && err != -ERANGE) {
+-        error_report("Invalid %s specified. You may use "
+-                     "k, M, G, T, P or E suffixes for", name);
+-        error_report("kilobytes, megabytes, gigabytes, terabytes, "
+-                     "petabytes and exabytes.");
++        error_report("Invalid %s specified: '%s'", name, value);
+         return err;
+     }
+     if (err == -ERANGE || res > max || res < min) {
+@@ -420,9 +418,9 @@ static int64_t cvtnum_full(const char *name, const char *value, int64_t min,
+     return res;
+ }
+ 
+-static int64_t cvtnum(const char *name, const char *value)
++static int64_t cvtnum(const char *name, const char *value, bool is_size)
+ {
+-    return cvtnum_full(name, value, 0, INT64_MAX);
++    return cvtnum_full(name, value, is_size, 0, INT64_MAX);
+ }
+ 
+ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+@@ -525,7 +523,7 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+ 
+     /* Get image size, if specified */
+     if (optind < argc) {
+-        img_size = cvtnum("image size", argv[optind++]);
++        img_size = cvtnum("image size", argv[optind++], true);
+         if (img_size < 0) {
+             goto fail;
+         }
+@@ -984,7 +982,7 @@ static int img_commit(const img_cmd_t *ccmd, int argc, char **argv)
+             drop = true;
              break;
-         case 'f':
-             fmt = optarg;
+         case 'r':
+-            rate_limit = cvtnum("rate limit", optarg);
++            rate_limit = cvtnum("rate limit", optarg, true);
+             if (rate_limit < 0) {
+                 return 1;
+             }
+@@ -2428,7 +2426,7 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+         {
+             int64_t sval;
+ 
+-            sval = cvtnum("buffer size for sparse output", optarg);
++            sval = cvtnum("buffer size for sparse output", optarg, true);
+             if (sval < 0) {
+                 goto fail_getopt;
+             } else if (!QEMU_IS_ALIGNED(sval, BDRV_SECTOR_SIZE) ||
+@@ -2462,16 +2460,15 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+             force_share = true;
              break;
--        case 'F':
--            src_fmt = optarg;
+         case 'r':
+-            rate_limit = cvtnum("rate limit", optarg);
++            rate_limit = cvtnum("rate limit", optarg, true);
+             if (rate_limit < 0) {
+                 goto fail_getopt;
+             }
+             break;
+         case 'm':
+-            if (qemu_strtol(optarg, NULL, 0, &s.num_coroutines) ||
+-                s.num_coroutines < 1 || s.num_coroutines > MAX_COROUTINES) {
+-                error_report("Invalid number of coroutines. Allowed number of"
+-                             " coroutines is between 1 and %d", MAX_COROUTINES);
++            s.num_coroutines = cvtnum_full("number of coroutines", optarg,
++                                           false, 1, MAX_COROUTINES);
++            if (s.num_coroutines < 0) {
+                 goto fail_getopt;
+             }
+             break;
+@@ -3376,13 +3373,13 @@ static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
+             image_opts = true;
+             break;
+         case 's':
+-            start_offset = cvtnum("start offset", optarg);
++            start_offset = cvtnum("start offset", optarg, true);
+             if (start_offset < 0) {
+                 return 1;
+             }
+             break;
+         case 'l':
+-            max_length = cvtnum("max length", optarg);
++            max_length = cvtnum("max length", optarg, true);
+             if (max_length < 0) {
+                 return 1;
+             }
+@@ -4720,9 +4717,9 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+     int count = 75000;
+     int depth = 64;
+     int64_t offset = 0;
+-    size_t bufsize = 4096;
++    ssize_t bufsize = 4096;
+     int pattern = 0;
+-    size_t step = 0;
++    ssize_t step = 0;
+     int flush_interval = 0;
+     bool drain_on_flush = true;
+     int64_t image_size;
+@@ -4827,27 +4824,17 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             }
+             break;
+         case 'c':
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+-                error_report("Invalid request count specified");
++            count = cvtnum_full("request count", optarg, false, 1, INT_MAX);
++            if (count < 0) {
+                 return 1;
+             }
+-            count = res;
+             break;
+-        }
+         case 'd':
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) <= 0 || res > INT_MAX) {
+-                error_report("Invalid queue depth specified");
++            depth = cvtnum_full("queue depth", optarg, false, 1, INT_MAX);
++            if (depth < 0) {
+                 return 1;
+             }
+-            depth = res;
+             break;
+-        }
+         case 'n':
+             flags |= BDRV_O_NATIVE_AIO;
+             break;
+@@ -4860,64 +4847,40 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             }
+             break;
+         case 'o':
+-        {
+-            offset = cvtnum("offset", optarg);
++            offset = cvtnum("offset", optarg, true);
+             if (offset < 0) {
+                 return 1;
+             }
+             break;
+-        }
 -            break;
--        case 'g':
--            granularity = cvtnum("granularity", optarg);
--            if (granularity < 0) {
--                return 1;
--            }
-+        case OPTION_IMAGE_OPTS:
-+            image_opts = true;
+         case 's':
+-        {
+-            int64_t sval;
+-
+-            sval = cvtnum_full("buffer size", optarg, 0, INT_MAX);
+-            if (sval < 0) {
++            bufsize = cvtnum_full("buffer size", optarg, true, 1, INT_MAX);
++            if (bufsize < 0) {
+                 return 1;
+             }
+-
+-            bufsize = sval;
              break;
-         case OPTION_ADD:
-             act = g_new0(ImgBitmapAction, 1);
-@@ -5233,6 +5254,12 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+-        }
+         case 'S':
+-        {
+-            int64_t sval;
+-
+-            sval = cvtnum_full("step_size", optarg, 0, INT_MAX);
+-            if (sval < 0) {
++            step = cvtnum_full("step size", optarg, true, 0, INT_MAX);
++            if (step < 0) {
+                 return 1;
+             }
+-
+-            step = sval;
+             break;
+-        }
+         case 'w':
+             flags |= BDRV_O_RDWR;
+             is_write = true;
+             break;
+         case OPTION_PATTERN:
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > 0xff) {
+-                error_report("Invalid pattern byte specified");
++            pattern = cvtnum_full("pattern byte", optarg, false, 0, 0xff);
++            if (pattern < 0) {
+                 return 1;
+             }
+-            pattern = res;
+             break;
+-        }
+         case OPTION_FLUSH_INTERVAL:
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+-                error_report("Invalid flush interval specified");
++            flush_interval = cvtnum_full("flush interval", optarg,
++                                         false, 0, INT_MAX);
++            if (flush_interval < 0) {
+                 return 1;
+             }
+-            flush_interval = res;
+             break;
+-        }
+         case OPTION_NO_DRAIN:
+             drain_on_flush = false;
+             break;
+@@ -5129,7 +5092,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
              add = true;
              break;
-+        case 'g':
-+            granularity = cvtnum("granularity", optarg);
-+            if (granularity < 0) {
-+                return 1;
-+            }
-+            break;
-         case OPTION_REMOVE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_REMOVE;
-@@ -5260,12 +5287,17 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-             merge = true;
-             break;
-+        case 'b':
-+            src_filename = optarg;
-+            break;
-+        case 'F':
-+            src_fmt = optarg;
-+            break;
-         case OPTION_OBJECT:
+         case 'g':
+-            granularity = cvtnum("granularity", optarg);
++            granularity = cvtnum("granularity", optarg, true);
+             if (granularity < 0) {
+                 return 1;
+             }
+@@ -5314,7 +5277,7 @@ static int img_dd_bs(const char *arg,
+ {
+     int64_t res;
+ 
+-    res = cvtnum_full("bs", arg, 1, INT_MAX);
++    res = cvtnum_full("bs", arg, true, 1, INT_MAX);
+ 
+     if (res < 0) {
+         return 1;
+@@ -5328,7 +5291,7 @@ static int img_dd_count(const char *arg,
+                         struct DdIo *in, struct DdIo *out,
+                         struct DdInfo *dd)
+ {
+-    dd->count = cvtnum("count", arg);
++    dd->count = cvtnum("count", arg, true);
+ 
+     if (dd->count < 0) {
+         return 1;
+@@ -5359,7 +5322,7 @@ static int img_dd_skip(const char *arg,
+                        struct DdIo *in, struct DdIo *out,
+                        struct DdInfo *dd)
+ {
+-    in->offset = cvtnum("skip", arg);
++    in->offset = cvtnum("skip", arg, true);
+ 
+     if (in->offset < 0) {
+         return 1;
+@@ -5767,7 +5730,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
              user_creatable_process_cmdline(optarg);
              break;
--        case OPTION_IMAGE_OPTS:
--            image_opts = true;
--            break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
+         case 's':
+-            img_size = cvtnum("image size", optarg);
++            img_size = cvtnum("image size", optarg, true);
+             if (img_size < 0) {
+                 goto out;
+             }
+diff --git a/tests/qemu-iotests/049.out b/tests/qemu-iotests/049.out
+index 34e1b452e6..70c627538b 100644
+--- a/tests/qemu-iotests/049.out
++++ b/tests/qemu-iotests/049.out
+@@ -98,8 +98,7 @@ qemu-img create -f qcow2 -o size=-1024 TEST_DIR/t.qcow2
+ qemu-img: TEST_DIR/t.qcow2: Value '-1024' is out of range for parameter 'size'
  
+ qemu-img create -f qcow2 TEST_DIR/t.qcow2 -- -1k
+-qemu-img: Invalid image size specified. You may use k, M, G, T, P or E suffixes for
+-qemu-img: kilobytes, megabytes, gigabytes, terabytes, petabytes and exabytes.
++qemu-img: Invalid image size specified: '-1k'
+ 
+ qemu-img create -f qcow2 -o size=-1k TEST_DIR/t.qcow2
+ qemu-img: TEST_DIR/t.qcow2: Parameter 'size' expects a non-negative number below 2^64
+@@ -107,8 +106,7 @@ Optional suffix k, M, G, T, P or E means kilo-, mega-, giga-, tera-, peta-
+ and exabytes, respectively.
+ 
+ qemu-img create -f qcow2 TEST_DIR/t.qcow2 -- 1kilobyte
+-qemu-img: Invalid image size specified. You may use k, M, G, T, P or E suffixes for
+-qemu-img: kilobytes, megabytes, gigabytes, terabytes, petabytes and exabytes.
++qemu-img: Invalid image size specified: '1kilobyte'
+ 
+ qemu-img create -f qcow2 -o size=1kilobyte TEST_DIR/t.qcow2
+ qemu-img: TEST_DIR/t.qcow2: Parameter 'size' expects a non-negative number below 2^64
+@@ -116,8 +114,7 @@ Optional suffix k, M, G, T, P or E means kilo-, mega-, giga-, tera-, peta-
+ and exabytes, respectively.
+ 
+ qemu-img create -f qcow2 TEST_DIR/t.qcow2 -- foobar
+-qemu-img: Invalid image size specified. You may use k, M, G, T, P or E suffixes for
+-qemu-img: kilobytes, megabytes, gigabytes, terabytes, petabytes and exabytes.
++qemu-img: Invalid image size specified: 'foobar'
+ 
+ qemu-img create -f qcow2 -o size=foobar TEST_DIR/t.qcow2
+ qemu-img: TEST_DIR/t.qcow2: Parameter 'size' expects a non-negative number below 2^64
 -- 
 2.50.1
 
