@@ -4,98 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84ECEC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D57AC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubiiN-0003gR-FX; Tue, 15 Jul 2025 12:41:12 -0400
+	id 1ubimS-0007tl-0o; Tue, 15 Jul 2025 12:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.nzdo93pfqcqfkd6=h9pahmoofkg0=g5ixvt3c6anda0@em483429.getutm.app>)
- id 1ubiCk-0004to-6M
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:08:30 -0400
-Received: from a3i638.smtp2go.com ([203.31.38.126])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubiM8-0003KP-S2
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:18:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce.nzdo93pfqcqfkd6=h9pahmoofkg0=g5ixvt3c6anda0@em483429.getutm.app>)
- id 1ubiCh-0002eP-Lm
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:08:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smtpservice.net;
- i=@smtpservice.net; q=dns/txt; s=a1-4; t=1752594799; h=feedback-id :
- x-smtpcorp-track : date : message-id : to : subject : from : reply-to
- : sender : list-unsubscribe : list-unsubscribe-post;
- bh=HN4AOMwg99rrNE4j5uAvRZY/J+MS1iO7572Vei2UTh8=;
- b=Auo45qvsMJewnXwvKta6ZWRks8lwINyflBIzBbxVgDqXherz1itkYvN8TxVdiAdxggwKu
- mMQfYbRETcytmd5rcAabG5rgIxbifao6Zr9r6cmRmMLnRV0gdqJ6g+yUKy5OylldtePAIIj
- /4waSXgj8210MvzCBXCIyUUPvyaYXReo/s+2zHzRmTk6xrjOAN6n0OQBKkv83JNiJ9u+zBy
- 1YFFzPU5557+OJvZamZoH1s8FMry1uH3jwXFbObpbUQ0FSxknTXZrhKIBel65CJngpC0reQ
- oZ3NLj1IuTGN+gvIUD/Ybz37RPLMFDPQmG68sqT2gNyxOvefW8APr35BYFDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1752594799; h=from : subject :
- to : message-id : date;
- bh=HN4AOMwg99rrNE4j5uAvRZY/J+MS1iO7572Vei2UTh8=;
- b=dwR+U3/9MwDso8e+lsL0/7CVfHn0k0A9gJ6vcGXikcdgV20LiAjt27ZOZQHECWWW8JKfZ
- GW2qsQL3MJhD4LtWyXv/wT3+gA/BAnnO6iS+oaBe6NymtPfB5nvlrSv+QElV6tFoG22P/Nv
- u0f/rM6aIvqDaxe5NMkVFS9nysIeekPqHCHQMR6lI9MUEaJkXD5glYiwst5oN63GCke+sz9
- zFRtAtlMX2rvMHAFp11xmqcuBCSqofg7+wH7UTYY92vgoipY+FDTsjMgGvsfvF3k0Ll/Iii
- 4Y2pccSc49z/97CaKnDkBUdk5ohQsnusiX7sULgDImlDoyns9N4PeiQBRayw==
-Received: from [10.159.238.187] (helo=mail-ej1-f49.google.com)
- by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
- (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1ubhy1-4o5NDgrgsRZ-uqVC for qemu-devel@nongnu.org;
- Tue, 15 Jul 2025 15:53:17 +0000
-Received: by mail-ej1-f49.google.com with SMTP id
- a640c23a62f3a-ae0d758c3a2so883747166b.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:53:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubiM7-0006mo-21
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 12:18:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752596290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CNUh0svRZ2Q06RSt8cVthOcqLfiFbwX5W3NbsN+5rAg=;
+ b=i/C1kI9YxlZvbRqk6srN7H9LTHwMZTux/gOxQwpX4/Ja+7C5x6a8R1E2DT/ymU5qH9T8C3
+ YkNYcdBATtj6TLHopNTxgbjYhPqvtdGzcWX6B7KbzLj7G0hyKk88xAR8uIjkQPoAnXXO2F
+ WSw8RnDc3gNq3CbPFMl8g7UEPMlpTw8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-466-OUSVqgukNS--sCObeyjoeg-1; Tue, 15 Jul 2025 12:18:05 -0400
+X-MC-Unique: OUSVqgukNS--sCObeyjoeg-1
+X-Mimecast-MFC-AGG-ID: OUSVqgukNS--sCObeyjoeg_1752596284
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so16042f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 09:18:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752596284; x=1753201084;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CNUh0svRZ2Q06RSt8cVthOcqLfiFbwX5W3NbsN+5rAg=;
+ b=lf80jt4pCaMA7iv+xIFynHUIp4suVx4knu0ErJDoj6CMAoGKf+pGwhvQ/VIkxBp52D
+ OytGR3Ip0LnZbpctX5jqEC1AdD1YbNkLfn1aJZfQ7z8A3+L7rlStX8Ay/t8K+Trnl6rV
+ Ui0x62U9ZrhPt706pe7zrK/Dfu3PIdqsme9G0jk4wvcEaLeFQZK0KKzWNK9CtMCXdcNA
+ GB5NPPHuyWhLLc/mjDLAfb4MDG2+G4YUg5SooBw3yEkct0RXPXavQy7vXnQVWmRycVdH
+ Rmw1RXJ8j30gq8WdCj3PQvnJvk/Al0LGI8fQKtH3e4kBGlh9b9B21a8azMd1lcmR6ziS
+ 3TPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA8ZZouZ33WGm3UtnnO+lS/wHNtTiyDZmSdzCAITBw4e9pltVS8Ojy++cH90uBGJXVbHGxM2vc/kGd@nongnu.org
-X-Gm-Message-State: AOJu0Yz/D7FgoQGuuDWROdimGqBQXB8s3JFtvOhLOiYJxUA7xo7NMp0+
- z25bHJJ/pIcp79ql3BA6h9EjnQAtURBuQGSgVbe+J47P1S0ikyMT4+XbMCNuv9hgOMsmlpR6m80
- tg1QE6zsJbG1PLG8xKWd2s9b+HAwLOJI=
-X-Google-Smtp-Source: AGHT+IHNNB4Sny3KHEdKkluwGwlW9Ttf6YK8G2IasdsnikL8APN3BRv6jfKm+9sftw1RO43v6LAzhnvWxis7+0iaCEU=
-X-Received: by 2002:a17:907:7287:b0:ae3:f2a0:459f with SMTP id
- a640c23a62f3a-ae7012f1b48mr1712186666b.54.1752594796124; Tue, 15 Jul 2025
- 08:53:16 -0700 (PDT)
+ AJvYcCUeihxchfTmju/jkmkaXV72usqsvMhd9YuvAAR5OTlqyT9VO2rSOXIGri062EuvoPyuvNJx2gZe9V3j@nongnu.org
+X-Gm-Message-State: AOJu0YwTxQYAqHMefCiaXVlE3reRQng02If329G2Jpc/9nnC9G5fwNUu
+ b48jEkvslLA43XZYmj347nspvbfSDDQtcCuYhmgHRWopdojg7WautdPlQOaxy8FCXuXkZDRI/xy
+ Ue2KpaajUCpY4HeCUilyFhSrdQ8lqPaBQ1JHtL/4VT86cuOF+ohQyuzL+
+X-Gm-Gg: ASbGncvWcmhEBgwp6yqd4iqXu5O3Boqztm+CHbh1QD5PO4jeGE9IJpEf3CZt9GwBEEk
+ 7rpIn/kJjfIo0x4ep/+C4RUGezmvyPL9q2tsTRCES1N3dzKzoVGc5i5iCGARxWyTcfqXd09Qryn
+ fNzHZTa8rk3xVPnn+okq2SAqRQbgn50jZyyN88eROf3tK0mG/72r4VwD2cxFdJkjPMkStcOwkVf
+ yVM8xKq4F6mDysS6hluZcbARRVZOCClu2p5mvTZiMD1CmrlktPUC2+/b4PvdtIu+VCnclrZS4jS
+ GkK3ZVH7FOrboSd3UmheA8dw6aK+jjF2ksR/078ET1tyvBLF0ysfcfc7lqabPouHXGujaTEEdk8
+ =
+X-Received: by 2002:a05:6000:2307:b0:3a5:1388:9a55 with SMTP id
+ ffacd0b85a97d-3b6095201d8mr3048110f8f.5.1752596284038; 
+ Tue, 15 Jul 2025 09:18:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJypmsiXdwn/NAR0ELKPLAna7QbUav+q4ZOjMzdT8iV7DOtiCfCx9rpwSmKr3/DdurXLVSww==
+X-Received: by 2002:a05:6000:2307:b0:3a5:1388:9a55 with SMTP id
+ ffacd0b85a97d-3b6095201d8mr3048088f8f.5.1752596283554; 
+ Tue, 15 Jul 2025 09:18:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
+ ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-454d5032fcbsm206750835e9.6.2025.07.15.09.18.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Jul 2025 09:18:03 -0700 (PDT)
+Message-ID: <887d991d-a8cd-40fb-99f4-2c02b23eaa6a@redhat.com>
+Date: Tue, 15 Jul 2025 18:18:02 +0200
 MIME-Version: 1.0
-References: <87zfd5zouv.fsf@draig.linaro.org> <86wm898yf4.wl-maz@kernel.org>
-In-Reply-To: <86wm898yf4.wl-maz@kernel.org>
-From: Joelle van Dyne <j@getutm.app>
-Date: Tue, 15 Jul 2025 08:53:03 -0700
-X-Gmail-Original-Message-ID: <CA+E+eSASz9Tx76-8PxMNF30f3L9DfPNYf_Zgf=ENozXapc3gyw@mail.gmail.com>
-X-Gm-Features: Ac12FXwMc4dV-yiQMMCGZ-YNKyxAfTFfwiOdHWlz-hJ1uZAjHvRv-AlgyTBf0Mc
-Message-ID: <CA+E+eSASz9Tx76-8PxMNF30f3L9DfPNYf_Zgf=ENozXapc3gyw@mail.gmail.com>
-Subject: Re: HVF EL2 support in QEMU (aka FEAT_NV/FEAT_NV2) for MacOS
-To: Marc Zyngier <maz@kernel.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, Alexander Graf <agraf@csgraf.de>,
- Ynddal <mads@ynddal.dk>, 
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Mark Burton <mburton@qti.qualcomm.com>, Joelle van Dyne <j@getutm.app>, 
- Danny Canter <danny_canter@apple.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
-Feedback-ID: 483429m:483429abrvJvs:483429spy4xxNeMg
-X-smtpcorp-track: iKQJTVH7fqHA.j5_mAIxECu0p.uW5r1g9YpfC
-Received-SPF: pass client-ip=203.31.38.126;
- envelope-from=bounce.nzdo93pfqcqfkd6=h9pahmoofkg0=g5ixvt3c6anda0@em483429.getutm.app;
- helo=a3i638.smtp2go.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] VFIO multifd device state transfer patches for
+ QEMU 10.1
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+ Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <cover.1752589295.git.maciej.szmigiero@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <cover.1752589295.git.maciej.szmigiero@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,31 +160,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UTM currently supports NV only with the Apple Virtualization backend,
-not QEMU HVF. While M2 supports NV, it is not enabled by XNU kernel
-and `hv_vm_config_get_el2_supported` returns false. I heard there was
-some compatibility issue in the hardware. M3 and newer generations
-fully support NV in hardware and by XNU.
+On 7/15/25 16:37, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> 
+> This is an updated v2 patch series of the v1 series located at [1] of the
+> leftover patches of VFIO multifd migration patch set that was merged in
+> QEMU 10.0.
+> 
+> Changes from v1:
+> * Drop the in-flight VFIO device state buffer *count* limit, leave
+>    the *size* limit only.
+> 
+> * Add a small target-dependent helper to hw/vfio/helpers.c to avoid doing
+>    strcmp(target_name(), "aarch64") in hw/vfio/migration-multifd.c.
+> 
+> * Mention that VFIO device config with ARM interlocking enabled is
+>    loaded as part of the non-iterables as suggested by Avihai.
+> 
+> * Collect Fabiano and Avihai Reviewed-by tags.
+> 
+> [1]: https://lore.kernel.org/qemu-devel/cover.1750787338.git.maciej.szmigiero@oracle.com/
+> 
+> Maciej S. Szmigiero (2):
+>    vfio/migration: Add x-migration-load-config-after-iter VFIO property
+>    vfio/migration: Max in-flight VFIO device state buffers size limit
+> 
+>   docs/devel/migration/vfio.rst     |  19 ++++++
+>   hw/core/machine.c                 |   1 +
+>   hw/vfio/helpers.c                 |  17 +++++
+>   hw/vfio/migration-multifd.c       | 100 +++++++++++++++++++++++++++++-
+>   hw/vfio/migration-multifd.h       |   3 +
+>   hw/vfio/migration.c               |  10 ++-
+>   hw/vfio/pci.c                     |  19 ++++++
+>   hw/vfio/vfio-helpers.h            |   2 +
+>   hw/vfio/vfio-migration-internal.h |   1 +
+>   include/hw/vfio/vfio-device.h     |   2 +
+>   10 files changed, 171 insertions(+), 3 deletions(-)
+> 
 
-On Tue, Jul 15, 2025 at 4:51=E2=80=AFAM Marc Zyngier <maz@kernel.org> wrote=
-:
->
-> On Tue, 15 Jul 2025 12:15:52 +0100,
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
->
-> >   - do we know which Apple silicon supports FEAT_NV2?
->
-> M2 and latter definitely support FEAT_NV2. That's how KVM NV support
-> has been developed for two years until I was given better HW.
->
-> Whether Apple supports NV on M2 in HVF, I have no idea. The rumour
-> mill says "no", but I don't have a way to check. The M3 I use at $WORK
-> is definitely able to give me EL2 without VHE with UTM. I haven't
-> played with M4, but I have it on the record that it behaves like M3
-> with UTM.
->
->         M.
->
-> --
-> Without deviation from the norm, progress is not possible.
+
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
+
+
 
