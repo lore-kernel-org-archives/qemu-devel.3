@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E31BC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 20:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED97C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 20:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublos-0002b6-DE; Tue, 15 Jul 2025 16:00:06 -0400
+	id 1ublsQ-0007ar-8O; Tue, 15 Jul 2025 16:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublbs-0003Nj-Dw
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:46:40 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublaf-0001lo-PW
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:26 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublbn-0002lY-0E
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:46:40 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45600581226so38327185e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:46:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublab-0002eS-OI
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:25 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-451dbe494d6so53831925e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752608793; x=1753213593; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=e6leM8DQht8TUhHC9NZWiwreTxGLFj7ofFNVivVFo60=;
- b=tT/dMAP7gho8xmRFXjTYxvbOszqSSsMrt8WCbby0Zozj3ATTxsOncwy416ZKeyh9HA
- T0yWOAq+QwRukjWW8qfI6jVnhvmdOuRhmL+s8InogrxxzYa4rndDRNnEQsFDSHBst84q
- OOXccOzgtPQZN9ickZzlnZdW1GluOmzisMWPL47WIQdz0Q+y7RBNmi1/738sLolWch/J
- V26Zn45anJvjxervd5/g6brR/IziwHKRlq+kLuS7zGEYJw303fxWLB1EqPW2sJehliXc
- 0ofcd8iNn9JurZz/B1Z8Nx+xYswcG65uIozWuBdB1kGhqGRKC3yeuYGz3IgtcQ0R8jge
- GomA==
+ d=linaro.org; s=google; t=1752608718; x=1753213518; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bedS8XdxUeR0U8Mxp6nnPuJPuV+JLV7Gob0+js/jbNc=;
+ b=Fm9HgRW81E+COeKFKrWkrh+8gDGLxsiCI9q6QcEGYLnTRSDXg2SVV87o2g+0T6qXDE
+ 4DZulBlkJpAjaECjyvl073O3TmWD/jlq6+noE8KY0/OSJNZmYwKpfg8r74P7Pffqt8hC
+ WZuCkzLCHkjf92+eyqlj9IygRMg7GrPqVm6gS/xdgRoQNOON8qpa++iCceRRlOGTKZu6
+ 6M0YYzbNv+IY1ZatK3Mm24pI7JkY+h+412pCYqGtFVvq7GSYGblhAHVkQXS8CGN83KGE
+ lL/bhmLanEIuZ9LcywBGJ+JNguXIBFnzvT21VhV22C2hBTXslEsWTNa7ll8+Z7hbC/12
+ 7v9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752608793; x=1753213593;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=e6leM8DQht8TUhHC9NZWiwreTxGLFj7ofFNVivVFo60=;
- b=gWibTIMW+UqaIa0qFfpqPxgL40ntQ+6nZcU8hecAttQZYhrGdbtYTlHjRjDiBakCdJ
- uph6gym9URO+mSU/RROtGxzSl/UXRmwzl5NNEA4PLCpTWAcE4pOe8w/4qhC1zTmchKCr
- ITYQcQH4f3al33wuihG++13bNmoUMgIgyQNS7KRLcE/vla17AZnbL9N2t/D2yZq+lvo5
- 4MH7VakKId3/w+FKnxzNjPUnq3Wdknt6aLDD2WgkZFTSzbvJZrP/qvKvzrp77jI2/pFL
- GkkLHNXpBPF5PEnPNSsr4oLZFRlHRr6TfSVGLaUyeESFheKJ4nYVDseBp9WrmJeT1jPl
- oC8Q==
-X-Gm-Message-State: AOJu0YzwPfGUgg07TD0X3aP1dTrqYO1dLNkEUjLUtRJIs+IKm0nQy/+T
- GzrztvhzOJSz+mpNfZXhXxtUbLdy0morG4RmJIOoQlSLBkgZWsAtMrs5MjzL37IPYp7AiW9+hQY
- 6tVeR
-X-Gm-Gg: ASbGncuvUP4T6Fjngloq08qMVgJdgoTqB1/9A7VJuNdKOhzbwnyyL3z9+mPCk4t0r6G
- Pv7AbWZBUOq7Qg+OE7xShjQ4MOne9ZgWK7hQX3lmQ499TFJHnG1OUG8cPtzQYunjXklgqkiwEBs
- iS7SH0LXg8l2giCNXdCd/NTXeF8Da0SAhBAHOSf61nOp5L38xGySOUHIzqpa1h2egVrNBbvlpNG
- /ZWr+HnMtmmLN7Rid9xw+iJG1orfJGUUpot2T/Yx2GJIE+BvkLcBwD+sjnSN1j/0GbxgZlhlWSp
- rgfUkEL/aNH+qRdr5oPWTkHRGeed70pZzrl93NlY3Earmjm208YOrbS5EFWoclTdrAciCOcKZe4
- 8/SckYzThpiORR+giph2SP2GpVrkVWIrN8yeOO3Z96RKdc6NDQfJ9bjiwPyYShmOqbWeVhK1CwU
- 58B8xZKNUeTMoO
-X-Google-Smtp-Source: AGHT+IH7AG93o0aR0eGIoIMQN8amjwKvqq4YbEP8/szKaTL3/B87hXzNZ5m5SjWkgF70cLQKvetiQA==
-X-Received: by 2002:a05:600c:a089:b0:442:e9eb:cba2 with SMTP id
- 5b1f17b1804b1-4562dfc0150mr2536945e9.0.1752608793014; 
- Tue, 15 Jul 2025 12:46:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752608718; x=1753213518;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bedS8XdxUeR0U8Mxp6nnPuJPuV+JLV7Gob0+js/jbNc=;
+ b=ZLEKuWhaR/QcMc5WS6CkQJT9I73aZbJdhuM3KY+t5iYAjER2gKx98jS+RWh06Ai/VD
+ Co9xogl9Zt2QGSIGj3UpiwgV4BqO3ow1PjJaWzwb6fftdNbN/Vsa7QTPXv7A2qEE8+HK
+ 2AxNRtq8MUk5D37mEOZVl6sG1TehGr0Ros9bsPGOiCiymiCA7yuoBtjPpSItwsBijfsV
+ LrkujESfy8V6zSL6UTB/t1w5azgr+asvO757qrE5rWopoNNnJCMcFvblNFGzHKrTOpcn
+ tk6QlNWFBaC+dIX048xZVpmuo7IZQzSCY2JetE3hy7JA0V1g0JqtfWgQQm4N2AOwKTQ/
+ WCTw==
+X-Gm-Message-State: AOJu0YwLDbby0b2cEowemKGWq/urT6ygBXMElXCsGhLqPhX0LoNvFphM
+ lg+7NrXS/WfgzhXDMyedfMzefpbYa3mB/LCkBif5F14D2wOkUcKklvLwWQN5BzXTGLtWGYE8+vL
+ IemnT
+X-Gm-Gg: ASbGncvB1on8O2Y2CHFTXEw6G8qob3Jxosrrfu+VAr9G9EySvYWXTljKGuwqrqqDEXO
+ zLS54q9DKzZCNKAoaCOBozcvqUMtTgQkTnSJfBD5acafrTtSJrzz3TD7kP+3GLzq/sDYb/v2Qu/
+ ZvaVBYNgF2fJ7adPdDTGUEcVE9TySz5o3OToFms+9ZGPCbapGIso5PlwFNZWpOAMoDVZQ4xmIFs
+ cagg0mb9mM2J3Eh3R7V+r1wQq3mTOjDe/f5Vw0bQZFtP70jLOHszYksGSx8TW1h4fByQni05t6u
+ H7TSEOZ7q4qAE2QTtU104PnPdJecoR1P1r+HM1mnQuFkFk31Hhxf3KAEmdQxNNe3VGVxP5WO94X
+ CxxskCE/lNrCHkljGq4IDsJLqtRwIdwCPJu7SogYROlFbbFZSL5snx6DxGPwDHDKlSV6S88BXZV
+ fyiw==
+X-Google-Smtp-Source: AGHT+IFkagzP3DlyE9wNfPEHnHtJJU+61JzujMpz/V+Qlx3I0tFPPIUdmU3YtUagSeYs2ChjPMJ4rQ==
+X-Received: by 2002:a05:6000:2910:b0:3a5:5fa4:a3f7 with SMTP id
+ ffacd0b85a97d-3b60dd97c5bmr255577f8f.58.1752608718251; 
+ Tue, 15 Jul 2025 12:45:18 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-456101b60besm96441045e9.1.2025.07.15.12.46.32
+ ffacd0b85a97d-3b5e8e2747fsm15537017f8f.100.2025.07.15.12.45.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 12:46:32 -0700 (PDT)
+ Tue, 15 Jul 2025 12:45:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/17] accel/hvf: Implement AccelClass::get_vcpu_stats() handler
-Date: Tue, 15 Jul 2025 21:45:14 +0200
-Message-ID: <20250715194516.91722-16-philmd@linaro.org>
+Subject: [PULL 00/17] Accelerators patches for 2025-07-15
+Date: Tue, 15 Jul 2025 21:44:59 +0200
+Message-ID: <20250715194516.91722-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250715194516.91722-1-philmd@linaro.org>
-References: <20250715194516.91722-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,73 +96,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Co-developed-by: Mads Ynddal <mads@ynddal.dk>
-Signed-off-by: Mads Ynddal <mads@ynddal.dk>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250715104015.72663-8-philmd@linaro.org>
----
- accel/hvf/hvf-accel-ops.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b543336:
 
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 214454bd0b4..d488d6afbac 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -58,6 +58,7 @@
- #include "system/cpus.h"
- #include "system/hvf.h"
- #include "system/hvf_int.h"
-+#include <mach/mach_time.h>
- 
- HVFState *hvf_state;
- 
-@@ -118,6 +119,12 @@ static void dummy_signal(int sig)
- {
- }
- 
-+static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data arg)
-+{
-+    int r = hv_vcpu_get_exec_time(cpu->accel->fd, arg.host_ptr);
-+    assert_hvf_ok(r);
-+}
-+
- static void hvf_vcpu_destroy(CPUState *cpu)
- {
-     hv_return_t ret = hv_vcpu_destroy(cpu->accel->fd);
-@@ -347,6 +354,21 @@ static void hvf_remove_all_breakpoints(CPUState *cpu)
-     }
- }
- 
-+static void hvf_get_vcpu_stats(CPUState *cpu, GString *buf)
-+{
-+    uint64_t time_mach; /* units of mach_absolute_time() */
-+
-+    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, RUN_ON_CPU_HOST_PTR(&time_mach));
-+
-+    mach_timebase_info_data_t timebase;
-+    mach_timebase_info(&timebase);
-+    uint64_t time_ns = time_mach * timebase.numer / timebase.denom;
-+
-+    g_string_append_printf(buf, "HVF cumulative execution time: %llu.%.3llus\n",
-+                                 time_ns / 1000000000,
-+                                (time_ns % 1000000000) / 1000000);
-+}
-+
- static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
-@@ -365,7 +387,10 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->remove_all_breakpoints = hvf_remove_all_breakpoints;
-     ops->update_guest_debug = hvf_update_guest_debug;
-     ops->supports_guest_debug = hvf_arch_supports_guest_debug;
-+
-+    ops->get_vcpu_stats = hvf_get_vcpu_stats;
- };
-+
- static const TypeInfo hvf_accel_ops_type = {
-     .name = ACCEL_OPS_NAME("hvf"),
- 
+  Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into staging (2025-07-13 01:46:04 -0400)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/accel-20250715
+
+for you to fetch changes up to 0a94a7b8802b7f6dc2521e48d837d1b5173f9db4:
+
+  system/runstate: Document qemu_add_vm_change_state_handler_prio* in hdr (2025-07-15 21:42:58 +0200)
+
+----------------------------------------------------------------
+Accelerators patches
+
+- Unify x86/arm hw/xen/arch_hvm.h header
+- Move non-system-specific 'accel/accel-ops.h' and 'accel-cpu-ops.h' to accel/
+- Move KVM definitions qapi/accelerator.json
+- Add @qom-type field to CpuInfoFast QAPI structure
+- Display CPU model name in 'info cpus' HMP command
+- Introduce @x-accel-stats QMP command
+- Add 'info accel' on HMP
+- Improve qemu_add_vm_change_state_handler*() docstring
+- Extract TCG statistic related code to tcg-stats.c
+- Implement AccelClass::get_[vcpu]_stats() handlers for TCG and HVF
+- Do not dump NaN in TCG statistics
+- Revert incomplete "accel/tcg: Unregister the RCU before exiting RR thread"
+
+Spurious warnings ignored:
+
+1/17 Checking commit 62b8cc1ecb37 (hw/xen/arch_hvm: Unify x86 and ARM variants)
+WARNING: added, moved or deleted file(s):
+
+  include/hw/arm/xen_arch_hvm.h
+  include/hw/i386/xen_arch_hvm.h
+
+Does MAINTAINERS need updating?
+
+$ git grep xen_arch_hvm.h
+$
+
+7/17 Checking commit 05927e9dc937 (accel: Rename 'system/accel-ops.h' -> 'accel/accel-cpu-ops.h')
+WARNING: added, moved or deleted file(s):
+
+  include/accel/accel-cpu-ops.h
+
+Does MAINTAINERS need updating?
+
+$ ./scripts/get_maintainer.pl -f include/accel/accel-cpu-ops.h
+Richard Henderson <richard.henderson@linaro.org> (maintainer:Overall)
+Paolo Bonzini <pbonzini@redhat.com> (reviewer:Overall)
+"Philippe Mathieu-Daudé" <philmd@linaro.org> (reviewer:Overall)
+
+10/17 Checking commit 8cc04fd9df3b (accel/tcg: Extract statistic related code to tcg-stats.c)
+WARNING: Saw acceptable license 'LGPL-2.1-or-later' but note 'GPL-2.0-or-later' is preferred for new files unless the code is derived from a source file with an existing declared license that must be retained. Please explain the license choice in the commit message.
+
+LGPL-2.1-or-later copied (explained in commit).
+
+WARNING: added, moved or deleted file(s):
+
+  accel/tcg/tcg-stats.c
+
+Does MAINTAINERS need updating?
+
+$ ./scripts/get_maintainer.pl -f accel/tcg/tcg-stats.c
+Richard Henderson <richard.henderson@linaro.org> (maintainer:Overall TCG CPUs)
+Paolo Bonzini <pbonzini@redhat.com> (reviewer:Overall TCG CPUs)
+
+11/17 Checking commit 1861993f1fc1 (accel/system: Introduce @x-accel-stats QMP command)
+WARNING: added, moved or deleted file(s):
+
+  accel/accel-qmp.c
+
+Does MAINTAINERS need updating?
+
+$ ./scripts/get_maintainer.pl -f accel/accel-qmp.c
+Richard Henderson <richard.henderson@linaro.org> (maintainer:Overall)
+Paolo Bonzini <pbonzini@redhat.com> (reviewer:Overall)
+"Philippe Mathieu-Daudé" <philmd@linaro.org> (reviewer:Overall)
+----------------------------------------------------------------
+
+Philippe Mathieu-Daudé (17):
+  hw/xen/arch_hvm: Unify x86 and ARM variants
+  hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h' header
+  qapi/accel: Move definitions related to accelerators in their own file
+  qapi/machine: Add @qom-type field to CpuInfoFast structure
+  hw/core/machine: Display CPU model name in 'info cpus' command
+  accel/tcg: Do not dump NaN statistics
+  accel: Rename 'system/accel-ops.h' -> 'accel/accel-cpu-ops.h'
+  accel: Extract AccelClass definition to 'accel/accel-ops.h'
+  Revert "accel/tcg: Unregister the RCU before exiting RR thread"
+  accel/tcg: Extract statistic related code to tcg-stats.c
+  accel/system: Introduce @x-accel-stats QMP command
+  accel/system: Add 'info accel' on human monitor
+  accel/tcg: Propagate AccelState to dump_accel_info()
+  accel/tcg: Implement AccelClass::get_stats() handler
+  accel/hvf: Implement AccelClass::get_vcpu_stats() handler
+  system/runstate: Document qemu_add_vm_change_state_handler()
+  system/runstate: Document qemu_add_vm_change_state_handler_prio* in
+    hdr
+
+ MAINTAINERS                                   |   3 +-
+ qapi/accelerator.json                         |  56 +++++
+ qapi/machine.json                             |  32 +--
+ qapi/qapi-schema.json                         |   1 +
+ accel/tcg/internal-common.h                   |   2 +-
+ .../accel-ops.h => accel/accel-cpu-ops.h}     |  11 +-
+ include/accel/accel-ops.h                     |  51 ++++
+ include/hw/arm/xen_arch_hvm.h                 |   9 -
+ include/hw/i386/xen_arch_hvm.h                |  11 -
+ include/hw/xen/arch_hvm.h                     |  14 +-
+ include/qemu/accel.h                          |  39 +---
+ include/system/hvf_int.h                      |   3 +-
+ include/system/kvm_int.h                      |   1 +
+ include/system/runstate.h                     |  40 ++++
+ include/tcg/tcg.h                             |   2 +
+ accel/accel-common.c                          |   2 +
+ accel/accel-qmp.c                             |  35 +++
+ accel/accel-system.c                          |  12 +-
+ accel/hvf/hvf-accel-ops.c                     |  27 ++-
+ accel/hvf/hvf-all.c                           |   1 +
+ accel/kvm/kvm-accel-ops.c                     |   2 +-
+ accel/kvm/kvm-all.c                           |   1 +
+ accel/qtest/qtest.c                           |   3 +-
+ accel/tcg/monitor.c                           | 192 ---------------
+ accel/tcg/tcg-accel-ops-rr.c                  |   2 -
+ accel/tcg/tcg-accel-ops.c                     |   3 +-
+ accel/tcg/tcg-all.c                           |   3 +
+ accel/tcg/tcg-stats.c                         | 219 ++++++++++++++++++
+ accel/xen/xen-all.c                           |   3 +-
+ bsd-user/main.c                               |   1 +
+ cpu-target.c                                  |   2 +-
+ gdbstub/system.c                              |   3 +-
+ hw/arm/xen-pvh.c                              |   1 -
+ hw/core/machine-hmp-cmds.c                    |   5 +-
+ hw/core/machine-qmp-cmds.c                    |   2 +
+ linux-user/main.c                             |   1 +
+ system/cpus.c                                 |   2 +-
+ system/memory.c                               |   1 +
+ system/runstate.c                             |  30 ---
+ target/i386/nvmm/nvmm-accel-ops.c             |   2 +-
+ target/i386/nvmm/nvmm-all.c                   |   1 +
+ target/i386/whpx/whpx-accel-ops.c             |   2 +-
+ target/i386/whpx/whpx-all.c                   |   1 +
+ accel/meson.build                             |   2 +-
+ accel/tcg/meson.build                         |   1 +
+ hmp-commands-info.hx                          |  12 +
+ qapi/meson.build                              |   1 +
+ 47 files changed, 515 insertions(+), 335 deletions(-)
+ create mode 100644 qapi/accelerator.json
+ rename include/{system/accel-ops.h => accel/accel-cpu-ops.h} (91%)
+ create mode 100644 include/accel/accel-ops.h
+ delete mode 100644 include/hw/arm/xen_arch_hvm.h
+ delete mode 100644 include/hw/i386/xen_arch_hvm.h
+ create mode 100644 accel/accel-qmp.c
+ create mode 100644 accel/tcg/tcg-stats.c
+
 -- 
 2.49.0
 
