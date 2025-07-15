@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90149C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7D8C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ2d-0003s3-Kd; Tue, 15 Jul 2025 02:21:31 -0400
+	id 1ubZ2f-0003se-Vc; Tue, 15 Jul 2025 02:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1r-0003LA-Sz
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:41 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1f-00030G-Jo
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:37 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1m-0007Qc-Vs
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:38 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a6cdc27438so4184550f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1c-0007Oi-PM
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:27 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a6cd1a6fecso4863449f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560431; x=1753165231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752560421; x=1753165221; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BJ/tkPkzgP2G4LmEdPSORw9xVUXvOZgvZ1yKFPXS8bk=;
- b=IehGzfAyyuXBfdNmnxZInT48pKxcpr9ObE0vhM60EuTZQW1ybcRGOaIExSeLyc4zcm
- k6xYG3NlsC9sQhwunoAERgbUSXnjFViFJtPTB3F8Zpl9SQn1OCdboyFtdndSfmC0Jidx
- AT4bsSLsEuRJBwMTuIs2PvVN7voPN80g19FrBB/ftIsCM+Ym7r9cg8UeZT4qBlyXw4dN
- DDoBicZUiPNfOkHTgOPT8e/KLTQVm+b71zdirJlKDDAJBHHjZ6GrQtGublEXz5xSHh4U
- sCjBR5np+p/Jx1NU+BJ67w1YvWVnomeVr29Ol8aUHc6E98p60KLwX6K4nYxsvioc85MZ
- /uew==
+ bh=D2Itf1u4dIdOzwp9PA5MQ9GY2YE6K+iup4a5uTVYETw=;
+ b=DESMPE1NoPiIAkiRb8uUGf8zEpmob2I/JFldsicPrrfejMknCxzdyjmSMjyRDyANWx
+ clwJvWHFJ2wnons+s0lM637WZOQnGgW1hPslok/gyLyqTLcVdvfvmhWqZc9yrhyc/c2T
+ Y7Vgy+YkIp9hILlTMnU2siHWioHWrGLnfbXwv8vXb7rd/Y8A+NVddp0CY0bJjcTJW9xi
+ q5783nIT4qWtNUbTb8Q8hDEy0YOm3wTwYhqvyArAZmyfZynRjPRqDnoRzGfCnN3uJ1yV
+ NBOykDCS8aIn0k/e2s+Zir28mK7gN976gV7mrfRaTT+2ozBdQgc9u1SEwbTtF5naVFgT
+ l8Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560431; x=1753165231;
+ d=1e100.net; s=20230601; t=1752560421; x=1753165221;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BJ/tkPkzgP2G4LmEdPSORw9xVUXvOZgvZ1yKFPXS8bk=;
- b=gL/iWroAuNrq5WrI7m7c9gIFdKiGlwp5K8tf4Nb0r9hdhnDTuzTcuwz2kW6uAg/JWA
- qpPCMmwJiS/oRHa2r7qUbdjKi+riwrszU0BQPNLT6o48SviWeHtKFDYdXj3aielaJ7G6
- t7igrGa0RAAKpXlNVwhe5rQFkPFtY7wAb1Zp3xPCCFb8KynpdvkvfHfuw7DRI4ddnBwX
- nBEJ+BMv1Uvb0aMXD5/ZMXXfZ/tIOKbRQvD/w5tVgAopVlUgaEgsj2RRDjrnTUCtJ4rw
- rOEuGQvupFuXayvUsrUMUTfSv1jWPoqaoeWadYOlrvX00mOEL2IMYwevV0MtgZiDjVMc
- 0Vgw==
-X-Gm-Message-State: AOJu0YwEy/dEpk/KkVyMRoi2RHzd9RXI10uOHpGUsIsKm46/NA754iTj
- 9QULlZY+pxvlQ10jxp5bYwhIj5g33t0cOXtEW7VXDrkK7KRD/lSQYkV48tnENgfpQLcOvLqudXz
- 2dOyU
-X-Gm-Gg: ASbGnctoOMG/G5x49zqbMRQqD/aQsl5PYNTMvMxFewCa2HRsfX/9+952vJuJCk9Nhoc
- 7sSlpwlmkPs6SYID3oTZyx7q2z1cl0iEdCFmB3cVvMjXMgb2eOu8Cyv0zqSw7shtoO8ySL3jD0A
- nvnDECil2K6eLvowuGlUYiTjD2jsQmmzWbZc52ERnNARW4tlFUB9FUnGILDOAV8IleCsSjIyebI
- +tVOODzKoeiw7zR8mh3/6Qjm5Fn+zJNPCiH9ilvZATgdTMU/TeDAbE0TjKgvGyUiZ2hAUUx2Ug4
- cpkvclgbGYJc4bfAP+eubGWQsiH45Uf7lA7HOCAm+y2WxCc0Q3e274oxnFa33zbqZDCIeuwhJ+3
- MZL3AE6Vcbuz4kuEWSL4kwpCYAQyMhTJR5iDcTjL4HsaNpR/MVCSWhSGdOaCgAEWg+h3y64Sn
-X-Google-Smtp-Source: AGHT+IGO8LYAGWiLViQFkqJbigWnR+O7BCPkSqZzEHAbmSD7r+xY53v76zJK8wetKhEblN2hFyjrEA==
-X-Received: by 2002:a5d:64e8:0:b0:3a4:e480:b5df with SMTP id
- ffacd0b85a97d-3b5f2e33b06mr11896666f8f.44.1752560430348; 
- Mon, 14 Jul 2025 23:20:30 -0700 (PDT)
+ bh=D2Itf1u4dIdOzwp9PA5MQ9GY2YE6K+iup4a5uTVYETw=;
+ b=mUstdHRsy2yIIZ9jJeSdItUJF3kcnefE8klCos/R42F7GkUtV0NhRcZd8Oi7WlO2tN
+ oaaoTo1HvJj1xExxzd4X0bJIsa+xBevzhPH4kIbtvir+tDzkstbO/wepkVbsKo8iTcD1
+ 3staQttxcLbg2dy+q36t+XALP4Nz70MC6m2RLeGfRqTnTFXu5IifXwquO1NoQv/KXdJb
+ UurQ9nLlsj6kgatOHlbpNH5qgt8NVkQ7lw6z1RtJZfB7BWUwDdPVJy1xZWqEk9DkEkQk
+ PqFPYxU3jmuckSkFuPKUJV9cv3/vHYjjyE24k/vXs1qGAnrBBsyu1LShJVjFI++nMieE
+ Lj1A==
+X-Gm-Message-State: AOJu0Yy7/2nou/a5En/jYLR94A0qiS+vv7hzpaVrvSrIJ2Uf0WTCOXsA
+ DdtM9Q1ix9aPZ1Cd5/Wl2+XsTocXhR+pcyAat1aLDNV7+sCMl8NvO5YUAXf03Vv6oqT2vEI+ucM
+ bzuV1
+X-Gm-Gg: ASbGncvJaI7YmYBjgKyR6rWceK3vmBPLRcPqWtFGJk4bQfwITy7QVUwqmn72OEHE2ww
+ Dnx7GjksSysEwOfE0rE5+xFXosZ4NakjKGzY8psCEEkkOvHC5rkpj3Jr0RmTESGCMurDYqIze++
+ pCpDno6gPus+i1hZwDSIA0NvxpwgiQaWrIflgLiIKdn8EfhKM7B+MZ8NzwvGegZ147QJpZmo1UA
+ 7KXh54OthYkJBiBaxZiKDizssMPJCltOSc3SSe9/WbY9TaSL6hszA4ihbicqvY9tFUaQ2AaQDYw
+ fStDTlKGaWj/PxFzFztBtsItHwifZRsOXqje4sDJhGpGr3nI9+pv3EyHi7ReQJkVxsncEY+bZKp
+ 5SXwVeelMYRJnjZL6eR48jbTFWDX6GA0rfFmPwwoNAnhVLORBHaOq7Mu0SwPt4fAUHcnU1YLf
+X-Google-Smtp-Source: AGHT+IEPyYJg4TwclqqAby4zKWjUSCJwyEeY5b1+X7wTCZis0VZDG9zua9cmzr/sTb4NO1bavjOnyA==
+X-Received: by 2002:adf:f3c5:0:b0:3a5:8abe:a264 with SMTP id
+ ffacd0b85a97d-3b60a195cb3mr756390f8f.37.1752560420737; 
+ Mon, 14 Jul 2025 23:20:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e14e82sm14307792f8f.71.2025.07.14.23.20.29
+ 5b1f17b1804b1-4560eb98a40sm82199075e9.27.2025.07.14.23.20.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:20:29 -0700 (PDT)
+ Mon, 14 Jul 2025 23:20:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: [PULL 14/17] esp.c: only call dma_memory_read function if transfer
- length is non-zero
-Date: Tue, 15 Jul 2025 08:19:14 +0200
-Message-ID: <20250715061918.44971-15-philmd@linaro.org>
+Subject: [PULL 12/17] esp.c: improve comment in esp_transfer_data()
+Date: Tue, 15 Jul 2025 08:19:12 +0200
+Message-ID: <20250715061918.44971-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
 References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,67 +103,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-In the cases where mixed DMA/non-DMA transfers are used or no data is
-available, it is possible for the calculated transfer length to be zero.
-Only call the dma_memory_read function where the transfer length is
-non-zero to avoid invoking the DMA engine for a zero length transfer
-which can have side-effects (along with generating additional tracing
-noise).
+Whilst working on the previous patch, the existing comment was not enough to
+document when the TI command codepath was being used. Update and improve the
+comment accordingly.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250711204636.542964-5-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20250711204636.542964-3-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/scsi/esp.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ hw/scsi/esp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 62ba4061492..ec9fcbeddf4 100644
+index 9181c8810fb..62ba4061492 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -487,8 +487,10 @@ static void esp_do_dma(ESPState *s)
-     case STAT_MO:
-         if (s->dma_memory_read) {
-             len = MIN(len, fifo8_num_free(&s->cmdfifo));
--            s->dma_memory_read(s->dma_opaque, buf, len);
--            esp_set_tc(s, esp_get_tc(s) - len);
-+            if (len) {
-+                s->dma_memory_read(s->dma_opaque, buf, len);
-+                esp_set_tc(s, esp_get_tc(s) - len);
-+            }
-         } else {
-             len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-@@ -541,9 +543,11 @@ static void esp_do_dma(ESPState *s)
-         trace_esp_do_dma(cmdlen, len);
-         if (s->dma_memory_read) {
-             len = MIN(len, fifo8_num_free(&s->cmdfifo));
--            s->dma_memory_read(s->dma_opaque, buf, len);
--            fifo8_push_all(&s->cmdfifo, buf, len);
--            esp_set_tc(s, esp_get_tc(s) - len);
-+            if (len) {
-+                s->dma_memory_read(s->dma_opaque, buf, len);
-+                fifo8_push_all(&s->cmdfifo, buf, len);
-+                esp_set_tc(s, esp_get_tc(s) - len);
-+            }
-         } else {
-             len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-@@ -572,8 +576,10 @@ static void esp_do_dma(ESPState *s)
-         switch (s->rregs[ESP_CMD]) {
+@@ -1029,8 +1029,9 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
          case CMD_TI | CMD_DMA:
-             if (s->dma_memory_read) {
--                s->dma_memory_read(s->dma_opaque, s->async_buf, len);
--                esp_set_tc(s, esp_get_tc(s) - len);
-+                if (len) {
-+                    s->dma_memory_read(s->dma_opaque, s->async_buf, len);
-+                    esp_set_tc(s, esp_get_tc(s) - len);
-+                }
-             } else {
-                 /* Copy FIFO data to device */
-                 len = MIN(s->async_len, ESP_FIFO_SZ);
+         case CMD_TI:
+             /*
+-             * Bus service interrupt raised because of initial change to
+-             * DATA phase
++             * If the final COMMAND phase data was transferred using a TI
++             * command, clear ESP_CMD to terminate the TI command and raise
++             * the completion interrupt
+              */
+             s->rregs[ESP_CMD] = 0;
+             s->rregs[ESP_RINTR] |= INTR_BS;
 -- 
 2.49.0
 
