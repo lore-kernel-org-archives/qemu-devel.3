@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE702C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695A7C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZMd-00038R-Et; Tue, 15 Jul 2025 02:42:07 -0400
+	id 1ubZMi-0003EE-Ha; Tue, 15 Jul 2025 02:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZEm-0003E7-7m
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:04 -0400
+ id 1ubZF9-0003R3-Qb
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZEk-0003hf-AT
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:33:59 -0400
+ id 1ubZF7-0003kf-WD
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752561236;
+ s=mimecast20190719; t=1752561261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XGxC8pOOHdvNF80rDAG/0y/ryZPUHgUpZxYeZeyNMtI=;
- b=fnhkCGedfgT02h/UInYK0aAYQtF7S984Vza3PEc5hldlh7KQMI3Ig+1+NVtwOzyCJGrV84
- lwmhQkWeBBiaoYRJm+qpql+xNbwADNdu9VKmh+SSfwP0Ib7smnZi5Iu2fFO3zHK1izrBGz
- izxoan6rAGr9+37OVpvX6PB+2owd66I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=aKPy83W1hiV5/W0xo6GAaKjDBMB+hmRcxLmXHAgpL6c=;
+ b=Ilj6UjT+5tEFxLNWMG+ix8f/iZ8WORMPX+HMeIGANaeVYD+l3t3s2nFWjcEA9DRLgXUm9/
+ 0wGv+H9YA3do9TDLzUoogF9pq8WT3m08TUuqklTM9smFwDIj2Cz3LGgQsjUYLzk/zKgVGo
+ Tyrrs9vJOHq/I0WogPGbM96XUbkhHIo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-O_Aizd2IM3ihX0GyyyvVxQ-1; Tue,
- 15 Jul 2025 02:33:55 -0400
-X-MC-Unique: O_Aizd2IM3ihX0GyyyvVxQ-1
-X-Mimecast-MFC-AGG-ID: O_Aizd2IM3ihX0GyyyvVxQ_1752561234
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-kCyp9wt-PrqGkG66rdGAXw-1; Tue,
+ 15 Jul 2025 02:34:19 -0400
+X-MC-Unique: kCyp9wt-PrqGkG66rdGAXw-1
+X-Mimecast-MFC-AGG-ID: kCyp9wt-PrqGkG66rdGAXw_1752561258
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0751F1800289; Tue, 15 Jul 2025 06:33:54 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B0EDA19560B1; Tue, 15 Jul 2025 06:34:18 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E70661977000; Tue, 15 Jul 2025 06:33:51 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30902195609D; Tue, 15 Jul 2025 06:34:16 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
+Cc: stefanha@redhat.com, Weifeng Liu <weifeng.liu.z@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PULL v2 07/13] ui/console-gl: Add a helper to create a texture with
- linear memory layout
-Date: Tue, 15 Jul 2025 10:32:53 +0400
-Message-ID: <20250715063301.145191-8-marcandre.lureau@redhat.com>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL v2 11/13] ui/gtk: Add keep-aspect-ratio option
+Date: Tue, 15 Jul 2025 10:32:57 +0400
+Message-ID: <20250715063301.145191-12-marcandre.lureau@redhat.com>
 In-Reply-To: <20250715063301.145191-1-marcandre.lureau@redhat.com>
 References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,109 +87,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
 
-There are cases where we do not want the memory layout of a texture to
-be tiled as the component processing the texture would not know how to
-de-tile either via software or hardware. Therefore, ensuring that the
-memory backing the texture has a linear layout is absolutely necessary
-in these situations.
+When aspect ratio of host window and that of guest display are not
+aligned, we can either zoom the guest content to fill the whole host
+window or add padding to respect aspect ratio of the guest. Add an
+option keep-aspect-ratio to allow users to select their preferred
+behavior in this case.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
+Suggested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Suggested-by: Kim, Dongwon <dongwon.kim@intel.com>
+Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Co-developed-by: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-Id: <20250617043546.1022779-6-vivek.kasireddy@intel.com>
+Tested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20250601045245.36778-2-weifeng.liu.z@gmail.com>
 ---
- include/ui/console.h |  3 +++
- ui/console-gl.c      | 48 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ qapi/ui.json     | 12 ++++++++----
+ include/ui/gtk.h |  1 +
+ ui/gtk.c         | 12 ++++++++++--
+ 3 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b3128185..98feaa58bd 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -422,6 +422,9 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
-                              pixman_format_code_t format);
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface);
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture,
-+                                       GLuint *mem_obj);
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h);
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 103b954017..afb36dba64 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/shader.h"
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 514fa159b1..9e496b4835 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1335,13 +1335,17 @@
+ # @show-menubar: Display the main window menubar.  Defaults to "on".
+ #     (Since 8.0)
+ #
++# @keep-aspect-ratio: Keep width/height aspect ratio of guest content when
++#     resizing host window.  Defaults to "on". (Since 10.1)
++#
+ # Since: 2.12
+ ##
+ { 'struct'  : 'DisplayGTK',
+-  'data'    : { '*grab-on-hover' : 'bool',
+-                '*zoom-to-fit'   : 'bool',
+-                '*show-tabs'     : 'bool',
+-                '*show-menubar'  : 'bool'  } }
++  'data'    : { '*grab-on-hover'     : 'bool',
++                '*zoom-to-fit'       : 'bool',
++                '*show-tabs'         : 'bool',
++                '*show-menubar'      : 'bool',
++                '*keep-aspect-ratio' : 'bool'  } }
  
-@@ -96,6 +97,53 @@ void surface_gl_create_texture(QemuGLShader *gls,
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+ ##
+ # @DisplayEGLHeadless:
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index d3944046db..b7cfbf218e 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -140,6 +140,7 @@ struct GtkDisplayState {
+     GdkCursor *null_cursor;
+     Notifier mouse_mode_notifier;
+     gboolean free_scale;
++    gboolean keep_aspect_ratio;
+ 
+     bool external_pause_update;
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 8c4a94c8f6..9104509ee1 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -828,8 +828,12 @@ void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh)
+ 
+         sx = (double)ww / fbw;
+         sy = (double)wh / fbh;
+-
+-        vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
++        if (vc->s->keep_aspect_ratio) {
++            vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
++        } else {
++            vc->gfx.scale_x = sx;
++            vc->gfx.scale_y = sy;
++        }
+     }
  }
+ /**
+@@ -2328,6 +2332,10 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+         s->free_scale = true;
+     }
  
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture,
-+                                       GLuint *mem_obj)
-+{
-+    unsigned long size = surface_stride(surface) * surface_height(surface);
-+    GLenum err = glGetError();
-+    *texture = 0;
-+    *mem_obj = 0;
++    s->keep_aspect_ratio = true;
++    if (s->opts->u.gtk.has_keep_aspect_ratio)
++        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
 +
-+    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
-+        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
-+        error_report("spice: required OpenGL extensions not supported: "
-+                     "GL_EXT_memory_object and GL_EXT_memory_object_fd");
-+        return false;
-+    }
-+
-+#ifdef GL_EXT_memory_object_fd
-+    glCreateMemoryObjectsEXT(1, mem_obj);
-+    glImportMemoryFdEXT(*mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, fd);
-+
-+    err = glGetError();
-+    if (err != GL_NO_ERROR) {
-+        error_report("spice: cannot import memory object from fd");
-+        goto cleanup_mem;
-+    }
-+
-+    glGenTextures(1, texture);
-+    glBindTexture(GL_TEXTURE_2D, *texture);
-+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_TILING_EXT, GL_LINEAR_TILING_EXT);
-+    glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, GL_RGBA8, surface_width(surface),
-+                         surface_height(surface), *mem_obj, 0);
-+    err = glGetError();
-+    if (err != GL_NO_ERROR) {
-+        error_report("spice: cannot create texture from memory object");
-+        goto cleanup_tex_and_mem;
-+    }
-+    return true;
-+
-+cleanup_tex_and_mem:
-+    glDeleteTextures(1, texture);
-+cleanup_mem:
-+    glDeleteMemoryObjectsEXT(1, mem_obj);
-+
-+#endif
-+    return false;
-+}
-+
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h)
+     for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
+         struct touch_slot *slot = &touch_slots[i];
+         slot->tracking_id = -1;
 -- 
 2.50.0
 
