@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED50AC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 22:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD946C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 22:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubnpz-0001k8-UZ; Tue, 15 Jul 2025 18:09:24 -0400
+	id 1ubo2Y-0000oW-Af; Tue, 15 Jul 2025 18:22:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubnpc-0001hM-17
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:09:07 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubnpZ-0004cY-DH
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:08:59 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-60c60f7eeaaso9352283a12.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 15:08:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752617335; x=1753222135; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WbniVntAWS0O9InHwMdwYEDk/2YqeRX6IOjMwHZx2Cs=;
- b=xMn9bOZFKQYQlw5YU8PxT8HEfNjuiR106OrXJP026vMgP3eCXhnrFZ4IpG8kS0NZk+
- fEMe5OH1mQyO5KFKdFMB772uyUmlRuEiue7L5GU2CiujmOGttPFXNqIM8J56dRwsRYc1
- dUy/rGlZ/rJRQTwd3sYesAnP//237Ni8+PdpkJ/iyjQO1Nsz3xNxHM04YgcwPuCKVZmC
- VB5HjcAq+Dg24Sh1M7dr/m2wVbQxL9xVWbblhNIitFk4x2BF8dEJVu88+8NqFyvOcGHX
- T/mb0MMVHOzwgjLug4B8WAgR4/GzTMIWo+nG5dikzjGFdMXCXvmonrrxd37J5wNgVIoF
- 2orw==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubo0y-0000Ap-6F
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:20:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubo0u-0007YD-RG
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:20:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752618036;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9R0UdxLrSuN9jPKUmxzkaad7Cd160hgWJUn1VR7GGKY=;
+ b=QzjB5gsJH+2l3rMEohSiYakF+gTQcq3yfw57tZadQ+DaYQ65DxFRepC2tMNLHs/To5vlKJ
+ DSs7iXdGl8FZu7DzTYilsO0OOqrH5UiZn56CAHMR878watBsZsZe38nXcf+/E3lNUDksnJ
+ ciiBNIHvtG5iU2hjFhrlelCwSCX9V6Y=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-Evkdc5eDPDa3wTDZtnaFpg-1; Tue, 15 Jul 2025 18:20:35 -0400
+X-MC-Unique: Evkdc5eDPDa3wTDZtnaFpg-1
+X-Mimecast-MFC-AGG-ID: Evkdc5eDPDa3wTDZtnaFpg_1752618034
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2363bb41664so2414955ad.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 15:20:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752617335; x=1753222135;
+ d=1e100.net; s=20230601; t=1752618034; x=1753222834;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WbniVntAWS0O9InHwMdwYEDk/2YqeRX6IOjMwHZx2Cs=;
- b=rKtyRvGGJ3mdKQy4RdwRGl3ZNvZODZOTMnx628W4xzua5nsesfyJaoT+DagQkqghch
- 3ptY8inkpKDegBCFqLQTM8l0GFl9BDi8pFAWdOFpwqGzFqkNgQnQbMz4YCIfDy7j1s86
- PIt9uQetthr7zRzJ5ri0LlzHiqqyigOGY3NSYldyNeRnppOkMs96Xv7aHIPckThIvlia
- 2bqIlen8aquhMSKWga7xQ2S/Oo3Zxxf9QqoF9hFy8S8qghH+GTMF/4BsUCAl8JWtypxA
- 9NeGz69HPIPBZHEpXHcxx/SP9pFg8rO8aopFribVgAHu2HU0EOEYFZpbh3pW4yzXWeDe
- 59WA==
-X-Gm-Message-State: AOJu0YzXpxK5D6bNtB7GypY0J+IRQhh9L5L5kaTelP4gvroErcJfowIe
- rO1T1Yu3NI5vWhSZnk6ZLIpYogvPB0JbY1u0QC59TmTD88pSUTm/LH0X+O20+ujB9e2vvf6dhHb
- Fqt10Gnu6f/j++XryJE8/w0k3GmNSQLlxWeUV4zoQHQ==
-X-Gm-Gg: ASbGncs80t+mKwuqdaVDqQIgLrlBgBSKMLbzFQOgOyA0+Nj6rs0CrFOuCYkP+CXSAWn
- rxHjJnLyY0l+tzkw0m8me5btjwl7F/3WGh6LUYbYM6OZvVsu1bxwij8iK4tRJJEt3UC7YfPbw+Z
- Gg6kUdX4DozvY7Ga2lJLfMAcAY8kcHqVKoONbRu8nJ9vW/vae3Kk8VGvjioQW2NiM+1axDQqzdg
- abCCm8=
-X-Google-Smtp-Source: AGHT+IGSQtvYjd//yq/bDy6fsvV1aE/yKqj/KDtMrHf9zQ0OwFXwjRO/YNwi1CCA1OOIkERVvaReqj29KPsN9vO1Wug=
-X-Received: by 2002:a05:6402:5241:b0:607:4c8e:514d with SMTP id
- 4fb4d7f45d1cf-61281e9ab0emr682124a12.6.1752617335286; Tue, 15 Jul 2025
- 15:08:55 -0700 (PDT)
+ bh=9R0UdxLrSuN9jPKUmxzkaad7Cd160hgWJUn1VR7GGKY=;
+ b=GbS8elAx+vYmOWS1SbseJ6xoBF7nb7QefIjYFs6GWypUyHFS0xFJJmMRJm9L4WHfS3
+ ERxvdqmiHdnW6AE99NyvhLsu/oodKTouFdm6HHj+bIQl5LaUMbet0yp8GMxe4fzZ5rM8
+ Y40RA9PeKo34n5F/SlEtZOlT7bNiaunCfRtI97ukCTubrg8YldLSJUiwJjEtQ6QbUAJs
+ /1AB6iZ39T5SAGuJEZCI5YIeHUD5PgGH7SU7HV9wD19IBNYhA+GILncXXILB7N+j1s1k
+ vG9JIwO6HM+cytKW1Vcp9rudShxYBbxKUR/oC0HRD3p0DKCb0ZTeSQtaporb8D9d9UhF
+ 8iXA==
+X-Gm-Message-State: AOJu0YzsPh/JW8b6lLQsBMp1JZUiUti4M6TQEVOHwhPed555oGwH2fHn
+ ezT0BYkLonRpd9C4CWHM/ch664uJgbBsmEKWX1s/urunZ4+ihOe8qFuTT/UDr4z4fvOFU5vKysk
+ oVGjsvsAl8U27/emCtltK4wv+KRr3LrjTYBh02VW6gwwuQtNf8EuWFhP0iTQhsWyhK63XCu8LwR
+ q6LwzobdOLvuWoA44hkeaLuQWBMVoOBH2e8jIgzNk=
+X-Gm-Gg: ASbGncv/O6JtzPYEW37D6Rkw39JgaEJbYx/Rehj1vualwEBFx5ZOj42+daR9GnJfi6n
+ LuXRtHe4ZWc7dbjEoEk0vlUuVfYYU7ridAtXY4ibS89TSTlkKTaKwlUDpjdD4euQPuVDW0yYzmo
+ GEaSWb6Z5mzsoXW4AV7fbjITcS0GVvYi0+OfalDlrEBl5cJx2+191b
+X-Received: by 2002:a17:902:9009:b0:231:e413:986c with SMTP id
+ d9443c01a7336-23e1a4497c6mr61060025ad.11.1752618033952; 
+ Tue, 15 Jul 2025 15:20:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHZURA1hWiI0mF/vUu+T2poucIeRfvU3d+NleBfYw0uKulT+10meJnbcGOn98Z4EDo8ZWUYBu5ZbweQgJwnJp0=
+X-Received: by 2002:a17:902:9009:b0:231:e413:986c with SMTP id
+ d9443c01a7336-23e1a4497c6mr61059865ad.11.1752618033521; Tue, 15 Jul 2025
+ 15:20:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250715212335.2215509-1-pierrick.bouvier@linaro.org>
- <20250715212335.2215509-2-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250715212335.2215509-2-pierrick.bouvier@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 16 Jul 2025 01:08:29 +0300
-X-Gm-Features: Ac12FXxIJShM8aFQ5Z-qfgeT_LbdfJqoHcAZWL7jY2u4iqeLvCha_ZNBcVCVtnM
-Message-ID: <CAAjaMXZHkOH9+c5x1reBm=o=y57sx-tajShQgKXweoDoeOvwEg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] tests/functional/test_aarch64_device_passthrough:
- update image
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, gustavo.romero@linaro.org, 
- Peter Maydell <peter.maydell@linaro.org>, richard.henderson@linaro.org
+References: <20250715212848.171879-1-jsnow@redhat.com>
+In-Reply-To: <20250715212848.171879-1-jsnow@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 15 Jul 2025 18:20:21 -0400
+X-Gm-Features: Ac12FXyuByxZh_2_lM7PN_ORIeVIeT8RkGzEAKRBCEQpkF0i-JimQPhap3gqp10
+Message-ID: <CAFn=p-bZBok_n-evUwjm6cdCmr+4ofjTRbVRJ+DNxft9gV4PpA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] docs, python: bump sphinx preferred version
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,52 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 12:25=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+fwiw, I think this is important enough / harmless enough to sneak into
+the rc releases, if possible.
+
+On Tue, Jul 15, 2025 at 5:28=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
 >
-> TF-A needs to be patched to enable support for FEAT_TCR2 and
-> FEAT_SCTLR2. This new image contains updated firmware.
+> CI: https://gitlab.com/jsnow/qemu/-/pipelines/1928836481
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  tests/functional/test_aarch64_device_passthrough.py | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> Unlike the previous series, this series only adjusts the *preferred*
+> sphinx version to be higher, leaving the accepted version at 3.4.3, the
+> version that CentOS Stream 9 still ships with.
 >
-> diff --git a/tests/functional/test_aarch64_device_passthrough.py b/tests/=
-functional/test_aarch64_device_passthrough.py
-> index 1f3f158a9ff..73bb0df8aba 100755
-> --- a/tests/functional/test_aarch64_device_passthrough.py
-> +++ b/tests/functional/test_aarch64_device_passthrough.py
-> @@ -77,15 +77,16 @@
+> Unfortunately, this means we can't cut out the compatibility code for
+> sphinx we're still carrying around just yet, but we'll await that
+> glorious moment to arrive on some future day.
 >
->  class Aarch64DevicePassthrough(QemuSystemTest):
+> Sphinx 6.2.1 is being chosen as the new default because it still offers
+> support for Python 3.8+, but is new enough to support Python 3.13+.
 >
-> -    # https://github.com/pbo-linaro/qemu-linux-stack
-> +    # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthr=
-ough
-> +    # $ ./build.sh && ./archive_artifacts.sh out.tar.xz
->      #
->      # Linux kernel is compiled with defconfig +
->      # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
->      # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
->      ASSET_DEVICE_PASSTHROUGH_STACK =3D Asset(
-> -        ('https://fileserver.linaro.org/s/fx5DXxBYme8dw2G/'
-> -         'download/device_passthrough.tar.xz'),
-> -         '812750b664d61c2986f2b149939ae28cafbd60d53e9c7e4b16e97143845e19=
-6d')
-> +        ('https://fileserver.linaro.org/s/bz9cjSGPgWJ2iQT/'
-> +         'download/device_passthrough_v2.tar.xz'),
-> +         '5e892ee9ea4d1348e673524485ecfb960f748dfdd76dbc396347b1781a4f42=
-52')
+> Distro version information for supported platforms as of 2025-07-15:
 >
->      # This tests the device passthrough implementation, by booting a VM
->      # supporting it with two nvme disks attached, and launching a nested=
- VM
+> distro              python3  pip     setuptools  sphinx
+> -------------------------------------------------------
+> alpine_3_19         3.11.13  23.3.1  70.3.0      6.2.1
+> alpine_3_20         3.12.11  24.0    70.3.0      7.2.6
+> alpine_3_21         3.12.11  24.3.1  70.3.0      8.1.3
+> alpine_3_22         3.12.11  25.1.1  80.9.0      8.2.3
+> centos_stream_9     3.9.23   21.3.1  53.0.0      3.4.3
+> centos_stream_10    3.12.11  23.3.2  69.0.3      7.2.6
+> debian_12           3.11.2   23.0.1  66.1.1      5.3.0
+> fedora_41           3.13.5   24.2    69.2.0      7.3.7
+> fedora_42           3.13.5   24.3.1  74.1.3      8.1.3
+> freebsd             3.11.13  23.3.2  63.1.0      5.3.0
+> homebrew            3.13.5   ---     80.9.0      8.2.3
+> macports            3.13.5   25.1.1  78.1.1      8.2.3
+> openbsd             3.12.11  25.1.1  79.0.1      8.2.3
+> pkgsrc_current      3.12.11  25.1.1  80.9.0      8.2.3
+> ubuntu_22_04        3.10.12  22.0.2  59.6.0      4.3.2
+> ubuntu_24_04        3.12.3   24.0    68.1.2      7.2.6
+> ubuntu_24_10        3.12.7   24.2    74.1.2      7.4.7
+> ubuntu_25_04        3.13.3   25.0    75.8.0      8.1.3
+>
+> Akihiko Odaki (2):
+>   docs: Bump sphinx to 6.2.1
+>   MAINTAINERS: Add docs/requirements.txt
+>
+>  MAINTAINERS           | 1 +
+>  docs/requirements.txt | 4 ++--
+>  pythondeps.toml       | 4 ++--
+>  3 files changed, 5 insertions(+), 4 deletions(-)
+>
 > --
-> 2.47.2
+> 2.50.0
 >
 >
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Tested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
