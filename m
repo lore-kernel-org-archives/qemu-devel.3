@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73597C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Jul 2025 23:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDAFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 00:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubT2L-0002Mt-Cp; Mon, 14 Jul 2025 19:56:45 -0400
+	id 1ubT6L-0001iK-Bs; Mon, 14 Jul 2025 20:00:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubT2J-0002Dp-Gy
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:56:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubT2H-0007Qu-47
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 19:56:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752537398;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yyynhVn6YIjdDDiSm17bBMgB3kqi/YfOvitQmZpGTmU=;
- b=UCof3PxxvOzjJ3kDPec6Y9IHHj8DWf85W4hm4bnTL+JIcziViOb8SBoSuxtCL7Lj+fN96K
- zcPzYDosk3FXBiBZutoGSisBswNWDmIkFD5QUAaLMczcH5deHI1NCoX1e4aFLNCbFu4RoH
- BdlXBMSYo6sJ+qGqwfk8/iXHsDmUSY0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-q9ea0-3uMSmdFOynBc4wmQ-1; Mon, 14 Jul 2025 19:56:36 -0400
-X-MC-Unique: q9ea0-3uMSmdFOynBc4wmQ-1
-X-Mimecast-MFC-AGG-ID: q9ea0-3uMSmdFOynBc4wmQ_1752537395
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f8192e2cso2725730f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 16:56:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752537395; x=1753142195;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1ubT6K-0001ff-Gz
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:52 -0400
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jackson88044@gmail.com>)
+ id 1ubT6H-00083g-Uh
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 20:00:52 -0400
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-7d9eac11358so483920985a.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 17:00:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752537648; x=1753142448; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yyynhVn6YIjdDDiSm17bBMgB3kqi/YfOvitQmZpGTmU=;
- b=gh9y6/CMuHGEOlT9gtTfWfZ+kgGJdsK56AVVscbjK3xrzB83xCcOhE77dfCjuSfHa1
- 1QrKsplqB8U6r0fut3BHGRrM8oklT/XrP9caaZLzZRequEHBdl8vzItqjnGgkXaGKnkm
- dC9nH5Eg+8Ovi7VvhrpRNALQssd/B39a60v2g6wNl0u71j1P2hmi59uLld7UZcnXXgms
- GQ/d6R5LqOOEOUSuWI+9jmrdNuYfqzCGti7qRrMkpjv3pfyvhxtMJ6ypoqOlb/tyw39E
- xxQk/9owgXdrHUOvdrn76tBAE04e3kxgLqQWb1E+unLha2C7OF68WEqGPVKYbLUy0iFk
- dFyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXxcHxKxfXTAAeORCXaSsL1+/yJNie8mK91ot/0pLRUiIPmDWCPd9uJIIaoNShxq43zGETsDLs+lzE@nongnu.org
-X-Gm-Message-State: AOJu0Yxh8jS0Mtm+v5HNbkD8O4gcY5zVecrIONmwKUoa0C5lsCt4C6CB
- 8MDnMtQByrs+rpR7R/dMZFluw/mpL6U6JRxPSrxhcD6MU6ECgBehCUtBAO9KU8iuIoTHil82rps
- eT6k4FL1lsGF8plvQ2uQKA+Y9jYIvHoUl36pOGsrsBtMIfDNwf0d+CKN/
-X-Gm-Gg: ASbGnctb28Uo/s9vMLIhUbNPj5ORd71SqMPdQ19aqE10ZTxCXW0Mr7Y8nGDh9EAgwi0
- k8B8+SfEuoNnWsMUD6oq125ODlsu9ss4/P7PJHhlp+VSTq0MQZEQCzT0qTRtUNHQteunAE+ss5x
- 5I32ZIj970eladG0dXSnfAee4Rm0nMVflZGw5XrIsUsy3AUytfWj1HalyK4sSB5qWj2T8Omp1y6
- 4RPTtFGH4XCW5eE+LRbD9z6IemwmyPXk3+hVtkdd5aXmx4gKOgTAl2QRn0ljPbkPOHmLuXLFl/E
- G/N/5+rIiGBUOh1TQLMR+Zxp/PPk7C1h
-X-Received: by 2002:a05:6000:2f81:b0:3a3:7baf:f06a with SMTP id
- ffacd0b85a97d-3b5f2dfdd45mr11282399f8f.37.1752537395132; 
- Mon, 14 Jul 2025 16:56:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiBWNPMogNMuw+FGLG9uPDQP65NspuydWNxXlVDgLEvdReYYcZYDkRStd2nFXJToEPKtfBtg==
-X-Received: by 2002:a05:6000:2f81:b0:3a3:7baf:f06a with SMTP id
- ffacd0b85a97d-3b5f2dfdd45mr11282379f8f.37.1752537394664; 
- Mon, 14 Jul 2025 16:56:34 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ bh=nx+xC+J/lP71Qi4WUZDurONxg6YN8jBhmpt2oNrZWbI=;
+ b=lZPZxq1ki8Uj0xqlqOLC9xuJNxMgVkyAWOLsMBACRNFwoIAniryzJl7VzuwTKigl5Q
+ ToUjYU6iWxFYJTgLiInOGnGO8CBYtTgY252pLxqb2bqnUOA4Jy2VIg3tsqKZuRnhQB9i
+ jIbwnNpLyC8/Dn50vTcJPOljYfrkOiUohVD055Cp3zWg/v+56+rPdLS6fvCNlMVCvq/i
+ JReSKR9W/FkmY+6GgoUQjrgOpH7j0eiVttsvwHMYrUWm5x5OLzBvv/2BlIakCI1t/gaL
+ H/OkmDMXL1psDso3a/3K6j2nZ8p6g8tsiWNNMcrdhh1Ytv/jBTN0rnwOKq2GRPT7RujF
+ W6Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752537648; x=1753142448;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nx+xC+J/lP71Qi4WUZDurONxg6YN8jBhmpt2oNrZWbI=;
+ b=Hbh4SuWKleVnd2dFuddmjjvvRDBCigxvH43MA/1UXtetRR8FtTsFBnuGCsS7pqaFOV
+ hkKlR0594mqE+1NtL4IRbqz9Vs6iHAnaEJNC3Y7GiOA3QEF+OfDH6M/QqeInqsQ6KGIG
+ jOGcZcnwt6pTyGiGiicsVuKuf2p7vGmnBVQeuzOG9IowkAwwqAyHrNiPMpaIjzrhhGxB
+ gyjwqsXORDmQFLdPtJMcu/rdMzpTXiJT0VNiXAAguh9j1RdEiWFDjYUGX5TG5Zaa33tG
+ FqeBwBcaW/30/Oy3x9v2ABfFGFtUUMPE/cH6GCjK5CN9JKrrFPe4IqQU0QXBNCfoLXxg
+ +Sew==
+X-Gm-Message-State: AOJu0YyXgtu3IlowYVE+eb14JLO1d9ZwEahsxR6jN9ZixzhpaZjCIS3V
+ rd58L8d8Fhys6eTjmmUe17tl1POQyEwzrL07ooqtYVX9O69280FA3YtKhynpRw==
+X-Gm-Gg: ASbGncuE7sI2jv6vJuOVdNGephUMSxlFcKZZwL+SP6zToTxEDFcX38Qyjd24/PGFIuH
+ GAbMHad/5uiCoi1q/xxD+F9T7/f9QmJ0U5lFjQf2b/QX7IfibbbSgWqlGgxN4XSXzje3ReVxj0o
+ GM1QNtCKGR8L0MZkYSaQNNlFf+pzMLh9If6qSgBlSwjgqjLx6dW0Ki91697Cnv0jCF/1sqimsJX
+ 5yq4Q0iegNQ8JLUbJBcH31wsK/ADAD81Tl32sIRcC3XNxLjELvd8ht7ZheJdzt8ELvRSWY2Wovp
+ 01LwuNG73XmqlA+hqoWOXtBo2Bah+K85lR6ibsuynPw1aW6bJbzkqU4cHTbvjsIvSbUFqdaYG4O
+ aOt8/z6Gp064tNi7EVVrbX1AZyxbZVgnztQcxVboet+cR3FsUQl88kpE2Ng==
+X-Google-Smtp-Source: AGHT+IGRhblmx1FY8srB8MyrPDAqASX2Jxr7sB47RkjJOqvBnx+J54fznEP/yN1aZ9hJeoQKxhN8Xw==
+X-Received: by 2002:a05:620a:1726:b0:7d3:a6bd:93fc with SMTP id
+ af79cd13be357-7ddebc935b0mr2096357685a.28.1752537648223; 
+ Mon, 14 Jul 2025 17:00:48 -0700 (PDT)
+Received: from user-jcksn.mynetworksettings.com
+ ([2600:4040:b51a:4200:2f17:e99b:e0cd:fdf7])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d785sm13905370f8f.59.2025.07.14.16.56.32
+ 6a1803df08f44-70497d8eee2sm52296276d6.97.2025.07.14.17.00.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Jul 2025 16:56:33 -0700 (PDT)
-Date: Mon, 14 Jul 2025 19:56:30 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
- gustavo.romero@linaro.org, anisinha@redhat.com,
- shannon.zhaosl@gmail.com, pbonzini@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org, alireza.sanaee@huawei.com
-Subject: Re: [PATCH v7 00/36] ACPI PCI Hotplug support on ARM
-Message-ID: <20250714195616-mutt-send-email-mst@kernel.org>
-References: <20250714080639.2525563-1-eric.auger@redhat.com>
- <20250714204008.00003fba@huawei.com>
- <bfaa2fd3-5cc6-494d-a2f6-6583f72f3b59@redhat.com>
+ Mon, 14 Jul 2025 17:00:47 -0700 (PDT)
+From: Jackson Donaldson <jackson88044@gmail.com>
+X-Google-Original-From: Jackson Donaldson <jcksn@duck.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v5 01/11] MAX78000: Add MAX78000FTHR Machine
+Date: Mon, 14 Jul 2025 20:00:35 -0400
+Message-Id: <20250715000045.57332-2-jcksn@duck.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250715000045.57332-1-jcksn@duck.com>
+References: <20250715000045.57332-1-jcksn@duck.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bfaa2fd3-5cc6-494d-a2f6-6583f72f3b59@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=jackson88044@gmail.com; helo=mail-qk1-x72b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,214 +102,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 09:51:40PM +0200, Eric Auger wrote:
-> Hi Jonathan,
-> 
-> On 7/14/25 9:40 PM, Jonathan Cameron wrote:
-> > On Mon, 14 Jul 2025 10:04:44 +0200
-> > Eric Auger <eric.auger@redhat.com> wrote:
-> >
-> >> This series enables ACPI PCI hotplug/hotunplug on ARM.
-> >> It is not enabled by default and ACPI PCI hotplug can
-> >> be selected by setting: 
-> >>
-> >> -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
-> >>
-> >> Expected benefits should be similar to those listed in [1],
-> >> ie. removal of some racy behaviors, improved latencies.
-> >>
-> >> The infrastructure used in x86 is heavily reused and a
-> >> huge part of the series consists in moving code from
-> >> hw/i386/acpi-build.c to a generic place and slightly
-> >> adapting it to make it usable on ARM. The DSDT table is
-> >> augmented to support ACPI PCI hotplug elements.
-> >>
-> >> On ARM we use use a GED event to notify the OS about
-> >> hotplug events.
-> >>
-> >> Best Regards 
-> >>
-> >> Eric
-> > Hi Eric,
-> >
-> > I guess you probably already know this but there is some
-> > impact on loongarch64 when their ACPI tables tests are added.
-> >
-> > Rather oddly I'm getting intermittent failures on Michael's
-> > gitlab tree but looks like the unification of _OSC affects
-> > them as well. (should be every time, but they aren't!)
-> >
-> > Should just be updating their 4 DSDT variants.
-> >
-> > If I had a stable test setup I'd send them.  Will try again
-> > tomorrow if not resolved.
-> just to make sure are we talking about
-> 
-> [PATCH v3 0/5] Add bios-tables-test for LoongArch system <https://lore.kernel.org/all/20250612090321.3416594-1-maobibo@loongson.cn/> 
-> https://lore.kernel.org/all/20250612090321.3416594-2-maobibo@loongson.cn/
-> 
-> Thanks
-> 
-> Eric
+This patch adds support for the MAX78000FTHR machine.
 
-I fixed this up, don't worry.
+The MAX78000FTHR contains a MAX78000 and a RISC-V core. This patch
+implements only the MAX78000, which is Cortex-M4 based.
+Details can be found at:
+https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
 
-> 
-> 
-> >
-> > Jonathan
-> >
-> >
-> >
-> >> This series can be found at:
-> >> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v7
-> >>
-> >> previous series:
-> >> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-v6
-> >>
-> >> History:
-> >> v6 -> v7:
-> >> - rebased after minor contextual conflict introduced
-> >>   by "hw/arm/virt: Basic CXL enablement on pci_expander_bridge
-> >>   instances pxb-cxl" in hw/arm/virt-acpi-build.c
-> >>   (hw/pci-host/gpex-acpi: Use GED acpi pcihp property)
-> >> - collected last Igor's and Prasad's R-bs
-> >>
-> >> v5 -> v6:
-> >> - collected Jonathan's R-bs
-> >> - cropped last 2 patch commit messages (Jonathan)
-> >>
-> >> v4 -> v5:
-> >> - Collected Jonathan's R-bs (many thanks!)
-> >> - fixed the tests/qtest/bios-tables-test issue by
-> >>   creating a variant for the viot test
-> >> - use the 3 phase reset API
-> >> - fixed qom-test failures that were due to unconditionnal
-> >>   fetches of the GED property
-> >>
-> >> v3 -> v4:
-> >> - toook into account all comments on v3
-> >> - static acpi-index is now supported unconditionally
-> >>   from acpi pcihp option. See indiviual patches.
-> >> - I hit a problem with ref block generation at
-> >>   [19/32] tests/qtest/bios-tables-test: Update ARM DSDT reference
-> >>   blobs: despite I regenerate the blobs, I get some errors.
-> >>
-> >> v2 -> v3:
-> >> - lot of changes taking into account various feedbacks
-> >>   (many thanks to all reviewers). Please refer to
-> >>   individual patches for details. Main changes:
-> >>   - no more machine option, acpi pci hp is not set by
-> >>     default.
-> >>   - removal of 2 unused variables in the osc method
-> >>   - introduction of GED property to set the bus
-> >>   - rework of the init/reset sequence
-> >>   - fix virtio-mem-pci hotplug regression
-> >>
-> >> v1 -> v2:
-> >> - collected a bunch of R-bs from Gustavo (many thanks!)
-> >> - Fixed the breakage of bios-tables-test in TCG mode by
-> >>   incorporating Gustavo's patches (part of
-> >>   [PATCH 0/5] ACPI tests for PCI Hotplug on ARM
-> >>   https://lore.kernel.org/all/20250526053123.1434204-1-gustavo.romero@linaro.org/)
-> >> - Tweeked the dsdt aml changes to avoid any dsdt blob difference when
-> >>   acpi-pcihp is off.
-> >>
-> >> RFC -> v1:
-> >> - First 3 trivial patches were pulled separately
-> >> - Fix of the register region size (0x18), ie. ACPI_PCIHP_SIZE
-> >> - addition of aml_pci_edsm which was not called in RFC
-> >> - acpi-index feature is now fixed. vms->bus was not set on
-> >>   acpi_pcihp_init. The init sequence is still hacky though. Suggestions
-> >>   are welcome.
-> >>
-> >> [1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
-> >> https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
-> >>
-> >> Eric Auger (32):
-> >>   hw/i386/acpi-build: Make aml_pci_device_dsm() static
-> >>   hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
-> >>   hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
-> >>     acpi_dsdt_add_pci_osc
-> >>   hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
-> >>   hw/acpi/ged: Add a acpi-pci-hotplug-with-bridge-support property
-> >>   hw/pci-host/gpex-acpi: Use GED acpi pcihp property
-> >>   hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
-> >>   hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
-> >>   tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _OSC change
-> >>   hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
-> >>   hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
-> >>   hw/i386/acpi-build: Move build_append_notification_callback to pcihp
-> >>   hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to
-> >>     pcihp
-> >>   hw/i386/acpi-build: Use AcpiPciHpState::root in acpi_set_pci_info
-> >>   hw/i386/acpi-build: Move aml_pci_edsm to a generic place
-> >>   qtest/bios-tables-test: Prepare for fixing the aarch64 viot test
-> >>   qtest/bios-tables-test: Add a variant to the aarch64 viot test
-> >>   qtest/bios-tables-test: Generate DSDT.viot
-> >>   hw/arm/virt-acpi-build: Let non hotplug ports support static
-> >>     acpi-index
-> >>   tests/qtest/bios-tables-test: Update ARM DSDT reference blobs
-> >>   hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI
-> >>     hotplug
-> >>   hw/acpi/ged: Add a bus link property
-> >>   hw/arm/virt: Pass the bus on the ged creation
-> >>   hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
-> >>     implementation
-> >>   hw/acpi/pcihp: Remove root arg in acpi_pcihp_init
-> >>   hw/acpi/ged: Prepare the device to react to PCI hotplug events
-> >>   hw/acpi/ged: Support migration of AcpiPciHpState
-> >>   hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
-> >>   hw/arm/virt: Minor code reshuffling in create_acpi_ged
-> >>   hw/arm/virt: Let virt support pci hotplug/unplug GED event
-> >>   qtest/bios-tables-test: Generate reference blob for
-> >>     DSDT.hpoffacpiindex
-> >>   qtest/bios-tables-test: Generate reference blob for DSDT.acpipcihp
-> >>
-> >> Gustavo Romero (4):
-> >>   tests/qtest/bios-tables-test: Prepare for changes in the DSDT table
-> >>   tests/qtest/bios-tables-test: Prepare for changes in the arm virt DSDT
-> >>     table
-> >>   tests/qtest/bios-tables-test: Prepare for addition of acpi pci hp
-> >>     tests
-> >>   tests/qtest/bios-tables-test: Add aarch64 ACPI PCI hotplug test
-> >>
-> >>  hw/i386/acpi-build.h                          |   4 -
-> >>  include/hw/acpi/generic_event_device.h        |  17 +-
-> >>  include/hw/acpi/pci.h                         |   5 +-
-> >>  include/hw/acpi/pcihp.h                       |  17 +-
-> >>  include/hw/arm/virt.h                         |   1 +
-> >>  include/hw/pci-host/gpex.h                    |   1 +
-> >>  include/hw/sysbus.h                           |   1 +
-> >>  hw/acpi/acpi-pci-hotplug-stub.c               |   2 +-
-> >>  hw/acpi/generic_event_device.c                |  77 +++
-> >>  hw/acpi/ich9.c                                |   7 +-
-> >>  hw/acpi/pci-bridge.c                          |  54 ++
-> >>  hw/acpi/pci.c                                 |  50 ++
-> >>  hw/acpi/pcihp.c                               | 439 ++++++++++++++-
-> >>  hw/acpi/piix4.c                               |   5 +-
-> >>  hw/arm/virt-acpi-build.c                      |  38 ++
-> >>  hw/arm/virt.c                                 |  27 +-
-> >>  hw/core/sysbus.c                              |  11 +
-> >>  hw/i386/acpi-build.c                          | 532 +-----------------
-> >>  hw/pci-host/gpex-acpi.c                       |  74 +--
-> >>  tests/qtest/bios-tables-test.c                |  53 ++
-> >>  hw/arm/Kconfig                                |   2 +
-> >>  hw/pci-host/Kconfig                           |   1 +
-> >>  tests/data/acpi/aarch64/virt/DSDT             | Bin 5196 -> 5293 bytes
-> >>  .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5282 -> 5379 bytes
-> >>  tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 0 -> 6202 bytes
-> >>  .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 0 -> 5347 bytes
-> >>  tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6557 -> 6654 bytes
-> >>  tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7679 -> 7768 bytes
-> >>  tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5398 -> 5495 bytes
-> >>  tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 0 -> 5310 bytes
-> >>  tests/data/acpi/riscv64/virt/DSDT             | Bin 3576 -> 3538 bytes
-> >>  tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 2985 bytes
-> >>  32 files changed, 811 insertions(+), 607 deletions(-)
-> >>  create mode 100644 tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-> >>  create mode 100644 tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-> >>  create mode 100644 tests/data/acpi/aarch64/virt/DSDT.viot
-> >>
+Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/Kconfig                |  10 ++
+ hw/arm/max78000_soc.c         | 172 ++++++++++++++++++++++++++++++++++
+ hw/arm/max78000fthr.c         |  50 ++++++++++
+ hw/arm/meson.build            |   2 +
+ include/hw/arm/max78000_soc.h |  35 +++++++
+ 5 files changed, 269 insertions(+)
+ create mode 100644 hw/arm/max78000_soc.c
+ create mode 100644 hw/arm/max78000fthr.c
+ create mode 100644 include/hw/arm/max78000_soc.h
+
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index f543d944c3..ddaafa8faa 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -95,6 +95,12 @@ config INTEGRATOR
+     select PL181 # display
+     select SMC91C111
+ 
++config MAX78000FTHR
++    bool
++    default y
++    depends on TCG && ARM
++    select MAX78000_SOC
++
+ config MPS3R
+     bool
+     default y
+@@ -357,6 +363,10 @@ config ALLWINNER_R40
+     select USB_EHCI_SYSBUS
+     select SD
+ 
++config MAX78000_SOC
++    bool
++    select ARM_V7M
++
+ config RASPI
+     bool
+     default y
+diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+new file mode 100644
+index 0000000000..9676ada6a2
+--- /dev/null
++++ b/hw/arm/max78000_soc.c
+@@ -0,0 +1,172 @@
++/*
++ * MAX78000 SOC
++ *
++ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Implementation based on stm32f205 and Max78000 user guide at
++ * https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "system/address-spaces.h"
++#include "system/system.h"
++#include "hw/arm/max78000_soc.h"
++#include "hw/qdev-clock.h"
++#include "hw/misc/unimp.h"
++
++static void max78000_soc_initfn(Object *obj)
++{
++    MAX78000State *s = MAX78000_SOC(obj);
++
++    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
++
++    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
++}
++
++static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
++{
++    MAX78000State *s = MAX78000_SOC(dev_soc);
++    MemoryRegion *system_memory = get_system_memory();
++    DeviceState *armv7m;
++    Error *err = NULL;
++
++    if (!clock_has_source(s->sysclk)) {
++        error_setg(errp, "sysclk clock must be wired up by the board code");
++        return;
++    }
++
++    memory_region_init_rom(&s->flash, OBJECT(dev_soc), "MAX78000.flash",
++                           FLASH_SIZE, &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        return;
++    }
++
++    memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
++
++    memory_region_init_ram(&s->sram, NULL, "MAX78000.sram", SRAM_SIZE,
++                           &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        return;
++    }
++    memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
++
++    armv7m = DEVICE(&s->armv7m);
++
++    /*
++     * The MAX78000 user guide's Interrupt Vector Table section
++     * suggests that there are 120 IRQs in the text, while only listing
++     * 104 in table 5-1. Implement the more generous of the two.
++     * This has not been tested in hardware.
++     */
++    qdev_prop_set_uint32(armv7m, "num-irq", 120);
++    qdev_prop_set_uint8(armv7m, "num-prio-bits", 3);
++    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
++    qdev_prop_set_bit(armv7m, "enable-bitband", true);
++    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
++    object_property_set_link(OBJECT(&s->armv7m), "memory",
++                             OBJECT(system_memory), &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
++        return;
++    }
++
++    create_unimplemented_device("globalControl",        0x40000000, 0x400);
++    create_unimplemented_device("systemInterface",      0x40000400, 0x400);
++    create_unimplemented_device("functionControl",      0x40000800, 0x400);
++    create_unimplemented_device("watchdogTimer0",       0x40003000, 0x400);
++    create_unimplemented_device("dynamicVoltScale",     0x40003c00, 0x40);
++    create_unimplemented_device("SIMO",                 0x40004400, 0x400);
++    create_unimplemented_device("trimSystemInit",       0x40005400, 0x400);
++    create_unimplemented_device("generalCtrlFunc",      0x40005800, 0x400);
++    create_unimplemented_device("wakeupTimer",          0x40006400, 0x400);
++    create_unimplemented_device("powerSequencer",       0x40006800, 0x400);
++    create_unimplemented_device("miscControl",          0x40006c00, 0x400);
++
++    create_unimplemented_device("aes",                  0x40007400, 0x400);
++    create_unimplemented_device("aesKey",               0x40007800, 0x400);
++
++    create_unimplemented_device("gpio0",                0x40008000, 0x1000);
++    create_unimplemented_device("gpio1",                0x40009000, 0x1000);
++
++    create_unimplemented_device("parallelCamInterface", 0x4000e000, 0x1000);
++    create_unimplemented_device("CRC",                  0x4000f000, 0x1000);
++
++    create_unimplemented_device("timer0",               0x40010000, 0x1000);
++    create_unimplemented_device("timer1",               0x40011000, 0x1000);
++    create_unimplemented_device("timer2",               0x40012000, 0x1000);
++    create_unimplemented_device("timer3",               0x40013000, 0x1000);
++
++    create_unimplemented_device("i2c0",                 0x4001d000, 0x1000);
++    create_unimplemented_device("i2c1",                 0x4001e000, 0x1000);
++    create_unimplemented_device("i2c2",                 0x4001f000, 0x1000);
++
++    create_unimplemented_device("standardDMA",          0x40028000, 0x1000);
++    create_unimplemented_device("flashController0",     0x40029000, 0x400);
++
++    create_unimplemented_device("icc0",                 0x4002a000, 0x800);
++    create_unimplemented_device("icc1",                 0x4002a800, 0x800);
++
++    create_unimplemented_device("adc",                  0x40034000, 0x1000);
++    create_unimplemented_device("pulseTrainEngine",     0x4003c000, 0xa0);
++    create_unimplemented_device("oneWireMaster",        0x4003d000, 0x1000);
++    create_unimplemented_device("semaphore",            0x4003e000, 0x1000);
++
++    create_unimplemented_device("uart0",                0x40042000, 0x1000);
++    create_unimplemented_device("uart1",                0x40043000, 0x1000);
++    create_unimplemented_device("uart2",                0x40044000, 0x1000);
++
++    create_unimplemented_device("spi1",                 0x40046000, 0x2000);
++    create_unimplemented_device("trng",                 0x4004d000, 0x1000);
++    create_unimplemented_device("i2s",                  0x40060000, 0x1000);
++    create_unimplemented_device("lowPowerControl",      0x40080000, 0x400);
++    create_unimplemented_device("gpio2",                0x40080400, 0x200);
++    create_unimplemented_device("lowPowerWatchdogTimer",    0x40080800, 0x400);
++    create_unimplemented_device("lowPowerTimer4",       0x40080c00, 0x400);
++
++    create_unimplemented_device("lowPowerTimer5",       0x40081000, 0x400);
++    create_unimplemented_device("lowPowerUART0",        0x40081400, 0x400);
++    create_unimplemented_device("lowPowerComparator",   0x40088000, 0x400);
++
++    create_unimplemented_device("spi0",                 0x400be000, 0x400);
++
++    /*
++     * The MAX78000 user guide's base address map lists the CNN TX FIFO as
++     * beginning at 0x400c0400 and ending at 0x400c0400. Given that CNN_FIFO
++     * is listed as having data accessible up to offset 0x1000, the user
++     * guide is likely incorrect.
++     */
++    create_unimplemented_device("cnnTxFIFO",            0x400c0400, 0x2000);
++
++    create_unimplemented_device("cnnGlobalControl",     0x50000000, 0x10000);
++    create_unimplemented_device("cnnx16quad0",          0x50100000, 0x40000);
++    create_unimplemented_device("cnnx16quad1",          0x50500000, 0x40000);
++    create_unimplemented_device("cnnx16quad2",          0x50900000, 0x40000);
++    create_unimplemented_device("cnnx16quad3",          0x50d00000, 0x40000);
++
++}
++
++static void max78000_soc_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = max78000_soc_realize;
++}
++
++static const TypeInfo max78000_soc_info = {
++    .name          = TYPE_MAX78000_SOC,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(MAX78000State),
++    .instance_init = max78000_soc_initfn,
++    .class_init    = max78000_soc_class_init,
++};
++
++static void max78000_soc_types(void)
++{
++    type_register_static(&max78000_soc_info);
++}
++
++type_init(max78000_soc_types)
+diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
+new file mode 100644
+index 0000000000..c4f6b5b1b0
+--- /dev/null
++++ b/hw/arm/max78000fthr.c
+@@ -0,0 +1,50 @@
++/*
++ * MAX78000FTHR Evaluation Board
++ *
++ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/boards.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-clock.h"
++#include "qemu/error-report.h"
++#include "hw/arm/max78000_soc.h"
++#include "hw/arm/boot.h"
++
++/* 60MHz is the default, but other clocks can be selected. */
++#define SYSCLK_FRQ 60000000ULL
++static void max78000_init(MachineState *machine)
++{
++    DeviceState *dev;
++    Clock *sysclk;
++
++    sysclk = clock_new(OBJECT(machine), "SYSCLK");
++    clock_set_hz(sysclk, SYSCLK_FRQ);
++
++    dev = qdev_new(TYPE_MAX78000_SOC);
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
++    qdev_connect_clock_in(dev, "sysclk", sysclk);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    armv7m_load_kernel(ARM_CPU(first_cpu),
++                       machine->kernel_filename,
++                       0x00000000, FLASH_SIZE);
++}
++
++static void max78000_machine_init(MachineClass *mc)
++{
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-m4"),
++        NULL
++    };
++
++    mc->desc = "MAX78000FTHR Board (Cortex-M4 / (Unimplemented) RISC-V)";
++    mc->init = max78000_init;
++    mc->valid_cpu_types = valid_cpu_types;
++}
++
++DEFINE_MACHINE("max78000fthr", max78000_machine_init)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index d90be8f4c9..dc68391305 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -27,6 +27,7 @@ arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
++arm_common_ss.add(when: 'CONFIG_MAX78000_SOC', if_true: files('max78000_soc.c'))
+ arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
+ arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+@@ -71,6 +72,7 @@ arm_ss.add(when: 'CONFIG_XEN', if_true: files(
+ arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+ arm_common_ss.add(when: 'CONFIG_COLLIE', if_true: files('collie.c'))
+ arm_common_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4_boards.c'))
++arm_common_ss.add(when: 'CONFIG_MAX78000FTHR', if_true: files('max78000fthr.c'))
+ arm_common_ss.add(when: 'CONFIG_NETDUINO2', if_true: files('netduino2.c'))
+ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_peripherals.c'))
+ arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_peripherals.c'))
+diff --git a/include/hw/arm/max78000_soc.h b/include/hw/arm/max78000_soc.h
+new file mode 100644
+index 0000000000..97bf4099c9
+--- /dev/null
++++ b/include/hw/arm/max78000_soc.h
+@@ -0,0 +1,35 @@
++/*
++ * MAX78000 SOC
++ *
++ * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_MAX78000_SOC_H
++#define HW_ARM_MAX78000_SOC_H
++
++#include "hw/or-irq.h"
++#include "hw/arm/armv7m.h"
++#include "qom/object.h"
++
++#define TYPE_MAX78000_SOC "max78000-soc"
++OBJECT_DECLARE_SIMPLE_TYPE(MAX78000State, MAX78000_SOC)
++
++#define FLASH_BASE_ADDRESS 0x10000000
++#define FLASH_SIZE (512 * 1024)
++#define SRAM_BASE_ADDRESS 0x20000000
++#define SRAM_SIZE (128 * 1024)
++
++struct MAX78000State {
++    SysBusDevice parent_obj;
++
++    ARMv7MState armv7m;
++
++    MemoryRegion sram;
++    MemoryRegion flash;
++
++    Clock *sysclk;
++};
++
++#endif
+-- 
+2.34.1
 
 
