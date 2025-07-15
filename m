@@ -4,99 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0227EC83F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78696C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubgK7-0004vq-SD; Tue, 15 Jul 2025 10:08:00 -0400
+	id 1ubgPO-0008WQ-T1; Tue, 15 Jul 2025 10:13:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubfgK-00062r-OU
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:26:57 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubfgI-0002hm-8A
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:26:52 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45617887276so18493305e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 06:26:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752586008; x=1753190808; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3g5u4ZdHCSZkZpi+Mg3cSyiQh/vf+08ZtKEuVevCNiY=;
- b=laO9eQmO9DW1IRHD+yrw4pSDNilaagTFgFbf4t3WALCIkufOk7vke0zDOqWHmp9fbq
- kOK6DegFntMg609GI05Bub2bZAxuZd7pxQ9C1DhYq8ysudK6kV43W2WoqaKTDr1pHbu1
- pr4ZPEjY61wAw4B/P1zrz8+ANLjApL0T+QIQeLuMIbXdEDZK/tmppvrfsbb5334hYQh9
- I+/xdFZg+iVFOuheMl0x3aeA+LAe6xt4njXT0k524axcIclec+9wDe/pd5jqjIy/BGd3
- Jn5isVMf2r7r6p9qMpi2M/2dikXsvEDzGrDdU1yaOX8Nb5TUPpqOOiWn/k7k2bObZNDo
- GAJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752586008; x=1753190808;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3g5u4ZdHCSZkZpi+Mg3cSyiQh/vf+08ZtKEuVevCNiY=;
- b=Gt8kkcbexTE+3b6y2/VB1mBcLi2gDLHrdjqMeC0bGbyiYFN0JKkR7hssvxjV47lWnM
- 3EaZooPl/LdisJ0QQB6rdFqL5DBupTFepFOILtvG7BuXwH0ksYWxGDx4QW9cHJdFA6fc
- 8hudljHHpuixbssRYMIAPh5EhruW48vQJyZMN/JscMiE5M9ZUIONLnqi+jdZzj2UAjJR
- pRzqOAlzR4SIBXlh46OM8QnD7mgW9Yo721ki4BgfdRd4Vr9Wa+5BQYvBxzK3KJ/0ZSjK
- vZ1lUGHgF9zlcl3Dhff5A9o53IxlO//LYKt010lduX459PylJXhK6ijjX/N6RYDgo9L+
- WAqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU43bbtN2j2z7ihsBxoB+qYM+VEq/yQKN7WxSo1/oI0GcC7l5YS9roQxzhajz3+pGVqIvGMq/jnuyel@nongnu.org
-X-Gm-Message-State: AOJu0Yy208rpoBSP/do8yfypIvQAx3zbkJm0yrC2aWOrq8jpFAIpfnGd
- byune2f20Xw3pMQ50HpGzsQfpc6uPhO1xHsUsr5UH112YEcswLuZVEOhAVvs0wDRHgg=
-X-Gm-Gg: ASbGnctq/rYj3xFDsJ9cyJWAanR+egIJ00VOPFTloD1S+hm6q5g1c77z3NqFNMW97fs
- 14bCjTDjIomMEZe9SkOjnlXPdUzJ5LBqZ3DeewCFLoyWp8f3I/LzQuoVtLwqDI+EEBUth2BfKtv
- BgY/Sizb7wGfyzH466RRA0BUmJ1HNJEKzQhWctHyD4+ocC1yhd+s6WeTXLp/vgK+9vEr7rg+dY/
- YHwKUHnl2WMslewi+F0jw3wsgLP3qAeP0Ih31koARgt8FT1O0tAoGgn8oJp8G1CEy95JrP0ZR1J
- mfsXqcnJe0OChl/Vgc7wzMxzwsbGHxAQd5UVxvOwEdFxBaNZumlGXO/GFyheX86CKb3z/56m2EM
- 9yXUCXgqgdfReCKX4i0PiurEof7314D/9+By4yjmJfVj0kAD30X6iVHnh1/55Dv8I4SsiNYs=
-X-Google-Smtp-Source: AGHT+IHmUA5fHiF/OSqRnvlAjsyPc9Kgqp9SlqnJBV6hVzTuM/4d3fe91I/FcZiAf91/95CilyKZGg==
-X-Received: by 2002:a05:600c:a111:b0:455:f6cd:8703 with SMTP id
- 5b1f17b1804b1-455f6cd8a4emr115830445e9.31.1752586007577; 
- Tue, 15 Jul 2025 06:26:47 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e26ff9sm15143883f8f.93.2025.07.15.06.26.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 06:26:47 -0700 (PDT)
-Message-ID: <62c54b15-d6ab-42cf-b2a2-3bf05cb8ec27@linaro.org>
-Date: Tue, 15 Jul 2025 15:26:46 +0200
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1ubfif-0007Wt-Q3; Tue, 15 Jul 2025 09:29:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1ubfia-0003Hs-0K; Tue, 15 Jul 2025 09:29:16 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56F90F8W030991;
+ Tue, 15 Jul 2025 13:29:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=mYqcNZ
+ nf4xI3HoTUWOVhPP9MVutqwHBu+ldfBZTTBbg=; b=btAzQZqEDdGKmZziNIaZxn
+ 4mp4ETN2SRk5GcvYOjLwPAauZzdcCxr0cWixKxViMxZQ9jK8EmisvhFKUpe+vRjN
+ HQVhY8wiWN4WbbcXBQQrOFhbbDapykJgXs8EJr+Vp53fAklnlxVh2q215f+Joydb
+ mBSWl1LeuGIV77tgyrtnd2jDl4XdP4tnN8FrUSqoqqN8qAV9oCmenB0MbmPcBUYT
+ GfJZXUkshdkuP3Uf3cQq7SG3b+ReumQA9F6+K3LinERbqpRmfU5hKSRWhSQuB7dq
+ pWwfFVePe6x5VaDo5Bzd2oF09JwA4ooMnqmgE3NH9OeRA0qPk3hsww5r9QIAHuiw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47vamttqah-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Jul 2025 13:29:07 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56FDGauC006549;
+ Tue, 15 Jul 2025 13:29:06 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47vamttqae-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Jul 2025 13:29:06 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56FCUYiI008180;
+ Tue, 15 Jul 2025 13:29:05 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47v2e0js7u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Jul 2025 13:29:05 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56FDT4di24969800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 15 Jul 2025 13:29:04 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8FC4858045;
+ Tue, 15 Jul 2025 13:29:04 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D40958054;
+ Tue, 15 Jul 2025 13:29:02 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.121.87]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 15 Jul 2025 13:29:02 +0000 (GMT)
+Message-ID: <ef30116afd1f01f5071f5ba9812459467dc32d3e.camel@linux.ibm.com>
+Subject: Re: [PATCH 21/22] s390x/s390-pci-vfio.c: use QOM casts where
+ appropriate
+From: Eric Farman <farman@linux.ibm.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
+ danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ john.levon@nutanix.com, thanos.makatos@nutanix.com,
+ alex.williamson@redhat.com, clg@redhat.com, steven.sistare@oracle.com,
+ tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Date: Tue, 15 Jul 2025 09:29:01 -0400
+In-Reply-To: <20250715093110.107317-22-mark.caveayland@nutanix.com>
+References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
+ <20250715093110.107317-22-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v5 6/7] accel/tcg: Implement get_[vcpu]_stats()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Eric Blake <eblake@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Mads Ynddal <mads@ynddal.dk>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
-References: <20250715104015.72663-1-philmd@linaro.org>
- <20250715104015.72663-7-philmd@linaro.org>
- <c741d3b1-6a6a-4702-a33b-2d5c7c2e3598@linaro.org>
- <9e199d53-9b7e-400a-9172-9986602cf6a7@linaro.org>
- <3bb37477-046c-4425-a96e-4dbef24c851e@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3bb37477-046c-4425-a96e-4dbef24c851e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: KrZGqFs5ZUDjbypI0Ie8fJPkdjqh8td0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEyMiBTYWx0ZWRfXwKkJqvSYJ5lt
+ 0OkVy9CweUtUiOaht76t8h/m78gaVgbckIMw7CjGAiBvqJXExql54rszKeypLWmr1wqSySmn8d7
+ THn46VznftqwnmGXqkLH2rSYCkhx79/m7R27LDv0fDs0ctTTSKzdFZJPsCDJzNElHGTuR/852Yk
+ aUXmbX5tiHv/rz+O3TOYervvWfvx0bzPcMnlgBgzFYSTKUIXOtQN/h2QguT8yU54ujsEpnHGEIK
+ zANJV6RdTPs7wD5klCElMoMeMcI6+rD5ZkGJVia3dzQK90cVurT1Lpu8aivH4ja9cKiqjGfGdsD
+ Ggtb3ltLuZ1Q9lZi/90Ko7Ma4ctMChAcHn3YWyjVWbEpTtj4LspvsY3YcAjecrMdcrsj1gJ0fp4
+ qM1RIXJPAJPUy8vprXsrYSedoupht5UTOo2MzhzHBUotQ2zrC4XwEJMjkfLjF8xPafF5ud+Q
+X-Proofpoint-ORIG-GUID: JFpLQSbwYoaWd80aGoKvbNYZ9JQcRELD
+X-Authority-Analysis: v=2.4 cv=dNSmmPZb c=1 sm=1 tr=0 ts=687657a3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=64Cc0HZtAAAA:8 a=VnNF1IyMAAAA:8
+ a=6V_Z78ehL-hMsaM6yTMA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=955 bulkscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ clxscore=1011 phishscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507150122
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,57 +135,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/25 15:18, Richard Henderson wrote:
-> On 7/15/25 07:06, Philippe Mathieu-Daudé wrote:
->> On 15/7/25 14:48, Richard Henderson wrote:
->>> On 7/15/25 04:40, Philippe Mathieu-Daudé wrote:
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>>> ---
->>>>   accel/tcg/tcg-all.c | 6 ++++++
->>>>   1 file changed, 6 insertions(+)
->>>
->>> Oh, this is what causes tcg-stats to be used by user-only binaries, 
->>> is it?
->>
->> Indeed, otherwise we'd have to use #ifdef'ry or stubs; and there is
->> no good reason to not dump TCG stats on user emulation (except indeed
->> this code path is currently unreachable there).
-> 
-> Ok, that's fine.  Let's avoid the ifdefs.
+On Tue, 2025-07-15 at 10:26 +0100, Mark Cave-Ayland wrote:
+> Use QOM casts to cast to VFIOPCIDevice instead of using container_of().
+>=20
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>  hw/s390x/s390-pci-vfio.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 
-This works for Linux (qemu-foo -d stats.log ...):
-
--- >8 --
-diff --git a/linux-user/exit.c b/linux-user/exit.c
-index 1ff8fe4f072..3e304422502 100644
---- a/linux-user/exit.c
-+++ b/linux-user/exit.c
-@@ -21,7 +21,10 @@
-  #include "gdbstub/syscalls.h"
-  #include "qemu.h"
-  #include "user-internals.h"
-+#include "qemu/accel.h"
-+#include "qemu/log.h"
-  #include "qemu/plugin.h"
-+#include "accel/tcg/internal-common.h"
-
-  #ifdef CONFIG_GCOV
-  extern void __gcov_dump(void);
-@@ -29,10 +32,14 @@ extern void __gcov_dump(void);
-
-  void preexit_cleanup(CPUArchState *env, int code)
-  {
-+        g_autoptr(GString) buf = g_string_new("");
-+
-  #ifdef CONFIG_GCOV
-          __gcov_dump();
-  #endif
-          gdb_exit(code);
-          qemu_plugin_user_exit();
-          perf_exit();
-+        tcg_dump_stats(current_accel(), buf);
-+        qemu_log("TCG stats: %s", buf->str);
-  }
----
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
