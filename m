@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2203DC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 03:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797D7C83F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 03:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubWWc-0004DX-Pg; Mon, 14 Jul 2025 23:40:14 -0400
+	id 1ubWWS-00046Z-UY; Mon, 14 Jul 2025 23:40:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubWWb-0004CG-IU
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 23:40:13 -0400
+ id 1ubWWR-00045J-1G
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 23:40:03 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubWWZ-0006Rk-Ej
- for qemu-devel@nongnu.org; Mon, 14 Jul 2025 23:40:13 -0400
+ id 1ubWWO-0006Rk-Vy
+ for qemu-devel@nongnu.org; Mon, 14 Jul 2025 23:40:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752550812; x=1784086812;
+ t=1752550801; x=1784086801;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Qeil6/cS4TnDGn/oSbEZUuBv4NuQFCKMlPyhRgS+pqA=;
- b=iZVk9GrKRVX3lwddkefiI+bsA3Kw9u4v/j7/4++UTwpAZxF0JCJGSD2l
- vfNxrd2Il1ccJxqUUXJtPllmFTPJM4NK+QTpBrIj2AfGzIMWN+0evB9l/
- kojCUvhK2xc9lzffnPIJPJa0J+mTi01jKc8Y/2hBHWDLZVk4c9D8idiW4
- 2lYZpcAYzCf3uaDUFmoPQTwTyJOUT/Qgc3m6lQOPWB6rP5pDfrE3s8+5a
- 02dSe5HsFNRjzPd82Q2DVlnxKNAsZrYpvkQgXeB6KoRC0uXBs1Npkn2Ep
- Rpy7ZxuAFoMJcKK3OK8IigW+Ohv4z9blm0vEs5ea2ej/bj0HHpapiP2oz g==;
-X-CSE-ConnectionGUID: yqjRu9P5Rh66xaKYsx4O3Q==
-X-CSE-MsgGUID: mcmHgc6+SpuQNTMplWypSg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="72334946"
-X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; d="scan'208";a="72334946"
+ bh=Q4SUK8FgUWLQ+4A301fwccsLC3/hT+jdFcVfpJvYn+8=;
+ b=mv2jQ3l+hDHFdztn9cVsxN0L/PssMjyQseLJZHylZQ+MZjN6x8/hCUsq
+ 5xMhxMj2NNF3P7b2crbw57ubGT3nWCwAmW3UBkbEDFbscsorPyyEz+r0k
+ KEq0YwSdYvg8Wp93ZJQ4jCQQt8a6xs3o2jmE+xFon70YiVOf0cOaMawk6
+ yQr7uWSTk1UX+gqOKBYD2VmPKX7wz56I74MUySlmg7St0BuPKMsu3EebU
+ 8vkfpF2Oc8DTbFc0TPihOzGzUO/mTgWImKDp+4XtTQhFXqTKxpQ+AtVD7
+ 2YQtdAK/u1VSiaH35Is+F+N5+E833plss6Uy/e2d5p0cOZTQUn9mSpYS3 w==;
+X-CSE-ConnectionGUID: OIa+c+qqTrWpv/GcbcJdEA==
+X-CSE-MsgGUID: cMOcKwo+Sc2kexls5ARLgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="72334926"
+X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; d="scan'208";a="72334926"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jul 2025 20:40:11 -0700
-X-CSE-ConnectionGUID: V/OJWrNDQHSoOfPHxJLXSA==
-X-CSE-MsgGUID: Zf/J+uF7SEqChZOuPe+G6Q==
+ 14 Jul 2025 20:40:00 -0700
+X-CSE-ConnectionGUID: xwHQgJYWS6Waa1s9cAT7Hg==
+X-CSE-MsgGUID: C+4jFUV2S3CD/bdO7Y/0qQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; d="scan'208";a="180808190"
+X-IronPort-AV: E=Sophos;i="6.16,312,1744095600"; d="scan'208";a="180808100"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa002.fm.intel.com with ESMTP; 14 Jul 2025 20:40:07 -0700
+ by fmviesa002.fm.intel.com with ESMTP; 14 Jul 2025 20:39:56 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  ackerleytng@google.com, seanjc@google.com
@@ -54,10 +54,9 @@ Cc: Fuad Tabba <tabba@google.com>, Vishal Annapurve <vannapurve@google.com>,
  michael.roth@amd.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [POC PATCH 5/5] [HACK] memory: Don't enable in-place conversion for
- internal MemoryRegion with gmem
-Date: Tue, 15 Jul 2025 11:31:41 +0800
-Message-ID: <20250715033141.517457-6-xiaoyao.li@intel.com>
+Subject: [POC PATCH 2/5] headers: Fetch gmem updates
+Date: Tue, 15 Jul 2025 11:31:38 +0800
+Message-ID: <20250715033141.517457-3-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250715033141.517457-1-xiaoyao.li@intel.com>
 References: <cover.1747264138.git.ackerleytng@google.com>
@@ -89,94 +88,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the TDVF cannot work with gmem in-place conversion because
-current implementation of KVM_TDX_INIT_MEM_REGION in KVM requires
-gmem of TDVF to be valid for both shared and private at the same time.
-
-To workaround it, explicitly not enable in-place conversion for internal
-MemoryRegion with gmem. So that TDVF doesn't use in-place conversion gmem
-and KVM_TDX_INIT_MEM_REGION will initialize the gmem with the separate
-shared memory.
-
-To make in-place conversion work with TDX's initial memory, the
-one possible solution and flow would be as below and it requires KVM
-change:
-
-- QEMU create gmem as shared;
-- QEMU mmap the gmem and load TDVF binary into it;
-- QEMU convert gmem to private with the content preserved[1];
-- QEMU invokes KVM_TDX_INIT_MEM_REGION without valid src, so that KVM
-  knows to fetch the content in-place and use in-place PAGE.ADD for TDX.
-
-[1] https://lore.kernel.org/all/aG0pNijVpl0czqXu@google.com/
-
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- include/system/memory.h | 3 +++
- system/memory.c         | 2 +-
- system/physmem.c        | 8 +++++---
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ linux-headers/linux/guestmem.h | 29 +++++++++++++++++++++++++++++
+ linux-headers/linux/kvm.h      | 18 ++++++++++++++++++
+ 2 files changed, 47 insertions(+)
+ create mode 100644 linux-headers/linux/guestmem.h
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index f14fbf65805d..89d6449cef70 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -256,6 +256,9 @@ typedef struct IOMMUTLBEvent {
-  */
- #define RAM_PRIVATE (1 << 13)
- 
-+/* Don't use enable in-place conversion for the guest mmefd backend */
-+#define RAM_GUEST_MEMFD_NO_INPLACE (1 << 14)
+diff --git a/linux-headers/linux/guestmem.h b/linux-headers/linux/guestmem.h
+new file mode 100644
+index 000000000000..be045fbad230
+--- /dev/null
++++ b/linux-headers/linux/guestmem.h
+@@ -0,0 +1,29 @@
++/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
++#ifndef _LINUX_GUESTMEM_H
++#define _LINUX_GUESTMEM_H
 +
- static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
-                                        IOMMUNotifierFlag flags,
-                                        hwaddr start, hwaddr end,
-diff --git a/system/memory.c b/system/memory.c
-index 6870a41629ef..c1b73abc4c94 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3702,7 +3702,7 @@ bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-     DeviceState *owner_dev;
++/*
++ * Huge page size must be explicitly defined when using the guestmem_hugetlb
++ * allocator for guest_memfd.  It is the responsibility of the application to
++ * know which sizes are supported on the running system.  See mmap(2) man page
++ * for details.
++ */
++
++#define GUESTMEM_HUGETLB_FLAG_SHIFT	58
++#define GUESTMEM_HUGETLB_FLAG_MASK	0x3fUL
++
++#define GUESTMEM_HUGETLB_FLAG_16KB	(14UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_64KB	(16UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_512KB	(19UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_1MB	(20UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_2MB	(21UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_8MB	(23UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_16MB	(24UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_32MB	(25UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_256MB	(28UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_512MB	(29UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_1GB	(30UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_2GB	(31UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++#define GUESTMEM_HUGETLB_FLAG_16GB	(34UL << GUESTMEM_HUGETLB_FLAG_SHIFT)
++
++#endif /* _LINUX_GUESTMEM_H */
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 32c5885a3c20..ff9ef5fb37c5 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -952,6 +952,9 @@ struct kvm_enable_cap {
+ #define KVM_CAP_ARM_EL2 240
+ #define KVM_CAP_ARM_EL2_E2H0 241
+ #define KVM_CAP_RISCV_MP_STATE_RESET 242
++#define KVM_CAP_GMEM_SHARED_MEM 240
++#define KVM_CAP_GMEM_CONVERSION 241
++#define KVM_CAP_GMEM_HUGETLB 242
  
-     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
--                                                RAM_GUEST_MEMFD, errp)) {
-+                                                RAM_GUEST_MEMFD | RAM_GUEST_MEMFD_NO_INPLACE, errp)) {
-         return false;
-     }
-     /* This will assert if owner is neither NULL nor a DeviceState.
-diff --git a/system/physmem.c b/system/physmem.c
-index ea1c27ea2b99..c23379082f38 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1916,7 +1916,8 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+ struct kvm_irq_routing_irqchip {
+ 	__u32 irqchip;
+@@ -1589,12 +1592,27 @@ struct kvm_memory_attributes {
  
-     if (new_block->flags & RAM_GUEST_MEMFD) {
-         int ret;
--        bool in_place = kvm_guest_memfd_inplace_supported;
-+        bool in_place = !(new_block->flags & RAM_GUEST_MEMFD_NO_INPLACE) &&
-+                        kvm_guest_memfd_inplace_supported;
+ #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
  
-         new_block->guest_memfd_flags = 0;
++#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1UL << 0)
++#define GUEST_MEMFD_FLAG_INIT_PRIVATE	(1UL << 1)
++#define GUEST_MEMFD_FLAG_HUGETLB	(1UL << 2)
++
+ struct kvm_create_guest_memfd {
+ 	__u64 size;
+ 	__u64 flags;
+ 	__u64 reserved[6];
+ };
  
-@@ -2230,7 +2231,8 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     ram_flags &= ~RAM_PRIVATE;
++#define KVM_GMEM_IO 0xAF
++#define KVM_GMEM_CONVERT_SHARED		_IOWR(KVM_GMEM_IO,  0x41, struct kvm_gmem_convert)
++#define KVM_GMEM_CONVERT_PRIVATE	_IOWR(KVM_GMEM_IO,  0x42, struct kvm_gmem_convert)
++
++struct kvm_gmem_convert {
++	__u64 offset;
++	__u64 size;
++	__u64 error_offset;
++	__u64 reserved[5];
++};
++
+ #define KVM_PRE_FAULT_MEMORY	_IOWR(KVMIO, 0xd5, struct kvm_pre_fault_memory)
  
-     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
--                          RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
-+                          RAM_NORESERVE | RAM_GUEST_MEMFD |
-+                          RAM_GUEST_MEMFD_NO_INPLACE)) == 0);
-     assert(!host ^ (ram_flags & RAM_PREALLOC));
-     assert(max_size >= size);
- 
-@@ -2314,7 +2316,7 @@ RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
-                          MemoryRegion *mr, Error **errp)
- {
-     assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD |
--                          RAM_PRIVATE)) == 0);
-+                          RAM_PRIVATE | RAM_GUEST_MEMFD_NO_INPLACE)) == 0);
-     return qemu_ram_alloc_internal(size, size, NULL, NULL, ram_flags, mr, errp);
- }
- 
+ struct kvm_pre_fault_memory {
 -- 
 2.43.0
 
