@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A351C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962A3C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublRO-0006fj-Uy; Tue, 15 Jul 2025 15:35:51 -0400
+	id 1ublVL-0006Ec-EY; Tue, 15 Jul 2025 15:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkx2-00047P-MV
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:04:38 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkwY-0003fL-DB
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:03:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkx1-0001NR-2z
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:04:28 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkwW-0001Gd-68
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:03:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606266;
+ s=mimecast20190719; t=1752606235;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1nb79uyak6u3+GWQ5IsuWkbzxb9UrXWeLaJnLPpJGP8=;
- b=F+cBVl26fKDs+4AsSi7quy4umjmBAMt2r4n7spo72ReTpWuzszkfURMA6bUe9wJ7zLPXvJ
- K2YKchhUdfTdR7oDmG+Q878+23AxyZ8WgT6tEnH1FYfJcLSCgtei6K2B6upRBmvjsUZQZg
- 3xqD3oubnZjDL7SMNwYnKgEhlyCucnY=
+ bh=6trNushndsv+D2tzWKPPnv40MMao6ZPGsi50y3Zk2k4=;
+ b=DCrFfVxQ2V/G5LEWzxJ1QTX1WjslvycqrTx9Ne+yZSE0Tu+Ooo1r7tnf6OueXHhj5BuJdT
+ BZudigOfDmSLkFqnsyBSBzlGvGuHcRaVxgF67eOyEzL6kZS+EFYaV3IGxTFPe1YfURrJrp
+ IauQUaKV0vyhn5v1w5h0rjeXpQ94Klo=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-FRtUwrNwNO6YXQTNpKKLIQ-1; Tue,
- 15 Jul 2025 15:04:23 -0400
-X-MC-Unique: FRtUwrNwNO6YXQTNpKKLIQ-1
-X-Mimecast-MFC-AGG-ID: FRtUwrNwNO6YXQTNpKKLIQ_1752606262
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-C4PmwvTaOYO_cL0G6c1GSg-1; Tue,
+ 15 Jul 2025 15:03:48 -0400
+X-MC-Unique: C4PmwvTaOYO_cL0G6c1GSg-1
+X-Mimecast-MFC-AGG-ID: C4PmwvTaOYO_cL0G6c1GSg_1752606227
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A35195608E; Tue, 15 Jul 2025 19:04:22 +0000 (UTC)
+ id 9F248195608C; Tue, 15 Jul 2025 19:03:47 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.34.84])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81AD9197702B; Tue, 15 Jul 2025 19:04:20 +0000 (UTC)
+ id 1EA65197702B; Tue, 15 Jul 2025 19:03:45 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 21/57] block: mark bdrv_insert_node() as GRAPH_UNLOCKED
-Date: Tue, 15 Jul 2025 21:02:54 +0200
-Message-ID: <20250715190330.378764-22-kwolf@redhat.com>
+Subject: [PULL 05/57] block: call bdrv_set_backing_hd() while unlocked in
+ bdrv_open_backing_file()
+Date: Tue, 15 Jul 2025 21:02:38 +0200
+Message-ID: <20250715190330.378764-6-kwolf@redhat.com>
 In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
 References: <20250715190330.378764-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +68,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,33 +86,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fiona Ebner <f.ebner@proxmox.com>
 
-The function bdrv_insert_node() calls bdrv_drained_begin() which must
-be called with the graph unlocked.
+This is in preparation to mark bdrv_set_backing_hd() as
+GRAPH_UNLOCKED.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20250530151125.955508-44-f.ebner@proxmox.com>
+Message-ID: <20250530151125.955508-28-f.ebner@proxmox.com>
+[kwolf: Removed an extra blank line]
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/block-global-state.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ block.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index 706a2cde36..cb4d8bca22 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -76,8 +76,9 @@ bdrv_replace_node(BlockDriverState *from, BlockDriverState *to, Error **errp);
+diff --git a/block.c b/block.c
+index 1da10d55f0..9ef3b0262c 100644
+--- a/block.c
++++ b/block.c
+@@ -3632,7 +3632,8 @@ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+     Error *local_err = NULL;
  
- int GRAPH_UNLOCKED
- bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs, Error **errp);
--BlockDriverState *bdrv_insert_node(BlockDriverState *bs, QDict *node_options,
--                                   int flags, Error **errp);
-+BlockDriverState * GRAPH_UNLOCKED
-+bdrv_insert_node(BlockDriverState *bs, QDict *node_options, int flags,
-+                 Error **errp);
- int bdrv_drop_filter(BlockDriverState *bs, Error **errp);
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    bdrv_graph_rdlock_main_loop();
  
- BdrvChild * no_coroutine_fn
+     if (bs->backing != NULL) {
+         goto free_exit;
+@@ -3713,7 +3714,9 @@ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+ 
+     /* Hook up the backing file link; drop our reference, bs owns the
+      * backing_hd reference now */
++    bdrv_graph_rdunlock_main_loop();
+     ret = bdrv_set_backing_hd(bs, backing_hd, errp);
++    bdrv_graph_rdlock_main_loop();
+     bdrv_unref(backing_hd);
+ 
+     if (ret < 0) {
+@@ -3725,6 +3728,7 @@ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+ free_exit:
+     g_free(backing_filename);
+     qobject_unref(tmp_parent_options);
++    bdrv_graph_rdunlock_main_loop();
+     return ret;
+ }
+ 
 -- 
 2.50.1
 
