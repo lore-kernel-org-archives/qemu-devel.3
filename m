@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E24C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CC2C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ0w-00029o-C9; Tue, 15 Jul 2025 02:19:42 -0400
+	id 1ubZ11-0002Et-PF; Tue, 15 Jul 2025 02:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0p-00022u-NA
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:35 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0n-00070J-Rg
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:35 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-455b00339c8so25064445e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560371; x=1753165171; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RcBzpRDaRrnDJbIDx3w7L821BpSBhOYClllIovi4m+Y=;
- b=Zsnh0ePmpB4mGcB69W404Pyi0815IGCDfpRugMGLsB03mr0ioc2Q0f5IqXC5pwZbFR
- yGj3a7MY7GWy/75NDfcaS9LEtO3ewyZdp0tIbUg0GTTKIRQQhjdxxpAJVr31qMIXSCnT
- AOKf/onrfp9j7Q+AaFCpRmevklC+8dfryGEHyKIFYJwoSHtHFZ6qUYFp5zyJmEFryBvD
- /lJ02D224jicvLDug8WPW1C2+0cpg2s2h8n/sCvdQUPNx8SCYlBVs8aEn6Prnb5ltWZJ
- CDPEl2drmM5fJEoxhbCBqK+ZZrbzyYbYPic0bzndUqX5Xp4++4Q9syaXskdxj9lotrhD
- rotw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubYxH-0007ti-Bz
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:16:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ubYxF-0006Q1-0y
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:15:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752560152;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uh429H/7Fd0JqSjaTv4ix/gvZDdMnAIxIzaDOJCmbvQ=;
+ b=hwURKt0FtSPmbu7RHJs/flD5bH+Ixxk1Zell+3gCkeq5ZDImCQGDUBYSYa4VFXB018VyU5
+ XCJEov77vAdAmbRL7gI1g4qIiNCN30UmUZfIB5AtjCxdegEaA8gnSvTa++Wtv9srizHbzf
+ axYsX7WB7ezImckWC96zcCZlRhgk/LE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-212-nplSoFjsPUijz8H--n0QPA-1; Tue, 15 Jul 2025 02:15:50 -0400
+X-MC-Unique: nplSoFjsPUijz8H--n0QPA-1
+X-Mimecast-MFC-AGG-ID: nplSoFjsPUijz8H--n0QPA_1752560149
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4e9252ba0so2978672f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:15:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560371; x=1753165171;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1752560149; x=1753164949;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RcBzpRDaRrnDJbIDx3w7L821BpSBhOYClllIovi4m+Y=;
- b=nH6/FJvN3lUbg3CxHTQKXb3zUlWMApV3LHgrIiaNbQgG5tJoKHmbTI6MbXE7bEYO1X
- q8WDUMyP5yR7Z74qJ72INhCWRPdVfh1mxwJWo9Kpa3PyD9/DQZ4Vr9cO7YADLbFcAgFe
- VX40iytPyEGMoROjf5tp/Cy2Oz+cqCEIuQW253mlkumQErWuBWu2YxbwTdEzGCa4a7rk
- 9fIOcB7MvAqkWBacPQUoCXiPoLrGQol5k1bUwM4pc1m3Hktr98YtfkFnlhF5ghsBmg/H
- JPuV1/U2VHmC5/0IBZXO84rFZCIEEZAuEm23qP8zzVtBB1AIhXqBJuDpjwSKPFcHJFgk
- fXzQ==
-X-Gm-Message-State: AOJu0Yyr1tvTK3666IO/vYMJfU3X2ykr1YKCignPXVttSJ9i6/k3BKfT
- HygReUPxS+UZP3iPiHnEHZhbyvjepb3A91LZQ5K6wemc7LIo8D1UlId+sYwD8aESa5WeCcOEg7U
- 9n2S8
-X-Gm-Gg: ASbGnct8XlCKZVRqZtV0XaFM+9d8t4DikcvRthGJBgcFN41D2QRr491M1x/Sk+ogXF/
- mgknon6gHw4/yMBdamRCJEUWplP9/umUbO56W4wgsQwd1zJUzBKYv1TRYTXc5jPtJmvWZVt+SEj
- HkQ7eDhT3o+xBJvFIeiQWZxKudv+92xoq2OlNB4702YGLHtrytsKPZIatKKaZYxJxgA6jNdEEoW
- +jRjsKCTiWVQAcQf04URUHaaa5qDtWaGwoqPXQQxLT5AWDPh3++1XnW1QfQcZ/58/cUBpjCT6hg
- 2tlRuUR0ZYwPMTXOrSroF1+BqIiTB0ScIU7xhYMjmsaQypFRf3rjVFZM9Jk3Qv+xAtFrY6i/uWO
- F27aoIQ4EZdlvqAN7e73W8GIslsBvBN1v78B0VrTQk5jOxUmHSPseEymjACDDRG0esQ6N2mPevC
- hgF1ubPBs=
-X-Google-Smtp-Source: AGHT+IFtW9qTbg5ljD79tyErB0jrr+mfC7Wa4AcWfb3NmZzZWmnY+JISdrpOgumcx5m7vc6dX9rjeQ==
-X-Received: by 2002:a05:600c:4e51:b0:456:8eb:a35c with SMTP id
- 5b1f17b1804b1-45608eba50dmr105954455e9.31.1752560371517; 
- Mon, 14 Jul 2025 23:19:31 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc3a62sm14064198f8f.40.2025.07.14.23.19.30
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:19:31 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=uh429H/7Fd0JqSjaTv4ix/gvZDdMnAIxIzaDOJCmbvQ=;
+ b=XdSzoMc+4zu5naTXNS2DT6aCHBavNRvOGTM/WkDys2FSJ15Uwni8SeSL8+ymD8J/IQ
+ /9rWJg+j0sS+LVY0upvCQsR8TAeB/zNwuOtQxuSr/sW0333kJ+KLswy0Co+FZ9et8krB
+ nxuhbft1qLRL8CmcmC1oS/Kf4lk9GEredqUrCk+i9Ya9QbN2eiSQF/afgoOcPYijdASw
+ XS1Yp+H74yHd2HPASwq0PPXP0hRR07+kr58N0v8K10tIRfCw26yn8UrvsQ4wTYThFCTO
+ f0UXSzTYz6h4QVkWb4qKxStZsB0+ar4xUeulb/305PDA31kj4ymczBr+E6fuFOIam/sN
+ E9Og==
+X-Gm-Message-State: AOJu0YxrwdJ0Swkzy9kT5BPb68Ecz2VJ1AV8+8xfX7F9wCt1hOWLjaXm
+ Buoy8lUZB+cJEoOg5hD32/3j3l9E2I50Pb8r1BI+Sw3NPLEcN78cwCwIRT8wvsyoisiQZlIei9G
+ 78Z4T79eUbbmAp8QARfirG/p8ZwcxB71T4pZrZI9SWf+zUVVqCyr8khN9dGdG/LtxbDgWM+eNff
+ DdAQmLtOqKRwqI60x1rOv20rmpXWPnUV2ngQ==
+X-Gm-Gg: ASbGncvtNLav70m5ruV3Jy7m3dv1cB74tvEOXwDRylkjU+aWkxS64HeIrxJoFmA0aak
+ ZnMy2gOad+CRZZ8H6ubyp4BnIDOuzdjGtau2cOeaiUHzJpxhnk/vrFNXOTzUWj5JFrYz2Yks58N
+ tQ5ovA8vlo4WlSqpuZy6Fp/sTMFmzaPqZyumL+sG6ruF7/34a7e4q1q7T8X0FofnlsKQF5YuMgu
+ XCOvWuphrYI7f35+nlMjzUlho2RB1q/OdN99xsy6TYGbpUMLEXEjraS4TIJW2oCbwnB7uHiJHc2
+ JJk/9dVywS5BcGsV3li86wmUU7TLsreW
+X-Received: by 2002:a05:6000:43d5:b0:3a5:2ec5:35a3 with SMTP id
+ ffacd0b85a97d-3b5f18e82d8mr9966104f8f.45.1752560149036; 
+ Mon, 14 Jul 2025 23:15:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFT7GVM6dTzSOuN6/p9UJaJmmDrydVcqite4GPEEar6R+66sVnawTLQMMxaVABg+N3sQ/W1vA==
+X-Received: by 2002:a05:6000:43d5:b0:3a5:2ec5:35a3 with SMTP id
+ ffacd0b85a97d-3b5f18e82d8mr9966084f8f.45.1752560148565; 
+ Mon, 14 Jul 2025 23:15:48 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e269a0sm14045211f8f.86.2025.07.14.23.15.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Jul 2025 23:15:48 -0700 (PDT)
+Date: Tue, 15 Jul 2025 02:15:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PULL 02/17] target/mips: Extract gen_base_index_addr() helper
-Date: Tue, 15 Jul 2025 08:19:02 +0200
-Message-ID: <20250715061918.44971-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
-References: <20250715061918.44971-1-philmd@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+Subject: [PATCH v2] rust: bindings: allow any number of params
+Message-ID: <e41344bd22248b0883752ef7a7c459090a3d9cfc.1752560127.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,82 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out gen_base_index_addr() which is used twice
-but we'll use it more.
+We are going to be adding more parameters, and this makes
+rust unhappy:
+    Functions with lots of parameters are considered bad style and reduce
+    readability (“what does the 5th parameter mean?”). Consider grouping
+    some parameters into a new type.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241111222936.59869-2-philmd@linaro.org>
+Specifically:
+
+error: this function has too many arguments (8/7)
+    --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/structured/bindings.inc.rs:3840:5
+     |
+3840 | /     pub fn new_bitfield_1(
+3841 | |         secure: std::os::raw::c_uint,
+3842 | |         space: std::os::raw::c_uint,
+3843 | |         user: std::os::raw::c_uint,
+...    |
+3848 | |         address_type: std::os::raw::c_uint,
+3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+     | |____________________________________________^
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#too_many_arguments
+     = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- target/mips/tcg/translate.h |  1 +
- target/mips/tcg/translate.c | 27 +++++++++++++--------------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ rust/qemu-api/src/bindings.rs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index 428b53a0dac..e65593815e6 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -154,6 +154,7 @@ void check_cp1_registers(DisasContext *ctx, int regs);
- void check_cop1x(DisasContext *ctx);
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 057de4b646..c4f1f755ce 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -13,7 +13,8 @@
+     clippy::missing_const_for_fn,
+     clippy::ptr_offset_with_cast,
+     clippy::useless_transmute,
+-    clippy::missing_safety_doc
++    clippy::missing_safety_doc,
++    clippy::too_many_arguments
+ )]
  
- void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset);
-+void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index);
- void gen_move_low32(TCGv ret, TCGv_i64 arg);
- void gen_move_high32(TCGv ret, TCGv_i64 arg);
- void gen_load_gpr(TCGv t, int reg);
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 5c80b030329..8816237e929 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1957,6 +1957,17 @@ void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset)
-     }
- }
- 
-+void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index)
-+{
-+    if (base == 0) {
-+        gen_load_gpr(addr, index);
-+    } else if (index == 0) {
-+        gen_load_gpr(addr, base);
-+    } else {
-+        gen_op_addr_add(ctx, addr, cpu_gpr[base], cpu_gpr[index]);
-+    }
-+}
-+
- static target_ulong pc_relative_pc(DisasContext *ctx)
- {
-     target_ulong pc = ctx->base.pc_next;
-@@ -10546,13 +10557,7 @@ static void gen_flt3_ldst(DisasContext *ctx, uint32_t opc,
- {
-     TCGv t0 = tcg_temp_new();
- 
--    if (base == 0) {
--        gen_load_gpr(t0, index);
--    } else if (index == 0) {
--        gen_load_gpr(t0, base);
--    } else {
--        gen_op_addr_add(ctx, t0, cpu_gpr[base], cpu_gpr[index]);
--    }
-+    gen_base_index_addr(ctx, t0, base, index);
-     /*
-      * Don't do NOP if destination is zero: we must perform the actual
-      * memory access.
-@@ -11334,13 +11339,7 @@ static void gen_mips_lx(DisasContext *ctx, uint32_t opc,
-     }
-     t0 = tcg_temp_new();
- 
--    if (base == 0) {
--        gen_load_gpr(t0, offset);
--    } else if (offset == 0) {
--        gen_load_gpr(t0, base);
--    } else {
--        gen_op_addr_add(ctx, t0, cpu_gpr[base], cpu_gpr[offset]);
--    }
-+    gen_base_index_addr(ctx, t0, base, offset);
- 
-     switch (opc) {
-     case OPC_LBUX:
+ //! `bindgen`-generated declarations.
 -- 
-2.49.0
+MST
 
 
