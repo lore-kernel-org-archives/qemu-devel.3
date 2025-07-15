@@ -4,145 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A429C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FADC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubYh3-0002p3-A5; Tue, 15 Jul 2025 01:59:09 -0400
+	id 1ubYiH-00040Y-1G; Tue, 15 Jul 2025 02:00:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYgz-0002mY-Fn
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:59:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYgx-0007dY-JO
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:59:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752559142;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JDqg5vbzwb6x3Xh6GqhJ6exbYVBYGmqUaUSFlMWoZlc=;
- b=FRur5ocvHnENF/NmlttGINHjTgSZ6U5d17EzOIgeF9E1ZTztl8tiIyU0pOCZ+e33wKHmhJ
- 0FFENrr2lOrhURN+Bs5WhDF1OL4cRm6rvIEQEBfSAiqq55ZDqalgmMYHkQwMxBa6oqGRm5
- h066hVDWx2CXtNzFs1pqKbHoElYDjhA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-j4G_XdCPPIWENjFDercaMQ-1; Tue, 15 Jul 2025 01:59:00 -0400
-X-MC-Unique: j4G_XdCPPIWENjFDercaMQ-1
-X-Mimecast-MFC-AGG-ID: j4G_XdCPPIWENjFDercaMQ_1752559139
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4f858bc5eso3813508f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:59:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYiA-0003xF-E1
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:00:21 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYi8-0007yB-FK
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:00:18 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a50fc7ac4dso2304836f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752559214; x=1753164014; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WGiQwGN6ypQgr72KRxvOA5uv1G7IT6YtMSXt8sKtqh4=;
+ b=CPTYqeUsZMyY/jmQcBFjiqnqhxjPKfhh/uiBmw85LzhzVPTKYrpIiH7AIxq8L5UJpN
+ Gju636+oDXF+1q5YJnF/2albuwVRdNaOT9gcnXaDuJ5Mnaec8VaSIrJMPIE2boF224Iu
+ Wu2aQ7lVUmOh5Q6xsBw0cMExgVBNvlGlUek+RuJziHxbQgKJgvza0iIIAMK+ZljPU6bm
+ dIzEgl0tuKQZA5cNMjtlIl0dqzv06/aPBoSU3ugfpmMpxt3gF6MA0G+LcdqGx2xUTvWO
+ /RsOzl6nf+sPulCSlEPtWExWgAXzxT2cNzwpof5rNJY/CT+AqZ0jXrDb0M4fhdPA3cEc
+ LFAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752559139; x=1753163939;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JDqg5vbzwb6x3Xh6GqhJ6exbYVBYGmqUaUSFlMWoZlc=;
- b=QpyFh5D9h/KuIeTIY91CdFGylmARiI3uqJFWlEhdQrBlCZEJ+LG8/s9xZ7Vf7zLuTg
- 2r6wfJpoCDcKUjtBvfR95JfvGb5F5oWL6EOg+TqFuq2DuGbSo9aqc8+R4p/mw4uMGAYq
- lziHdM98KWQRR8J12VXz2r6OIU/ozB3MdlWJR8WqEaK0/xWLi4p8Nhcpt1leNVW1E0fS
- CwbV0pkl1wGQql2w2EzrCv6PH21qXmwAg6qUfQf5lF/3QWcCvU3lk3/BLYtMd2cHuPFr
- omGB7U1fqCmJ7+rzEcIvpf3YshKOHn5h+AlvxAdVEJINyU3taf2y4nygxUR7EdHWAFAQ
- wyMQ==
+ d=1e100.net; s=20230601; t=1752559214; x=1753164014;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WGiQwGN6ypQgr72KRxvOA5uv1G7IT6YtMSXt8sKtqh4=;
+ b=FbDStYcWOc2t7WqfvzLGp2tBccNIlh0c0Ue0YmgQVMW8BbFXyAAFUX1/Kt3YBbd8vz
+ da3EW98308OswFgop63NyspdpYsIZBBHCdkPrNmVBJFwL4esfWbikjaXPnYhMAgsryRN
+ QQM0asHqWyaOG/NIkOc21nNyz5Q67si9pHLYpEcnXzN5TOVV7v3XmqS9mTwvK+XJGb82
+ wtNQgcXoJeWtl2GZpeDZaToR2BV1YTUEpCyugiqzocTwKXNxalm3Kz1auNBGrZhmo4sZ
+ Csn+N+pKXSiK5o50wxOPXbesZ5gU6hssLNCDgNH5MWxwhpUoeYauvpgPqB4EICQ27dZA
+ LnLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKqYYihHumYid8AEexEvPUtFPm4s/J9/nbFmkvYsvcQQaORU9RX5Y4d+hXdD11GpftuuxGXZDJFzJ0@nongnu.org
-X-Gm-Message-State: AOJu0YyAWZSqvaud2qPbLaF0Jq0qdpOJepqoINMsQ2EpiCM/lneXLl6P
- f30zveWoEWcAtyBKHaXxM4X4YBEfczDRzf1GGrLZhHZ0z1mhrZF/k4HeujSG5dikUCjA1vsucAg
- 1SH/QxWYBn2HFe4X8yXHE5jYs6qnC6nk08me+qjoj6Dac7+O4lj7/BX67rznQDFRJ
-X-Gm-Gg: ASbGnctkJ06LvtXQ6UwW6JDhKvdYS1iA0pdHAIWYVCkDb6DwtID5FaA0ysb5HP1myjy
- bZP6Gz6wsPpV5hMAshTnFWsI50GcjJ0zQpCFRfNo+fdqZ8nMqdnm6E3kC5dzSzHrRAvmU47RRro
- r6EoHth/WjwyX/O21FUMP1BgGKKqlrMWKhbrNguS1Kf7TzqHYPS6xZH5cfpjsLymZlgG09K6pUA
- WiuiduG4iMxRaZOhaB9hS/iF4RuR6d2w0C+o1+FjqI4CR6SzOP5Ov7GffTX8CbGON/soU3SoE+q
- i5ig77Lm//aM1UhMqu2eGTXwlsRLt73rrLrumU7MqxZrbXzU1xHHfdz7pE39rWfBsGZo6W6+2qY
- =
-X-Received: by 2002:a05:6000:26ca:b0:3aa:caea:aa7f with SMTP id
- ffacd0b85a97d-3b5f2e4901amr10446369f8f.56.1752559138932; 
- Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgPXWEItHEwG+ZA+Y0+ai3gMiNbTSZMvQpfE1x0RoL80qtBpTY1+eRDoP6bM/+jaWibhsVDQ==
-X-Received: by 2002:a05:6000:26ca:b0:3aa:caea:aa7f with SMTP id
- ffacd0b85a97d-3b5f2e4901amr10446355f8f.56.1752559138522; 
- Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
- ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e2fasm13994187f8f.77.2025.07.14.22.58.57
+ AJvYcCUT271UuKUYSPXwKA8jLKoN6Wa8Q3XAzhvqPp8teOZhnO4tyAQ6/AXNdvmRn5KE55/ojYs3CKmG9Ck9@nongnu.org
+X-Gm-Message-State: AOJu0Yy3moNK0njm+0yiDApFAUQtJnq2sFqo+HtWdrSG/Kerbb2DC4ib
+ V3OGqMhs++0YaanXUx2JB9gHK3aifHBeJWodIcGAMg5MFMIbl0qKYasBO6GpCmaeC8M=
+X-Gm-Gg: ASbGncspOiiDJcCY9PbG1FIOEDQXxrr0ljGDEyjfWTbW4vOLR6TKuzndudq1MdRQ8FX
+ 8UC4S+kgGyr+GislKLZnNehIoW0ddNnT9God1oY2MbBkj6fcm6BtdP1rJwWqJEe3UuxKI2UKxa3
+ 34WiJvyXwTMeIIR525MJwbNUZkvdgd6vTs3qZWVg/aFcWpx7Y5hwdztK+/DSJefk+HhbHhX+ls4
+ fuyrE2uQfXAi1AGwa/GLoz+I3qDikcPMNIlEFPlMVBZFsPupiafkt3dxufrKQIq973eDVo9e58B
+ jbf5KrHwFmtG3+ttZeZNvBF3NvaOPw4l74uXBzFPdEeT2luTe7NQr0U+itAPGw6ormsfpH8v2kp
+ +Ly8b5FmIz5ARMHx7vQ13BzYczeV5P+6++qLf0XeTxI73+VwcWYiTyu1XVVgZje6Yrg==
+X-Google-Smtp-Source: AGHT+IGivnlWZ7ycUc1pKS4NY3WFXGGuEVcQ+39066cJtJSwXfjP3Zy1que4GeLeCi8x283GagleBg==
+X-Received: by 2002:a05:6000:2012:b0:3a4:ea40:4d3f with SMTP id
+ ffacd0b85a97d-3b5f18de8demr14270689f8f.53.1752559214266; 
+ Mon, 14 Jul 2025 23:00:14 -0700 (PDT)
+Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5f16a6016sm12316792f8f.69.2025.07.14.23.00.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
-Message-ID: <5e186df4-d607-43ed-9a70-4e2525ad10ed@redhat.com>
-Date: Tue, 15 Jul 2025 07:58:57 +0200
+ Mon, 14 Jul 2025 23:00:12 -0700 (PDT)
+Message-ID: <5454f715-91cf-4c2d-a664-966f91214064@linaro.org>
+Date: Tue, 15 Jul 2025 08:00:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] vfio-user fixes
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-References: <20250715055246.422834-1-john.levon@nutanix.com>
- <2b58e252-d3f5-4dac-8b39-c990d7240853@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <2b58e252-d3f5-4dac-8b39-c990d7240853@redhat.com>
+Subject: Re: [PATCH v7 1/1] Add support for emulation of CRC32 instructions
+To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "arikalo@gmail.com" <arikalo@gmail.com>, "cfu@mips.com" <cfu@mips.com>,
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "berrange@redhat.com" <berrange@redhat.com>
+References: <20250627000246.1811052-1-aleksandar.rakic@htecgroup.com>
+ <20250627000246.1811052-3-aleksandar.rakic@htecgroup.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250627000246.1811052-3-aleksandar.rakic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,47 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/25 07:56, Cédric Le Goater wrote:
-> On 7/15/25 07:52, John Levon wrote:
->> Some small Coverity and related fixes for the recently merged vfio-user series.
->>
->> thanks
->> john
+On 27/6/25 02:04, Aleksandar Rakic wrote:
+> From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
 > 
-> Mark,
+> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
+> Reuse zlib crc32() and Linux crc32c().
 > 
-> Would you please re-add your R-b ?
+> Enable CRC for mips64r6.
+> 
+> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
+> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
+> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+> Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
+> ---
+>   target/mips/cpu-defs.c.inc                    |  10 +-
+>   target/mips/helper.h                          |   2 +
+>   target/mips/meson.build                       |   1 +
+>   target/mips/tcg/op_helper.c                   |  27 ++++
+>   target/mips/tcg/rel6.decode                   |   5 +
+>   target/mips/tcg/rel6_translate.c              |  13 ++
+>   target/mips/tcg/translate.c                   |  25 +++
+>   target/mips/tcg/translate.h                   |   2 +
 
-No need. b4 picked them up.
+>   tests/tcg/mips/include/wrappers_mips64r6.h    |  35 +++++
+>   tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  42 ++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32b.c   | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32cb.c  | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32cd.c  | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32ch.c  | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32cw.c  | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32d.c   | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32h.c   | 142 ++++++++++++++++++
+>   .../isa/mips64r6/crc/test_mips64r6_crc32w.c   | 142 ++++++++++++++++++
+>   18 files changed, 1294 insertions(+), 4 deletions(-)
 
-
-Thanks,
-
-C.
-
-
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> 
-> and applied to vfio-next.
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
->> John Levon (4):
->>    hw/vfio-user: add Cédric Le Goater as a maintainer
->>    hw/vfio: fix region fd initialization
->>    hw/vfio-user: wait for proxy close correctly
->>    hw/vfio-user: fix use of uninitialized variable
->>
->>   MAINTAINERS              |  1 +
->>   hw/vfio-user/container.c |  6 +-----
->>   hw/vfio-user/proxy.c     | 10 ++++++----
->>   hw/vfio/device.c         |  6 +++++-
->>   4 files changed, 13 insertions(+), 10 deletions(-)
->>
-> 
-
+Thanks, patch queued (as 2 patches, tests added on top) fixing style
+issues reported by checkpatch.pl.
 
