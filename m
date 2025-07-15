@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E46C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F56C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubiWi-0003qw-GJ; Tue, 15 Jul 2025 12:29:08 -0400
+	id 1ubiXp-0005fc-8u; Tue, 15 Jul 2025 12:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ubhpc-0002Dx-GP
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:44:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1ubhrS-0003ph-7w
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:46:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1ubhpa-0004iH-TY
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:44:36 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1ubhrK-000540-QG
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:46:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752594272;
+ s=mimecast20190719; t=1752594381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jxiTyg1mRMC7Z3JQbUBfWU3xSp+ncpALjV0Dn7J+JGg=;
- b=huJh9HUGjYTJ3v0eVzvSUW4knHDS5c6kMajEOz43Vty+WLELUmbRF7Db3hyBqYm76YprHp
- qSoTSCL3JxthmqEY0qPfIpNv4TZR7fCp2pgSXG6znVi7fcG+N7oCVmLIyosVSL1nkjm0EW
- aNsIUjOgL6XtvQEotYfzVx8QGyn/5Hg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-0IzG2LRhO8G2kLVQbfQwVQ-1; Tue,
- 15 Jul 2025 11:44:30 -0400
-X-MC-Unique: 0IzG2LRhO8G2kLVQbfQwVQ-1
-X-Mimecast-MFC-AGG-ID: 0IzG2LRhO8G2kLVQbfQwVQ_1752594269
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BB6D180028F
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 15:44:29 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.81])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7880218002B5; Tue, 15 Jul 2025 15:44:28 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Andrea Bolognani <abologna@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang?=
- =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] watchdog: generic name for i6300esb
-In-Reply-To: <CABJz62O3FKYfUOyCLMotgYgckWV1frSUb=MtTW2J4fDTEg_==g@mail.gmail.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20250610143259.1056400-1-cohuck@redhat.com>
- <20250610143259.1056400-3-cohuck@redhat.com> <aEhnbN1pSYgdi4EZ@redhat.com>
- <CABJz62O3FKYfUOyCLMotgYgckWV1frSUb=MtTW2J4fDTEg_==g@mail.gmail.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 15 Jul 2025 17:44:25 +0200
-Message-ID: <877c09792e.fsf@redhat.com>
+ bh=YeKZ0KmVhAbqsdVN0qJho6dSv0EDr6zEMDxOmyQv/m4=;
+ b=g3hSHevVhhIdpY5gRhWw6zhs66tqjjY51Pk7vPG/fX0laNDzYj90SdzRJ7O9u3FbxJ0u72
+ TaErtrej/2RpamJ8nm67w8xcQeC1hGDgTWMMs+e+Rhf62wHOxEZs1vmO3rHoHDoJQsdoc6
+ 1bx8x27GH5/lkqcGSSFh4O/HmLS60qw=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-aOzxedLhPAeCKgtC2KnEww-1; Tue, 15 Jul 2025 11:46:19 -0400
+X-MC-Unique: aOzxedLhPAeCKgtC2KnEww-1
+X-Mimecast-MFC-AGG-ID: aOzxedLhPAeCKgtC2KnEww_1752594378
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ae0a0683d6dso609215366b.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:46:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752594378; x=1753199178;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YeKZ0KmVhAbqsdVN0qJho6dSv0EDr6zEMDxOmyQv/m4=;
+ b=fZhCYZOsA5dL3C5C/BCj+BW9r63C8DZwiYwQ8dBYAHm/XoIop0YLJf3joR9wKeIFvs
+ mQ36iu4R/QeQOAEIIYSZFON/OQIqvwNZz8g7TF4A5xIyVjcgMxzJXsHfMgL+pCFWFsWr
+ hFOrzeZm7A2eopNho/QrcWSog84giXq3l6ezDksKKxGGB1S79Fb5Oj6bdTA1UR3uE2ED
+ 7w/+RZkxfwry0AD7oOjuetrYtIbf4sK7PhMkTIMP0anHG8wnRPx7d+KY9oDN6m63pQoY
+ AMg+2qaqpeNsy2R33nGY5BuOrnqFz5VKvsaqNkZgtgupCCrxWqiry2gldP/GfIlIuBBk
+ 3JJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUP4+OvmYdLTQao+JElHkDDkbbTc4K+mR7/gtYNz3AQYZLH0xOv0KdvejpAFVsMkSJogpdtAPVQK2+u@nongnu.org
+X-Gm-Message-State: AOJu0Yzth14iR7NHxu4x5wbCBSEGAcYzuYYL4jjbi8wsC92sHXBUo8eM
+ 5KFDLiUJGk78L0bhjo6Xgpo1cvWFNY6XZOglthU3jct8I4IgG2jpxzQ/A48qRe6ADbv093K1Lbd
+ qGX0aO4NcGoNwZzqZ6miTWi7Vd0E70SuK8hh8TYDa8aBs+gQQxSNXI8GrSwv/ZUJoQ5HgM/y8cR
+ xWlcijA4ezieIKA0a46GJspP1oIstRq10=
+X-Gm-Gg: ASbGnctUSu5dib7OhEZ/Wbglr4DqiKANXCsT7G+C5RHxX4v0V0JF2HkD85ewFuQGawv
+ RFIDjqRDrHeX7P5AmDWbQZD0zDH3l5pBZV085+p1ms7MOBRg+441QVeoD/Hian5EhWvzF5UeSos
+ YgBDo4b1PnWz+Grzadyr6DqA==
+X-Received: by 2002:a17:907:962a:b0:ae0:3f20:68f8 with SMTP id
+ a640c23a62f3a-ae6fcbc2c32mr1887245366b.39.1752594378047; 
+ Tue, 15 Jul 2025 08:46:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlCyXikNssAjjTBsAdIH0MIVmRcQfeT4dCIv8bEKRZETD1LqB+ZQ3r062eu/OZ/7fnE746+1I/QZe0sQ3hiM4=
+X-Received: by 2002:a17:907:962a:b0:ae0:3f20:68f8 with SMTP id
+ a640c23a62f3a-ae6fcbc2c32mr1887243166b.39.1752594377707; Tue, 15 Jul 2025
+ 08:46:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250713-vlan-v1-1-a3cf0bcfa644@rsg.ci.i.u-tokyo.ac.jp>
+ <ae225e65-0a13-47a8-9bfc-0f8497af2e58@linux.ibm.com>
+In-Reply-To: <ae225e65-0a13-47a8-9bfc-0f8497af2e58@linux.ibm.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Tue, 15 Jul 2025 23:45:41 +0800
+X-Gm-Features: Ac12FXxAVi3H2kkwLzNgapGt3HL99l3IuWXYcy9Tgg-NKyIA1vi-6LvLTL1aVjA
+Message-ID: <CAPpAL=wxV0RmFq+nwSjsYbmYpBkaXE3TPLrxNfrjYrr0hCjkjQ@mail.gmail.com>
+Subject: Re: [PATCH RFC] virtio-net: Fix VLAN filter table initialization
+ timing
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ yin31149@gmail.com, 
+ eperezma@redhat.com, mst@redhat.com, jasowang@redhat.com, 
+ virtualization@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,61 +109,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15 2025, Andrea Bolognani <abologna@redhat.com> wrote:
+Tested this patch with virtio-net regression tests, everything works fine.
 
-> On Tue, Jun 10, 2025 at 06:12:12PM +0100, Daniel P. Berrang=C3=A9 wrote:
->> On Tue, Jun 10, 2025 at 04:32:59PM +0200, Cornelia Huck wrote:
->> > The Intel 6300 Enterprise SouthBridge is a south bridge for a more or
->> > less obscure embedded Intel system; however, the i6300esb watchdog
->> > device we implement in QEMU is a virtual watchdog device that should
->> > work well on any PCI-based machine, is well supported by Linux guests,
->> > and used in many examples on how to set up a virtual watchdog.
->> >
->> > Let's use "virtual i6300ESB" in the description to make clear that
->> > this device will work just fine on non-Intel platforms.
->> >
->> > Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> > ---
->> >  hw/watchdog/wdt_i6300esb.c | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> I'm not entirely sold on the idea that this is needed, but at the same
->> time I won't object so
->>
->> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> I would argue that this change is incorrect.
->
-> While the QEMU device can be used for non-x86 VMs, it *is* faithfully
-> modelled after an Intel part, and the guest OS will recognize it as
-> such:
->
->   # lspci | grep 6300
->   07:01.0 System peripheral: Intel Corporation 6300ESB Watchdog Timer
->
-> What we actually need to do is create a new QEMU device with distinct
-> PCI IDs, same as we've done in the past for qemu-xhci, pcie-root-port
-> and pcie-to-pci-bridge.
->
-> That will take a lot longer to integrate throughout the stack and be
-> supported across the various guest OS, but it's the only approach
-> that eventually leads to truly Intel-free non-x86 VMs.
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-Hmm. So
-- request a new PCI id (probably in the PCI_DEVICE_ID_REDHAT_* space)
-- restructure to have two devices base off the same core functionality
-- teach guest operating systems about the new device
-- teach management software like libvirt about the new device
-
-Not sure how fast we can get an ID (or even how to go about it.) The
-second step should be reasonably easy. The third step is the most
-complex one, but at least teaching Linux should hopefully be easy
-enough, and existing guest operating systems could continue to use the
-existing device. The last step is probably not that bad.
-
-I can start down that path, if we have some consensus that this is the
-right way to handle this.
-
-I'd still argue that patch 1 should be applied regardless :)
+On Mon, Jul 14, 2025 at 5:34=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.ibm=
+.com> wrote:
+>
+> On 13-Jul-25 06:52, Akihiko Odaki wrote:
+> > Konstantin, please see if this patch fixes your workload.
+> Yes, it does. It delays vlans[] initialization until
+> virtio_net_set_status(0xf) which later also calls vhost_net_start()
+> which is where the NIC is actually programmed.
+>
+>
 
 
