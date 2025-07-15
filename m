@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FADC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD35C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubYiH-00040Y-1G; Tue, 15 Jul 2025 02:00:25 -0400
+	id 1ubYkw-0005dV-Q9; Tue, 15 Jul 2025 02:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYiA-0003xF-E1
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:00:21 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYkr-0005bH-Kr
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:03:08 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYi8-0007yB-FK
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:00:18 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a50fc7ac4dso2304836f8f.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:00:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubYkp-00016H-3m
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:03:05 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a522224582so2537371f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752559214; x=1753164014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752559367; x=1753164167; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WGiQwGN6ypQgr72KRxvOA5uv1G7IT6YtMSXt8sKtqh4=;
- b=CPTYqeUsZMyY/jmQcBFjiqnqhxjPKfhh/uiBmw85LzhzVPTKYrpIiH7AIxq8L5UJpN
- Gju636+oDXF+1q5YJnF/2albuwVRdNaOT9gcnXaDuJ5Mnaec8VaSIrJMPIE2boF224Iu
- Wu2aQ7lVUmOh5Q6xsBw0cMExgVBNvlGlUek+RuJziHxbQgKJgvza0iIIAMK+ZljPU6bm
- dIzEgl0tuKQZA5cNMjtlIl0dqzv06/aPBoSU3ugfpmMpxt3gF6MA0G+LcdqGx2xUTvWO
- /RsOzl6nf+sPulCSlEPtWExWgAXzxT2cNzwpof5rNJY/CT+AqZ0jXrDb0M4fhdPA3cEc
- LFAw==
+ bh=W/KbdVEGVhlArdmGaFpd7noZRBuOguuur2eaUTHaHIk=;
+ b=gTnm6A2piC/Sj2Y4aUcaKlCm6DD9edD4KGIxMJTBN0V+Z59BTQQI/aGMw0q/fHHYs4
+ T3QXtY6lkWTSI+sLTlCSss1li+MH5gFRhG5Bryd02+vtuTQHewhShbUgH7/1/l1Gr8WY
+ 0KJvNi4v5PbU9SQByqHem+UxMGeu7f/zoGjAqAjTT8yeUckqerSJ6NHz1lToMezbaq7S
+ wKDl/JHIpUz4dmANcSZrJBZLzMPRcN9QLXgt5TgJtV3Cy58ZK8tbZjpu3tfe30eRF/90
+ ehale22uBOyMa3XfWFYAvvOrXEaRkqn/53thTfjmMtwOU92JVraVysL896eU5cWB7KSU
+ /Yog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752559214; x=1753164014;
+ d=1e100.net; s=20230601; t=1752559367; x=1753164167;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WGiQwGN6ypQgr72KRxvOA5uv1G7IT6YtMSXt8sKtqh4=;
- b=FbDStYcWOc2t7WqfvzLGp2tBccNIlh0c0Ue0YmgQVMW8BbFXyAAFUX1/Kt3YBbd8vz
- da3EW98308OswFgop63NyspdpYsIZBBHCdkPrNmVBJFwL4esfWbikjaXPnYhMAgsryRN
- QQM0asHqWyaOG/NIkOc21nNyz5Q67si9pHLYpEcnXzN5TOVV7v3XmqS9mTwvK+XJGb82
- wtNQgcXoJeWtl2GZpeDZaToR2BV1YTUEpCyugiqzocTwKXNxalm3Kz1auNBGrZhmo4sZ
- Csn+N+pKXSiK5o50wxOPXbesZ5gU6hssLNCDgNH5MWxwhpUoeYauvpgPqB4EICQ27dZA
- LnLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUT271UuKUYSPXwKA8jLKoN6Wa8Q3XAzhvqPp8teOZhnO4tyAQ6/AXNdvmRn5KE55/ojYs3CKmG9Ck9@nongnu.org
-X-Gm-Message-State: AOJu0Yy3moNK0njm+0yiDApFAUQtJnq2sFqo+HtWdrSG/Kerbb2DC4ib
- V3OGqMhs++0YaanXUx2JB9gHK3aifHBeJWodIcGAMg5MFMIbl0qKYasBO6GpCmaeC8M=
-X-Gm-Gg: ASbGncspOiiDJcCY9PbG1FIOEDQXxrr0ljGDEyjfWTbW4vOLR6TKuzndudq1MdRQ8FX
- 8UC4S+kgGyr+GislKLZnNehIoW0ddNnT9God1oY2MbBkj6fcm6BtdP1rJwWqJEe3UuxKI2UKxa3
- 34WiJvyXwTMeIIR525MJwbNUZkvdgd6vTs3qZWVg/aFcWpx7Y5hwdztK+/DSJefk+HhbHhX+ls4
- fuyrE2uQfXAi1AGwa/GLoz+I3qDikcPMNIlEFPlMVBZFsPupiafkt3dxufrKQIq973eDVo9e58B
- jbf5KrHwFmtG3+ttZeZNvBF3NvaOPw4l74uXBzFPdEeT2luTe7NQr0U+itAPGw6ormsfpH8v2kp
- +Ly8b5FmIz5ARMHx7vQ13BzYczeV5P+6++qLf0XeTxI73+VwcWYiTyu1XVVgZje6Yrg==
-X-Google-Smtp-Source: AGHT+IGivnlWZ7ycUc1pKS4NY3WFXGGuEVcQ+39066cJtJSwXfjP3Zy1que4GeLeCi8x283GagleBg==
-X-Received: by 2002:a05:6000:2012:b0:3a4:ea40:4d3f with SMTP id
- ffacd0b85a97d-3b5f18de8demr14270689f8f.53.1752559214266; 
- Mon, 14 Jul 2025 23:00:14 -0700 (PDT)
+ bh=W/KbdVEGVhlArdmGaFpd7noZRBuOguuur2eaUTHaHIk=;
+ b=lFMaOe5ws6x1UW0hfEYGnLViBRdzCPOwlSENnPY81O/3iJLUl6BoYkrF63iAg9kGdG
+ uUQ4xdR33XFzzVXRKdenepjlH0Wu9q6phaQKB8BI17AKGtEivh4OB6/UlkhFYc+lBw4s
+ iuNjJkWV6YRL1EQkwLzyogUVTSc3KYqO0e5aNNayW2nowsazuCARzsZ4vKI+prYH0JY4
+ ynywX4ik91ovXeUC3kHjPeZtRo8pqRdWu7XmLW6+iaZajcTCdn4Ee6yoOFIDCx+36E9N
+ eu502iywiT76YQvXSWlByLgyzGWshBHej/ATPGEUr4snv7a3K7Ww634eMC/VkIMPs5R/
+ 5Hiw==
+X-Gm-Message-State: AOJu0YxTLmxNBL6eKtMVP5H3qkGjYYWqob3F89Uyg6j1qi0Vlb10VSia
+ 6e4DkaRwhpThURxyeXRRupkPKqIzTGB+Kk1WYxm1qErYsR4o9PXCnS1M0x09lJflU4yEnaHenGw
+ nFmXI
+X-Gm-Gg: ASbGnctmAZ6kOnVNIUzU+W/1gfqjr7zeTbHMVjUAcyKpF0tV2lcuHVhKlhOInSqa+IN
+ keOA7LWb+wfxeTaL1xnury9eoNT2oumuDYHidDVGQKPTUY8ZEXgIEITb1sjPgPCRiFzMS2dCw9H
+ gekJlVVZxetP6ZYD+KbROIHCArH8Iy+jOaVnMmcvbXDbLnHHlASl7KuHbvKyHHRVoPCtNaftbIR
+ zBBHpHMbsRWOwt56siMhIuM7WIIUDOrSFleR4CBmDY95fQqHkYAqZ362QoXfY6B/9C+zfwsgdIP
+ Ro0Py+OKBsOH2m1Nop9DXmzmdqtHCzrhrccKuUjh2HAfWLo2uXBnPySC+efp+KwwZbrS5YZDjUA
+ QiECMCcp0blrtzAf6vgSAEvUPkN8CtMY5IVBcHk87ldD5PDsFnlG3bt23ZfhHTp1NmA==
+X-Google-Smtp-Source: AGHT+IFQxIPdBaFpoYguLPHytHcFOSZe4ZrViKzTOpBwCS6XHi9K8sl+O3rdlDlXRvw/wlkH3K+mlg==
+X-Received: by 2002:a05:6000:230f:b0:3a6:cfca:efee with SMTP id
+ ffacd0b85a97d-3b5f35305c9mr12464910f8f.17.1752559367113; 
+ Mon, 14 Jul 2025 23:02:47 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5f16a6016sm12316792f8f.69.2025.07.14.23.00.12
+ ffacd0b85a97d-3b5e8e26daasm14519875f8f.91.2025.07.14.23.02.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 23:00:12 -0700 (PDT)
-Message-ID: <5454f715-91cf-4c2d-a664-966f91214064@linaro.org>
-Date: Tue, 15 Jul 2025 08:00:11 +0200
+ Mon, 14 Jul 2025 23:02:46 -0700 (PDT)
+Message-ID: <623d9b63-27c2-4f37-87e7-de0b54bdfef9@linaro.org>
+Date: Tue, 15 Jul 2025 08:02:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/1] Add support for emulation of CRC32 instructions
-To: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "arikalo@gmail.com" <arikalo@gmail.com>, "cfu@mips.com" <cfu@mips.com>,
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "berrange@redhat.com" <berrange@redhat.com>
-References: <20250627000246.1811052-1-aleksandar.rakic@htecgroup.com>
- <20250627000246.1811052-3-aleksandar.rakic@htecgroup.com>
+Subject: Re: [PATCH v3 00/16] target/mips: Convert nanoMIPS LSA opcode to
+ decodetree
+To: qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20241126140003.74871-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250627000246.1811052-3-aleksandar.rakic@htecgroup.com>
+In-Reply-To: <20241126140003.74871-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,40 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/6/25 02:04, Aleksandar Rakic wrote:
-> From: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-> 
-> Add emulation of MIPS' CRC32 (Cyclic Redundancy Check) instructions.
-> Reuse zlib crc32() and Linux crc32c().
-> 
-> Enable CRC for mips64r6.
-> 
-> Signed-off-by: Yongbok Kim <yongbok.kim@mips.com>
-> Signed-off-by: Aleksandar Markovic <amarkovic@wavecomp.com>
-> Signed-off-by: Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
-> Reviewed-by: Aleksandar Rikalo <arikalo@gmail.com>
+On 26/11/24 14:59, Philippe Mathieu-Daudé wrote:
+> Since v2:
+> - Fix translator_ld() calls
+> - Add support for 48-bit nanoMIPS opcodes
+> - Convert Load Immediate opcode
 > ---
->   target/mips/cpu-defs.c.inc                    |  10 +-
->   target/mips/helper.h                          |   2 +
->   target/mips/meson.build                       |   1 +
->   target/mips/tcg/op_helper.c                   |  27 ++++
->   target/mips/tcg/rel6.decode                   |   5 +
->   target/mips/tcg/rel6_translate.c              |  13 ++
->   target/mips/tcg/translate.c                   |  25 +++
->   target/mips/tcg/translate.h                   |   2 +
+> 
+> Prepare buildsys to decode micro/nanoMIPS opcodes using
+> the decodetree script.
+> Simplify gen_lsa/dsa() and convert micro/nanoMIPS LSA
+> opcode to decodetree.
+> 
+> Philippe Mathieu-Daudé (16):
+>    target/mips: Extract gen_base_index_addr() helper
+>    target/mips: Extract generic gen_lx() helper
+>    target/mips: Convert Octeon LX instructions to decodetree
 
->   tests/tcg/mips/include/wrappers_mips64r6.h    |  35 +++++
->   tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  42 ++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32b.c   | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32cb.c  | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32cd.c  | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32ch.c  | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32cw.c  | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32d.c   | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32h.c   | 142 ++++++++++++++++++
->   .../isa/mips64r6/crc/test_mips64r6_crc32w.c   | 142 ++++++++++++++++++
->   18 files changed, 1294 insertions(+), 4 deletions(-)
+>    target/mips: Have gen_[d]lsa() callers add 1 to shift amount argument
 
-Thanks, patch queued (as 2 patches, tests added on top) fixing style
-issues reported by checkpatch.pl.
+Patches 1-3 & 5 queued.
 
