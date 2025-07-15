@@ -4,64 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE62C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E88C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 09:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubbzZ-0007Sq-Ii; Tue, 15 Jul 2025 05:30:29 -0400
+	id 1ubbzM-0007If-1u; Tue, 15 Jul 2025 05:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubbzX-0007QY-1G; Tue, 15 Jul 2025 05:30:27 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubbyy-00076T-5i
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:29:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubbzU-0005bk-DO; Tue, 15 Jul 2025 05:30:26 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhDQl1jMBz6DKs7;
- Tue, 15 Jul 2025 17:29:03 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7BEEF1402EB;
- Tue, 15 Jul 2025 17:30:10 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 11:30:09 +0200
-Date: Tue, 15 Jul 2025 10:30:07 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 04/15] hw/arm/smmu-common: Introduce
- smmu_iommu_ops_by_type() helper
-Message-ID: <20250715103007.00003489@huawei.com>
-In-Reply-To: <20250714155941.22176-5-shameerali.kolothum.thodi@huawei.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-5-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubbyv-0005N3-G2
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 05:29:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752571787;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4XefknK1FQqAYXcPQExbfo1ksKosHasD/3eYnECtFXw=;
+ b=gAxpSFbQMq7tM9QTV048T4lcUhIOch2UofdxWrVoC89982Po3ETcZKxXEo9Ux3OpjP3hUK
+ MTNGLO62hVGLGTIBb1din9kabwSoY9/HtBvKVGgV0OZZCSC5wZFN/S5RECxqZ7t4BLFg51
+ TnIP62crZQupd5NplQmSRI3b+89/rOk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-CRs08kS5ND6I8vctsL0K7Q-1; Tue,
+ 15 Jul 2025 05:29:43 -0400
+X-MC-Unique: CRs08kS5ND6I8vctsL0K7Q-1
+X-Mimecast-MFC-AGG-ID: CRs08kS5ND6I8vctsL0K7Q_1752571782
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9AB0B18011EE; Tue, 15 Jul 2025 09:29:42 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.173])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7F03F1977029; Tue, 15 Jul 2025 09:29:41 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Henry Kleynhans <hkleynhans@fb.com>
+Subject: [PATCH 4/7] crypto: only verify CA certs in chain of trust
+Date: Tue, 15 Jul 2025 10:29:29 +0100
+Message-ID: <20250715092932.1395271-5-berrange@redhat.com>
+In-Reply-To: <20250715092932.1395271-1-berrange@redhat.com>
+References: <20250715092932.1395271-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,100 +82,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 16:59:30 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+From: Henry Kleynhans <hkleynhans@fb.com>
 
-> Allows to retrieve the=A0PCIIOMMUOps based on the SMMU type. This will be
-> useful when we add support for accelerated SMMUV3 in=A0subsequent patches
-> as that requires a different set of callbacks for=A0iommu ops.
->=20
-> No special handling is required for now and returns the default ops
-> in base SMMU Class.
->=20
-> No functional changes intended.
->=20
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Trivial inline.
+The CA file provided to qemu may contain CA certificates which do not
+form part of the chain of trust for the specific certificate we are
+sanity checking.
 
-> ---
->  hw/arm/smmu-common.c         | 17 +++++++++++++++--
->  include/hw/arm/smmu-common.h |  1 +
->  2 files changed, 16 insertions(+), 2 deletions(-)
->=20
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 0f1a06cec2..3a1080773a 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -934,6 +934,16 @@ void smmu_inv_notifiers_all(SMMUState *s)
->      }
->  }
-> =20
-> +static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState *s)
-> +{
-> +    SMMUBaseClass *sbc;
-> +
-> +    sbc =3D ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
-> +    assert(sbc->iommu_ops);
-> +
-> +    return sbc->iommu_ops;
-> +}
-> +
->  static void smmu_base_realize(DeviceState *dev, Error **errp)
->  {
->      SMMUState *s =3D ARM_SMMU(dev);
-> @@ -962,6 +972,7 @@ static void smmu_base_realize(DeviceState *dev, Error=
- **errp)
->       */
->      if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
->          object_dynamic_cast(OBJECT(pci_bus)->parent, TYPE_PCI_HOST_BRIDG=
-E)) {
-> +        const PCIIOMMUOps  *iommu_ops;
-Bonus space.
+This patch changes the sanity checking from validating every CA
+certificate to only checking the CA certificates which are part of the
+chain of trust (issuer chain).  Other certificates are ignored.
 
->          /*
->           * This condition matches either the default pcie.0, pxb-pcie, or
->           * pxb-cxl. For both pxb-pcie and pxb-cxl, parent_dev will be se=
-t.
-> @@ -974,10 +985,11 @@ static void smmu_base_realize(DeviceState *dev, Err=
-or **errp)
->              }
->          }
-> =20
-> +        iommu_ops =3D smmu_iommu_ops_by_type(s);
->          if (s->smmu_per_bus) {
-> -            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
-> +            pci_setup_iommu_per_bus(pci_bus, iommu_ops, s);
->          } else {
-> -            pci_setup_iommu(pci_bus, &smmu_ops, s);
-> +            pci_setup_iommu(pci_bus, iommu_ops, s);
->          }
->          return;
->      }
-> @@ -1018,6 +1030,7 @@ static void smmu_base_class_init(ObjectClass *klass=
-, const void *data)
->      device_class_set_parent_realize(dc, smmu_base_realize,
->                                      &sbc->parent_realize);
->      rc->phases.exit =3D smmu_base_reset_exit;
-> +    sbc->iommu_ops =3D &smmu_ops;
->  }
-> =20
->  static const TypeInfo smmu_base_info =3D {
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index c6f899e403..eb94623555 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -171,6 +171,7 @@ struct SMMUBaseClass {
->      /*< public >*/
-> =20
->      DeviceRealize parent_realize;
-> +    const PCIIOMMUOps *iommu_ops;
-> =20
->  };
-> =20
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Henry Kleynhans <hkleynhans@fb.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/tlscredsx509.c                 | 57 ++++++++++++++++++++++++---
+ tests/unit/test-crypto-tlscredsx509.c | 25 +++++++++++-
+ 2 files changed, 75 insertions(+), 7 deletions(-)
+
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 3e3ec4971f..ec6ff43af2 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -307,6 +307,51 @@ qcrypto_tls_creds_check_cert(QCryptoTLSCredsX509 *creds,
+     return 0;
+ }
+ 
++static int
++qcrypto_tls_creds_check_authority_chain(QCryptoTLSCredsX509 *creds,
++                                        gnutls_x509_crt_t cert,
++                                        gnutls_x509_crt_t *cacerts,
++                                        unsigned int ncacerts,
++                                        const char *cacertFile,
++                                        bool isServer,
++                                        bool isCA,
++                                        Error **errp)
++{
++    gnutls_x509_crt_t *cert_to_check = &cert;
++    int checking_issuer = 1;
++    int retval = 0;
++
++    while (checking_issuer) {
++        checking_issuer = 0;
++
++        if (gnutls_x509_crt_check_issuer(*cert_to_check,
++                                         *cert_to_check)) {
++            /*
++             * The cert is self-signed indicating we have
++             * reached the root of trust.
++             */
++            return qcrypto_tls_creds_check_cert(
++                creds, *cert_to_check, cacertFile,
++                isServer, isCA, errp);
++        }
++        for (int i = 0; i < ncacerts; i++) {
++            if (gnutls_x509_crt_check_issuer(*cert_to_check,
++                                             cacerts[i])) {
++                retval = qcrypto_tls_creds_check_cert(
++                    creds, cacerts[i], cacertFile,
++                    isServer, isCA, errp);
++                if (retval < 0) {
++                    return retval;
++                }
++                cert_to_check = &cacerts[i];
++                checking_issuer = 1;
++                break;
++            }
++        }
++    }
++
++    return -1;
++}
+ 
+ static int
+ qcrypto_tls_creds_check_cert_pair(gnutls_x509_crt_t cert,
+@@ -491,12 +536,12 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+         goto cleanup;
+     }
+ 
+-    for (i = 0; i < ncacerts; i++) {
+-        if (qcrypto_tls_creds_check_cert(creds,
+-                                         cacerts[i], cacertFile,
+-                                         isServer, true, errp) < 0) {
+-            goto cleanup;
+-        }
++    if (cert &&
++        qcrypto_tls_creds_check_authority_chain(creds, cert,
++                                                cacerts, ncacerts,
++                                                cacertFile, isServer,
++                                                true, errp) < 0) {
++        goto cleanup;
+     }
+ 
+     if (cert && ncacerts &&
+diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
+index 2025d75365..78b00401d1 100644
+--- a/tests/unit/test-crypto-tlscredsx509.c
++++ b/tests/unit/test-crypto-tlscredsx509.c
+@@ -589,6 +589,12 @@ int main(int argc, char **argv)
+                  true, true, GNUTLS_KEY_KEY_CERT_SIGN,
+                  false, false, NULL, NULL,
+                  0, 0);
++    TLS_CERT_REQ(cacertlevel1creq_invalid, cacertrootreq,
++                 "UK", "qemu level 1c invalid", NULL, NULL, NULL, NULL,
++                 true, true, true,
++                 true, true, GNUTLS_KEY_KEY_CERT_SIGN,
++                 false, false, NULL, NULL,
++                 360, 400);
+     TLS_CERT_REQ(cacertlevel2areq, cacertlevel1areq,
+                  "UK", "qemu level 2a", NULL, NULL, NULL, NULL,
+                  true, true, true,
+@@ -617,16 +623,32 @@ int main(int argc, char **argv)
+         cacertlevel2areq.crt,
+     };
+ 
++
+     test_tls_write_cert_chain(WORKDIR "cacertchain-ctx.pem",
+                               certchain,
+                               G_N_ELEMENTS(certchain));
+ 
++    gnutls_x509_crt_t certchain_with_invalid[] = {
++        cacertrootreq.crt,
++        cacertlevel1areq.crt,
++        cacertlevel1breq.crt,
++        cacertlevel1creq_invalid.crt,
++        cacertlevel2areq.crt,
++    };
++
++    test_tls_write_cert_chain(WORKDIR "cacertchain-with-invalid-ctx.pem",
++                              certchain_with_invalid,
++                              G_N_ELEMENTS(certchain_with_invalid));
++
+     TLS_TEST_REG(chain1, true,
+                  WORKDIR "cacertchain-ctx.pem",
+                  servercertlevel3areq.filename, false);
+     TLS_TEST_REG(chain2, false,
+                  WORKDIR "cacertchain-ctx.pem",
+                  clientcertlevel2breq.filename, false);
++    TLS_TEST_REG(certchainwithexpiredcert, false,
++                 WORKDIR "cacertchain-with-invalid-ctx.pem",
++                 clientcertlevel2breq.filename, false);
+ 
+     /* Some missing certs - first two are fatal, the last
+      * is ok
+@@ -640,7 +662,6 @@ int main(int argc, char **argv)
+     TLS_TEST_REG(missingclient, false,
+                  cacert1req.filename,
+                  "clientcertdoesnotexist.pem", false);
+-
+     ret = g_test_run();
+ 
+     test_tls_discard_cert(&cacertreq);
+@@ -694,10 +715,12 @@ int main(int argc, char **argv)
+     test_tls_discard_cert(&cacertrootreq);
+     test_tls_discard_cert(&cacertlevel1areq);
+     test_tls_discard_cert(&cacertlevel1breq);
++    test_tls_discard_cert(&cacertlevel1creq_invalid);
+     test_tls_discard_cert(&cacertlevel2areq);
+     test_tls_discard_cert(&servercertlevel3areq);
+     test_tls_discard_cert(&clientcertlevel2breq);
+     unlink(WORKDIR "cacertchain-ctx.pem");
++    unlink(WORKDIR "cacertchain-with-invalid-ctx.pem");
+ 
+     test_tls_cleanup(KEYFILE);
+     rmdir(WORKDIR);
+-- 
+2.49.0
 
 
