@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9DEC83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 07:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB444C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 07:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZvp-0004Nw-Mw; Tue, 15 Jul 2025 03:18:29 -0400
+	id 1uba0z-0007Ec-IR; Tue, 15 Jul 2025 03:23:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZt2-0002VJ-Sq
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:15:38 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uba0w-0007D4-VY
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:23:47 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZt0-00021c-Nd
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:15:36 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3a4f379662cso3852548f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 00:15:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uba0u-0003dz-Qs
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:23:46 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-60c9d8a16e5so9788099a12.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 00:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752563730; x=1753168530; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jK3VHhVp0eVShcAqpjGBRXDmPLTaiJrK+trki6OAZaY=;
- b=llYz9pi+GS68hsRs3UxY4YY+rN7irCj9K+Umx13Cxs/24yh4EWf0K+RQamolW8cdz4
- SyBiR1XMx7dsUT2TZe45nylPs1AiupeC/J2t9wb5Q9vEmQ9vGrFbkHKDYCWB4w0ElbR7
- MDKm7HBlHbwTVr5C3mCLD5hGbOjyv6BvxUwoIlDd9bZc+48bQUIe10M80t5iAw+RVXYA
- DwSC2U8YtYm1zkgS7Xk5sdSIlkSpd9kON8bh7PnhPX2DkVJbxrqT9Nr/8Ze1UO7VpjSU
- 6d2Kd7K8Vaz93WT4UdrxyndTEMJb6/2Qk2C+yyMpw38NBmhnEwyBPd/t9r73i1WbLDFx
- ECIw==
+ d=linaro.org; s=google; t=1752564222; x=1753169022; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UN1P7wXWdQjECtU3dVq1DC7zxXQJBQQB9IdVTomSwR4=;
+ b=nQQY70zngZcrGp8TEeNiEwVaB4ASeAa1xBmWMpDBMYDP8DD7uaSPKjlQySMRQBjVZ0
+ d1D6cwJPD/YSAGKr265suyk5KCT3a6uIbvg/fLZ0+b+H/LQUaE7lWror+j/sdmOItVlJ
+ NutWqGu+Xim9RjTLoAZmJbu7cQtt1nEHSLs0QDbXtgi7PMstaid6B/8tOde2yUhkifG+
+ /QAa3Sx2kmygbWaaFjrYKcSCqPh4ZrQpsoErocNkfDEcH51xMbRn6rrpL68nm7IFqQW6
+ GBZEA6dCwJSaj7XTCMHc4aO61KXPeldmsv0iJsue9LrZBPwTs2J7ZglBrRpsfDHXaPqX
+ n9TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752563730; x=1753168530;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jK3VHhVp0eVShcAqpjGBRXDmPLTaiJrK+trki6OAZaY=;
- b=pyJZVuWr0SI+LyJXDLfEzOrp12yM8L0r+0RtchleP/oPndtvm/XZxlC74gpaLf5xf0
- 14NwTeDI8P1i4HmBxud8+mQRzFV2XUMRSwx/9rXWNLM5OwC3Cc3ZJ6FmRLx5GRNnZCIP
- UZQYCtlf0lHltzUkSyEqadnb0I+4fFtxLpO0bWUyPsAubqthmmujlHuvifsrNBUV8gM8
- wRpovwPtb7KGlnYAUlysvm77gpo+nYDfPJ9Kqh55DqscWUbDbOtlOVvrgHPN66N4jD5T
- w/PZPNynK3MmSJETbEIFD4yOzFEoc/TI4aFzD91zKL72dDR4Q0fcvfAdgqvYFmGDiDH7
- lbNg==
-X-Gm-Message-State: AOJu0YxU/RNXUiSSMj+mrOFcrDYEQUKMt+OToD+PkX3Pxm9kORE1jJVe
- a3wt+Edv5c5o/djSqlv0cXAt37wsJJFlz1cDEZM+PCF7PoW7VdEl2evXb7UQS70aT3O6ra+1ksr
- ndixD
-X-Gm-Gg: ASbGncv0DxSHR/tntWJjY8LLYezN12lD1029ApXQkTbjmhavBIkem1j7fFrcpcvXRHx
- /q3Cj0fkkkGR7CB3Lnz614u4b4v0iUD20TodM8cHK8aVML8NdBFTI6Qy/x8yic6uPzt0X//bTKM
- 9MBpVrUFubd5U9vS1f+mn+ZbSIbiHU5y4aqd9Lc+Ap3ZWt7ovkgu/2Odm2fQXb8MeXVgg8hKL+d
- Dz5xc3HQ3cJtLtjZSmecKC5MaKfEtDWonkkwT+ctozqo3Vk7CMyCJslGvtiyzXU00Dbb/0qmg8F
- K30ejtAPjj+UWxhSsu1leYxl40emBmuNYm/5dlEhQF6Y+9ujA8TRK+WsI8ZO9wSFmtpdhZLaPW0
- o8D+8tm7tlQUI+dBmC0Cld/pc6eAY8hhyD04WlPbH1PfwHURDIfa/6rzcu0bD6xErpnQ8QMSHRs
- IcbQ==
-X-Google-Smtp-Source: AGHT+IHc/hNaSxV/q5zS/EGfLlhOgnJMNAW+20yw+IkE5PFdUkO2Ro8e29tK1H+hW7tz8zfDXyx3sg==
-X-Received: by 2002:a5d:64e2:0:b0:3a6:ec1d:1cba with SMTP id
- ffacd0b85a97d-3b5f2dc2ce7mr10700753f8f.20.1752563730160; 
- Tue, 15 Jul 2025 00:15:30 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4561976784dsm57489215e9.18.2025.07.15.00.15.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 00:15:29 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Anthony PERARD <anthony@xenproject.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org,
- xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v2] hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h'
- header
-Date: Tue, 15 Jul 2025 09:15:27 +0200
-Message-ID: <20250715071528.46196-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
+ d=1e100.net; s=20230601; t=1752564222; x=1753169022;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UN1P7wXWdQjECtU3dVq1DC7zxXQJBQQB9IdVTomSwR4=;
+ b=qRokldf0+udr3mDFenca1RKT8BFO1dPo/5Syqfmb6mQvYg2M0K08FrkU3WaP4vuXGS
+ 0jzG0D+lOkwOmE4492xt8pXtyN5HINCc767qv1yK0ahZYkBaYNDSNuc36KRfBsJSRhfg
+ qGbJ0et8PrDU8RUONKou/5D7K/Q2Xph4zeRPIdCNcrZZcC2cgwCNEwkQ4grf8oHC+Fns
+ DQ9oL0E0dJ2iOFYOzt8qzFPMxsz2yQmrefa2Z3mM8C04IUAfk6KP+AZjUuz8+HfbtTQV
+ 0vaG2Tni8BiwFFajzJ6pJovks5IR7yObkEgdqB6HdQfRyqkW4XWp5Th32zLQCJFFe0BT
+ 1pQg==
+X-Gm-Message-State: AOJu0YzyPO7/zVLzW+5ZsPvP6KFK7rQzRYRNHliCr/cMSqb6Ug7Q162J
+ Wm8RECA3INRHDqCqX6qgkpBM6TwBm5DWjBabhpQDi3MSt/gmv5MAD6GbYocxnNSrAyYeGgwleXy
+ WpxJ365/FjxTko6HphTtKhkO3IRXGls7xY60O0D4Ftw==
+X-Gm-Gg: ASbGncvgq8Jg06N3mGwpmiRstIjy8/6kQ1KYatogMX5bl3N8g4X5vj5QqRveOCMfUCQ
+ V2bkz1GiisGWlS0syVcuj3d4dbd5OjylEfzvXJoa/1YwtKMxQUI7C9Vivbh6Q/Z4knBcAK2NaFI
+ ZMxkwblSCKX1ZHbO6YMhhoyHT/8QPl97rv+lsqZvNtDtjXAcxiKJS9qWWnImVQZjwVF9IW7hzu+
+ Df/5Qk=
+X-Google-Smtp-Source: AGHT+IFkPbE5xNZZG95Q3SKrElAfzAAmTR+dvzwbAhFfwYxu8ShPJbhR9Ta2rRniMI3YiOH4ryrufuC1sTrn78+ICao=
+X-Received: by 2002:a05:6402:5255:b0:60e:23d:43b1 with SMTP id
+ 4fb4d7f45d1cf-611e848f84dmr13955242a12.16.1752564221512; Tue, 15 Jul 2025
+ 00:23:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+References: <e41344bd22248b0883752ef7a7c459090a3d9cfc.1752560127.git.mst@redhat.com>
+In-Reply-To: <e41344bd22248b0883752ef7a7c459090a3d9cfc.1752560127.git.mst@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 15 Jul 2025 10:23:15 +0300
+X-Gm-Features: Ac12FXyusC6k6XN8M6XIpB9GBXO_0cqLsHdz3RTT_XV6LIzW9TETpwx124NjMFU
+Message-ID: <CAAjaMXZ069X5b-1VF0ZA1+NWBoHRdrBZmimSZADsrY4A7k+P_A@mail.gmail.com>
+Subject: Re: [PATCH v2] rust: bindings: allow any number of params
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,31 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"hw/xen/arch_hvm.h" only declares the arch_handle_ioreq() and
-arch_xen_set_memory() prototypes, which are not used by xen-pvh.c.
-Remove the unnecessary header inclusion.
+On Tue, Jul 15, 2025 at 9:15=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> We are going to be adding more parameters, and this makes
+> rust unhappy:
+>     Functions with lots of parameters are considered bad style and reduce
+>     readability (=E2=80=9Cwhat does the 5th parameter mean?=E2=80=9D). Co=
+nsider grouping
+>     some parameters into a new type.
+>
+> Specifically:
+>
+> error: this function has too many arguments (8/7)
+>     --> /builds/mstredhat/qemu/build/rust/qemu-api/rust-qemu-api-tests.p/=
+structured/bindings.inc.rs:3840:5
+>      |
+> 3840 | /     pub fn new_bitfield_1(
+> 3841 | |         secure: std::os::raw::c_uint,
+> 3842 | |         space: std::os::raw::c_uint,
+> 3843 | |         user: std::os::raw::c_uint,
+> ...    |
+> 3848 | |         address_type: std::os::raw::c_uint,
+> 3849 | |     ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+>      | |____________________________________________^
+>      |
+>      =3D help: for further information visit https://rust-lang.github.io/=
+rust-clippy/master/index.html#too_many_arguments
+>      =3D note: `-D clippy::too-many-arguments` implied by `-D warnings`
+>      =3D help: to override `-D warnings` add `#[allow(clippy::too_many_ar=
+guments)]`
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  rust/qemu-api/src/bindings.rs | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.r=
+s
+> index 057de4b646..c4f1f755ce 100644
+> --- a/rust/qemu-api/src/bindings.rs
+> +++ b/rust/qemu-api/src/bindings.rs
+> @@ -13,7 +13,8 @@
+>      clippy::missing_const_for_fn,
+>      clippy::ptr_offset_with_cast,
+>      clippy::useless_transmute,
+> -    clippy::missing_safety_doc
+> +    clippy::missing_safety_doc,
+> +    clippy::too_many_arguments
+>  )]
+>
+>  //! `bindgen`-generated declarations.
+> --
+> MST
+>
 
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Based-on: <20250513171737.74386-1-philmd@linaro.org>
----
- hw/arm/xen-pvh.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-index 4b26bcff7a5..1a9eeb01c8e 100644
---- a/hw/arm/xen-pvh.c
-+++ b/hw/arm/xen-pvh.c
-@@ -10,7 +10,6 @@
- #include "hw/boards.h"
- #include "system/system.h"
- #include "hw/xen/xen-pvh-common.h"
--#include "hw/xen/arch_hvm.h"
- 
- #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
- 
--- 
-2.49.0
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
