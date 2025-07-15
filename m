@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F70C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 04:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D8EC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 04:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubXPL-0001sz-9g; Tue, 15 Jul 2025 00:36:47 -0400
+	id 1ubXPT-0001yL-Qn; Tue, 15 Jul 2025 00:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ubXOQ-0001Mf-1S
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:35:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ubXOv-0001ar-QE
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:36:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ubXOM-00060F-MT
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:35:48 -0400
+ id 1ubXOt-00064g-W6
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:36:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752554145;
+ s=mimecast20190719; t=1752554179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8j2jAdERTAzzT+hAJO41i8nD2nVsFsy3T4/6QKXE/18=;
- b=Nz9MquxxepnoZMxKo3y1v9ufJecmfppxLrR7MtZ/5JizOsT5C2KgZSQRGOy16vKn7ktoPY
- 5SoPY98kgeOzmuRTgAQyTVOJfIa2qsbSL7aQpU1Dku0hpE7fptSvIwBEnWW2sWrwXqTAyw
- 82WBno2//WKLbOwjP8qPLPgSWRdlG9Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XGCsCUL5qF6MIXdaUO7UwSCz3GEaEBI9T7XGpaS+VSQ=;
+ b=LpOSona/Y1xdisVNOIloKfUgtx7ki0yWADFpi8+8xrUGES1ScBe2ucVB/61RMFtPU3j0iG
+ V0AEb0FXb5PhEkatQeCs0gTwvxDYOCtHreeVxrspHqHiyE1Y3Rz97UEDeKeu9h4vpch9d1
+ SU2iJg5sLOTDQ8EuV7XvZLt+hZ3I0zk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-WUbWppeyN5eOb1G9gHh7Hw-1; Tue,
- 15 Jul 2025 00:35:43 -0400
-X-MC-Unique: WUbWppeyN5eOb1G9gHh7Hw-1
-X-Mimecast-MFC-AGG-ID: WUbWppeyN5eOb1G9gHh7Hw_1752554143
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-wf6_gl3XPZWtV_ArOR4Fhg-1; Tue,
+ 15 Jul 2025 00:36:17 -0400
+X-MC-Unique: wf6_gl3XPZWtV_ArOR4Fhg-1
+X-Mimecast-MFC-AGG-ID: wf6_gl3XPZWtV_ArOR4Fhg_1752554176
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3377F19560B6
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 04:35:43 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BB0A195608F; Tue, 15 Jul 2025 04:36:16 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.42])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 29D9D1977000; Tue, 15 Jul 2025 04:35:40 +0000 (UTC)
+ id 2AE4C1977029; Tue, 15 Jul 2025 04:36:12 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PULL V2 04/16] net: Define net_client_set_link()
-Date: Tue, 15 Jul 2025 12:35:12 +0800
-Message-ID: <20250715043524.21719-5-jasowang@redhat.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>, Ilya Maximets <i.maximets@ovn.org>,
+ Jason Wang <jasowang@redhat.com>, Anton Protopopov <aspsk@isovalent.com>
+Subject: [PULL V2 15/16] net/af-xdp: Fix up cleanup path upon failure in queue
+ creation
+Date: Tue, 15 Jul 2025 12:35:23 +0800
+Message-ID: <20250715043524.21719-16-jasowang@redhat.com>
 In-Reply-To: <20250715043524.21719-1-jasowang@redhat.com>
 References: <20250715043524.21719-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,119 +86,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-The code to set the link status is currently located in
-qmp_set_link(). This function identifies the device by name,
-searches for the corresponding NetClientState, and then updates
-the link status.
+While testing, it turned out that upon error in the queue creation loop,
+we never trigger the af_xdp_cleanup() handler. This is because we pass
+errp instead of a local err pointer into the various AF_XDP setup functions
+instead of a scheme like:
 
-In some parts of the code, such as vhost-user.c, the
-NetClientState are already available. Calling qmp_set_link()
-from these locations leads to a redundant search for the clients.
+    bool fn(..., Error **errp)
+    {
+        Error *err = NULL;
 
-This patch refactors the logic by introducing a new function,
-net_client_set_link(), which accepts a NetClientState array
-directly. qmp_set_link() is simplified to be a wrapper that
-performs the client search and then calls the new function.
-The vhost-user implementation is updated to use net_client_set_link()
-directly, thereby eliminating the unnecessary client lookup.
+        foo(arg, &err);
+        if (err) {
+            handle the error...
+            error_propagate(errp, err);
+            return false;
+        }
+        ...
+    }
 
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+The same is true for the attachment probing with bpf_xdp_query_id(). With a
+conversion into the above format, the af_xdp_cleanup() handler is called as
+expected. Note the error_propagate() handles a NULL err internally.
+
+Fixes: cb039ef3d9e3 ("net: add initial support for AF_XDP network backend")
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Ilya Maximets <i.maximets@ovn.org>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Anton Protopopov <aspsk@isovalent.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- include/net/net.h |  1 +
- net/net.c         | 32 ++++++++++++++++++++------------
- net/vhost-user.c  |  4 ++--
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ net/af-xdp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index cdd5b109b0..ac59b593ba 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -298,6 +298,7 @@ void net_client_parse(QemuOptsList *opts_list, const char *optstr);
- void show_netdevs(void);
- void net_init_clients(void);
- void net_check_clients(void);
-+void net_client_set_link(NetClientState **ncs, int queues, bool up);
- void net_cleanup(void);
- void hmp_host_net_add(Monitor *mon, const QDict *qdict);
- void hmp_host_net_remove(Monitor *mon, const QDict *qdict);
-diff --git a/net/net.c b/net/net.c
-index 39d6f28158..cfa2d8e958 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1601,21 +1601,11 @@ void colo_notify_filters_event(int event, Error **errp)
-     }
- }
+diff --git a/net/af-xdp.c b/net/af-xdp.c
+index 3d3268e18b..cbe1cae700 100644
+--- a/net/af-xdp.c
++++ b/net/af-xdp.c
+@@ -482,9 +482,8 @@ int net_init_af_xdp(const Netdev *netdev,
+         pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
+         s->ifindex = ifindex;
  
--void qmp_set_link(const char *name, bool up, Error **errp)
-+void net_client_set_link(NetClientState **ncs, int queues, bool up)
- {
--    NetClientState *ncs[MAX_QUEUE_NUM];
-     NetClientState *nc;
--    int queues, i;
--
--    queues = qemu_find_net_clients_except(name, ncs,
--                                          NET_CLIENT_DRIVER__MAX,
--                                          MAX_QUEUE_NUM);
-+    int i;
- 
--    if (queues == 0) {
--        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
--                  "Device '%s' not found", name);
--        return;
--    }
-     nc = ncs[0];
- 
-     for (i = 0; i < queues; i++) {
-@@ -1646,6 +1636,24 @@ void qmp_set_link(const char *name, bool up, Error **errp)
-     }
- }
- 
-+void qmp_set_link(const char *name, bool up, Error **errp)
-+{
-+    NetClientState *ncs[MAX_QUEUE_NUM];
-+    int queues;
-+
-+    queues = qemu_find_net_clients_except(name, ncs,
-+                                          NET_CLIENT_DRIVER__MAX,
-+                                          MAX_QUEUE_NUM);
-+
-+    if (queues == 0) {
-+        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
-+                  "Device '%s' not found", name);
-+        return;
-+    }
-+
-+    net_client_set_link(ncs, queues, up);
-+}
-+
- static void net_vm_change_state_handler(void *opaque, bool running,
-                                         RunState state)
- {
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 0b235e50c6..10ac8dc0b3 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -264,7 +264,7 @@ static void chr_closed_bh(void *opaque)
-         vhost_user_save_acked_features(ncs[i]);
-     }
- 
--    qmp_set_link(name, false, &err);
-+    net_client_set_link(ncs, queues, false);
- 
-     qemu_chr_fe_set_handlers(&s->chr, NULL, NULL, net_vhost_user_event,
-                              NULL, opaque, NULL, true);
-@@ -300,7 +300,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+-        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
+-            || af_xdp_socket_create(s, opts, errp)) {
+-            error_propagate(errp, err);
++        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
++            af_xdp_socket_create(s, opts, &err)) {
+             goto err;
          }
-         s->watch = qemu_chr_fe_add_watch(&s->chr, G_IO_HUP,
-                                          net_vhost_user_watch, s);
--        qmp_set_link(name, true, &err);
-+        net_client_set_link(ncs, queues, true);
-         s->started = true;
-         qapi_event_send_netdev_vhost_user_connected(name, chr->label);
-         break;
+     }
+@@ -492,7 +491,7 @@ int net_init_af_xdp(const Netdev *netdev,
+     if (nc0) {
+         s = DO_UPCAST(AFXDPState, nc, nc0);
+         if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) || !prog_id) {
+-            error_setg_errno(errp, errno,
++            error_setg_errno(&err, errno,
+                              "no XDP program loaded on '%s', ifindex: %d",
+                              s->ifname, s->ifindex);
+             goto err;
+@@ -506,6 +505,7 @@ int net_init_af_xdp(const Netdev *netdev,
+ err:
+     if (nc0) {
+         qemu_del_net_client(nc0);
++        error_propagate(errp, err);
+     }
+ 
+     return -1;
 -- 
 2.42.0
 
