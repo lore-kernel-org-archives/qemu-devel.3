@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7840C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9477AC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZMg-0003B9-29; Tue, 15 Jul 2025 02:42:10 -0400
+	id 1ubZMd-00038V-IU; Tue, 15 Jul 2025 02:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZF0-0003NS-M6
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ubZEa-00037v-QD
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:33:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZEy-0003io-Jr
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:34:14 -0400
+ id 1ubZEY-0003fz-Uw
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:33:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752561251;
+ s=mimecast20190719; t=1752561226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/DKBN3+7PHd5LpCAXXeTGQanR81sYEgVkI6B9fYUCVQ=;
- b=K3qhLCNW97wW2rbZVSB0lhCpBYIGVmNYOqpTvRnZzRsNcLs2M3ro1qrEd/d2VnT6b/4Dwk
- e1M/hYcQKUBGTdWO0s0vy3fiB9fIJnpPeLMzL5lk2JL4MqOAjogWPwunmnFDcx1mk7dF6g
- EmrjedgdT7fJl1H6pheaohd3aDLabFs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=hNyD+uj7UBvMq6QcPJobSQ1qYoFoeus0kbmfWveaUS0=;
+ b=PoNa3XYB6VzHhDWnc0nfa83Xlx4hyWiB7md7RoPHTDrM+VnnqyHclrThrK2AzHZDYP/BNy
+ TMt/+c5VLJsJfJ9mpCeFeB2icjWQeH52t87Kh9V9ocFsfxcz+71JcxNb8I2Ftre4RbEMPP
+ jobNKoDfzm4W1FeljlJrcjGG4aTbne8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-bPUKmgsxPLirvJ21-TXU_Q-1; Tue,
- 15 Jul 2025 02:34:07 -0400
-X-MC-Unique: bPUKmgsxPLirvJ21-TXU_Q-1
-X-Mimecast-MFC-AGG-ID: bPUKmgsxPLirvJ21-TXU_Q_1752561246
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-OWfWCeNkO_W4KyHG2NgFQg-1; Tue,
+ 15 Jul 2025 02:33:42 -0400
+X-MC-Unique: OWfWCeNkO_W4KyHG2NgFQg-1
+X-Mimecast-MFC-AGG-ID: OWfWCeNkO_W4KyHG2NgFQg_1752561221
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C229F1808993; Tue, 15 Jul 2025 06:34:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21C20195609F; Tue, 15 Jul 2025 06:33:41 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E372218046C7; Tue, 15 Jul 2025 06:34:03 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5F9E1977000; Tue, 15 Jul 2025 06:33:39 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -54,18 +54,19 @@ Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Subject: [PULL v2 09/13] ui/spice: Blit the scanout texture if its memory
- layout is not linear
-Date: Tue, 15 Jul 2025 10:32:55 +0400
-Message-ID: <20250715063301.145191-10-marcandre.lureau@redhat.com>
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL v2 05/13] ui/spice: Add an option for users to provide a
+ preferred video codec
+Date: Tue, 15 Jul 2025 10:32:51 +0400
+Message-ID: <20250715063301.145191-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20250715063301.145191-1-marcandre.lureau@redhat.com>
 References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -93,12 +94,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-In cases where the scanout buffer is provided as a texture (e.g. Virgl)
-we need to check to see if it has a linear memory layout or not. If
-it doesn't have a linear layout, then blitting it onto the texture
-associated with the display surface (which already has a linear layout)
-seems to ensure that there is no corruption seen regardless of which
-encoder or decoder is used.
+Giving users an option to choose a particular codec will enable
+them to make an appropriate decision based on their hardware and
+use-case. Note that, the Spice server would use this codec with
+Gstreamer encoder and only when gl=on is specified.
+
+If no codec is provided, then the codec gstreamer:h264 would be used
+as default. And, for the case where gl=off, the default codec to be
+used is determined by the Spice server.
 
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
@@ -106,148 +109,77 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Frediano Ziglio <freddy77@gmail.com>
 Cc: Dongwon Kim <dongwon.kim@intel.com>
 Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+[ Marc-Andre - fix unused variables warnings ]
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Message-Id: <20250617043546.1022779-8-vivek.kasireddy@intel.com>
+Message-Id: <20250617043546.1022779-4-vivek.kasireddy@intel.com>
 ---
- include/ui/spice-display.h |  3 ++
- ui/spice-display.c         | 81 +++++++++++++++++++++++++++++++++++---
- 2 files changed, 78 insertions(+), 6 deletions(-)
+ ui/spice-core.c | 16 ++++++++++++++++
+ qemu-options.hx |  8 ++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
-index 9bdde78266..690ece7380 100644
---- a/include/ui/spice-display.h
-+++ b/include/ui/spice-display.h
-@@ -132,6 +132,9 @@ struct SimpleSpiceDisplay {
-     egl_fb guest_fb;
-     egl_fb blit_fb;
-     egl_fb cursor_fb;
-+    bool backing_y_0_top;
-+    bool blit_scanout_texture;
-+    bool new_scanout_texture;
-     bool have_hot;
- #endif
- };
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 854a97c198..9ce622cefc 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -1086,7 +1086,7 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
- {
-     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
-     EGLint offset[DMABUF_MAX_PLANES], stride[DMABUF_MAX_PLANES], fourcc = 0;
--    int fd[DMABUF_MAX_PLANES], num_planes;
-+    int fd[DMABUF_MAX_PLANES], num_planes, i;
-     uint64_t modifier;
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 5acbdd3955..51bdcef1af 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -488,6 +488,9 @@ static QemuOptsList qemu_spice_opts = {
+         },{
+             .name = "streaming-video",
+             .type = QEMU_OPT_STRING,
++        },{
++            .name = "video-codec",
++            .type = QEMU_OPT_STRING,
+         },{
+             .name = "agent-mouse",
+             .type = QEMU_OPT_BOOL,
+@@ -837,7 +840,20 @@ static void qemu_spice_init(void)
+     if (qemu_opt_get_bool(opts, "gl", 0)) {
+         if ((port != 0) || (tls_port != 0)) {
+ #if SPICE_SERVER_VERSION >= 0x000f03 /* release 0.15.3 */
++            const char *video_codec = NULL;
++            g_autofree char *enc_codec = NULL;
++
+             spice_remote_client = 1;
++
++            video_codec = qemu_opt_get(opts, "video-codec");
++            if (video_codec) {
++                enc_codec = g_strconcat("gstreamer:", video_codec, NULL);
++            }
++            if (spice_server_set_video_codecs(spice_server,
++                                              enc_codec ?: "gstreamer:h264")) {
++                error_report("invalid video codec");
++                exit(1);
++            }
+ #else
+             error_report("SPICE GL support is local-only for now and "
+                          "incompatible with -spice port/tls-port");
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 1f862b19a6..8f6a228a89 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
+     "       [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
+     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
+     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
++    "       [,video-codec=<codec>\n"
+     "       [,gl=[on|off]][,rendernode=<file>]\n"
+     "                enable spice\n"
+     "                at least one of {port, tls-port} is mandatory\n",
+@@ -2369,6 +2370,13 @@ SRST
+     ``seamless-migration=[on|off]``
+         Enable/disable spice seamless migration. Default is off.
  
-     assert(tex_id);
-@@ -1098,11 +1098,26 @@ static void qemu_spice_gl_scanout_texture(DisplayChangeListener *dcl,
++    ``video-codec=<codec>``
++        Provide the preferred codec the Spice server should use with the
++        Gstreamer encoder. This option is only relevant when gl=on is
++        specified. If no codec is provided, then the codec gstreamer:h264
++        would be used as default. And, for the case where gl=off, the
++        default codec to be used is determined by the Spice server.
++
+     ``gl=[on|off]``
+         Enable/disable OpenGL context. Default is off.
  
-     trace_qemu_spice_gl_scanout_texture(ssd->qxl.id, w, h, fourcc);
- 
--    /* note: spice server will close the fd */
--    spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
--                            (uint32_t *)offset, (uint32_t *)stride, num_planes,
--                            fourcc, modifier, y_0_top);
--    qemu_spice_gl_monitor_config(ssd, x, y, w, h);
-+    if (spice_remote_client && modifier != DRM_FORMAT_MOD_LINEAR) {
-+        egl_fb_destroy(&ssd->guest_fb);
-+        egl_fb_setup_for_tex(&ssd->guest_fb,
-+                             backing_width, backing_height,
-+                             tex_id, false);
-+        ssd->backing_y_0_top = y_0_top;
-+        ssd->blit_scanout_texture = true;
-+        ssd->new_scanout_texture = true;
-+
-+        for (i = 0; i < num_planes; i++) {
-+            close(fd[i]);
-+        }
-+    } else {
-+        /* note: spice server will close the fd */
-+        spice_server_gl_scanout(&ssd->qxl, fd, backing_width, backing_height,
-+                                (uint32_t *)offset, (uint32_t *)stride,
-+                                num_planes, fourcc, modifier, y_0_top);
-+        qemu_spice_gl_monitor_config(ssd, x, y, w, h);
-+    }
-+
-     ssd->have_surface = false;
-     ssd->have_scanout = true;
- }
-@@ -1168,6 +1183,50 @@ static void qemu_spice_gl_release_dmabuf(DisplayChangeListener *dcl,
-     egl_dmabuf_release_texture(dmabuf);
- }
- 
-+static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
-+                                          egl_fb *scanout_tex_fb)
-+{
-+    uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
-+    int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
-+    uint64_t modifier;
-+    bool ret;
-+
-+    egl_fb_destroy(scanout_tex_fb);
-+    egl_fb_setup_for_tex(scanout_tex_fb,
-+                         surface_width(ssd->ds), surface_height(ssd->ds),
-+                         ssd->ds->texture, false);
-+    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
-+    glFlush();
-+
-+    if (!ssd->new_scanout_texture) {
-+        return true;
-+    }
-+
-+    ret = egl_dmabuf_export_texture(ssd->ds->texture,
-+                                    fds,
-+                                    (EGLint *)offsets,
-+                                    (EGLint *)strides,
-+                                    &fourcc,
-+                                    &num_planes,
-+                                    &modifier);
-+    if (!ret) {
-+        error_report("spice: failed to get fd for texture");
-+        return false;
-+    }
-+
-+    spice_server_gl_scanout(&ssd->qxl, fds,
-+                            surface_width(ssd->ds),
-+                            surface_height(ssd->ds),
-+                            (uint32_t *)offsets, (uint32_t *)strides,
-+                            num_planes, fourcc, modifier,
-+                            ssd->backing_y_0_top);
-+    qemu_spice_gl_monitor_config(ssd, 0, 0,
-+                                 surface_width(ssd->ds),
-+                                 surface_height(ssd->ds));
-+    ssd->new_scanout_texture = false;
-+    return true;
-+}
-+
- static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-                                  uint32_t x, uint32_t y, uint32_t w, uint32_t h)
- {
-@@ -1175,6 +1234,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     EGLint fourcc = 0;
-     bool render_cursor = false;
-     bool y_0_top = false; /* FIXME */
-+    bool ret;
-     uint32_t width, height, texture;
- 
-     if (!ssd->have_scanout) {
-@@ -1269,6 +1329,15 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-         glFlush();
-     }
- 
-+    if (spice_remote_client && ssd->blit_scanout_texture) {
-+        egl_fb scanout_tex_fb;
-+
-+        ret = spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
-+        if (!ret) {
-+            return;
-+        }
-+    }
-+
-     trace_qemu_spice_gl_update(ssd->qxl.id, w, h, x, y);
-     qemu_spice_gl_block(ssd, true);
-     glFlush();
 -- 
 2.50.0
 
