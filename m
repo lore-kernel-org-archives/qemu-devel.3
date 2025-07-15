@@ -4,63 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B83C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E390AC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubd5C-0004Ij-Ca; Tue, 15 Jul 2025 06:40:23 -0400
+	id 1ubd5M-0004Wg-Rs; Tue, 15 Jul 2025 06:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubd4w-0003w2-Fm; Tue, 15 Jul 2025 06:40:06 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubd4s-0005X0-U4; Tue, 15 Jul 2025 06:40:06 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhFwW38Nzz6L586;
- Tue, 15 Jul 2025 18:36:27 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E581E140144;
- Tue, 15 Jul 2025 18:39:56 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 12:39:55 +0200
-Date: Tue, 15 Jul 2025 11:39:54 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 12/15] hw/arm/smmuv3-accel: Introduce helpers to
- batch and issue cache invalidations
-Message-ID: <20250715113954.0000449e@huawei.com>
-In-Reply-To: <20250714155941.22176-13-shameerali.kolothum.thodi@huawei.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-13-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5C-0004J2-7n
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:22 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5A-0005l5-Ds
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:21 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-451dbe494d6so48681165e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752576018; x=1753180818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XGSrmDCR8wpv1EuhboPdK3VNEXK0BwB+Fm4Uly57pRU=;
+ b=TKsL9hsFsOqESmbP7UEz4NHCMdcNKdrGOcfC1lQ2OnYQ1pvv8XCbupgKYbkTz1K4O7
+ ZuJaQM6i9XBh/cnybZBU8hI5GUDpwrz23Q1/GVAdbI+otMApZ4zl56DEenfE1UHIriQX
+ dphBrJHWWaoTYmuJVZ2BMFwfPjOZGGWE3E+FdjdkA6RKHFpSt4b3TM7Wi5bsS+1S6ROe
+ +poLLqvaeVMQ3n9IXtHVdLWsz+dYNtAlLZH6QgU2IbBxfVv1PR0/r/QsTTxisIPbuJ2S
+ /zXqU9SSBuPmCTSwHmvH9goE4N+U+EX8NzAKyXqDBF6RL8bi5SMJoMxVySeRPon15cs7
+ opbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752576018; x=1753180818;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XGSrmDCR8wpv1EuhboPdK3VNEXK0BwB+Fm4Uly57pRU=;
+ b=ImyMjAa04PvZzx7EYzvg4ARGe7v6ySlzbHoozOcCwivceQenX1xr/1hdSNzZOqFpeL
+ cjbEqovdbHg3gYvnanFOWkPx3Ahj+mx5G1Yog4pTipRiJIpICc5pMTLoVvpB3aUnIQc0
+ mHCp7C5fARELCauSBNXsoJg+LkLTNMg0AxQ7ZOORiqQofK+t6ICousrUyQcYhvOBTUJq
+ p7l84pHPo2fJRfAhBaw/EHK1Zp+aKdA5kOZ55DA9/vpS94P8zDfXkPAti94zMvXA0ia3
+ FGmAI/cal/9oJ0gN3WPBr6iYdbnPoN7WuVhc7Lx5xq0p3T1AGDMskxC9iN0iiNuoKALv
+ L5qQ==
+X-Gm-Message-State: AOJu0YwUPp/MpmKj9O+QS+Td+URyd3/XG4Utrco9Q3e7c7NkEjRNlB7Z
+ HBixe+rfz5NIZdcA7EspqNT71ennFCpDglHBesFQhZEVozYKhuWUUby+xaVyJXoqEvun04NalD/
+ FFIl9
+X-Gm-Gg: ASbGnctfi+jPxLebsBJv8yO3+wdA+segeHUoHE2xkfII7Hw7CCLDBq9t1MjtRJSdp2H
+ ArpVsmVMIB5UJXobwkLV5wLsUzeZRxPUwXYUeVE26IVEkN1v6AIQdiKOfdaVx5IGmoXhoudIAMy
+ Iq6A+laOkNWwnauEbO1U9Kz29lQ2LKg+ntwdE0TV65chs6kqeuC8+YI+EWHkWq11Y1rPLo8lK/Y
+ 7JsrXmzFjhywPQWWLkmU6h3pfIAOludFQ/A4HZ5J2eceuz1ikBchdKYA4lshLNEP7Jjq7XgH8BM
+ xK4jcVzWrodmVTxnpS0kNW5V7QmOdfbs7Ap6f0ebjd7KiMZiaoeaxeUwDaAIBryOcf9Ikd/v/hq
+ ySzKI3sFg6bR5AFl+0SigQCMS5O//vBdkoENGYv2tO8dgyyhfmVKopRe44MNEuI24ykaR8JAV9+
+ LeOA==
+X-Google-Smtp-Source: AGHT+IGT55NU0BlDJ31etzAZzwwdbo6oK3auVttjNUBLIcttNpXx7p0ZPMVe7KbzfCl+NmgFG+Zxcg==
+X-Received: by 2002:a05:600c:4595:b0:43c:fe5e:f03b with SMTP id
+ 5b1f17b1804b1-454f427c3b8mr167076405e9.30.1752576017641; 
+ Tue, 15 Jul 2025 03:40:17 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45614aeba29sm72541985e9.11.2025.07.15.03.40.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 15 Jul 2025 03:40:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
+Subject: [PATCH-for-10.1 v5 0/7] accel/system: Add 'info accel' on human
+ monitor
+Date: Tue, 15 Jul 2025 12:40:08 +0200
+Message-ID: <20250715104015.72663-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,108 +105,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 16:59:38 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+Missing review: #1 and #5
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> 
-> Helpers will batch the commands and issue at once to host SMMUv3.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->  hw/arm/smmuv3-accel.c    | 65 ++++++++++++++++++++++++++++++++++++++++
->  hw/arm/smmuv3-accel.h    | 16 ++++++++++
->  hw/arm/smmuv3-internal.h | 12 ++++++++
->  3 files changed, 93 insertions(+)
-> 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 04c665ccf5..1298b4f6d0 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -168,6 +168,71 @@ smmuv3_accel_install_nested_ste_range(SMMUState *bs, SMMUSIDRange *range)
->      g_hash_table_foreach(bs->configs, smmuv3_accel_ste_range, range);
->  }
->  
-> +/* Update batch->ncmds to the number of execute cmds */
+Philippe Mathieu-Daudé (7):
+  Revert "accel/tcg: Unregister the RCU before exiting RR thread"
+  accel/tcg: Extract statistic related code to tcg-stats.c
+  accel/system: Introduce @x-accel-stats QMP command
+  accel/system: Add 'info accel' on human monitor
+  accel/tcg: Propagate AccelState to tcg_dump_stats()
+  accel/tcg: Implement get_[vcpu]_stats()
+  accel/hvf: Implement get_vcpu_stats()
 
-Not obvious what the return value here means. Maybe a comment?
+ qapi/accelerator.json         |  17 +++
+ accel/tcg/internal-common.h   |   2 +-
+ include/accel/accel-cpu-ops.h |   3 +
+ include/accel/accel-ops.h     |   2 +
+ accel/accel-qmp.c             |  35 ++++++
+ accel/accel-system.c          |   9 ++
+ accel/hvf/hvf-accel-ops.c     |  24 ++++
+ accel/tcg/monitor.c           | 202 +-------------------------------
+ accel/tcg/tcg-accel-ops-rr.c  |   2 -
+ accel/tcg/tcg-all.c           |   6 +
+ accel/tcg/tcg-stats.c         | 214 ++++++++++++++++++++++++++++++++++
+ accel/meson.build             |   2 +-
+ accel/tcg/meson.build         |   1 +
+ hmp-commands-info.hx          |  12 ++
+ 14 files changed, 326 insertions(+), 205 deletions(-)
+ create mode 100644 accel/accel-qmp.c
+ create mode 100644 accel/tcg/tcg-stats.c
 
-> +bool smmuv3_accel_issue_cmd_batch(SMMUState *bs, SMMUCommandBatch *batch)
-> +{
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    uint32_t total = batch->ncmds;
-> +    IOMMUFDViommu *viommu_core;
-> +    int ret;
-> +
-> +    if (!bs->accel) {
-> +        return true;
-> +    }
-> +
-> +    if (!s_accel->viommu) {
-> +        return true;
-> +    }
-> +
-> +    viommu_core = &s_accel->viommu->core;
-> +    ret = iommufd_backend_invalidate_cache(viommu_core->iommufd,
-> +                                           viommu_core->viommu_id,
-> +                                           IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3,
-> +                                           sizeof(Cmd), &batch->ncmds,
-> +                                           batch->cmds, NULL);
-> +    if (!ret || total != batch->ncmds) {
-> +        error_report("%s failed: ret=%d, total=%d, done=%d",
-> +                      __func__, ret, total, batch->ncmds);
-> +        return ret;
+-- 
+2.49.0
 
-This is reporting an error either way but returning success for the second
-condition which looks odd.  Add a comment if intended.
-
-> +    }
-> +
-> +    batch->ncmds = 0;
-> +    return ret;
-
-return true; given I think we know it's true if we get here?
-
-> +}
-> +
-> +/*
-> + * Note: sdev can be NULL for certain invalidation commands
-> + * e.g., SMMU_CMD_TLBI_NH_ASID, SMMU_CMD_TLBI_NH_VA etc.
-> + */
-> +void smmuv3_accel_batch_cmd(SMMUState *bs, SMMUDevice *sdev,
-> +                           SMMUCommandBatch *batch, Cmd *cmd,
-> +                           uint32_t *cons)
-> +{
-> +    if (!bs->accel) {
-> +        return;
-> +    }
-> +
-> +   /*
-> +    * We may end up here for any emulated PCI bridge or root port type
-> +    * devices. The batching of commands only matters for vfio-pci endpoint
-> +    * devices with Guest S1 translation enabled. Hence check that, if
-> +    * sdev is available.
-> +    */
-> +    if (sdev) {
-> +        SMMUv3AccelDevice *accel_dev;
-> +        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
-> +
-> +        if (!accel_dev->s1_hwpt) {
-> +            return;
-> +        }
-> +    }
-> +
-> +    batch->cmds[batch->ncmds] = *cmd;
-> +    batch->cons[batch->ncmds++] = *cons;
-> +    return;
-Drop this trailing return.
-
-> +}
 
