@@ -4,94 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D2BC83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B5EC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubcZ7-0000xf-9E; Tue, 15 Jul 2025 06:07:13 -0400
+	id 1ubcvM-0006ho-0x; Tue, 15 Jul 2025 06:30:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubcZ5-0000wS-Qq
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:07:11 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubcZ3-00029L-JB
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:07:11 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4560cdf235cso15127925e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:07:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752574026; x=1753178826; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ptqoZ55tBMoXVh25fn85EYsaDzQkgTXiiNRuyERDgz8=;
- b=AIgy6UManHrCULZC/+NRaTXrX+cN9J+4d4uyOUmvFB8YkwEatGohG612uoX4UQAUlq
- CGO3SgdlaKZ9lC0DmWQP4f4ukLAsY6bZxulRNXpdfbLBB3RhQ2fAiFTOdkoVjDymrb6w
- oeP8mvVpp3CIvmg8tYsuurg/dZrMIp2hH1uCiqnVi1FmArQSRpEcrzri0bpe3uONllSB
- GfKfYFr1zleVS+SXdOyzv/GZOJ+m0EVAEwQqrO5S/W2+Wfmzq9tvhVoPzA7Zovmco7Dq
- HUQKYpyd08FW2GZovnMnyiFAXLEWQ+07aG4o4wUG0qwpDfIjIOFqQpqvKaCMhN5jkTeB
- cQvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752574026; x=1753178826;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ptqoZ55tBMoXVh25fn85EYsaDzQkgTXiiNRuyERDgz8=;
- b=t2Wv7X6PUwPlA7v5UaUblrH9WQIyLmn10gcNME4ifo95re3dX3GeivFivwII7QJPmn
- jj183o5MvrIGA3wccfJB0CbgOfDGfJzhR+WNxj6joXcpuZbujPEOy4w8efDxdl+KjDJ+
- ZC5MLPGjW+WjKO+oBDiirwontZEDq8XZ1DBiXVja7frHnqKUjMezGlCE3Z5RN4BcUWZK
- k9TcRudahHvuvaFu0Zb0cOmJ/jcrgDvujMWZzXRwDTzkCdxua8Qzov6wHZmeLLD01yQT
- QR9u71QF2APIHPN7TJEV61PSz5VXvruzdleWPJOPmwZ1sTIXVfZeMDSJZDgQYEe5/e0e
- D22w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKahENo63JZqCzDMI+S+riTJPFF+qgRHHXY/mI6T1EGMAaFevbx3TWM86DepGZUGPBrKQFgt3qmwcW@nongnu.org
-X-Gm-Message-State: AOJu0Yx3qMB5qa4Dx5tMAmwm7lE7UQFjdHWlZ+qeOuIHPChT63QmTMM/
- MPNzdeHooIv2dNqimBlLFkdSp8+bfC0dAXXhYCR0RhyV9wrzKq4JwAriz9+dOBKGhB4=
-X-Gm-Gg: ASbGncstpdz0iUuDExRURuOWAuwl7WRc+xD+5KPVYywYBsOy0wd6ebOO/dO4FlFVrW3
- Kqq0ouVDc3iAZzYV0yL3yIOtOAdTLgInaub24TOf85/V3nkM3svT5oEHfoSFmw/m48XyLiXFJzM
- s79t3NzQjuEysPtLcAgn/B1Wm49Te3d/KnZXy0wO0jeOciiPCpNQz2AmsQVXBLjxcKX87P4l+uN
- 9zn3RTpVkV+IVbwT1ZYW7fkknYclRxTf+r3f5qjgeUVT1feuzOMT6LAsjOMSwjfVUpxdd4o6jlk
- UhRztIHsVrktyuPIWGShI2nuA6vPZFfMujpy6fSiDALlfxwx8gFq0PFVkP3cWYMQTcuAn3/fCAD
- qHwO3Re7CdkxI6MuHYepZq1reFKuJ6LBlQPWkmvgRUtJVlAtBp4gFFETB3jFbESv+iRmuUiE=
-X-Google-Smtp-Source: AGHT+IGqlyJq9r+9hdMszPNZErV7UUPsxvoJwXbZnrbRMDALKSxJrgeIzroJ/hNrv7olEEb2cwvz/Q==
-X-Received: by 2002:a05:600c:1913:b0:442:c993:6f94 with SMTP id
- 5b1f17b1804b1-4561a16064fmr78933425e9.12.1752574026151; 
- Tue, 15 Jul 2025 03:07:06 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e14e82sm14792905f8f.71.2025.07.15.03.07.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 03:07:05 -0700 (PDT)
-Message-ID: <97a9b456-9983-4c1f-8fb2-5bba94c95655@linaro.org>
-Date: Tue, 15 Jul 2025 12:07:04 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubcvB-0006Yc-6A; Tue, 15 Jul 2025 06:30:04 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubcv2-0001rW-Of; Tue, 15 Jul 2025 06:30:00 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhFlS5b0Rz6L4tM;
+ Tue, 15 Jul 2025 18:28:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 266CD140144;
+ Tue, 15 Jul 2025 18:29:44 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
+ 2025 12:29:43 +0200
+Date: Tue, 15 Jul 2025 11:29:41 +0100
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <linuxarm@huawei.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
+ <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 08/15] hw/arm/smmuv3-accel: Add
+ set/unset_iommu_device callback
+Message-ID: <20250715112941.00005348@huawei.com>
+In-Reply-To: <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/11] hw/riscv: Add support for MIPS Boston-aia board
- model
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250703104925.112688-1-djordje.todorovic@htecgroup.com>
- <20250703104925.112688-10-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250703104925.112688-10-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,40 +74,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/25 12:49, Djordje Todorovic wrote:
-> The board model supports up to 64 harts with MIPS CPS, MIPS GCR,
-> MIPS CPC, AIA plic, and AIA clint devices. The model can create
-> boot code, if there is no -bios parameter. We can specify -smp x,
-> cores=y,thread=z.
+On Mon, 14 Jul 2025 16:59:34 +0100
+Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+
+> From: Nicolin Chen <nicolinc@nvidia.com>
 > 
-> Ex: Use 4 cores and 2 threads with each core to
-> have 8 smp cpus as follows.
->    qemu-system-riscv64 -cpu mips-p8700 \
->    -m 2G -M boston-aia \
->    -smp 8,cores=4,threads=2 -kernel fw_payload.bin \
->    -drive file=rootfs.ext2,format=raw -serial stdio
+> Implement a set_iommu_device callback:
+>  -If found an existing viommu reuse that.
+>    (Devices behind the same physical SMMU should share an S2 HWPT)
+>  -Else,
+>     Allocate a viommu with the nested parent S2 hwpt allocated by VFIO.
+>     Allocate bypass and abort hwpt.
+>  -And add the dev to viommu device list
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   configs/devices/riscv64-softmmu/default.mak |   1 +
->   docs/system/riscv/mips.rst                  |  25 +
->   docs/system/target-riscv.rst                |   1 +
->   hw/riscv/Kconfig                            |   6 +
->   hw/riscv/boston-aia.c                       | 484 ++++++++++++++++++++
->   hw/riscv/cps.c                              | 187 ++++++++
->   hw/riscv/meson.build                        |   1 +
->   include/hw/riscv/cps.h                      |  75 +++
->   8 files changed, 780 insertions(+)
+> Also add an unset_iommu_device to unwind/cleanup above.
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-Patch is too big. Please provide the CPS as a preliminary patch,
-then the Boston AIA board, then add tests for this new board. You
-can find various examples in the tests/functional/ directory.
 
-Regards,
+One questions inline plus trivial stuff.  I'm not yet up to speed with
+all the iommufd stuff so this is rather superficial for now.
 
-Phil.
+> +static bool
+> +smmuv3_accel_dev_alloc_viommu(SMMUv3AccelDevice *accel_dev,
+> +                               HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+> +{
+> +    struct iommu_hwpt_arm_smmuv3 bypass_data = {
+> +        .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
+> +    };
+> +    struct iommu_hwpt_arm_smmuv3 abort_data = {
+> +        .ste = { SMMU_STE_VALID, 0x0ULL },
+> +    };
+> +    SMMUDevice *sdev = &accel_dev->sdev;
+> +    SMMUState *bs = sdev->smmu;
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +    SMMUv3AccelState *s_accel = s->s_accel;
+> +    uint32_t s2_hwpt_id = idev->hwpt_id;
+> +    SMMUS2Hwpt *s2_hwpt;
+> +    SMMUViommu *viommu;
+> +    uint32_t viommu_id;
+> +
+> +    if (s_accel->viommu) {
+> +        accel_dev->viommu = s_accel->viommu;
+> +        return true;
+> +    }
+> +
+> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+> +                                      s2_hwpt_id, &viommu_id, errp)) {
+> +        return false;
+> +    }
+> +
+> +    viommu = g_new0(SMMUViommu, 1);
+> +    viommu->core.viommu_id = viommu_id;
+> +    viommu->core.s2_hwpt_id = s2_hwpt_id;
+> +    viommu->core.iommufd = idev->iommufd;
+> +
+> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
+> +                                    viommu->core.viommu_id, 0,
+> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
+> +                                    sizeof(abort_data), &abort_data,
+> +                                    &viommu->abort_hwpt_id, errp)) {
+> +        goto free_viommu;
+> +    }
+> +
+> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
+> +                                    viommu->core.viommu_id, 0,
+> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
+> +                                    sizeof(bypass_data), &bypass_data,
+> +                                    &viommu->bypass_hwpt_id, errp)) {
+> +        goto free_abort_hwpt;
+> +    }
+> +
+> +    s2_hwpt = g_new(SMMUS2Hwpt, 1);
+> +    s2_hwpt->iommufd = idev->iommufd;
+> +    s2_hwpt->hwpt_id = s2_hwpt_id;
+> +
+> +    viommu->iommufd = idev->iommufd;
+> +    viommu->s2_hwpt = s2_hwpt;
+> +
+> +    s_accel->viommu = viommu;
+> +    accel_dev->viommu = viommu;
+> +    return true;
+> +
+> +free_abort_hwpt:
+> +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
+> +free_viommu:
+> +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
+> +    g_free(viommu);
+
+No unwinding of iommufd_backened_alloc_viommu?
+Looks like we just leak it until destruction of the fd. 
+
+Maybe add a comment for those like me who aren't all that familiar with
+this stuff and see an alloc with no matching free.
+
+
+> +    return false;
+> +}
+> +
+> +static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+> +                                          HostIOMMUDevice *hiod, Error **errp)
+> +{
+> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
+> +    SMMUState *bs = opaque;
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +    SMMUv3AccelState *s_accel = s->s_accel;
+> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
+> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
+> +    SMMUDevice *sdev = &accel_dev->sdev;
+> +
+> +    if (!idev) {
+> +        return true;
+> +    }
+> +
+> +    if (accel_dev->idev) {
+> +        if (accel_dev->idev != idev) {
+> +            error_report("Device 0x%x already has an associated idev",
+> +                         smmu_get_sid(sdev));
+> +            return false;
+> +        } else {
+
+No need for else as other path already returned.
+
+> +            return true;
+> +        }
+> +    }
+> +
+> +    if (!smmuv3_accel_dev_alloc_viommu(accel_dev, idev, errp)) {
+> +        error_report("Device 0x%x: Unable to alloc viommu", smmu_get_sid(sdev));
+> +        return false;
+> +    }
+> +
+> +    accel_dev->idev = idev;
+> +    QLIST_INSERT_HEAD(&s_accel->viommu->device_list, accel_dev, next);
+> +    trace_smmuv3_accel_set_iommu_device(devfn, smmu_get_sid(sdev));
+> +    return true;
+> +}
+
+
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index f3386bd7ae..c4537ca1d6 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -66,6 +66,10 @@ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s
+>  smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
+>  smmu_reset_exit(void) ""
+>  
+> +#smmuv3-accel.c
+> +smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
+> +smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x"
+bracket?
+
 
