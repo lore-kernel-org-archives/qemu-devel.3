@@ -4,87 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F56C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E20C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 16:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubiXp-0005fc-8u; Tue, 15 Jul 2025 12:30:17 -0400
+	id 1ubiYO-00066A-6s; Tue, 15 Jul 2025 12:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ubhrS-0003ph-7w
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:46:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubhuS-00060P-46
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:49:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ubhrK-000540-QG
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:46:29 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubhuQ-0005nA-43
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 11:49:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752594381;
+ s=mimecast20190719; t=1752594571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YeKZ0KmVhAbqsdVN0qJho6dSv0EDr6zEMDxOmyQv/m4=;
- b=g3hSHevVhhIdpY5gRhWw6zhs66tqjjY51Pk7vPG/fX0laNDzYj90SdzRJ7O9u3FbxJ0u72
- TaErtrej/2RpamJ8nm67w8xcQeC1hGDgTWMMs+e+Rhf62wHOxEZs1vmO3rHoHDoJQsdoc6
- 1bx8x27GH5/lkqcGSSFh4O/HmLS60qw=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EaaynNbXAbeJEzd/3fYvfFQk34QQXdyB/l9XIDKEMdY=;
+ b=hYfKuFlKbjMKtzREutT243gh+qb7IwQkgoSuxm5BLGoGrLKSf1vzzzQvwcEAtx3pwdmFDI
+ ot2KpM4icU4bR80EhehOKC+OM0LXx7rNQa+nBklQrzk5nucJv4GTnRZQFCgERzXMH2OngF
+ v9o/aoJnGMt8AgB2hSumfL9tfrOteVE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-aOzxedLhPAeCKgtC2KnEww-1; Tue, 15 Jul 2025 11:46:19 -0400
-X-MC-Unique: aOzxedLhPAeCKgtC2KnEww-1
-X-Mimecast-MFC-AGG-ID: aOzxedLhPAeCKgtC2KnEww_1752594378
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ae0a0683d6dso609215366b.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:46:19 -0700 (PDT)
+ us-mta-629-DiV_xYkUOWKjvv8hF3WssA-1; Tue, 15 Jul 2025 11:49:29 -0400
+X-MC-Unique: DiV_xYkUOWKjvv8hF3WssA-1
+X-Mimecast-MFC-AGG-ID: DiV_xYkUOWKjvv8hF3WssA_1752594568
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f65a705dso3720855f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 08:49:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752594378; x=1753199178;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YeKZ0KmVhAbqsdVN0qJho6dSv0EDr6zEMDxOmyQv/m4=;
- b=fZhCYZOsA5dL3C5C/BCj+BW9r63C8DZwiYwQ8dBYAHm/XoIop0YLJf3joR9wKeIFvs
- mQ36iu4R/QeQOAEIIYSZFON/OQIqvwNZz8g7TF4A5xIyVjcgMxzJXsHfMgL+pCFWFsWr
- hFOrzeZm7A2eopNho/QrcWSog84giXq3l6ezDksKKxGGB1S79Fb5Oj6bdTA1UR3uE2ED
- 7w/+RZkxfwry0AD7oOjuetrYtIbf4sK7PhMkTIMP0anHG8wnRPx7d+KY9oDN6m63pQoY
- AMg+2qaqpeNsy2R33nGY5BuOrnqFz5VKvsaqNkZgtgupCCrxWqiry2gldP/GfIlIuBBk
- 3JJA==
+ d=1e100.net; s=20230601; t=1752594568; x=1753199368;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EaaynNbXAbeJEzd/3fYvfFQk34QQXdyB/l9XIDKEMdY=;
+ b=KvyvGWJncpXX2aEbnIs70YmN29ImsHzwSB5Dh0k+NqR7cGHhZgf+rosFOkSoT10fZo
+ ka21m+Ehs0ESYzwsfoOKYKPR884G8FXljtJdt2CMget/V3jVZDvtSsxBBYqdd1TSafpj
+ aPkWXaKpmHmjN6frPZepZ6mF3aPtacD05fHzmxRU0VzGPls0pf1LS9ezGHxzxKYo4q+h
+ GBfc0xrOIpbypvKD3f4gYiYnBYgncZm32w38DxJsHIKFGg7TFU8ELFRSHp98SQuU3rl8
+ UKqTuIRURvzzgXxu4x/XlJKRFkygxcPI49K17lmj/tWHEp3qE560dokYQkGwP8lYVFyW
+ usHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUP4+OvmYdLTQao+JElHkDDkbbTc4K+mR7/gtYNz3AQYZLH0xOv0KdvejpAFVsMkSJogpdtAPVQK2+u@nongnu.org
-X-Gm-Message-State: AOJu0Yzth14iR7NHxu4x5wbCBSEGAcYzuYYL4jjbi8wsC92sHXBUo8eM
- 5KFDLiUJGk78L0bhjo6Xgpo1cvWFNY6XZOglthU3jct8I4IgG2jpxzQ/A48qRe6ADbv093K1Lbd
- qGX0aO4NcGoNwZzqZ6miTWi7Vd0E70SuK8hh8TYDa8aBs+gQQxSNXI8GrSwv/ZUJoQ5HgM/y8cR
- xWlcijA4ezieIKA0a46GJspP1oIstRq10=
-X-Gm-Gg: ASbGnctUSu5dib7OhEZ/Wbglr4DqiKANXCsT7G+C5RHxX4v0V0JF2HkD85ewFuQGawv
- RFIDjqRDrHeX7P5AmDWbQZD0zDH3l5pBZV085+p1ms7MOBRg+441QVeoD/Hian5EhWvzF5UeSos
- YgBDo4b1PnWz+Grzadyr6DqA==
-X-Received: by 2002:a17:907:962a:b0:ae0:3f20:68f8 with SMTP id
- a640c23a62f3a-ae6fcbc2c32mr1887245366b.39.1752594378047; 
- Tue, 15 Jul 2025 08:46:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlCyXikNssAjjTBsAdIH0MIVmRcQfeT4dCIv8bEKRZETD1LqB+ZQ3r062eu/OZ/7fnE746+1I/QZe0sQ3hiM4=
-X-Received: by 2002:a17:907:962a:b0:ae0:3f20:68f8 with SMTP id
- a640c23a62f3a-ae6fcbc2c32mr1887243166b.39.1752594377707; Tue, 15 Jul 2025
- 08:46:17 -0700 (PDT)
+ AJvYcCW6TrZEWF6f/nKkYt/qeqe5Hg1rQawG+efuwysbaoGKKGiB9fWyMxW7Z1Poe+I5I8ZVPWthPZQplt7H@nongnu.org
+X-Gm-Message-State: AOJu0YxYAoi1GnPiyvtgmdiHY3dOtX/bCJ8QThjtf+ya+bvlu2G/GnA+
+ jw+eqkcU0KYzCKe0lcS4votXvamui7Bd9LFB4U1TCY+Fi1RUW1fV1wi+DSeiWsvQ2sxbwiYO2HZ
+ 2wmqD8Ij2gL80vH23rNPiqkNIZlxUnr+nPWrMrAmcjDH3HqcbMn709+ha
+X-Gm-Gg: ASbGncubI3bDOI9tWe8x4B9GRWSQ3U7PpcjMdHZ6Ow7oKauVwMPuEAdQlESBwdaDUeG
+ FRqPZFKyRErcgEzjfzph+E70nqMb/2VL0OMLSVj2Yfrtj4F7SGNfu7UnVZfnCiwvB2PdRkwtj//
+ Ke2EX1TL2mtqkBeoiQOeOFXIuoDH1btg3wygLvOILLPruOcpuLRV5t0MUFBEdVqz2bOtkj/yVqq
+ e84UmrG15uoNwD+VNH98EXL76trsrmbHjLzGtLRuC6gpUlymKuLBb08GbJjiC7EyuUWKyziWp05
+ a5ss1vCvEiu08jFICRmKzsasGmDn8KRZQUgPz3I0q1C4M3SfUkOgvUeRCJ6mXgeWtw9d/jMHz68
+ cka5jQu3s/Gs=
+X-Received: by 2002:a05:6000:230e:b0:3b5:e6f2:9117 with SMTP id
+ ffacd0b85a97d-3b5f2e3083dmr14052953f8f.39.1752594567552; 
+ Tue, 15 Jul 2025 08:49:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF98qDkBB2TTtzIKKvxQc3djL0N5JfUyVilZbHF8FYISQjuvrvFyi7KXBenNz4gs7duy977fg==
+X-Received: by 2002:a05:6000:230e:b0:3b5:e6f2:9117 with SMTP id
+ ffacd0b85a97d-3b5f2e3083dmr14052923f8f.39.1752594567106; 
+ Tue, 15 Jul 2025 08:49:27 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
+ ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8e0d758sm15119598f8f.49.2025.07.15.08.49.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Jul 2025 08:49:26 -0700 (PDT)
+Message-ID: <e6626fe6-c66c-4b16-93e4-447e43379424@redhat.com>
+Date: Tue, 15 Jul 2025 17:49:25 +0200
 MIME-Version: 1.0
-References: <20250713-vlan-v1-1-a3cf0bcfa644@rsg.ci.i.u-tokyo.ac.jp>
- <ae225e65-0a13-47a8-9bfc-0f8497af2e58@linux.ibm.com>
-In-Reply-To: <ae225e65-0a13-47a8-9bfc-0f8497af2e58@linux.ibm.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Tue, 15 Jul 2025 23:45:41 +0800
-X-Gm-Features: Ac12FXxAVi3H2kkwLzNgapGt3HL99l3IuWXYcy9Tgg-NKyIA1vi-6LvLTL1aVjA
-Message-ID: <CAPpAL=wxV0RmFq+nwSjsYbmYpBkaXE3TPLrxNfrjYrr0hCjkjQ@mail.gmail.com>
-Subject: Re: [PATCH RFC] virtio-net: Fix VLAN filter table initialization
- timing
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- yin31149@gmail.com, 
- eperezma@redhat.com, mst@redhat.com, jasowang@redhat.com, 
- virtualization@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v2 12/13] net: implement tunnel probing
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ kvm@vger.kernel.org
+References: <cover.1752229731.git.pabeni@redhat.com>
+ <94ffdec876d61f22a90e63d6a79ff5517d1c727c.1752229731.git.pabeni@redhat.com>
+ <93de161a-3867-46aa-bfc0-2da951981bcf@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <93de161a-3867-46aa-bfc0-2da951981bcf@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,19 +121,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this patch with virtio-net regression tests, everything works fine.
+On 7/15/25 10:05 AM, Akihiko Odaki wrote:
+> On 2025/07/11 22:02, Paolo Abeni wrote:
+>> diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+>> index 86b6edee94..e7de0672f4 100644
+>> --- a/net/tap-bsd.c
+>> +++ b/net/tap-bsd.c
+>> @@ -217,6 +217,11 @@ int tap_probe_has_uso(int fd)
+>>       return 0;
+>>   }
+>>   
+>> +int tap_probe_has_tunnel(int fd)
+> 
+> This should return bool for consistency.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+Some inconsistency will persist, as others bsd helpers supposed to
+return a bool currently return an int. I tried to be consistent with the
+surrounding code, but no strong objections.
 
-On Mon, Jul 14, 2025 at 5:34=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.ibm=
-.com> wrote:
->
-> On 13-Jul-25 06:52, Akihiko Odaki wrote:
-> > Konstantin, please see if this patch fixes your workload.
-> Yes, it does. It delays vlans[] initialization until
-> virtio_net_set_status(0xf) which later also calls vhost_net_start()
-> which is where the NIC is actually programmed.
->
->
+/P
 
 
