@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0446AC83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 04:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33467C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 04:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubX7N-00019E-Rg; Tue, 15 Jul 2025 00:18:13 -0400
+	id 1ubX8e-0001rj-Ql; Tue, 15 Jul 2025 00:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ubX3C-0007uM-BC
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:14:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ubX39-0007eh-5v
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:13:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752552828;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4kkj667ViCLvZkiJSU23dkS3hxY6bi6u+vpzRPIlZWk=;
- b=ITfUL7/ICSv+3QL4it1uiJ96rggweWJlD4zXDbbgOs7/xWHaTJ7aDNfyOBq6RIlqj1G/N0
- LbVpQFmwbZifKGa/G2WQYB1QecW66X4Jd+LmMhFGutQw+ie5WE3wMDe2+3b5dXwjdH4RXs
- 2V1gG014BdDR/WwmOVzdQBHQSosKf1c=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-YT3_5_rJPPSNjvg6v9Rajw-1; Tue, 15 Jul 2025 00:13:46 -0400
-X-MC-Unique: YT3_5_rJPPSNjvg6v9Rajw-1
-X-Mimecast-MFC-AGG-ID: YT3_5_rJPPSNjvg6v9Rajw_1752552826
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-311e98ee3fcso5560980a91.0
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 21:13:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1ubX8R-0001hm-Cr
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:19:19 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1ubX8P-0001uq-GL
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 00:19:19 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-60780d74c85so7215855a12.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 21:19:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752553155; x=1753157955; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X18Qb6El3DLoOk6eskeNUGsfPX0xeQm0MRvQWs8yl4M=;
+ b=TYWnzwKous1G1GjkyXLNTS8geFS3Hx/EVv661sWZGWWkIoOlnYi0t/1ye2aPQ2CHQa
+ agqGRodd3nrE+9tgxmBBVc85LrW4xaeO1Tv/EX5AP3sRKVw3trADDHq4OY5XQp9fJNfy
+ 2M7+7ryITFtvjZnP0WYCDg4VQs2XbJZyzfZyPxFHgNWWPu/FNDtcC7jGpCZKmJAaTYV0
+ VLs/jvsDNlhdzGV+UrmTZcOubzgHtVFY548Ncl7SHcGTR9/AjCTaVVBT3aSwQu40bRsU
+ Zjz2g/efl2DqbRvbms51qjJ8bwRO51GfwOZrCj4TljEtPgXKqgkAq5S9H0ipRxbj9fHe
+ vVsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752552825; x=1753157625;
- h=content-transfer-encoding:to:subject:message-id:date:from
+ d=1e100.net; s=20230601; t=1752553155; x=1753157955;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4kkj667ViCLvZkiJSU23dkS3hxY6bi6u+vpzRPIlZWk=;
- b=JAhFB5FgWn4ITScVSf4rHqR3p33hB1+Jdktyyn4aC7Q5FTYEO0rua6bLQvaD8kRXw2
- bv57zLAM8dMK7H2QVMPKGx4kF5CYLb8A+paQNzjXwitTtaXaniqPmJvC1v9KnXODQDvO
- fZfZOfQv8NWVH2ywnBDHSLF30xurfKNWWJSWjBpuvKVuBxxxh5+oaaCFD7SyvHJHwfJi
- csk/fkdblgVD7cXQjF21v3GFmQ5c7qRRyWsDWJ6+vqgBuXvhfdOrwFlpvDYh/aFPY48t
- YSl+xBh9GsAM0yvQt92ozsEWo8jSq7GYzHvuwdhRCCPx2x6y3RfSS7LuunQpoUFxDgQe
- aHig==
-X-Gm-Message-State: AOJu0Yw4YY6uED9ZNcwmekELDJumzLzvTlX8GveJeCsT1xesUPnQasV9
- +CG23rWLfK6/fm6sH4o476JF0IEj0LiF6nvCzktgLzTeHbrQYxrX9croDyUd4kZ6Ry87t1f2qBk
- D1KMZKc4qcHhngMq9uorI566czYGTLY44gucaWeu+6b+Yy1qXFnwMsUd8PAicWOlTTcOofRt/1z
- Uu7ew0ES11X7Nom5Rsj2OARTiaxNQp6U+/QdIbcuO8NQ==
-X-Gm-Gg: ASbGncv+L+BmE151neg3LDAgdzq/JI2IV+cfl3nmrceQrh/jIa1Xih7w37arI+N5S76
- cab15x+ubUU6QqyP5upc6hYvFsVFK6e/5SfoVY6hST7psKJDOy5o68ZXHjikpNKIDZ/Ljb2jg28
- CFTBwxaheBEhPrQji9pjA=
-X-Received: by 2002:a17:90a:da83:b0:311:482a:f956 with SMTP id
- 98e67ed59e1d1-31c8f7da75emr3132683a91.5.1752552825398; 
- Mon, 14 Jul 2025 21:13:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1q+ciA1baAO+R+3OwysRaMLIhIXp3sC82bQEvcaz32QErfm34SYa+RW0997RHlo6jthVu+25M+Ys1+cpwCa4=
-X-Received: by 2002:a17:90a:da83:b0:311:482a:f956 with SMTP id
- 98e67ed59e1d1-31c8f7da75emr3132655a91.5.1752552824875; Mon, 14 Jul 2025
- 21:13:44 -0700 (PDT)
+ bh=X18Qb6El3DLoOk6eskeNUGsfPX0xeQm0MRvQWs8yl4M=;
+ b=RQemjSlCAr+UI63ap7cmJakqs5qD13NqtOn6mL3s7L1nosxH5WSRs9FE5faLHhmhNr
+ MdX61heGkaGojQvag4iN2ZDHOe7QaJ5rIA8l1WwftqhigMgtIrjflR24y7x+B5V9bJhn
+ xUKrqrsjzIfm+QYpZBsLMShmGJFbgrsj1orPvOsj9d4GRtUsGDG9+dAMM/gIJzlDJRQ1
+ CPqKODVi3U7tNg+ClxzlMuUO7nWhusHY8Dwjghkh47eI3AZfwhcQyQteaxSaKRNCMLgy
+ rf6O/oiGm153IGevJ6rlamyqewbiCBDZ8lyqND2dSv+d3h+6YM5bvIgjWtMbZRPoeMc6
+ +a3w==
+X-Gm-Message-State: AOJu0Yyqo/x3EdnikpBd6iQMKHfONwkY3K4x6XEw53glmeYBlt3CJH9Y
+ ZospTHcHtjTXAWnZU9xM/VVXAr5Ri2ved+6VF+0rRmNrfMtBI+C+nnnAM2vTxPLKWCIG542ROE7
+ 5z2Tvd8WhfbUW9glSOzNbPD+Isx0Rc74=
+X-Gm-Gg: ASbGnctaEt1A6zepbJLOTNuI3GsT1E2Z53HPwikuTq3Fatv7xg3LTD3K4sBsRotGN49
+ 5qhS1wqBj1L6yGzJZg+GD1qHK27tK0vRqmsiM4QCg0rPuK3Z7cb3+ZNCLZVT3Zun/x3hdlk+r+t
+ EyEckWuI/F3Hwr5depnNN6CxMgs3gxnoUd94bX2g/oMnweyl6iYkBDyIJV85q4XLPhK7vJRUIc1
+ es=
+X-Google-Smtp-Source: AGHT+IFxuX44j9soZbBMvssO9gQwI0aqLfVGtYCYgs/ikOj6BLMiARjCARXsR1WP57HpK/b2SbRyCmtTp/2E5TsyD5E=
+X-Received: by 2002:aa7:d512:0:b0:60e:b01:74c1 with SMTP id
+ 4fb4d7f45d1cf-6126b6e4e70mr680808a12.31.1752553154811; Mon, 14 Jul 2025
+ 21:19:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250714053423.10415-1-jasowang@redhat.com>
-In-Reply-To: <20250714053423.10415-1-jasowang@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 15 Jul 2025 12:13:32 +0800
-X-Gm-Features: Ac12FXz4EZpf5S4Z0oGdqL46s52axZYSpKRKg4CyvY8u0tPzSCenb-tpmW35u9Q
-Message-ID: <CACGkMEuLMqECDb-DYqcEQjF+rhYjT1gf0i7q6DiEWtYh0wuu5w@mail.gmail.com>
-Subject: Re: [PULL 00/13] Net patches
-To: qemu-devel@nongnu.org
+References: <20250714111039.4150419-1-marcandre.lureau@redhat.com>
+ <CAJ+F1C+SsUmNYVxMgRMBor+gxv+Yc6dz=4ZnmkY7pNisdgf+sw@mail.gmail.com>
+In-Reply-To: <CAJ+F1C+SsUmNYVxMgRMBor+gxv+Yc6dz=4ZnmkY7pNisdgf+sw@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 15 Jul 2025 00:19:02 -0400
+X-Gm-Features: Ac12FXxN7RJK0DxX7gY9l-het2KmdBXCXUaAppQfTwj8hmQvuqtp4Zy4d8Ueo-U
+Message-ID: <CAJSP0QXdHHYqZNDF-QM==oxdbgk=A-bJ9p2pZe55552jhPdYXQ@mail.gmail.com>
+Subject: Re: [PULL 00/13] Ui patches
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +95,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 1:34=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
+On Mon, Jul 14, 2025 at 10:02=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
 >
-> The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b5433=
-36:
+> On Mon, Jul 14, 2025 at 3:45=E2=80=AFPM <marcandre.lureau@redhat.com> wro=
+te:
+> >
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > The following changes since commit 9a4e273ddec3927920c5958d2226c6b38b54=
+3336:
+> >
+> >   Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into=
+ staging (2025-07-13 01:46:04 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
+> >
+> > for you to fetch changes up to c99b7e6d4aa8bcc12d47483ebe81072168de56fb=
+:
+> >
+> >   tpm: "qemu -tpmdev help" should return success (2025-07-14 15:02:00 +=
+0400)
+> >
+> > ----------------------------------------------------------------
+> > UI-related for 10.1
+> >
+> > - [PATCH v3 0/2] ui/vnc: Do not copy z_stream
+> > - [PATCH v6 0/7] ui/spice: Enable gl=3Don option for non-local or remot=
+e clients
+> > - [PATCH v6 0/1] Allow injection of virtio-gpu EDID name
+> > - [PATCH 0/2] ui/gtk: Add keep-aspect-ratio and scale option
+> >
+> > ----------------------------------------------------------------
+> >
+> > Akihiko Odaki (2):
+> >   ui/vnc: Do not copy z_stream
+> >   ui/vnc: Introduce the VncWorker type
+> >
+> > Andrew Keesler (1):
+> >   hw/display: Allow injection of virtio-gpu EDID name
+> >
+> > Marc-Andr=C3=A9 Lureau (1):
+> >   tpm: "qemu -tpmdev help" should return success
+> >
+> > Vivek Kasireddy (7):
+> >   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+> >   ui/spice: Enable gl=3Don option for non-local or remote clients
+> >   ui/spice: Add an option for users to provide a preferred video codec
+> >   ui/spice: Add an option to submit gl_draw requests at fixed rate
+> >   ui/console-gl: Add a helper to create a texture with linear memory
+> >     layout
+> >   ui/spice: Create a new texture with linear layout when gl=3Don is
+> >     specified
+> >   ui/spice: Blit the scanout texture if its memory layout is not linear
+> >
+> > Weifeng Liu (2):
+> >   ui/gtk: Add keep-aspect-ratio option
+> >   ui/gtk: Add scale option
 >
->   Merge tag 'pull-tcg-20250711' of https://gitlab.com/rth7680/qemu into s=
-taging (2025-07-13 01:46:04 -0400)
->
-> are available in the Git repository at:
->
->   https://github.com/jasowang/qemu.git tags/net-pull-request
->
-> for you to fetch changes up to da703b06a52bfb5fe1a77b0eddbb8d68d3f70762:
->
->   net/passt: Implement vhost-user backend support (2025-07-14 13:27:09 +0=
-800)
+> NACK, will resend because when Spice is not recent enough:
+> ../ui/spice-core.c: In function 'qemu_spice_init':
+> ../ui/spice-core.c:673:17: error: unused variable 'video_codec'
+> [-Werror=3Dunused-variable]
 
- I decided to include Daniel's AF_XDP enhancement, so I will post V2
-of the PULL.
+Okay, holding off on this pull request.
 
-Thanks
-
+Stefan
 
