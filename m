@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108B4C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 13:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9CCC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 13:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubfRO-0006Tk-9g; Tue, 15 Jul 2025 09:11:26 -0400
+	id 1ubfRT-0006fL-2V; Tue, 15 Jul 2025 09:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangzhijie@bosc.ac.cn>)
- id 1ubZXk-00073C-NC; Tue, 15 Jul 2025 02:53:37 -0400
-Received: from [115.124.28.128] (helo=out28-128.mail.aliyun.com)
+ id 1ubaE0-000568-0f; Tue, 15 Jul 2025 03:37:16 -0400
+Received: from [115.124.28.131] (helo=out28-131.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangzhijie@bosc.ac.cn>)
- id 1ubZXe-0008Jd-J5; Tue, 15 Jul 2025 02:53:36 -0400
+ id 1ubaDw-0007MN-T7; Tue, 15 Jul 2025 03:37:15 -0400
 Received: from aliyun.com(mailfrom:zhangzhijie@bosc.ac.cn
- fp:SMTPD_---.dn80ZvQ_1752561842 cluster:ay29) by smtp.aliyun-inc.com;
- Tue, 15 Jul 2025 14:44:03 +0800
+ fp:SMTPD_---.dnDqMsY_1752564773 cluster:ay29) by smtp.aliyun-inc.com;
+ Tue, 15 Jul 2025 15:32:54 +0800
 From: zhangzhijie <zhangzhijie@bosc.ac.cn>
 To: zhangzhijie@bosc.ac.cn, wangran@bosc.ac.cn, zhangjian@bosc.ac.cn,
  peter.maydell@linaro.org, andrew.smirnov@gmail.com, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v1] PCIE-Host Support 64Bit resource for DesignwarePCIEHost
-Date: Tue, 15 Jul 2025 14:44:00 +0800
-Message-Id: <20250715064400.2289152-1-zhangzhijie@bosc.ac.cn>
+Subject: [PATCH v1] hw/pci-host/designware: Support 64Bit resource for
+ DesignwarePCIEHost
+Date: Tue, 15 Jul 2025 15:32:51 +0800
+Message-Id: <20250715073251.2376473-1-zhangzhijie@bosc.ac.cn>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.128 (deferred)
-Received-SPF: pass client-ip=115.124.28.128;
- envelope-from=zhangzhijie@bosc.ac.cn; helo=out28-128.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.131 (deferred)
+Received-SPF: pass client-ip=115.124.28.131;
+ envelope-from=zhangzhijie@bosc.ac.cn; helo=out28-131.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 15 Jul 2025 09:08:53 -0400
+X-Mailman-Approved-At: Tue, 15 Jul 2025 09:08:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
