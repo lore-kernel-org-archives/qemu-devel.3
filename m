@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5382C83F1D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14DDC83F22
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubd5P-0004ZV-Bg; Tue, 15 Jul 2025 06:40:35 -0400
+	id 1ubd5T-0004ec-Bn; Tue, 15 Jul 2025 06:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5N-0004XL-Ug
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:33 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5R-0004cj-Nv
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:37 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5L-0005mD-6P
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:33 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5P-0005mx-Qy
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:37 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4560add6cd2so20795845e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:30 -0700 (PDT)
+ 5b1f17b1804b1-45617887276so17109025e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752576029; x=1753180829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752576034; x=1753180834; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/byhEjb91JNcKs2JPcnZQy4J3egNaCRw2egdh55YO8I=;
- b=Z+4IqMoX6S88MNXsdZeLJh2S7sjsSGv2WqWY21ViYgCsuFAbXtq6PtmHgLyktAxnRL
- aX755I8aFm9mBH01157GZ+eTO3/ZRSXqY7eMtdeuwDWkf+lWRnbh1mSKV7JtltVVEeUg
- P/BQ78t/xv6xUYTwTWDTgOr1QXQA4v6VfnPgX49mV/A8exhA3mCtci+86DddF4BDbDDw
- lZyQC1iarftv9PLJXp5d1EktUqd/PQpnaY93lZfc/HBAgUrgCCQEwVdVASb41BmkwbRr
- pCSPpYQls4eGqiagCfFwW+rBii8fw1GcqAAi/q2FFhjWZpgSFwbU/z4jDkp9qI8ZTkzg
- lUfg==
+ bh=kTH2R2emY9oOZylCpjFlFocpeep/S4agDx3DNsL1BWQ=;
+ b=bACpss8iQpliGnI9Mjk8wecIQiRny91cMNPMREUbCodEWAlKSeoTmXSqSioWLRwSY/
+ Bl5CiF0k3cxyXIHdn5iRQ9GaQ9gjJ9XCZVMBHMMU0jYwMkaRrwBhO3g79JIsuDsyPYAN
+ 0nAZYkLA4UvZBORP0AKlSEcjESH0TK6IhABZpNNQDZMtsBR1cSDEvTRvSrfOFnkt77yf
+ 5pJlc78jnh7tOvm3fRiKXB9Evijp6g7+y5blryvgm5x6vmwB4R2v8Btb1jvo2Z1wijGQ
+ eZ961+aabrSBAOHzej9BAfdMbJ7un6TFARAdNaYVENCPRnZDsYo+eXdWypT2ZaGsKL05
+ Qjvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752576029; x=1753180829;
+ d=1e100.net; s=20230601; t=1752576034; x=1753180834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/byhEjb91JNcKs2JPcnZQy4J3egNaCRw2egdh55YO8I=;
- b=wMar1FcDT7Ixd2IG/h+vqpEXK1PjOduxsis0AKnRieSdhInE/beIhpBBpKJelFDlnu
- 6b57sb2v8p9NR4geAQbe7TyW3WVFjiQnTYMPGr7wmqfQzMM6glpX280a+WXOnopITRWD
- J39R2W4KuczvarUGrIo2nXs/QrXEQGehMaQr+y+YezPOy+295yxvYrGakatQCZ19PAtr
- s1UoobeM+hDR8BTjv+LDzIyrHVMXkpbYvZmogdTLIC1/bPYVvqIkxYEjv2ae2nWVT7WN
- l0lvirsidPsDiXEefZhqp3LAZZa15j0gIGjIGrJBH7hVfWjs1HeRyDmQ4buof2d5qVbL
- zvQw==
-X-Gm-Message-State: AOJu0Yw+OxtRERtdq9bhvGFyIBNo6D7AmcAeJxN2X1X+ZB1RBGSUam1a
- o9NksNw/Vo17uBhSK/WRZ2g/umVv37sqIdGgwmZWZAfHvv7maRo3E99o4VPAEahOn/z20VJc8wN
- mO5o6
-X-Gm-Gg: ASbGncuw1vVpRB3zMbvkdKdVe1Jt8f0eYsRHdh//Gst7wLd66i7PQKtxaPejwB2VkmP
- iusoTUX+UX73rKTsOGFQCghEYH1Vax2FCAvi/JCXsFoDlkRL8M50l/d/3v29idaiD9BRBvnZtzR
- 9xCMdDoh0gRcCyi9u31XEzHHHIciE59w2fZVCL1uzN7HLn/q1srtw305f9N/oHyF8T4dowT+tG9
- M9/qEVVkKqS4641/6mMacYziXtUcO2Dp3VI45IlqDZIwTMezKJQ6Af+XvdQmZX7kvUiYwnLNJvy
- 7FZsa8Cf9Brji1nVTvgbZ7AZ9Sc9R63sfBTytEKE+xHuOulecsxQu4FHI0C7Oi67YItNShlHnNJ
- wqxsHisE41VR7on77lpWaw40YvCn8Ge1j5LovcZq7BwVabN+HqVNg6ltoMQ9si46ZkVQSnbr0A0
- 1jsg==
-X-Google-Smtp-Source: AGHT+IGcnT4i3Y+H8BbqKStZ8N+6aPDFvXq0rMvF3a40qGIN4f9nPzh6PnaYs0CeAoitIPR0oLMmOg==
-X-Received: by 2002:a05:600c:a101:b0:456:18b3:df2a with SMTP id
- 5b1f17b1804b1-45625e3f88amr20236075e9.7.1752576028937; 
- Tue, 15 Jul 2025 03:40:28 -0700 (PDT)
+ bh=kTH2R2emY9oOZylCpjFlFocpeep/S4agDx3DNsL1BWQ=;
+ b=IHC0dWtUntJyV8zj2NzclJKQIVREQSbe1BF42H/ijdBgxH3lwTiFQd5Ifbhz+5xwOf
+ g5ZhRU7AzEOsB+eWEJHR+nnTNnmaX6N12M0HnaWCOY3KtKZX3nOHJCVkvRw0JUExom0o
+ OwAuANMidXDgUE2Qung5Vqq68CloFqMeusZo1GUJ2A06kGbKkRsyh76ux9CD32KgF+gt
+ tsNYYu79CHQ9RPhEeK+DMTmlE3jjwUTpHdKE/2LSH96pSsJY23YVlLvzD9+pj6Poi348
+ Y35jE06+B5ogfmiP07C2RIE2WDNWpoi7YvE8qfzSdBOfX7Jx01hgj+sTJzeyjyRZ4OBk
+ UwxA==
+X-Gm-Message-State: AOJu0Yxbuisb6a2J40USBu1SehlBEcJa4cg5mlQF2oDaTrkQwbJlNr22
+ mMZFu6ladRJw1eFm68h+649FKzxJoqJeoVZFJVr1YH2qLLyDtRJPkJ75RK0MvWcRU1xckKUnplj
+ CdVnP
+X-Gm-Gg: ASbGncuJlc3fCrpYJwI0wbDuxtrvc2E5YpuuoQXmso1FwRALRiTfIBCV9Tcu/gf/1vL
+ xewPTDaJ+Yjhl453iSYWujilXSadvZUdybAXOMh0UIymvzy08sMSZ3wJU2kX7ILl/j9Jpe8GXQy
+ k51UCQPb/7vnuDa1MqzV5vTCRb/BrBM78hAh2iUBgxLwbXpm/Xom1DBalLpnTRcHtGZx9SMtuS+
+ gVmOETzAIS75IgDj10KZMHN2sft+DM5MOZcA0qbCRBdRMYVvsqRbA5IYeb2seGUlgCHdhw0bkft
+ S3tX3oiQZprpiu7UYCIS5Cwszbnzq/6po9EObLaoGCS+a1/SoBSmILgMnoWE15yfP/XlEJN9KOb
+ 6dKM0a5MtCcDN07HbJj3vaecNr/NwYMBSdT3RNZIxZs8hCT3CRL0r+N3yKtlKLkyhpp29XMpPXp
+ np7w==
+X-Google-Smtp-Source: AGHT+IGU3ThX0L7n8EBDyWCebR7ykt2CDe/ZKTG3gbCZVw6vyEpNeK5DJDxAG7mU5ZME+toQPiZGlA==
+X-Received: by 2002:a05:600c:670a:b0:456:1752:2b44 with SMTP id
+ 5b1f17b1804b1-456175234f1mr59233155e9.23.1752576034068; 
+ Tue, 15 Jul 2025 03:40:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e2cfsm14604387f8f.75.2025.07.15.03.40.26
+ 5b1f17b1804b1-4561323a488sm75651795e9.1.2025.07.15.03.40.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 03:40:28 -0700 (PDT)
+ Tue, 15 Jul 2025 03:40:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -78,10 +78,10 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH-for-10.1 v5 2/7] accel/tcg: Extract statistic related code to
- tcg-stats.c
-Date: Tue, 15 Jul 2025 12:40:10 +0200
-Message-ID: <20250715104015.72663-3-philmd@linaro.org>
+Subject: [PATCH-for-10.1 v5 3/7] accel/system: Introduce @x-accel-stats QMP
+ command
+Date: Tue, 15 Jul 2025 12:40:11 +0200
+Message-ID: <20250715104015.72663-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715104015.72663-1-philmd@linaro.org>
 References: <20250715104015.72663-1-philmd@linaro.org>
@@ -112,471 +112,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Statistic code is not specific to system emulation (except
-cross-page checks) and can be used to analyze user-mode binaries.
-Extract statistic related code to its own file: tcg-stats.c,
-keeping the original LGPL-2.1-or-later license tag.
+Unstable QMP 'x-accel-stats' dispatches to the
+AccelOpsClass::get_stats() and get_vcpu_stats() handlers.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- accel/tcg/monitor.c   | 201 ---------------------------------------
- accel/tcg/tcg-stats.c | 215 ++++++++++++++++++++++++++++++++++++++++++
- accel/tcg/meson.build |   1 +
- 3 files changed, 216 insertions(+), 201 deletions(-)
- create mode 100644 accel/tcg/tcg-stats.c
+ qapi/accelerator.json         | 17 +++++++++++++++++
+ include/accel/accel-cpu-ops.h |  3 +++
+ include/accel/accel-ops.h     |  2 ++
+ accel/accel-qmp.c             | 35 +++++++++++++++++++++++++++++++++++
+ accel/accel-system.c          |  1 +
+ accel/meson.build             |  2 +-
+ 6 files changed, 59 insertions(+), 1 deletion(-)
+ create mode 100644 accel/accel-qmp.c
 
-diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
-index 778b12613f4..adb9de5a1c6 100644
---- a/accel/tcg/monitor.c
-+++ b/accel/tcg/monitor.c
-@@ -7,213 +7,12 @@
-  */
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+index d55fe1aa0a3..6029e7307a7 100644
+--- a/qapi/accelerator.json
++++ b/qapi/accelerator.json
+@@ -37,3 +37,20 @@
+ #     <- { "return": { "enabled": true, "present": true } }
+ ##
+ { 'command': 'query-kvm', 'returns': 'KvmInfo' }
++
++##
++# @x-accel-stats:
++#
++# Query accelerator statistics
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: accelerator statistics
++#
++# Since: 10.1
++##
++{ 'command': 'x-accel-stats',
++  'returns': 'HumanReadableText',
++  'features': [ 'unstable' ] }
+diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
+index a9191dded7e..0674764914f 100644
+--- a/include/accel/accel-cpu-ops.h
++++ b/include/accel/accel-cpu-ops.h
+@@ -65,6 +65,9 @@ struct AccelOpsClass {
+     /* handle_interrupt is mandatory. */
+     void (*handle_interrupt)(CPUState *cpu, int mask);
  
- #include "qemu/osdep.h"
--#include "qemu/accel.h"
--#include "qemu/qht.h"
- #include "qapi/error.h"
- #include "qapi/type-helpers.h"
- #include "qapi/qapi-commands-machine.h"
- #include "monitor/monitor.h"
--#include "system/cpu-timers.h"
--#include "exec/icount.h"
- #include "system/tcg.h"
--#include "tcg/tcg.h"
- #include "internal-common.h"
--#include "tb-context.h"
--#include <math.h>
--
--static void dump_drift_info(GString *buf)
--{
--    if (!icount_enabled()) {
--        return;
--    }
--
--    g_string_append_printf(buf, "Host - Guest clock  %"PRIi64" ms\n",
--                           (cpu_get_clock() - icount_get()) / SCALE_MS);
--    if (icount_align_option) {
--        g_string_append_printf(buf, "Max guest delay     %"PRIi64" ms\n",
--                               -max_delay / SCALE_MS);
--        g_string_append_printf(buf, "Max guest advance   %"PRIi64" ms\n",
--                               max_advance / SCALE_MS);
--    } else {
--        g_string_append_printf(buf, "Max guest delay     NA\n");
--        g_string_append_printf(buf, "Max guest advance   NA\n");
--    }
--}
--
--static void dump_accel_info(GString *buf)
--{
--    AccelState *accel = current_accel();
--    bool one_insn_per_tb = object_property_get_bool(OBJECT(accel),
--                                                    "one-insn-per-tb",
--                                                    &error_fatal);
--
--    g_string_append_printf(buf, "Accelerator settings:\n");
--    g_string_append_printf(buf, "one-insn-per-tb: %s\n\n",
--                           one_insn_per_tb ? "on" : "off");
--}
--
--static void print_qht_statistics(struct qht_stats hst, GString *buf)
--{
--    uint32_t hgram_opts;
--    size_t hgram_bins;
--    char *hgram;
--    double avg;
--
--    if (!hst.head_buckets) {
--        return;
--    }
--    g_string_append_printf(buf, "TB hash buckets     %zu/%zu "
--                           "(%0.2f%% head buckets used)\n",
--                           hst.used_head_buckets, hst.head_buckets,
--                           (double)hst.used_head_buckets /
--                           hst.head_buckets * 100);
--
--    hgram_opts =  QDIST_PR_BORDER | QDIST_PR_LABELS;
--    hgram_opts |= QDIST_PR_100X   | QDIST_PR_PERCENT;
--    if (qdist_xmax(&hst.occupancy) - qdist_xmin(&hst.occupancy) == 1) {
--        hgram_opts |= QDIST_PR_NODECIMAL;
--    }
--    hgram = qdist_pr(&hst.occupancy, 10, hgram_opts);
--    avg = qdist_avg(&hst.occupancy);
--    if (!isnan(avg)) {
--        g_string_append_printf(buf, "TB hash occupancy   "
--                                    "%0.2f%% avg chain occ. "
--                                    "Histogram: %s\n",
--                               avg * 100, hgram);
--    }
--    g_free(hgram);
--
--    hgram_opts = QDIST_PR_BORDER | QDIST_PR_LABELS;
--    hgram_bins = qdist_xmax(&hst.chain) - qdist_xmin(&hst.chain);
--    if (hgram_bins > 10) {
--        hgram_bins = 10;
--    } else {
--        hgram_bins = 0;
--        hgram_opts |= QDIST_PR_NODECIMAL | QDIST_PR_NOBINRANGE;
--    }
--    hgram = qdist_pr(&hst.chain, hgram_bins, hgram_opts);
--    avg = qdist_avg(&hst.chain);
--    if (!isnan(avg)) {
--        g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
--                                    "Histogram: %s\n",
--                               avg, hgram);
--    }
--    g_free(hgram);
--}
--
--struct tb_tree_stats {
--    size_t nb_tbs;
--    size_t host_size;
--    size_t target_size;
--    size_t max_target_size;
--    size_t direct_jmp_count;
--    size_t direct_jmp2_count;
--    size_t cross_page;
--};
--
--static gboolean tb_tree_stats_iter(gpointer key, gpointer value, gpointer data)
--{
--    const TranslationBlock *tb = value;
--    struct tb_tree_stats *tst = data;
--
--    tst->nb_tbs++;
--    tst->host_size += tb->tc.size;
--    tst->target_size += tb->size;
--    if (tb->size > tst->max_target_size) {
--        tst->max_target_size = tb->size;
--    }
--    if (tb->page_addr[1] != -1) {
--        tst->cross_page++;
--    }
--    if (tb->jmp_reset_offset[0] != TB_JMP_OFFSET_INVALID) {
--        tst->direct_jmp_count++;
--        if (tb->jmp_reset_offset[1] != TB_JMP_OFFSET_INVALID) {
--            tst->direct_jmp2_count++;
--        }
--    }
--    return false;
--}
--
--static void tlb_flush_counts(size_t *pfull, size_t *ppart, size_t *pelide)
--{
--    CPUState *cpu;
--    size_t full = 0, part = 0, elide = 0;
--
--    CPU_FOREACH(cpu) {
--        full += qatomic_read(&cpu->neg.tlb.c.full_flush_count);
--        part += qatomic_read(&cpu->neg.tlb.c.part_flush_count);
--        elide += qatomic_read(&cpu->neg.tlb.c.elide_flush_count);
--    }
--    *pfull = full;
--    *ppart = part;
--    *pelide = elide;
--}
--
--static void tcg_dump_flush_info(GString *buf)
--{
--    size_t flush_full, flush_part, flush_elide;
--
--    g_string_append_printf(buf, "TB flush count      %u\n",
--                           qatomic_read(&tb_ctx.tb_flush_count));
--    g_string_append_printf(buf, "TB invalidate count %u\n",
--                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
--
--    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
--    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
--    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
--    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
--}
--
--static void dump_exec_info(GString *buf)
--{
--    struct tb_tree_stats tst = {};
--    struct qht_stats hst;
--    size_t nb_tbs;
--
--    tcg_tb_foreach(tb_tree_stats_iter, &tst);
--    nb_tbs = tst.nb_tbs;
--    /* XXX: avoid using doubles ? */
--    g_string_append_printf(buf, "Translation buffer state:\n");
--    /*
--     * Report total code size including the padding and TB structs;
--     * otherwise users might think "-accel tcg,tb-size" is not honoured.
--     * For avg host size we use the precise numbers from tb_tree_stats though.
--     */
--    g_string_append_printf(buf, "gen code size       %zu/%zu\n",
--                           tcg_code_size(), tcg_code_capacity());
--    g_string_append_printf(buf, "TB count            %zu\n", nb_tbs);
--    g_string_append_printf(buf, "TB avg target size  %zu max=%zu bytes\n",
--                           nb_tbs ? tst.target_size / nb_tbs : 0,
--                           tst.max_target_size);
--    g_string_append_printf(buf, "TB avg host size    %zu bytes "
--                           "(expansion ratio: %0.1f)\n",
--                           nb_tbs ? tst.host_size / nb_tbs : 0,
--                           tst.target_size ?
--                           (double)tst.host_size / tst.target_size : 0);
--    g_string_append_printf(buf, "cross page TB count %zu (%zu%%)\n",
--                           tst.cross_page,
--                           nb_tbs ? (tst.cross_page * 100) / nb_tbs : 0);
--    g_string_append_printf(buf, "direct jump count   %zu (%zu%%) "
--                           "(2 jumps=%zu %zu%%)\n",
--                           tst.direct_jmp_count,
--                           nb_tbs ? (tst.direct_jmp_count * 100) / nb_tbs : 0,
--                           tst.direct_jmp2_count,
--                           nb_tbs ? (tst.direct_jmp2_count * 100) / nb_tbs : 0);
--
--    qht_statistics_init(&tb_ctx.htable, &hst);
--    print_qht_statistics(hst, buf);
--    qht_statistics_destroy(&hst);
--
--    g_string_append_printf(buf, "\nStatistics:\n");
--    tcg_dump_flush_info(buf);
--}
--
--void tcg_dump_stats(GString *buf)
--{
--    dump_accel_info(buf);
--    dump_exec_info(buf);
--    dump_drift_info(buf);
--}
++    /* get_vcpu_stats: Append statistics of this @cpu to @buf */
++    void (*get_vcpu_stats)(CPUState *cpu, GString *buf);
++
+     /**
+      * @get_virtual_clock: fetch virtual clock
+      * @set_virtual_clock: set virtual clock
+diff --git a/include/accel/accel-ops.h b/include/accel/accel-ops.h
+index 86a27c30fa4..23a8c246e15 100644
+--- a/include/accel/accel-ops.h
++++ b/include/accel/accel-ops.h
+@@ -25,6 +25,8 @@ struct AccelClass {
+     int (*init_machine)(AccelState *as, MachineState *ms);
+     bool (*cpu_common_realize)(CPUState *cpu, Error **errp);
+     void (*cpu_common_unrealize)(CPUState *cpu);
++    /* get_stats: Append statistics to @buf */
++    void (*get_stats)(AccelState *as, GString *buf);
  
- HumanReadableText *qmp_x_query_jit(Error **errp)
- {
-diff --git a/accel/tcg/tcg-stats.c b/accel/tcg/tcg-stats.c
+     /* system related hooks */
+     void (*setup_post)(AccelState *as);
+diff --git a/accel/accel-qmp.c b/accel/accel-qmp.c
 new file mode 100644
-index 00000000000..eb6e20ae985
+index 00000000000..5fb70c6631f
 --- /dev/null
-+++ b/accel/tcg/tcg-stats.c
-@@ -0,0 +1,215 @@
++++ b/accel/accel-qmp.c
+@@ -0,0 +1,35 @@
 +/*
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
++ * QMP commands related to accelerators
 + *
-+ *  QEMU TCG statistics
++ * Copyright (c) Linaro
 + *
-+ *  Copyright (c) 2003-2005 Fabrice Bellard
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qemu/accel.h"
-+#include "qemu/qht.h"
-+#include "qapi/error.h"
-+#include "system/cpu-timers.h"
-+#include "exec/icount.h"
++#include "qapi/type-helpers.h"
++#include "qapi/qapi-commands-accelerator.h"
++#include "accel/accel-ops.h"
++#include "accel/accel-cpu-ops.h"
 +#include "hw/core/cpu.h"
-+#include "tcg/tcg.h"
-+#include "internal-common.h"
-+#include "tb-context.h"
-+#include <math.h>
 +
-+static void dump_drift_info(GString *buf)
-+{
-+    if (!icount_enabled()) {
-+        return;
-+    }
-+
-+    g_string_append_printf(buf, "Host - Guest clock  %"PRIi64" ms\n",
-+                           (cpu_get_clock() - icount_get()) / SCALE_MS);
-+    if (icount_align_option) {
-+        g_string_append_printf(buf, "Max guest delay     %"PRIi64" ms\n",
-+                               -max_delay / SCALE_MS);
-+        g_string_append_printf(buf, "Max guest advance   %"PRIi64" ms\n",
-+                               max_advance / SCALE_MS);
-+    } else {
-+        g_string_append_printf(buf, "Max guest delay     NA\n");
-+        g_string_append_printf(buf, "Max guest advance   NA\n");
-+    }
-+}
-+
-+static void dump_accel_info(GString *buf)
++HumanReadableText *qmp_x_accel_stats(Error **errp)
 +{
 +    AccelState *accel = current_accel();
-+    bool one_insn_per_tb = object_property_get_bool(OBJECT(accel),
-+                                                    "one-insn-per-tb",
-+                                                    &error_fatal);
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++    g_autoptr(GString) buf = g_string_new("");
 +
-+    g_string_append_printf(buf, "Accelerator settings:\n");
-+    g_string_append_printf(buf, "one-insn-per-tb: %s\n\n",
-+                           one_insn_per_tb ? "on" : "off");
-+}
-+
-+static void print_qht_statistics(struct qht_stats hst, GString *buf)
-+{
-+    uint32_t hgram_opts;
-+    size_t hgram_bins;
-+    char *hgram;
-+    double avg;
-+
-+    if (!hst.head_buckets) {
-+        return;
++    if (acc->get_stats) {
++        acc->get_stats(accel, buf);
 +    }
-+    g_string_append_printf(buf, "TB hash buckets     %zu/%zu "
-+                           "(%0.2f%% head buckets used)\n",
-+                           hst.used_head_buckets, hst.head_buckets,
-+                           (double)hst.used_head_buckets /
-+                           hst.head_buckets * 100);
++    if (acc->ops->get_vcpu_stats) {
++        CPUState *cpu;
 +
-+    hgram_opts =  QDIST_PR_BORDER | QDIST_PR_LABELS;
-+    hgram_opts |= QDIST_PR_100X   | QDIST_PR_PERCENT;
-+    if (qdist_xmax(&hst.occupancy) - qdist_xmin(&hst.occupancy) == 1) {
-+        hgram_opts |= QDIST_PR_NODECIMAL;
-+    }
-+    hgram = qdist_pr(&hst.occupancy, 10, hgram_opts);
-+    avg = qdist_avg(&hst.occupancy);
-+    if (!isnan(avg)) {
-+        g_string_append_printf(buf, "TB hash occupancy   "
-+                                    "%0.2f%% avg chain occ. "
-+                                    "Histogram: %s\n",
-+                               avg * 100, hgram);
-+    }
-+    g_free(hgram);
-+
-+    hgram_opts = QDIST_PR_BORDER | QDIST_PR_LABELS;
-+    hgram_bins = qdist_xmax(&hst.chain) - qdist_xmin(&hst.chain);
-+    if (hgram_bins > 10) {
-+        hgram_bins = 10;
-+    } else {
-+        hgram_bins = 0;
-+        hgram_opts |= QDIST_PR_NODECIMAL | QDIST_PR_NOBINRANGE;
-+    }
-+    hgram = qdist_pr(&hst.chain, hgram_bins, hgram_opts);
-+    avg = qdist_avg(&hst.chain);
-+    if (!isnan(avg)) {
-+        g_string_append_printf(buf, "TB hash avg chain   %0.3f buckets. "
-+                               "Histogram: %s\n",
-+                               avg, hgram);
-+    }
-+    g_free(hgram);
-+}
-+
-+struct tb_tree_stats {
-+    size_t nb_tbs;
-+    size_t host_size;
-+    size_t target_size;
-+    size_t max_target_size;
-+    size_t direct_jmp_count;
-+    size_t direct_jmp2_count;
-+    size_t cross_page;
-+};
-+
-+static gboolean tb_tree_stats_iter(gpointer key, gpointer value, gpointer data)
-+{
-+    const TranslationBlock *tb = value;
-+    struct tb_tree_stats *tst = data;
-+
-+    tst->nb_tbs++;
-+    tst->host_size += tb->tc.size;
-+    tst->target_size += tb->size;
-+    if (tb->size > tst->max_target_size) {
-+        tst->max_target_size = tb->size;
-+    }
-+#ifndef CONFIG_USER_ONLY
-+    if (tb->page_addr[1] != -1) {
-+        tst->cross_page++;
-+    }
-+#endif
-+    if (tb->jmp_reset_offset[0] != TB_JMP_OFFSET_INVALID) {
-+        tst->direct_jmp_count++;
-+        if (tb->jmp_reset_offset[1] != TB_JMP_OFFSET_INVALID) {
-+            tst->direct_jmp2_count++;
++        CPU_FOREACH(cpu) {
++            acc->ops->get_vcpu_stats(cpu, buf);
 +        }
 +    }
-+    return false;
++
++    return human_readable_text_from_str(buf);
 +}
-+
-+static void tlb_flush_counts(size_t *pfull, size_t *ppart, size_t *pelide)
-+{
-+    CPUState *cpu;
-+    size_t full = 0, part = 0, elide = 0;
-+
-+    CPU_FOREACH(cpu) {
-+        full += qatomic_read(&cpu->neg.tlb.c.full_flush_count);
-+        part += qatomic_read(&cpu->neg.tlb.c.part_flush_count);
-+        elide += qatomic_read(&cpu->neg.tlb.c.elide_flush_count);
-+    }
-+    *pfull = full;
-+    *ppart = part;
-+    *pelide = elide;
-+}
-+
-+static void tcg_dump_flush_info(GString *buf)
-+{
-+    size_t flush_full, flush_part, flush_elide;
-+
-+    g_string_append_printf(buf, "TB flush count      %u\n",
-+                           qatomic_read(&tb_ctx.tb_flush_count));
-+    g_string_append_printf(buf, "TB invalidate count %u\n",
-+                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
-+
-+    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
-+    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
-+    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
-+    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
-+}
-+
-+static void dump_exec_info(GString *buf)
-+{
-+    struct tb_tree_stats tst = {};
-+    struct qht_stats hst;
-+    size_t nb_tbs;
-+
-+    tcg_tb_foreach(tb_tree_stats_iter, &tst);
-+    nb_tbs = tst.nb_tbs;
-+    /* XXX: avoid using doubles ? */
-+    g_string_append_printf(buf, "Translation buffer state:\n");
-+    /*
-+     * Report total code size including the padding and TB structs;
-+     * otherwise users might think "-accel tcg,tb-size" is not honoured.
-+     * For avg host size we use the precise numbers from tb_tree_stats though.
-+     */
-+    g_string_append_printf(buf, "gen code size       %zu/%zu\n",
-+                           tcg_code_size(), tcg_code_capacity());
-+    g_string_append_printf(buf, "TB count            %zu\n", nb_tbs);
-+    g_string_append_printf(buf, "TB avg target size  %zu max=%zu bytes\n",
-+                           nb_tbs ? tst.target_size / nb_tbs : 0,
-+                           tst.max_target_size);
-+    g_string_append_printf(buf, "TB avg host size    %zu bytes "
-+                           "(expansion ratio: %0.1f)\n",
-+                           nb_tbs ? tst.host_size / nb_tbs : 0,
-+                           tst.target_size ?
-+                           (double)tst.host_size / tst.target_size : 0);
-+    g_string_append_printf(buf, "cross page TB count %zu (%zu%%)\n",
-+                           tst.cross_page,
-+                           nb_tbs ? (tst.cross_page * 100) / nb_tbs : 0);
-+    g_string_append_printf(buf, "direct jump count   %zu (%zu%%) "
-+                           "(2 jumps=%zu %zu%%)\n",
-+                           tst.direct_jmp_count,
-+                           nb_tbs ? (tst.direct_jmp_count * 100) / nb_tbs : 0,
-+                           tst.direct_jmp2_count,
-+                           nb_tbs ? (tst.direct_jmp2_count * 100) / nb_tbs : 0);
-+
-+    qht_statistics_init(&tb_ctx.htable, &hst);
-+    print_qht_statistics(hst, buf);
-+    qht_statistics_destroy(&hst);
-+
-+    g_string_append_printf(buf, "\nStatistics:\n");
-+    tcg_dump_flush_info(buf);
-+}
-+
-+void tcg_dump_stats(GString *buf)
-+{
-+    dump_accel_info(buf);
-+    dump_exec_info(buf);
-+    dump_drift_info(buf);
-+}
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 575e92bb9e8..002aa8f4588 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -11,6 +11,7 @@ tcg_ss.add(files(
-   'tcg-runtime-gvec.c',
-   'tb-maint.c',
-   'tcg-all.c',
-+  'tcg-stats.c',
-   'translate-all.c',
-   'translator.c',
- ))
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 8df561b9539..76cf4e7ef7a 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
+ #include "hw/boards.h"
++#include "hw/core/cpu.h"
+ #include "accel/accel-ops.h"
+ #include "accel/accel-cpu-ops.h"
+ #include "system/cpus.h"
+diff --git a/accel/meson.build b/accel/meson.build
+index 52909314bfa..25b0f100b51 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -1,6 +1,6 @@
+ common_ss.add(files('accel-common.c'))
+ specific_ss.add(files('accel-target.c'))
+-system_ss.add(files('accel-system.c', 'accel-blocker.c'))
++system_ss.add(files('accel-system.c', 'accel-blocker.c', 'accel-qmp.c'))
+ user_ss.add(files('accel-user.c'))
+ 
+ subdir('tcg')
 -- 
 2.49.0
 
