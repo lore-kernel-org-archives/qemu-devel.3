@@ -4,89 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DC9C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 07:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76665C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 07:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubaIr-0006x2-Dh; Tue, 15 Jul 2025 03:42:17 -0400
+	id 1ubaL0-0008Ed-Jh; Tue, 15 Jul 2025 03:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubaIp-0006vf-GT
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:42:15 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ubaIn-0002ZP-EU
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:42:15 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-605b9488c28so9333786a12.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 00:42:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752565331; x=1753170131; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hYR7w4dLF7UXeRre8tSi0Eeo0/ev/t+Pvvxeqfux61o=;
- b=c/GTfDrNkUVjgf0KDjP6ePExy67Rou4srbygL+vWWpBY+59/pQHyuFNw8xOhYDmZ2m
- wMUl42o+HlTkBZvh6Qtrco2TpsCGFXHjJ7g2qorzz1zTGSxtioiFokuLSeqqKfyidtJ8
- 3Tj2VPfP2XUs+uPFO3+7CFSUIF0cJ2OBUCheAfpnwEGB8BLktFnseBNyZqwXa1YgUhLh
- Fn97BEXl5IKJwT2Aj4g1c97tzUOZZ2JU2P+129b1jsqKVbJvwVYlsnRda8OCVRUbbiam
- wawKAwFi08E0hROuYjRTExK5Fd8ycmvcV8dz85LaxklNTAdWwCDn/Cf1FVIX/qmjypzi
- BiPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752565331; x=1753170131;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hYR7w4dLF7UXeRre8tSi0Eeo0/ev/t+Pvvxeqfux61o=;
- b=fCLuTO7rzaNnD5hauNaB9uxWUI01vA9m2i0/GR8IZxETYhnWsI8SAxYjXkvI+Xyb3q
- zcv9kYBHJjN3owZyxUzpfOuAn+GxzSImiGi3/Z6j4BLHbBHb8ZQw5BlxFKCBf2/QQAG9
- Ht5GTIq195fj5YIJ2+tuiwxEOI08yeC3Q0E/JEL9hI5U8+ABbYUsh+SyYknDjx+2USDn
- hnrdSaynPeNAzodrNhRb8aD4WLAalNMn2eO5tCtW3gt910zHBwuTAuPpRxWqcXCYNnVw
- BvPTRGbs0f6Gb1laWOuB47fKANc8MpHH/n+KZBi4OAq3O1/g6lH06NyA7kavwTnYfeHT
- Ll6g==
-X-Gm-Message-State: AOJu0YzKEfT155rVJT57fPNlS7l7wCgbypwoXLglYcEMn2W5vrMHNn/u
- NOml9jBj3fvsUJndcicMRvqWdEzNYjz504lsczpCRRx+6NFcpQ3js5xGB8O1oJaRRA0vxM4uKBf
- Btg28igUAVm65hLMwsmRSesMkXUmj26nehuM6W8l/nFQ1pe3xDUDcI5A=
-X-Gm-Gg: ASbGnctCNu43BacwIo+K9g09674wiRla9W+WMykezqESl67Sr/9gEkBsMWBVP2mma+G
- 8kg1sH8ADBuKjehDdjGX7nTBCRhLsziQBgq6bCzkhWRqAlhOICbCDSIRKrlvWGgBAYKLNmclvVh
- p8UEaalpJfvAqZkVJ8bDP0ibDfBmX2BDDkuotsK0ctyMc2ULPjWL2uRbEs5N+jL+fls3TA2odjP
- IUMUGM=
-X-Google-Smtp-Source: AGHT+IH9l5kwQ+/aFdN2ODXd15pi1XqGQJurcOEDtEwFvl/KI9Uv8CfosqCqCc4PCqPhf/Abc0EHOszJG7thOk13GEM=
-X-Received: by 2002:a05:6402:3127:b0:609:b263:41d3 with SMTP id
- 4fb4d7f45d1cf-611e86184f3mr10956068a12.32.1752565330836; Tue, 15 Jul 2025
- 00:42:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ubaKy-0008Dz-AR
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:44:28 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ubaKq-0002lq-PK
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 03:44:28 -0400
+Received: from [10.105.8.218] ([192.51.222.130]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56F7gmrF023054
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 15 Jul 2025 16:42:48 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=kx29O3j64MckhEwy/8xrLI+WMcwnZ0a/DV+G30DWIt4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1752565368; v=1;
+ b=EM8wQ8HW2O8SSEOhYmNg3PskWpwOwfaKYdS/xScxjL8o43n2ua8JiFXFbFGzEN87
+ GCRt0wfCypl49ZS4Y1xHX5tC/eh9eh6n9Eutc8CwvvDdguSrEDYa17zt5tA6Dp5v
+ de13QRh2oVK9ZWfHNw3lr9iAdEV4wFmPhq0m1sM0JjEORML1876fuQtxc0RhWsgE
+ 6E34F9YMbUxRx1PJlS9UK3YPbFKSNfv/f6+etly4NbpITgZvM4WlWC7/sNuQkyLC
+ /wI7Yc4s14XUz9MyB4ek44cxdOEFxWLcTP/+/Uf2ZfWhTOnZN14coQXqAzG0qAbB
+ Tu689Fp4DYpsSFfcL//DDQ==
+Message-ID: <8af39b78-a95d-4093-b68c-20b556860a09@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 15 Jul 2025 16:42:48 +0900
 MIME-Version: 1.0
-References: <20250715071528.46196-1-philmd@linaro.org>
-In-Reply-To: <20250715071528.46196-1-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 15 Jul 2025 10:41:44 +0300
-X-Gm-Features: Ac12FXxi_XwekSIvtVBq4Pa1K_wHfP3KJhO9XrJJKp-apJEpMIR0cI6nIp8L1RQ
-Message-ID: <CAAjaMXaeRTCw7XStmq=Mnj0M4TWop1zNCrSSa6sH0mvoE1SM9A@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h'
- header
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>, 
- Peter Maydell <peter.maydell@linaro.org>, Paul Durrant <paul@xen.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org, 
- xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>, 
- Xiaoyao Li <xiaoyao.li@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v2 06/13] virtio-pci: implement support for extended
+ features
+To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ kvm@vger.kernel.org
+References: <cover.1752229731.git.pabeni@redhat.com>
+ <eb1aa9c8442d9b482b5c84fdca54b92c8a824495.1752229731.git.pabeni@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <eb1aa9c8442d9b482b5c84fdca54b92c8a824495.1752229731.git.pabeni@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +83,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 10:19=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> "hw/xen/arch_hvm.h" only declares the arch_handle_ioreq() and
-> arch_xen_set_memory() prototypes, which are not used by xen-pvh.c.
-> Remove the unnecessary header inclusion.
->
-> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 2025/07/11 22:02, Paolo Abeni wrote:
+> Extend the features configuration space to 128 bits, and allow the
+> common read/write operation to access all of it.
+> 
+> On migration, save the 128 bit version of the features only if the
+> upper bits are non zero; after load zero the upper bits if the extended
+> features were not loaded.
+> 
+> Note that we must clear the proxy-ed features on device reset, otherwise
+> a guest kernel not supporting extended features booted after an extended
+> features enabled one could end-up wrongly inheriting extended features.
+> 
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 > ---
-> Based-on: <20250513171737.74386-1-philmd@linaro.org>
+> v1 -> v2:
+>    - use separate VMStateDescription and pre/post load to avoid breaking
+>      migration
+>    - clear proxy features on device reset
 > ---
->  hw/arm/xen-pvh.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
-> index 4b26bcff7a5..1a9eeb01c8e 100644
-> --- a/hw/arm/xen-pvh.c
-> +++ b/hw/arm/xen-pvh.c
-> @@ -10,7 +10,6 @@
->  #include "hw/boards.h"
->  #include "system/system.h"
->  #include "hw/xen/xen-pvh-common.h"
-> -#include "hw/xen/arch_hvm.h"
->
->  #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
->
-> --
-> 2.49.0
->
->
+>   hw/virtio/virtio-pci.c         | 101 +++++++++++++++++++++++++++++----
+>   include/hw/virtio/virtio-pci.h |   6 +-
+>   2 files changed, 96 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index fba2372c93..dc5e7eaf81 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -108,6 +108,39 @@ static const VMStateDescription vmstate_virtio_pci_modern_queue_state = {
+>       }
+>   };
+>   
+> +static bool virtio_pci_modern_state_features128_needed(void *opaque)
+> +{
+> +    VirtIOPCIProxy *proxy = opaque;
+> +    uint32_t features = 0;
+> +    int i;
+> +
+> +    for (i = 2; i < ARRAY_SIZE(proxy->guest_features128); ++i) {
+> +        features |= proxy->guest_features128[i];
+> +    }
+> +    return !!features;
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+"!!" is unnecessary; the implicit cast will clamp the value into true/false.
+
+> +}
+> +
+> +static int virtio_pci_modern_state_features128_post_load(void *opaque,
+> +                                                         int version_id)
+> +{
+> +    VirtIOPCIProxy *proxy = opaque;
+> +
+> +    proxy->extended_features_loaded = true;
+> +    return 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_virtio_pci_modern_state_features128 = {
+> +    .name = "virtio_pci/modern_state/features128",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load = &virtio_pci_modern_state_features128_post_load,
+> +    .needed = &virtio_pci_modern_state_features128_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT32_ARRAY(guest_features128, VirtIOPCIProxy, 4),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>   static bool virtio_pci_modern_state_needed(void *opaque)
+>   {
+>       VirtIOPCIProxy *proxy = opaque;
+> @@ -115,10 +148,40 @@ static bool virtio_pci_modern_state_needed(void *opaque)
+>       return virtio_pci_modern(proxy);
+>   }
+>   
+> +static int virtio_pci_modern_state_pre_load(void *opaque)
+> +{
+> +    VirtIOPCIProxy *proxy = opaque;
+> +
+> +    proxy->extended_features_loaded = false;
+> +    return 0;
+> +}
+> +
+> +static int virtio_pci_modern_state_post_load(void *opaque, int version_id)
+> +{
+> +    VirtIOPCIProxy *proxy = opaque;
+> +    int i;
+> +
+> +    if (proxy->extended_features_loaded) {
+> +        return 0;
+> +    }
+> +
+> +    QEMU_BUILD_BUG_ON(offsetof(VirtIOPCIProxy, guest_features[0]) !=
+> +                      offsetof(VirtIOPCIProxy, guest_features128[0]));
+> +    QEMU_BUILD_BUG_ON(offsetof(VirtIOPCIProxy, guest_features[1]) !=
+> +                      offsetof(VirtIOPCIProxy, guest_features128[1]));
+> +
+> +    for (i = 2; i < ARRAY_SIZE(proxy->guest_features128); ++i) {
+> +        proxy->guest_features128[i] = 0;
+> +    }
+> +    return 0;
+> +}
+> +
+
+You can expect the device is in the reset state when migrating so expect 
+guest_features128 is initialized as zero; there are already plenty of 
+code expecting the reset state.
+
+>   static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
+>       .name = "virtio_pci/modern_state",
+>       .version_id = 1,
+>       .minimum_version_id = 1,
+> +    .pre_load = &virtio_pci_modern_state_pre_load,
+> +    .post_load = &virtio_pci_modern_state_post_load,
+>       .needed = &virtio_pci_modern_state_needed,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
+> @@ -128,6 +191,10 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
+>                                vmstate_virtio_pci_modern_queue_state,
+>                                VirtIOPCIQueue),
+>           VMSTATE_END_OF_LIST()
+> +    },
+> +    .subsections = (const VMStateDescription * const []) {
+> +        &vmstate_virtio_pci_modern_state_features128,
+> +        NULL
+>       }
+>   };
+>   
+> @@ -1493,19 +1560,22 @@ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
+>           val = proxy->dfselect;
+>           break;
+>       case VIRTIO_PCI_COMMON_DF:
+> -        if (proxy->dfselect <= 1) {
+> +        if (proxy->dfselect < VIRTIO_FEATURES_WORDS) {
+>               VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+>   
+> -            val = (vdev->host_features & ~vdc->legacy_features) >>
+> -                (32 * proxy->dfselect);
+> +            val = vdev->host_features_array[proxy->dfselect >> 1] >>
+> +                  (32 * (proxy->dfselect & 1));
+> +            if (proxy->dfselect <= 1) {
+> +                val &= (~vdc->legacy_features) >> (32 * proxy->dfselect);
+> +            }
+>           }
+>           break;
+>       case VIRTIO_PCI_COMMON_GFSELECT:
+>           val = proxy->gfselect;
+>           break;
+>       case VIRTIO_PCI_COMMON_GF:
+> -        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
+> -            val = proxy->guest_features[proxy->gfselect];
+> +        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features128)) {
+> +            val = proxy->guest_features128[proxy->gfselect];
+>           }
+>           break;
+>       case VIRTIO_PCI_COMMON_MSIX:
+> @@ -1587,11 +1657,18 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+>           proxy->gfselect = val;
+>           break;
+>       case VIRTIO_PCI_COMMON_GF:
+> -        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
+> -            proxy->guest_features[proxy->gfselect] = val;
+> -            virtio_set_features(vdev,
+> -                                (((uint64_t)proxy->guest_features[1]) << 32) |
+> -                                proxy->guest_features[0]);
+> +        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features128)) {
+> +            uint64_t features[VIRTIO_FEATURES_DWORDS];
+> +            int i;
+> +
+> +            proxy->guest_features128[proxy->gfselect] = val;
+> +            virtio_features_clear(features);
+> +            for (i = 0; i < ARRAY_SIZE(proxy->guest_features128); ++i) {
+> +                uint64_t cur = proxy->guest_features128[i];
+> +
+> +                features[i >> 1] |= cur << ((i & 1) * 32);
+> +            }
+> +            virtio_set_features_ex(vdev, features);
+>           }
+>           break;
+>       case VIRTIO_PCI_COMMON_MSIX:
+> @@ -2310,6 +2387,10 @@ static void virtio_pci_reset(DeviceState *qdev)
+>       virtio_bus_reset(bus);
+>       msix_unuse_all_vectors(&proxy->pci_dev);
+>   
+> +    /* be sure to not carry over any feature across reset */
+
+It's obvious so I don't think the comment makes difference.
+
+> +    memset(proxy->guest_features128, 0, sizeof(uint32_t) *
+> +           ARRAY_SIZE(proxy->guest_features128));
+
+Simpler:
+memset(proxy->guest_features128, 0, sizeof(proxy->guest_features128);
+
+> +
+>       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+>           proxy->vqs[i].enabled = 0;
+>           proxy->vqs[i].reset = 0;
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> index eab5394898..1868e3b106 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -151,6 +151,7 @@ struct VirtIOPCIProxy {
+>       uint32_t flags;
+>       bool disable_modern;
+>       bool ignore_backend_features;
+> +    bool extended_features_loaded;
+>       OnOffAuto disable_legacy;
+>       /* Transitional device id */
+>       uint16_t trans_devid;
+> @@ -158,7 +159,10 @@ struct VirtIOPCIProxy {
+>       uint32_t nvectors;
+>       uint32_t dfselect;
+>       uint32_t gfselect;
+> -    uint32_t guest_features[2];
+> +    union {
+> +        uint32_t guest_features[2];
+> +        uint32_t guest_features128[4];
+> +    };
+
+I don't see anything preventing you from directly extending guest_features.
+
+>       VirtIOPCIQueue vqs[VIRTIO_QUEUE_MAX];
+>   
+>       VirtIOIRQFD *vector_irqfd;
+
 
