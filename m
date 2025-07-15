@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18601C83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AD2C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZ18-0002Jx-6o; Tue, 15 Jul 2025 02:19:55 -0400
+	id 1ubZ1b-0002vE-Kj; Tue, 15 Jul 2025 02:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0u-00028J-Hr
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:40 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1T-0002ku-Gz
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:15 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ0s-00071K-FE
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:19:40 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-451d3f72391so49800275e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:19:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubZ1R-0007M9-DW
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:20:15 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4561ca74829so15203155e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 23:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752560376; x=1753165176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752560411; x=1753165211; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CmqRT40RDvsgTqfFq5PqPhISBaVjONltwNS6X4XWcCM=;
- b=LpYaBdsQLsJac1AJ3IqV/kXjAoyReO1dJjlD1m9x3dAKvZ5Q5eD16e8YoJxs2y1foM
- Hd0q07aSq/ntIgbXkgVPg1wQJotHnjfEKGdzX1C+GjkP+zEjQ2ZyARYON8B7rvT6ksLM
- NNl58ewE0Pay5YRIpvCfjQO9tZAqcMI3/iDyiVrwdgPaOiICiNm5Gp4rT+Pp/GOrWsSg
- eLrcZnaVVJrZi8DQCx1Htn6UmFJ5411UqUY7RI9dI9cfKXuxVCsvhKdwPgVuTL1PoJj5
- SdUu7jcpvUGDJKOSmupVuxd975UnnhyVadUaYQh81V+cfwuuspZ+a4cyTsXHPDoq65Co
- /Mcw==
+ bh=hgFpG0rF6KVbYpLZQoXHGkLj2oHogtOGTEuxO5gWl6M=;
+ b=mjmHK/A1lt27LtoJVdzjdLDVDh94mhl2olX/NlZPs/LyCPWM0TodsFkh2lfXQuzolJ
+ ceb9Viy2LuMMLWOdPTNS6hFX5jxpkx8Jj7F9FLi8Rzzt4G6xkd6ZAiIgXxCZm1gFDMXf
+ PEySm9DCJItGupaEO1inoBNm9q8gwVxF3kgrbpbFaJlt1LNfvcZufwY7TkcTtQaHVuQA
+ BPJJaB5A3JK8AZe5/T6NXZF6Jed1z4P1aLgNCnLgSM6X7zXB15JvTp7Gg7w8gRwmkbA1
+ FObOxXK4fKJ6WCeh4+J83H71lHI2XA16zn4vwzCBwkkGRiuV0IOZNXr+fvnxzgoAv/XF
+ HO0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752560376; x=1753165176;
+ d=1e100.net; s=20230601; t=1752560411; x=1753165211;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CmqRT40RDvsgTqfFq5PqPhISBaVjONltwNS6X4XWcCM=;
- b=Du7n+XN9kcRn2UaC2545AxRiTNBLtP4BG4Q1sKJvZhcOCvHZZJzfkFYj7Q3YGGjDER
- VmoFVqgt7+AhaBwnbHkLF0GaVYO7Mot/rO1KOV+sMiQ3HOb5o4bQ0z3in0EBb549t56M
- 87J7Hc55wZ9lPOWn2m81D+P1x8TgksNe39wxMbTGxx5zJUjl2/u1m+J4vlAWv+7Dmr8n
- 2NEE1sHQd81uugJJjzYYQZYafneMV5i+kOsiOfkxdncOCkhGnVUVPeVWt+PixcHaOwU1
- 9cxc9qjtCeWhFVEvJzUBCosicFugKx7RCa5Da+9LCWzfAaFRio69jnaUg2HqdMuDjPn+
- EJXA==
-X-Gm-Message-State: AOJu0YwRK8KOGTXjQWatFf2oLwXvUzB75ncxIdlZqP/u83Lc0XlSYqbg
- ugvDD6zNIFvAJY6HKkseBa3BI1fzIzbtefvb3w6DSjIAXyWkEH4dsNe4stnZ1Usq+sbZg6poiuQ
- S/ZA3
-X-Gm-Gg: ASbGnctufC6V1u3XkC5Bg/MELfVUhMPDUvhwhtgzdf2uXsFnXez+wA6f37QpH1dTrJC
- mNnuBdHlX3w3E+ichfHFzUnLcD/+zfKJbDZhGKfCxqtaXd+NTOt/ZymV+Q7li/L8pvjFczs06j/
- Qqfm5u9EZN45IexNjpN3YOyJtzf22hliqe8ra5bPnPugLG06pR1s5o5aKYMOA8Fzp6+suy/NVAp
- iWm390gNKEAVENwCpnvBeVauTqK29T2P2y6Sv50MF0RBTdvCtkRZWh6poGCjxweU/o0M92toAnp
- gM4YC1eCboBc4GemI0GARUC8Mr2/3HB5ejwyhhTtJCP7gfh9aMFhalkxMKqQqnIcHb/R4GMRfww
- aycsgM8bCy693n0vZosfHx4aB9+TchljUKMkdJyveIV9Wb9surcIde8knISjOH/v9jBwY4ZKI
-X-Google-Smtp-Source: AGHT+IGvl37IZ7EQKmYyNzSoFjvnK5ndb1yvGSdrFJkrneSSIBf4WtKxeOT7fYDACRV2OT796f8JKg==
-X-Received: by 2002:a05:600c:1392:b0:455:fc16:9ed8 with SMTP id
- 5b1f17b1804b1-455fc16a23emr124875475e9.30.1752560376367; 
- Mon, 14 Jul 2025 23:19:36 -0700 (PDT)
+ bh=hgFpG0rF6KVbYpLZQoXHGkLj2oHogtOGTEuxO5gWl6M=;
+ b=rseIa3f1RKBo1PvdVb6yMOY0ugJfDbMp5P7K1Wj/7muABD95PmqHzCfPh5BlHABbdh
+ 4uSHuU04rVP+BHU5JhUK8uFkw4v1ithIMkcJwrANM8w4t0/OlMfQbZgDaijKAFEeMGXr
+ NLJD65gWHDa7q/cf2ylY+CdLgohOY68QjnUTxEa3fD3ZnwIrd4yGaY04DdlhzWpejkuS
+ 9D+vHSds5LpxHkmTC4fN5F4eCDUNt2KppOy3Q8kGdNYm66ohQ2fJMX3GJcsphMqeX3en
+ 0+L3eF+srkb2Ky/XqHf/T9kKVwOWrzM+hOj0rQt4YafJDc7/zzuLXY5XVU8yv3bmjy1+
+ V7rw==
+X-Gm-Message-State: AOJu0YwOkF8nO64b6IlOgH7GwPtMN1JJivH2V8qqWibvxnbQ7ELszpQG
+ HxRF6vva0LD/RI2PWIIBBvCOVXbN4wpOhWt2Km0rk4+R8d7PyMmTVtUOH6t2BmPf5V//oZBgwkI
+ 3BmzI
+X-Gm-Gg: ASbGnctKiphjFaJP/v73oRp117fMJiNuO0cjPBSAJk+JXBfeEM2wjQreFwGiPP6YbUl
+ raFMMRA8jkslxc666FGbMiymM0OjWARuhDtEypyhWMIU79DXch6SeTkVI2WpU0Fp+PlT5q3otln
+ Nt3Nq2Un0VDmh6w7RmdTDn1HMpv+MbvcXrLGI5chrGJ917Kaa6gV48VUXcv4+et+j0ku6N7gZQh
+ UjT/sGTM1Or3LEaKWry29BI+ZLei7FvYDsy/cV3QJzjcOw34YL1UUNld5j2CeoswzRHeO31J2PM
+ Uwq2YNqYSnZ1uqZj1K6JrvUwRkoZNgx0ckd6VYjZwRhsN3zBQh8MwonJcTSGA5pP+M6L6gEtJwL
+ nSYli6E9l8dfzaxsdLxREyz6PC4tQcyduDg22lX2Io1CSB0Q8WW4S28IXrOXQuissLoee9gn73W
+ D5jxQzrH4=
+X-Google-Smtp-Source: AGHT+IFxoEv69qpUFjeyT3G/ueHVC6NbQmo/GK7lh7Y/Vq1AN6tpPlLr4lNo7/ddtloI9jl1rKuA6Q==
+X-Received: by 2002:a05:6000:420a:b0:3a4:d64a:3df6 with SMTP id
+ ffacd0b85a97d-3b5f2daca74mr11812653f8f.3.1752560411187; 
+ Mon, 14 Jul 2025 23:20:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd181bsm13884227f8f.7.2025.07.14.23.19.35
+ ffacd0b85a97d-3b600722780sm6548582f8f.23.2025.07.14.23.20.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 14 Jul 2025 23:19:35 -0700 (PDT)
+ Mon, 14 Jul 2025 23:20:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PULL 03/17] target/mips: Extract generic gen_lx() helper
-Date: Tue, 15 Jul 2025 08:19:03 +0200
-Message-ID: <20250715061918.44971-4-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PULL 10/17] hw/microblaze: Add missing FDT dependency
+Date: Tue, 15 Jul 2025 08:19:10 +0200
+Message-ID: <20250715061918.44971-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715061918.44971-1-philmd@linaro.org>
 References: <20250715061918.44971-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,117 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract gen_lx() from gen_mips_lx(); inline the Octeon
-check in decode_opc_special3_legacy().
+From: Bernhard Beschow <shentey@gmail.com>
 
+These boards ship with a bundled DTB, and dtc will be required for generating
+these from device tree sources. Prepare for that by adding an FDT dependency.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250708204806.1898-2-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241111222936.59869-3-philmd@linaro.org>
 ---
- target/mips/tcg/translate.h |  1 +
- target/mips/tcg/translate.c | 55 +++++++++++++------------------------
- 2 files changed, 20 insertions(+), 36 deletions(-)
+ hw/microblaze/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index e65593815e6..89dde1e7124 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -169,6 +169,7 @@ void gen_store_fpr32(DisasContext *ctx, TCGv_i32 t, int reg);
- void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg);
- int get_fp_bit(int cc);
- 
-+void gen_lx(DisasContext *ctx, int rd, int base, int index, MemOp mop);
- void gen_ldxs(DisasContext *ctx, int base, int index, int rd);
- void gen_align(DisasContext *ctx, int wordsz, int rd, int rs, int rt, int bp);
- void gen_addiupc(DisasContext *ctx, int rx, int imm,
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 8816237e929..b9b2d8bb7e1 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -2036,6 +2036,15 @@ static void gen_lxr(DisasContext *ctx, TCGv reg, TCGv addr,
-     tcg_gen_or_tl(reg, t0, t1);
- }
- 
-+void gen_lx(DisasContext *ctx, int rd, int base, int index, MemOp mop)
-+{
-+    TCGv t0 = tcg_temp_new();
-+
-+    gen_base_index_addr(ctx, t0, base, index);
-+    tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, mo_endian(ctx) | mop);
-+    gen_store_gpr(t0, rd);
-+}
-+
- /* Load */
- static void gen_ld(DisasContext *ctx, uint32_t opc,
-                    int rt, int base, int offset)
-@@ -11328,41 +11337,6 @@ enum {
- 
- /* MIPSDSP functions. */
- 
--/* Indexed load is not for DSP only */
--static void gen_mips_lx(DisasContext *ctx, uint32_t opc,
--                        int rd, int base, int offset)
--{
--    TCGv t0;
--
--    if (!(ctx->insn_flags & INSN_OCTEON)) {
--        check_dsp(ctx);
--    }
--    t0 = tcg_temp_new();
--
--    gen_base_index_addr(ctx, t0, base, offset);
--
--    switch (opc) {
--    case OPC_LBUX:
--        tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, MO_UB);
--        gen_store_gpr(t0, rd);
--        break;
--    case OPC_LHX:
--        tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, mo_endian(ctx) | MO_SW);
--        gen_store_gpr(t0, rd);
--        break;
--    case OPC_LWX:
--        tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, mo_endian(ctx) | MO_SL);
--        gen_store_gpr(t0, rd);
--        break;
--#if defined(TARGET_MIPS64)
--    case OPC_LDX:
--        tcg_gen_qemu_ld_tl(t0, t0, ctx->mem_idx, mo_endian(ctx) | MO_UQ);
--        gen_store_gpr(t0, rd);
--        break;
--#endif
--    }
--}
--
- static void gen_mipsdsp_arith(DisasContext *ctx, uint32_t op1, uint32_t op2,
-                               int ret, int v1, int v2)
- {
-@@ -13633,15 +13607,24 @@ static void decode_opc_special3_legacy(CPUMIPSState *env, DisasContext *ctx)
-         }
-         break;
-     case OPC_LX_DSP:
-+        if (!(ctx->insn_flags & INSN_OCTEON)) {
-+            check_dsp(ctx);
-+        }
-         op2 = MASK_LX(ctx->opcode);
-         switch (op2) {
- #if defined(TARGET_MIPS64)
-         case OPC_LDX:
-+            gen_lx(ctx, rd, rs, rt, MO_UQ);
-+            break;
- #endif
-         case OPC_LBUX:
-+            gen_lx(ctx, rd, rs, rt, MO_UB);
-+            break;
-         case OPC_LHX:
-+            gen_lx(ctx, rd, rs, rt, MO_SW);
-+            break;
-         case OPC_LWX:
--            gen_mips_lx(ctx, op2, rd, rs, rt);
-+            gen_lx(ctx, rd, rs, rt, MO_SL);
-             break;
-         default:            /* Invalid */
-             MIPS_INVAL("MASK LX");
+diff --git a/hw/microblaze/Kconfig b/hw/microblaze/Kconfig
+index b0214b2c8b2..72d8072f764 100644
+--- a/hw/microblaze/Kconfig
++++ b/hw/microblaze/Kconfig
+@@ -1,7 +1,7 @@
+ config PETALOGIX_S3ADSP1800
+     bool
+     default y
+-    depends on MICROBLAZE
++    depends on MICROBLAZE && FDT
+     select PFLASH_CFI01
+     select XILINX
+     select XILINX_AXI
+@@ -11,7 +11,7 @@ config PETALOGIX_S3ADSP1800
+ config PETALOGIX_ML605
+     bool
+     default y
+-    depends on MICROBLAZE
++    depends on MICROBLAZE && FDT
+     select PFLASH_CFI01
+     select SERIAL_MM
+     select SSI_M25P80
 -- 
 2.49.0
 
