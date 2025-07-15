@@ -4,70 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4470C83F22
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF2EC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublQL-0002iE-VF; Tue, 15 Jul 2025 15:34:46 -0400
+	id 1ublQd-0004CT-DM; Tue, 15 Jul 2025 15:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkyD-0004h5-Fz
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1ubl0z-0006Vz-5I
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:08:33 -0400
+Received: from fout-a5-smtp.messagingengine.com ([103.168.172.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubkyB-0001nY-L2
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:05:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752606339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U0EOHuFMYVRcuZbgCHTLu4jqLIKx67Yh5hSOj0aEp0I=;
- b=WgDOaaL3i6T8YgVvBxuJ2M4GZ0wrJkLW61TLGoyyOCOD+OHwkrY+BsTC/4J3Oh9eEOAPLO
- JC9Gv6/a8UFoKdwRZCjtrWPGZh6zI4RDE7Exkcv+Mpziwd6BlEmpf9+yAe67LrzUJzSStU
- Bq1TGZshhTgl2iI1bJuWml9W95qbexA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-QbDz8SZBOleUTZb4lL_XoQ-1; Tue,
- 15 Jul 2025 15:05:35 -0400
-X-MC-Unique: QbDz8SZBOleUTZb4lL_XoQ-1
-X-Mimecast-MFC-AGG-ID: QbDz8SZBOleUTZb4lL_XoQ_1752606331
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0503119560B1; Tue, 15 Jul 2025 19:05:31 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.34.84])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 78603197702B; Tue, 15 Jul 2025 19:05:29 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 54/57] qemu-img: dd: refresh options/--help
-Date: Tue, 15 Jul 2025 21:03:27 +0200
-Message-ID: <20250715190330.378764-55-kwolf@redhat.com>
-In-Reply-To: <20250715190330.378764-1-kwolf@redhat.com>
-References: <20250715190330.378764-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1ubl0x-0001yj-Fj
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:08:32 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id BC473EC004E;
+ Tue, 15 Jul 2025 15:08:30 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+ by phl-compute-06.internal (MEProxy); Tue, 15 Jul 2025 15:08:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1752606510;
+ x=1752692910; bh=9PXGdBXHEkP0pmHM6WU1rsR0w2iS+OHLLukB/M/TEjA=; b=
+ Z6qrzYpENDgrwf3u8j0vFndP5mCJ9LaZLAuwhyqTjz1FjUHrAXMlrYQi2QTB3BS9
+ 7CLnewSv7ML6oU+3qU7RLjOYDWlZACvO+hzsdPEVouuauHRJXHkRoo6Vr53hmbkE
+ uCVkT1GUHRVwEEMcD7frEQD3BZYis0RLVCN6jCeVYzAqUJ5cK+nW14AvgTfSgckI
+ 49oR1E0SitpLx2DmzlNYm589ENPk520Jhm8ASMBrh8eByHMTN6qNshCagcvgKZYz
+ riIS0/R4na2pe/l0/IV+uXBwnrvxQZ66ooL38lnGMZq0mOqwMRvzWzTgTF3YkWlm
+ pIfsxPvhUZRT2MhdZu+bsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1752606510; x=1752692910; bh=9
+ PXGdBXHEkP0pmHM6WU1rsR0w2iS+OHLLukB/M/TEjA=; b=oRwd0M7jCTdu42BHU
+ pqwXsyOxw8dAAwGHuTeq21tNcocGB4iHomQQ8vQxg0ExfjAgQGfLIKSicCTs4hX3
+ FcQW87WayS0bn7OqJzxVw5bBfNqoEk1u5hz3QEP4HenwQETri8zHNap9usTDphz0
+ nztAhDW/lvFQnUhIIxsMKq+kx0q95H9WAPPZde3NGH9HGwhLVzWA/Y7Qu4OhJVZC
+ fxFLGH5ulMJMMoqLMx4v6WDGWsCxA4cnfFjFyd2pstQWXVrNuJfGzWS+z6n7JGML
+ 4VIeHMy0zoUM/TJ+5jFRlUccHPrfqmiXglgCFeLZ+Koq7hpovCyzzh07FtD4UlJn
+ 81l2Q==
+X-ME-Sender: <xms:Lqd2aI2mx3gCcAeU3YzqINLWfPIioFwKAHz0R-sC48syFRWZp5ohlQ>
+ <xme:Lqd2aDG0luTUURboU-qUVSaRwTq4ppEVWFiRpysZpl1_myeDryfnPo5HRXYYwPjq6
+ fcNsEATlW1rMNgf3Zg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeifecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhirgiguhhn
+ ucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
+ ftrfgrthhtvghrnhepjedvgfetvefhfffhudffheelieeiveelvdeileffgfeghfefkeeu
+ hfdugeefleffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+ homhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomhdpnhgspghrtghpthht
+ ohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhlmhgusehlihhnrg
+ hrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:Lqd2aPg4fZ-DucngGRjaq0FHgL7mUQ9PWBzMeAx2PKLwGJ0X2G2LkA>
+ <xmx:Lqd2aMMHaTJD9xgEnJlS9yhOr9EgGLKRlljqNTeFP6b-bFkOQCj6cw>
+ <xmx:Lqd2aA7JTz3v9A73_0V2xp8aq9s0svwfnoyjylKbf9Y-zta3mtNkpA>
+ <xmx:Lqd2aK2sSTCpdo8lmhMO2OA4yFMVNS1NO-hd7iEMuddOOVj4nxfZlw>
+ <xmx:Lqd2aCznaWn2s65310zT2V-r4vGKJTbOZ4I4zvkOhHgwRugtK0eu-ttu>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 7087E2CE0071; Tue, 15 Jul 2025 15:08:30 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ThreadId: Tb0803b803f43f61f
+Date: Tue, 15 Jul 2025 20:08:08 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "QEMU devel" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Message-Id: <632e091b-9af7-4363-8ce6-73cb6bde41b4@app.fastmail.com>
+In-Reply-To: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
+References: <20240506-mips-smp-v1-0-3cc234786910@flygoat.com>
+Subject: Re: [PATCH 0/5] hw/mips: Proper multi core support
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.148;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,102 +109,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Tokarev <mjt@tls.msk.ru>
 
-Add missing long options and --help output,
-reorder options for consistency.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250531171609.197078-25-mjt@tls.msk.ru>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qemu-img.c | 50 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+=E5=9C=A82024=E5=B9=B45=E6=9C=886=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=
+=8D=884:31=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+> Hi all,
+>
+> This series implemented propper multiple core support for MIPS
+> CPS systsm.
 
-diff --git a/qemu-img.c b/qemu-img.c
-index d7f69c4bfb..35c3d9ad48 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -5538,31 +5538,54 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
-     };
-     const struct option long_options[] = {
-         { "help", no_argument, 0, 'h'},
--        { "object", required_argument, 0, OPTION_OBJECT},
-+        { "format", required_argument, 0, 'f'},
-         { "image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+        { "output-format", required_argument, 0, 'O'},
-         { "force-share", no_argument, 0, 'U'},
-+        { "object", required_argument, 0, OPTION_OBJECT},
-         { 0, 0, 0, 0 }
-     };
- 
--    while ((c = getopt_long(argc, argv, ":hf:O:U", long_options, NULL))) {
-+    while ((c = getopt_long(argc, argv, "hf:O:U", long_options, NULL))) {
-         if (c == EOF) {
-             break;
-         }
-         switch (c) {
--        case 'O':
--            out_fmt = optarg;
-+        case 'h':
-+            cmd_help(ccmd, "[-f FMT|--image-opts] [-O OUTPUT_FMT] [-U]\n"
-+"        [--object OBJDEF] [bs=BLOCK_SIZE] [count=BLOCKS] if=INPUT of=OUTPUT\n"
-+,
-+"  -f, --format FMT\n"
-+"     specify format for INPUT explicitly (default: probing is used)\n"
-+"  --image-opts\n"
-+"     treat INPUT as an option string (key=value,..), not a file name\n"
-+"     (incompatible with -f|--format)\n"
-+"  -O, --output-format OUTPUT_FMT\n"
-+"     format of the OUTPUT (default: raw)\n"
-+"  -U, --force-share\n"
-+"     open images in shared mode for concurrent access\n"
-+"  --object OBJDEF\n"
-+"     defines QEMU user-creatable object\n"
-+"  bs=BLOCK_SIZE[bKMGTP]\n"
-+"     size of the I/O block, with optional multiplier suffix (powers of 1024)\n"
-+"     (default: 512)\n"
-+"  count=COUNT\n"
-+"     number of blocks to convert (default whole INPUT)\n"
-+"  if=INPUT\n"
-+"     name of the file, or option string (key=value,..)\n"
-+"     with --image-opts, to use for input\n"
-+"  of=OUTPUT\n"
-+"     output file name to create (will be overridden if alrady exists)\n"
-+);
-             break;
-         case 'f':
-             fmt = optarg;
-             break;
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
-+        case OPTION_IMAGE_OPTS:
-+            image_opts = true;
-             break;
--        case 'h':
--            help();
-+        case 'O':
-+            out_fmt = optarg;
-             break;
-         case 'U':
-             force_share = true;
-@@ -5570,9 +5593,8 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_OBJECT:
-             user_creatable_process_cmdline(optarg);
-             break;
--        case OPTION_IMAGE_OPTS:
--            image_opts = true;
--            break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
--- 
-2.50.1
+Ping :-)
 
+This is a really long outstanding series, I just want to get some
+review before respin.
+
+Thanks
+Jiaxun
+
+>
+> Previously all CPUs are being implemented as a smt thread in a
+> single core. Now it respects topology supplied in QEMU args.
+>
+> To test:
+> Build a latest kernel with 64r6el_defconfig (tested on 6.6,
+> next-20240506).
+>
+> Then run:
+> ```
+> qemu-system-mips64el -M boston -cpu I6500 -kernel ~/linux-next/vmlinux=20
+> -smp 4,cores=3D2,threads=3D2 -append "console=3DttyS0,115200" -nograph=
+ic
+> ```
+> In dmesg of guest kernel:
+> ```
+> [    0.000000] VP topology {2,2} total 4
+> ...
+> [    0.085190] smp: Bringing up secondary CPUs ...
+> [    0.090219] Primary instruction cache 64kB, VIPT, 4-way, linesize 6=
+4=20
+> bytes.
+> [    0.095461] Primary data cache 64kB, 4-way, PIPT, no aliases,=20
+> linesize 64 bytes
+> [    0.096658] CPU1 revision is: 0001b000 (MIPS I6500)
+> [    0.096718] FPU revision is: 20f30300
+> [    0.124711] Synchronize counters for CPU 1: done.
+> [    0.940979] Primary instruction cache 64kB, VIPT, 4-way, linesize 6=
+4=20
+> bytes.
+> [    0.941041] Primary data cache 64kB, 4-way, PIPT, no aliases,=20
+> linesize 64 bytes
+> [    0.941256] CPU2 revision is: 0001b000 (MIPS I6500)
+> [    0.941289] FPU revision is: 20f30300
+> [    0.965322] Synchronize counters for CPU 2: done.
+> [    1.260937] Primary instruction cache 64kB, VIPT, 4-way, linesize 6=
+4=20
+> bytes.
+> [    1.261001] Primary data cache 64kB, 4-way, PIPT, no aliases,=20
+> linesize 64 bytes
+> [    1.261172] CPU3 revision is: 0001b000 (MIPS I6500)
+> [    1.261209] FPU revision is: 20f30300
+> [    1.285390] Synchronize counters for CPU 3: done.
+> [    1.346985] smp: Brought up 1 node, 4 CPUs
+> ```
+>
+> Please review.
+>
+> Thanks
+>
+> To: qemu-devel@nongnu.org
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+> Jiaxun Yang (5):
+>       target/mips: Make globalnumber a CPU property
+>       hw/msic/mips_cmgcr: Implement multicore functions
+>       hw/msic/mips_cpc: Implement multi core support
+>       hw/mips/cps: Implement multi core support
+>       hw/mips/boston: Implement multi core support
+>
+>  hw/mips/boston.c             |  37 +++++++++-
+>  hw/mips/cps.c                |  66 ++++++++++-------
+>  hw/misc/mips_cmgcr.c         | 168 ++++++++++++++++++++++++++++++++++=
++--------
+>  hw/misc/mips_cpc.c           |  97 ++++++++++++++++++-------
+>  include/hw/mips/cps.h        |   1 +
+>  include/hw/misc/mips_cmgcr.h |  87 +++++++++++++++++++---
+>  include/hw/misc/mips_cpc.h   |  15 +++-
+>  target/mips/cpu.c            |  16 ++++-
+>  target/mips/cpu.h            |  10 ++-
+>  target/mips/sysemu/machine.c |   5 +-
+>  10 files changed, 403 insertions(+), 99 deletions(-)
+> ---
+> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
+> change-id: 20240506-mips-smp-9af9e71ad8c2
+>
+> Best regards,
+> --=20
+> Jiaxun Yang <jiaxun.yang@flygoat.com>
+
+--=20
+- Jiaxun
 
