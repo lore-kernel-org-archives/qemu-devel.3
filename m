@@ -4,65 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6FFC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 22:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36210C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 22:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubo65-0003ag-BR; Tue, 15 Jul 2025 18:26:01 -0400
+	id 1ubo7y-00054e-NA; Tue, 15 Jul 2025 18:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubo64-0003Zr-Ft
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:26:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1ubo7s-000533-Pn
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:27:52 -0400
+Received: from mail-bn8nam12on2087.outbound.protection.outlook.com
+ ([40.107.237.87] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ubo61-0000UD-UX
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:26:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752618354;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=KtyMkc0s2prb7f8cHf7z5dGxut21UByMx/wXz7atrnU=;
- b=Vhmev15SdCdenKizUSiSb8QVPgCV7ZIdYdz+g3DSH/DQBpqhyJGuZxA6pxWhrCBZfzIEiF
- s/xS+OIp0kbRzXAR483pLvnzhS8Qfqi3MoriF1dP7PpvrEu6x8STxVc2WRRtcnPDOxLgi6
- PJYOP2xVnmdIjP18Aymahe86Vp9ORTs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-TRUrDkttMh27uU1gqJMikA-1; Tue,
- 15 Jul 2025 18:25:53 -0400
-X-MC-Unique: TRUrDkttMh27uU1gqJMikA-1
-X-Mimecast-MFC-AGG-ID: TRUrDkttMh27uU1gqJMikA_1752618352
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 383CD18001D5; Tue, 15 Jul 2025 22:25:52 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.158])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 83D5C3000198; Tue, 15 Jul 2025 22:25:49 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH] python: fix editable installs for modern pip/setuptools
-Date: Tue, 15 Jul 2025 18:25:48 -0400
-Message-ID: <20250715222548.198888-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1ubo7o-0001Gn-Ia
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 18:27:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nuHPz4fvR+APTo1QWprY/wwhi/xrH+W9PLIOss+9zK3w6DH6YS1mNaCAeTxHv2uNCGY/dwfThr2Y/Vx8a+abebHHjLjsc8sMO+vXR8uD1VpdcgGUYJx7rlykz+4/ZxpK/cuugPTN57eYyTf965+loU51ncspVBO6LRao71XQUMmveANGatqzoO5AcO9dDK/n7cTdURWB5GZV/ivbb/5lp5/KzFSgisblfUdtl3YmpHwV0BL0de1UmPOtmO/xdGPP+wiJp7/VLhxNRwwBIqxSrjEy2YYpIYo4slJ6epxb7RiHIjjSLFFoaEwwULjYJAWL9UxtYik9mR8+6mS8pdHsUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EJr17DcCooXzpV3OGnSuhuOYQmK4BOCmZNtG6yXYHkk=;
+ b=q/Dj2O9fvx/PNL9qdRIpsYHtKTneBAQ6iEVQ/8G5oOV5vjlXLGvys8+pDMnyfHS/xAjRL6K8MkM5m0lZHe5H8rlCbLLKYZqLKOZlz4BMKFTdJKaojKC2k2JYTpmjjIeBzOQQ0g3IqYgsM8RJyO6ssQy//TrINVC7gc90kMIa6ZIZj7YYO4odd9D1tJFRuKy4pRqgW19uEydR4CGBeNNHKNcTtPQg3wdTr1b7lCNGffc0UQ9oK7B1NJs4FSCxkP7k9N6bgKFIK8Ufvv0ba41kLTaRYY4k0ehO4apbFSO+/fXgrdQM761ziPOldMIsgMXT6qdFKedA+t0hMEiHwgYecQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EJr17DcCooXzpV3OGnSuhuOYQmK4BOCmZNtG6yXYHkk=;
+ b=kfG6cVF0wBQPtOfVCjiuE9+ORajuo8NKKdWqZL49PBgPAdQU6CLqqnQOomKhAFCIVsjAJYse1vYth7/L+dF7b6eScpmCRpN12WkpuLvrwUYJlKhGsfiWi3Ek36zje8vU8RrUmF+JeHP+2h/BvLwF5C60BP8dkEE2q24R50JQA38=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by SA1PR12MB9471.namprd12.prod.outlook.com (2603:10b6:806:458::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.27; Tue, 15 Jul
+ 2025 22:22:39 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87%3]) with mapi id 15.20.8922.028; Tue, 15 Jul 2025
+ 22:22:39 +0000
+Message-ID: <0e7bb322-e6c3-409a-ba30-1d8a3a6dc865@amd.com>
+Date: Tue, 15 Jul 2025 17:22:37 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] target/i386: Add TSA attack variants TSA-SQ and
+ TSA-L1
+To: Babu Moger <babu.moger@amd.com>, pbonzini@redhat.com,
+ zhao1.liu@intel.com, bp@alien8.de
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
+Content-Language: en-US
+From: "Moger, Babu" <bmoger@amd.com>
+In-Reply-To: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SA1PR04CA0015.namprd04.prod.outlook.com
+ (2603:10b6:806:2ce::11) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|SA1PR12MB9471:EE_
+X-MS-Office365-Filtering-Correlation-Id: a90d0079-d902-4fcd-e1a1-08ddc3ee1bc3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y0dTdkNZZWlLTjFyTWltcnk1Ynk0MmNvcG9WSlErMWY0L09aa0d0TDFzT3dP?=
+ =?utf-8?B?eDJRRW1jUlhtY2Q3VlNwdmxrcUVkMHVRTDFGWjJMaGN5aWxMUzI1ZWRMUGVt?=
+ =?utf-8?B?L0g1QTNJT3BVVkg1OUNFbE1kQVQxWUFqMnA1SjA1cGVrUWpuNFcxendCTUlQ?=
+ =?utf-8?B?R0N3cStNWUVqVkloS052QUY5Y29qVnZmRmNFcG9KbklqQkwyL2RrWVhFSGQ1?=
+ =?utf-8?B?a0daS2tIa2lJc3ZuWDl1dzRTdDVWNW9scXc0RnZReG5kMW4yeFJPZUZXWTJs?=
+ =?utf-8?B?MlpiUEtJZEpJbExrbzQ2azNnanYrcWFuWU5wdlZvVllIUVJ0TTg2Y2VmTUVm?=
+ =?utf-8?B?MFdHWU1uNDgvZHBqYUV3MStpVlR0Szl3Z3lHRHdZd3NhUzNsSW9RYjR4NlN5?=
+ =?utf-8?B?aG1jSWlEN1J4bGxwMGU0bmZrUnAycFk1OUFyN1paL1F5TFBuR3luMDZrb2lH?=
+ =?utf-8?B?dUxHSXYwQ00zcXZjTkx3VjdyNGRHSHRvUzNCcUpkT21MQVhtQ2dyZ2VISHJz?=
+ =?utf-8?B?K2RURStucjFFR2pnVTh4b2tkRENBOFU5NjNUSmNjTW5VSUVaa0l3a2ZMS3lz?=
+ =?utf-8?B?ZWs0UGduS29zdC8yT0FkV2Y3c3hVVlhpbFlaVEg5T0M0dmtFRk92L0pMZWNJ?=
+ =?utf-8?B?dG81R3FLZkMrUEpMK0loeldjTi9CQ1c3UHVXUVkycGZMUHg0LzZ0bUNGMXpt?=
+ =?utf-8?B?Y29tTFU2V1JXaGpIZXlQNDVhVzQ4MWwyYkUxLzRmOVU3UzdBV3dvYlpXL0VR?=
+ =?utf-8?B?QjhGR0p5RmlaeHZTWTFEVmxQdDFITTNtUWRUTVQ5TXlQNTJnUW5OSGpINHZn?=
+ =?utf-8?B?NkVpVTJKd1B4N0NRL0Z1WnVLcXJZSnZyZGJWV0dKSTJRV2hYdUUvYnZma1Rz?=
+ =?utf-8?B?Y2dZQnB3R1I0V2R4TkxTb3RZRUFxVEJuUTd5c2dwRStwZU9pdmxQcFJPWitv?=
+ =?utf-8?B?NGRnanc0WTI4YUR1TWplcGROK0ZPNWdJU1dzQ2M5MnJRVU5ZbzVqZGdWOXV6?=
+ =?utf-8?B?bGpiZXU5MEJFdmd2Y3pwYXFGMVVmMTFRazRBTFhNQmRXMDZHUm5LYjZpdDhZ?=
+ =?utf-8?B?TTBsUlJUb2JOb0VmWDJoNkcwVHhOQ1FnYWpEY202bkRXYUIyL3BtWHhBcTJs?=
+ =?utf-8?B?bXRubnZTOFJIcFQ4RG9PaFVPZWRwSDI4UUFmQWRSVkVpMnYrT1F5NXBzV3Ro?=
+ =?utf-8?B?ekhGZmh4TTVjOVIxY25XUndFQkh5SDJtZStEUEpZQm1BbTVDN3hKZ0F4dnNG?=
+ =?utf-8?B?YURNempmU1ZabW5tMUkrRWkwNExtSk5ZZC9XaE5nNHE0NzB6Nmx3OXNpVHlB?=
+ =?utf-8?B?Mnh5RVBiQVBySVMwV0h4VWFxUnA2aGJNdnYyYmRIdW8yU0FLNXRmb1RsNjYz?=
+ =?utf-8?B?THlDRjRJS2d0dXVwRjRBMTdJMkxqWlpuaGxrcnZnU1lJRFUvKzhhWkpUbHVX?=
+ =?utf-8?B?MmJEM1dmKzRtdjdERmRsR1hRYkxIRSsxSklyWGl1OFZDS1k2OXljOGw0YVpt?=
+ =?utf-8?B?SFVFMDVPTVdnTW1UcGx5dncrcjlValZxRW9wdE1rNXNEU3JVVmVwcWxIdnkz?=
+ =?utf-8?B?b1ZUWlhuc0pSc0RLMjU4SHhzWVlrUktsT3AxMEdBQVFuQkU3ZmZNWm42QnFF?=
+ =?utf-8?B?YWVEYmQ4Mk80YUR0WXgway9JbHJyaW1qY3JNQkhKZ2x2cDRXaldOQmhTSFRj?=
+ =?utf-8?B?VEZHRm45Z0FVZG1MU0JoOUVEVE1yZTFYTFpCVVNpamt2LzYvY2pJaTN1U3lq?=
+ =?utf-8?B?ZUFERjNkVkJaOGFzN3JTVXE3Ymg5bm8xaHJpMTErZUxuaHdTNVpydEUza2Jk?=
+ =?utf-8?B?bnpwTFhYMWxFNlVvU251eGJHb0h2WUtveXE2OEg0RlR4QklraXZrMGNZVzRJ?=
+ =?utf-8?B?TWlSUThqeTJPTnA5QzZtZGZ4OU40bkhRNGVWbzRaeWltMkxwT2dzYTFjWEpq?=
+ =?utf-8?Q?ILE+oCQI8Ds=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NDBPVHNoNkVkNVNSWHFvK0Naa0dOU1RiMjdTUnRDcTBGRVJXcGpPOHZQbFdT?=
+ =?utf-8?B?OEwzU3lldjlsanhkOTd4TXhCT0EwelRhYU1DSi9FYkt0VmlYWE9XUThFd1My?=
+ =?utf-8?B?TXZlK0ZhSzBCMUpnT0E1UWRLNGpSZFhnODM4RE5IdkFybzROYk9iSDVNbWMy?=
+ =?utf-8?B?MDFhSURFZFJFTlN6TUpwd0M5alBFdldPbmdQNksxMUY0WklnY0V4OTQwWVpm?=
+ =?utf-8?B?RVArYW1XZjRMd0daY2xQTThYdmpZR1RaUUxqNlFYd29jVS9KcWNJSUVldHR1?=
+ =?utf-8?B?aGFncHpwZXg0WEM5RDk3QUlmQ2VTRDN0UUx0bklZaDlYYUgveDdtY3NBMnJZ?=
+ =?utf-8?B?cGd2Mm1jdjJ0K0hIcWxGaFVaV1Z1OHYxWldmUzJ4SVRHckhqcUdLS1BsZ1FI?=
+ =?utf-8?B?VGE4aWdnQ3l6eTRmclcwRlA4S3BTdS9nK01hUVZGcDIvOU9vTHczeWJyamdT?=
+ =?utf-8?B?ZTlJZzhTOXFOSVkxSlk4SU5BbFg2K3VYWGNlM2FoWjgvd1dlYnAxUTNzSlhU?=
+ =?utf-8?B?ZDVzVUlCNFpJL0VWV2xnVmFwdUhoU1RuZTZhWGZJZGZGVGxsbmdLcjMyZDA2?=
+ =?utf-8?B?SnFGMXJobzY4a3F5YVJyanZYUndGZVJzZXlLQlZTc2EzRTFaeURta2xRRWZu?=
+ =?utf-8?B?ZGxjL2I2Sk4rLzg3ZDBrN0dqM0ZXRVMxNWl6Z0FOVDI2Qm5IUjE4WFBKbmFD?=
+ =?utf-8?B?SU1JeldGZUdkMXpsZzlJejFGQU1FWnRyUzYxZ003Sk5xQ0xkK0hsaERqc3pU?=
+ =?utf-8?B?cDVnY25CQWdacXhaMGllSnZ5bXNHdHV1UkFkQ3piRm9jV1Y3UUxEZlV0ZzFh?=
+ =?utf-8?B?VWFRUjM5TWoxZ3U3cXowSW9pZXdZcUR0Q0F6Wjcyd0FRdjhNc0VLYm1ubVZN?=
+ =?utf-8?B?bnlqVTdhRkYzU2o3TkxFNHEweUR5alM2aXhnSkE0SEJxb0YxZWNLOFpxc1Y1?=
+ =?utf-8?B?Qzg1Q3ozZHR0V3d3S2pIenFqSmxRKzltcUtTK0dxa0dNa3diSVlnRXFoL2p1?=
+ =?utf-8?B?WktNZnlvTSs3Y3I4Zi9VdW1rTGlBemlaai9XeWduK3BkMk54ZHl4eVBOQXZq?=
+ =?utf-8?B?bCtsU1hwNVBQbFdlQXQvWVFnMHdCb3hOMzI0VjF0bm8yVXphKzhwbU1BUXlV?=
+ =?utf-8?B?bGdMOXpjKzAvVExUZzQ4YWNVSTF4cU45MjRNSUp0S0xjMTdqdTBiSW1ZNVdQ?=
+ =?utf-8?B?QWQ0RHAwMEFUUnNBQ1E0a0xQSEZkSmdtTDd1YVdjZVhTeTBqWW4rYlVIV1BS?=
+ =?utf-8?B?cEtERFVjdncxVmZJUFVnMWtCVmJpQ2o2T0x3cElQRDB4blJTVE1kYzV5Ry91?=
+ =?utf-8?B?RFRHRkNjTzczSWYzNGo1aWZYaktqOXJLS3grdUlNU2hrSWZDYmROMVQ3Umcw?=
+ =?utf-8?B?RS9JY0pQR3djcmg4aHJQZTBDY0xBRFJsMUlGS1p5UUlQNkg3YkEraWE2U0J0?=
+ =?utf-8?B?MmozMUtqU0tRUUxwUjJwRG1tZnNpRjAwbXdlZC9uc2hES2g1MEpDWmhOUGdZ?=
+ =?utf-8?B?ZWZYS08xZFdkaGlBSnpiNXJhcXN1ZFVpT2hnZ1k5MkVVOHNrbDN5Y1RaOXlz?=
+ =?utf-8?B?aHBNdlVybS9KVE40RGF2UGd1aHJRcVZPeTE3Zm5Md1I3Ykx0dHBVeitCT3A3?=
+ =?utf-8?B?SkwyRkdDZXp2R1JnVGJ5ai9hWGQyUCtVQWY2M0xhMndHV0tMSElKTTlLamVM?=
+ =?utf-8?B?L3FHTS9sMzRwcWd4WnlqQTRWZXN3Yy9wbm4vL3ZDWXhENElWTStHd08vOXJz?=
+ =?utf-8?B?TjJ0cVFzUVFveUoxclZtTVlROXVEcndkOEZhV2tmWVQ4V0NHNm1iTm5ueXN4?=
+ =?utf-8?B?RHh4R2o2NXBkNzZHalYzekRZQlg0NVkrMEZSMGdBazk1QThXSnd5OXk5bmQ3?=
+ =?utf-8?B?NTVzZm1kRGxCaVlmRkZSd3BJZ25nZzQvRTNyL3FLZ0srd3ZiYlVaclVFd0w1?=
+ =?utf-8?B?aElLQm1ubXRveFg0eTBHMDZwNnRnMDI5cHdEK2VWK1QzQkFlNlFORXYra29a?=
+ =?utf-8?B?MGxIV1pjdEs3SW9QQVpuNSs1Y1hiNEZOcGZybERBK0hpQVR0UnIyMWZvN0tW?=
+ =?utf-8?B?SXI5SjUzK08xMzdNYTJZZ1NVSFliUklhRHpOOGJxU1JZOTZQRnhkb2tWT0Nw?=
+ =?utf-8?Q?rS80=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a90d0079-d902-4fcd-e1a1-08ddc3ee1bc3
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 22:22:39.3994 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: caF/zt7y0HtHgQqyrbR9PX8kaNjTklozKWt4JzTvPZ/CBpzY7x6gi6seLKG4XZKk
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB9471
+Received-SPF: permerror client-ip=40.107.237.87;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,78 +179,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The way editable installs work has changed at some point since Fedora 40
-was released. Generally, we should be opting to use pyproject.toml
-installs (PEP517/518) - but those are not fully supported until v61 of
-setuptools, and CentOS Stream 9 ships v53.
+Hi Paolo,
 
-Until that time, we can make use of a transitional feature in
-pip/setuptools to use "legacy" editable installs, which is enough to fix
-"make check-dev" on modern local workstations for now.
+Can these two patches be included in the QEMU 10.1 release? We are only 
+adding bit definitions and not updating the CPU models, so the risk 
+should be very low.
 
-By using the environment variable approach to configure pip, we avoid
-any problems for older versions of pip that don't recognize this option,
-so it's harmless. The config-settings option first appeared in v23 of
-pip. editable_mode was first supported by setuptools in v64.
+thanks
+Babu
 
-(I'm not currently precisely aware of when the default behavior of '-e'
-switched away from 'compat', but it appears to be a joint effect between
-setuptools and pip versions.)
-
-Version information for supported build platforms:
-
-distro              python3  pip     setuptools  sphinx
---------------------------------------------------------
-centos_stream_9     3.9.23   21.3.1  53.0.0      3.4.3
-ubuntu_22_04        3.10.12  22.0.2  59.6.0      4.3.2
-
-** pyproject.toml installs supported as of here **
-
-freebsd             3.11.13  23.3.2  63.1.0      5.3.0
-debian_12           3.11.2   23.0.1  66.1.1      5.3.0
-ubuntu_24_04        3.12.3   24.0    68.1.2      7.2.6
-centos_stream_10    3.12.11  23.3.2  69.0.3      7.2.6
-fedora_41           3.13.5   24.2    69.2.0      7.3.7
-alpine_3_19         3.11.13  23.3.1  70.3.0      6.2.1
-alpine_3_20         3.12.11  24.0    70.3.0      7.2.6
-alpine_3_21         3.12.11  24.3.1  70.3.0      8.1.3
-ubuntu_24_10        3.12.7   24.2    74.1.2      7.4.7
-fedora_42           3.13.5   24.3.1  74.1.3      8.1.3
-ubuntu_25_04        3.13.3   25.0    75.8.0      8.1.3
-macports            3.13.5   25.1.1  78.1.1      8.2.3
-openbsd             3.12.11  25.1.1  79.0.1      8.2.3
-alpine_3_22         3.12.11  25.1.1  80.9.0      8.2.3
-homebrew            3.13.5   ---     80.9.0      8.2.3
-pkgsrc_current      3.12.11  25.1.1  80.9.0      8.2.3
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- python/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/python/Makefile b/python/Makefile
-index 764b79ccb23..32aedce4137 100644
---- a/python/Makefile
-+++ b/python/Makefile
-@@ -68,7 +68,7 @@ $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.tx
- 		echo "INSTALL -r tests/minreqs.txt $(QEMU_MINVENV_DIR)";\
- 		$(PIP_INSTALL) -r tests/minreqs.txt 1>/dev/null;	\
- 		echo "INSTALL -e qemu $(QEMU_MINVENV_DIR)";		\
--		$(PIP_INSTALL) -e . 1>/dev/null;			\
-+		PIP_CONFIG_SETTINGS="editable_mode=compat" $(PIP_INSTALL) -e . 1>/dev/null;	\
- 	)
- 	@touch $(QEMU_MINVENV_DIR)
- 
-@@ -103,7 +103,7 @@ check-dev: dev-venv
- 
- .PHONY: develop
- develop:
--	$(PIP_INSTALL) -e .[devel]
-+	PIP_CONFIG_SETTINGS="editable_mode=compat" $(PIP_INSTALL) -e .[devel]
- 
- .PHONY: check
- check:
--- 
-2.50.0
+On 7/10/2025 2:46 PM, Babu Moger wrote:
+> Transient Scheduler Attacks (TSA) are new speculative side channel attacks
+> related to the execution timing of instructions under specific
+> microarchitectural conditions. In some cases, an attacker may be able to
+> use this timing information to infer data from other contexts, resulting in
+> information leakage.
+> 
+> AMD has identified two sub-variants two variants of TSA.
+> CPUID Fn8000_0021 ECX[1] (TSA_SQ_NO).
+> 	If this bit is 1, the CPU is not vulnerable to TSA-SQ.
+> 
+> CPUID Fn8000_0021 ECX[2] (TSA_L1_NO).
+> 	If this bit is 1, the CPU is not vulnerable to TSA-L1.
+> 
+> Add the new feature word FEAT_8000_0021_ECX and corresponding bits to
+> detect TSA variants.
+> 
+> Link: https://www.amd.com/content/dam/amd/en/documents/resources/bulletin/technical-guidance-for-mitigating-transient-scheduler-attacks.pdf
+> Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Signed-off-by: Babu Moger <babu.moger@amd.com>
+> ---
+> v2: Split the patches into two.
+>      Not adding the feature bit in CPU model now. Users can add the feature
+>      bits by using the option "-cpu EPYC-Genoa,+tsa-sq-no,+tsa-l1-no".
+> 
+> v1: https://lore.kernel.org/qemu-devel/20250709104956.GAaG5JVO-74EF96hHO@fat_crate.local/
+> ---
+>   target/i386/cpu.c | 17 +++++++++++++++++
+>   target/i386/cpu.h |  6 ++++++
+>   2 files changed, 23 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 0d35e95430..2cd07b86b5 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1292,6 +1292,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>           .tcg_features = 0,
+>           .unmigratable_flags = 0,
+>       },
+> +    [FEAT_8000_0021_ECX] = {
+> +        .type = CPUID_FEATURE_WORD,
+> +        .feat_names = {
+> +            NULL, "tsa-sq-no", "tsa-l1-no", NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +            NULL, NULL, NULL, NULL,
+> +        },
+> +        .cpuid = { .eax = 0x80000021, .reg = R_ECX, },
+> +        .tcg_features = 0,
+> +        .unmigratable_flags = 0,
+> +    },
+>       [FEAT_8000_0022_EAX] = {
+>           .type = CPUID_FEATURE_WORD,
+>           .feat_names = {
+> @@ -7934,6 +7950,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>           *eax = *ebx = *ecx = *edx = 0;
+>           *eax = env->features[FEAT_8000_0021_EAX];
+>           *ebx = env->features[FEAT_8000_0021_EBX];
+> +        *ecx = env->features[FEAT_8000_0021_ECX];
+>           break;
+>       default:
+>           /* reserved values: zero */
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 51e10139df..6a9eb2dbf7 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -641,6 +641,7 @@ typedef enum FeatureWord {
+>       FEAT_8000_0008_EBX, /* CPUID[8000_0008].EBX */
+>       FEAT_8000_0021_EAX, /* CPUID[8000_0021].EAX */
+>       FEAT_8000_0021_EBX, /* CPUID[8000_0021].EBX */
+> +    FEAT_8000_0021_ECX, /* CPUID[8000_0021].ECX */
+>       FEAT_8000_0022_EAX, /* CPUID[8000_0022].EAX */
+>       FEAT_C000_0001_EDX, /* CPUID[C000_0001].EDX */
+>       FEAT_KVM,           /* CPUID[4000_0001].EAX (KVM_CPUID_FEATURES) */
+> @@ -1124,6 +1125,11 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>    */
+>   #define CPUID_8000_0021_EBX_RAPSIZE    (8U << 16)
+>   
+> +/* CPU is not vulnerable TSA SA-SQ attack */
+> +#define CPUID_8000_0021_ECX_TSA_SQ_NO  (1U << 1)
+> +/* CPU is not vulnerable TSA SA-L1 attack */
+> +#define CPUID_8000_0021_ECX_TSA_L1_NO  (1U << 2)
+> +
+>   /* Performance Monitoring Version 2 */
+>   #define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
+>   
 
 
