@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E390AC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12772C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubd5M-0004Wg-Rs; Tue, 15 Jul 2025 06:40:32 -0400
+	id 1ubd5J-0004RR-Jj; Tue, 15 Jul 2025 06:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5C-0004J2-7n
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:22 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5G-0004Pt-Sz
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:26 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5A-0005l5-Ds
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:21 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubd5F-0005lL-Cn
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 06:40:26 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-451dbe494d6so48681165e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:19 -0700 (PDT)
+ 5b1f17b1804b1-45629703011so2433645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 03:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752576018; x=1753180818; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XGSrmDCR8wpv1EuhboPdK3VNEXK0BwB+Fm4Uly57pRU=;
- b=TKsL9hsFsOqESmbP7UEz4NHCMdcNKdrGOcfC1lQ2OnYQ1pvv8XCbupgKYbkTz1K4O7
- ZuJaQM6i9XBh/cnybZBU8hI5GUDpwrz23Q1/GVAdbI+otMApZ4zl56DEenfE1UHIriQX
- dphBrJHWWaoTYmuJVZ2BMFwfPjOZGGWE3E+FdjdkA6RKHFpSt4b3TM7Wi5bsS+1S6ROe
- +poLLqvaeVMQ3n9IXtHVdLWsz+dYNtAlLZH6QgU2IbBxfVv1PR0/r/QsTTxisIPbuJ2S
- /zXqU9SSBuPmCTSwHmvH9goE4N+U+EX8NzAKyXqDBF6RL8bi5SMJoMxVySeRPon15cs7
- opbA==
+ d=linaro.org; s=google; t=1752576023; x=1753180823; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DUXxa+xP+Ej2YS3GTVa8ELdM0Yk7DkoIG4cYz8Z0G9Q=;
+ b=eQ0QZrXXsncpYfCm6Irtxl4kP9mw+mmkzXywdqRmdjrtQPUn9Qsmc6OQiqJ2LbHYVV
+ J8HGU7LxDB+2IH5DxLmjDDZYjdD9CJDq0r7+5/rLsD/GIeZzn57o2FODUdzH0jb7m3P3
+ pPcOlhcukn340lh8d/sPxJES28bNgVbUFrIWwgcwRgIbwxOSaqMO0fbUN+N/QlN3ouat
+ WanseawJPlMbu3C/G7R+l76D6Hp7uI4xh3w6fHZA6BuIrqY7QfGqkZEJwpt/QR5WOlWI
+ nEISROua8Cf1m9muNezb/uvj0SJ2lQv8P5BFrc5Vh5Nkk6pFzst3+GHwQWGDSmvH9pCm
+ J8Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752576018; x=1753180818;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XGSrmDCR8wpv1EuhboPdK3VNEXK0BwB+Fm4Uly57pRU=;
- b=ImyMjAa04PvZzx7EYzvg4ARGe7v6ySlzbHoozOcCwivceQenX1xr/1hdSNzZOqFpeL
- cjbEqovdbHg3gYvnanFOWkPx3Ahj+mx5G1Yog4pTipRiJIpICc5pMTLoVvpB3aUnIQc0
- mHCp7C5fARELCauSBNXsoJg+LkLTNMg0AxQ7ZOORiqQofK+t6ICousrUyQcYhvOBTUJq
- p7l84pHPo2fJRfAhBaw/EHK1Zp+aKdA5kOZ55DA9/vpS94P8zDfXkPAti94zMvXA0ia3
- FGmAI/cal/9oJ0gN3WPBr6iYdbnPoN7WuVhc7Lx5xq0p3T1AGDMskxC9iN0iiNuoKALv
- L5qQ==
-X-Gm-Message-State: AOJu0YwUPp/MpmKj9O+QS+Td+URyd3/XG4Utrco9Q3e7c7NkEjRNlB7Z
- HBixe+rfz5NIZdcA7EspqNT71ennFCpDglHBesFQhZEVozYKhuWUUby+xaVyJXoqEvun04NalD/
- FFIl9
-X-Gm-Gg: ASbGnctfi+jPxLebsBJv8yO3+wdA+segeHUoHE2xkfII7Hw7CCLDBq9t1MjtRJSdp2H
- ArpVsmVMIB5UJXobwkLV5wLsUzeZRxPUwXYUeVE26IVEkN1v6AIQdiKOfdaVx5IGmoXhoudIAMy
- Iq6A+laOkNWwnauEbO1U9Kz29lQ2LKg+ntwdE0TV65chs6kqeuC8+YI+EWHkWq11Y1rPLo8lK/Y
- 7JsrXmzFjhywPQWWLkmU6h3pfIAOludFQ/A4HZ5J2eceuz1ikBchdKYA4lshLNEP7Jjq7XgH8BM
- xK4jcVzWrodmVTxnpS0kNW5V7QmOdfbs7Ap6f0ebjd7KiMZiaoeaxeUwDaAIBryOcf9Ikd/v/hq
- ySzKI3sFg6bR5AFl+0SigQCMS5O//vBdkoENGYv2tO8dgyyhfmVKopRe44MNEuI24ykaR8JAV9+
- LeOA==
-X-Google-Smtp-Source: AGHT+IGT55NU0BlDJ31etzAZzwwdbo6oK3auVttjNUBLIcttNpXx7p0ZPMVe7KbzfCl+NmgFG+Zxcg==
-X-Received: by 2002:a05:600c:4595:b0:43c:fe5e:f03b with SMTP id
- 5b1f17b1804b1-454f427c3b8mr167076405e9.30.1752576017641; 
- Tue, 15 Jul 2025 03:40:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752576023; x=1753180823;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DUXxa+xP+Ej2YS3GTVa8ELdM0Yk7DkoIG4cYz8Z0G9Q=;
+ b=gHK1Hx5+F8sYrNCFBF0f2wEhse9/V+Wnx5UmFcKQ1vREN7RlMHNCKmIi9CJft7t+99
+ ysybsx/Is6S8qAHEbmY6nmWFP+klvdnarnPyV52u5ERMpfbFg93Jd9NreNe16yH7G8SJ
+ f6FAXw0RMonj2H6mE17nEKTchjE52mBQdnI3T9+pH2lCQ7M2NURKqjiLF2GGYdXK3Cy9
+ DAHlOkYmE4vKkOFZNi51zHV9bjBiEWA6tyUDD49jsCCPjYwFGsuVvZRis205z5tYLQBG
+ 9zcyyeyWPEL+YNDQIUEnnWHOHpCdfEmkIEvtspLBs9iGLgYcgQB5s4YWasmYj5rj977V
+ cOXA==
+X-Gm-Message-State: AOJu0YwSuska4eZjo2DtcilEPRcjcM7lNLji7tRVWfqR/c+56L5JfX7M
+ gZSyt17uthbYKW79mG24w+hIgsxGJ5Nxg9xMvoQ9jHqbJe3RvIpLlMEOxigefzSoX06NYavPeOn
+ DgAgZ
+X-Gm-Gg: ASbGnctZGlDkQzwk9via/oUZ9qQR9eh43Rn5hs5+D1YpXsxUMKgfzePbY9ajyFjXwXx
+ 10PbEspgqnAzIwbGN+V7GWMeNTyzACikOfYFWS9TdWVqT8yCfah31ve4/Ogj+qR3NvQmZtMulqu
+ zDQBmuTA80y2L+hZ68NM443JcrfmpquaKAnuQ3eVa1WqLXZlgN8eSGrRzQ9xzzA0G6CsU5sqnUb
+ 9dsAr4GvmtY15mtoI5PVMql+tfQT6WD7RdeP1/nFekBQKAc/Mx9/15Mm9ZmP9yyQrr4MKlrB1Wu
+ cH1tyXQgEf9PWENsKXJwg3iwMyv1Srqtx/Q8zgG0dtR1wq7cG8wEoePFX8NwIktQYgo1Q1J5shr
+ c4nfDnnQ0sDLSib7q6QxCLE7NmBnTlvTZxQz1r5XXnOSbVsWQtqs9CBQXB/gX+Akj3RkQuQCCbk
+ wRsA==
+X-Google-Smtp-Source: AGHT+IFaelI3Y/OhaoirXt/g1U6//WLMrAmUFQs26iVTfbxt72am3vV4E2e7/Gk8FjFHwusZI1gS2A==
+X-Received: by 2002:a05:6000:23c3:b0:3b5:f7a9:7f5e with SMTP id
+ ffacd0b85a97d-3b5f7a97fa4mr8679778f8f.7.1752576022945; 
+ Tue, 15 Jul 2025 03:40:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45614aeba29sm72541985e9.11.2025.07.15.03.40.16
+ ffacd0b85a97d-3b5e8dc1fd7sm14565314f8f.26.2025.07.15.03.40.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 03:40:17 -0700 (PDT)
+ Tue, 15 Jul 2025 03:40:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -75,14 +76,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
-Subject: [PATCH-for-10.1 v5 0/7] accel/system: Add 'info accel' on human
- monitor
-Date: Tue, 15 Jul 2025 12:40:08 +0200
-Message-ID: <20250715104015.72663-1-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH-for-10.1 v5 1/7] Revert "accel/tcg: Unregister the RCU before
+ exiting RR thread"
+Date: Tue, 15 Jul 2025 12:40:09 +0200
+Message-ID: <20250715104015.72663-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250715104015.72663-1-philmd@linaro.org>
+References: <20250715104015.72663-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::329;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
@@ -108,35 +112,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: #1 and #5
+This reverts commit bc93332fe460211c2d2f4ff50e1a0e030c7b5159,
+which was merged prematurely, re-introducing Coverity CID 1547782
+(unreachable code).
 
-Philippe Mathieu-Daudé (7):
-  Revert "accel/tcg: Unregister the RCU before exiting RR thread"
-  accel/tcg: Extract statistic related code to tcg-stats.c
-  accel/system: Introduce @x-accel-stats QMP command
-  accel/system: Add 'info accel' on human monitor
-  accel/tcg: Propagate AccelState to tcg_dump_stats()
-  accel/tcg: Implement get_[vcpu]_stats()
-  accel/hvf: Implement get_vcpu_stats()
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/tcg-accel-ops-rr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
- qapi/accelerator.json         |  17 +++
- accel/tcg/internal-common.h   |   2 +-
- include/accel/accel-cpu-ops.h |   3 +
- include/accel/accel-ops.h     |   2 +
- accel/accel-qmp.c             |  35 ++++++
- accel/accel-system.c          |   9 ++
- accel/hvf/hvf-accel-ops.c     |  24 ++++
- accel/tcg/monitor.c           | 202 +-------------------------------
- accel/tcg/tcg-accel-ops-rr.c  |   2 -
- accel/tcg/tcg-all.c           |   6 +
- accel/tcg/tcg-stats.c         | 214 ++++++++++++++++++++++++++++++++++
- accel/meson.build             |   2 +-
- accel/tcg/meson.build         |   1 +
- hmp-commands-info.hx          |  12 ++
- 14 files changed, 326 insertions(+), 205 deletions(-)
- create mode 100644 accel/accel-qmp.c
- create mode 100644 accel/tcg/tcg-stats.c
-
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index a578698d071..6eec5c9eee9 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -302,8 +302,6 @@ static void *rr_cpu_thread_fn(void *arg)
+         rr_deal_with_unplugged_cpus();
+     }
+ 
+-    rcu_unregister_thread();
+-
+     g_assert_not_reached();
+ }
+ 
 -- 
 2.49.0
 
