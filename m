@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483C0C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF81EC83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 19:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ublka-0002gc-QH; Tue, 15 Jul 2025 15:55:41 -0400
+	id 1ublke-0002oi-0m; Tue, 15 Jul 2025 15:55:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublai-0001oG-9D
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:32 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublam-0001r1-9o
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:36 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublag-0002f7-0N
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:27 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4555f89b236so43739495e9.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:45:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ublaj-0002fV-Sl
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 15:45:31 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a588da60dfso3934228f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 12:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752608723; x=1753213523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752608728; x=1753213528; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YI4WZbbT1bZzd2LYFBB3rNk/YqQvkBiNRUUbw7uKvvU=;
- b=LrT3iNjN7B3KpEW/Qy+u9cQNMjrtEGPKHnAbxDzWvBTGG3rwn0IW3lFu1HpeC8BU+S
- tjbw3p4tH27zN453TQHKNf6N23SCsWTEHRaFQAJnw6q/ra9oybKtNIiZPIwvbhUIpvD3
- XpWMoWpzXbmNy+xbYbWSVpbhGPoclAaBczbnVyFHHT3+XGANmWQ9CiK1vsvP3aNsUWzO
- 3gs13Oi5uz6g6MVVfz9mPYdIbKYWMyukjJoUvWCRSXiIi7TKZ8jUigmFQNtMwAhUOTnb
- p9xjtTHJ0fhxA6pwKwnV94UX/JuWjAzqGbfL0vFWUeXokvqJdWcHsdGWwaI1eR4X0vyV
- nsug==
+ :reply-to; bh=FurVbd1eLbO1skSsA8qBStYsslRinQbnXVcbQqhp0RM=;
+ b=QWrTxN11eSApbM/CODGrrK9EAJJ3R9UifVRr+CCXamYYzUFwAw5JEM6Db8vB4EIv7C
+ FNbne3xB2+fFR2PAuxKEKAGs9NdKrbw7Dozw1IT1PL4dDPLVyDwKzWyBhf3A4XqsMJ7p
+ A9tUH8xNO/dAL5BoRSFWhcGA9vp5jemj30nYB4opJQZDxFVyZoX0hsZ1LRIlVBikFpox
+ i6jcJrxLuWBrfQxvsXLuNgg445mURCtzXYpxl5H/EasoKH4CiSZ5fJvSFUPSbsS1H9+/
+ 8uisZH6GVLQ5+HBLnor+1SqGXfExbFZGxUooo82ne52mTmgf6XqWMYbV+o5yH8umNVWA
+ hwcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752608723; x=1753213523;
+ d=1e100.net; s=20230601; t=1752608728; x=1753213528;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YI4WZbbT1bZzd2LYFBB3rNk/YqQvkBiNRUUbw7uKvvU=;
- b=TGTxcqZ+JROm5pUgZw5l+Rto1+StsfY8HlyVuHwYm4RPmcjixlKf6+5mrU0We9Ed7n
- mHeiGtjdWsQ5L8ozCMVdXi5qTfzoJIPdiExiEN5ijJE7iERYsQ+VkTU6VX3JQMKGwZLk
- YuIyYmVeAR5sknZjqrkzcaFcZ1l4x4TcAf9+s7j5Dldfl6uyzRHA4/pMT7zfVGCkL5on
- 7xFs/wQoMXu/dw7wH5tgqeNxiYvrKIch1wGlthSgCu219a3uP+WOROMBAP012MCeQ2vr
- J7F9u5a2jUMtfCQRu4CEecFXnAYA91+fbeE+oSECPKlgJhu4IjxNdADAxgx24fuBlEfv
- l8zg==
-X-Gm-Message-State: AOJu0Yz//oA5R2HVIlXrcrXyt3Pq016Zh+y63VZYXfG/Y4344DAMhIt3
- DoPq49vQQLCeQHQk+iD+lLuVyVTd/BL+JrPH5tSIaAslTSAAwk7QMIR+2QvHqbzgGD1CG3HJeIs
- FaKsM
-X-Gm-Gg: ASbGncs8WV5Aolff1C0yOQVy/P72Mad5hKo9UZx+GV19rHRJ9/H1b0LPYHSx64HIXSo
- D3ykfvlUxo/0dJwi2Geg/XoKkfV4weT7FZ0eJN67+iApfkOMyhUh7yIgcgenc27rvvJz1gB+KUv
- npnU/F6EVp/Ikgd4fFaBNvq7yXDVX+4ZaXDZzBjNDmQa6M85Z7KptsyU7pqI1ku8FH08DlkX+YS
- up4awHPS8bBX/fEMm6Z8L0quFPXNL7p6rgzZIqxN6Fg/9JoMo1P1LUgirXUULMsWFUm4GNozmKB
- 4f7C0DG6/sRjnGrPcbDI/14xAqMo1WS8ZiJp89WTraRma19fo9rYwhmYWY+eVn7gMlR+l/FZb1+
- YG26MXZL6a6dVGlWoOtYJXh7BUeYbQaGaCAHCu0s09dG7TunroiuhipAkJShzTpsk1V6WUoK6Cc
- SBuw==
-X-Google-Smtp-Source: AGHT+IGsnUWm531ir9pIYoF/zMU1qwqlDqdFaAWqt6c/pcjoUI3ai7E+ZaMlKDkeIU+RoL2Tt7yGDQ==
-X-Received: by 2002:a05:600c:3b11:b0:43d:3df:42d8 with SMTP id
- 5b1f17b1804b1-4562e364770mr869885e9.6.1752608723049; 
- Tue, 15 Jul 2025 12:45:23 -0700 (PDT)
+ bh=FurVbd1eLbO1skSsA8qBStYsslRinQbnXVcbQqhp0RM=;
+ b=oaTJyhENqm41Udd4FKh5I1JrrwskszrSYiI3Ec8R9Eq1dqPeRg0G1ee+G9e/UFpT6c
+ 5MumjSciYPUeI3jhhh6XMJYOotZAFlsgq6MHADD4yQYd/ihA/DtdOgUCTtvWz1apSzgR
+ OCe+84Tcr9QHirevLZk9hGycIWejMOu1AVWnFA5Ftq59HJqTYa9yDn6CRyhjLBzeX0rt
+ gnLYH8qS0Br1nYRo9IMbzfTaOONGh64Jqu6tu7sfW4pfrTis8WPoy2X8fr/ZodC6aEN6
+ XLxcKlTeaNvQWiDy2ynQDszE4K2GW4MGyz/6s7Bt4UIvbMHRTQGyCzipKT6eG4mDCj4L
+ HR7Q==
+X-Gm-Message-State: AOJu0Yw4rbc0oTmN6BJOO6HcxfCGfsQ1w8c+XRABJaVm+W2TggJHy0I9
+ jdGjtP6XyGYIEzn+IEE/xoDvJA67VzY7aGAdIHcRra1b3ePGjRhGcEykgIcgE50IdFM1cTLvP+p
+ +egu2
+X-Gm-Gg: ASbGnctx8cRWRBaPFJK8KaPMuJDWo9PFabo3EQyNhfUKjGGKLN/2yIoiMXSZlOde1ZU
+ N6RtQRfcsr/Sa+ciDie4lUDuWYkav/DAy7K1qcUesPa0i+fA8UL02B5xHUUYyA2hTBpBvwEWWyy
+ Swc3TWmbuBSdAdoWIfvuuYjK9SnrDuoj8waMLTazEJwtlXqqfaqQvJuaznnF9Rk9zZdX64Nc8aX
+ 55XEvFc7AEGHwYotiGv1Lf0cC0tpROkoHVVKToSIn5K4CCF6sLJI7gd9P1ph5cLjxln7Nwn8xi0
+ kjgAoBqfswIv3aoLzuKpmq/+AvLvacbPl6cIFvrtuYlE786bd6i0Twi2BOttBnao39YMIzPCcf/
+ k1XS+WF09OulL66orX58B6WjH0X27mZ91iSmfa/Vr7WcOrxmsNoXFaoT8kIpjZw0PDFpoR061SU
+ mD9g==
+X-Google-Smtp-Source: AGHT+IEQYtnVSLRBKU5Sclkp9o8ExlijViyfXcFDm5GFUk6F9O6+VqJN2NXWJI6X18Pa7/r/4+9wWQ==
+X-Received: by 2002:a05:6000:40ca:b0:3b6:938:86b7 with SMTP id
+ ffacd0b85a97d-3b60dd780b9mr377900f8f.35.1752608727773; 
+ Tue, 15 Jul 2025 12:45:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562bacfa41sm9294755e9.40.2025.07.15.12.45.22
+ ffacd0b85a97d-3b5e8bd1997sm16190703f8f.10.2025.07.15.12.45.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Jul 2025 12:45:22 -0700 (PDT)
+ Tue, 15 Jul 2025 12:45:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/17] hw/xen/arch_hvm: Unify x86 and ARM variants
-Date: Tue, 15 Jul 2025 21:45:00 +0200
-Message-ID: <20250715194516.91722-2-philmd@linaro.org>
+Subject: [PULL 02/17] hw/arm/xen-pvh: Remove unnecessary 'hw/xen/arch_hvm.h'
+ header
+Date: Tue, 15 Jul 2025 21:45:01 +0200
+Message-ID: <20250715194516.91722-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250715194516.91722-1-philmd@linaro.org>
 References: <20250715194516.91722-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,73 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As each target declares the same prototypes, we can
-use a single header, removing the TARGET_XXX uses.
+"hw/xen/arch_hvm.h" only declares the arch_handle_ioreq() and
+arch_xen_set_memory() prototypes, which are not used by xen-pvh.c.
+Remove the unnecessary header inclusion.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-Id: <20250513171737.74386-1-philmd@linaro.org>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20250715071528.46196-1-philmd@linaro.org>
 ---
- include/hw/arm/xen_arch_hvm.h  |  9 ---------
- include/hw/i386/xen_arch_hvm.h | 11 -----------
- include/hw/xen/arch_hvm.h      | 14 ++++++++++----
- 3 files changed, 10 insertions(+), 24 deletions(-)
- delete mode 100644 include/hw/arm/xen_arch_hvm.h
- delete mode 100644 include/hw/i386/xen_arch_hvm.h
+ hw/arm/xen-pvh.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/arm/xen_arch_hvm.h b/include/hw/arm/xen_arch_hvm.h
-deleted file mode 100644
-index 8fd645e7232..00000000000
---- a/include/hw/arm/xen_arch_hvm.h
-+++ /dev/null
-@@ -1,9 +0,0 @@
--#ifndef HW_XEN_ARCH_ARM_HVM_H
--#define HW_XEN_ARCH_ARM_HVM_H
--
--#include <xen/hvm/ioreq.h>
--void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
--void arch_xen_set_memory(XenIOState *state,
--                         MemoryRegionSection *section,
--                         bool add);
--#endif
-diff --git a/include/hw/i386/xen_arch_hvm.h b/include/hw/i386/xen_arch_hvm.h
-deleted file mode 100644
-index 1000f8f5433..00000000000
---- a/include/hw/i386/xen_arch_hvm.h
-+++ /dev/null
-@@ -1,11 +0,0 @@
--#ifndef HW_XEN_ARCH_I386_HVM_H
--#define HW_XEN_ARCH_I386_HVM_H
--
--#include <xen/hvm/ioreq.h>
--#include "hw/xen/xen-hvm-common.h"
--
--void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
--void arch_xen_set_memory(XenIOState *state,
--                         MemoryRegionSection *section,
--                         bool add);
--#endif
-diff --git a/include/hw/xen/arch_hvm.h b/include/hw/xen/arch_hvm.h
-index df39c819c8f..8bacaa4ec41 100644
---- a/include/hw/xen/arch_hvm.h
-+++ b/include/hw/xen/arch_hvm.h
-@@ -1,5 +1,11 @@
--#if defined(TARGET_I386) || defined(TARGET_X86_64)
--#include "hw/i386/xen_arch_hvm.h"
--#elif defined(TARGET_ARM) || defined(TARGET_AARCH64)
--#include "hw/arm/xen_arch_hvm.h"
-+#ifndef HW_XEN_ARCH_HVM_H
-+#define HW_XEN_ARCH_HVM_H
-+
-+#include <xen/hvm/ioreq.h>
-+#include "hw/xen/xen-hvm-common.h"
-+
-+void arch_handle_ioreq(XenIOState *state, ioreq_t *req);
-+void arch_xen_set_memory(XenIOState *state,
-+                         MemoryRegionSection *section,
-+                         bool add);
- #endif
+diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
+index 4b26bcff7a5..1a9eeb01c8e 100644
+--- a/hw/arm/xen-pvh.c
++++ b/hw/arm/xen-pvh.c
+@@ -10,7 +10,6 @@
+ #include "hw/boards.h"
+ #include "system/system.h"
+ #include "hw/xen/xen-pvh-common.h"
+-#include "hw/xen/arch_hvm.h"
+ 
+ #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
+ 
 -- 
 2.49.0
 
