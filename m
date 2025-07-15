@@ -4,78 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F13C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08DBC83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 06:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubZI8-0005oS-5P; Tue, 15 Jul 2025 02:37:28 -0400
+	id 1ubZKL-0000IV-L2; Tue, 15 Jul 2025 02:39:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZEQ-0002xk-Ce
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:33:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ubZDM-00021G-1V
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:32:39 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1ubZEO-0003en-Ai
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:33:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752561215;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KQNIH2ceD/6p8CyUoQ4Hhxi4tjgzkOrN9UmPsBwnATI=;
- b=TAJMyQaFgpXcXBveSSDbJUttVkIz8f5Xob4mKcLd0n9wITvtzUyh4PhaI+5nknAb8pbZPz
- FnPgB3rDPgZHXsT7brg4XniIW0IU27lqu9KpQCwCHjSV0Jzuo1NOjZ6wcxGPrN1tXQDrvh
- j7b9CpCn7xm95KE4cjwSRMymcLzm+YA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-iOEMO65TPDCKyWL4vhhadQ-1; Tue,
- 15 Jul 2025 02:33:30 -0400
-X-MC-Unique: iOEMO65TPDCKyWL4vhhadQ-1
-X-Mimecast-MFC-AGG-ID: iOEMO65TPDCKyWL4vhhadQ_1752561209
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E5621955F42; Tue, 15 Jul 2025 06:33:28 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D4713000198; Tue, 15 Jul 2025 06:33:25 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Subject: [PULL v2 03/13] ui/egl-helpers: Error check the fds in
- egl_dmabuf_export_texture()
-Date: Tue, 15 Jul 2025 10:32:49 +0400
-Message-ID: <20250715063301.145191-4-marcandre.lureau@redhat.com>
-In-Reply-To: <20250715063301.145191-1-marcandre.lureau@redhat.com>
-References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ubZDH-0003XA-Rs
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 02:32:31 -0400
+Received: from [10.105.8.218] ([192.51.222.130]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56F6W02B093950
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 15 Jul 2025 15:32:00 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=2kt60vtMY2DfOE87U/cuxC8H5R+F/KM3jrCkiEYwAnA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1752561120; v=1;
+ b=Onv2sDB6mQbvWQOEbwH4J4wi851MjdiSl+MRTV9UqlsKaWudn38bMRy9KIaVFEVt
+ 2aAV0WL73qlMgBhLCKyqI5Jkiu3+Xz0+gOgNHpwkRvtVHSmMuQC0CKHeDuIIrIBT
+ vGkuc0CifzDfxXgpNpFb3cBTgtL9BbOxzUQvWW2soPPis3LF2dhgvQK6Bxw07EVH
+ aY1mzoejqXDxZxencv8DETa+4Cg6iJKtHaO2zBMDxRPvUC3nYWAUsltfUy6aqS3B
+ YeqZdTWi1A8Dc3nAPBs+pVWJ8ww/1RTRp/OgEbpf2lmEHysBEnI93wJULOIi3TBT
+ CJYMn3vMQ+yx2wXoLfMqlw==
+Message-ID: <0704cc6b-0001-4c38-9dfa-d16e6b3df1b2@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 15 Jul 2025 15:32:00 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gtk: Skip drawing if console surface is NULL
+To: Weifeng Liu <weifeng.liu.z@gmail.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Dongwon Kim <dongwon.kim@intel.com>
+References: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250714141758.10062-1-weifeng.liu.z@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,51 +78,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+On 2025/07/14 23:17, Weifeng Liu wrote:
+> In gtk draw/render callbacks, add an early NULL check for the console
+> surface and skip drawing if it's NULL. Otherwise, attempting to fetch
+> its width and height crash. This change fixes Coverity CID 1610328.
+> 
+> In practice, this case wouldn't happen at all because we always install
+> a placeholder surface to the console when there is nothing to display.
+> 
+> Resolves: Coverity CID 1610328
+> Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 
-While trying to export and obtain fds associated with a texture, it
-is possible that the fds returned after eglExportDMABUFImageMESA()
-call have error values. Therefore, we need to evaluate the value of
-all fds and return false if any of them are negative.
-
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Message-Id: <20250617043546.1022779-2-vivek.kasireddy@intel.com>
----
- ui/egl-helpers.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 5503a795e4..e3f2872cc1 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -295,6 +295,7 @@ bool egl_dmabuf_export_texture(uint32_t tex_id, int *fd, EGLint *offset,
- {
-     EGLImageKHR image;
-     EGLuint64KHR modifiers[DMABUF_MAX_PLANES];
-+    int i;
- 
-     image = eglCreateImageKHR(qemu_egl_display, eglGetCurrentContext(),
-                               EGL_GL_TEXTURE_2D_KHR,
-@@ -314,6 +315,11 @@ bool egl_dmabuf_export_texture(uint32_t tex_id, int *fd, EGLint *offset,
-         *modifier = modifiers[0];
-     }
- 
-+    for (i = 0; i < *num_planes; i++) {
-+        if (fd[i] < 0) {
-+            return false;
-+        }
-+    }
-     return true;
- }
- 
--- 
-2.50.0
-
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
