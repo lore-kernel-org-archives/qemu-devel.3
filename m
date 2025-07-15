@@ -4,48 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A72C83F2D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A660C83F22
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 14:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubgz9-0004Hq-8O; Tue, 15 Jul 2025 10:50:23 -0400
+	id 1ubgzv-0005eI-Rp; Tue, 15 Jul 2025 10:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ubgJM-0004Rd-KC; Tue, 15 Jul 2025 10:07:14 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1ubgRM-0002b8-QV; Tue, 15 Jul 2025 10:15:28 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ubgJJ-00062h-FL; Tue, 15 Jul 2025 10:07:12 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D980C136EB4;
- Tue, 15 Jul 2025 17:07:00 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 87851247D91;
- Tue, 15 Jul 2025 17:07:05 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 12/27] qemu-img: convert: refresh options/--help (short option
- change)
-Date: Tue, 15 Jul 2025 17:07:02 +0300
-Message-ID: <20250715140702.131321-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250531171609.197078-13-mjt@tls.msk.ru>
-References: <20250531171609.197078-13-mjt@tls.msk.ru>
- <20250531171609.197078-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1ubgRF-0001mn-I8; Tue, 15 Jul 2025 10:15:28 -0400
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FDeZJU027829;
+ Tue, 15 Jul 2025 07:15:13 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=proofpoint20171006; bh=mkLJZ3RyVslsTJ4
+ CyN7yS6VeqYKR8mDLMidZKrhq1/k=; b=ewdi1xtKkBDqBCqcwrihz9fVvOkUeFD
+ XHYCH4I/g+S1yjj2m1zbOBj3w31W42K6UxS0wUwVR+555XQD3jzFURXs9RW2A07A
+ MOD94SILfwhPI3wAzbKuGpIMRA7KisvJVbOkBOkPwlnVT3Y/n7OVfCyIuT/+uLxC
+ z4+Uy8hfaYEj+YHJSsUh9oFVOqnQLc4B6cUAEx78DKOgQC6OPl28gCKjJkxuMMiZ
+ 0k0nCC7Bc0JpgT1rsn0AtA4uIUwjwannUWsvP76uOIUN285vx+IhQYLOyQkPBf+M
+ pTKDiEP9ePFUkW1zBYNqnZQApKuivi1hVHS+61bJM5+ltRrI8JcH/Xw==
+Received: from dm1pr04cu001.outbound.protection.outlook.com
+ (mail-centralusazon11020114.outbound.protection.outlook.com [52.101.61.114])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 47um1v6huw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Jul 2025 07:15:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=N88Iv1wQ8T37BZ0buIalbw772eW6Nkmtt65ksKl8hir/1l4+zFZuHrJav0w4YiY8sxkq9Cu8B8Rw/cw1cEWqbA3ezmujUBOMycpKj6MLDwVMUT8gt32rolMG7RuAub80ignGxLrhIApMc+Rh3IWsHVpjqBHU+RC5uId4sz3bYaZpz9LuxGqyBF3jol5qkniTb5pWUrgze23zG+kj9NbkI0UBjfFECjC3AhLzSsxUbjgi8dmS5BmkjFPxn4cjlWrEIv1iFQo/JHDiBiSndHW1P8qLovecb1DeqgbgI0FVdYpgqKMmfYFp4zNHdhBgL15F8oQCVeCSjwGk+cxYa7elHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mkLJZ3RyVslsTJ4CyN7yS6VeqYKR8mDLMidZKrhq1/k=;
+ b=rGeaEDBTvXPxxOPemq9Nf1bCBbI1bHemPoJDGoCikakLyV0unQvYbsLeF0CNShG1+qAHBCcaGciGPW0a7majnBH/1ZMX2z9nDtjbxg9OfS+kEtXxA25LnN8m4rPa/W5yA456rEdg4TLU50DR/vrRYg6Zfp3sLPh4Tg/BB51FIJY3V89QvRgxnB7bH2WOQBnGN3BJtsWxrtw14cPReBmHtvtogyxWYkV+vhAjbI0S053rnXS5CsI44vFh+4EDsA/ZrBfM+VfNCtv50MJg3iAvlELrFErkucTbYwMn8esUU4TCsD7LNLEfHCnv0NoMvYlJWCXZ/hKxf4GJn+mdLmnVcw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mkLJZ3RyVslsTJ4CyN7yS6VeqYKR8mDLMidZKrhq1/k=;
+ b=sC5u+JOQlK0ws//CRH/7naK1TwvS8ZaCTIStrgGTFerck+z+/9ZWIcWyJdFr7Tp4in+80h2MUknU+dJPQ3GdfN8a/HRlsTUeOleoV3TB+KteqzevZKNC35utQDv6N41q/GU9RFjinI2q0mbhbViqZdwt7hq/o6G0z+I/WDKKht3N26P+H/zVQhnLZCFiWUV7gROkCETYVp+UML3tzp3xvccI1l91BrUsYPGYz0sDpraAvhwBE4EmGQb90f8CRWXpSX8GYX0Zk/wxBL1y89Gwgj/tFyb2eSJ/psaLPwVkzfMlhyLOysYgNKaZCCb8AVthvUwbicMESjeInW5hmcx4IQ==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by DS0PR02MB10760.namprd02.prod.outlook.com (2603:10b6:8:1fc::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.27; Tue, 15 Jul
+ 2025 14:15:11 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.8922.028; Tue, 15 Jul 2025
+ 14:15:11 +0000
+Date: Tue, 15 Jul 2025 16:15:05 +0200
+From: John Levon <john.levon@nutanix.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
+ mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ thanos.makatos@nutanix.com, alex.williamson@redhat.com, clg@redhat.com,
+ steven.sistare@oracle.com, tomitamoeko@gmail.com, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 11/22] vfio-user/pci.c: update VFIOUserPCIDevice
+ declaration
+Message-ID: <aHZiaUP2yhx2khP8@lent>
+References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
+ <20250715093110.107317-12-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715093110.107317-12-mark.caveayland@nutanix.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: AS4P191CA0053.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:657::29) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|DS0PR02MB10760:EE_
+X-MS-Office365-Filtering-Correlation-Id: e3b6cd3d-387a-4018-dff8-08ddc3aa02c1
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?mhE9PKWhzJ2YDjYYkCfvcsjM/5VHBP07/eZKw16WPsAZse6SXwGuOdzEeGau?=
+ =?us-ascii?Q?zx4MWsaCYoZibB2EYFMDyUNvxrfrxZmYxnum0Y4dRdtOBTj1kfA2ojYqrCx5?=
+ =?us-ascii?Q?CFF+L4UXmfCkq142yoMuU78yrB4OIjg45XEp4txyiamHql8BlpSz7iCDJEE6?=
+ =?us-ascii?Q?UluiAae0sq0nOv2qnMsa+OvYKWHwxFYcDZusDCdyJomqPODbzP0+waWllIKV?=
+ =?us-ascii?Q?cocUVh0a2cjQDAWVy6oW+4SyhtUxcS0DRJqLPIVZBxiuSlYWgK4cKel42MoQ?=
+ =?us-ascii?Q?z83FJ8fIS5sS8c3lhAXVSFaR3U6VvYcRLfzaOK7ePgYnjpfu6Q9gtEfKjxGJ?=
+ =?us-ascii?Q?qeiIugLT/snGc5LNHWV9nY7QOJdRbr6btevfIoTaeLG0Qdv+nqAemheVUH2L?=
+ =?us-ascii?Q?iqdcrCOb5YR65STnqIMcjMwcoGxsCoKLmwWMLvvW6xV3b3yJRGEXIBb3i7Z4?=
+ =?us-ascii?Q?K9EycyhRXzhKFeB7uMUlKi7iUfhYmGkCpfN+K5y0v/5JEF2CSP7XCWxv4NsL?=
+ =?us-ascii?Q?oyReNqfgLt7z3MBeHOF1olpHl5U39Q7fkGBi/QlQoSqmDcb9uJ/gCDTYud6/?=
+ =?us-ascii?Q?iRHn5MCf4GIfEkk7AGUcLZJLfNWFac/RTMV2yn0mu1NO6SleYSjzuDlwjrqx?=
+ =?us-ascii?Q?biECHOAr9+xTSK9NZcWt1MsjSprG2kX7TB1j/F8MzsS1yIxRFOp1V2dmk0B/?=
+ =?us-ascii?Q?arus1bWArk7cLDPe0QgD9ya7jewJBH9d+Jk6z4KwIcQNyNJPDp2HfKI08RQu?=
+ =?us-ascii?Q?r8/6a8DqgXMYOd5ulqb/iPhMKsm4ECI0uqcYg4BXuVLmXKxoq5oR7bPrjI8J?=
+ =?us-ascii?Q?OmH3zxxw30NZm7/IKSx8jFl8x4xjD/O1/dg9veIX71KEvYZvBjs0uBjIt5hG?=
+ =?us-ascii?Q?sx26DWYFQ0x9Ck4WqP4iAVESTP/miscr80QsUel9pzYtH0hlCt8OwT+UkPOf?=
+ =?us-ascii?Q?E2zTQR5M9C3falBDVrc5p239+U6ntSSMJIHsrMH77I1G5DplS1dCpxk4Z8/F?=
+ =?us-ascii?Q?t3k3pKal4ym0pJxgZ7bfJQ6cfL68jufaz/bSKZw2IdXdc88WN6pAGrwbKPsX?=
+ =?us-ascii?Q?jIjkyIH5TAgj0FiJLAjduX9PxwsjQucSw+e6otjZoldzr7VAmh1yBusny/oI?=
+ =?us-ascii?Q?srwN27nOTO4vy5vh1uMr5bn2RxxxP+yaW5nLCf/LH9ONtHk6yHHL/2U1ZDbE?=
+ =?us-ascii?Q?SPrORgzU1JBrzpzuqOAK3XKUSGVru+t/1g321Ajo5SeBl1/AuUimKrDBE+sa?=
+ =?us-ascii?Q?ygI9Lw5nHSKF0nSVX+irY8KCxSwID8yDRSrzkiJ/e1JwOmOvaiO5TgjB/jKn?=
+ =?us-ascii?Q?km2EbG0JxQmXtWkNL89cZPpjjA5nOMNiKPdJSm6azR80PO/EZSouJJIBCfcE?=
+ =?us-ascii?Q?X6ggWXZ6KDOF0Jvepz3ICRWLIxlfKlLQb/CHZWT4wt5mJf3a3hkZdFRVwwT5?=
+ =?us-ascii?Q?Rb+clSENnQI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Me1KvVz2EeVB1IlT/Z2aUjgQRnQ5059YfWryp3dJk7FJv76qwY4TGv1uHsCE?=
+ =?us-ascii?Q?eIoElkvMWXdcwc+jYYVi0JYOj2LHwhLvf6dyCC8KoJvWPA5i6mfSk8pmsJGr?=
+ =?us-ascii?Q?2QWbAauppdm1v/z4Ectd+YiM6xATK/eY6HRXuSKIPspF7j4zeiWOyq4llYM+?=
+ =?us-ascii?Q?Enb6Qvf1kbGcf3+pqdj68eiABWHyndtNT6SEovXMBAm+/y886GFCnST6elT4?=
+ =?us-ascii?Q?TvC6EjVgsuxti+/EHuE7FYmJfDDghINMNvU029C3KYlaEJGy1wjYmXFSvWRX?=
+ =?us-ascii?Q?E/J7+MAJWDJ7exdluIQIjfgD/P0ii8m+hHnmhQfQgtU6dA3ecY42PoAwPcQ6?=
+ =?us-ascii?Q?LNh4AQte1fiUhok3jdpbKbNVUDGrt+9urmvUtEfcD5t1o7z+H/vrTSc0B1Hx?=
+ =?us-ascii?Q?U3TCJZ80RNps39K7bR8nRY9ojdewSx1UsrFCrLc6wf6cXL93Tb9n286VKmei?=
+ =?us-ascii?Q?g1krUgqHtZJ4RYx7Oj6eRl3MBvyY8FxjyDPsDvFor3T/1AxkJ9HmKYSQQJq9?=
+ =?us-ascii?Q?9/GRGr5zf06ZnXVtgdbzcFhPjfBIx0Kx/jge0pc/zf5scI9WiwaKv9VtJ9aR?=
+ =?us-ascii?Q?Kh7k5qikn7RQkOKRUKMzxhsxJIhqxnlzHXXor7sqLaAaboR6oRYhGo/fScxV?=
+ =?us-ascii?Q?op3MxVbvGoR1diLNFMHM8ue289jhaCll3TlPnKDloL9QXi08Dq+1SHvV4gIK?=
+ =?us-ascii?Q?dSVfhPrzL/5rHvFKUqpJsr0mdNGHFodCnb/UDLtoShwwNqXgVP7pGPLpB/ut?=
+ =?us-ascii?Q?BOmCFD1FJRPFnIJwEWSdf1pAfxHr3/xb/EhlM8J8uyqIw7pp+qQkL1LqbwiM?=
+ =?us-ascii?Q?lqZrKHpS7qE8BfRD1pTK0mxtZBTKyvxnles27rstl/nyHZ3mvYrKgBZtyF6k?=
+ =?us-ascii?Q?+qagKAyqn9gQFW2530KpOvKHShnsrzzbXsN/tYSsvIsqwAIuy3p/sEVggMJJ?=
+ =?us-ascii?Q?uDda7P5C51QxgTEW0eJkfYcvxoo1K220v4LQmCqtX44jWKWJNvVbUPImjBww?=
+ =?us-ascii?Q?RICu6rw+m8vC43JuQfSXzGF15FQfCJuWlAId1cIAn/Tsc8lmioz5+OCWiPCI?=
+ =?us-ascii?Q?Gnxvgmm+SlIBOf1rsD1awQ3Np5qpPknzrEPQXDzOB2ZnKsXvUav72TsXFp69?=
+ =?us-ascii?Q?pkq6ua7NKSyPsExEUKRQOyfN34UJa+GwOOUKDxgzcJOa+6BVN9FidptlOU1p?=
+ =?us-ascii?Q?DSBJMO4KhKMLIKLwjRHIy/eVhDt/oHq1LRdoRYhGzcqbMri76CPdgWGi6Ngl?=
+ =?us-ascii?Q?aXUqY2bMn4wbL90yaMpe9TqXSXyt+KyBBUFM7NxWLd9ecnCWlThAlLcfF1ib?=
+ =?us-ascii?Q?t858vOPGysLJvS/774TJr1WEdxsUE9KJmNss+xuCIvDH8HNUfMeMuQer/jeL?=
+ =?us-ascii?Q?q/S9b06dxueRg+/gfn6pHJrquEL2bMgr/4Aen9iNKUQHgUxfRKYKsMoQjGnx?=
+ =?us-ascii?Q?N+MNQETubmtlcGomMVupIFnKU38RRZ/2zVH372za41OKCU0KhgYH6EP2ZcA4?=
+ =?us-ascii?Q?vF6Wsoby94TZ5VzEBdi4Te5iwr2APrvuGds4Ht0UvUaUFjlQwe0SjMkEYjj1?=
+ =?us-ascii?Q?Him96yjjoIvWk71jerxm4/WhxQW/3DkdqvQl1e6H3iBxKnqYr8SWRTmdLriu?=
+ =?us-ascii?Q?1A=3D=3D?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e3b6cd3d-387a-4018-dff8-08ddc3aa02c1
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 14:15:11.6019 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: W2GXyNiLYJiqwOry7y1fLWk0/xQ5LDOZKNJfrUtx/Is6saorcFfT8QFFAIuIZR1gfz8e6w+eTaBHvXVmiugjFA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB10760
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEzMCBTYWx0ZWRfX2x2aPanTZsQ3
+ IJSaiC37kUq5nwd1g1+etxLn3aNelPt67QjlBFu+WFbqYemnrcwvp1gn+LSRE7+FbBwh/XWQAMr
+ mxZ7FRVytB8tu5AjgLQpVpAeFoRrD/4xlPnH5h9kD8nY0V0SuTg5kejGSziNcgypAz47/6Hpdow
+ ors5qpDs9ma8KyDEzt4LNZyD/HAPqDS6P0gKb+Zl7oh2QImBptRS2g8cdi5LCxV5xJAKbfUdUnt
+ KPAOxlj8TUqYV16IhxsdejLHeOSbg1IflDBphXwY1yLHmSTi3aPmDd3jRuJMBqWuLVZmJeY/84U
+ olZ/uVEk7EsHwkzTcnoyQlcgCdq2Qzcq427xINXS70lHuqwJdPhUiDkwmlSOTGX7jlzI4mJmHk2
+ /4NtNFQkLGxFwIqWF53DqH4KgiMLFg2nG5pln6Z0XA1L0s/b/grHPsGLqYf0T2zaWmjygzAC
+X-Authority-Analysis: v=2.4 cv=Y5L4sgeN c=1 sm=1 tr=0 ts=68766271 cx=c_pps
+ a=cOg1uqDXM20bBY9WInewpQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Wb1JkmetP80A:10 a=0kUYKlekyDsA:10
+ a=64Cc0HZtAAAA:8 a=c_lB1a7J-0q12jGV87IA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: cI-aWxdflO5wJSJxQPiSaH5HJm3AkRxF
+X-Proofpoint-ORIG-GUID: cI-aWxdflO5wJSJxQPiSaH5HJm3AkRxF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,320 +200,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
+On Tue, Jul 15, 2025 at 10:25:51AM +0100, Mark Cave-Ayland wrote:
 
-Reorder options for consistency.
+> Update the VFIOUserPCIDevice declaration so that it is closer to our coding
+> guidelines: add a blank line after the parent object.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>  hw/vfio-user/pci.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+> index be71c77729..da6fe51809 100644
+> --- a/hw/vfio-user/pci.c
+> +++ b/hw/vfio-user/pci.c
+> @@ -21,6 +21,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
+>  
+>  struct VFIOUserPCIDevice {
+>      VFIOPCIDevice device;
+> +
+>      SocketAddress *socket;
+>      bool send_queued;   /* all sends are queued */
+>      uint32_t wait_time; /* timeout for message replies */
 
-Use -b for --backing, and recognize -B for backwards
-compatibility.  Unfortunately we can't use -B to
-specify backing format.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- docs/tools/qemu-img.rst |   2 +-
- qemu-img.c              | 230 +++++++++++++++++++++++++++-------------
- 2 files changed, 159 insertions(+), 73 deletions(-)
-
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index a21e439082..23715811e2 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -419,7 +419,7 @@ Command description:
-   4
-     Error on reading data
- 
--.. option:: convert [--object OBJECTDEF] [--image-opts] [--target-image-opts] [--target-is-zero] [--bitmaps [--skip-broken-bitmaps]] [-U] [-C] [-c] [-p] [-q] [-n] [-f FMT] [-t CACHE] [-T SRC_CACHE] [-O OUTPUT_FMT] [-B BACKING_FILE [-F BACKING_FMT]] [-o OPTIONS] [-l SNAPSHOT_PARAM] [-S SPARSE_SIZE] [-r RATE_LIMIT] [-m NUM_COROUTINES] [-W] FILENAME [FILENAME2 [...]] OUTPUT_FILENAME
-+.. option:: convert [--object OBJECTDEF] [--image-opts] [--target-image-opts] [--target-is-zero] [--bitmaps [--skip-broken-bitmaps]] [-U] [-C] [-c] [-p] [-q] [-n] [-f FMT] [-t CACHE] [-T SRC_CACHE] [-O OUTPUT_FMT] [-b BACKING_FILE [-F BACKING_FMT]] [-o OPTIONS] [-l SNAPSHOT_PARAM] [-S SPARSE_SIZE] [-r RATE_LIMIT] [-m NUM_COROUTINES] [-W] FILENAME [FILENAME2 [...]] OUTPUT_FILENAME
- 
-   Convert the disk image *FILENAME* or a snapshot *SNAPSHOT_PARAM*
-   to disk image *OUTPUT_FILENAME* using format *OUTPUT_FMT*. It can
-diff --git a/qemu-img.c b/qemu-img.c
-index 40a5a1f604..6952d78ea7 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -2390,53 +2390,122 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
-     for(;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"object", required_argument, 0, OPTION_OBJECT},
-+            {"source-format", required_argument, 0, 'f'},
-+ /*
-+  * XXX: historic --image-opts acts on source file only,
-+  * it seems better to have it affect both source and target,
-+  * and have separate --source-image-opts for source,
-+  * but this might break existing setups.
-+  */
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
--            {"force-share", no_argument, 0, 'U'},
--            {"target-image-opts", no_argument, 0, OPTION_TARGET_IMAGE_OPTS},
--            {"salvage", no_argument, 0, OPTION_SALVAGE},
--            {"target-is-zero", no_argument, 0, OPTION_TARGET_IS_ZERO},
-+            {"source-cache", required_argument, 0, 'T'},
-+            {"snapshot", required_argument, 0, 'l'},
-             {"bitmaps", no_argument, 0, OPTION_BITMAPS},
-             {"skip-broken-bitmaps", no_argument, 0, OPTION_SKIP_BROKEN},
-+            {"salvage", no_argument, 0, OPTION_SALVAGE},
-+            {"target-format", required_argument, 0, 'O'},
-+            {"target-image-opts", no_argument, 0, OPTION_TARGET_IMAGE_OPTS},
-+            {"target-format-options", required_argument, 0, 'o'},
-+            {"target-cache", required_argument, 0, 't'},
-+            {"backing", required_argument, 0, 'b'},
-+            {"backing-format", required_argument, 0, 'F'},
-+            {"sparse-size", required_argument, 0, 'S'},
-+            {"no-create", no_argument, 0, 'n'},
-+            {"target-is-zero", no_argument, 0, OPTION_TARGET_IS_ZERO},
-+            {"force-share", no_argument, 0, 'U'},
-+            {"rate-limit", required_argument, 0, 'r'},
-+            {"parallel", required_argument, 0, 'm'},
-+            {"oob-writes", no_argument, 0, 'W'},
-+            {"copy-range-offloading", no_argument, 0, 'C'},
-+            {"progress", no_argument, 0, 'p'},
-+            {"quiet", no_argument, 0, 'q'},
-+            {"object", required_argument, 0, OPTION_OBJECT},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":hf:O:B:CcF:o:l:S:pt:T:qnm:WUr:",
-+        c = getopt_long(argc, argv, "hf:O:b:B:CcF:o:l:S:pt:T:nm:WUr:q",
-                         long_options, NULL);
-         if (c == -1) {
-             break;
-         }
--        switch(c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-+        switch (c) {
-         case 'h':
--            help();
-+            cmd_help(ccmd, "[-f SRC_FMT | --image-opts] [-T SRC_CACHE]\n"
-+"        [-l SNAPSHOT_PARAM] [--bitmaps [--skip-broken-bitmaps]] [--salvage]\n"
-+"        [-O TGT_FMT | --target-image-opts] [-o TGT_FMT_OPTS] [-t TGT_CACHE]\n"
-+"        [-b BACKING_FILE [-F BACKING_FMT]] [-S SPARSE_SIZE]\n"
-+"        [-n] [--target-is-zero] [-c]\n"
-+"        [-U] [-r RATE] [-m NUM_PARALLEL] [-W] [-C] [-p] [-q] [--object OBJDEF]\n"
-+"        SRC_FILE [SRC_FILE2...] TGT_FILE\n"
-+,
-+"  -f, --source-format SRC_FMT\n"
-+"     specify format of all SRC_FILEs explicitly (default: probing is used)\n"
-+"  --image-opts\n"
-+"     treat each SRC_FILE as an option string (key=value,...), not a file name\n"
-+"     (incompatible with -f|--source-format)\n"
-+"  -T, --source-cache SRC_CACHE\n"
-+"     source image(s) cache mode (" BDRV_DEFAULT_CACHE ")\n"
-+"  -l, --snapshot SNAPSHOT_PARAMS\n"
-+"     specify source snapshot parameters\n"
-+"  --bitmaps\n"
-+"     also copy any persistent bitmaps present in source\n"
-+"  --skip-broken-bitmaps\n"
-+"     skip (do not error out) any broken bitmaps\n"
-+"  --salvage\n"
-+"     ignore errors on input (convert unreadable areas to zeros)\n"
-+"  -O, --target-format TGT_FMT\n"
-+"     specify TGT_FILE image format (default: raw)\n"
-+"  --target-image-opts\n"
-+"     treat TGT_FILE as an option string (key=value,...), not a file name\n"
-+"     (incompatible with -O|--target-format)\n"
-+"  -o, --target-format-options TGT_FMT_OPTS\n"
-+"     TGT_FMT-specific options\n"
-+"  -t, --target-cache TGT_CACHE\n"
-+"     cache mode when opening output image (default: unsafe)\n"
-+"  -b, --backing BACKING_FILE (was -B in <= 10.0)\n"
-+"     create target image to be a CoW on top of BACKING_FILE\n"
-+"  -F, --backing-format BACKING_FMT\n" /* -B used for -b in <=10.0 */
-+"     specify BACKING_FILE image format explicitly (default: probing is used)\n"
-+"  -S, --sparse-size SPARSE_SIZE[bkKMGTPE]\n"
-+"     specify number of consecutive zero bytes to treat as a gap on output\n"
-+"     (rounded down to nearest 512 bytes), with optional multiplier suffix\n"
-+"  -n, --no-create\n"
-+"     omit target volume creation (e.g. on rbd)\n"
-+"  --target-is-zero\n"
-+"     indicates that the target volume is pre-zeroed\n"
-+"  -c, --compress\n"
-+"     create compressed output image (qcow and qcow2 formats only)\n"
-+"  -U, --force-share\n"
-+"     open images in shared mode for concurrent access\n"
-+"  -r, --rate-limit RATE\n"
-+"     I/O rate limit, in bytes per second\n"
-+"  -m, --parallel NUM_PARALLEL\n"
-+"     specify parallelism (default: 8)\n"
-+"  -C, --copy-range-offloading\n"
-+"     try to use copy offloading\n"
-+"  -W, --oob-writes\n"
-+"     enable out-of-order writes to improve performance\n"
-+"  -p, --progress\n"
-+"     display progress information\n"
-+"  -q, --quiet\n"
-+"     quiet mode (produce only error messages if any)\n"
-+"  --object OBJDEF\n"
-+"     defines QEMU user-creatable object\n"
-+"  SRC_FILE...\n"
-+"     one or more source image file names,\n"
-+"     or option strings (key=value,..) with --source-image-opts\n"
-+"  TGT_FILE\n"
-+"     target (output) image file name,\n"
-+"     or option string (key=value,..) with --target-image-opts\n"
-+);
-             break;
-         case 'f':
-             fmt = optarg;
-             break;
--        case 'O':
--            out_fmt = optarg;
--            break;
--        case 'B':
--            out_baseimg = optarg;
--            break;
--        case 'C':
--            s.copy_range = true;
--            break;
--        case 'c':
--            s.compressed = true;
--            break;
--        case 'F':
--            backing_fmt = optarg;
-+        case OPTION_IMAGE_OPTS:
-+            image_opts = true;
-             break;
--        case 'o':
--            if (accumulate_options(&options, optarg) < 0) {
--                goto fail_getopt;
--            }
-+        case 'T':
-+            src_cache = optarg;
-             break;
-         case 'l':
-             if (strstart(optarg, SNAPSHOT_OPT_BASE, NULL)) {
-@@ -2451,6 +2520,36 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
-                 snapshot_name = optarg;
-             }
-             break;
-+        case OPTION_BITMAPS:
-+            bitmaps = true;
-+            break;
-+        case OPTION_SKIP_BROKEN:
-+            skip_broken = true;
-+            break;
-+        case OPTION_SALVAGE:
-+            s.salvage = true;
-+            break;
-+         case 'O':
-+            out_fmt = optarg;
-+            break;
-+        case OPTION_TARGET_IMAGE_OPTS:
-+            tgt_image_opts = true;
-+            break;
-+        case 'o':
-+            if (accumulate_options(&options, optarg) < 0) {
-+                goto fail_getopt;
-+            }
-+            break;
-+        case 't':
-+            cache = optarg;
-+            break;
-+        case 'B': /* <=10.0 */
-+        case 'b':
-+            out_baseimg = optarg;
-+            break;
-+        case 'F': /* can't use -B as it used as -b in <=10.0 */
-+            backing_fmt = optarg;
-+            break;
-         case 'S':
-         {
-             int64_t sval;
-@@ -2471,20 +2570,28 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
-             explict_min_sparse = true;
-             break;
-         }
--        case 'p':
--            progress = true;
-+        case 'n':
-+            skip_create = true;
-             break;
--        case 't':
--            cache = optarg;
-+        case OPTION_TARGET_IS_ZERO:
-+            /*
-+             * The user asserting that the target is blank has the
-+             * same effect as the target driver supporting zero
-+             * initialisation.
-+             */
-+            s.has_zero_init = true;
-             break;
--        case 'T':
--            src_cache = optarg;
-+        case 'c':
-+            s.compressed = true;
-             break;
--        case 'q':
--            s.quiet = true;
-+        case 'U':
-+            force_share = true;
-             break;
--        case 'n':
--            skip_create = true;
-+        case 'r':
-+            rate_limit = cvtnum("rate limit", optarg);
-+            if (rate_limit < 0) {
-+                goto fail_getopt;
-+            }
-             break;
-         case 'm':
-             if (qemu_strtol(optarg, NULL, 0, &s.num_coroutines) ||
-@@ -2497,41 +2604,20 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
-         case 'W':
-             s.wr_in_order = false;
-             break;
--        case 'U':
--            force_share = true;
-+        case 'C':
-+            s.copy_range = true;
-             break;
--        case 'r':
--            rate_limit = cvtnum("rate limit", optarg);
--            if (rate_limit < 0) {
--                goto fail_getopt;
--            }
-+        case 'p':
-+            progress = true;
-+            break;
-+        case 'q':
-+            s.quiet = true;
-             break;
-         case OPTION_OBJECT:
-             user_creatable_process_cmdline(optarg);
-             break;
--        case OPTION_IMAGE_OPTS:
--            image_opts = true;
--            break;
--        case OPTION_SALVAGE:
--            s.salvage = true;
--            break;
--        case OPTION_TARGET_IMAGE_OPTS:
--            tgt_image_opts = true;
--            break;
--        case OPTION_TARGET_IS_ZERO:
--            /*
--             * The user asserting that the target is blank has the
--             * same effect as the target driver supporting zero
--             * initialisation.
--             */
--            s.has_zero_init = true;
--            break;
--        case OPTION_BITMAPS:
--            bitmaps = true;
--            break;
--        case OPTION_SKIP_BROKEN:
--            skip_broken = true;
--            break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
--- 
-2.47.2
+Reviewed-by: John Levon <john.levon@nutanix.com>
 
 
