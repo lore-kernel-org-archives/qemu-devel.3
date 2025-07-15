@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BCAC83F1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A429C83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 05:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubYeK-000180-Jn; Tue, 15 Jul 2025 01:56:20 -0400
+	id 1ubYh3-0002p3-A5; Tue, 15 Jul 2025 01:59:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYeJ-00017L-2m
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:56:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYgz-0002mY-Fn
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:59:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYeG-0007EY-RF
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:56:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubYgx-0007dY-JO
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 01:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752558974;
+ s=mimecast20190719; t=1752559142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tVkiq47P5XoOulO53ufhWHTGMRKpI6tNCXQcYhptSm0=;
- b=CuafD+Exbly1Eo37MzaF7BrYRHfptIf3Yo5FkJGg4mXKpwU+dCOcl30U4cjX6YWKCt2yaw
- gfW443v+RyykQ1sii6dcXkXvlv5uns5BmL9FlguAdbw/WFBK4advl9KjyDtmMnhJjyv2kI
- YYdYegiHdPv6U9QUfOAwrpPCGzqZHyA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JDqg5vbzwb6x3Xh6GqhJ6exbYVBYGmqUaUSFlMWoZlc=;
+ b=FRur5ocvHnENF/NmlttGINHjTgSZ6U5d17EzOIgeF9E1ZTztl8tiIyU0pOCZ+e33wKHmhJ
+ 0FFENrr2lOrhURN+Bs5WhDF1OL4cRm6rvIEQEBfSAiqq55ZDqalgmMYHkQwMxBa6oqGRm5
+ h066hVDWx2CXtNzFs1pqKbHoElYDjhA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641--skKkpNyMh6SGxVZr0U-tA-1; Tue, 15 Jul 2025 01:56:12 -0400
-X-MC-Unique: -skKkpNyMh6SGxVZr0U-tA-1
-X-Mimecast-MFC-AGG-ID: -skKkpNyMh6SGxVZr0U-tA_1752558971
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4561c67daebso5041055e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:56:12 -0700 (PDT)
+ us-mta-635-j4G_XdCPPIWENjFDercaMQ-1; Tue, 15 Jul 2025 01:59:00 -0400
+X-MC-Unique: j4G_XdCPPIWENjFDercaMQ-1
+X-Mimecast-MFC-AGG-ID: j4G_XdCPPIWENjFDercaMQ_1752559139
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f858bc5eso3813508f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Jul 2025 22:59:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752558971; x=1753163771;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tVkiq47P5XoOulO53ufhWHTGMRKpI6tNCXQcYhptSm0=;
- b=SQfLpnVZ7GoTHFqMFAxzumXha4y+lyL/oZAUO0RstWCxUOW/DBHp9HaSrVCuxpJuqo
- hhaSAvMYu2G7l/218L4Q4ry/ze4/Y9kEc5s4CCLEAgO8KRquGqGpMcQX3cN7bPPcY7in
- 4Zz61aeEv4BNh6C73qgSvhruA238rc8yGilr5w5PWTILuCHHaKgq3EGV7pdR1ZUCfjYL
- XdN/lwLBjDcRZ7txakycbVYhKce7lnDI5yqD9YyrXYDJMe0iVQ0i5f9GVc6H2LVYd8kD
- mcqmEpvLNTxKQFOT8SGfxnE1hmNBKrymmcMhNRnLSgX10lDZdRkM5X5e5ffIG9/B3v+E
- R1Yw==
+ d=1e100.net; s=20230601; t=1752559139; x=1753163939;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JDqg5vbzwb6x3Xh6GqhJ6exbYVBYGmqUaUSFlMWoZlc=;
+ b=QpyFh5D9h/KuIeTIY91CdFGylmARiI3uqJFWlEhdQrBlCZEJ+LG8/s9xZ7Vf7zLuTg
+ 2r6wfJpoCDcKUjtBvfR95JfvGb5F5oWL6EOg+TqFuq2DuGbSo9aqc8+R4p/mw4uMGAYq
+ lziHdM98KWQRR8J12VXz2r6OIU/ozB3MdlWJR8WqEaK0/xWLi4p8Nhcpt1leNVW1E0fS
+ CwbV0pkl1wGQql2w2EzrCv6PH21qXmwAg6qUfQf5lF/3QWcCvU3lk3/BLYtMd2cHuPFr
+ omGB7U1fqCmJ7+rzEcIvpf3YshKOHn5h+AlvxAdVEJINyU3taf2y4nygxUR7EdHWAFAQ
+ wyMQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlBcRqzB7UjAy0I7VG2+cDVTMejTNuKD+JKSftFVHxEJ5GFy1t5b5DtCM5Xvn78A6/TCH0XnhcaJY4@nongnu.org
-X-Gm-Message-State: AOJu0Yxl5GUsIZm3D1TSvkU1zbfDJ5+mVazmXH4MOKBzE99dwe0UzOxn
- ky6wTcw7X/klZqcKSyoXRPwIGLRFY19cZuOli+imQ7rWNQrzzeOopLgeokGYYsRjX/INLrn8CgO
- jnTPV5GCwYEfA12RQcAlz5aH5yLzrjlPyI5CznGvmv3XSU8rMJq7cjrVD
-X-Gm-Gg: ASbGncsi/fzpG8HnyaemVSj28qI7XQ5xWZhxENa1hwGOFoPfdr01g5J+D+TyliKNntJ
- sofK8TXrjVSSUp/WbTQTyzWJ+2u9nPBGEJvxUQ4RpDOurksXOBzMZ+Q6BVgjQtSzl+A/MO+wqmM
- QGOA1uKGHKWCNZ0z2F2PFgHJYLtsf5yR1y5pvHj3vQ4FmrBvlVrk+Yv1Ng7hBTc8Mz6SyHTObUK
- HNUNqUmi7DHz3phs8T2DEYqTyBdGAarHRFDJC3SuOtITgv+lCyjN+3XaI1rklTT32Db32fERyhk
- SaHSukzV372DiCOprCJ1b2LQx15hFrMQpx3tFA97tIEKsC/puiU/iK5E4h3JZfwGJk4zZ2YShBQ
+ AJvYcCXKqYYihHumYid8AEexEvPUtFPm4s/J9/nbFmkvYsvcQQaORU9RX5Y4d+hXdD11GpftuuxGXZDJFzJ0@nongnu.org
+X-Gm-Message-State: AOJu0YyAWZSqvaud2qPbLaF0Jq0qdpOJepqoINMsQ2EpiCM/lneXLl6P
+ f30zveWoEWcAtyBKHaXxM4X4YBEfczDRzf1GGrLZhHZ0z1mhrZF/k4HeujSG5dikUCjA1vsucAg
+ 1SH/QxWYBn2HFe4X8yXHE5jYs6qnC6nk08me+qjoj6Dac7+O4lj7/BX67rznQDFRJ
+X-Gm-Gg: ASbGnctkJ06LvtXQ6UwW6JDhKvdYS1iA0pdHAIWYVCkDb6DwtID5FaA0ysb5HP1myjy
+ bZP6Gz6wsPpV5hMAshTnFWsI50GcjJ0zQpCFRfNo+fdqZ8nMqdnm6E3kC5dzSzHrRAvmU47RRro
+ r6EoHth/WjwyX/O21FUMP1BgGKKqlrMWKhbrNguS1Kf7TzqHYPS6xZH5cfpjsLymZlgG09K6pUA
+ WiuiduG4iMxRaZOhaB9hS/iF4RuR6d2w0C+o1+FjqI4CR6SzOP5Ov7GffTX8CbGON/soU3SoE+q
+ i5ig77Lm//aM1UhMqu2eGTXwlsRLt73rrLrumU7MqxZrbXzU1xHHfdz7pE39rWfBsGZo6W6+2qY
  =
-X-Received: by 2002:a05:600c:6d1:b0:455:efd7:17dc with SMTP id
- 5b1f17b1804b1-45625e663dbmr11953415e9.11.1752558971308; 
- Mon, 14 Jul 2025 22:56:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK/comgXml7++hUkh/U4rmkVXSnyRz7O+ZzXIZ+CPKhn4LSyhMEDZR8wK990U+8KxK14Lbew==
-X-Received: by 2002:a05:600c:6d1:b0:455:efd7:17dc with SMTP id
- 5b1f17b1804b1-45625e663dbmr11953225e9.11.1752558970844; 
- Mon, 14 Jul 2025 22:56:10 -0700 (PDT)
+X-Received: by 2002:a05:6000:26ca:b0:3aa:caea:aa7f with SMTP id
+ ffacd0b85a97d-3b5f2e4901amr10446369f8f.56.1752559138932; 
+ Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgPXWEItHEwG+ZA+Y0+ai3gMiNbTSZMvQpfE1x0RoL80qtBpTY1+eRDoP6bM/+jaWibhsVDQ==
+X-Received: by 2002:a05:6000:26ca:b0:3aa:caea:aa7f with SMTP id
+ ffacd0b85a97d-3b5f2e4901amr10446355f8f.56.1752559138522; 
+ Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
  ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-454dd466154sm149203685e9.12.2025.07.14.22.56.10
+ ffacd0b85a97d-3b5e8e1e2fasm13994187f8f.77.2025.07.14.22.58.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Jul 2025 22:56:10 -0700 (PDT)
-Message-ID: <2b58e252-d3f5-4dac-8b39-c990d7240853@redhat.com>
-Date: Tue, 15 Jul 2025 07:56:09 +0200
+ Mon, 14 Jul 2025 22:58:58 -0700 (PDT)
+Message-ID: <5e186df4-d607-43ed-9a70-4e2525ad10ed@redhat.com>
+Date: Tue, 15 Jul 2025 07:58:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 0/4] vfio-user fixes
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
 References: <20250715055246.422834-1-john.levon@nutanix.com>
+ <2b58e252-d3f5-4dac-8b39-c990d7240853@redhat.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
@@ -129,7 +130,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715055246.422834-1-john.levon@nutanix.com>
+In-Reply-To: <2b58e252-d3f5-4dac-8b39-c990d7240853@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -157,36 +158,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/25 07:52, John Levon wrote:
-> Some small Coverity and related fixes for the recently merged vfio-user series.
+On 7/15/25 07:56, Cédric Le Goater wrote:
+> On 7/15/25 07:52, John Levon wrote:
+>> Some small Coverity and related fixes for the recently merged vfio-user series.
+>>
+>> thanks
+>> john
 > 
-> thanks
-> john
+> Mark,
+> 
+> Would you please re-add your R-b ?
 
-Mark,
+No need. b4 picked them up.
 
-Would you please re-add your R-b ?
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-and applied to vfio-next.
 
 Thanks,
 
 C.
 
 
-> John Levon (4):
->    hw/vfio-user: add Cédric Le Goater as a maintainer
->    hw/vfio: fix region fd initialization
->    hw/vfio-user: wait for proxy close correctly
->    hw/vfio-user: fix use of uninitialized variable
 > 
->   MAINTAINERS              |  1 +
->   hw/vfio-user/container.c |  6 +-----
->   hw/vfio-user/proxy.c     | 10 ++++++----
->   hw/vfio/device.c         |  6 +++++-
->   4 files changed, 13 insertions(+), 10 deletions(-)
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> 
+> and applied to vfio-next.
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+>> John Levon (4):
+>>    hw/vfio-user: add Cédric Le Goater as a maintainer
+>>    hw/vfio: fix region fd initialization
+>>    hw/vfio-user: wait for proxy close correctly
+>>    hw/vfio-user: fix use of uninitialized variable
+>>
+>>   MAINTAINERS              |  1 +
+>>   hw/vfio-user/container.c |  6 +-----
+>>   hw/vfio-user/proxy.c     | 10 ++++++----
+>>   hw/vfio/device.c         |  6 +++++-
+>>   4 files changed, 13 insertions(+), 10 deletions(-)
+>>
 > 
 
 
