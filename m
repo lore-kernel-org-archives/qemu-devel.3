@@ -4,98 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE17DC83F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 13:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE2CC83F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 13:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubfsh-0007My-9w; Tue, 15 Jul 2025 09:39:39 -0400
+	id 1ubfsq-0007a8-ES; Tue, 15 Jul 2025 09:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubfMs-0008QX-RQ
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:06:47 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubfMo-0003Th-Tf
- for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:06:46 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45610582d07so18825805e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 06:06:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752584800; x=1753189600; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RT3q6+aCUO9Nik1c2NVnXBCkKK56bsil88LDSh+ktX0=;
- b=pZzSpJmTR53720Cf9VMCrWtfbBMsPSkH0VRbg6501YtZPWQpRTWR6h7ZmLvIqa9wTK
- QVwc4ioaGo0nouTcUn7IP1RD6aGuXC0u8uhm2965K1GrztQuaqUI3MTy8m09/9FvMHxQ
- DsUDDAoeKk51mVcC52N/5pleUEWXfQEzCaI2pl8c6vyCJ7ADO6Z1nQ35aWMe5QsrbKb9
- xMtNtgqfw0pdNHa03PtUBOXfWN/PhiAoiCnDLRxcaJMmSVygD3PushuK0QzGocrwfL5p
- YSFZBYjMVJUaFB0oVNX2QvZXoAZyfE+gd+j3tvMBTCLROr42kAwyhdYr2A87HXY4KXlc
- Ft0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752584800; x=1753189600;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RT3q6+aCUO9Nik1c2NVnXBCkKK56bsil88LDSh+ktX0=;
- b=MdQWmqAAew4xPUsz6s0ihgbmvAL9NmysX45P9Dx5E+fmj6IQBQCYZ6sGv1Uv4a0x/O
- 4LF+9pcDuD5JIUi+asWK9V9uneF5011q/2IUK+tdnlSDKjM29rkogI035rnMYxLmCaxn
- AltgSAByrKH2HQG4DrZVAAjb+ecZ1SkUWCUr11QfbGOb+anHkamtLEhn0b3UyeJa5Hda
- WxZ1csZFwKv6uDH8T+bNTWzV/fP/8FNMYuEI6qTNkMq+mhi6yzTyakEenEa4R+LS7IoD
- 4A4gdYn1QWVxAlwSiuJRVEDkl2cAODvUBccPK2sj+houzok3TBIOTzTZyhpax0ZjCyG0
- MuHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIJFBC8vmwnrOztP44kmT8QMHiIwvq5E0iwdDKYXaLtUS7zP757ylyJ8m/8iXjZJKQMn0D4WULcZXJ@nongnu.org
-X-Gm-Message-State: AOJu0YxTifuCaxjJmbQ4F8vDbr3Tpqg8KWvopd/8zxbefI2hA+q8W81e
- VRVSkOMXXkO5I242ZCFNSWQPWZZVoxKeKe6rbanfLjTf67TOz7r6hGV0TYMsN11lpy4=
-X-Gm-Gg: ASbGncv0dCOCaOdpl30icTL244uUygsseECdpyFveEK61E19P3YcmOh4fS+smxGf/K/
- fR5bIkbX/YwCij5i/oRUh6NJLKKpKzY3Ai9vppNRftjgUevU3JhwN45bZyE0vQl/LHrkKXCeuOH
- qm0dgbyBZpjFUegS7077YsSYn+dv7HaYnU1Te2dQikv+yXJCZvRy2uRHxgWUZbguupC7qUmx7a2
- E2NSlToLTfc0muaqULgpXrDxRes0nSFahrsbIpojLET07WUDvi2xEh1DVYCbX1Q8lyPFI4UffUZ
- Sc675GLR3Ld6W4HNfjNI5ZwcAeJKWJJ1c20seFeDurBQlsL+SGlr1AhpFMdoHFqOLO/arJdjXCc
- eaEbaAg70AvV0XuO2JZW/pfMFm+7R4S7szqnvL2jHNw2knoGc3IHGj1FtnmqnmljyuxP6WmqcpQ
- 8/gm74MA==
-X-Google-Smtp-Source: AGHT+IFgozBuWBo8EncpJrvTbu4jMOwsbvbNOujmRigXXOAuMPSj2HUhbdVS4j47NjzfCdEi7s0YVA==
-X-Received: by 2002:a05:600d:10d:b0:455:e858:cd04 with SMTP id
- 5b1f17b1804b1-455e858cfe6mr89726975e9.25.1752584799398; 
- Tue, 15 Jul 2025 06:06:39 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45624651a09sm30659515e9.12.2025.07.15.06.06.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 06:06:38 -0700 (PDT)
-Message-ID: <9e199d53-9b7e-400a-9172-9986602cf6a7@linaro.org>
-Date: Tue, 15 Jul 2025 15:06:37 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubfLe-0007cn-B6
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:05:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ubfLX-00039P-10
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 09:05:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752584717;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PcKhgaeB9672f8wxmLlktnqyK/hhl145xDhHJi/S/4g=;
+ b=LHwGsXm8OSeLu8kzJJKuwykNc1LtaztSv8xXy83cC8jPYkAnI8rjo/u0gEwdtz5BzKF6rv
+ 5gqubmM9IIajS5ixsutnqM6HHgEugdugoH9/c+sQzijxnf2vVuCEi+aHzpjFS1tw2ZtLbT
+ OhpCj6Z7GYoyktHUhDOPAMHukhgMbFI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-myLVS3BEO1K8aPKzdxi1fw-1; Tue,
+ 15 Jul 2025 09:04:50 -0400
+X-MC-Unique: myLVS3BEO1K8aPKzdxi1fw-1
+X-Mimecast-MFC-AGG-ID: myLVS3BEO1K8aPKzdxi1fw_1752584684
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 878F2195609F; Tue, 15 Jul 2025 13:04:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.84])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA65518046C7; Tue, 15 Jul 2025 13:04:39 +0000 (UTC)
+Date: Tue, 15 Jul 2025 15:04:36 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 13/27] qemu-img: info: refresh options/--help
+Message-ID: <aHZR5AdddU3oodjj@redhat.com>
+References: <20250531171609.197078-1-mjt@tls.msk.ru>
+ <20250531171609.197078-14-mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v5 6/7] accel/tcg: Implement get_[vcpu]_stats()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Eric Blake <eblake@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Mads Ynddal <mads@ynddal.dk>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>
-References: <20250715104015.72663-1-philmd@linaro.org>
- <20250715104015.72663-7-philmd@linaro.org>
- <c741d3b1-6a6a-4702-a33b-2d5c7c2e3598@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c741d3b1-6a6a-4702-a33b-2d5c7c2e3598@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250531171609.197078-14-mjt@tls.msk.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,60 +82,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/7/25 14:48, Richard Henderson wrote:
-> On 7/15/25 04:40, Philippe Mathieu-Daudé wrote:
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   accel/tcg/tcg-all.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
-> 
-> Oh, this is what causes tcg-stats to be used by user-only binaries, is it?
+Am 31.05.2025 um 19:15 hat Michael Tokarev geschrieben:
+> Add missing long options and --help output.
+> Also add -b short option for --backing-chain, and remove
+> now-unused OPTION_BACKING_CHAIN.
 
-Indeed, otherwise we'd have to use #ifdef'ry or stubs; and there is
-no good reason to not dump TCG stats on user emulation (except indeed
-this code path is currently unreachable there).
+I think I wouldn't do this part, -b specifies a backing file name
+elsewhere, so this feels a little inconsistent. Adding long options
+everywhere is obvious, but overloading short options with more meanings
+in different subcommands could be confusing.
 
+> Reorder options for consistency.
 > 
->>
->> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
->> index eaeb465dfd5..fc3f28e3532 100644
->> --- a/accel/tcg/tcg-all.c
->> +++ b/accel/tcg/tcg-all.c
->> @@ -236,6 +236,11 @@ static int 
->> tcg_gdbstub_supported_sstep_flags(AccelState *as)
->>       }
->>   }
->> +static void tcg_get_stats(AccelState *as, GString *buf)
->> +{
->> +    tcg_dump_stats(as, buf);
->> +}
+> While at it, remove unused option_index variable.
 > 
-> Is this shim preparatory for something else?
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  qemu-img.c | 54 ++++++++++++++++++++++++++++++++++--------------------
+>  1 file changed, 34 insertions(+), 20 deletions(-)
+> 
+> diff --git a/qemu-img.c b/qemu-img.c
+> index 5858304a62..f0d04a874d 100644
+> --- a/qemu-img.c
+> +++ b/qemu-img.c
+> @@ -65,7 +65,6 @@ typedef struct img_cmd_t {
+>  
+>  enum {
+>      OPTION_OUTPUT = 256,
+> -    OPTION_BACKING_CHAIN = 257,
+>      OPTION_OBJECT = 258,
+>      OPTION_IMAGE_OPTS = 259,
+>      OPTION_PATTERN = 260,
+> @@ -3217,50 +3216,65 @@ static int img_info(const img_cmd_t *ccmd, int argc, char **argv)
+>  
+>      fmt = NULL;
+>      for(;;) {
+> -        int option_index = 0;
+>          static const struct option long_options[] = {
+>              {"help", no_argument, 0, 'h'},
+>              {"format", required_argument, 0, 'f'},
+> -            {"output", required_argument, 0, OPTION_OUTPUT},
+> -            {"backing-chain", no_argument, 0, OPTION_BACKING_CHAIN},
+> -            {"object", required_argument, 0, OPTION_OBJECT},
+>              {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+> +            {"backing-chain", no_argument, 0, 'b'},
+>              {"force-share", no_argument, 0, 'U'},
+> +            {"output", required_argument, 0, OPTION_OUTPUT},
+> +            {"object", required_argument, 0, OPTION_OBJECT},
+>              {0, 0, 0, 0}
+>          };
+> -        c = getopt_long(argc, argv, ":f:hU",
+> -                        long_options, &option_index);
+> +        c = getopt_long(argc, argv, "hf:bU",
+> +                        long_options, NULL);
+>          if (c == -1) {
+>              break;
+>          }
+>          switch(c) {
+> -        case ':':
+> -            missing_argument(argv[optind - 1]);
+> -            break;
+> -        case '?':
+> -            unrecognized_option(argv[optind - 1]);
+> -            break;
+>          case 'h':
+> -            help();
+> +            cmd_help(ccmd, "[-f FMT | --image-opts] [-b] [-U]"
+> +"        [--output human|json] [--object OBJDEF] FILE\n"
+> +,
+> +"  -f, --format FMT\n"
+> +"     specify FILE image format explicitly (default: probing is used)\n"
+> +"  --image-opts\n"
+> +"     treat FILE as an option string (key=value,..), not a file name\n"
+> +"     (incompatible with -f|--format)\n"
+> +"  -b, --backing-chain\n"
+> +"     display information about backing chaing\n"
+> +"     in case the image is stacked\n"
 
-No, I didn't realize during rebase this can be simplified.
+s/chaing/chain/
 
-> Otherwise...
-> 
->> +
->>   static void tcg_accel_class_init(ObjectClass *oc, const void *data)
->>   {
->>       AccelClass *ac = ACCEL_CLASS(oc);
->> @@ -243,6 +248,7 @@ static void tcg_accel_class_init(ObjectClass *oc, 
->> const void *data)
->>       ac->init_machine = tcg_init_machine;
->>       ac->cpu_common_realize = tcg_exec_realizefn;
->>       ac->cpu_common_unrealize = tcg_exec_unrealizefn;
->> +    ac->get_stats = tcg_get_stats;
-> 
-> ... assign tcg_dump_stats directly?
-> 
-> 
-> r~
-> 
->>       ac->allowed = &tcg_allowed;
->>       ac->gdbstub_supported_sstep_flags = 
->> tcg_gdbstub_supported_sstep_flags;
-> 
+Also no need for the \n in the middle, the whole message fits in 80
+characters.
+
+Kevin
 
 
