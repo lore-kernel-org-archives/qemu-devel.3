@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6B5EC83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B83C83F1D
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Jul 2025 10:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubcvM-0006ho-0x; Tue, 15 Jul 2025 06:30:12 -0400
+	id 1ubd5C-0004Ij-Ca; Tue, 15 Jul 2025 06:40:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubcvB-0006Yc-6A; Tue, 15 Jul 2025 06:30:04 -0400
+ id 1ubd4w-0003w2-Fm; Tue, 15 Jul 2025 06:40:06 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubcv2-0001rW-Of; Tue, 15 Jul 2025 06:30:00 -0400
+ id 1ubd4s-0005X0-U4; Tue, 15 Jul 2025 06:40:06 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhFlS5b0Rz6L4tM;
- Tue, 15 Jul 2025 18:28:36 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhFwW38Nzz6L586;
+ Tue, 15 Jul 2025 18:36:27 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 266CD140144;
- Tue, 15 Jul 2025 18:29:44 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id E581E140144;
+ Tue, 15 Jul 2025 18:39:56 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 12:29:43 +0200
-Date: Tue, 15 Jul 2025 11:29:41 +0100
+ 2025 12:39:55 +0200
+Date: Tue, 15 Jul 2025 11:39:54 +0100
 To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  <linuxarm@huawei.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
@@ -38,12 +38,12 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
  <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
  <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 08/15] hw/arm/smmuv3-accel: Add
- set/unset_iommu_device callback
-Message-ID: <20250715112941.00005348@huawei.com>
-In-Reply-To: <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [RFC PATCH v3 12/15] hw/arm/smmuv3-accel: Introduce helpers to
+ batch and issue cache invalidations
+Message-ID: <20250715113954.0000449e@huawei.com>
+In-Reply-To: <20250714155941.22176-13-shameerali.kolothum.thodi@huawei.com>
 References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-13-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -79,157 +79,103 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 16:59:34 +0100
+On Mon, 14 Jul 2025 16:59:38 +0100
 Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 
 > From: Nicolin Chen <nicolinc@nvidia.com>
 > 
-> Implement a set_iommu_device callback:
->  -If found an existing viommu reuse that.
->    (Devices behind the same physical SMMU should share an S2 HWPT)
->  -Else,
->     Allocate a viommu with the nested parent S2 hwpt allocated by VFIO.
->     Allocate bypass and abort hwpt.
->  -And add the dev to viommu device list
-> 
-> Also add an unset_iommu_device to unwind/cleanup above.
+> Helpers will batch the commands and issue at once to host SMMUv3.
 > 
 > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3-accel.c    | 65 ++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h    | 16 ++++++++++
+>  hw/arm/smmuv3-internal.h | 12 ++++++++
+>  3 files changed, 93 insertions(+)
+> 
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 04c665ccf5..1298b4f6d0 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -168,6 +168,71 @@ smmuv3_accel_install_nested_ste_range(SMMUState *bs, SMMUSIDRange *range)
+>      g_hash_table_foreach(bs->configs, smmuv3_accel_ste_range, range);
+>  }
+>  
+> +/* Update batch->ncmds to the number of execute cmds */
 
+Not obvious what the return value here means. Maybe a comment?
 
-One questions inline plus trivial stuff.  I'm not yet up to speed with
-all the iommufd stuff so this is rather superficial for now.
-
-> +static bool
-> +smmuv3_accel_dev_alloc_viommu(SMMUv3AccelDevice *accel_dev,
-> +                               HostIOMMUDeviceIOMMUFD *idev, Error **errp)
+> +bool smmuv3_accel_issue_cmd_batch(SMMUState *bs, SMMUCommandBatch *batch)
 > +{
-> +    struct iommu_hwpt_arm_smmuv3 bypass_data = {
-> +        .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
-> +    };
-> +    struct iommu_hwpt_arm_smmuv3 abort_data = {
-> +        .ste = { SMMU_STE_VALID, 0x0ULL },
-> +    };
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +    SMMUState *bs = sdev->smmu;
 > +    SMMUv3State *s = ARM_SMMUV3(bs);
 > +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    uint32_t s2_hwpt_id = idev->hwpt_id;
-> +    SMMUS2Hwpt *s2_hwpt;
-> +    SMMUViommu *viommu;
-> +    uint32_t viommu_id;
+> +    uint32_t total = batch->ncmds;
+> +    IOMMUFDViommu *viommu_core;
+> +    int ret;
 > +
-> +    if (s_accel->viommu) {
-> +        accel_dev->viommu = s_accel->viommu;
+> +    if (!bs->accel) {
 > +        return true;
 > +    }
 > +
-> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> +                                      s2_hwpt_id, &viommu_id, errp)) {
-> +        return false;
+> +    if (!s_accel->viommu) {
+> +        return true;
 > +    }
 > +
-> +    viommu = g_new0(SMMUViommu, 1);
-> +    viommu->core.viommu_id = viommu_id;
-> +    viommu->core.s2_hwpt_id = s2_hwpt_id;
-> +    viommu->core.iommufd = idev->iommufd;
-> +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(abort_data), &abort_data,
-> +                                    &viommu->abort_hwpt_id, errp)) {
-> +        goto free_viommu;
+> +    viommu_core = &s_accel->viommu->core;
+> +    ret = iommufd_backend_invalidate_cache(viommu_core->iommufd,
+> +                                           viommu_core->viommu_id,
+> +                                           IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3,
+> +                                           sizeof(Cmd), &batch->ncmds,
+> +                                           batch->cmds, NULL);
+> +    if (!ret || total != batch->ncmds) {
+> +        error_report("%s failed: ret=%d, total=%d, done=%d",
+> +                      __func__, ret, total, batch->ncmds);
+> +        return ret;
+
+This is reporting an error either way but returning success for the second
+condition which looks odd.  Add a comment if intended.
+
 > +    }
 > +
-> +    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                    viommu->core.viommu_id, 0,
-> +                                    IOMMU_HWPT_DATA_ARM_SMMUV3,
-> +                                    sizeof(bypass_data), &bypass_data,
-> +                                    &viommu->bypass_hwpt_id, errp)) {
-> +        goto free_abort_hwpt;
-> +    }
-> +
-> +    s2_hwpt = g_new(SMMUS2Hwpt, 1);
-> +    s2_hwpt->iommufd = idev->iommufd;
-> +    s2_hwpt->hwpt_id = s2_hwpt_id;
-> +
-> +    viommu->iommufd = idev->iommufd;
-> +    viommu->s2_hwpt = s2_hwpt;
-> +
-> +    s_accel->viommu = viommu;
-> +    accel_dev->viommu = viommu;
-> +    return true;
-> +
-> +free_abort_hwpt:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
-> +free_viommu:
-> +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
-> +    g_free(viommu);
+> +    batch->ncmds = 0;
+> +    return ret;
 
-No unwinding of iommufd_backened_alloc_viommu?
-Looks like we just leak it until destruction of the fd. 
+return true; given I think we know it's true if we get here?
 
-Maybe add a comment for those like me who aren't all that familiar with
-this stuff and see an alloc with no matching free.
-
-
-> +    return false;
 > +}
 > +
-> +static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-> +                                          HostIOMMUDevice *hiod, Error **errp)
+> +/*
+> + * Note: sdev can be NULL for certain invalidation commands
+> + * e.g., SMMU_CMD_TLBI_NH_ASID, SMMU_CMD_TLBI_NH_VA etc.
+> + */
+> +void smmuv3_accel_batch_cmd(SMMUState *bs, SMMUDevice *sdev,
+> +                           SMMUCommandBatch *batch, Cmd *cmd,
+> +                           uint32_t *cons)
 > +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +    SMMUv3AccelState *s_accel = s->s_accel;
-> +    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
-> +    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-> +    SMMUDevice *sdev = &accel_dev->sdev;
-> +
-> +    if (!idev) {
-> +        return true;
+> +    if (!bs->accel) {
+> +        return;
 > +    }
 > +
-> +    if (accel_dev->idev) {
-> +        if (accel_dev->idev != idev) {
-> +            error_report("Device 0x%x already has an associated idev",
-> +                         smmu_get_sid(sdev));
-> +            return false;
-> +        } else {
-
-No need for else as other path already returned.
-
-> +            return true;
+> +   /*
+> +    * We may end up here for any emulated PCI bridge or root port type
+> +    * devices. The batching of commands only matters for vfio-pci endpoint
+> +    * devices with Guest S1 translation enabled. Hence check that, if
+> +    * sdev is available.
+> +    */
+> +    if (sdev) {
+> +        SMMUv3AccelDevice *accel_dev;
+> +        accel_dev = container_of(sdev, SMMUv3AccelDevice, sdev);
+> +
+> +        if (!accel_dev->s1_hwpt) {
+> +            return;
 > +        }
 > +    }
 > +
-> +    if (!smmuv3_accel_dev_alloc_viommu(accel_dev, idev, errp)) {
-> +        error_report("Device 0x%x: Unable to alloc viommu", smmu_get_sid(sdev));
-> +        return false;
-> +    }
-> +
-> +    accel_dev->idev = idev;
-> +    QLIST_INSERT_HEAD(&s_accel->viommu->device_list, accel_dev, next);
-> +    trace_smmuv3_accel_set_iommu_device(devfn, smmu_get_sid(sdev));
-> +    return true;
+> +    batch->cmds[batch->ncmds] = *cmd;
+> +    batch->cons[batch->ncmds++] = *cons;
+> +    return;
+Drop this trailing return.
+
 > +}
-
-
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index f3386bd7ae..c4537ca1d6 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -66,6 +66,10 @@ smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s
->  smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
->  smmu_reset_exit(void) ""
->  
-> +#smmuv3-accel.c
-> +smmuv3_accel_set_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x)"
-> +smmuv3_accel_unset_iommu_device(int devfn, uint32_t sid) "devfn=0x%x (sid=0x%x"
-bracket?
-
 
