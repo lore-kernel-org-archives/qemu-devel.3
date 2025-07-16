@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A949C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3FAC83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc6cH-0002qC-PY; Wed, 16 Jul 2025 14:12:29 -0400
+	id 1uc6fb-0005LU-I1; Wed, 16 Jul 2025 14:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uc6cE-0002gj-ET
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:12:26 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uc6d4-0003uH-Ro
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:13:25 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uc6cC-0007fB-Ka
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:12:26 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4561a4a8bf2so1278395e9.1
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 11:12:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uc6d3-0007vx-9p
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:13:18 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-5373b62bdb4so1310298e0c.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 11:13:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752689542; x=1753294342; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cbwv7/3tZEUbk2tUrI36mk/UyQGz56MEArNMWN7F7VU=;
- b=FXKPyxq7QF11rntkOs7fP9PAIcXtjewGpJcn2cqiPtT/cS2zmGXu2ZeDTSPHqP111V
- IYkpJM2qPCI/C0nBS9oXo6wvrrkYSpRKo8cO3QG3h3+FQnyG0FnUDcMDUoywTx/mV37I
- lpJIktUWfK6meilJgh1n6NNoXScvDTXHhyncb5jpNsRhVf2MsuiORLEYcvJEUvqj6nIy
- 5r9PKlh35lXicUwgPKnL33x4nzUhxmJ6Ef46Qk9Ti1O74xyRFPpDH1E4BLHkTaNewxB3
- aCjHlj0wppJ+adyWwy+nn6DqPigVHDook5J+6X/xEV6B2QEeiSYrDO7i5+A28Azx0aAU
- ph8Q==
+ d=linaro.org; s=google; t=1752689596; x=1753294396; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cjFqfHyGl+l2DeX2nCvra4CnmLYud68pFPe96jjv6Y8=;
+ b=t3oPuBSoA3CAFEfDdvNqEwQTuTh7txy4KmPa3wpjFgk35z3zzXnrc9SpNb3c33GpV4
+ VScW66Y7zivih1admv27mXOebmE4iTF8OBKaA+2iRGRFGaD0ryGILn8o94FHuasG4QuR
+ lMWPffFLUqAOBLIuR29IIUnAWqVBNxYOYTR0YuMCviaPoAuetQfW8rmLry+6Fvtb8lhq
+ TR89S3tPtUNW7rFUOBjW/6JudkyUXKUUrjyc8iRYA4I1WGhE66mgjBBRFuMptprnclT2
+ o22Gu6w9dq5lNIEBxUt5lXPpE9iZmBqY32Pot9XaEFBnFGtd0Xv+I3UGO5Jz8noYItHk
+ nnbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752689542; x=1753294342;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cbwv7/3tZEUbk2tUrI36mk/UyQGz56MEArNMWN7F7VU=;
- b=cqZdgQWK5oN1YdSRRf42VsUp3znI0cpmpGINFOWX7Tyd22l+T8PoFog4Jn19Zgm5Go
- 5I8+JnOaM3s66dHIOcdlEbnFHQvuWQv9KcQQavkveZft4/yp2ZTy+dhcNTGMJt3H5zZt
- 1jaQx6oiX/ZkZpJJ+wE7v7Ca2bkZntThXELt1gDrQt1TgwFvwWgYHk/5rz0nmS90EHxb
- psCRkGfE9448IaTSu/GuOuxeHMhXEziUskYc6NyHOqNFMLQLNIIJY2N0vEI3HSTUQYjj
- CqZS+6XrlzF8TYuALg/WnC6TDMLpo2FpiUZqVyPWPANXEaWPQZPMGDMRzDInO2vmTJo9
- kgjA==
-X-Gm-Message-State: AOJu0YxCpjsj2cEy6M/IpNoKmoeB/zDJLavanIqsySSVTt7HCxxPQfm1
- g+9Fz2NCxB2lljveCW5h5ZdpooerzaN2LmaVVzQNc9fxY5aZw46SLhfGelBe0anlGGo=
-X-Gm-Gg: ASbGncunCxikK/ERVylYuI6a3fR4UgZud2tyBCwfsrDdZH6TNfHqc9GiHrNf8XvSpQT
- 5dYYGvlDdf3apePEHv3kcXPUMkAFwbtCoEATWVI+hzouUREyUsG6VkTZOPrXbP3Xeqs73a8+Ul3
- MwD1hfpaMG+X+Ll1nEJmfzWrcVXqNBtLfE5CBCn1VjOKp2QXg8Nz6QvInA/3fKfsYKxfZIo9tuF
- nztjuSbqbeXhmN8MfQV+G21ZQKIjZJ0De2ve5cXJh4wLispotIkDEk8RNUn0PStCfwbZgXKMgEM
- 8QswIHjnv4OhWaxOzvk7zfOBg9btCcsXiudn2XuKZd0Y6qKohHs/LzetrT1soRyCxUqGrIwadxK
- pAe4LcMf+bj0bL8lVdQXj+5c=
-X-Google-Smtp-Source: AGHT+IGJyje28cO1VdCxdGr9KYywbhvezLBfJJzKnYOIpVt5aSoAnliWX7eQ+FZ8u9ORKJDC+J7v6Q==
-X-Received: by 2002:a05:600c:64ce:b0:455:f59e:fd79 with SMTP id
- 5b1f17b1804b1-4562e33d64emr39399125e9.11.1752689542585; 
- Wed, 16 Jul 2025 11:12:22 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e802ae4sm27708155e9.13.2025.07.16.11.12.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 11:12:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1718E5F885;
- Wed, 16 Jul 2025 19:12:21 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Cameron Esfahani <dirty@apple.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  Roman Bolshakov
- <rbolshakov@ddn.com>,  Mads Ynddal <mads@ynddal.dk>,  Phil Dennis-Jordan
- <phil@philjordan.eu>,  Alexander Graf <agraf@csgraf.de>
-Subject: Re: [PATCH-for-10.1 1/3] accel/hvf: Display executable bit as 'X'
-In-Reply-To: <20250716172813.73405-2-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 16 Jul 2025 19:28:11
- +0200")
-References: <20250716172813.73405-1-philmd@linaro.org>
- <20250716172813.73405-2-philmd@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Wed, 16 Jul 2025 19:12:21 +0100
-Message-ID: <87seiwxawq.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1752689596; x=1753294396;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cjFqfHyGl+l2DeX2nCvra4CnmLYud68pFPe96jjv6Y8=;
+ b=kp3ZIi4J9mtFqiVhK/CyuWP+e9UB4uppgYuJZsPR/YWapFfAqxQDWs0QfAq8nuEbS8
+ DATwoyPMMEmfP77VaIg7nKY3fu2RP5KJ/6RNzs08PBCM/BDqVOiMMrYE3wBFrpnwrmVC
+ 1p93mnjA5IGTEw9WMpNpuQGHIFj8G/DbktJNQUOTRb9VJMxgkucKqBAVk7IU9owyI1te
+ 3ULIipWT8wLFP3qO5mN+uGRR5wXdx1oLolrvRcWKKduCakH/glrTnvQsxlIfGNQiWDsd
+ P2qksMyhHAm4OyOtUUbx6MEgtBmwWcxt7UkjuS4ua+DjC84lW+AC3vTUAMThbJVvxLGw
+ ZqRg==
+X-Gm-Message-State: AOJu0Ywy5AoHBy19AbVuS8d0PkSzy3y1bz+tJLRsFwy6hBVjiGZIBVwh
+ DRWPQyVQ5voJ6ZE9JhphxWFbab8RKD6+ctzNQUT/AAcRgFOACELg+cxrV6QMmBZKpSQs8qmiYsm
+ vZGKo/VKRY54QOT5bweQGqVrNGU8Hp4tVW/31PGQMWw==
+X-Gm-Gg: ASbGncvdXrWS9LkoeNkoKIGyMXcDrpII/uP1bZBdYQ6ewR0Qoqo/pXTDni4xbme+x9q
+ b2YorMe6/HVxpEzS8rHs7uwLKEyiESTXRa7C0AVi9OzZ1NL7jEL0tX9L7rc4mycEo+qf+jcNa/G
+ QUyEDU+ll44h/s1x+v82tXYef32hfGl6kZY2gi8hIg//o4yJaPBbqLh4UC1nfw2NEdOMIppUyGf
+ FFQL8M=
+X-Google-Smtp-Source: AGHT+IG888u3KDeZ/hn+COj8WVG4qKdOz7Mv0i6RscFCABSPiwRFCOB/AGuGvpxxNk5WURHndZBsuOVS/O870eUXD9E=
+X-Received: by 2002:a05:6122:2896:b0:520:4806:a422 with SMTP id
+ 71dfb90a1353d-5374dde2768mr335456e0c.3.1752689595611; Wed, 16 Jul 2025
+ 11:13:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250715212335.2215509-1-pierrick.bouvier@linaro.org>
+ <52c5ed4a-0225-4360-b1c8-e3866041c4b3@linaro.org>
+ <1de7b0a3-846b-4e7b-b4a7-1b753f61ad0f@linaro.org>
+In-Reply-To: <1de7b0a3-846b-4e7b-b4a7-1b753f61ad0f@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Date: Wed, 16 Jul 2025 12:13:04 -0600
+X-Gm-Features: Ac12FXxyn71ofdPfjAAV5ECKeXYPmgj6FFRSBA8wjgd-HhYwIAZBnq5cBWHe1EU
+Message-ID: <CAFXwXrn3oUHeo=h2OZshZj3C24bf=tY6Mdz+rDX4YO0MAk70xQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] aarch64: update test images with new trusted firmware
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: "qemu-devel@nongnu.org Developers" <qemu-devel@nongnu.org>,
+ qemu-arm <qemu-arm@nongnu.org>, jean-philippe@linaro.org, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000bf923f063a0fd863"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-vk1-xa2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,17 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+--000000000000bf923f063a0fd863
+Content-Type: text/plain; charset="UTF-8"
 
-> Developers are custom to read RWX, not RWE.
-> Replace E -> X.
+On Wed, 16 July 2025, 10:50 Pierrick Bouvier, <pierrick.bouvier@linaro.org>
+wrote:
+
+> Do you plan to merge FEAT_MEC for 10.1, or prefer to wait for 10.2?
 >
-> Reported-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+We have missed the soft freeze window. It must wait for 10.2 now.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+r~
+
+>
+
+--000000000000bf923f063a0fd863
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div dir=3D"auto">On Wed, 16 July 2025, 10:50 Pierrick Bo=
+uvier, &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouvier@=
+linaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_contai=
+ner" dir=3D"auto"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
+8ex;border-left:1px #ccc solid;padding-left:1ex">
+Do you plan to merge FEAT_MEC for 10.1, or prefer to wait for 10.2?<br></bl=
+ockquote></div><div dir=3D"auto"><br></div><div dir=3D"auto">We have missed=
+ the soft freeze window. It must wait for 10.2 now.</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto"><br></div><div dir=3D"auto">r~</div><div class=
+=3D"gmail_quote gmail_quote_container" dir=3D"auto"><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-le=
+ft:1ex"></blockquote></div></div>
+
+--000000000000bf923f063a0fd863--
 
