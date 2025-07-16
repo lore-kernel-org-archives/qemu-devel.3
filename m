@@ -4,101 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD60C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B62C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc2H2-0004xm-Cz; Wed, 16 Jul 2025 09:34:19 -0400
+	id 1uc2HQ-00059I-B5; Wed, 16 Jul 2025 09:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uc2Cb-00024h-TC
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:29:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uc2EK-0002r2-Br; Wed, 16 Jul 2025 09:31:28 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uc2CZ-00087w-1Z
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:29:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752672577;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YipYrYYvZ7mwDxMeTCXCFPfBlcFx/++daPFAeztCEPI=;
- b=Gr2o9kh/4HozngW+gAi1bcMTDSp5Cuqo7kC7mANz+AV3aScVr2pfsmVyvwVV1NjHSvvZ8x
- +3Ge3iMVBs9Ju01S6SBq+8SGd38tRI0jfiP5mjedx+ZVSx6PKcKcxROvQK+uiebSnsRBGP
- ZcYyHdKa76W7xhAQqpuEoMdPN7J7X8M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-xy79ObSJPVm-aUYQYXtQIQ-1; Wed, 16 Jul 2025 09:29:33 -0400
-X-MC-Unique: xy79ObSJPVm-aUYQYXtQIQ-1
-X-Mimecast-MFC-AGG-ID: xy79ObSJPVm-aUYQYXtQIQ_1752672572
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4560b81ff9eso27036945e9.1
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 06:29:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752672572; x=1753277372;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YipYrYYvZ7mwDxMeTCXCFPfBlcFx/++daPFAeztCEPI=;
- b=pfoFaNfoiKe64XiJj85NUP2tYLaNgX3ZC3S1DFyKu2UEzd6XYjHdNtkJB1KC+1DK5s
- LiNeG9EJP+Ygf51Hho0pIZsyR5q3BM2gwyJGV96oZ4B5Ed6Jg3U8qpdy55OE4PS25j8Q
- hnJ93Ce6f9kSPC8pHCX7YvIFIqBqGXIsswI2mp0iSodEGVuTLgHiBefdzOIoFshCUUR/
- XsRGj1A9GSwAbV7JRme7AnF8uRmWdH+vaLcbJvXMmSR99h7tqt70+vdZAp0LHpb2zdIE
- HzTjEtN0uRYgeIwOV32SX0dyHnSyMdyQ/AYIriuEDHTWdxjhAJwQSPUSkS9avQV/Rdzc
- nBTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWBvQaGmEYXu0D+vdW0x7HY+JmlS8aA8iKF20z3jrtmKcwZBIp48ci/IPIKW0c7nV+bHInk/RAuCqy@nongnu.org
-X-Gm-Message-State: AOJu0YzQPBD8MZC7niJXslSQ+u21/asIY/fHI+QPxMwcQG72Qhs/dgOa
- C7W0B/Mmde1ejiFQ2kvmasFlCH/V+D0+QwpWkVLJAyIjNXdG8gvAkJXpNeulM18rj5AcDaR8X8M
- 6ucCJVlOg6GZbZaMoXCWNrnFsuq9J5WHWA2eLESvlEDWgvb0UOAYVuNot
-X-Gm-Gg: ASbGncsvB1eimWC4fqjyN8/73XDJLJ6nfFZuPEn8VBTVmYZqqmgaKdUgvX9vY3b408T
- 8SDQNrWn9fxZdlrO/exwWh86IZyPPfJ6ujpCkv91iP8nPMBn9nA99Lp2vv1uVR6iY7EigcWGBL5
- aA8qrrjg0YriObBkGAHyALv7CvJ56CFwnvbXXI3QIN20im+MT6RV1OL/1b4NTosFHV+RivWgBRS
- RnJcXKTfiIGtuhkcWSTfOrjJvvRiPudEx5KvpbKquIVSRBrSwk4A3e9/Fd8Lc3ArRpbUpDDNRUJ
- BI/ZvUYsNi+87GXUBtKrldCfBt/tJafk
-X-Received: by 2002:a05:600c:1906:b0:455:e858:cd04 with SMTP id
- 5b1f17b1804b1-4562e037499mr27211825e9.25.1752672572117; 
- Wed, 16 Jul 2025 06:29:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgAv2xF1oTX9GmVsWJ1L6cPR4Fl51c7da2yUglIZjs7GsD6v7pq3tXNP0XGkeqy7HJYD75wA==
-X-Received: by 2002:a05:600c:1906:b0:455:e858:cd04 with SMTP id
- 5b1f17b1804b1-4562e037499mr27211485e9.25.1752672571711; 
- Wed, 16 Jul 2025 06:29:31 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5f16a6016sm15992193f8f.69.2025.07.16.06.29.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 06:29:31 -0700 (PDT)
-Date: Wed, 16 Jul 2025 09:29:28 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, marcel.apfelbaum@gmail.com,
- pbonzini@redhat.com, eduardo@habkost.net,
- richard.henderson@linaro.org, alejandro.j.jimenez@oracle.com,
- Vasant Hegde <vasant.hegde@amd.com>
-Subject: Re: [PATCH 0/7] hw/i386/amd_iommu: Cleanups and fixes
-Message-ID: <20250716092916-mutt-send-email-mst@kernel.org>
-References: <20250716073145.915-1-sarunkod@amd.com>
- <6e56761c-64b1-43eb-9ff1-316b6de082e7@linaro.org>
- <a184b8d5-4620-4b21-99c4-0fc859647d14@amd.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uc2EH-0000LA-QS; Wed, 16 Jul 2025 09:31:27 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E2AB137880;
+ Wed, 16 Jul 2025 16:31:10 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 50E37248BCF;
+ Wed, 16 Jul 2025 16:31:15 +0300 (MSK)
+Message-ID: <c1a99ac3-bdb7-4825-99c8-b3a55241be84@tls.msk.ru>
+Date: Wed, 16 Jul 2025 16:31:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a184b8d5-4620-4b21-99c4-0fc859647d14@amd.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] vhost: Fix used memslot tracking when destroying a
+ vhost device
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: yuanminghao <yuanmh12@chinatelecom.cn>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250603111336.1858888-1-david@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250603111336.1858888-1-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,58 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 06:26:37PM +0530, Sairaj Kodilkar wrote:
+On 03.06.2025 14:13, David Hildenbrand wrote:
+> When we unplug a vhost device, we end up calling vhost_dev_cleanup()
+> where we do a memory_listener_unregister().
 > 
+> This memory_listener_unregister() call will end up disconnecting the
+> listener from the address space through listener_del_address_space().
 > 
-> On 7/16/2025 6:07 PM, Philippe Mathieu-Daudé wrote:
-> > On 16/7/25 09:31, Sairaj Kodilkar wrote:
-> > > This series provides few cleanups and fixes for the amd iommu
-> > > 
-> > > The patches are based on top of 56c6e249b698 (v10.0.0-rc3) and
-> > > Alejandro's
-> > > DMA remapping series [1].
-> > 
-> > 56c6e249b698 is 4 months old, we are about to release v10.1.0-rc0.
-> > 
-> > What is the point of posting obsolete code?
-> > 
-> > I'm not going to review further.
+> In that process, we effectively communicate the removal of all memory
+> regions from that listener, resulting in region_del() + commit()
+> callbacks getting triggered.
 > 
-> Hey Philippe,
+> So in case of vhost, we end up calling vhost_commit() with no remaining
+> memory slots (0).
 > 
-> sorry. I missed to add it in cover letter. Intention is to get feedback
-> on this series. Since this is on top of Alejandro's series, I will
-> rebase it once his series gets merged.
+> In vhost_commit() we end up overwriting the global variables
+> used_memslots / used_shared_memslots, used for detecting the number
+> of free memslots. With used_memslots / used_shared_memslots set to 0
+> by vhost_commit() during device removal, we'll later assume that the
+> other vhost devices still have plenty of memslots left when calling
+> vhost_get_free_memslots().
 > 
-> Regards
-> Sairaj
+> Let's fix it by simply removing the global variables and depending
+> only on the actual per-device count.
+> 
+> Easy to reproduce by adding two vhost-user devices to a VM and then
+> hot-unplugging one of them.
+> 
+> While at it, detect unexpected underflows in vhost_get_free_memslots()
+> and issue a warning.
+> 
+> Reported-by: yuanminghao <yuanmh12@chinatelecom.cn>
+> Link: https://lore.kernel.org/qemu-devel/20241121060755.164310-1-yuanmh12@chinatelecom.cn/
+> Fixes: 2ce68e4cf5be ("vhost: add vhost_has_free_slot() interface")
+> Cc: Igor Mammedov <imammedo@redhat.com>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Stefano Garzarella <sgarzare@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-Merged now, go ahead and rebase.
+Is it a stable material (10.0.x) too?
 
-> > 
-> > Regards,
-> > 
-> > Phil.
-> > 
-> > > [1] https://lore.kernel.org/all/20250502021605.1795985-1-
-> > > alejandro.j.jimenez@oracle.com/
-> > > 
-> > > The series is uploaded on github:
-> > > https://github.com/AMDESE/qemu-iommu/tree/sarunkod/alej%2Bcleanup-v1
-> > > 
-> > > Sairaj Kodilkar (7):
-> > >    hw/i386/amd_iommu: Fix MMIO register write tracing
-> > >    hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
-> > >    hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
-> > >    hw/i386/amd_iommu: Support MMIO writes to the status register
-> > >    hw/i386/amd_iommu: Fix event log generation
-> > >    hw/i386/amd_iommu: Fix handling device on buses != 0
-> > >    hw/i386/amd_iommu: Support 64 bit address for IOTLB lookup
-> > > 
-> > >   hw/i386/amd_iommu.c | 217 ++++++++++++++++++++++++++++----------------
-> > >   hw/i386/amd_iommu.h |   9 +-
-> > >   2 files changed, 146 insertions(+), 80 deletions(-)
-> > > 
-> > 
+Thanks,
 
+/mjt
 
