@@ -4,118 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682BCC83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 12:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE9EC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 12:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc17V-00038k-Iv; Wed, 16 Jul 2025 08:20:21 -0400
+	id 1uc1Jr-0002aD-Kb; Wed, 16 Jul 2025 08:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uc0wr-0005fq-Dv
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:09:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uc0wo-0002ro-OK
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:09:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752667755;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bSiRsUrxMoHrzvFRd0P/VSpkA5IMslaEtgN3IawZPkw=;
- b=SJSOJS8CDUoXvO+1skIYPMiU2btxApBR2b6NPaVuRv/im5fShkkC641UztxQhCZhAz5Qlk
- ATYBfWjBF9IAKexFdE7fnfA8H5vfrWHIkyj0TLwDUJVSPxlSGQGPDAaXUCfwfVBtuh9zzA
- 2Dg21GWrxVNLhFj1sMWzvEzov1xyXMk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-Gk3uUfUQNsCkCxRuKYcReg-1; Wed, 16 Jul 2025 08:09:13 -0400
-X-MC-Unique: Gk3uUfUQNsCkCxRuKYcReg-1
-X-Mimecast-MFC-AGG-ID: Gk3uUfUQNsCkCxRuKYcReg_1752667753
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3af3c860ed7so2899649f8f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 05:09:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uc14z-0001x0-Fu
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:17:52 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uc14m-0004no-Sy
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:17:44 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a531fcaa05so3667154f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 05:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752668248; x=1753273048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pt4151ltd6pu825F+pTiTobrWfgPk6VdhkoM907zbc4=;
+ b=Q+5eDbC/v66dKk8P6MhBNshu+Ws2iykLLT1+VVQduWXqWFYNrymCFMSDnpEilqY5Iy
+ 1Z/JhLbpwG0mHRZ7mgB4gPS5IZooONhscgoIZXWMfEsPJy11fjLfd2CPMW+LXC1bnkLs
+ sQi0cu+IP8KenpH+A5Zj1hxr07Ut59ZvUdR1NpQVfeDm4OjzDzCaGlDse0xH++k5wU3I
+ i7k3pe1ORiSAHLquWVOVLyZhr63Bhn/xYfSPJwqLGWm4w8F+9tiF6PvFdJyegXhdiKPV
+ q7igO35+OcYdJrQ8ZuAk+CDYG7R/yvMx+CZ9qSv+Ns04kE7T0syqHx8oPMwWNUNjQkV8
+ ioyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752667752; x=1753272552;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bSiRsUrxMoHrzvFRd0P/VSpkA5IMslaEtgN3IawZPkw=;
- b=HuLSW/fvhqJ0IToU7XPPJwnX3Tb3GjtmWLyw6cs0D2znZtuO6CcK1vt8sl/Iyewy4i
- pxfh/AzINfuKxU5cV4s+WGzjSGWpAvcGqHuDmjPH3Df5C4PXoL7TH6+ECofN0wnOZCts
- gMxQyNc2sUeEeNCykJ6eIa/2omA/HROqnUDvuD8rs5dQNLH+wFJBty8t2bG+z803LHj1
- 2J/m6crtTjw37G912NBfOGjmMYv+F0lM0kFzWIuiyW6WszYk3S8C8TVU26cDksq1WNoH
- ArXRsXyhuiZtWku9NYDRrLLC6L3DVyWK/qnQf4h+t0HUTjn7GlCm22SgNiaSDPCWiB/0
- Kdtw==
+ d=1e100.net; s=20230601; t=1752668248; x=1753273048;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pt4151ltd6pu825F+pTiTobrWfgPk6VdhkoM907zbc4=;
+ b=eiUeOp/AIKl/JC9Tu8fGdjHuEWQNjkhjBZobjREXXHD/NlWjfPZwxKqqH1qQ9VFCFN
+ 7MslCwgJSUZPHXiKl5Yme56C4G8z2kMUHMNK9c0JHY6DCStIQtGJ5Kl3nIJqys9bT6Ml
+ p8uJzZli9ATfGHuV90a5oCYFlyfDTO+uPbbDzMS4bcD+vSVQpTv13bkvm/eOCDY0vbYZ
+ fiEggkSFEua2FhGr76aSToVte/dFUvXo1cvugk3zn3EkZBJLHALzKA1r6xHwc7HPSJn5
+ 9lwnmdvtNjzsHL5pd2HZHXvcXXnpdHRAq5r2uJSFeQfx4nnHVe00krNoEn0cv+LFFoNP
+ QE/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUcSGZ+bqWFSZk6SXXrW0LUkpqKyExJMzCTD6S70ct5lwP6Q5vYIHPvt8mhV58psWCRABb9U5EQsUNG@nongnu.org
-X-Gm-Message-State: AOJu0YwjLyja7pewmin4D90NBgR+P+xJUKCn9a7lKtw96ziPAwSSXP/a
- +fgTVKS+bVEIjc/VnK8XZv7ekBxb6X0e0B0cwQySmVBuSqWufKAgXCCz0SFKQB2k089W5chjz32
- AmuqOtnTGLgEVrDyntTG4ge5yMJcb+8LcmR7sUaqNkYD9mHbNEYJLBK8/
-X-Gm-Gg: ASbGnctTMTELD1zNFuY5i5i5ehX5xob35/i3iVrRD6NmrnH3L3+lUZsideNbj4/zq0l
- O0jMJZTDmMHmPU/tyHlRunsq1hOQ/Xkn3MK9qc3AJMVkQtWqP75kRcAHtNUEcAkh/xRSGDuE4rM
- b+BiB3zv0ccu+OLH+jXkg4HTotNUsLyCJYgJOV4bXz5Enqw08VNMVRZTicE+bx0NmnecZe6g1jU
- 5YZG8aTW/GoGYkUrRxMGeXS/Q5EPOpxBKQOoxxF6jGApPodqZ/dwWsBFUWGXYUP8vLzxKUeiKY+
- Gdn/YY+ZJkNmvOZto25wHtU1ONAq/8lAR8lod9TDDBNkA7UWa74mixeasHNhD5Ic4wFhv8RbNE9
- tamYP1kqk1ms=
-X-Received: by 2002:a05:6000:430a:b0:3a5:3930:f57 with SMTP id
- ffacd0b85a97d-3b60e54b8d0mr2167750f8f.51.1752667752445; 
- Wed, 16 Jul 2025 05:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQQbthpOeBBBT/kolveiAWmpcRfuTFgiCTlaFeWyuvBm1QmUi/FxZ9LNFhmxpAJ9JWGQLYnw==
-X-Received: by 2002:a05:6000:430a:b0:3a5:3930:f57 with SMTP id
- ffacd0b85a97d-3b60e54b8d0mr2167709f8f.51.1752667751913; 
- Wed, 16 Jul 2025 05:09:11 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d872sm17894043f8f.60.2025.07.16.05.09.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 05:09:11 -0700 (PDT)
-Message-ID: <081c3534-332f-454a-985b-4dc81a3dd2a7@redhat.com>
-Date: Wed, 16 Jul 2025 14:09:03 +0200
+ AJvYcCXcT1EqKhjTvASLo0KfeI7i3xP5MjLaeHvKNOZTbCMpLTCEs3YaClIuXc8gQptPvaNp1GmMtBY40lJL@nongnu.org
+X-Gm-Message-State: AOJu0Yxes4/JHEzpXS3i4klhCtKOAcM86+1tOcVoQIf9GX3+rL6qTWhE
+ n8ysR8HoPiNVmwijMoRLMu5kxJRlMLWZyHsNzpDuqehZCgIbOy3tUEo7t4LYcAZ08+8=
+X-Gm-Gg: ASbGncuxS7HNpvj4nOIbl+iHvQPLjgKcCEJHTisr6AsApf5mO+9gvJx4dFTJJVK9QsD
+ LlDcACrfP7cTkjccYe7/dtiD8qDQmC7z31pYFDtqVOgUqC3cr3LUx7BG5N3eUHcS9CDmdi3JPPF
+ L4JBkkDEN4TLdK2HcZ4HWVolb2TgX4WZkc5TWFkSsTBswKx6y/gNuvI66YOt1Gdn/Btvwa82jtE
+ xp6sXb8DAvbldaevQYhLRInLXr3S6QFftCBcCfJzWVvoP0ICSMJ98NXGly50e9EcC0tDyp37JAy
+ /epZbJlOCAn8J7+xk9BI2On4QkPcCdxpbB/ypzwk1vNNfdLIOezvx2pmcsYbKiY52iXBkxVpUgK
+ aYu80vZ1Ere0C9hALE5X38DY=
+X-Google-Smtp-Source: AGHT+IEk43coNmJvYrMRL+Dr+vULtgyIWQFEOK6MH0iZYiQRV6g9qeX9Riug3W44Izhek1rWj0uReA==
+X-Received: by 2002:a05:6000:40de:b0:3b6:1e6:c9fb with SMTP id
+ ffacd0b85a97d-3b60e4c510dmr2188871f8f.11.1752668248256; 
+ Wed, 16 Jul 2025 05:17:28 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e80246asm19489535e9.10.2025.07.16.05.17.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Jul 2025 05:17:27 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3893D5F885;
+ Wed, 16 Jul 2025 13:17:26 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Danny Canter <danny_canter@apple.com>
+Cc: Joelle van Dyne <j@getutm.app>,  Marc Zyngier <maz@kernel.org>,
+ qemu-devel <qemu-devel@nongnu.org>,  Alexander Graf <agraf@csgraf.de>,
+ Ynddal <mads@ynddal.dk>,  Cameron Esfahani <dirty@apple.com>,  Roman
+ Bolshakov <rbolshakov@ddn.com>,  Phil Dennis-Jordan <phil@philjordan.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard
+ Henderson
+ <richard.henderson@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>
+Subject: Re: HVF EL2 support in QEMU (aka FEAT_NV/FEAT_NV2) for MacOS
+In-Reply-To: <03A3BBBF-6A01-4ECB-BE50-8103B9201528@apple.com> (Danny Canter's
+ message of "Wed, 16 Jul 2025 00:27:00 -0700")
+References: <87zfd5zouv.fsf@draig.linaro.org> <86wm898yf4.wl-maz@kernel.org>
+ <CA+E+eSASz9Tx76-8PxMNF30f3L9DfPNYf_Zgf=ENozXapc3gyw@mail.gmail.com>
+ <03A3BBBF-6A01-4ECB-BE50-8103B9201528@apple.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Wed, 16 Jul 2025 13:17:26 +0100
+Message-ID: <87a554z5wp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/20] intel_iommu: Check for compatibility with
- IOMMUFD backed device when x-flts=on
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
- <20250708110601.633308-8-zhenzhong.duan@intel.com>
- <342129d6-0b96-440c-83ac-e9b8bc5b18a0@redhat.com>
- <IA3PR11MB9136C85F0799CB91572121FB9256A@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB9136C85F0799CB91572121FB9256A@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,100 +111,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+Danny Canter <danny_canter@apple.com> writes:
 
-On 7/16/25 12:31 PM, Duan, Zhenzhong wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v3 07/20] intel_iommu: Check for compatibility with
->> IOMMUFD backed device when x-flts=on
->>
->> Hi Zhenzhong,
->>
->> On 7/8/25 1:05 PM, Zhenzhong Duan wrote:
->>> When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
->>> is passed to host to construct nested page table. We need to check
->>> compatibility of some critical IOMMU capabilities between vIOMMU and
->>> host IOMMU to ensure guest stage-1 page table could be used by host.
->>>
->>> For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
->>> does not, then this IOMMUFD backed device should fail.
->>>
->>> Even of the checks pass, for now we willingly reject the association
->>> because all the bits are not there yet.
->>>
->>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>  hw/i386/intel_iommu.c          | 30
->> +++++++++++++++++++++++++++++-
->>>  hw/i386/intel_iommu_internal.h |  1 +
->>>  2 files changed, 30 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index e90fd2f28f..c57ca02cdd 100644
->>> --- a/hw/i386/intel_iommu.c
->>> +++ b/hw/i386/intel_iommu.c
->>> @@ -40,6 +40,7 @@
->>>  #include "kvm/kvm_i386.h"
->>>  #include "migration/vmstate.h"
->>>  #include "trace.h"
->>> +#include "system/iommufd.h"
->>>
->>>  /* context entry operations */
->>>  #define VTD_CE_GET_RID2PASID(ce) \
->>> @@ -4355,7 +4356,34 @@ static bool vtd_check_hiod(IntelIOMMUState *s,
->> HostIOMMUDevice *hiod,
->>>          return true;
->>>      }
->>>
->>> -    error_setg(errp, "host device is uncompatible with stage-1
->> translation");
->>> +#ifdef CONFIG_IOMMUFD
->>> +    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
->>> +    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
->> I am now confused about how this relates to vtd_get_viommu_cap().
->> PCIIOMMUOps.set_iommu_device = vtd_dev_set_iommu_device calls
->> vtd_check_hiod()
->> viommu might return HW_NESTED_CAP through
->> PCIIOMMUOps.get_viommu_cap
->> without making sure the underlying HW IOMMU does support it. Is that a
->> correct understanding? Maybe we should clarify the calling order between
->> set_iommu_device vs get_viommu_cap? Could we check HW IOMMU
->> prerequisites in vtd_get_viommu_cap() by enforcing this is called after
->> set_iommu_device. I think we should clarify the exact semantic of
->> get_viommu_cap().Thanks Eric
-> My understanding get_viommu_cap() returns pure vIOMMU's capabilities
-> with no host IOMMU's capabilities involved.
->
-> For example, returned HW_NESTED_CAP means this vIOMMU has code
-> to support creating nested hwpt and attaching, no matter if host IOMMU
-> supports nesting or not.
+> Joelle is correct, M3 and newer SoCs have support for the EL2 APIs.
 
-Then I think you need to refine the description in 2/20 to make this clear.
-stating explicitly get_viommu_cap returns theoretical capabilities which
-are independent on the actual host capabilities they may depend on.
->
-> The compatibility check between host IOMMU vs vIOMMU is done in
-> set_iommu_device(), see vtd_check_hiod().
->
-> It's too late for VFIO to call get_viommu_cap() after set_iommu_device()
-> because we need get_viommu_cap() to determine if creating nested parent
-> hwpt or not at attaching stage.
-isn't it possible to rework the call sequence?
+Thanks for the confirmation. I'm looking at getting a M4 Mini for my
+team so we can help review and test patches for HVF going forward.
 
-Eric
->
-> If host doesn't support nesting, then creating nested parent hwpt will fail
-> early in vfio realize before vtd_check_hiod() is called and we fail the hotplug.
->
-> Thanks
-> Zhenzhong
+Are you aware of any work that needs doing in the wider QEMU to support
+nested virt or should it just be a case of doing the plumbing in
+accel/hvf to turn it on?
 
+>
+> -Danny
+>
+>> On Jul 15, 2025, at 8:53=E2=80=AFAM, Joelle van Dyne <j@getutm.app> wrot=
+e:
+>>=20
+>> UTM currently supports NV only with the Apple Virtualization backend,
+>> not QEMU HVF. While M2 supports NV, it is not enabled by XNU kernel
+>> and `hv_vm_config_get_el2_supported` returns false. I heard there was
+>> some compatibility issue in the hardware. M3 and newer generations
+>> fully support NV in hardware and by XNU.
+>>=20
+>> On Tue, Jul 15, 2025 at 4:51=E2=80=AFAM Marc Zyngier <maz@kernel.org> wr=
+ote:
+>>>=20
+>>> On Tue, 15 Jul 2025 12:15:52 +0100,
+>>> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+>>>=20
+>>>>  - do we know which Apple silicon supports FEAT_NV2?
+>>>=20
+>>> M2 and latter definitely support FEAT_NV2. That's how KVM NV support
+>>> has been developed for two years until I was given better HW.
+>>>=20
+>>> Whether Apple supports NV on M2 in HVF, I have no idea. The rumour
+>>> mill says "no", but I don't have a way to check. The M3 I use at $WORK
+>>> is definitely able to give me EL2 without VHE with UTM. I haven't
+>>> played with M4, but I have it on the record that it behaves like M3
+>>> with UTM.
+>>>=20
+>>>        M.
+>>>=20
+>>> --
+>>> Without deviation from the norm, progress is not possible.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
