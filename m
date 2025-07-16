@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 843EBC83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197B9C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubyQP-0006uA-T1; Wed, 16 Jul 2025 05:27:41 -0400
+	id 1ubyRS-00084C-2Z; Wed, 16 Jul 2025 05:28:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ubyQM-0006rk-Su; Wed, 16 Jul 2025 05:27:38 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubyRO-0007zF-P7
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 05:28:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1ubyQH-0008Kw-Tn; Wed, 16 Jul 2025 05:27:38 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhrGK1w8Bz6L53d;
- Wed, 16 Jul 2025 17:23:53 +0800 (CST)
-Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
- by mail.maildlp.com (Postfix) with ESMTPS id 826591404A6;
- Wed, 16 Jul 2025 17:27:25 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 16 Jul 2025 11:27:25 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 16 Jul 2025 11:27:25 +0200
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Nicolin Chen
- <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-Subject: RE: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce smmuv3 accel
- device
-Thread-Topic: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce smmuv3 accel
- device
-Thread-Index: AQHb9NhIGqv2DKEgZE6UQbgEjow1nbQy4MqAgABv5oCAAKpOAIAAglBA
-Date: Wed, 16 Jul 2025 09:27:25 +0000
-Message-ID: <6ee7908c8ea44270b9f4aa64abacaace@huawei.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-6-shameerali.kolothum.thodi@huawei.com>
- <IA3PR11MB9136ACFB4721D47304A9885C9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <aHaP3ULG90gGqWHJ@Asurada-Nvidia>
- <IA3PR11MB9136C94472D7D50CDC627CB49256A@IA3PR11MB9136.namprd11.prod.outlook.com>
-In-Reply-To: <IA3PR11MB9136C94472D7D50CDC627CB49256A@IA3PR11MB9136.namprd11.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubyRM-0008Re-EL
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 05:28:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752658117;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kuYoweXKmozrEkji5sHMMGhvJxKMm/WuWmarmJYz5Jc=;
+ b=Nw9V8xDjkX7VlsPv0IaovJKr4RNop+HR1JMCmnE0quN07zYG2d4zQBx/gM0AU8/WGt4Pae
+ DQIwUPEOL/9pRaLB+q3yQ2Oz4ZtR6paQxZlcjdaYN+HLx/kY2TEgZ+CklEDsZ1oqO9B+KS
+ vnWTuL1Ne04OtDsbi2IKa92rt/RG6xM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-YjCAiSzjPJ-4TuOUJSyP2Q-1; Wed,
+ 16 Jul 2025 05:28:35 -0400
+X-MC-Unique: YjCAiSzjPJ-4TuOUJSyP2Q-1
+X-Mimecast-MFC-AGG-ID: YjCAiSzjPJ-4TuOUJSyP2Q_1752658114
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2BD3195609E
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 09:28:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.68])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 565D318002B6; Wed, 16 Jul 2025 09:28:32 +0000 (UTC)
+Date: Wed, 16 Jul 2025 10:28:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] i386: Build SEV only for 64-bit target
+Message-ID: <aHdwvYF_wQyJIIsr@redhat.com>
+References: <20250716071554.377356-1-clg@redhat.com>
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250716071554.377356-1-clg@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,87 +85,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jul 16, 2025 at 09:15:54AM +0200, Cédric Le Goater wrote:
+> Recent changes broke build on 32-bit host. Since there is no 32-bit
+> support, restrict SEV to 64-bit.
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  hw/i386/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+Matches what we just did for TDX too.
 
 
-> -----Original Message-----
-> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
-> Sent: Wednesday, July 16, 2025 4:39 AM
-> To: Nicolin Chen <nicolinc@nvidia.com>
-> Cc: Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
-> qemu-devel@nongnu.org; eric.auger@redhat.com;
-> peter.maydell@linaro.org; jgg@nvidia.com; ddutile@redhat.com;
-> berrange@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
-> smostafa@google.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
-> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
-> Jonathan Cameron <jonathan.cameron@huawei.com>;
-> zhangfei.gao@linaro.org; shameerkolothum@gmail.com
-> Subject: RE: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce
-> smmuv3 accel device
->=20
->=20
->=20
-> >-----Original Message-----
-> >From: Nicolin Chen <nicolinc@nvidia.com>
-> >Subject: Re: [RFC PATCH v3 05/15] hw/arm/smmuv3-accel: Introduce
-> >smmuv3 accel device
-> >
-> >On Tue, Jul 15, 2025 at 10:48:31AM +0000, Duan, Zhenzhong wrote:
-> >> >+static const TypeInfo types[] =3D {
-> >> >+    {
-> >> >+        .name =3D TYPE_ARM_SMMUV3_ACCEL,
-> >> >+        .parent =3D TYPE_ARM_SMMUV3,
-> >> >+        .class_init =3D smmuv3_accel_class_init,
-> >> >+    }
-> >>
-> >> In cover-letter, I see "-device arm-smmuv3", so where is above accel
-> >> device created so we could use smmuv3_accel_ops?
-> >
-> >The smmu-common.c is the shared file between accel and non-accel
-> >instances. It has a module property:
-> >    DEFINE_PROP_BOOL("accel", SMMUState, accel, false),
->=20
-> It looks we expose a new TYPE_ARM_SMMUV3_ACCEL type device just for
-> exporting accel iommu_ops?
-> What about returning accel iommu_ops directly in
-> smmu_iommu_ops_by_type() and drop the new type?
+> 
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index 14d23e27b580b2d5ea3aa4c07ba066f21a62e348..5139d2308777114e76a789c4f850fa20f3fa754f 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -4,7 +4,7 @@ config X86_FW_OVMF
+>  config SEV
+>      bool
+>      select X86_FW_OVMF
+> -    depends on KVM
+> +    depends on KVM && X86_64
+>  
+>  config SGX
+>      bool
+> -- 
+> 2.50.1
+> 
+> 
 
-We are not creating any new device here. Its just a Class object of differe=
-nt type.
-I had a different approach previously and Eric suggested to try this as the=
-re
-are examples in VFIO/IOMMUFD for something like this.
-
-https://lore.kernel.org/qemu-devel/1105d100-dd1e-4aca-b518-50f903967416@red=
-hat.com/
-
-Thanks,
-Shameer
-
-> >
-> >where it directs to different iommu_ops:
-> >937 static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState
-> *s)
-> >938 {
-> >939     SMMUBaseClass *sbc;
-> >940
-> >941     if (s->accel) {
-> >942         sbc =3D
-> >ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMUV3_ACCEL));
-> >943     } else {
-> >944         sbc =3D
-> >ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
-> >945     }
-> >946     assert(sbc->iommu_ops);
-> >947
-> >948     return sbc->iommu_ops;
-> >949 }
-> >
-> >Nicolin
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
