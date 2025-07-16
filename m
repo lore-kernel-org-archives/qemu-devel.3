@@ -4,148 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9ECDC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 02:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2EDC83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 03:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubsLo-0003lH-PA; Tue, 15 Jul 2025 22:58:32 -0400
+	id 1ubsZl-0005WR-Ni; Tue, 15 Jul 2025 23:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubsLm-0003jY-0L; Tue, 15 Jul 2025 22:58:30 -0400
-Received: from mail-mw2nam12on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:200a::61a]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1ubsLj-00054B-I9; Tue, 15 Jul 2025 22:58:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b1+POvxAOwG0XNUapTLmius9jOBT3Kna6z/s9hmR017HcVN1TmVLNNlwYClcqu0DhMMAG7ZmuytMX00M+fdMh8nYYIAkpDmKZppyeTaSHfIf5Zjo2RldJv/VU/Zpe0gM5CHhsMzO3ucn+114SNw+5G+ETk1pZ06KvcKGNPd+UKM8NNlCj+4Ma7guTr12/DFT+YVOyhUudE4CnfWa+s+FYtL7LMBams50uaROMLcUqK0NO/SYqjP8ZEjjHJtM0tlQjogddImYgN9oo+lLTZtQpmpfuiPoHx+ChmQhy/nA/BgvaXsDiwS/+w6yr5BD+b/+tHQYec7QqsmC/Eb7U1QiiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5Wv/M+oCN+KnOoH8k4V2xqSmmvgUmWLyUYfg4BDQohk=;
- b=TFoTi3cFTPkguRzaF/12whFxcDRwMQw/xWdApL1rD8qWqfOYsmmI65Gc/3yy4v+lV/Gt93udpoQW8JMfBHWcJYUmUBYAlvT4VIwaJP6ED+P+48jxDadxT5crdAcC42EFW94GohN9TloFtXQk8eq6oHazBXKSd0qY+Y0takpO6w0NvbYzcgb+voW3zPVbf6CyRwmsdDpfC6xGij5uYZyK1PVL3BkZNQylao8xfdDfhmuvLH8otsqVndin935UeRvzVOviWYl5Gb2BKOAIZzW7BjsFy5s3z3of06NOQcW+l1KI8YfJ2oBzvhjOjrHiSgz38LKf2DpBBcp36yabIkdr8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5Wv/M+oCN+KnOoH8k4V2xqSmmvgUmWLyUYfg4BDQohk=;
- b=EFIzVynZIZvXRdJ7Bkqwb8kJD5USFrq7z1IBK02Q5mW/bCwzqHK/dRy1UZcAAdPplpBYZHNMvZekhOx5QTl6+eq9LspvUtVJEsVKtn5K5nOc6kzAsZNx1vIqjAQIKAJoZwP2CjQ9mNK0bxAHo+YBoGZd/Tyc0vDTgc/2W5wNbm20rdNcAVVTMalP7YXpygYx0dR5b+OHjIlR+SpyuZqkQuqU0hia6kx04ELDmKnR/s0vOP1VfZWESHmMqV8ynm9YwSh+QEliP7+PIcH3spPfDO+qEk+L7D5F97xgG7O0y2aCQBNgizWo6U5LyDEPBxTUXsXJjayMsHckdyZMoSGHTg==
-Received: from MN2PR03CA0018.namprd03.prod.outlook.com (2603:10b6:208:23a::23)
- by MN0PR12MB5908.namprd12.prod.outlook.com (2603:10b6:208:37c::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.35; Wed, 16 Jul
- 2025 02:58:17 +0000
-Received: from BN1PEPF00004682.namprd03.prod.outlook.com
- (2603:10b6:208:23a:cafe::67) by MN2PR03CA0018.outlook.office365.com
- (2603:10b6:208:23a::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.19 via Frontend Transport; Wed,
- 16 Jul 2025 02:58:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN1PEPF00004682.mail.protection.outlook.com (10.167.243.88) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 02:58:15 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 15 Jul
- 2025 19:58:00 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 15 Jul
- 2025 19:57:59 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 15 Jul 2025 19:57:59 -0700
-Date: Tue, 15 Jul 2025 19:57:57 -0700
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>,
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 14/15] Read and validate host SMMUv3 feature bits
-Message-ID: <aHcVNYtd9qe+sHAT@Asurada-Nvidia>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-15-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ubsZj-0005RX-N8
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 23:12:55 -0400
+Received: from mail-ua1-x941.google.com ([2607:f8b0:4864:20::941])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ubsZf-0007dS-Nz
+ for qemu-devel@nongnu.org; Tue, 15 Jul 2025 23:12:55 -0400
+Received: by mail-ua1-x941.google.com with SMTP id
+ a1e0cc1a2514c-884f2b3bc2eso2499244241.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 20:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752635570; x=1753240370; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=m+PfM5ZHY9OuxDgQlZyLsykzYAwecLDm0E9VEcWMvKk=;
+ b=spzKPwUK2clZCHf729BdAO9itcxhnekYiQ1Dj14qaxAHBoM1rH30vCOf/CLaJFyB59
+ BIa4Isld/fQUXygiV0Ovnca1EJE/IdfsZmeMQXecRaoYzcoq01VB2H5MJqRp5cFtvkea
+ SwdUwypwpD/JyZpWspZ3FMAaHVrKl/EQBXec8vPibN1CnCxVbsihhPwdR5tdEn+luBvj
+ Fjpt3U9HwH1dHNJ84kl0huBqBW0o9kdoSG1hkKeM3oj/LkcxHYM/svGVPKcwcYnabqG+
+ y32JVOwcbLNIqe4Arz7Xif2/GaiaS3f/W7gjEZSK++cur44oSeVR0fb+BTFclnKRVLTc
+ Ed9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752635570; x=1753240370;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=m+PfM5ZHY9OuxDgQlZyLsykzYAwecLDm0E9VEcWMvKk=;
+ b=ifg5UtaaNgFsCMw+lezdgJbWA+nIVXn/lOe5dRcnroZ/7+sw8Wq8wFIoUQNO1ZRGmY
+ 7nEPbGEpNwUqs+s6S6tQ9/xvGISuT9sOBmc/hqzfMubMa5SiNwoL0rzUaQntG1R0x22q
+ tdB5lOzUF/vOQ0E+NO1M1Phs8uZAKp/7/tFXX1610bV+gNdDF9wBLl3uvZrVIUZweEtv
+ kpmg0Cx/15LNHOS3PlyUQ1cPb0jUGQXDmpYhl6BtrdH3V5w9p9V8VWFqS5plUJeCaMcz
+ OeQ7r5RwhuvBbmlOqzL0ZnWjLhbZBL/n62lImnxohpFyKpzm1CPc9xQvpP9vRd+1I1cT
+ SZNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKnADiW50p3oS7665x2fNRjosJiBYiIPIQ3ToJfRxSSLvmmE/Q2/NyGRtV9+1aykEkuEju0PdSgc7O@nongnu.org
+X-Gm-Message-State: AOJu0YypSdz29x/HMOzLKCREi+f72X92L+mYYMXupWKhRCXsqngTqkCh
+ L+yke7CS7jWrZbEUiagatREnHNNbWs366cWatJZwj0gZ5CTJiJtz60i2ioyPaiEPF9bEkKy1FRj
+ tTHCoGrjxVA==
+X-Gm-Gg: ASbGncstmfLimXNtjRREAAhbfNnEj0YyMrCHBhS77c1A6mnrikcmdLLwPYmKX/M9Iib
+ uyvwmBdPxCf9y9/MqsvQ/Z4W1p6jl36TM3bUANoEr1bMhK67URsk823NKzmmtUe5qofx6szH0DL
+ RGX9mUkMlrgesZE+koPpSM4l2AfV8fZG9uzTm8wzo1HAzOvmedP8+6lHjHLzyrL8ztOijc5BZI0
+ MC9pUcXyI1+BhFK1DTr6QN+BnF0yrXm3k+bCBXL2LBf3Xps++PcwCzK+oO4Ihp/vz+j7JQfSBdY
+ TmTtjIdeq8y/v+3Hvz87c91yIv8iQ9Dn9VxfIRFII9/agpLrOwgyAguG0WDhkWBVGJokkqgdSW/
+ 63EWI58QYzaFiCbDvpAtTC6rI+XBr7ijNMqSm5qX3sSbr1LTlpxze7levHzUD1O7S
+X-Google-Smtp-Source: AGHT+IGKtfmq/I6F/e4wHznYqu6WPFxtx2mDRZNFK4MSmguyY6tZCIlCWJoln0wdXSP8w7cybXn6QQ==
+X-Received: by 2002:a05:6102:3ed0:b0:4e5:a394:16cb with SMTP id
+ ada2fe7eead31-4f955adbfa4mr406067137.7.1752635569803; 
+ Tue, 15 Jul 2025 20:12:49 -0700 (PDT)
+Received: from [192.168.0.102] (189-47-46-41.dsl.telesp.net.br. [189.47.46.41])
+ by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-888ebe6bcf8sm2792986241.0.2025.07.15.20.12.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Jul 2025 20:12:49 -0700 (PDT)
+Message-ID: <a4696a6f-9a7b-4ecf-aecc-90b2596ec9e4@linaro.org>
+Date: Wed, 16 Jul 2025 00:13:36 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/4] target/arm: Add FEAT_MEC to max cpu
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250714155836.1514748-1-richard.henderson@linaro.org>
+ <97292e35-b7f2-40ca-aed6-34ef39396433@linaro.org>
+ <f984d041-5d23-41c8-b2d5-c79217a7f77b@linaro.org>
+ <a7ecb907-2183-4625-a2bf-bbfc25acc77d@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <a7ecb907-2183-4625-a2bf-bbfc25acc77d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250714155941.22176-15-shameerali.kolothum.thodi@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004682:EE_|MN0PR12MB5908:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7f0d6cd-7360-43bd-cfe3-08ddc4149c5e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|1800799024|376014|7416014; 
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?hH7f9UuNYnTL4tT0/iZZOmQrz/Cebb6eObKCHkqkgSyS+yGJ8ipzvMT6Ej?=
- =?iso-8859-1?Q?IiIo3ewZHeRm5pUJwyqqfbFOT563zK0Iz2NdgKXZtlAyA9XJbvljLvmBtM?=
- =?iso-8859-1?Q?NpaS35YI8W7QA5ogMt5JwyfW6M1lRszSw2VeO2QIcGwbLDhcRn8Rbz6ynm?=
- =?iso-8859-1?Q?UoTQE9dEoCGc8v4YpaWUuatrt/xo3iXZml14angoj6BAh/v908TBRW77p1?=
- =?iso-8859-1?Q?PYikot/6Ck+U3sm0g8tb8qgXEpMD3pjAcOQfpoWPSEVtL+YiXlg5tjI093?=
- =?iso-8859-1?Q?FN4ll+MgN0W+/51TNRSGOnwdxnfkbiwgIX+ZRE0XxXHFuMNm5fAuZ1asZM?=
- =?iso-8859-1?Q?v9xLSYIXoTC7R27R5mSurz9o54fbR77EsZj/1JsClqZ8rFjFgNlASB3kda?=
- =?iso-8859-1?Q?oxokX4WwfW0m6MbWywtUmIg1rFFUz5meLbpIG4RaMzR/HnBx5cljo3kWE0?=
- =?iso-8859-1?Q?IwOPagCVgCeR4s3P1U5PWgq3IoXa2dR3kcUmAc6UkV0j7OGdkk9T+XYPHY?=
- =?iso-8859-1?Q?cp5SdRLY0zc5iUzkUA+1iMM6lfPefnpSHFlYNc2LYDTGtwH8PNgExr6HOc?=
- =?iso-8859-1?Q?aoG2XRpfWk7wQJezW104RxQ6UN+7WXWC1nt0hvQQaVp5A7J6DMGx+2DRPD?=
- =?iso-8859-1?Q?QggvvhW9/ueXp8053kXiphrv2RtviMtVvbUCVCuJ4MgNt8N+1pYkbKIgk+?=
- =?iso-8859-1?Q?yQCj7f1QuWDGaeaDOuvbSA2DxkwKGdEsbKHxKEeJ89DOpgs/WqRklL6SI/?=
- =?iso-8859-1?Q?5Hu473Yk3BTT9SHBSmmGdLP5JRQ3kna6lCGT09g5oDIQR7kAmKpfOJEjjJ?=
- =?iso-8859-1?Q?gYXFsz+e2pIJtWzWll2PgO6ikPeSDkGybnLHFqFwZDCT4VHZRASwsoLqfg?=
- =?iso-8859-1?Q?NX7FEJV/3wEes13ckRdnaTWA+qsNs7yL0U8w+vKgoDbvqMz4ZVMSi+XKit?=
- =?iso-8859-1?Q?FPTMJyTRIWO7KvwvciWLNUTgv6S9Jl3H33hSSZtbNRY3scrNpTE34VQFQq?=
- =?iso-8859-1?Q?7eoUr2eKqhL9oyrgO9MyTx/nsKfptfvyxCuyVexLNyCDENN/rfGBrbyh+U?=
- =?iso-8859-1?Q?UA+dkbcJdS7PI2sgk8zvFEyBdkHknhO+GDT0J4z7/eBfxx80Thrh2utGuc?=
- =?iso-8859-1?Q?Ht2wRG0H4lWXWdHPwa1DHwJV2S/uzaUKc3BPYTHqgnEd2F59Y/UEhX8g8G?=
- =?iso-8859-1?Q?8AfvRsgROxdk5IgLBocv8198HGSL2bS98q3oMmGJv6A98XoGUiFoZ1VeEW?=
- =?iso-8859-1?Q?dmTme5/L5BgThPoOMBPpf0220mSQNQ88ksM47f74r1UKnXpKYEocvP9jon?=
- =?iso-8859-1?Q?isgFhhca+XO6TBCKNnYQIrPZWQAnJS1lOLDrngZJOb6mfXLtoZmBOVKFmS?=
- =?iso-8859-1?Q?qnH2tEDfYPQ1+nbvleDxijRf+lEOR7KvC0cTyOhQxePm6hzwJmB39EWR6D?=
- =?iso-8859-1?Q?NytVKv4FBbLuB+qWqPW9v+e7USuPrXsdaSJKmiXaEGVnk2JdQUejioMiTB?=
- =?iso-8859-1?Q?oT5PHSo873h5GYNYLOqFV/PjhDJ35AdirbOyw/CVlA7dZj/8Y+1M+KMaxN?=
- =?iso-8859-1?Q?3lO2i/HBEbEbeV2YNnXuGTuQvavY?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(1800799024)(376014)(7416014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 02:58:15.6381 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7f0d6cd-7360-43bd-cfe3-08ddc4149c5e
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004682.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5908
-Received-SPF: permerror client-ip=2a01:111:f403:200a::61a;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::941;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-ua1-x941.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,78 +105,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
-From:  Nicolin Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 14, 2025 at 04:59:40PM +0100, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
+Hi Pierrick,
+
+On 7/14/25 22:26, Pierrick Bouvier wrote:
+> On 7/14/25 4:31 PM, Gustavo Romero wrote:
+>> Hi folks,
+>>
+>> Richard, thanks for v8. Pierrick, thanks for testing it. :)
+>>
+>> On 7/14/25 14:09, Pierrick Bouvier wrote:
+>>> On 7/14/25 8:58 AM, Richard Henderson wrote:
+>>>> Changes for v8:
+>>>>     - Re-order SCTLR2 and TCR2 so that they are independent of MEC.
+>>>>     - Enable the SCTLR2 and TCR2 enable bits.
+>>>>     - Squash 3 smaller MEC patches together.
+>>>>
+>>>> This still fails the RME tests, because we still need TF-A rebuilt
+>>>> with ENABLE_FEAT_SCTLR2 and ENABLE_FEAT_TCR2.  Pierrick, since you
+>>>> have just done such a build, could you re-test with this series?
+>>>>
+>>>
+>>> I tested that on my local Realm enabled setup and I can confirm this solved the issue and current series works.
+>>> Both flags are needed in TF-A. ENABLE_FEAT_TCR2 is needed to boot host, and ENABLE_FEAT_SCTLR2 is needed to boot nested guest.
+>>
+>> I'm a bit confused because the QEMU RME tests, afaics, uses OP-TEE, not TF-A. I've built TF-A
+>> using the scripts in [0], enabling ENABLE_FEAT_TCR2 and ENABLE_FEAT_SCTLR2, but no way to get
+>> it booting. I understand we can embed a OP-TEE into the TF_A via BL32=<optee_image> when
+>> building TF-A. Is that what you're using?
+>>
 > 
-> Not all fields in the SMMU IDR registers are meaningful for userspace.
-> Only the following fields can be used:
+> I agree it's confusing. In short, no, OP-TEE is not used anywhere for Realms, only TF-A and RMM are used in our images. It seems that OP-TEE is a term used generically to represent any firmware running in secure mode, but it's a *totally* different software than TF-A + RMM. Naming OP-TEE like this is like if Linux would have been named "OP-kernel".
+
+Got it, so we use TF-A + RMM in the test images. Thanks for the clarifications.
+
+Isn't the generic term (or concept) actually TEE (not OP-TEE) and OP-TEE is a real software stack that implements the TEE spec, i.e., OP-TEE is code in https://github.com/OP-TEE)?
+
+
+> The RME tests we have are based on this excellent tutorial [0], and build is automated with 'qemu-rme-stack' [1], that simply follows those instructions.
 > 
-> � - IDR0: ST_LEVEL, TERM_MODEL, STALL_MODEL, TTENDIAN, CD2L, ASID16, TTF �
-> � - IDR1: SIDSIZE, SSIDSIZE �
-> � - IDR3: BBML, RIL �
-> � - IDR5: VAX, GRAN64K, GRAN16K, GRAN4K
+> [0] https://linaro.atlassian.net/wiki/spaces/QEMU/pages/30128767027/Device+Assignment+Enabled+RME+Stack+on+QEMU
 
-But half of these fields are not validated in the patch :-/
+Should [0] be:
 
-My vSMMU didn't work until I added entries like SIDSIZE, SSIDSIZE,
-TERM_MODEL, STALL_MODEL, and RIL.
+https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/Building+an+RME+stack+for+QEMU ?
 
-I think IDR5.OAS should be also added in the list. Maybe we should
-update the kernel uAPI meanwhile.
 
-> +    val = FIELD_EX32(s_accel->info.idr[5], IDR5, GRAN4K);
-> +    if (val < FIELD_EX32(s->idr[5], IDR5, GRAN4K)) {
-> +        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, val);
-> +    }
-> +    val = FIELD_EX32(s_accel->info.idr[5], IDR5, GRAN16K);
-> +    if (val < FIELD_EX32(s->idr[5], IDR5, GRAN16K)) {
-> +        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, val);
-> +    }
-> +    val = FIELD_EX32(s_accel->info.idr[5], IDR5, GRAN64K);
-> +    if (val < FIELD_EX32(s->idr[5], IDR5, GRAN64K)) {
-> +        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, val);
+> [1] https://github.com/pbo-linaro/qemu-rme-stack
+> 
+> To add to the confusion (*get ready*), [0] uses OP-TEE build, which is simply a build system for op-tee + other things, but in the variant it generates, OP-TEE itself is not included. Yes, that's utterly confusing and took me quite some time to discover it, after talking with Mathieu himself. They removed it explicitely to make the stack more simple. In short, for Realms, forget about OP-TEE.
 
-Unless there is some conflicts between the QEMU emulation and the
-SMMU HW, I think we should probably just override these fields to
-the HW values, instead of running comparisons. The justification
-could be that these fields are unlikely going to be controlled by
-the QEMU but supported directly by the real HW.
+ah, that's what confused me! I see now.
 
-For example, if HW supports SSIDSIZE=5, there seems to be no good
-reason to limit it to SSIDSIZE=4? Even if the default SSIDSIZE in
-the smmuv3_init_regs() is 4.
 
-> @@ -1903,6 +1904,9 @@ static void smmu_reset_exit(Object *obj, ResetType type)
->      }
->  
->      smmuv3_init_regs(s);
-> +    if (sys->accel) {
-> +        smmuv3_accel_init_regs(s);
-> +    }
+> If you want to see it by yourself:
+> 
+> https://git.codelinaro.org/linaro/dcap/op-tee-4.2.0/build/-/blob/cca/v8/qemu_v8_cca.mk?ref_type=heads#L172
+> 
+> ...
+> TF_A_FLAGS ?= \
+>      BL33=$(BL33_BIN) \
+>      PLAT=qemu \
+>      QEMU_USE_GIC_DRIVER=$(TFA_GIC_DRIVER) \
+>      DEBUG=$(TF_A_DEBUG) \
+>      LOG_LEVEL=$(TF_A_LOGLVL) \
+>      ENABLE_RME=1 \
+>      RMM=$(RMM_BIN)
+> ...
+> TF_A_FLAGS_BL32_OPTEE  = BL32=$(OPTEE_OS_HEADER_V2_BIN)
+> TF_A_FLAGS_BL32_OPTEE += BL32_EXTRA1=$(OPTEE_OS_PAGER_V2_BIN)
+> TF_A_FLAGS_BL32_OPTEE += BL32_EXTRA2=$(OPTEE_OS_PAGEABLE_V2_BIN)
+> TF_A_FLAGS_SPMC_AT_EL_n  = $(TF_A_FLAGS_BL32_OPTEE) SPD=opteed
+> ...
+> #TF_A_FLAGS += $(TF_A_FLAGS_SPMC_AT_EL_$(SPMC_AT_EL))
+> 
+> The last line shows that OP_TEE flags are **NOT** added to TF_A_FLAGS build flags.
+> The qemu_v8_cca.mk build file was copied from qemu_v8.mk, which itself has the OP-TEE inclusion.
+> 
+> ---
+> 
+> Recently, I had to generate a custom rootfs, and I experimented generating it directly from docker images, to avoid rebuilding the world using Buildroot. Once it worked, I realized it was a good opportunity to rebuild the rest of the stack too. The result is 'qemu-linux-stack' [2].
+> 
+> Master branch has only tf-a + uboot (no Realm support), while rme branch [3], which supports Realm, uses tf-a + rmm + edk2 instead. I removed u-boot as I couldn't get it to boot, and I knew that edk2 worked.
+> 
+> One branch is only one configuration (and it will stay this way).
+> 
+> [2] https://github.com/pbo-linaro/qemu-linux-stack
+> [3] https://github.com/pbo-linaro/qemu-linux-stack/tree/rme
+> 
+> Beyond the personal knowledge I got through that, I hope it can be used for others for who it's confusing about what runs before start_kernel, and I guess I'm not the only one who didn't know about that. In the end, things are not too complicated, but as most of the build systems out there (OP-TEE build, shrinkwrap, ...) try to be "generic and versatile", it ends up being complicated. I prefer basic and straightforward script shells to lenghty documentation and wiki pages, but it's a personal choice.
+> 
+> ---
+> 
+> Now, coming to the change introduced by this series, and supporting FEAT_SCTRL2 and FEAT_TCR2, all those images need to be updated [0], [1], [2], [3], because essentially, TF-A itself must be patched to support this. I was about to mention that, and mention that I can send a PR directly to it once we have this merged on QEMU side.
+> 
+> The change in arm-trusted-firmware is quite simple:
+> 
+> +diff --git a/plat/qemu/common/common.mk b/plat/qemu/common/common.mk
+> +index 751511cf8..6bc108492 100644
+> +--- a/plat/qemu/common/common.mk
+> ++++ b/plat/qemu/common/common.mk
+> +@@ -122,6 +122,10 @@ ENABLE_FEAT_FGT         :=      2
+> + # 8.7
+> + ENABLE_FEAT_HCX             :=      2
+> +
+> ++# 8.8
+> ++ENABLE_FEAT_TCR2    :=      2
+> ++ENABLE_FEAT_SCTLR2  :=      2
+> ++
+> 
+> I'll push all that tomorrow on master, and rebase rmm and device_passthrough on top of it.
+> I'll add this to original RME images, it's less direct though, as it's needed to update the tf-a fork, and then the optee build system.
 
-I feel that we should likely do an if-else instead, i.e.
+So, I still fail to understand how you are generating the out/bin/flash.bin used in our images.
 
-    if (sys->accel) {
-        smmuv3_accel_init_regs(s);
-    } else {
-        smmuv3_init_regs(s);
-    }
+First I tried to use the https://github.com/pbo-linaro/qemu-rme-stack, since it's cited in the tests. I tried:
 
-The smmuv3_init_regs() enables certain bits that really should be
-set by the returned IDRs from hw_info in smmuv3_accel_init_regs().
+$ ./container.sh ./build_virt.sh
 
-Doing an overriding call can potentially give us some trouble in
-the future if there are new bits being introduced and enabled in
-smmuv3_init_regs() but missed in smmuv3_accel_init_regs().
+and get an error which seems a commit mismatch in some of branches used by repo:
 
-So, it can be simpler in the long run if smmuv3_accel_init_regs()
-initializes in its own way, IMHO.
+repo: reusing existing repo client checkout in /mnt/git/qemu-rme-stack
+Traceback (most recent call last):
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 869, in <module>
+     _Main(sys.argv[1:])
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 845, in _Main
+     result = repo._Run(name, gopts, argv) or 0
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 293, in _Run
+     result = run()
+              ^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 274, in <lambda>
+     lambda: self._RunLong(name, gopts, argv, git_trace2_event_log) or 0
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 437, in _RunLong
+     execute_command()
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 403, in execute_command
+     execute_command_helper()
+   File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 369, in execute_command_helper
+     result = cmd.Execute(copts, cargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/subcmds/init.py", line 400, in Execute
+     self._SyncManifest(opt)
+   File "/mnt/git/qemu-rme-stack/.repo/repo/subcmds/init.py", line 146, in _SyncManifest
+     if not self.manifest.manifestProject.Sync(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 4704, in Sync
+     self.MetaBranchSwitch(submodules=submodules, verbose=verbose)
+   File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 4173, in MetaBranchSwitch
+     self.Sync_LocalHalf(syncbuf, submodules=submodules, verbose=verbose)
+   File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 1636, in Sync_LocalHalf
+     lost = self._revlist(not_rev(revid), HEAD)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 3676, in _revlist
+     return self.work_git.rev_list(*a, **kw)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 3908, in rev_list
+     p.Wait()
+   File "/mnt/git/qemu-rme-stack/.repo/repo/git_command.py", line 556, in Wait
+     self.VerifyCommand()
+   File "/mnt/git/qemu-rme-stack/.repo/repo/git_command.py", line 546, in VerifyCommand
+     raise GitCommandError(
+git_command.GitCommandError: GitCommandError: 'rev-list ^6fd1cc667671a12cfc8789a390c990446e621f8f HEAD --' on manifests failed
+stderr: fatal: bad revision 'HEAD'
 
-Thanks
-Nicolin 
+
+Then I tried to build it from https://github.com/pbo-linaro/qemu-linux-stack/tree/rme and out/flash.bin
+simply doesn't boot the kernel...
+
+
+> Sorry for this very long email. At least, all is there.
+
+Nope, that's quite helpful. This firmware stack is a mess :)
+
+
+Cheers,
+Gustavo
 
