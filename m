@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD1DC83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 12:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32EDFC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc1bV-00064r-Lz; Wed, 16 Jul 2025 08:51:22 -0400
+	id 1uc1jl-0005iO-CU; Wed, 16 Jul 2025 08:59:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uc1Rn-0006Tt-LE
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:41:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uc1eB-0001kQ-Mn
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:54:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uc1Rg-0000Lf-17
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:41:19 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uc1e0-0002IP-K5
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:54:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752669669;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1752670434;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iz+3d5+JSrK35VSexVUCUW0N/U4gRiJ1I/moRxWQ0hU=;
- b=VykqseI+JG36MQTqvDjpHyGynHZCLBzMzUPFyAaGF7Ekzr0XR2C/8f+8UadwhkFfG0hud/
- ZxSDGs7MyPnErWD1o01L0NxQvakpcDNpcUkTg6f5TCvlLDirU9XRJL8aapr2M13qqnZKeF
- s1luLs5Wgsp0i22+nPnP3W5vxSZ/kUM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-2znkdw4xNVeYKNWEXi3VeA-1; Wed,
- 16 Jul 2025 08:41:08 -0400
-X-MC-Unique: 2znkdw4xNVeYKNWEXi3VeA-1
-X-Mimecast-MFC-AGG-ID: 2znkdw4xNVeYKNWEXi3VeA_1752669667
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4CAE01955F41
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 12:41:07 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.35])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D70F300019F; Wed, 16 Jul 2025 12:41:05 +0000 (UTC)
-Date: Wed, 16 Jul 2025 08:41:04 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PULL 0/7] vfio queue
-Message-ID: <20250716124104.GA328283@fedora>
-References: <20250715163703.243975-1-clg@redhat.com>
+ bh=vY0EvUnaMKksTmgyHQxFYcdzJp8Owdw5fv683Oyqk10=;
+ b=YEnhE2RoJHL/ho6QbPR0z0bOZBsAUDJPwHuJa5NWqf93GaUDBfrgrkkDth0RXjx4FRXSVM
+ hzeIPSiTA0mycz9jhhY0U+Wm+pXsPgPc5ERt07zgAEnTGrYTWIsm4LzFdEXfzKakKLUmh/
+ JstagujVWhhT94l26/hFp/mvduL27Iw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352-9clHmTRBOKarUQ9vx216pg-1; Wed, 16 Jul 2025 08:53:52 -0400
+X-MC-Unique: 9clHmTRBOKarUQ9vx216pg-1
+X-Mimecast-MFC-AGG-ID: 9clHmTRBOKarUQ9vx216pg_1752670432
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-456175dba68so26689405e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 05:53:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752670431; x=1753275231;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vY0EvUnaMKksTmgyHQxFYcdzJp8Owdw5fv683Oyqk10=;
+ b=wP1BdoNRMWdKye3+EiT/H/sRjJvQYgP9AVML8XJa8PGqJsc28WNol+2xxUZHc5AYKB
+ YTzhfYYk964COAsFWWrM9jT+5R73yTEU8jOT1h/Kkq0f9r+Tf4dqC9BgESF53Bd8lWjx
+ iw4szUxYLk4zaRfZqiHzj74xUujjrKcCRP9jzeruvh8lN6+8y574Ibf6jZplJqFlSWF6
+ B4JuTcWQjCfrR8VASKh5MYmPU9wU94ZmhwN+l2HjOIKxwlAZAQNNKfFsi1sikGUJR/oC
+ /rXggzolbAGxxVZYOYc5PRBXT3IanN5al0n2pv/5iZzsOlCQsGwPGSVwaopZvBYT2v+W
+ mKAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyWqTiY6KFyrt3kyTfWa+XdLYmvxGj1e9F+h9qh2vzRmAa1ELGEY4Asz3OHpIq/+S3vocFa1EWigEI@nongnu.org
+X-Gm-Message-State: AOJu0Ywt27s4K41L6J/PHnOh3EaYN/X4V3UNfctpWcaUMCO6P/ZYgaee
+ vZH/CZJuAsvKr78W4PcbdT489Q5yMduBbJ66/xp7W78zGBmzKH/wC99LAR4QzavJ236QSqNoYKe
+ 30LGD9V7febs9KlmwlcbGkA+z8LZdN9Oqdrvt/+WnIDuPfrGg8KdtvhYd
+X-Gm-Gg: ASbGncvqZEr0AhKkFtt6vK4sa9+Etd3GsPnmqXXC/zZz9kVBJt/tLnfrUDGqdkzSX9T
+ GaDzexdWUQDGH6FI/0gyfCrDraR04sb6Fp+6TC0MZ9akCu3m8krQckbIGvVQ4FcxrEOcNo/XOHT
+ 1V8+MTpkIey0DAoAElH5uMwV9WytWm4R4Xbx7rQAjhKp5iIaK2LeyCf+B/OJzm1WR020/Awis6e
+ 9prM2AF8WyIEFlWLfcOObFBlZD2EuOq1tBhwZZYOSu+mOvW05f/Qu/LFL2x4fizJUqeucIvDFcM
+ n20WadkmsMPZb88p/SbXKa59vJebCooYrVNErO9UtHdjmaRy77IjmfnPAZ50v73QUW7A9fMWxcW
+ /adFzDhIRvoQ=
+X-Received: by 2002:a05:600c:444f:b0:456:26d1:445d with SMTP id
+ 5b1f17b1804b1-4562e38007cmr29762155e9.31.1752670431508; 
+ Wed, 16 Jul 2025 05:53:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQWuXkomIvjLiavUQ3dV4XM5NUMc2z/+DBR0v0ZoZ4SqJk5WL08RLB4ikqClel+Q/5dw5AhA==
+X-Received: by 2002:a05:600c:444f:b0:456:26d1:445d with SMTP id
+ 5b1f17b1804b1-4562e38007cmr29761955e9.31.1752670431063; 
+ Wed, 16 Jul 2025 05:53:51 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e80223esm20342305e9.10.2025.07.16.05.53.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Jul 2025 05:53:50 -0700 (PDT)
+Message-ID: <3f8e0021-9a68-4326-8100-152dfc36cd13@redhat.com>
+Date: Wed, 16 Jul 2025 14:53:48 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="V8wuSRFaQdWSQYTA"
-Content-Disposition: inline
-In-Reply-To: <20250715163703.243975-1-clg@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/20] intel_iommu: Introduce two helpers
+ vtd_as_from/to_iommu_pasid_locked
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250708110601.633308-1-zhenzhong.duan@intel.com>
+ <20250708110601.633308-10-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250708110601.633308-10-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,7 +105,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,33 +118,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhenzhong,
 
---V8wuSRFaQdWSQYTA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
-
---V8wuSRFaQdWSQYTA
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh3neAACgkQnKSrs4Gr
-c8gInggAyYar7aFWNv4Jlzvr1Ju2Eau/yt/7eChbXhDmL55QEHFYTaRz+7NIofze
-iDCX1zLp2sDyCu0KQY2poMV7lfm2Z+27A2l10IBnu+QDsoDKw4v7/CoB/UIZS9h7
-Ax+6usyQH4IH5N7NT2Pd1MCnOfZLH2jXFFqFLUuKJQpUwxRmUBsajpoFuIHzJ+tc
-DPNM8yT5cG1GLfa1Swc7pDz+po9cFmDDZI7DJYeAvA3NUxbRwZS+XRN2J7oVQEqU
-eG4anAYSzVDOFRHvpeQrdEWOAWznyoWUGJWbKCWoH9kYXOb302K7/lk/5ypoVxI6
-eSoyHAjsizXZi21zNUlqTDf+uuHx+w==
-=3Uap
------END PGP SIGNATURE-----
-
---V8wuSRFaQdWSQYTA--
+On 7/8/25 1:05 PM, Zhenzhong Duan wrote:
+> PCI device supports two request types, Requests-without-PASID and
+> Requests-with-PASID. Requests-without-PASID doesn't include a PASID TLP
+> prefix, IOMMU fetches rid_pasid from context entry and use it as IOMMU's
+> pasid to index pasid table.
+>
+> So we need to translate between PCI's pasid and IOMMU's pasid specially
+> for Requests-without-PASID, e.g., PCI_NO_PASID(-1) <-> rid_pasid.
+> For Requests-with-PASID, PCI's pasid and IOMMU's pasid are same value.
+>
+> vtd_as_from_iommu_pasid_locked() translates from BDF+iommu_pasid to vtd_as
+> which contains PCI's pasid vtd_as->pasid.
+>
+> vtd_as_to_iommu_pasid_locked() translates from BDF+vtd_as->pasid to iommu_pasid.
+>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/i386/intel_iommu.c | 58 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 58 insertions(+)
+>
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 15f4393d6f..38e7f7b7be 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -1602,6 +1602,64 @@ static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+>      return 0;
+>  }
+>  
+> +static int vtd_as_to_iommu_pasid_locked(VTDAddressSpace *vtd_as,
+> +                                        uint32_t *pasid)
+> +{
+> +    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
+> +    IntelIOMMUState *s = vtd_as->iommu_state;
+> +    uint8_t bus_num = pci_bus_num(vtd_as->bus);
+> +    uint8_t devfn = vtd_as->devfn;
+> +    VTDContextEntry ce;
+> +    int ret;
+> +
+> +    if (cc_entry->context_cache_gen == s->context_cache_gen) {
+> +        ce = cc_entry->context_entry;
+> +    } else {
+> +        ret = vtd_dev_to_context_entry(s, bus_num, devfn, &ce);
+> +        if (ret) {
+> +            return ret;
+you need to retrieve the ce only if vtd_as->pasid. So this can be moved
+to the conditional block below.
+> +        }
+> +    }
+> +
+> +    /* Translate to iommu pasid if PCI_NO_PASID */
+> +    if (vtd_as->pasid == PCI_NO_PASID) {
+> +        *pasid = VTD_CE_GET_RID2PASID(&ce);
+> +    } else {
+> +        *pasid = vtd_as->pasid;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static gboolean vtd_find_as_by_sid_and_iommu_pasid(gpointer key, gpointer value,
+> +                                                   gpointer user_data)
+> +{
+> +    VTDAddressSpace *vtd_as = (VTDAddressSpace *)value;
+> +    struct vtd_as_raw_key *target = (struct vtd_as_raw_key *)user_data;
+> +    uint16_t sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
+> +    uint32_t pasid;
+> +
+> +    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
+> +        return false;
+> +    }
+> +
+> +    return (pasid == target->pasid) && (sid == target->sid);
+> +}
+> +
+> +/* Translate iommu pasid to vtd_as */
+> +static inline
+> +VTDAddressSpace *vtd_as_from_iommu_pasid_locked(IntelIOMMUState *s,
+> +                                                uint16_t sid, uint32_t pasid)
+> +{
+> +    struct vtd_as_raw_key key = {
+> +        .sid = sid,
+> +        .pasid = pasid
+> +    };
+> +
+> +    return g_hash_table_find(s->vtd_address_spaces,
+> +                             vtd_find_as_by_sid_and_iommu_pasid, &key);
+> +}
+> +
+>  static int vtd_sync_shadow_page_hook(const IOMMUTLBEvent *event,
+>                                       void *private)
+>  {
+With that addressed,
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Eric
 
 
