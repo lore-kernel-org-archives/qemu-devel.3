@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2951C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCECC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc20N-0001Pj-Bs; Wed, 16 Jul 2025 09:17:03 -0400
+	id 1uc1zb-000112-Sh; Wed, 16 Jul 2025 09:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
- id 1ubwsU-0008UQ-8w
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 03:48:34 -0400
-Received: from sg-1-39.ptr.blmpb.com ([118.26.132.39])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
- id 1ubwsM-00044T-E5
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 03:48:34 -0400
+ (Exim 4.90_1)
+ (envelope-from <44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com>)
+ id 1uc1sm-0004KT-LB
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:09:17 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com>)
+ id 1uc1sj-0004Ie-MC
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:09:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1752652083;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=U5ICjmmFh2LQm39YKHRoRRqmKT3VyQukSkY/TuMa9z8=;
- b=Ru5lITW0DJyz0DIdH/UXxuWs2UpXpOcBz03ws2eo0KT2gc9UORJjfDIqpTmOP9gTDqCBWP
- b2qBdd7tPVmfP1sUnfC0WoXUTFxHcibCE2INhuEgZ9GjiZGOkAJ0rcPxuvyosbhMwEpOpl
- F4nyGHgBwN9IOi08R8pe93huxpQtLa7EHRjuERYFXO1xoojWVoUh15vKUv7/eBRJKrOGTZ
- Dn7aQ8NbA89fJRYrIxIo1sV/4RYCau6FlFggH/7+S8ywXZwMcO5VDsNzLqzKl0rq5OYUzT
- 2uoxCZ2oB+dXKPauGid229TptsCm9HSnrYk7tTje0cSQpTvEgb3rkKjdszKTDQ==
-From: "BillXiang" <xiangwencheng@lanxincomputing.com>
-Subject: [PATCH] target/riscv/kvm: Introduce simple handler for VS-file
- allocation failure
-Received: from localhost.localdomain ([222.128.9.250]) by smtp.feishu.cn with
- ESMTP; Wed, 16 Jul 2025 15:48:00 +0800
-Date: Wed, 16 Jul 2025 15:47:37 +0800
-Message-Id: <20250716074738.1075-1-xiangwencheng@lanxincomputing.com>
-Mime-Version: 1.0
-X-Original-From: BillXiang <xiangwencheng@lanxincomputing.com>
-To: <palmer@dabbelt.com>
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: git-send-email 2.46.2.windows.1
-Cc: <alistair.francis@wdc.com>, <liwei1518@gmail.com>, 
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>, 
- <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, 
- "BillXiang" <xiangwencheng@lanxincomputing.com>
-X-Lms-Return-Path: <lba+268775931+3e4abb+nongnu.org+xiangwencheng@lanxincomputing.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Subject:Date:From:References:In-Reply-To:Message-Id:Content-ID:
+ Content-Description; bh=OYEY8UxDeP49eAShbSD6pdDT/uizTiS7zwXmv8Bx9IU=; b=BCxKg
+ IFE29VLp0y0VuV7ojYl93baptDbIP4XI0lrYWycJnn4DXpa/NkLdZRzG4Mt3lqU1ms2ku9qL/tC3x
+ A+f9foiW6pXilxxK3JD/0GVCC2HU0EwiiozGU7RI7IqtzR11lw9WfSUSX0ubb1Swnb7Jyq4Vu3tEZ
+ R2Jqx1PQxSuTG2AzjNfo8Pn2CYFauUl32xHYYfoO/AHRcRZy90TWhV2X+dBH0jCJVtLRvSNPm8NPZ
+ hfdyzDNCU4QlJTy+34n1yOhrVx6LBAT0mOjK4TLAy7A3JJ02dVztZvuS1KovJ22l/rnmy0Wkrp5Kd
+ OC7c7st29kC5DshCqFCASIaMMiSJ2GEw/Fj8QPHROWI3lCxkaRZTa71KXn1f/OeByYRiEYrBqivsi
+ AIlXrAcEXE95wZrxNM3kMTsslUmi67/o6uuAmdqB/qhHZHYSzGQxKxdvtHmybNnbtCLm8CrgCy1FP
+ uRAMpk8UQkYtqmbwdZ3FSUbrXg90GorlFC4nB/Rlul68F1M1rZ3bbZw78lmL2XMR8ttjiD23ZVyXS
+ 7DmSXpE4oNARRWkkoESDs//4dLI8AhiDpq5URUGIrsIUEZGpxx1icU8mwSAFjo5xRK3vZ/vHsP9zT
+ UhZM2cPUNtAIDlliKQQIbvo/IPW9zMUAvd+cYDf08W1ZKM+tnOUpoIKXA82PgM=;
+Message-Id: <44b540338a3e271866a3d636359bfe6b2edecbb6.1752669861.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1752669861.git.qemu_oss@crudebyte.com>
+References: <cover.1752669861.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Wed, 16 Jul 2025 14:44:22 +0200
+Subject: [PULL 1/2] fsdev/9p-marshal: move G_GNUC_PRINTF to header
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=118.26.132.39;
- envelope-from=xiangwencheng@lanxincomputing.com; helo=sg-1-39.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>,
+    Sean Wei <me@sean.taipei>,
+    Philippe Mathieu-Daudé <philmd@linaro.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 16 Jul 2025 09:11:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,60 +73,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consider a system with 8 harts, where each hart supports 5
-Guest Interrupt Files (GIFs), yielding 40 total GIFs.
-If we launch a QEMU guest with over 5 vCPUs using
-"-M virt,aia=3D'aplic-imsic' -accel kvm,riscv-aia=3Dhwaccel" =E2=80=93 whic=
-h
-relies solely on VS-files (not SW-files) for higher performance =E2=80=93 t=
-he
-guest requires more than 5 GIFs. However, the current Linux scheduler
-lacks GIF awareness, potentially scheduling >5 vCPUs to a single hart.
-This triggers VS-file allocation failure, and since no handler exists
-for this error, the QEMU guest becomes corrupted.
+From: Sean Wei <me@sean.taipei>
 
-To address this, we introduce this simple handler by rescheduling vCPU
-to alternative harts when VS-file allocation fails on the current hart.
+v9fs_string_sprintf() is annotated with G_GNUC_PRINTF(2, 3) in
+9p-marshal.c, but the prototype in fsdev/9p-marshal.h is missing the
+attribute, so callers that include only the header do not get format
+checking.
 
-Signed-off-by: BillXiang <xiangwencheng@lanxincomputing.com>
+Move the annotation to the header and delete the duplicate in the
+source file. No behavior change.
+
+Signed-off-by: Sean Wei <me@sean.taipei>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250613.qemu.9p.01@sean.taipei>
+[CS: fix code style (max. 80 chars per line)]
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fsdev/9p-marshal.c | 3 +--
+ fsdev/9p-marshal.h | 3 ++-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 5c19062c19..7cf258604f 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1706,6 +1706,9 @@ static bool kvm_riscv_handle_debug(CPUState *cs)
- int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+diff --git a/fsdev/9p-marshal.c b/fsdev/9p-marshal.c
+index f9b0336cd5..3455580703 100644
+--- a/fsdev/9p-marshal.c
++++ b/fsdev/9p-marshal.c
+@@ -27,8 +27,7 @@ void v9fs_string_free(V9fsString *str)
+     str->size = 0;
+ }
+ 
+-void G_GNUC_PRINTF(2, 3)
+-v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
++void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
  {
-     int ret =3D 0;
-+    uint64_t code;
-+    cpu_set_t set;
-+    long cpus;
-     switch (run->exit_reason) {
-     case KVM_EXIT_RISCV_SBI:
-         ret =3D kvm_riscv_handle_sbi(cs, run);
-@@ -1718,6 +1721,18 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_ru=
-n *run)
-             ret =3D EXCP_DEBUG;
-         }
-         break;
-+    case KVM_EXIT_FAIL_ENTRY:
-+        code =3D run->fail_entry.hardware_entry_failure_reason;
-+        if (code =3D=3D CSR_HSTATUS) {
-+            // Schedule vcpu to next hart upon VS-file=20
-+            // allocation failure on current hart.
-+            cpus =3D sysconf(_SC_NPROCESSORS_ONLN);
-+            CPU_ZERO(&set);
-+            CPU_SET((run->fail_entry.cpu+1)%cpus, &set);
-+            ret =3D sched_setaffinity(0, sizeof(set), &set);
-+            break;
-+        }
-+        /* FALLTHRU */
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
-                       __func__, run->exit_reason);
---=20
-2.46.2.windows.1
+     va_list ap;
+ 
+diff --git a/fsdev/9p-marshal.h b/fsdev/9p-marshal.h
+index f1abbe151c..8995e42067 100644
+--- a/fsdev/9p-marshal.h
++++ b/fsdev/9p-marshal.h
+@@ -76,7 +76,8 @@ static inline void v9fs_string_init(V9fsString *str)
+     str->size = 0;
+ }
+ void v9fs_string_free(V9fsString *str);
+-void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...);
++void G_GNUC_PRINTF(2, 3) v9fs_string_sprintf(V9fsString *str, const char *fmt,
++                                             ...);
+ void v9fs_string_copy(V9fsString *lhs, V9fsString *rhs);
+ 
+ #endif
+-- 
+2.30.2
+
 
