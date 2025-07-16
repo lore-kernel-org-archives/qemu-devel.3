@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96731C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7611EC83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubysp-00042F-LN; Wed, 16 Jul 2025 05:57:03 -0400
+	id 1ubysk-0003QU-2S; Wed, 16 Jul 2025 05:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1ubyrb-0001R8-Ab; Wed, 16 Jul 2025 05:55:49 -0400
-Received: from mail-bn1nam02on20609.outbound.protection.outlook.com
- ([2a01:111:f403:2407::609]
- helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ id 1ubyra-0001Qy-OO; Wed, 16 Jul 2025 05:55:47 -0400
+Received: from mail-co1nam11on2061f.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::61f]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1ubyrT-0006b0-5k; Wed, 16 Jul 2025 05:55:41 -0400
+ id 1ubyrR-0006ae-W7; Wed, 16 Jul 2025 05:55:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P5TFBK7lwkIHdidCqJVqwUrGC+/hWU99HLQEPpPx4mQIHbiJwqohxX6aME9oSYtX7z1oGzKJWTDkc3VkyTqVXFz4xK6/A3SB2RGffPfcSVWJmvb6MCk8H5EMuwi3Qg8juDfJCZF5eFcGRtzPPoiGL+p9K8y/zD2YPHdOV9cVdG3sBBvUnyDMIC0hXNqRDnBaBYQy2BG/y5gNsjcd+0dS/0Nu5y+76+BMx7sS/kBmku9Jp3b52hm7A1YVM+ffTpnislneuZ2aLj0ADlTQl1Gj1lNUcBthV7wsW4VWiP89cO/CWxyvTz714THNGZ6TSLSe0e24LkWUo5Xa7mhwCGkr4g==
+ b=dxwvb2I1BRIZhmPyjFVc7xJ7dMXJHZf9SEIisn4HUvjsw9/ljdytpm5a0DiU+d83SQGWkn6NjUrKjMi/tNSqQ+pZkJej6XxwgeyI3XJ7rRqGJeCI+T2fDyBGHbJrG2C9UAS1PznaSeJ0QxUsAxfD7Dygt1rggDJir6c6blUUadJZuhBQVw616jCMu7ViktkNFzy19I9oHrZa38AVioztefIIqi7P5Yai8Fw/LWw1RGcas+JmKO2QdkNgScXn2wjzhHElCZU91ICrvx2ZfOVRaW35m/RjB4PLxkEOw7wsNRw8IP31t6VefnNlLsyrCw8iU9HZbBFHdOtY2gV6aJFO3A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Zvx1rdXq0DxUUsT0sVzP9h26YiaAAKvsImlxlpR9j28=;
- b=YWcnD/CXKF0TuB9vWSR9mTkzYPn59I95T6Clmw2/SkAcnx6iZ27PCP85AOexOk7I+5DvgqIoTGlHP6BaUZkegwitkhHDgoRmoKCU54yZ2/3e1x5npBpxtJcJ8+wk3To3Qfx5Yk7UGwOJWkoi37Bmxqi2qDqQJ/Fr8Y0fFnVjhPcsJ/kQMfZrWl6eXRF83Xh2UoV9ZTcIPIqmWx/FPsJw+J8YrzYfnx3Gn8htVdJWW3TUJEfv2fWdWJPO12A6MgTdtxK0Nbv4cQY83FKKHy++8nMMmSJTVeZVtdmayoF6CEZaVe1OwW39114hLBc3Ks2VjzMQT17fxIhIVsQX4QIteA==
+ bh=hPb7LqSL4SVUh2popG2GjmmeGcMd7d6RllhsWRJ1u10=;
+ b=roSHqDPXcrHPHBhnjnFpAzvDm4FHwcvcGy26G1Dd7dJAiEJs6cHQCPPyrEJCp5SmfZE8iGfhFK/BPdT/mxF6HmUTPZ0s8qh6nv9hn/Jv2YXbKJv/uPZoexum80tcNgojFmNHmqBYhTsqZSy+6Vd4YhgrSO50rdejIMsICee84iVQ9dO7y+4/i9b5Zqz1QSB6J8xqVpfkC0wLAcC4gY76K8Sr1RobsLHqjEoiz+bcTP5Xfrl0MOMsM+DV/nC7VWmcENvYRwlvSnEZDE3CDFiJVafJsT9wP9JXshSKbQLffUhxnLO3zj8/E3RFJ+fgT2Ml8ArRGTDA1tDQMPFdJhKutg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Zvx1rdXq0DxUUsT0sVzP9h26YiaAAKvsImlxlpR9j28=;
- b=A/HhkvX5jGLdDqf3mIb3HueMjvcWM5CXMb0ibOlSOtqMF859NzWTMmWdiXwhcIrpB6k7mmOROorgCtXoNMPXBhmU2LNr4ZHgsaueRoC9Nyu1APGH9DHsSjLPxsh6J0CBhOo2IKjLnED8mmOqLvC9QsLlaiykIyk2v1PduKfP/Mo=
-Received: from SJ0PR05CA0069.namprd05.prod.outlook.com (2603:10b6:a03:332::14)
- by CY5PR12MB9053.namprd12.prod.outlook.com (2603:10b6:930:37::13)
+ bh=hPb7LqSL4SVUh2popG2GjmmeGcMd7d6RllhsWRJ1u10=;
+ b=1yG/UtFUmBG4adAADwWTU5XmGGFOQ7dUsiv4SHyWHFrhrj6f/y+EcBBkZVXbAXm24dxUaxs3TdgoVhQditZMwzL2OhKK1WPyxwS7lwVphRmHYPJljpXSKEctUewOBxk0SmBCUR0wSIcaLfRpoLlxW8tjdtaMdLVrgL61/7YaJrM=
+Received: from SJ0PR03CA0061.namprd03.prod.outlook.com (2603:10b6:a03:331::6)
+ by IA1PR12MB8286.namprd12.prod.outlook.com (2603:10b6:208:3f8::19)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.25; Wed, 16 Jul
- 2025 09:55:32 +0000
-Received: from SJ5PEPF00000205.namprd05.prod.outlook.com
- (2603:10b6:a03:332:cafe::97) by SJ0PR05CA0069.outlook.office365.com
- (2603:10b6:a03:332::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.15 via Frontend Transport; Wed,
- 16 Jul 2025 09:55:32 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.33; Wed, 16 Jul
+ 2025 09:55:31 +0000
+Received: from SJ5PEPF0000020A.namprd05.prod.outlook.com
+ (2603:10b6:a03:331:cafe::55) by SJ0PR03CA0061.outlook.office365.com
+ (2603:10b6:a03:331::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.19 via Frontend Transport; Wed,
+ 16 Jul 2025 09:55:31 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -52,16 +52,16 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
 Received: from SATLEXMB03.amd.com (165.204.84.17) by
- SJ5PEPF00000205.mail.protection.outlook.com (10.167.244.38) with Microsoft
+ SJ5PEPF0000020A.mail.protection.outlook.com (10.167.244.43) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 09:55:32 +0000
+ 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 09:55:31 +0000
 Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
  (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Jul
- 2025 04:55:21 -0500
+ 2025 04:55:19 -0500
 Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
  SATLEXMB03.amd.com (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39
- via Frontend Transport; Wed, 16 Jul 2025 04:55:20 -0500
+ via Frontend Transport; Wed, 16 Jul 2025 04:55:18 -0500
 From: Luc Michel <luc.michel@amd.com>
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>, 
@@ -69,9 +69,9 @@ CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>,
  <edgar.iglesias@amd.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>, "Frederic
  Konrad" <frederic.konrad@amd.com>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: [PATCH 12/48] hw/arm/xlnx-versal: ospi: refactor creation
-Date: Wed, 16 Jul 2025 11:53:54 +0200
-Message-ID: <20250716095432.81923-13-luc.michel@amd.com>
+Subject: [PATCH 11/48] hw/arm/xlnx-versal: efuse: refactor creation
+Date: Wed, 16 Jul 2025 11:53:53 +0200
+Message-ID: <20250716095432.81923-12-luc.michel@amd.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250716095432.81923-1-luc.michel@amd.com>
 References: <20250716095432.81923-1-luc.michel@amd.com>
@@ -82,55 +82,55 @@ Received-SPF: None (SATLEXMB03.amd.com: luc.michel@amd.com does not designate
  permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000205:EE_|CY5PR12MB9053:EE_
-X-MS-Office365-Filtering-Correlation-Id: c888c191-b57e-453e-e25f-08ddc44ee79d
+X-MS-TrafficTypeDiagnostic: SJ5PEPF0000020A:EE_|IA1PR12MB8286:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4eedb2c7-31bf-44a2-3bc8-08ddc44ee6a9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?grbBDYF/h9EHykFjz6VbO37GEPKCnKoPdbgziH6YcdUAYiuqmMt+FC9cjc1z?=
- =?us-ascii?Q?zDXQRGnAUcdIl3NgkZtSfYUqQnFPRY0eXvAGA1YwB5IWbr9TOScsKzpxOOXc?=
- =?us-ascii?Q?XfJiHAbi1a/0dSG3gFoWK9BXhr2hRZds1QnzOHKFBYCVpOSUHoab8qP4Rh3n?=
- =?us-ascii?Q?Tp37AVyI5mgCA6j9+L+wTtLefMcZgDASvXumPF64QOxdfF4BkTuCrEu7/+1B?=
- =?us-ascii?Q?DxMHID19FiEaqTi7bXFtHcHAEL/YeLVqtcX6LhptJNjVLq3608I6iR31sW5I?=
- =?us-ascii?Q?AdkGDnG0YN825cwIp/cg1Brie5wUaE+tCuJPMCFoifa8IlUGA6pBmMY/Zuwa?=
- =?us-ascii?Q?rimRzbGVNfBmfVCbfKBKf7MOOXZosDqBjSP44SYgohb7351vVTemtkrVzMIL?=
- =?us-ascii?Q?elICMNwgAuPi9CJH6HXTtVpEQnsqBmtxQdmzDt2qXTljv6I0ip8fqgj+sdGW?=
- =?us-ascii?Q?gfGoFVWYRn2myvUdbthAl3pUMP86syXwaaK2bWNA5Tri4uG6+ZEB9d2ffW0n?=
- =?us-ascii?Q?oBGxzPSKR3a2xZVJZbEc1yXS+Vr69i6F/mowukmUL47wQlhiCGRh8tJHg7Ti?=
- =?us-ascii?Q?nx5YZtXySJB44PHtOmHsZti0Yr6oQM7YMPE1nNa4P/8hR3tOS1jg//1q1IX3?=
- =?us-ascii?Q?YVm3IayWOANd13t/bEuX6EZoTZDiMAf14GTa5lrAxW+HfSnIM1VdNrnJhD7S?=
- =?us-ascii?Q?neRPZI4rsprNJa3QoE1jLFb/x9a1tIzLjWjUPp2I3irrGz5t4LDBawxd8p31?=
- =?us-ascii?Q?N+U978MYflD43kpdYgzJo0yVvIV0D94aCQth7Vfqsoh+MgcE1vI2gmBoN3mt?=
- =?us-ascii?Q?n/N6xQW90uAYCEPgNEhz3+JxohOf68pfCbGh0wgwAIWV9WIePIQ0s5QfhpMf?=
- =?us-ascii?Q?eFEEjSlzP7n2Q8X+lqaEX9RN2ZF0rj7gsWhpr9XKbZQvEjawwO+873uqWz7Q?=
- =?us-ascii?Q?mo3cH7Ar81xey0uLJn1Iq/MTkAeCUcgozCZd4kgB5TYw9X9dbMYnacoukW64?=
- =?us-ascii?Q?xOru+mdxNS/h7Faq9CERqJ4e2xUFPFN49/S6QpOTLsped+WqaVnvfRW8jBIU?=
- =?us-ascii?Q?Ce1jzfw6zD/OKEe6GY9r+xOrN4q+NKeezygeivWJ57jCYuhIHTg0J/cjhclC?=
- =?us-ascii?Q?JvRyUTxb+k+pt62/9ZEJt4izmgPlHJKnkmbi45EFSJxAP9b8501Pe71Bwh7M?=
- =?us-ascii?Q?tNt2mZtMPTRJ4sEHBHvd23VHb7yUgVWXig/iBqfJ5fTgyKW1AkCTcuOI5zl+?=
- =?us-ascii?Q?ElmIPtKPdOYajxwjR/ANyngYXMQa9bInyTU68D19Jn9LOOhbqb5kaXnk3YzW?=
- =?us-ascii?Q?K4vMAfLRAqLfIntaZhF2hs3yc+U6x7R5BAicMyLzBMpUZAnvoLAdwI7ICsuF?=
- =?us-ascii?Q?04qfeW6GunETV0NgJfLBSqe4R80V1yE16SVpD83cSyj0waQr9nSXheuDWhv1?=
- =?us-ascii?Q?IHc/lIyisfQi9B7QKOSDLImTbLp9V8gOUhu5Pb0kWwAPmTeUMofyZke/4Js5?=
- =?us-ascii?Q?l1iozafajuK2PI9AMfTHNxFpfGdp1EwqF+td?=
+ ARA:13230040|376014|1800799024|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?wPLfDk2xJ73jFc6LvnV15PdbDLbadbRRoG937eOmE09BVQOv2rfOQSed2wYK?=
+ =?us-ascii?Q?lbl7NM2yt06dhrWWn4nL0rANzRLgRyV/+P3sGU5MGPH9AjBtGcS7NOFOk+MX?=
+ =?us-ascii?Q?LVlxgnhZ4QG7nRTjrt+njrOkSYmLLYRDOA2q07ZcocmbExF3Im1OvCbS04f3?=
+ =?us-ascii?Q?CijRKwXsdSw47jykEgi5OjFcD6VI2PcXO8UjUSn1iN8MzrxWDnSW93R7rvZk?=
+ =?us-ascii?Q?lAqvMTRf5vuudXxz7jPXnYn/0HADFT4/xSTOZwNfRwA7/kKeXzSEtsJWUjwt?=
+ =?us-ascii?Q?eTx1U1xwmy4KBEdSBl0aljWhQ8a/MJH+rxg8iZjSVm1OAkZQtm8dgVTU9xaJ?=
+ =?us-ascii?Q?IV2H6GkI8HHsQAux7jF5Ejt5rob69nGHFL0nf1hChKqU1cfDtCiWIEvNkZh1?=
+ =?us-ascii?Q?R0ra17a74foV6PlFRFYJE5qS4mz6tfyTEVw3Uy8LCPFpYsjJnQVydNWFcCut?=
+ =?us-ascii?Q?27XSjsAU0aEma6nAMlpLA3AmihYoGb6f60VY1Oa5rKzR/itCT01j0Dyc+S2o?=
+ =?us-ascii?Q?BZev5gQ6adil/zvpStAGerqO10pXBK4+hjEdiiwsrPPu4Bgov5UmgwkN9yQg?=
+ =?us-ascii?Q?AE6qNeqL01YmXe1/64chIl1EyAEHpzJjzBLLq7Ww/VZlJRgGpNZ+PmnJEfhs?=
+ =?us-ascii?Q?4y/k6NCye9Hzd/w2yCnOZS6ZidMic6QeevyUBvKmpbNrrDCRm3CMevimrFin?=
+ =?us-ascii?Q?CGs+NAmyLOOirXCItWV2FQcadwPAb8+0YBPq+khtrpvjkpPqDixREzajArFn?=
+ =?us-ascii?Q?OLz6dzaMc/v9uzJ279kHk4t21n3zs4ISz/pxDhffFX7DaYdT7bB8Dyccv8Ew?=
+ =?us-ascii?Q?hmTEVpCA70LMSYn3ROggB0FeHzV4ZXC3er7RYImWbTOdgPWlB2aQ2gpAhq6b?=
+ =?us-ascii?Q?IOr2gzhJGnyklmJzupXulLlQcu5so+Ugc2+bpV8wd7yEjbtiv3QSCLQI9ljj?=
+ =?us-ascii?Q?BqIYZ+6sh8gL3irnqoUcS5rKt5d2Lnqf+SItWby5d+o9Ov3heSOL7Xcl82dA?=
+ =?us-ascii?Q?1NGYpKHPGyHdKM2aQfDmweW8gQ5COEuY3KUbTA4/Dnzh510VFgLtcjdTTd8A?=
+ =?us-ascii?Q?YaGyrZlj82G6pZMZWJu7Q+tsOc8PF/PAfk0ZJt3c1k5DoaV2st97f/eVVygY?=
+ =?us-ascii?Q?UCHjyhbITEPEZCztgjAl/iLMqWcSiYdm39AfL6r2AYIcoeBizKB+y9SE3fgF?=
+ =?us-ascii?Q?VYj/kfEshPTW72E1blxoSOVfBm/pumhtRpNvA6LVtwbZBCB7QDs1vtqUhxpQ?=
+ =?us-ascii?Q?mus85n22r35Cbbxrm+DEL0KfMSUbWTXJtfdJ56D9ydCoY3dMF6Dqit2ohwUv?=
+ =?us-ascii?Q?onY64hBCYX7nueJ5VKTZey0aTwWlOxMEL1Uk1wGDyz4nNd8AdzXLekmKsOW9?=
+ =?us-ascii?Q?LCPXm9JYArlJO2nRaz0RcpGntEaUx1s1x5huWWv1LIuiXIIgFx9NR/2dN24M?=
+ =?us-ascii?Q?2mUtDG7KnbaxwNjMXd/lOoJuT0ysTrlK5ZnYEEetok9dIeL7tzprhCXLm7CN?=
+ =?us-ascii?Q?Gd+sLN++9o/pjdKla0PUVCNDTzjvhlCNgSoW?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 09:55:32.7512 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c888c191-b57e-453e-e25f-08ddc44ee79d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 09:55:31.1478 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4eedb2c7-31bf-44a2-3bc8-08ddc44ee6a9
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000205.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF0000020A.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB9053
-Received-SPF: permerror client-ip=2a01:111:f403:2407::609;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8286
+Received-SPF: permerror client-ip=2a01:111:f403:2416::61f;
  envelope-from=Luc.Michel@amd.com;
- helo=NAM02-BN1-obe.outbound.protection.outlook.com
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -152,414 +152,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the OSPI controller creation using the VersalMap structure.
+Refactore the eFuse devices creation using the VersalMap structure.
 
-Note that the connection to the PMC IOU SLCR is removed for now and will
-be re-added by next commits.
+Note that the corresponding FDT nodes are removed. They do not
+correspond to any real node in standard Versal DTBs. No matching drivers
+exist for them.
 
 Signed-off-by: Luc Michel <luc.michel@amd.com>
 ---
- include/hw/arm/xlnx-versal.h |  12 +--
- hw/arm/xlnx-versal-virt.c    |  41 ++++------
- hw/arm/xlnx-versal.c         | 142 ++++++++++++++++++++---------------
- 3 files changed, 98 insertions(+), 97 deletions(-)
+ include/hw/arm/xlnx-versal.h |  5 +--
+ hw/arm/xlnx-versal-virt.c    | 43 ++------------------
+ hw/arm/xlnx-versal.c         | 78 +++++++++++++++++++++++-------------
+ 3 files changed, 54 insertions(+), 72 deletions(-)
 
 diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-index 79ca9b13321..b7ef255d6fd 100644
+index 5d4b30f0ff9..79ca9b13321 100644
 --- a/include/hw/arm/xlnx-versal.h
 +++ b/include/hw/arm/xlnx-versal.h
-@@ -18,12 +18,10 @@
+@@ -18,11 +18,10 @@
  #include "hw/or-irq.h"
  #include "hw/intc/arm_gicv3.h"
  #include "hw/rtc/xlnx-zynqmp-rtc.h"
  #include "qom/object.h"
  #include "hw/nvram/xlnx-bbram.h"
--#include "hw/ssi/xlnx-versal-ospi.h"
--#include "hw/dma/xlnx_csu_dma.h"
+-#include "hw/nvram/xlnx-versal-efuse.h"
+ #include "hw/ssi/xlnx-versal-ospi.h"
+ #include "hw/dma/xlnx_csu_dma.h"
  #include "hw/misc/xlnx-versal-crl.h"
  #include "hw/misc/xlnx-versal-pmc-iou-slcr.h"
  #include "hw/misc/xlnx-versal-trng.h"
- #include "net/can_emu.h"
- #include "hw/misc/xlnx-versal-cfu.h"
-@@ -86,18 +84,10 @@ struct Versal {
- 
-     /* The Platform Management Controller subsystem.  */
-     struct {
-         struct {
-             XlnxVersalPmcIouSlcr slcr;
--
--            struct {
--                XlnxVersalOspi ospi;
--                XlnxCSUDMA dma_src;
--                XlnxCSUDMA dma_dst;
--                MemoryRegion linear_mr;
--                OrIRQState irq_orgate;
--            } ospi;
+@@ -100,13 +99,10 @@ struct Versal {
          } iou;
  
          XlnxZynqMPRTC rtc;
          XlnxVersalTRng trng;
          XlnxBBRam bbram;
-@@ -134,10 +124,12 @@ static inline void versal_set_fdt(Versal *s, void *fdt)
+-        XlnxEFuse efuse;
+-        XlnxVersalEFuseCtrl efuse_ctrl;
+-        XlnxVersalEFuseCache efuse_cache;
+         XlnxVersalCFUAPB cfu_apb;
+         XlnxVersalCFUFDRO cfu_fdro;
+         XlnxVersalCFUSFR cfu_sfr;
+         XlnxVersalCFrameReg cframe[XLNX_VERSAL_NR_CFRAME];
+         XlnxVersalCFrameBcastReg cframe_bcast;
+@@ -137,10 +133,11 @@ static inline void versal_set_fdt(Versal *s, void *fdt)
+     g_assert(!qdev_is_realized(DEVICE(s)));
      s->cfg.fdt = fdt;
  }
  
  void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk);
- void versal_efuse_attach_drive(Versal *s, BlockBackend *blk);
-+void versal_ospi_create_flash(Versal *s, int flash_idx, const char *flash_mdl,
-+                              BlockBackend *blk);
++void versal_efuse_attach_drive(Versal *s, BlockBackend *blk);
  
  int versal_get_num_can(VersalVersion version);
  int versal_get_num_sdhci(VersalVersion version);
  
  /* Memory-map and IRQ definitions. Copied a subset from
 diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index d3c84d1955a..43f3c3d0be9 100644
+index 36341b825eb..d3c84d1955a 100644
 --- a/hw/arm/xlnx-versal-virt.c
 +++ b/hw/arm/xlnx-versal-virt.c
-@@ -46,12 +46,12 @@ struct VersalVirt {
- 
-     CanBusState **canbus;
- 
-     struct {
-         bool secure;
-+        char *ospi_model;
-     } cfg;
--    char *ospi_model;
- };
- 
- static void fdt_create(VersalVirt *s)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(s);
-@@ -379,19 +379,19 @@ static void sd_plug_card(VersalVirt *s, int idx, DriveInfo *di)
- 
- static char *versal_get_ospi_model(Object *obj, Error **errp)
- {
-     VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
- 
--    return g_strdup(s->ospi_model);
-+    return g_strdup(s->cfg.ospi_model);
+@@ -190,45 +190,10 @@ static void fdt_add_bbram_node(VersalVirt *s)
+                                  2, MM_PMC_BBRAM_CTRL_SIZE);
+     qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+     g_free(name);
  }
  
- static void versal_set_ospi_model(Object *obj, const char *value, Error **errp)
+-static void fdt_add_efuse_ctrl_node(VersalVirt *s)
+-{
+-    const char compat[] = TYPE_XLNX_VERSAL_EFUSE_CTRL;
+-    const char interrupt_names[] = "pmc_efuse";
+-    char *name = g_strdup_printf("/pmc_efuse@%x", MM_PMC_EFUSE_CTRL);
+-
+-    qemu_fdt_add_subnode(s->fdt, name);
+-
+-    qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, VERSAL_EFUSE_IRQ,
+-                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+-    qemu_fdt_setprop(s->fdt, name, "interrupt-names",
+-                     interrupt_names, sizeof(interrupt_names));
+-    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
+-                                 2, MM_PMC_EFUSE_CTRL,
+-                                 2, MM_PMC_EFUSE_CTRL_SIZE);
+-    qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+-    g_free(name);
+-}
+-
+-static void fdt_add_efuse_cache_node(VersalVirt *s)
+-{
+-    const char compat[] = TYPE_XLNX_VERSAL_EFUSE_CACHE;
+-    char *name = g_strdup_printf("/xlnx_pmc_efuse_cache@%x",
+-                                 MM_PMC_EFUSE_CACHE);
+-
+-    qemu_fdt_add_subnode(s->fdt, name);
+-
+-    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
+-                                 2, MM_PMC_EFUSE_CACHE,
+-                                 2, MM_PMC_EFUSE_CACHE_SIZE);
+-    qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+-    g_free(name);
+-}
+-
+ static void fdt_nop_memory_nodes(void *fdt, Error **errp)
  {
-     VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
- 
--    g_free(s->ospi_model);
--    s->ospi_model = g_strdup(value);
-+    g_free(s->cfg.ospi_model);
-+    s->cfg.ospi_model = g_strdup(value);
- }
- 
- 
- static void versal_virt_init(MachineState *machine)
- {
-@@ -480,42 +480,31 @@ static void versal_virt_init(MachineState *machine)
-         s->binfo.dtb_limit = 0x1000000;
-     }
-     arm_load_kernel(&s->soc.fpd.apu.cpu[0], machine, &s->binfo);
- 
-     for (i = 0; i < XLNX_VERSAL_NUM_OSPI_FLASH; i++) {
--        BusState *spi_bus;
--        DeviceState *flash_dev;
-         ObjectClass *flash_klass;
--        qemu_irq cs_line;
-         DriveInfo *dinfo = drive_get(IF_MTD, 0, i);
-+        BlockBackend *blk;
-+        const char *mdl;
- 
--        spi_bus = qdev_get_child_bus(DEVICE(&s->soc.pmc.iou.ospi), "spi0");
--
--        if (s->ospi_model) {
--            flash_klass = object_class_by_name(s->ospi_model);
-+        if (s->cfg.ospi_model) {
-+            flash_klass = object_class_by_name(s->cfg.ospi_model);
-             if (!flash_klass ||
-                 object_class_is_abstract(flash_klass) ||
-                 !object_class_dynamic_cast(flash_klass, TYPE_M25P80)) {
-                 error_report("'%s' is either abstract or"
--                       " not a subtype of m25p80", s->ospi_model);
-+                       " not a subtype of m25p80", s->cfg.ospi_model);
-                 exit(1);
-             }
-+            mdl = s->cfg.ospi_model;
-+        } else {
-+            mdl = "mt35xu01g";
-         }
- 
--        flash_dev = qdev_new(s->ospi_model ? s->ospi_model : "mt35xu01g");
--
--        if (dinfo) {
--            qdev_prop_set_drive_err(flash_dev, "drive",
--                                    blk_by_legacy_dinfo(dinfo), &error_fatal);
--        }
--        qdev_prop_set_uint8(flash_dev, "cs", i);
--        qdev_realize_and_unref(flash_dev, spi_bus, &error_fatal);
--
--        cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
--
--        sysbus_connect_irq(SYS_BUS_DEVICE(&s->soc.pmc.iou.ospi),
--                           i + 1, cs_line);
-+        blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
-+        versal_ospi_create_flash(&s->soc, i, mdl, blk);
+     Error *err = NULL;
+     char **node_path;
+     int n = 0;
+@@ -391,19 +356,19 @@ static void bbram_attach_drive(XlnxBBRam *dev)
+     if (blk) {
+         qdev_prop_set_drive(DEVICE(dev), "drive", blk);
      }
  }
  
- static void versal_virt_machine_instance_init(Object *obj)
+-static void efuse_attach_drive(XlnxEFuse *dev)
++static void efuse_attach_drive(VersalVirt *s)
  {
-@@ -540,11 +529,11 @@ static void versal_virt_machine_instance_init(Object *obj)
+     DriveInfo *dinfo;
+     BlockBackend *blk;
  
- static void versal_virt_machine_finalize(Object *obj)
- {
-     VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
- 
--    g_free(s->ospi_model);
-+    g_free(s->cfg.ospi_model);
-     g_free(s->canbus);
+     dinfo = drive_get_by_index(IF_PFLASH, 1);
+     blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
+     if (blk) {
+-        qdev_prop_set_drive(DEVICE(dev), "drive", blk);
++        versal_efuse_attach_drive(&s->soc, blk);
+     }
  }
  
- static void versal_virt_machine_class_init(ObjectClass *oc, const void *data)
+ static void sd_plug_card(VersalVirt *s, int idx, DriveInfo *di)
  {
+@@ -478,12 +443,10 @@ static void versal_virt_init(MachineState *machine)
+     versal_set_fdt(&s->soc, s->fdt);
+     fdt_add_gic_nodes(s);
+     fdt_add_timer_nodes(s);
+     fdt_add_rtc_node(s);
+     fdt_add_bbram_node(s);
+-    fdt_add_efuse_ctrl_node(s);
+-    fdt_add_efuse_cache_node(s);
+     fdt_add_cpu_nodes(s, psci_conduit);
+     fdt_add_clk_node(s, "/old-clk125", 125000000, s->phandle.clk_125Mhz);
+     fdt_add_clk_node(s, "/old-clk25", 25000000, s->phandle.clk_25Mhz);
+ 
+     sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+@@ -496,11 +459,11 @@ static void versal_virt_init(MachineState *machine)
+ 
+     /* Attach bbram backend, if given */
+     bbram_attach_drive(&s->soc.pmc.bbram);
+ 
+     /* Attach efuse backend, if given */
+-    efuse_attach_drive(&s->soc.pmc.efuse);
++    efuse_attach_drive(s);
+ 
+     /* Plug SD cards */
+     for (i = 0; i < versal_get_num_sdhci(VERSAL_VER_VERSAL); i++) {
+         sd_plug_card(s, i, drive_get(IF_SD, 0, i));
+     }
 diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index ed202b0fcda..58176fa11e5 100644
+index 4e4df0851e8..ed202b0fcda 100644
 --- a/hw/arm/xlnx-versal.c
 +++ b/hw/arm/xlnx-versal.c
-@@ -32,10 +32,11 @@
+@@ -31,10 +31,11 @@
+ #include "hw/sd/sdhci.h"
  #include "hw/net/cadence_gem.h"
  #include "hw/dma/xlnx-zdma.h"
  #include "hw/misc/xlnx-versal-xramc.h"
  #include "hw/usb/xlnx-usb-subsystem.h"
- #include "hw/nvram/xlnx-versal-efuse.h"
-+#include "hw/ssi/xlnx-versal-ospi.h"
++#include "hw/nvram/xlnx-versal-efuse.h"
  
  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
  #define GEM_REVISION        0x40070106
  
-@@ -93,10 +94,19 @@ typedef struct VersalMap {
-     struct VersalEfuseMap {
+@@ -86,10 +87,16 @@ typedef struct VersalMap {
+         uint64_t xhci;
          uint64_t ctrl;
-         uint64_t cache;
          int irq;
-     } efuse;
+     } usb[2];
+     size_t num_usb;
 +
-+    struct VersalOspiMap {
++    struct VersalEfuseMap {
 +        uint64_t ctrl;
-+        uint64_t dac;
-+        uint64_t dac_sz;
-+        uint64_t dma_src;
-+        uint64_t dma_dst;
++        uint64_t cache;
 +        int irq;
-+    } ospi;
++    } efuse;
  } VersalMap;
  
  static const VersalMap VERSAL_MAP = {
      .uart[0] = { 0xff000000, 18 },
      .uart[1] = { 0xff010000, 19 },
-@@ -126,10 +136,17 @@ static const VersalMap VERSAL_MAP = {
+@@ -117,10 +124,12 @@ static const VersalMap VERSAL_MAP = {
+         .irq = 79,
+     },
  
      .usb[0] = { .xhci = 0xfe200000, .ctrl = 0xff9d0000, .irq = 22 },
      .num_usb = 1,
- 
-     .efuse = { .ctrl = 0xf1240000, .cache = 0xf1250000, .irq = 139 },
 +
-+    .ospi = {
-+        .ctrl = 0xf1010000,
-+        .dac = 0xc0000000, .dac_sz = 0x20000000,
-+        .dma_src = 0xf1011000, .dma_dst = 0xf1011800,
-+        .irq = 124,
-+    },
++    .efuse = { .ctrl = 0xf1240000, .cache = 0xf1250000, .irq = 139 },
  };
  
  static const VersalMap *VERSION_TO_MAP[] = {
      [VERSAL_VER_VERSAL] = &VERSAL_MAP,
  };
-@@ -807,99 +824,78 @@ static void versal_create_pmc_iou_slcr(Versal *s, qemu_irq *pic)
- 
+@@ -744,46 +753,45 @@ static void versal_create_bbram(Versal *s, qemu_irq *pic)
+                                 sysbus_mmio_get_region(sbd, 0));
      sysbus_connect_irq(sbd, 0,
-                        qdev_get_gpio_in(DEVICE(&s->pmc.apb_irq_orgate), 2));
+                        qdev_get_gpio_in(DEVICE(&s->pmc.apb_irq_orgate), 1));
  }
  
--static void versal_create_ospi(Versal *s, qemu_irq *pic)
-+static DeviceState *versal_create_ospi(Versal *s,
-+                                       const struct VersalOspiMap *map)
+-static void versal_realize_efuse_part(Versal *s, Object *dev, hwaddr base)
++static void versal_create_efuse(Versal *s,
++                                const struct VersalEfuseMap *map)
  {
-     SysBusDevice *sbd;
-     MemoryRegion *mr_dac;
--    qemu_irq ospi_mux_sel;
--    DeviceState *orgate;
-+    DeviceState *dev, *dma_dst, *dma_src, *orgate;
-+    MemoryRegion *linear_mr = g_new(MemoryRegion, 1);
+-    SysBusDevice *part = SYS_BUS_DEVICE(dev);
++    DeviceState *bits;
++    DeviceState *ctrl;
++    DeviceState *cache;
  
--    memory_region_init(&s->pmc.iou.ospi.linear_mr, OBJECT(s),
--                       "versal-ospi-linear-mr" , MM_PMC_OSPI_DAC_SIZE);
-+    dev = qdev_new(TYPE_XILINX_VERSAL_OSPI);
-+    object_property_add_child(OBJECT(s), "ospi", OBJECT(dev));
+-    object_property_set_link(OBJECT(part), "efuse",
+-                             OBJECT(&s->pmc.efuse), &error_abort);
++    ctrl = qdev_new(TYPE_XLNX_VERSAL_EFUSE_CTRL);
++    cache = qdev_new(TYPE_XLNX_VERSAL_EFUSE_CACHE);
++    bits = qdev_new(TYPE_XLNX_EFUSE);
  
--    object_initialize_child(OBJECT(s), "versal-ospi", &s->pmc.iou.ospi.ospi,
--                            TYPE_XILINX_VERSAL_OSPI);
-+    memory_region_init(linear_mr, OBJECT(dev), "linear-mr", map->dac_sz);
+-    sysbus_realize(part, &error_abort);
+-    memory_region_add_subregion(&s->mr_ps, base,
+-                                sysbus_mmio_get_region(part, 0));
+-}
++    qdev_prop_set_uint32(bits, "efuse-nr", 3);
++    qdev_prop_set_uint32(bits, "efuse-size", 8192);
  
--    mr_dac = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pmc.iou.ospi.ospi), 1);
--    memory_region_add_subregion(&s->pmc.iou.ospi.linear_mr, 0x0, mr_dac);
-+    mr_dac = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-+    memory_region_add_subregion(linear_mr, 0x0, mr_dac);
+-static void versal_create_efuse(Versal *s, qemu_irq *pic)
+-{
+-    Object *bits = OBJECT(&s->pmc.efuse);
+-    Object *ctrl = OBJECT(&s->pmc.efuse_ctrl);
+-    Object *cache = OBJECT(&s->pmc.efuse_cache);
++    object_property_add_child(OBJECT(s), "efuse", OBJECT(bits));
++    qdev_realize_and_unref(bits, NULL, &error_abort);
  
-     /* Create the OSPI destination DMA */
--    object_initialize_child(OBJECT(s), "versal-ospi-dma-dst",
--                            &s->pmc.iou.ospi.dma_dst,
--                            TYPE_XLNX_CSU_DMA);
-+    dma_dst = qdev_new(TYPE_XLNX_CSU_DMA);
-+    object_property_add_child(OBJECT(dev), "dma-dst-dev", OBJECT(dma_dst));
-+    object_property_set_link(OBJECT(dma_dst), "dma",
-+                             OBJECT(get_system_memory()), &error_abort);
+-    object_initialize_child(OBJECT(s), "efuse-ctrl", &s->pmc.efuse_ctrl,
+-                            TYPE_XLNX_VERSAL_EFUSE_CTRL);
++    object_property_set_link(OBJECT(ctrl), "efuse", OBJECT(bits), &error_abort);
  
--    object_property_set_link(OBJECT(&s->pmc.iou.ospi.dma_dst),
--                            "dma", OBJECT(get_system_memory()),
--                             &error_abort);
-+    sbd = SYS_BUS_DEVICE(dma_dst);
-+    sysbus_realize_and_unref(sbd, &error_fatal);
+-    object_initialize_child(OBJECT(s), "efuse-cache", &s->pmc.efuse_cache,
+-                            TYPE_XLNX_VERSAL_EFUSE_CACHE);
++    object_property_set_link(OBJECT(cache), "efuse", OBJECT(bits),
++                             &error_abort);
  
--    sbd = SYS_BUS_DEVICE(&s->pmc.iou.ospi.dma_dst);
--    sysbus_realize(sbd, &error_fatal);
--
--    memory_region_add_subregion(&s->mr_ps, MM_PMC_OSPI_DMA_DST,
-+    memory_region_add_subregion(&s->mr_ps, map->dma_dst,
-                                 sysbus_mmio_get_region(sbd, 0));
+-    object_initialize_child_with_props(ctrl, "xlnx-efuse@0", bits,
+-                                       sizeof(s->pmc.efuse),
+-                                       TYPE_XLNX_EFUSE, &error_abort,
+-                                       "efuse-nr", "3",
+-                                       "efuse-size", "8192",
+-                                       NULL);
++    object_property_add_child(OBJECT(s), "efuse-cache", OBJECT(cache));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(cache), &error_abort);
  
-     /* Create the OSPI source DMA */
--    object_initialize_child(OBJECT(s), "versal-ospi-dma-src",
--                            &s->pmc.iou.ospi.dma_src,
--                            TYPE_XLNX_CSU_DMA);
-+    dma_src = qdev_new(TYPE_XLNX_CSU_DMA);
-+    object_property_add_child(OBJECT(dev), "dma-src-dev", OBJECT(dma_src));
+-    qdev_realize(DEVICE(bits), NULL, &error_abort);
+-    versal_realize_efuse_part(s, ctrl, MM_PMC_EFUSE_CTRL);
+-    versal_realize_efuse_part(s, cache, MM_PMC_EFUSE_CACHE);
++    object_property_add_child(OBJECT(s), "efuse-ctrl", OBJECT(ctrl));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(ctrl), &error_abort);
  
--    object_property_set_bool(OBJECT(&s->pmc.iou.ospi.dma_src), "is-dst",
--                             false, &error_abort);
-+    object_property_set_bool(OBJECT(dma_src), "is-dst", false, &error_abort);
- 
--    object_property_set_link(OBJECT(&s->pmc.iou.ospi.dma_src),
--                            "dma", OBJECT(mr_dac), &error_abort);
--
--    object_property_set_link(OBJECT(&s->pmc.iou.ospi.dma_src),
--                            "stream-connected-dma",
--                             OBJECT(&s->pmc.iou.ospi.dma_dst),
-+    object_property_set_link(OBJECT(dma_src), "dma", OBJECT(mr_dac),
-                              &error_abort);
- 
--    sbd = SYS_BUS_DEVICE(&s->pmc.iou.ospi.dma_src);
--    sysbus_realize(sbd, &error_fatal);
-+    object_property_set_link(OBJECT(dma_src), "stream-connected-dma",
-+                             OBJECT(dma_dst), &error_abort);
- 
--    memory_region_add_subregion(&s->mr_ps, MM_PMC_OSPI_DMA_SRC,
-+    sbd = SYS_BUS_DEVICE(dma_src);
-+    sysbus_realize_and_unref(sbd, &error_fatal);
-+
-+    memory_region_add_subregion(&s->mr_ps, map->dma_src,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
-     /* Realize the OSPI */
--    object_property_set_link(OBJECT(&s->pmc.iou.ospi.ospi), "dma-src",
--                             OBJECT(&s->pmc.iou.ospi.dma_src), &error_abort);
-+    object_property_set_link(OBJECT(dev), "dma-src",
-+                             OBJECT(dma_src), &error_abort);
- 
--    sbd = SYS_BUS_DEVICE(&s->pmc.iou.ospi.ospi);
--    sysbus_realize(sbd, &error_fatal);
-+    sbd = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(sbd, &error_fatal);
- 
--    memory_region_add_subregion(&s->mr_ps, MM_PMC_OSPI,
+-    sysbus_connect_irq(SYS_BUS_DEVICE(ctrl), 0, pic[VERSAL_EFUSE_IRQ]);
 +    memory_region_add_subregion(&s->mr_ps, map->ctrl,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
--    memory_region_add_subregion(&s->mr_ps, MM_PMC_OSPI_DAC,
--                                &s->pmc.iou.ospi.linear_mr);
--
--    /* ospi_mux_sel */
--    ospi_mux_sel = qdev_get_gpio_in_named(DEVICE(&s->pmc.iou.ospi.ospi),
--                                          "ospi-mux-sel", 0);
--    qdev_connect_gpio_out_named(DEVICE(&s->pmc.iou.slcr), "ospi-mux-sel", 0,
--                                ospi_mux_sel);
-+    memory_region_add_subregion(&s->mr_ps, map->dac,
-+                                linear_mr);
- 
-     /* OSPI irq */
--    object_initialize_child(OBJECT(s), "ospi-irq-orgate",
--                            &s->pmc.iou.ospi.irq_orgate, TYPE_OR_IRQ);
--    object_property_set_int(OBJECT(&s->pmc.iou.ospi.irq_orgate),
--                            "num-lines", NUM_OSPI_IRQ_LINES, &error_fatal);
-+    orgate = create_or_gate(s, OBJECT(dev), "irq-orgate", NUM_OSPI_IRQ_LINES,
-+                            map->irq);
- 
--    orgate = DEVICE(&s->pmc.iou.ospi.irq_orgate);
--    qdev_realize(orgate, NULL, &error_fatal);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(orgate, 0));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dma_src), 0, qdev_get_gpio_in(orgate, 1));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dma_dst), 0, qdev_get_gpio_in(orgate, 2));
- 
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pmc.iou.ospi.ospi), 0,
--                       qdev_get_gpio_in(orgate, 0));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pmc.iou.ospi.dma_src), 0,
--                       qdev_get_gpio_in(orgate, 1));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pmc.iou.ospi.dma_dst), 0,
--                       qdev_get_gpio_in(orgate, 2));
--
--    qdev_connect_gpio_out(orgate, 0, pic[VERSAL_OSPI_IRQ]);
-+    return dev;
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(ctrl),
++                                                       0));
++    memory_region_add_subregion(&s->mr_ps, map->cache,
++                                sysbus_mmio_get_region(SYS_BUS_DEVICE(cache),
++                                                       0));
++    versal_sysbus_connect_irq(s, SYS_BUS_DEVICE(ctrl), 0, map->irq);
  }
  
- static void versal_create_cfu(Versal *s, qemu_irq *pic)
+ static void versal_create_pmc_iou_slcr(Versal *s, qemu_irq *pic)
  {
      SysBusDevice *sbd;
-@@ -1256,17 +1252,17 @@ static void versal_realize(DeviceState *dev, Error **errp)
+@@ -1247,15 +1255,16 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ 
      for (i = 0; i < map->num_usb; i++) {
          versal_create_usb(s, &map->usb[i]);
      }
  
-     versal_create_efuse(s, &map->efuse);
-+    versal_create_ospi(s, &map->ospi);
- 
++    versal_create_efuse(s, &map->efuse);
++
      versal_create_pmc_apb_irq_orgate(s, pic);
      versal_create_rtc(s, pic);
      versal_create_trng(s, pic);
      versal_create_bbram(s, pic);
+-    versal_create_efuse(s, pic);
      versal_create_pmc_iou_slcr(s, pic);
--    versal_create_ospi(s, pic);
+     versal_create_ospi(s, pic);
      versal_create_crl(s, pic);
      versal_create_cfu(s, pic);
      versal_map_ddr(s);
-     versal_unimp(s);
- 
-@@ -1308,10 +1304,34 @@ void versal_efuse_attach_drive(Versal *s, BlockBackend *blk)
-     }
- 
-     qdev_prop_set_drive(efuse, "drive", blk);
+@@ -1286,10 +1295,23 @@ void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk)
+     qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
+     qdev_realize_and_unref(card, qdev_get_child_bus(DEVICE(sdhci), "sd-bus"),
+                            &error_fatal);
  }
  
-+void versal_ospi_create_flash(Versal *s, int flash_idx, const char *flash_mdl,
-+                              BlockBackend *blk)
++void versal_efuse_attach_drive(Versal *s, BlockBackend *blk)
 +{
-+    BusState *spi_bus;
-+    DeviceState *flash, *ospi;
-+    qemu_irq cs_line;
++    DeviceState *efuse;
 +
-+    ospi = DEVICE(versal_get_child(s, "ospi"));
-+    spi_bus = qdev_get_child_bus(ospi, "spi0");
++    efuse = DEVICE(versal_get_child(s, "efuse"));
 +
-+    flash = qdev_new(flash_mdl);
-+
-+    if (blk) {
-+        qdev_prop_set_drive_err(flash, "drive", blk, &error_fatal);
++    if (efuse == NULL) {
++        return;
 +    }
-+    qdev_prop_set_uint8(flash, "cs", flash_idx);
-+    qdev_realize_and_unref(flash, spi_bus, &error_fatal);
 +
-+    cs_line = qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0);
-+
-+    sysbus_connect_irq(SYS_BUS_DEVICE(ospi),
-+                       flash_idx + 1, cs_line);
++    qdev_prop_set_drive(efuse, "drive", blk);
 +}
 +
  int versal_get_num_can(VersalVersion version)
