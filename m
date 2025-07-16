@@ -4,122 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA730C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB9AC83F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubx5d-0006Nl-K0; Wed, 16 Jul 2025 04:02:09 -0400
+	id 1ubxKi-00043v-9D; Wed, 16 Jul 2025 04:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1ubx5G-0005ms-LW; Wed, 16 Jul 2025 04:01:56 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubxA2-0003Ri-LQ; Wed, 16 Jul 2025 04:06:43 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1ubx5B-0006v4-73; Wed, 16 Jul 2025 04:01:45 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FKYpWM016564;
- Wed, 16 Jul 2025 08:01:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=56sGgF
- WHJvMwcvHyke0RqrUPhZ0POB14rvLCip72W8g=; b=JSvAYvkqhKJ2LjyxKt6PV0
- n8yNG9HamGlbQdopVk5KjMNbAVDefya8FB+OFeK8w+FpIB087Vn0jjMRPKVM2sny
- QHklJU2rfUJzxxEDyhLP7pLI6/6BweP6nciEIsjbNfhKiTy6lw4cgUH2xCdo4KfM
- iGMsxB/BmlVkFiUMBv5rdI6yl4NQd4QXma215cMdYyak+6J+eB/XIiztKsSnEjdK
- F//EPdru2M6+1St44nyZmDw8THzGa3HA9iIj7msudB5br+XWQt0+Qjjbhtxw3tbP
- n0GwTIy8t0LCAGbl8ujIQpdXImMVGA35qvg0yKGF4KyzqZzV+kyUE/+cLaot/kBw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47ue4u3n98-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Jul 2025 08:01:38 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56G7xIpH019451;
- Wed, 16 Jul 2025 08:01:37 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47ue4u3n8x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Jul 2025 08:01:37 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56G5U2Er031904;
- Wed, 16 Jul 2025 08:01:36 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 47v21u6jeu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 16 Jul 2025 08:01:36 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56G81Zds28836378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Jul 2025 08:01:35 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94315580D1;
- Wed, 16 Jul 2025 08:01:31 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3DFBB580CF;
- Wed, 16 Jul 2025 08:01:25 +0000 (GMT)
-Received: from [9.39.30.73] (unknown [9.39.30.73])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 16 Jul 2025 08:01:24 +0000 (GMT)
-Message-ID: <96da7431-0c99-4f9e-b7eb-9fe759ba3dfb@linux.ibm.com>
-Date: Wed, 16 Jul 2025 13:31:23 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/22] vfio/spapr.c: use QOM casts where appropriate
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
- danielhb413@gmail.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- john.levon@nutanix.com, thanos.makatos@nutanix.com,
- alex.williamson@redhat.com, clg@redhat.com, steven.sistare@oracle.com,
- tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-7-mark.caveayland@nutanix.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubx9y-000824-Td; Wed, 16 Jul 2025 04:06:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhpWb1tGhz6M4hS;
+ Wed, 16 Jul 2025 16:05:15 +0800 (CST)
+Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6635B14027A;
+ Wed, 16 Jul 2025 16:06:30 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 16 Jul 2025 10:06:30 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 16 Jul 2025 10:06:29 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>, "Duan, Zhenzhong"
+ <zhenzhong.duan@intel.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: RE: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Topic: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Index: AQHb9NhJqDDdVP51l0m0Xe+3c+VdWbQy4kYAgAB23gCAAQTY8A==
+Date: Wed, 16 Jul 2025 08:06:29 +0000
+Message-ID: <756cf804fbd14d66ba8f23358524fe96@huawei.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
+ <IA3PR11MB9136A660E9FAE540037986FB9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <aHaW9IpjbaVcRUpA@Asurada-Nvidia>
+In-Reply-To: <aHaW9IpjbaVcRUpA@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250715093110.107317-7-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=baBrUPPB c=1 sm=1 tr=0 ts=68775c62 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=f7IdgyKtn90A:10 a=64Cc0HZtAAAA:8
- a=VnNF1IyMAAAA:8 a=AaRrkq5CDUwCYl7pSLkA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: TYmNIJPmYpCrkYteTJsIt0Cvanynskve
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDA2OSBTYWx0ZWRfXyc/gYvT/aJ4j
- jIOfqyaGJgpg7GQk7nruhtB5Uno6o8m9/oMmdnF/N9gum4+EkoClQO/ZwDG1y9ZXCIsciz6KscI
- RQK5EQFO2p/4Ey7+8nruBowahXzKH7nWH6wuzyFbmKBLvE/vq3WjJPfDyqbTyl4Cf+I3v4Ln/HE
- mGrlBmrfxCD95IM9MxwI83PIT1GSw+LQ/CEVN3HuqR99BkAxYNbK0v4d7bKmjOsad+zAWnuliGI
- jMJJBj6leaBtg0sFA3rV1Q5xdsWKFpKffm0G3+VZCk5fezOGZX7aqu2gnB2R8lsrEWJeK2juAsr
- ahXvA5XbJpLvwpRU6e/xEeHMIq0Z2mnG6/lBx+bi2VMUkUDftA6ebY4yFTKCQcv5TQFtCPcDaHt
- PgB6+ZkqNa6ZFnzcwNF1MuuDCgyx8gTdl1UTMUb70IH6n94HIXnediFuDLcxv86Lio/sPAFX
-X-Proofpoint-ORIG-GUID: VxvDy98nkhpK5jLekVbqaLmv-BeS6ASA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1011 mlxscore=0
- malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507160069
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,83 +88,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 7/15/25 14:55, Mark Cave-Ayland wrote:
-> Use QOM casts to convert between VFIOContainer and VFIOContainerBase instead
-> of accessing bcontainer directly.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Tuesday, July 15, 2025 6:59 PM
+> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> Cc: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+> qemu-devel@nongnu.org; eric.auger@redhat.com;
+> peter.maydell@linaro.org; jgg@nvidia.com; ddutile@redhat.com;
+> berrange@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
+> smostafa@google.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
+> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> zhangfei.gao@linaro.org; shameerkolothum@gmail.com
+> Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict
+> accelerated SMMUv3 to vfio-pci endpoints with iommufd
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+...
 
-> ---
->   hw/vfio/spapr.c | 16 ++++++----------
->   1 file changed, 6 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 564b70ef97..c41e4588d6 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -62,7 +62,7 @@ static void vfio_prereg_listener_region_add(MemoryListener *listener,
->       VFIOSpaprContainer *scontainer = container_of(listener, VFIOSpaprContainer,
->                                                     prereg_listener);
->       VFIOContainer *container = &scontainer->container;
-> -    VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       const hwaddr gpa = section->offset_within_address_space;
->       hwaddr end;
->       int ret;
-> @@ -244,7 +244,7 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
->                                       hwaddr *pgsize, Error **errp)
->   {
->       int ret = 0;
-> -    VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-> @@ -352,8 +352,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
->                                           MemoryRegionSection *section,
->                                           Error **errp)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       VFIOHostDMAWindow *hostwin;
-> @@ -443,8 +442,7 @@ static void
->   vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
->                                           MemoryRegionSection *section)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->   
-> @@ -465,8 +463,7 @@ vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
->   
->   static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       VFIOHostDMAWindow *hostwin, *next;
-> @@ -484,8 +481,7 @@ static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
->   static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
->                                          Error **errp)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       struct vfio_iommu_spapr_tce_info info;
+> > >+    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
+> > >+        error_report("Device(%s) not allowed. Only PCIe root complex
+> > >devices "
+> > >+                     "or PCI bridge devices or vfio-pci endpoint devi=
+ces
+> > >with "
+> > >+                     "iommufd as backend is allowed with
+> > >arm-smmuv3,accel=3Don",
+> > >+                     pdev->name);
+> > >+        exit(1);
+> >
+> > Seems aggressive for a hotplug, could we fail hotplug instead of kill
+> QEMU?
+
+That's right. I will try to see whether it is possible to do a dev->hotplug=
+ged
+check here.
+=20
+> Hotplug will unlikely be supported well, as it would introduce
+> too much complication.
+>=20
+> With iommufd, a vIOMMU object is allocated per device (vfio). If
+> the device fd (cdev) is not yet given to the QEMU. It isn't able
+> to allocate a vIOMMU object when creating a VM.
+>=20
+> While a vIOMMU object can be allocated at a later stage once the
+> device is hotplugged. But things like IORT mappings aren't able
+> to get refreshed since the OS is likely already booted.
+
+Why do we need IORT mappings to be refreshed during hotplug?
+AFAICS, the mappings are created per host bridge Ids. And how is this
+different from a host machine doing hotplug?
+
+ Even an
+> IOMMU capability sync via the hw_info ioctl will be difficult to
+> do at the runtime post the guest iommu driver's initialization.
+
+We had some discussion on this "at least one vfio-pci" restriction
+for accelerated mode previously here.
+https://lore.kernel.org/qemu-devel/Z6TtCLQ35UI12T77@redhat.com/#t
+
+I am not sure we reached any consensus on that. The 3 different approaches
+discussed were,
+
+1. The current one used here. At least one cold plugged vfio-pci device
+   so that  we can retrieve the host SMMUV3 HW_INFO as per current
+  IOMMUFD APIs.
+
+2. A new IOMMUFD API to retrieve HW_INFO without a device.=20
+
+3. A fully specified vSMMUv3 through Qemu command line so that we
+   don't need HW_INFO from kernel.
+
+We're going with option one for now, but completely blocking hotplug
+because of it  feels a bit too restrictive to me.
+
+The real issue (for now), as I see it, is that we need some way to remember
+the Guest SMMUv3 <-> Host SMMUv3 mapping after the guest has booted.
+That way, even if all devices tied to a Guest SMMUv3 get hot-unplugged,
+QEMU can still block attaching a device that belongs to a different Host
+SMMUv3.
+
+Thanks,
+Shameer
+
+> I am not 100% sure. But I think Intel model could have a similar
+> problem if the guest boots with zero cold-plugged device and then
+> hot-plugs a PASID-capable device at the runtime, when the guest-
+> level IOMMU driver is already inited?
+>=20
+> FWIW, Shameer's cover-letter has the following line:
+>  "At least one vfio-pci device must currently be cold-plugged to
+>   a PCIe root complex associated with arm-smmuv3,accel=3Don."
+>=20
+> Perhaps there should be a similar highlight in this smmuv3-accel
+> file as well (@Shameer).
+>=20
+> Nicolin
 
