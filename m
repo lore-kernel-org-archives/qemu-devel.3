@@ -4,121 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82540C83F22
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BA3C83F27
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc6qh-0006Pt-6a; Wed, 16 Jul 2025 14:27:23 -0400
+	id 1uc6qh-0006QC-Vp; Wed, 16 Jul 2025 14:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uc6qP-0006Lb-Aw
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:27:10 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uc6qI-0006Ks-LT
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:27:01 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uc6qN-0001x4-JW
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:27:05 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uc6qG-0001wT-LI
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:26:58 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9CECC2121C;
- Wed, 16 Jul 2025 18:26:55 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4A4E321216;
+ Wed, 16 Jul 2025 18:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752690415; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752690413; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IzFXNLf5QnTFB5mIk/R+kKYAGjTqoKMaHYK963hGzq0=;
- b=mS1E4hyRW2gQQBeECQK+UtmrMhdpThSzBCVrWKT3ovSdz+VjxAY2l+xA8J/N+31hiG2ORg
- HPe7jIzy1Axjl0ksXCBEf4lczTbRW2MiXJz/wgBpgnNQUFu04CXtMEN0V8NrRD3jH8W8YA
- 4oU3bg4L9WV3DJni9rgHo6eYWiRszmY=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rdSw2OIBIe4+lmIwTWEJGiBz/J7b+G/gqK/rPRiwk3E=;
+ b=SRmZyKSQUrtk+3k9YV+y2DEs0FlmP+hE885SdKUUvxNurRsYygZrZPphkQfvAC0Aaphwkk
+ qTr3eXAavYJ6gKcDWKfCDR6LB1KGR5YCWPalfbtegl3mZI0kd1ltJqQ/8oi9Z9ziYuZRcx
+ X1Sy8eNdQle1Xl7b9zpKzKxih6KcIlg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752690415;
+ s=susede2_ed25519; t=1752690413;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IzFXNLf5QnTFB5mIk/R+kKYAGjTqoKMaHYK963hGzq0=;
- b=S11IvWGM6qlPWGrw2D6ma4L9MZNM32qPr6OqU/UB6HMhx5KVkSsSpwyZLsZfa9eMZHUSR2
- 85MmwqvIvyDVWlDw==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rdSw2OIBIe4+lmIwTWEJGiBz/J7b+G/gqK/rPRiwk3E=;
+ b=06hq6NgbNROLi/8iVny5O6fIvQxGHnfqGv3ISDztfMTdycHgWepiHYwvDsDFaI7VZNmga9
+ 5MDmu1us5JUPajDA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=mS1E4hyR;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=S11IvWGM
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SRmZyKSQ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=06hq6Ngb
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1752690415; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1752690413; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IzFXNLf5QnTFB5mIk/R+kKYAGjTqoKMaHYK963hGzq0=;
- b=mS1E4hyRW2gQQBeECQK+UtmrMhdpThSzBCVrWKT3ovSdz+VjxAY2l+xA8J/N+31hiG2ORg
- HPe7jIzy1Axjl0ksXCBEf4lczTbRW2MiXJz/wgBpgnNQUFu04CXtMEN0V8NrRD3jH8W8YA
- 4oU3bg4L9WV3DJni9rgHo6eYWiRszmY=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rdSw2OIBIe4+lmIwTWEJGiBz/J7b+G/gqK/rPRiwk3E=;
+ b=SRmZyKSQUrtk+3k9YV+y2DEs0FlmP+hE885SdKUUvxNurRsYygZrZPphkQfvAC0Aaphwkk
+ qTr3eXAavYJ6gKcDWKfCDR6LB1KGR5YCWPalfbtegl3mZI0kd1ltJqQ/8oi9Z9ziYuZRcx
+ X1Sy8eNdQle1Xl7b9zpKzKxih6KcIlg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1752690415;
+ s=susede2_ed25519; t=1752690413;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IzFXNLf5QnTFB5mIk/R+kKYAGjTqoKMaHYK963hGzq0=;
- b=S11IvWGM6qlPWGrw2D6ma4L9MZNM32qPr6OqU/UB6HMhx5KVkSsSpwyZLsZfa9eMZHUSR2
- 85MmwqvIvyDVWlDw==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rdSw2OIBIe4+lmIwTWEJGiBz/J7b+G/gqK/rPRiwk3E=;
+ b=06hq6NgbNROLi/8iVny5O6fIvQxGHnfqGv3ISDztfMTdycHgWepiHYwvDsDFaI7VZNmga9
+ 5MDmu1us5JUPajDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C0E9B138D2;
- Wed, 16 Jul 2025 18:26:53 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5420B138D2;
+ Wed, 16 Jul 2025 18:26:51 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IPGNH+3ud2hmWAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 16 Jul 2025 18:26:53 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1caaBOvud2hmWAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 16 Jul 2025 18:26:51 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Prasad Pandit <ppandit@redhat.com>
-Subject: [PATCH v2 1/3] migration: HMP: Fix possible out-of-bounds access
-Date: Wed, 16 Jul 2025 15:26:46 -0300
-Message-Id: <20250716182648.30202-2-farosas@suse.de>
+Subject: [PATCH v2 0/3] migration: Fix possible access out of bounds
+Date: Wed, 16 Jul 2025 15:26:45 -0300
+Message-Id: <20250716182648.30202-1-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250716182648.30202-1-farosas@suse.de>
-References: <20250716182648.30202-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-3.50 / 50.00]; BAYES_HAM(-2.99)[99.96%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,linaro.org:email,suse.de:mid,suse.de:dkim,suse.de:email];
+ MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 9CECC2121C
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, suse.de:mid, suse.de:dkim]
+X-Rspamd-Queue-Id: 4A4E321216
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,40 +127,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity has caught a bug in the formatting of time intervals for
-postcopy latency distribution display in 'info migrate'.
+Fix the issue detected by Coverity in format_time_str() and move
+the function into the generic utils as suggested.
 
-While bounds checking the labels array, sizeof is incorrectly being
-used. ARRAY_SIZE is the correct form of obtaining the size of an
-array.
+v2:
+- Fix the incorrect loop condition.
+- Make the array static and fix argument name in signature.
 
-Fixes: 3345fb3b6d ("migration/postcopy: Add latency distribution report for blocktime")
-Resolves: Coverity CID 1612248
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration-hmp-cmds.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Fabiano Rosas (3):
+  migration: HMP: Fix possible out-of-bounds access
+  migration: HMP: Fix postcopy latency distribution label
+  cutils: Add time_us_to_str
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index cef5608210..bb954881d7 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -57,11 +57,9 @@ static const gchar *format_time_str(uint64_t us)
-     const char *units[] = {"us", "ms", "sec"};
-     int index = 0;
- 
--    while (us > 1000) {
-+    while (us > 1000 && index + 1 < ARRAY_SIZE(units)) {
-         us /= 1000;
--        if (++index >= (sizeof(units) - 1)) {
--            break;
--        }
-+        index++;
-     }
- 
-     return g_strdup_printf("%"PRIu64" %s", us, units[index]);
+ include/qemu/cutils.h          |  1 +
+ migration/migration-hmp-cmds.c | 19 ++-----------------
+ util/cutils.c                  | 13 +++++++++++++
+ 3 files changed, 16 insertions(+), 17 deletions(-)
+
 -- 
 2.35.3
 
