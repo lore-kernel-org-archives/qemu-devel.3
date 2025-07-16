@@ -4,88 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 575B6C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 06:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC3CC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 06:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubvDf-0005tQ-CF; Wed, 16 Jul 2025 02:02:19 -0400
+	id 1ubvLC-0001EM-7y; Wed, 16 Jul 2025 02:10:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubv7x-0005uE-Eo
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:56:25 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubvJU-0008Ao-E6
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:08:20 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubv7u-000459-JF
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:56:25 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-234f17910d8so61761445ad.3
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:56:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubvJN-00074P-T8
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:08:20 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4561a4a8bf2so29402725e9.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 23:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752645381; x=1753250181; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qtnBtwyb1RrL6ZQf2Fh026A+6mEJMNBFCbnLugvgWUg=;
- b=UoFh39n8R5OVST8VUFiw71UhcN8MUbUTessaYF8JRmknBc6evh9IMEr1T1l9Ovk8NK
- jFv/y//bZ605sE5EieJnw3K8oRYpTTImwpwprQZnNcUzaZRQ9ZjOE1Xv53us72hY4HZ0
- DTX/CwGHtcLmdW1xdXXVMMTCyzvJAEWvE2RmEqfDxYZOB5BwqltEANeHAW7JCv8Lhvh4
- t/X3q8zkeyOa3ua1xd/VdVP9nP7ePIcQ7ecLjcmPf29BJ3NX/56C93jH8ioL43UBCM3N
- DBNLOoyxjar6MWuY9XnH5r7+CwS35lrOLuja+IkT5X+LCm0kEibs4O+A1QKoAj94A6Jq
- 0GDg==
+ d=linaro.org; s=google; t=1752646092; x=1753250892; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rv3jPEdrdbgbAagDt9LzI7yRG1cPhbgwBJNfUgbNUig=;
+ b=O7Yby4cPz2S+zNmQd7NcuFTFGU/0knmD+gJRnuMQQm+bnB5o2tzzaRWbYWjLZD2QTl
+ vgrwHhr06pySsNm13KPV2bD8vc3ea6WkLB1FS93c04n6TYqviGC3OROMP+ougp5jR79l
+ uuO0wYqURydrc1NQSGGB9gGX14JQK2h3CgclN6tKxgUoEtNhz44RUgbCOHvCTOURBxwj
+ eCAfyekzI7IAUy2hA2Kpema56H6wXeJgyb0w7c+WprvazxIzbwTYqdZ/9vHVeXUOQhHk
+ oblk0XmJqvLioe8WGNEckQ+z1bl8Br1bBnHSd/AEX2vzryUOXVbhLMvFkME8AWSkcOte
+ WC+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752645381; x=1753250181;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qtnBtwyb1RrL6ZQf2Fh026A+6mEJMNBFCbnLugvgWUg=;
- b=B3ZI+QqWfUU8nP/hxAlI446AdjFGOKaTX8h/pMuW5aPYJJLRYaydNQUQq6C+EefF7Z
- pXrvbwTodxc2mJR6lINA+T6nS5AVwxro8co83x6VqvXf01JELYvFb5QXiTObS9E7rptz
- Fp4IMBk8StiebFlVX98Z/U4n5k1xF4bfErwRAuosMMfM6ieG9c3HPp8e9j/8W3Vzbrf2
- wV3mepJ0oxeJqyBdOsuMaCd+d9HjF+pMefss05Qm0jpMePqAswrMRkwsMR1SKnBPjxbN
- J4dWxhgoUrXMY5PfU0fBAtvIRXv5vrcHEy58O3M4wn7IFXB20oalD+wUrVzuy1BYO+ho
- NVRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/ULkzmRrNZrR+uJt2CzSyljFi7tIJn6/r1IByrohZrrzYHfceRYXa1HcLz7ILWkj04cz6Dq1o17JH@nongnu.org
-X-Gm-Message-State: AOJu0YzthmFvQWXkJK93twtpI0rz4NXOPAAcjZ4ac6XaZG5Jw35PP3Wu
- yJycov52gYhEDF0dbzxm9D68h6z+iMDqjvhFqX6EadJSDFCO5lSF57Iw9JiPUCr2540=
-X-Gm-Gg: ASbGncs//CP1COgdUkC9L5zqskmsf0WnvBmnR+lRj6Pqnd4eCWYQbtLGXDVDy9RTWqM
- spgoIsKqWnSrt0/QJr7h8uPBcWy+qt6GqRlV3ZT68hAm4bAAvArNC0NBEPWpP9ZJ/ReqUoIPtwG
- YSEcUzVq4VVgCziP2HgDRaq0FCpgeGX45RXRjzJlsaqMuWI8yRNCfk34EI5Am6oVqk3mIIgVy2Z
- CZvYZ5VBNCn9hU3Cqu3znLHSnmwMJvPlZJkrPhsUmXvo0i24E7weMRAurGlaWIBrwzrm09Kn6EN
- fvihB/OmEea3rzKUMyetPuWdPhYC/3uR96JOfQGaHkatLsvIulUEqu2vasmjPasx0iIXIPWnc/a
- 2i6gNLQGc5SWh7Q/Q5V/6TN0mvqaBqrDGXQkR/Me1QRIGow==
-X-Google-Smtp-Source: AGHT+IFrIG3GAwGhX1d5JPCJsUqQgLPSnShr4lsUdWi12ZXYtVTTwd26HDUuQwsStzb8p5SVfhQ/hw==
-X-Received: by 2002:a17:903:2452:b0:235:2403:779f with SMTP id
- d9443c01a7336-23e24f44f27mr26515355ad.29.1752645380691; 
- Tue, 15 Jul 2025 22:56:20 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1752646092; x=1753250892;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rv3jPEdrdbgbAagDt9LzI7yRG1cPhbgwBJNfUgbNUig=;
+ b=Nqtg4La6/cmwuXHhkZT3rBj9+omdpWPLwFPOPSfroj9JjqldsFdW9bAIg5uFxMZhvQ
+ tODzgXV9h7CHTnHnmXZqPErMMFa066yI0JpofsRshb4ZX0fJtTif7zyw0KuZLeYATfSo
+ FO3jIa3LnoiUTSuaoVkXrsWkINglun5/zQWbDZkuq/fwF0sWLbT18jQLOjB2R1hFXCeX
+ P45oQ1LtrWZHLhv8aUx8PMn4pgjK2f0F/RmOsRti2B0gaTHevGOcw4xFpwJhj2uitMmZ
+ YmdpDuwZwPL/TMsDRg+IB/8rrRzgh0ghcaEyeBYoFwhRDbJDd6V2MsgNDXecNMASPglF
+ CGqw==
+X-Gm-Message-State: AOJu0YxG/6+TZeU9h7a0hRO2ckXLsyu74YZwX+piqq92C56HyKn7qOc5
+ hG0Gu7/GKDpI4vfd/5ymbDwnTEALLKnpN61Ztt0N5CkCBAg7sjmkGFMp0tIxCX7L0/8=
+X-Gm-Gg: ASbGnctqhcLIDbJ3f8LbAKfpfJZB7OF9VWfNs5L+5nSg7d52SxV1zpM6tM/D9aS34V+
+ h6Zf5KSA5L9xvfCHtJV5kDxcp4msQ8c2xtpFkqUG+bSvizH1VfTGlPle58JufNqAZJDOBV9fAaQ
+ zIV8giY1SeteJA1PFzfCy4tKliHAa9lnwhPIzLYhWIh74rbOzvsrPR7QuwoNW39wd6gAFUemKuI
+ XKR4BXEqxwmI9FiHgqkM8MYM0wRRJn7+l0iYU1RHdzttKFvmfa23Bs+Ds0nE/SLdkyh3Qg6VZIF
+ wYg52MUBkCeOZw7ycFVcsnp34gUaoMu6sB7Tp7xtAgFk8/sdWLH6yAl65ZMVZdN+Coiv53We2a3
+ MS46L4dAL/1l3nh+aletNJjxcRBPI+n2JT51xyUf4s8Y2j9Z4yG3Q4fX3a5Qtc5g/PznLDqfCIL
+ GJzg==
+X-Google-Smtp-Source: AGHT+IEvTxtJgm6k97ioR8jCd88CfKfIMd5cQFbd21x7QYu2eJu6GesOlBdN9D/5KldFZY8IR7ActQ==
+X-Received: by 2002:a05:6000:40d9:b0:3b4:4876:9088 with SMTP id
+ ffacd0b85a97d-3b60e510003mr684087f8f.46.1752646091818; 
+ Tue, 15 Jul 2025 23:08:11 -0700 (PDT)
+Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23de43226c3sm123382695ad.117.2025.07.15.22.56.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 22:56:20 -0700 (PDT)
-Message-ID: <295bed63-049d-4cce-807f-e88df6ed6bb0@linaro.org>
-Date: Tue, 15 Jul 2025 22:56:19 -0700
+ ffacd0b85a97d-3b6039bdea0sm8014493f8f.65.2025.07.15.23.08.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Jul 2025 23:08:11 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 16 Jul 2025 09:08:00 +0300
+Subject: [PATCH] tests/functional: add --debug CLI arg
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/4] target/arm: Add FEAT_MEC to max cpu
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250714155836.1514748-1-richard.henderson@linaro.org>
- <97292e35-b7f2-40ca-aed6-34ef39396433@linaro.org>
- <f984d041-5d23-41c8-b2d5-c79217a7f77b@linaro.org>
- <a7ecb907-2183-4625-a2bf-bbfc25acc77d@linaro.org>
- <a4696a6f-9a7b-4ecf-aecc-90b2596ec9e4@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <a4696a6f-9a7b-4ecf-aecc-90b2596ec9e4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Message-Id: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAL9Bd2gC/x3M0QqEIBBA0V+JeU6wFov6lQgZa3QHwsKxZUH69
+ 5V9PHC5BYQSk8DcFEj0YeEzVnRtA9sbYyDFezX0ujd67Abl77jlGuFhM0kWu5O7g8UUFKJG4wc
+ 3vUYDdXAl8vz9z5f1eX47O4SYbAAAAA==
+X-Change-ID: 20250716-functional_tests_debug_arg-aa0a5f6b9375
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5981;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=MiSs7UvTYhbtyskBm5gctEZkrIRRjUVb/TsFHm9i2lE=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm9kMEhLOWh3S0Zkend2V01GeEdPcVNJWVhKWnk1CnRid2o3UkNRQ0hnZE80OVdr
+ U0dKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUhkQnlnQUt
+ DUkIzS2Nkd2YzNEowQlFlRC85Zng2QXVNQTRUVUZhcFEvelVWZGxNWWtpQ1RmQzJQaWxFWHRsdQ
+ pwWFhIRXVQaXBNRzNsWWZkSFBob1hvZTAzWFEvQjNvMXp5NUFXdW02ckFLUnM0RkgwbXRYQjJzb
+ HI3ZjVlazhJCjE4VHBqYWV3ZDlNV25QY2x5Q25pWUVpRXVhSG9oZ2ZCcm1qdTdNU09OcjJob3k2
+ NWFCQlg5RWxoU0dWVzRvNE4KUlV2OHBHRjBlUC9xSXNFL004MmlMRVZEc2VEaG5GbXFuUWZpMjV
+ FQ1ZzM3dNOHd1aWx0azFCMUFmb1ByVnZSUApXeXRzT1hLdThnOEZIQXA5L0ZRRzZzYmtoeUMyak
+ NSSDNLenl1eFJxbS96SlFzV1V6b3p6aEs5a0ZET25Lai94CjRIRU9HeTJPT2kxMnBhbXRHU3hoO
+ HpmR25ZY0JLYXVtQzVGd3pMN2xNa21maXlRbVFadWRvY1hSR1lNVnBWclIKN0xvSmo3T2dmY3Vn
+ OGRVL3lEQnhvVkFpZlJVOENxY3dmUTlLakFadzh6b3FTc2xxQnU4VXBNRTA0SkRweVplVgpzZnR
+ 3SVhHRGQ5ZXc3bE03U1dnb3RhYWZBNk5VSG9qTm9FMWpJdnIxOXhrL2VXQWRuc0F4QWFyeW1RdX
+ RDY3lGCmhacGhFTGQvczh0UUlReHRWYjVxQ0F2Y3lpN2hNTk5CbGppeFd6ZU5PTHMvMVVPbTVKN
+ 2ZkMWZ6ZnViMVhkVFAKL1Q3S0E3dkUxU2ZYWDMwbGxaQVk3RHRlcmJ1Zk9GMXVoZUxQRE0wV1I2
+ c3YxdXZqcXZCVnFGUWNDTVEvREF4LwpoR21POEUwMzJnd2xTZHRvbmFKdFUyV0RKNEFuTlJUL3d
+ HT1NsNVJYM3JPdC9seEVkWStrYjJ0MG9FbVpOd1lNCnFmNlBZdz09Cj1IZ2lGCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,208 +130,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/25 8:13 PM, Gustavo Romero wrote:
-> Hi Pierrick,
-> 
-> On 7/14/25 22:26, Pierrick Bouvier wrote:
->> On 7/14/25 4:31 PM, Gustavo Romero wrote:
->>> Hi folks,
->>>
->>> Richard, thanks for v8. Pierrick, thanks for testing it. :)
->>>
->>> On 7/14/25 14:09, Pierrick Bouvier wrote:
->>>> On 7/14/25 8:58 AM, Richard Henderson wrote:
->>>>> Changes for v8:
->>>>>      - Re-order SCTLR2 and TCR2 so that they are independent of MEC.
->>>>>      - Enable the SCTLR2 and TCR2 enable bits.
->>>>>      - Squash 3 smaller MEC patches together.
->>>>>
->>>>> This still fails the RME tests, because we still need TF-A rebuilt
->>>>> with ENABLE_FEAT_SCTLR2 and ENABLE_FEAT_TCR2.  Pierrick, since you
->>>>> have just done such a build, could you re-test with this series?
->>>>>
->>>>
->>>> I tested that on my local Realm enabled setup and I can confirm this solved the issue and current series works.
->>>> Both flags are needed in TF-A. ENABLE_FEAT_TCR2 is needed to boot host, and ENABLE_FEAT_SCTLR2 is needed to boot nested guest.
->>>
->>> I'm a bit confused because the QEMU RME tests, afaics, uses OP-TEE, not TF-A. I've built TF-A
->>> using the scripts in [0], enabling ENABLE_FEAT_TCR2 and ENABLE_FEAT_SCTLR2, but no way to get
->>> it booting. I understand we can embed a OP-TEE into the TF_A via BL32=<optee_image> when
->>> building TF-A. Is that what you're using?
->>>
->>
->> I agree it's confusing. In short, no, OP-TEE is not used anywhere for Realms, only TF-A and RMM are used in our images. It seems that OP-TEE is a term used generically to represent any firmware running in secure mode, but it's a *totally* different software than TF-A + RMM. Naming OP-TEE like this is like if Linux would have been named "OP-kernel".
-> 
-> Got it, so we use TF-A + RMM in the test images. Thanks for the clarifications.
-> 
-> Isn't the generic term (or concept) actually TEE (not OP-TEE) and OP-TEE is a real software stack that implements the TEE spec, i.e., OP-TEE is code in https://github.com/OP-TEE)?
-> 
+Add argument parsing to functional tests to improve developer experience
+when running individual tests. All logs are printed to stdout
+interspersed with TAP output.
 
-Yes, correct. The term is TEE, OP-TEE is the project you mentioned. For 
-some reason, everybody seems to think that OP-TEE is *the* unique TEE 
-implementation is Arm world.
-Thus my analogy with Linux that would be named OP-Kernel.
+  ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
+  usage: test_aarch64_virt [-h] [-d]
 
-> 
->> The RME tests we have are based on this excellent tutorial [0], and build is automated with 'qemu-rme-stack' [1], that simply follows those instructions.
->>
->> [0] https://linaro.atlassian.net/wiki/spaces/QEMU/pages/30128767027/Device+Assignment+Enabled+RME+Stack+on+QEMU
-> 
-> Should [0] be:
-> 
-> https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/Building+an+RME+stack+for+QEMU ?
-> 
+  QEMU Functional test
 
-Correct, bad copy paste sorry.
+  options:
+    -h, --help   show this help message and exit
+    -d, --debug  Also print test and console logs on stdout. This will
+                 make the TAP output invalid and is meant for debugging
+                 only.
 
-> 
->> [1] https://github.com/pbo-linaro/qemu-rme-stack
->>
->> To add to the confusion (*get ready*), [0] uses OP-TEE build, which is simply a build system for op-tee + other things, but in the variant it generates, OP-TEE itself is not included. Yes, that's utterly confusing and took me quite some time to discover it, after talking with Mathieu himself. They removed it explicitely to make the stack more simple. In short, for Realms, forget about OP-TEE.
-> 
-> ah, that's what confused me! I see now.
-> 
-> 
->> If you want to see it by yourself:
->>
->> https://git.codelinaro.org/linaro/dcap/op-tee-4.2.0/build/-/blob/cca/v8/qemu_v8_cca.mk?ref_type=heads#L172
->>
->> ...
->> TF_A_FLAGS ?= \
->>       BL33=$(BL33_BIN) \
->>       PLAT=qemu \
->>       QEMU_USE_GIC_DRIVER=$(TFA_GIC_DRIVER) \
->>       DEBUG=$(TF_A_DEBUG) \
->>       LOG_LEVEL=$(TF_A_LOGLVL) \
->>       ENABLE_RME=1 \
->>       RMM=$(RMM_BIN)
->> ...
->> TF_A_FLAGS_BL32_OPTEE  = BL32=$(OPTEE_OS_HEADER_V2_BIN)
->> TF_A_FLAGS_BL32_OPTEE += BL32_EXTRA1=$(OPTEE_OS_PAGER_V2_BIN)
->> TF_A_FLAGS_BL32_OPTEE += BL32_EXTRA2=$(OPTEE_OS_PAGEABLE_V2_BIN)
->> TF_A_FLAGS_SPMC_AT_EL_n  = $(TF_A_FLAGS_BL32_OPTEE) SPD=opteed
->> ...
->> #TF_A_FLAGS += $(TF_A_FLAGS_SPMC_AT_EL_$(SPMC_AT_EL))
->>
->> The last line shows that OP_TEE flags are **NOT** added to TF_A_FLAGS build flags.
->> The qemu_v8_cca.mk build file was copied from qemu_v8.mk, which itself has the OP-TEE inclusion.
->>
->> ---
->>
->> Recently, I had to generate a custom rootfs, and I experimented generating it directly from docker images, to avoid rebuilding the world using Buildroot. Once it worked, I realized it was a good opportunity to rebuild the rest of the stack too. The result is 'qemu-linux-stack' [2].
->>
->> Master branch has only tf-a + uboot (no Realm support), while rme branch [3], which supports Realm, uses tf-a + rmm + edk2 instead. I removed u-boot as I couldn't get it to boot, and I knew that edk2 worked.
->>
->> One branch is only one configuration (and it will stay this way).
->>
->> [2] https://github.com/pbo-linaro/qemu-linux-stack
->> [3] https://github.com/pbo-linaro/qemu-linux-stack/tree/rme
->>
->> Beyond the personal knowledge I got through that, I hope it can be used for others for who it's confusing about what runs before start_kernel, and I guess I'm not the only one who didn't know about that. In the end, things are not too complicated, but as most of the build systems out there (OP-TEE build, shrinkwrap, ...) try to be "generic and versatile", it ends up being complicated. I prefer basic and straightforward script shells to lenghty documentation and wiki pages, but it's a personal choice.
->>
->> ---
->>
->> Now, coming to the change introduced by this series, and supporting FEAT_SCTRL2 and FEAT_TCR2, all those images need to be updated [0], [1], [2], [3], because essentially, TF-A itself must be patched to support this. I was about to mention that, and mention that I can send a PR directly to it once we have this merged on QEMU side.
->>
->> The change in arm-trusted-firmware is quite simple:
->>
->> +diff --git a/plat/qemu/common/common.mk b/plat/qemu/common/common.mk
->> +index 751511cf8..6bc108492 100644
->> +--- a/plat/qemu/common/common.mk
->> ++++ b/plat/qemu/common/common.mk
->> +@@ -122,6 +122,10 @@ ENABLE_FEAT_FGT         :=      2
->> + # 8.7
->> + ENABLE_FEAT_HCX             :=      2
->> +
->> ++# 8.8
->> ++ENABLE_FEAT_TCR2    :=      2
->> ++ENABLE_FEAT_SCTLR2  :=      2
->> ++
->>
->> I'll push all that tomorrow on master, and rebase rmm and device_passthrough on top of it.
->> I'll add this to original RME images, it's less direct though, as it's needed to update the tf-a fork, and then the optee build system.
-> 
-> So, I still fail to understand how you are generating the out/bin/flash.bin used in our images.
-> 
-> First I tried to use the https://github.com/pbo-linaro/qemu-rme-stack, since it's cited in the tests. I tried:
-> 
-> $ ./container.sh ./build_virt.sh
-> 
-> and get an error which seems a commit mismatch in some of branches used by repo:
-> 
-> repo: reusing existing repo client checkout in /mnt/git/qemu-rme-stack
-> Traceback (most recent call last):
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 869, in <module>
->       _Main(sys.argv[1:])
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 845, in _Main
->       result = repo._Run(name, gopts, argv) or 0
->                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 293, in _Run
->       result = run()
->                ^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 274, in <lambda>
->       lambda: self._RunLong(name, gopts, argv, git_trace2_event_log) or 0
->               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 437, in _RunLong
->       execute_command()
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 403, in execute_command
->       execute_command_helper()
->     File "/mnt/git/qemu-rme-stack/.repo/repo/main.py", line 369, in execute_command_helper
->       result = cmd.Execute(copts, cargs)
->                ^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/subcmds/init.py", line 400, in Execute
->       self._SyncManifest(opt)
->     File "/mnt/git/qemu-rme-stack/.repo/repo/subcmds/init.py", line 146, in _SyncManifest
->       if not self.manifest.manifestProject.Sync(
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 4704, in Sync
->       self.MetaBranchSwitch(submodules=submodules, verbose=verbose)
->     File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 4173, in MetaBranchSwitch
->       self.Sync_LocalHalf(syncbuf, submodules=submodules, verbose=verbose)
->     File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 1636, in Sync_LocalHalf
->       lost = self._revlist(not_rev(revid), HEAD)
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 3676, in _revlist
->       return self.work_git.rev_list(*a, **kw)
->              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->     File "/mnt/git/qemu-rme-stack/.repo/repo/project.py", line 3908, in rev_list
->       p.Wait()
->     File "/mnt/git/qemu-rme-stack/.repo/repo/git_command.py", line 556, in Wait
->       self.VerifyCommand()
->     File "/mnt/git/qemu-rme-stack/.repo/repo/git_command.py", line 546, in VerifyCommand
->       raise GitCommandError(
-> git_command.GitCommandError: GitCommandError: 'rev-list ^6fd1cc667671a12cfc8789a390c990446e621f8f HEAD --' on manifests failed
-> stderr: fatal: bad revision 'HEAD'
-> 
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ docs/devel/testing/functional.rst      |  2 ++
+ tests/functional/qemu_test/testcase.py | 51 ++++++++++++++++++++++++++++++++--
+ 2 files changed, 50 insertions(+), 3 deletions(-)
 
-I'm not sure what is happening. I gave it a try now (from a clean repo), 
-and it works as expected. I had weird errors when stopping sync with 
-ctrl-c in the past too. Anyway, clean and retry.
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index 9e56dd1b1189216b9b4aede00174c15203f38b41..9d08abe2848277d635befb0296f578cfaa4bd66d 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -63,6 +63,8 @@ directory should be your build folder. For example::
+   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
+   $ pyvenv/bin/python3 ../tests/functional/test_file.py
+ 
++By default, functional tests redirect informational logs and console output to
++log files. Specify the ``--debug`` flag to also print those to standard output.
+ The test framework will automatically purge any scratch files created during
+ the tests. If needing to debug a failed test, it is possible to keep these
+ files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2082c6fce43b0544d4e4258cd4155f555ed30cd4..fad7a946c6677e9ef5c42b8f77187ba836c11aeb 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -11,6 +11,7 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
++import argparse
+ import logging
+ import os
+ from pathlib import Path
+@@ -31,6 +32,20 @@
+ from .uncompress import uncompress
+ 
+ 
++def parse_args(test_name: str) -> argparse.Namespace:
++    parser = argparse.ArgumentParser(
++        prog=test_name, description="QEMU Functional test"
++    )
++    parser.add_argument(
++        "-d",
++        "--debug",
++        action="store_true",
++        help="Also print test and console logs on stdout. This will make the"
++        " TAP output invalid and is meant for debugging only.",
++    )
++    return parser.parse_args()
++
++
+ class QemuBaseTest(unittest.TestCase):
+ 
+     '''
+@@ -196,6 +211,9 @@ def assets_available(self):
+         return True
+ 
+     def setUp(self):
++        path = os.path.basename(sys.argv[0])[:-3]
++        args = parse_args(path)
++        self.debug_output = args.debug
+         self.qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
+@@ -221,6 +239,16 @@ def setUp(self):
+         self.machinelog.setLevel(logging.DEBUG)
+         self.machinelog.addHandler(self._log_fh)
+ 
++        if self.debug_output:
++            handler = logging.StreamHandler(sys.stdout)
++            handler.setLevel(logging.DEBUG)
++            formatter = logging.Formatter(
++                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
++            )
++            handler.setFormatter(formatter)
++            self.log.addHandler(handler)
++            self.machinelog.addHandler(handler)
++
+         if not self.assets_available():
+             self.skipTest('One or more assets is not available')
+ 
+@@ -230,11 +258,16 @@ def tearDown(self):
+         if self.socketdir is not None:
+             shutil.rmtree(self.socketdir.name)
+             self.socketdir = None
+-        self.machinelog.removeHandler(self._log_fh)
+-        self.log.removeHandler(self._log_fh)
++        for handler in [self._log_fh, logging.StreamHandler(sys.stdout)]:
++            self.machinelog.removeHandler(handler)
++            self.log.removeHandler(handler)
+ 
+     def main():
+         path = os.path.basename(sys.argv[0])[:-3]
++        # If argparse receives --help or an unknown argument, it will raise a
++        # SystemExit which will get caught by the test runner. Parse the
++        # arguments here too to handle that case.
++        _ = parse_args(path)
+ 
+         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+         if cache is not None:
+@@ -292,6 +325,14 @@ def setUp(self):
+         fileFormatter = logging.Formatter('%(asctime)s: %(message)s')
+         self._console_log_fh.setFormatter(fileFormatter)
+         console_log.addHandler(self._console_log_fh)
++        if self.debug_output:
++            handler = logging.StreamHandler(sys.stdout)
++            handler.setLevel(logging.DEBUG)
++            formatter = logging.Formatter(
++                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
++            )
++            handler.setFormatter(formatter)
++            console_log.addHandler(handler)
+ 
+     def set_machine(self, machinename):
+         # TODO: We should use QMP to get the list of available machines
+@@ -398,5 +439,9 @@ def set_vm_arg(self, arg, value):
+     def tearDown(self):
+         for vm in self._vms.values():
+             vm.shutdown()
+-        logging.getLogger('console').removeHandler(self._console_log_fh)
++        for handler in [
++            self._console_log_fh,
++            logging.StreamHandler(sys.stdout),
++        ]:
++            logging.getLogger("console").removeHandler(handler)
+         super().tearDown()
 
-> 
-> Then I tried to build it from https://github.com/pbo-linaro/qemu-linux-stack/tree/rme and out/flash.bin
-> simply doesn't boot the kernel...
->
+---
+base-commit: c079d3a31e45093286c65f8ca5350beb3a4404a9
+change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
 
-Maybe you built previously master branch, then switched to rme and 
-rebuilt. In this case, your kernel and tf-a are not updated. I added a 
-note in README, there is no dependency check when switching branches, 
-you're expected to run git clean by yourself.
-Both shrinkwrap and OP-TEE build don't really handle that properly to be 
-honest...
-
-It's not ideal, but I don't want to go down the rabbit hole of 
-reimplementing any kind of half baked Make based dependency graph.
-Maybe we could use git submodules or repo in the future, but both have 
-their own drawbacks too.
-
-> 
->> Sorry for this very long email. At least, all is there.
-> 
-> Nope, that's quite helpful. This firmware stack is a mess :)
-> 
-> 
-> Cheers,
-> Gustavo
+--
+γαῖα πυρί μιχθήτω
 
 
