@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B2BC83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BE7C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc6Xp-00053N-Vk; Wed, 16 Jul 2025 14:07:54 -0400
+	id 1uc6Z3-0005lh-Af; Wed, 16 Jul 2025 14:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uc6WJ-0003so-Pz
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:06:28 -0400
+ id 1uc6Xx-0005Dq-KZ; Wed, 16 Jul 2025 14:08:01 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uc6WG-0006Vh-Q3
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 14:06:19 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GHfiuf001545;
- Wed, 16 Jul 2025 18:06:14 GMT
+ id 1uc6Xv-0006jj-KK; Wed, 16 Jul 2025 14:08:01 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56GHfij2028571;
+ Wed, 16 Jul 2025 18:07:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=jK7SCvlICd2xc7G6SgdXa67dMslUl9VgycPe50zpWtw=; b=
- JDUW4x8kTrlAXqgzQyTKjlHva9+c150aXavCexmIouqPkjPTKPgYn5HKprJmcAuG
- gjaU/cZJ5Yw1+Hi9ypFdDtgWxDxwc/i5LtXFOdcP/0kJtCA/I+q3ag6x+bNuwhlY
- mKc5Uk2VoikWHXTTy9ApAOhSzd7A9uLdkD9QzFeeoYNpYtk/3lT9cj6cBHux1r/s
- y5d8Zk1Jd2AZyxxC4s39osfI0YgEHiZbdc2PW5SSoxVO/PW7bcteBcnWYsQ6JiGG
- zyav3rWncDpxyU5sSBCdCAloMOir9HQuYSxxrPKjqB/8+Y4nwduV7XPVCDedjDmM
- 6n3r+M/NcMYjdVn7opr7cA==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhjfa08s-1
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=L/oRZEbA
+ cqddJhCnNsVzBa8dwS1u4KdUFHNJzKQGVVY=; b=P6UCPVLSYMqTmUYp56HJPyER
+ 9znnTWE2yAE9HbvcM4bS2ntc8arUxQRP+J5/PCaUnBoFqw+BxLsNVAfIR2TTDCPU
+ BP3O8lEM3aEC5FPL/74SFG/Ktlg/UYWfqTq5HlbNySnxOLc+Klom4XRLvoSudwwF
+ A07cHSIysFrR4VtVSfpFWfpmvlrN3X6o3g59yBySicxesnttRBrsxdQzj17XmbK6
+ +LE/kYvvE8WfYdAnBe1KSjWHNiiU9MeBQAMaM4b36G4K3pHnXARXGHdo26d1dt0i
+ wZFi4M1OF5VutAI8Av2CRAJHhwQkOyUIW01rn+UNmaSxumIp2x/CvPowdtO1zw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx81qcq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Jul 2025 18:06:13 +0000 (GMT)
+ Wed, 16 Jul 2025 18:07:56 +0000 (GMT)
 Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56GHSDdq040663; Wed, 16 Jul 2025 18:06:13 GMT
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 56GHbU9Q023762; Wed, 16 Jul 2025 18:07:55 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue5bq5vk-1
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47ue5bnruk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 16 Jul 2025 18:06:13 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56GI5BvH002385;
- Wed, 16 Jul 2025 18:06:12 GMT
+ Wed, 16 Jul 2025 18:07:55 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56GI7sso034678;
+ Wed, 16 Jul 2025 18:07:54 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue5bq5tx-3; Wed, 16 Jul 2025 18:06:12 +0000
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 47ue5bnru7-1; Wed, 16 Jul 2025 18:07:54 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Cedric Le Goater <clg@redhat.com>,
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Cedric Le Goater <clg@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 2/2] vfio/pci: preserve pending interrupts
-Date: Wed, 16 Jul 2025 11:06:09 -0700
-Message-Id: <1752689169-233452-3-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 1/1] hw/intc/arm_gicv3_kvm: preserve pending interrupts
+ during cpr
+Date: Wed, 16 Jul 2025 11:07:54 -0700
+Message-Id: <1752689274-233526-1-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1752689169-233452-1-git-send-email-steven.sistare@oracle.com>
-References: <1752689169-233452-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-16_03,2025-07-16_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 adultscore=0
- spamscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507160163
-X-Proofpoint-GUID: CAjnMjXv8X9ZVNlcczXvKsOZyrW5xFTz
-X-Authority-Analysis: v=2.4 cv=O6g5vA9W c=1 sm=1 tr=0 ts=6877ea15 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=nBKmIKK40ISUCqUSC4UA:9 cc=ntf
- awl=host:13600
-X-Proofpoint-ORIG-GUID: CAjnMjXv8X9ZVNlcczXvKsOZyrW5xFTz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDE2MyBTYWx0ZWRfX/TU/iLFzj5Gs
- tne2G4Z5Xc7hmMX+yINu9zYvWuNLgxy/bI26YJJ6NnypQwOSeX8B1Z4aAyq1Hcwqv2ri2o1hFfU
- rULYsl0P+MmcEC0hHmwcscvngGZY5yWnB+uY5e9PEUFZwdMg8mtGIPxeemdVBwLLn35ghpTw6nL
- 1NfjcMClYq1seitEm5szv+hCw7WJexPj1oS72fC1Z6rWb2aYPf6miP5YVIJuolizYS3fxIGm65n
- uGkiZupBwv2QBefQ06bKEylIlBYSNFnY8yYRq0/JhkeQHQ0xCKEwY0qWJ0VfMxRlYFYO7GD0TF1
- XEuR16+ASkQzgGs7JX8Bt4TkE7ooaJPCLg+WWI4VrDWTQ1ZWKxDgoGPNEXQiwoUsDjORQ5C2hS7
- hOrNPGLhYxTRhzPhRtKmBo19+UoA4s1wNCpWBKfjQoiYc+S763rYizpWKdyYvgbrkn5ZWMvG
+X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=6877ea7c b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=-1ppJrQcysB06QCxmjEA:9
+X-Proofpoint-ORIG-GUID: Dsdl-g_yw22xNVgdBHhoSkWDG35JdvOP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE2MDE2MyBTYWx0ZWRfX3reW2g83vLmz
+ UMwMD9/obIFKHp/AwrxnGk5gwUDclXArAimeUg5lsMH0m/Xxp/0e2tsvYDQOYmDZVoTC0wIuntP
+ z63Hrn2iz8EAhjhnQlMq3HKINtxo4UsayuiAh46/LDuUr55xU2Wc7knYqQKocUnahel6rjZIvcQ
+ 8S04nV/+foUjOlaNKnk+jl3KIjWSeSQUilpDUVOaSMYwKL+SlJ/JHNtOypZzBwoFVSzfFjqMlN6
+ /f/XUEWGT3wXjuLtAUwZfeqXwl85GLIjpi44korRDdUTDFQKCYN7HQT1GUzw8H+UIljqRgMpaHZ
+ 3mMWxBib2kIL1hot2JaY96drJXYmkBTX/rBBnmfl1FeydspMT2FFQYk2p+EvZjyfmGFTf/Gtic1
+ mzQkMwlI2wMPtcUSOT2fF3AjW16Ijv9YB/90fngzUffrZ7+7lq/VoA/3L7KGKZF8SsnVWuvJ
+X-Proofpoint-GUID: Dsdl-g_yw22xNVgdBHhoSkWDG35JdvOP
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -111,188 +107,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpr-transfer may lose a VFIO interrupt because the KVM instance is
-destroyed and recreated.  If an interrupt arrives in the middle, it is
-dropped.  To fix, stop pending new interrupts during cpr save, and pick
-up the pieces.  In more detail:
+Close a race condition that causes cpr-transfer to lose VFIO
+interrupts on ARM.
 
-Stop the VCPUs. Call kvm_irqchip_remove_irqfd_notifier_gsi --> KVM_IRQFD to
-deassign the irqfd gsi that routes interrupts directly to the VCPU and KVM.
-After this call, interrupts fall back to the kernel vfio_msihandler, which
-writes to QEMU's kvm_interrupt eventfd.  CPR already preserves that
-eventfd.  When the route is re-established in new QEMU, the kernel tests
-the eventfd and injects an interrupt to KVM if necessary.
+CPR stops VCPUs but does not disable VFIO interrupts, which may continue
+to arrive throughout the transition to new QEMU.
 
-Deassign INTx in a similar manner.  For both MSI and INTx, remove the
-eventfd handler so old QEMU does not consume an event.
-
-If an interrupt was already pended to KVM prior to the completion of
-kvm_irqchip_remove_irqfd_notifier_gsi, it will be recovered by the
-subsequent call to cpu_synchronize_all_states, which pulls KVM interrupt
-state to userland prior to saving it in vmstate.
+CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
+future interrupts to the producer eventfd, where they are preserved.
+Old QEMU then destroys the old KVM instance.  However, interrupts may
+already be pending in KVM state.  To preserve them, call ioctl
+KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
+they will be picked up when the new KVM+VCPU instance is created.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/cpr.c              | 91 ++++++++++++++++++++++++++++++++++++++
- hw/vfio/pci.c              |  2 +
- hw/vfio/pci.h              |  1 +
- include/hw/vfio/vfio-cpr.h |  6 +++
- 4 files changed, 100 insertions(+)
+ hw/intc/arm_gicv3_kvm.c            | 18 +++++++++++++++++-
+ include/hw/intc/arm_gicv3_common.h |  3 +++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index 2a244fc4b6..bca74ea20a 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -198,3 +198,94 @@ void vfio_cpr_add_kvm_notifier(void)
-                                     MIG_MODE_CPR_TRANSFER);
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index 3be3bf6c28..3d12c846ce 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -30,6 +30,7 @@
+ #include "gicv3_internal.h"
+ #include "vgic_common.h"
+ #include "migration/blocker.h"
++#include "migration/misc.h"
+ #include "qom/object.h"
+ #include "target/arm/cpregs.h"
+ 
+@@ -777,6 +778,17 @@ static void vm_change_state_handler(void *opaque, bool running,
      }
  }
-+
-+static int set_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
-+                                  EventNotifier *rn, int virq, bool enable)
+ 
++static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
++                                  MigrationEvent *e, Error **errp)
 +{
-+    if (enable) {
-+        return kvm_irqchip_add_irqfd_notifier_gsi(s, n, rn, virq);
-+    } else {
-+        return kvm_irqchip_remove_irqfd_notifier_gsi(s, n, virq);
-+    }
-+}
-+
-+static int vfio_cpr_set_msi_virq(VFIOPCIDevice *vdev, Error **errp, bool enable)
-+{
-+    const char *op = (enable ? "enable" : "disable");
-+    PCIDevice *pdev = &vdev->pdev;
-+    int i, nr_vectors, ret = 0;
-+
-+    if (msix_enabled(pdev)) {
-+        nr_vectors = vdev->msix->entries;
-+
-+    } else if (msi_enabled(pdev)) {
-+        nr_vectors = msi_nr_vectors_allocated(pdev);
-+
-+    } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
-+        ret = set_irqfd_notifier_gsi(kvm_state, &vdev->intx.interrupt,
-+                                     &vdev->intx.unmask, vdev->intx.route.irq,
-+                                     enable);
-+        if (ret) {
-+            error_setg_errno(errp, -ret, "failed to %s INTx irq %d",
-+                             op, vdev->intx.route.irq);
-+            return ret;
-+        }
-+        vfio_pci_intx_set_handler(vdev, enable);
-+        return ret;
-+
-+    } else {
-+        return 0;
-+    }
-+
-+    for (i = 0; i < nr_vectors; i++) {
-+        VFIOMSIVector *vector = &vdev->msi_vectors[i];
-+        if (vector->use) {
-+            ret = set_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
-+                                         NULL, vector->virq, enable);
-+            if (ret) {
-+                error_setg_errno(errp, -ret,
-+                                 "failed to %s msi vector %d virq %d",
-+                                 op, i, vector->virq);
-+                return ret;
-+            }
-+            vfio_pci_msi_set_handler(vdev, i, enable);
-+        }
-+    }
-+
-+    return ret;
-+}
-+
-+/*
-+ * When CPR starts, detach IRQs from the VFIO device so future interrupts
-+ * are posted to kvm_interrupt, which is preserved in new QEMU.  Interrupts
-+ * that were already posted to the old KVM instance, but not delivered to the
-+ * VCPU, are recovered via KVM_GET_LAPIC and pushed to the new KVM instance
-+ * in new QEMU.
-+ *
-+ * If CPR fails, reattach the IRQs.
-+ */
-+static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
-+                                 MigrationEvent *e, Error **errp)
-+{
-+    VFIOPCIDevice *vdev =
-+        container_of(notifier, VFIOPCIDevice, cpr.transfer_notifier);
-+
-+    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-+        return vfio_cpr_set_msi_virq(vdev, errp, false);
-+    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-+        return vfio_cpr_set_msi_virq(vdev, errp, true);
++    if (e->type == MIG_EVENT_PRECOPY_DONE) {
++        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
++        return kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
++                                 KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
++                                 NULL, true, errp);
 +    }
 +    return 0;
 +}
-+
-+void vfio_cpr_pci_register_device(VFIOPCIDevice *vdev)
-+{
-+    migration_add_notifier_mode(&vdev->cpr.transfer_notifier,
-+                                vfio_cpr_pci_notifier,
-+                                MIG_MODE_CPR_TRANSFER);
-+}
-+
-+void vfio_cpr_pci_unregister_device(VFIOPCIDevice *vdev)
-+{
-+    migration_remove_notifier(&vdev->cpr.transfer_notifier);
-+}
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 8b471c054a..22a4125131 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2993,6 +2993,7 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
+ 
+ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
  {
-     vfio_display_finalize(vdev);
-     vfio_bars_finalize(vdev);
-+    vfio_cpr_pci_unregister_device(vdev);
-     g_free(vdev->emulated_config_bits);
-     g_free(vdev->rom);
-     /*
-@@ -3442,6 +3443,7 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
-     vfio_pci_register_err_notifier(vdev);
-     vfio_pci_register_req_notifier(vdev);
-     vfio_setup_resetfn_quirk(vdev);
-+    vfio_cpr_pci_register_device(vdev);
+@@ -883,13 +895,17 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+                                GICD_CTLR)) {
+         error_setg(&s->migration_blocker, "This operating system kernel does "
+                                           "not support vGICv3 migration");
+-        if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
++        if (migrate_add_blocker_modes(&s->migration_blocker, MIG_MODE_NORMAL,
++                                      MIG_MODE_CPR_TRANSFER, errp) < 0) {
+             return;
+         }
+     }
+     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                               KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
+         qemu_add_vm_change_state_handler(vm_change_state_handler, s);
++        migration_add_notifier_mode(&s->cpr_notifier,
++                                    kvm_arm_gicv3_notifier,
++                                    MIG_MODE_CPR_TRANSFER);
+     }
+ }
  
-     return;
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index a3d6a0e507..75bbc403c7 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -27,6 +27,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/intc/arm_gic_common.h"
+ #include "qom/object.h"
++#include "qemu/notify.h"
  
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 80c8fcfa07..7989b94eb3 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -194,6 +194,7 @@ struct VFIOPCIDevice {
-     bool skip_vsc_check;
-     VFIODisplay *dpy;
-     Notifier irqchip_change_notifier;
-+    VFIOPCICPR cpr;
+ /*
+  * Maximum number of possible interrupts, determined by the GIC architecture.
+@@ -270,6 +271,8 @@ struct GICv3State {
+     GICv3CPUState *cpu;
+     /* List of all ITSes connected to this GIC */
+     GPtrArray *itslist;
++
++    NotifierWithReturn cpr_notifier;
  };
  
- /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index 80ad20d216..d37daffbc5 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -38,6 +38,10 @@ typedef struct VFIODeviceCPR {
-     uint32_t ioas_id;
- } VFIODeviceCPR;
- 
-+typedef struct VFIOPCICPR {
-+    NotifierWithReturn transfer_notifier;
-+} VFIOPCICPR;
-+
- bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
-                                         Error **errp);
- void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
-@@ -77,5 +81,7 @@ extern const VMStateDescription vfio_cpr_pci_vmstate;
- extern const VMStateDescription vmstate_cpr_vfio_devices;
- 
- void vfio_cpr_add_kvm_notifier(void);
-+void vfio_cpr_pci_register_device(struct VFIOPCIDevice *vdev);
-+void vfio_cpr_pci_unregister_device(struct VFIOPCIDevice *vdev);
- 
- #endif /* HW_VFIO_VFIO_CPR_H */
+ #define GICV3_BITMAP_ACCESSORS(BMP)                                     \
 -- 
 2.39.3
 
