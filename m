@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DF7C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABAAC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubzWr-0008Ek-B2; Wed, 16 Jul 2025 06:38:30 -0400
+	id 1ubzZh-0003CU-FD; Wed, 16 Jul 2025 06:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubzP8-0000Fl-Qc
+ id 1ubzP8-0000Fk-P6
  for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:30:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubzP4-0005aS-6t
+ id 1ubzP4-0005am-97
  for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:30:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752661814;
+ s=mimecast20190719; t=1752661817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=hpB4NG9+qfALvO+yzTtaBSuiqkIsRAfUoR07sJ8qqog=;
- b=LEEYdRyk8UB95pqLYw1P1ibWC1owFyoR6ZtCmjO3IEIARrQXACCNxQY4uOSju2Qhu5QORV
- 83EQI18fw74mb3lZmhI8/LrLm48EBRQml4AthJEKWMIy9NTOnDXMSMExfihq2isAb9T0gR
- rfqSNUvy3p8FlfgQMQYb/CpxNHLpyQE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z0wNxZ0cYw5JwWpC2QgW6kg1eL/yTJiIHUGQzjZYoNs=;
+ b=hfRcIBwwokAtMcXCMt7oAQOSOiTAtUGTLdki7jNsHuss4/tO8TzpexKfR5t6cQGphOTSWN
+ AiWWTGkLTC/Lb+WLmB8TMHAl4ULA1Chy/CQ3Azj2DPWyAUPRFw5iEYo7mZF8tT29itqwlU
+ r3JVTzlvOyrYUnK23EiPmiMxk8dJzm4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-AthkKU0yOfSvmNq07g3x9g-1; Wed,
- 16 Jul 2025 06:30:13 -0400
-X-MC-Unique: AthkKU0yOfSvmNq07g3x9g-1
-X-Mimecast-MFC-AGG-ID: AthkKU0yOfSvmNq07g3x9g_1752661812
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-T3733gW1NGSPNydm1746Sw-1; Wed,
+ 16 Jul 2025 06:30:16 -0400
+X-MC-Unique: T3733gW1NGSPNydm1746Sw-1
+X-Mimecast-MFC-AGG-ID: T3733gW1NGSPNydm1746Sw_1752661815
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D2AA1955F4A
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 10:30:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 545B819560B5; Wed, 16 Jul 2025 10:30:15 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.68])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EEE6D1954214; Wed, 16 Jul 2025 10:30:10 +0000 (UTC)
+ id 442041954214; Wed, 16 Jul 2025 10:30:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 0/4] Misc crypto & UI patches
-Date: Wed, 16 Jul 2025 11:30:05 +0100
-Message-ID: <20250716103009.2047433-1-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/4] ui: fix setting client_endian field defaults
+Date: Wed, 16 Jul 2025 11:30:06 +0100
+Message-ID: <20250716103009.2047433-2-berrange@redhat.com>
+In-Reply-To: <20250716103009.2047433-1-berrange@redhat.com>
+References: <20250716103009.2047433-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -83,42 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c079d3a31e45093286c65f8ca5350beb3a4404a9:
+When a VNC client sends a "set pixel format" message, the
+'client_endian' field will get initialized, however, it is
+valid to omit this message if the client wants to use the
+server's native pixel format. In the latter scenario nothing
+is initializing the 'client_endian' field, so it remains set
+to 0, matching neither G_LITTLE_ENDIAN nor G_BIG_ENDIAN. This
+then results in pixel format conversion routines taking the
+wrong code paths.
 
-  Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging (2025-07-15 00:12:07 -0400)
+This problem existed before the 'client_be' flag was changed
+into the 'client_endian' value, but the lack of initialization
+meant it semantically defaulted to little endian, so only big
+endian systems would potentially be exposed to incorrect pixel
+translation.
 
-are available in the Git repository at:
+The 'virt-viewer' / 'remote-viewer' apps always send a "set
+pixel format" message so aren't exposed to any problems, but
+the classical 'vncviewer' app will show the problem easily.
 
-  https://gitlab.com/berrange/qemu tags/misc-next-pull-request
+Fixes: 7ed96710e82c385c6cfc3d064eec7dde20f0f3fd
+Reported-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ ui/vnc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-for you to fetch changes up to def71a6b12d817b95a81b622bad2ca096ed5a3ab:
-
-  crypto: load all certificates in X509 CA file (2025-07-16 11:27:30 +0100)
-
-----------------------------------------------------------------
-* Fix endian defaults when no VNC pixel format message is set
-* Add more trace events for VNC messages
-* Fix checking of certificate loading
-* Eliminate cert limit on loading CA certificates
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (2):
-  ui: fix setting client_endian field defaults
-  ui: add trace events for all client messages
-
-Henry Kleynhans (1):
-  crypto: load all certificates in X509 CA file
-
-Peter Maydell (1):
-  crypto/x509-utils: Check for error from gnutls_x509_crt_init()
-
- crypto/tlscredsx509.c | 23 +++++++++----------
- crypto/x509-utils.c   |  6 ++++-
- ui/trace-events       | 14 ++++++++++++
- ui/vnc.c              | 53 +++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 83 insertions(+), 13 deletions(-)
-
+diff --git a/ui/vnc.c b/ui/vnc.c
+index e9c30aad62..a16be468b9 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2329,6 +2329,7 @@ static void pixel_format_message (VncState *vs) {
+     char pad[3] = { 0, 0, 0 };
+ 
+     vs->client_pf = qemu_default_pixelformat(32);
++    vs->client_endian = G_BYTE_ORDER;
+ 
+     vnc_write_u8(vs, vs->client_pf.bits_per_pixel); /* bits-per-pixel */
+     vnc_write_u8(vs, vs->client_pf.depth); /* depth */
 -- 
 2.49.0
 
