@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1825C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A37FC83F34
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubzoA-0003Lt-5t; Wed, 16 Jul 2025 06:56:19 -0400
+	id 1ubzoY-0003Xt-Nk; Wed, 16 Jul 2025 06:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubzmJ-0007ok-CX
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:54:23 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1ubzmO-0007w3-9P
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:54:31 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ubzmG-0002Th-Uy
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:54:23 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-ae0de1c378fso1042405766b.3
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 03:54:20 -0700 (PDT)
+ id 1ubzmG-0002Td-CU
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:54:27 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-ae0c571f137so1214535066b.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 03:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752663259; x=1753268059; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/KVF2ZS8Wkb+tDxBdS/SYtogmTbLC9pawdzdVe4S6bc=;
- b=FmqIWvYdCmVdlINtqAQfWGsHN/x0ChaJfhEHuclK8n1+BfpegyIR+rqqEmrlHhD73I
- abxoDcKTchYFlPyrwwd/jo0W2/VO90HPnrxfxdA7Kb4cIrtMFshPoCiQ4Do7rGmsVziX
- 8xNMlvzXzGsB9E861V5nwgH5+0y8InITi5czu03MqiGHERi/dhwjs/6OoLK9KEGq7uwD
- HtrXNjKXz6s6ZzWwZ4HzIK0TebpPPn7RI2a6UVnqXL5LWwYJ0CDqAiznaEkDZ5/fG3Wo
- 9xeyaVEjrGK1uVEypq0m3KsD3STdG7bux65AUkThwWKbyAo5EOnDN+juQipAuOT5Wgbz
- XXDQ==
+ d=linaro.org; s=google; t=1752663258; x=1753268058; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2yDR5WJ9OW5kxmFisrP8SwQ6sGdbHJXz6jo6wbRIeWk=;
+ b=yWDsIjwKnPTobkQ7WOxNcp6VRRT6LXSAbhtKuy19xoGr4fYAqgGQshsxo4xD6up62Z
+ GGo4jaz9FWX0HeBSF9w39wqjaw7tdjKqo2+vGqxv3bQSmm4v6HLduttmaU5EZ1YfNUdf
+ nkcGyRRY8eBuQpJplUpAHRvpXltZ+8uZwEWVeiZwrEmAF1e3cz+/L2jZEYzJy87B2ZXg
+ 2w7QlubTxVFbKlL5CIHflvnxuOgwn8XQnciVXSfqZwFhzJL0OltMDrh8qhoIR4oG6RcV
+ Oq5mIhHR0EmQ4EC0ww6k54H9rCJFvzYXdZqE9DtDILp0A63kAjnyl5l5ruutmWOBkScy
+ UQOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752663259; x=1753268059;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/KVF2ZS8Wkb+tDxBdS/SYtogmTbLC9pawdzdVe4S6bc=;
- b=r+r6RMotDT/guGi4E0K9LiVLqw+zmP6UWXTHvys8pXHwgLnb5xQJrvBG5b0X3RlKhR
- CagXHy1s+eyxdz5yxV98U8YEvWysKCu5X333lhgHWmBQM8wfAgO/uGFDOaNRwhTX2L7s
- x/QQeF4qRF7Kc/5hgf3nUZ+5Yuof1cqRgJajbSWIRLkiAfTW7+Cdp68jHV9PsGrnpyfq
- ickTOEf0igQYWCusucWRR76ore0Ptny+dFYI2clMcobJJ5w4yJFQl3xP2artXYwF/B/K
- bXSSQUrLLLOiRFCNcJ3bfNt5I7kEIlgMEsNO3WvcBsFfl1km2c0v4K4YggYnoZYlQsq7
- +MYQ==
-X-Gm-Message-State: AOJu0Yw7dr3eNdTghw+dqcYvjqlKNg3ZHwnhA/SaHhvQUfmdjYF3/xpz
- FHzpSFRGlXGvCH7mlP5XLPzkfmYSK06zOZuKp43tVGxsdqJ7c9vPPvWnfePhRJDZIq4=
-X-Gm-Gg: ASbGncsphhcVqOa1e326EQsBbDgj0Y1NiqoPhTwydvv5uRAcBd9b5Gyg/JtulB4J2AK
- MdLXDbN/+18zRLMIuoFEHHIlNPpHrxPnAlHD/Kg0SM+wccFe+b+PXOA02oiUc82Q12buPDOc9/J
- duFuBMsuVIDLHmpXVOqMkd4YBfi8yH9Z/zb0jAYFieI2JXMLZUI+v/appDLVkSJLYuqEIdzY4AR
- E9atx6kAamaGRh6AH8FJi4W0u7VS3/7T0GTlakuIJG3eA7t0phc5tUzeALwbUXb+p1rmM7vi0mX
- jriI4r2Nic0Oxqk1uyHgxethvOSuIakHZGbcKyZThOhozBKMZXhPXYIKBIPBZpDeIC94pc2eNkw
- 5od4IhDrO3FF65AyqOLQFj2g=
-X-Google-Smtp-Source: AGHT+IFKVUiHKcxQm7WpbJ6MpswO7uRC79JMoCi4tNDrOyUPQM71tX95HBagG8dSQjrsKG0msFkQuA==
-X-Received: by 2002:a17:907:8692:b0:ae3:5185:541a with SMTP id
- a640c23a62f3a-ae9ce19fdcemr223484266b.54.1752663259212; 
- Wed, 16 Jul 2025 03:54:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752663258; x=1753268058;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2yDR5WJ9OW5kxmFisrP8SwQ6sGdbHJXz6jo6wbRIeWk=;
+ b=gDL15dhLHGWJad/CFl063yPLdX5x46z9cOwgCSLykXXserR6h6+Hr1S6GEMeUVAslq
+ hzajSAR5kuDbn//GcR41/+DrnZK9YalG68lTspCXv7HsEiygPdbAQJdP930Y0CPt7Rx+
+ 7are+DDFmgS1DVYGNWCQ+SG5z8zI7EBQfRSqKMPMR0GG4+YeKdLrurE1MYdKrSn2OHMq
+ oIOh619NW72Pfz0ER7wR2rOZQoQ2tK2x4CtREuCq/4heknMEo/2eMkZcFqTeOf9zyUnE
+ YP1Hun+ugtYiBjL8fXFGtqVzCJDgmP0Gsw5TTtTN/vBY/uqTgTSGIXiGo/GezcCVJsrz
+ MFLA==
+X-Gm-Message-State: AOJu0Yx6d/m/UZ5XyqhxTerl5KU+oiBXf9W5DEgaFgC5ELxpVpy2bW+A
+ Zo2xNfr6xw06CRRgudaZYrRSSK44ZZUFuRqHkKrpwGSeiusO9mU4n/bDrL299R5eMtc=
+X-Gm-Gg: ASbGncsun+Rb05qGdtkhdewxCsxTuMrrUCqoj4xM4Sh5udKXcZieQX2hrvtO8fLD6f6
+ u/6kszGqiQNs9RmNm1G4thEoZqzaqoZjWNPCQuBy2kQDv9QLnVgwFVlRVNB0wYdshsancBFAJO2
+ fJ2ylPpi6Y62ZGaakGdP6gvby+D7PuWLrWxjSozXychnFPq74ZiVK800Wu9GlmuRY5gOnWKaaQU
+ lXJ7JqMxdSGdxBk2FFFqE0M0CsjlZsaTUITrR8dh06+P/+tSQiBuaXJoiI2CtFF92NNBJMLvdxq
+ DTdv0L9Zc5xwdQNRUw8V7hPh9xflf6b983frFxLgwqgo79YV29kPrLTk2sahLG2v3aoUQII1Bnw
+ Lx1T19l7YMKNozWCLy2xfJfT8iVqz0suHpQ==
+X-Google-Smtp-Source: AGHT+IHCZacBFDTN2v9FlfKT2YpbhxXVY+40ghPhSTmNr7MtWL68Chi/OtORgrExloRg/HUo+Fy+2Q==
+X-Received: by 2002:a17:907:fdcb:b0:ae3:bb0a:1cd8 with SMTP id
+ a640c23a62f3a-ae9c99be1ddmr240182466b.19.1752663258397; 
+ Wed, 16 Jul 2025 03:54:18 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e8291bb2sm1163863666b.113.2025.07.16.03.54.15
+ a640c23a62f3a-ae6e7eec2b1sm1184025566b.68.2025.07.16.03.54.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 16 Jul 2025 03:54:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1753F5F89A;
- Wed, 16 Jul 2025 11:54:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DD0F85F885;
+ Wed, 16 Jul 2025 11:54:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -75,17 +74,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  devel@lists.libvirt.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [RFC PATCH 2/6] tests/tcg: special case sparc32plus test cases
-Date: Wed, 16 Jul 2025 11:54:10 +0100
-Message-ID: <20250716105414.2330204-3-alex.bennee@linaro.org>
+Subject: [RFC PATCH 0/6] Fix building of sparc/sparc32plus test cases
+Date: Wed, 16 Jul 2025 11:54:08 +0100
+Message-ID: <20250716105414.2330204-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250716105414.2330204-1-alex.bennee@linaro.org>
-References: <20250716105414.2330204-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -108,37 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can re-use the sparc Makefile to ensure we build but don't run the
-tests.
+We didn't have any reliable way to build sparc test cases. I have
+found someone who ships a compiler but the binaries still don't run
+due to the need for CASA.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/Makefile.target | 2 +-
- tests/tcg/sparc32plus     | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+I'm posting mainly for those who actually care who might want to fix
+up the remaining cases.
+
+Alex.
+
+Alex Bennée (6):
+  tests/tcg: special case sparc test cases
+  tests/tcg: special case sparc32plus test cases
+  configure: update sparc and sparc32plus target compiler detection
+  tests/docker: add sparc-leon-cross container image
+  configure: enable the container fallbacks for sparc/sparc32plus
+  docs/about: deprecate add sparc/sparc32plus-*-user
+
+ docs/about/deprecated.rst                     |  8 ++++
+ configure                                     | 11 ++++-
+ .../dockerfiles/sparc-leon-cross.docker       | 40 +++++++++++++++++
+ tests/tcg/Makefile.target                     |  9 ++--
+ tests/tcg/sparc/Makefile.target               | 45 +++++++++++++++++++
+ tests/tcg/sparc32plus                         |  1 +
+ 6 files changed, 108 insertions(+), 6 deletions(-)
+ create mode 100644 tests/docker/dockerfiles/sparc-leon-cross.docker
+ create mode 100644 tests/tcg/sparc/Makefile.target
  create mode 120000 tests/tcg/sparc32plus
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 8bcafaaf7b..bc5d2cdeeb 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -106,7 +106,7 @@ ifeq ($(filter %-softmmu, $(TARGET)),)
- # architecture in its VPATH. However some targets are so
- # minimal/broken just include directly and skip the common multiarch
- # tests Makefile.
--ifeq ($(filter $(TARGET_NAME),aarch64_be sparc),$(TARGET_NAME))
-+ifeq ($(filter $(TARGET_NAME),aarch64_be sparc sparc32plus),$(TARGET_NAME))
- -include $(SRC_PATH)/tests/tcg/$(TARGET_NAME)/Makefile.target
- else
- -include $(SRC_PATH)/tests/tcg/multiarch/Makefile.target
-diff --git a/tests/tcg/sparc32plus b/tests/tcg/sparc32plus
-new file mode 120000
-index 0000000000..af551a9571
---- /dev/null
-+++ b/tests/tcg/sparc32plus
-@@ -0,0 +1 @@
-+sparc
-\ No newline at end of file
 -- 
 2.47.2
 
