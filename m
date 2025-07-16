@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED618C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4DCC83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubzS8-0002ZA-9w; Wed, 16 Jul 2025 06:33:32 -0400
+	id 1ubzTo-0004J1-IK; Wed, 16 Jul 2025 06:35:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ubzNr-0007ng-6e; Wed, 16 Jul 2025 06:29:12 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubzPA-0000GU-DF
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:30:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ubzNh-0005Pv-G0; Wed, 16 Jul 2025 06:29:05 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:29a1:0:640:5fbc:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 35FECC015F;
- Wed, 16 Jul 2025 13:28:50 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:748::1:e] (unknown [2a02:6bf:8080:748::1:e])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id mSJaXP0Gr8c0-O6p8sEwK; Wed, 16 Jul 2025 13:28:49 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1752661729;
- bh=VheFPJEX7HSPNGn/4KfSQr2XMtVdDiYl84SAO2wCj0g=;
- h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
- b=X6xucEJG1my9XbLMhueLk2K+qxe/LmVZqC5pW6HSEH7SY1v+JYKfs+gOwBCRyJ2v4
- yfRxBiStujGRsUT33GH6VYRxmYGgFWTWFuTD/M+oP/QhXgIGF/Yx1iFK0V/zb71K7o
- 51pJBsMcXlrWqWvctQrNvDcVkTlR4GnVON5reZXI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <9d839afc-f34f-401a-8716-e0ed098de272@yandex-team.ru>
-Date: Wed, 16 Jul 2025 13:28:48 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ubzP7-0005cO-T1
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:30:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752661824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l2rYVYVs6sXy1gz4yL8gzBsPaxm//UYf+b2pevdPpx8=;
+ b=Tp8xy4pJybNGjr+GerTGKZgc4ZmKySraMobr9xULHxSMkeALGSQRpbvWTweZ5FBTX3BL2i
+ oqY/YeeGNfL6epEKy/FUYCBBj+GpthYY7uhFa6LSbS/N4FvI0mUK9p4EJ+yC4ljdSNFuF0
+ qy8yKLPt2scBnnC4m/NTzLcaBYIbPNU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-IUhhF_5_MFaXFpBTyW00Eg-1; Wed,
+ 16 Jul 2025 06:30:22 -0400
+X-MC-Unique: IUhhF_5_MFaXFpBTyW00Eg-1
+X-Mimecast-MFC-AGG-ID: IUhhF_5_MFaXFpBTyW00Eg_1752661822
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBD7119560A1; Wed, 16 Jul 2025 10:30:21 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.68])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 500081954214; Wed, 16 Jul 2025 10:30:20 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Henry Kleynhans <hkleynhans@fb.com>
+Subject: [PULL 4/4] crypto: load all certificates in X509 CA file
+Date: Wed, 16 Jul 2025 11:30:09 +0100
+Message-ID: <20250716103009.2047433-5-berrange@redhat.com>
+In-Reply-To: <20250716103009.2047433-1-berrange@redhat.com>
+References: <20250716103009.2047433-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] vhost: drop backend_features
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, fam@euphon.net,
- pbonzini@redhat.com, jasowang@redhat.com, hreitz@redhat.com,
- kwolf@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net
-References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
- <20250714062807-mutt-send-email-mst@kernel.org>
- <d428a737-6733-457b-a973-28a70610c46d@yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <d428a737-6733-457b-a973-28a70610c46d@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,105 +86,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.25 22:23, Vladimir Sementsov-Ogievskiy wrote:
-> On 14.07.25 13:41, Michael S. Tsirkin wrote:
->> On Thu, Jul 03, 2025 at 03:47:08PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>> This field is mostly unused and sometimes confusing (we even have
->>> a TODO-like comment to drop it). Let's finally do.
->>
->> Breaks make check with UBSAN enabled:
->> 32/109 /arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch - ERROR:../tests/qtest/qos-test.c:189:subprocess_run_one_test: child process (/arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch/subprocess [9701]) failed unexpectedly FAIL
->>
->>
->>
->> https://gitlab.com/mstredhat/qemu/-/jobs/10668177755
->>
->>
->> To trigger, configure with:
->>
->> ./configure '--cc=clang' '--cxx=clang++' '--enable-ubsan' '--extra-cflags=-fno-sanitize-recover=undefined -fno-sanitize=pointer-overflow' '--target-list=arm-softmmu'
->>
->> make
->> make check
-> 
-> 
-> Thanks for reproducer, it works for me.
-> 
-> 
-> Hm. Seems, that because I miss that I've changed the behavior for vhost_net_ack_features():
-> with may patches it doesn't include VHOST_USER_F_PROTOCOL_FEATURES (taken from backend_features) into acked_features..
-> 
-> And with such change:
-> 
->   void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
->   {
-> -    net->dev.acked_features = qemu_has_vnet_hdr(net->nc)
-> -        ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
-> +    net->dev.acked_features =
-> +        (qemu_has_vnet_hdr(net->nc) ? 0 :
-> +                                      (1ULL << VHOST_NET_F_VIRTIO_NET_HDR)) |
-> +        (net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES));
->       vhost_ack_features(&net->dev, vhost_net_get_feature_bits(net), features);
->   }
-> 
-> 
-> test starts to work again.
-> 
-> But I can't understand, what is the relation with VHOST_USER_F_PROTOCOL_FEATURES and acked_features.
-> I though, VHOST_USER_F_PROTOCOL_FEATURES make sense only for vhost <-> QEMU communication, and should
-> not present in guest-negotiated acked_features..
-> 
-> 
+From: Henry Kleynhans <hkleynhans@fb.com>
 
-UPD: undestand.
+Some CA files may contain multiple intermediaries and roots of trust.
+These may not fit into the hard-coded limit of 16.
 
-the test wants to check features mismatch, and on this code in vhost_net_init():
+Extend the validation code to allocate enough space to load all of the
+certificates present in the CA file and ensure they are cleaned up.
 
-#ifdef CONFIG_VHOST_NET_USER
-     if (net->nc->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
-         features = vhost_user_get_acked_features(net->nc);
-         if (~net->dev.features & features) {
-             fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
-                     " for backend\n",
-                     (uint64_t)(~net->dev.features & features));
-             goto fail;
-         }
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Henry Kleynhans <hkleynhans@fb.com>
+[DB: drop MAX_CERTS constant & whitespace tweaks]
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/tlscredsx509.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
+
+diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
+index 63a72fe47c..143a4caef2 100644
+--- a/crypto/tlscredsx509.c
++++ b/crypto/tlscredsx509.c
+@@ -426,9 +426,8 @@ qcrypto_tls_creds_load_cert(QCryptoTLSCredsX509 *creds,
+ static int
+ qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
+                                     const char *certFile,
+-                                    gnutls_x509_crt_t *certs,
+-                                    unsigned int certMax,
+-                                    size_t *ncerts,
++                                    gnutls_x509_crt_t **certs,
++                                    unsigned int *ncerts,
+                                     Error **errp)
+ {
+     gnutls_datum_t data;
+@@ -449,20 +448,18 @@ qcrypto_tls_creds_load_ca_cert_list(QCryptoTLSCredsX509 *creds,
+     data.data = (unsigned char *)buf;
+     data.size = strlen(buf);
+ 
+-    if (gnutls_x509_crt_list_import(certs, &certMax, &data,
+-                                    GNUTLS_X509_FMT_PEM, 0) < 0) {
++    if (gnutls_x509_crt_list_import2(certs, ncerts, &data,
++                                     GNUTLS_X509_FMT_PEM, 0) < 0) {
+         error_setg(errp,
+                    "Unable to import CA certificate list %s",
+                    certFile);
+         return -1;
      }
-#endif
-
-still the only mismatching feature is VHOST_USER_F_PROTOCOL_FEATURES, which vhost_net code (before my changes) passes to acked features.
-
-Instead of exploiting acked_features this way, we may improve this check to also check VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user-only.
-
-I'll resend
-
->>
->>
->>> Vladimir Sementsov-Ogievskiy (4):
->>>    vhost: introduce vhost_ops->vhost_set_vring_enable_supported method
->>>    vhost-user: stop use backend_features
->>>    vhost_net: stop use backend_features
->>>    hw/vhost: finally drop vhost_dev.backend_features field
->>>
->>>   hw/block/vhost-user-blk.c         |  1 -
->>>   hw/net/vhost_net.c                | 14 ++++++--------
->>>   hw/scsi/vhost-scsi.c              |  1 -
->>>   hw/scsi/vhost-user-scsi.c         |  1 -
->>>   hw/virtio/vdpa-dev.c              |  1 -
->>>   hw/virtio/vhost-user.c            | 25 ++++++++++++++++---------
->>>   hw/virtio/vhost.c                 | 15 ++++++---------
->>>   hw/virtio/virtio-qmp.c            |  2 --
->>>   include/hw/virtio/vhost-backend.h |  2 ++
->>>   include/hw/virtio/vhost.h         |  7 -------
->>>   10 files changed, 30 insertions(+), 39 deletions(-)
->>>
->>> -- 
->>> 2.48.1
->>
-> 
-
+-    *ncerts = certMax;
+ 
+     return 0;
+ }
+ 
+ 
+-#define MAX_CERTS 16
+ static int
+ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+                                     bool isServer,
+@@ -471,12 +468,11 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+                                     Error **errp)
+ {
+     gnutls_x509_crt_t cert = NULL;
+-    gnutls_x509_crt_t cacerts[MAX_CERTS];
+-    size_t ncacerts = 0;
++    gnutls_x509_crt_t *cacerts = NULL;
++    unsigned int ncacerts = 0;
+     size_t i;
+     int ret = -1;
+ 
+-    memset(cacerts, 0, sizeof(cacerts));
+     if (certFile &&
+         access(certFile, R_OK) == 0) {
+         cert = qcrypto_tls_creds_load_cert(creds,
+@@ -488,8 +484,9 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+     }
+     if (access(cacertFile, R_OK) == 0) {
+         if (qcrypto_tls_creds_load_ca_cert_list(creds,
+-                                                cacertFile, cacerts,
+-                                                MAX_CERTS, &ncacerts,
++                                                cacertFile,
++                                                &cacerts,
++                                                &ncacerts,
+                                                 errp) < 0) {
+             goto cleanup;
+         }
+@@ -526,6 +523,8 @@ qcrypto_tls_creds_x509_sanity_check(QCryptoTLSCredsX509 *creds,
+     for (i = 0; i < ncacerts; i++) {
+         gnutls_x509_crt_deinit(cacerts[i]);
+     }
++    gnutls_free(cacerts);
++
+     return ret;
+ }
+ 
 -- 
-Best regards,
-Vladimir
+2.49.0
 
 
