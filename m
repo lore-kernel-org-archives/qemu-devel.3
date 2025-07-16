@@ -4,88 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246E3C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 04:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9862BC83F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 05:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubtxf-0001jA-Ak; Wed, 16 Jul 2025 00:41:43 -0400
+	id 1ubuPx-0000N6-BH; Wed, 16 Jul 2025 01:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubtwa-0000zO-EL
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:40:40 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ubtwW-0003lA-Pw
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:40:34 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a57ae5cb17so3477734f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 21:40:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752640830; x=1753245630; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dMq3VXb+MxY7wP+GgRoDyZgU1oB1M8c6lVbeUr1XbAE=;
- b=oMF9yMLotZQXxQAJvRlaYnHiCxAT8g7bnkUmQuFmMT2mN5pfuSAdv9Ld710YaGkJ5/
- U0XVGpxw5+Mr9hvwel0UUm4Pwh3QlHpRROI6XpedVW97aI74K/txO2STEUkNHQPyxVGi
- jZWNcwQ05p9GBs9C0TGI09+l9DTlMAtOo5yVMJHzILw5Fm2oVUNbGUFGDKD1hp3lzz3t
- DYnYEeZzJZrb184y5SJzjDraqbVcbnyVVV2wktCmilie7sCYfuKW5+lHJtQtqJPPX+4J
- cMJDVj7EeHMYqi1Al1Y1I1CM6wFoI+H83rcrADvqhrESvTsj1cYzPYYOMzkfxxCj8p3M
- Mexw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubuPu-0000Db-FZ
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:10:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubuPr-0002k8-4b
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:10:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752642648;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EOgqAXF7S+HeUbcQlZUt3c53FOldQXgDheMkvB1wRv8=;
+ b=S8t6b6YIoFtBzbM/++5shpWq3LLqzALGorZhM1vKLe5FUMbia9BPehbe8zn0NpjwVm3ldy
+ Brukm5yZztGic7N7cYj9dQENW6PvOyKCBl+EIpmigUM05KJeh70H6Loeu+VGhOb4BT4/tS
+ FcbIxApYERPYctkTO08s9glEXZPbfmo=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-464-0IpH9G0TMmCtjzFTP3m5yg-1; Wed, 16 Jul 2025 01:10:46 -0400
+X-MC-Unique: 0IpH9G0TMmCtjzFTP3m5yg-1
+X-Mimecast-MFC-AGG-ID: 0IpH9G0TMmCtjzFTP3m5yg_1752642645
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ade6db50b9cso683248166b.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:10:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752640830; x=1753245630;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dMq3VXb+MxY7wP+GgRoDyZgU1oB1M8c6lVbeUr1XbAE=;
- b=ijyJljxd/s5xbEB44mvQjGeXbqTNBMjwHorxGRLQAc5i0wwdzDC9Ij6Y9XYW2A4S9l
- uGyb3ZXluiM935RBkQAGnA4BxcgD/6aJ67mRwOuFndL3zYY3fyMqrBicl6DzH0k5mt9u
- 1h1JSBEy5u5gKsJMpRiFGmoz4kDw/6VnGebFH4jVcaEHSwSw6PqOvPHke5ZgdEOE6lCz
- EVNgcvP5OEVT51rzhn62iSJoSIXr7wh2k6byuF8fkvTcLK+TsiT/RGUBU/R0Wg2CE0aj
- OfMDNWVsBHlGPgU5uPIvdXcU31fCr1HIjAH+Z6Uq7IyH1616SRS6npOKx2gjv5qsa8Mi
- 9LiA==
-X-Gm-Message-State: AOJu0YzdrHQs+RI1zqCriaOX4Y+KqwYphgeknHo1s0LEndiLViPvybXD
- ggBhrBx9BWuvhhIS9som5xRvaGuQOkUyuDg8s6F2u6XbIlYwKOtSKVCrIKlTg1vm87s=
-X-Gm-Gg: ASbGncvv7lmmGUzE5RJGUkgIK3UJgC7qc6kwT+nemUW9PlnzM4QelCNCcoce61bCJIr
- 16P7owH0d/w9vDYGtF2oJuEPhmuqVaGaqpqRnugnHGa/GnfC5OmOQ3uLFG3OzD6Ncz+TTdFXItA
- JFwJb5eeckbFKdd1JFTfDOrwA78fPZjmjY8TAd7pThjZjeKpfv1dUrmHuTWtSqnO+XdEdW0jYP6
- oioOwHWHET+/bqVuTIryN8kMLP6Iq8fOXSRWkm7HEUOfdPDzj3gNu09MeIphNuhRy7qHqjeL799
- lGo6tynArTOhvSvMFBofTmlGSa48qI9HvTeaS69hYHDLY2KUwAyfUGqTpd5Gj0UpixMsNS6Yv7E
- 6KFoULrPTLjVxNcghBgb636yOJ7lYpYl7cxBf2HD5BlryS88GuWM+qEZorCbf3ndDsKUbTME=
-X-Google-Smtp-Source: AGHT+IH6X7Hjw8RdG+p2PSknTRqUO53icrkUaXmBWCgIvHPapew8ZmTV7u/r9+YJwHrwcfbWaW6oYw==
-X-Received: by 2002:a05:6000:250f:b0:3a5:2b75:56cc with SMTP id
- ffacd0b85a97d-3b60e4d4c15mr650883f8f.23.1752640830395; 
- Tue, 15 Jul 2025 21:40:30 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562797af47sm21893195e9.3.2025.07.15.21.40.28
+ d=1e100.net; s=20230601; t=1752642645; x=1753247445;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EOgqAXF7S+HeUbcQlZUt3c53FOldQXgDheMkvB1wRv8=;
+ b=fRMrsBVplBR4z3C0s+3KoS6RWQZjfaYLEZmfn566x7sfv0URgpsYhcOmcbtV8l+vv/
+ Bckz5HqAiffpcQBZWm5UxuxdRDw1Uxj7RJY7GVl6uMHG5g718mNNCjxG+sHpgk6wuta4
+ 1ph1AzFS8Fm4jZ6zJ8Sx0zJmhRRv9A2f3NGItfM6vX0Vk9BXec/PgIFaD/nrFTZGts6S
+ uWrAJWfp1WSSXlHwN1+UWMoYuKuS/IG8DnJ090iAGlY37scMGZE5SmmYpXQBIYlpPk87
+ pdxwgZHIIl7Dc5vphConU4mWKkT+HXIMMxViLbpFhkslWT/8oGVuOdJjQ62OYFELcEqS
+ tTKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDMt43T3zt5d3OacPSFx2YAxseMTESUxaTLZgZhHDpagXD0j2MlsXuOIHDborUYBBFwR/CVwOIb/q2@nongnu.org
+X-Gm-Message-State: AOJu0Yw0YlhXaH+KJzoNa1zRXcqYVC6+CPlNBT4MQafxetkbtQi+J1Xx
+ kXl07s8Ky2N5Ke4zB3XUQjnrnoAPdM15602Xy6DhkwltQxJvYw66CI3HC2ju2PcTp2TgGZGaSnR
+ +TeMlNYopl47qrFQtMWLfNzBho1Mz0j2ZI0hnmM9x7mJ6UKh6SdvHi6uz
+X-Gm-Gg: ASbGncsXiYiaVxBsSniokgwHsZswqi4tO14mP+H8+PtQ/jnMkyHspscQ6Wk4d8Ts3lD
+ SwfN2XWrN1L7Ez9O0SVF265ufcgQfQTAx+CzF1MdCUhiCrwiANR3S6OhYTQPOW93dUnC3qhgC3O
+ 3k4iNrf5afZd7ryLYETTpYhc+jRT4rBcXYKQhzxuI0j5/OsY4GqD1N/nuknHXwcGMH6JiGA8LXq
+ bTtSRMKvHfBMBwSu21Zw+VwPIt2rlwWi4S+BbMxVaL3N3FkiA58c4jVCnwhqAOKYWTLBkxcw5Tw
+ OTM3C6/e8SovM44lYr6lKeT7aBhdRVGbGH6YRo9awUreeSNDQOoqk2193/96FDtCiM4jITxq4Yn
+ Mw1dX
+X-Received: by 2002:a17:906:7946:b0:ae9:8dcb:4dac with SMTP id
+ a640c23a62f3a-ae9c99bac5fmr184215366b.14.1752642644735; 
+ Tue, 15 Jul 2025 22:10:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxFZSZ82wy+MfRNO8NnyB3QgIFmVV2nplBUWeV45HO7VnC05EV9Ea2yxfNPf7z9ey4y+6yXQ==
+X-Received: by 2002:a17:906:7946:b0:ae9:8dcb:4dac with SMTP id
+ a640c23a62f3a-ae9c99bac5fmr184212866b.14.1752642644283; 
+ Tue, 15 Jul 2025 22:10:44 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-115-130.pools.arcor-ip.net.
+ [47.64.115.130]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae6e8264636sm1110171566b.86.2025.07.15.22.10.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 21:40:28 -0700 (PDT)
-Message-ID: <7b8f77a5-c9cf-411d-9bb9-b9c72e9e98b6@linaro.org>
-Date: Wed, 16 Jul 2025 06:40:27 +0200
+ Tue, 15 Jul 2025 22:10:43 -0700 (PDT)
+Message-ID: <8e8fdba8-b3b1-4338-abd0-89005f747362@redhat.com>
+Date: Wed, 16 Jul 2025 07:10:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/13] Net patches
-To: Jason Wang <jasowang@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250714053423.10415-1-jasowang@redhat.com>
- <20250715195028.GA242340@fedora>
- <CACGkMEs=VtoeLUeXHy9Uyqb+YsRrZDXO7tOJVKrhGqidsjOn8g@mail.gmail.com>
+Subject: Re: [PATCH 0/2] docs, python: bump sphinx preferred version
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20250715212848.171879-1-jsnow@redhat.com>
+ <CAFn=p-bZBok_n-evUwjm6cdCmr+4ofjTRbVRJ+DNxft9gV4PpA@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CACGkMEs=VtoeLUeXHy9Uyqb+YsRrZDXO7tOJVKrhGqidsjOn8g@mail.gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFn=p-bZBok_n-evUwjm6cdCmr+4ofjTRbVRJ+DNxft9gV4PpA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,34 +154,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/25 04:21, Jason Wang wrote:
-> Hi Stefan:
-> 
-> On Wed, Jul 16, 2025 at 3:55 AM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+On 16/07/2025 00.20, John Snow wrote:
+> fwiw, I think this is important enough / harmless enough to sneak into
+> the rc releases, if possible.
+
+Yes, sounds like a good idea to avoid breakage with the latest Python versions.
+
+Series
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+
+> On Tue, Jul 15, 2025 at 5:28 PM John Snow <jsnow@redhat.com> wrote:
 >>
->> Applied, thanks.
+>> CI: https://gitlab.com/jsnow/qemu/-/pipelines/1928836481
 >>
->> Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
-> 
-> I sent a V2 of the PULL:
-> 
-> https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg03794.html
-> 
-> That includes some enhancement of AF_XDP. Considering you've merged
-> V1, I wonder how to proceed.
-
-Same happened to me last week, v2 got merged cleanly on top on v1
-(at my surprise).
-
-v1: 989dd906ed5 ("Merge tag 'accel-20250704' of https://github.com/
-philmd/qemu into staging")
-v2: 84d1639f286 ("Merge tag 'accel-20250704' of https://github.com/
-philmd/qemu into staging")
-
-> 
-> Are you ok to include those three patches in the next pull before hard freeze?
-> 
-> Thanks
+>> Unlike the previous series, this series only adjusts the *preferred*
+>> sphinx version to be higher, leaving the accepted version at 3.4.3, the
+>> version that CentOS Stream 9 still ships with.
+>>
+>> Unfortunately, this means we can't cut out the compatibility code for
+>> sphinx we're still carrying around just yet, but we'll await that
+>> glorious moment to arrive on some future day.
+>>
+>> Sphinx 6.2.1 is being chosen as the new default because it still offers
+>> support for Python 3.8+, but is new enough to support Python 3.13+.
+>>
+>> Distro version information for supported platforms as of 2025-07-15:
+>>
+>> distro              python3  pip     setuptools  sphinx
+>> -------------------------------------------------------
+>> alpine_3_19         3.11.13  23.3.1  70.3.0      6.2.1
+>> alpine_3_20         3.12.11  24.0    70.3.0      7.2.6
+>> alpine_3_21         3.12.11  24.3.1  70.3.0      8.1.3
+>> alpine_3_22         3.12.11  25.1.1  80.9.0      8.2.3
+>> centos_stream_9     3.9.23   21.3.1  53.0.0      3.4.3
+>> centos_stream_10    3.12.11  23.3.2  69.0.3      7.2.6
+>> debian_12           3.11.2   23.0.1  66.1.1      5.3.0
+>> fedora_41           3.13.5   24.2    69.2.0      7.3.7
+>> fedora_42           3.13.5   24.3.1  74.1.3      8.1.3
+>> freebsd             3.11.13  23.3.2  63.1.0      5.3.0
+>> homebrew            3.13.5   ---     80.9.0      8.2.3
+>> macports            3.13.5   25.1.1  78.1.1      8.2.3
+>> openbsd             3.12.11  25.1.1  79.0.1      8.2.3
+>> pkgsrc_current      3.12.11  25.1.1  80.9.0      8.2.3
+>> ubuntu_22_04        3.10.12  22.0.2  59.6.0      4.3.2
+>> ubuntu_24_04        3.12.3   24.0    68.1.2      7.2.6
+>> ubuntu_24_10        3.12.7   24.2    74.1.2      7.4.7
+>> ubuntu_25_04        3.13.3   25.0    75.8.0      8.1.3
+>>
+>> Akihiko Odaki (2):
+>>    docs: Bump sphinx to 6.2.1
+>>    MAINTAINERS: Add docs/requirements.txt
+>>
+>>   MAINTAINERS           | 1 +
+>>   docs/requirements.txt | 4 ++--
+>>   pythondeps.toml       | 4 ++--
+>>   3 files changed, 5 insertions(+), 4 deletions(-)
+>>
+>> --
+>> 2.50.0
+>>
+>>
 > 
 > 
 
