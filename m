@@ -4,141 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9862BC83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 05:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EA6C83F27
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 05:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubuPx-0000N6-BH; Wed, 16 Jul 2025 01:10:57 -0400
+	id 1ubumf-0007Fb-3M; Wed, 16 Jul 2025 01:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubuPu-0000Db-FZ
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:10:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ubuPr-0002k8-4b
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:10:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752642648;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EOgqAXF7S+HeUbcQlZUt3c53FOldQXgDheMkvB1wRv8=;
- b=S8t6b6YIoFtBzbM/++5shpWq3LLqzALGorZhM1vKLe5FUMbia9BPehbe8zn0NpjwVm3ldy
- Brukm5yZztGic7N7cYj9dQENW6PvOyKCBl+EIpmigUM05KJeh70H6Loeu+VGhOb4BT4/tS
- FcbIxApYERPYctkTO08s9glEXZPbfmo=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-0IpH9G0TMmCtjzFTP3m5yg-1; Wed, 16 Jul 2025 01:10:46 -0400
-X-MC-Unique: 0IpH9G0TMmCtjzFTP3m5yg-1
-X-Mimecast-MFC-AGG-ID: 0IpH9G0TMmCtjzFTP3m5yg_1752642645
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ade6db50b9cso683248166b.1
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:10:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ubumc-00074H-Ld
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:34:22 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ubuma-0007se-1e
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:34:22 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-748e81d37a7so3773057b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:34:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752644058; x=1753248858; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wasM4fPfefe8yCV5m/8wwSU7LP5OnhI1b90/+w6CwIM=;
+ b=dAoPbp4od4qwcnwvLqWddaPVBUtSdFd/yItZRd6IjEDBv94+9YVj0FfPTr9+/VZ86j
+ 0AdbiTUN3d7wi7zdEuDgOa+opILf5LdYN0IeJh/cvovN487hgzzVxvWj9wk9vRTLjbmW
+ rtr3POs9zqa2LOp5pbEJjVEiYcre44PUvKMOLjGOkQcWrAuQiu295JQEQYCF66QF0pjs
+ drjKORnS/1c93wZjf3tZVUDoJ3QvurwqYirlcMouSd7CCfgraDP62d7v7DFFo9ERoeIb
+ uHWUkVnFRK0SvY1taPazm7V4z05kx0A1o/JRVD3+asC1aiqRJYKKtj6qnYkgfirMzr2I
+ LMxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752642645; x=1753247445;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EOgqAXF7S+HeUbcQlZUt3c53FOldQXgDheMkvB1wRv8=;
- b=fRMrsBVplBR4z3C0s+3KoS6RWQZjfaYLEZmfn566x7sfv0URgpsYhcOmcbtV8l+vv/
- Bckz5HqAiffpcQBZWm5UxuxdRDw1Uxj7RJY7GVl6uMHG5g718mNNCjxG+sHpgk6wuta4
- 1ph1AzFS8Fm4jZ6zJ8Sx0zJmhRRv9A2f3NGItfM6vX0Vk9BXec/PgIFaD/nrFTZGts6S
- uWrAJWfp1WSSXlHwN1+UWMoYuKuS/IG8DnJ090iAGlY37scMGZE5SmmYpXQBIYlpPk87
- pdxwgZHIIl7Dc5vphConU4mWKkT+HXIMMxViLbpFhkslWT/8oGVuOdJjQ62OYFELcEqS
- tTKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDMt43T3zt5d3OacPSFx2YAxseMTESUxaTLZgZhHDpagXD0j2MlsXuOIHDborUYBBFwR/CVwOIb/q2@nongnu.org
-X-Gm-Message-State: AOJu0Yw0YlhXaH+KJzoNa1zRXcqYVC6+CPlNBT4MQafxetkbtQi+J1Xx
- kXl07s8Ky2N5Ke4zB3XUQjnrnoAPdM15602Xy6DhkwltQxJvYw66CI3HC2ju2PcTp2TgGZGaSnR
- +TeMlNYopl47qrFQtMWLfNzBho1Mz0j2ZI0hnmM9x7mJ6UKh6SdvHi6uz
-X-Gm-Gg: ASbGncsXiYiaVxBsSniokgwHsZswqi4tO14mP+H8+PtQ/jnMkyHspscQ6Wk4d8Ts3lD
- SwfN2XWrN1L7Ez9O0SVF265ufcgQfQTAx+CzF1MdCUhiCrwiANR3S6OhYTQPOW93dUnC3qhgC3O
- 3k4iNrf5afZd7ryLYETTpYhc+jRT4rBcXYKQhzxuI0j5/OsY4GqD1N/nuknHXwcGMH6JiGA8LXq
- bTtSRMKvHfBMBwSu21Zw+VwPIt2rlwWi4S+BbMxVaL3N3FkiA58c4jVCnwhqAOKYWTLBkxcw5Tw
- OTM3C6/e8SovM44lYr6lKeT7aBhdRVGbGH6YRo9awUreeSNDQOoqk2193/96FDtCiM4jITxq4Yn
- Mw1dX
-X-Received: by 2002:a17:906:7946:b0:ae9:8dcb:4dac with SMTP id
- a640c23a62f3a-ae9c99bac5fmr184215366b.14.1752642644735; 
- Tue, 15 Jul 2025 22:10:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxFZSZ82wy+MfRNO8NnyB3QgIFmVV2nplBUWeV45HO7VnC05EV9Ea2yxfNPf7z9ey4y+6yXQ==
-X-Received: by 2002:a17:906:7946:b0:ae9:8dcb:4dac with SMTP id
- a640c23a62f3a-ae9c99bac5fmr184212866b.14.1752642644283; 
- Tue, 15 Jul 2025 22:10:44 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-115-130.pools.arcor-ip.net.
- [47.64.115.130]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae6e8264636sm1110171566b.86.2025.07.15.22.10.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Jul 2025 22:10:43 -0700 (PDT)
-Message-ID: <8e8fdba8-b3b1-4338-abd0-89005f747362@redhat.com>
-Date: Wed, 16 Jul 2025 07:10:41 +0200
+ d=1e100.net; s=20230601; t=1752644058; x=1753248858;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wasM4fPfefe8yCV5m/8wwSU7LP5OnhI1b90/+w6CwIM=;
+ b=igAn3gQHfjgKI+n19hdWs30y25PXi/r5IJXPR9AwawxCD+gM5aixkWluStcvWDhFMD
+ 437YgEYwyx+n/fA5FgkmiuSGNOBBBbyAX8480jJ/1kdORIYR7RIgH9GDY+sYYrd9coj+
+ vUSafTospAP378vE/FdaBoPYTqISEpQqA8RcDDfFFEoSJZvpZHttVJTyyxCtUxfvctr0
+ XXcJTbS/5GoRZJQgLa6RdinzDHihO/RoxR3Kq+MNfzJjeAHKuS5/X/4k+6zkVzBuh0OC
+ vXDa7fW0YopdWWwANMs+vksjidRlJHp722hMSlZmkfPr0VqGU99GdXCUt9BzcOGEg3F+
+ aHmw==
+X-Gm-Message-State: AOJu0YzIKN2tIDu7b3wR8hPYXyaeL+1Tmo6uhdlp6N647OjEfXs0ntjT
+ 2OPbY1+o9cTD65UlKpeOWVIaeLN1u8fgRox9+Pusz/bN9utAdmQyd568DqW4Vws09bB20hVpWKv
+ UXtp+
+X-Gm-Gg: ASbGncunb/vm1mql8pi+YX86awxnO1lEa+5LdHvN5FzMsv6oMzEzLVyT1tFD3k4xlG9
+ F7gUhIwUzCdbm3aPpJNbewk4Hn0ojYx6pnkpx2YxxQCT84Vq3Rk2zn2fsUCtcI/rNUlxNzRSgQ6
+ RQJOBfE5bkN74j/OiBJQrYYEaN41KMYZ0GYPYxXJv/4f4v5KGA5J6uDCklpWcQKP+LrKu/+iDjP
+ he87U/sAqdHhBMjqUeOudoFIzfL/D5lcNr18PMSL0YZujrAJrN2Wwa8IwCq44GJp/mkC/TxlSuy
+ onlnQoCi10dh64k6E2zSOQpV0+v/KH0wFzCZ03yGJtKro8h5Ni/0ve5XVlKKCh0fBfrwOeW2l1N
+ 2lyQOb4nC7uSiFLJuMcVazQ/VX3XHQuxv
+X-Google-Smtp-Source: AGHT+IFLwHudL9d9qW6U7bWLmI6I4KSEOMPOt2iTDvqWbbXbh9ySEdZpDRhRbczUuaEPDf7pHSTRgw==
+X-Received: by 2002:a05:6a00:b70f:b0:748:e150:ac5c with SMTP id
+ d2e1a72fcca58-756ea8b92dcmr2947582b3a.23.1752644058042; 
+ Tue, 15 Jul 2025 22:34:18 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74eb9e06aa6sm13790162b3a.62.2025.07.15.22.34.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Jul 2025 22:34:17 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 6/6] contrib/plugins/uftrace: add documentation
+Date: Tue, 15 Jul 2025 22:34:07 -0700
+Message-ID: <20250716053407.2814736-7-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250716053407.2814736-1-pierrick.bouvier@linaro.org>
+References: <20250716053407.2814736-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] docs, python: bump sphinx preferred version
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250715212848.171879-1-jsnow@redhat.com>
- <CAFn=p-bZBok_n-evUwjm6cdCmr+4ofjTRbVRJ+DNxft9gV4PpA@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFn=p-bZBok_n-evUwjm6cdCmr+4ofjTRbVRJ+DNxft9gV4PpA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,68 +108,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/07/2025 00.20, John Snow wrote:
-> fwiw, I think this is important enough / harmless enough to sneak into
-> the rc releases, if possible.
+This documentation summarizes how to use the plugin, and present two
+examples of the possibilities offered by it.
 
-Yes, sounds like a good idea to avoid breakage with the latest Python versions.
+As well, it explains how to rebuild and reproduce easily the system boot
+example.
 
-Series
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/about/emulation.rst  | 184 ++++++++++++++++++++++++++++++++++++++
+ contrib/plugins/uftrace.c |   2 +
+ 2 files changed, 186 insertions(+)
 
-
-> On Tue, Jul 15, 2025 at 5:28 PM John Snow <jsnow@redhat.com> wrote:
->>
->> CI: https://gitlab.com/jsnow/qemu/-/pipelines/1928836481
->>
->> Unlike the previous series, this series only adjusts the *preferred*
->> sphinx version to be higher, leaving the accepted version at 3.4.3, the
->> version that CentOS Stream 9 still ships with.
->>
->> Unfortunately, this means we can't cut out the compatibility code for
->> sphinx we're still carrying around just yet, but we'll await that
->> glorious moment to arrive on some future day.
->>
->> Sphinx 6.2.1 is being chosen as the new default because it still offers
->> support for Python 3.8+, but is new enough to support Python 3.13+.
->>
->> Distro version information for supported platforms as of 2025-07-15:
->>
->> distro              python3  pip     setuptools  sphinx
->> -------------------------------------------------------
->> alpine_3_19         3.11.13  23.3.1  70.3.0      6.2.1
->> alpine_3_20         3.12.11  24.0    70.3.0      7.2.6
->> alpine_3_21         3.12.11  24.3.1  70.3.0      8.1.3
->> alpine_3_22         3.12.11  25.1.1  80.9.0      8.2.3
->> centos_stream_9     3.9.23   21.3.1  53.0.0      3.4.3
->> centos_stream_10    3.12.11  23.3.2  69.0.3      7.2.6
->> debian_12           3.11.2   23.0.1  66.1.1      5.3.0
->> fedora_41           3.13.5   24.2    69.2.0      7.3.7
->> fedora_42           3.13.5   24.3.1  74.1.3      8.1.3
->> freebsd             3.11.13  23.3.2  63.1.0      5.3.0
->> homebrew            3.13.5   ---     80.9.0      8.2.3
->> macports            3.13.5   25.1.1  78.1.1      8.2.3
->> openbsd             3.12.11  25.1.1  79.0.1      8.2.3
->> pkgsrc_current      3.12.11  25.1.1  80.9.0      8.2.3
->> ubuntu_22_04        3.10.12  22.0.2  59.6.0      4.3.2
->> ubuntu_24_04        3.12.3   24.0    68.1.2      7.2.6
->> ubuntu_24_10        3.12.7   24.2    74.1.2      7.4.7
->> ubuntu_25_04        3.13.3   25.0    75.8.0      8.1.3
->>
->> Akihiko Odaki (2):
->>    docs: Bump sphinx to 6.2.1
->>    MAINTAINERS: Add docs/requirements.txt
->>
->>   MAINTAINERS           | 1 +
->>   docs/requirements.txt | 4 ++--
->>   pythondeps.toml       | 4 ++--
->>   3 files changed, 5 insertions(+), 4 deletions(-)
->>
->> --
->> 2.50.0
->>
->>
-> 
-> 
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 456d01d5b08..93921b12ae9 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -816,6 +816,190 @@ This plugin can limit the number of Instructions Per Second that are executed::
+       The lower the number the more accurate time will be, but the less efficient the plugin.
+       Defaults to ips/10
+ 
++Uftrace
++.......
++
++``contrib/plugins/uftrace.c``
++
++This plugin generates a binary trace compatible with
++`uftrace <https://github.com/namhyung/uftrace>`_.
++
++Plugin supports aarch64 only (x64 support should be trivial to add), and works
++in user and system mode, allowing to trace a system boot, which is not something
++possible usually.
++
++In user mode, the memory mapping is directly copied from ``/proc/self/maps`` at
++the end of execution. Uftrace should be able to retrieve symbols by itself,
++without any additional step.
++In system mode, the default memory mapping is empty, and you can generate
++one (and associated symbols) using ``contrib/plugins/uftrace_symbols.py``.
++Symbols must be present in ELF binaries.
++
++It tracks the call stack (based on frame pointer analysis). Thus, your program
++and its dependencies must be compiled using ``-fno-omit-frame-pointer
++-mno-omit-leaf-frame-pointer``. In 2024, `Ubuntu and Fedora enabled it by
++default again on x64
++<https://www.brendangregg.com/blog/2024-03-17/the-return-of-the-frame-pointers.html>`_.
++On aarch64, this is less of a problem, as they are usually part of the ABI,
++except for leaf functions. That's true for user space applications, but not
++necessarily for bare metal code.
++
++Timestamps used for events are the number of instructions executed so far by
++default. As it's tracked per vcpu, each timeline should be considered
++separately. It's possible to use real timestamps by using option
++``timestamp-based-on-real-time``. This is not the default, as considering real
++time when doing emulation and instrumentation may not necessarily report correct
++things.
++
++Performance wise, overhead compared to normal tcg execution can vary from x2
++(sampling only) to x10-x15 (precise stack tracking).
++
++.. list-table:: Uftrace plugin arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - trace-privilege-level=[on|off]
++    - Generate one trace per privilege level (Exception Level + Security State
++      on aarch64).
++  * - trace-sample=N
++    - Instead of precise tracking, perform stack sampling every N instructions.
++      If combined with ``trace-privilege-level``, it will still contain precise
++      stacks for privilege level changes, and will sample stack between those.
++  * - timestamp-based-on-real-time=[on|off]
++    - Use real time for timestamps instead of number of instructions executed.
++
++.. list-table:: uftrace_symbols.py arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - elf_file [elf_file ...]
++    - path to an ELF file. Use /path/to/file:0xdeadbeef to add a mapping offset.
++  * - --prefix-symbols
++    - prepend binary name to symbols
++
++Example user trace
++++++++++++++++++++
++
++As an example, we can trace qemu itself running git::
++
++    $ ./build/qemu-aarch64 -plugin \
++      build/contrib/plugins/libuftrace.so,timestamp-based-on-real-time=on \
++      ./build/qemu-aarch64 /usr/bin/git --help
++
++    # and generate a chrome trace directly
++    $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
++
++For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
++<https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz>`_.
++Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
++using w,a,s,d keys. Some sequences taken from this trace:
++
++- Loading program and its interpreter
++
++.. image:: https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
++   :height: 200px
++
++- open syscall
++
++.. image:: https://fileserver.linaro.org/s/rsXPTeZZPza4PcE/preview
++   :height: 200px
++
++- TB creation
++
++.. image:: https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
++   :height: 200px
++
++It's usually better to use ``uftrace record`` directly. However, tracing
++binaries through qemu-user can be convenient when you don't want to recompile
++them (``uftrace record`` requires instrumentation), as long as symbols are
++present.
++
++Example system trace
++++++++++++++++++++++
++
++A full trace example (chrome trace, from instructions below) generated from a
++system boot can be found `here
++<https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz>`_.
++Download it and open this trace on https://ui.perfetto.dev/. You can see code
++executed for all privilege levels, and zoom in/out using w,a,s,d keys. You can
++find below some sequences taken from this trace:
++
++- Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
++
++.. image:: https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
++   :height: 200px
++
++- U-boot initialization (until code relocation, after which we can't track it)
++
++.. image:: https://fileserver.linaro.org/s/LKTgsXNZFi5GFNC/preview
++   :height: 200px
++
++- Stat and open syscalls in kernel
++
++.. image:: https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
++   :height: 200px
++
++- Timer interrupt
++
++.. image:: https://fileserver.linaro.org/s/TM5yobYzJtP7P3C/preview
++   :height: 200px
++
++- Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
++
++.. image:: https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
++   :height: 200px
++
++Build and run system example
++++++++++++++++++++++++++++++
++
++Building a full system image with frame pointers is not trivial.
++
++We provide a `simple way <https://github.com/pbo-linaro/qemu-linux-stack>`_ to
++build an aarch64 system, combining Arm Trusted firmware, U-boot, Linux kernel
++and debian userland. It's based on containers (``podman`` only) and
++``qemu-user-binfmt`` to make sure it's easily reproducible and does not depend
++on machine where you build it.
++
++To build the system::
++
++    # Install dependencies
++    $ sudo apt install -y podman qemu-user-binfmt
++
++    $ git clone https://github.com/pbo-linaro/qemu-linux-stack
++    $ cd qemu-linux-stack
++    $ ./build.sh
++
++    # system can be started using:
++    ./run.sh /path/to/qemu-system-aarch64
++
++To generate a uftrace for a system boot from that::
++
++    # run true and poweroff the system
++    $ env INIT=true ./run.sh path/to/qemu-system-aarch64 \
++      -plugin path/to/contrib/plugins/libuftrace.so,trace-privilege-level=on
++
++    # generate symbols and memory mapping
++    $ path/to/contrib/plugins/uftrace_symbols.py \
++      --prefix-symbols \
++      arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
++      arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
++      arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
++      u-boot/u-boot:0x60000000 \
++      linux/vmlinux
++
++    # inspect trace with
++    $ uftrace replay
++
++Uftrace allows to filter the trace, and dump flamegraphs, or a chrome trace.
++This last one is very interesting to see visually the boot process::
++
++    $ uftrace dump --chrome > boot.json
++    # Open your browser, and load boot.json on https://ui.perfetto.dev/.
++
+ Other emulation features
+ ------------------------
+ 
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 7bf658311b1..a040fc6ad1f 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -4,6 +4,8 @@
+  * Generates a trace compatible with uftrace (similar to uftrace record).
+  * https://github.com/namhyung/uftrace
+  *
++ * See docs/about/emulation.rst|Uftrace for details and examples.
++ *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-- 
+2.47.2
 
 
