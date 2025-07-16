@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B997C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 16:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC7AC83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 16:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc4e1-0005OC-1F; Wed, 16 Jul 2025 12:06:09 -0400
+	id 1uc4nK-000605-W8; Wed, 16 Jul 2025 12:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc4cA-000454-1Q
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 12:04:14 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc4h7-000852-Lq
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 12:09:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc4c7-0001yU-KM
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 12:04:13 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc4h4-0002l6-JI
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 12:09:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752681848;
+ s=mimecast20190719; t=1752682156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wpP5RL5MgDH0q7GU8n3ztWq5vyHz8jck7h98GJZ4Qws=;
- b=BvSeOKMp+YE4pLrJLCFd0/rezCWZIhdcBEuL37hXGCPyNy6xLvpHEc6A1UO/mqYw7NPIB5
- EhoZeoDDMX1PfJ52HZkJY+OM+W04VjSU+QZE0iUZCp8jiJZli1HoaXCs958vHV+Dac4Bx+
- W7rs55OGo2hziH2FmL9/13d8jak0qEc=
+ bh=gWawChLBBVotjkxL09x7pQnrlouLlvEaDlaYImRYDIo=;
+ b=cXWo3hv49vm7goNlvjrXGXhIo6i2v/m4yUI7XDZMEuhyPSSxBmwKTbDtg8on5ZQTP/zvTG
+ BAteXmshNfEnXOxmWI6yXx5JkvppguaOFAWfTxj3aWNrSkUVECxz3aVFkw2IgxsXpXstKu
+ 9IHSPcbbqvdJxIWhvJQoW582X/rT9UE=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-PJJ71HSqN2yLSlMx8hlSfA-1; Wed, 16 Jul 2025 12:04:06 -0400
-X-MC-Unique: PJJ71HSqN2yLSlMx8hlSfA-1
-X-Mimecast-MFC-AGG-ID: PJJ71HSqN2yLSlMx8hlSfA_1752681845
+ us-mta-520-nJOvjc6IPfmEEVRYzCgjPg-1; Wed, 16 Jul 2025 12:09:15 -0400
+X-MC-Unique: nJOvjc6IPfmEEVRYzCgjPg-1
+X-Mimecast-MFC-AGG-ID: nJOvjc6IPfmEEVRYzCgjPg_1752682154
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45597cc95d5so68445e9.1
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 09:04:06 -0700 (PDT)
+ 5b1f17b1804b1-455f79a2a16so52895e9.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 09:09:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752681845; x=1753286645;
+ d=1e100.net; s=20230601; t=1752682154; x=1753286954;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wpP5RL5MgDH0q7GU8n3ztWq5vyHz8jck7h98GJZ4Qws=;
- b=q5diWRNGoym+WPiqvKfcCvKQPlOjrYuaaKBGhJTxFYOPjya/xCMw2x8Xiyzh4yXMcI
- WDfs6S8wzc1vUPy6ihIjrZC8QJnx2k/Ys5B7nDAQLzgilKiku6bQryuoVkOzglX9hsgO
- YmhVGSKCl6Na5LndCEb41cqMTAEbJ9sKsgnh6XS/1AkIv5MJKnQRsV9iZ/+5QiRQ57b0
- kwKqHd1wTjcO96D0Kon4OoDGhY/D9s6SM3Roi68cj8vXKmj87a9IKzJ5kJBv/HlPog4x
- EM/al0ng7NgDP77ZFIEeCCN/rzWB7izaRgznRSwyGC3X21utEJbasOmJ3DYbmthEbxLC
- dJPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBEiKOQVTrexvdhfu0nyw66FpSm7eanJf/vMIlJDpGxR8Yur9ubK0BFTya9aj26hTFUtvX7HOLc8sd@nongnu.org
-X-Gm-Message-State: AOJu0YxXIDc9cXCgXUKC01Ni5MNF4tB5iyUzfyibYcgetf2cF0Q1aeAJ
- P9cwAoHeBTZIJx4CUk2Z7sKJTqOCT6tgHQXmnsEZEYyenqSm10KmtWQltAxtE2xKBdrDEqeU9Pg
- 7F0OqTYt1KMzRSppkKDR5F99YTVOJzzyOtPSeZuiiF9qSEaJLEKVy5oQA
-X-Gm-Gg: ASbGncse2uaeOGfZQ+gJcLmFTOeEsZtec1ztrEZZQJPsSZLR7XviNnIahRhz8yQ27AL
- 40OAPq1uDpHqSi54mirhmGEmlQsKBqrEhbX+CEiu0PW789WE7/a8dMvX2aHQ7W8h6GvEq9xotEt
- +MstpzLRJNKPfy3HOqRSm/YpBnKDedsbIv1mAiFLHb5DhZaU7ePotpKhCqgm0S+ssnb8FgLpby6
- mhzfQj02X/E62Vt7dtw5bcRTGrBEvbBp7aKRvxcsWmERQ3k+DPjLCUj+dS00NfqZQMHgSE21A0I
- ZbCkjcramg4IfsBWcMq/+NJM1NVQLfn8quUrCxyIgcSIPmXjeKu3kQTw+yUJ342I/tdQmkClcmj
- i7srbgjYbDms=
-X-Received: by 2002:a05:600c:45cd:b0:43e:bdf7:7975 with SMTP id
- 5b1f17b1804b1-4562e39b723mr32514115e9.32.1752681844350; 
- Wed, 16 Jul 2025 09:04:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfi7StPVA+v63wOR/ikn+iED0xbTzuAwwvWKtFngEvITrPXZ9OPyHtojBbNFKKBe2JVMjTVA==
-X-Received: by 2002:a05:600c:45cd:b0:43e:bdf7:7975 with SMTP id
- 5b1f17b1804b1-4562e39b723mr32513235e9.32.1752681843728; 
- Wed, 16 Jul 2025 09:04:03 -0700 (PDT)
+ bh=gWawChLBBVotjkxL09x7pQnrlouLlvEaDlaYImRYDIo=;
+ b=paxvYIL8d66KTbZ+HL7FuQwtJIqxB7wENQnIFVaikejEJlc3GB4v8X7O6ecAOTLrEV
+ aBJeKXDsncISW1M8pTbMeaV0Qk6rxAGibOSo2rOT+d/SPzoeKBa4yI4Qf/QWi5aRS97H
+ gYYQXil28WYdKKgeJYTp6r42mCyZfVmWBRWlacdQTbkwR9QbpBiBRuqXtwq1KTMEIins
+ MdRu247Xs61xQNB50cw6joFw+Mp5jtp6cJfgw0eDsXHOms5V3RBOGiSwNdyHBLDFtvcP
+ 1H0Q0QutcXEhzSSBCWKV2gEk4g5QdvGxkI6Bytt8xWtMDyS96/Q38Tyht62ero5Vm/AJ
+ fMew==
+X-Gm-Message-State: AOJu0Yz1PU9SizIVX+Djn+CQHBjYfgu338oLjth1aE2vEOBuO6GLDCLd
+ 9Hi9CspNiN3DkiPaJURrxnAYHcF8jy0VffyEdOMu3RkWMVhTxAN28PhVo8bKKYFF71amWrcA9ju
+ 4PPYYHCZVhByRwvJiAySEIs9yy0O5cauAX/f0iYrcDT3Wx8XSuK6GUNvw
+X-Gm-Gg: ASbGnctue80oP3s0yCCkI6PrQvUCNmti9+8GZLRmbi2UILgiuXovt1oQq7dTyFUYH73
+ 4JMmLaXzEmFsbgny9GZYQ/6IaOFYp3pBMEaTDGll7UIYsrLuL5y4g2v+Zl3SWxKpy72eEuvOSzt
+ tup4hokAqdPTVZKSDOR75a9KFDkIHN03RKmDHm+/gjUSFDbPPgD49zamfMEBgKaNC15DaXac0a9
+ RfJprqjIb8D9qHABpJAYyhbpAFBPwdesZ4WJgbEdjYSW2FHS1Ks/yz93KWdPGQi3YwxaBeEMK8M
+ JYbr0fSmFLt5UP97PDA0TBZMV+TnsmscmLlodfzK722Nd7cpEMTYAektAHPlyvKMLLeqbDAtl7E
+ JbbJvCf+1RWI=
+X-Received: by 2002:a05:600c:5253:b0:456:1efa:8fe9 with SMTP id
+ 5b1f17b1804b1-4562e03a678mr37502125e9.2.1752682153537; 
+ Wed, 16 Jul 2025 09:09:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuXhXeZHmCkJt3vyd8xwh91Aqb9L5GAkBV5W2i2xW//y24qk4hQb+WvE+hW6J8AROf8y4wmg==
+X-Received: by 2002:a05:600c:5253:b0:456:1efa:8fe9 with SMTP id
+ 5b1f17b1804b1-4562e03a678mr37501865e9.2.1752682153065; 
+ Wed, 16 Jul 2025 09:09:13 -0700 (PDT)
 Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
  ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e802984sm24991185e9.12.2025.07.16.09.04.02
+ 5b1f17b1804b1-4562e89c308sm25066505e9.30.2025.07.16.09.09.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 09:04:03 -0700 (PDT)
-Message-ID: <a6c9ce06-1f30-4999-9458-392b2a71aba4@redhat.com>
-Date: Wed, 16 Jul 2025 18:04:01 +0200
+ Wed, 16 Jul 2025 09:09:12 -0700 (PDT)
+Message-ID: <5060c2be-40f4-4479-8fbb-fc0156bf9a94@redhat.com>
+Date: Wed, 16 Jul 2025 18:09:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: boot failure on top of current git
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
 References: <6c04f89b-0313-481a-9d26-1fe9e60e0616@redhat.com>
  <1331c1fe-6064-4580-8464-02dee23c1fe2@redhat.com>
- <5b901f04-da30-4f40-8ab9-803e03e43414@redhat.com>
- <CABgObfbV-V9JC=qAw4UL4pYWv-qcaPCpjSKwP5yohqbFGSnbkQ@mail.gmail.com>
+ <aHfPwaF+uCOG8c+d@intel.com>
 Content-Language: en-US
 From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CABgObfbV-V9JC=qAw4UL4pYWv-qcaPCpjSKwP5yohqbFGSnbkQ@mail.gmail.com>
+In-Reply-To: <aHfPwaF+uCOG8c+d@intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -114,35 +111,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/25 5:39 PM, Paolo Bonzini wrote:
-> On Wed, Jul 16, 2025 at 5:26 PM Paolo Abeni <pabeni@redhat.com> wrote:
->> On 7/16/25 5:22 PM, Paolo Bonzini wrote:
->>> On 7/16/25 16:44, Paolo Abeni wrote:
->>>> I'm observing boot failure for a rhel-9.7 VM. I'm using qemu git tree at
->>>> commit c079d3a31e.
->>>
->>> No and I cannot reproduce it.
->>>
->>> What host is it (processor) and kernel version?
+On 7/16/25 6:13 PM, Zhao Liu wrote:
+> On Wed, Jul 16, 2025 at 05:22:46PM +0200, Paolo Bonzini wrote:
+>> Date: Wed, 16 Jul 2025 17:22:46 +0200
+>> From: Paolo Bonzini <pbonzini@redhat.com>
+>> Subject: Re: boot failure on top of current git
 >>
->> Host CPU is AMD EPYC 7302 16-Core Processor, the running hypervisor
->> kernel is ~current net-next (v6.16.0-rc5 + plus net-next new features
->> for 6.17)
+>> On 7/16/25 16:44, Paolo Abeni wrote:
+>>> Hi,
+>>>
+>>> I'm observing boot failure for a rhel-9.7 VM. I'm using qemu git tree at
+>>> commit c079d3a31e.
+>>
+>> No and I cannot reproduce it.
+>>
+>> What host is it (processor) and kernel version?
+>>
+>> Paolo
 > 
-> Hmm I have AMD EPYC 7313. I have a 6.15.4 kernel but I will check the
-> one you gave in the other message. Can you check if
+> It sounds like x86_ext_save_areas[] wasn't initialized correctly.
 > 
->   ./qemu-system-x86_64 -cpu host -accel kvm -smp 4
+> I just checked the related logic, in the previous QEMU, for x86_cpu_post_initfn(),
+> it initialized x86_ext_save_areas[] first, then called accel_cpu_instance_init(),
+> so that KVM's xsave assertion didn't complain.
 > 
-> is enough to reproduce or a real guest is needed?
+> But now, when we move accel_cpu_instance_init() to x86_cpu_initfn(), KVM
+> checks x86_ext_save_areas[] before x86_ext_save_areas[] initialization.
+> 
+> I understand, we should initialize x86_ext_save_areas[] in
+> x86_cpu_initfn() as well. Maybe we need something like this:
+> 
+> ---
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index da7d8dca633e..c8fccabeee71 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9619,6 +9619,16 @@ static void x86_cpu_register_feature_bit_props(X86CPUClass *xcc,
+>  }
+> 
+>  static void x86_cpu_post_initfn(Object *obj)
+> +{
+> +#ifndef CONFIG_USER_ONLY
+> +    if (current_machine && current_machine->cgs) {
+> +        x86_confidential_guest_cpu_instance_init(
+> +            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
+> +    }
+> +#endif
+> +}
+> +
+> +static void x86_cpu_init_xsave(void)
+>  {
+>      static bool first = true;
+>      uint64_t supported_xcr0;
+> @@ -9639,13 +9649,6 @@ static void x86_cpu_post_initfn(Object *obj)
+>              }
+>          }
+>      }
+> -
+> -#ifndef CONFIG_USER_ONLY
+> -    if (current_machine && current_machine->cgs) {
+> -        x86_confidential_guest_cpu_instance_init(
+> -            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
+> -    }
+> -#endif
+>  }
+> 
+>  static void x86_cpu_init_default_topo(X86CPU *cpu)
+> @@ -9715,6 +9718,7 @@ static void x86_cpu_initfn(Object *obj)
+>          x86_cpu_load_model(cpu, xcc->model);
+>      }
+> 
+> +    x86_cpu_init_xsave();
+>      accel_cpu_instance_init(CPU(obj));
+>  }
 
-Yes, I get the core dump with the above:
+FWIW, I can boot successfully my VM on top of c079d3a31e plus the above
+patch.
 
-# ./build/qemu-system-x86_64 -cpu host -accel kvm -smp 4
-qemu-system-x86_64: ../target/i386/kvm/kvm-cpu.c:149:
-kvm_cpu_xsave_init: Assertion `esa->size == eax' failed.
-Aborted (core dumped)
+If the above turns into a formal patch feel free to add:
 
-/P
+Tested-by: Paolo Abeni <pabeni@redhat.com>
+
+Thanks,
+
+Paolo
 
 
