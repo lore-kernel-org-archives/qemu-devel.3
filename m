@@ -4,57 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC27C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB1F5C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubyWh-0005qb-Bm; Wed, 16 Jul 2025 05:34:11 -0400
+	id 1ubyWh-0005rC-FU; Wed, 16 Jul 2025 05:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubyWe-0005l0-Gb; Wed, 16 Jul 2025 05:34:08 -0400
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubyWf-0005n4-M9; Wed, 16 Jul 2025 05:34:09 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ubyWc-0000zd-Ab; Wed, 16 Jul 2025 05:34:08 -0400
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ubyWd-00010z-CH; Wed, 16 Jul 2025 05:34:09 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhrSK5kH3z6M4g1;
- Wed, 16 Jul 2025 17:32:33 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhrSd2SCyz6M4lc;
+ Wed, 16 Jul 2025 17:32:49 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 0143714044F;
- Wed, 16 Jul 2025 17:33:49 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 16 Jul
- 2025 11:33:48 +0200
-Date: Wed, 16 Jul 2025 10:33:46 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 08/15] hw/arm/smmuv3-accel: Add
- set/unset_iommu_device callback
-Message-ID: <20250716103346.00005ca4@huawei.com>
-In-Reply-To: <aHaJYfitACLvupZV@Asurada-Nvidia>
+ by mail.maildlp.com (Postfix) with ESMTPS id 868551404FE;
+ Wed, 16 Jul 2025 17:34:04 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 16 Jul 2025 11:34:04 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 16 Jul 2025 11:34:04 +0200
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Nicolin Chen
+ <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: RE: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Topic: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Index: AQHb9NhJqDDdVP51l0m0Xe+3c+VdWbQy4kYAgAB23gCAANCmgIAAVFUw
+Date: Wed, 16 Jul 2025 09:34:04 +0000
+Message-ID: <798f739303f74fbca49a09a623a0a118@huawei.com>
 References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
- <20250715112941.00005348@huawei.com>
- <aHaJYfitACLvupZV@Asurada-Nvidia>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
+ <IA3PR11MB9136A660E9FAE540037986FB9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <aHaW9IpjbaVcRUpA@Asurada-Nvidia>
+ <IA3PR11MB9136E0D793F99E3837D208229256A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <IA3PR11MB9136E0D793F99E3837D208229256A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500008.china.huawei.com (7.182.85.71)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
 Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
@@ -75,67 +89,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Jul 2025 10:01:21 -0700
-Nicolin Chen <nicolinc@nvidia.com> wrote:
 
-> On Tue, Jul 15, 2025 at 11:29:41AM +0100, Jonathan Cameron wrote:
-> > > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> > > +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> > > +                                      s2_hwpt_id, &viommu_id, errp)) {
-> > > +        return false;
-> > > +    }  
-> 
-> [...]
-> 
-> > > +free_abort_hwpt:
-> > > +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
-> > > +free_viommu:
-> > > +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
-> > > +    g_free(viommu);  
-> > 
-> > No unwinding of iommufd_backened_alloc_viommu?
-> > Looks like we just leak it until destruction of the fd. 
-> > 
-> > Maybe add a comment for those like me who aren't all that familiar with
-> > this stuff and see an alloc with no matching free.  
-> 
-> Those iommufd_backend_free_id calls are the reverts. An iommufd
-> object is free-ed using its object id, i.e. the "viommu_id" and
-> "abort_hwpt_id" in the lines.
 
-Ah.  I confused IDs and thought this was unwinding the two
-iommufd_backend_alloc_hwpt() calls but of course the second one doesn't
-need unwinding in the error path as it is the last call so if it fails
-nothing to unwind.
+> -----Original Message-----
+> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> Sent: Wednesday, July 16, 2025 7:26 AM
+> To: Nicolin Chen <nicolinc@nvidia.com>
+> Cc: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+> qemu-devel@nongnu.org; eric.auger@redhat.com;
+> peter.maydell@linaro.org; jgg@nvidia.com; ddutile@redhat.com;
+> berrange@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
+> smostafa@google.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
+> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> zhangfei.gao@linaro.org; shameerkolothum@gmail.com
+> Subject: RE: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict
+> accelerated SMMUv3 to vfio-pci endpoints with iommufd
+>=20
 
-So feel free to ignore this comment. 
+...
 
-> 
-> Adding comments to every single iommufd_backened_free_id() call
-> isn't optimal, IMHO, as that function would be invoked across
-> different vIOMMU files and even the vfio/iommufd core files.
-> 
-> Perhaps QEMU should wrap it up with a helper, E.g.
-> 
-> static inline void iommufd_backend_free(int iommufd, int obj_id)
-> {
-> 	iommufd_backend_free_id(iommufd, obj_id);
-> }
-> 
-> if it helps readability?
+> >> >+static bool smmuv3_accel_pdev_allowed(PCIDevice *pdev, bool
+> >*vfio_pci)
+> >> >+{
+> >> >+
+> >> >+    if (object_dynamic_cast(OBJECT(pdev), TYPE_PCI_BRIDGE) ||
+> >> >+        object_dynamic_cast(OBJECT(pdev), "pxb-pcie") ||
+> >> >+        object_dynamic_cast(OBJECT(pdev), "gpex-root")) {
+> >> >+        return true;
+> >> >+    } else if ((object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI) &&
+> >> >+        object_property_find(OBJECT(pdev), "iommufd"))) {
+> >>
+> >> Will this always return true?
+> >
+> >It won't if a vfio-pci device doesn't have the "iommufd" property?
+>=20
+> IIUC, iommufd property is always there, just value not filled for legacy
+> container case.
+> What about checking VFIOPCIDevice.vbasedev.iommufd?
 
-That would then leave us with iommufd_backend_alloc_hwpt() being
-unwound by a direct iommufd_backend_free_id() which is equally
-odd - so let's just keep them all being odd.
+That's right. The property is always there. But instead of accessing VFIOPC=
+IDevice
+in SMMUv3 code, I think we can use object_property_get_link(obj, "iommufd",=
+ &error_abort)
+instead?
+=20
+> >
+> >> >+        *vfio_pci =3D true;
+> >> >+        return true;
+> >> >+    }
+> >> >+    return false;
+> >
+> >Then, it returns "false" here.
+> >
+> >> > static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void
+> >> >*opaque,
+> >> >                                               int devfn)
+> >> > {
+> >> >+    PCIDevice *pdev =3D pci_find_device(bus, pci_bus_num(bus), devfn=
+);
+> >> >     SMMUState *bs =3D opaque;
+> >> >+    bool vfio_pci =3D false;
+> >> >     SMMUPciBus *sbus;
+> >> >     SMMUv3AccelDevice *accel_dev;
+> >> >     SMMUDevice *sdev;
+> >> >
+> >> >+    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
+> >> >+        error_report("Device(%s) not allowed. Only PCIe root complex
+> >> >devices "
+> >> >+                     "or PCI bridge devices or vfio-pci endpoint
+> >devices
+> >> >with "
+> >> >+                     "iommufd as backend is allowed with
+> >> >arm-smmuv3,accel=3Don",
+> >> >+                     pdev->name);
+> >> >+        exit(1);
+> >>
+> >> Seems aggressive for a hotplug, could we fail hotplug instead of kill
+> QEMU?
+> >
+> >Hotplug will unlikely be supported well, as it would introduce
+> >too much complication.
+> >
+> >With iommufd, a vIOMMU object is allocated per device (vfio). If
+> >the device fd (cdev) is not yet given to the QEMU. It isn't able
+> >to allocate a vIOMMU object when creating a VM.
+> >
+> >While a vIOMMU object can be allocated at a later stage once the
+> >device is hotplugged. But things like IORT mappings aren't able
+> >to get refreshed since the OS is likely already booted. Even an
+> >IOMMU capability sync via the hw_info ioctl will be difficult to
+> >do at the runtime post the guest iommu driver's initialization.
+> >
+> >I am not 100% sure. But I think Intel model could have a similar
+> >problem if the guest boots with zero cold-plugged device and then
+> >hot-plugs a PASID-capable device at the runtime, when the guest-
+> >level IOMMU driver is already inited?
+>=20
+> For vtd we define a property for each capability we care about.
+> When hotplug a device, we get hw_info through ioctl and compare
+> host's capability with virtual vtd's property setting, if incompatible,
+> we fail the hotplug.
+>=20
+> In old implementation we sync host iommu caps into virtual vtd's cap,
+> but that's Naked by maintainer. The suggested way is to define property
+> for each capability we care and do compatibility check.
+>=20
+> There is a "pasid" property in virtual vtd, only when it's true, the PASI=
+D-
+> capable
+> device can work with pasid.
 
-Jonathan
+Thanks for this information. I think probably we need to take a look at thi=
+s as
+this doesn't have a dependency on cold-plug device to be present for SMMUv3=
+.
+Will go through intel vtd implementation.
 
-> 
-> Nicolin
+Thanks,
+Shameer
+
 
 
