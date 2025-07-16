@@ -4,86 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDA8C83F22
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E4F3C83F27
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 18:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc71Y-0006df-4B; Wed, 16 Jul 2025 14:38:36 -0400
+	id 1uc71K-0006Sd-PZ; Wed, 16 Jul 2025 14:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1uc71V-0006bx-Ri; Wed, 16 Jul 2025 14:38:33 -0400
-Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1uc71T-0003ar-Ro; Wed, 16 Jul 2025 14:38:33 -0400
-Received: by mail-qk1-x733.google.com with SMTP id
- af79cd13be357-7e278d8345aso14142185a.0; 
- Wed, 16 Jul 2025 11:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752691109; x=1753295909; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iK3wEUdszccuj+IbFKOtkO6YGhoqkA3SO5bXtirFCok=;
- b=dmrerxqii/iGTQ9uve4OQDMnEbIFzVcQLWc7MRgIuFz9jz9lSg7Jm3Pta6Bnh0S5mK
- +DCRwGuklltK3pPEaQsTwVLak5OigcOUkA2vg6D4VQYSvwD9Z9xYfyPnO6CB2ksQ9W+D
- tUT1iKVpMpqiHxSVqS2IaVGmBn4gIASD1w/IeKORWZp/PhwGoYF2ZNi+hSg12yL0eHLI
- NYAwuQEhIFtEfGo6PkRI+LBu6ilMpMeG7kyHQZnBoo2YOycflcc2vGWQwHJqgxyAWOEh
- U33h5tnfofSnoupPSskxW6zLuxqhqFcSSBzTMRahJY40HMPu8PHCRTDT6+DWG50BVgqO
- r/9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752691109; x=1753295909;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iK3wEUdszccuj+IbFKOtkO6YGhoqkA3SO5bXtirFCok=;
- b=Qp7fk0sm4h1VPM6IOj3Iv6K/KB8wl+eUFGPDjHA5LoCAtt6kPFxGCVmtvKcZyYv6Au
- JIgJxYnkqR0ElhSrLtuy1lcw/5GAZiXXO5sU1KAGxANXV/r8YNylhUlYXB/NiVUMg262
- KIixFX/N/5v4lyBouywDy7cS/FXMUg+r7nsFmEb275UK1vshDSt6P5v7hIwu7n/sHbgf
- DQiBqUanYGzXJB+Fht/0PnebF4yrCYEJ6vyg8Hr5aH9xmMA4t8nGikhZDkSlA6lkE2f8
- vScnAWUACNM08BaR8LTYuN9fzMcnvHd//ouFmaPSkmCMbAQTFLHkhGCrPjVJXYifL8P7
- LjGQ==
-X-Gm-Message-State: AOJu0YxUzKrWoxw0vKmp5nNBRiLF/gkNC1bRY02JKEfcSlB2uiV+819s
- kE0rJfR5F4BMFBPk3IB8hGVgxCYXPUkd37rDGdN7H3gEeKMCrSJHgW2kJN0rag==
-X-Gm-Gg: ASbGncvok9Y8EmtD6ksE4L6hd4XLhwe9lJYc5BvFL11c0y2+nk5VfYWgC4ilkSiMw4Y
- VSkCsnT3OOFPhG0iOCXrmOqWwOKQz0+QkV1/GGBlDOc/OpRYZgeiSE5+je94iIY8rp/7a5SahrQ
- zRL6XvDbQN1Gq6qqv0kvaa4mi1DZJug+6mjI/xnTigtVwgRqE9M2kisjjUNA7AwnQdMGgWr13l7
- mRSUMEusCbxZi2Q1oAOjI2VgpjLz1onnnRLLhyj9fMRtkipwb7IgA9mZZhpbQeVMj7P/53pXC1s
- oIdQPV7KokafvRo92m/6Qfv3G6jyqBaCzp5MxSAuPb5NvMptkxn4qUkjHF6axfz5wiUWZ5miu+/
- Xp3kajlw0/oRWMQHKhsRyVteC4mrgYN0+7pROngBtdvStyUlN3E7U70WoJZxAaaww5TXmB3ITbO
- vda12nXtc=
-X-Google-Smtp-Source: AGHT+IG1cvLeqrYq4HI34ug1P29dkq2TEE+48pU3flKArmHg5r+G6x0riCOHSQWLPYjtXqQJKcgXTQ==
-X-Received: by 2002:a05:620a:a50c:b0:7e3:4417:2b14 with SMTP id
- af79cd13be357-7e344173397mr596297085a.61.1752691109240; 
- Wed, 16 Jul 2025 11:38:29 -0700 (PDT)
-Received: from zzzhi.home
- (bras-base-ktnron0923w-grc-12-70-50-118-45.dsl.bell.ca. [70.50.118.45])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e168b4e352sm494464285a.82.2025.07.16.11.38.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 11:38:28 -0700 (PDT)
-From: Brian Song <hibriansong@gmail.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, bschubert@ddn.com,
- fam@euphon.net, hibriansong@gmail.com, hreitz@redhat.com, kwolf@redhat.com,
- stefanha@redhat.com
-Subject: [PATCH RFC 0/1] block/export: FUSE-over-io_uring Support for QEMU
- FUSE Exports
-Date: Wed, 16 Jul 2025 14:38:23 -0400
-Message-ID: <20250716183824.216257-1-hibriansong@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uc70o-00069Q-L5; Wed, 16 Jul 2025 14:37:50 -0400
+Received: from mail-mw2nam10on20606.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::606]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uc70l-0003Wm-TL; Wed, 16 Jul 2025 14:37:50 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uuPDxhFVCuEFb6BHY0+sitLXosj9dAoeZe9OpHLyBmY/j1p+6Ghy/n6L3FpvXj7G4ho1CBzL8Ig8FuaCsu7Emb3eOEGMNU+7iVmPa6QszTz6Ll56rM6OXmTEBAWX9MdOfNB7QlJ07KHP9LajjXss/eoDv+mln9V+7xCf5sJ26i+GrME2tnTpsyPOt8gWCH1/L7QirP719+WcL0/t5Be4xFCZr0sWhbdRDlupMgtIcLScv2DP/WvgIHesmeODaxdWmeTLZp3nxzH1OgnT3QnnKkEdu37xsH7nVuF9toUWgD9SIIcWAhsVZVE4SvDp3mQB6wyNS1UYU6tzI5R2HGimDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RzjoZi35nAzVZxvyvT96ZDvWSXXGGfCp0+i3km0kfcg=;
+ b=jUYUnNFs0UddPnr1zW2vxXeQFGYYVOkYc+fNYuB1kiTD0E/XKY0mO3P67SLCItxLWGcusDWo3FCsoNVT7cjWVuMJw4ZE/MtRo/E7ZFYdh7CvXx84XdeH4rxXuCmQ32UGUFV4lLbWyq2j1PBRk/fmYF7tOPAyvpPTu3ygH3luJmsFVFmbkSKAjBtyTuOSumgGGDJev24rPtnzm8hxfdHBOD60FWZ22976/IVQsb8K1q+P8ezFO/KOXQNNXjlnyYX7DAEqVARu/UhMOWpw2CBvqdMUnbQYANwk01l4LmIv6Hpl2cbZWOzQ4Vgc5SfQZ7basufHXQ1Hg9EA2nFYzOoZtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RzjoZi35nAzVZxvyvT96ZDvWSXXGGfCp0+i3km0kfcg=;
+ b=UxJ5SShTgxMtA/OtRouluuGE+Kf1mcpOGeCyD1MURecWJvVCIqnDuoPa0MzAWG2VWpD7SLoEdxD7dZGNP41zSGOrWTZoMvoXv8t2K/6Ea1qzm0H+0V23oGrxETzuDoOOE7Y6He3FoEluZi26zE1J5QZnTxFj7834TCjLPfr+qeYcZUiTc479utgWNFzggEODHpiGdyin6l85LNS8a12spjAgySSZBzY3mxCPaDW2vdbVb0uryN8RAzDVHrXV2hl3qvq4j4Xc8McYU8ek/JJU/PyMA5/loKNVyvSb5THRxNwY7R86ARoqDfw7THxpb/m+LR4eFDjtxuix7g1XgcpmnA==
+Received: from DS2PEPF00004566.namprd21.prod.outlook.com
+ (2603:10b6:f:fc00::508) by IA1PR12MB6652.namprd12.prod.outlook.com
+ (2603:10b6:208:38a::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.32; Wed, 16 Jul
+ 2025 18:37:38 +0000
+Received: from DS1PEPF00017091.namprd03.prod.outlook.com
+ (2603:10b6:2c:400:0:1002:0:5) by DS2PEPF00004566.outlook.office365.com
+ (2603:10b6:f:fc00::508) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.7 via Frontend Transport; Wed,
+ 16 Jul 2025 18:37:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ DS1PEPF00017091.mail.protection.outlook.com (10.167.17.133) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8943.21 via Frontend Transport; Wed, 16 Jul 2025 18:37:36 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 16 Jul
+ 2025 11:37:24 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 16 Jul 2025 11:37:24 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 16 Jul 2025 11:37:23 -0700
+Date: Wed, 16 Jul 2025 11:37:21 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 14/15] Read and validate host SMMUv3 feature bits
+Message-ID: <aHfxYbPLoiZvWlNZ@Asurada-Nvidia>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-15-shameerali.kolothum.thodi@huawei.com>
+ <aHcVNYtd9qe+sHAT@Asurada-Nvidia>
+ <d3396db488164f558aeafafd151aa7ee@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
- envelope-from=hibriansong@gmail.com; helo=mail-qk1-x733.google.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <d3396db488164f558aeafafd151aa7ee@huawei.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017091:EE_|IA1PR12MB6652:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4115697e-3b9b-4d51-20dd-08ddc497d651
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|7416014|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?GbqSmipJFNar9xz13U4yIIGe9N4enfxeWLNWjZVHvkSKm9dom1QBaAtpCvl8?=
+ =?us-ascii?Q?GKtZXFw/pCckQwQrvInNncsBsCka1ux8gyJLEARAGavfhuVd8n/CmsAD7+Uh?=
+ =?us-ascii?Q?fS9tYKG8s8ej+mAvd+0G/9yRBwUEynFcKsRzMaWD+t7AlIMekAoO5c13We+M?=
+ =?us-ascii?Q?YHdfBjaKzv2FbGOj+k4BCu7nmo3O8sFJEChWH0wWcbFoLWX4zpYIibi3lDsN?=
+ =?us-ascii?Q?Kf6Ei4hjlRNTuJEMr2n63QAK5phngV11gJ7HgltyVv+uB+19zJeXanSgFqi/?=
+ =?us-ascii?Q?0kSsbWM3A027+6RIDYvWQjS+EPKPbygQ0jbfsZmrZ7/V79sr2DM/chxP/igq?=
+ =?us-ascii?Q?ydhsSf9LS2rdggult1WjS9bb2JZB2dOAysRQWjzmsT7H2SzQcDTahb6ZD/gI?=
+ =?us-ascii?Q?/mJi9lSu5R3kIs4N71B3K1tisGq0nGlg3XzINPb185CUzTcmXQrDMr2I0ajA?=
+ =?us-ascii?Q?a7w87t3vk4TZKAeEg/1RzRi7olLpODFw7LJqDd2oU4eAcD53CJ2+nynib5l1?=
+ =?us-ascii?Q?bre1EJrtNOyoQWJ0E+qoaubiCws9nf/kuFyp9PDlGbRf/M/+ytGKU0FOAGDt?=
+ =?us-ascii?Q?F4jyA4VIJ2d6jYNlbnVAEWizXFskU1hAUhX2QUNgxou6YSGCZVYH5XT6LjqA?=
+ =?us-ascii?Q?6JdUgLFnYfJOBSqEgqGRPXgrnRVxt9NBRlRVSf2emq7WO/Mx5uEwLGNwMl3G?=
+ =?us-ascii?Q?ql41lKYd0vetlPrQrQkhTK3u1Xq8hTJOsHu4gGzL6DrH8Ir9Y9eedmek0RC+?=
+ =?us-ascii?Q?7TjK3yKn1AaSVLbVcu6eJe8nT1v+aUAwIkioaXTC3iBVd6Hltcok+vs1X//Q?=
+ =?us-ascii?Q?pk3doEBak47vwX5n4zDYFVlBO186d1tqqd/ri86QTUfsPIN+VsXjiIwyFfh6?=
+ =?us-ascii?Q?0sgxYuQ0WINMAAvy/Qm8RfiljDHPTMAk5Ga4hD36+P8hrlegVdtpiCY2v8vj?=
+ =?us-ascii?Q?SR66iD6SQ1EWMDszs+bhrQWM3MD/5E756M1JJl3rcYgYHepeBndsmVkpix2r?=
+ =?us-ascii?Q?dWwgZOoAgPyAUYopb+qokTNASwhT1Aq08v+m5jgv7sy7aBq+O9Tc2MFLf3oA?=
+ =?us-ascii?Q?fIFKWaOVG0qwZ7PRa+TRk4c8PxJoIIFwNxMv8XBkWQ4n1XIpFzanDoZhvvQN?=
+ =?us-ascii?Q?O8UHwrN6NHtAXXCtgj6d1UqFqzOUwj/tI8gAUgnhBoSaFefE2doyMXREOFd0?=
+ =?us-ascii?Q?+9giXz/pokPRu0JAqLndaPhv1kQ20ldQDeBQEhSnv4mxAZlVkDHCNkGIgEzZ?=
+ =?us-ascii?Q?5dSRszRnWJOMeQY5QW4cTB8nxncZuRvSdBwYTdjPI6a7lR/U3KstDMZRcVPO?=
+ =?us-ascii?Q?wcjLTZka7RfUT38T5BJJ8Y5Iw62Iqx3ZOoYnvCH8Cw1Vmn05muxui5EHFNM9?=
+ =?us-ascii?Q?sQLLPAVfulOsl0k+voOKTNna8jssb3HCtQXx2AAPTBtYU9NBX94quseen0W2?=
+ =?us-ascii?Q?atJugTjGetO51BiKgbk8vMgL/EchO8NoPx3AXU/pgYjN+7N+CrjMcok2Xgoh?=
+ =?us-ascii?Q?/mH8d5oBFKe9LBU+y8cHkwYoowqtgvaRMAD0?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(7416014)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 18:37:36.9798 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4115697e-3b9b-4d51-20dd-08ddc497d651
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017091.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6652
+Received-SPF: permerror client-ip=2a01:111:f403:2412::606;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,43 +167,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This RFC patch represents an initial implementation of the FUSE-over- 
-io_uring Exports idea proposed for Google Summer of Code (2025) under 
-the QEMU community:
-https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_exports
+On Wed, Jul 16, 2025 at 10:26:21AM +0000, Shameerali Kolothum Thodi wrote:
+> > On Mon, Jul 14, 2025 at 04:59:40PM +0100, Shameer Kolothum wrote:
+> > My vSMMU didn't work until I added entries like SIDSIZE, SSIDSIZE,
+> > TERM_MODEL, STALL_MODEL, and RIL.
+> 
+> How come your vSMMU not working? Or you meant the assigned
+> dev is not working?
 
-The implementation approach is primarily borrowed from how libfuse 
-interacts with the kernel.
+The "dev" (behind the vSMMU) running in the guest I mean.
 
-FUSE-over-io_uring (https://docs.kernel.org/next/filesystems/fuse-io- 
-uring.html) has been officially merged into the Linux kernel. The idea 
-is to replace the traditional /dev/fuse based communication with a more 
-efficient io_uring-based approach. In this model, userspace registers 
-io_uring SQEs via the FUSE_IO_URING_CMD_REGISTER opcode, and then waits 
-for the kernel to forward FUSE requests as CQEs. These are processed by 
-the FUSE exports implementation in userspace and then committed back to 
-the kernel using FUSE_IO_URING_CMD_COMMIT_AND_FETCH.
+> The emulation supports SIDSIZE = 16 and RIL. Could you please
+> share the difference between these values w.r.t host SMMUv3.
 
-To enable this feature in qemu-export-daemon, simply add the uring=on 
-option to the export configuration.
+My hardware doesn't support RIL while the VMM sets RIL.
 
-As this patch is still in the RFC stage, it currently supports **only 
-single thread**. Due to protocol requirements in FUSE-over-io_uring,
-the number of FUSE threads must match the number of CPUs. Therefore,
-this initial version only works on single-core VMs (i.e., QEMU started
-with -smp 1) or single core machine.
+There are other conflicts like STALL_MODEL that affected
+the final two-stage STE in the host too.
 
-Brian Song (1):
-  block/export: FUSE-over-io_uring Support for QEMU FUSE Exports
+> Probably we should take a look at Intel vtd implementation mentioned
+> by Zhenzhong in the other thread where it looks like there seems to be
+> a property for each capability they care about.
+> 
+> Probably something like,
+> -device arm-smmuv3,accel=on,pasid_cap=on,
+> 
+> And then enabling all features related to pasid and on later when
+> we retrieve the HW_INFO on device plug, compare and fail if not?
+> 
+> But I think on ARM, we still we have limitations in knowing the actual
+> host supported features through IDR. In that case, we can only assume
+> that user is making an informed decision while enabling these features.
 
- block/export/fuse.c                  | 423 +++++++++++++++++++++++++--
- docs/tools/qemu-storage-daemon.rst   |  10 +-
- qapi/block-export.json               |   6 +-
- storage-daemon/qemu-storage-daemon.c |   1 +
- util/fdmon-io_uring.c                |   5 +-
- 5 files changed, 420 insertions(+), 25 deletions(-)
+Yes, I think you are right about this approach.
 
--- 
-2.50.1
+Maybe a "subversion" parameter could mask away quite a few bits
+like RIL BBML. But the tricky thing is that user might want a
+customization to those individual bits, because it has to match
+with the HW values to use the device correctly.
 
+Thanks
+Nicolin
 
