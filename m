@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298D1C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B041C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubysR-0002IH-Bo; Wed, 16 Jul 2025 05:56:39 -0400
+	id 1ubytJ-0006lj-MS; Wed, 16 Jul 2025 05:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1ubyra-0001Qx-P0; Wed, 16 Jul 2025 05:55:47 -0400
-Received: from mail-dm6nam11on2061e.outbound.protection.outlook.com
- ([2a01:111:f403:2415::61e]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1ubysG-0002Bt-8R; Wed, 16 Jul 2025 05:56:34 -0400
+Received: from mail-co1nam11on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::604]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1ubyrR-0006aX-Nb; Wed, 16 Jul 2025 05:55:41 -0400
+ id 1ubysB-0006lM-JT; Wed, 16 Jul 2025 05:56:27 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W9yjsQWnXA7ssmz1PwBMCpPt3la2tW4MLkUIhbVakxURP/EvPCo5qDvzKTB6i138bABZ4smePTJnquvcAC37AjW2o77mZJWa8QXLkmOmGS/jCI8NhtpplJ3M84QsNEA1umil0ml2kv/DWR7ZKh5IEv94lizACJdwGPc3617ApAUvFkocMhMdmzPBCutkYSmNmETJvNZpDIFPyx2boNY0MtKIul/6h1ADzbJykCbpKJFgAieHoaJvZl5L1Xg9+E6vP1G5hnN7+xBtWhOtcfBdU+SfxKggtR5XMJcPI7x0Ijb+oJ3srBu74C5L3CzowdPWsGy3uI8KfRhSRMmUb+dVeg==
+ b=UxROWFToDHPr3zVSBbFb8cjteVuX362O/e/1NytfdQx6GQbTOPh5WpBIBxiYNpMkkqNXAU0gf1B/7LDVVJKrrLKjKXs3cQGxJmoRbMPAtqWlXQnWLEr3hDzqkZsODiqU9njAow5vvBppYimEEow4uxyertAq2NZQACTOK0d5+DKCcmoGPKDwpY5IzZFzSuNGgl00kcUYU426gGg1hXQmhO+GzUQznbK4QmlPd17umbzcCEMjsbA9qIAy5qXOOiFwhfpzK1HJjdrhgdVWnEIN6I6hB9NgIknuCnq3me1G4pf1cHTZpZ2lmNNLXJOKZxh/PgTCBPWn0d3QpVd1vrJnjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mcq8a0lMmPFaf+iKXYBarKV3fDp2Zp1S4aczbtGlxlE=;
- b=aI29lni1CFUEGyGojr8ePBd8HtTWOLkJH148Lf4y/idXdOeerhNYAKHtMl5RiyDbSrNwRvDjQDwV1Dky7J9fn47x20SQnpmXmFWFzRu9sBVtg5yRXnLFaLEbTGs1dsZ/yhjT7qrwy5yDt4Mi/eb4U8d9KnOWdn84UxiRngLc2GozSk7nCdH4nno0sEYPLh4B61KjSjD+lQhfYGOnseUY0J9wNg421arFr+Gpo2LMOe5iSPmRfOPcaZSQ9L2zEiE/TZBUXpN0fcfLOYx1x3ZOcaiCHB3iKj6wmFHXZeu4i1wTgy1fMU/HAApl7okUBELGBFlWBczffNdOI6fSR7Bq1g==
+ bh=vxWgsjcOpN57v67/FTkdfRVB9f/iEKP7e+AasnGvPgQ=;
+ b=vRJ3WHWFc0LuKOO8VL23FdGPTsJ1NgkoSTU1Zf0yNH96NjcpxgFLljkQEKISWq5qJSCL53v0QYOovwSoQwVYTChxxZWqnCydaLyT64CZoQkNoSPKRpznmtnX5vT2YHhMx/cd1Yw1KVdpr69+bWapyqjvw8gIQy1xbLrjfh3Aaz7xGp2GK9POkCqyuGN12QcA3cr2kkF4iN4wGoTwmQOzpqJwJaLDUwy4ccgIkFAPj9udiX6K+0X4Qv/rJUpfHrNOJEuDkFh/v0T9KnhDAHoRO/uQ5WJYRuetKEJKIEdXXJYSd32GwfivJlziJEZEAPlFaUkLYdkbzpFsANbw8YAL9w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mcq8a0lMmPFaf+iKXYBarKV3fDp2Zp1S4aczbtGlxlE=;
- b=D+JZPAa4TlNy5Ax8aSa17JkJCIPheKjzsfRr7Vp4FAZw/AdQf7jm2Thx5f16YefNPKM5lxbIBQyVunOuCbj33D4FTyPJUlH9TRMEbRrT0NulsFradOY4Aps8BpTT5kXtDq3ag7OmeRGMmjZantApQ2uieBXFCx9fI6uTjBCkyb4=
-Received: from SJ0PR05CA0081.namprd05.prod.outlook.com (2603:10b6:a03:332::26)
- by BL3PR12MB6594.namprd12.prod.outlook.com (2603:10b6:208:38d::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Wed, 16 Jul
- 2025 09:55:30 +0000
-Received: from SJ5PEPF00000205.namprd05.prod.outlook.com
- (2603:10b6:a03:332:cafe::5e) by SJ0PR05CA0081.outlook.office365.com
- (2603:10b6:a03:332::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.17 via Frontend Transport; Wed,
- 16 Jul 2025 09:55:29 +0000
+ bh=vxWgsjcOpN57v67/FTkdfRVB9f/iEKP7e+AasnGvPgQ=;
+ b=vDSQECBUcskUtjJ7kEA14RQfEV/AeO9seXFzyo8lFSHVhhVqwkUyoJlZGgoeFUfFJFPMgRJ0tp0mMf/Gey/6gHvbqQvmadagichPFDMalDs9HLqZrdnwB26nSfvfFaX3U9EDL2Yd4Jg8DcNLPzvaH6+lMxQNZuSusaBgUu8YFYg=
+Received: from CH3P220CA0019.NAMP220.PROD.OUTLOOK.COM (2603:10b6:610:1e8::18)
+ by DM4PR12MB6661.namprd12.prod.outlook.com (2603:10b6:8:b7::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8901.35; Wed, 16 Jul 2025 09:56:14 +0000
+Received: from DS2PEPF0000343E.namprd02.prod.outlook.com
+ (2603:10b6:610:1e8:cafe::f5) by CH3P220CA0019.outlook.office365.com
+ (2603:10b6:610:1e8::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.20 via Frontend Transport; Wed,
+ 16 Jul 2025 09:56:14 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
 Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- SJ5PEPF00000205.mail.protection.outlook.com (10.167.244.38) with Microsoft
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS2PEPF0000343E.mail.protection.outlook.com (10.167.18.41) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 09:55:29 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 09:56:14 +0000
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Jul
- 2025 04:55:17 -0500
+ 2025 04:56:13 -0500
 Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
  SATLEXMB03.amd.com (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39
- via Frontend Transport; Wed, 16 Jul 2025 04:55:16 -0500
+ via Frontend Transport; Wed, 16 Jul 2025 04:56:11 -0500
 From: Luc Michel <luc.michel@amd.com>
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>, 
@@ -69,74 +69,75 @@ CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>,
  <edgar.iglesias@amd.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>, "Frederic
  Konrad" <frederic.konrad@amd.com>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: [PATCH 10/48] hw/arm/xlnx-versal: usb: refactor creation
-Date: Wed, 16 Jul 2025 11:53:52 +0200
-Message-ID: <20250716095432.81923-11-luc.michel@amd.com>
+Subject: [PATCH 37/48] hw/misc/xlnx-versal-crl: add the versal2 version
+Date: Wed, 16 Jul 2025 11:54:19 +0200
+Message-ID: <20250716095432.81923-38-luc.michel@amd.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250716095432.81923-1-luc.michel@amd.com>
 References: <20250716095432.81923-1-luc.michel@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: None (SATLEXMB03.amd.com: luc.michel@amd.com does not designate
+Received-SPF: None (SATLEXMB04.amd.com: luc.michel@amd.com does not designate
  permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000205:EE_|BL3PR12MB6594:EE_
-X-MS-Office365-Filtering-Correlation-Id: addc1e18-b788-47bc-c1ca-08ddc44ee5b2
+X-MS-TrafficTypeDiagnostic: DS2PEPF0000343E:EE_|DM4PR12MB6661:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93c77d25-0eb2-4b1c-b6f3-08ddc44f0045
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?tclhrQQ7BQfVf66TkFV/tYHmrD7vHzHV1Nbm0LI9oeYFpLFMv+2HEB3WbeTN?=
- =?us-ascii?Q?RI4zI3aFCpbJSWBeOYdgxyJZSNvJI1MJENYj+ulqGlewzD1Dz8ySzPyjY1n+?=
- =?us-ascii?Q?0XMijB2q2afBwIVBHPPB9Sx22c+L/0CQJ8XzwgxISZ4aeWir6VwPtLKQGSGt?=
- =?us-ascii?Q?ltnNSEcIpL9wGu3nSDU9oTVk22CqBs5kWvy03ywR3hJhLygZbRFWf7ViP8WE?=
- =?us-ascii?Q?811NB1PJOVJxyjBRVhD5SbPnQyLxNd2+HcoWrhnh2z/CXQqNsIYPewByIMr6?=
- =?us-ascii?Q?fm0LzxBGpMx4RCWTvtzLSZ7bAl0Of1DpX/R4Hr2mHOeZquRH6lt1dWL1RJDa?=
- =?us-ascii?Q?gwpujnMPR3K653zQQe3JuM1xfBObvNnAJGMpLLBDAPtKSl1XfyS6EE2qnAxa?=
- =?us-ascii?Q?OMCxBWLhmz3TLLTt8KI58OhrILQ2pmhwF3tISinneDdWSWL1A5ckyix0a0AZ?=
- =?us-ascii?Q?mFWrkIwqUhX/caVEJhINzFM/KSGtfKxixWKiVlngl7ABIe41xxWt5bnA1eWO?=
- =?us-ascii?Q?d0WmW37xqwtMapFY2ApCD8JoNIYBKVblnSrAUiaWbTb1ksEZPFIl8Jb2uBnk?=
- =?us-ascii?Q?5jjBstBrs9S+u4gym2zZMsu5VXgtbwzRS+8p/0gi86nLnPFsRaToozmqaAsS?=
- =?us-ascii?Q?mA/dJYwVSweFqXsa5kZg/WRPcM8DG2FTVRhrEWCiqD+F2ouRaSMykXpGqVOh?=
- =?us-ascii?Q?/kWFdG9e7MQy7huo53pOp0ET6fmZJQCzWNSBbWKjf+N0PHdvYGk2jVZRqZJk?=
- =?us-ascii?Q?9d8LrFSdocr1qY6DqkeP1ti7n/kyo4ORThmF3mmLlG3tBYLkxCDMePGUeWEo?=
- =?us-ascii?Q?ns7omQvdT+KWl5s0b7p0t9N/CAyu5a6uSPXKCmNBhGexK21uVOvmuHoZwu/P?=
- =?us-ascii?Q?loRlHqZkF1VNO5DK7y39vVPm2UlAJkgiL4k5OB8OqFxU+ZW0CBVOfBrIYvoa?=
- =?us-ascii?Q?wZWRaqcGiIaBPwbt8n0hmw62xHOEkbt4aLGkouTys29WbYIHdB9ywwJlwgL2?=
- =?us-ascii?Q?uQ9ZC4g4mUtAWUbq/o8PL7uAwi/TheloHNCcnJojvui8jTEp/fTn/Csy6xct?=
- =?us-ascii?Q?1kWyuDtpnAVIEuAPJ0azS8WPzPVwcm4qBDY7ZCW59as8paoUzJQXFZ4RuRyy?=
- =?us-ascii?Q?0gO+gWN/kqEGVgNQUc+H4P9JN46Xs3MGU4M2RYCbc45Ltto0JMvctgcll5C5?=
- =?us-ascii?Q?2V7ZvJm+NS5OwT4MFO5wqifpIJpJlJGlNdHDk4ECvLmTYhgGXQNe4WrXu3hO?=
- =?us-ascii?Q?Ka513pvYInyrtY2drpAczfhMvVRGVyBJ+dq78FdDl63PeWhvJdI1EgWsnftQ?=
- =?us-ascii?Q?SN8baE2cEEpjDFWU7k1lfW6lzxLEK4OkaLnnENiLgaGf/SWp2YCuJOXtnE0I?=
- =?us-ascii?Q?z/UMgFZWoah3BcZdUkT+VNE5Dq5WX+s1xvFMhtlW1C9OqEDCDmgK4NtbySIu?=
- =?us-ascii?Q?B1eBlOLRn83N0A9HLTuG5zCld7xGF4YczCduVpY+RXG3nHwF+aRZ0owBjIfq?=
- =?us-ascii?Q?CQzwXz/9JFX+BXWEswevw255qKwZu4Gt8oOV?=
+ ARA:13230040|82310400026|376014|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1jshIXKWMlY7WVICem2rq0Nd5SKnerPz4pbve+1ruZbo8wVaz6PsMrCdcJn5?=
+ =?us-ascii?Q?GuhnB8RWxKUdumAz24m5RYDK6T/SFA81gCrlDt5qBPGaiihRZVIQOYiEVspd?=
+ =?us-ascii?Q?s15DuaAcH+lh0GIt7lo9KV5Px3H+ywp7kMsC64rxXMPklEz6fkATIe3Wm+jv?=
+ =?us-ascii?Q?RgCNaqNSS1lHjRe1UhOLCwyxnA5eYYFL7sVldYLJyXZ0JBte0B9VP79dgMo5?=
+ =?us-ascii?Q?FlkDVmEk8/q9UdhXdVJsCzBfjhwwUUGKBefGuMZ4KtDQMaxCTXzARECRuQGl?=
+ =?us-ascii?Q?iHjMFQNtvLRQsZnF2jJCD9fXk+PUg613+C4NnsXzg0GVXJIOzit7OOMd1YAX?=
+ =?us-ascii?Q?rY1yLWMA6tWYDf64Qo7BF4zzz/QCSuQjdFD9TTwVaom1uJAZ6Vw8qgrJEvwX?=
+ =?us-ascii?Q?VHiOoh9ilJVJeyVh9IAOj2keGOsv/fy5vhPMb5Zb/OQaYDgdJXuI+xhvxn4D?=
+ =?us-ascii?Q?uX4F/575ma4O/vpWyktObgxv6a+WG5Qz89vxYPxOX673qRga9SXptPvii+jy?=
+ =?us-ascii?Q?LrIwo6oTRG2YLbpDZSAn4tbIbA2sjHaksH5DlJUvtwXH6PUBcIGOccSrdx4Y?=
+ =?us-ascii?Q?63B71qrqdWfkLuuFl+dEbbZu0Rm7IR4xK/6EEf05kh40urxTToQrjkMvmvpz?=
+ =?us-ascii?Q?XUbITpAfGBE6W0RhL2+sN4V5Vjr3Tfi4dJbfJ8daCLBQPDM0WQtwF/NqVRVG?=
+ =?us-ascii?Q?UK0SgyeL2UxLCRDQ0TElU7fW6nQpbICk5nTd3ARy2LT8CxO7Y3oan5L3yA8p?=
+ =?us-ascii?Q?KLAWaw4RGSX6m4ftqgKR3yMQ7IGNxWTLY3GIwBqst/xIfSr/D2syqtP03ypa?=
+ =?us-ascii?Q?VoU/ZLY3DMpw9I/b7oy2dA/TS4A8k6oXD80UaiZ36vaqwy+HOnr5wSGqMfp5?=
+ =?us-ascii?Q?zW/z6dzic/8KAMWC0KG5aCk3OYWDREReNXIDbdjA6gT2bQhhBZVIxrMyWXvh?=
+ =?us-ascii?Q?98zfZCf8In4nB2FpRX+pNkamN/81b3BJXrtIBcssfjbJvlQ4K05Ok2hFapB/?=
+ =?us-ascii?Q?bGGADSu9i4HAy4Ortl1rNm27Egqv0tgZNzG+UrhNFffvEKfMFd/jEAKHjwPM?=
+ =?us-ascii?Q?6t0/hZ47yvuCiGZKACGyp4vYGljWVrElQoOjJjpa3UYh8innLxNxVuHfn5VF?=
+ =?us-ascii?Q?/W25AIodtdYuM5ZOBEnqVFtyuxF+FoKO5nU2Wmr1dAFEPkUkKhehDaaZAXAV?=
+ =?us-ascii?Q?j2Sqfa3ah518JWHOqKTnjWY9qCW5fNsDCMu3UY7jrBDissrKS/pVPWVkpO9N?=
+ =?us-ascii?Q?I8FXgOc2PB2gQmgcE2hZ72nqeOmHdUSeFzDg1Clke5gyaKUR/uqYophn5GDV?=
+ =?us-ascii?Q?n0LlFHir5FRs9X8z9NqSmjqI/IUFrP/UEQEigxAp9ZdMzwJadu5on1JxZ8Tl?=
+ =?us-ascii?Q?E9dJ9Wwjx5YD129jUCrhQj/79PhiJl7/B/wI7DHIZa4ovc7C7nPiziKadb8D?=
+ =?us-ascii?Q?vWeIzQ1BXfPsnOw2TKsdtAuKhL0ktrDQMv5nRMH+evSuCx1hH/vVvQSJLLRg?=
+ =?us-ascii?Q?g2ANAh4zEX0CmytavCnsq5s8vd7kVbz7F9th?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013); DIR:OUT;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 09:55:29.5325 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: addc1e18-b788-47bc-c1ca-08ddc44ee5b2
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 09:56:14.1707 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93c77d25-0eb2-4b1c-b6f3-08ddc44f0045
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000205.namprd05.prod.outlook.com
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF0000343E.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6594
-Received-SPF: permerror client-ip=2a01:111:f403:2415::61e;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6661
+Received-SPF: permerror client-ip=2a01:111:f403:2416::604;
  envelope-from=Luc.Michel@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,323 +153,879 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the USB controller creation using the VersalMap structure.
-
-Note that the connection to the CRL is removed for now and will be
-re-added by next commits.
+Add the versal2 version of the CRL device. For the implemented part, it
+is similar to the versal version but drives reset line of more devices.
 
 Signed-off-by: Luc Michel <luc.michel@amd.com>
 ---
- include/hw/arm/xlnx-versal.h |  5 ---
- hw/arm/xlnx-versal-virt.c    | 56 +--------------------------
- hw/arm/xlnx-versal.c         | 74 +++++++++++++++++++++++++++++-------
- 3 files changed, 62 insertions(+), 73 deletions(-)
+ include/hw/arm/xlnx-versal-version.h |   1 +
+ include/hw/misc/xlnx-versal-crl.h    | 329 ++++++++++++++++++++++
+ hw/misc/xlnx-versal-crl.c            | 392 +++++++++++++++++++++++++++
+ 3 files changed, 722 insertions(+)
 
-diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-index 71c3314b8b4..5d4b30f0ff9 100644
---- a/include/hw/arm/xlnx-versal.h
-+++ b/include/hw/arm/xlnx-versal.h
-@@ -17,11 +17,10 @@
- #include "hw/cpu/cluster.h"
- #include "hw/or-irq.h"
- #include "hw/intc/arm_gicv3.h"
- #include "hw/rtc/xlnx-zynqmp-rtc.h"
- #include "qom/object.h"
--#include "hw/usb/xlnx-usb-subsystem.h"
- #include "hw/nvram/xlnx-bbram.h"
- #include "hw/nvram/xlnx-versal-efuse.h"
- #include "hw/ssi/xlnx-versal-ospi.h"
- #include "hw/dma/xlnx_csu_dma.h"
- #include "hw/misc/xlnx-versal-crl.h"
-@@ -72,14 +71,10 @@ struct Versal {
-     } noc;
+diff --git a/include/hw/arm/xlnx-versal-version.h b/include/hw/arm/xlnx-versal-version.h
+index 46eb165a2bd..1e8d31b3248 100644
+--- a/include/hw/arm/xlnx-versal-version.h
++++ b/include/hw/arm/xlnx-versal-version.h
+@@ -8,8 +8,9 @@
+ #ifndef HW_ARM_XLNX_VERSAL_VERSION_H
+ #define HW_ARM_XLNX_VERSAL_VERSION_H
  
-     struct {
-         MemoryRegion mr_ocm;
+ typedef enum VersalVersion {
+     VERSAL_VER_VERSAL,
++    VERSAL_VER_VERSAL2,
+ } VersalVersion;
  
--        struct {
--            VersalUsb2 usb;
--        } iou;
--
-         /* Real-time Processing Unit.  */
-         struct {
-             MemoryRegion mr;
-             MemoryRegion mr_ps_alias;
+ #endif
+diff --git a/include/hw/misc/xlnx-versal-crl.h b/include/hw/misc/xlnx-versal-crl.h
+index 7e50a95ad3c..f6b8694ebea 100644
+--- a/include/hw/misc/xlnx-versal-crl.h
++++ b/include/hw/misc/xlnx-versal-crl.h
+@@ -15,14 +15,16 @@
+ #include "target/arm/cpu-qom.h"
+ #include "hw/arm/xlnx-versal-version.h"
  
-diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index 1922a90019c..36341b825eb 100644
---- a/hw/arm/xlnx-versal-virt.c
-+++ b/hw/arm/xlnx-versal-virt.c
-@@ -12,10 +12,11 @@
+ #define TYPE_XLNX_VERSAL_CRL_BASE "xlnx-versal-crl-base"
+ #define TYPE_XLNX_VERSAL_CRL "xlnx-versal-crl"
++#define TYPE_XLNX_VERSAL2_CRL "xlnx-versal2-crl"
  
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "system/device_tree.h"
-+#include "system/address-spaces.h"
- #include "hw/block/flash.h"
- #include "hw/boards.h"
- #include "hw/sysbus.h"
- #include "hw/arm/fdt.h"
- #include "hw/qdev-properties.h"
-@@ -38,12 +39,10 @@ struct VersalVirt {
-     int fdt_size;
-     struct {
-         uint32_t gic;
-         uint32_t clk_125Mhz;
-         uint32_t clk_25Mhz;
--        uint32_t usb;
--        uint32_t dwc;
-     } phandle;
-     struct arm_boot_info binfo;
+ OBJECT_DECLARE_TYPE(XlnxVersalCRLBase, XlnxVersalCRLBaseClass,
+                     XLNX_VERSAL_CRL_BASE)
+ OBJECT_DECLARE_SIMPLE_TYPE(XlnxVersalCRL, XLNX_VERSAL_CRL)
++OBJECT_DECLARE_SIMPLE_TYPE(XlnxVersal2CRL, XLNX_VERSAL2_CRL)
  
-     CanBusState **canbus;
+ REG32(ERR_CTRL, 0x0)
+     FIELD(ERR_CTRL, SLVERR_ENABLE, 0, 1)
+ REG32(IR_STATUS, 0x4)
+     FIELD(IR_STATUS, ADDR_DECODE_ERR, 0, 1)
+@@ -218,10 +220,318 @@ REG32(PSM_RST_MODE, 0x370)
+     FIELD(PSM_RST_MODE, WAKEUP, 2, 1)
+     FIELD(PSM_RST_MODE, RST_MODE, 0, 2)
  
-@@ -66,12 +65,10 @@ static void fdt_create(VersalVirt *s)
-     /* Allocate all phandles.  */
-     s->phandle.gic = qemu_fdt_alloc_phandle(s->fdt);
-     s->phandle.clk_25Mhz = qemu_fdt_alloc_phandle(s->fdt);
-     s->phandle.clk_125Mhz = qemu_fdt_alloc_phandle(s->fdt);
+ #define CRL_R_MAX (R_PSM_RST_MODE + 1)
  
--    s->phandle.usb = qemu_fdt_alloc_phandle(s->fdt);
--    s->phandle.dwc = qemu_fdt_alloc_phandle(s->fdt);
-     /* Create /chosen node for load_dtb.  */
-     qemu_fdt_add_subnode(s->fdt, "/chosen");
-     qemu_fdt_add_subnode(s->fdt, "/aliases");
- 
-     /* Header */
-@@ -152,60 +149,10 @@ static void fdt_add_timer_nodes(VersalVirt *s)
-             GIC_FDT_IRQ_TYPE_PPI, VERSAL_TIMER_NS_EL2_IRQ, irqflags);
-     qemu_fdt_setprop(s->fdt, "/timer", "compatible",
-                      compat, sizeof(compat));
- }
- 
--static void fdt_add_usb_xhci_nodes(VersalVirt *s)
--{
--    const char clocknames[] = "bus_clk\0ref_clk";
--    const char irq_name[] = "dwc_usb3";
--    const char compatVersalDWC3[] = "xlnx,versal-dwc3";
--    const char compatDWC3[] = "snps,dwc3";
--    char *name = g_strdup_printf("/usb@%" PRIx32, MM_USB2_CTRL_REGS);
--
--    qemu_fdt_add_subnode(s->fdt, name);
--    qemu_fdt_setprop(s->fdt, name, "compatible",
--                         compatVersalDWC3, sizeof(compatVersalDWC3));
--    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
--                                 2, MM_USB2_CTRL_REGS,
--                                 2, MM_USB2_CTRL_REGS_SIZE);
--    qemu_fdt_setprop(s->fdt, name, "clock-names",
--                         clocknames, sizeof(clocknames));
--    qemu_fdt_setprop_cells(s->fdt, name, "clocks",
--                               s->phandle.clk_25Mhz, s->phandle.clk_125Mhz);
--    qemu_fdt_setprop(s->fdt, name, "ranges", NULL, 0);
--    qemu_fdt_setprop_cell(s->fdt, name, "#address-cells", 2);
--    qemu_fdt_setprop_cell(s->fdt, name, "#size-cells", 2);
--    qemu_fdt_setprop_cell(s->fdt, name, "phandle", s->phandle.usb);
--    g_free(name);
--
--    name = g_strdup_printf("/usb@%" PRIx32 "/dwc3@%" PRIx32,
--                           MM_USB2_CTRL_REGS, MM_USB_0);
--    qemu_fdt_add_subnode(s->fdt, name);
--    qemu_fdt_setprop(s->fdt, name, "compatible",
--                     compatDWC3, sizeof(compatDWC3));
--    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
--                                 2, MM_USB_0, 2, MM_USB_0_SIZE);
--    qemu_fdt_setprop(s->fdt, name, "interrupt-names",
--                     irq_name, sizeof(irq_name));
--    qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
--                               GIC_FDT_IRQ_TYPE_SPI, VERSAL_USB0_IRQ_0,
--                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
--    qemu_fdt_setprop_cell(s->fdt, name,
--                          "snps,quirk-frame-length-adjustment", 0x20);
--    qemu_fdt_setprop_cells(s->fdt, name, "#stream-id-cells", 1);
--    qemu_fdt_setprop_string(s->fdt, name, "dr_mode", "host");
--    qemu_fdt_setprop_string(s->fdt, name, "phy-names", "usb3-phy");
--    qemu_fdt_setprop(s->fdt, name, "snps,dis_u2_susphy_quirk", NULL, 0);
--    qemu_fdt_setprop(s->fdt, name, "snps,dis_u3_susphy_quirk", NULL, 0);
--    qemu_fdt_setprop(s->fdt, name, "snps,refclk_fladj", NULL, 0);
--    qemu_fdt_setprop(s->fdt, name, "snps,mask_phy_reset", NULL, 0);
--    qemu_fdt_setprop_cell(s->fdt, name, "phandle", s->phandle.dwc);
--    qemu_fdt_setprop_string(s->fdt, name, "maximum-speed", "high-speed");
--    g_free(name);
--}
--
- static void fdt_add_rtc_node(VersalVirt *s)
- {
-     const char compat[] = "xlnx,zynqmp-rtc";
-     const char interrupt_names[] = "alarm\0sec";
-     char *name = g_strdup_printf("/rtc@%x", MM_PMC_RTC);
-@@ -529,11 +476,10 @@ static void versal_virt_init(MachineState *machine)
- 
-     fdt_create(s);
-     versal_set_fdt(&s->soc, s->fdt);
-     fdt_add_gic_nodes(s);
-     fdt_add_timer_nodes(s);
--    fdt_add_usb_xhci_nodes(s);
-     fdt_add_rtc_node(s);
-     fdt_add_bbram_node(s);
-     fdt_add_efuse_ctrl_node(s);
-     fdt_add_efuse_cache_node(s);
-     fdt_add_cpu_nodes(s, psci_conduit);
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 6c5eb6d3fd5..4e4df0851e8 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -30,10 +30,11 @@
- #include "hw/net/xlnx-versal-canfd.h"
- #include "hw/sd/sdhci.h"
- #include "hw/net/cadence_gem.h"
- #include "hw/dma/xlnx-zdma.h"
- #include "hw/misc/xlnx-versal-xramc.h"
-+#include "hw/usb/xlnx-usb-subsystem.h"
- 
- #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
- #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
- #define GEM_REVISION        0x40070106
- 
-@@ -78,10 +79,17 @@ typedef struct VersalMap {
-         uint64_t ctrl;
-         uint64_t ctrl_stride;
-         int irq;
-         size_t num;
-     } xram;
++REG32(VERSAL2_ERR_CTRL, 0x0)
++REG32(VERSAL2_WPROT, 0x1c)
++    FIELD(VERSAL2_WPROT, ACTIVE, 0, 1)
++REG32(VERSAL2_RPLL_CTRL, 0x40)
++    FIELD(VERSAL2_RPLL_CTRL, POST_SRC, 24, 3)
++    FIELD(VERSAL2_RPLL_CTRL, PRE_SRC, 20, 3)
++    FIELD(VERSAL2_RPLL_CTRL, CLKOUTDIV, 16, 2)
++    FIELD(VERSAL2_RPLL_CTRL, FBDIV, 8, 8)
++    FIELD(VERSAL2_RPLL_CTRL, BYPASS, 3, 1)
++    FIELD(VERSAL2_RPLL_CTRL, RESET, 0, 1)
++REG32(VERSAL2_RPLL_CFG, 0x44)
++    FIELD(VERSAL2_RPLL_CFG, LOCK_DLY, 25, 7)
++    FIELD(VERSAL2_RPLL_CFG, LOCK_CNT, 13, 10)
++    FIELD(VERSAL2_RPLL_CFG, LFHF, 10, 2)
++    FIELD(VERSAL2_RPLL_CFG, CP, 5, 4)
++    FIELD(VERSAL2_RPLL_CFG, RES, 0, 4)
++REG32(VERSAL2_FLXPLL_CTRL, 0x50)
++    FIELD(VERSAL2_FLXPLL_CTRL, POST_SRC, 24, 3)
++    FIELD(VERSAL2_FLXPLL_CTRL, PRE_SRC, 20, 3)
++    FIELD(VERSAL2_FLXPLL_CTRL, CLKOUTDIV, 16, 2)
++    FIELD(VERSAL2_FLXPLL_CTRL, FBDIV, 8, 8)
++    FIELD(VERSAL2_FLXPLL_CTRL, BYPASS, 3, 1)
++    FIELD(VERSAL2_FLXPLL_CTRL, RESET, 0, 1)
++REG32(VERSAL2_FLXPLL_CFG, 0x54)
++    FIELD(VERSAL2_FLXPLL_CFG, LOCK_DLY, 25, 7)
++    FIELD(VERSAL2_FLXPLL_CFG, LOCK_CNT, 13, 10)
++    FIELD(VERSAL2_FLXPLL_CFG, LFHF, 10, 2)
++    FIELD(VERSAL2_FLXPLL_CFG, CP, 5, 4)
++    FIELD(VERSAL2_FLXPLL_CFG, RES, 0, 4)
++REG32(VERSAL2_PLL_STATUS, 0x60)
++    FIELD(VERSAL2_PLL_STATUS, FLXPLL_STABLE, 3, 1)
++    FIELD(VERSAL2_PLL_STATUS, RPLL_STABLE, 2, 1)
++    FIELD(VERSAL2_PLL_STATUS, FLXPLL_LOCK, 1, 1)
++    FIELD(VERSAL2_PLL_STATUS, RPLL_LOCK, 0, 1)
++REG32(VERSAL2_RPLL_TO_XPD_CTRL, 0x100)
++    FIELD(VERSAL2_RPLL_TO_XPD_CTRL, DIVISOR0, 8, 10)
++REG32(VERSAL2_LPX_TOP_SWITCH_CTRL, 0x104)
++    FIELD(VERSAL2_LPX_TOP_SWITCH_CTRL, CLKACT_ADMA, 26, 1)
++    FIELD(VERSAL2_LPX_TOP_SWITCH_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_LPX_TOP_SWITCH_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_LPX_TOP_SWITCH_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_LPX_LSBUS_CLK_CTRL, 0x108)
++    FIELD(VERSAL2_LPX_LSBUS_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_LPX_LSBUS_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_LPX_LSBUS_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_RPU_CLK_CTRL, 0x10c)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT_CLUSTERE, 24, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT_CLUSTERD, 23, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT_CLUSTERC, 22, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT_CLUSTERB, 21, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, CLKACT_CLUSTERA, 20, 1)
++    FIELD(VERSAL2_RPU_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_RPU_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_OCM_CLK_CTRL, 0x120)
++    FIELD(VERSAL2_OCM_CLK_CTRL, CLKACT_OCM3, 24, 1)
++    FIELD(VERSAL2_OCM_CLK_CTRL, CLKACT_OCM2, 23, 1)
++    FIELD(VERSAL2_OCM_CLK_CTRL, CLKACT_OCM1, 22, 1)
++    FIELD(VERSAL2_OCM_CLK_CTRL, CLKACT_OCM0, 21, 1)
++REG32(VERSAL2_IOU_SWITCH_CLK_CTRL, 0x124)
++    FIELD(VERSAL2_IOU_SWITCH_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_IOU_SWITCH_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_IOU_SWITCH_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_GEM0_REF_CTRL, 0x128)
++    FIELD(VERSAL2_GEM0_REF_CTRL, CLKACT_RX, 27, 1)
++    FIELD(VERSAL2_GEM0_REF_CTRL, CLKACT_TX, 26, 1)
++    FIELD(VERSAL2_GEM0_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_GEM0_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_GEM0_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_GEM1_REF_CTRL, 0x12c)
++    FIELD(VERSAL2_GEM1_REF_CTRL, CLKACT_RX, 27, 1)
++    FIELD(VERSAL2_GEM1_REF_CTRL, CLKACT_TX, 26, 1)
++    FIELD(VERSAL2_GEM1_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_GEM1_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_GEM1_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_GEM_TSU_REF_CLK_CTRL, 0x130)
++    FIELD(VERSAL2_GEM_TSU_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_GEM_TSU_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_GEM_TSU_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_USB0_BUS_REF_CLK_CTRL, 0x134)
++    FIELD(VERSAL2_USB0_BUS_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_USB0_BUS_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_USB0_BUS_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_USB1_BUS_REF_CLK_CTRL, 0x138)
++    FIELD(VERSAL2_USB1_BUS_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_USB1_BUS_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_USB1_BUS_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_UART0_REF_CLK_CTRL, 0x13c)
++    FIELD(VERSAL2_UART0_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_UART0_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_UART0_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_UART1_REF_CLK_CTRL, 0x140)
++    FIELD(VERSAL2_UART1_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_UART1_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_UART1_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_SPI0_REF_CLK_CTRL, 0x144)
++    FIELD(VERSAL2_SPI0_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_SPI0_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_SPI0_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_SPI1_REF_CLK_CTRL, 0x148)
++    FIELD(VERSAL2_SPI1_REF_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_SPI1_REF_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_SPI1_REF_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_CAN0_REF_2X_CTRL, 0x14c)
++    FIELD(VERSAL2_CAN0_REF_2X_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_CAN0_REF_2X_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_CAN0_REF_2X_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_CAN1_REF_2X_CTRL, 0x150)
++    FIELD(VERSAL2_CAN1_REF_2X_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_CAN1_REF_2X_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_CAN1_REF_2X_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_CAN2_REF_2X_CTRL, 0x154)
++    FIELD(VERSAL2_CAN2_REF_2X_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_CAN2_REF_2X_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_CAN2_REF_2X_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_CAN3_REF_2X_CTRL, 0x158)
++    FIELD(VERSAL2_CAN3_REF_2X_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_CAN3_REF_2X_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_CAN3_REF_2X_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C0_REF_CTRL, 0x15c)
++    FIELD(VERSAL2_I3C0_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C0_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C0_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C1_REF_CTRL, 0x160)
++    FIELD(VERSAL2_I3C1_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C1_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C1_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C2_REF_CTRL, 0x164)
++    FIELD(VERSAL2_I3C2_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C2_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C2_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C3_REF_CTRL, 0x168)
++    FIELD(VERSAL2_I3C3_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C3_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C3_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C4_REF_CTRL, 0x16c)
++    FIELD(VERSAL2_I3C4_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C4_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C4_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C5_REF_CTRL, 0x170)
++    FIELD(VERSAL2_I3C5_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C5_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C5_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C6_REF_CTRL, 0x174)
++    FIELD(VERSAL2_I3C6_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C6_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C6_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_I3C7_REF_CTRL, 0x178)
++    FIELD(VERSAL2_I3C7_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_I3C7_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_I3C7_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_DBG_LPX_CTRL, 0x17c)
++    FIELD(VERSAL2_DBG_LPX_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_DBG_LPX_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_DBG_LPX_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_TIMESTAMP_REF_CTRL, 0x180)
++    FIELD(VERSAL2_TIMESTAMP_REF_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_TIMESTAMP_REF_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_TIMESTAMP_REF_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_SAFETY_CHK, 0x184)
++REG32(VERSAL2_ASU_CLK_CTRL, 0x188)
++    FIELD(VERSAL2_ASU_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_ASU_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_DBG_TSTMP_CLK_CTRL, 0x18c)
++    FIELD(VERSAL2_DBG_TSTMP_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_DBG_TSTMP_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_DBG_TSTMP_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_MMI_TOPSW_CLK_CTRL, 0x190)
++    FIELD(VERSAL2_MMI_TOPSW_CLK_CTRL, CLKACT, 25, 1)
++    FIELD(VERSAL2_MMI_TOPSW_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_MMI_TOPSW_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_WWDT_PLL_CLK_CTRL, 0x194)
++    FIELD(VERSAL2_WWDT_PLL_CLK_CTRL, DIVISOR0, 8, 10)
++    FIELD(VERSAL2_WWDT_PLL_CLK_CTRL, SRCSEL, 0, 3)
++REG32(VERSAL2_RCLK_CTRL, 0x1a0)
++    FIELD(VERSAL2_RCLK_CTRL, CLKACT, 8, 6)
++    FIELD(VERSAL2_RCLK_CTRL, SELECT, 0, 6)
++REG32(VERSAL2_RST_RPU_A, 0x310)
++    FIELD(VERSAL2_RST_RPU_A, TOPRESET, 16, 1)
++    FIELD(VERSAL2_RST_RPU_A, CORE1_POR, 9, 1)
++    FIELD(VERSAL2_RST_RPU_A, CORE0_POR, 8, 1)
++    FIELD(VERSAL2_RST_RPU_A, CORE1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_A, CORE0_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_B, 0x314)
++    FIELD(VERSAL2_RST_RPU_B, TOPRESET, 16, 1)
++    FIELD(VERSAL2_RST_RPU_B, CORE1_POR, 9, 1)
++    FIELD(VERSAL2_RST_RPU_B, CORE0_POR, 8, 1)
++    FIELD(VERSAL2_RST_RPU_B, CORE1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_B, CORE0_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_C, 0x318)
++    FIELD(VERSAL2_RST_RPU_C, TOPRESET, 16, 1)
++    FIELD(VERSAL2_RST_RPU_C, CORE1_POR, 9, 1)
++    FIELD(VERSAL2_RST_RPU_C, CORE0_POR, 8, 1)
++    FIELD(VERSAL2_RST_RPU_C, CORE1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_C, CORE0_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_D, 0x31c)
++    FIELD(VERSAL2_RST_RPU_D, TOPRESET, 16, 1)
++    FIELD(VERSAL2_RST_RPU_D, CORE1_POR, 9, 1)
++    FIELD(VERSAL2_RST_RPU_D, CORE0_POR, 8, 1)
++    FIELD(VERSAL2_RST_RPU_D, CORE1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_D, CORE0_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_E, 0x320)
++    FIELD(VERSAL2_RST_RPU_E, TOPRESET, 16, 1)
++    FIELD(VERSAL2_RST_RPU_E, CORE1_POR, 9, 1)
++    FIELD(VERSAL2_RST_RPU_E, CORE0_POR, 8, 1)
++    FIELD(VERSAL2_RST_RPU_E, CORE1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_E, CORE0_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_GD_0, 0x324)
++    FIELD(VERSAL2_RST_RPU_GD_0, RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_GD_0, TOP_RESET, 0, 1)
++REG32(VERSAL2_RST_RPU_GD_1, 0x328)
++    FIELD(VERSAL2_RST_RPU_GD_1, RESET, 1, 1)
++    FIELD(VERSAL2_RST_RPU_GD_1, TOP_RESET, 0, 1)
++REG32(VERSAL2_RST_ASU_GD, 0x32c)
++    FIELD(VERSAL2_RST_ASU_GD, RESET, 1, 1)
++    FIELD(VERSAL2_RST_ASU_GD, TOP_RESET, 0, 1)
++REG32(VERSAL2_RST_ADMA, 0x334)
++    FIELD(VERSAL2_RST_ADMA, RESET, 0, 1)
++REG32(VERSAL2_RST_SDMA, 0x338)
++    FIELD(VERSAL2_RST_SDMA, RESET, 0, 1)
++REG32(VERSAL2_RST_GEM0, 0x33c)
++    FIELD(VERSAL2_RST_GEM0, RESET, 0, 1)
++REG32(VERSAL2_RST_GEM1, 0x340)
++    FIELD(VERSAL2_RST_GEM1, RESET, 0, 1)
++REG32(VERSAL2_RST_USB0, 0x348)
++    FIELD(VERSAL2_RST_USB0, RESET, 0, 1)
++REG32(VERSAL2_RST_USB1, 0x34c)
++    FIELD(VERSAL2_RST_USB1, RESET, 0, 1)
++REG32(VERSAL2_RST_UART0, 0x350)
++    FIELD(VERSAL2_RST_UART0, RESET, 0, 1)
++REG32(VERSAL2_RST_UART1, 0x354)
++    FIELD(VERSAL2_RST_UART1, RESET, 0, 1)
++REG32(VERSAL2_RST_SPI0, 0x358)
++    FIELD(VERSAL2_RST_SPI0, RESET, 0, 1)
++REG32(VERSAL2_RST_SPI1, 0x35c)
++    FIELD(VERSAL2_RST_SPI1, RESET, 0, 1)
++REG32(VERSAL2_RST_CAN0, 0x360)
++    FIELD(VERSAL2_RST_CAN0, RESET, 0, 1)
++REG32(VERSAL2_RST_CAN1, 0x364)
++    FIELD(VERSAL2_RST_CAN1, RESET, 0, 1)
++REG32(VERSAL2_RST_CAN2, 0x368)
++    FIELD(VERSAL2_RST_CAN2, RESET, 0, 1)
++REG32(VERSAL2_RST_CAN3, 0x36c)
++    FIELD(VERSAL2_RST_CAN3, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C0, 0x374)
++    FIELD(VERSAL2_RST_I3C0, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C1, 0x378)
++    FIELD(VERSAL2_RST_I3C1, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C2, 0x37c)
++    FIELD(VERSAL2_RST_I3C2, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C3, 0x380)
++    FIELD(VERSAL2_RST_I3C3, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C4, 0x384)
++    FIELD(VERSAL2_RST_I3C4, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C5, 0x388)
++    FIELD(VERSAL2_RST_I3C5, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C6, 0x38c)
++    FIELD(VERSAL2_RST_I3C6, RESET, 0, 1)
++REG32(VERSAL2_RST_I3C7, 0x390)
++    FIELD(VERSAL2_RST_I3C7, RESET, 0, 1)
++REG32(VERSAL2_RST_DBG_LPX, 0x398)
++    FIELD(VERSAL2_RST_DBG_LPX, RESET_HSDP, 1, 1)
++    FIELD(VERSAL2_RST_DBG_LPX, RESET, 0, 1)
++REG32(VERSAL2_RST_GPIO, 0x39c)
++    FIELD(VERSAL2_RST_GPIO, RESET, 0, 1)
++REG32(VERSAL2_RST_TTC, 0x3a0)
++    FIELD(VERSAL2_RST_TTC, TTC7_RESET, 7, 1)
++    FIELD(VERSAL2_RST_TTC, TTC6_RESET, 6, 1)
++    FIELD(VERSAL2_RST_TTC, TTC5_RESET, 5, 1)
++    FIELD(VERSAL2_RST_TTC, TTC4_RESET, 4, 1)
++    FIELD(VERSAL2_RST_TTC, TTC3_RESET, 3, 1)
++    FIELD(VERSAL2_RST_TTC, TTC2_RESET, 2, 1)
++    FIELD(VERSAL2_RST_TTC, TTC1_RESET, 1, 1)
++    FIELD(VERSAL2_RST_TTC, TTC0_RESET, 0, 1)
++REG32(VERSAL2_RST_TIMESTAMP, 0x3a4)
++    FIELD(VERSAL2_RST_TIMESTAMP, RESET, 0, 1)
++REG32(VERSAL2_RST_SWDT0, 0x3a8)
++    FIELD(VERSAL2_RST_SWDT0, RESET, 0, 1)
++REG32(VERSAL2_RST_SWDT1, 0x3ac)
++    FIELD(VERSAL2_RST_SWDT1, RESET, 0, 1)
++REG32(VERSAL2_RST_SWDT2, 0x3b0)
++    FIELD(VERSAL2_RST_SWDT2, RESET, 0, 1)
++REG32(VERSAL2_RST_SWDT3, 0x3b4)
++    FIELD(VERSAL2_RST_SWDT3, RESET, 0, 1)
++REG32(VERSAL2_RST_SWDT4, 0x3b8)
++    FIELD(VERSAL2_RST_SWDT4, RESET, 0, 1)
++REG32(VERSAL2_RST_IPI, 0x3bc)
++    FIELD(VERSAL2_RST_IPI, RESET, 0, 1)
++REG32(VERSAL2_RST_SYSMON, 0x3c0)
++    FIELD(VERSAL2_RST_SYSMON, CFG_RST, 0, 1)
++REG32(VERSAL2_ASU_MB_RST_MODE, 0x3c4)
++    FIELD(VERSAL2_ASU_MB_RST_MODE, WAKEUP, 2, 1)
++    FIELD(VERSAL2_ASU_MB_RST_MODE, RST_MODE, 0, 2)
++REG32(VERSAL2_FPX_TOPSW_MUX_CTRL, 0x3c8)
++    FIELD(VERSAL2_FPX_TOPSW_MUX_CTRL, SELECT, 0, 1)
++REG32(VERSAL2_RST_FPX, 0x3d0)
++    FIELD(VERSAL2_RST_FPX, SRST, 1, 1)
++    FIELD(VERSAL2_RST_FPX, POR, 0, 1)
++REG32(VERSAL2_RST_MMI, 0x3d4)
++    FIELD(VERSAL2_RST_MMI, POR, 0, 1)
++REG32(VERSAL2_RST_OCM, 0x3d8)
++    FIELD(VERSAL2_RST_OCM, RESET_OCM3, 3, 1)
++    FIELD(VERSAL2_RST_OCM, RESET_OCM2, 2, 1)
++    FIELD(VERSAL2_RST_OCM, RESET_OCM1, 1, 1)
++    FIELD(VERSAL2_RST_OCM, RESET_OCM0, 0, 1)
 +
-+    struct VersalUsbMap {
-+        uint64_t xhci;
-+        uint64_t ctrl;
-+        int irq;
-+    } usb[2];
-+    size_t num_usb;
- } VersalMap;
- 
- static const VersalMap VERSAL_MAP = {
-     .uart[0] = { 0xff000000, 18 },
-     .uart[1] = { 0xff010000, 19 },
-@@ -106,10 +114,13 @@ static const VersalMap VERSAL_MAP = {
-         .num = 4,
-         .mem = 0xfe800000, .mem_stride = 1 * MiB,
-         .ctrl = 0xff8e0000, .ctrl_stride = 0x10000,
-         .irq = 79,
-     },
++#define VERSAL2_CRL_R_MAX (R_VERSAL2_RST_OCM + 1)
 +
-+    .usb[0] = { .xhci = 0xfe200000, .ctrl = 0xff9d0000, .irq = 22 },
-+    .num_usb = 1,
+ struct XlnxVersalCRLBase {
+     SysBusDevice parent_obj;
+ 
+     RegisterInfoArray *reg_array;
+     uint32_t *regs;
+@@ -247,15 +557,34 @@ struct XlnxVersalCRL {
+ 
+     uint32_t regs[CRL_R_MAX];
+     RegisterInfo regs_info[CRL_R_MAX];
  };
  
- static const VersalMap *VERSION_TO_MAP[] = {
-     [VERSAL_VER_VERSAL] = &VERSAL_MAP,
++struct XlnxVersal2CRL {
++    XlnxVersalCRLBase parent_obj;
++
++    struct {
++        DeviceState *rpu[10];
++        DeviceState *adma[8];
++        DeviceState *sdma[8];
++        DeviceState *uart[2];
++        DeviceState *gem[2];
++        DeviceState *usb[2];
++        DeviceState *can[4];
++    } cfg;
++
++    RegisterInfo regs_info[VERSAL2_CRL_R_MAX];
++    uint32_t regs[VERSAL2_CRL_R_MAX];
++};
++
+ static inline const char *xlnx_versal_crl_class_name(VersalVersion ver)
+ {
+     switch (ver) {
+     case VERSAL_VER_VERSAL:
+         return TYPE_XLNX_VERSAL_CRL;
++    case VERSAL_VER_VERSAL2:
++        return TYPE_XLNX_VERSAL2_CRL;
+     default:
+         g_assert_not_reached();
+     }
+ }
+ 
+diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
+index 115327cfcf4..367e42a30d3 100644
+--- a/hw/misc/xlnx-versal-crl.c
++++ b/hw/misc/xlnx-versal-crl.c
+@@ -87,10 +87,55 @@ static DeviceState **versal_decode_periph_rst(XlnxVersalCRLBase *s,
+         /* invalid or unimplemented */
+         return NULL;
+     }
+ }
+ 
++static DeviceState **versal2_decode_periph_rst(XlnxVersalCRLBase *s,
++                                               hwaddr addr, size_t *count)
++{
++    size_t idx;
++    XlnxVersal2CRL *xvc = XLNX_VERSAL2_CRL(s);
++
++    *count = 1;
++
++    switch (addr) {
++    case A_VERSAL2_RST_RPU_A ... A_VERSAL2_RST_RPU_E:
++        idx = (addr - A_VERSAL2_RST_RPU_A) / sizeof(uint32_t);
++        idx *= 2; /* two RPUs per RST_RPU_x registers */
++        return xvc->cfg.rpu + idx;
++
++    case A_VERSAL2_RST_ADMA:
++        /* A single register fans out to all DMA reset inputs */
++        *count = ARRAY_SIZE(xvc->cfg.adma);
++        return xvc->cfg.adma;
++
++    case A_VERSAL2_RST_SDMA:
++        *count = ARRAY_SIZE(xvc->cfg.sdma);
++        return xvc->cfg.sdma;
++
++    case A_VERSAL2_RST_UART0 ... A_VERSAL2_RST_UART1:
++        idx = (addr - A_VERSAL2_RST_UART0) / sizeof(uint32_t);
++        return xvc->cfg.uart + idx;
++
++    case A_VERSAL2_RST_GEM0 ... A_VERSAL2_RST_GEM1:
++        idx = (addr - A_VERSAL2_RST_GEM0) / sizeof(uint32_t);
++        return xvc->cfg.gem + idx;
++
++    case A_VERSAL2_RST_USB0 ... A_VERSAL2_RST_USB1:
++        idx = (addr - A_VERSAL2_RST_USB0) / sizeof(uint32_t);
++        return xvc->cfg.usb + idx;
++
++    case A_VERSAL2_RST_CAN0 ... A_VERSAL2_RST_CAN3:
++        idx = (addr - A_VERSAL2_RST_CAN0) / sizeof(uint32_t);
++        return xvc->cfg.can + idx;
++
++    default:
++        /* invalid or unimplemented */
++        return NULL;
++    }
++}
++
+ static uint64_t crl_rst_cpu_prew(RegisterInfo *reg, uint64_t val64)
+ {
+     XlnxVersalCRLBase *s = XLNX_VERSAL_CRL_BASE(reg->opaque);
+     XlnxVersalCRLBaseClass *xvcbc = XLNX_VERSAL_CRL_BASE_GET_CLASS(s);
+     DeviceState **dev;
+@@ -305,20 +350,270 @@ static const RegisterAccessInfo crl_regs_info[] = {
+         .reset = 0x1,
+         .rsvd = 0xf8,
+     }
  };
-@@ -420,33 +431,71 @@ static void versal_create_canfd(Versal *s, const VersalSimplePeriphMap *map,
-     qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-                            GIC_FDT_IRQ_TYPE_SPI, map->irq,
-                            GIC_FDT_IRQ_FLAGS_LEVEL_HI);
- }
  
--static void versal_create_usbs(Versal *s, qemu_irq *pic)
-+static void versal_create_usb(Versal *s,
-+                              const struct VersalUsbMap *map)
++static const RegisterAccessInfo versal2_crl_regs_info[] = {
++    {   .name = "ERR_CTRL",  .addr = A_VERSAL2_ERR_CTRL,
++        .reset = 0x1,
++    },{ .name = "WPROT",  .addr = A_VERSAL2_WPROT,
++    },{ .name = "RPLL_CTRL",  .addr = A_VERSAL2_RPLL_CTRL,
++        .reset = 0x24809,
++        .rsvd = 0xf88c00f6,
++    },{ .name = "RPLL_CFG",  .addr = A_VERSAL2_RPLL_CFG,
++        .reset = 0x7e5dcc6c,
++        .rsvd = 0x1801210,
++    },{ .name = "FLXPLL_CTRL",  .addr = A_VERSAL2_FLXPLL_CTRL,
++        .reset = 0x24809,
++        .rsvd = 0xf88c00f6,
++    },{ .name = "FLXPLL_CFG",  .addr = A_VERSAL2_FLXPLL_CFG,
++        .reset = 0x7e5dcc6c,
++        .rsvd = 0x1801210,
++    },{ .name = "PLL_STATUS",  .addr = A_VERSAL2_PLL_STATUS,
++        .reset = 0xf,
++        .rsvd = 0xf0,
++        .ro = 0xf,
++    },{ .name = "RPLL_TO_XPD_CTRL",  .addr = A_VERSAL2_RPLL_TO_XPD_CTRL,
++        .reset = 0x2000100,
++        .rsvd = 0xfdfc00ff,
++    },{ .name = "LPX_TOP_SWITCH_CTRL",  .addr = A_VERSAL2_LPX_TOP_SWITCH_CTRL,
++        .reset = 0xe000300,
++        .rsvd = 0xf1fc00f8,
++    },{ .name = "LPX_LSBUS_CLK_CTRL",  .addr = A_VERSAL2_LPX_LSBUS_CLK_CTRL,
++        .reset = 0x2000800,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "RPU_CLK_CTRL",  .addr = A_VERSAL2_RPU_CLK_CTRL,
++        .reset = 0x3f00300,
++        .rsvd = 0xfc0c00f8,
++    },{ .name = "OCM_CLK_CTRL",  .addr = A_VERSAL2_OCM_CLK_CTRL,
++        .reset = 0x1e00000,
++        .rsvd = 0xfe1fffff,
++    },{ .name = "IOU_SWITCH_CLK_CTRL",  .addr = A_VERSAL2_IOU_SWITCH_CLK_CTRL,
++        .reset = 0x2000500,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "GEM0_REF_CTRL",  .addr = A_VERSAL2_GEM0_REF_CTRL,
++        .reset = 0xe000a00,
++        .rsvd = 0xf1fc00f8,
++    },{ .name = "GEM1_REF_CTRL",  .addr = A_VERSAL2_GEM1_REF_CTRL,
++        .reset = 0xe000a00,
++        .rsvd = 0xf1fc00f8,
++    },{ .name = "GEM_TSU_REF_CLK_CTRL",  .addr = A_VERSAL2_GEM_TSU_REF_CLK_CTRL,
++        .reset = 0x300,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "USB0_BUS_REF_CLK_CTRL",
++        .addr = A_VERSAL2_USB0_BUS_REF_CLK_CTRL,
++        .reset = 0x2001900,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "USB1_BUS_REF_CLK_CTRL",
++        .addr = A_VERSAL2_USB1_BUS_REF_CLK_CTRL,
++        .reset = 0x2001900,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "UART0_REF_CLK_CTRL",  .addr = A_VERSAL2_UART0_REF_CLK_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "UART1_REF_CLK_CTRL",  .addr = A_VERSAL2_UART1_REF_CLK_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "SPI0_REF_CLK_CTRL",  .addr = A_VERSAL2_SPI0_REF_CLK_CTRL,
++        .reset = 0x600,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "SPI1_REF_CLK_CTRL",  .addr = A_VERSAL2_SPI1_REF_CLK_CTRL,
++        .reset = 0x600,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "CAN0_REF_2X_CTRL",  .addr = A_VERSAL2_CAN0_REF_2X_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "CAN1_REF_2X_CTRL",  .addr = A_VERSAL2_CAN1_REF_2X_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "CAN2_REF_2X_CTRL",  .addr = A_VERSAL2_CAN2_REF_2X_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "CAN3_REF_2X_CTRL",  .addr = A_VERSAL2_CAN3_REF_2X_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C0_REF_CTRL",  .addr = A_VERSAL2_I3C0_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C1_REF_CTRL",  .addr = A_VERSAL2_I3C1_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C2_REF_CTRL",  .addr = A_VERSAL2_I3C2_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C3_REF_CTRL",  .addr = A_VERSAL2_I3C3_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C4_REF_CTRL",  .addr = A_VERSAL2_I3C4_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C5_REF_CTRL",  .addr = A_VERSAL2_I3C5_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C6_REF_CTRL",  .addr = A_VERSAL2_I3C6_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "I3C7_REF_CTRL",  .addr = A_VERSAL2_I3C7_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "DBG_LPX_CTRL",  .addr = A_VERSAL2_DBG_LPX_CTRL,
++        .reset = 0x300,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "TIMESTAMP_REF_CTRL",  .addr = A_VERSAL2_TIMESTAMP_REF_CTRL,
++        .reset = 0x2000c00,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "SAFETY_CHK",  .addr = A_VERSAL2_SAFETY_CHK,
++    },{ .name = "ASU_CLK_CTRL",  .addr = A_VERSAL2_ASU_CLK_CTRL,
++        .reset = 0x2000f04,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "DBG_TSTMP_CLK_CTRL",  .addr = A_VERSAL2_DBG_TSTMP_CLK_CTRL,
++        .reset = 0x300,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "MMI_TOPSW_CLK_CTRL",  .addr = A_VERSAL2_MMI_TOPSW_CLK_CTRL,
++        .reset = 0x2000300,
++        .rsvd = 0xfdfc00f8,
++    },{ .name = "WWDT_PLL_CLK_CTRL",  .addr = A_VERSAL2_WWDT_PLL_CLK_CTRL,
++        .reset = 0xc00,
++        .rsvd = 0xfffc00f8,
++    },{ .name = "RCLK_CTRL",  .addr = A_VERSAL2_RCLK_CTRL,
++        .rsvd = 0xc040,
++    },{ .name = "RST_RPU_A",  .addr = A_VERSAL2_RST_RPU_A,
++        .reset = 0x10303,
++        .rsvd = 0xfffefcfc,
++        .pre_write = crl_rst_cpu_prew,
++    },{ .name = "RST_RPU_B",  .addr = A_VERSAL2_RST_RPU_B,
++        .reset = 0x10303,
++        .rsvd = 0xfffefcfc,
++        .pre_write = crl_rst_cpu_prew,
++    },{ .name = "RST_RPU_C",  .addr = A_VERSAL2_RST_RPU_C,
++        .reset = 0x10303,
++        .rsvd = 0xfffefcfc,
++        .pre_write = crl_rst_cpu_prew,
++    },{ .name = "RST_RPU_D",  .addr = A_VERSAL2_RST_RPU_D,
++        .reset = 0x10303,
++        .rsvd = 0xfffefcfc,
++        .pre_write = crl_rst_cpu_prew,
++    },{ .name = "RST_RPU_E",  .addr = A_VERSAL2_RST_RPU_E,
++        .reset = 0x10303,
++        .rsvd = 0xfffefcfc,
++        .pre_write = crl_rst_cpu_prew,
++    },{ .name = "RST_RPU_GD_0",  .addr = A_VERSAL2_RST_RPU_GD_0,
++        .reset = 0x3,
++    },{ .name = "RST_RPU_GD_1",  .addr = A_VERSAL2_RST_RPU_GD_1,
++        .reset = 0x3,
++    },{ .name = "RST_ASU_GD",  .addr = A_VERSAL2_RST_ASU_GD,
++        .reset = 0x3,
++    },{ .name = "RST_ADMA",  .addr = A_VERSAL2_RST_ADMA,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_SDMA",  .addr = A_VERSAL2_RST_SDMA,
++        .pre_write = crl_rst_dev_prew,
++        .reset = 0x1,
++    },{ .name = "RST_GEM0",  .addr = A_VERSAL2_RST_GEM0,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_GEM1",  .addr = A_VERSAL2_RST_GEM1,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_USB0",  .addr = A_VERSAL2_RST_USB0,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_USB1",  .addr = A_VERSAL2_RST_USB1,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_UART0",  .addr = A_VERSAL2_RST_UART0,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_UART1",  .addr = A_VERSAL2_RST_UART1,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_SPI0",  .addr = A_VERSAL2_RST_SPI0,
++        .reset = 0x1,
++    },{ .name = "RST_SPI1",  .addr = A_VERSAL2_RST_SPI1,
++        .reset = 0x1,
++    },{ .name = "RST_CAN0",  .addr = A_VERSAL2_RST_CAN0,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_CAN1",  .addr = A_VERSAL2_RST_CAN1,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_CAN2",  .addr = A_VERSAL2_RST_CAN2,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_CAN3",  .addr = A_VERSAL2_RST_CAN3,
++        .reset = 0x1,
++        .pre_write = crl_rst_dev_prew,
++    },{ .name = "RST_I3C0",  .addr = A_VERSAL2_RST_I3C0,
++        .reset = 0x1,
++    },{ .name = "RST_I3C1",  .addr = A_VERSAL2_RST_I3C1,
++        .reset = 0x1,
++    },{ .name = "RST_I3C2",  .addr = A_VERSAL2_RST_I3C2,
++        .reset = 0x1,
++    },{ .name = "RST_I3C3",  .addr = A_VERSAL2_RST_I3C3,
++        .reset = 0x1,
++    },{ .name = "RST_I3C4",  .addr = A_VERSAL2_RST_I3C4,
++        .reset = 0x1,
++    },{ .name = "RST_I3C5",  .addr = A_VERSAL2_RST_I3C5,
++        .reset = 0x1,
++    },{ .name = "RST_I3C6",  .addr = A_VERSAL2_RST_I3C6,
++        .reset = 0x1,
++    },{ .name = "RST_I3C7",  .addr = A_VERSAL2_RST_I3C7,
++        .reset = 0x1,
++    },{ .name = "RST_DBG_LPX",  .addr = A_VERSAL2_RST_DBG_LPX,
++        .reset = 0x3,
++        .rsvd = 0xfc,
++    },{ .name = "RST_GPIO",  .addr = A_VERSAL2_RST_GPIO,
++        .reset = 0x1,
++    },{ .name = "RST_TTC",  .addr = A_VERSAL2_RST_TTC,
++        .reset = 0xff,
++    },{ .name = "RST_TIMESTAMP",  .addr = A_VERSAL2_RST_TIMESTAMP,
++        .reset = 0x1,
++    },{ .name = "RST_SWDT0",  .addr = A_VERSAL2_RST_SWDT0,
++        .reset = 0x1,
++    },{ .name = "RST_SWDT1",  .addr = A_VERSAL2_RST_SWDT1,
++        .reset = 0x1,
++    },{ .name = "RST_SWDT2",  .addr = A_VERSAL2_RST_SWDT2,
++        .reset = 0x1,
++    },{ .name = "RST_SWDT3",  .addr = A_VERSAL2_RST_SWDT3,
++        .reset = 0x1,
++    },{ .name = "RST_SWDT4",  .addr = A_VERSAL2_RST_SWDT4,
++        .reset = 0x1,
++    },{ .name = "RST_IPI",  .addr = A_VERSAL2_RST_IPI,
++    },{ .name = "RST_SYSMON",  .addr = A_VERSAL2_RST_SYSMON,
++    },{ .name = "ASU_MB_RST_MODE",  .addr = A_VERSAL2_ASU_MB_RST_MODE,
++        .reset = 0x1,
++        .rsvd = 0xf8,
++    },{ .name = "FPX_TOPSW_MUX_CTRL",  .addr = A_VERSAL2_FPX_TOPSW_MUX_CTRL,
++        .reset = 0x1,
++    },{ .name = "RST_FPX",  .addr = A_VERSAL2_RST_FPX,
++        .reset = 0x3,
++    },{ .name = "RST_MMI",  .addr = A_VERSAL2_RST_MMI,
++        .reset = 0x1,
++    },{ .name = "RST_OCM",  .addr = A_VERSAL2_RST_OCM,
++    }
++};
++
+ static void versal_crl_reset_enter(Object *obj, ResetType type)
  {
-     DeviceState *dev;
-     MemoryRegion *mr;
-+    g_autofree char *node, *subnode;
-+    const char clocknames[] = "bus_clk\0ref_clk";
-+    const char irq_name[] = "dwc_usb3";
-+    const char compat_versal_dwc3[] = "xlnx,versal-dwc3";
-+    const char compat_dwc3[] = "snps,dwc3";
+     XlnxVersalCRL *s = XLNX_VERSAL_CRL(obj);
+     unsigned int i;
  
--    object_initialize_child(OBJECT(s), "usb2", &s->lpd.iou.usb,
--                            TYPE_XILINX_VERSAL_USB2);
--    dev = DEVICE(&s->lpd.iou.usb);
-+    dev = qdev_new(TYPE_XILINX_VERSAL_USB2);
-+    object_property_add_child(OBJECT(s), "usb[*]", OBJECT(dev));
- 
-     object_property_set_link(OBJECT(dev), "dma", OBJECT(&s->mr_ps),
-                              &error_abort);
-     qdev_prop_set_uint32(dev, "intrs", 1);
-     qdev_prop_set_uint32(dev, "slots", 2);
- 
--    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
--    memory_region_add_subregion(&s->mr_ps, MM_USB_0, mr);
-+    memory_region_add_subregion(&s->mr_ps, map->xhci, mr);
- 
--    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[VERSAL_USB0_IRQ_0]);
-+    versal_sysbus_connect_irq(s, SYS_BUS_DEVICE(dev), 0, map->irq);
- 
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
--    memory_region_add_subregion(&s->mr_ps, MM_USB2_CTRL_REGS, mr);
-+    memory_region_add_subregion(&s->mr_ps, map->ctrl, mr);
-+
-+    node = versal_fdt_add_simple_subnode(s, "/usb", map->ctrl, 0x10000,
-+                                         compat_versal_dwc3,
-+                                         sizeof(compat_versal_dwc3));
-+    qemu_fdt_setprop(s->cfg.fdt, node, "clock-names",
-+                         clocknames, sizeof(clocknames));
-+    qemu_fdt_setprop_cells(s->cfg.fdt, node, "clocks",
-+                               s->phandle.clk_25mhz, s->phandle.clk_125mhz);
-+    qemu_fdt_setprop(s->cfg.fdt, node, "ranges", NULL, 0);
-+    qemu_fdt_setprop_cell(s->cfg.fdt, node, "#address-cells", 2);
-+    qemu_fdt_setprop_cell(s->cfg.fdt, node, "#size-cells", 2);
-+
-+    subnode = g_strdup_printf("/%s/dwc3", node);
-+    g_free(node);
-+
-+    node = versal_fdt_add_simple_subnode(s, subnode, map->xhci, 0x10000,
-+                                         compat_dwc3,
-+                                         sizeof(compat_dwc3));
-+    qemu_fdt_setprop(s->cfg.fdt, node, "interrupt-names",
-+                     irq_name, sizeof(irq_name));
-+    qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-+                               GIC_FDT_IRQ_TYPE_SPI, map->irq,
-+                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-+    qemu_fdt_setprop_cell(s->cfg.fdt, node,
-+                          "snps,quirk-frame-length-adjustment", 0x20);
-+    qemu_fdt_setprop_cells(s->cfg.fdt, node, "#stream-id-cells", 1);
-+    qemu_fdt_setprop_string(s->cfg.fdt, node, "dr_mode", "host");
-+    qemu_fdt_setprop_string(s->cfg.fdt, node, "phy-names", "usb3-phy");
-+    qemu_fdt_setprop(s->cfg.fdt, node, "snps,dis_u2_susphy_quirk", NULL, 0);
-+    qemu_fdt_setprop(s->cfg.fdt, node, "snps,dis_u3_susphy_quirk", NULL, 0);
-+    qemu_fdt_setprop(s->cfg.fdt, node, "snps,refclk_fladj", NULL, 0);
-+    qemu_fdt_setprop(s->cfg.fdt, node, "snps,mask_phy_reset", NULL, 0);
-+    qemu_fdt_setprop_string(s->cfg.fdt, node, "maximum-speed", "high-speed");
+     for (i = 0; i < ARRAY_SIZE(s->regs_info); ++i) {
+         register_reset(&s->regs_info[i]);
+     }
  }
  
- static void versal_create_gem(Versal *s,
-                               const struct VersalGemMap *map)
++static void versal2_crl_reset_enter(Object *obj, ResetType type)
++{
++    XlnxVersal2CRL *s = XLNX_VERSAL2_CRL(obj);
++    size_t i;
++
++    for (i = 0; i < VERSAL2_CRL_R_MAX; ++i) {
++        register_reset(&s->regs_info[i]);
++    }
++}
++
+ static void versal_crl_reset_hold(Object *obj, ResetType type)
  {
-@@ -1009,14 +1058,10 @@ static void versal_create_crl(Versal *s, qemu_irq *pic)
-         object_property_set_link(OBJECT(&s->lpd.crl),
-                                  name, OBJECT(&s->lpd.rpu.cpu[i]),
-                                  &error_abort);
-     }
+     XlnxVersalCRL *s = XLNX_VERSAL_CRL(obj);
  
--    object_property_set_link(OBJECT(&s->lpd.crl),
--                             "usb", OBJECT(&s->lpd.iou.usb),
--                             &error_abort);
--
-     sysbus_realize(sbd, &error_fatal);
-     memory_region_add_subregion(&s->mr_ps, MM_CRL,
-                                 sysbus_mmio_get_region(sbd, 0));
-     sysbus_connect_irq(sbd, 0, pic[VERSAL_CRL_IRQ]);
+     crl_update_irq(s);
+@@ -386,10 +681,77 @@ static void versal_crl_init(Object *obj)
+                                  qdev_prop_allow_set_link_before_realize,
+                                  OBJ_PROP_LINK_STRONG);
+     }
  }
-@@ -1198,11 +1243,14 @@ static void versal_realize(DeviceState *dev, Error **errp)
-         versal_create_zdma(s, &map->zdma[i]);
-     }
  
-     versal_create_xrams(s, &map->xram);
- 
--    versal_create_usbs(s, pic);
-+    for (i = 0; i < map->num_usb; i++) {
-+        versal_create_usb(s, &map->usb[i]);
++static void versal2_crl_init(Object *obj)
++{
++    XlnxVersal2CRL *s = XLNX_VERSAL2_CRL(obj);
++    XlnxVersalCRLBase *xvcb = XLNX_VERSAL_CRL_BASE(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    size_t i;
++
++    xvcb->reg_array = register_init_block32(DEVICE(obj), versal2_crl_regs_info,
++                                            ARRAY_SIZE(versal2_crl_regs_info),
++                                            s->regs_info, s->regs,
++                                            &crl_ops,
++                                            XLNX_VERSAL_CRL_ERR_DEBUG,
++                                            VERSAL2_CRL_R_MAX * 4);
++    xvcb->regs = s->regs;
++
++    sysbus_init_mmio(sbd, &xvcb->reg_array->mem);
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.rpu); ++i) {
++        object_property_add_link(obj, "rpu[*]", TYPE_ARM_CPU,
++                                 (Object **)&s->cfg.rpu[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
 +    }
 +
-     versal_create_pmc_apb_irq_orgate(s, pic);
-     versal_create_rtc(s, pic);
-     versal_create_trng(s, pic);
-     versal_create_bbram(s, pic);
-     versal_create_efuse(s, pic);
++    for (i = 0; i < ARRAY_SIZE(s->cfg.adma); ++i) {
++        object_property_add_link(obj, "adma[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.adma[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.sdma); ++i) {
++        object_property_add_link(obj, "sdma[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.sdma[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.uart); ++i) {
++        object_property_add_link(obj, "uart[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.uart[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.gem); ++i) {
++        object_property_add_link(obj, "gem[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.gem[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.usb); ++i) {
++        object_property_add_link(obj, "usb[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.usb[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(s->cfg.can); ++i) {
++        object_property_add_link(obj, "can[*]", TYPE_DEVICE,
++                                 (Object **)&s->cfg.can[i],
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++    }
++}
++
+ static void crl_finalize(Object *obj)
+ {
+     XlnxVersalCRLBase *s = XLNX_VERSAL_CRL_BASE(obj);
+     register_finalize_block(s->reg_array);
+ }
+@@ -402,10 +764,20 @@ static const VMStateDescription vmstate_versal_crl = {
+         VMSTATE_UINT32_ARRAY(regs, XlnxVersalCRL, CRL_R_MAX),
+         VMSTATE_END_OF_LIST(),
+     }
+ };
+ 
++static const VMStateDescription vmstate_versal2_crl = {
++    .name = TYPE_XLNX_VERSAL2_CRL,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, XlnxVersal2CRL, VERSAL2_CRL_R_MAX),
++        VMSTATE_END_OF_LIST(),
++    }
++};
++
+ static void versal_crl_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     XlnxVersalCRLBaseClass *xvcc = XLNX_VERSAL_CRL_BASE_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+@@ -414,10 +786,21 @@ static void versal_crl_class_init(ObjectClass *klass, const void *data)
+     rc->phases.enter = versal_crl_reset_enter;
+     rc->phases.hold = versal_crl_reset_hold;
+     xvcc->decode_periph_rst = versal_decode_periph_rst;
+ }
+ 
++static void versal2_crl_class_init(ObjectClass *klass, const void *data)
++{
++    XlnxVersalCRLBaseClass *xvcc = XLNX_VERSAL_CRL_BASE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->vmsd = &vmstate_versal2_crl;
++    rc->phases.enter = versal2_crl_reset_enter;
++    xvcc->decode_periph_rst = versal2_decode_periph_rst;
++}
++
+ static const TypeInfo crl_base_info = {
+     .name          = TYPE_XLNX_VERSAL_CRL_BASE,
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(XlnxVersalCRLBase),
+     .class_size    = sizeof(XlnxVersalCRLBaseClass),
+@@ -431,12 +814,21 @@ static const TypeInfo versal_crl_info = {
+     .instance_size = sizeof(XlnxVersalCRL),
+     .instance_init = versal_crl_init,
+     .class_init    = versal_crl_class_init,
+ };
+ 
++static const TypeInfo versal2_crl_info = {
++    .name          = TYPE_XLNX_VERSAL2_CRL,
++    .parent        = TYPE_XLNX_VERSAL_CRL_BASE,
++    .instance_size = sizeof(XlnxVersal2CRL),
++    .instance_init = versal2_crl_init,
++    .class_init    = versal2_crl_class_init,
++};
++
+ static void crl_register_types(void)
+ {
+     type_register_static(&crl_base_info);
+     type_register_static(&versal_crl_info);
++    type_register_static(&versal2_crl_info);
+ }
+ 
+ type_init(crl_register_types)
 -- 
 2.50.0
 
