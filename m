@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662A8C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 04:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680E4C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 04:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubtPU-0006fg-Qh; Wed, 16 Jul 2025 00:06:24 -0400
+	id 1ubtom-0003Im-9G; Wed, 16 Jul 2025 00:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kostikbel@gmail.com>)
- id 1ubtPP-0006dR-TR
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:06:19 -0400
-Received: from kib.kiev.ua ([2001:470:d5e7:1::1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ubtoi-0003ER-Jd
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:32:28 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kostikbel@gmail.com>)
- id 1ubtPI-00052V-UB
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:06:18 -0400
-Received: from tom.home (kib@localhost [127.0.0.1] (may be forged))
- by kib.kiev.ua (8.18.1/8.18.1) with ESMTP id 56G4559f075934;
- Wed, 16 Jul 2025 07:05:08 +0300 (EEST)
- (envelope-from kostikbel@gmail.com)
-DKIM-Filter: OpenDKIM Filter v2.10.3 kib.kiev.ua 56G4559f075934
-Received: (from kostik@localhost)
- by tom.home (8.18.1/8.18.1/Submit) id 56G454nL075933;
- Wed, 16 Jul 2025 07:05:04 +0300 (EEST)
- (envelope-from kostikbel@gmail.com)
-X-Authentication-Warning: tom.home: kostik set sender to kostikbel@gmail.com
- using -f
-Date: Wed, 16 Jul 2025 07:05:04 +0300
-From: Konstantin Belousov <kostikbel@gmail.com>
-To: Yi Liu <yi.l.liu@intel.com>
-Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Konstantin Belousov <kib@kib.kiev.ua>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Le Tan <tamlokveer@gmail.com>,
- "jhb@freebsd.org" <jhb@freebsd.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2] intel_iommu: Allow both Status Write and Interrupt
- Flag in QI wait
-Message-ID: <aHck8KHvEJqrRJ2s@kib.kiev.ua>
-References: <0122cbabc0adcc3cf878f5fd7834d8f258c7a2f2.camel@infradead.org>
- <9ce8b7e6-ad15-4d2e-a430-3896eccc7519@intel.com>
- <4FE9A8E3-5BA5-46D3-A1FA-EA1B7C85C058@infradead.org>
- <aHV0-wDJImAjRPPp@kib.kiev.ua>
- <afe3881b-1193-4d89-b0d0-6c316e54684f@eviden.com>
- <7cf6b91c1e1ea8b50d116f738215bcb55732b214.camel@infradead.org>
- <d84bdcab-3d2e-4731-a9aa-b8094fbaf7e8@eviden.com>
- <1d00dc9f-7647-4aa5-9ca5-987a06ce4292@intel.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ubtof-0002Oi-GR
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 00:32:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1752640345; x=1784176345;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=2BVHKwrhsznPCq6xBQHl8kRyuU+BRCR0BonggEcp9Bc=;
+ b=E4jmeCJuOQLlOEdYKs3HayZgLwAMi+65kBZKLp29GBElnDTd31X2yPAi
+ kBhstGJ/1MV4dPnPlRe3wT6itgi2YHeI5BeQlHV1g6Vbrn3K+38i8avCt
+ Oh4hocT7E9YB9SEH4XissYHbhZ/BF99alrV3n00Wcupp3wyproAe7g4h2
+ 1eaSEXlQj3xubsQD4WAegAz3BRNhammmwyctkklRZTxh/opSSSJ7g/0X9
+ ypPSwNsCuQod8s5oVLAaRFfjEQNhoy9vCtXoFDwQeJvTOjWQ7CUYqeFXz
+ I3kfDBMIEMMYRx8i8V4cUH2Gld+1Gc9/hafFYYpeb+Y3REBOh0RqROLno A==;
+X-CSE-ConnectionGUID: XDv3EkGLQVK8xHzZFCQd+A==
+X-CSE-MsgGUID: ljpYwwK6T3KVF90Ifr6OBA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="65135358"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="65135358"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2025 21:32:19 -0700
+X-CSE-ConnectionGUID: jRuyK731SRyhxPAAVVnFXg==
+X-CSE-MsgGUID: FyP64Jc6RXevcIRGl1RIUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="157059959"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 15 Jul 2025 21:32:18 -0700
+Date: Wed, 16 Jul 2025 12:53:48 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Babu Moger <babu.moger@amd.com>
+Cc: pbonzini@redhat.com, bp@alien8.de, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] target/i386: Add TSA attack variants TSA-SQ and
+ TSA-L1
+Message-ID: <aHcwXBFy90lBjcfF@intel.com>
+References: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1d00dc9f-7647-4aa5-9ca5-987a06ce4292@intel.com>
-Received-SPF: softfail client-ip=2001:470:d5e7:1::1;
- envelope-from=kostikbel@gmail.com; helo=kib.kiev.ua
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_CUSTOM_MED=0.001,
- FORGED_GMAIL_RCVD=1, FREEMAIL_FROM=0.001, MAY_BE_FORGED=0.001,
- NML_ADSP_CUSTOM_MED=0.9, SPF_HELO_PASS=-0.001,
- SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+In-Reply-To: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,54 +84,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 12:01:44PM +0800, Yi Liu wrote:
-> On 2025/7/15 20:27, CLEMENT MATHIEU--DRIF wrote:
-> > 
-> > 
-> > On 15/07/2025 10:27 am, David Woodhouse wrote:
-> > > On Tue, 2025-07-15 at 06:11 +0000, CLEMENT MATHIEU--DRIF wrote:
-> > > > 
-> > > > 
-> > > > On 14/07/2025 11:22 pm, Konstantin Belousov wrote:
-> > > > > 
-> > > > > On Mon, Jul 14, 2025 at 05:41:22PM +0100, David Woodhouse wrote:
-> > > > > > On 14 July 2025 15:28:09 GMT+01:00, Yi Liu <yi.l.liu@intel.com>
-> > > > > > wrote:
-> > > > > > > Hi David,
-> > > > > > > 
-> > > > > > > On 2025/7/14 16:00, David Woodhouse wrote:
-> > > > > > > > From: David Woodhouse <dwmw@amazon.co.uk>
-> > > > > > > > 
-> > > 
-> > > > > > > I think this "if branch" can be moved just after the inv_desc non-zero
-> > > > > > > reserved bit checking. Hence you don't need a ret at all. :)
-> > > > > > 
-> > > > > > We want to return false if the memory write fails, and the
-> > > > > > interrupt has to happen afterwards.
-> > > > 
-> > > > Per spec: "Hardware behavior is undefined if the Status Address
-> > > > specified is not an address route-able to memory"
-> > > > 
-> > > > Do we want to trigger the interrupt even when the DMA fails?
-> > > 
-> > > Yes, we do. That's a quality of implementation issue. Just because the
-> > > behaviour is 'undefined' and theoretically gives us permission to do
-> > > whatever we like to the guest, we should still be as sensible as
-> > > possible.
-> > 
+On Thu, Jul 10, 2025 at 02:46:10PM -0500, Babu Moger wrote:
+> Date: Thu, 10 Jul 2025 14:46:10 -0500
+> From: Babu Moger <babu.moger@amd.com>
+> Subject: [PATCH v2 1/2] target/i386: Add TSA attack variants TSA-SQ and
+>  TSA-L1
+> X-Mailer: git-send-email 2.34.1
 > 
-> Personally, I'm fine with generating the interrupt even the status write
-> failed. But to avoid potential conflict, I've also raised this question to
-> the VT-d spec owner. Haven't got a clear answer yet. To further understand
-> this, may I ask some dumb questions here. Why FreeBSD set both SW and IF
-> flag. What is the usage model here. Would software consider that all the QI
-> descriptors prior to this specific wait descriptor has succeeded when
-> either the interrupt got invoked or the expected status is written back?
+> Transient Scheduler Attacks (TSA) are new speculative side channel attacks
+> related to the execution timing of instructions under specific
+> microarchitectural conditions. In some cases, an attacker may be able to
+> use this timing information to infer data from other contexts, resulting in
+> information leakage.
+> 
+> AMD has identified two sub-variants two variants of TSA.
+> CPUID Fn8000_0021 ECX[1] (TSA_SQ_NO).
+> 	If this bit is 1, the CPU is not vulnerable to TSA-SQ.
+> 
+> CPUID Fn8000_0021 ECX[2] (TSA_L1_NO).
+> 	If this bit is 1, the CPU is not vulnerable to TSA-L1.
+> 
+> Add the new feature word FEAT_8000_0021_ECX and corresponding bits to
+> detect TSA variants.
+> 
+> Link: https://www.amd.com/content/dam/amd/en/documents/resources/bulletin/technical-guidance-for-mitigating-transient-scheduler-attacks.pdf
+> Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+> Signed-off-by: Babu Moger <babu.moger@amd.com>
+> ---
+> v2: Split the patches into two.
+>     Not adding the feature bit in CPU model now. Users can add the feature
+>     bits by using the option "-cpu EPYC-Genoa,+tsa-sq-no,+tsa-l1-no".
+> 
+> v1: https://lore.kernel.org/qemu-devel/20250709104956.GAaG5JVO-74EF96hHO@fat_crate.local/
+> ---
+>  target/i386/cpu.c | 17 +++++++++++++++++
+>  target/i386/cpu.h |  6 ++++++
+>  2 files changed, 23 insertions(+)
 
-FreeBSD queues invalidations, each invalidation has the gen number. To
-know that some invalidation finished, FreeBSD waits for the interrupt,
-we do not scan the invalidation sequence word otherwise. There might be
-further generations of the invalidation descriptors in flight when we
-get the interrupt, which means that we need to know which generation is
-finished.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
