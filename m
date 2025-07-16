@@ -4,75 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197B9C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC27C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 09:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubyRS-00084C-2Z; Wed, 16 Jul 2025 05:28:48 -0400
+	id 1ubyWh-0005qb-Bm; Wed, 16 Jul 2025 05:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubyRO-0007zF-P7
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 05:28:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubyWe-0005l0-Gb; Wed, 16 Jul 2025 05:34:08 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ubyRM-0008Re-EL
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 05:28:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752658117;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kuYoweXKmozrEkji5sHMMGhvJxKMm/WuWmarmJYz5Jc=;
- b=Nw9V8xDjkX7VlsPv0IaovJKr4RNop+HR1JMCmnE0quN07zYG2d4zQBx/gM0AU8/WGt4Pae
- DQIwUPEOL/9pRaLB+q3yQ2Oz4ZtR6paQxZlcjdaYN+HLx/kY2TEgZ+CklEDsZ1oqO9B+KS
- vnWTuL1Ne04OtDsbi2IKa92rt/RG6xM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-YjCAiSzjPJ-4TuOUJSyP2Q-1; Wed,
- 16 Jul 2025 05:28:35 -0400
-X-MC-Unique: YjCAiSzjPJ-4TuOUJSyP2Q-1
-X-Mimecast-MFC-AGG-ID: YjCAiSzjPJ-4TuOUJSyP2Q_1752658114
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2BD3195609E
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 09:28:34 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.68])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 565D318002B6; Wed, 16 Jul 2025 09:28:32 +0000 (UTC)
-Date: Wed, 16 Jul 2025 10:28:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] i386: Build SEV only for 64-bit target
-Message-ID: <aHdwvYF_wQyJIIsr@redhat.com>
-References: <20250716071554.377356-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ubyWc-0000zd-Ab; Wed, 16 Jul 2025 05:34:08 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhrSK5kH3z6M4g1;
+ Wed, 16 Jul 2025 17:32:33 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0143714044F;
+ Wed, 16 Jul 2025 17:33:49 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 16 Jul
+ 2025 11:33:48 +0200
+Date: Wed, 16 Jul 2025 10:33:46 +0100
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <linuxarm@huawei.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
+ <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 08/15] hw/arm/smmuv3-accel: Add
+ set/unset_iommu_device callback
+Message-ID: <20250716103346.00005ca4@huawei.com>
+In-Reply-To: <aHaJYfitACLvupZV@Asurada-Nvidia>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-9-shameerali.kolothum.thodi@huawei.com>
+ <20250715112941.00005348@huawei.com>
+ <aHaJYfitACLvupZV@Asurada-Nvidia>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250716071554.377356-1-clg@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,48 +75,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 09:15:54AM +0200, Cédric Le Goater wrote:
-> Recent changes broke build on 32-bit host. Since there is no 32-bit
-> support, restrict SEV to 64-bit.
+On Tue, 15 Jul 2025 10:01:21 -0700
+Nicolin Chen <nicolinc@nvidia.com> wrote:
+
+> On Tue, Jul 15, 2025 at 11:29:41AM +0100, Jonathan Cameron wrote:
+> > > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> > > +                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+> > > +                                      s2_hwpt_id, &viommu_id, errp)) {
+> > > +        return false;
+> > > +    }  
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->  hw/i386/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> [...]
+> 
+> > > +free_abort_hwpt:
+> > > +    iommufd_backend_free_id(idev->iommufd, viommu->abort_hwpt_id);
+> > > +free_viommu:
+> > > +    iommufd_backend_free_id(idev->iommufd, viommu->core.viommu_id);
+> > > +    g_free(viommu);  
+> > 
+> > No unwinding of iommufd_backened_alloc_viommu?
+> > Looks like we just leak it until destruction of the fd. 
+> > 
+> > Maybe add a comment for those like me who aren't all that familiar with
+> > this stuff and see an alloc with no matching free.  
+> 
+> Those iommufd_backend_free_id calls are the reverts. An iommufd
+> object is free-ed using its object id, i.e. the "viommu_id" and
+> "abort_hwpt_id" in the lines.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Ah.  I confused IDs and thought this was unwinding the two
+iommufd_backend_alloc_hwpt() calls but of course the second one doesn't
+need unwinding in the error path as it is the last call so if it fails
+nothing to unwind.
 
-Matches what we just did for TDX too.
-
+So feel free to ignore this comment. 
 
 > 
-> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> index 14d23e27b580b2d5ea3aa4c07ba066f21a62e348..5139d2308777114e76a789c4f850fa20f3fa754f 100644
-> --- a/hw/i386/Kconfig
-> +++ b/hw/i386/Kconfig
-> @@ -4,7 +4,7 @@ config X86_FW_OVMF
->  config SEV
->      bool
->      select X86_FW_OVMF
-> -    depends on KVM
-> +    depends on KVM && X86_64
->  
->  config SGX
->      bool
-> -- 
-> 2.50.1
+> Adding comments to every single iommufd_backened_free_id() call
+> isn't optimal, IMHO, as that function would be invoked across
+> different vIOMMU files and even the vfio/iommufd core files.
 > 
+> Perhaps QEMU should wrap it up with a helper, E.g.
 > 
+> static inline void iommufd_backend_free(int iommufd, int obj_id)
+> {
+> 	iommufd_backend_free_id(iommufd, obj_id);
+> }
+> 
+> if it helps readability?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+That would then leave us with iommufd_backend_alloc_hwpt() being
+unwound by a direct iommufd_backend_free_id() which is equally
+odd - so let's just keep them all being odd.
+
+Jonathan
+
+> 
+> Nicolin
 
 
