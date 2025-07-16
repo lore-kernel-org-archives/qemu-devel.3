@@ -4,71 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672C7C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 11:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41740C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 11:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc0Xo-0004dv-BH; Wed, 16 Jul 2025 07:43:29 -0400
+	id 1uc0YB-0004tI-HY; Wed, 16 Jul 2025 07:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uc0OL-0005u3-KT
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:33:42 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uc0WQ-0003hq-UH; Wed, 16 Jul 2025 07:42:03 -0400
+Received: from sender4-op-o12.zoho.com ([136.143.188.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uc0OA-0003bc-Og
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:33:40 -0400
-Received: from [157.82.206.39] ([157.82.206.39]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56GBWqxB026035
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 16 Jul 2025 20:32:52 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ICTS1Ps0EN4b96NtX6XGLQlHBYf4LG/YqpIJ5KhSIUo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1752665572; v=1;
- b=mZKsqwvN1S8meHTxAObOEVF3Zxy+Szlfym3D07WhtRGxYD10NZwmjTb2U8JJJClF
- 2V2fjZdZgydkpgrefVKcEjybs1JiBVJ/fdBb6NKVZ3qhxV0f7CE4xUtCDQfwLoeD
- EGKwiWvH3+w/yA9eK1skzXaOq4pFIbU1D5lEgyWVdKpEUjEi+qWs93O1/Pj/9b8f
- v71cuBQiqLCNryi3LF1Wb5EPRWEHARzg0HS5j+wwBOEJrXLU4nE+2ZGaXaHeTFXt
- TO2N7wJvTtRugyYX6yWDjZu0v4IrZ5FILnQEw8IWxxYHxfU89N3NBTPuOgx2lNyy
- B0givpv91oc52nHeu1C1Vg==
-Message-ID: <f2674001-9489-44c9-b17a-c9d8a66b3935@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 16 Jul 2025 20:32:52 +0900
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uc0WK-00053m-2g; Wed, 16 Jul 2025 07:42:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1752666075; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=YPz3XUJenBbCOxUgY2lWK4jOaAbYc7Dm3o3LABOpiA9N7JAy+0wPzgx6lCCgQLIxXnAy5iDvc2vYntPTAqVEcrYoGHIgYxHB0MB5bc2AxYWeL5MYs5iXmnYKTXc5R1QStuMUyvbh5PXMdVu2yk2cmpeG9jQ6SmoHB0XXSjq1AAE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1752666075;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=l2q8W/CL92JSNVH2L0zrZaYc6bImsqR1lzhthb27ALM=; 
+ b=h3DfWMsTB7iSzTbovjtVgloHtmvjoOQck+oYwU8qAJgdHoWurfUhj8i1KPNQzoFCIb9ycZLm+3uOJ3ZR4HqNVBu0RiWOFD52Or+bI2Q/pfeiypXsCXuigfloZ5YZFSdIDk8Qb7bD6ssMt5sXvVG2Aa0BeGKL94x2R7YuYkDByaA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1752666075; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=l2q8W/CL92JSNVH2L0zrZaYc6bImsqR1lzhthb27ALM=;
+ b=Fkk6ymZhHoxwr19s1MFHHY+rviCLLfQ+FLkWJtTSv7WulKpCiumUkLR6S2W1QPoT
+ /sObr9uE5FKsDQcyH3hzD60O/+tyK8qQqYgVWgPibXqpgvMnKCLKgGsTgE6LX510R1g
+ Dts4b2dWaEqvs69BpOmnrB2g2wg8+4aCaH4fdYvc=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1752666071850223.43906210923728;
+ Wed, 16 Jul 2025 04:41:11 -0700 (PDT)
+Date: Wed, 16 Jul 2025 19:41:11 +0800
+From: Li Chen <me@linux.beauty>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
+ "Eduardo Habkost" <eduardo@habkost.net>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ "Yanan Wang" <wangyanan55@huawei.com>,
+ "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Sunil V L" <sunilvl@ventanamicro.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,
+ "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>,
+ "Li Chen" <chenl311@chinatelecom.cn>
+Message-ID: <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
+In-Reply-To: <20250714144303-mutt-send-email-mst@kernel.org>
+References: <20250528105404.457729-1-me@linux.beauty>
+ <20250528105404.457729-5-me@linux.beauty>
+ <20250714144303-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
+ when guest has no serial hardware
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 01/13] net: bundle all offloads in a single struct
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- kvm@vger.kernel.org
-References: <cover.1752229731.git.pabeni@redhat.com>
- <6e85b684df9f953f04b10c75288e2d4065af49a2.1752229731.git.pabeni@redhat.com>
- <d434b098-aebc-42cb-b589-d84f7bd78c21@rsg.ci.i.u-tokyo.ac.jp>
- <bbf7744c-9340-4d59-804b-87f7ff9bdcc4@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <bbf7744c-9340-4d59-804b-87f7ff9bdcc4@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
+ helo=sender4-op-o12.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,71 +96,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/15 23:52, Paolo Abeni wrote:
-> On 7/15/25 8:36 AM, Akihiko Odaki wrote:
->> On 2025/07/11 22:02, Paolo Abeni wrote:
->>> The set_offload() argument list is already pretty long and
->>> we are going to introduce soon a bunch of additional offloads.
->>>
->>> Replace the offload arguments with a single struct and update
->>> all the relevant call-sites.
->>>
->>> No functional changes intended.
->>>
->>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->>> ---
->>> Note: I maintained  the struct usage as opposed to uint64_t bitmask usage
->>> as suggested by Akihiko, because the latter feel a bit more invasive.
->>
->> I think a bitmask will be invasive to the same extent with the current
->> version; most part of this change comes from the parameter passing,
->> which does not depend on the representation of the parameter.
-> 
-> Do you have strong feeling WRT the bitmask usage?
-> 
-> Another argument vs the bitmask usage is that it will requires some
-> extra input validation of the selected offload bits (most of them don't
-> make sense in this context).
+Hi Michael,
 
-I don't think such a validation is necessary.
+Thanks for your kind review! All issues below have been fixed in v5:
+https://lore.kernel.org/qemu-devel/20250716111959.404917-5-me@linux.beauty/=
+T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
 
-There is practically no chance to have a wrong bit set by mistake when 
-callers specify bits with macros prefixed with VIRTIO_NET_O_GUEST_. 
-There will be a compilation error if the caller specify a offload bit 
-that doesn't exist.
-
-It is also obvious if a caller specified something unrelated (i.e., not 
-prefixed with VIRTIO_NET_O_GUEST_). A real downside here would be that 
-we will need to type VIRTIO_NET_O_GUEST_ each time referring an offload 
-bit; such a redundancy does not exist with struct because the type 
-system knows the bits bound to the type.
-
-That said, 1) I prefer bitmasks much over struct though 2) I will be in 
-favor of merging this series if everything else gets sorted out while 
-the struct remains.
-
-I'll explain the reason for 1) first:
-
-There are both a downside and an upside with bitmasks. The downside is 
-the redundancy of syntax, which I have just pointed out. The upside is 
-the consistency with virtio's offload configuration, which defines the 
-functionality of set_offload().
-
-I consider the following two factors in such a trade-off scenario:
-a) The balance between the downside and upside
-b) Prior examples in the code base
-
-Regarding a), I think the upside outweighs the downside but its extent 
-is small.
-
-b) matters more for this particular case; there are bunch of examples 
-that use bitmasks in "include", excluding "include/hw" but there are 
-none of structs that are dedicated for bools. Consistency matters for a 
-big code base like QEMU so I want a good reason when making an exception.
-
-The reasoning behind 2) is that having this patch is still better than 
-the status quo.
-
+ ---- On Tue, 15 Jul 2025 02:45:31 +0800  Michael S. Tsirkin <mst@redhat.co=
+m> wrote ---=20
+ > On Wed, May 28, 2025 at 06:53:38PM +0800, Li Chen wrote:
+ > > From: Li Chen <chenl311@chinatelecom.cn>
+ > >=20
+ > > The virt machines always instantiate a PL011/16550 at UART0 and
+ > > describe it in ACPI (DSDT device node plus optional SPCR table).  When
+ > > the command line contains =E2=80=9C-serial none=E2=80=9D there is no b=
+ackend attached to
+ > > that UART, yet the guest still discovers it via ACPI and may try to us=
+e
+ > > it as a console, causing unexpected results.
+ > >=20
+ > > And also explicitly add "-serial stdio" in bios-tables-test.c to allow
+ > > serial device creation, otherwise DSDT assert would get failure becaus=
+e
+ > > "-nodefaults" will not create uart device by default:
+ > >=20
+ > > ```
+ > > stderr:
+ > > acpi-test: Warning! DSDT binary file mismatch. Actual [aml:/tmp/aml-BM=
+OL72], Expected [aml:tests/data/acpi/aarch64/virt/DSDT].
+ > > See source file tests/qtest/bios-tables-test.c for instructions on how=
+ to update expected files.
+ > > acpi-test: Warning! DSDT mismatch. Actual [asl:/tmp/asl-RNOL72.dsl, am=
+l:/tmp/aml-BMOL72], Expected [asl:/tmp/asl-ZVQL72.dsl, aml:tests/data/acpi/=
+aarch64/virt/DS
+ > > DT].
+ > > ```
+ > >=20
+ > > Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+ > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+ > > Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+ >=20
+ >=20
+ > will need to be rebased updating loongarch too, now.
+ >=20
+ >=20
+ > > ---
+ > >=20
+ > > Notes:
+ > >     Changes since v3: 1. Add Reviewed-by from Sunil V L <sunilvl@venta=
+namicro.com>
+ > >                       2. Explicitly add "-serial stdio" to pass DSDT a=
+ssert
+ > >=20
+ > >  hw/arm/virt-acpi-build.c       | 15 +++++++++------
+ > >  hw/riscv/virt-acpi-build.c     |  7 +++++--
+ > >  include/system/system.h        |  2 ++
+ > >  system/vl.c                    |  5 +++++
+ > >  tests/qtest/bios-tables-test.c |  5 +++--
+ > >  5 files changed, 24 insertions(+), 10 deletions(-)
+ > >=20
+ > > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+ > > index d77d16cbd3..c26aedb1b1 100644
+ > > --- a/hw/arm/virt-acpi-build.c
+ > > +++ b/hw/arm/virt-acpi-build.c
+ > > @@ -59,6 +59,7 @@
+ > >  #include "hw/acpi/viot.h"
+ > >  #include "hw/virtio/virtio-acpi.h"
+ > >  #include "target/arm/multiprocessing.h"
+ > > +#include "system/system.h"
+ > > =20
+ > >  #define ARM_SPI_BASE 32
+ > > =20
+ > > @@ -821,11 +822,13 @@ build_dsdt(GArray *table_data, BIOSLinker *linke=
+r, VirtMachineState *vms)
+ > >       */
+ > >      scope =3D aml_scope("\\_SB");
+ > >      acpi_dsdt_add_cpus(scope, vms);
+ > > -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
+ > > -                       (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
+ > > -    if (vms->second_ns_uart_present) {
+ > > -        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
+ > > -                           (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
+ > > +    if (serial_exist()) {
+ > > +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
+ > > +                           (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
+ > > +        if (vms->second_ns_uart_present) {
+ > > +            acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
+ > > +                               (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1=
+);
+ > > +        }
+ > >      }
+ > >      if (vmc->acpi_expose_flash) {
+ > >          acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
+ > > @@ -937,7 +940,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBu=
+ildTables *tables)
+ > > =20
+ > >      acpi_add_table(table_offsets, tables_blob);
+ > > =20
+ > > -    if (ms->acpi_spcr_enabled) {
+ > > +    if (ms->acpi_spcr_enabled && serial_exist()) {
+ > >          spcr_setup(tables_blob, tables->linker, vms);
+ > >      }
+ > > =20
+ > > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+ > > index ee1416d264..80bf3c3cec 100644
+ > > --- a/hw/riscv/virt-acpi-build.c
+ > > +++ b/hw/riscv/virt-acpi-build.c
+ > > @@ -39,6 +39,7 @@
+ > >  #include "qapi/error.h"
+ > >  #include "qemu/error-report.h"
+ > >  #include "system/reset.h"
+ > > +#include "system/system.h"
+ > > =20
+ > >  #define ACPI_BUILD_TABLE_SIZE             0x20000
+ > >  #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
+ > > @@ -474,7 +475,9 @@ static void build_dsdt(GArray *table_data,
+ > >                                   memmap[VIRT_APLIC_S].size, "RSCV0002=
+");
+ > >      }
+ > > =20
+ > > -    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
+ > > +    if (serial_exist())
+ > > +        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
+ > > +
+ >=20
+ > coding style violation
+ >=20
+ > >      if (virt_is_iommu_sys_enabled(s)) {
+ > >          acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU=
+_SYS_IRQ);
+ > >      }
+ > > @@ -895,7 +898,7 @@ static void virt_acpi_build(RISCVVirtState *s, Acp=
+iBuildTables *tables)
+ > > =20
+ > >      acpi_add_table(table_offsets, tables_blob);
+ > > =20
+ > > -    if (ms->acpi_spcr_enabled) {
+ > > +    if (ms->acpi_spcr_enabled && serial_exist()) {
+ > >          spcr_setup(tables_blob, tables->linker, s);
+ > >      }
+ > > =20
+ > > diff --git a/include/system/system.h b/include/system/system.h
+ > > index a7effe7dfd..ca1af38432 100644
+ > > --- a/include/system/system.h
+ > > +++ b/include/system/system.h
+ > > @@ -75,6 +75,8 @@ extern unsigned int nb_prom_envs;
+ > >  /* Return the Chardev for serial port i, or NULL if none */
+ > >  Chardev *serial_hd(int i);
+ > > =20
+ > > +bool serial_exist(void);
+ > > +
+ > >  /* parallel ports */
+ > > =20
+ > >  #define MAX_PARALLEL_PORTS 3
+ > > diff --git a/system/vl.c b/system/vl.c
+ > > index fd402b8ff8..e340ee3a95 100644
+ > > --- a/system/vl.c
+ > > +++ b/system/vl.c
+ > > @@ -1485,6 +1485,11 @@ Chardev *serial_hd(int i)
+ > >      return NULL;
+ > >  }
+ > > =20
+ > > +bool serial_exist(void)
+ > > +{
+ > > +    return serial_hd(0) ? true : false;
+ > > +}
+ > > +
+ >=20
+ > serial_exists
+ >=20
+ >=20
+ > >  static bool parallel_parse(const char *devname, Error **errp)
+ > >  {
+ > >      static int index =3D 0;
+ > > diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-=
+test.c
+ > > index 44de152a36..452566fa86 100644
+ > > --- a/tests/qtest/bios-tables-test.c
+ > > +++ b/tests/qtest/bios-tables-test.c
+ > > @@ -824,10 +824,11 @@ static char *test_acpi_create_args(test_data *da=
+ta, const char *params)
+ > >          /*
+ > >           * TODO: convert '-drive if=3Dpflash' to new syntax (see e337=
+63be7cd3)
+ > >           * when arm/virt boad starts to support it.
+ > > +         * NOTE: Explicitly add "-serial stdio" to enable uart in DSD=
+T.
+ > >           */
+ > >          if (data->cd) {
+ > >              args =3D g_strdup_printf("-machine %s%s %s -accel tcg "
+ > > -                "-nodefaults -nographic "
+ > > +                "-nodefaults -serial stdio -nographic "
+ > >                  "-drive if=3Dpflash,format=3Draw,file=3D%s,readonly=
+=3Don "
+ > >                  "-drive if=3Dpflash,format=3Draw,file=3D%s,snapshot=
+=3Don -cdrom %s %s",
+ > >                  data->machine, data->machine_param ?: "",
+ > > @@ -835,7 +836,7 @@ static char *test_acpi_create_args(test_data *data=
+, const char *params)
+ > >                  data->uefi_fl1, data->uefi_fl2, data->cd, params ? pa=
+rams : "");
+ > >          } else {
+ > >              args =3D g_strdup_printf("-machine %s%s %s -accel tcg "
+ > > -                "-nodefaults -nographic "
+ > > +                "-nodefaults -serial stdio -nographic "
+ > >                  "-drive if=3Dpflash,format=3Draw,file=3D%s,readonly=
+=3Don "
+ > >                  "-drive if=3Dpflash,format=3Draw,file=3D%s,snapshot=
+=3Don %s",
+ > >                  data->machine, data->machine_param ?: "",
+ >=20
+ >=20
+ >=20
+ >=20
+ > > --=20
+ > > 2.49.0
+ >=20
+ >=20
 Regards,
-Akihiko Odaki
+
+Li=E2=80=8B
+
 
