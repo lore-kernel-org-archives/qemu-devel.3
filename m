@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79501C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 15:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3753C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 15:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc425-0003pX-6n; Wed, 16 Jul 2025 11:26:57 -0400
+	id 1uc4BW-0001Wq-EX; Wed, 16 Jul 2025 11:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc41w-0003le-Lj
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 11:26:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uc46r-0007Nw-EM; Wed, 16 Jul 2025 11:31:53 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uc41s-0004df-Qq
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 11:26:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752679602;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Cp6W86vHw6E8rrCssFSKuLge2PazBSu7MhY5CNm4ckI=;
- b=cHHKNnHMsxE0GFpZvS5K49uJhR0hbGMQkgfj55WrIHvfEXmhavaybHKqshqm1G2L+A5xuB
- oSjcLVU4hbt7BT4+eockwBVg9MhawVGMmMxc6eboc7Fpbl1h+8O8Suz91sqswpNnwiblJ+
- uZvWcfbeB6LWrxCtEedLhGreigQ45A4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-4ZqVOHlVM8eIBkXP4wxkbA-1; Wed, 16 Jul 2025 11:26:41 -0400
-X-MC-Unique: 4ZqVOHlVM8eIBkXP4wxkbA-1
-X-Mimecast-MFC-AGG-ID: 4ZqVOHlVM8eIBkXP4wxkbA_1752679599
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-455ea9cb0beso42838865e9.0
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 08:26:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752679599; x=1753284399;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Cp6W86vHw6E8rrCssFSKuLge2PazBSu7MhY5CNm4ckI=;
- b=fcBA1RsCR8d+r8FFv3/mRk2Z7QFDCtEKVYhf2ht9r90I9OoMNJvVJID3IV3RfvfLV3
- k+xnpcCu2Mozec62F21Vrw1ziR2fEenp7KjoqH6yOsyB/CuDlLfLVtZ/KO7IF72UNDo1
- WGeEUx63bPql0EEkRkxum4nrEUp0xEYGdrAp9Zjk5O/z7RhhkKvGqumYC54mLEZ89Ac4
- iJX5eLre7hYKp4EEbi2JhFr0qRlrUfOgARI0oTg5FCL9MmhEyWJSJwHtZpgx/oArbf6K
- ZO+i5wOD4LIMZCION8X22GmnyBGhS2B/Vj69aRnCt2wB0Z/3WG8Y8eZi3yXpIex3Gz2O
- kB/Q==
-X-Gm-Message-State: AOJu0YyyWK0ECInrJYHpUx1PhKe1WJGHtrhXUIsaz1AZPEm7kEg63MRf
- cc0+5ea2N7Fkmxgqc4iIm+qeq80wMVvLLojTckMAMYE8H3OEZ+h7I5eBEoSw3MJSUMSPOhCrND0
- YDyGnEiX5nSqwgfx5lhk/idaZBaM7w02IQm3WrV+VL3hoUEpiZvQGJmK+
-X-Gm-Gg: ASbGncvEGyxtypC1vii3ZBIk0PJ9Xw5PWrT97S8eQETL1QjctFDHwkhCUIYxYV+oyaB
- hIaZDtkO289dJO5qkE77fVx4Rhfq4FFM/tUDoeCUjVAz89wh46M1wp4nf3t91hRpbQN+gJbkDTP
- 81X8X2fFtEtrddHBpWX7aCuJ9n/RkBU+dpxewj1pdNUfAoAMZqY4A3vgrNWKFV9ZzP/ECT4L2r7
- 2kaUb0vcbvH14NqDng1fF4OoVZe4wHI57bxwR/yXsITGJlM+Xq4RmvWWw8IfcdoiCMXGHeebG72
- xa2gEaYAJcR3UfowochA178Ieda5IMUyphg17MYyHbvqh4vJR2bYWQbzidKkAKswo/f71MVEYPa
- fAu030XCwB7I=
-X-Received: by 2002:a05:600c:a305:b0:453:8bc7:5e53 with SMTP id
- 5b1f17b1804b1-4562e853505mr28341965e9.0.1752679598771; 
- Wed, 16 Jul 2025 08:26:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWBeoEUw20skYSmP4OnHJlblGwQlZITR6i+JHUgqwno1dL6yvQHpPDCJaEPw5p6xbkUvdjHA==
-X-Received: by 2002:a05:600c:a305:b0:453:8bc7:5e53 with SMTP id
- 5b1f17b1804b1-4562e853505mr28341355e9.0.1752679598403; 
- Wed, 16 Jul 2025 08:26:38 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e818525sm24165975e9.16.2025.07.16.08.26.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 08:26:37 -0700 (PDT)
-Message-ID: <5b901f04-da30-4f40-8ab9-803e03e43414@redhat.com>
-Date: Wed, 16 Jul 2025 17:26:37 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uc46o-0005EY-Rf; Wed, 16 Jul 2025 11:31:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 776F01378F5;
+ Wed, 16 Jul 2025 18:31:39 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CB177248C5D;
+ Wed, 16 Jul 2025 18:31:45 +0300 (MSK)
+Message-ID: <33497cb5-037b-4656-bd8d-6310c7c03e65@tls.msk.ru>
+Date: Wed, 16 Jul 2025 18:31:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: boot failure on top of current git
-To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <6c04f89b-0313-481a-9d26-1fe9e60e0616@redhat.com>
- <1331c1fe-6064-4580-8464-02dee23c1fe2@redhat.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <1331c1fe-6064-4580-8464-02dee23c1fe2@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 4/7] i386/cpu: Fix number of addressable IDs field for
+ CPUID.01H.EBX[23:16]
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Ewan Hai <ewanhai-oc@zhaoxin.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Tao Su <tao1.su@intel.com>, Yi Lai <yi1.lai@intel.com>,
+ Dapeng Mi <dapeng1.mi@intel.com>, qemu-devel@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250714080859.1960104-1-zhao1.liu@intel.com>
+ <20250714080859.1960104-5-zhao1.liu@intel.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250714080859.1960104-5-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,19 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/25 5:22 PM, Paolo Bonzini wrote:
-> On 7/16/25 16:44, Paolo Abeni wrote:
->> I'm observing boot failure for a rhel-9.7 VM. I'm using qemu git tree at
->> commit c079d3a31e.
+On 14.07.2025 11:08, Zhao Liu wrote:
+> From: Chuang Xu <xuchuangxclwt@bytedance.com>
 > 
-> No and I cannot reproduce it.
+> When QEMU is started with:
+> -cpu host,migratable=on,host-cache-info=on,l3-cache=off
+> -smp 180,sockets=2,dies=1,cores=45,threads=2
 > 
-> What host is it (processor) and kernel version?
+> On Intel platform:
+> CPUID.01H.EBX[23:16] is defined as "max number of addressable IDs for
+> logical processors in the physical package".
+> 
+> When executing "cpuid -1 -l 1 -r" in the guest, we obtain a value of 90 for
+> CPUID.01H.EBX[23:16], whereas the expected value is 128. Additionally,
+> executing "cpuid -1 -l 4 -r" in the guest yields a value of 63 for
+> CPUID.04H.EAX[31:26], which matches the expected result.
+> 
+> As (1+CPUID.04H.EAX[31:26]) rounds up to the nearest power-of-2 integer,
+> it's necessary to round up CPUID.01H.EBX[23:16] to the nearest power-of-2
+> integer too. Otherwise there would be unexpected results in guest with
+> older kernel.
+> 
+> For example, when QEMU is started with CLI above and xtopology is disabled,
+> guest kernel 5.15.120 uses CPUID.01H.EBX[23:16]/(1+CPUID.04H.EAX[31:26]) to
+> calculate threads-per-core in detect_ht(). Then guest will get "90/(1+63)=1"
+> as the result, even though threads-per-core should actually be 2.
+> 
+> And on AMD platform:
+> CPUID.01H.EBX[23:16] is defined as "Logical processor count". Current
+> result meets our expectation.
+> 
+> So round up CPUID.01H.EBX[23:16] to the nearest power-of-2 integer only
+> for Intel platform to solve the unexpected result.
+> 
+> Use the "x-vendor-cpuid-only-v2" compat option to fix this issue.
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes Since New v1 [**]:
+>   * Drop Igor's Acked-by since this version uses the newly added
+>     x-vendor-cpuid-only-v2.
+>   * Add Zhaoxin since this is the behavior defined in SDM.
+> 
+> Changes Since original v6 [*] :
+>   * Rebase on the b69801dd6b1e ("Merge tag 'for_upstream' of
+>     https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging").
+>   * Polish the comment in code.
+>   * Explain the change doesn't need extra compat property.
+> 
+> [*] original v6: https://lore.kernel.org/qemu-devel/20241009035638.59330-1-xuchuangxclwt@bytedance.com/
+> [**] new v1: https://lore.kernel.org/qemu-devel/20250227062523.124601-2-zhao1.liu@intel.com/
+> ---
+>   target/i386/cpu.c | 12 +++++++++++-
+>   1 file changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 9e110e49ab8a..7fcb6c144d94 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7869,7 +7869,17 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>           }
+>           *edx = env->features[FEAT_1_EDX];
+>           if (threads_per_pkg > 1) {
+> -            *ebx |= threads_per_pkg << 16;
+> +            /*
+> +             * For CPUID.01H.EBX[Bits 23-16], AMD requires logical processor
+> +             * count, but Intel needs maximum number of addressable IDs for
+> +             * logical processors per package.
+> +             */
+> +            if (cpu->vendor_cpuid_only_v2 &&
+> +                (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
 
-Host CPU is AMD EPYC 7302 16-Core Processor, the running hypervisor
-kernel is ~current net-next (v6.16.0-rc5 + plus net-next new features
-for 6.17)
+Hi!
 
-/P
+Previous incarnation of this patch were Cc'd qemu-stable@, as it were
+supposed to be picked up for the stable qemu series.  However, this
+incarnation is not Cc'd to stable, and, most importantly, it relies
+on a feature which was introduced after all released qemu versions.
+Namely, vendor_cpuid_only_v2 is past v10.0.0, which is commit
+216d9bb6d7716 "i386/cpu: Add x-vendor-cpuid-only-v2 option for
+compatibility".
 
+Should I omit this change for stable-10.0 series, or should it be
+modified to work in 10.0?
+
+Thanks,
+
+/mjt
 
