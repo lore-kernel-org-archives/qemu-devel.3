@@ -4,100 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A33C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38FB8C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubxYv-0004Uo-29; Wed, 16 Jul 2025 04:32:25 -0400
+	id 1ubxZP-00055N-RY; Wed, 16 Jul 2025 04:32:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1ubxYq-0004Si-9h
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:32:20 -0400
-Received: from ma-mx02.apple.com ([17.23.4.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1ubxYo-0005Xb-7V
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:32:20 -0400
-Received: from mr55p01nt-mtap01.apple.com
- (mr55p01nt-mtap01.apple.com [10.170.185.217]) by st47p01nt-mxp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.27.20250130 64bit (built Jan 30
- 2025)) with ESMTPS id <0SZH17CPQE1AZ620@st47p01nt-mxp02.apple.com> for
- qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:27:15 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=cc :
- content-transfer-encoding : content-type : date : from : in-reply-to :
- message-id : mime-version : references : subject : to; s=20180706;
- bh=8vl5Of5/yCNYlEpL8nhCBoDvh+ovojhlvhAJAMlBfyM=;
- b=A3qHSBkPOriOZ+H/UjcDRuEVXca6A2XiUdTwpVW0tIBX4m8PQHTSWt6wE/IZ+3oVURXs
- VBRUYsuCep/3U47kHl9xpY/Pa40ED/fwSldLnP4Xnc6060/bhrLD4PGiTzpsoo8kGpo5
- NZ9dz1XkinMtp70Q90+dM6Z0tKALjVY819ciqldzcpxTIC8JOAUtJJu1Jbi/CQLFHuj9
- PVp0ozUb0p0HCd7jI5ZlGs/Fa384O7zzHZqkLfUI25WiS8kltQdcxg0V7Uflv2QTmB+9
- +j4Xs56bYzzAkBwDK8Sb36tPWOAEQh0NCXjJr7YvnCeLAslPc7UW/0cdminfpssNuMUQ Yw==
-Received: from mr55p01nt-mmpp01.apple.com
- (mr55p01nt-mmpp01.apple.com [10.170.185.219]) by mr55p01nt-mtap01.apple.com
- (Oracle Communications Messaging Server 8.1.0.27.20250130 64bit (built Jan 30
- 2025)) with ESMTPS id <0SZH2354DE1BYB30@mr55p01nt-mtap01.apple.com>; Wed,
- 16 Jul 2025 07:27:12 +0000 (GMT)
-Received: from process_milters-daemon.mr55p01nt-mmpp01.apple.com by
- mr55p01nt-mmpp01.apple.com
- (Oracle Communications Messaging Server 8.1.0.27.20250130 64bit (built Jan 30
- 2025)) id <0SZH12C00DJQK600@mr55p01nt-mmpp01.apple.com>; Wed,
- 16 Jul 2025 07:27:11 +0000 (GMT)
-X-Va-A: 
-X-Va-T-CD: 874eb03d5c71380729cfc7a4af7a316f
-X-Va-E-CD: 28aaa44b059d8724bc96c7c9acdd18d1
-X-Va-R-CD: 959c523f5b818a32ab2fcfa542961938
-X-Va-ID: 2f9424b5-1e5b-4741-9935-736f8bacdc7e
-X-Va-CD: 0
-X-V-A: 
-X-V-T-CD: 874eb03d5c71380729cfc7a4af7a316f
-X-V-E-CD: 28aaa44b059d8724bc96c7c9acdd18d1
-X-V-R-CD: 959c523f5b818a32ab2fcfa542961938
-X-V-ID: cedc2b9b-b29a-4035-899f-4fa9bf3bb3d9
-X-V-CD: 0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-16_01,2025-07-15_02,2025-03-28_01
-Received: from smtpclient.apple (unknown [17.11.213.254])
- by mr55p01nt-mmpp01.apple.com
- (Oracle Communications Messaging Server 8.1.0.27.20250130 64bit (built Jan 30
- 2025)) with ESMTPSA id <0SZH12Q1KE1AZS00@mr55p01nt-mmpp01.apple.com>; Wed,
- 16 Jul 2025 07:27:11 +0000 (GMT)
-Content-type: text/plain; charset=utf-8
-MIME-version: 1.0 (Mac OS X Mail 16.0 \(3859.100.2\))
-Subject: Re: HVF EL2 support in QEMU (aka FEAT_NV/FEAT_NV2) for MacOS
-From: Danny Canter <danny_canter@apple.com>
-In-reply-to: <CA+E+eSASz9Tx76-8PxMNF30f3L9DfPNYf_Zgf=ENozXapc3gyw@mail.gmail.com>
-Date: Wed, 16 Jul 2025 00:27:00 -0700
-Cc: Marc Zyngier <maz@kernel.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, Alexander Graf <agraf@csgraf.de>,
- Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>, 
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>
-Content-transfer-encoding: quoted-printable
-Message-id: <03A3BBBF-6A01-4ECB-BE50-8103B9201528@apple.com>
-References: <87zfd5zouv.fsf@draig.linaro.org> <86wm898yf4.wl-maz@kernel.org>
- <CA+E+eSASz9Tx76-8PxMNF30f3L9DfPNYf_Zgf=ENozXapc3gyw@mail.gmail.com>
-To: Joelle van Dyne <j@getutm.app>
-X-Mailer: Apple Mail (2.3859.100.2)
-Received-SPF: pass client-ip=17.23.4.17; envelope-from=danny_canter@apple.com;
- helo=ma-mx02.apple.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubxZI-000516-Dz
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:32:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ubxZE-0005ab-E9
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:32:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752654760;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PFb4HEJSeyKMX7IqSneL6waLr0C5Osf3xxuDffuPHM0=;
+ b=BtaUtvLJZozwxqCnV5EtocJLy7k14asfbHponYvVqQ1VP/NWAMyw+tFAi4jNBoAijeerej
+ KxQLLnuKvs4NhCIi5LgHGDH2II6yiA5LHDK/qKSfd4PHtSgcKRoRcMKOkEF7IS37bSUdw0
+ UE3H99yn+2+mRFHyn/ThnNZhWZdUU2I=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-U3o5QyRuMkeHLqB--_ybzA-1; Wed,
+ 16 Jul 2025 04:32:38 -0400
+X-MC-Unique: U3o5QyRuMkeHLqB--_ybzA-1
+X-Mimecast-MFC-AGG-ID: U3o5QyRuMkeHLqB--_ybzA_1752654757
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64B1519560A5; Wed, 16 Jul 2025 08:32:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D8191955F16; Wed, 16 Jul 2025 08:32:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 51C8521E6A27; Wed, 16 Jul 2025 10:32:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Cleber Rosa <crosa@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Daniel P.
+ Berrange" <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>
+Subject: Re: [PATCH V4 2/3] python: use qom-list-get
+In-Reply-To: <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
+ (John Snow's message of "Tue, 15 Jul 2025 13:27:05 -0400")
+References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
+ <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+ <871pqmwzqr.fsf@pond.sub.org>
+ <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
+Date: Wed, 16 Jul 2025 10:32:34 +0200
+Message-ID: <87zfd4v8m5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Joelle is correct, M3 and newer SoCs have support for the EL2 APIs.
+John Snow <jsnow@redhat.com> writes:
 
--Danny
+> On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
 
-> On Jul 15, 2025, at 8:53=E2=80=AFAM, Joelle van Dyne <j@getutm.app> =
-wrote:
->=20
-> UTM currently supports NV only with the Apple Virtualization backend,
-> not QEMU HVF. While M2 supports NV, it is not enabled by XNU kernel
-> and `hv_vm_config_get_el2_supported` returns false. I heard there was
-> some compatibility issue in the hardware. M3 and newer generations
-> fully support NV in hardware and by XNU.
->=20
-> On Tue, Jul 15, 2025 at 4:51=E2=80=AFAM Marc Zyngier <maz@kernel.org> =
-wrote:
->>=20
->> On Tue, 15 Jul 2025 12:15:52 +0100,
->> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
->>=20
->>>  - do we know which Apple silicon supports FEAT_NV2?
->>=20
->> M2 and latter definitely support FEAT_NV2. That's how KVM NV support
->> has been developed for two years until I was given better HW.
->>=20
->> Whether Apple supports NV on M2 in HVF, I have no idea. The rumour
->> mill says "no", but I don't have a way to check. The M3 I use at =
-$WORK
->> is definitely able to give me EL2 without VHE with UTM. I haven't
->> played with M4, but I have it on the record that it behaves like M3
->> with UTM.
->>=20
->>        M.
->>=20
->> --
->> Without deviation from the norm, progress is not possible.
+[...]
+
+>> Exception ignored in: <function QEMUMonitorProtocol.__del__ at
+>> 0x7fcfcd080d60>
+>> Traceback (most recent call last):
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+>> line 310, in __del__
+>>     self.close()
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+>> line 281, in close
+>>     self._sync(
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py",
+>> line 102, in _sync
+>>     return self._aloop.run_until_complete(
+>>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in
+>> run_until_complete
+>>     return future.result()
+>>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
+>>     return await fut
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+>> line 399, in disconnect
+>>     await self._wait_disconnect()
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+>> line 719, in _wait_disconnect
+>>     await all_defined_tasks  # Raise Exceptions from the bottom half.
+>>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.py",
+>> line 870, in _bh_loop_forever
+>>     await async_fn()
+>> RuntimeError: cannot reuse already awaited coroutine
+>>
+>
+> Curious about this backtrace. It looks like something has gone
+> fundamentally wrong in the internals and the error is being raised by the
+> garbage collector which is not ideal.
+>
+> Can you help me reproduce this? Even if it's old/bad code, I don't want
+> python-qemu-qmp faulting like this.
+
+Reproducer for Fedora 41, current master c079d3a31e4:
+
+Run
+
+    $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dmon1,path=3D=
+test-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,id=3Dqmp,chardev=3Dmon1
+
+and
+
+    $ scripts/qmp/qom-tree -s test-qmp >/dev/null
+
+Questions?
 
 
