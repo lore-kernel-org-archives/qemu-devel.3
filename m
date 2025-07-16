@@ -4,108 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9187DC83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED618C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 10:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubzMK-0006Uq-TO; Wed, 16 Jul 2025 06:27:33 -0400
+	id 1ubzS8-0002ZA-9w; Wed, 16 Jul 2025 06:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubz8X-0000Zk-VH
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:13:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ubzNr-0007ng-6e; Wed, 16 Jul 2025 06:29:12 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ubz8U-0001ho-IM
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 06:13:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752660791;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SDg9fNKVULSPywM4snHAHkQlAePZyW2iPDo8IaasA5s=;
- b=EyWxFCS0TUdNP1TxBG4hcUaeUhkrxp7OegIWbXDxYGl1dB49bk0nh/lk5abCBAvHsuNFGf
- 1UcWBcplrEie612ee45tT9CjPZeA9KNQEtKSPf3D1jFGVo97tKhtInrCHkDD5IAVQPjkz+
- CTVcL/Fm8YqBD4f8sGCmTeLbax/XN88=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-3MeJo9W2PRSztNs8lPIZeA-1; Wed, 16 Jul 2025 06:13:09 -0400
-X-MC-Unique: 3MeJo9W2PRSztNs8lPIZeA-1
-X-Mimecast-MFC-AGG-ID: 3MeJo9W2PRSztNs8lPIZeA_1752660788
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3af3c860ed7so2841639f8f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 03:13:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752660788; x=1753265588;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SDg9fNKVULSPywM4snHAHkQlAePZyW2iPDo8IaasA5s=;
- b=oNoZGcKmuC0DHksJ3M4xlkwy1bqKJGBcn2Bn3ca9q35rMRENW5nfymuw5K7Lju8iwm
- WF8y6L3HUB6VHVsXSTSalBed8dsJqDcun0Be6mxYLXbhMdzn9Xhrq+kuHMgCoFcfRqlo
- GDxztQwoq4ERmHuE0trpz9OrhQpVx4+l35AD5Wad4mFekfQiifG9zgV6jVjriu+iqBdL
- pyou0d+V6wZlBoUVPW1pyyqhOaOhYQgJBC/baIz6M5bTrrtu+CQeiEDBz4EZ614e87mz
- ui1sskIEXOAsMZIojqzekDfe/NnVNps1s++KN/z4K1IiZLCPmOCehGA5bWCEJSK1k9Pj
- vDWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZycsGyJYBmLFybk5hosNSqNb6lrrr2DN3Rg1fnhTGxYi86o5LUgPwDdjG+Y3LKfDsKq7J56pScvwl@nongnu.org
-X-Gm-Message-State: AOJu0YzwWpcDrClQ1Kw3OBdsvDn7AXFxsLiSAjuRp66HcL46c5FUu3Ib
- dk02ZcHbuggAM3+QD6Y6WBhTzhaGCGi6G6/jzbkd0LAfzHcElFne7SlPfETLqsilq8rA1IqSBly
- IKDA5qtfPlzd1wq40usgiTH6u4vI8QqF6ndOMBY4Wm/oJboPHtHVJUocd
-X-Gm-Gg: ASbGnctZSgUgtgMVUllc72zZ9UTLmulLRYX3NckA/nvKxiBc1glUY6e+pSBbeFf+PDJ
- KzCQYje8QU44CJOpgk+44b1znTFxvv+5azufyp//Ngy3Bd6rB0Fa80wxSzUbIOB/gYS2arQ+/Iw
- ReKpNURRyihlRZp86r+ecVZPFVoBJGrtooDZD3e8jx+9B+V/CF0I779nwUi1Dehf2hlkmar1tm1
- KfaJuz4J7jAyZ0skhyPAd/OAX8/GlXf5NWDORfy+MN7IwCw8ZW7GQInTvCYladtiBNTOSYT3bOE
- DLURPnjKhuoHqb/4VtlS+b0J30N/W63AC9/mOUvWUl5tCFZ4ps0AHQIvfQDCvr11NnTdB7xBhTp
- z+sqi/2Do6K0=
-X-Received: by 2002:a05:6000:22c2:b0:3a4:eef9:818a with SMTP id
- ffacd0b85a97d-3b60e523c46mr1553380f8f.27.1752660787785; 
- Wed, 16 Jul 2025 03:13:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoGu1ZMJP681KqUVqeq25FjmKb96lWRRkwj0gCeExoWeI/XqpEHgo8aaGRe7lLpQzLbwrMAA==
-X-Received: by 2002:a05:6000:22c2:b0:3a4:eef9:818a with SMTP id
- ffacd0b85a97d-3b60e523c46mr1553350f8f.27.1752660787282; 
- Wed, 16 Jul 2025 03:13:07 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0dc3esm17279608f8f.47.2025.07.16.03.13.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 03:13:06 -0700 (PDT)
-Message-ID: <1d582df4-2995-423c-8b6c-351beaf94139@redhat.com>
-Date: Wed, 16 Jul 2025 12:13:05 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ubzNh-0005Pv-G0; Wed, 16 Jul 2025 06:29:05 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:29a1:0:640:5fbc:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 35FECC015F;
+ Wed, 16 Jul 2025 13:28:50 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:748::1:e] (unknown [2a02:6bf:8080:748::1:e])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id mSJaXP0Gr8c0-O6p8sEwK; Wed, 16 Jul 2025 13:28:49 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1752661729;
+ bh=VheFPJEX7HSPNGn/4KfSQr2XMtVdDiYl84SAO2wCj0g=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=X6xucEJG1my9XbLMhueLk2K+qxe/LmVZqC5pW6HSEH7SY1v+JYKfs+gOwBCRyJ2v4
+ yfRxBiStujGRsUT33GH6VYRxmYGgFWTWFuTD/M+oP/QhXgIGF/Yx1iFK0V/zb71K7o
+ 51pJBsMcXlrWqWvctQrNvDcVkTlR4GnVON5reZXI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9d839afc-f34f-401a-8716-e0ed098de272@yandex-team.ru>
+Date: Wed, 16 Jul 2025 13:28:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 13/13] net: implement UDP tunnel features offloading
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- kvm@vger.kernel.org
-References: <cover.1752229731.git.pabeni@redhat.com>
- <509e49207e4dc4a10ef36492a2ee1f90f3c2c237.1752229731.git.pabeni@redhat.com>
- <f266ffe9-f601-46cc-85be-515475cbfe12@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 0/4] vhost: drop backend_features
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, fam@euphon.net,
+ pbonzini@redhat.com, jasowang@redhat.com, hreitz@redhat.com,
+ kwolf@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net
+References: <20250703124713.2530079-1-vsementsov@yandex-team.ru>
+ <20250714062807-mutt-send-email-mst@kernel.org>
+ <d428a737-6733-457b-a973-28a70610c46d@yandex-team.ru>
 Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <f266ffe9-f601-46cc-85be-515475cbfe12@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <d428a737-6733-457b-a973-28a70610c46d@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,38 +78,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/25 10:07 AM, Akihiko Odaki wrote:
-> On 2025/07/11 22:02, Paolo Abeni wrote:
->> When any host or guest GSO over UDP tunnel offload is enabled the
->> virtio net header includes the additional tunnel-related fields,
->> update the size accordingly.
+On 14.07.25 22:23, Vladimir Sementsov-Ogievskiy wrote:
+> On 14.07.25 13:41, Michael S. Tsirkin wrote:
+>> On Thu, Jul 03, 2025 at 03:47:08PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>> This field is mostly unused and sometimes confusing (we even have
+>>> a TODO-like comment to drop it). Let's finally do.
 >>
->> Push the GSO over UDP tunnel offloads all the way down to the tap
->> device extending the newly introduced NetFeatures struct, and
->> eventually enable the associated features.
+>> Breaks make check with UBSAN enabled:
+>> 32/109 /arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch - ERROR:../tests/qtest/qos-test.c:189:subprocess_run_one_test: child process (/arm/virt/virtio-mmio/virtio-bus/virtio-net-device/virtio-net/virtio-net-tests/vhost-user/flags-mismatch/subprocess [9701]) failed unexpectedly FAIL
 >>
->> As per virtio specification, to convert features bit to offload bit,
->> map the extended features into the reserved range.
 >>
->> Finally, make the vhost backend aware of the exact header layout, to
->> copy it correctly. The tunnel-related field are present if either
->> the guest or the host negotiated any UDP tunnel related feature:
->> add them to host kernel supported features list, to allow qemu
->> transfer to such backend the needed information.
+>>
+>> https://gitlab.com/mstredhat/qemu/-/jobs/10668177755
+>>
+>>
+>> To trigger, configure with:
+>>
+>> ./configure '--cc=clang' '--cxx=clang++' '--enable-ubsan' '--extra-cflags=-fno-sanitize-recover=undefined -fno-sanitize=pointer-overflow' '--target-list=arm-softmmu'
+>>
+>> make
+>> make check
 > 
-> Please also update: hw/virtio/virtio-qmp.c
+> 
+> Thanks for reproducer, it works for me.
+> 
+> 
+> Hm. Seems, that because I miss that I've changed the behavior for vhost_net_ack_features():
+> with may patches it doesn't include VHOST_USER_F_PROTOCOL_FEATURES (taken from backend_features) into acked_features..
+> 
+> And with such change:
+> 
+>   void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
+>   {
+> -    net->dev.acked_features = qemu_has_vnet_hdr(net->nc)
+> -        ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
+> +    net->dev.acked_features =
+> +        (qemu_has_vnet_hdr(net->nc) ? 0 :
+> +                                      (1ULL << VHOST_NET_F_VIRTIO_NET_HDR)) |
+> +        (net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES));
+>       vhost_ack_features(&net->dev, vhost_net_get_feature_bits(net), features);
+>   }
+> 
+> 
+> test starts to work again.
+> 
+> But I can't understand, what is the relation with VHOST_USER_F_PROTOCOL_FEATURES and acked_features.
+> I though, VHOST_USER_F_PROTOCOL_FEATURES make sense only for vhost <-> QEMU communication, and should
+> not present in guest-negotiated acked_features..
+> 
+> 
 
-Do you mean by adding FEATURE_ENTRY() for
-{GUEST,HOST}_UDP_TUNNEL_GSO{,_CSUM} ?
+UPD: undestand.
 
-Such entries are added in patch 8/13 "qmp: update virtio features map to
-support extended features". Even if the features are not supported yet
-in such patch, I think the code could already parse their name.
+the test wants to check features mismatch, and on this code in vhost_net_init():
 
-Do you prefer I move the features entry definition here?
+#ifdef CONFIG_VHOST_NET_USER
+     if (net->nc->info->type == NET_CLIENT_DRIVER_VHOST_USER) {
+         features = vhost_user_get_acked_features(net->nc);
+         if (~net->dev.features & features) {
+             fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
+                     " for backend\n",
+                     (uint64_t)(~net->dev.features & features));
+             goto fail;
+         }
+     }
+#endif
 
-Thanks,
+still the only mismatching feature is VHOST_USER_F_PROTOCOL_FEATURES, which vhost_net code (before my changes) passes to acked features.
 
-Paolo
+Instead of exploiting acked_features this way, we may improve this check to also check VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user-only.
+
+I'll resend
+
+>>
+>>
+>>> Vladimir Sementsov-Ogievskiy (4):
+>>>    vhost: introduce vhost_ops->vhost_set_vring_enable_supported method
+>>>    vhost-user: stop use backend_features
+>>>    vhost_net: stop use backend_features
+>>>    hw/vhost: finally drop vhost_dev.backend_features field
+>>>
+>>>   hw/block/vhost-user-blk.c         |  1 -
+>>>   hw/net/vhost_net.c                | 14 ++++++--------
+>>>   hw/scsi/vhost-scsi.c              |  1 -
+>>>   hw/scsi/vhost-user-scsi.c         |  1 -
+>>>   hw/virtio/vdpa-dev.c              |  1 -
+>>>   hw/virtio/vhost-user.c            | 25 ++++++++++++++++---------
+>>>   hw/virtio/vhost.c                 | 15 ++++++---------
+>>>   hw/virtio/virtio-qmp.c            |  2 --
+>>>   include/hw/virtio/vhost-backend.h |  2 ++
+>>>   include/hw/virtio/vhost.h         |  7 -------
+>>>   10 files changed, 30 insertions(+), 39 deletions(-)
+>>>
+>>> -- 
+>>> 2.48.1
+>>
+> 
+
+-- 
+Best regards,
+Vladimir
 
 
