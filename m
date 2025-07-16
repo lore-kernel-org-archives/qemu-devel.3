@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56557C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 05:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F195DC83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 05:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubumg-0007Kl-1K; Wed, 16 Jul 2025 01:34:26 -0400
+	id 1ubv3S-0007u1-EV; Wed, 16 Jul 2025 01:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubumc-00074F-Le
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:34:22 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubuy7-0002EO-0X
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:46:17 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ubumY-0007s9-K9
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:34:22 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7399a2dc13fso6625387b3a.2
- for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:34:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ubuy4-0001cY-K4
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 01:46:14 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-611f74c1837so8893182a12.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Jul 2025 22:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752644057; x=1753248857; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1752644770; x=1753249570; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=QXW49XV9w1cdkc1JEIlcgB39cT3cQbKCN0Sam1Y//RC9dIESAsrbeg5AwYH/ITqHPQ
- 3XHi8cWhUGUWcGl6S5/uJj2jpj39FV2a/EN/Vv5DX8xagD4vKulqOIT0PcoXAqIeAJy1
- 48gbmzxfOTLUNyM5rfwIjrUu3pEZEFNlBGe8/KywTa32+qNWSLrCFS9p3w+S57YCj/E1
- TUzMsxlrJjZI/Zvo8iYH/CPuVuRvRPvrk9Qja1V5AnApV+ONscE7277fhGeS082siE2n
- S0Q8MCWkEO8TbDuUGoc7mjhqRYARpC12Qsby5EFH6b7gdjQiq1rCOVJZOxLYQDQ0Xpgb
- 0AMA==
+ bh=lLewxkWgNZ+c/eFkdWePc1JtOWsf1qVmnafs+m2hbjk=;
+ b=cRW9fdPqOWyl4ipCUzke2H4oFUYPhdQ76OgI2Gz0VGC/3JNtYTP7BQ6JT6mJ4M4RVB
+ G7TL/1DAqM1L3HPRbQmt5ojP4v7BNsZtzY67f49ESHRLP9dDC6XJQHNdpZ8ZVEmV2FEt
+ dZanzv8LQI9fXYPydZ/XP+TtZCFnvyteX9jmo03ZYzgBs9ABoZT7SI//LSiaH+I7wOz5
+ zGB9vyL1ro1po5p9jKve7CiuMlSiqekZSoEp44I/kurNHSavlhjOggpTo5eoKU/ee8Hs
+ LyoT5N+ct5wle0MchYxfJsODpsMShWqvsGAATh/R+6ME3goIf7lO/3vHiBryms0HrPPj
+ sK5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752644057; x=1753248857;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1752644770; x=1753249570;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=uZ8/rNSaKG1yb3Uf6QNXx5OER5+kh33Z/drc+9kzcwgQGQ67bgBXe4CLMvGo/4JKcs
- WgOVFswrkifnAzZ9oi9q6cAR6QY8Qr/oJVvv7Du3aSd/GqML1lMpyQ+yaUshMFvXdKtB
- AAamHOGLHw6/2J7dDJ0PnLwA/ewgOUMwnFX61p5g73qtGQvLRi1qmPhD1iRRY9CJrvcK
- hlJNrmIla2mzGVU3BNhFGb48w1nqPX5lQh78tA6aKACGP1u5Iscj6Dyyz9PH/5qwnIPa
- SDNWN60cOq9FO1azsJuAIaGWOy1h23dgAxLPjFGgs4o+zYOQLN90hKde4dmu7OH2Y4WJ
- Ln9Q==
-X-Gm-Message-State: AOJu0YyCEGHlPvjhmILynT5gxOQkiuEXv1Sib103ZPph3JEbJvmHTBxq
- ssA7wY5ZSEnb+6hGjTzMLhulcTuIMDn13dhKAOWnQq8G0Pe/6TEwJqEa10BrCD2jWTRUikSD+tR
- UsqN/
-X-Gm-Gg: ASbGncsrpBI3ukLTEBEjLSrPctEiFuWXmCyTVUC8fmWRFGjwDHM/r4E9FYWqiDadKUM
- g1RliLJDJCi3A6WFvzKcvXY5yxs0px7gJSpHV8i7Seo/fkygtQBeSTIMej+16q7SCCeewUQyzOT
- l2WVD5VykRJXfVNCCSxm0XFzEs0wTPKDYWL/Cp4E1tNwlRAazuRUR3T6YGDjWf8mCGa+8fRYpvw
- m2N6tm9fc0hA3r8Gsn95F4Tsb4rGnDWEjAFu6p9ER/15Cb1QBog8Yfr9vOElmWsNlcBplceMNAA
- cOtTnqpcxerSWU7hW8N+lRorSPAmwMrT745CBTxJUsPeOmJsq4zAe7wqxR1xUvdc8sS3N2u1Hsd
- jEc99BfxvKbYu+OmX/GjdPA==
-X-Google-Smtp-Source: AGHT+IG7It6557I6UtY2Dczgj2ZS6s0XhsmYEL1MseYi71+gDXadyZ0K2zEOg15FPUajsSq+ecjnKQ==
-X-Received: by 2002:a05:6a00:244b:b0:748:eb38:8830 with SMTP id
- d2e1a72fcca58-7572427ae6dmr1673687b3a.13.1752644057071; 
- Tue, 15 Jul 2025 22:34:17 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74eb9e06aa6sm13790162b3a.62.2025.07.15.22.34.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Jul 2025 22:34:16 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 5/6] contrib/plugins/uftrace_symbols.py
-Date: Tue, 15 Jul 2025 22:34:06 -0700
-Message-ID: <20250716053407.2814736-6-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250716053407.2814736-1-pierrick.bouvier@linaro.org>
-References: <20250716053407.2814736-1-pierrick.bouvier@linaro.org>
+ bh=lLewxkWgNZ+c/eFkdWePc1JtOWsf1qVmnafs+m2hbjk=;
+ b=Y6hPfcRFvawqVt9lhPX4tyzkhNnDufZbtL1Jekjk0vUHcXZg0LXGxjKqTQTFVpeZQ6
+ wcbg1O1qhLns1bc3hZj8a2rCsgO/UnL6XKbegyilj4QUnxNTq92C/hDqzrS0RAuLcdl+
+ sALqOS64uR4Y/E/YnBaequoinzIaJswmWzI7C9YsU/KgpefPZGeqG7p6dHeZKvxm4xep
+ 9yFQg3Xx1Wz74gVjFiG0jaS0OyPQAu7xYV4eKgGgTUMA8Yr49fvPLHSJGxi3ygzkUJcv
+ QQ7wtbPrkxn9VcnEGmftYDqoO28dKGRx8e3GPoyCLn7M4CLeS/G5AKuwytPUYCJMgibA
+ gwCQ==
+X-Gm-Message-State: AOJu0YyQdazvutDdSMmZwVexyX5RPFBYs+hYqFiOGway5CvmedEjSHJl
+ 69xj+NWW6H8mDrLSQbflWI75P1+/Il7S12wbJGwQxSfkcUSiz7B0AbVMFoCa16/j34RBmtY8oKt
+ IuaOOcB243eT2mqi8at7ECLe/XfU8ShrwPPSimfQyFQ==
+X-Gm-Gg: ASbGncsY4mGxM4Z1bZnr5Za3eh2GUv55mlZ59V7/aq4lAq3XBhs+yyWR5YeYrbKadI9
+ 6Zm9JLMusxVE7pzfcLi50PF0acPHg3mo/HY8CmnHt9e1bJpK5uOjkLSPUuOuulAohPLeGy5RERo
+ 2PjwAlpkvQp32FC5ZrDlh6IJkDnLntF3+Oej6MIIFwWzndnkHy8zu6UoE66muwtBXMvz1TN3u3t
+ At+0A==
+X-Google-Smtp-Source: AGHT+IFkwOurNtpCU7cYXMvcEo/EDLBpeiO9i6U3sbakOiQBWie3k+LVG5RHLGt7bVdMGb7jvtIEYisd4GUv8iM+v5g=
+X-Received: by 2002:a17:906:d246:b0:ae2:4630:7de4 with SMTP id
+ a640c23a62f3a-ae9c9af2636mr168892466b.34.1752644770287; Tue, 15 Jul 2025
+ 22:46:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+References: <20250715212335.2215509-1-pierrick.bouvier@linaro.org>
+ <20250715212335.2215509-3-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250715212335.2215509-3-pierrick.bouvier@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 16 Jul 2025 08:45:44 +0300
+X-Gm-Features: Ac12FXzYt2pP0VXDey-qJk-TUSzOtKHjfZt4avYSUlqTui_pdFqLgjltZ9YRGJ8
+Message-ID: <CAAjaMXYVVL-_wC2yqcYveb4dgCvcYr02GrTP21EmMAzohQ7=XA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tests/functional/test_aarch64_rme: update image
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, gustavo.romero@linaro.org, 
+ Peter Maydell <peter.maydell@linaro.org>, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,188 +97,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usage:  contrib/plugins/uftrace_symbols.py \
-        --prefix-symbols \
-        arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
-        arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
-        arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
-        u-boot/u-boot:0x60000000 \
-        u-boot/u-boot.relocated:0x000000023f6b6000 \
-        linux/vmlinux
+On Wed, Jul 16, 2025 at 12:25=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> TF-A needs to be patched to enable support for FEAT_TCR2 and
+> FEAT_SCTLR2. This new image contains updated firmware.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  tests/functional/test_aarch64_rme_sbsaref.py | 9 +++++----
+>  tests/functional/test_aarch64_rme_virt.py    | 9 +++++----
+>  2 files changed, 10 insertions(+), 8 deletions(-)
+>
+> diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functio=
+nal/test_aarch64_rme_sbsaref.py
+> index 746770e776d..70737d3d599 100755
+> --- a/tests/functional/test_aarch64_rme_sbsaref.py
+> +++ b/tests/functional/test_aarch64_rme_sbsaref.py
+> @@ -21,10 +21,11 @@ class Aarch64RMESbsaRefMachine(QemuSystemTest):
+>      # Stack is built with OP-TEE build environment from those instructio=
+ns:
+>      # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
+>      # https://github.com/pbo-linaro/qemu-rme-stack
+> +    # ./container.sh ./build_sbsa.sh && ./archive_artifacts.sh sbsa sbsa=
+.tar.xz
+>      ASSET_RME_STACK_SBSA =3D Asset(
+> -        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
+> -         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
+> -         'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c10499=
+9e')
+> +        ('https://fileserver.linaro.org/s/gW3mmtC4ZQaxNJ2/'
+> +         'download/sbsa_cca_v10.tar.xz'),
+> +         'b6ec3435a459eb298f221beb5073e485f290d38055d0aafbcff7d8e7c334aa=
+73')
+>
+>      # This tests the FEAT_RME cpu implementation, by booting a VM suppor=
+ting it,
+>      # and launching a nested VM using it.
+> @@ -38,7 +39,7 @@ def test_aarch64_rme_sbsaref(self):
+>          stack_path_tar_gz =3D self.ASSET_RME_STACK_SBSA.fetch()
+>          self.archive_extract(stack_path_tar_gz, format=3D"tar")
+>
+> -        rme_stack =3D self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-s=
+bsa')
+> +        rme_stack =3D self.scratch_file('.')
+>          pflash0 =3D os.path.join(rme_stack, 'images', 'SBSA_FLASH0.fd')
+>          pflash1 =3D os.path.join(rme_stack, 'images', 'SBSA_FLASH1.fd')
+>          virtual =3D os.path.join(rme_stack, 'images', 'disks', 'virtual'=
+)
+> diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional=
+/test_aarch64_rme_virt.py
+> index 8452d27928f..fcc321b6006 100755
+> --- a/tests/functional/test_aarch64_rme_virt.py
+> +++ b/tests/functional/test_aarch64_rme_virt.py
+> @@ -49,10 +49,11 @@ class Aarch64RMEVirtMachine(QemuSystemTest):
+>      # Stack is built with OP-TEE build environment from those instructio=
+ns:
+>      # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
+>      # https://github.com/pbo-linaro/qemu-rme-stack
+> +    # ./container.sh ./build_virt.sh && ./archive_artifacts.sh virt virt=
+.tar.xz
+>      ASSET_RME_STACK_VIRT =3D Asset(
+> -        ('https://fileserver.linaro.org/s/iaRsNDJp2CXHMSJ/'
+> -         'download/rme-stack-op-tee-4.2.0-cca-v4-qemu_v8.tar.gz'),
+> -         '1851adc232b094384d8b879b9a2cfff07ef3d6205032b85e9b3a4a9ae6b0b7=
+ad')
+> +        ('https://fileserver.linaro.org/s/YpLmzLNL6BAxYL8/'
+> +         'download/virt_cca_v10.tar.xz'),
+> +         'bc432c92d62f3cd3542a943cd5a6329b2464c986f8f5dc48f727a0e5386a0e=
+95')
+>
+>      # This tests the FEAT_RME cpu implementation, by booting a VM suppor=
+ting it,
+>      # and launching a nested VM using it.
+> @@ -66,7 +67,7 @@ def test_aarch64_rme_virt(self):
+>          stack_path_tar_gz =3D self.ASSET_RME_STACK_VIRT.fetch()
+>          self.archive_extract(stack_path_tar_gz, format=3D"tar")
+>
+> -        rme_stack =3D self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-q=
+emu_v8')
+> +        rme_stack =3D self.scratch_file('.')
+>          kernel =3D os.path.join(rme_stack, 'out', 'bin', 'Image')
+>          bios =3D os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
+>          drive =3D os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ex=
+t4')
+> --
+> 2.47.2
+>
+>
 
-Will generate symbols and memory mapping files for uftrace, allowing to
-have an enhanced trace, instead of raw addresses.
-
-It takes a collection of elf files, and automatically find all their
-symbols, and generate an ordered memory map based on that.
-
-This script uses the python (native) pyelftools module.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/uftrace_symbols.py | 152 +++++++++++++++++++++++++++++
- 1 file changed, 152 insertions(+)
- create mode 100755 contrib/plugins/uftrace_symbols.py
-
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-new file mode 100755
-index 00000000000..b49e03203c8
---- /dev/null
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -0,0 +1,152 @@
-+#!/usr/bin/env python3
-+# -*- coding: utf-8 -*-
-+#
-+# Create symbols and mapping files for uftrace.
-+#
-+# Copyright 2025 Linaro Ltd
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import argparse
-+import elftools # pip install pyelftools
-+import os
-+
-+from elftools.elf.elffile import ELFFile
-+from elftools.elf.sections import SymbolTableSection
-+
-+def elf_func_symbols(elf):
-+    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
-+                  if isinstance(s, SymbolTableSection)]
-+    symbols = []
-+    for _, section in symbol_tables:
-+        for _, symbol in enumerate(section.iter_symbols()):
-+            if symbol_size(symbol) == 0:
-+                continue
-+            type = symbol['st_info']['type']
-+            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
-+                symbols.append(symbol)
-+    symbols.sort(key = lambda x: symbol_addr(x))
-+    return symbols
-+
-+def symbol_size(symbol):
-+    return symbol['st_size']
-+
-+def symbol_addr(symbol):
-+    addr = symbol['st_value']
-+    # clamp addr to 48 bits, like uftrace entries
-+    return addr & 0xffffffffffff
-+
-+def symbol_name(symbol):
-+    return symbol.name
-+
-+class BinaryFile:
-+    def __init__(self, path, map_offset):
-+        self.fullpath = os.path.realpath(path)
-+        self.map_offset = map_offset
-+        with open(path, 'rb') as f:
-+            self.elf = ELFFile(f)
-+            self.symbols = elf_func_symbols(self.elf)
-+
-+    def path(self):
-+        return self.fullpath
-+
-+    def addr_start(self):
-+        return self.map_offset
-+
-+    def addr_end(self):
-+        last_sym = self.symbols[-1]
-+        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
-+
-+    def generate_symbol_file(self, prefix_symbols):
-+        binary_name = os.path.basename(self.fullpath)
-+        sym_file_path = f'./uftrace.data/{binary_name}.sym'
-+        print(f'{sym_file_path} ({len(self.symbols)} symbols)')
-+        with open(sym_file_path, 'w') as sym_file:
-+            # print hexadecimal addresses on 48 bits
-+            addrx = "0>12x"
-+            for s in self.symbols:
-+                addr = symbol_addr(s)
-+                addr = f'{addr:{addrx}}'
-+                size = f'{symbol_size(s):{addrx}}'
-+                name = symbol_name(s)
-+                if prefix_symbols:
-+                    name = f'{binary_name}:{name}'
-+                print(addr, size, 'T', name, file=sym_file)
-+
-+def parse_parameter(p):
-+    s = p.split(":")
-+    path = s[0]
-+    if len(s) == 1:
-+        return path, 0
-+    if len(s) > 2:
-+        raise ValueError('only one offset can be set')
-+    offset = s[1]
-+    if not offset.startswith('0x'):
-+        err = f'offset "{offset}" is not an hexadecimal constant. '
-+        err += 'It should starts with "0x".'
-+        raise ValueError(err)
-+    offset = int(offset, 16)
-+    return path, offset
-+
-+def is_from_user_mode(map_file_path):
-+    if os.path.exists(map_file_path):
-+        with open(map_file_path, 'r') as map_file:
-+            if not map_file.readline().startswith('# map stack on'):
-+                return True
-+    return False
-+
-+def generate_map(binaries):
-+    map_file_path = './uftrace.data/sid-0.map'
-+
-+    if is_from_user_mode(map_file_path):
-+        print(f'do not overwrite {map_file_path} generated from qemu-user')
-+        return
-+
-+    mappings = []
-+
-+    # print hexadecimal addresses on 48 bits
-+    addrx = "0>12x"
-+
-+    mappings += ['# map stack on highest address possible, to prevent uftrace']
-+    mappings += ['# from considering any kernel address']
-+    mappings += ['ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]']
-+
-+    for b in binaries:
-+        m = f'{b.addr_start():{addrx}}-{b.addr_end():{addrx}}'
-+        m += f' r--p 00000000 00:00 0 {b.path()}'
-+        mappings.append(m)
-+
-+    with open(map_file_path, 'w') as map_file:
-+        print('\n'.join(mappings), file=map_file)
-+    print(f'{map_file_path}')
-+    print('\n'.join(mappings))
-+
-+def main():
-+    parser = argparse.ArgumentParser(description=
-+                                     'generate symbol files for uftrace')
-+    parser.add_argument('elf_file', nargs='+',
-+                        help='path to an ELF file. '
-+                        'Use /path/to/file:0xdeadbeef to add a mapping offset.')
-+    parser.add_argument('--prefix-symbols',
-+                        help='prepend binary name to symbols',
-+                        action=argparse.BooleanOptionalAction)
-+    args = parser.parse_args()
-+
-+    if not os.path.exists('./uftrace.data'):
-+        os.mkdir('./uftrace.data')
-+
-+    binaries = []
-+    for file in args.elf_file:
-+        path, offset = parse_parameter(file)
-+        b = BinaryFile(path, offset)
-+        binaries.append(b)
-+    binaries.sort(key = lambda b: b.addr_end());
-+
-+    for b in binaries:
-+        b.generate_symbol_file(args.prefix_symbols)
-+
-+    generate_map(binaries)
-+
-+if __name__ == '__main__':
-+    main()
--- 
-2.47.2
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Tested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
