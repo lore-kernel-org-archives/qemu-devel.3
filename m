@@ -4,143 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE98C83F22
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3589C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc1jk-0005gy-Aq; Wed, 16 Jul 2025 08:59:52 -0400
+	id 1uc1o3-0008RZ-9D; Wed, 16 Jul 2025 09:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uc1dp-0001KT-BN
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:53:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uc1gu-0003HX-IG
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:56:57 -0400
+Received: from mail-dm6nam12on20631.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::631]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uc1dh-0002De-7w
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:53:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752670414;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7GbuHen0ahmWkk9wYJ3FI9bpzuqmSwErxKurt4cZvz0=;
- b=IQ1s9WYA1829qHEvk91qreJdbYV/ZeyX5u5XWuIlhUJxZmQBFQaHkQGxPvVUtlXgL5D/0w
- NCkwNa64waH7cpOKzsj83xLMjwovf2xNIchp2BaynjLqztkh9sbebGPAHo0XJeGWYcy911
- cxQo+s3kX+u1qMaXNW3OfGNovJ01UWg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-hj7fnxalMEKwyScXe_7oaA-1; Wed, 16 Jul 2025 08:53:32 -0400
-X-MC-Unique: hj7fnxalMEKwyScXe_7oaA-1
-X-Mimecast-MFC-AGG-ID: hj7fnxalMEKwyScXe_7oaA_1752670411
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4560a30a793so18172615e9.3
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 05:53:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752670411; x=1753275211;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7GbuHen0ahmWkk9wYJ3FI9bpzuqmSwErxKurt4cZvz0=;
- b=ToFu8q/idDy1BRbKMoiWCnZzrRke0ttYzMr3LjtGaMWRsXjgeVkGNsaHE3XEtm4MWZ
- tdAxxP2P1KZXCKMy8dMrxnMRX8p6YStcjkgXycFrqaBOojktLH+4leVdXqFgNBSPfCKY
- e8k6NSRdHfavWbMsD7B7Enz8o4bXEYbCJFPhGemNsov/EIwH0driXZgA14SAY7QAtgAt
- NjEkDgqeqsGxEgXoOlvZONnroaPu8O+7HEVC7lJXpw+9M58jW80hBjORshEEZmh23BL0
- BKLfjHQD6qkSeeDIAQXcGHdIPpqEADpBXKuiUi8rli4XNy1PwdIGypVvmo9IMrT7JtlK
- 5AtA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5ZLppqqfRbJJx3aLEHpZ4e6bI5lYLo6pJki7oppSNKyYj6C/VItN9VkxGtxXo8OloAk3h9ercyzT5@nongnu.org
-X-Gm-Message-State: AOJu0YzQis8e9lGUE65kLHykRS35/ycXU70PGYP1HN2O3kptCNDP33WC
- wxu2kuG+/xRksbky+tBnqGni+GzcsvN+iS0iI2XaqyahNma4vAnxyJlhLxWBhsP98nyKsg0wXmT
- IY21fSPg8CeympDSyIE7zy9K757wWbX7LsIaFQZ/pDT1IO/Q1dwimnyL8
-X-Gm-Gg: ASbGncslvjyt/cC+crRgxSw1kx2LUq5dYKmZ0Tye1WmGIOlGlfjagITOeEDqljkCDF3
- HDypDQvTXKZhy+txcLOIIi9ku09B1doNAT43SPha8DNQs74rY0/aN8nuUWmiQ+fR4rvejxVuNJG
- 8SZBnNeyqMKNmGd/dJyYlUqKgj8BMgMHSe15da8Eamlo7HXEtRlh4ktM8I0xdEghZXUMTeu4PU0
- D6yn7NBO1BvGX7zu6IbsPmrynq4BD6h7qL8BfKEk8iLJFyEDfqW9xorGrf9hZKlnnlXkybR92zG
- hNC5wmeSp/2RVlH/aZZcaYJHv4ICvbgn9BWaMuiDolIAzRwdjC5Wq+ghmPRg53F9sEhJmB9rFd0
- =
-X-Received: by 2002:a05:600c:c0d2:10b0:456:23aa:8c8 with SMTP id
- 5b1f17b1804b1-4562e3548d6mr16821415e9.13.1752670411011; 
- Wed, 16 Jul 2025 05:53:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUm5brW90t7OhwYNjQYtyLM67VbagdoCG7ncEWpgiJf0eL/cOYyhXsu19bXUbK1QfPiTIpnA==
-X-Received: by 2002:a05:600c:c0d2:10b0:456:23aa:8c8 with SMTP id
- 5b1f17b1804b1-4562e3548d6mr16821265e9.13.1752670410556; 
- Wed, 16 Jul 2025 05:53:30 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
- ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e1e285sm17554358f8f.76.2025.07.16.05.53.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 05:53:29 -0700 (PDT)
-Message-ID: <9ad2be7c-5399-4a7e-98c2-badb44f64145@redhat.com>
-Date: Wed, 16 Jul 2025 14:53:29 +0200
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uc1gq-0002hW-Se
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 08:56:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PRYXzWXvXGJ3Q3JOTebVXsy47ML4wFzuVxrd3yDOHCCI6GMnZGsCvVJuaFgTRNOP8LamLH/z2CB65H+slXaIrmg9l9YoUz7OOKHGHqQXHdsX0fBAPN2d2BYlczLOOkjObau8/g8VKCiNS3IBNOUcuj2hL0CJJ/qfc4xTh2AzrJvN126fZvS6laZZbXsWrTOthHJH1eQPVMqkAxdFF6Cimk4gL5VPgGVBhq18b0xiqIadGLWn+9HNgtAVDfsoYVViH6H3v8DTVH+alIXhJWXRYjUyabmCMVsjJnDTzzLQ+mUyq0G19rMgdM2RmMHqgyHmx17masHBZxTjueQt+4eokg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4gZ36hZY0r+q9AgpsAXVolYgFnie+1vpoP6dWr7rutU=;
+ b=NJi+wlLIucT084l0R8f+pgRA6VRC948N1Cvqg/sVxq2aGZmQqL+/Aub55e+d6qEc4tS8Y5t+Ibkb7sPPsWhrqtEFcSo7aBmhpPHORtNXJ/2FBmQ6C0ji1/1Ub9JTKfBAAiGew0N2ArFQMxA+aYUrKFT5AXer8SKJOebenbZvAKqp38YylFpG8axMX2fFTXw7ULZgOmPkIXWh24gmbk+3c5gqxla5yeqnP7Q4noBrjQ5vJ/h9u1gBr0OD/AHRMcg2wjS0qrhxfK49mv7XOum4vb9WK/iUCEwr2yx8FYwX2cA3eckJ4IEQiUoXHAwL8Z9u8a6pduXvzKQH9n03y5ANmw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4gZ36hZY0r+q9AgpsAXVolYgFnie+1vpoP6dWr7rutU=;
+ b=z3KcNJ3QH4BgJHKUk2WSAEQgZjWgwxzeHUsVRaxNcgPuMW+RoBzbyfkkGSpe60Vud1QEETO71xlV3rvZNZzFBOVP64ws90g+97QlPWDZvYrpW+czh+DjOcZyefoxAWNkZAjljLQjQzw8ZssIMIhrxDmpKEw8KTDw+hpeA2hKD58=
+Received: from DS7PR05CA0076.namprd05.prod.outlook.com (2603:10b6:8:57::13) by
+ MN0PR12MB6246.namprd12.prod.outlook.com (2603:10b6:208:3c2::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8922.32; Wed, 16 Jul 2025 12:56:43 +0000
+Received: from DS1PEPF0001709B.namprd05.prod.outlook.com
+ (2603:10b6:8:57:cafe::bd) by DS7PR05CA0076.outlook.office365.com
+ (2603:10b6:8:57::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8964.12 via Frontend Transport; Wed,
+ 16 Jul 2025 12:56:42 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ DS1PEPF0001709B.mail.protection.outlook.com (10.167.18.105) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 12:56:42 +0000
+Received: from [10.252.206.76] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Jul
+ 2025 07:56:39 -0500
+Message-ID: <a184b8d5-4620-4b21-99c4-0fc859647d14@amd.com>
+Date: Wed, 16 Jul 2025 18:26:37 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/2] vfio/pci: preserve pending interrupts
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>, 'Peter Xu' <peterx@redhat.com>
-References: <1752503222-222669-1-git-send-email-steven.sistare@oracle.com>
- <1752503222-222669-3-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1752503222-222669-3-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH 0/7] hw/i386/amd_iommu: Cleanups and fixes
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <richard.henderson@linaro.org>,
+ <alejandro.j.jimenez@oracle.com>, Vasant Hegde <vasant.hegde@amd.com>
+References: <20250716073145.915-1-sarunkod@amd.com>
+ <6e56761c-64b1-43eb-9ff1-316b6de082e7@linaro.org>
+Content-Language: en-US
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <6e56761c-64b1-43eb-9ff1-316b6de082e7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF0001709B:EE_|MN0PR12MB6246:EE_
+X-MS-Office365-Filtering-Correlation-Id: 846dfce4-7347-416a-d654-08ddc468367c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|1800799024|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bWR6YStaR1BCUDkyS3pLb1R6WDlwNHZER2NFcUJrdmpQNXhkenpybjhWcDBw?=
+ =?utf-8?B?cTJTN2p4bVh6djlrSWgyaEJheWdPdTRKaG9TSTUxOW9tTERLaXU0R1JNMUpL?=
+ =?utf-8?B?WmdTUSs3bWJrQW1ZYmN5eXI4TWFJWmE0ckdYekZ0T1RFRUN1ZDJXL2RKZmJV?=
+ =?utf-8?B?Ty9rclJTTnZoaS9BcWNKMEJmcGt3UDBueWxDWmhWaEtxUldMUGpjQ0VmUm8w?=
+ =?utf-8?B?ZmNsa3hmNFQvaEplWXMrY2Nnbk0zdVNNU1ZVNzlzTUdNSmRwM2JwNm1SUG1j?=
+ =?utf-8?B?YmxQTHhwRVN0Tkg4aDRXSmlIVDBSa1plbmhmTkNHNlBjR09pQ3V0eXo1VlY4?=
+ =?utf-8?B?RmQrcEpCWGpVMGIzUENHL1BMN1d6d2pUQzhxem5VNjkvOXRBYTk0bExCYlVI?=
+ =?utf-8?B?UG9nN3EzNFhsdzB1Nm9ld09JZmJuL3BvWUdHaWtDSVZUWXBGR21KMTlPTDky?=
+ =?utf-8?B?V1pPaWluWkJsR1ducEtVN08zMXJiVWNzZTBrVmZMSnZkUFRiM29mTUpnRFYx?=
+ =?utf-8?B?U21EazVFR3JIMWVTcjdLdG5NOHNqMzdYcm5La0ZzUVZXWEdCeFA0MkFuMEQ1?=
+ =?utf-8?B?dzBsRGRvVkoyb1FxbTdNOHlFeXNzZ2xDQjZKMk52clJ3Ymlrc0RPRFBsTFBY?=
+ =?utf-8?B?aElJYWd1QnBvRWxNUFg5OXpUWllNcWJNakZ5Umd0VUZTY3hEOXRtbUl4cCti?=
+ =?utf-8?B?d2dZNVk0QW16aWwrZlF6MUh5TFNHZ1owZjY0blRDK1BhZnhDd0VJbDhPU2xM?=
+ =?utf-8?B?eXIwYUF1NVZQbnJKMC9NTHpzSGo4K09yU0hkUGxxSVZETGhjWlp1WHhHRFdW?=
+ =?utf-8?B?cmU1QjBEWGN0UjhIL1hOT3l3YWsxenl3Qng2UnA3aldPLythU1pHV0x5Vjdn?=
+ =?utf-8?B?MlRnY2dZSnE5dktJQnZKWmhvTXZPWnltVTF4ODUzTXJsRTJwN0RmMWIxSkly?=
+ =?utf-8?B?YmlYS2dmY2hueHh6ZjlIR0JKK3YxRGRGK2pwaUVZSnRyTmt0dVpCRnhlVmRm?=
+ =?utf-8?B?S1l1ZlBOT0VPTVNQQXhUTm53RUdhdnJMRWFXLzBZaU1aYXpwcjJUdVVwd2Zm?=
+ =?utf-8?B?aHVXMXUvWU9ud1V2dEdXQzI4UEkvNGZvRStMdWRwNm82WExiN1BTS2pmZlZ3?=
+ =?utf-8?B?ZkQrRnNQZHhTWVJGaFUyc1BUTE9vWG9Ta1ZaYWNzaWFIQUJkdkpnaU1WNlk5?=
+ =?utf-8?B?Y0pvSUtZT1dRYWIwaTRVTFNBY0FMRHhPcUJIWk5Xc2RISTNzL1FsU0s0bVZo?=
+ =?utf-8?B?NzdjazYxc3Nvck5MNEVNQnBJeVhGbVEwc0Z4TlhPV3N2SUNPK2ZYU01TQytT?=
+ =?utf-8?B?RzRKMFZ2MGVwQlFLTXp4MFk1ZEQxR1A2Uk94VVJGOVF2YnpqRDlzTjZTMFUr?=
+ =?utf-8?B?cXlsNmtoaFFhV0dRYVY4YjRqMW1xcWFOdldNMklUb1MvQ0pOeDVWcjd2QVQw?=
+ =?utf-8?B?ZGt6K3BBcndrN25wUzZjbHQrYy9teElCWUk3eUlYWGYwbldZdXF4OVdTYUsx?=
+ =?utf-8?B?ZWlRRm9hQ2dDdURIRDNWK2tjaitZSzcrRzdBZ0JsSEtpemVBcGgveG5jc0I1?=
+ =?utf-8?B?N0VyenVRMXU2RGpFWThMT0xuTzRLYXdXajk4YkxzTEREdENQUkJPaWwwMSt3?=
+ =?utf-8?B?ZFNyZU81bFBFNTB0YTBqSll3R21zaHVFMThTeEpycUhnN3BDWTFZaUttMVNi?=
+ =?utf-8?B?RVVva3NwSlF2ZHUvWDFFeEpvZFFOV1Axb2NKaUw1L21yTlR4WTl6bjVTMWgv?=
+ =?utf-8?B?aUlEdTkremo0Z2FkTXZoRTRCeDFKdkpCMkUxc1BpQTVtWUVMUkJaTFkySHFD?=
+ =?utf-8?B?RWp2Nm9LTGFjM1hubHhkQVh1VHBnalNTay9RQW9PcmtaaEkrQzk0QU40VEQ0?=
+ =?utf-8?B?VlVramE2MnVFY1dFMWdnenQxRElRREs1eUNqRTZqbGxSOTVrOFpLM0s1cFZT?=
+ =?utf-8?B?bCtMM3pEUzhIcUhkZlpGM0toSDhIZFpoK2ltUE9OMWh6SHFoR1d2Qk91ZktK?=
+ =?utf-8?Q?qxp2j5wu7n9XUUNiWuUvH6iEvUMs7s=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 12:56:42.5484 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 846dfce4-7347-416a-d654-08ddc468367c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF0001709B.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6246
+Received-SPF: permerror client-ip=2a01:111:f403:2417::631;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,189 +161,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Peter, for info.
 
-On 7/14/25 16:27, Steve Sistare wrote:
-> cpr-transfer may lose a VFIO interrupt because the KVM instance is
-> destroyed and recreated.  If an interrupt arrives in the middle, it is
-> dropped.  To fix, disable pended interrupts during cpr save, and pick
-> up the pieces.  In more detail:
+
+On 7/16/2025 6:07 PM, Philippe Mathieu-Daudé wrote:
+> On 16/7/25 09:31, Sairaj Kodilkar wrote:
+>> This series provides few cleanups and fixes for the amd iommu
+>>
+>> The patches are based on top of 56c6e249b698 (v10.0.0-rc3) and 
+>> Alejandro's
+>> DMA remapping series [1].
 > 
-> Stop the VCPUs. Call kvm_irqchip_remove_irqfd_notifier_gsi --> KVM_IRQFD to
-> deassign the irqfd gsi that routes interrupts directly to the VCPU and KVM.
-> After this call, interrupts fall back to the kernel vfio_msihandler, which
-> writes to QEMU's kvm_interrupt eventfd.  CPR already preserves that
-> eventfd.  When the route is re-established in new QEMU, the kernel tests
-> the eventfd and pends an interrupt to KVM if necessary.
+> 56c6e249b698 is 4 months old, we are about to release v10.1.0-rc0.
 > 
-> Deassign INTx in a similar manner.  For both MSI and INTx, remove the
-> eventfd handler so old QEMU does not consume an event.
+> What is the point of posting obsolete code?
 > 
-> If an interrupt was already pended to KVM prior to the completion of
-> kvm_irqchip_remove_irqfd_notifier_gsi, it will be recovered by the
-> subsequent call to cpu_synchronize_all_states, which pulls KVM interrupt
-> state to userland prior to saving it in vmstate.
+> I'm not going to review further.
+
+Hey Philippe,
+
+sorry. I missed to add it in cover letter. Intention is to get feedback
+on this series. Since this is on top of Alejandro's series, I will
+rebase it once his series gets merged.
+
+Regards
+Sairaj
+
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   hw/vfio/cpr.c              | 90 ++++++++++++++++++++++++++++++++++++++
->   hw/vfio/pci.c              |  2 +
->   hw/vfio/pci.h              |  1 +
->   include/hw/vfio/vfio-cpr.h |  6 +++
->   4 files changed, 99 insertions(+)
+> Regards,
 > 
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index 2a244fc4b6..ae2a6b7acd 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -198,3 +198,93 @@ void vfio_cpr_add_kvm_notifier(void)
->                                       MIG_MODE_CPR_TRANSFER);
->       }
->   }
-> +
-> +static int set_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
-> +                                  EventNotifier *rn, int virq, bool enable)
-> +{
-> +    if (enable) {
-> +        return kvm_irqchip_add_irqfd_notifier_gsi(s, n, rn, virq);
-> +    } else {
-> +        return kvm_irqchip_remove_irqfd_notifier_gsi(s, n, virq);
-> +    }
-> +}
-> +
-> +static int vfio_cpr_set_msi_virq(VFIOPCIDevice *vdev, Error **errp, bool enable)
-> +{
-> +    const char *op = (enable ? "enable" : "disable");
-> +    PCIDevice *pdev = &vdev->pdev;
-> +    int i, nr_vectors, ret = 0;
-> +
-> +    if (msix_enabled(pdev)) {
-> +        nr_vectors = vdev->msix->entries;
-> +
-> +    } else if (msi_enabled(pdev)) {
-> +        nr_vectors = msi_nr_vectors_allocated(pdev);
-> +
-> +    } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
-> +        ret = set_irqfd_notifier_gsi(kvm_state, &vdev->intx.interrupt,
-> +                                     &vdev->intx.unmask, vdev->intx.route.irq,
-> +                                     enable);
-> +        if (ret) {
-> +            error_setg(errp, "failed to %s INTx irq %d: error %d",
-> +                       op, vdev->intx.route.irq, ret);
-> +        } else {
-> +            vfio_pci_intx_set_handler(vdev, enable);
-> +        }
-> +        return ret;
-> +
-> +    } else {
-> +        nr_vectors = 0;
-> +    }
-> +
-> +    for (i = 0; i < nr_vectors; i++) {
-> +        VFIOMSIVector *vector = &vdev->msi_vectors[i];
-> +        if (vector->use) {
-> +            ret = set_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
-> +                                         NULL, vector->virq, enable);
-> +            if (ret) {
-> +                error_setg(errp, "failed to %s msi vector %d virq %d: error %d",
-> +                           op, i, vector->virq, ret);
-> +            } else {
-> +                vfio_pci_msi_set_handler(vdev, i, enable);
-> +            }
-> +        }
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +/*
-> + * When CPR starts, detach IRQs from the VFIO device so future interrupts
-> + * are posted to kvm_interrupt, which is preserved in new QEMU.  Interrupts
-> + * that were already posted to the old KVM instance, but not delivered to the
-> + * VCPU, are recovered via KVM_GET_LAPIC and pushed to the new KVM instance
-> + * in new QEMU.
-> + *
-> + * If CPR fails, reattach the IRQs.
-> + */
-> +static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
-> +                                 MigrationEvent *e, Error **errp)
-> +{
-> +    VFIOPCIDevice *vdev =
-> +        container_of(notifier, VFIOPCIDevice, cpr.transfer_notifier);
-> +
-> +    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-> +        return vfio_cpr_set_msi_virq(vdev, errp, false);
-> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +        return vfio_cpr_set_msi_virq(vdev, errp, true);
-> +    }
-> +    return 0;
-> +}
-> +
-> +void vfio_cpr_pci_register_device(VFIOPCIDevice *vdev)
-> +{
-> +    migration_add_notifier_mode(&vdev->cpr.transfer_notifier,
-> +                                vfio_cpr_pci_notifier,
-> +                                MIG_MODE_CPR_TRANSFER);
-> +}
-> +
-> +void vfio_cpr_pci_unregister_device(VFIOPCIDevice *vdev)
-> +{
-> +    migration_remove_notifier(&vdev->cpr.transfer_notifier);
-> +}
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 8b471c054a..22a4125131 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2993,6 +2993,7 @@ void vfio_pci_put_device(VFIOPCIDevice *vdev)
->   {
->       vfio_display_finalize(vdev);
->       vfio_bars_finalize(vdev);
-> +    vfio_cpr_pci_unregister_device(vdev);
->       g_free(vdev->emulated_config_bits);
->       g_free(vdev->rom);
->       /*
-> @@ -3442,6 +3443,7 @@ static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
->       vfio_pci_register_err_notifier(vdev);
->       vfio_pci_register_req_notifier(vdev);
->       vfio_setup_resetfn_quirk(vdev);
-> +    vfio_cpr_pci_register_device(vdev);
->   
->       return;
->   
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 80c8fcfa07..7989b94eb3 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -194,6 +194,7 @@ struct VFIOPCIDevice {
->       bool skip_vsc_check;
->       VFIODisplay *dpy;
->       Notifier irqchip_change_notifier;
-> +    VFIOPCICPR cpr;
->   };
->   
->   /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
-> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index 80ad20d216..d37daffbc5 100644
-> --- a/include/hw/vfio/vfio-cpr.h
-> +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -38,6 +38,10 @@ typedef struct VFIODeviceCPR {
->       uint32_t ioas_id;
->   } VFIODeviceCPR;
->   
-> +typedef struct VFIOPCICPR {
-> +    NotifierWithReturn transfer_notifier;
-> +} VFIOPCICPR;
-> +
->   bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
->                                           Error **errp);
->   void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
-> @@ -77,5 +81,7 @@ extern const VMStateDescription vfio_cpr_pci_vmstate;
->   extern const VMStateDescription vmstate_cpr_vfio_devices;
->   
->   void vfio_cpr_add_kvm_notifier(void);
-> +void vfio_cpr_pci_register_device(struct VFIOPCIDevice *vdev);
-> +void vfio_cpr_pci_unregister_device(struct VFIOPCIDevice *vdev);
->   
->   #endif /* HW_VFIO_VFIO_CPR_H */
+> Phil.
+> 
+>> [1] https://lore.kernel.org/all/20250502021605.1795985-1- 
+>> alejandro.j.jimenez@oracle.com/
+>>
+>> The series is uploaded on github:
+>> https://github.com/AMDESE/qemu-iommu/tree/sarunkod/alej%2Bcleanup-v1
+>>
+>> Sairaj Kodilkar (7):
+>>    hw/i386/amd_iommu: Fix MMIO register write tracing
+>>    hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+>>    hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
+>>    hw/i386/amd_iommu: Support MMIO writes to the status register
+>>    hw/i386/amd_iommu: Fix event log generation
+>>    hw/i386/amd_iommu: Fix handling device on buses != 0
+>>    hw/i386/amd_iommu: Support 64 bit address for IOTLB lookup
+>>
+>>   hw/i386/amd_iommu.c | 217 ++++++++++++++++++++++++++++----------------
+>>   hw/i386/amd_iommu.h |   9 +-
+>>   2 files changed, 146 insertions(+), 80 deletions(-)
+>>
+> 
 
 
