@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83992C83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 12:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FD2C83F34
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 12:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc0ns-0007lj-Ij; Wed, 16 Jul 2025 08:00:05 -0400
+	id 1uc0q7-0000fH-W9; Wed, 16 Jul 2025 08:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uc0hX-0003Sg-Ff
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:53:31 -0400
+ id 1uc0k3-0005Gq-9a
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:56:09 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uc0hN-0007uX-W0
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:53:30 -0400
+ id 1uc0jx-0008So-LL
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 07:56:06 -0400
 Received: from [157.82.206.39] ([157.82.206.39]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56GBqwpA031686
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56GBtiDw032585
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 16 Jul 2025 20:52:58 +0900 (JST)
+ Wed, 16 Jul 2025 20:55:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=GjmQy1NDdPTuVHZ8/I+mITVpluhpLhXagsPnL+0J/Xg=; 
+DKIM-Signature: a=rsa-sha256; bh=35L8HRBjOQ1lFYDWVFY8MHeYKn6iTAxwtbU8F1CQFVU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1752666778; v=1;
- b=hprgm3PpWQDIea4b3TZFFZvlQqyxDueU0KfvU7e+sDbGB4v/APBXZ8awCFsydQS6
- xGqDrWRfZ/t0cH2KfAIkEs7Hu/ebwYwRKyGbAsxln4h+Do2LMKnrvhoZ446q/Q/f
- MtuXsvEJNrM2JX/QWpNQ4bp89CtBsZs/YhDYYoM3IkT0tuXu+pMNJP58qLQajhsf
- TpbmW2gSNcf40QPPXgIzRVi+gp0q6ldMdi7vY67j8WLB2JrbsvwNzJHWeJRdh2pU
- nGmxBD+PrtlwpIHV4UvMfFB7LrIGk0F4Y5uzolNouSm4ZwGi2UV6899jQQFSkNlV
- 7ppPd8PMrkGmHUEYT5BM3g==
-Message-ID: <07b09740-9e20-43df-a128-83e62e7a34a2@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 16 Jul 2025 20:52:58 +0900
+ s=rs20250326; t=1752666945; v=1;
+ b=vAlgwaGObVxhq3ExobDUjZ1guCfThxNZqMTCtOhDSOQL52fGG9XSTEDYIGYrOjD2
+ 98OrTu/Olzm3Ck62aIG5ninth9+RrutGhpTdF8YLf+JszKUj6PaAZuY56B9NR5Q1
+ P5W75EkiVmYB3zjytN0S67QFjAuoc8cs9xkmT+VdHspUvSjIzIv9iDfZpeNUAQyU
+ U1JiH6SABEl16MsPy/nTjR56G5dQf60BqQoKhfGkQxlRCX1bsbEoYsCP/2KwKfSn
+ GGowJ/Tdh1LQqB++o3fs89g4umSS6qcdm3BqhREheg6qzOOtgFjGA+BH53YEEKT0
+ 4xhcsQ44W+qKjsXBXmYnlA==
+Message-ID: <b4ee5979-c35e-4c50-97c4-dbb0ae1e6d27@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 16 Jul 2025 20:55:44 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 04/13] virtio: serialize extended features state
+Subject: Re: [PATCH RFC v2 06/13] virtio-pci: implement support for extended
+ features
 To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
@@ -52,14 +53,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  kvm@vger.kernel.org
 References: <cover.1752229731.git.pabeni@redhat.com>
- <d0f97a8157c718dcb0799353394e1469153c6b22.1752229731.git.pabeni@redhat.com>
- <08285c9c-f522-4c64-ba3b-4fa533e42962@rsg.ci.i.u-tokyo.ac.jp>
- <efd96b88-284c-4853-93ea-9e1b81b1ffe7@redhat.com>
+ <eb1aa9c8442d9b482b5c84fdca54b92c8a824495.1752229731.git.pabeni@redhat.com>
+ <8af39b78-a95d-4093-b68c-20b556860a09@rsg.ci.i.u-tokyo.ac.jp>
+ <f1381483-a507-4420-a0c9-52bf8131e6e6@redhat.com>
+ <59102a09-1e25-4c14-a681-7170c87df501@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <efd96b88-284c-4853-93ea-9e1b81b1ffe7@redhat.com>
+In-Reply-To: <59102a09-1e25-4c14-a681-7170c87df501@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -84,76 +86,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/16 0:40, Paolo Abeni wrote:
-> On 7/15/25 9:24 AM, Akihiko Odaki wrote:
->> On 2025/07/11 22:02, Paolo Abeni wrote:
->>> +     */
->>> +    QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_DWORDS != 2);
->>> +    if (virtio_128bit_features_needed(vdev)) {
+On 2025/07/16 18:14, Paolo Abeni wrote:
+> On 7/15/25 6:21 PM, Paolo Abeni wrote:
+>> On 7/15/25 9:42 AM, Akihiko Odaki wrote:
+>>> On 2025/07/11 22:02, Paolo Abeni wrote:
+>>>> @@ -158,7 +159,10 @@ struct VirtIOPCIProxy {
+>>>>        uint32_t nvectors;
+>>>>        uint32_t dfselect;
+>>>>        uint32_t gfselect;
+>>>> -    uint32_t guest_features[2];
+>>>> +    union {
+>>>> +        uint32_t guest_features[2];
+>>>> +        uint32_t guest_features128[4];
+>>>> +    };
+>>>
+>>> I don't see anything preventing you from directly extending guest_features.
 >>
->> There is no need to distinguish virtio_128bit_features_needed() and
->> virtio_64bit_features_needed() here.
+>> Uhmm... I have a vague memory of some interim revisions doing that and
+>> failing miserably (but I have no log of the actual details). I'll try to
+>> have another shot at it.
 > 
-> Double checking I'm reading the above correctly. Are you suggesting to
-> replace this chunk with something alike:
+> The VMSTATE_ARRAY() macro has explicit checks on the specified array
+> matching exactly the specified array size. Using a single:
 > 
->      if (virtio_64bit_features_needed(vdev)) {
-
-This condition is not right as virtio_64bit_features_needed() doesn't 
-return true when the some of bits [64, 128) is set while bits [32, 64) 
-are cleared. I see two options to fix:
-
-- Check: virtio_64bit_features_needed(vdev) ||
-          virtio_128bit_features_needed(vdev)
-
-- Ensure that virtio_64bit_features_needed(vdev) returns true when a bit 
-more significant than bit 31 is set.
-
->          /* The 64 highest bit has been cleared by the previous
->           *  virtio_features_from_u64() and ev.
->           * initialized as needed when loading
->           * "virtio/128bit_features"*/
->          uint64_t *val = vdev->guest_features_array;
+> 	uint32_t guest_features[4];
 > 
->          if (virtio_set_128bit_features_nocheck_maybe_co(vdev, val) < 0)
-> // ...> >> For the 32-bit case, it will be simpler to have an array here and use
->> virtio_set_128bit_features_nocheck_maybe_co() instead of having
->> virtio_set_features_nocheck_maybe_co().
+> variable, this statement
 > 
-> Again double checking I'm parsing the above correctly. You are
-> suggesting to dismiss the  virtio_set_features_nocheck_maybe_co() helper
-> entirely and use virtio_set_128bit_features_nocheck_maybe_co() even when
-> only 32bit features are loaded. Am I correct?
-
-Yes, but now I found it is unnecessary to special-case even the 32-bit case.
-
-Commit 019a3edbb25f ("virtio: make features 64bit wide") had to add a 
-conditional to distinguish the 64-bit and 32-bit cases because 
-vdev->guest_features was not set before executing this part of code.
-
-However, commit 62cee1a28aad ("virtio: set low features early on load") 
-later added preceding code to set vdev->guest_features. In summary, this 
-part of code can be simply replaced with:
-
-     if (virtio_set_128bit_features_nocheck_maybe_co(vdev, 
-vdev->guest_features_array) < 0) {
-         error_report("Features 0x" VIRTIO_FEATURES_FMT " unsupported. "
-                         "Allowed features: 0x" VIRTIO_FEATURES_FMT,
-                         VIRTIO_FEATURES_PR(val),
-                         VIRTIO_FEATURES_PR(vdev->host_features_array));
-         return -1;
-     }
-
-There is no need of virtio_64bit_features_needed(vdev) or 
-virtio_128bit_features_needed(vdev) at all.
-
-I have another finding by the way; there are three phrases that refers 
-to the new extension: array (e.g., guest_features_array), _ex (e.g., 
-virtio_add_feature_ex), 128bit (e.g., virtio_128bit_features_needed).
-
-It makes sense to make "128bit" an exception in the migration code 
-because the migration format is fixed and will require e.g., "192bit" 
-for a future extension. But two suffixes, _ex and _array, can be unified.
+> 	 VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
+> 
+> causes the following build error:
+> 
+> --
+> include/migration/vmstate.h:259:48: error: invalid operands to binary -
+> (have ‘uint32_t (*)[2]’ {aka ‘unsigned int (*)[2]’} and ‘uint32_t
+> (*)[4]’ {aka ‘unsigned int (*)[4]’})
+>    259 | #define type_check_array(t1,t2,n) ((t1(*)[n])0 - (t2*)0)
+>        |                                                ^
+> include/migration/vmstate.h:282:6: note: in expansion of macro
+> ‘type_check_array’
+>    282 |      type_check_array(_type, typeof_field(_state, _field), _num))
+>        |      ^~~~~~~~~~~~~~~~
+> include/migration/vmstate.h:373:19: note: in expansion of macro
+> ‘vmstate_offset_array’
+>    373 |     .offset     = vmstate_offset_array(_state, _field, _type,
+> _num), \
+>        |                   ^~~~~~~~~~~~~~~~~~~~
+> include/migration/vmstate.h:1090:5: note: in expansion of macro
+> ‘VMSTATE_ARRAY’
+>   1090 |     VMSTATE_ARRAY(_f, _s, _n, _v, vmstate_info_uint32, uint32_t)
+>        |     ^~~~~~~~~~~~~
+> include/migration/vmstate.h:1096:5: note: in expansion of macro
+> ‘VMSTATE_UINT32_ARRAY_V’
+>   1096 |     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, 0)
+>        |     ^~~~~~~~~~~~~~~~~~~~~~
+> ../hw/virtio/virtio-pci.c:168:9: note: in expansion of macro
+> ‘VMSTATE_UINT32_ARRAY’
+>    168 |         VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
+>        |         ^~~~~~~~~~~~~~~~~~~~
+> --
+> 
+> I'll keep the union here.
+I think you can use VMSTATE_UINT32_SUB_ARRAY().
 
 Regards,
 Akihiko Odaki
