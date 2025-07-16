@@ -4,58 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCECC83F1B
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD60C83F22
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 13:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uc1zb-000112-Sh; Wed, 16 Jul 2025 09:16:15 -0400
+	id 1uc2H2-0004xm-Cz; Wed, 16 Jul 2025 09:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com>)
- id 1uc1sm-0004KT-LB
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:09:17 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uc2Cb-00024h-TC
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:29:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com>)
- id 1uc1sj-0004Ie-MC
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:09:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Content-Transfer-Encoding:Content-Type:
- MIME-Version:Subject:Date:From:References:In-Reply-To:Message-Id:Content-ID:
- Content-Description; bh=OYEY8UxDeP49eAShbSD6pdDT/uizTiS7zwXmv8Bx9IU=; b=BCxKg
- IFE29VLp0y0VuV7ojYl93baptDbIP4XI0lrYWycJnn4DXpa/NkLdZRzG4Mt3lqU1ms2ku9qL/tC3x
- A+f9foiW6pXilxxK3JD/0GVCC2HU0EwiiozGU7RI7IqtzR11lw9WfSUSX0ubb1Swnb7Jyq4Vu3tEZ
- R2Jqx1PQxSuTG2AzjNfo8Pn2CYFauUl32xHYYfoO/AHRcRZy90TWhV2X+dBH0jCJVtLRvSNPm8NPZ
- hfdyzDNCU4QlJTy+34n1yOhrVx6LBAT0mOjK4TLAy7A3JJ02dVztZvuS1KovJ22l/rnmy0Wkrp5Kd
- OC7c7st29kC5DshCqFCASIaMMiSJ2GEw/Fj8QPHROWI3lCxkaRZTa71KXn1f/OeByYRiEYrBqivsi
- AIlXrAcEXE95wZrxNM3kMTsslUmi67/o6uuAmdqB/qhHZHYSzGQxKxdvtHmybNnbtCLm8CrgCy1FP
- uRAMpk8UQkYtqmbwdZ3FSUbrXg90GorlFC4nB/Rlul68F1M1rZ3bbZw78lmL2XMR8ttjiD23ZVyXS
- 7DmSXpE4oNARRWkkoESDs//4dLI8AhiDpq5URUGIrsIUEZGpxx1icU8mwSAFjo5xRK3vZ/vHsP9zT
- UhZM2cPUNtAIDlliKQQIbvo/IPW9zMUAvd+cYDf08W1ZKM+tnOUpoIKXA82PgM=;
-Message-Id: <44b540338a3e271866a3d636359bfe6b2edecbb6.1752669861.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1752669861.git.qemu_oss@crudebyte.com>
-References: <cover.1752669861.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Wed, 16 Jul 2025 14:44:22 +0200
-Subject: [PULL 1/2] fsdev/9p-marshal: move G_GNUC_PRINTF to header
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uc2CZ-00087w-1Z
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 09:29:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752672577;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YipYrYYvZ7mwDxMeTCXCFPfBlcFx/++daPFAeztCEPI=;
+ b=Gr2o9kh/4HozngW+gAi1bcMTDSp5Cuqo7kC7mANz+AV3aScVr2pfsmVyvwVV1NjHSvvZ8x
+ +3Ge3iMVBs9Ju01S6SBq+8SGd38tRI0jfiP5mjedx+ZVSx6PKcKcxROvQK+uiebSnsRBGP
+ ZcYyHdKa76W7xhAQqpuEoMdPN7J7X8M=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-78-xy79ObSJPVm-aUYQYXtQIQ-1; Wed, 16 Jul 2025 09:29:33 -0400
+X-MC-Unique: xy79ObSJPVm-aUYQYXtQIQ-1
+X-Mimecast-MFC-AGG-ID: xy79ObSJPVm-aUYQYXtQIQ_1752672572
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4560b81ff9eso27036945e9.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 06:29:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752672572; x=1753277372;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YipYrYYvZ7mwDxMeTCXCFPfBlcFx/++daPFAeztCEPI=;
+ b=pfoFaNfoiKe64XiJj85NUP2tYLaNgX3ZC3S1DFyKu2UEzd6XYjHdNtkJB1KC+1DK5s
+ LiNeG9EJP+Ygf51Hho0pIZsyR5q3BM2gwyJGV96oZ4B5Ed6Jg3U8qpdy55OE4PS25j8Q
+ hnJ93Ce6f9kSPC8pHCX7YvIFIqBqGXIsswI2mp0iSodEGVuTLgHiBefdzOIoFshCUUR/
+ XsRGj1A9GSwAbV7JRme7AnF8uRmWdH+vaLcbJvXMmSR99h7tqt70+vdZAp0LHpb2zdIE
+ HzTjEtN0uRYgeIwOV32SX0dyHnSyMdyQ/AYIriuEDHTWdxjhAJwQSPUSkS9avQV/Rdzc
+ nBTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWBvQaGmEYXu0D+vdW0x7HY+JmlS8aA8iKF20z3jrtmKcwZBIp48ci/IPIKW0c7nV+bHInk/RAuCqy@nongnu.org
+X-Gm-Message-State: AOJu0YzQPBD8MZC7niJXslSQ+u21/asIY/fHI+QPxMwcQG72Qhs/dgOa
+ C7W0B/Mmde1ejiFQ2kvmasFlCH/V+D0+QwpWkVLJAyIjNXdG8gvAkJXpNeulM18rj5AcDaR8X8M
+ 6ucCJVlOg6GZbZaMoXCWNrnFsuq9J5WHWA2eLESvlEDWgvb0UOAYVuNot
+X-Gm-Gg: ASbGncsvB1eimWC4fqjyN8/73XDJLJ6nfFZuPEn8VBTVmYZqqmgaKdUgvX9vY3b408T
+ 8SDQNrWn9fxZdlrO/exwWh86IZyPPfJ6ujpCkv91iP8nPMBn9nA99Lp2vv1uVR6iY7EigcWGBL5
+ aA8qrrjg0YriObBkGAHyALv7CvJ56CFwnvbXXI3QIN20im+MT6RV1OL/1b4NTosFHV+RivWgBRS
+ RnJcXKTfiIGtuhkcWSTfOrjJvvRiPudEx5KvpbKquIVSRBrSwk4A3e9/Fd8Lc3ArRpbUpDDNRUJ
+ BI/ZvUYsNi+87GXUBtKrldCfBt/tJafk
+X-Received: by 2002:a05:600c:1906:b0:455:e858:cd04 with SMTP id
+ 5b1f17b1804b1-4562e037499mr27211825e9.25.1752672572117; 
+ Wed, 16 Jul 2025 06:29:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgAv2xF1oTX9GmVsWJ1L6cPR4Fl51c7da2yUglIZjs7GsD6v7pq3tXNP0XGkeqy7HJYD75wA==
+X-Received: by 2002:a05:600c:1906:b0:455:e858:cd04 with SMTP id
+ 5b1f17b1804b1-4562e037499mr27211485e9.25.1752672571711; 
+ Wed, 16 Jul 2025 06:29:31 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:150d:fc00:de3:4725:47c6:6809])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5f16a6016sm15992193f8f.69.2025.07.16.06.29.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Jul 2025 06:29:31 -0700 (PDT)
+Date: Wed, 16 Jul 2025 09:29:28 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Sairaj Kodilkar <sarunkod@amd.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, marcel.apfelbaum@gmail.com,
+ pbonzini@redhat.com, eduardo@habkost.net,
+ richard.henderson@linaro.org, alejandro.j.jimenez@oracle.com,
+ Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH 0/7] hw/i386/amd_iommu: Cleanups and fixes
+Message-ID: <20250716092916-mutt-send-email-mst@kernel.org>
+References: <20250716073145.915-1-sarunkod@amd.com>
+ <6e56761c-64b1-43eb-9ff1-316b6de082e7@linaro.org>
+ <a184b8d5-4620-4b21-99c4-0fc859647d14@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Sean Wei <me@sean.taipei>,
-    Philippe Mathieu-Daud√© <philmd@linaro.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=44b540338a3e271866a3d636359bfe6b2edecbb6@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
+In-Reply-To: <a184b8d5-4620-4b21-99c4-0fc859647d14@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -73,55 +114,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sean Wei <me@sean.taipei>
+On Wed, Jul 16, 2025 at 06:26:37PM +0530, Sairaj Kodilkar wrote:
+> 
+> 
+> On 7/16/2025 6:07 PM, Philippe Mathieu-DaudÈ wrote:
+> > On 16/7/25 09:31, Sairaj Kodilkar wrote:
+> > > This series provides few cleanups and fixes for the amd iommu
+> > > 
+> > > The patches are based on top of 56c6e249b698 (v10.0.0-rc3) and
+> > > Alejandro's
+> > > DMA remapping series [1].
+> > 
+> > 56c6e249b698 is 4 months old, we are about to release v10.1.0-rc0.
+> > 
+> > What is the point of posting obsolete code?
+> > 
+> > I'm not going to review further.
+> 
+> Hey Philippe,
+> 
+> sorry. I missed to add it in cover letter. Intention is to get feedback
+> on this series. Since this is on top of Alejandro's series, I will
+> rebase it once his series gets merged.
+> 
+> Regards
+> Sairaj
 
-v9fs_string_sprintf() is annotated with G_GNUC_PRINTF(2, 3) in
-9p-marshal.c, but the prototype in fsdev/9p-marshal.h is missing the
-attribute, so callers that include only the header do not get format
-checking.
+Merged now, go ahead and rebase.
 
-Move the annotation to the header and delete the duplicate in the
-source file. No behavior change.
-
-Signed-off-by: Sean Wei <me@sean.taipei>
-Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
-Message-Id: <20250613.qemu.9p.01@sean.taipei>
-[CS: fix code style (max. 80 chars per line)]
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- fsdev/9p-marshal.c | 3 +--
- fsdev/9p-marshal.h | 3 ++-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/fsdev/9p-marshal.c b/fsdev/9p-marshal.c
-index f9b0336cd5..3455580703 100644
---- a/fsdev/9p-marshal.c
-+++ b/fsdev/9p-marshal.c
-@@ -27,8 +27,7 @@ void v9fs_string_free(V9fsString *str)
-     str->size = 0;
- }
- 
--void G_GNUC_PRINTF(2, 3)
--v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
-+void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
- {
-     va_list ap;
- 
-diff --git a/fsdev/9p-marshal.h b/fsdev/9p-marshal.h
-index f1abbe151c..8995e42067 100644
---- a/fsdev/9p-marshal.h
-+++ b/fsdev/9p-marshal.h
-@@ -76,7 +76,8 @@ static inline void v9fs_string_init(V9fsString *str)
-     str->size = 0;
- }
- void v9fs_string_free(V9fsString *str);
--void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...);
-+void G_GNUC_PRINTF(2, 3) v9fs_string_sprintf(V9fsString *str, const char *fmt,
-+                                             ...);
- void v9fs_string_copy(V9fsString *lhs, V9fsString *rhs);
- 
- #endif
--- 
-2.30.2
+> > 
+> > Regards,
+> > 
+> > Phil.
+> > 
+> > > [1] https://lore.kernel.org/all/20250502021605.1795985-1-
+> > > alejandro.j.jimenez@oracle.com/
+> > > 
+> > > The series is uploaded on github:
+> > > https://github.com/AMDESE/qemu-iommu/tree/sarunkod/alej%2Bcleanup-v1
+> > > 
+> > > Sairaj Kodilkar (7):
+> > > †† hw/i386/amd_iommu: Fix MMIO register write tracing
+> > > †† hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+> > > †† hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
+> > > †† hw/i386/amd_iommu: Support MMIO writes to the status register
+> > > †† hw/i386/amd_iommu: Fix event log generation
+> > > †† hw/i386/amd_iommu: Fix handling device on buses != 0
+> > > †† hw/i386/amd_iommu: Support 64 bit address for IOTLB lookup
+> > > 
+> > > † hw/i386/amd_iommu.c | 217 ++++++++++++++++++++++++++++----------------
+> > > † hw/i386/amd_iommu.h |†† 9 +-
+> > > † 2 files changed, 146 insertions(+), 80 deletions(-)
+> > > 
+> > 
 
 
