@@ -4,144 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6791C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DE9C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 08:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubxNE-000707-HE; Wed, 16 Jul 2025 04:20:20 -0400
+	id 1ubxNs-0007jW-Rz; Wed, 16 Jul 2025 04:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubxLS-00053z-O8
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:18:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ubxL5-0000qe-MZ
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:18:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752653773;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FTUX/Onc9Gxo3ZE8sx6G0gUqQKI8V45WfhVJKkKPI2s=;
- b=BGX/n8B7jGnfdcAWIPH5flgho93zqvlne+HfCnMPtrgVAKLxXsE36MhDO6p+chLLPkCt0F
- K8DdpLvYprMKhUqomn+/mOG9bqajAaQyr0Lpi0F0GXvl6ej0Ahp7PLXcgjieZ0p19YIhch
- Vy4w6t2YX5Wpz0thSaoS6kn+6nGx0mg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-470-ds6wwOKiMgKnIvtDVt2IbQ-1; Wed, 16 Jul 2025 04:11:04 -0400
-X-MC-Unique: ds6wwOKiMgKnIvtDVt2IbQ-1
-X-Mimecast-MFC-AGG-ID: ds6wwOKiMgKnIvtDVt2IbQ_1752653464
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45611579300so22851535e9.0
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 01:11:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ubxLp-0005Aq-Rl
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:18:57 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1ubxLn-0001hp-AI
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 04:18:53 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4550709f2c1so33730645e9.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 01:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752653927; x=1753258727; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=JN7FEf+8t7oiq29+zDIIL6o3/QvSrm2WtDIlELOr9do=;
+ b=GRHb0CMtOrJYC8yHG1OHw4yixXf+Y6rz6NevBfvVYuxiCUxf+Owv1doF49M/XW3hgK
+ 0i5eS24216o/lUdxjWCFuAMAl5ChvrZ7vhM7M96/DAFRNHLjlfgPHDETsQrji48cd7wh
+ XlarvUWr6lMuZl9CW56XsyOZ5G/DHSRx3Znm9lUoWMan00d1k+c8EBTSxYeZjfzL2hjn
+ T16uf8XmNZFpqzPcc2dLD6rwOHGJSI8OVkbXUkfZh6rWtUbIwWRU2DpY1suRFykstFlE
+ qdUq/xRxgPxoq9vwvqJiFKa4LZdJ4sesKR7jsYZBRGjkCwpzi8xXYpPo+0P3P8v7pGXZ
+ EuHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752653463; x=1753258263;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FTUX/Onc9Gxo3ZE8sx6G0gUqQKI8V45WfhVJKkKPI2s=;
- b=oV5EaoCOGaXSwK/z/1KAI75hn74fk9UMhL2Y9urejxls5u4YtMomgcIyEN1tXGf1Wu
- JPIvj+DNkH3zYIkKue18en55h911HycaxbZsPaTLnjC2mC60DaKDjAqwik+kOrf7hSQI
- jWiXWqQ348gn4sfuarHgQsVr0R+CIbaY6nKJhh0elC/Ekgi4Ee/iCLKB7XMsUYf62hEb
- y5z/zm9h83e/1miT+sj9nyDuIJwrhjiL5x3MGQAMH4QwgYm1K8NhYC9vianp/YCUzWOZ
- qYUnES/fZcyVJ93CVKqp6dfQjaKmyuyGKYxannki6BHq0LdDT5Xs1sV/iO86Vc4P4AAe
- CEpA==
+ d=1e100.net; s=20230601; t=1752653927; x=1753258727;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JN7FEf+8t7oiq29+zDIIL6o3/QvSrm2WtDIlELOr9do=;
+ b=LIIAvljO8NyjGoo0mZJWNuXOH7vaJe4C9KlD+f2QbWDWJaj0lyashb7a5jPAyCRzXi
+ +Clus4sKwMhyaQIpRusGIoqo2DwVSrE7NqDe3MHa3+i+5rjjU6OVLTe1jh9KqtwPugf2
+ qFosM4G+neP+54vLaFWXzAuPqDM8HzARt+GGPNk4f0eW0ooXfmaEfw7XTBqDIJiPN0cg
+ NvGinINBNaE5wwdRxfAmTQxDS/GvMu71Ng8YJni2sdE2pkA5i4bgj3IOxxx+Dr1lxedX
+ o552zTBeHM+YZmbAhN9UfU9euQvs5IbmQGp+eFdqG+/R1G6nM9e8NIoz4evx6YrDTd7E
+ 8t1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULIm8+yaSIzgS8RK+k7JcS916L5fjTHdxZ+eR6zC6naqMSBz8Q6cwzLvTlVZF11GENfwMraZFCDqIr@nongnu.org
-X-Gm-Message-State: AOJu0YzdKVg+lBFHUI7ptCAYsykkfT/HcqAVedkoGVSAozliYiXRAszj
- KD+F1/HDslo/DCiCWxlJenzDyqnjqDFuRUBNkY6sC4n2mx9I8RpdwB8ZKmM8RYErxtwcTlIk+pe
- zhx20N6WOJI/hmD+oQWjK31B8fejQOQNenBIzIXZHHLmMHxqSsF6SV5I8
-X-Gm-Gg: ASbGncv2glflkVe+vP/OLJADFcVLuOCXavsFSp3w5HN+tNGUBoQ8sZEEMx3dBbQwX46
- o+4ODZX5qZVzpJknWGbK+3gzrXHtQ/PHOBydTVyQbxe/+tPYRUQUXv4uasKOmfuedm1t9AvR4Ku
- OKcE6fCosQgMNGl9GBKQCoXnO3qt8yioGIa/nuCwSHTLlsvrsYI3xEm5ysD1sBGT0ZC1HznA07Y
- 68xgQuTLavIQj8O+99DFF9DWBde3KLmB9RAjVudFlS+qJuGz/WNqFymiI/Dhs7ffDNMKp8TLx/W
- hARpKQ8c8hJULT33rRYFSQh0OTFkvi/rMsAOv7O64mgsfa3dQm30UTuCkw67DMceEovK11ahlj0
- =
-X-Received: by 2002:a05:6000:706:b0:3a6:e2d5:f14c with SMTP id
- ffacd0b85a97d-3b60e4f2bffmr969541f8f.30.1752653463488; 
- Wed, 16 Jul 2025 01:11:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGW2gtol2KhF9ZHcHcopvO+iFazr99mrWlDwpDV3J2QB1YtpG1Fd6T9amYNStzS4AjTyq//GA==
-X-Received: by 2002:a05:6000:706:b0:3a6:e2d5:f14c with SMTP id
- ffacd0b85a97d-3b60e4f2bffmr969510f8f.30.1752653463031; 
- Wed, 16 Jul 2025 01:11:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:266c:b13b:afd7:40fd?
- ([2a01:e0a:165:d60:266c:b13b:afd7:40fd])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e7f2f01sm13245095e9.1.2025.07.16.01.11.02
+ AJvYcCVqiihBLlXfmmWCiDaZMEDhMNNwKaTxk2pbW89G8+bpD3mhQh5eQ0Qk2Wk7jSwbglHQ5Cr3HFcudNr3@nongnu.org
+X-Gm-Message-State: AOJu0YySu+fbUUv0ptdpXxEOumqRoDltm/6q7dfn/GiV/pPZV6A++ios
+ +9QHIJBOBkGLHz+DFrUrIPQGqckFcQ++fDLJfppKUqd1CZb/t/JeZeZSfPKoqg==
+X-Gm-Gg: ASbGnctr/QC1t/mvnw07mvduhVdAny4fFNzxZ0RxMbnWOwZ4DFZko636vTDyE3/Dzax
+ aJ7U3Pc4jUoZI2kE0+3XD4PCuRve3Kbcx+P9paqXRJwwMn92RHVqoV7IR5fdOoxNa4183qJkQhd
+ DzrG2TMWHKmscqg3fMxSZtQo4FvwDLbb+YJ4VvaI6yI3qv3rzDQBiPvbfu6Zy1NdJTSz/H8jtYW
+ G1AFvVu4inZNJUfRQtUfxqR4iSp5vUKEY9ovV3WMGCB0rDUovE7QQlmM/x6T5K1znFxw/Mub9pg
+ xeEZsnH6YjZubxFgLnPa/4XwN6ShV2ep9q1gyGigh43wBE037ZU2vKvxpuzSIaBjItUFrnM1k1Z
+ ZKjHSkO/Wy8GRc2K/
+X-Google-Smtp-Source: AGHT+IHWBxMY9/ImA68wMvU9e/OuhodsjNYg9RV34i9DorzI/0q1Od6LGiig0SYCJ5swlJenkKZ+YQ==
+X-Received: by 2002:a05:600c:674a:b0:450:d4a6:799e with SMTP id
+ 5b1f17b1804b1-4562e275dedmr14873155e9.20.1752653926913; 
+ Wed, 16 Jul 2025 01:18:46 -0700 (PDT)
+Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e88474fsm13476375e9.22.2025.07.16.01.18.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Jul 2025 01:11:02 -0700 (PDT)
-Message-ID: <43882887-bf52-4e2c-b94d-e555caadad9d@redhat.com>
-Date: Wed, 16 Jul 2025 10:11:01 +0200
+ Wed, 16 Jul 2025 01:18:46 -0700 (PDT)
+Date: Wed, 16 Jul 2025 08:13:09 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] meson: Add most 3rd-party includes as system includes
+In-Reply-To: <aHZbZN4MIKL7-pu6@redhat.com>
+References: <20250617203435.41490-1-shentey@gmail.com>
+ <CAFEAcA_cfg5je7Nx-qsQoB=cY7KRYan1+wXhWztoLydnjpg15Q@mail.gmail.com>
+ <aHDuyBl4rc4eWvIn@redhat.com> <aHZbZN4MIKL7-pu6@redhat.com>
+Message-ID: <29215B68-1090-4D85-A710-67CBB3317430@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1] vfio: fix sub-page bar after cpr
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <1752520890-223356-1-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1752520890-223356-1-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,90 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/25 21:21, Steve Sistare wrote:
-> Regions for sub-page BARs are normally mapped here, in response to the
-> guest writing to PCI config space:
-> 
->    vfio_pci_write_config()
->      pci_default_write_config()
->        pci_update_mappings()
->          memory_region_add_subregion()
->      vfio_sub_page_bar_update_mapping()
->        ... vfio_dma_map()
-> 
-> However, after CPR, the guest does not reconfigure the device and the
-> code path above is not taken.  To fix, in vfio_cpr_pci_post_load, call
-> vfio_sub_page_bar_update_mapping for each sub-page BAR with a valid
-> address.
-> 
-> Fixes: 7e9f21411302 ("vfio/container: restore DMA vaddr")
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   hw/vfio/pci.h |  1 +
->   hw/vfio/cpr.c |  2 ++
->   hw/vfio/pci.c | 14 ++++++++++++++
->   3 files changed, 17 insertions(+)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 495fae7..cb1310d 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -228,6 +228,7 @@ void vfio_pci_write_config(PCIDevice *pdev,
->   uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
->   void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
->   
-> +void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev);
->   bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
->   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
->   void vfio_vga_quirk_setup(VFIOPCIDevice *vdev);
-
-We should rename all this routines.  For later.
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
 
 
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index af0f12a..384b56c 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -116,6 +116,8 @@ static int vfio_cpr_pci_post_load(void *opaque, int version_id)
->       PCIDevice *pdev = &vdev->pdev;
->       int nr_vectors;
->   
-> +    vfio_sub_page_bar_update_mappings(vdev);
-> +
->       if (msix_enabled(pdev)) {
->           vfio_pci_msix_set_notifiers(vdev);
->           nr_vectors = vdev->msix->entries;
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 1093b28..9c616bd 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2826,6 +2826,20 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
->       return ret;
->   }
->   
-> +void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev)
-> +{
-> +    PCIDevice *pdev = &vdev->pdev;
-> +    int page_size = qemu_real_host_page_size();
-> +    int bar;
-> +
-> +    for (bar = 0; bar < PCI_ROM_SLOT; bar++) {
-> +        PCIIORegion *r = &pdev->io_regions[bar];
-> +        if (r->addr != PCI_BAR_UNMAPPED && r->size > 0 && r->size < page_size) {
-> +            vfio_sub_page_bar_update_mapping(pdev, bar);
-> +        }
-> +    }
-> +}
-> +
->   static VFIODeviceOps vfio_pci_ops = {
->       .vfio_compute_needs_reset = vfio_pci_compute_needs_reset,
->       .vfio_hot_reset_multi = vfio_pci_hot_reset_multi,
+Am 15=2E Juli 2025 13:45:08 UTC schrieb "Daniel P=2E Berrang=C3=A9" <berra=
+nge@redhat=2Ecom>:
+>On Fri, Jul 11, 2025 at 12:00:24PM +0100, Daniel P=2E Berrang=C3=A9 wrote=
+:
+>> On Fri, Jul 11, 2025 at 11:45:08AM +0100, Peter Maydell wrote:
+>> > On Tue, 17 Jun 2025 at 21:35, Bernhard Beschow <shentey@gmail=2Ecom> =
+wrote:
+>> > >
+>> > > When compiling QEMU against fuse3-3=2E17=2E1 with --enable-werror t=
+he build fails
+>> > > with:
+>> > >
+>> > >   In file included from =2E=2E/src/block/export/fuse=2Ec:33:
+>> > >   /usr/include/fuse3/fuse=2Eh:959:5: error: redundant redeclaration=
+ of =E2=80=98fuse_main_real_versioned=E2=80=99 [-Werror=3Dredundant-decls]
+>> > >     959 | int fuse_main_real_versioned(int argc, char *argv[],
+>> > >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>> > >   /usr/include/fuse3/fuse=2Eh:885:5: note: previous declaration of =
+=E2=80=98fuse_main_real_versioned=E2=80=99 with type =E2=80=98int(int,  cha=
+r **, const struct fuse_operations *, size_t,  struct libfuse_version *, vo=
+id *)=E2=80=99 {aka =E2=80=98int(int,  char **, const struct fuse_operation=
+s *, long unsigned int,  struct libfuse_version *, void *)=E2=80=99}
+>> > >     885 | int fuse_main_real_versioned(int argc, char *argv[],
+>> > >         |     ^~~~~~~~~~~~~~~~~~~~~~~~
+>> > >   cc1: all warnings being treated as errors
+>> > >
+>> > > That is, a fuse header triggers a warning within itself=2E Since QE=
+MU adds the
+>> > > fuse3 include path via `-I`, the compiler thinks that the header is=
+ part of the
+>> > > QEMU project, and thus raises a warning=2E The compiler can be told=
+ to ignore
+>> > > warnings within 3rd party headers by adding these paths via `-isyst=
+em`=2E Fix the
+>> > > above build failure by marking fuse as system dependency=2E While a=
+t it mark
+>> > > every 3rd-party dependency as system dependency to prevent similar =
+issues in the
+>> > > future but skip glib since that results in glib include paths to be=
+ omitted from
+>> > > bindgen in case of a Rust build=2E
+>> >=20
+>> > The problem with this is that -isystem does not only do "suppress
+>> > warnings in these headers" -- it also alters the search order
+>> > for includes, in a way that can sometimes cause problems:
+>> > https://gcc=2Egnu=2Eorg/bugzilla/show_bug=2Ecgi?id=3D70129
+>> > So this isn't completely risk-free, though I think meson tries to
+>> > avoid some of this by doing something a bit more complex than a
+>> > pure 's/-I/-isystem/'=2E
+>> >=20
+>> > We would also lose the warnings about e=2Eg=2E use of deprecated
+>> > functions in our dependencies=2E
+>> >=20
+>> > All that said, this might still be the best tradeoff=2E
+>>=20
+>> FWIW, the actual bug mentioned here is a clear regression & mistake in
+>> libfuse3 3=2E17=2E1 only, that they really should fix=2E I've filed thi=
+s:
+>>=20
+>>   https://github=2Ecom/libfuse/libfuse/issues/1282
+>>=20
+>> and will likely send a PR too later=2E
+>
+>The issue turned out to already be fixed in libfuse git master=2E So give=
+n
+>that the problem only appears in one single release, IMHO, the best thing
+>is to ignore it=2E Any distro which ships the broken libfuse should eithe=
+r
+>update it, or cherry-pick the trivial header file bugfix from git=2E
 
+The idea of this patch is also to insulate ourselves from similar issues i=
+n the future=2E Moreover,  `-isystem` might be helpful in other ways, such =
+as for static analysis tools=2E For example, clang-tidy ignores any issues =
+caused by headers included via -isystem=2E So IMO this patch is still worth=
+ for consideration (but I'm not attached to it)=2E
+
+Best regards,
+Bernhard
+
+>
+>
+>With regards,
+>Daniel
 
