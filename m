@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8C6C83F27
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 06:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF66C83F1B
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Jul 2025 06:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ubvcG-0001Q6-Ta; Wed, 16 Jul 2025 02:27:44 -0400
+	id 1ubvdE-0002Ms-If; Wed, 16 Jul 2025 02:28:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubvcD-0001IB-BF
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:27:41 -0400
+ id 1ubvd8-0002Ce-Nm
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:28:40 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ubvcA-0002qW-Tk
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:27:40 -0400
+ id 1ubvd5-0002v9-Rn
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 02:28:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752647259; x=1784183259;
+ t=1752647316; x=1784183316;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=Nm6wYWpaUTxUQrksbS/WulWRPA20L3tmmXTPB37k/8A=;
- b=RPCwu7BqGHpt1y2wVn13wc92/EppB/vXcO5aCmwhJs8N6+AYpghg0nUB
- AKq8Dk5XklKLfB7dfnP6K5o3kyLozy+7y8mSvIzpJ2RFJsySWsj0tpvrB
- V8NvbD2BrV4/1JRo43jc8Hxe1v9WTBrHRWOJPWZjT9OMn7NFEMadVeezn
- Ut/c4U3sMIaFJNk9I2HFmCPXphb5jGqCRZN1iaSqR2UCIW/dYs/+lFMc7
- vW30KN1v6F/mhP58QYALi0T0sqrmlA0SyslvUTCZUDXIMLOypdGLq30+0
- 23aDMyFlldOSVtWxui+vPsynV+ey3oUYuvLKDOeSPfau1sAEupY7+0h/z g==;
-X-CSE-ConnectionGUID: 7jBYRhi6QumNC3Zt+agiQQ==
-X-CSE-MsgGUID: W7mNaDK8TdmEJAq6K+qhPw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54819072"
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="54819072"
+ bh=hKKcDyHx6DNwwChFLkdCBJRnzKlBjlTOVCeNq17uiac=;
+ b=nf6wqpXrGABAzED32ICGO03pk8PpBmst1lI/Ua0AWxLKSorCTDCV4p+S
+ H24Nk98X1gOJnCdk1HCZrh3kV6+lUpLA6F4jmprDT7DNJzyMMptPzKLk7
+ zCrLj3b4HGOKe/JMSp0wpy4nFuQW4aRKSdeuQI2WGiVrfRlBFhcxlhY86
+ hZPCmTWMp3yZjlXsE9dQyrLIp8Y354qDVI6KxIwFYGcyzIutskgiDMnJx
+ hL2S6fZKs3LouGHSUSK4f2oViSukzuUtvi0VF8WnwygZZpWqdOc3Ef8/j
+ WfDqGmqvAPWoYqH0oQ5i9PCz2dXLsdnvRKuala8rt3vO0Iz4OLkTNRKJp A==;
+X-CSE-ConnectionGUID: kn2sSbjVSCqpqbXeSf+BxQ==
+X-CSE-MsgGUID: +ycEGbKBSvihFKXhg66eag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54819115"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="54819115"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2025 23:27:37 -0700
-X-CSE-ConnectionGUID: cHc9Z1nyT8Gr5uQWj6iK0Q==
-X-CSE-MsgGUID: 35RxXw/uRlak7L5rmo3dsQ==
+ 15 Jul 2025 23:28:33 -0700
+X-CSE-ConnectionGUID: CD8i571HTe+5IMmERv/8xA==
+X-CSE-MsgGUID: UcBip278QSC4SC3ckK4zhA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="158145049"
+X-IronPort-AV: E=Sophos;i="6.16,315,1744095600"; d="scan'208";a="158145109"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Jul 2025 23:27:35 -0700
-Message-ID: <59ec573d-c489-4008-ac87-6d8c207b7e4c@intel.com>
-Date: Wed, 16 Jul 2025 14:27:32 +0800
+ 15 Jul 2025 23:28:30 -0700
+Message-ID: <74df57ca-a47e-46d8-b0ee-efb03dd774f3@intel.com>
+Date: Wed, 16 Jul 2025 14:28:27 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/i386: Add TSA attack variants TSA-SQ and
- TSA-L1
+Subject: Re: [PATCH v2 2/2] target/i386: Add TSA feature flag verw-clear
 To: Babu Moger <babu.moger@amd.com>, pbonzini@redhat.com,
  zhao1.liu@intel.com, bp@alien8.de
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org
 References: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
+ <e6362672e3a67a9df661a8f46598335a1a2d2754.1752176771.git.babu.moger@amd.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <12881b2c03fa351316057ddc5f39c011074b4549.1752176771.git.babu.moger@amd.com>
+In-Reply-To: <e6362672e3a67a9df661a8f46598335a1a2d2754.1752176771.git.babu.moger@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
@@ -92,17 +92,10 @@ On 7/11/2025 3:46 AM, Babu Moger wrote:
 > related to the execution timing of instructions under specific
 > microarchitectural conditions. In some cases, an attacker may be able to
 > use this timing information to infer data from other contexts, resulting in
-> information leakage.
+> information leakage
 > 
-> AMD has identified two sub-variants two variants of TSA.
-> CPUID Fn8000_0021 ECX[1] (TSA_SQ_NO).
-> 	If this bit is 1, the CPU is not vulnerable to TSA-SQ.
-> 
-> CPUID Fn8000_0021 ECX[2] (TSA_L1_NO).
-> 	If this bit is 1, the CPU is not vulnerable to TSA-L1.
-> 
-> Add the new feature word FEAT_8000_0021_ECX and corresponding bits to
-> detect TSA variants.
+> CPUID Fn8000_0021 EAX[5] (VERW_CLEAR). If this bit is 1, the memory form of
+> the VERW instruction may be used to help mitigate TSA.
 > 
 > Link: https://www.amd.com/content/dam/amd/en/documents/resources/bulletin/technical-guidance-for-mitigating-transient-scheduler-attacks.pdf
 > Co-developed-by: Borislav Petkov (AMD) <bp@alien8.de>
