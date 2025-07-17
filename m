@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8854BC83F3B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 15:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C67C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 15:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucQwc-000124-UI; Thu, 17 Jul 2025 11:54:51 -0400
+	id 1ucR06-00059P-T6; Thu, 17 Jul 2025 11:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ucP1Q-0006zl-NE
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:51:41 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ucP1N-0007fN-Sb
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:51:39 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-60c60f7eeaaso1635915a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 06:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752760293; x=1753365093; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3EMWDuzWlXtljhatIpXTRoIa2BGGu3IyS38H4G8Azug=;
- b=dO/M4wGUQQk50uSUzEO0ENSaqikMmStlgAgBOZK95/0l5nChLb8eGVDRNeOxUlKVhv
- dFoOmQucIJk7pLjUDEaw+Vob/V+7bxI1ijTjICbnNYvcO/JdtcNHxAXq463iF8Ysagwp
- +lygtcLBj5nYL2Pg+uny427Sj8Fy7LTVHBtf++EJNxkC2hVChAExWSezlNI+zzrhcYa5
- qE75OWjM05Pila8/imFZgCZaz+uc153d2Sg2tc+FSp/MIMuHdyYx7m+Bmn8q5Y2pzgrO
- BvfIUrim9+uMWPg9lB6UK38UqrgL5+r/EKJIBg6D0QXcWqXu8ZK7BWo6NIjYKJYCGZqC
- AYQw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucP3Q-0008BM-5K
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:53:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucP3M-0007un-9s
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752760416;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=hF6isSrCp0MAqcL83XiTrA9Y5/5rEcJH6y7LNtoyZBS5BcNbeaT/xGMQkD1/j8ZDLtwRn4
+ wtNgtRg+4ZrrAwXMzcE8/s0RIJpqhOPONDzmYUrVOTnD4NqW6+YqKv3ywsygMq4iyPNGjq
+ Z2NuAG/LVp9P982XsufRCT2M8iE8Yts=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-475-pVNwgKc7MWm1g3OEEUpj7w-1; Thu, 17 Jul 2025 09:53:33 -0400
+X-MC-Unique: pVNwgKc7MWm1g3OEEUpj7w-1
+X-Mimecast-MFC-AGG-ID: pVNwgKc7MWm1g3OEEUpj7w_1752760412
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451d7de4ae3so5642375e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 06:53:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752760293; x=1753365093;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3EMWDuzWlXtljhatIpXTRoIa2BGGu3IyS38H4G8Azug=;
- b=B/6OfyYAyrw6qGJstkN+MaOokQSjh8nzp/uj6XaQTAtMgPvmhGw2uxTl2ksxa8eYSM
- xMw0dJsBsr0Z1db0ZpndAPUWAWXBPxTJ3yIyIlvdAPGg9A4NwZO1uuEQsO46VvH+m5x8
- DQT7GpXMBLZ8sIMkEVpMZfaOxNavZDL80YTdqdVlOnGoE3OvkNlJA02QooEWmzFnCCAo
- hQ/01izz6poVNAUijwnuoXRUNtot8m0OQBD2/mauCHaPMZe/xyh0UOdPJo4IlwZCWyFL
- rra/KV6BPsb/p4Xwvh2urL37KRrUEC7tsEejQNP+o21vmwzgXG2QmMmr5YoCLtte5LU7
- dY0g==
-X-Gm-Message-State: AOJu0YxFhoHnrNC8apAXse0G9QQ9YZHXKEMIBDmCgyUN+b3VfuwzjzVb
- eIkJkTRJ/1LWsCvsbrjleblR/UJh5NgA4Un2QOjxwPUWfodWi/+TmU9C7J5ATbDcPxg=
-X-Gm-Gg: ASbGncsQAwS7LAAQ+PjU/uczDTY5HResz2BtolvjRX/8cHdoe1KX6chssccZYY+OA8h
- VuyVTb2fCwZsAgxBU3F4nKc2H3XZPYlLgAyQK5thL6Im3CbvGFft/FB35VvFB3DUOh5Kfa5EQuj
- SihyDvCLxSzACiA8xsC9wE3n99gBk3fa7GMaw7blHp18+xU84KJcI5/5z7mrlR4NWzjiFiJjzxJ
- 5l0pefBI6eR6qNUnMFet98whJvnEIEAp6ehyJyC3iFX0E9jypBaaLm2GgmXFKx93SiIUm4In2YA
- sYvZRVwQwDLfGpUH0s+5KD/DLpQ0N5YL1AjXz4gHS9akgT88kLEwawQ+TwHKXzd6AQRXPNdq26J
- KFe80/aNhl+UFG/veryxbN6w=
-X-Google-Smtp-Source: AGHT+IHuC8NbmYKDRsM0D6W6C+xSQBM24FckbnKmODh4mmZxUkUlHTc456ARH6VrYkotwtN1hcXwFw==
-X-Received: by 2002:a05:6402:42d3:b0:612:b9bf:2a56 with SMTP id
- 4fb4d7f45d1cf-612b9bf2fb9mr815697a12.21.1752760293110; 
- Thu, 17 Jul 2025 06:51:33 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-611c973360bsm10317606a12.45.2025.07.17.06.51.32
+ d=1e100.net; s=20230601; t=1752760412; x=1753365212;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=pDwi3QZQZnw8M9eK2mGav4L43Cj7Y3Av02bDzY9z4cK1kiDNpYXRji9frLdDT+dMcl
+ XMXCm/vuFI3eHguY/7JrsUWOhzoRFWnrqbwWhNl+jCRZ3sVa/gh+N59eewFAryZL6hKC
+ rL4fxer1u9qSY8gRs4u4PaHdbFUES+sq31EGfP/3cyE7UGu2chaCmCCRNLUhO2kn/nAP
+ UQVVxTTSGqL1pWXqf7ynLYR8PqYxe+lE9hPYOgV0fuXpb0AbURU+SOC6tUCDZyGNikRK
+ pjgGCuQ/MmMdzvvkdKsff0Zvf8O68BOdajiFEkP4h+gNA0OoBEUQGThCXUwaFH+5iGKT
+ cDhg==
+X-Gm-Message-State: AOJu0Yzn0zTsSFwXNtwvf5psi14Q9bjyJSYSVhMVK0jAUJKwFNPdv9tF
+ g5ZKeuFnrvwlvN1fA03nAGBWirJDP3RZ1WikAiwGVwvG2wLWBrSlO4Kl07lEPojJ2Si7h/76bTS
+ P6Hh5MfH7tbuxnjSmythIH6EJ5EOScgGKElup3JSGzKVMaV8OoqHWKa5y
+X-Gm-Gg: ASbGncvgfbcSfqMNgBTg7+aUSqZbCHoPPSK6xOS/90VyV7gDG9kEbExB/5EcoYjE6IV
+ TiMHNNUocnh/QZ8eXNonJPovQyjhwfwBBvQgw71763//O3XKhjZKpjOx2TzTPDcpwAhi7ZfiWAs
+ oB8iua66RKy1j5bhPVcSyhciyKFWQviPXOynhoFNapTlwtmoepdWpmAUUcDfp5VfMQKw29971cO
+ eoKdlQacDvjxH/QRP6XqIW3O2T9kCDuWbFq6cdBc1uS1axxeOnUIEGZOxiDesEqcvf7dgxnIZdo
+ ijzMh4Sw/jnNJ2/ZRkCVXtOmoKMxFa8LYmj8JFcdn/U=
+X-Received: by 2002:a05:600c:6295:b0:456:191b:9e8d with SMTP id
+ 5b1f17b1804b1-4562e047133mr76455395e9.11.1752760412412; 
+ Thu, 17 Jul 2025 06:53:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVwHQhdQ54asTnU5TidJzmmjsXJ2wOgqzCjzlPXgynDVhJQhRSDgA6ztMnEpZ5NlAOzzbfnw==
+X-Received: by 2002:a05:600c:6295:b0:456:191b:9e8d with SMTP id
+ 5b1f17b1804b1-4562e047133mr76455105e9.11.1752760411990; 
+ Thu, 17 Jul 2025 06:53:31 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b5e8dc201asm20662291f8f.22.2025.07.17.06.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jul 2025 06:51:32 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8E2315F812;
- Thu, 17 Jul 2025 14:51:31 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Thomas
- Huth <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- devel@lists.libvirt.org,  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Re: [RFC PATCH 0/6] Fix building of sparc/sparc32plus test cases
-In-Reply-To: <89d04983-956e-4fa0-b607-951522b2a731@ilande.co.uk> (Mark
- Cave-Ayland's message of "Thu, 17 Jul 2025 13:32:31 +0100")
-References: <20250716105414.2330204-1-alex.bennee@linaro.org>
- <89d04983-956e-4fa0-b607-951522b2a731@ilande.co.uk>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 17 Jul 2025 14:51:31 +0100
-Message-ID: <87tt3bvsbg.fsf@draig.linaro.org>
+ Thu, 17 Jul 2025 06:53:31 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] i386/tdx: Remove the redundant qemu_mutex_init(&tdx->lock)
+Date: Thu, 17 Jul 2025 15:53:30 +0200
+Message-ID: <20250717135330.343030-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250717103707.688929-1-xiaoyao.li@intel.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,47 +109,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> writes:
+Queued, thanks.
 
-> On 16/07/2025 11:54, Alex Benn=C3=A9e wrote:
->
->> We didn't have any reliable way to build sparc test cases. I have
->> found someone who ships a compiler but the binaries still don't run
->> due to the need for CASA.
->> I'm posting mainly for those who actually care who might want to fix
->> up the remaining cases.
->> Alex.
->> Alex Benn=C3=A9e (6):
->>    tests/tcg: special case sparc test cases
->>    tests/tcg: special case sparc32plus test cases
->>    configure: update sparc and sparc32plus target compiler detection
->>    tests/docker: add sparc-leon-cross container image
->>    configure: enable the container fallbacks for sparc/sparc32plus
->>    docs/about: deprecate add sparc/sparc32plus-*-user
->>   docs/about/deprecated.rst                     |  8 ++++
->>   configure                                     | 11 ++++-
->>   .../dockerfiles/sparc-leon-cross.docker       | 40 +++++++++++++++++
->>   tests/tcg/Makefile.target                     |  9 ++--
->>   tests/tcg/sparc/Makefile.target               | 45 +++++++++++++++++++
->>   tests/tcg/sparc32plus                         |  1 +
->>   6 files changed, 108 insertions(+), 6 deletions(-)
->>   create mode 100644 tests/docker/dockerfiles/sparc-leon-cross.docker
->>   create mode 100644 tests/tcg/sparc/Makefile.target
->>   create mode 120000 tests/tcg/sparc32plus
->
-> I think the basic Debian toolchain for 32-bit SPARC is working because
-> it is currently used to build OpenBIOS, so I don't think we're quite
-> at deprecation point yet.
+Paolo
 
-If you can figure out the right runes to compile then we can just tweak
-configure and also use the debian-all-test-cross image as a fallback.
-
->
-> Let me have a look and see if I can figure out what is going on here.
-
-Ack.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
