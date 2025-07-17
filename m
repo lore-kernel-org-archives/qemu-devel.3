@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB25AC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 00:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E7AC83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 00:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucCl0-0005OY-3c; Wed, 16 Jul 2025 20:45:57 -0400
+	id 1ucCjJ-00016I-5A; Wed, 16 Jul 2025 20:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ucChO-0005ju-AD
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ucChd-0006FB-Pg
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ucChL-0005KX-HI
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:09 -0400
+ id 1ucCha-0005Ns-KF
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752712925;
+ s=mimecast20190719; t=1752712941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UaNetO2Qn1xjqwHWbrWgZcK9a9Y4Ysw6MagpqH4pFTg=;
- b=M/pRXlzSDVxaFbwfvc+puPJ0LFc3gQUXQ9Kz4btU3IjDq9SSzrkBMAVs5BY/lzFkL5V8G8
- baX+pglCpN/IIyAHek0V3g7WJm3285b5f1lqQ3cZ0ZMfTSYFD3ZaAELuBPEz6yxPY7awfo
- iFCZC7i2jbTgmrdaNZ5tZAR8XhQAHjM=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VB7ywUEVqmA3oghObQBPFE3seKY/3Bw1DaxOoNhDBBY=;
+ b=Q48hJrhfsqC1fcPTe0qIsVe2YwgPKzChvXrUycQBv/1xYFUvdUIotZmN5/K2UEc6jLRp7b
+ Wld7XAljX6k7F+t6QRoe6CWSLie8N4NEpznG2aVQbJhTHHFHy3KrIaC1IYCod1f+I9XEz7
+ KTpXMl05r3OSdqm8t5qSKSz47nuFc/o=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-kqK5JYbcMVSYdazTzrpVgw-1; Wed, 16 Jul 2025 20:42:03 -0400
-X-MC-Unique: kqK5JYbcMVSYdazTzrpVgw-1
-X-Mimecast-MFC-AGG-ID: kqK5JYbcMVSYdazTzrpVgw_1752712922
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-31cb0471b45so159416a91.0
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 17:42:03 -0700 (PDT)
+ us-mta-164-KWessoE2M-imOOAQgtA3jg-1; Wed, 16 Jul 2025 20:42:20 -0400
+X-MC-Unique: KWessoE2M-imOOAQgtA3jg-1
+X-Mimecast-MFC-AGG-ID: KWessoE2M-imOOAQgtA3jg_1752712939
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-312df02acf5so1484354a91.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 17:42:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752712922; x=1753317722;
+ d=1e100.net; s=20230601; t=1752712939; x=1753317739;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UaNetO2Qn1xjqwHWbrWgZcK9a9Y4Ysw6MagpqH4pFTg=;
- b=LCk0YH1JEdiPsL3Hg/NI0hKPnXACKobIJBB9Oig34JbPaTGDHYynDITUrJKjanbm2I
- tFoNq7nmCtrZQc458tSn3SaowYq7dehqAs0PSsmyIiEX7a/whRzS7ZKWTza1KsiJizpI
- YwCMMDiiOgpKF2rnjRyLwf5/JLilWtjFE+1/REi2ksKnS1IA3NywmeKw/c5dHwPZPq77
- 0YwXIwo9MPkX7Dhao8FoPFfxwYk/XcpBCHBmYkHvh1gZ86m08uxsoeaAc74wn7S6pCXB
- rq/jSf9xF9lbKKQy2YwdBEEMazGQpPgg+pw2oboqSs6TJ4LwQW7MJdA6b5pxPqFoWZPN
- RCpQ==
-X-Gm-Message-State: AOJu0YwDs/+Z564ttCEIiUlgM376LkC0Omecgl0TUDjzyhIDRsl/X8LU
- chQW87Lpj2l7yJlc8yRU8SO9uB9VV1iHeDZ7EYuxYMd3ZDNlbCP5uWlRJJcT2MF5SbF1lbGrozH
- 0Z70i4WmKEvHCUmf7pWWtyPNQXVcC/Cm09GgMyVD1rqMMEmjp/URWbAgc
-X-Gm-Gg: ASbGnctySMq4yuVQW7H/UG1HtxOInayi01ieu22TCU87FbDspJl1RONVLmLbhxATglM
- mfB4SvGUSXSfjaPNKYMzMknXtY0GL2JA9cVEh7xcEHVt7MxuhXs2AhGfBQLCLGqcHC+RwP3VAY/
- hKPAO7KOsEzlT/tdjs2sS6QB2DBWBNzVzd+EWnJp8DDAvGSXJPr6UjQ/4RGm6kG9HLLLQR/LGaI
- yvIpGWmvTrUnX3KP13ADyrdmS3ZBo32oY7qg0N4O56/HxX7nIsb0MtWJ725zZ+J/hE02tewDB+4
- SclsHE2lwZe4uAKT9KXgHrt0GKujSfx/4XAEDbCC5pIZTwhje72J
-X-Received: by 2002:a17:90b:5446:b0:311:482a:f956 with SMTP id
- 98e67ed59e1d1-31cae9989e4mr1609991a91.5.1752712922302; 
- Wed, 16 Jul 2025 17:42:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERJSQdSSL8Vo3WArCwO2D+1ROILgOberqXZPMTsuecnhPfXXsILl4OADCEzpvNuMViRToPgg==
-X-Received: by 2002:a17:90b:5446:b0:311:482a:f956 with SMTP id
- 98e67ed59e1d1-31cae9989e4mr1609954a91.5.1752712921886; 
- Wed, 16 Jul 2025 17:42:01 -0700 (PDT)
+ bh=VB7ywUEVqmA3oghObQBPFE3seKY/3Bw1DaxOoNhDBBY=;
+ b=NdxX0keu1+pQznsGnD994QPt1r+zI7SRpJ1cV4jO+SouqzF8UKaDoQuPblsOHBihIG
+ iPwK0NwqOjSfIrU9Um6As39HRpnn0iFPUYQtNA0pYwc/Xg6ePiQo5M21sRiwkLWFocR9
+ zCTZ/i6cVC8ygYumQvfZGVsRPAxw+uf5zJCCR/w3pU3FdI5bPZeXdAHIAMih8R/g4gQV
+ B8fJGI+sZ7exaVPM4wzkxVFdfqp6UMmoZHPHqL+S0UJEZlP1/MsnrkJFTy6D/v16GLSf
+ ttQqxt7eHD+aMAqsvbN6U3QkiO4f0TiLISak7PqaM79UmOFAAHyT3RuuzWiMiWxS0gpu
+ xd7g==
+X-Gm-Message-State: AOJu0Yy4SW5g1/sX7gWCHbSPleZL2Q3nbbyMrEzvkqVE9my3bZn9EYkc
+ ZaHQHd3jvxWTOhsO4qvqTtdB1KlAARgkCRyeUwbCbzsXv4VP6fzBBMTWc3AY/N+nri0lGBjN2T4
+ rbGZ7Zv/z8YjwqA7DOPY/5Au1FjdgoOJ6FaGWh1kyH1JfFLxycTLWktuS
+X-Gm-Gg: ASbGncs4iMOVpjfiEiq7uyemXqBLMvdPb5UYgp2VPvuQz+9NQsJ8cMF+tBUhADEHVES
+ CbO+p6I3LMRBB5ItW74xasIMw0i/+MM+8Vr8/6lfB0Pqn7JNDEj/jgJhT56UqUGqJk//TmAj4Mk
+ cMVralOEwlSK+yr5efDlmj0J1I65rFc4nwzat/yBk3tbDmQUWwwU+LJycJYggr41biHejXeEtRt
+ wI8iTjgHdk4nddKDAL2SaeQZkYuLFXSVW/ItvvuKErhia48PMhvdPBimTmO5IZbC/vYRUoBm385
+ pAA9gDm4BWFVwQBwfrmxC++AoLwMfKIPafK6EDrNYFTC35pIGipb
+X-Received: by 2002:a17:90b:3f4b:b0:2fa:42f3:e3e4 with SMTP id
+ 98e67ed59e1d1-31cae9730f0mr1913274a91.3.1752712938841; 
+ Wed, 16 Jul 2025 17:42:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0TNhsBLt9chwXzoKyo14UNr2QnhkN/YbcStFKqM2RoBmVQtYWkXJFkkUMTgTG652d0vqxig==
+X-Received: by 2002:a17:90b:3f4b:b0:2fa:42f3:e3e4 with SMTP id
+ 98e67ed59e1d1-31cae9730f0mr1913232a91.3.1752712938256; 
+ Wed, 16 Jul 2025 17:42:18 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.97.205])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31c9f287c19sm2214424a91.31.2025.07.16.17.41.53
+ 98e67ed59e1d1-31c9f287c19sm2214424a91.31.2025.07.16.17.42.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 17:42:01 -0700 (PDT)
+ Wed, 16 Jul 2025 17:42:17 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
-Date: Thu, 17 Jul 2025 06:07:44 +0530
-Subject: [PATCH v5 21/23] migration: Capture error in
- postcopy_ram_listen_thread()
+Date: Thu, 17 Jul 2025 06:07:46 +0530
+Subject: [PATCH v5 23/23] backends/tpm: Propagate vTPM error on migration
+ failure
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-propagate_tpm_error-v5-21-1f406f88ee65@redhat.com>
+Message-Id: <20250717-propagate_tpm_error-v5-23-1f406f88ee65@redhat.com>
 References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
 In-Reply-To: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
 To: qemu-devel@nongnu.org
@@ -104,17 +104,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>
+ Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2959; i=armenon@redhat.com;
- h=from:subject:message-id; bh=42uhy85WkdN9bMSUXABk6f8LoYWAKhZekD76Ts14rfw=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0aFm/LcVSX3Ww+8nSl1JsVzYSerZG50kLWXseV9DaNFb
- F75j1U6SlkYxLgYZMUUWRq+Bsg2BRRGRNq+vA4zh5UJZAgDF6cATOT9IUaG1vJed0+Thc5GNY8Y
- btmcWfEr2Tu16tM/4SPispMdzlebMDL8Y7s8JUdf5enJr3dYJS4mROyUKjZf3Pd9qZx7WhS/zF8
- mAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6614; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=lhIHMpU0qkadz4azlKtjxrgPGcXYLFkklrIa1moEZ6E=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0aFm/L5O+fLtpds9ty69n3KmQD3pa+0xQPmb6hhVT8x5
+ //qPV/cOkpZGMS4GGTFFFkavgbINgUURkTavrwOM4eVCWQIAxenAExklywjw3zdyvnX12xInf3G
+ Tmfr+XV3nj1wfxL/ff861z0LWG/dWLyXkWH+yYqblx+XHryr3C61ZNa8lvXTLk/aq1Lwa9OqwgX
+ HYztZAQ==
 X-Developer-Key: i=armenon@redhat.com; a=openpgp;
  fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -123,7 +124,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,74 +140,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
-to load the vm, and in case of a failure, it should set the error
-in the migration object.
+- When migration of a VM with encrypted vTPM fails on the
+  destination host, (e.g., due to a mismatch in secret values),
+  the error message displayed on the source host is generic and unhelpful.
+- For example, a typical error looks like this:
+  "operation failed: job 'migration out' failed: Sibling indicated error 1.
+  operation failed: job 'migration in' failed: load of migration failed:
+  Input/output error"
+- Such generic errors are logged using error_report(), which prints to
+  the console/monitor but does not make the detailed error accessible via
+  the QMP query-migrate command.
+- This change, along with the set of changes of passing errp Error object
+  to the VM state loading functions, help in addressing the issue.
+  We use the post_load_errp hook of VMStateDescription to propagate errors
+  by setting Error **errp objects in case of failure in the TPM backend.
+- It can then be retrieved using QMP command:
+  {"execute" : "query-migrate"}
 
-When postcopy live migration runs, the device states are loaded by
-both the qemu coroutine process_incoming_migration_co() and the
-postcopy_ram_listen_thread(). Therefore, it is important that the
-coroutine also reports the error in case of failure, with
-error_report_err(). Otherwise, the source qemu will not display
-any errors before going into the postcopy pause state.
+Buglink: https://issues.redhat.com/browse/RHEL-82826
 
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- migration/migration.c |  2 +-
- migration/savevm.c    | 10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ backends/tpm/tpm_emulator.c | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 1f0a8bd6ab28ff09bb76919564bdbfbde35c5e42..efd02d917cfe4d1221907123eadd98932b02e8bc 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -925,7 +925,7 @@ fail:
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                       MIGRATION_STATUS_FAILED);
-     migrate_set_error(s, local_err);
--    error_free(local_err);
-+    error_report_err(local_err);
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 4a234ab2c0b19b2604bf0dd8cb5f4540c72a9438..9bf5927e8e1542cf2e4f2275783d32853d5f1473 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -819,7 +819,8 @@ static int tpm_emulator_get_state_blobs(TPMEmulator *tpm_emu)
+ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+                                        uint32_t type,
+                                        TPMSizedBuffer *tsb,
+-                                       uint32_t flags)
++                                       uint32_t flags,
++                                       Error **errp)
+ {
+     ssize_t n;
+     ptm_setstate pss;
+@@ -838,17 +839,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+     /* write the header only */
+     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SET_STATEBLOB, &pss,
+                              offsetof(ptm_setstate, u.req.data), 0, 0) < 0) {
+-        error_report("tpm-emulator: could not set state blob type %d : %s",
+-                     type, strerror(errno));
++        error_setg(errp, "tpm-emulator: could not set state blob type %d : %s",
++                   type, strerror(errno));
+         return -1;
+     }
  
-     migration_incoming_state_destroy();
+     /* now the body */
+     n = qemu_chr_fe_write_all(&tpm_emu->ctrl_chr, tsb->buffer, tsb->size);
+     if (n != tsb->size) {
+-        error_report("tpm-emulator: Writing the stateblob (type %d) "
+-                     "failed; could not write %u bytes, but only %zd",
+-                     type, tsb->size, n);
++        error_setg(errp, "tpm-emulator: Writing the stateblob (type %d) "
++                   "failed; could not write %u bytes, but only %zd",
++                   type, tsb->size, n);
+         return -1;
+     }
  
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 0fff65c96344c65191353311e72730cd6e3bfb23..4f67eebe5321c175d51e8029e36ceb336c98ad1f 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2086,6 +2086,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-     QEMUFile *f = mis->from_src_file;
-     int load_res;
-     MigrationState *migr = migrate_get_current();
-+    Error *local_err = NULL;
+@@ -856,17 +857,17 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+     n = qemu_chr_fe_read_all(&tpm_emu->ctrl_chr,
+                              (uint8_t *)&pss, sizeof(pss.u.resp));
+     if (n != sizeof(pss.u.resp)) {
+-        error_report("tpm-emulator: Reading response from writing stateblob "
+-                     "(type %d) failed; expected %zu bytes, got %zd", type,
+-                     sizeof(pss.u.resp), n);
++        error_setg(errp, "tpm-emulator: Reading response from writing "
++                   "stateblob (type %d) failed; expected %zu bytes, "
++                   "got %zd", type, sizeof(pss.u.resp), n);
+         return -1;
+     }
  
-     object_ref(OBJECT(migr));
+     tpm_result = be32_to_cpu(pss.u.resp.tpm_result);
+     if (tpm_result != 0) {
+-        error_report("tpm-emulator: Setting the stateblob (type %d) failed "
+-                     "with a TPM error 0x%x %s", type, tpm_result,
+-                     tpm_emulator_strerror(tpm_result));
++        error_setg(errp, "tpm-emulator: Setting the stateblob (type %d) "
++                   "failed with a TPM error 0x%x %s", type, tpm_result,
++                   tpm_emulator_strerror(tpm_result));
+         return -1;
+     }
  
-@@ -2102,7 +2103,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-     qemu_file_set_blocking(f, true);
+@@ -880,7 +881,7 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
+  *
+  * Returns a negative errno code in case of error.
+  */
+-static int tpm_emulator_set_state_blobs(TPMBackend *tb)
++static int tpm_emulator_set_state_blobs(TPMBackend *tb, Error **errp)
+ {
+     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+     TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
+@@ -894,13 +895,13 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb)
  
-     /* TODO: sanity check that only postcopiable data will be loaded here */
--    load_res = qemu_loadvm_state_main(f, mis, NULL);
-+    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+     if (tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_PERMANENT,
+                                     &state_blobs->permanent,
+-                                    state_blobs->permanent_flags) < 0 ||
++                                    state_blobs->permanent_flags, errp) < 0 ||
+         tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_VOLATILE,
+                                     &state_blobs->volatil,
+-                                    state_blobs->volatil_flags) < 0 ||
++                                    state_blobs->volatil_flags, errp) < 0 ||
+         tpm_emulator_set_state_blob(tpm_emu, PTM_BLOB_TYPE_SAVESTATE,
+                                     &state_blobs->savestate,
+-                                    state_blobs->savestate_flags) < 0) {
++                                    state_blobs->savestate_flags, errp) < 0) {
+         return -EIO;
+     }
  
-     /*
-      * This is tricky, but, mis->from_src_file can change after it
-@@ -2128,7 +2129,12 @@ static void *postcopy_ram_listen_thread(void *opaque)
-                          __func__, load_res);
-             load_res = 0; /* prevent further exit() */
-         } else {
--            error_report("%s: loadvm failed: %d", __func__, load_res);
-+            if (local_err != NULL) {
-+                error_prepend(&local_err, "%s: loadvm failed: %d", __func__,
-+                              load_res);
-+                migrate_set_error(migr, local_err);
-+                error_report_err(local_err);
-+            }
-             migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-                                            MIGRATION_STATUS_FAILED);
-         }
+@@ -948,12 +949,12 @@ static void tpm_emulator_vm_state_change(void *opaque, bool running,
+  *
+  * Returns negative errno codes in case of error.
+  */
+-static int tpm_emulator_post_load(void *opaque, int version_id)
++static int tpm_emulator_post_load(void *opaque, int version_id, Error **errp)
+ {
+     TPMBackend *tb = opaque;
+     int ret;
+ 
+-    ret = tpm_emulator_set_state_blobs(tb);
++    ret = tpm_emulator_set_state_blobs(tb, errp);
+     if (ret < 0) {
+         return ret;
+     }
+@@ -969,7 +970,7 @@ static const VMStateDescription vmstate_tpm_emulator = {
+     .name = "tpm-emulator",
+     .version_id = 0,
+     .pre_save = tpm_emulator_pre_save,
+-    .post_load = tpm_emulator_post_load,
++    .post_load_errp = tpm_emulator_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(state_blobs.permanent_flags, TPMEmulator),
+         VMSTATE_UINT32(state_blobs.permanent.size, TPMEmulator),
 
 -- 
 2.50.0
