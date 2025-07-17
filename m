@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A15C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B3FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:59:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucMGR-0007RJ-CM; Thu, 17 Jul 2025 06:54:59 -0400
+	id 1ucMGW-0007X2-DM; Thu, 17 Jul 2025 06:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucMGP-0007MP-6Y; Thu, 17 Jul 2025 06:54:57 -0400
+ id 1ucMGS-0007To-Cw; Thu, 17 Jul 2025 06:55:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucMGN-00039c-9P; Thu, 17 Jul 2025 06:54:56 -0400
+ id 1ucMGQ-0003Ab-Kr; Thu, 17 Jul 2025 06:55:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 183F2137E20;
+ by isrv.corpit.ru (Postfix) with ESMTP id 364BD137E22;
  Thu, 17 Jul 2025 13:54:35 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 134B924926A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3172D24926C;
  Thu, 17 Jul 2025 13:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 20/26] amd_iommu: Update bitmasks representing DTE
- reserved fields
-Date: Thu, 17 Jul 2025 13:54:34 +0300
-Message-ID: <20250717105442.735202-5-mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 22/26] amd_iommu: Fix mask to retrieve Interrupt Table
+ Root Pointer from DTE
+Date: Thu, 17 Jul 2025 13:54:36 +0300
+Message-ID: <20250717105442.735202-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250717135416@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250717135416@cover.tls.msk.ru>
@@ -63,71 +63,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The DTE validation method verifies that all bits in reserved DTE fields are
-unset. Update them according to the latest definition available in AMD I/O
-Virtualization Technology (IOMMU) Specification - Section 2.2.2.1 Device
-Table Entry Format. Remove the magic numbers and use a macro helper to
-generate bitmasks covering the specified ranges for better legibility.
-
-Note that some reserved fields specify that events are generated when they
-contain non-zero bits, or checks are skipped under certain configurations.
-This change only updates the reserved masks, checks for special conditions
-are not yet implemented.
+Fix an off-by-one error in the definition of AMDVI_IR_PHYS_ADDR_MASK. The
+current definition masks off the most significant bit of the Interrupt Table
+Root ptr i.e. it only generates a mask with bits [50:6] set. See the AMD I/O
+Virtualization Technology (IOMMU) Specification for the Interrupt Table
+Root Pointer[51:6] field in the Device Table Entry format.
 
 Cc: qemu-stable@nongnu.org
+Fixes: b44159fe0078 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-4-alejandro.j.jimenez@oracle.com>
+Message-Id: <20250617150427.20585-6-alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit ff3dcb3bf652912466dcc1cd10d3267f185c212e)
+(cherry picked from commit 123cf4bdd378f746dfa2f5415ba084148dded3e3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 1d1f734eca..f2da6348f6 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -823,9 +823,10 @@ static inline uint64_t amdvi_get_perms(uint64_t entry)
- static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
-                                uint64_t *dte)
- {
--    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
--        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
--        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
-+    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
-+        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
-+        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
-+        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
-         amdvi_log_illegaldevtab_error(s, devid,
-                                       s->devtab +
-                                       devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
 diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index a1913cd59d..ba9508fe5d 100644
+index bc3a6eaa6d..15ed663001 100644
 --- a/hw/i386/amd_iommu.h
 +++ b/hw/i386/amd_iommu.h
-@@ -25,6 +25,8 @@
- #include "hw/i386/x86-iommu.h"
- #include "qom/object.h"
+@@ -229,7 +229,7 @@
+ #define AMDVI_IR_INTCTL_PASS            1
+ #define AMDVI_IR_INTCTL_REMAP           2
  
-+#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
-+
- /* Capability registers */
- #define AMDVI_CAPAB_BAR_LOW           0x04
- #define AMDVI_CAPAB_BAR_HIGH          0x08
-@@ -161,9 +163,10 @@
- #define AMDVI_FEATURE_PC                  (1ULL << 9) /* Perf counters       */
+-#define AMDVI_IR_PHYS_ADDR_MASK         (((1ULL << 45) - 1) << 6)
++#define AMDVI_IR_PHYS_ADDR_MASK         GENMASK64(51, 6)
  
- /* reserved DTE bits */
--#define AMDVI_DTE_LOWER_QUAD_RESERVED  0x80300000000000fc
--#define AMDVI_DTE_MIDDLE_QUAD_RESERVED 0x0000000000000100
--#define AMDVI_DTE_UPPER_QUAD_RESERVED  0x08f0000000000000
-+#define AMDVI_DTE_QUAD0_RESERVED        (GENMASK64(6, 2) | GENMASK64(63, 63))
-+#define AMDVI_DTE_QUAD1_RESERVED        0
-+#define AMDVI_DTE_QUAD2_RESERVED        GENMASK64(53, 52)
-+#define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
- 
- /* AMDVI paging mode */
- #define AMDVI_GATS_MODE                 (2ULL <<  12)
+ /* MSI data 10:0 bits (section 2.2.5.1 Fig 14) */
+ #define AMDVI_IRTE_OFFSET               0x7ff
 -- 
 2.47.2
 
