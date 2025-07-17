@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F808C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4756DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucVZo-0000k9-D2; Thu, 17 Jul 2025 16:51:36 -0400
+	id 1ucVZq-0000oY-4W; Thu, 17 Jul 2025 16:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW8-0008WI-LU
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:41 -0400
+ id 1ucTWA-00006u-Im
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:42 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW4-00008i-Mf
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:40 -0400
+ id 1ucTW5-000098-7Z
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:42 -0400
 Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0i2r018938;
- Thu, 17 Jul 2025 18:39:33 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0kGn019010;
+ Thu, 17 Jul 2025 18:39:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=Yv7L4OwqL9MTFjfSdoAcXNtPgLe1md+/tBkeCxeUoZc=; b=
- WphManCyyzgWaOFQ8kjQ2iFhH7bAFBWQEgca/00ePTgrRau6JYpNevDJeFA8/rSZ
- R/0KyYUaA0ymOxiyJ0hGYwF4jV5p763JmRCddhwT7COVVITM07AFD7HbufT+Agur
- fYOm3fn8FdWipAvkpSsOBuKevxkgCyQRG9lWpDEv8EhmXEl7hrAmbHiH3nAtZzgq
- vWW0LBRoBnBKbn1chaMkJDSB485QbdRazWdl07rxHIQ3vQDDpar4ibkMNtSlPm1W
- qvJX3zORGOpRpiG3I+c2wWxYHQUkkXoMEFbK6E73xwrB5vt//j7b2yJfuxrwJniX
- ZfHU2iSz6s5gENkSYnjpnw==
+ corp-2025-04-25; bh=eSNzcugpJDUELIC5DRj7TTBvV/Xir0IRT2uoMB+BwnI=; b=
+ RaEN3CgBQWMDib62Av8EbVIJl++i5vlhMJc7trRJ8F4fWLyxLSi3jyjmHB+J2ta3
+ VK20DYQavWoq1dd4hgy0TDsRdTk47ZEBtm0SW1/5sseLhAbCLd1fqbFIWaNhv1mF
+ jtZZoxNGPzzf1cvRCqc+4aWarRTRmh3v+NfxDTsAIKkPL6ZDZ/puiQsJzwlD+8vP
+ VpYf1hYA9Zky5zIhk5XOFcVE8bhN2EvXMsOlOHdnFAVBT3Mn+SueYQ9FOAciglOC
+ J5p+eYorcNxUe7r04B7LYRzPFTq4kb+9CQ11AX2Wgf6Qc373dfyr1n5GiUTPYmpr
+ 7963Xtn2lVa3F45wIiLKzg==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx83ybb-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx83ybd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Jul 2025 18:39:32 +0000 (GMT)
+ Thu, 17 Jul 2025 18:39:34 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56HHgBow023735; Thu, 17 Jul 2025 18:39:31 GMT
+ with ESMTP id 56HHZgwK023985; Thu, 17 Jul 2025 18:39:33 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue5d2tac-1
+ 47ue5d2tay-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Jul 2025 18:39:31 +0000
+ Thu, 17 Jul 2025 18:39:33 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoip007425;
- Thu, 17 Jul 2025 18:39:31 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoit007425;
+ Thu, 17 Jul 2025 18:39:32 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue5d2t8q-5; Thu, 17 Jul 2025 18:39:31 +0000
+ ESMTP id 47ue5d2t8q-7; Thu, 17 Jul 2025 18:39:32 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V2 4/8] cpr: delete all fds
-Date: Thu, 17 Jul 2025 11:39:24 -0700
-Message-Id: <1752777568-236368-5-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V2 6/8] tap: common return label
+Date: Thu, 17 Jul 2025 11:39:26 -0700
+Message-Id: <1752777568-236368-7-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
 References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
@@ -73,18 +73,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507170165
-X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=68794365 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=68794366 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=n655hgSsutws6UkWyQYA:9
-X-Proofpoint-ORIG-GUID: t6huPCgt8nWRKANxwO7vM1ybTmNrAKU8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX1LlgxG23QrDr
- B2d09INMNXAWJVBfQAjc7cwsBg8q546pX0Hu5mtF2ECXmsF4zSGNoyfa4MTx2+vh47pRy1DX+vF
- mLQ/C6maaIS2Uu1ImbuMatyHCVjrZNOOAsttk1sBdW4Ptif+W0myQDQJg0UrQLN9zzj2qO9R44Z
- A5IgfBC8QBEuJIhbxMMM/U2T1SnsmXcB0ZjL8Gxi9s5XRv8wvcYzrGlTUrE3V+bJkHLBKLDVVWl
- cJot4JUw1RBO0wtX5lGxNdoqkL5WXCKvXrsUW6NwPYzYH4lm86Z1aU5RJybWa2FMbRtCWycnfCE
- rqTSJlIZW1EDyjrJWn7VqxgoxE+9HUjcjVpe7OanDIKdh/Hb0qSFIyxJFk3QYsxxKDz49r/yYeQ
- JbA3iVr5p9aF7jJo3aNyTIWdVuG+PI/4O2ydmakVbf0sDhDEu4VT/kImTx6Nn/LhhMTSTKWL
-X-Proofpoint-GUID: t6huPCgt8nWRKANxwO7vM1ybTmNrAKU8
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=zPeY32rCmRbJBjnbAY4A:9
+X-Proofpoint-ORIG-GUID: Zgn7E2gluDKCN_Rwgh-UxEcF0aTfhg5L
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX3RldsngSgD9N
+ 0JLhOJxXVI/PKGMDnjpvtDPswtyhSa7abvBkZ9rREN9paTgqheXuXQj6Gxb7hI2XsUVift4VxNl
+ Xqw3D4q7oeqyBtAfUHefMKMqLJfczOJCElaBex5tBZhQtDa56Qli/DdH3jb9Zm33Ae1+1p3nfIa
+ JA67EQiYW/9aZ/92XjKVcHfwtHZMiyE/Jw7suvKT8fVYpdC79sI+Scg24jY4aCd/jZhD4jRpDYO
+ vY/FBFVKVZEkeq89mvLtJgvgg6rWNfmW4x12igOwzjEnxMIxhd5fX9zO79+q4SYSSDHkTo/arB+
+ Q4vneTM/xuCioDOPgT1MJ9DnccxU+yXdtzE3y2vf9H7PG+ugaaaQW1sYWKJkEoDOpZa4u+QHE8y
+ lOIejllFErdsD1kW4CPv/X3oPAZDzy/vSx9YUghdwBTQQm/vdw1oN6pl2pdlzUXAQanzulTG
+X-Proofpoint-GUID: Zgn7E2gluDKCN_Rwgh-UxEcF0aTfhg5L
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -110,51 +110,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the cpr_delete_fd_all function to delete all fds associated with a
-device.
+Modify net_init_tap so every return branches to a common label, for
+common cleanup in a subsequent patch.  No functional change.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- include/migration/cpr.h |  1 +
- migration/cpr.c         | 13 +++++++++++++
- 2 files changed, 14 insertions(+)
+ net/tap.c | 54 ++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 3fc19a7..0fa57dd 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -29,6 +29,7 @@ extern CprState cpr_state;
+diff --git a/net/tap.c b/net/tap.c
+index 35552c4..1b239fd 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -780,7 +780,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+      * For -netdev, peer is always NULL. */
+     if (peer && (tap->has_queues || tap->fds || tap->vhostfds)) {
+         error_setg(errp, "Multiqueue tap cannot be used with hubs");
+-        return -1;
++        ret = -1;
++        goto out;
+     }
  
- void cpr_save_fd(const char *name, int id, int fd);
- void cpr_delete_fd(const char *name, int id);
-+void cpr_delete_fd_all(const char *name);
- int cpr_find_fd(const char *name, int id);
- void cpr_resave_fd(const char *name, int id, int fd);
- int cpr_open_fd(const char *path, int flags, const char *name, int id,
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 42ad0b0..e97be9d 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -83,6 +83,19 @@ void cpr_delete_fd(const char *name, int id)
-     trace_cpr_delete_fd(name, id);
+     if (tap->fd) {
+@@ -790,25 +791,29 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+                        "helper=, queues=, fds=, and vhostfds= "
+                        "are invalid with fd=");
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         fd = monitor_fd_param(monitor_cur(), tap->fd, errp);
+         if (fd == -1) {
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         if (!g_unix_set_fd_nonblocking(fd, true, NULL)) {
+             error_setg_errno(errp, errno, "%s: Can't use file descriptor %d",
+                              name, fd);
+             close(fd);
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
+         if (vnet_hdr < 0) {
+             close(fd);
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         net_init_tap_one(tap, peer, "tap", name, NULL,
+@@ -817,7 +822,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         if (err) {
+             error_propagate(errp, err);
+             close(fd);
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+     } else if (tap->fds) {
+         char **fds;
+@@ -830,7 +836,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+                        "helper=, queues=, and vhostfd= "
+                        "are invalid with fds=");
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         fds = g_new0(char *, MAX_TAP_QUEUES);
+@@ -894,30 +901,35 @@ free_fail:
+         }
+         g_free(fds);
+         g_free(vhost_fds);
+-        return ret;
++        goto out;
++
+     } else if (tap->helper) {
+         if (tap->ifname || tap->script || tap->downscript ||
+             tap->has_vnet_hdr || tap->has_queues || tap->vhostfds) {
+             error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+                        "queues=, and vhostfds= are invalid with helper=");
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         fd = net_bridge_run_helper(tap->helper,
+                                    tap->br ?: DEFAULT_BRIDGE_INTERFACE,
+                                    errp);
+         if (fd == -1) {
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         if (!g_unix_set_fd_nonblocking(fd, true, NULL)) {
+             error_setg_errno(errp, errno, "Failed to set FD nonblocking");
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+         vnet_hdr = tap_probe_vnet_hdr(fd, errp);
+         if (vnet_hdr < 0) {
+             close(fd);
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         net_init_tap_one(tap, peer, "bridge", name, ifname,
+@@ -926,14 +938,16 @@ free_fail:
+         if (err) {
+             error_propagate(errp, err);
+             close(fd);
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+     } else {
+         g_autofree char *default_script = NULL;
+         g_autofree char *default_downscript = NULL;
+         if (tap->vhostfds) {
+             error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
+-            return -1;
++            ret = -1;
++            goto out;
+         }
+ 
+         if (!script) {
+@@ -954,14 +968,16 @@ free_fail:
+             fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? "no" : script,
+                               ifname, sizeof ifname, queues > 1, errp);
+             if (fd == -1) {
+-                return -1;
++                ret = -1;
++                goto out;
+             }
+ 
+             if (queues > 1 && i == 0 && !tap->ifname) {
+                 if (tap_fd_get_ifname(fd, ifname)) {
+                     error_setg(errp, "Fail to get ifname");
+                     close(fd);
+-                    return -1;
++                    ret = -1;
++                    goto out;
+                 }
+             }
+ 
+@@ -972,12 +988,14 @@ free_fail:
+             if (err) {
+                 error_propagate(errp, err);
+                 close(fd);
+-                return -1;
++                ret = -1;
++                goto out;
+             }
+         }
+     }
+ 
+-    return 0;
++out:
++    return ret;
  }
  
-+void cpr_delete_fd_all(const char *name)
-+{
-+    CprFd *elem, *next_elem;
-+
-+    QLIST_FOREACH_SAFE(elem, &cpr_state.fds, next, next_elem) {
-+        if (!strcmp(elem->name, name)) {
-+            QLIST_REMOVE(elem, next);
-+            g_free(elem->name);
-+            g_free(elem);
-+        }
-+    }
-+}
-+
- int cpr_find_fd(const char *name, int id)
- {
-     CprFd *elem = find_fd(&cpr_state.fds, name, id);
+ VHostNetState *tap_get_vhost_net(NetClientState *nc)
 -- 
 1.8.3.1
 
