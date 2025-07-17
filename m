@@ -4,60 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E589CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FBAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucJqy-0004Ga-TW; Thu, 17 Jul 2025 04:20:33 -0400
+	id 1ucJrr-00056n-Hi; Thu, 17 Jul 2025 04:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ucJqq-0004BJ-SW
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:20:25 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ id 1ucJrX-0004qm-Sb
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:21:09 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ucJqn-0000qG-He
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:20:24 -0400
+ id 1ucJrW-0000vF-5f
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:21:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752740422; x=1784276422;
+ t=1752740467; x=1784276467;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=fL92tWr/g2fBKqdtf04Rw6jIuAOiOhSgysYj+aMOtwc=;
- b=XF1yA9z8jdXDjqDXWBKcio1H7erHVPVkahPd1EgPQ3fOWI90xjbgLSVS
- +YySeB8syVMzPhid9oEGS0TynVEp0hp0yqnBwZrEqguDli+Y4aVdShv5Z
- u6NAwIQfH1YSfKeHXXZlYzBdOZg9GhVVj/PxYA8Lcw2h9KKD0i2uNbZxV
- oM7J8F8mYHiPIBHqy1IfFWuZHBYnxmM1yYj8Khnq5pl9X/MPUg6AMh3WD
- tbXY3KlM5P9gknU1+bQ6/5JkPeXNwnpdrpq9BSJ6P6rcQz7RCGA8u7T50
- +bbtNNzdIKaeTMqXGnLqUW7xyk7JRD7evqW4UXJ1RmQi5rBFuI0WrjVd8 g==;
-X-CSE-ConnectionGUID: iEgVQZbWQkG1x4+2OIiv4Q==
-X-CSE-MsgGUID: gHerSWU9QeeEg6GIGKeDmg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54880831"
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="54880831"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2025 01:20:16 -0700
-X-CSE-ConnectionGUID: anytn1/HQbOEInGkNK8apw==
-X-CSE-MsgGUID: tKzCMJRHS3Sf2CE4gclaiA==
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=8hjF//dfqCnZv9Z0UKjSHCR08IapYHDyB/EVH83yfRg=;
+ b=Jei0jY5q7nBwgGv/xH1FUR1d+K8S9k3A6dGX/kHcMsoyggKJShByD87k
+ /YiJWctqCYLYj4+DVxMEZM625ZPnDYDybgNBnvTjjVjXlSfAP6Z6XUzUe
+ VINaviioJ6r4Z8aaNAqoqeH5F6pjqUdGAqzfNikcDuM2fquKBq6RWsXm5
+ J37tPAHY8E5px8RaLXjweFnxDRcaIz+rOrmiIepadHUn5ZK0N8wepGYHn
+ ldMgu9Br1TF1dVm30w2sYlH1awBMSNYn+kTBcVWm3jAVFK/VeIlYb7nx2
+ JLsFjpcrcMOnT/XZatcdRde1aQ7xXS7RPeLfiXEp6Z42azM9JEy7QGE7q Q==;
+X-CSE-ConnectionGUID: fK/onOxdSQiuLM2N0xQHGw==
+X-CSE-MsgGUID: Qt5UnOqBR+avEDgIg+vJaw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54222309"
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="54222309"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jul 2025 01:21:04 -0700
+X-CSE-ConnectionGUID: 9iXgAv3RRNmmilucGPKzsA==
+X-CSE-MsgGUID: xFkqR0MeTPuZNPhypOzwiA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="158087601"
+X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="157803315"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 17 Jul 2025 01:20:14 -0700
-Date: Thu, 17 Jul 2025 16:41:46 +0800
+ by orviesa007.jf.intel.com with ESMTP; 17 Jul 2025 01:21:02 -0700
+Date: Thu, 17 Jul 2025 16:42:32 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/cpu: Cleanup host_cpu_max_instance_init()
-Message-ID: <aHi3ShRbe+uhTLBL@intel.com>
-References: <20250716063117.602050-1-xiaoyao.li@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH-for-10.1] system/runstate: Document
+ qemu_add_vm_change_state_handler_prio* in hdr
+Message-ID: <aHi3eFLDgjvAnabV@intel.com>
+References: <20250715171920.89670-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250716063117.602050-1-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250715171920.89670-1-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -82,23 +88,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 02:31:16PM +0800, Xiaoyao Li wrote:
-> Date: Wed, 16 Jul 2025 14:31:16 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH] i386/cpu: Cleanup host_cpu_max_instance_init()
-> X-Mailer: git-send-email 2.43.0
+On Tue, Jul 15, 2025 at 07:19:20PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue, 15 Jul 2025 19:19:20 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH-for-10.1] system/runstate: Document
+>  qemu_add_vm_change_state_handler_prio* in hdr
+> X-Mailer: git-send-email 2.49.0
 > 
-> The implementation of host_cpu_max_instance_init() was merged into
-> host_cpu_instance_init() by commit 29f1ba338baf ("target/i386: merge
-> host_cpu_instance_init() and host_cpu_max_instance_init()"), while the
-> declaration of it remains in host-cpu.h.
+> Generally APIs to the rest of QEMU should be documented in the headers.
+> Comments on individual functions or internal details are fine to live
+> in the C files. Make qemu_add_vm_change_state_handler_prio[_full]()
+> docstrings consistent by moving them from source to header.
 > 
-> Clean it up.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/i386/host-cpu.h | 1 -
->  1 file changed, 1 deletion(-)
+> Based-on: <20250703173248.44995-4-philmd@linaro.org>
+> ---
+>  include/system/runstate.h | 30 ++++++++++++++++++++++++++++++
+>  system/runstate.c         | 30 ------------------------------
+>  2 files changed, 30 insertions(+), 30 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
