@@ -4,59 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B6F4C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 02:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BAB2C83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 02:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucECW-0003fd-5V; Wed, 16 Jul 2025 22:18:25 -0400
+	id 1ucEcL-0004gw-CI; Wed, 16 Jul 2025 22:45:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ucECO-0003Yl-W1
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 22:18:20 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ id 1ucEcG-0004XD-BZ; Wed, 16 Jul 2025 22:45:00 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ucECM-0004lK-2t
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 22:18:16 -0400
+ id 1ucEcE-0000px-NJ; Wed, 16 Jul 2025 22:45:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752718694; x=1784254694;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=uJR2/wouJJ8RqqxW6tAsCafKZhx6045fKFnShVBIPW4=;
- b=ZBd6IG14hzVZR/zZQmeUsJZoLkx+i9q3rHy/VgFDuwT4CniKgXadsgpY
- iiIfvKP/mh4mlQJ1nLQtcJl2lO1SxkJVmhUt9Ldd++r2F4n7h7W1XmMnn
- wmhUJhob39ebUPL1ovqacc9UypMje/3kBIjYLT+O9X6QzG4o0I8aMvj/m
- VMCZfO401tUS8djcEPOBAAUoxoRnoPkIMWjcGcot65Tb3Z4fYXbBlh1zD
- g/cqdms1XX2XW/SeKEjgGuzJLVbQFf8GV5SWkhAo6jdENhx1WI1EZoMze
- mysotDlktR1l5qdieyYfb/AHGQPtImZyiEeTGjvDB5RcF1uvtdBUMkmpo Q==;
-X-CSE-ConnectionGUID: Hk56oc0mS2+j5N1ytbNPHg==
-X-CSE-MsgGUID: bL7ssqAqTPmAUnzZ8df+ZQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="80428163"
-X-IronPort-AV: E=Sophos;i="6.16,317,1744095600"; d="scan'208";a="80428163"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jul 2025 19:18:11 -0700
-X-CSE-ConnectionGUID: JFJSHF74TWqtd2BlJCN7kg==
-X-CSE-MsgGUID: Cnb1fhfhRG2caE8WPZWWBg==
+ t=1752720298; x=1784256298;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=JG+43YE4q0pQg1zZzquBVVhadgET8E1jT/8t/kAfX2Y=;
+ b=VHsVTrbYO0yABpS2akSIuutPjtq0z3eL2i7aRlU99INbwwMoh/EZcapJ
+ 9RQpOe1YYwKGQQmCOLQjJOyUZ5VmogDGPd25e/5W1DpAOCyB0NeJ812un
+ PjOMEFFsayXfkfYc0EWViW8yVLeV8hKSR2eEGa2JOeRdLgL2g5O/OxjzZ
+ BekeiWPE8sZpbQ7FgA7DAvqvQCqnSqFZc3tJbUk8OVoDmNKfHXxVNeli2
+ In3HyHWvOBkvm7q03rmusQuYLOubIlk8XpHlLFvFCg5PrIIdRBTFofrAN
+ JjRUQ/2xXXl4rOWt3ItO4sn+AFyFpldlVEmbCeSN0Oh0Y1lJoyeYIbhpP Q==;
+X-CSE-ConnectionGUID: E353v+uVSA+CMcO3XmSx6w==
+X-CSE-MsgGUID: 8w/vxxyjT5eBVyCuqkaFXQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54954685"
+X-IronPort-AV: E=Sophos;i="6.16,317,1744095600"; d="scan'208";a="54954685"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jul 2025 19:44:56 -0700
+X-CSE-ConnectionGUID: VEKx6418RLmIcjSZiQhEsA==
+X-CSE-MsgGUID: d0MZqC+7TLKB6cAInpcm1A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,317,1744095600"; d="scan'208";a="157061967"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 16 Jul 2025 19:18:09 -0700
+X-IronPort-AV: E=Sophos;i="6.16,317,1744095600"; d="scan'208";a="158020076"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 16 Jul 2025 19:44:53 -0700
+Date: Thu, 17 Jul 2025 11:06:24 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH for v10.1] i386/cpu: Move x86_ext_save_areas[] initialization
- to .instance_init
-Date: Thu, 17 Jul 2025 10:39:33 +0800
-Message-Id: <20250717023933.2502109-1-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
+ Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
+ qemu-devel@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PATCH v2 4/7] i386/cpu: Fix number of addressable IDs field for
+ CPUID.01H.EBX[23:16]
+Message-ID: <aHhosJ/VWEyjwQDc@intel.com>
+References: <20250714080859.1960104-1-zhao1.liu@intel.com>
+ <20250714080859.1960104-5-zhao1.liu@intel.com>
+ <33497cb5-037b-4656-bd8d-6310c7c03e65@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <33497cb5-037b-4656-bd8d-6310c7c03e65@tls.msk.ru>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -81,76 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In x86_cpu_post_initfn(), the initialization of x86_ext_save_areas[]
-marks the unsupported xsave areas based on Host support.
+> Hi!
+> 
+> Previous incarnation of this patch were Cc'd qemu-stable@, as it were
+> supposed to be picked up for the stable qemu series.  However, this
+> incarnation is not Cc'd to stable, and, most importantly, it relies
+> on a feature which was introduced after all released qemu versions.
+> Namely, vendor_cpuid_only_v2 is past v10.0.0, which is commit
+> 216d9bb6d7716 "i386/cpu: Add x-vendor-cpuid-only-v2 option for
+> compatibility".
+> 
+> Should I omit this change for stable-10.0 series, or should it be
+> modified to work in 10.0?
 
-This step must be done before accel_cpu_instance_init(), otherwise,
-KVM's assertion on host xsave support would fail:
+Hi Michael, considerring current fix is covered by compat option,
+it's not fit to be backported to the previous version.
 
-qemu-system-x86_64: ../target/i386/kvm/kvm-cpu.c:149:
-kvm_cpu_xsave_init: Assertion `esa->size == eax' failed.
+This issue has existed for a very long time, and the feedback received
+on this is currently one case and it based on a specific topology
+configuration, so the impact is limited. Therefore, in this patch
+version, I fixed it with the newly added compat option, which also
+avoids the controversy about the impact of migration.
 
-(on AMD EPYC 7302 16-Core Processor)
+So I think you could omit this change for stable-10.0 series, if it's
+also okay with Paolo.
 
-Move x86_ext_save_areas[] initialization to .instance_init and place it
-before accel_cpu_instance_init().
-
-Fixes: commit 5f158abef44c ("target/i386: move accel_cpu_instance_init to .instance_init")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index da7d8dca633e..251d5760a0bd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9619,6 +9619,16 @@ static void x86_cpu_register_feature_bit_props(X86CPUClass *xcc,
- }
- 
- static void x86_cpu_post_initfn(Object *obj)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (current_machine && current_machine->cgs) {
-+        x86_confidential_guest_cpu_instance_init(
-+            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
-+    }
-+#endif
-+}
-+
-+static void x86_cpu_init_xsave(void)
- {
-     static bool first = true;
-     uint64_t supported_xcr0;
-@@ -9639,13 +9649,6 @@ static void x86_cpu_post_initfn(Object *obj)
-             }
-         }
-     }
--
--#ifndef CONFIG_USER_ONLY
--    if (current_machine && current_machine->cgs) {
--        x86_confidential_guest_cpu_instance_init(
--            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
--    }
--#endif
- }
- 
- static void x86_cpu_init_default_topo(X86CPU *cpu)
-@@ -9715,6 +9718,11 @@ static void x86_cpu_initfn(Object *obj)
-         x86_cpu_load_model(cpu, xcc->model);
-     }
- 
-+    /*
-+     * accel's cpu_instance_init may have the xsave check,
-+     * so x86_ext_save_areas[] must be initialized before this.
-+     */
-+    x86_cpu_init_xsave();
-     accel_cpu_instance_init(CPU(obj));
- }
- 
--- 
-2.34.1
+Thanks,
+Zhao
 
 
