@@ -4,64 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE2BC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 11:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE0AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 11:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucNCm-0004un-Jq; Thu, 17 Jul 2025 07:55:17 -0400
+	id 1ucNG1-0001Au-Fu; Thu, 17 Jul 2025 07:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucNAX-0003cQ-1q
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 07:52:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucNFR-0000f4-FN
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 07:58:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucNAT-0001hX-Fb
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 07:52:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucNFO-00023m-IR
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 07:58:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752753171;
+ s=mimecast20190719; t=1752753476;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AuvT+ecQDMtv9NOHi5WzTVm8kJdJm9sr13IkjBKFsRM=;
- b=Si7/8gvd6PHsNHX82Ia1oacjcilhk7NbhgLuv6rxlpmyCZoexClWLR+GSS0h1jURaMNjTP
- duWAGUzMwBZqz2vlehIVwTqHiigj+mbVuR3sWCRoezyzovBLiKKboPE16qL76H37Kh0MCW
- J+3mZwKI0SAlchxForAcjcrC1Ee2G+E=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cQ8BIkUV/SfuFZj3sO7/WJjIaXTUBopWCPm9Eyq/UHA=;
+ b=fYqXfafkpJSd74ld9GX/De9f0yiWbiuU9rXiI4BeFf6/CQjnjC3rxTzrzJRgJby+F7sZHZ
+ 90grNG37btfT8urm6+6rIXvJ99nEj8zitsdji0Lf9FobxIhUxoydv9m0rBctWn1/IxjzwI
+ jelEt+k0uvnGIgwLUTLUPdwSJCZYtTI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-CiLRY-PIO-CHv7AegCjo7w-1; Thu,
- 17 Jul 2025 07:52:50 -0400
-X-MC-Unique: CiLRY-PIO-CHv7AegCjo7w-1
-X-Mimecast-MFC-AGG-ID: CiLRY-PIO-CHv7AegCjo7w_1752753169
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-vkpDbzl7OBiPE726HReV4g-1; Thu,
+ 17 Jul 2025 07:57:54 -0400
+X-MC-Unique: vkpDbzl7OBiPE726HReV4g-1
+X-Mimecast-MFC-AGG-ID: vkpDbzl7OBiPE726HReV4g_1752753474
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36EC818004A7; Thu, 17 Jul 2025 11:52:49 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AFD61800281
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 11:57:54 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C50A730001B1; Thu, 17 Jul 2025 11:52:48 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E6C221956089
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 11:57:53 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 33CE021E6924; Thu, 17 Jul 2025 13:52:46 +0200 (CEST)
+ id 5A0B721E6A27; Thu, 17 Jul 2025 13:57:51 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
- jsnow@redhat.com, berrange@redhat.com
-Subject: [PATCH v2 1/4] qga: Fix guest-network-get-route return value
- documentation
-Date: Thu, 17 Jul 2025 13:52:43 +0200
-Message-ID: <20250717115246.3830007-2-armbru@redhat.com>
-In-Reply-To: <20250717115246.3830007-1-armbru@redhat.com>
-References: <20250717115246.3830007-1-armbru@redhat.com>
+Cc: eblake@redhat.com,
+	jsnow@redhat.com
+Subject: [PATCH] qapi: Add more cross-references
+Date: Thu, 17 Jul 2025 13:57:51 +0200
+Message-ID: <20250717115751.3832597-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,49 +83,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tagged sections are only recognized at the beginning of a paragraph.
-guest-network-get-route's Returns: isn't, and therefore gets rendered
-as ordinary text within its paragraph:
+We recently (merge commit 504632dcc631) enclosed command and type
+names in `backquotes`, so they become links in generated HTML.  Take
+care of a few we missed.
 
-    Retrieve information about route of network. Returns: List of route
-    info of guest.
-
-Since there is no (recognized) Returns: section, the doc generator
-adds
-
-    Return:
-       [GuestNetworkRoute]
-
-Note: only since recent commit 636c96cd77d (qapi: Fix undocumented
-return values by generating something).
-
-Insert the required blank line so that Returns: is recognized.
-Result:
-
-    Retrieve information about route of network.
-
-    Return:
-       [GuestNetworkRoute] -- List of route info of guest.
-
-Fixes: commit 8e326d36dd16 (qga/linux: Add new api 'guest-network-get-route')
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/qapi-schema.json | 1 +
- 1 file changed, 1 insertion(+)
+ qapi/dump.json      | 2 +-
+ qapi/machine.json   | 2 +-
+ qapi/migration.json | 4 ++--
+ qapi/misc-i386.json | 2 +-
+ qapi/run-state.json | 2 +-
+ qapi/sockets.json   | 2 +-
+ 6 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 6d770f7b8e..a569a14b55 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -1966,6 +1966,7 @@
- # @guest-network-get-route:
+diff --git a/qapi/dump.json b/qapi/dump.json
+index 32c8c1f06e..726b520870 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -79,7 +79,7 @@
  #
- # Retrieve information about route of network.
-+#
- # Returns: List of route info of guest.
+ # @detach: if true, QMP will return immediately rather than waiting
+ #     for the dump to finish.  The user can track progress using
+-#     "query-dump".  (since 2.6).
++#     `query-dump`.  (since 2.6).
  #
- # Since: 9.1
+ # @begin: if specified, the starting physical address.
+ #
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 6f59f70ca6..038eab281c 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -2087,7 +2087,7 @@
+ #
+ # @deprecated-props: an optional list of properties that are flagged as
+ #     deprecated by the CPU vendor.  The list depends on the
+-#     CpuModelExpansionType: "static" properties are a subset of the
++#     `CpuModelExpansionType`: "static" properties are a subset of the
+ #     enabled-properties for the expanded model; "full" properties are
+ #     a set of properties that are deprecated across all models for
+ #     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
+diff --git a/qapi/migration.json b/qapi/migration.json
+index e08a99bb82..2387c21e9c 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -641,7 +641,7 @@
+ #
+ #     This mode supports VFIO devices provided the user first puts the
+ #     guest in the suspended runstate, such as by issuing
+-#     guest-suspend-ram to the QEMU guest agent.
++#     `guest-suspend-ram` to the QEMU guest agent.
+ #
+ #     Best performance is achieved when the memory backend is shared
+ #     and the @x-ignore-shared migration capability is set, but this
+@@ -1704,7 +1704,7 @@
+ #
+ # .. admonition:: Notes
+ #
+-#     1. The 'query-migrate' command should be used to check
++#     1. The `query-migrate` command should be used to check
+ #        migration's progress and final result (this information is
+ #        provided by the 'status' member).
+ #
+diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+index c8c91a241c..d1ce8caf25 100644
+--- a/qapi/misc-i386.json
++++ b/qapi/misc-i386.json
+@@ -8,7 +8,7 @@
+ #
+ # Reset the RTC interrupt reinjection backlog.  Can be used if another
+ # mechanism to synchronize guest time is in effect, for example QEMU
+-# guest agent's guest-set-time command.
++# guest agent's `guest-set-time` command.
+ #
+ # Use of this command is only applicable for x86 machines with an RTC,
+ # and on other machines will silently return without performing any
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index 54ba5c9a3f..4757947ca6 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -20,7 +20,7 @@
+ # @inmigrate: guest is paused waiting for an incoming migration.  Note
+ #     that this state does not tell whether the machine will start at
+ #     the end of the migration.  This depends on the command-line -S
+-#     option and any invocation of 'stop' or 'cont' that has happened
++#     option and any invocation of `stop` or `cont` that has happened
+ #     since QEMU was started.
+ #
+ # @internal-error: An internal error that prevents further guest
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 82046b0b3a..32fac51728 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -143,7 +143,7 @@
+ #
+ # @str: decimal is for file descriptor number, otherwise it's a file
+ #     descriptor name.  Named file descriptors are permitted in
+-#     monitor commands, in combination with the 'getfd' command.
++#     monitor commands, in combination with the `getfd` command.
+ #     Decimal file descriptors are permitted at startup or other
+ #     contexts where no monitor context is active.
+ #
 -- 
 2.49.0
 
