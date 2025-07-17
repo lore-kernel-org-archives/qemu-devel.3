@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35251C83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 00:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522E0C83F27
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 00:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucCj2-0000GE-Co; Wed, 16 Jul 2025 20:43:52 -0400
+	id 1ucCj5-0000iu-E1; Wed, 16 Jul 2025 20:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ucCgK-0004Lj-AQ
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:41:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ucChW-000626-9v
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ucCgH-00057J-E1
- for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:41:03 -0400
+ id 1ucChT-0005Li-4R
+ for qemu-devel@nongnu.org; Wed, 16 Jul 2025 20:42:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752712859;
+ s=mimecast20190719; t=1752712933;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WgO7zWmS2mad1LAC+VDbczyzpEeF7OhFfACO/B0QFSc=;
- b=KBvCX4IGxTEISuduEBsuJDeWIPPiGl5VTZeFaYAoz2wkuOQMFarze/1gmlLgItyt46XM01
- cbus0oyaVEp0S5Ge4wVH9+G/y4+C7KI7NwVTqV/oyRFSq3i/AdU9WyMXKDPf/Uzm7vEGWO
- 6+xjwZwP/bpBjqoFGChAsQ44NJrKOgE=
+ bh=5r7DYLmp+E9ag1L7wKjeNhUnOiKaPcopIlcFiJkBtOc=;
+ b=SEAmIles1H0lKUi6b9xTKIuVv0PJ8zRWejXBAKOtcTCovQYAwYH48fVwFjdB80F5O06x7S
+ ty7goxTDVbS+M1aTIHDfCm5WSl7INbvwyrdcFavNo/u9Y/gz2yg3RIxI4eOWXpdaUCeiK4
+ 11FaCRkkCDm0HIQcjsYj1OGQMD+tFs0=
 Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
  [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-q9L7BB6oO2qtORIlaOzlAg-1; Wed, 16 Jul 2025 20:40:57 -0400
-X-MC-Unique: q9L7BB6oO2qtORIlaOzlAg-1
-X-Mimecast-MFC-AGG-ID: q9L7BB6oO2qtORIlaOzlAg_1752712856
+ us-mta-339-_ukr-oB9O-euigQW9xfG9Q-1; Wed, 16 Jul 2025 20:42:11 -0400
+X-MC-Unique: _ukr-oB9O-euigQW9xfG9Q-1
+X-Mimecast-MFC-AGG-ID: _ukr-oB9O-euigQW9xfG9Q_1752712931
 Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-311ae2b6647so437222a91.0
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 17:40:57 -0700 (PDT)
+ 98e67ed59e1d1-313c3915345so600746a91.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 17:42:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752712856; x=1753317656;
+ d=1e100.net; s=20230601; t=1752712930; x=1753317730;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WgO7zWmS2mad1LAC+VDbczyzpEeF7OhFfACO/B0QFSc=;
- b=rShuQZeCSI1CNfnvpkYNxJqeM75nCAOKfHXWONIfG2AcfnUXq4IAtIkS9PQnFWfLP8
- UfBCQV8a8hGX2zVBV/XWeMNtK1PZQLi5Gd85Rk8ctasipMeCuhMzUwhvwEj7AKdFQlCc
- f7lv9nEuaqi9pZeygDM0XQWMOhd3BBSMEoJPKo64IoLQsueMdA5Y/Y0In+Lb9dC6vi8O
- gd9PT7rmvRPbygykIC3qcCGmXno8sna+IFfJmANyf2FLcxg97a349Y2BNGBXS1teWutT
- AxueaTLszy2c7/MWn/kCMXOW/S07PCMNK5XWUOD8KjboEPs7TIJ6XqBDUL5WePlHX/Z9
- XfWA==
-X-Gm-Message-State: AOJu0YwCTKJ6Ws8Prt9jgpLpkUbQ0+50bc/7YldRHx34ztw7XiK9raCW
- TLxbY8CgTHsZmMC+6VCGeuyNpiPndWElqjMQVSIdSl3rfU92iNUSnmZLslBkNI7abQYU2ZcaL5P
- 3Lo6zF0av8q6wmE7L2mIWgiiIbOw5oPUPJ+B0W/nleJQ0keQw2QYZ6j+Izy67SmalMyU=
-X-Gm-Gg: ASbGnctVt+2hy370DGI7mo6oUhFQcQk+MQsc7wveQBacKkFeuYKPuHtF6chLKZyPumr
- I04orHcGYLoKp0NZDmq+oPIkykXMTSW7ovv/Xc9X5O9XItNlGOZKEWNan0q82Uwvmh9Wir8uacw
- exrCi0nS9OVCVeWcbrjTf3VuXOro2oHQ9007CtY5NI6ddS8PUaE5HzdmGHUyUbCZRObLKMC9rey
- lqDypfZOYEp/Kgn/cLfdrluGbbocq1l70QlG/o5nVzxQ0zFIdJAMJLpkVv3o4Q+CR5UKJAeOKkw
- 9FyGdEPWJ2MNmg5M+fR8X4r4n29jGe2RDxonKt/E2bOiVmmXvApv
-X-Received: by 2002:a17:90b:5587:b0:311:c596:5c6f with SMTP id
- 98e67ed59e1d1-31c9e7596edmr8092740a91.17.1752712856063; 
- Wed, 16 Jul 2025 17:40:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJWfaEIBJrrkBktHUzi6no3I5kzqqHpnPcoukb2qlZDTEQb3saP52NyLBAV/bDZgA9XH49eQ==
-X-Received: by 2002:a17:90b:5587:b0:311:c596:5c6f with SMTP id
- 98e67ed59e1d1-31c9e7596edmr8092693a91.17.1752712855546; 
- Wed, 16 Jul 2025 17:40:55 -0700 (PDT)
+ bh=5r7DYLmp+E9ag1L7wKjeNhUnOiKaPcopIlcFiJkBtOc=;
+ b=KT2uODa6qcxYClT/7WUcZs7FUWTa17GXXxl7So/d1GAKhHVUvUSFNLDNY2VhVnfeh4
+ 0fszIASIUHSKtp1sRNeR0QlaAD79ZgJejylSKfW3/HhGSGVf7clEv0z2hzdMUMNy5KSA
+ GnC9hFylRA4YmPEwGlkeX3ZOpYsb5i7r6X/qjpPe800iUdOuThKxS+GvAlKraJyFSIQY
+ 7R6kH2TPYB09fYL4Sj9q7GPpIkDH75p2WCsOtRAJCiDxYV19OxHP6G38nGZl65s0167L
+ g1KPBnL30eiq15HVuP3XAdGa79yiIA9xtc2KJnKu5/ByBCRj/I8WFyee96Nj3IEyOjrm
+ Pyhg==
+X-Gm-Message-State: AOJu0YwXBpSRd9czszRTHx3CvwbV6gypzN2hmuMFlXeQ9ElFL0BI7jzt
+ u/wmmlihQ8kBPpTrkZ2FRqy88UoKkB4MzCAZckRsUPzvfUe7fQz3QYZtsWJK6tRtPYne4siGd3a
+ OigMPThbFssNChkIhq48WklQVOMDBrjxXu1UoQ5IlRqRUiXP3ekd/XV+4
+X-Gm-Gg: ASbGnct40txhED0ps3U5074rTxsq36aOtF4qCfQtwZa27ARqhl64TyEvt1zr12g9tmb
+ bMW6u29AW0lFTcmRntsxloxnGyA2LM1trwFHsVfWYpX9cFI72WgmZmyYvtW5tlB+iibzyi7+7PA
+ agE7+i99Vzdq0YWittUZvjT0Ph58EWQcHWE0rXAOwRlTwidjDyYzJoZy6LaVzeYfb1vLg7Oe0DX
+ aJ3tNE1OLzeNZBYUYqeSJ/969/juZG2TZHSBzXJ1uP48rvfNjjAfQbeijhQyC5iD4gsjuIHguiy
+ C3z3DxwkDbjXtijhe5t4ya/ckowBtTl/ZavPUNxL9RFU0js69oeS
+X-Received: by 2002:a17:90b:37c7:b0:313:db0b:75db with SMTP id
+ 98e67ed59e1d1-31caf921e68mr1520932a91.33.1752712930473; 
+ Wed, 16 Jul 2025 17:42:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcBcC4aFTv+LaK2xP+TQMkJEutHYmMtxsDA/0udJ+JEtHOpvNFxPDtefSpeVnicS7CXZS1NA==
+X-Received: by 2002:a17:90b:37c7:b0:313:db0b:75db with SMTP id
+ 98e67ed59e1d1-31caf921e68mr1520894a91.33.1752712930075; 
+ Wed, 16 Jul 2025 17:42:10 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.97.205])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31c9f287c19sm2214424a91.31.2025.07.16.17.40.47
+ 98e67ed59e1d1-31c9f287c19sm2214424a91.31.2025.07.16.17.42.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 17:40:55 -0700 (PDT)
+ Wed, 16 Jul 2025 17:42:09 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
-Date: Thu, 17 Jul 2025 06:07:36 +0530
-Subject: [PATCH v5 13/23] migration: push Error **errp into
- loadvm_postcopy_ram_handle_discard()
+Date: Thu, 17 Jul 2025 06:07:45 +0530
+Subject: [PATCH v5 22/23] migration: Add error-parameterized function
+ variants in VMSD struct
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-propagate_tpm_error-v5-13-1f406f88ee65@redhat.com>
+Message-Id: <20250717-propagate_tpm_error-v5-22-1f406f88ee65@redhat.com>
 References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
 In-Reply-To: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
 To: qemu-devel@nongnu.org
@@ -106,15 +106,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
  Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4236; i=armenon@redhat.com;
- h=from:subject:message-id; bh=elWoGicsrQ1vrc7DXwImjeDd+wLVc/6RTeaJIRDgHBY=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0aFmyJ/ySuR6QZsz4wzDwU3iJQkcLW1xs1IXvYqRmla0
- fJv9b86SlkYxLgYZMUUWRq+Bsg2BRRGRNq+vA4zh5UJZAgDF6cATCTmFcNfuUn/Bb2iTx27npb5
- +sJL3yW/eDZ3PLT4ISikx78ivve7JsP/vAcHtiwK71/qO4Xnit80a5YD1wzVlglPFd5iGS4R+qy
- CCQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5680; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=3Jq36iXUSbHTQC9cQ7Zq45KdL78RMO+hdXGkLCz9CVo=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0aFm/JMpndrNoRZtShX/RI60hd4sdKXPXWD/w7RF8kRV
+ q6toekdpSwMYlwMsmKKLA1fA2SbAgojIm1fXoeZw8oEMoSBi1MAJrKkm+GfaTyX+/+mbQF7FA6V
+ CSh7atzZ4Mf85/bS9YodDd9Cq54dZmRYc+KaQZPx5LWm7rftDto/445dOOmw1MejUVxnQs7Eyyx
+ iAAA=
 X-Developer-Key: i=armenon@redhat.com; a=openpgp;
  fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -139,107 +139,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-It is ensured that loadvm_postcopy_ram_handle_discard() must report an error
-in errp, in case of failure.
+- We need to have good error reporting in the callbacks in
+  VMStateDescription struct. Specifically pre_save, post_save,
+  pre_load and post_load callbacks.
+- It is not possible to change these functions everywhere in one
+  patch, therefore, we introduce a duplicate set of callbacks
+  with Error object passed to them.
+- So, in this commit, we implement 'errp' variants of these callbacks,
+  introducing an explicit Error object parameter.
+- This is a functional step towards transitioning the entire codebase
+  to the new error-parameterized functions.
+- Deliberately called in mutual exclusion from their counterparts,
+  to prevent conflicts during the transition.
+- New impls should preferentally use 'errp' variants of
+  these methods, and existing impls incrementally converted.
+  The variants without 'errp' are intended to be removed
+  once all usage is converted.
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- migration/savevm.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ include/migration/vmstate.h | 11 +++++++++++
+ migration/vmstate.c         | 36 +++++++++++++++++++++++++++++++-----
+ 2 files changed, 42 insertions(+), 5 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 509b71dc2666617ee3e7b707f46187ee5287d201..6f181c381dc6ecd996a1f8dbc25cceead7ebe014 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1996,7 +1996,7 @@ static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
-  * There can be 0..many of these messages, each encoding multiple pages.
-  */
- static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
--                                              uint16_t len)
-+                                              uint16_t len, Error **errp)
- {
-     int tmp;
-     char ramid[256];
-@@ -2009,6 +2009,7 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-         /* 1st discard */
-         tmp = postcopy_ram_prepare_discard(mis);
-         if (tmp) {
-+            error_setg(errp, "Failed to prepare for RAM discard: %d", tmp);
-             return tmp;
-         }
-         break;
-@@ -2018,8 +2019,8 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-         break;
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc8745fdbb79bfd7c8 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -200,15 +200,26 @@ struct VMStateDescription {
+      * exclusive. For this reason, also early_setup VMSDs are migrated in a
+      * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+      * a QEMU_VM_SECTION_START section.
++     *
++     * There are duplicate impls of the post/pre save/load hooks.
++     * New impls should preferentally use 'errp' variants of these
++     * methods and existing impls incrementally converted.
++     * The variants without 'errp' are intended to be removed
++     * once all usage is converted.
+      */
++
+     bool early_setup;
+     int version_id;
+     int minimum_version_id;
+     MigrationPriority priority;
+     int (*pre_load)(void *opaque);
++    int (*pre_load_errp)(void *opaque, Error **errp);
+     int (*post_load)(void *opaque, int version_id);
++    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+     int (*pre_save)(void *opaque);
++    int (*pre_save_errp)(void *opaque, Error **errp);
+     int (*post_save)(void *opaque);
++    int (*post_save_errp)(void *opaque, Error **errp);
+     bool (*needed)(void *opaque);
+     bool (*dev_unplug_pending)(void *opaque);
  
-     default:
--        error_report("CMD_POSTCOPY_RAM_DISCARD in wrong postcopy state (%d)",
--                     ps);
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD in wrong "
-+                   "postcopy state (%d)", ps);
-         return -1;
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 078a00003023cc248fb16f05017d4c4251fd86df..bff4539cbe526c5a0718678d4e1f32ba9ac57889 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -152,7 +152,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+         return -EINVAL;
      }
-     /* We're expecting a
-@@ -2028,29 +2029,30 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-      *    then at least 1 16 byte chunk
-     */
-     if (len < (1 + 1 + 1 + 1 + 2 * 8)) {
--        error_report("CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
-         return -1;
-     }
- 
-     tmp = qemu_get_byte(mis->from_src_file);
-     if (tmp != postcopy_ram_discard_version) {
--        error_report("CMD_POSTCOPY_RAM_DISCARD invalid version (%d)", tmp);
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid version (%d)", tmp);
-         return -1;
-     }
- 
-     if (!qemu_get_counted_string(mis->from_src_file, ramid)) {
--        error_report("CMD_POSTCOPY_RAM_DISCARD Failed to read RAMBlock ID");
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD Failed to read "
-+                   "RAMBlock ID");
-         return -1;
-     }
-     tmp = qemu_get_byte(mis->from_src_file);
-     if (tmp != 0) {
--        error_report("CMD_POSTCOPY_RAM_DISCARD missing nil (%d)", tmp);
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD missing nil (%d)", tmp);
-         return -1;
-     }
- 
-     len -= 3 + strlen(ramid);
-     if (len % 16) {
--        error_report("CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
-+        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
-         return -1;
-     }
-     trace_loadvm_postcopy_ram_handle_discard_header(ramid, len);
-@@ -2062,6 +2064,7 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
-         len -= 16;
-         int ret = ram_discard_range(ramid, start_addr, block_length);
+-    if (vmsd->pre_load) {
++    if (vmsd->pre_load_errp) {
++        ret = vmsd->pre_load_errp(opaque, errp);
++        if (ret) {
++            error_prepend(errp, "VM pre load failed : %d ", ret);
++            return ret;
++        }
++    } else if (vmsd->pre_load) {
+         ret = vmsd->pre_load(opaque);
          if (ret) {
-+            error_setg(errp, "Failed to discard RAM range %s: %d", ramid, ret);
-             return ret;
-         }
+             error_setg(errp, "VM pre load failed : %d", ret);
+@@ -238,7 +244,12 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         qemu_file_set_error(f, ret);
+         return ret;
      }
-@@ -2627,12 +2630,7 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
-         return loadvm_postcopy_handle_run(mis, errp);
+-    if (vmsd->post_load) {
++    if (vmsd->post_load_errp) {
++        ret = vmsd->post_load_errp(opaque, version_id, errp);
++        if (ret < 0) {
++            error_prepend(errp, "VM Post load failed : %d ", ret);
++        }
++    } else if (vmsd->post_load) {
+         ret = vmsd->post_load(opaque, version_id);
+         if (ret < 0) {
+             error_setg(errp, "VM Post load failed : %d", ret);
+@@ -414,7 +425,14 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
  
-     case MIG_CMD_POSTCOPY_RAM_DISCARD:
--        ret = loadvm_postcopy_ram_handle_discard(mis, len);
--        if (ret < 0) {
--            error_setg(errp, "Failed to load device state command: %d", ret);
--            return -1;
--        }
--        return ret;
-+        return loadvm_postcopy_ram_handle_discard(mis, len, errp);
+     trace_vmstate_save_state_top(vmsd->name);
  
-     case MIG_CMD_POSTCOPY_RESUME:
-         ret = loadvm_postcopy_handle_resume(mis);
+-    if (vmsd->pre_save) {
++    if (vmsd->pre_save_errp) {
++        ret = vmsd->pre_save_errp(opaque, errp);
++        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
++        if (ret) {
++            error_prepend(errp, "pre-save failed: %s ", vmsd->name);
++            return ret;
++        }
++    } else if (vmsd->pre_save) {
+         ret = vmsd->pre_save(opaque);
+         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+         if (ret) {
+@@ -524,7 +542,9 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 if (ret) {
+                     error_setg(errp, "Save of field %s/%s failed",
+                                 vmsd->name, field->name);
+-                    if (vmsd->post_save) {
++                    if (vmsd->post_save_errp) {
++                        vmsd->post_save_errp(opaque, errp);
++                    } else if (vmsd->post_save) {
+                         vmsd->post_save(opaque);
+                     }
+                     return ret;
+@@ -552,7 +572,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+ 
+     ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+ 
+-    if (vmsd->post_save) {
++    if (vmsd->post_save_errp) {
++        int ps_ret = vmsd->post_save_errp(opaque, errp);
++        if (!ret && ps_ret) {
++            ret = ps_ret;
++            error_prepend(errp, "post-save failed: %s ", vmsd->name);
++        }
++    } else if (vmsd->post_save) {
+         int ps_ret = vmsd->post_save(opaque);
+         if (!ret && ps_ret) {
+             ret = ps_ret;
 
 -- 
 2.50.0
