@@ -4,62 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37327C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8316FC83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucJsS-0005c3-7V; Thu, 17 Jul 2025 04:22:05 -0400
+	id 1ucJsX-0005lq-8r; Thu, 17 Jul 2025 04:22:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucJrv-0005Co-0C
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucJru-0005Cf-TS
  for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:21:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucJrq-0000wl-Qu
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ucJrq-0000wj-NV
  for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:21:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1752740485;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=g3wiLVeJG6eRNKooWYvuQr49qjdJy/RkIv0LfEcMu2s=;
- b=PuDkGR8Lq+tvP8b8YB0N4Q2BjLZbmHfbhUpnZzR9JDodnUtxQ4bQ7epUcPgwBVTZNksmdc
- klBTlTsx4yL+16aStphm4FgAjwRL9als5Yt1iIbjjA4Oxeg0jwmucjLyoMVxbE3RLz9SUT
- RuC42UlIuO+a2sbYaPil4M35I8QSMbw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Jz+uAt/0NPmH6HIiMA9hHifRk4wyBRNvnaHaVXqjdsg=;
+ b=aGLCQShy4bzBfYmIjduXPffXno6iRQ24vrx5F6zTAZsQJG0oqfB0LLldgo9IUdaq7AYcuw
+ Wl1nzXhT/VTD5eT1y8VU85vYrCQal5eHaNTkByVKaS5Kwptcp7DBe6SOd7z90R8ZohdNZ2
+ pM5uIw4vIINJ//erJZRGJCTI/QYWZxA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-HuBOc1kMMSmAEPzixxjn_A-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-4UExQNgVM5S_uZXzhy3etw-1; Thu,
  17 Jul 2025 04:21:21 -0400
-X-MC-Unique: HuBOc1kMMSmAEPzixxjn_A-1
-X-Mimecast-MFC-AGG-ID: HuBOc1kMMSmAEPzixxjn_A_1752740481
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+X-MC-Unique: 4UExQNgVM5S_uZXzhy3etw-1
+X-Mimecast-MFC-AGG-ID: 4UExQNgVM5S_uZXzhy3etw_1752740481
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE77F19560B4; Thu, 17 Jul 2025 08:21:20 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8CCC1800284; Thu, 17 Jul 2025 08:21:20 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EF3A195608D; Thu, 17 Jul 2025 08:21:20 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66AA71956089; Thu, 17 Jul 2025 08:21:20 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B83D321E6935; Thu, 17 Jul 2025 10:21:17 +0200 (CEST)
+ id AE49321E6A27; Thu, 17 Jul 2025 10:21:17 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: eblake@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  jsnow@redhat.com
-Subject: [PATCH 3/4] qga: Rephrase return docs to avoid type name
-Date: Thu, 17 Jul 2025 10:21:16 +0200
-Message-ID: <20250717082117.3767754-4-armbru@redhat.com>
-In-Reply-To: <20250717082117.3767754-1-armbru@redhat.com>
-References: <20250717082117.3767754-1-armbru@redhat.com>
+Subject: [PATCH 0/4] qga: Doc fixes and improvements
+Date: Thu, 17 Jul 2025 10:21:13 +0200
+Message-ID: <20250717082117.3767754-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,36 +82,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Returns: <description>" is rendered like
+This series touches only doc comments.  I'd like to get it into 10.1.
 
-    Return: <Type> – <description>
+Markus Armbruster (4):
+  qga: Fix guest-network-get-route return value documentation
+  qga: Remove trivial "Returns:" sections
+  qga: Rephrase return docs to avoid type name
+  qga: Add cross-references
 
-Mentioning the type in the description again is commonly redundant.
-There is just one such description.  Rephrase it not to mention the
-type.
+ qga/qapi-schema.json | 79 +++++++++++++++-----------------------------
+ 1 file changed, 27 insertions(+), 52 deletions(-)
 
-We did this for qapi/ in commit f7296f8de5c (qapi: rephrase return
-docs to avoid type name).
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- qga/qapi-schema.json | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index a9cc9150dc..6c26ace3c9 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -534,8 +534,7 @@
- #     discarded.  The default value is zero, meaning "discard every
- #     free block".
- #
--# Returns: A @GuestFilesystemTrimResponse which contains the status of
--#     all trimmed paths.  (since 2.4)
-+# Returns: status of all trimmed paths.  (since 2.4)
- #
- # Since: 1.2
- ##
 -- 
 2.49.0
 
