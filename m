@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6019EC83F34
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 19:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79074C83F34
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 19:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucUbW-0006Dj-C0; Thu, 17 Jul 2025 15:49:18 -0400
+	id 1ucUdf-0008AX-2x; Thu, 17 Jul 2025 15:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucS7E-0008Nw-5J
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:09:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucS7B-0002F3-D6
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:09:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752772186;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PXVTDH+hbxdnvOJxnih2614wpTzmDUV06R/SpK1bRKM=;
- b=U8V0hczaLLuWr2uN8tbBYw88kkSHqH1cDYMhb6euWrunHJoQJfygogRZr4Auqe7f0AJOse
- Qf2Icor4sNpLkG/QxXq63ijVBMUj8spcY6z+ApZDHpCK/dydLm6KZ06/4Hwjntm/ig7tcd
- iw/wLm8m6Un2S7TW3alrjQK1HnOL4qE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-nmsvsXgQNiW_uyFGk2tMZQ-1; Thu,
- 17 Jul 2025 13:09:42 -0400
-X-MC-Unique: nmsvsXgQNiW_uyFGk2tMZQ-1
-X-Mimecast-MFC-AGG-ID: nmsvsXgQNiW_uyFGk2tMZQ_1752772180
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3819195FE1E; Thu, 17 Jul 2025 17:09:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.171])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 213FF30001B9; Thu, 17 Jul 2025 17:09:28 +0000 (UTC)
-Date: Thu, 17 Jul 2025 18:09:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v5 10/23] migration: push Error **errp into
- loadvm_postcopy_handle_advise()
-Message-ID: <aHkuRkaMw226cU4W@redhat.com>
-References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
- <20250717-propagate_tpm_error-v5-10-1f406f88ee65@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ucS2d-0005TW-IZ
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:05:10 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ucS2b-0001ti-Mu
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:05:07 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso1615148b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 10:05:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752771904; x=1753376704; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XMqEN3QsE6wJqklujGilDAGpGh9DttXjTTF21J4POrg=;
+ b=EHpN5/7Au+20Vk5Pj1KtcZxKNYPFcVw/Sadtq7qZPqaRzJeHXGc/sXW4OMoYs2Y9Cy
+ nL6dLaXxnCzhO+nksXj+AMljfSlWoeqSO1aSMgd3pp+6rPbIgZ3EwbBpFQbE48SCatu0
+ lRnPj+5k1e7eTK8L645dgiob/4zqRGUskazst3BCDfquiLPEb1d2YRPsHUKd1d9UmYDa
+ CodVe6oxUcLNNg38ClrkZ5JdEXFPkgLkspElP8Lwwdh/OywZTE+AgaUEmJNaPsAyGLrw
+ 1ck6pnJoWKwBcagc1lO1oMyqQSGjc8hq8vSDGZGz4z05GYmf6TYHKCz56i2IJTjlzXYi
+ 7Xkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752771904; x=1753376704;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XMqEN3QsE6wJqklujGilDAGpGh9DttXjTTF21J4POrg=;
+ b=wikB0qXPZTG3raRmdRRaQ4jJpDCJ7PBEVMIMVvYtMJrapPYnuICb5XVTIqMpgY9Szp
+ Rgr0+l7f6t8Eyc5WSW6DFCEpmF03tKEnaal+iSyVjgQbkYRd5A9ezszC2xLH36YJHxS2
+ dzlzbWZuhUuefYupHEQPiyxhQodl+hZJ1VQ13UK3Tx6JpjiqB1HuUnTc/6S8GOCxe0p2
+ dRiOEfuPSUR+JvGSao0nQ0lA/Gc3LOfmr4UJ+kk8lBU8JRrgrxSQHmQp4vGnlzUD4k40
+ k3ZV+W7Wayz1lQJjbD8TXnKOXncUqhRVoLIvacx5FGbjPXMoTM8GaymgB0HDFmB7IY4R
+ O/xQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7iqNpaygDBGjgGEzubE8dX/aYQr63IjIibWIOuLpJpgz8Gw7NFhfbaQM9nQk5/eY1riPFmGnoON7u@nongnu.org
+X-Gm-Message-State: AOJu0YxAN1a6UtYTEXLufZaaI9MbOPSI+lvL8ystylNrP7LDZhQE/B/0
+ qjDs2GxmH7UargI5OSA3SJ2b+FQmSjJlz1cwfriiiuAbmWsGYYR4Ff3GPwgys8pWxvQ=
+X-Gm-Gg: ASbGncuedDNNsLDu5yrPLVkdyox3NxuQ2wZMig1NAiKdPuiK3LklVrosnR6YF4diEb9
+ AnflaOjLWBhtKPGaEjI3bpE47FdW0ZWx5XJyBZQ3+GtTNYEzXjRRRkZrZ/aG4KYZgQXkHwS46k3
+ pJypw2ktMDm7uYtd+5WJaurGiuAHr35uqJNolWjR5LVNGbzkNunoqVZ15nrMmWme/UJjB9c6iUm
+ jKy/p/1bgbxkOmiToXclmfiVdm5x+Jrgfa18wzT+mdVJjfFOYqdX92kTZxHQ5tDdkHInWiY4hrD
+ 8dRPHWlcQmIEWbqtL9s7/bp9Wg/UVhYBG4TyzcYYpbJJQac5hHj+HGDMaUFJSeL400wQdOMokEr
+ HyvnT4T6vO2XvskE2dQaaMJ7UniRetIy4BOQ=
+X-Google-Smtp-Source: AGHT+IF/qH0tAxtwrPSw5eViUD90I+vxFsBCBqhCn7MD+oqEztGNU4QkwIEtyGL8TXpKDWzberbZVg==
+X-Received: by 2002:a05:6a00:3392:b0:740:9e87:9625 with SMTP id
+ d2e1a72fcca58-7572267d1f8mr10444044b3a.4.1752771902960; 
+ Thu, 17 Jul 2025 10:05:02 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b3bbe345f2esm15810423a12.0.2025.07.17.10.05.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Jul 2025 10:05:02 -0700 (PDT)
+Message-ID: <3ca15207-c4af-4cf8-8502-b78bf95bd5f8@linaro.org>
+Date: Thu, 17 Jul 2025 10:05:01 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250717-propagate_tpm_error-v5-10-1f406f88ee65@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Provide always-false kvm_arm_*_supported()
+ stubs for usermode
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250714135152.1896214-1-peter.maydell@linaro.org>
+ <0b438773-01b9-42e1-8edf-2330e50387f8@linaro.org>
+ <95b00393-bdd2-4db3-ac39-02a09f83b4d7@linaro.org>
+ <CAFEAcA_Hbpg0wkQ9frt+MUj7x7uR+p7+8o4SLLx=GwhWvfCzaQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA_Hbpg0wkQ9frt+MUj7x7uR+p7+8o4SLLx=GwhWvfCzaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,30 +105,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 06:07:33AM +0530, Arun Menon wrote:
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that loadvm_postcopy_handle_advise() must report an error
-> in errp, in case of failure.
+On 7/17/25 9:56 AM, Peter Maydell wrote:
+> On Mon, 14 Jul 2025 at 16:41, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>> As folding is not guaranteed by C standard, I'm not sure it's really
+>> possible to file a bug. However, since we rely on this behaviour in
+>> other parts, maybe it would be better to rewrite the condition on our side.
+>>
+>> By changing the code to this, the folding happens as expected.
+>>
+>> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+>> index 26cf7e6dfa2..af5788dafab 100644
+>> --- a/target/arm/cpu64.c
+>> +++ b/target/arm/cpu64.c
+>> @@ -318,9 +318,11 @@ static void cpu_arm_set_sve(Object *obj, bool
+>> value, Error **errp)
+>>    {
+>>        ARMCPU *cpu = ARM_CPU(obj);
+>>
+>> -    if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
+>> -        error_setg(errp, "'sve' feature not supported by KVM on this
+>> host");
+>> -        return;
+>> +    if (value) {
+>> +        if (kvm_enabled() && !kvm_arm_sve_supported()) {
+>> +            error_setg(errp, "'sve' feature not supported by KVM on
+>> this host");
+>> +            return;
+>> +        }
+>>        }
+>>
+>>        FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
+>>
+>> If you prefer keeping your patch, I'm ok, but fixing the condition looks
+>> better to me (as we already rely on constant folding in other places).
 > 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->  migration/savevm.c | 39 +++++++++++++++++----------------------
->  1 file changed, 17 insertions(+), 22 deletions(-)
+> I'm not really a fan of relying on the compiler to fold stuff
+> away -- it's fragile and there's no guarantee the compiler
+> will actually do it. In this example it would be really easy
+> for somebody coming along to tidy this up later to put the
+> nested if()s back into a single if() condition and reintroduce
+> the problem, for instance.
+>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+There are various places where we already relied on that, including 
+before the single-binary work ({accel}_allowed).
 
+For the fragile aspect of it, that's why CI exists. Building all 
+binaries with clang --enable-debug should ensure no regression can be 
+introduced.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> I've applied this patch to target-arm.next; thanks for the review.
+>
 
+Thank you Peter.
+
+> -- PMM
 
