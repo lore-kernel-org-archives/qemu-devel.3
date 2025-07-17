@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BB8C83F34
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3ACC83F34
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucUsf-0003pO-7o; Thu, 17 Jul 2025 16:07:01 -0400
+	id 1ucUy6-0007eG-Mb; Thu, 17 Jul 2025 16:12:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucSU9-00063s-Aw
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:33:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ucSPP-0003cI-CX
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:28:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucSU5-0005rv-ML
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:33:32 -0400
+ id 1ucSPM-0005EH-AT
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:28:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752773608;
+ s=mimecast20190719; t=1752773315;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=An8hRqXygYhUmSPCxGlxURl7Vf5y5rzkOFQ4l+1cpXU=;
- b=SwQyFMWrusshmRGfUYb7chcM1sACvLLBO7uovT3emjYs4ViaciRWbN1NJsTV6c9ufiIuza
- ZamIxHyx+//KzyVxDXfjjZClVk4MxUspBepA3u54Epu2/yHjhI+rKIjJkz+3r4PSW9z1ww
- yXgm2ufwfY8EJiFbd5xVfxTFA3504H4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=GVpC/qE+YiVz3ZqZoCvGz+eOwCVyto+ap59/u3wwXOo=;
+ b=ESF1UQvABrmTKkbmLYyNwqPu3t/7Y4VuAmfrcU4At5DipjigXLIxOcsG61cbE6zZ/A7VRu
+ wXuPutTxElaqDml0+rCwVDj9LhLVgc3hbGGAB1hlBa69ABl0rHL7ZaSUgKfrTVR5qIZoh+
+ NPWIOlS8XeEE/Y7AV3sPbQryF2K3mIg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-wwImG5SZNzCNMbrP21lfGA-1; Thu,
- 17 Jul 2025 13:33:24 -0400
-X-MC-Unique: wwImG5SZNzCNMbrP21lfGA-1
-X-Mimecast-MFC-AGG-ID: wwImG5SZNzCNMbrP21lfGA_1752773601
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-fu6YoU1YOD2M8VkEyPtusQ-1; Thu,
+ 17 Jul 2025 13:28:31 -0400
+X-MC-Unique: fu6YoU1YOD2M8VkEyPtusQ-1
+X-Mimecast-MFC-AGG-ID: fu6YoU1YOD2M8VkEyPtusQ_1752773308
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FC0B1800281; Thu, 17 Jul 2025 17:33:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A802F195FE1C; Thu, 17 Jul 2025 17:28:28 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.171])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CEF930001B1; Thu, 17 Jul 2025 17:33:11 +0000 (UTC)
-Date: Thu, 17 Jul 2025 18:33:08 +0100
+ id 706A430001B1; Thu, 17 Jul 2025 17:28:20 +0000 (UTC)
+Date: Thu, 17 Jul 2025 18:28:17 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Arun Menon <armenon@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -72,18 +72,18 @@ Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v5 21/23] migration: Capture error in
- postcopy_ram_listen_thread()
-Message-ID: <aHkz1JSTB20Me4yY@redhat.com>
+Subject: Re: [PATCH v5 19/23] migration: push Error **errp into
+ qemu_loadvm_state()
+Message-ID: <aHkysb7qX_yowv-D@redhat.com>
 References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
- <20250717-propagate_tpm_error-v5-21-1f406f88ee65@redhat.com>
+ <20250717-propagate_tpm_error-v5-19-1f406f88ee65@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250717-propagate_tpm_error-v5-21-1f406f88ee65@redhat.com>
+In-Reply-To: <20250717-propagate_tpm_error-v5-19-1f406f88ee65@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,68 +109,35 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 06:07:44AM +0530, Arun Menon wrote:
+On Thu, Jul 17, 2025 at 06:07:42AM +0530, Arun Menon wrote:
 > This is an incremental step in converting vmstate loading
 > code to report error via Error objects instead of directly
 > printing it to console/monitor.
-> postcopy_ram_listen_thread() calls qemu_loadvm_state_main()
-> to load the vm, and in case of a failure, it should set the error
-> in the migration object.
-> 
-> When postcopy live migration runs, the device states are loaded by
-> both the qemu coroutine process_incoming_migration_co() and the
-> postcopy_ram_listen_thread(). Therefore, it is important that the
-> coroutine also reports the error in case of failure, with
-> error_report_err(). Otherwise, the source qemu will not display
-> any errors before going into the postcopy pause state.
+> It is ensured that qemu_loadvm_state() must report an error
+> in errp, in case of failure.
 > 
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
->  migration/migration.c |  2 +-
->  migration/savevm.c    | 10 ++++++++--
->  2 files changed, 9 insertions(+), 3 deletions(-)
-> 
+>  migration/migration.c |  5 +++--
+>  migration/savevm.c    | 25 +++++++++++++------------
+>  migration/savevm.h    |  2 +-
+>  3 files changed, 17 insertions(+), 15 deletions(-)
 
 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 0fff65c96344c65191353311e72730cd6e3bfb23..4f67eebe5321c175d51e8029e36ceb336c98ad1f 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2086,6 +2086,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
->      QEMUFile *f = mis->from_src_file;
->      int load_res;
->      MigrationState *migr = migrate_get_current();
-> +    Error *local_err = NULL;
->  
->      object_ref(OBJECT(migr));
->  
-> @@ -2102,7 +2103,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
->      qemu_file_set_blocking(f, true);
->  
->      /* TODO: sanity check that only postcopiable data will be loaded here */
-> -    load_res = qemu_loadvm_state_main(f, mis, NULL);
-> +    load_res = qemu_loadvm_state_main(f, mis, &local_err);
->  
->      /*
->       * This is tricky, but, mis->from_src_file can change after it
-> @@ -2128,7 +2129,12 @@ static void *postcopy_ram_listen_thread(void *opaque)
->                           __func__, load_res);
->              load_res = 0; /* prevent further exit() */
+> @@ -3181,8 +3178,12 @@ int qemu_loadvm_state(QEMUFile *f)
+>          if (migrate_has_error(migrate_get_current()) ||
+>              !qemu_loadvm_thread_pool_wait(s, mis)) {
+>              ret = -EINVAL;
+> +            error_setg(errp, "Error while loading vmstate : %d", ret);
 >          } else {
-> -            error_report("%s: loadvm failed: %d", __func__, load_res);
-> +            if (local_err != NULL) {
-> +                error_prepend(&local_err, "%s: loadvm failed: %d", __func__,
-> +                              load_res);
-
-IMHO __func__ is redundant if you change the message
-to be 'loadvm failed during postcopy' like the earlier part
-fo the "if { " does.
-
-> +                migrate_set_error(migr, local_err);
-> +                error_report_err(local_err);
+>              ret = qemu_file_get_error(f);
+> +            if (ret < 0) {
+> +                error_setg(errp, "Error while loading vmstate : %d", ret);
 > +            }
->              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
->                                             MIGRATION_STATUS_FAILED);
+
+Replace qemu_file_get_error with qemu_file_get_error_obj(..., errp)
+so we propagate the real error message.
+
 
 With regards,
 Daniel
