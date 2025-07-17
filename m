@@ -4,116 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3033FC83F34
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E61C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 22:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucVcY-00049L-Ar; Thu, 17 Jul 2025 16:54:26 -0400
+	id 1ucX0m-0001qb-Ps; Thu, 17 Jul 2025 18:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucTpT-0000DZ-Ri
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:59:40 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from
+ <3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com>)
+ id 1ucVfj-0007eU-Pw
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:57:44 -0400
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucTpR-0003cI-Ki
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:59:39 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-605b9488c28so2203069a12.2
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 11:59:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com>)
+ id 1ucVfi-0005S4-Av
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:57:43 -0400
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-3138e64b3f1so1900151a91.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 13:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752778775; x=1753383575; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wwCBjGg0rvzX7woBxqV7/6npQcI6/kwHBj6TfJr3YEo=;
- b=ZdsUmTDrqpOavCVE6NXtRxRVXvXvxX5t5NpqSdM1b8OM93nJHNTupoBwGY+UhbEx5R
- SOdSg+rLViTIzUKxw61yNIKVXtER/C9bzkqv4XPvZlrRO28Qqn3DAfVDJOCUjYBSan+r
- tNnRWy6UTglj8B1RG52vpUfIKH6vFf4FKA3WHNK8Z4m/GtC0eaErwELRLW2glizroJQz
- u41tj+d3wIzxZEiAeUcqcjsk0WyHPonvv7dNw3sMu8s+eGbJJ7mt/DRUwLk0durJo3kY
- L+EErTyR2JBrE0cQXveJ6KnEi5UV7J4z8etJqP3Ouz/OEV3zQY1+q102+jogirVanbDd
- wxLQ==
+ d=google.com; s=20230601; t=1752785860; x=1753390660; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=7GNLAb9+HAgXzXVkivfD2j5NSWuBMdtsr/kW1eIs5w8=;
+ b=Vwa+hqyjIVAjwfNyVJCxMWg2hl6ReRl/VL3ZrMH2xDpD/vD+m2MroomtYkJBwSgF07
+ AGaNAZojCgzA7wSzCU1a3bv58jugvCjogqGFuMnPrvYSLyuFD7dK20ldrSS92XgWglO8
+ kBhhQWQD9rs/DXLBJ/pam6sZH+kdPf1aG7Qbp/KY6QVhUhqVAT0TN+AE5Xy3uac3exkp
+ 0Sz0gDGs2vC7qsfqieEWddMAdis0YVmH0gK7sED1m08g6JnuvrGLJjmWipVBF1d0W0Zs
+ c/AT1WjAJs54MSicn72tFdEgMvQGTETUAOgvnwUyuOvoz7DPT1YhWe/GZ1XgFGiLHk2S
+ nVHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752778775; x=1753383575;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wwCBjGg0rvzX7woBxqV7/6npQcI6/kwHBj6TfJr3YEo=;
- b=VyZ9H7rGDSQOirmvcuBye2u1zjxPVIdyNJPyTJ09zPhsK9uf3uoWHQDVL8216mhEdF
- hr6OF8dPY9sjXBPMQmqAdoOB2CfG1nZlAtNlRr+l4r7hQUi0Duqi6uI6PxvxIbqKy0Os
- JW/138KGNtiELGFs+B0K+V2ASTbP31GMRm5QmD2sSQtYsdl7An/ZxLBzUFpPdRHLpdl4
- ys2SNQ+SqdiVSmS5VtBOk9xyJ9a+Y6rqzBuh5SszgzXabpCtORPZjX8boA/3SlK5Qg++
- OnmJRJzmx3VTBnaanT15CknPvPbe1Odk3Oj1buzpd1Bh+ExziNwZz7jKV2Mk2jrhHL/E
- 7+YA==
-X-Gm-Message-State: AOJu0YzDN81JveZwEDPTBgZI7ulPIQ0DB/fQMLpw0QejeXf7E6mhzW52
- cf/IReIIUjoyVMabuIqtT/3sdPoz/zgdIBnAI1KP7pVAiqozNjB5HNGxeefruVupv5U=
-X-Gm-Gg: ASbGncvyEtzldtqKbZ1jLnA0GkcT9TKi0ScgrQMlnK1Hsx7+hdjBAX7/0j9exrvmW3w
- vihBMgUHLzC2xeEoB9b/WQbXFLAHRkM+80DfCyWUQHANDztGXpH97vnkt1dw//3hRzIFuLh/60p
- /XHr6LS2ViVI2qpgPZIj6BhxTxVnF9tN/xj438ipDl/2e8iRmoyqJ5iYk1TOySY7/2l5+jSD8t2
- 13PLYEHXZbP/Iqj2s9SDZHPmkdnjZSyI42zzFur1klq75nvPUbQ7CWGCCm2/nuwxdm0Tvbb5A59
- DHW3/ddM82iCWYHPzFyU0xjwI+au7lPjDpJJEat7qcJU5Ll43qYZ6iYOlEykNfY4+XoIj+cWBZy
- +jeB8iCcvoqlm3eQeMn4OqVpcuDYUQYU99x3opY+W0CYsm1NQObLvLItmh6u0Hv0dmXI=
-X-Google-Smtp-Source: AGHT+IFBqbbXDUCzAUNSLVIKdjylU24w6Cam/+8beaM7wfImh0+OUG1IW0bMa3tei7LELZhrM9uMoQ==
-X-Received: by 2002:aa7:dcc3:0:b0:60c:3c23:2935 with SMTP id
- 4fb4d7f45d1cf-61285c0c948mr5211976a12.29.1752778775436; 
- Thu, 17 Jul 2025 11:59:35 -0700 (PDT)
-Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-611c9523a75sm10551714a12.25.2025.07.17.11.59.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jul 2025 11:59:35 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 17 Jul 2025 21:59:28 +0300
-Subject: [PATCH v2] docs/devel/submitting-a-patch.rst: add b4 section
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250717-docs_add_b4_section-v2-1-69212ed39299@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAA9IeWgC/32NWwrDIBREtxLudy1qEiz96j5CEB/X5EKJRYO0B
- PdemwX08wwzZw7ImAgz3LsDEhbKFLcG8tKBW822ICPfGCSXI1dCMR9d1sZ7bQed0e2tz4LrFY7
- 9zUpuoS1fCQO9T+s0N14p7zF9zpMiful/XxFMMOmDHYyXAbl6PGkzKV5jWmCutX4B/sCdD7cAA
- AA=
-X-Change-ID: 20250717-docs_add_b4_section-fc37e538b20b
+ d=1e100.net; s=20230601; t=1752785860; x=1753390660;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7GNLAb9+HAgXzXVkivfD2j5NSWuBMdtsr/kW1eIs5w8=;
+ b=XsviQKwyKY1IFePioY4h/GChNxFadhmbXbE/kUM5LycGF/0xaIcW8LQV22nHeEj51J
+ 9liDYElED2nGIC/2kB/o6LxwE6WW+iYwpTBM15WklJ/kziDCzcnOgV8GHxetrJViWeYS
+ Hq94Vw43P9VvlO+h3vVrQSzL3f5Ha3c8dBa8mdh1jbeeoG0KW6NnBfpLighoK+6viVE/
+ bQcF3cMEOc83CjIBww/Z50DbEsVB9b7VTLzP90kWiVCx9vL8s8Qdce7RdFNPBLRIo55y
+ R3s/3Z3jiI7hv+rNAHwawRkNmDgJyaOLT7Nyz+tLmhUWLSMiVRppPOHkJJg0xRtG2nbA
+ UuNA==
+X-Gm-Message-State: AOJu0Yzk+hoNnib0v1mqL8ugM9qx3mtzV027vpPwpTso4hySmrSmdP+f
+ KjMEfxshZCUUjpStkLH8Y9jwAEJakWcn4+j85AWqWgybiVkoUe2CrGlqxzOqYuYNg7mKvw+ceD5
+ 0BoJx5EVEmELJE0B6FWZEPLGG9+FJxbM6Wmj0zKFvtx5GaDLPf2vLnBsFZFRl1JYvz1uacylkhY
+ 0UIFaZOSySoAZZqUB4ewo6AlTc
+X-Google-Smtp-Source: AGHT+IF0S3FJ39z89y9XS8sAMGlgwSJ4VPdn0F/0DbDjr/DMlFKKEoR8B+TWvuR0qDsvTcUNxLvTbyyo
+X-Received: from pjbme10.prod.google.com ([2002:a17:90b:17ca:b0:314:d44:4108])
+ (user=rkir job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:5846:b0:312:e731:5a66
+ with SMTP id 98e67ed59e1d1-31c9f398bf1mr11315983a91.3.1752785859814; Thu, 17
+ Jul 2025 13:57:39 -0700 (PDT)
+Date: Thu, 17 Jul 2025 13:57:35 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
+Message-ID: <20250717205735.2345674-1-rkir@google.com>
+Subject: [PATCH] hw/arm: remove `inline` from `smmu_iotlb_inv_vmid_s1`
+From: Roman Kiryanov <rkir@google.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3431;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=aJ/wLrwOs8D/j7Cwkp0R5JgbMFdFWu9mNBieQnVZ8ic=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9lVWdXampBQlhzelE1WEJERTR0STZYOUM3UlkwCmtiY0cxT1M3WFVTRmFhdXhS
- TGFKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUhsSUZnQUt
- DUkIzS2Nkd2YzNEowRGNoRUFDSUVtcW5aVjlKR1hGL3FNUUNJR0xDenJxZTJzcjdkOGRBVHdQLw
- pWS0gxTGhyL1hwTEFOekRWZUhSaU9WR2xDY2RJS1lvRHZ1RHpBVUkrOGpLVzBrUlJoWjQwVkNoS
- DQxR2JMTitJCmNTdjZnQTA0Vm53SytPL3RsL1N0bk9rYnUxNVpmenFQSzFrN05XcmltVStFKzdV
- OC96Vyttbi9WbTcrYTVHNUsKVjdJK1hzc1I5em52M3RPRlJvRzY5aXZ2MHBveHpMMXB1REhYTmt
- KcEYwZVluamtkQ0lKZkEzNHE3USttTmRGcwpMSUpBUTdjaEYrczl2MXdyWlJGR0Z2NXp5dmt4MT
- VjT3loWnZQeWNkSklDWEJMWWdLeUkvY1BTZnhsMlZ0U3dYCkJQbTBxNlQ5OUdpbnlzd0U5djVwS
- lFqQkM3S1Z4dFdNQVJJQWNTZ2JLckJBc2FCYzJ3TmRzLzdGUUdQNVVSZkEKcWNwTTVQN1IxYzg0
- RlluZjNaVVVOaklURkxFU1hHVmw4YzhQUnAzR3dVZlNpNlduOTRGRkFCcEFMdk55dHVWYwpSbGV
- Kb0FPUW5ZN3NDUlRWRzFvVlcyL0pENFZ3dmxxWlhndFpPdFd2ZysvUFJkSHZTZGJjS2ozNjlENV
- pIUi9kCmdtNk5abHBGWmorZEs1T21lYlJjMmFQKzBNRnMrM1AvMGhVQXl5L2YrV05ObGxra1dud
- kR3WnBRd1UwSU9WdkgKbGNjVEhDSzlFdEpFbzB3a1dzUWpIbFNvR05tREl3cUZVaXBxQkRjWWpK
- NnBzaU1Tbm0rUnMzM0RMMlM2TG1PNwp4eWJSa096TnBBdjM2Rk9sSUpHTUxnd2llU1RHdi9ELzQ
- 5aE9EcWlucmdpVUxDbTEzM082SUtXa2dKQ01TUGo1CmhYMDJDUT09Cj11Z1JNCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: eric.auger@redhat.com, mjt@tls.msk.ru, whollins@google.com, 
+ jansene@google.com, jpcottin@google.com, Roman Kiryanov <rkir@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,90 +92,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a section about b4, an actively maintained and widely packaged CLI
-tool for contributing to patch-based development projects.
+this function is declared in smmu-common.h without
+`inline`. It is also used outside of this file
+which causes linking errors because the non-inline
+version is not generated.
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Will Hollins <whollins@google.com>
+Signed-off-by: Roman Kiryanov <rkir@google.com>
 ---
-Changes in v2:
-- s/later/letter and add review trailers (thanks Gustavo)
-- Link to v1: https://lore.kernel.org/qemu-devel/20250717-docs_add_b4_section-v1-1-2dfb4ad2fe07@linaro.org
----
- docs/devel/submitting-a-patch.rst | 40 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ hw/arm/smmu-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index f7917b899f6892ef74908fe8f1399b6ae5a30324..dd1cf32ad35a98528f43918eceb2cc8a4847c5b6 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -235,6 +235,38 @@ to another list.) ``git send-email`` (`step-by-step setup guide
- works best for delivering the patch without mangling it, but
- attachments can be used as a last resort on a first-time submission.
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index f39b99e526..0dcaf2f589 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -319,7 +319,7 @@ void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
+     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
+ }
  
-+.. _use_b4:
-+
-+Use B4
-+~~~~~~
-+
-+The `b4`_ tool, used for Linux kernel development, can also be used for QEMU
-+development. It is packaged in most distros and PyPi. The QEMU source tree
-+includes a ``b4`` project configuration file at the root: ``.b4-config``.
-+
-+Example workflow to prepare a patch series:
-+
-+1. Start with a clean checkout of the ``master`` branch.
-+2. Create a new series with a topical branch name using ``b4 prep -n descriptive-name``.
-+   ``b4`` will create a ``b4/descriptive-name`` branch and switch to it.
-+3. Commit your changes, following this page's guidelines about proper commit messages etc.
-+4. Write a descriptive cover letter with ``b4 prep --edit-cover``.
-+5. Add maintainer and reviewer CCs with ``b4 prep --auto-to-cc``. You can make
-+   changes to Cc: and To: recipients by editing the cover letter.
-+6. Run patch checks with ``b4 prep --check``.
-+7. Optionally review the patches with ``b4 send --dry-run`` which will print the
-+   raw patches in standard output.
-+
-+To send the patches, you can:
-+
-+- Setup ``git-send-email`` and use ``b4 send``, or
-+- Export the patches to files using ``b4 send -o OUTPUT_DIR`` and send them manually.
-+
-+For more details, consult the `b4 documentation`_.
-+
-+.. _b4 documentation: https://b4.docs.kernel.org/
-+.. _b4: https://github.com/mricon/b4/
-+
- .. _use_git_publish:
- 
- Use git-publish
-@@ -418,7 +450,7 @@ Retrieve an existing series
- ---------------------------
- 
- If you want to apply an existing series on top of your tree, you can simply use
--`b4 <https://github.com/mricon/b4>`__.
-+`b4`_.
- 
- ::
- 
-@@ -533,7 +565,11 @@ summary belongs. The `git-publish
- <https://github.com/stefanha/git-publish>`__ script can help with
- tracking a good summary across versions. Also, the `git-backport-diff
- <https://github.com/codyprime/git-scripts>`__ script can help focus
--reviewers on what changed between revisions.
-+reviewers on what changed between revisions. The ``b4`` tool automatically
-+generates a version history section in the cover letter, including links to the
-+previous versions on `Lore`_.
-+
-+.. _Lore: https://lore.kernel.org/
- 
- .. _tips_and_tricks:
- 
-
----
-base-commit: f96b157ebb93f94cd56ebbc99bc20982b8fd86ef
-change-id: 20250717-docs_add_b4_section-fc37e538b20b
-
---
-γαῖα πυρί μιχθήτω
+-inline void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
++void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
+ {
+     trace_smmu_iotlb_inv_vmid_s1(vmid);
+     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid_s1, &vmid);
+-- 
+2.50.0.727.gbf7dc18ff4-goog
 
 
