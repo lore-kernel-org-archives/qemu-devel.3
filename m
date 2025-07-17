@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89936C83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36ECC83F34
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLGM-0003vy-9u; Thu, 17 Jul 2025 05:50:50 -0400
+	id 1ucLFx-0002sv-1y; Thu, 17 Jul 2025 05:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL0Z-0001rq-Pa; Thu, 17 Jul 2025 05:34:41 -0400
+ id 1ucL0R-0001pX-Ul; Thu, 17 Jul 2025 05:34:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL0X-0001oi-Ud; Thu, 17 Jul 2025 05:34:31 -0400
+ id 1ucL0P-0001nQ-Sa; Thu, 17 Jul 2025 05:34:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B100137CEE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 47049137CE9;
  Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 757872491E8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B7F62491E3;
  Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Chaney, Ben" <bchaney@akamai.com>,
- Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 46/65] migration: Don't sync volatile memory after
- migration completes
-Date: Thu, 17 Jul 2025 12:33:42 +0300
-Message-ID: <20250717093412.728292-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 41/65] target/arm: Don't enforce NSE,
+ NS check for EL3->EL3 returns
+Date: Thu, 17 Jul 2025 12:33:37 +0300
+Message-ID: <20250717093412.728292-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
@@ -60,34 +61,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Chaney, Ben" <bchaney@akamai.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Syncing volatile memory provides no benefit, instead it can cause
-performance issues in some cases.  Only sync memory that is marked as
-non-volatile after migration completes on destination.
+In the Arm ARM, rule R_TYTWB that defines illegal exception return cases
+includes the case:
+ If FEAT_RME is implemented, then if SCR_EL3.{NSE, NS} is {1, 0}, an
+ exception return from EL3 to a lower Exception level
 
-Signed-off-by: Ben Chaney <bchaney@akamai.com>
-Fixes: bd108a44bc29 (migration: ram: Switch to ram block writeback)
-Link: https://lore.kernel.org/r/1CC43F59-336F-4A12-84AD-DB89E0A17A95@akamai.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 983899eab4939dc4dff67fa4d822c5b4df7eae21)
+Our implementation of this check fails to check that the
+return is to a lower exception level, so it will incorrectly fire on
+EL3->EL3 exception returns.
+
+Fix the check condition. This requires us to move it further
+down in the function to a point where we know the new_el value.
+
+Fixes: 35aa6715ddcd9 ("target/arm: Catch illegal-exception-return from EL3 with bad NSE/NS")
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3016
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250704165636.261888-1-peter.maydell@linaro.org
+(cherry picked from commit c563cd7e61d074f58eef413322144461dd243716)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 424df6d9f1..a0784d99b2 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3598,7 +3598,9 @@ static int ram_load_cleanup(void *opaque)
-     RAMBlock *rb;
- 
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        qemu_ram_block_writeback(rb);
-+        if (memory_region_is_nonvolatile(rb->mr)) {
-+            qemu_ram_block_writeback(rb);
-+        }
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 9244848efe..be0935d194 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -653,15 +653,6 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         spsr &= ~PSTATE_SS;
      }
  
-     xbzrle_load_cleanup();
+-    /*
+-     * FEAT_RME forbids return from EL3 with an invalid security state.
+-     * We don't need an explicit check for FEAT_RME here because we enforce
+-     * in scr_write() that you can't set the NSE bit without it.
+-     */
+-    if (cur_el == 3 && (env->cp15.scr_el3 & (SCR_NS | SCR_NSE)) == SCR_NSE) {
+-        goto illegal_return;
+-    }
+-
+     new_el = el_from_spsr(spsr);
+     if (new_el == -1) {
+         goto illegal_return;
+@@ -673,6 +664,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         goto illegal_return;
+     }
+ 
++    /*
++     * FEAT_RME forbids return from EL3 to a lower exception level
++     * with an invalid security state.
++     * We don't need an explicit check for FEAT_RME here because we enforce
++     * in scr_write() that you can't set the NSE bit without it.
++     */
++    if (cur_el == 3 && new_el < 3 &&
++        (env->cp15.scr_el3 & (SCR_NS | SCR_NSE)) == SCR_NSE) {
++        goto illegal_return;
++    }
++
+     if (new_el != 0 && arm_el_is_aa64(env, new_el) != return_to_aa64) {
+         /* Return to an EL which is configured for a different register width */
+         goto illegal_return;
 -- 
 2.47.2
 
