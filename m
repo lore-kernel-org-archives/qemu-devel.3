@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E456C83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FCDC83F34
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 17:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucSdn-0005lO-0c; Thu, 17 Jul 2025 13:43:31 -0400
+	id 1ucSdo-0005pw-4S; Thu, 17 Jul 2025 13:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1ucQDg-0006nW-6t
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:08:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ucQDh-0006p4-Lj
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:08:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1ucQDb-00027N-14
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:08:23 -0400
+ id 1ucQDb-00027d-C9
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:08:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752764893;
+ s=mimecast20190719; t=1752764894;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=14czh6RRPcrgej6f9V9oJtuw78x+35YkVJBQTbjE4ng=;
- b=J5jDqI7mJGOD1oUqAAIlgRd8ILu4BsMaoh23AEdJ5b8Ap3Np46KniUXqheuRaGgXL/fL2X
- Rd9GAaEDzuJ9pRRJVU1IgUPk5Lpms0CBlUGaj/Zusz/4viA4ApPlZBoI/Y0K1UGfCtmd4W
- CIzYAz0n078DWv38M0fthy5/JYgGZWE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DBQX4oHEyEVSgUlx/4xDvO7ZYEg0OgUmDIvJpF3hZz8=;
+ b=UHjRVohOD0RBAgl7IiM05Y8S05yQXdZwWWGiYERO745LUcP5KgQ7Binj4j+f3qUNhN7192
+ fuCn6jEh+hZTd/F7EONGwHMPwzFJ8Jvg9QzJV9Vym6htFzQ84T04hG+9rzW7vTuPd4B7B7
+ 8lk774NN9wjeqWpCo93ebhkb4JkMSrs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-RZnx5VtbOX-sV2ebTfkTjg-1; Thu,
- 17 Jul 2025 11:08:10 -0400
-X-MC-Unique: RZnx5VtbOX-sV2ebTfkTjg-1
-X-Mimecast-MFC-AGG-ID: RZnx5VtbOX-sV2ebTfkTjg_1752764889
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-3ttw-xoLMLaU-MQ083qRKQ-1; Thu,
+ 17 Jul 2025 11:08:12 -0400
+X-MC-Unique: 3ttw-xoLMLaU-MQ083qRKQ-1
+X-Mimecast-MFC-AGG-ID: 3ttw-xoLMLaU-MQ083qRKQ_1752764891
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E8CC19560B3
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 15:08:09 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66FCA195608B
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 15:08:11 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.44.33.65])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 74C2E180049D; Thu, 17 Jul 2025 15:08:07 +0000 (UTC)
+ id B92D318003FC; Thu, 17 Jul 2025 15:08:09 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 0/6] net: Fix various Coverity issues in vhost-user and passt
-Date: Thu, 17 Jul 2025 17:07:59 +0200
-Message-ID: <20250717150805.1344034-1-lvivier@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 1/6] net/passt: Remove unused "err" from
+ passt_vhost_user_event() (CID 1612375)
+Date: Thu, 17 Jul 2025 17:08:00 +0200
+Message-ID: <20250717150805.1344034-2-lvivier@redhat.com>
+In-Reply-To: <20250717150805.1344034-1-lvivier@redhat.com>
+References: <20250717150805.1344034-1-lvivier@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,41 +86,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series addresses several static analysis warnings reported by=0D
-Coverity (CIDs 1612365, 1612368, 1612369, 1612371, 1612372, 1612375)=0D
-in the vhost-user and passt networking code.=0D
-=0D
-The changes are mostly minor cleanups and fixes:=0D
-=0D
-Three patches remove an unused "err" variable and its associated=0D
-unreachable error handling block.=0D
-=0D
-One patch removes another piece of dead code in an error path by=0D
-refactoring away a goto.=0D
-=0D
-The remaining two patches initialize a pointer to prevent a potential=0D
-illegal memory access and add a check for the return value of=0D
-g_remove() to log potential errors.=0D
-=0D
-Laurent Vivier (6):=0D
-  net/passt: Remove unused "err" from passt_vhost_user_event() (CID=0D
-    1612375)=0D
-  net/vhost-user: Remove unused "err" from net_vhost_user_event() (CID=0D
-    1612372)=0D
-  net/passt: Remove dead code in passt_vhost_user_start error path (CID=0D
-    1612371)=0D
-  net/passt: Check return value of g_remove() in net_passt_cleanup()=0D
-    (CID 1612369)=0D
-  net/passt: Initialize "error" variable in net_passt_send() (CID=0D
-    1612368)=0D
-  net/vhost-user: Remove unused "err" from chr_closed_bh() (CID 1612365)=0D
-=0D
- net/passt.c      | 22 +++++++---------------=0D
- net/vhost-user.c |  9 ---------=0D
- 2 files changed, 7 insertions(+), 24 deletions(-)=0D
-=0D
--- =0D
-2.49.0=0D
-=0D
+The "err" variable was declared but never used within the
+passt_vhost_user_event() function. This resulted in a dead code
+warning (CID 1612375) from Coverity.
+
+Remove the unused variable and the associated error block
+to resolve the issue.
+
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+---
+ net/passt.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/net/passt.c b/net/passt.c
+index 6f616ba3c258..9cd5b3e6f2af 100644
+--- a/net/passt.c
++++ b/net/passt.c
+@@ -397,7 +397,6 @@ err:
+ static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
+ {
+     NetPasstState *s = opaque;
+-    Error *err = NULL;
+ 
+     switch (event) {
+     case CHR_EVENT_OPENED:
+@@ -428,10 +427,6 @@ static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
+         /* Ignore */
+         break;
+     }
+-
+-    if (err) {
+-        error_report_err(err);
+-    }
+ }
+ 
+ static int net_passt_vhost_user_init(NetPasstState *s, Error **errp)
+-- 
+2.49.0
 
 
