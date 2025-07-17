@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40CDC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071D7C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLDu-0006oc-K2; Thu, 17 Jul 2025 05:48:18 -0400
+	id 1ucLCh-0004oa-KP; Thu, 17 Jul 2025 05:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1U-0002N2-04; Thu, 17 Jul 2025 05:35:30 -0400
+ id 1ucL0T-0001pp-7I; Thu, 17 Jul 2025 05:34:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1R-00025V-Um; Thu, 17 Jul 2025 05:35:27 -0400
+ id 1ucL0R-0001nW-Ei; Thu, 17 Jul 2025 05:34:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4733B137CF8;
- Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E60F137CEA;
+ Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2A75F2491F2;
- Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 37E6F2491E4;
+ Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 56/65] amd_iommu: Fix the calculation for Device Table
- size
-Date: Thu, 17 Jul 2025 12:33:52 +0300
-Message-ID: <20250717093412.728292-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 42/65] hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
+Date: Thu, 17 Jul 2025 12:33:38 +0300
+Message-ID: <20250717093412.728292-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,36 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Correctly calculate the Device Table size using the format encoded in the
-Device Table Base Address Register (MMIO Offset 0000h).
+Allows to run KVM guests inside the imx8mp-evk machine.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-7-alejandro.j.jimenez@oracle.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 67d3077ee403472d45794399e97c9f329242fce9)
+Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
+CC: qemu-stable
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 930180f3b9a292639eb894f1ca846683834ed4b7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 69d69a9b2d..06df344575 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -665,8 +665,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
-     uint64_t val = amdvi_readq(s, AMDVI_MMIO_DEVICE_TABLE);
-     s->devtab = (val & AMDVI_MMIO_DEVTAB_BASE_MASK);
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 82edf61082..d775aa934a 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -356,6 +356,10 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+                                qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+             sysbus_connect_irq(gicsbd, i + ms->smp.cpus,
+                                qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++            sysbus_connect_irq(gicsbd, i + 2 * ms->smp.cpus,
++                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++            sysbus_connect_irq(gicsbd, i + 3 * ms->smp.cpus,
++                               qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+         }
+     }
  
--    /* set device table length */
--    s->devtab_len = ((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1 *
-+    /* set device table length (i.e. number of entries table can hold) */
-+    s->devtab_len = (((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1) *
-                     (AMDVI_MMIO_DEVTAB_SIZE_UNIT /
-                      AMDVI_MMIO_DEVTAB_ENTRY_SIZE));
- }
 -- 
 2.47.2
 
