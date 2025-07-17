@@ -4,86 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EBDC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BEFC83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLCS-0004aD-HT; Thu, 17 Jul 2025 05:46:48 -0400
+	id 1ucLCX-0004eK-TO; Thu, 17 Jul 2025 05:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucKtu-0004kP-Nx
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:27:41 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucKts-000188-CU
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:27:38 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-60768f080d8so1362779a12.1
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 02:27:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752744454; x=1753349254; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rJyVsKo6V40Q/oce/4z02JkREpVcdr7tpwIO/CZiuWE=;
- b=bVqVG9xgKEQH3Ho0TdoREGdN49ePzcHwziF9oLTlN5tEbbTEf44SuRCmpuGozlJ/I4
- zoJZB/gOE/GE3gJpMlHsZGQa+5K0IfCC6Aqha0wpiuPpdlnCdwmqWqSDs5pYM6jM17mZ
- mBVraYMqQSJNhiEkXqLTYFOJh5URCPYs/2WlAiogv5C6zRCGiyVMbU6ksgeMcy933pFt
- 1iikwMVJUkuh8GP2tx6Vl2zB71gsZQ0SCthf5Wpok1M+49BtNlnDJG7cOt1CaM8dSVBr
- yC8xyWWuCNR4IaAas1GA2WEbPKhpuD2WqNqerZUISyp9ssEtYq8HeagG8CwkYuZtR3bo
- Em2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752744454; x=1753349254;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rJyVsKo6V40Q/oce/4z02JkREpVcdr7tpwIO/CZiuWE=;
- b=isQxD0jtSXi3HgxfKJlJN5Wyy6AOv4qZsXyF8VYX8wHRbjIfTnG18jwKU3YDsa40E4
- 6L9ZW0ugwukSJID27N3ijLbiKGYjMynMADVOQMEK8YY25MBJPVMCugNdmrIsYyhA2erX
- bxg7FaNptcBIjnvz2WAfb3M5MHmhvidTVnIj7IfgCmTGcsv8YczYDSwHrIlhNnPn3gim
- KLhkScAx7w5ykyYVRAuK1dGW/7xaHbnUYJ4x0YK0ZEWxmimyeTRQLBscJfp6GlmTWXFE
- DYoX1KFXWuOmkoh8kBCGBvwOqv+QlNyIGYVUsGxEReYPI7UjznpGs1zAq0TMI8wb7W7x
- mj+A==
-X-Gm-Message-State: AOJu0YylSu0cvNUOqJbBvduJlFaR6VuJF72pIMSvOPhntdFecPjQXdmw
- 0Hl38LEZsK9P+LdM3vgayyAF/bx211sGEGqhgSZZbxc3Y45KranWAMVoXEkHmXd4OzhyUp6ldNX
- BFPsyR2AO86kkISpIQDuhiFuDjdw+7BPnO+0kQdLI1AK8TbiNUxpZ
-X-Gm-Gg: ASbGnctcNUHls3mvEaUczXScn/lkIaRJAjUKvC3JRTfFFsttWFvF2UazqN0dwwnzrKJ
- ARb2a6Owf82k4tzFnFngEF1SIp3pjH7MBWSQ5G5iafuDT34/XRcgceEDZ1OyJySjtE3YO8nK1CA
- vn3Ds/0uMgfNK7ZOcde3mwhstz4UMmK85J/hPwe5cf3agP0NyMben1yQVmH6Bn633+JBcdwY+rR
- X+1MFR2c5irwpxk
-X-Google-Smtp-Source: AGHT+IFl62n0riT96YqsNZJXjpnOH8esI3lFPw167FfDcJ6VxXcFd3e9L1A92a+OhN4AqBlY1MUJnqPdZPy3PNpU/ZI=
-X-Received: by 2002:a05:6402:40c6:b0:607:f431:33fb with SMTP id
- 4fb4d7f45d1cf-6128590a18cmr5610549a12.3.1752744454433; Thu, 17 Jul 2025
- 02:27:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL0O-0001n9-RK; Thu, 17 Jul 2025 05:34:21 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL0M-0001mc-Be; Thu, 17 Jul 2025 05:34:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2D17B137CE7;
+ Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1058E2491E1;
+ Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 v2 00/65] Patch Round-up for stable 10.0.3,
+ freeze on 2025-07-21
+Date: Thu, 17 Jul 2025 12:33:35 +0300
+Message-ID: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <aHjAsibYCOu0YuU3@redhat.com>
-In-Reply-To: <aHjAsibYCOu0YuU3@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 17 Jul 2025 12:27:08 +0300
-X-Gm-Features: Ac12FXzUPKpRYkYp9TSUb2wVgHXQp357b0aPR7ybMTJ8j1zcsZT2KuNMkcj7SIs
-Message-ID: <CAAjaMXY-fMJ9MFjOURct-zxPi8nCVraoxjgy+A960zHD-iFu1A@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,220 +59,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 12:22=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Wed, Jul 16, 2025 at 09:08:00AM +0300, Manos Pitsidianakis wrote:
-> > Add argument parsing to functional tests to improve developer experienc=
-e
-> > when running individual tests. All logs are printed to stdout
-> > interspersed with TAP output.
-> >
-> >   ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
-> >   usage: test_aarch64_virt [-h] [-d]
-> >
-> >   QEMU Functional test
-> >
-> >   options:
-> >     -h, --help   show this help message and exit
-> >     -d, --debug  Also print test and console logs on stdout. This will
-> >                  make the TAP output invalid and is meant for debugging
-> >                  only.
-> >
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> >  docs/devel/testing/functional.rst      |  2 ++
-> >  tests/functional/qemu_test/testcase.py | 51 ++++++++++++++++++++++++++=
-++++++--
-> >  2 files changed, 50 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/fun=
-ctional.rst
-> > index 9e56dd1b1189216b9b4aede00174c15203f38b41..9d08abe2848277d635befb0=
-296f578cfaa4bd66d 100644
-> > --- a/docs/devel/testing/functional.rst
-> > +++ b/docs/devel/testing/functional.rst
-> > @@ -63,6 +63,8 @@ directory should be your build folder. For example::
-> >    $ export QEMU_TEST_QEMU_BINARY=3D$PWD/qemu-system-x86_64
-> >    $ pyvenv/bin/python3 ../tests/functional/test_file.py
-> >
-> > +By default, functional tests redirect informational logs and console o=
-utput to
-> > +log files. Specify the ``--debug`` flag to also print those to standar=
-d output.
-> >  The test framework will automatically purge any scratch files created =
-during
-> >  the tests. If needing to debug a failed test, it is possible to keep t=
-hese
-> >  files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=3D1``` as an=
- env
-> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/=
-qemu_test/testcase.py
-> > index 2082c6fce43b0544d4e4258cd4155f555ed30cd4..fad7a946c6677e9ef5c42b8=
-f77187ba836c11aeb 100644
-> > --- a/tests/functional/qemu_test/testcase.py
-> > +++ b/tests/functional/qemu_test/testcase.py
-> > @@ -11,6 +11,7 @@
-> >  # This work is licensed under the terms of the GNU GPL, version 2 or
-> >  # later.  See the COPYING file in the top-level directory.
-> >
-> > +import argparse
-> >  import logging
-> >  import os
-> >  from pathlib import Path
-> > @@ -31,6 +32,20 @@
-> >  from .uncompress import uncompress
-> >
-> >
-> > +def parse_args(test_name: str) -> argparse.Namespace:
-> > +    parser =3D argparse.ArgumentParser(
-> > +        prog=3Dtest_name, description=3D"QEMU Functional test"
-> > +    )
-> > +    parser.add_argument(
-> > +        "-d",
-> > +        "--debug",
-> > +        action=3D"store_true",
-> > +        help=3D"Also print test and console logs on stdout. This will =
-make the"
-> > +        " TAP output invalid and is meant for debugging only.",
-> > +    )
-> > +    return parser.parse_args()
-> > +
-> > +
-> >  class QemuBaseTest(unittest.TestCase):
-> >
-> >      '''
-> > @@ -196,6 +211,9 @@ def assets_available(self):
-> >          return True
-> >
-> >      def setUp(self):
-> > +        path =3D os.path.basename(sys.argv[0])[:-3]
-> > +        args =3D parse_args(path)
->
-> IMHO this is not code that belongs in setUp. Indeed, I don't think
-> it belongs in this file at all, better have a helper for parsing
-> args in 'utils', and expose a global 'debug_enabled' flag from utils
-> that we can reference elsewhere.
+The following patches are queued for QEMU stable v10.0.3:
 
-setUp is where the logs are setup, do you mean logs should be split
-into another function/file altogether? Maybe out of scope for this
-patch, I can another one that does it before adding the --debug
-option. What do you think?
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
->
-> > +        self.debug_output =3D args.debug
-> >          self.qemu_bin =3D os.getenv('QEMU_TEST_QEMU_BINARY')
-> >          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY mus=
-t be set')
-> >          self.arch =3D self.qemu_bin.split('-')[-1]
-> > @@ -221,6 +239,16 @@ def setUp(self):
-> >          self.machinelog.setLevel(logging.DEBUG)
-> >          self.machinelog.addHandler(self._log_fh)
-> >
-> > +        if self.debug_output:
-> > +            handler =3D logging.StreamHandler(sys.stdout)
-> > +            handler.setLevel(logging.DEBUG)
-> > +            formatter =3D logging.Formatter(
-> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-> > +            )
-> > +            handler.setFormatter(formatter)
-> > +            self.log.addHandler(handler)
-> > +            self.machinelog.addHandler(handler)
->
-> There was already a lot of effectively duplicated code between
-> this and the console_log stuff below. This new addition makes
-> that duplication even more substantial, such that I think it
-> all needs to be spun out into a helper method.
+Patch freeze is 2025-07-21, and the release is planned for 2025-07-23:
 
-Ditto
+  https://wiki.qemu.org/Planning/10.0
 
->
-> > +
-> >          if not self.assets_available():
-> >              self.skipTest('One or more assets is not available')
-> >
-> > @@ -230,11 +258,16 @@ def tearDown(self):
-> >          if self.socketdir is not None:
-> >              shutil.rmtree(self.socketdir.name)
-> >              self.socketdir =3D None
-> > -        self.machinelog.removeHandler(self._log_fh)
-> > -        self.log.removeHandler(self._log_fh)
-> > +        for handler in [self._log_fh, logging.StreamHandler(sys.stdout=
-)]:
->
-> We should have stashed the original handler when created,
-> rather than re-creating StreamHandler at time of removal.
-> I'm kinda of surprised it even works to re-create it.
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-It's the same file descriptor, after all. I'd be surprised if it didn't wor=
-k.
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
->
-> > +            self.machinelog.removeHandler(handler)
-> > +            self.log.removeHandler(handler)
-> >
-> >      def main():
-> >          path =3D os.path.basename(sys.argv[0])[:-3]
-> > +        # If argparse receives --help or an unknown argument, it will =
-raise a
-> > +        # SystemExit which will get caught by the test runner. Parse t=
-he
-> > +        # arguments here too to handle that case.
-> > +        _ =3D parse_args(path)
-> >
-> >          cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
-> >          if cache is not None:
-> > @@ -292,6 +325,14 @@ def setUp(self):
-> >          fileFormatter =3D logging.Formatter('%(asctime)s: %(message)s'=
-)
-> >          self._console_log_fh.setFormatter(fileFormatter)
-> >          console_log.addHandler(self._console_log_fh)
-> > +        if self.debug_output:
-> > +            handler =3D logging.StreamHandler(sys.stdout)
-> > +            handler.setLevel(logging.DEBUG)
-> > +            formatter =3D logging.Formatter(
-> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-> > +            )
-> > +            handler.setFormatter(formatter)
-> > +            console_log.addHandler(handler)
-> >
-> >      def set_machine(self, machinename):
-> >          # TODO: We should use QMP to get the list of available machine=
-s
-> > @@ -398,5 +439,9 @@ def set_vm_arg(self, arg, value):
-> >      def tearDown(self):
-> >          for vm in self._vms.values():
-> >              vm.shutdown()
-> > -        logging.getLogger('console').removeHandler(self._console_log_f=
-h)
-> > +        for handler in [
-> > +            self._console_log_fh,
-> > +            logging.StreamHandler(sys.stdout),
-> > +        ]:
-> > +            logging.getLogger("console").removeHandler(handler)
-> >          super().tearDown()
-> >
-> > ---
-> > base-commit: c079d3a31e45093286c65f8ca5350beb3a4404a9
-> > change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
-> >
-> > --
-> > =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
-=CE=B8=CE=AE=CF=84=CF=89
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+Thanks!
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+/mjt
+
+--------------------------------------
+01* fb8e59abbe46 Jamin Lin:
+   hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware hang
+02* e6941ac10619 Jamin Lin:
+   hw/arm/aspeed_ast27x0: Fix RAM size detection failure on BE hosts
+03* 9498e2f7e1a2 Weifeng Liu:
+   ui/gtk: Document scale and coordinate handling
+04* 3a6b314409b4 Weifeng Liu:
+   ui/gtk: Use consistent naming for variables in different coordinates
+05* a19665448156 Weifeng Liu:
+   gtk/ui: Introduce helper gd_update_scale
+06* 8fb072472c38 Weifeng Liu:
+   ui/gtk: Update scales in fixed-scale mode when rendering GL area
+07* 30aa105640b0 Weifeng Liu:
+   ui/sdl: Consider scaling in mouse event handling
+08* 7ed96710e82c Daniel P. Berrangé:
+   ui/vnc.c: replace big endian flag with byte order value
+09* 70097442853c Daniel P. Berrangé:
+   ui/vnc: take account of client byte order in pixman format
+10* 63d320909220 Daniel P. Berrangé:
+   ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
+11* e6bc01777e5a Guenter Roeck:
+   hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
+12* a9403bfcd930 Huaitong Han:
+   vhost: Don't set vring call if guest notifier is unused
+13* 0b006153b7ec Bernhard Beschow:
+   hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+14* 31753d5a336f Sairaj Kodilkar:
+   hw/i386/amd_iommu: Fix device setup failure when PT is on.
+15* 0f178860df34 Vasant Hegde:
+   hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+16* 5ddd6c8dc849 Volker Rümelin:
+   audio: fix SIGSEGV in AUD_get_buffer_size_out()
+17* ccb4fec0e5f2 Volker Rümelin:
+   audio: fix size calculation in AUD_get_buffer_size_out()
+18* d009f26a54f5 Volker Rümelin:
+   hw/audio/asc: fix SIGSEGV in asc_realize()
+19* 0b901459a87a Xin Li (Intel):
+   target/i386: Remove FRED dependency on WRMSRNS
+20* 2e887187454e Stefan Hajnoczi:
+   iotests: fix 240
+21* eef2dd03f948 Fiona Ebner:
+   hw/core/qdev-properties-system: Add missing return in set_drive_helper()
+22* 9c55c03c05c1 Bibo Mao:
+   hw/loongarch/virt: Fix big endian support with MCFG table
+23* f5ec751ee70d Shameer Kolothum:
+   hw/arm/virt: Check bypass iommu is not set for iommu-map DT property
+24* e372214e663a Ethan Chen:
+   qemu-options.hx: Fix reversed description of icount sleep behavior
+25* cd38e638c43e Peter Maydell:
+   hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
+26* 5ad2b1f443a9 J. Neuschäfer:
+   linux-user/arm: Fix return value of SYS_cacheflush
+27* e7788da9860c Song Gao:
+   target/loongarch: add check for fcond
+28* c2a2e1ad2a74 Song Gao:
+   target/loongarch: fix vldi/xvldi raise wrong error
+29* 0d0fc3f46589 Richard Henderson:
+   tcg: Fix constant propagation in tcg_reg_alloc_dup
+30* 9a3bf0e0ab62 Solomon Tan:
+   target/arm: Make RETA[AB] UNDEF when pauth is not implemented
+31* a412575837b6 Philippe Mathieu-Daudé:
+   target/arm: Correct KVM & HVF dtb_compatible value
+32* 1fa2ffdbec55 Yiwei Zhang:
+   virtio-gpu: support context init multiple timeline
+33* 78e378154120 Kevin Wolf:
+   hw/s390x/ccw-device: Fix memory leak in loadparm setter
+34* f9b0f6930407 Richard Henderson:
+   target/arm: Fix SME vs AdvSIMD exception priority
+35* b4b2e070f41d Richard Henderson:
+   target/arm: Fix sve_access_check for SME
+36* e6ffd009c771 Richard Henderson:
+   target/arm: Fix 128-bit element ZIP, UZP, TRN
+37* 3801c5b75ffc Richard Henderson:
+   target/arm: Fix PSEL size operands to tcg_gen_gvec_ands
+38* cfc688c00ade Richard Henderson:
+   target/arm: Fix f16_dotadd vs nan selection
+39* bf020eaa6741 Richard Henderson:
+   target/arm: Fix bfdotadd_ebf vs nan selection
+40 0f1d6606c28d Mark Cave-Ayland:
+   target/i386: fix TB exit logic in gen_movl_seg() when writing to SS
+41 c563cd7e61d0 Peter Maydell:
+   target/arm: Don't enforce NSE,NS check for EL3->EL3 returns
+42 930180f3b9a2 Bernhard Beschow:
+   hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
+43 6a3e132a1be8 Peter Maydell:
+   linux-user: Implement fchmodat2 syscall
+44 c4828cb8502d Peter Maydell:
+   linux-user: Check for EFAULT failure in nanosleep
+45 e4e839b2eeea Geoffrey Thomas:
+   linux-user: Hold the fd-trans lock across fork
+46 983899eab493 Chaney, Ben:
+   migration: Don't sync volatile memory after migration completes
+47 d6390204c61e Peter Maydell:
+   linux-user: Use qemu_set_cloexec() to mark pidfd as FD_CLOEXEC
+48 f180e367fce4 Thomas Huth:
+   accel/kvm: Adjust the note about the minimum required kernel version
+49 110d0fa2d4d1 Anastasia Belova:
+   net: fix buffer overflow in af_xdp_umem_create()
+50 adda0ad56bd2 Akihiko Odaki:
+   virtio-net: Add queues for RSS during migration
+51 091c7d7924f3 Alejandro Jimenez:
+   amd_iommu: Fix Miscellaneous Information Register 0 encoding
+52 c63b8d1425ba Alejandro Jimenez:
+   amd_iommu: Fix Device ID decoding for INVALIDATE_IOTLB_PAGES command
+53 ff3dcb3bf652 Alejandro Jimenez:
+   amd_iommu: Update bitmasks representing DTE reserved fields
+54 108e10ff6909 Alejandro Jimenez:
+   amd_iommu: Fix masks for various IOMMU MMIO Registers
+55 123cf4bdd378 Alejandro Jimenez:
+   amd_iommu: Fix mask to retrieve Interrupt Table Root Pointer from DTE
+56 67d3077ee403 Alejandro Jimenez:
+   amd_iommu: Fix the calculation for Device Table size
+57 5959b641c98b Alejandro Jimenez:
+   amd_iommu: Remove duplicated definitions
+58 5788929e05e1 Ethan Milon:
+   amd_iommu: Fix truncation of oldval in amdvi_writeq
+59 d402da1360c2 Kevin Wolf:
+   file-posix: Fix aio=threads performance regression after enablign FUA
+60 a598090ebaeb Cole Robinson:
+   roms: re-remove execute bit from hppa-firmware*
+61 9f749129e262 David Hildenbrand:
+   vhost: Fix used memslot tracking when destroying a vhost device
+62 aef22331b5a4 Akihiko Odaki:
+   ui/vnc: Do not copy z_stream
+63 a62fef582995 Michael Tokarev:
+   i386/cpu: Fix cpu number overflow in CPUID.01H.EBX[23:16]
+64 3e86124e7cb9 Qian Wen:
+   i386/cpu: Fix overflow of cache topology fields in CPUID.04H
+65 5d21ee453ad8 Zhao Liu:
+   i386/cpu: Honor maximum value for CPUID.8000001DH.EAX[25:14]
+
+(commit(s) marked with * were in previous series and are not resent)
 
