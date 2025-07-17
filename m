@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC00C83F38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74E8C83F1A
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucVSi-0006uX-Ug; Thu, 17 Jul 2025 16:44:17 -0400
+	id 1ucVSv-00073I-Nd; Thu, 17 Jul 2025 16:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW6-0008Uz-O9
+ id 1ucTW6-0008Uy-Nz
  for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:39 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW4-00008E-2F
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:38 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0iXW018940;
+ id 1ucTW3-00008R-UN
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:37 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0j66010805;
  Thu, 17 Jul 2025 18:39:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=VgprnmZCr3q9J4H2t0odPHCzfj2X9xCle5ED7ksx70k=; b=
- SGqZYH8sniDD4lCBYc+mJ62kZFHOelAQT9zWAkSNjxDuEl4Jb2YLL/cCaEZe6Qar
- fHxN+5tgDO+o5gaApVr7/6A9z1JkonO9NhC+iP3fyRkrp8Vn/z09sP9QQkQXf3b8
- rJVH31fYRTVNWh8YhZxhIWvh6ZWsiHldRsXM/vhA84hayXRhL4WEyQuqVBSdEu0L
- 156A+DKAsVR5oEXjzu3muoJ9+WBrDA4tMnvYq8d9q1nAapjOX35LFJpq77zS/oc2
- CEJfVyJTDIJX9Mi8iF2s/9iHZFT9yGP++aB/EVYCTh0AYyz1pjcRyLyx6ri+g0Fu
- S+hCNkRW3AHy9pkhjCtxPQ==
+ corp-2025-04-25; bh=CPjLh5gQBfnwSKznR9Oac4ZSf2Y+9lmNJZ/lIKEoDXA=; b=
+ PIZcTRxOg8HYBVMUJzHJ9Vp+BXQHn8wmG0R/bE2EsrY7BRoYN3g+3c9qVoVp1goX
+ 5pNZub8iKl3bk9IEHskEYpmSlt1M0753nGUPnInlQOwEiTmT+1YDMy5+tnMs2PRq
+ wZpV7jpkxJvDXmSgi0DApC/0j1QjfWkIV3QAjYCPCoS4/YXxjeSBns/FlkFRHInR
+ NQC1WCxbUGOWQxh2rNU+rec6JEnlS/D4jZF1qYZ14hoygcx0BJOnpJB5C9vqh8Dx
+ Olof6D/p/K9h1eLGEgMWY8jC6NtrQVUDDf6p0if801lBNOY9Ut4Ys1S87qud+zHY
+ ONzWzIVkRwQukXkmNzs+Qw==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx83yb8-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhjfcad1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Thu, 17 Jul 2025 18:39:31 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56HGxmrQ023785; Thu, 17 Jul 2025 18:39:30 GMT
+ with ESMTP id 56HGsXuY023941; Thu, 17 Jul 2025 18:39:30 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue5d2t9d-1
+ 47ue5d2t9p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Thu, 17 Jul 2025 18:39:30 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoij007425;
- Thu, 17 Jul 2025 18:39:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoil007425;
+ Thu, 17 Jul 2025 18:39:30 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue5d2t8q-2; Thu, 17 Jul 2025 18:39:29 +0000
+ ESMTP id 47ue5d2t8q-3; Thu, 17 Jul 2025 18:39:30 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V2 1/8] migration: stop vm earlier for cpr
-Date: Thu, 17 Jul 2025 11:39:21 -0700
-Message-Id: <1752777568-236368-2-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V2 2/8] migration: cpr setup notifier
+Date: Thu, 17 Jul 2025 11:39:22 -0700
+Message-Id: <1752777568-236368-3-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
 References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
@@ -73,18 +73,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507170165
-X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=68794363 b=1 cx=c_pps
+X-Proofpoint-GUID: P4GrYe6bmPEe7RQpPF5amFGTalN4MHsm
+X-Authority-Analysis: v=2.4 cv=O6g5vA9W c=1 sm=1 tr=0 ts=68794363 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=SpDTNw6YXiUZnQYNxJkA:9
-X-Proofpoint-ORIG-GUID: lMa3iabYyk_bQGaBuyJLWQ8WtA237J8Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX/JHB6pMdyKun
- dW/lEDJdCYpuVEj9WYvgj9ya9tDd9xOxkx7mCglNLSeJeR8RIRjVq98GGvsn375+q6gqX8+BHPV
- ibhM/YWbZ2ZkxEYl95q/79mMaBZIqvMpeIrIrXc3slhVoNl3tZtXVX8ZAGf3ci6j5ySqKv1DPfT
- s19MWsxmMS4kBXn/J1HdB4bjMJ4m6n5/8jpN1A6YO0wQ61Iabh/4jqt7LDDGO4+juqm+tv7vwkH
- HRsdyB+mALTSV5K+ZBat9/JRZ5JQXXKBQprMd+IlybUtDflKSo6sWI944G8EYiq193qgE7gSpSu
- SGY/BTShiYQpZ/jHU+nI03s6jFokF6IUxf/cG56oxHL0xzSBR9kdl0eb1etxh9c6mKRZ39qGsq5
- L+1OUkmXtSZIRiub3/8RtvPb5TYlNok0bFC9+SU0I7tabPZL3QnCFlFemfTF6bkVYeQhHq0/
-X-Proofpoint-GUID: lMa3iabYyk_bQGaBuyJLWQ8WtA237J8Y
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=8YgkOPFe86U-wwtjNboA:9
+X-Proofpoint-ORIG-GUID: P4GrYe6bmPEe7RQpPF5amFGTalN4MHsm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX+x/0f5gL7ahI
+ HJW8UV3LmZS7qWB9DltXIoN4ZJDqgQiItt/zzKYqKNIhvuX4z7b/pntbGuFfA5+y+yCduiQ0ATo
+ /SbaAWUNEJVj0FFPddThU3p0hw0zLeFJXKqxOhIPBZAXpN+bq0NMcILUcj2tSfc2uq8DD4twHQ4
+ NLu4Xz7E2QW4U2FBFkd61UV1xbs4maAwn8/O7yVXvTHsmOm7ggAIQy56cDjb/zy1t9RB+lzsocB
+ kcwoSsg9bgz3CAquf+vNIO9kEgY9wMvBfUNzDFHZW3ZRaqBIS8N8zrVz0k36cyVQTTVvVR1HeNs
+ oDZ4Dc6F+vGGelMas2wcoXpBHFDAo6y1XcLKs7wwDhuOXMSDBcJegwdQzNKG6xWdbm5+tRCmA3B
+ 0V7fp1wkOV0KU08+rE68+THtqpsr7HzVqh5sCmvdX/qKBIbEf7izpr+09Mg9Hw9Ey1YwBTyG
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -110,95 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stop the vm earlier for cpr, before cpr_save_state which causes new QEMU
-to proceed and initialize devices.  We must guarantee devices are stopped
-in old QEMU, and all source notifiers called, before they are initialized
-in new QEMU.
+Call MIG_EVENT_PRECOPY_SETUP earlier, before CPR starts.  An early notifier
+is needed for resetting vhost devices, as explained in the next patch.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- migration/migration.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ migration/migration.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 10c216d..2efe60a 100644
+index 2efe60a..49d1e7d 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1662,6 +1662,7 @@ void migration_cancel(void)
-                           MIGRATION_STATUS_CANCELLED);
-         cpr_state_close();
-         migrate_hup_delete(s);
-+        vm_resume(s->vm_old_state);
-     }
- }
- 
-@@ -2196,6 +2197,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     MigrationAddress *addr = NULL;
-     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
-     MigrationChannel *cpr_channel = NULL;
-+    bool stopped = false;
- 
-     /*
-      * Having preliminary checks for uri and channel
-@@ -2248,6 +2250,15 @@ void qmp_migrate(const char *uri, bool has_channels,
-         return;
+@@ -2259,7 +2259,14 @@ void qmp_migrate(const char *uri, bool has_channels,
+         stopped = true;
      }
  
-+    if (migrate_mode_is_cpr(s)) {
-+        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-+        if (ret < 0) {
-+            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-+            goto out;
-+        }
-+        stopped = true;
++    /* Notify before starting migration thread, and before starting cpr */
++    if (!resume_requested &&
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
++        goto out;
 +    }
 +
      if (cpr_state_save(cpr_channel, &local_err)) {
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
          goto out;
      }
-@@ -2274,6 +2285,9 @@ out:
-     if (local_err) {
-         migration_connect_set_error(s, local_err);
-         error_propagate(errp, local_err);
-+        if (stopped) {
-+            vm_resume(s->vm_old_state);
-+        }
-     }
- }
  
-@@ -2319,6 +2333,9 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
-         }
-         migration_connect_set_error(s, local_err);
-         error_propagate(errp, local_err);
-+        if (migrate_mode_is_cpr(s)) {
-+            vm_resume(s->vm_old_state);
-+        }
-         return;
-     }
- }
-@@ -3961,7 +3978,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-     Error *local_err = NULL;
-     uint64_t rate_limit;
-     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
--    int ret;
- 
-     /*
-      * If there's a previous error, free it and prepare for another one.
-@@ -4033,14 +4049,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-         return;
-     }
- 
--    if (migrate_mode_is_cpr(s)) {
--        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
--        if (ret < 0) {
--            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+@@ -4010,11 +4017,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     } else {
+         /* This is a fresh new migration */
+         rate_limit = migrate_max_bandwidth();
+-
+-        /* Notify before starting migration thread */
+-        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
 -            goto fail;
 -        }
--    }
--
-     /*
-      * Take a refcount to make sure the migration object won't get freed by
-      * the main thread already in migration_shutdown().
+     }
+ 
+     migration_rate_set(rate_limit);
 -- 
 1.8.3.1
 
