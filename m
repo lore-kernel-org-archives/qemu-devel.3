@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071D7C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 431DBC83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLCh-0004oa-KP; Thu, 17 Jul 2025 05:47:03 -0400
+	id 1ucLE6-0007Xx-3y; Thu, 17 Jul 2025 05:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL0T-0001pp-7I; Thu, 17 Jul 2025 05:34:29 -0400
+ id 1ucL1r-0002nc-LQ; Thu, 17 Jul 2025 05:35:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL0R-0001nW-Ei; Thu, 17 Jul 2025 05:34:24 -0400
+ id 1ucL1p-000265-DO; Thu, 17 Jul 2025 05:35:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5E60F137CEA;
- Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79E7E137CFB;
+ Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 37E6F2491E4;
- Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52A722491F4;
+ Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 42/65] hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
-Date: Thu, 17 Jul 2025 12:33:38 +0300
-Message-ID: <20250717093412.728292-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ethan Milon <ethan.milon@eviden.com>,
+ Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 58/65] amd_iommu: Fix truncation of oldval in
+ amdvi_writeq
+Date: Thu, 17 Jul 2025 12:33:54 +0300
+Message-ID: <20250717093412.728292-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,33 +61,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Ethan Milon <ethan.milon@eviden.com>
 
-Allows to run KVM guests inside the imx8mp-evk machine.
+The variable `oldval` was incorrectly declared as a 32-bit `uint32_t`.
+This could lead to truncation and incorrect behavior where the upper
+read-only 32 bits are significant.
 
-Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
-CC: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 930180f3b9a292639eb894f1ca846683834ed4b7)
+Fix the type of `oldval` to match the return type of `ldq_le_p()`.
+
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Ethan Milon <ethan.milon@eviden.com>
+Message-Id: <20250617150427.20585-9-alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 5788929e05e18ed5f76dc8ade4210f022c9ba5a1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 82edf61082..d775aa934a 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -356,6 +356,10 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                                qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
-             sysbus_connect_irq(gicsbd, i + ms->smp.cpus,
-                                qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
-+            sysbus_connect_irq(gicsbd, i + 2 * ms->smp.cpus,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
-+            sysbus_connect_irq(gicsbd, i + 3 * ms->smp.cpus,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
-         }
-     }
- 
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 06df344575..f773653487 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -140,7 +140,7 @@ static void amdvi_writeq(AMDVIState *s, hwaddr addr, uint64_t val)
+ {
+     uint64_t romask = ldq_le_p(&s->romask[addr]);
+     uint64_t w1cmask = ldq_le_p(&s->w1cmask[addr]);
+-    uint32_t oldval = ldq_le_p(&s->mmior[addr]);
++    uint64_t oldval = ldq_le_p(&s->mmior[addr]);
+     stq_le_p(&s->mmior[addr],
+             ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
+ }
 -- 
 2.47.2
 
