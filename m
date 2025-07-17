@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F0C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C0BC83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLGa-00055H-4W; Thu, 17 Jul 2025 05:51:04 -0400
+	id 1ucLJ1-0001q4-UX; Thu, 17 Jul 2025 05:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1F-00027o-Ih; Thu, 17 Jul 2025 05:35:16 -0400
+ id 1ucL1D-00026k-JS; Thu, 17 Jul 2025 05:35:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1B-00023A-Pb; Thu, 17 Jul 2025 05:35:12 -0400
+ id 1ucL11-0001qA-PB; Thu, 17 Jul 2025 05:35:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 10A69137CF4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 030F7137CF3;
  Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E7F242491EE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D8D712491ED;
  Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 52/65] amd_iommu: Fix Device ID decoding for
- INVALIDATE_IOTLB_PAGES command
-Date: Thu, 17 Jul 2025 12:33:48 +0300
-Message-ID: <20250717093412.728292-13-mjt@tls.msk.ru>
+ Ethan MILON <ethan.milon@eviden.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 51/65] amd_iommu: Fix Miscellaneous Information
+ Register 0 encoding
+Date: Thu, 17 Jul 2025 12:33:47 +0300
+Message-ID: <20250717093412.728292-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
@@ -63,42 +63,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The DeviceID bits are extracted using an incorrect offset in the call to
-amdvi_iotlb_remove_page(). This field is read (correctly) earlier, so use
-the value already retrieved for devid.
+The definitions encoding the maximum Virtual, Physical, and Guest Virtual
+Address sizes supported by the IOMMU are using incorrect offsets i.e. the
+VASize and GVASize offsets are switched. The value in the GVAsize field is
+also modified, since it was incorrectly encoded.
 
 Cc: qemu-stable@nongnu.org
 Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Co-developed-by: Ethan MILON <ethan.milon@eviden.com>
+Signed-off-by: Ethan MILON <ethan.milon@eviden.com>
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20250617150427.20585-2-alejandro.j.jimenez@oracle.com>
 Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-3-alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit c63b8d1425ba8b3b08ee4f7346457fd8a7f12a24)
+(cherry picked from commit 091c7d7924f33781c2fb8e7297dc54971e0c3785)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index af85706b8a..de55074b21 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -508,7 +508,7 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
- static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
- {
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 28125130c6..921f7e1a4f 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -196,9 +196,9 @@
+ #define AMDVI_PAGE_SHIFT_4K 12
+ #define AMDVI_PAGE_MASK_4K  (~((1ULL << AMDVI_PAGE_SHIFT_4K) - 1))
  
--    uint16_t devid = extract64(cmd[0], 0, 16);
-+    uint16_t devid = cpu_to_le16(extract64(cmd[0], 0, 16));
-     if (extract64(cmd[1], 1, 1) || extract64(cmd[1], 3, 1) ||
-         extract64(cmd[1], 6, 6)) {
-         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
-@@ -521,7 +521,7 @@ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
-                                     &devid);
-     } else {
-         amdvi_iotlb_remove_page(s, cpu_to_le64(extract64(cmd[1], 12, 52)) << 12,
--                                cpu_to_le16(extract64(cmd[1], 0, 16)));
-+                                devid);
-     }
-     trace_amdvi_iotlb_inval();
- }
+-#define AMDVI_MAX_VA_ADDR          (48UL << 5)
+-#define AMDVI_MAX_PH_ADDR          (40UL << 8)
+-#define AMDVI_MAX_GVA_ADDR         (48UL << 15)
++#define AMDVI_MAX_GVA_ADDR      (2UL << 5)
++#define AMDVI_MAX_PH_ADDR       (40UL << 8)
++#define AMDVI_MAX_VA_ADDR       (48UL << 15)
+ 
+ /* Completion Wait data size */
+ #define AMDVI_COMPLETION_DATA_SIZE    8
 -- 
 2.47.2
 
