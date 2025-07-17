@@ -4,92 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5E8C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739ADC83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucJZR-0008Ep-Pb; Thu, 17 Jul 2025 04:02:25 -0400
+	id 1ucJdV-0004pH-Ea; Thu, 17 Jul 2025 04:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1ucJZP-0008Dm-Ny
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:02:23 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1ucJZN-0006C3-I0
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:02:23 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3b5e6bfb427so343158f8f.2
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 01:02:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1752739339; x=1753344139; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=HOG8D/7qNCJPh9MwkO3VKDHXwHmSWp6l5mw9j64kA5A=;
- b=Hz2t723czXG6AID2Oi5OvDFzRDjUWBhF7SFZEufGpbTW7WkURgDgNdGTRbY5/91I8H
- FKFAjX67dwbB/ZhdRtHjHRUtO+SwUNucDO92GW1wBYMy88xBEIZZCIOabAjCxnGo19nX
- 0AAKWiGjRRRT/nd5Lx5hYCzq2Bgf7WgjDrYisq0y/FhT0otRM3buxwdz/YTMAFA0by0T
- X5qLkY/MtyLLqXi2S8NrCNTJQb5QtRt4IljvoJw4YUX1N4EkH0u2QIAqlRuHVhehIACp
- IA6CIh1u3rZ8zrtEeAc3cMSkUMF1pyS22Xmu5d4lABWN6SILeBL8S0AdsYLy5O1tJNpr
- qjoA==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ucJdQ-0004kE-JL
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:06:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ucJdH-0006mu-7J
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:06:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752739581;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RlJnwjeDE1GAbnO/XxhFYXL7uAR2EHW+OEhbSnCRXaw=;
+ b=EqHRq0h9VdHeONpOw2Y4PL1ayblGKeYMaSNIouZceWlVis6a/ve/wuwea2NuqKiG+m2AAa
+ pERuHtLs/N/fTMmpMew4wn3N9Rci2YE9hN+ramnersASwFHHgf+1/Hp9TzR1O9lJ0I/EqK
+ BecCoM1bBLuherie866XrtDdzfNQUzw=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-VUMwkSP8OOKVy6RiisRNzg-1; Thu, 17 Jul 2025 04:06:19 -0400
+X-MC-Unique: VUMwkSP8OOKVy6RiisRNzg-1
+X-Mimecast-MFC-AGG-ID: VUMwkSP8OOKVy6RiisRNzg_1752739578
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b38fc4d8dbaso801590a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 01:06:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752739339; x=1753344139;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HOG8D/7qNCJPh9MwkO3VKDHXwHmSWp6l5mw9j64kA5A=;
- b=hUibcLPF5RS+TNlmP3Y1mZgfhG3kGiRhHw7lCCiptRwUJWHDHR4eSxgpj33SbkJZU2
- YCSVWbv1YQUp/rt5Toy0hxWUlK8Nmg6Pk7Fx2YckJbB/LytkyIP9Ue/zvgUcj5oQ+5O1
- RRnj6PYRV54uMORaLpfiY5RPSx7gATUF5daV9dyckBxKWR10ySBoHveYoUj3L3PFboGh
- xHgGs3EnkPVWWZnbP93En4MjHobZpG+fI1zhWu/YSSr4HTcjf2HMwObp4Lx2mUgVb/86
- U8rslDaTv4/NnqeOMtcOqCQ5vqBKHev+qGFixFuEEoDgwAUnZP2MkOBSDg41AutmkLv7
- Rz/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW19BrPwUzIoVapnMbW5dTtqlgYpWCkrvsrJ+SUz0msKCKkeGiThx/ELKhIOcQjLRaqhDO8X3WfoK2E@nongnu.org
-X-Gm-Message-State: AOJu0Yzvs51vwSOR/dOWMaAGlzks0ytCbuiF65X3sekTMh9Oe0hGi9BR
- efl5Z11u2iBunPYBV8X7tvT7qoFntyCmlFoxNuNHF1GSiu/2mpsTSlClIVYAX0SIDKk=
-X-Gm-Gg: ASbGncv0vmbjskqNB7OQ8NUIEAezXiL422MBZ7YZVoot1y6mnJVEwwt+m9Rrwnl+WEf
- zoKI1JfU3UrCADLO5o/gkZQ4Q5DerwUeBH3zcccrqLpGvJspHbq4GFbC9CYY8AJgh4ElJUHztCc
- YlNprn7OjqblWzwtVcmBB/H1h051ogFyj+k7e7+aEVpLtrCO9AS4hHKrxY8EK+pAlVnl06sqWa1
- gpTHxf1XYeu+KBjacz6TaLwax3PrC9KukAHveTRcEN5md0LV0rvbhLUNd76ox5UJiT1xzpciN7s
- DmIzA21GC94BOewC6tCZ8YsZZkp2LhXxHncgpAbfHsTcuMM+8FNf3VP8u0PfjthQD4OvUvHYsHV
- 3FY5YERVPzqju8sAH6ZImKexQfihLDIBkQESnyJVsHVVGyRAVdz4=
-X-Google-Smtp-Source: AGHT+IGrftFiGVlU9vXuB+tdE077r7cOuoYsNNGzgqsYn8mgt9BRQHGUV0E8D5YsPfrg9By2Re6uPw==
-X-Received: by 2002:a05:6000:2489:b0:3b6:c88:7b74 with SMTP id
- ffacd0b85a97d-3b60dd918b1mr5023685f8f.59.1752739338953; 
- Thu, 17 Jul 2025 01:02:18 -0700 (PDT)
-Received: from localhost (cst2-173-14.cust.vodafone.cz. [31.30.173.14])
+ d=1e100.net; s=20230601; t=1752739578; x=1753344378;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RlJnwjeDE1GAbnO/XxhFYXL7uAR2EHW+OEhbSnCRXaw=;
+ b=nh7msdCTZAzLIRBAiEUBA37pMVQwuzKtnjRX0fq/LL+TKeSVIKhk5/P5iqO8YLwwd1
+ BkTvO6WTsKpyGaGo6DSj2PzuZOzovGRMEmLGNkzvAtGoBkkoEXm7TXmok012Ng+aCQKw
+ n65sFMvzSJ2juBkgIJp0AtEw7fE1AmGisoKYWuLsR8mcVCoqKXhDwmAqOd7nLznncSL/
+ MhQaQGk8o7xfnS5ZuWxEQY+eT+idbibHItolFtIaHX64oges3vdTPSJMXGqBMcVypJtj
+ FSiQvJhw1hYm5/mKMZvUh4EAD5MisgyuvWPSt6RFxNbc7YMnED73K/VVEfDeflfnYhi0
+ n2JQ==
+X-Gm-Message-State: AOJu0YzOsV4jBPBvievjTTgIbzTJPFmsCcDwfxDQPDUQzSmkyVY/1Ev4
+ 6i7SGgwnFL5EeZ9hZTtxcRIfGEZ5og/HBCJ8ekQv0mucr2u+d/hzt+aR0ipVwqk865h1UHla/V+
+ 6zuYGF85kzh4CR4wOMIZmAYwY/CvsKuuM6rFOGmcF8rPgU/BVOiOL4JW4
+X-Gm-Gg: ASbGnctKCMhxkYmmlGWqwhhhWrsJSjrXCDL6/45fdTjt4NqBuCsaNoQMaWy68E0RPdl
+ i0IZ1Wy9UrN++G018GV1Y7yMOTJ9QBRNxX4NPXnp3EE8jdpRHg0EIj8+IQo9krOj7aQXWl3w5rk
+ 8l1d8BSgzGsiRjmslBHsVb3HtpeFTCFreN52+LYn9VTTibkoUvNpIYgcAnBf80Hvx6CA2mU5SQ3
+ 4ppnB40w37zoBAp278Ig4//5a7SRY5ttnH5HeLhCPt/QGyhMR/bg0+kUC5yRbsnDBq4jec0hhRc
+ XCu8hN/fMJnxJwEK3Bcb89+kPW1cCwtY96S/y4DVv6qUZPpeAXeALA==
+X-Received: by 2002:a05:6300:628d:b0:238:351a:6442 with SMTP id
+ adf61e73a8af0-238351aa1e9mr5909217637.45.1752739578213; 
+ Thu, 17 Jul 2025 01:06:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNu6IJWCZi0IiL4eGl25b5bj0yrW0Gg4EwUs+FZjIyZxHZutc+AjsV8YIDGdFLk50eOju5Cg==
+X-Received: by 2002:a05:6300:628d:b0:238:351a:6442 with SMTP id
+ adf61e73a8af0-238351aa1e9mr5909180637.45.1752739577781; 
+ Thu, 17 Jul 2025 01:06:17 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.101.169])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1647sm19923825f8f.1.2025.07.17.01.02.18
+ 41be03b00d2f7-b3bbe52cddesm15130094a12.6.2025.07.17.01.06.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jul 2025 01:02:18 -0700 (PDT)
-Date: Thu, 17 Jul 2025 10:02:12 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: BillXiang <xiangwencheng@lanxincomputing.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/riscv/kvm: Introduce simple handler for VS-file
- allocation failure
-Message-ID: <20250717-f8c5ad3a56fbd7cf24224853@orel>
-References: <20250716074738.1075-1-xiangwencheng@lanxincomputing.com>
+ Thu, 17 Jul 2025 01:06:17 -0700 (PDT)
+Date: Thu, 17 Jul 2025 13:36:06 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v5 09/23] migration: push Error **errp into
+ ram_postcopy_incoming_init()
+Message-ID: <aHiu7m0SokILGIXl@armenon-kvm.bengluru.csb>
+References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
+ <20250717-propagate_tpm_error-v5-9-1f406f88ee65@redhat.com>
+ <c535b2b0-78d6-4afa-bd6a-d11159d3a952@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250716074738.1075-1-xiangwencheng@lanxincomputing.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42f.google.com
+In-Reply-To: <c535b2b0-78d6-4afa-bd6a-d11159d3a952@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,90 +130,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 03:47:37PM +0800, BillXiang wrote:
-> Consider a system with 8 harts, where each hart supports 5
-> Guest Interrupt Files (GIFs), yielding 40 total GIFs.
-> If we launch a QEMU guest with over 5 vCPUs using
-> "-M virt,aia='aplic-imsic' -accel kvm,riscv-aia=hwaccel" – which
-> relies solely on VS-files (not SW-files) for higher performance – the
-> guest requires more than 5 GIFs. However, the current Linux scheduler
-> lacks GIF awareness, potentially scheduling >5 vCPUs to a single hart.
-> This triggers VS-file allocation failure, and since no handler exists
-> for this error, the QEMU guest becomes corrupted.
+Hi Akihiko,
 
-What do you mean by "become corrupted"? Shouldn't the VM just stop after
-the vcpu dumps register state?
+Thanks for the review.
+
+On Thu, Jul 17, 2025 at 12:34:21PM +0900, Akihiko Odaki wrote:
+> On 2025/07/17 9:37, Arun Menon wrote:
+> > This is an incremental step in converting vmstate loading
+> > code to report error via Error objects instead of directly
+> > printing it to console/monitor.
+> > It is ensured that ram_postcopy_incoming_init() must report an error
+> > in errp, in case of failure.
+> > 
+> > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > ---
+> >   migration/postcopy-ram.c | 9 ++++++---
+> >   migration/postcopy-ram.h | 2 +-
+> >   migration/ram.c          | 6 +++---
+> >   migration/ram.h          | 2 +-
+> >   migration/savevm.c       | 2 +-
+> >   5 files changed, 12 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index 45af9a361e8eacaad0fb217a5da2c5004416c1da..05617e5fbcad62226a54fe17d9f7d9a316baf1e4 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -681,6 +681,7 @@ out:
+> >    */
+> >   static int init_range(RAMBlock *rb, void *opaque)
+> >   {
+> > +    Error **errp = opaque;
+> >       const char *block_name = qemu_ram_get_idstr(rb);
+> >       void *host_addr = qemu_ram_get_host_addr(rb);
+> >       ram_addr_t offset = qemu_ram_get_offset(rb);
+> > @@ -701,6 +702,8 @@ static int init_range(RAMBlock *rb, void *opaque)
+> >        * (Precopy will just overwrite this data, so doesn't need the discard)
+> >        */
+> >       if (ram_discard_range(block_name, 0, length)) {
+> > +        error_setg(errp, "failed to discard RAM block %s len=%zu",
+> > +                   block_name, length);
+> >           return -1;
+> >       }
+> > @@ -749,9 +752,9 @@ static int cleanup_range(RAMBlock *rb, void *opaque)
+> >    * postcopy later; must be called prior to any precopy.
+> >    * called from arch_init's similarly named ram_postcopy_incoming_init
+> >    */
+> > -int postcopy_ram_incoming_init(MigrationIncomingState *mis)
+> > +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
+> >   {
+> > -    if (foreach_not_ignored_block(init_range, NULL)) {
+> > +    if (foreach_not_ignored_block(init_range, errp)) {
+> >           return -1;
+> >       }
+> > @@ -1703,7 +1706,7 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
+> >       return false;
+> >   }
+> > -int postcopy_ram_incoming_init(MigrationIncomingState *mis)
+> > +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
+> >   {
+> >       error_report("postcopy_ram_incoming_init: No OS support");
+> >       return -1;
+> > diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+> > index 3852141d7e37ab18bada4b46c137fef0969d0070..ca19433b246893fa5105bcebffb442c58a9a4f48 100644
+> > --- a/migration/postcopy-ram.h
+> > +++ b/migration/postcopy-ram.h
+> > @@ -30,7 +30,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis);
+> >    * postcopy later; must be called prior to any precopy.
+> >    * called from ram.c's similarly named ram_postcopy_incoming_init
+> >    */
+> > -int postcopy_ram_incoming_init(MigrationIncomingState *mis);
+> > +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp);
+> >   /*
+> >    * At the end of a migration where postcopy_ram_incoming_init was called.
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 7208bc114fb5c366740db380ee6956a91b3871a0..8223183132dc0f558f45fbae3f4f832845730bd3 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3708,7 +3708,7 @@ static int ram_load_cleanup(void *opaque)
+> >   /**
+> >    * ram_postcopy_incoming_init: allocate postcopy data structures
+> >    *
+> > - * Returns 0 for success and negative if there was one error
+> > + * Returns 0 for success and -1 if there was one error
+> 
+> This is true but not relevant in this patch's goal.
+> 
+> Besides, I'm not in favor of letting callers make an assumption on integer
+> return values (i.e., let callers assume a particular integer value in the
+> error conditions). It is subtle to make a mistake to return -errno while the
+> documentation says it returns -1.
+> 
+> I think a proper way to avoid bugs due to return values here is to change
+> the type to bool, which ensures there are two possible values; that is a
+> nice improvement but something that can be done later.
+
+I agree, I shall remove the unnecessary documentation change as it is not in
+the scope.
 
 > 
-> To address this, we introduce this simple handler by rescheduling vCPU
-> to alternative harts when VS-file allocation fails on the current hart.
+> >    *
+> >    * @mis: current migration incoming state
+> >    *
+> > @@ -3716,9 +3716,9 @@ static int ram_load_cleanup(void *opaque)
+> >    * postcopy-ram. postcopy-ram's similarly names
+> >    * postcopy_ram_incoming_init does the work.
+> >    */
+> > -int ram_postcopy_incoming_init(MigrationIncomingState *mis)
+> > +int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp)
+> >   {
+> > -    return postcopy_ram_incoming_init(mis);
+> > +    return postcopy_ram_incoming_init(mis, errp);
+> >   }
+> >   /**
+> > diff --git a/migration/ram.h b/migration/ram.h
+> > index 921c39a2c5c45bc2344be80854c46e4c10c09aeb..275709a99187f9429ccb4111e05281ec268ba0db 100644
+> > --- a/migration/ram.h
+> > +++ b/migration/ram.h
+> > @@ -86,7 +86,7 @@ void ram_postcopy_migrated_memory_release(MigrationState *ms);
+> >   void ram_postcopy_send_discard_bitmap(MigrationState *ms);
+> >   /* For incoming postcopy discard */
+> >   int ram_discard_range(const char *block_name, uint64_t start, size_t length);
+> > -int ram_postcopy_incoming_init(MigrationIncomingState *mis);
+> > +int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp);
+> >   int ram_load_postcopy(QEMUFile *f, int channel);
+> >   void ram_handle_zero(void *host, uint64_t size);
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index d1edeaac5f2a5df2f6d94357388be807a938b2ef..8eba151a693b7f2dc58853292c92024288eae81e 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -1983,7 +1983,7 @@ static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
+> >           return -1;
+> >       }
+> > -    if (ram_postcopy_incoming_init(mis)) {
+> > +    if (ram_postcopy_incoming_init(mis, NULL)) {
+> >           return -1;
+> >       }
+> > 
 > 
-> Signed-off-by: BillXiang <xiangwencheng@lanxincomputing.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 5c19062c19..7cf258604f 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1706,6 +1706,9 @@ static bool kvm_riscv_handle_debug(CPUState *cs)
->  int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->  {
->      int ret = 0;
-> +    uint64_t code;
-> +    cpu_set_t set;
-> +    long cpus;
->      switch (run->exit_reason) {
->      case KVM_EXIT_RISCV_SBI:
->          ret = kvm_riscv_handle_sbi(cs, run);
-> @@ -1718,6 +1721,18 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->              ret = EXCP_DEBUG;
->          }
->          break;
-> +    case KVM_EXIT_FAIL_ENTRY:
-> +        code = run->fail_entry.hardware_entry_failure_reason;
-> +        if (code == CSR_HSTATUS) {
-> +            // Schedule vcpu to next hart upon VS-file 
-> +            // allocation failure on current hart.
-> +            cpus = sysconf(_SC_NPROCESSORS_ONLN);
-> +            CPU_ZERO(&set);
-> +            CPU_SET((run->fail_entry.cpu+1)%cpus, &set);
-> +            ret = sched_setaffinity(0, sizeof(set), &set);
 
-If other guests have already consumed all the VS-files on the selected
-hart then this will fail again and the next hart will be tried and if all
-VS-files of the system are already consumed then we'll just go around and
-around.
+Regards,
+Arun
 
-Other than that problem, this isn't the right approach because QEMU should
-not be pinning vcpus - that's a higher level virt management layer's job
-since it's a policy.
-
-A better solution to this is to teach KVM to track free VS-files and then
-migrate (but not pin) vcpus to harts with free VS-files, rather than
-immediately fail.
-
-But, if all guests are configured to only use VS-files, then upper layers
-of the virt stack will still need to be aware that they can never schedule
-more vcpus than supported by the number of total VS-files. And, if upper
-layers are already involved in the scheduling, then pinning is also an
-option to avoid this problem. Indeed pinning is better for the failure
-case of over scheduling, since over scheduling with the KVM vcpu migration
-approach can result in a VM launched earlier to be killed, whereas with
-the upper layer pinning approach, the last guest launched will fail before
-it runs.
-
-Thanks,
-drew
-
-> +            break;
-> +        }
-> +        /* FALLTHRU */
->      default:
->          qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
->                        __func__, run->exit_reason);
-> -- 
-> 2.46.2.windows.1
-> 
 
