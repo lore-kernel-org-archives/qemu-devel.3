@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C79C83F34
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 18:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5FFFC83F34
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 18:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucTCq-0004gr-4a; Thu, 17 Jul 2025 14:19:44 -0400
+	id 1ucTCs-0004ib-AS; Thu, 17 Jul 2025 14:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucQSO-0004co-Rn
+ id 1ucQSO-0004cj-9h
  for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:23:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucQSM-0004KR-7N
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:23:36 -0400
+ id 1ucQSI-0004Jm-Gn
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:23:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752765812;
+ s=mimecast20190719; t=1752765809;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XDBnlPqeGv4rwPb8eQVz5uOF6kllE9KhwMqiqUrgjcE=;
- b=HkyNIwDdXGHcqFzE++IkQMdC285jVxkTBLIjzIH05eYCC7/1vddlXl64c/Zz4s2zexELCV
- 7D57RyWGKgKsGWtd6s0VY+u/DnMbiq1LepakiXcmmQkcfQn+WdPSExw+XYM+YqV6ptfEJQ
- hRjMdXoUwF2vUBcwMuHBhKj1Auc6n70=
+ bh=SqG2DiLmplhxW74U3B4JYB/l83wKcoDTCpLDYKMWsIY=;
+ b=Q5LPT0PAy5ROfUOVav+h3KeQrNdR/DxpnGq4eXm3z0yjx+v19O1gwqKVkMeKnjtNS8OdO5
+ MMdm2YW+6HjSOjj8udkbzHkApTs7+JQ4Z4k7l4DgsmEyOgAtT9KswxraOMx2zliIj7Y7qp
+ KWy1B5G50rTN7Lcg1cpvUvsDznHX2Hc=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-NlHHr0ayOBKuHmvPZcSNZg-1; Thu, 17 Jul 2025 11:23:31 -0400
-X-MC-Unique: NlHHr0ayOBKuHmvPZcSNZg-1
-X-Mimecast-MFC-AGG-ID: NlHHr0ayOBKuHmvPZcSNZg_1752765809
+ us-mta-114-HZUGwbhiNSisxlYag485lg-1; Thu, 17 Jul 2025 11:23:27 -0400
+X-MC-Unique: HZUGwbhiNSisxlYag485lg-1
+X-Mimecast-MFC-AGG-ID: HZUGwbhiNSisxlYag485lg_1752765806
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-456013b59c1so6261255e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 08:23:29 -0700 (PDT)
+ 5b1f17b1804b1-451d7de4ae3so7434505e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 08:23:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752765808; x=1753370608;
+ d=1e100.net; s=20230601; t=1752765806; x=1753370606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XDBnlPqeGv4rwPb8eQVz5uOF6kllE9KhwMqiqUrgjcE=;
- b=Tjo/CpOqyQV/txyiqZc2JkGd/Aiksm5yAcLGOLId70/T6y4FUJj6hIniY3RoOl6v3D
- +FTXknzsUWYUwEL/4I4/+gatxwFlnRSowqNseAUBM1I1THrHun3fss/55oKdNRAyNGwx
- aYt31Z/jb6htvifX6dSCb3zccJEL2qXgyViw3zbRamim5U2wb10zqpGgUkVlBSKdzXIV
- VjjPjcggH+TxF8kqGk+U4b/8czoQHSTPQuwUVz0Hq6WbkjG+pbmi1/Qlgf1PEHDoMbFe
- SlQnet+gHwu7Sv5NRGIQr65BuWpoKw9wJWTm1fGQ91R/ygkx+uovR1cJHzBBMl8FWgcv
- 2z3A==
-X-Gm-Message-State: AOJu0YyC13E7P+87XIm7NDfqgXSjonrMVTvQTe2o3jnjQ5dDY1wY0/Q0
- uvJqLVO5jfbJ60ExqOZ3kQTUYtrPyW6XttxcasQprFg4uXSRMJmLHIIYkaHaEF5koGHlpV1W5Bs
- YfjdQgin4rMgUnIvXFRXTDljkRPSqGgPQJB1GCGKTstxJl5R/3yq6N5MO/5Ke9FhI97ELTm4apS
- g4R2+vpcl3hFrJ4U6pAkjXPwIxqr3T6g8Naf6YaDIU
-X-Gm-Gg: ASbGnctwNBDRcJ/aweFULMDjfFx3j2naahoDpuqnW9AXhPfYOPsixRXepKotzAbGiPk
- vZrxd+RUWpFoxU6NLhPZliOF3XEXrxq0VEMMUx33GDtVtufW0JvueFGVtYQ4xg/ARmxviNEXi+l
- ZVexHWO4f4aAaoqiun+LNoR7KsYEhT8vAoY/p2A0Z1fdnwrRBwTYFSA+tyMRNYkD2z6w2HVexbh
- PgbCSQfyW+/S+Md73pw81iHoSASqKXxC2rrmW3DOWYpi3iG3YcO2lFRTfg/1H4WAjWqYx7hmyq4
- C8AVHM/N0tNZD4aMRhcje9w0+kkKa7GWDro3Baydp7w=
-X-Received: by 2002:a05:600c:3b15:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-4562e36c7b1mr64527205e9.20.1752765808328; 
- Thu, 17 Jul 2025 08:23:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyN8eEMJD/Pih4TSdIuIrq9ldSM/t9VtjwaF21Y2H3uzUD9WAPATka0Ucye/+U88+to8Ecjw==
-X-Received: by 2002:a05:600c:3b15:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-4562e36c7b1mr64526895e9.20.1752765807843; 
- Thu, 17 Jul 2025 08:23:27 -0700 (PDT)
+ bh=SqG2DiLmplhxW74U3B4JYB/l83wKcoDTCpLDYKMWsIY=;
+ b=lqdgFBbrFoDN5o6fR7MR/LkQXmX/tTxTzXVL23FWnrw7Xc61TDlkw/xrVk3jpcJIMc
+ utDtQamYKtNyj7oO1G+VcQCswug4CFVEdi7ly5yA1aPurTyXpiPHQnm2wgRNBbKch89Z
+ 6UKYiAvwU0UVyTsuWE9quNfBwDB8qzQi94PkdGk6vRzYDc2FafEeIVmAXaLpV/QLYAh0
+ piygrEQO7M9TfMQee35RPJZOFTwGNGJR4SK/VfO3DDO0Zg46LZFU4RjpEN6UkRft0tRx
+ x3AKOsFrrR0e01jCX+n40dUdqgLnlTNeP/EAP1iea5/xryDwpAWpn/hOim9T9Z/1j0GI
+ pLDQ==
+X-Gm-Message-State: AOJu0Yz1K0L2aiE2CIVyAiWGf/kjV4WcP0sDYv5wYRwBdUN1gJZxmYzr
+ ijCcnvjqBbeguyzPL0rAf3XYxBbThucESUa3Bjzw2AhS2eOXknmm9fKmdimW4EH8dai1fW+qqm/
+ qHXx2VKPOYHkIIdEiBBFsGv81/pHVlgLZsyWVT90NWMHXyDndAd+lQ2xdjmHxdtrHjqerFiWv/U
+ 4DCzQsBZFNaiKodbnzz3EiQOfk/8kRh6+RS3cfs7M8
+X-Gm-Gg: ASbGnctwA21DaCMS81buyIPkj4In/QO8WEo08WvgD4PfadTpus6icY/TtTYW05NEFuf
+ Zjes+h9DX4GJh/38bcM+hqNgobY+HJiTNyhbqJ9sp/EHCovprRRaUlOdVImX/1Noh4kxqnZSRyC
+ vr6S3ZwGtv9odTtl5yIp/0O2EZv6e55dB7k7l714Agxv9subcM/NJSI8HZ1BsfXJ0TbV8JhQVeC
+ YfqhIpkk9wK2YcJ1lJytF9zQssIcnYt5SHvXKFZj7uEB/1/pVjBiExMcanveZg2SlH9afaUjALE
+ 2nKkfPfxbs6u5+TT9yCgDxHd5B+y8lrWWKvj7oYcD90=
+X-Received: by 2002:a05:600c:450f:b0:456:19b2:6aa8 with SMTP id
+ 5b1f17b1804b1-4562e27497dmr82003955e9.19.1752765805963; 
+ Thu, 17 Jul 2025 08:23:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3T/LVF2KN+smCrvn0joUa8mhv8EM7POcMbCgIwKCjMzWv4zcCtN5TPP/D9zdUacM+VR/UKA==
+X-Received: by 2002:a05:600c:450f:b0:456:19b2:6aa8 with SMTP id
+ 5b1f17b1804b1-4562e27497dmr82003595e9.19.1752765805445; 
+ Thu, 17 Jul 2025 08:23:25 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45634f9a53asm25053995e9.30.2025.07.17.08.23.25
+ 5b1f17b1804b1-45634f6b1a0sm25064235e9.16.2025.07.17.08.23.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jul 2025 08:23:26 -0700 (PDT)
+ Thu, 17 Jul 2025 08:23:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 4/6] target/i386: tdx: fix locking for interrupt injection
-Date: Thu, 17 Jul 2025 17:23:14 +0200
-Message-ID: <20250717152316.353049-5-pbonzini@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, roy.hopkins@randomman.co.uk,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 3/6] meson: re-generate scripts/meson-buildoptions.sh to fix
+ IGVM entry
+Date: Thu, 17 Jul 2025 17:23:13 +0200
+Message-ID: <20250717152316.353049-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250717152316.353049-1-pbonzini@redhat.com>
 References: <20250717152316.353049-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,50 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Take tdx_guest->lock when injecting the event notification interrupt into
-the guest.
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Fixes CID 1612364.
+Commit 84fe49d94a ("meson: Add optional dependency on IGVM library")
+was inconsistent with the contents of meson_options.txt and the one
+generated in scripts/meson-buildoptions.sh
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Let's regenerate the file in this way to keep them consistent and prevent
+future changes from including the spurious diff:
+
+    touch meson_options.txt
+    make update-buildoptions
+
+Fixes: 84fe49d94a ("meson: Add optional dependency on IGVM library")
+Cc: roy.hopkins@randomman.co.uk
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20250717131256.157383-1-sgarzare@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ scripts/meson-buildoptions.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 7d69d6d7b06..1574e7d76fe 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -1126,10 +1126,15 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
-     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
- }
- 
--static void tdx_inject_interrupt(uint32_t apicid, uint32_t vector)
-+static void tdx_inject_interrupt(TdxGuest *tdx)
- {
-     int ret;
-+    uint32_t apicid, vector;
- 
-+    qemu_mutex_lock(&tdx->lock);
-+    vector = tdx->event_notify_vector;
-+    apicid = tdx->event_notify_apicid;
-+    qemu_mutex_unlock(&tdx->lock);
-     if (vector < 32 || vector > 255) {
-         return;
-     }
-@@ -1179,8 +1184,7 @@ static void tdx_get_quote_completion(TdxGenerateQuoteTask *task)
-         error_report("TDX: get-quote: failed to update GetQuote header.");
-     }
- 
--    tdx_inject_interrupt(tdx_guest->event_notify_apicid,
--                         tdx_guest->event_notify_vector);
-+    tdx_inject_interrupt(tdx);
- 
-     g_free(task->send_data);
-     g_free(task->receive_buf);
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index e8504689e80..0ebe6bc52a6 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -130,7 +130,7 @@ meson_options_help() {
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
+-  printf "%s\n" '  igvm            IGVM file support'
++  printf "%s\n" '  igvm            Independent Guest Virtual Machine (IGVM) file support'
+   printf "%s\n" '  jack            JACK sound support'
+   printf "%s\n" '  keyring         Linux keyring support'
+   printf "%s\n" '  kvm             KVM acceleration support'
 -- 
 2.50.1
 
