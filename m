@@ -4,189 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3C0C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC00C83F38
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucVNo-0001XA-VC; Thu, 17 Jul 2025 16:39:13 -0400
+	id 1ucVSi-0006uX-Ug; Thu, 17 Jul 2025 16:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1ucTAy-00042n-Gb
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:17:49 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1ucTW6-0008Uz-O9
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:39 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1ucTAq-0004jj-Cc
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:17:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752776261; x=1784312261;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=WmRDGP1MFLzqvjZ0y4tOI47YXJ+696gX9K9nURk+tLY=;
- b=GyxNlZGdOwMSbBX/D3qnhbVdOHrKLL35ukhGjsXWbgMyrATWEaOiIJrX
- uN9XyntdNHnsr1L2A2l/DLgoFNYS5fYvHxAEqJ0PKbjtcaMiVP1swyLc+
- +biWf0P/dAFCTtIDBmBWdvBh+DLMaVNZYLZMBabbAHdWTxziPdPgCPHOY
- SkwaCBPAZotCTK0EmXdZ2601C6Cditzdb6VPjwacAtHhvSRmQOeNLR9P4
- Y9hOpHSkYmhW9GbMS/N3yh1nkVY93t5EOM4LdfEqfgSWL62tHST7vJNRY
- J9jMQ6BOGzOBeL3pLsZ+RNKcqI+lDuPqJ4YGFbq17DQ6Gg/ufMypk/Zv1 w==;
-X-CSE-ConnectionGUID: bqOH3SqFR6CO+gZ+sVXofQ==
-X-CSE-MsgGUID: 41Z5oBQNS6mVjQLFO4IFdg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="58843297"
-X-IronPort-AV: E=Sophos;i="6.16,319,1744095600"; d="scan'208";a="58843297"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2025 11:17:34 -0700
-X-CSE-ConnectionGUID: Le30O31DTZe6ONeTcL4PEQ==
-X-CSE-MsgGUID: 9Hc5TD4NQe2Dj+CZ3vt8kg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,319,1744095600"; d="scan'208";a="158560166"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2025 11:17:33 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26; Thu, 17 Jul 2025 11:17:32 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26 via Frontend Transport; Thu, 17 Jul 2025 11:17:32 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.82)
- by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26; Thu, 17 Jul 2025 11:17:31 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g3riy+As4zsaMrFIjHnYTl/o5SnEboOfUagK+7YJQAbcdHQU+yiCUEgF2jGllftYvdyYyICxCekpTdjKao73TRl6olBP8cHJoWDZnau7re8p44BVazEbYN57y3+E9zhdmbYCTWCJZLAlIbyVevnY79J5r2fmtxD1CKeP89eTRixNw5UAZ/28N/SauQwj5orxgjPYn3J0GIvsCmEmtEDd05V39UfxzZXMNpoekuSumW8Wzs9CSICRKc9fvAXUdhIt7AiT70AxUXMYkXwRZpuMjZdYp3OkPKNUZR9mw2ntzT27yp948IhCQWDAts8PBjqFSDWYrpTIDLqrPr/ZE8zsUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D+2hEJNnQbnYLMzZMWVwcGfyPqQQ2G8ibncUsUUkNjI=;
- b=oxjaLBR6IrKYKAGFMt6RsfKuvwsL+N/rSaGbSg90Sh/xO8HW0l0yhKOausAa/B+mGuLEgY8LT3uMbskaPd2CdgvSu8pFLk999bGTZyGfB4S6dlLeA2W8F5FDyLXd1UQwjdhm44eevdrJYJLUGbH0IsbynJEgxuG2PwLLmO1hDLfy0+src2EHqO3Sw7o1jN2hRLtBTEJ4r8cXplyj00SEhNy7X1DRTw9ZWFszjcSkae6G5ZvydcRt/j0ahlvKAriRru42ncNJ0uC5y6m54TpvaKWxMY/wBUph4h2SiE6lb8zZQPLIhmoob9BvovL4TFOETOLxp9lQCbtxwkEZ+qS1UA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
- by CO1PR11MB4882.namprd11.prod.outlook.com (2603:10b6:303:97::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.39; Thu, 17 Jul
- 2025 18:17:29 +0000
-Received: from IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
- ([fe80::dd3b:ce77:841a:722b%3]) with mapi id 15.20.8922.037; Thu, 17 Jul 2025
- 18:17:29 +0000
-From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>, "marcandre.lureau@redhat.com"
- <marcandre.lureau@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "stefanha@redhat.com"
- <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Frediano Ziglio <freddy77@gmail.com>, "Kim,
- Dongwon" <dongwon.kim@intel.com>, Michael Scherle
- <michael.scherle@rz.uni-freiburg.de>
-Subject: RE: [PULL v2 09/13] ui/spice: Blit the scanout texture if its memory
- layout is not linear
-Thread-Topic: [PULL v2 09/13] ui/spice: Blit the scanout texture if its memory
- layout is not linear
-Thread-Index: AQHb9VKBxcMuo3Nw9UqxdvahzF7yW7Q2Dk8AgACThaA=
-Date: Thu, 17 Jul 2025 18:17:29 +0000
-Message-ID: <IA0PR11MB7185EE1F0594404C45CA1C98F851A@IA0PR11MB7185.namprd11.prod.outlook.com>
-References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
- <20250715063301.145191-10-marcandre.lureau@redhat.com>
- <CAFEAcA_humAdK=eco8GNgO77d9tJUP_mTsoyuG=uEFCCSc34pQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_humAdK=eco8GNgO77d9tJUP_mTsoyuG=uEFCCSc34pQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|CO1PR11MB4882:EE_
-x-ms-office365-filtering-correlation-id: cdd8d63c-214e-4a2d-bf91-08ddc55e3113
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?F6SLGVLnouFUlLClCFC6I2i2Bm/3CzLMn0sOR82o+4s96aBaGlVXSqfDMG6X?=
- =?us-ascii?Q?Z+NtM5ZEgxR0rKNZtWrHjMAQkW1MswnLtq5wrKpz80WJrvbfsg5z16WnJ96V?=
- =?us-ascii?Q?cFKdDqGF1CQ8atophlfJc3D4RpwUAONx0xbjmS4TliN5uSEKEAHqpt3LT39G?=
- =?us-ascii?Q?eZXQAMVlJGZU6FUB0R6ZLf905pynLaDMCPHqnJNlC+qIX2ZC2rVd3bS/Sn72?=
- =?us-ascii?Q?yUNyB2xsAUMjL4wzVknSHcaKVggD2G00S6ebO1eNiYtoeSySMm8USSt166Nx?=
- =?us-ascii?Q?ABnSvBouMv3poVP2NJ62TAAQnRUgNAQYK0rlcUB+s1jzNny1Gx+Z495H1fAe?=
- =?us-ascii?Q?FKEIQvC6Lh0Zgk5VBqFbjNChGV4vQxC8hCNS/vwB3lT8HF2awnOic0WaSL0p?=
- =?us-ascii?Q?Ok9XBlHPZqqmvzZ4m0mP2eluZeJJjjZwFl577xdYaMRlr2/B75qfX8Ty0TNt?=
- =?us-ascii?Q?PKjOLvNr0lbbw0En7X2zFNWF3Do0IxYM+tjLnq1XZqVin7XnF543QEs3Am5q?=
- =?us-ascii?Q?P94k/cyKcyXwE+tQoRnm2/7DdJSDQf1wyA24tQB7lHesuVx2EhbvX4lRxGCP?=
- =?us-ascii?Q?eY64Ah9qI/v32aFhkGdLllSD5l6y9eFWEQlMREJsOaNwwDaMvXTB8z7SpY1n?=
- =?us-ascii?Q?ac7d1wa9dhxYPiDPZ041c9EATsoF74W3mVNwrIO3XR9Jur3TbXxfNMqfLjBa?=
- =?us-ascii?Q?RWPFJqW9wdv8NLJOocox2ZAj7FMRPDYGzyJQ6/Yx1uJC4rbAWUId8swX9dcd?=
- =?us-ascii?Q?7MnEIxHYtVJkXjZUUgT4ebe+FvyzRxkhwqbTyKV1oEIiWXG82cy5a6HdZVE2?=
- =?us-ascii?Q?0lq8jQ5z5DPATdPqux/KS17W4VbivrHgSby5wHT+Rj8Yj4+dMgOm2RNnrGEa?=
- =?us-ascii?Q?CLNSczrprV2ZN3ge9ZlN4y+j61RfqjYjAu8LVz6PjrUflhs7PzG7RQoP7EFN?=
- =?us-ascii?Q?TOuyWxZzVRP3YoHTrGhCRpLJOxoNx3LxJV+SdUIl2CL1lVNvdyXrN/KEyHSu?=
- =?us-ascii?Q?DxozHfyY4VGidEdBREPlWuMjPtR8ORHZic2cvfVZeTZL0lBiSxdVkEdXfQK5?=
- =?us-ascii?Q?7Bz10gZHUiR/q8zX5Exdvctm2+7QRG8ynRBgsazaiOhN0gDboGBstlBKTAtn?=
- =?us-ascii?Q?M5bLvMeEiqVn32c9GMsQoS2uDAw2HCM/7hlUKFcwCb0I0bIradBKac0cStNm?=
- =?us-ascii?Q?z5EgYR1aI/CkDXn5qtxQ6OFiJyO6JX+aeNiBAurhERI0Y3RbE+ZVqF18h/ak?=
- =?us-ascii?Q?m0fWZbi+DA0Jx8syGz9R4KPJ/NWjfXlu5k5RFTHk+we4M6IkBkV534w+zkVf?=
- =?us-ascii?Q?YNEpW5LOkthU75WiZYRZuwmPNR30auOmCZOaj5rotfSlores7z9uZxdJbrOV?=
- =?us-ascii?Q?8wswROoCA8UsA5AoeHTw5399bbD8S+hu/I0BSeY9+9+bgUjx92A85UuqSx1+?=
- =?us-ascii?Q?7cZV7MEdW73Qebz1z0zmugj2aX832DL6lrn4aFpjz1Y8jXg8HUEuzg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jsXwvhAyhdld9QJHISRlNoCsEsT31Vz9PPPYfD8tWR5RxCKbaevFihbzEdJT?=
- =?us-ascii?Q?2sUUDARf1T6OtJ0WYcKtoxrTx8BjruEVcF28y2PRMxvbWHg40pWL/Lp/Q45t?=
- =?us-ascii?Q?dKG3LPIbf6K0+AEDCqHSEF4qyoobbxlZyaW/uYaia+Asy8LBM7Jg9vBx2zgT?=
- =?us-ascii?Q?VMJOrUMREfUxV9MXOXPpbW6qFM+elJTnkobrDftS2f4u2fZEEzrHXXB9QOeJ?=
- =?us-ascii?Q?7amGXe4a6JivnKq4bqJW4R3ipHziETFk/RJXatscPLvzWnPvZ45FAn20DK3f?=
- =?us-ascii?Q?d8PnWb1Zz4V1QiwyCOXr2XlzS/2Q3PY6ibdWfE2S6Zdz58XiycZtNZREuQSq?=
- =?us-ascii?Q?epzB/L790yUwtpHcaT7HdKte7b8WNXKRenNto6Aznhw7+qeIsPFaDhN2Cgvl?=
- =?us-ascii?Q?UVVhsHBNis1IuqG3ST7dXOTQegweCvYlcgJ8ESiOBiRlvVypLDM+j3tAuev8?=
- =?us-ascii?Q?CU/YsYEcODutSKOdTxFKh2O9eqUaRxQ3y8wJ71+fwuUvyxlaULrfOeeZ2EMk?=
- =?us-ascii?Q?GKMsjiP2+yaZtp5HUAcCnPJCm/P7wwpyZNO6OVVhd8/trGn9fCHDo360r7go?=
- =?us-ascii?Q?2VQJ9SyU26W99OyhdZtNagvpvIQmk/fqfFH3wvhxwFGNt8H0Jn7tXrIu5iG9?=
- =?us-ascii?Q?JzaJdYdO1rwPfAwWVjpuR1PfqFlAOKKxUo0+zLRffj6cEE5XfwHFb/YESmRS?=
- =?us-ascii?Q?TiX1yTcFQLkFFw14nlOXJancXPHKqHCEH4Qb06OKGCRlLTRs2Geha3hQ9XWQ?=
- =?us-ascii?Q?m8F7WN08pXzdaigLD4LyDidTZG4mrVJ5o89ES+QnfL6MGSRBSZwIwVnpWcrB?=
- =?us-ascii?Q?3wTr2u5QyRIgU23UbIWOU3BFi9ScIO4bezPsyvVMLCPfjXG4SCaBOR3r3+fX?=
- =?us-ascii?Q?fezNbnhCFmyqfTXlRkk654TCr63GzV5jF+jIxEZOqXqn+bWEEHPdbe+c61lM?=
- =?us-ascii?Q?9qQ80i+w0PtR5A5N1BAYVulNHj0fKEoKIrFnEZqMHcCrE155xGMUUz49WHwG?=
- =?us-ascii?Q?DBRuyRqGr864ul5UnznT6pYtfwnQFgHXLexo4wMiPw3S8Ekp33eKC6LFHPSS?=
- =?us-ascii?Q?Q98vNxPMp71inOEtzLOOHEwjW9r7S4Gioskc6h2H1E3Ok7RLgW4Nw1j27Vdh?=
- =?us-ascii?Q?rHhS81YN6aaCFBzms+HVNZZGbIIae4n+Kp344x/1fd6MKHyCcJAFEZUkjjzd?=
- =?us-ascii?Q?CEGB4wi51ZZrBz2pttN2TbVRVVzYlRPVDlmrv1Jp2Y4++50peTsa4v89mjt7?=
- =?us-ascii?Q?VDNNQcCd1K8oopvbGzYRaSDxYb0eG095/vY1pIQEU7u4AxezSO4+VcSX9RzL?=
- =?us-ascii?Q?a7u5JKREfmYXAq447Wu9ko+C3OTjtNedvYOv20YWZLKOHOA27eqbyk/LdmYv?=
- =?us-ascii?Q?HbKy2CYXR+VfkUrcahpNYDGlkGyQ+WM5kM6gdlHVm/Ra9dmN1hMYoBbsQ2u7?=
- =?us-ascii?Q?VbuTXCDPYpzBxJ+aGza96Gjv7VWapsTzohzrti2n3Pwv4u4fKCVPAHHqnDts?=
- =?us-ascii?Q?+CzzImd68dUZdOU5DPHG+M/6O5KfKOyBnNTc2XDNVU90/YIpJZf0620sYHBn?=
- =?us-ascii?Q?YyuaI2g2nbAH8KrjHOgryzM/rOZg9mJamALVYO9r?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cdd8d63c-214e-4a2d-bf91-08ddc55e3113
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2025 18:17:29.7073 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +mKLvW9046shOlljHvU7DGg+mvh4XAW6ZwN1pNqrxWFyX37kQ2vbzmf34r0GNzp62+HWMkr3SMVyRDtyC3pXbAHNOzCfIqYm85Yx5/lkEiw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4882
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.14;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1ucTW4-00008E-2F
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:38 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0iXW018940;
+ Thu, 17 Jul 2025 18:39:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=VgprnmZCr3q9J4H2t0odPHCzfj2X9xCle5ED7ksx70k=; b=
+ SGqZYH8sniDD4lCBYc+mJ62kZFHOelAQT9zWAkSNjxDuEl4Jb2YLL/cCaEZe6Qar
+ fHxN+5tgDO+o5gaApVr7/6A9z1JkonO9NhC+iP3fyRkrp8Vn/z09sP9QQkQXf3b8
+ rJVH31fYRTVNWh8YhZxhIWvh6ZWsiHldRsXM/vhA84hayXRhL4WEyQuqVBSdEu0L
+ 156A+DKAsVR5oEXjzu3muoJ9+WBrDA4tMnvYq8d9q1nAapjOX35LFJpq77zS/oc2
+ CEJfVyJTDIJX9Mi8iF2s/9iHZFT9yGP++aB/EVYCTh0AYyz1pjcRyLyx6ri+g0Fu
+ S+hCNkRW3AHy9pkhjCtxPQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx83yb8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Jul 2025 18:39:31 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 56HGxmrQ023785; Thu, 17 Jul 2025 18:39:30 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47ue5d2t9d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Jul 2025 18:39:30 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoij007425;
+ Thu, 17 Jul 2025 18:39:29 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 47ue5d2t8q-2; Thu, 17 Jul 2025 18:39:29 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [RFC V2 1/8] migration: stop vm earlier for cpr
+Date: Thu, 17 Jul 2025 11:39:21 -0700
+Message-Id: <1752777568-236368-2-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-17_02,2025-07-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507170165
+X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=68794363 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=SpDTNw6YXiUZnQYNxJkA:9
+X-Proofpoint-ORIG-GUID: lMa3iabYyk_bQGaBuyJLWQ8WtA237J8Y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX/JHB6pMdyKun
+ dW/lEDJdCYpuVEj9WYvgj9ya9tDd9xOxkx7mCglNLSeJeR8RIRjVq98GGvsn375+q6gqX8+BHPV
+ ibhM/YWbZ2ZkxEYl95q/79mMaBZIqvMpeIrIrXc3slhVoNl3tZtXVX8ZAGf3ci6j5ySqKv1DPfT
+ s19MWsxmMS4kBXn/J1HdB4bjMJ4m6n5/8jpN1A6YO0wQ61Iabh/4jqt7LDDGO4+juqm+tv7vwkH
+ HRsdyB+mALTSV5K+ZBat9/JRZ5JQXXKBQprMd+IlybUtDflKSo6sWI944G8EYiq193qgE7gSpSu
+ SGY/BTShiYQpZ/jHU+nI03s6jFokF6IUxf/cG56oxHL0xzSBR9kdl0eb1etxh9c6mKRZ39qGsq5
+ L+1OUkmXtSZIRiub3/8RtvPb5TYlNok0bFC9+SU0I7tabPZL3QnCFlFemfTF6bkVYeQhHq0/
+X-Proofpoint-GUID: lMa3iabYyk_bQGaBuyJLWQ8WtA237J8Y
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -202,52 +110,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter, Marc-Andre,
+Stop the vm earlier for cpr, before cpr_save_state which causes new QEMU
+to proceed and initialize devices.  We must guarantee devices are stopped
+in old QEMU, and all source notifiers called, before they are initialized
+in new QEMU.
 
-> Subject: Re: [PULL v2 09/13] ui/spice: Blit the scanout texture if its me=
-mory
-> layout is not linear
->=20
-> On Tue, 15 Jul 2025 at 07:43, <marcandre.lureau@redhat.com> wrote:
-> >
-> > From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >
-> > In cases where the scanout buffer is provided as a texture (e.g. Virgl)
-> > we need to check to see if it has a linear memory layout or not. If
-> > it doesn't have a linear layout, then blitting it onto the texture
-> > associated with the display surface (which already has a linear layout)
-> > seems to ensure that there is no corruption seen regardless of which
-> > encoder or decoder is used.
->=20
-> Hi; Coverity points out (CID 1612367) that this change
-> introduces a use of an uninitialized variable:
->=20
-> > @@ -1269,6 +1329,15 @@ static void
-> qemu_spice_gl_update(DisplayChangeListener *dcl,
-> >          glFlush();
-> >      }
-> >
-> > +    if (spice_remote_client && ssd->blit_scanout_texture) {
-> > +        egl_fb scanout_tex_fb;
->=20
-> We don't initialize scanout_tex_fb...
->=20
-> > +
-> > +        ret =3D spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
->=20
-> ...and we immediately pass it to spice_gl_blit_scanout_texture(),
-> which will unconditionally call egl_fb_destroy() on it.
-I'll send out a patch in a day or two to fix this issue.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ migration/migration.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-Thanks,
-Vivek
+diff --git a/migration/migration.c b/migration/migration.c
+index 10c216d..2efe60a 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1662,6 +1662,7 @@ void migration_cancel(void)
+                           MIGRATION_STATUS_CANCELLED);
+         cpr_state_close();
+         migrate_hup_delete(s);
++        vm_resume(s->vm_old_state);
+     }
+ }
+ 
+@@ -2196,6 +2197,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationAddress *addr = NULL;
+     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+     MigrationChannel *cpr_channel = NULL;
++    bool stopped = false;
+ 
+     /*
+      * Having preliminary checks for uri and channel
+@@ -2248,6 +2250,15 @@ void qmp_migrate(const char *uri, bool has_channels,
+         return;
+     }
+ 
++    if (migrate_mode_is_cpr(s)) {
++        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret < 0) {
++            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
++            goto out;
++        }
++        stopped = true;
++    }
++
+     if (cpr_state_save(cpr_channel, &local_err)) {
+         goto out;
+     }
+@@ -2274,6 +2285,9 @@ out:
+     if (local_err) {
+         migration_connect_set_error(s, local_err);
+         error_propagate(errp, local_err);
++        if (stopped) {
++            vm_resume(s->vm_old_state);
++        }
+     }
+ }
+ 
+@@ -2319,6 +2333,9 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+         }
+         migration_connect_set_error(s, local_err);
+         error_propagate(errp, local_err);
++        if (migrate_mode_is_cpr(s)) {
++            vm_resume(s->vm_old_state);
++        }
+         return;
+     }
+ }
+@@ -3961,7 +3978,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+-    int ret;
+ 
+     /*
+      * If there's a previous error, free it and prepare for another one.
+@@ -4033,14 +4049,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+         return;
+     }
+ 
+-    if (migrate_mode_is_cpr(s)) {
+-        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+-        if (ret < 0) {
+-            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+-            goto fail;
+-        }
+-    }
+-
+     /*
+      * Take a refcount to make sure the migration object won't get freed by
+      * the main thread already in migration_shutdown().
+-- 
+1.8.3.1
 
->=20
-> > +        if (!ret) {
-> > +            return;
-> > +        }
-> > +    }
->=20
-> thanks
-> -- PMM
 
