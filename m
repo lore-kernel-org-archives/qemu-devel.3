@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9460C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B8AC83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucK0h-000299-MS; Thu, 17 Jul 2025 04:30:35 -0400
+	id 1ucK2L-0004Xt-K0; Thu, 17 Jul 2025 04:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ucK0c-0001vD-Lv
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:30:31 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ucK0Z-00024J-DM
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:30:30 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Axz3OatHho7vYrAQ--.24782S3;
- Thu, 17 Jul 2025 16:30:18 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDx_8OXtHho08EaAA--.12164S3;
- Thu, 17 Jul 2025 16:30:17 +0800 (CST)
-Subject: Re: [PATCH v5 08/11] hw/loongarch: Implement avec set irq
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250711085915.3042395-1-gaosong@loongson.cn>
- <20250711085915.3042395-9-gaosong@loongson.cn>
- <d27adfdf-ef1e-e46c-3af0-3ceb731dc64f@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <7fefe852-c308-54bf-ef38-c261a498edab@loongson.cn>
-Date: Thu, 17 Jul 2025 16:33:17 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ucK1v-0004ED-6Y
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:32:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ucK1s-0002C7-R1
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:31:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752741107;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BNeCG793zXes7BCJXfHnynX/cUwq+pKu66m/YQR/1OE=;
+ b=gRZP4z37jKSb/Jh+wt5IluOE0et4gTMfX2cqvHBtk5z7u5L5QRzHP5dxwKdyauecQsWen2
+ FxDMDG9VnsBsFoWRh7DLxI0NvLhPSHYdFGE63pZneg0CgaUzJexyGV2ynFr2oAzG1oCwyV
+ vgcuztHHfBTtxC1ukQJDWeXxPFy/bgk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-h1WQJ70HOnWe6D1_F2FE9A-1; Thu,
+ 17 Jul 2025 04:31:42 -0400
+X-MC-Unique: h1WQJ70HOnWe6D1_F2FE9A-1
+X-Mimecast-MFC-AGG-ID: h1WQJ70HOnWe6D1_F2FE9A_1752741101
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4AF3F195FCC2; Thu, 17 Jul 2025 08:31:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.171])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20B251956089; Thu, 17 Jul 2025 08:31:38 +0000 (UTC)
+Date: Thu, 17 Jul 2025 09:31:35 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com,
+ kkostiuk@redhat.com, jsnow@redhat.com
+Subject: Re: [PATCH 4/4] qga: Add cross-references
+Message-ID: <aHi053WApxOX3XkY@redhat.com>
+References: <20250717082117.3767754-1-armbru@redhat.com>
+ <20250717082117.3767754-5-armbru@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <d27adfdf-ef1e-e46c-3af0-3ceb731dc64f@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJDx_8OXtHho08EaAA--.12164S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXFW8Gw4DGF4DGryDtw13trc_yoW5ZrW7pF
- 1kArZ8WryUJrn3XwnxG345WFy5Jr1xWw17t3WIgFyIyF1Dur10gry8Xr1qgF1UCw48Xr1U
- Xr18X3W3uF17JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.695,
+In-Reply-To: <20250717082117.3767754-5-armbru@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,94 +86,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/7/14 下午5:29, Bibo Mao 写道:
->
->
-> On 2025/7/11 下午4:59, Song Gao wrote:
->> Implement avec set irq and update CSR_MSIS.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   hw/intc/loongarch_avec.c | 34 ++++++++++++++++++++++++++++++++--
->>   1 file changed, 32 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
->> index 1f9f376898..af6c75c4a9 100644
->> --- a/hw/intc/loongarch_avec.c
->> +++ b/hw/intc/loongarch_avec.c
->> @@ -16,6 +16,12 @@
->>   #include "migration/vmstate.h"
->>   #include "trace.h"
->>   #include "hw/qdev-properties.h"
->> +#include "target/loongarch/cpu.h"
->> +
->> +/* msg addr field */
->> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
->> +FIELD(MSG_ADDR, FIX, 28, 12)
->>     static uint64_t loongarch_avec_mem_read(void *opaque,
->>                                           hwaddr addr, unsigned size)
->> @@ -23,12 +29,36 @@ static uint64_t loongarch_avec_mem_read(void 
->> *opaque,
->>       return 0;
->>   }
->>   +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int 
->> irq_num, int level)
->> +{
->> +    MachineState *machine = MACHINE(qdev_get_machine());
->> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
->> +    const CPUArchIdList *id_list = NULL;
->> +    CPUState *cpu;
->> +    CPULoongArchState *env;
->> +
->> +    assert(mc->possible_cpu_arch_ids(machine));
->> +    id_list = mc->possible_cpu_arch_ids(machine);
->> +    cpu = id_list->cpus[cpu_num].cpu;
->> +    env = &LOONGARCH_CPU(cpu)->env;
->> +
->> +    if (level) {
->> +        set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
->> +    }
->> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
->> +}
->> +
->>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->>                                        uint64_t val, unsigned size)
->>   {
->> -    return;
->> -}
->> +    int irq_num, cpu_num = 0;
->> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
->> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
->>   +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> Here is physical cpuid rather than logic cpu index. We need convert 
-> physical cpuid to logic cpu index.
-How about the following code;
-+    CPUState * cpu = cpu_by_arch_id(cpu_num);
-+    cpu_num = cpu->cpu_index;
+On Thu, Jul 17, 2025 at 10:21:17AM +0200, Markus Armbruster wrote:
+> Enclose command and type names in `backquotes`, so they become links
+> in generated HTML.
+> 
+> We did this for qapi/ in merge commit 504632dcc631.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qga/qapi-schema.json | 50 ++++++++++++++++++++++----------------------
+>  1 file changed, 25 insertions(+), 25 deletions(-)
 
-or like the IPI device add an  function pointer in LoongsonIPICommonClass
-     LoongsonIPICommonClass {
-     [..]
-     int (*cpu_by_arch_id)(LoongsonIPICommonState *lics, int64_t id,
-                           int *index, CPUState **pcs);
-     [...]
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-Thanks.
-Song Gao
+> @@ -585,7 +585,7 @@
+>  # - pm-utils (via pm-hibernate)
+>  # - manual write into sysfs
+>  #
+> -# IMPORTANT: guest-suspend-ram requires working wakeup support in
+> +# IMPORTANT: `guest-suspend-ram` requires working wakeup support in
+>  # QEMU. You should check QMP command query-current-machine returns
+>  # wakeup-suspend-support: true before issuing this command.  Failure
 
->
-> Regards
-> Bibo Mao
->> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->> +    avec_set_irq(s, cpu_num, irq_num, 1);
->> +}
->>     static const MemoryRegionOps loongarch_avec_ops = {
->>       .read = loongarch_avec_mem_read,
->>
+I presume you're not updating 'query-current-machine' and
+'wakeup-suspend-support' due to an inability do cross references
+across the two QAPI schemas ?
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
