@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11A89C83F34
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 19:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5485AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 19:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucUKT-0002eR-Nq; Thu, 17 Jul 2025 15:31:42 -0400
+	id 1ucUMC-0003lC-TQ; Thu, 17 Jul 2025 15:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucRn9-0007Ae-BE
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 12:49:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucRn7-0007oh-5S
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 12:49:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752770943;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1MimOt7JSOZXWdvOHA5q5cv+NY3Ej2RMg8rLSC/H0+s=;
- b=f+jQDxSAQPEwWpUClB0FcsY7lL+Al9fcsQeba8NFnXNXgwx4aRra1jvpug/TDsUulB9J7W
- ul3TCr3NcyLT5vgfDroVsKZfRDxFgpO8untFNU88iTBu9zKnuCEVPZPYroW/FGhr5tPbNX
- BHnidMS224YpJ/lhC6ZTpWSjDvG5ars=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-0G5XO7lePQiVvKFN6W-xfQ-1; Thu,
- 17 Jul 2025 12:49:00 -0400
-X-MC-Unique: 0G5XO7lePQiVvKFN6W-xfQ-1
-X-Mimecast-MFC-AGG-ID: 0G5XO7lePQiVvKFN6W-xfQ_1752770937
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4305219560B6; Thu, 17 Jul 2025 16:48:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.171])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5ACB530001B1; Thu, 17 Jul 2025 16:48:49 +0000 (UTC)
-Date: Thu, 17 Jul 2025 17:48:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v5 06/23] migration: push Error **errp into
- qemu_loadvm_section_part_end()
-Message-ID: <aHkpboSZOIfcLtxe@redhat.com>
-References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
- <20250717-propagate_tpm_error-v5-6-1f406f88ee65@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucRxf-0003Tw-VK
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 13:00:10 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucRxd-0000g9-VQ
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 12:59:59 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e8bcbe46cf1so1194736276.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 09:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752771595; x=1753376395; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SIQ5WgqD/M4tar5f/JqNwEkwk3JLal/n3LfaTLUzYGA=;
+ b=JmeqCT/hxunuIz2gucdiFUGJ2QRY5s5/m1LmGsHPJAxiOJuV55sJFv20x5SuYXIkF4
+ vZP+7h0UR58um2n967u/G8mwztOqOw81HDrjMN1MEK9CZKxvAFdMJv+HLQ1JK/LokeF1
+ AFuKosfqSSoMKXreBPSB0/69Vv9L4wD3fB4tv0OKhNbbuxNyyB+2gIOja4nS2Xiy0p5t
+ NkKjjPvOM/GV+IYk4QuVrwm14/h2tio+KyM6J6QAFjssdYsNJG+uLsUG9WIblXCsvSLM
+ zxRqisztQL3OFL9eaWJ2N6WkPSfKW6KncFoC1lOX6BMUnKyGfiwxJ1NTsjJZQswDAm+z
+ 43oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752771595; x=1753376395;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SIQ5WgqD/M4tar5f/JqNwEkwk3JLal/n3LfaTLUzYGA=;
+ b=LLq3T5kdk2BzqyvDN2LYZkOM/JfNnvLjkCWTe0srpjHKJGLznFllQxnLqv1GJc0sme
+ JTSl5/+9FU6t8LeU5xEkh7T7o9KDDZ2+jfzXxJgtk/GNeACWGCWZnBqpdyIAeMwoa/xH
+ 7qS2ey3OKaPKa6Oww/2mERXvj4EB3PWx9FwHrwkcbxmnGUQSArMH175LunrK7rHk0FiX
+ NgVU+EPNoZyACZDOPSuyhm81/dFrI2Pokg//QL8asHhkjZwwt5mjniVI++3r7OoQLjsB
+ BP9czXd/3C6Aay/B7bsQdXNpPKSKJNEGvL1fLMCEuyBX9QEfl2/1ijNAMJxbfANZfxul
+ H0NA==
+X-Gm-Message-State: AOJu0YzbTsc9UGwkYglrXsEhPifoIf4f2TccsvLqN6sLBE3btFtqh1es
+ CidxD6Qv//0YQDjEUaOz+OOZ0UIVhzJRSQDYTzmnlJxu7yHkZjInlmMuSuw3A3yE+4YwbcoEjgV
+ 4cAqK8nAooqfG6fOnvqbZTXLdifUbgB9TZk1FGLBZqw==
+X-Gm-Gg: ASbGnctaNfyiliUKDCKL71I964wiXA8gs//ALn0o5VVlNNoDaLSeX20hPd+B0XUI3RH
+ QT6rmLHd0068+QiyHJIS/oexRHIJAZVyLEWDg1vEqT0Yl/CODQsHAwYl29TSltt5OorejoPEhd7
+ B/Q4IffromOhy7PL/END0zDfQwR1Z3GBrMUi9viPPR3hZgZ5Fg816MdUcBJkrKAE3j3y5OvcyFT
+ HvSUc7Y
+X-Google-Smtp-Source: AGHT+IGnHTy2RcMfGqoYK2d4tZSBDfR6EFZOyvywJ2w8PKKnrjffoLIYdE3fpoMcxn2/zVoTOg2d4YAV3JNRp+o9438=
+X-Received: by 2002:a05:690c:9b10:b0:70f:8884:a5fc with SMTP id
+ 00721157ae682-718370ee6e1mr89715287b3.4.1752771595627; Thu, 17 Jul 2025
+ 09:59:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250717-propagate_tpm_error-v5-6-1f406f88ee65@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250714145033.1908788-1-peter.maydell@linaro.org>
+ <2b9a18a9-239d-40cc-bd65-225bad2706d3@linaro.org>
+In-Reply-To: <2b9a18a9-239d-40cc-bd65-225bad2706d3@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 17 Jul 2025 17:59:41 +0100
+X-Gm-Features: Ac12FXy23CXYFPOgo8Z5U2tHioxJcnVfAXch8HJCo6getewcYej3AmsS93IZ7SU
+Message-ID: <CAFEAcA8hznDWTOXYMPbBscHmy5F_gKXhaAtyPk1LPcGf54RPXQ@mail.gmail.com>
+Subject: Re: [PATCH] host-utils: Drop workaround for buggy Apple Clang
+ __builtin_subcll()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,63 +93,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 06:07:29AM +0530, Arun Menon wrote:
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that qemu_loadvm_section_part_end() must report an error
-> in errp, in case of failure.
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->  migration/savevm.c | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
-> 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 63125971751394b72efc9bcaf7c4364715eef07f..22d73999595384519c755c9416b74ba1263a8bb9 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2764,7 +2764,7 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type, Error **errp)
->  }
->  
->  static int
-> -qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-> +qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type, Error **errp)
->  {
->      bool trace_downtime = (type == QEMU_VM_SECTION_END);
->      int64_t start_ts, end_ts;
-> @@ -2776,8 +2776,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
->  
->      ret = qemu_file_get_error(f);
->      if (ret) {
-> -        error_report("%s: Failed to read section ID: %d",
-> -                     __func__, ret);
-> +        error_setg(errp, "%s: Failed to read section ID: %d",
-> +                   __func__, ret);
+On Mon, 14 Jul 2025 at 20:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 14/7/25 16:50, Peter Maydell wrote:
+> > In commit b0438861efe ("host-utils: Avoid using __builtin_subcll on
+> > buggy versions of Apple Clang") we added a workaround for a bug in
+> > Apple Clang 14 where its __builtin_subcll() implementation was wrong.
+> > This bug was only present in Apple Clang 14, not in upstream clang,
+> > and is not present in Apple Clang versions 15 and newer.
+> >
+> > Since commit 4e035201 we have required at least Apple Clang 15, so we
+> > no longer build with the buggy versions.  We can therefore drop the
+> > workaround. This is effectively a revert of b0438861efe.
+> >
+> > This should not be backported to stable branches, which may still
+> > need to support Apple Clang 14.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3030
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   include/qemu/compiler.h   | 13 -------------
+> >   include/qemu/host-utils.h |  2 +-
+> >   2 files changed, 1 insertion(+), 14 deletions(-)
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Same note about dropping __func__
+Thanks all for the review; I'll pick this up via target-arm.next.
 
-> @@ -2810,6 +2810,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
->      }
->  
->      if (!check_section_footer(f, se)) {
-> +        error_setg(errp, "Check section footer error");
-
-Include "section_id" as that's the only context we have available.
-
->          return -EINVAL;
->      }
->  
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
