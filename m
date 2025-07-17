@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5930FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F808C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 20:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucVWe-0004Op-0h; Thu, 17 Jul 2025 16:48:20 -0400
+	id 1ucVZo-0000k9-D2; Thu, 17 Jul 2025 16:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW7-0008Vt-Qu
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:40 -0400
+ id 1ucTW8-0008WI-LU
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:41 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ucTW4-00008S-JP
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:39 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0jQT010788;
- Thu, 17 Jul 2025 18:39:30 GMT
+ id 1ucTW4-00008i-Mf
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 14:39:40 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56HH0i2r018938;
+ Thu, 17 Jul 2025 18:39:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=mI9wq6ts
- Lhj/wmKRYOT5+iyxzr7rQRgzM/2VWgYKq1s=; b=NEIEr7NIljj3tnoGnCCaFDce
- V3vFIFwEmbN/Tds/gIHzCvBN8LwlR8nU+/+j9KQLjEZKDXkVoLoQtpC4sXddhSbn
- Y7Ccrllqz34KNq1z2b5/F93n/0MOEZ2doa9Tqw8oADx5ILvVcCA2XZ6qupDKX6wB
- Anb6phQAO5GG3FSQgISJTNBgjDNXw4kVAfsYnEygdNKn1q2WVBcVe5VdHFzMesfo
- jIEXFWKGyY9x4S0DcZfdtvSehgcPJ1N/FXcI2coObtgVaMHjy6dSD1J0YwVwNxCD
- 1yepv82xchkyqwQr6wkGdaWrDXqzIqBnMCN2W30B9HrUqS24HoPkpa/YElbzaw==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=Yv7L4OwqL9MTFjfSdoAcXNtPgLe1md+/tBkeCxeUoZc=; b=
+ WphManCyyzgWaOFQ8kjQ2iFhH7bAFBWQEgca/00ePTgrRau6JYpNevDJeFA8/rSZ
+ R/0KyYUaA0ymOxiyJ0hGYwF4jV5p763JmRCddhwT7COVVITM07AFD7HbufT+Agur
+ fYOm3fn8FdWipAvkpSsOBuKevxkgCyQRG9lWpDEv8EhmXEl7hrAmbHiH3nAtZzgq
+ vWW0LBRoBnBKbn1chaMkJDSB485QbdRazWdl07rxHIQ3vQDDpar4ibkMNtSlPm1W
+ qvJX3zORGOpRpiG3I+c2wWxYHQUkkXoMEFbK6E73xwrB5vt//j7b2yJfuxrwJniX
+ ZfHU2iSz6s5gENkSYnjpnw==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhjfcacx-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uhx83ybb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Jul 2025 18:39:30 +0000 (GMT)
+ Thu, 17 Jul 2025 18:39:32 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56HHgBou023735; Thu, 17 Jul 2025 18:39:29 GMT
+ with ESMTP id 56HHgBow023735; Thu, 17 Jul 2025 18:39:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 47ue5d2t8w-1
+ 47ue5d2tac-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Jul 2025 18:39:29 +0000
+ Thu, 17 Jul 2025 18:39:31 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoih007425;
- Thu, 17 Jul 2025 18:39:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56HIcoip007425;
+ Thu, 17 Jul 2025 18:39:31 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 47ue5d2t8q-1; Thu, 17 Jul 2025 18:39:29 +0000
+ ESMTP id 47ue5d2t8q-5; Thu, 17 Jul 2025 18:39:31 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [RFC V2 0/8] Live update: tap and vhost
-Date: Thu, 17 Jul 2025 11:39:20 -0700
-Message-Id: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+Subject: [RFC V2 4/8] cpr: delete all fds
+Date: Thu, 17 Jul 2025 11:39:24 -0700
+Message-Id: <1752777568-236368-5-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-17_02,2025-07-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  phishscore=0 spamscore=0
- mlxlogscore=745 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 suspectscore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507170165
-X-Proofpoint-GUID: -RvsLgPNzFpLWdcK6NrbZUg9uCva7J9m
-X-Authority-Analysis: v=2.4 cv=O6g5vA9W c=1 sm=1 tr=0 ts=68794362 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=auKyCTZV c=1 sm=1 tr=0 ts=68794365 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=Wb1JkmetP80A:10 a=4o5NCgjuJ1xDdWi_kjcA:9
-X-Proofpoint-ORIG-GUID: -RvsLgPNzFpLWdcK6NrbZUg9uCva7J9m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX03J1GAD2i76J
- M/mnY40iiMDH04KGRBNSOw8IEzSb0yFqlzFMX/PKhTz0ecEMMzQDHW7EXfje6BSogdnVOSxvHvc
- 8+X+47drA9+Z4+y2yrFSM285o2OAYAMmcNCtezVpU+YMsLDT0dFED7gmFIXwp0l4JHfd0Xl8jhj
- pRLAvB/jby2vtBYsse6P1o/MuezGdQKmXVYhXIKS7Xmo16cG3QsDAVZuZ/PJ6JFxMI5T8ZlVRQY
- gVPYBk5ceUPPdrMi6wv/IwmfqTB9o1L7kc0sjSUBAqFdU0/5gpdcwolpezCGzTmbOf6qKuosjX+
- N4w06pdFPHRxmgXuka1xf/Ftgwr5NIzSH6we+YFaPCqDQLR0V4Uxv6Fhj43fEWI+wzOf8H02CpD
- xOJm157MD48UqloxwE2Ci1QPe3NQN70s23oWwccmzGfLuWYEoU577cqE9l2qOO1cvJya2y5g
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=n655hgSsutws6UkWyQYA:9
+X-Proofpoint-ORIG-GUID: t6huPCgt8nWRKANxwO7vM1ybTmNrAKU8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE3MDE2NSBTYWx0ZWRfX1LlgxG23QrDr
+ B2d09INMNXAWJVBfQAjc7cwsBg8q546pX0Hu5mtF2ECXmsF4zSGNoyfa4MTx2+vh47pRy1DX+vF
+ mLQ/C6maaIS2Uu1ImbuMatyHCVjrZNOOAsttk1sBdW4Ptif+W0myQDQJg0UrQLN9zzj2qO9R44Z
+ A5IgfBC8QBEuJIhbxMMM/U2T1SnsmXcB0ZjL8Gxi9s5XRv8wvcYzrGlTUrE3V+bJkHLBKLDVVWl
+ cJot4JUw1RBO0wtX5lGxNdoqkL5WXCKvXrsUW6NwPYzYH4lm86Z1aU5RJybWa2FMbRtCWycnfCE
+ rqTSJlIZW1EDyjrJWn7VqxgoxE+9HUjcjVpe7OanDIKdh/Hb0qSFIyxJFk3QYsxxKDz49r/yYeQ
+ JbA3iVr5p9aF7jJo3aNyTIWdVuG+PI/4O2ydmakVbf0sDhDEu4VT/kImTx6Nn/LhhMTSTKWL
+X-Proofpoint-GUID: t6huPCgt8nWRKANxwO7vM1ybTmNrAKU8
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -107,40 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tap and vhost devices can be preserved during cpr-transfer using
-traditional live migration methods, wherein the management layer
-creates new interfaces for the target and fiddles with 'ip link'
-to deactivate the old interface and activate the new.
+Add the cpr_delete_fd_all function to delete all fds associated with a
+device.
 
-However, CPR can simply send the file descriptors to new QEMU,
-with no special management actions required.  The user enables
-this behavior by specifing '-netdev tap,cpr=on'.  The default
-is cpr=off.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ include/migration/cpr.h |  1 +
+ migration/cpr.c         | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
-Steve Sistare (8):
-  migration: stop vm earlier for cpr
-  migration: cpr setup notifier
-  vhost: reset vhost devices for cpr
-  cpr: delete all fds
-  Revert "vhost-backend: remove vhost_kernel_reset_device()"
-  tap: common return label
-  tap: cpr support
-  tap: postload fix for cpr
-
- qapi/net.json             |   5 +-
- include/hw/virtio/vhost.h |   1 +
- include/migration/cpr.h   |   3 +-
- include/net/tap.h         |   1 +
- hw/net/virtio-net.c       |  20 +++++++
- hw/vfio/device.c          |   2 +-
- hw/virtio/vhost-backend.c |   6 ++
- hw/virtio/vhost.c         |  32 +++++++++++
- migration/cpr.c           |  24 ++++++--
- migration/migration.c     |  38 ++++++++-----
- net/tap-win32.c           |   5 ++
- net/tap.c                 | 141 +++++++++++++++++++++++++++++++++++-----------
- 12 files changed, 223 insertions(+), 55 deletions(-)
-
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 3fc19a7..0fa57dd 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -29,6 +29,7 @@ extern CprState cpr_state;
+ 
+ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
++void cpr_delete_fd_all(const char *name);
+ int cpr_find_fd(const char *name, int id);
+ void cpr_resave_fd(const char *name, int id, int fd);
+ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 42ad0b0..e97be9d 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -83,6 +83,19 @@ void cpr_delete_fd(const char *name, int id)
+     trace_cpr_delete_fd(name, id);
+ }
+ 
++void cpr_delete_fd_all(const char *name)
++{
++    CprFd *elem, *next_elem;
++
++    QLIST_FOREACH_SAFE(elem, &cpr_state.fds, next, next_elem) {
++        if (!strcmp(elem->name, name)) {
++            QLIST_REMOVE(elem, next);
++            g_free(elem->name);
++            g_free(elem);
++        }
++    }
++}
++
+ int cpr_find_fd(const char *name, int id)
+ {
+     CprFd *elem = find_fd(&cpr_state.fds, name, id);
 -- 
 1.8.3.1
 
