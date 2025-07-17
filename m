@@ -4,48 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C0BC83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1FBC83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLJ1-0001q4-UX; Thu, 17 Jul 2025 05:53:36 -0400
+	id 1ucLLw-00037I-J1; Thu, 17 Jul 2025 05:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1D-00026k-JS; Thu, 17 Jul 2025 05:35:14 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL11-0001qA-PB; Thu, 17 Jul 2025 05:35:08 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 030F7137CF3;
- Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8D712491ED;
- Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Ethan MILON <ethan.milon@eviden.com>, Vasant Hegde <vasant.hegde@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 51/65] amd_iommu: Fix Miscellaneous Information
- Register 0 encoding
-Date: Thu, 17 Jul 2025 12:33:47 +0300
-Message-ID: <20250717093412.728292-12-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
-References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucL6c-0008Nt-Kq
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:40:46 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucL6a-0002pj-Nz
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:40:46 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-7184015180fso8386757b3.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 02:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752745243; x=1753350043; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KT/cNhNrsVLlNFlNs9ur5OR9ca2bG5fE8QkwKdsISmA=;
+ b=TC3lIfyRTiLKHMCeu0smL/moGjOu93iviFYnKfpuDKXkECmeFQjd4zfDt0xsJUyOmN
+ T6rVqYxyyG3lSnh3UGLp7rJr7f7vHqMDC2G/QUZ5CB7YJ3ZhDEqeLNKi/+FgXAClckbz
+ UlR+yi0zXAuYtHT/hY83o2PdUNS44V7OQiXU65EO8e/iRWt9c5Jyzd9rfzC+J1gT5p9T
+ cs65zMV2y3jUUCkIONdSkDmGGB0i+qDCmqgMo7KsqCCkgbFRjEh1mjkhXys5GuF+azim
+ nnVI7nH++DoHmYCZYnMcfmjgR0Ky5BEl5LSEPZQ7UkP5MGSG2LaVfZ22Lr0qlFvQ4jHo
+ GLcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752745243; x=1753350043;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KT/cNhNrsVLlNFlNs9ur5OR9ca2bG5fE8QkwKdsISmA=;
+ b=J8+tnOLs338Rs98eNvAJ3kUJ9SGfH3KGhxs6FheK/o2olFTsVD4p8U/LBDkqrfucoN
+ 7SEAjZZVxm64VMlLp/yo1AsEI7/FY45y3YiDmZLJGOyGqgM6RPcnP2O+c8h3Hr7bzDq8
+ 22YT+BZdaP4rzGoNKrbRP4eQQU70oB0G7CwN6ngl5F7MKNaj9EwMhBHDk+qD4dtk5iYS
+ PmTYgejufgTkd/vwoup6885WXtJUcqdAXpsPvuH7j4fXNLKV//ApRwYV4eQwy14fZJRK
+ UTZZKpu5dnR8wgewzV27bnUiOF6rrPlbNfKz10hCWixPLpStYm+LOCu4CeiuOIeaCHn4
+ eIpA==
+X-Gm-Message-State: AOJu0YySahRhdozK1pD9KDyUHucDvrs2wWEnyLaB+uY0ciraW+FpRq+v
+ ZIilgz6sAgLG7+v5ukAKGanWmwMzatjwEU034NFOIJS2BX2JaSxzn9TupSE/6n6Hu20l68P+AOn
+ otAjdBFz0kSLz/wS8YrtJftz+OJnsAOmJLPZhEHO2fg==
+X-Gm-Gg: ASbGncuVuIFlaLXLQ6tbkQREQ3kKF8D/Rq5JCiXvhepPWMh1ZHPPYUSd6Fy5hFofcIo
+ UKC/De4ozAoi2Xt9E2wTvbtF/WxFU2C52QtXEU4WlvpFWREz34cPpMT08/EjLB9Ad4FA2Trob2D
+ yod7n1UEkBrDv/HGZm9Xe35VNdzJ/hK0MBlxtv7hb1G+2i5SSq9fNCZXODzcANRPPX96q32UvY/
+ RUPSktB
+X-Google-Smtp-Source: AGHT+IFBPVI8rWM8Qau+qY7/op+ABQ72OsePj8b5hpUDw5Dd5eCwgAyBGqsP7AzhXnnq6TyL/q0BkBqBtBeJ0zVsUOs=
+X-Received: by 2002:a05:690c:7343:b0:70e:7ae4:5a3e with SMTP id
+ 00721157ae682-7183712c96dmr58072227b3.11.1752745243059; Thu, 17 Jul 2025
+ 02:40:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-21-pbonzini@redhat.com>
+In-Reply-To: <20250530071250.2050910-21-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 17 Jul 2025 10:40:31 +0100
+X-Gm-Features: Ac12FXx4YpBtJY66w70lyO7YrV280bpxC-tvkNIE2fAVoe8AVQaFGsiWfPF4iWI
+Message-ID: <CAFEAcA8XdxQbvSJmo9BZOcxojTNgaFvCdO4xDuUi0eXcj13uAw@mail.gmail.com>
+Subject: Re: [PULL 20/77] i386/tdx: Initialize TDX before creating TD vcpus
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,43 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+On Fri, 30 May 2025 at 08:23, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>
+> Invoke KVM_TDX_INIT_VM in kvm_arch_pre_create_vcpu() that
+> KVM_TDX_INIT_VM configures global TD configurations, e.g. the canonical
+> CPUID config, and must be executed prior to creating vCPUs.
+>
+> Use kvm_x86_arch_cpuid() to setup the CPUID settings for TDX VM.
+>
+> Note, this doesn't address the fact that QEMU may change the CPUID
+> configuration when creating vCPUs, i.e. punts on refactoring QEMU to
+> provide a stable CPUID config prior to kvm_arch_init().
 
-The definitions encoding the maximum Virtual, Physical, and Guest Virtual
-Address sizes supported by the IOMMU are using incorrect offsets i.e. the
-VASize and GVASize offsets are switched. The value in the GVAsize field is
-also modified, since it was incorrectly encoded.
+Hi; I noticed something odd about this change when I was
+investigating a false-positive Coverity issue:
 
-Cc: qemu-stable@nongnu.org
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
-Co-developed-by: Ethan MILON <ethan.milon@eviden.com>
-Signed-off-by: Ethan MILON <ethan.milon@eviden.com>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Message-Id: <20250617150427.20585-2-alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 091c7d7924f33781c2fb8e7297dc54971e0c3785)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> @@ -162,6 +265,8 @@ static void tdx_guest_init(Object *obj)
+>      ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+>      TdxGuest *tdx = TDX_GUEST(obj);
+>
+> +    qemu_mutex_init(&tdx->lock);
+> +
 
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 28125130c6..921f7e1a4f 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -196,9 +196,9 @@
- #define AMDVI_PAGE_SHIFT_4K 12
- #define AMDVI_PAGE_MASK_4K  (~((1ULL << AMDVI_PAGE_SHIFT_4K) - 1))
- 
--#define AMDVI_MAX_VA_ADDR          (48UL << 5)
--#define AMDVI_MAX_PH_ADDR          (40UL << 8)
--#define AMDVI_MAX_GVA_ADDR         (48UL << 15)
-+#define AMDVI_MAX_GVA_ADDR      (2UL << 5)
-+#define AMDVI_MAX_PH_ADDR       (40UL << 8)
-+#define AMDVI_MAX_VA_ADDR       (48UL << 15)
- 
- /* Completion Wait data size */
- #define AMDVI_COMPLETION_DATA_SIZE    8
--- 
-2.47.2
+This adds a qemu_mutex_init() call, but we were already
+doing that later on in this function, so now we init the mutex twice.
 
+>      cgs->require_guest_memfd = true;
+>      tdx->attributes = 0;
+
+thanks
+-- PMM
 
