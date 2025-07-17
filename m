@@ -4,76 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D638C83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 14:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A04C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 15:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucPuT-000580-Qe; Thu, 17 Jul 2025 10:48:33 -0400
+	id 1ucQ5D-0002lh-RD; Thu, 17 Jul 2025 10:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ucOME-0007SX-79; Thu, 17 Jul 2025 09:09:06 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ucOQA-0001pA-B2
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:13:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ucOMA-0001sg-Cc; Thu, 17 Jul 2025 09:09:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752757743; x=1784293743;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=T/IVqI+1Ccw5qrGvHqbqRKzY61XINI9554vFTWPatks=;
- b=PI7OEDYvKhyZ1dQAZcS007qrHJhtfqdS0UdOKHknMIOhF1ZmCKMFCCaR
- 78OMOFl75rErvjyJGWNeW4kU7LvrW9h09BayFqv6FJP31G5Ji/fReDNnF
- GfpPdOI/VDBCWlrNew9mp2a0zU1FHemn+FcWL2D+bRZDEAIffZKQnoOJe
- 9Ob3Uv1qTq3YDd4kcFJbyVcCBwSiLHHpYZ1KZ+yEc8TUsy7vWNKaTqeMt
- XQPJpX9hFxHSber/AS99YKO5D0AIzXpljNpyTVjk/D36T/CGOkCn3bF8l
- X43hK5O4nP94lSVcZob6a6utUr9Ct+cuPdKdBB4DsUZXwSuD4HKBdOuNl g==;
-X-CSE-ConnectionGUID: 1TIziBsJT129OlvYnqxTLQ==
-X-CSE-MsgGUID: pMsCIXoPTb6Jb+jrR9lJmg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11495"; a="55180524"
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="55180524"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2025 06:08:58 -0700
-X-CSE-ConnectionGUID: IIMwW4kYSt2I146w0cPbFQ==
-X-CSE-MsgGUID: BAAFq7s1TFODC8MaVXBS8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,318,1744095600"; d="scan'208";a="158141936"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jul 2025 06:08:54 -0700
-Message-ID: <1edeecdd-76cf-4baa-97d8-c07df20b4824@intel.com>
-Date: Thu, 17 Jul 2025 21:08:49 +0800
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1ucOQ5-0002d0-Hx
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 09:13:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752757982;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/D6rBSL1mXGr0eR7+8mIYvSixxDNJg3R2iiIi+Q6pHw=;
+ b=dWk8U7z5EfJfNjTnzl0y/5wvKSK29ozoX0lJOHFMsKQ4s1rfKijZRSyVaAb59B8LsNa6I5
+ UOPdUbVoN9V1nG+wHaRcFB+p3ntnQrXoUg3pCrSPEABK3XwM/u6TfhQEIO6p65vNS1q29k
+ 7mRxmadm43/gLLpZYomq1MgrwzA5L5E=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-192-i8rjJx_ZP-6AOOUvDdsJWA-1; Thu, 17 Jul 2025 09:13:01 -0400
+X-MC-Unique: i8rjJx_ZP-6AOOUvDdsJWA-1
+X-Mimecast-MFC-AGG-ID: i8rjJx_ZP-6AOOUvDdsJWA_1752757980
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ae0c11adcd2so68424366b.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 06:13:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752757979; x=1753362779;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/D6rBSL1mXGr0eR7+8mIYvSixxDNJg3R2iiIi+Q6pHw=;
+ b=TakteDQEer8+qxpIZQHCRU4T/F6nKIJtWXxJnTPGUFM/o8Kkqa+JlzDoWCYUn5jA3N
+ pat6WNC6MkkvhwUVq/gJ3/uG0FVA0HCeiqP1TjJCD3rtjgqW/BH+j6zHZV+NYBUJwGqR
+ xILnF/a+r6H2xB4Iwhsm3L6RBfI191nrWYo76VTYjdRZYY03m9S23Ueg9c2XeHBLdGGy
+ YBOa1mA9bsgKJOSpjS4FHtwK9h/6GX3aZW5cbizz6EYFvvgyakIGo4eUR5iYHqamizvl
+ YqhYlue0wqxIQoeVAKZ5EvSW8ABFnOHJ0cR5KBfYcX8lMh/F2CWvxkOyMxdiWaKOapnj
+ zQow==
+X-Gm-Message-State: AOJu0Yy+GQdKVfI0A8RzQoKf3A7BMS563uVtqdK5fSEGjypJfCRn5EA+
+ amaSRhymrIz8vYCZBg/Nnvr/1kyQIltT7whZCvRArPNwbeEvRH8IGZ6W5uLbev4/27f8qyafxoI
+ Bwlo7eQ7XZRUfOfvoBA0V1mQmwYzVLujmV+BETxbozDemUTiKqi5mCGgRyy3v25T1ahEU2Gi70R
+ whPxw4Rulx61se1RHlNAkV7O+Hmgupiby6zT53Vwl5
+X-Gm-Gg: ASbGncvvyWGXpXvPM+VRJuJVUcZJLfHbumuWjAZ+wjqTl0saWLnKM2FHVvn7d5OI9aV
+ SuHraL6E3EXigWYQunNJz22vFvaIVp7f3kfn1JjbhIYy9pbvb+oMtzvXg7Rdjt/EwnHGDklfLMz
+ CbZCvh2hBDpQweLpB6ciXX5IU2rAyH5aW+yJNHwcCOWpex7QfAT4s3US5w5q9pOH9JgR9rU/AqN
+ 0ZK//s6KGirRciiFDdEW2i/00SN+vttb/AijhWCyyDgPXGaENRnIoDqlXQJ+uipygRXP1onKZR9
+ 4OIG2KMF8RBoeRot2jhnaJyBPUxSu8rpdEEhudGVkiXfBgjztHHRqfTdBNIkV8vD38QUGRFqVqh
+ 2yg==
+X-Received: by 2002:a17:907:a647:b0:ad8:a935:b8ff with SMTP id
+ a640c23a62f3a-ae9ce094585mr695876066b.31.1752757979309; 
+ Thu, 17 Jul 2025 06:12:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPYqBuSBQWvbKrV5RLZ90sOFDScV1iry075eypPackOR9mDuFkkf62O1J22f7IUVRQyYQr1Q==
+X-Received: by 2002:a17:907:a647:b0:ad8:a935:b8ff with SMTP id
+ a640c23a62f3a-ae9ce094585mr695870566b.31.1752757978475; 
+ Thu, 17 Jul 2025 06:12:58 -0700 (PDT)
+Received: from stex1 (host-79-45-205-118.retail.telecomitalia.it.
+ [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae6e7ee8d9fsm1341911766b.46.2025.07.17.06.12.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Jul 2025 06:12:57 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, roy.hopkins@randomman.co.uk
+Subject: [PATCH] meson: re-generate scripts/meson-buildoptions.sh to fix IGVM
+ entry
+Date: Thu, 17 Jul 2025 15:12:56 +0200
+Message-ID: <20250717131256.157383-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/3] accel/hvf: Display executable bit as 'X'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250716172813.73405-1-philmd@linaro.org>
- <20250716172813.73405-2-philmd@linaro.org>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250716172813.73405-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,31 +112,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/2025 1:28 AM, Philippe Mathieu-Daudé wrote:
-> Developers are custom to read RWX, not RWE.
-> Replace E -> X.
-> 
-> Reported-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Commit 84fe49d94a ("meson: Add optional dependency on IGVM library")
+was inconsistent with the contents of meson_options.txt and the one
+generated in scripts/meson-buildoptions.sh
 
-> ---
->   accel/hvf/hvf-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-> index e67a8105a66..0a4b498e836 100644
-> --- a/accel/hvf/hvf-all.c
-> +++ b/accel/hvf/hvf-all.c
-> @@ -84,7 +84,7 @@ static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
->       trace_hvf_vm_map(slot->start, slot->size, slot->mem, flags,
->                        flags & HV_MEMORY_READ ?  'R' : '-',
->                        flags & HV_MEMORY_WRITE ? 'W' : '-',
-> -                     flags & HV_MEMORY_EXEC ?  'E' : '-');
-> +                     flags & HV_MEMORY_EXEC ?  'X' : '-');
->       ret = hv_vm_map(slot->mem, slot->start, slot->size, flags);
->       assert_hvf_ok(ret);
->       return 0;
+Let's regenerate the file in this way to keep them consistent and prevent
+future changes from including the spurious diff:
+
+    touch meson_options.txt
+    make update-buildoptions
+
+Fixes: 84fe49d94a ("meson: Add optional dependency on IGVM library")
+Cc: roy.hopkins@randomman.co.uk
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ scripts/meson-buildoptions.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index e8504689e8..0ebe6bc52a 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -130,7 +130,7 @@ meson_options_help() {
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
+-  printf "%s\n" '  igvm            IGVM file support'
++  printf "%s\n" '  igvm            Independent Guest Virtual Machine (IGVM) file support'
+   printf "%s\n" '  jack            JACK sound support'
+   printf "%s\n" '  keyring         Linux keyring support'
+   printf "%s\n" '  kvm             KVM acceleration support'
+-- 
+2.50.1
 
 
