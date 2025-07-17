@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA6FC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EF5C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:50:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLDm-0006Ba-Rg; Thu, 17 Jul 2025 05:48:11 -0400
+	id 1ucLFI-0001AE-PO; Thu, 17 Jul 2025 05:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1Q-0002L6-F0; Thu, 17 Jul 2025 05:35:26 -0400
+ id 1ucL2P-0003pq-69; Thu, 17 Jul 2025 05:36:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1F-00023n-SW; Thu, 17 Jul 2025 05:35:23 -0400
+ id 1ucL2N-00029h-2i; Thu, 17 Jul 2025 05:36:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1F37A137CF5;
+ by isrv.corpit.ru (Postfix) with ESMTP id EF5F6137D02;
  Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 01C172491EF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D230E2491FB;
  Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 53/65] amd_iommu: Update bitmasks representing DTE
- reserved fields
-Date: Thu, 17 Jul 2025 12:33:49 +0300
-Message-ID: <20250717093412.728292-14-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 65/65] i386/cpu: Honor maximum value for
+ CPUID.8000001DH.EAX[25:14]
+Date: Thu, 17 Jul 2025 12:34:01 +0300
+Message-ID: <20250717093412.728292-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
@@ -61,73 +61,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-The DTE validation method verifies that all bits in reserved DTE fields are
-unset. Update them according to the latest definition available in AMD I/O
-Virtualization Technology (IOMMU) Specification - Section 2.2.2.1 Device
-Table Entry Format. Remove the magic numbers and use a macro helper to
-generate bitmasks covering the specified ranges for better legibility.
+CPUID.8000001DH:EAX[25:14] is "NumSharingCache", and the number of
+logical processors sharing this cache is the value of this field
+incremented by 1. Because of its width limitation, the maximum value
+currently supported is 4095.
 
-Note that some reserved fields specify that events are generated when they
-contain non-zero bits, or checks are skipped under certain configurations.
-This change only updates the reserved masks, checks for special conditions
-are not yet implemented.
+Though at present Q35 supports up to 4096 CPUs, by constructing a
+specific topology, the width of the APIC ID can be extended beyond 12
+bits. For example, using `-smp threads=33,cores=9,modules=9` results in
+a die level offset of 6 + 4 + 4 = 14 bits, which can also cause
+overflow. Check and honor the maximum value as CPUID.04H did.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250617150427.20585-4-alejandro.j.jimenez@oracle.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit ff3dcb3bf652912466dcc1cd10d3267f185c212e)
+Cc: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250714080859.1960104-8-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5d21ee453ad8e3f95f75e542cb3b35c5bb7cf23a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index de55074b21..69d69a9b2d 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -848,9 +848,10 @@ static inline uint64_t amdvi_get_perms(uint64_t entry)
- static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
-                                uint64_t *dte)
- {
--    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
--        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
--        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
-+    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
-+        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
-+        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
-+        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
-         amdvi_log_illegaldevtab_error(s, devid,
-                                       s->devtab +
-                                       devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 921f7e1a4f..60af62bef6 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -25,6 +25,8 @@
- #include "hw/i386/x86-iommu.h"
- #include "qom/object.h"
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0480ad4ab1..b768d8ea33 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -496,7 +496,8 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
  
-+#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
-+
- /* Capability registers */
- #define AMDVI_CAPAB_BAR_LOW           0x04
- #define AMDVI_CAPAB_BAR_HIGH          0x08
-@@ -162,9 +164,10 @@
- #define AMDVI_FEATURE_PC                  (1ULL << 9) /* Perf counters       */
+     *eax = CACHE_TYPE(cache->type) | CACHE_LEVEL(cache->level) |
+                (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0);
+-    *eax |= max_thread_ids_for_cache(topo_info, cache->share_level) << 14;
++    /* Bits 25:14 - NumSharingCache: maximum 4095. */
++    *eax |= MIN(max_thread_ids_for_cache(topo_info, cache->share_level), 4095) << 14;
  
- /* reserved DTE bits */
--#define AMDVI_DTE_LOWER_QUAD_RESERVED  0x80300000000000fc
--#define AMDVI_DTE_MIDDLE_QUAD_RESERVED 0x0000000000000100
--#define AMDVI_DTE_UPPER_QUAD_RESERVED  0x08f0000000000000
-+#define AMDVI_DTE_QUAD0_RESERVED        (GENMASK64(6, 2) | GENMASK64(63, 63))
-+#define AMDVI_DTE_QUAD1_RESERVED        0
-+#define AMDVI_DTE_QUAD2_RESERVED        GENMASK64(53, 52)
-+#define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
- 
- /* AMDVI paging mode */
- #define AMDVI_GATS_MODE                 (2ULL <<  12)
+     assert(cache->line_size > 0);
+     assert(cache->partitions > 0);
 -- 
 2.47.2
 
