@@ -4,86 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A19C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36842C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLGf-0005d1-KZ; Thu, 17 Jul 2025 05:51:09 -0400
+	id 1ucLGh-0005uu-NE; Thu, 17 Jul 2025 05:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucKqL-0001HE-QG
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:24:06 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucKqI-0000VH-Tk
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:23:57 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-7183d264e55so6936977b3.2
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 02:23:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752744230; x=1753349030; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=oy8N3oJhZgmaRv2TkjtpHwp25xp6e+hHsepELZyYigI=;
- b=y632JgrSw48SBJIEjqwNly93feUnW8dmmCwqRY+iaXsvPH6G5+p8Ezab3/4/F5UE9S
- BwqDecmcQLaqsPgjlidtvuyyVH7SkyBEHlHQWuCNxfzjV89liiS0EdnwJaxVjN3N8ntl
- W8FkseN9HlGUznDoi11yAOSEPIk0xOkIpp3lv7pw/OYkFMv5R9zWlVP+DNr85kLMr/lF
- AFnYlxX261fUmiPXfFYRXmMlQbqQSYVj9/aicCLvWCTL19LwGh4e+eLzjkq0O9g2kc2I
- fNYQ4LsNRYNdYH+7gGfb2oULqg0KL1MKFE+ZUHfrSX5DBCgMo/CudFy3L5M0/YFsve3x
- z4rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752744230; x=1753349030;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oy8N3oJhZgmaRv2TkjtpHwp25xp6e+hHsepELZyYigI=;
- b=fyoxw8NXDGLw8VQgW9VxYNkSQyuwT2KS6Jd2XDgkT/lUzPYbMvO2Yf3zf45Kd9FWPW
- 5/73ciHQJAkIdPKDphUVSJ3XYED2cwc3yAilRBxTyADA7jGhClWyKPfdHnsOp9s4UoLk
- fsS+VgT7X6srttDCmYRorhgKXvR+Gtvdk/xMtD/Fa/tXDfCI9g+R16kug9/FUP2u3bwS
- 7TlPMmoP5CbE8htNRNUk6kQ4rwi+IJGcb/TFL4eZV9XwXVPr9GFUe5Nl5J7cGCUV1X+w
- tFCBixtDHvjh9Yy56UHe3cAAyS5Mg8kFhZYrUZQWmLT35v6yowUwsoIn+UtVPuyjymYK
- CvoA==
-X-Gm-Message-State: AOJu0YwcY5m/kvIZDwAHWkaoKhZj6S1YZaO8jX6MMo0/0c4EbhBcc5TV
- mSaqtHflukl9aOt5LwSRiVdCPr1DbsOsiKSI3wO5177e5HujcunFUI/C5Wl6LyeskCFp55BTZUt
- ufiRkxyOlhcus0RsjT2jkBc/1IrYzTQOqoYuuLii2+g==
-X-Gm-Gg: ASbGnctBybSfcNPLMmqnZK7Iep8KH+WcTpm4tBsKu7crY46kxj39i/2lVdlQnlVCALS
- 5AwI3/UOlFlf6OZRdw7f40/WK0p9U8qa5JW37CKyrLOUOTkqgdV42VBHzvijT/f7MrHBTxjE7Gv
- av+rviaLNTYeMzy1a45DxJasmEhEUWb9BVJMvnU4eOTQ5aqCgOOQ/0Yclc+cvqp5kvZlSiggMFg
- zZ7HuHhV3IECZq0VW8=
-X-Google-Smtp-Source: AGHT+IGCuIfEgEzUnCGUtLFPi9YpCh2t6Ruu5Lk7hzw/tIWJi62c/871zWhBKGU6VaKu1LiScIIfnh1VinhEfSf+6co=
-X-Received: by 2002:a05:690c:6704:b0:710:e7ad:9d41 with SMTP id
- 00721157ae682-718a3361f20mr24922947b3.12.1752744230255; Thu, 17 Jul 2025
- 02:23:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL1r-0002oS-Tq; Thu, 17 Jul 2025 05:35:51 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL1p-000267-ER; Thu, 17 Jul 2025 05:35:51 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 88FA0137CFC;
+ Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BA5A2491F5;
+ Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Tingting Mao <timao@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 59/65] file-posix: Fix aio=threads performance
+ regression after enablign FUA
+Date: Thu, 17 Jul 2025 12:33:55 +0300
+Message-ID: <20250717093412.728292-20-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
+References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20250715063301.145191-1-marcandre.lureau@redhat.com>
- <20250715063301.145191-10-marcandre.lureau@redhat.com>
-In-Reply-To: <20250715063301.145191-10-marcandre.lureau@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Jul 2025 10:23:38 +0100
-X-Gm-Features: Ac12FXyMxUKvAwvKDNRkgGvmPf-pPAhwgHyufcg-xjmOIaPEQiVfNAnkNQZxe4c
-Message-ID: <CAFEAcA_humAdK=eco8GNgO77d9tJUP_mTsoyuG=uEFCCSc34pQ@mail.gmail.com>
-Subject: Re: [PULL v2 09/13] ui/spice: Blit the scanout texture if its memory
- layout is not linear
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- Vivek Kasireddy <vivek.kasireddy@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, 
- Dongwon Kim <dongwon.kim@intel.com>, 
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,40 +61,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Jul 2025 at 07:43, <marcandre.lureau@redhat.com> wrote:
->
-> From: Vivek Kasireddy <vivek.kasireddy@intel.com>
->
-> In cases where the scanout buffer is provided as a texture (e.g. Virgl)
-> we need to check to see if it has a linear memory layout or not. If
-> it doesn't have a linear layout, then blitting it onto the texture
-> associated with the display surface (which already has a linear layout)
-> seems to ensure that there is no corruption seen regardless of which
-> encoder or decoder is used.
+From: Kevin Wolf <kwolf@redhat.com>
 
-Hi; Coverity points out (CID 1612367) that this change
-introduces a use of an uninitialized variable:
+For aio=threads, we're currently not implementing REQ_FUA in any useful
+way, but just do a separate raw_co_flush_to_disk() call. This changes
+behaviour compared to the old state, which used bdrv_co_flush() with its
+optimisations. As a quick fix, call bdrv_co_flush() again like before.
+Eventually, we can use pwritev2() to make use of RWF_DSYNC if available,
+but we'll still have to keep this code path as a fallback, so this fix
+is required either way.
 
-> @@ -1269,6 +1329,15 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
->          glFlush();
->      }
->
-> +    if (spice_remote_client && ssd->blit_scanout_texture) {
-> +        egl_fb scanout_tex_fb;
+While the fix itself is a one-liner, some new graph locking annotations
+are needed to convince TSA that the locking is correct.
 
-We don't initialize scanout_tex_fb...
+Cc: qemu-stable@nongnu.org
+Fixes: 984a32f17e8d ("file-posix: Support FUA writes")
+Buglink: https://issues.redhat.com/browse/RHEL-96854
+Reported-by: Tingting Mao <timao@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20250625085019.27735-1-kwolf@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit d402da1360c2240e81f0e5fc80ddbfc6238e0da8)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-> +
-> +        ret = spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 56d1972d15..796553bafd 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -2484,9 +2484,9 @@ static inline bool raw_check_linux_aio(BDRVRawState *s)
+ }
+ #endif
+ 
+-static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
+-                                   uint64_t bytes, QEMUIOVector *qiov, int type,
+-                                   int flags)
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
++           QEMUIOVector *qiov, int type, int flags)
+ {
+     BDRVRawState *s = bs->opaque;
+     RawPosixAIOData acb;
+@@ -2545,7 +2545,7 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
+     ret = raw_thread_pool_submit(handle_aiocb_rw, &acb);
+     if (ret == 0 && (flags & BDRV_REQ_FUA)) {
+         /* TODO Use pwritev2() instead if it's available */
+-        ret = raw_co_flush_to_disk(bs);
++        ret = bdrv_co_flush(bs);
+     }
+     goto out; /* Avoid the compiler err of unused label */
+ 
+@@ -2580,16 +2580,16 @@ out:
+     return ret;
+ }
+ 
+-static int coroutine_fn raw_co_preadv(BlockDriverState *bs, int64_t offset,
+-                                      int64_t bytes, QEMUIOVector *qiov,
+-                                      BdrvRequestFlags flags)
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_preadv(BlockDriverState *bs, int64_t offset, int64_t bytes,
++              QEMUIOVector *qiov, BdrvRequestFlags flags)
+ {
+     return raw_co_prw(bs, &offset, bytes, qiov, QEMU_AIO_READ, flags);
+ }
+ 
+-static int coroutine_fn raw_co_pwritev(BlockDriverState *bs, int64_t offset,
+-                                       int64_t bytes, QEMUIOVector *qiov,
+-                                       BdrvRequestFlags flags)
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_pwritev(BlockDriverState *bs, int64_t offset, int64_t bytes,
++               QEMUIOVector *qiov, BdrvRequestFlags flags)
+ {
+     return raw_co_prw(bs, &offset, bytes, qiov, QEMU_AIO_WRITE, flags);
+ }
+@@ -3525,10 +3525,11 @@ static int coroutine_fn raw_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
+ #endif
+ 
+ #if defined(CONFIG_BLKZONED)
+-static int coroutine_fn raw_co_zone_append(BlockDriverState *bs,
+-                                           int64_t *offset,
+-                                           QEMUIOVector *qiov,
+-                                           BdrvRequestFlags flags) {
++static int coroutine_fn GRAPH_RDLOCK
++raw_co_zone_append(BlockDriverState *bs,
++                   int64_t *offset,
++                   QEMUIOVector *qiov,
++                   BdrvRequestFlags flags) {
+     assert(flags == 0);
+     int64_t zone_size_mask = bs->bl.zone_size - 1;
+     int64_t iov_len = 0;
+-- 
+2.47.2
 
-...and we immediately pass it to spice_gl_blit_scanout_texture(),
-which will unconditionally call egl_fb_destroy() on it.
-
-> +        if (!ret) {
-> +            return;
-> +        }
-> +    }
-
-thanks
--- PMM
 
