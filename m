@@ -4,98 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4C5C83F22
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 160B3C83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 08:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucKFd-0005o9-2d; Thu, 17 Jul 2025 04:46:01 -0400
+	id 1ucKGf-0007Iq-Dy; Thu, 17 Jul 2025 04:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ucKFR-0005h1-MQ
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:45:52 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ucKFN-0003hS-V8
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:45:48 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a4f379662cso515518f8f.0
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 01:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752741944; x=1753346744; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xZ4OUL/O6x+anLhegvg4iCGqGFbYPglXhLHI/aOL+AA=;
- b=Ls/Br589EV/4SIHc1MTa/VYeX3sVd2E+WR96A3629rTSPOLAFLYiA2tg4a24bcQtp1
- YFKlFKDc82hi38VQw/yFprTXhZ45UcPmNNjZy4Qip34jIcsw8VJSB365jMMnaVg9l52Z
- eKcv9xbdj27BHVIE9lMYSeJtVuTtiXDA3s0Gju+DGtVUYXeo1wGvlVOZ/w5GC7ymNQ4S
- yIaBcHtaqWLWtZ4t/1fuZnlh+z/dEtj2FeiG0sJ2wbRLex9RWGuG7vvzqzP8SEM3CAKl
- E+q7n+cXVZUvkygwFDbgyrvqlvpSVajUt3ZYxKhuzNKimgUy4QoxTWnYIFnM1zq8MshO
- Pn6w==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ucKGb-0007B8-QO
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:47:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ucKGV-0003zs-HM
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 04:47:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752742012;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wrcBbo23Ev5G6ybN0tXe7LMqDELdj3G9EwS7qwfW+h0=;
+ b=Hu2eQ+WHv0H1PYi7HHmWLhTnJwi0C8IMV555GkQ0iHfLKBHrSPuMZP/iHHmvtYwrH3x7rm
+ YPqSGAvxbAv51DTS87BcfXofejroyXGKamtjjo41wKCDYWwKhdAEUe/ios8lbYvJXRHvFB
+ 2Q0FC93G3/HcM4kjLC3CjAtJQWq6kp8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-HtxPnVuKOautHIb4C8HOIA-1; Thu, 17 Jul 2025 04:46:50 -0400
+X-MC-Unique: HtxPnVuKOautHIb4C8HOIA-1
+X-Mimecast-MFC-AGG-ID: HtxPnVuKOautHIb4C8HOIA_1752742010
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b39cc43f15so332285f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 01:46:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752741944; x=1753346744;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xZ4OUL/O6x+anLhegvg4iCGqGFbYPglXhLHI/aOL+AA=;
- b=VYmoaNJKyy+JRbcjkPdjNurgzqiEGHqH7PNVqSb1BbGDF4hld9uSorlxs3nEyVFhVH
- YtOt9Rv2aS3Kzu+mkDumJqycxGHF7m+/Qj/vSfj/cDF5qrQVKAuCbSccdS0i2l0KXE24
- +aFvPZlQK857iMenchzcgqKXMrlgALFekXQ10sgBFtoTLcaLiuSI9HhjCxg4AhYiBxHd
- uPICewNJ18mTSSFgT2xRs9CYMAzmN4ecTRWX6JPHlpsY2vUb0g0QK4h385DyHtBXhL5p
- 3VdF4xwBwwv7TOe5koU2WY9tUp5xbowbTk4R0NuKDehf4xle+/azKrKtJK/Fkb8Btszp
- 7AxQ==
-X-Gm-Message-State: AOJu0YzIdfDR3IyITVieXyMunXWYXn14mCosRTu5WeoLWZGJvwhaGvBU
- oQzfXLHi+8CgZbrtdjBpv05fxxiML3brpk2GdrT0zCdsXCheB377pdSi5G6W05M65YM=
-X-Gm-Gg: ASbGncsnvswhn5PJXiVTGsaVv9stag6dxVcR6ApwKm6teJyOWkTMtCTk7T5/0mUCCn3
- IgUS/xL9rricikiijJstiqRcnY7gkvbEDHO76IzVMHqD0erkpw8UBpwYBGn2hpxJO6BdOK0nouO
- MkZu76T1q0yxfJgJifjn/w04nkKF7iG0bbp2rX0CqwVEtFRNsyWkFCw3VTYpBACJ3UZgw5wMf59
- xe3g7Ivswa9Bv9g5V6gm73zwOfOdm4ktD2EDNs7U7hcA6nW4yCnLZsLLQ9s8GW9C0AXntQFNpVL
- aAHFYgslgqp3Som0Ee4vt7W2K7/XdYrRKK7ozKWcxwpg/OMGsZ2IaDtbUkUkaU5d7RoUZuALvoT
- tgLL5w/xHQJk9zX/bSFuyF/koMsUwDFjazdBmJg7bqfCYOVVMSJvj4w179+Xns6u95g==
-X-Google-Smtp-Source: AGHT+IHP1oE7whlj7bL7NxqdbKQL2B4A0lGKBZweLux3egDh4x4vy/Gg1bFMH369T+DyMv3qn9vMxg==
-X-Received: by 2002:a05:6000:430b:b0:3a5:26fd:d450 with SMTP id
- ffacd0b85a97d-3b60e50ff9fmr4167896f8f.47.1752741944033; 
- Thu, 17 Jul 2025 01:45:44 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8dc9298sm20109523f8f.44.2025.07.17.01.45.41
+ d=1e100.net; s=20230601; t=1752742009; x=1753346809;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wrcBbo23Ev5G6ybN0tXe7LMqDELdj3G9EwS7qwfW+h0=;
+ b=KnmugZR/9v8mcIdv5Y/2eO/t0pz9v6MIAXrzVnP7nfl3ZwKjIcNEPv9HfDuFU/scPE
+ Ul6obTlPPObW/IDwg2QrL0sLPxF4quyJ17+jw10wvdIIXjiQvbvXTH6LlkR4dcZ4f+Et
+ 4Cl7Snb/Z6coe3sVA/9BpAURjL2RA8Mb2KbiJ6gKKFzX9z3Fj4J2AbuR57BfIXc51WaZ
+ fESzc1gD4Wkl6e+g54iMJhRGhkshl6on1TMVNNPlVurjNEVXm3ig6Dwi8Mf8ClqWjsNT
+ 1P0Dqb4ynWMe4MO0IsnBqC1Hn2XS/3CRAoZ0hyvpeRoGHmL7gPydXxRggukHltAKr/38
+ FZrg==
+X-Gm-Message-State: AOJu0YzQxlbUVGA3yAm3RhHJseVnWApF+tCTxxKV7gT5MhwjfncrnsX1
+ mr2nP3z3Myg1wQwFV2RsL0cwVcXVEg3vkeW2DIrEc3xDpg1iEtPBuk2JlA09V3tUuS11Vrd1gJB
+ 5ouB4HpGY8dyM01yj/1iG/7Jks37mPw9Bwf9L2tv0zzJNsjD2eDfTgEmI
+X-Gm-Gg: ASbGnct3mAyMVLCP8cmpmzRp7KZGVg7He7ucqoN7zo3gQvl2Bp8GGD6rtLQhLVoOa/n
+ dyYcyDD7i1/+zHCdbQMzKa7ivAVJrCksC3LbErHu1U/qN9rPolqDQRgZCPrAotebR+KLYTD4jEM
+ b/XY3bdy59EqKa/9hbVXEGlxBEnOp/sAAUZbgd2I22zHuqaFsKDOvGfry0Vs3VC3qzCCwCNXsXE
+ gA5ftZ2DC08SfYfe780D1fox6IXv5LBx93xumHMhjMp3XiV6Pxv8FpyOYNlqtm6Vte5yrBiRZJl
+ RGeMbVb6Jz6lrw2T2U0vqSmz5O04n+aJvidvLiHRl5ENW6dUZt5JJqYqgQXDmg6csoTOAhnWVRw
+ YkDU=
+X-Received: by 2002:a05:6000:2084:b0:3b2:e07f:757 with SMTP id
+ ffacd0b85a97d-3b60e4be9a5mr4907022f8f.1.1752742009332; 
+ Thu, 17 Jul 2025 01:46:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBjllyIlSrimI86v4FcZdjQar/0n3MIeI+nvGjsUtFV8e/qdiqIMLzvMuW1pAPys6zEYiZgA==
+X-Received: by 2002:a05:6000:2084:b0:3b2:e07f:757 with SMTP id
+ ffacd0b85a97d-3b60e4be9a5mr4906994f8f.1.1752742008915; 
+ Thu, 17 Jul 2025 01:46:48 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-114-097.pools.arcor-ip.net.
+ [47.64.114.97]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45634f4c34dsm15612675e9.6.2025.07.17.01.46.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Jul 2025 01:45:43 -0700 (PDT)
-Message-ID: <118bd5fd-a340-4a27-ac3f-fb9774a65746@linaro.org>
-Date: Thu, 17 Jul 2025 10:45:41 +0200
+ Thu, 17 Jul 2025 01:46:48 -0700 (PDT)
+Message-ID: <7924aab8-2d89-4b69-be5d-40ffb0c839a5@redhat.com>
+Date: Thu, 17 Jul 2025 10:46:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 28/69] qapi: Move definitions related to accelerators
- in their own file
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, kvm@vger.kernel.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-References: <20250703105540.67664-1-philmd@linaro.org>
- <20250703105540.67664-29-philmd@linaro.org>
- <db0b2ce0-e702-4f32-b284-29cccc8d67ba@linaro.org>
- <877c08wnlt.fsf@pond.sub.org> <aHdvwYM7kXBU4cji@redhat.com>
+Subject: Re: [PATCH] tests/functional: add --debug CLI arg
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+ <87ms93xl69.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aHdvwYM7kXBU4cji@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <87ms93xl69.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,121 +156,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/25 11:24, Daniel P. Berrangé wrote:
-> On Wed, Jul 16, 2025 at 10:23:26AM +0200, Markus Armbruster wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> Hi Markus,
->>
->> I missed this one, sorry!
->>
->>> On 3/7/25 12:54, Philippe Mathieu-Daudé wrote:
->>>> Extract TCG and KVM definitions from machine.json to accelerator.json.
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->>
->> [...]
->>
->>>> diff --git a/qapi/accelerator.json b/qapi/accelerator.json
->>>> new file mode 100644
->>>> index 00000000000..00d25427059
->>>> --- /dev/null
->>>> +++ b/qapi/accelerator.json
->>>> @@ -0,0 +1,57 @@
->>>> +# -*- Mode: Python -*-
->>>> +# vim: filetype=python
->>>> +#
->>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>> +
->>>> +##
->>>> +# = Accelerators
->>>> +##
->>>> +
->>>> +{ 'include': 'common.json' }
->>>
->>> common.json defines @HumanReadableText, ...
->>>
->>> [...]
->>>
->>>> +##
->>>> +# @x-query-jit:
->>>> +#
->>>> +# Query TCG compiler statistics
->>>> +#
->>>> +# Features:
->>>> +#
->>>> +# @unstable: This command is meant for debugging.
->>>> +#
->>>> +# Returns: TCG compiler statistics
->>>> +#
->>>> +# Since: 6.2
->>>> +##
->>>> +{ 'command': 'x-query-jit',
->>>> +  'returns': 'HumanReadableText',
->>>> +  'if': 'CONFIG_TCG',
->>>
->>> ... which is *optionally* used here, triggering when
->>> TCG is not built in:
->>>
->>> qapi/qapi-commands-accelerator.c:85:13: error: ‘qmp_marshal_output_HumanReadableText’ defined but not used [-Werror=unused-function]
->>>     85 | static void qmp_marshal_output_HumanReadableText(HumanReadableText *ret_in,
->>>        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>> cc1: all warnings being treated as errors
->>
->> This is a defect in the QAPI code generator.  More below.
->>
->>> We previously discussed that issue:
->>> https://mail.gnu.org/archive/html/qemu-devel/2021-06/msg02667.html
->>>
->>> where you said:
->>>
->>> "conditional commands returning an unconditional type is a bit
->>> of a code smell". Is it however a "non-smelly instances of this pattern"?
->>
->> The instance discussed there wasn't.
->>
->> You ran into it when you made TPM commands conditional on CONFIG_TPM
->> without also making the types they return conditional.
-
-Indeed, I now remembered it:
-https://lore.kernel.org/qemu-devel/87r1haasht.fsf@dusky.pond.sub.org/
-
->>  The proper
->> solution was to make the types conditional, too.  Avoided generating
->> dead code.  I told you "The user is responsible for making T's 'if' the
->> conjunction of the commands'."
->>
->> Some of the commands returning HumanReadableText are unconditional, so
->> said conjunction is also unconditional.  So how do we end up with unused
->> qmp_marshal_output_HumanReadableText()?
->>
->> A qmp_marshal_output_T() is only ever called by qmp_marshal_C() for a
->> command C that returns T.
->>
->> We've always generated it as a static function on demand, i.e. when we
->> generate a call.
+On 17/07/2025 10.42, Alex Bennée wrote:
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 > 
-> ..snip..
+>> Add argument parsing to functional tests to improve developer experience
+>> when running individual tests. All logs are printed to stdout
+>> interspersed with TAP output.
+>>
+>>    ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
+>>    usage: test_aarch64_virt [-h] [-d]
 > 
->> I need to ponder this to decide on a solution.
+> Am I holding it wrong?
 > 
-> Functionally the redundat function is harmless, so the least effort
-> option is to change the generated QAPI headers to look like
+>    ➜  ./pyvenv/bin/python ../../tests/functional/test_aarch64_virt.py --help
+>    Traceback (most recent call last):
+>      File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/test_aarch64_virt.py", line 16, in <module>
+>        from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
+>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init__.py", line 14, in <module>
+>        from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
+>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcase.py", line 26, in <module>
+>        from qemu.machine import QEMUMachine
+>    ModuleNotFoundError: No module named 'qemu'
 > 
->    #pragma GCC diagnostic push
->    #pragma GCC ignored "-Wunused-function"
-> 
->    ... rest of QAPI header...
-> 
->    #pragma GCC diagnostic pop
+> I thought the point of the venv is we had all the modules we need
+> automatically available to the PYTHONPATH?
 
-I agree, the same was suggested as comment in my previous patch
-https://lore.kernel.org/qemu-devel/20210609184955.1193081-2-philmd@redhat.com/
+The "qemu" module is special since we ship it in our repository. See the 
+"PYTHONPATH" description in docs/devel/testing/functional.rst.
 
-Markus, WDYT?
+  Thomas
 
-Regards,
-
-Phil.
 
