@@ -4,99 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9DAC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 006BAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLyy-0004sh-K5; Thu, 17 Jul 2025 06:36:56 -0400
+	id 1ucM1Y-0007fs-SW; Thu, 17 Jul 2025 06:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ucLyx-0004qV-6s
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 06:36:55 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ucLyu-0001E6-8G
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 06:36:53 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3a536ecbf6fso486335f8f.2
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 03:36:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752748610; x=1753353410; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kwuNpPmxzGwb8R/Whlcr/GY3SicfNUIPsQQINOYciu4=;
- b=wJn/rN9HJxdxa26E3sdVlBvf7xtI2rh9Sp1Xu+2DHPLSb5qKgcDW4YYlMyeyXUbFos
- LRXUvtAnRTdSyN1VamSwtxxkOKeA1bIPLiNt/IqHm3L7/5N3+c7RqmTAi4mqqEUiB97g
- IWZkijs68FqNEg7vRjLLks7aZ1rSYhYHYt9HMaPmduRWyZvtR9rVD4kWWrV5dpbizMZo
- 6kYLyHKUdj/puoZJ6fi7mpCfX/7Khc+uI3j2PtRIW8PmfwypkfPvQJaSXnFY/n7qWsrC
- 7r+Ng8OlOHSFMw0nsw3LC3qn0lZ2THagPQrVUeucY1I2f4IADXFawfQwiFNTu8b2yG+U
- hn5g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucM1S-0007cy-BX
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 06:39:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucM1L-0001Om-H3
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 06:39:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752748761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zcxoJjXc12xb3kFZ3uf+dexponMwVxD9EuwP0V2RT7w=;
+ b=fA6d00yV5uTWY4sUMBrDqKzQBRxMtYwth9WV2SpHL2STb8GBZ0pXLcuHqtu6bjOPbRXJXm
+ 981cJatvMISbGMKpikabz2M+baliZnBhyeiE39HdIEMSu9y7HsWSoq6Eo2K7aRF8XUkaEK
+ 9vcJVFWx2QpxIBDkYkdCb9ssJMwT8EE=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-1rx--LIJMACurvPoToM0JQ-1; Thu, 17 Jul 2025 06:39:19 -0400
+X-MC-Unique: 1rx--LIJMACurvPoToM0JQ-1
+X-Mimecast-MFC-AGG-ID: 1rx--LIJMACurvPoToM0JQ_1752748759
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6085b0265c5so675260a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 03:39:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752748610; x=1753353410;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kwuNpPmxzGwb8R/Whlcr/GY3SicfNUIPsQQINOYciu4=;
- b=r2MD0is9/QmnY25mb8HVxclUFxTicEV2Sz/q4lJ95AvD9vMRr++CtZRvVrjhM1cm6d
- D/SVurgNXa1YirSjq0hS96dauRDjMYxfEVdd65U8Vov2VpS+j5p6oFd9/N7h+vg804k7
- citwF32qJJegMrUmyqrqYRD0Qb7eqElNkhWP/rQzLppLm+bVckxNlL+n6UeQLI+4ULXa
- B6fbWJ/Q7KXqDnbsGR9tjhVldKki4/g7zC4WjR9WjmoqAhRRDvNzFzBfxVQgVNGxi9st
- Cz+DzB1R3vnuCnGwL9MimKtSCqrGXe9oaXQQOaBJfgrRicAS4ybaHuJ6+mxFKTZNyfn/
- vBgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXobFfTffGHebEs3VdslEyomnzDXmBvXWEZm05s6X5OgZJ+N4UhrcY1hE7gzAktyhDpf63O3U4OIwpN@nongnu.org
-X-Gm-Message-State: AOJu0YwV+pNaQdTWJTjKxOuwmWGgjNojWZ5V/4EFqWH8HLxx2Ce0DgG1
- 1AuqzxwaQbIRQZplTTYFrYOGmRBX/qe+yUfEW1bJSnicuwfjZt6SffBZmEIWqw2eVhg=
-X-Gm-Gg: ASbGnctkezLagzPSNvcxqP98s9Hu8bQt2j55vypmZ2zJc1SGX36Eu35KGn26YspQXz3
- r1Z5EOgo5znEhualNXUPZRb7wNj2WZoF2PF1JKH3zANAJuj6i19PfNCRjsSeeP50MAckZSX1JDL
- DAu53LT7UvhZQ2SU03SSlZ/IhPlwURwdleIKVM1bt8zYXBbjZ9aYlnB6Sj9wGfWmsk8pVPkSYGx
- Cdzh2RNXgiUf5sBOpT2fxsGOhSTm9i22les03J+V8Hcxvz8dYGvUkx+vLg9BTWh9TXzXl/FZDq7
- mdsK86FQlwIj0t0j9lzlt7Q9tlo5DWhJERl2RuadpbaMgCLpvVBbK+ez7OcEOFa2IRp5up7w3an
- 1CszrYAlJkqB9dw57Mh/5H3w=
-X-Google-Smtp-Source: AGHT+IFQOeJ/UR6EbPhewdUzoDKZZSwigRxXMPzPkE8typoJINA/gOK2Ss28XI6yCyLJIdHiDpakfw==
-X-Received: by 2002:a05:6000:460a:b0:3b5:dc04:3f59 with SMTP id
- ffacd0b85a97d-3b613e97badmr1654224f8f.37.1752748610064; 
- Thu, 17 Jul 2025 03:36:50 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8bd1792sm20570226f8f.13.2025.07.17.03.36.49
+ d=1e100.net; s=20230601; t=1752748758; x=1753353558;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zcxoJjXc12xb3kFZ3uf+dexponMwVxD9EuwP0V2RT7w=;
+ b=wp3aKV2IAUz9HCyY6bs+y8iDSIaofmx3LyvIqT4XO1/M8aw+UpB+AhEjdwJLgQrpV5
+ m1bZvyNNis6Z9O/jy16FSix+bRf1FHPlVQwbnHzZjZoiWgf0AxAI+7xtLRzLBPt9alKZ
+ wyqx2mftBoGuG/oT64CCrgQalL7ZK+2FZYuC1/z36u7DDznrSKSDrvU2eZ7G9CaG7GOu
+ W7TzRGJvmpoqteP39If3dwC8rTYPausdZt47bOBacLBrFpjfAFHWK36xToF4cGq6WpJx
+ GHiWd913iKLxGSLbORKqvcVZrEOC8Fd6NuxkN5D3NT1INULxa9dABTC239uRrrqF2h0i
+ 2XeQ==
+X-Gm-Message-State: AOJu0YwO5Q892/IDnlB4KvTkAKOKvWVLxcFHzRsObSW8bL9BVht3sm7P
+ /lnYXxTFb8e4ObJGgMFEzjLvpHjUAYhnX7Vbu5cDUPfh/4td3KOQe1gbZ5KuM6V71uI5SD4MpJ0
+ AJRSjzzkBFmlf6zX2Pq0JLj3/nuDuQQQ1sp0lsMlr59m1MXTCQRjutCAncU1rf2XokMIxYw2kLy
+ J1ahxySLYD3cxgOff8OBvrejw1igpuP0GNOkvok2gE
+X-Gm-Gg: ASbGncv1g1sQCT4g20nqO91e1C/XI7UW2YHWdjWm63IghFQQrb2Z0UIhbl7w+XnHaDQ
+ +d3HkPc9q7kz2a7MbvMA1J5UXJjllGMTjttwXRuUt+zdJgAnZp2N+cmQuSjfuVnGdeBgsCGUVWA
+ 8AwqHTtQQg8Z9CRMomzq/4caeSKbfsPMsLfkEgdLNL3sPESBt0a6xt9CGqWUATGD0VXVtJimDlJ
+ YrU0EA+79RrgcNn5wgjbSgZHn9KgUsabt87N0PFZQ3cc+fYMbJMMomuGMDCI8YUkV9pLjDm+Nyx
+ lv2lQEdTHRjJdHAylKz0CMVB3IbbERZPsVA/LO3eSog=
+X-Received: by 2002:a17:907:97c1:b0:ae0:bd4d:4d66 with SMTP id
+ a640c23a62f3a-ae9c9a105b7mr732285566b.27.1752748757873; 
+ Thu, 17 Jul 2025 03:39:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtB2d6svKo/6A9mUZ2rEDG5uMzzawkofraPZqfK7RZcuvhyM4JVgEqjKykykasje38y8u/xw==
+X-Received: by 2002:a17:907:97c1:b0:ae0:bd4d:4d66 with SMTP id
+ a640c23a62f3a-ae9c9a105b7mr732283166b.27.1752748757296; 
+ Thu, 17 Jul 2025 03:39:17 -0700 (PDT)
+Received: from [10.131.45.123] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae6e8291bb2sm1333374666b.113.2025.07.17.03.39.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Jul 2025 03:36:49 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7328C5F812;
- Thu, 17 Jul 2025 11:36:48 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-In-Reply-To: <7924aab8-2d89-4b69-be5d-40ffb0c839a5@redhat.com> (Thomas Huth's
- message of "Thu, 17 Jul 2025 10:46:46 +0200")
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <87ms93xl69.fsf@draig.linaro.org>
- <7924aab8-2d89-4b69-be5d-40ffb0c839a5@redhat.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Thu, 17 Jul 2025 11:36:48 +0100
-Message-ID: <875xfrxfwf.fsf@draig.linaro.org>
+ Thu, 17 Jul 2025 03:39:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH] target/i386: tdx: fix locking for interrupt injection
+Date: Thu, 17 Jul 2025 12:39:15 +0200
+Message-ID: <20250717103915.331309-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,41 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Take tdx_guest->lock when injecting the event notification interrupt into
+the guest.
 
-> On 17/07/2025 10.42, Alex Benn=C3=A9e wrote:
->> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->>=20
->>> Add argument parsing to functional tests to improve developer experience
->>> when running individual tests. All logs are printed to stdout
->>> interspersed with TAP output.
->>>
->>>    ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
->>>    usage: test_aarch64_virt [-h] [-d]
->> Am I holding it wrong?
->>    =E2=9E=9C  ./pyvenv/bin/python
->> ../../tests/functional/test_aarch64_virt.py --help
->>    Traceback (most recent call last):
->>      File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/te=
-st_aarch64_virt.py", line 16, in <module>
->>        from qemu_test import QemuSystemTest, Asset, exec_command_and_wai=
-t_for_pattern
->>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init__.=
-py", line 14, in <module>
->>        from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
->>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcase.=
-py", line 26, in <module>
->>        from qemu.machine import QEMUMachine
->>    ModuleNotFoundError: No module named 'qemu'
->> I thought the point of the venv is we had all the modules we need
->> automatically available to the PYTHONPATH?
->
-> The "qemu" module is special since we ship it in our repository. See
-> the "PYTHONPATH" description in docs/devel/testing/functional.rst.
+Fixes CID 1612364.
 
-Is there anyway to setup the venv so it automatically does that?
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/kvm/tdx.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 7d69d6d7b06..7dcf2f75026 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1126,10 +1126,15 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
+     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
+ }
+ 
+-static void tdx_inject_interrupt(uint32_t apicid, uint32_t vector)
++static void tdx_inject_interrupt(TdxGuest *tdx_guest)
+ {
+     int ret;
++    uint32_t apicid, vector;
+ 
++    qemu_mutex_lock(&tdx_guest->lock);
++    vector = tdx_guest->event_notify_vector;
++    apicid = tdx_guest->event_notify_apicid;
++    qemu_mutex_unlock(&tdx_guest->lock);
+     if (vector < 32 || vector > 255) {
+         return;
+     }
+@@ -1179,8 +1184,7 @@ static void tdx_get_quote_completion(TdxGenerateQuoteTask *task)
+         error_report("TDX: get-quote: failed to update GetQuote header.");
+     }
+ 
+-    tdx_inject_interrupt(tdx_guest->event_notify_apicid,
+-                         tdx_guest->event_notify_vector);
++    tdx_inject_interrupt(tdx);
+ 
+     g_free(task->send_data);
+     g_free(task->receive_buf);
+-- 
+2.50.1
+
 
