@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8F7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EBDC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucKxI-0006oA-Cc; Thu, 17 Jul 2025 05:31:08 -0400
+	id 1ucLCS-0004aD-HT; Thu, 17 Jul 2025 05:46:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1ucKjZ-0004vw-0B
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:17:01 -0400
-Received: from mail-m3283.qiye.163.com ([220.197.32.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1ucKjU-00079K-MP
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:16:56 -0400
-Content-Type: multipart/alternative;
- BOUNDARY="=_Part_797021_1680096719.1752743378900"
-Message-ID: <AJkA5ADwJOXy18uXpIWm1qoc.3.1752743378900.Hmail.fanyihao@rt-thread.org>
-To: Peter Maydell  <peter.maydell@linaro.org>
-Cc: qemu-devel  <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?UmU6IEFkZCB0aGUgc3RtMzJmNDA3IFNvQw==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
- Sirius_WEB_WIN_1.52.0
-X-Originating-IP: 117.67.71.52
-In-Reply-To: <CAFEAcA-8_UvqD2kP=9MaGmkde187J_nZzP4p=Sp80nB4-KRPNA@mail.gmail.com>
-References: <AEsAbwBKJLTgnqrz7OpDUKry.1.1752336287467.Hmail.fanyihao@rt-thread.org>
- <CAFEAcA-8_UvqD2kP=9MaGmkde187J_nZzP4p=Sp80nB4-KRPNA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ucKtu-0004kP-Nx
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:27:41 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ucKts-000188-CU
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:27:38 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-60768f080d8so1362779a12.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 02:27:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752744454; x=1753349254; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rJyVsKo6V40Q/oce/4z02JkREpVcdr7tpwIO/CZiuWE=;
+ b=bVqVG9xgKEQH3Ho0TdoREGdN49ePzcHwziF9oLTlN5tEbbTEf44SuRCmpuGozlJ/I4
+ zoJZB/gOE/GE3gJpMlHsZGQa+5K0IfCC6Aqha0wpiuPpdlnCdwmqWqSDs5pYM6jM17mZ
+ mBVraYMqQSJNhiEkXqLTYFOJh5URCPYs/2WlAiogv5C6zRCGiyVMbU6ksgeMcy933pFt
+ 1iikwMVJUkuh8GP2tx6Vl2zB71gsZQ0SCthf5Wpok1M+49BtNlnDJG7cOt1CaM8dSVBr
+ yC8xyWWuCNR4IaAas1GA2WEbPKhpuD2WqNqerZUISyp9ssEtYq8HeagG8CwkYuZtR3bo
+ Em2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752744454; x=1753349254;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rJyVsKo6V40Q/oce/4z02JkREpVcdr7tpwIO/CZiuWE=;
+ b=isQxD0jtSXi3HgxfKJlJN5Wyy6AOv4qZsXyF8VYX8wHRbjIfTnG18jwKU3YDsa40E4
+ 6L9ZW0ugwukSJID27N3ijLbiKGYjMynMADVOQMEK8YY25MBJPVMCugNdmrIsYyhA2erX
+ bxg7FaNptcBIjnvz2WAfb3M5MHmhvidTVnIj7IfgCmTGcsv8YczYDSwHrIlhNnPn3gim
+ KLhkScAx7w5ykyYVRAuK1dGW/7xaHbnUYJ4x0YK0ZEWxmimyeTRQLBscJfp6GlmTWXFE
+ DYoX1KFXWuOmkoh8kBCGBvwOqv+QlNyIGYVUsGxEReYPI7UjznpGs1zAq0TMI8wb7W7x
+ mj+A==
+X-Gm-Message-State: AOJu0YylSu0cvNUOqJbBvduJlFaR6VuJF72pIMSvOPhntdFecPjQXdmw
+ 0Hl38LEZsK9P+LdM3vgayyAF/bx211sGEGqhgSZZbxc3Y45KranWAMVoXEkHmXd4OzhyUp6ldNX
+ BFPsyR2AO86kkISpIQDuhiFuDjdw+7BPnO+0kQdLI1AK8TbiNUxpZ
+X-Gm-Gg: ASbGnctcNUHls3mvEaUczXScn/lkIaRJAjUKvC3JRTfFFsttWFvF2UazqN0dwwnzrKJ
+ ARb2a6Owf82k4tzFnFngEF1SIp3pjH7MBWSQ5G5iafuDT34/XRcgceEDZ1OyJySjtE3YO8nK1CA
+ vn3Ds/0uMgfNK7ZOcde3mwhstz4UMmK85J/hPwe5cf3agP0NyMben1yQVmH6Bn633+JBcdwY+rR
+ X+1MFR2c5irwpxk
+X-Google-Smtp-Source: AGHT+IFl62n0riT96YqsNZJXjpnOH8esI3lFPw167FfDcJ6VxXcFd3e9L1A92a+OhN4AqBlY1MUJnqPdZPy3PNpU/ZI=
+X-Received: by 2002:a05:6402:40c6:b0:607:f431:33fb with SMTP id
+ 4fb4d7f45d1cf-6128590a18cmr5610549a12.3.1752744454433; Thu, 17 Jul 2025
+ 02:27:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: from fanyihao@rt-thread.org( [117.67.71.52] ) by ajax-webmail (
- [127.0.0.1] ) ; Thu, 17 Jul 2025 17:09:38 +0800 (GMT+08:00)
-From: =?UTF-8?B?6IyD6Im66LGq?= <fanyihao@rt-thread.org>
-Date: Thu, 17 Jul 2025 17:09:38 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaHktCVkkYSkJNQh1CQ0JNSVYVFAkWGhdVEwETFh
- oSFyQUDg9ZV1kYEgtZQVlKSkxVTUxVTEpVTklZV1kWGg8SFR0UWUFZT0tIVUpLSEpITUpVSktLVU
- pCS0tZBg++
-X-HM-Tid: 0a9817a57f2402f2kunm802cec936eae6
-X-HM-MType: 1
-X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMYBSeVkCuDgEtMK2I7Iz00qensNJKpr13iP1kR
- QhqmkIB0JsRL95DITp428yHXGpwJsMv1qvrvYkUbPLInScoyh4eEOcBro23OHiPqK4ETeNInE/+n
- jdmROmUT/p8rfh82r2Q3v4dxcHKn7b+xY/Ijs=
-X-HM-Sender-Digest: e1kJHlYWEh9ZQUpOQ09NQktDSkpLQjdXWQweGVlBDwkOHldZEh8eFQ9Z
- QVlHOjEQOk46PwwxNCMCSkMOIwsyLBZKChQYVUhVSkxOSUxPSEhMQk5IS1UzFhoSF1UdGhUCEhMa
- FDsJD1YPEwkeGh9VFAkcRVlXWRILWUFZSkpMVU1MVUxKVU5JWVdZCAFZQUpLS0JIN1dZFAsPEhQV
- CFlBSzcG
-DKIM-Signature: a=rsa-sha256;
- b=HaM0stZjZKGeIS9fddxlK0NIX1ga6EuamfRrPyqh5yeHoOeizxNOpVWNy6heRME7kOnLdKwXpC0qT3ahTr9vUcqlSKlbPraGHFKnERQjdZAgkBSD63TFowmjMFSfs5GruwDzLK/caZhwCrtVng1wPbdFZt4RWYMIIREU5phuEhwEbAPZO0kY8d9O2nESWJ07EI7dii3sgikqRlm7kQONCG7Pko+ag9sjdxWcsGk0spnez1mZ6KvdMhHMwmirVNgjgt1MxpmWJ1ptPCwvFDaWSO6W3BEqgIkY7wVmt6Oev1mNCSfhlwHqoN5mYOhJUvfgVDQiUy1ojSdUE0LEKKdHAA==;
- c=relaxed/relaxed; s=default; d=rt-thread.org; v=1; 
- bh=OqqlOoQ1HU7hLR1yS5itoDKEkZ6Y/FzG5ksZDIqFZKY=;
- h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=220.197.32.83;
- envelope-from=fanyihao@rt-thread.org; helo=mail-m3283.qiye.163.com
+References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+ <aHjAsibYCOu0YuU3@redhat.com>
+In-Reply-To: <aHjAsibYCOu0YuU3@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 17 Jul 2025 12:27:08 +0300
+X-Gm-Features: Ac12FXzUPKpRYkYp9TSUb2wVgHXQp357b0aPR7ybMTJ8j1zcsZT2KuNMkcj7SIs
+Message-ID: <CAAjaMXY-fMJ9MFjOURct-zxPi8nCVraoxjgy+A960zHD-iFu1A@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: add --debug CLI arg
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,125 +99,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=_Part_797021_1680096719.1752743378900
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+On Thu, Jul 17, 2025 at 12:22=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
+>
+> On Wed, Jul 16, 2025 at 09:08:00AM +0300, Manos Pitsidianakis wrote:
+> > Add argument parsing to functional tests to improve developer experienc=
+e
+> > when running individual tests. All logs are printed to stdout
+> > interspersed with TAP output.
+> >
+> >   ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
+> >   usage: test_aarch64_virt [-h] [-d]
+> >
+> >   QEMU Functional test
+> >
+> >   options:
+> >     -h, --help   show this help message and exit
+> >     -d, --debug  Also print test and console logs on stdout. This will
+> >                  make the TAP output invalid and is meant for debugging
+> >                  only.
+> >
+> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > ---
+> >  docs/devel/testing/functional.rst      |  2 ++
+> >  tests/functional/qemu_test/testcase.py | 51 ++++++++++++++++++++++++++=
+++++++--
+> >  2 files changed, 50 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/fun=
+ctional.rst
+> > index 9e56dd1b1189216b9b4aede00174c15203f38b41..9d08abe2848277d635befb0=
+296f578cfaa4bd66d 100644
+> > --- a/docs/devel/testing/functional.rst
+> > +++ b/docs/devel/testing/functional.rst
+> > @@ -63,6 +63,8 @@ directory should be your build folder. For example::
+> >    $ export QEMU_TEST_QEMU_BINARY=3D$PWD/qemu-system-x86_64
+> >    $ pyvenv/bin/python3 ../tests/functional/test_file.py
+> >
+> > +By default, functional tests redirect informational logs and console o=
+utput to
+> > +log files. Specify the ``--debug`` flag to also print those to standar=
+d output.
+> >  The test framework will automatically purge any scratch files created =
+during
+> >  the tests. If needing to debug a failed test, it is possible to keep t=
+hese
+> >  files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=3D1``` as an=
+ env
+> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/=
+qemu_test/testcase.py
+> > index 2082c6fce43b0544d4e4258cd4155f555ed30cd4..fad7a946c6677e9ef5c42b8=
+f77187ba836c11aeb 100644
+> > --- a/tests/functional/qemu_test/testcase.py
+> > +++ b/tests/functional/qemu_test/testcase.py
+> > @@ -11,6 +11,7 @@
+> >  # This work is licensed under the terms of the GNU GPL, version 2 or
+> >  # later.  See the COPYING file in the top-level directory.
+> >
+> > +import argparse
+> >  import logging
+> >  import os
+> >  from pathlib import Path
+> > @@ -31,6 +32,20 @@
+> >  from .uncompress import uncompress
+> >
+> >
+> > +def parse_args(test_name: str) -> argparse.Namespace:
+> > +    parser =3D argparse.ArgumentParser(
+> > +        prog=3Dtest_name, description=3D"QEMU Functional test"
+> > +    )
+> > +    parser.add_argument(
+> > +        "-d",
+> > +        "--debug",
+> > +        action=3D"store_true",
+> > +        help=3D"Also print test and console logs on stdout. This will =
+make the"
+> > +        " TAP output invalid and is meant for debugging only.",
+> > +    )
+> > +    return parser.parse_args()
+> > +
+> > +
+> >  class QemuBaseTest(unittest.TestCase):
+> >
+> >      '''
+> > @@ -196,6 +211,9 @@ def assets_available(self):
+> >          return True
+> >
+> >      def setUp(self):
+> > +        path =3D os.path.basename(sys.argv[0])[:-3]
+> > +        args =3D parse_args(path)
+>
+> IMHO this is not code that belongs in setUp. Indeed, I don't think
+> it belongs in this file at all, better have a helper for parsing
+> args in 'utils', and expose a global 'debug_enabled' flag from utils
+> that we can reference elsewhere.
 
-VGhhbmsgeW91IGZvciB5b3VyIHJldmlldy4KSSB3aWxsIHRha2UgeW91ciBzdWdnZXN0aW9ucyBp
-bnRvIGFjY291bnQg4oCUIEnigJlsbCBzZW5kIGEgcHJvcGVyIHBhdGNoIHNlcmllcyBpbmNsdWRp
-bmcgdGhlIGJvYXJkIG1vZGVsIHVzaW5nIHRoaXMgU29DLCBhbmQgc3dpdGNoIHRvIHBsYWluIHRl
-eHQgZW1haWwgdXNpbmcgZ2l0IHNlbmQtZW1haWwuCgoKCgoKCgoKIOiMg+iJuuixqgpmYW55aWhh
-b0BydC10aHJlYWQub3JnCgoKCgoKCgoKCgpPcmlnaW5hbDoKRnJvbe+8mlBldGVyIE1heWRlbGwg
-PHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz5EYXRl77yaMjAyNS0wNy0xNCAxODoxNToxNyjkuK3l
-m70gKEdNVCswODowMCkpVG/vvJrojIPoibrosao8ZmFueWloYW9AcnQtdGhyZWFkLm9yZz5DY++8
-mnFlbXUtZGV2ZWwgPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz5TdWJqZWN077yaUmU6IEFkZCB0aGUg
-c3RtMzJmNDA3IFNvQ09uIFNhdCwgMTIgSnVsIDIwMjUgYXQgMTc6MDQsIOiMg+iJuuixqiA8ZmFu
-eWloYW9AcnQtdGhyZWFkLm9yZz4gd3JvdGU6Cj4KPiBUaGlzIHdpbGwgYmUgdXNlZCBieSB0aGUg
-UlQtU3BhcmsgdG8gY3JlYXRlIGEgbWFjaGluZS4KPiBTdWJqZWN0OiBbUEFUQ0ggdjFdIEFkZCB0
-aGUgc3RtMzJmNDA3IFNvQwo+Cj4gU2lnbmVkLW9mZi1ieTogWWloYW8gRmFuIDxmYW55aWhhb0By
-dC10aHJlYWQub3JnPgo+IC0tLQo+ICBNQUlOVEFJTkVSUyAgICAgICAgICAgICAgICAgICAgfCAg
-IDcgKysKPiAgaHcvYXJtL0tjb25maWcgICAgICAgICAgICAgICAgIHwgICA2ICsrCj4gIGh3L2Fy
-bS9tZXNvbi5idWlsZCAgICAgICAgICAgICB8ICAgMSArCj4gIGh3L2FybS9zdG0zMmY0MDdfc29j
-LmMgICAgICAgICB8IDEzMCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKPiAgaW5j
-bHVkZS9ody9hcm0vc3RtMzJmNDA3X3NvYy5oIHwgIDMyICsrKysrKysrKysrCj4gIDUgZmlsZXMg
-Y2hhbmdlZCwgMjE3IGluc2VydGlvbnMoKykKPiAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3L2FybS9z
-dG0zMmY0MDdfc29jLmMKPiAgY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvaHcvYXJtL3N0bTMy
-ZjQwN19zb2MuaAoKSGk7IHRoYW5rcyBmb3IgdGhpcyBwYXRjaC4gQXMgdGhpcyBpcyBhIHBhdGNo
-IGZvciBhIG5ldwpTb0MsIHlvdSBzaG91bGQgc3VibWl0IGl0IGFzIHBhcnQgb2YgdGhlIHBhdGNo
-IHNlcmllcwp3aGljaCBhZGRzIGFsc28gdGhlIGJvYXJkIG1vZGVsIHRoYXQgdXNlcyBpdC4KCllv
-dSBhbHNvIHNlZW0gdG8gaGF2ZSBzZW50IHRoaXMgcGF0Y2ggYXMgYW4gSFRNTCBmb3JtYXQKZW1h
-aWw7IHBsZWFzZSB1c2UgcGxhaW4gdGV4dCBmb3Igc2VuZGluZyBtYWlscyB0byB0aGUKbWFpbGlu
-ZyBsaXN0LCBhbmQgZXNwZWNpYWxseSBmb3IgcGF0Y2ggbWFpbHMuIFlvdSBtYXkKZmluZCB0aGF0
-IHVzaW5nIHRvb2xpbmcgbGlrZSBnaXQgc2VuZC1lbWFpbCBnaXZlcyBiZXR0ZXIKcmVzdWx0cyB0
-aGFuIHVzaW5nIGEgbm9ybWFsIG1haWwgY2xpZW50IGZvciBzZW5kaW5nIHBhdGNoZXMuCgpodHRw
-czovL3d3dy5xZW11Lm9yZy9kb2NzL21hc3Rlci9kZXZlbC9zdWJtaXR0aW5nLWEtcGF0Y2guaHRt
-bApoYXMgc29tZSBpbmZvcm1hdGlvbiBhbmQgcmVzb3VyY2VzIG9uIHRoaXMga2luZCBvZgphZG1p
-biBkZXRhaWwuCgp0aGFua3MKLS0gUE1NCgoKCgoNCg0K
---=_Part_797021_1680096719.1752743378900
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+setUp is where the logs are setup, do you mean logs should be split
+into another function/file altogether? Maybe out of scope for this
+patch, I can another one that does it before adding the --debug
+option. What do you think?
 
-PGhlYWQ+PC9oZWFkPjxib2R5PjxwPlRoYW5rIHlvdSBmb3IgeW91ciByZXZpZXcuIDwvcD48cD5J
-IHdpbGwgdGFrZSB5b3VyIHN1Z2dlc3Rpb25zIGludG8gYWNjb3VudCDigJQgSeKAmWxsIHNlbmQg
-YSBwcm9wZXIgcGF0Y2ggc2VyaWVzIGluY2x1ZGluZyB0aGUgYm9hcmQgbW9kZWwgdXNpbmcgdGhp
-cyBTb0MsIGFuZCBzd2l0Y2ggdG8gcGxhaW4gdGV4dCBlbWFpbCB1c2luZyBnaXQgc2VuZC1lbWFp
-bC48L3A+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZTox
-NHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6
-U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48
-YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6
-ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1p
-bHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAg
-Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQt
-c2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1m
-YW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAg
-ICAgIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2Zv
-bnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9u
-dC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsK
-ICAgICAgIj48YnI+PC9kaXY+PGRpdiBjbGFzcz0ibWFpbC1zaWduYXR1cmUiPiAgICAgPGRpdiBj
-bGFzcz0ibGluZ3hpLXNpZ25hdHVyZS1jb250YWluZXIiIHN0eWxlPSJmb250LWZhbWlseTogUGlu
-Z0ZhbmcsU291cmNlIEhhbiBTYW5zLHNhbnMtc2VyaWY7Ij4gICAgICAgICAgPCEtLSDmoLflvI/k
-uIDvvIzlrozmlbTniYggLS0+ICAgICAgICAgIDx0YWJsZSBzdHlsZT0iYm9yZGVyLWNvbGxhcHNl
-OiBjb2xsYXBzZTt3aWR0aDogMTAwJTt0ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0
-YWJsZS1sYXlvdXQ6IGZpeGVkOyI+ICAgICAgICAgICAgICAgPHRib2R5IHN0eWxlPSJ0ZXh0LXNp
-emUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt3b3JkLXdyYXA6YnJlYWstd29yZDsgd29yZC1icmVh
-azpicmVhay1hbGw7Ij4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvdGJvZHk+
-ICAgICAgICAgIDwvdGFibGU+ICAgICAgICAgIDwhLS0g5qC35byP5LqM77yM5peg5aS05YOPIC0t
-PiAgICAgICAgICA8ZGl2IGlkPSJsaW5neGktc2lnbmF0dXJlLXYyLWJsb2NrIiBzdHlsZT0id2lk
-dGg6IDEwMCU7dGV4dC1kZWNvcmF0aW9uOiBub25lO3RleHQtdW5kZXJsaW5lOiBub25lOyI+ICAg
-ICAgICAgICAgICAgPGRpdiBpZD0ibGluZ3hpLXNpZ25hdHVyZS12Mi1jb250ZW50IiBpdGVtaWQ9
-ImlkIiBzdHlsZT0ibWF4LXdpZHRoOiA5NSU7Zm9udC1zaXplOiAxNHB4O2xpbmUtaGVpZ2h0OiAx
-NnB4O2NvbG9yOiAjN0E4NTk5O3BhZGRpbmc6IDE2cHggMTZweCA0cHggMHB4O21hcmdpbi1sZWZ0
-OiAwcHg7IiBpdGVtcHJvcD0iOTgzMDAwMyI+ICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxl
-PSJjb2xvcjogIzIzMkQ0Nztib3JkZXI6IG5vbmU7bWFyZ2luLWJvdHRvbTo0cHg7Zm9udC1zaXpl
-OiAxNnB4O2xpbmUtaGVpZ2h0OiAyMHB4O3RleHQtdW5kZXJsaW5lOiBub25lO2ZvbnQtd2VpZ2h0
-OiBib2xkZXI7IiBpdGVtaWQ9Im5hbWUiPuiMg+iJuuixqjwvZGl2PiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9ImJv
-cmRlcjogbm9uZTttYXJnaW4tYm90dG9tOjhweDt0ZXh0LXVuZGVybGluZTogbm9uZTsiPmZhbnlp
-aGFvQHJ0LXRocmVhZC5vcmc8L2Rpdj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4gICAgICAgICAg
-PC9kaXY+ICAgICAgICAgIDwhLS3lip7lhazlk4HniYwtLT4gICAgICAgICAgICAgICA8L2Rpdj48
-L2Rpdj48ZGl2IGNsYXNzPSJwcmUtbWFpbC1jb250ZW50Ij48ZGl2IHN0eWxlPSJmb250LWZhbWls
-eTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1zaXplOjE0cHg7bGluZS1oZWlnaHQ6MS41OwogICAgICAi
-IGRhdGEtbWNlLXN0eWxlPSJmb250LWZhbWlseTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1zaXplOjE0
-cHg7bGluZS1oZWlnaHQ6MS41OwogICAgICAiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZh
-bWlseTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1zaXplOjE0cHg7bGluZS1oZWlnaHQ6MS41OwogICAg
-ICAiIGRhdGEtbWNlLXN0eWxlPSJmb250LWZhbWlseTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1zaXpl
-OjE0cHg7bGluZS1oZWlnaHQ6MS41OwogICAgICAiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250
-LWZhbWlseTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1zaXplOjE0cHg7bGluZS1oZWlnaHQ6MS41Owog
-ICAgICAiIGRhdGEtbWNlLXN0eWxlPSJmb250LWZhbWlseTpTb3VyY2UgSGFuIFNhbnM7Zm9udC1z
-aXplOjE0cHg7bGluZS1oZWlnaHQ6MS41OwogICAgICAiPjxicj48L2Rpdj48ZGl2IGlkPSJpc1Jl
-cGx5Q29udGVudCIgc3R5bGU9Im1hcmdpbjogMDsiPjxkaXYgc3R5bGU9ImNvbG9yOiAjN2Q4MDg1
-Ij5PcmlnaW5hbDo8L2Rpdj48dWwgc3R5bGU9ImNvbG9yOiAjN2Q4MDg1OyBmb250LXNpemU6MTJw
-eDsgcGFkZGluZy1sZWZ0OiAyMHB4Ij48bGk+RnJvbe+8mlBldGVyIE1heWRlbGwgJmx0OzxhIGhy
-ZWY9Im1haWx0bzpwZXRlci5tYXlkZWxsQGxpbmFyby5vcmciPnBldGVyLm1heWRlbGxAbGluYXJv
-Lm9yZzwvYT4mZ3Q7PC9saT48bGk+RGF0Ze+8mjIwMjUtMDctMTQgMTg6MTU6MTco5Lit5Zu9IChH
-TVQrMDg6MDApKTwvbGk+PGxpPlRv77ya6IyD6Im66LGqJmx0OzxhIGhyZWY9Im1haWx0bzpmYW55
-aWhhb0BydC10aHJlYWQub3JnIj5mYW55aWhhb0BydC10aHJlYWQub3JnPC9hPiZndDs8L2xpPjxs
-aT5DY++8mnFlbXUtZGV2ZWwgJmx0OzxhIGhyZWY9Im1haWx0bzpxZW11LWRldmVsQG5vbmdudS5v
-cmciPnFlbXUtZGV2ZWxAbm9uZ251Lm9yZzwvYT4mZ3Q7PC9saT48bGk+U3ViamVjdO+8mlJlOiBB
-ZGQgdGhlIHN0bTMyZjQwNyBTb0M8L2xpPjwvdWw+PHByZT5PbiBTYXQsIDEyIEp1bCAyMDI1IGF0
-IDE3OjA0LCDojIPoibrosaogJmx0O2ZhbnlpaGFvQHJ0LXRocmVhZC5vcmcmZ3Q7IHdyb3RlOgom
-Z3Q7CiZndDsgVGhpcyB3aWxsIGJlIHVzZWQgYnkgdGhlIFJULVNwYXJrIHRvIGNyZWF0ZSBhIG1h
-Y2hpbmUuCiZndDsgU3ViamVjdDogW1BBVENIIHYxXSBBZGQgdGhlIHN0bTMyZjQwNyBTb0MKJmd0
-OwomZ3Q7IFNpZ25lZC1vZmYtYnk6IFlpaGFvIEZhbiAmbHQ7ZmFueWloYW9AcnQtdGhyZWFkLm9y
-ZyZndDsKJmd0OyAtLS0KJmd0OyAgTUFJTlRBSU5FUlMgICAgICAgICAgICAgICAgICAgIHwgICA3
-ICsrCiZndDsgIGh3L2FybS9LY29uZmlnICAgICAgICAgICAgICAgICB8ICAgNiArKwomZ3Q7ICBo
-dy9hcm0vbWVzb24uYnVpbGQgICAgICAgICAgICAgfCAgIDEgKwomZ3Q7ICBody9hcm0vc3RtMzJm
-NDA3X3NvYy5jICAgICAgICAgfCAxMzAgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-CiZndDsgIGluY2x1ZGUvaHcvYXJtL3N0bTMyZjQwN19zb2MuaCB8ICAzMiArKysrKysrKysrKwom
-Z3Q7ICA1IGZpbGVzIGNoYW5nZWQsIDIxNyBpbnNlcnRpb25zKCspCiZndDsgIGNyZWF0ZSBtb2Rl
-IDEwMDY0NCBody9hcm0vc3RtMzJmNDA3X3NvYy5jCiZndDsgIGNyZWF0ZSBtb2RlIDEwMDY0NCBp
-bmNsdWRlL2h3L2FybS9zdG0zMmY0MDdfc29jLmgKCkhpOyB0aGFua3MgZm9yIHRoaXMgcGF0Y2gu
-IEFzIHRoaXMgaXMgYSBwYXRjaCBmb3IgYSBuZXcKU29DLCB5b3Ugc2hvdWxkIHN1Ym1pdCBpdCBh
-cyBwYXJ0IG9mIHRoZSBwYXRjaCBzZXJpZXMKd2hpY2ggYWRkcyBhbHNvIHRoZSBib2FyZCBtb2Rl
-bCB0aGF0IHVzZXMgaXQuCgpZb3UgYWxzbyBzZWVtIHRvIGhhdmUgc2VudCB0aGlzIHBhdGNoIGFz
-IGFuIEhUTUwgZm9ybWF0CmVtYWlsOyBwbGVhc2UgdXNlIHBsYWluIHRleHQgZm9yIHNlbmRpbmcg
-bWFpbHMgdG8gdGhlCm1haWxpbmcgbGlzdCwgYW5kIGVzcGVjaWFsbHkgZm9yIHBhdGNoIG1haWxz
-LiBZb3UgbWF5CmZpbmQgdGhhdCB1c2luZyB0b29saW5nIGxpa2UgZ2l0IHNlbmQtZW1haWwgZ2l2
-ZXMgYmV0dGVyCnJlc3VsdHMgdGhhbiB1c2luZyBhIG5vcm1hbCBtYWlsIGNsaWVudCBmb3Igc2Vu
-ZGluZyBwYXRjaGVzLgoKaHR0cHM6Ly93d3cucWVtdS5vcmcvZG9jcy9tYXN0ZXIvZGV2ZWwvc3Vi
-bWl0dGluZy1hLXBhdGNoLmh0bWwKaGFzIHNvbWUgaW5mb3JtYXRpb24gYW5kIHJlc291cmNlcyBv
-biB0aGlzIGtpbmQgb2YKYWRtaW4gZGV0YWlsLgoKdGhhbmtzCi0tIFBNTQoKPC9wcmU+PC9kaXY+
-PC9kaXY+PGJyPjwvYm9keT4=
---=_Part_797021_1680096719.1752743378900--
+>
+> > +        self.debug_output =3D args.debug
+> >          self.qemu_bin =3D os.getenv('QEMU_TEST_QEMU_BINARY')
+> >          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY mus=
+t be set')
+> >          self.arch =3D self.qemu_bin.split('-')[-1]
+> > @@ -221,6 +239,16 @@ def setUp(self):
+> >          self.machinelog.setLevel(logging.DEBUG)
+> >          self.machinelog.addHandler(self._log_fh)
+> >
+> > +        if self.debug_output:
+> > +            handler =3D logging.StreamHandler(sys.stdout)
+> > +            handler.setLevel(logging.DEBUG)
+> > +            formatter =3D logging.Formatter(
+> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+> > +            )
+> > +            handler.setFormatter(formatter)
+> > +            self.log.addHandler(handler)
+> > +            self.machinelog.addHandler(handler)
+>
+> There was already a lot of effectively duplicated code between
+> this and the console_log stuff below. This new addition makes
+> that duplication even more substantial, such that I think it
+> all needs to be spun out into a helper method.
+
+Ditto
+
+>
+> > +
+> >          if not self.assets_available():
+> >              self.skipTest('One or more assets is not available')
+> >
+> > @@ -230,11 +258,16 @@ def tearDown(self):
+> >          if self.socketdir is not None:
+> >              shutil.rmtree(self.socketdir.name)
+> >              self.socketdir =3D None
+> > -        self.machinelog.removeHandler(self._log_fh)
+> > -        self.log.removeHandler(self._log_fh)
+> > +        for handler in [self._log_fh, logging.StreamHandler(sys.stdout=
+)]:
+>
+> We should have stashed the original handler when created,
+> rather than re-creating StreamHandler at time of removal.
+> I'm kinda of surprised it even works to re-create it.
+
+It's the same file descriptor, after all. I'd be surprised if it didn't wor=
+k.
+
+>
+> > +            self.machinelog.removeHandler(handler)
+> > +            self.log.removeHandler(handler)
+> >
+> >      def main():
+> >          path =3D os.path.basename(sys.argv[0])[:-3]
+> > +        # If argparse receives --help or an unknown argument, it will =
+raise a
+> > +        # SystemExit which will get caught by the test runner. Parse t=
+he
+> > +        # arguments here too to handle that case.
+> > +        _ =3D parse_args(path)
+> >
+> >          cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
+> >          if cache is not None:
+> > @@ -292,6 +325,14 @@ def setUp(self):
+> >          fileFormatter =3D logging.Formatter('%(asctime)s: %(message)s'=
+)
+> >          self._console_log_fh.setFormatter(fileFormatter)
+> >          console_log.addHandler(self._console_log_fh)
+> > +        if self.debug_output:
+> > +            handler =3D logging.StreamHandler(sys.stdout)
+> > +            handler.setLevel(logging.DEBUG)
+> > +            formatter =3D logging.Formatter(
+> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+> > +            )
+> > +            handler.setFormatter(formatter)
+> > +            console_log.addHandler(handler)
+> >
+> >      def set_machine(self, machinename):
+> >          # TODO: We should use QMP to get the list of available machine=
+s
+> > @@ -398,5 +439,9 @@ def set_vm_arg(self, arg, value):
+> >      def tearDown(self):
+> >          for vm in self._vms.values():
+> >              vm.shutdown()
+> > -        logging.getLogger('console').removeHandler(self._console_log_f=
+h)
+> > +        for handler in [
+> > +            self._console_log_fh,
+> > +            logging.StreamHandler(sys.stdout),
+> > +        ]:
+> > +            logging.getLogger("console").removeHandler(handler)
+> >          super().tearDown()
+> >
+> > ---
+> > base-commit: c079d3a31e45093286c65f8ca5350beb3a4404a9
+> > change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
+> >
+> > --
+> > =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
+=CE=B8=CE=AE=CF=84=CF=89
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
