@@ -4,47 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20656C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 13:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7967C83F22
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 13:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucOj2-0004PC-7Y; Thu, 17 Jul 2025 09:32:40 -0400
+	id 1ucOnv-000774-SA; Thu, 17 Jul 2025 09:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ucNqV-0007Uw-HG; Thu, 17 Jul 2025 08:36:22 -0400
+ id 1ucNrt-00081J-2d
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 08:38:00 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ucNqT-0006W9-6R; Thu, 17 Jul 2025 08:36:18 -0400
+ id 1ucNrr-0006mC-4r
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 08:37:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=8mtVf8T8pboHjWq1RK2EyQxzADd6v0v6YVt3iUWOK4U=; b=LkGBiP+q6M+XmCZCPmAtMXAU3N
- 0eYofu5g75+e4gkc2lL2F/GmAI0hBWAUvp3qFZLRMrj0PGjFQQNafvFcMEPJsPzl5D1Cb3rGjHZAB
- s7d+hiyVFGpdilmJaMvJPWn2YSFxqNpl4wqZsUqnEptmW2RdBfbA5YupLckwRFUkMW8HKHvx1a6iv
- lLgsY3kNuYkDIeBgNrbyyREHRayVAegIrNNWLOuWd68TFDA7xa1dOvZWOMc3avoSboPSFgdwcRNyW
- 0bfkDUDq00DFbbjMRvy/3LBhB5/z0uJboZ3UGR12TGQ1z1y8JhUG9QHxtp8Hq+Pojj+VTd/c8YXqG
- 8TDvNAibzpaF9GELO0YaJVyUvQC0lp5lyHbRbSdn/Gwyvr5VfQP74IztkdmwlZ4lPAAO/m+Jq7dYH
- smWKNx1lDP+eoQeKCY6eYm0WqX2a3H8D1vPhaxV0vQFrFJptAmnW3KUfK6zpVvVuRX9AroATf2OSU
- 32eN32ILloZG/FctVaUczwHbyfe+9CTftlPwl2U+z9MRZgc9omMK3U+vsEEP/7uoHsuFZjwP8cuyr
- aKiUzbjWEuTwkNv70fN46JROUcyHSPIsYbk/GTPc9Y67vBhLgYsaXL9+zmf2c6lNGtzYFCFK/Jdbp
- W5IJu9b+88/PZN+gv/EnZ3aI4ySD+Sd7RSmGpO5WQ=;
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=T7mBhhY6YdkepIcvcVqC7B99HpfUf/AMTKL+AEmOKrI=; b=o37jDckhG0RpnvxO2+8R6Kc/bD
+ b6f7PAG5F7X6VTs68m5mYLO7PZxfMBVW3mK5ZOFP69JQDMduJNpHCoAEYYjmiD3vpSXt10020Cke+
+ oj9wXU5ozAOfZ5UF+Cfu+M/FBXFvoRicHx4jfj2yhBlYyRMovqdh26X1VIwMIqugg8HokT7bVqDwm
+ pfOwH1qkQZQuh1cfKVqO+SJVwnhMht3wZ3+yVxUE/WR5r9RmXPWgj7ezxGKRX4z+nRIdLXe98p6Md
+ Sqavpgp67e8iI0DP4RKvSF5zmeyT4iRWOChl0fNxk/NyPHWAwANUJ2v0XTZKXnZlGK8MUVtDZa/3/
+ M6r/6VthlokiwPA+kykTHjtUkSpYakGs0iuBHcfm3YdQ+DUWoPER0ehvKWQBK+DGzZYh9/Ok5NUaD
+ gDNTOj5uppLQR3/FqmRpHE44a2Yxj7EBkcFX1LwLqyY8jxKXXVQsH6+f1NFDOUZD8LP3fnCrCvkV/
+ QureB9ZIEhly/HswRTswa/QgBrbBzG/MjsTbZ4+kWZAMdxMeqSBdgOSJHjS9rgfRn1xvFAHxMnpE6
+ Dkv0AUwJ2FAoX+D93PQAGru6brHJOJebgR6IuJV+rO7gQPHEoMEG5GOOb5iI0XuxWoVRQ/LAF9trk
+ U3VRmds/2W0+7+z2uwbGQkb2hOQiwDtmUXwnlLeIo=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1ucNof-0003nQ-Ho; Thu, 17 Jul 2025 13:34:25 +0100
-Message-ID: <6e801e63-143d-42ee-b7e3-04156f7940e0@ilande.co.uk>
-Date: Thu, 17 Jul 2025 13:35:56 +0100
+ id 1ucNqD-0003ny-5C; Thu, 17 Jul 2025 13:36:01 +0100
+Message-ID: <66ff0189-ade8-46fa-b8d5-903ebbf9091d@ilande.co.uk>
+Date: Thu, 17 Jul 2025 13:37:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Michael Tokarev <mjt@tls.msk.ru>, pbonzini@redhat.com, fam@euphon.net,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20250711204636.542964-1-mark.cave-ayland@ilande.co.uk>
- <f8ebf601-d6b4-47fa-b7b5-008c4fa8711d@tls.msk.ru>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+References: <20250715061918.44971-1-philmd@linaro.org>
+ <20250715061918.44971-15-philmd@linaro.org>
+ <4319b447-5e85-4e14-8146-b8615d497171@linaro.org>
+ <CAFEAcA_C16Ta0HT1i10RErmSOMJNuecHuDX=JDALn701+9YtpA@mail.gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -71,13 +77,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <f8ebf601-d6b4-47fa-b7b5-008c4fa8711d@tls.msk.ru>
+In-Reply-To: <CAFEAcA_C16Ta0HT1i10RErmSOMJNuecHuDX=JDALn701+9YtpA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 0/7] esp.c: only allow ESP commands permitted in the
- current mode
+Subject: Re: [PULL 14/17] esp.c: only call dma_memory_read function if
+ transfer length is non-zero
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -103,58 +109,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/07/2025 16:13, Michael Tokarev wrote:
+On 17/07/2025 12:58, Peter Maydell wrote:
 
-> On 11.07.2025 23:46, Mark Cave-Ayland wrote:
->> This series contains a few minor tidy-ups along with an implementation of the
->> logic to only allow ESP commands permitted in the current mode. The motivation
->> is to fix GitLab issue #2464 which causes Windows NT MIPS to bluescreen on
->> boot.
+> On Thu, 17 Jul 2025 at 12:51, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>
->> Patches 1 to 5 are simple tidy-ups from investigating the issue. Patch 6 adds
->> a new asc_mode variable to indicate the current ESP mode, whilst patch 7 implements
->> the feature which fixes GitLab issue #2464.
+>> Hi Mark,
 >>
->> Note: this series is being reposted as both the SeaBIOS and SeaBIOS hppa binaries
->> currently distributed with QEMU have now been fixed so that they do not use an
->> illegal ESP command sequence.
+>> On 15/7/25 08:19, Philippe Mathieu-Daudé wrote:
+>>> From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>>
+>>> In the cases where mixed DMA/non-DMA transfers are used or no data is
+>>> available, it is possible for the calculated transfer length to be zero.
+>>> Only call the dma_memory_read function where the transfer length is
+>>> non-zero to avoid invoking the DMA engine for a zero length transfer
+>>> which can have side-effects (along with generating additional tracing
+>>> noise).
+>>>
+>>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Message-ID: <20250711204636.542964-5-mark.cave-ayland@ilande.co.uk>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>    hw/scsi/esp.c | 20 +++++++++++++-------
+>>>    1 file changed, 13 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>>> index 62ba4061492..ec9fcbeddf4 100644
+>>> --- a/hw/scsi/esp.c
+>>> +++ b/hw/scsi/esp.c
+>>> @@ -487,8 +487,10 @@ static void esp_do_dma(ESPState *s)
+>>>        case STAT_MO:
+>>>            if (s->dma_memory_read) {
+>>>                len = MIN(len, fifo8_num_free(&s->cmdfifo));
+>>> -            s->dma_memory_read(s->dma_opaque, buf, len);
+>>> -            esp_set_tc(s, esp_get_tc(s) - len);
+>>> +            if (len) {
+>>> +                s->dma_memory_read(s->dma_opaque, buf, len);
+>>> +                esp_set_tc(s, esp_get_tc(s) - len);
+>>> +            }
+>>>            } else {
+>>>                len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
+>>>                len = MIN(fifo8_num_free(&s->cmdfifo), len);
+>>               }
+>>               fifo8_push_all(&s->cmdfifo, buf, len);
 >>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> Coverity reported access to uninitialized buf[]:
 >>
->> v3:
->> - Fix typo in comments for patches 4 and 5 as pointed out by Phil
->> - Add R-B tags from Phil
+>>   >>>     CID 1612373:         Uninitialized variables  (UNINIT)
+>>   >>>     Using uninitialized value "*buf" when calling "fifo8_push_all".
 >>
->> v2:
->> - Rebase onto master
->> - Add patches 4 and 5 to avoid calling the DMA functions for zero-length transfers
->>
->>
->> Mark Cave-Ayland (7):
->>    esp.c: only raise IRQ in esp_transfer_data() for CMD_SEL, CMD_SELATN
->>      and CMD_TI commands
->>    esp.c: improve comment in esp_transfer_data()
->>    esp.h: remove separate ESPState typedef
->>    esp.c: only call dma_memory_read function if transfer length is
->>      non-zero
->>    esp.c: only call dma_memory_write function if transfer length is
->>      non-zero
->>    esp.c: add asc_mode property to indicate the current ESP mode
->>    esp.c: only allow ESP commands permitted in the current asc_mode
->>
->>   hw/scsi/esp.c         | 94 +++++++++++++++++++++++++++++++++++++------
->>   hw/scsi/trace-events  |  1 +
->>   include/hw/scsi/esp.h | 15 ++++++-
->>   3 files changed, 96 insertions(+), 14 deletions(-)
+>> Do you mind having a look?
 > 
-> I wonder if we can pick this up for qemu-stable (10.0).  It's a large
-> change, but a fairy focused one..  What do you think?
+> I think this is a false positive (and marked it that way in
+> the Coverity Scan UI). Coverity is complaining that
+> we might access buf[] uninitialized, but in the code path
+> it is complaining about we know that len is zero. The
+> fifo8_push_all() does a "memcpy(&fifo->data[start], data, num)"
+> and if num is 0 that is valid and won't access anything in buf[].
 > 
-> (10.0 is expected to be long-term support series).
+> We could I suppose make fifo8_push_all() return early for the
+> num == 0 case, just to make it clearer that it's supposed to work.
 
-Probably not in this case, because during testing I found that the drivers in 
-SeaBIOS/OpenBIOS also used commands in the wrong ASC mode and needed corresponding 
-updates first.
+Thanks both!
+
+I can certainly look to update fifo8_push_all() if you think it would be a better 
+solution?
 
 
 ATB,
