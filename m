@@ -4,101 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD0BC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 03:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBC1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 03:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucFGB-00031T-9h; Wed, 16 Jul 2025 23:26:15 -0400
+	id 1ucFGx-0004Nw-43; Wed, 16 Jul 2025 23:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucFG4-0002wb-Hy; Wed, 16 Jul 2025 23:26:09 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ucFGi-0003ev-WF; Wed, 16 Jul 2025 23:26:49 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucFG2-0006ja-EY; Wed, 16 Jul 2025 23:26:08 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 103BB137B0A;
- Thu, 17 Jul 2025 06:25:52 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 52204249000;
- Thu, 17 Jul 2025 06:25:59 +0300 (MSK)
-Message-ID: <2d8fe938-3148-470f-b2d2-8eb60c67aeb1@tls.msk.ru>
-Date: Thu, 17 Jul 2025 06:25:59 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ucFGf-0006ni-It; Wed, 16 Jul 2025 23:26:48 -0400
+Received: from [10.160.60.105] (p7852202-ipoefx.ipoe.ocn.ne.jp
+ [123.225.53.201]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56H3QGIg074529
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 17 Jul 2025 12:26:16 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=6ICodstAUrhkYCIC0wqsaV70Ry7XrMDrg9q1lX1LroI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1752722777; v=1;
+ b=OIzzSQDFcTUwI1XlO7ed7lxQuAiIrUsoCnUuBs3Q0Otto5qOxgYMNyHTYYXq/Rd6
+ qVAdOh3yD35poxMoZSXBLhRKrwKdnnWRfw4bSZecaJteh0hKs8/G2fSGX2iXQ88k
+ TpRLE7F34uEZa6xe47ow/ESLAwtTYFW4mQKmM2BQTKfHyEPw1XwqmbTAC2oNZlhc
+ vEH6wBGaIT9tV87ordJCl18YClspkx+ipxJJv2HPi0EB2x81pbEhn3O5y5m1L27L
+ 08NEk9AKNFlA6qA4n4ekrH5cVjj2bS59SebhxS7QD5WXRr0PzavscHHHfI26rprx
+ C7oxFqjz/elo5Z8SVjD77g==
+Message-ID: <172e1d7c-e603-46fe-8ce4-fd60f28f6f35@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 17 Jul 2025 12:26:16 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] i386/cpu: Fix number of addressable IDs field for
- CPUID.01H.EBX[23:16]
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Tao Su <tao1.su@intel.com>,
- Yi Lai <yi1.lai@intel.com>, Dapeng Mi <dapeng1.mi@intel.com>,
- qemu-devel@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250714080859.1960104-1-zhao1.liu@intel.com>
- <20250714080859.1960104-5-zhao1.liu@intel.com>
- <33497cb5-037b-4656-bd8d-6310c7c03e65@tls.msk.ru>
- <aHhosJ/VWEyjwQDc@intel.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <aHhosJ/VWEyjwQDc@intel.com>
+Subject: Re: [PATCH v5 16/23] migration: push Error **errp into
+ loadvm_process_enable_colo()
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
+ <20250717-propagate_tpm_error-v5-16-1f406f88ee65@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250717-propagate_tpm_error-v5-16-1f406f88ee65@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,57 +94,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.07.2025 06:06, Zhao Liu wrote:
->> Hi!
->>
->> Previous incarnation of this patch were Cc'd qemu-stable@, as it were
->> supposed to be picked up for the stable qemu series.  However, this
->> incarnation is not Cc'd to stable, and, most importantly, it relies
->> on a feature which was introduced after all released qemu versions.
->> Namely, vendor_cpuid_only_v2 is past v10.0.0, which is commit
->> 216d9bb6d7716 "i386/cpu: Add x-vendor-cpuid-only-v2 option for
->> compatibility".
->>
->> Should I omit this change for stable-10.0 series, or should it be
->> modified to work in 10.0?
+On 2025/07/17 9:37, Arun Menon wrote:
+> This is an incremental step in converting vmstate loading
+> code to report error via Error objects instead of directly
+> printing it to console/monitor.
+> It is ensured that loadvm_process_enable_colo() must report an error
+> in errp, in case of failure.
 > 
-> Hi Michael, considerring current fix is covered by compat option,
-> it's not fit to be backported to the previous version.
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>   include/migration/colo.h |  2 +-
+>   migration/migration.c    | 12 ++++++------
+>   migration/ram.c          |  8 ++++----
+>   migration/ram.h          |  2 +-
+>   migration/savevm.c       | 25 ++++++++++++-------------
+>   5 files changed, 24 insertions(+), 25 deletions(-)
 > 
-> This issue has existed for a very long time, and the feedback received
-> on this is currently one case and it based on a specific topology
-> configuration, so the impact is limited. Therefore, in this patch
-> version, I fixed it with the newly added compat option, which also
-> avoids the controversy about the impact of migration.
-> 
-> So I think you could omit this change for stable-10.0 series, if it's
-> also okay with Paolo.
+> diff --git a/include/migration/colo.h b/include/migration/colo.h
+> index 43222ef5ae6adc3f7d8aa6a48bef79af33d09208..d4fe422e4d335d3bef4f860f56400fcd73287a0e 100644
+> --- a/include/migration/colo.h
+> +++ b/include/migration/colo.h
+> @@ -25,7 +25,7 @@ void migrate_start_colo_process(MigrationState *s);
+>   bool migration_in_colo_state(void);
+>   
+>   /* loadvm */
+> -int migration_incoming_enable_colo(void);
+> +int migration_incoming_enable_colo(Error **errp);
+>   void migration_incoming_disable_colo(void);
+>   bool migration_incoming_colo_enabled(void);
+>   bool migration_incoming_in_colo_state(void);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 10c216d25dec01f206eacad2edd24d21f00e614c..326487882c8d41e2f89f99f69df0d9d4d42705e4 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -623,22 +623,22 @@ void migration_incoming_disable_colo(void)
+>       migration_colo_enabled = false;
+>   }
+>   
+> -int migration_incoming_enable_colo(void)
+> +int migration_incoming_enable_colo(Error **errp)
+>   {
+>   #ifndef CONFIG_REPLICATION
+> -    error_report("ENABLE_COLO command come in migration stream, but the "
+> -                 "replication module is not built in");
+> +    error_setg(errp, "ENABLE_COLO command come in migration stream, but the "
+> +               "replication module is not built in");
+>       return -ENOTSUP;
+>   #endif
+>   
+>       if (!migrate_colo()) {
+> -        error_report("ENABLE_COLO command come in migration stream, but x-colo "
+> -                     "capability is not set");
+> +        error_setg(errp, "ENABLE_COLO command come in migration stream"
+> +                   ", but x-colo capability is not set");
+>           return -EINVAL;
+>       }
+>   
+>       if (ram_block_discard_disable(true)) {
+> -        error_report("COLO: cannot disable RAM discard");
+> +        error_setg(errp, "COLO: cannot disable RAM discard");
+>           return -EBUSY;
+>       }
+>       migration_colo_enabled = true;
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 8223183132dc0f558f45fbae3f4f832845730bd3..607c979cc15a3d321e5e3e380ac7613d80d86fc9 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3576,7 +3576,7 @@ static void colo_init_ram_state(void)
+>    * memory of the secondary VM, it is need to hold the global lock
+>    * to call this helper.
+>    */
+> -int colo_init_ram_cache(void)
+> +int colo_init_ram_cache(Error **errp)
+>   {
+>       RAMBlock *block;
+>   
+> @@ -3585,9 +3585,9 @@ int colo_init_ram_cache(void)
+>               block->colo_cache = qemu_anon_ram_alloc(block->used_length,
+>                                                       NULL, false, false);
+>               if (!block->colo_cache) {
+> -                error_report("%s: Can't alloc memory for COLO cache of block %s,"
+> -                             "size 0x" RAM_ADDR_FMT, __func__, block->idstr,
+> -                             block->used_length);
+> +                error_setg(errp, "%s: Can't alloc memory for COLO cache of "
+> +                           "block %s, size 0x" RAM_ADDR_FMT, __func__,
+> +                           block->idstr, block->used_length);
+>                   RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+>                       if (block->colo_cache) {
+>                           qemu_anon_ram_free(block->colo_cache, block->used_length);
+> diff --git a/migration/ram.h b/migration/ram.h
+> index 275709a99187f9429ccb4111e05281ec268ba0db..24cd0bf585762cfa1e86834dc03c6baeea2f0627 100644
+> --- a/migration/ram.h
+> +++ b/migration/ram.h
+> @@ -109,7 +109,7 @@ void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset,
+>                                      bool set);
+>   
+>   /* ram cache */
+> -int colo_init_ram_cache(void);
+> +int colo_init_ram_cache(Error **errp);
+>   void colo_flush_ram_cache(void);
+>   void colo_release_ram_cache(void);
+>   void colo_incoming_start_dirty_log(void);
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 1cbc44a5314043a403d983511066cf137681a18d..755ba7e4504d377a4649da191ad9875d9fd66f69 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2510,15 +2510,19 @@ static int loadvm_handle_recv_bitmap(MigrationIncomingState *mis,
+>       return 0;
+>   }
+>   
+> -static int loadvm_process_enable_colo(MigrationIncomingState *mis)
+> +static int loadvm_process_enable_colo(MigrationIncomingState *mis,
+> +                                      Error **errp)
+>   {
+> -    int ret = migration_incoming_enable_colo();
+> +    int ret;
+>   
+> -    if (!ret) {
+> -        ret = colo_init_ram_cache();
+> -        if (ret) {
+> -            migration_incoming_disable_colo();
+> -        }
+> +    if (migration_incoming_enable_colo(errp) < 0) {
+> +        return -1;
 
-This makes sense.
+Returning -1 here while colo_init_ram_cache() returns -errno results in 
+an inconsistent semantics of this function's return value.
 
-In this case though, the next patch, a62fef5829956 "i386/cpu: Fix cpu
-number overflow in CPUID.01H.EBX[23:16]", becomes a one-liner:
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 2c9517f56d..5e55dd9ee5 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6828,7 +6828,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
-index, uint32_t count,
-          }
-          *edx = env->features[FEAT_1_EDX];
-          if (threads_per_pkg > 1) {
--            *ebx |= threads_per_pkg << 16;
-+            /* Fixup overflow: max value for bits 23-16 is 255. */
-+            *ebx |= MIN(threads_per_pkg, 255) << 16;
-          }
-          if (!cpu->enable_pmu) {
-              *ecx &= ~CPUID_EXT_PDCM;
-
-Is it okay with you, or maybe should I drop this change for 10.0.x
-too?
-
-Thanks,
-
-/mjt
+Ideally, I think this function (and other similar functions) should stop 
+returning -errno and instead return a bool value to prevent callers to 
+make any assumption based on the return value other than 
+success/failure. But that could be done later; let it return -errno 
+until then.
 
