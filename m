@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92E67C83F34
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F1FBC83F1B
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 06:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucIMR-0006kZ-FQ; Thu, 17 Jul 2025 02:44:55 -0400
+	id 1ucIMd-0006z0-KG; Thu, 17 Jul 2025 02:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucI5l-0008Ab-8q
+ id 1ucI5l-0008Af-EJ
  for qemu-devel@nongnu.org; Thu, 17 Jul 2025 02:27:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucI5f-00085n-Kq
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 02:27:37 -0400
+ id 1ucI5h-000865-JQ
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 02:27:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752733654;
+ s=mimecast20190719; t=1752733656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=A7MqYkErdty9uD7TbD+Z+ihMDFjNt79Yru60c119ORA=;
- b=aRpVK4qz+cPNY6r44N4f7YvN1zxoCPaafx2x6ctPjjnvquNIqVXp+DQBtB6+Lz9i+FzGpE
- 3sauzbY4ldBKWJJ4b75kDA0LmaPxOMQiq26lKNNYqn0NMzTKQ3bC2CZvE8DwiCak2Dc8yg
- qVEzMCUQ3pCszqDyHMQMKNOP0TottbA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=idkGHwv6pmeTAhqgTjVqPwn8pB104XDgL5/WOwov3Dw=;
+ b=DlFXCCChL9iDPwkSexJtvFLm2xSpXA6LciIw17alvf7MkBT9WJqvCLNx/04zOs5iYMhjXL
+ LDviQY3oqQf39i8On8LyOPyYCkkwx2XXhcRXevVZUs2et6f+YMKNZTlbNdpb62zma0A7MZ
+ cDwfenHgDIrdni6ejugjkpnc8Ywk7tg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-xTF7riB3OKKDlWTIZphV0g-1; Thu, 17 Jul 2025 02:27:32 -0400
-X-MC-Unique: xTF7riB3OKKDlWTIZphV0g-1
-X-Mimecast-MFC-AGG-ID: xTF7riB3OKKDlWTIZphV0g_1752733651
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eeed54c2so335857f8f.3
- for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 23:27:32 -0700 (PDT)
+ us-mta-609-Gr2DzOPYPJuRERGWtBY-5Q-1; Thu, 17 Jul 2025 02:27:35 -0400
+X-MC-Unique: Gr2DzOPYPJuRERGWtBY-5Q-1
+X-Mimecast-MFC-AGG-ID: Gr2DzOPYPJuRERGWtBY-5Q_1752733654
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45359bfe631so2520295e9.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Jul 2025 23:27:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752733650; x=1753338450;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A7MqYkErdty9uD7TbD+Z+ihMDFjNt79Yru60c119ORA=;
- b=AhkQ2gwv4CiGU0ZYsnsmJ7OBIVIzheBHlmdCwLYTF4C6mVj5j/tX53qaZuOdY1qoWT
- WmuF4dwDXnHMWWzj2uFN+EP/dsEOg553EEk0ZABfBDog8GXFCSXtNwRQVOLOX4AwpWA8
- VQyFAbKWyjki40eQR6vg30iUcSlzxNU/CmqT625tR47WiHGX4ufhPVL1zQxaUIiuybTC
- yHTxfGuJbjUks0HjrAK1UeHzodDbFXCTlm6xn9m645yTIbXN4Otw0BIHZBqZs8yjzUAh
- taTcQBvUcdLLjShkWNmlaOcFkr+J1OcdyAPRIPY8DSa/0GoUkHlbT71CpydeTza5zK2J
- pXSA==
-X-Gm-Message-State: AOJu0Ywqdc2cC/4bd5lZpp2EIjYzhec8jiE+dWNp9NBfXcOp8SkDmcaA
- wLjtMA0PVGP4sdgX9Q7tZcU9IXr1JZaWvBMKeKYn4/3Qzqyvqp4Q21btAAZ9s7XssWoFCaaH/CC
- akOPwBsaTb4yo74Os7h5/nTemooWIi58lLgzqowqSPWdcdfqQil7AKMfPH3sfc1PfcQNypVip5A
- jXa38nMaKNSwBJdYpzyjU1q8WuWMRXcLy4pg73FFLq
-X-Gm-Gg: ASbGncvPWifX3gmFznMfn5C8ZzvnRG+pc7PbcL+Hr0cO3wtYmEUJbm6PNhtazvgmGGv
- 3W3NlGqVaQyMUROHaMSJtMVksEzfvH5OBCI2un4tvz2pAAiFRw9esL3DKO2y5Oj4x1gUAgHl2p6
- hQsI5a+KBGEpVX70I/d1CPvggmCVpB8VJZXVhqEC3bRP3Ed88Y3hgvX4aVAR573rB31/L7SmggL
- j/8tXWdTvOvSLN3N3ayu+YYpxYPIEkRRs5U8cCG+wqpTxKvSSN3by3xlPCKBuk12jxw/lcS9ZQi
- j1Siuxj8P0temvX/qaJph5oztQZXOYIYtggyko2tXnE=
-X-Received: by 2002:a05:6000:4b1e:b0:3b4:b4d:6861 with SMTP id
- ffacd0b85a97d-3b60e50fe9cmr4084180f8f.27.1752733649928; 
- Wed, 16 Jul 2025 23:27:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUa4aOXbChYUxWv8JWA15fCsaQUq72srX4VLGiAhq9NwptUicuvnABzKx0c9GffdNfBTkSmQ==
-X-Received: by 2002:a05:6000:4b1e:b0:3b4:b4d:6861 with SMTP id
- ffacd0b85a97d-3b60e50fe9cmr4084160f8f.27.1752733649446; 
- Wed, 16 Jul 2025 23:27:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752733653; x=1753338453;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=idkGHwv6pmeTAhqgTjVqPwn8pB104XDgL5/WOwov3Dw=;
+ b=ZKN6KV6eoYP2CP1i4ifcmUSQ5E9HFef0aJ9vv4N9rpy4tz6l1c5+stzZbqsN3EL9gW
+ jGLnh17c7V3rlwA+OFIIPqfe+CvgUn0i4Qd9+Edk77Rhhqlb1HHzw5fxXJxtkjweBl0t
+ uRt9Of1vTyF0ESctbhHWLK8IwCtWl5gkt9KozNd3ChaqyH18NX+W14bWfK0mM0/uSAea
+ gtI+Up+Fof31gmN311nU/BzoLApP2uu74+A/ICb4SF8SZ3jwpjA9kXcj/G3e+AHDhx8E
+ XmlGdVv0KnLOqcmdMy02h0uynbEeZpAQOLfwDe+0xyLQAZhdzK+0W6TMrek8ed2zV6De
+ Zx3w==
+X-Gm-Message-State: AOJu0Yxdp01U86Tp16ajCh1DTi50pQR1c5JcFcXvxXLHypzv5RJi4dA5
+ pv+cWjoGq9FPhChaBJav4Rz5LBia3cZLrUvO+4FsmsRepOXdfhFiqR3P1dD++8ABO1UCJecfQNC
+ yKM0rXKxf7VFRZgB0OBzggVaHMZ2+lp4NzuLn/aYAeTlO6LAGZojP8NxN7jZUCEbvdgKYt0mgQF
+ 0k86oU1oGVToxFYVQZpmRA4ZiQSDYXBYCKY3GBvfdC
+X-Gm-Gg: ASbGncsBQpRMNCvwDZRPItIcalqzkn8itNsEmMRfkXmVSOwRMlVxnlbcStPi+VvGUdE
+ d9U6JJIZwLp/aJQvcmFqumVSGz5iiMm/qGrGVENTYj8ZmGeKw1INubctMYqWvt0VRzc9Hq3Ukse
+ MtddnqYrOS+H7bgXppKzTDliKKAiZViDvtkxaOacznab2/wwYPSN7lty41k4bJTSswukzfN0ngZ
+ EblCCYvCsDaZl8MdOO0XE7cHz5dBKVLTXaPtRAvKVqgfsxdeFyYPKyfmIZ+8Uw8kQUaSPp3g+Ht
+ BFtu5VuqXCMu0slZoQ0e+cVWMdmuyC2mvDpGxX5pZp0=
+X-Received: by 2002:a05:6000:250d:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3b613e66eaemr1140201f8f.13.1752733653268; 
+ Wed, 16 Jul 2025 23:27:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHra9UfOABKEB5T130dQ6ZZFVGZu4mHDHo1L6t3BM9ReMpJah12MQbrITyMyROflUJgshaO2A==
+X-Received: by 2002:a05:6000:250d:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3b613e66eaemr1140179f8f.13.1752733652817; 
+ Wed, 16 Jul 2025 23:27:32 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.73.155])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b5e8e0d719sm19981527f8f.54.2025.07.16.23.27.28
+ ffacd0b85a97d-3b5e8e1e1d5sm19941359f8f.78.2025.07.16.23.27.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Jul 2025 23:27:28 -0700 (PDT)
+ Wed, 16 Jul 2025 23:27:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	manos.pitsidianakis@linaro.org
-Subject: [RFC PATCH 0/4] rust: use attrs crate to parse #[property]
-Date: Thu, 17 Jul 2025 08:27:23 +0200
-Message-ID: <20250717062727.305466-1-pbonzini@redhat.com>
+Subject: [PATCH 1/4] subprojects: update proc-macro2 and syn
+Date: Thu, 17 Jul 2025 08:27:24 +0200
+Message-ID: <20250717062727.305466-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250717062727.305466-1-pbonzini@redhat.com>
+References: <20250717062727.305466-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -106,41 +109,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This needs a bit of preparation, but it simplifies the handwritten parsing
-code down to approximately 10 lines, and slightly improves the error
-messages too.  All the scaffolding will be shared by future uses of
-procedural macros.
+Update to a version that is accepted by the attrs crate.
 
-Thanks to the author of the attrs crate, Aatif Syed, for accepting to lower
-his crate's minimum supported Rust version to 1.83.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/Cargo.lock                                       | 8 ++++----
+ subprojects/.gitignore                                | 4 ++--
+ subprojects/packagefiles/proc-macro2-1-rs/meson.build | 2 +-
+ subprojects/packagefiles/syn-2-rs/meson.build         | 2 +-
+ subprojects/proc-macro2-1-rs.wrap                     | 8 ++++----
+ subprojects/syn-2-rs.wrap                             | 8 ++++----
+ 6 files changed, 16 insertions(+), 16 deletions(-)
 
-Paolo
-
-Paolo Bonzini (4):
-  subprojects: update proc-macro2 and syn
-  subprojects: add attrs crate
-  rust: qemu-api-macros: support matching more than one error
-  rust: qemu-api-macros: switch #[property] parsing to use combinators
-
- rust/Cargo.lock                               | 19 ++++-
- rust/meson.build                              |  2 +
- rust/qemu-api-macros/Cargo.toml               |  1 +
- rust/qemu-api-macros/meson.build              |  1 +
- rust/qemu-api-macros/src/lib.rs               | 84 +++++++------------
- rust/qemu-api-macros/src/tests.rs             | 14 ++--
- scripts/archive-source.sh                     |  2 +-
- scripts/make-release                          |  2 +-
- subprojects/.gitignore                        |  5 +-
- subprojects/attrs-0.2-rs.wrap                 |  7 ++
- .../packagefiles/attrs-0.2-rs/meson.build     | 32 +++++++
- .../packagefiles/proc-macro2-1-rs/meson.build |  2 +-
- subprojects/packagefiles/syn-2-rs/meson.build |  2 +-
- subprojects/proc-macro2-1-rs.wrap             |  8 +-
- subprojects/syn-2-rs.wrap                     |  8 +-
- 15 files changed, 111 insertions(+), 78 deletions(-)
- create mode 100644 subprojects/attrs-0.2-rs.wrap
- create mode 100644 subprojects/packagefiles/attrs-0.2-rs/meson.build
-
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index b785c718f31..4baf6ba663c 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -118,9 +118,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "proc-macro2"
+-version = "1.0.84"
++version = "1.0.95"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6"
++checksum = "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778"
+ dependencies = [
+  "unicode-ident",
+ ]
+@@ -155,9 +155,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "syn"
+-version = "2.0.66"
++version = "2.0.104"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5"
++checksum = "17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index f4281934ce1..9d579f72d12 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -16,7 +16,7 @@
+ /libc-0.2.162
+ /proc-macro-error-1.0.4
+ /proc-macro-error-attr-1.0.4
+-/proc-macro2-1.0.84
++/proc-macro2-1.0.95
+ /quote-1.0.36
+-/syn-2.0.66
++/syn-2.0.104
+ /unicode-ident-1.0.12
+diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+index 5759df3ecc9..ba7de070292 100644
+--- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
++++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
+@@ -1,6 +1,6 @@
+ project('proc-macro2-1-rs', 'rust',
+   meson_version: '>=1.5.0',
+-  version: '1.0.84',
++  version: '1.0.95',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+ 
+diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
+index a0094174084..3e6dc318a9c 100644
+--- a/subprojects/packagefiles/syn-2-rs/meson.build
++++ b/subprojects/packagefiles/syn-2-rs/meson.build
+@@ -1,6 +1,6 @@
+ project('syn-2-rs', 'rust',
+   meson_version: '>=1.5.0',
+-  version: '2.0.66',
++  version: '2.0.104',
+   license: 'MIT OR Apache-2.0',
+   default_options: [])
+ 
+diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
+index 6c9369f0df3..0f06cd8e111 100644
+--- a/subprojects/proc-macro2-1-rs.wrap
++++ b/subprojects/proc-macro2-1-rs.wrap
+@@ -1,8 +1,8 @@
+ [wrap-file]
+-directory = proc-macro2-1.0.84
+-source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.84/download
+-source_filename = proc-macro2-1.0.84.0.tar.gz
+-source_hash = ec96c6a92621310b51366f1e28d05ef11489516e93be030060e5fc12024a49d6
++directory = proc-macro2-1.0.95
++source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.95/download
++source_filename = proc-macro2-1.0.95.0.tar.gz
++source_hash = 02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778
+ #method = cargo
+ patch_directory = proc-macro2-1-rs
+ 
+diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
+index d79cf750fb4..1e5e9d9fb6e 100644
+--- a/subprojects/syn-2-rs.wrap
++++ b/subprojects/syn-2-rs.wrap
+@@ -1,8 +1,8 @@
+ [wrap-file]
+-directory = syn-2.0.66
+-source_url = https://crates.io/api/v1/crates/syn/2.0.66/download
+-source_filename = syn-2.0.66.0.tar.gz
+-source_hash = c42f3f41a2de00b01c0aaad383c5a45241efc8b2d1eda5661812fda5f3cdcff5
++directory = syn-2.0.104
++source_url = https://crates.io/api/v1/crates/syn/2.0.104/download
++source_filename = syn-2.0.104.0.tar.gz
++source_hash = 17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40
+ #method = cargo
+ patch_directory = syn-2-rs
+ 
 -- 
 2.50.1
 
