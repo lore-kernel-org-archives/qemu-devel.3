@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 585C9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40CDC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLD2-0005Dl-KT; Thu, 17 Jul 2025 05:47:32 -0400
+	id 1ucLDu-0006oc-K2; Thu, 17 Jul 2025 05:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL19-000243-Ac; Thu, 17 Jul 2025 05:35:11 -0400
+ id 1ucL1U-0002N2-04; Thu, 17 Jul 2025 05:35:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL0y-0001pn-OW; Thu, 17 Jul 2025 05:35:06 -0400
+ id 1ucL1R-00025V-Um; Thu, 17 Jul 2025 05:35:27 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E7A24137CF2;
- Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4733B137CF8;
+ Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C95862491EC;
- Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2A75F2491F2;
+ Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Lei Yang <leiyang@redhat.com>, Jason Wang <jasowang@redhat.com>,
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 50/65] virtio-net: Add queues for RSS during migration
-Date: Thu, 17 Jul 2025 12:33:46 +0300
-Message-ID: <20250717093412.728292-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 56/65] amd_iommu: Fix the calculation for Device Table
+ size
+Date: Thu, 17 Jul 2025 12:33:52 +0300
+Message-ID: <20250717093412.728292-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
@@ -60,123 +61,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
-VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
-number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
-VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
-is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
-VIRTIO_NET_F_MQ uses bit 22.
+Correctly calculate the Device Table size using the format encoded in the
+Device Table Base Address Register (MMIO Offset 0000h).
 
-Instead of inferring the required number of queues from
-vdev->guest_features, use the number loaded from the vm state. This
-change also has a nice side effect to remove a duplicate peer queue
-pair change by circumventing virtio_net_set_multiqueue().
-
-Also update the comment in include/hw/virtio/virtio.h to prevent an
-implementation of pre_load_queues() from refering to any fields being
-loaded during migration by accident in the future.
-
-Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
-
-Tested-by: Lei Yang <leiyang@redhat.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit adda0ad56bd28d5a809051cbd190fda5798ec4e4)
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250617150427.20585-7-alejandro.j.jimenez@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 67d3077ee403472d45794399e97c9f329242fce9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index bd37651dab..5f908e5bca 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3021,11 +3021,10 @@ static void virtio_net_del_queue(VirtIONet *n, int index)
-     virtio_del_queue(vdev, index * 2 + 1);
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 69d69a9b2d..06df344575 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -665,8 +665,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
+     uint64_t val = amdvi_readq(s, AMDVI_MMIO_DEVICE_TABLE);
+     s->devtab = (val & AMDVI_MMIO_DEVTAB_BASE_MASK);
+ 
+-    /* set device table length */
+-    s->devtab_len = ((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1 *
++    /* set device table length (i.e. number of entries table can hold) */
++    s->devtab_len = (((val & AMDVI_MMIO_DEVTAB_SIZE_MASK) + 1) *
+                     (AMDVI_MMIO_DEVTAB_SIZE_UNIT /
+                      AMDVI_MMIO_DEVTAB_ENTRY_SIZE));
  }
- 
--static void virtio_net_change_num_queue_pairs(VirtIONet *n, int new_max_queue_pairs)
-+static void virtio_net_change_num_queues(VirtIONet *n, int new_num_queues)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int old_num_queues = virtio_get_num_queues(vdev);
--    int new_num_queues = new_max_queue_pairs * 2 + 1;
-     int i;
- 
-     assert(old_num_queues >= 3);
-@@ -3061,16 +3060,14 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     int max = multiqueue ? n->max_queue_pairs : 1;
- 
-     n->multiqueue = multiqueue;
--    virtio_net_change_num_queue_pairs(n, max);
-+    virtio_net_change_num_queues(n, max * 2 + 1);
- 
-     virtio_net_set_queue_pairs(n);
- }
- 
--static int virtio_net_pre_load_queues(VirtIODevice *vdev)
-+static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
- {
--    virtio_net_set_multiqueue(VIRTIO_NET(vdev),
--                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_RSS) ||
--                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_MQ));
-+    virtio_net_change_num_queues(VIRTIO_NET(vdev), n);
- 
-     return 0;
- }
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 755260981e..ec54573feb 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3257,13 +3257,6 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         config_len--;
-     }
- 
--    if (vdc->pre_load_queues) {
--        ret = vdc->pre_load_queues(vdev);
--        if (ret) {
--            return ret;
--        }
--    }
--
-     num = qemu_get_be32(f);
- 
-     if (num > VIRTIO_QUEUE_MAX) {
-@@ -3271,6 +3264,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         return -1;
-     }
- 
-+    if (vdc->pre_load_queues) {
-+        ret = vdc->pre_load_queues(vdev, num);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-     for (i = 0; i < num; i++) {
-         vdev->vq[i].vring.num = qemu_get_be32(f);
-         if (k->has_variable_vring_alignment) {
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 6386910280..14c2afed33 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -210,8 +210,14 @@ struct VirtioDeviceClass {
-     void (*guest_notifier_mask)(VirtIODevice *vdev, int n, bool mask);
-     int (*start_ioeventfd)(VirtIODevice *vdev);
-     void (*stop_ioeventfd)(VirtIODevice *vdev);
--    /* Called before loading queues. Useful to add queues before loading. */
--    int (*pre_load_queues)(VirtIODevice *vdev);
-+    /*
-+     * Called before loading queues.
-+     * If the number of queues change at runtime, use @n to know the
-+     * number and add or remove queues accordingly.
-+     * Note that this function is called in the middle of loading vmsd;
-+     * no assumption should be made on states being loaded from vmsd.
-+     */
-+    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
-     /* Saving and loading of a device; trying to deprecate save/load
-      * use vmsd for new devices.
-      */
 -- 
 2.47.2
 
