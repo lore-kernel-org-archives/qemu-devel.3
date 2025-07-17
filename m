@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09366C83F1B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2329CC83F22
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucMHL-00005M-2j; Thu, 17 Jul 2025 06:56:01 -0400
+	id 1ucMGN-0007Ki-S8; Thu, 17 Jul 2025 06:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucMGu-0007za-Uk; Thu, 17 Jul 2025 06:55:31 -0400
+ id 1ucMGL-0007HI-Hj; Thu, 17 Jul 2025 06:54:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucMGr-0003G4-DA; Thu, 17 Jul 2025 06:55:27 -0400
+ id 1ucMGI-00037u-Jc; Thu, 17 Jul 2025 06:54:53 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8994D137E26;
- Thu, 17 Jul 2025 13:54:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EDBF0137E1E;
+ Thu, 17 Jul 2025 13:54:34 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 846F3249270;
- Thu, 17 Jul 2025 13:54:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E3466249268;
+ Thu, 17 Jul 2025 13:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.19 26/26] ui/vnc: Do not copy z_stream
-Date: Thu, 17 Jul 2025 13:54:40 +0300
-Message-ID: <20250717105442.735202-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Ethan MILON <ethan.milon@eviden.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.19 18/26] amd_iommu: Fix Miscellaneous Information
+ Register 0 encoding
+Date: Thu, 17 Jul 2025 13:54:32 +0300
+Message-ID: <20250717105442.735202-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.19-20250717135416@cover.tls.msk.ru>
 References: <qemu-stable-7.2.19-20250717135416@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,160 +61,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-vnc_worker_thread_loop() copies z_stream stored in its local VncState to
-the persistent VncState, and the copied one is freed with deflateEnd()
-later. However, deflateEnd() refuses to operate with a copied z_stream
-and returns Z_STREAM_ERROR, leaking the allocated memory.
+The definitions encoding the maximum Virtual, Physical, and Guest Virtual
+Address sizes supported by the IOMMU are using incorrect offsets i.e. the
+VASize and GVASize offsets are switched. The value in the GVAsize field is
+also modified, since it was incorrectly encoded.
 
-Avoid copying the zlib state to fix the memory leak.
-
-Fixes: bd023f953e5e ("vnc: threaded VNC server")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250603-zlib-v3-1-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit aef22331b5a4670f42638a5f63a26e93bf779aae)
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Co-developed-by: Ethan MILON <ethan.milon@eviden.com>
+Signed-off-by: Ethan MILON <ethan.milon@eviden.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20250617150427.20585-2-alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 091c7d7924f33781c2fb8e7297dc54971e0c3785)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc-enc-zlib.c b/ui/vnc-enc-zlib.c
-index 900ae5b30f..52e9193eab 100644
---- a/ui/vnc-enc-zlib.c
-+++ b/ui/vnc-enc-zlib.c
-@@ -48,21 +48,21 @@ void vnc_zlib_zfree(void *x, void *addr)
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 1899e9aee1..a1913cd59d 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -194,9 +194,9 @@
+ #define AMDVI_PAGE_SHIFT_4K 12
+ #define AMDVI_PAGE_MASK_4K  (~((1ULL << AMDVI_PAGE_SHIFT_4K) - 1))
  
- static void vnc_zlib_start(VncState *vs)
- {
--    buffer_reset(&vs->zlib.zlib);
-+    buffer_reset(&vs->zlib->zlib);
+-#define AMDVI_MAX_VA_ADDR          (48UL << 5)
+-#define AMDVI_MAX_PH_ADDR          (40UL << 8)
+-#define AMDVI_MAX_GVA_ADDR         (48UL << 15)
++#define AMDVI_MAX_GVA_ADDR      (2UL << 5)
++#define AMDVI_MAX_PH_ADDR       (40UL << 8)
++#define AMDVI_MAX_VA_ADDR       (48UL << 15)
  
-     // make the output buffer be the zlib buffer, so we can compress it later
--    vs->zlib.tmp = vs->output;
--    vs->output = vs->zlib.zlib;
-+    vs->zlib->tmp = vs->output;
-+    vs->output = vs->zlib->zlib;
- }
- 
- static int vnc_zlib_stop(VncState *vs)
- {
--    z_streamp zstream = &vs->zlib.stream;
-+    z_streamp zstream = &vs->zlib->stream;
-     int previous_out;
- 
-     // switch back to normal output/zlib buffers
--    vs->zlib.zlib = vs->output;
--    vs->output = vs->zlib.tmp;
-+    vs->zlib->zlib = vs->output;
-+    vs->output = vs->zlib->tmp;
- 
-     // compress the zlib buffer
- 
-@@ -85,24 +85,24 @@ static int vnc_zlib_stop(VncState *vs)
-             return -1;
-         }
- 
--        vs->zlib.level = vs->tight->compression;
-+        vs->zlib->level = vs->tight->compression;
-         zstream->opaque = vs;
-     }
- 
--    if (vs->tight->compression != vs->zlib.level) {
-+    if (vs->tight->compression != vs->zlib->level) {
-         if (deflateParams(zstream, vs->tight->compression,
-                           Z_DEFAULT_STRATEGY) != Z_OK) {
-             return -1;
-         }
--        vs->zlib.level = vs->tight->compression;
-+        vs->zlib->level = vs->tight->compression;
-     }
- 
-     // reserve memory in output buffer
--    buffer_reserve(&vs->output, vs->zlib.zlib.offset + 64);
-+    buffer_reserve(&vs->output, vs->zlib->zlib.offset + 64);
- 
-     // set pointers
--    zstream->next_in = vs->zlib.zlib.buffer;
--    zstream->avail_in = vs->zlib.zlib.offset;
-+    zstream->next_in = vs->zlib->zlib.buffer;
-+    zstream->avail_in = vs->zlib->zlib.offset;
-     zstream->next_out = vs->output.buffer + vs->output.offset;
-     zstream->avail_out = vs->output.capacity - vs->output.offset;
-     previous_out = zstream->avail_out;
-@@ -147,8 +147,8 @@ int vnc_zlib_send_framebuffer_update(VncState *vs, int x, int y, int w, int h)
- 
- void vnc_zlib_clear(VncState *vs)
- {
--    if (vs->zlib.stream.opaque) {
--        deflateEnd(&vs->zlib.stream);
-+    if (vs->zlib->stream.opaque) {
-+        deflateEnd(&vs->zlib->stream);
-     }
--    buffer_free(&vs->zlib.zlib);
-+    buffer_free(&vs->zlib->zlib);
- }
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 629a500adc..e56ef2609a 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -56,6 +56,11 @@
- #include "io/dns-resolver.h"
- #include "monitor/monitor.h"
- 
-+typedef struct VncConnection {
-+    VncState vs;
-+    VncZlib zlib;
-+} VncConnection;
-+
- #define VNC_REFRESH_INTERVAL_BASE GUI_REFRESH_INTERVAL_DEFAULT
- #define VNC_REFRESH_INTERVAL_INC  50
- #define VNC_REFRESH_INTERVAL_MAX  GUI_REFRESH_INTERVAL_IDLE
-@@ -1378,7 +1383,7 @@ void vnc_disconnect_finish(VncState *vs)
-     vs->magic = 0;
-     g_free(vs->zrle);
-     g_free(vs->tight);
--    g_free(vs);
-+    g_free(container_of(vs, VncConnection, vs));
- }
- 
- size_t vnc_client_io_error(VncState *vs, ssize_t ret, Error *err)
-@@ -3242,11 +3247,13 @@ static void vnc_refresh(DisplayChangeListener *dcl)
- static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
-                         bool skipauth, bool websocket)
- {
--    VncState *vs = g_new0(VncState, 1);
-+    VncConnection *vc = g_new0(VncConnection, 1);
-+    VncState *vs = &vc->vs;
-     bool first_client = QTAILQ_EMPTY(&vd->clients);
-     int i;
- 
-     trace_vnc_client_connect(vs, sioc);
-+    vs->zlib = &vc->zlib;
-     vs->zrle = g_new0(VncZrle, 1);
-     vs->tight = g_new0(VncTight, 1);
-     vs->magic = VNC_MAGIC;
-@@ -3269,7 +3276,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
- #ifdef CONFIG_PNG
-     buffer_init(&vs->tight->png,      "vnc-tight-png/%p", sioc);
- #endif
--    buffer_init(&vs->zlib.zlib,      "vnc-zlib/%p", sioc);
-+    buffer_init(&vc->zlib.zlib,      "vnc-zlib/%p", sioc);
-     buffer_init(&vs->zrle->zrle,      "vnc-zrle/%p", sioc);
-     buffer_init(&vs->zrle->fb,        "vnc-zrle-fb/%p", sioc);
-     buffer_init(&vs->zrle->zlib,      "vnc-zrle-zlib/%p", sioc);
-diff --git a/ui/vnc.h b/ui/vnc.h
-index a60fb13115..e0888c6bb5 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -342,7 +342,7 @@ struct VncState
-      *  update vnc_async_encoding_start()
-      */
-     VncTight *tight;
--    VncZlib zlib;
-+    VncZlib *zlib;
-     VncHextile hextile;
-     VncZrle *zrle;
-     VncZywrle zywrle;
+ /* Completion Wait data size */
+ #define AMDVI_COMPLETION_DATA_SIZE    8
 -- 
 2.47.2
 
