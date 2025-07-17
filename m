@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E61C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 22:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB321C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 22:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucX0m-0001qb-Ps; Thu, 17 Jul 2025 18:23:32 -0400
+	id 1ucX4G-0005VP-9s; Thu, 17 Jul 2025 18:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com>)
- id 1ucVfj-0007eU-Pw
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:57:44 -0400
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com>)
- id 1ucVfi-0005S4-Av
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:57:43 -0400
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-3138e64b3f1so1900151a91.3
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 13:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1752785860; x=1753390660; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=7GNLAb9+HAgXzXVkivfD2j5NSWuBMdtsr/kW1eIs5w8=;
- b=Vwa+hqyjIVAjwfNyVJCxMWg2hl6ReRl/VL3ZrMH2xDpD/vD+m2MroomtYkJBwSgF07
- AGaNAZojCgzA7wSzCU1a3bv58jugvCjogqGFuMnPrvYSLyuFD7dK20ldrSS92XgWglO8
- kBhhQWQD9rs/DXLBJ/pam6sZH+kdPf1aG7Qbp/KY6QVhUhqVAT0TN+AE5Xy3uac3exkp
- 0Sz0gDGs2vC7qsfqieEWddMAdis0YVmH0gK7sED1m08g6JnuvrGLJjmWipVBF1d0W0Zs
- c/AT1WjAJs54MSicn72tFdEgMvQGTETUAOgvnwUyuOvoz7DPT1YhWe/GZ1XgFGiLHk2S
- nVHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752785860; x=1753390660;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7GNLAb9+HAgXzXVkivfD2j5NSWuBMdtsr/kW1eIs5w8=;
- b=XsviQKwyKY1IFePioY4h/GChNxFadhmbXbE/kUM5LycGF/0xaIcW8LQV22nHeEj51J
- 9liDYElED2nGIC/2kB/o6LxwE6WW+iYwpTBM15WklJ/kziDCzcnOgV8GHxetrJViWeYS
- Hq94Vw43P9VvlO+h3vVrQSzL3f5Ha3c8dBa8mdh1jbeeoG0KW6NnBfpLighoK+6viVE/
- bQcF3cMEOc83CjIBww/Z50DbEsVB9b7VTLzP90kWiVCx9vL8s8Qdce7RdFNPBLRIo55y
- R3s/3Z3jiI7hv+rNAHwawRkNmDgJyaOLT7Nyz+tLmhUWLSMiVRppPOHkJJg0xRtG2nbA
- UuNA==
-X-Gm-Message-State: AOJu0Yzk+hoNnib0v1mqL8ugM9qx3mtzV027vpPwpTso4hySmrSmdP+f
- KjMEfxshZCUUjpStkLH8Y9jwAEJakWcn4+j85AWqWgybiVkoUe2CrGlqxzOqYuYNg7mKvw+ceD5
- 0BoJx5EVEmELJE0B6FWZEPLGG9+FJxbM6Wmj0zKFvtx5GaDLPf2vLnBsFZFRl1JYvz1uacylkhY
- 0UIFaZOSySoAZZqUB4ewo6AlTc
-X-Google-Smtp-Source: AGHT+IF0S3FJ39z89y9XS8sAMGlgwSJ4VPdn0F/0DbDjr/DMlFKKEoR8B+TWvuR0qDsvTcUNxLvTbyyo
-X-Received: from pjbme10.prod.google.com ([2002:a17:90b:17ca:b0:314:d44:4108])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5846:b0:312:e731:5a66
- with SMTP id 98e67ed59e1d1-31c9f398bf1mr11315983a91.3.1752785859814; Thu, 17
- Jul 2025 13:57:39 -0700 (PDT)
-Date: Thu, 17 Jul 2025 13:57:35 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.50.0.727.gbf7dc18ff4-goog
-Message-ID: <20250717205735.2345674-1-rkir@google.com>
-Subject: [PATCH] hw/arm: remove `inline` from `smmu_iotlb_inv_vmid_s1`
-From: Roman Kiryanov <rkir@google.com>
-To: qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, mjt@tls.msk.ru, whollins@google.com, 
- jansene@google.com, jpcottin@google.com, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3w2N5aAQKCrowpnwlttlqj.htrvjrz-ij0jqstslsz.twl@flex--rkir.bounces.google.com;
- helo=mail-pj1-x104a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1ucVgg-0008B0-Nk
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:58:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1ucVgf-0005cx-0i
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 16:58:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752785919;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3BY6Spdis9w9M2zPAIp7oWM9VKiKR1Ss/J6p082wk3k=;
+ b=GHnpGksJK70XI/i0Of14SzpaUlQTW3/AIrD/DjE8I6Rg3muYS6k0Xu0XKh+OQuhJiAiZlS
+ pio2EzO6fi4FK+9m33vC1n9M1ESckFkvGb208hmrNeOR1coTOvGkP34vtBVDlfiLidX65M
+ 5oI3NtW2VBGMzQOmLSvh4o74a6v7Ceg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-b2mbBY_SNKuPlOsNhfzygg-1; Thu,
+ 17 Jul 2025 16:58:35 -0400
+X-MC-Unique: b2mbBY_SNKuPlOsNhfzygg-1
+X-Mimecast-MFC-AGG-ID: b2mbBY_SNKuPlOsNhfzygg_1752785915
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B15111800C38
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 20:58:34 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.49])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E71CB30001B1; Thu, 17 Jul 2025 20:58:33 +0000 (UTC)
+Date: Thu, 17 Jul 2025 16:56:35 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Subject: Re: [PULL 0/6] QAPI patches patches for 2025-07-16
+Message-ID: <20250717205635.GA378750@fedora>
+References: <20250716172535.3520175-1-armbru@redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="NeGn7mgfXORTMURs"
+Content-Disposition: inline
+In-Reply-To: <20250716172535.3520175-1-armbru@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,31 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-this function is declared in smmu-common.h without
-`inline`. It is also used outside of this file
-which causes linking errors because the non-inline
-version is not generated.
 
-Signed-off-by: Will Hollins <whollins@google.com>
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- hw/arm/smmu-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--NeGn7mgfXORTMURs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index f39b99e526..0dcaf2f589 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -319,7 +319,7 @@ void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
-     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
- }
- 
--inline void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
-+void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
- {
-     trace_smmu_iotlb_inv_vmid_s1(vmid);
-     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid_s1, &vmid);
--- 
-2.50.0.727.gbf7dc18ff4-goog
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+
+--NeGn7mgfXORTMURs
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh5Y4MACgkQnKSrs4Gr
+c8hj6Af+JLOZ9ROt+vPfEC+f9unUf36uFc2PhSpYwnElb9srOic7n4uzaxoHzDzL
+B+rzC+QZq4D39UroFpBYUeg33Pbi5LpehMsSJLbYiRjjpocLmJC6dd3nza5kEAdJ
+WAhJkQ7S1ZIwzIDMgItHBFin/1JCoNQt9SCUdb4QGpu+03xDEtqmEoIcO836qSGa
+egjf3keInDPL+W5E/prh+MiCyUD5oWM0UYt8X4gEw0ajqvYkF6741lA1YH1HBGrC
+qAEhElNZdwhA+XRZFaJTAq5cAXNJ9Fnh2SAwgnoEGqeyutXqAa9etjh7V5MM6aCi
+gSQ+H0WoQQ/Psi3l34MIkA/6GWfErw==
+=q+i7
+-----END PGP SIGNATURE-----
+
+--NeGn7mgfXORTMURs--
 
 
