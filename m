@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2225CC83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA6FC83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLEE-0008D9-Cb; Thu, 17 Jul 2025 05:48:38 -0400
+	id 1ucLDm-0006Ba-Rg; Thu, 17 Jul 2025 05:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1z-000341-8i; Thu, 17 Jul 2025 05:35:59 -0400
+ id 1ucL1Q-0002L6-F0; Thu, 17 Jul 2025 05:35:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1x-00027n-5W; Thu, 17 Jul 2025 05:35:58 -0400
+ id 1ucL1F-00023n-SW; Thu, 17 Jul 2025 05:35:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C15D7137CFF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1F37A137CF5;
  Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A4C1F2491F8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 01C172491EF;
  Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 62/65] ui/vnc: Do not copy z_stream
-Date: Thu, 17 Jul 2025 12:33:58 +0300
-Message-ID: <20250717093412.728292-23-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 53/65] amd_iommu: Update bitmasks representing DTE
+ reserved fields
+Date: Thu, 17 Jul 2025 12:33:49 +0300
+Message-ID: <20250717093412.728292-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,160 +61,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-vnc_worker_thread_loop() copies z_stream stored in its local VncState to
-the persistent VncState, and the copied one is freed with deflateEnd()
-later. However, deflateEnd() refuses to operate with a copied z_stream
-and returns Z_STREAM_ERROR, leaking the allocated memory.
+The DTE validation method verifies that all bits in reserved DTE fields are
+unset. Update them according to the latest definition available in AMD I/O
+Virtualization Technology (IOMMU) Specification - Section 2.2.2.1 Device
+Table Entry Format. Remove the magic numbers and use a macro helper to
+generate bitmasks covering the specified ranges for better legibility.
 
-Avoid copying the zlib state to fix the memory leak.
+Note that some reserved fields specify that events are generated when they
+contain non-zero bits, or checks are skipped under certain configurations.
+This change only updates the reserved masks, checks for special conditions
+are not yet implemented.
 
-Fixes: bd023f953e5e ("vnc: threaded VNC server")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250603-zlib-v3-1-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit aef22331b5a4670f42638a5f63a26e93bf779aae)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250617150427.20585-4-alejandro.j.jimenez@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit ff3dcb3bf652912466dcc1cd10d3267f185c212e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc-enc-zlib.c b/ui/vnc-enc-zlib.c
-index 900ae5b30f..52e9193eab 100644
---- a/ui/vnc-enc-zlib.c
-+++ b/ui/vnc-enc-zlib.c
-@@ -48,21 +48,21 @@ void vnc_zlib_zfree(void *x, void *addr)
- 
- static void vnc_zlib_start(VncState *vs)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index de55074b21..69d69a9b2d 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -848,9 +848,10 @@ static inline uint64_t amdvi_get_perms(uint64_t entry)
+ static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
+                                uint64_t *dte)
  {
--    buffer_reset(&vs->zlib.zlib);
-+    buffer_reset(&vs->zlib->zlib);
+-    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
+-        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
+-        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
++    if ((dte[0] & AMDVI_DTE_QUAD0_RESERVED) ||
++        (dte[1] & AMDVI_DTE_QUAD1_RESERVED) ||
++        (dte[2] & AMDVI_DTE_QUAD2_RESERVED) ||
++        (dte[3] & AMDVI_DTE_QUAD3_RESERVED)) {
+         amdvi_log_illegaldevtab_error(s, devid,
+                                       s->devtab +
+                                       devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 921f7e1a4f..60af62bef6 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -25,6 +25,8 @@
+ #include "hw/i386/x86-iommu.h"
+ #include "qom/object.h"
  
-     // make the output buffer be the zlib buffer, so we can compress it later
--    vs->zlib.tmp = vs->output;
--    vs->output = vs->zlib.zlib;
-+    vs->zlib->tmp = vs->output;
-+    vs->output = vs->zlib->zlib;
- }
- 
- static int vnc_zlib_stop(VncState *vs)
- {
--    z_streamp zstream = &vs->zlib.stream;
-+    z_streamp zstream = &vs->zlib->stream;
-     int previous_out;
- 
-     // switch back to normal output/zlib buffers
--    vs->zlib.zlib = vs->output;
--    vs->output = vs->zlib.tmp;
-+    vs->zlib->zlib = vs->output;
-+    vs->output = vs->zlib->tmp;
- 
-     // compress the zlib buffer
- 
-@@ -85,24 +85,24 @@ static int vnc_zlib_stop(VncState *vs)
-             return -1;
-         }
- 
--        vs->zlib.level = vs->tight->compression;
-+        vs->zlib->level = vs->tight->compression;
-         zstream->opaque = vs;
-     }
- 
--    if (vs->tight->compression != vs->zlib.level) {
-+    if (vs->tight->compression != vs->zlib->level) {
-         if (deflateParams(zstream, vs->tight->compression,
-                           Z_DEFAULT_STRATEGY) != Z_OK) {
-             return -1;
-         }
--        vs->zlib.level = vs->tight->compression;
-+        vs->zlib->level = vs->tight->compression;
-     }
- 
-     // reserve memory in output buffer
--    buffer_reserve(&vs->output, vs->zlib.zlib.offset + 64);
-+    buffer_reserve(&vs->output, vs->zlib->zlib.offset + 64);
- 
-     // set pointers
--    zstream->next_in = vs->zlib.zlib.buffer;
--    zstream->avail_in = vs->zlib.zlib.offset;
-+    zstream->next_in = vs->zlib->zlib.buffer;
-+    zstream->avail_in = vs->zlib->zlib.offset;
-     zstream->next_out = vs->output.buffer + vs->output.offset;
-     zstream->avail_out = vs->output.capacity - vs->output.offset;
-     previous_out = zstream->avail_out;
-@@ -147,8 +147,8 @@ int vnc_zlib_send_framebuffer_update(VncState *vs, int x, int y, int w, int h)
- 
- void vnc_zlib_clear(VncState *vs)
- {
--    if (vs->zlib.stream.opaque) {
--        deflateEnd(&vs->zlib.stream);
-+    if (vs->zlib->stream.opaque) {
-+        deflateEnd(&vs->zlib->stream);
-     }
--    buffer_free(&vs->zlib.zlib);
-+    buffer_free(&vs->zlib->zlib);
- }
-diff --git a/ui/vnc.c b/ui/vnc.c
-index c96bd8ceea..ca02ff872a 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -56,6 +56,11 @@
- #include "io/dns-resolver.h"
- #include "monitor/monitor.h"
- 
-+typedef struct VncConnection {
-+    VncState vs;
-+    VncZlib zlib;
-+} VncConnection;
++#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
 +
- #define VNC_REFRESH_INTERVAL_BASE GUI_REFRESH_INTERVAL_DEFAULT
- #define VNC_REFRESH_INTERVAL_INC  50
- #define VNC_REFRESH_INTERVAL_MAX  GUI_REFRESH_INTERVAL_IDLE
-@@ -1364,7 +1369,7 @@ void vnc_disconnect_finish(VncState *vs)
-     vs->magic = 0;
-     g_free(vs->zrle);
-     g_free(vs->tight);
--    g_free(vs);
-+    g_free(container_of(vs, VncConnection, vs));
- }
+ /* Capability registers */
+ #define AMDVI_CAPAB_BAR_LOW           0x04
+ #define AMDVI_CAPAB_BAR_HIGH          0x08
+@@ -162,9 +164,10 @@
+ #define AMDVI_FEATURE_PC                  (1ULL << 9) /* Perf counters       */
  
- size_t vnc_client_io_error(VncState *vs, ssize_t ret, Error *err)
-@@ -3243,11 +3248,13 @@ static void vnc_refresh(DisplayChangeListener *dcl)
- static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
-                         bool skipauth, bool websocket)
- {
--    VncState *vs = g_new0(VncState, 1);
-+    VncConnection *vc = g_new0(VncConnection, 1);
-+    VncState *vs = &vc->vs;
-     bool first_client = QTAILQ_EMPTY(&vd->clients);
-     int i;
+ /* reserved DTE bits */
+-#define AMDVI_DTE_LOWER_QUAD_RESERVED  0x80300000000000fc
+-#define AMDVI_DTE_MIDDLE_QUAD_RESERVED 0x0000000000000100
+-#define AMDVI_DTE_UPPER_QUAD_RESERVED  0x08f0000000000000
++#define AMDVI_DTE_QUAD0_RESERVED        (GENMASK64(6, 2) | GENMASK64(63, 63))
++#define AMDVI_DTE_QUAD1_RESERVED        0
++#define AMDVI_DTE_QUAD2_RESERVED        GENMASK64(53, 52)
++#define AMDVI_DTE_QUAD3_RESERVED        (GENMASK64(14, 0) | GENMASK64(53, 48))
  
-     trace_vnc_client_connect(vs, sioc);
-+    vs->zlib = &vc->zlib;
-     vs->zrle = g_new0(VncZrle, 1);
-     vs->tight = g_new0(VncTight, 1);
-     vs->magic = VNC_MAGIC;
-@@ -3270,7 +3277,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
- #ifdef CONFIG_PNG
-     buffer_init(&vs->tight->png,      "vnc-tight-png/%p", sioc);
- #endif
--    buffer_init(&vs->zlib.zlib,      "vnc-zlib/%p", sioc);
-+    buffer_init(&vc->zlib.zlib,      "vnc-zlib/%p", sioc);
-     buffer_init(&vs->zrle->zrle,      "vnc-zrle/%p", sioc);
-     buffer_init(&vs->zrle->fb,        "vnc-zrle-fb/%p", sioc);
-     buffer_init(&vs->zrle->zlib,      "vnc-zrle-zlib/%p", sioc);
-diff --git a/ui/vnc.h b/ui/vnc.h
-index 02613aa63a..82b883bb69 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -340,7 +340,7 @@ struct VncState
-      *  update vnc_async_encoding_start()
-      */
-     VncTight *tight;
--    VncZlib zlib;
-+    VncZlib *zlib;
-     VncHextile hextile;
-     VncZrle *zrle;
-     VncZywrle zywrle;
+ /* AMDVI paging mode */
+ #define AMDVI_GATS_MODE                 (2ULL <<  12)
 -- 
 2.47.2
 
