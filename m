@@ -4,80 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A54DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9F0C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 10:02:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLGj-00066K-20; Thu, 17 Jul 2025 05:51:13 -0400
+	id 1ucLK9-0006Cn-HW; Thu, 17 Jul 2025 05:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucKvS-0005yi-77
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:29:14 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucKvQ-0001KP-A9
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 05:29:13 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-70f862dbeaeso7068357b3.1
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 02:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752744551; x=1753349351; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rvAHTPbULdw1cqaYPzluxpN/MB3/oKbzGjmLhAAMghw=;
- b=LaK5rZNpF+LyYnAFgbQP/6iSfqtFL/z+3wH/47Z0PMzaUd8GOJy2qmZ81V93e/0r/r
- i80gw4xdZpmFDmuaRWyrYNYGeOanI8ZFeR1yrUY12Z63uF5s1kwz7gMc9Yxu0axTSls/
- N/CcinRrTWX8Rlr8peK9tHnR9I0GZt960QpMEH67KDd7qyBpsZL4zSC98Utxl0B6kwQa
- AQ4gRPJu7ySO7UReMjItW59MfRYzbaNDU8lxEirCWCL6HNfup2sU3oHtMAUCHg6WIaSj
- RhphV3pFB3hibfe1lWWZwSOVA/dC34ZFIqUjTEJp7nkB+sut24UKb05vwdLddZ0TQQI7
- m8hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752744551; x=1753349351;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rvAHTPbULdw1cqaYPzluxpN/MB3/oKbzGjmLhAAMghw=;
- b=nkAQVmCimRpmY150hjLS2UzS0At+47cqVvkX3yyVVUTh+8yDL53HsSKvwLM9koyLAn
- 6aMyvVMiUREtKdWulBesS5bWv1JVhZmyrbWUjoOpwlE6B+NWfucA35CFx1CkLpySHLZX
- xNLMOfjNC0duGB7RJfaehYKdBi+RO8f/xZ6BREb39PqDcEnZ+X7A/uKtYlmJa6SKtJ3B
- 6KnwVBVXucx1JJ8lq2nDkRzy0DhP6GnzP1JG2LehbzRekNE4121ionx36kNKXPjbNDgY
- Sqv6bA6Lls3fVzEORX7yQE4+gdi3KUqJuifW4psS2Bf4NMyrKSeVlVedspqFSHgMFBZ9
- 6t8Q==
-X-Gm-Message-State: AOJu0Ywf0XvBrQqvCruTUjW4DoUKr8Mm3o+MpMmtEPMq3BVuXtjGNIsO
- o2LUIwMZBfLOXGwgshn7g+hatBZ+Ydr6HUPNqpTHh9H0eTwbXKkA7tMV807Na/VD1NKiI+hJ9J0
- 7vqwcCWEoMjjkhrERr7Pn4L8H0mHyHiXglP6xEbrXow==
-X-Gm-Gg: ASbGncut79K7MEzgaTIebqAH4RRwgfcRbeyOnYj5dcYwCENSZZDST7R4ThfFdR3Rrt6
- R9gmUop9GzYnWGunVyBwYSg3+w8/12c9PbiqqM060mFatSYg8XfEqwyuJ48eCujhObgC+nL/84G
- w2mE/zg2BVB6zwXC5bf6VJci34Dl6/CO2SIJ+oV5ocopvlW+M6nscHdmmMa/T7k04LQj5zBtcJx
- xZS0OsXQjcozN4m+yU=
-X-Google-Smtp-Source: AGHT+IHFxjOYZW7t2KCapZdVT5UhGjOpwxUYtz5l/qoRSt5Zr/OGXN2OvnrSpPRLE3wQ7yPLrwlfPyownnRhQKJMfHY=
-X-Received: by 2002:a05:690c:4b05:b0:719:3e4f:60f7 with SMTP id
- 00721157ae682-7193e4f80e6mr14267097b3.26.1752744550508; Thu, 17 Jul 2025
- 02:29:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL2K-0003jH-Jr; Thu, 17 Jul 2025 05:36:20 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucL2I-000281-9g; Thu, 17 Jul 2025 05:36:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D16B4137D00;
+ Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
+Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B32B92491F9;
+ Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Qian Wen <qian.wen@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [Stable-10.0.3 63/65] i386/cpu: Fix cpu number overflow in
+ CPUID.01H.EBX[23:16]
+Date: Thu, 17 Jul 2025 12:33:59 +0300
+Message-ID: <20250717093412.728292-24-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
+References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
-References: <20250715043524.21719-1-jasowang@redhat.com>
- <20250715043524.21719-13-jasowang@redhat.com>
-In-Reply-To: <20250715043524.21719-13-jasowang@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 17 Jul 2025 10:28:58 +0100
-X-Gm-Features: Ac12FXw8B2bFyd_lIo41UwkV22lSsTiAXgwZhLAECgZ-NXPt0riIL94yvU0wZhA
-Message-ID: <CAFEAcA9OydUfi-sz+dEJ2w4OiudM-9bo6jNk+_zacyj9bos_-A@mail.gmail.com>
-Subject: Re: [PULL V2 12/16] net: Add passt network backend
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,70 +61,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 15 Jul 2025 at 05:42, Jason Wang <jasowang@redhat.com> wrote:
->
-> From: Laurent Vivier <lvivier@redhat.com>
->
-> This commit introduces support for passt as a new network backend.
-> passt is an unprivileged, user-mode networking solution that provides
-> connectivity for virtual machines by launching an external helper process.
->
-> The implementation reuses the generic stream data handling logic. It
-> launches the passt binary using GSubprocess, passing it a file
-> descriptor from a socketpair() for communication. QEMU connects to
-> the other end of the socket pair to establish the network data stream.
->
-> The PID of the passt daemon is tracked via a temporary file to
-> ensure it is terminated when QEMU exits.
+The legacy topology enumerated by CPUID.1.EBX[23:16] is defined in SDM
+Vol2:
 
-Hi; Coverity points out some potential issues with this code:
+Bits 23-16: Maximum number of addressable IDs for logical processors in
+this physical package.
 
-> +static void net_passt_cleanup(NetClientState *nc)
-> +{
-> +    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
-> +
-> +    kill(s->pid, SIGTERM);
+When threads_per_socket > 255, it will 1) overwrite bits[31:24] which is
+apic_id, 2) bits [23:16] get truncated.
 
-CID 1612369: we don't check the return value from kill().
+Specifically, if launching the VM with -smp 256, the value written to
+EBX[23:16] is 0 because of data overflow. If the guest only supports
+legacy topology, without V2 Extended Topology enumerated by CPUID.0x1f
+or Extended Topology enumerated by CPUID.0x0b to support over 255 CPUs,
+the return of the kernel invoking cpu_smt_allowed() is false and APs
+(application processors) will fail to bring up. Then only CPU 0 is online,
+and others are offline.
 
-> +    g_remove(s->pidfile);
-> +    g_free(s->pidfile);
-> +    g_ptr_array_free(s->args, TRUE);
-> +}
-> +
-> +static ssize_t net_passt_receive(NetClientState *nc, const uint8_t *buf,
-> +                                  size_t size)
-> +{
-> +    NetStreamData *d = DO_UPCAST(NetStreamData, nc, nc);
-> +
-> +    return net_stream_data_receive(d, buf, size);
-> +}
-> +
-> +static gboolean net_passt_send(QIOChannel *ioc, GIOCondition condition,
-> +                                gpointer data)
-> +{
-> +    if (net_stream_data_send(ioc, condition, data) == G_SOURCE_REMOVE) {
-> +        NetPasstState *s = DO_UPCAST(NetPasstState, data, data);
-> +        Error *error;
+For example, launch VM via:
+qemu-system-x86_64 -M q35,accel=kvm,kernel-irqchip=split \
+    -cpu qemu64,cpuid-0xb=off -smp 256 -m 32G \
+    -drive file=guest.img,if=none,id=virtio-disk0,format=raw \
+    -device virtio-blk-pci,drive=virtio-disk0,bootindex=1 --nographic
 
-CID 1612368: you forgot to initialize error to NULL.
+The guest shows:
+    CPU(s):               256
+    On-line CPU(s) list:  0
+    Off-line CPU(s) list: 1-255
 
-> +
-> +        /* we need to restart passt */
-> +        kill(s->pid, SIGTERM);
+To avoid this issue caused by overflow, limit the max value written to
+EBX[23:16] to 255 as the HW does.
 
-Another kill() without checking for failure.
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Qian Wen <qian.wen@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250714080859.1960104-6-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit a62fef58299562aae6667b8d8552247423e886b3)
+(Mjt: fixup for 10.0.x series due to missing v10.0.0-2217-gf985a1195b
+ "i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]")
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-> +        if (net_passt_stream_start(s, &error) == -1) {
-> +            error_report_err(error);
-> +        }
-> +
-> +        return G_SOURCE_REMOVE;
-> +    }
-> +
-> +    return G_SOURCE_CONTINUE;
-> +}
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 2c9517f56d..4603b2b98b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6828,7 +6828,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         *edx = env->features[FEAT_1_EDX];
+         if (threads_per_pkg > 1) {
+-            *ebx |= threads_per_pkg << 16;
++            /* Fixup overflow: max value for bits 23-16 is 255. */
++            *ebx |= MIN(threads_per_pkg, 255) << 16;
+         }
+         if (!cpu->enable_pmu) {
+             *ecx &= ~CPUID_EXT_PDCM;
+-- 
+2.47.2
 
-thanks
--- PMM
 
