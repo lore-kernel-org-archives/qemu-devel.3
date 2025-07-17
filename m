@@ -4,41 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15548C83F1B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89936C83F22
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 09:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucLEA-0007uA-5h; Thu, 17 Jul 2025 05:48:34 -0400
+	id 1ucLGM-0003vy-9u; Thu, 17 Jul 2025 05:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1v-0002w9-Kj; Thu, 17 Jul 2025 05:35:55 -0400
+ id 1ucL0Z-0001rq-Pa; Thu, 17 Jul 2025 05:34:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucL1t-00027H-9O; Thu, 17 Jul 2025 05:35:55 -0400
+ id 1ucL0X-0001oi-Ud; Thu, 17 Jul 2025 05:34:31 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A3048137CFD;
- Thu, 17 Jul 2025 12:34:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B100137CEE;
+ Thu, 17 Jul 2025 12:34:04 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 79B682491F6;
- Thu, 17 Jul 2025 12:34:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 757872491E8;
+ Thu, 17 Jul 2025 12:34:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Cole Robinson <crobinso@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 60/65] roms: re-remove execute bit from hppa-firmware*
-Date: Thu, 17 Jul 2025 12:33:56 +0300
-Message-ID: <20250717093412.728292-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Chaney, Ben" <bchaney@akamai.com>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 46/65] migration: Don't sync volatile memory after
+ migration completes
+Date: Thu, 17 Jul 2025 12:33:42 +0300
+Message-ID: <20250717093412.728292-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250717113032@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,28 +60,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cole Robinson <crobinso@redhat.com>
+From: "Chaney, Ben" <bchaney@akamai.com>
 
-This was fixed in c9d77526bddba0803a1fa982fb59ec98057150f9 for
-9.2.0 but regressed in db34be329162cf6b06192703065e6c1010dbe3c5 in
-10.0.0
+Syncing volatile memory provides no benefit, instead it can cause
+performance issues in some cases.  Only sync memory that is marked as
+non-volatile after migration completes on destination.
 
-When the bit is present, rpmbuild complains about missing ELF build-id
-
-Signed-off-by: Cole Robinson <crobinso@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-ID: <52d0edfbb9b2f63a866f0065a721f3a95da6f8ba.1747590860.git.crobinso@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a598090ebaeb930ce33c2df0d80d87da13be8848)
+Signed-off-by: Ben Chaney <bchaney@akamai.com>
+Fixes: bd108a44bc29 (migration: ram: Switch to ram block writeback)
+Link: https://lore.kernel.org/r/1CC43F59-336F-4A12-84AD-DB89E0A17A95@akamai.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 983899eab4939dc4dff67fa4d822c5b4df7eae21)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/hppa-firmware.img b/pc-bios/hppa-firmware.img
-old mode 100755
-new mode 100644
-diff --git a/pc-bios/hppa-firmware64.img b/pc-bios/hppa-firmware64.img
-old mode 100755
-new mode 100644
+diff --git a/migration/ram.c b/migration/ram.c
+index 424df6d9f1..a0784d99b2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3598,7 +3598,9 @@ static int ram_load_cleanup(void *opaque)
+     RAMBlock *rb;
+ 
+     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+-        qemu_ram_block_writeback(rb);
++        if (memory_region_is_nonvolatile(rb->mr)) {
++            qemu_ram_block_writeback(rb);
++        }
+     }
+ 
+     xbzrle_load_cleanup();
 -- 
 2.47.2
 
