@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76B6C83F1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 03:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD117C83F1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 03:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucFa4-0003bi-2k; Wed, 16 Jul 2025 23:46:48 -0400
+	id 1ucFXv-0007Fb-SG; Wed, 16 Jul 2025 23:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ucFVp-00048T-QM; Wed, 16 Jul 2025 23:42:37 -0400
+ id 1ucFUv-0003aI-6F; Wed, 16 Jul 2025 23:41:31 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1ucFVo-0000g2-92; Wed, 16 Jul 2025 23:42:25 -0400
+ id 1ucFUt-0000ZH-D5; Wed, 16 Jul 2025 23:41:28 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 17 Jul
- 2025 11:41:01 +0800
+ 2025 11:40:59 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 17 Jul 2025 11:41:01 +0800
+ Transport; Thu, 17 Jul 2025 11:40:59 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 20/21] tests/function/aspeed: Replace manual loader with
- vbootrom for ast2700fc test
-Date: Thu, 17 Jul 2025 11:40:48 +0800
-Message-ID: <20250717034054.1903991-21-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 12/21] hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
+ and update realization order
+Date: Thu, 17 Jul 2025 11:40:40 +0800
+Message-ID: <20250717034054.1903991-13-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
 References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
@@ -66,84 +66,79 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SSP and TSP now boot in a powered-off state by default. Enabling them requires
-the PSP (Cortex-A35) to explicitly set SCU control registers at runtime. This
-behavior aligns with real hardware.
+This commit adds a MemoryRegion alias to support PSP access to
+TSP SDRAM through shared memory remapping, as defined by the default SCU
+configuration.
 
-However, the current functional test framework design does not support switching
-the active VM console after launch. For example, when the PSP is launched first
-to enable SSP via SCU, the test framework cannot dynamically attach to the SSP
-console afterward to verify its behavior.
+The TSP coprocessor exposes one DRAM alias:
+  - remap maps PSP DRAM at 0x42e000000 (32MB) to TSP SDRAM offset 0x0
 
-Due to this limitation, the test case for AST2700FC has been modified to use
-vBootROM (`ast27x0_bootrom.bin`) instead of manually loading boot images and
-firmwares via `-device loader`. The vBootROM integrates boot sequencing for
-PSP, TSP, and SSP and sets up SCU configuration as part of its flow, enabling
-more realistic full-system testing without relying on console switching.
+This region corresponds to the default SCU register value, which controls
+the mapping between PSP and coprocessor memory windows.
+
+To ensure correctness, the alias is initialized early in
+aspeed_soc_ast2700_realize(), before SCU and coprocessor realization.
+This allows TSP to reference the alias region during its SDRAM setup.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- .../test_aarch64_aspeed_ast2700fc.py          | 47 +------------------
- 1 file changed, 1 insertion(+), 46 deletions(-)
+ include/hw/arm/aspeed_soc.h | 1 +
+ hw/arm/aspeed_ast27x0-tsp.c | 2 ++
+ hw/arm/aspeed_ast27x0.c     | 9 +++++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/tests/functional/test_aarch64_aspeed_ast2700fc.py b/tests/functional/test_aarch64_aspeed_ast2700fc.py
-index b85370e182..d7d50eda4d 100755
---- a/tests/functional/test_aarch64_aspeed_ast2700fc.py
-+++ b/tests/functional/test_aarch64_aspeed_ast2700fc.py
-@@ -72,52 +72,7 @@ def do_ast2700fc_tsp_test(self):
-                                           '[72c02000] 06010103')
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index d628a189c1..83e07582d2 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -153,6 +153,7 @@ struct Aspeed27x0TSPSoCState {
+     MemoryRegion memory;
+     MemoryRegion sram_mr_alias;
+     MemoryRegion scu_mr_alias;
++    MemoryRegion sdram_remap_alias;
  
-     def start_ast2700fc_test(self, name):
--        ca35_core = 4
--        uboot_size = os.path.getsize(self.scratch_file(name,
--                                                       'u-boot-nodtb.bin'))
--        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
--
--        load_images_list = [
--            {
--                'addr': '0x400000000',
--                'file': self.scratch_file(name,
--                                          'u-boot-nodtb.bin')
--            },
--            {
--                'addr': str(uboot_dtb_load_addr),
--                'file': self.scratch_file(name, 'u-boot.dtb')
--            },
--            {
--                'addr': '0x430000000',
--                'file': self.scratch_file(name, 'bl31.bin')
--            },
--            {
--                'addr': '0x430080000',
--                'file': self.scratch_file(name, 'optee',
--                                          'tee-raw.bin')
--            }
--        ]
--
--        for load_image in load_images_list:
--            addr = load_image['addr']
--            file = load_image['file']
--            self.vm.add_args('-device',
--                             f'loader,force-raw=on,addr={addr},file={file}')
--
--        for i in range(ca35_core):
--            self.vm.add_args('-device',
--                             f'loader,addr=0x430000000,cpu-num={i}')
--
--        load_elf_list = {
--            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
--            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
--        }
--
--        for cpu_num, key in enumerate(load_elf_list, start=4):
--            file = load_elf_list[key]
--            self.vm.add_args('-device',
--                             f'loader,file={file},cpu-num={cpu_num}')
--
-+        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-         self.do_test_aarch64_aspeed_sdk_start(
-                 self.scratch_file(name, 'image-bmc'))
- 
+     ARMv7MState armv7m;
+ };
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index 6b035e2612..4c3b18695e 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -187,6 +187,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+                                 AST2700_TSP_SDRAM_SIZE, errp)) {
+         return;
+     }
++    /* SDRAM remap alias used by PSP to access TSP SDRAM */
++    memory_region_add_subregion(&s->dram_container, 0, &a->sdram_remap_alias);
+     memory_region_add_subregion(s->memory,
+                                 sc->memmap[ASPEED_DEV_SDRAM],
+                                 &s->dram_container);
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index be130db5e2..0f988eaa4d 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -812,6 +812,12 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+      *   - remap2 maps PSP DRAM at 0x42c000000 (size: 32MB) to SSP SDRAM
+      *     offset 0x0
+      *
++     * The TSP coprocessor uses one memory alias (remap) to access a shared
++     * region in the PSP DRAM:
++     *
++     *   - remap maps PSP DRAM at 0x42e000000 (size: 32MB) to TSP SDRAM
++     *     offset 0x0
++     *
+      * These mappings correspond to the default values of the SCU registers:
+      *
+      * This configuration enables shared memory communication between the PSP
+@@ -824,6 +830,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+         memory_region_init_alias(&a->ssp.sdram_remap2_alias, OBJECT(a),
+                                  "ssp.sdram.remap2", s->memory,
+                                  0x42c000000ULL, 32 * MiB);
++        memory_region_init_alias(&a->tsp.sdram_remap_alias, OBJECT(a),
++                                 "tsp.sdram.remap", s->memory,
++                                 0x42e000000, 32 * MiB);
+     }
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+         return;
 -- 
 2.43.0
 
