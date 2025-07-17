@@ -4,74 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51B9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 18:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F44C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Jul 2025 18:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucTf9-0005vG-HX; Thu, 17 Jul 2025 14:49:00 -0400
+	id 1ucThf-00081A-AW; Thu, 17 Jul 2025 14:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucQs7-0005lC-Jp
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:50:13 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucR8d-0002tk-Gr
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 12:07:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ucQs3-0008N7-V2
- for qemu-devel@nongnu.org; Thu, 17 Jul 2025 11:50:10 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucR8b-0002Fx-P1
+ for qemu-devel@nongnu.org; Thu, 17 Jul 2025 12:07:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752767406;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1752768432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u5H+dIwi42KvMOnLtP+PfzlFzqA05+K9pKVyEGotqVg=;
- b=EWSYSuAYqIzL1x5Fw4WS4fULcTxW3PrvRjy7ahdKTscoYBK3EyA4WZyZ5Mjq2coKI9JLLq
- NzchB09jqAqUV+LxJgEwy6XZPznQPLIoSkAvZiwz4UagPqeiyvvnmNGYwhYzOJQO2BXxSM
- 5Mwk5HJ90o1+OVw4HurSpeMSxmd0TGk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-HfL7i-cCNaqZo-bSzlSt9Q-1; Thu,
- 17 Jul 2025 11:49:59 -0400
-X-MC-Unique: HfL7i-cCNaqZo-bSzlSt9Q-1
-X-Mimecast-MFC-AGG-ID: HfL7i-cCNaqZo-bSzlSt9Q_1752767398
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E68C19560B4
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 15:49:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.171])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72565196664F; Thu, 17 Jul 2025 15:49:56 +0000 (UTC)
-Date: Thu, 17 Jul 2025 16:49:53 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Andrea Bolognani <abologna@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] watchdog: generic name for i6300esb
-Message-ID: <aHkboV03D6lSzpgK@redhat.com>
-References: <20250610143259.1056400-1-cohuck@redhat.com>
- <20250610143259.1056400-3-cohuck@redhat.com>
- <aEhnbN1pSYgdi4EZ@redhat.com>
- <CABJz62O3FKYfUOyCLMotgYgckWV1frSUb=MtTW2J4fDTEg_==g@mail.gmail.com>
- <877c09792e.fsf@redhat.com> <aHZ7rpYFMWai-7RL@redhat.com>
- <CABJz62P+p_uYiatXroauLkG2AH2TnjS8drbHxLPsgY+=QSB8Lw@mail.gmail.com>
- <aHaC6_2vdXJqdxLo@redhat.com> <874iva7so9.fsf@redhat.com>
+ bh=PLrQp95rvm2mOaUAqrOiIgoBJpm3/ZUBPdW5pZC03uU=;
+ b=NCtF0OlOIgk9N11OB97WUUIuo1MBFh529wE+NoatHbHw3w2Yc1+7ELFVZnTKSJsTycrAa2
+ gyd+uH1mdij5q+kv63yrNyf+YiYA7uBW6yCS12wlHpxcqyLuXjvL5OOy0+/mwdonY/CJgT
+ 7cNKtEMegMKULAgLqZz3CsiAiU4rsDU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-uI2ASmdsPtiGg8u6t1k6HA-1; Thu, 17 Jul 2025 12:07:11 -0400
+X-MC-Unique: uI2ASmdsPtiGg8u6t1k6HA-1
+X-Mimecast-MFC-AGG-ID: uI2ASmdsPtiGg8u6t1k6HA_1752768430
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-453817323afso7991155e9.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 09:07:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752768428; x=1753373228;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PLrQp95rvm2mOaUAqrOiIgoBJpm3/ZUBPdW5pZC03uU=;
+ b=vRG+bh68wZfGp08CxQHKvYJ7CWnOIi40vy3chlicXDcp7p4axrJWeR6TcKoIb7nPuH
+ BNZmqjW6OI5lmIqA9qveYIBWrG3khNU9RdMqex1flFIQdqG4h2qXMXodScUPE099CXUs
+ mxIu/VbIDvaFZFltJtFsO9bQGmuID35iKFZR+19W8EXgdXAabu6LPNlI8uOU3JODiFJU
+ 7zQWddt8rZGB1BOyBeDwGvUSa+6zT82FjeYK3M8jf9+qlst5BZpAcxjJAdoTMLF61Lql
+ U4BS9oBEmv8Hrb6NTi3xTLK98bgP+OvbQUhpxc+tvrqFDVMysYuLSHAkPe668gQY5F1W
+ k/JA==
+X-Gm-Message-State: AOJu0YzE0gDalDWKCIidQl90A8goehjKP1DXf/A0cG4foQKWA7TT/0Dl
+ ZpVcPyO+Q8ps62JTIaPO+8qYdFisWPeDvjipfPf33mbB1IDsgW4TwsDoUg2md150ZPxrRcuaF1e
+ ldEItI/9HsJsGnId1cqoCEANM0FRwOWYFq5I26GRFP4iYPNeVudT1hIr++F+Cooj8KG/3JpCtgy
+ b6PdarBczBJvS2HEU+DvsU59qtEDcFL17EhswPKUdn
+X-Gm-Gg: ASbGncsSy/Qntd1q28xJhFLY1pol3MB9ntpUzKbuIVOcBkkTLgMmph8yINh70JyrCvs
+ cYixQVHohiapDe6WgMcz4F3x8VMOOISpyBt8asfzseSEIJ2W/oJ3aV7Si2BRkGWRHRRJLrBCgD4
+ d/xcjlqlbJVHbA0GpbMya9tXRctlTwzcMLDdGr85H0kyPcj3Clfg4JGMT0GSDM2d4lSetmBOK5p
+ JvH6c11UKcowtpTYRCN7y9VXu40HL72anWl17onIojjrXyKakwDAMezApNW5caEnaJtO6RILrOn
+ 6y+c7+cSU+zxYtOvfR7FkF80FH5TZWG0xZlQJ44MiCM=
+X-Received: by 2002:a05:600c:3b29:b0:453:7713:546a with SMTP id
+ 5b1f17b1804b1-4562f164b1bmr80081325e9.14.1752768423699; 
+ Thu, 17 Jul 2025 09:07:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdGQzMTN+ad5BHVXV7gltb3idOqFI05xWmY6qv2AqFAOMK/pm8K/0ir4Kl8p5iFOJ3m3KP+A==
+X-Received: by 2002:a05:600c:3b29:b0:453:7713:546a with SMTP id
+ 5b1f17b1804b1-4562f164b1bmr80080645e9.14.1752768423116; 
+ Thu, 17 Jul 2025 09:07:03 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45634f4c848sm27537025e9.4.2025.07.17.09.07.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Jul 2025 09:07:02 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Chartre <alexandre.chartre@oracle.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 1/6] target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
+Date: Thu, 17 Jul 2025 18:06:55 +0200
+Message-ID: <20250717160700.357384-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250717160700.357384-1-pbonzini@redhat.com>
+References: <20250717160700.357384-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <874iva7so9.fsf@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,105 +108,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 05:17:42PM +0200, Cornelia Huck wrote:
-> On Tue, Jul 15 2025, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > On Tue, Jul 15, 2025 at 09:16:24AM -0700, Andrea Bolognani wrote:
-> >> On Tue, Jul 15, 2025 at 05:02:54PM +0100, Daniel P. Berrangé wrote:
-> >> > On Tue, Jul 15, 2025 at 05:44:25PM +0200, Cornelia Huck wrote:
-> >> > > Hmm. So
-> >> > > - request a new PCI id (probably in the PCI_DEVICE_ID_REDHAT_* space)
-> >> > > - restructure to have two devices base off the same core functionality
-> >> > > - teach guest operating systems about the new device
-> >> > > - teach management software like libvirt about the new device
-> >> > >
-> >> > > Not sure how fast we can get an ID (or even how to go about it.) The
-> >> > > second step should be reasonably easy. The third step is the most
-> >> > > complex one, but at least teaching Linux should hopefully be easy
-> >> > > enough, and existing guest operating systems could continue to use the
-> >> > > existing device. The last step is probably not that bad.
-> >> > >
-> >> > > I can start down that path, if we have some consensus that this is the
-> >> > > right way to handle this.
-> >> > >
-> >> > > I'd still argue that patch 1 should be applied regardless :)
-> >> >
-> >> > This sounds like a hell of alot of busy work to fix a problem that, IIUC,
-> >> > does not actually exist from a functional POV - it is merely a perception
-> >> > issue that people might be put off by the "Intel 6300ESB" names.
-> >> >
-> >> > IMHO a better use of time is to expand documentation to clarify this is
-> >> > just fine for all PCI architectures, and change nothing in either QEMU
-> >> > or guest kernels.
-> >> 
-> >> Agreed that it's not the most high-reward endeavor, but IIRC users
-> >> were getting genuinely confused and annoyed by the string "Intel"
-> >> showing up in their aarch64 guests.
-> >
-> > So be it, that's far from the only wierd thing in virt.
-> 
-> So I'm wondering what the general sentiment is towards having an "Intel"
-> device show up in your non-Intel guest. This device is generic enough to
-> be included in PCI_DEVICES, and should be usable on any of those
-> platforms.
+KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
+cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
+MSR and it makes no sense to emulate it on AMD.
 
-That is not all that different from an "Intel" device showing up
-in my "AMD" guest, or that my "modern" virt guest is exposing an
-Intel machine board from 2005, or that what we advertize as a
-"q35" machine is actually a "p35" machine, or many other wierd
-virt things.
+As a consequence, VMs created on AMD with qemu -cpu host and using
+KVM will advertise the ARCH_CAPABILITIES feature and provide the
+IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
+as the guest OS might not expect this MSR to exist on such cpus (the
+AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
+are not defined on the AMD architecture).
 
-> Linux treats this as a generic PCI driver as well. Do we know what
-> Windows on non-x86 expects? The *BSDs? Others?
+A fix was proposed in KVM code, however KVM maintainers don't want to
+change this behavior that exists for 6+ years and suggest changes to be
+done in QEMU instead.  Therefore, hide the bit from "-cpu host":
+migration of -cpu host guests is only possible between identical host
+kernel and QEMU versions, therefore this is not a problematic breakage.
 
-I'm not sure offhand.
+If a future AMD machine does include the MSR, that would re-expose the
+Windows guest bug; but it would not be KVM/QEMU's problem at that
+point, as we'd be following a genuine physical CPU impl.
 
-> >> You can point them to documentation over and over again, or you can
-> >> work to prevent the confusion/annoyance from showing up in the first
-> >> place. Which of the two approaches is a better use of anyone's time
-> >> is up for debate.
-> >> 
-> >> I for one am grateful that someone put the time in all those years
-> >> ago and, as a result, PCI and USB controllers don't suffer from the
-> >> problem today. Ultimately it's up to Connie though.
-> >
-> > The PCI/USB controller situation is not the same tradeoff though.
-> > Those guest kernel drivers will identify and attach to these two
-> > controllers regardless of their PCI vendor/product, via the PCI
-> > class property. In that case changing the PCI ID and other device
-> > metadata in QEMU is cheap as it has no negative impact on guest OS
-> > driver compibility.
-> >
-> > In the case of 6300ESB though the guest driver is tied directly to
-> > the currently used PCI device product/vendor ID.
-> >
-> > If we change this then we have actually created new functional
-> > problems with guest/QEMU compatibility, in order to placate a
-> > non-functional problem. That is not a good thing.
-> 
-> I don't think the suggestion was to disable the existing driver on
-> non-Intel setups, but to add a more generic one. Still, more work to get
-> this actually propagated into guests than doing the change in
-> QEMU. Before I start down that route, I'd like to know whether the issue
-> is actually big enough to make investing time there worth it.
+Reported-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/kvm/kvm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-If we're a mmgmt app provisioning a guest, we have to choose what
-watchdog to create - either the old one which works everywhere
-that currently has a driver, or the new one will will work in
-far fewer places. We'll have to wire up guest OS info about
-watchdogs into osinfo, and then wire up all the mgmt apps to
-query this and take action based off it. All possible, but it
-still feels like a huge waste of time to me.
-
-With regards,
-Daniel
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index e8c8be09bae..369626f8c8d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -503,8 +503,12 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+          * Linux v4.17-v4.20 incorrectly return ARCH_CAPABILITIES on SVM hosts.
+          * We can detect the bug by checking if MSR_IA32_ARCH_CAPABILITIES is
+          * returned by KVM_GET_MSR_INDEX_LIST.
++         *
++         * But also, because Windows does not like ARCH_CAPABILITIES on AMD
++         * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
++         * KVM sets up.
+          */
+-        if (!has_msr_arch_capabs) {
++        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
+             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
+         }
+     } else if (function == 7 && index == 1 && reg == R_EAX) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.50.1
 
 
