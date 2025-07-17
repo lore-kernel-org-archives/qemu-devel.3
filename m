@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4486DC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7C0C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucgJY-00084A-DP; Fri, 18 Jul 2025 04:19:32 -0400
+	id 1ucgJY-00082i-57; Fri, 18 Jul 2025 04:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1ucgJP-0007uz-GK
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:19:23 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1ucgJT-00080L-N2
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:19:27 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1ucgJI-0001Wi-ID
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:19:20 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20250718081912epoutp037c6d28e046929076f1ff79a99069596f~TSqUJs4O-0973009730epoutp03d
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 08:19:12 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20250718081912epoutp037c6d28e046929076f1ff79a99069596f~TSqUJs4O-0973009730epoutp03d
+ id 1ucgJQ-0001Xs-Nq
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:19:27 -0400
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250718081918epoutp016c88d6a94be698780273a8416b888938~TSqZZpJbJ2589525895epoutp019
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 08:19:18 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250718081918epoutp016c88d6a94be698780273a8416b888938~TSqZZpJbJ2589525895epoutp019
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1752826752;
- bh=q8mgLEDBBtLwWuVqQ1Q1XlIqR7uiPwGux7yAlfkaMvg=;
+ s=mail20170921; t=1752826758;
+ bh=Gkbrm8sGB+prOA674568G6OepPeer9uYT3iqQ6wN8tY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FJs0AFf1l9UESrP1Ru4cuhi0k6VDxxBMlSUTz/ZFY3edvRp1sFzf1/Dt1T1yoaloi
- Bx+8QUMNCi21jyE2mDGbLpwCaGO/0MsOcWVI53KAPBb8OxKZuIxukcQZPyPp2Hy1Jj
- rEfvz9DFWv8z1GVtBo0zdm/9p04/OYctIHQ2WoAE=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
- 20250718081912epcas5p447d56262b0369463902efdd5a861fd39~TSqTmcOAV2466224662epcas5p4S;
- Fri, 18 Jul 2025 08:19:12 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.86]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4bk2kl2Yn0z2SSKq; Fri, 18 Jul
- 2025 08:19:11 +0000 (GMT)
+ b=Ya53r+CMrLybkIkEUvBCpaDmy6yE2ROzTBWFe+hWZ/Xs23Aff5KYABskF7xeNzArI
+ o8n3B0ZB0mykPWAINPaX1CCl428z8q3AYqn2s4OG2E9KnqI+l6vcMSfEpKP0pON75L
+ ds57D2DRyFlklEkHM+AQyDGAUNNal7Bp8sjGBjM8=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250718081917epcas5p28734c00465365253f9ff7cf3593a5194~TSqY5vU761086610866epcas5p2A;
+ Fri, 18 Jul 2025 08:19:17 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.91]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4bk2ks0b33z3hhT3; Fri, 18 Jul
+ 2025 08:19:17 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20250717114157epcas5p230c17abfb2d0e9f83258b90187eaf9b1~TByDsNm2P2755427554epcas5p2W;
- Thu, 17 Jul 2025 11:41:57 +0000 (GMT)
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250717114200epcas5p1324853eb5e30cbcf38b6bfb4defe597b~TByGcLGB23025730257epcas5p1w;
+ Thu, 17 Jul 2025 11:42:00 +0000 (GMT)
 Received: from test-X570-AORUS-ULTRA.samsungds.net (unknown [107.99.41.42])
  by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20250717114157epsmtip2deed623bbc5be5dad1990a30cc6cfcb4~TByC4u1oO1310113101epsmtip2f;
- Thu, 17 Jul 2025 11:41:56 +0000 (GMT)
+ 20250717114159epsmtip2b697ba2b971f3087466414db218f318c~TByFiwJna1309013090epsmtip2Z;
+ Thu, 17 Jul 2025 11:41:59 +0000 (GMT)
 From: Ayush Mishra <ayush.m55@samsung.com>
 To: qemu-devel@nongnu.org
 Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Ayush Mishra
  <ayush.m55@samsung.com>
-Subject: [PATCH 1/2] hw/nvme: Adding support for LID 0x00- Supported Log Pages
-Date: Thu, 17 Jul 2025 16:50:28 +0530
-Message-ID: <20250717112029.28242-2-ayush.m55@samsung.com>
+Subject: [PATCH 2/2] hw/nvme: Adding Support for Feature Identifiers
+ Supported and Effects (Log Identifier 12h)
+Date: Thu, 17 Jul 2025 16:50:29 +0530
+Message-ID: <20250717112029.28242-3-ayush.m55@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250717112029.28242-1-ayush.m55@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250717114157epcas5p230c17abfb2d0e9f83258b90187eaf9b1
+X-CMS-MailID: 20250717114200epcas5p1324853eb5e30cbcf38b6bfb4defe597b
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250717114157epcas5p230c17abfb2d0e9f83258b90187eaf9b1
+X-CMS-RootMailID: 20250717114200epcas5p1324853eb5e30cbcf38b6bfb4defe597b
 References: <20250717112029.28242-1-ayush.m55@samsung.com>
- <CGME20250717114157epcas5p230c17abfb2d0e9f83258b90187eaf9b1@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=ayush.m55@samsung.com; helo=mailout3.samsung.com
+ <CGME20250717114200epcas5p1324853eb5e30cbcf38b6bfb4defe597b@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=ayush.m55@samsung.com; helo=mailout1.samsung.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -96,117 +97,151 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
 ---
- hw/nvme/ctrl.c       | 32 ++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |  2 ++
- include/block/nvme.h | 11 +++++++++++
- 3 files changed, 45 insertions(+)
+ hw/nvme/ctrl.c       | 63 ++++++++++++++++++++++++++++++++++++++++++++
+ include/block/nvme.h | 21 +++++++++++++++
+ 2 files changed, 84 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e62c6a3588..93c950b5b2 100644
+index 93c950b5b2..5ef2282fd2 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -5105,6 +5105,22 @@ static uint16_t nvme_fw_log_info(NvmeCtrl *n, uint32_t buf_len, uint64_t off,
-     return nvme_c2h(n, (uint8_t *) &fw_log + off, trans_len, req);
+@@ -252,6 +252,24 @@ static const bool nvme_feature_support[NVME_FID_MAX] = {
+     [NVME_FDP_EVENTS]               = true,
+ };
+ 
++static const uint32_t nvme_fid_supp_effects[NVME_FID_MAX] = {
++    [NVME_ARBITRATION]             = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_POWER_MANAGEMENT]        = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_TEMPERATURE_THRESHOLD]   = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_ERROR_RECOVERY]          = NVME_EFFECTS_CSUPP | NVME_NMSP_SCOPE,
++    [NVME_VOLATILE_WRITE_CACHE]    = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_NUMBER_OF_QUEUES]        = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_INTERRUPT_COALESCING]    = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_INTERRUPT_VECTOR_CONF]   = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_WRITE_ATOMICITY]         = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_ASYNCHRONOUS_EVENT_CONF] = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_TIMESTAMP]               = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_HOST_BEHAVIOR_SUPPORT]   = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_COMMAND_SET_PROFILE]     = NVME_EFFECTS_CSUPP | NVME_CTRL_SCOPE,
++    [NVME_FDP_MODE]                = NVME_EFFECTS_CSUPP | NVME_ENDURANCE_SCOPE,
++    [NVME_FDP_EVENTS]              = NVME_EFFECTS_CSUPP,
++};
++
+ static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
+     [NVME_TEMPERATURE_THRESHOLD]    = NVME_FEAT_CAP_CHANGE,
+     [NVME_ERROR_RECOVERY]           = NVME_FEAT_CAP_CHANGE | NVME_FEAT_CAP_NS,
+@@ -5086,6 +5104,47 @@ static uint16_t nvme_endgrp_info(NvmeCtrl *n,  uint8_t rae, uint32_t buf_len,
+     return nvme_c2h(n, (uint8_t *)&info + off, buf_len, req);
  }
  
-+static uint16_t nvme_supp_log_page(NvmeCtrl *n, uint8_t rae, uint32_t buf_len,
-+    uint64_t off, NvmeRequest *req)
++static uint16_t nvme_log_fid_supp_effects_log(NvmeCtrl *n, uint8_t csi,
++                uint32_t buf_len, uint64_t off, NvmeRequest *req)
 +{
-+    uint32_t supplogpagesize = sizeof(n->supplogpage);
++    NvmeFidSuppLog log = {};
++    const uint32_t *supp_fid = NULL;
 +    uint32_t trans_len;
++    bool ot = le32_to_cpu(req->cmd.cdw14) >> 23;
 +
-+    if (off >= supplogpagesize) {
-+        trace_pci_nvme_err_invalid_log_page_offset(off, supplogpagesize);
++    if (off >= sizeof(log) || (ot == 1 && (off * 4 >= sizeof(log)))) {
++        trace_pci_nvme_err_invalid_log_page_offset(off, sizeof(log));
 +        return NVME_INVALID_FIELD | NVME_DNR;
 +    }
 +
-+    trans_len = MIN(supplogpagesize - off, buf_len);
++    switch (NVME_CC_CSS(ldl_le_p(&n->bar.cc))) {
++    case NVME_CC_CSS_NVM:
++        supp_fid = nvme_fid_supp_effects;
++        /* fall through */
++    case NVME_CC_CSS_ADMIN_ONLY:
++        break;
++    case NVME_CC_CSS_ALL:
++        switch (csi) {
++        case NVME_CSI_NVM:
++            supp_fid = nvme_fid_supp_effects;
++            break;
++        case NVME_CSI_ZONED:
++            break;
++        }
++    }
 +
-+    return nvme_c2h(n, ((uint8_t *)n->supplogpage) + off, trans_len, req);
++    if (ot == 1) {
++        off *= 4;
++    }
++
++    if (supp_fid) {
++        memcpy(log.fis, supp_fid, sizeof(log.fis));
++    }
++
++    trans_len = MIN(sizeof(log) - off, buf_len);
++
++    return nvme_c2h(n, ((uint8_t *)&log) + off, trans_len, req);
 +}
-+
- static uint16_t nvme_error_info(NvmeCtrl *n, uint8_t rae, uint32_t buf_len,
-                                 uint64_t off, NvmeRequest *req)
- {
-@@ -5474,6 +5490,8 @@ static uint16_t nvme_get_log(NvmeCtrl *n, NvmeRequest *req)
-     }
  
-     switch (lid) {
-+    case NVME_SUPP_LOG_PAGE:
-+        return nvme_supp_log_page(n, rae, len, off, req);
-     case NVME_LOG_ERROR_INFO:
-         return nvme_error_info(n, rae, len, off, req);
-     case NVME_LOG_SMART_INFO:
-@@ -8904,6 +8922,20 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     if (pci_is_vf(pci_dev) && !sctrl->scs) {
-         stl_le_p(&n->bar.csts, NVME_CSTS_FAILED);
-     }
-+
-+    n->supplogpage[NVME_SUPP_LOG_PAGE].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_ERROR_INFO].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_SMART_INFO].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_FW_SLOT_INFO].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_CHANGED_NSLIST].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_CMD_EFFECTS].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_ENDGRP].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_FDP_CONFS].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_FDP_RUH_USAGE].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_FDP_STATS].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_FDP_EVENTS].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_VENDOR_START].lsupp_ios = NVME_LID_SUPP;
-+    n->supplogpage[NVME_LOG_VENDOR_END].lsupp_ios = NVME_LID_SUPP;
- }
- 
- static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 6f782ba188..660420c95a 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -26,6 +26,7 @@
- 
- #define NVME_MAX_CONTROLLERS 256
- #define NVME_MAX_NAMESPACES  256
-+#define NVME_MAX_LOG_PAGES  256
- #define NVME_EUI64_DEFAULT ((uint64_t)0x5254000000000000)
- #define NVME_FDP_MAX_EVENTS 63
- #define NVME_FDP_MAXPIDS 128
-@@ -625,6 +626,7 @@ typedef struct NvmeCtrl {
-     NvmeSQueue      admin_sq;
-     NvmeCQueue      admin_cq;
-     NvmeIdCtrl      id_ctrl;
-+    NvmeSuppLogpage supplogpage[NVME_MAX_LOG_PAGES];
- 
-     struct {
-         struct {
+ static uint16_t nvme_fw_log_info(NvmeCtrl *n, uint32_t buf_len, uint64_t off,
+                                  NvmeRequest *req)
+@@ -5506,6 +5565,8 @@ static uint16_t nvme_get_log(NvmeCtrl *n, NvmeRequest *req)
+         return nvme_cmd_effects(n, csi, len, off, req);
+     case NVME_LOG_ENDGRP:
+         return nvme_endgrp_info(n, rae, len, off, req);
++    case NVME_LOG_FID_SUPP_EFFECTS:
++        return nvme_log_fid_supp_effects_log(n, csi, len, off, req);
+     case NVME_LOG_FDP_CONFS:
+         return nvme_fdp_confs(n, lspi, len, off, req);
+     case NVME_LOG_FDP_RUH_USAGE:
+@@ -8930,6 +8991,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     n->supplogpage[NVME_LOG_CHANGED_NSLIST].lsupp_ios = NVME_LID_SUPP;
+     n->supplogpage[NVME_LOG_CMD_EFFECTS].lsupp_ios = NVME_LID_SUPP;
+     n->supplogpage[NVME_LOG_ENDGRP].lsupp_ios = NVME_LID_SUPP;
++    n->supplogpage[NVME_LOG_FID_SUPP_EFFECTS].lsupp_ios = NVME_LID_SUPP
++                                                        | NVME_INDEX_OFF_SUPP;
+     n->supplogpage[NVME_LOG_FDP_CONFS].lsupp_ios = NVME_LID_SUPP;
+     n->supplogpage[NVME_LOG_FDP_RUH_USAGE].lsupp_ios = NVME_LID_SUPP;
+     n->supplogpage[NVME_LOG_FDP_STATS].lsupp_ios = NVME_LID_SUPP;
 diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 358e516e38..c38422b38d 100644
+index c38422b38d..0ba69477a0 100644
 --- a/include/block/nvme.h
 +++ b/include/block/nvme.h
-@@ -1079,6 +1079,7 @@ enum {
- };
+@@ -1068,6 +1068,10 @@ typedef struct NvmeEffectsLog {
+     uint8_t     resv[2048];
+ } NvmeEffectsLog;
  
- enum NvmeLogIdentifier {
-+    NVME_SUPP_LOG_PAGE                  = 0x00,
-     NVME_LOG_ERROR_INFO                 = 0x01,
-     NVME_LOG_SMART_INFO                 = 0x02,
-     NVME_LOG_FW_SLOT_INFO               = 0x03,
-@@ -1705,6 +1706,16 @@ typedef enum NvmeZoneState {
-     NVME_ZONE_STATE_OFFLINE          = 0x0f,
- } NvmeZoneState;
++typedef struct NvmeFidSuppLog {
++    uint32_t    fis[256];
++} NvmeFidSuppLog;
++
+ enum {
+     NVME_CMD_EFF_CSUPP      = 1 << 0,
+     NVME_CMD_EFF_LBCC       = 1 << 1,
+@@ -1086,6 +1090,7 @@ enum NvmeLogIdentifier {
+     NVME_LOG_CHANGED_NSLIST             = 0x04,
+     NVME_LOG_CMD_EFFECTS                = 0x05,
+     NVME_LOG_ENDGRP                     = 0x09,
++    NVME_LOG_FID_SUPP_EFFECTS           = 0x12,
+     NVME_LOG_FDP_CONFS                  = 0x20,
+     NVME_LOG_FDP_RUH_USAGE              = 0x21,
+     NVME_LOG_FDP_STATS                  = 0x22,
+@@ -1364,6 +1369,22 @@ typedef enum NvmeFeatureCap {
+     NVME_FEAT_CAP_CHANGE    = 1 << 2,
+ } NvmeFeatureCap;
  
-+enum {
-+    NVME_LID_SUPP        = 1 << 0,
-+    NVME_INDEX_OFF_SUPP  = 1 << 1,
-+};
++typedef enum NvmeFidSuppEffects {
++    NVME_EFFECTS_CSUPP      = 1 <<  0,
++    NVME_EFFECTS_UDCC       = 1 <<  1,
++    NVME_EFFECTS_NCC        = 1 <<  2,
++    NVME_EFFECTS_NIC        = 1 <<  3,
++    NVME_EFFECTS_CCC        = 1 <<  4,
++    NVME_EFFECTS_UUID_SEL   = 1 << 19,
++    NVME_NMSP_SCOPE         = 1 << 20,
++    NVME_CTRL_SCOPE         = 1 << 21,
++    NVME_NVM_SET_SCOPE      = 1 << 22,
++    NVME_ENDURANCE_SCOPE    = 1 << 23,
++    NVME_DOMAIN_SCOPE       = 1 << 24,
++    NVME_SUBSYSTEM_SCOPE    = 1 << 25,
++    NVME_CTRL_DATA_QUEUE    = 1 << 26,
++} NvmeFidSuppEffects;
 +
-+typedef struct QEMU_PACKED NvmeSuppLogpage {
-+    uint16_t lsupp_ios;
-+    uint16_t lidspec;
-+} NvmeSuppLogpage;
-+
- typedef struct QEMU_PACKED NvmePriCtrlCap {
-     uint16_t    cntlid;
-     uint16_t    portid;
+ typedef enum NvmeGetFeatureSelect {
+     NVME_GETFEAT_SELECT_CURRENT = 0x0,
+     NVME_GETFEAT_SELECT_DEFAULT = 0x1,
 -- 
 2.43.0
 
