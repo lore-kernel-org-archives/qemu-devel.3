@@ -4,78 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14E7C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635B2C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 09:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucgrW-0002eA-KC; Fri, 18 Jul 2025 04:54:38 -0400
+	id 1uchEG-0006AS-Uo; Fri, 18 Jul 2025 05:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ucgr5-0002Fs-5i
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:54:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ucgr3-0001Jm-8w
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:54:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752828848;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=R3eaiMgWp97MVuul4ARrtwpieGOua2/uili0FeBNTgA=;
- b=FAf6H9iCbH3T/8XFdyLcxkpiYgsOut7LOC0FNIXSiaLDDSwzuRhAMKFauOIfq8h6NJMszD
- hOFBNx3F0Z5GjnyNNxeTcYvN1FbDSR7kW1qrXjIhqCkYzRIBKNYp+b0KlPEP9tMviEbvga
- bV2XSHDLrHYfr95J7T2AEzkmr8leQXI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-P4Kh3o9wODGbtt3GGag9uw-1; Fri,
- 18 Jul 2025 04:54:05 -0400
-X-MC-Unique: P4Kh3o9wODGbtt3GGag9uw-1
-X-Mimecast-MFC-AGG-ID: P4Kh3o9wODGbtt3GGag9uw_1752828844
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 599081800294; Fri, 18 Jul 2025 08:54:04 +0000 (UTC)
-Received: from gerbillo.redhat.com (unknown [10.44.33.19])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB1C71956089; Fri, 18 Jul 2025 08:53:59 +0000 (UTC)
-From: Paolo Abeni <pabeni@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH RFC v3 10/13] vhost-net: implement extended features support
-Date: Fri, 18 Jul 2025 10:52:36 +0200
-Message-ID: <083cd54b7ee4909fdedbf5c9128e60563469057e.1752828082.git.pabeni@redhat.com>
-In-Reply-To: <cover.1752828082.git.pabeni@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uch9t-0002N5-BC
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 05:13:38 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uch9r-0000M9-9w
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 05:13:37 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4563cfac2d2so3028755e9.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 02:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752830013; x=1753434813; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=OzsBvEnuBuem8f8dBJF+l6tBY8V6RE8gWcsguX/ipV4=;
+ b=DoTpzlej4PmSpjZd3LhO0q1I/DAgW+3ySoP6HoHCUHA1nOVkBwgWeDQ8sqzBPUsftz
+ U0DUk+8CMEvDhK7WhpjT1g6AVMm4BIGHbmo7syw7Y4borupDvjc8DAl8+xgVpEWRZ7VB
+ 83OfWBk7B2szHf4xaqzbVuAxxMcu+fpSc9edAtzss+kLSXDxa27C83e5TIlDyDtySM6B
+ Fm4SR7fx3IF78ATP/TJVFsyFIqzVSncRInbvzoh/1TjL298uPIiqNTj3iGdSN00h+mL/
+ Pe/pj8rRZeDgO2pAOeB0lvDXYKb1ChkxvSZIVgknMk3IznG2aIwfq3wU2CmvBL37/K0D
+ RNYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752830013; x=1753434813;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OzsBvEnuBuem8f8dBJF+l6tBY8V6RE8gWcsguX/ipV4=;
+ b=WTUmqC+O5/UhlrBatroG/cv+y2MMiQrI8P0xojzMTbNjUOZvhFLsLjVTZUdPNvZ7js
+ jYxU7kfjkQiAeIOpRiCOZHAbPrastF7he4k+ZSjavZijUvYk5R0ieCL4PiJlvaT9LY0i
+ sOU/EJp2g8kF/6/2cJJhZ5jjo8r2vv58J6c32h5lkp6ZSUf3LvRxNTbKP+jcfKgeU08V
+ OPiO4r1Sya6Q99gFzKNroNdB/ZFYvM3jEfiUTlMLGat3eglFAEPeT1hHCtbLwdo9mKYc
+ BGxJiQYZLgBGB3OaICNrTLUicVsC95L6RQSJ1N2CNHk8cjC1hl+LhHrVXFwzfhLsSVIr
+ O20g==
+X-Gm-Message-State: AOJu0Yx7Nuk5o+cFGtnVtP16sXl2pb9x4hjldXPHPejYHOS4Fto1D6Dz
+ 10RGqk5L7WhMTFq2MFLbrxf/CIreSwQNUe9eVIG2f+7y8yuA5V/vnSiWqcotC23FiZs=
+X-Gm-Gg: ASbGnctFTF8TkT8TiZj8/7M1bEr4ouZTYSlApXt8lz2Pmh9ryBSF70Ct0qvGfHj/HIo
+ h7IDRw4ZclZl6NT5vtASX80e/xku5gRmaP+nzG6hT5RnbVeGP+BZv1RY/EFRBqbEhhzgJVuSxLh
+ jJNl1PYkZvrhaq6uqfNcy7qimgu1HH7z7/X1tpJt65ejEuI7i6i6Hcc14Sk5IMYY1+gn6pwyrFz
+ oQyNX3QZ0ZOw+Q0qSbY1FRJUPLujWi5peOpVZdB9HPfEf26Nx0AH2K1mao0I1g5nhwLiebbQIUp
+ ds2jYBvlLr7cknm9l5Yu735kWYQB1/Jx9v26jMQePVbjt691Ld4417LB7lwxhIQmhkC82/Augk8
+ iDYv3pSpre7D1Kdz2xbq/S4t0U2H2ckHh0Kx7BwxFszyOepKMZnHIp91064BUJBEDYMo=
+X-Google-Smtp-Source: AGHT+IHUla4UM9rIQP7MbPg6r/ODOlALUh4jSjsPVFoV1ccjBTZtgXagt0ScEUwbbx2VOWaTAtfGgg==
+X-Received: by 2002:a05:6000:2c11:b0:3a8:6262:6ef5 with SMTP id
+ ffacd0b85a97d-3b60e4b80a6mr8874595f8f.10.1752830013373; 
+ Fri, 18 Jul 2025 02:13:33 -0700 (PDT)
+Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b61ca487fdsm1267145f8f.48.2025.07.18.02.13.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Jul 2025 02:13:32 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 18 Jul 2025 12:12:53 +0300
+Subject: [PATCH 2/3] tests/functional: add --list-tests CLI arg
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250718-functional_tests_args-v1-2-54d4c6207690@linaro.org>
+References: <20250718-functional_tests_args-v1-0-54d4c6207690@linaro.org>
+In-Reply-To: <20250718-functional_tests_args-v1-0-54d4c6207690@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2173;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=L7NfVvYqmwA+Lo4/7oYRawHYzlttF/tNf4Bie8Kzyes=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm9laEE1Qm4wRTk3Y3U1bm0yc0VOdlNGT00wMHpRCmZIdnA1TlhjZmlJMlI2TDVJ
+ V2lKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUhvUU9RQUt
+ DUkIzS2Nkd2YzNEowQ21yRC85Z3JZSTFKK09FSnpXNzNKS2FjQnVacCs2WXFzZ2NheURKemsvUQ
+ pDNnB1RzYxZDRaclg1OWp3T05ZSm9UOFphVU91SmFPY1c1MCtpODZjMEZKQ0hTamtmQW0wUWF3a
+ 3l6SC9UUk03CjAzT2xLQ0wvZUlVOWRaYjVGMmhObStzcldPVktmQnBYT0RWc0VZdzJKRTh1R0VS
+ bTlmY2paaHJFbHAvaUh5OXUKbEFQN1YvZlNOdnFjOEp0cmc2RWc5MndHOXkxT0RmRUFCUGNxSWZ
+ Yd1JZQ2xqUCtBYWVBanBZa3pycUlJTFdnRQo5QXNFRmhpRjFSY2RBWHV1TmUvam53SlRSN2tOSU
+ E4MHZVdUtaV2JwdmdROWFadDdlekszeWJYYXJuMVNkU2Z0CjZaRXBPSFVmb3RYRTJnVGI4RVZLN
+ WUxQVF5bm5ZM2Q5TkU1NzlaL3YvY3JsbXRwcUU2QW91S1FydEpVTllTSUwKRGh0RFZiUjhsRzlG
+ YUliaVE1Sjk2SWtIWk9uWk1YYU1pdmtnY3BtTE83N1ZLdU41bkpMMFoxRVJnZ3p0ZEt1OQpvcHQ
+ 2MTgydnlpdHRPdzhwcXorOHZ5RTBDTGU3NVBlM29Lc3dVYmpHaTdNanFkRnZRS3NtTThoR28wUk
+ FsVlRlCm9ibkc1ZkNjUGNROTY3TVZ6dGxGZEUwTzlaMTlJcUFBSkl2ZVpjT2paMVhSNlVYck9hW
+ TRka0hDUDQzS01HK0kKSkNrdjdERTV0QnRpekxYNU51dUhPSjBIVHBPQ2FQSG9GY1RNSkcvN3k3
+ eHR1eTl4SjF6cCtuMkNlR3FNb2VJVgpqVEEvdXg1enU4MUNFZE1yaURMa2ZNREFTZHdrQURpbmF
+ UbUtXdk5NNFRrVFZHWk5MYW9YZ1FLdFVCdkpqQUIxClNqQ1kyZz09Cj0xK3NiCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,223 +126,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide extended version of the features manipulation helpers,
-and let the device initialization deal with the full features space,
-adjusting the relevant format strings accordingly.
+Add CLI argument to list tests and exit.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Example output (current dir is build directory under root dir):
+
+  $ export PYTHONPATH=../python:../tests/functional
+  $ export QEMU_TEST_QEMU_BINARY="$(pwd)/qemu-system-aarch64"
+  $ ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --list-tests
+  test_aarch64_virt_gicv2 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv2)
+  test_aarch64_virt_gicv3 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv3)
+  test_alpine_virt_tcg_gic_max (test_aarch64_virt.Aarch64VirtMachine.test_alpine_virt_tcg_gic_max)
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
-v2 -> v3:
-  - use virtio_features_andnot return value instead of virtio_features_empty
-  - rebased on top of "net: Consolidate vhost feature bits into vhost_net
-    structure"
-  - _array -> _ex
+ tests/functional/qemu_test/testcase.py | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-v1 -> v2:
-  - uint128_t -> uint64_t[]
-  - provide extended variant of the features manipulation helpers
----
- hw/net/vhost_net-stub.c |  8 +++----
- hw/net/vhost_net.c      | 46 ++++++++++++++++++++++-------------------
- include/net/vhost_net.h | 33 ++++++++++++++++++++++++++---
- 3 files changed, 58 insertions(+), 29 deletions(-)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 24f0b452964012532530a92018b2c4367b39fb77..4455fcc38016c14db04019bbd64eaae9b47363c1 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -50,6 +50,11 @@ def parse_args(test_name: str) -> argparse.Namespace:
+         "This is equivalent to setting QEMU_TEST_KEEP_SCRATCH=1 in the "
+         "environment.",
+     )
++    parser.add_argument(
++        "--list-tests",
++        action="store_true",
++        help="List all tests that would be executed and exit.",
++    )
+     return parser.parse_args()
+ 
+ 
+@@ -281,10 +286,13 @@ def tearDown(self):
+ 
+     def main():
+         path = os.path.basename(sys.argv[0])[:-3]
+-        # If argparse receives --help or an unknown argument, it will raise a
+-        # SystemExit which will get caught by the test runner. Parse the
+-        # arguments here too to handle that case.
+-        parse_args(path)
++        args = parse_args(path)
++        if args.list_tests:
++            loader = unittest.TestLoader()
++            for test_suite in loader.loadTestsFromName(path):
++                for test in test_suite:
++                    print(test)
++            return
+ 
+         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+         if cache is not None:
 
-diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
-index 7d49f82906..0740d5a2eb 100644
---- a/hw/net/vhost_net-stub.c
-+++ b/hw/net/vhost_net-stub.c
-@@ -46,9 +46,8 @@ void vhost_net_cleanup(struct vhost_net *net)
- {
- }
- 
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
- {
--    return features;
- }
- 
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-@@ -62,13 +61,12 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
-     return 0;
- }
- 
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return 0;
- }
- 
- bool vhost_net_virtqueue_pending(VHostNetState *net, int idx)
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 540492b37d..33fc6ba2f9 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -35,10 +35,9 @@
- #include "hw/virtio/virtio-bus.h"
- #include "linux-headers/linux/vhost.h"
- 
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
- {
--    return vhost_get_features(&net->dev, net->feature_bits,
--            features);
-+    vhost_get_features_ex(&net->dev, net->feature_bits, features);
- }
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len)
-@@ -51,10 +50,11 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
-     return vhost_dev_set_config(&net->dev, data, offset, size, flags);
- }
- 
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
--    net->dev.acked_features = net->dev.backend_features;
--    vhost_ack_features(&net->dev, net->feature_bits, features);
-+    virtio_features_copy(net->dev.acked_features_ex,
-+                         net->dev.backend_features_ex);
-+    vhost_ack_features_ex(&net->dev, net->feature_bits, features);
- }
- 
- uint64_t vhost_net_get_max_queues(VHostNetState *net)
-@@ -62,9 +62,9 @@ uint64_t vhost_net_get_max_queues(VHostNetState *net)
-     return net->dev.max_queues;
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return net->dev.acked_features;
-+    virtio_features_copy(features, net->dev.acked_features_ex);
- }
- 
- void vhost_net_save_acked_features(NetClientState *nc)
-@@ -234,7 +234,8 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     int r;
-     bool backend_kernel = options->backend_type == VHOST_BACKEND_TYPE_KERNEL;
-     struct vhost_net *net = g_new0(struct vhost_net, 1);
--    uint64_t features = 0;
-+    uint64_t missing_features[VIRTIO_FEATURES_DWORDS];
-+    uint64_t features[VIRTIO_FEATURES_DWORDS];
-     Error *local_err = NULL;
- 
-     if (!options->net_backend) {
-@@ -261,7 +262,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-         net->backend = r;
-         net->dev.protocol_features = 0;
-     } else {
--        net->dev.backend_features = 0;
-+        virtio_features_clear(net->dev.backend_features_ex);
-         net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-@@ -279,28 +280,31 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     if (backend_kernel) {
-         if (!qemu_has_vnet_hdr_len(options->net_backend,
-                                sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
--            net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
-+            net->dev.features &= ~VIRTIO_BIT(VIRTIO_NET_F_MRG_RXBUF);
-         }
--        if (~net->dev.features & net->dev.backend_features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                   " for backend\n",
--                   (uint64_t)(~net->dev.features & net->dev.backend_features));
-+
-+        if (virtio_features_andnot(missing_features,
-+                                   net->dev.backend_features_ex,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
- 
-     /* Set sane init value. Override when guest acks. */
-     if (options->get_acked_features) {
--        features = options->get_acked_features(net->nc);
--        if (~net->dev.features & features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                    " for backend\n",
--                    (uint64_t)(~net->dev.features & features));
-+        virtio_features_from_u64(features,
-+                                 options->get_acked_features(net->nc));
-+        if (virtio_features_andnot(missing_features, features,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                    " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
- 
--    vhost_net_ack_features(net, features);
-+    vhost_net_ack_features_ex(net, features);
- 
-     return net;
- 
-diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
-index 879781dad7..1d07b437c7 100644
---- a/include/net/vhost_net.h
-+++ b/include/net/vhost_net.h
-@@ -2,6 +2,7 @@
- #define VHOST_NET_H
- 
- #include "net/net.h"
-+#include "hw/virtio/virtio-features.h"
- #include "hw/virtio/vhost-backend.h"
- 
- struct vhost_net;
-@@ -33,8 +34,26 @@ void vhost_net_stop(VirtIODevice *dev, NetClientState *ncs,
- 
- void vhost_net_cleanup(VHostNetState *net);
- 
--uint64_t vhost_net_get_features(VHostNetState *net, uint64_t features);
--void vhost_net_ack_features(VHostNetState *net, uint64_t features);
-+void vhost_net_get_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_features(VHostNetState *net,
-+                                              uint64_t features)
-+{
-+    uint64_t features_array[VIRTIO_FEATURES_DWORDS];
-+
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_get_features_ex(net, features_array);
-+    return features_array[0];
-+}
-+
-+void vhost_net_ack_features_ex(VHostNetState *net, const uint64_t *features);
-+static inline void vhost_net_ack_features(VHostNetState *net,
-+                                          uint64_t features)
-+{
-+    uint64_t features_array[VIRTIO_FEATURES_DWORDS];
-+
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_ack_features_ex(net, features_array);
-+}
- 
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len);
-@@ -51,7 +70,15 @@ VHostNetState *get_vhost_net(NetClientState *nc);
- 
- int vhost_net_set_vring_enable(NetClientState *nc, int enable);
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net);
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+{
-+    uint64_t features[VIRTIO_FEATURES_DWORDS];
-+
-+    vhost_net_get_acked_features_ex(net, features);
-+    assert(!virtio_features_use_extended(features));
-+    return features[0];
-+}
- 
- int vhost_net_set_mtu(struct vhost_net *net, uint16_t mtu);
- 
 -- 
-2.50.0
+2.47.2
 
 
