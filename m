@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DE3C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B41C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucgSm-0003Q5-E2; Fri, 18 Jul 2025 04:29:12 -0400
+	id 1ucgi5-0006Uo-0n; Fri, 18 Jul 2025 04:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ucgSc-0003Lk-8y
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:28:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ucgSV-00053z-PY
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:28:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752827324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7kY0hUzHy+1xksL8EsYzei/AzxcaJy0QGDXDCxTluJ4=;
- b=cxitjrzGIA9bY+OStS9RUoZx/+l4drcfFm5rzfMo/USyrXLkDiG8Th2bHgZ4mSdM9s3u8Z
- ePh3giu0nMRiYZ8EJIJ9TAtbxxm4ILgMlLoEK6xeYgQBJD6l4blELfgGETHbggkYbpqXrg
- cmDxEuUpE6a0o+hSIR7Xbj4x4xPiyOE=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-hOfxkIPkOeahuO3rtSvjSQ-1; Fri, 18 Jul 2025 04:28:42 -0400
-X-MC-Unique: hOfxkIPkOeahuO3rtSvjSQ-1
-X-Mimecast-MFC-AGG-ID: hOfxkIPkOeahuO3rtSvjSQ_1752827321
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ae3c8477f1fso128950066b.3
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 01:28:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucgi0-0006LZ-Ar
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:44:48 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucghy-0004fO-47
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 04:44:47 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-70e5d953c0bso19990197b3.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 01:44:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752828284; x=1753433084; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6plV1daOnaS0viPD8kTW2UzxjVaHv69dHs3pH0C1vwE=;
+ b=XEepcCyGMitm0FL9Vtabjob/LT/N3+CU2KrBeB3P19Goaa4D4hslyEje2deCfkF17P
+ kyESkvJ2tai0Msmfkv2Dm7IR0zaNbPY6Vzs4n8KkHeT1vVdgmgoAd1PO6eB1sJHBXSSf
+ IXdeyTcJkS7xOS82wk5sNvs3UEH9OQ0QR797nrZBQV+5ieyk56T8ds57ynJVF3GoxdZj
+ 67tv1zTx2+ZNdoxbeUqT4CF1RHmDCAAYSc8LRBJz2JSBrahE92Ywpe8mmbTKi/ffDXL4
+ V3k2kWprxkryQN9gVHIbwEj3hWjjNMXquzC02vGHCPsbeNj8SnOvH6piSrKei18aPKRh
+ 520A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752827321; x=1753432121;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7kY0hUzHy+1xksL8EsYzei/AzxcaJy0QGDXDCxTluJ4=;
- b=GDz9vYPuXqJB16bjBaNoci4rb7paIwjlTihFBuFLcOQgoPJExbhylV5NkmEF11XXzR
- EmkHyCF9zgv7u4ufH48KtxdbSide/9vYT8j2b6ERjijCOuzodIyW9O4io135SNeV4Mfp
- +7P7FFmmiTaTrcbb4W3JkAwBgXvLTNvRwCPuMjulUpmRicLSBpn8BaqlNqu5mpJQkGQT
- S2KRHGjeaaIeHDY2av411Bq5/RvSOMrPtLltA1SP8rJoOJED7LlX7kBs8lgYi/REOdvJ
- fdvaVWJ2gUPUVocul3Vm+NCQHIudcClnO3mIFpFWPCEzpdVxP7SzUDG9F5mNferfS7MH
- nL0A==
-X-Gm-Message-State: AOJu0YzGP1RDO52YjPCCwJ/7dE+9j8e0Gq3uOy6Wq/RRQIVa+6JdDwS7
- Qt1uRmk4xQYkYLTHOF8mXsJBd9LNMK72QruOFeSjZE5uuU6pUgnwS2ZQ2ADMWhY3lP/QocALloi
- Bd6IE0jJEbFl8/3m/4EWApnemgjbksG4QjlrEIXLOYGCwaLbetSwnRzytnRPzY158NRQ8xKOIW0
- rpQrdf7Fe/QgSTSMz7esG2jcEIHahcrKk=
-X-Gm-Gg: ASbGnct6W5vjNI//oEqsSlQNhmIik3ih7LdAkP7EJEjmmsWgJUeGmhJnyO66s5DXVi4
- y8zy7WgWKBC9rBz1g+6l5dVhTr3LzpkzrwOamryh2Cj6oP6tbvc1PbinFQXhq/uJU4VvNnyB4Xf
- USerWKnLtVp5Y1j7Vd12/u/Q==
-X-Received: by 2002:a17:907:3c83:b0:ae3:bd92:e69b with SMTP id
- a640c23a62f3a-ae9c99814c7mr1034236766b.7.1752827321023; 
- Fri, 18 Jul 2025 01:28:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyEZj5EJqYckVvBSu8ghamCtIGS5k89o0krQiAjPuY0CyQfCfi/XKO91VzAFrzj9hUk58en8tNwTEwkvkY+aY=
-X-Received: by 2002:a17:907:3c83:b0:ae3:bd92:e69b with SMTP id
- a640c23a62f3a-ae9c99814c7mr1034234666b.7.1752827320644; Fri, 18 Jul 2025
- 01:28:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752828284; x=1753433084;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6plV1daOnaS0viPD8kTW2UzxjVaHv69dHs3pH0C1vwE=;
+ b=ZlVCcr+KWFE+b1KDdTrS5iFa6GgtYDYDVHtcLwZB790sGzp1uZJ980BUIDoEnfItyt
+ IDhu0B/BjYiMDKNon7VXXDsDxJxvjXNUY+KHJpLxmVJD6aWgja86xFOAuEjKO+9b2JLw
+ kw6crnyhYg4e0UBbFraFwfXc2jOPeWy6mlDRGhOLjvCw4neQhI+mmLK1wj5NtNg9SdCe
+ NZhIKnkw1IVJ3Azilv1WDjebNagZzXr6hBK7XUEpAJmtIpYGD4V9it0hwOpLjQxntFOr
+ P9VmnFDHweNiyaeQWB49GmszUq/QqnKibX1eQGHDqsd/l7JzRwm1jsuGRDVgdd1BYpDC
+ csbA==
+X-Gm-Message-State: AOJu0Yww4V8iu7I+giJpY3/30rHCPUdQtgofMWV74SggehYwqGr/iyoM
+ LQnhW7C71tJ7g6NMSjnABz5UHZRqa3cduaESWNoSakZU6KDBDQBWFOpoRR1UzFtgrUw+2Vw4epo
+ dJk+/8j9kcqov4tUyYX9cOr9az05ViGjlf00m5uN3Iw==
+X-Gm-Gg: ASbGncsbvDGFcoiyF36uwnCc8DY/OM2VqvaYTkhR5X+sx+w2ncGRBM63iyjvC57HXY6
+ ynpOOHlgRSxVOzcQuyC3qvHAIFyxtgBH5kiOLJqo6tFbzhqBxWgbDTq7W/yTig4oJeaNGTsT4lK
+ CqEDBC4aFKIruLzci6cWyfywZcSyQvTQdwmprCXATIYDHMpsZBHGjaY1D9/icPAPBvBZy+4skiV
+ oo/6iKE
+X-Google-Smtp-Source: AGHT+IGXLzRoDOupopHjlm1O+E2XhcbjODJypBzPWavUO/jtOUufwfM2F6fJuz/SyGM9wRbjKxoThwqPR/2UPad5I+c=
+X-Received: by 2002:a05:690c:620e:b0:718:37f7:66d6 with SMTP id
+ 00721157ae682-719522b1c02mr22993007b3.25.1752828284578; Fri, 18 Jul 2025
+ 01:44:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250716072854.13403-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20250716072854.13403-1-vsementsov@yandex-team.ru>
-From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 18 Jul 2025 16:28:02 +0800
-X-Gm-Features: Ac12FXyykOgvccBzN1fMtJt5A6vlz1KnOV4MqK5gM6xaArn92MJHiOAJpNTrBE4
-Message-ID: <CAPpAL=wghDOvxdiprfTmB+B=PFMhz3Js3RmZqOq_KEV0xCzZ6Q@mail.gmail.com>
-Subject: Re: [PATCH v2] net/tap: drop too small packets
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, d-tatianin@yandex-team.ru
-Content-Type: multipart/alternative; boundary="000000000000cd11e3063a2fe9f2"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250718062607.2209900-1-vivek.kasireddy@intel.com>
+In-Reply-To: <20250718062607.2209900-1-vivek.kasireddy@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 18 Jul 2025 09:44:33 +0100
+X-Gm-Features: Ac12FXxWedL7Wt2vV45KEjLTvn7uM5c9l_AGVCrxNzgxtGyw65qtS8VU-vQMycM
+Message-ID: <CAFEAcA-rTkSQe5zm2bLXA-DSoeo2pwC07NGPCGevwq7KXyE26Q@mail.gmail.com>
+Subject: Re: [PATCH] ui/spice: Destroy the temporary egl fb after the blit is
+ submitted
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,107 +96,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cd11e3063a2fe9f2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Tested this patch v2 again,everything works fine.
-
-Tested-by: Lei Yang <leiyang@redhat.com>
-
-On Wed, Jul 16, 2025 at 3:29=E2=80=AFPM Vladimir Sementsov-Ogievskiy <
-vsementsov@yandex-team.ru> wrote:
-
-> Theoretically tap_read_packet() may return size less than
-> s->host_vnet_hdr_len, and next, we'll work with negative size
-> (in case of !s->using_vnet_hdr). Let's avoid it.
+On Fri, 18 Jul 2025 at 07:29, Vivek Kasireddy <vivek.kasireddy@intel.com> w=
+rote:
 >
-> Don't proceed with size =3D=3D s->host_vnet_hdr_len as well in case
-> of !s->using_vnet_hdr, it doesn't make sense.
+> The temporary egl fb scanout_tex_fb is only needed to facilitate the
+> blit to the display surface's texture (ssd->ds->texture). Therefore,
+> destroy it after the blit is submitted. And, also make sure that it
+> is empty initialized before it is actually used.
 >
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Fixes: f851cd65 ("ui/spice: Blit the scanout texture if its memory layout=
+ is not linear")
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > ---
+>  ui/spice-display.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> v2: change "<" -> "<=3D"
+> diff --git a/ui/spice-display.c b/ui/spice-display.c
+> index 9ce622cefc..401d6c4aba 100644
+> --- a/ui/spice-display.c
+> +++ b/ui/spice-display.c
+> @@ -1191,12 +1191,12 @@ static bool spice_gl_blit_scanout_texture(SimpleS=
+piceDisplay *ssd,
+>      uint64_t modifier;
+>      bool ret;
 >
->  net/tap.c | 5 +++++
->  1 file changed, 5 insertions(+)
+> -    egl_fb_destroy(scanout_tex_fb);
+>      egl_fb_setup_for_tex(scanout_tex_fb,
+>                           surface_width(ssd->ds), surface_height(ssd->ds)=
+,
+>                           ssd->ds->texture, false);
+>      egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
+>      glFlush();
+> +    egl_fb_destroy(scanout_tex_fb);
 >
-> diff --git a/net/tap.c b/net/tap.c
-> index 23536c09b46..2a859360193 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -190,6 +190,11 @@ static void tap_send(void *opaque)
->              break;
->          }
+>      if (!ssd->new_scanout_texture) {
+>          return true;
+> @@ -1330,7 +1330,7 @@ static void qemu_spice_gl_update(DisplayChangeListe=
+ner *dcl,
+>      }
 >
-> +        if (s->host_vnet_hdr_len && size <=3D s->host_vnet_hdr_len) {
-> +            /* Invalid packet */
-> +            break;
-> +        }
-> +
->          if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
->              buf  +=3D s->host_vnet_hdr_len;
->              size -=3D s->host_vnet_hdr_len;
-> --
-> 2.48.1
+>      if (spice_remote_client && ssd->blit_scanout_texture) {
+> -        egl_fb scanout_tex_fb;
+> +        egl_fb scanout_tex_fb =3D {};
 >
->
+>          ret =3D spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
+>          if (!ret) {
 
---000000000000cd11e3063a2fe9f2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+It looks like we only call spice_gl_blit_scanout_texture()
+once -- would it make more sense to put the scanout_tx_fb
+variable inside that function rather than making its only
+callsite set it up? That way the function owns, sets up,
+uses and destroys the egl_fb.
 
-<div dir=3D"ltr">Tested this patch v2 again,everything works fine.<div><br>=
-</div><div>Tested-by: Lei Yang &lt;<a href=3D"mailto:leiyang@redhat.com">le=
-iyang@redhat.com</a>&gt;</div></div><br><div class=3D"gmail_quote gmail_quo=
-te_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 16, 2025 at=
- 3:29=E2=80=AFPM Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vsement=
-sov@yandex-team.ru">vsementsov@yandex-team.ru</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">Theoretically tap_read_packet(=
-) may return size less than<br>
-s-&gt;host_vnet_hdr_len, and next, we&#39;ll work with negative size<br>
-(in case of !s-&gt;using_vnet_hdr). Let&#39;s avoid it.<br>
-<br>
-Don&#39;t proceed with size =3D=3D s-&gt;host_vnet_hdr_len as well in case<=
-br>
-of !s-&gt;using_vnet_hdr, it doesn&#39;t make sense.<br>
-<br>
-Signed-off-by: Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vsementso=
-v@yandex-team.ru" target=3D"_blank">vsementsov@yandex-team.ru</a>&gt;<br>
----<br>
-<br>
-v2: change &quot;&lt;&quot; -&gt; &quot;&lt;=3D&quot;<br>
-<br>
-=C2=A0net/tap.c | 5 +++++<br>
-=C2=A01 file changed, 5 insertions(+)<br>
-<br>
-diff --git a/net/tap.c b/net/tap.c<br>
-index 23536c09b46..2a859360193 100644<br>
---- a/net/tap.c<br>
-+++ b/net/tap.c<br>
-@@ -190,6 +190,11 @@ static void tap_send(void *opaque)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;host_vnet_hdr_len &amp;&amp; size &l=
-t;=3D s-&gt;host_vnet_hdr_len) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Invalid packet */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (s-&gt;host_vnet_hdr_len &amp;&amp; !s=
--&gt;using_vnet_hdr) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0buf=C2=A0 +=3D s-&gt;host_v=
-net_hdr_len;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0size -=3D s-&gt;host_vnet_h=
-dr_len;<br>
--- <br>
-2.48.1<br>
-<br>
-</blockquote></div>
-
---000000000000cd11e3063a2fe9f2--
-
+thanks
+-- PMM
 
