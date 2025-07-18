@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF07BC83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F06C83F34
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 17:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucoR5-0007kR-P5; Fri, 18 Jul 2025 12:59:51 -0400
+	id 1ucoR9-0007oc-Os; Fri, 18 Jul 2025 12:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ucnt4-0007fb-I3; Fri, 18 Jul 2025 12:24:42 -0400
+ id 1ucnt7-0007kk-Ru; Fri, 18 Jul 2025 12:24:46 -0400
 Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ucnt2-00076F-ML; Fri, 18 Jul 2025 12:24:42 -0400
+ id 1ucnt6-000783-8b; Fri, 18 Jul 2025 12:24:45 -0400
 Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-55516abe02cso2326558e87.0; 
- Fri, 18 Jul 2025 09:24:38 -0700 (PDT)
+ 2adb3069b0e04-5561ab55c4dso2321215e87.2; 
+ Fri, 18 Jul 2025 09:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752855877; x=1753460677; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1752855882; x=1753460682; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4fvsdLfmb83aU2Sh4Qg/fqQwyzBBdQVHUoJEX1nqKVw=;
- b=YnnL1y3gejWQiS6o71FCM0gHDhGJkh+Ur5xaVsGa5LNi3Ji9SXR5uUByeKi8tX9VwM
- 3d7jeJCjUyz4bWqLc+M61BoRtKdn5qDe1kbKbi/2v2ZhokBJ+o8xo3fCL0/lbdvY00h6
- GlohuLJqPZTnng3hTcjNKoH2fIco+P3kZKuWckLs1Xp4wsrmtiakVd6gToH2Mj3Yc6yd
- D9XMHoDfkI8P2onh7qHeXeCEpxumcACOqTNoS8nQ2i6wJhYKlM36diOOugftRdQL25gr
- lu/J16M3J3cVBvXna0QNu0Je6Qvaed8ceXzBmxAENmZ1g7aPIiJrlaLM72O1ZEkhqZ9m
- 7TdA==
+ bh=lBrX8kFqn3SKWgrzeGigP/iZk6FEK2hdUWJr2evgfk0=;
+ b=NiBtA1QqKI6Zx57J3XDhk0dZAA77YZU/GbGWM84eUVA/qPOBOIJl11Urg/LafgKTwX
+ IeeQuWqlrF/WylkCIw+Z4CBqD04WpoeBqT5BVH7y81Z+PpaGXmFIA9RcV8jzJJwKDwvO
+ 2fb5qm6wayfv7DyqC16+kKQx1u7IUWNw+Fy8Oc9W5238YqcYb3am/lMsnLMNHi+zSpJV
+ s+k46atsf49Z34OKUKI/tSsTuD4HVVWa3J04X6jJvhneTruQt37zkS9/djUu4P3HECpp
+ imWZB64+knw8PLkKalRj/AliNSpwd3DWn1JiPUW5wdbDs1d/JbzL2WD924Gvenu5moNL
+ jB7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752855877; x=1753460677;
+ d=1e100.net; s=20230601; t=1752855882; x=1753460682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4fvsdLfmb83aU2Sh4Qg/fqQwyzBBdQVHUoJEX1nqKVw=;
- b=L7fyvTnqdWItUxTVT8LUb+Nh3iSV+1w+TUC6j6X8nl6TaAvfDb0uqUA2TELNk2tTut
- 7cNMJ1zNJ/1BirwLdglo0OVZIHdkU/bB3OZDW265sW28SxwV59QCnY0TZdlMVkI7A3K+
- z8t2eds/e5o91h7MPHm/t6vL80WCi4iqL2OHv/5Oy/7aVhJnwfyTgDY0qpLWFI1dFKuO
- 3d1IKX8qrVV+Sbw3I/POTU/cAxz3cUp8vvMnHRkLbPE4I60/gE0+KHJOU7g5t98+QTcE
- QfNkyr1HXhTM7PCAFMMpLks5b4UQOqr2OcirPJhWB7iW1StPFFrllvif5NSAjz25KKQt
- G6pQ==
-X-Gm-Message-State: AOJu0YyM5eQM0MTsOJdt/1MZx5FCP3+EJCjjmgivnRggyTHpvb6QGwyT
- nIY15DRHHJzKgGYYgWl+RePL0iqreMdKr52wqYrA9DAKyjIbTWTj/5bVulF9ns8TGzafPA==
-X-Gm-Gg: ASbGncuynX9dHuumGk5m+M285u4Vs0XIYe8DY3Acy0sqQBLUH/atVfD5FUuOa4Uojnl
- HPJMtInMEuNtt424/I9L2ThGvuFYFxopNG8UvzTkccPFauuxxnRv94DZUK/ZMazDj9/XcaBCNZc
- YSGDoSo3uWiNCZYRkNrt7WksmVEXF2ixjp01E7HX+MSohrrlkfl5lG8WX/CTsJg6p2vh/9PpPRI
- DOU9DBWWwwGdwaiucwwMxHORbqHqlzxTrVuPkLJoXOoCSEYXBcrTDJljVbSZuysg0LCaG1m6Key
- RQ9A0YE3FBukGTOz+L63CC0SfGB9zb16HopocDkUxp6vBEUBNOWAc3nwvGagqTnD4h2l/mCrZX7
- WlXW2A+k2q9UkirFjWqcRlIKGftR2H7l68lwWElP5tFZLfDNDStC2LRwNV9NHjpguvj0kaBvD2r
- ESHh6+AL7GXXK4oA==
-X-Google-Smtp-Source: AGHT+IGU25PLablMzKwTO5FI2bsrYyo8sQ1RpC8WQgSQV9PH00Xa2Pk8aLtDQR04n63VjmGRG3DrHQ==
-X-Received: by 2002:a05:6512:1296:b0:553:a294:3f8 with SMTP id
- 2adb3069b0e04-55a2fe38ecfmr1383553e87.14.1752855876964; 
- Fri, 18 Jul 2025 09:24:36 -0700 (PDT)
+ bh=lBrX8kFqn3SKWgrzeGigP/iZk6FEK2hdUWJr2evgfk0=;
+ b=dvFbH63/e+uxYM2s/69FLkViOH3ekJsfQbRpm+HKYVu7/XKMCH01jMRqAa2st4bmES
+ QM2G/jeUHLHfEjYW8gDgwPhm2TAEfI6OkcoZzj34uw3sXWoWtwcD/tcVn2sq9460s8Ah
+ Fwcqu00Pb3K2Procml+dHtptOUuEEcnyh2an/NUUVehpDvyWn+9wibPu/SGhyZKLxsml
+ cZn9D4v+KS6ltaBSE0MIZABwdC6sKTEK4/8ARD4SQFlMlB0Ua4ppJO4Nm+UJs5Wo/Xga
+ HTA/nk3Qyjx7O669pi2YSsbquPfLtz6JbjBnqlSoNVVDucGAt7Mp9fklqcWaKHPnIaXf
+ VZuw==
+X-Gm-Message-State: AOJu0YyT1T+nfNVBK1dwCmCBzHJWGVIOzB3RbKSEScU7YsRi2ytqsCpc
+ zY69QHv453RWEmC0mto8yTQlllMUlWfZP/wMXCh5o40eksCzpTvPyDspXCZz/30YGFJkyQ==
+X-Gm-Gg: ASbGncu2NBjRtw/gsnYp2+OMSdX/A56BUx9t9gqueFrDfj0udtjSTm+Db0PhyU8MStd
+ NKAyGMsJ7cEr6JWQ8SBIMMDnfWsYSocvz3z1wt/TcZRfRLYjs62zFRzw58cacxM83mswlsCtUBh
+ Gxi7L4v35I/HGXNs8HNSbznV6oI/oXsmvOMmEd+b9t+S3N4km7ZiV/IneZUetAgjTHG4uNdL+rs
+ kxrQ/w/uBL2fZ6hk/+37cwwvFHMcw427VjQ21ap957xbYswXKEN860JszhtGVAGlUANtInJN9hE
+ VpUlo+knKQ2zr4rHwNZ5aX5HF/uKsOFzSHkZhXhFRLwga9HsP3kD3PWOzOKYIP//zNGkimIwVJw
+ NvYkhJ8iCUW+ImF6/aF2HV5Cjj8iUdxzZyR8jEy7BdStduNVcrWhA1GZAQI9fF7iiAgUqoqtZ8j
+ R5vUA=
+X-Google-Smtp-Source: AGHT+IGlHiMksbEmRW0KxRp1iZ6W6YbmkAf69uMpLqxicNJIdMpRH+IefAPftUveOA/RA17QXw0NZQ==
+X-Received: by 2002:a05:6512:238e:b0:553:24f4:8736 with SMTP id
+ 2adb3069b0e04-55a318a967amr897237e87.53.1752855881576; 
+ Fri, 18 Jul 2025 09:24:41 -0700 (PDT)
 Received: from localhost.localdomain (m91-129-102-83.cust.tele2.ee.
  [91.129.102.83]) by smtp.googlemail.com with ESMTPSA id
- 2adb3069b0e04-55a31dacd84sm310615e87.206.2025.07.18.09.24.35
+ 2adb3069b0e04-55a31dacd84sm310615e87.206.2025.07.18.09.24.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 18 Jul 2025 09:24:36 -0700 (PDT)
+ Fri, 18 Jul 2025 09:24:41 -0700 (PDT)
 From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 2/4] tests: acpi: whitelist expected blobs
-Date: Fri, 18 Jul 2025 19:20:43 +0300
-Message-Id: <20250718162045.49012-3-chichikalyuk@gmail.com>
+Subject: [PATCH 4/4] tests: acpi: update expected blobs
+Date: Fri, 18 Jul 2025 19:20:45 +0300
+Message-Id: <20250718162045.49012-5-chichikalyuk@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250718162045.49012-1-chichikalyuk@gmail.com>
 References: <20250718162045.49012-1-chichikalyuk@gmail.com>
@@ -101,18 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Previous patch changed the SPCR ACPI table for AArch64 virt:
+@@ -15,2 +15,2 @@
+-[008h 0008 001h]                    Revision : 02
+-[009h 0009 001h]                    Checksum : B1
++[008h 0008 001h]                    Revision : 03
++[009h 0009 001h]                    Checksum : 0B
+@@ -49 +49 @@
+-[04Ch 0076 004h]                    Reserved : 00000000
++[04Ch 0076 004h]                    Reserved : 016E3600
+@@ -53 +53 @@
+-0000: 53 50 43 52 50 00 00 00 02 B1 42 4F 43 48 53 20  // SPCRP.....BOCHS
++0000: 53 50 43 52 50 00 00 00 03 0B 42 4F 43 48 53 20  // SPCRP.....BOCHS
+@@ -57 +57 @@
+-0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
++0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 36 6E 01  // .............6n.
+
+In a revision 3 SPCR table, the "Reserved" field is the UART clock frequency
+field.
+
 Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+ tests/data/acpi/aarch64/virt/SPCR           | Bin 80 -> 80 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/data/acpi/aarch64/virt/SPCR b/tests/data/acpi/aarch64/virt/SPCR
+index cf0f2b75226515097c08d2e2016a83a4f08812ba..76ac417fbdc4dc6a473c51b82164f40bc5320c58 100644
+GIT binary patch
+delta 20
+bcmWFt;0g|K4hmpkU|{B+$mPszmd6MHD|7?L
+
+delta 20
+acmWFt;0g|K4hmpkU|`xfk;|DG$N&H@90SJy
 
 diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..2a30472d57 100644
+index 2a30472d57..dfb8523c8b 100644
 --- a/tests/qtest/bios-tables-test-allowed-diff.h
 +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
+@@ -1,2 +1 @@
  /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/SPCR",
+-"tests/data/acpi/aarch64/virt/SPCR",
 \ No newline at end of file
 -- 
 2.39.5 (Apple Git-154)
