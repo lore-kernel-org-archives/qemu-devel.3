@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E102EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 17:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93D2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 17:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucoRt-0008Qw-Mb; Fri, 18 Jul 2025 13:00:41 -0400
+	id 1ucoVJ-0005Zu-Oc; Fri, 18 Jul 2025 13:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ucnsx-0007W4-Iv; Fri, 18 Jul 2025 12:24:35 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ id 1ucnt5-0007hS-Sg; Fri, 18 Jul 2025 12:24:43 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ucnsw-000702-0A; Fri, 18 Jul 2025 12:24:35 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-553be4d2fbfso2369854e87.0; 
- Fri, 18 Jul 2025 09:24:32 -0700 (PDT)
+ id 1ucnt2-00072R-MM; Fri, 18 Jul 2025 12:24:43 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5561c20e2d5so2972472e87.0; 
+ Fri, 18 Jul 2025 09:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1752855871; x=1753460671; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0tSNdwHvz7/qWn2NTQ1xPS7vHeWeR1Yks6l86cO/Dqw=;
- b=fzlWV3hXWR6XIqOdPiGfpxVZTUBjcCmBby554ie01n2PSuhEI+H6xM0vH4uh10WA3c
- 1itJkTSTE1+Qrh1WRoxGphV5YlvwoKpVPXR5+sCZAOEYh1yWNzDU0LyMXiHPknCkiehl
- bEI3neyZ8KaDv7mfKzO8vP4IdytlJaZp2LsEiZJjtWP9VpCsEO7SwOPTu79dUNTXnmoR
- tBz7zIHwobSz3R7P1BzieuMIma7vFRhLBPd4Mesr+L07QvXtx3jCYpKedIoqXxH4HdaD
- naeKKzNJ/FHC/5L4Sx5XctGdpT0sCgufwUrLwfvJy/9vqCvngKHeypN5VdjeC/asinLh
- ZUEg==
+ d=gmail.com; s=20230601; t=1752855875; x=1753460675; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d8kJDLuC+UaKMIjK/HRmpSPdwsiOoh88VgdFCc0iMko=;
+ b=iB+PD8GRkYhqXb9O2eXg+CEVokL4xtijvGdeAoqI9JCb507DKQTJ4k1OaTk5FqYgUJ
+ P562DY+PKN5idvjTMVcmnZ4AW0oOC9R2fxG1q49QPpTaLmP2ShbPGaHuwF/mHiWY/yZM
+ xVOInucAMqZWdB0nFUN5xostgRwSafT8rOrZwn76w8S42FagoOLmQPR1ABHS8KfGvHMI
+ rvGHHBsHNwq2miFhOF3cXLvy+RlyUSkoHtRnsCYrKOyu8pciuweVhl9QMWavbUYhOyOh
+ ZRBdyOi/lrvr9lj84GeiNtD9SOhK0rLj4goUIZ2cqT5oj8ifX9DA549IuOgrWtUbs4nI
+ srtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752855871; x=1753460671;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0tSNdwHvz7/qWn2NTQ1xPS7vHeWeR1Yks6l86cO/Dqw=;
- b=NK2LzxO1V4UDD/GlwABBUfbz8M37OQ/u/DJJ2WlbrAo1izlJwa5buVt0mdk3bL07yY
- 0+825MTW8Lp4+hLnURrd2/Nl16mTti/R49MRPF5HR714RBwMmnUFirz16kl1G+AeP+En
- YoZePO0mOJXcqHvGRqfNvnip26I1qOTSQGKNlyPeaprw2EVIEDaQvIABqDFUebqvwW/A
- Sj4kPpmqAZWfrhCpsYEewKwpTyAoVTufRaAaNTlEF11YolbA9OyWZ77QBethZYmIUTa2
- unHdLjkaR9PaDswBDOcY1B1rIK7XqunUDYwjdgW0Vh8PgjILLw1HR7kBpFF/o44GO1kV
- rdlQ==
-X-Gm-Message-State: AOJu0YxkOia+W57VKV0Jr2mJcm4n8NRdLi0QU/o+vV7Mx56m8s3I3pK6
- pVsy8JK6LMZRveGKgbTJs96AbXcmMY/Q65f6sqi6amUgYwMiFoHGymkVDlHFWCY4oZBWUQ==
-X-Gm-Gg: ASbGncvj/X/BF7m9NDeogUh3PYytWMcXUKOgkLuG5UUavJQuP0faN05HZIb2LpSzfmp
- maOauz5wrof5nFZ2MrKnqRn02JCDeHs6c16XXbPbtZs5pVRY2N7vRqj8KdlumqknsjmaKFyj6rJ
- 0lT5M4PKSg8q2gFcZdO/DVhNu2ioLBpoJgvOwePxz4+nTvXJIus7rTsFZdXqiXhvi3XF8W001R2
- 4MAla1DNikHvR1G11iElzhOM+avaNYuJX5FwtQGDeQED3DlYE/R+WCC2t/ktY3XWUx3Ms2aeuvb
- lzyIbePOV3hILV2Fte5Wq4Ek27oHHtFz0maX83iJGbskjrwRS7Mkn44UrP/gWwLeubVEJXhkyGQ
- dMgfzl2+XkqjwsM+rVggKcb3C6lrTTdFGjLTDou4UWTo2SvGLl7uEar+CKsFy73A5r6RWZdor8O
- 9k8cg=
-X-Google-Smtp-Source: AGHT+IE5ccMkBF49Qwr3sjez00wAXnqMzLqXkW4m4VtK/6AYMLWVQF4ez2Nk3OmgRdsavEYiPOVQvw==
-X-Received: by 2002:a05:6512:4058:10b0:553:adda:db40 with SMTP id
- 2adb3069b0e04-55a23f7f73emr2723212e87.44.1752855870623; 
- Fri, 18 Jul 2025 09:24:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752855875; x=1753460675;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d8kJDLuC+UaKMIjK/HRmpSPdwsiOoh88VgdFCc0iMko=;
+ b=wtItX+xOEhBUBxS5M/mUct4ItGk1OXwJueWS+0pfmE0VJjstfxoFJOpVIt/oLmvdCt
+ 5kCne6B3RViJNm6pW/oUk8K51hfacM3evoFyEZUfQRjcBPxHAUUN15JPKAoa5J7pV8o6
+ uVvstm3mRZiSI1IxPOCXGn8cIUn7kYOiJXr6yMKZF5r87G7qSZx6yLYKtOsI7Vt285Mr
+ q+StqEZVSdGJOU/+tG9m76TthiUGkjJtQx+o3SpcvjCWv4yl8yPSfbXiHjJ6Jdx2gzwQ
+ KvgcLqQEZLkJ713a3HByC2n/ZHN5rsqtcqjcZIGGpmEQ/YlWHn4fCbFQdtErv6l5Dt59
+ 0pWg==
+X-Gm-Message-State: AOJu0YzRX7Od/5EcyX83/lOt0uOT+lFN/hIqFpYexutSJY8yH/hQTNsu
+ VTaJ4SFiMP+6zMFh5krF1vjXKPkHYxREMB5ZuggANyVXQbnIpbnY6FYUrAScKMQZmI2Hkw==
+X-Gm-Gg: ASbGncshR6U4nz1Pp4AB/BkkU2D3htg5VPAdf2gedOmw9IxAQMJO8rp0IEdw8GPjrzM
+ bGICVEM94h21kvu0yJBqo9er/42S/NOq0aQbAxZQ5FaOLvCMU3Brb5ZI3/5clTLCLMZ6aYh3LE3
+ AZxFtEN6+JFFX9Esnf+e2ElBxWMlCeJg0Mp0GeCe1Kr5oy9R5fgBTZPlb3jtM7HGFUWBAy+wkQo
+ BCIv8kXA1S0Fd0C5d7jzIZqOw1R+hZrRPy1HtA7MbYER/evGPGh8bvbZoPGmxMqevSf6k98d2Uu
+ 0hiS35F4hbvN5H96QGzl3uhgh11kSlG5fTJIrWM624cfBnCi02Y3fnA0iYtSeJUx4uAdJWqXVbU
+ LuBaJO8p6OCe0QwmOQonJ7NHrypaFnRvJ9SZ1JXT4Fy5OdvzRlYObcdBP7yHJ3wHA5rPZh0Irq8
+ Zhw24iKlAbhzm5Ww==
+X-Google-Smtp-Source: AGHT+IENXYP1k/2GxplmkUb0rUBIwCEFpwx/rq0d8RZS6SPEvHiRAopRfMQ9+dhcX67N0jNSPLj0xQ==
+X-Received: by 2002:ac2:42cf:0:b0:553:d7f1:6297 with SMTP id
+ 2adb3069b0e04-55a3188e89bmr747653e87.34.1752855874422; 
+ Fri, 18 Jul 2025 09:24:34 -0700 (PDT)
 Received: from localhost.localdomain (m91-129-102-83.cust.tele2.ee.
  [91.129.102.83]) by smtp.googlemail.com with ESMTPSA id
- 2adb3069b0e04-55a31dacd84sm310615e87.206.2025.07.18.09.24.29
+ 2adb3069b0e04-55a31dacd84sm310615e87.206.2025.07.18.09.24.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 18 Jul 2025 09:24:30 -0700 (PDT)
+ Fri, 18 Jul 2025 09:24:34 -0700 (PDT)
 From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 0/4] hw: acpi: support SPCR rev. 3 & UART clock freq in ARM
- SPCR
-Date: Fri, 18 Jul 2025 19:20:41 +0300
-Message-Id: <20250718162045.49012-1-chichikalyuk@gmail.com>
+Subject: [PATCH 1/4] hw: acpi: add support for SPCR revision 3
+Date: Fri, 18 Jul 2025 19:20:42 +0300
+Message-Id: <20250718162045.49012-2-chichikalyuk@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250718162045.49012-1-chichikalyuk@gmail.com>
+References: <20250718162045.49012-1-chichikalyuk@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=chichikalyuk@gmail.com; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=chichikalyuk@gmail.com; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes erroneous building of ACPI SPCR tables in hw/acpi/aml-build.c, 
-where the UART clock frequency field is omitted in revision 3 tables despite
-being present since revision 3 of the specification.
+The UART clock frequency field of the SPCR table was added in revision 3.
+Currently, build_spcr() treats revision 3 tables the same as revision 2 and
+only includes this field in revision 4 tables.
 
-The last three patches update the SPCR table for the AArch64 virt machine to
-revision 3, exposing the UART clock frequency, which was not previously available
-via ACPI, to the guest.
-
-Thanks,
-Vadim
+Fix build_spcr() to include the clock frequency field in revision 3 tables.
+Per the specification, this is the only change between revisions 2 and 3.
 
 Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
+---
+ hw/acpi/aml-build.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-Vadim Chichikalyuk (4):
-  hw: acpi: add support for SPCR revision 3
-  tests: acpi: whitelist expected blobs
-  hw: arm: acpi: add UART clock frequency to SPCR table
-  tests: acpi: update expected blobs
-
- hw/acpi/aml-build.c               |  20 +++++++++++---------
- hw/arm/virt-acpi-build.c          |   5 +++--
- tests/data/acpi/aarch64/virt/SPCR | Bin 80 -> 80 bytes
- 3 files changed, 14 insertions(+), 11 deletions(-)
-
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 1e685f982f..9855d5f053 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2123,20 +2123,22 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+     build_append_int_noprefix(table_data, f->pci_flags, 4);
+     /* PCI Segment */
+     build_append_int_noprefix(table_data, f->pci_segment, 1);
+-    if (rev < 4) {
++    if (rev < 3) {
+         /* Reserved */
+         build_append_int_noprefix(table_data, 0, 4);
+     } else {
+         /* UartClkFreq */
+         build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
+-        /* PreciseBaudrate */
+-        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
+-        /* NameSpaceStringLength */
+-        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
+-        /* NameSpaceStringOffset */
+-        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
+-        /* NamespaceString[] */
+-        g_array_append_vals(table_data, name, f->namespace_string_length);
++        if (rev >= 4) {
++            /* PreciseBaudrate */
++            build_append_int_noprefix(table_data, f->precise_baudrate, 4);
++            /* NameSpaceStringLength */
++            build_append_int_noprefix(table_data, f->namespace_string_length, 2);
++            /* NameSpaceStringOffset */
++            build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
++            /* NamespaceString[] */
++            g_array_append_vals(table_data, name, f->namespace_string_length);
++        }
+     }
+     acpi_table_end(linker, &table);
+ }
 -- 
 2.39.5 (Apple Git-154)
 
