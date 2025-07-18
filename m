@@ -4,97 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F8E2C83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7154DC83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 08:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucfyu-0002U7-2P; Fri, 18 Jul 2025 03:58:12 -0400
+	id 1ucg2c-0006ac-Ha; Fri, 18 Jul 2025 04:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucfyi-0002Qh-3y
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:58:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ucg2M-0006RG-36; Fri, 18 Jul 2025 04:01:48 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ucfyf-0006Ow-U3
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:57:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752825475;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GOn2BSUf8DrlsSe15fpzUBSFAezNelDy/nuMtbmfih8=;
- b=THaTvHH1jjryczZo2TyxRtbNb7xs5yz2JtELTRVQMVdh8I0w1vSDpE1wVAQW6oDLNZSssC
- 6scT0wlti/tQWDa/LOFwQkyxdmnfDPzSJZA0dhhVaIp2CeeAgNnW5JtlkITjLqAkVXAGe5
- 21W2Ew5Xs0CQWnq2wsp5QmKGrQHj/Yo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-yTseaDRDOiuLLtMxTXRzGw-1; Fri, 18 Jul 2025 03:48:29 -0400
-X-MC-Unique: yTseaDRDOiuLLtMxTXRzGw-1
-X-Mimecast-MFC-AGG-ID: yTseaDRDOiuLLtMxTXRzGw_1752824908
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a6d90929d6so734848f8f.2
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 00:48:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752824908; x=1753429708;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GOn2BSUf8DrlsSe15fpzUBSFAezNelDy/nuMtbmfih8=;
- b=wvUd9zovnuV3/2GxaPy7Vn5mbAR9axZML/FV8vAKS8Boxso2OaJZKaSRnmo+sKVs8G
- b2D4RKDrfW5j5B8MozqVJRJzToMitZPhEn1ALsN9Gd+V4mJI3G5SFAkdPiGr0OJ8A1zT
- 9fHHJ0xT/YpJMflvrjEDafI2w/Z1T3+RUUdEYLHDm3VwDY2odLbLctz57JFw+2F1oBlM
- WjLZcXRfZhl2esEnsFOS4CZPB7nr9bNNPLmpvd6bhh1xD+apqeJOQP6nRerkA2QucJel
- 58DLMab6a8cx8wqzFo2Y1Z55BHYJYqP9+PLGWTur2zbKiRjSYFmzghCFHuHXjoA/a1+q
- QXxg==
-X-Gm-Message-State: AOJu0YyXnWpUTjplWbZSMOLMq7a/zoIwgSPbeQ81FtWBD8ZLdtlkJOzE
- aPygQEpUaHMGfNlSXOzCfxyRaBwVkTa3m1vIc7AhNsa/luWuPAVXinkbME8TSNhDUBp7g7W1vSD
- Z440I42lCU+fQNhjkv72QVpqiwov/7jR43JbDb9Zzo3hN7FbR6xvtnPVx
-X-Gm-Gg: ASbGncvuz1yBeVyynA9dTzLBr28SfJF0inyKciby2dA6r1MYmpKWiN9oq7mDT6hrjuh
- MkdqRwfQR5g7jnyH5AqXSxFTF75KBTt3w2JRibSfU4VBPHSFcVxr1xY5bmb7n3bGHtVkg4626+f
- dQ/Ztr4uCP2IOcZImNmxTV+eRqQplYUtlLKVbjcDV7KilSybO3STztSbZJshkcseU3gO3/Nr0au
- UfEqztyG+SOrQaKeicfjkEz7pA88m2ULLxsfJCRM9gDaSEQQe2aiKaIUHBESWAdaWfL3gI33Cgt
- cZdBcTGzvTbKbn12kCvIDQrbrWYTWvli1/i5CbhUn8I=
-X-Received: by 2002:a5d:588f:0:b0:3b4:990a:a0d6 with SMTP id
- ffacd0b85a97d-3b60e4ec65dmr6986258f8f.19.1752824907760; 
- Fri, 18 Jul 2025 00:48:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFncB2nK/oOUu5mKV2yAN1DW2VPc6AOBqhjl2B/EJa0SyzAtGRhHsWDZ+nN5E/WN2XukIjMvQ==
-X-Received: by 2002:a5d:588f:0:b0:3b4:990a:a0d6 with SMTP id
- ffacd0b85a97d-3b60e4ec65dmr6986245f8f.19.1752824907395; 
- Fri, 18 Jul 2025 00:48:27 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.73.155])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e7f2bb4sm70232135e9.8.2025.07.18.00.48.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Jul 2025 00:48:26 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH] rust/pl011: merge device_class.rs into device.rs
-Date: Fri, 18 Jul 2025 09:47:48 +0200
-Message-ID: <20250718074747.367232-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250718-rust-pl011-cleanup-v1-1-c71b1d6a69a5@linaro.org>
-References: 
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1ucg2H-0007iE-Vr; Fri, 18 Jul 2025 04:01:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bk2Jh6MTFz6M4wv;
+ Fri, 18 Jul 2025 16:00:04 +0800 (CST)
+Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
+ by mail.maildlp.com (Postfix) with ESMTPS id 069FF140371;
+ Fri, 18 Jul 2025 16:01:23 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 18 Jul 2025 10:01:22 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Fri, 18 Jul 2025 10:01:22 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "gustavo.romero@linaro.org"
+ <gustavo.romero@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH v8 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
+ instantiation
+Thread-Topic: [PATCH v8 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
+ instantiation
+Thread-Index: AQHb8l0bM38DEvQAn02aSOaRjdl7LrQ3LnQAgABc6VA=
+Date: Fri, 18 Jul 2025 08:01:22 +0000
+Message-ID: <f793c36c2cf145b7842eb72795553824@huawei.com>
+References: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
+ <20250711084749.18300-9-shameerali.kolothum.thodi@huawei.com>
+ <aHnJ+qUsVyu+eFaT@Asurada-Nvidia>
+In-Reply-To: <aHnJ+qUsVyu+eFaT@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,12 +88,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.  But for 10.2 maybe we could alternate in preparing pull
-requests?  We'll see.
 
-Paolo
+
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Friday, July 18, 2025 5:14 AM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> ddutile@redhat.com; berrange@redhat.com; imammedo@redhat.com;
+> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com;
+> gustavo.romero@linaro.org; mst@redhat.com;
+> marcel.apfelbaum@gmail.com; Linuxarm <linuxarm@huawei.com>;
+> Wangzhou (B) <wangzhou1@hisilicon.com>; jiangkunkun
+> <jiangkunkun@huawei.com>; Jonathan Cameron
+> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> Subject: Re: [PATCH v8 08/12] hw/arm/virt: Allow user-creatable SMMUv3
+> dev instantiation
+>=20
+> Hi Shameer,
+>=20
+> On Fri, Jul 11, 2025 at 09:47:45AM +0100, Shameer Kolothum wrote:
+> > +static void create_smmuv3_dev_dtb(VirtMachineState *vms,
+> > +                                  DeviceState *dev, PCIBus *bus)
+> > +{
+> > +    PlatformBusDevice *pbus =3D PLATFORM_BUS_DEVICE(vms-
+> >platform_bus_dev);
+> > +    SysBusDevice *sbdev =3D SYS_BUS_DEVICE(dev);
+> > +    int irq =3D platform_bus_get_irqn(pbus, sbdev, 0);
+> > +    hwaddr base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> > +    MachineState *ms =3D MACHINE(vms);
+> > +
+> > +    if (!(vms->bootinfo.firmware_loaded && virt_is_acpi_enabled(vms))
+> &&
+> > +        strcmp("pcie.0", bus->qbus.name)) {
+> > +        warn_report("SMMUv3 device only supported with pcie.0 for DT")=
+;
+> > +        return;
+> > +    }
+> > +    base +=3D vms->memmap[VIRT_PLATFORM_BUS].base;
+> > +    irq +=3D vms->irqmap[VIRT_PLATFORM_BUS];
+>=20
+> The code is fine.
+>=20
+> Just a related question here:
+>=20
+> Do you know where we define the number of IRQs and the range of
+> MMIO for the SysBusDevice?
+>=20
+> SMMU has four IRQs. And I see multiple vSMMU instances do have
+> correct intervals to their IRQ numbers, but I cannot find where
+> the magic is done.
+
+Look for,
+#define PLATFORM_BUS_NUM_IRQS 64
+
+So in theory we could have around 16 vSMMU per VM. It depends on
+other platform devices specified as well. Do you see a need for more
+on a per VM basis? I know there are host systems with large number of
+SMMUv3s, but how many a VM will get assigned realistically?
+
+Thanks,
+Shameer
+
+
+
 
 
