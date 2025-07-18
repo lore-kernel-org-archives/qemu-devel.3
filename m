@@ -4,115 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDB3C83F34
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21ABC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucfEY-0005JM-Tj; Fri, 18 Jul 2025 03:10:18 -0400
+	id 1ucfgn-00070C-In; Fri, 18 Jul 2025 03:39:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucf5g-0003yT-Me
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:01:08 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ucf5e-00080j-3J
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:01:08 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ae3b336e936so341998166b.3
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 00:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752822064; x=1753426864; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TRv14jTjaPNdfV9WYIP6YBJPUP2EWuiScVG97tOiKS8=;
- b=ZXTNzYu4WtnkZ0V6pZgTcoSUOw3l2GuMmckcC0J+wMpmb/niSaywPX39PbHaXdZJ78
- wD+7je0+SUcxTuEMhTfOdJPiClJatRzgAOzofOEX2sWypFNOQIreyPy7/TcIqoGGzcru
- 8t3jYx4L1WcqNTY430C/Szp4e47By665NcXUCDitvGbaF1nDmbYVVLQ3hvLjmEun0obM
- Xbh9WNFFcpLTsrgFJdoxwO+KHsLcUe3FbUjXEiQgs+xS2wULf4y1MR0sXYD05bhkNQ5I
- rSZI903qqtvamnyGd6EjgD5sGPVT/qP1Cy+qKKFj0OIkOK7PP2/RMRylNcunZm9giqzL
- d8Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752822064; x=1753426864;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TRv14jTjaPNdfV9WYIP6YBJPUP2EWuiScVG97tOiKS8=;
- b=dj3OpzaCakWGUJdSTcQ1EcVnIAB2j8kxEbCbICHqd2Odvs5qEjDHkaAkp5cfW1a/IW
- /weN+iABupAjbsK1nPB/BJwx6ybMRI29YMOohoch+FSZpvSpF00U+YT65abevkdiRrwi
- kEBG6GBL0rj2aIyUdQyh1gZVmUCTrUuYoe298l72nyPDX0T47q8A0f4+pJBSuIYthZI7
- mri2LaCUJXgRpmEl95a/Sjr582ImPUczM+OFleOHXd+MkGflv1EeAKyC4SF3kCc1SFf6
- Dc7WrxqPxVL/LK+ZAFy0HLeIrARbJ2XGVnLdXQX7ctMqQ9IsOJ2EQl/Iq/AYGQ7+fZrV
- yxlw==
-X-Gm-Message-State: AOJu0Yw45KiV9qN/NGrVu0oRxpz90173z+I+Oh3ZNLtjFq8DgCf/qN3W
- wmPkgd1iw7a+zptYHEAOGP3ojTQU13awY1tv4PAkogTNxSvEu+MRemB+KAX1A7xpPVLOqsxRxH/
- w8Np/
-X-Gm-Gg: ASbGncsWO+XtK39nhdExcZo93d2r7KQVuJT1uwyNqK9OSLCYyyejMTjRhVXYgLltZ/i
- FMFKQsExzggEb/L2NMhzeAMgpqDWmQt3uaUxUl3CaHJS5vUwqOo6G+TuY6mHBT4ssrdVcJAFLbD
- 0Y/vIt05CIsigbq4kmAVLrlZLhVbhbqsU5qwbJj3nO8liGazhys42BplZwoIJ3I2NtfuJ4ypOLZ
- tcPbYRiF+lEacZOzG2T69Kn/GDzkCSBYaBrEuAD84jAPj/lh/Uyxrwj5/w7clNDQ11Sp1rrvUJR
- CLMp8J7HwAILFz3FlXWY8yT0gAHz7yn52tbsbYKlN06o2ucW0JFLGMm7CMzkMyJ+MxGweiGbBaL
- /oP7ZjbjDA1zLCzdGGf9A2ekKWYDLHlAKf2OakqzE1pIqru/ka4deJIHoA7BKQWbI8i0=
-X-Google-Smtp-Source: AGHT+IE8PWlLlR1eB7SbgP7hUeKe4KuNytKCv8e511RBPlmXrUtC6M0+m0tu2PiBdsFPXA6rWnEvGg==
-X-Received: by 2002:a17:907:a588:b0:ae0:a813:1bc0 with SMTP id
- a640c23a62f3a-ae9ce1addc0mr1002408566b.53.1752822063373; 
- Fri, 18 Jul 2025 00:01:03 -0700 (PDT)
-Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aec6ca7bc8esm65500166b.106.2025.07.18.00.01.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Jul 2025 00:01:02 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 18 Jul 2025 10:00:52 +0300
-Subject: [PATCH] rust/pl011: merge device_class.rs into device.rs
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucfQ1-00025e-Fk; Fri, 18 Jul 2025 03:22:09 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ucfPz-0008Qy-5J; Fri, 18 Jul 2025 03:22:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F14A71381DB;
+ Fri, 18 Jul 2025 10:21:43 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E50A249883;
+ Fri, 18 Jul 2025 10:21:53 +0300 (MSK)
+Message-ID: <df3745a5-28ab-482c-9fa1-434d2c0327de@tls.msk.ru>
+Date: Fri, 18 Jul 2025 10:21:53 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/6] target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Alexandre Chartre <alexandre.chartre@oracle.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250717152316.353049-1-pbonzini@redhat.com>
+ <20250717152316.353049-2-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20250717152316.353049-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250718-rust-pl011-cleanup-v1-1-c71b1d6a69a5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIACPxeWgC/x3MQQqAIBBA0avErBtwpEi6SrSQGmtATLQikO6et
- HyL/wtkTsIZxqZA4luyHKGC2gaW3YaNUdZq0Er3aiCD6conRq+IcPFswxWRrGHSPVunOqhhTOz
- k+afT/L4fWCbO52QAAAA=
-X-Change-ID: 20250718-rust-pl011-cleanup-1a8e125eaf04
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9245;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=2iVVbLOnqB09NHa0a042eLDGvvrb+k6avN3yeC1C2EM=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9lZkV1bmtVOWV3YkltUU4zdkQ5RE1lQlp4TVFqCmZUNVhJWjNacTN4UkJGSXQ0
- T3lKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUhueExnQUt
- DUkIzS2Nkd2YzNEowTzYyRC85bERCTzhia05GSWcvaXRtazJPd2U5MldQZHo0QTFORkYyb3BROA
- pLbDAxeVc1QTZUK1I2S0xOeEN1WTE3RUYrV2I1WEQ4cnhmQmJrRHVDYS9LZG80V0o3V0pGNGtyZ
- WVhTDExeEkvCk5LcENwK0xTZ3lOYzRwalExWlRFSHZZV2F3T1VhYkZMU2NtSEVhT0gxUTRYbjVZ
- M0JmbDYxMzRpQ3R5T3E5QWcKWjl0d2VCNmhPc1I1d3B2bkdjaFJsRXQ0K2tzMTVFZ2FsODBTUG1
- Bak9UNU9TYzNtMW01c3diekVyM1ZzcmZJaApKUGZYS2xVdHIwQXJveVZHVUNEcGVFalYzZUU3aV
- JFWjBxTDV6RXk5U3dWL01ZWmQvdHY0OGpVVGFnZnp2NGo3CkxqSFFYNmI3bjVoelpuc3ZDU2FFY
- zBBODZVci9XeHE1TEpBWU9aSWZubXptaFV2eGpFL0gwcCtleUl1WFZTc04KbEZqYWo3NHRYbFN1
- dHZ3NVpsNFgwMmdaR213MHpKcW45MmVmMkU0a3FFUXA5SkM4dFNIZ1QzcTA0R2h0TFJKVgpVZEI
- vMzBQTHVDamVIVEpGMnZLNXA5Z01oaWhRVG1jaXk0MDBTaGVMRy9UZmFvN1NXdThwKzY5RDBIaE
- RRODBzCmw1QW4zaTYzT0ZDK2N5Z2RhMDdmakFSSzJtaGMvRWkydnI1U0FBcEFPUUlCMmVjbHBiV
- GN3WUdrcjJvVDZKNy8KYWhGcU83ZVlSaytMMk9UZXVkZEFXbDkyOWVRTTh2SVBTM0FwVjNWYVA0
- bFlaWDMwVE9xTVNVMlRSallJMUFHTgppUHZqWmM2VGRZY0k2WGthNGwyUmJjdW5OL2N1OUFDd2J
- XTzJPeGlScVl2Uldmc0FHMUVNdGpjNTU0c2lrZ0RaCkxOWldzQT09Cj1tRDdFCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,280 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The split was a relic of early development and is not necessary.
+On 17.07.2025 18:23, Paolo Bonzini wrote:
+> KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
+> cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
+> MSR and it makes no sense to emulate it on AMD.
+> 
+> As a consequence, VMs created on AMD with qemu -cpu host and using
+> KVM will advertise the ARCH_CAPABILITIES feature and provide the
+> IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
+> as the guest OS might not expect this MSR to exist on such cpus (the
+> AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
+> are not defined on the AMD architecture).
+> 
+> A fix was proposed in KVM code, however KVM maintainers don't want to
+> change this behavior that exists for 6+ years and suggest changes to be
+> done in QEMU instead.  Therefore, hide the bit from "-cpu host":
+> migration of -cpu host guests is only possible between identical host
+> kernel and QEMU versions, therefore this is not a problematic breakage.
+> 
+> If a future AMD machine does include the MSR, that would re-expose the
+> Windows guest bug; but it would not be KVM/QEMU's problem at that
+> point, as we'd be following a genuine physical CPU impl.
+> 
+> Reported-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- rust/hw/char/pl011/src/device.rs       | 103 ++++++++++++++++++++++++++++++---
- rust/hw/char/pl011/src/device_class.rs | 103 ---------------------------------
- rust/hw/char/pl011/src/lib.rs          |   1 -
- 3 files changed, 96 insertions(+), 111 deletions(-)
+This feels like a qemu-stable material, is it not?
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 5b53f2649f161287f40f79075afba47db6d9315c..ceb71dd99b661b9f4da98f2dbabe18e82142035b 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -2,9 +2,14 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::{ffi::CStr, mem::size_of};
-+use std::{
-+    ffi::{c_int, c_void, CStr},
-+    mem::size_of,
-+    ptr::NonNull,
-+};
- 
- use qemu_api::{
-+    bindings::{qdev_prop_bool, qdev_prop_chr},
-     chardev::{CharBackend, Chardev, Event},
-     impl_vmstate_forward,
-     irq::{IRQState, InterruptSource},
-@@ -18,12 +23,11 @@
-     sysbus::{SysBusDevice, SysBusDeviceImpl},
-     uninit_field_mut,
-     vmstate::VMStateDescription,
-+    vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_unused,
-+    zeroable::Zeroable,
- };
- 
--use crate::{
--    device_class,
--    registers::{self, Interrupt, RegisterOffset},
--};
-+use crate::registers::{self, Interrupt, RegisterOffset};
- 
- // TODO: You must disable the UART before any of the control registers are
- // reprogrammed. When the UART is disabled in the middle of transmission or
-@@ -173,10 +177,10 @@ impl ObjectImpl for PL011State {
- 
- impl DeviceImpl for PL011State {
-     fn properties() -> &'static [Property] {
--        &device_class::PL011_PROPERTIES
-+        &PL011_PROPERTIES
-     }
-     fn vmsd() -> Option<&'static VMStateDescription> {
--        Some(&device_class::VMSTATE_PL011)
-+        Some(&VMSTATE_PL011)
-     }
-     const REALIZE: Option<fn(&Self) -> qemu_api::Result<()>> = Some(Self::realize);
- }
-@@ -712,3 +716,88 @@ impl PL011Impl for PL011Luminary {
- impl DeviceImpl for PL011Luminary {}
- impl ResettablePhasesImpl for PL011Luminary {}
- impl SysBusDeviceImpl for PL011Luminary {}
-+
-+extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
-+    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-+    unsafe { state.as_ref().migrate_clock }
-+}
-+
-+/// Migration subsection for [`PL011State`] clock.
-+static VMSTATE_PL011_CLOCK: VMStateDescription = VMStateDescription {
-+    name: c"pl011/clock".as_ptr(),
-+    version_id: 1,
-+    minimum_version_id: 1,
-+    needed: Some(pl011_clock_needed),
-+    fields: vmstate_fields! {
-+        vmstate_clock!(PL011State, clock),
-+    },
-+    ..Zeroable::ZERO
-+};
-+
-+extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
-+    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
-+    let result = unsafe { state.as_ref().post_load(version_id as u32) };
-+    if result.is_err() {
-+        -1
-+    } else {
-+        0
-+    }
-+}
-+
-+static VMSTATE_PL011_REGS: VMStateDescription = VMStateDescription {
-+    name: c"pl011/regs".as_ptr(),
-+    version_id: 2,
-+    minimum_version_id: 2,
-+    fields: vmstate_fields! {
-+        vmstate_of!(PL011Registers, flags),
-+        vmstate_of!(PL011Registers, line_control),
-+        vmstate_of!(PL011Registers, receive_status_error_clear),
-+        vmstate_of!(PL011Registers, control),
-+        vmstate_of!(PL011Registers, dmacr),
-+        vmstate_of!(PL011Registers, int_enabled),
-+        vmstate_of!(PL011Registers, int_level),
-+        vmstate_of!(PL011Registers, read_fifo),
-+        vmstate_of!(PL011Registers, ilpr),
-+        vmstate_of!(PL011Registers, ibrd),
-+        vmstate_of!(PL011Registers, fbrd),
-+        vmstate_of!(PL011Registers, ifl),
-+        vmstate_of!(PL011Registers, read_pos),
-+        vmstate_of!(PL011Registers, read_count),
-+        vmstate_of!(PL011Registers, read_trigger),
-+    },
-+    ..Zeroable::ZERO
-+};
-+
-+pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
-+    name: c"pl011".as_ptr(),
-+    version_id: 2,
-+    minimum_version_id: 2,
-+    post_load: Some(pl011_post_load),
-+    fields: vmstate_fields! {
-+        vmstate_unused!(core::mem::size_of::<u32>()),
-+        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
-+    },
-+    subsections: vmstate_subsections! {
-+        VMSTATE_PL011_CLOCK
-+    },
-+    ..Zeroable::ZERO
-+};
-+
-+qemu_api::declare_properties! {
-+    PL011_PROPERTIES,
-+    qemu_api::define_property!(
-+        c"chardev",
-+        PL011State,
-+        char_backend,
-+        unsafe { &qdev_prop_chr },
-+        CharBackend
-+    ),
-+    qemu_api::define_property!(
-+        c"migrate-clk",
-+        PL011State,
-+        migrate_clock,
-+        unsafe { &qdev_prop_bool },
-+        bool,
-+        default = true
-+    ),
-+}
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-deleted file mode 100644
-index d328d846323f6080a9573053767e51481eb32941..0000000000000000000000000000000000000000
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ /dev/null
-@@ -1,103 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--use std::{
--    ffi::{c_int, c_void},
--    ptr::NonNull,
--};
--
--use qemu_api::{
--    bindings::{qdev_prop_bool, qdev_prop_chr},
--    prelude::*,
--    vmstate::VMStateDescription,
--    vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_unused,
--    zeroable::Zeroable,
--};
--
--use crate::device::{PL011Registers, PL011State};
--
--extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
--    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
--    unsafe { state.as_ref().migrate_clock }
--}
--
--/// Migration subsection for [`PL011State`] clock.
--static VMSTATE_PL011_CLOCK: VMStateDescription = VMStateDescription {
--    name: c"pl011/clock".as_ptr(),
--    version_id: 1,
--    minimum_version_id: 1,
--    needed: Some(pl011_clock_needed),
--    fields: vmstate_fields! {
--        vmstate_clock!(PL011State, clock),
--    },
--    ..Zeroable::ZERO
--};
--
--extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
--    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
--    let result = unsafe { state.as_ref().post_load(version_id as u32) };
--    if result.is_err() {
--        -1
--    } else {
--        0
--    }
--}
--
--static VMSTATE_PL011_REGS: VMStateDescription = VMStateDescription {
--    name: c"pl011/regs".as_ptr(),
--    version_id: 2,
--    minimum_version_id: 2,
--    fields: vmstate_fields! {
--        vmstate_of!(PL011Registers, flags),
--        vmstate_of!(PL011Registers, line_control),
--        vmstate_of!(PL011Registers, receive_status_error_clear),
--        vmstate_of!(PL011Registers, control),
--        vmstate_of!(PL011Registers, dmacr),
--        vmstate_of!(PL011Registers, int_enabled),
--        vmstate_of!(PL011Registers, int_level),
--        vmstate_of!(PL011Registers, read_fifo),
--        vmstate_of!(PL011Registers, ilpr),
--        vmstate_of!(PL011Registers, ibrd),
--        vmstate_of!(PL011Registers, fbrd),
--        vmstate_of!(PL011Registers, ifl),
--        vmstate_of!(PL011Registers, read_pos),
--        vmstate_of!(PL011Registers, read_count),
--        vmstate_of!(PL011Registers, read_trigger),
--    },
--    ..Zeroable::ZERO
--};
--
--pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
--    name: c"pl011".as_ptr(),
--    version_id: 2,
--    minimum_version_id: 2,
--    post_load: Some(pl011_post_load),
--    fields: vmstate_fields! {
--        vmstate_unused!(core::mem::size_of::<u32>()),
--        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
--    },
--    subsections: vmstate_subsections! {
--        VMSTATE_PL011_CLOCK
--    },
--    ..Zeroable::ZERO
--};
--
--qemu_api::declare_properties! {
--    PL011_PROPERTIES,
--    qemu_api::define_property!(
--        c"chardev",
--        PL011State,
--        char_backend,
--        unsafe { &qdev_prop_chr },
--        CharBackend
--    ),
--    qemu_api::define_property!(
--        c"migrate-clk",
--        PL011State,
--        migrate_clock,
--        unsafe { &qdev_prop_bool },
--        bool,
--        default = true
--    ),
--}
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 5c4fbc9d148fc4cebfe45adfd31a4fd215c87363..2b70d2ff5604179b367b91cbcfdbf9480fa30180 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -13,7 +13,6 @@
- //! the [`registers`] module for register types.
- 
- mod device;
--mod device_class;
- mod registers;
- 
- pub use device::pl011_create;
+Thanks,
 
----
-base-commit: 3656e761bcdd207b7759cdcd608212d2a6f9c12d
-change-id: 20250718-rust-pl011-cleanup-1a8e125eaf04
-
---
-γαῖα πυρί μιχθήτω
-
+/mjt
 
