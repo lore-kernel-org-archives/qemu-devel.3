@@ -4,96 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7F5C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 05:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107B0C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 06:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucdxI-0002j4-I8; Fri, 18 Jul 2025 01:48:27 -0400
+	id 1uce8c-0007ik-Jf; Fri, 18 Jul 2025 02:00:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ucdwr-0002gS-4v
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 01:47:57 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ucdwo-0004yg-Uy
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 01:47:56 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a6f2c6715fso1362277f8f.1
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 22:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752817672; x=1753422472; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=baqikEA6Bt2DPLQkQCy+8M2l3qcydKPQYEHK1DQGKTU=;
- b=cv9xXWcsL/v4K4vFlfXN5yCcxU55/UH9xYGT79tkjqgUeq51b+3jOB3l18bSpVlaWv
- MlSblXnUaBvH6L8xtpv0vctLFIUtzBLsoizQmrENetNwGKfwhedJjdTH+sswkMoVxJF8
- u0kKtIS0/1yHtEj66cgqHNukgv8Akmne06kqVYI2dA1ZLBHtjNETb5EsOFbXuRQQlzZY
- 2PBkVoDzkftmVHyxhnOe3Qu/ZEE9v//EsFoPWqJpzE3gkwPtIZihvQWAhKyClhvAlPlz
- frc47q5Sku8vSr9JKB93BAmfxZW29t4d2nXxMmISErz3OhBaQxrPobZGvTxzTKTKc0VS
- YSlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752817672; x=1753422472;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=baqikEA6Bt2DPLQkQCy+8M2l3qcydKPQYEHK1DQGKTU=;
- b=Calb2v1B3JEqWz69G62pGxW6n+olXaUp8GYGIMOzzUmDh0AVzutWzNmraSxK6Wala9
- b8DN2UgsjNS4RYarxHOoe8+JYX4YorvwMUKTl/cSq3KTXPEYqBpDmNC0+3TB1e49Whlq
- S2pL/Lyl7Id8Fw1io7vi7Wj/SSuCN7hQiNHdjmw7mkp74dMZ0ZS31VWgxUb0i7M3qsGu
- 5xBpZHEIf9ghpDTmC/4Tv2qqk5I/dQA9Edv6gz2s7nU4yWUGt0KNKEVV3v/pJdO7lTU1
- CWAhhM6kkJDVEjC1C1oWrWl9mNCy2OvI9/rSSogQ2+3q0WiEuhJupKkxtFU7VWJfvXPp
- HHlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUp552gXusaJg87l6Mmgn6gIYq2H8jVkCSDMa+SGLe9UHjz0oHhzwNaAQGt5IokbijkDDL7ZAlG0QyA@nongnu.org
-X-Gm-Message-State: AOJu0Yz7GVAlvcvhi1aLfHz8aUkBdn7flKxUj4zNeUDFIcj8GZKOIER4
- Rk0WzQBgCaWZp19fQPXK4RDGjZRFnKdi8MPPSWHJ2x7qywnyksiuqHT1STipEI6GRJ8=
-X-Gm-Gg: ASbGncusy19H1Oxj03Iwz8o2fYxu0cCNWrRqP5qrx0tC0moKjkVKCp7XlbKTSXlT1Mw
- u3b2oijxPSoYjgJdmZUnjlPEZ9a1xfMqYDOX2tR6yb+iH2EHE+b37pwd/rFSfHQ4NBEH6Z/TmEX
- fGZWm/ouYi7FAVdYIkFKUmL0SBy7Peh1Z5smpXHtKyWnE/mnCcSvSC4iniCzw5nfAdIaiJgZATr
- 8+yYhQLMLYMFTS3fQaFQyBoiKMMKkXB3CgRaVuTrqNHUJtq/fOoDZBTWlZRVXeACssmygwc5db/
- Pu4R4KOrM9Vdrc0wSWKu1ze7rcjBmNRMHH2nRww9kHyFcWOqdocby4wM4XpT880Tz160CDDXAOU
- 6LiygoqTyss/bifUyXt9DE9/TetZ3lk4snsWEi0J7zup98tov/cCUScu+gucyTsaBeQ==
-X-Google-Smtp-Source: AGHT+IFueJ+RJmVjsiwJ0yJcrpa9ej1WlGLYZoVYql5jbSGfdUyV2jZhvBIltr3sQdLEyzKdJIb+xA==
-X-Received: by 2002:a05:6000:2c11:b0:3a8:6262:6ef5 with SMTP id
- ffacd0b85a97d-3b60e4b80a6mr8265560f8f.10.1752817672401; 
- Thu, 17 Jul 2025 22:47:52 -0700 (PDT)
-Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4563b74ed25sm10000365e9.24.2025.07.17.22.47.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Jul 2025 22:47:51 -0700 (PDT)
-Message-ID: <45123543-91ab-463d-800e-04899d699352@linaro.org>
-Date: Fri, 18 Jul 2025 07:47:49 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uce8Z-0007dq-JZ
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:00:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uce8X-00016D-1U
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:00:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752818398;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/mEqaLDr/H+9nu0IwwfKNIFjiN3TR7SoKZq7aIz8ozc=;
+ b=MvD998ssyelIQKFXLN7HxeNCtxfOzz6zOJNdcXqU4U329EhDU2RHG9bMzNCmaDXP7cnQOh
+ rhlg9N0yFFHFP47gNKrxODfbYuwlzIn2D8LAVUshXkLltqZQ2csQg1bHsfV7Mc8ia44xEU
+ Ik1HXJe9SxGi3aY1hwkEIgReHK53FvM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-grsRW010NZSypg8DjlPwxA-1; Fri,
+ 18 Jul 2025 01:59:54 -0400
+X-MC-Unique: grsRW010NZSypg8DjlPwxA-1
+X-Mimecast-MFC-AGG-ID: grsRW010NZSypg8DjlPwxA_1752818393
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C4961800282; Fri, 18 Jul 2025 05:59:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A55DB196664F; Fri, 18 Jul 2025 05:59:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1BEF021E6A27; Fri, 18 Jul 2025 07:59:50 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Adam Williamson <awilliam@redhat.com>,  qemu-devel@nongnu.org,  Paul
+ Durrant <paul@xen.org>,  xen-devel@lists.xenproject.org,  Stefano
+ Stabellini <sstabellini@kernel.org>,  "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>,  Anthony PERARD <anthony@xenproject.org>
+Subject: Re: [PATCH] xen/passthrough: add missing error-report include
+In-Reply-To: <87v7nqgk21.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Fri, 18 Jul 2025 07:11:18 +0200")
+References: <20250717220207.171040-1-awilliam@redhat.com>
+ <87v7nqgk21.fsf@pond.sub.org>
+Date: Fri, 18 Jul 2025 07:59:50 +0200
+Message-ID: <87ikjqght5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 37/42] accel/hvf: Emulate HVC at EL2
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250620172751.94231-1-philmd@linaro.org>
- <20250620172751.94231-38-philmd@linaro.org>
- <4bd8e983-d10f-437a-94fd-1cda26478e56@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4bd8e983-d10f-437a-94fd-1cda26478e56@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,62 +88,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/6/25 05:28, Richard Henderson wrote:
-> On 6/20/25 10:27, Philippe Mathieu-Daudé wrote:
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/arm/hvf/hvf.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Adam Williamson <awilliam@redhat.com> writes:
+>
+>> In cfcacba an `error_report` was added to this file, but the
+>> corresponding include of `qemu/error-report.h` was missed. This
+>> only becomes apparent when building against Xen 4.20+.
 >>
->> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->> index 3907ea8791e..a4f823f834d 100644
->> --- a/target/arm/hvf/hvf.c
->> +++ b/target/arm/hvf/hvf.c
->> @@ -17,6 +17,7 @@
->>   #include "system/hvf.h"
->>   #include "system/hvf_int.h"
->>   #include "system/hw_accel.h"
->> +#include "system/tcg.h"
->>   #include "hvf_arm.h"
->>   #include "cpregs.h"
->> @@ -1117,6 +1118,8 @@ static void hvf_raise_exception(CPUState *cpu, 
->> uint32_t excp,
->>       env->exception.syndrome = syndrome;
->>       arm_cpu_do_interrupt(cpu);
->> +    cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
-> 
-> Why is this needed?
+>> Signed-off-by: Adam Williamson <awilliam@redhat.com>
+>> ---
+>>  hw/xen/xen_pt.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+>> index 9d16644d82..006b5b55f2 100644
+>> --- a/hw/xen/xen_pt.c
+>> +++ b/hw/xen/xen_pt.c
+>> @@ -54,6 +54,7 @@
+>>  
+>>  #include "qemu/osdep.h"
+>>  #include "qapi/error.h"
+>> +#include "qemu/error-report.h"
+>>  #include <sys/ioctl.h>
+>>  
+>>  #include "hw/pci/pci.h"
+>
+> Uh, error-report.h is included without this for me.  To see, build with
+> -H:
+>
+> . /work/armbru/qemu/hw/xen/xen_pt.h
+> .. /work/armbru/qemu/include/hw/xen/xen_native.h
+> ... /work/armbru/qemu/hw/xen/trace.h
+> .... ./trace/trace-hw_xen.h
+> ..... /work/armbru/qemu/include/qemu/error-report.h
 
-Left-over from previous intents, indeed unneeded.
+Just remembered: the generated trace header includes error-report.h only
+when trace's log backend is enabled.
 
-> 
-> r~
-> 
->> +    cpu->exception_index = -1;
->>   }
->>   static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
->> @@ -2090,6 +2093,9 @@ int hvf_vcpu_exec(CPUState *cpu)
->>                   /* SMCCC 1.3 section 5.2 says every unknown SMCCC 
->> call returns -1 */
->>                   env->xregs[0] = -1;
->>               }
->> +        } else if (tcg_enabled()) {
+Suggested commit message:
 
-As you noted you last night during an epic debugging session, since HVF
-doesn't execute the instructions but we get here being trapped, if we
-are going to resume under TCG we need to skip the HVC call (otherwise
-we keep looping over it) with:
+  In commit cfcacba an `error_report` was added to this file, but the
+  corresponding include of `qemu/error-report.h` was missed. This
+  only becomes apparent when building against Xen 4.20+ with trace
+  backend log disabled.
 
-                 env->pc += 4;
+  Fixes: cfcacbab38e4 (xen/passthrough: use gsi to map pirq when dom0 is PVH)
 
-(Same applies to "Emulate SMC at EL3" patch).
+With something like that
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
->> +            /* FIXME check we are called from EL1 (so EL0 -> UDEF) ? */
->> +            hvf_raise_exception(cpu, EXCP_HVC, syn_aa64_hvc(0), 2);
->>           } else {
->>               trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
->>               hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 
->> 1);
-> 
+> Code smell: header in include/... includes header from hw/.  Not this
+> patch's concern.
 
 
