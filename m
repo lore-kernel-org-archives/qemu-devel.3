@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69008C83F3B
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 20:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47732C83F34
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 20:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucrDn-0004zr-Nz; Fri, 18 Jul 2025 15:58:19 -0400
+	id 1ucrI5-0001mZ-Me; Fri, 18 Jul 2025 16:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucr01-0006Y0-Mi
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:05 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzz-0006Ut-Rt
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzx-0000Kw-Jn
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:05 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzw-0000Iq-8h
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752867841;
+ s=mimecast20190719; t=1752867839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CUctqlNzUkpeCx7tkKhfVM7ymn6lOPlaPin3xQLDGY4=;
- b=jHHVF7OlwqqeNPyER/O5+EIzm4Croaw5gek0hQ9nF/rNXWyDOIx3YixGTS+60410LnhG/e
- r/ULVIOqBySmF05lUoe+Z2PRMcHzn2iUU78had423+uFTgnZtggaHq16rsTI8Xi2zMLxao
- /oS4MmVXi6D6It25wYLmCrU1+jGXPM8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iZ34fFgdW/kB6BkmBz6HWhxJ/R9s9L86g6Nh3VJWRVw=;
+ b=ABy6ZZWMwnU0cUs78KsCKug+jbdvzEsir9EaXxgYEUXxs+ZINwEpa8idJ3ij/RnUi/1COb
+ 2cP32WL0rLIPZuj8jZQOUXJmtis1PsKz1yEWRzHmmPLtGRw6csT6L06xItih0dL6UAy0tV
+ QZ835klhCd0IvB97Kg34Rhg7Ce59rJs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-uNVScfDNOJSXKvDgXOQPEg-1; Fri,
- 18 Jul 2025 15:43:57 -0400
-X-MC-Unique: uNVScfDNOJSXKvDgXOQPEg-1
-X-Mimecast-MFC-AGG-ID: uNVScfDNOJSXKvDgXOQPEg_1752867836
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-AhNIyl43MD6cDbaa5o_poQ-1; Fri,
+ 18 Jul 2025 15:43:55 -0400
+X-MC-Unique: AhNIyl43MD6cDbaa5o_poQ-1
+X-Mimecast-MFC-AGG-ID: AhNIyl43MD6cDbaa5o_poQ_1752867834
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CB46195FE11; Fri, 18 Jul 2025 19:43:56 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A789518002B1; Fri, 18 Jul 2025 19:43:53 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.25])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC85B30001B9; Fri, 18 Jul 2025 19:43:55 +0000 (UTC)
+ id 96BD930001B9; Fri, 18 Jul 2025 19:43:51 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id BC8CA180099D; Fri, 18 Jul 2025 21:43:49 +0200 (CEST)
+ id 678391800082; Fri, 18 Jul 2025 21:43:49 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,13 +58,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Sergio Lopez <slp@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 3/3] hw/i386: Add the ramfb romfile compatibility
-Date: Fri, 18 Jul 2025 21:43:49 +0200
-Message-ID: <20250718194349.65771-4-kraxel@redhat.com>
-In-Reply-To: <20250718194349.65771-1-kraxel@redhat.com>
-References: <20250718194349.65771-1-kraxel@redhat.com>
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 0/3] Display 20250718 patches
+Date: Fri, 18 Jul 2025 21:43:46 +0200
+Message-ID: <20250718194349.65771-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -94,172 +91,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shaoqin Huang <shahuang@redhat.com>
+The following changes since commit c079d3a31e45093286c65f8ca5350beb3a4404a9:
 
-ramfb is a sysbus device so it can only used for machine types where it
-is explicitly enabled:
+  Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging (2025-07-15 00:12:07 -0400)
 
-  # git grep machine_class_allow_dynamic_sysbus_dev.*TYPE_RAMFB_DEVICE
-  hw/arm/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-		  TYPE_RAMFB_DEVICE);
-  hw/i386/microvm.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-		  TYPE_RAMFB_DEVICE);
-  hw/i386/pc_piix.c:    machine_class_allow_dynamic_sysbus_dev(m,
-		  TYPE_RAMFB_DEVICE);
-  hw/i386/pc_q35.c:    machine_class_allow_dynamic_sysbus_dev(m,
-		  TYPE_RAMFB_DEVICE);
-  hw/loongarch/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-		  TYPE_RAMFB_DEVICE);
-  hw/riscv/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
-		  TYPE_RAMFB_DEVICE);
+are available in the Git repository at:
 
-So these six are the only machine types we have to worry about.
+  https://gitlab.com/kraxel/qemu.git tags/display-20250718-pull-request
 
-The three x86 machine types (pc, q35, microvm) will actually use the rom
-(when booting with seabios).
+for you to fetch changes up to d5fcf0d960d893b1765e6388cefca9c690839267:
 
-For arm/riscv/loongarch virt we want to disable the rom.
+  hw/i386: Add the ramfb romfile compatibility (2025-07-18 21:41:57 +0200)
 
-This patch sets ramfb romfile option to false by default, except for x86
-machines types (pc, q35, microvm) which need the rom file when booting
-with seabios and machine types <= 10.0 (handling the case of arm virt,
-for compat reasons).
+----------------------------------------------------------------
+Load ramfb vgabios on x86 only.
 
-At the same time, set the "use-legacy-x86-rom" property to true on those
-historical versioned machine types in order to avoid the memory layout
-being changed.
+----------------------------------------------------------------
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
-Message-ID: <20250717100941.2230408-4-shahuang@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
+Shaoqin Huang (3):
+  ramfb: Add property to control if load the romfile
+  vfio: Move the TYPE_* to hw/vfio/types.h
+  hw/i386: Add the ramfb romfile compatibility
+
+ hw/vfio/pci.h                 | 11 ++---------
+ hw/vfio/types.h               | 21 +++++++++++++++++++++
+ include/hw/display/ramfb.h    |  2 +-
  hw/core/machine.c             |  2 ++
- hw/display/ramfb-standalone.c |  2 +-
+ hw/display/ramfb-standalone.c |  5 ++++-
+ hw/display/ramfb-stubs.c      |  2 +-
+ hw/display/ramfb.c            |  6 ++++--
  hw/i386/microvm.c             |  3 +++
  hw/i386/pc_piix.c             | 10 ++++++++++
  hw/i386/pc_q35.c              |  3 +++
- hw/vfio/pci.c                 |  2 +-
- 6 files changed, 20 insertions(+), 2 deletions(-)
+ hw/vfio/display.c             |  4 ++--
+ hw/vfio/pci.c                 |  2 ++
+ 12 files changed, 55 insertions(+), 16 deletions(-)
+ create mode 100644 hw/vfio/types.h
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index e869821b2246..a7043e2a3425 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -39,6 +39,8 @@
- 
- GlobalProperty hw_compat_10_0[] = {
-     { "scsi-hd", "dpofua", "off" },
-+    { "ramfb", "use-legacy-x86-rom", "true"},
-+    { "vfio-pci", "use-legacy-x86-rom", "true" },
- };
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
-diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
-index 82d8c69f8903..72b2071aed01 100644
---- a/hw/display/ramfb-standalone.c
-+++ b/hw/display/ramfb-standalone.c
-@@ -64,7 +64,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
- static const Property ramfb_properties[] = {
-     DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
-     DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState,
--                     use_legacy_x86_rom, true),
-+                     use_legacy_x86_rom, false),
- };
- 
- static void ramfb_class_initfn(ObjectClass *klass, const void *data)
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index e0daf0d4fc30..d90b69a16200 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -49,6 +49,7 @@
- #include "hw/acpi/generic_event_device.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/usb/xhci.h"
-+#include "hw/vfio/types.h"
- 
- #include "elf.h"
- #include "kvm/kvm_i386.h"
-@@ -633,6 +634,8 @@ GlobalProperty microvm_properties[] = {
-      * so reserving io space is not going to work.  Turn it off.
-      */
-     { "pcie-root-port", "io-reserve", "0" },
-+    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
- };
- 
- static void microvm_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index a3285fbc6450..ad5caff3a5d2 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -49,6 +49,7 @@
- #include "hw/i2c/smbus_eeprom.h"
- #include "system/memory.h"
- #include "hw/acpi/acpi.h"
-+#include "hw/vfio/types.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "system/xen.h"
-@@ -77,6 +78,13 @@ static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
- static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
- #endif
- 
-+static GlobalProperty pc_piix_compat_defaults[] = {
-+    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
-+};
-+static const size_t pc_piix_compat_defaults_len =
-+    G_N_ELEMENTS(pc_piix_compat_defaults);
-+
- /*
-  * Return the global irq number corresponding to a given device irq
-  * pin. We could also use the bus number to have a more precise mapping.
-@@ -492,6 +500,8 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                    pc_set_south_bridge);
-     object_class_property_set_description(oc, "x-south-bridge",
-                                      "Use a different south bridge than PIIX3");
-+    compat_props_add(m->compat_props,
-+                     pc_piix_compat_defaults, pc_piix_compat_defaults_len);
- }
- 
- static void pc_i440fx_machine_10_1_options(MachineClass *m)
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index cf871cfdad86..9b9519fa02d5 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -45,6 +45,7 @@
- #include "hw/i386/pc.h"
- #include "hw/i386/amd_iommu.h"
- #include "hw/i386/intel_iommu.h"
-+#include "hw/vfio/types.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/display/ramfb.h"
- #include "hw/ide/pci.h"
-@@ -67,6 +68,8 @@
- 
- static GlobalProperty pc_q35_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
-+    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
- };
- static const size_t pc_q35_compat_defaults_len =
-     G_N_ELEMENTS(pc_q35_compat_defaults);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 0b969b3359db..174499ecec65 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3810,7 +3810,7 @@ static const TypeInfo vfio_pci_dev_info = {
- static const Property vfio_pci_dev_nohotplug_properties[] = {
-     DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
-     DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice,
--                     use_legacy_x86_rom, true),
-+                     use_legacy_x86_rom, false),
-     DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
-                             ON_OFF_AUTO_AUTO),
- };
 -- 
 2.50.1
 
