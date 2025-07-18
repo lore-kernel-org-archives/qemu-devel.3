@@ -4,87 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21ABC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B908C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucfgn-00070C-In; Fri, 18 Jul 2025 03:39:29 -0400
+	id 1ucfj0-0001SD-Ln; Fri, 18 Jul 2025 03:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucfQ1-00025e-Fk; Fri, 18 Jul 2025 03:22:09 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ucfPz-0008Qy-5J; Fri, 18 Jul 2025 03:22:09 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F14A71381DB;
- Fri, 18 Jul 2025 10:21:43 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5E50A249883;
- Fri, 18 Jul 2025 10:21:53 +0300 (MSK)
-Message-ID: <df3745a5-28ab-482c-9fa1-434d2c0327de@tls.msk.ru>
-Date: Fri, 18 Jul 2025 10:21:53 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1ucfW4-0002dj-EZ
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:28:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1ucfVy-0002ii-Mr
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:28:24 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8BxIK+K93lowsksAQ--.24114S3;
+ Fri, 18 Jul 2025 15:28:10 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJCxocKI93lo0QwcAA--.17387S5;
+ Fri, 18 Jul 2025 15:28:10 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 3/9] target/loongarch: Set page size in TLB misc with STLB
+Date: Fri, 18 Jul 2025 15:28:01 +0800
+Message-Id: <20250718072807.3585466-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250718072807.3585466-1-maobibo@loongson.cn>
+References: <20250718072807.3585466-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/6] target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Alexandre Chartre <alexandre.chartre@oracle.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250717152316.353049-1-pbonzini@redhat.com>
- <20250717152316.353049-2-pbonzini@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250717152316.353049-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+X-CM-TRANSID: qMiowJCxocKI93lo0QwcAA--.17387S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,36 +65,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.07.2025 18:23, Paolo Bonzini wrote:
-> KVM emulates the ARCH_CAPABILITIES on x86 for both Intel and AMD
-> cpus, although the IA32_ARCH_CAPABILITIES MSR is an Intel-specific
-> MSR and it makes no sense to emulate it on AMD.
-> 
-> As a consequence, VMs created on AMD with qemu -cpu host and using
-> KVM will advertise the ARCH_CAPABILITIES feature and provide the
-> IA32_ARCH_CAPABILITIES MSR. This can cause issues (like Windows BSOD)
-> as the guest OS might not expect this MSR to exist on such cpus (the
-> AMD documentation specifies that ARCH_CAPABILITIES feature and MSR
-> are not defined on the AMD architecture).
-> 
-> A fix was proposed in KVM code, however KVM maintainers don't want to
-> change this behavior that exists for 6+ years and suggest changes to be
-> done in QEMU instead.  Therefore, hide the bit from "-cpu host":
-> migration of -cpu host guests is only possible between identical host
-> kernel and QEMU versions, therefore this is not a problematic breakage.
-> 
-> If a future AMD machine does include the MSR, that would re-expose the
-> Windows guest bug; but it would not be KVM/QEMU's problem at that
-> point, as we'd be following a genuine physical CPU impl.
-> 
-> Reported-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+With VTLB different TLB entry may have different page size, and
+page size is set in PS field of TLB misc. However with STLB, all the
+TLB entries have the same page size, page size comes from register
+CSR_STLBPS, PS field of TLB misc is not used.
 
-This feels like a qemu-stable material, is it not?
+Here PS field of TLB misc is used with all TLB entries, even with
+STLB, it is convenient with TLB maintainance operation.
 
-Thanks,
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/tcg/tlb_helper.c | 41 ++++++++-----------------------
+ 1 file changed, 10 insertions(+), 31 deletions(-)
 
-/mjt
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 8872593ff0..3ea0e153b1 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -110,11 +110,8 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+     if (!tlb_e) {
+         return;
+     }
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
+     mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
+ 
+@@ -173,11 +170,8 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
+         lo1 = env->CSR_TLBELO1;
+     }
+ 
+-    /* Only MTLB has the ps fields */
+-    if (index >= LOONGARCH_STLB) {
+-        tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+-    }
+-
++    /* Store page size in field PS */
++    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VPPN, csr_vppn);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
+     csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+@@ -283,12 +277,7 @@ void helper_tlbrd(CPULoongArchState *env)
+ 
+     index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     tlb = &env->tlb[index];
+-
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+ 
+     if (!tlb_e) {
+@@ -476,11 +465,8 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+         if (!tlb_e) {
+             continue;
+         }
+-        if (i >= LOONGARCH_STLB) {
+-            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-        } else {
+-            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-        }
++
++        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+         tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+         vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+         compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+@@ -509,11 +495,8 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+         if (!tlb_e) {
+             continue;
+         }
+-        if (i >= LOONGARCH_STLB) {
+-            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-        } else {
+-            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-        }
++
++        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+         tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+         vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+         compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+@@ -673,11 +656,7 @@ static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
+     uint64_t tlb_entry, tlb_ppn;
+     uint8_t tlb_ps, n, tlb_v, tlb_d, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
+ 
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     n = (address >> tlb_ps) & 0x1;/* Odd or even */
+ 
+     tlb_entry = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
+-- 
+2.39.3
+
 
