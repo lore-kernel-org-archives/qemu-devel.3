@@ -4,68 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9C0C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 13:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A741EC83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 13:54:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uclWI-0001Fj-Bf; Fri, 18 Jul 2025 09:53:02 -0400
+	id 1uclXS-0002ik-Ls; Fri, 18 Jul 2025 09:54:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uclS6-0005Qs-SX
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 09:48:43 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uclSd-0005vI-Bl
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 09:49:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uclS4-0007pa-VQ
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 09:48:42 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1uclSb-0008PY-M9
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 09:49:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752846519;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1752846552;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r1/Tl6PGKJ8ohQdM7yFmIJObbKa7UnBHPnNAfVDUhKQ=;
- b=jGm9TSWsHDPNkfiIH+kSzLlJAys+8Hha4WOXhutPUXCmS4QN7stxczoNwnISNyo3K89MnB
- gdiAjcFHSFO3GodTr/8LhkhXYVfIcUkIRMDLylvhx7PHvrtdCwyZLwtVVfMB5I0EKs6E7n
- P01Ke/sSmWc9LNKq9upkeJL7relhGi4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-r4ARqO6WM-Woo_kVxU_GAg-1; Fri,
- 18 Jul 2025 09:41:30 -0400
-X-MC-Unique: r4ARqO6WM-Woo_kVxU_GAg-1
-X-Mimecast-MFC-AGG-ID: r4ARqO6WM-Woo_kVxU_GAg_1752846089
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CF1E18004A7; Fri, 18 Jul 2025 13:41:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69774180170E; Fri, 18 Jul 2025 13:41:27 +0000 (UTC)
-Date: Fri, 18 Jul 2025 14:41:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] net/passt: Fix build failure due to missing GIO dependency
-Message-ID: <aHpPBCiuUBJxqHyx@redhat.com>
-References: <20250718133110.1510978-1-lvivier@redhat.com>
+ bh=mjGlNlf8zwpGQynY2vEPoNssNpsDu6qikmmpoXGF1Kk=;
+ b=ItxbDnB6e9/3TuNqzp7PuE6SxKaYpbKIeOD7tjfuZwoHxsE/szxqjOr2AbaC+klmwiur2b
+ oJvnxyHlAkFsTEj3ycHguV3uPP2PlwLpgwD/NUx+QCPZNwo+onYW7ouXMxT6vwwfDnYPoT
+ OiiaB8hogzbkSOe+bmc1W68MWlVZ8LQ=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680-aahiOxrUMyy9gPvw3q5YGA-1; Fri, 18 Jul 2025 09:49:10 -0400
+X-MC-Unique: aahiOxrUMyy9gPvw3q5YGA-1
+X-Mimecast-MFC-AGG-ID: aahiOxrUMyy9gPvw3q5YGA_1752846550
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6fb0e344e3eso20959136d6.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 06:49:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752846550; x=1753451350;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mjGlNlf8zwpGQynY2vEPoNssNpsDu6qikmmpoXGF1Kk=;
+ b=TD8hCti7UwOrr1X559/wpizNDvQo9SizGhCPzKP7rB/LKUP8Uz7Ajoj5IIDzpjPKKd
+ /7HzQpb7dtyBGEPBdv40MsQzj2YIxUkuHQOJfgoZOVHe6XgcGG8lWj2S/uwn82ccuQLv
+ MOqezIRXjfqYnHK6nPq0/36Fs24e3MUXgBZYkbw5YyPM2o8sUpVruYosxXQO41LyBq8f
+ +A7o3GMcP2aSZ81D2gVolwHSN83POdxvHxtm82bulNS36LLW1TYkFFNUAphNf6ZPtuMR
+ seIDzGkku4+jZ+OtWDU5isi0XSqHCBG+YaJ2sVTvDwA+pjWz1KAoLWrYImquV0q4Znoc
+ 09kg==
+X-Gm-Message-State: AOJu0YyFPg3g3QIm48jHIFv0kCGlkaYMSPGR+ZHm6kAIzukKbZzpWcav
+ ssGjZTEazIn39j60q/9BeGlimPaF8K9e6wRnf1tIHKV6UPPxJrACH7V6Ph8hCji73rI12PnllDK
+ 6FduilbEcZK5WGFRenHrRWP4IQYGZnU+1bPuhNzZmLQ3zz1Z4GvKpTBG7
+X-Gm-Gg: ASbGncvJdWCxOoHf3JeAUO0V1Pux8Ex8A255OXYN9RNrmNSNnPBPw4Ag/sw2xjl8Xue
+ xdN32jWHnkmLpkwfga4sWngwDo4434t5VjpdCyfzSeiIl0aZPLepTZ86gB20mSMRJIayKmTWF9x
+ ClRmHO1OK0OosNaFzkNWQTvJUTt8ofhnZC2RZDG+67l+//H1wejH/HSw1mCeoF4HicqJCCCUZHT
+ 09b7Fr5tkdK9JWcYNkFHmFZHaMs/GJ1hb7AeR0ZOhfafQwJUx7yMg4FbVUcMTNyyGvgOPvwD8q3
+ LTLt6wTH7Gtj7UbP9rfxJ5ovTAaJaUTJ/WncvTUSrC/4r+VEFvAI7l2Rx8Q4zUzDNAn13jqbQrX
+ ean1aFRnzOLV2ioY=
+X-Received: by 2002:a05:6214:3c88:b0:6e4:2f7f:d0bb with SMTP id
+ 6a1803df08f44-704f69d2e2amr116970806d6.4.1752846550218; 
+ Fri, 18 Jul 2025 06:49:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1ytU/9AFkclHqqERvVcEGpp16bR3Z+MIdD5y1g8q3lBEalfyjUDnC/Wq7BCKS4E8rg1cBjA==
+X-Received: by 2002:a05:6214:3c88:b0:6e4:2f7f:d0bb with SMTP id
+ 6a1803df08f44-704f69d2e2amr116970236d6.4.1752846549550; 
+ Fri, 18 Jul 2025 06:49:09 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-45-205-118.retail.telecomitalia.it.
+ [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7051ba93626sm7630916d6.87.2025.07.18.06.49.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Jul 2025 06:49:09 -0700 (PDT)
+Date: Fri, 18 Jul 2025 15:48:59 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH RFC v3 13/13] net: implement UDP tunnel features offloading
+Message-ID: <fm3i2r4lmvzdjp4tly6gbk57knayn7533a27yzk2b3qc6o56io@idk2vwpexjfo>
+References: <cover.1752828082.git.pabeni@redhat.com>
+ <b59ee8e3eb926dd510a7a0f2de16f3d0380589f0.1752828082.git.pabeni@redhat.com>
+ <7eaaizkny73ki3o3ph7bi2x6y7cjtfgyupsbyywxmcismtkdvn@vtgzq3bfygzz>
+ <a137cad8-862f-4601-93ca-b1d9240acc71@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250718133110.1510978-1-lvivier@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <a137cad8-862f-4601-93ca-b1d9240acc71@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,49 +115,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 03:31:10PM +0200, Laurent Vivier wrote:
-> The passt networking backend uses functions from the GIO library,
-> such as g_subprocess_launcher_new(), to manage its daemon process.
-> So, building with passt enabled requires GIO to be available.
-> 
-> If we enable passt and disable gio the build fails during linkage with
-> undefined reference errors:
-> 
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
->   net/passt.c:250: undefined reference to `g_subprocess_launcher_new'
->   /usr/bin/ld: net/passt.c:251: undefined reference to `g_subprocess_launcher_take_fd'
->   /usr/bin/ld: net/passt.c:253: undefined reference to `g_subprocess_launcher_spawnv'
->   /usr/bin/ld: net/passt.c:256: undefined reference to `g_object_unref'
->   /usr/bin/ld: net/passt.c:263: undefined reference to `g_subprocess_wait'
->   /usr/bin/ld: net/passt.c:268: undefined reference to `g_subprocess_get_if_exited'
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `glib_autoptr_clear_GSubprocess':
->   /usr/include/glib-2.0/gio/gio-autocleanups.h:132: undefined reference to `g_object_unref'
->   /usr/bin/ld: libsystem.a.p/net_passt.c.o: in function `net_passt_start_daemon':
->   net/passt.c:269: undefined reference to `g_subprocess_get_exit_status'
-> 
-> Fix this by adding an explicit weson dependency on GIO for the passt
-> option.
-> The existing dependency on linux is kept because passt is only available
-> on this OS.
-> 
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->  meson.build | 1 +
->  1 file changed, 1 insertion(+)
+On Fri, Jul 18, 2025 at 03:44:20PM +0200, Paolo Abeni wrote:
+>On 7/18/25 3:22 PM, Stefano Garzarella wrote:
+>> On Fri, Jul 18, 2025 at 10:52:39AM +0200, Paolo Abeni wrote:
+>>> diff --git a/net/tap.c b/net/tap.c
+>>> index 23c6c118e7..2dfa843547 100644
+>>> --- a/net/tap.c
+>>> +++ b/net/tap.c
+>>> @@ -62,6 +62,8 @@ static const int kernel_feature_bits[] = {
+>>>     VIRTIO_F_NOTIFICATION_DATA,
+>>>     VIRTIO_NET_F_RSC_EXT,
+>>>     VIRTIO_NET_F_HASH_REPORT,
+>>> +    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
+>>> +    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+>>
+>> The *_GSO_CSUM are not supported by vhost-net, right?
+>> (sorry, I don't know the details, it just occurred to me by looking at
+>> the fetaures we enable in the other patch.)
+>
+>Yes, the kernel module supports/exposes only the 2 features above:
+>vhost-net need only to be aware of the exact virtio_net_header size,
+>which in turn depends just on them. Enabling/disabling the outer header
+>csum offload does not change the virtio_net_header struct.
+>
+>The actual csum offload is implemented by the tun device.
+>
+>Please LMK if the above solves your doubt.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Yes, thanks!
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Stefano
 
 
