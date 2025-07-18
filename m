@@ -4,106 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A657C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 19:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D965AC83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 19:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucqcD-0007bW-BF; Fri, 18 Jul 2025 15:19:29 -0400
+	id 1ucqvp-0000q3-13; Fri, 18 Jul 2025 15:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1ucq8t-0003DE-SZ
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 14:49:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1ucq8r-0002Sf-4s
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 14:49:11 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IHUK4d008498
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 18:49:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-type:date:from:message-id:mime-version:subject:to; s=
- qcppdkim1; bh=w/lQuxDCQBVsVTUQZbFlH47iI+AaFLrX6OO5Hx3g/V0=; b=pF
- s6Nrlj4VgCZoYwCVyUJreRa4sExMiJ7BswLJcrbMAE6eMViGdZRSW6d72tOhDwPq
- 7e96OaGjDtJBGH4lHJX5GsCeSExOHequ86sKdmMNlJOjf1EocCKvG3T4m0FUxpgB
- ectkNiHggChctQdM02D4PXMkYVUlG0BHB4QukIX7RCRksMwevntrbmhKe1nPQQ7i
- YGf/fptAXHj1zoG05Zwih5WMZ1zS/F2Y8Enl5XPMpmo0G89CbhmziICSDT51HRpU
- zgjVOb4Cpj5bogwjBosjzzBf5wEzPP5tf2bVPxcSREX00ZmMKB9b/GJ/3P7BpBFi
- gGO4TjWPQeom8HybhZDg==
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufxbcn6f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 18:49:05 +0000 (GMT)
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-e8bcb21f1b8so3119814276.2
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 11:49:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucqV0-0003KL-Rs
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:12:02 -0400
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ucqUy-0001Y3-8r
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:12:01 -0400
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e7d9d480e6cso2043800276.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 12:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752865918; x=1753470718; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=v4xwvNtll+Pk7RSVpzpPc2Cr5zO+kbm6v/0CLrk5xEM=;
+ b=Km3sa2el+zkuQNYcQjq6NDe3S1mbkgXRIMCsvAYTVuWhXYe9wezt7RmOc8i2aTiOAX
+ g4JaJcaVXrdxsnO1qjO6ififvMR9fSTU+Uu4RjhOWMgraLM1aABBl9Q3Tfrom8C8uJa+
+ CcMNScPuJcmiX9DnV4dhWpGlErdbSO+wS+/1lz21lMCbpefmZ/UVNqQbo6x7kQKfcFW4
+ Y0QmgFMb/JWUtxsfc3jSHcjscb+LIpH+e+IFiUzhyG2+xFfrzZ8fE1uZvv9zeoDV8ffu
+ g8EqajBLPrJSE6ulsMZ4PpJW2PK0vop/iRKI7ZMMz2lKpGpOVRWfn1m/Qx6VXglQhW1d
+ EfIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752864544; x=1753469344;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w/lQuxDCQBVsVTUQZbFlH47iI+AaFLrX6OO5Hx3g/V0=;
- b=KMdo2OG8Wt3PDJ8nX7EtZoSfAWVo7VcDFKh07a361GtnVsXeJnj8vK4U9vbokoVB4+
- eNSivtUIP/EEy+nNaRt3qaPA4dDOWNe/nBGQ0fL2oHiREqDwPaTi1yJBKrZ12+N/qvxs
- FePihLeid8TISI3tBQB25XpFNe3sxjvVO/cqNKEOLpf4a5BKVw79oFr1suDxbQTijdTH
- 9hQUXGBpNq8ocRG+vb47GNS1BgSnMgPbU7ZjSmBWAcRujKCyC3hVN8yHztHtOL8whrro
- AfKYf7UfK0G4qHdRPzMaq4YmnT9VTLSt6QAbhbYTFWgENnRpNL/ySiLtRrZJv8c9lRWC
- AYsA==
-X-Gm-Message-State: AOJu0YzMi0VWfhovC8tSVNQeySoFIZZh9wL0Up3SrOu25U+9hIasajIK
- E0egjSRz83+Lt5XfG0A2vK4SzclMQG4w4b3jrHzZTWsWGG9EgMTCgEATepSkvOC7XXZc2CbV7Zf
- UVEHjoOyyXPs3O2zlqq7t4ZjznBOfi14jjd98SzNXAay1+MM7GHgEhFLHZgi3H6cz/SPC8jKjTe
- xreinLCH9WixUN5oaO5Cjc+p90u8rJmVLZYwoHhK4UOb4=
-X-Gm-Gg: ASbGncuowJtIKS5YSxwU+qAhyb/L2AwhnstaLNPhFMRt6F6hCoEwQcJI1EeXCDy6ZLq
- IzlSbp/j9STe7OhyPTMza6sIhZ8ldXJr27G7gaGroRPy2K7P6SUMDahT3EoQweKfFLMlhSU/BDe
- 5WDr7Q7eM8sCTF5W7msRDk+g==
-X-Received: by 2002:a05:6902:18ce:b0:e89:7280:bf98 with SMTP id
- 3f1490d57ef6-e8c5fb98d12mr9564511276.48.1752864544056; 
- Fri, 18 Jul 2025 11:49:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGOFFx4LFsQfEOAfWxcyy8arc3u3pjsA5YFYyfyYg9nNmfVFPxKK7rmqZe+zNNi5DNnX8va5q/BTuusCItFb4o=
-X-Received: by 2002:a05:6902:18ce:b0:e89:7280:bf98 with SMTP id
- 3f1490d57ef6-e8c5fb98d12mr9564479276.48.1752864543353; Fri, 18 Jul 2025
- 11:49:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1752865918; x=1753470718;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v4xwvNtll+Pk7RSVpzpPc2Cr5zO+kbm6v/0CLrk5xEM=;
+ b=DAzywKX4aoK7U0b/eZalgn/9FymMAAYchlD1nFuZWPoKxv36EuDJakD4cYMoM/FIum
+ 2cO0zOx4lbxfG5S2zl8KlRj2flXtWN/09fDYylyk+uTwB6nLxL7wHbqIyZKKHed1ceBR
+ c0sO9iL5BpJz41Da/c/X3VAlVdmsMg7aN5nGQlstlu+9hAyPAgJT5joOR4A5PeFHt3px
+ 66egP8vxvhbGW4Hb4gkoU/EcMyjOAEvwX17mejqxEdBu4L52OE+rmYzfZq35o+m49QO8
+ dxpkv6gtgAiQU3FThjxVL8GJliJVyH/zFBdzmmKf9Q1L1bgzUoWUUpJ7nHyUoTEsadRM
+ l0UA==
+X-Gm-Message-State: AOJu0Yzb/XuhpHMPVKTVYeJn/7VTYRXaPut+DRXE42zOgsuXH2zN8VB9
+ PiKuVOpgv5rWcb6RvOzfI5cehmjvZuTu/3NmMd2WkjiGfWJ04ESxsg1IvnonAXZTl8JSrgjb68z
+ XCaR2LddPAd1mlBSSjdl0D3IScIvkp65+U8OaEKKhtw==
+X-Gm-Gg: ASbGnctxAXP/MHLXV8ZAi1RN33VgoQxGMxGTK3oNBUo5Q4itgJ2Q12EbDYThzAILQzI
+ /yn4rq98REkFiN5xNiyi8HrzIV5wOriG2RKWNr/d5Txc0RnamZNZNi2nNN0s8RYqZJiSj0kKnS9
+ rUj4FB/7mWNLVkA3smOfTvxNHEZUSHgEuNcUEI1AqT9slfqgD4Gt1VnlTF6MBW3hnWBqrgRtZYC
+ YJp2pUvgg9+DCTKxlc=
+X-Google-Smtp-Source: AGHT+IHEnO196Q40JvjD+4c+YcezdYKcxNXc8bQMu3SkDGYcy0kq0PtvCB5zX831NkbegeuHi0TBMr9j7oBip3xZQsc=
+X-Received: by 2002:a05:690c:6408:b0:70e:2d77:3cfe with SMTP id
+ 00721157ae682-71836c6aa9bmr186419967b3.2.1752865918309; Fri, 18 Jul 2025
+ 12:11:58 -0700 (PDT)
 MIME-Version: 1.0
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Date: Fri, 18 Jul 2025 14:48:51 -0400
-X-Gm-Features: Ac12FXyM3n8dWEYA7jslaEkVqArEqxGjCS1Ojq_vsBZHcyfuGA8eFefFGtZHnYE
-Message-ID: <CAEWVDmuS0RSwZiDGNZg4cT1jXp7Xfu97YZL7hDfTvha2TOgS1g@mail.gmail.com>
-Subject: [RFC] target/arm: Concerns about mixed endian support for remote GDB
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000725057063a38948e"
-X-Proofpoint-GUID: ax313kfruEb3simeGnpFEz4Z1IF6327L
-X-Proofpoint-ORIG-GUID: ax313kfruEb3simeGnpFEz4Z1IF6327L
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDE0OSBTYWx0ZWRfX1uGb0qWNowe4
- VehkGr9bP3LpfcPqtayBSREpwYVoJ0xbC/fX/DtEBLvHRCKaEknyM87eQ6XHOdyQRr4TWHbUZO1
- qbdGl4Y3dlRkI0DD8Mv8GYm1NYDlZoUEoFEGRV1V6MoZyc2qpbWWdJw2h78QL/YZ7vFSbOtuY64
- H/8VqStk2sitg9zVHDoq79hk1cyuxA6Rkv8BrMWc/PGYAeEdcGChjbwdZ0i1Po0VKBDaXEy2ZQp
- O3GPSkV3XS4Q+jxDqvp0TYEk3o/SEe0uV03/bFeSKVb8+slvD2Z1hvhlPhBrVeL2mJjvKHQNj0C
- 99BPcKDlocpWag7k0qB9nADGEYC8XY+Ql5RXbxVLYqm2+RLuK/NRL6jkcBVEQecq6b1UCTzLzz/
- WODwLraOdAm/c773EovlqZkBLvP8ugYR4NnaTYdf5MkuQXVg8jc84M+WfxZeGA74HPq9zN5z
-X-Authority-Analysis: v=2.4 cv=Xc2JzJ55 c=1 sm=1 tr=0 ts=687a9721 cx=c_pps
- a=peiObFy/9J5zY6vzkL/ViA==:117 a=Wb1JkmetP80A:10 a=OtHITOApMHYOX6r9MroA:9
- a=QEXdDO2ut3YA:10 a=kjEkAWSLhUONxAS0VI4A:9 a=G_WUqgConza7r-74:21
- a=uSskPZdq7w8du69dlLff:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-18_04,2025-07-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=810
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507180149
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250718173832.47820-1-richard.henderson@linaro.org>
+In-Reply-To: <20250718173832.47820-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 18 Jul 2025 20:11:47 +0100
+X-Gm-Features: Ac12FXzdc0aNY4_eAmrcTGCDdJaJR9F8OObI0O5mBWMPAaoHXTQMafM-LGYr5H8
+Message-ID: <CAFEAcA-nY-2YrZQg6seKzhqYvKc7Adu_xZVsa380KL1XJ4AuJQ@mail.gmail.com>
+Subject: Re: [PATCH for-10.1] tcg/optimize: Don't fold INDEX_op_and_vec to
+ extract
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,321 +93,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000725057063a38948e
-Content-Type: text/plain; charset="UTF-8"
+On Fri, 18 Jul 2025 at 18:46, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> There is no such thing as vector extract.
+>
+> Fixes: 932522a9ddc1 ("tcg/optimize: Fold and to extract during optimize")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3036
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  tcg/optimize.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tcg/optimize.c b/tcg/optimize.c
+> index 62a128bc9b..3638ab9fea 100644
+> --- a/tcg/optimize.c
+> +++ b/tcg/optimize.c
+> @@ -1454,7 +1454,7 @@ static bool fold_and(OptContext *ctx, TCGOp *op)
+>      a_mask = t1->z_mask & ~t2->o_mask;
+>
+>      if (!fold_masks_zosa_int(ctx, op, z_mask, o_mask, s_mask, a_mask)) {
+> -        if (ti_is_const(t2)) {
+> +        if (op->opc == INDEX_op_and && ti_is_const(t2)) {
+>              /*
+>               * Canonicalize on extract, if valid.  This aids x86 with its
+>               * 2 operand MOVZBL and 2 operand AND, selecting the TCGOpcod
 
-Upon examining the current implementation for getting/setting SIMD
-and SVE registers via remote GDB, there is a concern about mixed
-endian support.
 
-Consider the following snippet from a GDB session in which a SIMD
-register's value is set via remote GDB where the QEMU host is little
-endian and the target is big endian:
+How does the fold_masks_zosa stuff work for vector operations here?
+The masks are only 64 bits but the value we're working with is
+wider than that, right?
 
-(gdb) p/x $v0
-$1 = {d = {f = {0x0, 0x0}, u = {0x0, 0x0}, s = {0x0, 0x0}}, s = {f =
-{0x0, 0x0, 0x0, 0x0}, u = {0x0, 0x0, 0x0, 0x0}, s = {0x0, 0x0,
-0x0, 0x0}}, h = {bf = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-0x0}, f = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, u = {
-         0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, s = {0x0, 0x0, 0x0,
-0x0, 0x0, 0x0, 0x0, 0x0}}, b = {u = {0x0 <repeats 16 times>},
-s = {0x0 <repeats 16 times>}}, q = {u = {0x0}, s = {0x0}}}
-(gdb) set $v0.d.u[0] = 0x010203
-(gdb) p/x $v0
-$2 = {d = {f = {0x302010000000000, 0x0}, u = {0x302010000000000, 0x0},
-s = {0x302010000000000, 0x0}}, s = {f = {0x3020100, 0x0, 0x0,
-0x0}, u = {0x3020100, 0x0, 0x0, 0x0}, s = {0x3020100, 0x0, 0x0,
-0x0}}, h = {bf = {0x302, 0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
-f = {0x302, 0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, u = {0x302,
-0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, s = {0x302, 0x100, 0x0,
-0x0, 0x0, 0x0, 0x0, 0x0}}, b = {u = {0x3, 0x2, 0x1, 0x0
-<repeats 13 times>}, s = {0x3, 0x2, 0x1, 0x0 <repeats 13 times>}},
-q = {u = {0x3020100000000000000000000000000}, s = {
-      0x3020100000000000000000000000000}}}
-
-The above snippet exemplifies an issue with how the SIMD register value
-is set when the target endianness differs from the host endianness. A
-similar issue is evident when setting SVE registers, as is shown by the
-snippet below where the QEMU host is little endian and the target is big
-endian:
-
-(gdb) p/x $z0
-$1 = {q = {u = {0x0 <repeats 16 times>}, s = {0x0 <repeats 16 times>}},
-d = {f = {0x0 <repeats 32 times>}, u = {0x0 <repeats 32 times>},
-s = {0x0 <repeats 32 times>}}, s = {f = {0x0 <repeats 64 times>},
-u = {0x0 <repeats 64 times>}, s = {0x0 <repeats 64 times>}},
-h = {f = {0x0 <repeats 128 times>}, u = {0x0 <repeats 128 times>},
-s = {0x0 <repeats 128 times>}}, b = {u = {0x0 <repeats 256 times>},
-s = {0x0 <repeats 256 times>}}}
-(gdb) set $z0.q.u[0] = 0x010203
-(gdb) p/x $z0
-$2 = {q = {u = {0x302010000000000, 0x0 <repeats 15 times>}, s =
-{0x302010000000000, 0x0 <repeats 15 times>}}, d = {f = {0x0,
-0x302010000000000, 0x0 <repeats 30 times>}, u = {0x0, 0x302010000000000,
-0x0 <repeats 30 times>}, s = {0x0, 0x302010000000000,
-0x0 <repeats 30 times>}}, s = {f = {0x0, 0x0, 0x3020100, 0x0
-<repeats 61 times>}, u = {0x0, 0x0, 0x3020100, 0x0 <repeats 61 times>},
-s = {0x0, 0x0, 0x3020100, 0x0 <repeats 61 times>}}, h = {f = {0x0, 0x0,
-0x0, 0x0, 0x302, 0x100, 0x0 <repeats 122 times>}, u = {0x0, 0x0, 0x0,
-      0x0, 0x302, 0x100, 0x0 <repeats 122 times>}, s = {0x0, 0x0, 0x0, 0x0,
-0x302, 0x100, 0x0 <repeats 122 times>}}, b = {u = {0x0, 0x0, 0x0, 0x0,
-0x0, 0x0, 0x0, 0x0, 0x3, 0x2, 0x1, 0x0 <repeats 245 times>}, s = {0x0,
-0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3, 0x2, 0x1, 0x0 <repeats 245 times>
-}}}
-
-Note, in the case of SVE, this issue is also present when the host
-and target are both little endian. Consider the GDB remote session snippet
-below
-showcasing this:
-
-(gdb) p/x $z0
-$6 = {q = {u = {0x0 <repeats 16 times>}, s = {0x0 <repeats 16 times>}}, d =
-{f = {0x0 <repeats 32 times>}, u = {0x0 <repeats 32 times>}, s = {
-      0x0 <repeats 32 times>}}, s = {f = {0x0 <repeats 64 times>}, u = {
-      0x0 <repeats 64 times>}, s = {0x0 <repeats 64 times>}}, h = {f = {
-      0x0 <repeats 128 times>}, u = {0x0 <repeats 128 times>}, s = {
-      0x0 <repeats 128 times>}}, b = {u = {0x0 <repeats 256 times>}, s = {
-      0x0 <repeats 256 times>}}}
-(gdb) set $z0.q.u[0] = 0x010203
-(gdb) p/x $z0
-$7 = {q = {u = {0x102030000000000000000, 0x0 <repeats 15 times>}, s = {
-      0x102030000000000000000, 0x0 <repeats 15 times>}}, d = {f = {0x0,
-0x10203,
-      0x0 <repeats 30 times>}, u = {0x0, 0x10203, 0x0 <repeats 30 times>},
-s = {0x0,
-      0x10203, 0x0 <repeats 30 times>}}, s = {f = {0x0, 0x0, 0x10203,
-      0x0 <repeats 61 times>}, u = {0x0, 0x0, 0x10203, 0x0
-<repeats 61 times>}, s = {0x0, 0x0, 0x10203, 0x0 <repeats 61 times>}},
-h = {f = {0x0, 0x0, 0x0, 0x0, 0x203, 0x1, 0x0 <repeats 122 times>},
-u = {0x0, 0x0, 0x0, 0x0, 0x203, 0x1, 0x0 <repeats 122 times>},
-s = {0x0, 0x0, 0x0, 0x0, 0x203, 0x1, 0x0 <repeats 122 times>}},
-b = {u = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3, 0x2, 0x1,
-0x0 <repeats 245 times>}, s = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-0x3, 0x2, 0x1, 0x0 <repeats 245 times>}}}
-
-In all scenarios, the value returning on getting the register after setting
-it
-to 0x010203 is not preserved in appropriate byte order and hence does not
-print 0x010203 as expected.
-
-The current implementation for the SIMD functionality for getting and
-setting
-registers via the gdbstub is implemented as follows:
-
-aarch64_gdb_set_fpu_reg:
-<omitted code>
-uint64_t *q = aa64_vfp_qreg(env, reg);
-q[0] = ldq_le_p(buf);
-q[1] = ldq_le_p(buf + 8);
-return 16;
-<omitted code>
-
-The following code is a suggested fix for the current implementation that
-should allow for mixed endian support for getting/setting SIMD registers
-via the remote GDB protocol.
-
-aarch64_gdb_set_fpu_reg:
-<omitted code>
-// case 0...31
-uint64_t *q = aa64_vfp_qreg(env, reg);
-if (target_big_endian()){
-q[1] = ldq_p(buf);
-        q[0] = ldq_p(buf + 8);
-}
-else{
-q[0] = ldq_p(buf);
-        q[1] = ldq_p(buf);
-}
-return 16;
-<omitted code>
-
-This use of ldq_p rather than ldq_le_p (which the current implementation
-uses) to load bytes into host endian struct is inspired by the current
-implementation for getting/setting general purpose registers via remote
-GDB (which works appropriately regardless of target endianness), as well
-as the current implementation for getting/setting gprs via GDB with ppc
-as a target (refer to ppc_cpu_gdb_write_register() for example). Note the
-the order of setting q[0] and q[1] is suggested to be swapped for big
-endian targets to ensure that q[1] always holds the most significant half
-and q[0] always holds the least significant half (refer to the comment
-in target/arm/cpu.h, line 155).
-
-For SVE, the current implementation is as follows for the zregs:
-
-aarch64_gdb_set_sve_reg:
-<omitted code>
-// case 0...31
-int vq, len = 0;
-uint64_t *p = (uint64_t *) buf;
-for (vq = 0; vq < cpu->sve_max_vq; vq++) {
-env->vfp.zregs[reg].d[vq * 2 + 1] = *p++;
-        env->vfp.zregs[reg].d[vq * 2] = *p++;
-        len += 16;
-}
-return len;
-
-The suggestion here is similar to the one above for SIMD, that ldq_p
-should be used rather than simple pointer dereferencing. This suggestion
-aims to allow the QEMU gdbstub to support getting/setting register values
-correctly regardless of the target endianness. This suggestion aims to
-yield results such as the following from a remote GDB session, regardless
-of target endianness:
-
-(gdb) p/x $z0
-$1 = {q = {u = {0x0 <repeats 16 times>}, s = {0x0 <repeats 16 times>}},
-d = {f = {0x0 <repeats 32 times>}, u = {0x0 <repeats 32 times>},
-s = {0x0 <repeats 32 times>}}, s = {f = {0x0 <repeats 64 times>},
-u = {0x0 <repeats 64 times>}, s = {0x0 <repeats 64 times>}}, h = {f = {
-      0x0 <repeats 128 times>}, u = {0x0 <repeats 128 times>}, s = {
-      0x0 <repeats 128 times>}}, b = {u = {0x0 <repeats 256 times>}, s = {
-      0x0 <repeats 256 times>}}}
-(gdb) set $z0.q.u[0] = 0x010203
-(gdb) p/x $z0
-$2 = {q = {u = {0x10203, 0x0 <repeats 15 times>}, s = {0x10203,
-      0x0 <repeats 15 times>}}, d = {f = {0x10203, 0x0
-<repeats 31 times>},u = {0x10203, 0x0 <repeats 31 times>},
-s = {0x10203, 0x0 <repeats 31 times>}}, s = {f = {0x10203,
-0x0 <repeats 63 times>}, u = {0x10203, 0x0 <repeats 63 times>},
-s = {0x10203, 0x0 <repeats 63 times>}}, h = {f = {0x203, 0x1,
-0x0 <repeats 126 times>}, u = {0x203, 0x1, 0x0 <repeats 126 times>},
-s = {0x203, 0x1, 0x0 <repeats 126 times>}}, b = {u = {0x3, 0x2, 0x1,
-0x0 <repeats 253 times>}, s = {0x3, 0x2, 0x1, 0x0 <repeats 253 times>}}}
-
---000000000000725057063a38948e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Upon examining the current implementation for getting/sett=
-ing SIMD<br>and SVE registers via remote GDB, there is a concern about mixe=
-d<br>endian support.<br><br>Consider the following snippet from a GDB sessi=
-on in which a SIMD<br>register&#39;s value is set via remote GDB where the =
-QEMU host is little<br>endian and the target is big endian:<br><br>(gdb) p/=
-x $v0<br>$1 =3D {d =3D {f =3D {0x0, 0x0}, u =3D {0x0, 0x0}, s =3D {0x0, 0x0=
-}}, s =3D {f =3D <br>	{0x0, 0x0, 0x0, 0x0}, u =3D {0x0, 0x0, 0x0, 0x0}, s =
-=3D {0x0, 0x0,<br>	 0x0, 0x0}}, h =3D {bf =3D {0x0, 0x0, 0x0, 0x0, 0x0, 0x0=
-, 0x0, <br>	 0x0}, f =3D {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, u =3D {<=
-br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0=
-}, s =3D {0x0, 0x0, 0x0,<br>	 0x0, 0x0, 0x0, 0x0, 0x0}}, b =3D {u =3D {0x0 =
-&lt;repeats 16 times&gt;},<br>	s =3D {0x0 &lt;repeats 16 times&gt;}}, q =3D=
- {u =3D {0x0}, s =3D {0x0}}}<br>(gdb) set $v0.d.u[0] =3D 0x010203<br>(gdb) =
-p/x $v0<br>$2 =3D {d =3D {f =3D {0x302010000000000, 0x0}, u =3D {0x30201000=
-0000000, 0x0},<br>	s =3D {0x302010000000000, 0x0}}, s =3D {f =3D {0x3020100=
-, 0x0, 0x0,<br>	0x0}, u =3D {0x3020100, 0x0, 0x0, 0x0}, s =3D {0x3020100, 0=
-x0, 0x0,<br>	0x0}}, h =3D {bf =3D {0x302, 0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0=
-x0},<br>	f =3D {0x302, 0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, u =3D {0x302, =
-<br>	0x100, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}, s =3D {0x302, 0x100, 0x0, <br>	0=
-x0, 0x0, 0x0, 0x0, 0x0}}, b =3D {u =3D {0x3, 0x2, 0x1, 0x0 <br>	&lt;repeats=
- 13 times&gt;}, s =3D {0x3, 0x2, 0x1, 0x0 &lt;repeats 13 times&gt;}},<br>	q=
- =3D {u =3D {0x3020100000000000000000000000000}, s =3D {<br>=C2=A0 =C2=A0 =
-=C2=A0 	0x3020100000000000000000000000000}}}<br><br>The above snippet exemp=
-lifies an issue with how the SIMD register value<br>is set when the target =
-endianness differs from the host endianness. A<br>similar issue is evident =
-when setting SVE registers, as is shown by the<br>snippet below where the Q=
-EMU host is little endian and the target is big<br>endian:<br><br>(gdb) p/x=
- $z0<br>$1 =3D {q =3D {u =3D {0x0 &lt;repeats 16 times&gt;}, s =3D {0x0 &lt=
-;repeats 16 times&gt;}},<br>	d =3D {f =3D {0x0 &lt;repeats 32 times&gt;}, u=
- =3D {0x0 &lt;repeats 32 times&gt;},<br>	s =3D {0x0 &lt;repeats 32 times&gt=
-;}}, s =3D {f =3D {0x0 &lt;repeats 64 times&gt;},<br>	u =3D {0x0 &lt;repeat=
-s 64 times&gt;}, s =3D {0x0 &lt;repeats 64 times&gt;}}, <br>	h =3D {f =3D {=
-0x0 &lt;repeats 128 times&gt;}, u =3D {0x0 &lt;repeats 128 times&gt;},<br>	=
-s =3D {0x0 &lt;repeats 128 times&gt;}}, b =3D {u =3D {0x0 &lt;repeats 256 t=
-imes&gt;},<br>	s =3D {0x0 &lt;repeats 256 times&gt;}}}<br>(gdb) set $z0.q.u=
-[0] =3D 0x010203<br>(gdb) p/x $z0<br>$2 =3D {q =3D {u =3D {0x30201000000000=
-0, 0x0 &lt;repeats 15 times&gt;}, s =3D <br>	{0x302010000000000, 0x0 &lt;re=
-peats 15 times&gt;}}, d =3D {f =3D {0x0, <br>	0x302010000000000, 0x0 &lt;re=
-peats 30 times&gt;}, u =3D {0x0, 0x302010000000000,<br>	 0x0 &lt;repeats 30=
- times&gt;}, s =3D {0x0, 0x302010000000000, <br>	0x0 &lt;repeats 30 times&g=
-t;}}, s =3D {f =3D {0x0, 0x0, 0x3020100, 0x0 <br>	&lt;repeats 61 times&gt;}=
-, u =3D {0x0, 0x0, 0x3020100, 0x0 &lt;repeats 61 times&gt;},<br>	s =3D {0x0=
-, 0x0, 0x3020100, 0x0 &lt;repeats 61 times&gt;}}, h =3D {f =3D {0x0, 0x0,<b=
-r>	0x0, 0x0, 0x302, 0x100, 0x0 &lt;repeats 122 times&gt;}, u =3D {0x0, 0x0,=
- 0x0, <br>=C2=A0 =C2=A0 =C2=A0 	0x0, 0x302, 0x100, 0x0 &lt;repeats 122 time=
-s&gt;}, s =3D {0x0, 0x0, 0x0, 0x0, <br>	0x302, 0x100, 0x0 &lt;repeats 122 t=
-imes&gt;}}, b =3D {u =3D {0x0, 0x0, 0x0, 0x0,<br>	0x0, 0x0, 0x0, 0x0, 0x3, =
-0x2, 0x1, 0x0 &lt;repeats 245 times&gt;}, s =3D {0x0,<br>	0x0, 0x0, 0x0, 0x=
-0, 0x0, 0x0, 0x0, 0x3, 0x2, 0x1, 0x0 &lt;repeats 245 times&gt;<br>	}}}<br><=
-br>Note, in the case of SVE, this issue is also present when the host<br>an=
-d target are both little endian. Consider the GDB remote session snippet be=
-low<br>showcasing this:<br><br>(gdb) p/x $z0<br>$6 =3D {q =3D {u =3D {0x0 &=
-lt;repeats 16 times&gt;}, s =3D {0x0 &lt;repeats 16 times&gt;}}, d =3D <br>=
-	{f =3D {0x0 &lt;repeats 32 times&gt;}, u =3D {0x0 &lt;repeats 32 times&gt;=
-}, s =3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 32 times&gt;}}, s =3D {=
-f =3D {0x0 &lt;repeats 64 times&gt;}, u =3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x0 =
-&lt;repeats 64 times&gt;}, s =3D {0x0 &lt;repeats 64 times&gt;}}, h =3D {f =
-=3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 128 times&gt;}, u =3D {0x0 &=
-lt;repeats 128 times&gt;}, s =3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats=
- 128 times&gt;}}, b =3D {u =3D {0x0 &lt;repeats 256 times&gt;}, s =3D {<br>=
-=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 256 times&gt;}}}<br>(gdb) set $z0.q.u=
-[0] =3D 0x010203<br>(gdb) p/x $z0<br>$7 =3D {q =3D {u =3D {0x10203000000000=
-0000000, 0x0 &lt;repeats 15 times&gt;}, s =3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x=
-102030000000000000000, 0x0 &lt;repeats 15 times&gt;}}, d =3D {f =3D {0x0, <=
-br>	0x10203, <br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 30 times&gt;}, u =3D=
- {0x0, 0x10203, 0x0 &lt;repeats 30 times&gt;}, <br>	s =3D {0x0, <br>=C2=A0 =
-=C2=A0 =C2=A0 	0x10203, 0x0 &lt;repeats 30 times&gt;}}, s =3D {f =3D {0x0, =
-0x0, 0x10203, <br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 61 times&gt;}, u =
-=3D {0x0, 0x0, 0x10203, 0x0<br>	&lt;repeats 61 times&gt;}, s =3D {0x0, 0x0,=
- 0x10203, 0x0 &lt;repeats 61 times&gt;}},<br>	h =3D {f =3D {0x0, 0x0, 0x0, =
-0x0, 0x203, 0x1, 0x0 &lt;repeats 122 times&gt;},<br>	u =3D {0x0, 0x0, 0x0, =
-0x0, 0x203, 0x1, 0x0 &lt;repeats 122 times&gt;},<br>	s =3D {0x0, 0x0, 0x0, =
-0x0, 0x203, 0x1, 0x0 &lt;repeats 122 times&gt;}},<br>	b =3D {u =3D {0x0, 0x=
-0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3, 0x2, 0x1, <br>	0x0 &lt;repeats 245 ti=
-mes&gt;}, s =3D {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,<br>	0x3, 0x2, 0x1,=
- 0x0 &lt;repeats 245 times&gt;}}}<br><br>In all scenarios, the value return=
-ing on getting the register after setting it<br>to 0x010203 is not preserve=
-d in appropriate byte order and hence does not<br>print 0x010203 as expecte=
-d.<br><br>The current implementation for the SIMD functionality for getting=
- and setting<br>registers via the gdbstub is implemented as follows:<br><br=
->aarch64_gdb_set_fpu_reg:<br>&lt;omitted code&gt;<br>uint64_t *q =3D aa64_v=
-fp_qreg(env, reg);<br>q[0] =3D ldq_le_p(buf);<br>q[1] =3D ldq_le_p(buf + 8)=
-;<br>return 16;<br>&lt;omitted code&gt;<br><br>The following code is a sugg=
-ested fix for the current implementation that<br>should allow for mixed end=
-ian support for getting/setting SIMD registers<br>via the remote GDB protoc=
-ol.<br><br>aarch64_gdb_set_fpu_reg:<br>&lt;omitted code&gt;<br>// case 0...=
-31<br>uint64_t *q =3D aa64_vfp_qreg(env, reg);<br>if (target_big_endian()){=
-<br>	q[1] =3D ldq_p(buf);<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 q[0] =3D ldq_p(buf=
- + 8);<br>}<br>else{<br>	q[0] =3D ldq_p(buf);<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 q[1] =3D ldq_p(buf);<br>}<br>return 16;<br>&lt;omitted code&gt;<br><br>=
-This use of ldq_p rather than ldq_le_p (which the current implementation<br=
->uses) to load bytes into host endian struct is inspired by the current<br>=
-implementation for getting/setting general purpose registers via remote<br>=
-GDB (which works appropriately regardless of target endianness), as well<br=
->as the current implementation for getting/setting gprs via GDB with ppc<br=
->as a target (refer to ppc_cpu_gdb_write_register() for example). Note the<=
-br>the order of setting q[0] and q[1] is suggested to be swapped for big <b=
-r>endian targets to ensure that q[1] always holds the most significant half=
-<br>and q[0] always holds the least significant half (refer to the comment<=
-br>in target/arm/cpu.h, line 155).<br><br>For SVE, the current implementati=
-on is as follows for the zregs:<br><br>aarch64_gdb_set_sve_reg:<br>&lt;omit=
-ted code&gt;<br>// case 0...31<br>int vq, len =3D 0;<br>uint64_t *p =3D (ui=
-nt64_t *) buf;<br>for (vq =3D 0; vq &lt; cpu-&gt;sve_max_vq; vq++) {<br>	en=
-v-&gt;vfp.zregs[reg].d[vq * 2 + 1] =3D *p++;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- env-&gt;vfp.zregs[reg].d[vq * 2] =3D *p++;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-len +=3D 16;<br>}<br>return len;<br><br>The suggestion here is similar to t=
-he one above for SIMD, that ldq_p<br>should be used rather than simple poin=
-ter dereferencing. This suggestion<br>aims to allow the QEMU gdbstub to sup=
-port getting/setting register values<br>correctly regardless of the target =
-endianness. This suggestion aims to<br>yield results such as the following =
-from a remote GDB session, regardless<br>of target endianness:<br><br>(gdb)=
- p/x $z0<br>$1 =3D {q =3D {u =3D {0x0 &lt;repeats 16 times&gt;}, s =3D {0x0=
- &lt;repeats 16 times&gt;}},<br>	d =3D {f =3D {0x0 &lt;repeats 32 times&gt;=
-}, u =3D {0x0 &lt;repeats 32 times&gt;},<br>	s =3D {0x0 &lt;repeats 32 time=
-s&gt;}}, s =3D {f =3D {0x0 &lt;repeats 64 times&gt;},<br>	u =3D {0x0 &lt;re=
-peats 64 times&gt;}, s =3D {0x0 &lt;repeats 64 times&gt;}}, h =3D {f =3D {<=
-br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 128 times&gt;}, u =3D {0x0 &lt;rep=
-eats 128 times&gt;}, s =3D {<br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repeats 128 t=
-imes&gt;}}, b =3D {u =3D {0x0 &lt;repeats 256 times&gt;}, s =3D {<br>=C2=A0=
- =C2=A0 =C2=A0 	0x0 &lt;repeats 256 times&gt;}}}<br>(gdb) set $z0.q.u[0] =
-=3D 0x010203<br>(gdb) p/x $z0<br>$2 =3D {q =3D {u =3D {0x10203, 0x0 &lt;rep=
-eats 15 times&gt;}, s =3D {0x10203, <br>=C2=A0 =C2=A0 =C2=A0 	0x0 &lt;repea=
-ts 15 times&gt;}}, d =3D {f =3D {0x10203, 0x0<br>	&lt;repeats 31 times&gt;}=
-,u =3D {0x10203, 0x0 &lt;repeats 31 times&gt;},<br>	s =3D {0x10203, 0x0 &lt=
-;repeats 31 times&gt;}}, s =3D {f =3D {0x10203, <br>	0x0 &lt;repeats 63 tim=
-es&gt;}, u =3D {0x10203, 0x0 &lt;repeats 63 times&gt;},<br>	s =3D {0x10203,=
- 0x0 &lt;repeats 63 times&gt;}}, h =3D {f =3D {0x203, 0x1, <br>	0x0 &lt;rep=
-eats 126 times&gt;}, u =3D {0x203, 0x1, 0x0 &lt;repeats 126 times&gt;},<br>=
-	s =3D {0x203, 0x1, 0x0 &lt;repeats 126 times&gt;}}, b =3D {u =3D {0x3, 0x2=
-, 0x1,<br>	0x0 &lt;repeats 253 times&gt;}, s =3D {0x3, 0x2, 0x1, 0x0 &lt;re=
-peats 253 times&gt;}}}</div>
-
---000000000000725057063a38948e--
+thanks
+-- PMM
 
