@@ -4,89 +4,220 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB98FC83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 17:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 365D4C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 17:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucpDk-0007A9-Vh; Fri, 18 Jul 2025 13:50:09 -0400
+	id 1ucpHg-0002DM-EN; Fri, 18 Jul 2025 13:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucov0-000537-EB
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 13:30:46 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ucoux-0000r0-Mn
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 13:30:46 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45618ddd62fso24721345e9.3
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 10:30:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1ucow9-0005sM-1h
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 13:31:57 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1ucow3-00010x-DI
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 13:31:56 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56IHHjeU003790;
+ Fri, 18 Jul 2025 17:31:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=rL1dNVKoI5r0ZHK1+6/c5d0uxGDQgcjsOiqcLo/ZAhc=; b=
+ jwfMyARTzqxZRrHGziX1sgAI/CCCJtLPbsAe6jrhn83xJwOBrGLJwuXnbU6cOsU6
+ K8Bm+OtT3opFCbAGhvtoUKyWNZy7k/OlFHuDuNx0dl8AEhe9WfbALi+CQyhxr1SM
+ +KSOZKRj3kJ4TTx9e/DR6JsWmvymbzyuhPW4vb2SfcjZ5blG6bdJozxFg2j7mhzx
+ yJfBinyd5tSsUOrGKU7suufCWobNyJZzD922kPERTztzbYnetP7IL1EwZ8SKlFhd
+ jyWyHLRhmXZSiHAlImiwBwZr3581RWDaTMdfktEVWRnxb/0uBptFXWXckQl8kwCL
+ vKs/Q8Ee6ZaQjlhU1n/VIg==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47uk8g5m62-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 18 Jul 2025 17:31:44 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 56IH8u9l013811; Fri, 18 Jul 2025 17:31:43 GMT
+Received: from nam11-co1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2049.outbound.protection.outlook.com [40.107.220.49])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 47ue5dv8m0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 18 Jul 2025 17:31:43 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vZnl4GH6w+iaHsY6OTK6jqkDMtpmQXcLehTDQ4G47lEOfE7XuGvcJ7WvqmP93yiDquWm1YoDzGW8WvLZ8mscAbCITjz3zIr9TzolptQLlfjIqvx1hRg04QXoDnkfIV4xTdgeNt6QVITroW2L1ovLBWcMBIQeovkFMajRpfpdC90OU5PGzcRoRzSLkW3Z0vaAmF/kedTgTHFF5E0fYWYGB82xmfT15Ev/++U80ZB1ALGJ2ze2rZc88l+0sEG/oYNeiavThSyDw/9/V/shLzGfFv19+NvJUPLe3+j8Pc/if2aZ+hvglHAaxmbjKybzV31Duxpj4xnVJlHidkrsPVagDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rL1dNVKoI5r0ZHK1+6/c5d0uxGDQgcjsOiqcLo/ZAhc=;
+ b=rNCVqXS64LgM+e7vQF0hv9RKlSyJIM6IrWbhLtUsy2Dl1nNFeoGwMCn05WHdj8eJQHulyovqPxLHUI3Z3z+XJ7M9HNO1zF6hkrJwd0zOepkLoUaUzyLG2DFfC4nsSKCJtseUQtjBknrObY/m8gemXagNkO/5Bal1dGVTXMgfmwXeUbQYvKt5Qhyyq39unCOLdmRZzTf+I1e3uA8dsttnRGBfgunqkpozF27hk8GJxMZEQK8vtG9b+10oyDpPFmTzaCIAXE9Lrm1wkwsHPRAsAuos8cAn7FAjFNwPBS+NdfQAHOzQgineOWXgWdNfrVGEQJffXuyGKNN/EpsjU8H05Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752859841; x=1753464641; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=83s1l7e8slhfNxjdmj0HuMqD4EcLsV28TpE5dx21NzY=;
- b=ptzvvufoKTTe0GsziqwQAEtd7TUaitvGZtN7M9IEV0ePxpm4njk/i+ipqadPS5aKnx
- hcqEjtvv0ylrbY1wwG0TXC03arKEOPE1FghgALbHp9E9r/8LMK5kLr4ctvpRXFCUyEAW
- TmwD9nsFKmY2MiRGX0euah52FH3b7wN7CUHzxtqFf++YRRgp/wOL6OR81+weKI7r0OdF
- 8IWnC8Z8Tqc+/JksxiAhgUSW1PNnYs4YIP7+VZ4e1J9b58rNzjE1yynR9AJAALqF4/EY
- kCyWVK25U2spOYLmHsM1WyRBIwdo6+zZVZX4eQHriZzjqbcC3jZfKtfYftfhZUPVZjt6
- FIfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752859841; x=1753464641;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=83s1l7e8slhfNxjdmj0HuMqD4EcLsV28TpE5dx21NzY=;
- b=Yh73Da7dbJSGi2qNHkUkrYQR2zAkxfLwxu6RrmqsgtWwRByokkU2jEkTxQJm/wxC2u
- 3emILHi00sNf70KT+2kg5hFSV8tX+KrufbyK5Tb/yb+PwsGUiWQfl54DEc+2WZvFf5va
- 2kQEeitwCR/zZn2u6xQ5hlW3mlmUa6AnoFitri3ghQ/84vacK2a3OdnYmZm0h/TS9gu/
- RnPK176C8YpCAevOXyiWP4iFA7FOasxCkS85Hvdm11/nq9+RmOdjxQcQQgKIEsY8HArS
- ZMPxnvRz3drEE+6wSN3577gnpXtoADDVUkC5N6lMr0VQL4yguNxLYESG1LnoNfasOiWh
- tSoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/QO1JtWu3DzQ93t2hi5oViOpvh/MZr+FS5K+EKEw9+5RV+ClpaoE9PvyetmSsqIfc/f/gYoUpGKta@nongnu.org
-X-Gm-Message-State: AOJu0YwNRQmQYSiqjYwyhmoGpugHGQixIjSpfNpAns1mHutj5OpxDovV
- txknv2njnHC/pxu7a6RMIFD754B1aYaynrsIlQyQjpM4dnJG1VddmNb8xpsCmnB+wF8=
-X-Gm-Gg: ASbGncvxfUIFVQPW9SRQJHjQ9puGKepj6ufCVuwC4CpC5YarVLvJZIq/fwpZwArHZhY
- Fvyu8hLzLULA+IcTAAGX8FEZoKrv4Lo/HWbrtl8ObIj6V6I9i7a0G0qytNTzxE0afDM1Gm61iNc
- KXgvGqgoQbzHOAhSm5TmcZzp3CQPhPDafb8jXMWrvPmc9BUAUGhQwwW3wMLuZ879e3iYoQGVSkV
- wUenSBnv7XBCmgnoggxjpvQLQWrR/zMy5L8/S5rySycdsVIIbfunqBpVHetOfv5euUszqk2cU7t
- pfHfa7wgjKHrs6N+YhZHmCeQF8LANNXicnzcsEnaozkDYoshygA52for7klhUFZR/V3CgHZSijM
- zVIJp9uU63KVj4CMbsT1Wyl3dB5D8
-X-Google-Smtp-Source: AGHT+IF5qlS51ngxkOnePtdx/r9fP5wVYXkNq5FayuK+HvABgeKa+5Hq+untG0XVyYjLx/kbLxjQng==
-X-Received: by 2002:a05:600c:c4a6:b0:440:6a1a:d89f with SMTP id
- 5b1f17b1804b1-45632a45295mr92026695e9.4.1752859841431; 
- Fri, 18 Jul 2025 10:30:41 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca25443sm2454655f8f.9.2025.07.18.10.30.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Jul 2025 10:30:39 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH for-10.1 05/10] target/arm: Add BFMLA, BFMLS (vectors)
-Date: Fri, 18 Jul 2025 18:30:27 +0100
-Message-ID: <20250718173032.2498900-6-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250718173032.2498900-1-peter.maydell@linaro.org>
-References: <20250718173032.2498900-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rL1dNVKoI5r0ZHK1+6/c5d0uxGDQgcjsOiqcLo/ZAhc=;
+ b=GwPMNvcLkXt9VzME8h3y6T2CMrXIOXdtMpyewm05zo2q59Hg9v8eI9zsFaHXKafrgnT4QnchSL90OYIsB79LQK3AJc8LeOThgXxBVhKNzvsQZqv9p5DOT0J8SWrIdrLyzVXQcoIjqpfarZGObPLUVEgN/RmjhR7cWKI/fNOAQMc=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by IA4PR10MB8635.namprd10.prod.outlook.com (2603:10b6:208:569::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.35; Fri, 18 Jul
+ 2025 17:31:40 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8901.028; Fri, 18 Jul 2025
+ 17:31:39 +0000
+Message-ID: <368d11c5-dbd2-4550-99c4-7675a3bbbbb9@oracle.com>
+Date: Fri, 18 Jul 2025 13:31:36 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC V2 0/8] Live update: tap and vhost
+To: Lei Yang <leiyang@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+ <CAPpAL=y=2os30kCA4_MCMT8OdE3PqGZdg7oBPeS8SKCN0heMrg@mail.gmail.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <CAPpAL=y=2os30kCA4_MCMT8OdE3PqGZdg7oBPeS8SKCN0heMrg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: PH3PEPF000040A5.namprd05.prod.outlook.com
+ (2603:10b6:518:1::54) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA4PR10MB8635:EE_
+X-MS-Office365-Filtering-Correlation-Id: 22840908-6ec6-4ba6-8787-08ddc620f43f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Zi9IY1RwS2tBRE5SYzZiendlOW4xbnZITjRSRTVRZEJCbjVWVnhxdG5Wc25T?=
+ =?utf-8?B?L3VRSUwwK0tyMWd2QUtXYU5DN0JldGZuYk9MSS9adVlFTEZwckVXUnI5UW95?=
+ =?utf-8?B?V3FjN2gvbERKZjhWZ0d0S0FGRFk5amhOZWZIc0ZmT3F6aXRiRTg2OVNLeUlN?=
+ =?utf-8?B?N0UrTUpHS1ZyWVZpV3VwS25oMzF4akxaWm5ONmxvVmdFc3VSUGIxOWFFWlFV?=
+ =?utf-8?B?Vm0zMC9NMW96NzFUdWVsWUhsazBmT3RkbllYS2Y4YkYzVEYxbDgyL2tuQWdK?=
+ =?utf-8?B?TStzQklPWEhkbU9ONmhlOUJKUnV2ck9xTzQ0eW5tdHppb1dxSkJ4NkZLb3Zt?=
+ =?utf-8?B?cUtiQUY4ZkFZZk9PcFhrUlNuRVA4ZUxoWm5mNjFmL0tMdERpek42dmdXcC82?=
+ =?utf-8?B?bkFXY2duNlE0ZXc0OWttVW9acWVyZGtUbHF1WnRUSWtmMTBKdkRPdXBqakpn?=
+ =?utf-8?B?enQ4c2w3YnlneURMSVcrcjcydmRrRzRrSzlNU0RKV3pPUTdDVzV0NXpxK3hG?=
+ =?utf-8?B?bUtxZUhWRjZTaHhDQXk1MUZOWnJGb0pMMGdXQW9YUEhqVDcyaTJTV1VXczJk?=
+ =?utf-8?B?cG9HNHlMVVV1UStYVUNBbUVHVlM0cExLSlYxZ0lrNzQySW9mSDNidm1qdkdr?=
+ =?utf-8?B?dWoyU3RIQ1dtWm5haVF5MTF4MzlSdTRkVmVtdFFDR09QRDhHRnV6Q2NuTzlT?=
+ =?utf-8?B?cXd4VWh0emRCaXIrTkFsUmRiMnpaOS9hTkc0RVR5K1Vod1d3SVl2TGFFdmtV?=
+ =?utf-8?B?VXBOcktjSGVHTTBMSm5keEw1cUduTFNsRkx1NXpVckNIM2JJTi9tMS95ZTVj?=
+ =?utf-8?B?THBDNTFSbDZxbWZvdHYzK3ZKalFtRFBQeXhmV29Ed1EzZXZGd29aaTFkdE5E?=
+ =?utf-8?B?YndEdGFXMmdTUXp5WlRlT29yeWJ4K1dodW4rNWNjbU9tV2VvWG5idzNlN1Ix?=
+ =?utf-8?B?Wlh3M3RUczhNZURTa3o2a0pSS1dyTlRyUy81L05wWnh4c2ZEOHM1MGd0MCtw?=
+ =?utf-8?B?bU5ldElKYjV2bXNqcEVnL0s2bmMyaFppSXBJVUcrdEh6VG5pN1pUK1pnRkZv?=
+ =?utf-8?B?cmJqRjkzd1pNeE5sbUc0TnRHK0FQbnFTTjVVSUcxa1pLazE0WEg1YjRoa0Mw?=
+ =?utf-8?B?bysrMlJCOFlBWjZNekZuZFBMaXpzVTBhamR1NmJCbTNhZGxlSVBjbzZjcHdI?=
+ =?utf-8?B?eEpreVZDcTBFSkMxMXFCaXZVM28xRkFKOUpqOG5mMGlwZWp3QVBNdURuMDlK?=
+ =?utf-8?B?d3pBbXdMTFVOcURWVlZ4UlpGbmZOdWVjbUZ0VllaWUxpeW5WaFcwYXF6VnA2?=
+ =?utf-8?B?UmZWUGo2eVM3QmNVaHQ5NE1OamxXUU40enlTL2JVS3M1RC9ZT2dpRG9aZm1w?=
+ =?utf-8?B?SVF1Q3hnZDRRQmJpbzZNWVo1UHFhSmpLaGFpdmxtZ2FWUXNHNENMVmg4Zmln?=
+ =?utf-8?B?aFRBY1RyZTZWL1pkR0NkQzRxNzVIOGNXNWFPdTV6V3ladEx1K2NOWnFEWHdl?=
+ =?utf-8?B?Ykx6cmhHMGdST2d2RmRvak11ckptVVArNnFtTzl4VFUxM1BhTjZ6OFgwenY1?=
+ =?utf-8?B?WGxEVlFIN1NMUllkRHJ6ZnJhZ24zOU1ya3ZkQVAwQ1h0RVF6RU9qenRZSGh4?=
+ =?utf-8?B?aFZnQU5wcE1KYmhTQTJLMzFyREwveTJNS2VrcWdGTDdiMjV5Z3ZIOUJpV1Bj?=
+ =?utf-8?B?TGJHV1gvUjdZOCsxVFlnUnhLYzVFamFsVWkwc2hJckxzZDBIWUdka1o0N2w1?=
+ =?utf-8?B?OHBhMXdVc3VPK3UyOXhiOXpWWUVmdW4xZUlLRHZrcDdGRURabWFPQ0VUYUg1?=
+ =?utf-8?B?R2JDYzFHVjh1azRKSE5LamlQd0JHL0l6am5ZdWFpTUdNN0gyS2FIdnVkMHRZ?=
+ =?utf-8?B?MWxQYWx0YThMV0NoSUNCMnB4Vlk3ZERqdUlNamJWWW9IRGZXQldvdERKSFFt?=
+ =?utf-8?Q?9J2cyiPxZdk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SXlKazEzYnZVdjh1eUREcVUxTFRsYWhsUmc4NHlENjAycGpwZUlEeGJMdDNB?=
+ =?utf-8?B?SVNvd3ZyUHVCMGdIOHdnSVlJOVA2U3ZqckxTYlpkWG9SY01wT3BsRUdzSzJ4?=
+ =?utf-8?B?Y0RINVJVeGxGd1lCMElwR1pZU25uM0w3T3lUZmQrMGRzWVh2VlRTTk1TUlpo?=
+ =?utf-8?B?NDZVNy85U005WFpEdm02dGRubldzZTNNUnViWVB4WHRBejdjbHdmdUNzT1pH?=
+ =?utf-8?B?Sk1FamIxbm9jK2JEZlBKeGYwN09oNk04b3VhL3diZERIQnhHaStxOEN1Yjk2?=
+ =?utf-8?B?bUtZWjNzRFp0eDFBbHZNN3pEbG5DVzE0UHFOd3ZHQXRNNnB3c3huQ3p1U2Fn?=
+ =?utf-8?B?YU01QmlmNTlWNHc1VEJON1NaOU14WjhTWTVKaDN0Z3ZSOWJmZytFelI1RytI?=
+ =?utf-8?B?d2JXNml3VWhBZlA5cFQwQ2dTbStZdzlYNEFyVEd1RjZIa042UUg4MFNWOGI2?=
+ =?utf-8?B?ck10M2w0U1dLTTJHaDhlL0U1bzlOamw1TjJnSXk0eEdlb0ViUWZSY3lHSnhJ?=
+ =?utf-8?B?dzAvK2h1WEZVWTdBZzZiNVZqUSs1ODFhWDdvMWVCbnk1TG82amVVR0h0Ym5k?=
+ =?utf-8?B?b3BhckRYYVdUWlJ1QnNaMllxMmJPYkI3Q0JvSHpqdFd5dUV0bFBHVHlHSzFJ?=
+ =?utf-8?B?ak13c2x2VDEySFl2SkRJSjVaZERRVmwxSWxSTU1oeWdtWjJMdWM1TG82SzVn?=
+ =?utf-8?B?UjEveEFMTUx3NXErbjlKMllJSHhZRk9Vemt3WGVQaFFsdjVVaE9IaGpWZU9M?=
+ =?utf-8?B?aFRzdHV4Z1RFU1pxREx2dkx1eUthdG5TK2xReXZUb3JNb1pBRjMvSkZuNWJ1?=
+ =?utf-8?B?S1JrSUlNcmEyYVYrVk85bnMrMEdMLzY4WkM3N0FzVGVqM2UybUhZdlM1SXRJ?=
+ =?utf-8?B?STdwSklJVndFWWxHWEFUL3VKR1hYQkRGMDJjSFNZN0RhUGQyd1FrcElxc213?=
+ =?utf-8?B?WmwwdXMzek1QNTRteDlMbEZMcGYzVDlKaTZsWDVTNC9mU1k2cEZtODR5MThV?=
+ =?utf-8?B?Rm56aGpDQTV0blVITFRScFdwR2w1WUtjQVNqeERxVnZIRytPbG45eVJsN3RD?=
+ =?utf-8?B?dW55Zm5WTzJodGVWRldsSWk2cEx5bklZN0dqNWY0VEcyYm9KbEtRUEdzN0FQ?=
+ =?utf-8?B?TzRmbUpldEpsd1BGbXpLeXNNQUZadCtWbEMra2pPMTN5SWh0dVNCSHg0TFdx?=
+ =?utf-8?B?WE9Uc3I1ajAyWllDVFU5bGlDZmNTcnFpWHdHMzBoTVVycmliNi9xQ2RhWXM3?=
+ =?utf-8?B?ME52azRCSFBSM3VObm1UUFQ2VTNSdmMyL2Urd0MxblNTMXEzZ2hsbXhHb2c5?=
+ =?utf-8?B?UlhQbW9vbXNSeG9DMCtncHhYQjU1cHBBVGdvV1ZpaHRQYkVQUEQwSy91aU1w?=
+ =?utf-8?B?TlQ0VVRkaHpBakdaSnlPZllCcmNTcytrSTBXUUtuelBtK21aeDlLaEVUbDEy?=
+ =?utf-8?B?bjQrS0NoZEFqWHFLQ2hsQ0FLMWZXb2lDbit5S0h1Vy9Dc0J2YVFEVzFMcUlJ?=
+ =?utf-8?B?L0tiRzhiU2VSMDd2ZnRlY0JOQUdCc0hsY2pnRVF1Z05oOWR1UVQ4ZGJxdHFS?=
+ =?utf-8?B?SlVlTDBEakVhYWRZQkp1R01tU2FQcHFyZXlOOHhnVE8xWDlCdjdLRVpia0Va?=
+ =?utf-8?B?aXg3OWdET3lja1pBWnlKamI1bkowWDNYaU5mL1NHd0RObDE5OWtTQzA0Q3Vh?=
+ =?utf-8?B?cTdUKzdrc3lNeThOaU5jd3hTWFk4NmErVTVoUnFNVFEycE1rK1hIZEVSZHdC?=
+ =?utf-8?B?Zjg2VDhaUDFVVHNlcmd1VzhWcm9pU3FiVk05MVFKaWhLRm54aVM3SkZMZGNp?=
+ =?utf-8?B?bTJWRHplblZoeW5JS2N5TW9MbDJMQythMG4yRnNkK1ROM1pPRENyVzdPMGlH?=
+ =?utf-8?B?VVRSbjE1M2x2TXkybW9MeFBRNmw0bFJCYUNKM3VTSHZHOFV1MnczS0FCdnlR?=
+ =?utf-8?B?UUJjZGZNM29nazI2cW9SZ0s4T2NiaDNscVpud2hITVZudGNwTWt4NnpaZzNK?=
+ =?utf-8?B?Q1RTRzZjT21VVUN6bC9WQ0QzQU5iMEttSlkrbWF3U0tuM2UwYzlpc0ptZ1E0?=
+ =?utf-8?B?WHNWR0haQ21IL3VhU1FwbnJJdE1NZWY2czFKamhEYWl3c1Nxdmc1UTRKOGxZ?=
+ =?utf-8?B?b0txYkNXRUpISXA1L3lIdm55VGpxUUxSNDcvQlRwQkJLc0VMOHZLWCtrd2lJ?=
+ =?utf-8?B?TUE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: dcjKcBZbNt8P+qiqsVj9n/3kFecQ5XvqeaLhz3U2sl1BG6t6UEIX1W+UlC4UY2LAfbxYNfOKUF2KSiTaTo2mpVnDA1Js5GO23KgBHbDptpAW+RujF1S1JZMkyMmKUbMJTpfjBKmqtq/eZBJdfAKsBfaM1lMK5keBlQgBSQd8TrcjuyIXAGizEnhwm1kwxl+zf9jnrKVaegweAOwarKFQ1cTBKeJeNwP6G7Xk9KNvJXoIYWY6/Ai0zqOv/8rw2j2IXX4fdcSzDIXv5t81gdl5pep1eU0nJY61dAa+/gQxN+RNYjHeYAF0DvcMam4J82mt9n7+FVhY0uR22bLOI+5juhRMZQ6DlCb2+B1ThtbhzBa4Dltr2kzuMR4LUh/PwkBnDDT0YCzhEygXKPCXT/k5gGCrBSjyc2/EbGEACGmHmwb+wZIJ7bNChY4FB2Uv+fto4BA6lXV0co+82zYF5rreeWpP79UbXMb/fxVNMOR4Yr60qpt2AQsHPWLdUGfYtgkRh0hQZpeCGQGiX5Cr5YQPzZqGkeMutiF5JrgiwdnVpRadNorbKY8ZWN6e0xFb43dN/rqGAtOT8z7Y8x6YnHOH0FbUrsTynxNnw6n01x2rDfo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22840908-6ec6-4ba6-8787-08ddc620f43f
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 17:31:39.8226 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: moIBrFAUjoNHpX5/iKkZMdTdRM96PLmd+DeyspmPG9XyqaXK4LkuQxSXi35HGGciHLuMW8jKTbbc+g3gLQkh53sEQOzWHFc/AnRPVecGPYQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR10MB8635
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-18_04,2025-07-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 malwarescore=0
+ phishscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507180138
+X-Proofpoint-ORIG-GUID: e76Y-kdrC_Mc1xYrjWDmy1iZl-D1L0kp
+X-Authority-Analysis: v=2.4 cv=Of+YDgTY c=1 sm=1 tr=0 ts=687a8500 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=jNggveMGteVPl1z8NNEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 cc=ntf awl=host:12061
+X-Proofpoint-GUID: e76Y-kdrC_Mc1xYrjWDmy1iZl-D1L0kp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE4MDEzOSBTYWx0ZWRfX4P4wT0+kziOi
+ qc3S9y6r3Hrrgwgds9V/rM4uVCbaSWqg0s4LMNQdSedAyRFwHtHyLcHunrcVHm4kduDHeuSyV4l
+ OkrGbTyT18SbBz5NigmDd0XSFthwlh1SE2vOjCIZDjZ2g3pD488gWn+tQZzhBAA6KeOXJ7FErs2
+ uHZDTwDNHWtqsMqZnvPVyoyBIgOGLWsqDsyI+r/0+iuaN5MGjZDql+cWWfl2lJvYU0XV7umWxVj
+ wdxatFZUvTCekuak3e4uQu5okdyxbUyj7p1qDInTAvRqRpsth3yDE3uRmckJ8VUmdkj8GOdSku1
+ scexlXtHWXmW9WOvnNCSucSARUYbaz9O2f66oDoF3qoNLRhWyo90Q3JMooQtm7BXVwMXyKHT8zj
+ U+PF1YbiIr4kU3HzNPqB/qUPlNVuyjQp7sAd+JBaeNzd6pVTKnGVg+jNI71Wp5DFGQUQcLy8
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,205 +233,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_SVE_B16B16 adds bfloat16 versions of the FMLA and FMLS insns in
-the "SVE floating-point multiply-accumulate writing addend" group,
-encoded as sz=0b00.
+On 7/18/2025 4:48 AM, Lei Yang wrote:
+> Hi Steve
+> 
+> I tested your patch which hit a problem under enable/disable nic mq
+> state(The full test scenario is live migration vm at local under
+> enable/disable vm nic mq state):
+> Run command: /qemu-img info /home/images/vm1.qcow2 --output=json
+> Error info: qemu-img: Could not open '/home/images/vm1.qcow2': Failed
+> to get shared "write" lock
+> 
+> In the same environment if I remove the enable/disable nic mq steps,
+> it can work well.
+> 
+> Note: This issue has not been reproduced 100%, but in order to confirm
+> this is really a bug, I test the following:
+> 1. Live migration vm at local under enable/disable nic mq state: 3/5
+> reproduce ratio
+> 2. Only live migration 5 times are all passed.
 
-Fixes: 7b1613a1020d2942 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/helper-sve.h    | 14 +++++++
- target/arm/tcg/sve_helper.c    | 69 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sve.c | 21 ++++++++---
- 3 files changed, 98 insertions(+), 6 deletions(-)
+Thank you Lei for testing this.  I would like to debug it, but I need
+more information:
 
-diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index cb6c2355e58..5e4b7fd8cf4 100644
---- a/target/arm/tcg/helper-sve.h
-+++ b/target/arm/tcg/helper-sve.h
-@@ -1541,6 +1541,8 @@ DEF_HELPER_FLAGS_6(sve_fcadd_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(sve_fcadd_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_fmla_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fmla_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fmla_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1548,6 +1550,8 @@ DEF_HELPER_FLAGS_7(sve_fmla_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_fmla_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_fmls_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fmls_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fmls_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1555,6 +1559,8 @@ DEF_HELPER_FLAGS_7(sve_fmls_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_fmls_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_fnmla_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fnmla_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fnmla_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1562,6 +1568,8 @@ DEF_HELPER_FLAGS_7(sve_fnmla_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_fnmla_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_fnmls_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fnmls_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_fnmls_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1569,6 +1577,8 @@ DEF_HELPER_FLAGS_7(sve_fnmls_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_fnmls_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_ah_fmls_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fmls_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fmls_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1576,6 +1586,8 @@ DEF_HELPER_FLAGS_7(sve_ah_fmls_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_ah_fmls_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_ah_fnmla_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fnmla_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fnmla_zpzzz_s, TCG_CALL_NO_RWG,
-@@ -1583,6 +1595,8 @@ DEF_HELPER_FLAGS_7(sve_ah_fnmla_zpzzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_7(sve_ah_fnmla_zpzzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_7(sve_ah_fnmls_zpzzz_b16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fnmls_zpzzz_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_7(sve_ah_fnmls_zpzzz_s, TCG_CALL_NO_RWG,
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 1a56fa86d9c..105cc5dd122 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5099,6 +5099,75 @@ DO_ZPZ_FP(flogb_d, float64, H1_8, do_float64_logb_as_int)
- 
- #undef DO_ZPZ_FP
- 
-+static void do_fmla_zpzzz_b16(void *vd, void *vn, void *vm, void *va, void *vg,
-+                              float_status *status, uint32_t desc,
-+                              uint16_t neg1, uint16_t neg3, int flags)
-+{
-+    intptr_t i = simd_oprsz(desc);
-+    uint64_t *g = vg;
-+
-+    do {
-+        uint64_t pg = g[(i - 1) >> 6];
-+        do {
-+            i -= 2;
-+            if (likely((pg >> (i & 63)) & 1)) {
-+                float16 e1, e2, e3, r;
-+
-+                e1 = *(uint16_t *)(vn + H1_2(i)) ^ neg1;
-+                e2 = *(uint16_t *)(vm + H1_2(i));
-+                e3 = *(uint16_t *)(va + H1_2(i)) ^ neg3;
-+                r = bfloat16_muladd(e1, e2, e3, flags, status);
-+                *(uint16_t *)(vd + H1_2(i)) = r;
-+            }
-+        } while (i & 63);
-+    } while (i != 0);
-+}
-+
-+void HELPER(sve_fmla_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                              void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0, 0, 0);
-+}
-+
-+void HELPER(sve_fmls_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                              void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0x8000, 0, 0);
-+}
-+
-+void HELPER(sve_fnmla_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                               void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0x8000, 0x8000, 0);
-+}
-+
-+void HELPER(sve_fnmls_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                               void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0, 0x8000, 0);
-+}
-+
-+void HELPER(sve_ah_fmls_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                              void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0, 0,
-+                      float_muladd_negate_product);
-+}
-+
-+void HELPER(sve_ah_fnmla_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                               void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0, 0,
-+                      float_muladd_negate_product | float_muladd_negate_c);
-+}
-+
-+void HELPER(sve_ah_fnmls_zpzzz_b16)(void *vd, void *vn, void *vm, void *va,
-+                               void *vg, float_status *status, uint32_t desc)
-+{
-+    do_fmla_zpzzz_b16(vd, vn, vm, va, vg, status, desc, 0, 0,
-+                      float_muladd_negate_c);
-+}
-+
- static void do_fmla_zpzzz_h(void *vd, void *vn, void *vm, void *va, void *vg,
-                             float_status *status, uint32_t desc,
-                             uint16_t neg1, uint16_t neg3, int flags)
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 918cf6e1bd4..37ecbc2b7c0 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4368,19 +4368,28 @@ TRANS_FEAT(FCADD, aa64_sve, gen_gvec_fpst_zzzp, fcadd_fns[a->esz],
-            a->rd, a->rn, a->rm, a->pg, a->rot | (s->fpcr_ah << 1),
-            a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
- 
-+static bool do_fmla_zpzzz(DisasContext *s, arg_rprrr_esz *a,
-+                          gen_helper_gvec_5_ptr *fn)
-+{
-+    /* These insns use MO_8 to encode BFloat16 */
-+    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
-+        return false;
-+    }
-+    return gen_gvec_fpst_zzzzp(s, fn, a->rd, a->rn, a->rm, a->ra, a->pg, 0,
-+                               a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
-+}
-+
- #define DO_FMLA(NAME, name, ah_name)                                    \
-     static gen_helper_gvec_5_ptr * const name##_fns[4] = {              \
--        NULL, gen_helper_sve_##name##_h,                                \
-+        gen_helper_sve_##name##_b16, gen_helper_sve_##name##_h,         \
-         gen_helper_sve_##name##_s, gen_helper_sve_##name##_d            \
-     };                                                                  \
-     static gen_helper_gvec_5_ptr * const name##_ah_fns[4] = {           \
--        NULL, gen_helper_sve_##ah_name##_h,                             \
-+        gen_helper_sve_##ah_name##_b16, gen_helper_sve_##ah_name##_h,   \
-         gen_helper_sve_##ah_name##_s, gen_helper_sve_##ah_name##_d      \
-     };                                                                  \
--    TRANS_FEAT(NAME, aa64_sve, gen_gvec_fpst_zzzzp,                     \
--               s->fpcr_ah ? name##_ah_fns[a->esz] : name##_fns[a->esz], \
--               a->rd, a->rn, a->rm, a->ra, a->pg, 0,                    \
--               a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
-+    TRANS_FEAT(NAME, aa64_sve, do_fmla_zpzzz, a,                        \
-+               s->fpcr_ah ? name##_ah_fns[a->esz] : name##_fns[a->esz])
- 
- /* We don't need an ah_fmla_zpzzz because fmla doesn't negate anything */
- DO_FMLA(FMLA_zpzzz, fmla_zpzzz, fmla_zpzzz)
--- 
-2.43.0
+* did you add the cpr=on option for tap devices, or is this just
+   a regression test of existing functionality?
+
+* What platform: linux or windows?
+
+* Is this a publicly available test that I can run?  I cannot find any
+   reference to "Live migration vm at local under enable/disable nic mq state"
+
+If this is not a public test, can you provide more detail on the commands
+issued at each step in the test?
+
+Thanks!
+
+- Steve
+
+> On Fri, Jul 18, 2025 at 4:48 AM Steve Sistare <steven.sistare@oracle.com> wrote:
+>>
+>> Tap and vhost devices can be preserved during cpr-transfer using
+>> traditional live migration methods, wherein the management layer
+>> creates new interfaces for the target and fiddles with 'ip link'
+>> to deactivate the old interface and activate the new.
+>>
+>> However, CPR can simply send the file descriptors to new QEMU,
+>> with no special management actions required.  The user enables
+>> this behavior by specifing '-netdev tap,cpr=on'.  The default
+>> is cpr=off.
+>>
+>> Steve Sistare (8):
+>>    migration: stop vm earlier for cpr
+>>    migration: cpr setup notifier
+>>    vhost: reset vhost devices for cpr
+>>    cpr: delete all fds
+>>    Revert "vhost-backend: remove vhost_kernel_reset_device()"
+>>    tap: common return label
+>>    tap: cpr support
+>>    tap: postload fix for cpr
+>>
+>>   qapi/net.json             |   5 +-
+>>   include/hw/virtio/vhost.h |   1 +
+>>   include/migration/cpr.h   |   3 +-
+>>   include/net/tap.h         |   1 +
+>>   hw/net/virtio-net.c       |  20 +++++++
+>>   hw/vfio/device.c          |   2 +-
+>>   hw/virtio/vhost-backend.c |   6 ++
+>>   hw/virtio/vhost.c         |  32 +++++++++++
+>>   migration/cpr.c           |  24 ++++++--
+>>   migration/migration.c     |  38 ++++++++-----
+>>   net/tap-win32.c           |   5 ++
+>>   net/tap.c                 | 141 +++++++++++++++++++++++++++++++++++-----------
+>>   12 files changed, 223 insertions(+), 55 deletions(-)
+>>
+>> --
+>> 1.8.3.1
+>>
+>>
+> 
 
 
