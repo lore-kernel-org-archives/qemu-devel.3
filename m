@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DC3C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 15:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB403C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 15:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucmzR-0007TS-27; Fri, 18 Jul 2025 11:27:13 -0400
+	id 1ucn5q-0007Sj-Bo; Fri, 18 Jul 2025 11:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ucmux-0000IX-AN
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 11:22:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1ucmuu-0006Xh-NJ
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 11:22:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752852148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BZVUwPT9+GyGgvsM9xXHYJpCep8zf44RZQMoR3nCen8=;
- b=T1VuNo3bn+BBN+rTof2VYkxO28zNutjOxWqrIQyVPUBv96q/KVyMeoeLPqSlKDo7c1H/PT
- QCqBFrwdIgEuRKNHjBDXG2P+/LtejRcjBOKTn7kBGSwAcbDV+pqJsU3ftbXIMJTPSM4++V
- UAHigfDLau1N1sjBrsl2SiIkNaY9HOs=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-xNRhBHjLMRONT6cDM2acAw-1; Fri, 18 Jul 2025 11:21:58 -0400
-X-MC-Unique: xNRhBHjLMRONT6cDM2acAw-1
-X-Mimecast-MFC-AGG-ID: xNRhBHjLMRONT6cDM2acAw_1752852118
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6fad8b4c92cso53735246d6.0
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 08:21:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752852118; x=1753456918;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1ucmzP-0007Rr-0Q; Fri, 18 Jul 2025 11:27:11 -0400
+Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1ucmzM-0008O8-LK; Fri, 18 Jul 2025 11:27:10 -0400
+Received: by mail-pl1-x643.google.com with SMTP id
+ d9443c01a7336-235d6de331fso25153195ad.3; 
+ Fri, 18 Jul 2025 08:27:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1752852426; x=1753457226; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BZVUwPT9+GyGgvsM9xXHYJpCep8zf44RZQMoR3nCen8=;
- b=Rm/jhK8lZGqflPRXcICVjgY8opYFZ3cOcbiBtagpQA69heJcta4k0KGNfm1ysE1rSA
- 6y/QUOBRLZrf9y3grHEij8PYmj/NXXjQGbjq9tVNAHHr6V4II17DfixrfJKJqAk4A/+n
- c+YTNS86+iSRMuQpfg2L60J0nFIk8duvExKcKJIPjDlBXoWl/sx1n/tRaal6oue7ntmY
- L9auKbmqs7TND60ubIfcAP+f+W/k2rfVqjOe9lIwl8X8X7962nMnauvuQRAG4h1ik48W
- 83oLKyqfcsZ2WxdEka4ReARSbBwO/SgwXdFLUavOfKYjxYUR9/D68uWOpAv++ofNbwV3
- jAxA==
-X-Gm-Message-State: AOJu0YwBp4yaLLHM5DgO5ahagsAh8SrIo4XWYjIpH0iiCuA/KxurZ6Gw
- B/0i3gVgZiS2NfEGiSEjtUHB0zUAcwJgexB8ve3Rt/wQsQeTKIsdFDE0RvL8HBr3IwqTwz/FAeB
- xxZM0CEFTeOkGOsDEduAoW9SRasCd9F7an6ix4u/esLc7SPlVybW9Wwm0
-X-Gm-Gg: ASbGnctdD0jEGljZ0AGSmF1rdgzJxDOeBqC7p5RXWnNWtVEP0L8GA+H2YkVugVQs8Ec
- vAxtcHWA+U8zuAUAo5FY7L+jRnVAtGNvZbWtSmm9I75QfVRYataAAc/ZmGNRFjUhBU1O6SArkl4
- TIpZfVqQIeyn38xIj6CikthWc2CN0aUj3VxEWzgJppz47Dkuh9F8D/ORS0M1cbQrICpgbpNM9z7
- sc6yOvsPyo6lCuUUvOqMaKBbKYj7jwr6LugjWZ5G9IWAGfO8MF7GcPBNUYb3PtvTAXi7VlvgbXM
- 1amCHYrwwAKpnTzRHD0XvMe94ETvWnaFFe06ICbSa/p4wPs400v8mt0pHjGPciGm9nr90+5Grma
- kR9hd885Stg+xkSw=
-X-Received: by 2002:a05:6214:2624:b0:6fa:a0ac:8d57 with SMTP id
- 6a1803df08f44-7051a012badmr42561446d6.12.1752852117842; 
- Fri, 18 Jul 2025 08:21:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCJ28WlNrRbKpzWW1Bf+XDwd3Mp/4O8xny2hhBT0BEE4BY35ZmWy+w5r/aJ546/ZzaVy6g/g==
-X-Received: by 2002:a05:6214:2624:b0:6fa:a0ac:8d57 with SMTP id
- 6a1803df08f44-7051a012badmr42560166d6.12.1752852115744; 
- Fri, 18 Jul 2025 08:21:55 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-45-205-118.retail.telecomitalia.it.
- [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7051ba8cac6sm8845656d6.77.2025.07.18.08.21.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Jul 2025 08:21:55 -0700 (PDT)
-Date: Fri, 18 Jul 2025 17:21:46 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH RFC v3 13/13] net: implement UDP tunnel features offloading
-Message-ID: <6ze5egria3fy3w2jlr3kc2xtljmgiu7klpkbsgucmrgpuuapav@ibsb6ubimbsi>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <b59ee8e3eb926dd510a7a0f2de16f3d0380589f0.1752828082.git.pabeni@redhat.com>
+ bh=zHs/ZpV5VF+uPAwNF4WxC+69ynbzP1chLJuN5FmdjsQ=;
+ b=N9C1NcLfJlz09YlihIUVZXQ0wQ/UUl0tN3Dbpw1/tVmHBHw3c8wiNUi+SkZ68nxI8T
+ AsRM7OmUREXAm6hLltUy/LI0ta7dBcve8qSl0ckhl3hYCjmtQY8h9OkZARg7HVlz/cSB
+ acAw99GK0dWf07RqfyycLBM7lXCO1rSHEtooAUHQRQsTOYMUadYBtFMFSqI2cA6xpdmx
+ WBcLiNSfaP51hy/1lcmCZqcJUiZBDeKTeETFqlHf2ovIIzQaFDdSoaJzMcRPnn0CY+Rj
+ K3hHO2uegIZC6LFDoLwzgUO4nCBxhN4wrZi4u4ZjfFV9PseWmSw+ohJY0sGWeWOz+HCx
+ bgvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752852426; x=1753457226;
+ h=content-transfer-encoding:in-reply-to:from:references:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zHs/ZpV5VF+uPAwNF4WxC+69ynbzP1chLJuN5FmdjsQ=;
+ b=BtWn9WXhVpxK43kxyUnvyFtv0GLfgQIZGgEfCLGUzZn7Oi/k/e9SaNHAA4LBBbZdcm
+ WBWnKv5XH5ZqvBZvp010tc+8YshRURKLfmceQ2YjAPrpFyhF2DF+Ob+fV1cN/mpWOzQI
+ 3jZ5vnL84W234GfvcaZcxc9QN8q7n9sIVvnuc9ztzP3XjROxW6qHiMcpNCzNB+XpnXPN
+ BtRrEvrsuYTSG4AaPE5sc2gkfmpJxeAi8YAtaIqHJfBri+ZAPFP9+vT0ErenkqQBFuqV
+ eAfqpmd6xv19FsRAEc7eU3Y3KRJ9yKBuoJo5VA1LoYj9z9l1VTnro/XdgCUxLDnx3fP0
+ 5q+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCyf7jbaIcmK0cLzKVsei4dkkFPqwXoW6vepYJ4A2uIipGoCBbX1u286NaVRaTP/L9kvYtlCRjvxADOg==@nongnu.org,
+ AJvYcCX59uHGBhhuCLSmZdSyQ3hSg6dMs45lA0Rq+UuewbY1+X7NMRSofMY+qPTsM9eKDeb/GOibqxoQ1q6W@nongnu.org,
+ AJvYcCX9zQxbp0qKKz9pd0XuaCE1nKdmIyXIv1Uh5+xD9fjg82B+6b2Zit+K5la+sGzKBEv9LjHhw8Lb/Nc=@nongnu.org
+X-Gm-Message-State: AOJu0YyGYt5kwmI7W8bM4P9ulnlHH2oBaq5eNs0Z+b/aQb3v2qKish2c
+ bMQSPcWCgnzXh09x+iiKYVjqf6HAehiqvut4ipLS0r95pTERHUODYuI=
+X-Gm-Gg: ASbGnctfldHTlh9SvWSLqWMXrhjSa1jIEiLIJH+7rRbUMbN7AyzlacPZ+wKOD0cqt23
+ /7icqQ1xJtL12UZszjr8HUrJMJGt1k0pkC8u/K9MU9c4r8+HzXWwFDvQwgK1PqCxrEND3LsHz77
+ aSOD4qOUPO22TDdT6Fa0ZnxgLjuTeD+wSRWqcYe8S/tQOJV+zAw3qEDmE6FmCKAu1tWT2Z2NYOP
+ 0rSRQHRhaOS8X5yocUYOo096H+FyGIqWU1ceo33D1JL7Olsf+BjoI1lUa2mgXXT6osQQRcbXI+4
+ bI75Co5ZaFtmUWtyR+vSfriJhDPRqgW5k5mZUZpWGzjCM3GcfbCRNmTrOeaj+gJRAmcvIpAI7TH
+ r8z6LTU9ryw9NxlEOYRetO7OBCeO8OTvu8LgRB0xb2Q==
+X-Google-Smtp-Source: AGHT+IHQ7fwE1NbZhxatBQlFWB2Fj1U4buMyEGGA0Le5b+v2JK5U8vqoh0bFWZXpnOLhAtNpVgzmNA==
+X-Received: by 2002:a17:903:1a8d:b0:234:9092:9dda with SMTP id
+ d9443c01a7336-23e2572ab0bmr191981545ad.24.1752852425927; 
+ Fri, 18 Jul 2025 08:27:05 -0700 (PDT)
+Received: from [192.168.0.113] ([139.227.17.46])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23e3b60f426sm14981165ad.67.2025.07.18.08.26.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Jul 2025 08:27:05 -0700 (PDT)
+Message-ID: <6bb92825-a9f6-4c08-8beb-8af490291378@gmail.com>
+Date: Fri, 18 Jul 2025 23:26:57 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <b59ee8e3eb926dd510a7a0f2de16f3d0380589f0.1752828082.git.pabeni@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/22] vfio/igd.c: use QOM casts where appropriate
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
+ danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
+ farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ iii@linux.ibm.com, john.levon@nutanix.com, thanos.makatos@nutanix.com,
+ alex.williamson@redhat.com, clg@redhat.com, steven.sistare@oracle.com,
+ qemu-ppc@nongnu.org, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
+ <20250715093110.107317-20-mark.caveayland@nutanix.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20250715093110.107317-20-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,209 +108,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 10:52:39AM +0200, Paolo Abeni wrote:
->When any host or guest GSO over UDP tunnel offload is enabled the
->virtio net header includes the additional tunnel-related fields,
->update the size accordingly.
->
->Push the GSO over UDP tunnel offloads all the way down to the tap
->device extending the newly introduced NetFeatures struct, and
->eventually enable the associated features.
->
->As per virtio specification, to convert features bit to offload bit,
->map the extended features into the reserved range.
->
->Finally, make the vhost backend aware of the exact header layout, to
->copy it correctly. The tunnel-related field are present if either
->the guest or the host negotiated any UDP tunnel related feature:
->add them to the kernel supported features list, to allow qemu
->transfer to the backend the needed information.
->
->Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->---
->v2 -> v3:
->  - rebased on top of "net: Consolidate vhost feature bits into vhost_net
->    structure"
->  - _array -> _ex
->
->v1 -> v2:
->  - squashed vhost support into this patch
->  - dropped tun offload consistency checks; they are implemented in
->    the kernel side
->  - virtio_has_tnl_hdr ->virtio_has_tunnel_hdr
->---
-> hw/net/virtio-net.c | 34 ++++++++++++++++++++++++++--------
-> include/net/net.h   |  2 ++
-> net/net.c           |  3 ++-
-> net/tap-linux.c     |  6 ++++++
-> net/tap.c           |  2 ++
-> 5 files changed, 38 insertions(+), 9 deletions(-)
->
->diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->index 70c85f7f77..46f7efac7d 100644
->--- a/hw/net/virtio-net.c
->+++ b/hw/net/virtio-net.c
->@@ -103,6 +103,12 @@
-> #define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
->                                        VIRTIO_NET_FEATURES_MAP_MIN + 64)
->
->+static bool virtio_has_tunnel_hdr(const uint64_t *features)
->+{
->+    return virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO) |
+On 7/15/2025 5:25 PM, Mark Cave-Ayland wrote:
+> Use QOM casts to convert between VFIOPCIDevice and PCIDevice instead of
+> accessing pdev directly.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>  hw/vfio/igd.c | 38 +++++++++++++++++++++-----------------
+>  1 file changed, 21 insertions(+), 17 deletions(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index e7a9d1ffc1..d3ffbe7db6 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -199,7 +199,7 @@ static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
+>      }
+>  
+>      /* Hotplugging is not supported for opregion access */
+> -    if (vdev->pdev.qdev.hotplugged) {
+> +    if (DEVICE(vdev)->hotplugged) {
+>          warn_report("IGD device detected, but OpRegion is not supported "
+>                      "on hotplugged device.");
+>          return false;
+> @@ -259,11 +259,12 @@ static int vfio_pci_igd_copy(VFIOPCIDevice *vdev, PCIDevice *pdev,
+>  static int vfio_pci_igd_host_init(VFIOPCIDevice *vdev,
+>                                    struct vfio_region_info *info)
+>  {
+> +    PCIDevice *pdev = PCI_DEVICE(vdev);
+>      PCIBus *bus;
+>      PCIDevice *host_bridge;
+>      int ret;
+>  
+> -    bus = pci_device_root_bus(&vdev->pdev);
+> +    bus = pci_device_root_bus(pdev);
+>      host_bridge = pci_find_device(bus, 0, PCI_DEVFN(0, 0));
+>  
+>      if (!host_bridge) {
+> @@ -326,13 +327,14 @@ type_init(vfio_pci_igd_register_types)
+>  static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+>                                   struct vfio_region_info *info)
+>  {
+> +    PCIDevice *pdev = PCI_DEVICE(vdev);
+>      PCIDevice *lpc_bridge;
+>      int ret;
+>  
+> -    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
+> +    lpc_bridge = pci_find_device(pci_device_root_bus(pdev),
+>                                   0, PCI_DEVFN(0x1f, 0));
+>      if (!lpc_bridge) {
+> -        lpc_bridge = pci_create_simple(pci_device_root_bus(&vdev->pdev),
+> +        lpc_bridge = pci_create_simple(pci_device_root_bus(pdev),
+>                                   PCI_DEVFN(0x1f, 0), "vfio-pci-igd-lpc-bridge");
+>      }
+>  
+> @@ -349,13 +351,14 @@ static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
+>  {
+>      struct vfio_region_info *host = NULL;
+>      struct vfio_region_info *lpc = NULL;
+> +    PCIDevice *pdev = PCI_DEVICE(vdev);
+>      PCIDevice *lpc_bridge;
+>      int ret;
+>  
+>      /*
+>       * Copying IDs or creating new devices are not supported on hotplug
+>       */
+> -    if (vdev->pdev.qdev.hotplugged) {
+> +    if (DEVICE(vdev)->hotplugged) {
+>          error_setg(errp, "IGD LPC is not supported on hotplugged device");
+>          return false;
+>      }
+> @@ -365,7 +368,7 @@ static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
+>       * can stuff host values into, so if there's already one there and it's not
+>       * one we can hack on, this quirk is no-go.  Sorry Q35.
+>       */
+> -    lpc_bridge = pci_find_device(pci_device_root_bus(&vdev->pdev),
+> +    lpc_bridge = pci_find_device(pci_device_root_bus(pdev),
+>                                   0, PCI_DEVFN(0x1f, 0));
+>      if (lpc_bridge && !object_dynamic_cast(OBJECT(lpc_bridge),
+>                                             "vfio-pci-igd-lpc-bridge")) {
+> @@ -509,6 +512,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>  static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>  {
+>      struct vfio_region_info *opregion = NULL;
+> +    PCIDevice *pdev = PCI_DEVICE(vdev);
+>      int ret, gen;
+>      uint64_t gms_size = 0;
+>      uint64_t *bdsm_size;
+> @@ -528,7 +532,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>      info_report("OpRegion detected on Intel display %x.", vdev->device_id);
+>  
+>      gen = igd_gen(vdev);
+> -    gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
+> +    gmch = vfio_pci_read_config(pdev, IGD_GMCH, 4);
+>  
+>      /*
+>       * For backward compatibility, enable legacy mode when
+> @@ -540,7 +544,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>      if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
+>          (gen >= 6 && gen <= 9) &&
+>          !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
+> -        (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
+> +        (pdev == pci_find_device(pci_device_root_bus(pdev),
+>          0, PCI_DEVFN(0x2, 0)))) {
+>          /*
+>           * IGD legacy mode requires:
+> @@ -562,7 +566,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>           */
+>          ret = vfio_device_get_region_info(&vdev->vbasedev,
+>                                            VFIO_PCI_ROM_REGION_INDEX, &rom);
+> -        if ((ret || !rom->size) && !vdev->pdev.romfile) {
+> +        if ((ret || !rom->size) && !pdev->romfile) {
+>              error_setg(&err, "Device has no ROM");
+>              goto error;
+>          }
+> @@ -605,8 +609,8 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>       * ASLS (OpRegion address) is read-only, emulated
+>       * It contains HPA, guest firmware need to reprogram it with GPA.
+>       */
+> -    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+> -    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+> +    pci_set_long(pdev->config + IGD_ASLS, 0);
+> +    pci_set_long(pdev->wmask + IGD_ASLS, ~0);
+>      pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+>  
+>      /*
+> @@ -620,8 +624,8 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>          }
+>  
+>          /* GMCH is read-only, emulated */
+> -        pci_set_long(vdev->pdev.config + IGD_GMCH, gmch);
+> -        pci_set_long(vdev->pdev.wmask + IGD_GMCH, 0);
+> +        pci_set_long(pdev->config + IGD_GMCH, gmch);
+> +        pci_set_long(pdev->wmask + IGD_GMCH, 0);
+>          pci_set_long(vdev->emulated_config_bits + IGD_GMCH, ~0);
+>      }
+>  
+> @@ -630,12 +634,12 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>  
+>          /* BDSM is read-write, emulated. BIOS needs to be able to write it */
+>          if (gen < 11) {
+> -            pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
+> -            pci_set_long(vdev->pdev.wmask + IGD_BDSM, ~0);
+> +            pci_set_long(pdev->config + IGD_BDSM, 0);
+> +            pci_set_long(pdev->wmask + IGD_BDSM, ~0);
+>              pci_set_long(vdev->emulated_config_bits + IGD_BDSM, ~0);
+>          } else {
+> -            pci_set_quad(vdev->pdev.config + IGD_BDSM_GEN11, 0);
+> -            pci_set_quad(vdev->pdev.wmask + IGD_BDSM_GEN11, ~0);
+> +            pci_set_quad(pdev->config + IGD_BDSM_GEN11, 0);
+> +            pci_set_quad(pdev->wmask + IGD_BDSM_GEN11, ~0);
+>              pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
+>          }
+>      }
 
-I'd replace | with || since virtio_has_feature_ex() return a `bool`.
-
-Thanks,
-Stefano
-
->+           virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
->+}
->+
-> static const VirtIOFeature feature_sizes[] = {
->     {.flags = 1ULL << VIRTIO_NET_F_MAC,
->      .end = endof(struct virtio_net_config, mac)},
->@@ -659,7 +665,8 @@ static bool peer_has_tunnel(VirtIONet *n)
-> }
->
-> static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->-                                       int version_1, int hash_report)
->+                                       int version_1, int hash_report,
->+                                       int tunnel)
-> {
->     int i;
->     NetClientState *nc;
->@@ -667,9 +674,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->     n->mergeable_rx_bufs = mergeable_rx_bufs;
->
->     if (version_1) {
->-        n->guest_hdr_len = hash_report ?
->-            sizeof(struct virtio_net_hdr_v1_hash) :
->-            sizeof(struct virtio_net_hdr_mrg_rxbuf);
->+        n->guest_hdr_len = tunnel ?
->+            sizeof(struct virtio_net_hdr_v1_hash_tunnel) :
->+            (hash_report ?
->+             sizeof(struct virtio_net_hdr_v1_hash) :
->+             sizeof(struct virtio_net_hdr_mrg_rxbuf));
->         n->rss_data.populate_hash = !!hash_report;
->     } else {
->         n->guest_hdr_len = n->mergeable_rx_bufs ?
->@@ -803,6 +812,10 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
->        .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
->        .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
->        .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
->+       .tnl  = !!(n->curr_guest_offloads &
->+                  (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED)),
->+       .tnl_csum = !!(n->curr_guest_offloads &
->+                      (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED)),
->     };
->
->     qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
->@@ -824,7 +837,9 @@ virtio_net_guest_offloads_by_features(const uint64_t *features)
->         (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
->         (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
->         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
->-        (1ULL << VIRTIO_NET_F_GUEST_USO6);
->+        (1ULL << VIRTIO_NET_F_GUEST_USO6) |
->+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED) |
->+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED);
->
->     return guest_offloads_mask & virtio_net_features_to_offload(features);
-> }
->@@ -937,7 +952,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
->                                virtio_has_feature_ex(features,
->                                                   VIRTIO_F_VERSION_1),
->                                virtio_has_feature_ex(features,
->-                                                  VIRTIO_NET_F_HASH_REPORT));
->+                                                  VIRTIO_NET_F_HASH_REPORT),
->+                               virtio_has_tunnel_hdr(features));
->
->     n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
->         virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
->@@ -3160,13 +3176,15 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
->     VirtIONet *n = opaque;
->     VirtIODevice *vdev = VIRTIO_DEVICE(n);
->     int i, link_down;
->+    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
->
->     trace_virtio_net_post_load_device();
->     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
->                                virtio_vdev_has_feature(vdev,
->                                                        VIRTIO_F_VERSION_1),
->                                virtio_vdev_has_feature(vdev,
->-                                                       VIRTIO_NET_F_HASH_REPORT));
->+                                                      VIRTIO_NET_F_HASH_REPORT),
->+                               has_tunnel_hdr);
->
->     /* MAC_TABLE_ENTRIES may be different from the saved image */
->     if (n->mac_table.in_use > MAC_TABLE_ENTRIES) {
->@@ -3986,7 +4004,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->
->     n->vqs[0].tx_waiting = 0;
->     n->tx_burst = n->net_conf.txburst;
->-    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0);
->+    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0, 0);
->     n->promisc = 1; /* for compatibility */
->
->     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
->diff --git a/include/net/net.h b/include/net/net.h
->index 9a9084690d..72b476ee1d 100644
->--- a/include/net/net.h
->+++ b/include/net/net.h
->@@ -43,6 +43,8 @@ typedef struct NetOffloads {
->     bool ufo;
->     bool uso4;
->     bool uso6;
->+    bool tnl;
->+    bool tnl_csum;
-> } NetOffloads;
->
-> #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
->diff --git a/net/net.c b/net/net.c
->index 9536184a0c..27e0d27807 100644
->--- a/net/net.c
->+++ b/net/net.c
->@@ -575,7 +575,8 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
->
->     assert(len == sizeof(struct virtio_net_hdr_mrg_rxbuf) ||
->            len == sizeof(struct virtio_net_hdr) ||
->-           len == sizeof(struct virtio_net_hdr_v1_hash));
->+           len == sizeof(struct virtio_net_hdr_v1_hash) ||
->+           len == sizeof(struct virtio_net_hdr_v1_hash_tunnel));
->
->     nc->vnet_hdr_len = len;
->     nc->info->set_vnet_hdr_len(nc, len);
->diff --git a/net/tap-linux.c b/net/tap-linux.c
->index e2628be798..8e275d2ea4 100644
->--- a/net/tap-linux.c
->+++ b/net/tap-linux.c
->@@ -279,6 +279,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
->         if (ol->uso6) {
->             offload |= TUN_F_USO6;
->         }
->+        if (ol->tnl) {
->+            offload |= TUN_F_UDP_TUNNEL_GSO;
->+        }
->+        if (ol->tnl_csum) {
->+            offload |= TUN_F_UDP_TUNNEL_GSO_CSUM;
->+        }
->     }
->
->     if (ioctl(fd, TUNSETOFFLOAD, offload) != 0) {
->diff --git a/net/tap.c b/net/tap.c
->index 23c6c118e7..2dfa843547 100644
->--- a/net/tap.c
->+++ b/net/tap.c
->@@ -62,6 +62,8 @@ static const int kernel_feature_bits[] = {
->     VIRTIO_F_NOTIFICATION_DATA,
->     VIRTIO_NET_F_RSC_EXT,
->     VIRTIO_NET_F_HASH_REPORT,
->+    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
->+    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
->     VHOST_INVALID_FEATURE_BIT
-> };
->
->-- 
->2.50.0
->
+Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
 
 
