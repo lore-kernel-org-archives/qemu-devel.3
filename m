@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFB3C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 06:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D2FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 06:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uceJY-0007T1-Nt; Fri, 18 Jul 2025 02:11:28 -0400
+	id 1uceTW-0005yu-23; Fri, 18 Jul 2025 02:21:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceJM-0007Oa-M6
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:11:14 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceTU-0005tU-2t
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:21:40 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceJJ-0005D7-2B
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:11:10 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4538bc52a8dso13079765e9.2
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 23:11:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceTS-0008Ul-32
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:21:39 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3b49ffbb31bso1020952f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 23:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752819065; x=1753423865; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nZAac98V1Ph4SSzeeQOmmYePk1mOHcZMqMQb2F7bDrA=;
- b=OKEO+3wfRWi8MTV+axGgTS6Wdbr5DrCjjaSVpQx2RVfGiOpdpIh8y2wxsCe8RVndNe
- B+Jz923QHOmze+HWMhNVrJsqLsWE6jQ8gnamH50S3ru2gjtFygUrSQmqwUc7mVIJ7/vk
- 1OP5aDGsgAPFC1otEjh5myBMKxFUHrA0ka4siPCIrL/WBw1et7i++XSAQ5bOXBUkVQgO
- RW1FDT9sGcFcaSwEhcA+FHIversbZS+vejqBwRIEHaKmeo40AgP0wvaSCyCJx+3xJ7Bn
- k74tEfNCyPqnTgLcs3Rsyh6U/DuxfWIEOjG9ijWQrNl2/xJQJOFEiJLheo9jk2CkmOZi
- jC/w==
+ d=linaro.org; s=google; t=1752819696; x=1753424496; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=J7vYcLwfK3H2c1tSJleUypbU7M3wqbN1e3jpA5zKYtA=;
+ b=rpVfnCf+xIXlRVDhmGx5LR/ZsJHQKbsQa3ZqkkmtTOLYSKvKfvNX4v2UJkaLtzZgYz
+ fGlfKXx9oAlC4fZE2E2WVPymgGAJ/JzXNs8IORG9pjfC5WJ3HJq1gPcFkcfVRVBFPEHq
+ gJp5ZCKXqL9/ZX+icwePiuDMTDjSHdsVQhuqpPjXMWJhV8xcXvlij7C+OJquc7XOvdVw
+ NYTj2pL1Ry3YE9czak+UhjvsK9sIYpZmH7/yZFMPyhacT1CKH+fJV4NKshBC0O2qAUue
+ IHMyxEb3J+FY2bfnR5yOcks8KWFLsEVDd02Xaezy6Sm8RZT2z3upp8j81oGKpHSt7ilz
+ Nl1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752819065; x=1753423865;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1752819696; x=1753424496;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nZAac98V1Ph4SSzeeQOmmYePk1mOHcZMqMQb2F7bDrA=;
- b=XIAyTBxfdimLtpIeY1TBy1q1uXl17alNvQQ7rvdxqREWUNzqd7uCVxHAqIn4JdvF0g
- AGAAiLPccbhnE1BUGZely1T1npvB9HpdD4zVvT/rdA4Zl3oN9mmevzJQ7bBLfZklImkG
- WXOErgE9SFO+QFOvdoW5u5+v1iu8K+K6Bo7Rc33ubTVLURWYaKvjvd49mtw5PBKgiLU6
- oi8WWw/4v7bbPZpFWHTcEF2dLyY9qOVyypk5oMIj9tfIIMBil2DGvArJMwfPr0FSnrf8
- 9umALwi8AuC5VMe7hbq1qCJ8nR/5Fm+ogZ8PE6054/AMLOhaCdK6z8ih01GyZOwczbwQ
- WyRg==
-X-Gm-Message-State: AOJu0Yzdzr7UFKOw5SZ5jCxFI79/dmT6T1JFnhwhjAprBzEIxBi5CVYV
- c4Jmy4+YAu9Duoj7TFT47IfDot9HD2hb7VoHvBCVXkFpd35sc3la7J+oAgsAoK9hbDM=
-X-Gm-Gg: ASbGncsbafIOemLgGLGOA+uj79ayfWsPLADn/ZAjsJzcXBFho5NkBwuBfd1zw821L7R
- aZfRXSC0dKZTJ2DOX2Loide2/VodTW4/WfjOc5mer2Zbg1d0pEdkUL86m6k/e+JbUvC899lLfwd
- MaxnNLsC/kJt2CBdIIIKTxuYlQHnNUhW20gpc48T+MvnTC6+gCGTV0uSdzQAtIekSlH1y9xCZ1n
- U35DLv3z7Ezz0XHkZ+j6q4/FpLzaBN3H7hROdVAbcKa9Gs4Q2E8jun1eOb8A3OjigUA5eiS+JH9
- uvoIkoupt/+ezOzTS13iHTiCC0aNQ5c7gbDxuFhqLJSncIFXa61o/92nsH7e5GguyujFCEOqYgl
- YH+H8eo3R6ZSBfRmd8O53GXkYyXEPS67ToRmfdojuQN6VJVXi61H8WuepD3E/Eqhn9Q==
-X-Google-Smtp-Source: AGHT+IEpCWyWwdv8CpeVxwa+3oJvNgqjEFe9x+XvDnznetGtywDcCAK2PdBu8fRRGwwbhMTCxYQCeA==
-X-Received: by 2002:a05:600c:8205:b0:456:2020:165d with SMTP id
- 5b1f17b1804b1-4563b8fcc48mr12436625e9.31.1752819065231; 
- Thu, 17 Jul 2025 23:11:05 -0700 (PDT)
+ bh=J7vYcLwfK3H2c1tSJleUypbU7M3wqbN1e3jpA5zKYtA=;
+ b=OAGpOxoeqEHhkamXh3S/Bt0ENSYYsy/l5tSdrLTafMIict3E+trpWJ5Uw/JZvoP71s
+ Xm1vje7Xlq8RFH/WANqHZrNMVmhwOszwXuCN2jKAIIZPO6im6WUPTyY385A9If7+GhRW
+ IKKAkP4bSU6K8zivR76/00YHnGpAcMezQ0Md2PsjMUY/QWm82ih7N+BSSrYYyjfAcfSJ
+ NeExxWJcG49U5I9So7zyhimf1xk1x5iJixpFL0/i6KCiLCyrLnzKN7cmuHwv1j23fzVc
+ oVvlZbpC3Z4Tuk81AhRgCXJ7CX+lugCVgPOog+PPUuDtvIIrKw0R0vuHSzOmmM46BaSX
+ 4Rwg==
+X-Gm-Message-State: AOJu0Yxhc8az1YeLeHlpa60pbdwNufEGgOTQDuoSJqWxA3NKWEeZ+eir
+ kPuzD5JCwv0CXBaCYReCQ7gZBngs92RHnrXWG9frZ+tY/NGsn+ZB5WuAy6OLXNnD8nY=
+X-Gm-Gg: ASbGncszGaY0j27Iee7O93EcldvLZ7ON4CCXFowBJ7EynSAG9630L3BCDscyI9GvUax
+ /9O8BEBQwGIqhehJHsB2E4N9Mcf3OshMrnfGbm+Ttyg5UA9CG/0WdgbnrpV97TCrLjPfsp5zPKG
+ Kggr7+ZFbg+9QhCoomgLxNe0CD8LgVNKZ+HBxEZUGhzLdeDwj64WCwjZG4JS+GG0QzLLddNpqJN
+ D6mGMf6ug+LwzA4nq36uvBKEMf1gmF6wCBWeihKBqoLOkE4e+Z2VZBuDx+Cf8I1pczkWsh0sjw5
+ HK0gRJhbMtxUC3YQ0iVOdr6jyqYU5v5deUg8j/XcWzk+DmhqbUWY38/oy6rhCYQQgjtz+UZcKgo
+ GmYE8qhefDErJPBHbns+DXqVCY62xJDt1yQwUiQbtiUajO1sDg4RLMM5j+wvkXz11bW6nCo4i2F
+ Jx
+X-Google-Smtp-Source: AGHT+IEC5tQgQtwh1CjuHRTa9lNpCTVmoTmlu6n6EV8FHBz3FyQIYyhE/5tBkTAkk2hbHp95Cb0VIA==
+X-Received: by 2002:adf:e19e:0:b0:3a5:2ec5:35ba with SMTP id
+ ffacd0b85a97d-3b613e984b9mr3705327f8f.30.1752819695582; 
+ Thu, 17 Jul 2025 23:21:35 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4563b5a4055sm10883655e9.5.2025.07.17.23.11.04
+ ffacd0b85a97d-3b61ca2b81asm898980f8f.20.2025.07.17.23.21.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Jul 2025 23:11:04 -0700 (PDT)
-Message-ID: <bf6df47b-8815-4d84-a01b-010281187d24@linaro.org>
-Date: Fri, 18 Jul 2025 08:11:03 +0200
+ Thu, 17 Jul 2025 23:21:35 -0700 (PDT)
+Message-ID: <25667aaa-d884-4615-acc2-da230728923d@linaro.org>
+Date: Fri, 18 Jul 2025 08:21:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1] hw/arm/smmu-common: Avoid using inlined
- functions with external linkage
-To: JianChunfu <jansef.jian@hj-micro.com>, eric.auger@redhat.com,
- peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>,
- Will Hollins <whollins@google.com>
-References: <20250214072029.515379-1-jansef.jian@hj-micro.com>
-Content-Language: en-US
+Subject: Re: [PATCH] xen/passthrough: add missing error-report include
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250214072029.515379-1-jansef.jian@hj-micro.com>
+To: Markus Armbruster <armbru@redhat.com>,
+ Adam Williamson <awilliam@redhat.com>
+Cc: qemu-devel@nongnu.org, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20250717220207.171040-1-awilliam@redhat.com>
+ <87v7nqgk21.fsf@pond.sub.org>
+ <2c536b62-1253-4ac2-a549-ce783f8bf5c6@linaro.org>
+Content-Language: en-US
+In-Reply-To: <2c536b62-1253-4ac2-a549-ce783f8bf5c6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,48 +107,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-(sorry for previously missing this patch)
-
-(cc'ing Google folks for 
-https://lore.kernel.org/qemu-devel/20250717205735.2345674-1-rkir@google.com/)
-
-On 14/2/25 08:20, JianChunfu wrote:
-> Similarly to commit 9de9fa5c ("hw/arm/smmu-common: Avoid using
-> inlined functions with external linkage"):
+On 18/7/25 08:05, Philippe Mathieu-Daudé wrote:
+> On 18/7/25 07:11, Markus Armbruster wrote:
+>> Adam Williamson <awilliam@redhat.com> writes:
+>>
+>>> In cfcacba an `error_report` was added to this file, but the
 > 
->    None of our code base require / use inlined functions with external
->    linkage. Some places use internal inlining in the hot path. These
->    two functions are certainly not in any hot path and don't justify
->    any inlining, so these are likely oversights rather than intentional.
+>     In commit cfcacbab38e ("xen/passthrough: use gsi to map pirq when
+>     dom0 is PVH") an `error_report` was added to this file, but the
 > 
-> Fixes: b8fa4c23 (hw/arm/smmu: Support nesting in the rest of commands)
+>>> corresponding include of `qemu/error-report.h` was missed. This
+>>> only becomes apparent when building against Xen 4.20+.
+>>>
+>>> Signed-off-by: Adam Williamson <awilliam@redhat.com>
+>>> ---
+>>>   hw/xen/xen_pt.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+>>> index 9d16644d82..006b5b55f2 100644
+>>> --- a/hw/xen/xen_pt.c
+>>> +++ b/hw/xen/xen_pt.c
+>>> @@ -54,6 +54,7 @@
+>>>   #include "qemu/osdep.h"
+>>>   #include "qapi/error.h"
+>>> +#include "qemu/error-report.h"
+>>>   #include <sys/ioctl.h>
+>>>   #include "hw/pci/pci.h"
+>>
+>> Uh, error-report.h is included without this for me.  To see, build with
+>> -H:
+>>
+>> . /work/armbru/qemu/hw/xen/xen_pt.h
+>> .. /work/armbru/qemu/include/hw/xen/xen_native.h
+>> ... /work/armbru/qemu/hw/xen/trace.h
+>> .... ./trace/trace-hw_xen.h
+>> ..... /work/armbru/qemu/include/qemu/error-report.h
 
-I suppose b8fa4c233bd was copy/pasted before 0b796f38106 ("hw/arm/smmu:
-Avoid using inlined functions with external linkage again").
+FYI "qemu/error-report.h" was added in commit 418ed14268f ("trace:
+make the 'log' backend timestamp configurable") to access the
+message_with_timestamp declaration.
 
-> Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> ---
->   hw/arm/smmu-common.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> Code smell: header in include/... includes header from hw/.  Not this
+>> patch's concern.
 > 
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 3f8272875..545d763ac 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -298,7 +298,7 @@ void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
->       g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
->   }
->   
-> -inline void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
-> +void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
->   {
->       trace_smmu_iotlb_inv_vmid_s1(vmid);
->       g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid_s1, &vmid);
+> Lucky side effect of including "trace.h" a include/ file due to trace
+> event being called in inlined function. Bad pattern indeed.
+> 
+> Back to this patch:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> 
 
 
