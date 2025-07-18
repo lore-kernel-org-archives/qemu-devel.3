@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47732C83F34
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 20:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8941FC83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 20:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucrI5-0001mZ-Me; Fri, 18 Jul 2025 16:02:50 -0400
+	id 1ucrIT-00022e-4T; Fri, 18 Jul 2025 16:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzz-0006Ut-Rt
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:03 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucr01-0006XV-Bh
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzw-0000Iq-8h
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:03 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ucqzx-0000Ky-OD
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 15:44:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752867839;
+ s=mimecast20190719; t=1752867841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=iZ34fFgdW/kB6BkmBz6HWhxJ/R9s9L86g6Nh3VJWRVw=;
- b=ABy6ZZWMwnU0cUs78KsCKug+jbdvzEsir9EaXxgYEUXxs+ZINwEpa8idJ3ij/RnUi/1COb
- 2cP32WL0rLIPZuj8jZQOUXJmtis1PsKz1yEWRzHmmPLtGRw6csT6L06xItih0dL6UAy0tV
- QZ835klhCd0IvB97Kg34Rhg7Ce59rJs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rFMLACJLii3DfCYL/mU4zLV/+6fIm/s2iVEOiPOxUiA=;
+ b=U15JW0QkUXAn26rpT7eA+0Cj4pE/nP95L8YRxoWI+yxVogPi2s1YssAOwLFTyqZbptlEwE
+ aK7JE/3EeMw0ODNPlVmPCIjYv5ATlPkmt6QSM8NTpf6oP/NdhsBJB2W3S7obsoC/Om2Py4
+ 9Q+Vp8gRiql0zIhkqwfJrvJIn48JBWM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-AhNIyl43MD6cDbaa5o_poQ-1; Fri,
- 18 Jul 2025 15:43:55 -0400
-X-MC-Unique: AhNIyl43MD6cDbaa5o_poQ-1
-X-Mimecast-MFC-AGG-ID: AhNIyl43MD6cDbaa5o_poQ_1752867834
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-spba4xvcPqGvSi7ciP2pRg-1; Fri,
+ 18 Jul 2025 15:43:58 -0400
+X-MC-Unique: spba4xvcPqGvSi7ciP2pRg-1
+X-Mimecast-MFC-AGG-ID: spba4xvcPqGvSi7ciP2pRg_1752867837
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A789518002B1; Fri, 18 Jul 2025 19:43:53 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2036719560B4; Fri, 18 Jul 2025 19:43:57 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96BD930001B9; Fri, 18 Jul 2025 19:43:51 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B6616195608D; Fri, 18 Jul 2025 19:43:55 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 678391800082; Fri, 18 Jul 2025 21:43:49 +0200 (CEST)
+ id 98F54180090C; Fri, 18 Jul 2025 21:43:49 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,14 +59,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Sergio Lopez <slp@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>
-Subject: [PULL 0/3] Display 20250718 patches
-Date: Fri, 18 Jul 2025 21:43:46 +0200
-Message-ID: <20250718194349.65771-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Shaoqin Huang <shahuang@redhat.com>
+Subject: [PULL 2/3] vfio: Move the TYPE_* to hw/vfio/types.h
+Date: Fri, 18 Jul 2025 21:43:48 +0200
+Message-ID: <20250718194349.65771-3-kraxel@redhat.com>
+In-Reply-To: <20250718194349.65771-1-kraxel@redhat.com>
+References: <20250718194349.65771-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,43 +94,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c079d3a31e45093286c65f8ca5350beb3a4404a9:
+From: Shaoqin Huang <shahuang@redhat.com>
 
-  Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging (2025-07-15 00:12:07 -0400)
+Move the TYPE_* to a new file hw/vfio/types.h because the
+TYPE_VFIO_PCI will be used in later patch, but directly include the
+hw/vfio/pci.h can cause some compilation error when cross build the
+windows version.
 
-are available in the Git repository at:
+The hw/vfio/types.h can be included to mitigate that problem.
 
-  https://gitlab.com/kraxel/qemu.git tags/display-20250718-pull-request
-
-for you to fetch changes up to d5fcf0d960d893b1765e6388cefca9c690839267:
-
-  hw/i386: Add the ramfb romfile compatibility (2025-07-18 21:41:57 +0200)
-
-----------------------------------------------------------------
-Load ramfb vgabios on x86 only.
-
-----------------------------------------------------------------
-
-Shaoqin Huang (3):
-  ramfb: Add property to control if load the romfile
-  vfio: Move the TYPE_* to hw/vfio/types.h
-  hw/i386: Add the ramfb romfile compatibility
-
- hw/vfio/pci.h                 | 11 ++---------
- hw/vfio/types.h               | 21 +++++++++++++++++++++
- include/hw/display/ramfb.h    |  2 +-
- hw/core/machine.c             |  2 ++
- hw/display/ramfb-standalone.c |  5 ++++-
- hw/display/ramfb-stubs.c      |  2 +-
- hw/display/ramfb.c            |  6 ++++--
- hw/i386/microvm.c             |  3 +++
- hw/i386/pc_piix.c             | 10 ++++++++++
- hw/i386/pc_q35.c              |  3 +++
- hw/vfio/display.c             |  4 ++--
- hw/vfio/pci.c                 |  2 ++
- 12 files changed, 55 insertions(+), 16 deletions(-)
+Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+Message-ID: <20250717100941.2230408-3-shahuang@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/vfio/pci.h   | 10 +---------
+ hw/vfio/types.h | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 9 deletions(-)
  create mode 100644 hw/vfio/types.h
 
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 826db8c1319b..0fd151c5dc2c 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -14,6 +14,7 @@
+ 
+ #include "system/memory.h"
+ #include "hw/pci/pci_device.h"
++#include "hw/vfio/types.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/vfio-region.h"
+ #include "qemu/event_notifier.h"
+@@ -119,17 +120,8 @@ typedef struct VFIOMSIXInfo {
+     MemoryRegion *pba_region;
+ } VFIOMSIXInfo;
+ 
+-/*
+- * TYPE_VFIO_PCI_BASE is an abstract type used to share code
+- * between VFIO implementations that use a kernel driver
+- * with those that use user sockets.
+- */
+-#define TYPE_VFIO_PCI_BASE "vfio-pci-base"
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
+ 
+-#define TYPE_VFIO_PCI "vfio-pci"
+-/* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
+-
+ struct VFIOPCIDevice {
+     PCIDevice pdev;
+     VFIODevice vbasedev;
+diff --git a/hw/vfio/types.h b/hw/vfio/types.h
+new file mode 100644
+index 000000000000..fa20c29b9fbb
+--- /dev/null
++++ b/hw/vfio/types.h
+@@ -0,0 +1,21 @@
++/*
++ * VFIO types definition
++ *
++ * Copyright Red Hat, Inc. 2025
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef HW_VFIO_VFIO_TYPES_H
++#define HW_VFIO_VFIO_TYPES_H
++
++/*
++ * TYPE_VFIO_PCI_BASE is an abstract type used to share code
++ * between VFIO implementations that use a kernel driver
++ * with those that use user sockets.
++ */
++#define TYPE_VFIO_PCI_BASE "vfio-pci-base"
++
++#define TYPE_VFIO_PCI "vfio-pci"
++/* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
++
++#endif /* HW_VFIO_VFIO_TYPES_H */
 -- 
 2.50.1
 
