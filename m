@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55740C83F34
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5834DC83F3B
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 22:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uctUm-00035J-4o; Fri, 18 Jul 2025 18:24:00 -0400
+	id 1uctVb-0004i5-Uh; Fri, 18 Jul 2025 18:24:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ucstw-0007aI-Rm
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:46:10 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1ucsun-0008P7-Ib
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:46:53 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ucstu-0007QB-O4
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:45:56 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-23c8f179e1bso26026355ad.1
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 14:45:53 -0700 (PDT)
+ id 1ucsul-0007Vk-LS
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:46:49 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso2391134b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 14:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752875152; x=1753479952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752875206; x=1753480006; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qFCgTEnGfbkQyGEyygjMD6Tgh0lIzYBSqfo2EolfHrE=;
- b=y+ylFT2IQPpeyMAzRsvVTaNJtvp1E0dSkyNENUH2Vmkph9vgyJCuiF9fKLX0MlewyP
- JLYOLJyRY3/a2UyN4CEuLQaQKRm/pHwD8y8m2x/GYNqnHtfy957TO3CYcSdBClIU+2oi
- i0vvT25XGltJgixr+mF/milo+RM25srJK/bFKj4RsBiMEEiLcZKzqKal4qL6flVFKHFt
- XriHw0fmXPIIou73yg7OllONjumvQ2UKXw2M230k2RtRojIcIJQ+kiayzNlYl06YYNiG
- TG3RXlh6SHVBdrKhF+u7yKA9A+FHfuvXyfjYtA/KyFq+SqZL5vKpmWSaYj4aR4H2dVnK
- ZI8A==
+ bh=0vtVhfnoYsbi7FVIw5IIyiOnvzB6WsKqtOcF4xWo1Z8=;
+ b=XEi/VEJHWNvphnTdY8WjI27ReJ7QsNL2R3Oskda8NEEubf4OZaR0wJvwMq7a3eYTir
+ uDzBO3GafILsrnp1browvipq8Bjwf8wMIo1v+dcaDXzmaZyxAHUjvdRhSZ1lsEo6IFST
+ q8cuEML0YrKpPRDNYTeTM17sOKL9h3cYJdi61NncLYarB2l7CO70gpdAqoCLJI0uP7gi
+ xZA+tiYfAEbcgntUyNNdXyt4WcxcoMbVE46IjrHcSr7f85l2DAyf7LOINgi1WzHJC//C
+ cApKdRl2YiBemXVlDMN7fcimyoR3nbaW/RW8cZEWMSO0A3/GgSRlu1BpKCrWRLWQaaTv
+ Fv6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752875152; x=1753479952;
+ d=1e100.net; s=20230601; t=1752875206; x=1753480006;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qFCgTEnGfbkQyGEyygjMD6Tgh0lIzYBSqfo2EolfHrE=;
- b=efN8VqLPLXgs4IU/JighKKKvmnSRL5jyfyFU9zbs6p50lYDIZIj2mG17pHDSKhvcPq
- /EssYiijI93f6/lhUpoD3Uq5jbK+Fv5QDVOnlfK7M6xaHySfVAgBYOXNVndTNLz5gQnJ
- xZ65l2Jkwnc4Q/XYyiywlib7zMY+Ut4Jh6MM1Yp/Z2tHk9alHbVBtQMa6+IFGFY9yhHm
- 5XldJtdaQMt0/PoMyfvuhtQNGWweoVUO0HuaP3HcXPOvsW7PZmBN3PmJcwtyonZaWs+v
- i7W8mhtHRz8qazLGszG0DHBMKuuq+fubxG5Nq1RkR5Cx0VaUyiN9bvChelUzJJDadR0S
- AtDQ==
+ bh=0vtVhfnoYsbi7FVIw5IIyiOnvzB6WsKqtOcF4xWo1Z8=;
+ b=L17HAAZ6Uhd1hx9hX/tHPFo9wVXHqdREq8SUZx8ElpFulAAVIsk9GpWUAgfmtQUuO9
+ AbU9aVbzayX+GLUcN4ZH3BX4K6NKKaxfQL0YpWV9cUPCbeILLBd1bJS1zeMuB0BQu7hf
+ z/UXwdhiWvQCDhO/ma+EYH0FCfF3ry98tcBa2K1M2UoN/gVxIQGAttRx7oNbHesd+vDE
+ g1JaeJonuV/4GJ06s3n1wWJvK2/0pbaQG8EkVYH1wG3LmL/fgco09jvi165QvTaH/tKj
+ oHVN4nH73cgc/+g6scVzAln3tK71YiLK7G2CTOYy4yA0Mm7etpwf1HBXetRtOxDqUNfP
+ lkqw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQMjiCPyk9Gs0255KuMhOIjuwaqiGeQWNVUqRFJod35iCb+L3xkCvgtM60137V2m3f0kFtRcVFT+s0@nongnu.org
-X-Gm-Message-State: AOJu0Yxzk1yWaWe0fl16U0JjnyjiASVnrzqV2i5wuXI4oRjo8IMBuFCr
- mnIAYptMiVpfcU9/2ASS4nEthTe5lBglJ3+ceLlhYcF/l/HeQJojn5HdhpW5A0ENDCw=
-X-Gm-Gg: ASbGncvLrRI3jhg3NYiRWAxjF1TTE2gmK0KDU0h44TNoZ99gKQI3l6ZSxDUzmiOolvd
- P4yLuKIZfoRMszjFWsVlAKN0K0MNg/qg4EXuLhpRammc5wSE7dJC19oXKSyUiwDxLtS2UlC7I+v
- A3MB8i8H8SdTX1MhQZS86xhR7If4RwWt9ERioJEtUoz5lGrgbbuC/GWxqYcmfvcZFCwJlhFBI+d
- pB/XMBlg1UHFEuJl/g8EIB7v/Q7Rcrhyvi+RPThC3EO/aCNcbDEhMxIkg4t7qbHyNa94ItxCPeS
- Yirpq/4OluQhTKX3UJziZxePx8Ao14TeOzpOp5g8qpzGWdNWsjRoel1traAxjl3O2rO/KqRRQqx
- v0gMH7cbO+ZiX3794SklzQUE0FknZjdW2ECe6Q6ul5w==
-X-Google-Smtp-Source: AGHT+IEcfN9XF5zFoUPVIMTKoXQvKGvYLii74QjF2piLXT4zWBbXAd4vgMHmSrTJWWGEdpoZYGUVng==
-X-Received: by 2002:a17:903:2342:b0:235:ea29:28e9 with SMTP id
- d9443c01a7336-23e25764c41mr213318765ad.38.1752875152430; 
- Fri, 18 Jul 2025 14:45:52 -0700 (PDT)
+ AJvYcCWoMG9pm+hdTuwNRNWYOmtjCptwFqstF6O+WJ6+yqWX48tX2RpOhx3Rw4Ppn8Gu1vonjwfkfcxAp+nA@nongnu.org
+X-Gm-Message-State: AOJu0Yx+mzVQliWX8Zm08Nng7pbgmTuRkaYjv3bJl/+7vseOLjFa+BJL
+ R3h8eZcOyQQCH2vJOSgEWDZhxz1xsnp/lYy0E48KGuXQrPydnVR5Uitl7f59djVcau9a6sjrzCF
+ nm8dj
+X-Gm-Gg: ASbGncvGS/xrQYHc/68RAuU+5ucgMBfTF0hoKBZMMQliCtR/gZzUGCm3tbk64ELsa9F
+ kojhfKZsYV1IgKnMYMMGIae52941wLdq5t1jBPYVhtNyeGFAn58wpnHn33b4kHMadU0FFSnAOZC
+ jhH0mX+R0gPZgAhkcfSMq0JHkaVpIsVUyhMNDL4fZv4SzrgNvx3lHm+MJo0AMYRDnw+B027VHXv
+ FY4cqiByAO9tbYD4U6fDSdjoQZZZh0cQFSC5RjWIN2FFHGTD+ndUBy2It4tQ4BXDwvDs/yC1Jta
+ 0igidEJdC4ZucQA7LefCu/T8af7oj1vAweCiGN+XWz459W2Tz+5Dt6jRDscPVEQqH/EIsfou74r
+ oRkelUXP5em4XkcEVVvtxF2Lohw99J2WevRPiy4cG3w==
+X-Google-Smtp-Source: AGHT+IHZ46G6vsECdMKPxR0JDgbjFwYX2bZhlIIdfgHofxWcoQ3U/6QteK4soAT/Iz8rv5cGwIDFdw==
+X-Received: by 2002:a05:6a20:3d8a:b0:204:4573:d855 with SMTP id
+ adf61e73a8af0-23811d5b33amr20819751637.9.1752875206270; 
+ Fri, 18 Jul 2025 14:46:46 -0700 (PDT)
 Received: from [192.168.101.134] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23e3b6b48f2sm17959695ad.90.2025.07.18.14.45.51
+ 41be03b00d2f7-b3f2ff62972sm1431258a12.40.2025.07.18.14.46.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Jul 2025 14:45:51 -0700 (PDT)
-Message-ID: <b19bc469-484c-4dba-bafe-62f8ddccdb15@linaro.org>
-Date: Fri, 18 Jul 2025 14:45:50 -0700
+ Fri, 18 Jul 2025 14:46:45 -0700 (PDT)
+Message-ID: <8b1f32b8-73fb-4cb2-8b86-2f6677cb0286@linaro.org>
+Date: Fri, 18 Jul 2025 14:46:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 09/10] target/arm: Honour FPCR.AH=1 default NaN
- value in FMAXNMQV, FMINNMQV
+Subject: Re: [PATCH for-10.1 10/10] target/arm: Make LD1Q decode and trans fn
+ agree about a->u
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250718173032.2498900-1-peter.maydell@linaro.org>
- <20250718173032.2498900-10-peter.maydell@linaro.org>
+ <20250718173032.2498900-11-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250718173032.2498900-10-peter.maydell@linaro.org>
+In-Reply-To: <20250718173032.2498900-11-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,17 +107,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/18/25 10:30, Peter Maydell wrote:
-> The FMAXNMQV and FMINNMQV insns use the default NaN as their identity
-> value for inactive source vector elements. We open-coded this in
-> sve_helper.c, hoping to avoid a function call. However, this fails
-> to account for FPCR.AH=1 changing the default NaN value to set the
-> sign bit. Use a call to floatN_default_nan() to obtain this value.
+> For the LD1Q instruction (gather load of quadwords) we use the
+> LD1_zprz pattern with MO_128 elements.  At this element size there is
+> no signed vs unsigned distinction, and we only set the 'u' bit in the
+> arg_LD1_zprz struct because we share the code and decode struct with
+> smaller element sizes.
 > 
-> Fixes: 1de7ecfc12d05 ("target/arm: Implement FADDQV, F{MIN, MAX}{NM}QV for SVE2p1")
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> However, we set u=0 in the decode pattern line but then accidentally
+> asserted that it was 1 in the trans function.  Since our usual convention
+> is that the "default" is unsigned and we only mark operations as signed
+> when they really do need to extend, change the decode pattern line to
+> set u=1 to match the assert.
+> 
+> Fixes: d2aa9a804ee6 ("target/arm: Implement LD1Q, ST1Q for SVE2p1")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/sve_helper.c | 29 +++++++++++++++++------------
->   1 file changed, 17 insertions(+), 12 deletions(-)
+>   target/arm/tcg/sve.decode | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+> index a77b725c876..aea7f519730 100644
+> --- a/target/arm/tcg/sve.decode
+> +++ b/target/arm/tcg/sve.decode
+> @@ -1345,7 +1345,7 @@ LD1_zprz        1100010 11 1. ..... 11. ... ..... ..... \
+>   
+>   # LD1Q
+>   LD1_zprz        1100 0100 000 rm:5 101 pg:3 rn:5 rd:5 \
+> -                &rprr_gather_load u=0 ff=0 xs=2 esz=4 msz=4 scale=0
+> +                &rprr_gather_load u=1 ff=0 xs=2 esz=4 msz=4 scale=0
+>   
+>   # SVE 64-bit gather load (vector plus immediate)
+>   LD1_zpiz        1100010 .. 01 ..... 1.. ... ..... ..... \
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
