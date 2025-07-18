@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CAEC83F1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 14:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B87C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 14:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucmAX-0003Ut-7n; Fri, 18 Jul 2025 10:34:37 -0400
+	id 1ucmCD-0006lW-00; Fri, 18 Jul 2025 10:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ucm9m-0003IQ-HI
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 10:33:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1ucmBz-0006ej-Fz
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 10:36:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ucm9j-0006V3-Dv
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 10:33:50 -0400
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1ucmBx-0007LB-Ef
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 10:36:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752849225;
+ s=mimecast20190719; t=1752849364;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wxwdNNudFq9hF2LEo8/LSwBiGxBoroi+CIjxHbRX0IY=;
- b=d3MJg2uLsyjSg016lRS57ulOyuvRnhntQHiH9BCVxrDv+fEwAUPCgyo+lVffjPLMWhfgGr
- G9lhEFQ58vjQO+AZkM6mjQbBij1eOApy1DHDFXkDQneMOaE5AlVg7XneOxBFwB67iGTJJ7
- 5/n0EBBCpx1oYXy3StfGi6esk/HlqEQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/7mXpn6xvDYVa4/hgVoaIhiFdYrOWIfdw5OqPsoMzqY=;
+ b=D+X9Y93PePc+JHaqgapRoyPKSa7Loh8JBMV8Wd289PLyULtnqNRgCkPOp8BWYvz7d0YQ38
+ e4TsDTkMmMXblrCeRf5LcXNYLH0sywoE/WCJB1r4tqHrO//IL9Ju895XtHpq4cKgR+W8Hv
+ EAH9JzNsl0Lh8CUNWwH1dD7yLW2+6oc=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-mz9jHU1vO0S0HUpY4wcG_w-1; Fri, 18 Jul 2025 10:33:44 -0400
-X-MC-Unique: mz9jHU1vO0S0HUpY4wcG_w-1
-X-Mimecast-MFC-AGG-ID: mz9jHU1vO0S0HUpY4wcG_w_1752849223
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3b61e53eea3so386457f8f.0
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 07:33:43 -0700 (PDT)
+ us-mta-212-G7EHHN4CM9K3dQvXkRsOzA-1; Fri, 18 Jul 2025 10:36:02 -0400
+X-MC-Unique: G7EHHN4CM9K3dQvXkRsOzA-1
+X-Mimecast-MFC-AGG-ID: G7EHHN4CM9K3dQvXkRsOzA_1752849360
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-7194c6b0892so16433437b3.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 07:36:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752849223; x=1753454023;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wxwdNNudFq9hF2LEo8/LSwBiGxBoroi+CIjxHbRX0IY=;
- b=vta5WugoyHYXuX/a5cnQXFepBCrJqqjKuPsPaD6CZAMjK5KXHXkgHUKoZCVDeioKUK
- /3AdNwae3tTWzX+rXG594ox64gt/e01p8GWAjnJo0UphB582/ducQ3RuKVyK3XUdcU+G
- 9aCK8aq62tVWG3hNdrN/KxvZrvwhopqfWhji+nWXFV72r8EAdznPDq/NCfca5ZLwL2Jw
- oCtsZ9OFsuZbk1VroRfAqOrFcg2gelaRJlvi4UNM5abBjh6Lmx6vDBpSNgGOrdQthaus
- lDY3dqUGDdwcbnNiOq/t9y2XuDosvYVOOcYLE/dCUHiylEiaUtq3BVAiVnz6YpEXVlhV
- LCfA==
-X-Gm-Message-State: AOJu0YxBZBMZDrT+40UrxB3CsgC0dxu+pBI/b137uNk5o2XAhAej1XDK
- RjUXZHLLlDlW6WZFBUKJequ/Po1fL/okarDGarqCKtEFoZ7MmzcrikH37tiqtzR4/7T5GvhGG5S
- BX1ldTCGJltYa3IFjlXoBihoov45q7xmJ/Uu1qp4chQvXTm7FUnnkTljA
-X-Gm-Gg: ASbGnctyXMGTagv9f1UiyC3/JVNkjYNjz46lo6bHOWsOAm6QF1V4BbX0ib3PtVbVjKV
- 81v07XZv4zzKYRdU6kZfVX67nWmK5gEA2HRXfIGvORJS0foxzWdD84bsTqUa3leZe63+OX+pH/k
- O6aVoU8cZwwoiOIneLtRhhBKe1GyZdc1QoPfBIturUFKqP6CLfi2b0PfSrs9yVHcqN33aipYZwv
- 3PGz8jAo2ZuHE7DpHksuJBY4q9qf8c2ALfmHQcDceT/ir5AajpKT3N0SyDDk280TqViaWQn0pEy
- L2hv1jrroYQrgT9OCGmQ8eB9SUWbw7NOXPyMDyB+jgZdQ09/qaVL8cMG4MDn1FeVHIb5I3L+KPU
- 3Zu1LhK5qSvo=
-X-Received: by 2002:a5d:584e:0:b0:3a4:fbaf:3f99 with SMTP id
- ffacd0b85a97d-3b60e4c8e2emr7695946f8f.13.1752849222829; 
- Fri, 18 Jul 2025 07:33:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLlj8yh5JHgdAqeErBlPhMgGNNyaoxTxzIaWd1PbZqQ6TBUYiMyHw9oV2P5hkDmwhpzgpbiw==
-X-Received: by 2002:a5d:584e:0:b0:3a4:fbaf:3f99 with SMTP id
- ffacd0b85a97d-3b60e4c8e2emr7695913f8f.13.1752849222274; 
- Fri, 18 Jul 2025 07:33:42 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca486edsm2046124f8f.56.2025.07.18.07.33.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Jul 2025 07:33:41 -0700 (PDT)
-Message-ID: <12b37ffa-19d4-4f8c-8ff5-30d323260cdd@redhat.com>
-Date: Fri, 18 Jul 2025 16:33:39 +0200
+ d=1e100.net; s=20230601; t=1752849360; x=1753454160;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/7mXpn6xvDYVa4/hgVoaIhiFdYrOWIfdw5OqPsoMzqY=;
+ b=rpMqBowaYxexSdrfeJy/ARoY8nwJrD52Fcdfc5sxYqlZZiwB1M0IZu5+vZ06wY0WZC
+ fqwgQ+X6aa8rbdndAYY2ElpaAHoBt+Sqq+qGoYuX1bAvBcHDEgt19CFXPe2IexQZk0UR
+ oWjxWTL6/uXHYcVokKVP2QnkGeaKbS1QBz5ddSnw7pH47tify1f5uKlsOzSRO2oPlqZ7
+ LyE4X87axtoNrH+eLiLQZPSD76iT2p9iKOjKrt41+piG0MLpfm+DdIUA+jBpcNn2ZV4c
+ L6APHxBGuIleudqGgC1swdBoSctLEj7DWLURKns3PA6JxpnNy/5zHaZHZspBtMsaTmY1
+ cwgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDrPZl3M8kwy8+aVbBgUbSd6kx9TDm1GaSBIUHhHLeBQlCYY4Q0jlrTqp6KNBcUs4mUSRnfuexRXWF@nongnu.org
+X-Gm-Message-State: AOJu0Yx3SOKUoTRA/fVH/j1QQi17JhmZxZhiD04A186J7FaHNNA2aEhz
+ 7AexALqh88Um4K16VuXQjp8DCFwX7kareYDrWWoLxz8ynegvXNYzleO8j59GmEtqht+sa+Sxf4S
+ EuuWhQ2aUhWDrzrEKvCsfAhM5ZQdb4VKrrFP1MmLspH1QeIWuc3IgMJSyJWQ7Fiff3KBudcKSLX
+ RxZ08ZgFy3zzsJlrFVa29JbWnEVaf/3ss=
+X-Gm-Gg: ASbGncuTjzltnN5NfiWwO1QQkT+3KZGCjIUpYQsAZh4oRCyOiKC/qqew9Ni2RzB7ujx
+ Omn5gpBmqwKhcCHmaozqpudG7f2MDaTcKCMEoBYOm3rxJe4WrC0SWJGnO9lP38KlYLGrDZX/B4b
+ E/zPh3yYlHd6A4jsNorVo=
+X-Received: by 2002:a05:690c:4c10:b0:70d:ed5d:b4cd with SMTP id
+ 00721157ae682-718374f0e8dmr155609817b3.17.1752849359806; 
+ Fri, 18 Jul 2025 07:35:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLmB0TGvM7DPbc8JGsoF9emG1gUoz5meiT0pBj1WgeRND6u/bcTbyWPfL1xaHtIngrHLWea5R3pGTg3hagcN8=
+X-Received: by 2002:a05:690c:4c10:b0:70d:ed5d:b4cd with SMTP id
+ 00721157ae682-718374f0e8dmr155609407b3.17.1752849359320; Fri, 18 Jul 2025
+ 07:35:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 10/13] vhost-net: implement extended features
- support
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <083cd54b7ee4909fdedbf5c9128e60563469057e.1752828082.git.pabeni@redhat.com>
- <zdfxqwsj7bmx6dfoxticifa2max3rkqhhoor5mjxfy7xcj7tys@6hwveszzsbua>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <zdfxqwsj7bmx6dfoxticifa2max3rkqhhoor5mjxfy7xcj7tys@6hwveszzsbua>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+References: <20250610143259.1056400-1-cohuck@redhat.com>
+ <20250610143259.1056400-3-cohuck@redhat.com>
+ <aEhnbN1pSYgdi4EZ@redhat.com>
+ <CABJz62O3FKYfUOyCLMotgYgckWV1frSUb=MtTW2J4fDTEg_==g@mail.gmail.com>
+ <877c09792e.fsf@redhat.com> <aHZ7rpYFMWai-7RL@redhat.com>
+ <CABJz62P+p_uYiatXroauLkG2AH2TnjS8drbHxLPsgY+=QSB8Lw@mail.gmail.com>
+ <aHaC6_2vdXJqdxLo@redhat.com> <874iva7so9.fsf@redhat.com>
+In-Reply-To: <874iva7so9.fsf@redhat.com>
+From: Yan Vugenfirer <yvugenfi@redhat.com>
+Date: Fri, 18 Jul 2025 17:35:48 +0300
+X-Gm-Features: Ac12FXweEF0cPlcLIfY6V4nT-cNG__C-B_slcMKqhSnanEZ5xXjFRwnGtg0WHDk
+Message-ID: <CAGoVJZxGO05QSE20x7=F4ne4Hf4DOf2oMsWoo=2SQi8FumJ+7g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] watchdog: generic name for i6300esb
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Andrea Bolognani <abologna@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ Eric Auger <eauger@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=yvugenfi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -120,79 +113,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/25 3:01 PM, Stefano Garzarella wrote:
-> On Fri, Jul 18, 2025 at 10:52:36AM +0200, Paolo Abeni wrote:
->> @@ -234,7 +234,8 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
->>     int r;
->>     bool backend_kernel = options->backend_type == VHOST_BACKEND_TYPE_KERNEL;
->>     struct vhost_net *net = g_new0(struct vhost_net, 1);
->> -    uint64_t features = 0;
->> +    uint64_t missing_features[VIRTIO_FEATURES_DWORDS];
->> +    uint64_t features[VIRTIO_FEATURES_DWORDS];
-> 
-> Should we initialize `features` (IIUC calling virtio_features_clear)
-> since it was set to 0 before this patch?
-> 
->>     Error *local_err = NULL;
->>
->>     if (!options->net_backend) {
->> @@ -261,7 +262,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
->>         net->backend = r;
->>         net->dev.protocol_features = 0;
->>     } else {
->> -        net->dev.backend_features = 0;
->> +        virtio_features_clear(net->dev.backend_features_ex);
->>         net->dev.protocol_features = 0;
->>         net->backend = -1;
->>
->> @@ -279,28 +280,31 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
->>     if (backend_kernel) {
->>         if (!qemu_has_vnet_hdr_len(options->net_backend,
->>                                sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
->> -            net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
->> +            net->dev.features &= ~VIRTIO_BIT(VIRTIO_NET_F_MRG_RXBUF);
->>         }
->> -        if (~net->dev.features & net->dev.backend_features) {
->> -            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
->> -                   " for backend\n",
->> -                   (uint64_t)(~net->dev.features & net->dev.backend_features));
->> +
->> +        if (virtio_features_andnot(missing_features,
->> +                                   net->dev.backend_features_ex,
->> +                                   net->dev.features_ex)) {
->> +            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
->> +                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
->>             goto fail;
->>         }
->>     }
->>
->>     /* Set sane init value. Override when guest acks. */
->>     if (options->get_acked_features) {
->> -        features = options->get_acked_features(net->nc);
->> -        if (~net->dev.features & features) {
->> -            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
->> -                    " for backend\n",
->> -                    (uint64_t)(~net->dev.features & features));
->> +        virtio_features_from_u64(features,
->> +                                 options->get_acked_features(net->nc));
->> +        if (virtio_features_andnot(missing_features, features,
->> +                                   net->dev.features_ex)) {
->> +            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
->> +                    " for backend\n", VIRTIO_FEATURES_PR(missing_features));
->>             goto fail;
->>         }
->>     }
->>
->> -    vhost_net_ack_features(net, features);
->> +    vhost_net_ack_features_ex(net, features);
-> 
-> If `options->get_acked_features` is false, `features` here is not
-> initialized (it was set to 0 before this patch).
+On Thu, Jul 17, 2025 at 9:14=E2=80=AFPM Cornelia Huck <cohuck@redhat.com> w=
+rote:
+>
+> On Tue, Jul 15 2025, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+>
+> > On Tue, Jul 15, 2025 at 09:16:24AM -0700, Andrea Bolognani wrote:
+> >> On Tue, Jul 15, 2025 at 05:02:54PM +0100, Daniel P. Berrang=C3=A9 wrot=
+e:
+> >> > On Tue, Jul 15, 2025 at 05:44:25PM +0200, Cornelia Huck wrote:
+> >> > > Hmm. So
+> >> > > - request a new PCI id (probably in the PCI_DEVICE_ID_REDHAT_* spa=
+ce)
+> >> > > - restructure to have two devices base off the same core functiona=
+lity
+> >> > > - teach guest operating systems about the new device
+> >> > > - teach management software like libvirt about the new device
+> >> > >
+> >> > > Not sure how fast we can get an ID (or even how to go about it.) T=
+he
+> >> > > second step should be reasonably easy. The third step is the most
+> >> > > complex one, but at least teaching Linux should hopefully be easy
+> >> > > enough, and existing guest operating systems could continue to use=
+ the
+> >> > > existing device. The last step is probably not that bad.
+> >> > >
+> >> > > I can start down that path, if we have some consensus that this is=
+ the
+> >> > > right way to handle this.
+> >> > >
+> >> > > I'd still argue that patch 1 should be applied regardless :)
+> >> >
+> >> > This sounds like a hell of alot of busy work to fix a problem that, =
+IIUC,
+> >> > does not actually exist from a functional POV - it is merely a perce=
+ption
+> >> > issue that people might be put off by the "Intel 6300ESB" names.
+> >> >
+> >> > IMHO a better use of time is to expand documentation to clarify this=
+ is
+> >> > just fine for all PCI architectures, and change nothing in either QE=
+MU
+> >> > or guest kernels.
+> >>
+> >> Agreed that it's not the most high-reward endeavor, but IIRC users
+> >> were getting genuinely confused and annoyed by the string "Intel"
+> >> showing up in their aarch64 guests.
+> >
+> > So be it, that's far from the only wierd thing in virt.
+>
+> So I'm wondering what the general sentiment is towards having an "Intel"
+> device show up in your non-Intel guest. This device is generic enough to
+> be included in PCI_DEVICES, and should be usable on any of those
+> platforms.
+>
+> Linux treats this as a generic PCI driver as well. Do we know what
+> Windows on non-x86 expects? The *BSDs? Others?
 
-Indeed the initialization is needed. I will fix the next revision.
+Eric just asked me about the i6300ESB on ARM and Windows.
+Windows has i6300ESB device PNP ID in machine.inf:
+%WatchdogTimer_Desc% =3D NO_DRV, PCI\VEN_8086&DEV_25AB
+NO_DRV means that there is no device driver installed for the device,
+but the device will have some "Friendly Name" in the device manager
+and will be treated as installed device. Users could then install
+Intel's driver.
 
-Thanks,
+Changing the device ID, will make this device as not-installed from
+Windows perspective. If such device will be included by default for
+some machine types, those machine types will not be able to pass
+Microsoft SVVP certification because the OS will have a device without
+a driver. The mitigation is to keep and certify our own dummy INF,
+which is a grey zone as Intel should have their own driver certified
+with MS.
+This is very similar to the discussion we had about AMD IOMMU PCIe
+endpoint PNP Id.
 
-Paolo
+Best regards,
+Yan.
+
+>
+> >
+> >> You can point them to documentation over and over again, or you can
+> >> work to prevent the confusion/annoyance from showing up in the first
+> >> place. Which of the two approaches is a better use of anyone's time
+> >> is up for debate.
+> >>
+> >> I for one am grateful that someone put the time in all those years
+> >> ago and, as a result, PCI and USB controllers don't suffer from the
+> >> problem today. Ultimately it's up to Connie though.
+> >
+> > The PCI/USB controller situation is not the same tradeoff though.
+> > Those guest kernel drivers will identify and attach to these two
+> > controllers regardless of their PCI vendor/product, via the PCI
+> > class property. In that case changing the PCI ID and other device
+> > metadata in QEMU is cheap as it has no negative impact on guest OS
+> > driver compibility.
+> >
+> > In the case of 6300ESB though the guest driver is tied directly to
+> > the currently used PCI device product/vendor ID.
+> >
+> > If we change this then we have actually created new functional
+> > problems with guest/QEMU compatibility, in order to placate a
+> > non-functional problem. That is not a good thing.
+>
+> I don't think the suggestion was to disable the existing driver on
+> non-Intel setups, but to add a more generic one. Still, more work to get
+> this actually propagated into guests than doing the change in
+> QEMU. Before I start down that route, I'd like to know whether the issue
+> is actually big enough to make investing time there worth it.
+>
+>
 
 
