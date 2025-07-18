@@ -4,106 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5398AC83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 10:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3004AC83F34
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 11:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uciKF-000304-Pi; Fri, 18 Jul 2025 06:28:23 -0400
+	id 1ucitm-0002h7-S4; Fri, 18 Jul 2025 07:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uciKC-0002wY-9X
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 06:28:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uciKA-00068D-Hw
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 06:28:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1752834496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KCUWHZvWUFTEiuVCSKBZ7fDqaqvHkAkknvw7+1o0IdM=;
- b=Xx5RsmQCYjFlOhgGNtwAzLLTLmqWyTWWzA+nkHutX0s1hjiz/4FMAElm39IA2FwJMe5W8i
- rh+gHepWjAZaNOMb1UpiHfe9Q34DhTtno3wocmy8jAJj+3dw7O32B7JhfKhnDZBbRBh8je
- kvtXWgkAI1g2oZ9QKhbKVazu9Pf1mlY=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-i3T6BTBaMe6-9s-a_wWhIQ-1; Fri, 18 Jul 2025 06:28:15 -0400
-X-MC-Unique: i3T6BTBaMe6-9s-a_wWhIQ-1
-X-Mimecast-MFC-AGG-ID: i3T6BTBaMe6-9s-a_wWhIQ_1752834495
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6fb01bb5d9aso26785466d6.3
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 03:28:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ucitO-0002YD-Th
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 07:04:43 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ucitN-0005om-5q
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 07:04:42 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a6e8b1fa37so1373970f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 04:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752836679; x=1753441479; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nI52mj/NOpmVxIV/aC5RI+b8iaJ7jsY+o3+3JbLpnyM=;
+ b=W0umaNY8+upSIlPPea+SGejreaoHFpIAYKYkbvKXla+pt50IBG2mmmuYJ/z6AsxL+H
+ FbMbXXqOAh4ysm1Ba1Zpycbd4oKZF32lp2xnYf5jDMoqsHAMsxO+qT6+ceHHO3ZDf5nY
+ +++eSoZPU+Ty8Ck8Tu+1L/9UYfDKt5XfKw8nbl5jPmmM6K5L9S4pWsykPWBWEmH3QIbH
+ N4dwKChtXzhj6BKFnxfXhWWqHInnf/XJFOWFCV/kTo2F9RuqvVl9oWJ9f4EwqmFC6uAw
+ dw2i0CYvRc54dvXZJT2Kr5Vq6/g/LlVm/n3jHQ2jBMnE/mq1pQTaauXtXcKkJxR2NmiY
+ v37g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752834495; x=1753439295;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KCUWHZvWUFTEiuVCSKBZ7fDqaqvHkAkknvw7+1o0IdM=;
- b=i6pPyzZ8rnUBJmSnzyBFkELhpBsuByvapr0d0QJCXsoyDhELHB/2R/gzvqXLtR9yea
- 4Vbv/8+8o7AdVV0WA9UB4OW2hYiZdK68eY0X4SsSZBjOyftZY2E0ePxOm3/5rBmkhjVW
- O40to4XyG4V7U4heYUZZU2Ym9DZcaXwlkyCy15hiTJ1uKwVkDEHpIzWS3SWAHmKP1+hC
- j3OP2AY0hBoSs/dflXTjoI+Bp9djJHX+txJ0vbVrAyK1g6f3RE5R8h5Z+Kz74bjYbr0Y
- 6vsGgke+eclcYE3byCMY/gng5vrYz32aL0nLT+GvJj2rOe2YNMnMr7UBqL8c+qGGnj3B
- 6BNw==
-X-Gm-Message-State: AOJu0YwPiGtEMS7UIp6qc1ExGKmU0Ry4OFf6sfZrYxBNSaYaPRsOQiSJ
- ce8gUcPgqWbjvMBpLUfkVL4c4+uuIjSsOyiXCXX9C5qVyKOG9htoj0K7ktsqCVIcQWqWeV3pz/O
- MCbdLntiByYX4d7st0IJ+TvFGuxSbQkPZrd2gAmAYhlk0xl3Bz9JxeCq5
-X-Gm-Gg: ASbGncuU3/KHPq1PZmqHg9DV0tCzTFZ/ipK/0WHbAHnXLeZGOxdHOJBQsikHS2Ixj5F
- Or/c6Y22HXylFCMnMXI+eo9c3sCgtzfsPmSaarfalzx7ZmphK68gmhRlJbtM6xSiZB+tTCFvkTv
- UqusGHCgpeV1PgcbDJh1P+P+vuWkB9MECkaYgxVB/0TNajGlCG40ErsWNCPJ++GT3LgbtprqlkV
- vK6n0xhU1nvHBJiaJLLwkD5baprMrmmiN+HfwYbWvUddYMteucL3+nmgOjrMuwQp/jqqetiSNSX
- clHyWaRJQKYxDGicZTPCFjZvAxLCjsbcSkryd3rh1CIGP38cZGi48fpd9sjbHyaxRfCpiqxzb1a
- L2eVRVozVHe2YB4I=
-X-Received: by 2002:a05:6214:4283:b0:704:7df7:c1a0 with SMTP id
- 6a1803df08f44-704f47fa4bemr180802756d6.7.1752834494695; 
- Fri, 18 Jul 2025 03:28:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNEqh+cBaafO4OlGYjldZIYmK3zY47yOzBlzxa4/z3Q6+yaqezpXSk9TFcdLP7APQ0Aq4bFA==
-X-Received: by 2002:a05:6214:4283:b0:704:7df7:c1a0 with SMTP id
- 6a1803df08f44-704f47fa4bemr180802276d6.7.1752834494138; 
- Fri, 18 Jul 2025 03:28:14 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-45-205-118.retail.telecomitalia.it.
- [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7051ba6b728sm5800316d6.69.2025.07.18.03.28.11
+ d=1e100.net; s=20230601; t=1752836679; x=1753441479;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nI52mj/NOpmVxIV/aC5RI+b8iaJ7jsY+o3+3JbLpnyM=;
+ b=XvW2NiqcOKfnBP81+Yikp0goahygz+AsMAAUFGVHaFPcesbhHwaSXY89UNOlBrfNwL
+ TFT18kf91cieEwQnDReDlJ5bTp/JcyTF/kjQd5UHeobIUPBDYA/L02X65B7vqZ0eXJMG
+ YgiHyrCGk/pJz56yt0ziKiRsQcr8FT0xiJUEiPNyzGmHt/BB4hvJNUxVj/HIzfu7MrFz
+ 4F7BV5bCmxrIypV/Bg4B5gJj8dkivX1/oTLYg4+lbmpOpcmwj4KnHC8MpOf175AI4dqp
+ CDLYc9EFQaMyISjgQ7irpA6B6Db6TNtW+OBKTdlf6SRK4g3Ze4/N5Ehb9xNF4wopkNrl
+ 6r/g==
+X-Gm-Message-State: AOJu0YxiZ4lGBOXKYIWFV+hPWs6DZZETe/d3XI3FEiM9/qgsd2kcMlSG
+ Agb/rCiTv8Y64fsEQd/FmoNEpu/jw5OpcXD7RYFRc3P/HlDGEQivQOC+tkX9llAPciTHkbQIvdo
+ 60Q2k
+X-Gm-Gg: ASbGncuxr573QfoPCTKhnDfDsD7EWV23C0gCE6vdJ/p6uUYsEfR6WqZApvVDPefg+h7
+ wwzQbsjv+dzOUeshjl8zLcCQ8jKqUrLkiDgMZvS4b36rNkq7quttgMx7rBc7+g9SMiSe70JydWr
+ X2rzRNyCpA55LG7LpLA9bVJ8YabJ42mopohpO1jZeDdgaNebG0FFvZxDHfNZWpjc5zlxK65rhG9
+ 17ahDLuldp5NLDrzCQt/wFSty6dyrXJmsak0dBGcddjOS+lwNZnjhSaaPEs1O32y7WL/9f5iX3w
+ B9yukpMAcERqkoe5NkdPUzc4bdJPwm06+xE/08DCTfEezbQA4GhuI7ydpjt8fRrSX/h+0XiAp+F
+ +x87W7yTSWB/U2W3uLm1IvCPbBZ9fJFE8eZClcrL5Ye49/aFodpoSuggsMnNv9NT7MPg=
+X-Google-Smtp-Source: AGHT+IE6AiflDnatX31QFul2w7FK2lYVC/cT9RI3+d4u0PWxx5vC16EqPttF8Y8+0j3D580V1o1b9g==
+X-Received: by 2002:a05:6000:4b1e:b0:3b4:b4d:6861 with SMTP id
+ ffacd0b85a97d-3b60e50fe9cmr7635945f8f.27.1752836679144; 
+ Fri, 18 Jul 2025 04:04:39 -0700 (PDT)
+Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e8ab891sm76117585e9.35.2025.07.18.04.04.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Jul 2025 03:28:13 -0700 (PDT)
-Date: Fri, 18 Jul 2025 12:28:06 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH RFC v3 08/13] qmp: update virtio features map to support
- extended features
-Message-ID: <747yl6magfb5cvwdk72mwukafp6xdzhyc3ovmsmixxcewos6xx@hb45y3knbg7i>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <8a42515171c651101aa487519fbbc53dbe4c4c29.1752828082.git.pabeni@redhat.com>
- <5vwmpqfuwdo66kydy7k45fmps2jtgawwsan6bd2ipzs6v5j3lo@cuoibjphppck>
- <8842b61b-eb9b-4484-ab5d-0dda9642cb02@redhat.com>
+ Fri, 18 Jul 2025 04:04:38 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 18 Jul 2025 14:04:27 +0300
+Subject: [PATCH v2 3/3] tests/functional: add -k TEST_NAME_PATTERN CLI arg
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <8842b61b-eb9b-4484-ab5d-0dda9642cb02@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250718-functional_tests_args-v2-3-cde6e08bf98e@linaro.org>
+References: <20250718-functional_tests_args-v2-0-cde6e08bf98e@linaro.org>
+In-Reply-To: <20250718-functional_tests_args-v2-0-cde6e08bf98e@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2179;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=1CgM+Kp1f+WKnkXx4AdXZu8CWuCTr/dCbXb3gkwdtYU=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQm9laXBDZURNR2lDNS9EWTZQV01xZm9pSTd4VjRTCjlEVDhnelJNVGhwanRxbDlL
+ aVdKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUhvcVFnQUt
+ DUkIzS2Nkd2YzNEowUFQwRC8wZVpWbTM0VE9sZUlqMTdjYjlvN0J5OXlRYkluN1ZucVdkRWhWTQ
+ phbGVpM0RhQnlHTkxOcEF3bzhRV2xwV1ZaMlVZTVVtSFVlQWd0ci9yUUh3WGhHT3o5Ni93Y0pwR
+ m1aTmhuVXQ2CjlVTlo5VStlQ3VYMFk5dHN2RU5WRTc4WVRWbjJDcDJFVnNFMmRleG0wRmY1UVVI
+ SGlheHhTM3A1RGRNYzlqTlgKMFhsSi95UVE2QTgwMXVLb0hEMUp5djErNE5kWDBzYkFvQ3d4U3h
+ zbHZRV1VmbmdSQVUrczQwdGowK2xzbkdXeApIaTl0K3ZOdjZJWkxrUXhDTklqY0dPT1VJNXR1aX
+ BrZVcraFBsMU1vOEl0UnJGcFNtSkZaRVk0eDcvblhqWnZCCi9vWWdKZWZnU0ZLRUljNUkzNGxmM
+ zd0RHdMbWNKTEU1QUl6NzJvVnJjdVRqUjhWbUl4WHpoZnVPcWQ2M25nVmwKaHRlMFNXQUZmZFIx
+ dVJDVWdiOGF0L3F3bUl2SmdIcWxjTXk2d0RUcFFCKys1dHl3NXNvbnRMNVo3RnhpV2xESQpIc1V
+ wUnljVVJYWjBILzhFOGJBcDA4M2tWMWJCM1pjcHJtbnNXcGhwVGtpdHFqbU1ua1dhcDR4Q0E5M1
+ hiMVF2CmVKYnJtSUxVNmtzT2VwL3VkR0RRWDJiZVFsNVg5cFIwb1JYY0tRSStyaWZQb2tDbjlKc
+ UlrSlV4cEtwMzFpakYKWFZ2WkVWUzBzK2FJTWwyT0FWcFhwbFc0RG9tNkt1eW1WQnNtN2R5S1pm
+ MEtGT2E5RFZxSzl6d3ZrdmF6MHpBWgoxb01QaWgzQkhGZjhrcHl1UHd2VTRpZktUSnBNTURza3J
+ CZDNZRnlOK3F0VVZwQ0lVczJHWmRnN0xjRHI4eVZSClZjY1Rsdz09Cj1DcUJTCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,56 +128,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 12:23:21PM +0200, Paolo Abeni wrote:
->On 7/18/25 12:18 PM, Stefano Garzarella wrote:
->> On Fri, Jul 18, 2025 at 10:52:34AM +0200, Paolo Abeni wrote:
->>> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
->>> index 3b6377cf0d..03c6163cf4 100644
->>> --- a/hw/virtio/virtio-qmp.c
->>> +++ b/hw/virtio/virtio-qmp.c
->>> @@ -325,6 +325,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
->>>     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
->>>             "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
->>>             "negotiation supported"),
->>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
->>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
->>> +            "UDP tunnel packets"),
->>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
->>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
->>> +            "UDP tunnel packets requiring checksum offload for the outer "
->>> +            "header"),
->>> +    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
->>> +            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
->>> +            "UDP tunnel packets"),
->>> +    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, \
->>> +            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
->>> +            "UDP tunnel packets requiring checksum offload for the outer "
->>> +            "header"),
->>
->> Is this chunk supposed to be here in this patch or better in the last
->> patches where you add UPD tunnel features support?
->
->Note that this point was discussed in the previous iteration:
->
->https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg04418.html
+Add a CLI argument that takes fnmatch(3)-style patterns as value and can
+be specified many times. Only tests that match the pattern will be
+executed. This argument is passed to unittest.main which takes the same
+argument.
 
-Ops, sorry, I skiped that version and came directly here.
-I'll check the v3.
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ tests/functional/qemu_test/testcase.py | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
->
->I think it could be both way: it could be useful for QMP to be able to
->dump the (kernel/backend) features in human readable format even if qemu
->does not support them.
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index bfee6638edf6f9853ead1e3809ae3c9152089406..e137c05baf91f6f88d6228d86d98aa9498797382 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -16,6 +16,7 @@
+ import os
+ from pathlib import Path
+ import pycotap
++import itertools
+ import shutil
+ from subprocess import run
+ import sys
+@@ -55,6 +56,14 @@ def parse_args(test_name: str) -> argparse.Namespace:
+         action="store_true",
+         help="List all tests that would be executed and exit.",
+     )
++    parser.add_argument(
++        "-k",
++        dest="test_name_patterns",
++        action="append",
++        type=str,
++        help="Only run tests which match the given substring. "
++        "This argument is passed to unittest.main verbatim.",
++    )
+     return parser.parse_args()
+ 
+ 
+@@ -300,8 +309,16 @@ def main():
+ 
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+-        res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=["__dummy__", path])
++        argv = ["__dummy__", path] + (
++            list(
++                itertools.chain.from_iterable(
++                    ["-k", x] for x in args.test_name_patterns
++                )
++            )
++            if args.test_name_patterns
++            else []
++        )
++        res = unittest.main(module=None, testRunner=tr, exit=False, argv=argv)
+         for (test, message) in res.result.errors + res.result.failures:
+ 
+             if hasattr(test, "log_filename"):
 
-I see.
-
->
->No big objection to move the above chunk in patch 13/13, if there is
->agreement :)
-
-Not a strong opinion here.
-
-Thanks,
-Stefano
+-- 
+2.47.2
 
 
