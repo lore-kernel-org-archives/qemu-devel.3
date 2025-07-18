@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814ABC83F34
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 22:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFB7C83F34
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 22:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uctHb-0000cr-4K; Fri, 18 Jul 2025 18:10:23 -0400
+	id 1uctKF-0004SY-2d; Fri, 18 Jul 2025 18:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ucsn0-0006DN-8q
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:38:46 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1ucsjE-0008FK-Vm
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:34:53 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ucsmy-00062Y-MS
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:38:45 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b350704f506so2177061a12.0
- for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 14:38:44 -0700 (PDT)
+ id 1ucsjC-00051J-LY
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 17:34:52 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-75001b1bd76so1717425b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 14:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752874723; x=1753479523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752874488; x=1753479288; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NRfWVhKnyB1HSmXC6npdGvPwbFR81eqtzCrl0rkYyHg=;
- b=zXmiixc6JoD494ZpyBb2JMsEWMuMIiZjuZlc+AWnML6nmHqVQy7YXUxivsUTL/Cpis
- xOavvaNY9bNA48IG9v3jP05t07epOhERm3K4B4qAwURYVAnY0LBMuUkRiaA3BzBUPh18
- LLtky+yCls/Nm2bh8h6xAekbfcRMTZIR6IY+YAmn0MbfuIU6DfZ/UHkgLuMq3ciLnSLs
- FUaFR2p3iI8I9/TZwcuHy5rfcwQElkXMtn2jG+VZfrqzAwqNNEO/D8bQlTJYNFR/iJvk
- wxGwB2lJE2tZSEPFf8PiVrcmKnBnYzDU3jR2ivQH5qh0ftXyZNxIuJz9VsX9AF6d0rF8
- pFIg==
+ bh=lDK8BMSxoa1iZ3EfA/s5tzZ9b0JEgVHWkas8sQGa8QU=;
+ b=GBy7Q5wMLS8jdXhkXXiZ1w4jOuO7A6Kl+XoEuyThKx9WJ8Rxdnhc5ga+2oicmIigAK
+ DNjMJRQpu2b/59XE5N0/mHbHsO99tosoJtG2zeBUteCklrya//EO+l/U7AKJ6vSM/zJO
+ D/pzYna8AtupKC+qtXysQAfIcTaZsOV4R7vCIPMBgtd34ruzAJKKgZSHIHFwezs4nEvl
+ SNoT7p3ZGkeOoalJnCJvoAhfDTwe8pPW758Ydoh+/c6cARlI4DuZlGwtAXjFTPuBuxV4
+ F15h9puTU7AnhYmjhyAqI8lEHUhYhpsAnqFg/aNq2EKnVY1io+n30xQdVEDS6nl8a3dI
+ 2grQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752874723; x=1753479523;
+ d=1e100.net; s=20230601; t=1752874488; x=1753479288;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NRfWVhKnyB1HSmXC6npdGvPwbFR81eqtzCrl0rkYyHg=;
- b=WUpNw0LEJMsdDRDrzChQ1PFZ//k7xCu0DMWnDc69zYpw2+ZpaSpcNKJOQ8X0sk4Ssb
- vJbzCbY2WGYSWRgm+DzK2yEGXwSGuHp7aj71ZCth0dTVODGRoqYB/xtz5xbkGCW0GLOG
- Bdstwb6gfZmno/reuLd9KQfD+/nvoMbOJEMyKbC16rb0O4r2bPV3m9iPrh0z5POQz1cj
- u7XPnInSaA3WhfrtVWgBMsfIuVsMyBNXtyVf8Dmcvjfa49s+BsYf2ITFTffmNQZAiDAO
- +eLdX+vdTaYvYphs02VkPdvPFpFwederdAfw5JyGTEAuxQLQOGSiWCioozZ3Tg3xP3aU
- 9y7Q==
+ bh=lDK8BMSxoa1iZ3EfA/s5tzZ9b0JEgVHWkas8sQGa8QU=;
+ b=W9UxDRNex4TX4X4gow3SW3+ilkbb/1Q+vthcRu7AcY0wpUgl+9qwW5EKLJqwGnX3L9
+ qX3YYPXV6GBIiEXnWVlid6FQKFeUE6aBQZ4gemihzlYgGFRmS5gCBnl0qaxtT/uQY9Vk
+ 8pfGaPDHcaVBALDC5cxsBea+l5DDRrzeHp9dK4n/QZrtMagMAx+wFqgsBhYwBCt/4KsR
+ iOQ27JQsdBOrNvgQcUNaI4e9fs6d4vocuuu4x3KL0WgRiMQBY1OIFwhxh7at8O4Y4eQk
+ X8zhzwtTnKiit6UqD5v1gY/vh1xqo72dL4kdHy3ZK79z5j9W4GCiJxWnVoaKE0xiXhXD
+ mofQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/W75yzc/lks0Qb5l0tJIJyt/Ty76SaQHa+rqQkAyAIJt5BukHL1r/c6C+Fv5wVHDYCzB7eh9URUW1@nongnu.org
-X-Gm-Message-State: AOJu0Yzr3a2voiYfd5I2jH3GUeFfAff7ClgDPrbWXzSHAu1m845FL1fD
- 1F2yQ5IRj8Xdq3s8flU5fWeKvLXy+4xjLDFY9eE6RR9VjkztAHqOQcBW+MAiX4H4bpCsgwLge9T
- G8Ch3
-X-Gm-Gg: ASbGncs1UyCIfXZmo6UqsEcH/ojJu8F3+yt20YfeYsI27imSeLg01qza+Mi63p8kXbR
- r1dC9a2wIrX2qgyjWBwYNuFlOZQxRUwf7lBg9m2dDqigw0Hgjpbam/shxq+NS6Q5z1JahIGEkr0
- JeHEWfR8wU52ZY+pzHvZKv4MTY5KUzWnbNSLdv1R6hWbxPQ4juZ5cQLucGevVYK6DPk2RX6lRcG
- v1OYwhCpBGbeuNN+TeOJxgfMvs1xh2+hHAGv4gF46s3/B3fxI6c4RXiOzOcsGCpcYrDtDS7YyFS
- XBxQi9dc0erA5py2Tex9NHbPZiHnZArbU9nidd5PqBfUrn1dVizP8Te+wODclq0YE9pE6v1B8Yk
- R7gj9nGMUCneR4zGzZAGZkUyKMX0fr72Z9rSx7O1V4w==
-X-Google-Smtp-Source: AGHT+IEueRLFbC+ERyhOPVI+MGq4YykPSHcuJTvZd4m6X1Nz3fK0d/wkK5Wca7Qdt9Yn6fD6u3xSAQ==
-X-Received: by 2002:a05:6a20:9186:b0:1f3:20be:c18a with SMTP id
- adf61e73a8af0-2390c79a037mr13437569637.10.1752874723079; 
- Fri, 18 Jul 2025 14:38:43 -0700 (PDT)
+ AJvYcCUj9UugWqIhDfeEGhJYK8Tw8qwTmpMjYk++Nls0Gz6gmp5RtX8e16OKMw/O1tbH/uTbL2+suOHDh7Et@nongnu.org
+X-Gm-Message-State: AOJu0Yz5zyNt4C1EDJz6Ism1wOkil/aVbuTk8zIwZVtO76LTUTZXIs6E
+ EgMybU0dIzj0qy+GqsnME2E2F9BwoDD4ybrKIhN5MYEkNCwLTJyCIpIX4WREoCgs5+p31nZJK3Z
+ ki4dI
+X-Gm-Gg: ASbGncvWrpZddHaBAXTyyVXVS6dKPcYKskHXiA0cJ/FBGCIVBzXI5DTOHuQnRMlU4Gw
+ 6zwbrfWjNiUeYnRZeGFZKbdchjGKWURaxaLpHUrq5D2XYbYy81+ibkRSQGIRY7Hevd3nHNnyCCs
+ mGASj5TniLmX7e/lMn011k07cPwvdmtS3iupcFN+90NuwHYqIaIkyVWAGAsebU3f24xVxd6AFcx
+ GIqShrPvzif0GpjuC75AxM2prruQkfD+MsGw/kbN33pk0lktKre/AQcS8P9AqJrqJBod9zyt2/c
+ 2jAU4QXH9UcrewbpYmVajgNbssjIfym2ExEbFclM6zQ3RweRJ+eGQ4SFa/rBgfuf01+2l268RSN
+ AQ7haXD3Xy6bnxeXRC6tzfavI4oujO5lwwLZAQxbQfA==
+X-Google-Smtp-Source: AGHT+IFtMiePl2AMdNmNIWaMAwbyGbaHmBkHovL3w/+keJiutxV1rm3AZGNZcZLjlL0C8NivMs5oDA==
+X-Received: by 2002:a05:6a21:a344:b0:220:10e5:825d with SMTP id
+ adf61e73a8af0-23810e50fe4mr18750881637.8.1752874487666; 
+ Fri, 18 Jul 2025 14:34:47 -0700 (PDT)
 Received: from [192.168.101.134] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-759c84e2175sm1738216b3a.1.2025.07.18.14.38.42
+ d2e1a72fcca58-759cb76d69csm1769135b3a.102.2025.07.18.14.34.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Jul 2025 14:38:42 -0700 (PDT)
-Message-ID: <c7398952-a030-49c9-9455-5602cbdd2e21@linaro.org>
-Date: Fri, 18 Jul 2025 14:38:40 -0700
+ Fri, 18 Jul 2025 14:34:47 -0700 (PDT)
+Message-ID: <b1677ce1-637f-439f-b52d-ddf53d32d79c@linaro.org>
+Date: Fri, 18 Jul 2025 14:34:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 04/10] target/arm: Add BFMUL (indexed)
+Subject: Re: [PATCH for-10.1 03/10] target/arm: Add BFMIN, BFMAX (predicated)
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250718173032.2498900-1-peter.maydell@linaro.org>
- <20250718173032.2498900-5-peter.maydell@linaro.org>
+ <20250718173032.2498900-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250718173032.2498900-5-peter.maydell@linaro.org>
+In-Reply-To: <20250718173032.2498900-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +106,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/18/25 10:30, Peter Maydell wrote:
-> FEAT_SVE_B16B16 adds a bfloat16 version of the FMUL insn in the
-> floating-point multiply (indexed) instruction group. The encoding
-> is slightly bespoke; in our implementation we use MO_8 to indicate
-> bfloat16, as with the other B16B16 insns.
+> FEAT_SVE_B16B16 adds bfloat16 versions of the SVE floating point
+> (predicated) instructions, which are encoded via sz=0b00.  Add the
+> BFMAX and BFMIN insns.  These have separate behaviour for AH=1 and
+> AH=0; we have already implemented the AH=1 helper for the SME2
+> versions of these insns.
 > 
 > Fixes: 7b1613a1020d2942 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/helper.h        | 2 ++
->   target/arm/tcg/sve.decode      | 1 +
->   target/arm/tcg/translate-sve.c | 2 +-
->   target/arm/tcg/vec_helper.c    | 1 +
->   4 files changed, 5 insertions(+), 1 deletion(-)
+>   target/arm/tcg/helper-sve.h    |  8 ++++++++
+>   target/arm/tcg/sve_helper.c    |  4 ++++
+>   target/arm/tcg/translate-sve.c | 17 +++++++++++++++--
+>   3 files changed, 27 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
