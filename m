@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F419C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 06:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFB3C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 06:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uceFP-00018E-2N; Fri, 18 Jul 2025 02:07:08 -0400
+	id 1uceJY-0007T1-Nt; Fri, 18 Jul 2025 02:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceFK-00014Z-I6
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:07:02 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceJM-0007Oa-M6
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:11:14 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceFH-0004Jy-8k
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:07:02 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a4fd1ba177so1097403f8f.0
- for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 23:06:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uceJJ-0005D7-2B
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 02:11:10 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4538bc52a8dso13079765e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Jul 2025 23:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752818817; x=1753423617; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752819065; x=1753423865; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=b9w+VOmtrDkzwqwfsAJHUFRqgXBoAXodiO5gYMhKLlQ=;
- b=yO2IITh1dSfpOlXYJNz4OCv6Xv7n62LNQFQUKhgVbh5moIG6ReucMIL/3UpFIx0S9M
- +vbWerZTpw9yMoTg0izJl7UrGQnx45gj6OXNEC3w8ZfAGJ2L4qwmhOPbja3aLeQwYjdV
- emKmz99nneu3VE+rMQpAk9UCum7Cg5Sk0bLBfmQexZ2kfg4zlq1QW0sN3PKN64xV3jqW
- x6Poi+nFdgyoOciZgc1wlq1tAUhPR4R3aE5DmPqhIYOGXqVgLH/xsVUU8nvGWuhCx2Di
- I+HcBC0HguD/B+H9OF1KsD+IMkrkPP34+ZDZKJgLFnnYFXP7S+jucaDvgjLRxCHbRNVV
- GdPQ==
+ bh=nZAac98V1Ph4SSzeeQOmmYePk1mOHcZMqMQb2F7bDrA=;
+ b=OKEO+3wfRWi8MTV+axGgTS6Wdbr5DrCjjaSVpQx2RVfGiOpdpIh8y2wxsCe8RVndNe
+ B+Jz923QHOmze+HWMhNVrJsqLsWE6jQ8gnamH50S3ru2gjtFygUrSQmqwUc7mVIJ7/vk
+ 1OP5aDGsgAPFC1otEjh5myBMKxFUHrA0ka4siPCIrL/WBw1et7i++XSAQ5bOXBUkVQgO
+ RW1FDT9sGcFcaSwEhcA+FHIversbZS+vejqBwRIEHaKmeo40AgP0wvaSCyCJx+3xJ7Bn
+ k74tEfNCyPqnTgLcs3Rsyh6U/DuxfWIEOjG9ijWQrNl2/xJQJOFEiJLheo9jk2CkmOZi
+ jC/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752818817; x=1753423617;
+ d=1e100.net; s=20230601; t=1752819065; x=1753423865;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b9w+VOmtrDkzwqwfsAJHUFRqgXBoAXodiO5gYMhKLlQ=;
- b=nMvdQdIxqTPaUxqJym7tWaDpAZBIzOc/0DBrhtY0g3zRY3yQinNgAlEE8AJFvYyAjc
- iMCwXiFpMyIGNKBdrTYw/chfrGWytYe6n2GlK5fs25glns/AAIuU9Qwsu3UG1nMhlh4i
- DFYVGn6tGplHHm2H0EGaH+QviywMTvWkbw4zHWoELCzqgBXig6rmLElp5NsO6H1U31bY
- zGp5kskk9+AfZejSfqfwM08R5mdo+466a1nLbx/RHvP+ls3p2XGuVzN8RyaDbPYW8Fyt
- torR+Q5DeoYEFOiVIwNgq1SdeSIySMv5Y6sgIm/vim4A0OVhsZdA7ruSceQ/ALl2vay2
- bhbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzkNnWjDgyiCfj3+VQRINAp3oLgB9bBOdpXt6YlNjLzxWdFXNpTcUkjSAqOR58V9O/2/IOKmvhl53R@nongnu.org
-X-Gm-Message-State: AOJu0YygToqDXSjLP5XbyuIicmC3EtUd8C0/vdr+XFcIITgkJoL6Uh6K
- CBoFkqt1PjytVKkn0BFsOCER6DrEOE1L5wHLR2rPYp2vzOvU+3dkYNrLgjt9DsMG5xU=
-X-Gm-Gg: ASbGncvv3yd05kPEeaUAfhkgAqvfVTMRqXRDmlg0X/qesAy6Lgexl7K7IarCZ/0olZs
- qzYRjn7a7IIIrFBNCc3GkYHBezrdQLqBuszFraF9i99x6sPxbx1QvGYS8qTxL3JCI2eKKmpFAGA
- NkUtPWawbLAftLhsiBRYS+HFdMAUOHBC8keqTlWeeu1+6bhqThx+YtK7t2++zMMr8LOt108oFNZ
- 9su0cUuefOLrWx0V3iJ3XWo5pqKlThyRYKjgSFNpKCLjYnYkMi+ENPD6RFmVGSs2hbeP+4OxLOn
- 03eTiAW2VXUneEvuWzH4Rg1FSbbdDXcL3dabquq7GC9VuKzVikMJ0MWthoR2BySV/hTh6mx3YIQ
- SArkXoraWV6vKJMZhz+J5Cq51//nyo2dQGzqKV9ZCvrI2IyASShq6d17C8j9Uj9pVHg==
-X-Google-Smtp-Source: AGHT+IFuIR0PozaALdTktz0RC8fIYccw/jRyKrsINSs9PajgDaDaQtkTrrCuNk3pzOOO6fTxnqSLag==
-X-Received: by 2002:a05:6000:701:b0:3a4:f722:a46b with SMTP id
- ffacd0b85a97d-3b619cc0dedmr1454189f8f.15.1752818817489; 
- Thu, 17 Jul 2025 23:06:57 -0700 (PDT)
+ bh=nZAac98V1Ph4SSzeeQOmmYePk1mOHcZMqMQb2F7bDrA=;
+ b=XIAyTBxfdimLtpIeY1TBy1q1uXl17alNvQQ7rvdxqREWUNzqd7uCVxHAqIn4JdvF0g
+ AGAAiLPccbhnE1BUGZely1T1npvB9HpdD4zVvT/rdA4Zl3oN9mmevzJQ7bBLfZklImkG
+ WXOErgE9SFO+QFOvdoW5u5+v1iu8K+K6Bo7Rc33ubTVLURWYaKvjvd49mtw5PBKgiLU6
+ oi8WWw/4v7bbPZpFWHTcEF2dLyY9qOVyypk5oMIj9tfIIMBil2DGvArJMwfPr0FSnrf8
+ 9umALwi8AuC5VMe7hbq1qCJ8nR/5Fm+ogZ8PE6054/AMLOhaCdK6z8ih01GyZOwczbwQ
+ WyRg==
+X-Gm-Message-State: AOJu0Yzdzr7UFKOw5SZ5jCxFI79/dmT6T1JFnhwhjAprBzEIxBi5CVYV
+ c4Jmy4+YAu9Duoj7TFT47IfDot9HD2hb7VoHvBCVXkFpd35sc3la7J+oAgsAoK9hbDM=
+X-Gm-Gg: ASbGncsbafIOemLgGLGOA+uj79ayfWsPLADn/ZAjsJzcXBFho5NkBwuBfd1zw821L7R
+ aZfRXSC0dKZTJ2DOX2Loide2/VodTW4/WfjOc5mer2Zbg1d0pEdkUL86m6k/e+JbUvC899lLfwd
+ MaxnNLsC/kJt2CBdIIIKTxuYlQHnNUhW20gpc48T+MvnTC6+gCGTV0uSdzQAtIekSlH1y9xCZ1n
+ U35DLv3z7Ezz0XHkZ+j6q4/FpLzaBN3H7hROdVAbcKa9Gs4Q2E8jun1eOb8A3OjigUA5eiS+JH9
+ uvoIkoupt/+ezOzTS13iHTiCC0aNQ5c7gbDxuFhqLJSncIFXa61o/92nsH7e5GguyujFCEOqYgl
+ YH+H8eo3R6ZSBfRmd8O53GXkYyXEPS67ToRmfdojuQN6VJVXi61H8WuepD3E/Eqhn9Q==
+X-Google-Smtp-Source: AGHT+IEpCWyWwdv8CpeVxwa+3oJvNgqjEFe9x+XvDnznetGtywDcCAK2PdBu8fRRGwwbhMTCxYQCeA==
+X-Received: by 2002:a05:600c:8205:b0:456:2020:165d with SMTP id
+ 5b1f17b1804b1-4563b8fcc48mr12436625e9.31.1752819065231; 
+ Thu, 17 Jul 2025 23:11:05 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e7f4294sm69297695e9.3.2025.07.17.23.06.56
+ 5b1f17b1804b1-4563b5a4055sm10883655e9.5.2025.07.17.23.11.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Jul 2025 23:06:56 -0700 (PDT)
-Message-ID: <5beaebe8-f5b6-4910-b648-c9d60c8c757c@linaro.org>
-Date: Fri, 18 Jul 2025 08:06:56 +0200
+ Thu, 17 Jul 2025 23:11:04 -0700 (PDT)
+Message-ID: <bf6df47b-8815-4d84-a01b-010281187d24@linaro.org>
+Date: Fri, 18 Jul 2025 08:11:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: remove `inline` from `smmu_iotlb_inv_vmid_s1`
-To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, mjt@tls.msk.ru, whollins@google.com,
- jansene@google.com, jpcottin@google.com
-References: <20250717205735.2345674-1-rkir@google.com>
+Subject: Re: [PATCH-for-10.1] hw/arm/smmu-common: Avoid using inlined
+ functions with external linkage
+To: JianChunfu <jansef.jian@hj-micro.com>, eric.auger@redhat.com,
+ peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>,
+ Will Hollins <whollins@google.com>
+References: <20250214072029.515379-1-jansef.jian@hj-micro.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717205735.2345674-1-rkir@google.com>
+In-Reply-To: <20250214072029.515379-1-jansef.jian@hj-micro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/25 22:57, Roman Kiryanov wrote:
-> this function is declared in smmu-common.h without
-> `inline`. It is also used outside of this file
-> which causes linking errors because the non-inline
-> version is not generated.
+Hi,
+
+(sorry for previously missing this patch)
+
+(cc'ing Google folks for 
+https://lore.kernel.org/qemu-devel/20250717205735.2345674-1-rkir@google.com/)
+
+On 14/2/25 08:20, JianChunfu wrote:
+> Similarly to commit 9de9fa5c ("hw/arm/smmu-common: Avoid using
+> inlined functions with external linkage"):
 > 
-> Signed-off-by: Will Hollins <whollins@google.com>
-> Signed-off-by: Roman Kiryanov <rkir@google.com>
+>    None of our code base require / use inlined functions with external
+>    linkage. Some places use internal inlining in the hot path. These
+>    two functions are certainly not in any hot path and don't justify
+>    any inlining, so these are likely oversights rather than intentional.
+> 
+> Fixes: b8fa4c23 (hw/arm/smmu: Support nesting in the rest of commands)
+
+I suppose b8fa4c233bd was copy/pasted before 0b796f38106 ("hw/arm/smmu:
+Avoid using inlined functions with external linkage again").
+
+> Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 > ---
 >   hw/arm/smmu-common.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index f39b99e526..0dcaf2f589 100644
+> index 3f8272875..545d763ac 100644
 > --- a/hw/arm/smmu-common.c
 > +++ b/hw/arm/smmu-common.c
-> @@ -319,7 +319,7 @@ void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
+> @@ -298,7 +298,7 @@ void smmu_iotlb_inv_vmid(SMMUState *s, int vmid)
 >       g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
 >   }
 >   
@@ -128,6 +146,4 @@ On 17/7/25 22:57, Roman Kiryanov wrote:
 >       trace_smmu_iotlb_inv_vmid_s1(vmid);
 >       g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid_s1, &vmid);
 
-Already posted (but missed):
-https://lore.kernel.org/qemu-devel/20250214072029.515379-1-jansef.jian@hj-micro.com/
 
