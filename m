@@ -4,52 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43B1C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F8E2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 07:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucfje-0003Il-84; Fri, 18 Jul 2025 03:42:26 -0400
+	id 1ucfyu-0002U7-2P; Fri, 18 Jul 2025 03:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ucfW4-0002dY-66
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:28:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ucfVz-0002j8-1z
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:28:23 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxLHKL93loxcksAQ--.57691S3;
- Fri, 18 Jul 2025 15:28:11 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCxocKI93lo0QwcAA--.17387S6;
- Fri, 18 Jul 2025 15:28:10 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 4/9] target/loongarch: Add header file cpu-mmu.h
-Date: Fri, 18 Jul 2025 15:28:02 +0800
-Message-Id: <20250718072807.3585466-5-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250718072807.3585466-1-maobibo@loongson.cn>
-References: <20250718072807.3585466-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucfyi-0002Qh-3y
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:58:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ucfyf-0006Ow-U3
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 03:57:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1752825475;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GOn2BSUf8DrlsSe15fpzUBSFAezNelDy/nuMtbmfih8=;
+ b=THaTvHH1jjryczZo2TyxRtbNb7xs5yz2JtELTRVQMVdh8I0w1vSDpE1wVAQW6oDLNZSssC
+ 6scT0wlti/tQWDa/LOFwQkyxdmnfDPzSJZA0dhhVaIp2CeeAgNnW5JtlkITjLqAkVXAGe5
+ 21W2Ew5Xs0CQWnq2wsp5QmKGrQHj/Yo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-yTseaDRDOiuLLtMxTXRzGw-1; Fri, 18 Jul 2025 03:48:29 -0400
+X-MC-Unique: yTseaDRDOiuLLtMxTXRzGw-1
+X-Mimecast-MFC-AGG-ID: yTseaDRDOiuLLtMxTXRzGw_1752824908
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a6d90929d6so734848f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 00:48:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752824908; x=1753429708;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GOn2BSUf8DrlsSe15fpzUBSFAezNelDy/nuMtbmfih8=;
+ b=wvUd9zovnuV3/2GxaPy7Vn5mbAR9axZML/FV8vAKS8Boxso2OaJZKaSRnmo+sKVs8G
+ b2D4RKDrfW5j5B8MozqVJRJzToMitZPhEn1ALsN9Gd+V4mJI3G5SFAkdPiGr0OJ8A1zT
+ 9fHHJ0xT/YpJMflvrjEDafI2w/Z1T3+RUUdEYLHDm3VwDY2odLbLctz57JFw+2F1oBlM
+ WjLZcXRfZhl2esEnsFOS4CZPB7nr9bNNPLmpvd6bhh1xD+apqeJOQP6nRerkA2QucJel
+ 58DLMab6a8cx8wqzFo2Y1Z55BHYJYqP9+PLGWTur2zbKiRjSYFmzghCFHuHXjoA/a1+q
+ QXxg==
+X-Gm-Message-State: AOJu0YyXnWpUTjplWbZSMOLMq7a/zoIwgSPbeQ81FtWBD8ZLdtlkJOzE
+ aPygQEpUaHMGfNlSXOzCfxyRaBwVkTa3m1vIc7AhNsa/luWuPAVXinkbME8TSNhDUBp7g7W1vSD
+ Z440I42lCU+fQNhjkv72QVpqiwov/7jR43JbDb9Zzo3hN7FbR6xvtnPVx
+X-Gm-Gg: ASbGncvuz1yBeVyynA9dTzLBr28SfJF0inyKciby2dA6r1MYmpKWiN9oq7mDT6hrjuh
+ MkdqRwfQR5g7jnyH5AqXSxFTF75KBTt3w2JRibSfU4VBPHSFcVxr1xY5bmb7n3bGHtVkg4626+f
+ dQ/Ztr4uCP2IOcZImNmxTV+eRqQplYUtlLKVbjcDV7KilSybO3STztSbZJshkcseU3gO3/Nr0au
+ UfEqztyG+SOrQaKeicfjkEz7pA88m2ULLxsfJCRM9gDaSEQQe2aiKaIUHBESWAdaWfL3gI33Cgt
+ cZdBcTGzvTbKbn12kCvIDQrbrWYTWvli1/i5CbhUn8I=
+X-Received: by 2002:a5d:588f:0:b0:3b4:990a:a0d6 with SMTP id
+ ffacd0b85a97d-3b60e4ec65dmr6986258f8f.19.1752824907760; 
+ Fri, 18 Jul 2025 00:48:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFncB2nK/oOUu5mKV2yAN1DW2VPc6AOBqhjl2B/EJa0SyzAtGRhHsWDZ+nN5E/WN2XukIjMvQ==
+X-Received: by 2002:a5d:588f:0:b0:3b4:990a:a0d6 with SMTP id
+ ffacd0b85a97d-3b60e4ec65dmr6986245f8f.19.1752824907395; 
+ Fri, 18 Jul 2025 00:48:27 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.73.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e7f2bb4sm70232135e9.8.2025.07.18.00.48.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Jul 2025 00:48:26 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: Re: [PATCH] rust/pl011: merge device_class.rs into device.rs
+Date: Fri, 18 Jul 2025 09:47:48 +0200
+Message-ID: <20250718074747.367232-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250718-rust-pl011-cleanup-v1-1-c71b1d6a69a5@linaro.org>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxocKI93lo0QwcAA--.17387S6
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,143 +110,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New header file cpu-mmu.h is added and move mmu relative function
-declaration to this file.
+Queued, thanks.  But for 10.2 maybe we could alternate in preparing pull
+requests?  We'll see.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu-mmu.h        | 30 ++++++++++++++++++++++++++++++
- target/loongarch/cpu.c            |  1 +
- target/loongarch/cpu_helper.c     |  1 +
- target/loongarch/internals.h      | 20 --------------------
- target/loongarch/tcg/csr_helper.c |  1 +
- target/loongarch/tcg/tlb_helper.c |  1 +
- 6 files changed, 34 insertions(+), 20 deletions(-)
- create mode 100644 target/loongarch/cpu-mmu.h
-
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-new file mode 100644
-index 0000000000..4c5cbd7425
---- /dev/null
-+++ b/target/loongarch/cpu-mmu.h
-@@ -0,0 +1,30 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch CPU parameters for QEMU.
-+ *
-+ * Copyright (c) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef LOONGARCH_CPU_MMU_H
-+#define LOONGARCH_CPU_MMU_H
-+
-+enum {
-+    TLBRET_MATCH = 0,
-+    TLBRET_BADADDR = 1,
-+    TLBRET_NOMATCH = 2,
-+    TLBRET_INVALID = 3,
-+    TLBRET_DIRTY = 4,
-+    TLBRET_RI = 5,
-+    TLBRET_XI = 6,
-+    TLBRET_PE = 7,
-+};
-+
-+bool check_ps(CPULoongArchState *ent, uint8_t ps);
-+int get_physical_address(CPULoongArchState *env, hwaddr *physical,
-+                         int *prot, target_ulong address,
-+                         MMUAccessType access_type, int mmu_idx, int is_debug);
-+void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-+                               uint64_t *dir_width, target_ulong level);
-+hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
-+
-+#endif  /* LOONGARCH_CPU_MMU_H */
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index b96429ffb1..990985708e 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -17,6 +17,7 @@
- #include "hw/qdev-properties.h"
- #include "exec/translation-block.h"
- #include "cpu.h"
-+#include "cpu-mmu.h"
- #include "internals.h"
- #include "fpu/softfloat-helpers.h"
- #include "csr.h"
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index e172b11ce1..2e8d3d7cfb 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -13,6 +13,7 @@
- #include "exec/target_page.h"
- #include "internals.h"
- #include "cpu-csr.h"
-+#include "cpu-mmu.h"
- #include "tcg/tcg_loongarch.h"
- 
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index a7384b0d31..e50d109767 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -32,19 +32,6 @@ void restore_fp_status(CPULoongArchState *env);
- #endif
- 
- #ifndef CONFIG_USER_ONLY
--enum {
--    TLBRET_MATCH = 0,
--    TLBRET_BADADDR = 1,
--    TLBRET_NOMATCH = 2,
--    TLBRET_INVALID = 3,
--    TLBRET_DIRTY = 4,
--    TLBRET_RI = 5,
--    TLBRET_XI = 6,
--    TLBRET_PE = 7,
--};
--
--bool check_ps(CPULoongArchState *ent, uint8_t ps);
--
- extern const VMStateDescription vmstate_loongarch_cpu;
- 
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
-@@ -54,13 +41,6 @@ uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
- uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
- void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-                                                uint64_t value);
--int get_physical_address(CPULoongArchState *env, hwaddr *physical,
--                         int *prot, target_ulong address,
--                         MMUAccessType access_type, int mmu_idx, int is_debug);
--void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
--                               uint64_t *dir_width, target_ulong level);
--hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
--
- #endif /* !CONFIG_USER_ONLY */
- 
- uint64_t read_fcc(CPULoongArchState *env);
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 28b1bb86bd..0d99e2c92b 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -16,6 +16,7 @@
- #include "accel/tcg/cpu-ldst.h"
- #include "hw/irq.h"
- #include "cpu-csr.h"
-+#include "cpu-mmu.h"
- 
- target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
- {
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 3ea0e153b1..1f49619e7f 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -10,6 +10,7 @@
- #include "qemu/guest-random.h"
- 
- #include "cpu.h"
-+#include "cpu-mmu.h"
- #include "internals.h"
- #include "exec/helper-proto.h"
- #include "exec/cputlb.h"
--- 
-2.39.3
+Paolo
 
 
