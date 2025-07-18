@@ -4,148 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD99C83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 04:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240B9C83F17
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 04:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uccUS-0001BK-5L; Fri, 18 Jul 2025 00:14:38 -0400
+	id 1ucclQ-0005dO-AE; Fri, 18 Jul 2025 00:32:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uccUB-00017n-Go; Fri, 18 Jul 2025 00:14:17 -0400
-Received: from mail-co1nam11on2060f.outbound.protection.outlook.com
- ([2a01:111:f403:2416::60f]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uccia-00036t-47; Fri, 18 Jul 2025 00:29:09 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uccU9-0000QU-NU; Fri, 18 Jul 2025 00:14:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qxtHjzkN0Z3QMU4xwPxTSjpW8DUhmEFf6ChNamd/C3O54DASUI5i2xWCnA++ndm2VWh9auvkwWHGzbtJNSTmnoY+ra196w7FTunehkSuGsMmdZr2E+rO2kyaNYZAXieqqV4WICj0mE8Da8IN726H8BQl/2U/5dmWMLfgPZdyJEBKRxISgwiz1wPmI6gc1ZjUqyYC9hy97X+EemlUG0SKjwG7nh5n5hF5II7z/rD8r+xifM0oeDS2oGsCDXEY9pFZdLvsMlgn6fEa8fbiLDnZ1gkoLkwmv+c1IJERtHZC5xWnvGGCTpqLs9JxHRd+ZIT1nnEG1O3GcUQ0MsmYpzv8ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R8NcY98UzUkK/OOhGHJCrMWYku0hO7bBEC7lPjjKzh4=;
- b=kN2tbvWh6J5mHzsbHOALNUbVjd8IjW8eTOoT6J3qj9Y++OHZeCqDdiQV+AEHOwGb6CFHfNRRB2/WZ3LE9JSc6OFZ2hyBUXS5j84Zeca0crvX5G70i+bOJNCT8bok/rLcP7bwmB5U4jtHlzka8kwwpolfo07SH/D7jwJwJZCCMk2K4U6ehepWYr71t1kqidUU0nUGVGuymAUepxgqzP1fRT/1uYplvYsgJq4uwlRk3R6XmcC6Y6RDEzzMha7U2E0Jz2aW8VQO8y4Fh6au6Hps8HdRY83ZJn41XfnOwPmjazjDvZef13oDVzjTXAxwMXbs75vBU0wEwisB3WdDXWoWpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R8NcY98UzUkK/OOhGHJCrMWYku0hO7bBEC7lPjjKzh4=;
- b=H9c3dc8+K69OnAsJOM4Wv0GaAMKvgf8I6iDEfBtLSmFL1NgFVcnE6P8SBUY0eau3XWSBuNYv2R2ndrqdl15Wj4MXLVsrE8hXcGoI6GAJtYekCkcOxMZISbXDOe8Q7eGd7biQVuecNUr205+qTwGhCgC6E020i4V8fTIHv9486p+Xba/R9yZJCWsULxos7RCfG0hPkcaVR6RKjqjIWX829td/R8cb7MmhWOgklZYifuNqlOrMIxXCZgiBaQmz7mjLCMR6x1ikIvDF+ikbEQZ5fXEfBJvNCwHiqI2NywZe/EPTRdS6M95bkE3H+v2ZXUv7mEKo2vZCMwhGyTDu1YE2JA==
-Received: from SJ0PR03CA0183.namprd03.prod.outlook.com (2603:10b6:a03:2ef::8)
- by MW3PR12MB4411.namprd12.prod.outlook.com (2603:10b6:303:5e::24)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.39; Fri, 18 Jul
- 2025 04:14:06 +0000
-Received: from SJ5PEPF000001EB.namprd05.prod.outlook.com
- (2603:10b6:a03:2ef:cafe::79) by SJ0PR03CA0183.outlook.office365.com
- (2603:10b6:a03:2ef::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.20 via Frontend Transport; Fri,
- 18 Jul 2025 04:14:06 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ5PEPF000001EB.mail.protection.outlook.com (10.167.242.199) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8943.21 via Frontend Transport; Fri, 18 Jul 2025 04:14:05 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 17 Jul
- 2025 21:13:50 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 17 Jul
- 2025 21:13:49 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 17 Jul 2025 21:13:48 -0700
-Date: Thu, 17 Jul 2025 21:13:46 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <imammedo@redhat.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <smostafa@google.com>, <gustavo.romero@linaro.org>,
- <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <linuxarm@huawei.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v8 08/12] hw/arm/virt: Allow user-creatable SMMUv3 dev
- instantiation
-Message-ID: <aHnJ+qUsVyu+eFaT@Asurada-Nvidia>
-References: <20250711084749.18300-1-shameerali.kolothum.thodi@huawei.com>
- <20250711084749.18300-9-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ucciW-0005ON-57; Fri, 18 Jul 2025 00:29:07 -0400
+Received: from [10.105.8.218] ([192.51.222.130]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56I4SWSp051498
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 18 Jul 2025 13:28:32 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fmnmDlQHInqm6RvSdl1bn9y+fRIwHL6/BQ0YXiXcRbU=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1752812912; v=1;
+ b=FGWlmrQea8cdfEw7Tqp4oDXKU3cAvbLPKaOUGfOPey7eVAAZV6WmE8WPuS3MfdLD
+ y5Up5sc2ON7DTfCcLa4eMbGol1JDeSOYlMte/TAxXZ78iTYO7aqVwzbHKrhQLX6q
+ gfaXQwsXF2zshCSQsXu+frJ+BrKKyfznlTAUK8OTGeKndnBytzLsBqdVuHynfqwr
+ YJjh/9Te1rpvrnLQO7xxPlH+E5rrj+hx9oZo2IETz/lLFfZ/RD5o52f3haH50CGe
+ +mfm11cU0mXTeHTG6mTjJakR490biygvfkpRrjvQJfIsb28+26qN/3cX/mrABL4J
+ ijzgGMODP6gxSnaFyU2vcg==
+Message-ID: <0447e269-c242-4cd7-b68e-d0c7211784a7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 18 Jul 2025 13:28:31 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250711084749.18300-9-shameerali.kolothum.thodi@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EB:EE_|MW3PR12MB4411:EE_
-X-MS-Office365-Filtering-Correlation-Id: ebd990de-a21a-45ce-7eff-08ddc5b18920
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|82310400026|7416014|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?famJL+KI0Yi6xNA48KMKPN9POi4kO1PRdwizMTjLem4my8DXs6Mv1WHMkbFT?=
- =?us-ascii?Q?oKIcj6OpMMxnCDYhj4zGUID8zLo97/kb2a/ySP47R7MsSaRP1D1Y4MxsRqGb?=
- =?us-ascii?Q?45CQDeGzwUGonO9cJdV501JM81bYCuFtgnDmlxigYCesJwCgiEEg6KYJe5bI?=
- =?us-ascii?Q?HauwFf10UFm9UchxG8H3nklm9akECZEKVjzSaXoumellF1fJ/+b/y/Y/8+EB?=
- =?us-ascii?Q?vvw0GlbOZkDafUfOak0RFoLgGquIcWIEHWFKnjjnhDYr8EeoKSd60zxx3Yfz?=
- =?us-ascii?Q?2MoXpTBcRrTQjlP4MrdQmyBhgH9n7sIjF69vWW124/91ozDocQLssmfC52l8?=
- =?us-ascii?Q?vs6n08t4TjXN2Icagsy+A5w6u8L7/GdVqbXKUvc4hSjsxw4d0yZFZA6GK1zy?=
- =?us-ascii?Q?iUx5McCz7EgkPxR7V5MQki3DpwVuBdZ9RcRaEEtkGBU+CI5T3heN60J4LAyC?=
- =?us-ascii?Q?CkFBUVxMrtyPcyvwu5pgpx0oSpl2DQa8IjSYOOB8B3SglndBDImNGHeLF4Zh?=
- =?us-ascii?Q?MnI6yh+sSG0p0qfXArb5G8ZWsCFf5DiwftCqossuY1ZxKfX+nH4LDlJ0BhXj?=
- =?us-ascii?Q?R2jwV6ISDw/BezKqhmwQOUqx3vmpHu1C8tachdmsVIQXiniy1F2sU6UUEhrM?=
- =?us-ascii?Q?RVlGr8l42P7QwNJF3p2SiPEaar4zNkhjuYdFJnJ3PeqD5oQ6yYKBZS7qP2ON?=
- =?us-ascii?Q?PConlEkD3zEYTC7W1078ID5vzHrAMsXYJ6lZRHDqWMVu30wz0XAjdggUDZFE?=
- =?us-ascii?Q?JvwAOuZHPW+q3xq5REmlvy1ELQhIkfBzjHz1LByPzfvvK1R1RdMyg+N2x5ad?=
- =?us-ascii?Q?Kr/E+qMWBMtYAs7/HUCgAQxaPI4K4RkuVkYOeQPVYySyegNn8sko28p9sQym?=
- =?us-ascii?Q?mVhcd7qMLKS3nYOuVtTqx52B/1M4r0VcpKyj+9jNqhBywRL1iB2Lnf9FWSjX?=
- =?us-ascii?Q?xbIeYMMC/GQM/DVdIYar4rG5rXvKetd5hRJwhKd4UEZGcJGgiNrJfE/i1Yz+?=
- =?us-ascii?Q?erpqvVQD3iGl90f4yBpMaJmwC65VyKimw4joa5wUa1uLgK6/DW+Y/lM08emc?=
- =?us-ascii?Q?QuHuhLjS4TlWurxc+dS3xs4j0ou1Gi6joI6aCvqWo5HwkkyFDY645qWk49Es?=
- =?us-ascii?Q?TFgXLQbl9TEkR0aXCSKmFne59SpCvpJkEM2UDmTSe9bTfPokNL9elYjX8jb1?=
- =?us-ascii?Q?F5eAz2O9wDxWNywfNw94tklgCyN51AOIYoi2LBVe45zPw6tl6g/hLc6NKEo/?=
- =?us-ascii?Q?JgqrXhKklzsfaPW+MDqj4ZPae9miTwOSb+FiJiPkaHcsDME6UL3GgfNSNKfa?=
- =?us-ascii?Q?0U2gGKsomwV6dUIgWDF8m5oPq2f9aClNJ0eBZ5XBUkpIdwqOBI7dFPX5f0hq?=
- =?us-ascii?Q?uKz438HBLM5YGQdp5vjazEFlRF1a1mlWxUEV6GQg95fCONeOc7C3M2u9bYTJ?=
- =?us-ascii?Q?d4KLhiGZVMQcr9sx1nGuvMWvWJoIu4tfKehEf1R8T6LhVXst62f1GPlJg2UG?=
- =?us-ascii?Q?uLLoVAddAGn7X1jIhWv+2+uC7tLVy3sFRfmQ?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 04:14:05.6276 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ebd990de-a21a-45ce-7eff-08ddc5b18920
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EB.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4411
-Received-SPF: permerror client-ip=2a01:111:f403:2416::60f;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 09/23] migration: push Error **errp into
+ ram_postcopy_incoming_init()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com>
+ <20250717-propagate_tpm_error-v5-9-1f406f88ee65@redhat.com>
+ <c535b2b0-78d6-4afa-bd6a-d11159d3a952@rsg.ci.i.u-tokyo.ac.jp>
+ <aHkskfsMNVgjoV2y@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aHkskfsMNVgjoV2y@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,37 +96,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 2025/07/18 2:02, Daniel P. Berrangé wrote:
+> On Thu, Jul 17, 2025 at 12:34:21PM +0900, Akihiko Odaki wrote:
+>> On 2025/07/17 9:37, Arun Menon wrote:
+>>> This is an incremental step in converting vmstate loading
+>>> code to report error via Error objects instead of directly
+>>> printing it to console/monitor.
+>>> It is ensured that ram_postcopy_incoming_init() must report an error
+>>> in errp, in case of failure.
+>>>
+>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>> ---
+>>>    migration/postcopy-ram.c | 9 ++++++---
+>>>    migration/postcopy-ram.h | 2 +-
+>>>    migration/ram.c          | 6 +++---
+>>>    migration/ram.h          | 2 +-
+>>>    migration/savevm.c       | 2 +-
+>>>    5 files changed, 12 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+>>> index 45af9a361e8eacaad0fb217a5da2c5004416c1da..05617e5fbcad62226a54fe17d9f7d9a316baf1e4 100644
+>>> --- a/migration/postcopy-ram.c
+>>> +++ b/migration/postcopy-ram.c
+>>> @@ -681,6 +681,7 @@ out:
+>>>     */
+>>>    static int init_range(RAMBlock *rb, void *opaque)
+>>>    {
+>>> +    Error **errp = opaque;
+>>>        const char *block_name = qemu_ram_get_idstr(rb);
+>>>        void *host_addr = qemu_ram_get_host_addr(rb);
+>>>        ram_addr_t offset = qemu_ram_get_offset(rb);
+>>> @@ -701,6 +702,8 @@ static int init_range(RAMBlock *rb, void *opaque)
+>>>         * (Precopy will just overwrite this data, so doesn't need the discard)
+>>>         */
+>>>        if (ram_discard_range(block_name, 0, length)) {
+>>> +        error_setg(errp, "failed to discard RAM block %s len=%zu",
+>>> +                   block_name, length);
+>>>            return -1;
+>>>        }
+>>> @@ -749,9 +752,9 @@ static int cleanup_range(RAMBlock *rb, void *opaque)
+>>>     * postcopy later; must be called prior to any precopy.
+>>>     * called from arch_init's similarly named ram_postcopy_incoming_init
+>>>     */
+>>> -int postcopy_ram_incoming_init(MigrationIncomingState *mis)
+>>> +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
+>>>    {
+>>> -    if (foreach_not_ignored_block(init_range, NULL)) {
+>>> +    if (foreach_not_ignored_block(init_range, errp)) {
+>>>            return -1;
+>>>        }
+>>> @@ -1703,7 +1706,7 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
+>>>        return false;
+>>>    }
+>>> -int postcopy_ram_incoming_init(MigrationIncomingState *mis)
+>>> +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
+>>>    {
+>>>        error_report("postcopy_ram_incoming_init: No OS support");
+>>>        return -1;
+>>> diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+>>> index 3852141d7e37ab18bada4b46c137fef0969d0070..ca19433b246893fa5105bcebffb442c58a9a4f48 100644
+>>> --- a/migration/postcopy-ram.h
+>>> +++ b/migration/postcopy-ram.h
+>>> @@ -30,7 +30,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis);
+>>>     * postcopy later; must be called prior to any precopy.
+>>>     * called from ram.c's similarly named ram_postcopy_incoming_init
+>>>     */
+>>> -int postcopy_ram_incoming_init(MigrationIncomingState *mis);
+>>> +int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp);
+>>>    /*
+>>>     * At the end of a migration where postcopy_ram_incoming_init was called.
+>>> diff --git a/migration/ram.c b/migration/ram.c
+>>> index 7208bc114fb5c366740db380ee6956a91b3871a0..8223183132dc0f558f45fbae3f4f832845730bd3 100644
+>>> --- a/migration/ram.c
+>>> +++ b/migration/ram.c
+>>> @@ -3708,7 +3708,7 @@ static int ram_load_cleanup(void *opaque)
+>>>    /**
+>>>     * ram_postcopy_incoming_init: allocate postcopy data structures
+>>>     *
+>>> - * Returns 0 for success and negative if there was one error
+>>> + * Returns 0 for success and -1 if there was one error
+>>
+>> This is true but not relevant in this patch's goal.
+>>
+>> Besides, I'm not in favor of letting callers make an assumption on integer
+>> return values (i.e., let callers assume a particular integer value in the
+>> error conditions). It is subtle to make a mistake to return -errno while the
+>> documentation says it returns -1.
+> 
+> In general I would consider it bad practice to have an method
+> with "Error **errp" that also returns an errno. 95% of the time
+> the errno is just there as further info on the error scenario,
+> which "errp" obsoletes. Only in the rare cases where the caller
+> needs to take functional action based on errno values, is it
+> appropriate to contine returning '-errno'.> > IOW, I'd consider this appropriate for the patch as is.> >> I think 
+a proper way to avoid bugs due to return values here is to change
+>> the type to bool, which ensures there are two possible values; that is a
+>> nice improvement but something that can be done later.
+> 
+> That doesn't guarantee avoidance of bugs, as bool values can be
+> assigned to & compared against integers.
 
-On Fri, Jul 11, 2025 at 09:47:45AM +0100, Shameer Kolothum wrote: 
-> +static void create_smmuv3_dev_dtb(VirtMachineState *vms,
-> +                                  DeviceState *dev, PCIBus *bus)
-> +{
-> +    PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-> +    SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
-> +    int irq = platform_bus_get_irqn(pbus, sbdev, 0);
-> +    hwaddr base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> +    MachineState *ms = MACHINE(vms);
-> +
-> +    if (!(vms->bootinfo.firmware_loaded && virt_is_acpi_enabled(vms)) &&
-> +        strcmp("pcie.0", bus->qbus.name)) {
-> +        warn_report("SMMUv3 device only supported with pcie.0 for DT");
-> +        return;
-> +    }
-> +    base += vms->memmap[VIRT_PLATFORM_BUS].base;
-> +    irq += vms->irqmap[VIRT_PLATFORM_BUS];
+Returning -errno with "Error **errp" is indeed a bad practice, but 
+someone may write a return statement with -errno by mistake as long as 
+the type is int. For callers, it is a good defensive coding practice to 
+assume any negative value indicates an error as it will dismiss the 
+difference of -1 or -errno, and it is what the existing documentation 
+implicitly suggests.
 
-The code is fine.
+On the other hand, a function can never have a bug to return -errno if 
+its return value type is bool.
 
-Just a related question here:
-
-Do you know where we define the number of IRQs and the range of
-MMIO for the SysBusDevice?
-
-SMMU has four IRQs. And I see multiple vSMMU instances do have
-correct intervals to their IRQ numbers, but I cannot find where
-the magic is done.
-
-Thanks
-Nicolin
+Regards,
+Akihiko Odaki
 
