@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C0EC83F17
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Jul 2025 23:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7EB8C83F34
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Jul 2025 04:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ucuia-0006pH-N7; Fri, 18 Jul 2025 19:42:20 -0400
+	id 1ucyj1-000482-5z; Fri, 18 Jul 2025 23:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1ucuiW-0006ju-JB
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 19:42:17 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1ucuiT-0003h1-VA
- for qemu-devel@nongnu.org; Fri, 18 Jul 2025 19:42:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1752882132; x=1784418132;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=fL6UqhsgnUYt1MefObBWRGNQV2U99Qh0QQqUIr1xdNY=;
- b=IKL2vFZvYLaLnUMlmQCFyXGZxkCzMVJJlDKwUQ6WBGsX8yeKTX5uruPc
- YWdJ0j/KDB8/igVJdtY0A2Qh5/aEZAwg31n4igw6nZ+gUl7XaSqusIPjl
- CKt7R8vRlX6Cm14R2A0VphGuZ+WvjtvdE+H2MKDbRbPbTJH+kpGa4JxvR
- T5ShpMzJe3oFkhlU6nx+F0qZhGUxAy8FBYvHJGRWUpMyAdZFIH1H8DeVR
- rKFiz9U1Jl9bAvnRTCWm8E3oesiqzj3z5MIQW+WslgP9hBuT65T7bHJI+
- MWmjbZw8Eoxp9S8RmI+AzutB9WYKS9NntZkWmeTSdAWPuD8BCcf0cvA4Y w==;
-X-CSE-ConnectionGUID: xMX9mbI0TfakGMgNsptRSw==
-X-CSE-MsgGUID: kSwj16F4SC+BEAipIFAbOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11496"; a="58846316"
-X-IronPort-AV: E=Sophos;i="6.16,323,1744095600"; d="scan'208";a="58846316"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2025 16:42:08 -0700
-X-CSE-ConnectionGUID: Q3ncy0ENSdy2LUhtWQ1hxw==
-X-CSE-MsgGUID: wzXzpbi6Tli5YdIZC2p6xA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,323,1744095600"; d="scan'208";a="162891797"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jul 2025 16:42:09 -0700
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ucyit-0003zk-J1
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 23:58:57 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ucyio-00071d-QZ
+ for qemu-devel@nongnu.org; Fri, 18 Jul 2025 23:58:54 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3139027b825so2203538a91.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Jul 2025 20:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1752897529; x=1753502329; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i9sy/GkKxEpvogxAbQ/BlWtpttvEFz3MkYKybtI+dz8=;
+ b=hKWCakLnPjS58o4dUckOMieEzDE2kEtfRmm4J/bRxn9hIG11/QYObeEQgP6ZSfVXzE
+ dB+4DuSoo6JqIEJg5p8vFWBqyrB0shi6D3+RR+wmebvIShi6HQSkaTR46aPpLpTVJlcW
+ U8P75Z76mppRZg2fwvb4MjBbRYcm9tGGvUn65yUz3rJCYz2B2GvT1C0kVcF14P7WznIM
+ UZLvuxndn4M1UkqKu7P02LMQ8m9zuPdT+JX2nFfc0Z4n/z7dbFCCZtMJjaACztEqwTub
+ V+lepnuvIwQphveI/H2T6wSI/5H+H/rxm3pMwNCfa9NGmvrVjtLz7LgVX66dpjLZq7u+
+ 4J4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1752897529; x=1753502329;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i9sy/GkKxEpvogxAbQ/BlWtpttvEFz3MkYKybtI+dz8=;
+ b=qzhWzf3XpF2XWzt4M2+P4Uj9SxBWrfpG2UAzq6hCCqPAFH5ktI7d3Ali+ZjLEF2hV+
+ FmmSL1zSqIxjypOXiKT3icQg+oLgCKykxJg4n3LkcxkuyNZa7SspDUSR8j1FiGxnqTLN
+ Ta4nbiuAc2MILwmAS5NrvP20wJaY/laZ414+UCVuUmsikHVf0GmnM/lFubY8/Szk9Zxy
+ d81/IueBkRzHdlSwxUuc/dYI0O2jVJgJDx2HdIQs+pjZN38xF//eXtDwq4N1hpJYx5Wd
+ Ti2vBDFzXpd0CPsG2bTENVtakO8usxRgPYkPtN1cCNingY8ATAQACDKgHvSm8hx4FM7z
+ EFyw==
+X-Gm-Message-State: AOJu0YwHMq1382acLjDVEPx3GO8Hi+UFBg5upGOUloMVpW5MudPEHXyb
+ CBkoxEpLvoP9d020NcluH5tjyWUsvnZxy0Vwp38c81KHGftHsKC4Gd8cUExYrrxevSWNCBs8pO6
+ remCmZWg=
+X-Gm-Gg: ASbGncsZ62sGblqzme4qzlgvo7PfiIzWOccYSbrUrgLIjvvGtYU9eaxaawwTF3gZKUu
+ 8mR4U8TaK+3cocyMzXKJZz8TNGAMq2nqcUxOTOemfwaUeKGX9kkx8b/gJdnIiz13yQzJl/ovK3c
+ JUDz0CMCmzJJQ2Cgib2bsvWkeK3MUdX1d3UQqT1jcJfMlr7ktXHWceQsv+LdbhLL63kriZEkmK4
+ U07RLKhWS8QT4w/qM1gMdQQ0kiPeb/YTt5e5XNznY7x9Ei9+d/SFuUDeW735LhqfkjBl4WBCUEl
+ 19Do6uS05cCCbzeW2RPMnElaEFOFmNE2T+1O61d43ZyybevXoqN4I70HLAdcl2Aw5iJQZ+IGPMg
+ qpaAQruGGh4wHCji6JRU/uX2XRuGoOqsL
+X-Google-Smtp-Source: AGHT+IGiXq8suzeZY2Gbl4zSLPsU4W8ayUC9ZDlyL7V+8Em5vBVJq2C2jL8BMVdcm5qXkHeq6XVxOw==
+X-Received: by 2002:a17:90b:514d:b0:311:b413:f5e1 with SMTP id
+ 98e67ed59e1d1-31c9f45b1admr16462512a91.32.1752897528951; 
+ Fri, 18 Jul 2025 20:58:48 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b3f2ff88cf8sm1961819a12.49.2025.07.18.20.58.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Jul 2025 20:58:48 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+Cc: jean-philippe@linaro.org, richard.henderson@linaro.org,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] ui/spice: Destroy the temporary egl fb after the blit is
- submitted
-Date: Fri, 18 Jul 2025 16:40:39 -0700
-Message-ID: <20250718234039.2266704-1-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.49.0
+ Mathieu Poirier <mathieu.poirier@linaro.org>, gustavo.romero@linaro.org,
+ qemu-arm@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 1/2] tests/functional/test_aarch64_device_passthrough:
+ update image
+Date: Fri, 18 Jul 2025 20:58:37 -0700
+Message-ID: <20250719035838.2284029-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250719035838.2284029-1-pierrick.bouvier@linaro.org>
+References: <20250719035838.2284029-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.15;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,65 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The temporary egl fb scanout_tex_fb is only needed to facilitate the
-blit to the display surface's texture (ssd->ds->texture). Therefore,
-destroy it after the blit is submitted. And, also make sure that it
-is empty initialized before it is actually used.
+TF-A needs to be patched to enable support for FEAT_TCR2 and
+FEAT_SCTLR2. This new image contains updated firmware.
 
-Fixes: f851cd65 ("ui/spice: Blit the scanout texture if its memory layout is not linear")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
-v2:
-- Make scanout_tex_fb local to spice_gl_blit_scanout_texture() since
-  it is not used outside of it (Peter)
----
- ui/spice-display.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ .../test_aarch64_device_passthrough.py        | 27 ++++++++++---------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 9ce622cefc..669832c561 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -1183,20 +1183,20 @@ static void qemu_spice_gl_release_dmabuf(DisplayChangeListener *dcl,
-     egl_dmabuf_release_texture(dmabuf);
- }
+diff --git a/tests/functional/test_aarch64_device_passthrough.py b/tests/functional/test_aarch64_device_passthrough.py
+index 1f3f158a9ff..17437784bbe 100755
+--- a/tests/functional/test_aarch64_device_passthrough.py
++++ b/tests/functional/test_aarch64_device_passthrough.py
+@@ -9,7 +9,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
--static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
--                                          egl_fb *scanout_tex_fb)
-+static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd)
- {
-     uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
-     int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
-+    egl_fb scanout_tex_fb = {};
-     uint64_t modifier;
-     bool ret;
+-import os
++from os.path import join
  
--    egl_fb_destroy(scanout_tex_fb);
--    egl_fb_setup_for_tex(scanout_tex_fb,
-+    egl_fb_setup_for_tex(&scanout_tex_fb,
-                          surface_width(ssd->ds), surface_height(ssd->ds),
-                          ssd->ds->texture, false);
--    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
-+    egl_fb_blit(&scanout_tex_fb, &ssd->guest_fb, false);
-     glFlush();
-+    egl_fb_destroy(&scanout_tex_fb);
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+@@ -77,15 +77,16 @@
  
-     if (!ssd->new_scanout_texture) {
-         return true;
-@@ -1330,9 +1330,7 @@ static void qemu_spice_gl_update(DisplayChangeListener *dcl,
-     }
+ class Aarch64DevicePassthrough(QemuSystemTest):
  
-     if (spice_remote_client && ssd->blit_scanout_texture) {
--        egl_fb scanout_tex_fb;
--
--        ret = spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
-+        ret = spice_gl_blit_scanout_texture(ssd);
-         if (!ret) {
-             return;
-         }
+-    # https://github.com/pbo-linaro/qemu-linux-stack
++    # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
++    # $ ./build.sh && ./archive_artifacts.sh out.tar.xz
+     #
+     # Linux kernel is compiled with defconfig +
+     # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
+     # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
+     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
+-        ('https://fileserver.linaro.org/s/fx5DXxBYme8dw2G/'
+-         'download/device_passthrough.tar.xz'),
+-         '812750b664d61c2986f2b149939ae28cafbd60d53e9c7e4b16e97143845e196d')
++        ('https://github.com/pbo-linaro/qemu-linux-stack/'
++         'releases/download/build/device_passthrough-c3fb84a.tar.xz'),
++         '15ac2b02bed0c0ea8e3e007de0bcfdaf6fd51c1ba98213f841dc7d01d6f72f04')
+ 
+     # This tests the device passthrough implementation, by booting a VM
+     # supporting it with two nvme disks attached, and launching a nested VM
+@@ -96,16 +97,16 @@ def test_aarch64_device_passthrough(self):
+ 
+         self.vm.set_console()
+ 
+-        stack_path_tar_gz = self.ASSET_DEVICE_PASSTHROUGH_STACK.fetch()
+-        self.archive_extract(stack_path_tar_gz, format="tar")
++        stack_path_tar = self.ASSET_DEVICE_PASSTHROUGH_STACK.fetch()
++        self.archive_extract(stack_path_tar, format="tar")
+ 
+         stack = self.scratch_file('out')
+-        kernel = os.path.join(stack, 'Image.gz')
+-        rootfs_host = os.path.join(stack, 'host.ext4')
+-        disk_vfio = os.path.join(stack, 'disk_vfio')
+-        disk_iommufd = os.path.join(stack, 'disk_iommufd')
+-        guest_cmd = os.path.join(stack, 'guest.sh')
+-        nested_guest_cmd = os.path.join(stack, 'nested_guest.sh')
++        kernel = join(stack, 'Image.gz')
++        rootfs_host = join(stack, 'host.ext4')
++        disk_vfio = join(stack, 'disk_vfio')
++        disk_iommufd = join(stack, 'disk_iommufd')
++        guest_cmd = join(stack, 'guest.sh')
++        nested_guest_cmd = join(stack, 'nested_guest.sh')
+         # we generate two random disks
+         with open(disk_vfio, "wb") as d: d.write(randbytes(512))
+         with open(disk_iommufd, "wb") as d: d.write(randbytes(1024))
 -- 
-2.49.0
+2.47.2
 
 
