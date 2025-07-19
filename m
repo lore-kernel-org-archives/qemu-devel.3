@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8457C83F27
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Jul 2025 19:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79E5C83F27
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Jul 2025 20:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udDib-0002F0-2v; Sat, 19 Jul 2025 15:59:38 -0400
+	id 1udDj4-0003L1-9z; Sat, 19 Jul 2025 16:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udDch-00054P-1g
- for qemu-devel@nongnu.org; Sat, 19 Jul 2025 15:53:31 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1udDct-0005Dh-RM
+ for qemu-devel@nongnu.org; Sat, 19 Jul 2025 15:53:44 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udDcf-00017h-Ko
- for qemu-devel@nongnu.org; Sat, 19 Jul 2025 15:53:30 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-70e5d953c0bso33862517b3.1
- for <qemu-devel@nongnu.org>; Sat, 19 Jul 2025 12:53:28 -0700 (PDT)
+ id 1udDcs-00018W-CG
+ for qemu-devel@nongnu.org; Sat, 19 Jul 2025 15:53:43 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e8bc571ce7aso3021685276.0
+ for <qemu-devel@nongnu.org>; Sat, 19 Jul 2025 12:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1752954808; x=1753559608; darn=nongnu.org;
+ d=linaro.org; s=google; t=1752954821; x=1753559621; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1Ll4J0AUFjnln5RHN86muLwD1C5wmTwfcL3z6XoVZ1s=;
- b=pwACGYKSC0yAj+udrOsrMJ+bGlEm6JK37sHtc2b6jAKguaPJITfJ0PFR0FYCNgnKzv
- iscK09iMPjNUiOGrSQA1G0YYFkfQgEl9qmV348igNbypTMjMFqiturpY6zpVPuIBnFkf
- +v6OLFlbBQuN46fyXJnY4lzm7uinHEX6Rp+osdmpJg9KsC18X3vFh3lw7lma0LEcp8NW
- L3j2H1Aae5p1PKaDcApl0pOSjFxx3g5ECBt96+FplTGOP2yBQOI9eSCiGb1NglMdFhJD
- CTuLzQq8gz2RPG8/oNHTxCEJwgJLOgq7ydqbfa/t1j85EeMZGwmYbx4bscQi/MW+iGWn
- NBIw==
+ bh=kQ27xU8bSrsOxMayVMzoirXDUoPGeYTR+WH+11mq+I8=;
+ b=rOFU+stdczvg4Ei4JXYP9kccr7Wc0IwY2gTk5PMMlZu+pKMBpNp4ov/kq1X3j7Q/+9
+ 4oITP3dfYL1LN9ERpr2Te66T87LqED0AlB6mGisaSMSzeSLXq8Hjyn7EZX6sL6cOO3hS
+ 3MosLzsRC7vMbKjHDwxgbRtBh/GJ60+lV0PZqavUJRQ7eRnnfk1I5ehep+nJmG4FW/OL
+ QJ+PuSgH+GwbiCpcUT2ZJ0LxvLpBOiYtfWpgLl9Rrh1HQNif6/owTsQM/96/pKoSDm+J
+ Sqn+F3YAiuKP8TEe7/Uzg8XnFktiyksuSPYATRT2DE7wi/QPTO3HSEunHOQ4G7DZ9pqP
+ CYzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1752954808; x=1753559608;
+ d=1e100.net; s=20230601; t=1752954821; x=1753559621;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1Ll4J0AUFjnln5RHN86muLwD1C5wmTwfcL3z6XoVZ1s=;
- b=KmTOzLObWtMdZDW5WPOcYZB/vhMu9TORTlXrd1O5knvousbcW3bYiSZCQKcrP7c4UU
- 0AQ7AozvlSb4Lmw5SMCK+3QDUcpCxVTzKId7VhlnC6czMgbnFgK1TEYKtXLuzqH5JW1y
- scUcJyZxMcLn1/7uDCcUjIdi6q4q+Af/QUGE99A+JimKiiiXi9ZDFU+RMYRyldEh8nWo
- fk+03lgEkVc9RwAEo+VcNrIlfTYDjbj+W5W+E/mHq+fs+iZZkI9DGYC1LogEhcLUlaoN
- HU+605ZskgbJiDVUpWrGVg+hQ6edqqCiSocRt1ILA2GkEy7dtgoi9aTNz1rV8cPCVGVr
- 9EIQ==
-X-Gm-Message-State: AOJu0YwvaPQHACv7elh4lHW4X/hJXturbpiQtVv9K1lUi9JAcpvrERR/
- KhxdozwMjFD+zOYjQgWjS+SpiHg7LyqjYQk8Hk1nx7rqdSWfS/3V5DjhesQPsf0FPXTHRRrnzPd
- tRtMyY89+GLN80nsCj4/+dwaxjGhQDarnDy9xMO8Xvg==
-X-Gm-Gg: ASbGnctyNV7yHm9uyzOZZMlrM9CxZf7VXrs4TFLTNF0ADJnmpXGCQ29tJDdLBUtt3Z9
- FOTkwa1v6Y2h0pvj2N+Cau28A1pZT0R39XO65Gb8h5VDghvtjxvJSle8H4vAPLc8BE2qvchYieL
- u89bH1oaLMUgFJCXMzXgv9qp/mRMAvVml+QvQ1IB5Kw9BLt6KQJA9KeQk2RMd575KbkKkRKiafn
- TwLMdoZ
-X-Google-Smtp-Source: AGHT+IFls2xGfl2v/M07BjbtDPY+QzI22ydqoZA+xGON6vYRPFIuqDjxpS/8CBWU5+qeXuDZueJ5lM3r1czVPBOADkc=
-X-Received: by 2002:a05:690c:6312:b0:70f:83af:7db1 with SMTP id
- 00721157ae682-719522ba98amr78674477b3.19.1752954808362; Sat, 19 Jul 2025
- 12:53:28 -0700 (PDT)
+ bh=kQ27xU8bSrsOxMayVMzoirXDUoPGeYTR+WH+11mq+I8=;
+ b=RzWvzZeHY62+HtQEMwAvbuqqseCyFrtSLjccn4aGI9tD8FVZbL7PXa8GgBommusWx3
+ qs9VtkTr3eILDFUAzkCI5POH95ORNnnebH9MDESIR3qwnWAu/SBwkEkh7vpxlCGKv7/0
+ btskQNER6D+qXKkdR2WPFfwPZN1QxaaE5oTlBkrcPHXZ89mh6jKmAEbtzdDQSdetMbJi
+ kvK6aCCypr/cVKxVGRSGq7VbLOJ+55h1Ljex2/imcbneX9u/wFTYg6dUo99cK+MZ5obd
+ ahYeGQlM8/jpbm63iI1WPDHZyoClWRZQjaFFXBzplCFqC7qmKwbfYUdyHGIetVasrzXl
+ RBPQ==
+X-Gm-Message-State: AOJu0Yz6s+UFuVdbbzRmlJjJydITdT8yuaAXo6plr5xyWcnKyElW6XLd
+ TsNhvQ7lI+vHAz9GxaypRuplqarqaMiLr7/kUg7lF1/HElc9Dmw2Ca8AYxgOY35ln46GtwjjhWg
+ 5r68jyil6J3miZUBISDMyKHNroK9v5PqSK/gvw0r6hw==
+X-Gm-Gg: ASbGncuhF1VfZYCK1f9OgAu+3UK85kx5Yy1X4LXTSvyLxNaS9UpyvxVFEFZJq/S6zKc
+ rVm6FdmfGoSbzV0pt4qMUwbDRTi9qBNvoX+MtlHTF1I73iESUOqvKov/aKUi+jZYI1/BnTHwZXr
+ 4qAtgLWfZ+supmwPLuZyegtxivIbBpffzMUMPbXbJaWBvsKzKfa/Fr2gBCzF8g12hm6L4np6DLF
+ dq6QL1r
+X-Google-Smtp-Source: AGHT+IHXmkzkhoUr9fg4kYPeF9RXS7AKBk5RX3Eebsdx91+7rd+BjVf6EDWCMzDuuiv+uUgH9JA0t0IehL0vSjft3aM=
+X-Received: by 2002:a05:690c:4905:b0:70c:b882:305 with SMTP id
+ 00721157ae682-718351ae978mr213577427b3.36.1752954820857; Sat, 19 Jul 2025
+ 12:53:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250717150805.1344034-1-lvivier@redhat.com>
- <20250717150805.1344034-4-lvivier@redhat.com>
-In-Reply-To: <20250717150805.1344034-4-lvivier@redhat.com>
+ <20250717150805.1344034-7-lvivier@redhat.com>
+In-Reply-To: <20250717150805.1344034-7-lvivier@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 19 Jul 2025 20:53:16 +0100
-X-Gm-Features: Ac12FXz3-tXWa4n74_Su1hn82bS5XNvZ78IESMgS6UUPuKO_5uylfKHyl0Vdm_E
-Message-ID: <CAFEAcA9x4CsF+XjEN+PM_TcUkZYQmQcB-M1AtCUv2wuEN3A1-A@mail.gmail.com>
-Subject: Re: [PATCH 3/6] net/passt: Remove dead code in passt_vhost_user_start
- error path (CID 1612371)
+Date: Sat, 19 Jul 2025 20:53:29 +0100
+X-Gm-Features: Ac12FXy_BoX6smqcq9QnJyTBvRgqonwumKP6uNmj_LFHSgxR8hEjLFW369igjLc
+Message-ID: <CAFEAcA9M4=S-BsfhGEJ92L6QnaMZy4mcko===XOSQJEg37cy9g@mail.gmail.com>
+Subject: Re: [PATCH 6/6] net/vhost-user: Remove unused "err" from
+ chr_closed_bh() (CID 1612365)
 To: Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Jason Wang <jasowang@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,15 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 17 Jul 2025 at 18:50, Laurent Vivier <lvivier@redhat.com> wrote:
 >
-> In passt_vhost_user_start(), if vhost_net_init() fails, the "net"
-> variable is NULL and execution jumps to the "err:" label.
+> The "err" variable was declared but never used within the
+> chr_closed_bh() function. This resulted in a dead code
+> warning (CID 1612365) from Coverity.
 >
-> The cleanup code within this label is conditioned on "if (net)",
-> which can never be true in this error case. This makes the cleanup
-> block dead code, as reported by Coverity (CID 1612371).
+> Remove the unused variable and the associated error block
+> to resolve the issue.
 >
-> Refactor the error handling to occur inline, removing the goto and
-> the unreachable cleanup block.
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> ---
+>  net/vhost-user.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/net/vhost-user.c b/net/vhost-user.c
+> index cec83e925ff0..8b96157145a7 100644
+> --- a/net/vhost-user.c
+> +++ b/net/vhost-user.c
+> @@ -298,7 +298,6 @@ static void chr_closed_bh(void *opaque)
+>      const char *name = opaque;
+>      NetClientState *ncs[MAX_QUEUE_NUM];
+>      NetVhostUserState *s;
+> -    Error *err = NULL;
+>      int queues, i;
+>
+>      queues = qemu_find_net_clients_except(name, ncs,
+> @@ -317,9 +316,6 @@ static void chr_closed_bh(void *opaque)
+>      qemu_chr_fe_set_handlers(&s->chr, NULL, NULL, net_vhost_user_event,
+>                               NULL, opaque, NULL, true);
+>
+> -    if (err) {
+> -        error_report_err(err);
+> -    }
+>      qapi_event_send_netdev_vhost_user_disconnected(name);
+>  }
 >
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
