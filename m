@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976EEC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B30DBC87FC5
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 12:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udpnl-0005EG-35; Mon, 21 Jul 2025 08:39:29 -0400
+	id 1udpnp-0005gw-2P; Mon, 21 Jul 2025 08:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udpne-0004Ez-Tt; Mon, 21 Jul 2025 08:39:23 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1udpnj-0005E1-VE
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 08:39:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udpnb-0004AI-9L; Mon, 21 Jul 2025 08:39:22 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56LCcrox050504
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 21 Jul 2025 21:38:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=PSICSBuQB3c7G4s1bZ2sgy16pos0hbf+ihrxiWxeX5A=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753101534; v=1;
- b=ZmZfZMchXnAs1Gbo3txqx/NUOKHk4jctfZeIZGhHDmlAe8h44+oQQkyeYi5swivm
- /QKmwwzHoFckEoS/0s8q7yEjznKFGIVWy7eA62I8imSyI4qPelXQMp8MeJ9bvI5v
- 3EkzbGB6JEiyznNNJbVx3WqHUgVPslg0OEDfvgQAVmLPjG4fBuUKDTfZTZTCPsn2
- +v8WEmo1Lk/rr0lv5T8JFoqD+Jao/zPNulVzVb4azTBs2qUR3nvIXzqP1GCFCM9n
- UXpYgVKg65gXnjuxP145ZgniAOR9FyuM7YrzBxfVccz3O36jFvzmdhapkjntyWBP
- typ+SvkympxvktImNUu6Zw==
-Message-ID: <6966dd7b-635a-422c-b4ac-584c0c1fce49@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 21 Jul 2025 21:38:53 +0900
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1udpng-0004FN-A6
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 08:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753101563;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zAB20DBaGxbXTmz/aKytmtD2+yIyNSGFc2uCLnWbDpE=;
+ b=HpKH8IcvcbbzeMb20n+WRYwys5OzVTBiqeH1TvuOd1FYq16AaM6PTtKFaWwFn9hgrwM4rT
+ tgM8LNnq60IPbkjoqanj9jXP3/Z5rOgUdaKRkkw8nPkhS2qCwo/6XR1OCjlAoKGBpJ+nSE
+ d9c3Xflvj9T5ya66+C3y44ShB7FpH+w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-7t5rM-F9MjezYkU9O0G7wg-1; Mon,
+ 21 Jul 2025 08:39:19 -0400
+X-MC-Unique: 7t5rM-F9MjezYkU9O0G7wg-1
+X-Mimecast-MFC-AGG-ID: 7t5rM-F9MjezYkU9O0G7wg_1753101558
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 639FC195FD2B; Mon, 21 Jul 2025 12:39:18 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.31])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6E68719560A3; Mon, 21 Jul 2025 12:39:17 +0000 (UTC)
+Date: Sun, 20 Jul 2025 12:13:51 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bschubert@ddn.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+Subject: Re: [PATCH RFC 0/1] block/export: FUSE-over-io_uring Support for
+ QEMU FUSE Exports
+Message-ID: <20250720161351.GA32887@fedora>
+References: <20250716183824.216257-1-hibriansong@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 08/24] migration: push Error **errp into
- loadvm_process_command()
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
- <20250721-propagate_tpm_error-v6-8-fef740e15e17@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250721-propagate_tpm_error-v6-8-fef740e15e17@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="SezE4twLgtxkGkmM"
+Content-Disposition: inline
+In-Reply-To: <20250716183824.216257-1-hibriansong@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.926, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,186 +87,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/21 20:29, Arun Menon wrote:
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that loadvm_process_command() must report an error
-> in errp, in case of failure.
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->   migration/savevm.c | 87 +++++++++++++++++++++++++++++++++++++++++-------------
->   1 file changed, 66 insertions(+), 21 deletions(-)
-> 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 96af7b412f2ed43468f4bcac8b833cda223f8321..d8feb9e1599d019636cd400ee7ebe594df27bd1d 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2546,12 +2546,13 @@ static int loadvm_postcopy_handle_switchover_start(void)
->    * LOADVM_QUIT All good, but exit the loop
->    * <0          Error
->    */
-> -static int loadvm_process_command(QEMUFile *f)
-> +static int loadvm_process_command(QEMUFile *f, Error **errp)
->   {
->       MigrationIncomingState *mis = migration_incoming_get_current();
->       uint16_t cmd;
->       uint16_t len;
->       uint32_t tmp32;
-> +    int ret;
->   
->       cmd = qemu_get_be16(f);
->       len = qemu_get_be16(f);
-> @@ -2562,16 +2563,16 @@ static int loadvm_process_command(QEMUFile *f)
->       }
->   
->       if (cmd >= MIG_CMD_MAX || cmd == MIG_CMD_INVALID) {
-> -        error_report("MIG_CMD 0x%x unknown (len 0x%x)", cmd, len);
-> +        error_setg(errp, "MIG_CMD 0x%x unknown (len 0x%x)", cmd, len);
->           return -EINVAL;
->       }
->   
->       trace_loadvm_process_command(mig_cmd_args[cmd].name, len);
->   
->       if (mig_cmd_args[cmd].len != -1 && mig_cmd_args[cmd].len != len) {
-> -        error_report("%s received with bad length - expecting %zu, got %d",
-> -                     mig_cmd_args[cmd].name,
-> -                     (size_t)mig_cmd_args[cmd].len, len);
-> +        error_setg(errp, "%s received with bad length - expecting %zu, got %d",
-> +                   mig_cmd_args[cmd].name,
-> +                   (size_t)mig_cmd_args[cmd].len, len);
->           return -ERANGE;
->       }
->   
-> @@ -2590,11 +2591,10 @@ static int loadvm_process_command(QEMUFile *f)
->            * been created.
->            */
->           if (migrate_switchover_ack() && !mis->switchover_ack_pending_num) {
-> -            int ret = migrate_send_rp_switchover_ack(mis);
-> +            ret = migrate_send_rp_switchover_ack(mis);
->               if (ret) {
-> -                error_report(
-> -                    "Could not send switchover ack RP MSG, err %d (%s)", ret,
-> -                    strerror(-ret));
-> +                error_setg(errp, "Could not send switchover ack "
-> +                           "RP MSG, err %d (%s)", ret, strerror(-ret));
->                   return ret;
->               }
->           }
-> @@ -2604,39 +2604,84 @@ static int loadvm_process_command(QEMUFile *f)
->           tmp32 = qemu_get_be32(f);
->           trace_loadvm_process_command_ping(tmp32);
->           if (!mis->to_src_file) {
-> -            error_report("CMD_PING (0x%x) received with no return path",
-> -                         tmp32);
-> +            error_setg(errp, "CMD_PING (0x%x) received with no return path",
-> +                       tmp32);
->               return -1;
->           }
->           migrate_send_rp_pong(mis, tmp32);
->           break;
->   
->       case MIG_CMD_PACKAGED:
-> -        return loadvm_handle_cmd_packaged(mis);
-> +        ret = loadvm_handle_cmd_packaged(mis);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
 
-This "return -1" is extraneous.
+--SezE4twLgtxkGkmM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The error_setg() call is later replaced with "[PATCH v6 09/24] 
-migration: push Error **errp into loadvm_handle_cmd_packaged()", but 
-this "return -1" is simply removed in the patch. There is no need to add 
-it in the first place.
+On Wed, Jul 16, 2025 at 02:38:23PM -0400, Brian Song wrote:
+> This RFC patch represents an initial implementation of the FUSE-over-=20
+> io_uring Exports idea proposed for Google Summer of Code (2025) under=20
+> the QEMU community:
+> https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_expor=
+ts
+>=20
+> The implementation approach is primarily borrowed from how libfuse=20
+> interacts with the kernel.
+>=20
+> FUSE-over-io_uring (https://docs.kernel.org/next/filesystems/fuse-io-=20
+> uring.html) has been officially merged into the Linux kernel. The idea=20
+> is to replace the traditional /dev/fuse based communication with a more=
+=20
+> efficient io_uring-based approach. In this model, userspace registers=20
+> io_uring SQEs via the FUSE_IO_URING_CMD_REGISTER opcode, and then waits=
+=20
+> for the kernel to forward FUSE requests as CQEs. These are processed by=
+=20
+> the FUSE exports implementation in userspace and then committed back to=
+=20
+> the kernel using FUSE_IO_URING_CMD_COMMIT_AND_FETCH.
+>=20
+> To enable this feature in qemu-export-daemon, simply add the uring=3Don=
+=20
+> option to the export configuration.
 
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_POSTCOPY_ADVISE:
-> -        return loadvm_postcopy_handle_advise(mis, len);
-> +        ret = loadvm_postcopy_handle_advise(mis, len);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_POSTCOPY_LISTEN:
-> -        return loadvm_postcopy_handle_listen(mis);
-> +        ret = loadvm_postcopy_handle_listen(mis);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_POSTCOPY_RUN:
-> -        return loadvm_postcopy_handle_run(mis);
-> +        ret = loadvm_postcopy_handle_run(mis);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_POSTCOPY_RAM_DISCARD:
-> -        return loadvm_postcopy_ram_handle_discard(mis, len);
-> +        ret = loadvm_postcopy_ram_handle_discard(mis, len);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_POSTCOPY_RESUME:
-> -        return loadvm_postcopy_handle_resume(mis);
-> +        ret = loadvm_postcopy_handle_resume(mis);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_RECV_BITMAP:
-> -        return loadvm_handle_recv_bitmap(mis, len);
-> +        ret = loadvm_handle_recv_bitmap(mis, len);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_ENABLE_COLO:
-> -        return loadvm_process_enable_colo(mis);
-> +        ret = loadvm_process_enable_colo(mis);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->   
->       case MIG_CMD_SWITCHOVER_START:
-> -        return loadvm_postcopy_handle_switchover_start();
-> +        ret = loadvm_postcopy_handle_switchover_start();
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load device state command: %d", ret);
-> +            return -1;
-> +        }
-> +        return ret;
->       }
->   
->       return 0;
-> @@ -3074,7 +3119,7 @@ retry:
->               }
->               break;
->           case QEMU_VM_COMMAND:
-> -            ret = loadvm_process_command(f);
-> +            ret = loadvm_process_command(f, NULL);
->               trace_qemu_loadvm_state_section_command(ret);
->               if ((ret < 0) || (ret == LOADVM_QUIT)) {
->                   goto out;
-> 
+For consistency with the --blockdev file,aio=3Dio_uring option, please
+name it "io_uring=3Don" instead of "uring=3Don".
+
+>=20
+> As this patch is still in the RFC stage, it currently supports **only=20
+> single thread**. Due to protocol requirements in FUSE-over-io_uring,
+> the number of FUSE threads must match the number of CPUs. Therefore,
+> this initial version only works on single-core VMs (i.e., QEMU started
+> with -smp 1) or single core machine.
+>=20
+> Brian Song (1):
+>   block/export: FUSE-over-io_uring Support for QEMU FUSE Exports
+>=20
+>  block/export/fuse.c                  | 423 +++++++++++++++++++++++++--
+>  docs/tools/qemu-storage-daemon.rst   |  10 +-
+>  qapi/block-export.json               |   6 +-
+>  storage-daemon/qemu-storage-daemon.c |   1 +
+>  util/fdmon-io_uring.c                |   5 +-
+>  5 files changed, 420 insertions(+), 25 deletions(-)
+>=20
+> --=20
+> 2.50.1
+>=20
+
+--SezE4twLgtxkGkmM
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh9Fb4ACgkQnKSrs4Gr
+c8ioUAf+NdtbezyiQ6w0MzegtZyDJ5LSzEQQ/wRwIKqDs+Z1UR4p/Hp6m/NxAiLz
+PYvMyYEIgeir49wHVxcOYj677Rj2wl8BVX9E9553AfZhajDDu7uDIo+s4Ci0YIWk
+qYcZcTYHtOzlE3rTSY/IEmjgtgv0ebRhpPOHYevvSVxG0Ao0jviHGLT8jB+50Ob1
+sGzNXd7bNhyjKk4KIgkrfMvgCIy5oSge6Ko1Ehr1MY1PvMVP9JcYZentt1Lvf4Rx
+3wwE6SCFf3iDpai3YQEMv/qAyfoeUvGZEvt0kp+MuN7vzuUAxRwPYkJma1409teh
+DMJVN93QVo4DgJRCeEZ4a66SeVdIIQ==
+=MVNo
+-----END PGP SIGNATURE-----
+
+--SezE4twLgtxkGkmM--
 
 
