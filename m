@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B67AC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 355B8C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udqYt-0007bR-GZ; Mon, 21 Jul 2025 09:28:11 -0400
+	id 1udqYh-0003ua-9d; Mon, 21 Jul 2025 09:27:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqYB-00009m-Ci
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:40 -0400
+ id 1udqYF-0000Bg-PB
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:43 -0400
 Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqY7-0005HX-O5
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:26 -0400
+ id 1udqYC-0005IN-Ac
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:31 -0400
 Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3a54700a46eso2386572f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:23 -0700 (PDT)
+ ffacd0b85a97d-3a4fb9c2436so2478750f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753104442; x=1753709242; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753104446; x=1753709246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qIaOxCI5fy5oW8HBDIV+uJ9KDuDzR7caM4buiAgm8WU=;
- b=KWNnlT6Qg6jJkqJRT2hJKv9QdN1f8IN784Aishs4SmxgoKwYbRu3MRLOTUFxQb/xua
- GjDE5y1Ju8s0cE9fs+LpNbGxF5Z25vfaJRMS3cI5aLL3ZKBbH7X8sUy0NVsH5qlAwA2l
- 4dUlKUVrmwTQJzEMbDENweti//N76N+pqgERGE4rDGvT/+q6q1WvCHXwup/Ewk/gMHox
- uVvaNlP9ndnnNzF5etjibKpTf6ExUc4P5Wqr/ZrpdazLCuWj8QYbgSrrqjEzz7wjET1W
- 4y3753XOC+12Oam2GEfYm4PZ8UO9fQrog45FMMufK9dReyD7u6K71ALnXL11vgpvnN4O
- 9apw==
+ :reply-to; bh=rMO0z2Dg2xe9/sSr/rgtQPRY3C/mD4AtJBFkheyKZIo=;
+ b=A3ATLQA9qQ7rfat6iAjbwseyPA5+4bN9BoTz8w48ApFFj/jh23uWFu5P8R49DYUZ4d
+ w8mU+AL1BiMxAxqD+yA0ZptYnmu25rwxh1fjvjYeD4UPs+h5rXbSEkk4jx+b3huR4+iY
+ BXf9XhrTL86+O96AdE84Mxejt69VkNCdMm2lh6otqHmZ24rC2Y427FZhEx/FpKK/QniO
+ hxuY6E76H9HP73DGz+p9pjlNuDMegpucEVIZgsVzPXLkI/gxiouAYHGeQzFliy3w8IIn
+ WDJ2dm+0xMvmvRTDzDV2zEK0JRtpQGc7ctb6SMtv+9iZ6Brfj2QvhIlRAS5+XaEOkNbA
+ HT6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753104442; x=1753709242;
+ d=1e100.net; s=20230601; t=1753104446; x=1753709246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qIaOxCI5fy5oW8HBDIV+uJ9KDuDzR7caM4buiAgm8WU=;
- b=Tcw9IJXVSiTkNg3ePqGwdRJS6l0l2FQ789KTDj+KOwCG6UZ95QYlEYYAY78ln3nWwo
- S8QDgbuTvc/dZcLYefXFlWoBnBolT0An9IV3JuQc6VQsmwbR+rKMqP8LfF4A16pJMI0Y
- eAOM35MuCgGJcJ4QWaNy2GqifCxeKLRv8/X/jmZqkcq+3nbBoPirAJUgN8k2GPfs/DfS
- eaPgGPaH/cjpJuHR/t3+nONuxryhYlCCR1VmVaGOj+cfhNITU9VxOZCWtA22dfKpc7Dr
- ZK8Kw898jTuWkJmv+pY3F2YM8dtUuBvesww8Nkp3RMWkeSkV2sueRx2yN+USO2J7eU5t
- xjNA==
-X-Gm-Message-State: AOJu0YzYyuvHLfyAJa71P3tN0BsKjTxuxirlE+mfYpGrOXUZ1HJZtZFq
- gfNuCIhG/+bo1/q0VPj3mbM1LlogetJl1SysA7oGdWcc9IPirZMhOm+SHv/mSYoFZTXxG0rPj3n
- ++khE
-X-Gm-Gg: ASbGnct8ROY0BHJBKL/8oUH5eoFPtwTPAMkFcsvMX1ps/m8qpfFDcdT476Ui1QtxZz9
- om+7feJEcz4i0PXPdudq8EytyWkktUnqIwGv/hAeLv5M9Qj1uquQWGY+oDwcV0269aUTZfNXvvo
- tW559yxRojg/oejVO0KloLUBtht3QSdds6PnJBhpSk7y1DUy0PjPVrlsx3c20dStRAnWer3nMvk
- 1rjqy/3VwBJwdLc3bQ8MsRSWGf+rEgTVkfMFmhMBpnp72c0ANTNf51MMF6rc4M5oVJBbUra0ueC
- 6WmYQ8LNMEYe0GaKPeEJc1F5M6OVUU/FaQZF3h8PY6SOUpdUj3MyHc3kp5SCPAFmi+OHG61c/uo
- AvBmASIgfmAHzkAoC+BGOxD69mf6T
-X-Google-Smtp-Source: AGHT+IF32i2qZ8v//GNpQFaYUB4SGYBvDWMeJoXLWUGzs5Wl4XmPhvYIdaa9gGWb2NdQ5xESKRVJcQ==
-X-Received: by 2002:a05:6000:4b0b:b0:3a6:d296:feaf with SMTP id
- ffacd0b85a97d-3b613e776fdmr13196354f8f.24.1753104441842; 
- Mon, 21 Jul 2025 06:27:21 -0700 (PDT)
+ bh=rMO0z2Dg2xe9/sSr/rgtQPRY3C/mD4AtJBFkheyKZIo=;
+ b=FnFMQg4IaxvMcqtlBJ/uDaljw8wzoivHgVsto1GXqjYYk2OSC16kAe5CpsiL4Ag6Ff
+ mharX+010GvjGP0NInKkGAb9J+0xGUc+5gwcnV6SswHbBXEupkwQoKQqz7/gz87ZW7zQ
+ aiD2S4TplIn82k3hg64I97P+BcCfy4NoewVUsI3JKWNerD8+JPtsHzEc4QmuzIhWSC89
+ Jb3ykVW88H8zLH3vHqZVAVziCxYdJs7cKDAyewWMF+U9IjiPjdRYTpE41VQKjhY5Aooy
+ k2YhZjzMHoaMNfzXS32Z7rKcdA7uq/oCRFttMMVcuw+7PoTwWy4puVsRP0jfgY7+dYdc
+ /lRg==
+X-Gm-Message-State: AOJu0YyJQeuXJ3ITAvlUcb/xQZP4h38F106Fx5nNbcxsgNzOZSuBwARs
+ bl+8NloM+oRCVaznG/4w1vMhEjopMdINfC4R0MH0IQLz5EBFzVXp4xBC+ayG9vXHZ8g8AThNSyp
+ N8Ntx
+X-Gm-Gg: ASbGncsD3/lgmPoKfZjuJdcokZL8aWwf+f9vHjYO60Df5/pnHc/tc6pXN4YFcuIXZ0o
+ Gfp6Z8wPGEBCDrOK73+gW/v3TjNpJ5tlsLE7z2sw/qjrNTqdjNjn4g7FG7bAuOLowd08ZkxNBp9
+ KAf/i16J8jgPmRkCGyB9WCi5567jCT0cxb6KdCHxV8RlI5gJml5BrTORXTxRLQE+1AXDCKQhaKI
+ 0bSGJ43cabTuco96/XO/CS8J76OROouc91oVw7ODRPgMltgZmvC/nbjVy7ZSj+qt++5V4tEyy4i
+ 1/Qmw2ifp4JlkG1hU6l8QbdrBztdQUnu7kCFGGEQhHfnX5fpHLJ6OvWfMFx2LyU4GekyLPVe+k3
+ 3VL5I97JxUM1T3Fu65xMAzMhs6Z+0
+X-Google-Smtp-Source: AGHT+IHEliG8u9hGB5rHKVEqR/80qdXbGH2JsWhYJx98+QmP3vQCw/NPTx04ifCCISyrjd8P82FbRw==
+X-Received: by 2002:a5d:5f55:0:b0:3a4:e841:b236 with SMTP id
+ ffacd0b85a97d-3b61b217f68mr9274095f8f.33.1753104446409; 
+ Mon, 21 Jul 2025 06:27:26 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.21
+ ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 06:27:21 -0700 (PDT)
+ Mon, 21 Jul 2025 06:27:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/20] target/arm: Correct encoding of Debug Communications
- Channel registers
-Date: Mon, 21 Jul 2025 14:26:59 +0100
-Message-ID: <20250721132718.2835729-3-peter.maydell@linaro.org>
+Subject: [PULL 07/20] docs: Fix Aspeed title
+Date: Mon, 21 Jul 2025 14:27:04 +0100
+Message-ID: <20250721132718.2835729-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250721132718.2835729-1-peter.maydell@linaro.org>
 References: <20250721132718.2835729-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::431;
  envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
@@ -100,77 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't implement the Debug Communications Channel (DCC), but
-we do attempt to provide dummy versions of its system registers
-so that software that tries to access them doesn't fall over.
+From: Cédric Le Goater <clg@redhat.com>
 
-However, we got the tx/rx register definitions wrong. These
-should be:
+commit ad8e0e8a0088 removed the "======" underlining the file title
+which broke documentation rendering. Add it back.
 
-AArch32:
-  DBGDTRTX   p14 0 c0 c5 0  (on writes)
-  DBGDTRRX   p14 0 c0 c5 0  (on reads)
-
-AArch64:
-  DBGDTRTX_EL0  2 3 0 5 0 (on writes)
-  DBGDTRRX_EL0  2 3 0 5 0 (on reads)
-  DBGDTR_EL0    2 3 0 4 0 (reads and writes)
-
-where DBGDTRTX and DBGDTRRX are effectively different names for the
-same 32-bit register, which has tx behaviour on writes and rx
-behaviour on reads.  The AArch64-only DBGDTR_EL0 is a 64-bit wide
-register whose top and bottom halves map to the DBGDTRRX and DBGDTRTX
-registers.
-
-Currently we have just one cpreg struct, which:
- * calls itself DBGDTR_EL0
- * uses the DBGDTRTX_EL0/DBGDTRRX_EL0 encoding
- * is marked as ARM_CP_STATE_BOTH but has the wrong opc1
-   value for AArch32
- * is implemented as RAZ/WI
-
-Correct the encoding so:
- * we name the DBGDTRTX/DBGDTRRX register correctly
- * we split it into AA64 and AA32 versions so we can get the
-   AA32 encoding right
- * we implement DBGDTR_EL0 at its correct encoding
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2986
+Fixes: ad8e0e8a0088 ("docs: add support for gb200-bmc")
+Cc: Ed Tanous <etanous@nvidia.com>
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Ed Tanous <etanous@nvidia.com>
+Message-id: 20250715061904.97540-1-clg@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250708141049.778361-1-peter.maydell@linaro.org
 ---
- target/arm/debug_helper.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ docs/system/arm/aspeed.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 69fb1d0d9ff..aee06d4d426 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -988,11 +988,20 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-       .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 2,
-       .access = PL1_RW, .accessfn = access_tdcc,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
--    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
--    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_BOTH, .cp = 14,
-+    /* Architecturally DBGDTRTX is named DBGDTRRX when used for reads */
-+    { .name = "DBGDTRTX_EL0", .state = ARM_CP_STATE_AA64,
-       .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
-       .access = PL0_RW, .accessfn = access_tdcc,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
-+    { .name = "DBGDTRTX", .state = ARM_CP_STATE_AA32, .cp = 14,
-+      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
-+      .access = PL0_RW, .accessfn = access_tdcc,
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-+    /* This is AArch64-only and is a combination of DBGDTRTX and DBGDTRRX */
-+    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 4, .opc2 = 0,
-+      .access = PL0_RW, .accessfn = access_tdcc,
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * OSECCR_EL1 provides a mechanism for an operating system
-      * to access the contents of EDECCR. EDECCR is not implemented though,
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index bec0a1dfa8b..bf18c563470 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,4 +1,5 @@
+ Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++====================================================================================================================================================================================================================================================================================================================================================================================================================================
+ 
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
 -- 
 2.43.0
 
