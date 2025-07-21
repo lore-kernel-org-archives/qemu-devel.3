@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23C5C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8CB0C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udxbM-0002HM-EZ; Mon, 21 Jul 2025 16:59:13 -0400
+	id 1udxht-0007nn-Rq; Mon, 21 Jul 2025 17:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxZr-0001At-AY
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:57:43 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxab-0001nT-QS
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:58:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxZo-0004sf-3y
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:57:37 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxaY-00057f-Fh
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:58:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753131454;
+ s=mimecast20190719; t=1753131501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i4358BB0ZdYlZXmC0GvHVwWPKLk2/oxzKTQz2hNa+rQ=;
- b=RgF+mzTnS8tsubw9obLEudz4QFmY0LXxRuNAyiwa446DmPNqSh4AiAXHDpel/h2Fxb4n/G
- tM+jzxLl8SRomuTlsvtTIsJTJfWFSpGd7LQYyyW09o1CzOECUI4MSSkLbSMUm/11VtCFiK
- ixwjEbyyBCAXf/zHCUN6qbjcaHOVRUA=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dEZ2KHKOvlK5O9hwIzcxzzpf1amG8RrSqz2D31ADJF0=;
+ b=PsJO5GixpoC6JYWxrWxZUvdNp1pJMmf3SVbjke7HuVaJHw2REK8Rl1FUOf9pkOaP6oi3YK
+ XkRgafrhNu7x3fTGbkqhNaxMmJWqzGosGwvz7dyMWMLuLqaZuO3f01scrDHge3fuyK5mXo
+ xopYI/8zpzOs5tED3ezpzTqX8ywlX/E=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-c5fzqLGvOO6VI99WKnYZ3A-1; Mon, 21 Jul 2025 16:57:32 -0400
-X-MC-Unique: c5fzqLGvOO6VI99WKnYZ3A-1
-X-Mimecast-MFC-AGG-ID: c5fzqLGvOO6VI99WKnYZ3A_1753131452
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-311e98ee3fcso6106627a91.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:57:32 -0700 (PDT)
+ us-mta-118-Le1Aga5FP_uAgMV66MEyIw-1; Mon, 21 Jul 2025 16:58:19 -0400
+X-MC-Unique: Le1Aga5FP_uAgMV66MEyIw-1
+X-Mimecast-MFC-AGG-ID: Le1Aga5FP_uAgMV66MEyIw_1753131499
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-31cb5c75e00so4471256a91.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:58:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753131451; x=1753736251;
+ d=1e100.net; s=20230601; t=1753131499; x=1753736299;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i4358BB0ZdYlZXmC0GvHVwWPKLk2/oxzKTQz2hNa+rQ=;
- b=aqCEXLFbKCuBAif3IKsKovB8oilh2L0ncZVCRf2s98ldZOS+Cdm572QumRkEOPxeEp
- XvBd8eEW7kOEiOsmhsvVKjFGzusfO7Fvb2PeRykHaOuj/ggjcNMBe7icIv3MpPo+KNZ2
- 0WSLEYMAXqo6FOpvTdW6T1V+ub6iSucRqGmBXyKTSqXOd3Hh+y7XNstnE/3iMFNoHMVS
- V2sYk1WkeW29rze+zAKoKfyMqjSogPP4SEPc+3/oLiiYPYdLSTu5v1dziYl3lDjj7Z66
- mPaVwo7+CDuYbgbQiUfmkiapVYSsHe8GpsdQAnzkiZxwKvmaq9O6RV0+D7rk7VZ5P84u
- eLeQ==
-X-Gm-Message-State: AOJu0YxNFBQ3NLQJJmpyoe/b4CI/2gOhHWgSp+bQrU8ic49L+R2aL4E3
- yoO58FYt1mPrBpfcPDPsb26z66oxwsjm1lPEgYdKDAyWkXsZg1+liQXP5fa/SxrAAKoeipZnsam
- E3HeMFT2khcWBv0Fgn2XoZnTzUBhVZqdgwvK+frXLDmzO0d3dhgXZHATFcryOU0ycAeLD6xEGMK
- P39kADzbodf9JaX0sscM0uUz/NnqLa5B0=
-X-Gm-Gg: ASbGncsbPepBXHHyKnsg1hg2eiZWinc6QCkERwyzKVunV8CsDR4+RfvKYuwN5AXMLjc
- acc5xn9Jkcdesxc4jwVonFGyfpo0VGYRdGbGamL46tLm8PtRAE56iMgam6CUarpfcIEzjSxviWc
- mh8rmkkQPlcaT7ruBuLygtfWU4LQQnc+gfRXr/94yckhVPiYorbb5f
-X-Received: by 2002:a17:90b:1b50:b0:313:d361:73d7 with SMTP id
- 98e67ed59e1d1-31e3e17b307mr1244727a91.13.1753131451451; 
- Mon, 21 Jul 2025 13:57:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAGFUuhsvDiXCLekARfhpn9zuh9g/enIxSuk2H77NsZQRGStkritcqYnKJ4hhYeQ0aNjh6x+D7rLo/RdCjWrE=
-X-Received: by 2002:a17:90b:1b50:b0:313:d361:73d7 with SMTP id
- 98e67ed59e1d1-31e3e17b307mr1244712a91.13.1753131450993; Mon, 21 Jul 2025
- 13:57:30 -0700 (PDT)
+ bh=dEZ2KHKOvlK5O9hwIzcxzzpf1amG8RrSqz2D31ADJF0=;
+ b=n94ReHTx/wZH9vq+ONhfu+lr93eOOXlUGssoM+YRgKCG0r9wZtY12MRiYiL4Yfif6n
+ 5tKGlZypqAFKMiYDlEzal99DIH45i1e6fMTcffIiw1IPMDboL7qyPlGtGCCg7Ovcae5K
+ PdhS8FyXHAS1DwHsVqCuhgKI+CpP2aVi0qOrbEUAXRbgYNua/Kg59ZxbeIIIgAW7OxHs
+ c09icXR+pptK1Ah7kmQjPl6y9PQ8D7ntTbZNhq7Z8WSaZr1YdMi89e5XzKX0tEvcSXl5
+ +h+7Pkl3jXEqGO36Uc0o7xLOsTRNE0Vj9sNoOHHc+h0IygNxG9Gee9vibHeR5PPPWLpl
+ yatg==
+X-Gm-Message-State: AOJu0YzlRO9B4egHZ9tzI0lF1G5jQUlUubhpHAI+KQ7viH5URNwvwUfp
+ Voq21qxHsse0zCMRlDkoxsG1/tipKaN4cWxkgHWRWnac5iK6ATuoFliAluCDVEa9TXGaCDgdpV1
+ VJ0EEoB3b7wmc06cK71bM9oo3awqx46i2sDZmYvukM+zqMhJlhKePl26Vl52Nvxceazdz4kNywO
+ L0hH+A1mbFGLLkNw1lxl0u+QAg3Dt3RcY=
+X-Gm-Gg: ASbGncvDTMpCtU32qzO+zWIoN5a/qaTO5m4nyh+I0atPtJ883SK6e9kTRMPpkJH/KdB
+ wvJ4eVHOVsInflepnraDJTzxEEWXyY7XQCaoEE68UyKjpl/ZltZcMvPDqqdLcscJR1lCVeMhspM
+ OxZ3zqOGOUwGgg9SRCVjoB/9M00rsMy5eCeQtUuh28DGzTwTyG+ZKt
+X-Received: by 2002:a17:90b:5646:b0:302:fc48:4f0a with SMTP id
+ 98e67ed59e1d1-31e3dff05d0mr1443043a91.0.1753131498852; 
+ Mon, 21 Jul 2025 13:58:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvk8DZqiHezfektSTtcU289QixqEizeRzQ/bdOf7+G3J5vEwKKOR0912a60/EKkdfU+vmX1j8tdOTpEKfo/go=
+X-Received: by 2002:a17:90b:5646:b0:302:fc48:4f0a with SMTP id
+ 98e67ed59e1d1-31e3dff05d0mr1443018a91.0.1753131498487; Mon, 21 Jul 2025
+ 13:58:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250717115246.3830007-1-armbru@redhat.com>
- <20250717115246.3830007-3-armbru@redhat.com>
-In-Reply-To: <20250717115246.3830007-3-armbru@redhat.com>
+ <20250717115246.3830007-4-armbru@redhat.com>
+In-Reply-To: <20250717115246.3830007-4-armbru@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 21 Jul 2025 16:57:17 -0400
-X-Gm-Features: Ac12FXwHItPvNzMVxjYm_0IA7rAPME4OdqmeCXwju8P7R3iqxO0AtHZxdYmqW-w
-Message-ID: <CAFn=p-a5VYx7jsyp1c=uVuWsttv6OWmZ-_PLKzLH5-d69OvWkw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] qga: Remove trivial "Returns:" sections
+Date: Mon, 21 Jul 2025 16:58:05 -0400
+X-Gm-Features: Ac12FXzYvyAka-03d54D3WodjzNs-cyOuu6F1Ta91uqPdsA_9mZzxkJfjDYJ3pY
+Message-ID: <CAFn=p-YciTJt7SOcRDXyea6niasHV7Uhuq9VkAhqWemeRanSPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] qga: Rephrase return docs to avoid type name
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com, 
  kkostiuk@redhat.com, berrange@redhat.com
@@ -105,24 +105,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Jul 17, 2025 at 7:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 >
-> The QAPI doc generator recently started to auto-generate return
-> documentation when there is no "Returns:" section (commit 636c96cd77d
-> "qapi: Fix undocumented return values by generating something").
-> Remove "Returns:" sections where the auto-generated text is obviously
-> no worse.  For instance, guest-info's documentation changes from
+> "Returns: <description>" is rendered like
 >
->     Return:
->        GuestAgentInfo -- GuestAgentInfo
+>     Return: <Type> =E2=80=93 <description>
 >
-> to
+> Mentioning the type in the description again is commonly redundant.
+> There is just one such description.  Rephrase it not to mention the
+> type.
 >
->     Return:
->        GuestAgentInfo
->
-> The auto-generated returns all are in the exact same spot.
->
-> We did this for qapi/ in commit 0462da9d6b1 (qapi: remove trivial
-> "Returns:" sections).
+> We did this for qapi/ in commit f7296f8de5c (qapi: rephrase return
+> docs to avoid type name).
 >
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
@@ -130,122 +122,23 @@ m> wrote:
 Reviewed-by: John Snow <jsnow@redhat.com>
 
 > ---
->  qga/qapi-schema.json | 25 -------------------------
->  1 file changed, 25 deletions(-)
+>  qga/qapi-schema.json | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
 > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index a569a14b55..a9cc9150dc 100644
+> index a9cc9150dc..6c26ace3c9 100644
 > --- a/qga/qapi-schema.json
 > +++ b/qga/qapi-schema.json
-> @@ -202,8 +202,6 @@
+> @@ -534,8 +534,7 @@
+>  #     discarded.  The default value is zero, meaning "discard every
+>  #     free block".
 >  #
->  # Get some information about the guest agent.
+> -# Returns: A @GuestFilesystemTrimResponse which contains the status of
+> -#     all trimmed paths.  (since 2.4)
+> +# Returns: status of all trimmed paths.  (since 2.4)
 >  #
-> -# Returns: @GuestAgentInfo
-> -#
->  # Since: 0.15.0
+>  # Since: 1.2
 >  ##
->  { 'command': 'guest-info',
-> @@ -285,8 +283,6 @@
->  # @count: maximum number of bytes to read (default is 4KB, maximum is
->  #     48MB)
->  #
-> -# Returns: @GuestFileRead
-> -#
->  # Since: 0.15.0
->  ##
->  { 'command': 'guest-file-read',
-> @@ -320,8 +316,6 @@
->  # @count: bytes to write (actual bytes, after base64-decode), default
->  #     is all content in buf-b64 buffer after base64 decoding
->  #
-> -# Returns: @GuestFileWrite
-> -#
->  # Since: 0.15.0
->  ##
->  { 'command': 'guest-file-write',
-> @@ -387,8 +381,6 @@
->  #
->  # @whence: Symbolic or numeric code for interpreting offset
->  #
-> -# Returns: @GuestFileSeek
-> -#
->  # Since: 0.15.0
->  ##
->  { 'command': 'guest-file-seek',
-> @@ -428,9 +420,6 @@
->  #
->  # Get guest fsfreeze state.
->  #
-> -# Returns: GuestFsfreezeStatus ("thawed", "frozen", etc., as defined
-> -#     below)
-> -#
->  # .. note:: This may fail to properly report the current state as a
->  #    result of some other guest processes having issued an fs
->  #    freeze/thaw.
-> @@ -749,8 +738,6 @@
->  #
->  # Get list of guest IP addresses, MAC addresses and netmasks.
->  #
-> -# Returns: List of GuestNetworkInterface
-> -#
->  # Since: 1.1
->  ##
->  { 'command': 'guest-network-get-interfaces',
-> @@ -1251,8 +1238,6 @@
->  #
->  # Get information relating to guest memory blocks.
->  #
-> -# Returns: @GuestMemoryBlockInfo
-> -#
->  # Since: 2.3
->  ##
->  { 'command': 'guest-get-memory-block-info',
-> @@ -1298,8 +1283,6 @@
->  #
->  # @pid: pid returned from guest-exec
->  #
-> -# Returns: GuestExecStatus
-> -#
->  # Since: 2.5
->  ##
->  { 'command': 'guest-exec-status',
-> @@ -1458,8 +1441,6 @@
->  #
->  # Retrieves the timezone information from the guest.
->  #
-> -# Returns: A GuestTimezone dictionary.
-> -#
->  # Since: 2.10
->  ##
->  { 'command': 'guest-get-timezone',
-> @@ -1533,8 +1514,6 @@
->  #
->  # Retrieve guest operating system information
->  #
-> -# Returns: @GuestOSInfo
-> -#
->  # Since: 2.10
->  ##
->  { 'command': 'guest-get-osinfo',
-> @@ -1604,8 +1583,6 @@
->  #
->  # Retrieve information about device drivers in Windows guest
->  #
-> -# Returns: @GuestDeviceInfo
-> -#
->  # Since: 5.2
->  ##
->  { 'command': 'guest-get-devices',
-> @@ -1633,8 +1610,6 @@
->  #
->  # @username: the user account to add the authorized keys
->  #
-> -# Returns: @GuestAuthorizedKeys
-> -#
->  # Since: 5.2
->  ##
->  { 'command': 'guest-ssh-get-authorized-keys',
 > --
 > 2.49.0
 >
