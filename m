@@ -4,61 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B16BC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF82C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udx1G-0006HI-C0; Mon, 21 Jul 2025 16:21:54 -0400
+	id 1udx33-0000R1-5B; Mon, 21 Jul 2025 16:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1udwyO-00038U-AM
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:19:02 -0400
-Received: from mail-m8288.xmail.ntesmail.com ([156.224.82.88])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udx2b-00007d-Tc
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:23:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1udwyK-0000Xw-Pm
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:18:56 -0400
-Received: from DESKTOP-FHFCVTH.localdomain (unknown
- [IPV6:240e:360:9379:c800:30:bacc:21c0:5559])
- by smtp.qiye.163.com (Hmail) with ESMTP id 1cc453b66;
- Tue, 22 Jul 2025 04:11:37 +0800 (GMT+08:00)
-From: fanyihao@rt-thread.org
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yihao Fan <fanyihao@rt-thread.org>
-Subject: [PATCH v2 1/3] Add-the-stm32f407-SoC
-Date: Tue, 22 Jul 2025 04:11:32 +0800
-Message-ID: <20250721201134.13270-2-fanyihao@rt-thread.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250721201134.13270-1-fanyihao@rt-thread.org>
-References: <20250721201134.13270-1-fanyihao@rt-thread.org>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udx2W-0002VI-PY
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:23:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753129390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SW2YZH8VPu84epFVDwEIGlufhFH/BOapke+MHbnLBRU=;
+ b=W6mAD80LOJHfWliYDg2CPYw5w9betvlW1P6IN10iqx5+dJ/hXlEwF5bn5/VDXByN8aqJQ5
+ agY5BtmJV6wJX2dbVQ99ZbtzzX38hq1lAx3sqAj9vs+uU7gXpwMgn++Vh402o4yHs3tQOE
+ sPjLfqvJMid4UkPUciTYoLZtl/aZCXI=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-101-pv9INo2_P368mkdFWXlDIQ-1; Mon, 21 Jul 2025 16:23:08 -0400
+X-MC-Unique: pv9INo2_P368mkdFWXlDIQ-1
+X-Mimecast-MFC-AGG-ID: pv9INo2_P368mkdFWXlDIQ_1753129388
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-235196dfc50so46286525ad.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:23:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753129387; x=1753734187;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SW2YZH8VPu84epFVDwEIGlufhFH/BOapke+MHbnLBRU=;
+ b=RdZCetYWvKBtDGXB4mbf5KeKcvu1joU2urwOVzCHfgIwHZp1UFaLTvIP9vXFhmnUZU
+ pXcEX8fa2zNouqJq8/KpdE/lKG4g8GmOXkKVUCq9M/ICL4hh6CbHpexaIbNfGVK9eh0c
+ XOIbgds+jt0OW43JXnDVyYSpezaP0ZCEHzP6yIhFbNPDCC1DGfJPKtDXJnSCRPrUKI4x
+ 9aDfHG1IdNbqygHGGjXociwyhOlmPCD1plOHMQBmngaGnyaupSY1wsmbjoJiFlArqCvm
+ JmLoKpLjl6ncgBdHqAyb3BxM6GmqOqEWgNV8UxE/wQHEOE1nx2qniAYRkIxUzjHDBPIx
+ rSeg==
+X-Gm-Message-State: AOJu0Yy28a3cqYjPEVosHBOxmrq6YLrEk1rFselj+NdSjs9lIVkxa2BB
+ 2zCxnB2W4L88gcYtzAVoMLT98Wi6ChTIwsdT+IBziEDh+S511PO3uUPeMiim+dcNRE+1FxmCDnC
+ YrhBw7XLLOMDal8sctTBeEKQ7AEU3oIsCCrsBAswr9VklsdsHYR9OE1uj8Ud6bj2TyYHLQwwhwb
+ fcL0dYZCtHU7KUicF7Y1hjsqNfRFOWr40qnj2JtGQ=
+X-Gm-Gg: ASbGncuHV7Pj5/7CuEj++GT13WqBMx4PyMFuNLEYhK5h+pz44IyRxUtK7Xh5qOTi30U
+ NX/I1YkVKf1Z5j+lHeL8Idg2Qmn3GtTeG1QPfqxHvyv/mrzE/qj5fGVfKMskX5b1muUklEcGNRp
+ PW/rLaliSMRBPKkxSCDnpIsZsqWH5QrDVK74fXfsOsewZwmJdtxYeJ
+X-Received: by 2002:a17:903:1446:b0:233:d3e7:6fd6 with SMTP id
+ d9443c01a7336-23f8acccc85mr12172475ad.19.1753129386737; 
+ Mon, 21 Jul 2025 13:23:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVWdrH/XweNOqtMCDsHQ7VRAghnTcZEbI7W6qprYngq4iDLQYZrAjoG4cmYTKXlLY55JV1HOyWj027CYbe0VE=
+X-Received: by 2002:a17:903:1446:b0:233:d3e7:6fd6 with SMTP id
+ d9443c01a7336-23f8acccc85mr12172215ad.19.1753129386242; Mon, 21 Jul 2025
+ 13:23:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZSUlDVk9IQ0gaTx8ZTh9CTlYVFAkWGhdVEwETFh
- oSFyQUDg9ZV1kYEgtZQVlJT0seQUhNS0FCSExCQRhDS0tBSEtBGRoYGEFJShhLQU5OTkJZV1kWGg
- 8SFR0UWUFZT0tIVUpLSUJDQ0lVSktLVUtZBg++
-X-HM-Tid: 0a982e9cfe6703a4kunm518c726929260c6
-X-HM-MType: 1
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PjI6Axw4GDEiCDo3Nw8CFTZK
- DjJPCQxVSlVKTE5ISklDTUJDSUpCVTMWGhIXVR0aFQISExoUOwkPVg8TCR4aH1UUCRxFWVdZEgtZ
- QVlJT0seQUhNS0FCSExCQRhDS0tBSEtBGRoYGEFJShhLQU5OTkJZV1kIAVlBQ09CQzcG
-DKIM-Signature: a=rsa-sha256;
- b=KzyHIYTB+QDCc9sYUliuyDOnkwAFpQNah8T4hEWDSBFnc+rGi6O1osxYR4dJQQ30QxMvzVpa2vaYvB37lzV/hePxP/mFjRrUpUihFhb9jZ4BpY41XeXB59iTQH868p5zdLeZGtIv6T1V3OQXkmzgPKa3XFHW+VXxvRgy3zy7uAIuthB6bsju494kJuivO00DZGE/WsR4paMFBdy55VhRlrHJq61Oa1UI9Ym8fxbN7AWKMiS30IHod3L/znD2IVYbHEgKpDKsFhJO9sGFom4RmCHWy9M4riJMDoqNXr5zCCfMfetuCyGR17Ws1QM+XvT1M02XJ03oV8i0ZmZSajI4Zg==;
- c=relaxed/relaxed; s=default; d=rt-thread.org; v=1; 
- bh=mmOs2IbJ1iobGCcYuwGC/cVhsR6OQTKNHle8PCJkcX4=;
- h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=156.224.82.88;
- envelope-from=fanyihao@rt-thread.org; helo=mail-m8288.xmail.ntesmail.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20250717115751.3832597-1-armbru@redhat.com>
+In-Reply-To: <20250717115751.3832597-1-armbru@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 21 Jul 2025 16:22:52 -0400
+X-Gm-Features: Ac12FXwng3wvA5onVCgLLH9bqk3a7qSJ8RO7r4eTeI1Ru6rty1gnGz9rUHaGLNI
+Message-ID: <CAFn=p-ZB5K_++-6SwvoMN59dBdrdCvXaeBPmsUGYQxqToRRpBg@mail.gmail.com>
+Subject: Re: [PATCH] qapi: Add more cross-references
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,251 +100,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yihao Fan <fanyihao@rt-thread.org>
+On Thu, Jul 17, 2025 at 7:57=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> We recently (merge commit 504632dcc631) enclosed command and type
+> names in `backquotes`, so they become links in generated HTML.  Take
+> care of a few we missed.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qapi/dump.json      | 2 +-
+>  qapi/machine.json   | 2 +-
+>  qapi/migration.json | 4 ++--
+>  qapi/misc-i386.json | 2 +-
+>  qapi/run-state.json | 2 +-
+>  qapi/sockets.json   | 2 +-
+>  6 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/qapi/dump.json b/qapi/dump.json
+> index 32c8c1f06e..726b520870 100644
+> --- a/qapi/dump.json
+> +++ b/qapi/dump.json
+> @@ -79,7 +79,7 @@
+>  #
+>  # @detach: if true, QMP will return immediately rather than waiting
+>  #     for the dump to finish.  The user can track progress using
+> -#     "query-dump".  (since 2.6).
+> +#     `query-dump`.  (since 2.6).
 
-This patch introduces a new QEMU machine type for the STM32F407 SoC featuring a Cortex-M4 core.
-This will be used by the RT-Spark to create a machine.
+Funny. Offset and in quotes, so it got missed.
 
-Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
----
- MAINTAINERS                    |   7 ++
- hw/arm/Kconfig                 |   6 ++
- hw/arm/meson.build             |   1 +
- hw/arm/stm32f407_soc.c         | 130 +++++++++++++++++++++++++++++++++
- include/hw/arm/stm32f407_soc.h |  39 ++++++++++
- 5 files changed, 183 insertions(+)
- create mode 100644 hw/arm/stm32f407_soc.c
- create mode 100644 include/hw/arm/stm32f407_soc.h
+>  #
+>  # @begin: if specified, the starting physical address.
+>  #
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 6f59f70ca6..038eab281c 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -2087,7 +2087,7 @@
+>  #
+>  # @deprecated-props: an optional list of properties that are flagged as
+>  #     deprecated by the CPU vendor.  The list depends on the
+> -#     CpuModelExpansionType: "static" properties are a subset of the
+> +#     `CpuModelExpansionType`: "static" properties are a subset of the
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d1672fda8d..2744639a8b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1137,6 +1137,13 @@ F: hw/misc/stm32f4xx_exti.c
- F: hw/misc/stm32_rcc.c
- F: include/hw/misc/stm32_rcc.h
- 
-+STM32F407
-+M: yanl1229 <yanl1229@rt-thread.org>
-+M: Yihao Fan <fanyihao@rt-thread.org>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: hw/arm/stm32f407_soc.c
-+
- Netduino 2
- M: Alistair Francis <alistair@alistair23.me>
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f543d944c3..4b2f71e6e1 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -392,6 +392,12 @@ config STM32F405_SOC
-     select STM32F4XX_SYSCFG
-     select STM32F4XX_EXTI
- 
-+config STM32F407_SOC
-+    bool
-+    select ARM_V7M
-+    select STM32F4XX_SYSCFG
-+    select STM32F4XX_EXTI
-+
- config B_L475E_IOT01A
-     bool
-     default y
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index d90be8f4c9..31621060ba 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -32,6 +32,7 @@ arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2
- arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
- arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
- arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
-+arm_common_ss.add(when: 'CONFIG_STM32F407_SOC', if_true: files('stm32f407_soc.c'))
- arm_common_ss.add(when: 'CONFIG_B_L475E_IOT01A', if_true: files('b-l475e-iot01a.c'))
- arm_common_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_soc.c'))
- arm_common_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp.c', 'xlnx-zcu102.c'))
-diff --git a/hw/arm/stm32f407_soc.c b/hw/arm/stm32f407_soc.c
-new file mode 100644
-index 0000000000..0a91d4bb10
---- /dev/null
-+++ b/hw/arm/stm32f407_soc.c
-@@ -0,0 +1,130 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "system/address-spaces.h"
-+#include "system/system.h"
-+#include "hw/arm/stm32f407_soc.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/sd/sd.h"
-+#include "hw/boards.h"
-+#include "qom/object.h"
-+#include "hw/block/flash.h"
-+#include "hw/misc/unimp.h"
-+
-+
-+static const uint32_t syscfg_addr = 0x40013800;
-+static const uint32_t exti_addr = 0x40013C00;
-+static const int syscfg_irq = 71;
-+static const int exti_irq[] = {
-+    6, 7, 8, 9, 10, 23, 23, 23, 23, 23, 40,
-+    40, 40, 40, 40, 40
-+};
-+
-+
-+static void stm32f407_soc_initfn(Object *obj)
-+{
-+    int i;
-+
-+    STM32F407State *s = STM32F407_SOC(obj);
-+
-+    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
-+
-+    object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32F4XX_SYSCFG);
-+    object_initialize_child(obj, "exti", &s->exti, TYPE_STM32F4XX_EXTI);
-+
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-+    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
-+}
-+
-+static void stm32f407_soc_realize(DeviceState *dev_soc, Error **errp)
-+{
-+    STM32F407State *s = STM32F407_SOC(dev_soc);
-+    DeviceState *dev, *armv7m;
-+    SysBusDevice *busdev;
-+    DriveInfo *dinfo;
-+    int i, j;
-+
-+    MemoryRegion *system_memory = get_system_memory();
-+
-+    /*
-+     * We use s->refclk internally and only define it with qdev_init_clock_in()
-+     * so it is correctly parented and not leaked on an init/deinit; it is not
-+     * intended as an externally exposed clock.
-+     */
-+    if (clock_has_source(s->refclk)) {
-+        error_setg(errp, "refclk clock must not be wired up by the board code");
-+        return;
-+    }
-+
-+    if (!clock_has_source(s->sysclk)) {
-+        error_setg(errp, "sysclk clock must be wired up by the board code");
-+        return;
-+    }
-+
-+    /*
-+     * TODO: ideally we should model the SoC RCC and its ability to
-+     * change the sysclk frequency and define different sysclk sources.
-+     */
-+
-+    /* The refclk always runs at frequency HCLK / 8 */
-+    clock_set_mul_div(s->refclk, 8, 1);
-+    clock_set_source(s->refclk, s->sysclk);
-+
-+
-+    armv7m = DEVICE(&s->armv7m);
-+    qdev_prop_set_uint32(armv7m, "num-irq", 98);
-+    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-+    qdev_prop_set_bit(armv7m, "enable-bitband", true);
-+    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-+    qdev_connect_clock_in(armv7m, "refclk", s->refclk);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory",
-+                             OBJECT(system_memory), &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-+        return;
-+    }
-+    /* System configuration controller */
-+    dev = DEVICE(&s->syscfg);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->syscfg), errp)) {
-+        return;
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_mmio_map(busdev, 0, syscfg_addr);
-+    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, syscfg_irq));
-+
-+    /* EXTI device */
-+    dev = DEVICE(&s->exti);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->exti), errp)) {
-+        return;
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_mmio_map(busdev, 0, exti_addr);
-+    for (i = 0; i < 16; i) {
-+        sysbus_connect_irq(busdev, i, qdev_get_gpio_in(armv7m, exti_irq[i]));
-+    }
-+    for (i = 0; i < 16; i) {
-+        qdev_connect_gpio_out(DEVICE(&s->syscfg), i, qdev_get_gpio_in(dev, i));
-+    }
-+
-+}
-+
-+static void stm32f407_soc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = stm32f407_soc_realize;
-+}
-+
-+static const TypeInfo stm32f407_soc_info = {
-+    .name          = TYPE_STM32F407_SOC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(STM32F407State),
-+    .instance_init = stm32f407_soc_initfn,
-+    .class_init    = stm32f407_soc_class_init,
-+};
-+
-+static void stm32f407_soc_types(void)
-+{
-+    type_register_static(&stm32f407_soc_info);
-+}
-+
-+type_init(stm32f407_soc_types)
-diff --git a/include/hw/arm/stm32f407_soc.h b/include/hw/arm/stm32f407_soc.h
-new file mode 100644
-index 0000000000..19191dc44e
---- /dev/null
-+++ b/include/hw/arm/stm32f407_soc.h
-@@ -0,0 +1,39 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef STM32F407_SOC_H
-+#define STM32F407_SOC_H
-+
-+#include "hw/or-irq.h"
-+#include "hw/arm/armv7m.h"
-+#include "hw/misc/stm32f4xx_syscfg.h"
-+#include "hw/misc/stm32f4xx_exti.h"
-+
-+#include "qom/object.h"
-+
-+#define TYPE_STM32F407_SOC "stm32f407-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(STM32F407State, STM32F407_SOC)
-+
-+#define SYSCFG_BASE_ADDRESS 0x40013800
-+#define SYSCFG_IRQ  71
-+#define EXIT_BASE_ADDRESS   0x40013C00
-+#define FLASH_BASE_ADDRESS  0x8000000
-+#define FLASH_SIZE          0x100000
-+#define SRAM_BASE_ADDRESS   0x20000000
-+#define SRAM_SIZE           (192 * 1024)
-+
-+
-+struct STM32F407State {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    /*< public >*/
-+
-+    char *kernel_filename;
-+    ARMv7MState armv7m;
-+
-+    STM32F4xxSyscfgState syscfg;
-+    STM32F4xxExtiState exti;
-+
-+    Clock *sysclk;
-+    Clock *refclk;
-+};
-+
-+#endif
--- 
-2.43.0
+"What are the odds that a name we want to turn into a reference will
+be immediately followed by a colon?" 100%, I guess.
+
+>  #     enabled-properties for the expanded model; "full" properties are
+>  #     a set of properties that are deprecated across all models for
+>  #     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index e08a99bb82..2387c21e9c 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -641,7 +641,7 @@
+>  #
+>  #     This mode supports VFIO devices provided the user first puts the
+>  #     guest in the suspended runstate, such as by issuing
+> -#     guest-suspend-ram to the QEMU guest agent.
+> +#     `guest-suspend-ram` to the QEMU guest agent.
+
+Missed because it's indented?
+
+>  #
+>  #     Best performance is achieved when the memory backend is shared
+>  #     and the @x-ignore-shared migration capability is set, but this
+> @@ -1704,7 +1704,7 @@
+>  #
+>  # .. admonition:: Notes
+>  #
+> -#     1. The 'query-migrate' command should be used to check
+> +#     1. The `query-migrate` command should be used to check
+>  #        migration's progress and final result (this information is
+>  #        provided by the 'status' member).
+
+Indent miss.
+
+>  #
+> diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
+> index c8c91a241c..d1ce8caf25 100644
+> --- a/qapi/misc-i386.json
+> +++ b/qapi/misc-i386.json
+> @@ -8,7 +8,7 @@
+>  #
+>  # Reset the RTC interrupt reinjection backlog.  Can be used if another
+>  # mechanism to synchronize guest time is in effect, for example QEMU
+> -# guest agent's guest-set-time command.
+> +# guest agent's `guest-set-time` command.
+
+Why'd I miss this one, I wonder?
+
+>  #
+>  # Use of this command is only applicable for x86 machines with an RTC,
+>  # and on other machines will silently return without performing any
+> diff --git a/qapi/run-state.json b/qapi/run-state.json
+> index 54ba5c9a3f..4757947ca6 100644
+> --- a/qapi/run-state.json
+> +++ b/qapi/run-state.json
+> @@ -20,7 +20,7 @@
+>  # @inmigrate: guest is paused waiting for an incoming migration.  Note
+>  #     that this state does not tell whether the machine will start at
+>  #     the end of the migration.  This depends on the command-line -S
+> -#     option and any invocation of 'stop' or 'cont' that has happened
+> +#     option and any invocation of `stop` or `cont` that has happened
+
+Rare instance of actually *wanting* these to be cross-refs. :)
+
+>  #     since QEMU was started.
+>  #
+>  # @internal-error: An internal error that prevents further guest
+> diff --git a/qapi/sockets.json b/qapi/sockets.json
+> index 82046b0b3a..32fac51728 100644
+> --- a/qapi/sockets.json
+> +++ b/qapi/sockets.json
+> @@ -143,7 +143,7 @@
+>  #
+>  # @str: decimal is for file descriptor number, otherwise it's a file
+>  #     descriptor name.  Named file descriptors are permitted in
+> -#     monitor commands, in combination with the 'getfd' command.
+> +#     monitor commands, in combination with the `getfd` command.
+>  #     Decimal file descriptors are permitted at startup or other
+>  #     contexts where no monitor context is active.
+
+Presumably another indent miss.
+
+>  #
+> --
+> 2.49.0
+
+Reviewed-by: John Snow <jsnow@redhat.com>
 
 
