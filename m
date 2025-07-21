@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6FDC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F190C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udx4X-00028F-E5; Mon, 21 Jul 2025 16:25:17 -0400
+	id 1udxHt-0002p8-41; Mon, 21 Jul 2025 16:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udx4Q-0001zM-QM
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:25:11 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxHc-0002lk-Rl
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:38:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udx4N-0003D6-EY
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:25:10 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxHa-0007IC-FU
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:38:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753129505;
+ s=mimecast20190719; t=1753130324;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=psj6dX1PbrjNIzs2kSnJUiGaWUhvYhSymboxI7TUWB8=;
- b=JmqYXDAfJLRi7/dWuLQiZW3+wSPESniNs0bR7LLNy8o3Iw+jB2AGDiYyfFDUMfPzQO6Vv7
- ziYzqy968IrndLPtmD83KCiLF7oLBVmtczFZR6pQq+GtSyjjRPeb+HQnvuHWMPA6LGXCBe
- VCt3JW0QNv5SKAnbgqeHjTNQAI0hx/A=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=32hBqsS59L4N5atbDma0XrKZqbh/7lW6YeMFmB3fWGk=;
+ b=SxvSbKazO7kh7A+6GtslJqTFM/TG4fyLz32CgCc8VWoILgcXa8XBkaV/UXPOTwBw+WfJkR
+ uRFqOgn84x4G4Q63Fbmok1MGSZYfR1SgBfZ7QZupzABwNyqrn10ABzptwdNQBVumaze8ZI
+ KrjGXjvx8s2VZKvrDTEDFoExkBGXtOk=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-qLWtUCpBOIC2qUslcicvVw-1; Mon, 21 Jul 2025 16:25:03 -0400
-X-MC-Unique: qLWtUCpBOIC2qUslcicvVw-1
-X-Mimecast-MFC-AGG-ID: qLWtUCpBOIC2qUslcicvVw_1753129503
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b38ec062983so3181243a12.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:25:03 -0700 (PDT)
+ us-mta-414-44u-SM9VO4mJezzh3G11dQ-1; Mon, 21 Jul 2025 16:38:41 -0400
+X-MC-Unique: 44u-SM9VO4mJezzh3G11dQ-1
+X-Mimecast-MFC-AGG-ID: 44u-SM9VO4mJezzh3G11dQ_1753130320
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-234fedd3e51so46408545ad.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:38:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753129503; x=1753734303;
+ d=1e100.net; s=20230601; t=1753130320; x=1753735120;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=psj6dX1PbrjNIzs2kSnJUiGaWUhvYhSymboxI7TUWB8=;
- b=KHxdy4M6pIZMYQRN6VLSWqGMr/WjNC8OtE/qssrlYETRQfajEos17PZywt6YhAfnLX
- iCmndbF4PYtWqEaBcoQtswDr9WYH8YHzeO4tgv9L8nX+GDNCXuw9+pj+te5PrFiGsgRa
- JopJniBdRCaq0azSYPBBDvib2axlYMRxvMRGRCuufXgC9CS0ZkQD/wF3wpqrsBaFEkKo
- t5D28HCdQpemUdlh4s3RRsC0xgHXzuPjkvjQBFzoUJ4fPj8ya8b+fOCtnRsXkBmeAAvW
- QDvpg9IVSegdPHERHOzAHDtxod5qyeH35bpobJH1G0PcVzbhjhwjaRIpi9xgu3HcAuVt
- B/wA==
-X-Gm-Message-State: AOJu0YwHjKPVHwBLb4MCSgm7fX4rWQb4klobhqYlHLzxRyIeaDmHCuxX
- TQ/2YyHUkEzPl1MNDJy6e+pqJKxJibLR6j1ac+Hk1SREwb5rsHnXz3lGbSipL/q3YkOsdIjumbu
- RdCV2xNenJ4Uqskd/LqapS4XPuC2jMrvIkQ5lyWOPEG1fiAmN6JlzcUpUnoo9nqZg/525WL6hVf
- JE379Tp28hezNMw+8yrTP+Ey0nmO8ugQc=
-X-Gm-Gg: ASbGncsciMQQhhNTYms3F/v3NqWLnF+jugq8OtXEplo7zoDW6jTnbQ1JQsPhMGwpd5j
- l1zWoM4M97RiK4fPCACZqDzHkciL+moHLwI5DTwsytc7EWkJ4ipBFTT76GuifoP7d3cEXMwdwEg
- 25xLkmFs6eS/pmq0MJ6YsyBKdngklJogJzC5RL4nO/1ttrrvSbbqcv
-X-Received: by 2002:a17:90b:38d0:b0:311:a314:c2dc with SMTP id
- 98e67ed59e1d1-31cc25447bamr21949849a91.14.1753129502705; 
- Mon, 21 Jul 2025 13:25:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiN/y5I+DgPxvg861Nx+6jrxwXheU1O/Hf/fWelt9RsOCTgG62VkaTSYGP7TiriyNNzHfw3hbfnrpCaFinR5I=
-X-Received: by 2002:a17:90b:38d0:b0:311:a314:c2dc with SMTP id
- 98e67ed59e1d1-31cc25447bamr21949823a91.14.1753129502332; Mon, 21 Jul 2025
- 13:25:02 -0700 (PDT)
+ bh=32hBqsS59L4N5atbDma0XrKZqbh/7lW6YeMFmB3fWGk=;
+ b=Hwd0w7VlQmJbRTjCeALB4drh9nAs0e+7FgDVK97cxcx4dTXbXWlWRddcZrs8rmK7gl
+ H5OHOaK2CEKdH5kH3S3AHsNoVRzh4DhR/0iiBrDkfHOMXC4bVoDoz0Vy5enYid/FGAOQ
+ 6wvjSq6M5m7wB2g+WnBbLNcmcS6Wf1p+G+KDrk0zj0UqEMU1CzyRfdlRAPkrQ+bslMlF
+ BiC4jA6thWMbsZWx2lZ8DoLUmW52JUMpYTs4hw20MPeVapcy+rkMstbAIIU5XFgMl4Yt
+ 6ms06nVltKVriX4msQhnMSZKvhGT70QAhuRIgwZb2H6JYbpC2zo2FNoZLn4VpcrR1F6O
+ K+ZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDEPpFsyGEx2JC/SEii+5jie4MV5tpdZUSzlCCsa6/AHt080f6Vy9H6HfzrWsZnw8GVWxUZug9iduT@nongnu.org
+X-Gm-Message-State: AOJu0YzfWE16yvdE680WQCue8f2dU9dlrIcwkblLosTDFN8XITKnUJbR
+ Kc592UPOlBTb7m1SrK66gvl93AjrCNu41EMLKlRW2+C2TuDoE+FMu6HexdPIxE8B0RzfyvqoNkC
+ kNcikgDljOCGUbIJI8qs3lp/1fXXFW/xxwE1JkIZ9lTMouEtVIqjVBGivrDZMYGMgMHbcFieqqv
+ Epm8HZCQssonvMDUik00GyF7Zfhltokzk=
+X-Gm-Gg: ASbGnctn/hH0ZHBDPRKStQ+SBlRhivh2RglcixzW+l+kKcZycVHUO4nMLTo9t95vAJm
+ 82FBz3F7iNSev+xrXrHgLcRvHDfVDxopc7K3CPnUmRf4BATjqc8bqkCa9WWKZ7yA+cpk9Nhq7cH
+ GosnIlzi2B1UYFfzw9zEm6VezIg2rOgn6t2IhHgWlhmZAtq/+ndLK4
+X-Received: by 2002:a17:902:e802:b0:234:d7b2:2ac5 with SMTP id
+ d9443c01a7336-23e256c97d4mr280355055ad.21.1753130320289; 
+ Mon, 21 Jul 2025 13:38:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1MvrI/x3sWqyCnBsZKlYWOJ4d2TNY5sQ/m6FQVbe2YZdR4htSm/WRhHyIYzklpo0GXnf41PnDdQRTnTLEFRM=
+X-Received: by 2002:a17:902:e802:b0:234:d7b2:2ac5 with SMTP id
+ d9443c01a7336-23e256c97d4mr280354795ad.21.1753130319846; Mon, 21 Jul 2025
+ 13:38:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250717115246.3830007-1-armbru@redhat.com>
- <20250717115246.3830007-2-armbru@redhat.com>
-In-Reply-To: <20250717115246.3830007-2-armbru@redhat.com>
+References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+ <87ms93xl69.fsf@draig.linaro.org>
+In-Reply-To: <87ms93xl69.fsf@draig.linaro.org>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 21 Jul 2025 16:24:48 -0400
-X-Gm-Features: Ac12FXx0jjo70MlXuCHHMX3TLgiGXVaKmmtxanbCp2OtF87tx_3QlT-L4y-ht94
-Message-ID: <CAFn=p-Zqz3hmNbt+TNzjDStjUueheCgMj=L8E3R_XGeHGSP32w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] qga: Fix guest-network-get-route return value
- documentation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com, 
- kkostiuk@redhat.com, berrange@redhat.com
+Date: Mon, 21 Jul 2025 16:38:26 -0400
+X-Gm-Features: Ac12FXwwF7n10QSdSY3QY4-M0PVvF_kCqs9QHImSyYEH7yN7UATLuT7aHuGiiKA
+Message-ID: <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: add --debug CLI arg
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -103,58 +108,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 7:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On Thu, Jul 17, 2025 at 4:44=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 >
-> Tagged sections are only recognized at the beginning of a paragraph.
-> guest-network-get-route's Returns: isn't, and therefore gets rendered
-> as ordinary text within its paragraph:
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 >
->     Retrieve information about route of network. Returns: List of route
->     info of guest.
+> > Add argument parsing to functional tests to improve developer experienc=
+e
+> > when running individual tests. All logs are printed to stdout
+> > interspersed with TAP output.
+> >
+> >   ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
+> >   usage: test_aarch64_virt [-h] [-d]
 >
-> Since there is no (recognized) Returns: section, the doc generator
-> adds
+> Am I holding it wrong?
 >
->     Return:
->        [GuestNetworkRoute]
+>   =E2=9E=9C  ./pyvenv/bin/python ../../tests/functional/test_aarch64_virt=
+.py --help
+>   Traceback (most recent call last):
+>     File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/test=
+_aarch64_virt.py", line 16, in <module>
+>       from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_=
+for_pattern
+>     File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init__.py=
+", line 14, in <module>
+>       from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
+>     File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcase.py=
+", line 26, in <module>
+>       from qemu.machine import QEMUMachine
+>   ModuleNotFoundError: No module named 'qemu'
 >
-> Note: only since recent commit 636c96cd77d (qapi: Fix undocumented
-> return values by generating something).
->
-> Insert the required blank line so that Returns: is recognized.
-> Result:
->
->     Retrieve information about route of network.
->
->     Return:
->        [GuestNetworkRoute] -- List of route info of guest.
->
-> Fixes: commit 8e326d36dd16 (qga/linux: Add new api 'guest-network-get-rou=
-te')
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> I thought the point of the venv is we had all the modules we need
+> automatically available to the PYTHONPATH?
 
-Reviewed-by: John Snow <jsnow@redhat.com>
+As Thomas points out, "qemu" is special since it's already in the
+tree. There has been some dragging-of-feet by yours-truly because
+installing the "qemu" module by default when running configure
+introduces a considerable startup lag time, and the module is not
+actually needed for the simple configuration and building of QEMU -
+only testing.
 
-> ---
->  qga/qapi-schema.json | 1 +
->  1 file changed, 1 insertion(+)
+It's something I want to fix, but must admit to being a bit stumped as
+to how I will bridge that gap long term. Currently, all of the modules
+we need are in the tree with no dependencies, so it can be fixed with
+a simple PYTHONPATH hack. However, if I actually remove the QMP
+library from the tree like I have wanted to, then we need pip to do a
+real install and process dependencies, and this creates some
+complications and extra startup lag.
+
+Naively, I think adding a "just in time installation of testing
+dependencies" when you go to run a testing command from "make XXXX"
+might be sufficient for us, possibly in conjunction with a configure
+flag that lets you pre-load testing dependencies.
+
 >
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index 6d770f7b8e..a569a14b55 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1966,6 +1966,7 @@
->  # @guest-network-get-route:
->  #
->  # Retrieve information about route of network.
-> +#
->  # Returns: List of route info of guest.
->  #
->  # Since: 9.1
+>
+> >
+> >   QEMU Functional test
+> >
+> >   options:
+> >     -h, --help   show this help message and exit
+> >     -d, --debug  Also print test and console logs on stdout. This will
+> >                  make the TAP output invalid and is meant for debugging
+> >                  only.
+> >
+> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > ---
+> >  docs/devel/testing/functional.rst      |  2 ++
+> >  tests/functional/qemu_test/testcase.py | 51 ++++++++++++++++++++++++++=
+++++++--
+> >  2 files changed, 50 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/fun=
+ctional.rst
+> > index 9e56dd1b1189216b9b4aede00174c15203f38b41..9d08abe2848277d635befb0=
+296f578cfaa4bd66d 100644
+> > --- a/docs/devel/testing/functional.rst
+> > +++ b/docs/devel/testing/functional.rst
+> > @@ -63,6 +63,8 @@ directory should be your build folder. For example::
+> >    $ export QEMU_TEST_QEMU_BINARY=3D$PWD/qemu-system-x86_64
+> >    $ pyvenv/bin/python3 ../tests/functional/test_file.py
+> >
+> > +By default, functional tests redirect informational logs and console o=
+utput to
+> > +log files. Specify the ``--debug`` flag to also print those to standar=
+d output.
+> >  The test framework will automatically purge any scratch files created =
+during
+> >  the tests. If needing to debug a failed test, it is possible to keep t=
+hese
+> >  files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=3D1``` as an=
+ env
+> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/=
+qemu_test/testcase.py
+> > index 2082c6fce43b0544d4e4258cd4155f555ed30cd4..fad7a946c6677e9ef5c42b8=
+f77187ba836c11aeb 100644
+> > --- a/tests/functional/qemu_test/testcase.py
+> > +++ b/tests/functional/qemu_test/testcase.py
+> > @@ -11,6 +11,7 @@
+> >  # This work is licensed under the terms of the GNU GPL, version 2 or
+> >  # later.  See the COPYING file in the top-level directory.
+> >
+> > +import argparse
+> >  import logging
+> >  import os
+> >  from pathlib import Path
+> > @@ -31,6 +32,20 @@
+> >  from .uncompress import uncompress
+> >
+> >
+> > +def parse_args(test_name: str) -> argparse.Namespace:
+> > +    parser =3D argparse.ArgumentParser(
+> > +        prog=3Dtest_name, description=3D"QEMU Functional test"
+> > +    )
+> > +    parser.add_argument(
+> > +        "-d",
+> > +        "--debug",
+> > +        action=3D"store_true",
+> > +        help=3D"Also print test and console logs on stdout. This will =
+make the"
+> > +        " TAP output invalid and is meant for debugging only.",
+> > +    )
+> > +    return parser.parse_args()
+> > +
+> > +
+> >  class QemuBaseTest(unittest.TestCase):
+> >
+> >      '''
+> > @@ -196,6 +211,9 @@ def assets_available(self):
+> >          return True
+> >
+> >      def setUp(self):
+> > +        path =3D os.path.basename(sys.argv[0])[:-3]
+> > +        args =3D parse_args(path)
+> > +        self.debug_output =3D args.debug
+> >          self.qemu_bin =3D os.getenv('QEMU_TEST_QEMU_BINARY')
+> >          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY mus=
+t be set')
+> >          self.arch =3D self.qemu_bin.split('-')[-1]
+> > @@ -221,6 +239,16 @@ def setUp(self):
+> >          self.machinelog.setLevel(logging.DEBUG)
+> >          self.machinelog.addHandler(self._log_fh)
+> >
+> > +        if self.debug_output:
+> > +            handler =3D logging.StreamHandler(sys.stdout)
+> > +            handler.setLevel(logging.DEBUG)
+> > +            formatter =3D logging.Formatter(
+> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+> > +            )
+> > +            handler.setFormatter(formatter)
+> > +            self.log.addHandler(handler)
+> > +            self.machinelog.addHandler(handler)
+> > +
+> >          if not self.assets_available():
+> >              self.skipTest('One or more assets is not available')
+> >
+> > @@ -230,11 +258,16 @@ def tearDown(self):
+> >          if self.socketdir is not None:
+> >              shutil.rmtree(self.socketdir.name)
+> >              self.socketdir =3D None
+> > -        self.machinelog.removeHandler(self._log_fh)
+> > -        self.log.removeHandler(self._log_fh)
+> > +        for handler in [self._log_fh, logging.StreamHandler(sys.stdout=
+)]:
+> > +            self.machinelog.removeHandler(handler)
+> > +            self.log.removeHandler(handler)
+> >
+> >      def main():
+> >          path =3D os.path.basename(sys.argv[0])[:-3]
+> > +        # If argparse receives --help or an unknown argument, it will =
+raise a
+> > +        # SystemExit which will get caught by the test runner. Parse t=
+he
+> > +        # arguments here too to handle that case.
+> > +        _ =3D parse_args(path)
+> >
+> >          cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
+> >          if cache is not None:
+> > @@ -292,6 +325,14 @@ def setUp(self):
+> >          fileFormatter =3D logging.Formatter('%(asctime)s: %(message)s'=
+)
+> >          self._console_log_fh.setFormatter(fileFormatter)
+> >          console_log.addHandler(self._console_log_fh)
+> > +        if self.debug_output:
+> > +            handler =3D logging.StreamHandler(sys.stdout)
+> > +            handler.setLevel(logging.DEBUG)
+> > +            formatter =3D logging.Formatter(
+> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+> > +            )
+> > +            handler.setFormatter(formatter)
+> > +            console_log.addHandler(handler)
+> >
+> >      def set_machine(self, machinename):
+> >          # TODO: We should use QMP to get the list of available machine=
+s
+> > @@ -398,5 +439,9 @@ def set_vm_arg(self, arg, value):
+> >      def tearDown(self):
+> >          for vm in self._vms.values():
+> >              vm.shutdown()
+> > -        logging.getLogger('console').removeHandler(self._console_log_f=
+h)
+> > +        for handler in [
+> > +            self._console_log_fh,
+> > +            logging.StreamHandler(sys.stdout),
+> > +        ]:
+> > +            logging.getLogger("console").removeHandler(handler)
+> >          super().tearDown()
+> >
+> > ---
+> > base-commit: c079d3a31e45093286c65f8ca5350beb3a4404a9
+> > change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
+>
 > --
-> 2.49.0
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 >
 
 
