@@ -4,86 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F190C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6FFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udxHt-0002p8-41; Mon, 21 Jul 2025 16:39:07 -0400
+	id 1udxSG-0003MV-IL; Mon, 21 Jul 2025 16:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxHc-0002lk-Rl
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:38:48 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1udxQT-0001v4-86
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:47:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxHa-0007IC-FU
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:38:48 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1udxQR-000157-70
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:47:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753130324;
+ s=mimecast20190719; t=1753130874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=32hBqsS59L4N5atbDma0XrKZqbh/7lW6YeMFmB3fWGk=;
- b=SxvSbKazO7kh7A+6GtslJqTFM/TG4fyLz32CgCc8VWoILgcXa8XBkaV/UXPOTwBw+WfJkR
- uRFqOgn84x4G4Q63Fbmok1MGSZYfR1SgBfZ7QZupzABwNyqrn10ABzptwdNQBVumaze8ZI
- KrjGXjvx8s2VZKvrDTEDFoExkBGXtOk=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-44u-SM9VO4mJezzh3G11dQ-1; Mon, 21 Jul 2025 16:38:41 -0400
-X-MC-Unique: 44u-SM9VO4mJezzh3G11dQ-1
-X-Mimecast-MFC-AGG-ID: 44u-SM9VO4mJezzh3G11dQ_1753130320
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-234fedd3e51so46408545ad.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:38:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753130320; x=1753735120;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=32hBqsS59L4N5atbDma0XrKZqbh/7lW6YeMFmB3fWGk=;
- b=Hwd0w7VlQmJbRTjCeALB4drh9nAs0e+7FgDVK97cxcx4dTXbXWlWRddcZrs8rmK7gl
- H5OHOaK2CEKdH5kH3S3AHsNoVRzh4DhR/0iiBrDkfHOMXC4bVoDoz0Vy5enYid/FGAOQ
- 6wvjSq6M5m7wB2g+WnBbLNcmcS6Wf1p+G+KDrk0zj0UqEMU1CzyRfdlRAPkrQ+bslMlF
- BiC4jA6thWMbsZWx2lZ8DoLUmW52JUMpYTs4hw20MPeVapcy+rkMstbAIIU5XFgMl4Yt
- 6ms06nVltKVriX4msQhnMSZKvhGT70QAhuRIgwZb2H6JYbpC2zo2FNoZLn4VpcrR1F6O
- K+ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDEPpFsyGEx2JC/SEii+5jie4MV5tpdZUSzlCCsa6/AHt080f6Vy9H6HfzrWsZnw8GVWxUZug9iduT@nongnu.org
-X-Gm-Message-State: AOJu0YzfWE16yvdE680WQCue8f2dU9dlrIcwkblLosTDFN8XITKnUJbR
- Kc592UPOlBTb7m1SrK66gvl93AjrCNu41EMLKlRW2+C2TuDoE+FMu6HexdPIxE8B0RzfyvqoNkC
- kNcikgDljOCGUbIJI8qs3lp/1fXXFW/xxwE1JkIZ9lTMouEtVIqjVBGivrDZMYGMgMHbcFieqqv
- Epm8HZCQssonvMDUik00GyF7Zfhltokzk=
-X-Gm-Gg: ASbGnctn/hH0ZHBDPRKStQ+SBlRhivh2RglcixzW+l+kKcZycVHUO4nMLTo9t95vAJm
- 82FBz3F7iNSev+xrXrHgLcRvHDfVDxopc7K3CPnUmRf4BATjqc8bqkCa9WWKZ7yA+cpk9Nhq7cH
- GosnIlzi2B1UYFfzw9zEm6VezIg2rOgn6t2IhHgWlhmZAtq/+ndLK4
-X-Received: by 2002:a17:902:e802:b0:234:d7b2:2ac5 with SMTP id
- d9443c01a7336-23e256c97d4mr280355055ad.21.1753130320289; 
- Mon, 21 Jul 2025 13:38:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1MvrI/x3sWqyCnBsZKlYWOJ4d2TNY5sQ/m6FQVbe2YZdR4htSm/WRhHyIYzklpo0GXnf41PnDdQRTnTLEFRM=
-X-Received: by 2002:a17:902:e802:b0:234:d7b2:2ac5 with SMTP id
- d9443c01a7336-23e256c97d4mr280354795ad.21.1753130319846; Mon, 21 Jul 2025
- 13:38:39 -0700 (PDT)
+ bh=QBSbbaAKyl5aY4HyJSJ+sf8E1dv6K+OA1Yu7iM9qnfg=;
+ b=JuWLWr6e3DcsmIrc3vctBPsJKHmV5GIaNmguOjBw/B0u90qksVal3SLDCRVtZqyv+gydKd
+ RnJTTQhgAFbd3to0iUWY1VjyarRARt88kbYItNrUQsLG5FExk1/83zUY23GdZwMxIVcHNQ
+ pOSBFrJdHHdyFhcphaJTQfbcaoC+oas=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-Gf1YD_ZAOgqCUUgwxzXHFg-1; Mon,
+ 21 Jul 2025 16:47:50 -0400
+X-MC-Unique: Gf1YD_ZAOgqCUUgwxzXHFg-1
+X-Mimecast-MFC-AGG-ID: Gf1YD_ZAOgqCUUgwxzXHFg_1753130869
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EBF58195608B; Mon, 21 Jul 2025 20:47:48 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.31])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C73CB1966650; Mon, 21 Jul 2025 20:47:47 +0000 (UTC)
+Date: Mon, 21 Jul 2025 16:47:46 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, eblake@redhat.com,
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-block@nongnu.org,
+ Aarushi Mehta <mehta.aaru20@gmail.com>, hibriansong@gmail.com
+Subject: Re: [PATCH v2 01/12] aio-posix: fix race between io_uring CQE and
+ AioHandler deletion
+Message-ID: <20250721204746.GA84885@fedora>
+References: <20250620000829.1426291-1-stefanha@redhat.com>
+ <20250620000829.1426291-2-stefanha@redhat.com>
+ <aGUhxUhGk7dx4fd-@redhat.com>
 MIME-Version: 1.0
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <87ms93xl69.fsf@draig.linaro.org>
-In-Reply-To: <87ms93xl69.fsf@draig.linaro.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 21 Jul 2025 16:38:26 -0400
-X-Gm-Features: Ac12FXwwF7n10QSdSY3QY4-M0PVvF_kCqs9QHImSyYEH7yN7UATLuT7aHuGiiKA
-Message-ID: <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="pq8ywfv3rKnbJJ9N"
+Content-Disposition: inline
+In-Reply-To: <aGUhxUhGk7dx4fd-@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -92,7 +75,7 @@ X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,220 +91,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 17, 2025 at 4:44=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->
-> > Add argument parsing to functional tests to improve developer experienc=
-e
-> > when running individual tests. All logs are printed to stdout
-> > interspersed with TAP output.
-> >
-> >   ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --help
-> >   usage: test_aarch64_virt [-h] [-d]
->
-> Am I holding it wrong?
->
->   =E2=9E=9C  ./pyvenv/bin/python ../../tests/functional/test_aarch64_virt=
-.py --help
->   Traceback (most recent call last):
->     File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/test=
-_aarch64_virt.py", line 16, in <module>
->       from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_=
-for_pattern
->     File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init__.py=
-", line 14, in <module>
->       from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
->     File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcase.py=
-", line 26, in <module>
->       from qemu.machine import QEMUMachine
->   ModuleNotFoundError: No module named 'qemu'
->
-> I thought the point of the venv is we had all the modules we need
-> automatically available to the PYTHONPATH?
 
-As Thomas points out, "qemu" is special since it's already in the
-tree. There has been some dragging-of-feet by yours-truly because
-installing the "qemu" module by default when running configure
-introduces a considerable startup lag time, and the module is not
-actually needed for the simple configuration and building of QEMU -
-only testing.
+--pq8ywfv3rKnbJJ9N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's something I want to fix, but must admit to being a bit stumped as
-to how I will bridge that gap long term. Currently, all of the modules
-we need are in the tree with no dependencies, so it can be fixed with
-a simple PYTHONPATH hack. However, if I actually remove the QMP
-library from the tree like I have wanted to, then we need pip to do a
-real install and process dependencies, and this creates some
-complications and extra startup lag.
-
-Naively, I think adding a "just in time installation of testing
-dependencies" when you go to run a testing command from "make XXXX"
-might be sufficient for us, possibly in conjunction with a configure
-flag that lets you pre-load testing dependencies.
-
->
->
-> >
-> >   QEMU Functional test
-> >
-> >   options:
-> >     -h, --help   show this help message and exit
-> >     -d, --debug  Also print test and console logs on stdout. This will
-> >                  make the TAP output invalid and is meant for debugging
-> >                  only.
-> >
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+On Wed, Jul 02, 2025 at 02:10:45PM +0200, Kevin Wolf wrote:
+> Am 20.06.2025 um 02:08 hat Stefan Hajnoczi geschrieben:
+> > When an AioHandler is enqueued on ctx->submit_list for removal, the
+> > fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
+> > cancel the in-flight POLL_ADD operation.
+> >=20
+> > There is a race when another thread enqueues an AioHandler for deletion
+> > on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
+> > case POLL_REMOVE is unnecessary. The code already handled this, but
+> > forgot that the AioHandler itself is still on ctx->submit_list when the
+> > POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
+> > that point in time (use-after-free).
+> >=20
+> > Solve this problem by keeping the AioHandler alive but setting a flag so
+> > that it will be deleted by fill_sq_ring() when it runs.
+> >=20
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 > > ---
-> >  docs/devel/testing/functional.rst      |  2 ++
-> >  tests/functional/qemu_test/testcase.py | 51 ++++++++++++++++++++++++++=
-++++++--
-> >  2 files changed, 50 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/fun=
-ctional.rst
-> > index 9e56dd1b1189216b9b4aede00174c15203f38b41..9d08abe2848277d635befb0=
-296f578cfaa4bd66d 100644
-> > --- a/docs/devel/testing/functional.rst
-> > +++ b/docs/devel/testing/functional.rst
-> > @@ -63,6 +63,8 @@ directory should be your build folder. For example::
-> >    $ export QEMU_TEST_QEMU_BINARY=3D$PWD/qemu-system-x86_64
-> >    $ pyvenv/bin/python3 ../tests/functional/test_file.py
-> >
-> > +By default, functional tests redirect informational logs and console o=
-utput to
-> > +log files. Specify the ``--debug`` flag to also print those to standar=
-d output.
-> >  The test framework will automatically purge any scratch files created =
-during
-> >  the tests. If needing to debug a failed test, it is possible to keep t=
-hese
-> >  files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=3D1``` as an=
- env
-> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/=
-qemu_test/testcase.py
-> > index 2082c6fce43b0544d4e4258cd4155f555ed30cd4..fad7a946c6677e9ef5c42b8=
-f77187ba836c11aeb 100644
-> > --- a/tests/functional/qemu_test/testcase.py
-> > +++ b/tests/functional/qemu_test/testcase.py
-> > @@ -11,6 +11,7 @@
-> >  # This work is licensed under the terms of the GNU GPL, version 2 or
-> >  # later.  See the COPYING file in the top-level directory.
-> >
-> > +import argparse
-> >  import logging
-> >  import os
-> >  from pathlib import Path
-> > @@ -31,6 +32,20 @@
-> >  from .uncompress import uncompress
-> >
-> >
-> > +def parse_args(test_name: str) -> argparse.Namespace:
-> > +    parser =3D argparse.ArgumentParser(
-> > +        prog=3Dtest_name, description=3D"QEMU Functional test"
-> > +    )
-> > +    parser.add_argument(
-> > +        "-d",
-> > +        "--debug",
-> > +        action=3D"store_true",
-> > +        help=3D"Also print test and console logs on stdout. This will =
-make the"
-> > +        " TAP output invalid and is meant for debugging only.",
-> > +    )
-> > +    return parser.parse_args()
-> > +
-> > +
-> >  class QemuBaseTest(unittest.TestCase):
-> >
-> >      '''
-> > @@ -196,6 +211,9 @@ def assets_available(self):
-> >          return True
-> >
-> >      def setUp(self):
-> > +        path =3D os.path.basename(sys.argv[0])[:-3]
-> > +        args =3D parse_args(path)
-> > +        self.debug_output =3D args.debug
-> >          self.qemu_bin =3D os.getenv('QEMU_TEST_QEMU_BINARY')
-> >          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY mus=
-t be set')
-> >          self.arch =3D self.qemu_bin.split('-')[-1]
-> > @@ -221,6 +239,16 @@ def setUp(self):
-> >          self.machinelog.setLevel(logging.DEBUG)
-> >          self.machinelog.addHandler(self._log_fh)
-> >
-> > +        if self.debug_output:
-> > +            handler =3D logging.StreamHandler(sys.stdout)
-> > +            handler.setLevel(logging.DEBUG)
-> > +            formatter =3D logging.Formatter(
-> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-> > +            )
-> > +            handler.setFormatter(formatter)
-> > +            self.log.addHandler(handler)
-> > +            self.machinelog.addHandler(handler)
-> > +
-> >          if not self.assets_available():
-> >              self.skipTest('One or more assets is not available')
-> >
-> > @@ -230,11 +258,16 @@ def tearDown(self):
-> >          if self.socketdir is not None:
-> >              shutil.rmtree(self.socketdir.name)
-> >              self.socketdir =3D None
-> > -        self.machinelog.removeHandler(self._log_fh)
-> > -        self.log.removeHandler(self._log_fh)
-> > +        for handler in [self._log_fh, logging.StreamHandler(sys.stdout=
-)]:
-> > +            self.machinelog.removeHandler(handler)
-> > +            self.log.removeHandler(handler)
-> >
-> >      def main():
-> >          path =3D os.path.basename(sys.argv[0])[:-3]
-> > +        # If argparse receives --help or an unknown argument, it will =
-raise a
-> > +        # SystemExit which will get caught by the test runner. Parse t=
-he
-> > +        # arguments here too to handle that case.
-> > +        _ =3D parse_args(path)
-> >
-> >          cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
-> >          if cache is not None:
-> > @@ -292,6 +325,14 @@ def setUp(self):
-> >          fileFormatter =3D logging.Formatter('%(asctime)s: %(message)s'=
-)
-> >          self._console_log_fh.setFormatter(fileFormatter)
-> >          console_log.addHandler(self._console_log_fh)
-> > +        if self.debug_output:
-> > +            handler =3D logging.StreamHandler(sys.stdout)
-> > +            handler.setLevel(logging.DEBUG)
-> > +            formatter =3D logging.Formatter(
-> > +                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-> > +            )
-> > +            handler.setFormatter(formatter)
-> > +            console_log.addHandler(handler)
-> >
-> >      def set_machine(self, machinename):
-> >          # TODO: We should use QMP to get the list of available machine=
-s
-> > @@ -398,5 +439,9 @@ def set_vm_arg(self, arg, value):
-> >      def tearDown(self):
-> >          for vm in self._vms.values():
-> >              vm.shutdown()
-> > -        logging.getLogger('console').removeHandler(self._console_log_f=
-h)
-> > +        for handler in [
-> > +            self._console_log_fh,
-> > +            logging.StreamHandler(sys.stdout),
-> > +        ]:
-> > +            logging.getLogger("console").removeHandler(handler)
-> >          super().tearDown()
-> >
-> > ---
-> > base-commit: c079d3a31e45093286c65f8ca5350beb3a4404a9
-> > change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+> >  util/fdmon-io_uring.c | 26 +++++++++++++++++++-------
+> >  1 file changed, 19 insertions(+), 7 deletions(-)
+> >=20
+> > diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> > index b0d68bdc44..2e40fff09a 100644
+> > --- a/util/fdmon-io_uring.c
+> > +++ b/util/fdmon-io_uring.c
+> > @@ -52,9 +52,10 @@ enum {
+> >      FDMON_IO_URING_ENTRIES  =3D 128, /* sq/cq ring size */
+> > =20
+> >      /* AioHandler::flags */
+> > -    FDMON_IO_URING_PENDING  =3D (1 << 0),
+> > -    FDMON_IO_URING_ADD      =3D (1 << 1),
+> > -    FDMON_IO_URING_REMOVE   =3D (1 << 2),
+> > +    FDMON_IO_URING_PENDING            =3D (1 << 0),
+> > +    FDMON_IO_URING_ADD                =3D (1 << 1),
+> > +    FDMON_IO_URING_REMOVE             =3D (1 << 2),
+> > +    FDMON_IO_URING_DELETE_AIO_HANDLER =3D (1 << 3),
+> >  };
+> > =20
+> >  static inline int poll_events_from_pfd(int pfd_events)
+> > @@ -218,6 +219,9 @@ static void fill_sq_ring(AioContext *ctx)
+> >          if (flags & FDMON_IO_URING_REMOVE) {
+> >              add_poll_remove_sqe(ctx, node);
+> >          }
+> > +        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
+> > +            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, no=
+de_deleted);
+> > +        }
+> >      }
+> >  }
+>=20
+> Why is it safe to add new SQEs for the node and then add it to
+> ctx->deleted_aio_handlers without waiting for the CQEs first?  I
+> expected this to be the first check in the loop iteration and to
+> contain a 'continue;' statement.
+>=20
+> The POLL_REMOVE case is clear when looking at more context, it doesn't
+> pass the node. As for POLL_ADD, I suppose both flags are actually never
+> set together in practice because FDMON_IO_URING_DELETE_AIO_HANDLER is
+> only set when processing the CQE of POLL_ADD, so no new POLL_ADD for the
+> same node will be pending yet. And checking the callers, I see that
+> adding is only ever done with newly allocated nodes, so something like
+> removing and re-adding the same node doesn't happen either.
+>=20
+> Could we then assert that FDMON_IO_URING_DELETE_AIO_HANDLER is never
+> combined with FDMON_IO_URING_ADD, but always with FDMON_IO_URING_REMOVE,
+> to make the assumptions more explicit?
+
+An update to my previous reply:
+
+REMOVE and DELETE_AIO_HANDLER are never set simultaneously:
+
+    flags =3D qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
+                                            ^^ REMOVE is cleared here ^^
+    if (flags & FDMON_IO_URING_REMOVE) {
+        if (flags & FDMON_IO_URING_PENDING) {
+            /* Still on ctx->submit_list, defer deletion until fill_sq_ring=
+() */
+            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
+	                             ^^ DELETE_AIO_HANDLER is set here ^^
+
+So the assertion should be:
+
+  if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
+      /*
+       * process_cqe() sets this flag after ADD and REMOVE have been
+       * cleared. They cannot be set again, so they must be clear.
+       */
+      assert(!(flags & FDMON_IO_URING_ADD));
+      assert(!(flags & FDMON_IO_URING_REMOVE));
+
+      QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
+  }
+
+>=20
+> > @@ -347,10 +356,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
+> >              unsigned flags =3D qatomic_fetch_and(&node->flags,
+> >                      ~(FDMON_IO_URING_PENDING |
+> >                        FDMON_IO_URING_ADD |
+> > -                      FDMON_IO_URING_REMOVE));
+> > +                      FDMON_IO_URING_REMOVE |
+> > +                      FDMON_IO_URING_DELETE_AIO_HANDLER));
+> > =20
+> > -            if (flags & FDMON_IO_URING_REMOVE) {
+> > -                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node=
+, node_deleted);
+> > +            if ((flags & FDMON_IO_URING_REMOVE) ||
+> > +                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
+>=20
+> If my conclusion above is right, FDMON_IO_URING_REMOVE will be set in
+> both cases, so checking FDMON_IO_URING_DELETE_AIO_HANDLER is redundant.
+> Maybe assert this, too, when setting FDMON_IO_URING_DELETE_AIO_HANDLER.
+
+We need both here because either REMOVE or DELETE_AIO_HANDLER can be
+set, but not both.
+
+Stefan
+
+--pq8ywfv3rKnbJJ9N
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh+p3IACgkQnKSrs4Gr
+c8gCqAf+MMq07x6zYtF+POVtDN11Ib7UmDZ6yevFkl/1DpMfdc26ECw/jQdGi2Yn
++Opwqvk3GVK5fMISEJ/s8qSRmfoiww/3aDcgHygZScCN8UQwYVo14Hyx3V9kgtAu
+ZRsMG8vSisoLrCn8OxOmV7eenQmUA7Hzhis8fZj4hkUGIIdx5zx9JiiNLAQEOOgz
+mb79c7tMWVYpVQrkfoe/RGcXw/nNicupLY6LgNq+0XObFiwtuLAxMCyXeKXE6Z/n
+eE38TTY6YyzE2u01gaLRE6Pu9I4PcXMI+aTlPgon42j/CDSzLYX74zM2bM6g9jdf
+N/aHR7A4HMWiPyVB0mkYcyZvA/kzbg==
+=5R/k
+-----END PGP SIGNATURE-----
+
+--pq8ywfv3rKnbJJ9N--
 
 
