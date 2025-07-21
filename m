@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608DDC87FC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E52C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udlmb-0006A1-Ow; Mon, 21 Jul 2025 04:22:01 -0400
+	id 1udlw6-0007QR-88; Mon, 21 Jul 2025 04:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlmS-0005zT-DD
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:21:52 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlvl-0007EK-N5
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:31:32 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlmO-0008Ow-Tj
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:21:52 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3a51481a598so2091334f8f.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:21:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlvi-0001J6-Rl
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:31:29 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3b611665b96so2166070f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753086106; x=1753690906; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753086682; x=1753691482; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XhhH/TzG/troxEq8IYIlg1IkMOI5clr0JWF/dc4Mp2M=;
- b=TRZSZ1Xj92mT3PX7SaLohzofjFqdAkxSwPoJfwym+AgYER+OpuQ7ZJ/ednDU4AgGXL
- YZxN9h0DXkYfoj/U8XWjpa+n8J3u9cT5tMExbq/k9IxBKjkj3X7Rzi04anm07b1b1FWm
- 2GhRZKWO69631ijlU8KoHxU08fVSJQYv1KP2FSMtFKI7YZ93F3ZNVbPWxJhoXcbs31cK
- +H10lInnJzkIUFZ317W1UozboqAmlRNmq+zRMzIjh33rVHqtN23Nx2NHxprLT1hVB2Dt
- CXOkV7cVeYsK+1gf4h9RZT0oAvl7oDPVXu0Z3ob3LMzrxeVfwCllIeTx5DmzcAy/248R
- 13sQ==
+ bh=BM+XpGpoFgdgk8BQ/1RXBrAiK2PD629/Ss/licxoFoY=;
+ b=nHpqjedm2dGIk2yIjm2ZdIB6pblmgZr4ROiy6GRkldMo27MhiBBUdH9q044ZeRMnPv
+ XHCaayfX/dFH273++EVxKdkWiFzq3QMV40rNVvYDFLVYeyTNnH8RbIa/whqd8mCx3IZE
+ NDFDHWBAsNofzdUzgYU7XAnClJ8s99MnipaBCZuqUP2Qi7Fb3QnCqi+O7uaBOPE/pdW1
+ k2KUmDjzkvDz8g5y9KfRtdcWPwkTpaWD8w8pn3x4TXD+Wm0oW41QBWVU4st8XJh2DHtz
+ 0NlGsyQgHwbliysTAwgzNfVSoqgTUZFLttK89/wfTzQPVXSV3nn4qWjbRVFj0UL7n7Dk
+ aOIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753086106; x=1753690906;
+ d=1e100.net; s=20230601; t=1753086682; x=1753691482;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XhhH/TzG/troxEq8IYIlg1IkMOI5clr0JWF/dc4Mp2M=;
- b=uGLqWG0ddx7D0x8eqTCVgFGsRQBElC3Yy2JDSA1CFRjELkjqRxw2P31OiTT/rmk2u6
- vCPYY24XMKmRoAPQ4O/6DMkpGDaJLmc2HrK03pZ2l84FqBbkGFh8HAQ+DJ6r9ISN0tNy
- zk9O/b2rpPQie/xu1J38r9f0C48fHACdCmEfKAZSj++D9hT/AkHr2z+lmazc7kIONQs2
- OrXLz7tqa2t0I25HkVso8lEIAxX9Gny2ZW0WPpp+qeb7W/iohg1r1er9beeir1OdGr8z
- gAV6t0MDmyDXSYVPDKTm/Ry0DnQ4XQIpjn7XsFpcibwReviou98Z2NqbDXXtTE68Z6JP
- nGcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5hbCLNKdwSPDNrTCUchwhyc2rh+2rncPA78Uas4914WciU55Upuws4FYW4gLU1ODR9MWoFxaC7WlT@nongnu.org
-X-Gm-Message-State: AOJu0YyBL/Iu6PNmpEBRg7lsFaADK+yaJRjm9FFkV/AyCVsJesFIWhns
- 6SHB3ERLSHCSVscAojQQDiZCQCp3D9kS+t1pgyGpXNO1cPvM2p835dhLHXo2153C8MA=
-X-Gm-Gg: ASbGncsfYyKL06J9PX6hVWGK0JDaBxfmNLZTz8NI3kBHtC4bw43zDM6Bq00rHL2/4Ep
- isLI335qF0L4R4ku/I6zlp/lESsozYpt479MrUtnin1idHgeC9wxTl5/suBl84xOJl4bOfA21gE
- /7V7oHXCtjb76jf+vcz/S+SZAl7jfQ2nk3wa9rilpq0USjlxwrGK2Ko5wzr+4O4SGJk8RS8jFBx
- TdqZ1frjRKn71I3JbrJbFceZthuxDPeTcGgjkoCIUSyifZFZCITmb0ATCFsK85S0V4a/0BpNiV2
- FF+atf6HV494TL5LRAwRUG8DpXLRQIe73epA7n9FKW7OpgP2K8De+M7Bwjso4T2TOnOgfXDm9qt
- 3fZgOEv0xGToexMD22Bu8Lo2sPz9dtwu0d8AAYEM/MHGD8Zu+vOk9cBCRGwwTiVlaQA==
-X-Google-Smtp-Source: AGHT+IGgEFYIv41LqdabyFeNifJaSJroT+y2NZTTF6S7XFwc6+OXV6t1yM6YAQRcxsNxBL7227504A==
-X-Received: by 2002:a05:6000:2285:b0:3a3:7ba5:960e with SMTP id
- ffacd0b85a97d-3b60e5532b1mr16223901f8f.59.1753086106202; 
- Mon, 21 Jul 2025 01:21:46 -0700 (PDT)
+ bh=BM+XpGpoFgdgk8BQ/1RXBrAiK2PD629/Ss/licxoFoY=;
+ b=J4cPEixUACkuLEM63bcys7VSiZU6wfy511//MzPA/zY94WW+QxF8L81Uy+CWleoIYp
+ /2dtqHqCI6FA2mm/+ouV8aYSQatqVzIjCi1jf1fJLKrapriKblj+vsu5c3uWKnziEqaV
+ w+1EBDvB41PvaWhsKzNRfL6R+6wxovzbzo4ds/v6uIMmvvEYax+kWEFUnzPvxqsNT8xi
+ aCeSdTDFGtqfwhPhf++o4oBdczy38hIwirX4o3WB2IiqtWXqbZp97iNhvb+frnbub319
+ RskhBJO2qbKJavd/sJbML2UjLKwZfPqRipuJiXYzNSWtp/dBzH9Kt6Y62iSBr/AElvwz
+ lTFA==
+X-Gm-Message-State: AOJu0YwNraIu1YaacZCiojmWzOGd89B5MwJlx817VtmRqao/H3M4++ti
+ jtzOaj/M1xuQ92Dl8UgdYGaRHRyZ0mThginNMySqxvhhNXrYJucFCWBet/gpDNTVdCo=
+X-Gm-Gg: ASbGnctyX5nd0Q/xvHGULYnFzF/vDnUsWSDARXkxro+Mm4Ymt+41Fu/9rG8KjEYHInA
+ Omk2FmF2j71B6ExQr41M8wViDjB48+RIA4sc7qU0tZboJUjf9XSk6Snaee72EOjBI8RxiSI64eS
+ sKYT5weogXph4SE7MDY3Kko41roXyWyRpRn4+STbMX1355QTWZ8ShoU81w7djLYk47fa5RWODLG
+ WRFgNtFI9qEKhLL3VUV68+U3bPWZheNrgISRnYRwEk8vynkRWa8eV1ZWfKAZyMSCGt0VGtpYxUm
+ ZII5Hfl2BuhHEMYcAD7o7SqLvOBrZI1k/UESUGmKT+2kOhQjnWMUyBFe86KKE/CLDVpI114JdZN
+ aqrWHJentg0LmuEB3psoeymqbgqqDeIvPc6MsdYJJW+mKIcevAmsa8L9+aIKFX8FrAQ==
+X-Google-Smtp-Source: AGHT+IFeyPnrsHwb3rD5VoWiT/kBU8pSy7umjSVdZ/RBKgl1eO1v//vLicqDE1mSZ/gnrGwonbsiVQ==
+X-Received: by 2002:adf:8989:0:b0:3a4:f936:7882 with SMTP id
+ ffacd0b85a97d-3b60e523c5dmr10921099f8f.55.1753086682317; 
+ Mon, 21 Jul 2025 01:31:22 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4563b5c84absm94699585e9.16.2025.07.21.01.21.45
+ ffacd0b85a97d-3b61ca48c40sm9826049f8f.58.2025.07.21.01.31.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 01:21:45 -0700 (PDT)
-Message-ID: <a3ea9869-dac7-4c20-9c07-5623e137a7f8@linaro.org>
-Date: Mon, 21 Jul 2025 10:21:44 +0200
+ Mon, 21 Jul 2025 01:31:21 -0700 (PDT)
+Message-ID: <4068807d-d1b8-4929-97f2-520a2b46d891@linaro.org>
+Date: Mon, 21 Jul 2025 10:31:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 07/10] target/arm: Correct sense of FPCR.AH test
- for FMAXQV and FMINQV
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250718173032.2498900-1-peter.maydell@linaro.org>
- <20250718173032.2498900-8-peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 2/2] tests/functional/test_aarch64_rme: update image
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, jean-philippe@linaro.org,
+ richard.henderson@linaro.org, Leif Lindholm
+ <leif.lindholm@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, gustavo.romero@linaro.org,
+ qemu-arm@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>
+References: <20250719035838.2284029-1-pierrick.bouvier@linaro.org>
+ <20250719035838.2284029-3-pierrick.bouvier@linaro.org>
+ <CAAjaMXYRar1FnWSXqxRb1cKabWOXu2YxFi5B_JhypS0OZZ2LSg@mail.gmail.com>
+ <7afa0c8d-71a1-4c97-aedf-1ed401f95fad@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250718173032.2498900-8-peter.maydell@linaro.org>
+In-Reply-To: <7afa0c8d-71a1-4c97-aedf-1ed401f95fad@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/7/25 19:30, Peter Maydell wrote:
-> When we implemented the FMAXQV and FMINQV insns we accidentally
-> inverted the sense of the FPCR.AH test, so we gave the AH=1 behaviour
-> when FPCR.AH was zero, and vice-versa.  (The difference is limited to
-> hadling of negative zero and NaN inputs.)
+On 19/7/25 17:38, Pierrick Bouvier wrote:
+> On 7/19/25 3:57 AM, Manos Pitsidianakis wrote:
+>> On Sat, Jul 19, 2025 at 7:00 AM Pierrick Bouvier
+>> <pierrick.bouvier@linaro.org> wrote:
+>>>
+>>> TF-A needs to be patched to enable support for FEAT_TCR2 and
+>>> FEAT_SCTLR2. This new image contains updated firmware.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   tests/functional/test_aarch64_rme_sbsaref.py | 64 ++++++++-------
+>>>   tests/functional/test_aarch64_rme_virt.py    | 85 +++++++-------------
+>>>   2 files changed, 66 insertions(+), 83 deletions(-)
 
-Typo "handling"
 
+>>>   class Aarch64RMESbsaRefMachine(QemuSystemTest):
+>>>
+>>> -    # Stack is built with OP-TEE build environment from those 
+>>> instructions:
+>>> +    # Stack is inspired from:
+>>>       # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
+>>> -    # https://github.com/pbo-linaro/qemu-rme-stack
+>>> +    # https://github.com/pbo-linaro/qemu-linux-stack/tree/ 
+>>> rme_sbsa_release
+>>> +    # ./build.sh && ./archive_artifacts.sh out.tar.xz
+>>>       ASSET_RME_STACK_SBSA = Asset(
+>>> -        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
+>>> -         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
+>>> -         
+>>> 'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
+>>> +        ('https://github.com/pbo-linaro/qemu-linux-stack/'
+>>> +         'releases/download/build/rme_sbsa_release-a7f02cf.tar.xz'),
+>>> +         
+>>> '27d8400b11befb828d6db0cab97e7ae102d0992c928d3dfbf38b24b6cf6c324c')
+>>
+>> Hi Pierrick, I got:
+>>
+>>> qemu_test.asset.AssetError: https://github.com/pbo-linaro/qemu-linux- 
+>>> stack/releases/download/build/rme_sbsa_release-a7f02cf.tar.xz: 
+>>> Download retries exceeded
+>>
+>> Maybe fileserver.linaro.org is a better option?
+>>
 > 
-> Fixes: 1de7ecfc12d05 ("target/arm: Implement FADDQV, F{MIN, MAX}{NM}QV for SVE2p1")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate-sve.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> In years of using GitHub releases to download various sources/artifacts, 
+> I found that it is very reliable (as much as cloning code from GitHub), 
+> so I would favor this over any custom solution.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+GitHub releases has the advantage of not involving manual steps to
+upload to fileserver and generate a shared URL.
 
+Another downside of fileserver.linaro.org is its bandwidth is limited.
+
+My 2 cents anyway ;)
 
