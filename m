@@ -4,80 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A775C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 19:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF93C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 19:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udw4d-0007jb-NJ; Mon, 21 Jul 2025 15:21:19 -0400
+	id 1udw4x-00087H-3x; Mon, 21 Jul 2025 15:21:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1udvwf-0000og-8j
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:13:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1udvww-0001Ga-U7; Mon, 21 Jul 2025 15:13:23 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1udvwd-0005PB-0r
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:13:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753125178;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kD5paCBxuxM0phd+/BHQE4ippvE1L6iKwBl0fAE28+g=;
- b=fzP76MCI0h5u1JyuB8cSDtAHRugjLOZS6UPghj54D7WIU5O8oqvwcZH+uIMRvBJxAWvkK9
- JmvEWyVyFoJq6B8VIoAxdaVSKXes1nfRe7nyLv48znTNUrkosqsalq3kV3r0v+ZXgamPYn
- dUZKsMzk+eftNTF+zGMxzwaTCkAw0Hc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258--bsPeuNQNXaHKz-4bNPm4A-1; Mon,
- 21 Jul 2025 15:12:52 -0400
-X-MC-Unique: -bsPeuNQNXaHKz-4bNPm4A-1
-X-Mimecast-MFC-AGG-ID: -bsPeuNQNXaHKz-4bNPm4A_1753125171
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE9ED19560AA; Mon, 21 Jul 2025 19:12:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.213])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 804FB18002B6; Mon, 21 Jul 2025 19:12:48 +0000 (UTC)
-Date: Mon, 21 Jul 2025 20:12:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Adam Williamson <awilliam@redhat.com>, qemu-devel@nongnu.org,
- Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Anthony PERARD <anthony@xenproject.org>
-Subject: Re: [PATCH] xen/passthrough: add missing error-report include
-Message-ID: <aH6RLYKcGcQM6n6_@redhat.com>
-References: <20250717220207.171040-1-awilliam@redhat.com>
- <87v7nqgk21.fsf@pond.sub.org> <87ikjqght5.fsf@pond.sub.org>
- <aHoJsmB6BT86sdv3@redhat.com> <87h5z9eiu4.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1udvwt-0005UG-TV; Mon, 21 Jul 2025 15:13:22 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LBSgsY014558;
+ Mon, 21 Jul 2025 19:13:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lXRGH6
+ FhM9/itjwTOz0zpJtbx6nah5EZ1msncx8FnIM=; b=j25i6FAJROf+CfXN2HL/n3
+ AJ1ikR6aqDwWi4cj38oppLpeAT0AkyowTLbmXK2VnFTtz21WGbxoQn44LoHZKZUK
+ b7si9q57GwS1N9/yA5zHOjJTaZdGn4OZb+XGd6TFjaWPmEi/e7eXdQei3I3kCYn+
+ 070rEnQnbHDsWX+KQY6N+j1CUnHCKnbvy6TYqHvd0PdrQkkSk8auXvREw9/NlzwU
+ Ye2JIj445/yHxyRQBapIlR2czNtb4ktcIlPFxWOLWRaO6o4y4e/qoab5MofkpqeG
+ NkmH9AThsLutYZYZqQEuF4AdZT0WvDKX0L/Xcf6UF4Whkk7zxAgpmlOrfmYswUCQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4805ut2cr9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Jul 2025 19:13:14 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56LFireY012867;
+ Mon, 21 Jul 2025 19:13:14 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 480p2yyquj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Jul 2025 19:13:14 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56LJDDba24707762
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Jul 2025 19:13:13 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 13B4F5805D;
+ Mon, 21 Jul 2025 19:13:13 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C31E58059;
+ Mon, 21 Jul 2025 19:13:12 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 21 Jul 2025 19:13:12 +0000 (GMT)
+Message-ID: <d0ef6ede-316d-4379-8473-a2c924364958@linux.ibm.com>
+Date: Mon, 21 Jul 2025 15:13:11 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 28/28] docs: Add secure IPL documentation
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-29-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20250711211105.439554-29-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h5z9eiu4.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE3MCBTYWx0ZWRfX0K+RjGboWS4t
+ uTRrj2fpYvoXeGDBtn0nrUF8HnC/9JnbKsxkPmePIBvee/NApdzzYcAHIV/66vno4qA/4iJUSA1
+ gd5CUX10vKubIdj5To6BpRjWVt8HDXo8KTPw/fJsBsmEuBefv2LnCcnuLPywf5ek4jlPfHO5Mzx
+ 76D+ybvs1tNfuS2G5pSqKWE7RqErV9vXGJ/tafDP2q8j9vvWnS352BTzEh6PE64Li6fy7XH6mxK
+ LYA9CJYREpKw5UtrinU5De5weyNyzqM8z8T4IeNvTJvRYQal4973ncJ8XJxcyaAgCFEA8mjEsJ9
+ mpV+E/oAT48LUt9fdCAZVQFxoG9MNQZGzc+rtLCsVMjjMrC/SE3+SziNyrRe4nSo9+vQePFh3Ms
+ UY0xLP51K6/7RWoHJ2vFpPCtX2KVuDeW+Bpb76HHAg70c2lmpF4kgUHPiBqxw1LgjvOBR9Tg
+X-Proofpoint-ORIG-GUID: 8Lke0tWgtWWkWiYbISKkW-BHhFY5C4W_
+X-Authority-Analysis: v=2.4 cv=cIDgskeN c=1 sm=1 tr=0 ts=687e914b cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=q5T4S90kAAAA:8
+ a=DhrfyVfT3H1JqU-V5JIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=LnBBZQxPVJ0Z7KJyRdxh:22
+X-Proofpoint-GUID: 8Lke0tWgtWWkWiYbISKkW-BHhFY5C4W_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_05,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0
+ adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507210170
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,124 +121,534 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 03:20:35PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 7/11/25 17:11, Zhuoying Cai wrote:
+> Add documentation for secure IPL
 > 
-> > On Fri, Jul 18, 2025 at 07:59:50AM +0200, Markus Armbruster wrote:
-> >> Markus Armbruster <armbru@redhat.com> writes:
-> >> 
-> >> > Adam Williamson <awilliam@redhat.com> writes:
-> >> >
-> >> >> In cfcacba an `error_report` was added to this file, but the
-> >> >> corresponding include of `qemu/error-report.h` was missed. This
-> >> >> only becomes apparent when building against Xen 4.20+.
-> >> >>
-> >> >> Signed-off-by: Adam Williamson <awilliam@redhat.com>
-> >> >> ---
-> >> >>  hw/xen/xen_pt.c | 1 +
-> >> >>  1 file changed, 1 insertion(+)
-> >> >>
-> >> >> diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
-> >> >> index 9d16644d82..006b5b55f2 100644
-> >> >> --- a/hw/xen/xen_pt.c
-> >> >> +++ b/hw/xen/xen_pt.c
-> >> >> @@ -54,6 +54,7 @@
-> >> >>  
-> >> >>  #include "qemu/osdep.h"
-> >> >>  #include "qapi/error.h"
-> >> >> +#include "qemu/error-report.h"
-> >> >>  #include <sys/ioctl.h>
-> >> >>  
-> >> >>  #include "hw/pci/pci.h"
-> >> >
-> >> > Uh, error-report.h is included without this for me.  To see, build with
-> >> > -H:
-> >> >
-> >> > . /work/armbru/qemu/hw/xen/xen_pt.h
-> >> > .. /work/armbru/qemu/include/hw/xen/xen_native.h
-> >> > ... /work/armbru/qemu/hw/xen/trace.h
-> >> > .... ./trace/trace-hw_xen.h
-> >> > ..... /work/armbru/qemu/include/qemu/error-report.h
-> >> 
-> >> Just remembered: the generated trace header includes error-report.h only
-> >> when trace's log backend is enabled.
-> >
-> > Hmm, that's rather an unfortunate trap-door :-( Given that 'log' is enabled
-> > by default when building from git we'll never see missing error-report.h
-> > problems in daily work.
-> 
-> Correct.
-> 
-> > Looking at the log backend it appears that originally it would
-> > unconditionally include the timestamp when calling qemu_log, but
-> > then changed that to opt-in with
-> >
-> >   commit 418ed14268f797a5142b60cd557cd598eb548c66
-> >   Author: Stefan Hajnoczi <stefanha@redhat.com>
-> >   Date:   Mon Jan 25 11:35:07 2021 +0000
-> >
-> >     trace: make the 'log' backend timestamp configurable
-> >
-> > requiring -msg timestamp=on, which was a pre-existing flag that already
-> > did a similar toggle for the 'error_report' function. The goal makes
-> > sense, but it introduced the error-report.h trap door
-> >
-> > When I see that I also question why the 'log' backend should be a
-> > special case user of qemu_log() ?  Why shouldn't we emit timestamps
-> > for all usage of qemu_log() ?
-> >
-> > If we changed the qemu_log impl to honour the timestamp toggle, then
-> > all users of qemu_log benefit. We then eliminate error-report.h usage
-> > in trace.h headers, and also cut the code size for trace points
-> > significantly
-> >
-> >
-> > static inline void _nocheck__trace_object_dynamic_cast_assert(const char * type, const char * target, const char * file, int line, const char * func)
-> > {
-> >     if (trace_event_get_state(TRACE_OBJECT_DYNAMIC_CAST_ASSERT) && qemu_loglevel_mask(LOG_TRACE)) {
-> >         if (message_with_timestamp) {
-> >             struct timeval _now;
-> >             gettimeofday(&_now, NULL);
-> >             qemu_log("%d@%zu.%06zu:object_dynamic_cast_assert " "%s->%s (%s:%d:%s)" "\n",
-> >                      qemu_get_thread_id(),
-> >                      (size_t)_now.tv_sec, (size_t)_now.tv_usec
-> >                      , type, target, file, line, func);
-> >         } else {
-> >             qemu_log("object_dynamic_cast_assert " "%s->%s (%s:%d:%s)" "\n", type, target, file, line, func);
-> >         }
-> >     }
-> > }
-> >
-> > down to
-> >
-> >
-> > static inline void _nocheck__trace_object_dynamic_cast_assert(const char * type, const char * target, const char * file, int line, const char * func)
-> > {
-> >     if (trace_event_get_state(TRACE_OBJECT_DYNAMIC_CAST_ASSERT) && qemu_loglevel_mask(LOG_TRACE)) {
-> >             qemu_log("object_dynamic_cast_assert " "%s->%s (%s:%d:%s)" "\n", type, target, file, line, func);
-> >     }
-> > }
-> >
-> > which feels more in keeping with the kind of level of complexity you should
-> > want to be inlined in trace callers.
-> 
-> Oh yes.  We should do this even if we find a reason for keeping
-> qemu_log() as it is.  The obvious way would be a new function
-> qemu_log_with_timestamp().
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 
-Now proposed at:
+We should consider segmenting these documents by introducing the wording
+with the same patch that introduces the relevant functionality.  I'll
+try to do my best here to give some guidance on how it should be broken
+up, but I might miss a few things.  Hopefully I've successfully conveyed
+what I meant in my first sentence.
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2025-07/msg05234.html
+I'll organize my feedback here using XML tags to help encapsulate the
+segments and provide a comment to which patch in this series they should
+be merged with. E.g.
 
-With regards,
-Daniel
+	<segment>
+
+	Comment
+
+	Diff
+
+	</segment>
+
+You do not need to provide my sign-off on the patches you merge the
+documentation with.
+
+> ---
+>  docs/specs/s390x-secure-ipl.rst  | 159 +++++++++++++++++++++++++++++++
+>  docs/system/s390x/secure-ipl.rst | 156 ++++++++++++++++++++++++++++++
+>  2 files changed, 315 insertions(+)
+>  create mode 100644 docs/specs/s390x-secure-ipl.rst
+>  create mode 100644 docs/system/s390x/secure-ipl.rst
+> 
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> new file mode 100644
+> index 0000000000..1ff69092e2
+> --- /dev/null
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -0,0 +1,159 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +
+
+<segment>
+
+This can be introduced in a standalone patch at the end of the series
+(basically this patch).  You can keep my sign-off on that patch.
+
+> +s390 Secure IPL
+> +===============
+> +
+> +Secure IPL (a.k.a. secure boot) enables s390-ccw virtual machines to
+> +leverage qcrypto libraries and z/Architecture emulations to verify the
+> +integrity of signed kernels. The qcrypto libraries are used to perform
+> +certificate validation and signature-verification, whereas the
+> +z/Architecture emulations are used to ensure secure IPL data has not
+> +been tampered with, convey data between QEMU and userspace, and set up
+> +the relevant secure IPL data structures with verification results.
+> +
+> +To find out more about using this feature, see ``docs/system/s390x/secure-ipl.rst``.
+> +
+> +Note that "userspace" will refer to the s390-ccw BIOS unless stated
+> +otherwise.
+> +
+> +Both QEMU and userspace work in tandem to perform secure IPL. The Secure
+> +Loading Attributes Facility (SCLAF) is used to check the Secure Code
+> +Loading Attribute Block (SCLAB) and ensure that secure IPL data has not
+> +been tampered with. DIAGNOSE 'X'320' is invoked by userspace to query
+> +the certificate store info and retrieve specific certificates from QEMU.
+> +DIAGNOSE 'X'508' is used by userspace to leverage qcrypto libraries to
+> +perform signature-verification in QEMU. Lastly, userspace generates and
+> +appends an IPL Information Report Block (IIRB) at the end of the IPL
+> +Parameter Block, which is used by the kernel to store signed and
+> +verified entries.
+> +
+> +The logical steps are as follows:
+> +
+> +- Userspace reads data payload from disk (e.g. stage3 boot loader, kernel)
+> +- Userspace checks the validity of the SCLAB
+> +- Userspace invokes DIAG 508 subcode 1 and provides it the payload
+> +- QEMU handles DIAG 508 request by reading the payload and retrieving the
+> +  certificate store
+> +- QEMU DIAG 508 utilizes qcrypto libraries to perform signature-verification on
+> +  the payload, attempting with each cert in the store (until success or exhausted)
+> +- QEMU DIAG 508 returns:
+> +
+> +  - success: index of cert used to verify payload
+> +  - failure: error code
+> +
+> +- Userspace responds to this operation:
+> +
+> +  - success: retrieves cert from store via DIAG 320 using returned index
+> +  - failure: reports with warning (audit mode), aborts with error (secure mode)
+> +
+> +- Userspace appends IIRB at the end of the IPLB
+> +- Userspace kicks off IPL
+> +
+> +More information regarding the respective DIAGNOSE commands and IPL data
+> +structures are outlined within this document.
+
+</segment>
+
+
+
+<segment>
+
+This should be merged with [PATCH v4 05/28] s390x/diag: Introduce DIAG
+320 for certificate store facility
+
+> +
+> +s390 Certificate Store and Functions
+> +====================================
+> +
+> +s390 Certificate Store
+> +----------------------
+> +
+> +A certificate store is implemented for s390-ccw guests to retain within
+> +memory all certificates provided by the user via the command-line, which
+> +are expected to be stored somewhere on the host's file system. The store
+> +will keep track of the number of certificates, their respective size,
+> +and a summation of the sizes.
+> +
+> +DIAGNOSE function code 'X'320' - Certificate Store Facility
+> +-----------------------------------------------------------
+> +
+> +DIAGNOSE 'X'320' is used to provide support for userspace to directly
+> +query the s390 certificate store. Userspace may be the s390-ccw BIOS or
+> +the guest kernel.
+> +
+> +Subcode 0 - query installed subcodes
+> +    Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+> +    subcodes block (ISB). This mask indicates which sucodes are currently
+> +    installed and available for use.
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 07/28] s390x/diag: Implement DIAG 320 subcode 1
+
+> +
+> +Subcode 1 - query verification certificate storage information
+> +    Provides the information required to determine the amount of memory needed to
+> +    store one or more verification-certificates (VCs) from the certificate store (CS).
+> +
+> +    Upon successful completion, this subcode returns various storage size values for
+> +    verification-certificate blocks (VCBs).
+> +
+> +    The output is returned in the verification-certificate-storage-size block (VCSSB).
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 09/28] s390x/diag: Implement DIAG 320 subcode 2
+
+> +Subcode 2 - store verification certificates
+> +    Provides VCs that are in the certificate store.
+> +
+> +    The output is provided in a VCB, which includes a common header followed by zero
+> +    or more verification-certificate entries (VCEs).
+> +
+> +    The first-VC index and last-VC index fields of VCB specify the range of VCs
+> +    to be stored by subcode 2. Stored count and remained count fields specify the
+> +    number of VCs stored and could not be stored in the VCB due to insufficient
+> +    storage specified in the VCB input length field.
+> +
+> +    VCE contains various information of a VC from the CS.
+> +
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 13/28] pc-bios/s390-ccw: Introduce IPL Information
+Report Block (IIRB)
+
+> +Secure IPL Data Structures, Facilities, and Functions
+> +=====================================================
+> +
+> +IPL Information Report Block
+> +----------------------------
+> +
+> +The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
+> +IPL Information Report Block (IIRB), which contains the results from secure IPL
+> +operations such as:
+> +
+> +* component data
+> +* verification results
+> +* certificate data
+> +
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 21/28] s390x: Guest support for Secure-IPL Code
+Loading Attributes Facility (SCLAF)
+
+Though we may need to revisit if this documentation is valuable.  SCLAF
+has a lot of heavy technical information that may be better suited for
+the PoPs.
+
+For now, let's keep it.
+
+> +Secure Code Loading Attributes Facility
+> +---------------------------------
+> +
+> +The Secure Code Loading Attributes Facility (SCLAF) enhances system security during the
+> +IPL by enforcing additional verification rules.
+> +
+> +When SCLAF is available, its behavior depends on the IPL mode. It introduces verification
+> +of both signed and unsigned components to help ensure that only authorized code is loaded
+> +during the IPL process. Any errors detected by SCLAF are reported in the IIRB.
+> +
+> +Unsigned components are restricted to load addresses at or above absolute storage address
+> +``0x2000``.
+> +
+> +Signed components must include a Secure Code Loading Attribute Block (SCLAB), which is
+> +appended at the very end of the component. The SCLAB defines security attributes for
+> +handling the signed code. Specifically, it may:
+> +
+> +* Provide direction on how to process the rest of the component.
+> +
+> +* Provide further validation of information on where to load the signed binary code
+> +  from the load device.
+> +
+> +* Specify where to start the execution of the loaded OS code.
+> +
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 10/28] s390x/diag: Introduce DIAG 508 for secure
+IPL operations
+
+> +DIAGNOSE function code 'X'508' - KVM IPL extensions
+> +---------------------------------------------------
+> +
+> +DIAGNOSE 'X'508' is reserved for KVM guest use in order to facilitate
+> +communication of additional IPL operations that cannot be handled by userspace,
+> +such as signature verification for secure IPL.
+> +
+> +If the function code specifies 0x508, KVM IPL extension functions are performed.
+> +These functions are meant to provide extended functionality for s390 guest boot
+> +that requires assistance from QEMU.
+> +
+> +Subcode 0 - query installed subcodes
+> +    Returns a 64-bit mask indicating which subcodes are supported.
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 12/28] s390x/diag: Implement DIAG 508 subcode 1 for
+signature verification
+
+> +Subcode 1 - perform signature verification
+> +    Perform signature-verification on a signed component, using certificates
+> +    from the certificate store and leveraging qcrypto libraries to perform
+> +    this operation.
+
+Add more detail here later to describe the data structures and
+input/output, similar to how the documentation for 320 is laid out.
+
+
+</segment>
+
+
+
+[...]
+
+
+
+<segment>
+
+Introduce this as another standalone patch (not with the same standalone
+as mentioned above)
+
+> +s390 Secure IPL
+> +===============
+> +
+> +Secure IPL, also known as secure boot, enables s390-ccw virtual machines to
+> +verify the integrity of guest kernels.
+> +
+> +For technical details of this feature, see ``docs/specs/s390x-secure-ipl.rst``.
+> +
+> +This document explains how to use secure IPL with s390x in QEMU. It covers
+> +new command line options for providing certificates and enabling secure IPL,
+> +the different IPL modes (Normal, Audit, and Secure), and system requirements.
+> +
+> +A quickstart guide is provided to demonstrate how to generate certificates,
+> +sign images, and start a guest in Secure Mode.
+> +
+> +
+> +Secure IPL Command Line Options
+> +===============================
+> +
+> +New parameters have been introduced to s390-ccw-virtio machine type option
+> +to support secure IPL. These parameters allow users to provide certificates
+> +and enable secure IPL directly via the command line.
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 01/28] Add boot-certificates to s390-ccw-virtio
+machine type option
+
+> +Providing Certificates
+> +----------------------
+> +
+> +The certificate store can be populated by supplying a comma-delimited list of
+> +certificates on the command-line:
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio, \
+> +    boot-certificates=/.../qemu/certs:/another/path/cert.pem
+> +
+
+</segment>
+
+
+
+<segment>
+
+Merge with [PATCH v4 23/28] Add secure-boot to s390-ccw-virtio machine
+type option
+
+> +Enabling Secure IPL
+> +-------------------
+> +
+> +Different IPL modes may be toggled with the following command line option:
+> +
+
+Change to: "Secure IPL is enabled by explicitly providing the
+secure-boot='on' option.  The absence of this option is equivalent to
+setting this option to off.
+
+(maybe reword it so "option" isn't used three times in one breath?)
+
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on|off
+> +
+> +Additionally, the provision of certificates affect the mode.
+> +
+> +
+
+Remove the line above.  It'll be explained in the IPL Modes section.
+
+</segment>
+
+
+
+<segment>
+
+Merge each mode below with the same patch that implements the respective
+enum.
+
+> +IPL Modes
+> +=========
+
+Let's add a quick description of what "IPL Mode" means:
+
+"The concept of IPL Modes are introduced to differentiate between the
+IPL configurations. These modes are mutually exclusive and enabled based
+on specific combinations of the ``secure-boot`` and
+``boot-certificates`` options on the QEMU command line."
+
+> +
+> +Normal Mode
+> +-----------
+> +
+
+Configuration: ``qemu-system-s390x -machine s390-ccw-virtio ...``
+
+> +The absence of both certificates and the ``secure-boot`` option will attempt to
+> +IPL a guest without secure IPL operations. No checks are performed, and no
+> +warnings/errors are reported.  This is the default mode, and can be explicitly
+> +enabled with ``secure-boot=off``.
+> +
+> +
+> +Audit Mode
+> +----------
+> +
+
+Configuration: ``qemu-system-s390x -machine
+s390-ccw-virtio,boot-certificates=path/to/cert.pem ...``
+
+> +With *only* the presence of certificates in the store, it is assumed that secure
+> +boot operations should be performed with errors reported as warnings. As such,
+> +the secure IPL operations will be performed, and any errors that stem from these
+> +operations will report a warning via the SCLP console.
+> +
+> +
+> +Secure Mode
+> +-----------
+> +
+
+Configuration: ``qemu-system-s390x -machine
+s390-ccw-virtio,boot-certificates=path/to/cert.pem,secure-boot=on ...``
+
+> +With *both* the presence of certificates in the store and the ``secure-boot=on``
+> +option, it is understood that secure boot should be performed with errors
+> +reported and boot will abort.
+> +
+
+</segment>
+
+
+
+<segment>
+
+Include this with the standalone patch for this doc.
+
+> +
+> +Constraints
+> +===========
+> +
+> +The following constraints apply when attempting to secure IPL an s390 guest:
+> +
+> +- z16 CPU model
+> +- certificates must be in X.509 PEM format
+> +- only sha256 encryption is supported
+> +- only support for SCSI scheme of virtio-blk/virtio-scsi devices
+> +- a boot device must be specified
+> +- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
+> +  Net) will cause the entire boot process terminating early with an error
+> +  logged to the console.
+> +
+> +
+> +Secure IPL Quickstart
+> +=====================
+> +
+> +Build QEMU with gnutls enabled
+> +-------------------------------
+> +
+> +.. code-block:: shell
+> +
+> +    ./configure … --enable-gnutls
+> +
+> +Generate certificate (e.g. via certtool)
+> +----------------------------------------
+> +
+> +A private key is required before generating a certificate. This key must be keypt secure
+> +and confidential.
+
+s/keypt/kept
+
+> +
+> +Use an RSA private key for signing.
+> +
+> +.. code-block:: shell
+> +
+> +    certtool --generate-privkey > key.pem
+> +
+> +A self-signed certificate requires the organization name. Use the ``cert.info`` template
+> +to pre-fill values and avoid interactive prompts from certtool.
+> +
+> +.. code-block:: shell
+> +
+> +    cat > cert.info <<EOF
+> +    cn = "My Name"
+> +    expiration_days = 36500
+> +    cert_signing_key
+> +    EOF
+> +
+> +    certtool --generate-self-signed \
+> +             --load-privkey key.pem \
+> +             --template cert.info \
+> +             --hash=SHA256 \
+> +             --outfile cert.pem
+> +
+> +Sign Images (e.g. via sign-file)
+> +--------------------------------
+> +
+> +- signing must be performed on a KVM guest filesystem
+> +- sign-file script used in the example below is located within the kernel source
+> +  repo
+> +
+> +.. code-block:: shell
+> +
+> +    ./sign-file sha256 key.pem cert.pem /boot/vmlinuz-…
+> +    ./sign-file sha256 key.pem cert.pem /usr/lib/s390-tools/stage3.bin
+> +
+> +Run zipl with secure boot enabled
+> +---------------------------------
+> +
+> +.. code-block:: shell
+> +
+> +    zipl --secure 1 -V
+> +
+> +Start Guest with Cmd Options
+> +----------------------------
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certificates=cert.pem ...
+
+</segment>
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Regards,
+  Collin
 
