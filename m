@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73306C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9812AC87FC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udmA6-0004co-2a; Mon, 21 Jul 2025 04:46:19 -0400
+	id 1udmCr-0007Jf-El; Mon, 21 Jul 2025 04:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udm9x-0004YZ-5Z
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:46:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udmCq-0007I0-0N
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:49:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udm9s-0002n6-Jt
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:46:08 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udmCn-00031y-TR
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:49:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753087561;
+ s=mimecast20190719; t=1753087744;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=10CQIQEs5rhQGP10WD3z2WHI/tTPeoT74TkbLmKSqDI=;
- b=CY1g0sXpYt0agh6tzr+otKu9St3Ez+X6ac8a+IoaDF6yESReQLzbFRiFZkkwF8JjyBqM70
- CtS+y3kTQWbcewbVsJX+eiKaXpfY/rVKGzOkupChiOGSMHNv1TmbKWZvGRCU9TQd5A+UdY
- eKFEOabB7XWIPyqZ4zhMXWGTAOuqVFQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UAufFh2LUgG5kuUETXc2PDqREMdWjxyDrjFB3zkP5f8=;
+ b=NRLQbGMI4300E7gNp2Hjpl7CdYO6oUr6w3qzq9RjGZ/r8qoyTcRMfE67pvGtS4NHrp4jfA
+ HzRI5u/aKj+HtNrLTF9cBFRUeKOa1lTF9OZ9HFNm7ao/xieW9eAk1e20DpJf/e3zWmQxa9
+ 3xYQJa1thvtV1xBd4MWynVYpIgCiHDo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-HOrS-L9TPvqildwe7bKU3w-1; Mon, 21 Jul 2025 04:45:59 -0400
-X-MC-Unique: HOrS-L9TPvqildwe7bKU3w-1
-X-Mimecast-MFC-AGG-ID: HOrS-L9TPvqildwe7bKU3w_1753087558
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so24927195e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:45:59 -0700 (PDT)
+ us-mta-526-T2i78AtbOBeoDGhz845vUA-1; Mon, 21 Jul 2025 04:49:03 -0400
+X-MC-Unique: T2i78AtbOBeoDGhz845vUA-1
+X-Mimecast-MFC-AGG-ID: T2i78AtbOBeoDGhz845vUA_1753087742
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a58939191eso1795111f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:49:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753087558; x=1753692358;
+ d=1e100.net; s=20230601; t=1753087742; x=1753692542;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=10CQIQEs5rhQGP10WD3z2WHI/tTPeoT74TkbLmKSqDI=;
- b=C/c46/u/fPsofrIYEwul/lAtkbBg4HVJuWNXZAhHr0hhvILpEMbeh5tE88HRL2G6BI
- DEaDtJ/jdoUZi8vVeLqElYab+Rgmm9BCMnatF9o3d05DTy90rb01c2QQau5+4n4wChK9
- 37CC23quvHv7UFXwNoRa4dPTMg9qFXEjXJptnwcDMLl2onJHHw2fnvgYLsiIF6bU95QY
- hSPE/tEz/Zb/xhi7O+iJfImoRA4Btu7DetBCx+3Bxh8B3hLk2BZntiJzmhvrbTyHGnQG
- FwjgH/oB5jMn2sKaw9vJ5F5FyYau7GSm36iUsKU4pp8miypeYr6RC0SGb8cmp3+K1FeT
- N4gQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFcXauQ7twbzmCQ71n4PmyIiir7OqTDzvGGrghCFq+03t0VxCv3Wo7h1gjRRLt7qpDW03EA8pG/qqZ@nongnu.org
-X-Gm-Message-State: AOJu0Yy/o9Xf6Ydb8XKM9G3p+WOZkkgYbWBIfdqESmRBLMKozO1C8+Mn
- glcqSJw24bdQqhrDvYGK+gmmYvRVrAxR9dsjyZs/V/Jlws1rKoq6t33217B+l4MH1iWi9cSrawV
- mnCM3JW61Dd5a2Yoib5Y3DerxctR1AFLw4yOrbdvtpaaX+H/vWrHWnyQD
-X-Gm-Gg: ASbGncuRlG5ny9kfCs17znibYHrELv0YcUygHbzpBlrFZXQZTzECv1vCCfObyESBt+L
- ByQH+jw7HNXas6UYnN4ui9cNYNMSA/DEajSKI/gS8zncutMTY7c/4iKao/RYxPnVEBN6vhXxzO7
- 9yUD7wrm0bK0NOMurjWfRuIvu3TtQysY4+cMvhbhYNFCxPScWu3j6RjqfZy0R4CHrN8B0+IeGDL
- +Q2B6bJtoPjalST4VXaxLU2QcN9kUxB4WxTykYBKNFFWDlwMD7eDRcZj3DbzKZWcs9VgVZEK+Lk
- Wa/VtKKBB4iKfK82QpHTvFxynANE5JeG9NbtBECjmaWtwliGLLmTUjznzbWfIGJ/pO2ewn0TZoo
- hRUAxOvnVxqo=
-X-Received: by 2002:a05:600c:c0d2:20b0:456:1e4a:bb5b with SMTP id
- 5b1f17b1804b1-45635845454mr76483795e9.32.1753087558047; 
- Mon, 21 Jul 2025 01:45:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhESKfL9pHlF+9Qqcev4RYPAhSWJGkxaeGX2dFJsiFEhN3OwwzAoMXHBsJqKsLDn/oRA3CbQ==
-X-Received: by 2002:a05:600c:c0d2:20b0:456:1e4a:bb5b with SMTP id
- 5b1f17b1804b1-45635845454mr76483625e9.32.1753087557568; 
- Mon, 21 Jul 2025 01:45:57 -0700 (PDT)
+ bh=UAufFh2LUgG5kuUETXc2PDqREMdWjxyDrjFB3zkP5f8=;
+ b=DtHZljkvf+5N2/ZXo2apzaokVtOo3vP9rWuj76ZI8Bw2uflTBZVN4b0AcvR+uHzg+e
+ X3IjOXxwdtnNxqDL6fx//BPPBLXFdFbiM3CtCVABRIlnUEZ7x3uMQhcZWLxoa33Waigg
+ Guic2pp+1ffwl5cHA9reylda5gIAvljeNEiS1ou7adakMluIV2Q39ujcSBoTsDSt9kq0
+ v8jnGDjl4mGI+cIIbv3BypbMkkkLRElvD338RuFSydB30cXseODAxWLHX6gFBx5vpiB9
+ UdAfHz2tsjPasnmhViNr2YJqPG4aDOpTbc3PN0NX/1BBhqk2EMT/psAEVCFNrFE2SFHq
+ SBMg==
+X-Gm-Message-State: AOJu0YwT5iPysEfKImUIGWa1plLULCUyr+PMXAIwGoFrZmNCnNuAxB02
+ iiiVcfWG9Gcl/ouL6DcQsjPowil7Van0HhoQ1GHfbERg+PYYCDqxVM+ny8ESEpp+9gI7Bfxw0iB
+ TDC1a1dj3vS/HcSZzK2Ys4hwu8OLnMUWRUFhv4nE7TaZ9rxRQle1f8jnr
+X-Gm-Gg: ASbGnctmMf3O2Za+eeDSzCenRpZ78DI0+Mn6C3+FrfPPEkUvnpo521XWNKSoqMJ+PWe
+ nlONvXJTDXOJcu70VZxfZPxKzsgIs4XuWt6APgkYDqNF2wvkTaZBBhSKu08PB9dJShNftx4CRxj
+ El71XLM2oBM1tskvLTftkUGQv4KNt4L6tJdYlAf3/5Rsxp4+P/KzC+t4n1Bl0S5veWemSQ/qUrn
+ JrbRfMx0046DX6AxNjJCu/dSMb0XPqtbiLoEqpO1TQTCGsGyK6ELZLe181FhEjSPCbjZpasmg+5
+ JJjSq/hEhU7Nmi39b9S56ltyznGrkqUiUb1w8h97LJ7XQ3u8f0j6Ng9/lxYN3krUiTqB/CjVWc6
+ dvX8ku36C7ME=
+X-Received: by 2002:adf:9cc7:0:b0:3a4:f024:6717 with SMTP id
+ ffacd0b85a97d-3b60e523b9dmr10846913f8f.53.1753087741581; 
+ Mon, 21 Jul 2025 01:49:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNd7K+NflIIG/ssJcZH1UgiQUh2V52EesArq3pjYiQJe8MLnL1ju0DGxkn06Hx8AeYLqS6Nw==
+X-Received: by 2002:adf:9cc7:0:b0:3a4:f024:6717 with SMTP id
+ ffacd0b85a97d-3b60e523b9dmr10846889f8f.53.1753087741117; 
+ Mon, 21 Jul 2025 01:49:01 -0700 (PDT)
 Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
  ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e7f4294sm152558615e9.3.2025.07.21.01.45.56
+ ffacd0b85a97d-3b61ca4d73esm9579679f8f.66.2025.07.21.01.48.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 01:45:57 -0700 (PDT)
-Message-ID: <28bcda3f-52a9-43b9-86be-69e66b1f4ec2@redhat.com>
-Date: Mon, 21 Jul 2025 10:45:55 +0200
+ Mon, 21 Jul 2025 01:49:00 -0700 (PDT)
+Message-ID: <3625d863-5609-4ffc-bf2f-68c122bf7c35@redhat.com>
+Date: Mon, 21 Jul 2025 10:48:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 03/13] virtio: introduce extended features type
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+Subject: Re: [PATCH RFC v3 12/13] net: implement tunnel probing
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
  Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
  <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <cover.1752828082.git.pabeni@redhat.com>
- <c1b14368e79fb3fd3cf402d7b03aed4449cdf0a8.1752828082.git.pabeni@redhat.com>
- <18dd4847-769f-4c5d-8559-8647822d362a@rsg.ci.i.u-tokyo.ac.jp>
- <fe72a900-9b4f-472d-af1d-e5f37d78a529@redhat.com>
- <e89fade5-1912-45d5-8c4e-259b45a8a3bd@rsg.ci.i.u-tokyo.ac.jp>
+ <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
+ <y5qbg4bbp7horugws4wwpqtqcbff47gt2lksc7ookom5mplcm5@7eesso3jebep>
 Content-Language: en-US
 From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <e89fade5-1912-45d5-8c4e-259b45a8a3bd@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <y5qbg4bbp7horugws4wwpqtqcbff47gt2lksc7ookom5mplcm5@7eesso3jebep>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -122,70 +119,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/21/25 9:49 AM, Akihiko Odaki wrote:
-> On 2025/07/21 16:33, Paolo Abeni wrote:
->> On 7/20/25 12:41 PM, Akihiko Odaki wrote:
->>> On 2025/07/18 17:52, Paolo Abeni wrote:
->>>> diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
->>>> new file mode 100644
->>>> index 0000000000..68e326e3e8
->>>> --- /dev/null
->>>> +++ b/include/hw/virtio/virtio-features.h
->>>> @@ -0,0 +1,123 @@
->>>> +/*
->>>> + * Virtio features helpers
->>>> + *
->>>> + * Copyright 2025 Red Hat, Inc.
->>>> + *
->>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>> + */
->>>> +
->>>> +#ifndef QEMU_VIRTIO_FEATURES_H
->>>> +#define QEMU_VIRTIO_FEATURES_H
->>>> +
->>>> +#include "qemu/bitops.h"
->>>> +
->>>> +#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
->>>> +#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
->>>> +
->>>> +#define VIRTIO_FEATURES_MAX        128
->>>> +#define VIRTIO_BIT(b)              BIT_ULL((b) % 64)
->>>> +#define VIRTIO_DWORD(b)            ((b) >> 6)
->>>> +#define VIRTIO_FEATURES_WORDS      (VIRTIO_FEATURES_MAX >> 5)
->>>> +#define VIRTIO_FEATURES_DWORDS     (VIRTIO_FEATURES_WORDS >> 1)
->>>
->>> These shifts are better to be replaced with division for clarity;
->>> BIT_WORD() is a good example.
->>>
->>> "WORD" and "DWORD" should be avoided due to contradicting definitions
->>> common in QEMU as described at:
->>> https://lore.kernel.org/qemu-devel/aab8c434-364e-4305-9d8b-943eb0c98406@rsg.ci.i.u-tokyo.ac.jp/
->>>
->>> BITS_TO_U32S() is a good example this regard.
->>
->> Ok, I'll rename:
->> 	VIRTIO_FEATURES_DWORDS -> VIRTIO_U64_PER_FEATURES
->> 	VIRTIO_FEATURES_WORDS -> VIRTIO_U32_PER_FEATURES
+On 7/18/25 1:17 PM, Stefano Garzarella wrote:
+> On Fri, Jul 18, 2025 at 10:52:38AM +0200, Paolo Abeni wrote:
+>> @@ -4245,6 +4274,14 @@ static const Property virtio_net_properties[] = {
+>>                                   rss_data.specified_hash_types,
+>>                                   VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
+>>                                   ON_OFF_AUTO_AUTO),
+>> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
+>> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
+>> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
+>> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
 > 
-> U64 and U32 should be plural (i.e., rename them into 
-> VIRTIO_U64S_PER_FEATURES and VIRTIO_U32S_PER_FEATURES)
-> 
-> "PER_FEATURES" also sounds a bit awkward; BITS_PER_BYTE and 
-> BITS_PER_LONG had singular after "per" so the unit was clear, but it is 
-> not in this case.
-> 
-> I could think of several options:
-> - VIRTIO_U64S_PER_FEATURES (what you proposed + plural U64S)
-> - VIRTIO_FEATURES_U64S (closer to the previous version)
-> - VIRTIO_FEATURES_NU64S (like CPU_TEMP_BUF_NLONGS)
-> - VIRTIO_U64S_PER_FEATURE_BITMASK
-> 
-> They have downsides and upsides, and I don't have an idea what's the best.
+> IIUC, to avoid issue with live-migration, we should disable all of them
+> in `hw_compat_10_0` in hw/core/machine.c (e.g. like `host_uso`, 
+> `guest_uso*` in hw_compat_8_1).
 
-Indeed an optimal name here could be impossible to fit. IMHO
-VIRTIO_FEATURES_NU64S is the best option among the above and I like it.
-
-I'll use that one.
+I guess the relevant compat entry should be 10.1, right? AFAICS such
+entry should added with a separate/specific before 10.1 will be tagged.
+I'll add the relevant the entries after that the hw_compat_10_1 will be
+added.
 
 Thanks,
 
