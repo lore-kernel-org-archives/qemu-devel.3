@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA51BC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57646C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwkC-0005aA-71; Mon, 21 Jul 2025 16:04:16 -0400
+	id 1udwkO-0005jF-1X; Mon, 21 Jul 2025 16:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjH-0004ri-6d; Mon, 21 Jul 2025 16:03:29 -0400
+ id 1udwjI-0004rs-F2; Mon, 21 Jul 2025 16:03:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjE-0004lf-On; Mon, 21 Jul 2025 16:03:18 -0400
+ id 1udwjG-0004mL-Tc; Mon, 21 Jul 2025 16:03:20 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2235A139046;
+ by isrv.corpit.ru (Postfix) with ESMTP id 30977139047;
  Mon, 21 Jul 2025 23:02:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D638924BED2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E442624BED3;
  Mon, 21 Jul 2025 23:03:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 69/70] target/arm: Correct encoding of Debug
- Communications Channel registers
-Date: Mon, 21 Jul 2025 23:02:56 +0300
-Message-ID: <20250721200302.133559-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zenghui Yu <zenghui.yu@linux.dev>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 70/70] hvf: arm: Emulate ICC_RPR_EL1 accesses properly
+Date: Mon, 21 Jul 2025 23:02:57 +0300
+Message-ID: <20250721200302.133559-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,78 +61,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Zenghui Yu <zenghui.yu@linux.dev>
 
-We don't implement the Debug Communications Channel (DCC), but
-we do attempt to provide dummy versions of its system registers
-so that software that tries to access them doesn't fall over.
+Commit a2260983c655 ("hvf: arm: Add support for GICv3") added GICv3 support
+by implementing emulation for a few system registers. ICC_RPR_EL1 was
+defined but not plugged in the sysreg handlers (for no good reason).
 
-However, we got the tx/rx register definitions wrong. These
-should be:
+Fix it.
 
-AArch32:
-  DBGDTRTX   p14 0 c0 c5 0  (on writes)
-  DBGDTRRX   p14 0 c0 c5 0  (on reads)
-
-AArch64:
-  DBGDTRTX_EL0  2 3 0 5 0 (on writes)
-  DBGDTRRX_EL0  2 3 0 5 0 (on reads)
-  DBGDTR_EL0    2 3 0 4 0 (reads and writes)
-
-where DBGDTRTX and DBGDTRRX are effectively different names for the
-same 32-bit register, which has tx behaviour on writes and rx
-behaviour on reads.  The AArch64-only DBGDTR_EL0 is a 64-bit wide
-register whose top and bottom halves map to the DBGDTRRX and DBGDTRTX
-registers.
-
-Currently we have just one cpreg struct, which:
- * calls itself DBGDTR_EL0
- * uses the DBGDTRTX_EL0/DBGDTRRX_EL0 encoding
- * is marked as ARM_CP_STATE_BOTH but has the wrong opc1
-   value for AArch32
- * is implemented as RAZ/WI
-
-Correct the encoding so:
- * we name the DBGDTRTX/DBGDTRRX register correctly
- * we split it into AA64 and AA32 versions so we can get the
-   AA32 encoding right
- * we implement DBGDTR_EL0 at its correct encoding
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2986
+Fixes: a2260983c655 ("hvf: arm: Add support for GICv3")
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250714160139.10404-3-zenghui.yu@linux.dev
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250708141049.778361-1-peter.maydell@linaro.org
-(cherry picked from commit 655659a74a36b63e33d2dc969d3c44beb1b008b3)
+(cherry picked from commit e6da704b711d5d731e4d933ad56cbbc25ee0a825)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index a9a619ba6b..79c0e8eaff 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -986,11 +986,20 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-       .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 2,
-       .access = PL1_RW, .accessfn = access_tdcc,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
--    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
--    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_BOTH, .cp = 14,
-+    /* Architecturally DBGDTRTX is named DBGDTRRX when used for reads */
-+    { .name = "DBGDTRTX_EL0", .state = ARM_CP_STATE_AA64,
-       .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
-       .access = PL0_RW, .accessfn = access_tdcc,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
-+    { .name = "DBGDTRTX", .state = ARM_CP_STATE_AA32, .cp = 14,
-+      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
-+      .access = PL0_RW, .accessfn = access_tdcc,
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-+    /* This is AArch64-only and is a combination of DBGDTRTX and DBGDTRRX */
-+    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 4, .opc2 = 0,
-+      .access = PL0_RW, .accessfn = access_tdcc,
-+      .type = ARM_CP_CONST, .resetvalue = 0 },
-     /*
-      * OSECCR_EL1 provides a mechanism for an operating system
-      * to access the contents of EDECCR. EDECCR is not implemented though,
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 01e26a9726..8a4a41d15b 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1352,6 +1352,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+     case SYSREG_ICC_IGRPEN0_EL1:
+     case SYSREG_ICC_IGRPEN1_EL1:
+     case SYSREG_ICC_PMR_EL1:
++    case SYSREG_ICC_RPR_EL1:
+     case SYSREG_ICC_SGI0R_EL1:
+     case SYSREG_ICC_SGI1R_EL1:
+     case SYSREG_ICC_SRE_EL1:
+@@ -1666,6 +1667,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+     case SYSREG_ICC_IGRPEN0_EL1:
+     case SYSREG_ICC_IGRPEN1_EL1:
+     case SYSREG_ICC_PMR_EL1:
++    case SYSREG_ICC_RPR_EL1:
+     case SYSREG_ICC_SGI0R_EL1:
+     case SYSREG_ICC_SGI1R_EL1:
+     case SYSREG_ICC_SRE_EL1:
 -- 
 2.47.2
 
