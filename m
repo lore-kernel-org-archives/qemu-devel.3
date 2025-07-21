@@ -4,130 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C811EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972E6C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udnaS-0003SY-OF; Mon, 21 Jul 2025 06:17:36 -0400
+	id 1udncw-0005v7-7V; Mon, 21 Jul 2025 06:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1udnaN-0003N9-EM
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:17:33 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udncn-0005jC-AH
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:20:01 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1udnaL-0006MB-3c
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:17:30 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45619d70c72so39071205e9.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 03:17:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udncf-0006fK-9J
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:19:59 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-70e767ce72eso38012397b3.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 03:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec; t=1753093045; x=1753697845; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2L8nOUhRFz8Qd2H2+y83xVXbQVi2gMHd8RFg/bFXMCw=;
- b=jKC7DXisa6npACNDrO+pgK/3g3ABZlEM5DR9re+mlHccRL4hYhcb3diGg0ii59oa5b
- 9R8ZaDYwLORUIW/ZJ3tc793P9gQ3FzQFsQL4r9l0AC1Z27vKj9IV5fMdMO+s/a0ZfrDH
- 0d0pRYecWBo04Ms9MSbDRX9xBAhksoZAve2pvniCySD8P4pY9pOSXDqWdprjTSAc+FKV
- 3q3WaIzhohktBFO7m4xSePFJc7ZPQiKOBFiuRPvLNUZjFLrtDig7865Y3u5wjTzC5kf+
- nUP19gAkEh9Rl13vytAKOyF3ggwKwFDAVht27cC9nMt0q3dQsOlsZFvrIx8cdGKzRWFz
- VHhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753093045; x=1753697845;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1753093190; x=1753697990; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2L8nOUhRFz8Qd2H2+y83xVXbQVi2gMHd8RFg/bFXMCw=;
- b=pn7CzFY9Z4X/qlzIU4NOGocWyvOTGrmwrNLE/XrQiN4vNOUClQAENYHCbZ686PwIRx
- c4CXG60BV8jk4UPzn1URybQ0IP7/7qu/jpISSd57K488NLVBh3y13yZ4bzTWYj8hXETI
- QLssnIcY7JzNjJ4dkwiWJYwvohEHyy4+9rx9mB62R9o8ezp6GxyLg1ExyKYwWqQtMukZ
- XLKlO6BfBBQO61W5PqXxMaipyp32krgqGj91WUB09E7CjkjiUnwmW+kIhKBRfGvYpJJp
- rZr6gTg9WblKCaDh1Lchrk2xoCKO4e4/ZfVRE+308rvqMMieC4efgOX7hi2g+7FILBLS
- Ya6g==
+ bh=bqL3criYFaR+yc8K24H2T6pBlM4FO4IFc7lSC9rixWo=;
+ b=Vq2qRTXZQ9EG9b8r2FTTe3gLxvn5UA8pAZq0eYSzkyOqJG+C8NnqdQJv/eg9sQsYKD
+ tkeaBx+l8ZCg3UwjTL3CnRKS6ZoJmoNiK2iKS+O0Mlw9C11cX68zAjYK+ry1KaujRuWN
+ vo95ZJgNAslzQtTu6NG6Qw83jLRMFJJ48Z2MeIvWQnJWJaeqLtTmpNzrM8U+Q/1d84bH
+ znoiaqCSY9cfhRVKOS674sEyhDMHXnvJ0sb5S7MEEuNZIMJJq8vQA1Qb8Phox91Fw7QL
+ urp/XZDkE5wqX+afF3dYnjhcPT1zmloim34E5suETv2cCn+siA5UytAN9KdzqUz37MWE
+ QG6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753093190; x=1753697990;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bqL3criYFaR+yc8K24H2T6pBlM4FO4IFc7lSC9rixWo=;
+ b=CKIgZwhQTMw6IrogiAOIQp57bryHQO/Gw7/HGWp/LYLG3JMCi57UOW1T6402NrHvch
+ ZFy19kVnEHShuHATAhZJ774cYUBCegn3qV2rBbqkiHgifFjUtBo5tFhAJI9+YEteh+hc
+ NqojrCRR8ksrsai0QsG1a8A5uPAdbmejJK6lly+biYAffeTBU6c4Tl1NVL6mB0HLdB0n
+ JNolBmEuXfcVB90159BGcTxqlhVGowJ3N97gBkWsuSou+djwIJAHmjaWxUOTpRtwokVL
+ 0yEClsaS2+LT6vHNc2wWt+cdikX6VPRgg8f7F0kiUUDORRUs4BSEO1JlbtaZ8buwERqC
+ A+zQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbEpVj3HuRAP5anGrGI0NjIVfaUha+w9d23yXTgrjel6jQVEg7uCFx2ppC4bLNej1HHLnkTyfJwwvv@nongnu.org
-X-Gm-Message-State: AOJu0Yy2tzuaBZ16qtJO1E2gTOge/g5K3+AChZKHIzgzB3EdbNPyD/D/
- eywGC6WqDUz1vDCclgwd7Vo5QqjvCLWILKZmUrCxw6kdnXEJ/9wd2OYQPIB0OYQY/gq2lrglPEz
- MLQjE
-X-Gm-Gg: ASbGncuU854U/7GutSSYbFzpB1knsZ6Yrasjgj1G7hJj3l7IpLn/BQJ0sG6VocKjdEc
- d0ZPN4kSz2geNvbXoxsgoz0KDF/gK3RTI3tbbmIqd6ys+pkKAIa1GWszf5bhkAtz54htWS0PN/r
- KBLIKyN0jlC/oK851U0bOsVWB4hHS6S+WZGWLq6RxIcILUZAa8D+SyiTUpkrvWU0Ea76sgLfrNe
- xM9+6oVjLvIwqZ55dm/r0zb0CSJprXGenSFJVziaUtspyih1wxe9vxo2bhbwJndWNfQcoTA2nXd
- wd7VecXHsSF1I/9BqoK3/mixBQWaUSP8quaMV0ah/W07IbU0qJ1RuTodi4dEQjP0fxeTOOLCKr1
- XA3K/HIXwlmq23wQZhMQ25Ct7WTxM88+8RH4z408z5eXVcGjCEYVX+sONYiNP4J7C+mHlgPVo0F
- Zyv87lFGjwfYVFTZIhfL2ix+gfB2bXEJLF89gJ9EyV1whh9v6cNdtzwPc=
-X-Google-Smtp-Source: AGHT+IGD2z7sMV5r9LkaIWTLYLxVo/iO18rZpGF4CgXRRlqBAx+jsowtTyIf18iIhKhB1ZTxesuyLA==
-X-Received: by 2002:adf:ef8b:0:b0:3b6:18c0:8b6d with SMTP id
- ffacd0b85a97d-3b619cd25efmr7646889f8f.28.1753093045417; 
- Mon, 21 Jul 2025 03:17:25 -0700 (PDT)
-Received: from ?IPV6:2003:fa:af22:cf00:2208:a86d:dff:5ae9?
- (p200300faaf22cf002208a86d0dff5ae9.dip0.t-ipconnect.de.
- [2003:fa:af22:cf00:2208:a86d:dff:5ae9])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4562e89c739sm153933755e9.32.2025.07.21.03.17.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 03:17:24 -0700 (PDT)
-Message-ID: <5f9cc1ba-4b6f-4a87-8aa8-cd684c9fa3e1@grsecurity.net>
-Date: Mon, 21 Jul 2025 12:17:23 +0200
+ AJvYcCU2oCdqRhzNw1Eq0L/6yeIih4+JK6eARzfTdmlyCSRjHreV6a8K9geX0zl9FDFF6eo036VaAYYmU09V@nongnu.org
+X-Gm-Message-State: AOJu0Yz9FDAqnnJxYeqViKKUKFzeATtUZxj8cGFo77Gz8tepcOqF4fvk
+ Ov7+RqbCiIv/444oyiQQRNZDLQUHWdt9bdo9VXSuV8Dp+o2LtSugGudIfBC0p3PHkwoLLVylgmN
+ O4zhe72E+pBWyOJUWm8Ac/w7v8iQ8DpB31s7q3j9+bQ==
+X-Gm-Gg: ASbGncubHcGEyWEK6cu/kMTrpiygA0Cax4HIVXiCFnRYejSPcTDhCEKsvgijWRPCTAK
+ Ii8q60syrt0KKADjKvb0A4qv1m1FhoxLzlxQ4tfU+SZNpD15aUaJ8hCfxF7KZ0EMCpfCXTro9To
+ qG4EU7iKranCv5qQnOMo//E0lAtKW/6loFwk3jgHV33qBepVB+cuqTnu4S8b9z0o/y4ZLZfoZ+m
+ ExYYBeW
+X-Google-Smtp-Source: AGHT+IEZ/9Ez8j3nlHzfDP/iMM05lwvpiT5KlCipUtk4VzyerpQzBowc0BJsui/jOhlDDloP57bGtP2dBolCK8tyaCs=
+X-Received: by 2002:a05:690c:f07:b0:718:3992:9144 with SMTP id
+ 00721157ae682-71839929448mr248995597b3.40.1753093190245; Mon, 21 Jul 2025
+ 03:19:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Fix CR2 handling for non-canonical addresses
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
-References: <20250612142155.132175-1-minipli@grsecurity.net>
-Content-Language: en-US, de-DE
-From: Mathias Krause <minipli@grsecurity.net>
-Autocrypt: addr=minipli@grsecurity.net; keydata=
- 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
- RzDVkdgPJkL/NFTKZHo5foFXNi89kA==
-In-Reply-To: <20250612142155.132175-1-minipli@grsecurity.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=mathias.krause@opensrcsec.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.157,
+References: <20250714160139.10404-1-zenghui.yu@linux.dev>
+ <20250714160139.10404-2-zenghui.yu@linux.dev>
+ <7a34c735-3306-4028-bec9-f34b4271a543@linaro.org>
+In-Reply-To: <7a34c735-3306-4028-bec9-f34b4271a543@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 21 Jul 2025 11:19:38 +0100
+X-Gm-Features: Ac12FXwAmGHvgigb0kKzZQ4XciIzOCQQ3zpOvg60DE2DgGyKjkxcyzWOi4c2sMU
+Message-ID: <CAFEAcA-7bUavf41RS5Ppd4XAibcLVxHnybDyJH0Yc-U8WHSpHg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] hvf: arm: Add permission check in GIC sysreg
+ handlers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Zenghui Yu <zenghui.yu@linux.dev>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, agraf@csgraf.de, mads@ynddal.dk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,27 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.06.25 16:21, Mathias Krause wrote:
-> Commit 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-> accidentally modified CR2 for non-canonical address exceptions while these
-> should lead to a #GP / #SS instead -- without changing CR2.
-> 
-> Fix that.
-> 
-> A KUT test for this was submitted as [1].
-> 
-> [1] https://lore.kernel.org/kvm/20250612141637.131314-1-minipli@grsecurity.net/
-> 
-> Fixes: 3563362ddfae ("target/i386: Introduce structures for mmu_translate")
-> Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-> ---
+On Mon, 14 Jul 2025 at 21:04, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 14/7/25 18:01, Zenghui Yu wrote:
+> > Quoting Peter Maydell:
+> >
+> > " hvf_sysreg_read_cp() and hvf_sysreg_write_cp() do not check the .acce=
+ss
+> >    field of the ARMCPRegInfo to ensure that they forbid writes to regis=
+ters
+> >    that are marked with a .access field that says they're read-only (an=
+d
+> >    ditto reads to write-only registers). "
+> >
+> > Before we add more registers in GIC sysreg handlers, let's get it corre=
+ct
+> > by adding the .access checks to hvf_sysreg_read_cp() and
+> > hvf_sysreg_write_cp(). With that, a sysreg access with invalid permissi=
+on
+> > will result in an UNDEFINED exception.
+> >
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> > ---
+> >
+> > I hard-code the @current_el parameter of cp_access_ok() to 1 because
+> >
+> > * we only support EL0 and EL1 in HVF, and
+>
+> This might change with this work:
+> https://lore.kernel.org/qemu-devel/20250620172751.94231-1-philmd@linaro.o=
+rg/
+> and plan to leverage M3/M4 for EL2 support:
+> https://developer.apple.com/documentation/hypervisor/hv_vm_config_set_el2=
+_enabled(_:_:)
 
-Ping!
+True, but for 10.1 I'm going to take these patches as-is, because
+they do fix a bug, and handling EL2 in hvf with an emulated GIC is
+going to need a more general look at the GIC code anyway.
+(My preference would be to use the GICv3 which hvf provides in
+macos 15 and up when we can in any case.)
 
-Paolo, Richard, any take on the patch? It's a regression fix that can
-easily be verified with the KUT test failing after the commit mentioned
-in the Fixes tag and succeeding again with the below fix applied.
+Syncing the whole VM state for any call through to the GIC
+emulation would be quite heavyweight. I'm not sure if we exactly
+thought through that the state would not be synced here, though:
+the GIC emulation was never written to assume that some CPU
+registers might not be in sync...
 
-Thanks,
-Mathias
+thanks
+-- PMM
 
