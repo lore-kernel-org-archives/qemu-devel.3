@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9849CC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F125AC83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udtKx-0003Qm-7s; Mon, 21 Jul 2025 12:26:07 -0400
+	id 1udtbW-0002Ya-F1; Mon, 21 Jul 2025 12:43:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJc-0007pk-Pq
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJa-0001kn-KL
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753115074;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f9zwT7ZGhqGYHNUIdjiGru3IcNqxqD9iWpzeEHAQh+g=;
- b=NoP9NOooeDULkDhiiAyzSWreb8/WbrkAzEn/dWennvUc3D1tqBWJPLW0FT6oi5m6Z0fl+3
- EEz42R8lOUVjAUPXEJtAIgYy/v8GOl8rPVRfkFoK2fT8B//DDTVWtzEhZ8x/NvP727+Sh1
- EccblhsgMszrmjTDSoTg3zSJYiAVLH0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-pVO4pux2P6KyUOCu-rD2Lg-1; Mon,
- 21 Jul 2025 12:24:32 -0400
-X-MC-Unique: pVO4pux2P6KyUOCu-rD2Lg-1
-X-Mimecast-MFC-AGG-ID: pVO4pux2P6KyUOCu-rD2Lg_1753115071
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E466180029E; Mon, 21 Jul 2025 16:24:31 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.19])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A029195608D; Mon, 21 Jul 2025 16:24:28 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 40/50] ppc/xive2: implement NVP context save restore for POOL
- ring
-Date: Mon, 21 Jul 2025 18:22:23 +0200
-Message-ID: <20250721162233.686837-41-clg@redhat.com>
-In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
-References: <20250721162233.686837-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1udtae-0007Da-NL
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:42:13 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1udtac-0004Mo-AW
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:42:11 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso3910790b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 09:42:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753116129; x=1753720929; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zmJPQjHLHknSa5OKOtJR5fqkEuCteGRxB8ltVr9bd/U=;
+ b=NbGxkoYOFyMmPTF8Lu0NilNE2ges9E+LJooLX6l4BynZZErxMr6x6FtpHpaMw4tff1
+ k5CFPxVdTV7FaIb4kDoZJM7Loo8AMMBSojuXoyy46zJn6DyV+7ZK/ZRTCLHt+eoSpXQ+
+ m7q2Zt5XE+geEu2/UFZKLMm5xfpM2wej7uRYzhYJpLA0GudOEmzgwQ5+vT5Aoyo5NndS
+ hGx6+Yk+PKv9kFSbLb+O1pgqMbMDJjlizHkmb/8UZqSBpoL3UFx1yADlun9GcKPeIUGl
+ l9+w+l71UxYp4hLmv4cEhDnwcmU9F6OSnB1ZaPYYW5mbNVUjLbrAUQsujBSfK2UlYfTt
+ BFUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753116129; x=1753720929;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zmJPQjHLHknSa5OKOtJR5fqkEuCteGRxB8ltVr9bd/U=;
+ b=wA1gPw5E67REJT4+ipbZ0rqFZKRGtFRifbjj50IqJ1TE+7CaQkB8WGn/ToGGMqGIv6
+ om+mtTRxXoCCZvYhXs83w+8GN49FvxVEnZjs8tFmiDT/9cJwdHQrbTP2jcJOj4h0AACI
+ erS4sN5ZDISEa8DS4HrYWfvOo/FjYux+CBzNTJWh90/NMyLKqo2Utp8eTGbKurD4oCHp
+ TRB79/le0mIJ1yNFEEsWwrpJt+XftyXAQayOvoxNzQjqFYc4V1M4MZ7mfvHWi0dMQlHI
+ wiH1gmobogMjVDniVxGXn2mM78F+//yktD5BhU1nKzHqg9zxjJ6Plkw5XuOQdts4iyCC
+ hc0g==
+X-Gm-Message-State: AOJu0Yw7Gc+GE7jdXANKCEU1fIy4YmPOhn0j0ruzpXw0namJ5iM7Sz+f
+ CH30+6I1Il6f5cgq9SznvvKeMRQrul+RVCIujEeTNfe1GNjYjYz3GK85Qy25J3ULgPtTlTpHQ+3
+ c1I+b
+X-Gm-Gg: ASbGncvY8CayM1cCTklDnxZjeWdiXdI9ZsxXMLt7jf7i9ku7KWxeLKVOl62IZNvUrc0
+ p7YD94/E76g1uRX7eY2fX2wBLAynoPgLYBfMjbKOEn9Ioyor3ElthmHMy+lGNV0FtGqfHy8VQOp
+ xYQoh1q+yvFGZMWGRhpkKCWg6sBZp/ICotugqv/S9mCfCDbOGaiYnQ06q42bt3nc2PUcNeRYW42
+ UzlkA00uJrQx1+2oYJokxKaHB2rZxdTMHNT0Cn3TANuIdlTpP0LLxh9jmHGtlLRQbfW91GPAOyN
+ db7drQM5AXcaLIAbS5Sxy+RaHEf1CdXfngGb76xq3oWhZ+EQ7KIdZSLKGokYAPBeUdopGjEtZ5z
+ 1Rj85NWSxTIqIk5SlAL6h1JxZRpb6FXKOBW4=
+X-Google-Smtp-Source: AGHT+IG5XDNg+WUX9eiqFN8FyjQc3uEDfPyYQL0XC4JUeuW7tV789KaLlfxYpsj24O1aofz1D2DUrQ==
+X-Received: by 2002:a05:6a00:21d4:b0:74e:a560:dd23 with SMTP id
+ d2e1a72fcca58-757248722c6mr28840862b3a.21.1753116128589; 
+ Mon, 21 Jul 2025 09:42:08 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-759cb678f21sm6093595b3a.104.2025.07.21.09.42.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Jul 2025 09:42:08 -0700 (PDT)
+Message-ID: <f0fec739-f543-47e3-a6d7-bb462c364923@linaro.org>
+Date: Mon, 21 Jul 2025 09:42:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] control guest time using a dilation factor
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, richard.henderson@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ peter.maydell@linaro.org, philmd@linaro.org
+References: <20250628002431.41823-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250628002431.41823-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,156 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+On 6/27/25 5:24 PM, Pierrick Bouvier wrote:
+> Depending on host cpu speed, and QEMU optimization level, it may sometimes be
+> needed to slow or accelerate time guest is perceiving. A common scenario is
+> hitting a timeout during a boot process, because some operations were not
+> finished on time.
+> 
+> An existing solution for that is -icount shift=X, with low values, which will
+> roughly map virtual time to how many instructions were executed.
+> 
+> This series introduces another approach, based on faking host time returned to
+> the guest, by applying a time-dilation factor. Time will go slower/faster for
+> the guest, without impacting QEMU emulation speed.
+> 
+> It may eventually be used to fix some of the timeouts we hit in CI, by slowing
+> down time in VM, to be less sensitive to varying cpu performance.
+> 
+> v2
+> --
+> 
+> In review, Paolo mentioned timers deadline should redilated in the other
+> direction. After going through this part, it seems that arrival is always based
+> on one of the clocks we have (which is dilated already), so I don't think we
+> should redilate that, as this would create a discordance between time set, and
+> real time when this happen. Feel free to correct me if this is wrong.
+> 
+> - keep start time per clock and apply accordingly
+> - apply time dilation for cpu_get_host_ticks as well
+> - use a default factor of 1.0
+> - rename cli option to -rtc speed-factor
+> - forbid to use option with kvm, as time is not provided by QEMU for guest
+> 
+> Pierrick Bouvier (2):
+>    qemu/timer: introduce time dilation factor
+>    system/rtc: introduce -rtc speed-factor option
+> 
+>   include/qemu/timer.h     | 60 ++++++++++++++++++++++++++++------------
+>   system/rtc.c             | 11 ++++++++
+>   system/vl.c              |  9 ++++++
+>   util/qemu-timer-common.c |  7 +++++
+>   qemu-options.hx          |  7 ++++-
+>   5 files changed, 75 insertions(+), 19 deletions(-)
+> 
 
-In preparation to implement POOL context push, add support for POOL
-NVP context save/restore.
+Another ping on this series.
+Paolo, do you have any opinion about the comment in v2 I added in the 
+cover letter? Especially to not modify the arrival date for timers.
 
-The NVP p bit is defined in the spec as follows:
-
-    If TRUE, the CPPR of a Pool VP in the NVP is updated during store of
-    the context with the CPPR of the Hard context it was running under.
-
-It's not clear whether non-pool VPs always or never get CPPR updated.
-Before this patch, OS contexts always save CPPR, so we will assume that
-is the behaviour.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-41-npiggin@gmail.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/ppc/xive2_regs.h |  1 +
- hw/intc/xive2.c             | 51 +++++++++++++++++++++++++------------
- 2 files changed, 36 insertions(+), 16 deletions(-)
-
-diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
-index f82054661bda..2a3e60abadbf 100644
---- a/include/hw/ppc/xive2_regs.h
-+++ b/include/hw/ppc/xive2_regs.h
-@@ -158,6 +158,7 @@ typedef struct Xive2Nvp {
- #define NVP2_W0_L                  PPC_BIT32(8)
- #define NVP2_W0_G                  PPC_BIT32(9)
- #define NVP2_W0_T                  PPC_BIT32(10)
-+#define NVP2_W0_P                  PPC_BIT32(11)
- #define NVP2_W0_ESC_END            PPC_BIT32(25) /* 'N' bit 0:ESB  1:END */
- #define NVP2_W0_PGOFIRST           PPC_BITMASK32(26, 31)
-         uint32_t       w1;
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index a0a6b1a88179..7631d4886206 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -512,12 +512,13 @@ static void xive2_presenter_backlog_decr(XivePresenter *xptr,
-  */
- 
- static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
--                                uint8_t nvp_blk, uint32_t nvp_idx,
--                                uint8_t ring)
-+                                uint8_t ring,
-+                                uint8_t nvp_blk, uint32_t nvp_idx)
- {
-     CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
-     uint32_t pir = env->spr_cb[SPR_PIR].default_value;
-     Xive2Nvp nvp;
-+    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
-     uint8_t *regs = &tctx->regs[ring];
- 
-     if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
-@@ -553,7 +554,14 @@ static void xive2_tctx_save_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-     }
- 
-     nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, regs[TM_IPB]);
--    nvp.w2 = xive_set_field32(NVP2_W2_CPPR, nvp.w2, regs[TM_CPPR]);
-+
-+    if ((nvp.w0 & NVP2_W0_P) || ring != TM_QW2_HV_POOL) {
-+        /*
-+         * Non-pool contexts always save CPPR (ignore p bit). XXX: Clarify
-+         * whether that is the correct behaviour.
-+         */
-+        nvp.w2 = xive_set_field32(NVP2_W2_CPPR, nvp.w2, sig_regs[TM_CPPR]);
-+    }
-     if (nvp.w0 & NVP2_W0_L) {
-         /*
-          * Typically not used. If LSMFB is restored with 0, it will
-@@ -722,7 +730,7 @@ static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-     }
- 
-     if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
--        xive2_tctx_save_ctx(xrtr, tctx, nvp_blk, nvp_idx, ring);
-+        xive2_tctx_save_ctx(xrtr, tctx, ring, nvp_blk, nvp_idx);
-     }
- 
-     /*
-@@ -863,12 +871,15 @@ void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-     xive2_tm_pull_ctx_ol(xptr, tctx, offset, value, size, TM_QW3_HV_PHYS);
- }
- 
--static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
--                                        uint8_t nvp_blk, uint32_t nvp_idx,
--                                        Xive2Nvp *nvp)
-+static uint8_t xive2_tctx_restore_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-+                                      uint8_t ring,
-+                                      uint8_t nvp_blk, uint32_t nvp_idx,
-+                                      Xive2Nvp *nvp)
- {
-     CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
-     uint32_t pir = env->spr_cb[SPR_PIR].default_value;
-+    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
-+    uint8_t *regs = &tctx->regs[ring];
-     uint8_t cppr;
- 
-     if (!xive2_nvp_is_hw(nvp)) {
-@@ -881,10 +892,10 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-     nvp->w2 = xive_set_field32(NVP2_W2_CPPR, nvp->w2, 0);
-     xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 2);
- 
--    tctx->regs[TM_QW1_OS + TM_CPPR] = cppr;
--    tctx->regs[TM_QW1_OS + TM_LSMFB] = xive_get_field32(NVP2_W2_LSMFB, nvp->w2);
--    tctx->regs[TM_QW1_OS + TM_LGS] = xive_get_field32(NVP2_W2_LGS, nvp->w2);
--    tctx->regs[TM_QW1_OS + TM_T] = xive_get_field32(NVP2_W2_T, nvp->w2);
-+    sig_regs[TM_CPPR] = cppr;
-+    regs[TM_LSMFB] = xive_get_field32(NVP2_W2_LSMFB, nvp->w2);
-+    regs[TM_LGS] = xive_get_field32(NVP2_W2_LGS, nvp->w2);
-+    regs[TM_T] = xive_get_field32(NVP2_W2_T, nvp->w2);
- 
-     nvp->w1 = xive_set_field32(NVP2_W1_CO, nvp->w1, 1);
-     nvp->w1 = xive_set_field32(NVP2_W1_CO_THRID_VALID, nvp->w1, 1);
-@@ -893,9 +904,18 @@ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
-     /*
-      * Checkout privilege: 0:OS, 1:Pool, 2:Hard
-      *
--     * TODO: we only support OS push/pull
-+     * TODO: we don't support hard push/pull
-      */
--    nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 0);
-+    switch (ring) {
-+    case TM_QW1_OS:
-+        nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 0);
-+        break;
-+    case TM_QW2_HV_POOL:
-+        nvp->w1 = xive_set_field32(NVP2_W1_CO_PRIV, nvp->w1, 1);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
- 
-     xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, nvp, 1);
- 
-@@ -930,9 +950,8 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
-     }
- 
-     /* Automatically restore thread context registers */
--    if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE &&
--        do_restore) {
--        xive2_tctx_restore_os_ctx(xrtr, tctx, nvp_blk, nvp_idx, &nvp);
-+    if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_restore) {
-+        xive2_tctx_restore_ctx(xrtr, tctx, TM_QW1_OS, nvp_blk, nvp_idx, &nvp);
-     }
- 
-     ipb = xive_get_field32(NVP2_W2_IPB, nvp.w2);
--- 
-2.50.1
-
+Thanks,
+Pierrick
 
