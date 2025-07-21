@@ -4,35 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7F7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31C2C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwkF-0005cR-Hc; Mon, 21 Jul 2025 16:04:19 -0400
+	id 1udwkB-0005XU-EQ; Mon, 21 Jul 2025 16:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwj9-0004qG-5i; Mon, 21 Jul 2025 16:03:24 -0400
+ id 1udwjC-0004rN-RV; Mon, 21 Jul 2025 16:03:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwj6-0004dO-JH; Mon, 21 Jul 2025 16:03:10 -0400
+ id 1udwjA-0004ke-NI; Mon, 21 Jul 2025 16:03:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8C4C1139042;
- Mon, 21 Jul 2025 23:02:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1364E139045;
+ Mon, 21 Jul 2025 23:02:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4A13824BECE;
- Mon, 21 Jul 2025 23:03:02 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C546C24BED1;
+ Mon, 21 Jul 2025 23:03:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 v3 00/70] Patch Round-up for stable 10.0.3,
- freeze on 2025-07-21 (frozen)
-Date: Mon, 21 Jul 2025 23:02:52 +0300
-Message-ID: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 68/70] ui: fix setting client_endian field defaults
+Date: Mon, 21 Jul 2025 23:02:55 +0300
+Message-ID: <20250721200302.133559-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
+References: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,165 +64,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.3:
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+When a VNC client sends a "set pixel format" message, the
+'client_endian' field will get initialized, however, it is
+valid to omit this message if the client wants to use the
+server's native pixel format. In the latter scenario nothing
+is initializing the 'client_endian' field, so it remains set
+to 0, matching neither G_LITTLE_ENDIAN nor G_BIG_ENDIAN. This
+then results in pixel format conversion routines taking the
+wrong code paths.
 
-Patch queue is frozen on 2025-07-21, and the release is planned for 2025-07-23:
+This problem existed before the 'client_be' flag was changed
+into the 'client_endian' value, but the lack of initialization
+meant it semantically defaulted to little endian, so only big
+endian systems would potentially be exposed to incorrect pixel
+translation.
 
-  https://wiki.qemu.org/Planning/10.0
+The 'virt-viewer' / 'remote-viewer' apps always send a "set
+pixel format" message so aren't exposed to any problems, but
+the classical 'vncviewer' app will show the problem easily.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Fixes: 7ed96710e82c385c6cfc3d064eec7dde20f0f3fd
+Reported-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 3ac6daa9e1c5d7dae2a3cd1c6a388174b462f3e8)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ca02ff872a..a6bf8442d5 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2336,6 +2336,7 @@ static void pixel_format_message (VncState *vs) {
+     char pad[3] = { 0, 0, 0 };
+ 
+     vs->client_pf = qemu_default_pixelformat(32);
++    vs->client_endian = G_BYTE_ORDER;
+ 
+     vnc_write_u8(vs, vs->client_pf.bits_per_pixel); /* bits-per-pixel */
+     vnc_write_u8(vs, vs->client_pf.depth); /* depth */
+-- 
+2.47.2
 
-Thanks!
-
-/mjt
-
---------------------------------------
-01* fb8e59abbe46 Jamin Lin:
-   hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware hang
-02* e6941ac10619 Jamin Lin:
-   hw/arm/aspeed_ast27x0: Fix RAM size detection failure on BE hosts
-03* 9498e2f7e1a2 Weifeng Liu:
-   ui/gtk: Document scale and coordinate handling
-04* 3a6b314409b4 Weifeng Liu:
-   ui/gtk: Use consistent naming for variables in different coordinates
-05* a19665448156 Weifeng Liu:
-   gtk/ui: Introduce helper gd_update_scale
-06* 8fb072472c38 Weifeng Liu:
-   ui/gtk: Update scales in fixed-scale mode when rendering GL area
-07* 30aa105640b0 Weifeng Liu:
-   ui/sdl: Consider scaling in mouse event handling
-08* 7ed96710e82c Daniel P. Berrangé:
-   ui/vnc.c: replace big endian flag with byte order value
-09* 70097442853c Daniel P. Berrangé:
-   ui/vnc: take account of client byte order in pixman format
-10* 63d320909220 Daniel P. Berrangé:
-   ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
-11* e6bc01777e5a Guenter Roeck:
-   hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
-12* a9403bfcd930 Huaitong Han:
-   vhost: Don't set vring call if guest notifier is unused
-13* 0b006153b7ec Bernhard Beschow:
-   hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
-14* 31753d5a336f Sairaj Kodilkar:
-   hw/i386/amd_iommu: Fix device setup failure when PT is on.
-15* 0f178860df34 Vasant Hegde:
-   hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-16* 5ddd6c8dc849 Volker Rümelin:
-   audio: fix SIGSEGV in AUD_get_buffer_size_out()
-17* ccb4fec0e5f2 Volker Rümelin:
-   audio: fix size calculation in AUD_get_buffer_size_out()
-18* d009f26a54f5 Volker Rümelin:
-   hw/audio/asc: fix SIGSEGV in asc_realize()
-19* 0b901459a87a Xin Li (Intel):
-   target/i386: Remove FRED dependency on WRMSRNS
-20* 2e887187454e Stefan Hajnoczi:
-   iotests: fix 240
-21* eef2dd03f948 Fiona Ebner:
-   hw/core/qdev-properties-system: Add missing return in set_drive_helper()
-22* 9c55c03c05c1 Bibo Mao:
-   hw/loongarch/virt: Fix big endian support with MCFG table
-23* f5ec751ee70d Shameer Kolothum:
-   hw/arm/virt: Check bypass iommu is not set for iommu-map DT property
-24* e372214e663a Ethan Chen:
-   qemu-options.hx: Fix reversed description of icount sleep behavior
-25* cd38e638c43e Peter Maydell:
-   hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
-26* 5ad2b1f443a9 J. Neuschäfer:
-   linux-user/arm: Fix return value of SYS_cacheflush
-27* e7788da9860c Song Gao:
-   target/loongarch: add check for fcond
-28* c2a2e1ad2a74 Song Gao:
-   target/loongarch: fix vldi/xvldi raise wrong error
-29* 0d0fc3f46589 Richard Henderson:
-   tcg: Fix constant propagation in tcg_reg_alloc_dup
-30* 9a3bf0e0ab62 Solomon Tan:
-   target/arm: Make RETA[AB] UNDEF when pauth is not implemented
-31* a412575837b6 Philippe Mathieu-Daudé:
-   target/arm: Correct KVM & HVF dtb_compatible value
-32* 1fa2ffdbec55 Yiwei Zhang:
-   virtio-gpu: support context init multiple timeline
-33* 78e378154120 Kevin Wolf:
-   hw/s390x/ccw-device: Fix memory leak in loadparm setter
-34* f9b0f6930407 Richard Henderson:
-   target/arm: Fix SME vs AdvSIMD exception priority
-35* b4b2e070f41d Richard Henderson:
-   target/arm: Fix sve_access_check for SME
-36* e6ffd009c771 Richard Henderson:
-   target/arm: Fix 128-bit element ZIP, UZP, TRN
-37* 3801c5b75ffc Richard Henderson:
-   target/arm: Fix PSEL size operands to tcg_gen_gvec_ands
-38* cfc688c00ade Richard Henderson:
-   target/arm: Fix f16_dotadd vs nan selection
-39* bf020eaa6741 Richard Henderson:
-   target/arm: Fix bfdotadd_ebf vs nan selection
-40* 0f1d6606c28d Mark Cave-Ayland:
-   target/i386: fix TB exit logic in gen_movl_seg() when writing to SS
-41* c563cd7e61d0 Peter Maydell:
-   target/arm: Don't enforce NSE,NS check for EL3->EL3 returns
-42* 930180f3b9a2 Bernhard Beschow:
-   hw/arm/fsl-imx8mp: Wire VIRQ and VFIQ
-43* 6a3e132a1be8 Peter Maydell:
-   linux-user: Implement fchmodat2 syscall
-44* c4828cb8502d Peter Maydell:
-   linux-user: Check for EFAULT failure in nanosleep
-45* e4e839b2eeea Geoffrey Thomas:
-   linux-user: Hold the fd-trans lock across fork
-46* 983899eab493 Chaney, Ben:
-   migration: Don't sync volatile memory after migration completes
-47* d6390204c61e Peter Maydell:
-   linux-user: Use qemu_set_cloexec() to mark pidfd as FD_CLOEXEC
-48* f180e367fce4 Thomas Huth:
-   accel/kvm: Adjust the note about the minimum required kernel version
-49* 110d0fa2d4d1 Anastasia Belova:
-   net: fix buffer overflow in af_xdp_umem_create()
-50* adda0ad56bd2 Akihiko Odaki:
-   virtio-net: Add queues for RSS during migration
-51* 091c7d7924f3 Alejandro Jimenez:
-   amd_iommu: Fix Miscellaneous Information Register 0 encoding
-52* c63b8d1425ba Alejandro Jimenez:
-   amd_iommu: Fix Device ID decoding for INVALIDATE_IOTLB_PAGES command
-53* ff3dcb3bf652 Alejandro Jimenez:
-   amd_iommu: Update bitmasks representing DTE reserved fields
-54* 108e10ff6909 Alejandro Jimenez:
-   amd_iommu: Fix masks for various IOMMU MMIO Registers
-55* 123cf4bdd378 Alejandro Jimenez:
-   amd_iommu: Fix mask to retrieve Interrupt Table Root Pointer from DTE
-56* 67d3077ee403 Alejandro Jimenez:
-   amd_iommu: Fix the calculation for Device Table size
-57* 5959b641c98b Alejandro Jimenez:
-   amd_iommu: Remove duplicated definitions
-58* 5788929e05e1 Ethan Milon:
-   amd_iommu: Fix truncation of oldval in amdvi_writeq
-59* d402da1360c2 Kevin Wolf:
-   file-posix: Fix aio=threads performance regression after enablign FUA
-60* a598090ebaeb Cole Robinson:
-   roms: re-remove execute bit from hppa-firmware*
-61* 9f749129e262 David Hildenbrand:
-   vhost: Fix used memslot tracking when destroying a vhost device
-62* aef22331b5a4 Akihiko Odaki:
-   ui/vnc: Do not copy z_stream
-63* a62fef582995 Michael Tokarev:
-   i386/cpu: Fix cpu number overflow in CPUID.01H.EBX[23:16]
-64* 3e86124e7cb9 Qian Wen:
-   i386/cpu: Fix overflow of cache topology fields in CPUID.04H
-65* 5d21ee453ad8 Zhao Liu:
-   i386/cpu: Honor maximum value for CPUID.8000001DH.EAX[25:14]
-66 d3a24134e37d Paolo Bonzini:
-   target/i386: do not expose ARCH_CAPABILITIES on AMD CPU
-67 871a6e5b339f Peter Maydell:
-   hw/net/npcm_gmac.c: Send the right data for second packet in a row
-68 3ac6daa9e1c5 Daniel P. Berrangé:
-   ui: fix setting client_endian field defaults
-69 655659a74a36 Peter Maydell:
-   target/arm: Correct encoding of Debug Communications Channel registers
-70 e6da704b711d Zenghui Yu:
-   hvf: arm: Emulate ICC_RPR_EL1 accesses properly
-
-(commit(s) marked with * were in previous series and are not resent)
 
