@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022A8C87FC6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B31C87FC5
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 06:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udjcC-0001rh-PB; Mon, 21 Jul 2025 02:03:09 -0400
+	id 1udjbE-000100-2f; Mon, 21 Jul 2025 02:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjZA-0008IF-B5
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 02:00:07 -0400
+ id 1udjZ3-0008CV-J1
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjZ8-00069G-GR
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:59 -0400
+ id 1udjZ0-00067R-PK
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753077597;
+ s=mimecast20190719; t=1753077589;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r27fFDv0rcrOqMogFBb3ERRL57PzfIvzx8FWyvucAqo=;
- b=XbPxU9rCH3f+R/oiyvPYuBMGnkL2sFALW73M6ZSYqSemraxr80qZU1RCkH5QCZc2h/qxuV
- u97F0N6Qb2mtXkM5ez3jYBOYbxPQa5TwSvLpJ9q7HuXV0BawjOZuUT1++WZ/8F+rbiFTVW
- sNA+UqXG/4F9BKSFNvMh6U3tbRQaE6w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=so4o0qh5eAFTTG1tWk2RBAHz3wYv4RnAAL56VvPJxoo=;
+ b=eczSgr5tnQcM3apjbeJhPJVrgFvh/l668MtYHZr211z+SuzWAjASX6ILQu3kKqq8buARzG
+ 9Q0NVBXZyniahAKB6uaUnIoGg4O2vIFZK3Q2m1zqINi9gWpOMrXReWhig0UrrFEAa3kvzu
+ zTkDBBOFwpvTLylk1UUUMN+eN4YuEZI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-PxqKhTIlOAyDV9TMgbsUXA-1; Mon,
- 21 Jul 2025 01:59:56 -0400
-X-MC-Unique: PxqKhTIlOAyDV9TMgbsUXA-1
-X-Mimecast-MFC-AGG-ID: PxqKhTIlOAyDV9TMgbsUXA_1753077595
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-PnX5GBeuOcWCuSts5n10_A-1; Mon,
+ 21 Jul 2025 01:59:47 -0400
+X-MC-Unique: PnX5GBeuOcWCuSts5n10_A-1
+X-Mimecast-MFC-AGG-ID: PnX5GBeuOcWCuSts5n10_A_1753077586
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32AE319560AA; Mon, 21 Jul 2025 05:59:55 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 747CD195FE11; Mon, 21 Jul 2025 05:59:46 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.190])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8E55A195608D; Mon, 21 Jul 2025 05:59:52 +0000 (UTC)
+ id 838BB195608D; Mon, 21 Jul 2025 05:59:44 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 07/12] net/passt: Remove unused "err" from
- passt_vhost_user_event() (CID 1612375)
-Date: Mon, 21 Jul 2025 13:59:22 +0800
-Message-ID: <20250721055927.75951-8-jasowang@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 04/12] hw/net/npcm_gmac.c: Unify length and prev_buf_size
+ variables
+Date: Mon, 21 Jul 2025 13:59:19 +0800
+Message-ID: <20250721055927.75951-5-jasowang@redhat.com>
 In-Reply-To: <20250721055927.75951-1-jasowang@redhat.com>
 References: <20250721055927.75951-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -86,45 +85,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The "err" variable was declared but never used within the
-passt_vhost_user_event() function. This resulted in a dead code
-warning (CID 1612375) from Coverity.
+After the bug fix in the previous commit, the length and prev_buf_size
+variables are identical, except that prev_buf_size is uint32_t and
+length is uint16_t. We can therefore unify them. The only place where
+the type makes a difference is that we will truncate the packet
+at 64K when sending it; this commit preserves that behaviour
+by using a local variable when doing the packet send.
 
-Remove the unused variable and the associated error block
-to resolve the issue.
-
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- net/passt.c | 5 -----
- 1 file changed, 5 deletions(-)
+ hw/net/npcm_gmac.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/passt.c b/net/passt.c
-index 6f616ba3c2..9cd5b3e6f2 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -397,7 +397,6 @@ err:
- static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
- {
-     NetPasstState *s = opaque;
--    Error *err = NULL;
+diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+index 921327dd8c..a0050a7725 100644
+--- a/hw/net/npcm_gmac.c
++++ b/hw/net/npcm_gmac.c
+@@ -516,7 +516,6 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+     uint32_t desc_addr;
+     struct NPCMGMACTxDesc tx_desc;
+     uint32_t tx_buf_addr, tx_buf_len;
+-    uint16_t length = 0;
+     uint8_t *buf = tx_send_buffer;
+     uint32_t prev_buf_size = 0;
+     int csum = 0;
+@@ -583,7 +582,6 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+                         __func__, tx_buf_addr);
+             return;
+         }
+-        length += tx_buf_len;
+         prev_buf_size += tx_buf_len;
  
-     switch (event) {
-     case CHR_EVENT_OPENED:
-@@ -428,10 +427,6 @@ static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
-         /* Ignore */
-         break;
-     }
--
--    if (err) {
--        error_report_err(err);
--    }
- }
+         /* If not chained we'll have a second buffer. */
+@@ -606,15 +604,18 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+                               __func__, tx_buf_addr);
+                 return;
+             }
+-            length += tx_buf_len;
+             prev_buf_size += tx_buf_len;
+         }
+         if (tx_desc.tdes1 & TX_DESC_TDES1_LAST_SEG_MASK) {
++            /*
++             * This will truncate the packet at 64K.
++             * TODO: find out if this is the correct behaviour.
++             */
++            uint16_t length = prev_buf_size;
+             net_checksum_calculate(tx_send_buffer, length, csum);
+             qemu_send_packet(qemu_get_queue(gmac->nic), tx_send_buffer, length);
+             trace_npcm_gmac_packet_sent(DEVICE(gmac)->canonical_path, length);
+             buf = tx_send_buffer;
+-            length = 0;
+             prev_buf_size = 0;
+         }
  
- static int net_passt_vhost_user_init(NetPasstState *s, Error **errp)
 -- 
 2.42.0
 
