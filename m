@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B4FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78405C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udtMo-0007V4-Vu; Mon, 21 Jul 2025 12:27:55 -0400
+	id 1udtMZ-0006SN-TK; Mon, 21 Jul 2025 12:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJy-00006F-9G
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJh-00082f-Iy
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJv-0001pZ-Nf
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJf-0001lU-5w
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753115095;
+ s=mimecast20190719; t=1753115078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C2ZgW8Ta/jYhhfoxR4Cj+5sB7PkbrWhpyHhu0+VJS0g=;
- b=R3YxL/Cd605cMTfMN38BEvhQ1KVKbRLeBP1MYZOf9cfPiuu4EmAfvftsB0VNmXfS5DxCuw
- V01uIU9+4BO0v0QqOtB5VIeBYOjyCG92b2NmS8Zr1PM/V1OaDaHTlPKyBZq6zpCaxHWLsh
- y6UGPJcovPvBUUCutiqiACpplH4F0a4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=zmjY5Y9EZxT/2HeR0ihNtiWignYjkZ2TZhM04W0MAJQ=;
+ b=X/7wS2znJmcYRxoIFCPhnG6/Jd+bvAzTm9ZKlTxWXNCxuIU0bR6i9Yydmv9lUQW9Eh8QGF
+ 2jUiMAi0z9vsR/fkrTye7eS6zgY226hVxKopqCKkeyC8nCxTFg7d15GgYiRfzIMwvQEmwv
+ k0dpNBtm3n1yPpELRpLx8zL7oYiqeq8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-yp_m8tYaOFeeQ_oQASwH6Q-1; Mon,
- 21 Jul 2025 12:24:51 -0400
-X-MC-Unique: yp_m8tYaOFeeQ_oQASwH6Q-1
-X-Mimecast-MFC-AGG-ID: yp_m8tYaOFeeQ_oQASwH6Q_1753115090
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-B7IXq15fOFGaMtwFzCzDlQ-1; Mon,
+ 21 Jul 2025 12:24:35 -0400
+X-MC-Unique: B7IXq15fOFGaMtwFzCzDlQ-1
+X-Mimecast-MFC-AGG-ID: B7IXq15fOFGaMtwFzCzDlQ_1753115074
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 417C6195FE1C; Mon, 21 Jul 2025 16:24:50 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2EE018002A2; Mon, 21 Jul 2025 16:24:33 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.19])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E2D819560AD; Mon, 21 Jul 2025 16:24:47 +0000 (UTC)
+ id BFC30195608D; Mon, 21 Jul 2025 16:24:31 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -52,9 +52,10 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Gautam Menghani <gautam@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 47/50] ppc/xive2: Implement POOL LGS push TIMA op
-Date: Mon, 21 Jul 2025 18:22:30 +0200
-Message-ID: <20250721162233.686837-48-clg@redhat.com>
+Subject: [PULL 41/50] ppc/xive2: Prevent pulling of pool context losing phys
+ interrupt
+Date: Mon, 21 Jul 2025 18:22:24 +0200
+Message-ID: <20250721162233.686837-42-clg@redhat.com>
 In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
 References: <20250721162233.686837-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,44 +89,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-Implement set LGS for the POOL ring.
+When the pool context is pulled, the shared pool/phys signal is
+reset, which loses the qemu irq if a phys interrupt was presented.
+
+Only reset the signal if a poll irq was presented.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
 Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-48-npiggin@gmail.com
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-42-npiggin@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/intc/xive.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/intc/xive2.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 25cb3877cb15..725ba72b8f7a 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -532,6 +532,12 @@ static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
-     xive_tctx_set_lgs(tctx, TM_QW1_OS, value & 0xff);
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 7631d4886206..112397459afe 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -727,20 +727,22 @@ static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+                 xive2_redistribute(xrtr, tctx, cur_ring);
+             }
+         }
++
++        /*
++         * Lower external interrupt line of requested ring and below except for
++         * USER, which doesn't exist.
++         */
++        if (xive_nsr_indicates_exception(cur_ring, nsr)) {
++            if (cur_ring == xive_nsr_exception_ring(cur_ring, nsr)) {
++                xive_tctx_reset_signal(tctx, cur_ring);
++            }
++        }
+     }
+ 
+     if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
+         xive2_tctx_save_ctx(xrtr, tctx, ring, nvp_blk, nvp_idx);
+     }
+ 
+-    /*
+-     * Lower external interrupt line of requested ring and below except for
+-     * USER, which doesn't exist.
+-     */
+-    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
+-         cur_ring += XIVE_TM_RING_SIZE) {
+-        xive_tctx_reset_signal(tctx, cur_ring);
+-    }
+     return target_ringw2;
  }
  
-+static void xive_tm_set_pool_lgs(XivePresenter *xptr, XiveTCTX *tctx,
-+                          hwaddr offset, uint64_t value, unsigned size)
-+{
-+    xive_tctx_set_lgs(tctx, TM_QW2_HV_POOL, value & 0xff);
-+}
-+
- /*
-  * Adjust the PIPR to allow a CPU to process event queues of other
-  * priorities during one physical interrupt cycle.
-@@ -737,6 +743,8 @@ static const XiveTmOp xive2_tm_operations[] = {
-       xive2_tm_push_pool_ctx, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW2_HV_POOL + TM_WORD2, 8, true, true,
-       xive2_tm_push_pool_ctx, NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW2_HV_POOL + TM_LGS,   1, true, true,
-+      xive_tm_set_pool_lgs, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, true, true,
-       xive2_tm_set_hv_cppr, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, true, true,
 -- 
 2.50.1
 
