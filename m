@@ -4,70 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F840C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 07:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37310C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 07:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udlHr-0007DI-Ir; Mon, 21 Jul 2025 03:50:18 -0400
+	id 1udlIj-0007tl-Jp; Mon, 21 Jul 2025 03:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udlHY-0006zO-Fq
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 03:49:59 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1udlI7-0007Z7-5B
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 03:50:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udlHU-0003ar-S5
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 03:49:56 -0400
-Received: from [157.82.206.39] ([157.82.206.39]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56L7nTm9075995
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 21 Jul 2025 16:49:29 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=sR+xtdWtfCKlGHxN5bliOwYPB83lLYJPuQmK7SR6Ywg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753084170; v=1;
- b=hqrG9MGJ2pMLw7aeCPtVstuYbS5sWAvFSlOreVC7PmTH3FZWgXzVFN2hqCswcbR8
- pCH+ycvPB9CBkIG64aoasSBlF1UDvmwIx1ZoRkaspNviL8G43WBqfLkz818iJWJI
- P8/WBgdg8Kwk9xD9mKFeOZiDG7YfccO5Sw1sDKExQuDwyNfUz5stFQXg2jvpAqhc
- Ofw1z1yCP29sBzZoFbQkqTTPw98rBtj1Atd8F0rK4RSJ6Wj/n73i7gaUmfB6bBEm
- g2kGF56aS9i+hZ7SwvA/llDsBnVrdB0WlU4ylasJHs4K3D+BdMrScuGuCo55mQnR
- rPO6YiYDJeyAKfy3uKpdHQ==
-Message-ID: <e89fade5-1912-45d5-8c4e-259b45a8a3bd@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 21 Jul 2025 16:49:29 +0900
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1udlHy-0003oz-P3
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 03:50:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753084219;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ncMBR53AIGXeOgrPe8UjKqALGhybLctri0J4w3A0FvE=;
+ b=PRCxgj6JglfcNGF7nXzsS7EdWu+DkjGZryXuEFUw7kZ4guUtN6khJw869Sl3GrNXjq2wsE
+ aaMw7nQ/yUbyGiicLN3fpOOGbWbahCckJk9RibTg1bldeglRtodu22OKdTRENjHfi0JPNC
+ c/1vtzmWv5OTgw2alZ3/caRobQjssBw=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-34-QxUsLepFPl2q4iI9jOOCEA-1; Mon, 21 Jul 2025 03:50:17 -0400
+X-MC-Unique: QxUsLepFPl2q4iI9jOOCEA-1
+X-Mimecast-MFC-AGG-ID: QxUsLepFPl2q4iI9jOOCEA_1753084217
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7e4ca52aedaso28710685a.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 00:50:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753084217; x=1753689017;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ncMBR53AIGXeOgrPe8UjKqALGhybLctri0J4w3A0FvE=;
+ b=e9gGWeE9X3sagGhYiJyq1rB978xwqasg16vdY4/oZu1nJfv3Ya61fb2btMJnYF/zaa
+ GGnLMV1RKQJUtngHxoSfqlFqobQ0EMDbvAz9CMgK6plX1hYVUxgILgKXXA6AxbA1VRgT
+ vVg71yGRjjMs08NQD5fDQKCR1Bf4y7MNVBhySmDFieshLbZnEmvvj4rQGahqgOKzAyDg
+ iqZIUqYCRzNcEMiTQQImBrKR/8cAV8fELlU2n+CDL4O7U6PGeE7qwQ5oi4TDOTbnS4BK
+ XICxnZ1/5pakuDfIwBXcmBN4zAuccFU1PQ19jLr5GMou54ZK9C+7DRU+Z558/qq+CjNj
+ Cjxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHy70wGwjNabA1sT29Gwv9oh2AX8a6eWNzGHvtoEwcu0pBUKjaR2ul3BvNWcvRTSrX5MN5PnUYXnnh@nongnu.org
+X-Gm-Message-State: AOJu0YzD9PrflzzqR75jVULl+u58Bh/oq1DT4Ofcsg7ttyNqCoVyMtYc
+ gqWGlmlLPJG8bVuMTzucVOUJpcjHSHq3O8zybfwom3xIO26yuD2sPEcCjGY1q8Kl/7hXKVcQ7u9
+ 19tsdBMLNjwJmBINYkmstcZWZYODGvW9vPpW3+bISlCb5KMVwA6gZOyEA
+X-Gm-Gg: ASbGncuaZgnpqvmIMsgpWKxuTi7lugwZapzkFUJAo2WGyjmUZ0a6oVGakBLG9qDv4CP
+ S+o3pznWKb5g1c80YBqUHlmLvI/9ldvMvTPTNKvoradDT05F3auZAY0i9a4gaD7ygNC66ubg9Hw
+ bNjwgmL9GOoV6RnKPcvtCd8j4wV6qhexHPrOyvqiw9joStmrWxJIne2mV2zXTGJ11RDeiCfDKsJ
+ HLNM9qvv0Adqf1qKygZeZsYK8gp03wTaIFBd+3+T3Z0uaOoSz11RZ6W8B81sIe8w+zWOcEhs2Ip
+ W0JQBXKRiQDZFk+4aTdG3SgWPsL+CNsWkFQmxEsUJCvQ+i7pePLWttqIK1rZWPikhoA2oMR+Sjt
+ 6Qma4OuZImqwpBe4=
+X-Received: by 2002:a05:620a:8393:b0:7e3:30ac:8cb3 with SMTP id
+ af79cd13be357-7e342a6041amr2449734785a.12.1753084217195; 
+ Mon, 21 Jul 2025 00:50:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX+zz9LmKhXBgbRAanc3wnmPNYpU6Itoi3wASs/i7muplrz4cU1VJUiFKUAZ67OUTIx79/mQ==
+X-Received: by 2002:a05:620a:8393:b0:7e3:30ac:8cb3 with SMTP id
+ af79cd13be357-7e342a6041amr2449732585a.12.1753084216667; 
+ Mon, 21 Jul 2025 00:50:16 -0700 (PDT)
+Received: from sgarzare-redhat (host-79-45-205-118.retail.telecomitalia.it.
+ [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e356c72bf3sm403245185a.86.2025.07.21.00.50.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Jul 2025 00:50:16 -0700 (PDT)
+Date: Mon, 21 Jul 2025 09:50:12 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: David Hildenbrand <david@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] hostmem/shm: Allow shm memory backend serve as shared
+ memory for coco-VMs
+Message-ID: <4wehjmkobd4tqmjpa2jgm3gzl46cmdqxltcglgmyvg42xgwhwc@kfmcvm2zexgn>
+References: <20250721065220.895606-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 03/13] virtio: introduce extended features type
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <c1b14368e79fb3fd3cf402d7b03aed4449cdf0a8.1752828082.git.pabeni@redhat.com>
- <18dd4847-769f-4c5d-8559-8647822d362a@rsg.ci.i.u-tokyo.ac.jp>
- <fe72a900-9b4f-472d-af1d-e5f37d78a529@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <fe72a900-9b4f-472d-af1d-e5f37d78a529@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250721065220.895606-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,67 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jul 21, 2025 at 02:52:20PM +0800, Xiaoyao Li wrote:
+>shm can surely serve as the shared memory for coco-VMs. But currently it
+>doesn't check the backend->guest_memfd to pass down the RAM_GUEST_MEMFD
+>flag. It leads to failure when creating coco-VMs (e.g., TDX guest) which
+>require private mmeory.
+>
+>Set and pass down RAM_GUEST_MEMFD when backend->guest_memfd is true, to
+>allow shm memory backend serve as shared memory for coco-VMs.
+>
+>cc: Stefano Garzarella <sgarzare@redhat.com>
+>Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>---
+> backends/hostmem-shm.c | 1 +
+> 1 file changed, 1 insertion(+)
 
+LGTM!
 
-On 2025/07/21 16:33, Paolo Abeni wrote:
-> On 7/20/25 12:41 PM, Akihiko Odaki wrote:
->> On 2025/07/18 17:52, Paolo Abeni wrote:
->>> diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
->>> new file mode 100644
->>> index 0000000000..68e326e3e8
->>> --- /dev/null
->>> +++ b/include/hw/virtio/virtio-features.h
->>> @@ -0,0 +1,123 @@
->>> +/*
->>> + * Virtio features helpers
->>> + *
->>> + * Copyright 2025 Red Hat, Inc.
->>> + *
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>> + */
->>> +
->>> +#ifndef QEMU_VIRTIO_FEATURES_H
->>> +#define QEMU_VIRTIO_FEATURES_H
->>> +
->>> +#include "qemu/bitops.h"
->>> +
->>> +#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
->>> +#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
->>> +
->>> +#define VIRTIO_FEATURES_MAX        128
->>> +#define VIRTIO_BIT(b)              BIT_ULL((b) % 64)
->>> +#define VIRTIO_DWORD(b)            ((b) >> 6)
->>> +#define VIRTIO_FEATURES_WORDS      (VIRTIO_FEATURES_MAX >> 5)
->>> +#define VIRTIO_FEATURES_DWORDS     (VIRTIO_FEATURES_WORDS >> 1)
->>
->> These shifts are better to be replaced with division for clarity;
->> BIT_WORD() is a good example.
->>
->> "WORD" and "DWORD" should be avoided due to contradicting definitions
->> common in QEMU as described at:
->> https://lore.kernel.org/qemu-devel/aab8c434-364e-4305-9d8b-943eb0c98406@rsg.ci.i.u-tokyo.ac.jp/
->>
->> BITS_TO_U32S() is a good example this regard.
-> 
-> Ok, I'll rename:
-> 	VIRTIO_FEATURES_DWORDS -> VIRTIO_U64_PER_FEATURES
-> 	VIRTIO_FEATURES_WORDS -> VIRTIO_U32_PER_FEATURES
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 
-U64 and U32 should be plural (i.e., rename them into 
-VIRTIO_U64S_PER_FEATURES and VIRTIO_U32S_PER_FEATURES)
+Thanks,
+Stefano
 
-"PER_FEATURES" also sounds a bit awkward; BITS_PER_BYTE and 
-BITS_PER_LONG had singular after "per" so the unit was clear, but it is 
-not in this case.
+>
+>diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+>index f66211a2ec92..806e2670e039 100644
+>--- a/backends/hostmem-shm.c
+>+++ b/backends/hostmem-shm.c
+>@@ -54,6 +54,7 @@ have_fd:
+>     /* Let's do the same as memory-backend-ram,share=on would do. */
+>     ram_flags = RAM_SHARED;
+>     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+>+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+>
+>     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
+>                                               backend_name, backend->size,
+>-- 
+>2.43.0
+>
 
-I could think of several options:
-- VIRTIO_U64S_PER_FEATURES (what you proposed + plural U64S)
-- VIRTIO_FEATURES_U64S (closer to the previous version)
-- VIRTIO_FEATURES_NU64S (like CPU_TEMP_BUF_NLONGS)
-- VIRTIO_U64S_PER_FEATURE_BITMASK
-
-They have downsides and upsides, and I don't have an idea what's the best.
-
-Regards,
-Akihiko Odaki
 
