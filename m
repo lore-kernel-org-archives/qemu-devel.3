@@ -4,106 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9812AC87FC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AF0C87FC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 09:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udmCr-0007Jf-El; Mon, 21 Jul 2025 04:49:09 -0400
+	id 1udmgL-00032j-VC; Mon, 21 Jul 2025 05:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udmCq-0007I0-0N
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:49:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1udmgD-0002kz-3W
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 05:19:31 -0400
+Received: from p-east3-cluster6-host1-snip4-2.eps.apple.com ([57.103.85.133]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udmCn-00031y-TR
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:49:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753087744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UAufFh2LUgG5kuUETXc2PDqREMdWjxyDrjFB3zkP5f8=;
- b=NRLQbGMI4300E7gNp2Hjpl7CdYO6oUr6w3qzq9RjGZ/r8qoyTcRMfE67pvGtS4NHrp4jfA
- HzRI5u/aKj+HtNrLTF9cBFRUeKOa1lTF9OZ9HFNm7ao/xieW9eAk1e20DpJf/e3zWmQxa9
- 3xYQJa1thvtV1xBd4MWynVYpIgCiHDo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-T2i78AtbOBeoDGhz845vUA-1; Mon, 21 Jul 2025 04:49:03 -0400
-X-MC-Unique: T2i78AtbOBeoDGhz845vUA-1
-X-Mimecast-MFC-AGG-ID: T2i78AtbOBeoDGhz845vUA_1753087742
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a58939191eso1795111f8f.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:49:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753087742; x=1753692542;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UAufFh2LUgG5kuUETXc2PDqREMdWjxyDrjFB3zkP5f8=;
- b=DtHZljkvf+5N2/ZXo2apzaokVtOo3vP9rWuj76ZI8Bw2uflTBZVN4b0AcvR+uHzg+e
- X3IjOXxwdtnNxqDL6fx//BPPBLXFdFbiM3CtCVABRIlnUEZ7x3uMQhcZWLxoa33Waigg
- Guic2pp+1ffwl5cHA9reylda5gIAvljeNEiS1ou7adakMluIV2Q39ujcSBoTsDSt9kq0
- v8jnGDjl4mGI+cIIbv3BypbMkkkLRElvD338RuFSydB30cXseODAxWLHX6gFBx5vpiB9
- UdAfHz2tsjPasnmhViNr2YJqPG4aDOpTbc3PN0NX/1BBhqk2EMT/psAEVCFNrFE2SFHq
- SBMg==
-X-Gm-Message-State: AOJu0YwT5iPysEfKImUIGWa1plLULCUyr+PMXAIwGoFrZmNCnNuAxB02
- iiiVcfWG9Gcl/ouL6DcQsjPowil7Van0HhoQ1GHfbERg+PYYCDqxVM+ny8ESEpp+9gI7Bfxw0iB
- TDC1a1dj3vS/HcSZzK2Ys4hwu8OLnMUWRUFhv4nE7TaZ9rxRQle1f8jnr
-X-Gm-Gg: ASbGnctmMf3O2Za+eeDSzCenRpZ78DI0+Mn6C3+FrfPPEkUvnpo521XWNKSoqMJ+PWe
- nlONvXJTDXOJcu70VZxfZPxKzsgIs4XuWt6APgkYDqNF2wvkTaZBBhSKu08PB9dJShNftx4CRxj
- El71XLM2oBM1tskvLTftkUGQv4KNt4L6tJdYlAf3/5Rsxp4+P/KzC+t4n1Bl0S5veWemSQ/qUrn
- JrbRfMx0046DX6AxNjJCu/dSMb0XPqtbiLoEqpO1TQTCGsGyK6ELZLe181FhEjSPCbjZpasmg+5
- JJjSq/hEhU7Nmi39b9S56ltyznGrkqUiUb1w8h97LJ7XQ3u8f0j6Ng9/lxYN3krUiTqB/CjVWc6
- dvX8ku36C7ME=
-X-Received: by 2002:adf:9cc7:0:b0:3a4:f024:6717 with SMTP id
- ffacd0b85a97d-3b60e523b9dmr10846913f8f.53.1753087741581; 
- Mon, 21 Jul 2025 01:49:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNd7K+NflIIG/ssJcZH1UgiQUh2V52EesArq3pjYiQJe8MLnL1ju0DGxkn06Hx8AeYLqS6Nw==
-X-Received: by 2002:adf:9cc7:0:b0:3a4:f024:6717 with SMTP id
- ffacd0b85a97d-3b60e523b9dmr10846889f8f.53.1753087741117; 
- Mon, 21 Jul 2025 01:49:01 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4d73esm9579679f8f.66.2025.07.21.01.48.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 01:49:00 -0700 (PDT)
-Message-ID: <3625d863-5609-4ffc-bf2f-68c122bf7c35@redhat.com>
-Date: Mon, 21 Jul 2025 10:48:59 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 12/13] net: implement tunnel probing
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
- <y5qbg4bbp7horugws4wwpqtqcbff47gt2lksc7ookom5mplcm5@7eesso3jebep>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <y5qbg4bbp7horugws4wwpqtqcbff47gt2lksc7ookom5mplcm5@7eesso3jebep>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1udmg8-0004LM-Jx
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 05:19:28 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-0 (Postfix) with ESMTPS id
+ 3BBCF18005D5; Mon, 21 Jul 2025 09:19:17 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=rNBRVyIFq1cls9Fv2ZropXi7/scmfUZp0UV2ALZZxBs=;
+ h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme;
+ b=N6LDmT9QhcME70+KsCMdnk03Itpca+P0mpy4eGVJS+069NZ38uqaj0XU/k/bZ3WJwFf3GKCsEq6O7VfNfMT0M0GLXTj+EXpi+hiTtOOzo1T5UEDAtCqERg32mXh6bpHkrtaxf/s9BnsX+5QErkxUaJnYNOTsnYOBUuJsSC4ccgu02+ROu28wQPA5qdg1VidcUm4r0ilzZvJ1QdVLsohpqTY542zKSd6qBTWvuebLLeL4HMMyPjSPDUT5iU5vJMWhZheaaoiMxOl/ILmddK5bjKFyE/ug9kQZU2urkmv/WQDjIL041hEUz+8xk3O+XErImarXabD9pc9ZP8mxshB46Q==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-0 (Postfix) with ESMTPSA id
+ D681B18005C7; Mon, 21 Jul 2025 09:19:16 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3858.100.10\))
+Subject: GICv3 + GICv2m configuration for -M virt
+Message-Id: <E71D61BE-3A9E-4549-ABEF-2A713D23DDEC@unpredictable.fr>
+Date: Mon, 21 Jul 2025 11:19:14 +0200
+To: qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+X-Mailer: Apple Mail (2.3858.100.10)
+X-Proofpoint-ORIG-GUID: mioiYLOdCSyfiozUOcqHnkqW1DmglTGE
+X-Proofpoint-GUID: mioiYLOdCSyfiozUOcqHnkqW1DmglTGE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDA4MiBTYWx0ZWRfX9erGP+RcwY9R
+ 10T3VEhMLLvITxDgFaSdR1TB4QSmdQ3dcUZcK9VGMlSfrsxIV4Z5XfO7DEYat71X+K8sDE6lom8
+ 2DSKr5CkbuGKgQ0NN60XG45Zhx+9ZkazmCrhVvWf9Bpa0QSysWeed4ZcovJgSncM6q3mz8vrlfy
+ ZOHRYjsPkufJ8MTLK6/tINTiRjqfv9zCQw3cSt2q+3GOvggBZ450ibaN7k9OC7Ifl3Kw5qOXB3L
+ D5spQkCztSkK1TMQ4MVwb8EZ6qMM2xtaIISgDpIc8BPj38wnsNETVk90vKHTCYNvDeN4h3Bww=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_02,2025-07-21_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 spamscore=0 mlxlogscore=813 bulkscore=0 suspectscore=0
+ clxscore=1030 malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507210082
+Received-SPF: pass client-ip=57.103.85.133;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,32 +82,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/25 1:17 PM, Stefano Garzarella wrote:
-> On Fri, Jul 18, 2025 at 10:52:38AM +0200, Paolo Abeni wrote:
->> @@ -4245,6 +4274,14 @@ static const Property virtio_net_properties[] = {
->>                                   rss_data.specified_hash_types,
->>                                   VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
->>                                   ON_OFF_AUTO_AUTO),
->> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_ex,
->> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
->> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_ex,
->> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
->> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_ex,
->> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
->> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_ex,
->> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
-> 
-> IIUC, to avoid issue with live-migration, we should disable all of them
-> in `hw_compat_10_0` in hw/core/machine.c (e.g. like `host_uso`, 
-> `guest_uso*` in hw_compat_8_1).
+Hello,
 
-I guess the relevant compat entry should be 10.1, right? AFAICS such
-entry should added with a separate/specific before 10.1 will be tagged.
-I'll add the relevant the entries after that the hw_compat_10_1 will be
-added.
+On arm64 the platform GICs exposed in Hypervisor.framework on macOS and =
+WHPX on Windows* do not provide an ITS but do come with an expectation =
+that a GICv2m will be used for MSIs.
 
-Thanks,
+Would it be a good idea to shift Qemu over to exposing a GICv3 + GICv2m =
+configuration in those cases by default on the -M virt target instead of =
+the current state of things where MSIs become unavailable in that =
+scenario? Or should an additional gicv2m flag be added?
 
-Paolo
+* patches upcoming=20
 
+Thank you,
+-Mohamed=
 
