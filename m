@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF046C83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C387AC87FC6
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 06:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udjZR-0008HT-7x; Mon, 21 Jul 2025 02:00:33 -0400
+	id 1udjZj-0008L6-Ou; Mon, 21 Jul 2025 02:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjYu-0008Ao-QL
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:52 -0400
+ id 1udjZ4-0008Cl-G9
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjYq-00065h-Ut
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:44 -0400
+ id 1udjZ2-00067s-Rv
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753077578;
+ s=mimecast20190719; t=1753077592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=SWwn/nYe/GmEuGy8KuW6M8dATKb5NoW+5cpMla73H9o=;
- b=FQFfsci13BxqpR8IR2G2ejGCCQ/J5u6ZQdIZhQmy2DXxx+/+ewRyrmvuoYXKiDuON+diHB
- U4Qyzm5YgJqiq/E7ZqzpjeSvkQszZMRVmRAbfJyxauy5OWegxi9f/aJkN/EmhJhYCkQHQQ
- RqEZVa4+Rl8zmwwG2/k942mTn8oQEik=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5KWT+/o3dTqGxj2GxT8gQwaUixPakGt6yMy2ciNkG3w=;
+ b=hvHFMNZZWq1TVipq4SUE3YDx4GaERhrPVFq9RUQSnsGrat1RgHlaS9xB+BgrQzGdO3CkeL
+ G0cTvYpz6XrGA5a5RkymkvddjSoCSPhC9C4YYUSlQ4/cVePpmxLBZuqs9tsZeHPIUupdG8
+ rEtKUQd9rLdNUrHGjC7q9+Ii7aXbvOc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-eDsblP4CPsyNZyoubkCzeQ-1; Mon,
- 21 Jul 2025 01:59:35 -0400
-X-MC-Unique: eDsblP4CPsyNZyoubkCzeQ-1
-X-Mimecast-MFC-AGG-ID: eDsblP4CPsyNZyoubkCzeQ_1753077574
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-JWcRK7uvNIm9-G3zb9D82A-1; Mon,
+ 21 Jul 2025 01:59:50 -0400
+X-MC-Unique: JWcRK7uvNIm9-G3zb9D82A-1
+X-Mimecast-MFC-AGG-ID: JWcRK7uvNIm9-G3zb9D82A_1753077589
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D8F1195608B
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 05:59:34 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D9931800C30; Mon, 21 Jul 2025 05:59:49 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.190])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8957919560AD; Mon, 21 Jul 2025 05:59:31 +0000 (UTC)
+ id 33E59195608D; Mon, 21 Jul 2025 05:59:46 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: [PULL 00/12] Net patches
-Date: Mon, 21 Jul 2025 13:59:15 +0800
-Message-ID: <20250721055927.75951-1-jasowang@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 05/12] hw/net/npcm_gmac.c: Correct test for when to reallocate
+ packet buffer
+Date: Mon, 21 Jul 2025 13:59:20 +0800
+Message-ID: <20250721055927.75951-6-jasowang@redhat.com>
+In-Reply-To: <20250721055927.75951-1-jasowang@redhat.com>
+References: <20250721055927.75951-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -82,56 +85,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e82989544e38062beeeaad88c175afbeed0400f8:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-07-18 14:10:02 -0400)
+In gmac_try_send_next_packet() we have code that does "if this block
+of data won't fit in the buffer, reallocate it".  However, the
+condition it uses is
+  if ((prev_buf_size + tx_buf_len) > sizeof(buf))
+where buf is a uint8_t *.
 
-are available in the Git repository at:
+This means that sizeof(buf) is always 8 bytes, and the condition will
+almost always be true, so we will reallocate the buffer more often
+than we need to.
 
-  https://github.com/jasowang/qemu.git tags/net-pull-request
+Correct the condition to test against tx_buffer_size, which is
+where we track how big the allocated buffer is.
 
-for you to fetch changes up to ae9b09972bbf8ff49ae0edf3241fb413391b15ce:
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
+ hw/net/npcm_gmac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  net/vhost-user: Remove unused "err" from chr_closed_bh() (CID 1612365) (2025-07-21 10:23:17 +0800)
-
-----------------------------------------------------------------
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmh91p0ACgkQ7wSWWzmN
-YhG+2wgAqw3G2TGRPT29ObyYDcd2Z54jdnNpX5gEND/UnqENprXfdD3PR58bnxe3
-uJGPRkMXgkIDit61lshsb8DF8x9ZEIlm/Ax5FM0ksBczWDYHiyEuXoyt2Uai1kWY
-fLBkVfjFqCu1AGniboCZiC4ZawZXIqkx/+DI3J/XRqa+bSCQ18I15dsLD/yxU/pp
-Hwxp07/d+UayANdxs0mZ5Lr7a1ktTgytCt0O2jQNHlMzfOvdBbVbF/WGclMWfNgI
-68HWPY7P8k8jRTRFx3H/0LyYQrPyseTpa3zHC+zW9jNskkPkhCwlAY4UDC8x8LII
-OjsDc/0nre626rNCiJlifD3UJ7t86A==
-=xj23
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Laurent Vivier (6):
-      net/passt: Remove unused "err" from passt_vhost_user_event() (CID 1612375)
-      net/vhost-user: Remove unused "err" from net_vhost_user_event() (CID 1612372)
-      net/passt: Remove dead code in passt_vhost_user_start error path (CID 1612371)
-      net/passt: Check return value of g_remove() in net_passt_cleanup() (CID 1612369)
-      net/passt: Initialize "error" variable in net_passt_send() (CID 1612368)
-      net/vhost-user: Remove unused "err" from chr_closed_bh() (CID 1612365)
-
-Peter Maydell (4):
-      hw/net/npcm_gmac.c: Send the right data for second packet in a row
-      hw/net/npcm_gmac.c: Unify length and prev_buf_size variables
-      hw/net/npcm_gmac.c: Correct test for when to reallocate packet buffer
-      hw/net/npcm_gmac.c: Drop 'buf' local variable
-
-Steve Sistare (1):
-      tap: fix net_init_tap() return code
-
-Vladimir Sementsov-Ogievskiy (1):
-      net/tap: drop too small packets
-
- hw/net/npcm_gmac.c | 26 ++++++++++++--------------
- net/passt.c        | 22 +++++++---------------
- net/tap.c          |  9 +++++++--
- net/vhost-user.c   |  9 ---------
- 4 files changed, 26 insertions(+), 40 deletions(-)
+diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+index a0050a7725..0c17ae9b2a 100644
+--- a/hw/net/npcm_gmac.c
++++ b/hw/net/npcm_gmac.c
+@@ -569,7 +569,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+         tx_buf_len = TX_DESC_TDES1_BFFR1_SZ_MASK(tx_desc.tdes1);
+         buf = &tx_send_buffer[prev_buf_size];
+ 
+-        if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
++        if ((prev_buf_size + tx_buf_len) > tx_buffer_size) {
+             tx_buffer_size = prev_buf_size + tx_buf_len;
+             tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
+             buf = &tx_send_buffer[prev_buf_size];
+@@ -591,7 +591,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+             tx_buf_len = TX_DESC_TDES1_BFFR2_SZ_MASK(tx_desc.tdes1);
+             buf = &tx_send_buffer[prev_buf_size];
+ 
+-            if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
++            if ((prev_buf_size + tx_buf_len) > tx_buffer_size) {
+                 tx_buffer_size = prev_buf_size + tx_buf_len;
+                 tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
+                 buf = &tx_send_buffer[prev_buf_size];
+-- 
+2.42.0
 
 
