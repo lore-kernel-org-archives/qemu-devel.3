@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A6EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1503CC87FC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udlhd-00083P-M6; Mon, 21 Jul 2025 04:16:55 -0400
+	id 1udliR-0000LO-CB; Mon, 21 Jul 2025 04:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1udlhL-0007pz-IV
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:16:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1udlhT-0007yk-Nk
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:16:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1udlhJ-0007eG-P3
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:16:35 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1udlhR-0007fh-QF
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753085792;
+ s=mimecast20190719; t=1753085800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BJ6CU4sjeCPOeNC6MabAD9zbnxqnEwRvbvIeZp+xqB4=;
- b=Lnl1BunPz0G+l8jiaLNlu3L9a15qoeA6JR0OjcQnkU0WMikNB5tlPTKUAwT9/y0/mG75vV
- n7wF3rC/Rsr0WlwjRAdtqoemrF/CSwc8cwDuohgGDiZuKTgmRaGovpLrijQH9939CuE2Xa
- vrfa0NEhQnyeMvKxtDWgjTFvQ48/2JM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WWXQCqeJFFydfM0MlOTKvz3fsuBhdYzekl9MqTO0cWE=;
+ b=V1mckFaWlPyT+YmzO/H7CWA7aX0r7CjTvsDU+aX2vBXV6Zl9OplhGQUTDooekQaWTDT/hx
+ 4SgWZLlIGLXTkw85GoM0sECGOPfXOn5yk3P64VjLngocVWe8cSvAcSDlBDkjupPJWGNnlI
+ xiQs0xv95DuxPrRPN5b0lDF2fCN0tnM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-CRp_-xaENwWRYc5A5oWW2Q-1; Mon,
- 21 Jul 2025 04:16:29 -0400
-X-MC-Unique: CRp_-xaENwWRYc5A5oWW2Q-1
-X-Mimecast-MFC-AGG-ID: CRp_-xaENwWRYc5A5oWW2Q_1753085789
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-klqO9jYoNXCH14udo_4MDQ-1; Mon,
+ 21 Jul 2025 04:16:33 -0400
+X-MC-Unique: klqO9jYoNXCH14udo_4MDQ-1
+X-Mimecast-MFC-AGG-ID: klqO9jYoNXCH14udo_4MDQ_1753085792
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3C4B19560A5
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 08:16:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 307AF1956095; Mon, 21 Jul 2025 08:16:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.77])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7331119560A3; Mon, 21 Jul 2025 08:16:27 +0000 (UTC)
+ id 7E5FC19560A3; Mon, 21 Jul 2025 08:16:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 4/5] functional: always enable all python warnings
-Date: Mon, 21 Jul 2025 10:16:13 +0200
-Message-ID: <20250721081614.262563-5-thuth@redhat.com>
+Subject: [PULL 5/5] docs/devel: fix over-quoting of QEMU_TEST_KEEP_SCRATCH
+Date: Mon, 21 Jul 2025 10:16:14 +0200
+Message-ID: <20250721081614.262563-6-thuth@redhat.com>
 In-Reply-To: <20250721081614.262563-1-thuth@redhat.com>
 References: <20250721081614.262563-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,46 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Of most importance is that this gives us a heads-up if anything
-we rely on has been deprecated. The default python behaviour
-only emits a warning if triggered from __main__ which is very
-limited.
-
-Setting the env variable further ensures that any python child
-processes will also display warnings.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250715143023.1851000-11-berrange@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250717104105.2656786-1-alex.bennee@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ docs/devel/testing/functional.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 71c7160adcf..2a78e735f16 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -19,6 +19,7 @@
- from subprocess import run
- import sys
- import tempfile
-+import warnings
- import unittest
- import uuid
+diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+index 9e56dd1b118..3728bab6c0c 100644
+--- a/docs/devel/testing/functional.rst
++++ b/docs/devel/testing/functional.rst
+@@ -65,7 +65,7 @@ directory should be your build folder. For example::
  
-@@ -235,6 +236,9 @@ def tearDown(self):
-         self._log_fh.close()
+ The test framework will automatically purge any scratch files created during
+ the tests. If needing to debug a failed test, it is possible to keep these
+-files around on disk by setting ```QEMU_TEST_KEEP_SCRATCH=1``` as an env
++files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
+ variable.  Any preserved files will be deleted the next time the test is run
+ without this variable set.
  
-     def main():
-+        warnings.simplefilter("default")
-+        os.environ["PYTHONWARNINGS"] = "default"
-+
-         path = os.path.basename(sys.argv[0])[:-3]
- 
-         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
 -- 
 2.50.0
 
