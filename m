@@ -4,121 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 364EAC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 15:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76AFC83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 15:19:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udsEM-00043q-Gv; Mon, 21 Jul 2025 11:15:07 -0400
+	id 1udsHa-0008EE-Nu; Mon, 21 Jul 2025 11:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1udsEG-0003v1-0T
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:15:01 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1udsED-0004j0-Jc
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:14:59 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ECBA81F44F;
- Mon, 21 Jul 2025 15:14:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753110895; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IQrS0MSxqUsu/BPWV7dXXRmvLVJ0+5IoggvpWCT4HaY=;
- b=01ZBf8zgC/lE4I2c4/za1mSVQdNF/LrPcO67PAwBvks9KXzcoW6VmGxud2k133TkrNBFXG
- LJhjVguvM/aPgJ+bUhWzdggQ2A/QwcCfKfRjXTnYGwhGOXU58qyuNg2Z/paL5I7Te8AvMn
- 1ghtp7Ec3esFB2d1M9PVE7sUcy4BzX0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753110895;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IQrS0MSxqUsu/BPWV7dXXRmvLVJ0+5IoggvpWCT4HaY=;
- b=l4VxV5t8dfRy86cJD3pH+G2s192nHBVxEGTtgztS0KOqoM+qVtNePC2lnCwUISTZXkzbzX
- Sl+94Ei6tMas+7AQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ru4OY0rF;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=yCpR6LLY
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753110894; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IQrS0MSxqUsu/BPWV7dXXRmvLVJ0+5IoggvpWCT4HaY=;
- b=ru4OY0rF5cXbj5obXJd2i+ajooO7fhIlfBXaBYHj3vs80sD0PbZEYulZaM0DtX3leJuSRy
- Fl0dtd6yEy19uxa07A+nRanSbdSsS6eV9Kvahd1xKL1dTjYwcgrTao56fDC39wDvmtVp9P
- Q4acWVp/XPrh3mdrk9lXyoo6GY5VRnM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753110894;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IQrS0MSxqUsu/BPWV7dXXRmvLVJ0+5IoggvpWCT4HaY=;
- b=yCpR6LLYmBF13RQv/woMcbWfsb1FTWgXlCoDMkBbdEdIxw654KuwhMZ4gSDKHD+ZDutyHz
- Dx7bcTBQ/5q9eBBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5BDDC136A8;
- Mon, 21 Jul 2025 15:14:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ld8MB25ZfmgfdQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 21 Jul 2025 15:14:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Peter Xu
- <peterx@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 0/4] migration: workaround GNUTLS live migration crashes
-In-Reply-To: <aH5WwXbqF0JzTjnU@redhat.com>
-References: <20250718150514.2635338-1-berrange@redhat.com>
- <871pq9lhiu.fsf@suse.de> <aH5WwXbqF0JzTjnU@redhat.com>
-Date: Mon, 21 Jul 2025 12:14:51 -0300
-Message-ID: <87y0shk238.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1udsFd-0005xL-B6; Mon, 21 Jul 2025 11:16:25 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1udsFX-0005G7-L0; Mon, 21 Jul 2025 11:16:24 -0400
+Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56LFFsYu041503
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 22 Jul 2025 00:15:54 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=bNuNKyzVDeKh62uH7stdtMjPgFbdM7XIM9ZPukFTRII=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1753110954; v=1;
+ b=jrTi2svaunOw9q9Gz6FDmaUzajYOMh842KfGn6oUn8X9UwB/asRw0VRxXaGKiVZq
+ L0P0yubWYDrP6yrdeYSAhccnkoNdi5QBJuG1DQiwFpTdhnkrvDkRb++XoKINQ+gi
+ l+heVn2GeDMJ9RLaX5pG2WADeOBzAqetzgEJCU4iBy5J3GxTbtmcquI/cmZx/LP5
+ Zbq837SUZcUp4YwSwl5ndWZ+dFlq8e0ErgT0QYthXa5prlkgu3kurbBX+cVHzam1
+ L7iLhSZgnSGHNZZaPcvSf1EqjxaYWmbSo7+KgrZz9hzRLmdjAvC7XNJmLqpzM5/M
+ L/WwkStHClKEN2laINhusg==
+Message-ID: <9c552525-72fa-4d1e-89a2-b5c0e446935a@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 22 Jul 2025 00:15:54 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: ECBA81F44F
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
+ <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
+ <3e9aa703-2805-4ac4-9f10-f4ba71c10c8a@rsg.ci.i.u-tokyo.ac.jp>
+ <aH5AtUcjI3HYXdBe@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aH5AtUcjI3HYXdBe@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GUARANTEED_100_PERCENT=2.699, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,90 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 2025/07/21 22:29, Daniel P. Berrangé wrote:
+> On Mon, Jul 21, 2025 at 10:14:30PM +0900, Akihiko Odaki wrote:
+>> On 2025/07/21 20:29, Arun Menon wrote:
+>>> - We need to have good error reporting in the callbacks in
+>>>     VMStateDescription struct. Specifically pre_save, post_save,
+>>>     pre_load and post_load callbacks.
+>>> - It is not possible to change these functions everywhere in one
+>>>     patch, therefore, we introduce a duplicate set of callbacks
+>>>     with Error object passed to them.
+>>> - So, in this commit, we implement 'errp' variants of these callbacks,
+>>>     introducing an explicit Error object parameter.
+>>> - This is a functional step towards transitioning the entire codebase
+>>>     to the new error-parameterized functions.
+>>> - Deliberately called in mutual exclusion from their counterparts,
+>>>     to prevent conflicts during the transition.
+>>> - New impls should preferentally use 'errp' variants of
+>>>     these methods, and existing impls incrementally converted.
+>>>     The variants without 'errp' are intended to be removed
+>>>     once all usage is converted.
+>>>
+>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>> ---
+>>>    include/migration/vmstate.h | 11 +++++++++++
+>>>    migration/vmstate.c         | 47 +++++++++++++++++++++++++++++++++++++++------
+>>>    2 files changed, 52 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>>> index 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc8745fdbb79bfd7c8 100644
+>>> --- a/include/migration/vmstate.h
+>>> +++ b/include/migration/vmstate.h
+>>> @@ -200,15 +200,26 @@ struct VMStateDescription {
+>>>         * exclusive. For this reason, also early_setup VMSDs are migrated in a
+>>>         * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+>>>         * a QEMU_VM_SECTION_START section.
+>>> +     *
+>>> +     * There are duplicate impls of the post/pre save/load hooks.
+>>> +     * New impls should preferentally use 'errp' variants of these
+>>> +     * methods and existing impls incrementally converted.
+>>> +     * The variants without 'errp' are intended to be removed
+>>> +     * once all usage is converted.
+>>>         */
+>>> +
+>>>        bool early_setup;
+>>>        int version_id;
+>>>        int minimum_version_id;
+>>>        MigrationPriority priority;
+>>>        int (*pre_load)(void *opaque);
+>>> +    int (*pre_load_errp)(void *opaque, Error **errp);
+>>>        int (*post_load)(void *opaque, int version_id);
+>>> +    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>>>        int (*pre_save)(void *opaque);
+>>> +    int (*pre_save_errp)(void *opaque, Error **errp);
+>>>        int (*post_save)(void *opaque);
+>>> +    int (*post_save_errp)(void *opaque, Error **errp);
+>>
+>> I think the new functions should have void as return value instead.
+>>
+>> As I discussed before, I think having an integer return value is a source of
+>> confusion:
+>> https://lore.kernel.org/qemu-devel/0447e269-c242-4cd7-b68e-d0c7211784a7@rsg.ci.i.u-tokyo.ac.jp/
+>>
+>> In the previous discussion, I suggested using bool, but void fits better in
+>> this particular case.
+>>
+>> include/qapi/error.h says:
+>>> Whenever practical, also return a value that indicates success /
+>>> failure.  This can make the error checking more concise, and can avoid
+>>> useless error object creation and destruction.  Note that we still
+>>> have many functions returning void.
+>>
+>> There will be more implementations of these function pointers than their
+>> callers, so it makes more sense to let return void and make implementations
+>> more concise while making the callers less so. There is also DeviceRealize,
+>> an example of function pointer type that takes errp but returns void.
+> 
+> No, please do NOT make these functions void. As that text you quote
+> says, we want functions to return a value indicating success/failure.
+> 'void' return is a historical practice we don't want to continue
+> in QEMU.
+> 
+> Given that the existing methods all return 'int', we should remain
+> consistent with the new functions and return 'int', with -1 for
+> failure, 0 for success, and not use bool.
 
-> On Mon, Jul 21, 2025 at 11:56:09AM -0300, Fabiano Rosas wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > TL:DR: GNUTLS is liable to crash QEMU when live migration is run
->> > with TLS enabled and a return path channel is present, if approx
->> > 64 GB of data is transferred. This is easily triggered in a 16 GB
->> > VM with 4 CPUs, by running 'stress-ng --vm 4 --vm-bytes 80%' to
->> > prevent convergance until 64 GB of RAM has been copied. Then
->> > triggering post-copy switchover, or removing the stress workload
->> > to allow completion, will crash it.
->> >
->> > The only live migration scenario that should avoid this danger
->> > is multifd, since the high volume data transfers are handled in
->> > dedicated TCP connections which are unidirectional. The main
->> > bi-directionl TCP connection is only for co-ordination purposes
->> >
->> > This patch implements a workaround that will prevent future QEMU
->> > versions from triggering the crash.
->> >
->> > The only way to avoid the crash with *existing* running QEMU
->> > processes is to change the TLS cipher priority string to avoid
->> > use of AES with TLS 1.3. This can be done with the 'priority'
->> > field in the 'tls-creds-x509' object.eg
->> >
->> >   -object tls-creds-x509,id=3Dtls0,priority=3DNORMAL:-AES-256-GCM:-AES=
--128-GCM:-AES-128-CCM
->> >
->> > which should force the use of CHACHA20-POLY1305 which does not
->> > require TLS re-keying after 16 million sent records (64 GB of
->> > migration data).
->> >
->> >   https://gitlab.com/qemu-project/qemu/-/issues/1937
->> >
->> > On RHEL/Fedora distros you can also use the system wide crypto
->> > priorities to override this from the migration *target* host
->> > by creating /etc/crypto-policies/local.d/gnutls-qemu.config
->> > containing
->> >
->> >   QEMU=3DNONE:+ECDHE-RSA:+ECDHE-ECDSA:+RSA:+DHE-RSA:+GROUP-X25519:+GRO=
-UP-X448:+GROUP-SECP256R1:+GROUP-SECP384R1:+GROUP-SECP521R1:+GROUP-FF
->> >
->> > and running 'update-crypto-policies'. I recommend the QEMU
->> > level 'tls-creds-x509' workaround though, which new libvirt
->> > patches can soon do:
->> >
->> >   https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thre=
-ad/LX5KMIUFZSP5DPUXKJDFYBZI5TIE3E5N/
->> >
->> > Daniel P. Berrang=C3=A9 (4):
->> >   crypto: implement workaround for GNUTLS thread safety problems
->> >   io: add support for activating TLS thread safety workaround
->> >   migration: activate TLS thread safety workaround
->> >   crypto: add tracing & warning about GNUTLS countermeasures
->> >
->> >  crypto/tlssession.c           | 99 +++++++++++++++++++++++++++++++++--
->> >  crypto/trace-events           |  2 +
->> >  include/crypto/tlssession.h   | 14 +++++
->> >  include/io/channel.h          |  1 +
->> >  io/channel-tls.c              |  5 ++
->> >  meson.build                   |  9 ++++
->> >  meson_options.txt             |  2 +
->> >  migration/tls.c               |  9 ++++
->> >  scripts/meson-buildoptions.sh |  5 ++
->> >  9 files changed, 143 insertions(+), 3 deletions(-)
->>=20
->> Hi, thank you for getting to the bottom of this.
->>=20
->> Do you think it would be too cumbersome to add a test for this
->> somewhere? So we don't regress the workaround but also so the test tells
->> us whether GNUTLS is fixed.
->
-> The reproducer scenario is very expensive. I'm doing it with a 16 GB RAM
-> guest, with 4 CPUs, running 'stress-ng' guest workload. With that, it
-> takes between 10-20 minutes before live migration gets GNUTLS into the
-> potentially broken state, and the failure is not 100% guaranteed at
-> that point.
->
+Markus, I'd also like to hear your opinion since you are the maintainer 
+of the error reporting facility.
 
-Makes sense. Thanks.
-
-Will you take the series or should I?
-
-> With regards,
-> Daniel
+Regards,
+Akihiko Odaki
 
