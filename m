@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 986A9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9821C87FC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udlVO-0004AE-4p; Mon, 21 Jul 2025 04:04:19 -0400
+	id 1udlVr-0004b6-OP; Mon, 21 Jul 2025 04:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1udlUz-0003z5-28
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:03:55 -0400
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1udlUv-0005Ow-Ku
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:03:48 -0400
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-4ab8403b6daso42495101cf.2
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753085024; x=1753689824; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dk6OOKLiA5OUnxVXWAWsfybFyBNrlN58iLU10otgwgY=;
- b=JHkUJoHpuUFFs1PMZ7vq1IpF1dO01cRxJPc0zNd5lP8nskQJ06QKemO/oc8hTK8Eq3
- DFJDj9uX5uWSZahdkRjeBsIVqm8lMlOG9CR16oeKNpYtD7YKaJ0ZEXTJFkLdO+EAecMT
- iH6dGmEWyE4GeNpJupwvs78Zyen8kqCoBLX9oQ+Otti0xYNyFt6Fh/xfEXbnusrBPg84
- 8DZqSTewu4BgMBK3RozjsOp35Gf7gcAFqI78Lno1OLpfPxIpal+DwSw8V1y64MOuJGau
- 8Wc2Hr9a0q4aUNnVMRKOyXb9k1FwM1sAT5ztAK9SMzYySMfN6L1cFXr3kjmdEuUYD85C
- oFIw==
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udlVV-0004LV-Qw
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:04:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1udlVS-0005U2-Kb
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:04:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753085057;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H/uOJt9PoGyZw9NpNNuaVKeGYdVzrEJ/owlzZHZgPL0=;
+ b=jWVmDCitcaWRAFf+U+1gqbVPTDciFCRKoGwjVhQEFKhg4uoyU2dfxBodMuh2F9ZnUl830i
+ SFQVi+uybCsHNIQUX74RVkX+22/FIaArb9y21AiWL7D0kcuE2QjBQagTFSBhoAI8/LD651
+ xFmxgRm+O7o5EJW69Y0e730PCtLDZSU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-140-kR4yVDhZNhSU69k_jyYwUQ-1; Mon, 21 Jul 2025 04:04:13 -0400
+X-MC-Unique: kR4yVDhZNhSU69k_jyYwUQ-1
+X-Mimecast-MFC-AGG-ID: kR4yVDhZNhSU69k_jyYwUQ_1753085052
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451ecc3be97so20898345e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:04:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753085024; x=1753689824;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Dk6OOKLiA5OUnxVXWAWsfybFyBNrlN58iLU10otgwgY=;
- b=HjdoV2a5OkW6fBAshK2kKjNnS4I2WxSjk9Iu+iTYpkXv+0St41oFKdXoG6YspCK5dI
- DL7qD37gf+dPrHUsdh/XoXOOv20oNX7Bkoc2ffikPCi7aq4Jab595L7CLxQO/yCqX6Th
- sgZQBD7cfI2/lnzTsbcUdq0OgNiJcoGNRV4Kzk6rvisfdLlNrV3ZlLTX1f7V6DFDL3De
- 2xWG5gcJbZZmeVrapnPXaUKyU//Y7YHLRRlPlSw10zui6r98jk3KINyFYq/lszpUINcA
- SWXa2l0iFUTY3fHprjKkZ24aHqncLOZCJxb8rfAUGqejW33LZAjd82uNxbT1qz3pFYsW
- WXAQ==
-X-Gm-Message-State: AOJu0YwgHcFA1ezha3z/1Q6YuQOu/7wqBU6WdiwB5IIg18ZP4NwPhmPo
- lrv5PSfOSQioliYg+oauYoTV/1Xtzs34pgLsGB4qFhf0UIPc3r6RUKXPmxP7n1bzPfKW0HDIojr
- 0uVzOsy6IF2VIwp83ZFIBGS57lJH8+vU=
-X-Gm-Gg: ASbGnctcRMMLJB8U+nhtHpAdrhVg/7W7p6h9iZ+NSQI64Vzfu7lxoG7W1zdAme126Hv
- NEW3gqKltcodxTqSy00h2lgfHpC+7rAb0SwHTKYB9v2Bh1QUICf48NWS5BgVmmLFRwXcAU6F6R3
- YigsxO3dLTD1AMhS+m8gxGGgU63UNjDZGiVZluPDZo+8nKGRvbeh02QDkfmASSBDpv9EjL5dN4L
- CWp3Nvn
-X-Google-Smtp-Source: AGHT+IEnEwiysyAdGTm0Jsmse7YdzJ7QwqbtGTk2fMgg+zeopHd0IEAndEpS4/PvNl8Jse4js2BbMhTNIbVu3WajBc4=
-X-Received: by 2002:a05:622a:1886:b0:4a9:c2e1:89c4 with SMTP id
- d75a77b69052e-4ab93db9a29mr286070881cf.47.1753085023538; Mon, 21 Jul 2025
- 01:03:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753085052; x=1753689852;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H/uOJt9PoGyZw9NpNNuaVKeGYdVzrEJ/owlzZHZgPL0=;
+ b=aQNTYlxSRxLGCOyf9dj0pUUWZ7EfpAWGvxqMJ59cJ9cAjtAj3XovUmP0/BY0fiHBUF
+ I7cfmD7mMAg42Gs6qnRkFUsox0rIOdxUWKMeBYnQysspUGtJ3zA1p501idWGNT8tiZlm
+ RnhjFuTNdWkbDbsDblK93pqoPa/tYrcn/XtNUOiodikX1t/UWtL/4nIEwG1kCSlKKKZe
+ 4hd6YNuXtFQtW1Z7iJQI4k3QVGHag+yGz7zy3j66V4v3VXAXlRb1cwtumySxN3JH4uz3
+ SX3ytoFXrL95x7LSxN3Q9RJ08nCiBskH1zB/xa09iSTgMdK06pzobKSoBGGhcIr/4YxJ
+ 3QXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxU/f/KPk0pFyUcl1v4QdxZeLDU2kmzGrGjzt7q/oSFLHMKWxyeGLdkuadm4oIWtx927QlV+q8jVcd@nongnu.org
+X-Gm-Message-State: AOJu0YxU8w3OEnK8RgWmX/sZ35kETCl8+bbUD+95+xaJLkGZmQw11paR
+ sy5OUnk50AKxDDXmk1gW1NgJi7BkG7ycR5I9Py12MRnKf62PzeCAagS6gTLzh7Jeld0EkjZC8kn
+ zJsL0emmrnnZTZ5d8OYEnGHaTcN1hn46ON3PGK8s8CY38ZTt8X6uv4R9Q
+X-Gm-Gg: ASbGnctN4dAknFtYjcpsM9FxsHIVWd3nEXnOn6d4fP9LwLCSyn8fwFBHzRYMfX3p899
+ LCXjIREJKNkzlr9mwAtIA/BRrRUZ8fxdGXpPljh1qRPjZhWrcnpmOXk8w2TEULMD9cIco8K0Y+a
+ ruoXY1V5TZEKb76v9JYKbjuFt6tjRFmMa7cbFoegpJco9ntxjZv/wEHT8+7XDuLTlO2pQOGfn/t
+ wMnHZFbJLlgxjR9HVI1bDvc/6q2aFfzgSrF0EepBiTzdgKt6v5S1NHplpeLBWbXFCjQzKJGyUAN
+ BgMXLp1HWWlJkSDyyV7rmQsi2IIdqfXgpAumNH2xiM7+rZerN8c5xrMQW2nnhhW/5xG6N4W4MEA
+ o3V6vFvnRS2E=
+X-Received: by 2002:a05:600c:699a:b0:43c:ec4c:25b4 with SMTP id
+ 5b1f17b1804b1-45636ba6679mr171676375e9.10.1753085052118; 
+ Mon, 21 Jul 2025 01:04:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqdrwd7NvAeKHaVLGzEEm+HPRQJlkHCfwU0x7YxG7YH4N19YeOWSeuB7+z7N8/FE0G+tlITw==
+X-Received: by 2002:a05:600c:699a:b0:43c:ec4c:25b4 with SMTP id
+ 5b1f17b1804b1-45636ba6679mr171675835e9.10.1753085051525; 
+ Mon, 21 Jul 2025 01:04:11 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
+ ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4563b5b78d0sm94861425e9.8.2025.07.21.01.04.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Jul 2025 01:04:11 -0700 (PDT)
+Message-ID: <c9a7889b-190f-4bff-bb62-4396ee4d0e56@redhat.com>
+Date: Mon, 21 Jul 2025 10:04:09 +0200
 MIME-Version: 1.0
-References: <20250718234039.2266704-1-vivek.kasireddy@intel.com>
-In-Reply-To: <20250718234039.2266704-1-vivek.kasireddy@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 21 Jul 2025 12:03:32 +0400
-X-Gm-Features: Ac12FXzTMDMn_8W4Ld7VPpbiLoCSYc62boHhF9tVeH9QEy11o4RSNQRz5FVL9tw
-Message-ID: <CAJ+F1CL9z1fLnj6U_jTayGrjwHZXuLV6xtek-7VN-2Uj4gPiSQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/spice: Destroy the temporary egl fb after the blit is
- submitted
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x835.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 08/13] qmp: update virtio features map to support
+ extended features
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1752828082.git.pabeni@redhat.com>
+ <8a42515171c651101aa487519fbbc53dbe4c4c29.1752828082.git.pabeni@redhat.com>
+ <e17fdd28-b8a7-42cf-a4c0-bc04ffeb3eea@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <e17fdd28-b8a7-42cf-a4c0-bc04ffeb3eea@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,80 +121,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 19, 2025 at 3:43=E2=80=AFAM Vivek Kasireddy
-<vivek.kasireddy@intel.com> wrote:
->
-> The temporary egl fb scanout_tex_fb is only needed to facilitate the
-> blit to the display surface's texture (ssd->ds->texture). Therefore,
-> destroy it after the blit is submitted. And, also make sure that it
-> is empty initialized before it is actually used.
->
-> Fixes: f851cd65 ("ui/spice: Blit the scanout texture if its memory layout=
- is not linear")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+On 7/21/25 9:23 AM, Akihiko Odaki wrote:
+> On 2025/07/18 17:52, Paolo Abeni wrote:
+>> Extend the VirtioDeviceFeatures struct with an additional u64
+>> to track unknown features in the 64-127 bit range and decode
+>> the full virtio features spaces for vhost and virtio devices.
+>>
+>> Also add entries for the soon-to-be-supported virtio net GSO over
+>> UDP features.
+>>
+>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+>> ---
+>> v2 -> v3:
+>>    - unknown-dev-features-dword2 -> unknown-dev-features2
+>>    - _array -> _ex
+>>    - fixed typos in entries description
+>>
+>> v1 -> v2:
+>>    - uint128_t -> uint64_t[]
+>> ---
+>>   hw/virtio/virtio-hmp-cmds.c |  3 +-
+>>   hw/virtio/virtio-qmp.c      | 89 ++++++++++++++++++++++++++-----------
+>>   hw/virtio/virtio-qmp.h      |  3 +-
+>>   qapi/virtio.json            |  8 +++-
+>>   4 files changed, 73 insertions(+), 30 deletions(-)
+>>
+>> diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
+>> index 7d8677bcf0..1daae482d3 100644
+>> --- a/hw/virtio/virtio-hmp-cmds.c
+>> +++ b/hw/virtio/virtio-hmp-cmds.c
+>> @@ -74,7 +74,8 @@ static void hmp_virtio_dump_features(Monitor *mon,
+>>       }
+>>   
+>>       if (features->has_unknown_dev_features) {
+>> -        monitor_printf(mon, "  unknown-features(0x%016"PRIx64")\n",
+>> +        monitor_printf(mon, "  unknown-features(0x%016"PRIx64"%016"PRIx64")\n",
+>> +                       features->unknown_dev_features2,
+>>                          features->unknown_dev_features);
+>>       }
+>>   }
+>> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+>> index 3b6377cf0d..03c6163cf4 100644
+>> --- a/hw/virtio/virtio-qmp.c
+>> +++ b/hw/virtio/virtio-qmp.c
+>> @@ -325,6 +325,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+>>       FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+>>               "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
+>>               "negotiation supported"),
+>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
+>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+>> +            "UDP tunnel packets"),
+>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
+>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+>> +            "UDP tunnel packets requiring checksum offload for the outer "
+>> +            "header"),
+>> +    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
+>> +            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
+>> +            "UDP tunnel packets"),
+>> +    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, \
+>> +            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
+>> +            "UDP tunnel packets requiring checksum offload for the outer "
+>> +            "header"),
+>>       { -1, "" }
+>>   };
+>>   #endif
+>> @@ -510,6 +524,24 @@ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
+>>           list;                                            \
+>>       })
+>>   
+>> +#define CONVERT_FEATURES_EX(type, map, bitmap)           \
+>> +    ({                                                   \
+>> +        type *list = NULL;                               \
+>> +        type *node;                                      \
+>> +        for (i = 0; map[i].virtio_bit != -1; i++) {      \
+>> +            bit = map[i].virtio_bit;                     \
+>> +            if (!virtio_has_feature_ex(bitmap, bit)) {   \
+>> +                continue;                                \
+>> +            }                                            \
+>> +            node = g_new0(type, 1);                      \
+>> +            node->value = g_strdup(map[i].feature_desc); \
+>> +            node->next = list;                           \
+>> +            list = node;                                 \
+>> +            virtio_clear_feature_ex(bitmap, bit);        \
+>> +        }                                                \
+>> +        list;                                            \
+>> +    })
+>> +
+>>   VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap)
+>>   {
+>>       VirtioDeviceStatus *status;
+>> @@ -545,109 +577,112 @@ VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap)
+>>       return vhu_protocols;
+>>   }
+>>   
+>> -VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
+>> +VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
+>> +                                          const uint64_t *bmap)
+>>   {
+>> +    uint64_t bitmap[VIRTIO_FEATURES_DWORDS];
+>>       VirtioDeviceFeatures *features;
+>>       uint64_t bit;
+>>       int i;
+>>   
+>> +    virtio_features_copy(bitmap, bmap);
+>>       features = g_new0(VirtioDeviceFeatures, 1);
+>>       features->has_dev_features = true;
+>>   
+>>       /* transport features */
+>> -    features->transports = CONVERT_FEATURES(strList, virtio_transport_map, 0,
+>> -                                            bitmap);
+>> +    features->transports = CONVERT_FEATURES_EX(strList, virtio_transport_map,
+>> +                                               bitmap);
+>>   
+>>       /* device features */
+>>       switch (device_id) {
+>>   #ifdef CONFIG_VIRTIO_SERIAL
+>>       case VIRTIO_ID_CONSOLE:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_serial_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_serial_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_BLK
+>>       case VIRTIO_ID_BLOCK:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_blk_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_blk_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_GPU
+>>       case VIRTIO_ID_GPU:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_gpu_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_gpu_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_NET
+>>       case VIRTIO_ID_NET:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_net_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_net_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_SCSI
+>>       case VIRTIO_ID_SCSI:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_scsi_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_scsi_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_BALLOON
+>>       case VIRTIO_ID_BALLOON:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_balloon_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_balloon_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_IOMMU
+>>       case VIRTIO_ID_IOMMU:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_iommu_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_iommu_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_INPUT
+>>       case VIRTIO_ID_INPUT:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_input_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_input_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VHOST_USER_FS
+>>       case VIRTIO_ID_FS:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_fs_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_fs_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VHOST_VSOCK
+>>       case VIRTIO_ID_VSOCK:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_vsock_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_vsock_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_CRYPTO
+>>       case VIRTIO_ID_CRYPTO:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_crypto_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_crypto_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_MEM
+>>       case VIRTIO_ID_MEM:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_mem_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_mem_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_I2C_ADAPTER
+>>       case VIRTIO_ID_I2C_ADAPTER:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_i2c_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_i2c_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VIRTIO_RNG
+>>       case VIRTIO_ID_RNG:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_rng_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_rng_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>   #ifdef CONFIG_VHOST_USER_GPIO
+>>       case VIRTIO_ID_GPIO:
+>>           features->dev_features =
+>> -            CONVERT_FEATURES(strList, virtio_gpio_feature_map, 0, bitmap);
+>> +            CONVERT_FEATURES_EX(strList, virtio_gpio_feature_map, bitmap);
+>>           break;
+>>   #endif
+>>       /* No features */
+>> @@ -680,9 +715,10 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
+>>           g_assert_not_reached();
+>>       }
+>>   
+>> -    features->has_unknown_dev_features = bitmap != 0;
+>> +    features->has_unknown_dev_features = !virtio_features_empty(bitmap);
+>>       if (features->has_unknown_dev_features) {
+>> -        features->unknown_dev_features = bitmap;
+>> +        features->unknown_dev_features = bitmap[0];
+>> +        features->unknown_dev_features2 = bitmap[1];
+>>       }
+>>   
+>>       return features;
+>> @@ -743,11 +779,11 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+>>       status->device_id = vdev->device_id;
+>>       status->vhost_started = vdev->vhost_started;
+>>       status->guest_features = qmp_decode_features(vdev->device_id,
+>> -                                                 vdev->guest_features);
+>> +                                                 vdev->guest_features_ex);
+>>       status->host_features = qmp_decode_features(vdev->device_id,
+>> -                                                vdev->host_features);
+>> +                                                vdev->host_features_ex);
+>>       status->backend_features = qmp_decode_features(vdev->device_id,
+>> -                                                   vdev->backend_features);
+>> +                                                 vdev->backend_features_ex);
+>>   
+>>       switch (vdev->device_endian) {
+>>       case VIRTIO_DEVICE_ENDIAN_LITTLE:
+>> @@ -785,11 +821,12 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+>>           status->vhost_dev->nvqs = hdev->nvqs;
+>>           status->vhost_dev->vq_index = hdev->vq_index;
+>>           status->vhost_dev->features =
+>> -            qmp_decode_features(vdev->device_id, hdev->features);
+>> +            qmp_decode_features(vdev->device_id, hdev->features_ex);
+>>           status->vhost_dev->acked_features =
+>> -            qmp_decode_features(vdev->device_id, hdev->acked_features);
+>> +            qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
+>>           status->vhost_dev->backend_features =
+>> -            qmp_decode_features(vdev->device_id, hdev->backend_features);
+>> +            qmp_decode_features(vdev->device_id, hdev->backend_features_ex);
+>> +
+>>           status->vhost_dev->protocol_features =
+>>               qmp_decode_protocols(hdev->protocol_features);
+>>           status->vhost_dev->max_queues = hdev->max_queues;
+>> diff --git a/hw/virtio/virtio-qmp.h b/hw/virtio/virtio-qmp.h
+>> index 245a446a56..e0a1e49035 100644
+>> --- a/hw/virtio/virtio-qmp.h
+>> +++ b/hw/virtio/virtio-qmp.h
+>> @@ -18,6 +18,7 @@
+>>   VirtIODevice *qmp_find_virtio_device(const char *path);
+>>   VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap);
+>>   VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap);
+>> -VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap);
+>> +VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
+>> +                                          const uint64_t *bitmap);
+>>   
+>>   #endif
+>> diff --git a/qapi/virtio.json b/qapi/virtio.json
+>> index 9d652fe4a8..f2e2dd6e97 100644
+>> --- a/qapi/virtio.json
+>> +++ b/qapi/virtio.json
+>> @@ -490,14 +490,18 @@
+>>   #     unique features)
+>>   #
+>>   # @unknown-dev-features: Virtio device features bitmap that have not
+>> -#     been decoded
+>> +#     been decoded (bits 0-63)
+>> +#
+>> +# @unknown-dev-features2: Virtio device features bitmap that have not
+>> +#     been decoded (bits 64-127)
+> 
+> This documentation should contain "(since 10.1)" as described in:
+> docs/devel/qapi-code-gen.rst
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Just to be pedant, since there is a little ambiguity between the
+examples in docs/devel/qapi-code-gen.rst and the actual code e.g. in
+qapi/qom.json, I'll use:
 
-> ---
-> v2:
-> - Make scanout_tex_fb local to spice_gl_blit_scanout_texture() since
->   it is not used outside of it (Peter)
-> ---
->  ui/spice-display.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
->
-> diff --git a/ui/spice-display.c b/ui/spice-display.c
-> index 9ce622cefc..669832c561 100644
-> --- a/ui/spice-display.c
-> +++ b/ui/spice-display.c
-> @@ -1183,20 +1183,20 @@ static void qemu_spice_gl_release_dmabuf(DisplayC=
-hangeListener *dcl,
->      egl_dmabuf_release_texture(dmabuf);
->  }
->
-> -static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
-> -                                          egl_fb *scanout_tex_fb)
-> +static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd)
->  {
->      uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
->      int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
-> +    egl_fb scanout_tex_fb =3D {};
->      uint64_t modifier;
->      bool ret;
->
-> -    egl_fb_destroy(scanout_tex_fb);
-> -    egl_fb_setup_for_tex(scanout_tex_fb,
-> +    egl_fb_setup_for_tex(&scanout_tex_fb,
->                           surface_width(ssd->ds), surface_height(ssd->ds)=
-,
->                           ssd->ds->texture, false);
-> -    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
-> +    egl_fb_blit(&scanout_tex_fb, &ssd->guest_fb, false);
->      glFlush();
-> +    egl_fb_destroy(&scanout_tex_fb);
->
->      if (!ssd->new_scanout_texture) {
->          return true;
-> @@ -1330,9 +1330,7 @@ static void qemu_spice_gl_update(DisplayChangeListe=
-ner *dcl,
->      }
->
->      if (spice_remote_client && ssd->blit_scanout_texture) {
-> -        egl_fb scanout_tex_fb;
-> -
-> -        ret =3D spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
-> +        ret =3D spice_gl_blit_scanout_texture(ssd);
->          if (!ret) {
->              return;
->          }
-> --
-> 2.49.0
->
->
+# @unknown-dev-features2: Virtio device features bitmap that have not
+#     been decoded (bits 64-127) (since 10.2)
 
+/P
 
---=20
-Marc-Andr=C3=A9 Lureau
 
