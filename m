@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8CB0C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFA4C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udxht-0007nn-Rq; Mon, 21 Jul 2025 17:06:00 -0400
+	id 1udxii-0000MF-Ia; Mon, 21 Jul 2025 17:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxab-0001nT-QS
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:58:30 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxd1-0003dP-Ea
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 17:00:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxaY-00057f-Fh
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:58:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxcy-0005sU-Dj
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 17:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753131501;
+ s=mimecast20190719; t=1753131651;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dEZ2KHKOvlK5O9hwIzcxzzpf1amG8RrSqz2D31ADJF0=;
- b=PsJO5GixpoC6JYWxrWxZUvdNp1pJMmf3SVbjke7HuVaJHw2REK8Rl1FUOf9pkOaP6oi3YK
- XkRgafrhNu7x3fTGbkqhNaxMmJWqzGosGwvz7dyMWMLuLqaZuO3f01scrDHge3fuyK5mXo
- xopYI/8zpzOs5tED3ezpzTqX8ywlX/E=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=O5GE9viBfL/P9tCl9w0OIO2ARHkUFKBGQf09tTRv5aA=;
+ b=iiHaknW529KwJzAXtAWNA3bmkaTGvCRoNJTAAm2htpUBiYxuab8HqJjqScvpm4mJD8yIkF
+ l8rXomYQ3Oys21Ng2Tf40A8ze+PdFdJa4irqEjDpXTr5dB6k2LKG2fb5+vwDHaEx0Afy1I
+ dOiLPPj93Yq9x/eB0PJij3lBZmlJ3SI=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-Le1Aga5FP_uAgMV66MEyIw-1; Mon, 21 Jul 2025 16:58:19 -0400
-X-MC-Unique: Le1Aga5FP_uAgMV66MEyIw-1
-X-Mimecast-MFC-AGG-ID: Le1Aga5FP_uAgMV66MEyIw_1753131499
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-31cb5c75e00so4471256a91.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:58:19 -0700 (PDT)
+ us-mta-56-0TaHGrPxNn2SPbqUWTaMcQ-1; Mon, 21 Jul 2025 17:00:49 -0400
+X-MC-Unique: 0TaHGrPxNn2SPbqUWTaMcQ-1
+X-Mimecast-MFC-AGG-ID: 0TaHGrPxNn2SPbqUWTaMcQ_1753131648
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b26e33ae9d5so4929677a12.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 14:00:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753131499; x=1753736299;
+ d=1e100.net; s=20230601; t=1753131648; x=1753736448;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dEZ2KHKOvlK5O9hwIzcxzzpf1amG8RrSqz2D31ADJF0=;
- b=n94ReHTx/wZH9vq+ONhfu+lr93eOOXlUGssoM+YRgKCG0r9wZtY12MRiYiL4Yfif6n
- 5tKGlZypqAFKMiYDlEzal99DIH45i1e6fMTcffIiw1IPMDboL7qyPlGtGCCg7Ovcae5K
- PdhS8FyXHAS1DwHsVqCuhgKI+CpP2aVi0qOrbEUAXRbgYNua/Kg59ZxbeIIIgAW7OxHs
- c09icXR+pptK1Ah7kmQjPl6y9PQ8D7ntTbZNhq7Z8WSaZr1YdMi89e5XzKX0tEvcSXl5
- +h+7Pkl3jXEqGO36Uc0o7xLOsTRNE0Vj9sNoOHHc+h0IygNxG9Gee9vibHeR5PPPWLpl
- yatg==
-X-Gm-Message-State: AOJu0YzlRO9B4egHZ9tzI0lF1G5jQUlUubhpHAI+KQ7viH5URNwvwUfp
- Voq21qxHsse0zCMRlDkoxsG1/tipKaN4cWxkgHWRWnac5iK6ATuoFliAluCDVEa9TXGaCDgdpV1
- VJ0EEoB3b7wmc06cK71bM9oo3awqx46i2sDZmYvukM+zqMhJlhKePl26Vl52Nvxceazdz4kNywO
- L0hH+A1mbFGLLkNw1lxl0u+QAg3Dt3RcY=
-X-Gm-Gg: ASbGncvDTMpCtU32qzO+zWIoN5a/qaTO5m4nyh+I0atPtJ883SK6e9kTRMPpkJH/KdB
- wvJ4eVHOVsInflepnraDJTzxEEWXyY7XQCaoEE68UyKjpl/ZltZcMvPDqqdLcscJR1lCVeMhspM
- OxZ3zqOGOUwGgg9SRCVjoB/9M00rsMy5eCeQtUuh28DGzTwTyG+ZKt
-X-Received: by 2002:a17:90b:5646:b0:302:fc48:4f0a with SMTP id
- 98e67ed59e1d1-31e3dff05d0mr1443043a91.0.1753131498852; 
- Mon, 21 Jul 2025 13:58:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvk8DZqiHezfektSTtcU289QixqEizeRzQ/bdOf7+G3J5vEwKKOR0912a60/EKkdfU+vmX1j8tdOTpEKfo/go=
-X-Received: by 2002:a17:90b:5646:b0:302:fc48:4f0a with SMTP id
- 98e67ed59e1d1-31e3dff05d0mr1443018a91.0.1753131498487; Mon, 21 Jul 2025
- 13:58:18 -0700 (PDT)
+ bh=O5GE9viBfL/P9tCl9w0OIO2ARHkUFKBGQf09tTRv5aA=;
+ b=r02obLG0dmrA7mParQGpEHPADE84ReCgiiwM3kiNAW7l2OeS5ohSbp5aRbSy1Se/rE
+ GMee9WLXOTxqVLRAEViv7UufCedx7YUPliegcVPvkBaHAKr1X39f9M4IMhggvOZPfn8S
+ HMp+7OqOy/n+dxwyb8Cu2jq5GTkHP0nc9t79AqMk0vkyDwCtdSL3E6MBRGahfY0Wi83+
+ bk7/IP8cQoN1EtgSGtAGhCGge7MeM6m2jaR02cGajKNwKkX2WZuiclFWAZoP5H/w5U+g
+ Dej+hknYRiquQqX2HKHMQFNY7LnFO14OmvrbLTO/oHNUk1KAf6poOjsCQoNIGzF/IZS6
+ 1hdg==
+X-Gm-Message-State: AOJu0YxuDVywJSD9lZcCWobGHvMrwRxIwj2ffsP0bjmyU3IVB0SJuAIq
+ A8ux+7FORlJ8DzRaucu6k0cH6ShDgQtAZdiMvs/ezsFKYwkAFwIuEg7fxIE2ftXVFjRKKsYIGcQ
+ bSby7yDfPDlQj/23w+/AlJWYz1E5FIGrN1FeW2YkpSAz0m8xSUrhTn/8k9GJheCtMu2ykYCDY9H
+ gXhL5Z8i+G6LcGhX10Tw8C6Dub+/3RxPA=
+X-Gm-Gg: ASbGncuRNZTpDn/d5cZCeefsGGnvORenpDWUVWFfFRKoxPaKv42D4KygY5fO8ijaTlf
+ nPXmIKlIkukKDEgcFWDxeNCFJRbtzQkCl/1OWvoTS0EiDkvDWVJ0mxhaSW31drFrEU/aEpuGksT
+ g3HaRKV1ZP1U2L21/5ORRBsqseSuDhh1/K1tHDc7oc3+JnMm4KaHyh
+X-Received: by 2002:a17:90b:2fcc:b0:31e:3bac:96bc with SMTP id
+ 98e67ed59e1d1-31e3bac9951mr3751581a91.33.1753131648011; 
+ Mon, 21 Jul 2025 14:00:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUnK8QQ7Mg1GzwztHX66pIZxdKNpH0eRwJ5G1nQfsIzMtKfe+JkjSM+y3vrebd7ePiywOUr8g8tqnoAXGW0TY=
+X-Received: by 2002:a17:90b:2fcc:b0:31e:3bac:96bc with SMTP id
+ 98e67ed59e1d1-31e3bac9951mr3751510a91.33.1753131647317; Mon, 21 Jul 2025
+ 14:00:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250717115246.3830007-1-armbru@redhat.com>
- <20250717115246.3830007-4-armbru@redhat.com>
-In-Reply-To: <20250717115246.3830007-4-armbru@redhat.com>
+ <20250717115246.3830007-5-armbru@redhat.com>
+In-Reply-To: <20250717115246.3830007-5-armbru@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 21 Jul 2025 16:58:05 -0400
-X-Gm-Features: Ac12FXzYvyAka-03d54D3WodjzNs-cyOuu6F1Ta91uqPdsA_9mZzxkJfjDYJ3pY
-Message-ID: <CAFn=p-YciTJt7SOcRDXyea6niasHV7Uhuq9VkAhqWemeRanSPQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] qga: Rephrase return docs to avoid type name
+Date: Mon, 21 Jul 2025 17:00:34 -0400
+X-Gm-Features: Ac12FXxBZqWPk0FzT6FP6KjnWmzkacaylp4BQjpD1gc0aPF6_q45gvJj_YPVPww
+Message-ID: <CAFn=p-YPk+9EQozpcRdHEsjN+BgxN9dq_irA0nkU=BDLpUJnjw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] qga: Add cross-references
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com, 
  kkostiuk@redhat.com, berrange@redhat.com
@@ -105,40 +105,323 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Jul 17, 2025 at 7:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 >
-> "Returns: <description>" is rendered like
+> Enclose command and type names in `backquotes`, so they become links
+> in generated HTML.
 >
->     Return: <Type> =E2=80=93 <description>
->
-> Mentioning the type in the description again is commonly redundant.
-> There is just one such description.  Rephrase it not to mention the
-> type.
->
-> We did this for qapi/ in commit f7296f8de5c (qapi: rephrase return
-> docs to avoid type name).
+> We did this for qapi/ in merge commit 504632dcc631.
 >
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
 Reviewed-by: John Snow <jsnow@redhat.com>
 
 > ---
->  qga/qapi-schema.json | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  qga/qapi-schema.json | 80 ++++++++++++++++++++++----------------------
+>  1 file changed, 40 insertions(+), 40 deletions(-)
 >
 > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index a9cc9150dc..6c26ace3c9 100644
+> index 6c26ace3c9..8162d888bb 100644
 > --- a/qga/qapi-schema.json
 > +++ b/qga/qapi-schema.json
-> @@ -534,8 +534,7 @@
->  #     discarded.  The default value is zero, meaning "discard every
->  #     free block".
+> @@ -96,11 +96,11 @@
+>  # In cases where a partial stale response was previously received by
+>  # the client, this cannot always be done reliably.  One particular
+>  # scenario being if qemu-ga responses are fed character-by-character
+> -# into a JSON parser.  In these situations, using guest-sync-delimited
+> +# into a JSON parser.  In these situations, using `guest-sync-delimited`
+>  # may be optimal.
 >  #
-> -# Returns: A @GuestFilesystemTrimResponse which contains the status of
-> -#     all trimmed paths.  (since 2.4)
-> +# Returns: status of all trimmed paths.  (since 2.4)
+>  # For clients that fetch responses line by line and convert them to
+> -# JSON objects, guest-sync should be sufficient, but note that in
+> +# JSON objects, `guest-sync` should be sufficient, but note that in
+>  # cases where the channel is dirty some attempts at parsing the
+>  # response may result in a parser error.
 >  #
->  # Since: 1.2
+> @@ -217,7 +217,7 @@
+>  #
+>  # This command does NOT return a response on success.  Success
+>  # condition is indicated by the VM exiting with a zero exit status or,
+> -# when running with --no-shutdown, by issuing the query-status QMP
+> +# when running with --no-shutdown, by issuing the `query-status` QMP
+>  # command to confirm the VM status is "shutdown".
+>  #
+>  # Since: 0.15.0
+> @@ -247,7 +247,7 @@
+>  #
+>  # Close an open file in the guest
+>  #
+> -# @handle: filehandle returned by guest-file-open
+> +# @handle: filehandle returned by `guest-file-open`
+>  #
+>  # Since: 0.15.0
 >  ##
+> @@ -278,7 +278,7 @@
+>  # As this command is just for limited, ad-hoc debugging, such as log
+>  # file access, the number of bytes to read is limited to 48 MB.
+>  #
+> -# @handle: filehandle returned by guest-file-open
+> +# @handle: filehandle returned by `guest-file-open`
+>  #
+>  # @count: maximum number of bytes to read (default is 4KB, maximum is
+>  #     48MB)
+> @@ -309,7 +309,7 @@
+>  #
+>  # Write to an open file in the guest.
+>  #
+> -# @handle: filehandle returned by guest-file-open
+> +# @handle: filehandle returned by `guest-file-open`
+>  #
+>  # @buf-b64: base64-encoded string representing data to be written
+>  #
+> @@ -340,7 +340,7 @@
+>  ##
+>  # @QGASeek:
+>  #
+> -# Symbolic names for use in @guest-file-seek
+> +# Symbolic names for use in `guest-file-seek`
+>  #
+>  # @set: Set to the specified offset (same effect as 'whence':0)
+>  #
+> @@ -355,7 +355,7 @@
+>  ##
+>  # @GuestFileWhence:
+>  #
+> -# Controls the meaning of offset to @guest-file-seek.
+> +# Controls the meaning of offset to `guest-file-seek`.
+>  #
+>  # @value: Integral value (0 for set, 1 for cur, 2 for end), available
+>  #     for historical reasons, and might differ from the host's or
+> @@ -375,7 +375,7 @@
+>  # current file position afterward.  Also encapsulates ftell()'s
+>  # functionality, with offset=3D0 and whence=3D1.
+>  #
+> -# @handle: filehandle returned by guest-file-open
+> +# @handle: filehandle returned by `guest-file-open`
+>  #
+>  # @offset: bytes to skip over in the file stream
+>  #
+> @@ -393,7 +393,7 @@
+>  #
+>  # Write file changes buffered in userspace to disk/kernel buffers
+>  #
+> -# @handle: filehandle returned by guest-file-open
+> +# @handle: filehandle returned by `guest-file-open`
+>  #
+>  # Since: 0.15.0
+>  ##
+> @@ -434,12 +434,12 @@
+>  # @guest-fsfreeze-freeze:
+>  #
+>  # Sync and freeze all freezable, local guest filesystems.  If this
+> -# command succeeded, you may call @guest-fsfreeze-thaw later to
+> +# command succeeded, you may call `guest-fsfreeze-thaw` later to
+>  # unfreeze.
+>  #
+>  # On error, all filesystems will be thawed.  If no filesystems are
+> -# frozen as a result of this call, then @guest-fsfreeze-status will
+> -# remain "thawed" and calling @guest-fsfreeze-thaw is not necessary.
+> +# frozen as a result of this call, then `guest-fsfreeze-status` will
+> +# remain "thawed" and calling `guest-fsfreeze-thaw` is not necessary.
+>  #
+>  # Returns: Number of file systems currently frozen.
+>  #
+> @@ -457,7 +457,7 @@
+>  # @guest-fsfreeze-freeze-list:
+>  #
+>  # Sync and freeze specified guest filesystems.  See also
+> -# @guest-fsfreeze-freeze.
+> +# `guest-fsfreeze-freeze`.
+>  #
+>  # On error, all filesystems will be thawed.
+>  #
+> @@ -482,7 +482,7 @@
+>  # Returns: Number of file systems thawed by this call
+>  #
+>  # .. note:: If the return value does not match the previous call to
+> -#    guest-fsfreeze-freeze, this likely means some freezable filesystems
+> +#    `guest-fsfreeze-freeze`, this likely means some freezable filesyste=
+ms
+>  #    were unfrozen before this call, and that the filesystem state may
+>  #    have changed before issuing this command.
+>  #
+> @@ -513,7 +513,7 @@
+>  ##
+>  # @GuestFilesystemTrimResponse:
+>  #
+> -# @paths: list of @GuestFilesystemTrimResult per path that was trimmed
+> +# @paths: list of `GuestFilesystemTrimResult` per path that was trimmed
+>  #
+>  # Since: 2.4
+>  ##
+> @@ -557,7 +557,7 @@
+>  #
+>  # This command does NOT return a response on success.  There is a high
+>  # chance the command succeeded if the VM exits with a zero exit status
+> -# or, when running with --no-shutdown, by issuing the query-status QMP
+> +# or, when running with --no-shutdown, by issuing the `query-status` QMP
+>  # command to to confirm the VM status is "shutdown". However, the VM
+>  # could also exit (or set its status to "shutdown") due to other
+>  # reasons.
+> @@ -565,7 +565,7 @@
+>  # Errors:
+>  #     - If suspend to disk is not supported, Unsupported
+>  #
+> -# .. note:: It's strongly recommended to issue the guest-sync command
+> +# .. note:: It's strongly recommended to issue the `guest-sync` command
+>  #    before sending commands when the guest resumes.
+>  #
+>  # Since: 1.1
+> @@ -585,8 +585,8 @@
+>  # - pm-utils (via pm-hibernate)
+>  # - manual write into sysfs
+>  #
+> -# IMPORTANT: guest-suspend-ram requires working wakeup support in
+> -# QEMU. You should check QMP command query-current-machine returns
+> +# IMPORTANT: `guest-suspend-ram` requires working wakeup support in
+> +# QEMU. You should check QMP command `query-current-machine` returns
+>  # wakeup-suspend-support: true before issuing this command.  Failure
+>  # in doing so can result in a suspended guest that QEMU will not be
+>  # able to awaken, forcing the user to power cycle the guest to bring
+> @@ -595,14 +595,14 @@
+>  # This command does NOT return a response on success.  There are two
+>  # options to check for success:
+>  #
+> -# 1. Wait for the SUSPEND QMP event from QEMU
+> -# 2. Issue the query-status QMP command to confirm the VM status is
+> +# 1. Wait for the `SUSPEND` QMP event from QEMU
+> +# 2. Issue the `query-status` QMP command to confirm the VM status is
+>  #    "suspended"
+>  #
+>  # Errors:
+>  #     - If suspend to ram is not supported, Unsupported
+>  #
+> -# .. note:: It's strongly recommended to issue the guest-sync command
+> +# .. note:: It's strongly recommended to issue the `guest-sync` command
+>  #    before sending commands when the guest resumes.
+>  #
+>  # Since: 1.1
+> @@ -621,8 +621,8 @@
+>  # - systemd hybrid-sleep
+>  # - pm-utils (via pm-suspend-hybrid)
+>  #
+> -# IMPORTANT: guest-suspend-hybrid requires working wakeup support in
+> -# QEMU. You should check QMP command query-current-machine returns
+> +# IMPORTANT: `guest-suspend-hybrid` requires working wakeup support in
+> +# QEMU. You should check QMP command `query-current-machine` returns
+>  # wakeup-suspend-support: true before issuing this command.  Failure
+>  # in doing so can result in a suspended guest that QEMU will not be
+>  # able to awaken, forcing the user to power cycle the guest to bring
+> @@ -631,14 +631,14 @@
+>  # This command does NOT return a response on success.  There are two
+>  # options to check for success:
+>  #
+> -# 1. Wait for the SUSPEND QMP event from QEMU
+> -# 2. Issue the query-status QMP command to confirm the VM status is
+> +# 1. Wait for the `SUSPEND` QMP event from QEMU
+> +# 2. Issue the `query-status` QMP command to confirm the VM status is
+>  #    "suspended"
+>  #
+>  # Errors:
+>  #     - If hybrid suspend is not supported, Unsupported
+>  #
+> -# .. note:: It's strongly recommended to issue the guest-sync command
+> +# .. note:: It's strongly recommended to issue the `guest-sync` command
+>  #    before sending commands when the guest resumes.
+>  #
+>  # Since: 1.1
+> @@ -793,7 +793,7 @@
+>  #     There's no restriction on list length or on repeating the same
+>  #     @logical-id (with possibly different @online field).  Preferably
+>  #     the input list should describe a modified subset of
+> -#     @guest-get-vcpus' return value.
+> +#     `guest-get-vcpus`' return value.
+>  #
+>  # Returns: The length of the initial sublist that has been
+>  #     successfully processed.  The guest agent maximizes this value.
+> @@ -1069,7 +1069,7 @@
+>  #
+>  # Returns: The list of filesystems information mounted in the guest.
+>  #     The returned mountpoints may be specified to
+> -#     @guest-fsfreeze-freeze-list.  Network filesystems (such as CIFS
+> +#     `guest-fsfreeze-freeze-list`.  Network filesystems (such as CIFS
+>  #     and NFS) are not listed.
+>  #
+>  # Since: 2.2
+> @@ -1171,7 +1171,7 @@
+>  ##
+>  # @GuestMemoryBlockResponse:
+>  #
+> -# @phys-index: same with the 'phys-index' member of @GuestMemoryBlock.
+> +# @phys-index: same with the 'phys-index' member of `GuestMemoryBlock`.
+>  #
+>  # @response: the result of memory block operation.
+>  #
+> @@ -1201,11 +1201,11 @@
+>  #     guest-supported identifiers.  There's no restriction on list
+>  #     length or on repeating the same @phys-index (with possibly
+>  #     different @online field).  Preferably the input list should
+> -#     describe a modified subset of @guest-get-memory-blocks' return
+> +#     describe a modified subset of `guest-get-memory-blocks`' return
+>  #     value.
+>  #
+>  # Returns: The operation results, it is a list of
+> -#     @GuestMemoryBlockResponse, which is corresponding to the input
+> +#     `GuestMemoryBlockResponse`, which is corresponding to the input
+>  #     list.
+>  #
+>  #     Note: it will return an empty list if the @mem-blks list was
+> @@ -1258,7 +1258,7 @@
+>  #
+>  # @err-data: base64-encoded stderr of the process.  Note: @out-data
+>  #     and @err-data are present only if 'capture-output' was specified
+> -#     for 'guest-exec'.  This field will only be populated after the
+> +#     for `guest-exec`.  This field will only be populated after the
+>  #     process exits.
+>  #
+>  # @out-truncated: true if stdout was not fully captured due to size
+> @@ -1277,10 +1277,10 @@
+>  # @guest-exec-status:
+>  #
+>  # Check status of process associated with PID retrieved via
+> -# guest-exec.  Reap the process and associated metadata if it has
+> +# `guest-exec`.  Reap the process and associated metadata if it has
+>  # exited.
+>  #
+> -# @pid: pid returned from guest-exec
+> +# @pid: pid returned from `guest-exec`
+>  #
+>  # Since: 2.5
+>  ##
+> @@ -1301,7 +1301,7 @@
+>  ##
+>  # @GuestExecCaptureOutputMode:
+>  #
+> -# An enumeration of guest-exec capture modes.
+> +# An enumeration of `guest-exec` capture modes.
+>  #
+>  # @none: do not capture any output
+>  #
+> @@ -1310,7 +1310,7 @@
+>  # @stderr: only capture stderr
+>  #
+>  # @separated: capture both stdout and stderr, but separated into
+> -#     GuestExecStatus out-data and err-data, respectively
+> +#     `GuestExecStatus` out-data and err-data, respectively
+>  #
+>  # @merged: capture both stdout and stderr, but merge together into
+>  #     out-data.  Not effective on windows guests.
+> @@ -1324,10 +1324,10 @@
+>  ##
+>  # @GuestExecCaptureOutput:
+>  #
+> -# Controls what guest-exec output gets captures.
+> +# Controls what `guest-exec` output gets captures.
+>  #
+>  # @flag: captures both stdout and stderr if true.  Equivalent to
+> -#     GuestExecCaptureOutputMode::all.  (since 2.5)
+> +#     `GuestExecCaptureOutputMode`::all.  (since 2.5)
+>  #
+>  # @mode: capture mode; preferred interface
+>  #
 > --
 > 2.49.0
 >
