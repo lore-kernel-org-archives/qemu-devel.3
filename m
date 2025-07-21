@@ -4,99 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB8FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 17:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CE5C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 17:23:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udu6t-00034R-Bx; Mon, 21 Jul 2025 13:15:31 -0400
+	id 1uduEB-0006gg-Db; Mon, 21 Jul 2025 13:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1udu64-0002Ow-Fn
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:14:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1uduE5-0006IU-6e
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:22:57 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1udu62-00005w-6x
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:14:40 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 34DB0138FC3;
- Mon, 21 Jul 2025 20:14:17 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9C5FF24BD75;
- Mon, 21 Jul 2025 20:14:32 +0300 (MSK)
-Message-ID: <bd3c403c-6aa2-4583-a50a-5cc5fcaca2b8@tls.msk.ru>
-Date: Mon, 21 Jul 2025 20:14:31 +0300
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1uduE1-0001K9-PG
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:22:56 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bm6ct0mjNz6D9CR;
+ Tue, 22 Jul 2025 01:21:18 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id C5993140277;
+ Tue, 22 Jul 2025 01:22:40 +0800 (CST)
+Received: from P_UKIT01-A7bmah.china.huawei.com (10.48.155.20) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 21 Jul 2025 19:22:40 +0200
+To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <jonathan.cameron@huawei.com>, <fan.ni@samsung.com>, <dave@stgolabs.net>
+CC: <linuxarm@huawei.com>, <shiju.jose@huawei.com>
+Subject: [PATCH qemu v4 2/7] hw/cxl/events: Updates for rev3.2 general media
+ event record
+Date: Mon, 21 Jul 2025 18:22:23 +0100
+Message-ID: <20250721172228.2118-3-shiju.jose@huawei.com>
+X-Mailer: git-send-email 2.43.0.windows.1
+In-Reply-To: <20250721172228.2118-1-shiju.jose@huawei.com>
+References: <20250721172228.2118-1-shiju.jose@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: apparent race condition in mttcg memory handling
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- QEMU Development <qemu-devel@nongnu.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-References: <abe00af4-3af5-4c6b-8443-b7350a4d9349@tls.msk.ru>
- <96201a23-784b-4268-b011-a6912175d237@linaro.org>
- <c0878723-62e3-47cc-810e-6ba8a0bd30cd@linaro.org>
- <8a50f07d-ef0b-43b1-b49c-335ca6a7ff70@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <8a50f07d-ef0b-43b1-b49c-335ca6a7ff70@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.48.155.20]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ frapeml500007.china.huawei.com (7.182.85.172)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,35 +69,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  <shiju.jose@huawei.com>
+From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.07.2025 19:29, Pierrick Bouvier wrote:
-> On 7/21/25 9:23 AM, Pierrick Bouvier wrote:
-..
->> looks like a good target for TSAN, which might expose the race without
->> really having to trigger it.
->> https://www.qemu.org/docs/master/devel/testing/main.html#building-and- 
->> testing-with-tsan
+From: Shiju Jose <shiju.jose@huawei.com>
 
-I think I tried with TSAN and it gave something useful even.
-The prob now is to reproduce the thing by someone more familiar
-with this stuff than me :)
+CXL spec rev3.2 section 8.2.10.2.1.1 Table 8-57, general media event
+table has updated with following new fields.
+1. Advanced Programmable Corrected Memory Error Threshold Event Flags
+2. Corrected Memory Error Count at Event
+3. Memory Event Sub-Type
+4. Support for component ID in the PLDM format.
 
->> Else, you can reproduce your run using rr record -h (chaos mode) [1],
->> which randomly schedules threads, until it catches the segfault, and
->> then you'll have a reproducible case to debug.
-> 
-> In case you never had opportunity to use rr, it is quite convenient, 
-> because you can set a hardware watchpoint on your faulty pointer (watch 
-> -l), do a reverse-continue, and in most cases, you'll directly reach 
-> where the bug happened. Feels like cheating.
+Add updates for the above spec changes in the CXL general media event
+reporting and QMP command to inject general media event.
 
-rr is the first thing I tried.  Nope, it's absolutely hopeless.   It
-tried to boot just the kernel for over 30 minutes, after which I just
-gave up.
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+---
+ hw/mem/cxl_type3.c          | 29 +++++++++++++++++++++++++++++
+ hw/mem/cxl_type3_stubs.c    |  6 ++++++
+ include/hw/cxl/cxl_events.h |  7 +++++--
+ qapi/cxl.json               | 18 +++++++++++++++++-
+ 4 files changed, 57 insertions(+), 3 deletions(-)
 
-Thanks,
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index aa6e5c1a08..a10e6bf518 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1646,6 +1646,11 @@ static const QemuUUID memory_module_uuid = {
+ #define CXL_GMER_VALID_RANK                             BIT(1)
+ #define CXL_GMER_VALID_DEVICE                           BIT(2)
+ #define CXL_GMER_VALID_COMPONENT                        BIT(3)
++#define CXL_GMER_VALID_COMPONENT_ID_FORMAT              BIT(4)
++
++#define CXL_GMER_EV_DESC_UCE                            BIT(0)
++#define CXL_GMER_EV_DESC_THRESHOLD_EVENT                BIT(1)
++#define CXL_GMER_EV_DESC_POISON_LIST_OVERFLOW_EVENT     BIT(2)
+ 
+ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+ {
+@@ -1677,6 +1682,12 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+                                         bool has_rank, uint8_t rank,
+                                         bool has_device, uint32_t device,
+                                         const char *component_id,
++                                        bool has_comp_id_pldm,
++                                        uint8_t is_comp_id_pldm,
++                                        bool has_cme_ev_flags,
++                                        uint8_t cme_ev_flags,
++                                        bool has_cme_count, uint32_t cme_count,
++                                        uint8_t sub_type,
+                                         Error **errp)
+ {
+     Object *obj = object_resolve_path(path, NULL);
+@@ -1737,10 +1748,28 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+         strncpy((char *)gem.component_id, component_id,
+                 sizeof(gem.component_id) - 1);
+         valid_flags |= CXL_GMER_VALID_COMPONENT;
++        if (has_comp_id_pldm && is_comp_id_pldm) {
++            valid_flags |= CXL_GMER_VALID_COMPONENT_ID_FORMAT;
++        }
+     }
+ 
+     stw_le_p(&gem.validity_flags, valid_flags);
+ 
++    if (has_cme_ev_flags) {
++        gem.cme_ev_flags = cme_ev_flags;
++    } else {
++        gem.cme_ev_flags = 0;
++    }
++
++    if (has_cme_count) {
++        descriptor |= CXL_GMER_EV_DESC_THRESHOLD_EVENT;
++        st24_le_p(gem.cme_count, cme_count);
++    } else {
++        st24_le_p(gem.cme_count, 0);
++    }
++
++    gem.sub_type = sub_type;
++
+     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
+         cxl_event_irq_assert(ct3d);
+     }
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index 91b1478114..28eb880b30 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -27,6 +27,12 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+                                         bool has_rank, uint8_t rank,
+                                         bool has_device, uint32_t device,
+                                         const char *component_id,
++                                        bool has_comp_id_pldm,
++                                        uint8_t is_comp_id_pldm,
++                                        bool has_cme_ev_flags,
++                                        uint8_t cme_ev_flags,
++                                        bool has_cme_count, uint32_t cme_count,
++                                        uint8_t sub_type,
+                                         Error **errp) {}
+ 
+ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 4d9cfdb621..352f9891bd 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -115,10 +115,10 @@ typedef struct CXLEventInterruptPolicy {
+ 
+ /*
+  * General Media Event Record
+- * CXL r3.1 Section 8.2.9.2.1.1; Table 8-45
++ * CXL r3.2 Section 8.2.10.2.1.1; Table 8-57
+  */
+ #define CXL_EVENT_GEN_MED_COMP_ID_SIZE  0x10
+-#define CXL_EVENT_GEN_MED_RES_SIZE      0x2e
++#define CXL_EVENT_GEN_MED_RES_SIZE      0x29
+ typedef struct CXLEventGenMedia {
+     CXLEventRecordHdr hdr;
+     uint64_t phys_addr;
+@@ -130,6 +130,9 @@ typedef struct CXLEventGenMedia {
+     uint8_t rank;
+     uint8_t device[3];
+     uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
++    uint8_t cme_ev_flags;
++    uint8_t cme_count[3];
++    uint8_t sub_type;
+     uint8_t reserved[CXL_EVENT_GEN_MED_RES_SIZE];
+ } QEMU_PACKED CXLEventGenMedia;
+ 
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index c1fe8319c8..e8060d16f7 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -82,6 +82,19 @@
+ # @component-id: Device specific component identifier for the event.
+ #     May describe a field replaceable sub-component of the device.
+ #
++# @is-comp-id-pldm: Flag represents device specific component identifier
++#     format is PLDM or not.
++#
++# @cme-ev-flags: Advanced programmable corrected memory error
++#     threshold event flags.
++#     See CXL r3.2 Table 8-57 General Media Event Record.
++#
++# @cme-count: Corrected memory error count at event.
++#     See CXL r3.2 Table 8-57 General Media Event Record.
++#
++# @sub-type: Memory event sub-type.
++#     See CXL r3.2 Table 8-57 General Media Event Record.
++#
+ # Since: 8.1
+ ##
+ { 'command': 'cxl-inject-general-media-event',
+@@ -91,7 +104,10 @@
+             'dpa': 'uint64', 'descriptor': 'uint8',
+             'type': 'uint8', 'transaction-type': 'uint8',
+             '*channel': 'uint8', '*rank': 'uint8',
+-            '*device': 'uint32', '*component-id': 'str' } }
++            '*device': 'uint32', '*component-id': 'str',
++            '*is-comp-id-pldm':'uint8',
++            '*cme-ev-flags':'uint8', '*cme-count':'uint32',
++            'sub-type':'uint8' } }
+ 
+ ##
+ # @cxl-inject-dram-event:
+-- 
+2.43.0
 
-/mjt
 
