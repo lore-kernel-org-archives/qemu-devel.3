@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57646C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB56C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwkO-0005jF-1X; Mon, 21 Jul 2025 16:04:30 -0400
+	id 1udwkT-0005py-K0; Mon, 21 Jul 2025 16:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjI-0004rs-F2; Mon, 21 Jul 2025 16:03:26 -0400
+ id 1udwjF-0004rU-8R; Mon, 21 Jul 2025 16:03:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjG-0004mL-Tc; Mon, 21 Jul 2025 16:03:20 -0400
+ id 1udwjB-0004kc-Fh; Mon, 21 Jul 2025 16:03:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30977139047;
+ by isrv.corpit.ru (Postfix) with ESMTP id 01474139044;
  Mon, 21 Jul 2025 23:02:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E442624BED3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B4CB124BED0;
  Mon, 21 Jul 2025 23:03:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zenghui Yu <zenghui.yu@linux.dev>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 70/70] hvf: arm: Emulate ICC_RPR_EL1 accesses properly
-Date: Mon, 21 Jul 2025 23:02:57 +0300
-Message-ID: <20250721200302.133559-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 67/70] hw/net/npcm_gmac.c: Send the right data for
+ second packet in a row
+Date: Mon, 21 Jul 2025 23:02:54 +0300
+Message-ID: <20250721200302.133559-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,42 +60,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zenghui Yu <zenghui.yu@linux.dev>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit a2260983c655 ("hvf: arm: Add support for GICv3") added GICv3 support
-by implementing emulation for a few system registers. ICC_RPR_EL1 was
-defined but not plugged in the sysreg handlers (for no good reason).
+The transmit loop in gmac_try_send_next_packet() is constructed in a
+way that means it will send incorrect data if it it sends more than
+one packet.
 
-Fix it.
+The function assembles the outbound data in a dynamically allocated
+block of memory which is pointed to by tx_send_buffer.  We track the
+first point in this block of memory which is not yet used with the
+prev_buf_size offset, initially zero.  We track the size of the
+packet we're sending with the length variable, also initially zero.
 
-Fixes: a2260983c655 ("hvf: arm: Add support for GICv3")
-Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250714160139.10404-3-zenghui.yu@linux.dev
+As we read chunks of data out of guest memory, we write them to
+tx_send_buffer[prev_buf_size], and then increment both prev_buf_size
+and length.  (We might dynamically reallocate the buffer if needed.)
+
+When we send a packet, we checksum and send length bytes, starting at
+tx_send_buffer, and then we reset length to 0.  This gives the right
+data for the first packet.  But we don't reset prev_buf_size.  This
+means that if we process more descriptors with further data for the
+next packet, that data will continue to accumulate at offset
+prev_buf_size, i.e.  after the data for the first packet.  But when
+we transmit that second packet, we send length bytes from
+tx_send_buffer, so we will send a packet which has the length of the
+second packet but the data of the first one.
+
+The fix for this is to also clear prev_buf_size after the packet has
+been sent -- we never need the data from packet one after we've sent
+it, so we can write packet two's data starting at the beginning of
+the buffer.
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit e6da704b711d5d731e4d933ad56cbbc25ee0a825)
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 871a6e5b339f0b5e71925ec7d3f452944a1c82d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 01e26a9726..8a4a41d15b 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1352,6 +1352,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-     case SYSREG_ICC_IGRPEN0_EL1:
-     case SYSREG_ICC_IGRPEN1_EL1:
-     case SYSREG_ICC_PMR_EL1:
-+    case SYSREG_ICC_RPR_EL1:
-     case SYSREG_ICC_SGI0R_EL1:
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
-@@ -1666,6 +1667,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-     case SYSREG_ICC_IGRPEN0_EL1:
-     case SYSREG_ICC_IGRPEN1_EL1:
-     case SYSREG_ICC_PMR_EL1:
-+    case SYSREG_ICC_RPR_EL1:
-     case SYSREG_ICC_SGI0R_EL1:
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
+diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+index e1fb383772..d4dba630ac 100644
+--- a/hw/net/npcm_gmac.c
++++ b/hw/net/npcm_gmac.c
+@@ -615,6 +615,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+             trace_npcm_gmac_packet_sent(DEVICE(gmac)->canonical_path, length);
+             buf = tx_send_buffer;
+             length = 0;
++            prev_buf_size = 0;
+         }
+ 
+         /* step 6 */
 -- 
 2.47.2
 
