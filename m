@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E52C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF6D1C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 08:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udlw6-0007QR-88; Mon, 21 Jul 2025 04:31:50 -0400
+	id 1udlzr-0003Lo-2r; Mon, 21 Jul 2025 04:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlvl-0007EK-N5
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:31:32 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlzS-00035C-Mm
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:35:19 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlvi-0001J6-Rl
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:31:29 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3b611665b96so2166070f8f.2
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:31:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1udlzP-0001k9-LE
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 04:35:17 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-451d54214adso28436115e9.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 01:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753086682; x=1753691482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1753086911; x=1753691711; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BM+XpGpoFgdgk8BQ/1RXBrAiK2PD629/Ss/licxoFoY=;
- b=nHpqjedm2dGIk2yIjm2ZdIB6pblmgZr4ROiy6GRkldMo27MhiBBUdH9q044ZeRMnPv
- XHCaayfX/dFH273++EVxKdkWiFzq3QMV40rNVvYDFLVYeyTNnH8RbIa/whqd8mCx3IZE
- NDFDHWBAsNofzdUzgYU7XAnClJ8s99MnipaBCZuqUP2Qi7Fb3QnCqi+O7uaBOPE/pdW1
- k2KUmDjzkvDz8g5y9KfRtdcWPwkTpaWD8w8pn3x4TXD+Wm0oW41QBWVU4st8XJh2DHtz
- 0NlGsyQgHwbliysTAwgzNfVSoqgTUZFLttK89/wfTzQPVXSV3nn4qWjbRVFj0UL7n7Dk
- aOIQ==
+ bh=z9hmMkq6WRr+8Xm2fAKfj1k2r2ooPF3YBSZzbDONu68=;
+ b=Y5d2e7X1502uJB9fiaTEskZ8bXiKM+u66lLoy3SBirPZxXs32tUUdwrqbnc+zAAGEr
+ 9RNrqZGdpIygG2vofs7RKvr2z7PvpDen7sPcfhziZd9EBrkHzGx7XHRLfn31OJMd1ujH
+ bHqFj8ydrib+gPZfXOomJYgAxOQIygz+hz5QTV7zFvsfyTactDQ9y0VDDkKkihiq1f1I
+ EBTIarRs1XyORGVv9CGqoZKokrYdSjJKS1PYSvZnhEkaNsDPya9suuiKdcFITTfcONr3
+ GmcE7cGkX4lf7G45PqT/S0KygLXKR9I2EXDt9RELtGFiK7eMki4V82DIbLrYP4KC6Byl
+ f3yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753086682; x=1753691482;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753086911; x=1753691711;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BM+XpGpoFgdgk8BQ/1RXBrAiK2PD629/Ss/licxoFoY=;
- b=J4cPEixUACkuLEM63bcys7VSiZU6wfy511//MzPA/zY94WW+QxF8L81Uy+CWleoIYp
- /2dtqHqCI6FA2mm/+ouV8aYSQatqVzIjCi1jf1fJLKrapriKblj+vsu5c3uWKnziEqaV
- w+1EBDvB41PvaWhsKzNRfL6R+6wxovzbzo4ds/v6uIMmvvEYax+kWEFUnzPvxqsNT8xi
- aCeSdTDFGtqfwhPhf++o4oBdczy38hIwirX4o3WB2IiqtWXqbZp97iNhvb+frnbub319
- RskhBJO2qbKJavd/sJbML2UjLKwZfPqRipuJiXYzNSWtp/dBzH9Kt6Y62iSBr/AElvwz
- lTFA==
-X-Gm-Message-State: AOJu0YwNraIu1YaacZCiojmWzOGd89B5MwJlx817VtmRqao/H3M4++ti
- jtzOaj/M1xuQ92Dl8UgdYGaRHRyZ0mThginNMySqxvhhNXrYJucFCWBet/gpDNTVdCo=
-X-Gm-Gg: ASbGnctyX5nd0Q/xvHGULYnFzF/vDnUsWSDARXkxro+Mm4Ymt+41Fu/9rG8KjEYHInA
- Omk2FmF2j71B6ExQr41M8wViDjB48+RIA4sc7qU0tZboJUjf9XSk6Snaee72EOjBI8RxiSI64eS
- sKYT5weogXph4SE7MDY3Kko41roXyWyRpRn4+STbMX1355QTWZ8ShoU81w7djLYk47fa5RWODLG
- WRFgNtFI9qEKhLL3VUV68+U3bPWZheNrgISRnYRwEk8vynkRWa8eV1ZWfKAZyMSCGt0VGtpYxUm
- ZII5Hfl2BuhHEMYcAD7o7SqLvOBrZI1k/UESUGmKT+2kOhQjnWMUyBFe86KKE/CLDVpI114JdZN
- aqrWHJentg0LmuEB3psoeymqbgqqDeIvPc6MsdYJJW+mKIcevAmsa8L9+aIKFX8FrAQ==
-X-Google-Smtp-Source: AGHT+IFeyPnrsHwb3rD5VoWiT/kBU8pSy7umjSVdZ/RBKgl1eO1v//vLicqDE1mSZ/gnrGwonbsiVQ==
-X-Received: by 2002:adf:8989:0:b0:3a4:f936:7882 with SMTP id
- ffacd0b85a97d-3b60e523c5dmr10921099f8f.55.1753086682317; 
- Mon, 21 Jul 2025 01:31:22 -0700 (PDT)
+ bh=z9hmMkq6WRr+8Xm2fAKfj1k2r2ooPF3YBSZzbDONu68=;
+ b=PBLawG1mzshSLFwaNYc30FCfGcW1hLVWGYQI2wBC2gljpDxQ/pc3NiyYKJt4KnR62v
+ jZllUh68Y6o/NTIXdTsOMc1dGQLd8RMUcx/8+VZjzPxAF0JQ3daA12zcM0e57VSnlPpH
+ 3lyxBEWVvUhAbbRCkvgWkIDIJk5ZHCsUsaz39gGHG/vRLavdYhAOlpf6hrEB80IW+VHT
+ sVWeohz6mbWAUykHZCbxpmRllifLVfnI+Z73658vIdMsDXbBAeIQfoS/tbhrjdLMFf6m
+ vyIl2F6NntArtrRzqHyuDkyINW92f+aFHvbTfljTy7yU56U0cFFNjbrklzljtXqS+sp4
+ plKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1eXjkeLsbzGl+PVs1vpnZX67rGrfYzwGQJUl++L3kLDr0+MkHOKELsvwzoqFlQKQZMXhM1CDMs6Vg@nongnu.org
+X-Gm-Message-State: AOJu0Ywexg8qggI96ydmdlEJ2LksAZwUdVJ/7AJfIoNoQTUXLmS4VvK6
+ dpjikpAOPcDewn+iiZ/9nSFgqSG8Lt62CC8YcVcxBfigCeG/v/XcF4fNwttRFAR0WaY=
+X-Gm-Gg: ASbGncs5RbEgk5PmUIExn0Yyz57dR2Z0xkVOlQzAaxU6OmUqr/pn3pjuJyGwOlVs24d
+ kdx2VZnfx9QG0LYvsF9qX1wexEGuoRh85hYLSY3Ct/EDSbYCiiuEVWME4QEP19YOBsvp10ZjZej
+ VmcpbJ69R74J7dPgVNjP9lyKLkn1uP/cX78I/kPEsMLI/wZAtAIGt0CHFP7cGFT9ixkUk1mrxFu
+ 3Jt442mBKrHKNot1ToElZ+CBvnSl5WT0RqbJaZ7rxQrS8Be7/U6GRLBaw3zGxKzzBUi4bc/rqhZ
+ +Etic7YM199s9htx/ibZgiCQApj4DQ29Yk8537kj4i5XWJ+1pCXsRLFGrv+uNl469HfEgJE0Y/s
+ 5AiYZ4n0pvkjd2FmVKZCrqfm2uoiHmUQf3MGDodwCCWr5RuztZSO+8Xxd5+a9hM7n2g==
+X-Google-Smtp-Source: AGHT+IE3DzfiqDdSjqaAOr8CJICKzCjxxYXvo7roku1fBRqfr9MeVUcuAzSTX6VuNRvG0z11EDN3Tg==
+X-Received: by 2002:a05:600c:3484:b0:456:1a41:f932 with SMTP id
+ 5b1f17b1804b1-4563535d2ddmr116720635e9.22.1753086911082; 
+ Mon, 21 Jul 2025 01:35:11 -0700 (PDT)
 Received: from [192.168.69.239] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca48c40sm9826049f8f.58.2025.07.21.01.31.20
+ 5b1f17b1804b1-4563b5a4e40sm95731465e9.6.2025.07.21.01.35.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 01:31:21 -0700 (PDT)
-Message-ID: <4068807d-d1b8-4929-97f2-520a2b46d891@linaro.org>
-Date: Mon, 21 Jul 2025 10:31:20 +0200
+ Mon, 21 Jul 2025 01:35:10 -0700 (PDT)
+Message-ID: <5a57181b-4b17-4de4-bf48-e5222c9ba2c8@linaro.org>
+Date: Mon, 21 Jul 2025 10:35:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] tests/functional/test_aarch64_rme: update image
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, jean-philippe@linaro.org,
- richard.henderson@linaro.org, Leif Lindholm
- <leif.lindholm@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, gustavo.romero@linaro.org,
- qemu-arm@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>
-References: <20250719035838.2284029-1-pierrick.bouvier@linaro.org>
- <20250719035838.2284029-3-pierrick.bouvier@linaro.org>
- <CAAjaMXYRar1FnWSXqxRb1cKabWOXu2YxFi5B_JhypS0OZZ2LSg@mail.gmail.com>
- <7afa0c8d-71a1-4c97-aedf-1ed401f95fad@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH-for-10.1] ui/curses: Fix infinite loop on windows
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7afa0c8d-71a1-4c97-aedf-1ed401f95fad@linaro.org>
+To: William Hu <purplearmadillo77@proton.me>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbeNpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=@proton.me>
+ <19616b23-6b86-4f64-9836-fbfda79c76b8@linaro.org>
+Content-Language: en-US
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+In-Reply-To: <19616b23-6b86-4f64-9836-fbfda79c76b8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,58 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/7/25 17:38, Pierrick Bouvier wrote:
-> On 7/19/25 3:57 AM, Manos Pitsidianakis wrote:
->> On Sat, Jul 19, 2025 at 7:00 AM Pierrick Bouvier
->> <pierrick.bouvier@linaro.org> wrote:
->>>
->>> TF-A needs to be patched to enable support for FEAT_TCR2 and
->>> FEAT_SCTLR2. This new image contains updated firmware.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>   tests/functional/test_aarch64_rme_sbsaref.py | 64 ++++++++-------
->>>   tests/functional/test_aarch64_rme_virt.py    | 85 +++++++-------------
->>>   2 files changed, 66 insertions(+), 83 deletions(-)
+Ping?
 
-
->>>   class Aarch64RMESbsaRefMachine(QemuSystemTest):
->>>
->>> -    # Stack is built with OP-TEE build environment from those 
->>> instructions:
->>> +    # Stack is inspired from:
->>>       # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
->>> -    # https://github.com/pbo-linaro/qemu-rme-stack
->>> +    # https://github.com/pbo-linaro/qemu-linux-stack/tree/ 
->>> rme_sbsa_release
->>> +    # ./build.sh && ./archive_artifacts.sh out.tar.xz
->>>       ASSET_RME_STACK_SBSA = Asset(
->>> -        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
->>> -         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
->>> -         
->>> 'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
->>> +        ('https://github.com/pbo-linaro/qemu-linux-stack/'
->>> +         'releases/download/build/rme_sbsa_release-a7f02cf.tar.xz'),
->>> +         
->>> '27d8400b11befb828d6db0cab97e7ae102d0992c928d3dfbf38b24b6cf6c324c')
+On 8/4/25 21:01, Philippe Mathieu-Daudé wrote:
+> On 3/4/25 03:07, William Hu via wrote:
+>>  From a42046272f0544dd18ed58661e53ea17d1584c2c Mon Sep 17 00:00:00 2001
+>> From: William Hu <purplearmadillo77@proton.me>
+>> Date: Wed, 2 Apr 2025 12:00:00 -0400
+>> Subject: [PATCH] ui/curses: Fix infinite loop on windows
 >>
->> Hi Pierrick, I got:
+>> Replace -1 comparisons for wint_t with WEOF to fix infinite loop 
+>> caused by a
+>> 65535 == -1 comparison.
 >>
->>> qemu_test.asset.AssetError: https://github.com/pbo-linaro/qemu-linux- 
->>> stack/releases/download/build/rme_sbsa_release-a7f02cf.tar.xz: 
->>> Download retries exceeded
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2905
+>> Signed-off-by: William Hu <purplearmadillo77@proton.me>
+>> ---
+>>   ui/curses.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
 >>
->> Maybe fileserver.linaro.org is a better option?
->>
+>> diff --git a/ui/curses.c b/ui/curses.c
+>> index a39aee8762..3f5c5adf78 100644
+>> --- a/ui/curses.c
+>> +++ b/ui/curses.c
+>> @@ -265,7 +265,12 @@ static int curses2foo(const int _curses2foo[], 
+>> const int _curseskey2foo[],
+>>   static void curses_refresh(DisplayChangeListener *dcl)
+>>   {
+>> -    int chr, keysym, keycode, keycode_alt;
+>> +    /*
+>> +     * DO NOT MAKE chr AN INT:
+>> +     * Causes silent conversion errors on Windows where wint_t is 
+>> unsigned short.
+>> +     */
+>> +    wint_t chr = 0;
+>> +    int keysym, keycode, keycode_alt;
+>>       enum maybe_keycode maybe_keycode = CURSES_KEYCODE;
+>>       curses_winch_check();
+>> @@ -284,8 +289,9 @@ static void curses_refresh(DisplayChangeListener 
+>> *dcl)
+>>           /* while there are any pending key strokes to process */
+>>           chr = console_getch(&maybe_keycode);
+>> -        if (chr == -1)
+>> +        if (chr == WEOF) {
+>>               break;
+>> +        }
 > 
-> In years of using GitHub releases to download various sources/artifacts, 
-> I found that it is very reliable (as much as cloning code from GitHub), 
-> so I would favor this over any custom solution.
+> Correct but incomplete, also missing the same check few lines below:
+> 
+> -- >8 --
+> diff --git a/ui/curses.c b/ui/curses.c
+> index a39aee87623..9c33de331cd 100644
+> --- a/ui/curses.c
+> +++ b/ui/curses.c
+> @@ -304,9 +304,9 @@ static void curses_refresh(DisplayChangeListener *dcl)
+>           /* alt or esc key */
+>           if (keycode == 1) {
+>               enum maybe_keycode next_maybe_keycode = CURSES_KEYCODE;
+> -            int nextchr = console_getch(&next_maybe_keycode);
+> +            wint_t nextchr = console_getch(&next_maybe_keycode);
+> 
+> -            if (nextchr != -1) {
+> +            if (nextchr != WEOF) {
+>                   chr = nextchr;
+>                   maybe_keycode = next_maybe_keycode;
+>                   keycode_alt = ALT;
+> ---
+> 
+> With that:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
-GitHub releases has the advantage of not involving manual steps to
-upload to fileserver and generate a shared URL.
-
-Another downside of fileserver.linaro.org is its bandwidth is limited.
-
-My 2 cents anyway ;)
 
