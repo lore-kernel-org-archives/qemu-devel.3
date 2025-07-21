@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78405C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C98C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udtMZ-0006SN-TK; Mon, 21 Jul 2025 12:27:40 -0400
+	id 1udtJ3-0005je-K2; Mon, 21 Jul 2025 12:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJh-00082f-Iy
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIG-0003fM-MX
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJf-0001lU-5w
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIE-0001RT-4q
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753115078;
+ s=mimecast20190719; t=1753114989;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zmjY5Y9EZxT/2HeR0ihNtiWignYjkZ2TZhM04W0MAJQ=;
- b=X/7wS2znJmcYRxoIFCPhnG6/Jd+bvAzTm9ZKlTxWXNCxuIU0bR6i9Yydmv9lUQW9Eh8QGF
- 2jUiMAi0z9vsR/fkrTye7eS6zgY226hVxKopqCKkeyC8nCxTFg7d15GgYiRfzIMwvQEmwv
- k0dpNBtm3n1yPpELRpLx8zL7oYiqeq8=
+ bh=5HMbXVPwEREx4z0xNHGKAjtCskhCG3OzH+66bN8KWJ0=;
+ b=DsT3WMG9rKBYq3TwUM8gAkanELNzVOiDlw9y3U4Tc+UX+hv+YZpmv2YEHcBFhffn6bOhrL
+ mEg/O9kWszIrA/PeLmgWc6uxdZO8WT/tpaK1nkuceReWKFLuV7csPvQTVxQ1nUWWDcoffN
+ VUS9fOsp0VNlt1HgwbOZbyzeGoEhEpE=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-B7IXq15fOFGaMtwFzCzDlQ-1; Mon,
- 21 Jul 2025 12:24:35 -0400
-X-MC-Unique: B7IXq15fOFGaMtwFzCzDlQ-1
-X-Mimecast-MFC-AGG-ID: B7IXq15fOFGaMtwFzCzDlQ_1753115074
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-J1ls4oRrPLCueQf2Kr5OMw-1; Mon,
+ 21 Jul 2025 12:23:05 -0400
+X-MC-Unique: J1ls4oRrPLCueQf2Kr5OMw-1
+X-Mimecast-MFC-AGG-ID: J1ls4oRrPLCueQf2Kr5OMw_1753114983
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2EE018002A2; Mon, 21 Jul 2025 16:24:33 +0000 (UTC)
+ id D2AE51800365; Mon, 21 Jul 2025 16:23:03 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.19])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BFC30195608D; Mon, 21 Jul 2025 16:24:31 +0000 (UTC)
+ id 63208195608D; Mon, 21 Jul 2025 16:23:01 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.ibm.com>,
  Gautam Menghani <gautam@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 41/50] ppc/xive2: Prevent pulling of pool context losing phys
- interrupt
-Date: Mon, 21 Jul 2025 18:22:24 +0200
-Message-ID: <20250721162233.686837-42-clg@redhat.com>
+Subject: [PULL 09/50] ppc/xive2: Fix irq preempted by lower priority group irq
+Date: Mon, 21 Jul 2025 18:21:52 +0200
+Message-ID: <20250721162233.686837-10-clg@redhat.com>
 In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
 References: <20250721162233.686837-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,58 +87,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-When the pool context is pulled, the shared pool/phys signal is
-reset, which loses the qemu irq if a phys interrupt was presented.
+A problem was seen where uart interrupts would be lost resulting in the
+console hanging. Traces showed that a lower priority interrupt was
+preempting a higher priority interrupt, which would result in the higher
+priority interrupt never being handled.
 
-Only reset the signal if a poll irq was presented.
+The new interrupt's priority was being compared against the CPPR
+(Current Processor Priority Register) instead of the PIPR (Post
+Interrupt Priority Register), as was required by the XIVE spec.
+This allowed for a window between raising an interrupt and ACK'ing
+the interrupt where a lower priority interrupt could slip in.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Fixes: 26c55b99418 ("ppc/xive2: Process group backlog when updating the CPPR")
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-42-npiggin@gmail.com
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-10-npiggin@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/intc/xive2.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ hw/intc/xive2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 7631d4886206..112397459afe 100644
+index edf5d9eb94cb..36e842f041e5 100644
 --- a/hw/intc/xive2.c
 +++ b/hw/intc/xive2.c
-@@ -727,20 +727,22 @@ static uint64_t xive2_tm_pull_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-                 xive2_redistribute(xrtr, tctx, cur_ring);
-             }
-         }
-+
-+        /*
-+         * Lower external interrupt line of requested ring and below except for
-+         * USER, which doesn't exist.
-+         */
-+        if (xive_nsr_indicates_exception(cur_ring, nsr)) {
-+            if (cur_ring == xive_nsr_exception_ring(cur_ring, nsr)) {
-+                xive_tctx_reset_signal(tctx, cur_ring);
-+            }
-+        }
+@@ -1283,7 +1283,7 @@ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
+      * priority to know if the thread can take the interrupt now or if
+      * it is precluded.
+      */
+-    if (priority < alt_regs[TM_CPPR]) {
++    if (priority < alt_regs[TM_PIPR]) {
+         return false;
      }
- 
-     if (xive2_router_get_config(xrtr) & XIVE2_VP_SAVE_RESTORE && do_save) {
-         xive2_tctx_save_ctx(xrtr, tctx, ring, nvp_blk, nvp_idx);
-     }
- 
--    /*
--     * Lower external interrupt line of requested ring and below except for
--     * USER, which doesn't exist.
--     */
--    for (cur_ring = TM_QW1_OS; cur_ring <= ring;
--         cur_ring += XIVE_TM_RING_SIZE) {
--        xive_tctx_reset_signal(tctx, cur_ring);
--    }
-     return target_ringw2;
- }
- 
+     return true;
 -- 
 2.50.1
 
