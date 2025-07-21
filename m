@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C387AC87FC6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 06:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F8BC83F27
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 06:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udjZj-0008L6-Ou; Mon, 21 Jul 2025 02:00:41 -0400
+	id 1udjaJ-0000FS-B0; Mon, 21 Jul 2025 02:01:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjZ4-0008Cl-G9
+ id 1udjZ1-0008Bv-0N
  for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1udjZ2-00067s-Rv
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:54 -0400
+ id 1udjYx-000678-SX
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 01:59:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753077592;
+ s=mimecast20190719; t=1753077587;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5KWT+/o3dTqGxj2GxT8gQwaUixPakGt6yMy2ciNkG3w=;
- b=hvHFMNZZWq1TVipq4SUE3YDx4GaERhrPVFq9RUQSnsGrat1RgHlaS9xB+BgrQzGdO3CkeL
- G0cTvYpz6XrGA5a5RkymkvddjSoCSPhC9C4YYUSlQ4/cVePpmxLBZuqs9tsZeHPIUupdG8
- rEtKUQd9rLdNUrHGjC7q9+Ii7aXbvOc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=B+YOWVyBM2NC9L7cVU6GfA7Ln+4xlkaVPQo1sEz1p2Y=;
+ b=HY8a6WRZUXM2pKtFgSwHYdcMLz6o4N7rXgkTXk56By7+tfZpHHrL5O4DB0c4jTC9FHPGQK
+ /vPvMj3t1/8gxe7yLnGp0A004ZofVI/LElBA0AMR5+7PoJG8Kn9b0ID+KfR7Y2km0l0LK+
+ SPOY97mphe1U5oBM/kJ/FM+128FLcWg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-JWcRK7uvNIm9-G3zb9D82A-1; Mon,
- 21 Jul 2025 01:59:50 -0400
-X-MC-Unique: JWcRK7uvNIm9-G3zb9D82A-1
-X-Mimecast-MFC-AGG-ID: JWcRK7uvNIm9-G3zb9D82A_1753077589
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-wBQNHcxhNaCP1DEBSYW79Q-1; Mon,
+ 21 Jul 2025 01:59:44 -0400
+X-MC-Unique: wBQNHcxhNaCP1DEBSYW79Q-1
+X-Mimecast-MFC-AGG-ID: wBQNHcxhNaCP1DEBSYW79Q_1753077583
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D9931800C30; Mon, 21 Jul 2025 05:59:49 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C45691800286; Mon, 21 Jul 2025 05:59:43 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.190])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 33E59195608D; Mon, 21 Jul 2025 05:59:46 +0000 (UTC)
+ id 5D130195608D; Mon, 21 Jul 2025 05:59:41 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 05/12] hw/net/npcm_gmac.c: Correct test for when to reallocate
- packet buffer
-Date: Mon, 21 Jul 2025 13:59:20 +0800
-Message-ID: <20250721055927.75951-6-jasowang@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PULL 03/12] hw/net/npcm_gmac.c: Send the right data for second
+ packet in a row
+Date: Mon, 21 Jul 2025 13:59:18 +0800
+Message-ID: <20250721055927.75951-4-jasowang@redhat.com>
 In-Reply-To: <20250721055927.75951-1-jasowang@redhat.com>
 References: <20250721055927.75951-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -87,47 +88,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In gmac_try_send_next_packet() we have code that does "if this block
-of data won't fit in the buffer, reallocate it".  However, the
-condition it uses is
-  if ((prev_buf_size + tx_buf_len) > sizeof(buf))
-where buf is a uint8_t *.
+The transmit loop in gmac_try_send_next_packet() is constructed in a
+way that means it will send incorrect data if it it sends more than
+one packet.
 
-This means that sizeof(buf) is always 8 bytes, and the condition will
-almost always be true, so we will reallocate the buffer more often
-than we need to.
+The function assembles the outbound data in a dynamically allocated
+block of memory which is pointed to by tx_send_buffer.  We track the
+first point in this block of memory which is not yet used with the
+prev_buf_size offset, initially zero.  We track the size of the
+packet we're sending with the length variable, also initially zero.
 
-Correct the condition to test against tx_buffer_size, which is
-where we track how big the allocated buffer is.
+As we read chunks of data out of guest memory, we write them to
+tx_send_buffer[prev_buf_size], and then increment both prev_buf_size
+and length.  (We might dynamically reallocate the buffer if needed.)
 
+When we send a packet, we checksum and send length bytes, starting at
+tx_send_buffer, and then we reset length to 0.  This gives the right
+data for the first packet.  But we don't reset prev_buf_size.  This
+means that if we process more descriptors with further data for the
+next packet, that data will continue to accumulate at offset
+prev_buf_size, i.e.  after the data for the first packet.  But when
+we transmit that second packet, we send length bytes from
+tx_send_buffer, so we will send a packet which has the length of the
+second packet but the data of the first one.
+
+The fix for this is to also clear prev_buf_size after the packet has
+been sent -- we never need the data from packet one after we've sent
+it, so we can write packet two's data starting at the beginning of
+the buffer.
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/npcm_gmac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/net/npcm_gmac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
-index a0050a7725..0c17ae9b2a 100644
+index a434112580..921327dd8c 100644
 --- a/hw/net/npcm_gmac.c
 +++ b/hw/net/npcm_gmac.c
-@@ -569,7 +569,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
-         tx_buf_len = TX_DESC_TDES1_BFFR1_SZ_MASK(tx_desc.tdes1);
-         buf = &tx_send_buffer[prev_buf_size];
+@@ -615,6 +615,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+             trace_npcm_gmac_packet_sent(DEVICE(gmac)->canonical_path, length);
+             buf = tx_send_buffer;
+             length = 0;
++            prev_buf_size = 0;
+         }
  
--        if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
-+        if ((prev_buf_size + tx_buf_len) > tx_buffer_size) {
-             tx_buffer_size = prev_buf_size + tx_buf_len;
-             tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
-             buf = &tx_send_buffer[prev_buf_size];
-@@ -591,7 +591,7 @@ static void gmac_try_send_next_packet(NPCMGMACState *gmac)
-             tx_buf_len = TX_DESC_TDES1_BFFR2_SZ_MASK(tx_desc.tdes1);
-             buf = &tx_send_buffer[prev_buf_size];
- 
--            if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
-+            if ((prev_buf_size + tx_buf_len) > tx_buffer_size) {
-                 tx_buffer_size = prev_buf_size + tx_buf_len;
-                 tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
-                 buf = &tx_send_buffer[prev_buf_size];
+         /* step 6 */
 -- 
 2.42.0
 
