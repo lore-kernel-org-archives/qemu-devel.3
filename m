@@ -4,58 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E64A2C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 17:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90F7C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 17:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uduEH-00073A-05; Mon, 21 Jul 2025 13:23:09 -0400
+	id 1uduHM-0007Au-9w; Mon, 21 Jul 2025 13:26:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uduE7-0006VC-R6
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:23:00 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uduE5-0001KV-5j
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:22:59 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bm6cq3RZJz6L5Fn;
- Tue, 22 Jul 2025 01:21:15 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id CEB79140277;
- Tue, 22 Jul 2025 01:22:42 +0800 (CST)
-Received: from P_UKIT01-A7bmah.china.huawei.com (10.48.155.20) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 21 Jul 2025 19:22:42 +0200
-To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <jonathan.cameron@huawei.com>, <fan.ni@samsung.com>, <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <shiju.jose@huawei.com>
-Subject: [PATCH qemu v4 5/7] hw/cxl/cxl-mailbox-utils: Move declaration of
- scrub and ECS feature attributes in cmd_features_set_feature()
-Date: Mon, 21 Jul 2025 18:22:26 +0100
-Message-ID: <20250721172228.2118-6-shiju.jose@huawei.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20250721172228.2118-1-shiju.jose@huawei.com>
-References: <20250721172228.2118-1-shiju.jose@huawei.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uduGd-0006Y7-HA
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:25:53 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uduGZ-0001om-Cr
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 13:25:35 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-74b27c1481bso2855892b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 10:25:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753118729; x=1753723529; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7fSkUaiuzjNlJ3L/Lf2+2fcQJIdr2OqK0OJfOrwSvIM=;
+ b=mC6OVaUoy9sQw5IICDwcryHR0H9vGMYq3yuUYFeymjtWnT/2sND1j0KXtLUrFQXJS7
+ f6zVn8+au4kYrPBSTOlRdrRByHU6lmZ8beu6gyysDcvsxpG/NqabZ0cA+xCJejTIe5Jp
+ fDtlWZ2PEJVWM44QUu8fGef+KSUo0wE3vQOhZwis3cz7wEmNjPerIH38lwAYiRqNutrO
+ F/Q8GmxJE29GCr6QXiKeqZBUIDq40B/ZLd+kMkCtlCYTBi9+USLS8XTgLMnRpblcMKsH
+ 8+ElEWvYWhiqeBTNMS4s8ZLwhDNE+XiKpCGjO7H/7vwu9Ssi1oV9agEhNNtEAPtzVR7S
+ xmCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753118729; x=1753723529;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7fSkUaiuzjNlJ3L/Lf2+2fcQJIdr2OqK0OJfOrwSvIM=;
+ b=XHpxvGJk+P6DNAJqhBCzi1yJRzCJ5G8GW4lkDBKgdplP+Kkbnm9vsNZzkULkdqAtbL
+ Bj81GtoajzPx7BGxRokoP/VlkJr3IihLeGkya0hNkXlEGkN8JiIvMCi3Qbm8xcHQqbLF
+ W81QUtZDOAucmI0gCLc7KpxSpIoFBRDP8Fg0ZQV9PNTM9R94TBvjLK3yk5QqBKZ1fbeH
+ sVheC//I1Zd1Ipvf6Sq20I5KRAb3W89O1hSGUArVKjRv4lbrs4u1s5R8wpUArLVt9kEl
+ w5dEikV3CvO7Ndl3K1CrxV5i+xP/n6C2dwriu6ESuFSf93Rej3LStUJpbGDgf6DYu7u2
+ C2Yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW88Z1Ngkv9Eevvn+A32Oy/U5RCpff3TuSlfK+6PEepZO18A6mIu/+iBKDORM+jQcsBi3h2XmI6nrzr@nongnu.org
+X-Gm-Message-State: AOJu0YzqXlGZDG5NX+GNxYI/PtxVNSFzvNwxJMSRa6UYlhYQY2vpi2sw
+ 11oQdZGhhTQBbMAGNX4WuO4rCFYJI7JL6nl+GD6mg+WpGQd2t/oJUtg7s2PQ5rtHt4IGqZSy7gE
+ 4e4VR
+X-Gm-Gg: ASbGnctAvhyYd07GqsK+KU/yCN+st4jrywrhGORjNcmeKwDhN3uZSn4qvujaQT1rNkR
+ UNnj4ro6mGKZVg0alR5uNBQFWK+cSvPpamLAt3/AHMbHyJ+6ycyvfwYZG9YR1HJLMQHQ0lXUImB
+ 7ON5eq5g3LTQssQS1GsmxVxmQDzGUgplkCjlSH0Eu9j3IbLJR+Xqjcu5Zot4RO4B2JF8UZsCpje
+ yzKpIcRExq79jkAxv/aLGoJDblqZ482ITHUGxVNou53BBcb2oK27se5EP/bcvrm/kRMdg+uSoBF
+ lVeG+rPXr1XfWj0TZihIq8kPUfJKwjo9NHsPmiphyXO0c4RPo4o515xG5DM2C2Zho/ACH5IAJ4r
+ kIMzLFccXEqRdJZNchLWbh4N124zGHSeyRe4=
+X-Google-Smtp-Source: AGHT+IFffnMFodm7niTA1P5T00ARe9YtzQfDg/zqrhPX7xrCK3aFe3XJJbI1vba8W4T8MczBw8BDGg==
+X-Received: by 2002:a05:6a21:1fc3:b0:235:c9fe:5929 with SMTP id
+ adf61e73a8af0-237d7b649bbmr30740887637.42.1753118728954; 
+ Mon, 21 Jul 2025 10:25:28 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-759cb76de4fsm5987889b3a.114.2025.07.21.10.25.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Jul 2025 10:25:28 -0700 (PDT)
+Message-ID: <e1272431-f38d-46ee-8140-38e2c3418399@linaro.org>
+Date: Mon, 21 Jul 2025 10:25:27 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.48.155.20]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- frapeml500007.china.huawei.com (7.182.85.172)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: apparent race condition in mttcg memory handling
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ QEMU Development <qemu-devel@nongnu.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+References: <abe00af4-3af5-4c6b-8443-b7350a4d9349@tls.msk.ru>
+ <96201a23-784b-4268-b011-a6912175d237@linaro.org>
+ <c0878723-62e3-47cc-810e-6ba8a0bd30cd@linaro.org>
+ <8a50f07d-ef0b-43b1-b49c-335ca6a7ff70@linaro.org>
+ <bd3c403c-6aa2-4583-a50a-5cc5fcaca2b8@tls.msk.ru>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <bd3c403c-6aa2-4583-a50a-5cc5fcaca2b8@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,73 +111,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  <shiju.jose@huawei.com>
-From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+On 7/21/25 10:14 AM, Michael Tokarev wrote:
+> On 21.07.2025 19:29, Pierrick Bouvier wrote:
+>> On 7/21/25 9:23 AM, Pierrick Bouvier wrote:
+> ..
+>>> looks like a good target for TSAN, which might expose the race without
+>>> really having to trigger it.
+>>> https://www.qemu.org/docs/master/devel/testing/main.html#building-and-
+>>> testing-with-tsan
+> 
+> I think I tried with TSAN and it gave something useful even.
+> The prob now is to reproduce the thing by someone more familiar
+> with this stuff than me :)
+> 
+>>> Else, you can reproduce your run using rr record -h (chaos mode) [1],
+>>> which randomly schedules threads, until it catches the segfault, and
+>>> then you'll have a reproducible case to debug.
+>>
+>> In case you never had opportunity to use rr, it is quite convenient,
+>> because you can set a hardware watchpoint on your faulty pointer (watch
+>> -l), do a reverse-continue, and in most cases, you'll directly reach
+>> where the bug happened. Feels like cheating.
+> 
+> rr is the first thing I tried.  Nope, it's absolutely hopeless.   It
+> tried to boot just the kernel for over 30 minutes, after which I just
+> gave up.
+>
 
-Move the declaration of scrub and ECS feature attributes in
-cmd_features_set_feature() to the local scope where they are used.
+I had a similar thing to debug recently, and with a simple loop, I 
+couldn't expose it easily. The bug I had was triggered with 3% 
+probability, which seems close from yours.
+As rr record -h is single threaded, I found useful to write a wrapper 
+script [1] to run one instance, and then run it in parallel using:
+./run_one.sh | head -n 10000 | parallel --bar -j$(nproc)
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
----
- hw/cxl/cxl-mailbox-utils.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+With that, I could expose the bug in 2 minutes reliably (vs trying for 
+more than one hour before). With your 64 cores, I'm sure it will quickly 
+expose it.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 8f62ea9b54..ce02ae8528 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1350,10 +1350,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-                                            CXLCCI *cci)
- {
-     CXLSetFeatureInHeader *hdr = (void *)payload_in;
--    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
--    CXLMemPatrolScrubSetFeature *ps_set_feature;
--    CXLMemECSWriteAttrs *ecs_write_attrs;
--    CXLMemECSSetFeature *ecs_set_feature;
-     CXLSetFeatureInfo *set_feat_info;
-     uint16_t bytes_to_copy = 0;
-     uint8_t data_transfer_flag;
-@@ -1395,13 +1391,14 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-     }
- 
-     if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-+        CXLMemPatrolScrubSetFeature *ps_set_feature = (void *)payload_in;
-+        CXLMemPatrolScrubWriteAttrs *ps_write_attrs =
-+                                &ps_set_feature->feat_data;
-+
-         if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION) {
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
--        ps_set_feature = (void *)payload_in;
--        ps_write_attrs = &ps_set_feature->feat_data;
--
-         if ((uint32_t)hdr->offset + bytes_to_copy >
-             sizeof(ct3d->patrol_scrub_wr_attrs)) {
-             return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-@@ -1422,13 +1419,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-         }
-     } else if (qemu_uuid_is_equal(&hdr->uuid,
-                                   &ecs_uuid)) {
-+        CXLMemECSSetFeature *ecs_set_feature = (void *)payload_in;
-+        CXLMemECSWriteAttrs *ecs_write_attrs = ecs_set_feature->feat_data;
-+
-         if (hdr->version != CXL_ECS_SET_FEATURE_VERSION) {
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
--        ecs_set_feature = (void *)payload_in;
--        ecs_write_attrs = ecs_set_feature->feat_data;
--
-         if ((uint32_t)hdr->offset + bytes_to_copy >
-             sizeof(ct3d->ecs_wr_attrs)) {
-             return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
--- 
-2.43.0
+Might be worth a try, as you need to only catch the bug once to be able 
+to reproduce it.
+
+[1] https://github.com/pbo-linaro/qemu/blob/master/try_rme.sh
+
+> Thanks,
+> 
+> /mjt
 
 
