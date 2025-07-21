@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC7EC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B70A3C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udnyK-0001D5-Ko; Mon, 21 Jul 2025 06:42:20 -0400
+	id 1udo2A-0005Xf-71; Mon, 21 Jul 2025 06:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udnxh-0000vg-Ja
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:41:42 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udnxf-00019z-0U
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:41:36 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-70e767ce72eso38161727b3.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 03:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753094493; x=1753699293; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y+2r6LNE6tW9DE8SC5ADxypcwAmnesM6Ge6Ey+pgMtM=;
- b=WAh4Veen+jXStteaf4x+Ik5RNShWAruARhkdVpO4qerHoxlJjZIJwoyuc0AVnZ2eWN
- uh7d3k3d/qlFJ0yHGvTy92I3nc+eYUhXwZeEMIPUnXQ6cIMz9gAwUfZ1icYl1RLFmUOR
- FBP6UoIAruC7csAPM/W5YWo868BiwJzR0Iy1/npLC19A0l2N2ODSzKcI9sdhk/nxwyGq
- TIJ3Z5AVCc2J+sOtfgCF54xDr11dwU/jApg6iQXaW2hg0U06D1Hwftql4ELc8RfbxoXU
- XA107mxvIA28yN6i91g+chiZULrZOK/Ew18nlGoxa/R3V2DJ5jtUYOmyogcftP8Jucnk
- gXdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753094493; x=1753699293;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y+2r6LNE6tW9DE8SC5ADxypcwAmnesM6Ge6Ey+pgMtM=;
- b=EJADiFSrAAr7vay2sz9p8L5jnwTv1L+QPySBmQz/7jz/shBD/z3ceG7zDEqzuvx3L7
- 4YsOB0czdfe6HPW8xdyzfDvU0c2MESZdAsm0sg3R2PC/azaXwbdlUmh07etFS2+2xBSM
- rxmSE4S9MiglHpAUt1bmk+3Pby8Rcn5pAMu5sGqye2PSb5vdtaHgdHs61+u2la6ygkWk
- JyWBRjjBrGMqzi7ro8Up2993knMlfCG87D5nUbjObwqxVFS1evS4XYs73wEGcUbxP///
- L9vprVe5JVLwdt6ppeaMgeWeDzmFnlOwNTO6rfNysFk28+oM8B625/sjYHWaNgigIme5
- n/FA==
-X-Gm-Message-State: AOJu0YxKCJzjSz9WRRkav83F4uWGpFuC8ODnY6IPSLZuS7bIYfnIQeuz
- Bvv0hXfF05UzcV30RXKQsrdtKVRAjW6sPAR2O3uu6/rXqaeyrEGkqMqXR0ka9bEVWLQ27M9qDhs
- FfMvwJfBEtKVF8G+Bn50SYhm3UgHOzLwF0zxfwXLGNg==
-X-Gm-Gg: ASbGncuB30UZEaRQRcIhQNMjTo77D5C5gbcQ1rhnMsMT9Xxhf5oZ8HcVEWEqvaX706W
- 8KrxCKNDIdEAI6mnuVGeEZs/mwDTene+f/mWzpT72K9HsDxo5R12lsf8SGlvMAz5I2lQMHq4Gh3
- pAvhLUXzzVGL/ANmtemEGvkCidzaeis78fWKWK2GhP8fVM7graFU0M7oj1daIUAxDSq3XyMoPTy
- xSxfKgj
-X-Google-Smtp-Source: AGHT+IEs29TQvnEXT3kLb43asDqjzcesmuN9cgn533x9eRtZG9KEWYAroIzpkgV3HupkTPIxlM+CLUiHOGzhpijiZtM=
-X-Received: by 2002:a05:690c:23c2:b0:719:53fd:79aa with SMTP id
- 00721157ae682-71953fd7bc9mr142713137b3.22.1753094493183; Mon, 21 Jul 2025
- 03:41:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udo1o-0005Iv-8Z
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:45:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udo1m-0001ee-4q
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:45:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753094748;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZZNXoUpZojGw4Up14HZf3MJGyeAwQkISGu6kItKqgXk=;
+ b=JyvJgJRes+heXDOToOVRM9AzDSYHvxskHK/QbpgzpN/fotd6kmCQ06PoBP3DA8GMOfw5g8
+ vL9mbwEOQfYicpEhhrdP5rXwyghJvLGELZr2EGU/GnVm5kkzLfd+u8ihRSQaw7GK/VkBjd
+ HN84Vx/a9Ur7i/3sZMdIKFDGM+Rjwso=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-9xJajp5AP5e7V7YM_9fgog-1; Mon,
+ 21 Jul 2025 06:45:45 -0400
+X-MC-Unique: 9xJajp5AP5e7V7YM_9fgog-1
+X-Mimecast-MFC-AGG-ID: 9xJajp5AP5e7V7YM_9fgog_1753094744
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5797519560B5; Mon, 21 Jul 2025 10:45:44 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.213])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 13E651956094; Mon, 21 Jul 2025 10:45:42 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL v2 3/4] crypto/x509-utils: Check for error from
+ gnutls_x509_crt_init()
+Date: Mon, 21 Jul 2025 11:45:35 +0100
+Message-ID: <20250721104536.2856423-4-berrange@redhat.com>
+In-Reply-To: <20250721104536.2856423-1-berrange@redhat.com>
+References: <20250721104536.2856423-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20250716172813.73405-1-philmd@linaro.org>
- <20250716172813.73405-4-philmd@linaro.org>
-In-Reply-To: <20250716172813.73405-4-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Jul 2025 11:41:21 +0100
-X-Gm-Features: Ac12FXziqMPNmvRoaGEVCHceZysNoEU-vSgyXD0zuOxSduT7BdPUj4xtngA09vw
-Message-ID: <CAFEAcA88O1KpH4V1EPKZSJ1qzLgoP98EP=QrWn=v_M5r3Xyy+w@mail.gmail.com>
-Subject: Re: [PATCH-for-10.1 3/3] hw/arm/virt: Warn when HVF doesn't report
- IPA bit length
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
- qemu-arm@nongnu.org, 
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +87,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Jul 2025 at 18:28, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Emit a warning when HVF doesn't return the IPA bit length
-> and return -1 as "this accelerator is not usable", allowing
-> QEMU to try with the next one (when using '-accel hvf:tcg').
->
-> Reported-by: Ivan Krasilnikov
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2981
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  hw/arm/virt.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index ef6be3660f5..062812bf252 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3149,8 +3149,12 @@ static int virt_hvf_get_physical_address_range(Mac=
-hineState *ms)
->  {
->      VirtMachineState *vms =3D VIRT_MACHINE(ms);
->
-> -    int default_ipa_size =3D hvf_arm_get_default_ipa_bit_size();
-> -    int max_ipa_size =3D hvf_arm_get_max_ipa_bit_size();
-> +    uint32_t default_ipa_size =3D hvf_arm_get_default_ipa_bit_size();
-> +    uint32_t max_ipa_size =3D hvf_arm_get_max_ipa_bit_size();
-> +    if (!default_ipa_size || !max_ipa_size) {
-> +        warn_report("HVF didn't report IPA bit length");
-> +        return -1;
-> +    }
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Even if we avoid blowing up in this function, won't
-hvf_accel_init() immediately fail in hvf_arch_vm_create()
-and either exit(1) or assert() depending on what error
-code it got back ?
+Coverity notes that in qcrypto_get_x509_cert_fingerprint() we
+call gnutls_x509_crt_init() but don't check for an error return.
+Add the missing check.
 
-It's unfortunate that there's no convenient way we can
-check "hvf is basically going to work" in hvf_accel_init()
-before we get into the machine-specific hook. "HVF didn't
-report IPA bit length" isn't really a very good message
-to report for "HVF isn't going to work at all here".
+Coverity: CID 1593155
+Fixes: 10a1d34fc0d ("crypto: Introduce x509 utils")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/x509-utils.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-(More generally, I think the hvf code rather overuses
-assert_hvf_ok(). I don't think the KVM code uses asserts
-for error checking like this.)
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 8bad00a51b..39bb6d4d8c 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -46,7 +46,11 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+         return -1;
+     }
+ 
+-    gnutls_x509_crt_init(&crt);
++    if (gnutls_x509_crt_init(&crt) < 0) {
++        error_setg(errp, "Unable to initialize certificate: %s",
++                   gnutls_strerror(ret));
++        return -1;
++    }
+ 
+     if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
+         error_setg(errp, "Failed to import certificate");
+-- 
+2.50.1
 
-thanks
--- PMM
 
