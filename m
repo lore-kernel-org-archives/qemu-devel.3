@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D615EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 19:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FC4C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 19:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwHv-0003Zc-KW; Mon, 21 Jul 2025 15:35:04 -0400
+	id 1udwHs-0003Ro-KW; Mon, 21 Jul 2025 15:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1udwGv-0002ev-2O
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:34:06 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1udwGr-0002c7-Tq
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:34:00 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1udwGr-0003VF-5Q
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:34:00 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-23694cec0feso43868845ad.2
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 12:33:56 -0700 (PDT)
+ id 1udwGp-0003Uf-A3
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 15:33:57 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-235d6de331fso54300135ad.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 12:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753126435; x=1753731235; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753126434; x=1753731234; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=HtNmKbh2L3alZlNY5q1TvSEsjhU2dZxNByvSnOu2tJVXeed47aYa8q31sVlugRZx9J
- 1gaPfnNeIJBLnxKiwaj/salesiBGjda7SjmfjksbCgsq3pJ6v4HqwgMlBpS9NpjOypmj
- /7BTL5wkrO5EUNd+olc59tfYZ+cn+1AwHQRo/65XJ7YY4dt+K+cjtoIQBaASx9aQkyzh
- thzHZc+r5mXJxRgbodukttHgKlmgMxOQj6jSfSLVBaK5NeQRanzLg0a9ZomAgcczttmt
- inulfjOq13yP9o2GNHpyUXffw2uS1VfSbfiQst1ih/Rg4UNzqyGC0G7WejLr9MH8ad9D
- Fpkg==
+ bh=jcmFbOiVpquKEieZ7mSi2vF0OBN5CJXXV8GbAAyMRJg=;
+ b=gd3sR8/4RHi6sITJCkIHYuYoq+LCGuRwpQhCJrmm4ywrgWLNcCQlX9+P9TYBHGhnYj
+ Yh8T07TbdrkelGoUSZJrsbjFvIkltCAEe+6zDI2bgQuVUZ/KTd2FHO10sZIXiXz0l1yY
+ 4CbgKQUHD9nvwI1Xsi4Tslr0vOxc3Kxea/FSX1mLk1GQVHd3FnC8YDesHggzuEJHrRaH
+ 2b1wsSpsMDZ4EOkIhl2uNwiAfXnu4mkqfZJa7DVOqOw4OJlTm2flxK8VoFN7ztPdXg1w
+ Oa69nyAJJByII8DPFN9MUt/Gsq9iPJL+VXJjAAKyCL5Ei4LO+sN7pGoh8HkWeFn498Tb
+ +mhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753126435; x=1753731235;
+ d=1e100.net; s=20230601; t=1753126434; x=1753731234;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=Ogyql0J1B4dUL1PASZJU+6dDg4YaAg3nSrpbQ7or60+iZXKvZZpKkYcCju3zP86Buy
- FaGxt/Sinwu24Yqq4TFB6fNEpOrkQK0lyCQzCpmP1A00IxAeyeSL5Ab8EPhjCUUTPy5u
- FYlqqzer7SKtMvsIZLwvVweo7jcFrr9YR8h44aWaWvrbRBueC8ScGDwhhk6M/9gRC3Kn
- abD6NqzGR7NtmbFiWuyD1psiUsyMKMm77HUCGsEz/WZSLA+cCCbztQgY0Nj488Ofaz8I
- TMrMae4/Wy7aTLaytLBORwng9KdUbG9HII2XVXRNX+Wi6AwXROoPkdqY3zFvLhQkUCgH
- P7Xw==
-X-Gm-Message-State: AOJu0Yz4YVIGS93Wq+DuByoiU6V/BxzSBdBCDZX2PbqDr+FpZrIQlW1c
- 9wrSzTgb98F0bGajxa5QccXtHySV2kfNus5Ug3CLeoXbUoMYvlMShtjSuVvYd1Up4eUQ5JupOAN
- iqUgH
-X-Gm-Gg: ASbGnctaqWJDCmK79hJDU6hoV5XC1nWPJv+KjPWdAaMzaBtGu328NF2SPs9GSWcvQ92
- v+NJiCbYKxuZ8GNwMFGlrOcg2AqLXzODCFsx98ENOeJHk3KAGLhvZJ926QF01on6SfvplSm39EO
- 4iuapV0E+jlLAO1rKX6PeJ2M3k3yf4PPxs92acNpGuZfX1cjVRLK9thPHVlQD1ledScu2E2kLbx
- zcQTPbJuSjiKaK6NknHXBFjxX+w8C+wXRgLyu1TBg9TMqjOvIJy5hT5bE51QSzrNv8H7izrRyFb
- 3b5oq62Y7IgDWzqthGh2G55HIN7BQy0RX0Pj8qThADtevRiF2gRri5MRxV9kz4wAkANnxQVSgnG
- +Gw2kQBb0SyKsziqqxoRbOw==
-X-Google-Smtp-Source: AGHT+IG/azbmMlf7krgDA7Rr1usvx9g/0JbWNNdw5xiQ5QSop8Y0DuGFFAIADfG3PPEcXzThKYfOGw==
-X-Received: by 2002:a17:903:2d1:b0:234:d2fb:2d28 with SMTP id
- d9443c01a7336-23e24ec73b2mr344169515ad.2.1753126435455; 
- Mon, 21 Jul 2025 12:33:55 -0700 (PDT)
+ bh=jcmFbOiVpquKEieZ7mSi2vF0OBN5CJXXV8GbAAyMRJg=;
+ b=TqfneLxLN3wpU4jL9bx70Ve6cY6/4WkK/wG5yUxoHqH5Hjgl9HOZtm+SKeYPnxOr5R
+ /qzon596OQumMUbrokXqH/1ga6LKj1ZRAmvAo1buqJGOodTWUPYHWw17oZ5Bv6jIhX1v
+ fnnU/NCowZofn26P/jjuRfp3ImW8OYk/lsjqfhNqveS5IaptPkg2KxawvPRh1cQ0yGzr
+ fcQ29qvmJ9dXfA55gk+OBReALs2VLxiiEc04mbeIYuAyIACug5MEO7YHXYPED9zd1r4S
+ yqyUDrZuHXrQexis6uWf9o1nWW+hGRvTvpzzs584Pic6hbIVQZTQOAaoTnm59wtjdujr
+ 5ntg==
+X-Gm-Message-State: AOJu0Yz1miBscn/Hqc4i/KxFChhvhiZdWsCWGZQU1Ur+oV0JDomI+Lta
+ MgLZQeGV2x7tzfKggWKPhdQxYSYAVRUp+mNCJKG2La5yY5DSuTltp696PfsrVqJPrHEAWKXqmaN
+ /Sj4Y
+X-Gm-Gg: ASbGncsXjczd8JJnc2bIFRzAdAL1+mfyx2AIaUsuKTLCOWMCh06v9d+L0JffR5shyhf
+ Lhf8DRlONxdZQu3vDomMhc/bZhDip5G1ZO1h/nPWaSEXL9jLV6uoBU+LzGq4VGSmct+sloOiolz
+ /Nyh4xN+Ey8yMc6/XlpgzUlawHh3zNPJUuMH5DIcEKVTvDgYLsF3UlXjHAC+6cpoBXaLjuuYGK5
+ MmveCWMWGpa8f3vjgc7URC+CJ6ZOWMQQTzifyARNgowUYsaMuZt8Wq7IGht3GCWYb6ac4PPCXqw
+ quGf+Rgmfj+Gat0ghmUJCB35Ef/cYwq7mUN6UAA/yGgtJlD5zeVWjjNtkegqNnybWRvj4ZcfYlj
+ 64MFVoElObtxE/A0uej+XoQ==
+X-Google-Smtp-Source: AGHT+IGFuQUMpIH71NSx6IYTyttEr2Xq5FXAftKCA2WQWFJLdgo+Kc6/DVEYYEjChDjELms6HFR0pg==
+X-Received: by 2002:a17:903:1112:b0:235:ec11:f0ee with SMTP id
+ d9443c01a7336-23e2569bbe0mr284901465ad.14.1753126433601; 
+ Mon, 21 Jul 2025 12:33:53 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23e3b5e4750sm62238685ad.6.2025.07.21.12.33.54
+ d9443c01a7336-23e3b5e4750sm62238685ad.6.2025.07.21.12.33.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 12:33:55 -0700 (PDT)
+ Mon, 21 Jul 2025 12:33:53 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -75,16 +75,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v2 5/6] contrib/plugins/uftrace_symbols.py
-Date: Mon, 21 Jul 2025 12:33:39 -0700
-Message-ID: <20250721193340.1059019-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 3/6] contrib/plugins/uftrace: add trace-privilege-level
+ option
+Date: Mon, 21 Jul 2025 12:33:37 -0700
+Message-ID: <20250721193340.1059019-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
 References: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,187 +108,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usage:  contrib/plugins/uftrace_symbols.py \
-        --prefix-symbols \
-        arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
-        arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
-        arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
-        u-boot/u-boot:0x60000000 \
-        u-boot/u-boot.relocated:0x000000023f6b6000 \
-        linux/vmlinux
+usage: trace-privilege-level=[on|off]
 
-Will generate symbols and memory mapping files for uftrace, allowing to
-have an enhanced trace, instead of raw addresses.
+This option generates different traces (represented as different
+processes in uftrace), allowing to follow privilege level changes.
 
-It takes a collection of elf files, and automatically find all their
-symbols, and generate an ordered memory map based on that.
+For aarch64, we track current EL and Security State.
 
-This script uses the python (native) pyelftools module.
+As well, we make sure that sampling works correctly with this option. If
+user requests sampling and privilege-level tracing, we perform an
+accurate callstack tracking (slower), and only sample the information we
+present.
+
+This gives accurate backtraces on all privilege switches, while keeping
+the trace sampled if needed.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace_symbols.py | 152 +++++++++++++++++++++++++++++
- 1 file changed, 152 insertions(+)
- create mode 100755 contrib/plugins/uftrace_symbols.py
+ contrib/plugins/uftrace.c | 182 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 171 insertions(+), 11 deletions(-)
 
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-new file mode 100755
-index 00000000000..b49e03203c8
---- /dev/null
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -0,0 +1,152 @@
-+#!/usr/bin/env python3
-+# -*- coding: utf-8 -*-
-+#
-+# Create symbols and mapping files for uftrace.
-+#
-+# Copyright 2025 Linaro Ltd
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 1f3b8aaf828..ff4dcb4e9bf 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -38,6 +38,9 @@ typedef struct {
+     void (*init)(Cpu *cpu);
+     void (*end)(Cpu *cpu);
+     uint64_t (*get_frame_pointer)(Cpu *cpu);
++    uint8_t (*get_privilege_level)(Cpu *cpu);
++    uint8_t (*num_privilege_levels)(void);
++    const char *(*get_privilege_level_name)(uint8_t pl);
+     bool (*does_insn_modify_frame_pointer)(const char *disas);
+ } CpuOps;
+ 
+@@ -48,6 +51,7 @@ typedef struct Cpu {
+     callstack *sample_cs;
+     trace *trace;
+     callstack *cs;
++    uint8_t privilege_level;
+     GArray *callstacks; /* callstack *callstacks[] */
+     GArray *traces; /* trace *traces [] */
+     GByteArray *buf;
+@@ -55,8 +59,23 @@ typedef struct Cpu {
+     void *arch;
+ } Cpu;
+ 
++typedef enum {
++    AARCH64_EL0_SECURE,
++    AARCH64_EL0_NONSECURE,
++    AARCH64_EL0_REALM,
++    AARCH64_EL1_SECURE,
++    AARCH64_EL1_NONSECURE,
++    AARCH64_EL1_REALM,
++    AARCH64_EL2_SECURE,
++    AARCH64_EL2_NONSECURE,
++    AARCH64_EL2_REALM,
++    AARCH64_EL3,
++} Aarch64PrivilegeLevel;
 +
-+import argparse
-+import elftools # pip install pyelftools
-+import os
+ typedef struct {
+     struct qemu_plugin_register *reg_fp;
++    struct qemu_plugin_register *reg_cpsr;
++    struct qemu_plugin_register *reg_scr_el3;
+ } Aarch64Cpu;
+ 
+ typedef struct {
+@@ -73,6 +92,7 @@ enum uftrace_record_type {
+ 
+ static struct qemu_plugin_scoreboard *score;
+ static uint64_t trace_sample;
++static bool trace_privilege_level;
+ static CpuOps arch_ops;
+ 
+ static void uftrace_write_map(bool system_emulation)
+@@ -357,6 +377,16 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+     return *((uint64_t *) buf->data);
+ }
+ 
++static uint32_t cpu_read_register32(Cpu *cpu, struct qemu_plugin_register *reg)
++{
++    GByteArray *buf = cpu->buf;
++    g_byte_array_set_size(buf, 0);
++    size_t sz = qemu_plugin_read_register(reg, buf);
++    g_assert(sz == 4);
++    g_assert(buf->len == 4);
++    return *((uint32_t *) buf->data);
++}
 +
-+from elftools.elf.elffile import ELFFile
-+from elftools.elf.sections import SymbolTableSection
+ static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
+ {
+     g_assert(addr);
+@@ -426,6 +456,68 @@ static uint64_t cpu_get_timestamp(const Cpu *cpu)
+     return cpu->insn_count;
+ }
+ 
++static uint8_t aarch64_num_privilege_levels(void)
++{
++    return AARCH64_EL3 + 1;
++}
 +
-+def elf_func_symbols(elf):
-+    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
-+                  if isinstance(s, SymbolTableSection)]
-+    symbols = []
-+    for _, section in symbol_tables:
-+        for _, symbol in enumerate(section.iter_symbols()):
-+            if symbol_size(symbol) == 0:
-+                continue
-+            type = symbol['st_info']['type']
-+            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
-+                symbols.append(symbol)
-+    symbols.sort(key = lambda x: symbol_addr(x))
-+    return symbols
++static const char *aarch64_get_privilege_level_name(uint8_t pl)
++{
++    switch (pl) {
++    case AARCH64_EL0_SECURE: return "S-EL0";
++    case AARCH64_EL0_NONSECURE: return "NS-EL0";
++    case AARCH64_EL0_REALM: return "R-EL0";
++    case AARCH64_EL1_SECURE: return "S-EL1";
++    case AARCH64_EL1_NONSECURE: return "NS-EL1";
++    case AARCH64_EL1_REALM: return "R-EL1";
++    case AARCH64_EL2_SECURE: return "S-EL2";
++    case AARCH64_EL2_NONSECURE: return "NS-EL2";
++    case AARCH64_EL2_REALM: return "R-EL2";
++    case AARCH64_EL3: return "EL3";
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+def symbol_size(symbol):
-+    return symbol['st_size']
++static uint8_t aarch64_get_privilege_level(Cpu *cpu_)
++{
++    Aarch64Cpu *cpu = cpu_->arch;
++    /*
++     * QEMU gdbstub does not provide access to CurrentEL,
++     * so we use CPSR instead.
++     */
++    uint8_t el = cpu_read_register32(cpu_, cpu->reg_cpsr) >> 2 & 0b11;
 +
-+def symbol_addr(symbol):
-+    addr = symbol['st_value']
-+    # clamp addr to 48 bits, like uftrace entries
-+    return addr & 0xffffffffffff
++    if (el == 3) {
++        return AARCH64_EL3;
++    }
 +
-+def symbol_name(symbol):
-+    return symbol.name
++    uint8_t ss = AARCH64_EL0_SECURE;
++    if (!cpu->reg_scr_el3) {
++        ss = AARCH64_EL0_NONSECURE;
++    }
++    uint64_t scr_el3 = cpu_read_register64(cpu_, cpu->reg_scr_el3);
++    uint64_t ns = (scr_el3 >> 0) & 0b1;
++    uint64_t nse = (scr_el3 >> 62) & 0b1;
++    switch (nse << 1 | ns) {
++    case 0b00:
++        ss = AARCH64_EL0_SECURE;
++        break;
++    case 0b01:
++        ss = AARCH64_EL0_NONSECURE;
++        break;
++    case 0b11:
++        ss = AARCH64_EL0_REALM;
++        break;
++    default:
++        g_assert_not_reached();
++    }
 +
-+class BinaryFile:
-+    def __init__(self, path, map_offset):
-+        self.fullpath = os.path.realpath(path)
-+        self.map_offset = map_offset
-+        with open(path, 'rb') as f:
-+            self.elf = ELFFile(f)
-+            self.symbols = elf_func_symbols(self.elf)
++    const uint8_t num_ss = 3;
++    Aarch64PrivilegeLevel pl = el * num_ss + ss;
++    return pl;
++}
 +
-+    def path(self):
-+        return self.fullpath
+ static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
+ {
+     Aarch64Cpu *cpu = cpu_->arch;
+@@ -442,6 +534,10 @@ static void aarch64_init(Cpu *cpu_)
+         reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
+         if (!strcmp(reg->name, "x29")) {
+             cpu->reg_fp = reg->handle;
++        } else if (!strcmp(reg->name, "cpsr")) {
++            cpu->reg_cpsr = reg->handle;
++        } else if (!strcmp(reg->name, "SCR_EL3")) {
++            cpu->reg_scr_el3 = reg->handle;
+         }
+     }
+     if (!cpu->reg_fp) {
+@@ -449,6 +545,8 @@ static void aarch64_init(Cpu *cpu_)
+                         "available. Please use an AArch64 cpu (or -cpu max).\n");
+         g_abort();
+     }
++    g_assert(cpu->reg_cpsr);
++    /* scr_el3 is optional */
+ }
+ 
+ static void aarch64_end(Cpu *cpu)
+@@ -470,9 +568,43 @@ static CpuOps aarch64_ops = {
+     .init = aarch64_init,
+     .end = aarch64_end,
+     .get_frame_pointer = aarch64_get_frame_pointer,
++    .get_privilege_level = aarch64_get_privilege_level,
++    .num_privilege_levels = aarch64_num_privilege_levels,
++    .get_privilege_level_name = aarch64_get_privilege_level_name,
+     .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
+ };
+ 
++static void track_privilege_change(unsigned int cpu_index, void *udata)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    uint8_t new_pl = cpu->ops.get_privilege_level(cpu);
 +
-+    def addr_start(self):
-+        return self.map_offset
++    if (new_pl == cpu->privilege_level) {
++        return;
++    }
 +
-+    def addr_end(self):
-+        last_sym = self.symbols[-1]
-+        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
++    uint64_t pc = (uintptr_t) udata;
++    uint64_t timestamp = cpu_get_timestamp(cpu);
 +
-+    def generate_symbol_file(self, prefix_symbols):
-+        binary_name = os.path.basename(self.fullpath)
-+        sym_file_path = f'./uftrace.data/{binary_name}.sym'
-+        print(f'{sym_file_path} ({len(self.symbols)} symbols)')
-+        with open(sym_file_path, 'w') as sym_file:
-+            # print hexadecimal addresses on 48 bits
-+            addrx = "0>12x"
-+            for s in self.symbols:
-+                addr = symbol_addr(s)
-+                addr = f'{addr:{addrx}}'
-+                size = f'{symbol_size(s):{addrx}}'
-+                name = symbol_name(s)
-+                if prefix_symbols:
-+                    name = f'{binary_name}:{name}'
-+                print(addr, size, 'T', name, file=sym_file)
++    if (trace_sample) {
++        cpu_trace_last_sample(cpu, timestamp);
++    }
 +
-+def parse_parameter(p):
-+    s = p.split(":")
-+    path = s[0]
-+    if len(s) == 1:
-+        return path, 0
-+    if len(s) > 2:
-+        raise ValueError('only one offset can be set')
-+    offset = s[1]
-+    if not offset.startswith('0x'):
-+        err = f'offset "{offset}" is not an hexadecimal constant. '
-+        err += 'It should starts with "0x".'
-+        raise ValueError(err)
-+    offset = int(offset, 16)
-+    return path, offset
++    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
++    callstack_clear(cpu->cs);
 +
-+def is_from_user_mode(map_file_path):
-+    if os.path.exists(map_file_path):
-+        with open(map_file_path, 'r') as map_file:
-+            if not map_file.readline().startswith('# map stack on'):
-+                return True
-+    return False
++    cpu->privilege_level = new_pl;
++    cpu->cs = g_array_index(cpu->callstacks, callstack*, new_pl);
++    cpu->trace = g_array_index(cpu->traces, trace*, new_pl);
 +
-+def generate_map(binaries):
-+    map_file_path = './uftrace.data/sid-0.map'
++    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
++    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
 +
-+    if is_from_user_mode(map_file_path):
-+        print(f'do not overwrite {map_file_path} generated from qemu-user')
-+        return
++    if (trace_sample) {
++        cpu_set_new_sample(cpu, timestamp);
++    }
++}
 +
-+    mappings = []
+ static void track_callstack(unsigned int cpu_index, void *udata)
+ {
+     uint64_t pc = (uintptr_t) udata;
+@@ -567,7 +699,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     qemu_plugin_u64 sample_insn_count = qemu_plugin_scoreboard_u64_in_struct(
+                                             score, Cpu, sample_insn_count);
+ 
+-    if (trace_sample) {
++    if (trace_sample && !trace_privilege_level) {
+         /* We can do a light instrumentation, per tb only */
+         qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+             tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
+@@ -580,6 +712,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         return;
+     }
+ 
++    if (trace_privilege_level) {
++        qemu_plugin_register_vcpu_tb_exec_cb(tb, track_privilege_change,
++                                             QEMU_PLUGIN_CB_R_REGS,
++                                             (void *) tb_pc);
++    }
 +
-+    # print hexadecimal addresses on 48 bits
-+    addrx = "0>12x"
+     /*
+      * We now instrument all instructions following one that might have updated
+      * the frame pointer. We always instrument first instruction in block, as
+@@ -622,17 +760,33 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+     g_assert(vcpu_index < 1000);
+     uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
+ 
+-    g_autoptr(GString) trace_name = g_string_new(NULL);
+-    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
+-    trace *t = trace_new(trace_id, trace_name);
+-    g_array_append_val(cpu->traces, t);
+-    callstack *cs = callstack_new();
+-    g_array_append_val(cpu->callstacks, cs);
+-    /* create/truncate trace file */
+-    trace_flush(t, false);
++    if (trace_privilege_level) {
++        for (uint8_t pl = 0; pl < cpu->ops.num_privilege_levels(); ++pl) {
++            g_autoptr(GString) trace_name = g_string_new(NULL);
++            g_string_append_printf(trace_name, "cpu%u %s", vcpu_index,
++                                   cpu->ops.get_privilege_level_name(pl));
++            trace *t = trace_new(trace_id + pl, trace_name);
++            g_array_append_val(cpu->traces, t);
++            callstack *cs = callstack_new();
++            g_array_append_val(cpu->callstacks, cs);
++        }
++    } else {
++        g_autoptr(GString) trace_name = g_string_new(NULL);
++        g_string_append_printf(trace_name, "cpu%u", vcpu_index);
++        trace *t = trace_new(trace_id, trace_name);
++        g_array_append_val(cpu->traces, t);
++        callstack *cs = callstack_new();
++        g_array_append_val(cpu->callstacks, cs);
++    }
+ 
+-    cpu->cs = cs;
+-    cpu->trace = t;
++    for (size_t i = 0; i < cpu->traces->len; ++i) {
++        /* create/truncate trace files */
++        trace *t = g_array_index(cpu->traces, trace*, i);
++        trace_flush(t, false);
++    }
 +
-+    mappings += ['# map stack on highest address possible, to prevent uftrace']
-+    mappings += ['# from considering any kernel address']
-+    mappings += ['ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]']
-+
-+    for b in binaries:
-+        m = f'{b.addr_start():{addrx}}-{b.addr_end():{addrx}}'
-+        m += f' r--p 00000000 00:00 0 {b.path()}'
-+        mappings.append(m)
-+
-+    with open(map_file_path, 'w') as map_file:
-+        print('\n'.join(mappings), file=map_file)
-+    print(f'{map_file_path}')
-+    print('\n'.join(mappings))
-+
-+def main():
-+    parser = argparse.ArgumentParser(description=
-+                                     'generate symbol files for uftrace')
-+    parser.add_argument('elf_file', nargs='+',
-+                        help='path to an ELF file. '
-+                        'Use /path/to/file:0xdeadbeef to add a mapping offset.')
-+    parser.add_argument('--prefix-symbols',
-+                        help='prepend binary name to symbols',
-+                        action=argparse.BooleanOptionalAction)
-+    args = parser.parse_args()
-+
-+    if not os.path.exists('./uftrace.data'):
-+        os.mkdir('./uftrace.data')
-+
-+    binaries = []
-+    for file in args.elf_file:
-+        path, offset = parse_parameter(file)
-+        b = BinaryFile(path, offset)
-+        binaries.append(b)
-+    binaries.sort(key = lambda b: b.addr_end());
-+
-+    for b in binaries:
-+        b.generate_symbol_file(args.prefix_symbols)
-+
-+    generate_map(binaries)
-+
-+if __name__ == '__main__':
-+    main()
++    cpu->cs = g_array_index(cpu->callstacks, callstack*, cpu->privilege_level);
++    cpu->trace = g_array_index(cpu->traces, trace*, cpu->privilege_level);
+ }
+ 
+ static void vcpu_end(unsigned int vcpu_index)
+@@ -705,6 +859,12 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 return -1;
+             }
+             trace_sample = value;
++        } else if (g_strcmp0(tokens[0], "trace-privilege-level") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
++                                        &trace_privilege_level)) {
++                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
++                return -1;
++            }
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+             return -1;
 -- 
 2.47.2
 
