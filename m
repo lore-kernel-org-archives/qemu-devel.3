@@ -4,84 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0264C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 14:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEDCC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 14:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udr6z-0001rW-LP; Mon, 21 Jul 2025 10:03:25 -0400
+	id 1udrAz-0000E2-9m; Mon, 21 Jul 2025 10:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udr6t-0000qk-P0
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:03:21 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udr6q-0004Q7-UL
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:03:19 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-71967cd1072so17777407b3.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 07:03:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753106595; x=1753711395; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CYVQe0Mks7K6hEfZs7ov2VhXUKLZCR1ICDo08+Q05aY=;
- b=FoQRAXOfV4R1ih97sLggWiU1CPFtwdqYzrtEyC2pumOTRPd/gRGFICpkkIrV7eym/e
- QiO/2qeG8zVg6C5GbjOvznyRNye6OIWcWJqi6iyZPYYpbGAnBMgSRRReCTDwG4aIUWtP
- 5phbS7C26DwyIsJh2qW+kNeUENJyXSmH/2WyG/wxuOLYPqHD4AiLaFIVyXSO+NQ73iOf
- W1Z1iW10zyfhV/WCv40Ph/KHc2LPRXn0duxRLrprskakZHJtbwVEouDoJux5uTwRU56g
- bF+YtYQUmtWu/KVsfGnyOo0EjXqfYSJMy0lgRHrNhwpPj+NUX2q5nKbfeVMnDe950ajO
- EZig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753106595; x=1753711395;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CYVQe0Mks7K6hEfZs7ov2VhXUKLZCR1ICDo08+Q05aY=;
- b=f+yoWbefKRqDr3M6B3vSVswkRer2XtfYSTticOIAPVgQPfi6vMKvt15GHhZkT8YAzl
- cOBs0oJp/tHIxgXY+XS4oGNTcBYxOcs3En2hCkZwZJxSrr4S0ACU0qYbLkTR9cPfSe6Q
- rv+Ol21jcQuk9WM9AiggnzG4Ww2j4il40d+yMf9Bx1Yc4jMa77lKi0QPxH7mIvDZU27n
- T7gv4z9ctirKcyHM5drl1wx0J3GBenWaa93Yg6xo9shJ0GZj7sIXIZNbgaQHyRVTUX6p
- QuHa808YV48RBkVE/HjMR5BSzBAvg/kgUyFeQd0s5aRdAyt1TN2FWTpcWOsSeM9/Z4I4
- z8eQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXufmeTe/l6o0bcoAeuvKcU8qKtM2z0zWlqpIwA/0RMoAff3cUmvFBuEbEB2V43trVLDM690EVInPp@nongnu.org
-X-Gm-Message-State: AOJu0YzdIGikJcDEKz2ghUmeh0z5Ehe/nN6onvSv+0gkRVEwqoBr/6sl
- uN+D1pZQnQTGTqSsy7njpod4VBt5sDWQK1Nv/tQ6ZnLBAGD0HJuueAhkncyz8oyyxudkF8LoAd5
- uXyCic7NZHwYmyBYl8vQ/cuwwlq4mj7vdH7Pd7A9EPg==
-X-Gm-Gg: ASbGncvfKA0ygP6mCJDmyVMMOiYtAdTlvzG+viadiBEyJ6gsS/UYg9k4WPnJ6oCTlF0
- SlFCq65bH6GAr8L5npbKA/LBSAp0II4yiFV/eQcAIVKi4RVWp6whys+PRszl84JHr74NYnTFysb
- /CznlYoKuLNxMkwkiJjyO/frZF8sSuVn64ZNqgMeLmFwVskdWtzmeVMalB6aVEdU/bI5WDN0XQC
- uTM/4yU
-X-Google-Smtp-Source: AGHT+IHsG9Fmrl2imd+MQNO4Jhzw1CzGekKQ2Z/zJ+9wt9/QH9rKlHxu/bfzKU9FZMWix8CpXJ4g8LjI9mlRoUjt5nY=
-X-Received: by 2002:a05:690c:4905:b0:70c:b882:305 with SMTP id
- 00721157ae682-718351ae978mr280071237b3.36.1753106594747; Mon, 21 Jul 2025
- 07:03:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udr9t-0005ZX-EO
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:06:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udr9o-0005hr-Vc
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:06:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753106778;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CokC7rm30BVpMN/1DOHYN6IsyXcOUBpsYjNn/hU+iJs=;
+ b=dea1NDmb5+4px5J2LTRjRbKQzi9lz28GPlI8WYJRcMHTiLuYlpnaNpWMGQRnrTp2KqzwsS
+ bEPL0UNWETG2ZuSn2u+RbsQoYuMPw7Un03Umqud67Ci7yXecrBDq9C8GIXKnqreUoFebYg
+ 1iHnc8BgXfjGe9jITAF3BEZ8bTnJ294=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-MhVm10qHO_y2vs3DHs34TA-1; Mon,
+ 21 Jul 2025 10:06:15 -0400
+X-MC-Unique: MhVm10qHO_y2vs3DHs34TA-1
+X-Mimecast-MFC-AGG-ID: MhVm10qHO_y2vs3DHs34TA_1753106772
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BF15180026D; Mon, 21 Jul 2025 14:06:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.213])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9E0819560AB; Mon, 21 Jul 2025 14:06:02 +0000 (UTC)
+Date: Mon, 21 Jul 2025 15:05:59 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v6 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+Message-ID: <aH5JR-58iMk0ArSl@redhat.com>
+References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
+ <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
+ <aH5BgAVc2x_tjsHJ@redhat.com>
+ <aH5Gj61ZmtZ0NzEv@armenon-kvm.bengluru.csb>
 MIME-Version: 1.0
-References: <20250714165523.1956235-1-peter.maydell@linaro.org>
- <20250714165523.1956235-3-peter.maydell@linaro.org>
-In-Reply-To: <20250714165523.1956235-3-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Jul 2025 15:03:03 +0100
-X-Gm-Features: Ac12FXzQCJ_IkNMo4Ne1_A9_EHvTmQFabt3QlXuTagGeVCSyrmNR5nGgIe7mEyY
-Message-ID: <CAFEAcA8pSTpOne-u6BaEABhxcCXn=BvX4U2VF=pw00WFAc8yTQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/net/npcm_gmac.c: Unify length and prev_buf_size
- variables
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>, 
- Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aH5Gj61ZmtZ0NzEv@armenon-kvm.bengluru.csb>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,30 +110,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Jul 2025 at 17:55, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> After the bug fix in the previous commit, the length and prev_buf_size
-> variables are identical, except that prev_buf_size is uint32_t and
-> length is uint16_t. We can therefore unify them. The only place where
-> the type makes a difference is that we will truncate the packet
-> at 64K when sending it; this commit preserves that behaviour
-> by using a local variable when doing the packet send.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Should the behaviour really be to truncate the packet at 64K
-> rather than flagging an error if the guest assembles descriptors
-> that combine to give a too-large packet?
+On Mon, Jul 21, 2025 at 07:24:23PM +0530, Arun Menon wrote:
+> Hi,
+> Thank you for the review.
+> 
+> On Mon, Jul 21, 2025 at 02:32:48PM +0100, Daniel P. Berrangé wrote:
+> > On Mon, Jul 21, 2025 at 04:59:28PM +0530, Arun Menon wrote:
+> > > - We need to have good error reporting in the callbacks in
+> > >   VMStateDescription struct. Specifically pre_save, post_save,
+> > >   pre_load and post_load callbacks.
+> > > - It is not possible to change these functions everywhere in one
+> > >   patch, therefore, we introduce a duplicate set of callbacks
+> > >   with Error object passed to them.
+> > > - So, in this commit, we implement 'errp' variants of these callbacks,
+> > >   introducing an explicit Error object parameter.
+> > > - This is a functional step towards transitioning the entire codebase
+> > >   to the new error-parameterized functions.
+> > > - Deliberately called in mutual exclusion from their counterparts,
+> > >   to prevent conflicts during the transition.
+> > > - New impls should preferentally use 'errp' variants of
+> > >   these methods, and existing impls incrementally converted.
+> > >   The variants without 'errp' are intended to be removed
+> > >   once all usage is converted.
+> > > 
+> > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > ---
+> > >  include/migration/vmstate.h | 11 +++++++++++
+> > >  migration/vmstate.c         | 47 +++++++++++++++++++++++++++++++++++++++------
+> > >  2 files changed, 52 insertions(+), 6 deletions(-)
+> > > 
+> > 
+> > > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > > index 288b57e1ed778cce21247b64d5e97dfef41ad586..d96908d12ccffaef421e5d399a48e26cada2cb77 100644
+> > > --- a/migration/vmstate.c
+> > > +++ b/migration/vmstate.c
+> > 
+> > > @@ -524,7 +548,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> > >                  if (ret) {
+> > >                      error_setg(errp, "Save of field %s/%s failed",
+> > >                                  vmsd->name, field->name);
+> > > -                    if (vmsd->post_save) {
+> > > +                    if (vmsd->post_save_errp) {
+> > > +                        ret = vmsd->post_save_errp(opaque, &local_err);
+> > > +                        if (ret < 0) {
+> > > +                            error_propagate(errp, local_err);
+> > > +                        }
+> > 
+> > This is still broken. 'errp' is already set a few lines earlier, so you
+> > can't propagate a new error over the top
+> 
+> I was wondering that we should preserve the first error that was encountered.
+> So even if local_err was set, and in case errp already has an error, then it will
+> be a no-op and local_err will be freed.
 
-I see Jason has picked this up in a pullreq, which is OK given
-this isn't a behaviour change -- but it would still be good
-if somebody with access to the datasheet for this device could
-confirm what the actual correct behaviour for attempts to tx
-very large packets should be.
+We know that 'local_err' is definitely set when 'post_save_errp' is called,
+because there's a call to 'error_setg' right above it.
 
-thanks
--- PMM
+
+
+> > > +                    } else if (vmsd->post_save) {
+> > >                          vmsd->post_save(opaque);
+> > >                      }
+
+... pre-existing mistake not checking return value of
+post_save.
+
+> > >                      return ret;
+> > > @@ -552,7 +581,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> > >  
+> > >      ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+> > >  
+> > > -    if (vmsd->post_save) {
+> > > +    if (vmsd->post_save_errp) {
+> > > +        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
+> > > +        if (!ret && ps_ret) {
+> > > +            ret = ps_ret;
+> > > +            error_propagate(errp, local_err);
+> > > +        }
+> > 
+> > Again, propagating over the top of an existing error
+> 
+> Sorry, correct me if I am wrong.
+> Since we have 'if (!ret && ps_ret)' ,
+> if vmstate_subsection_save() fails, the above condition will not hold true.
+> Only if the first function call vmstate_subsection_save() is successful and the second one
+> post_save_errp() fails then we try to propagate, again hoping to preserve the first error.
+
+Opps, yes, you're right - I missed the 'ps_ret' check. That means this
+code is a memory leak when 'ret' is non-zero, as nothing frees 'local_err'
+in that case.
+
+> 
+> > 
+> > > +    } else if (vmsd->post_save) {
+> > >          int ps_ret = vmsd->post_save(opaque);
+> > >          if (!ret && ps_ret) {
+> > >              ret = ps_ret;
+> > > 
+> > > -- 
+> > > 2.50.0
+> > > 
+> > > 
+> > 
+> > With regards,
+> > Daniel
+> > -- 
+> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > 
+> 
+> Regards,
+> Arun Menon
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
