@@ -4,115 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEA2C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926F2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udxwq-0003O1-I1; Mon, 21 Jul 2025 17:21:24 -0400
+	id 1udy2M-00014b-94; Mon, 21 Jul 2025 17:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1udxvs-0001rc-0q
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 17:20:35 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1udy2D-0000yk-8V; Mon, 21 Jul 2025 17:26:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1udxvW-0002mx-8w
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 17:20:05 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LGtf1A000926
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:20:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=JssYDSr7IY2zcFNDNLBhEx24
- PNrJgt0ER5Z8R6R1hng=; b=U3gWUv/QGnpCPsuI1lkigCE2FWLwk7L5E4Zx2szK
- NiDrwDd9P4wz2HJ+RhldGdDE0f3gNID4zfs8XIwR1V7AsxrSTcSlyA0Of3JuN+D/
- rt7yKxAWfPSnnuzZGfQXVMxtLrS7n3TtrTfU59TVxmI2PLYxbyWX4DoK7rS+VcLb
- vOCzS5dHudl8+LJEK3rnTcAfFkM68G0V6khVyOJnPIXLSXdOGW4XhobEoHXNVSxn
- RxkrXq3lGc2c9fWlotnqBXCFvzGvaKaT3XlkuDY1JCneQeYDPWHYvkCwOIHh11Ao
- uupbsGMFqeKivjj/SAf3x2Kfth3k7MZshbrI+KDqt/TA2w==
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48044df4f7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:20:00 +0000 (GMT)
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-e8bb5b1a519so5781962276.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 14:20:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753132799; x=1753737599;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JssYDSr7IY2zcFNDNLBhEx24PNrJgt0ER5Z8R6R1hng=;
- b=oMLzgMNuONASCLfWqQWqOmrqszCinTc8F+p/zl31QBpNFOTlBq35E/DzKXNDQRGN09
- b1D3+pg6L5NardERVb3/YQ7AtXnbBmSStdYNZgNeMOTXdcYz1cPWCxFTRsA+0Q+4bFGM
- hLDdfxnJE5JNFmWQASMT5IPT/RN+083e37Gwm1goUC5ibAFVCtQ3oitrl+n/V8dPVU4r
- 4SNxQDLsf4AuO0fwqf7IY079LMiq+lN6gcAEl+PhCCNq/TPxjeCWnLIhTaq2nak/j+3x
- ne6EUtxFLmydGqfVtpH7xpXxzPreXOhNmwQifQ88EnfpSK+MfL8wqKSH8GkXmsGD0AVu
- 6G0A==
-X-Gm-Message-State: AOJu0YyqQmi6S+6oHQgOaZMFeC6gGpCRtcWazqjFevxnvcIS2ho4j5xD
- DhEP+JI7ZRdsaVXIE4tTyjKoUa5BD6hFW9S05V31o4j8IdjpJBKcpPJ3HLvM5bG8OsI0+Z7J+Dl
- Kmb9t+BygwjD+nNdJHB1YA7EBjDTrOy7xHzTMd78vrdF37G01jMl66k3m8fG9waEfSgCsVBHsXP
- Z5qanyOZrhhW7N3RViitHg5RqKc9OHeJw/
-X-Gm-Gg: ASbGnctSnDmsjyP46DnBgyKM4C58PAcbwnValWFsnuuJL4DkS9skjQu8fPIGIaefclI
- XewbUh8MzHxHBRmRaqYmcC/sVQfvmkhj/ncAeXJ2y8rSJB2F2CqlFHlV+PkBlrLsF33VNp3bW+x
- +P8X57ejmlntBT8NlN5/fyknA=
-X-Received: by 2002:a05:6902:220d:b0:e8b:7491:d4e9 with SMTP id
- 3f1490d57ef6-e8bc24e7a93mr27923061276.26.1753132799549; 
- Mon, 21 Jul 2025 14:19:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFF23gdmZi5Zt7+chkqHIJQBIt71uoyBg76l3e2VPCDMRnSzms4zs9wgx+O5Y5/Riw4hYk6yTFSRBEz3WlAUk4=
-X-Received: by 2002:a05:6902:220d:b0:e8b:7491:d4e9 with SMTP id
- 3f1490d57ef6-e8bc24e7a93mr27923036276.26.1753132799192; Mon, 21 Jul 2025
- 14:19:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1udy2A-0005XA-Am; Mon, 21 Jul 2025 17:26:56 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LKvY2M015099;
+ Mon, 21 Jul 2025 21:26:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=af8ZhQ
+ WZ7IxXVhDZDutXqQd5zTSPY+nF6ebap1mMnBI=; b=H7gExuDp7thbHcx9J8sEPv
+ YykPbmAiC2MonEPYU/irPdav7171CGwlsyirtMWyWquRFMQk1XGd7G67AidvjiNg
+ el1LIF+2yAl7k8jSK3vrW2hn1PUT6iYDpMKmY5ox18wjKTGdG0hUFUdUwoiG/Hg3
+ VctGvlvjnVMZGKAfqtQ7bSofcTrwBat9nyrKQoAFwZkTHOhi2jvILWP/Arc4Sc+G
+ 1UvQCKaDRuNrFcB2UrcJdhiWgs2dRuz8zn4q4E1o4iJNccW9D0jC5JiJ1DUxseEo
+ GsSCIChbaNyrbUAkfbt3oZzSYtsXoudVLOaXLA7aQP3BLap6y6+CTmYJudGUUbMw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4805ut2vby-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Jul 2025 21:26:50 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56LHnoi5024761;
+ Mon, 21 Jul 2025 21:26:49 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 480rd27r6y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Jul 2025 21:26:49 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56LLQlbQ61669886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Jul 2025 21:26:47 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F16058057;
+ Mon, 21 Jul 2025 21:26:47 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E3F458058;
+ Mon, 21 Jul 2025 21:26:46 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 21 Jul 2025 21:26:46 +0000 (GMT)
+Message-ID: <5847016f-f4e7-49ca-82dd-3fb062a8ec0c@linux.ibm.com>
+Date: Mon, 21 Jul 2025 17:26:46 -0400
 MIME-Version: 1.0
-References: <CAEWVDmuS0RSwZiDGNZg4cT1jXp7Xfu97YZL7hDfTvha2TOgS1g@mail.gmail.com>
- <CAFEAcA9u2N2GsWZ+eFuqezqCPj9hWGT=qGnwjjG3M5NYO9Jb5A@mail.gmail.com>
-In-Reply-To: <CAFEAcA9u2N2GsWZ+eFuqezqCPj9hWGT=qGnwjjG3M5NYO9Jb5A@mail.gmail.com>
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Date: Mon, 21 Jul 2025 17:19:48 -0400
-X-Gm-Features: Ac12FXyTAnUD5Efo-kAjeKPZdiEPYyAZHV15T0vU0B0oF6X0XD01WyJAFBPAovM
-Message-ID: <CAEWVDmsqjN+KiRp3AC3uht1=xoQDu2+sHVZKVdDyMPBRThZFkg@mail.gmail.com>
-Subject: Re: [RFC] target/arm: Concerns about mixed endian support for remote
- GDB
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000bd871e063a770921"
-X-Authority-Analysis: v=2.4 cv=BJ6zrEQG c=1 sm=1 tr=0 ts=687eaf00 cx=c_pps
- a=peiObFy/9J5zY6vzkL/ViA==:117 a=Wb1JkmetP80A:10 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=XuKpq1OSl9U7Vqusa7AA:9 a=QEXdDO2ut3YA:10
- a=G78pyL7yVTk7Gtk_Gy4A:9 a=C5rqynb0f5RdBcmA:21 a=lqcHg5cX4UMA:10
- a=uSskPZdq7w8du69dlLff:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: yU0PZGYOirAr_B98YowbJ7CQCW6K30MZ
-X-Proofpoint-ORIG-GUID: yU0PZGYOirAr_B98YowbJ7CQCW6K30MZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE5MCBTYWx0ZWRfX2BBG8JvtOh+d
- XTcoI6Hpa+PlEpcS4bYtmTqpYzBbgoeoTYgnwxd73XeVM8Js79V4fge6q+YPByL5OGIoPFVnBAB
- gxAwCfin8T42PJSZFW7FZljBrSclpVxlcywgInFbBPZY15Zgr1YqvTqwMHIpDBPkMD7qQI/qLsC
- J9lZwVJhsOiPlzuqZnXsIiKnbU6LLlo1a7jzSDYmA4Cru7p1iMZuxSX40bjcrNua0z+ztZrzP/c
- NTKV70Kivzu55Fy5OFFj4twRKYxoxhJI9jmSmKdiRyoh+IBCgLfmQBsPBpfIFtzokkDgdw7JKgP
- Paunogch1XjLqInzSa02Q2Bi2MHXaGDETpZSvzFhPwbr9NoBdS+ils0vWsB8nU4Hg/+G7DiTqw2
- SFIhMhZj6tsy7fZSckygEgoe7gZ9lvSW4MCUpr6iizi5YiDXgpeV+m3x2Cz1t5UGg3vjxIkM
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 05/28] s390x/diag: Introduce DIAG 320 for certificate
+ store facility
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-6-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20250711211105.439554-6-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE4OCBTYWx0ZWRfX1xEn1fNI1xNb
+ 9D/uXU0KlS/lrW7cxl/lg4/ngOorNEJNCkuu8V0G+M/2YqSpvxSfEOggd4o/MrwMOW/afKBw939
+ WOTSRYLBSoAJL611gIiarIbY2CLRjD7JizKWQa+uyK+pPzPkAVDIIpZEoozgxZyELsqt5mON5wt
+ thQd1Tjx4dm8CZ0Mt+xlmZ4v9tbkgJaZuqJEzE2JeK4FV4loea3J1NBS+TjMJqSV0+8oEkVvszQ
+ sQaHxdsDw2pCu5zUAyixyY6wDxgQ/+QLXqk1rJU/jnLPhD8HQymHB2yBlwRnh2+vzswNXVzO66p
+ jtoN0uSu6j1DSOUJ+X7Tqc9dobqMnuGbsUtEVb5j4kVX+DXbgFyK+ZrZTINEhD5ugiXfRVXt8K8
+ DjxtYvKpbKNgPXAqdsP8EmBV+0rPY0wC6bByZaHO+Qlr77+JM/02cilwNRAEhgsKJkm2m+D9
+X-Proofpoint-ORIG-GUID: i-zhmp_pq_US3SWKPiKlj0icFJghDbb0
+X-Authority-Analysis: v=2.4 cv=cIDgskeN c=1 sm=1 tr=0 ts=687eb09a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=wPz425FPKc1gwUKmrLQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: i-zhmp_pq_US3SWKPiKlj0icFJghDbb0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-21_05,2025-07-21_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- mlxlogscore=856 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a
+ malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0
+ adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507210190
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ engine=8.19.0-2505280000 definitions=main-2507210188
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,235 +124,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bd871e063a770921
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/11/25 17:10, Zhuoying Cai wrote:
+> DIAGNOSE 320 is introduced to support certificate store facility,
+> which includes operations such as query certificate storage
+> information and provide certificates in the certificate store.
+> 
+> Currently, only subcode 0 is supported with this patch, which is
+> used to query a bitmap of which subcodes are supported.
 
-Hi Peter,
+Change to: "used to query the Installed Subcodes Mask (ISM)."
 
-I am using the user mode emulator to test the "target big endian" code path=
-.
+Based on my feedback below, make sure to include a statement that this
+subcode is only supported when the Certificate Store facility is enabled.
 
-I apologize for the error, I have sent this content as a patch series to
-make it easier to review!
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>  include/hw/s390x/ipl/diag320.h | 17 ++++++++++++++
+>  target/s390x/diag.c            | 41 ++++++++++++++++++++++++++++++++++
+>  target/s390x/kvm/kvm.c         | 14 ++++++++++++
+>  target/s390x/s390x-internal.h  |  2 ++
+>  target/s390x/tcg/misc_helper.c |  7 ++++++
+>  5 files changed, 81 insertions(+)
+>  create mode 100644 include/hw/s390x/ipl/diag320.h
+> 
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> new file mode 100644
+> index 0000000000..713570545d
+> --- /dev/null
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -0,0 +1,17 @@
+> +/*
+> + * S/390 DIAGNOSE 320 definitions and structures
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef S390X_DIAG320_H
+> +#define S390X_DIAG320_H
+> +
+> +#define DIAG_320_SUBC_QUERY_ISM     0
+> +
+> +#define DIAG_320_RC_OK              0x0001
+> +
+> +#endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index cff9fbc4b0..d33c5daf38 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -18,6 +18,7 @@
+>  #include "hw/watchdog/wdt_diag288.h"
+>  #include "system/cpus.h"
+>  #include "hw/s390x/ipl.h"
+> +#include "hw/s390x/ipl/diag320.h"
+>  #include "hw/s390x/s390-virtio-ccw.h"
+>  #include "system/kvm.h"
+>  #include "kvm/kvm_s390x.h"
+> @@ -191,3 +192,43 @@ out:
+>          break;
+>      }
+>  }
+> +
+> +void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+> +{
+> +    S390CPU *cpu = env_archcpu(env);
+> +    uint64_t subcode = env->regs[r3];
+> +    uint64_t addr = env->regs[r1];
+> +    int rc;
 
-Looking forward to your feedback!
+Even though "rc" likely means "response code" in the context of DIAG, it
+screams "return code" in a void function, which looks a little odd.  I'd
+remove this variable and simply set `env->regs[r1 + 1] = DIAG_320_RC_*`
+instead, similar to how DIAG 308 handles this.
 
-Thanks,
-Vacha
+> +
+> +    if (env->psw.mask & PSW_MASK_PSTATE) {
+> +        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
+> +        return;
+> +    }
+> +
+> +    if (!s390_has_feat(S390_FEAT_DIAG_320)) {
+> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +        return;
+> +    }
+> +
+> +    if (r1 & 1) {
+> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +        return;
+> +    }
+> +
+> +    switch (subcode) {
 
-On Mon, Jul 21, 2025 at 10:36=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org>
-wrote:
+In patch 4, you introduce the feature bit for DIAG 320.  It is
+documented that subcodes 0-3 are only supported if this feature bit is
+on.  Please add a check for this feature.  Subcode 0 (and later 1 and 2)
+should not be handled if this feature bit is not present.
 
-> On Fri, 18 Jul 2025 at 20:20, Vacha Bhavsar
-> <vacha.bhavsar@oss.qualcomm.com> wrote:
-> >
-> > Upon examining the current implementation for getting/setting SIMD
-> > and SVE registers via remote GDB, there is a concern about mixed
-> > endian support.
->
-> Yes, we discussed this on a different thread.
->
-> > The current implementation for the SIMD functionality for getting and
-> setting
-> > registers via the gdbstub is implemented as follows:
-> >
-> > aarch64_gdb_set_fpu_reg:
-> > <omitted code>
-> > uint64_t *q =3D aa64_vfp_qreg(env, reg);
-> > q[0] =3D ldq_le_p(buf);
-> > q[1] =3D ldq_le_p(buf + 8);
-> > return 16;
-> > <omitted code>
-> >
-> > The following code is a suggested fix for the current implementation th=
-at
-> > should allow for mixed endian support for getting/setting SIMD register=
-s
-> > via the remote GDB protocol.
-> >
-> > aarch64_gdb_set_fpu_reg:
-> > <omitted code>
-> > // case 0...31
->
-> It would be easier to review your proposed changes if you'd
-> sent them in a proper patch format...
->
-> > uint64_t *q =3D aa64_vfp_qreg(env, reg);
-> > if (target_big_endian()){
->
-> What config are you using to test this "target big endian"
-> code path? On system emulation target/arm is *always*
-> target_big_endian() =3D=3D false (even if CPSR.E is set).
-> The QEMU "target endianness" is a compile-time property of the
-> system, not a runtime property of the CPU. CPSR.E just causes us to
-> byteswap values as they go out from the CPU to the memory subsystem.
->
-> I think for the user mode emulator aarch64_be-linux-user
-> we may have target_big_endian() true, but I forget. BE
-> linux-user is pretty unmaintained...
->
-> > q[1] =3D ldq_p(buf);
-> >         q[0] =3D ldq_p(buf + 8);
-> > }
-> > else{
-> > q[0] =3D ldq_p(buf);
-> >         q[1] =3D ldq_p(buf);
->
-> (You're loading q[0] and q[1] from the same buffer address here.)
->
-> > }> return 16;
-> > <omitted code>
-> >
-> > This use of ldq_p rather than ldq_le_p (which the current implementatio=
-n
-> > uses) to load bytes into host endian struct is inspired by the current
-> > implementation for getting/setting general purpose registers via remote
-> > GDB (which works appropriately regardless of target endianness), as wel=
-l
-> > as the current implementation for getting/setting gprs via GDB with ppc
-> > as a target (refer to ppc_cpu_gdb_write_register() for example).
->
-> Note that for PPC, we build both ppc64-softmmu and ppc64le-softmmu config=
-s,
-> so for PPC target_endianness() really can be either LE or BE even
-> in system emulation mode.
->
-> > For SVE, the current implementation is as follows for the zregs:
-> >
-> > aarch64_gdb_set_sve_reg:
-> > <omitted code>
-> > // case 0...31
-> > int vq, len =3D 0;
-> > uint64_t *p =3D (uint64_t *) buf;
-> > for (vq =3D 0; vq < cpu->sve_max_vq; vq++) {
-> > env->vfp.zregs[reg].d[vq * 2 + 1] =3D *p++;
-> >         env->vfp.zregs[reg].d[vq * 2] =3D *p++;
-> >         len +=3D 16;
-> > }
->
-> This code definitely is wrong, because the gdbstub protocol buffer
-> is target-endianness and the env->vfp.zregs values are host-endianness.
->
-> thanks
-> -- PMM
->
+> +    case DIAG_320_SUBC_QUERY_ISM:
+> +        uint64_t ism =  0;
 
---000000000000bd871e063a770921
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Technically, this subcode is suppose to write to an 8-word installed
+subcodes block (ISB).  Though I can't imagine that we'll grow beyond
+even the first word for quite some time.  I guess it's up to the caller
+to provide a proper ISB anyway.
 
-<div dir=3D"ltr">Hi Peter,<div><br></div><div>I am using the user mode emul=
-ator to test the &quot;target big endian&quot; code path.</div><div><br></d=
-iv><div>I apologize for the error, I have sent this content=C2=A0as a patch=
- series to make it easier to review!</div><div><br></div><div>Looking forwa=
-rd to your feedback!</div><div><br></div><div>Thanks,</div><div>Vacha</div>=
-</div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr"=
- class=3D"gmail_attr">On Mon, Jul 21, 2025 at 10:36=E2=80=AFAM Peter Maydel=
-l &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">O=
-n Fri, 18 Jul 2025 at 20:20, Vacha Bhavsar<br>
-&lt;<a href=3D"mailto:vacha.bhavsar@oss.qualcomm.com" target=3D"_blank">vac=
-ha.bhavsar@oss.qualcomm.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Upon examining the current implementation for getting/setting SIMD<br>
-&gt; and SVE registers via remote GDB, there is a concern about mixed<br>
-&gt; endian support.<br>
-<br>
-Yes, we discussed this on a different thread.<br>
-<br>
-&gt; The current implementation for the SIMD functionality for getting and =
-setting<br>
-&gt; registers via the gdbstub is implemented as follows:<br>
-&gt;<br>
-&gt; aarch64_gdb_set_fpu_reg:<br>
-&gt; &lt;omitted code&gt;<br>
-&gt; uint64_t *q =3D aa64_vfp_qreg(env, reg);<br>
-&gt; q[0] =3D ldq_le_p(buf);<br>
-&gt; q[1] =3D ldq_le_p(buf + 8);<br>
-&gt; return 16;<br>
-&gt; &lt;omitted code&gt;<br>
-&gt;<br>
-&gt; The following code is a suggested fix for the current implementation t=
-hat<br>
-&gt; should allow for mixed endian support for getting/setting SIMD registe=
-rs<br>
-&gt; via the remote GDB protocol.<br>
-&gt;<br>
-&gt; aarch64_gdb_set_fpu_reg:<br>
-&gt; &lt;omitted code&gt;<br>
-&gt; // case 0...31<br>
-<br>
-It would be easier to review your proposed changes if you&#39;d<br>
-sent them in a proper patch format...<br>
-<br>
-&gt; uint64_t *q =3D aa64_vfp_qreg(env, reg);<br>
-&gt; if (target_big_endian()){<br>
-<br>
-What config are you using to test this &quot;target big endian&quot;<br>
-code path? On system emulation target/arm is *always*<br>
-target_big_endian() =3D=3D false (even if CPSR.E is set).<br>
-The QEMU &quot;target endianness&quot; is a compile-time property of the<br=
->
-system, not a runtime property of the CPU. CPSR.E just causes us to<br>
-byteswap values as they go out from the CPU to the memory subsystem.<br>
-<br>
-I think for the user mode emulator aarch64_be-linux-user<br>
-we may have target_big_endian() true, but I forget. BE<br>
-linux-user is pretty unmaintained...<br>
-<br>
-&gt; q[1] =3D ldq_p(buf);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0q[0] =3D ldq_p(buf + 8);<br>
-&gt; }<br>
-&gt; else{<br>
-&gt; q[0] =3D ldq_p(buf);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0q[1] =3D ldq_p(buf);<br>
-<br>
-(You&#39;re loading q[0] and q[1] from the same buffer address here.)<br>
-<br>
-&gt; }&gt; return 16;<br>
-&gt; &lt;omitted code&gt;<br>
-&gt;<br>
-&gt; This use of ldq_p rather than ldq_le_p (which the current implementati=
-on<br>
-&gt; uses) to load bytes into host endian struct is inspired by the current=
-<br>
-&gt; implementation for getting/setting general purpose registers via remot=
-e<br>
-&gt; GDB (which works appropriately regardless of target endianness), as we=
-ll<br>
-&gt; as the current implementation for getting/setting gprs via GDB with pp=
-c<br>
-&gt; as a target (refer to ppc_cpu_gdb_write_register() for example).<br>
-<br>
-Note that for PPC, we build both ppc64-softmmu and ppc64le-softmmu configs,=
-<br>
-so for PPC target_endianness() really can be either LE or BE even<br>
-in system emulation mode.<br>
-<br>
-&gt; For SVE, the current implementation is as follows for the zregs:<br>
-&gt;<br>
-&gt; aarch64_gdb_set_sve_reg:<br>
-&gt; &lt;omitted code&gt;<br>
-&gt; // case 0...31<br>
-&gt; int vq, len =3D 0;<br>
-&gt; uint64_t *p =3D (uint64_t *) buf;<br>
-&gt; for (vq =3D 0; vq &lt; cpu-&gt;sve_max_vq; vq++) {<br>
-&gt; env-&gt;vfp.zregs[reg].d[vq * 2 + 1] =3D *p++;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;vfp.zregs[reg].d[vq * 2] =3D =
-*p++;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0len +=3D 16;<br>
-&gt; }<br>
-<br>
-This code definitely is wrong, because the gdbstub protocol buffer<br>
-is target-endianness and the env-&gt;vfp.zregs values are host-endianness.<=
-br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
+I'd suggest the following:
 
---000000000000bd871e063a770921--
+change from `uint64_t` to `uint32_t ism_word0`
+
+Add a comment:
+
+/*
+ * The Installed Subcode Block (ISB) can be up 8 words in size,
+ * but the current set of subcodes can fit within a single word
+ * for now.
+ */
+
+> +
+> +        if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism))) {
+> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +            return;
+> +        }
+> +
+> +        rc = DIAG_320_RC_OK;
+
+env->regs[r1 + 1] = DIAG_320_RC_OK;
+
+> +        break;
+> +    default:
+> +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +        return;
+
+As specified in the documentation, "response code 0x0102 indicates that
+the subcode is reserved or not supported on this model". There is no
+program specification when an incorrect subcode has been provided.
+
+> +    }
+> +    env->regs[r1 + 1] = rc;
+
+Remove this line.
+
+> +}
+> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+> index 8f655a4b7f..d5b3694600 100644
+> --- a/target/s390x/kvm/kvm.c
+> +++ b/target/s390x/kvm/kvm.c
+> @@ -98,6 +98,7 @@
+>  #define DIAG_TIMEREVENT                 0x288
+>  #define DIAG_IPL                        0x308
+>  #define DIAG_SET_CONTROL_PROGRAM_CODES  0x318
+> +#define DIAG_CERT_STORE                 0x320
+>  #define DIAG_KVM_HYPERCALL              0x500
+>  #define DIAG_KVM_BREAKPOINT             0x501
+>  
+> @@ -1560,6 +1561,16 @@ static void handle_diag_318(S390CPU *cpu, struct kvm_run *run)
+>      }
+>  }
+>  
+> +static void kvm_handle_diag_320(S390CPU *cpu, struct kvm_run *run)
+> +{
+> +    uint64_t r1, r3;
+> +
+> +    r1 = (run->s390_sieic.ipa & 0x00f0) >> 4;
+> +    r3 = run->s390_sieic.ipa & 0x000f;
+> +
+> +    handle_diag_320(&cpu->env, r1, r3, RA_IGNORED);
+> +}
+> +
+>  #define DIAG_KVM_CODE_MASK 0x000000000000ffff
+>  
+>  static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+> @@ -1590,6 +1601,9 @@ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+>      case DIAG_KVM_BREAKPOINT:
+>          r = handle_sw_breakpoint(cpu, run);
+>          break;
+> +    case DIAG_CERT_STORE:
+> +        kvm_handle_diag_320(cpu, run);
+> +        break;
+>      default:
+>          trace_kvm_insn_diag(func_code);
+>          kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
+> diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+> index a4ba6227ab..86a652f833 100644
+> --- a/target/s390x/s390x-internal.h
+> +++ b/target/s390x/s390x-internal.h
+> @@ -400,6 +400,8 @@ int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
+>  int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3);
+>  void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
+>                       uintptr_t ra);
+> +void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3,
+> +                     uintptr_t ra);
+>  
+>  
+>  /* translate.c */
+> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+> index f7101be574..412c34ed93 100644
+> --- a/target/s390x/tcg/misc_helper.c
+> +++ b/target/s390x/tcg/misc_helper.c
+> @@ -142,6 +142,13 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
+>          /* time bomb (watchdog) */
+>          r = handle_diag_288(env, r1, r3);
+>          break;
+> +    case 0x320:
+> +        /* cert store */
+> +        bql_lock();
+> +        handle_diag_320(env, r1, r3, GETPC());
+> +        bql_unlock();
+> +        r = 0;
+> +        break;
+>      default:
+>          r = -1;
+>          break;
+
+
+-- 
+Regards,
+  Collin
 
