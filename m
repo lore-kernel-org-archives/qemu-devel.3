@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994C0C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC9BC83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udtKd-0002mk-IC; Mon, 21 Jul 2025 12:25:39 -0400
+	id 1udtJR-0006i3-2f; Mon, 21 Jul 2025 12:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJA-0006Bp-SW
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIn-0004kE-2x
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJ8-0001eS-Rk
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:24:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIe-0001Uo-Nv
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753115045;
+ s=mimecast20190719; t=1753115005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yDXV9JEqd2YGulb9ZztH7aN7aI/DnHYJgwb9sf9N20o=;
- b=CuYwLsScJCNQhE5VmoFzE/WDEJbO4Ngf6DrHSlSUEpyPw7Nt6yaUoVHSAvOOjbhBjTIqSh
- q1cyPj1R4mMqwt1mE2Z+SKjA+MiUJNA+szho6gsCNdRGEdDkPwJ+3ScK6LbrNY1zxrzvBs
- 8su1WCRwXlrhD1nlQX542Hzuq2O9jhc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=mOnTSLxJi5yj63cfC5aTMnrzLcPnJGX7PJdWzyG0SaU=;
+ b=asfoMaIdOSfXxd16GSKKAaKsyfrxk28MC/Wj5TKWD9uE3uhUtJBBlJ7HEM6w1Ruu5J0HY2
+ AhvSTaIgb4UDTLyVWg5hCB23+7COWDaD9qMqZYhAhYO1KHEGqWT5XID+HkndIYpzllSbcy
+ JB1ejeHC+CdlESSR93wRSY78djReSQk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-zhr1gl49MV-68yB-N4hrTw-1; Mon,
- 21 Jul 2025 12:24:02 -0400
-X-MC-Unique: zhr1gl49MV-68yB-N4hrTw-1
-X-Mimecast-MFC-AGG-ID: zhr1gl49MV-68yB-N4hrTw_1753115040
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-ODq7BigxPXudfA59YZgs4w-1; Mon,
+ 21 Jul 2025 12:23:19 -0400
+X-MC-Unique: ODq7BigxPXudfA59YZgs4w-1
+X-Mimecast-MFC-AGG-ID: ODq7BigxPXudfA59YZgs4w_1753114998
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA9C51800D86; Mon, 21 Jul 2025 16:24:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6EF7A1956089; Mon, 21 Jul 2025 16:23:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.19])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 96F051955F4A; Mon, 21 Jul 2025 16:23:58 +0000 (UTC)
+ id 0093D195608D; Mon, 21 Jul 2025 16:23:15 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.ibm.com>,
  Gautam Menghani <gautam@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 29/50] ppc/xive2: Redistribute group interrupt preempted by
- higher priority interrupt
-Date: Mon, 21 Jul 2025 18:22:12 +0200
-Message-ID: <20250721162233.686837-30-clg@redhat.com>
+Subject: [PULL 14/50] ppc/xive: Explicitly zero NSR after accepting
+Date: Mon, 21 Jul 2025 18:21:57 +0200
+Message-ID: <20250721162233.686837-15-clg@redhat.com>
 In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
 References: <20250721162233.686837-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -89,47 +89,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicholas Piggin <npiggin@gmail.com>
 
-A group interrupt that gets preempted by a higher priority interrupt
-delivery must be redistributed otherwise it would get lost.
+Have xive_tctx_accept clear NSR in one shot rather than masking out bits
+as they are tested, which makes it clear it's reset to 0, and does not
+have a partial NSR value in the register.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-30-npiggin@gmail.com
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-15-npiggin@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/intc/xive2.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ hw/intc/xive.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 602b23d06d80..f51fd38a13eb 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1638,11 +1638,21 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-                              crowd, cam_ignore, priority,
-                              xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
-                              &match)) {
-+        XiveTCTX *tctx = match.tctx;
-+        uint8_t ring = match.ring;
-+        uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
-+        uint8_t *aregs = &tctx->regs[alt_ring];
-+        uint8_t nsr = aregs[TM_NSR];
-         uint8_t group_level;
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index a0a60a24f510..b35d2ec1793e 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -68,13 +68,11 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+          * If the interrupt was for a specific VP, reset the pending
+          * buffer bit, otherwise clear the logical server indicator
+          */
+-        if (regs[TM_NSR] & TM_NSR_GRP_LVL) {
+-            regs[TM_NSR] &= ~TM_NSR_GRP_LVL;
+-        } else {
++        if (!(regs[TM_NSR] & TM_NSR_GRP_LVL)) {
+             alt_regs[TM_IPB] &= ~xive_priority_to_ipb(cppr);
+         }
  
-+        if (priority < aregs[TM_PIPR] &&
-+            xive_nsr_indicates_group_exception(alt_ring, nsr)) {
-+            xive2_redistribute(xrtr, tctx, alt_ring);
-+        }
-+
-         group_level = xive_get_group_level(crowd, cam_ignore, nvx_blk, nvx_idx);
--        trace_xive_presenter_notify(nvx_blk, nvx_idx, match.ring, group_level);
--        xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
-+        trace_xive_presenter_notify(nvx_blk, nvx_idx, ring, group_level);
-+        xive_tctx_pipr_update(tctx, ring, priority, group_level);
-         return;
-     }
+-        /* Drop the exception bit and any group/crowd */
++        /* Clear the exception from NSR */
+         regs[TM_NSR] = 0;
  
+         trace_xive_tctx_accept(tctx->cs->cpu_index, alt_ring,
 -- 
 2.50.1
 
