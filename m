@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31C2C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA51BC83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwkB-0005XU-EQ; Mon, 21 Jul 2025 16:04:16 -0400
+	id 1udwkC-0005aA-71; Mon, 21 Jul 2025 16:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjC-0004rN-RV; Mon, 21 Jul 2025 16:03:26 -0400
+ id 1udwjH-0004ri-6d; Mon, 21 Jul 2025 16:03:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1udwjA-0004ke-NI; Mon, 21 Jul 2025 16:03:14 -0400
+ id 1udwjE-0004lf-On; Mon, 21 Jul 2025 16:03:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1364E139045;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2235A139046;
  Mon, 21 Jul 2025 23:02:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C546C24BED1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D638924BED2;
  Mon, 21 Jul 2025 23:03:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.3 68/70] ui: fix setting client_endian field defaults
-Date: Mon, 21 Jul 2025 23:02:55 +0300
-Message-ID: <20250721200302.133559-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.3 69/70] target/arm: Correct encoding of Debug
+ Communications Channel registers
+Date: Mon, 21 Jul 2025 23:02:56 +0300
+Message-ID: <20250721200302.133559-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.3-20250721221446@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,47 +61,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When a VNC client sends a "set pixel format" message, the
-'client_endian' field will get initialized, however, it is
-valid to omit this message if the client wants to use the
-server's native pixel format. In the latter scenario nothing
-is initializing the 'client_endian' field, so it remains set
-to 0, matching neither G_LITTLE_ENDIAN nor G_BIG_ENDIAN. This
-then results in pixel format conversion routines taking the
-wrong code paths.
+We don't implement the Debug Communications Channel (DCC), but
+we do attempt to provide dummy versions of its system registers
+so that software that tries to access them doesn't fall over.
 
-This problem existed before the 'client_be' flag was changed
-into the 'client_endian' value, but the lack of initialization
-meant it semantically defaulted to little endian, so only big
-endian systems would potentially be exposed to incorrect pixel
-translation.
+However, we got the tx/rx register definitions wrong. These
+should be:
 
-The 'virt-viewer' / 'remote-viewer' apps always send a "set
-pixel format" message so aren't exposed to any problems, but
-the classical 'vncviewer' app will show the problem easily.
+AArch32:
+  DBGDTRTX   p14 0 c0 c5 0  (on writes)
+  DBGDTRRX   p14 0 c0 c5 0  (on reads)
 
-Fixes: 7ed96710e82c385c6cfc3d064eec7dde20f0f3fd
-Reported-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 3ac6daa9e1c5d7dae2a3cd1c6a388174b462f3e8)
+AArch64:
+  DBGDTRTX_EL0  2 3 0 5 0 (on writes)
+  DBGDTRRX_EL0  2 3 0 5 0 (on reads)
+  DBGDTR_EL0    2 3 0 4 0 (reads and writes)
+
+where DBGDTRTX and DBGDTRRX are effectively different names for the
+same 32-bit register, which has tx behaviour on writes and rx
+behaviour on reads.  The AArch64-only DBGDTR_EL0 is a 64-bit wide
+register whose top and bottom halves map to the DBGDTRRX and DBGDTRTX
+registers.
+
+Currently we have just one cpreg struct, which:
+ * calls itself DBGDTR_EL0
+ * uses the DBGDTRTX_EL0/DBGDTRRX_EL0 encoding
+ * is marked as ARM_CP_STATE_BOTH but has the wrong opc1
+   value for AArch32
+ * is implemented as RAZ/WI
+
+Correct the encoding so:
+ * we name the DBGDTRTX/DBGDTRRX register correctly
+ * we split it into AA64 and AA32 versions so we can get the
+   AA32 encoding right
+ * we implement DBGDTR_EL0 at its correct encoding
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2986
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250708141049.778361-1-peter.maydell@linaro.org
+(cherry picked from commit 655659a74a36b63e33d2dc969d3c44beb1b008b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index ca02ff872a..a6bf8442d5 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2336,6 +2336,7 @@ static void pixel_format_message (VncState *vs) {
-     char pad[3] = { 0, 0, 0 };
- 
-     vs->client_pf = qemu_default_pixelformat(32);
-+    vs->client_endian = G_BYTE_ORDER;
- 
-     vnc_write_u8(vs, vs->client_pf.bits_per_pixel); /* bits-per-pixel */
-     vnc_write_u8(vs, vs->client_pf.depth); /* depth */
+diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
+index a9a619ba6b..79c0e8eaff 100644
+--- a/target/arm/debug_helper.c
++++ b/target/arm/debug_helper.c
+@@ -986,11 +986,20 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
+       .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 2,
+       .access = PL1_RW, .accessfn = access_tdcc,
+       .type = ARM_CP_CONST, .resetvalue = 0 },
+-    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
+-    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_BOTH, .cp = 14,
++    /* Architecturally DBGDTRTX is named DBGDTRRX when used for reads */
++    { .name = "DBGDTRTX_EL0", .state = ARM_CP_STATE_AA64,
+       .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
+       .access = PL0_RW, .accessfn = access_tdcc,
+       .type = ARM_CP_CONST, .resetvalue = 0 },
++    { .name = "DBGDTRTX", .state = ARM_CP_STATE_AA32, .cp = 14,
++      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
++      .access = PL0_RW, .accessfn = access_tdcc,
++      .type = ARM_CP_CONST, .resetvalue = 0 },
++    /* This is AArch64-only and is a combination of DBGDTRTX and DBGDTRRX */
++    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
++      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 4, .opc2 = 0,
++      .access = PL0_RW, .accessfn = access_tdcc,
++      .type = ARM_CP_CONST, .resetvalue = 0 },
+     /*
+      * OSECCR_EL1 provides a mechanism for an operating system
+      * to access the contents of EDECCR. EDECCR is not implemented though,
 -- 
 2.47.2
 
