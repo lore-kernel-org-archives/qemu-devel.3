@@ -4,81 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EEAC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 12:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0869DC83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 12:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udpMO-0007XT-14; Mon, 21 Jul 2025 08:11:12 -0400
+	id 1udpbW-0007Gs-W7; Mon, 21 Jul 2025 08:26:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udpMJ-0006ub-3E; Mon, 21 Jul 2025 08:11:07 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udpZf-00017J-Vj
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 08:24:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udpMB-00078F-BX; Mon, 21 Jul 2025 08:11:06 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56LCAMpU044515
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 21 Jul 2025 21:10:23 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=+SB18LhifwMhnPKqTfjmQ8gmvC4aRrNSH8mjWGIc11Y=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753099823; v=1;
- b=pY8TmominlU2gpMgjMx3nxIGE7gKSnetu53wjZ1OdUji+Yp0LMTvfP7f4jdkdF4V
- ftlbqbmjbld+7cNsoUL2xNSWss3k8mWh78WhoQDrvds+/1ViP82JwF33flseHSEv
- eVdTzY1gemR/Nk3cl/F2nE/FN+elHm0Tqm31FMYR2yIVOpPpCKhRfF0D+8NH02FP
- JUMrOINqeBzMoMlnxte07i6f2QLh62ElOM6mz612wCuE9COfp/UyrcSw1bJFSpW6
- a1Vwl03HVkOz0tbfVKesh7hiOyy+7CHIRgy8L5hLkZ6lvCRWCyL69eQVR5l/eerm
- 0BFyUnJEVrQdwxmIeu79Aw==
-Message-ID: <bf321448-6fe2-429e-a36a-9f9e0fb6bec5@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 21 Jul 2025 21:10:21 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/24] migration: push Error **errp into
- vmstate_subsection_load()
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udpZa-0000mk-Qf
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 08:24:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753100685;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2L3wEWhTvCQaiTeIJztzq/u2Rn+r0faIANBXwe2xqHw=;
+ b=Mf8YPBBiqtF2PBC8uPpo/lD5iFCSSqHUaw3N2z7GI2Wdu9IlJfVSJPg0aDE9gbFEC5z4Xe
+ 33XwwOGEWq5C1gI0i5wfbbK2gc4qMXa3VEGiYfSu5LvayXfpI8sHPOuFGXm/LcJqDCOTXB
+ h4yL7ZcuWXHZSvZFNMpqcYP7o+9dtvU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-4dkBulMhNHmUCaEnzfUFKA-1; Mon,
+ 21 Jul 2025 08:24:42 -0400
+X-MC-Unique: 4dkBulMhNHmUCaEnzfUFKA-1
+X-Mimecast-MFC-AGG-ID: 4dkBulMhNHmUCaEnzfUFKA_1753100679
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4AF518004A7; Mon, 21 Jul 2025 12:24:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.213])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 184EA19560AD; Mon, 21 Jul 2025 12:24:29 +0000 (UTC)
+Date: Mon, 21 Jul 2025 13:24:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Hailiang Zhang <zhanghailiang@xfusion.com>,
  Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
  qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v6 07/24] migration: Update qemu_file_get_return_path()
+ docs and remove dead checks
+Message-ID: <aH4xeibE9uus2p5d@redhat.com>
 References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
- <20250721-propagate_tpm_error-v6-1-fef740e15e17@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250721-propagate_tpm_error-v6-1-fef740e15e17@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ <20250721-propagate_tpm_error-v6-7-fef740e15e17@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250721-propagate_tpm_error-v6-7-fef740e15e17@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,73 +108,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/21 20:29, Arun Menon wrote:
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that vmstate_subsection_load() must report an error
-> in errp, in case of failure.
+On Mon, Jul 21, 2025 at 04:59:12PM +0530, Arun Menon wrote:
+> The documentation of qemu_file_get_return_path() states that it can
+> return NULL on failure. However, a review of the current implementation
+> reveals that it is guaranteed that it will always succeed and will never
+> return NULL.
+> 
+> As a result, the NULL checks post calling the function become redundant.
+> This commit updates the documentation for the function and removes all
+> NULL checks throughout the migration code.
 > 
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
->   migration/vmstate.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 5feaa3244d259874f03048326b2497e7db32e47c..129b19d7603a0ddf8ab6e946e41c1c4d773d1fa8 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -25,7 +25,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
->                                      void *opaque, JSONWriter *vmdesc,
->                                      Error **errp);
->   static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-> -                                   void *opaque);
-> +                                   void *opaque, Error **errp);
->   
->   /* Whether this field should exist for either save or load the VM? */
->   static bool
-> @@ -225,7 +225,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->           field++;
->       }
->       assert(field->flags == VMS_END);
-> -    ret = vmstate_subsection_load(f, vmsd, opaque);
-> +    ret = vmstate_subsection_load(f, vmsd, opaque, NULL);
->       if (ret != 0) {
->           qemu_file_set_error(f, ret);
->           return ret;
-> @@ -566,7 +566,7 @@ vmstate_get_subsection(const VMStateDescription * const *sub,
->   }
->   
->   static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
-> -                                   void *opaque)
-> +                                   void *opaque, Error **errp)
->   {
->       trace_vmstate_subsection_load(vmsd->name);
->   
-> @@ -598,6 +598,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->           sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
->           if (sub_vmsd == NULL) {
->               trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
-> +            error_setg(errp, "VM subsection '%s'  in '%s' does not exist",
+>  migration/colo.c      |  4 ----
+>  migration/migration.c | 12 ++----------
+>  migration/qemu-file.c |  1 -
+>  migration/savevm.c    |  4 ----
+>  4 files changed, 2 insertions(+), 19 deletions(-)
 
-There are two whitespaces before "in" but I think we only need one.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> +                       idstr, vmsd->name);
->               return -ENOENT;
->           }
->           qemu_file_skip(f, 1); /* subsection */
-> @@ -608,6 +610,8 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->           ret = vmstate_load_state(f, sub_vmsd, opaque, version_id);
->           if (ret) {
->               trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(child)");
-> +            error_setg(errp, "Loading VM subsection '%s' in '%s' failed : %d",
-> +                       idstr, vmsd->name, ret);
->               return ret;
->           }
->       }
-> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
