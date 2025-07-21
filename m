@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF11C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821D1C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udwsF-0006uZ-0W; Mon, 21 Jul 2025 16:12:35 -0400
+	id 1udwy4-0002oV-3p; Mon, 21 Jul 2025 16:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1udwsC-0006tS-5g; Mon, 21 Jul 2025 16:12:32 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1udwwH-0001LK-R6
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:16:53 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1udwsA-0007N6-5y; Mon, 21 Jul 2025 16:12:31 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-32b43cce9efso40603631fa.3; 
- Mon, 21 Jul 2025 13:12:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1udwwF-0000WP-V3
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:16:45 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6077dea37easo7439300a12.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753128747; x=1753733547; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1753129001; x=1753733801; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B6X57D9h3fZQwbp9rJ9R1YByGkHp+bI3VYHvZ1CCm5Q=;
- b=evSDvH7fxsimX7BQCX17YpoKK97CGvIzO/gJ9Q6AGOmwdajydhezyCEwYlAttsh8ab
- ixNPumD4hTUtoYCs8TKbrMAkgGOXUvbAI15i8O4F2gXeFEfzfDmN6qrhGSWojBh/NSPP
- XTXgZaqbE2U362f9yeKbGDYm/tDM8SctrF680wAcAABXB/qe7LT1S4u70RGlUh8JJb1W
- WBwds7PUyktGYv8UmAkl3LBSgIEHiGAl7v0RGjXcZhqbuuRtabka1UmInEi+GJbjnYSL
- VRWvIcFS0cPv6T6jMc50nbfHNQ5WmLHJlT4vACReaM3A9L6gMO32frb3/AwLK3H7iyFu
- wnoA==
+ bh=E1hFrAOY/afLayIsqHlCuoTIyS4m9SJm/laR3v05IW8=;
+ b=BtrqHIRvpcbTn9sQ6VB0VMBk+3MK0/Aid3sYvwBOHUuo8CETV7Lg26U9at7GROXKsw
+ WKQbo8+fYsv7BwAFFy3afd9u3oJDZCG8AVhowakw/FHVZ8pPQQJngx9gakpPVPzM08cp
+ NjJjvJo0YwqRKctwC4aEDoENxNhiFJIbzgPcGOaCRyDt9B6IhKNTbCrAhw4znjgROdDB
+ W0U3D8cpsrhnMihrAF52392q0AZnjj7+6UYYxaePmf83GbfJOwINiAncbNE8nO80Cs3F
+ +4lC0dwpWudhli0jF6a4zvmzeyZ980/NlBeKSHdrp2CXEHQI6uvp7a/6HzEF3frYNch3
+ C8WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753128747; x=1753733547;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1753129001; x=1753733801;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B6X57D9h3fZQwbp9rJ9R1YByGkHp+bI3VYHvZ1CCm5Q=;
- b=Jiui4sRtupOlAsHK7NlhxX5IbvT3vuC4QUcWtcjx9kPDOP8E1S1LnwKXpgHFmufQFR
- ALo2hR9Jo1c/KZ78DrJ0xbNxgVv7yLpu8rws6TlQl+hLkqrJkVdZzdgff4z8y1RspfkE
- vYJxhgwba05+BsZtwTDf7WzdMe1kJLPSO3j9Y64kaJ2fKVedGkcP7v+2iQgBvYXGEDEL
- j8+6sAkNhQTbu+UwJs+HHe6Y/v19IAT2VBuKydcXwzIbiibwqZ/TSaS2xEBF7pUpPAqR
- UwoIb9oWj4WBLIUBoUZ1ZVA5mRlAotGHpyrY74/WBasJ5hx0SVoQQrtJltc2YYoC22+2
- 0BPA==
+ bh=E1hFrAOY/afLayIsqHlCuoTIyS4m9SJm/laR3v05IW8=;
+ b=CJRlDs+qlF2dBqEyDLbJuK1afOPYo2PQXgr8zyEliaRYkUp4MyH/Qnv509iJ+85V4P
+ 3s7SE+ejWTLZ6/rtEyX0QRgI9hGsgMcSEU63HbWPBdlGGigeNMlTC8XrLUYGnB3dN4Ix
+ PRTCPKZANeBPq9fqCj5xh9tKY5KRgC0LDGC/G9yJGIf/o2U6SUGMSQ5hm3OMOxWlZ9NI
+ dTchBc9ApiQyC9sBfk9SCAY0y6fMekk8/ohRkakjqKpGR7gnGfTXmWnx4zWgE9ep+uhz
+ 1eXopl7okdpcau4vnVQNfAo5vb3yuG782uXzcCn5bh95SebtupYl2viZWiFt8Ssjnp3x
+ yoEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOiJ7RvSdptOfHXXD2zlcdkpHSlCjfLCoS7SBE8oex3djskHV1y1fHWwKLNM/etkRcoHkoFARypQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yyh/xmKdKGJ7ktsGvZh5fgX8TSQezHv+VsfCLl7uIfC3hLlWwql
- Qgm5xyKcmIdh0b06cXIez2UHLvGk4UJHUotZW5xg2ExTy5IL9neEZSp9
-X-Gm-Gg: ASbGncsd/OGIkZO4lR4jAU0rl+t4SUJ7LJlFxBCEirXc9eVVlGfWmjEBd9dtg1kKStO
- 2gRfapPxLHAq4FTnBNNMbjLHVvA85l7XlLrDfpPoYWZnkE8InR9RYXwkHt78JOyDttBpHn5JVax
- RcB1BLEWTFJnGpPysr9lCu14xOSKEDIrN8VJ+tOJPqjplX6FOe9KMUwcFQaXBXq5jNztfe40GFk
- O4akyZcKosop5byIFL9/Vv8OkuFx/Rev1M3FDXY/2gJqu35kNu8SL8ihm4PCaRZQntNlOuY6a58
- hgoqUbMiufwl4tt4piSk68gjorxkMA0Gmsd+qYXWIXJNTV1Esp1Mo7tZ6v1RJDGWUtLoLb4b1+O
- u1BNCAZdWKKPWLtmTBQTpQstNXq3SAd6F3nw+FlnvHmKXG7aaL5EnxDk6Rt8Uuqt4qNXM9X1Vrc
- w=
-X-Google-Smtp-Source: AGHT+IFNCcs75/5DbyllzyHq2/mNK8dps+hQVHFYeGgUzMgxfnxJEo4Z4eLig/5FpjPZ99SB+75E9g==
-X-Received: by 2002:a05:651c:2115:b0:32c:bc69:e926 with SMTP id
- 38308e7fff4ca-3308f4c10b9mr60465631fa.7.1753128747169; 
- Mon, 21 Jul 2025 13:12:27 -0700 (PDT)
-Received: from smtpclient.apple (m91-129-105-190.cust.tele2.ee.
- [91.129.105.190]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-330a91da0dbsm14333931fa.89.2025.07.21.13.12.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 21 Jul 2025 13:12:25 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.71\))
-Subject: Re: [PATCH 1/4] hw: acpi: add support for SPCR revision 3
-From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
-In-Reply-To: <20250721103937.00007933@huawei.com>
-Date: Mon, 21 Jul 2025 23:12:02 +0300
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Vadim Chichikalyuk <chichikalyuk@gmail.com>
+ AJvYcCW23RKw2EYnDYcTxha8PUovg+7WuxMWg16bkYpum7+aI3K1Lm/nzUK4a9gJC7ti/2G2L/YSgQYO6bgi@nongnu.org
+X-Gm-Message-State: AOJu0Yz+6t6Fii64Km/KUKyFuL/heIwxQlyLH8fWV2X1ntdAWBPILSvT
+ UUUPyRyS1oLIOFuNSDjsprNlGa4uFOoiMr6RJjW9p6zFikpo9Acqypzh93o9UnWatpN6l/Q+rII
+ anTDVdMjSiPwvIfXlPIMzPbQOmEqH3Dg=
+X-Gm-Gg: ASbGncua1NPh53fM+zXaOJW9MBAu6go0pN9wvQxmlvc619J6Qb++3E4c18F7gulF7uA
+ OaN9+7oYLKwxryP+GjLwr+7dVW6Y/KsVQgcHfM4kpdpM5MNn7sQ78el09s5SNPfvba1u3DO/Nhv
+ eukKRG32VLcDJoe4QdHjvxy+a2WbXHLsd2YDIhYpKrvq729oP4+VaNe1gjSMCy+bZYY+AD+A8iG
+ H897A==
+X-Google-Smtp-Source: AGHT+IGMcLuEDV08bq6NnW+gI87WuV/LuF6GR5BESOUb0zqsbno7/eKvkflJ2NAG+XwW7hTuGqMLUUmoYDFxUdm4cwk=
+X-Received: by 2002:a05:6402:354a:b0:612:d8b3:a9e7 with SMTP id
+ 4fb4d7f45d1cf-612d8b3af64mr10689628a12.5.1753129000560; Mon, 21 Jul 2025
+ 13:16:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250721181051.61143-1-stefanha@redhat.com>
+ <20250721181051.61143-2-stefanha@redhat.com>
+ <aH6Ngt6dmk56uMEt@redhat.com>
+In-Reply-To: <aH6Ngt6dmk56uMEt@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 21 Jul 2025 16:16:28 -0400
+X-Gm-Features: Ac12FXww2PnFwUlrCmI39lGQgf-CB9dJCfOYsDWTcAPYCclkSKUqG5oJswJ0_tI
+Message-ID: <CAJSP0QUjGRoT6uz7CbVxGH2ySZ4L9J3uukZKN64kRBhhqoK6jQ@mail.gmail.com>
+Subject: Re: [PULL 1/1] trace: log.py: human-readable timestamp
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mads Ynddal <mads@ynddal.dk>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <98B4B864-6AF6-4B34-B52B-4C15667B4913@gmail.com>
-References: <20250718162045.49012-1-chichikalyuk@gmail.com>
- <20250718162045.49012-2-chichikalyuk@gmail.com>
- <20250721103937.00007933@huawei.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-X-Mailer: Apple Mail (2.3826.700.71)
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=chichikalyuk@gmail.com; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,73 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jul 21, 2025 at 3:04=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Mon, Jul 21, 2025 at 02:10:51PM -0400, Stefan Hajnoczi wrote:
+> > From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> >
+> > So tired to parse all these timestamps, when need to compare them
+> > with other logs.
+> >
+> > Use iso8601 format as in warn_report() (info_report(), error_report())
+> > already used.
+> >
+> > Also, start line with date, to be similar with warn_report() as well.
+> >
+> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > Message-id: 20250626195514.366177-1-vsementsov@yandex-team.ru
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  scripts/tracetool/backend/log.py | 11 ++++++++---
+> >  1 file changed, 8 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backe=
+nd/log.py
+> > index 17ba1cd90e..61118474b1 100644
+> > --- a/scripts/tracetool/backend/log.py
+> > +++ b/scripts/tracetool/backend/log.py
+> > @@ -39,10 +39,15 @@ def generate_h(event, group):
+> >          '        if (message_with_timestamp) {',
+> >          '            struct timeval _now;',
+> >          '            gettimeofday(&_now, NULL);',
+> > +        '            time_t _seconds =3D _now.tv_sec;',
+> > +        '            struct tm _tm;',
+> > +        '            gmtime_r(&_seconds, &_tm);',
+> >          '#line %(event_lineno)d "%(event_filename)s"',
+> > -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n=
+",',
+> > -        '                     qemu_get_thread_id(),',
+> > -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_use=
+c',
+> > +        '            qemu_log("%%04d-%%02d-%%02dT%%02d:%%02d:%%02d.%%0=
+6ldZ'
+> > +        ' (%%d) %(name)s " %(fmt)s "\\n",',
+> > +        '                     _tm.tm_year + 1900, _tm.tm_mon + 1, _tm.=
+tm_mday,',
+> > +        '                     _tm.tm_hour, _tm.tm_min, _tm.tm_sec, _no=
+w.tv_usec,',
+> > +        '                     qemu_get_thread_id()',
+> >          '                     %(argnames)s);',
+>
+> IMHO this is undesirable, as it bloats the QEMU binaries by another 1 MB
+> as we have an excessive amount of code being inlined in every trace call
+> location. I've co-incidentally just sent a patch that would fix the same
+> problem based on a discussion last week about a bug caused by this log
+> backend adding 'error-report.h' into all files:
+>
+>   https://lists.nongnu.org/archive/html/qemu-devel/2025-07/msg04905.html
+>
+> >          '#line %(out_next_lineno)d "%(out_filename)s"',
+> >          '        } else {',
 
-> On 21 Jul 2025, at 12:39, Jonathan Cameron via <qemu-devel@nongnu.org> =
-wrote:
->=20
-> On Fri, 18 Jul 2025 19:20:42 +0300
-> Vadim Chichikalyuk <chichikalyuk@gmail.com> wrote:
->=20
->> The UART clock frequency field of the SPCR table was added in =
-revision 3.
->> Currently, build_spcr() treats revision 3 tables the same as revision =
-2 and
->> only includes this field in revision 4 tables.
->=20
-> Given this isn't in the ACPI spec, I'd make sure you have a reference =
-to the MS
-> documentation for this. I think it is this one:
-> =
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-=
-port-console-redirection-table
+There is also a format string portability issue that CI has just found:
+https://gitlab.com/qemu-project/qemu/-/jobs/10761777777#L2294
 
-I=E2=80=99m going off of the following line in the revision history =
-table on that MS page,=20
-suggesting there was a revision 3 with just the clock frequency added:
-"Changed Table Revision to 3 and created field for UART Clock Frequency. =
-Edited formatting."
+This patch will need to be reworked.
 
->=20
->> ---
->> hw/acpi/aml-build.c | 20 +++++++++++---------
->> 1 file changed, 11 insertions(+), 9 deletions(-)
->>=20
->> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
->> index 1e685f982f..9855d5f053 100644
->> --- a/hw/acpi/aml-build.c
->> +++ b/hw/acpi/aml-build.c
->> @@ -2123,20 +2123,22 @@ void build_spcr(GArray *table_data, =
-BIOSLinker *linker,
->>     build_append_int_noprefix(table_data, f->pci_flags, 4);
->>     /* PCI Segment */
->>     build_append_int_noprefix(table_data, f->pci_segment, 1);
->> -    if (rev < 4) {
->> +    if (rev < 3) {
->>         /* Reserved */
->>         build_append_int_noprefix(table_data, 0, 4);
->>     } else {
->>         /* UartClkFreq */
->>         build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
->> -        /* PreciseBaudrate */
->> -        build_append_int_noprefix(table_data, f->precise_baudrate, =
-4);
->> -        /* NameSpaceStringLength */
->> -        build_append_int_noprefix(table_data, =
-f->namespace_string_length, 2);
->> -        /* NameSpaceStringOffset */
->> -        build_append_int_noprefix(table_data, =
-f->namespace_string_offset, 2);
->> -        /* NamespaceString[] */
->> -        g_array_append_vals(table_data, name, =
-f->namespace_string_length);
->> +        if (rev >=3D 4) {
->> +            /* PreciseBaudrate */
->=20
-> Obviously historical, but this does seem like a lot of unnecessary =
-comments
-> given the clear naming of the input parameters!
->=20
+Stefan
 
-Absolutely, I=E2=80=99ll remove those that don=E2=80=99t add any useful =
-information in v2.=
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+>
 
