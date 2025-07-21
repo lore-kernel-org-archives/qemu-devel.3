@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE10C83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C460FC83F25
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udx1C-0006AL-Sg; Mon, 21 Jul 2025 16:21:50 -0400
+	id 1udx0x-0005gl-1V; Mon, 21 Jul 2025 16:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1udwyO-00038V-Aq
+ id 1udwyQ-0003AF-Jz
  for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:19:02 -0400
-Received: from mail-m8288.xmail.ntesmail.com ([156.224.82.88])
+Received: from mail-m93118.xmail.ntesmail.com ([103.126.93.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1udwyK-0000Xx-RN
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:18:55 -0400
+ id 1udwyM-0000YU-7Y
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:18:58 -0400
 Received: from DESKTOP-FHFCVTH.localdomain (unknown
  [IPV6:240e:360:9379:c800:30:bacc:21c0:5559])
- by smtp.qiye.163.com (Hmail) with ESMTP id 1cc453b65;
- Tue, 22 Jul 2025 04:11:35 +0800 (GMT+08:00)
+ by smtp.qiye.163.com (Hmail) with ESMTP id 1cc453b67;
+ Tue, 22 Jul 2025 04:11:38 +0800 (GMT+08:00)
 From: fanyihao@rt-thread.org
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Yihao Fan <fanyihao@rt-thread.org>
-Subject: [PATCH v2 0/3] Add STM32F4 support and USART device model
-Date: Tue, 22 Jul 2025 04:11:31 +0800
-Message-ID: <20250721201134.13270-1-fanyihao@rt-thread.org>
+Subject: [PATCH v2 2/3] Add the STM32F4spark Machine
+Date: Tue, 22 Jul 2025 04:11:33 +0800
+Message-ID: <20250721201134.13270-3-fanyihao@rt-thread.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250721201134.13270-1-fanyihao@rt-thread.org>
+References: <20250721201134.13270-1-fanyihao@rt-thread.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaSB0fVkkYHUIYHkodQxkfHVYVFAkWGhdVEwETFh
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZH0oYVk5JTRofQx0ZTElCHlYVFAkWGhdVEwETFh
  oSFyQUDg9ZV1kYEgtZQVlJT0seQUhNS0FCSExCQRhDS0tBSEtBGRoYGEFJShhLQU5OTkJZV1kWGg
- 8SFR0UWUFZS1VLVUtVS1kG
-X-HM-Tid: 0a982e9cf87203a4kunm518c726929260ae
+ 8SFR0UWUFZT0tIVUpLSUJDQ0lVSktLVUtZBg++
+X-HM-Tid: 0a982e9d038203a4kunm518c726929260df
 X-HM-MType: 1
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Kz46Ehw4DzEhEDoRTg0xFTVK
- CEMaCkpVSlVKTE5ISklDTUJNTEtPVTMWGhIXVR0aFQISExoUOwkPVg8TCR4aH1UUCRxFWVdZEgtZ
- QVlJT0seQUhNS0FCSExCQRhDS0tBSEtBGRoYGEFJShhLQU5OTkJZV1kIAVlBSkNPSjcG
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NC46Gjo5CjEiTToWCQhOFTcj
+ DAkwCjpVSlVKTE5ISklDTUJCT09MVTMWGhIXVR0aFQISExoUOwkPVg8TCR4aH1UUCRxFWVdZEgtZ
+ QVlJT0seQUhNS0FCSExCQRhDS0tBSEtBGRoYGEFJShhLQU5OTkJZV1kIAVlBT0lJSjcG
 DKIM-Signature: a=rsa-sha256;
- b=WioTTbc0oRPmx7GecNVL5QUULf7YbliJcPuiSesSMZ0pda8GPbyIFp+/TqTFWuQM2vm7ETYpU+KK/G4GWMEnrS9WvNZNfmkmxaRo+ozRyVEUTnGVPVwpwwbsH90eDPHVMkyouNyT9MAm+IatVd0WZ+z3Qt+6Cdb+3pUy+qotou9oFWYmS/OpzFee6i73th5xqyYcNQPt3wzoO8BptPsnA8ocm+KN8ipyhNG5kkmI83o0KFI6xMpPpl53sABe86IzFrxJ1bLCY8UNLJVBBCFSg0i88WpTMvS9CMWsxqovn5wDprL0H+8KEpPMjY7NmudTxRrauGMU7X9WP3d5NY+QcQ==;
+ b=LLxpfIlqLaNCMMadtDCbA4wUfR06QfnmLAhD6nrPxvu+24Qt4uZk4RmlC1PK/NeSjhKqjbv5CU9jDsqCYnGhrhUU+x+U5B9f6Die3YcD2LLuGwd+XYrm1x00zs8wWxhfk/IWjU1HidieekfmU0LH5btgI9a2lxlXB5VdvHnWOOhBlsUhRerfYBDwGWpWHbxjwQ+2vicutCHiXY3dcDPTQmv5F7leVrgq+afXi0JnmrpA8FejsOo+hDHEku5AGdsO1ya8UCMR6Y1ckdyZQ0SrLzQpoL3c7fbr/8BcXjMx/yJ3FYw9IXnBvXrvmx11mvDT0x681EsNB/j66/S/k2SCuw==;
  c=relaxed/relaxed; s=default; d=rt-thread.org; v=1; 
- bh=zpV62gaFona0W5aWDG4KVdn1LgVeP8AThJsp7DC6jIY=;
+ bh=DhtHw8BoO83emuq5svR1hPIfwohhpo4OSgYOi+4ii5Y=;
  h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=156.224.82.88;
- envelope-from=fanyihao@rt-thread.org; helo=mail-m8288.xmail.ntesmail.com
+Received-SPF: pass client-ip=103.126.93.118;
+ envelope-from=fanyihao@rt-thread.org; helo=mail-m93118.xmail.ntesmail.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,38 +76,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yihao Fan <fanyihao@rt-thread.org>
 
-This patch series introduces basic support for the STM32F407 SoC and
-a new STM32F4spark machine in QEMU, along with a USART device model.
-
-This series includes:
-- A new SoC model (STM32F407) with initial integration.
-- A board model called STM32F4spark to instantiate and test the SoC.
-- A USART device implementation for STM32F4xx family.
+Add the STM32F4spark machine model using the STM32F407 SoC.
 
 Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
-
-Yihao Fan (3):
-  Add-the-stm32f407-SoC
-  Add the STM32F4spark Machine
-  Add STM32F4xx USART device model
-
- MAINTAINERS                       |  16 ++
- hw/arm/Kconfig                    |  13 ++
- hw/arm/meson.build                |   2 +
- hw/arm/stm32f407_soc.c            | 154 +++++++++++++++++++
- hw/arm/stm32f4spark.c             |  48 ++++++
- hw/char/Kconfig                   |   3 +
- hw/char/meson.build               |   1 +
- hw/char/stm32f4xx_usart.c         | 236 ++++++++++++++++++++++++++++++
- include/hw/arm/stm32f407_soc.h    |  47 ++++++
- include/hw/char/stm32f4xx_usart.h |  60 ++++++++
- 10 files changed, 580 insertions(+)
- create mode 100644 hw/arm/stm32f407_soc.c
+---
+ MAINTAINERS           |  7 +++++++
+ hw/arm/Kconfig        |  6 ++++++
+ hw/arm/meson.build    |  1 +
+ hw/arm/stm32f4spark.c | 48 +++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 62 insertions(+)
  create mode 100644 hw/arm/stm32f4spark.c
- create mode 100644 hw/char/stm32f4xx_usart.c
- create mode 100644 include/hw/arm/stm32f407_soc.h
- create mode 100644 include/hw/char/stm32f4xx_usart.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2744639a8b..0dc7c7bf60 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1030,6 +1030,13 @@ S: Maintained
+ F: hw/arm/stm32vldiscovery.c
+ F: docs/system/arm/stm32.rst
+ 
++STM32F4SPARK
++M: yanl1229 <yanl1229@rt-thread.org>
++M: Yihao Fan <fanyihao@rt-thread.org>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/stm32f4spark.c
++
+ Versatile Express
+ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 4b2f71e6e1..3706a65286 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -234,6 +234,12 @@ config STM32VLDISCOVERY
+     depends on TCG && ARM
+     select STM32F100_SOC
+ 
++config STM32F4SPARK
++    bool
++    default y
++    depends on TCG && ARM
++    select STM32F407_SOC
++
+ config STRONGARM
+     bool
+     select PXA2XX_TIMER
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 31621060ba..ec63ed7373 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -17,6 +17,7 @@ arm_common_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
+ arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
+ arm_common_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32VLDISCOVERY', if_true: files('stm32vldiscovery.c'))
++arm_common_ss.add(when: 'CONFIG_STM32F4SPARK', if_true: files('stm32f4spark.c'))
+ arm_common_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xilinx_zynq.c'))
+ arm_common_ss.add(when: 'CONFIG_SABRELITE', if_true: files('sabrelite.c'))
+ 
+diff --git a/hw/arm/stm32f4spark.c b/hw/arm/stm32f4spark.c
+new file mode 100644
+index 0000000000..e1d656a3f9
+--- /dev/null
++++ b/hw/arm/stm32f4spark.c
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/boards.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-clock.h"
++#include "qemu/error-report.h"
++#include "hw/arm/stm32f407_soc.h"
++#include "hw/arm/boot.h"
++
++/* stm32f4spark implementation is derived from netduinoplus2 */
++
++/* Main SYSCLK frequency in Hz (72MHz) */
++#define SYSCLK_FRQ 72000000ULL
++
++
++static void stm32f4spark_init(MachineState *machine)
++{
++    DeviceState *dev;
++    Clock *sysclk;
++
++    /* This clock doesn't need migration because it is fixed-frequency */
++    sysclk = clock_new(OBJECT(machine), "SYSCLK");
++    clock_set_hz(sysclk, SYSCLK_FRQ);
++
++    dev = qdev_new(TYPE_STM32F407_SOC);
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
++    qdev_connect_clock_in(dev, "sysclk", sysclk);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    armv7m_load_kernel(ARM_CPU(first_cpu),
++                       machine->kernel_filename,
++                       0, FLASH_SIZE);
++}
++
++static void stm32f4spark_machine_init(MachineClass *mc)
++{
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-m4"),
++        NULL
++    };
++
++    mc->desc = "ST RT-spark (Cortex-M4)";
++    mc->init = stm32f4spark_init;
++    mc->valid_cpu_types = valid_cpu_types;
++}
++
++DEFINE_MACHINE("rt-spark", stm32f4spark_machine_init)
 -- 
 2.43.0
 
