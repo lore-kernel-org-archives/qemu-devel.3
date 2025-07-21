@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCC2C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0801C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udqdr-00029i-7m; Mon, 21 Jul 2025 09:33:20 -0400
+	id 1udqYu-0007lp-If; Mon, 21 Jul 2025 09:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1udqdl-0001al-IZ
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:33:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1udqdi-0006OV-PF
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:33:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753104788;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=aK+tzYjCRayd9HuOraSn8VF8VY1E/hyk3gguaEClc4o=;
- b=WE5OSG8X3ZBYbQqFkcuqbTEjvRnotmP0BFf2yBoX8iYaTPsMw0UqJ1jQMEepinVNN2nYvv
- gUGBDRGr6lH5kKN4+iTwB6NNdQ3m2gCORlLB7iJ94NuAfHmtQiAI8pwea7B48E3Z38hpJ2
- QMBTuQXoYXDENJVVRVMk0n+nv1gn0RE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-cIbPsd68PuC0jgySTmeruQ-1; Mon,
- 21 Jul 2025 09:33:04 -0400
-X-MC-Unique: cIbPsd68PuC0jgySTmeruQ-1
-X-Mimecast-MFC-AGG-ID: cIbPsd68PuC0jgySTmeruQ_1753104781
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B6BC19560B7; Mon, 21 Jul 2025 13:33:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.213])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3DC3195608D; Mon, 21 Jul 2025 13:32:51 +0000 (UTC)
-Date: Mon, 21 Jul 2025 14:32:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v6 23/24] migration: Add error-parameterized function
- variants in VMSD struct
-Message-ID: <aH5BgAVc2x_tjsHJ@redhat.com>
-References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
- <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udqYO-00017M-Vm
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:43 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udqYM-0005Lo-Tk
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:40 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a52874d593so3302567f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753104457; x=1753709257; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=S8k9vbZWrI9+KrHmalDtLLG34nLTiZteSToHN3jBdkY=;
+ b=cPLhqzBb+KJeTGxhEdhlyDPgIeLerrNOwQl+2KNJSGBEmmXiSB1tgNrlh9Jl+eGOQz
+ LAVXvf8mu1rmF4HWSftc2M+p3QZg2dVzjlDelBCWGc8EIRe2qfalYwDL+kXGu4c+fvx1
+ JjxLWRoAmpSs5bGRwgZrOHcojZxGkRhCntdDgMrLxlYmDzlGkfZAwK3rncm3D2pDCQyr
+ Yzg9sp+YLYbPHossW967DappDqMt7hN8vGR7+GppuqZ1fMXIAHmtG4UDNN6AEpiM6+Fd
+ rH8cztny6FSgXUgomt6eWBK2c1+CBnhLnV234rciJUIpavtiK6iaSsqy5GHhnY7LQYNH
+ Dutg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753104457; x=1753709257;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=S8k9vbZWrI9+KrHmalDtLLG34nLTiZteSToHN3jBdkY=;
+ b=WlP2DBUQ9dHrwLHczO5R6zg/mDHmDp/8qE3WqYVF9Jo8CukpS1usYhv4s4e0tjCadT
+ YUzJi9LK9Sie3PNhSKiL9CHuXE/z8se9DlPmpZ5h3fXmGG/WplNi8vALyNsq0WfofKVv
+ RJCERnocT+uBHW9VOMmIZ6JVaR9zWGr5CpKXBNuTUUd1xGE4o/UE479ZsNNBZl3orwCI
+ cqy82f4G7VaJd1ArwbgeOUVz63dlMIOP7WcajSx/IQ/EvvYy1ecYyg5bq3IoiZLI27Vb
+ 6BcSD/QGwUIKDbCcB2ppzTJqeBgB0rC8lJE/FrMiLqBRMvDweeQp86LbGlYEcq23Guri
+ vJ8g==
+X-Gm-Message-State: AOJu0Yy4b1emI+ZaL7nYMWB3L8tMG9W7cYkQ7IJ2ub8T08sL4bZ637XO
+ atssgFRyOyi9pRprkWsOUHXxRtwmI4CStkvKTWWHx64h76bVeqHXbzdjH6JZ5DDW0GiYP/TqXH0
+ uPFtn
+X-Gm-Gg: ASbGncs7Pt+IJk4lmB4Ih8k4tYy227sBdVdtJ92eL5tuSDaUKzQZzP/SBpxFpJURcwj
+ BNAbXFTL4ErappybLn3JRLy0hRscvk1WEEU/Hkybcbz0daNlV93Q0QTvpu/k90KFuae+hJUbfMe
+ bJHPX4vTJTu0uL1gr7BHl53hEGj6ch4jVHVrvmGZ3RjAWkBZmxp40movQ++BK1QmtCuNwRCzeLM
+ N31QxL0iiMaL3rt0NR+JvJR5AGSOtJTobyOOJNGKwbAe+FvK7vej36uLGcYy4fcx2QBap/6RJcB
+ fCSsmvbpw17SZB2fCmbgMQI59eWW5AXqBuc4CspyQmoQFOG88jx1FsHxSA1mGzOAln+lQjRA5t9
+ f5Lg26BsJ9pAM2TrPNgjuNNjI1pgq
+X-Google-Smtp-Source: AGHT+IEsIYeG3WXdBV7MFXMNhPXH3ATgF1KI5Zxg8d46STSHuIH/BehK5Y90kFQWCSsgkMrfB4ubGA==
+X-Received: by 2002:a5d:588f:0:b0:3a4:e7d3:bd9c with SMTP id
+ ffacd0b85a97d-3b60e4c9102mr14727419f8f.17.1753104457024; 
+ Mon, 21 Jul 2025 06:27:37 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.36
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Jul 2025 06:27:36 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 18/20] hvf: arm: Add permission check in GIC sysreg handlers
+Date: Mon, 21 Jul 2025 14:27:15 +0100
+Message-ID: <20250721132718.2835729-19-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250721132718.2835729-1-peter.maydell@linaro.org>
+References: <20250721132718.2835729-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,87 +96,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 21, 2025 at 04:59:28PM +0530, Arun Menon wrote:
-> - We need to have good error reporting in the callbacks in
->   VMStateDescription struct. Specifically pre_save, post_save,
->   pre_load and post_load callbacks.
-> - It is not possible to change these functions everywhere in one
->   patch, therefore, we introduce a duplicate set of callbacks
->   with Error object passed to them.
-> - So, in this commit, we implement 'errp' variants of these callbacks,
->   introducing an explicit Error object parameter.
-> - This is a functional step towards transitioning the entire codebase
->   to the new error-parameterized functions.
-> - Deliberately called in mutual exclusion from their counterparts,
->   to prevent conflicts during the transition.
-> - New impls should preferentally use 'errp' variants of
->   these methods, and existing impls incrementally converted.
->   The variants without 'errp' are intended to be removed
->   once all usage is converted.
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->  include/migration/vmstate.h | 11 +++++++++++
->  migration/vmstate.c         | 47 +++++++++++++++++++++++++++++++++++++++------
->  2 files changed, 52 insertions(+), 6 deletions(-)
-> 
+From: Zenghui Yu <zenghui.yu@linux.dev>
 
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 288b57e1ed778cce21247b64d5e97dfef41ad586..d96908d12ccffaef421e5d399a48e26cada2cb77 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
+Quoting Peter Maydell:
 
-> @@ -524,7 +548,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->                  if (ret) {
->                      error_setg(errp, "Save of field %s/%s failed",
->                                  vmsd->name, field->name);
-> -                    if (vmsd->post_save) {
-> +                    if (vmsd->post_save_errp) {
-> +                        ret = vmsd->post_save_errp(opaque, &local_err);
-> +                        if (ret < 0) {
-> +                            error_propagate(errp, local_err);
-> +                        }
+" hvf_sysreg_read_cp() and hvf_sysreg_write_cp() do not check the .access
+  field of the ARMCPRegInfo to ensure that they forbid writes to registers
+  that are marked with a .access field that says they're read-only (and
+  ditto reads to write-only registers). "
 
-This is still broken. 'errp' is already set a few lines earlier, so you
-can't propagate a new error over the top
+Before we add more registers in GIC sysreg handlers, let's get it correct
+by adding the .access checks to hvf_sysreg_read_cp() and
+hvf_sysreg_write_cp(). With that, a sysreg access with invalid permission
+will result in an UNDEFINED exception.
 
-> +                    } else if (vmsd->post_save) {
->                          vmsd->post_save(opaque);
->                      }
->                      return ret;
-> @@ -552,7 +581,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->  
->      ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
->  
-> -    if (vmsd->post_save) {
-> +    if (vmsd->post_save_errp) {
-> +        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
-> +        if (!ret && ps_ret) {
-> +            ret = ps_ret;
-> +            error_propagate(errp, local_err);
-> +        }
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+Message-id: 20250714160139.10404-2-zenghui.yu@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/hvf/hvf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Again, propagating over the top of an existing error
-
-> +    } else if (vmsd->post_save) {
->          int ps_ret = vmsd->post_save(opaque);
->          if (!ret && ps_ret) {
->              ret = ps_ret;
-> 
-> -- 
-> 2.50.0
-> 
-> 
-
-With regards,
-Daniel
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 8f93e42b34b..861657df966 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1263,6 +1263,9 @@ static bool hvf_sysreg_read_cp(CPUState *cpu, uint32_t reg, uint64_t *val)
+ 
+     ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+     if (ri) {
++        if (!cp_access_ok(1, ri, true)) {
++            return false;
++        }
+         if (ri->accessfn) {
+             if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
+                 return false;
+@@ -1543,6 +1546,9 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
+     ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+ 
+     if (ri) {
++        if (!cp_access_ok(1, ri, false)) {
++            return false;
++        }
+         if (ri->accessfn) {
+             if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
+                 return false;
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
