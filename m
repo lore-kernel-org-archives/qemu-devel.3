@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 435A0C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1ABC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udqYf-0003Ig-Gz; Mon, 21 Jul 2025 09:27:57 -0400
+	id 1udqYr-0006xo-IQ; Mon, 21 Jul 2025 09:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqYB-00009l-AM
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:40 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1udqYM-0000Ka-6R
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:42 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqY9-0005Hd-0k
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:26 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a4fd1ba177so2782017f8f.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:24 -0700 (PDT)
+ id 1udqYI-0005Ja-P1
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:36 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-456108bf94bso30305015e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753104443; x=1753709243; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753104450; x=1753709250; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TkHO/JBZlINngYKtzqWQqivz7dVd5JZjQfrMD1ZECRc=;
- b=mwf19hHrENdlCdoFnJrF+pfmuIbyjvJxhCG4ZY9sssTk+oTzHMM9slcUAzCVkuXO4/
- 8a4sEkNF0iJzi+tAbOAfVkfznlyfaNhM3xrOTY1agtH3i/eiNiYsOVYP4RrgHFmE2NJ9
- tTDCiyv+u/NEVsFotxS8EUn+PNlgIcI1c5sFCkIiknR+KXfSK62oWcHVwvsCA6xUPmk9
- 26GvIY/f9wjj1xBNRmgNwGYbXS1ev8yHS4D0VUzd8aW7uczL+17v0W6I/x19A0tpPZ/U
- G0fnUuXJ+N6bXl2hT/dlmfsVbGwSISWkOpL1OHDmD8i7Ox8uqOX70omtG8KaDB1cSn+q
- 8u8A==
+ :reply-to; bh=60MbsbkAK2zpO61hgALxIWvnCBXQLORY/0j3sPXYAtQ=;
+ b=Hj3/tUNADTXx023ExtE/fTWy8eLttOQ5P/gZnxAVYE5tOd37egGbRMCpILDqYIJX0j
+ imBxukQyVF6QtzVTVp42dy+B8BMxYwKa2mk8aBROsKBCKD0MaikUtOqAPBJFlRWTSBa6
+ ZuOt1c71qMxxrbQPNUSSHKp2G1MTUkkHQqD3jr/CfQT4bnEGT2q6HN1APz8ackJhxfwQ
+ 6iy7I0YaCEXdjdX3bYbXIu9N1FefxpgDylSxBzqBJ9o9h/zcBlgZGcuu7ug+FIOEVfzj
+ g4taKSdI3JscnnkJfTq49vjpccYxCWO+2brvEKAYx10u3MWPIF+c/3ZmTd7ezIe22PAv
+ V+zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753104443; x=1753709243;
+ d=1e100.net; s=20230601; t=1753104450; x=1753709250;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TkHO/JBZlINngYKtzqWQqivz7dVd5JZjQfrMD1ZECRc=;
- b=w9ovvX2jXrW9FdZruXPGhyvCGhtKQ05tJvgQoabs8ynn9nogzkHHubkOHNfccGfOv3
- h14/zltmnF8CzvOTZakCIKNCvEPi5uTk3OMt0IMS7BL50os2XbwsDEu9+yzzSCJ3ZDiF
- leOqzx0ELaCcDGNZWk60d8KCJBU+o/8Xuykpji/8/mYUYjUdF8feQVRt3+BqKyZd7clk
- s0Gr5hEgKy0INLmX5pq9yTWYq5XZp/cg60jMPEopQuajb/dS/7CaJxi3XAhH+U/dX13m
- a8Q8hbxaBSFPU2uhg4I9iIPoYdXpW8UxKrvHBvYbLfr0hjMgbVZHRIEoDWz8RKswCarY
- wFvQ==
-X-Gm-Message-State: AOJu0Yw0PXT0MWRXw42DO3t5NZUmx7ux/OPD9SacSv8Vvx8UQJ13tPHC
- V7R3GhAsRagFlLBPAloKHCySBocBzriNsj92lHI20N0Ed0MKcXBsXANnckRt3/3+BSpyA8OusNX
- hYnDB
-X-Gm-Gg: ASbGncs+fLdjosQ7h0JygDE6L5nPnPHVq1LHqUOciRKFrVRdGpQIngaezWHbLuG1iJC
- eU2s3TvZ9pCd4FMbpUINV6ipNk8Y7ut52y0OwVoWWUEinOus6EzGhvYIeWQMwQ+Ug1e67sBupHt
- TS8iCaEckU5itD3NWk4c9KAG5Dn8W97sqP8qMyS+VTnkKG+2hXurKv0w1DORmuNwtBe/v2RVAqT
- yKCkVu2UWyzCUNDa4ZMDzx9AAUWd2MElo894NKRdqyDBaK6yw/KZsmcSzZI6Tf9lDMkiG0+txke
- MRPcz1YPqJT/z2rSiYMLFIXDFDDrrMTYhaN6/fewkoZ62ZIfhI05CU74Zvm2qQ6QJtBCm9Bnc33
- fkTzKxpIwtqkfHHU6Q7e1bWYF8pTu
-X-Google-Smtp-Source: AGHT+IHvY2jLQjjc8824H5hIgCQ1vzw/z1EE94aVJ1qeMet7iDxcen7uMcVKj0+O4KE4gHOMjGE9lA==
-X-Received: by 2002:a05:6000:2881:b0:3b7:590d:ac7d with SMTP id
- ffacd0b85a97d-3b7590dad1fmr4639886f8f.1.1753104442720; 
- Mon, 21 Jul 2025 06:27:22 -0700 (PDT)
+ bh=60MbsbkAK2zpO61hgALxIWvnCBXQLORY/0j3sPXYAtQ=;
+ b=IYAcidyYzZjSpVq34rfa/EWFusYbzd09RQBEFWcs8pRIWDZS0LmB0+xuBNjVNFfm6o
+ cCSs4ju98w83LF+wWqKUGReCLXl14W/0NiVjNDYqIbSRH6YB6cfZGHFEC6yTAOaimxAm
+ sRHLL34D0Ah/Jrinpb0SqBXMvE/Tv6BE+Amempp2GlFPMI/H90Uki9tzahi657Kyka00
+ M+qQkOAwLyoWDCMK7xQqb05oBH1GdZ5i98O/gv6LzoMzoWReEoY7bNTznQU4Yq1FKjLE
+ YuSoNFCq2/qZRRYvBtX5VON0pp71Yml0V6bMyMlm/bLgjn02dU1t5e7fRmlkkbSp3w+e
+ icEA==
+X-Gm-Message-State: AOJu0YxMO+Z6SxBIiyQ/EaO5qRAXg5aWtsMl0WuaANXzn3UyzUXVl49n
+ 8gXjZ3GLKmPK/dw7Btdsa8gWHxT74dxw0nS9fTUWfsXPpshf67YcNh/yyf40cW5QOXKwDvx0Ggo
+ iWmTP
+X-Gm-Gg: ASbGncu31GchiT+S4asgHTKajxx+wgQhR/mTRIDolLy+S5qKi1Nq0xfUT6zP+GfBcGW
+ pL9JZkVbXuoADx5paPfNTqMVSEvdW9LvwwDD/6RpmthW5mj2SMRhJe8Jee3q1+L1fah5vXW4TRl
+ BO5I4b2HuGXxkn+rK3rKKDb6P/WSdxW4/SPEFwor2xYt2SfhKDVnkh4Cb1NUbSrkbJ20sEX/mZ9
+ 3jP33KOAH4C990tVIyZ1pWakGFNXJkDH5gXGvNS6udGM0hKYpmPqrrUCKJ2u95NU+N+ISOKgwjZ
+ 8pYGXEE2VzAY/8I/1VfyV6snIhMYxSuUSy9NKetYt4UmNmdLqUaBfF1Xhl+nT3Dbx7z6CEka9Zl
+ 3yayC850n/soi3Nvaa/dj4jaGiurM
+X-Google-Smtp-Source: AGHT+IHNTASwYuis8daqtfiH7k0MraeyDtAt/CiVufa+XYBmjqLDAAsOXyhcTeqZmqubRJNvR5IMag==
+X-Received: by 2002:adf:b650:0:b0:3b6:136d:55de with SMTP id
+ ffacd0b85a97d-3b6136d55efmr10206326f8f.7.1753104450422; 
+ Mon, 21 Jul 2025 06:27:30 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.21
+ ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 06:27:22 -0700 (PDT)
+ Mon, 21 Jul 2025 06:27:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/20] hw/misc/ivshmem-pci: Improve error handling
-Date: Mon, 21 Jul 2025 14:27:00 +0100
-Message-ID: <20250721132718.2835729-4-peter.maydell@linaro.org>
+Subject: [PULL 11/20] target/arm: Add BFMUL (indexed)
+Date: Mon, 21 Jul 2025 14:27:08 +0100
+Message-ID: <20250721132718.2835729-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250721132718.2835729-1-peter.maydell@linaro.org>
 References: <20250721132718.2835729-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity points out that the ivshmem-pci code has some error handling
-cases where it incorrectly tries to use an invalid filedescriptor.
-These generally happen because ivshmem_recv_msg() calls
-qemu_chr_fe_get_msgfd(), which might return -1, but the code in
-process_msg() generally assumes that the file descriptor was provided
-when it was supposed to be. In particular:
- * the error case in process_msg() only needs to close the fd
-   if one was provided
- * process_msg_shmem() should fail if no fd was provided
+FEAT_SVE_B16B16 adds a bfloat16 version of the FMUL insn in the
+floating-point multiply (indexed) instruction group. The encoding
+is slightly bespoke; in our implementation we use MO_8 to indicate
+bfloat16, as with the other B16B16 insns.
 
-Coverity: CID 1508726
+Fixes: 7b1613a1020d2942 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-id: 20250711145012.1521936-1-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250718173032.2498900-5-peter.maydell@linaro.org
 ---
- hw/misc/ivshmem-pci.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/arm/tcg/helper.h        | 2 ++
+ target/arm/tcg/sve.decode      | 1 +
+ target/arm/tcg/translate-sve.c | 2 +-
+ target/arm/tcg/vec_helper.c    | 1 +
+ 4 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index 5a10bca633d..d47ae739d61 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -479,6 +479,11 @@ static void process_msg_shmem(IVShmemState *s, int fd, Error **errp)
-     struct stat buf;
-     size_t size;
+diff --git a/target/arm/tcg/helper.h b/target/arm/tcg/helper.h
+index d9ca5b7c56e..4da32db9021 100644
+--- a/target/arm/tcg/helper.h
++++ b/target/arm/tcg/helper.h
+@@ -823,6 +823,8 @@ DEF_HELPER_FLAGS_5(gvec_ftsmul_s, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_5(gvec_ftsmul_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
  
-+    if (fd < 0) {
-+        error_setg(errp, "server didn't provide fd with shared memory message");
-+        return;
-+    }
-+
-     if (s->ivshmem_bar2) {
-         error_setg(errp, "server sent unexpected shared memory message");
-         close(fd);
-@@ -553,7 +558,9 @@ static void process_msg(IVShmemState *s, int64_t msg, int fd, Error **errp)
++DEF_HELPER_FLAGS_5(gvec_fmul_idx_b16, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmul_idx_h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmul_idx_s, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index 2efd5f57e45..a76f2236f43 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -1062,6 +1062,7 @@ FMLS_zzxz       01100100 11 1 ..... 000001 ..... .....  @rrxr_1 esz=3
+ ### SVE FP Multiply Indexed Group
  
-     if (msg < -1 || msg > IVSHMEM_MAX_PEERS) {
-         error_setg(errp, "server sent invalid message %" PRId64, msg);
--        close(fd);
-+        if (fd >= 0) {
-+            close(fd);
-+        }
-         return;
-     }
+ # SVE floating-point multiply (indexed)
++FMUL_zzx        01100100 0. 1 ..... 001010 ..... .....   @rrx_3 esz=0
+ FMUL_zzx        01100100 0. 1 ..... 001000 ..... .....   @rrx_3 esz=1
+ FMUL_zzx        01100100 10 1 ..... 001000 ..... .....   @rrx_2 esz=2
+ FMUL_zzx        01100100 11 1 ..... 001000 ..... .....   @rrx_1 esz=3
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 27af3df9a4b..918cf6e1bd4 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3907,7 +3907,7 @@ TRANS_FEAT(FMLS_zzxz, aa64_sve, gen_gvec_fpst_zzzz,
+  */
  
+ static gen_helper_gvec_3_ptr * const fmul_idx_fns[4] = {
+-    NULL,                       gen_helper_gvec_fmul_idx_h,
++    gen_helper_gvec_fmul_idx_b16, gen_helper_gvec_fmul_idx_h,
+     gen_helper_gvec_fmul_idx_s, gen_helper_gvec_fmul_idx_d,
+ };
+ TRANS_FEAT(FMUL_zzx, aa64_sve, gen_gvec_fpst_zzz,
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 76a9ab0da39..33a136b90a6 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -1785,6 +1785,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
+ 
+ #define nop(N, M, S) (M)
+ 
++DO_FMUL_IDX(gvec_fmul_idx_b16, nop, bfloat16_mul, float16, H2)
+ DO_FMUL_IDX(gvec_fmul_idx_h, nop, float16_mul, float16, H2)
+ DO_FMUL_IDX(gvec_fmul_idx_s, nop, float32_mul, float32, H4)
+ DO_FMUL_IDX(gvec_fmul_idx_d, nop, float64_mul, float64, H8)
 -- 
 2.43.0
 
