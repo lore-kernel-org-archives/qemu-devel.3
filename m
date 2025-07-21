@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD8CC83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 15:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29003C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 15:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udsWZ-0006G4-Ut; Mon, 21 Jul 2025 11:33:55 -0400
+	id 1udsWZ-0006G5-V2; Mon, 21 Jul 2025 11:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1udsWL-00067f-WC
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udsWS-0006AK-3J
  for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:33:48 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1udsWJ-0000bI-JE
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:33:41 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-451dbe494d6so49245965e9.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 08:33:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1udsWQ-0000bs-3p
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:33:47 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3b49ffbb31bso2839455f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 08:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753112018; x=1753716818; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753112024; x=1753716824; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kBRZ04wX0MzyglrriRi9JfcL05p9dBe8tgATnNn/jvk=;
- b=tw8KiagWI+HWNFp8snSMfTZzDDgGOZ0/NW+QsWDmTjkOWv8jFhLjWAF+n4cV82lSOv
- rX6kN0tELGSMaYjVXzmEE8HRI9xlfQu4a23DEGdMe+p2CO7VaSetZoH6H/eyun0K7YDQ
- XvHiGiBvQx/ExAv+M+hc3OodUI0tcPDY29PqGviGc6E3rmy3wxTCUKY43t5x98eE1pNW
- n9Jwy+aMXC5io9xGfK2XkvlvLOzPSOTn2DmGg/KcQ2h9Q6uZnXWad6NM1b0kBcER8FXV
- u0ELOpTgb1mwpIW+xzWpKfS7ZIGysRU601dkn7w4KIjeLS+SDRsJ10/JaHrmPGm8Zs3k
- RBwA==
+ bh=5txsamFcyhlFDYcFgElaERHKYxRAHYENtRVr/jJs6kQ=;
+ b=kURRYUtMtZaB6bYQZIdWFtkil5Zk9RXeqiDcFmuI4rh/rvhPjpUpGhXLwiI/NbAsZt
+ esWHx9lGo6qLFGnzvUbTdw+tLAb57KO5CPSiMfDOqfR1rVIzQNrQa8Rr5iwlYlfmdSad
+ +XxBga0HU92A1rGr2pBzdtPKc2ADqEEKsFAAVVoORzI9+ornVFDgzPP9BQiTqznHUNsf
+ lFKp0lTuVYpoWbNDmzQ3Uzh2aPkYwtqHj9mgJoYLEE5MpTH73w55+WyMI+8+IFGpWnUR
+ Cysxj5345K2BTVTNCUkuMm6cEKvFZHwnvyq/xvtxr4SqY9BfkxTe46grncFEvqPCHDCU
+ nIUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753112018; x=1753716818;
+ d=1e100.net; s=20230601; t=1753112024; x=1753716824;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kBRZ04wX0MzyglrriRi9JfcL05p9dBe8tgATnNn/jvk=;
- b=dLLfeYIJfyrAhZ0Vw5k//ZkbtOyqcLJg+MXrTiXpf5TTEK+jDfXcF+dhzan3i9fmI3
- bzRYIt1RROf/gO73DFUe49kIwTwPTzN2Bgj+m/Kom3qW6qmEmAOZAa7cGwND2dq/fAUz
- B42BdYKd6kWhQJuaodTFuB+Zhj4YcSPiNiCSfLmttDKfbEYlVZuS88m8hDGGhMfIT3zl
- enMzZLbpscMbUC4cHsLAYd7PpppT2jq24Kka5CsH281V7OuoW//7KXqxfW2keCVJD9st
- ZoMS4VquL2shThDKMdUzslg87Fx9LrIsnavMRby0q/Qg8IBusUPeQsK86AgxyXRxAPxu
- vhSA==
-X-Gm-Message-State: AOJu0YwilWDsg4/Lz38GzlMlJEFrW1agfTKMVnNc9cMR0am0Au2xSAJV
- 3TC9BHogQDVDMnR/IDp/xG66idtxl73MuWwe/OLFvdNDFWLOZtgZ5AOC3vjgbazdP/c=
-X-Gm-Gg: ASbGncvmnjYYmV4PPLutmY/zaMVSaSSH0T20oPGa6wMRHpfIiBmJLP3PuPwgkCF465d
- W2uW8Btcw2stO5FD5nJ3zzNfscaALOiNizDRbTycTIht5BAAUlBmqDzXyoIC784LcZ7sPWS1kgw
- zxr8QflwxY2Jm2+ubhKVfz2YabcX7/6dIjRKNp+YD3W1cbT+02RXlRN+Q7cbBdo4h4jD2oihMFs
- OMHB8KzGUAbKmNibcF9fI0fjgACUDkMlBKlNfNpHc5VU0FWWdOfTv0Gn/LSL1coX4G0F7FW4Jxf
- ccBxJHYJlHm3fI8ST+hgscEA52d6mTaXB1idmA3i+000KUMoHlB837rDiYZtVO1QEd2IFlAwvSY
- MHnRTBRzkdSmJudnLmXRZg0w=
-X-Google-Smtp-Source: AGHT+IFaxmdMhxno+1k1m2fGQzxJ/tgypKdqfIbnicj6OiFQefpCzxniahLSH/N8qz5kTF8ms/fV1g==
-X-Received: by 2002:a05:600c:3ba2:b0:456:d1c:ef38 with SMTP id
- 5b1f17b1804b1-457b94ab14fmr19067155e9.24.1753112017723; 
- Mon, 21 Jul 2025 08:33:37 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45627962384sm117403325e9.2.2025.07.21.08.33.36
+ bh=5txsamFcyhlFDYcFgElaERHKYxRAHYENtRVr/jJs6kQ=;
+ b=u9aeN3dR0aO0unBb7zgaC/R0uevmxl26+tjojA4chhI+e960MLrfshxX32nfhn/uf7
+ wKgE/XSUF2/pE6HWiuXb9d7MsvGcSy3PBaR+KxU99RMB0cI6VvT9wbVh/7BUppT9xJwb
+ tfMuDk0mfomM23rBA/h+4um9FGyEob0SxcMkcqqEmsh9WPO/PGu8Ad8rzyhLyIdVxpMj
+ IeEFph4qkPfIonD2pLlXR1hXFAgxfiqd8Clrh/74R/SawE2fOE2COhjJRUsqSw9zGsJ2
+ bx7glVpJHhcS1KNJzd86K7VJ/nS/HQutWkcDjOuJ8QMtiVo/tTNhzd+6js4cAbr3RE2V
+ tpIw==
+X-Gm-Message-State: AOJu0Yw9KAVlVr9V8TvZcrN5D2je/DoQ/CGDtR1JBrh3rPHfMkNPx4Ki
+ 7XzWJBTFz2Hsovpg8mxahYdAzrlBIEac3wi7kMhvZ7ydeW4PxFov5y6QHjNB1Pm5KAmKXAIQny6
+ ITRSR
+X-Gm-Gg: ASbGncvbXoewJgd8zwhAs40eVfyYYbgx3uP1Gp5ayMRYK4/Rvaq5tlYhIPrlsmytO/A
+ c7HwLDKQ/yytYJrIx1IomlKHYZmu3K/yWkR7n4yqFV62BS0Ab0qz8PuGFk67zHqWqKaw15O1n9n
+ Pj0E25UWWw6MzD8im+IrKAvvm8TR/UtiWIHz4yxR0xoHItJxndXzd1mcOvz2k/jHtAd3KfId6H8
+ QFYeTxpr+I3DkiQu+vEePT7S3kzcUpOYMk0tv6Sa1XQdfwwWTa7SKiyARYF9hqZKTm2oaRJw3RO
+ BnIUjEBv+Xl3QgePLUEyvc0LxVLrx1hbxBjFjbwEiIBk9N0wYj+IyUTlLvxnHover8cVUEM2t40
+ xEOD5I5w1b93qzEpqdiqVoU236p/h
+X-Google-Smtp-Source: AGHT+IGGj/btQucl9PsQeNeN+HmRtH52LhBehqLPzpwxDRUkm8gk2WB6Z0tQCJ2+CzOJEavtlrXvNA==
+X-Received: by 2002:a05:6000:5c2:b0:3a5:39bb:3d61 with SMTP id
+ ffacd0b85a97d-3b613e982e0mr12474469f8f.27.1753112024145; 
+ Mon, 21 Jul 2025 08:33:44 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4562e7f4294sm162982295e9.3.2025.07.21.08.33.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 08:33:37 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 426935F83D;
- Mon, 21 Jul 2025 16:33:36 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Mon, 21 Jul 2025 08:33:43 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>
-Subject: [RFC PATCH] tests/functional: add hypervisor test for aarch64
-Date: Mon, 21 Jul 2025 16:33:26 +0100
-Message-ID: <20250721153326.783646-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] scripts/make-release: Go back to cloning all the EDK2
+ submodules
+Date: Mon, 21 Jul 2025 16:33:41 +0100
+Message-ID: <20250721153341.2910800-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,122 +101,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a simple test case that runs an image with kvmtool and
-kvm-unit-tests which can validate virtualisation works. This is useful
-for exercising TCG but can also be applied to any nested virt setup
-which is why it doesn't specify an accelerator.
+In commit bd0da3a3d4f we changed make-release so that instead of
+cloning every git submodule of EDK2 we only cloned a fixed list.
+The original motivation for this was that one of the submodules:
+ * was from a non-github repo
+ * that repo had a "SSL certificate expired" failure
+ * wasn't actually needed for the set of EDK2 binaries we build
+and at the time we were trying to build the EDK2 binaries in one of
+our CI jobs.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Mark Burton <mburton@qti.qualcomm.com>
+Unfortunately this change meant that we were exposed to bugs where
+EDK2 adds a new submodule and the sources we ship in the release
+tarball won't build any more.  In particular, in EDK2 commit
+c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
+the ROM build in our tarball starting from QEMU release 8.2.0:
+
+/tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
+        Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
+        /tmp/qemu-10.0.0/roms/.
+        /tmp/qemu-10.0.0/roms/edk2
+
+(Building from a QEMU git checkout works fine.)
+
+In the intervening time EDK2 moved the submodule that had a problem
+to be one they mirrored themselves (and at time of writing all their
+submodules are hosted on github), and we stopped trying to build
+EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
+
+Go back to cloning every EDK2 submodule, so we don't have an
+untested explicit list of submodules which will break without
+our noticing it.
+
+This increases the size of the QEMU tarball .tar.xz file from
+133M to 139M in my testing.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/meson.build         |  1 +
- tests/functional/test_aarch64_kvm.py | 83 ++++++++++++++++++++++++++++
- 2 files changed, 84 insertions(+)
- create mode 100755 tests/functional/test_aarch64_kvm.py
+I think ideally we would not ship these rom blobs in our source
+tarball but instead provide them separately. Then we would definitely
+have no reason to ship a huge amount of EDK2 sourcecode that
+99.9% of the users of the tarball don't want. But that's an
+idea that was floated at least three or four years ago now
+and we don't in practice have time or effort to try to do that.
+So the simple thing is to at least ship the right source...
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 8bebcd4d94e..ecf965adc6c 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -89,6 +89,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_device_passthrough',
-   'aarch64_hotplug_pci',
-   'aarch64_imx8mp_evk',
-+  'aarch64_kvm',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-   'aarch64_replay',
-diff --git a/tests/functional/test_aarch64_kvm.py b/tests/functional/test_aarch64_kvm.py
-new file mode 100755
-index 00000000000..a42d82872af
---- /dev/null
-+++ b/tests/functional/test_aarch64_kvm.py
-@@ -0,0 +1,83 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that runs subsets of kvm-unit-tests on Aarch64.
-+# These can run on TCG and any accelerator supporting nested
-+# virtualisation.
-+#
-+# Copyright (c) 2025 Linaro
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+NB: for me this can build the x86 blobs now, but it then tries
+to build the Arm blobs with the x86 GCC, which obviously doesn't
+work. Perhaps something needs to be set in the environment ?
+
+---
+ scripts/make-release | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/scripts/make-release b/scripts/make-release
+index 4509a9fabf5..87f563ef5f7 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -62,17 +62,15 @@ meson subprojects download $SUBPROJECTS
+ (cd roms/skiboot && ./make_version.sh > .version)
+ # Fetch edk2 submodule's submodules, since it won't have access to them via
+ # the tarball later.
+-#
+-# A more uniform way to handle this sort of situation would be nice, but we
+-# don't necessarily have much control over how a submodule handles its
+-# submodule dependencies, so we continue to handle these on a case-by-case
+-# basis for now.
+-(cd roms/edk2 && \
+-    git submodule update --init --depth 1 -- \
+-        ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3 \
+-        BaseTools/Source/C/BrotliCompress/brotli \
+-        CryptoPkg/Library/OpensslLib/openssl \
+-        MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
 +
-+from qemu.machine.machine import VMLaunchFailure
-+
-+from qemu_test import Asset
-+from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
-+from qemu_test.linuxkernel import LinuxKernelTest
-+
-+
-+class Aarch64VirtKVMTests(LinuxKernelTest):
-+
-+    ASSET_KVM_TEST_KERNEL = Asset(
-+        'https://fileserver.linaro.org/s/HmjaxXXYHYSqbes/'
-+        'download?path=%2F&files='
-+        'image-with-kvm-tool-and-unit-tests.gz',
-+        '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
-+
-+    # make it easier to detect successful return to shell
-+    PS1 = 'RES=[$?] # '
-+    OK_CMD = 'RES=[0] # '
-+
-+    # base of tests
-+    KUT_BASE = "/usr/share/kvm-unit-tests/"
-+
-+    def _launch_guest(self, kvm_mode="nvhe"):
-+
-+        self.set_machine('virt')
-+        kernel_path = self.ASSET_KVM_TEST_KERNEL.fetch()
-+
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               f"console=ttyAMA0 kvm-arm.mode={kvm_mode}")
-+
-+        self.vm.add_args("-cpu", "cortex-a72")
-+        self.vm.add_args("-machine", "virt,gic-version=3,virtualization=on",
-+                         '-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        self.vm.add_args("-smp", "2", "-m", "320")
-+
-+        try:
-+            self.vm.launch()
-+        except VMLaunchFailure as excp:
-+            self.log.info("unhandled launch failure: %s", excp.output)
-+            raise excp
-+
-+        self.wait_for_console_pattern('buildroot login:')
-+        ec_and_wait(self, 'root', '#')
-+        ec_and_wait(self, f"export PS1='{self.PS1}'", self.OK_CMD)
-+
-+
-+    def test_aarch64_nvhe_selftest(self):
-+
-+        self._launch_guest("nvhe")
-+
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-setup", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-smp", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-kernel", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-user", self.OK_CMD)
-+
-+
-+    def test_aarch64_vhe_selftest(self):
-+
-+        self._launch_guest("vhe")
-+
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-setup", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-smp", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-kernel", self.OK_CMD)
-+        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-user", self.OK_CMD)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++# As recommended by the EDK2 readme, we don't use --recursive here.
++# EDK2 won't use any code or feature from a submodule of a submodule,
++# so we don't need to add them to the tarball.
++# Although we don't necessarily need all of the submodules that EDK2
++# has, we clone them all, to avoid running into problems where EDK2
++# adds a new submodule or changes its use of an existing one and
++# the sources we ship in the tarball then fail to build.
++(cd roms/edk2 && git submodule update --init --depth 1)
+ popd
+ 
+ exclude=(--exclude=.git)
 -- 
-2.47.2
+2.43.0
 
 
