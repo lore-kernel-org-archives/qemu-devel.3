@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6FFC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 20:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23C5C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udxSG-0003MV-IL; Mon, 21 Jul 2025 16:49:48 -0400
+	id 1udxbM-0002HM-EZ; Mon, 21 Jul 2025 16:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1udxQT-0001v4-86
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:47:57 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxZr-0001At-AY
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:57:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1udxQR-000157-70
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:47:56 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1udxZo-0004sf-3y
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 16:57:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753130874;
+ s=mimecast20190719; t=1753131454;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QBSbbaAKyl5aY4HyJSJ+sf8E1dv6K+OA1Yu7iM9qnfg=;
- b=JuWLWr6e3DcsmIrc3vctBPsJKHmV5GIaNmguOjBw/B0u90qksVal3SLDCRVtZqyv+gydKd
- RnJTTQhgAFbd3to0iUWY1VjyarRARt88kbYItNrUQsLG5FExk1/83zUY23GdZwMxIVcHNQ
- pOSBFrJdHHdyFhcphaJTQfbcaoC+oas=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-Gf1YD_ZAOgqCUUgwxzXHFg-1; Mon,
- 21 Jul 2025 16:47:50 -0400
-X-MC-Unique: Gf1YD_ZAOgqCUUgwxzXHFg-1
-X-Mimecast-MFC-AGG-ID: Gf1YD_ZAOgqCUUgwxzXHFg_1753130869
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBF58195608B; Mon, 21 Jul 2025 20:47:48 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.31])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C73CB1966650; Mon, 21 Jul 2025 20:47:47 +0000 (UTC)
-Date: Mon, 21 Jul 2025 16:47:46 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, eblake@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-block@nongnu.org,
- Aarushi Mehta <mehta.aaru20@gmail.com>, hibriansong@gmail.com
-Subject: Re: [PATCH v2 01/12] aio-posix: fix race between io_uring CQE and
- AioHandler deletion
-Message-ID: <20250721204746.GA84885@fedora>
-References: <20250620000829.1426291-1-stefanha@redhat.com>
- <20250620000829.1426291-2-stefanha@redhat.com>
- <aGUhxUhGk7dx4fd-@redhat.com>
+ bh=i4358BB0ZdYlZXmC0GvHVwWPKLk2/oxzKTQz2hNa+rQ=;
+ b=RgF+mzTnS8tsubw9obLEudz4QFmY0LXxRuNAyiwa446DmPNqSh4AiAXHDpel/h2Fxb4n/G
+ tM+jzxLl8SRomuTlsvtTIsJTJfWFSpGd7LQYyyW09o1CzOECUI4MSSkLbSMUm/11VtCFiK
+ ixwjEbyyBCAXf/zHCUN6qbjcaHOVRUA=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-526-c5fzqLGvOO6VI99WKnYZ3A-1; Mon, 21 Jul 2025 16:57:32 -0400
+X-MC-Unique: c5fzqLGvOO6VI99WKnYZ3A-1
+X-Mimecast-MFC-AGG-ID: c5fzqLGvOO6VI99WKnYZ3A_1753131452
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-311e98ee3fcso6106627a91.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 13:57:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753131451; x=1753736251;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i4358BB0ZdYlZXmC0GvHVwWPKLk2/oxzKTQz2hNa+rQ=;
+ b=aqCEXLFbKCuBAif3IKsKovB8oilh2L0ncZVCRf2s98ldZOS+Cdm572QumRkEOPxeEp
+ XvBd8eEW7kOEiOsmhsvVKjFGzusfO7Fvb2PeRykHaOuj/ggjcNMBe7icIv3MpPo+KNZ2
+ 0WSLEYMAXqo6FOpvTdW6T1V+ub6iSucRqGmBXyKTSqXOd3Hh+y7XNstnE/3iMFNoHMVS
+ V2sYk1WkeW29rze+zAKoKfyMqjSogPP4SEPc+3/oLiiYPYdLSTu5v1dziYl3lDjj7Z66
+ mPaVwo7+CDuYbgbQiUfmkiapVYSsHe8GpsdQAnzkiZxwKvmaq9O6RV0+D7rk7VZ5P84u
+ eLeQ==
+X-Gm-Message-State: AOJu0YxNFBQ3NLQJJmpyoe/b4CI/2gOhHWgSp+bQrU8ic49L+R2aL4E3
+ yoO58FYt1mPrBpfcPDPsb26z66oxwsjm1lPEgYdKDAyWkXsZg1+liQXP5fa/SxrAAKoeipZnsam
+ E3HeMFT2khcWBv0Fgn2XoZnTzUBhVZqdgwvK+frXLDmzO0d3dhgXZHATFcryOU0ycAeLD6xEGMK
+ P39kADzbodf9JaX0sscM0uUz/NnqLa5B0=
+X-Gm-Gg: ASbGncsbPepBXHHyKnsg1hg2eiZWinc6QCkERwyzKVunV8CsDR4+RfvKYuwN5AXMLjc
+ acc5xn9Jkcdesxc4jwVonFGyfpo0VGYRdGbGamL46tLm8PtRAE56iMgam6CUarpfcIEzjSxviWc
+ mh8rmkkQPlcaT7ruBuLygtfWU4LQQnc+gfRXr/94yckhVPiYorbb5f
+X-Received: by 2002:a17:90b:1b50:b0:313:d361:73d7 with SMTP id
+ 98e67ed59e1d1-31e3e17b307mr1244727a91.13.1753131451451; 
+ Mon, 21 Jul 2025 13:57:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAGFUuhsvDiXCLekARfhpn9zuh9g/enIxSuk2H77NsZQRGStkritcqYnKJ4hhYeQ0aNjh6x+D7rLo/RdCjWrE=
+X-Received: by 2002:a17:90b:1b50:b0:313:d361:73d7 with SMTP id
+ 98e67ed59e1d1-31e3e17b307mr1244712a91.13.1753131450993; Mon, 21 Jul 2025
+ 13:57:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="pq8ywfv3rKnbJJ9N"
-Content-Disposition: inline
-In-Reply-To: <aGUhxUhGk7dx4fd-@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+References: <20250717115246.3830007-1-armbru@redhat.com>
+ <20250717115246.3830007-3-armbru@redhat.com>
+In-Reply-To: <20250717115246.3830007-3-armbru@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 21 Jul 2025 16:57:17 -0400
+X-Gm-Features: Ac12FXwHItPvNzMVxjYm_0IA7rAPME4OdqmeCXwju8P7R3iqxO0AtHZxdYmqW-w
+Message-ID: <CAFn=p-a5VYx7jsyp1c=uVuWsttv6OWmZ-_PLKzLH5-d69OvWkw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] qga: Remove trivial "Returns:" sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com, 
+ kkostiuk@redhat.com, berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -75,7 +86,7 @@ X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,144 +102,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jul 17, 2025 at 7:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> The QAPI doc generator recently started to auto-generate return
+> documentation when there is no "Returns:" section (commit 636c96cd77d
+> "qapi: Fix undocumented return values by generating something").
+> Remove "Returns:" sections where the auto-generated text is obviously
+> no worse.  For instance, guest-info's documentation changes from
+>
+>     Return:
+>        GuestAgentInfo -- GuestAgentInfo
+>
+> to
+>
+>     Return:
+>        GuestAgentInfo
+>
+> The auto-generated returns all are in the exact same spot.
+>
+> We did this for qapi/ in commit 0462da9d6b1 (qapi: remove trivial
+> "Returns:" sections).
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
---pq8ywfv3rKnbJJ9N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: John Snow <jsnow@redhat.com>
 
-On Wed, Jul 02, 2025 at 02:10:45PM +0200, Kevin Wolf wrote:
-> Am 20.06.2025 um 02:08 hat Stefan Hajnoczi geschrieben:
-> > When an AioHandler is enqueued on ctx->submit_list for removal, the
-> > fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
-> > cancel the in-flight POLL_ADD operation.
-> >=20
-> > There is a race when another thread enqueues an AioHandler for deletion
-> > on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
-> > case POLL_REMOVE is unnecessary. The code already handled this, but
-> > forgot that the AioHandler itself is still on ctx->submit_list when the
-> > POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
-> > that point in time (use-after-free).
-> >=20
-> > Solve this problem by keeping the AioHandler alive but setting a flag so
-> > that it will be deleted by fill_sq_ring() when it runs.
-> >=20
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> >  util/fdmon-io_uring.c | 26 +++++++++++++++++++-------
-> >  1 file changed, 19 insertions(+), 7 deletions(-)
-> >=20
-> > diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-> > index b0d68bdc44..2e40fff09a 100644
-> > --- a/util/fdmon-io_uring.c
-> > +++ b/util/fdmon-io_uring.c
-> > @@ -52,9 +52,10 @@ enum {
-> >      FDMON_IO_URING_ENTRIES  =3D 128, /* sq/cq ring size */
-> > =20
-> >      /* AioHandler::flags */
-> > -    FDMON_IO_URING_PENDING  =3D (1 << 0),
-> > -    FDMON_IO_URING_ADD      =3D (1 << 1),
-> > -    FDMON_IO_URING_REMOVE   =3D (1 << 2),
-> > +    FDMON_IO_URING_PENDING            =3D (1 << 0),
-> > +    FDMON_IO_URING_ADD                =3D (1 << 1),
-> > +    FDMON_IO_URING_REMOVE             =3D (1 << 2),
-> > +    FDMON_IO_URING_DELETE_AIO_HANDLER =3D (1 << 3),
-> >  };
-> > =20
-> >  static inline int poll_events_from_pfd(int pfd_events)
-> > @@ -218,6 +219,9 @@ static void fill_sq_ring(AioContext *ctx)
-> >          if (flags & FDMON_IO_URING_REMOVE) {
-> >              add_poll_remove_sqe(ctx, node);
-> >          }
-> > +        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
-> > +            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, no=
-de_deleted);
-> > +        }
-> >      }
-> >  }
->=20
-> Why is it safe to add new SQEs for the node and then add it to
-> ctx->deleted_aio_handlers without waiting for the CQEs first?  I
-> expected this to be the first check in the loop iteration and to
-> contain a 'continue;' statement.
->=20
-> The POLL_REMOVE case is clear when looking at more context, it doesn't
-> pass the node. As for POLL_ADD, I suppose both flags are actually never
-> set together in practice because FDMON_IO_URING_DELETE_AIO_HANDLER is
-> only set when processing the CQE of POLL_ADD, so no new POLL_ADD for the
-> same node will be pending yet. And checking the callers, I see that
-> adding is only ever done with newly allocated nodes, so something like
-> removing and re-adding the same node doesn't happen either.
->=20
-> Could we then assert that FDMON_IO_URING_DELETE_AIO_HANDLER is never
-> combined with FDMON_IO_URING_ADD, but always with FDMON_IO_URING_REMOVE,
-> to make the assumptions more explicit?
-
-An update to my previous reply:
-
-REMOVE and DELETE_AIO_HANDLER are never set simultaneously:
-
-    flags =3D qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
-                                            ^^ REMOVE is cleared here ^^
-    if (flags & FDMON_IO_URING_REMOVE) {
-        if (flags & FDMON_IO_URING_PENDING) {
-            /* Still on ctx->submit_list, defer deletion until fill_sq_ring=
-() */
-            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
-	                             ^^ DELETE_AIO_HANDLER is set here ^^
-
-So the assertion should be:
-
-  if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
-      /*
-       * process_cqe() sets this flag after ADD and REMOVE have been
-       * cleared. They cannot be set again, so they must be clear.
-       */
-      assert(!(flags & FDMON_IO_URING_ADD));
-      assert(!(flags & FDMON_IO_URING_REMOVE));
-
-      QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
-  }
-
->=20
-> > @@ -347,10 +356,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
-> >              unsigned flags =3D qatomic_fetch_and(&node->flags,
-> >                      ~(FDMON_IO_URING_PENDING |
-> >                        FDMON_IO_URING_ADD |
-> > -                      FDMON_IO_URING_REMOVE));
-> > +                      FDMON_IO_URING_REMOVE |
-> > +                      FDMON_IO_URING_DELETE_AIO_HANDLER));
-> > =20
-> > -            if (flags & FDMON_IO_URING_REMOVE) {
-> > -                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node=
-, node_deleted);
-> > +            if ((flags & FDMON_IO_URING_REMOVE) ||
-> > +                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
->=20
-> If my conclusion above is right, FDMON_IO_URING_REMOVE will be set in
-> both cases, so checking FDMON_IO_URING_DELETE_AIO_HANDLER is redundant.
-> Maybe assert this, too, when setting FDMON_IO_URING_DELETE_AIO_HANDLER.
-
-We need both here because either REMOVE or DELETE_AIO_HANDLER can be
-set, but not both.
-
-Stefan
-
---pq8ywfv3rKnbJJ9N
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh+p3IACgkQnKSrs4Gr
-c8gCqAf+MMq07x6zYtF+POVtDN11Ib7UmDZ6yevFkl/1DpMfdc26ECw/jQdGi2Yn
-+Opwqvk3GVK5fMISEJ/s8qSRmfoiww/3aDcgHygZScCN8UQwYVo14Hyx3V9kgtAu
-ZRsMG8vSisoLrCn8OxOmV7eenQmUA7Hzhis8fZj4hkUGIIdx5zx9JiiNLAQEOOgz
-mb79c7tMWVYpVQrkfoe/RGcXw/nNicupLY6LgNq+0XObFiwtuLAxMCyXeKXE6Z/n
-eE38TTY6YyzE2u01gaLRE6Pu9I4PcXMI+aTlPgon42j/CDSzLYX74zM2bM6g9jdf
-N/aHR7A4HMWiPyVB0mkYcyZvA/kzbg==
-=5R/k
------END PGP SIGNATURE-----
-
---pq8ywfv3rKnbJJ9N--
+> ---
+>  qga/qapi-schema.json | 25 -------------------------
+>  1 file changed, 25 deletions(-)
+>
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index a569a14b55..a9cc9150dc 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -202,8 +202,6 @@
+>  #
+>  # Get some information about the guest agent.
+>  #
+> -# Returns: @GuestAgentInfo
+> -#
+>  # Since: 0.15.0
+>  ##
+>  { 'command': 'guest-info',
+> @@ -285,8 +283,6 @@
+>  # @count: maximum number of bytes to read (default is 4KB, maximum is
+>  #     48MB)
+>  #
+> -# Returns: @GuestFileRead
+> -#
+>  # Since: 0.15.0
+>  ##
+>  { 'command': 'guest-file-read',
+> @@ -320,8 +316,6 @@
+>  # @count: bytes to write (actual bytes, after base64-decode), default
+>  #     is all content in buf-b64 buffer after base64 decoding
+>  #
+> -# Returns: @GuestFileWrite
+> -#
+>  # Since: 0.15.0
+>  ##
+>  { 'command': 'guest-file-write',
+> @@ -387,8 +381,6 @@
+>  #
+>  # @whence: Symbolic or numeric code for interpreting offset
+>  #
+> -# Returns: @GuestFileSeek
+> -#
+>  # Since: 0.15.0
+>  ##
+>  { 'command': 'guest-file-seek',
+> @@ -428,9 +420,6 @@
+>  #
+>  # Get guest fsfreeze state.
+>  #
+> -# Returns: GuestFsfreezeStatus ("thawed", "frozen", etc., as defined
+> -#     below)
+> -#
+>  # .. note:: This may fail to properly report the current state as a
+>  #    result of some other guest processes having issued an fs
+>  #    freeze/thaw.
+> @@ -749,8 +738,6 @@
+>  #
+>  # Get list of guest IP addresses, MAC addresses and netmasks.
+>  #
+> -# Returns: List of GuestNetworkInterface
+> -#
+>  # Since: 1.1
+>  ##
+>  { 'command': 'guest-network-get-interfaces',
+> @@ -1251,8 +1238,6 @@
+>  #
+>  # Get information relating to guest memory blocks.
+>  #
+> -# Returns: @GuestMemoryBlockInfo
+> -#
+>  # Since: 2.3
+>  ##
+>  { 'command': 'guest-get-memory-block-info',
+> @@ -1298,8 +1283,6 @@
+>  #
+>  # @pid: pid returned from guest-exec
+>  #
+> -# Returns: GuestExecStatus
+> -#
+>  # Since: 2.5
+>  ##
+>  { 'command': 'guest-exec-status',
+> @@ -1458,8 +1441,6 @@
+>  #
+>  # Retrieves the timezone information from the guest.
+>  #
+> -# Returns: A GuestTimezone dictionary.
+> -#
+>  # Since: 2.10
+>  ##
+>  { 'command': 'guest-get-timezone',
+> @@ -1533,8 +1514,6 @@
+>  #
+>  # Retrieve guest operating system information
+>  #
+> -# Returns: @GuestOSInfo
+> -#
+>  # Since: 2.10
+>  ##
+>  { 'command': 'guest-get-osinfo',
+> @@ -1604,8 +1583,6 @@
+>  #
+>  # Retrieve information about device drivers in Windows guest
+>  #
+> -# Returns: @GuestDeviceInfo
+> -#
+>  # Since: 5.2
+>  ##
+>  { 'command': 'guest-get-devices',
+> @@ -1633,8 +1610,6 @@
+>  #
+>  # @username: the user account to add the authorized keys
+>  #
+> -# Returns: @GuestAuthorizedKeys
+> -#
+>  # Since: 5.2
+>  ##
+>  { 'command': 'guest-ssh-get-authorized-keys',
+> --
+> 2.49.0
+>
 
 
