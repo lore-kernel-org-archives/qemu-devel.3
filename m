@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D425C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 12:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73462C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 12:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udps3-0003Rf-Kk; Mon, 21 Jul 2025 08:43:55 -0400
+	id 1udpwK-0001lQ-4a; Mon, 21 Jul 2025 08:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udprx-00036M-Nk; Mon, 21 Jul 2025 08:43:49 -0400
+ id 1udpvQ-0007fN-VK; Mon, 21 Jul 2025 08:47:45 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1udprv-00058X-BW; Mon, 21 Jul 2025 08:43:49 -0400
+ id 1udpvN-0005cw-4k; Mon, 21 Jul 2025 08:47:24 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56LChVJ6051357
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56LCkx02052232
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 21 Jul 2025 21:43:31 +0900 (JST)
+ Mon, 21 Jul 2025 21:46:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=bi4uS/D0wPht6DS+lgGGmKKhRTkmgzkopOjGsFvu0jU=; 
+DKIM-Signature: a=rsa-sha256; bh=E2PezotxEVdua1A4XzIXD4BEPSpx2lxJHdXRWsMMqkA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753101811; v=1;
- b=qNGH2ut9RXSFgZLuc8aFttMfuyuQfaH0jR5JG6jP5TNK4gw8NTpg+1yfZkVXzZe3
- a6mt/StJ4CvlHujjmAn+9VS9+fEr1sZlwpZ1A/BC3LH5MhfDSWJWWBQ/xJcjZxZj
- IzMGF2UcsmC1Bt5eapwjUP5CVPLRwG7dX33YS9AQukF0w8DDzHU18MCtuQk340Si
- DbQR67TNtQ66FAuO+5ZYngMPxF2rKbWVk9yy8cX0V3/tbOnQCLbb1qe5hvG1khrQ
- +yHUPua4QDwW7ILv2C1yfl9y+T2T6RWooD8c47PbAFSMXLOagonq3NVA3YjjJhln
- fXGsVW/bTHcpv30t26Zz5Q==
-Message-ID: <ba4ca7d3-efb9-47a9-a84e-95394fe8bfff@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 21 Jul 2025 21:43:30 +0900
+ s=rs20250326; t=1753102019; v=1;
+ b=pwl0pQcErqYynPcCP2cUpg4fM+T3eC7xA71CAaMilTy0u+bATddPzqMBpBTKcMV+
+ s/wVnodnV2VORG6MPQCfjA7XEQ2g7HvGQzsFKACT75oDQtrLWcIeFz6RsxDY7sdR
+ aJndC+LQJbwqzgcD5Wbx/s/jsNuJmD5Nn5t5kq1dvK5R/MraugnhoLyDbRA8zLD9
+ TYrYzvXtCuY61T793nYT2f7aoCz4nLKPUQcGbqJcDuKRToKV2WMFo5+iiMXIO5zN
+ UmemaV32I5SAetUFT/EybdyOMUwOtLNIHANnyuBRkHLY2YGySSjrHNNUAETteaoI
+ IyQ1Egt4bDWgYXFo0mVr1w==
+Message-ID: <af32a0a2-96f1-4e8d-b7ea-aa6bdecbfc75@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 21 Jul 2025 21:46:59 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 11/24] migration: push Error **errp into
- loadvm_postcopy_handle_advise()
+Subject: Re: [PATCH v6 15/24] migration: make loadvm_postcopy_handle_resume()
+ void
 To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -65,10 +65,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
- <20250721-propagate_tpm_error-v6-11-fef740e15e17@redhat.com>
+ <20250721-propagate_tpm_error-v6-15-fef740e15e17@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250721-propagate_tpm_error-v6-11-fef740e15e17@redhat.com>
+In-Reply-To: <20250721-propagate_tpm_error-v6-15-fef740e15e17@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -99,100 +99,61 @@ On 2025/07/21 20:29, Arun Menon wrote:
 > This is an incremental step in converting vmstate loading
 > code to report error via Error objects instead of directly
 > printing it to console/monitor.
-> It is ensured that loadvm_postcopy_handle_advise() must report an error
-> in errp, in case of failure.
 > 
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
->   migration/savevm.c | 39 +++++++++++++++++----------------------
->   1 file changed, 17 insertions(+), 22 deletions(-)
+>   migration/savevm.c | 16 +++++-----------
+>   1 file changed, 5 insertions(+), 11 deletions(-)
 > 
 > diff --git a/migration/savevm.c b/migration/savevm.c
-> index 6b8c78bfb9bde2a8e7500b0342cd386b0d12db97..4a3db9498678a19597257e683029cd3f6c8d1a65 100644
+> index e472f79d5d5c4fb4410a28cbf43c298be028f4b4..6887877f2f8648f66e34bdb1cc3ca6dc7514f9df 100644
 > --- a/migration/savevm.c
 > +++ b/migration/savevm.c
-> @@ -1912,39 +1912,39 @@ enum LoadVMExitCodes {
->    * quickly.
->    */
->   static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
-> -                                         uint16_t len)
-> +                                         uint16_t len, Error **errp)
+> @@ -2339,12 +2339,12 @@ static void migrate_send_rp_req_pages_pending(MigrationIncomingState *mis)
+>       }
+>   }
+>   
+> -static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
+> +static void loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
 >   {
->       PostcopyState ps = postcopy_state_set(POSTCOPY_INCOMING_ADVISE);
->       uint64_t remote_pagesize_summary, local_pagesize_summary, remote_tps;
->       size_t page_size = qemu_target_page_size();
-> -    Error *local_err = NULL;
->   
->       trace_loadvm_postcopy_handle_advise();
->       if (ps != POSTCOPY_INCOMING_NONE) {
-> -        error_report("CMD_POSTCOPY_ADVISE in wrong postcopy state (%d)", ps);
-> +        error_setg(errp, "CMD_POSTCOPY_ADVISE in wrong postcopy "
-> +                   "state (%d)", ps);
->           return -1;
+>       if (mis->state != MIGRATION_STATUS_POSTCOPY_RECOVER) {
+> -        error_report("%s: illegal resume received", __func__);
+> +        warn_report("%s: illegal resume received", __func__);
+>           /* Don't fail the load, only for this. */
+> -        return 0;
+> +        return;
 >       }
 >   
->       switch (len) {
->       case 0:
->           if (migrate_postcopy_ram()) {
-> -            error_report("RAM postcopy is enabled but have 0 byte advise");
-> +            error_setg(errp, "RAM postcopy is enabled but have 0 byte advise");
->               return -EINVAL;
->           }
->           return 0;
->       case 8 + 8:
->           if (!migrate_postcopy_ram()) {
-> -            error_report("RAM postcopy is disabled but have 16 byte advise");
-> +            error_setg(errp, "RAM postcopy is disabled but have 16 "
-> +                       "byte advise");
->               return -EINVAL;
->           }
->           break;
->       default:
-> -        error_report("CMD_POSTCOPY_ADVISE invalid length (%d)", len);
-> +        error_setg(errp, "CMD_POSTCOPY_ADVISE invalid length (%d)", len);
->           return -EINVAL;
+>       /*
+> @@ -2396,8 +2396,6 @@ static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
+>           /* Kick the fast ram load thread too */
+>           qemu_sem_post(&mis->postcopy_pause_sem_fast_load);
 >       }
+> -
+> -    return 0;
+>   }
 >   
-> -    if (!postcopy_ram_supported_by_host(mis, &local_err)) {
-> -        error_report_err(local_err);
-> +    if (!postcopy_ram_supported_by_host(mis, errp)) {
->           postcopy_state_set(POSTCOPY_INCOMING_NONE);
->           return -1;
->       }
-> @@ -1967,9 +1967,9 @@ static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
->            *      also fails when passed to an older qemu that doesn't
->            *      do huge pages.
->            */
-> -        error_report("Postcopy needs matching RAM page sizes (s=%" PRIx64
-> -                                                             " d=%" PRIx64 ")",
-> -                     remote_pagesize_summary, local_pagesize_summary);
-> +        error_setg(errp, "Postcopy needs matching RAM "
-> +                   "page sizes (s=%" PRIx64 " d=%" PRIx64 ")",
-> +                   remote_pagesize_summary, local_pagesize_summary);
->           return -1;
->       }
+>   /**
+> @@ -2635,12 +2633,8 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
+>           return loadvm_postcopy_ram_handle_discard(mis, len, errp);
 >   
-> @@ -1979,17 +1979,17 @@ static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
->            * Again, some differences could be dealt with, but for now keep it
->            * simple.
->            */
-> -        error_report("Postcopy needs matching target page sizes (s=%d d=%zd)",
-> -                     (int)remote_tps, page_size);
-> +        error_setg(errp, "Postcopy needs matching target "
-> +                   "page sizes (s=%d d=%zd)", (int)remote_tps, page_size);
->           return -1;
->       }
->   
-> -    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_ADVISE, &local_err)) {
-> -        error_report_err(local_err);
-> +    if (postcopy_notify(POSTCOPY_NOTIFY_INBOUND_ADVISE, errp)) {
->           return -1;
->       }
->   
-> -    if (ram_postcopy_incoming_init(mis, NULL) < 0) {
-> +    if (ram_postcopy_incoming_init(mis, errp) < 0) {
-> +        error_prepend(errp, "PostCopy RAM incoming init failed ");
+>       case MIG_CMD_POSTCOPY_RESUME:
+> -        ret = loadvm_postcopy_handle_resume(mis);
+> -        if (ret < 0) {
+> -            error_setg(errp, "Failed to load device state command: %d", ret);
+> -            return -1;
+> -        }
+> -        return ret;
+> +        loadvm_postcopy_handle_resume(mis);
+> +        return 0;
 
-Nitpick: s/PostCopy/Postcopy/ for consistency with other error messages.
+This patch can be moved before "[PATCH v6 08/24] migration: push Error 
+**errp into loadvm_process_command()" to make it smaller.
+
+>   
+>       case MIG_CMD_RECV_BITMAP:
+>           ret = loadvm_handle_recv_bitmap(mis, len);
+> 
+
 
