@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 066E0C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C57C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 10:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udnhD-0002nD-Oj; Mon, 21 Jul 2025 06:24:35 -0400
+	id 1udnm6-0007mh-54; Mon, 21 Jul 2025 06:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udnh0-0002d3-5J
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:24:26 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udngu-0007D2-Oy
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:24:20 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-718389fb988so39251287b3.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 03:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753093454; x=1753698254; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GJ6uqOViAPbOJLlHUrS3N+RdrRHODubV68Db/kn3ld0=;
- b=sveU0Pe9gUrRU16dSwQzqDYaxAZdJb5rKIB9mCXl/mgl0guc92qfk10mscZlu1r+UH
- fOFyBH6PYpNebBnzaYRtK4Exzqavu0f2UgsGNkyLVuGJVguurlq2pM6e0lg5IknE793u
- 3ffdKP2OvqIrmI+xpZp6xr4FlpzvC0dzWPY7rNG/fmz25vDNwWQJ6YvzsftkaybNxbHi
- 5fZrn27ppxk2LfP2KI87qYYoY67SAURAzBMFY7rFMO9+AOj8cLTLIOv4bDN5larJHNtY
- 102NlRR+kK0xEWTpVsyoF7IxUQsYuMd4zIf908vZ8klUBTjemCtl8sMXp0GTjlqzYqdd
- Wh9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753093454; x=1753698254;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GJ6uqOViAPbOJLlHUrS3N+RdrRHODubV68Db/kn3ld0=;
- b=VwhOuv6eNFLWZ7b7bZX8LS3CEDG+FwfJwj0c8WE1v/CcMmXUjnUDXgJcp6xzIL+GhR
- ZBZOapa5x1LvBHAQOvIviFEZhQXswaD8pfl9jmapzIGbQllJFyMmkJ/gg19JpaWea7Ls
- 9qQdfuWPociudUpf0nRFIiKFU/XS+4wM7m6+jxTsP6PlrKzxdpwuhK68StRhdNzu/mzd
- tzecaODzO4t3MuwnRp84F5FMRy/Noxmqt5zIZ1YrGbvQobF5h2esKmaSQws13x0o7t6T
- 43Wt7dy6Y7XOsMzi1GPNF63kgNE1FXTPqm3TtNkClIDyGxR5vp0awJQ8fVZcO8lbRqif
- hRsQ==
-X-Gm-Message-State: AOJu0Yx2fuOAubM94rsvl+cjH+bJSytFTvUL9cwrdSU1/+aUxJveYC51
- 0ktJVDh4N6sUexGoEFG9jq66weUDFXuKUNZSoRKb1oDmec8JHU6qXs+CNwBTnalwEJD9jnLfvVs
- +6LaiptQODADSHHnNXfvalEJ9efEbU0TnG5X6AX/PsA==
-X-Gm-Gg: ASbGncsE/926R15ED4TVbogLJJEkB/rX33/WcUK0eCQ5UZOqIYoXnfOWP/TFammYImq
- E3tLIB3JRhmAzpiGyKeL4Ij3W0WjNrXGM6RDf+DLM6cW/QCDAzbViGkIkSP4UIHoErgwNV36dbw
- ICz8bqySutZKWMlLOTTe3ZcIsmQwLcuf1FNsF85CwHG6Vi1RXbnw+ISCKm/i6frOlLf/UBnjXFH
- TLy/WzToLOzc1g2dY8=
-X-Google-Smtp-Source: AGHT+IEgwaVzG4dA2EqTWbfV2LWgTRz4F7pmlf7dT7+yvuBFv5XSMGWd/iwIQv7MDlUcQs0GjFDnQTGMdJ5kXsWNNnI=
-X-Received: by 2002:a05:690c:708a:b0:6f9:7920:e813 with SMTP id
- 00721157ae682-71834f35972mr257448697b3.4.1753093454129; Mon, 21 Jul 2025
- 03:24:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <1752689274-233526-1-git-send-email-steven.sistare@oracle.com>
-In-Reply-To: <1752689274-233526-1-git-send-email-steven.sistare@oracle.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 21 Jul 2025 11:24:02 +0100
-X-Gm-Features: Ac12FXyJSZl5bbScTOPgx7crSn9ufYk-18PhO6bLLQGobQw11xFUK9qOhuNGDVc
-Message-ID: <CAFEAcA8P4H7n=uXe3qredxVMwB4QtDfZtVyuuTWBLwa6enGR3g@mail.gmail.com>
-Subject: Re: [PATCH V2 1/1] hw/intc/arm_gicv3_kvm: preserve pending interrupts
- during cpr
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Cedric Le Goater <clg@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>, 
- Alex Williamson <alex.williamson@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1udnlk-0007ah-Er
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:29:17 -0400
+Received: from p-east3-cluster7-host6-snip4-7.eps.apple.com ([57.103.84.188]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1udnlg-00084w-TT
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 06:29:15 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPS id
+ 9593418000B5; Mon, 21 Jul 2025 10:29:08 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=8RZpjcC1eC/jKwDyOKt/gEUgNto/QOWjaPA6wa7ix9w=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=CJtwUocB4Yg/Nf/kog0xFEKXB8m2xsxMgYXv4olfHnYSY+ew2TfXJoOBi4YLjbWUA408xGn/Pr49yx0ULt7U+UCQo7Deaqo7JwaFf/SZsLm2NcSExUYhO+ssuiwkpicmU+FXBlIOHnKevqmm7yiq5+UVCVIuzJSF4qVhIkUmryWqo8VkXhbvHKmTeFm68L45qmLEOj9JihyofEuLQ2JaP6WfvKeTyyZt4G4yhtRJcKaysYGW3qt37k2pyxIwBj0M8Su3zm7oiOcdOuwF7F+iI0GaMxdkB7l/8oVqRTzHgDfZpxv0RujsPgXvIB7k+BxBj7FpB58nmkHKbG68xlwnmA==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPSA id
+ C17F81800172; Mon, 21 Jul 2025 10:29:06 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3858.100.10\))
+Subject: Re: [PATCH v2 1/2] hvf: arm: Add permission check in GIC sysreg
+ handlers
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA-7bUavf41RS5Ppd4XAibcLVxHnybDyJH0Yc-U8WHSpHg@mail.gmail.com>
+Date: Mon, 21 Jul 2025 12:28:55 +0200
+Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zenghui Yu <zenghui.yu@linux.dev>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, agraf@csgraf.de, mads@ynddal.dk
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4F284FB1-C3D1-4759-9A4D-3C0B43B37657@unpredictable.fr>
+References: <20250714160139.10404-1-zenghui.yu@linux.dev>
+ <20250714160139.10404-2-zenghui.yu@linux.dev>
+ <7a34c735-3306-4028-bec9-f34b4271a543@linaro.org>
+ <CAFEAcA-7bUavf41RS5Ppd4XAibcLVxHnybDyJH0Yc-U8WHSpHg@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3858.100.10)
+X-Proofpoint-GUID: M0U4kRbKv-j6bd3wlIdwHMjf3LM40fB-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDA5MyBTYWx0ZWRfX+gbNnySLj5Fk
+ Bj+eUw+C+RLWj5Dd6tzg6e3EeckIIgzID0ae4VfWHfZG4YJzl/y9d1iqB04aoq2YGr7K77V7C/R
+ 57jgMRiThgo0yZmCs9wk9GV+1aD0l6LdvIqrPjA8C71IZR85J3hi2ybmfpI9i1ce2onZKsHaFK6
+ Yh7i1qjvcV52Lgi2SdNd+VG3a/1zyj61TArY5o9ZWuOdsZ2G4+KCYPXCi6P4BH8tmqzkNAiqL0H
+ pC+iHyi8LsV21zEUjDEUOD7KZzz1As1af7ys9x3jZH3bs1zrkqve45DMvKldhfl7BDEX8K/mE=
+X-Proofpoint-ORIG-GUID: M0U4kRbKv-j6bd3wlIdwHMjf3LM40fB-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_03,2025-07-21_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 spamscore=0 suspectscore=0 clxscore=1030 mlxlogscore=999
+ malwarescore=0 adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507210093
+Received-SPF: pass client-ip=57.103.84.188;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,64 +91,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Jul 2025 at 19:07, Steve Sistare <steven.sistare@oracle.com> wrote:
->
-> Close a race condition that causes cpr-transfer to lose VFIO
-> interrupts on ARM.
->
-> CPR stops VCPUs but does not disable VFIO interrupts, which may continue
-> to arrive throughout the transition to new QEMU.
->
-> CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
-> future interrupts to the producer eventfd, where they are preserved.
-> Old QEMU then destroys the old KVM instance.  However, interrupts may
-> already be pending in KVM state.  To preserve them, call ioctl
-> KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
-> they will be picked up when the new KVM+VCPU instance is created.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-> +static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
-> +                                  MigrationEvent *e, Error **errp)
-> +{
-> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
-> +        return kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
-> +                                 KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
-> +                                 NULL, true, errp);
-> +    }
-> +    return 0;
-> +}
->
->  static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
->  {
-> @@ -883,13 +895,17 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
->                                 GICD_CTLR)) {
->          error_setg(&s->migration_blocker, "This operating system kernel does "
->                                            "not support vGICv3 migration");
-> -        if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
-> +        if (migrate_add_blocker_modes(&s->migration_blocker, MIG_MODE_NORMAL,
-> +                                      MIG_MODE_CPR_TRANSFER, errp) < 0) {
 
-Why did you change this? It's the general "if no support, can't
-migrate at all" check, which seems unrelated to cpr-transfer.
+> On 21. Jul 2025, at 12:19, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Mon, 14 Jul 2025 at 21:04, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>>=20
+>> On 14/7/25 18:01, Zenghui Yu wrote:
+>>> Quoting Peter Maydell:
+>>>=20
+>>> " hvf_sysreg_read_cp() and hvf_sysreg_write_cp() do not check the =
+.access
+>>>   field of the ARMCPRegInfo to ensure that they forbid writes to =
+registers
+>>>   that are marked with a .access field that says they're read-only =
+(and
+>>>   ditto reads to write-only registers). "
+>>>=20
+>>> Before we add more registers in GIC sysreg handlers, let's get it =
+correct
+>>> by adding the .access checks to hvf_sysreg_read_cp() and
+>>> hvf_sysreg_write_cp(). With that, a sysreg access with invalid =
+permission
+>>> will result in an UNDEFINED exception.
+>>>=20
+>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+>>> ---
+>>>=20
+>>> I hard-code the @current_el parameter of cp_access_ok() to 1 because
+>>>=20
+>>> * we only support EL0 and EL1 in HVF, and
+>>=20
+>> This might change with this work:
+>> =
+https://lore.kernel.org/qemu-devel/20250620172751.94231-1-philmd@linaro.or=
+g/
+>> and plan to leverage M3/M4 for EL2 support:
+>> =
+https://developer.apple.com/documentation/hypervisor/hv_vm_config_set_el2_=
+enabled(_:_:)
+>=20
+> True, but for 10.1 I'm going to take these patches as-is, because
+> they do fix a bug, and handling EL2 in hvf with an emulated GIC is
+> going to need a more general look at the GIC code anyway.
+> (My preference would be to use the GICv3 which hvf provides in
+> macos 15 and up when we can in any case.)
+Something to note on the vGIC provided by Hypervisor.framework is that =
+it provides its serialisable internal state as an opaque structure which =
+isn=E2=80=99t guaranteed to not change in the future (with however =
+guarantees that it=E2=80=99ll be readable on newer macOS versions than =
+the one it was generated from).
 
->              return;
->          }
->      }
->      if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
->                                KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
->          qemu_add_vm_change_state_handler(vm_change_state_handler, s);
-> +        migration_add_notifier_mode(&s->cpr_notifier,
-> +                                    kvm_arm_gicv3_notifier,
-> +                                    MIG_MODE_CPR_TRANSFER);
->      }
->  }
+And is of course not a documented one.
+> Syncing the whole VM state for any call through to the GIC
+> emulation would be quite heavyweight. I'm not sure if we exactly
+> thought through that the state would not be synced here, though:
+> the GIC emulation was never written to assume that some CPU
+> registers might not be in sync...
+>=20
+> thanks
+> -- PMM
+>=20
 
-Otherwise the patch looks OK in general shape, but I know
-nothing about cpr-transfer so a review from somebody on the
-migration side would be helpful.
-
-thanks
--- PMM
 
