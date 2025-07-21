@@ -4,72 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCE4C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 18:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF68C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 18:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udvIv-0007zw-RG; Mon, 21 Jul 2025 14:32:02 -0400
+	id 1udvh0-00019p-7P; Mon, 21 Jul 2025 14:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1udvIu-0007yi-8g
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 14:32:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udvfI-0008Uz-Pq
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 14:55:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1udvIr-0005EO-EO
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 14:31:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1udvfG-0001QP-GB
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 14:55:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753122716;
+ s=mimecast20190719; t=1753124104;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wTvPAVsJ9QkWS5xYlE+mCtGQD1PM8ccq5tQytE8XGdw=;
- b=alwe8+jRR/lbLR1IRIMuEF74ra33Fm1h61lqziZ8S4/ANls6xv44VMhLUn7RcdWpfA3SD6
- 6q3MTSazAdPNtvsj7J5WP6kJ6xkOyxpDoP7jjKMhUIvfZAoTj7CBU8I2/jwe5y3hNNVWDU
- HyzKV8fVHZe5ZYGZGqnSrGPdOjCDwU0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=mnOnAh6e29Z6Rpm7WVvEcJlMExGHcMCYmqWbz5RxB+4=;
+ b=FjCF5IVxOuWJ0rRun7FbAQby2O+V+bzWj/3LJutpUckJHq0Fe1HxFNG0509VYkMJQ0mF+q
+ KWd9LLjLQzKF5Bri8Jnz1Z9bGOR4reVsuoKv/dZ9DSpS6aeZGPo1Z4ttPYCgTZtqmoHlI3
+ F5WjjNVMshX9dA6A1o+GwaYF5fmIaNU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-yz_0J_MSNgWDtphACLWU7g-1; Mon,
- 21 Jul 2025 14:31:53 -0400
-X-MC-Unique: yz_0J_MSNgWDtphACLWU7g-1
-X-Mimecast-MFC-AGG-ID: yz_0J_MSNgWDtphACLWU7g_1753122711
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-qZrK4HeqPm-8pI-BbQMSaw-1; Mon,
+ 21 Jul 2025 14:54:56 -0400
+X-MC-Unique: qZrK4HeqPm-8pI-BbQMSaw-1
+X-Mimecast-MFC-AGG-ID: qZrK4HeqPm-8pI-BbQMSaw_1753124095
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E50A19560AA; Mon, 21 Jul 2025 18:31:51 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.31])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B179219560A3; Mon, 21 Jul 2025 18:31:49 +0000 (UTC)
-Date: Mon, 21 Jul 2025 14:31:48 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Sergio Lopez <slp@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PULL 0/3] Display 20250718 patches
-Message-ID: <20250721183148.GA78037@fedora>
-References: <20250718194349.65771-1-kraxel@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C66C21956089; Mon, 21 Jul 2025 18:54:55 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.213])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 628761956094; Mon, 21 Jul 2025 18:54:54 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] log: make '-msg timestamp=on' apply to all qemu_log usage
+Date: Mon, 21 Jul 2025 19:54:52 +0100
+Message-ID: <20250721185452.3016488-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OdrFdkD7PGLosqMK"
-Content-Disposition: inline
-In-Reply-To: <20250718194349.65771-1-kraxel@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -94,30 +82,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Currently the tracing 'log' back emits special code to add timestamps
+to trace points sent via qemu_log(). This current impl is a bad design
+for a number of reasons.
 
---OdrFdkD7PGLosqMK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ * It changes the QEMU headers, such that 'error-report.h' content
+   is visible to all files using tracing, but only when the 'log'
+   backend is enabled. This has led to build failure bugs as devs
+   rarely test without the (default) 'log' backend enabled, and
+   CI can't cover every scenario for every trace backend.
 
-Applied, thanks.
+ * It bloats the trace points definitions which are inlined into
+   every probe location due to repeated inlining of timestamp
+   formatting code, adding MBs of overhead to QEMU.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+ * The tracing subsystem should not be treated any differently
+   from other users of qemu_log. They all would benefit from
+   having timestamps present.
 
---OdrFdkD7PGLosqMK
-Content-Type: application/pgp-signature; name=signature.asc
+ * The timestamp emitted with the tracepoints is in a needlessly
+   different format to that used by error_report() in response
+   to '-msg timestamp=on'.
 
------BEGIN PGP SIGNATURE-----
+This fixes all these issues simply by moving timestamp formatting
+into qemu_log, using the same approach as for error_report.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh+h5QACgkQnKSrs4Gr
-c8gH8ggAoxWwB3W04TvW02BmX5+Kv1PQAJozRCs/WykOBbBsUbdyKHb30MrrtOXI
-UPx8mjN/eAtFPoOkZSz7XJMI3dIBLetgvPpq+aM5clzizm6KdNuCUYG56YY3ZOh7
-o6SQ61fWdFpKhaB1Hjil3DOHWWoZz807hKw72RUZkPgn4Gx0Ol6V2TRKxLWM2z3w
-8/rS2TvVUPycgV1ajFl3ECzslmtqR0bSKULFnWxIym+fLvMzYoATHV6ZHX3YI5LV
-V+A4LK8E9hSFGiPRN6WzNya6RJ1NN7Fq31poyPyfTNveW0oOgqWdBlPPJ5q9i7BO
-wTS25WFeLUcKslWlE2pmChFd2aF5yw==
-=8RXp
------END PGP SIGNATURE-----
+The code before:
 
---OdrFdkD7PGLosqMK--
+  static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * creds, const char * filename, const char * path)
+  {
+      if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu_loglevel_mask(LOG_TRACE)) {
+          if (message_with_timestamp) {
+              struct timeval _now;
+              gettimeofday(&_now, NULL);
+              qemu_log("%d@%zu.%06zu:qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n",
+                       qemu_get_thread_id(),
+                       (size_t)_now.tv_sec, (size_t)_now.tv_usec
+                       , creds, filename, path);
+          } else {
+              qemu_log("qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n", creds, filename, path);
+          }
+      }
+  }
+
+and after:
+
+  static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * creds, const char * filename, const char * path)
+  {
+      if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu_loglevel_mask(LOG_TRACE)) {
+          qemu_log("qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n", creds, filename, path);
+      }
+  }
+
+The log and error messages before:
+
+  $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=tls0,dir=$HOME/tls -msg timestamp=on
+  2986097@1753122905.917608:qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55d925bd9490 dir=/var/home/berrange/tls
+  2986097@1753122905.917621:qcrypto_tls_creds_get_path TLS creds path creds=0x55d925bd9490 filename=ca-cert.pem path=<none>
+  2025-07-21T18:35:05.917626Z qemu-system-x86_64: Unable to access credentials /var/home/berrange/tls/ca-cert.pem: No such file or directory
+
+and after:
+
+  $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=tls0,dir=$HOME/tls -msg timestamp=on
+  2025-07-21T18:43:28.089797Z qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55bf5bf12380 dir=/var/home/berrange/tls
+  2025-07-21T18:43:28.089815Z qcrypto_tls_creds_get_path TLS creds path creds=0x55bf5bf12380 filename=ca-cert.pem path=<none>
+  2025-07-21T18:43:28.089819Z qemu-system-x86_64: Unable to access credentials /var/home/berrange/tls/ca-cert.pem: No such file or directory
+
+The binary size before:
+
+  $ ls -alh qemu-system-x86_64
+  -rwxr-xr-x. 1 berrange berrange 87M Jul 21 19:39 qemu-system-x86_64
+  $ strip qemu-system-x86_64
+  $ ls -alh qemu-system-x86_64
+  -rwxr-xr-x. 1 berrange berrange 30M Jul 21 19:39 qemu-system-x86_64
+
+and after:
+
+  $ ls -alh qemu-system-x86_64
+  -rwxr-xr-x. 1 berrange berrange 85M Jul 21 19:41 qemu-system-x86_64
+  $ strip qemu-system-x86_64
+  $ ls -alh qemu-system-x86_64
+  -rwxr-xr-x. 1 berrange berrange 29M Jul 21 19:41 qemu-system-x86_64
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/tracetool/backend/log.py | 14 +-------------
+ util/log.c                       | 20 +++++++++++++++++++-
+ 2 files changed, 20 insertions(+), 14 deletions(-)
+
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index 17ba1cd90e..bd6739ae41 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -20,7 +20,6 @@
+ 
+ def generate_h_begin(events, group):
+     out('#include "qemu/log-for-trace.h"',
+-        '#include "qemu/error-report.h"',
+         '')
+ 
+ 
+@@ -36,20 +35,9 @@ def generate_h(event, group):
+         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+ 
+     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
+-        '        if (message_with_timestamp) {',
+-        '            struct timeval _now;',
+-        '            gettimeofday(&_now, NULL);',
+         '#line %(event_lineno)d "%(event_filename)s"',
+-        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",',
+-        '                     qemu_get_thread_id(),',
+-        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
+-        '                     %(argnames)s);',
++        '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '        } else {',
+-        '#line %(event_lineno)d "%(event_filename)s"',
+-        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+-        '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '        }',
+         '    }',
+         cond=cond,
+         event_lineno=event.lineno,
+diff --git a/util/log.c b/util/log.c
+index 58d24de48a..abdcb6b311 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -145,10 +145,28 @@ void qemu_log_unlock(FILE *logfile)
+ 
+ void qemu_log(const char *fmt, ...)
+ {
+-    FILE *f = qemu_log_trylock();
++    FILE *f;
++    g_autofree const char *timestr = NULL;
++
++    /*
++     * Prepare the timestamp *outside* the logging
++     * lock so it better reflects when the message
++     * was emitted if we are delayed acquiring the
++     * mutex
++     */
++    if (message_with_timestamp) {
++        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
++        timestr = g_date_time_format_iso8601(dt);
++    }
++
++    f = qemu_log_trylock();
+     if (f) {
+         va_list ap;
+ 
++        if (timestr) {
++            fprintf(f, "%s ", timestr);
++        }
++
+         va_start(ap, fmt);
+         vfprintf(f, fmt, ap);
+         va_end(ap);
+-- 
+2.50.1
 
 
