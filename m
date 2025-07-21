@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2A3C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 11:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECEFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 11:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udolD-0003MI-6Y; Mon, 21 Jul 2025 07:32:47 -0400
+	id 1udoiT-0007EC-T2; Mon, 21 Jul 2025 07:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1udojB-0000Pe-EH
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 07:30:42 -0400
+ id 1udoiC-0006yX-Op
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 07:29:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1udoj8-0000vx-7k
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 07:30:40 -0400
+ id 1udoi9-0000b4-59
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 07:29:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753097436;
+ s=mimecast20190719; t=1753097375;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/LNqUCu7dKPQ/SuGiYcMybR4TcCesQNHzWDsgprIUc0=;
- b=VCJeVhLPt1csVhr06vxN5lxH3IzFV0/Jk0q7Ovi54MNuiwdHr95xwUAQzXgJyWrQ9DAoQb
- jOs0osnZX9JoHCzPYDCgcUqLLxjfA+Gnr0WluLsw0N1NKKfo4ArWzAx/bJDdvb4obUzSv0
- 0v4sYe3gpyRVdB4aVu2gz5uYPunoE6Q=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=r0ZtwJu78fIFKUQVdqfEBLuK8HO1eTvK9U+QyWlvatQ=;
+ b=CxtUtgEOob18D2ryXhmxj2k71FVuvsestWu4Wg73geV2q+Wp43UI37TCYCAsig36dLb6rt
+ /r6t31CuKK0jS1TGMRWmuINDqxPDsQ9CBgfabjxO8NGDGUH1bKzl6l+YpSZI3UXvYm54qz
+ 7fxTWZqIx19+opSD8k3m8o7pKZ1qqNM=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-ge81KtitMIukKsXxbl_UkQ-1; Mon, 21 Jul 2025 07:30:34 -0400
-X-MC-Unique: ge81KtitMIukKsXxbl_UkQ-1
-X-Mimecast-MFC-AGG-ID: ge81KtitMIukKsXxbl_UkQ_1753097434
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-23dc7d3e708so29870755ad.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 04:30:34 -0700 (PDT)
+ us-mta-605-a4NHprjuPkuW5tVqVa4a2w-1; Mon, 21 Jul 2025 07:29:33 -0400
+X-MC-Unique: a4NHprjuPkuW5tVqVa4a2w-1
+X-Mimecast-MFC-AGG-ID: a4NHprjuPkuW5tVqVa4a2w_1753097372
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-313c3915345so6191042a91.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 04:29:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753097432; x=1753702232;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/LNqUCu7dKPQ/SuGiYcMybR4TcCesQNHzWDsgprIUc0=;
- b=As7Lmy1nHBjXHNl9J2RNZtUcxZv4tit8pqP0Z0wZ1KPj/owRxYrrmVrSGPknbIFzA+
- FyhtOTZ3RNaWb2DMzWR/hCv6/gF2LQTPc00Rw3Wbz5ZnAE0/vaLycNx2Wt3oQkdi8v/c
- T2KEjNSCTNQRXTlQKzvp5iLNFhWqEicxYJ28vjLLzdsItkWHIjNfgFbJqpD28JN2x5j6
- kQkXJc/Lnna+qj9egtGH0dddjnyqynIV8CIoh531nKOe+GsNS9PNtcXE+s9MmvXj3Ta8
- J2Auwwo+aOuEsMGV+Xwf4mM8AYXm7t7j77LFewbWb48bEsngObkAf+1Qr5OdFoLHrPQF
- j4WQ==
-X-Gm-Message-State: AOJu0YzOAUX6Yo0W++G2OtCgbNsJJ7LJFC5+owIU2/NPn6FgqlwRwXsx
- dETx8zNknPBWloP6qhZ/iq27RT8vBfGyf5oAJQvPPu/1rTUHK57Iu9vmlEe2fRPf/rlVZCIc/EW
- wzNoRvrm4xh+hKKY8Ed249TEMKqJ13nXcTPqnEzFVYOGwmO16rGWBLQbT
-X-Gm-Gg: ASbGnctgLNQRLri42e2j4VbZ9IF4aenSgz1hGKgW/GKDRGwqvvbn897qfeluyDD9vVR
- ZEcvx6yhkq2h7y8dJUhgBaLeDuMkizZjxhPgqDDBDbN3LX7iDoiVhEiYYPNx6j+8HjrDJWaghsE
- WKBY372f+PV0x/4NiceK8Cq7n+iyqQiCFma2h99Nefb169IECEO6bbzxR6H2YyP0MK/nCsu/gYH
- dWWpAm+kWq81hRyLRj1RlA0bEf2/7RabkQHS0WBGM1potPNr+KZSerw9r8yeXowOs0+f08r/+0B
- blpQ+2pBz7guAuTLIcUaQEqBgJV2o9chnGUjBpNmnFvJmgjiv1ca
-X-Received: by 2002:a17:903:ace:b0:234:adce:3ebc with SMTP id
- d9443c01a7336-23e2578a8aemr309082525ad.52.1753097431654; 
- Mon, 21 Jul 2025 04:30:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwH+R2QUhaa3FhehiC+1lKY5szCrc6hJ8O/PHhTR1YRDlWDQqngxSbW4ms4MM/6cHGw1XM9w==
-X-Received: by 2002:a17:903:ace:b0:234:adce:3ebc with SMTP id
- d9443c01a7336-23e2578a8aemr309081805ad.52.1753097431234; 
- Mon, 21 Jul 2025 04:30:31 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753097372; x=1753702172;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r0ZtwJu78fIFKUQVdqfEBLuK8HO1eTvK9U+QyWlvatQ=;
+ b=INC2LbCM9pIklWxJd+Pt2XgTRj48kkEaSkFNgq7Cg+sWFHi3E3YxhR+nNYGp37/a7e
+ 6sEzh04brqnEjZbPdahzEhKFfJLkdCV5Khg0LhbYhrut3vYFA2eZaiYst0/ag50bSvk5
+ gGKvmsGpxhhYFTqm7rMMgE/FpU8oyzsKtAbP5NV1VfmWEQN72XMGg4G/XfGo32RyVfdz
+ A4Nf48TZtos4hQpOt0i2Z4DJSTPfYjNtV87sWfj4o8xiFjaOOqtbO5Wbuge9XkJQRXcv
+ H8uiDchhFzVmfcD1Myf92/ynZpM3ArVRgZjq5OQ1uHtPnbwIlHZhQbgKiiaRb8piKWxR
+ m86A==
+X-Gm-Message-State: AOJu0YziUePeyDueMpMm4qBa59EjIh1oFWg4Uo+I14NOS1l3jF5JzDI2
+ VI2OzHLV45j1FxP1FIOtsr4+19c5jPRcTepDpKpSqgEyoVkZsih7cG4SSL+2ep+lZ6t0sQ7VBqc
+ hCm1oY+4F5cLFuNbBc9tD3gSdXloYShuX4u3a1fn4fNjORfyFsJ6A8UC+
+X-Gm-Gg: ASbGncts81e0/SKs51ZWRA4bwHklIOQwTW36rnCoCDSqw08wjanBsDjcgaKQeNrOp7p
+ YYgh86mFvyGslu9ZRAlMYtwS5JvadtOERXkcZrn2JZcLQHY3GPcPSmOp4uuVYAdygEUxKON7OeE
+ tKEFMmXCkvN6dY9xnqO0dLRyJtqymzDYvJXNIo+ABRcQc3EqC2EMjvwN/pnOJ3BPW6wkCEQAwSO
+ 1iuZA5SNQMOUlAG+OXb4rh7EsM8Ft2KZVqb2Xtyk7OTNCygFhBGtuDCbsCFhj49dKYAXuMyHmTi
+ gn4zfHjaCl7iTkUoPBCeEeWAdLef8mOQJsVBZ2ydNn+s4mYCUZqJ
+X-Received: by 2002:a17:90a:e70e:b0:313:279d:665c with SMTP id
+ 98e67ed59e1d1-31caf821883mr20846669a91.7.1753097372167; 
+ Mon, 21 Jul 2025 04:29:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1HKqCZrzrN6JZN7Exv6ReXoJWDXOJl/80K47oX6KP0w7dmwTErR2CHnPY18g5Vx/xIx8BRQ==
+X-Received: by 2002:a17:90a:e70e:b0:313:279d:665c with SMTP id
+ 98e67ed59e1d1-31caf821883mr20846624a91.7.1753097371672; 
+ Mon, 21 Jul 2025 04:29:31 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.101.21])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23e3b5e3c89sm56150465ad.18.2025.07.21.04.30.23
+ d9443c01a7336-23e3b5e3c89sm56150465ad.18.2025.07.21.04.29.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 04:30:30 -0700 (PDT)
+ Mon, 21 Jul 2025 04:29:31 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
-Date: Mon, 21 Jul 2025 16:59:12 +0530
-Subject: [PATCH v6 07/24] migration: Update qemu_file_get_return_path()
- docs and remove dead checks
+Subject: [PATCH v6 00/24] migration: propagate vTPM errors using Error objects
+Date: Mon, 21 Jul 2025 16:59:05 +0530
+Message-Id: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250721-propagate_tpm_error-v6-7-fef740e15e17@redhat.com>
-References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
-In-Reply-To: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAIIkfmgC/33PTWrDMBAF4KsErasyGv131XuUEFRpHGuRyMjGN
+ ATfvUo2dbHb5RuY7/HubKSaaWRvhzurNOcxl2sL5uXAYh+uZ+I5tcwQUINBxYdahnAOE52m4XK
+ iWkvln50KZCLKJIG1z6FSl7+e6sex5T6PU6m3Z8ksHtf/vVlw4CisUM4G7WV6r5T6ML3GcmEPc
+ MY1YvcRbIjT3kN0PgX0G0T+IBZwH5EN8c4kr7QCjW6DqBUizD6iGtLGCA8I1kbYIHqN/DFHN0R
+ 0CkznHJHRv5BlWb4ByurzLssBAAA=
+X-Change-ID: 20250624-propagate_tpm_error-bf4ae6c23d30
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
@@ -104,14 +106,16 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>
+ Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3725; i=armenon@redhat.com;
- h=from:subject:message-id; bh=XMQupSy2eiojmjsmzqjvvSwAHzmqZOlGldkjbKkKFOw=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0adysSJ0jLCr/JCUu4FLpw+IX3XYpc4q5gmyflPJYS1/
- 9eYBVzsKGVhEONikBVTZGn4GiDbFFAYEWn78jrMHFYmkCEMXJwCMJHjaxn+CofGCq7qSShQbLnm
- +37lk+aCrAsTbzenHZa3dpLRuZxex8jQcnNH57Yby2TV/jzpX8fz9YvwscDtLzQ36x48plX+TcW
- fGwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7724; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=7J0znC18jEgkYFfYar9ns8MZ9NX1hrTNXc6koZDxfw4=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0adyoRlqWwzPeZoGj5a4/MwMJ9XnmVzXKDtt+S7Kfsvz
+ Hzdl3Sto5SFQYyLQVZMkaXha4BsU0BhRKTty+swc1iZQIYwcHEKwETMTjAy7Le9uWgDi0jN0XWX
+ t8vtE353bp/u2nOfTa3Yf5oxtOm/9GH4Zz27627M2pMay+1Sjv6cL9+hfZ/v72WFBaxCUh2vbju
+ mMgIA
 X-Developer-Key: i=armenon@redhat.com; a=openpgp;
  fpr=80F5501D82507158593DE9D76A7A2538D90F328E
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
@@ -139,106 +143,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation of qemu_file_get_return_path() states that it can
-return NULL on failure. However, a review of the current implementation
-reveals that it is guaranteed that it will always succeed and will never
-return NULL.
+Hello,
 
-As a result, the NULL checks post calling the function become redundant.
-This commit updates the documentation for the function and removes all
-NULL checks throughout the migration code.
+Currently, when a migration of a VM with an encrypted vTPM
+fails on the destination host (e.g., due to a mismatch in secret values),
+the error message displayed on the source host is generic and unhelpful.
+
+For example, a typical error looks like this:
+"operation failed: job 'migration out' failed: Sibling indicated error 1.
+operation failed: job 'migration in' failed: load of migration failed:
+Input/output error"
+
+This message does not provide any specific indication of a vTPM failure.
+Such generic errors are logged using error_report(), which prints to
+the console/monitor but does not make the detailed error accessible via
+the QMP query-migrate command.
+
+This series addresses the issue, by ensuring that specific TPM error
+messages are propagated via the QEMU Error object.
+To make this possible,
+- A set of functions in the call stack is changed
+  to incorporate an Error object as an additional parameter.
+- Also, the TPM backend makes use of a new hook called post_load_errp()
+  that explicitly passes an Error object.
+
+It is organized as follows,
+ - Patches 1-21 focuses on pushing Error object into the functions
+   that are important in the call stack where TPM errors are observed.
+   We still need to make changes in rest of the functions in savevm.c
+   such that they also incorporate the errp object for propagating errors.
+ - Patch 22 introduces the new variants of the hooks in VMStateDescription
+   structure. These hooks should be used in future implementations.
+ - Patch 23 focuses on changing the TPM backend such that the errors are
+   set in the Error object.
+
+While this series focuses specifically on TPM error reporting during
+live migration, it lays the groundwork for broader improvements.
+A lot of methods in savevm.c that previously returned an integer now capture
+errors in the Error object, enabling other modules to adopt the
+post_load_errp hook in the future.
+
+One such change previously attempted:
+https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg01727.html
+
+Resolves: https://issues.redhat.com/browse/RHEL-82826
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- migration/colo.c      |  4 ----
- migration/migration.c | 12 ++----------
- migration/qemu-file.c |  1 -
- migration/savevm.c    |  4 ----
- 4 files changed, 2 insertions(+), 19 deletions(-)
+Changes in v6:
+- Incorporated review comments from Daniel and Akihiko, related to few
+  semantic errors and improve error logging.
+- Add one more patch that removes NULL checks after calling 
+  qemu_file_get_return_path() because it does not fail.
+- Link to v5: https://lore.kernel.org/qemu-devel/20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com
 
-diff --git a/migration/colo.c b/migration/colo.c
-index e0f713c837f5da25d67afbd02ceb6c54024ca3af..981bd4bf9ced8b45b4c5d494acae119a174ee974 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -849,10 +849,6 @@ static void *colo_process_incoming_thread(void *opaque)
-     failover_init_state();
- 
-     mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
--    if (!mis->to_src_file) {
--        error_report("COLO incoming thread: Open QEMUFile to_src_file failed");
--        goto out;
--    }
-     /*
-      * Note: the communication between Primary side and Secondary side
-      * should be sequential, we set the fd to unblocked in migration incoming
-diff --git a/migration/migration.c b/migration/migration.c
-index 10c216d25dec01f206eacad2edd24d21f00e614c..b3bccaeaee806abd01595863f6475057049b0688 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2646,12 +2646,9 @@ out:
-     return NULL;
- }
- 
--static int open_return_path_on_source(MigrationState *ms)
-+static void open_return_path_on_source(MigrationState *ms)
- {
-     ms->rp_state.from_dst_file = qemu_file_get_return_path(ms->to_dst_file);
--    if (!ms->rp_state.from_dst_file) {
--        return -1;
--    }
- 
-     trace_open_return_path_on_source();
- 
-@@ -2660,8 +2657,6 @@ static int open_return_path_on_source(MigrationState *ms)
-     ms->rp_state.rp_thread_created = true;
- 
-     trace_open_return_path_on_source_continue();
--
--    return 0;
- }
- 
- /* Return true if error detected, or false otherwise */
-@@ -4010,10 +4005,7 @@ void migration_connect(MigrationState *s, Error *error_in)
-      * QEMU uses the return path.
-      */
-     if (migrate_postcopy_ram() || migrate_return_path()) {
--        if (open_return_path_on_source(s)) {
--            error_setg(&local_err, "Unable to open return-path for postcopy");
--            goto fail;
--        }
-+        open_return_path_on_source(s);
-     }
- 
-     /*
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index b6ac190034f777dbde0da1598483a892089d7538..f9ccee9a1091ecbd37e6b7d2081a4446442b544d 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -125,7 +125,6 @@ static QEMUFile *qemu_file_new_impl(QIOChannel *ioc, bool is_writable)
- 
- /*
-  * Result: QEMUFile* for a 'return path' for comms in the opposite direction
-- *         NULL if not available
-  */
- QEMUFile *qemu_file_get_return_path(QEMUFile *f)
- {
-diff --git a/migration/savevm.c b/migration/savevm.c
-index bef2236799945ed63124b3a41559ca4ab02e094e..96af7b412f2ed43468f4bcac8b833cda223f8321 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2583,10 +2583,6 @@ static int loadvm_process_command(QEMUFile *f)
-             return 0;
-         }
-         mis->to_src_file = qemu_file_get_return_path(f);
--        if (!mis->to_src_file) {
--            error_report("CMD_OPEN_RETURN_PATH failed");
--            return -1;
--        }
- 
-         /*
-          * Switchover ack is enabled but no device uses it, so send an ACK to
+Changes in v5:
+- Solve a bug that set errp even though it was not NULL, pointed out by Fabiano in v4.
+- Link to v4: https://lore.kernel.org/qemu-devel/20250716-propagate_tpm_error-v4-0-7141902077c0@redhat.com
 
+Changes in v4:
+- Split the patches into smaller ones based on functions. Pass NULL in the
+  caller until errp is made available. Every function that has an
+  Error **errp object passed to it, ensures that it sets the errp object
+  in case of failure.
+- A few more functions within loadvm_process_command() now handle errors using
+  the errp object. I've converted these for consistency, taking Daniel's
+  patches (link above) as a reference.
+- Along with the post_load_errp() hook, other duplicate hooks are also introduced.
+  This will enable us to migrate to the newer versions eventually.
+- Fix some semantic errors, like using error_propagate_prepend() in places where
+  we need to preserve existing behaviour of accumulating the error in local_err
+  and then propagating it to errp. This can be refactored in a later commit.
+- Add more information in commit messages explaining the changes.
+- Link to v3: https://lore.kernel.org/qemu-devel/20250702-propagate_tpm_error-v3-0-986d94540528@redhat.com
+
+Changes in v3:
+- Split the 2nd patch into 2. Introducing post_load_with_error() hook
+  has been separated from using it in the backends TPM module. This is
+  so that it can be acknowledged.
+- Link to v2: https://lore.kernel.org/qemu-devel/20250627-propagate_tpm_error-v2-0-85990c89da29@redhat.com
+
+Changes in v2:
+- Combine the first two changes into one, focusing on passing the
+  Error object (errp) consistently through functions involved in
+  loading the VM's state. Other functions are not yet changed.
+- As suggested in the review comment, add null checks for errp
+  before adding error messages, preventing crashes.
+  We also now correctly set errors when post-copy migration fails.
+- In process_incoming_migration_co(), switch to error_prepend
+  instead of error_setg. This means we now null-check local_err in
+  the "fail" section before using it, preventing dereferencing issues.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250624-propagate_tpm_error-v1-0-2171487a593d@redhat.com
+
+---
+Arun Menon (24):
+      migration: push Error **errp into vmstate_subsection_load()
+      migration: push Error **errp into vmstate_load_state()
+      migration: push Error **errp into qemu_loadvm_state_header()
+      migration: push Error **errp into vmstate_load()
+      migration: push Error **errp into qemu_loadvm_section_start_full()
+      migration: push Error **errp into qemu_loadvm_section_part_end()
+      migration: Update qemu_file_get_return_path() docs and remove dead checks
+      migration: push Error **errp into loadvm_process_command()
+      migration: push Error **errp into loadvm_handle_cmd_packaged()
+      migration: push Error **errp into ram_postcopy_incoming_init()
+      migration: push Error **errp into loadvm_postcopy_handle_advise()
+      migration: push Error **errp into loadvm_postcopy_handle_listen()
+      migration: push Error **errp into loadvm_postcopy_handle_run()
+      migration: push Error **errp into loadvm_postcopy_ram_handle_discard()
+      migration: make loadvm_postcopy_handle_resume() void
+      migration: push Error **errp into loadvm_handle_recv_bitmap()
+      migration: push Error **errp into loadvm_process_enable_colo()
+      migration: push Error **errp into loadvm_postcopy_handle_switchover_start()
+      migration: push Error **errp into qemu_loadvm_state_main()
+      migration: push Error **errp into qemu_loadvm_state()
+      migration: push Error **errp into qemu_load_device_state()
+      migration: Capture error in postcopy_ram_listen_thread()
+      migration: Add error-parameterized function variants in VMSD struct
+      backends/tpm: Propagate vTPM error on migration failure
+
+ backends/tpm/tpm_emulator.c |  39 +++---
+ hw/display/virtio-gpu.c     |   2 +-
+ hw/pci/pci.c                |   2 +-
+ hw/s390x/virtio-ccw.c       |   2 +-
+ hw/scsi/spapr_vscsi.c       |   2 +-
+ hw/vfio/pci.c               |   2 +-
+ hw/virtio/virtio-mmio.c     |   2 +-
+ hw/virtio/virtio-pci.c      |   2 +-
+ hw/virtio/virtio.c          |   4 +-
+ include/migration/colo.h    |   2 +-
+ include/migration/vmstate.h |  13 +-
+ migration/colo.c            |  12 +-
+ migration/cpr.c             |   4 +-
+ migration/migration.c       |  31 ++---
+ migration/postcopy-ram.c    |   9 +-
+ migration/postcopy-ram.h    |   2 +-
+ migration/qemu-file.c       |   1 -
+ migration/ram.c             |  14 +-
+ migration/ram.h             |   4 +-
+ migration/savevm.c          | 309 +++++++++++++++++++++++++-------------------
+ migration/savevm.h          |   7 +-
+ migration/vmstate-types.c   |  10 +-
+ migration/vmstate.c         |  94 ++++++++++----
+ tests/unit/test-vmstate.c   |  18 +--
+ ui/vdagent.c                |   2 +-
+ 25 files changed, 342 insertions(+), 247 deletions(-)
+---
+base-commit: f96b157ebb93f94cd56ebbc99bc20982b8fd86ef
+change-id: 20250624-propagate_tpm_error-bf4ae6c23d30
+
+Best regards,
 -- 
-2.50.0
+Arun Menon <armenon@redhat.com>
 
 
