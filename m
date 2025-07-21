@@ -4,111 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706BEC83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C4AC83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 21:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udy77-0005Mo-6U; Mon, 21 Jul 2025 17:32:03 -0400
+	id 1udyJ2-0007U0-7L; Mon, 21 Jul 2025 17:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1udy67-0004zR-El; Mon, 21 Jul 2025 17:31:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1udy65-0006IO-B0; Mon, 21 Jul 2025 17:30:59 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LBCGre015841;
- Mon, 21 Jul 2025 21:30:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=K+bgz8
- GjTlrnwbjEOVXT/KhcyyzhcOvTLK4BDlyWPgE=; b=tFOvNs6FoaZRgWclJnKMc8
- ngVKYvYXS5WBGZItnO/wOVcZ6mpbGOXvpt1+fWw7D7cDIz50pu2DouI8e6JuWnGb
- au6zKZB81I7tmoKvT5F6lrB1ZKoRMzyonhP0G18yPihz5e1arK/KxyIz8edsnAj1
- S4gIKaLv3bhU3KsI5l1kVsQhucVf3GfD7swoUq5VhzUw2HHZ2LPvmcWizJcSy3/+
- xf4STAmDpB8F5e6BntT4xpd96Edh95aywnERFzHiL5g5+OzrF3JmfC+T79ghLPNL
- DBwDK4+3XomlmBqAhyiPZmziapvRxfNZ5g8sFnMJNfd8NE1C/zwGkc084MMbjCoA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4805ut2vyq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Jul 2025 21:30:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56LJhDvY012404;
- Mon, 21 Jul 2025 21:30:54 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 480p3005hs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Jul 2025 21:30:54 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56LLUqYD50659820
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Jul 2025 21:30:52 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A50B58059;
- Mon, 21 Jul 2025 21:30:52 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1F5358058;
- Mon, 21 Jul 2025 21:30:51 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 21 Jul 2025 21:30:51 +0000 (GMT)
-Message-ID: <84eea732-145a-4650-bec3-0b9daf25723e@linux.ibm.com>
-Date: Mon, 21 Jul 2025 17:30:51 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/28] s390x: Guest support for Certificate Store
- Facility (CS)
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-5-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20250711211105.439554-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDE4OCBTYWx0ZWRfX2Wykm+oLAalf
- /zGX0aW4KIOIA6PPW+xyLgcfDXgtvdp6jvi9roy21Ibl5tS1TNwC/bW2EKKzNktl1G54l186OhB
- /3e/JA/h3Bd6kpyfbNtOsGrn3JJdE4z0aqWD7cUMDVNN+CKZDQAM/3mT9JhdQKp8HC/uz9sG4Tq
- OBeSR3DdHIRIwiqvoD65IV3AEV7UBwzbssNrJgdDco73KkqQpa8qVWXWbTj2LwvXl+oSbMzGSW0
- 45DQbNCc3hYlw5HTdl1REoR5nPNBgzj5OySLOSaXw6zBNn2hPaiyAs//gEs6i8XN639NpWqcuGz
- k9tgC2svtzy2YlvFth4PW9fGO2eD6CbDVV4JqNodJQeL8VBrZBOkrP1vfsuMl5the9Kp5f9Trfj
- s9e2O1L0yFLwrOPGfDgLbaqjkv2+MXl505zcvqEG+S0grgRGNzk0izntTWtJ/zdRcIYiOG03
-X-Proofpoint-ORIG-GUID: eNwkvedTQwkoLQjKzjmTOR6nDX_n-spr
-X-Authority-Analysis: v=2.4 cv=cIDgskeN c=1 sm=1 tr=0 ts=687eb18e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=sFiGHyX3b9B8Ka-s2VAA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: eNwkvedTQwkoLQjKzjmTOR6nDX_n-spr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-21_05,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0 suspectscore=0
- adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507210188
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
+ id 1udyHR-00061K-19; Mon, 21 Jul 2025 17:42:41 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
+ id 1udyHN-00008E-Tj; Mon, 21 Jul 2025 17:42:40 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-32b7123edb9so50576351fa.2; 
+ Mon, 21 Jul 2025 14:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753134156; x=1753738956; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Pi5a7yefMwcMVC85NgeCH42h8Mc4dcn+m0lnzMYwaE=;
+ b=OWHuljrkR9Xk+5AnOr/vwEvm1ATX60cJsD6CZDIT8/KCW80/RjvEhuw+HlJe6py43W
+ HHPh1zLB8XCQp5DCrMpCqtpEW7cHs/6usaMaIIaBuKn9rcz1ElOdtUodZy+BWxtFQjvF
+ GDav2vk3TPb2soDaRM/sJs26x6tGxYtWI7dWMARYh3oCypaE23ZCBp0rj0t4eMZ+pZpZ
+ dETeNDFStDZPSIeVfEZXmfUfXqT5ARUuqhk3LTwTMrTGFt8M84xMU2cmGXEJsafP34ZT
+ Lm5XJLatFaiAq6zG09piLp07vjM7OOO7H5ug8S9cC+Htk8oe6Fqufl7hf/3yjXY9osrZ
+ j/SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753134156; x=1753738956;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Pi5a7yefMwcMVC85NgeCH42h8Mc4dcn+m0lnzMYwaE=;
+ b=fabWpCA9Whxqe3/tD/XC25hlZ/BSOJdrQciAzGAjmX1KNkS1KI74CxOwPcrnebB7rR
+ vH1dvxIKuS+W/hrQyVfFSucGiU0fOQmK2O9Z9Y74X5r2FodKov7BNjx1A/9vOGXiIO2W
+ SUKq9aD+EffOSf/ZMgX15gk+Q+XHXbTp2j8vNuCj1NJccZOUroMco1zM38nVMTvHlBUy
+ UWPC1SiSYBKhi4yb+VyvA0uMhS8HEnn7q+DrlNC7P/fDWNxKJKLvoo3+/lyly/VAuiZl
+ E15R7iOPSsXqAe3nwlaEBrSW+mylYO+x0gzOfrHeCPLzwtYkxx80FMXOK8GQYB2GZqr8
+ WSGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmoWNsiIZnGP8biaAOPTj9g40U4Bnizjp4QExci6UPLUvIXOk4TG6lzYuQTu3crLVbj/12REXHZg==@nongnu.org
+X-Gm-Message-State: AOJu0Ywab9lsVUeBH8/b1O0e+/98lld6+RlPLkEwsLkjwsVwUQsgDZ9p
+ U+mtfuBG8u3I/9NpVDakB7FPcmjKML7oNYONcnEjOYE2Mx6VKK5kfK5u
+X-Gm-Gg: ASbGnctj4aDXnOmlA271FeKvIsWqrL5sWLOV2eB9klIruscoTDhLKJaHGMvEUcm7kEH
+ mWTtUzmY58Z53zwGTSTwBFj/BoqskY6hwAlfyS9X8a75Ghz/4oZOYSNzYYW99RaOaKJPgi//Dzz
+ RwwwqzXAmyPUcehbiNAL53TldRSEl6RUnwQU21yF7p8m5KEOppAiD52Ur72sKGwwkb3gUg+5ErX
+ Nc+gffhIIKXB0DTYsE6ISkWLRayx1xXtrXTj0gW405jmjUETGcxgdsq8uaq4eHw23ARpRLAe98D
+ LzVZX3E4h1pdYgzBVJOsLHE0HdOT50c+uvCLkpdQiXtCivJrj2LQ2m7fUz7Sz2loF5Zka9cla5m
+ m7sA2sdp1klfhZeS561c6V6WHg1dadlOvYfv4wAjmJw==
+X-Google-Smtp-Source: AGHT+IF5RcNO4blGcmzEtB6kWZ+FNNyfz7EkL+jdGtN1Z7MVV42kX+fJBIxAkFu0UNMQO+SYRsRhgg==
+X-Received: by 2002:a05:651c:1a0c:b0:32b:59d1:7ef3 with SMTP id
+ 38308e7fff4ca-3308f64e218mr62852991fa.35.1753134155281; 
+ Mon, 21 Jul 2025 14:42:35 -0700 (PDT)
+Received: from smtpclient.apple ([62.183.185.10])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-330a90d56b0sm15796631fa.4.2025.07.21.14.42.33
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 21 Jul 2025 14:42:34 -0700 (PDT)
+From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
+Message-Id: <11C21A37-0225-46DE-84D9-19E12BCEC59B@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_5DE68C0F-2FE8-4B8C-8D7A-4B81F95CE82F"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.71\))
+Subject: Re: [PATCH 3/4] hw: arm: acpi: add UART clock frequency to SPCR table
+Date: Tue, 22 Jul 2025 00:06:20 +0300
+In-Reply-To: <20250721104119.00001882@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Vadim Chichikalyuk <chichikalyuk@gmail.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20250718162045.49012-1-chichikalyuk@gmail.com>
+ <20250718162045.49012-4-chichikalyuk@gmail.com>
+ <20250721104119.00001882@huawei.com>
+X-Mailer: Apple Mail (2.3826.700.71)
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=chichikalyuk@gmail.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,113 +104,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 17:10, Zhuoying Cai wrote:
-> DIAG 320 is supported when the certificate-store (CS) facility
-> is installed.
-> 
-> Availability of CS facility is determined by byte 134 bit 5 of the
-> SCLP Read Info block. Byte 134's facilities cannot be represented
-> without the availability of the extended-length-SCCB, so add it as
-> a check for consistency.
-> 
-> Note: secure IPL is not available for Secure Execution (SE) guests,
-> as their images are already integrity protected, and an additional
-> protection of the kernel by secure IPL is not necessary.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 
-For consistency with documentation, please change this from
-"S390_FEAT_DIAG_320" to "S390_FEAT_CERT_STORE".
-
-> ---
->  target/s390x/cpu_features.c         | 1 +
->  target/s390x/cpu_features_def.h.inc | 1 +
->  target/s390x/cpu_models.c           | 2 ++
->  target/s390x/gen-features.c         | 3 +++
->  target/s390x/kvm/kvm.c              | 2 ++
->  5 files changed, 9 insertions(+)
-> 
-> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-> index 4b5be6798e..99089ab3f5 100644
-> --- a/target/s390x/cpu_features.c
-> +++ b/target/s390x/cpu_features.c
-> @@ -147,6 +147,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
->          break;
->      case S390_FEAT_TYPE_SCLP_FAC134:
->          clear_be_bit(s390_feat_def(S390_FEAT_DIAG_318)->bit, data);
-> +        clear_be_bit(s390_feat_def(S390_FEAT_DIAG_320)->bit, data);
->          break;
->      default:
->          return;
-> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-> index e23e603a79..7b13a95d98 100644
-> --- a/target/s390x/cpu_features_def.h.inc
-> +++ b/target/s390x/cpu_features_def.h.inc
-> @@ -138,6 +138,7 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
->  
->  /* Features exposed via SCLP SCCB Facilities byte 134 (bit numbers relative to byte-134) */
->  DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
-> +DEF_FEAT(DIAG_320, "cstore", SCLP_FAC134, 5, "Provide Certificate Store functions")
->  
->  /* Features exposed via SCLP CPU info. */
->  DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
-> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-> index 954a7a99a9..33ef5c190c 100644
-> --- a/target/s390x/cpu_models.c
-> +++ b/target/s390x/cpu_models.c
-> @@ -248,6 +248,7 @@ bool s390_has_feat(S390Feat feat)
->      if (s390_is_pv()) {
->          switch (feat) {
->          case S390_FEAT_DIAG_318:
-> +        case S390_FEAT_DIAG_320:
->          case S390_FEAT_HPMA2:
->          case S390_FEAT_SIE_F2:
->          case S390_FEAT_SIE_SKEY:
-> @@ -505,6 +506,7 @@ static void check_consistency(const S390CPUModel *model)
->          { S390_FEAT_PTFF_STOUE, S390_FEAT_MULTIPLE_EPOCH },
->          { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
->          { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
-> +        { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
->          { S390_FEAT_NNPA, S390_FEAT_VECTOR },
->          { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
->          { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-> index 8218e6470e..86486def23 100644
-> --- a/target/s390x/gen-features.c
-> +++ b/target/s390x/gen-features.c
-> @@ -720,6 +720,7 @@ static uint16_t full_GEN16_GA1[] = {
->      S390_FEAT_PAIE,
->      S390_FEAT_UV_FEAT_AP,
->      S390_FEAT_UV_FEAT_AP_INTR,
-> +    S390_FEAT_DIAG_320,
->  };
->  
->  static uint16_t full_GEN17_GA1[] = {
-> @@ -919,6 +920,8 @@ static uint16_t qemu_MAX[] = {
->      S390_FEAT_KIMD_SHA_512,
->      S390_FEAT_KLMD_SHA_512,
->      S390_FEAT_PRNO_TRNG,
-> +    S390_FEAT_EXTENDED_LENGTH_SCCB,
-> +    S390_FEAT_DIAG_320,
->  };
->  
->  /****** END FEATURE DEFS ******/
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index 2e02d2c4de..8f655a4b7f 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -2490,6 +2490,8 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
->          set_bit(S390_FEAT_DIAG_318, model->features);
->      }
->  
-> +    set_bit(S390_FEAT_DIAG_320, model->features);
-> +
->      /* Test for Ultravisor features that influence secure guest behavior */
->      query_uv_feat_guest(model->features);
->  
+--Apple-Mail=_5DE68C0F-2FE8-4B8C-8D7A-4B81F95CE82F
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
 
--- 
-Regards,
-  Collin
+> On 21 Jul 2025, at 12:41, Jonathan Cameron =
+<Jonathan.Cameron@huawei.com> wrote:
+>=20
+> On Fri, 18 Jul 2025 19:20:44 +0300
+> Vadim Chichikalyuk <chichikalyuk@gmail.com> wrote:
+>=20
+>> On the ARM virt machine, there is currently no way to =
+programmatically
+>> discover the frequency of the UART reference clock solely through the =
+use of
+>> UEFI/ACPI (without the DTB). The SPCR table can include this =
+information
+>> as of revision 3.
+>>=20
+>> Bump the revision to 3 and add the clock frequency of 24 MHz to the =
+table.
+>=20
+> Maybe add something on why you aren't just skipping forwards to 4 and =
+filling
+> in the rest of the stuff?
+
+Haven=E2=80=99t really considered that =E2=80=93 you=E2=80=99re right, =
+might as well upgrade it to revision 4.
+
+Based on build_dsdt() and acpi_dsdt_add_uart(), the NamespaceString =
+would be=20
+=E2=80=9C\_SB.COM0=E2=80=9D, right? Although, for some reason, it=E2=80=99=
+s just =E2=80=9C.=E2=80=9D for RISC-V virt (indicating
+that there isn=E2=80=99t a corresponding device in the ACPI namespace), =
+despite there being=20
+entries for the UART in the DSDT, just as for ARM?
+
+The relevant lines, for reference (hw/arm/virt-acpi-build.c):
+
+scope =3D aml_scope("\\_SB");
+acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], (irqmap[VIRT_UART0] + =
+ARM_SPI_BASE), 0);
+
+static void acpi_dsdt_add_uart(Aml *scope, const MemMapEntry =
+*uart_memmap, uint32_t uart_irq) {
+    Aml *dev =3D aml_device("COM%d", uartidx);
+    ...
+}
+
+
+Thanks for the review,
+Vadim=
+
+--Apple-Mail=_5DE68C0F-2FE8-4B8C-8D7A-4B81F95CE82F
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: =
+after-white-space;"><br><div><blockquote type=3D"cite"><div>On 21 Jul =
+2025, at 12:41, Jonathan Cameron &lt;Jonathan.Cameron@huawei.com&gt; =
+wrote:</div><br class=3D"Apple-interchange-newline"><div><div>On Fri, 18 =
+Jul 2025 19:20:44 +0300<br>Vadim Chichikalyuk =
+&lt;chichikalyuk@gmail.com&gt; wrote:<br><br><blockquote type=3D"cite">On =
+the ARM virt machine, there is currently no way to =
+programmatically<br>discover the frequency of the UART reference clock =
+solely through the use of<br>UEFI/ACPI (without the DTB). The SPCR table =
+can include this information<br>as of revision 3.<br><br>Bump the =
+revision to 3 and add the clock frequency of 24 MHz to the =
+table.<br></blockquote><br>Maybe add something on why you aren't just =
+skipping forwards to 4 and filling<br>in the rest of the =
+stuff?<br></div></div></blockquote><br></div><div>Haven=E2=80=99t really =
+considered that =E2=80=93 you=E2=80=99re right, might as well upgrade it =
+to revision 4.</div><div><br></div><div>Based on&nbsp;build_dsdt() =
+and&nbsp;acpi_dsdt_add_uart(), the&nbsp;<span style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);">NamespaceString&nbsp;</span><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">would =
+be&nbsp;</span></div><div><font color=3D"#000000">=E2=80=9C\_SB.COM0=E2=80=
+=9D, right? Although, for some reason,&nbsp;</font><span style=3D"color: =
+rgb(0, 0, 0);">it=E2=80=99s just =E2=80=9C.=E2=80=9D for RISC-V virt =
+(indicating</span></div><div><span style=3D"color: rgb(0, 0, 0);">that =
+there isn=E2=80=99t&nbsp;</span><span style=3D"color: rgb(0, 0, 0);">a =
+corresponding device in the ACPI namespace), despite there =
+being&nbsp;</span></div><div><span style=3D"color: rgb(0, 0, =
+0);">entries for&nbsp;</span><span style=3D"color: rgb(0, 0, 0);">the =
+UART in the DSDT, just as for ARM?</span></div><div><br></div><div>The =
+relevant lines, for reference =
+(hw/arm/virt-acpi-build.c):</div><div><br></div><div><div>scope =3D =
+aml_scope("\\_SB");</div><div>acpi_dsdt_add_uart(scope, =
+&amp;memmap[VIRT_UART0], (irqmap[VIRT_UART0] + ARM_SPI_BASE), =
+0);</div><div><br></div><div><div>static void acpi_dsdt_add_uart(Aml =
+*scope, const MemMapEntry *uart_memmap, uint32_t uart_irq) =
+{</div><div><div style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0);"><div>&nbsp; &nbsp; Aml *dev =3D aml_device("COM%d", =
+uartidx);</div><div>&nbsp; &nbsp; =
+...</div></div></div><div>}</div></div><div><br></div><div><br></div></div=
+><div>Thanks for the review,</div><div>Vadim</div></body></html>=
+
+--Apple-Mail=_5DE68C0F-2FE8-4B8C-8D7A-4B81F95CE82F--
 
