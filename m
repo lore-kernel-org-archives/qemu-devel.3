@@ -4,122 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B844C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 14:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25DDFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 15:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udrwE-0002cX-5y; Mon, 21 Jul 2025 10:56:22 -0400
+	id 1uds2I-0002hl-Om; Mon, 21 Jul 2025 11:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1udrw8-0002Vj-Fe
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:56:16 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1udrw5-0000NE-RZ
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 10:56:16 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 53A102115F;
- Mon, 21 Jul 2025 14:56:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753109772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AIgk9utDkVDEOOULX2pnpW3cDNKhRmIaaNTAHedXc2w=;
- b=DxzMB8hd+RDxf6/XhyRMWhGUhPJpnr6TE/6W/ESZe6fCD1Lk7tXKDi5DL/5vCRsm8tloQM
- BH1N5HDGXHvj3u2Osjc9aBNLVhq2FynGAWaaB0Tq68i2+UU+kJOIr150BA39xAC1zvQTjn
- LDye1XHWVbDHNWC5UOjZsXFho0Huil4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753109772;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AIgk9utDkVDEOOULX2pnpW3cDNKhRmIaaNTAHedXc2w=;
- b=5V5h7HtaDL07b+HLSWPbYt6jyi9idgN494mV732XQ6g97doIGLdE7IHHtgI7zDLzb57R2a
- m+EXbw24Wdyr3bCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DxzMB8hd;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5V5h7Hta
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753109772; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AIgk9utDkVDEOOULX2pnpW3cDNKhRmIaaNTAHedXc2w=;
- b=DxzMB8hd+RDxf6/XhyRMWhGUhPJpnr6TE/6W/ESZe6fCD1Lk7tXKDi5DL/5vCRsm8tloQM
- BH1N5HDGXHvj3u2Osjc9aBNLVhq2FynGAWaaB0Tq68i2+UU+kJOIr150BA39xAC1zvQTjn
- LDye1XHWVbDHNWC5UOjZsXFho0Huil4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753109772;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AIgk9utDkVDEOOULX2pnpW3cDNKhRmIaaNTAHedXc2w=;
- b=5V5h7HtaDL07b+HLSWPbYt6jyi9idgN494mV732XQ6g97doIGLdE7IHHtgI7zDLzb57R2a
- m+EXbw24Wdyr3bCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2E2A136A8;
- Mon, 21 Jul 2025 14:56:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Xs8kIAtVfmg3bwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 21 Jul 2025 14:56:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>, Peter Xu <peterx@redhat.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 0/4] migration: workaround GNUTLS live migration crashes
-In-Reply-To: <20250718150514.2635338-1-berrange@redhat.com>
-References: <20250718150514.2635338-1-berrange@redhat.com>
-Date: Mon, 21 Jul 2025 11:56:09 -0300
-Message-ID: <871pq9lhiu.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uds1z-0002V6-Ji
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:02:21 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1uds1x-00026M-IT
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 11:02:19 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LEu4fd019378;
+ Mon, 21 Jul 2025 15:02:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=feC4XMB/gTHRp8AVmzUNKO+oifJ4K
+ UBpomZbfrH4rEo=; b=kl/qMaufAHX0Aj3ISzqA7jOkcO+Y0dE3nEYAYueCnw4iv
+ LGMdKo7w3kEVTPMECnMy3YKAowjqL3Y9UbjroRtPZpA7pSgfHFpuL3Og15Ir0GZF
+ 1TraSapAT5+eg4jEZqw+kK/HfgCX3ZG/DqtU+vTYKzdWnOZKXMZB/UmUuPqS4oTO
+ G8UrZmvcOlIkpFoGDBDiGIRya3q/evAkx/tE+3G4cUMAH3HhQJDb4ju8tS7MplmV
+ DacUreoY2MDrKidOmPkeLkSDOKynA7kJHoXgjA+gzt1aqwvu1IkUDI3J+1EeDqBA
+ QrOktQ7mbOYp276e0SHAKoIB62MoWTmdIfrZJhMMA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48057qty3k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Jul 2025 15:02:10 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 56LETBOp010340; Mon, 21 Jul 2025 15:02:09 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4801t85s01-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Jul 2025 15:02:09 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56LF29Bg036816;
+ Mon, 21 Jul 2025 15:02:09 GMT
+Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
+ (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.252.67])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 4801t85rxk-1; Mon, 21 Jul 2025 15:02:09 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: jonah.palmer@oracle.com, eperezma@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ terrynini38514@gmail.com
+Subject: [PATCH] virtio: fix off-by-one and invalid access in
+ virtqueue_ordered_fill
+Date: Mon, 21 Jul 2025 15:02:08 +0000
+Message-ID: <20250721150208.2409779-1-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 53A102115F
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_04,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507210134
+X-Authority-Analysis: v=2.4 cv=MNRgmNZl c=1 sm=1 tr=0 ts=687e5673 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=Wb1JkmetP80A:10 a=pGLkceISAAAA:8 a=yPCof4ZbAAAA:8 a=djd2ks-o-hz2YHr8Um8A:9
+X-Proofpoint-ORIG-GUID: -ytwO018jgkc_LIkph46ln8GxIx_a8Lx
+X-Proofpoint-GUID: -ytwO018jgkc_LIkph46ln8GxIx_a8Lx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDEzMyBTYWx0ZWRfX5GE3eFcGOCud
+ SWQkF/lrLUpN8wuAN6n6E9rfF4DjSjdbuV7lJerGYkaO4BPZKphuJSb+YaQSpJJxeO0/V47JtXU
+ QF85zDT6gly+q2niIEXVxzk+E1vCuen6lESsUb8dw3HpnLajykZc0RRxdyoEWMXfyXW1nOfFsau
+ OI6TIAmnoU1quG//mPpgjnHoORmmocilhccV6urr50fzzOL2Olyv3YcIgfQ6JW8pEhiWOgmFjab
+ X2otGreofdI+y3w20f6CLFHNqceWjgBrPEBXz+Dp/E/wtdj4+DA2Y5IiCTXKit2W6TzK1mJ10bl
+ VQDH9HeGg5a/CqiWQwwklRO6BwOK3fcJBLoLV4f85Hg/JSF3tYsx/CRv2mSgryIwUYfbZwRRy41
+ I/CHz+qTJISbdJCoR8sgey7htmTUoeSMMQYrzseEt/ZcddbC1yazjNH2h8sQIkTn5t/eqhlf
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,73 +112,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Commit b44135daa372 introduced virtqueue_ordered_fill for
+VIRTIO_F_IN_ORDER support but had a few issues:
 
-> TL:DR: GNUTLS is liable to crash QEMU when live migration is run
-> with TLS enabled and a return path channel is present, if approx
-> 64 GB of data is transferred. This is easily triggered in a 16 GB
-> VM with 4 CPUs, by running 'stress-ng --vm 4 --vm-bytes 80%' to
-> prevent convergance until 64 GB of RAM has been copied. Then
-> triggering post-copy switchover, or removing the stress workload
-> to allow completion, will crash it.
->
-> The only live migration scenario that should avoid this danger
-> is multifd, since the high volume data transfers are handled in
-> dedicated TCP connections which are unidirectional. The main
-> bi-directionl TCP connection is only for co-ordination purposes
->
-> This patch implements a workaround that will prevent future QEMU
-> versions from triggering the crash.
->
-> The only way to avoid the crash with *existing* running QEMU
-> processes is to change the TLS cipher priority string to avoid
-> use of AES with TLS 1.3. This can be done with the 'priority'
-> field in the 'tls-creds-x509' object.eg
->
->   -object tls-creds-x509,id=3Dtls0,priority=3DNORMAL:-AES-256-GCM:-AES-12=
-8-GCM:-AES-128-CCM
->
-> which should force the use of CHACHA20-POLY1305 which does not
-> require TLS re-keying after 16 million sent records (64 GB of
-> migration data).
->
->   https://gitlab.com/qemu-project/qemu/-/issues/1937
->
-> On RHEL/Fedora distros you can also use the system wide crypto
-> priorities to override this from the migration *target* host
-> by creating /etc/crypto-policies/local.d/gnutls-qemu.config
-> containing
->
->   QEMU=3DNONE:+ECDHE-RSA:+ECDHE-ECDSA:+RSA:+DHE-RSA:+GROUP-X25519:+GROUP-=
-X448:+GROUP-SECP256R1:+GROUP-SECP384R1:+GROUP-SECP521R1:+GROUP-FF
->
-> and running 'update-crypto-policies'. I recommend the QEMU
-> level 'tls-creds-x509' workaround though, which new libvirt
-> patches can soon do:
->
->   https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/=
-LX5KMIUFZSP5DPUXKJDFYBZI5TIE3E5N/
->
-> Daniel P. Berrang=C3=A9 (4):
->   crypto: implement workaround for GNUTLS thread safety problems
->   io: add support for activating TLS thread safety workaround
->   migration: activate TLS thread safety workaround
->   crypto: add tracing & warning about GNUTLS countermeasures
->
->  crypto/tlssession.c           | 99 +++++++++++++++++++++++++++++++++--
->  crypto/trace-events           |  2 +
->  include/crypto/tlssession.h   | 14 +++++
->  include/io/channel.h          |  1 +
->  io/channel-tls.c              |  5 ++
->  meson.build                   |  9 ++++
->  meson_options.txt             |  2 +
->  migration/tls.c               |  9 ++++
->  scripts/meson-buildoptions.sh |  5 ++
->  9 files changed, 143 insertions(+), 3 deletions(-)
+* Conditional while loop used 'steps <= max_steps' but should've been
+  'steps < max_steps' since reaching steps == max_steps would indicate
+  that we didn't find an element, which is an error. Without this
+  change, the code would attempt to read invalid data at an index
+  outside of our search range.
 
-Hi, thank you for getting to the bottom of this.
+* Incremented 'steps' using the next chain's ndescs instead of the
+  current one.
 
-Do you think it would be too cumbersome to add a test for this
-somewhere? So we don't regress the workaround but also so the test tells
-us whether GNUTLS is fixed.
+This patch corrects the loop bounds and synchronizes 'steps' and index
+increments.
+
+We also add a defensive sanity check against malicious or invalid
+descriptor counts to avoid a potential infinite loop and DoS.
+
+Fixes: b44135daa372 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
+Reported-by: terrynini <terrynini38514@gmail.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/virtio/virtio.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 82a285a31d..cc1c072cf7 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -938,18 +938,18 @@ static void virtqueue_packed_fill(VirtQueue *vq, const VirtQueueElement *elem,
+ static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+                                    unsigned int len)
+ {
+-    unsigned int i, steps, max_steps;
++    unsigned int i, steps, max_steps, ndescs;
+ 
+     i = vq->used_idx % vq->vring.num;
+     steps = 0;
+     /*
+-     * We shouldn't need to increase 'i' by more than the distance
+-     * between used_idx and last_avail_idx.
++     * We shouldn't need to increase 'i' by more than or equal to
++     * the distance between used_idx and last_avail_idx (max_steps).
+      */
+     max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
+ 
+     /* Search for element in vq->used_elems */
+-    while (steps <= max_steps) {
++    while (steps < max_steps) {
+         /* Found element, set length and mark as filled */
+         if (vq->used_elems[i].index == elem->index) {
+             vq->used_elems[i].len = len;
+@@ -957,8 +957,18 @@ static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+             break;
+         }
+ 
+-        i += vq->used_elems[i].ndescs;
+-        steps += vq->used_elems[i].ndescs;
++        ndescs = vq->used_elems[i].ndescs;
++
++        /* Defensive sanity check */
++        if (unlikely(ndescs == 0 || ndescs > vq->vring.num)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: %s invalid ndescs %u at position %u\n",
++                          __func__, vq->vdev->name, ndescs, i);
++            return;
++        }
++
++        i += ndescs;
++        steps += ndescs;
+ 
+         if (i >= vq->vring.num) {
+             i -= vq->vring.num;
+-- 
+2.47.1
+
 
