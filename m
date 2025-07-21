@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B54C83F25
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91611C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udqYc-00027G-CK; Mon, 21 Jul 2025 09:27:54 -0400
+	id 1udqYo-0006FG-Hn; Mon, 21 Jul 2025 09:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqY9-00008Q-36
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:38 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1udqYI-0000Cs-1j
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:42 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqY6-0005HG-Os
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:24 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3a536ecbf6fso2532543f8f.2
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:22 -0700 (PDT)
+ id 1udqYD-0005Ik-R3
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:32 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4561ca74829so47954895e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753104441; x=1753709241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753104448; x=1753709248; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lZRW/Th0xabms8q7W0G10Em2Wy3GHDA1PbTBnv9Ysvg=;
- b=qnDAoPzmy+ZbeB4jt/pQtGeE0PRQ6rjL3/rTinVyB4VH5jXf5A8NHiU24gzPnFv12j
- G/9KFVh/re3Al8ZETIAQL27mVrj1DbLH9Dxe6RfXmlCwYlT+08vgANPjC1Oima2m3sHN
- 9Hw1NqKG7EO4MS7SfDkfW68UynYjLrduoA/zhk3Z8kfeLlWE+0BXj13Ca3DP4XIwwS/R
- Xs+EQ7Yp3jsBkNANgghgbFHr4iDLr7kK8rkB12w1yEaXq4pWe6+KDsKvWx7mftNK6vXl
- jxCDfazyCQ4eFStMHG9Fr+TOn94qHOHEs7rOISn0BcogFlvEK5AJG/ibiQaIVxMCOhj6
- ocfw==
+ :reply-to; bh=wcyNJdNL/xiLYp3N57lKK8EPw8zPH/26wbvTC0tX4sQ=;
+ b=qFtt/uhCwYta1r6NkBJ9lnwbeyLfnU0M2w+3ieRvQhQCIxZi9PV+MQb8FTkQ9RGE/4
+ 6hlVd2ktD2t9aeA8Kao5+exRtAUkBRSb1Jln20aztrjrVm239k9ESmM9IgK9xmayHpR6
+ +x1GL62ndOegaa3U+FFsBQyKsPxyBGQO1ZrWZMGhOCpGI8ML2Yfgv1bzTOTdcsSj5zN0
+ snCzwBIyQ9IP7j63dRoG7PmWwHWMWDCUtEYC0wP/4D5P8LdebfBATVaQZWtwyG7eHm54
+ nbTyTq4zxoB4foi3ADlINgXgZiikc5dYsXunhio0vIyFbQnrlbQdNezDGmMEPkDbcuoG
+ cLNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753104441; x=1753709241;
+ d=1e100.net; s=20230601; t=1753104448; x=1753709248;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lZRW/Th0xabms8q7W0G10Em2Wy3GHDA1PbTBnv9Ysvg=;
- b=GS8C+u+Er98DeDHUjIpN9lf3eNderMaam4MXyE+zt8syj3iZ2DKkXuRp5Owhre4Y97
- 5I+soDAPrlu7gcdMaMr5LIHICSymr5BkSGjTFoqKpdxLlTGF7XNFvINR4ig5X2qOU5jy
- G7NXsiSxNVS5Qdm5RKrsmgUDU6rqnVL++XzBZZsL5Snz+81hWZF1TdaNjQnre3Yp5W4h
- 9lFYvHYeS7EDbZXn0KHzMSg5NGqtzm/kLu5SyvPnjIdBWnYYPKmChABZA5BBC9O62MRZ
- MEvwHUZ1/BEHSVsJsP0NDKoSDvIhHt2yxAnRzXquxpPFkhNRQj1wt0Jwe8EPJnUCqEMH
- 075A==
-X-Gm-Message-State: AOJu0YzeOJSrpWdzfG5Z88bn1BdJwLKD3cZfigs1BX96IH6q2iF7rGms
- Vp8q6rGIG446xKfU30YrD/GvkaPk7cL2sRxCLfCcEm6Mxhtu6QcPt323P8THkCd6lMWs+1qiUb3
- PDV4W
-X-Gm-Gg: ASbGncstkcEwV4mBTSwrrHMdxTfeMPsZaub2CwaLriP47giWkrxE1UqeEfWTFLjaYf5
- MXyW/QW9bZoDldlr7bii+PY5d6ZdyockuFptH8KKlAz1o8heR4NlZIHxqc07/4WqZ3dE4sjPVAz
- z/T+am5v6+mNp0d3gIzYGAQCXxlY6yHALRK3KV1MdNO56q5LBQtf2wJYLyauhycLyfmo3Tkxl6u
- K/yoQhJcnuu8kU4MiXjeYbhlt3uXXvL5V6glQmmSLR8Fw91P+aT7MsLBDT1nkIdGyZC+WDwzewG
- f7SqAjs/s301muF4eSLI9yV7cavZ0P87WTZsUuzlmRIPTCAd40lt3HXF5PexyWk4hBOlXsZzntf
- 9EWSfBW8bdMeFD05dzxLrzUuuS8l9
-X-Google-Smtp-Source: AGHT+IF/dkPhJZ8o+uUVPOF9mFfnWFLyopZg7FJnE9GKnaurGcM9bO9Pxaszb3DwzjqL61JSawcoXw==
-X-Received: by 2002:a5d:5f46:0:b0:3a6:d145:e2cc with SMTP id
- ffacd0b85a97d-3b613e66ef4mr12995791f8f.15.1753104440928; 
- Mon, 21 Jul 2025 06:27:20 -0700 (PDT)
+ bh=wcyNJdNL/xiLYp3N57lKK8EPw8zPH/26wbvTC0tX4sQ=;
+ b=pqwrynGn7HTKp+1kUk1psIVMqsZBOLWHec57m/0Zi6hoW/dN+bQe2HH+tcB/zoYU4o
+ Bc28Xo2ED2DptOCcFdpPEBwAFg7H9HbLNUsEiojHvdI0Ykjv5GJ9BTDphtNuP5n9nGCC
+ vTbaxH6yIdN2Oh9oYjpUx9iAif7mRu/gLrQkQ93C/COAPc75W0VQRO592qrOwcUnRPSS
+ rwQYIS2TrxcnMdoXWIlkyN4yXCqh1cVQbE2Ioef1gqbDnSiMdhZgyT9A7SV7lUD1q2Rr
+ gllswtwr0Q8basloXlaziWezU4p4aYB6n52ErCQL4Y+PpjpXsmrPC30pUgNM3x09lETV
+ bq5Q==
+X-Gm-Message-State: AOJu0Yy4ElFaP0LoZNvlFM6RNEXwr1gZdbNMddqMTE6O7n9UX0Gd5fbw
+ bfork7NHijF2th7cM2R9F9Vby7g6Rrb+Mll6MhU0hMLJ/gAIpFEo7zth9cV6eF5Pz5ugptZhbkw
+ bbVqw
+X-Gm-Gg: ASbGncuftkOrGHRiwAJGJhy+LWoPi+pHNNUfuaZwHYYUxwUBDtbAXZ107BRhDENDrw3
+ vtlUI/8fvHG6ToGBni26yxP2WFrZWCVbx2mLfGTG9QuayIV+yvkZI38S2t6nEyiiPZfpHGNX9nt
+ PiVDh8I+N03lgeySbLy9/hmTzmhPmcHEAfXojqs9M4hlnN5dwlmf5uxeNk6vqvlPjLjfqU6lBix
+ pHak1Vqo6wWVJSw+ycYboN2iSuAXGzks/Z/AFACvH+fGaR1a9QTTEQvhvyltzwqk8WM0EpkMq3P
+ sRJ3E3SvY83TCU8wAH5npUHHdtd5Yu1egg6/+ez6n2dbHInXFOLFKzQJWrCmS8dPpo527FmnjXF
+ 6SUbtRIJhI8K2SzTxi7Ms+2vvQSGG
+X-Google-Smtp-Source: AGHT+IHP4VR8Fl9G5OcuoYqYTditu/QIIF+7VYjnigXLB4tyhvo6jQD5bktNDB9047NHPdbV3qX9WA==
+X-Received: by 2002:a05:600d:10f:b0:456:1611:ce85 with SMTP id
+ 5b1f17b1804b1-4562e4f7a45mr98215905e9.21.1753104447721; 
+ Mon, 21 Jul 2025 06:27:27 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.20
+ ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 06:27:20 -0700 (PDT)
+ Mon, 21 Jul 2025 06:27:26 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/20] hvf: arm: Remove $pc from trace_hvf_data_abort()
-Date: Mon, 21 Jul 2025 14:26:58 +0100
-Message-ID: <20250721132718.2835729-2-peter.maydell@linaro.org>
+Subject: [PULL 08/20] target/arm: Add BFADD, BFSUB, BFMUL (unpredicated)
+Date: Mon, 21 Jul 2025 14:27:05 +0100
+Message-ID: <20250721132718.2835729-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250721132718.2835729-1-peter.maydell@linaro.org>
 References: <20250721132718.2835729-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zenghui Yu <zenghui.yu@linux.dev>
+FEAT_SVE_B16B16 adds bfloat16 versions of the SVE floating point
+(unpredicated) instructions, which are encoded via sz==0b00.
 
-We don't synchronize vcpu registers from the hardware accelerator (e.g., by
-cpu_synchronize_state()) in the Dabort handler, so env->pc points to the
-instruction which has nothing to do with the Dabort at all.
-
-And it doesn't seem to make much sense to log PC in every Dabort handler,
-let's just remove it from this trace event.
-
-Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
-Message-id: 20250713154719.4248-1-zenghui.yu@linux.dev
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 7b1613a1020d2942 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250718173032.2498900-2-peter.maydell@linaro.org
 ---
- target/arm/hvf/hvf.c        | 2 +-
- target/arm/hvf/trace-events | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/arm/tcg/helper.h        | 3 +++
+ target/arm/tcg/translate-sve.c | 6 +++++-
+ target/arm/tcg/vec_helper.c    | 3 +++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index c9cfcdc08bb..8f93e42b34b 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2005,7 +2005,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-         uint32_t cm = (syndrome >> 8) & 0x1;
-         uint64_t val = 0;
+diff --git a/target/arm/tcg/helper.h b/target/arm/tcg/helper.h
+index 0a006d95142..d9ca5b7c56e 100644
+--- a/target/arm/tcg/helper.h
++++ b/target/arm/tcg/helper.h
+@@ -728,16 +728,19 @@ DEF_HELPER_FLAGS_4(gvec_fclt0_h, TCG_CALL_NO_RWG, void, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_4(gvec_fclt0_s, TCG_CALL_NO_RWG, void, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_4(gvec_fclt0_d, TCG_CALL_NO_RWG, void, ptr, ptr, fpst, i32)
  
--        trace_hvf_data_abort(env->pc, hvf_exit->exception.virtual_address,
-+        trace_hvf_data_abort(hvf_exit->exception.virtual_address,
-                              hvf_exit->exception.physical_address, isv,
-                              iswrite, s1ptw, len, srt);
++DEF_HELPER_FLAGS_5(gvec_fadd_b16, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fadd_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fadd_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fadd_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_bfadd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
  
-diff --git a/target/arm/hvf/trace-events b/target/arm/hvf/trace-events
-index b49746f28d1..b29a995f3d3 100644
---- a/target/arm/hvf/trace-events
-+++ b/target/arm/hvf/trace-events
-@@ -2,7 +2,7 @@ hvf_unhandled_sysreg_read(uint64_t pc, uint32_t reg, uint32_t op0, uint32_t op1,
- hvf_unhandled_sysreg_write(uint64_t pc, uint32_t reg, uint32_t op0, uint32_t op1, uint32_t crn, uint32_t crm, uint32_t op2) "unhandled sysreg write at pc=0x%"PRIx64": 0x%08x (op0=%d op1=%d crn=%d crm=%d op2=%d)"
- hvf_inject_fiq(void) "injecting FIQ"
- hvf_inject_irq(void) "injecting IRQ"
--hvf_data_abort(uint64_t pc, uint64_t va, uint64_t pa, bool isv, bool iswrite, bool s1ptw, uint32_t len, uint32_t srt) "data abort: [pc=0x%"PRIx64" va=0x%016"PRIx64" pa=0x%016"PRIx64" isv=%d iswrite=%d s1ptw=%d len=%d srt=%d]"
-+hvf_data_abort(uint64_t va, uint64_t pa, bool isv, bool iswrite, bool s1ptw, uint32_t len, uint32_t srt) "data abort: [va=0x%016"PRIx64" pa=0x%016"PRIx64" isv=%d iswrite=%d s1ptw=%d len=%d srt=%d]"
- hvf_sysreg_read(uint32_t reg, uint32_t op0, uint32_t op1, uint32_t crn, uint32_t crm, uint32_t op2, uint64_t val) "sysreg read 0x%08x (op0=%d op1=%d crn=%d crm=%d op2=%d) = 0x%016"PRIx64
- hvf_sysreg_write(uint32_t reg, uint32_t op0, uint32_t op1, uint32_t crn, uint32_t crm, uint32_t op2, uint64_t val) "sysreg write 0x%08x (op0=%d op1=%d crn=%d crm=%d op2=%d, val=0x%016"PRIx64")"
- hvf_unknown_hvc(uint64_t pc, uint64_t x0) "pc=0x%"PRIx64" unknown HVC! 0x%016"PRIx64
++DEF_HELPER_FLAGS_5(gvec_fsub_b16, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fsub_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fsub_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fsub_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_bfsub, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ 
++DEF_HELPER_FLAGS_5(gvec_fmul_b16, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmul_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmul_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmul_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, fpst, i32)
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 7b575734fde..f00cccf1548 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -190,6 +190,10 @@ static bool gen_gvec_fpst_zzz(DisasContext *s, gen_helper_gvec_3_ptr *fn,
+ static bool gen_gvec_fpst_arg_zzz(DisasContext *s, gen_helper_gvec_3_ptr *fn,
+                                   arg_rrr_esz *a, int data)
+ {
++    /* These insns use MO_8 to encode BFloat16 */
++    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
++        return false;
++    }
+     return gen_gvec_fpst_zzz(s, fn, a->rd, a->rn, a->rm, data,
+                              a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
+ }
+@@ -4146,7 +4150,7 @@ static bool trans_FADDA(DisasContext *s, arg_rprr_esz *a)
+ 
+ #define DO_FP3(NAME, name) \
+     static gen_helper_gvec_3_ptr * const name##_fns[4] = {          \
+-        NULL, gen_helper_gvec_##name##_h,                           \
++        gen_helper_gvec_##name##_b16, gen_helper_gvec_##name##_h,   \
+         gen_helper_gvec_##name##_s, gen_helper_gvec_##name##_d      \
+     };                                                              \
+     TRANS_FEAT(NAME, aa64_sve, gen_gvec_fpst_arg_zzz, name##_fns[a->esz], a, 0)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index bae6165b505..76a9ab0da39 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -1467,16 +1467,19 @@ void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
+     clear_tail(d, oprsz, simd_maxsz(desc));                                \
+ }
+ 
++DO_3OP(gvec_fadd_b16, bfloat16_add, float16)
+ DO_3OP(gvec_fadd_h, float16_add, float16)
+ DO_3OP(gvec_fadd_s, float32_add, float32)
+ DO_3OP(gvec_fadd_d, float64_add, float64)
+ DO_3OP(gvec_bfadd, bfloat16_add, bfloat16)
+ 
++DO_3OP(gvec_fsub_b16, bfloat16_sub, float16)
+ DO_3OP(gvec_fsub_h, float16_sub, float16)
+ DO_3OP(gvec_fsub_s, float32_sub, float32)
+ DO_3OP(gvec_fsub_d, float64_sub, float64)
+ DO_3OP(gvec_bfsub, bfloat16_sub, bfloat16)
+ 
++DO_3OP(gvec_fmul_b16, bfloat16_mul, float16)
+ DO_3OP(gvec_fmul_h, float16_mul, float16)
+ DO_3OP(gvec_fmul_s, float32_mul, float32)
+ DO_3OP(gvec_fmul_d, float64_mul, float64)
 -- 
 2.43.0
 
