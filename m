@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49480C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D309C83F25
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 13:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udqYd-0002VO-0o; Mon, 21 Jul 2025 09:27:55 -0400
+	id 1udqYm-0005bt-2e; Mon, 21 Jul 2025 09:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqYM-0000Kd-7h
+ id 1udqYE-0000BC-LO
  for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:42 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1udqYI-0005K6-Pi
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:37 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a4fb9c2436so2478847f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:33 -0700 (PDT)
+ id 1udqYC-0005IE-6D
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 09:27:29 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4560d176f97so46908965e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 06:27:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753104452; x=1753709252; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753104445; x=1753709245; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xNYbFXcxNOECXlHwPuWcDJo9Biyy1bfORUt4orh1o4E=;
- b=l4vk+cEsEqIZ2S457k7FBkttRUnM2EU6w4YQaDBdOG80OHxV+WqlFoIY+fG0yIfoM3
- iWkqQVRUWtZn0sK5Wz/wFDhH1FDTvlg1FlM9NVlTEEgNi45Hn5E286g7pFTbU9tZeIKG
- CZKk7E15wWNtf5r7/9XWimvIlwYZe+GD2ZAR68g40TtShmP5XKei19n4HYyxPpqDG0RC
- Unsuuh6HX1RZHWdDa19WNWBHWU7NNknAhV1eSGiS4edeuqYabUW5/zWUs5oCnzXG7Te6
- mEcqqi94Gtc84vWeYVeMuWU+3V11A9Te/O0qvg6NKSskLEASKkFCI0cZi99b7WcZHtUT
- w++w==
+ :reply-to; bh=KBSm5ugZ/xrMuFfTDLrUi2oSc650VnWgZyUG+JvhWFA=;
+ b=eNOQtYNQ2TPmeCWYRDtdqw2ssblrm+P8uI8+C/E2CtoS9lHwSS6zSBXDvSpRo9cbpu
+ eQzu1w328EmHXShlTN+XLuLQ/rB1guhYxHl0lcnrwTWQ+0c02gb5A4Y2XweH6GDsxeG9
+ K9shmHzP8ezNgG91XJ7roVEvG+SNusxAlRThfZmGQb2wWyLZvdeTCXqhpfOsULAEE9Ls
+ XTIUAlmN/uD2TMycJcoMogzZxPfwOXR/k03H1+pfaiIhJd2k1ViTVsgeHQ9XHkK8lXTA
+ m0dOft/TF3CMhO6Adz6PjtGTFc5zs1JhI9RL4QL80D53vJ8sPZwDFMvT3qh5j65IGju9
+ 9WoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753104452; x=1753709252;
+ d=1e100.net; s=20230601; t=1753104445; x=1753709245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xNYbFXcxNOECXlHwPuWcDJo9Biyy1bfORUt4orh1o4E=;
- b=nK2LdcssvORgYnMCtEIN2EGEXS/aUBUF56dY/GGUPjJs2lsyqIh629ueT4uMM8XKbC
- TgCosyHHCkAemYGcI7yIZfd4KVTTlq538VdQmtbAAQIu7SG+oCQUiFHsfSIC3N01xGV8
- ksrU+yta5rjZlDZwVZOb1y3oQFB9wfSfPNhWqaquAY7mNRc6QqDQS3mrJRcrrLWtIvKQ
- e3zeqfCAbuWh4Z08uOEggFJd+ZrSFWOqsyjwBW/oTKQinF6C7lP3TXnCq8fCSoFUaI0u
- Qzo6ZZ8V4fC3XrKDqFXSkKHM5+/d9ZjHSwpvqf8LvsFgoMYElvN73ADm5jh60FpdN35v
- j55g==
-X-Gm-Message-State: AOJu0YwR8dT9Zm9izOlCTe8mpkTTSUXNOvGYxN/lLpSWz6mr5Y3QEcY1
- Z2lb/zHOejJGEqrABN/8B5GoljjBTvtkaJIXi7IIYgqeclve50zzTYhaWW5phrLaysSzgEO/Bdf
- uvaJP
-X-Gm-Gg: ASbGncsNiOX9A+VTahoBjcEyG6uKDryFjsVJMXHq8FbXVsBT0r4aXjVvmgf3cbq70jn
- 8v02u+1aSmNNNB6nML7CdFmJEQr2vubDDsEK2uJC6nk/LAWRq8udQnrLccGt1VeUmJCjQSEmkja
- NQuJSopiWcUHtPqyN8o/NVSG8E6RbtKKlSUGGHeqb85fhVvheejSuDG6HyRW0TqR5cYuiATbcbc
- UWWwynzzyTwkKaqP3NowuIGbY8wntafVb00ucR1AToJsgQmz0/6O94ddLWO30QdiMmDXf2cQe37
- YggETOH6qdEX0lYRl7iVc5ZaWyluAaz8hfG7jlQzyRVl3ctz8zl9ckx9rwsJFfhBswnDbDqHhbq
- CKeDfozymj0jC8rDMkHP46IFrI/Qf
-X-Google-Smtp-Source: AGHT+IFvh7fryo/JjaR8I7d0aTCBNorihQ1DcVZwbS1BiBbkA9cfddWhIYnmvArW5qkHNH5eY+ekMA==
-X-Received: by 2002:a05:6000:4716:b0:3b4:98f6:dd77 with SMTP id
- ffacd0b85a97d-3b61b217fd7mr10000732f8f.36.1753104452335; 
- Mon, 21 Jul 2025 06:27:32 -0700 (PDT)
+ bh=KBSm5ugZ/xrMuFfTDLrUi2oSc650VnWgZyUG+JvhWFA=;
+ b=rYhOjymzoAsvZL/inJnHFzBdF+IWKCCvBy0en5GSECkw8Jej6bEHBncUeXWLzfrMvF
+ xHBjKScoPaF3w5Q/RHiiKLcPhIx9poetp9F1jkg9QiGsGP9uvQ1KfdGIbge/nE/EzeQ3
+ z8bg/nH20jz5nYKGOfN7UIPBM8JdV7niIp1ac97ZziUedSSr1v0YKQ8A5/PyGaBPyEsR
+ 5A4iprNckXcx6XtJKtCN+6gpRRFsNxQieymja9I17p/FCdBbGDqhR1I/SSRWyI7HtPSj
+ Zrzgpf9bLjw6ysm2/Npiruj6Y+vhs4ZDxH8wWKumwjIL+p0woi3zqsAEFR7SDlsL9Heb
+ Dn8w==
+X-Gm-Message-State: AOJu0YyN4lFEQ6YpsgqPZPC80IcBFvdx5pg/YhB4+zhZTgrYSWYdRwpv
+ tifmxyhhnDJMotrqBamoG3fo7ABXMxBI822e2Fd5Z1bZxM5pUZLQyNQ0h3gTTulJBxTE30MRYkK
+ bs00N
+X-Gm-Gg: ASbGncsYTL3iUpI+LOTcQ3IwQOldrkKdedjbl0GtXEUOSviJJiMznsCuwp8rc4I5qB+
+ rJFbi+YKv8yyPC/DDemfSLw3BCg6y11eOtakMNlYzj7nw8XOYmEM0aTEQypiwlLlae+/4kAqaPV
+ cbBIlXUhdswUFIn6QGlpUTPKU1FZcNHnQR85jsZZQz2GonKPxLLm3ym57SMV8P5n/id2uehYdJv
+ NIbvQc5Qbjxz73KcRW9EdG0m5nXf7fsm6LfOi6m5GSxjsEYbksd1e0qcCUq972fk8DMzuhzEpt2
+ yDUhbdzVCZb5yL8vw41gt+G+q3eHHp1uOJMYhv1QF4M9z/1qZ6dZrKMuY/QbazgRMdI2ILA0nr6
+ z5amw2zPJ7rt+xUo7QdrFHI5laeHc
+X-Google-Smtp-Source: AGHT+IHJwPF4ohez1x5yFR1bFWaryY1M7C8ofGioTW/0PVshGhr54naD5p1u1AjswgRkpdRYaMkcFQ==
+X-Received: by 2002:a05:600c:4e8c:b0:456:1fd9:c8f0 with SMTP id
+ 5b1f17b1804b1-4562e32e669mr214834575e9.2.1753104445527; 
+ Mon, 21 Jul 2025 06:27:25 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.31
+ ffacd0b85a97d-3b61ca4c754sm10487946f8f.59.2025.07.21.06.27.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 06:27:31 -0700 (PDT)
+ Mon, 21 Jul 2025 06:27:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/20] target/arm: Add BFMLA, BFMLS (indexed)
-Date: Mon, 21 Jul 2025 14:27:10 +0100
-Message-ID: <20250721132718.2835729-14-peter.maydell@linaro.org>
+Subject: [PULL 06/20] hw/misc/max78000_aes: Comment Internal Key Storage
+Date: Mon, 21 Jul 2025 14:27:03 +0100
+Message-ID: <20250721132718.2835729-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250721132718.2835729-1-peter.maydell@linaro.org>
 References: <20250721132718.2835729-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,80 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_SVE_B16B16 adds bfloat16 versions of the FMLA and FMLS insns in
-the SVE floating-point multiply-add (indexed) insn group.  Implement
-these.
+From: Jackson Donaldson <jackson88044@gmail.com>
 
-Fixes: 7b1613a1020d2942 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
+Coverity Scan noted an unusual pattern in the
+MAX78000 aes device, with duplicated calls to
+set_decrypt. This commit adds a comment noting
+why the implementation is correct.
+
+Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+Message-id: 20250716002622.84685-1-jcksn@duck.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250718173032.2498900-7-peter.maydell@linaro.org
 ---
- target/arm/tcg/sve.decode      |  2 ++
- target/arm/tcg/translate-sve.c | 25 ++++++++++++++++---------
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ hw/misc/max78000_aes.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index a76f2236f43..a77b725c876 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1052,9 +1052,11 @@ FCMLA_zzxz      01100100 11 1 index:1 rm:4 0001 rot:2 rn:5 rd:5 \
- ### SVE FP Multiply-Add Indexed Group
+diff --git a/hw/misc/max78000_aes.c b/hw/misc/max78000_aes.c
+index 0bfb2f02b5b..d883ddd2b61 100644
+--- a/hw/misc/max78000_aes.c
++++ b/hw/misc/max78000_aes.c
+@@ -79,6 +79,12 @@ static void max78000_aes_do_crypto(Max78000AesState *s)
+         keydata += 8;
+     }
  
- # SVE floating-point multiply-add (indexed)
-+FMLA_zzxz       01100100 0. 1 ..... 000010 ..... .....  @rrxr_3 esz=0
- FMLA_zzxz       01100100 0. 1 ..... 000000 ..... .....  @rrxr_3 esz=1
- FMLA_zzxz       01100100 10 1 ..... 000000 ..... .....  @rrxr_2 esz=2
- FMLA_zzxz       01100100 11 1 ..... 000000 ..... .....  @rrxr_1 esz=3
-+FMLS_zzxz       01100100 0. 1 ..... 000011 ..... .....  @rrxr_3 esz=0
- FMLS_zzxz       01100100 0. 1 ..... 000001 ..... .....  @rrxr_3 esz=1
- FMLS_zzxz       01100100 10 1 ..... 000001 ..... .....  @rrxr_2 esz=2
- FMLS_zzxz       01100100 11 1 ..... 000001 ..... .....  @rrxr_1 esz=3
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 37ecbc2b7c0..fc76624b5a1 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3883,24 +3883,31 @@ DO_SVE2_RRXR_ROT(CDOT_zzxw_d, gen_helper_sve2_cdot_idx_d)
-  *** SVE Floating Point Multiply-Add Indexed Group
-  */
- 
-+static bool do_fmla_zzxz(DisasContext *s, arg_rrxr_esz *a,
-+                         gen_helper_gvec_4_ptr *fn)
-+{
-+    /* These insns use MO_8 to encode BFloat16 */
-+    if (a->esz == MO_8 && !dc_isar_feature(aa64_sve_b16b16, s)) {
-+        return false;
-+    }
-+    return gen_gvec_fpst_zzzz(s, fn, a->rd, a->rn, a->rm, a->ra, a->index,
-+                              a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
-+}
-+
- static gen_helper_gvec_4_ptr * const fmla_idx_fns[4] = {
--    NULL,                       gen_helper_gvec_fmla_idx_h,
-+    gen_helper_gvec_bfmla_idx, gen_helper_gvec_fmla_idx_h,
-     gen_helper_gvec_fmla_idx_s, gen_helper_gvec_fmla_idx_d
- };
--TRANS_FEAT(FMLA_zzxz, aa64_sve, gen_gvec_fpst_zzzz,
--           fmla_idx_fns[a->esz], a->rd, a->rn, a->rm, a->ra, a->index,
--           a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
-+TRANS_FEAT(FMLA_zzxz, aa64_sve, do_fmla_zzxz, a, fmla_idx_fns[a->esz])
- 
- static gen_helper_gvec_4_ptr * const fmls_idx_fns[4][2] = {
--    { NULL, NULL },
-+    { gen_helper_gvec_bfmls_idx, gen_helper_gvec_ah_bfmls_idx },
-     { gen_helper_gvec_fmls_idx_h, gen_helper_gvec_ah_fmls_idx_h },
-     { gen_helper_gvec_fmls_idx_s, gen_helper_gvec_ah_fmls_idx_s },
-     { gen_helper_gvec_fmls_idx_d, gen_helper_gvec_ah_fmls_idx_d },
- };
--TRANS_FEAT(FMLS_zzxz, aa64_sve, gen_gvec_fpst_zzzz,
--           fmls_idx_fns[a->esz][s->fpcr_ah],
--           a->rd, a->rn, a->rm, a->ra, a->index,
--           a->esz == MO_16 ? FPST_A64_F16 : FPST_A64)
-+TRANS_FEAT(FMLS_zzxz, aa64_sve, do_fmla_zzxz, a,
-+           fmls_idx_fns[a->esz][s->fpcr_ah])
- 
- /*
-  *** SVE Floating Point Multiply Indexed Group
++    /*
++     * The MAX78000 AES engine stores an internal key, which it uses only
++     * for decryption. This results in the slighly odd looking pairs of
++     * set_encrypt and set_decrypt calls below; s->internal_key is
++     * being stored for later use in both cases.
++     */
+     AES_KEY key;
+     if ((s->ctrl & TYPE) == 0) {
+         AES_set_encrypt_key(keydata, keylen, &key);
 -- 
 2.43.0
 
