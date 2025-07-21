@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD69C83F1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEE5C83F1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Jul 2025 16:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1udtJs-000870-PI; Mon, 21 Jul 2025 12:24:54 -0400
+	id 1udtK4-0000Wk-1m; Mon, 21 Jul 2025 12:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIn-0004kC-1z
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:48 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtJ1-0005fU-OF
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIY-0001UG-Gb
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1udtIy-0001b7-LT
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 12:23:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753115002;
+ s=mimecast20190719; t=1753115035;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jnnN5+GtdpuH7z4EFdFOk5KedjDZ6TIb4J90RWfBUp0=;
- b=jWEVvqAWW8G4PwLgkszHM3rNJizUHaxr6LTMBL4OgVbRxNVwWmAHTaqoRFECwWCS+mxrnK
- 0WYfjxWWHt1+pTzES8HM/Xr7f1p08VIzH5RkwQnynqeSdPuMG9A83/bDNTH3NU/SWRTz9D
- iOc4TTqaItlLvBJ9+W2IMeNdKuHNARY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UXj8l7+pXf3A3kuFGI9aHSWMoaqzu3lAyL6p7MvggMc=;
+ b=Oh1yFiF7+4cizlAc94EloCM4yaBD8bC1RdsQCJlFoojegdn3GFMBv0UX3YofX2OCG5Lymt
+ uJzRUm0fZt1fb1X9lIyqtWgwQsVqAkvhPxTR21K3+TnO2P8ObknvDZQa4rmR6m/ntP+eEn
+ GvQs6oesKqj3vzgqxLfrEyeBg9/a6Qg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-216--czOhk3vN5-2bbkpgk-row-1; Mon,
- 21 Jul 2025 12:23:16 -0400
-X-MC-Unique: -czOhk3vN5-2bbkpgk-row-1
-X-Mimecast-MFC-AGG-ID: -czOhk3vN5-2bbkpgk-row_1753114995
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-lvBA7Z0eOBm8rwaCm-FKSw-1; Mon,
+ 21 Jul 2025 12:23:48 -0400
+X-MC-Unique: lvBA7Z0eOBm8rwaCm-FKSw-1
+X-Mimecast-MFC-AGG-ID: lvBA7Z0eOBm8rwaCm-FKSw_1753115027
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83B631800D88; Mon, 21 Jul 2025 16:23:15 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D7AB1800447; Mon, 21 Jul 2025 16:23:47 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.19])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A7F1195608D; Mon, 21 Jul 2025 16:23:12 +0000 (UTC)
+ id BBEF8195608D; Mon, 21 Jul 2025 16:23:44 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.ibm.com>,
  Gautam Menghani <gautam@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/50] ppc/xive: tctx_notify should clear the precluded
- interrupt
-Date: Mon, 21 Jul 2025 18:21:56 +0200
-Message-ID: <20250721162233.686837-14-clg@redhat.com>
+Subject: [PULL 24/50] ppc/xive2: Improve pool regs variable name
+Date: Mon, 21 Jul 2025 18:22:07 +0200
+Message-ID: <20250721162233.686837-25-clg@redhat.com>
 In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
 References: <20250721162233.686837-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,37 +86,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-If CPPR is lowered to preclude the pending interrupt, NSR should be
-cleared and the qemu_irq should be lowered. This avoids some cases
-of supurious interrupts.
+Change pregs to pool_regs, for clarity.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+[npiggin: split from larger patch]
+
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-14-npiggin@gmail.com
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-25-npiggin@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/intc/xive.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/intc/xive2.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index bc829bebe9d0..a0a60a24f510 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -110,6 +110,9 @@ void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level)
-                                regs[TM_IPB], alt_regs[TM_PIPR],
-                                alt_regs[TM_CPPR], alt_regs[TM_NSR]);
-         qemu_irq_raise(xive_tctx_output(tctx, ring));
-+    } else {
-+        alt_regs[TM_NSR] = 0;
-+        qemu_irq_lower(xive_tctx_output(tctx, ring));
-     }
- }
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index f810e716dee3..1f4713dabeb1 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -1044,13 +1044,12 @@ again:
  
+     /* PHYS updates also depend on POOL values */
+     if (ring == TM_QW3_HV_PHYS) {
+-        uint8_t *pregs = &tctx->regs[TM_QW2_HV_POOL];
++        uint8_t *pool_regs = &tctx->regs[TM_QW2_HV_POOL];
+ 
+         /* POOL values only matter if POOL ctx is valid */
+-        if (pregs[TM_WORD2] & 0x80) {
+-
+-            uint8_t pool_pipr = xive_ipb_to_pipr(pregs[TM_IPB]);
+-            uint8_t pool_lsmfb = pregs[TM_LSMFB];
++        if (pool_regs[TM_WORD2] & 0x80) {
++            uint8_t pool_pipr = xive_ipb_to_pipr(pool_regs[TM_IPB]);
++            uint8_t pool_lsmfb = pool_regs[TM_LSMFB];
+ 
+             /*
+              * Determine highest priority interrupt and
+@@ -1064,7 +1063,7 @@ again:
+             }
+ 
+             /* Values needed for group priority calculation */
+-            if (pregs[TM_LGS] && (pool_lsmfb < lsmfb_min)) {
++            if (pool_regs[TM_LGS] && (pool_lsmfb < lsmfb_min)) {
+                 group_enabled = true;
+                 lsmfb_min = pool_lsmfb;
+                 if (lsmfb_min < pipr_min) {
 -- 
 2.50.1
 
