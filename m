@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E8FC83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 05:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B75FC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 06:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue5w8-0003YY-Dz; Tue, 22 Jul 2025 01:53:12 -0400
+	id 1ue689-0006vs-G4; Tue, 22 Jul 2025 02:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue5vy-0003RX-Ep
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 01:53:04 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue683-0006tb-DS
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 02:05:32 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue5vt-0007Wt-Ab
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 01:52:59 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a57ae5cb17so2445333f8f.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 22:52:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue681-0004H9-JF
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 02:05:31 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4550709f2c1so38069925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 23:05:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753163575; x=1753768375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753164327; x=1753769127; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4alBfDXtH0Yd3e2TM3R3sXaqbkUqWpnXF3Fc/WNWPUk=;
- b=KWHOfOSKOk59y/LDnGJCT/qcSZk0JmruwKDZ+MysTD2o/60UA6A4/rB6RELTrHFYe6
- ISQgvnCvkMgqSqMBOTLZcZc7RPHUCEEZcn0X6L+q9ENf/ztj84RcHaoV1F8FiwCIlYgV
- 6KPD8YyWbrOBXMKZFaCnGTHsMf5iAgfmTDyZRYcK1iSd9xVCcV71vXV3syEyeIA7y+xR
- mTFZngZZJ2Sc+kjtDC6qiZO2/GIyMSDRpw6PdcStxVn0L4a8TQDZKNoTTUjegcy5LkW5
- EAHTDZ2C+HUUlIbJWIdtNmtFxYIcTWRbPxChnq3KofvgjuOEBGvpEZ8LxX4OxBPnQsnv
- URBw==
+ bh=VukedWE3pKkNRi71uDKIyCcwPl05rQvRwWCGyjroZSY=;
+ b=dg5tJknCjXpEgyO/WiXAwMxdzyoFbl9wuUr6ZvkgWnoNhSc+os11xQ1YlFuFBU08D8
+ fmlrI1L6HmeahUjCBTVCC8xoJWrZHf8qACEhrZRP0ZTYbqe2jQmm+AbGzlX+MJmgmfeT
+ 7dvgtQnWZ9EKqBuCUUiCC6GJY9a++CFCplHIxbJAahhZ2GtFZtH9lhryExkfdvqYu9Ri
+ UK/QDexnRFEGdl68Uni4+0ZPQYGESVOQC7IVERC9pvRKUzHkvkjw+GErxq05xwggL/gX
+ GgQWAjHSkpzLQGfvfL/lk22s+oLdeWHwTj4Ha1p+qUdLQY0ENdYjyw76aQcVt81ehNYl
+ NEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753163575; x=1753768375;
+ d=1e100.net; s=20230601; t=1753164327; x=1753769127;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4alBfDXtH0Yd3e2TM3R3sXaqbkUqWpnXF3Fc/WNWPUk=;
- b=FsZBPq8m22xl1JyLN2S8vokBdwewayUAtRVn0Cal2lwFZcZN0pdhp2C34QT5xnVcT9
- 4F/sG5wfPxRCHuz3rD6l24FrTQIsNMnz44lyslye9LuwkBFGF07G6VGCuxukIGmquKMY
- c/0n3oROr7mYATl8VplxDxFOeSmIx9IlhLRGvj/xVx5QSsjzNyXNt1M7yzHkD8596+jz
- 13ICf8ncG60vCr3hhc7DGwCVHP553xu17yYV/9iWLbBCnY+VoXLfuvotfVHESZ0vb9Wd
- nyYYO9lEXUylGLXRNVSzKLU/QdjaLuZrxDJTnfvUFj0ccuPO31FYWrT1UoHbmcHpLa2Z
- 1TSA==
+ bh=VukedWE3pKkNRi71uDKIyCcwPl05rQvRwWCGyjroZSY=;
+ b=tvGt/M125ZLm8zkgwaQ5RW2DrLk+iyFy1p3wSV7cUUwXcPgIufyli6NuVM+gaOcg/I
+ A5nZX9/kxpk21/cXyidd8XbTw540KEXJMSGAP5j/6Yj7iee5yhMutzhCnnU0TES10696
+ vSI+TT909y0atDH/zG73cLONntw1MdSpaZ61XU8QzfUdtLvJ18+DKdsIiOt5f7df7dUh
+ R0xXXTHaVZJpIQrbSjOUUrME8iG2qP82m9u3eHrBv7YFh1nFk6bALNm34WtYXRcVjozw
+ xBPSL6O3xmLUxFWmMX//2oH0E33KKhuimj/RRqkGombPEytxWThM28TetGedknqtcrey
+ Ekrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWodvdMo7MK8hSRdDsMS7pqixv97y+a9XE27fCIdFG1XGIo8gqB8kK7bMHVioqpOVPfyW+z10DxyysA@nongnu.org
-X-Gm-Message-State: AOJu0YwpafWpK70SpCR5BDRnlFiZC0AT9HuajfscfRVxv4iFX3A6eeSq
- ZUMXxZew4GYPfSiqnpLpY85Wf2xan+MRkresZgksUvSkLhKAbGL1lTcaFsOpel1QI9I=
-X-Gm-Gg: ASbGnctzntLId4K/kDspapipGmuy+D99H8mjJYKflv+3aEI9LuifuA0Z1Tqnd6eKHZ6
- wOJ8FmaE/OT6gtDgUQCqHY0/Fh8Q687t8/ZbsyWjfLXkEqklSUHaqZG+be/EUu6y7ApbjlBBp6d
- 8ZEiVhTWOYmUDWPRe2AjOL1IjrK9oPqWz3z0ruJD6OeplQNgIATDWq2NVJgJr10FNxQYocnDSvW
- tLu96AyZyEoGyjuvqqXFQ26Mcv6Uc15mV2xO0zrRS+KtXe0FQHGi2N1V8vLYKqrObOOsIx0j/8l
- hWrEzWtrnaCVBa/t8DKNc2Q2o3MebvhUdTaYY96/P0iJ7T6YzvIZMdpgmI3VX3JcCacZAYV0h9Y
- wK0GBhdfpOlguaBva00NMX1KwuuhPXKCk+wgj+ZBE20ZnCU9Yfyg7N5QgMawb0FndvqZ1DWQ=
-X-Google-Smtp-Source: AGHT+IFMTmv9F8j0Gb0Yk5kQzB78XXeRj7VoRJ6RtUW4u5puHppiYvQ0kBLMOm8eInDzyBo1gOWH/g==
-X-Received: by 2002:a05:6000:40de:b0:3b6:1e6:c9fb with SMTP id
- ffacd0b85a97d-3b60e4c510dmr21008799f8f.11.1753163575242; 
- Mon, 21 Jul 2025 22:52:55 -0700 (PDT)
+ AJvYcCWu/nougm5ocfi8OQTFA7bkbfPtW5xxevDuMtaSeTfCLOBujGqgGbg2QbOrqOZCi85RJqOU2HR1/Kc/@nongnu.org
+X-Gm-Message-State: AOJu0Yzd59DhORIlMF6LEc/vIWpuz6h9fvotstLVav1uCJ4rdgUkfGUq
+ kWCh9AE962S0v1e2vyzvlhbi1pXEwX2ubHftpuv/y49QHsmWaVcRKRfuG8fblIeKEg1jhXjvy0s
+ clFZZ
+X-Gm-Gg: ASbGnct9wgr6MdYQ60eGlJG1Ja6+JBkzuFrCaHjfkz0Aj6W5aYlmioNXKQGVwcOfqkB
+ uypApNde2/3dT+GQkuDQdA1FuIr0OTK1hvG7jmzAq4B1vrTAmRdvf2dVcgm21RlBptiaNd+X8II
+ f0R0e6ofbO3HH9+GXqkLZplh4w9c64BfJgPEFgr9QtWIgmKNV6xHo9fvNUQcoP3W31RKRPM0Jq+
+ V4k7wikfLoB0mEQ/hE85m//HdA1Dp8tZP6ddyOHvoXzqvZXnC9NOE5mDYxRJJbOW9bRgrJPmIGL
+ MP8mkNK4qvYwEO1hzcM9D28ykDeyvIkU7dBN0gfmhWr/rRHPPNGIr3GmFovbGGbBQ/lvnpvCyg9
+ VAKyjjoR8kf8UMt+37degUVLSPjOcCDoK/X7iiUhK7zWuqhCKvpn6rhJLulaGJVgStL8fbmc=
+X-Google-Smtp-Source: AGHT+IEC2z9J4WLof/rzqlY+tjwz/MpDAPa2x/YFrRzSxWYSrF6cjra0+KBNGunrvO9UE6vbgFSNKA==
+X-Received: by 2002:a05:600c:45d0:b0:456:11db:2f1e with SMTP id
+ 5b1f17b1804b1-4563b8b3559mr150345335e9.15.1753164326644; 
+ Mon, 21 Jul 2025 23:05:26 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca5c9e2sm12651343f8f.89.2025.07.21.22.52.54
+ ffacd0b85a97d-3b61ca25643sm12103300f8f.16.2025.07.21.23.05.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 22:52:54 -0700 (PDT)
-Message-ID: <6b86402d-6a3d-45cd-b680-a83fe5818945@linaro.org>
-Date: Tue, 22 Jul 2025 07:52:53 +0200
+ Mon, 21 Jul 2025 23:05:26 -0700 (PDT)
+Message-ID: <9eeee985-0df8-4e88-8ebc-00e20399fe95@linaro.org>
+Date: Tue, 22 Jul 2025 08:05:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm: hvf: add timer frequency note
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250721152902.38671-1-mohamed@unpredictable.fr>
- <20250721152902.38671-2-mohamed@unpredictable.fr>
+Subject: Re: [PATCH 1/2] target/arm: Fix big-endian handling of NEON gdb
+ remote debugging
+To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250721211952.2239714-1-vacha.bhavsar@oss.qualcomm.com>
+ <20250721211952.2239714-2-vacha.bhavsar@oss.qualcomm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250721152902.38671-2-mohamed@unpredictable.fr>
+In-Reply-To: <20250721211952.2239714-2-vacha.bhavsar@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,39 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mohamed,
+Hi,
 
-On 21/7/25 17:29, Mohamed Mediouni wrote:
-> On Apple M3 and later, the timer frequency within apps and VM guests are different from each other.
+On 21/7/25 23:19, Vacha Bhavsar wrote:
+> This patch adds big endian support for NEON GDB remote
+> debugging. It replaces the use of ldq_le_p() with the use of ldq_p() as
+> explained in the first part of this patch series. Additionally, the order in
+> which the buffer content is loaded into the CPU struct is switched depending
+> on target endianness to ensure the most significant bits are always in second
+> element.
 
-Also M1/M2, so all Apple Silicon chipsets IMO.
+This patch description is what will be committed in the git history.
 
-This might be the issue I fixed here:
-https://lore.kernel.org/qemu-devel/20250620130709.31073-18-philmd@linaro.org/
+What do you mean by "as explained in the first part of this patch
+series"? This is already the first patch of the series. The "series"
+notion will be lost in the git history, so we don't understand what
+you meant / referred to.
 
-> 
-> Note that app binaries compiled with older SDKs continue to retain a non-1 GHz timer frequency on Apple M3/M4.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Anyway, maybe the description can be simplified as:
+
+"Check target endianness and always store the most significant bits
+  in the second element."
+
+> Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 > ---
->   target/arm/hvf/hvf.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+>   target/arm/gdbstub64.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index c9cfcdc08b..4331a3386a 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1018,6 +1018,13 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->       int i;
->   
->       env->aarch64 = true;
-> +    /*
-> +     * TODO: This does not correspond to the exposed generic
-> +     * timer frequency to the guest on Apple M3/M4.
-> +     * This is due to a scaled 1GHz counter being exposed
-> +     * to applications built with newer SDKs when running
-> +     * on that silicon, while VMs get an unscaled counter.
-> +     */
->       asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
+> diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+> index 64ee9b3b56..8b7f15b920 100644
+> --- a/target/arm/gdbstub64.c
+> +++ b/target/arm/gdbstub64.c
+> @@ -115,8 +115,16 @@ int aarch64_gdb_set_fpu_reg(CPUState *cs, uint8_t *buf, int reg)
+>           /* 128 bit FP register */
+>           {
+>               uint64_t *q = aa64_vfp_qreg(env, reg);
+> -            q[0] = ldq_le_p(buf);
+> -            q[1] = ldq_le_p(buf + 8);
+> +
+> +            if (target_big_endian()){
+> +                q[1] = ldq_p(buf);
+> +                q[0] = ldq_p(buf + 8);
+> +            }
+> +            else{
+
+Per our docs/devel/style.rst:
+
+                } else {
+
+> +                q[0] = ldq_p(buf);
+> +                q[1] = ldq_p(buf + 8);
+> +            }
+> +
+>               return 16;
+>           }
+>       case 32:
 
 
