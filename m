@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1AAC83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 09:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7062EC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 09:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue9PT-0002Ja-LS; Tue, 22 Jul 2025 05:35:43 -0400
+	id 1ue9VQ-0001an-Gf; Tue, 22 Jul 2025 05:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=A8BM=2D=kaod.org=clg@ozlabs.org>)
- id 1ue9PI-0002DK-0y; Tue, 22 Jul 2025 05:35:32 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1ue9VG-0001VZ-Qh; Tue, 22 Jul 2025 05:41:43 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=A8BM=2D=kaod.org=clg@ozlabs.org>)
- id 1ue9PE-0004An-VY; Tue, 22 Jul 2025 05:35:31 -0400
+ id 1ue9VD-0006qb-2L; Tue, 22 Jul 2025 05:41:41 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bmX9m2y72z4x21;
- Tue, 22 Jul 2025 19:32:44 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bmXJv4fnHz4x6q;
+ Tue, 22 Jul 2025 19:38:55 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bmX9h5Lv6z4wbx;
- Tue, 22 Jul 2025 19:32:40 +1000 (AEST)
-Message-ID: <1b3c89d8-ec01-4ff0-9bbf-0bfcabf1cbb2@kaod.org>
-Date: Tue, 22 Jul 2025 11:35:17 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bmXJq5pSjz4wbY;
+ Tue, 22 Jul 2025 19:38:51 +1000 (AEST)
+Message-ID: <200bd9bb-d33d-4f42-bb65-251048e8301e@kaod.org>
+Date: Tue, 22 Jul 2025 11:41:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v4 5/5] hw/misc/aspeed_sbc: Add machine parameter
- to alias OTP drive property
+Subject: Re: [SPAM] [PATCH v4 0/5] ASPEED OTP QEMU model: block backend,
+ machine alias, SoC integration
 To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,7 +42,6 @@ To: Kane Chen <kane_chen@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250708055810.2868680-1-kane_chen@aspeedtech.com>
- <20250708055810.2868680-6-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,17 +86,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250708055810.2868680-6-kane_chen@aspeedtech.com>
+In-Reply-To: <20250708055810.2868680-1-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=A8BM=2D=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
 X-Spam_bar: ----
 X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.157, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,94 +115,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/8/25 07:57, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> This patch adds a new machine parameter `otpmem` which creates a QOM
-> property alias on the aspeed_sbc device for the OTP drive.
+> This patch series extends the QEMU model for the ASPEED OTP (One-Time
+> Programmable) memory device with block backend support and tighter
+> integration with the SoC and machine configuration.
+> 
+> The OTP model simulates a simple fuse array, used in ASPEED SoCs
+> for secure boot and configuration purposes. The updated model now
+> supports loading initial OTP content from a file via the QEMU CLI.
 > 
 > Example usage:
-> 
 >    ./qemu-system-arm \
->      -machine ast2600-evb,otpmem=otp-drive \
+>      -machine ast2600-evb,otpmem=otp \
 >      -blockdev driver=file,filename=otpmem.img,node-name=otp \
 >      -global aspeed-otp.drive=otp \
 >      ...
 > 
-> With this change, the specified alias name (e.g. "otp-drive") becomes
-> available on the QOM path `/machine/soc/sbc/otp-drive`.
-> 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->   hw/arm/aspeed.c      | 20 ++++++++++++++++++++
->   hw/misc/aspeed_sbc.c |  8 ++++++++
->   2 files changed, 28 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index c31bbe7701..8ec32369a6 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -48,6 +48,7 @@ struct AspeedMachineState {
->       uint32_t uart_chosen;
->       char *fmc_model;
->       char *spi_model;
-> +    char *otpmem;
->       uint32_t hw_strap1;
->   };
->   
-> @@ -1424,6 +1425,21 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
->       bmc->uart_chosen = val + ASPEED_DEV_UART0;
->   }
->   
-> +static char *aspeed_get_otpmem(Object *obj, Error **errp)
-> +{
-> +    AspeedMachineState *bmc = ASPEED_MACHINE(obj);
-> +
-> +    return g_strdup(bmc->otpmem);
-> +}
-> +
-> +static void aspeed_set_otpmem(Object *obj, const char *value, Error **errp)
-> +{
-> +    AspeedMachineState *bmc = ASPEED_MACHINE(obj);
-> +
-> +    g_free(bmc->otpmem);
-> +    bmc->otpmem = g_strdup(value);
-> +}
-> +
->   static void aspeed_machine_class_props_init(ObjectClass *oc)
->   {
->       object_class_property_add_bool(oc, "execute-in-place",
-> @@ -1445,6 +1461,10 @@ static void aspeed_machine_class_props_init(ObjectClass *oc)
->                                      aspeed_set_spi_model);
->       object_class_property_set_description(oc, "spi-model",
->                                             "Change the SPI Flash model");
-> +    object_class_property_add_str(oc, "otpmem", aspeed_get_otpmem,
-> +                                   aspeed_set_otpmem);
-> +    object_class_property_set_description(oc, "otpmem",
-> +                                          "Set OTP Memory type");
->   }
->   
->   static void aspeed_machine_class_init_cpus_defaults(MachineClass *mc)
-> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index b56a8b7678..b82c5e37cc 100644
-> --- a/hw/misc/aspeed_sbc.c
-> +++ b/hw/misc/aspeed_sbc.c
-> @@ -209,10 +209,18 @@ static void aspeed_sbc_instance_init(Object *obj)
->   {
->       AspeedSBCClass *sc = ASPEED_SBC_GET_CLASS(obj);
->       AspeedSBCState *s = ASPEED_SBC(obj);
-> +    char *otpname;
->   
->       if (sc->has_otp) {
->           object_initialize_child(OBJECT(s), "otp", &s->otp,
->                                   TYPE_ASPEED_OTP);
-> +        otpname = object_property_get_str(qdev_get_machine(),
-> +                                          "otpmem",> +                                          &error_abort);
+> ChangeLog
+> ---------
+> v4:
+> - Add a 'drive' property to allow backing OTP data with a block device
+> - Expose a machine parameter (`-machine otpmem=XXX`) for convenient
+>    aliasing of the OTP drive via QOM path
 
-This is a hack and I would prefer to prevent device models from
-accessing directly the machine.
 
-It would have been nice to have a machine option, but since the
-user can specify a file for the OTP backend from the command line,
-let's leave it as is.
+Patch 1-4 are fine. Patch 5 is too complex to address and its
+value is limited as explained.
 
+Could you please send a documentation update :
+
+   https://gitlab.com/qemu-project/qemu/-/blob/master/docs/system/arm/aspeed.rst ?
+
+An extra section after "Other booting options" explaining the OTP backend
+for the AST2600 SoC would be welcome.
+
+Please make sure  --enable-docs is configured.
 
 Thanks,
 
@@ -212,12 +156,41 @@ C.
 
 
 
-> +        if (strlen(otpname)) {
-> +            object_property_add_alias(obj, otpname,
-> +                                      OBJECT(&s->otp), "drive");
-> +        }
->       }
->   }
->   
+
+> 
+> v3:
+> - Switched to object_property_set_int() for setting "size"
+> - Simplified qdev_realize() error handling by passing errp directly
+> - Added "drive" property to OTP model for future extensibility
+> 
+> v2:
+> - Rename device from 'aspeed_otpmem' to 'aspeed_otp' and move it to hw/nvram/
+> - Move OTP device realization from instance_init to the realize function
+> - Improve error logging with qemu_log_mask() and remove unused error propagation
+> 
+> v1:
+> - Initial version
+> 
+> ---
+> 
+> Kane-Chen-AS (5):
+>    hw/misc/aspeed_otp: Add ASPEED OTP memory device model
+>    hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
+>    hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
+>    hw/misc/aspeed_otp: Add 'drive' property to support block backend
+>    hw/misc/aspeed_sbc: Add machine parameter to alias OTP drive property
+> 
+>   include/hw/misc/aspeed_sbc.h  |   5 ++
+>   include/hw/nvram/aspeed_otp.h |  33 ++++++++++
+>   hw/arm/aspeed.c               |  20 ++++++
+>   hw/arm/aspeed_ast2600.c       |   2 +-
+>   hw/misc/aspeed_sbc.c          | 121 ++++++++++++++++++++++++++++++++++
+>   hw/nvram/aspeed_otp.c         | 113 +++++++++++++++++++++++++++++++
+>   hw/misc/trace-events          |   5 ++
+>   hw/nvram/meson.build          |   4 ++
+>   8 files changed, 302 insertions(+), 1 deletion(-)
+>   create mode 100644 include/hw/nvram/aspeed_otp.h
+>   create mode 100644 hw/nvram/aspeed_otp.c
+> 
 
 
