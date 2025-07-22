@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF98C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C8EC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue52o-0005jE-1U; Tue, 22 Jul 2025 00:56:02 -0400
+	id 1ue552-0008Ul-BL; Tue, 22 Jul 2025 00:58:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52X-0005bs-Jt
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:47 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1ue54d-00082w-9g
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:57:58 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52T-0004Gp-0Z
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:42 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b34a6d0c9a3so5147418a12.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:40 -0700 (PDT)
+ id 1ue54b-0004ei-C3
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:57:55 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-748d982e97cso4523392b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753160140; x=1753764940; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bTTq9wgcgDFhDutfJJC82sCVw2rH7HCJB+ChDzBs1bA=;
- b=G/yc22ixehPlgLZEg6MPFAm1Xikgx9F4KXyOKHzBNuxCdwsScazFF9WxR6wKFO0j77
- 7obrH3nhZdRbOb0y+OxQqzZrSXsKLnclx965JQ68g9FwPk/wNC7X+FJPRY+6g8C46gvG
- hYf58A3Tnt1Rg44Kpk4qLtGphcfpxFVmm1X4JKws+np0pDGnwAHHbqB2VhayOCJxUmEe
- wYXGIL1/wNL4Epc6PY1pXZm5NRvHNKs2aeM094wQBU2wh5hpvG2yhIootgnVO+/A/1rH
- E9yEys//DEbAmZnlL34/zAz61xu+fIuGntrmvGTf6z7owp5lE55iZqoRerGGAYlwMvZL
- K1UQ==
+ d=linaro.org; s=google; t=1753160272; x=1753765072; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UKj2tCIeq+gTs/4FxwGmf+XyhqbWUhV5SBlBQNmg1o0=;
+ b=V9XBnQFKjTY3xLRMZ2VSRASc/62HTGNlyi9irXfU94/QjW1vbKfN++jb9g7ADbobL+
+ cVt8rR8Gfr9i/qqUFMs/VrH+9g2NrSm7htnbzpGCSvStMmwENSNBMdJGS2pH6O1G7NOQ
+ XEnsUkScE0XconOvIYjXSxgfPam0EYhKNgGvLSfjZMlLIgNkXT2JySNcp5TqyhiTFgn7
+ sB3OJcXWZzkY2QI5rz0xtvgM5aWzi4ylghJQXCGcQQJ9nr2IMGVI2yyzf/Ps8XDHsbYX
+ 9whBKqzybEqRcsRffq4/rLqAl3P+Jkj7C46kCPkCj4KcndHPtKIlWO93/MLtoo4h8r6d
+ 6b1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753160140; x=1753764940;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bTTq9wgcgDFhDutfJJC82sCVw2rH7HCJB+ChDzBs1bA=;
- b=weuuvYh53VK41XGTXhnu8IMqvfjPurjKtb3WLLyij/GJratA0VVukNjCuebpqKrm8+
- +w9Vr+RYanb7qlTE94YItZFSeOu029DJ6G99BfulbGQ1zj32NAdikg1FycEIQXmXLm9R
- 33AaPCK2M2ANA1lwke+drbXEqKplq4klzghFfuDUJGyFhHO4/3gUaVqmSJJYAEkkvD8Y
- /4zaObyCzb/GHkyRZSKa2WngaVsSUZgX4XD7ItwTZQw29m0A6RV+cjZ45HFWeqhSJVrq
- Riue29j5LVMzLUOtP0JSdjOj8mSQoa0lL4zZ/VVAvIP87gXDcmce+f3JfHtKcqd1qioq
- xRNg==
-X-Gm-Message-State: AOJu0Yx9IQ0VXbeI9HxEEovIvmn4ASaOsyIzRZuThqWjE9gl6rkLtSLB
- jVQIptZ0MfezOAkc3LBKySQpQrFmdVNtQjp+WOuvoUvdSBdMy3IFtVO0eEzd2kFUurJ/fkzqP/L
- p+bd2
-X-Gm-Gg: ASbGncsONeM4WKjvjK3PLduntMMcI+oI1cnJb/VTOu1FvptNmrm3vny9qVqOkqYJ1u8
- iBUQGPaq7wjOtoR1nzc2/I6Gbs5LXA1JBEA7gqkX/fipoMuSVmfs6nYNDRDDiiYpRx/Oae4FNGT
- f/byAF0/xQi+g2E7+kkUGGEV8TPyiXycy1Sk8BW4sBRUZCXPdAkSuZ2PQD/Q4tl5qcG0e57cZdG
- 17dehhaIjUwi8051RJEbxbzZTrJI4tZd2uSxJn5ayp+L4TIQpPdVpc7capk26t9iY7EYkZMziJx
- HNB/TNJwD8vYMMtMD+Atw8lHnFph4J8fJ+Dh7LEyv7RK86B95cKj6N0VwDXTOF6nLUv1K8bedZf
- DGfMvyIzRCzweNd4EnP6U/A==
-X-Google-Smtp-Source: AGHT+IHlgmEk3lhAL2fitfb3dr5idsLcP5oz9EnfLvaJ7slKGPk4coF5sss3P7z/Z2QFRUCKQNTsBQ==
-X-Received: by 2002:a17:90b:5385:b0:312:e51c:af67 with SMTP id
- 98e67ed59e1d1-31c9f3ef43cmr28364310a91.1.1753160139584; 
- Mon, 21 Jul 2025 21:55:39 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 21:55:39 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 4/6] contrib/plugins/uftrace: add
- timestamp-based-on-real-time option
-Date: Mon, 21 Jul 2025 21:55:25 -0700
-Message-ID: <20250722045527.1164751-5-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
-References: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1753160272; x=1753765072;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UKj2tCIeq+gTs/4FxwGmf+XyhqbWUhV5SBlBQNmg1o0=;
+ b=Iv5LVDCPb1yLgsvHre5GhC2lZKjUBHZRFD+nZ4JUITHTlw2dHaMNYPRKmbAluy6+Bo
+ KD3mEOoeAhm7Cl0tnWvAQnSGOdKjPB7DTvdm6ZD50F1KuylziNnlDiaaIB5syXzEY6Ey
+ HCXzhb2ZYcnjJaBbI4Bi537UT5Un1EiOjsiwY4q9TwHxaVRwu5LcKAY1NodhYs9Ex/JN
+ 1Aehh60IyzHpTtawNcSa02sIQQI5lycWk4tmFceoahjw+cT2T43u82BMCueB6UQKl0Tu
+ ORUoC4aS9b2JZI/m+GUTjfuvGIsu9Yq16Ve5nJqUAhEgferJbIg5Pm3THR1i1B5ath5O
+ Rk6w==
+X-Gm-Message-State: AOJu0YxRtaFwssMkGO3s7Sdm3dcPDKIYNtFAsITkOQUjGWhRi0t79VZh
+ SFm1E4H2nEp5fhacIuSiyWo5/nrvW3COIDWfxoBqgHKDsMu7ip9V8c7bEoVcVUGOILrCfXqYgGX
+ xbvJ1
+X-Gm-Gg: ASbGncsWJbA7d/IJs6s1L4VoVaEfd48awWXpuBL5wMVsZ+Xv9fJPTvemBLAC5wTYca9
+ EPFiyaA5jLjEgiJwRrIpwqc3dIMfWV0sZTBFm0UTxmg6CincgAiCbkdnXaYwEoOzoeuxk+DlGys
+ p/EWIAkU97ul+RLYvRD1xodJCDwDOpauydrr7POmj6Gf4h/L0y3iQ235+J34qsaDHIxx6AaHkO/
+ JwvxlZXWlWmlzBXTM+6CejYE8Ocz6s0k6m2srfElDb4UGtmOitoQ5S5XYkJSaeoK4kWtALuguOP
+ 5PY9lqGEpqj4N9HBVOp1p8zSwXijD4Gsog1YVHu6T2Vh/A/+wsmvacDIcfZJ8bvY4HMox5ljJ9L
+ fnlsyNm79pMKTa9C754thGyadwQoIw68HkbXFk6xkV5lTxA==
+X-Google-Smtp-Source: AGHT+IFMANRxNFuySeAcZGBjRCwYzOnUFj8Kv5ahYaHZ5bcafWF5fwEQafc8LbCON0VM+Jc5Rglm+Q==
+X-Received: by 2002:a05:6a00:3d53:b0:748:3385:a4a with SMTP id
+ d2e1a72fcca58-75724e89802mr33597685b3a.23.1753160271723; 
+ Mon, 21 Jul 2025 21:57:51 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-759cb76da69sm6590514b3a.115.2025.07.21.21.57.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Jul 2025 21:57:51 -0700 (PDT)
+Message-ID: <39ffac72-0173-4541-a81d-236ba1ec6d0f@linaro.org>
+Date: Mon, 21 Jul 2025 21:57:50 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] contrib/plugins: uftrace
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, rowan Hart <rowanbhart@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,74 +109,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usage: timestamp-based-on-real-time=[on|off]
+On 7/21/25 12:33 PM, Pierrick Bouvier wrote:
+> This plugin generates a binary trace compatible with the excellent uftrace:
+> https://github.com/namhyung/uftrace
+> 
+> In short, it tracks all function calls performed during execution, based on
+> frame pointer analysis. A big advantage over "uftrace record" is that it works
+> in system mode, allowing to trace a full system execution, which was the
+> original goal. It works as well in user mode, but uftrace itself already does
+> this. It's implemented for aarch64 only (with the intent to add x86_64 later).
+> 
+> Let's start with concrete examples of the result.
+> 
+> First, in system mode, booting a stack using TF-A + U-boot + Linux:
+> - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+> https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
+> - Stat and open syscalls in kernel
+> https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
+> - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+> https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
+> 
+> Full trace is available here:
+> https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz
+> You can download and open it on https://ui.perfetto.dev/ to explore it.
+> 
+> Second, in user mode, tracing qemu-aarch64 (itself) running git --help:
+> - Loading program and its interpreter
+> https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
+> - TB creation
+> https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
+> 
+> Full trace is available here:
+> https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz
+> 
+> If you had curiosity and now you're ready to give some attention, most of the
+> details you want to read are included in the documentation patch (final one).
+> 
+> Overhead is around x2 (sampling only) to x10-x15 (precise), and long traces can
+> be directly filtered with uftrace if needed.
+> 
+> The series is splitted in:
+> - implementing the plugin
+> - adding useful options (especially sampling and privilege level tracing)
+> - add a companion script to symbolize traces generated
+> - add documentation with examples
+> 
+> I hope this plugin can help people trying to understand what happens out of the
+> user space, and get a better grasp of how firmwares, bootloader, and kernel
+> interact behind the curtain.
+> 
+> v2
+> --
+> 
+> - trace active stacks on exit
+> - do not erase map generated in system_emulation
+> - add documentation to generate restricted visual traces around specific events
+>    of execution
+> 
+> Pierrick Bouvier (6):
+>    contrib/plugins/uftrace: new uftrace plugin
+>    contrib/plugins/uftrace: add trace-sample option
+>    contrib/plugins/uftrace: add trace-privilege-level option
+>    contrib/plugins/uftrace: add timestamp-based-on-real-time option
+>    contrib/plugins/uftrace_symbols.py
+>    contrib/plugins/uftrace: add documentation
+> 
+>   docs/about/emulation.rst           | 207 +++++++
+>   contrib/plugins/uftrace.c          | 919 +++++++++++++++++++++++++++++
+>   contrib/plugins/meson.build        |   3 +-
+>   contrib/plugins/uftrace_symbols.py | 152 +++++
+>   4 files changed, 1280 insertions(+), 1 deletion(-)
+>   create mode 100644 contrib/plugins/uftrace.c
+>   create mode 100755 contrib/plugins/uftrace_symbols.py
+> 
 
-Instead of using number of instructions executed (which is per vcpu), we
-use the wall time for timestamps. This is useful when tracing user mode
-programs as well.
+Sent v3 fixing a missing include (build failed on MacOS only):
+https://lore.kernel.org/qemu-devel/20250722045527.1164751-1-pierrick.bouvier@linaro.org/T/
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/uftrace.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index bd4219db693..9211f273700 100644
---- a/contrib/plugins/uftrace.c
-+++ b/contrib/plugins/uftrace.c
-@@ -94,8 +94,28 @@ enum uftrace_record_type {
- static struct qemu_plugin_scoreboard *score;
- static uint64_t trace_sample;
- static bool trace_privilege_level;
-+static bool timestamp_based_on_real_time;
- static CpuOps arch_ops;
- 
-+static uint64_t gettime_ns(void)
-+{
-+#ifdef _WIN32
-+    /*
-+     * On Windows, timespec_get is available only with UCRT, but not with
-+     * MinGW64 environment. Simplify by using only gettimeofday on this
-+     * platform.
-+     */
-+    struct timeval tv;
-+    gettimeofday(&tv, NULL);
-+    uint64_t now_ns = tv.tv_sec * 1000 * 1000 * 1000 + tv.tv_usec * 1000;
-+#else
-+    struct timespec ts;
-+    timespec_get(&ts, TIME_UTC);
-+    uint64_t now_ns = ts.tv_sec * 1000 * 1000 * 1000 + ts.tv_nsec;
-+#endif
-+    return now_ns;
-+}
-+
- static void uftrace_write_map(bool system_emulation)
- {
-     const char *path = "./uftrace.data/sid-0.map";
-@@ -454,6 +474,9 @@ static void cpu_set_new_sample(Cpu *cpu, uint64_t timestamp)
- 
- static uint64_t cpu_get_timestamp(const Cpu *cpu)
- {
-+    if (timestamp_based_on_real_time) {
-+        return gettime_ns();
-+    }
-     return cpu->insn_count;
- }
- 
-@@ -866,6 +889,12 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-                 return -1;
-             }
-+        } else if (g_strcmp0(tokens[0], "timestamp-based-on-real-time") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-+                                        &timestamp_based_on_real_time)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
--- 
-2.47.2
-
+Regards,
+Pierrick
 
