@@ -4,44 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F02C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 11:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C010C83F25
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 11:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueB2C-0004P7-2H; Tue, 22 Jul 2025 07:19:48 -0400
+	id 1ueB4D-0006fp-Gv; Tue, 22 Jul 2025 07:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1ueB1q-00049C-Bd
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 07:19:26 -0400
-Received: from air.basealt.ru ([193.43.8.18])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1ueB31-0005EQ-3H
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 07:20:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1ueB1n-0004bp-Pi
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 07:19:25 -0400
-Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
- [217.15.195.17]) (Authenticated sender: rastyoginds)
- by air.basealt.ru (Postfix) with ESMTPSA id 8FA3E23395;
- Tue, 22 Jul 2025 14:19:19 +0300 (MSK)
-From: gerben@altlinux.org
-To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
-Subject: [PATCH] hw/display: refine upper limit for offset value in assert
- check
-Date: Tue, 22 Jul 2025 14:17:47 +0300
-Message-ID: <20250722111917.19584-1-gerben@altlinux.org>
-X-Mailer: git-send-email 2.42.2
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1ueB2v-000592-8x
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 07:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753183230;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4jf+wH78yqLmtVM6d/V/k6k0/8Epu00t8sJLoGx1Pj8=;
+ b=hPj2XnokMurOHN1BqBH13xBuWLvUhNwpRjBuhwsaCfZiVuA6pWqREzJuwyvYyZzGaymEYw
+ tM1TAeS/IiRS7TJNyLy44k6RN/2vy/7sPTaPSaQakuugGbKS8SEUihSFFSvflMHtWRB4Ig
+ SuS6TIu11WzDngZCz+j013R5ImESN/U=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-iFWSs8mSNgec10aE-a8czQ-1; Tue,
+ 22 Jul 2025 07:20:27 -0400
+X-MC-Unique: iFWSs8mSNgec10aE-a8czQ-1
+X-Mimecast-MFC-AGG-ID: iFWSs8mSNgec10aE-a8czQ_1753183226
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0EF9C1956088; Tue, 22 Jul 2025 11:20:26 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.10])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 752DD19560AD; Tue, 22 Jul 2025 11:20:24 +0000 (UTC)
+Date: Tue, 22 Jul 2025 07:20:23 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PULL 00/50] ppc queue
+Message-ID: <20250722112023.GA187149@fedora>
+References: <20250721162233.686837-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
- helo=air.basealt.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="tkpqxKdBKXZivAbe"
+Content-Disposition: inline
+In-Reply-To: <20250721162233.686837-1-clg@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,43 +86,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis Rastyogin <gerben@altlinux.org>
 
-Accessing s->core_registers (size 236) could overflow
-if the offset goes beyond the valid range.
+--tkpqxKdBKXZivAbe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Since the memory region matches core_registers size exactly,
-guest cannot write out-of-bounds.
+Applied, thanks.
 
-Therefore, the debug assert has been refined to ensure the offset
-remains within DP_CORE_REG_ARRAY_SIZE, preventing internal errors.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+--tkpqxKdBKXZivAbe
+Content-Type: application/pgp-signature; name=signature.asc
 
-Reported-by: David Meliksetyan <d.meliksetyan@fobos-nt.ru>
-Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
----
- hw/display/xlnx_dp.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index 7c980ee642..b35ee2f869 100644
---- a/hw/display/xlnx_dp.c
-+++ b/hw/display/xlnx_dp.c
-@@ -896,7 +896,11 @@ static void xlnx_dp_write(void *opaque, hwaddr offset, uint64_t value,
-         xlnx_dp_update_irq(s);
-         break;
-     default:
--        assert(offset <= (0x504C >> 2));
-+        /*
-+         * Check to ensure the offset is within the bounds of
-+         * the core_registers[] array.
-+         */
-+        assert(offset < DP_CORE_REG_ARRAY_SIZE);
-         s->core_registers[offset] = value;
-         break;
-     }
--- 
-2.42.2
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh/c/cACgkQnKSrs4Gr
+c8g+8wgAk4R1tT3dyfEo1xxyo/mIKxGCNUNXejJvkisCne/wggBSuL3WoOQ/M4ma
+C5d9/U7Tp6Btxf72u3LVDWtv5QDP3NnamFSqiHRg/cIfvsPh4W6sKFiv6TIt4Nnk
+Jqc7i+m+gFSdpYn5MjD6SdX98QFV7Phpa2JphXptf6a4GbzVRwsMPaXMowPwxxCq
+oB0+1SC0xiRE1vMq8jXsQ4sFrCKzzlU8HRge/umM8Q/UivsBC61wWr6J3VuWumIe
+S8Zt1whEdzEL0zOb3irXE320wM6E8Pn5geSxqPcJniJMgwQ4CM3B0HdA1JW5TGi4
+5vs+xGygSan1klWDqTNlDMmm1295Gw==
+=Gcik
+-----END PGP SIGNATURE-----
+
+--tkpqxKdBKXZivAbe--
 
 
