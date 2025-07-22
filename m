@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDEEC83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE18C83F27
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueCK7-0002Uv-HY; Tue, 22 Jul 2025 08:42:27 -0400
+	id 1ueCKY-000392-S8; Tue, 22 Jul 2025 08:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJO-0002JA-8W
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:39 -0400
+ id 1ueCJU-0002O7-3g
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:48 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJL-0006K4-DB
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:37 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TCk3031647;
- Tue, 22 Jul 2025 12:41:31 GMT
+ id 1ueCJN-0006L2-VG
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:42 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAwT024411;
+ Tue, 22 Jul 2025 12:41:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=SiUCTq2sDtERGyDvsyMh1YyOjA9Hw
- rC/0CHq+bpL5MI=; b=dF1O6FndNxntbZbg4/9oGUBjufn7Wk++wY1tyL0Rl4IjE
- hriAG+VVbpKf1kVAqzMOQzuo7bZe5FYSxs/oBx4JLOIJdtQ9FHrSKRiHMFAQdaIY
- 5RMCuuKs6M+iKJcGW+jBqtV4jba2o3HODTIDZZUaCRFoIen1MrWUJaRuyrAnnJ6d
- QwqUSqqskMWJGVEIqffNU7SYDgP9U2YDqXUTvqfs7SeOEq2Z6PQyJCAKewhdk15z
- l0wY6CfMSH+KvIsAVF6UerJI8ovdbf1Kah0fbm4iYF0OlaF5UOMDAVPF/wJMOdbV
- lbC64glrWzLYs0q5fYCp19YTgsbY4VpvZLb11LNeQ==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=ogUus
+ Nb8abplo4/L0tdtqGz4oTrmEgBVtp4/Ei2IsC4=; b=ifLfv4BarK5GBAQVdLcPZ
+ 3NmJkpgWEK7lnRVGWFWqLe7Qfoj1gayYwMnXyXUhSwfODJClEmv683eVliv9THYl
+ CPSAHABfD3hpj4/bEBYjsQbsHw6IsLjrOuD17S2Jb/GtIQXJQyQXy+SH8j9apF1r
+ tKyQ3bxLV+XotWr1wXHcDRcEb3SqkBj2gtWNqqn1FlFomLux6J8HSHkWpYx+buJk
+ pAMzv/UmKOh3FyhqeKUk31/JQT+ykmLFxpSDhfCX10cGfGa86QbxpeQj0F0V3KJS
+ p+uFbNPG7fY0IGLeyUfpZbGS9X1lRwpqm/SagwrhciTon0Ay5BWSqU9wZOu9s06I
+ Q==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 480576n1d9-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48057qw70x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:31 +0000 (GMT)
+ Tue, 22 Jul 2025 12:41:36 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56MCFGa7010247; Tue, 22 Jul 2025 12:41:30 GMT
+ with ESMTP id 56MBJr7g010262; Tue, 22 Jul 2025 12:41:35 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4801t99ga4-1
+ 4801t99gc3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:30 +0000
+ Tue, 22 Jul 2025 12:41:35 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3n039536;
- Tue, 22 Jul 2025 12:41:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3v039536;
+ Tue, 22 Jul 2025 12:41:34 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4801t99g9h-1; Tue, 22 Jul 2025 12:41:29 +0000
+ 4801t99g9h-5; Tue, 22 Jul 2025 12:41:34 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
  jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
  eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 0/6] virtio-net: initial iterative live migration support
-Date: Tue, 22 Jul 2025 12:41:21 +0000
-Message-ID: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+Subject: [RFC 4/6] virtio-net: iter live migration - migrate vmstate
+Date: Tue, 22 Jul 2025 12:41:25 +0000
+Message-ID: <20250722124127.2497406-5-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -74,18 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507220104
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfXyqI+WZG+vOHs
- zk8CNjtV2+bdiw9CDEj+A+9pzhPzhgckfXpz4xYP4BrBa01wEGnSaxZVNYX+Fhg+21PK+nuNw8Y
- GQep/aIaumH86W6jkAEFT5eW/wfFqShzdRSmR0oMsMNO0LlEbhyhf8omo1DxgadiMxsDby893KT
- hTuBLsoV8C55dtB3qxgRQ2960VHpULAvrvg/EVa76/Jl3oW70MXmJ1DbaNFOTa/43qJIveRdK60
- FVv+qkRBIWOqf/exZ6dLjOgSqxV1glX76ItmuarOPe7beAZ+fV50iDGLS7sX7vrvpYMQiH7V59P
- wpGNCf1DZQywmv3we3IdYnn0A2xO4rnDGbHL7PRg8B4v+XRJQZN9sG29/fnpzIRfIAygoXMh1KJ
- 6Hgwo8fEx+tZS6Z5DvtqBbjggfBqgTKpuiYW7h0VDiRYA2TLroSacJ+BEoBcBaCUBob37Lr+
-X-Authority-Analysis: v=2.4 cv=doDbC0g4 c=1 sm=1 tr=0 ts=687f86fb cx=c_pps
+X-Authority-Analysis: v=2.4 cv=MNRgmNZl c=1 sm=1 tr=0 ts=687f8700 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=QJ7LjP0NDpSce9unQJYA:9
-X-Proofpoint-GUID: 6OEgey6YkgWRiqCR1F6wcVYp9XI4nnJQ
-X-Proofpoint-ORIG-GUID: 6OEgey6YkgWRiqCR1F6wcVYp9XI4nnJQ
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=sg1MOQW8EVPkchQJ_ukA:9
+X-Proofpoint-ORIG-GUID: 3npKTO5TyU8r6hxB6GtgL0lawjxwGUWC
+X-Proofpoint-GUID: 3npKTO5TyU8r6hxB6GtgL0lawjxwGUWC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX6e7mD6CalmPb
+ 1nnEy+r6LjZLk1AgytXyrd7W23J1NZiJeYLke6j1ZHl6yg+Sm4VWJfsfEDXpgamDvfiM0fGp+f5
+ yN2bqDV4f+9/VRnRkNyTVlOE+bIXstHqZ70qzHOJPe698yYLcogApA5aHKtEzc60QP22aPZQ/Kw
+ XdUjZ66MAZKLcOTbibOhAkf2gdVA+oDNDtzPE1GbRtFcPyDmfzQz85Hk+yZEhtSENCLr6mlwwEI
+ ncw8XmGHuH3strrqcGKK5gNMFpZvdyI/rlJ3cCslpFiExs/ZQiSmhbZZss87NG4nl4nWUht1ZGn
+ 6L43GGaBHSZurqxsl8SdcSUbjMWh6sC4o5NXKM5XnCbTXNu+tlihRcF7mgVOrhXuh6z3oe1hFX+
+ YXWZPPiUFKSDO3tQ49eZCXmga5XwAZesDaUghmYDZmK+Z5wkXP81zp0VnZBWP9LoSjNSeshq
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -111,39 +114,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is an RFC initial implementation of iterative live
-migration for virtio-net devices.
+Lays out the initial groundwork for iteratively migrating the state of a
+virtio-net device, starting with its vmstate (via vmstate_save_state &
+vmstate_load_state).
 
-The main motivation behind implementing iterative migration for
-virtio-net devices is to start on heavy, time-consuming operations
-for the destination while the source is still active (i.e. before
-the stop-and-copy phase).
+The original non-iterative vmstate framework still runs during the
+stop-and-copy phase when the guest is paused, which is still necessary
+to migrate over the final state of the virtqueues once the sourced has
+been paused.
 
-The motivation behind this RFC series specifically is to provide an
-initial framework for such an implementation and get feedback on the
-design and direction.
--------
+Although the vmstate framework is used twice (once during the iterative
+portion and once during the stop-and-copy phase), it appears that
+there's some modest improvement in guest-visible downtime when using a
+virtio-net device.
 
-This implementation of iterative live migration for a virtio-net device
-is enabled via setting the migration capability 'virtio-iterative' to
-on for both the source & destination, e.g. (HMP):
-
-(qemu) migrate_set_capability virtio-iterative on
-
-The virtio-net device's SaveVMHandlers hooks are registered/unregistered
-during the device's realize/unrealize phase.
-
-Currently, this series only sends and loads the vmstate at the start of
-migration. The vmstate is still sent (again) during the stop-and-copy
-phase, as it is today, to handle any deltas in the state since it was
-initially sent. A future patch in this series could avoid having to
-re-send and re-load the entire state again and instead focus only on the
-deltas.
-
-There is a slight, modest improvement in guest-visible downtime from
-this series. More specifically, when using iterative live migration with
-a virtio-net device, the downtime contributed by migrating a virtio-net
-device decreased from ~3.2ms to ~1.4ms on average:
+When tracing the vmstate_downtime_save and vmstate_downtime_load
+tracepoints, for a virtio-net device using iterative live migration, the
+non-iterative downtime portion improved modestly, going from ~3.2ms to
+~1.4ms:
 
 Before:
 -------
@@ -155,31 +143,107 @@ After:
 vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
   instance_id=0 downtime=1607
 
-This slight improvement is likely due to the initial vmstate_load_state
-call "warming up" pages in memory such that, when it's called a second
-time during the stop-and-copy phase, allocation and page-fault latencies
-are reduced.
--------
+This improvement is likely due to the initial vmstate_load_state call
+(while the guest is still running) "warming up" all related pages and
+structures on the destination. In other words, by the time the final
+stop-and-copy phase starts, the heavy allocations and page-fault
+latencies are reduced, making the device re-loads slightly faster and
+the guest-visible downtime window slightly smaller.
 
-Comments, suggestions, etc. are welcome here.
+Future patches could improve upon this by skipping the second
+vmstate_save/load_state calls (during the stop-and-copy phase) and
+instead only send deltas right before/after the source is stopped.
 
-Jonah Palmer (6):
-  migration: Add virtio-iterative capability
-  virtio-net: Reorder vmstate_virtio_net and helpers
-  virtio-net: Add SaveVMHandlers for iterative migration
-  virtio-net: iter live migration - migrate vmstate
-  virtio,virtio-net: skip consistency check in virtio_load for iterative
-    migration
-  virtio-net: skip vhost_started assertion during iterative migration
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/net/virtio-net.c            | 37 ++++++++++++++++++++++++++++++++++
+ include/hw/virtio/virtio-net.h |  8 ++++++++
+ 2 files changed, 45 insertions(+)
 
- hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++------
- hw/virtio/virtio.c             |  32 +++--
- include/hw/virtio/virtio-net.h |   8 ++
- include/hw/virtio/virtio.h     |   7 +
- migration/savevm.c             |   1 +
- qapi/migration.json            |   7 +-
- 6 files changed, 247 insertions(+), 54 deletions(-)
-
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 19aa5b5936..86a6fe5b91 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3808,16 +3808,31 @@ static bool virtio_net_is_active(void *opaque)
+ 
+ static int virtio_net_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
++    VirtIONet *n = opaque;
++
++    qemu_put_be64(f, VNET_MIG_F_INIT_STATE);
++    vmstate_save_state(f, &vmstate_virtio_net, n, NULL);
++    qemu_put_be64(f, VNET_MIG_F_END_DATA);
++
+     return 0;
+ }
+ 
+ static int virtio_net_save_live_iterate(QEMUFile *f, void *opaque)
+ {
++    bool new_data = false;
++
++    if (!new_data) {
++        qemu_put_be64(f, VNET_MIG_F_NO_DATA);
++        return 1;
++    }
++
++    qemu_put_be64(f, VNET_MIG_F_END_DATA);
+     return 1;
+ }
+ 
+ static int virtio_net_save_live_complete_precopy(QEMUFile *f, void *opaque)
+ {
++    qemu_put_be64(f, VNET_MIG_F_NO_DATA);
+     return 0;
+ }
+ 
+@@ -3833,6 +3848,28 @@ static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ 
+ static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
+ {
++    VirtIONet *n = opaque;
++    uint64_t flag;
++
++    flag = qemu_get_be64(f);
++    if (flag == VNET_MIG_F_NO_DATA) {
++        return 0;
++    }
++
++    while (flag != VNET_MIG_F_END_DATA) {
++        switch (flag) {
++        case VNET_MIG_F_INIT_STATE:
++        {
++            vmstate_load_state(f, &vmstate_virtio_net, n, VIRTIO_NET_VM_VERSION);
++            break;
++        }
++        default:
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Uknown flag 0x%"PRIx64, __func__, flag);
++            return -EINVAL;
++        }
++
++        flag = qemu_get_be64(f);
++    }
+     return 0;
+ }
+ 
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index b9ea9e824e..d6c7619053 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -163,6 +163,14 @@ typedef struct VirtIONetQueue {
+     struct VirtIONet *n;
+ } VirtIONetQueue;
+ 
++/*
++ * Flags to be used as unique delimiters for virtio-net devices in the
++ * migration stream.
++ */
++#define VNET_MIG_F_INIT_STATE          (0xffffffffef200000ULL)
++#define VNET_MIG_F_END_DATA            (0xffffffffef200001ULL)
++#define VNET_MIG_F_NO_DATA             (0xffffffffef200002ULL)
++
+ struct VirtIONet {
+     VirtIODevice parent_obj;
+     uint8_t mac[ETH_ALEN];
 -- 
 2.47.1
 
