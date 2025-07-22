@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4ADC83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2A2C83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueCKl-0003V9-Io; Tue, 22 Jul 2025 08:43:04 -0400
+	id 1ueCKX-000367-C0; Tue, 22 Jul 2025 08:42:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJQ-0002Ld-8A
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:45 -0400
+ id 1ueCJV-0002P2-Ap
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:48 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJL-0006KK-Fo
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:39 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TCVY006880;
- Tue, 22 Jul 2025 12:41:34 GMT
+ id 1ueCJQ-0006Lg-FU
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:44 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAYZ002494;
+ Tue, 22 Jul 2025 12:41:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=mTAkC
- kg5NAr+U2BQKhXP4vrQ5SSm+w/ZkB8cpu8ucqg=; b=Sr1yqCfpxA+8tmpIoa+M+
- ci/wx/UOLEB9E9mxgrsAAQnGfjBKJWWLxqvfk8h/dNN3hmP6104kC6E22YZkzgvA
- oz04QjLQJ57otU047clRhBMZecp5lCUZuKrGCTKJxdWafmwbsNdJo07ChdWno3io
- +J/s84cCuJL7MliCgpc6gQuffOAF7buNjn85kf99dE0d2jZO5lgW4WtpOuZMAWzu
- ptoc3Ppu0fdb70/IdSNAlWQwiq18uAVV1lNYrVDfysh/aD4ZIIMD/VJqzEVxUASR
- +wziQTDajmKAzN8lLvxv1STvP8b8auuQGNjqk3aWGpMAfFzalDm6BS08IH+rgBVb
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=Rl49k
+ rj7ViSaTPPGMRA6RmJFt6EEl+djuAVv29tgwhw=; b=oNz7sp0LQr+4lGlyZeGs3
+ o+IF9y+RZ+vQL/6XLMgIr98ORCt7/l2TYEm6LbgU/ifgiMQw8M+I5/fzxPknlotM
+ iVcZbrpvVxI8ptLG9kOfdGovCK7LNK7KN7HOshi/RXu8Q6txt6n6LlVzFsV9vFXe
+ FmNdJlv14/HpwaGwMG2SP8/RXWQOSxTNMJj18W9adHpk8Eu+N00wZdz3Kx6OQ6YT
+ Grwpta1lh4zABundQytBDpLa750cuZ/M8phb9fKIzW7JJVv7Lxgc6X/CHfI5iL5J
+ ZZgn5axseqFKtJeQLsrO2DDyLqwLyQV+gPHmfWSUDXhsPd3xqk48vFXQZ9wRYM4u
+ g==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4805e2d2p8-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4805hpd584-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:33 +0000 (GMT)
+ Tue, 22 Jul 2025 12:41:38 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56MBf90X010337; Tue, 22 Jul 2025 12:41:32 GMT
+ with ESMTP id 56MBf90b010337; Tue, 22 Jul 2025 12:41:37 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4801t99gb4-1
+ 4801t99gdk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:32 +0000
+ Tue, 22 Jul 2025 12:41:37 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3r039536;
- Tue, 22 Jul 2025 12:41:32 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT41039536;
+ Tue, 22 Jul 2025 12:41:37 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4801t99g9h-3; Tue, 22 Jul 2025 12:41:32 +0000
+ 4801t99g9h-7; Tue, 22 Jul 2025 12:41:37 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
  jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
  eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 2/6] virtio-net: Reorder vmstate_virtio_net and helpers
-Date: Tue, 22 Jul 2025 12:41:23 +0000
-Message-ID: <20250722124127.2497406-3-jonah.palmer@oracle.com>
+Subject: [RFC 6/6] virtio-net: skip vhost_started assertion during iterative
+ migration
+Date: Tue, 22 Jul 2025 12:41:27 +0000
+Message-ID: <20250722124127.2497406-7-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250722124127.2497406-1-jonah.palmer@oracle.com>
 References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
@@ -77,18 +78,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507220104
-X-Authority-Analysis: v=2.4 cv=WaYMa1hX c=1 sm=1 tr=0 ts=687f86fd cx=c_pps
+X-Proofpoint-ORIG-GUID: NMkobAYHwjzZ4RjayJK_EdtlBXcSPSJh
+X-Authority-Analysis: v=2.4 cv=YY+95xRf c=1 sm=1 tr=0 ts=687f8702 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=Su2gMDwvtMPhgmBzyZ4A:9
-X-Proofpoint-GUID: xUTt2it9AJpkryHbhhZzSjwf3L0gGEq_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX4bhky5bqli0E
- bS429T/LqkVW9q/wgc4y8CkbV17MHl34sg34hU9uiaFx9JetLDIJgJIM6qb9Whp7fvYnUgSnmjx
- c9VQXePx6IVD45aHI6q1GQH1P9FDGZH5vzCE9IOvh36TOYLiaD46hktkUcSMpLqKznbOvpSgllm
- KaP0OA+flBsKRlOFYPtRgdMpUlVNmqoZMB9PpncQGlRe0sIBm4JZr0x+Pg++wN7gVNLipkt3a1v
- 3oALySrMeJMqeumhCHO4pCt5H4Y81I8N3ByJTLTkvimF6gchv4B6xhyh5qqRK30KmMB+MV2WShx
- WenYmjbdYKlKVVp+hueUpyNqFCOcLwIHQDAI6hImbwO6Ko5pEGhw3y5of5NZEpSmM/w01oVZ6Gl
- heBya98Zi7DWawlFMDVsRI9c6Bh+EH05yQcfgSRbRLsy0cdnzmAb1PtICQlTAO7T+JS4+Pt4
-X-Proofpoint-ORIG-GUID: xUTt2it9AJpkryHbhhZzSjwf3L0gGEq_
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=9V0WdlfnHfHVK-SkIusA:9
+X-Proofpoint-GUID: NMkobAYHwjzZ4RjayJK_EdtlBXcSPSJh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX/6SVOmdGDsLQ
+ QOBemMUWsXM5ZbIwT/F66I0UMZCLjSd6VY04i0gaij+rLJWmdAyPpdpgijEXnD8nzPj4o3XHcav
+ 9Q4fhuXfTmG2YphFYf1zn5vjRAd4fdf4EapRfP983viCM5yYw29judLhUGCRDoKTJI5dgsnWFDE
+ u9X6ujA7JFSd52fK4x5ZEuBFozz7TiK9+CwWK/Ffde24Da00MP1k/MEBvzcJVpkJ/FHmNJL5H0y
+ 6GowUQN01hq7GH8mG8snlyp537V5QNTlSx7Kpfzia683tNY+g+PNvDCfRcAyqa8nEg1VHaCMjc2
+ JIrcsqKoILc4Gj8x95XnWcP9GCjooS2zXVnOpJRrCEUtbQ7nGqNz74v4+Uyblq9/TbZADZFORdN
+ DlurALeds5FPR/Mz80wa6xsQz0T6iIU/xUhZ9pefLF+zM3nyJLDVAj6ICnyXqriWAAKjLJIH
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -114,123 +115,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reordering makes the vmstate_virtio_net available for use by future
-virtio-net SaveVMHandlers hooks that will need to be placed before
-virtio_net_device_realize.
+Initializes vhost-net support for iterative live migration by avoiding
+the assertion that vhost needs to be stopped before proceeding with
+sending the initial VMStateDescription for virtio-net.
+
+This should be okay to do since we only care about the static device
+state and not the dynamic ring states for the initial sending of the
+device state.
+
+After the iterative migration portion is finished and the source is
+stopped, we still assert that vhost is also stopped.
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/net/virtio-net.c | 90 ++++++++++++++++++++++-----------------------
- 1 file changed, 45 insertions(+), 45 deletions(-)
+ hw/net/virtio-net.c        | 23 ++++++++++++++++++++++-
+ include/hw/virtio/virtio.h |  1 +
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 221252e00a..93029104b3 100644
+index b7ac5e8278..07941f991e 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -3746,6 +3746,51 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
- }
- 
-+static int virtio_net_pre_save(void *opaque)
-+{
-+    VirtIONet *n = opaque;
-+
-+    /* At this point, backend must be stopped, otherwise
-+     * it might keep writing to memory. */
-+    assert(!n->vhost_started);
-+
-+    return 0;
-+}
-+
-+static bool primary_unplug_pending(void *opaque)
-+{
-+    DeviceState *dev = opaque;
-+    DeviceState *primary;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VirtIONet *n = VIRTIO_NET(vdev);
-+
-+    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_STANDBY)) {
-+        return false;
-+    }
-+    primary = failover_find_primary_device(n);
-+    return primary ? primary->pending_deleted_event : false;
-+}
-+
-+static bool dev_unplug_pending(void *opaque)
-+{
-+    DeviceState *dev = opaque;
-+    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(dev);
-+
-+    return vdc->primary_unplug_pending(dev);
-+}
-+
-+static const VMStateDescription vmstate_virtio_net = {
-+    .name = "virtio-net",
-+    .minimum_version_id = VIRTIO_NET_VM_VERSION,
-+    .version_id = VIRTIO_NET_VM_VERSION,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VIRTIO_DEVICE,
-+        VMSTATE_END_OF_LIST()
-+    },
-+    .pre_save = virtio_net_pre_save,
-+    .dev_unplug_pending = dev_unplug_pending,
-+};
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+@@ -3753,6 +3753,19 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+ static int virtio_net_pre_save(void *opaque)
  {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4016,51 +4061,6 @@ static void virtio_net_instance_init(Object *obj)
-     ebpf_rss_init(&n->ebpf_rss);
+     VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++
++    /*
++     * During iterative migration, vhost will still be active. However,
++     * this shouldn't be an issue since we don't care about the dynamic
++     * ring states at this point.
++     *
++     * The final migration at the end will still occur with vhost stopped
++     * and any inconsistencies will be overwritten.
++     */
++    if (vdev->migration && !vdev->migration->iterative_vmstate_sent) {
++        return 0;
++    }
+ 
+     /* At this point, backend must be stopped, otherwise
+      * it might keep writing to memory. */
+@@ -3809,11 +3822,16 @@ static bool virtio_net_is_active(void *opaque)
+ static int virtio_net_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    vdev->migration = g_new0(VirtIODevMigration, 1);
++    vdev->migration->iterative_vmstate_sent = false;
+ 
+     qemu_put_be64(f, VNET_MIG_F_INIT_STATE);
+     vmstate_save_state(f, &vmstate_virtio_net, n, NULL);
+     qemu_put_be64(f, VNET_MIG_F_END_DATA);
+ 
++    vdev->migration->iterative_vmstate_sent = true;
++
+     return 0;
  }
  
--static int virtio_net_pre_save(void *opaque)
--{
--    VirtIONet *n = opaque;
+@@ -3838,7 +3856,10 @@ static int virtio_net_save_live_complete_precopy(QEMUFile *f, void *opaque)
+ 
+ static void virtio_net_save_cleanup(void *opaque)
+ {
 -
--    /* At this point, backend must be stopped, otherwise
--     * it might keep writing to memory. */
--    assert(!n->vhost_started);
--
--    return 0;
--}
--
--static bool primary_unplug_pending(void *opaque)
--{
--    DeviceState *dev = opaque;
--    DeviceState *primary;
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
--    VirtIONet *n = VIRTIO_NET(vdev);
--
--    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_STANDBY)) {
--        return false;
--    }
--    primary = failover_find_primary_device(n);
--    return primary ? primary->pending_deleted_event : false;
--}
--
--static bool dev_unplug_pending(void *opaque)
--{
--    DeviceState *dev = opaque;
--    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(dev);
--
--    return vdc->primary_unplug_pending(dev);
--}
--
--static const VMStateDescription vmstate_virtio_net = {
--    .name = "virtio-net",
--    .minimum_version_id = VIRTIO_NET_VM_VERSION,
--    .version_id = VIRTIO_NET_VM_VERSION,
--    .fields = (const VMStateField[]) {
--        VMSTATE_VIRTIO_DEVICE,
--        VMSTATE_END_OF_LIST()
--    },
--    .pre_save = virtio_net_pre_save,
--    .dev_unplug_pending = dev_unplug_pending,
--};
--
- static const Property virtio_net_properties[] = {
-     DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
-                     VIRTIO_NET_F_CSUM, true),
++    VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    g_free(vdev->migration);
++    vdev->migration = NULL;
+ }
+ 
+ static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 06b6e6ba65..aa3f60cb7b 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -101,6 +101,7 @@ enum virtio_device_endian {
+ /* VirtIODevice iterative live migration data structure */
+ typedef struct VirtIODevMigration {
+     bool iterative_vmstate_loaded;
++    bool iterative_vmstate_sent;
+ } VirtIODevMigration;
+ 
+ /**
 -- 
 2.47.1
 
