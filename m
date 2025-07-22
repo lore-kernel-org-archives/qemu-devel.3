@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37220C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDEEC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueC7U-0001Uy-C4; Tue, 22 Jul 2025 08:29:27 -0400
+	id 1ueCK7-0002Uv-HY; Tue, 22 Jul 2025 08:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ueC7O-0001RW-7f
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:29:14 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ueC7I-0001Rs-SK
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:29:13 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-605b9488c28so9303185a12.2
- for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 05:29:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753187346; x=1753792146; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dU5Vuu2RbHdWWGd+esiFCg0Vx8GarEZq9jusKs2nt2Q=;
- b=WtMAzV3XgI/vMvjhOrWwccSWElAV/ozoSgttV2YARV25E22+94XzWOFgJwGzWnyCjO
- nZpVbWPV8ZiqdRCf2eN80Z4yf3AezpALgMgByJ7KVQOi9MouXkevWXkN/r/F+kawVcZx
- JI5KbWoKdMi0qAjuQqft+Rxy4sqsVTlIMcTyKxWTeP3H+ZRsnYn24DCvUpB/98duKcTv
- YRYS1y10HfzU/rWtivPSGqIb8+nJvjMFw/dFcb8fgcGn9c8ME92/XeBd/COObMEC6Zow
- bA4c2Rcu0u6GPomouWEXtjq/ikX0lryqrFOf9nWMpH1V6uhJdoS0XedG8oTO7PzL6Jot
- BKJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753187346; x=1753792146;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dU5Vuu2RbHdWWGd+esiFCg0Vx8GarEZq9jusKs2nt2Q=;
- b=nPYWuKp9K13i2ZCBy8yNAZF+36sE5uhgZcpdjqRBaMRzU0w3TdNtvYlnysxtVSIKkH
- USJHjfsq9mcFF/+30IDogjfoyZmV3kR/VDSi6bkr3vQyIpPlquHcB7n6h1uwVcPZ+Qz3
- qy7odsJ/Ixtqtjd8U00QCz9wjWCBCHJa+bD9/dKTwmJg97C5TW8ZAUrhJsyb5CghfMVx
- +o2Pt+USGOnTf4Ko9mqUXxAJniv/v40PStwmNC0olqJ4FWYIyEgUWsCBroE6TRoTyf2u
- /H2g214Z8L0U8NC/pVsSITQXe0wKMUXYp5y7TfBCU6IikOCOxkulmSeClbxToB0WluEz
- w8wg==
-X-Gm-Message-State: AOJu0YykrGPeyRHZsJU/g/OcYf/TWkc5aq9sXFCK8yJUo2i65/cSmZ+Q
- RBwTSfoEIK5aQ+fWVxUC4v7KC0NtqAoO+KFpOyhVb4Xi9TIBMoLpRsMKoA157jS6mIXmRuWkqiK
- 7c3ef66Idi1FdO9ixStCtP7gK5dS/ksccGJ56pJW9/Q==
-X-Gm-Gg: ASbGncsk/h9+KJAPub93k4sO3WOI8Pn8x/K6E0L/THKJLa7k171dH8Nm9hlKdel9//y
- tXt1qcWYVUmgJDCntAy36JjWsnlXf4Dq1UeHSxGSA9lFstRiqLxBLkMoy6+JTH8Dv+RQOvyD8YH
- 3YigCt1cq/Cg+jjAJH7doGFxqZnQ66za7pHDAA1w8YYPsLN7Rfpv/iLLbEVefi4HHP//1c61wP8
- xs4Pw==
-X-Google-Smtp-Source: AGHT+IHePfySFLH2TTpEZl6cGZKtFCmmu+kUzfqT2d31uzQFzvruq+jVsbw5ekj9m0jcB0g/MUS+EQCDhOQMoSHERAc=
-X-Received: by 2002:a50:cd4e:0:b0:612:a524:2b31 with SMTP id
- 4fb4d7f45d1cf-612a52432demr14021192a12.25.1753187345847; Tue, 22 Jul 2025
- 05:29:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1ueCJO-0002JA-8W
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:39 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1ueCJL-0006K4-DB
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:37 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TCk3031647;
+ Tue, 22 Jul 2025 12:41:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=SiUCTq2sDtERGyDvsyMh1YyOjA9Hw
+ rC/0CHq+bpL5MI=; b=dF1O6FndNxntbZbg4/9oGUBjufn7Wk++wY1tyL0Rl4IjE
+ hriAG+VVbpKf1kVAqzMOQzuo7bZe5FYSxs/oBx4JLOIJdtQ9FHrSKRiHMFAQdaIY
+ 5RMCuuKs6M+iKJcGW+jBqtV4jba2o3HODTIDZZUaCRFoIen1MrWUJaRuyrAnnJ6d
+ QwqUSqqskMWJGVEIqffNU7SYDgP9U2YDqXUTvqfs7SeOEq2Z6PQyJCAKewhdk15z
+ l0wY6CfMSH+KvIsAVF6UerJI8ovdbf1Kah0fbm4iYF0OlaF5UOMDAVPF/wJMOdbV
+ lbC64glrWzLYs0q5fYCp19YTgsbY4VpvZLb11LNeQ==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 480576n1d9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Jul 2025 12:41:31 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 56MCFGa7010247; Tue, 22 Jul 2025 12:41:30 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4801t99ga4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Jul 2025 12:41:30 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3n039536;
+ Tue, 22 Jul 2025 12:41:29 GMT
+Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
+ (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.252.67])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 4801t99g9h-1; Tue, 22 Jul 2025 12:41:29 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
+ jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
+ eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
+Subject: [RFC 0/6] virtio-net: initial iterative live migration support
+Date: Tue, 22 Jul 2025 12:41:21 +0000
+Message-ID: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-References: <20250722083507.678542-1-pbonzini@redhat.com>
-In-Reply-To: <20250722083507.678542-1-pbonzini@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 22 Jul 2025 15:28:39 +0300
-X-Gm-Features: Ac12FXxqk7gGztfIdI9ISyH8gEuAM5tiEwlLdSXgcbO1Yacw5Luyz7Exa_-7VHE
-Message-ID: <CAAjaMXagtnr-r6ou8Nfh4+x_TSt4BTUT_4RM7tMnjX7bU_ohAA@mail.gmail.com>
-Subject: Re: [PATCH] scripts: add script to help distro use global Rust
- packages
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, berrange@redhat.com, 
- ngompa@fedoraproject.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ spamscore=0 phishscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2507220104
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfXyqI+WZG+vOHs
+ zk8CNjtV2+bdiw9CDEj+A+9pzhPzhgckfXpz4xYP4BrBa01wEGnSaxZVNYX+Fhg+21PK+nuNw8Y
+ GQep/aIaumH86W6jkAEFT5eW/wfFqShzdRSmR0oMsMNO0LlEbhyhf8omo1DxgadiMxsDby893KT
+ hTuBLsoV8C55dtB3qxgRQ2960VHpULAvrvg/EVa76/Jl3oW70MXmJ1DbaNFOTa/43qJIveRdK60
+ FVv+qkRBIWOqf/exZ6dLjOgSqxV1glX76ItmuarOPe7beAZ+fV50iDGLS7sX7vrvpYMQiH7V59P
+ wpGNCf1DZQywmv3we3IdYnn0A2xO4rnDGbHL7PRg8B4v+XRJQZN9sG29/fnpzIRfIAygoXMh1KJ
+ 6Hgwo8fEx+tZS6Z5DvtqBbjggfBqgTKpuiYW7h0VDiRYA2TLroSacJ+BEoBcBaCUBob37Lr+
+X-Authority-Analysis: v=2.4 cv=doDbC0g4 c=1 sm=1 tr=0 ts=687f86fb cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=Wb1JkmetP80A:10 a=QJ7LjP0NDpSce9unQJYA:9
+X-Proofpoint-GUID: 6OEgey6YkgWRiqCR1F6wcVYp9XI4nnJQ
+X-Proofpoint-ORIG-GUID: 6OEgey6YkgWRiqCR1F6wcVYp9XI4nnJQ
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,279 +111,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 22, 2025 at 11:36=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->
-> Some distros prefer to avoid vendored crate sources, and instead use
-> local sources from e.g. ``/usr/share/cargo/registry``.  Add a
-> script, inspired by the Mesa spec file(*), that automatically
-> performs this task.  The script is meant to be invoked after unpacking
-> the QEMU tarball.
->
-> (*) This is the hack that Mesa uses:
->
->     export MESON_PACKAGE_CACHE_DIR=3D"%{cargo_registry}/"
->     %define inst_crate_nameversion() %(basename %{cargo_registry}/%{1}-*)
->     %define rewrite_wrap_file() sed -e "/source.*/d" -e "s/%{1}-.*/%{inst=
-_crate_nameversion %{1}}/" -i subprojects/%{1}.wrap
->     %rewrite_wrap_file proc-macro2
->     ... more %rewrite_wrap_file invocations follow ...
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/about/build-platforms.rst           |   8 +
->  scripts/get-wraps-from-cargo-registry.py | 191 +++++++++++++++++++++++
->  2 files changed, 199 insertions(+)
->  create mode 100755 scripts/get-wraps-from-cargo-registry.py
->
-> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.=
-rst
-> index 8ecbd6b26f7..8671c3be9cd 100644
-> --- a/docs/about/build-platforms.rst
-> +++ b/docs/about/build-platforms.rst
-> @@ -127,6 +127,14 @@ Rust build dependencies
->    (or newer) package.  The path to ``rustc`` and ``rustdoc`` must be
->    provided manually to the configure script.
->
-> +  Some distros prefer to avoid vendored crate sources, and instead use
-> +  local sources from e.g. ``/usr/share/cargo/registry``.  QEMU includes =
-a
-> +  script, ``scripts/get-wraps-from-cargo-registry.py``, that automatical=
-ly
-> +  performs this task.  The script is meant to be invoked after unpacking
-> +  the QEMU tarball.  QEMU also includes ``rust/Cargo.toml`` and
-> +  ``rust/Cargo.lock`` files that can be used to compute QEMU's build
-> +  dependencies, e.g. using ``cargo2rpm -p rust/Cargo.toml buildrequires`=
-`.
-> +
->  Optional build dependencies
->    Build components whose absence does not affect the ability to build QE=
-MU
->    may not be available in distros, or may be too old for our requirement=
-s.
-> diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps=
--from-cargo-registry.py
-> new file mode 100755
-> index 00000000000..6b76d00a6d9
-> --- /dev/null
-> +++ b/scripts/get-wraps-from-cargo-registry.py
-> @@ -0,0 +1,191 @@
-> +#!/usr/bin/env python3
-> +
-> +"""
-> +get-wraps-from-cargo-registry.py - Update Meson subprojects from a globa=
-l registry
-> +"""
-> +
-> +# Copyright (C) 2025 Red Hat, Inc.
-> +#
-> +# Author: Paolo Bonzini <pbonzini@redhat.com>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later. See the COPYING file in the top-level directory.
-> +
+This series is an RFC initial implementation of iterative live
+migration for virtio-net devices.
 
-Nit, missing:
+The main motivation behind implementing iterative migration for
+virtio-net devices is to start on heavy, time-consuming operations
+for the destination while the source is still active (i.e. before
+the stop-and-copy phase).
 
-# SPDX-License-Identifier:
+The motivation behind this RFC series specifically is to provide an
+initial framework for such an implementation and get feedback on the
+design and direction.
+-------
 
-> +import argparse
-> +import configparser
-> +import filecmp
-> +import glob
-> +import os
-> +import subprocess
-> +import sys
-> +
-> +
-> +def get_name_and_semver(namever: str) -> tuple[str, str]:
-> +    """Split a subproject name into its name and semantic version parts"=
-""
-> +    parts =3D namever.rsplit("-", 1)
-> +    if len(parts) !=3D 2:
-> +        return namever, ""
-> +
-> +    return parts[0], parts[1]
-> +
-> +
-> +class UpdateSubprojects:
-> +    cargo_registry: str
-> +    top_srcdir: str
-> +    dry_run: bool
-> +    changes: int =3D 0
-> +
-> +    def find_installed_crate(self, namever: str) -> str | None:
-> +        """Find installed crate matching name and semver prefix"""
-> +        name, semver =3D get_name_and_semver(namever)
-> +
-> +        # exact version match
-> +        path =3D os.path.join(self.cargo_registry, f"{name}-{semver}")
-> +        if os.path.exists(path):
-> +            return f"{name}-{semver}"
-> +
-> +        # semver match
-> +        matches =3D sorted(glob.glob(f"{path}.*"))
-> +        return os.path.basename(matches[0]) if matches else None
-> +
-> +    def compare_build_rs(self, orig_dir: str, registry_namever: str) -> =
-None:
-> +        """Warn if the build.rs in the original directory differs from t=
-he registry version."""
-> +        orig_build_rs =3D os.path.join(orig_dir, "build.rs")
-> +        new_build_rs =3D os.path.join(self.cargo_registry, registry_name=
-ver, "build.rs")
-> +
-> +        msg =3D None
-> +        if os.path.isfile(orig_build_rs) !=3D os.path.isfile(new_build_r=
-s):
-> +            if os.path.isfile(orig_build_rs):
-> +                msg =3D f"build.rs removed in {registry_namever}"
-> +            if os.path.isfile(new_build_rs):
-> +                msg =3D f"build.rs added in {registry_namever}"
-> +
-> +        elif os.path.isfile(orig_build_rs) and not filecmp.cmp(orig_buil=
-d_rs, new_build_rs):
-> +            msg =3D f"build.rs changed from {orig_dir} to {registry_name=
-ver}"
-> +
-> +        if msg:
-> +            print(f"=E2=9A=A0=EF=B8=8F  Warning: {msg}")
-> +            print("   This may affect the build process - please review =
-the differences.")
-> +
-> +    def update_subproject(self, wrap_file: str, registry_namever: str) -=
-> None:
-> +        """Modify [wrap-file] section to point to self.cargo_registry.""=
-"
-> +        assert wrap_file.endswith("-rs.wrap")
-> +        wrap_name =3D wrap_file[:-5]
-> +
-> +        env =3D os.environ.copy()
-> +        env["MESON_PACKAGE_CACHE_DIR"] =3D self.cargo_registry
-> +
-> +        config =3D configparser.ConfigParser()
-> +        config.read(wrap_file)
-> +        if "wrap-file" not in config:
-> +            return
-> +
-> +        # do not download the wrap, always use the local copy
-> +        orig_dir =3D config["wrap-file"]["directory"]
-> +        if os.path.exists(orig_dir) and orig_dir !=3D registry_namever:
-> +            self.compare_build_rs(orig_dir, registry_namever)
-> +        if self.dry_run:
-> +            if orig_dir =3D=3D registry_namever:
-> +                print(f"Will install {orig_dir} from registry.")
-> +            else:
-> +                print(f"Will replace {orig_dir} with {registry_namever}.=
-")
-> +            self.changes +=3D 1
-> +            return
-> +
-> +        config["wrap-file"]["directory"] =3D registry_namever
-> +        for key in list(config["wrap-file"].keys()):
-> +            if key.startswith("source"):
-> +                del config["wrap-file"][key]
-> +
-> +        # replace existing directory with installed version
-> +        if os.path.exists(orig_dir):
-> +            subprocess.run(
-> +                ["meson", "subprojects", "purge", "--confirm", wrap_name=
-],
-> +                cwd=3Dself.top_srcdir,
-> +                env=3Denv,
-> +                check=3DTrue,
-> +            )
-> +
-> +        with open(wrap_file, "w") as f:
-> +            config.write(f)
-> +
-> +        if orig_dir =3D=3D registry_namever:
-> +            print(f"Installing {orig_dir} from registry.")
-> +        else:
-> +            print(f"Replacing {orig_dir} with {registry_namever}.")
-> +
-> +        if orig_dir !=3D registry_namever:
-> +            patch_dir =3D config["wrap-file"]["patch_directory"]
-> +            patch_dir =3D os.path.join("packagefiles", patch_dir)
-> +            _, ver =3D registry_namever.rsplit("-", 1)
-> +            subprocess.run(
-> +                ["meson", "rewrite", "kwargs", "set", "project", "/", "v=
-ersion", ver],
-> +                cwd=3Dpatch_dir,
-> +                env=3Denv,
-> +                check=3DTrue,
-> +            )
-> +
-> +        subprocess.run(
-> +            ["meson", "subprojects", "download", wrap_name],
-> +            cwd=3Dself.top_srcdir,
-> +            env=3Denv,
-> +            check=3DTrue,
-> +        )
-> +
-> +    @staticmethod
-> +    def parse_cmdline() -> argparse.Namespace:
-> +        parser =3D argparse.ArgumentParser(
-> +            description=3D"Replace Meson subprojects with packages in a =
-Cargo registry"
-> +        )
-> +        parser.add_argument(
-> +            "--cargo-registry",
-> +            default=3Dos.environ.get("CARGO_REGISTRY"),
-> +            help=3D"Path to Cargo registry (default: CARGO_REGISTRY env =
-var)",
-> +        )
-> +        parser.add_argument(
-> +            "--dry-run",
-> +            action=3D"store_true",
-> +            default=3DFalse,
-> +            help=3D"Do not actually replace anything",
-> +        )
-> +
-> +        args =3D parser.parse_args()
-> +        if not args.cargo_registry:
-> +            print("error: CARGO_REGISTRY environment variable not set an=
-d --cargo-registry not provided")
-> +            sys.exit(1)
-> +
-> +        return args
-> +
-> +    def __init__(self, args: argparse.Namespace):
-> +        self.cargo_registry =3D args.cargo_registry
-> +        self.dry_run =3D args.dry_run
-> +        self.top_srcdir =3D os.getcwd()
-> +
-> +    def main(self) -> None:
-> +        if not os.path.exists("subprojects"):
-> +            print("'subprojects' directory not found, nothing to do.")
-> +            return
-> +
-> +        os.chdir("subprojects")
-> +        for wrap_file in sorted(glob.glob("*-rs.wrap")):
-> +            namever =3D wrap_file[:-8]  # Remove '-rs.wrap'
-> +
-> +            registry_namever =3D self.find_installed_crate(namever)
-> +            if not registry_namever:
-> +                print(f"No installed crate found for {wrap_file}")
-> +                continue
-> +
-> +            self.update_subproject(wrap_file, registry_namever)
-> +
-> +        if self.changes:
-> +            if self.dry_run:
-> +                print("Rerun without --dry-run to apply changes.")
-> +            else:
-> +                print(f"=E2=9C=A8 {self.changes} subproject(s) updated!"=
-)
-> +        else:
-> +            print("No changes.")
-> +
-> +
-> +if __name__ =3D=3D "__main__":
-> +    args =3D UpdateSubprojects.parse_cmdline()
-> +    UpdateSubprojects(args).main()
-> --
-> 2.50.1
->
->
+This implementation of iterative live migration for a virtio-net device
+is enabled via setting the migration capability 'virtio-iterative' to
+on for both the source & destination, e.g. (HMP):
+
+(qemu) migrate_set_capability virtio-iterative on
+
+The virtio-net device's SaveVMHandlers hooks are registered/unregistered
+during the device's realize/unrealize phase.
+
+Currently, this series only sends and loads the vmstate at the start of
+migration. The vmstate is still sent (again) during the stop-and-copy
+phase, as it is today, to handle any deltas in the state since it was
+initially sent. A future patch in this series could avoid having to
+re-send and re-load the entire state again and instead focus only on the
+deltas.
+
+There is a slight, modest improvement in guest-visible downtime from
+this series. More specifically, when using iterative live migration with
+a virtio-net device, the downtime contributed by migrating a virtio-net
+device decreased from ~3.2ms to ~1.4ms on average:
+
+Before:
+-------
+vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
+  instance_id=0 downtime=3594
+
+After:
+------
+vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
+  instance_id=0 downtime=1607
+
+This slight improvement is likely due to the initial vmstate_load_state
+call "warming up" pages in memory such that, when it's called a second
+time during the stop-and-copy phase, allocation and page-fault latencies
+are reduced.
+-------
+
+Comments, suggestions, etc. are welcome here.
+
+Jonah Palmer (6):
+  migration: Add virtio-iterative capability
+  virtio-net: Reorder vmstate_virtio_net and helpers
+  virtio-net: Add SaveVMHandlers for iterative migration
+  virtio-net: iter live migration - migrate vmstate
+  virtio,virtio-net: skip consistency check in virtio_load for iterative
+    migration
+  virtio-net: skip vhost_started assertion during iterative migration
+
+ hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++------
+ hw/virtio/virtio.c             |  32 +++--
+ include/hw/virtio/virtio-net.h |   8 ++
+ include/hw/virtio/virtio.h     |   7 +
+ migration/savevm.c             |   1 +
+ qapi/migration.json            |   7 +-
+ 6 files changed, 247 insertions(+), 54 deletions(-)
+
+-- 
+2.47.1
+
 
