@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCAAC83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EB7C83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue4jb-0001fw-Sr; Tue, 22 Jul 2025 00:36:13 -0400
+	id 1ue52h-0005bc-DI; Tue, 22 Jul 2025 00:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ue4Pf-00059o-9D
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:15:35 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ue4PZ-0006aV-6q
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:15:34 -0400
-Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56M4F42X014293
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 22 Jul 2025 13:15:04 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=QECXGxkjREu4c5L8Ye+cy1cRm/QqXyaiUBzQ6sLE15g=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753157704; v=1;
- b=YmS/8S7cv7WHouiDTfXoR3JlkNX9yjCLEGPabmLnotIbDtX5b4HR2EbjiRwOSU5o
- I+WEnzcU0DmXpULtR1ZISJ1cI/vQz6/aPqbaKiXs7NTMyC8z8rVIKH5a78zyjz95
- wsuYcZ0rjQMOUD9Hy2N0g9bXT/2jaHKPAu/OcfsSdF29W6K9Ub6UC1SIZoTVZVvx
- 7iZUXbVQfflJD2RoKNCX53iXapIPnd7PNdHQdo73AjbalXB+fd4ZIRY5jzp1Gxxw
- wDR46gE8QrXZxrDpJ+PVGiA/IbTlNF8vtp4NdPJcmTiZeKYuyqQyxiv2nC3vn9sE
- 0MHCMtlvV+K/4fej5C8FHg==
-Message-ID: <a4d95ebc-6076-4140-b412-281eb49cf756@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 22 Jul 2025 13:15:04 +0900
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ue52T-0005Yr-Hb
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:41 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ue52R-0004GF-5i
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:41 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-747e41d5469so5416137b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753160138; x=1753764938; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
+ b=SE+K72VBYL2UohlX/kGC4cI+IXvxm+BxMbnEHyElXFQtt/HcN2LRBgch3K+LXSzPuu
+ OgW+BFfxSl/4ucF0VCpGceI6/WQwYaOEMn9aOEr1szuYsTlmB+nyUO5MagncJWHMXx5+
+ nHoMN7BFOd8eB8vlSJqwxc9n9gshE51+dr+FTSgk/prSnOGSCRLOCWVbd7178tjyrxDc
+ kp4viMgg417FEGS/LP7ExFG+QDktrWl3zGrmqjQOwaAwFYJxFTa+7fCg6Wdf60lhKaBj
+ Wp5Efu9bjKkKdisD5f1fubhYKbopC30b7G2KV140qR4oY8trrDF9w6DpPFdxn1swDHfx
+ r2lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753160138; x=1753764938;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
+ b=BSj2oHsHrGTTJ+HtuBr3Ezy6QsbKSDQ9HbXvuwuxwn1nfepuD7KPqlKvF0r3UhXjtK
+ MdKJg0EXHROWzZ656E8srHzeCWqCTIIXdx8Q9HQz/c9fppNqVNgZnlHmcouCJsk6Vrn0
+ ZtojfPkcussUI2JGQBeUyzMNTiTXAsv84YXqX7sIbpCqG94ZBwWIUl+Dw1BVw632iwn1
+ 5Lmixujk9sNGkeeURZv831EbKQ/MkFqs1Fh7B8LicgVNiVQA+ZV13MSPNx7F82Auvc46
+ JorLeZ0gNkr8BPaUwIW/szrAFO4Tod52G1NkibeZkeGLS2R0G0mW2LTZGX+lsQOLXu/I
+ GOkg==
+X-Gm-Message-State: AOJu0YxoQy8JUw0H5NnOyyXHar9q04kzZ1lcftpxqSRZ5rJvldU52wWb
+ QgFvLHHAp5dYFWRNyoxm2MSMynlmtRMfkmAEvdWxahg53aOzivur5eAmqb6XBnhn7LUxJBOmsQ2
+ CckIn
+X-Gm-Gg: ASbGnctpHWABDhb+56tltBtDKc5gPPy8eip51CCrHsG3HXIOskYCR/wa2hZwUAWNuI2
+ 7uUWBOSgBacm4VEIHij8PTumq0R9USRL4CiJ1lKRWhkM+ZMKXxP3RYVX7m631mruicBmtXs2vbf
+ Dc6GtXno85vvvJfRjq6CbK8bd8mXqQVtUIKPBF66CYnpU+biappIxPKYLmEeeAHtIKb8bZ5ZJZ4
+ NvxuPNhlYYH2RRfoIkW2D/f65H8lWP/JDo3dQ4qvEYQnqYlKlfMm5C184KWouD8IrLY6Dh607LY
+ bPoZjHrafTnN88ekgiqEt3TVckfU+gnBsBgRGPewwsjtiJQLN/lPnf84mxPc9vEnOBL+kNHWdAd
+ olV2tcjUN6OlWFXdtpJmkQw==
+X-Google-Smtp-Source: AGHT+IG+0QzQH0+l+E9PIDtaRMy4Ey2eZkRjqrWSCJb95s9Rj+QrURb7yLdSL4DNpqy5Ed4hhZk88w==
+X-Received: by 2002:a05:6a20:4324:b0:203:bb3b:5f1d with SMTP id
+ adf61e73a8af0-23810d53c0amr33099499637.6.1753160137721; 
+ Mon, 21 Jul 2025 21:55:37 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Jul 2025 21:55:37 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 2/6] contrib/plugins/uftrace: add trace-sample option
+Date: Mon, 21 Jul 2025 21:55:23 -0700
+Message-ID: <20250722045527.1164751-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
+References: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 12/13] net: implement tunnel probing
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,309 +107,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/18 17:52, Paolo Abeni wrote:
-> Tap devices support GSO over UDP tunnel offload. Probe for such
-> feature in a similar manner to other offloads.
-> 
-> GSO over UDP tunnel needs to be enabled in addition to a "plain"
-> offload (TSO or USO).
-> 
-> No need to check separately for the outer header checksum offload:
-> the kernel is going to support both of them or none.
-> 
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> ---
-> v2 -> v3:
->    - use bool type for tap_probe_has_tunnel()
->    - rebased on top of 2deec9ab7d ("virtio-net: Move
->          virtio_net_get_features() down")
->    - _array -> _ex
-> 
-> v1 -> v2:
->    - peer_has_tunnel return a bool
->    - move TUN_F definition in net/tun-linux.h
-> ---
->   hw/net/virtio-net.c | 37 +++++++++++++++++++++++++++++++++++++
->   include/net/net.h   |  3 +++
->   net/net.c           |  9 +++++++++
->   net/tap-bsd.c       |  5 +++++
->   net/tap-linux.c     | 11 +++++++++++
->   net/tap-linux.h     |  9 +++++++++
->   net/tap-solaris.c   |  5 +++++
->   net/tap-stub.c      |  5 +++++
->   net/tap.c           | 11 +++++++++++
->   net/tap_int.h       |  1 +
->   10 files changed, 96 insertions(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 53413ec4d5..70c85f7f77 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
->       return qemu_has_uso(qemu_get_queue(n->nic)->peer);
->   }
->   
-> +static bool peer_has_tunnel(VirtIONet *n)
-> +{
-> +    if (!peer_has_vnet_hdr(n)) {
-> +        return false;
-> +    }
-> +
-> +    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
-> +}
-> +
->   static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->                                          int version_1, int hash_report)
->   {
-> @@ -3070,6 +3079,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
->           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
->   
-> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> +        virtio_clear_feature_ex(features,
-> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> +        virtio_clear_feature_ex(features,
-> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> +
->           virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
->       }
->   
-> @@ -3083,6 +3099,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->           virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
->       }
->   
-> +    if (!peer_has_tunnel(n)) {
-> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
-> +        virtio_clear_feature_ex(features,
-> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
-> +        virtio_clear_feature_ex(features,
-> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
-> +    }
-> +
->       if (!get_vhost_net(nc->peer)) {
->           if (!use_own_hash) {
->               virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
-> @@ -4137,6 +4162,10 @@ static const VMStateDescription vmstate_virtio_net = {
->       .dev_unplug_pending = dev_unplug_pending,
->   };
->   
-> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
-> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_DWORD(_bit)],    \
-> +                      (_bit) % 64, _defval)
+usage: trace-sample=N
 
-I suggest moving this to: include/hw/virtio/virtio-features.h
+Allow to use sampling (every N instructions) for tracking the stack.
+We implement a fast mode, where instrumentation is only per tb, and
+simply dump current stack, and unwind new one, instead of tracking every
+frame pointer change.
 
-> +
->   static const Property virtio_net_properties[] = {
->       DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
->                       VIRTIO_NET_F_CSUM, true),
-> @@ -4245,6 +4274,14 @@ static const Property virtio_net_properties[] = {
->                                     rss_data.specified_hash_types,
->                                     VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
->                                     ON_OFF_AUTO_AUTO),
-> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_ex,
-> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
-> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_ex,
-> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
-> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_ex,
-> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
-> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_ex,
-> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
->   };
->   
->   static void virtio_net_class_init(ObjectClass *klass, const void *data)
-> diff --git a/include/net/net.h b/include/net/net.h
-> index 48ba333d02..9a9084690d 100644
-> --- a/include/net/net.h
-> +++ b/include/net/net.h
-> @@ -65,6 +65,7 @@ typedef void (NetClientDestructor)(NetClientState *);
->   typedef RxFilterInfo *(QueryRxFilter)(NetClientState *);
->   typedef bool (HasUfo)(NetClientState *);
->   typedef bool (HasUso)(NetClientState *);
-> +typedef bool (HasTunnel)(NetClientState *);
->   typedef bool (HasVnetHdr)(NetClientState *);
->   typedef bool (HasVnetHdrLen)(NetClientState *, int);
->   typedef void (SetOffload)(NetClientState *, const NetOffloads *);
-> @@ -95,6 +96,7 @@ typedef struct NetClientInfo {
->       NetPoll *poll;
->       HasUfo *has_ufo;
->       HasUso *has_uso;
-> +    HasTunnel *has_tunnel;
->       HasVnetHdr *has_vnet_hdr;
->       HasVnetHdrLen *has_vnet_hdr_len;
->       SetOffload *set_offload;
-> @@ -197,6 +199,7 @@ void qemu_set_info_str(NetClientState *nc,
->   void qemu_format_nic_info_str(NetClientState *nc, uint8_t macaddr[6]);
->   bool qemu_has_ufo(NetClientState *nc);
->   bool qemu_has_uso(NetClientState *nc);
-> +bool qemu_has_tunnel(NetClientState *nc);
->   bool qemu_has_vnet_hdr(NetClientState *nc);
->   bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
->   void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
-> diff --git a/net/net.c b/net/net.c
-> index 63872b6855..9536184a0c 100644
-> --- a/net/net.c
-> +++ b/net/net.c
-> @@ -522,6 +522,15 @@ bool qemu_has_uso(NetClientState *nc)
->       return nc->info->has_uso(nc);
->   }
->   
-> +bool qemu_has_tunnel(NetClientState *nc)
-> +{
-> +    if (!nc || !nc->info->has_tunnel) {
-> +        return false;
-> +    }
-> +
-> +    return nc->info->has_tunnel(nc);
-> +}
-> +
->   bool qemu_has_vnet_hdr(NetClientState *nc)
->   {
->       if (!nc || !nc->info->has_vnet_hdr) {
-> diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-> index 86b6edee94..751d4c819c 100644
-> --- a/net/tap-bsd.c
-> +++ b/net/tap-bsd.c
-> @@ -217,6 +217,11 @@ int tap_probe_has_uso(int fd)
->       return 0;
->   }
->   
-> +bool tap_probe_has_tunnel(int fd)
-> +{
-> +    return false;
-> +}
-> +
->   void tap_fd_set_vnet_hdr_len(int fd, int len)
->   {
->   }
-> diff --git a/net/tap-linux.c b/net/tap-linux.c
-> index a1c58f74f5..e2628be798 100644
-> --- a/net/tap-linux.c
-> +++ b/net/tap-linux.c
-> @@ -196,6 +196,17 @@ int tap_probe_has_uso(int fd)
->       return 1;
->   }
->   
-> +bool tap_probe_has_tunnel(int fd)
-> +{
-> +    unsigned offload;
-> +
-> +    offload = TUN_F_CSUM | TUN_F_TSO4 | TUN_F_UDP_TUNNEL_GSO;
-> +    if (ioctl(fd, TUNSETOFFLOAD, offload) < 0) {
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
->   void tap_fd_set_vnet_hdr_len(int fd, int len)
->   {
->       if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
-> diff --git a/net/tap-linux.h b/net/tap-linux.h
-> index 9a58cecb7f..8cd6b5874b 100644
-> --- a/net/tap-linux.h
-> +++ b/net/tap-linux.h
-> @@ -53,4 +53,13 @@
->   #define TUN_F_USO4    0x20    /* I can handle USO for IPv4 packets */
->   #define TUN_F_USO6    0x40    /* I can handle USO for IPv6 packets */
->   
-> +/* I can handle TSO/USO for UDP tunneled packets */
-> +#define TUN_F_UDP_TUNNEL_GSO       0x080
-> +
-> +/*
-> + * I can handle TSO/USO for UDP tunneled packets requiring csum offload for
-> + * the outer header
-> + */
-> +#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
-> +
->   #endif /* QEMU_TAP_LINUX_H */
-> diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-> index 833c066bee..ac1ae25761 100644
-> --- a/net/tap-solaris.c
-> +++ b/net/tap-solaris.c
-> @@ -222,6 +222,11 @@ int tap_probe_has_uso(int fd)
->       return 0;
->   }
->   
-> +bool tap_probe_has_tunnel(int fd)
-> +{
-> +    return false;
-> +}
-> +
->   void tap_fd_set_vnet_hdr_len(int fd, int len)
->   {
->   }
-> diff --git a/net/tap-stub.c b/net/tap-stub.c
-> index 67d14ad4d5..f7a5e0c163 100644
-> --- a/net/tap-stub.c
-> +++ b/net/tap-stub.c
-> @@ -52,6 +52,11 @@ int tap_probe_has_uso(int fd)
->       return 0;
->   }
->   
-> +bool tap_probe_has_tunnel(int fd)
-> +{
-> +    return false;
-> +}
-> +
->   void tap_fd_set_vnet_hdr_len(int fd, int len)
->   {
->   }
-> diff --git a/net/tap.c b/net/tap.c
-> index b49db19f83..23c6c118e7 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -76,6 +76,7 @@ typedef struct TAPState {
->       bool using_vnet_hdr;
->       bool has_ufo;
->       bool has_uso;
-> +    bool has_tunnel;
->       bool enabled;
->       VHostNetState *vhost_net;
->       unsigned host_vnet_hdr_len;
-> @@ -241,6 +242,14 @@ static bool tap_has_uso(NetClientState *nc)
->       return s->has_uso;
->   }
->   
-> +static bool tap_has_tunnel(NetClientState *nc)
-> +{
-> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> +
-> +    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-> +    return s->has_tunnel;
-> +}
-> +
->   static bool tap_has_vnet_hdr(NetClientState *nc)
->   {
->       TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> @@ -369,6 +378,7 @@ static NetClientInfo net_tap_info = {
->       .cleanup = tap_cleanup,
->       .has_ufo = tap_has_ufo,
->       .has_uso = tap_has_uso,
-> +    .has_tunnel = tap_has_tunnel,
->       .has_vnet_hdr = tap_has_vnet_hdr,
->       .has_vnet_hdr_len = tap_has_vnet_hdr_len,
->       .set_offload = tap_set_offload,
-> @@ -398,6 +408,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
->       s->using_vnet_hdr = false;
->       s->has_ufo = tap_probe_has_ufo(s->fd);
->       s->has_uso = tap_probe_has_uso(s->fd);
-> +    s->has_tunnel = tap_probe_has_tunnel(s->fd);
->       s->enabled = true;
->       tap_set_offload(&s->nc, &ol);
->       /*
-> diff --git a/net/tap_int.h b/net/tap_int.h
-> index f8bbe1cb0c..b76a05044b 100644
-> --- a/net/tap_int.h
-> +++ b/net/tap_int.h
-> @@ -38,6 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
->   int tap_probe_vnet_hdr(int fd, Error **errp);
->   int tap_probe_has_ufo(int fd);
->   int tap_probe_has_uso(int fd);
-> +bool tap_probe_has_tunnel(int fd);
->   void tap_fd_set_offload(int fd, const NetOffloads *ol);
->   void tap_fd_set_vnet_hdr_len(int fd, int len);
->   int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 111 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 105 insertions(+), 6 deletions(-)
+
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 4ca6d3fd68d..a626030b7da 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -44,6 +44,9 @@ typedef struct {
+ 
+ typedef struct Cpu {
+     uint64_t insn_count;
++    uint64_t sample_insn_count;
++    uint64_t sample_timestamp;
++    callstack *sample_cs;
+     trace *trace;
+     callstack *cs;
+     GArray *callstacks; /* callstack *callstacks[] */
+@@ -70,6 +73,7 @@ enum uftrace_record_type {
+ };
+ 
+ static struct qemu_plugin_scoreboard *score;
++static uint64_t trace_sample;
+ static CpuOps arch_ops;
+ 
+ static void uftrace_write_map(bool system_emulation)
+@@ -199,6 +203,13 @@ static callstack *callstack_new(void)
+     return cs;
+ }
+ 
++static callstack *callstack_clone(const callstack *cs)
++{
++    callstack *clone = g_malloc0(sizeof(callstack));
++    clone->s = g_array_copy(cs->s);
++    return clone;
++}
++
+ static void callstack_free(callstack *cs)
+ {
+     g_array_free(cs->s, true);
+@@ -391,6 +402,26 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
+     }
+ }
+ 
++static void cpu_trace_last_sample(Cpu *cpu, uint64_t timestamp)
++{
++    if (!cpu->sample_cs) {
++        return;
++    }
++    uint64_t elapsed = timestamp - cpu->sample_timestamp;
++    uint64_t middle_timestamp = cpu->sample_timestamp + (elapsed / 2);
++    trace_exit_stack(cpu->trace, cpu->sample_cs, middle_timestamp);
++    callstack_free(cpu->sample_cs);
++    cpu->sample_cs = NULL;
++    trace_enter_stack(cpu->trace, cpu->cs, middle_timestamp);
++}
++
++static void cpu_set_new_sample(Cpu *cpu, uint64_t timestamp)
++{
++    cpu->sample_insn_count = 0;
++    cpu->sample_cs = callstack_clone(cpu->cs);
++    cpu->sample_timestamp = timestamp;
++}
++
+ static uint64_t cpu_get_timestamp(const Cpu *cpu)
+ {
+     return cpu->insn_count;
+@@ -451,6 +482,13 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     callstack *cs = cpu->cs;
+     trace *t = cpu->trace;
+ 
++    if (trace_sample && cpu->sample_insn_count >= trace_sample) {
++        cpu_trace_last_sample(cpu, timestamp);
++        cpu_set_new_sample(cpu, timestamp);
++    }
++
++    bool trace_change = !trace_sample;
++
+     uint64_t fp = cpu->ops.get_frame_pointer(cpu);
+     if (!fp && callstack_empty(cs)) {
+         /*
+@@ -459,7 +497,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+          */
+         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
+                                                .pc = pc});
+-        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+@@ -473,7 +513,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     if (fp == caller.frame_pointer) {
+         /* return */
+         callstack_entry e = callstack_pop(cs);
+-        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+@@ -482,27 +524,65 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+         /* call */
+         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
+                 .pc = pc});
+-        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+     /* discontinuity, exit current stack and unwind new one */
+-    trace_exit_stack(t, cs, timestamp);
++    if (trace_change) {
++        trace_exit_stack(t, cs, timestamp);
++    }
+     callstack_clear(cs);
+ 
+     cpu_unwind_stack(cpu, fp, pc);
+-    trace_enter_stack(t, cs, timestamp);
++    if (trace_change) {
++        trace_enter_stack(t, cs, timestamp);
++    }
++}
++
++static void sample_callstack(unsigned int cpu_index, void *udata)
++{
++    uint64_t pc = (uintptr_t) udata;
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    uint64_t timestamp = cpu_get_timestamp(cpu);
++
++    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
++    callstack_clear(cpu->cs);
++
++    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
++    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
++
++    /* reset counter */
++    cpu->sample_insn_count = 0;
+ }
+ 
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
+     size_t n_insns = qemu_plugin_tb_n_insns(tb);
++    uintptr_t tb_pc = qemu_plugin_tb_vaddr(tb);
+ 
+     qemu_plugin_u64 insn_count = qemu_plugin_scoreboard_u64_in_struct(
+                                       score, Cpu, insn_count);
++    qemu_plugin_u64 sample_insn_count = qemu_plugin_scoreboard_u64_in_struct(
++                                            score, Cpu, sample_insn_count);
++
++    if (trace_sample) {
++        /* We can do a light instrumentation, per tb only */
++        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++            tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
++        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++            tb, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, n_insns);
++        qemu_plugin_register_vcpu_tb_exec_cond_cb(
++            tb, sample_callstack, QEMU_PLUGIN_CB_R_REGS,
++            QEMU_PLUGIN_COND_GE, sample_insn_count, trace_sample,
++            (void *) tb_pc);
++        return;
++    }
+ 
+     /*
+-     * We instrument all instructions following one that might have updated
++     * We now instrument all instructions following one that might have updated
+      * the frame pointer. We always instrument first instruction in block, as
+      * last executed instruction, in previous tb, may have modified it.
+      */
+@@ -511,6 +591,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+         qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
++        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++                insn, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, 1);
+ 
+         if (instrument_insn) {
+             uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+@@ -536,6 +618,7 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+     cpu->buf = g_byte_array_new();
+     cpu->callstacks = g_array_new(0, 0, sizeof(callstack *));
+     cpu->traces = g_array_new(0, 0, sizeof(trace *));
++    cpu->sample_timestamp = cpu_get_timestamp(cpu);
+ 
+     g_assert(vcpu_index < 1000);
+     uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
+@@ -613,6 +696,22 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info,
+                                            int argc, char **argv)
+ {
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "trace-sample") == 0) {
++            gint64 value = g_ascii_strtoll(tokens[1], NULL, 10);
++            if (value <= 0) {
++                fprintf(stderr, "bad trace-sample value: %s\n", tokens[1]);
++                return -1;
++            }
++            trace_sample = value;
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
+     if (!strcmp(info->target_name, "aarch64")) {
+         arch_ops = aarch64_ops;
+     } else {
+-- 
+2.47.2
 
 
