@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE33C87FC5
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581E5C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueCKV-00032f-FS; Tue, 22 Jul 2025 08:42:47 -0400
+	id 1ueCKq-0003cK-QM; Tue, 22 Jul 2025 08:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJV-0002Oy-9W
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:48 -0400
+ id 1ueCJQ-0002Lh-Ge
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:45 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJQ-0006LR-2t
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:43 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAZb002504;
- Tue, 22 Jul 2025 12:41:37 GMT
+ id 1ueCJL-0006KE-O1
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:40 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAKD024432;
+ Tue, 22 Jul 2025 12:41:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=udCm3
- rQJ9v1mNX6dwFqc4R9vJOWnpGCGOSOWjfUFE1Q=; b=g2Uu8W9iEbUZ6NuYZASUv
- tIlWHoybJjY4+OgoU9UWRqGaJHeIG1UbhTUJEpitP7MdG8HZCubl708RqJhCnoPd
- uooB8/rweZNZKJdu89RYuz+7WoKsmOaWZXTshRP4cHxtisuk2KWQLHzJPBqsSqz8
- /u6l/quD6Hzrt4Zp/nMCvrBOFJ7q3FLpqIStb0ipVPEGF7mHK3SKCGef3q2hUpE1
- iBYSftPffDLeukI/GobyikQ2RGJEHck0heXjvR4e5vF7dXXDFGD3X3+hd9Uuct2u
- iLp8NCd6V8imUWDFxT7zcltwQIzRWxOHLKfW2M1jf3g9nmKqOygd9DFMIJ3RzOB3
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=IsLv/
+ 76PdAm9fyknh/wENGfwWc4cVutv2fWza08LdOQ=; b=T62OvdVeBU01GH5Ts4TbB
+ Wta9et7yTHl585jkXz09lBrHkgDNBxvhigHZsFacL600e8svk5E3HEQqAKeJLmur
+ 8xWmyvFwb1E+Lj2McHnovbKpeIl4qy3iQ5ntnT8o5foxrru0CUccnVtEV/kt6i2Z
+ i1gJOC6FhWx8OHhhtyOPWeOUE8gejl8niB7ohjBlX3tIAvt7+9D3ekvF43r0xFQy
+ v9uz1Nb2G2Q/wsFZnOgrRS9piVh6HCvZ0N160KS9dw/0+yX75GEgkrRW26lyyhEQ
+ qJCd6Qa+NdPq9x3crQ+/9d+VrcgWIwNcdocxK5Eg1DvnqF1cBScIl6b8a42Jdtmf
+ Q==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4805hpd580-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48057qw70s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:37 +0000 (GMT)
+ Tue, 22 Jul 2025 12:41:32 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56MCHZTZ010356; Tue, 22 Jul 2025 12:41:36 GMT
+ with ESMTP id 56MC5xQE010475; Tue, 22 Jul 2025 12:41:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4801t99gcw-1
+ 4801t99gah-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:36 +0000
+ Tue, 22 Jul 2025 12:41:31 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3x039536;
- Tue, 22 Jul 2025 12:41:35 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3p039536;
+ Tue, 22 Jul 2025 12:41:30 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4801t99g9h-6; Tue, 22 Jul 2025 12:41:35 +0000
+ 4801t99g9h-2; Tue, 22 Jul 2025 12:41:30 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
  jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
  eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 5/6] virtio,
- virtio-net: skip consistency check in virtio_load for iterative
- migration
-Date: Tue, 22 Jul 2025 12:41:26 +0000
-Message-ID: <20250722124127.2497406-6-jonah.palmer@oracle.com>
+Subject: [RFC 1/6] migration: Add virtio-iterative capability
+Date: Tue, 22 Jul 2025 12:41:22 +0000
+Message-ID: <20250722124127.2497406-2-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250722124127.2497406-1-jonah.palmer@oracle.com>
 References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
@@ -78,18 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507220104
-X-Proofpoint-ORIG-GUID: _COdjGfAkEcheAkQqFVhqtdxyTzAtyDj
-X-Authority-Analysis: v=2.4 cv=YY+95xRf c=1 sm=1 tr=0 ts=687f8701 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=MNRgmNZl c=1 sm=1 tr=0 ts=687f86fc cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=ncbDbCRbhD_Ka3aqogoA:9
-X-Proofpoint-GUID: _COdjGfAkEcheAkQqFVhqtdxyTzAtyDj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfXxRrh7JVNjT/U
- GZDyMg5+GarRZduLMBrYMOb85rkDSwQbSlUyNCPAUdD9ktdEJjwZBg2SnO4UEQzwaPBYxw7mJ/c
- vgNkhNVQ8T8WTgYS7d8V6ac63IzzHOWGmiohp0PsMAEiH5b3WdWz1oV8prAFt8+3aWtrh9JG/TE
- a6/sCDNFka8qFwLow9lSkPEEXgFv9T2ooW2XBcqd9RzsrMe24zaX9+1pMhFDFMmdxcGYLNTODQY
- IACUa3VuRUoqrw45Hu/2yf5utCwMy3pdibUKCshS1Dp6HZT98WVDNgBCalk0oj/XHaytLXLLYJK
- QoKCfUowlzzxedsgVu6hJRW/Rj6y4re3Y1fUiMQUmo2CRiLiQLAgET19U9DjosqdtWUSjEwmbDn
- DPQI6xmfpYP0KNOg28dLfpDvqchF37/Ex2yQP3iSQu+MjvuRlAHcphNTG3S4eTbDCqxuarbV
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=ipTBKrNiw92s7om4A18A:9
+X-Proofpoint-ORIG-GUID: vYjqTppBd9-jBcwyS9McPHnwNLoDS2Nf
+X-Proofpoint-GUID: vYjqTppBd9-jBcwyS9McPHnwNLoDS2Nf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX5/tbHfIJfJ7R
+ XJUy+eMzoL/A2KRzmYWT+CWMDCr7bNAc2MTBT6Xh3qFbZ1JLheIaQRBLLun/lP+Rk/M4mtfTfbP
+ 1CXWTGjGq1dF1a2ZcL+gcxY0aKPCMps5Mvd2051f5cGWm5BlYhjQDC6Wly3idJhTP/ul1m1crel
+ lVIh+7jbCN5WcfnH9sJ/rET/hPUMKZGRGUOuAQgwL7UXsx+TI/Fs9YAF+Dn0ra1h7DgzCR0QONU
+ USM4bSa6wiOX1n91jXfz2NN3NZWD2D2mCbi4PXdnw9knhNMVACLgPglkseT6d9a3r2gnqUEzqqM
+ rfjGTYsbifk6iGpLRJcjsFstQ92aHPtcDSdnnVVMtAibx99YXaxa/qnYZ8bepnV4yjVKAyFMmf9
+ dDYx4nvXcbztcddX4pU4wnduR4d9JkgriO0ILAs8GCo/Qe0TVHR2fol/+XnsKOkICdiH1t3B
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -112,161 +111,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonah Palmer <jonah.palmer@oracle.com>
-From:  Jonah Palmer via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Iterative live migration for virtio-net sends an initial
-VMStateDescription while the source is still active. Because data
-continues to flow for virtio-net, the guest's avail index continues to
-increment after last_avail_idx had already been sent. This causes the
-destination to often see something like this from virtio_error():
+Adds a new migration capability 'virtio-iterative' that will allow
+virtio devices, where supported, to iteratively migrate configuration
+changes that occur during the migration process.
 
-VQ 0 size 0x100 Guest index 0x0 inconsistent with Host index 0xc: delta 0xfff4
+This capability is added to the validated capabilities list to ensure
+both the source and destination support it before enabling.
 
-This patch suppresses this consistency check if we're loading the
-initial VMStateDescriptions via iterative migration and unsuppresses
-it for the stop-and-copy phase when the final VMStateDescriptions
-(carrying the correct indices) are loaded.
+The capability defaults to off to maintain backward compatibility.
 
-A temporary VirtIODevMigration migration data structure is introduced here to
-represent the iterative migration process for a VirtIODevice. For now it
-just holds a flag to indicate whether or not the initial
-VMStateDescription was sent during the iterative live migration process.
+To enable the capability via HMP:
+(qemu) migrate_set_capability virtio-iterative on
+
+To enable the capability via QMP:
+{"execute": "migrate-set-capabilities", "arguments": {
+     "capabilities": [
+        { "capability": "virtio-iterative", "state": true }
+     ]
+  }
+}
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/net/virtio-net.c        | 13 +++++++++++++
- hw/virtio/virtio.c         | 32 ++++++++++++++++++++++++--------
- include/hw/virtio/virtio.h |  6 ++++++
- 3 files changed, 43 insertions(+), 8 deletions(-)
+ migration/savevm.c  | 1 +
+ qapi/migration.json | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 86a6fe5b91..b7ac5e8278 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3843,12 +3843,19 @@ static void virtio_net_save_cleanup(void *opaque)
+diff --git a/migration/savevm.c b/migration/savevm.c
+index bb04a4520d..40a2189866 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -279,6 +279,7 @@ static bool should_validate_capability(int capability)
+     switch (capability) {
+     case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
+     case MIGRATION_CAPABILITY_MAPPED_RAM:
++    case MIGRATION_CAPABILITY_VIRTIO_ITERATIVE:
+         return true;
+     default:
+         return false;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 4963f6ca12..8f042c3ba5 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -479,6 +479,11 @@
+ #     each RAM page.  Requires a migration URI that supports seeking,
+ #     such as a file.  (since 9.0)
+ #
++# @virtio-iterative: Enable iterative migration for virtio devices, if
++#     the device supports it. When enabled, and where supported, virtio
++#     devices will track and migrate configuration changes that may
++#     occur during the migration process. (Since 10.1)
++#
+ # Features:
+ #
+ # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+@@ -498,7 +503,7 @@
+            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+            'validate-uuid', 'background-snapshot',
+            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+-           'dirty-limit', 'mapped-ram'] }
++           'dirty-limit', 'mapped-ram', 'virtio-iterative'] }
  
- static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-+    VirtIONet *n = opaque;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+    vdev->migration = g_new0(VirtIODevMigration, 1);
-+    vdev->migration->iterative_vmstate_loaded = false;
-+
-     return 0;
- }
- 
- static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
- {
-     VirtIONet *n = opaque;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+    VirtIODevMigration *mig = vdev->migration;
-     uint64_t flag;
- 
-     flag = qemu_get_be64(f);
-@@ -3861,6 +3868,7 @@ static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
-         case VNET_MIG_F_INIT_STATE:
-         {
-             vmstate_load_state(f, &vmstate_virtio_net, n, VIRTIO_NET_VM_VERSION);
-+            mig->iterative_vmstate_loaded = true;
-             break;
-         }
-         default:
-@@ -3875,6 +3883,11 @@ static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
- 
- static int virtio_net_load_cleanup(void *opaque)
- {
-+    VirtIONet *n = opaque;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+    g_free(vdev->migration);
-+    vdev->migration = NULL;
-+
-     return 0;
- }
- 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 5534251e01..68957ee7d1 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3222,6 +3222,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-     int32_t config_len;
-     uint32_t num;
-     uint32_t features;
-+    bool inconsistent_indices;
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
-@@ -3365,6 +3366,16 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         if (vdev->vq[i].vring.desc) {
-             uint16_t nheads;
- 
-+           /*
-+            * Ring indices will be inconsistent during iterative migration. The actual
-+            * indices will be sent later during the stop-and-copy phase.
-+            */
-+            if (vdev->migration) {
-+                inconsistent_indices = !vdev->migration->iterative_vmstate_loaded;
-+            } else {
-+                inconsistent_indices = false;
-+            }
-+
-             /*
-              * VIRTIO-1 devices migrate desc, used, and avail ring addresses so
-              * only the region cache needs to be set up.  Legacy devices need
-@@ -3384,14 +3395,19 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-                 continue;
-             }
- 
--            nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
--            /* Check it isn't doing strange things with descriptor numbers. */
--            if (nheads > vdev->vq[i].vring.num) {
--                virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
--                             "inconsistent with Host index 0x%x: delta 0x%x",
--                             i, vdev->vq[i].vring.num,
--                             vring_avail_idx(&vdev->vq[i]),
--                             vdev->vq[i].last_avail_idx, nheads);
-+            if (!inconsistent_indices) {
-+                nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
-+                /* Check it isn't doing strange things with descriptor numbers. */
-+                if (nheads > vdev->vq[i].vring.num) {
-+                    virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
-+                                 "inconsistent with Host index 0x%x: delta 0x%x",
-+                                 i, vdev->vq[i].vring.num,
-+                                 vring_avail_idx(&vdev->vq[i]),
-+                                 vdev->vq[i].last_avail_idx, nheads);
-+                    inconsistent_indices = true;
-+                }
-+            }
-+            if (inconsistent_indices) {
-                 vdev->vq[i].used_idx = 0;
-                 vdev->vq[i].shadow_avail_idx = 0;
-                 vdev->vq[i].inuse = 0;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 214d4a77e9..06b6e6ba65 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -98,6 +98,11 @@ enum virtio_device_endian {
-     VIRTIO_DEVICE_ENDIAN_BIG,
- };
- 
-+/* VirtIODevice iterative live migration data structure */
-+typedef struct VirtIODevMigration {
-+    bool iterative_vmstate_loaded;
-+} VirtIODevMigration;
-+
- /**
-  * struct VirtIODevice - common VirtIO structure
-  * @name: name of the device
-@@ -151,6 +156,7 @@ struct VirtIODevice
-     bool disable_legacy_check;
-     bool vhost_started;
-     VMChangeStateEntry *vmstate;
-+    VirtIODevMigration *migration;
-     char *bus_name;
-     uint8_t device_endian;
-     /**
+ ##
+ # @MigrationCapabilityStatus:
 -- 
 2.47.1
 
