@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3F6C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186ADC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue52o-0005ka-JQ; Tue, 22 Jul 2025 00:56:02 -0400
+	id 1ue52s-0005nu-94; Tue, 22 Jul 2025 00:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52U-0005Ze-7w
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:44 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1ue52b-0005df-UH
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:55 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52Q-0004G9-QM
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:41 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b34a71d9208so3447731a12.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:38 -0700 (PDT)
+ id 1ue52U-0004H8-FB
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:46 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b31e076f714so4280971a12.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753160137; x=1753764937; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753160141; x=1753764941; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pKUtWEEVUYGKmPHteBMDUYjRr3TkCuYDcFLmPPv/IAQ=;
- b=XpHGSqCMvXAqmDkiivCg2pZZ73GQK57TMaSdvifmkTcNUM+kxHtK5jn/SEhIS6JIis
- FdRqZ0f3E1OXBjD4M2ZCKM2kLcHQiW4ToTLQHvT5X9V3apodHTWsVCWKeTLP2ljGOnaP
- rA/VBlNWwg9F8gau7ozEnn4SXS4H3fDltJEuFbKb7i7fYL7bb2aEYcWbIXBypPULcHDm
- BA1Un4D7HoP7pBeejQmpkHcobYgKgzCud+EZCaUQ5PpzyIcy9i1Ta4CgOoInJksxOpma
- entTGHeej0uW5O4wYxuwT6pgYl964ENq9RdPbJIN/FdhWH+m8oghNAgnVwwInT8AD4mi
- kmvg==
+ bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
+ b=oM1DzS0m5WQNiwpd9HfmGnqJ2ZDUuue86MfRRKro4Zi8BygBuYRLBiLigIwcnwJqG3
+ iY10Jykg9MSX4w/MLXysx7etSM/2+xJpT6Z8W2Dcex6lFdaSJO806mCBvrPL2qrvtfVU
+ rz2VvPyzBXXANoHmyXnigEZZXu53MGXNZ3YOb/4UehU+udWOvFWaYyHpGrsXziQ1gxmu
+ 0MfDoqEL6QozjzZ/C8d1hdDC5fwMSE95tUzXMydoH8DcrTDLODah1MDLHDtReFbEhIpf
+ 8gMj/RZ9TfguLPuXNdyhq2WoHGt50xxLBjOF8oUhKossuOJWKrG6gZJMFo5msyBUg1m+
+ UQAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753160137; x=1753764937;
+ d=1e100.net; s=20230601; t=1753160141; x=1753764941;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pKUtWEEVUYGKmPHteBMDUYjRr3TkCuYDcFLmPPv/IAQ=;
- b=uLeJdIzqM2Ny9nVsT5RDFbg2uuhw8Ehg/v1DaJYV6rG6EH5ypUoLdE4nHKDOAXtW5T
- l/yQYWU3vhsRuM2JC8YDAsvx6hArBjejd+K5SOOAv/kny+uBM7vxvEdJv3umf0R+h/Gw
- uqOUfLAlmpF744UgmoiRPrVoiNO5EaC+yZPHhXHLwjSgtTw6OuYnO5isYemteevIFdIT
- Tq6KXzFEHO/HoPw1qdtusObuskNVQg+qmQLhNPqtsXv8FyWjeokjR339h1R/68oRtpn9
- XGRfRyd7ZYVUx8vwGluh6E2VC5pp2m8cvXqTdZgXC7w0l7t3lZDpmPq75utYNoirfkSY
- 9rJg==
-X-Gm-Message-State: AOJu0YzujjP22N2wd2HwF9glcMnX3loefTKe4TryCWqQAskM2ZhgHH4S
- JuX16tp5Ns+LB8D4gyFklpIzdBNEj9hQSmFMRPmm1RLrPold4HvST/EjeSS3eYBzSq5Wrs8GMU3
- slzaa
-X-Gm-Gg: ASbGncs2tjfVmSOVURIZqLokwNlO8TUMAI5HT7lMorWMCXWGswqytJmEq2zunR/Be/l
- c4xIT8VXFLTepSHYDPG4WA/vU4g9ylg78stwrflkN3X+Zts8uGv/UWIYZRSk/HFBgwf6hTVAIdK
- C5bov+lPgZ7K3XggRv9gLny3Lojm8UDOvV2u0s7jSMxP/p1phYqk9gWp1dymm+LEpdO330DuqLj
- HPnvBiF1cKFWEf5hhP1LyiaJgI21+he+H9CPHts0r3RKHN+n6+A9LSfFOjlEHwdociU16KqvkcZ
- ROzdC5E/hVJ0gNgXQERQUp19iq9dnGnU3HpMFa1mLUkQGJGyf3w/3ol5i75AUTIaQxmG10kzMph
- 1rh1AHrC3LdO7kt3mIhV1ew==
-X-Google-Smtp-Source: AGHT+IE/7HgQ6HuJRKfsHrzq/FaNedNgCLhQaUsJIo1XdZoqqPIEkN8lmYq44h9jpxvjmIG3HUN8OA==
-X-Received: by 2002:a17:90b:4985:b0:311:ea13:2e63 with SMTP id
- 98e67ed59e1d1-31c9f47c919mr29675967a91.13.1753160136773; 
- Mon, 21 Jul 2025 21:55:36 -0700 (PDT)
+ bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
+ b=v9qdqZn3uX+fuQzR70WPDzK0wNiH5qFMce1ETsx9VOsjkp7JD36MmEWsd39E2ZErkI
+ VNu+U7YmHkNuiFVi1nH1f6AgQWo/Nc4NoIq5jt0VQRurGxiIiJywjlkvZJ1AbkS2prM5
+ Ql0DQ01g8YHpjKQOlGLwKQvG2AkMiroCqfP522SAywHAOqYwRSv1ppWcEUdoLRRsWueH
+ 7tA43FiW7ykNfrDknHms86lP4iHpZDH/t//g0NYqdqrecDmzZSNngc14rX1ecInJ+kRv
+ 847y8+gRYbeID7Tamvo4ZMgG4gn+RUpyCH8NKfV4EWThDhvHOfMAxqOiUIR407WJdmWb
+ OlaA==
+X-Gm-Message-State: AOJu0YxU5GUum45u3jAhO0J+wgGiqPGFGzuIGd2naN3CGlqxKFW6HGvA
+ kvzxRd23dKI9VUGTzKEPQhNzbq7vIiK3iY6ZShy+qm91q5uBtQTo6u9qC15lEokVl2WYIvAiG1V
+ 2/PDC
+X-Gm-Gg: ASbGncvpD6ybpGECP0WrtukRb9CdqPrelH2q+k+kGlGZBilWb5DeobyfXu/t9iEZ5jJ
+ P3Pq6ajIcTRT/G8U6tmw2Dey0nvoBjpbYOT1h6ZYan/7vvIZkR1cKRxhQIZ0/Oq5TFLrZtGxioe
+ GS5mqI5o/i7EnQkng3fO6VP3KlLCKrQyytDuoiPYMSv4wdeqxEwf8XZqDqMQlE5meU7xSV993Av
+ VOVVSTd71lBDS4fN0BMyGfmDTaTwmess/Ui4z3hbFoDZvnQg7zq5i7K5+MdEQEhixMb5z3a4A6g
+ wDXvjgcN6Ypm+1X7GORfACjhGZXAPFKMya9fPBCUwkWqTO293dMO6NiKeS3JVzhqjeFr9DBpJQN
+ SQL+k4sR6k/HUMcd1Q6n+Bg==
+X-Google-Smtp-Source: AGHT+IEDCuBSbX9XZo4DiCbxY3XxmlhDLekqSzM/TK6YiYZV6Et4cux2UWWGmnX0l+YhE5oG5n9vng==
+X-Received: by 2002:a17:90b:3910:b0:311:83d3:fd9c with SMTP id
+ 98e67ed59e1d1-31e3dfcfbb0mr3110650a91.0.1753160140513; 
+ Mon, 21 Jul 2025 21:55:40 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.35
+ 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 21:55:36 -0700 (PDT)
+ Mon, 21 Jul 2025 21:55:40 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>,
@@ -75,16 +75,16 @@ Cc: Gustavo Romero <gustavo.romero@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/6] contrib/plugins/uftrace: new uftrace plugin
-Date: Mon, 21 Jul 2025 21:55:22 -0700
-Message-ID: <20250722045527.1164751-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 5/6] contrib/plugins/uftrace_symbols.py
+Date: Mon, 21 Jul 2025 21:55:26 -0700
+Message-ID: <20250722045527.1164751-6-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
 References: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,670 +107,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This plugin generates a binary trace compatible with:
-https://github.com/namhyung/uftrace
+usage:  contrib/plugins/uftrace_symbols.py \
+        --prefix-symbols \
+        arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
+        arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
+        arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
+        u-boot/u-boot:0x60000000 \
+        u-boot/u-boot.relocated:0x000000023f6b6000 \
+        linux/vmlinux
 
-It tracks frame pointer during execution, detecting function
-calls/returns and works in system and user mode.
+Will generate symbols and memory mapping files for uftrace, allowing to
+have an enhanced trace, instead of raw addresses.
 
-It's implemented for aarch64 only (adding other architecture should
-be trivial, especially x86_64 that share the same stack layout).
+It takes a collection of elf files, and automatically find all their
+symbols, and generate an ordered memory map based on that.
+
+This script uses the python (native) pyelftools module.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace.c   | 630 ++++++++++++++++++++++++++++++++++++
- contrib/plugins/meson.build |   3 +-
- 2 files changed, 632 insertions(+), 1 deletion(-)
- create mode 100644 contrib/plugins/uftrace.c
+ contrib/plugins/uftrace_symbols.py | 152 +++++++++++++++++++++++++++++
+ 1 file changed, 152 insertions(+)
+ create mode 100755 contrib/plugins/uftrace_symbols.py
 
-diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-new file mode 100644
-index 00000000000..4ca6d3fd68d
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+new file mode 100755
+index 00000000000..b49e03203c8
 --- /dev/null
-+++ b/contrib/plugins/uftrace.c
-@@ -0,0 +1,630 @@
-+/*
-+ * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+ *
-+ * Generates a trace compatible with uftrace (similar to uftrace record).
-+ * https://github.com/namhyung/uftrace
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <qemu-plugin.h>
-+#include <glib.h>
-+#include <stdio.h>
-+#include <sys/stat.h>
-+#include <sys/time.h>
-+#include <time.h>
-+#include <unistd.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+typedef struct {
-+    GArray *s;
-+} callstack;
-+
-+typedef struct {
-+    uint64_t pc;
-+    uint64_t frame_pointer;
-+} callstack_entry;
-+
-+typedef struct {
-+    GArray *t;
-+    GString *path;
-+    GString *name;
-+    uint32_t id;
-+} trace;
-+
-+typedef struct Cpu Cpu;
-+
-+typedef struct {
-+    void (*init)(Cpu *cpu);
-+    void (*end)(Cpu *cpu);
-+    uint64_t (*get_frame_pointer)(Cpu *cpu);
-+    bool (*does_insn_modify_frame_pointer)(const char *disas);
-+} CpuOps;
-+
-+typedef struct Cpu {
-+    uint64_t insn_count;
-+    trace *trace;
-+    callstack *cs;
-+    GArray *callstacks; /* callstack *callstacks[] */
-+    GArray *traces; /* trace *traces [] */
-+    GByteArray *buf;
-+    CpuOps ops;
-+    void *arch;
-+} Cpu;
-+
-+typedef struct {
-+    struct qemu_plugin_register *reg_fp;
-+} Aarch64Cpu;
-+
-+typedef struct {
-+    uint64_t timestamp;
-+    uint64_t data;
-+} uftrace_entry;
-+
-+enum uftrace_record_type {
-+    UFTRACE_ENTRY,
-+    UFTRACE_EXIT,
-+    UFTRACE_LOST,
-+    UFTRACE_EVENT
-+};
-+
-+static struct qemu_plugin_scoreboard *score;
-+static CpuOps arch_ops;
-+
-+static void uftrace_write_map(bool system_emulation)
-+{
-+    const char *path = "./uftrace.data/sid-0.map";
-+
-+    if (system_emulation && access(path, F_OK) == 0) {
-+        /* do not erase existing map in system emulation, as a custom one might
-+         * already have been generated by uftrace_symbols.py */
-+        return;
-+    }
-+
-+    FILE *sid_map = fopen(path, "w");
-+    g_assert(sid_map);
-+
-+    if (system_emulation) {
-+        fprintf(sid_map,
-+                "# map stack on highest address possible, to prevent uftrace\n"
-+                "# from considering any kernel address\n");
-+        fprintf(sid_map,
-+          "ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]\n");
-+    } else {
-+        /* in user mode, copy /proc/self/maps instead */
-+        FILE *self_map = fopen("/proc/self/maps", "r");
-+        g_assert(self_map);
-+        for (;;) {
-+            int c = fgetc(self_map);
-+            if (c == EOF) {
-+                break;
-+            }
-+            fputc(c, sid_map);
-+        }
-+        fclose(self_map);
-+    }
-+    fclose(sid_map);
-+}
-+
-+static void uftrace_write_task(const GArray *traces)
-+{
-+    FILE *task = fopen("./uftrace.data/task.txt", "w");
-+    g_assert(task);
-+    for (int i = 0; i < traces->len; ++i) {
-+        trace *t = g_array_index(traces, trace*, i);
-+        fprintf(task, "SESS timestamp=0.0 pid=%"PRIu32" sid=0 exename=\"%s\"\n",
-+                t->id, t->name->str);
-+        fprintf(task, "TASK timestamp=0.0 tid=%"PRIu32" pid=%"PRIu32"\n",
-+                t->id, t->id);
-+    }
-+    fclose(task);
-+}
-+
-+static void uftrace_write_info(const GArray *traces)
-+{
-+    g_autoptr(GString) taskinfo_tids = g_string_new("taskinfo:tids=");
-+    for (int i = 0; i < traces->len; ++i) {
-+        trace *t = g_array_index(traces, trace*, i);
-+        const char *delim = i > 0 ? "," : "";
-+        g_string_append_printf(taskinfo_tids, "%s%"PRIu32, delim, t->id);
-+    }
-+
-+    g_autoptr(GString) taskinfo_nr_tid = g_string_new("taskinfo:nr_tid=");
-+    g_string_append_printf(taskinfo_nr_tid, "%d", traces->len);
-+
-+    FILE *info = fopen("./uftrace.data/info", "w");
-+    g_assert(info);
-+    /*
-+     * $ uftrace dump --debug
-+     * uftrace file header: magic         = 4674726163652100
-+     * uftrace file header: version       = 4
-+     * uftrace file header: header size   = 40
-+     * uftrace file header: endian        = 1 (little)
-+     * ftrace file header: class          = 2 (64 bit)
-+     * uftrace file header: features      = 0x1263 (PLTHOOK | ...
-+     * uftrace file header: info          = 0x7bff (EXE_NAME | ...
-+     *  <0000000000000000>: 46 74 72 61 63 65 21 00  04 00 00 00 28 00 01 02
-+     *  <0000000000000010>: 63 12 00 00 00 00 00 00  ff 7b 00 00 00 00 00 00
-+     *  <0000000000000020>: 00 04 00 00 00 00 00 00
-+     */
-+    const uint8_t header[] = {0x46, 0x74, 0x72, 0x61, 0x63, 0x65, 0x21, 0x00,
-+                              0x04, 0x00, 0x00, 0x00, 0x28, 0x00, 0x01, 0x02,
-+                              0x63, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+                              0xff, 0x7b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+                              0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-+    fwrite(header, sizeof(header), 1, info);
-+    const char *info_data[] = {
-+        "exename:from_qemu",
-+        "build_id:0123456789abcdef0123456789abcdef01234567",
-+        "exit_status:0",
-+        "cmdline:uftrace record qemu",
-+        "cpuinfo:lines=2",
-+        "cpuinfo:nr_cpus=1 / 1 (online/possible)",
-+        "cpuinfo:desc=Intel 8086",
-+        "meminfo:1.0 / 1.0 GB (free / total)",
-+        "osinfo:lines=3",
-+        "osinfo:kernel=Linux 6.12.33",
-+        "osinfo:hostname=pc",
-+        "osinfo:distro=\"Debian GNU/Linux 13 (trixie)\"",
-+        "taskinfo:lines=2",
-+        taskinfo_nr_tid->str,
-+        taskinfo_tids->str,
-+        "usageinfo:lines=6",
-+        "usageinfo:systime=0.000000",
-+        "usageinfo:usrtime=0.000000",
-+        "usageinfo:ctxsw=0 / 0 (voluntary / involuntary)",
-+        "usageinfo:maxrss=8016",
-+        "usageinfo:pagefault=0 / 0 (major / minor)",
-+        "usageinfo:iops=0 / 0 (read / write)",
-+        "loadinfo:0.0 / 0.0 / 0.0",
-+        "record_date:Mon Jan  1 00:00:00 2025",
-+        "elapsed_time:1000000000000.0 sec",
-+        "pattern_type:regex",
-+        "uftrace_version:v0.17 ( x86_64 dwarf python3 luajit tui perf sched dynamic kernel )",
-+        "utc_offset:1751552954",
-+        0};
-+    const char **info_data_it = info_data;
-+    while (*(info_data_it)) {
-+        fprintf(info, "%s\n", *info_data_it);
-+        ++info_data_it;
-+    }
-+    fclose(info);
-+}
-+
-+static callstack *callstack_new(void)
-+{
-+    callstack *cs = g_malloc0(sizeof(callstack));
-+    cs->s = g_array_new(false, false, sizeof(callstack_entry));
-+    return cs;
-+}
-+
-+static void callstack_free(callstack *cs)
-+{
-+    g_array_free(cs->s, true);
-+    cs->s = NULL;
-+    g_free(cs);
-+}
-+
-+static size_t callstack_depth(const callstack *cs)
-+{
-+    return cs->s->len;
-+}
-+
-+static size_t callstack_empty(const callstack *cs)
-+{
-+    return callstack_depth(cs) == 0;
-+}
-+
-+static void callstack_clear(callstack *cs)
-+{
-+    g_array_set_size(cs->s, 0);
-+}
-+
-+static const callstack_entry *callstack_at(const callstack *cs, size_t depth)
-+{
-+    g_assert(depth > 0);
-+    g_assert(depth <= callstack_depth(cs));
-+    return &g_array_index(cs->s, callstack_entry, depth - 1);
-+}
-+
-+static callstack_entry callstack_top(const callstack *cs)
-+{
-+    if (callstack_depth(cs) >= 1) {
-+        return *callstack_at(cs, callstack_depth(cs));
-+    }
-+    return (callstack_entry){};
-+}
-+
-+static callstack_entry callstack_caller(const callstack *cs)
-+{
-+    if (callstack_depth(cs) >= 2) {
-+        return *callstack_at(cs, callstack_depth(cs) - 1);
-+    }
-+    return (callstack_entry){};
-+}
-+
-+static void callstack_push(callstack *cs, callstack_entry e)
-+{
-+    g_array_append_val(cs->s, e);
-+}
-+
-+static callstack_entry callstack_pop(callstack *cs)
-+{
-+    g_assert(!callstack_empty(cs));
-+    callstack_entry e = callstack_top(cs);
-+    g_array_set_size(cs->s, callstack_depth(cs) - 1);
-+    return e;
-+}
-+
-+static trace *trace_new(uint32_t id, GString *name)
-+{
-+    trace *t = g_malloc0(sizeof(trace));
-+    t->t = g_array_new(false, false, sizeof(uftrace_entry));
-+    t->path = g_string_new(NULL);
-+    g_string_append_printf(t->path, "./uftrace.data/%"PRIu32".dat", id);
-+    t->name = g_string_new(name->str);
-+    t->id = id;
-+    return t;
-+}
-+
-+static void trace_free(trace *t)
-+{
-+    g_assert(t->t->len == 0);
-+    g_array_free(t->t, true);
-+    t->t = NULL;
-+    g_string_free(t->path, true);
-+    t->path = NULL;
-+    g_string_free(t->name, true);
-+    t->name = NULL;
-+    g_free(t);
-+}
-+
-+static void trace_flush(trace *t, bool append)
-+{
-+    int create_dir = g_mkdir_with_parents("./uftrace.data",
-+                                          S_IRWXU | S_IRWXG | S_IRWXO);
-+    g_assert(create_dir == 0);
-+    FILE *dat = fopen(t->path->str, append ? "a" : "w");
-+    g_assert(dat);
-+    GArray *data = t->t;
-+    if (data->len) {
-+        fwrite(data->data, data->len, sizeof(uftrace_entry), dat);
-+    }
-+    fclose(dat);
-+    g_array_set_size(data, 0);
-+}
-+
-+static void trace_add_entry(trace *t, uint64_t timestamp, uint64_t pc,
-+                            size_t depth, enum uftrace_record_type type)
-+{
-+    /* libmcount/record.c:record_event */
-+    const uint64_t record_magic = 0x5;
-+    uint64_t data = type | record_magic << 3;
-+    data += depth << 6;
-+    data += pc << 16;
-+    uftrace_entry e = {.timestamp = timestamp, .data = data};
-+    g_array_append_val(t->t, e);
-+    if (t->t->len * sizeof(uftrace_entry) > 32 * 1024 * 1024) {
-+        /* flush every 32 MB */
-+        trace_flush(t, true);
-+    }
-+}
-+
-+static void trace_enter_function(trace *t, uint64_t timestamp,
-+                                 uint64_t pc, size_t depth)
-+{
-+    trace_add_entry(t, timestamp, pc, depth, UFTRACE_ENTRY);
-+}
-+
-+static void trace_exit_function(trace *t, uint64_t timestamp,
-+                                uint64_t pc, size_t depth)
-+{
-+    trace_add_entry(t, timestamp, pc, depth, UFTRACE_EXIT);
-+}
-+
-+static void trace_enter_stack(trace *t, callstack *cs, uint64_t timestamp)
-+{
-+    for (size_t depth = 1; depth <= callstack_depth(cs); ++depth) {
-+        trace_enter_function(t, timestamp, callstack_at(cs, depth)->pc, depth);
-+    }
-+}
-+
-+static void trace_exit_stack(trace *t, callstack *cs, uint64_t timestamp)
-+{
-+    for (size_t depth = callstack_depth(cs); depth > 0; --depth) {
-+        trace_exit_function(t, timestamp, callstack_at(cs, depth)->pc, depth);
-+    }
-+}
-+
-+static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
-+{
-+    GByteArray *buf = cpu->buf;
-+    g_byte_array_set_size(buf, 0);
-+    size_t sz = qemu_plugin_read_register(reg, buf);
-+    g_assert(sz == 8);
-+    g_assert(buf->len == 8);
-+    return *((uint64_t *) buf->data);
-+}
-+
-+static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
-+{
-+    g_assert(addr);
-+    GByteArray *buf = cpu->buf;
-+    g_byte_array_set_size(buf, 0);
-+    bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
-+    if (!read) {
-+        return 0;
-+    }
-+    g_assert(buf->len == 8);
-+    return *((uint64_t *) buf->data);
-+}
-+
-+static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
-+{
-+    g_assert(callstack_empty(cpu->cs));
-+
-+    #define UNWIND_STACK_MAX_DEPTH 1024
-+    callstack_entry unwind[UNWIND_STACK_MAX_DEPTH];
-+    size_t depth = 0;
-+    do {
-+        /* check we don't have an infinite stack */
-+        for (size_t i = 0; i < depth; ++i) {
-+            if (frame_pointer == unwind[i].frame_pointer) {
-+                break;
-+            }
-+        }
-+        callstack_entry e = {.frame_pointer = frame_pointer, .pc = pc};
-+        unwind[depth] = e;
-+        depth++;
-+        if (frame_pointer) {
-+            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
-+        }
-+        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
-+    } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
-+    #undef UNWIND_STACK_MAX_DEPTH
-+
-+    /* push it from bottom to top */
-+    while (depth) {
-+        callstack_push(cpu->cs, unwind[depth - 1]);
-+        --depth;
-+    }
-+}
-+
-+static uint64_t cpu_get_timestamp(const Cpu *cpu)
-+{
-+    return cpu->insn_count;
-+}
-+
-+static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
-+{
-+    Aarch64Cpu *cpu = cpu_->arch;
-+    return cpu_read_register64(cpu_, cpu->reg_fp);
-+}
-+
-+static void aarch64_init(Cpu *cpu_)
-+{
-+    Aarch64Cpu *cpu = g_malloc0(sizeof(Aarch64Cpu));
-+    cpu_->arch = cpu;
-+    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-+    for (int i = 0; i < regs->len; ++i) {
-+        qemu_plugin_reg_descriptor *reg;
-+        reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-+        if (!strcmp(reg->name, "x29")) {
-+            cpu->reg_fp = reg->handle;
-+        }
-+    }
-+    if (!cpu->reg_fp) {
-+        fprintf(stderr, "uftrace plugin: frame pointer register (x29) is not "
-+                        "available. Please use an AArch64 cpu (or -cpu max).\n");
-+        g_abort();
-+    }
-+}
-+
-+static void aarch64_end(Cpu *cpu)
-+{
-+    g_free(cpu->arch);
-+}
-+
-+static bool aarch64_does_insn_modify_frame_pointer(const char *disas)
-+{
-+    /*
-+     * Check if current instruction concerns fp register "x29".
-+     * We add a prefix space to make sure we don't match addresses dump
-+     * in disassembly.
-+     */
-+    return strstr(disas, " x29");
-+}
-+
-+static CpuOps aarch64_ops = {
-+    .init = aarch64_init,
-+    .end = aarch64_end,
-+    .get_frame_pointer = aarch64_get_frame_pointer,
-+    .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
-+};
-+
-+static void track_callstack(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t pc = (uintptr_t) udata;
-+    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
-+    uint64_t timestamp = cpu_get_timestamp(cpu);
-+    callstack *cs = cpu->cs;
-+    trace *t = cpu->trace;
-+
-+    uint64_t fp = cpu->ops.get_frame_pointer(cpu);
-+    if (!fp && callstack_empty(cs)) {
-+        /*
-+         * We simply push current pc. Note that we won't detect symbol change as
-+         * long as a proper call does not happen.
-+         */
-+        callstack_push(cs, (callstack_entry){.frame_pointer = fp,
-+                                               .pc = pc});
-+        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        return;
-+    }
-+
-+    callstack_entry top = callstack_top(cs);
-+    if (fp == top.frame_pointer) {
-+        /* same function */
-+        return;
-+    }
-+
-+    callstack_entry caller = callstack_caller(cs);
-+    if (fp == caller.frame_pointer) {
-+        /* return */
-+        callstack_entry e = callstack_pop(cs);
-+        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
-+        return;
-+    }
-+
-+    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
-+    if (caller_fp == top.frame_pointer) {
-+        /* call */
-+        callstack_push(cs, (callstack_entry){.frame_pointer = fp,
-+                .pc = pc});
-+        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        return;
-+    }
-+
-+    /* discontinuity, exit current stack and unwind new one */
-+    trace_exit_stack(t, cs, timestamp);
-+    callstack_clear(cs);
-+
-+    cpu_unwind_stack(cpu, fp, pc);
-+    trace_enter_stack(t, cs, timestamp);
-+}
-+
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-+
-+    qemu_plugin_u64 insn_count = qemu_plugin_scoreboard_u64_in_struct(
-+                                      score, Cpu, insn_count);
-+
-+    /*
-+     * We instrument all instructions following one that might have updated
-+     * the frame pointer. We always instrument first instruction in block, as
-+     * last executed instruction, in previous tb, may have modified it.
-+     */
-+    bool instrument_insn = true;
-+    for (int i = 0; i < n_insns; i++) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+
-+        if (instrument_insn) {
-+            uintptr_t pc = qemu_plugin_insn_vaddr(insn);
-+            qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
-+                                                   QEMU_PLUGIN_CB_R_REGS,
-+                                                   (void *) pc);
-+            instrument_insn = false;
-+        }
-+
-+        char *disas = qemu_plugin_insn_disas(insn);
-+        if (arch_ops.does_insn_modify_frame_pointer(disas)) {
-+            instrument_insn = true;
-+        }
-+    }
-+}
-+
-+static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-+{
-+    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
-+    cpu->ops = arch_ops;
-+
-+    cpu->ops.init(cpu);
-+    cpu->buf = g_byte_array_new();
-+    cpu->callstacks = g_array_new(0, 0, sizeof(callstack *));
-+    cpu->traces = g_array_new(0, 0, sizeof(trace *));
-+
-+    g_assert(vcpu_index < 1000);
-+    uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
-+
-+    g_autoptr(GString) trace_name = g_string_new(NULL);
-+    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
-+    trace *t = trace_new(trace_id, trace_name);
-+    g_array_append_val(cpu->traces, t);
-+    callstack *cs = callstack_new();
-+    g_array_append_val(cpu->callstacks, cs);
-+    /* create/truncate trace file */
-+    trace_flush(t, false);
-+
-+    cpu->cs = cs;
-+    cpu->trace = t;
-+}
-+
-+static void vcpu_end(unsigned int vcpu_index)
-+{
-+    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
-+    g_byte_array_free(cpu->buf, true);
-+
-+    for (size_t i = 0; i < cpu->traces->len; ++i) {
-+        trace *t = g_array_index(cpu->traces, trace*, i);
-+        trace_free(t);
-+    }
-+
-+    for (size_t i = 0; i < cpu->callstacks->len; ++i) {
-+        callstack *cs = g_array_index(cpu->callstacks, callstack*, i);
-+        callstack_free(cs);
-+    }
-+
-+    g_array_free(cpu->traces, true);
-+    g_array_free(cpu->callstacks, true);
-+    memset(cpu, 0, sizeof(Cpu));
-+}
-+
-+static void at_exit(qemu_plugin_id_t id, void *data)
-+{
-+    bool system_emulation = (bool) data;
-+    g_autoptr(GArray) traces = g_array_new(0, 0, sizeof(trace *));
-+
-+    /* exit last active stacks */
-+    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        Cpu *cpu = qemu_plugin_scoreboard_find(score, i);
-+        uint64_t timestamp = cpu_get_timestamp(cpu);
-+        if (trace_sample) {
-+            cpu_trace_last_sample(cpu, timestamp);
-+        }
-+        trace_exit_stack(cpu->trace, cpu->cs, timestamp);
-+        callstack_clear(cpu->cs);
-+    }
-+
-+    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        Cpu *cpu = qemu_plugin_scoreboard_find(score, i);
-+        for (size_t j = 0; j < cpu->traces->len; ++j) {
-+            trace *t = g_array_index(cpu->traces, trace*, j);
-+            trace_flush(t, true);
-+            g_array_append_val(traces, t);
-+        }
-+    }
-+
-+    uftrace_write_map(system_emulation);
-+    uftrace_write_info(traces);
-+    uftrace_write_task(traces);
-+
-+    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        vcpu_end(i);
-+    }
-+
-+    qemu_plugin_scoreboard_free(score);
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    if (!strcmp(info->target_name, "aarch64")) {
-+        arch_ops = aarch64_ops;
-+    } else {
-+        fprintf(stderr, "plugin uftrace: %s target is not supported\n",
-+                info->target_name);
-+        return 1;
-+    }
-+
-+    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
-+    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-+    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 1876bc78438..7eb3629c95d 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -1,5 +1,6 @@
- contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
--                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
-+                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
-+                   'uftrace']
- if host_os != 'windows'
-   # lockstep uses socket.h
-   contrib_plugins += 'lockstep'
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -0,0 +1,152 @@
++#!/usr/bin/env python3
++# -*- coding: utf-8 -*-
++#
++# Create symbols and mapping files for uftrace.
++#
++# Copyright 2025 Linaro Ltd
++# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import argparse
++import elftools # pip install pyelftools
++import os
++
++from elftools.elf.elffile import ELFFile
++from elftools.elf.sections import SymbolTableSection
++
++def elf_func_symbols(elf):
++    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
++                  if isinstance(s, SymbolTableSection)]
++    symbols = []
++    for _, section in symbol_tables:
++        for _, symbol in enumerate(section.iter_symbols()):
++            if symbol_size(symbol) == 0:
++                continue
++            type = symbol['st_info']['type']
++            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
++                symbols.append(symbol)
++    symbols.sort(key = lambda x: symbol_addr(x))
++    return symbols
++
++def symbol_size(symbol):
++    return symbol['st_size']
++
++def symbol_addr(symbol):
++    addr = symbol['st_value']
++    # clamp addr to 48 bits, like uftrace entries
++    return addr & 0xffffffffffff
++
++def symbol_name(symbol):
++    return symbol.name
++
++class BinaryFile:
++    def __init__(self, path, map_offset):
++        self.fullpath = os.path.realpath(path)
++        self.map_offset = map_offset
++        with open(path, 'rb') as f:
++            self.elf = ELFFile(f)
++            self.symbols = elf_func_symbols(self.elf)
++
++    def path(self):
++        return self.fullpath
++
++    def addr_start(self):
++        return self.map_offset
++
++    def addr_end(self):
++        last_sym = self.symbols[-1]
++        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
++
++    def generate_symbol_file(self, prefix_symbols):
++        binary_name = os.path.basename(self.fullpath)
++        sym_file_path = f'./uftrace.data/{binary_name}.sym'
++        print(f'{sym_file_path} ({len(self.symbols)} symbols)')
++        with open(sym_file_path, 'w') as sym_file:
++            # print hexadecimal addresses on 48 bits
++            addrx = "0>12x"
++            for s in self.symbols:
++                addr = symbol_addr(s)
++                addr = f'{addr:{addrx}}'
++                size = f'{symbol_size(s):{addrx}}'
++                name = symbol_name(s)
++                if prefix_symbols:
++                    name = f'{binary_name}:{name}'
++                print(addr, size, 'T', name, file=sym_file)
++
++def parse_parameter(p):
++    s = p.split(":")
++    path = s[0]
++    if len(s) == 1:
++        return path, 0
++    if len(s) > 2:
++        raise ValueError('only one offset can be set')
++    offset = s[1]
++    if not offset.startswith('0x'):
++        err = f'offset "{offset}" is not an hexadecimal constant. '
++        err += 'It should starts with "0x".'
++        raise ValueError(err)
++    offset = int(offset, 16)
++    return path, offset
++
++def is_from_user_mode(map_file_path):
++    if os.path.exists(map_file_path):
++        with open(map_file_path, 'r') as map_file:
++            if not map_file.readline().startswith('# map stack on'):
++                return True
++    return False
++
++def generate_map(binaries):
++    map_file_path = './uftrace.data/sid-0.map'
++
++    if is_from_user_mode(map_file_path):
++        print(f'do not overwrite {map_file_path} generated from qemu-user')
++        return
++
++    mappings = []
++
++    # print hexadecimal addresses on 48 bits
++    addrx = "0>12x"
++
++    mappings += ['# map stack on highest address possible, to prevent uftrace']
++    mappings += ['# from considering any kernel address']
++    mappings += ['ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]']
++
++    for b in binaries:
++        m = f'{b.addr_start():{addrx}}-{b.addr_end():{addrx}}'
++        m += f' r--p 00000000 00:00 0 {b.path()}'
++        mappings.append(m)
++
++    with open(map_file_path, 'w') as map_file:
++        print('\n'.join(mappings), file=map_file)
++    print(f'{map_file_path}')
++    print('\n'.join(mappings))
++
++def main():
++    parser = argparse.ArgumentParser(description=
++                                     'generate symbol files for uftrace')
++    parser.add_argument('elf_file', nargs='+',
++                        help='path to an ELF file. '
++                        'Use /path/to/file:0xdeadbeef to add a mapping offset.')
++    parser.add_argument('--prefix-symbols',
++                        help='prepend binary name to symbols',
++                        action=argparse.BooleanOptionalAction)
++    args = parser.parse_args()
++
++    if not os.path.exists('./uftrace.data'):
++        os.mkdir('./uftrace.data')
++
++    binaries = []
++    for file in args.elf_file:
++        path, offset = parse_parameter(file)
++        b = BinaryFile(path, offset)
++        binaries.append(b)
++    binaries.sort(key = lambda b: b.addr_end());
++
++    for b in binaries:
++        b.generate_symbol_file(args.prefix_symbols)
++
++    generate_map(binaries)
++
++if __name__ == '__main__':
++    main()
 -- 
 2.47.2
 
