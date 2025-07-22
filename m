@@ -4,98 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B69C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 07:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F92C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 08:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue7Z8-0002LK-Vu; Tue, 22 Jul 2025 03:37:35 -0400
+	id 1ue8M0-00027y-RK; Tue, 22 Jul 2025 04:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ue7Yr-0002EC-9w
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 03:37:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ue8LQ-0001rb-GS
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 04:27:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ue7Yo-0007Ce-78
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 03:37:16 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ue8LO-000532-6j
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 04:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753169832;
+ s=mimecast20190719; t=1753172841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0MQ7x154NqVP9nFw8weJMNUpYTZP5zp+wi4jYAH2iL4=;
- b=DyWpqrAKW37SNWyPWcCNMOdt/H/UQUMAtGuhfO1m1602fK9lGkZ2lcht0VkqIXbWj9iI9u
- RquvgQVanU2145tZipnyn1bZvtB/biocuAWS3JbmjOZuuOxFyPpnn4MTjxQoeYbcHOpP2z
- 5BwzNoVH7M5X83xzLnXVtv3mt55FhDk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-539-1Ma6zurgNdm4QAXMgwf4nA-1; Tue, 22 Jul 2025 03:37:09 -0400
-X-MC-Unique: 1Ma6zurgNdm4QAXMgwf4nA-1
-X-Mimecast-MFC-AGG-ID: 1Ma6zurgNdm4QAXMgwf4nA_1753169828
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4563f15f226so9476895e9.1
- for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 00:37:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753169828; x=1753774628;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0MQ7x154NqVP9nFw8weJMNUpYTZP5zp+wi4jYAH2iL4=;
- b=T3Gff7LmGI62UbGVeD83GzUeOlHGtWk1ou1+uL8HD5JIjMQWFCIItzaD8yi9hILBza
- ABycAQ1eF0erpDcQcWQ2Zg9Kw0Ce/WSoJwhYtKpMOpIPF3nV6AF1gRwtmf08h6KKRraV
- NaETiaKldqBCStfQu60yRZcJLDME3vqXv9xEHcdX0Vxy3AlutRpbA793g+tB8y/d2ky9
- Bc/SXfduYRXWjN1RmKLbTimrEPwGBeVQ0Gv+ybRF/DFpzEvUYKNvuG1IFo7KOv4q/rlb
- DMA+GDsu7xpjdD9cHc1EpE+53r1XM7+9cLI89aVm//XBeZ+NrOa8wJ2m8C8OZR9Xx7mR
- 5XLw==
-X-Gm-Message-State: AOJu0YxOGHA8RAEOAAta3tDSqW4dq+2fUq6nZi53VkUf16SXBVp/dp1c
- /r1+w80/Ls53neIsWjC+Ka+7oPbFDfb/1W3DNrgIBCHZrvo5SlnQs2Ede3cP4jCmYy9e22Q8e2p
- jZ9d3dACSq0uMB7F0I/WuBWFjU9RlZ9x+LXtMkVn2FPmswPfTgQiPz8K1
-X-Gm-Gg: ASbGnctdBbhJ0ofUlqYGC4smc0jQUo0lIsHauncIPpJBWFztIXaLbAqI7cMYTcz8ciB
- wZvHYUI32j8tVLme3li5WW8JWrd1DS4nK52dRzWIYSsriqG9AlRdsEZHP/tmUzET8dpM6Ms19eW
- 0+RXSj7TLL3UBISyoAqDae3im7RyxBBugOd8O98F7fQ967RQIatl2jupB2h1RlJh2aWcTlW+6g0
- hsgxNNJVKhQbitO9PvDSu0ou76jWDgvXIv8wCcr/xneSg/+8vW8OiextCdP9RQxjqB/aGFn9Bpv
- vASIMkGYpzSkVotX+YCGETS5ECHk4wlZg9sbsDkmU76YkjZSczBMLoxyGxiP6xl5UQcXIVEUaCk
- lmUw96vt37Qw=
-X-Received: by 2002:a05:600c:45d0:b0:43d:46de:b0eb with SMTP id
- 5b1f17b1804b1-4563b8ab992mr158404675e9.12.1753169827941; 
- Tue, 22 Jul 2025 00:37:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQNq0W649JZWPVqN8AoInR9v0a//jDbkfXX5ItPqtII60WCTv/GYlvxMRCwMC/2t5HNVXQ+w==
-X-Received: by 2002:a05:600c:45d0:b0:43d:46de:b0eb with SMTP id
- 5b1f17b1804b1-4563b8ab992mr158404315e9.12.1753169827480; 
- Tue, 22 Jul 2025 00:37:07 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca2b803sm12303133f8f.19.2025.07.22.00.37.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Jul 2025 00:37:07 -0700 (PDT)
-Message-ID: <6a1e2b06-4f4f-45b7-8875-ecb60f74aa8d@redhat.com>
-Date: Tue, 22 Jul 2025 09:37:05 +0200
+ bh=q0xiDH8hv89FBL1aZAQj0fqwDUgAsrN+DRO7C0SAW8o=;
+ b=K5hcq4gDqXmL6bfAu4Y2wW3MsbBmzTyzOpE+DBkkgekyPF1U37VWjotsVzJtkYdP/qSmCa
+ a71T4H2QZiXMoIfwVe8tKphYF3FeYh36CHulawnVkt2rhn/4uQZD6yO0bS4q5UcJhaSvvk
+ 64WqSVTFqWTU84AOk2hHytP84gBG3WA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-Ga8hweSbNgeKtcyjxR1rRg-1; Tue,
+ 22 Jul 2025 04:27:17 -0400
+X-MC-Unique: Ga8hweSbNgeKtcyjxR1rRg-1
+X-Mimecast-MFC-AGG-ID: Ga8hweSbNgeKtcyjxR1rRg_1753172836
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AB5E195FE16; Tue, 22 Jul 2025 08:27:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74739195608D; Tue, 22 Jul 2025 08:27:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BCD1D21E6A27; Tue, 22 Jul 2025 10:27:12 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Mads Ynddal <mads@ynddal.dk>,  Stefan Hajnoczi
+ <stefanha@redhat.com>
+Subject: Re: [PATCH] log: make '-msg timestamp=on' apply to all qemu_log usage
+In-Reply-To: <20250721185452.3016488-1-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 21 Jul 2025 19:54:52
+ +0100")
+References: <20250721185452.3016488-1-berrange@redhat.com>
+Date: Tue, 22 Jul 2025 10:27:12 +0200
+Message-ID: <87cy9sy6jj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 06/13] virtio-pci: implement support for extended
- features
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <253cd85bc76ded8259fc9d12ed3764e2507bcb75.1752828082.git.pabeni@redhat.com>
- <CACGkMEvBr0dQdNqtYNdOT+oN13aOWh1Hob7C6NLbSKCcEDPtLg@mail.gmail.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CACGkMEvBr0dQdNqtYNdOT+oN13aOWh1Hob7C6NLbSKCcEDPtLg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -120,28 +88,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/25 5:28 AM, Jason Wang wrote:
-> On Fri, Jul 18, 2025 at 4:53 PM Paolo Abeni <pabeni@redhat.com> wrote:
->>
->> Extend the features configuration space to 128 bits, and allow the
->> common read/write operation to access all of it.
->>
->> On migration, save the 128 bit version of the features only if the
->> upper bits are non zero. Relay reset to clear all the feature
->> space before load.
->>
->> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> 
-> This is a guest noticeable behaviour change. I wonder if we need a
-> command line option to enable and disable this feature for migration
-> compatibility.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-This point is not clear to me, could you please elaborate a bit more? do
-you mean we need i.e. a DEFINE_PROP_BOOL() or the like to enable the 128
-bit space usage?
+> Currently the tracing 'log' back emits special code to add timestamps
+> to trace points sent via qemu_log(). This current impl is a bad design
+> for a number of reasons.
+>
+>  * It changes the QEMU headers, such that 'error-report.h' content
+>    is visible to all files using tracing, but only when the 'log'
+>    backend is enabled. This has led to build failure bugs as devs
+>    rarely test without the (default) 'log' backend enabled, and
+>    CI can't cover every scenario for every trace backend.
+>
+>  * It bloats the trace points definitions which are inlined into
+>    every probe location due to repeated inlining of timestamp
+>    formatting code, adding MBs of overhead to QEMU.
+>
+>  * The tracing subsystem should not be treated any differently
+>    from other users of qemu_log. They all would benefit from
+>    having timestamps present.
+>
+>  * The timestamp emitted with the tracepoints is in a needlessly
+>    different format to that used by error_report() in response
+>    to '-msg timestamp=3Don'.
+>
+> This fixes all these issues simply by moving timestamp formatting
+> into qemu_log, using the same approach as for error_report.
+>
+> The code before:
+>
+>   static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * cr=
+eds, const char * filename, const char * path)
+>   {
+>       if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu=
+_loglevel_mask(LOG_TRACE)) {
+>           if (message_with_timestamp) {
+>               struct timeval _now;
+>               gettimeofday(&_now, NULL);
+>               qemu_log("%d@%zu.%06zu:qcrypto_tls_creds_get_path " "TLS cr=
+eds path creds=3D%p filename=3D%s path=3D%s" "\n",
+>                        qemu_get_thread_id(),
+>                        (size_t)_now.tv_sec, (size_t)_now.tv_usec
+>                        , creds, filename, path);
+>           } else {
+>               qemu_log("qcrypto_tls_creds_get_path " "TLS creds path cred=
+s=3D%p filename=3D%s path=3D%s" "\n", creds, filename, path);
+>           }
+>       }
+>   }
+>
+> and after:
+>
+>   static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * cr=
+eds, const char * filename, const char * path)
+>   {
+>       if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu=
+_loglevel_mask(LOG_TRACE)) {
+>           qemu_log("qcrypto_tls_creds_get_path " "TLS creds path creds=3D=
+%p filename=3D%s path=3D%s" "\n", creds, filename, path);
+>       }
+>   }
+>
+> The log and error messages before:
+>
+>   $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=3Dtls0,d=
+ir=3D$HOME/tls -msg timestamp=3Don
+>   2986097@1753122905.917608:qcrypto_tls_creds_x509_load TLS creds x509 lo=
+ad creds=3D0x55d925bd9490 dir=3D/var/home/berrange/tls
+>   2986097@1753122905.917621:qcrypto_tls_creds_get_path TLS creds path cre=
+ds=3D0x55d925bd9490 filename=3Dca-cert.pem path=3D<none>
+>   2025-07-21T18:35:05.917626Z qemu-system-x86_64: Unable to access creden=
+tials /var/home/berrange/tls/ca-cert.pem: No such file or directory
+>
+> and after:
+>
+>   $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=3Dtls0,d=
+ir=3D$HOME/tls -msg timestamp=3Don
+>   2025-07-21T18:43:28.089797Z qcrypto_tls_creds_x509_load TLS creds x509 =
+load creds=3D0x55bf5bf12380 dir=3D/var/home/berrange/tls
+>   2025-07-21T18:43:28.089815Z qcrypto_tls_creds_get_path TLS creds path c=
+reds=3D0x55bf5bf12380 filename=3Dca-cert.pem path=3D<none>
+>   2025-07-21T18:43:28.089819Z qemu-system-x86_64: Unable to access creden=
+tials /var/home/berrange/tls/ca-cert.pem: No such file or directory
+>
+> The binary size before:
+>
+>   $ ls -alh qemu-system-x86_64
+>   -rwxr-xr-x. 1 berrange berrange 87M Jul 21 19:39 qemu-system-x86_64
+>   $ strip qemu-system-x86_64
+>   $ ls -alh qemu-system-x86_64
+>   -rwxr-xr-x. 1 berrange berrange 30M Jul 21 19:39 qemu-system-x86_64
+>
+> and after:
+>
+>   $ ls -alh qemu-system-x86_64
+>   -rwxr-xr-x. 1 berrange berrange 85M Jul 21 19:41 qemu-system-x86_64
+>   $ strip qemu-system-x86_64
+>   $ ls -alh qemu-system-x86_64
+>   -rwxr-xr-x. 1 berrange berrange 29M Jul 21 19:41 qemu-system-x86_64
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  scripts/tracetool/backend/log.py | 14 +-------------
+>  util/log.c                       | 20 +++++++++++++++++++-
+>  2 files changed, 20 insertions(+), 14 deletions(-)
+>
+> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
+/log.py
+> index 17ba1cd90e..bd6739ae41 100644
+> --- a/scripts/tracetool/backend/log.py
+> +++ b/scripts/tracetool/backend/log.py
+> @@ -20,7 +20,6 @@
+>=20=20
+>  def generate_h_begin(events, group):
+>      out('#include "qemu/log-for-trace.h"',
+> -        '#include "qemu/error-report.h"',
+>          '')
+>=20=20
+>=20=20
+> @@ -36,20 +35,9 @@ def generate_h(event, group):
+>          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
+per())
+>=20=20
+>      out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
+> -        '        if (message_with_timestamp) {',
+> -        '            struct timeval _now;',
+> -        '            gettimeofday(&_now, NULL);',
+>          '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",=
+',
+> -        '                     qemu_get_thread_id(),',
+> -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
+> -        '                     %(argnames)s);',
+> +        '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+>          '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '        } else {',
+> -        '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+> -        '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '        }',
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+> diff --git a/util/log.c b/util/log.c
+> index 58d24de48a..abdcb6b311 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -145,10 +145,28 @@ void qemu_log_unlock(FILE *logfile)
+>=20=20
+>  void qemu_log(const char *fmt, ...)
+>  {
+> -    FILE *f =3D qemu_log_trylock();
+> +    FILE *f;
+> +    g_autofree const char *timestr =3D NULL;
+> +
+> +    /*
+> +     * Prepare the timestamp *outside* the logging
+> +     * lock so it better reflects when the message
+> +     * was emitted if we are delayed acquiring the
+> +     * mutex
+> +     */
+> +    if (message_with_timestamp) {
+> +        g_autoptr(GDateTime) dt =3D g_date_time_new_now_utc();
+> +        timestr =3D g_date_time_format_iso8601(dt);
+> +    }
 
-Thanks,
+Duplicates real_time_iso8601() from error-report.c.  Tolerable.
 
-Paolo
+> +
+> +    f =3D qemu_log_trylock();
+>      if (f) {
+>          va_list ap;
+>=20=20
+> +        if (timestr) {
+> +            fprintf(f, "%s ", timestr);
+> +        }
+> +
+>          va_start(ap, fmt);
+>          vfprintf(f, fmt, ap);
+>          va_end(ap);
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
