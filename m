@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC29AC83F25
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 10:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6636C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 10:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueA2U-00019c-Na; Tue, 22 Jul 2025 06:16:02 -0400
+	id 1ueA3y-0002Xd-Pa; Tue, 22 Jul 2025 06:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1ueA2S-00017P-52
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 06:16:00 -0400
+ id 1ueA3r-0002Qj-FV
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 06:17:28 -0400
 Received: from air.basealt.ru ([193.43.8.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1ueA2M-00087G-Or
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 06:15:59 -0400
+ id 1ueA3p-0000PT-SN
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 06:17:27 -0400
 Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
  [217.15.195.17]) (Authenticated sender: rastyoginds)
- by air.basealt.ru (Postfix) with ESMTPSA id C68C52339B;
- Tue, 22 Jul 2025 13:15:47 +0300 (MSK)
+ by air.basealt.ru (Postfix) with ESMTPSA id 3536723392;
+ Tue, 22 Jul 2025 13:17:24 +0300 (MSK)
 From: gerben@altlinux.org
 To: qemu-devel@nongnu.org,
-	laurent@vivier.eu
+	richard.henderson@linaro.org
 Cc: sdl.qemu@linuxtesting.org
-Subject: [PATCH] linux-user: check for NULL before using
- interval_tree_iter_first result
-Date: Tue, 22 Jul 2025 13:15:05 +0300
-Message-ID: <20250722101544.16366-1-gerben@altlinux.org>
+Subject: [PATCH] target/ppc: fix potential shift overflow by using 64-bit
+ constant
+Date: Tue, 22 Jul 2025 13:16:47 +0300
+Message-ID: <20250722101721.16458-1-gerben@altlinux.org>
 X-Mailer: git-send-email 2.42.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -60,31 +60,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis Rastyogin <gerben@altlinux.org>
 
-interval_tree_iter_first() may return NULL if the interval tree is empty or invalid.
-Add a check for NULL before dereferencing the pointer to avoid potential crashes
-due to null pointer dereference in open_self_maps_2().
+Change shift operand from 32-bit literal `1` to 64-bit `1ULL` to avoid undefined behavior
+when shifting bits beyond the width of a 32-bit integer.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
 ---
- linux-user/syscall.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/ppc/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c..d5d5912c96 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8172,6 +8172,9 @@ static int open_self_maps_2(void *opaque, vaddr guest_start,
-     while (1) {
-         IntervalTreeNode *n =
-             interval_tree_iter_first(d->host_maps, host_start, host_start);
-+        if (n == NULL) {
-+            return -1;
-+        }
-         MapInfo *mi = container_of(n, MapInfo, itree);
-         uintptr_t this_hlast = MIN(host_last, n->last);
-         target_ulong this_gend = h2g(this_hlast) + 1;
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 27f90c3cc5..8e69c4cb48 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2998,7 +2998,7 @@ static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+ 
+     /* RT = (t != t2 ? t : u = 1<<(s*8-1)) */
+     tcg_gen_movcond_tl(cond, cpu_gpr[rD(ctx->opcode)], t, t2, t,
+-                       tcg_constant_tl(1 << (memop_size(memop) * 8 - 1)));
++                       tcg_constant_tl(1ULL << (memop_size(memop) * 8 - 1)));
+ }
+ 
+ static void gen_ld_atomic(DisasContext *ctx, MemOp memop)
 -- 
 2.42.2
 
