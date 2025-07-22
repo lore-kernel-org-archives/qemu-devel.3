@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C8EC83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E8FC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 05:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue552-0008Ul-BL; Tue, 22 Jul 2025 00:58:20 -0400
+	id 1ue5w8-0003YY-Dz; Tue, 22 Jul 2025 01:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue54d-00082w-9g
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:57:58 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue5vy-0003RX-Ep
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 01:53:04 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue54b-0004ei-C3
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:57:55 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-748d982e97cso4523392b3a.1
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:57:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue5vt-0007Wt-Ab
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 01:52:59 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a57ae5cb17so2445333f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 22:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753160272; x=1753765072; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753163575; x=1753768375; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UKj2tCIeq+gTs/4FxwGmf+XyhqbWUhV5SBlBQNmg1o0=;
- b=V9XBnQFKjTY3xLRMZ2VSRASc/62HTGNlyi9irXfU94/QjW1vbKfN++jb9g7ADbobL+
- cVt8rR8Gfr9i/qqUFMs/VrH+9g2NrSm7htnbzpGCSvStMmwENSNBMdJGS2pH6O1G7NOQ
- XEnsUkScE0XconOvIYjXSxgfPam0EYhKNgGvLSfjZMlLIgNkXT2JySNcp5TqyhiTFgn7
- sB3OJcXWZzkY2QI5rz0xtvgM5aWzi4ylghJQXCGcQQJ9nr2IMGVI2yyzf/Ps8XDHsbYX
- 9whBKqzybEqRcsRffq4/rLqAl3P+Jkj7C46kCPkCj4KcndHPtKIlWO93/MLtoo4h8r6d
- 6b1Q==
+ bh=4alBfDXtH0Yd3e2TM3R3sXaqbkUqWpnXF3Fc/WNWPUk=;
+ b=KWHOfOSKOk59y/LDnGJCT/qcSZk0JmruwKDZ+MysTD2o/60UA6A4/rB6RELTrHFYe6
+ ISQgvnCvkMgqSqMBOTLZcZc7RPHUCEEZcn0X6L+q9ENf/ztj84RcHaoV1F8FiwCIlYgV
+ 6KPD8YyWbrOBXMKZFaCnGTHsMf5iAgfmTDyZRYcK1iSd9xVCcV71vXV3syEyeIA7y+xR
+ mTFZngZZJ2Sc+kjtDC6qiZO2/GIyMSDRpw6PdcStxVn0L4a8TQDZKNoTTUjegcy5LkW5
+ EAHTDZ2C+HUUlIbJWIdtNmtFxYIcTWRbPxChnq3KofvgjuOEBGvpEZ8LxX4OxBPnQsnv
+ URBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753160272; x=1753765072;
+ d=1e100.net; s=20230601; t=1753163575; x=1753768375;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UKj2tCIeq+gTs/4FxwGmf+XyhqbWUhV5SBlBQNmg1o0=;
- b=Iv5LVDCPb1yLgsvHre5GhC2lZKjUBHZRFD+nZ4JUITHTlw2dHaMNYPRKmbAluy6+Bo
- KD3mEOoeAhm7Cl0tnWvAQnSGOdKjPB7DTvdm6ZD50F1KuylziNnlDiaaIB5syXzEY6Ey
- HCXzhb2ZYcnjJaBbI4Bi537UT5Un1EiOjsiwY4q9TwHxaVRwu5LcKAY1NodhYs9Ex/JN
- 1Aehh60IyzHpTtawNcSa02sIQQI5lycWk4tmFceoahjw+cT2T43u82BMCueB6UQKl0Tu
- ORUoC4aS9b2JZI/m+GUTjfuvGIsu9Yq16Ve5nJqUAhEgferJbIg5Pm3THR1i1B5ath5O
- Rk6w==
-X-Gm-Message-State: AOJu0YxRtaFwssMkGO3s7Sdm3dcPDKIYNtFAsITkOQUjGWhRi0t79VZh
- SFm1E4H2nEp5fhacIuSiyWo5/nrvW3COIDWfxoBqgHKDsMu7ip9V8c7bEoVcVUGOILrCfXqYgGX
- xbvJ1
-X-Gm-Gg: ASbGncsWJbA7d/IJs6s1L4VoVaEfd48awWXpuBL5wMVsZ+Xv9fJPTvemBLAC5wTYca9
- EPFiyaA5jLjEgiJwRrIpwqc3dIMfWV0sZTBFm0UTxmg6CincgAiCbkdnXaYwEoOzoeuxk+DlGys
- p/EWIAkU97ul+RLYvRD1xodJCDwDOpauydrr7POmj6Gf4h/L0y3iQ235+J34qsaDHIxx6AaHkO/
- JwvxlZXWlWmlzBXTM+6CejYE8Ocz6s0k6m2srfElDb4UGtmOitoQ5S5XYkJSaeoK4kWtALuguOP
- 5PY9lqGEpqj4N9HBVOp1p8zSwXijD4Gsog1YVHu6T2Vh/A/+wsmvacDIcfZJ8bvY4HMox5ljJ9L
- fnlsyNm79pMKTa9C754thGyadwQoIw68HkbXFk6xkV5lTxA==
-X-Google-Smtp-Source: AGHT+IFMANRxNFuySeAcZGBjRCwYzOnUFj8Kv5ahYaHZ5bcafWF5fwEQafc8LbCON0VM+Jc5Rglm+Q==
-X-Received: by 2002:a05:6a00:3d53:b0:748:3385:a4a with SMTP id
- d2e1a72fcca58-75724e89802mr33597685b3a.23.1753160271723; 
- Mon, 21 Jul 2025 21:57:51 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-759cb76da69sm6590514b3a.115.2025.07.21.21.57.50
+ bh=4alBfDXtH0Yd3e2TM3R3sXaqbkUqWpnXF3Fc/WNWPUk=;
+ b=FsZBPq8m22xl1JyLN2S8vokBdwewayUAtRVn0Cal2lwFZcZN0pdhp2C34QT5xnVcT9
+ 4F/sG5wfPxRCHuz3rD6l24FrTQIsNMnz44lyslye9LuwkBFGF07G6VGCuxukIGmquKMY
+ c/0n3oROr7mYATl8VplxDxFOeSmIx9IlhLRGvj/xVx5QSsjzNyXNt1M7yzHkD8596+jz
+ 13ICf8ncG60vCr3hhc7DGwCVHP553xu17yYV/9iWLbBCnY+VoXLfuvotfVHESZ0vb9Wd
+ nyYYO9lEXUylGLXRNVSzKLU/QdjaLuZrxDJTnfvUFj0ccuPO31FYWrT1UoHbmcHpLa2Z
+ 1TSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWodvdMo7MK8hSRdDsMS7pqixv97y+a9XE27fCIdFG1XGIo8gqB8kK7bMHVioqpOVPfyW+z10DxyysA@nongnu.org
+X-Gm-Message-State: AOJu0YwpafWpK70SpCR5BDRnlFiZC0AT9HuajfscfRVxv4iFX3A6eeSq
+ ZUMXxZew4GYPfSiqnpLpY85Wf2xan+MRkresZgksUvSkLhKAbGL1lTcaFsOpel1QI9I=
+X-Gm-Gg: ASbGnctzntLId4K/kDspapipGmuy+D99H8mjJYKflv+3aEI9LuifuA0Z1Tqnd6eKHZ6
+ wOJ8FmaE/OT6gtDgUQCqHY0/Fh8Q687t8/ZbsyWjfLXkEqklSUHaqZG+be/EUu6y7ApbjlBBp6d
+ 8ZEiVhTWOYmUDWPRe2AjOL1IjrK9oPqWz3z0ruJD6OeplQNgIATDWq2NVJgJr10FNxQYocnDSvW
+ tLu96AyZyEoGyjuvqqXFQ26Mcv6Uc15mV2xO0zrRS+KtXe0FQHGi2N1V8vLYKqrObOOsIx0j/8l
+ hWrEzWtrnaCVBa/t8DKNc2Q2o3MebvhUdTaYY96/P0iJ7T6YzvIZMdpgmI3VX3JcCacZAYV0h9Y
+ wK0GBhdfpOlguaBva00NMX1KwuuhPXKCk+wgj+ZBE20ZnCU9Yfyg7N5QgMawb0FndvqZ1DWQ=
+X-Google-Smtp-Source: AGHT+IFMTmv9F8j0Gb0Yk5kQzB78XXeRj7VoRJ6RtUW4u5puHppiYvQ0kBLMOm8eInDzyBo1gOWH/g==
+X-Received: by 2002:a05:6000:40de:b0:3b6:1e6:c9fb with SMTP id
+ ffacd0b85a97d-3b60e4c510dmr21008799f8f.11.1753163575242; 
+ Mon, 21 Jul 2025 22:52:55 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b61ca5c9e2sm12651343f8f.89.2025.07.21.22.52.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 21:57:51 -0700 (PDT)
-Message-ID: <39ffac72-0173-4541-a81d-236ba1ec6d0f@linaro.org>
-Date: Mon, 21 Jul 2025 21:57:50 -0700
+ Mon, 21 Jul 2025 22:52:54 -0700 (PDT)
+Message-ID: <6b86402d-6a3d-45cd-b680-a83fe5818945@linaro.org>
+Date: Tue, 22 Jul 2025 07:52:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] contrib/plugins: uftrace
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, rowan Hart <rowanbhart@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 1/2] target/arm: hvf: add timer frequency note
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250721152902.38671-1-mohamed@unpredictable.fr>
+ <20250721152902.38671-2-mohamed@unpredictable.fr>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250721193340.1059019-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250721152902.38671-2-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,83 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/21/25 12:33 PM, Pierrick Bouvier wrote:
-> This plugin generates a binary trace compatible with the excellent uftrace:
-> https://github.com/namhyung/uftrace
-> 
-> In short, it tracks all function calls performed during execution, based on
-> frame pointer analysis. A big advantage over "uftrace record" is that it works
-> in system mode, allowing to trace a full system execution, which was the
-> original goal. It works as well in user mode, but uftrace itself already does
-> this. It's implemented for aarch64 only (with the intent to add x86_64 later).
-> 
-> Let's start with concrete examples of the result.
-> 
-> First, in system mode, booting a stack using TF-A + U-boot + Linux:
-> - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
-> https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
-> - Stat and open syscalls in kernel
-> https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
-> - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
-> https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
-> 
-> Full trace is available here:
-> https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz
-> You can download and open it on https://ui.perfetto.dev/ to explore it.
-> 
-> Second, in user mode, tracing qemu-aarch64 (itself) running git --help:
-> - Loading program and its interpreter
-> https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
-> - TB creation
-> https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
-> 
-> Full trace is available here:
-> https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz
-> 
-> If you had curiosity and now you're ready to give some attention, most of the
-> details you want to read are included in the documentation patch (final one).
-> 
-> Overhead is around x2 (sampling only) to x10-x15 (precise), and long traces can
-> be directly filtered with uftrace if needed.
-> 
-> The series is splitted in:
-> - implementing the plugin
-> - adding useful options (especially sampling and privilege level tracing)
-> - add a companion script to symbolize traces generated
-> - add documentation with examples
-> 
-> I hope this plugin can help people trying to understand what happens out of the
-> user space, and get a better grasp of how firmwares, bootloader, and kernel
-> interact behind the curtain.
-> 
-> v2
-> --
-> 
-> - trace active stacks on exit
-> - do not erase map generated in system_emulation
-> - add documentation to generate restricted visual traces around specific events
->    of execution
-> 
-> Pierrick Bouvier (6):
->    contrib/plugins/uftrace: new uftrace plugin
->    contrib/plugins/uftrace: add trace-sample option
->    contrib/plugins/uftrace: add trace-privilege-level option
->    contrib/plugins/uftrace: add timestamp-based-on-real-time option
->    contrib/plugins/uftrace_symbols.py
->    contrib/plugins/uftrace: add documentation
-> 
->   docs/about/emulation.rst           | 207 +++++++
->   contrib/plugins/uftrace.c          | 919 +++++++++++++++++++++++++++++
->   contrib/plugins/meson.build        |   3 +-
->   contrib/plugins/uftrace_symbols.py | 152 +++++
->   4 files changed, 1280 insertions(+), 1 deletion(-)
->   create mode 100644 contrib/plugins/uftrace.c
->   create mode 100755 contrib/plugins/uftrace_symbols.py
-> 
+Hi Mohamed,
 
-Sent v3 fixing a missing include (build failed on MacOS only):
-https://lore.kernel.org/qemu-devel/20250722045527.1164751-1-pierrick.bouvier@linaro.org/T/
+On 21/7/25 17:29, Mohamed Mediouni wrote:
+> On Apple M3 and later, the timer frequency within apps and VM guests are different from each other.
 
-Regards,
-Pierrick
+Also M1/M2, so all Apple Silicon chipsets IMO.
+
+This might be the issue I fixed here:
+https://lore.kernel.org/qemu-devel/20250620130709.31073-18-philmd@linaro.org/
+
+> 
+> Note that app binaries compiled with older SDKs continue to retain a non-1 GHz timer frequency on Apple M3/M4.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   target/arm/hvf/hvf.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index c9cfcdc08b..4331a3386a 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -1018,6 +1018,13 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>       int i;
+>   
+>       env->aarch64 = true;
+> +    /*
+> +     * TODO: This does not correspond to the exposed generic
+> +     * timer frequency to the guest on Apple M3/M4.
+> +     * This is due to a scaled 1GHz counter being exposed
+> +     * to applications built with newer SDKs when running
+> +     * on that silicon, while VMs get an unscaled counter.
+> +     */
+>       asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
+
 
