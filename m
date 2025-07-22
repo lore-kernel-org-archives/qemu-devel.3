@@ -4,135 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BC5C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 20:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C45FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 20:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueJMS-0000Y0-7o; Tue, 22 Jul 2025 16:13:16 -0400
+	id 1ueJNO-0001jL-VS; Tue, 22 Jul 2025 16:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1ueJMP-0000VJ-L9
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:13:13 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1ueJMN-0001ne-OI
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:13:13 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7425bd5a83aso5159245b3a.0
- for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 13:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec; t=1753215190; x=1753819990; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=yhLALA9B3rULq7Vw42aLBvPtSaoo7MaonmbLRVdlFf8=;
- b=D96h+G102L9B5jWGvgmD/ueoRXfJmjRbt1LuLf84o/m9lGk3niF4SWF0gvxkjCkF0i
- GatUQBf2WXiQGkwLWvxr1QKHkYDOk4i+RG524smH84NxNtMpYmYaREKe51sb5QNO06Xc
- tOZvOJ1IBEQx30hgse8rbvmhTdkt46hjhPPSGLHl6SijharL+md6XG+9bz7obscn6XLa
- kAl6ntAjtwGCoDKqyNUfRRFou0IAdS4tDGx/4TTuKSKhaDGS//fwIG+M73g6VyGeQST0
- EEtsXWJH+W7OB5m8wROIMsWJeub2+BeiQj5tw7jjh+GwRnYbD9/bJfxwG29z7MlflFzL
- rG0Q==
+ (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
+ id 1ueJNM-0001ht-VN
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:14:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
+ id 1ueJNK-0001t4-Jj
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:14:12 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56MIWGnG016262
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 20:14:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=nmnX/xKgSu+5/1cXpptovo
+ eiAaGDzyx+sdbPmv2Icdw=; b=GzVIvFJjrf+nk+Hko8VuJCuwrtoQahn5kpiJ0p
+ phZm9yGGaiaI8VjSsxz4Kd2bHZxaNjT8LOrJ3g6l4wpRWtmSAn8WzeZ2tk3m4HVY
+ e+2KLHykxThmcsthwkEIF0azNwOrmKSeH/Ch9OPpPFbCl2zljGipgbVrcM3fyRue
+ ct2qYvx57AtRAtfmm6Miv669I8nxl/mTCh7Pur7q7XH1H4zGZbu3nf6dnhxrKmg1
+ 0LE+o3VX0x372rDc7VfEUpGrZoBZtIxsStVNMhKVFivEWErVaX/wl6G8HUWDl3Mh
+ AfSavjLRTl7jb1gw+lnxUhQ6ob/M5NSkfwSFywttP7Hdwl7A==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48048s2u6y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 20:14:08 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-235dd77d11fso59378425ad.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 13:14:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753215190; x=1753819990;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yhLALA9B3rULq7Vw42aLBvPtSaoo7MaonmbLRVdlFf8=;
- b=Q+sbvtEuUOoeHOT6UiikNIlJ1kp7kwhO5cedlFc81RLqi7lQJ8eoiYN1GmyQy5JHuU
- oISAJZ9JkSsjIE9mMgM6Ta/bjEPYDsJJt/X1Ps28ML01/hqpYDJi/DJRqYJVUwfqSgsv
- I4j3GH49SQ377aEOWR7OMcBtIbbVRm6mR9/WHdAKjIrSisVP0a/5sne4Af7P4v8yfa6+
- Ex5qX6QU2PcJonCwSZr6g7fdhUc9BXAyD8Hxmphzs/n6U12nW9AuKN+qYLptOl2uw7s3
- oTtJQ8AJFx/DAMs4rBQdFkMffWYOOH1PR0aTjt9IXdsT4ioGkvQ6DHB5BTlIMOYFDrMT
- +8/g==
-X-Gm-Message-State: AOJu0YwlWfAJro0TSKgkT4HlVQnS3IWAeMfqxAft32oeXHljk9K+cM0c
- ZX58py7jGBQKs57lXj5ZHSIf41/bXKTOkgXaiJA4XKmHLvSu++fRwLOkY4WqFGc7s5g=
-X-Gm-Gg: ASbGncsrobZpLXTzZq8bH3Om7kvxsaC8YTiS2aWrr6DN4ukEckHwHblrQC9qGyeXIN2
- ZyPvtVgrxZBnmsHMPBPiuUQ9j7+U2XCbbi1MN5f6PKaerbctXAcjBya7zKLkdQ+AysJ2HVQjG8B
- jXFxiqz5Ch506qMB9XhtLU2wFCoWEbu/HrDPrfWqrq03TFHPYxFIi0kxsQBws9sLUI2D3zLdfYl
- yIu3hIVFYhA7HkeOVQi/2VqmtmoCrVVWkCAXew2d7L4wX9T+InurnwMYtgHI2um6y2yWYJrG4j6
- UpxrVO0H63h1qyLRTAkm/+RPSaCfJAOxLXOFUpSz7grk1wNXa7V5q3DRntE5K+D6dbJSei07Q0B
- JK6fzB1R1No26Td3H7JgT8oKquy9LvH9r+nIL7gkwY3URhi05z+wr62leJZckOWq1zw0XarKPy+
- 8V0mkE980isMBtIAg07ayipWOuMNRPI63FahNdXn4Nt21fhe9GcKbLi+s=
-X-Google-Smtp-Source: AGHT+IHYPk53nUChKVapkUHv3H9H6FTfDsjozDyj6Fty2m+Mis+ubcSsO3JOGJKE76bJMrILGMXHgQ==
-X-Received: by 2002:a05:6a20:3c89:b0:234:8b24:1088 with SMTP id
- adf61e73a8af0-23d48fe0481mr291696637.3.1753215189831; 
- Tue, 22 Jul 2025 13:13:09 -0700 (PDT)
-Received: from ?IPV6:2003:fa:af22:cf00:2208:a86d:dff:5ae9?
- (p200300faaf22cf002208a86d0dff5ae9.dip0.t-ipconnect.de.
- [2003:fa:af22:cf00:2208:a86d:dff:5ae9])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3f2ffbce6esm7519095a12.72.2025.07.22.13.13.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Jul 2025 13:13:09 -0700 (PDT)
-Message-ID: <834dd439-34dd-4cc7-a1cb-ffe3b95ec460@grsecurity.net>
-Date: Tue, 22 Jul 2025 22:13:06 +0200
+ d=1e100.net; s=20230601; t=1753215247; x=1753820047;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nmnX/xKgSu+5/1cXpptovoeiAaGDzyx+sdbPmv2Icdw=;
+ b=CIFIBqkzT/ZdLbBWFBmDWebJaR4XF9Lhjm3Kxwyg/S8vMEyl4wVBFUXumR+4eEiCHc
+ OX52dvKs/R1T8S5k0dKiIP+A9r9gxYHz3hOWCNKYC0AIJD+UFKy8tZvwk6CIR5o/+rfV
+ l1uuERtgNDveY95glaM9s247yfp1W5m3obbgLjUab9ssb1woP5v5AkBpEo5DECTCbagw
+ 0YziQhC8jbJ4/NbmPXohYnH/J5Ck+MaUgWMJKA4E/toVFey3vFAnKHyzIZG9a+oT8A7e
+ ZfFrGvH7hgyv8NCOyvwC7Nx4DUZEG/vZNIYiTbAyzT2QGRjOsXXlma7Y0rK4ZZk6DFZb
+ sJ4Q==
+X-Gm-Message-State: AOJu0YwpMjfV3OXPKZTPbgCPt5Gy2IpYfCzwsCooPzNvV2rQe6mkANK8
+ A0tQEMB7UvZirZ+Y0/JsqMqoQQv6952rqgGdUi5U6UsSlthy8fyWMvBxFlOtJ/rd2voV1vL1u8m
+ nOmbn+nZF8UametUj68HDuWO6nSPrJCaknfvy1uT5ikbzIvy45Uo6kmeuwzz9vs6QpBcW
+X-Gm-Gg: ASbGnctN/9Io/p4Hw1JyAqnsCZq4z39tS9zTMRKBB/8h98gWLxtrDwwuKfLhLsyQSD6
+ zujs+sjvRzShCnFRN4WlBuZIktXxjVrOS4sKgDs8ej0VbyFI/pFRztC7LV5biaTOilqlPSA4KwF
+ Myxuc9J3A2ulBbBUxxkikzFZEsECbCBd4I0pJchM9k5ZOvD+xXHSx84L6k9C1AQgcL/OIKawKaE
+ W3Y2zHJ4rZ96eM4lx+UihCIT5NJmpCXM9q0xrWjmJHm3TLboNaHBDrLWQMkdA806zo1KT+Eoc7t
+ iMutzqw8k/OtIcVtPmr3TpMEbHKglFFDTrLMwPq08a2Zr3KZyOzZoA15UW4XE7WfINAqU7Afm5d
+ gfhd2K/eIrb1lqQg=
+X-Received: by 2002:a17:902:f64f:b0:235:c9a7:d5fb with SMTP id
+ d9443c01a7336-23f9818d905mr3836525ad.16.1753215247091; 
+ Tue, 22 Jul 2025 13:14:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjNCEfS05A3wad+yiqv5XGTIH+N7NOlUxBOo910SB4zJSkGzA48qYLki3rUSZeT53D3+y9Zw==
+X-Received: by 2002:a17:902:f64f:b0:235:c9a7:d5fb with SMTP id
+ d9443c01a7336-23f9818d905mr3836225ad.16.1753215246590; 
+ Tue, 22 Jul 2025 13:14:06 -0700 (PDT)
+Received: from admin15.qualcomm.com (i-global254.qualcomm.com.
+ [199.106.103.254]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23e3b6b4a9esm81917075ad.93.2025.07.22.13.14.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Jul 2025 13:14:06 -0700 (PDT)
+From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Subject: [PATCH v4 0/2] target/arm: Added support for SME register exposure to
+ GDB
+Date: Tue, 22 Jul 2025 20:14:02 +0000
+Message-Id: <20250722201404.2368507-1-vacha.bhavsar@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/kvm: Disable hypercall patching quirk by default
-To: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Oliver Upton <oliver.upton@linux.dev>,
- Sean Christopherson <seanjc@google.com>
-References: <20250619194204.1089048-1-minipli@grsecurity.net>
- <41a5767e-42d7-4877-9bc8-aa8eca6dd3e3@intel.com>
- <b8336828-ce72-4567-82df-b91d3670e26c@grsecurity.net>
- <3f58125c-183f-49e0-813e-d4cb1be724e8@intel.com>
- <aH9yuVcUJQc4_-vP@redhat.com>
- <c2d2a3e9-e317-4049-9b6d-b6b3027ddd6d@intel.com>
-Content-Language: en-US, de-DE
-From: Mathias Krause <minipli@grsecurity.net>
-Autocrypt: addr=minipli@grsecurity.net; keydata=
- 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
- RzDVkdgPJkL/NFTKZHo5foFXNi89kA==
-In-Reply-To: <c2d2a3e9-e317-4049-9b6d-b6b3027ddd6d@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=mathias.krause@opensrcsec.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.158,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDE3NCBTYWx0ZWRfXwXwL9T7dZee8
+ PMqcQjqxRogW04zwGNSBL7RJ9kD5H19B01fAuy/OyBEgR4U0h2gfCjv1lNjn37GJHwcsvh/K1Rm
+ bO3KPY50TAV5EGpAlZPQuLDjMe6EFS0RoRJxUl1Ib+/TpGBQeoGf8YChFUbgHjXTsOgCMwDABTW
+ mkAJhoRjRgIyfbJVYMbYO/S+9b7mX0AlOfgbDSaxVhNpoahx8Kgdicup2QkVyPAfpACnFQXLrfR
+ jOWXxidbcaegoz9Ub568uLfpEgb468bHcUjQrFlnfX17ZkIR5PLUlOoqiXNCE+IRQLKapb5Mg1H
+ I0jaUl+c5cJeU8WDwcDP8TDo9Vkf3L4tGe8YfCy30VEiV4cR64kjI5otkv9la1zNssoDqDPEC6y
+ rMTnNcZH8czVxtKIcd/6Mid/d1XDaOLcnLKUprF8ivo9DIkGzRr5lyxcDrbwXx8/j3EJ3keg
+X-Proofpoint-ORIG-GUID: eAKdiMkCeYTzd5CKpDMI1zUzJ1l8DNSf
+X-Proofpoint-GUID: eAKdiMkCeYTzd5CKpDMI1zUzJ1l8DNSf
+X-Authority-Analysis: v=2.4 cv=OPUn3TaB c=1 sm=1 tr=0 ts=687ff110 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8 a=Q-dapHUw0VXFM7UNezAA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-22_02,2025-07-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 mlxlogscore=608 lowpriorityscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507220174
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,24 +131,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.07.25 14:21, Xiaoyao Li wrote:
-> On 7/22/2025 7:15 PM, Daniel P. Berrangé wrote:
->> [...]
->>
->> Usually CSPs don't have full control over what their customers
->> are running as a guest. If their customers are running mainstream
->> modern guest OS, CONFIG_STRICT_KERNEL_RWX is pretty likely to be
->> set, so presumably migration between Intel & AMD will not work
->> and this isn't making it worse ?
-> 
-> If breaking some usecase is not a concern, then I'm fine with no compat
-> property.
+The QEMU GDB stub does not expose the ZA storage SME register to GDB via
+the remote serial protocol, which can be a useful functionality to debug SME
+code. To provide this functionality in Aarch64 target, this patch registers the
+SME register set with the GDB stub. To do so, this patch implements the
+aarch64_gdb_get_sme_reg() and aarch64_gdb_set_sme_reg() functions to
+specify how to get and set the SME registers, and the
+arm_gen_dynamic_smereg_feature() function to generate the target
+description in XML format to indicate the target architecture supports SME.
+Finally, this patch includes a dyn_smereg_feature structure to hold this
+GDB XML description of the SME registers for each CPU.
 
-Well, there's still the chicken bit `-accel kvm,hypercall-patching=on`
-one could make use of if (and really only if) that's really needed. But
-I'd rather have the guest see a proper exception emulation of trying to
-execute an unsupported instruction than seeing a bogus #PF.
+Furthermore, this patch series increases the value of MAX_PACKET_LENGTH
+to allow for remote GDB debugging of the ZA register when the vector
+length is maximal.
 
-Thanks,
-Mathias
+Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+
+Vacha Bhavsar (2):
+  target/arm: Increase MAX_PACKET_LENGTH for SME ZA remote gdb debugging
+  target/arm: Added support for SME register exposure to GDB
+
+-- 
+2.34.1
+
 
