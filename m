@@ -4,134 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A2CC83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 20:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 932BAC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 20:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueJHj-000518-C7; Tue, 22 Jul 2025 16:08:23 -0400
+	id 1ueJKz-0007bM-0L; Tue, 22 Jul 2025 16:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1ueJHZ-0004oe-Hi
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:08:13 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ueJK8-0007MM-06
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:11:03 -0400
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1ueJHX-00010n-7w
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:08:13 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-234c5b57557so52915835ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 13:08:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ueJJy-0001PJ-B6
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 16:10:49 -0400
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso5157943b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 13:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec; t=1753214888; x=1753819688; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=vwH29HD58/kXA0a6qBsvFXRXfwES4lcV0p0FxVJxugI=;
- b=oMQ1tti4hGRb44Xp7dDOyDgSUI0Gh1HFFWhkCBXdZ+f7naNaywbi+M1jmM7HuNoiRN
- pCAGpeDed9aKDPIjpbfQ84uLBVU0SujTqWfDmiVeB0ZVLLNQL+4FL9ck91QhtNMJujwA
- 1cbCNz8uJc7hznQ2DKYvHHJ8n9htMxHNUgRGttlh+Cy2qWSPd9H3+2/SWOQ1VB+qML0i
- exvaci/qicIE8DkcXj/RamBpIZPGCf6pUdRbefMu37TEZCu6SETYhjx3Mz6qnm3/WOMm
- jYm6d0FXC9mgir07Qz5LNCg6EmWbl60kmpWlmUKyjN/DoRtoPQ8P8pqpiAot+sE6p/7x
- W6Lw==
+ d=linaro.org; s=google; t=1753215039; x=1753819839; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BfqeKup3IFii2PjczQ9UcX4A40z5iYFzs99ExWCv5JI=;
+ b=g55EHK/ZK4bwmBdAXkT8OOLU+a0RxYdhfgUJECK029Bu90MdMzQyfae96UgTzkbTbo
+ OBtu+HfzFS1fkmvcFk40lqT+ISXjRdoY8fJgvuXEnDy1pOb/AiJLGrDRkd9HvZWmDiaF
+ hPakcyVCcDU0u6XUT9Ru6uomeD6v35ENHEKv8RACJjO9VSkpl8C3DUGAwwQ5qAjaWHoy
+ MIhPQvIXUr1QBoNTzc6HP8iBa7KVnnrxC/xbwEl5bhIEPbK21xSmirIXS67y87TcApnk
+ 0Rgp0m3339Bg0nKFYhkI8pQZPGm/Xf9RD25vfPWC9axQFwnx+gsQl75H9BmeN8Qj1n2B
+ IKsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753214888; x=1753819688;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vwH29HD58/kXA0a6qBsvFXRXfwES4lcV0p0FxVJxugI=;
- b=K+PrChk7+hOcI9bKfJg5EWsopfBeeOi4sWmGcNQyR+1FwkVrVJIDozmC3MqpxOwibF
- xC3rIiTjg6/z6tRCxgwLQK2zmVId8v+ddIore7aNry02rp4OBO0tWyZ+r7uvCVsVgiPU
- OQQpgXOwUP3sSLs4kVvFLJ1P5ZD3aOtEmA1NR7NqgHrbozUwNjpWoBqd2ruMimdFs9/m
- xbxdH4fhEV08Pt1wWVHE+wA/0F9XhH3Sz2u9ora3V+aha8RwBUlmPMaoKQAOPx+3UAQv
- m2b+7snq4O+N1kF4a/7UziriFhpR1TTSs3uVX2jsDxrvZczG1XqfUuHKzcuyQwvWi7vY
- InTw==
+ d=1e100.net; s=20230601; t=1753215039; x=1753819839;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BfqeKup3IFii2PjczQ9UcX4A40z5iYFzs99ExWCv5JI=;
+ b=UmjeiyHLCVzaYxmyg1NxIQua0tSVrOBkR0d+r9tQsImu5Z6w4KUfKx9mYB5qTrctQT
+ Vzcsp3Tblgmg+37WGVoeEOSETZqQ5j0CQ/mhl6yoxsC+m0Jni8rabNS65LPvVhmFZiyV
+ 2zVqgWzzae+mP9dncVESSIJEPfXXlA5lkWrz+UtvQmZXrcHl3Z41q9rrt8Z/qlqlEz0z
+ 6BKSmbFuRswiOcWbnQStPLPx6i2t3FEbdRlg+mYYFdXMjz7xegsvkJAJIiNPuLhom4Mu
+ NP9sDN1EACn0x6wuPbpsUexW+6FYwLWQK+SHoVkBUS+Kskaxg4L1fVCzYJxQ7P+3LvHm
+ kstw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCvuy7qnnuvPlgp5y6wfXAkDbkcdVoeWiVHAdD5s/uWrVLFrQHKquGzVAoan/qh4JnmGa0ZL25eZhA@nongnu.org
-X-Gm-Message-State: AOJu0YwWef7l7saJhfNxIQ7M5RKwMUeO5vcTloMR9/0P8EwNI1rSMixM
- kquFrFoWmE7GUP+4M7Xj4OWfAR7Lm2JJXwpGDISQsKO02Np07W8C1LEsOlEE70O0Ow4=
-X-Gm-Gg: ASbGncsZjU7+ViRUrae1n4D+UsK34M3YcM1HVASeeuSNlTCbvYfIiszrpUROIqmo2nW
- JQ7y69ox+yOE7kaFTH++XHg9n6gLO2frZLpYxmcci8YB27DTN3V09T6iAttac+qcsN7wte8lQXJ
- GRp6Z0WE63n4UfaGkQyNrTn/emdeDQQBE74vFxYqY5wnMyEEu1N2mCEnS8FsfuWifQVo2Xg9F6P
- J0n7NWBjURitlhwqAwK7lHZ7mdD4Iyf0/7opGacYRBBqh2MbDyJNiJFWqF/FaqKpbOZphSCN+Xx
- s1LDM73/vtRD8FOC5soUTeHp+AQUVkPAHGspUe1Hiwvh8gDdKchQrVwcZd2nDnKSPeywCEU4C+m
- fvtLmtbqhXl4Ndg7KxZQ/FYrvNtuNWEuw+wm6aIwmzaK3N65GFq9EIWwhqyUfqee26LqJKC0yLM
- WwgxzFLuO2EB+0q9/+/gXPEcARM7fVyvmHFPjn5T+dFY+YvaupFHGWj0Q=
-X-Google-Smtp-Source: AGHT+IGON/c9iPG+QKwvcxEf/RE7AY6A4s1xpf7C/QxC3rgsnygCXWPewfrss5+j+S9dy1x575sXiw==
-X-Received: by 2002:a17:902:ec83:b0:235:7c6:ebd2 with SMTP id
- d9443c01a7336-23f9820c81fmr3570915ad.31.1753214888479; 
- Tue, 22 Jul 2025 13:08:08 -0700 (PDT)
-Received: from ?IPV6:2003:fa:af22:cf00:2208:a86d:dff:5ae9?
- (p200300faaf22cf002208a86d0dff5ae9.dip0.t-ipconnect.de.
- [2003:fa:af22:cf00:2208:a86d:dff:5ae9])
+ AJvYcCWb3pgDh+6bCGe/c07SEu1plqUd4WL0BrlnSCIxSHRRw9v8eN7eQ18q0vaL9cj1Q/8uPPHIb8lRpv0M@nongnu.org
+X-Gm-Message-State: AOJu0YzRphc1ZqZiLpSt6KO8gvXbqRgZMe8IAFUOm90XegNBoji5EEfA
+ l6TSzL9yTQrAXQsa04EGvh8jHwZSrpEQt3u403LwXbd1JuI0Gk7yEh1imdZEkTKrRRSZPlqUbRA
+ tswBg8AA9GA==
+X-Gm-Gg: ASbGncsUP3n4Amdx26/1psONMzINCLkzk+K4HS1XFEGKKOvF4YVCa9x6DyUVpyNV1IN
+ zCf6u8FzW/y/8tVzpn36rz9CxLSvehuYNQoYC6KbMeeneauwtbWPL0dhmfUa2UDWlnccTrV8Rst
+ CjBzRhBcCj8J5Y+e18dBfPSmpbpvpWs2V5VhpPfteoSd4d5v0r3D1GgGcMxPDSVWQtKdlm6r+8h
+ 145gKH9A6xWQhLxuwMtyHqTqZJ9yJtmswnUNKf7JlPCk4vuUyWcZ29HVVEbYIb7qXwfOM9/s4gz
+ 4wntoC+ZJcj3cV1cPVjYJUbJLtP2uTjwgZMWLHNJcKBagS7gsvz4MKNhG98PNczvUNC9vFaBt1G
+ TtClKQsCn6eH0gP6600G0gMtFjaD6cSa7Sw==
+X-Google-Smtp-Source: AGHT+IHC9r6Z23EkrQ33rS1DmrugaJDw51+PoD98ge6I+GEScTGGEgvWN0oXWyZEpyQoCe/tqHmBfw==
+X-Received: by 2002:a17:90b:2885:b0:311:c1ec:7cfb with SMTP id
+ 98e67ed59e1d1-31e50817402mr656655a91.21.1753215038607; 
+ Tue, 22 Jul 2025 13:10:38 -0700 (PDT)
+Received: from [192.168.0.102] ([187.75.37.236])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23e3b6b4aa9sm81964265ad.129.2025.07.22.13.08.05
+ 98e67ed59e1d1-31e51a66d1bsm11417a91.27.2025.07.22.13.10.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Jul 2025 13:08:08 -0700 (PDT)
-Message-ID: <2bcf0f93-12e3-49d6-aba1-3e560c423e12@grsecurity.net>
-Date: Tue, 22 Jul 2025 22:08:03 +0200
+ Tue, 22 Jul 2025 13:10:37 -0700 (PDT)
+Message-ID: <0fe781d5-5739-40b8-9413-73d6b24941f4@linaro.org>
+Date: Tue, 22 Jul 2025 17:11:34 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/kvm: Disable hypercall patching quirk by default
-To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Oliver Upton <oliver.upton@linux.dev>,
- Sean Christopherson <seanjc@google.com>
-References: <20250619194204.1089048-1-minipli@grsecurity.net>
- <41a5767e-42d7-4877-9bc8-aa8eca6dd3e3@intel.com>
- <b8336828-ce72-4567-82df-b91d3670e26c@grsecurity.net>
- <3f58125c-183f-49e0-813e-d4cb1be724e8@intel.com>
-Content-Language: de-DE, en-US
-From: Mathias Krause <minipli@grsecurity.net>
-Autocrypt: addr=minipli@grsecurity.net; keydata=
- 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
- RzDVkdgPJkL/NFTKZHo5foFXNi89kA==
-In-Reply-To: <3f58125c-183f-49e0-813e-d4cb1be724e8@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: apparent race condition in mttcg memory handling
+To: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development <qemu-devel@nongnu.org>
+References: <abe00af4-3af5-4c6b-8443-b7350a4d9349@tls.msk.ru>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <abe00af4-3af5-4c6b-8443-b7350a4d9349@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=mathias.krause@opensrcsec.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.158,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x443.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,138 +103,453 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.07.25 12:27, Xiaoyao Li wrote:
-> On 7/22/2025 5:21 PM, Mathias Krause wrote:
->> IMHO, there is no valid reason for still having the patching in place as
->> the .text of non-ancient kernel's  will be write-protected, making
->> patching attempts fail. And, as they fail with a #PF instead of #UD, the
->> guest cannot even handle them appropriately, as there was no memory
->> write attempt from its point of view. Therefore the default should be to
->> disable it, IMO. This won't prevent guests making use of the wrong
->> instruction from trapping, but, at least, now they'll get the correct
->> exception vector and can handle it appropriately.
+Hi Michael,
+
+On 5/30/25 16:20, Michael Tokarev wrote:
+> Hi!
 > 
-> But you don't accout for the case that guest kernel is built without
-> CONFIG_STRICT_KERNEL_RWX enabled, or without CONFIG_DEBUG_RO_DATA, or
-> for whatever reason the guest's text is not readonly, and the VM needs
-> to be migrated among different vendors (Intel <-> AMD).
+> For quite some time (almost whole day yesterday) I'm trying to find out
+> what's going on with mmtcg in qemu.  There's apparently a race condition
+> somewhere, like a use-after-free or something.
 > 
-> Before this patch, the above usecase works well. But with this patch,
-> the guest will gets #UD after migrated to different vendors.
-
-I strongly doubt that use case works well, probably doesn't work at all
-right now. There's so much more to handle on the kernel side for such a
-thing to actually "work". Think of mitigations like RETPOLINE, RETHUNK,
-UNRET, SRSO, GDS,... and all the vendor-specific MSRs that need to be
-switched over. No way this "just works". Not patching VMCALL to VMMCALL
-or vice versa is the least of your problems in such a scenario.
-
-> I heard from some small CSPs that they do want to the ability to live
-> migrate VMs among Intel and AMD host.
-
-Well, they'll have a hard time trying to get it to work, sorry.
-
->> [...]
->> 
->> Ignoring pre-v2.6.25 kernels for a moment, we can assume that KVM will
->> do the patching. So the lack of KVM_X86_QUIRK_FIX_HYPERCALL_INSN but
->> having 'hypercall_patching_enabled == false' indicates that the user
->> wants to disable it but QEMU cannot do so, because KVM lacks the
->> extension to do so. This, IMO, legitimizes the warn_report("kvm:
->> disabling hypercall patching not supported") -- as it's not supported.
+> It started as an incarnation of
+> https://gitlab.com/qemu-project/qemu/-/issues/1921 -- the same assertion
+> failure, but on an x86_64 host this time (it's also mentioned in that
+> issue).
 > 
-> The minimum supported kernel version is 4.5 (see commit f180e367fce4).
-> So pre-v2.6.25 kernels is not the case.
-
-Perfect!
-
-> Surely we can list all the cases of different versions of KVM starting
-> from v4.5 and draw the conclusion that the semantics of "valid_quirks &
-> KVM_X86_QUIRK_FIX_HYPERCALL_INSN == 0" means KVM enables the hypercall
-> patching quirk but don't provide the interface for userspace to disable
-> it. So the code logic is correct.
-
-Thanks for confirming!
-
-> My statement of "I think it requires a new cap in KVM to return the
-> enabled quirks" is more for generic consideration. i.e., QEMU can know
-> whether a quirk is enabled or not without analysing the detailed history
-> of KVM.
-
-Well, all quirks are enabled by default, only explicitly disabled ones
-are, well, disabled. And that requires actively doing so via
-kvm_vm_enable_cap(KVM_CAP_DISABLE_QUIRKS[2]). Surely, QEMU can track
-these calls on its own if it really wants to.
-
-> Of course, it's more of the requirement on KVM to provide new interface
-> and Current QEMU can do nothing on it. That is, current implementation
-> of this PATCH is OK to me.
-
-Ok, I'll send a v2 incorporating the member name change to
-'hypercall_patching'.
-
->>> [...]
->>> I think return 0 here is to avoid the warn_report() in the caller. But
->>> for the correct semantics, we need to return -1 to indicate that it
->>> fails to disable the hypercall patching?
->>
->> No, returning 0 here is very much on purpose, as you noticed, to avoid
->> the warn_report() in the caller. The already issued warn_report() is the
->> correct one for this case.
+> However, that particular assertion failure is not the only possible
+> outcome.  We're hitting multiple assertion failures or SIGSEGVs in
+> physmem.c and related files, - 4 or 5 different places so far.
 > 
-> We can use @Error to pass the error log instead of the trick on return
-> value.
+> The problem here is that the bug is rather difficult to reproduce.
+> What I've been using so far was to make most host cores busy, and
+> specify amount of virtual CPUs close to actual host cores (threads).
 > 
-> e.g.,
+> For example, on my 4-core, 8-threads notebook, I used `stress -c 8`
+> and ran qemu with -smp 10, to trigger this issue. However, on this
+> very notebook it is really difficult to trigger it, - it happens
+> every 30..50 runs or so.
 > 
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -3228,17 +3228,24 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
->      return 0;
->  }
+> The reproducer I was using - it was just booting kernel, no user-
+> space is needed. Qemu crashes during kernel init, or it runs fine.
 > 
-> -static int kvm_vm_disable_hypercall_patching(KVMState *s)
-> +static int kvm_vm_disable_hypercall_patching(KVMState *s, Error **errp)
->  {
->      int valid_quirks = kvm_vm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-> +    int ret = -1;
+> I used regular kernel from debian sid:
+>   http://deb.debian.org/debian/pool/main/l/linux-signed-amd64/linux-image-amd64_6.12.29-1_amd64.deb
+> Extract vmlinuz-6.12.29-amd64 from there.
+
+The link above is broken. Googling for "linux-image-amd64_6.12.29-1_amd64.deb" successful too.
+
+Could you point out another image to reproduce it?
+
+
+Cheers,
+Gustavo
+
+> In order to simplify the reproducing, I created a tiny initrd with
+> just one executable in there, which does a poweroff:
 > 
->      if (valid_quirks & KVM_X86_QUIRK_FIX_HYPERCALL_INSN) {
-> -        return kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0,
-> -                                 KVM_X86_QUIRK_FIX_HYPERCALL_INSN);
-> +        ret = kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0,
-> +                                KVM_X86_QUIRK_FIX_HYPERCALL_INSN);
-> +        if (ret) {
-> +            error_setg_errno(errp, -ret, "kvm: failed to disable "
-> +                             "hypercall patching quirk: %s",
-> +                             strerror(-ret));
-> +        }
-> +    } else {
-> +        error_setg(errp, "kvm: disabling hypercall patching not
-> supported");
->      }
+> cat >poweroff.c <<'EOF'
+> #include <sys/reboot.h>
+> #include <unistd.h>
 > 
-> -    warn_report("kvm: disabling hypercall patching not supported");
-> -    return 0;
-> +    return ret;
->  }
+> int main(void) {
+>    reboot(RB_POWER_OFF);
+>    sleep(5);
+>    return 0;
+> }
+> EOF
+> diet gcc -static -o init poweroff.c
+> echo init | cpio -o -H newc > initrd
 > 
->  int kvm_arch_init(MachineState *ms, KVMState *s)
-> @@ -3381,8 +3388,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->      }
+> (it uses dietlibc, optional, just to make the initrd smaller).
 > 
->      if (s->hypercall_patching_enabled == false) {
-> -        if (kvm_vm_disable_hypercall_patching(s)) {
-> -            warn_report("kvm: failed to disable hypercall patching
-> quirk");
-> +        if (kvm_vm_disable_hypercall_patching(s, &local_err)) {
-> +            error_report_err(local_err);
->          }
->      }
+> Now, the qemu invocation I used:
+> 
+>   qemu-system-x86_64 -kernel vmlinuz -initrd initrd \
+>     -append "console=ttyS0" \
+>     -vga none -display none \
+>     -serial file:/dev/tty \
+>     -monitor stdio \
+>     -m 256 \
+>     -smp 16
+> 
+> This way, it either succeeds, terminating normally due to
+> the initrd hating the system, or it will segfault or assert
+> as per the issue.
+> 
+> For a 64-core machine, I used -smp 64, and had 16..40 cores
+> being busy with other stuff.  Also, adding `nice' in front
+> of that command apparently helps.
+> 
+> Now, to the various issues/places I've hit.  Here's a typical
+> output:
+> 
+> ...
+> [    3.129806] smpboot: x86: Booting SMP configuration:
+> [    3.135789] .... node  #0, CPUs:        #1  #2  #3  #4  #5  #6  #7 #8  #9
+> [    0.000000] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    0.000000] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    0.000000] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    0.000000] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    0.000000] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    0.000000] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    0.000000] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    0.000000] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    4.494389] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    4.494389] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    4.494396] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    4.494396] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    4.494401] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    4.494401] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    4.494408] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    4.494408] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    4.494415] calibrate_delay_direct() failed to get a good estimate for loops_per_jiffy.
+> [    4.494415] Probably due to long platform interrupts. Consider using "lpj=" boot option.
+> [    5.864038] smp: Brought up 1 node, 10 CPUs
+> [    5.865772] smpboot: Total of 10 processors activated (25983.25 BogoMIPS)
+> [    6.119683] Memory: 200320K/261624K available (16384K kernel code, 2486K rwdata, 11780K rodata, 4148K init, 4956K bss, 53176K reserved, 0K cma-reserved)
+> [    6.591933] devtmpfs: initialized
+> [    6.635844] x86/mm: Memory block size: 128MB
+> [    6.756849] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+> [    6.774545] futex hash table entries: 4096 (order: 6, 262144 bytes, linear)
+> [    6.840775] pinctrl core: initialized pinctrl subsystem
+> [    7.117085] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+> [    7.165883] DMA: preallocated 128 KiB GFP_KERNEL pool for atomic allocations
+> [    7.184243] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+> [    7.188322] DMA: preallocated 128 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+> [    7.195902] audit: initializing netlink subsys (disabled)
+> [    7.223865] audit: type=2000 audit(1748628013.324:1): state=initialized audit_enabled=0 res=1
+> [    7.290904] thermal_sys: Registered thermal governor 'fair_share'
+> [    7.291980] thermal_sys: Registered thermal governor 'bang_bang'
+> [    7.295875] thermal_sys: Registered thermal governor 'step_wise'
+> [    7.299817] thermal_sys: Registered thermal governor 'user_space'
+> [    7.303804] thermal_sys: Registered thermal governor 'power_allocator'
+> [    7.316281] cpuidle: using governor ladder
+> [    7.331907] cpuidle: using governor menu
+> [    7.348199] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+> [    7.407802] PCI: Using configuration type 1 for base access
+> [    7.417386] mtrr: your CPUs had inconsistent fixed MTRR settings
+> [    7.418244] mtrr: your CPUs had inconsistent variable MTRR settings
+> [    7.419048] mtrr: your CPUs had inconsistent MTRRdefType settings
+> [    7.419938] mtrr: probably your BIOS does not setup all CPUs.
+> [    7.420691] mtrr: corrected configuration.
+> [    7.461270] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+> [    7.591938] HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+> [    7.595986] HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
+> [    7.816900] ACPI: Added _OSI(Module Device)
+> [    7.819950] ACPI: Added _OSI(Processor Device)
+> [    7.823873] ACPI: Added _OSI(3.0 _SCP Extensions)
+> [    7.827683] ACPI: Added _OSI(Processor Aggregator Device)
+> [    8.000944] ACPI: 1 ACPI AML tables successfully acquired and loaded
+> [    8.355952] ACPI: Interpreter enabled
+> [    8.406604] ACPI: PM: (supports S0 S3 S4 S5)
+> [    8.416143] ACPI: Using IOAPIC for interrupt routing
+> [    8.448173] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+> [    8.468051] PCI: Using E820 reservations for host bridge windows
+> [    8.562534] ACPI: Enabled 2 GPEs in block 00 to 0F
+> [    9.153432] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+> [    9.166585] acpi PNP0A03:00: _OSC: OS supports [ASPM ClockPM Segments MSI HPX-Type3]
+> [    9.168452] acpi PNP0A03:00: _OSC: not requesting OS control; OS requires [ExtendedConfig ASPM ClockPM MSI]
+> [    9.181933] acpi PNP0A03:00: fail to add MMCONFIG information, can't access extended configuration space under this bridge
+> [    9.297562] acpiphp: Slot [2] registered
+> ...
+> [    9.369007] PCI host bridge to bus 0000:00
+> [    9.376590] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+> [    9.379987] pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+> [    9.383826] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff window]
+> [    9.387818] pci_bus 0000:00: root bus resource [mem 0x10000000-0xfebfffff window]
+> [    9.393681] pci_bus 0000:00: root bus resource [mem 0x100000000-0x17fffffff window]
+> [    9.396987] pci_bus 0000:00: root bus resource [bus 00-ff]
+> [    9.414378] pci 0000:00:00.0: [8086:1237] type 00 class 0x060000 conventional PCI endpoint
+> [    9.477179] pci 0000:00:01.0: [8086:7000] type 00 class 0x060100 conventional PCI endpoint
+> [    9.494836] pci 0000:00:01.1: [8086:7010] type 00 class 0x010180 conventional PCI endpoint
+> [    9.527173] pci 0000:00:01.1: BAR 4 [io  0xc040-0xc04f]
+> Segmentation fault
+> 
+> 
+> So it breaks somewhere in PCI init, after SMP/CPUs has been inited
+> by the guest kernel.
+> 
+> Thread 21 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> 0x0000555555e2e9c0 in section_covers_addr (section=0x7fff58307, addr=182591488) at ../system/physmem.c:309
+> 309         return int128_gethi(section->size) ||
+> (gdb) p *section
+> Cannot access memory at address 0x7fff58307
+> 
+> This one has been seen multiple times.
+> 
+> Thread 53 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7ffe8a7fc6c0 (LWP 104067)]
+> 0x0000555555e30382 in memory_region_section_get_iotlb (cpu=0x5555584e0a90, section=0x7fff58c3eac0) at
+>               ../system/physmem.c:1002
+> 1002        return section - d->map.sections;
+> d is NULL here
+> 
+> 
+> Thread 22 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7fff0bfff6c0 (LWP 57595)]
+> 0x0000555555e42c9a in memory_region_get_iommu (mr=0xffffffc1ffffffc1) at include/exec/memory.h:1756
+> 1756        if (mr->alias) {
+> (gdb) p *mr
+> Cannot access memory at address 0xffffffc1ffffffc1
+> (gdb) frame 1
+> #1  0x0000555555e42cb9 in memory_region_get_iommu (mr=0x7fff54239a10) at include/exec/memory.h:1757
+> 1757            return memory_region_get_iommu(mr->alias);
+> (gdb) p mr
+> $1 = (MemoryRegion *) 0x7fff54239a10
+> 
+> 
+> [    9.222531] pci 0000:00:02.0: BAR 0 [mem 0xfebc0000-0xfebdffff]
+> [
+> Thread 54 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7ffebeffd6c0 (LWP 14977)]
+> 
+> (gdb) l
+> 1004    /* Called from RCU critical section */
+> 1005    hwaddr memory_region_section_get_iotlb(CPUState *cpu,
+> 1006                                           MemoryRegionSection *section)
+> 1007    {
+> 1008        AddressSpaceDispatch *d = flatview_to_dispatch(section->fv);
+> 1009        return section - d->map.sections;
+> 1010    }
+> 1011
+> 1012    static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
+> 1013                                uint16_t section);
+> 
+> (gdb) p *section
+> $1 = {size = 4940204083636081308795136, mr = 0x7fff98739760, fv = 0x7fff998f6fd0,
+>    offset_within_region = 0, offset_within_address_space = 0, readonly = false,
+>    nonvolatile = false, unmergeable = 12}
+> 
+> (gdb) p *section->fv
+> $2 = {rcu = {next = 0x0, func = 0x20281}, ref = 2555275280, ranges = 0x7fff99486a60, nr = 0,
+>    nr_allocated = 0, dispatch = 0x0, root = 0xffffffc1ffffffc1}
+> 
+> (gdb) bt
+> #0  0x0000555555e5118c in memory_region_section_get_iotlb (cpu=cpu@entry=0x55555894fdf0,
+>      section=section@entry=0x7fff984e6810) at system/physmem.c:1009
+> #1  0x0000555555e6e07a in tlb_set_page_full (cpu=cpu@entry=0x55555894fdf0,
+>      mmu_idx=mmu_idx@entry=6, addr=addr@entry=151134208, full=full@entry=0x7ffebeffbd60)
+>      at accel/tcg/cputlb.c:1088
+> #2  0x0000555555e70a92 in tlb_set_page_with_attrs (cpu=cpu@entry=0x55555894fdf0,
+>      addr=addr@entry=151134208, paddr=paddr@entry=151134208, attrs=..., prot=<optimized out>,
+>      mmu_idx=mmu_idx@entry=6, size=4096) at accel/tcg/cputlb.c:1193
+> #3  0x0000555555d4ae44 in x86_cpu_tlb_fill (cs=0x55555894fdf0, addr=151138272,
+>      size=<optimized out>, access_type=MMU_DATA_STORE, mmu_idx=6, probe=<optimized out>,
+>      retaddr=0) at target/i386/tcg/system/excp_helper.c:624
+> #4  0x0000555555e6e8cf in tlb_fill_align (cpu=0x55555894fdf0, addr=151138272,
+>      type=MMU_DATA_LOAD, type@entry=MMU_DATA_STORE, mmu_idx=6, memop=memop@entry=MO_8,
+>      size=-1739692016, size@entry=151138272, probe=true, ra=0) at accel/tcg/cputlb.c:1251
+> #5  0x0000555555e6eb0d in probe_access_internal (cpu=cpu@entry=0x55555894fdf0,
+>      addr=addr@entry=151138272, fault_size=fault_size@entry=0,
+>      access_type=access_type@entry=MMU_DATA_STORE, mmu_idx=<optimized out>,
+>      nonfault=nonfault@entry=true, phost=0x7ffebeffc0a8, pfull=0x7ffebeffbfa0, retaddr=0,
+>      check_mem_cbs=false) at accel/tcg/cputlb.c:1371
+> #6  0x0000555555e70c84 in probe_access_full_mmu (env=0x5555589529b0, addr=addr@entry=151138272,
+>      size=size@entry=0, access_type=access_type@entry=MMU_DATA_STORE, mmu_idx=<optimized out>,
+>      phost=phost@entry=0x7ffebeffc0a8, pfull=0x7ffebeffbfa0) at accel/tcg/cputlb.c:1439
+> #7  0x0000555555d497c9 in ptw_translate (inout=0x7ffebeffc090, addr=151138272)
+>      at target/i386/tcg/system/excp_helper.c:68
+> #8  0x0000555555d49988 in mmu_translate (env=env@entry=0x5555589529b0,
+>      in=in@entry=0x7ffebeffc140, out=out@entry=0x7ffebeffc110, err=err@entry=0x7ffebeffc120,
+>      ra=ra@entry=0) at target/i386/tcg/system/excp_helper.c:198
+> #9  0x0000555555d4aece in get_physical_address (env=0x5555589529b0, addr=18446741874686299840,
+>      access_type=MMU_DATA_LOAD, mmu_idx=4, out=0x7ffebeffc110, err=0x7ffebeffc120, ra=0)
+>      at target/i386/tcg/system/excp_helper.c:597
+> #10 x86_cpu_tlb_fill (cs=0x55555894fdf0, addr=18446741874686299840, size=<optimized out>,
+>      access_type=MMU_DATA_LOAD, mmu_idx=4, probe=<optimized out>, retaddr=0)
+>      at target/i386/tcg/system/excp_helper.c:617
+> #11 0x0000555555e6e8cf in tlb_fill_align (cpu=0x55555894fdf0, addr=18446741874686299840,
+>      type=type@entry=MMU_DATA_LOAD, mmu_idx=4, memop=MO_8, memop@entry=MO_32, size=-1739692016,
+>      size@entry=3776, probe=false, ra=0) at accel/tcg/cputlb.c:1251
+> #12 0x0000555555e6ed4d in mmu_lookup1 (cpu=cpu@entry=0x55555894fdf0,
+>      data=data@entry=0x7ffebeffc310, memop=memop@entry=MO_32, mmu_idx=mmu_idx@entry=4,
+>      access_type=access_type@entry=MMU_DATA_LOAD, ra=ra@entry=0) at accel/tcg/cputlb.c:1652
+> #13 0x0000555555e6eea5 in mmu_lookup (cpu=cpu@entry=0x55555894fdf0,
+>      addr=addr@entry=18446741874686299840, oi=oi@entry=36, ra=ra@entry=0,
+>      type=type@entry=MMU_DATA_LOAD, l=l@entry=0x7ffebeffc310) at accel/tcg/cputlb.c:1755
+> #14 0x0000555555e6f2f3 in do_ld4_mmu (cpu=cpu@entry=0x55555894fdf0,
+>      addr=addr@entry=18446741874686299840, oi=oi@entry=36, ra=ra@entry=0,
+>      access_type=access_type@entry=MMU_DATA_LOAD) at accel/tcg/cputlb.c:2364
+> #15 0x0000555555e71dba in cpu_ldl_mmu (env=0x5555589529b0, addr=18446741874686299840, oi=36,
+>      ra=0) at accel/tcg/ldst_common.c.inc:165
+> #16 cpu_ldl_le_mmuidx_ra (env=env@entry=0x5555589529b0, addr=addr@entry=18446741874686299840,
+>      mmu_idx=<optimized out>, ra=ra@entry=0) at accel/tcg/ldst_common.c.inc:308
+> #17 0x0000555555db72da in do_interrupt64 (env=0x5555589529b0, intno=236, is_int=0, error_code=0,
+>      next_eip=<optimized out>, is_hw=0) at target/i386/tcg/seg_helper.c:954
+> #18 do_interrupt_all (cpu=cpu@entry=0x55555894fdf0, intno=236, is_int=is_int@entry=0,
+>      error_code=error_code@entry=0, next_eip=next_eip@entry=0, is_hw=is_hw@entry=1)
+>      at target/i386/tcg/seg_helper.c:1213
+> #19 0x0000555555db884a in do_interrupt_x86_hardirq (env=env@entry=0x5555589529b0,
+>      intno=<optimized out>, is_hw=is_hw@entry=1) at target/i386/tcg/seg_helper.c:1245
+> #20 0x0000555555d4f06f in x86_cpu_exec_interrupt (cs=0x55555894fdf0,
+>      interrupt_request=<optimized out>) at target/i386/tcg/system/seg_helper.c:209
+> #21 0x0000555555e660ed in cpu_handle_interrupt (cpu=0x55555894fdf0, last_tb=<synthetic pointer>)
+>      at accel/tcg/cpu-exec.c:851
+> #22 cpu_exec_loop (cpu=cpu@entry=0x55555894fdf0, sc=sc@entry=0x7ffebeffc580)
+>      at accel/tcg/cpu-exec.c:955
+> #23 0x0000555555e663f1 in cpu_exec_setjmp (cpu=cpu@entry=0x55555894fdf0,
+>      sc=sc@entry=0x7ffebeffc580) at accel/tcg/cpu-exec.c:1033
+>      type=type@entry=MMU_DATA_LOAD, l=l@entry=0x7ffebeffc310) at accel/tcg/cputlb.c:1755
+> #14 0x0000555555e6f2f3 in do_ld4_mmu (cpu=cpu@entry=0x55555894fdf0,
+>      addr=addr@entry=18446741874686299840, oi=oi@entry=36, ra=ra@entry=0,
+>      access_type=access_type@entry=MMU_DATA_LOAD) at accel/tcg/cputlb.c:2364
+> #15 0x0000555555e71dba in cpu_ldl_mmu (env=0x5555589529b0, addr=18446741874686299840, oi=36,
+>      ra=0) at accel/tcg/ldst_common.c.inc:165
+> #16 cpu_ldl_le_mmuidx_ra (env=env@entry=0x5555589529b0, addr=addr@entry=18446741874686299840,
+>      mmu_idx=<optimized out>, ra=ra@entry=0) at accel/tcg/ldst_common.c.inc:308
+> #17 0x0000555555db72da in do_interrupt64 (env=0x5555589529b0, intno=236, is_int=0, error_code=0,
+>      next_eip=<optimized out>, is_hw=0) at target/i386/tcg/seg_helper.c:954
+> #18 do_interrupt_all (cpu=cpu@entry=0x55555894fdf0, intno=236, is_int=is_int@entry=0,
+>      error_code=error_code@entry=0, next_eip=next_eip@entry=0, is_hw=is_hw@entry=1)
+>      at target/i386/tcg/seg_helper.c:1213
+> #19 0x0000555555db884a in do_interrupt_x86_hardirq (env=env@entry=0x5555589529b0,
+>      intno=<optimized out>, is_hw=is_hw@entry=1) at target/i386/tcg/seg_helper.c:1245
+> #20 0x0000555555d4f06f in x86_cpu_exec_interrupt (cs=0x55555894fdf0,
+>      interrupt_request=<optimized out>) at target/i386/tcg/system/seg_helper.c:209
+> #21 0x0000555555e660ed in cpu_handle_interrupt (cpu=0x55555894fdf0, last_tb=<synthetic pointer>)
+>      at accel/tcg/cpu-exec.c:851
+> #22 cpu_exec_loop (cpu=cpu@entry=0x55555894fdf0, sc=sc@entry=0x7ffebeffc580)
+>      at accel/tcg/cpu-exec.c:955
+> #23 0x0000555555e663f1 in cpu_exec_setjmp (cpu=cpu@entry=0x55555894fdf0,
+>      sc=sc@entry=0x7ffebeffc580) at accel/tcg/cpu-exec.c:1033
+> --Type <RET> for more, q to quit, c to continue without paging--
+> #24 0x0000555555e66a5d in cpu_exec (cpu=cpu@entry=0x55555894fdf0) at accel/tcg/cpu-exec.c:1059
+> #25 0x0000555555d2bdc7 in tcg_cpu_exec (cpu=cpu@entry=0x55555894fdf0)
+>      at accel/tcg/tcg-accel-ops.c:80
+> #26 0x0000555555d2c1c3 in mttcg_cpu_thread_fn (arg=arg@entry=0x55555894fdf0)
+>      at accel/tcg/tcg-accel-ops-mttcg.c:94
+> #27 0x0000555556056d90 in qemu_thread_start (args=0x5555589cdba0) at util/qemu-thread-posix.c:541
+> #28 0x00007ffff60e0b7b in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+> #29 0x00007ffff615e7b8 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+> 
+> 
+> qemu-system-x86_64: ./include/exec/ram_addr.h:91: ramblock_ptr: Assertion `offset_in_ramblock(block, offset)' failed.
+> 
+> (gdb) bt
+> #0  0x00007ffff6076507 in abort () from /lib/x86_64-linux-gnu/libc.so.6
+> #1  0x00007ffff6076420 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+> #2  0x0000555555a047fa in ramblock_ptr (offset=281471527758833, block=<optimized out>)
+>      at ./include/exec/ram_addr.h:91
+> #3  0x0000555555a04c83 in ramblock_ptr (block=<optimized out>, offset=<optimized out>)
+>      at system/physmem.c:2238
+> #4  qemu_ram_ptr_length (lock=false, is_write=true, block=<optimized out>, addr=<optimized out>,
+>      size=0x0) at system/physmem.c:2430
+> #5  qemu_map_ram_ptr (ram_block=<optimized out>, addr=<optimized out>) at system/physmem.c:2443
+> #6  0x0000555555e4af6b in memory_region_get_ram_ptr (mr=<optimized out>) at system/memory.c:2452
+> #7  0x0000555555e6e024 in tlb_set_page_full (cpu=cpu@entry=0x5555589f9f50,
+>      mmu_idx=mmu_idx@entry=4, addr=addr@entry=18446741874686296064,
+>      full=full@entry=0x7ffebd7f90b0) at accel/tcg/cputlb.c:1065
+> #8  0x0000555555e70a92 in tlb_set_page_with_attrs (cpu=cpu@entry=0x5555589f9f50,
+>      addr=addr@entry=18446741874686296064, paddr=paddr@entry=206749696, attrs=...,
+>      prot=<optimized out>, mmu_idx=mmu_idx@entry=4, size=4096) at accel/tcg/cputlb.c:1193
+> #9  0x0000555555d4ae44 in x86_cpu_tlb_fill (cs=0x5555589f9f50, addr=18446741874686299840,
+>      size=<optimized out>, access_type=MMU_DATA_LOAD, mmu_idx=4, probe=<optimized out>, retaddr=0)
+>      at target/i386/tcg/system/excp_helper.c:624
+> #10 0x0000555555e6e8cf in tlb_fill_align (cpu=0x5555589f9f50, addr=18446741874686299840,
+>      type=type@entry=MMU_DATA_LOAD, mmu_idx=4, memop=MO_8, memop@entry=MO_32, size=-1115714056,
+>      size@entry=3776, probe=false, ra=0) at accel/tcg/cputlb.c:1251
+> #11 0x0000555555e6ed4d in mmu_lookup1 (cpu=cpu@entry=0x5555589f9f50,
+>      data=data@entry=0x7ffebd7f9310, memop=memop@entry=MO_32, mmu_idx=mmu_idx@entry=4,
+>      access_type=access_type@entry=MMU_DATA_LOAD, ra=ra@entry=0) at accel/tcg/cputlb.c:1652
+> #12 0x0000555555e6eea5 in mmu_lookup (cpu=cpu@entry=0x5555589f9f50,
+>      addr=addr@entry=18446741874686299840, oi=oi@entry=36, ra=ra@entry=0,
+>      type=type@entry=MMU_DATA_LOAD, l=l@entry=0x7ffebd7f9310) at accel/tcg/cputlb.c:1755
+> #13 0x0000555555e6f2f3 in do_ld4_mmu (cpu=cpu@entry=0x5555589f9f50,
+>      addr=addr@entry=18446741874686299840, oi=oi@entry=36, ra=ra@entry=0,
+>      access_type=access_type@entry=MMU_DATA_LOAD) at accel/tcg/cputlb.c:2364
+> #14 0x0000555555e71dba in cpu_ldl_mmu (env=0x5555589fcb10, addr=18446741874686299840, oi=36,
+>      ra=0) at accel/tcg/ldst_common.c.inc:165
+> #15 cpu_ldl_le_mmuidx_ra (env=env@entry=0x5555589fcb10, addr=addr@entry=18446741874686299840,
+>      mmu_idx=<optimized out>, ra=ra@entry=0) at accel/tcg/ldst_common.c.inc:308
+> #16 0x0000555555db72da in do_interrupt64 (env=0x5555589fcb10, intno=236, is_int=0, error_code=0,
+>      next_eip=<optimized out>, is_hw=0) at target/i386/tcg/seg_helper.c:954
+> #17 do_interrupt_all (cpu=cpu@entry=0x5555589f9f50, intno=236, is_int=is_int@entry=0,
+>      error_code=error_code@entry=0, next_eip=next_eip@entry=0, is_hw=is_hw@entry=1)
+>      at target/i386/tcg/seg_helper.c:1213
+> #18 0x0000555555db884a in do_interrupt_x86_hardirq (env=env@entry=0x5555589fcb10,
+>      intno=<optimized out>, is_hw=is_hw@entry=1) at target/i386/tcg/seg_helper.c:1245
+> #19 0x0000555555d4f06f in x86_cpu_exec_interrupt (cs=0x5555589f9f50,
+>      interrupt_request=<optimized out>) at target/i386/tcg/system/seg_helper.c:209
+> #20 0x0000555555e660ed in cpu_handle_interrupt (cpu=0x5555589f9f50, last_tb=<synthetic pointer>)
+>      at accel/tcg/cpu-exec.c:851
+> #21 cpu_exec_loop (cpu=cpu@entry=0x5555589f9f50, sc=sc@entry=0x7ffebd7f9580)
+>      at accel/tcg/cpu-exec.c:955
+> #22 0x0000555555e663f1 in cpu_exec_setjmp (cpu=cpu@entry=0x5555589f9f50,
+>      sc=sc@entry=0x7ffebd7f9580) at accel/tcg/cpu-exec.c:1033
+> #23 0x0000555555e66a5d in cpu_exec (cpu=cpu@entry=0x5555589f9f50) at accel/tcg/cpu-exec.c:1059
+> #24 0x0000555555d2bdc7 in tcg_cpu_exec (cpu=cpu@entry=0x5555589f9f50)
+>      at accel/tcg/tcg-accel-ops.c:80
+> #25 0x0000555555d2c1c3 in mttcg_cpu_thread_fn (arg=arg@entry=0x5555589f9f50)
+>      at accel/tcg/tcg-accel-ops-mttcg.c:94
+> #26 0x0000555556056d90 in qemu_thread_start (args=0x55555856bf60) at util/qemu-thread-posix.c:541
+> #27 0x00007ffff60e0b7b in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+> #28 0x00007ffff615e7b8 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+> 
+> (gdb) frame 2
+> #2  0x0000555555a047fa in ramblock_ptr (offset=281471527758833, block=<optimized out>)
+>      at ./include/exec/ram_addr.h:91
+> 91          assert(offset_in_ramblock(block, offset));
+> 
+> (gdb) l
+> 86          return (b && b->host && offset < b->used_length) ? true : false;
+> 87      }
+> 88
+> 89      static inline void *ramblock_ptr(RAMBlock *block, ram_addr_t offset)
+> 90      {
+> 91          assert(offset_in_ramblock(block, offset));
+> 92          return (char *)block->host + offset;
+> 93      }
+> 94
+> 95      static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
+> 
+> 
+> [    9.439487] pci 0000:00:02.0: BAR 1 [io  0xc000-0xc03f]
+> 
+> Thread 65 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7ffe9cff96c0 (LWP 15472)]
+> phys_page_find (d=d@entry=0x7fff905ec880, addr=addr@entry=111288320) at system/physmem.c:337
+> 337         if (section_covers_addr(&sections[lp.ptr], addr)) {
+> (gdb) l
+> 332             }
+> 333             p = nodes[lp.ptr];
+> 334             lp = p[(index >> (i * P_L2_BITS)) & (P_L2_SIZE - 1)];
+> 335         }
+> 336
+> 337         if (section_covers_addr(&sections[lp.ptr], addr)) {
+> 338             return &sections[lp.ptr];
+> 339         } else {
+> 340             return &sections[PHYS_SECTION_UNASSIGNED];
+> 341         }
+> (gdb)
+> 
+> 
+> I was doing a bisection between 9.2.0 and 10.0.0, since we observed
+> this issue happening wiht 10.0 but not - with 9.2.  So some of the
+> above failures might be somewhere from the middle between 9.2 and
+> 10.0.  However, I was able to trigger some of the failures with
+> 9.2.0, though with much less probability.  And some can be triggered
+> in current master too, with much better probability.
+> 
+> On my 4-core notebook, the above command line fails every 20..50 run.
+> 
+> I was never able to reproduce the assertion failure as shown in !1921.
+> 
+> As of now, this issue is hitting debian trixie, - in debci, when a
+> package which creates a guest image tries to run qemu but in the
+> debci environment there's no kvm available, so it resorts to tcg.
+> 
+> On IRC, Manos Pitsidianakis noted that he was debugging use-after-free
+> with MemoryRegion recently, and posted a patch which can help a bit:
+> https://people.linaro.org/~manos.pitsidianakis/backtrace.diff
+> 
+> I'm not sure where to go from here.
+> 
+> Just collecting everything we have now.
+> 
+> Thanks,
+> 
+> /mjt
 > 
 
-Ohh, neat. I'll integrate that as well. Thanks!
-
-Thanks,
-Mathias
 
