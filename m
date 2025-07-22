@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E0E9C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37220C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueC1d-0002ue-TB; Tue, 22 Jul 2025 08:23:17 -0400
+	id 1ueC7U-0001Uy-C4; Tue, 22 Jul 2025 08:29:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ueC1a-0002rd-Rh
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:23:15 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ueC1X-0000BC-5Z
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:23:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753186991; x=1784722991;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=WTKpFAUaMH3gTX/82ufgLc6VaesBS81C1+Rq7IwfKuE=;
- b=WyvFfeBmJlUipddklAwMz7ix1Vd5fvbwCXvpR3C0+TRdc1l4rCSiWgot
- 4UT3biyt2uIXXwp1k0hTIUbr2NcfyBNlrIFEYFNx5+dKtzjK7xR0wcg+2
- SUfZYHhen4ttYKnGYb7MGTIY5QEOEbZCUOKFUremhGpRlZvT4tdfk80g+
- jX0NIDNyzb84y7iUT3RbUtCGtm/TbqpF05BMURiEi/ACP/2Q6pX2R/iQz
- knfszSKPjP017rmN4RCz4LKd7p/9u/4oQmlm280ygs6A6uVNugCvxNXN+
- DqensZRmQ7QQoms6DPx3Lg84DKOQ7CIiBsBVZW5PUt5GShQPSNxZQWmAD g==;
-X-CSE-ConnectionGUID: g3Q2k3LlQGyXmICEqGVsIg==
-X-CSE-MsgGUID: IgTf4mqoSxukqwLdrZXdJQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="55140131"
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; d="scan'208";a="55140131"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2025 05:21:51 -0700
-X-CSE-ConnectionGUID: +qBA7GxQRBSQdMSL60kwIg==
-X-CSE-MsgGUID: njD7ki8oQViqWSWR8dSM6A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; d="scan'208";a="182831385"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jul 2025 05:21:49 -0700
-Message-ID: <c2d2a3e9-e317-4049-9b6d-b6b3027ddd6d@intel.com>
-Date: Tue, 22 Jul 2025 20:21:46 +0800
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ueC7O-0001RW-7f
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:29:14 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ueC7I-0001Rs-SK
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:29:13 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-605b9488c28so9303185a12.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 05:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753187346; x=1753792146; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dU5Vuu2RbHdWWGd+esiFCg0Vx8GarEZq9jusKs2nt2Q=;
+ b=WtMAzV3XgI/vMvjhOrWwccSWElAV/ozoSgttV2YARV25E22+94XzWOFgJwGzWnyCjO
+ nZpVbWPV8ZiqdRCf2eN80Z4yf3AezpALgMgByJ7KVQOi9MouXkevWXkN/r/F+kawVcZx
+ JI5KbWoKdMi0qAjuQqft+Rxy4sqsVTlIMcTyKxWTeP3H+ZRsnYn24DCvUpB/98duKcTv
+ YRYS1y10HfzU/rWtivPSGqIb8+nJvjMFw/dFcb8fgcGn9c8ME92/XeBd/COObMEC6Zow
+ bA4c2Rcu0u6GPomouWEXtjq/ikX0lryqrFOf9nWMpH1V6uhJdoS0XedG8oTO7PzL6Jot
+ BKJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753187346; x=1753792146;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dU5Vuu2RbHdWWGd+esiFCg0Vx8GarEZq9jusKs2nt2Q=;
+ b=nPYWuKp9K13i2ZCBy8yNAZF+36sE5uhgZcpdjqRBaMRzU0w3TdNtvYlnysxtVSIKkH
+ USJHjfsq9mcFF/+30IDogjfoyZmV3kR/VDSi6bkr3vQyIpPlquHcB7n6h1uwVcPZ+Qz3
+ qy7odsJ/Ixtqtjd8U00QCz9wjWCBCHJa+bD9/dKTwmJg97C5TW8ZAUrhJsyb5CghfMVx
+ +o2Pt+USGOnTf4Ko9mqUXxAJniv/v40PStwmNC0olqJ4FWYIyEgUWsCBroE6TRoTyf2u
+ /H2g214Z8L0U8NC/pVsSITQXe0wKMUXYp5y7TfBCU6IikOCOxkulmSeClbxToB0WluEz
+ w8wg==
+X-Gm-Message-State: AOJu0YykrGPeyRHZsJU/g/OcYf/TWkc5aq9sXFCK8yJUo2i65/cSmZ+Q
+ RBwTSfoEIK5aQ+fWVxUC4v7KC0NtqAoO+KFpOyhVb4Xi9TIBMoLpRsMKoA157jS6mIXmRuWkqiK
+ 7c3ef66Idi1FdO9ixStCtP7gK5dS/ksccGJ56pJW9/Q==
+X-Gm-Gg: ASbGncsk/h9+KJAPub93k4sO3WOI8Pn8x/K6E0L/THKJLa7k171dH8Nm9hlKdel9//y
+ tXt1qcWYVUmgJDCntAy36JjWsnlXf4Dq1UeHSxGSA9lFstRiqLxBLkMoy6+JTH8Dv+RQOvyD8YH
+ 3YigCt1cq/Cg+jjAJH7doGFxqZnQ66za7pHDAA1w8YYPsLN7Rfpv/iLLbEVefi4HHP//1c61wP8
+ xs4Pw==
+X-Google-Smtp-Source: AGHT+IHePfySFLH2TTpEZl6cGZKtFCmmu+kUzfqT2d31uzQFzvruq+jVsbw5ekj9m0jcB0g/MUS+EQCDhOQMoSHERAc=
+X-Received: by 2002:a50:cd4e:0:b0:612:a524:2b31 with SMTP id
+ 4fb4d7f45d1cf-612a52432demr14021192a12.25.1753187345847; Tue, 22 Jul 2025
+ 05:29:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/kvm: Disable hypercall patching quirk by default
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Mathias Krause <minipli@grsecurity.net>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org, Oliver Upton <oliver.upton@linux.dev>,
- Sean Christopherson <seanjc@google.com>
-References: <20250619194204.1089048-1-minipli@grsecurity.net>
- <41a5767e-42d7-4877-9bc8-aa8eca6dd3e3@intel.com>
- <b8336828-ce72-4567-82df-b91d3670e26c@grsecurity.net>
- <3f58125c-183f-49e0-813e-d4cb1be724e8@intel.com>
- <aH9yuVcUJQc4_-vP@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aH9yuVcUJQc4_-vP@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250722083507.678542-1-pbonzini@redhat.com>
+In-Reply-To: <20250722083507.678542-1-pbonzini@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 22 Jul 2025 15:28:39 +0300
+X-Gm-Features: Ac12FXxqk7gGztfIdI9ISyH8gEuAM5tiEwlLdSXgcbO1Yacw5Luyz7Exa_-7VHE
+Message-ID: <CAAjaMXagtnr-r6ou8Nfh4+x_TSt4BTUT_4RM7tMnjX7bU_ohAA@mail.gmail.com>
+Subject: Re: [PATCH] scripts: add script to help distro use global Rust
+ packages
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, berrange@redhat.com, 
+ ngompa@fedoraproject.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,93 +96,279 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/22/2025 7:15 PM, Daniel P. Berrangé wrote:
-> On Tue, Jul 22, 2025 at 06:27:45PM +0800, Xiaoyao Li wrote:
->> On 7/22/2025 5:21 PM, Mathias Krause wrote:
->>> On 22.07.25 05:45, Xiaoyao Li wrote:
->>>> On 6/20/2025 3:42 AM, Mathias Krause wrote:
->>>>> KVM has a weird behaviour when a guest executes VMCALL on an AMD system
->>>>> or VMMCALL on an Intel CPU. Both naturally generate an invalid opcode
->>>>> exception (#UD) as they are just the wrong instruction for the CPU
->>>>> given. But instead of forwarding the exception to the guest, KVM tries
->>>>> to patch the guest instruction to match the host's actual hypercall
->>>>> instruction. That is doomed to fail as read-only code is rather the
->>>>> standard these days. But, instead of letting go the patching attempt and
->>>>> falling back to #UD injection, KVM injects the page fault instead.
->>>>>
->>>>> That's wrong on multiple levels. Not only isn't that a valid exception
->>>>> to be generated by these instructions, confusing attempts to handle
->>>>> them. It also destroys guest state by doing so, namely the value of CR2.
->>>>>
->>>>> Sean attempted to fix that in KVM[1] but the patch was never applied.
->>>>>
->>>>> Later, Oliver added a quirk bit in [2] so the behaviour can, at least,
->>>>> conceptually be disabled. Paolo even called out to add this very
->>>>> functionality to disable the quirk in QEMU[3]. So lets just do it.
->>>>>
->>>>> A new property 'hypercall-patching=on|off' is added, for the very
->>>>> unlikely case that there are setups that really need the patching.
->>>>> However, these would be vulnerable to memory corruption attacks freely
->>>>> overwriting code as they please. So, my guess is, there are exactly 0
->>>>> systems out there requiring this quirk.
->>>>
->>>> The default behavior is patching the hypercall for many years.
->>>>
->>>> If you desire to change the default behavior, please at least keep it
->>>> unchanged for old machine version. i.e., introduce compat_property,
->>>> which sets KVMState->hypercall_patching_enabled to true.
->>>
->>> Well, the thing is, KVM's patching is done with the effective
->>> permissions of the guest which means, if the code in question isn't
->>> writable from the guest's point of view, KVM's attempt to modify it will
->>> fail. This failure isn't transparent for the guest as it sees a #PF
->>> instead of a #UD, and that's what I'm trying to fix by disabling the quirk.
->>>
->>> The hypercall patching was introduced in Linux commit 7aa81cc04781
->>> ("KVM: Refactor hypercall infrastructure (v3)") in v2.6.25. Until then
->>> it was based on a dedicated hypercall page that was handled by KVM to
->>> use the proper instruction of the KVM module in use (VMX or SVM).
->>>
->>> Patching code was fine back then, but the introduction of DEBUG_RO_DATA
->>> made the patching attempts fail and, ultimately, lead to Paolo handle
->>> this with commit c1118b3602c2 ("x86: kvm: use alternatives for VMCALL
->>> vs. VMMCALL if kernel text is read-only").
->>>
->>> However, his change still doesn't account for the cross-vendor live
->>> migration case (Intel<->AMD), which will still be broken, causing the
->>> before mentioned bogus #PF, which will just lead to misleading Oops
->>> reports, confusing the poor souls, trying to make sense of it.
->>>
->>> IMHO, there is no valid reason for still having the patching in place as
->>> the .text of non-ancient kernel's  will be write-protected, making
->>> patching attempts fail. And, as they fail with a #PF instead of #UD, the
->>> guest cannot even handle them appropriately, as there was no memory
->>> write attempt from its point of view. Therefore the default should be to
->>> disable it, IMO. This won't prevent guests making use of the wrong
->>> instruction from trapping, but, at least, now they'll get the correct
->>> exception vector and can handle it appropriately.
->>
->> But you don't accout for the case that guest kernel is built without
->> CONFIG_STRICT_KERNEL_RWX enabled, or without CONFIG_DEBUG_RO_DATA, or for
->> whatever reason the guest's text is not readonly, and the VM needs to be
->> migrated among different vendors (Intel <-> AMD).
->>
->> Before this patch, the above usecase works well. But with this patch, the
->> guest will gets #UD after migrated to different vendors.
->>
->> I heard from some small CSPs that they do want to the ability to live
->> migrate VMs among Intel and AMD host.
-> 
-> Usually CSPs don't have full control over what their customers
-> are running as a guest. If their customers are running mainstream
-> modern guest OS, CONFIG_STRICT_KERNEL_RWX is pretty likely to be
-> set, so presumably migration between Intel & AMD will not work
-> and this isn't making it worse ?
+On Tue, Jul 22, 2025 at 11:36=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> Some distros prefer to avoid vendored crate sources, and instead use
+> local sources from e.g. ``/usr/share/cargo/registry``.  Add a
+> script, inspired by the Mesa spec file(*), that automatically
+> performs this task.  The script is meant to be invoked after unpacking
+> the QEMU tarball.
+>
+> (*) This is the hack that Mesa uses:
+>
+>     export MESON_PACKAGE_CACHE_DIR=3D"%{cargo_registry}/"
+>     %define inst_crate_nameversion() %(basename %{cargo_registry}/%{1}-*)
+>     %define rewrite_wrap_file() sed -e "/source.*/d" -e "s/%{1}-.*/%{inst=
+_crate_nameversion %{1}}/" -i subprojects/%{1}.wrap
+>     %rewrite_wrap_file proc-macro2
+>     ... more %rewrite_wrap_file invocations follow ...
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  docs/about/build-platforms.rst           |   8 +
+>  scripts/get-wraps-from-cargo-registry.py | 191 +++++++++++++++++++++++
+>  2 files changed, 199 insertions(+)
+>  create mode 100755 scripts/get-wraps-from-cargo-registry.py
+>
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.=
+rst
+> index 8ecbd6b26f7..8671c3be9cd 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -127,6 +127,14 @@ Rust build dependencies
+>    (or newer) package.  The path to ``rustc`` and ``rustdoc`` must be
+>    provided manually to the configure script.
+>
+> +  Some distros prefer to avoid vendored crate sources, and instead use
+> +  local sources from e.g. ``/usr/share/cargo/registry``.  QEMU includes =
+a
+> +  script, ``scripts/get-wraps-from-cargo-registry.py``, that automatical=
+ly
+> +  performs this task.  The script is meant to be invoked after unpacking
+> +  the QEMU tarball.  QEMU also includes ``rust/Cargo.toml`` and
+> +  ``rust/Cargo.lock`` files that can be used to compute QEMU's build
+> +  dependencies, e.g. using ``cargo2rpm -p rust/Cargo.toml buildrequires`=
+`.
+> +
+>  Optional build dependencies
+>    Build components whose absence does not affect the ability to build QE=
+MU
+>    may not be available in distros, or may be too old for our requirement=
+s.
+> diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps=
+-from-cargo-registry.py
+> new file mode 100755
+> index 00000000000..6b76d00a6d9
+> --- /dev/null
+> +++ b/scripts/get-wraps-from-cargo-registry.py
+> @@ -0,0 +1,191 @@
+> +#!/usr/bin/env python3
+> +
+> +"""
+> +get-wraps-from-cargo-registry.py - Update Meson subprojects from a globa=
+l registry
+> +"""
+> +
+> +# Copyright (C) 2025 Red Hat, Inc.
+> +#
+> +# Author: Paolo Bonzini <pbonzini@redhat.com>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later. See the COPYING file in the top-level directory.
+> +
 
-If breaking some usecase is not a concern, then I'm fine with no compat 
-property.
+Nit, missing:
 
-> With regards,
-> Daniel
+# SPDX-License-Identifier:
 
+> +import argparse
+> +import configparser
+> +import filecmp
+> +import glob
+> +import os
+> +import subprocess
+> +import sys
+> +
+> +
+> +def get_name_and_semver(namever: str) -> tuple[str, str]:
+> +    """Split a subproject name into its name and semantic version parts"=
+""
+> +    parts =3D namever.rsplit("-", 1)
+> +    if len(parts) !=3D 2:
+> +        return namever, ""
+> +
+> +    return parts[0], parts[1]
+> +
+> +
+> +class UpdateSubprojects:
+> +    cargo_registry: str
+> +    top_srcdir: str
+> +    dry_run: bool
+> +    changes: int =3D 0
+> +
+> +    def find_installed_crate(self, namever: str) -> str | None:
+> +        """Find installed crate matching name and semver prefix"""
+> +        name, semver =3D get_name_and_semver(namever)
+> +
+> +        # exact version match
+> +        path =3D os.path.join(self.cargo_registry, f"{name}-{semver}")
+> +        if os.path.exists(path):
+> +            return f"{name}-{semver}"
+> +
+> +        # semver match
+> +        matches =3D sorted(glob.glob(f"{path}.*"))
+> +        return os.path.basename(matches[0]) if matches else None
+> +
+> +    def compare_build_rs(self, orig_dir: str, registry_namever: str) -> =
+None:
+> +        """Warn if the build.rs in the original directory differs from t=
+he registry version."""
+> +        orig_build_rs =3D os.path.join(orig_dir, "build.rs")
+> +        new_build_rs =3D os.path.join(self.cargo_registry, registry_name=
+ver, "build.rs")
+> +
+> +        msg =3D None
+> +        if os.path.isfile(orig_build_rs) !=3D os.path.isfile(new_build_r=
+s):
+> +            if os.path.isfile(orig_build_rs):
+> +                msg =3D f"build.rs removed in {registry_namever}"
+> +            if os.path.isfile(new_build_rs):
+> +                msg =3D f"build.rs added in {registry_namever}"
+> +
+> +        elif os.path.isfile(orig_build_rs) and not filecmp.cmp(orig_buil=
+d_rs, new_build_rs):
+> +            msg =3D f"build.rs changed from {orig_dir} to {registry_name=
+ver}"
+> +
+> +        if msg:
+> +            print(f"=E2=9A=A0=EF=B8=8F  Warning: {msg}")
+> +            print("   This may affect the build process - please review =
+the differences.")
+> +
+> +    def update_subproject(self, wrap_file: str, registry_namever: str) -=
+> None:
+> +        """Modify [wrap-file] section to point to self.cargo_registry.""=
+"
+> +        assert wrap_file.endswith("-rs.wrap")
+> +        wrap_name =3D wrap_file[:-5]
+> +
+> +        env =3D os.environ.copy()
+> +        env["MESON_PACKAGE_CACHE_DIR"] =3D self.cargo_registry
+> +
+> +        config =3D configparser.ConfigParser()
+> +        config.read(wrap_file)
+> +        if "wrap-file" not in config:
+> +            return
+> +
+> +        # do not download the wrap, always use the local copy
+> +        orig_dir =3D config["wrap-file"]["directory"]
+> +        if os.path.exists(orig_dir) and orig_dir !=3D registry_namever:
+> +            self.compare_build_rs(orig_dir, registry_namever)
+> +        if self.dry_run:
+> +            if orig_dir =3D=3D registry_namever:
+> +                print(f"Will install {orig_dir} from registry.")
+> +            else:
+> +                print(f"Will replace {orig_dir} with {registry_namever}.=
+")
+> +            self.changes +=3D 1
+> +            return
+> +
+> +        config["wrap-file"]["directory"] =3D registry_namever
+> +        for key in list(config["wrap-file"].keys()):
+> +            if key.startswith("source"):
+> +                del config["wrap-file"][key]
+> +
+> +        # replace existing directory with installed version
+> +        if os.path.exists(orig_dir):
+> +            subprocess.run(
+> +                ["meson", "subprojects", "purge", "--confirm", wrap_name=
+],
+> +                cwd=3Dself.top_srcdir,
+> +                env=3Denv,
+> +                check=3DTrue,
+> +            )
+> +
+> +        with open(wrap_file, "w") as f:
+> +            config.write(f)
+> +
+> +        if orig_dir =3D=3D registry_namever:
+> +            print(f"Installing {orig_dir} from registry.")
+> +        else:
+> +            print(f"Replacing {orig_dir} with {registry_namever}.")
+> +
+> +        if orig_dir !=3D registry_namever:
+> +            patch_dir =3D config["wrap-file"]["patch_directory"]
+> +            patch_dir =3D os.path.join("packagefiles", patch_dir)
+> +            _, ver =3D registry_namever.rsplit("-", 1)
+> +            subprocess.run(
+> +                ["meson", "rewrite", "kwargs", "set", "project", "/", "v=
+ersion", ver],
+> +                cwd=3Dpatch_dir,
+> +                env=3Denv,
+> +                check=3DTrue,
+> +            )
+> +
+> +        subprocess.run(
+> +            ["meson", "subprojects", "download", wrap_name],
+> +            cwd=3Dself.top_srcdir,
+> +            env=3Denv,
+> +            check=3DTrue,
+> +        )
+> +
+> +    @staticmethod
+> +    def parse_cmdline() -> argparse.Namespace:
+> +        parser =3D argparse.ArgumentParser(
+> +            description=3D"Replace Meson subprojects with packages in a =
+Cargo registry"
+> +        )
+> +        parser.add_argument(
+> +            "--cargo-registry",
+> +            default=3Dos.environ.get("CARGO_REGISTRY"),
+> +            help=3D"Path to Cargo registry (default: CARGO_REGISTRY env =
+var)",
+> +        )
+> +        parser.add_argument(
+> +            "--dry-run",
+> +            action=3D"store_true",
+> +            default=3DFalse,
+> +            help=3D"Do not actually replace anything",
+> +        )
+> +
+> +        args =3D parser.parse_args()
+> +        if not args.cargo_registry:
+> +            print("error: CARGO_REGISTRY environment variable not set an=
+d --cargo-registry not provided")
+> +            sys.exit(1)
+> +
+> +        return args
+> +
+> +    def __init__(self, args: argparse.Namespace):
+> +        self.cargo_registry =3D args.cargo_registry
+> +        self.dry_run =3D args.dry_run
+> +        self.top_srcdir =3D os.getcwd()
+> +
+> +    def main(self) -> None:
+> +        if not os.path.exists("subprojects"):
+> +            print("'subprojects' directory not found, nothing to do.")
+> +            return
+> +
+> +        os.chdir("subprojects")
+> +        for wrap_file in sorted(glob.glob("*-rs.wrap")):
+> +            namever =3D wrap_file[:-8]  # Remove '-rs.wrap'
+> +
+> +            registry_namever =3D self.find_installed_crate(namever)
+> +            if not registry_namever:
+> +                print(f"No installed crate found for {wrap_file}")
+> +                continue
+> +
+> +            self.update_subproject(wrap_file, registry_namever)
+> +
+> +        if self.changes:
+> +            if self.dry_run:
+> +                print("Rerun without --dry-run to apply changes.")
+> +            else:
+> +                print(f"=E2=9C=A8 {self.changes} subproject(s) updated!"=
+)
+> +        else:
+> +            print("No changes.")
+> +
+> +
+> +if __name__ =3D=3D "__main__":
+> +    args =3D UpdateSubprojects.parse_cmdline()
+> +    UpdateSubprojects(args).main()
+> --
+> 2.50.1
+>
+>
 
