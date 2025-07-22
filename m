@@ -4,90 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF45CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 06:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12142C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 07:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue6Bb-0001Ml-Lx; Tue, 22 Jul 2025 02:09:11 -0400
+	id 1ue7VC-0007u1-S1; Tue, 22 Jul 2025 03:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue6BY-0001Jl-33
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 02:09:08 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ue6BV-0006cf-WD
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 02:09:07 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4560d176f97so54417195e9.0
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 23:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753164544; x=1753769344; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rHi5AoTZKxgE1b905lgbLvWxvaelygagiP7bhh1leBo=;
- b=GonkqLLtsiXASdgvpCKKfD9YDTxgfO+BqPJ5Ku565aVEztns5ySn/HKxocGBbDG6Rq
- UNInXxcyMxOfXonT3vA1AJLEBMJV+QQOMXTi3o0WyfSkAbiWPhJBcSeDkbHuO4Kv1GQK
- G2Cb3DpINKlKVQSEEclwsCeWrXq8JzMESti3cR+JUitrde0t9FPj7qsCgb+XX/ncKxsn
- s7s6SxGST7hq0r6EX038B2991uTqtseKK6O30sbXTqsIgfwadPXjxDiF1juBfekM7HYZ
- 9iIVFUy1RtfMcxs3zo4brKjsCJnIhpQXm81Gk20UeH9MB/3cqXO6YiRrtY/oFUA6BnRU
- s/RA==
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ue7V2-0007qV-El
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 03:33:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ue7Uw-0005pS-F9
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 03:33:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753169590;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gQguFRDnQHyJdSq2GrO07NlcFzBXMo9T0F5s54XHLMA=;
+ b=gn88GGvOPuftXWPZI+bSBQ4ZNrVjsSA5O7st5f7o6TDYsLpeOQ/CWPS50iBcZBGGoXqq+k
+ UP26DDorurMR6mZuWfsgCS7i55lgAViJg90DLhWUUszYnNOHPIV7ISil8Hij/6ALC5YD1e
+ 2+TdIl5e+uKcfpRqF+3MiI01RMhvJCc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-542-uSO1rby4PleinFiGSjCiug-1; Tue, 22 Jul 2025 03:33:08 -0400
+X-MC-Unique: uSO1rby4PleinFiGSjCiug-1
+X-Mimecast-MFC-AGG-ID: uSO1rby4PleinFiGSjCiug_1753169587
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f6ff23ccso3484282f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 00:33:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753164544; x=1753769344;
+ d=1e100.net; s=20230601; t=1753169587; x=1753774387;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rHi5AoTZKxgE1b905lgbLvWxvaelygagiP7bhh1leBo=;
- b=nkjPWT5NlK4Ut5MeT5pk13ktaHaUFgmmkybLGYX4YbFsu95dSmJVriMGiPSP/i5ZGy
- 69ovw+fvTZGLGXcPCuxyoAr+Sq3fi4lBxEKGEIwW2Uq50ub94C9RMZ1oHGax/DKPSIbn
- YRgh9HQNsRORH/pEp/Ybomwzcf3+gutCBrmRu5ji/vz5Htsx/s2UioPJmUZ/rqAYc+k0
- Y85UfZiHtPsKNgVN0CmiLiEln0SlFzlGCNhjD22qaf+5hWrUUPQWyYuk75UKs5K8gadc
- Oufm4x+gb6sQzu596IIYxE8UQLANR/Kog81mNEKcYy28oXdvxsjEqUBgsMOn5nUmTSVo
- 9cvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeBE0C3HNZEeK5i5WxqRTPmXXYAkNVTcHrXTgT0sCpY5HSmSk2imDBUga8mgZ/YlwueCJlvZCWBv8f@nongnu.org
-X-Gm-Message-State: AOJu0Yw/mYJlblvCJcDx9imiZrtoyQ2bUWbSBhkGMa7xlwbkAvwsgEQR
- 6ITzFOQ8k4iGNFp5ZLDDWGpMWooZUu7lk8XcaEzE6wjaszO569R62eB686YSC4LGIOY=
-X-Gm-Gg: ASbGnctIRsmcnSRhxmxSlsgZNIgqFw47E+1mNMK8ZfuxAtMPTWtD1V0K5moM9OIza2b
- 959ZW6VrS1j9wAgC5OTumdQMX/1qXYnsbCTpzicwdvdk1Rid0Bi7/XoFYLnsBKaPUPjrt5kTnut
- 4P0sRDusg7fGXHNUbUn/UigwNuaLqqerncF57/QmR5BAIsnz99o8TIl+pwnG+P3dX/WihR7hCoe
- eIbE6wmAWdGLclGue3Np76PcOhsoGimIDgIRXG5C1x4EfDa4VVdDaoy2/LyeRFd91vPyaOMHp6O
- aej9ULiL9XEekWR7Prop11/97rjcLCsWkvNfWD7iKMyfUdPPvHJ0KogMH9266bA/RxH9tJua3bY
- wwmoWWzXkni72EEK/UQwehscddww5yDeVLFZikeS6hrinTztGbtQLMv3aKdzYbKtYqRbpjgo=
-X-Google-Smtp-Source: AGHT+IGWfSkPQGSRXrP/753q1NjFbpWSvPS62sJhnMx8803vuTwAbqImOPH/SbPolgjITygjpH7PEQ==
-X-Received: by 2002:a5d:59c5:0:b0:3a4:e502:81e1 with SMTP id
- ffacd0b85a97d-3b60e5181dbmr16014708f8f.52.1753164544026; 
- Mon, 21 Jul 2025 23:09:04 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76455e57asm1043751f8f.21.2025.07.21.23.09.03
+ bh=gQguFRDnQHyJdSq2GrO07NlcFzBXMo9T0F5s54XHLMA=;
+ b=fTeZ2jBGjqgjiQ+ioRhu74TczGJK5jpv35J4e0lVF/mi1FFn2VeiKcgAW92qx6Ez35
+ tfVjncPpftXsdqNdBIB54pEWEPCNzz8nJx9CscuKrhegRyt8N64y+wBKClRvIgqYpJsZ
+ asW9sgrI6CR8wLNDJOAj1fFdX1rh7GtB7VV/BCZQiFQZtGHlxuqw1p1V8uKDxaclspSU
+ Ph3bXekKC/Ft2gCWYgUdxoC8riF0BrLYDMl17M1R6u5XQ44itmlOFLgsfEjbBKf+TCWf
+ TM/ukVUpLuWQapbBETZpTbkHX1g3/g7fRfEYUY3AECpjMJbKF6PCOHqCbKd2vYSVs1zJ
+ qGPg==
+X-Gm-Message-State: AOJu0Yz5zRbqfuWr85GM7yS6ta9oQ7Zc8YtYDq5BKRN4vossAH+gaLcj
+ 80oBCbLJcQII3WP/RWRDVXaCbBkY0GTab7yvk+LJoWxJ7NUhkNA9PpR0dybfq+uM6GXBMqHcgvf
+ vzJrlKPIZDRPlib6E8QAdY+Jjh3aWG5PnVBUTT8DlYy7SGnMwdfr/9fNr
+X-Gm-Gg: ASbGnctM1WoodkhJOuMGyswLOdHyHdXdecWpVXnB46swN5vV8wsf+WNcQtMzyYE6HH2
+ aNRjAr4ft1PcAlh/CX3q5RuNFQARKgB6+BzeSwG59hlbSixL37uYROsxUH6QVR5TI6HCyXtLZT1
+ Fh8Y4cIH15xEdkB+D8DlB0q4WCl52dVA8fQp7WkxnUjPZr7iY8yMLNBqVKBRzKqZaiZBZXmFaxt
+ LVS9aIxpoU5z0HqhFoW0/EiCvdawYmn34TDE2VQNSyVGgDMez0Kd15/qcrNy3xS5rhJm1EiNJAz
+ VACY7buqBjCimaaMs379QVNGlevPonnbrbZqpiXYdlkHqdcVvl/f853LGdbbSlandGBU++7eZg4
+ lk2NZuIEg9ZU=
+X-Received: by 2002:a5d:64c5:0:b0:3b7:61e5:a8a5 with SMTP id
+ ffacd0b85a97d-3b761e5a9b5mr3232209f8f.47.1753169586586; 
+ Tue, 22 Jul 2025 00:33:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnUSVngl4KBKdKubZsQQwWRZfCzc0efMwljlvF/PRVNi2H2OGL7IoX3L4xcHT9jm1ufxY6bw==
+X-Received: by 2002:a5d:64c5:0:b0:3b7:61e5:a8a5 with SMTP id
+ ffacd0b85a97d-3b761e5a9b5mr3232169f8f.47.1753169585987; 
+ Tue, 22 Jul 2025 00:33:05 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
+ ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4563b5a4253sm124822425e9.3.2025.07.22.00.33.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Jul 2025 23:09:03 -0700 (PDT)
-Message-ID: <3aa0c603-7acd-4802-9a32-80e183ef01eb@linaro.org>
-Date: Tue, 22 Jul 2025 08:09:02 +0200
+ Tue, 22 Jul 2025 00:33:05 -0700 (PDT)
+Message-ID: <b865db9f-725f-4ca7-9101-caf4b3caa430@redhat.com>
+Date: Tue, 22 Jul 2025 09:33:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: Fix big-endian handling of SVE gdb remote
- debugging
-To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250721211952.2239714-1-vacha.bhavsar@oss.qualcomm.com>
- <20250721211952.2239714-3-vacha.bhavsar@oss.qualcomm.com>
+Subject: Re: [PATCH RFC v3 12/13] net: implement tunnel probing
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
+ <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1752828082.git.pabeni@redhat.com>
+ <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
+ <CACGkMEunxuooL+z=Oz1FsNabNuh=QwfMbzG0k0S+avL3LxEV7w@mail.gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250721211952.2239714-3-vacha.bhavsar@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <CACGkMEunxuooL+z=Oz1FsNabNuh=QwfMbzG0k0S+avL3LxEV7w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,63 +119,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/7/25 23:19, Vacha Bhavsar wrote:
-> This patch adds big endian support for SVE GDB remote
-> debugging. It replaces the use of pointer dereferencing with the use of
-> ldq_p() as explained in the first part of this patch series. Additionally,
-> the order in which the buffer content is loaded into the CPU struct is
-> switched depending on target endianness to ensure the most significant bits
-> are always in second element.
+On 7/22/25 5:50 AM, Jason Wang wrote:
+> On Fri, Jul 18, 2025 at 4:54 PM Paolo Abeni <pabeni@redhat.com> wrote:
+>> Tap devices support GSO over UDP tunnel offload. Probe for such
+>> feature in a similar manner to other offloads.
+>>
+>> GSO over UDP tunnel needs to be enabled in addition to a "plain"
+>> offload (TSO or USO).
+>>
+>> No need to check separately for the outer header checksum offload:
+>> the kernel is going to support both of them or none.
+>>
+>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+>> ---
+>> v2 -> v3:
+>>   - use bool type for tap_probe_has_tunnel()
+>>   - rebased on top of 2deec9ab7d ("virtio-net: Move
+>>         virtio_net_get_features() down")
+>>   - _array -> _ex
+>>
+>> v1 -> v2:
+>>   - peer_has_tunnel return a bool
+>>   - move TUN_F definition in net/tun-linux.h
+>> ---
+>>  hw/net/virtio-net.c | 37 +++++++++++++++++++++++++++++++++++++
+>>  include/net/net.h   |  3 +++
+>>  net/net.c           |  9 +++++++++
+>>  net/tap-bsd.c       |  5 +++++
+>>  net/tap-linux.c     | 11 +++++++++++
+>>  net/tap-linux.h     |  9 +++++++++
+>>  net/tap-solaris.c   |  5 +++++
+>>  net/tap-stub.c      |  5 +++++
+>>  net/tap.c           | 11 +++++++++++
+>>  net/tap_int.h       |  1 +
+>>  10 files changed, 96 insertions(+)
+>>
+>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>> index 53413ec4d5..70c85f7f77 100644
+>> --- a/hw/net/virtio-net.c
+>> +++ b/hw/net/virtio-net.c
+>> @@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
+>>      return qemu_has_uso(qemu_get_queue(n->nic)->peer);
+>>  }
+>>
+>> +static bool peer_has_tunnel(VirtIONet *n)
 > 
-> Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-> ---
->   target/arm/gdbstub64.c | 18 +++++++++++++-----
->   1 file changed, 13 insertions(+), 5 deletions(-)
+> Nit: it looks better to use peer_has_udp_gso_tunnel().
 > 
-> diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-> index 8b7f15b920..cd61d946bb 100644
-> --- a/target/arm/gdbstub64.c
-> +++ b/target/arm/gdbstub64.c
-> @@ -200,10 +200,18 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
+>> +{
+>> +    if (!peer_has_vnet_hdr(n)) {
+>> +        return false;
+>> +    }
+>> +
+>> +    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
+>> +}
+>> +
+>>  static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+>>                                         int version_1, int hash_report)
+>>  {
+>> @@ -3070,6 +3079,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+>>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+>>
+>> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+>> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+>> +        virtio_clear_feature_ex(features,
+>> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+>> +        virtio_clear_feature_ex(features,
+>> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+>> +
+>>          virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+>>      }
+>>
+>> @@ -3083,6 +3099,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+>>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+>>      }
+>>
+>> +    if (!peer_has_tunnel(n)) {
+>> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
+>> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
+>> +        virtio_clear_feature_ex(features,
+>> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+>> +        virtio_clear_feature_ex(features,
+>> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+>> +    }
+>> +
+>>      if (!get_vhost_net(nc->peer)) {
+>>          if (!use_own_hash) {
+>>              virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+>> @@ -4137,6 +4162,10 @@ static const VMStateDescription vmstate_virtio_net = {
+>>      .dev_unplug_pending = dev_unplug_pending,
+>>  };
+>>
+>> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
+>> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_DWORD(_bit)],    \
+>> +                      (_bit) % 64, _defval)
+>> +
+>>  static const Property virtio_net_properties[] = {
+>>      DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
+>>                      VIRTIO_NET_F_CSUM, true),
+>> @@ -4245,6 +4274,14 @@ static const Property virtio_net_properties[] = {
+>>                                    rss_data.specified_hash_types,
+>>                                    VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
+>>                                    ON_OFF_AUTO_AUTO),
+>> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
+>> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
+>> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
+>> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_ex,
+>> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
+>>  };
+> 
+> Need compatibility work like:
+> 
+> d83f46d189 ("virtio-pci: compat page aligned ATS")
 
-Alex,
+If I read correctly the only missing pieces are the hw_compat_10_1
+entries, am I correct?
 
-Why is there a disconnection with gdb_register_coprocessor() and
-"gdbstub/helpers.h" APIs? The former is older? Should we unify
-using the latter API with GByteArray?
+If so, as mentioned here:
 
->       case 0 ... 31:
->       {
->           int vq, len = 0;
-> -        uint64_t *p = (uint64_t *) buf;
->           for (vq = 0; vq < cpu->sve_max_vq; vq++) {
-> -            env->vfp.zregs[reg].d[vq * 2 + 1] = *p++;
-> -            env->vfp.zregs[reg].d[vq * 2] = *p++;
-> +            if (target_big_endian()){
-> +                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
-> +                buf += 8;
-> +                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
-> +            }
-> +            else{
-> +                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
-> +                buf += 8;
-> +                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
-> +            }
-> +            buf += 8;
->               len += 16;
->           }
->           return len;
-> @@ -218,9 +226,9 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
->       {
->           int preg = reg - 34;
->           int vq, len = 0;
-> -        uint64_t *p = (uint64_t *) buf;
->           for (vq = 0; vq < cpu->sve_max_vq; vq = vq + 4) {
-> -            env->vfp.pregs[preg].p[vq / 4] = *p++;
-> +            env->vfp.pregs[preg].p[vq/4] = ldq_p(buf);
-> +            buf += 8;
->               len += 8;
->           }
->           return len;
+https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05032.html
+
+I'll add the needed entries after that the hw_compat_10_1 will be created.
+
+Thanks,
+
+Paolo
 
 
