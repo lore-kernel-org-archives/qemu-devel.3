@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B436C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 16:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DEEBC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 16:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueGFY-0006nW-HC; Tue, 22 Jul 2025 12:53:56 -0400
+	id 1ueGGO-0007nX-22; Tue, 22 Jul 2025 12:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ueFMQ-0007Ds-05
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 11:56:58 -0400
+ id 1ueFVi-00059t-Ha
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:06:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ueFMM-0005Vd-Dt
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 11:56:56 -0400
+ id 1ueFVe-0000Vt-54
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:06:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753199811;
+ s=mimecast20190719; t=1753200388;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=P2ZX8rYyfkzuq33ganJciWG3dEO2cOON/gr5yI+UVgE=;
- b=b+xvu+lgy2DFLHnURu8x166bGIt5HiqIdEI4EDOKaYzVHL2rOJaDhb8ItUS3CIURhu8db1
- JVbjpIvC+useJe7Gk4D57vW0ZIk5BeXozEndkl8bzrqH2pEpKpgT5QHR1dEoE+42XcJ4Zj
- e3XF5SjELmfXnxJwPn7YHQfmDK0z/rQ=
+ bh=8PkPdoAtbd73SLURCB7Bp7l06Gqgo0BdBWA7rBDnXxA=;
+ b=OpBLiKqrRcGPdxxoum4sNjEps+Lvu9moYDna+iHwRo5g2o2r3Sws/DQ2tdn4t8+Xj03Etd
+ TgcQ9C/zzhisSjwup6WCt6b+if3GD0DUu+3+KrRSwJrtFtdzD19UwRdB2K2G3N0dkLToa4
+ KOemURZ/S5DO9iFB6jrbic50kSc1C3o=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-8eGFGXGOPkac_49TRSXhoA-1; Tue,
- 22 Jul 2025 11:56:48 -0400
-X-MC-Unique: 8eGFGXGOPkac_49TRSXhoA-1
-X-Mimecast-MFC-AGG-ID: 8eGFGXGOPkac_49TRSXhoA_1753199806
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-KCVoaJhjOX6BFuXpIu_c-A-1; Tue,
+ 22 Jul 2025 12:06:25 -0400
+X-MC-Unique: KCVoaJhjOX6BFuXpIu_c-A-1
+X-Mimecast-MFC-AGG-ID: KCVoaJhjOX6BFuXpIu_c-A_1753200383
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5AC4B1800291; Tue, 22 Jul 2025 15:56:46 +0000 (UTC)
+ id D4B691800294; Tue, 22 Jul 2025 16:06:22 +0000 (UTC)
 Received: from redhat.com (dhcp-16-135.lcy.redhat.com [10.42.16.135])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6163618016F9; Tue, 22 Jul 2025 15:56:42 +0000 (UTC)
-Date: Tue, 22 Jul 2025 16:56:39 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E307E18003FC; Tue, 22 Jul 2025 16:06:18 +0000 (UTC)
+Date: Tue, 22 Jul 2025 17:06:15 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Zhuoying Cai <zycai@linux.ibm.com>
 Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
@@ -54,17 +54,17 @@ Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
  qemu-devel@nongnu.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-Subject: Re: [PATCH v4 01/28] Add boot-certificates to s390-ccw-virtio
- machine type option
-Message-ID: <aH-0t47zgKpDOebt@redhat.com>
+Subject: Re: [PATCH v4 02/28] crypto/x509-utils: Add helper functions for
+ certificate store
+Message-ID: <aH-294Q-03CRPJHN@redhat.com>
 References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-2-zycai@linux.ibm.com>
+ <20250711211105.439554-3-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250711211105.439554-2-zycai@linux.ibm.com>
+In-Reply-To: <20250711211105.439554-3-zycai@linux.ibm.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -91,94 +91,287 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 11, 2025 at 05:10:37PM -0400, Zhuoying Cai wrote:
-> Add boot-certificates as a parameter of s390-ccw-virtio machine type option.
+On Fri, Jul 11, 2025 at 05:10:38PM -0400, Zhuoying Cai wrote:
+> Introduce new helper functions for x509 certificate, which will be used
+> by the certificate store:
 > 
-> The `boot-certificates=/path/dir:/path/file` parameter is implemented
-> to provide path to either a directory or a single certificate.
+> qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+> qcrypto_x509_get_keyid_len() - returns the length of the key ID
+> qcrypto_x509_get_signature_algorithm() - returns signature algorithm of the certificate
 > 
-> Multiple paths can be delineated using a colon.
+> These functions provide support for certificate format conversion and
+> metadata extraction.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->  hw/s390x/s390-virtio-ccw.c         | 22 ++++++++++++++++++++++
->  include/hw/s390x/s390-virtio-ccw.h |  1 +
->  qemu-options.hx                    |  7 ++++++-
->  3 files changed, 29 insertions(+), 1 deletion(-)
+>  crypto/meson.build          |   5 +-
+>  crypto/x509-utils.c         | 155 ++++++++++++++++++++++++++++++++++++
+>  include/crypto/x509-utils.h |  71 +++++++++++++++++
+>  3 files changed, 227 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index c294106a74..167876295e 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -798,6 +798,22 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->      g_free(val);
->  }
+> diff --git a/crypto/meson.build b/crypto/meson.build
+> index 735635de1f..0614bfa914 100644
+> --- a/crypto/meson.build
+> +++ b/crypto/meson.build
+> @@ -22,12 +22,9 @@ crypto_ss.add(files(
+>    'tlscredsx509.c',
+>    'tlssession.c',
+>    'rsakey.c',
+> +  'x509-utils.c',
+>  ))
 >  
-> +static inline char *machine_get_boot_certificates(Object *obj, Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+> -if gnutls.found()
+> -  crypto_ss.add(files('x509-utils.c'))
+> -endif
+> -
+
+Lets make this change, plus....
+
+>  if nettle.found()
+>    crypto_ss.add(nettle, files('hash-nettle.c', 'hmac-nettle.c', 'pbkdf-nettle.c'))
+>    if hogweed.found()
+> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+> index 8bad00a51b..d2cf790d5b 100644
+> --- a/crypto/x509-utils.c
+> +++ b/crypto/x509-utils.c
+> @@ -11,6 +11,8 @@
+>  #include "qemu/osdep.h"
+>  #include "qapi/error.h"
+>  #include "crypto/x509-utils.h"
 > +
-> +    return g_strdup(ms->boot_certificates);
-> +}
-> +
-> +static void machine_set_boot_certificates(Object *obj, const char *str,
-> +                                          Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +
-> +    g_free(ms->boot_certificates);
-> +    ms->boot_certificates = g_strdup(str);
-> +}
-> +
->  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -851,6 +867,12 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
->              " to upper case) to pass to machine loader, boot manager,"
->              " and guest kernel");
-> +
-> +    object_class_property_add_str(oc, "boot-certificates",
-> +                                  machine_get_boot_certificates,
-> +                                  machine_set_boot_certificates);
-> +    object_class_property_set_description(oc, "boot-certificates",
-> +            "provide path to a directory or a single certificate for secure boot");
->  }
->  
->  static inline void s390_machine_initfn(Object *obj)
-> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-> index 526078a4e2..45adc8bce6 100644
-> --- a/include/hw/s390x/s390-virtio-ccw.h
-> +++ b/include/hw/s390x/s390-virtio-ccw.h
-> @@ -31,6 +31,7 @@ struct S390CcwMachineState {
->      uint8_t loadparm[8];
->      uint64_t memory_limit;
->      uint64_t max_pagesize;
-> +    char *boot_certificates;
->  
->      SCLPDevice *sclp;
+> +#ifdef CONFIG_GNUTLS
+
+...this addition as a separate commit. They are refactoring the
+way we build the code, without adding any features, so best
+practice says they should be separated from feature additions.
+
+
+
+>  #include <gnutls/gnutls.h>
+>  #include <gnutls/crypto.h>
+>  #include <gnutls/x509.h>
+> @@ -25,6 +27,87 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+>      [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
 >  };
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 1f862b19a6..d42e6f502c 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -43,7 +43,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->  #endif
->      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
-> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
-> +    "                boot-certificates='/path/directory:/path/file' provide a path to a directory or a boot certificate\n",
+>  
+> +static const int qcrypto_to_gnutls_keyid_flags_map[] = {
+> +    [QCRYPTO_KEYID_FLAGS_SHA1] = GNUTLS_KEYID_USE_SHA1,
+> +    [QCRYPTO_KEYID_FLAGS_SHA256] = GNUTLS_KEYID_USE_SHA256,
+> +    [QCRYPTO_KEYID_FLAGS_SHA512] = GNUTLS_KEYID_USE_SHA512,
+> +    [QCRYPTO_KEYID_FLAGS_BEST_KNOWN] = GNUTLS_KEYID_USE_BEST_KNOWN,
+> +};
+> +
+> +static const int gnutls_to_qcrypto_sig_alg_map[] = {
+> +    [GNUTLS_SIGN_UNKNOWN] = QCRYPTO_SIG_ALGO_UNKNOWN,
+> +    [GNUTLS_SIGN_RSA_SHA1] = QCRYPTO_SIG_ALGO_RSA_SHA1,
+> +    [GNUTLS_SIGN_RSA_SHA] = QCRYPTO_SIG_ALGO_RSA_SHA1,
+> +    [GNUTLS_SIGN_DSA_SHA1] = QCRYPTO_SIG_ALGO_DSA_SHA1,
+> +    [GNUTLS_SIGN_RSA_MD5] = QCRYPTO_SIG_ALGO_RSA_MD5,
+> +    [GNUTLS_SIGN_RSA_MD2] = QCRYPTO_SIG_ALGO_RSA_MD2,
+> +    [GNUTLS_SIGN_RSA_RMD160] = QCRYPTO_SIG_ALGO_RSA_RMD160,
+> +    [GNUTLS_SIGN_RSA_SHA256] = QCRYPTO_SIG_ALGO_RSA_SHA256,
+> +    [GNUTLS_SIGN_RSA_SHA384] = QCRYPTO_SIG_ALGO_RSA_SHA384,
+> +    [GNUTLS_SIGN_RSA_SHA512] = QCRYPTO_SIG_ALGO_RSA_SHA512,
+> +    [GNUTLS_SIGN_RSA_SHA224] = QCRYPTO_SIG_ALGO_RSA_SHA224,
+> +    [GNUTLS_SIGN_DSA_SHA224] = QCRYPTO_SIG_ALGO_DSA_SHA224,
+> +    [GNUTLS_SIGN_DSA_SHA256] = QCRYPTO_SIG_ALGO_DSA_SHA256,
+> +    [GNUTLS_SIGN_ECDSA_SHA1] = QCRYPTO_SIG_ALGO_ECDSA_SHA1,
+> +    [GNUTLS_SIGN_ECDSA_SHA224] = QCRYPTO_SIG_ALGO_ECDSA_SHA224,
+> +    [GNUTLS_SIGN_ECDSA_SHA256] = QCRYPTO_SIG_ALGO_ECDSA_SHA256,
+> +    [GNUTLS_SIGN_ECDSA_SHA384] = QCRYPTO_SIG_ALGO_ECDSA_SHA384,
+> +    [GNUTLS_SIGN_ECDSA_SHA512] = QCRYPTO_SIG_ALGO_ECDSA_SHA512,
+> +};
+> +
+> +int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+> +                                  uint8_t **result, size_t *resultlen,
+> +                                  Error **errp)
+> +{
+> +    int ret = -1;
+> +    int rc;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +
+> +    rc = gnutls_x509_crt_init(&crt);
+> +    if (rc < 0) {
+> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
+> +        return ret;
+> +    }
+> +
+> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    *result = g_malloc0(*resultlen);
+> +    rc = gnutls_x509_crt_export(crt, GNUTLS_X509_FMT_DER, *result, resultlen);
+> +    if (rc != 0) {
 
-I forgot to respond to your previous question about how to do
-arrays for this. The command line exmaples here for cxl-fmw
-and smp-cache conveniently illustrate the syntax.
+We need to  do   "g_clear_pointer(result, g_free)"  in this error path
 
-It would be something like this on the CLI:
+> +        error_setg(errp, "Failed to convert certificate to DER format: %s",
+> +                   gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    ret = 0;
+> +
+> +cleanup:
+> +    gnutls_x509_crt_deinit(crt);
+> +    return ret;
+> +}
+> +
+> +int qcrypto_x509_get_keyid_len(QCryptoKeyidFlags flag, Error **errp)
+> +{
+> +    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
+> +        error_setg(errp, "Unknow key ID flag %d", flag);
+> +        return -1;
+> +    }
+> +
+> +    if ((flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA512]) ||
+> +        (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_BEST_KNOWN])) {
+> +        return QCRYPTO_HASH_DIGEST_LEN_SHA512;
+> +    } else if (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA256]) {
+> +        return QCRYPTO_HASH_DIGEST_LEN_SHA256;
+> +    } else {
+> +        return QCRYPTO_HASH_DIGEST_LEN_SHA1;
+> +    }
+> +}
+> +
 
-  boot-certs.0.path=/path/to/dir,boot-certs.1.path=/to/other/dir,boot-certs.2.path=/some/...
+If we eliminate the QCryptoKeyidFlags enum, then the need for this
+method also goes away.
 
+>  int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>                                        QCryptoHashAlgo alg,
+>                                        uint8_t *result,
+> @@ -74,3 +157,75 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>      gnutls_x509_crt_deinit(crt);
+>      return ret;
+>  }
+> +
+> +int qcrypto_x509_get_signature_algorithm(uint8_t *cert, size_t size, Error **errp)
+> +{
+> +    int rc;
+> +    int ret = -1;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +
+> +    rc = gnutls_x509_crt_init(&crt);
+> +    if (rc < 0) {
+> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
+> +        return ret;
+> +    }
+> +
+> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
+> +    if (rc != 0) {
+> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
+> +        goto cleanup;
+> +    }
+> +
+> +    /*
+> +     * This function never returns a negative error code.
+> +     * Error cases and unknown/unsupported signature algorithms
+> +     * are mapped to GNUTLS_SIGN_UNKNOWN.
+> +     */
+> +    rc = gnutls_x509_crt_get_signature_algorithm(crt);
+> +    if (rc >= G_N_ELEMENTS(gnutls_to_qcrypto_sig_alg_map)) {
+> +        error_setg(errp, "Unknown signature algorithm %d", rc);
+> +        goto cleanup;
+> +    }
+> +
+> +    ret = gnutls_to_qcrypto_sig_alg_map[rc];
+> +
+> +cleanup:
+> +    gnutls_x509_crt_deinit(crt);
+> +    return ret;
+> +}
+> +
+> +#else /* ! CONFIG_GNUTLS */
+> +
+> +int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+> +                                  uint8_t **result,
+> +                                  size_t *resultlen,
+> +                                  Error **errp)
+> +{
+> +    error_setg(errp, "GNUTLS is required to export X.509 certificate");
+> +    return -1;
+> +}
+> +
+> +int qcrypto_x509_get_keyid_len(QCryptoKeyidFlags flag, Error **errp)
+> +{
+> +    error_setg(errp, "GNUTLS is required to get key ID length");
+> +    return -1;
+> +}
+> +
+> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+> +                                      QCryptoHashAlgo hash,
+> +                                      uint8_t *result,
+> +                                      size_t *resultlen,
+> +                                      Error **errp)
+> +{
+> +    error_setg(errp, "GNUTLS is required to get fingerprint");
+> +    return -1;
+> +}
 
+If you separate out the  meson.build + #ifdef CONFIG_GNUTLS change, then
+this specific stub should be done in that refactoring commit too.
+
+> +
+> +int qcrypto_x509_get_signature_algorithm(uint8_t *cert, size_t size, Error **errp)
+> +{
+> +    error_setg(errp, "GNUTLS is required to get signature algorithm");
+> +    return -1;
+> +}
+> +
+> +#endif /* ! CONFIG_GNUTLS */
+> diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+> index 1e99661a71..d916d248bb 100644
+> --- a/include/crypto/x509-utils.h
+> +++ b/include/crypto/x509-utils.h
+> @@ -13,10 +13,81 @@
+>  
+>  #include "crypto/hash.h"
+>  
+> +typedef enum {
+> +    QCRYPTO_KEYID_FLAGS_SHA1,
+> +    QCRYPTO_KEYID_FLAGS_SHA256,
+> +    QCRYPTO_KEYID_FLAGS_SHA512,
+> +    QCRYPTO_KEYID_FLAGS_BEST_KNOWN,
+> +} QCryptoKeyidFlags;
+
+I don't think this enum serves any useful purpose.
+
+The qcrypto_x509_get_cert_key_id method should just accept
+the QCryptoHashAlgo enum directly and avoid the redirextion.
+
+> +
+> +typedef enum {
+> +    QCRYPTO_SIG_ALGO_UNKNOWN,
+> +    QCRYPTO_SIG_ALGO_RSA_SHA1,
+> +    QCRYPTO_SIG_ALGO_DSA_SHA1,
+> +    QCRYPTO_SIG_ALGO_RSA_MD5,
+> +    QCRYPTO_SIG_ALGO_RSA_MD2,
+> +    QCRYPTO_SIG_ALGO_RSA_RMD160,
+> +    QCRYPTO_SIG_ALGO_RSA_SHA256,
+> +    QCRYPTO_SIG_ALGO_RSA_SHA384,
+> +    QCRYPTO_SIG_ALGO_RSA_SHA512,
+> +    QCRYPTO_SIG_ALGO_RSA_SHA224,
+> +    QCRYPTO_SIG_ALGO_DSA_SHA224,
+> +    QCRYPTO_SIG_ALGO_DSA_SHA256,
+> +    QCRYPTO_SIG_ALGO_ECDSA_SHA1,
+> +    QCRYPTO_SIG_ALGO_ECDSA_SHA224,
+> +    QCRYPTO_SIG_ALGO_ECDSA_SHA256,
+> +    QCRYPTO_SIG_ALGO_ECDSA_SHA384,
+> +    QCRYPTO_SIG_ALGO_ECDSA_SHA512,
+> +} QCryptoSigAlgo;
+> +
+>  int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+>                                        QCryptoHashAlgo hash,
+>                                        uint8_t *result,
+>                                        size_t *resultlen,
+>                                        Error **errp);
+>  
 
 With regards,
 Daniel
