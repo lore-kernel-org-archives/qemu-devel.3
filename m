@@ -4,101 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FC9C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C21C83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 13:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueCKV-00030A-7j; Tue, 22 Jul 2025 08:42:47 -0400
+	id 1ueD7I-0008QF-JD; Tue, 22 Jul 2025 09:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJU-0002O6-3g
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:48 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ueD7A-0008IJ-En
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 09:33:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJN-0006Kd-HH
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:41 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAKE024432;
- Tue, 22 Jul 2025 12:41:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=T7tNI
- Dru02PeriUSzz8aBkyb9Tz6kpEvzGllNy4b8Ow=; b=nEwUWOnvAD0HMvVxUF0Ut
- 2qA6LO2CPSwbfk7VWbRhInMylUoUplIzaWoe2MWQRhoACry2Q/ce9BEiuvu0idUt
- KKCR21LtoDPylL/yLgQRogbz67YfvkLpxnNGYe3eO1pPyxb+LNnLsEUmoEadUD9w
- 7EZE8JuiV0CnQrr8r0UbioB4KrIBuGRnendUOXCq7Qd3HDIQBGGzbY/dCdqxuKDL
- gHmFTWo9KDiLXT3lFwtFXJoqGYZQNd97Iemab08SI35hXBDSXRQcKiLhfgkBAF30
- 9WXI1Xu6dsX4cuRIkQk913sSg077PpgD+lpgmcvff/6koY8sAQA1YjD8qSK+2kpX
- w==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48057qw70u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:34 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56MBU3m0010414; Tue, 22 Jul 2025 12:41:34 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4801t99gbh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:33 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3t039536;
- Tue, 22 Jul 2025 12:41:33 GMT
-Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
- (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.252.67])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4801t99g9h-4; Tue, 22 Jul 2025 12:41:33 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
- jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
- eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 3/6] virtio-net: Add SaveVMHandlers for iterative migration
-Date: Tue, 22 Jul 2025 12:41:24 +0000
-Message-ID: <20250722124127.2497406-4-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250722124127.2497406-1-jonah.palmer@oracle.com>
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ueD76-000596-Rj
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 09:33:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753191178;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eJ0Ezi4YBKVxyFKknH8ppZf0265MQWGEcay2zpGL9QA=;
+ b=AUlnpvIxDsaMR9xct3jI23vMJC0hrWeMyDzZKGBlYUpx6uT8epDZDzWqV9bHLtj/gUD3/c
+ JNENJxkUsNflKE575oxFhHtLlghoztP+pA49Y2gaH+tWy0khAsfWragUzxmVyjTheOhoVB
+ +p1/Xn7wr38F3qGofObSrLSOHBGrOsc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-vn80zdX8P8-NKqtOZhcYSg-1; Tue,
+ 22 Jul 2025 09:32:55 -0400
+X-MC-Unique: vn80zdX8P8-NKqtOZhcYSg-1
+X-Mimecast-MFC-AGG-ID: vn80zdX8P8-NKqtOZhcYSg_1753191174
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0205B1800C31; Tue, 22 Jul 2025 13:32:54 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.16])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6014B19560AB; Tue, 22 Jul 2025 13:32:50 +0000 (UTC)
+Date: Tue, 22 Jul 2025 15:32:47 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bschubert@ddn.com, fam@euphon.net, hreitz@redhat.com, stefanha@redhat.com
+Subject: Re: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for
+ QEMU FUSE Exports
+Message-ID: <aH-S_31c8RNW3coY@redhat.com>
+References: <20250716183824.216257-1-hibriansong@gmail.com>
+ <20250716183824.216257-2-hibriansong@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-22_02,2025-07-21_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- spamscore=0 phishscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2507220104
-X-Authority-Analysis: v=2.4 cv=MNRgmNZl c=1 sm=1 tr=0 ts=687f86fe cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=EcWnT0cij3RzOpli2RYA:9
-X-Proofpoint-ORIG-GUID: eGsc5JN3OklBUXGlRewXEwdXWNmDAS1Q
-X-Proofpoint-GUID: eGsc5JN3OklBUXGlRewXEwdXWNmDAS1Q
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX7JZIK4xHQpwi
- TuujY955QsZMMR0N6Hp27FqYfsAZ3+vqgv6WztiEj3a3s632tTAgKprmI70en6Ulw0trrzo2fBD
- 4RQ0FMZyWANhdzDHId/X2RTGCo2m6RA6ua8Kk/I/mWTC3FLkXdZ3VplOZ00lE7RUhpX4ZuTq6CQ
- vmJIBMvYNxQznbHLHAyiGlc1tWsn+HIEozF9wjwkAMdil4dZ8WRJNgXEGECDi2wOhzaE9Y4G6fj
- Kzh39fZfQIkDuYpncSK1jYp7TE90fWNZ78VO/kCDXQLAY8TD5w/YIx1dLPXXPwM/cojta5PopF5
- of0UdeU1rvG2qix1fWPpx5CVZpPNjjdC5ioBklHYfM8apD9C2E6PjG41+QWhsjU1HXWzw0s3jOQ
- 7m5LBvJMoSqiWyIjZKFiEyHMBOfKx5AvT3jx8aU0zyCdGg7bc0NiouINcFSgI4mbhG3lLkVf
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250716183824.216257-2-hibriansong@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,157 +84,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add SaveVMHandlers struct for virtio-net iterative migration support.
-The handlers are registered but only contain no-op implementations.
+Am 16.07.2025 um 20:38 hat Brian Song geschrieben:
+> This work provides an initial implementation of fuse-over-io_uring
+> support for QEMU export. According to the fuse-over-io_uring protocol
+> specification, the userspace side must create the same number of queues
+> as the number of CPUs (nr_cpu), just like the kernel. Currently, each
+> queue contains only a single SQE entry, which is used to validate the
+> correctness of the fuse-over-io_uring functionality.
+> 
+> All FUSE read and write operations interact with the kernel via io
+> vectors embedded in the SQE entry during submission and CQE fetching.
+> The req_header and op_payload members of each entry are included as
+> parts of the io vector: req_header carries the FUSE operation header,
+> and op_payload carries the data payload, such as file attributes in a
+> getattr reply, file content in a read reply, or file content being
+> written to the FUSE client in a write operation.
+> 
+> At present, multi-threading support is still incomplete. In addition,
+> handling connection termination and managing the "drained" state of a
+> FUSE block export in QEMU remain as pending work.
+> 
+> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Brian Song <hibriansong@gmail.com>
+> 
+> ---
+>  block/export/fuse.c                  | 423 +++++++++++++++++++++++++--
+>  docs/tools/qemu-storage-daemon.rst   |  10 +-
+>  qapi/block-export.json               |   6 +-
+>  storage-daemon/qemu-storage-daemon.c |   1 +
+>  util/fdmon-io_uring.c                |   5 +-
+>  5 files changed, 420 insertions(+), 25 deletions(-)
 
-This provides the framework for iterative migration without changing any
-actual migration behavior when the capability is disabled.
+You already got a lot of feedback on details. Let me add a more generic
+point that should be addressed for a non-RFC submission: You should try
+to limit each commit to a single logical change. You'll then send a
+patch series instead of just a single patch where each patch works
+incrementally towards the final state.
 
-A BFD representation is used when registering a virtio-net device's
-SaveVMHandlers hooks. This is to create unique IDs in the case of
-multiple virtio-net devices.
+This makes it not only easier to review the changes because there is
+less going on in each individual patch, but it will also be helpful if
+we ever have to debug a problem and can bisect to a smaller change, or
+even just because looking at the commit message in a few years is
+likelier to explain why some specific code was written the way it is.
 
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- hw/net/virtio-net.c | 85 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+For example, your change to util/fdmon-io_uring.c could be the first
+patch, enabling IORING_SETUP_SQE128 is a self-contained logical change.
+You can mention in its commit message that it's in preparation for using
+IORING_OP_URING_CMD.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 93029104b3..19aa5b5936 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -17,6 +17,7 @@
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
-+#include "qemu/cutils.h"
- #include "hw/virtio/virtio.h"
- #include "net/net.h"
- #include "net/checksum.h"
-@@ -38,6 +39,9 @@
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
- #include "migration/misc.h"
-+#include "migration/register.h"
-+#include "migration/qemu-file.h"
-+#include "migration/migration.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
- #include "system/replay.h"
-@@ -3791,11 +3795,77 @@ static const VMStateDescription vmstate_virtio_net = {
-     .dev_unplug_pending = dev_unplug_pending,
- };
- 
-+static bool virtio_net_iterative_migration_enabled(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->capabilities[MIGRATION_CAPABILITY_VIRTIO_ITERATIVE];
-+}
-+
-+static bool virtio_net_is_active(void *opaque)
-+{
-+    return virtio_net_iterative_migration_enabled();
-+}
-+
-+static int virtio_net_save_setup(QEMUFile *f, void *opaque, Error **errp)
-+{
-+    return 0;
-+}
-+
-+static int virtio_net_save_live_iterate(QEMUFile *f, void *opaque)
-+{
-+    return 1;
-+}
-+
-+static int virtio_net_save_live_complete_precopy(QEMUFile *f, void *opaque)
-+{
-+    return 0;
-+}
-+
-+static void virtio_net_save_cleanup(void *opaque)
-+{
-+
-+}
-+
-+static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
-+{
-+    return 0;
-+}
-+
-+static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
-+{
-+    return 0;
-+}
-+
-+static int virtio_net_load_cleanup(void *opaque)
-+{
-+    return 0;
-+}
-+
-+static void virtio_net_state_pending_exact(void *opaque, uint64_t *must_precopy,
-+                                           uint64_t *can_postcopy)
-+{
-+
-+}
-+
-+static const SaveVMHandlers savevm_virtio_net_handlers = {
-+    .is_active = virtio_net_is_active,
-+    .save_setup = virtio_net_save_setup,
-+    .save_live_iterate = virtio_net_save_live_iterate,
-+    .save_live_complete_precopy = virtio_net_save_live_complete_precopy,
-+    .save_cleanup = virtio_net_save_cleanup,
-+    .load_setup = virtio_net_load_setup,
-+    .load_state = virtio_net_load_state,
-+    .load_cleanup = virtio_net_load_cleanup,
-+    .state_pending_exact = virtio_net_state_pending_exact,
-+};
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIONet *n = VIRTIO_NET(dev);
-     NetClientState *nc;
-+    g_autofree char *path = NULL;
-+    char id[256] = "";
-     int i;
- 
-     if (n->net_conf.mtu) {
-@@ -3963,12 +4033,21 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
-         virtio_net_load_ebpf(n, errp);
-     }
-+
-+    /* Register handlers for iterative migration */
-+    path = qdev_get_dev_path(DEVICE(&n->parent_obj));
-+    path = g_strdup_printf("%s/virtio-net-iterative", path);
-+    strpadcpy(id, sizeof(id), path, '\0');
-+    register_savevm_live(id, VMSTATE_INSTANCE_ID_ANY, 1,
-+                         &savevm_virtio_net_handlers, n);
- }
- 
- static void virtio_net_device_unrealize(DeviceState *dev)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIONet *n = VIRTIO_NET(dev);
-+    g_autofree char *path = NULL;
-+    char id[256] = "";
-     int i, max_queue_pairs;
- 
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
-@@ -4007,6 +4086,12 @@ static void virtio_net_device_unrealize(DeviceState *dev)
-     g_free(n->rss_data.indirections_table);
-     net_rx_pkt_uninit(n->rx_pkt);
-     virtio_cleanup(vdev);
-+
-+    /* Unregister migration handlers */
-+    path = qdev_get_dev_path(DEVICE(&n->parent_obj));
-+    path = g_strdup_printf("%s/virtio-net-iterative", path);
-+    strpadcpy(id, sizeof(id), path, '\0');
-+    unregister_savevm(VMSTATE_IF(dev), id, n);
- }
- 
- static void virtio_net_reset(VirtIODevice *vdev)
--- 
-2.47.1
+Another patch could be refactoring fuse_co_process_request() so that it
+works for both /dev/fuse based and io_uring based exports. (I agree with
+Stefan that the code should be shared between both.)
+
+And then you could see if adding io_uring support to the FUSE export
+itself can be broken down into multiple self-contained changes or if
+that part has to stay a single big patch. Maybe you can keep it similar
+to how you're actually developing the code: First a patch with a minimal
+implementation that processes one request per queue, then another one to
+implement parallel I/O, then one for supporting multiple iothreads.
+
+
+Another thing I wondered is if the large #ifdef'ed section with io_uring
+helpers would actually make more sense as a separate source file
+block/export/fuse-io_uring.c that can be linked conditionally if
+io_uring is available. This would help to minimise the number of #ifdefs
+in fuse.c.
+
+Kevin
 
 
