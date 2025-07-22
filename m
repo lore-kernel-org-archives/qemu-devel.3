@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EB7C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C27AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 04:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue52h-0005bc-DI; Tue, 22 Jul 2025 00:55:56 -0400
+	id 1ue52h-0005b9-Ng; Tue, 22 Jul 2025 00:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52T-0005Yr-Hb
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:41 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1ue52S-0005Y1-KM
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:40 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ue52R-0004GF-5i
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:41 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so5416137b3a.3
- for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:38 -0700 (PDT)
+ id 1ue52Q-0004Ft-AJ
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 00:55:40 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-311e2cc157bso4275785a91.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 21:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753160138; x=1753764938; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
- b=SE+K72VBYL2UohlX/kGC4cI+IXvxm+BxMbnEHyElXFQtt/HcN2LRBgch3K+LXSzPuu
- OgW+BFfxSl/4ucF0VCpGceI6/WQwYaOEMn9aOEr1szuYsTlmB+nyUO5MagncJWHMXx5+
- nHoMN7BFOd8eB8vlSJqwxc9n9gshE51+dr+FTSgk/prSnOGSCRLOCWVbd7178tjyrxDc
- kp4viMgg417FEGS/LP7ExFG+QDktrWl3zGrmqjQOwaAwFYJxFTa+7fCg6Wdf60lhKaBj
- Wp5Efu9bjKkKdisD5f1fubhYKbopC30b7G2KV140qR4oY8trrDF9w6DpPFdxn1swDHfx
- r2lw==
+ d=linaro.org; s=google; t=1753160136; x=1753764936; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CgE++xvexUseTINqBHq6gQeS3k49ucX5EMn4UZFtaoA=;
+ b=NXN+ORUAwUJbUvS4pOpRuFxsQhVfoqN409EC4gf4ghS7U8WJAvd9ZjTxZX6FfbX+rn
+ HPQ2M9IzVI2GJ1pcJZEOAceIyjHo4Rmcl3iZeamrv0jKA8ewlt39tCFSWegvyHZnA/+P
+ n/rjbjdFc0cGiDyTZYrKG7gYMnCG+rWM6AjI7o6XnGah3FsV4X9euLLQ80L0zi//+/TY
+ ErKZWquh2IaG6n974856m4XfWkmdIfk+B3B3SFF/Ph5MpGpghg6tRLAD9PGAwLva3WC1
+ 06z+BB8aq5iCqA6O1yzlpRxJegjeRYJqkq08yRf2XpZvGG/M/oeTm5HiwN/z2LokMSon
+ p4XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753160138; x=1753764938;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
- b=BSj2oHsHrGTTJ+HtuBr3Ezy6QsbKSDQ9HbXvuwuxwn1nfepuD7KPqlKvF0r3UhXjtK
- MdKJg0EXHROWzZ656E8srHzeCWqCTIIXdx8Q9HQz/c9fppNqVNgZnlHmcouCJsk6Vrn0
- ZtojfPkcussUI2JGQBeUyzMNTiTXAsv84YXqX7sIbpCqG94ZBwWIUl+Dw1BVw632iwn1
- 5Lmixujk9sNGkeeURZv831EbKQ/MkFqs1Fh7B8LicgVNiVQA+ZV13MSPNx7F82Auvc46
- JorLeZ0gNkr8BPaUwIW/szrAFO4Tod52G1NkibeZkeGLS2R0G0mW2LTZGX+lsQOLXu/I
- GOkg==
-X-Gm-Message-State: AOJu0YxoQy8JUw0H5NnOyyXHar9q04kzZ1lcftpxqSRZ5rJvldU52wWb
- QgFvLHHAp5dYFWRNyoxm2MSMynlmtRMfkmAEvdWxahg53aOzivur5eAmqb6XBnhn7LUxJBOmsQ2
- CckIn
-X-Gm-Gg: ASbGnctpHWABDhb+56tltBtDKc5gPPy8eip51CCrHsG3HXIOskYCR/wa2hZwUAWNuI2
- 7uUWBOSgBacm4VEIHij8PTumq0R9USRL4CiJ1lKRWhkM+ZMKXxP3RYVX7m631mruicBmtXs2vbf
- Dc6GtXno85vvvJfRjq6CbK8bd8mXqQVtUIKPBF66CYnpU+biappIxPKYLmEeeAHtIKb8bZ5ZJZ4
- NvxuPNhlYYH2RRfoIkW2D/f65H8lWP/JDo3dQ4qvEYQnqYlKlfMm5C184KWouD8IrLY6Dh607LY
- bPoZjHrafTnN88ekgiqEt3TVckfU+gnBsBgRGPewwsjtiJQLN/lPnf84mxPc9vEnOBL+kNHWdAd
- olV2tcjUN6OlWFXdtpJmkQw==
-X-Google-Smtp-Source: AGHT+IG+0QzQH0+l+E9PIDtaRMy4Ey2eZkRjqrWSCJb95s9Rj+QrURb7yLdSL4DNpqy5Ed4hhZk88w==
-X-Received: by 2002:a05:6a20:4324:b0:203:bb3b:5f1d with SMTP id
- adf61e73a8af0-23810d53c0amr33099499637.6.1753160137721; 
- Mon, 21 Jul 2025 21:55:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753160136; x=1753764936;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CgE++xvexUseTINqBHq6gQeS3k49ucX5EMn4UZFtaoA=;
+ b=puMHdFDW5eM63DZFpHUESKyTwybbc+7MnHeUI4luC/kqJviope3Fc/gAfbr77NiiJF
+ igKDFnrZf3euhRgbriIWoqW5uBf0vE+nKsRUYv9pg18u4payU1pFXWqtqAu0P5yG+5fa
+ 6KWsYHkv0h8+DdwPgTYX3fKojagqpGAZ+/zaw3QeyA79y5NTs35sFuKP1NFUtrWrEfvU
+ oxH8GV0NBc1qXhjYBlu+5anf9aLgQT50GCZmFC2+R95S90lPE1WH/XVRaE5w1TTfhy2Z
+ 6c49p1/vw/Gzm+qTIciAHrcosM+NZOjRrhHSraLAEr/tdkefHGsRsi4dOnRuNyaQ88t7
+ 1MQg==
+X-Gm-Message-State: AOJu0YyGkYs5CSFRtBxXSKIwgUccKxSWj2ximrxry8n27LGILnamy1Mw
+ 3p6f2waZC5QjGa/sZnyAGBsZ+9fDYbT4OcDL+Ev2mTy3umKP329pMiY7wVSGgam6KlfcgcaWD63
+ YkUUk
+X-Gm-Gg: ASbGncvMo/jPbdiMYfA7puhGDytEu7iWNkO3edxyc/Ta+MAM4bqvNooRPqF15wRFTFn
+ Ge1hPsVHHKOpbtJ740Q+44uWwWLTmOh2ZwIBnjPzwm6pdelxya8hG54nyxg/z/n2IzdR63k1eva
+ 82fJDxkC1afmijUq9JXWhK1nGBsPmZKQ6aj7SfAOQHJEYMvi5g5+Ndz0o9/PvEGfiOuH2tKOtTc
+ KZyJvLMeoQfkqHjyh4eIjsBnfqnRu/haHr75eZUCcOlhOP50/4cvsFfdutzcdkaowDis+p1NkF1
+ 9ra7n5hijvWzf61bXQOo2jYPImWov/ZLEoeCSjzU7zVV34r4iWWANcnK4vAz5C3FkzvR9KKDuHG
+ pbrcoCKVwrEPxKHSVhc0SFQ==
+X-Google-Smtp-Source: AGHT+IHuymRnNx96K0cVHXkKQrM7BpKhCPd2QYtD01R7jm48C6FoNtK/mShnTAUAR4bmy0niqoifAA==
+X-Received: by 2002:a17:90b:5281:b0:2fa:157e:c790 with SMTP id
+ 98e67ed59e1d1-31c9e6e52e8mr28060569a91.5.1753160135793; 
+ Mon, 21 Jul 2025 21:55:35 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.36
+ 98e67ed59e1d1-31cc3e5b038sm7065311a91.10.2025.07.21.21.55.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Jul 2025 21:55:37 -0700 (PDT)
+ Mon, 21 Jul 2025 21:55:35 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>,
@@ -75,16 +74,15 @@ Cc: Gustavo Romero <gustavo.romero@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 2/6] contrib/plugins/uftrace: add trace-sample option
-Date: Mon, 21 Jul 2025 21:55:23 -0700
-Message-ID: <20250722045527.1164751-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 0/6] contrib/plugins: uftrace
+Date: Mon, 21 Jul 2025 21:55:21 -0700
+Message-ID: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
-References: <20250722045527.1164751-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,227 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usage: trace-sample=N
+This plugin generates a binary trace compatible with the excellent uftrace:
+https://github.com/namhyung/uftrace
 
-Allow to use sampling (every N instructions) for tracking the stack.
-We implement a fast mode, where instrumentation is only per tb, and
-simply dump current stack, and unwind new one, instead of tracking every
-frame pointer change.
+In short, it tracks all function calls performed during execution, based on
+frame pointer analysis. A big advantage over "uftrace record" is that it works
+in system mode, allowing to trace a full system execution, which was the
+original goal. It works as well in user mode, but uftrace itself already does
+this. It's implemented for aarch64 only (with the intent to add x86_64 later).
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/uftrace.c | 111 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 105 insertions(+), 6 deletions(-)
+Let's start with concrete examples of the result.
 
-diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index 4ca6d3fd68d..a626030b7da 100644
---- a/contrib/plugins/uftrace.c
-+++ b/contrib/plugins/uftrace.c
-@@ -44,6 +44,9 @@ typedef struct {
- 
- typedef struct Cpu {
-     uint64_t insn_count;
-+    uint64_t sample_insn_count;
-+    uint64_t sample_timestamp;
-+    callstack *sample_cs;
-     trace *trace;
-     callstack *cs;
-     GArray *callstacks; /* callstack *callstacks[] */
-@@ -70,6 +73,7 @@ enum uftrace_record_type {
- };
- 
- static struct qemu_plugin_scoreboard *score;
-+static uint64_t trace_sample;
- static CpuOps arch_ops;
- 
- static void uftrace_write_map(bool system_emulation)
-@@ -199,6 +203,13 @@ static callstack *callstack_new(void)
-     return cs;
- }
- 
-+static callstack *callstack_clone(const callstack *cs)
-+{
-+    callstack *clone = g_malloc0(sizeof(callstack));
-+    clone->s = g_array_copy(cs->s);
-+    return clone;
-+}
-+
- static void callstack_free(callstack *cs)
- {
-     g_array_free(cs->s, true);
-@@ -391,6 +402,26 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
-     }
- }
- 
-+static void cpu_trace_last_sample(Cpu *cpu, uint64_t timestamp)
-+{
-+    if (!cpu->sample_cs) {
-+        return;
-+    }
-+    uint64_t elapsed = timestamp - cpu->sample_timestamp;
-+    uint64_t middle_timestamp = cpu->sample_timestamp + (elapsed / 2);
-+    trace_exit_stack(cpu->trace, cpu->sample_cs, middle_timestamp);
-+    callstack_free(cpu->sample_cs);
-+    cpu->sample_cs = NULL;
-+    trace_enter_stack(cpu->trace, cpu->cs, middle_timestamp);
-+}
-+
-+static void cpu_set_new_sample(Cpu *cpu, uint64_t timestamp)
-+{
-+    cpu->sample_insn_count = 0;
-+    cpu->sample_cs = callstack_clone(cpu->cs);
-+    cpu->sample_timestamp = timestamp;
-+}
-+
- static uint64_t cpu_get_timestamp(const Cpu *cpu)
- {
-     return cpu->insn_count;
-@@ -451,6 +482,13 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-     callstack *cs = cpu->cs;
-     trace *t = cpu->trace;
- 
-+    if (trace_sample && cpu->sample_insn_count >= trace_sample) {
-+        cpu_trace_last_sample(cpu, timestamp);
-+        cpu_set_new_sample(cpu, timestamp);
-+    }
-+
-+    bool trace_change = !trace_sample;
-+
-     uint64_t fp = cpu->ops.get_frame_pointer(cpu);
-     if (!fp && callstack_empty(cs)) {
-         /*
-@@ -459,7 +497,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-          */
-         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
-                                                .pc = pc});
--        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        if (trace_change) {
-+            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        }
-         return;
-     }
- 
-@@ -473,7 +513,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-     if (fp == caller.frame_pointer) {
-         /* return */
-         callstack_entry e = callstack_pop(cs);
--        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
-+        if (trace_change) {
-+            trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
-+        }
-         return;
-     }
- 
-@@ -482,27 +524,65 @@ static void track_callstack(unsigned int cpu_index, void *udata)
-         /* call */
-         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
-                 .pc = pc});
--        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        if (trace_change) {
-+            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
-+        }
-         return;
-     }
- 
-     /* discontinuity, exit current stack and unwind new one */
--    trace_exit_stack(t, cs, timestamp);
-+    if (trace_change) {
-+        trace_exit_stack(t, cs, timestamp);
-+    }
-     callstack_clear(cs);
- 
-     cpu_unwind_stack(cpu, fp, pc);
--    trace_enter_stack(t, cs, timestamp);
-+    if (trace_change) {
-+        trace_enter_stack(t, cs, timestamp);
-+    }
-+}
-+
-+static void sample_callstack(unsigned int cpu_index, void *udata)
-+{
-+    uint64_t pc = (uintptr_t) udata;
-+    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
-+    uint64_t timestamp = cpu_get_timestamp(cpu);
-+
-+    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
-+    callstack_clear(cpu->cs);
-+
-+    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
-+    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
-+
-+    /* reset counter */
-+    cpu->sample_insn_count = 0;
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- {
-     size_t n_insns = qemu_plugin_tb_n_insns(tb);
-+    uintptr_t tb_pc = qemu_plugin_tb_vaddr(tb);
- 
-     qemu_plugin_u64 insn_count = qemu_plugin_scoreboard_u64_in_struct(
-                                       score, Cpu, insn_count);
-+    qemu_plugin_u64 sample_insn_count = qemu_plugin_scoreboard_u64_in_struct(
-+                                            score, Cpu, sample_insn_count);
-+
-+    if (trace_sample) {
-+        /* We can do a light instrumentation, per tb only */
-+        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+            tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
-+        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+            tb, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, n_insns);
-+        qemu_plugin_register_vcpu_tb_exec_cond_cb(
-+            tb, sample_callstack, QEMU_PLUGIN_CB_R_REGS,
-+            QEMU_PLUGIN_COND_GE, sample_insn_count, trace_sample,
-+            (void *) tb_pc);
-+        return;
-+    }
- 
-     /*
--     * We instrument all instructions following one that might have updated
-+     * We now instrument all instructions following one that might have updated
-      * the frame pointer. We always instrument first instruction in block, as
-      * last executed instruction, in previous tb, may have modified it.
-      */
-@@ -511,6 +591,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-         qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                insn, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, 1);
- 
-         if (instrument_insn) {
-             uintptr_t pc = qemu_plugin_insn_vaddr(insn);
-@@ -536,6 +618,7 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-     cpu->buf = g_byte_array_new();
-     cpu->callstacks = g_array_new(0, 0, sizeof(callstack *));
-     cpu->traces = g_array_new(0, 0, sizeof(trace *));
-+    cpu->sample_timestamp = cpu_get_timestamp(cpu);
- 
-     g_assert(vcpu_index < 1000);
-     uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
-@@ -613,6 +696,22 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info,
-                                            int argc, char **argv)
- {
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "trace-sample") == 0) {
-+            gint64 value = g_ascii_strtoll(tokens[1], NULL, 10);
-+            if (value <= 0) {
-+                fprintf(stderr, "bad trace-sample value: %s\n", tokens[1]);
-+                return -1;
-+            }
-+            trace_sample = value;
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-     if (!strcmp(info->target_name, "aarch64")) {
-         arch_ops = aarch64_ops;
-     } else {
+First, in system mode, booting a stack using TF-A + U-boot + Linux:
+- Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
+- Stat and open syscalls in kernel
+https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
+- Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
+
+Full trace is available here:
+https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz
+You can download and open it on https://ui.perfetto.dev/ to explore it.
+
+Second, in user mode, tracing qemu-aarch64 (itself) running git --help:
+- Loading program and its interpreter
+https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
+- TB creation
+https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
+
+Full trace is available here:
+https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz
+
+If you had curiosity and now you're ready to give some attention, most of the
+details you want to read are included in the documentation patch (final one).
+
+Overhead is around x2 (sampling only) to x10-x15 (precise), and long traces can
+be directly filtered with uftrace if needed.
+
+The series is splitted in:
+- implementing the plugin
+- adding useful options (especially sampling and privilege level tracing)
+- add a companion script to symbolize traces generated
+- add documentation with examples
+
+I hope this plugin can help people trying to understand what happens out of the
+user space, and get a better grasp of how firmwares, bootloader, and kernel
+interact behind the curtain.
+
+v2
+--
+
+- trace active stacks on exit
+- do not erase map generated in system_emulation
+- add documentation to generate restricted visual traces around specific events
+  of execution
+
+v3
+--
+
+- fix missing include unistd.h (build failed on MacOS only)
+
+Pierrick Bouvier (6):
+  contrib/plugins/uftrace: new uftrace plugin
+  contrib/plugins/uftrace: add trace-sample option
+  contrib/plugins/uftrace: add trace-privilege-level option
+  contrib/plugins/uftrace: add timestamp-based-on-real-time option
+  contrib/plugins/uftrace_symbols.py
+  contrib/plugins/uftrace: add documentation
+
+ docs/about/emulation.rst           | 207 +++++++
+ contrib/plugins/uftrace.c          | 920 +++++++++++++++++++++++++++++
+ contrib/plugins/meson.build        |   3 +-
+ contrib/plugins/uftrace_symbols.py | 152 +++++
+ 4 files changed, 1281 insertions(+), 1 deletion(-)
+ create mode 100644 contrib/plugins/uftrace.c
+ create mode 100755 contrib/plugins/uftrace_symbols.py
+
 -- 
 2.47.2
 
