@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581E5C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4ADC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueCKq-0003cK-QM; Tue, 22 Jul 2025 08:43:09 -0400
+	id 1ueCKl-0003V9-Io; Tue, 22 Jul 2025 08:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJQ-0002Lh-Ge
+ id 1ueCJQ-0002Ld-8A
  for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:45 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ueCJL-0006KE-O1
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:40 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TAKD024432;
- Tue, 22 Jul 2025 12:41:33 GMT
+ id 1ueCJL-0006KK-Fo
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 08:41:39 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56M5TCVY006880;
+ Tue, 22 Jul 2025 12:41:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=IsLv/
- 76PdAm9fyknh/wENGfwWc4cVutv2fWza08LdOQ=; b=T62OvdVeBU01GH5Ts4TbB
- Wta9et7yTHl585jkXz09lBrHkgDNBxvhigHZsFacL600e8svk5E3HEQqAKeJLmur
- 8xWmyvFwb1E+Lj2McHnovbKpeIl4qy3iQ5ntnT8o5foxrru0CUccnVtEV/kt6i2Z
- i1gJOC6FhWx8OHhhtyOPWeOUE8gejl8niB7ohjBlX3tIAvt7+9D3ekvF43r0xFQy
- v9uz1Nb2G2Q/wsFZnOgrRS9piVh6HCvZ0N160KS9dw/0+yX75GEgkrRW26lyyhEQ
- qJCd6Qa+NdPq9x3crQ+/9d+VrcgWIwNcdocxK5Eg1DvnqF1cBScIl6b8a42Jdtmf
- Q==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=mTAkC
+ kg5NAr+U2BQKhXP4vrQ5SSm+w/ZkB8cpu8ucqg=; b=Sr1yqCfpxA+8tmpIoa+M+
+ ci/wx/UOLEB9E9mxgrsAAQnGfjBKJWWLxqvfk8h/dNN3hmP6104kC6E22YZkzgvA
+ oz04QjLQJ57otU047clRhBMZecp5lCUZuKrGCTKJxdWafmwbsNdJo07ChdWno3io
+ +J/s84cCuJL7MliCgpc6gQuffOAF7buNjn85kf99dE0d2jZO5lgW4WtpOuZMAWzu
+ ptoc3Ppu0fdb70/IdSNAlWQwiq18uAVV1lNYrVDfysh/aD4ZIIMD/VJqzEVxUASR
+ +wziQTDajmKAzN8lLvxv1STvP8b8auuQGNjqk3aWGpMAfFzalDm6BS08IH+rgBVb
+ w==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48057qw70s-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4805e2d2p8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:32 +0000 (GMT)
+ Tue, 22 Jul 2025 12:41:33 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56MC5xQE010475; Tue, 22 Jul 2025 12:41:31 GMT
+ with ESMTP id 56MBf90X010337; Tue, 22 Jul 2025 12:41:32 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4801t99gah-1
+ 4801t99gb4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Jul 2025 12:41:31 +0000
+ Tue, 22 Jul 2025 12:41:32 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3p039536;
- Tue, 22 Jul 2025 12:41:30 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 56MCfT3r039536;
+ Tue, 22 Jul 2025 12:41:32 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4801t99g9h-2; Tue, 22 Jul 2025 12:41:30 +0000
+ 4801t99g9h-3; Tue, 22 Jul 2025 12:41:32 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
  jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
  eperezma@redhat.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 1/6] migration: Add virtio-iterative capability
-Date: Tue, 22 Jul 2025 12:41:22 +0000
-Message-ID: <20250722124127.2497406-2-jonah.palmer@oracle.com>
+Subject: [RFC 2/6] virtio-net: Reorder vmstate_virtio_net and helpers
+Date: Tue, 22 Jul 2025 12:41:23 +0000
+Message-ID: <20250722124127.2497406-3-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250722124127.2497406-1-jonah.palmer@oracle.com>
 References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
@@ -77,18 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2507220104
-X-Authority-Analysis: v=2.4 cv=MNRgmNZl c=1 sm=1 tr=0 ts=687f86fc cx=c_pps
+X-Authority-Analysis: v=2.4 cv=WaYMa1hX c=1 sm=1 tr=0 ts=687f86fd cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=ipTBKrNiw92s7om4A18A:9
-X-Proofpoint-ORIG-GUID: vYjqTppBd9-jBcwyS9McPHnwNLoDS2Nf
-X-Proofpoint-GUID: vYjqTppBd9-jBcwyS9McPHnwNLoDS2Nf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX5/tbHfIJfJ7R
- XJUy+eMzoL/A2KRzmYWT+CWMDCr7bNAc2MTBT6Xh3qFbZ1JLheIaQRBLLun/lP+Rk/M4mtfTfbP
- 1CXWTGjGq1dF1a2ZcL+gcxY0aKPCMps5Mvd2051f5cGWm5BlYhjQDC6Wly3idJhTP/ul1m1crel
- lVIh+7jbCN5WcfnH9sJ/rET/hPUMKZGRGUOuAQgwL7UXsx+TI/Fs9YAF+Dn0ra1h7DgzCR0QONU
- USM4bSa6wiOX1n91jXfz2NN3NZWD2D2mCbi4PXdnw9knhNMVACLgPglkseT6d9a3r2gnqUEzqqM
- rfjGTYsbifk6iGpLRJcjsFstQ92aHPtcDSdnnVVMtAibx99YXaxa/qnYZ8bepnV4yjVKAyFMmf9
- dDYx4nvXcbztcddX4pU4wnduR4d9JkgriO0ILAs8GCo/Qe0TVHR2fol/+XnsKOkICdiH1t3B
+ a=Wb1JkmetP80A:10 a=yPCof4ZbAAAA:8 a=Su2gMDwvtMPhgmBzyZ4A:9
+X-Proofpoint-GUID: xUTt2it9AJpkryHbhhZzSjwf3L0gGEq_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIyMDEwNCBTYWx0ZWRfX4bhky5bqli0E
+ bS429T/LqkVW9q/wgc4y8CkbV17MHl34sg34hU9uiaFx9JetLDIJgJIM6qb9Whp7fvYnUgSnmjx
+ c9VQXePx6IVD45aHI6q1GQH1P9FDGZH5vzCE9IOvh36TOYLiaD46hktkUcSMpLqKznbOvpSgllm
+ KaP0OA+flBsKRlOFYPtRgdMpUlVNmqoZMB9PpncQGlRe0sIBm4JZr0x+Pg++wN7gVNLipkt3a1v
+ 3oALySrMeJMqeumhCHO4pCt5H4Y81I8N3ByJTLTkvimF6gchv4B6xhyh5qqRK30KmMB+MV2WShx
+ WenYmjbdYKlKVVp+hueUpyNqFCOcLwIHQDAI6hImbwO6Ko5pEGhw3y5of5NZEpSmM/w01oVZ6Gl
+ heBya98Zi7DWawlFMDVsRI9c6Bh+EH05yQcfgSRbRLsy0cdnzmAb1PtICQlTAO7T+JS4+Pt4
+X-Proofpoint-ORIG-GUID: xUTt2it9AJpkryHbhhZzSjwf3L0gGEq_
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -114,69 +114,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a new migration capability 'virtio-iterative' that will allow
-virtio devices, where supported, to iteratively migrate configuration
-changes that occur during the migration process.
-
-This capability is added to the validated capabilities list to ensure
-both the source and destination support it before enabling.
-
-The capability defaults to off to maintain backward compatibility.
-
-To enable the capability via HMP:
-(qemu) migrate_set_capability virtio-iterative on
-
-To enable the capability via QMP:
-{"execute": "migrate-set-capabilities", "arguments": {
-     "capabilities": [
-        { "capability": "virtio-iterative", "state": true }
-     ]
-  }
-}
+This reordering makes the vmstate_virtio_net available for use by future
+virtio-net SaveVMHandlers hooks that will need to be placed before
+virtio_net_device_realize.
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- migration/savevm.c  | 1 +
- qapi/migration.json | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/net/virtio-net.c | 90 ++++++++++++++++++++++-----------------------
+ 1 file changed, 45 insertions(+), 45 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index bb04a4520d..40a2189866 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -279,6 +279,7 @@ static bool should_validate_capability(int capability)
-     switch (capability) {
-     case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
-     case MIGRATION_CAPABILITY_MAPPED_RAM:
-+    case MIGRATION_CAPABILITY_VIRTIO_ITERATIVE:
-         return true;
-     default:
-         return false;
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 4963f6ca12..8f042c3ba5 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -479,6 +479,11 @@
- #     each RAM page.  Requires a migration URI that supports seeking,
- #     such as a file.  (since 9.0)
- #
-+# @virtio-iterative: Enable iterative migration for virtio devices, if
-+#     the device supports it. When enabled, and where supported, virtio
-+#     devices will track and migrate configuration changes that may
-+#     occur during the migration process. (Since 10.1)
-+#
- # Features:
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
-@@ -498,7 +503,7 @@
-            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
-            'validate-uuid', 'background-snapshot',
-            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
--           'dirty-limit', 'mapped-ram'] }
-+           'dirty-limit', 'mapped-ram', 'virtio-iterative'] }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 221252e00a..93029104b3 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3746,6 +3746,51 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+     return qatomic_read(&n->failover_primary_hidden);
+ }
  
- ##
- # @MigrationCapabilityStatus:
++static int virtio_net_pre_save(void *opaque)
++{
++    VirtIONet *n = opaque;
++
++    /* At this point, backend must be stopped, otherwise
++     * it might keep writing to memory. */
++    assert(!n->vhost_started);
++
++    return 0;
++}
++
++static bool primary_unplug_pending(void *opaque)
++{
++    DeviceState *dev = opaque;
++    DeviceState *primary;
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VirtIONet *n = VIRTIO_NET(vdev);
++
++    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_STANDBY)) {
++        return false;
++    }
++    primary = failover_find_primary_device(n);
++    return primary ? primary->pending_deleted_event : false;
++}
++
++static bool dev_unplug_pending(void *opaque)
++{
++    DeviceState *dev = opaque;
++    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(dev);
++
++    return vdc->primary_unplug_pending(dev);
++}
++
++static const VMStateDescription vmstate_virtio_net = {
++    .name = "virtio-net",
++    .minimum_version_id = VIRTIO_NET_VM_VERSION,
++    .version_id = VIRTIO_NET_VM_VERSION,
++    .fields = (const VMStateField[]) {
++        VMSTATE_VIRTIO_DEVICE,
++        VMSTATE_END_OF_LIST()
++    },
++    .pre_save = virtio_net_pre_save,
++    .dev_unplug_pending = dev_unplug_pending,
++};
++
+ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+@@ -4016,51 +4061,6 @@ static void virtio_net_instance_init(Object *obj)
+     ebpf_rss_init(&n->ebpf_rss);
+ }
+ 
+-static int virtio_net_pre_save(void *opaque)
+-{
+-    VirtIONet *n = opaque;
+-
+-    /* At this point, backend must be stopped, otherwise
+-     * it might keep writing to memory. */
+-    assert(!n->vhost_started);
+-
+-    return 0;
+-}
+-
+-static bool primary_unplug_pending(void *opaque)
+-{
+-    DeviceState *dev = opaque;
+-    DeviceState *primary;
+-    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+-    VirtIONet *n = VIRTIO_NET(vdev);
+-
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_STANDBY)) {
+-        return false;
+-    }
+-    primary = failover_find_primary_device(n);
+-    return primary ? primary->pending_deleted_event : false;
+-}
+-
+-static bool dev_unplug_pending(void *opaque)
+-{
+-    DeviceState *dev = opaque;
+-    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(dev);
+-
+-    return vdc->primary_unplug_pending(dev);
+-}
+-
+-static const VMStateDescription vmstate_virtio_net = {
+-    .name = "virtio-net",
+-    .minimum_version_id = VIRTIO_NET_VM_VERSION,
+-    .version_id = VIRTIO_NET_VM_VERSION,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_VIRTIO_DEVICE,
+-        VMSTATE_END_OF_LIST()
+-    },
+-    .pre_save = virtio_net_pre_save,
+-    .dev_unplug_pending = dev_unplug_pending,
+-};
+-
+ static const Property virtio_net_properties[] = {
+     DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
+                     VIRTIO_NET_F_CSUM, true),
 -- 
 2.47.1
 
