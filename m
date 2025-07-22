@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BAF0C83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 16:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AEAC83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 17:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueGKp-0005JY-PR; Tue, 22 Jul 2025 12:59:24 -0400
+	id 1ueGL8-0005WA-8w; Tue, 22 Jul 2025 12:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ueFj8-00041W-Rc
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:20:30 -0400
+ id 1ueFmQ-0005gn-14
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:23:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ueFj6-0004Hk-AM
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:20:26 -0400
+ id 1ueFmO-0004Ur-0C
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 12:23:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753201222;
+ s=mimecast20190719; t=1753201424;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=IvzUrpKrwhK1g5v5oAUeAaMdsRBf+YM265r61Jmqeao=;
- b=Jf7O0TpqJMWwMyo5WZoeaqGFaG0p2kWWoXPmxqov0STzcipDmRxgUXhKiAviOFYYOXtohS
- pQ+P8wfdc6CbgtDjtfP30usY4LDwlwA9yEZYzK7EnApzxEcLIwNURcgpBuKIYxgF2TRx/l
- cUQWMyn469hWnNy1hm+lrURu2G+TtbI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=9TRIhTq5TmRYyvsveC0VB4lUyOqMVSFU6UbHeczAOCA=;
+ b=e7c5wSou++cueXGDzcSUEEeLqJT31jZYt2oy28qgMM224iTJmaYex1n0PaTUgquwjxKBYM
+ /j8DJ+mx2Ot1D/P0tNSvuOhX11XjguVmm+Df1thssGyG8pJUda3YU3seU6O8nG4hQlyDCT
+ IExjvdjRuSMtULPVyU9iRIEdJr/JMDI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-6dhjpjksPiG12msIzfbNkw-1; Tue,
- 22 Jul 2025 12:20:18 -0400
-X-MC-Unique: 6dhjpjksPiG12msIzfbNkw-1
-X-Mimecast-MFC-AGG-ID: 6dhjpjksPiG12msIzfbNkw_1753201216
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-SP3Xn19GOs-27isFyP5ESw-1; Tue,
+ 22 Jul 2025 12:23:40 -0400
+X-MC-Unique: SP3Xn19GOs-27isFyP5ESw-1
+X-Mimecast-MFC-AGG-ID: SP3Xn19GOs-27isFyP5ESw_1753201419
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B73F01944D23; Tue, 22 Jul 2025 16:20:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 969831800165; Tue, 22 Jul 2025 16:23:38 +0000 (UTC)
 Received: from redhat.com (dhcp-16-135.lcy.redhat.com [10.42.16.135])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DF8D30001A4; Tue, 22 Jul 2025 16:20:12 +0000 (UTC)
-Date: Tue, 22 Jul 2025 17:20:09 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D494318016FE; Tue, 22 Jul 2025 16:23:34 +0000 (UTC)
+Date: Tue, 22 Jul 2025 17:23:31 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Zhuoying Cai <zycai@linux.ibm.com>
 Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
@@ -54,17 +54,16 @@ Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
  qemu-devel@nongnu.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-Subject: Re: [PATCH v4 08/28] crypto/x509-utils: Add helper functions for
- DIAG 320 subcode 2
-Message-ID: <aH-6OV5_Q2YcYUgb@redhat.com>
+Subject: Re: [PATCH v4 09/28] s390x/diag: Implement DIAG 320 subcode 2
+Message-ID: <aH-7A6Yuclqe1WDL@redhat.com>
 References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-9-zycai@linux.ibm.com>
+ <20250711211105.439554-10-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250711211105.439554-9-zycai@linux.ibm.com>
+In-Reply-To: <20250711211105.439554-10-zycai@linux.ibm.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -74,7 +73,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,189 +90,135 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 11, 2025 at 05:10:44PM -0400, Zhuoying Cai wrote:
-> Introduce new helper functions to extract certificate metadata needed for
-> DIAG 320 subcode 2:
+On Fri, Jul 11, 2025 at 05:10:45PM -0400, Zhuoying Cai wrote:
+> DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+> certificate store. Only X509 certificates in DER format and SHA-256 hash
+> type are recognized.
 > 
-> qcrypto_x509_get_cert_version() - retrieves version of a certificate
-> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
-> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
-> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
+> The subcode value is denoted by setting the second-left-most bit
+> of an 8-byte field.
 > 
-> These functions provide support for metadata extraction and validity checking
-> for X.509 certificates.
+> The Verification Certificate Block (VCB) contains the output data
+> when the operation completes successfully. It includes a common
+> header followed by zero or more Verification Certificate Entries (VCEs),
+> depending on the VCB input length and the VC range (from the first VC
+> index to the last VC index) in the certificate store.
+> 
+> Each VCE contains information about a certificate retrieved from
+> the S390IPLCertificateStore, such as the certificate name, key type,
+> key ID length, hash length, and the raw certificate data.
+> The key ID and hash are extracted from the raw certificate by the crypto API.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->  crypto/x509-utils.c         | 199 ++++++++++++++++++++++++++++++++++++
->  include/crypto/x509-utils.h |  76 +++++++++++++-
->  2 files changed, 272 insertions(+), 3 deletions(-)
+>  include/hw/s390x/ipl/diag320.h |  47 ++++++
+>  target/s390x/diag.c            | 254 ++++++++++++++++++++++++++++++++-
+>  2 files changed, 300 insertions(+), 1 deletion(-)
 > 
-> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> index d2cf790d5b..135f83f55e 100644
-> --- a/crypto/x509-utils.c
-> +++ b/crypto/x509-utils.c
-> @@ -55,6 +55,14 @@ static const int gnutls_to_qcrypto_sig_alg_map[] = {
->      [GNUTLS_SIGN_ECDSA_SHA512] = QCRYPTO_SIG_ALGO_ECDSA_SHA512,
->  };
->  
-> +static const int gnutls_to_qcrypto_pk_alg_map[] = {
-> +    [GNUTLS_PK_UNKNOWN] = QCRYPTO_PK_ALGO_UNKNOWN,
-> +    [GNUTLS_PK_RSA] = QCRYPTO_PK_ALGO_RSA,
-> +    [GNUTLS_PK_DSA] = QCRYPTO_PK_ALGO_DSA,
-> +    [GNUTLS_PK_DH] = QCRYPTO_PK_ALGO_DH,
-> +    [GNUTLS_PK_ECDSA] = QCRYPTO_PK_ALGO_ECDSA,
-> +};
-> +
->  int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
->                                    uint8_t **result, size_t *resultlen,
->                                    Error **errp)
-> @@ -195,6 +203,169 @@ cleanup:
->      return ret;
+
+>  int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
+> @@ -191,8 +193,252 @@ out:
+>      }
 >  }
 >  
-> +int qcrypto_x509_get_cert_version(uint8_t *cert, size_t size, Error **errp)
+> +static int diag_320_is_cert_valid(S390IPLCertificate qcert)
 > +{
+> +    int version;
 > +    int rc;
-> +    int ret = -1;
-> +    gnutls_x509_crt_t crt;
-> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +    Error *err = NULL;
 > +
-> +    rc = gnutls_x509_crt_init(&crt);
-> +    if (rc < 0) {
-> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-> +        return ret;
+> +    version = qcrypto_x509_get_cert_version(qcert.raw, qcert.size, &err);
+> +    if (version < 0) {
+> +        error_report_err(err);
+> +        return -1;
 > +    }
-> +
-> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-> +    if (rc != 0) {
-> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-> +        goto cleanup;
-> +    }
-> +
-> +    rc = gnutls_x509_crt_get_version(crt);
-> +    if (rc < 0) {
-> +        error_setg(errp, "Failed to get certificate version: %s", gnutls_strerror(rc));
-> +        goto cleanup;
-> +    }
-> +
-> +    ret = rc;
-> +
-> +cleanup:
-> +    gnutls_x509_crt_deinit(crt);
-> +    return ret;
-> +}
 
-I'm not convinced this method needs to exist. QEMU doesn't care about the
-cert version, and if something else consuming the data from guest OS/firmware
-cares, then it can validate the version.
+IMHO this isn't doing anything worthwhile given qemu accepts
+any version at all here.
 
-> +int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
-> +{
-> +    int rc;
-> +    int ret = -1;
-> +    unsigned int bits;
-> +    gnutls_x509_crt_t crt;
-> +    gnutls_datum_t datum = {.data = cert, .size = size};
 > +
-> +    rc = gnutls_x509_crt_init(&crt);
-> +    if (rc < 0) {
-> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-> +        return ret;
-> +    }
-> +
-> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
+> +    rc = qcrypto_x509_check_cert_times(qcert.raw, qcert.size, &err);
 > +    if (rc != 0) {
-> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-> +        goto cleanup;
+> +        error_report_err(err);
+> +        return -1;
 > +    }
 > +
-> +    rc = gnutls_x509_crt_get_pk_algorithm(crt, &bits);
-> +    if (rc >= G_N_ELEMENTS(gnutls_to_qcrypto_pk_alg_map)) {
-> +        error_setg(errp, "Unknown public key algorithm %d", rc);
-> +        goto cleanup;
-> +    }
-> +
-> +    ret = gnutls_to_qcrypto_pk_alg_map[rc];
-> +
-> +cleanup:
-> +    gnutls_x509_crt_deinit(crt);
-> +    return ret;
+> +    return 0;
 > +}
 > +
-> +int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-> +                                 QCryptoKeyidFlags flag,
-
-IMHO this can just use  "QCryptoHashAlgo hash_alg"
-
-> +                                 uint8_t **result,
-> +                                 size_t *resultlen,
-> +                                 Error **errp)
+> +static int diag_320_get_cert_info(VCEntry *vce, S390IPLCertificate qcert,
+> +                                  uint8_t **cert_der, unsigned char **key_id_data,
+> +                                  void **hash_data)
 > +{
+> +    int algo;
 > +    int rc;
-> +    int ret = -1;
-> +    gnutls_x509_crt_t crt;
-> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +    Error *err = NULL;
 > +
-> +    *resultlen = qcrypto_x509_get_keyid_len(qcrypto_to_gnutls_keyid_flags_map[flag],
-> +                                            errp);
-> +    if (*resultlen == -1) {
-> +        return ret;
+> +    /* key-type */
+> +    algo = qcrypto_x509_get_pk_algorithm(qcert.raw, qcert.size, &err);
+> +    if (algo < 0) {
+> +        error_report_err(err);
+> +        return -1;
 > +    }
+> +    if (algo == QCRYPTO_PK_ALGO_RSA) {
+> +        vce->key_type = DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+> +    }
+
+Shouldn't this have an "else" clause to either fill in vce->key_type,
+or raise an error
+
 > +
-> +    rc = gnutls_x509_crt_init(&crt);
+> +    /* certificate in DER format */
+> +    rc = qcrypto_x509_convert_cert_der(qcert.raw, qcert.size,
+> +                                       cert_der, &qcert.der_size, &err);
 > +    if (rc < 0) {
-> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-> +        return ret;
+> +        error_report_err(err);
+> +        goto out;
 > +    }
 > +
-> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-> +    if (rc != 0) {
-> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-> +        goto cleanup;
+> +    /* VC format */
+> +    vce->format = DIAG_320_VCE_FORMAT_X509_DER;
+> +
+> +    /* key id and key id len */
+> +    rc = qcrypto_x509_get_cert_key_id(qcert.raw, qcert.size,
+> +                                      QCRYPTO_KEYID_FLAGS_SHA256,
+> +                                      key_id_data, &qcert.key_id_size, &err);
+> +    if (rc < 0) {
+> +        error_report_err(err);
+> +        goto out;
 > +    }
+> +    vce->keyid_len = cpu_to_be16(qcert.key_id_size);
 > +
-> +    *result = g_malloc0(*resultlen);
-> +    if (gnutls_x509_crt_get_key_id(crt,
-> +                                   qcrypto_to_gnutls_keyid_flags_map[flag],
-> +                                   *result, resultlen) != 0) {
-> +        error_setg(errp, "Failed to get key ID from certificate");
-> +        goto cleanup;
+> +    /* hash type */
+> +    if (qcert.hash_type == QCRYPTO_SIG_ALGO_RSA_SHA256) {
+> +        vce->hash_type = DIAG_320_VCE_HASHTYPE_SHA2_256;
 > +    }
+
+Again, an "else" clause to either fill in vce->hash_type,
+or raise an error ?
+
 > +
-> +    ret = 0;
+> +    /* hash and hash len */
+> +    *hash_data = g_malloc0(qcert.hash_size);
+> +    rc = qcrypto_get_x509_cert_fingerprint(qcert.raw, qcert.size,
+> +                                           QCRYPTO_HASH_ALGO_SHA256,
+> +                                           *hash_data, &qcert.hash_size, &err);
+> +    if (rc < 0) {
+> +        error_report_err(err);
+> +        goto out;
+> +    }
+> +    vce->hash_len = cpu_to_be16(qcert.hash_size);
 > +
-> +cleanup:
-> +    gnutls_x509_crt_deinit(crt);
-> +    return ret;
+> +    return 0;
+> +
+> +out:
+> +    g_clear_pointer(cert_der, g_free);
+> +    g_clear_pointer(key_id_data, g_free);
+> +    g_clear_pointer(hash_data, g_free);
+> +
+> +    return -1;
 > +}
 
-
-> @@ -53,10 +61,10 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->   * @result: output location for the allocated buffer for the certificate in DER format
->              (the function allocates memory which must be freed by the caller)
->   * @resultlen: pointer to the size of the buffer
-> -               (will be replaced by the actual size of the DER-encoded certificate)
-> +               (will be updated with the actual size of the DER-encoded certificate)
->   * @errp: error pointer
->   *
-> - * Convert given @cert from PEM to DER format.
-> + * Convert the given @cert from PEM to DER format.
->   *
->   * Returns: 0 on success,
->   *         -1 on error.
-> @@ -70,7 +78,7 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
->   * qcrypto_x509_get_keyid_len
->   * @flag: the key ID flag
->   *
-> - * Determine the length of the key ID of the given @flag.
-> + * Determine the length of the key ID corresponding to the given @flag.
->   *
->   * Returns: the length on success,
->   *          -1 on error.
-
-
-Squash these changes into the arlier patch that introduced the mistakes,
 
 
 With regards,
