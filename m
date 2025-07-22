@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84B1C83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 008C5C83F34
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueBgl-0007vT-2X; Tue, 22 Jul 2025 08:01:43 -0400
+	id 1ueBgk-0007uC-G4; Tue, 22 Jul 2025 08:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1ueBga-0007hF-HZ; Tue, 22 Jul 2025 08:01:33 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1ueBgb-0007hV-GJ; Tue, 22 Jul 2025 08:01:38 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1ueBgU-0001GO-O8; Tue, 22 Jul 2025 08:01:32 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-615913ff67fso3304959eaf.0; 
- Tue, 22 Jul 2025 05:01:23 -0700 (PDT)
+ id 1ueBgU-0001Gb-OJ; Tue, 22 Jul 2025 08:01:32 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-41eaf6805ebso2373656b6e.3; 
+ Tue, 22 Jul 2025 05:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753185681; x=1753790481; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+wW6CG8qeQ76uqKIJrdpRUwBQrGQ6/XGlIzCqEyeFnI=;
- b=DtBUq+Sle2jglJaNwRgz4UUjWHK1mWQpfLuC9kbAKTXs+mCX3QnNwfu0xLqKDqvopd
- 91mOsdNZojB+l+vvS2wOIbg9B7jssbl4Ahh6zhiqMayskgzZBiFYhTYM9W8ksNHUK+Rj
- avcJ5MbrCapbu9imUzNJWm+VmNnDA29iSeiO9qzE7BjOxfXHz/X2fO/edAf4ZP2hlhv4
- 9tc+0bYX+CYuYmvghaEG2dOJemVPkwgnFXTLnwx1XXTgS3bZZlAS4IEjHkq3qkTrRT7K
- LZAr6RHGAKDlK9XRU9ioeu+rBtg3zaBdhPzujMh5807WM/zfXZlaxRU2NtR29MJhQYB7
- hE5Q==
+ d=gmail.com; s=20230601; t=1753185684; x=1753790484; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nTRGWhNS/9asmYVuC9Atkf+6c99Gwys3cC/Ik8EOh4U=;
+ b=fj4JROn6U38KZBxoWmh48PiXsxhP4OBYrjRT8O7AXHejwmS7fKWvyisrC5zhLD3DVj
+ AGh6wpEtlyG33VV39V3jaoJj0+o9qkeoiOQ2/qGsNpVYuhe1zzSk/d/2KD2VcDjeMANr
+ v5DK/5cswbo54Ux8wLotmEts5PatOgYW+PN2qOajnpSuF/iD48W0NcqqTxBy5UXtnnAa
+ v9dFlA4Nou15iyx2wbm4Qz2nLFKvVAAB1EE2GK2g0Gmmi1HVk2HTYMqrMi7UHIGbh0aY
+ X7d4XryVgUHB5Km1s7t/zIFv6/4kCkdnLPJh9FRuV9oyqMH9m1et/Epld4u08mAAvWka
+ 4ocg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753185681; x=1753790481;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+wW6CG8qeQ76uqKIJrdpRUwBQrGQ6/XGlIzCqEyeFnI=;
- b=Y6PQmZTsH6tnpQL0/16K5lo4i3isZ+mp4Z9gQ6A5fcKC+olv8jIy6jo1ItC1fftO1Y
- sXFwUSJ7rnki3jI8f/dmrO3XhkTythhRrve2axthFWwnThZKpD83auqDcfX9s67/uIsT
- Eke3DhikIp7rjhTvtnXhslad2+VSC3XQFvh6pXF/t04AkyBxhsxRyz3oWXXAo4Dn69qx
- MUnrktU+wzeFpKCtcUt1wuPZqMsEoVWINf5voe7gxxh7cocWqt4vtST3gLIM/Hdyq5fw
- BGu9jl6vMwlPijjCC4/dQM2EBFXbIct+Ipa0SeqbReED9UP6AWEu5ut/afDOTx5YJ8g1
- 2XWQ==
+ d=1e100.net; s=20230601; t=1753185684; x=1753790484;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nTRGWhNS/9asmYVuC9Atkf+6c99Gwys3cC/Ik8EOh4U=;
+ b=AIQPgr0Vou+F8GKxtnMffNY1yb8vmYF17I3ghEcfd4XtrAjQuC/dj/GSTzkW280sPd
+ WIfo3KnE5SE2VVNLk7S6+hTJNdJ/z3S38EOUl5/3+hr07sIc8SHzCLwIpWgWLpJpYC+w
+ Uk4phrZD0s2BTZg6QcVrtPp6K5YX+vyMbCm2k2jw8xDC1+5nx/eluSgJYjvMBzekMJ8T
+ 1XCwIDqrPVcW3VQps4X7YSA6h5pFIN31h5z5kmj6skA/QXgPPCkya4tIsUGGDGJDVNNO
+ EVYxTIXOE2LrQvxcoruAHyM4u7Qz1XUV9TSi0rLMywORkzRwuuq5YMmMuzp+AclohZhv
+ 62IQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVZv6gGa6ypCYvmkAy0VS1q9eYMWC/Ulgtb68vpboBFTcgUom08HNn548Rhv5RXyQfriltLU+KfDdz@nongnu.org
-X-Gm-Message-State: AOJu0YwDGSVYJ7gNhDzG3k2Ylya36MjyMVh2qz0PWfDMd8XFH90BOhWS
- TIjWYCjacOMvColFuwqpPcTXHNhgVkPcO1813xR1qEwcY3XV8+cVXbJMxfB2wKlcriAsCPR8/Qx
- USJEiGrBeXGjTv/zjliyeAVc50mHMVrY=
-X-Gm-Gg: ASbGncu5TGanQipDmO48HJGZ/UFPJ65TEEzL1IhTPjTJWpSa6oVj57+EhNigEmn7q0d
- hg7hElmgRdrg2W2FFpoK8nbPYdQMJPpJZJdkVcBA9iW3dzblE7vMTvPrIsqiTBEoWJDryU0uES5
- r3MVBz7yonCrJdaeVl/7fm4IaaPteGSoKAdlavNKov9lA20K5nvsw3Vl7Qcm9lFm0bixO7UUbRV
- s+N3g==
-X-Google-Smtp-Source: AGHT+IG3vMtFNPWQXbT41fxuBvVLogIClLE/v6D37nOlN6VpBqA5bIBdIJoe6s6ojBHkha2mOIkpiqt0Flmxk69DYxA=
-X-Received: by 2002:a05:6820:2918:b0:615:9a1e:8d30 with SMTP id
- 006d021491bc7-615ee675ef2mr3019525eaf.2.1753185680663; Tue, 22 Jul 2025
- 05:01:20 -0700 (PDT)
+ AJvYcCWyMdc9pWb/MhTTiP8+XGlcTcVrD7fKyqe6mQVK64Aerjv/9IN/DravhAk+7zCxtqQAlL7ih3K6pWny@nongnu.org
+X-Gm-Message-State: AOJu0YyYGZEWWI33LOn7kSiESuhPy0G8VUrClwR9zUf04kLbS6nqMb8x
+ y99MmKo0Fqf4tHMKHc8O90t7SbTd9HGUta/5GcARvTphxDkzgrJG9QwQsOTkMDCTzoxBeTe8dm/
+ niCoI+H14FflowBj1s7DFf90sBSd9TNBy1w==
+X-Gm-Gg: ASbGncvIVNPsWuNFLHBsiIhGywDQskkswViwpHU0pqbjcxKsuVdkiAVzmexAqbljydr
+ /PC/EFuDCI7gRvvfzwgNWdMRAOtMLVwlY9oi6nxQYQTPG1wgk3yUzLoPhGcLGl6wUjUMmceMmDh
+ uvsLu8PDkOI6qy4KxNE+a4b/Nh9yXFSxOgAKVDbmIJdkBajGKjcwAaPPnrxFCwodwP3qWvw6mIT
+ p53QA==
+X-Google-Smtp-Source: AGHT+IFy5hxCIEa8IoqeVNSy6O8pJq6q8qGgalBry8jg4V0Qy03mn6eZzYIEI0DWwSEGb15FpQoZHnW1IKGlXLp94HU=
+X-Received: by 2002:a05:6808:1806:b0:406:697f:a62f with SMTP id
+ 5614622812f47-41cee76561bmr17321719b6e.10.1753185683065; Tue, 22 Jul 2025
+ 05:01:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250716183824.216257-1-hibriansong@gmail.com>
  <20250716183824.216257-2-hibriansong@gmail.com>
- <20250721005346.GB32887@fedora>
-In-Reply-To: <20250721005346.GB32887@fedora>
+ <e13f8119-7c60-4aa6-91b0-860ac0a462f5@ddn.com>
+In-Reply-To: <e13f8119-7c60-4aa6-91b0-860ac0a462f5@ddn.com>
 From: Brian Song <hibriansong@gmail.com>
 Date: Tue, 22 Jul 2025 08:00:00 -0400
-X-Gm-Features: Ac12FXylTXuQSISNV9CmcrRFe_JOgw5o75fKZxzg67-2fx-dxcElcIEYNX2L3yo
-Message-ID: <CAKWCU7WEv=qohQJ6XUzHS9ffHN8gT0yuRZojmrTgpqja3ghaiw@mail.gmail.com>
+X-Gm-Features: Ac12FXzY5eiY51Rwh8pb4zrDJZRC2GCTlbc83kfABrzB1W_s70Y2_hUCnZIpiZU
+Message-ID: <CAKWCU7WijF5zaEePtCRNVPS3CZF09vfxnkVYVBQQy8V93GUPFg@mail.gmail.com>
 Subject: Re: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for QEMU
  FUSE Exports
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
- bschubert@ddn.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+To: Bernd Schubert <bschubert@ddn.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "armbru@redhat.com" <armbru@redhat.com>, 
+ "fam@euphon.net" <fam@euphon.net>, "hreitz@redhat.com" <hreitz@redhat.com>, 
+ "kwolf@redhat.com" <kwolf@redhat.com>,
+ "stefanha@redhat.com" <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=hibriansong@gmail.com; helo=mail-oo1-xc2d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=hibriansong@gmail.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,8 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/25 8:53 PM, Stefan Hajnoczi wrote:
-> On Wed, Jul 16, 2025 at 02:38:24PM -0400, Brian Song wrote:
+On 7/21/25 9:51 AM, Bernd Schubert wrote:
+> Hi Brian,
+>
+> nice work! Just some minor comments from my side below.
+>
+
+Really appreciate you taking the time to review my code and many thanks
+for the helpful suggestions!
+
+
+> On 7/16/25 20:38, Brian Song wrote:
+>> [You don't often get email from hibriansong@gmail.com. Learn why this is=
+ important at https://aka.ms/LearnAboutSenderIdentification ]
+>>
 >> This work provides an initial implementation of fuse-over-io_uring
 >> support for QEMU export. According to the fuse-over-io_uring protocol
 >> specification, the userspace side must create the same number of queues
@@ -128,9 +146,6 @@ On 7/20/25 8:53 PM, Stefan Hajnoczi wrote:
 >>   storage-daemon/qemu-storage-daemon.c |   1 +
 >>   util/fdmon-io_uring.c                |   5 +-
 >>   5 files changed, 420 insertions(+), 25 deletions(-)
->
-> Here is feedback from a first pass over this patch.
->
 >>
 >> diff --git a/block/export/fuse.c b/block/export/fuse.c
 >> index c0ad4696ce..637d36186a 100644
@@ -146,26 +161,18 @@ On 7/20/25 8:53 PM, Stefan Hajnoczi wrote:
 >> +#define FUSE_BUFFER_HEADER_SIZE 0x1000
 >> +
 >>   /* Prevent overly long bounce buffer allocations */
->>   #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+>>   #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 10=
+24))
 >>   /*
 >> @@ -64,6 +69,26 @@
 >>
 >>   typedef struct FuseExport FuseExport;
 >>
 >> +struct FuseQueue;
->
-> Use "typedef struct FuseQueue FuseQueue;" here...
->
 >> +
 >> +typedef struct FuseRingEnt {
 >> +    /* back pointer */
 >> +    struct FuseQueue *q;
->
-> ...and then this can be "FuseQueue *q;" so that QEMU coding style is
-> followed.
-
-Done.
-
 >> +
 >> +    /* commit id of a fuse request */
 >> +    uint64_t req_commit_id;
@@ -174,6 +181,18 @@ Done.
 >> +    struct fuse_uring_req_header *req_header;
 >> +    void *op_payload;
 >> +    size_t req_payload_sz;
+>
+> Note that this will be needed only later, when we have multiple request s=
+izes per queue. I had added it to libfuse only pro-actively to avoid the ne=
+ed to change too much code later on.
+>
+
+I noticed that libfuse uses it the same way I do in QEMU: I use
+req_payload_sz to represent the size of op_payload (this is needed by
+the kernel to determine how much data should be copied into its buffer),
+and ent_in_out->payload_sz as the actual size of the data we are going
+to respond with.
+
 >> +
 >> +    /* The vector passed to the kernel */
 >> +    struct iovec iov[2];
@@ -182,22 +201,18 @@ Done.
 >> +} FuseRingEnt;
 >> +
 >>   /*
->>    * One FUSE "queue", representing one FUSE FD from which requests are fetched
+>>    * One FUSE "queue", representing one FUSE FD from which requests are =
+fetched
 >>    * and processed.  Each queue is tied to an AioContext.
 >> @@ -73,6 +98,7 @@ typedef struct FuseQueue {
 >>
 >>       AioContext *ctx;
 >>       int fuse_fd;
 >> +    int qid;
->
-> Could this go inside #ifdef CONFIG_LINUX_IO_URING? It seems to be
-> specific to FUSE-over-io_uring.
-
-Done.
-
 >>
 >>       /*
->>        * The request buffer must be able to hold a full write, and/or at least
+>>        * The request buffer must be able to hold a full write, and/or at=
+ least
 >> @@ -109,6 +135,17 @@ typedef struct FuseQueue {
 >>        * Free this buffer with qemu_vfree().
 >>        */
@@ -208,19 +223,11 @@ Done.
 >> +
 >> +    /*
 >> +     * TODO
->> +     * Support multi-threaded FUSE over io_uring by using eventfd and allocating
+>> +     * Support multi-threaded FUSE over io_uring by using eventfd and a=
+llocating
 >> +     * an extra SQE for each thread to be notified when the connection
 >> +     * shuts down.
 >> +     */
->
-> eventfd and the extra SQE won't be necessary because
-> aio_bh_schedule_oneshot() can be used to cause threads to execute a
-> function.
->
-> (I think this comment effectively says that connection shutdown still
-> needs to be implemented. The implementation details don't matter at this
-> point.)
->
 >> +#endif
 >>   } FuseQueue;
 >>
@@ -233,24 +240,21 @@ Done.
 >>
 >>       mode_t st_mode;
 >>       uid_t st_uid;
->> @@ -257,6 +295,126 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
->>       .drained_poll  = fuse_export_drained_poll,
+>> @@ -257,6 +295,126 @@ static const BlockDevOps fuse_export_blk_dev_ops =
+=3D {
+>>       .drained_poll  =3D fuse_export_drained_poll,
 >>   };
 >>
 >> +#ifdef CONFIG_LINUX_IO_URING
->> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent);
+>> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent=
+);
 >> +
 >> +static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaque)
 >> +{
->> +    CqeHandler *cqe_handler = opaque;
->> +    FuseRingEnt *ent = container_of(cqe_handler, FuseRingEnt, fuse_cqe_handler);
->
-> Passing ent in opaque instead of cqe_handler would simplify this.
->
-
-Done.
-
->> +    FuseExport *exp = ent->q->exp;
+>> +    CqeHandler *cqe_handler =3D opaque;
+>> +    FuseRingEnt *ent =3D container_of(cqe_handler, FuseRingEnt, fuse_cq=
+e_handler);
+>> +    FuseExport *exp =3D ent->q->exp;
 >> +
 >> +    fuse_uring_co_process_request(ent);
 >> +
@@ -259,35 +263,26 @@ Done.
 >> +
 >> +static void fuse_uring_cqe_handler(CqeHandler *cqe_handler)
 >> +{
->> +    FuseRingEnt *ent = container_of(cqe_handler, FuseRingEnt, fuse_cqe_handler);
->> +    FuseQueue *q = ent->q;
+>> +    FuseRingEnt *ent =3D container_of(cqe_handler, FuseRingEnt, fuse_cq=
+e_handler);
+>> +    FuseQueue *q =3D ent->q;
 >> +    Coroutine *co;
->> +    FuseExport *exp = ent->q->exp;
+>> +    FuseExport *exp =3D ent->q->exp;
 >> +
->> +    int err = cqe_handler->cqe.res;
->> +    if (err != 0) {
+>> +    int err =3D cqe_handler->cqe.res;
+>> +    if (err !=3D 0) {
 >> +        /* TODO end_conn support */
 >> +
 >> +        /* -ENOTCONN is ok on umount  */
->> +        if (err != -EINTR && err != -EOPNOTSUPP &&
->> +            err != -EAGAIN && err != -ENOTCONN) {
+>> +        if (err !=3D -EINTR && err !=3D -EOPNOTSUPP &&
+>> +            err !=3D -EAGAIN && err !=3D -ENOTCONN) {
 >> +            fuse_export_halt(exp);
 >> +        }
 >> +    } else {
->> +        co = qemu_coroutine_create(co_fuse_uring_queue_handle_cqes,
+>> +        co =3D qemu_coroutine_create(co_fuse_uring_queue_handle_cqes,
 >> +                            cqe_handler);
 >> +        /* Decremented by co_fuse_uring_queue_handle_cqes() */
 >> +        fuse_inc_in_flight(q->exp);
->
-> Can this be moved inside co_fuse_uring_queue_handle_cqes() to avoid
-> calling inc/dec from different functions? That would make the code
-> easier to understand and more robust against future bugs.
->
-
-Yes, I kept some of the logic the same as in the traditional approach
-for handling requests
-
-
 >> +        qemu_coroutine_enter(co);
 >> +    }
 >> +}
@@ -296,85 +291,96 @@ for handling requests
 >> +                    const unsigned int qid,
 >> +                    const unsigned int commit_id)
 >> +{
->> +    req->qid = qid;
->> +    req->commit_id = commit_id;
->> +    req->flags = 0;
+>> +    req->qid =3D qid;
+>> +    req->commit_id =3D commit_id;
+>> +    req->flags =3D 0;
 >> +}
 >> +
->> +static void fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseRingEnt *ent,
+>> +static void fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseRingEn=
+t *ent,
 >> +               __u32 cmd_op)
 >> +{
->> +    sqe->opcode = IORING_OP_URING_CMD;
+>> +    sqe->opcode =3D IORING_OP_URING_CMD;
 >> +
->> +    sqe->fd = ent->q->fuse_fd;
->> +    sqe->rw_flags = 0;
->> +    sqe->ioprio = 0;
->> +    sqe->off = 0;
+>> +    sqe->fd =3D ent->q->fuse_fd;
+>> +    sqe->rw_flags =3D 0;
+>> +    sqe->ioprio =3D 0;
+>> +    sqe->off =3D 0;
 >> +
->> +    sqe->cmd_op = cmd_op;
->> +    sqe->__pad1 = 0;
+>> +    sqe->cmd_op =3D cmd_op;
+>> +    sqe->__pad1 =3D 0;
 >> +}
 >> +
->> +static void fuse_uring_prep_sqe_register(struct io_uring_sqe *sqe, void *opaque)
+>> +static void fuse_uring_prep_sqe_register(struct io_uring_sqe *sqe, void=
+ *opaque)
 >> +{
->> +    FuseQueue *q = opaque;
->> +    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
+>> +    FuseQueue *q =3D opaque;
+>> +    struct fuse_uring_cmd_req *req =3D (void *)&sqe->cmd[0];
 >> +
 >> +    fuse_uring_sqe_prepare(sqe, &q->ent, FUSE_IO_URING_CMD_REGISTER);
 >> +
->> +    sqe->addr = (uint64_t)(q->ent.iov);
->> +    sqe->len = 2;
+>> +    sqe->addr =3D (uint64_t)(q->ent.iov);
+>> +    sqe->len =3D 2;
 >> +
 >> +    fuse_uring_sqe_set_req_data(req, q->qid, 0);
 >> +}
 >> +
->> +static void fuse_uring_start(FuseExport *exp, struct fuse_init_out *out)
+>> +static void fuse_uring_start(FuseExport *exp, struct fuse_init_out *out=
+)
 >> +{
 >> +    /*
 >> +     * Since we didn't enable the FUSE_MAX_PAGES feature, the value of
->> +     * fc->max_pages should be FUSE_DEFAULT_MAX_PAGES_PER_REQ, which is set by
+>> +     * fc->max_pages should be FUSE_DEFAULT_MAX_PAGES_PER_REQ, which is=
+ set by
 >> +     * the kernel by default. Also, max_write should not exceed
 >> +     * FUSE_DEFAULT_MAX_PAGES_PER_REQ * PAGE_SIZE.
+>
+>  From kernel point of view these things always cause headache, because no=
+w it
+> is impossible to change defaults. Can't it set FUSE_MAX_PAGES and then de=
+fine
+> the actual limit?
+>
+
+We can definitely set FUSE_MAX_PAGES and use a large buffer.
+However, in QEMU, it seems that we don't really need this parameter
+right now, though it could still be exposed as an option for users.
+
 >> +     */
->> +    size_t bufsize = out->max_write + FUSE_BUFFER_HEADER_SIZE;
+>> +    size_t bufsize =3D out->max_write + FUSE_BUFFER_HEADER_SIZE;
 >> +
 >> +    if (!(out->flags & FUSE_MAX_PAGES)) {
 >> +        /*
->> +         * bufsize = MIN(FUSE_DEFAULT_MAX_PAGES_PER_REQ *
->> +         *       qemu_real_host_page_size() + FUSE_BUFFER_HEADER_SIZE, bufsize);
+>> +         * bufsize =3D MIN(FUSE_DEFAULT_MAX_PAGES_PER_REQ *
+>> +         *       qemu_real_host_page_size() + FUSE_BUFFER_HEADER_SIZE, =
+bufsize);
 >> +         */
->> +        bufsize = FUSE_DEFAULT_MAX_PAGES_PER_REQ * qemu_real_host_page_size()
+>> +        bufsize =3D FUSE_DEFAULT_MAX_PAGES_PER_REQ * qemu_real_host_pag=
+e_size()
 >> +                         + FUSE_BUFFER_HEADER_SIZE;
 >> +    }
 >> +
->> +    for (int i = 0; i < exp->num_queues; i++) {
->> +        FuseQueue *q = &exp->queues[i];
+>> +    for (int i =3D 0; i < exp->num_queues; i++) {
+>> +        FuseQueue *q =3D &exp->queues[i];
 >> +
->> +        q->ent.q = q;
+>> +        q->ent.q =3D q;
 >> +
->> +        q->ent.req_header = g_malloc0(sizeof(struct fuse_uring_req_header));
->
-> It's probably easier to embed the header as a FuseRingEnt field instead
-> of heap allocating it.
-
-Done.
-
->
->> +        q->ent.req_payload_sz = bufsize - FUSE_BUFFER_HEADER_SIZE;
->> +        q->ent.op_payload = g_malloc0(q->ent.req_payload_sz);
->
->
+>> +        q->ent.req_header =3D g_malloc0(sizeof(struct fuse_uring_req_he=
+ader));
+>> +        q->ent.req_payload_sz =3D bufsize - FUSE_BUFFER_HEADER_SIZE;
+>> +        q->ent.op_payload =3D g_malloc0(q->ent.req_payload_sz);
 >> +
->> +        q->ent.iov[0] = (struct iovec) {
+>> +        q->ent.iov[0] =3D (struct iovec) {
 >> +            q->ent.req_header,
 >> +            sizeof(struct fuse_uring_req_header)
 >> +        };
->> +        q->ent.iov[1] = (struct iovec) {
+>> +        q->ent.iov[1] =3D (struct iovec) {
 >> +            q->ent.op_payload,
 >> +            q->ent.req_payload_sz
 >> +        };
 >> +
->> +        exp->queues[i].ent.fuse_cqe_handler.cb = fuse_uring_cqe_handler;
+>> +        exp->queues[i].ent.fuse_cqe_handler.cb =3D fuse_uring_cqe_handl=
+er;
 >> +
 >> +        aio_add_sqe(fuse_uring_prep_sqe_register, &(exp->queues[i]),
 >> +            &(exp->queues[i].ent.fuse_cqe_handler));
@@ -387,25 +393,25 @@ Done.
 >>                                 AioContext *const *multithread,
 >> @@ -280,6 +438,7 @@ static int fuse_export_create(BlockExport *blk_exp,
 >>
->>           for (size_t i = 0; i < mt_count; i++) {
->>               exp->queues[i] = (FuseQueue) {
->> +                .qid = i,
->>                   .exp = exp,
->>                   .ctx = multithread[i],
->>                   .fuse_fd = -1,
+>>           for (size_t i =3D 0; i < mt_count; i++) {
+>>               exp->queues[i] =3D (FuseQueue) {
+>> +                .qid =3D i,
+>>                   .exp =3D exp,
+>>                   .ctx =3D multithread[i],
+>>                   .fuse_fd =3D -1,
 >> @@ -293,6 +452,7 @@ static int fuse_export_create(BlockExport *blk_exp,
->>           exp->num_queues = 1;
->>           exp->queues = g_new(FuseQueue, 1);
->>           exp->queues[0] = (FuseQueue) {
->> +            .qid = 0,
->>               .exp = exp,
->>               .ctx = exp->common.ctx,
->>               .fuse_fd = -1,
+>>           exp->num_queues =3D 1;
+>>           exp->queues =3D g_new(FuseQueue, 1);
+>>           exp->queues[0] =3D (FuseQueue) {
+>> +            .qid =3D 0,
+>>               .exp =3D exp,
+>>               .ctx =3D exp->common.ctx,
+>>               .fuse_fd =3D -1,
 >> @@ -312,6 +472,8 @@ static int fuse_export_create(BlockExport *blk_exp,
 >>           }
 >>       }
 >>
->> +    exp->is_uring = args->uring ? true : false;
+>> +    exp->is_uring =3D args->uring ? true : false;
 >> +
 >>       blk_set_dev_ops(exp->common.blk, &fuse_export_blk_dev_ops, exp);
 >>
@@ -417,13 +423,13 @@ Done.
 >> +#ifdef CONFIG_LINUX_IO_URING
 >> +static void fuse_export_delete_uring(FuseExport *exp)
 >> +{
->> +    exp->is_uring = false;
+>> +    exp->is_uring =3D false;
 >> +
 >> +    /*
 >> +     * TODO
 >> +     * end_conn handling
 >> +     */
->> +    for (size_t qid = 0; qid < exp->num_queues; qid++) {
+>> +    for (size_t qid =3D 0; qid < exp->num_queues; qid++) {
 >> +        g_free(exp->queues[qid].ent.req_header);
 >> +        g_free(exp->queues[qid].ent.op_payload);
 >> +    }
@@ -432,107 +438,120 @@ Done.
 >> +
 >>   static void fuse_export_shutdown(BlockExport *blk_exp)
 >>   {
->>       FuseExport *exp = container_of(blk_exp, FuseExport, common);
->> @@ -618,6 +796,11 @@ static void fuse_export_delete(BlockExport *blk_exp)
+>>       FuseExport *exp =3D container_of(blk_exp, FuseExport, common);
+>> @@ -618,6 +796,11 @@ static void fuse_export_delete(BlockExport *blk_exp=
+)
 >>   {
->>       FuseExport *exp = container_of(blk_exp, FuseExport, common);
+>>       FuseExport *exp =3D container_of(blk_exp, FuseExport, common);
 >>
 >> +#ifdef CONFIG_LINUX_IO_URING
 >> +    if (exp->is_uring)
 >> +        fuse_export_delete_uring(exp);
 >> +#endif
 >> +
->>       for (int i = 0; i < exp->num_queues; i++) {
->>           FuseQueue *q = &exp->queues[i];
+>>       for (int i =3D 0; i < exp->num_queues; i++) {
+>>           FuseQueue *q =3D &exp->queues[i];
 >>
 >> @@ -687,15 +870,22 @@ static ssize_t coroutine_fn
 >>   fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
 >>                uint32_t max_readahead, uint32_t flags)
 >>   {
->> -    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
->> +    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO
+>> -    const uint32_t supported_flags =3D FUSE_ASYNC_READ | FUSE_ASYNC_DIO=
+;
+>> +    const uint32_t supported_flags =3D FUSE_ASYNC_READ | FUSE_ASYNC_DIO
 >> +                                     | FUSE_INIT_EXT;
->> +    uint64_t outargflags = flags;
+>> +    uint64_t outargflags =3D flags;
 >> +
 >> +#ifdef CONFIG_LINUX_IO_URING
 >> +    if (exp->is_uring)
->> +        outargflags |= FUSE_OVER_IO_URING;
+>> +        outargflags |=3D FUSE_OVER_IO_URING;
 >> +#endif
 >>
->>       *out = (struct fuse_init_out) {
->>           .major = FUSE_KERNEL_VERSION,
->>           .minor = FUSE_KERNEL_MINOR_VERSION,
->>           .max_readahead = max_readahead,
->>           .max_write = FUSE_MAX_WRITE_BYTES,
->> -        .flags = flags & supported_flags,
->> -        .flags2 = 0,
->> +        .flags = outargflags & supported_flags,
->> +        .flags2 = outargflags >> 32,
+>>       *out =3D (struct fuse_init_out) {
+>>           .major =3D FUSE_KERNEL_VERSION,
+>>           .minor =3D FUSE_KERNEL_MINOR_VERSION,
+>>           .max_readahead =3D max_readahead,
+>>           .max_write =3D FUSE_MAX_WRITE_BYTES,
+>> -        .flags =3D flags & supported_flags,
+>> -        .flags2 =3D 0,
+>> +        .flags =3D outargflags & supported_flags,
+>> +        .flags2 =3D outargflags >> 32,
 >>
 >>           /* libfuse maximum: 2^16 - 1 */
->>           .max_background = UINT16_MAX,
->> @@ -943,6 +1133,9 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
->>    * Data in @in_place_buf is assumed to be overwritten after yielding, so will
->>    * be copied to a bounce buffer beforehand.  @spillover_buf in contrast is
+>>           .max_background =3D UINT16_MAX,
+>> @@ -943,6 +1133,9 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64=
+_t offset, uint32_t size)
+>>    * Data in @in_place_buf is assumed to be overwritten after yielding, =
+so will
+>>    * be copied to a bounce buffer beforehand.  @spillover_buf in contras=
+t is
 >>    * assumed to be exclusively owned and will be used as-is.
->> + * In FUSE-over-io_uring mode, the actual op_payload content is stored in
->> + * @spillover_buf. To ensure this buffer is used for writing, @in_place_buf
+>> + * In FUSE-over-io_uring mode, the actual op_payload content is stored =
+in
+>> + * @spillover_buf. To ensure this buffer is used for writing, @in_place=
+_buf
 >> + * is explicitly set to NULL.
->>    * Return the number of bytes written to *out on success, and -errno on error.
+>>    * Return the number of bytes written to *out on success, and -errno o=
+n error.
 >>    */
 >>   static ssize_t coroutine_fn
->> @@ -950,8 +1143,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+>> @@ -950,8 +1143,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_ou=
+t *out,
 >>                 uint64_t offset, uint32_t size,
 >>                 const void *in_place_buf, const void *spillover_buf)
 >>   {
 >> -    size_t in_place_size;
 >> -    void *copied;
->> +    size_t in_place_size = 0;
->> +    void *copied = NULL;
+>> +    size_t in_place_size =3D 0;
+>> +    void *copied =3D NULL;
 >>       int64_t blk_len;
 >>       int ret;
 >>       struct iovec iov[2];
->> @@ -966,10 +1159,12 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+>> @@ -966,10 +1159,12 @@ fuse_co_write(FuseExport *exp, struct fuse_write_=
+out *out,
 >>           return -EACCES;
 >>       }
 >>
 >> -    /* Must copy to bounce buffer before potentially yielding */
->> -    in_place_size = MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
->> -    copied = blk_blockalign(exp->common.blk, in_place_size);
+>> -    in_place_size =3D MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
+>> -    copied =3D blk_blockalign(exp->common.blk, in_place_size);
 >> -    memcpy(copied, in_place_buf, in_place_size);
 >> +    if (in_place_buf) {
 >> +        /* Must copy to bounce buffer before potentially yielding */
->> +        in_place_size = MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
->> +        copied = blk_blockalign(exp->common.blk, in_place_size);
+>> +        in_place_size =3D MIN(size, FUSE_IN_PLACE_WRITE_BYTES);
+>> +        copied =3D blk_blockalign(exp->common.blk, in_place_size);
 >> +        memcpy(copied, in_place_buf, in_place_size);
 >> +    }
 >>
 >>       /**
 >>        * Clients will expect short writes at EOF, so we have to limit
->> @@ -993,26 +1188,37 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+>> @@ -993,26 +1188,37 @@ fuse_co_write(FuseExport *exp, struct fuse_write_=
+out *out,
 >>           }
 >>       }
 >>
->> -    iov[0] = (struct iovec) {
->> -        .iov_base = copied,
->> -        .iov_len = in_place_size,
+>> -    iov[0] =3D (struct iovec) {
+>> -        .iov_base =3D copied,
+>> -        .iov_len =3D in_place_size,
 >> -    };
 >> -    if (size > FUSE_IN_PLACE_WRITE_BYTES) {
->> -        assert(size - FUSE_IN_PLACE_WRITE_BYTES <= FUSE_SPILLOVER_BUF_SIZE);
->> -        iov[1] = (struct iovec) {
->> -            .iov_base = (void *)spillover_buf,
->> -            .iov_len = size - FUSE_IN_PLACE_WRITE_BYTES,
+>> -        assert(size - FUSE_IN_PLACE_WRITE_BYTES <=3D FUSE_SPILLOVER_BUF=
+_SIZE);
+>> -        iov[1] =3D (struct iovec) {
+>> -            .iov_base =3D (void *)spillover_buf,
+>> -            .iov_len =3D size - FUSE_IN_PLACE_WRITE_BYTES,
 >> +    if (in_place_buf) {
->> +        iov[0] = (struct iovec) {
->> +            .iov_base = copied,
->> +            .iov_len = in_place_size,
+>> +        iov[0] =3D (struct iovec) {
+>> +            .iov_base =3D copied,
+>> +            .iov_len =3D in_place_size,
 >>           };
 >> -        qemu_iovec_init_external(&qiov, iov, 2);
 >> +        if (size > FUSE_IN_PLACE_WRITE_BYTES) {
->> +            assert(size - FUSE_IN_PLACE_WRITE_BYTES <= FUSE_SPILLOVER_BUF_SIZE);
->> +            iov[1] = (struct iovec) {
->> +                .iov_base = (void *)spillover_buf,
->> +                .iov_len = size - FUSE_IN_PLACE_WRITE_BYTES,
+>> +            assert(size - FUSE_IN_PLACE_WRITE_BYTES <=3D FUSE_SPILLOVER=
+_BUF_SIZE);
+>> +            iov[1] =3D (struct iovec) {
+>> +                .iov_base =3D (void *)spillover_buf,
+>> +                .iov_len =3D size - FUSE_IN_PLACE_WRITE_BYTES,
 >> +            };
 >> +            qemu_iovec_init_external(&qiov, iov, 2);
 >> +        } else {
@@ -540,14 +559,14 @@ Done.
 >> +        }
 >>       } else {
 >> +        /* fuse over io_uring */
->> +        iov[0] = (struct iovec) {
->> +            .iov_base = (void *)spillover_buf,
->> +            .iov_len = size,
+>> +        iov[0] =3D (struct iovec) {
+>> +            .iov_base =3D (void *)spillover_buf,
+>> +            .iov_len =3D size,
 >> +        };
 >>           qemu_iovec_init_external(&qiov, iov, 1);
 >>       }
 >> +
->>       ret = blk_co_pwritev(exp->common.blk, offset, size, &qiov, 0);
+>>       ret =3D blk_co_pwritev(exp->common.blk, offset, size, &qiov, 0);
 >>       if (ret < 0) {
 >>           goto fail_free_buffer;
 >>       }
@@ -556,9 +575,10 @@ Done.
 >> +    if (in_place_buf)
 >> +        qemu_vfree(copied);
 >>
->>       *out = (struct fuse_write_out) {
->>           .size = size,
->> @@ -1020,7 +1226,9 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+>>       *out =3D (struct fuse_write_out) {
+>>           .size =3D size,
+>> @@ -1020,7 +1226,9 @@ fuse_co_write(FuseExport *exp, struct fuse_write_o=
+ut *out,
 >>       return sizeof(*out);
 >>
 >>   fail_free_buffer:
@@ -569,12 +589,14 @@ Done.
 >>       return ret;
 >>   }
 >>
->> @@ -1409,6 +1617,12 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
->>           const struct fuse_init_in *in = FUSE_IN_OP_STRUCT(init, q);
->>           ret = fuse_co_init(exp, FUSE_OUT_OP_STRUCT(init, out_buf),
+>> @@ -1409,6 +1617,12 @@ fuse_co_process_request(FuseQueue *q, void *spill=
+over_buf)
+>>           const struct fuse_init_in *in =3D FUSE_IN_OP_STRUCT(init, q);
+>>           ret =3D fuse_co_init(exp, FUSE_OUT_OP_STRUCT(init, out_buf),
 >>                              in->max_readahead, in->flags);
 >> +#ifdef CONFIG_LINUX_IO_URING
->> +        /* Set up fuse over io_uring after replying to the first FUSE_INIT */
+>> +        /* Set up fuse over io_uring after replying to the first FUSE_I=
+NIT */
 >> +        if (exp->is_uring) {
 >> +            fuse_uring_start(exp, FUSE_OUT_OP_STRUCT(init, out_buf));
 >> +        }
@@ -582,57 +604,77 @@ Done.
 >>           break;
 >>       }
 >>
->> @@ -1515,6 +1729,173 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+>> @@ -1515,6 +1729,173 @@ fuse_co_process_request(FuseQueue *q, void *spil=
+lover_buf)
 >>       qemu_vfree(spillover_buf);
 >>   }
 >>
 >> +#ifdef CONFIG_LINUX_IO_URING
->> +static void fuse_uring_prep_sqe_commit(struct io_uring_sqe *sqe, void *opaque)
+>> +static void fuse_uring_prep_sqe_commit(struct io_uring_sqe *sqe, void *=
+opaque)
 >> +{
->> +    FuseRingEnt *ent = opaque;
->> +    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
+>> +    FuseRingEnt *ent =3D opaque;
+>> +    struct fuse_uring_cmd_req *req =3D (void *)&sqe->cmd[0];
 >> +
->> +    fuse_uring_sqe_prepare(sqe, ent, FUSE_IO_URING_CMD_COMMIT_AND_FETCH);
+>> +    fuse_uring_sqe_prepare(sqe, ent, FUSE_IO_URING_CMD_COMMIT_AND_FETCH=
+);
 >> +    fuse_uring_sqe_set_req_data(req, ent->q->qid,
 >> +                                     ent->req_commit_id);
 >> +}
 >> +
 >> +static void
->> +fuse_uring_write_response(FuseRingEnt *ent, uint32_t req_id, ssize_t ret,
+>> +fuse_uring_write_response(FuseRingEnt *ent, uint32_t req_id, ssize_t re=
+t,
 >> +                          const void *out_op_hdr, const void *buf)
+>
+> Isn't it more a "send_response"? With /dev/fuse there was a write()
+> operation, but with io-uring it just fills an SQE?
+>
+
+Yep, make sense. Thanks for pointing out.
+
 >> +{
->> +    struct fuse_uring_req_header *rrh = ent->req_header;
->> +    struct fuse_out_header *out_header = (struct fuse_out_header *)&rrh->in_out;
->> +    struct fuse_uring_ent_in_out *ent_in_out =
+>> +    struct fuse_uring_req_header *rrh =3D ent->req_header;
+>> +    struct fuse_out_header *out_header =3D (struct fuse_out_header *)&r=
+rh->in_out;
+>> +    struct fuse_uring_ent_in_out *ent_in_out =3D
 >> +        (struct fuse_uring_ent_in_out *)&rrh->ring_ent_in_out;
 >> +
 >> +    if (buf) {
 >> +        memcpy(ent->op_payload, buf, ret);
 >> +    } else if (ret > 0) {
 >> +        if (ret > ent->req_payload_sz) {
->> +            warn_report("data size %zu exceeds payload buffer size %zu",
+>> +            warn_report("data size %zu exceeds payload buffer size %zu"=
+,
 >> +                        ret, ent->req_payload_sz);
->> +                        ret = -EINVAL;
+>> +                        ret =3D -EINVAL;
 >> +        } else {
 >> +            memcpy(ent->op_payload, out_op_hdr, ret);
 >> +        }
 >> +    }
+>
+> I would try to optimize that away. Like
+>
+> if (buf && buf !=3D ent->op_payload) {
+>       /* copy needed */
+> }
 >> +
->> +    out_header->error  = ret < 0 ? ret : 0;
->> +    out_header->unique = req_id;
->> +    /* out_header->len = ret > 0 ? ret : 0; */
->> +    ent_in_out->payload_sz = ret > 0 ? ret : 0;
+>> +    out_header->error  =3D ret < 0 ? ret : 0;
+>> +    out_header->unique =3D req_id;
+>> +    /* out_header->len =3D ret > 0 ? ret : 0; */
+>> +    ent_in_out->payload_sz =3D ret > 0 ? ret : 0;
 >> +
 >> +    aio_add_sqe(fuse_uring_prep_sqe_commit, ent,
 >> +                    &ent->fuse_cqe_handler);
 >> +}
 >> +
->> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent)
+>> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent=
+)
 >> +{
->> +    FuseQueue *q = ent->q;
->> +    FuseExport *exp = q->exp;
->> +    struct fuse_uring_req_header *rrh = ent->req_header;
->> +    struct fuse_uring_ent_in_out *ent_in_out =
+>> +    FuseQueue *q =3D ent->q;
+>> +    FuseExport *exp =3D q->exp;
+>> +    struct fuse_uring_req_header *rrh =3D ent->req_header;
+>> +    struct fuse_uring_ent_in_out *ent_in_out =3D
 >> +        (struct fuse_uring_ent_in_out *)&rrh->ring_ent_in_out;
 >> +
 >> +    char out_op_hdr[MAX_CONST(sizeof(struct fuse_init_out),
@@ -640,39 +682,37 @@ Done.
 >> +                 MAX_CONST(sizeof(struct fuse_attr_out),
 >> +                 MAX_CONST(sizeof(struct fuse_write_out),
 >> +                           sizeof(struct fuse_lseek_out)))))];
->
-> A union would be cleaner because the casts below could be avoided and
-> MAX_CONST() would be unnecessary:
->
->    union {
->        struct fuse_init_out init;
->        struct fuse_open out open;
->        struct fuse_attr_out attr;
->        struct fuse_write_out write;
->        struct fuse_lseek_out lseek;
->    } out_op_hdr;
-
-Yep, makes sense
-
 >> +
->> +    void *out_data_buffer = NULL;
+>> +    void *out_data_buffer =3D NULL;
 >> +
 >> +    uint32_t opcode;
 >> +    uint64_t req_id;
 >> +
->> +    struct fuse_in_header *in_hdr = (struct fuse_in_header *)&rrh->in_out;
->> +    opcode = in_hdr->opcode;
->> +    req_id = in_hdr->unique;
+>> +    struct fuse_in_header *in_hdr =3D (struct fuse_in_header *)&rrh->in=
+_out;
+>> +    opcode =3D in_hdr->opcode;
+>> +    req_id =3D in_hdr->unique;
 >> +
->> +    ent->req_commit_id = ent_in_out->commit_id;
+>> +    ent->req_commit_id =3D ent_in_out->commit_id;
 >> +
->> +    if (unlikely(ent->req_commit_id == 0)) {
+>> +    if (unlikely(ent->req_commit_id =3D=3D 0)) {
 >> +        /*
 >> +         * If this happens kernel will not find the response - it will
 >> +         * be stuck forever - better to abort immediately.
 >> +         */
->> +        error_report("If this happens kernel will not find the response"
+>> +        error_report("If this happens kernel will not find the response=
+"
 >> +        " - it will be stuck forever - better to abort immediately.");
+>
+> Dunno about qemu style, but isn't it better to keep the string in a singl=
+e
+> line to make it greppable?
+>
+
+The actual log output doesn=E2=80=99t include any line breaks. I just broke=
+ the
+line in the code to keep it under 80 characters per line.
+
 >> +        fuse_export_halt(exp);
 >> +        fuse_dec_in_flight(exp);
 >> +        return;
@@ -682,147 +722,177 @@ Yep, makes sense
 >> +
 >> +    switch (opcode) {
 >> +    case FUSE_OPEN:
->> +        ret = fuse_co_open(exp, (struct fuse_open_out *)out_op_hdr);
+>> +        ret =3D fuse_co_open(exp, (struct fuse_open_out *)out_op_hdr);
 >> +        break;
 >> +
 >> +    case FUSE_RELEASE:
->> +        ret = 0;
+>> +        ret =3D 0;
 >> +        break;
 >> +
 >> +    case FUSE_LOOKUP:
->> +        ret = -ENOENT; /* There is no node but the root node */
+>> +        ret =3D -ENOENT; /* There is no node but the root node */
 >> +        break;
 >> +
 >> +    case FUSE_GETATTR:
->> +        ret = fuse_co_getattr(exp, (struct fuse_attr_out *)out_op_hdr);
+>> +        ret =3D fuse_co_getattr(exp, (struct fuse_attr_out *)out_op_hdr=
+);
 >> +        break;
 >> +
 >> +    case FUSE_SETATTR: {
->> +        const struct fuse_setattr_in *in =
+>> +        const struct fuse_setattr_in *in =3D
 >> +                        (const struct fuse_setattr_in *)&rrh->op_in;
->> +        ret = fuse_co_setattr(exp, (struct fuse_attr_out *)out_op_hdr,
->> +                              in->valid, in->size, in->mode, in->uid, in->gid);
+>> +        ret =3D fuse_co_setattr(exp, (struct fuse_attr_out *)out_op_hdr=
+,
+>> +                              in->valid, in->size, in->mode, in->uid, i=
+n->gid);
 >> +        break;
 >> +    }
 >> +
 >> +    case FUSE_READ: {
->> +        const struct fuse_read_in *in =
+>> +        const struct fuse_read_in *in =3D
 >> +                        (const struct fuse_read_in *)&rrh->op_in;
->> +        ret = fuse_co_read(exp, &out_data_buffer, in->offset, in->size);
+>> +        ret =3D fuse_co_read(exp, &out_data_buffer, in->offset, in->siz=
+e);
 >> +        break;
 >> +    }
+>
+> There is room for optimization here - this could just pass the payload
+> buffer and let it directly copy the data into it?
+>
+
+We ultimately copy either the fuse_ops_out structures or the output data
+from read operations into the payload.
+
+Technically, we could just pass the payload pointer directly to each
+operation handler in fuse_co_ops, but that might be confusing, it's not
+immediately clear to readers what the payload is actually being used for.
+
+For better code readability, I decided to allocate a temporary buffer
+for non-read operations to store their fuse_ops_out structures.
+
+This is especially important for write operations, where we may end up
+passing the same ent->op_payload as both the output header and the file
+data to be written to disk, which could lead to confusion.
+
+In libfuse, there are many more operation types, and they always copy
+both the output headers and the file content into the payload anyway.
+
+Maybe we could use differently named pointers to refer to
+ent->op_payload, just to make the code more readable and clarify its
+role in different contexts.
+
+
 >> +
 >> +    case FUSE_WRITE: {
->> +        const struct fuse_write_in *in =
+>> +        const struct fuse_write_in *in =3D
 >> +                        (const struct fuse_write_in *)&rrh->op_in;
 >> +
->> +        assert(in->size == ent_in_out->payload_sz);
+>> +        assert(in->size =3D=3D ent_in_out->payload_sz);
 >> +
 >> +        /*
->> +         * poll_fuse_fd() has checked that in_hdr->len matches the number of
+>> +         * poll_fuse_fd() has checked that in_hdr->len matches the numb=
+er of
 >> +         * bytes read, which cannot exceed the max_write value we set
->> +         * (FUSE_MAX_WRITE_BYTES).  So we know that FUSE_MAX_WRITE_BYTES >=
->> +         * in_hdr->len >= in->size + X, so this assertion must hold.
+>> +         * (FUSE_MAX_WRITE_BYTES).  So we know that FUSE_MAX_WRITE_BYTE=
+S >=3D
+>> +         * in_hdr->len >=3D in->size + X, so this assertion must hold.
 >> +         */
->> +        assert(in->size <= FUSE_MAX_WRITE_BYTES);
+>> +        assert(in->size <=3D FUSE_MAX_WRITE_BYTES);
 >> +
->> +        ret = fuse_co_write(exp, (struct fuse_write_out *)out_op_hdr,
->> +                            in->offset, in->size, NULL, ent->op_payload);
+>> +        ret =3D fuse_co_write(exp, (struct fuse_write_out *)out_op_hdr,
+>> +                            in->offset, in->size, NULL, ent->op_payload=
+);
 >> +        break;
 >> +    }
 >> +
 >> +    case FUSE_FALLOCATE: {
->> +        const struct fuse_fallocate_in *in =
+>> +        const struct fuse_fallocate_in *in =3D
 >> +                        (const struct fuse_fallocate_in *)&rrh->op_in;
->> +        ret = fuse_co_fallocate(exp, in->offset, in->length, in->mode);
+>> +        ret =3D fuse_co_fallocate(exp, in->offset, in->length, in->mode=
+);
 >> +        break;
 >> +    }
 >> +
 >> +    case FUSE_FSYNC:
->> +        ret = fuse_co_fsync(exp);
+>> +        ret =3D fuse_co_fsync(exp);
 >> +        break;
 >> +
 >> +    case FUSE_FLUSH:
->> +        ret = fuse_co_flush(exp);
+>> +        ret =3D fuse_co_flush(exp);
 >> +        break;
 >> +
 >> +#ifdef CONFIG_FUSE_LSEEK
 >> +    case FUSE_LSEEK: {
->> +        const struct fuse_lseek_in *in =
+>> +        const struct fuse_lseek_in *in =3D
 >> +                        (const struct fuse_lseek_in *)&rrh->op_in;
->> +        ret = fuse_co_lseek(exp, (struct fuse_lseek_out *)out_op_hdr,
+>> +        ret =3D fuse_co_lseek(exp, (struct fuse_lseek_out *)out_op_hdr,
 >> +                            in->offset, in->whence);
 >> +        break;
 >> +    }
 >> +#endif
 >> +
 >> +    default:
->> +        ret = -ENOSYS;
+>> +        ret =3D -ENOSYS;
 >> +    }
->
-> It would be nice to reuse the non-io_uring code rather than duplicating
-> the switch statement that covers each FUSE opcode. Is the memory layout
-> so different that the code cannot be shared?
->
-
-Yes. But I think the main issue is that we have to handle too many
-differences when it comes to various operations and the final step of
-replying to the request. There would be a lot of #ifdef
-CONFIG_LINUX_IO_URING and if statements. So, for simplicity, I made it a
-separate function.
-
-In the traditional model:
-q->request_buf = fuse_in_header + struct fuse_opsxx_in +
-FUSE_IN_PLACE_WRITE_BYTES (used for part of the payload data)
-q->spillover_buf is used for the rest of the payload data.
-
-In Fuse-over-io_uring:
-FuseRingEnt contains req_header (which includes in_out for
-fuse_in/out_header, and op_in for struct fuse_opsxx_in)
-op_payload corresponds to the final FUSE_IN_PLACE_WRITE_BYTES bytes from
-request_buf + spillover_buf in the traditional model but carries either
-the out operation headers (fuse_ops_out) or the file data to be written
-or read.
-
-
 >> +
->> +    fuse_uring_write_response(ent, req_id, ret, out_op_hdr, out_data_buffer);
+>> +    fuse_uring_write_response(ent, req_id, ret, out_op_hdr, out_data_bu=
+ffer);
 >> +
 >> +    if (out_data_buffer)
 >> +        qemu_vfree(out_data_buffer);
 >> +}
 >> +#endif
 >> +
->>   const BlockExportDriver blk_exp_fuse = {
->>       .type               = BLOCK_EXPORT_TYPE_FUSE,
->>       .instance_size      = sizeof(FuseExport),
->> diff --git a/docs/tools/qemu-storage-daemon.rst b/docs/tools/qemu-storage-daemon.rst
+>>   const BlockExportDriver blk_exp_fuse =3D {
+>>       .type               =3D BLOCK_EXPORT_TYPE_FUSE,
+>>       .instance_size      =3D sizeof(FuseExport),
+>> diff --git a/docs/tools/qemu-storage-daemon.rst b/docs/tools/qemu-storag=
+e-daemon.rst
 >> index 35ab2d7807..4ec0648e95 100644
 >> --- a/docs/tools/qemu-storage-daemon.rst
 >> +++ b/docs/tools/qemu-storage-daemon.rst
 >> @@ -78,7 +78,7 @@ Standard options:
->>   .. option:: --export [type=]nbd,id=<id>,node-name=<node-name>[,name=<export-name>][,writable=on|off][,bitmap=<name>]
->>     --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=unix,addr.path=<socket-path>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
->>     --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=fd,addr.str=<fd>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
->> -  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto]
->> +  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto][,uring=on|off]
->>     --export [type=]vduse-blk,id=<id>,node-name=<node-name>,name=<vduse-name>[,writable=on|off][,num-queues=<num-queues>][,queue-size=<queue-size>][,logical-block-size=<block-size>][,serial=<serial-number>]
+>>   .. option:: --export [type=3D]nbd,id=3D<id>,node-name=3D<node-name>[,n=
+ame=3D<export-name>][,writable=3Don|off][,bitmap=3D<name>]
+>>     --export [type=3D]vhost-user-blk,id=3D<id>,node-name=3D<node-name>,a=
+ddr.type=3Dunix,addr.path=3D<socket-path>[,writable=3Don|off][,logical-bloc=
+k-size=3D<block-size>][,num-queues=3D<num-queues>]
+>>     --export [type=3D]vhost-user-blk,id=3D<id>,node-name=3D<node-name>,a=
+ddr.type=3Dfd,addr.str=3D<fd>[,writable=3Don|off][,logical-block-size=3D<bl=
+ock-size>][,num-queues=3D<num-queues>]
+>> -  --export [type=3D]fuse,id=3D<id>,node-name=3D<node-name>,mountpoint=
+=3D<file>[,growable=3Don|off][,writable=3Don|off][,allow-other=3Don|off|aut=
+o]
+>> +  --export [type=3D]fuse,id=3D<id>,node-name=3D<node-name>,mountpoint=
+=3D<file>[,growable=3Don|off][,writable=3Don|off][,allow-other=3Don|off|aut=
+o][,uring=3Don|off]
+>>     --export [type=3D]vduse-blk,id=3D<id>,node-name=3D<node-name>,name=
+=3D<vduse-name>[,writable=3Don|off][,num-queues=3D<num-queues>][,queue-size=
+=3D<queue-size>][,logical-block-size=3D<block-size>][,serial=3D<serial-numb=
+er>]
 >>
->>     is a block export definition. ``node-name`` is the block node that should be
+>>     is a block export definition. ``node-name`` is the block node that s=
+hould be
 >> @@ -111,7 +111,13 @@ Standard options:
 >>     that enabling this option as a non-root user requires enabling the
->>     user_allow_other option in the global fuse.conf configuration file.  Setting
->>     ``allow-other`` to auto (the default) will try enabling this option, and on
+>>     user_allow_other option in the global fuse.conf configuration file. =
+ Setting
+>>     ``allow-other`` to auto (the default) will try enabling this option,=
+ and on
 >> -  error fall back to disabling it.
 >> +  error fall back to disabling it. Once ``uring`` is enabled
->> +  (off by default), the initialization of FUSE-over-io_uring-related settings
->> +  will be performed in the FUSE_INIT request handler. This setup bypasses
->> +  the traditional /dev/fuse communication mechanism and instead uses io_uring
+>> +  (off by default), the initialization of FUSE-over-io_uring-related se=
+ttings
+>> +  will be performed in the FUSE_INIT request handler. This setup bypass=
+es
+>> +  the traditional /dev/fuse communication mechanism and instead uses io=
+_uring
 >> +  for handling FUSE operations.
 >> +
 >> +
 >>
->>     The ``vduse-blk`` export type takes a ``name`` (must be unique across the host)
+>>     The ``vduse-blk`` export type takes a ``name`` (must be unique acros=
+s the host)
 >>     to create the VDUSE device.
 >> diff --git a/qapi/block-export.json b/qapi/block-export.json
 >> index 9ae703ad01..7d14f3f1ba 100644
@@ -846,15 +916,18 @@ or read.
 >>     'if': 'CONFIG_FUSE' }
 >>
 >>   ##
->> diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+>> diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-=
+storage-daemon.c
 >> index eb72561358..803538db29 100644
 >> --- a/storage-daemon/qemu-storage-daemon.c
 >> +++ b/storage-daemon/qemu-storage-daemon.c
 >> @@ -107,6 +107,7 @@ static void help(void)
 >>   #ifdef CONFIG_FUSE
->>   "  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>\n"
->>   "           [,growable=on|off][,writable=on|off][,allow-other=on|off|auto]\n"
->> +"           [,fuse-over-uring=on|off]"
+>>   "  --export [type=3D]fuse,id=3D<id>,node-name=3D<node-name>,mountpoint=
+=3D<file>\n"
+>>   "           [,growable=3Don|off][,writable=3Don|off][,allow-other=3Don=
+|off|auto]\n"
+>> +"           [,fuse-over-uring=3Don|off]"
 >>   "                         export the specified block node over FUSE\n"
 >>   "\n"
 >>   #endif /* CONFIG_FUSE */
@@ -862,22 +935,43 @@ or read.
 >> index d2433d1d99..68d3fe8e01 100644
 >> --- a/util/fdmon-io_uring.c
 >> +++ b/util/fdmon-io_uring.c
->> @@ -452,10 +452,13 @@ static const FDMonOps fdmon_io_uring_ops = {
+>> @@ -452,10 +452,13 @@ static const FDMonOps fdmon_io_uring_ops =3D {
 >>   void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
 >>   {
 >>       int ret;
 >> +    int flags;
 >>
->>       ctx->io_uring_fd_tag = NULL;
->> +    flags = IORING_SETUP_SQE128;
+>>       ctx->io_uring_fd_tag =3D NULL;
+>> +    flags =3D IORING_SETUP_SQE128;
 >>
->> -    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
->> +    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES,
+>> -    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_=
+uring, 0);
+>> +    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES,
 >> +                            &ctx->fdmon_io_uring, flags);
->>       if (ret != 0) {
+>>       if (ret !=3D 0) {
 >>           error_setg_errno(errp, -ret, "Failed to initialize io_uring");
 >>           return;
->> --
->> 2.50.1
->>
+>
+> I need test these flags again, might be worthful for qemu as well
+>
+>       /* These flags should help to increase performance, but actually
+>        * make it a bit slower - reason should get investigated.
+>        */
+>       if (0) {
+>               /* Has the main slow down effect */
+>               params.flags |=3D IORING_SETUP_SINGLE_ISSUER;
+>
+>               // params.flags |=3D IORING_SETUP_DEFER_TASKRUN;
+>               params.flags |=3D IORING_SETUP_TASKRUN_FLAG;
+>
+>               /* Second main effect to make it slower */
+>               params.flags |=3D IORING_SETUP_COOP_TASKRUN;
+>       }
+>
+>
+>
+>
+> Thanks,
+> Bernd
+>
 
