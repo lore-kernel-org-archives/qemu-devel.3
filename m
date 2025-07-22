@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF37C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 15:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2BA6C83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 15:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueEh3-0007ME-Jq; Tue, 22 Jul 2025 11:14:14 -0400
+	id 1ueEkQ-0000dl-I4; Tue, 22 Jul 2025 11:17:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1ueELJ-0002Rm-1d
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 10:51:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1ueELH-0004ki-4N
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 10:51:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753195901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=L8PmE92wTCS0FhvKnf59sbCAMAQqJbFdxejwZqFUDag=;
- b=L133Dnu14hlarNvQbRPlUv+HQk4ZhvmJ1WV8evHXTjn7Wpb3hnn8erJBUTcbLnmibdwQhc
- LUDpzi7u3taHJd+uyWYEIXf4FQUol/UuhcNYxMM0No3CV4ovHrOV3H+X9dnyKCs4YOSRRz
- ZWklh1RjNCuUa7dSUiKi93e7AvTq93w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-XMZAkbxlPAK2DOaU4icc5w-1; Tue,
- 22 Jul 2025 10:51:35 -0400
-X-MC-Unique: XMZAkbxlPAK2DOaU4icc5w-1
-X-Mimecast-MFC-AGG-ID: XMZAkbxlPAK2DOaU4icc5w_1753195894
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F4941800C32; Tue, 22 Jul 2025 14:51:34 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.72])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C616195608D; Tue, 22 Jul 2025 14:51:32 +0000 (UTC)
-Date: Tue, 22 Jul 2025 10:51:31 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Brian Song <hibriansong@gmail.com>
-Cc: Bernd Schubert <bschubert@ddn.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "armbru@redhat.com" <armbru@redhat.com>, "fam@euphon.net" <fam@euphon.net>,
- "hreitz@redhat.com" <hreitz@redhat.com>,
- "kwolf@redhat.com" <kwolf@redhat.com>
-Subject: Re: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for
- QEMU FUSE Exports
-Message-ID: <20250722145131.GE8264@fedora>
-References: <20250716183824.216257-1-hibriansong@gmail.com>
- <20250716183824.216257-2-hibriansong@gmail.com>
- <e13f8119-7c60-4aa6-91b0-860ac0a462f5@ddn.com>
- <CAKWCU7WijF5zaEePtCRNVPS3CZF09vfxnkVYVBQQy8V93GUPFg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ueEM2-0002oh-79
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 10:52:30 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ueELz-0005H2-GX
+ for qemu-devel@nongnu.org; Tue, 22 Jul 2025 10:52:29 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-7183fd8c4c7so60798767b3.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Jul 2025 07:52:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753195945; x=1753800745; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9tMAznd+1SsHvYjdRnM6O8GnkwB4nBWumHqcRmHHHUA=;
+ b=W+9ftDjFJDFQxsmM/JXv6Lndv8oYNkq4NAdTDxMCSonhYed2MOPYxnPdqEAfSeHsFr
+ A2Hkj1A9g0FJiI+vWOAJfsWgJGR+FHxgT55iiPsqM2ibhyPAGpcJ+x6dNbuyGt26Q+qv
+ y/WhHXuJ7lZEBoNAmkigJRjpB4NrFfoEaIgU/Xr4lO3bsfNdgsOFQfrhsCdOvRtYr56n
+ DwftzpwUhyps+BERvW+9D2NdUY5e8X7lWPR/oyX8tUzftxeFRkQCkAGPzbrrydSEBcnX
+ 4s0SyfyDUOPEfKGfEdzGGhBqy2qsje2dRUzjQxm0F+lrPEz852R4snShK8cVhHRbDP0/
+ QF/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753195945; x=1753800745;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9tMAznd+1SsHvYjdRnM6O8GnkwB4nBWumHqcRmHHHUA=;
+ b=aidewd62XhDc9aV/z+OTwwt/aGyfqnnaUJ41J6N22YV3QlVWThpd64YkPsC1vgqKi2
+ jHXWMqKNqLw0zpKKg46VBEwyHD8mUU5mDeOAFfZb+rrt+IhiEdXCgohEKqE5l7wL5rXa
+ hGXxCjBkfuEqRs1F3s7VFaLLP9RVIEt2SPiXCVMkmjmiamp9/Km1Oq1+M5PhV0rFNIzw
+ o2trdCVAVZIh2SCj/B7TLjhygonRMeikQrVkuIc5mqDS69NsmDRYn1AzOMVyaxK7eksE
+ 1v1mwkdgPjND8/62E/tcm8uBA+8/WxvaimW6BWCsif4Rn1oA1XwLyKYW7f0SdMbVXbkY
+ xgJQ==
+X-Gm-Message-State: AOJu0YyLD/Ed5QWuQzBuxxSCAHMA3FWBb/Njzb+Qi3PRiMbsy85NPQtg
+ awhmlEhz+sn9pqM5OJSM9Uq1h3h6PuMYhG9SVncXQwZkOjDrXENAWWaduM3kuOVzX2A6RMOd35y
+ giZyanCJB2cldljwHGMAV6BwN4E/WSmCGT3eLxUrc1A==
+X-Gm-Gg: ASbGnctCjhvHkaXWv8IbXII0uTHxvQ38DVAMYnWipCuD7ZF7cuFp9Nb1Db5rlOZLoRR
+ xYYXBNrDQftDk1qlDkhGr5kGQ9YZ0orMIMv4UM7gu1huDNkUo20dtFL3otoeN5mpYUH7qvOHcC0
+ 96ogWc065i12tEyWelEGUYtZQ2ffXi1rsAT9SHumjc1WMiBNNR252UPNE2WckgAU92nrMG88T3M
+ cBybQr2
+X-Google-Smtp-Source: AGHT+IE5qFIMbwaYuUH6u/BvpN09BOrsZRQzHQ8BAYN3YdC6l5JN7M81YtapWCKTezMTckW/wWefj9qxC3hxFRFuV8w=
+X-Received: by 2002:a05:690c:6d0b:b0:712:c325:2965 with SMTP id
+ 00721157ae682-7183747ce76mr353740877b3.20.1753195945033; Tue, 22 Jul 2025
+ 07:52:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="0UMIuhf6K4gnWsoZ"
-Content-Disposition: inline
-In-Reply-To: <CAKWCU7WijF5zaEePtCRNVPS3CZF09vfxnkVYVBQQy8V93GUPFg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250722142358.253998-1-richard.henderson@linaro.org>
+In-Reply-To: <20250722142358.253998-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 22 Jul 2025 15:52:13 +0100
+X-Gm-Features: Ac12FXwclOsTNjETPBBoCIuEyrGEguFgbyDYjcT2w3BtTlWm0EO7eqpNtQc6_uE
+Message-ID: <CAFEAcA-_pYcxD+rCocqGJ5LpvE4S7dzf55wW8Nn=ggEDek9FEw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/arm: Fix sve2p1 mtedesc assertion
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +92,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 22 Jul 2025 at 15:24, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Hi Peter,
+>
+> Sadly, I couldn't reorg mtedesc as I hypothesized, because of
+> different usage within AdvSIMD.  So I decided to expand the
+> mtedesc from 17 to 32 bits, and then pack the gvec desc and
+> mtedesc into a 64-bit argument.
 
---0UMIuhf6K4gnWsoZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I was playing around with this today as well, and I
+did manage to get something that seems to work with an
+msz/nregs split. I opted to just re-encode the byte
+length back into a fake msz/nregs combo in gen_mte_checkN,
+which is the main place we don't already have an actual msz/nregs:
 
-On Tue, Jul 22, 2025 at 08:00:00AM -0400, Brian Song wrote:
-> On 7/21/25 9:51 AM, Bernd Schubert wrote:
-> >> +    struct fuse_in_header *in_hdr =3D (struct fuse_in_header *)&rrh->=
-in_out;
-> >> +    opcode =3D in_hdr->opcode;
-> >> +    req_id =3D in_hdr->unique;
-> >> +
-> >> +    ent->req_commit_id =3D ent_in_out->commit_id;
-> >> +
-> >> +    if (unlikely(ent->req_commit_id =3D=3D 0)) {
-> >> +        /*
-> >> +         * If this happens kernel will not find the response - it will
-> >> +         * be stuck forever - better to abort immediately.
-> >> +         */
-> >> +        error_report("If this happens kernel will not find the respon=
-se"
-> >> +        " - it will be stuck forever - better to abort immediately.");
-> >
-> > Dunno about qemu style, but isn't it better to keep the string in a sin=
-gle
-> > line to make it greppable?
-> >
->=20
-> The actual log output doesn=E2=80=99t include any line breaks. I just bro=
-ke the
-> line in the code to keep it under 80 characters per line.
++    /*
++     * Encode the total_size into how we fit it into an MTEDESC
++     * and assert that it fits, whether MTE is enabled or not.
++     */
++    uint32_t nregs;
++
++    if (((total_size / 3) * 3) == total_size) {
++        /* If this is a multiple of 3, we need to use that for nregs */
++        total_size /= 3;
++        nregs = 3;
++    } else {
++        /* Use the highest of nregs = 4 / 2 / 1 that we can */
++        switch (ctz32(total_size)) {
++        case 0:
++            nregs = 1;
++            break;
++        case 1:
++            total_size >>= 1;
++            nregs = 2;
++            break;
++        default:
++            total_size >>= 2;
++            nregs = 4;
++            break;
++        }
++    }
++    /* Now we've divided by our chosen nregs we must have a valid MO_* */
++    assert(is_power_of_2(total_size));
++    assert(total_size >= 1 && total_size <= (1 << MO_SIZE));
 
-QEMU coding style is stricter about 80 characters per line. Linux allows
-long error message strings on a line so it is easier to grep for them in
-the source code.
 
-I think it's just a difference in coding style and splitting strings is
-generally how QEMU code does it.
+But I think your approach is better because it's more
+straightforward, and it means we will have space space in
+MTEDESC for future purposes.
 
-Stefan
+> Lightly tested so far, but it does fix the LD3Q/LD4Q assert.
 
---0UMIuhf6K4gnWsoZ
-Content-Type: application/pgp-signature; name=signature.asc
+There's also a bug we have at the moment where gen_sve_ldr()
+and gen_sve_str() call gen_mte_checkN() with a length value
+which is the SVE vector length and can be up to 256 bytes.
+We don't assert there, so we just fail to do the MTE checks
+on the right length of memory. I assume these patches will
+fix that too.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmh/pXMACgkQnKSrs4Gr
-c8iVoQf/bAWD0hZSn7QEJrcdvVc2YQZsxkS5EcZAQROq9i8UStAEG00hvEusy2NM
-ahw9xJFiKjTTdaeK/WfLo0sBtcZhCzAWXtyHt0lqhR355cFxWagS9wkzQzoGloEL
-XlHJDNhXPqOGzqjuaTnW9jzY8vdRM1OjOT454rPZZ5atVo+DYA4yZw00mmS1BwL+
-QiqG9U60OtxaToVx5TuYWmRTyCVIygpqBVG2VIjj+N03UROCGuIBis+QegJWv99g
-ylwmhuiXGzrnFgxSzOYC0Ugond/5UdlNXwnFDyGiakIAqkpzMQaIKwtLlnXuYwhw
-P2xg9C8s0iiA1UUZQxikpryqqY2Qmw==
-=lveL
------END PGP SIGNATURE-----
-
---0UMIuhf6K4gnWsoZ--
-
+thanks
+-- PMM
 
