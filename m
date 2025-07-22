@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D970C83F1A
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41BFAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 12:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueBhD-0000WA-O0; Tue, 22 Jul 2025 08:02:11 -0400
+	id 1ueBhq-0001ZX-Dj; Tue, 22 Jul 2025 08:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1ueBh9-0000RA-Cx; Tue, 22 Jul 2025 08:02:07 -0400
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ (Exim 4.90_1) (envelope-from <ngompa13@gmail.com>)
+ id 1ueBhg-0001L6-MK; Tue, 22 Jul 2025 08:02:42 -0400
+Received: from mail-ej1-f45.google.com ([209.85.218.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1ueBh6-0001Ll-5j; Tue, 22 Jul 2025 08:02:06 -0400
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-615a4b504b2so1226484eaf.1; 
- Tue, 22 Jul 2025 05:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753185721; x=1753790521; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OAk5oJIRGeHnc9dUKgFBjmqSc2DM+INaoUXU4oCRw68=;
- b=RjEKhLdiMvKRD+QslIxn3yHEYOQEhglQE8tX5P8TwmsVJ00wnMr/nfaTCp1gEZwj1T
- ye5sQc4X1Xtd8vHkEHKW703YB85G/Ql/jYsaegQh2Wz+/Y2RIgA0H6kY9jScJzU+mPAh
- vr4Q7nQaSfzPtzwrQt96J4r64r4tD+rJMEO9/4bVSzUP3hTMod5bjEnsxNGEOsvSYdpK
- MSn9UKpo0/beFWHsz6yTGwgP4OgrgzbsGXVA/eJz17c91Zekb9R6t8bs1ZReeaRj4Np3
- AQdtm0/b4p3ehM14ZaHs19hphQ3cf2/ViZ7h300v5i4HomYZVI3YqoYVES7gFFZxnIlL
- LvWg==
+ (Exim 4.90_1) (envelope-from <ngompa13@gmail.com>)
+ id 1ueBhd-0001Pb-7b; Tue, 22 Jul 2025 08:02:39 -0400
+Received: by mail-ej1-f45.google.com with SMTP id
+ a640c23a62f3a-af0dc229478so253145166b.1; 
+ Tue, 22 Jul 2025 05:02:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753185721; x=1753790521;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OAk5oJIRGeHnc9dUKgFBjmqSc2DM+INaoUXU4oCRw68=;
- b=dTJowvrXvt8r8dlciTbC+CP8ryvukOYJ8uVek/l9tk4KHMPYA+S+U9kUqpaNsR898v
- 3rDTkJpEzFRVpzVYei/x2QNIZEnqb/qkkNTeYSCt2eN7xM41I/RRCZdwKKAC1cmDre6T
- cSBScttJ/YMdjAe1wGoqUUaHdJ1e+Cw6P+mZ6POJfZ0YJZ3a6lXyscVWOlQAP7h1gLAQ
- gq0TsO7Y2uKpykjwxymK9otyHlPHCeaJUT01M+ZDow0G5EXQ69rxneHOhqcizIR2swKJ
- aSX4gTJaHw0J0cmcCfYgy6iks132rndjl1rAaNEKbNMoJ28sJc5SR6Z4fmx6m3hHdppj
- +USw==
+ d=1e100.net; s=20230601; t=1753185749; x=1753790549;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wKchTSFkgT9LHWbhAAmAfGOhLIhg/J0mzwd7ts9T860=;
+ b=ZzR6g1nSRNv355f5M9Zhy0KjOISL6gg2hbYmtpgIrcyhhS5nECs4GPPlCeQipk0zpI
+ KmkxPowFDI/N0REgUvumcGWuAkBVIrzxWWnsLP1i7nTUwjq58SderP1AxCIo7Xf7SHjl
+ 6fvOc7okC3uqsImUzPtgJM+iaYaJJA7XEaDAVV7O/BfPBQuFqSexdRMQvy+OQp1GZohl
+ r9ypZXRVZp9W367LqXZhFSjsmAGY84xE71Uv7dnHWQ7JL7jW+5ty8aSx509Aie9Xi0lj
+ ROD8wQpUZO/yqwBFmMxTeg0oS1Q5DTrMsOWzY9s8oiOdWvDqa9Qsm9ZPIMpvV1AHDhnB
+ hfWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIS9d5nFqN4QLQsN7r1PosKgBk9LZB0t1mlRYUuX5IuiqyPqG5XPpP9tiIYlYlOCjoWne1l838ujT+@nongnu.org
-X-Gm-Message-State: AOJu0Yxxjc6xkktk0XTWKJkzCgBolXIUP1SmmDhTrR/iXUFXRSXKgqBY
- zfBb+6gIzvA9sw9xDWm7oEI/uVFgaITkyFpUJkCIRXzKsTnhnHJf2ltXOTxH3oUxAnvds1WBcIM
- rc80Z+PatLI3afQ0qkVM5DM5RmKRS9xWaDg==
-X-Gm-Gg: ASbGncu20QI3cnW5L1En79xwcXDWdTZJ1DDBcvDdr0lBbEqONq2uAIrPY0LSjVJylfM
- cC8GuXlk1vAuHBI5mqZLfJFAFpswIQvJO1SRQ7aEwlVG1p4O/X+GjpIzoJT0VXVFm2iCy5x3mbJ
- 0mYDdnOnPuf+wWKKEhEjhFbbCLoxgAaw09j2Kk9ELlpm9A7UDui7e6qRFGKI6jvrjs/q8LQbTs2
- uYXVg==
-X-Google-Smtp-Source: AGHT+IGkkWAbO5Ti0jWvh6ORG2kjDG+INolM7kWLj6ncfxGwEmpu9MKkqvfRE2vjXRKTWZecuF4Tld/jwbjkQYbyAZM=
-X-Received: by 2002:a05:6808:3c4b:b0:40c:5b59:6b8d with SMTP id
- 5614622812f47-41d04d8e87cmr22024315b6e.26.1753185720535; Tue, 22 Jul 2025
- 05:02:00 -0700 (PDT)
+ AJvYcCXUsvjgzvxGQnjefR9zgGtC/UVrRwWODmbm8gbcXrNV7GY3I/ntT9FtWddL/NXf04gEkoGieu5z79Q=@nongnu.org
+X-Gm-Message-State: AOJu0YwdCN6MdnZzHRkKSWHuWCY/gkCVVGjr8pTDAbf3dLxFzVWmwApg
+ 8CYCT8+l3blIk+Kjj9Qqz+9vCqL0PaP68P4REYS2ZzPVPS+LvWPq5jvAMPo1ZiMw
+X-Gm-Gg: ASbGncvS3NFZ954Q0NPZVsxbsM62sWK3C1DdXrBvyZXN/PyWh/Jl+9QZfhY695eSHsm
+ vbfkjJyP7D6wVKUYihWo/r9Wc8Ica7ds11D0JmE21UaMMEhAegySfsgAgGtb8Gd6J6apbuH0Hmz
+ KIc0PlKr7IGOEwRP6ua65CFYixCKXGsltZoW3CjGgADP2LbiKG7K4PRzA34uZ628rlrtSO5+V2T
+ rYn4Yxm1NtMOpn50jJ4+OUILRI25mZ7557/2Gz02Ue9t3yX2sMkyBI0f20f5qxs8HjDgOm02BR8
+ B7cyAgU0DE9LX6L9pKtyamq+R4BUFCudCLfSeZtEeyWh1aulxOdOKFzgyoW6X67sp48TvwtgsRy
+ q7Grg0lvznUW9CLYFBrTQ5VatM+FveegjiKT7hA74toqNkTM6Yj1PGyXvry3iAbsfeg==
+X-Google-Smtp-Source: AGHT+IFNBQGrS/zbGoS0lzNAME9rd0OKauH9oTXy0cSfc8ZTjR9gLBP4Yqh4DNnE6aReWsJUpfU6MA==
+X-Received: by 2002:a05:6402:164d:b0:60c:5853:5b7f with SMTP id
+ 4fb4d7f45d1cf-61285dfca8dmr19237858a12.32.1753185738149; 
+ Tue, 22 Jul 2025 05:02:18 -0700 (PDT)
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com.
+ [209.85.208.51]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-612f21073e6sm5036792a12.56.2025.07.22.05.02.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Jul 2025 05:02:17 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id
+ 4fb4d7f45d1cf-60c9d8a169bso9244917a12.1; 
+ Tue, 22 Jul 2025 05:02:17 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR6Yg2rrkyCSHjvCh9ydKCf59WMWnVglkBzI9U1bNuUg1d1WYvZAQanlWxIb0I6/Y6WtK4bO2jqQ8=@nongnu.org
+X-Received: by 2002:a05:6402:2683:b0:612:bd30:d326 with SMTP id
+ 4fb4d7f45d1cf-612bd30d6e9mr16689528a12.22.1753185736482; Tue, 22 Jul 2025
+ 05:02:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250716183824.216257-1-hibriansong@gmail.com>
- <20250720161351.GA32887@fedora>
-In-Reply-To: <20250720161351.GA32887@fedora>
-From: Brian Song <hibriansong@gmail.com>
-Date: Tue, 22 Jul 2025 08:00:00 -0400
-X-Gm-Features: Ac12FXz4rIGotoXUgnLrRXthsoL4efyH8QkpMn2HItSmHUHmqjAaEQHPk216V_c
-Message-ID: <CAKWCU7XqQc=cyn36MR9C7R_0S2ZKEPBdt6eUOZ-LxtRZuegsbw@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/1] block/export: FUSE-over-io_uring Support for QEMU
- FUSE Exports
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
- bschubert@ddn.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+References: <20250722083507.678542-1-pbonzini@redhat.com>
+In-Reply-To: <20250722083507.678542-1-pbonzini@redhat.com>
+From: Neal Gompa <ngompa@fedoraproject.org>
+Date: Tue, 22 Jul 2025 08:01:38 -0400
+X-Gmail-Original-Message-ID: <CAEg-Je8cctYdMik1+sEM7yAsATvUuOwC0pNzqH80UbHSn3B+Ww@mail.gmail.com>
+X-Gm-Features: Ac12FXzjOGfO3BS2nXdgOUOuU-piBWEzMROVxJh7Zrhf87poH4F2UvJ2wz_GoQk
+Message-ID: <CAEg-Je8cctYdMik1+sEM7yAsATvUuOwC0pNzqH80UbHSn3B+Ww@mail.gmail.com>
+Subject: Re: [PATCH] scripts: add script to help distro use global Rust
+ packages
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, berrange@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=hibriansong@gmail.com; helo=mail-oo1-xc2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.218.45; envelope-from=ngompa13@gmail.com;
+ helo=mail-ej1-f45.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.158, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,61 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/25 12:13 PM, Stefan Hajnoczi wrote:
-> On Wed, Jul 16, 2025 at 02:38:23PM -0400, Brian Song wrote:
->> This RFC patch represents an initial implementation of the FUSE-over-
->> io_uring Exports idea proposed for Google Summer of Code (2025) under
->> the QEMU community:
->> https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_exports
->>
->> The implementation approach is primarily borrowed from how libfuse
->> interacts with the kernel.
->>
->> FUSE-over-io_uring (https://docs.kernel.org/next/filesystems/fuse-io-
->> uring.html) has been officially merged into the Linux kernel. The idea
->> is to replace the traditional /dev/fuse based communication with a more
->> efficient io_uring-based approach. In this model, userspace registers
->> io_uring SQEs via the FUSE_IO_URING_CMD_REGISTER opcode, and then waits
->> for the kernel to forward FUSE requests as CQEs. These are processed by
->> the FUSE exports implementation in userspace and then committed back to
->> the kernel using FUSE_IO_URING_CMD_COMMIT_AND_FETCH.
->>
->> To enable this feature in qemu-export-daemon, simply add the uring=on
->> option to the export configuration.
+On Tue, Jul 22, 2025 at 4:35=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> For consistency with the --blockdev file,aio=io_uring option, please
-> name it "io_uring=on" instead of "uring=on".
+> Some distros prefer to avoid vendored crate sources, and instead use
+> local sources from e.g. ``/usr/share/cargo/registry``.  Add a
+> script, inspired by the Mesa spec file(*), that automatically
+> performs this task.  The script is meant to be invoked after unpacking
+> the QEMU tarball.
+>
+> (*) This is the hack that Mesa uses:
+>
+>     export MESON_PACKAGE_CACHE_DIR=3D"%{cargo_registry}/"
+>     %define inst_crate_nameversion() %(basename %{cargo_registry}/%{1}-*)
+>     %define rewrite_wrap_file() sed -e "/source.*/d" -e "s/%{1}-.*/%{inst=
+_crate_nameversion %{1}}/" -i subprojects/%{1}.wrap
+>     %rewrite_wrap_file proc-macro2
+>     ... more %rewrite_wrap_file invocations follow ...
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  docs/about/build-platforms.rst           |   8 +
+>  scripts/get-wraps-from-cargo-registry.py | 191 +++++++++++++++++++++++
+>  2 files changed, 199 insertions(+)
+>  create mode 100755 scripts/get-wraps-from-cargo-registry.py
 >
 
-It seems we are not allowed to use '_' here.
+I am impressed how much code my three lines in the Mesa spec file produced.
 
-In file included from ../storage-daemon/qapi/qapi-schema.json:57:
+The code looks good to me and seems to do what it says on the tin.
 
-../storage-daemon/qapi/../../qapi/block-export.json: In struct
-'BlockExportOptionsFuse':
-
-../storage-daemon/qapi/../../qapi/block-export.json:191: name of 'data'
-member '*io_uring' must not use uppercase or '_'
+Reviewed-by: Neal Gompa <ngompa@fedoraproject.org>
 
 
->>
->> As this patch is still in the RFC stage, it currently supports **only
->> single thread**. Due to protocol requirements in FUSE-over-io_uring,
->> the number of FUSE threads must match the number of CPUs. Therefore,
->> this initial version only works on single-core VMs (i.e., QEMU started
->> with -smp 1) or single core machine.
->>
->> Brian Song (1):
->>    block/export: FUSE-over-io_uring Support for QEMU FUSE Exports
->>
->>   block/export/fuse.c                  | 423 +++++++++++++++++++++++++--
->>   docs/tools/qemu-storage-daemon.rst   |  10 +-
->>   qapi/block-export.json               |   6 +-
->>   storage-daemon/qemu-storage-daemon.c |   1 +
->>   util/fdmon-io_uring.c                |   5 +-
->>   5 files changed, 420 insertions(+), 25 deletions(-)
->>
->> --
->> 2.50.1
->>
+
+--=20
+Neal Gompa (FAS: ngompa)
 
