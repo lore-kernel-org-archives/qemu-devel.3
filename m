@@ -4,75 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2123DC83F27
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 03:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574C5C83F27
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Jul 2025 03:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ue3xA-0002Lh-4T; Mon, 21 Jul 2025 23:46:09 -0400
+	id 1ue41s-0005k5-3b; Mon, 21 Jul 2025 23:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ue3wR-0002Cn-RM
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 23:45:24 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ue41W-0005V7-6b
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 23:50:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ue3wO-0004xH-4I
- for qemu-devel@nongnu.org; Mon, 21 Jul 2025 23:45:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753155920; x=1784691920;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=zrZs/No0qVKF30sP6igUlzT/Mz2cYoNHdEUSToc4YGQ=;
- b=etUUz7ZRsdNItHg7xYhGeBBRygk//Z+uPLF+g4lF+CX5zR6jtpqOOuN7
- imfsk6VeESeI8/wzwIHP3zdgOL/1QwuX4yxpSXvmC0+4knG+UWgRMGk8K
- SUWZQFGa13wFklnh/RIg5lRa+TE82c0p8MD6jNr/BaSxrjgy0ljST6erq
- Xbp+vq2+feRajgJDj4B6PXRkZTShKniCkaI/3aLs95APcifgdYF3lpkJF
- hXL4VNTnuKzJ+jKlURqLIKlP1OrVQY2F1o5K5y2+hPTLk2n6kGb2b27QC
- j70Agim8lB7TXu4jNPlGfLOJpUl/zdN9weufbGnS0sLm9jBGA7OGJ1JJO A==;
-X-CSE-ConnectionGUID: HrpeO2WZQwS+ouLB7X1sAQ==
-X-CSE-MsgGUID: L5PFlAW6Sxum1ku9Iqz0Pw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="55346524"
-X-IronPort-AV: E=Sophos;i="6.16,330,1744095600"; d="scan'208";a="55346524"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jul 2025 20:45:17 -0700
-X-CSE-ConnectionGUID: AUpdBQ2USry0Ket7kA6lFg==
-X-CSE-MsgGUID: ko3Gql3gR/+sQw1x0wpdHA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,330,1744095600"; d="scan'208";a="163071168"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jul 2025 20:45:15 -0700
-Message-ID: <41a5767e-42d7-4877-9bc8-aa8eca6dd3e3@intel.com>
-Date: Tue, 22 Jul 2025 11:45:13 +0800
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1ue41T-0006Rh-Mm
+ for qemu-devel@nongnu.org; Mon, 21 Jul 2025 23:50:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753156232;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kYGXIGLC2KVsPIV3olzaU+YXxh3WemHM/ehhzq71XN4=;
+ b=by5y4FhqM/zvtaTeqfciqn6YoY59mOBOoL8aTTbndzai/G7tWzHB77gUOq2w0XXjtCxvAF
+ uwukVP9EOORBRUQ53Rxe5fU4REXSnC56Iu6Ol95BWdsX8UE2GkxFQlWiwsXbum6Ys2COdV
+ QMK981UELUuP/uwyqRbrK6QU8HLm3pw=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-wVgvGaHUMM2wHkNZcpMBAw-1; Mon, 21 Jul 2025 23:50:30 -0400
+X-MC-Unique: wVgvGaHUMM2wHkNZcpMBAw-1
+X-Mimecast-MFC-AGG-ID: wVgvGaHUMM2wHkNZcpMBAw_1753156229
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-74d15d90cdbso4315188b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Jul 2025 20:50:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753156229; x=1753761029;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kYGXIGLC2KVsPIV3olzaU+YXxh3WemHM/ehhzq71XN4=;
+ b=n6QBhqzDIB777BN0pR6jOzqMrQ9Yz8cbcslJ7P0Q3SilBCkBthnV7BsZ6rpY7kUar1
+ iAFlsKh0c4XDKjjm9APrgpHSp/nLoD362znO97kb++MEk62GadUyXG4Sel64PSpByZ1u
+ hCPwPPdQBqBtFGCvC0AptVA6h76kMmgwJZGUAlyUevNlo8FPmAAsSVU3F6CYH0X4k2s4
+ T84DLVndDkUYOPVXWZ7JwvOzaX1cvhAs+mKPb4vHqcyiRcJm0973pT81Qqj/jS2C7/Q+
+ jYdU4f5dFaPX8NyMqtGGPPDyIUuDJJ80wbo0+rPOoFK8EdCxkOFB8srQyFjm0T5wvGTa
+ oesQ==
+X-Gm-Message-State: AOJu0Yz+rgcA3hIkPcC9ANh8CUYE5p4Yu2/6lPQOIz1pMHjjFo98Qkzt
+ /X2IGrIoqN/XkxkyAN6DZ79bxAl7od4ycAMNHPyaz4D5C6iiXwVgndlyFstr4siqoeFay8vkqWq
+ RyNnNJQ/XHvKXYwWqW5+yo6fzay0rghnEfEm0R3x54xkxFqerxW/3aNlIdH8iv7wgxqJXhjkz5E
+ 6X8WlAjllhHbPxeRgIYEn29uCOC5okfe0=
+X-Gm-Gg: ASbGncvPOS2oOkQWAGuwxdywr2YtQxF3v9ZvzcEUj9BQYMVpJfV0BQ26etPe/5sKMb5
+ BeVwtFJhomZYQqMPlrkkzbsVa8yL0n7KQ1o9bF64n10iIE0GmYn7lSv2i/Ra2e63OQzzqsEZfdV
+ 2GnEjxUgZFUQanjIttlctlZg==
+X-Received: by 2002:a05:6a21:6197:b0:235:e7b6:6a04 with SMTP id
+ adf61e73a8af0-23813c6d6abmr36225673637.24.1753156229266; 
+ Mon, 21 Jul 2025 20:50:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvIvNw+PGfGuS0rOB5qEwgnShqN8DZnCWHT0ruKwCb1B9svUQu3PvlsE8o7AfxEGnTgyVK+eKJBrNhHZNunIM=
+X-Received: by 2002:a05:6a21:6197:b0:235:e7b6:6a04 with SMTP id
+ adf61e73a8af0-23813c6d6abmr36225628637.24.1753156228835; Mon, 21 Jul 2025
+ 20:50:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/kvm: Disable hypercall patching quirk by default
-To: Mathias Krause <minipli@grsecurity.net>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Oliver Upton <oliver.upton@linux.dev>,
- Sean Christopherson <seanjc@google.com>
-References: <20250619194204.1089048-1-minipli@grsecurity.net>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250619194204.1089048-1-minipli@grsecurity.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
+References: <cover.1752828082.git.pabeni@redhat.com>
+ <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
+In-Reply-To: <6ec36a1cc2497f827b9e024acc6adb2515dd9335.1752828082.git.pabeni@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 22 Jul 2025 11:50:17 +0800
+X-Gm-Features: Ac12FXwvNw9RK62hdQ8CK2RhAXaqlR3YsssW7zN7Ocn8zEvPQo8MYdydJqPMdAk
+Message-ID: <CACGkMEunxuooL+z=Oz1FsNabNuh=QwfMbzG0k0S+avL3LxEV7w@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 12/13] net: implement tunnel probing
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.926,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,182 +112,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/2025 3:42 AM, Mathias Krause wrote:
-> KVM has a weird behaviour when a guest executes VMCALL on an AMD system
-> or VMMCALL on an Intel CPU. Both naturally generate an invalid opcode
-> exception (#UD) as they are just the wrong instruction for the CPU
-> given. But instead of forwarding the exception to the guest, KVM tries
-> to patch the guest instruction to match the host's actual hypercall
-> instruction. That is doomed to fail as read-only code is rather the
-> standard these days. But, instead of letting go the patching attempt and
-> falling back to #UD injection, KVM injects the page fault instead.
-> 
-> That's wrong on multiple levels. Not only isn't that a valid exception
-> to be generated by these instructions, confusing attempts to handle
-> them. It also destroys guest state by doing so, namely the value of CR2.
-> 
-> Sean attempted to fix that in KVM[1] but the patch was never applied.
-> 
-> Later, Oliver added a quirk bit in [2] so the behaviour can, at least,
-> conceptually be disabled. Paolo even called out to add this very
-> functionality to disable the quirk in QEMU[3]. So lets just do it.
-> 
-> A new property 'hypercall-patching=on|off' is added, for the very
-> unlikely case that there are setups that really need the patching.
-> However, these would be vulnerable to memory corruption attacks freely
-> overwriting code as they please. So, my guess is, there are exactly 0
-> systems out there requiring this quirk.
-
-The default behavior is patching the hypercall for many years.
-
-If you desire to change the default behavior, please at least keep it 
-unchanged for old machine version. i.e., introduce compat_property, 
-which sets KVMState->hypercall_patching_enabled to true.
-
-> [1] https://lore.kernel.org/kvm/20211210222903.3417968-1-seanjc@google.com/
-> [2] https://lore.kernel.org/kvm/20220316005538.2282772-2-oupton@google.com/
-> [3] https://lore.kernel.org/kvm/80e1f1d2-2d79-22b7-6665-c00e4fe9cb9c@redhat.com/
-> 
-> Cc: Oliver Upton <oliver.upton@linux.dev>
-> Cc: Sean Christopherson <seanjc@google.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+On Fri, Jul 18, 2025 at 4:54=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wro=
+te:
+>
+> Tap devices support GSO over UDP tunnel offload. Probe for such
+> feature in a similar manner to other offloads.
+>
+> GSO over UDP tunnel needs to be enabled in addition to a "plain"
+> offload (TSO or USO).
+>
+> No need to check separately for the outer header checksum offload:
+> the kernel is going to support both of them or none.
+>
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 > ---
->   include/system/kvm_int.h |  1 +
->   qemu-options.hx          | 10 ++++++++++
->   target/i386/kvm/kvm.c    | 38 ++++++++++++++++++++++++++++++++++++++
->   3 files changed, 49 insertions(+)
-> 
-> diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-> index 756a3c0a250e..fd7129824429 100644
-> --- a/include/system/kvm_int.h
-> +++ b/include/system/kvm_int.h
-> @@ -159,6 +159,7 @@ struct KVMState
->       uint64_t kvm_eager_split_size;  /* Eager Page Splitting chunk size */
->       struct KVMDirtyRingReaper reaper;
->       struct KVMMsrEnergy msr_energy;
-> +    bool hypercall_patching_enabled;
+> v2 -> v3:
+>   - use bool type for tap_probe_has_tunnel()
+>   - rebased on top of 2deec9ab7d ("virtio-net: Move
+>         virtio_net_get_features() down")
+>   - _array -> _ex
+>
+> v1 -> v2:
+>   - peer_has_tunnel return a bool
+>   - move TUN_F definition in net/tun-linux.h
+> ---
+>  hw/net/virtio-net.c | 37 +++++++++++++++++++++++++++++++++++++
+>  include/net/net.h   |  3 +++
+>  net/net.c           |  9 +++++++++
+>  net/tap-bsd.c       |  5 +++++
+>  net/tap-linux.c     | 11 +++++++++++
+>  net/tap-linux.h     |  9 +++++++++
+>  net/tap-solaris.c   |  5 +++++
+>  net/tap-stub.c      |  5 +++++
+>  net/tap.c           | 11 +++++++++++
+>  net/tap_int.h       |  1 +
+>  10 files changed, 96 insertions(+)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 53413ec4d5..70c85f7f77 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
+>      return qemu_has_uso(qemu_get_queue(n->nic)->peer);
+>  }
+>
+> +static bool peer_has_tunnel(VirtIONet *n)
 
-IMHO, we can just name it "hypercall_patching".
+Nit: it looks better to use peer_has_udp_gso_tunnel().
 
-Since it's a boolean type, true means enabled and false means disabled.
-
->       NotifyVmexitOption notify_vmexit;
->       uint32_t notify_window;
->       uint32_t xen_version;
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 1f862b19a676..c2e232649c19 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -231,6 +231,7 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
->       "                dirty-ring-size=n (KVM dirty ring GFN count, default 0)\n"
->       "                eager-split-size=n (KVM Eager Page Split chunk size, default 0, disabled. ARM only)\n"
->       "                notify-vmexit=run|internal-error|disable,notify-window=n (enable notify VM exit and set notify window, x86 only)\n"
-> +    "                hypercall-patching=on|off (enable KVM's VMCALL/VMMCALL hypercall patching quirk, x86 only)\n"
->       "                thread=single|multi (enable multi-threaded TCG)\n"
->       "                device=path (KVM device path, default /dev/kvm)\n", QEMU_ARCH_ALL)
->   SRST
-> @@ -313,6 +314,15 @@ SRST
->           open up for a specified of time (i.e. notify-window).
->           Default: notify-vmexit=run,notify-window=0.
->   
-> +    ``hypercall-patching=on|off``
-> +        KVM tries to recover from the wrong hypercall instruction being used by
-> +        a guest by attempting to rewrite it to the one supported natively by
-> +        the host CPU (VMCALL on Intel, VMMCALL for AMD systems). However, this
-> +        patching may fail if the guest memory is write protected, leading to a
-> +        page fault getting propagated to the guest instead of an illegal
-> +        instruction exception. As this may confuse guests, it gets disabled by
-> +        default (x86 only).
-> +
->       ``device=path``
->           Sets the path to the KVM device node. Defaults to ``/dev/kvm``. This
->           option can be used to pass the KVM device to use via a file descriptor
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 56a6b9b6381a..6f5f3b95e553 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -3224,6 +3224,19 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
->       return 0;
->   }
->   
-> +static int kvm_vm_disable_hypercall_patching(KVMState *s)
 > +{
-> +    int valid_quirks = kvm_vm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-> +
-> +    if (valid_quirks & KVM_X86_QUIRK_FIX_HYPERCALL_INSN) {
-> +        return kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0,
-> +                                 KVM_X86_QUIRK_FIX_HYPERCALL_INSN);
+> +    if (!peer_has_vnet_hdr(n)) {
+> +        return false;
 > +    }
 > +
-> +    warn_report("kvm: disabling hypercall patching not supported");
-
-It's not clear it's 1) KVM doesn't support/has FIX_HYPERCALL_INSN quirk 
-or 2) KVM has FIX_HYPERCALL_INSN quirk but doesn't allow it to be 
-disabled, when KVM_X86_QUIRK_FIX_HYPERCALL_INSN is not returned in 
-KVM_CAP_DISABLE_QUIRKS2.
-
-If it's case 1), it can be treated as hypercall patching is disabled 
-thus no warning is expected.
-
-So, I think it requires a new cap in KVM to return the enabled quirks.
-
-> +    return 0;
-
-I think return 0 here is to avoid the warn_report() in the caller. But 
-for the correct semantics, we need to return -1 to indicate that it 
-fails to disable the hypercall patching?
-
+> +    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
 > +}
 > +
->   int kvm_arch_init(MachineState *ms, KVMState *s)
->   {
->       int ret;
-> @@ -3363,6 +3376,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           }
->       }
->   
-> +    if (s->hypercall_patching_enabled == false) {
-> +        if (kvm_vm_disable_hypercall_patching(s)) {
-> +            warn_report("kvm: failed to disable hypercall patching quirk");
-> +        }
+>  static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bu=
+fs,
+>                                         int version_1, int hash_report)
+>  {
+> @@ -3070,6 +3079,13 @@ static void virtio_net_get_features(VirtIODevice *=
+vdev, uint64_t *features,
+>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+>
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_=
+GSO);
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_G=
+SO);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
+> +
+>          virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+>      }
+>
+> @@ -3083,6 +3099,15 @@ static void virtio_net_get_features(VirtIODevice *=
+vdev, uint64_t *features,
+>          virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+>      }
+>
+> +    if (!peer_has_tunnel(n)) {
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_=
+GSO);
+> +        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_G=
+SO);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
+> +        virtio_clear_feature_ex(features,
+> +                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
 > +    }
 > +
->       return 0;
->   }
->   
-> @@ -6456,6 +6475,19 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask)
->       }
->   }
->   
-> +static bool kvm_arch_get_hypercall_patching(Object *obj, Error **errp)
-> +{
-> +    KVMState *s = KVM_STATE(obj);
-> +    return s->hypercall_patching_enabled;
-> +}
+>      if (!get_vhost_net(nc->peer)) {
+>          if (!use_own_hash) {
+>              virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+> @@ -4137,6 +4162,10 @@ static const VMStateDescription vmstate_virtio_net=
+ =3D {
+>      .dev_unplug_pending =3D dev_unplug_pending,
+>  };
+>
+> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
+> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_DWORD(_bit)],    \
+> +                      (_bit) % 64, _defval)
 > +
-> +static void kvm_arch_set_hypercall_patching(Object *obj, bool value,
-> +                                            Error **errp)
-> +{
-> +    KVMState *s = KVM_STATE(obj);
-> +    s->hypercall_patching_enabled = value;
-> +}
-> +
->   static int kvm_arch_get_notify_vmexit(Object *obj, Error **errp)
->   {
->       KVMState *s = KVM_STATE(obj);
-> @@ -6589,6 +6621,12 @@ static void kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
->   
->   void kvm_arch_accel_class_init(ObjectClass *oc)
->   {
-> +    object_class_property_add_bool(oc, "hypercall-patching",
-> +                                   kvm_arch_get_hypercall_patching,
-> +                                   kvm_arch_set_hypercall_patching);
-> +    object_class_property_set_description(oc, "hypercall-patching",
-> +                                          "Enable hypercall patching quirk");
-> +
->       object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
->                                      &NotifyVmexitOption_lookup,
->                                      kvm_arch_get_notify_vmexit,
+>  static const Property virtio_net_properties[] =3D {
+>      DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
+>                      VIRTIO_NET_F_CSUM, true),
+> @@ -4245,6 +4274,14 @@ static const Property virtio_net_properties[] =3D =
+{
+>                                    rss_data.specified_hash_types,
+>                                    VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
+>                                    ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_FEATURE("host_tunnel", VirtIONet, host_features_ex,
+> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, true),
+> +    DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet, host_features_ex,
+> +                        VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, true),
+> +    DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet, host_features_ex,
+> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, true),
+> +    DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet, host_features_ex=
+,
+> +                        VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, true),
+>  };
+
+Need compatibility work like:
+
+d83f46d189 ("virtio-pci: compat page aligned ATS")
+
+Thanks
 
 
