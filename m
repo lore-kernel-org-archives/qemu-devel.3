@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A84A0C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 12:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CD4C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 12:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueYFI-0002XF-Lv; Wed, 23 Jul 2025 08:06:53 -0400
+	id 1ueYL9-0007KL-MM; Wed, 23 Jul 2025 08:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYF7-0002DQ-Uk
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:06:43 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYL7-0007AJ-8I
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:12:53 -0400
 Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYF4-00076Z-AC
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:06:40 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYKz-0000st-9x
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:12:52 -0400
 Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3a53359dea5so3172869f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 05:06:36 -0700 (PDT)
+ ffacd0b85a97d-3a6d1369d4eso3962525f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 05:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753272395; x=1753877195; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753272761; x=1753877561; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Gg6ya0HeQQI/L9cjeKTN9VxyKHZdrQ2ZJqyDy8HZpvA=;
- b=e2aK5j+wyBOo8cldWqTLj2KLJ74aFvWSJVCIFaVTSW3oQiNC9GE40xjwADYtGgw/2a
- wV8IyNJoc4jcA9Ta44d7Nc3tELGIOoznmmAbDLs9ZShLziTiRZ6pAhucjH17WQnqDjXy
- 3Qd5vg1mKk7aJ775XuWD+ql36hRAWYzTgbw5FPkPUaiRruZvbp2pxnwEyxk+iFTURyEe
- m4Mn2aX81bHW0xNWaNUCPfeRRWXvwX4YZ3+IBJOyx10hKtmRjs6RPb/p/K02xOh7U0xd
- umjRDVN3Cs9peCKUIaJKl9yN4V9Eu5uBbJrYPwfWbRJa9P0pdPeiWcwWbk+LaXwRVoGu
- 0KbA==
+ bh=SkEGo6VsCznhDpms3T9HiDB427zOaqvA/xUszzAoVRk=;
+ b=wMzAR4ZIGM9u579qqz12nKD7KF7ohoazP5z1EApEgzAHK74LysnKjxXU1R0WAqDt3x
+ tTrt6sYU4Qq/xoMriSrbiZuxV7DoEMMuJVv9BryIqtp7PTSkHp5LbWfjI2MQIzyGEZU6
+ ksfGKaIqa2OSFYeF0+7d5gyMn2i6HEg2zZxAAuRBMn9Jl4rs51xM1ie2C4G0WfvYqvz9
+ eEznt+XNCmmyDVjt9E6SllVvBugeVQUq0fRaUhcWkcIqPx/eiER1Ot5faOK/AMfZn38p
+ EZUFdUYOcgw8e7bzs0xlo3+9iEsyU3JsEEwznMLrplfVTY+ASr06zKgUAYr1NVmlsMl8
+ MliA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753272395; x=1753877195;
+ d=1e100.net; s=20230601; t=1753272761; x=1753877561;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Gg6ya0HeQQI/L9cjeKTN9VxyKHZdrQ2ZJqyDy8HZpvA=;
- b=D98nYpCtT9JTtTySIDnFM5zqoNAmYPIJ+taHWM8V0WQdAA9fqgK1/OFykCoJwDIGGv
- BgVdd/OLPKFcDg5Qd5bKyV9xg4PpAJ2wRNj0+92nKCqSAl+rBzwhZ75semJ1ExJPgzPp
- qZkDk8J9rHlv2h6GXtGJMwbB2shd6IV6phGcGKHiIb4itfpU6SaADe8Xv7+s8YsPsuck
- 6rynguslazJ3p1fVxnsyL9BgllmO1MeW8S5Y+HuzK5poX8shHduDNZxryaif+6vKBlgh
- 9Z3/QFS7jcw1OB5Z8fzg5xLsji9ocDRKrjTWWB1a5erMVVyihsOdFRtR1s7IyvTg6p5Q
- 6iqQ==
-X-Gm-Message-State: AOJu0YxJuSAs9HJDaHjAR/donfr2NLMvsEMYr3nHkWIlpdcE4DaIDKRg
- 9mwZvgZfrTbJOzi+YVm9zs1yULsDfAaKyMX72RncBTKs1cVrDaxQAcbrcjNH4SbciuCErvxCUqY
- Kr0hA
-X-Gm-Gg: ASbGncum8ZQ74ebLRtIPRfwxkpo70HbDtfGd7uC3LKUupBm7BWMwCo6YteJyTRrZ3Hf
- kf+WQqpWrzat/v3S5BzqrZs83FbTPXskOPsmNAsYTizjTg7NhRpgkciZnV7fk4WT4VMkSZrc+Ss
- uaiiV71dyQ27NDRxUbuPJkq479zX/u2WREn2TSVROfregNNWzTrJP3CbvQ+65GvTjgl/0w/fV83
- Jlq1UnyU/M1sSC20MZiZj/BMH9DMR+gW4KN0nEHEv3YCSnC+oNuogUmDNK96cTK434ryWaJFbmj
- 26GnIkBY/mRIiRZ3K2kqOcdU6x6vYu78eOpDm4unkGYi99610zpWqRywocpuSkWk2hCjeQgZBnR
- O2Aj8xgT4WW4hQDd626x4N22hCONIYv3uOsRnQWs3Is7mNEXdelRD2vb54NoRWscUdcdQ15M3xh
- LZK/fk0w==
-X-Google-Smtp-Source: AGHT+IGhHgUl1L87x52BYv27y6yvFPAtg0Kql3fSIcm7iWaTMQL0dObFbtdQ92d25GEhgIkcDOo7Rg==
-X-Received: by 2002:a5d:5f48:0:b0:3a4:eda1:6c39 with SMTP id
- ffacd0b85a97d-3b768e9d608mr2173600f8f.13.1753272394485; 
- Wed, 23 Jul 2025 05:06:34 -0700 (PDT)
+ bh=SkEGo6VsCznhDpms3T9HiDB427zOaqvA/xUszzAoVRk=;
+ b=mFoCYJq6Sy7Uxhvz3V1ZE5inUXmqGJI7bK2fd4vg46v6mfKDTQqZ5O0exhGuQIJlY2
+ 5rHbXCozlDJFgM9ry8swx2Edx2S3ni3A6H8hsBjCygxptOzsCIdov5QZT9IOcczoX6yb
+ wAG5QHFWRMeiKFQkGdgcgTn7AhbAhGlT08NvWK8RmkIKRV4JL8uEYGIM0kOX391PTqt/
+ Hl5fexSC2FoV3qN4b6C24I7a8UrgeQVIuEeO4gm/bISQE/NI5yw+QhrJA8aPvh/m26Gv
+ SZdDUTAUMhGBW9PmIqF0IkVdy2bSBcawpduWKZLKGfVjaar/ZCITf33qeTFh8jTB3cai
+ sHxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUv60WaGOecsnsB8ml/FUdh6dHJPbPlcRPlQFX4Yi7JgaNll4zGYgfGyHDxmyJrUnlLVgrfN5TdMwEN@nongnu.org
+X-Gm-Message-State: AOJu0YwU7Cm5sq1Diwp2UrdAQGSibKmtB3nyh28IM2T+6SUD6oHI3zYB
+ riSvu/inpXdxU/hBMtP3RJM0z3w7Zof0kYI4OacTnryEZL/REy5dmUpNvD1zWaUd52CLP8nLL6q
+ jUH1N
+X-Gm-Gg: ASbGncvoxcKxVxFpkiPYwhR+7o/G3jHHeoKDcUnX4wvkL7160DYYbtYY1hEjVuOrwXe
+ pmZvbVHnjgEGp9D84gXP8P7Lp9v5cp4+VsvwnWr6pQp5WQ4fMUCFLwFnFMqUD9xf1+/d1RLFTfr
+ uPo5bl5YDNq1zwUV6B0V0v6zYjGQ0RWWIkxLdzZAxPn+AxOm6LbDKW1ajnqA0mJ+TwU4k2RqTgq
+ hWxEFUEEm6GK3F3wWSgoz6v6vu06Q1FzRE0brOHO3gf6rgE4ZC4XXo8sqEPpvq4gu1cNWs7/047
+ p8Rcrl3tLshHSStGYvhl9ohrUAlXeBNSOSc86j2aKvk3ckj+ywf8dSH2Lyie1WQge/tgfd6i3Tc
+ wibTBT5/XB1hkiL4ohfQsQi8m3/R18y9bCEdYonQ0nESsXXW2F7hE2+8t6FxK0rbRARPwJS8=
+X-Google-Smtp-Source: AGHT+IF1F1TfJD0ueFulF2LKuoUKjMJX7b1L1QFhnWs/BpAUUnAKZA1ZrKYqcBTzoRLOBKj0/dVJiw==
+X-Received: by 2002:a05:6000:1885:b0:3a4:f70e:abda with SMTP id
+ ffacd0b85a97d-3b768c98f5fmr2247123f8f.10.1753272760887; 
+ Wed, 23 Jul 2025 05:12:40 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca4d807sm16363035f8f.73.2025.07.23.05.06.33
+ ffacd0b85a97d-3b61ca2bf4bsm16056820f8f.31.2025.07.23.05.12.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 05:06:33 -0700 (PDT)
-Message-ID: <c149b1b3-1b28-452e-91ee-e4f8efb8f24e@linaro.org>
-Date: Wed, 23 Jul 2025 14:06:33 +0200
+ Wed, 23 Jul 2025 05:12:40 -0700 (PDT)
+Message-ID: <62a3b621-d078-4c2b-be2e-9bca1c569119@linaro.org>
+Date: Wed, 23 Jul 2025 14:12:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] accel/kvm: Set mem.guest_memfd_offset only when
- guest_memfd is valid
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250723070951.1134374-1-xiaoyao.li@intel.com>
- <20250723070951.1134374-4-xiaoyao.li@intel.com>
+Subject: Re: [PATCH] target/mips: fix TLB huge page check to use 64-bit shift
+To: gerben@altlinux.org, qemu-devel@nongnu.org
+Cc: sdl.qemu@linuxtesting.org
+References: <20250722101816.16528-1-gerben@altlinux.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250723070951.1134374-4-xiaoyao.li@intel.com>
+In-Reply-To: <20250722101816.16528-1-gerben@altlinux.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::431;
@@ -85,9 +84,8 @@ X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,52 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/25 09:09, Xiaoyao Li wrote:
-> Current QEMU unconditionally sets the mmem.guest_memfd_offset in
-> kvm_set_user_memory_region(), which leads to the trace of kvm_set_user_memory
-> look as:
+Hi Denis,
+
+On 22/7/25 12:17, gerben@altlinux.org wrote:
+> From: Denis Rastyogin <gerben@altlinux.org>
 > 
-> kvm_set_user_memory AddrSpace#0 Slot#4 flags=0x2 gpa=0xe0000 size=0x20000 ua=0x7f5840de0000 guest_memfd=-1 guest_memfd_offset=0x3e0000 ret=0
+> Use 1ULL << psn to ensure the shift is done in 64-bit arithmetic,
+> avoiding overflow for large psn values. The 6-bit psn field allows
+> values up to 63, so 64-bit shift is required for correctness.
+
+If you are really worried about that, please use the simpler
+extract64() method instead, it is much clearer to understand
+when reviewing than (unsigned long long) casts.
+
 > 
-> It's confusing that the guest_memfd_offset has a non-zero value while
-> the guest_memfd is invalid (-1).
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
 > 
-> Change to only set guest_memfd_offset when guest_memfd is valid.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
 > ---
->   accel/kvm/kvm-all.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   target/mips/tcg/system/tlb_helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 4f4c30fc84b2..2b6fbf58a127 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -367,7 +367,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
->       mem.userspace_addr = (unsigned long)slot->ram;
->       mem.flags = slot->flags;
->       mem.guest_memfd = slot->guest_memfd;
-> -    mem.guest_memfd_offset = slot->guest_memfd_offset;
-> +    if (slot->guest_memfd >= 0) {
-> +        mem.guest_memfd_offset = slot->guest_memfd_offset;
-> +    }
+> diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+> index eccaf3624c..b8b8747064 100644
+> --- a/target/mips/tcg/system/tlb_helper.c
+> +++ b/target/mips/tcg/system/tlb_helper.c
+> @@ -652,7 +652,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+>           return 0;
+>       }
+>   
+> -    if ((entry & (1 << psn)) && hugepg) {
+> +    if ((entry & (1ULL << psn)) && hugepg) {
+>           *huge_page = true;
+>           *hgpg_directory_hit = true;
+>           entry = get_tlb_entry_layout(env, entry, leaf_mop, pf_ptew);
 
-IMHO the issue is in when the KVMSlot is filled in kvm_set_phys_mem():
-
--- >8 --
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 890d5ea9f86..631f14b996a 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1595,7 +1595,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-          mem->ram = ram;
-          mem->flags = kvm_mem_flags(mr);
-          mem->guest_memfd = mr->ram_block->guest_memfd;
--        mem->guest_memfd_offset = (uint8_t*)ram - mr->ram_block->host;
-+        mem->guest_memfd_offset = mr->ram_block->guest_memfd
-+                                ? (uint8_t*)ram - mr->ram_block->host : 0;
-
-          kvm_slot_init_dirty_bitmap(mem);
-          err = kvm_set_user_memory_region(kml, mem, true);
----
 
