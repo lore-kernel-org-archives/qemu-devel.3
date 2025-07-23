@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CD4C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 12:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1CDC83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 12:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueYL9-0007KL-MM; Wed, 23 Jul 2025 08:12:55 -0400
+	id 1ueYS3-0005sZ-Gb; Wed, 23 Jul 2025 08:20:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYL7-0007AJ-8I
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:12:53 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueYKz-0000st-9x
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:12:52 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3a6d1369d4eso3962525f8f.2
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 05:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753272761; x=1753877561; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SkEGo6VsCznhDpms3T9HiDB427zOaqvA/xUszzAoVRk=;
- b=wMzAR4ZIGM9u579qqz12nKD7KF7ohoazP5z1EApEgzAHK74LysnKjxXU1R0WAqDt3x
- tTrt6sYU4Qq/xoMriSrbiZuxV7DoEMMuJVv9BryIqtp7PTSkHp5LbWfjI2MQIzyGEZU6
- ksfGKaIqa2OSFYeF0+7d5gyMn2i6HEg2zZxAAuRBMn9Jl4rs51xM1ie2C4G0WfvYqvz9
- eEznt+XNCmmyDVjt9E6SllVvBugeVQUq0fRaUhcWkcIqPx/eiER1Ot5faOK/AMfZn38p
- EZUFdUYOcgw8e7bzs0xlo3+9iEsyU3JsEEwznMLrplfVTY+ASr06zKgUAYr1NVmlsMl8
- MliA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753272761; x=1753877561;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SkEGo6VsCznhDpms3T9HiDB427zOaqvA/xUszzAoVRk=;
- b=mFoCYJq6Sy7Uxhvz3V1ZE5inUXmqGJI7bK2fd4vg46v6mfKDTQqZ5O0exhGuQIJlY2
- 5rHbXCozlDJFgM9ry8swx2Edx2S3ni3A6H8hsBjCygxptOzsCIdov5QZT9IOcczoX6yb
- wAG5QHFWRMeiKFQkGdgcgTn7AhbAhGlT08NvWK8RmkIKRV4JL8uEYGIM0kOX391PTqt/
- Hl5fexSC2FoV3qN4b6C24I7a8UrgeQVIuEeO4gm/bISQE/NI5yw+QhrJA8aPvh/m26Gv
- SZdDUTAUMhGBW9PmIqF0IkVdy2bSBcawpduWKZLKGfVjaar/ZCITf33qeTFh8jTB3cai
- sHxw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUv60WaGOecsnsB8ml/FUdh6dHJPbPlcRPlQFX4Yi7JgaNll4zGYgfGyHDxmyJrUnlLVgrfN5TdMwEN@nongnu.org
-X-Gm-Message-State: AOJu0YwU7Cm5sq1Diwp2UrdAQGSibKmtB3nyh28IM2T+6SUD6oHI3zYB
- riSvu/inpXdxU/hBMtP3RJM0z3w7Zof0kYI4OacTnryEZL/REy5dmUpNvD1zWaUd52CLP8nLL6q
- jUH1N
-X-Gm-Gg: ASbGncvoxcKxVxFpkiPYwhR+7o/G3jHHeoKDcUnX4wvkL7160DYYbtYY1hEjVuOrwXe
- pmZvbVHnjgEGp9D84gXP8P7Lp9v5cp4+VsvwnWr6pQp5WQ4fMUCFLwFnFMqUD9xf1+/d1RLFTfr
- uPo5bl5YDNq1zwUV6B0V0v6zYjGQ0RWWIkxLdzZAxPn+AxOm6LbDKW1ajnqA0mJ+TwU4k2RqTgq
- hWxEFUEEm6GK3F3wWSgoz6v6vu06Q1FzRE0brOHO3gf6rgE4ZC4XXo8sqEPpvq4gu1cNWs7/047
- p8Rcrl3tLshHSStGYvhl9ohrUAlXeBNSOSc86j2aKvk3ckj+ywf8dSH2Lyie1WQge/tgfd6i3Tc
- wibTBT5/XB1hkiL4ohfQsQi8m3/R18y9bCEdYonQ0nESsXXW2F7hE2+8t6FxK0rbRARPwJS8=
-X-Google-Smtp-Source: AGHT+IF1F1TfJD0ueFulF2LKuoUKjMJX7b1L1QFhnWs/BpAUUnAKZA1ZrKYqcBTzoRLOBKj0/dVJiw==
-X-Received: by 2002:a05:6000:1885:b0:3a4:f70e:abda with SMTP id
- ffacd0b85a97d-3b768c98f5fmr2247123f8f.10.1753272760887; 
- Wed, 23 Jul 2025 05:12:40 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b61ca2bf4bsm16056820f8f.31.2025.07.23.05.12.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 05:12:40 -0700 (PDT)
-Message-ID: <62a3b621-d078-4c2b-be2e-9bca1c569119@linaro.org>
-Date: Wed, 23 Jul 2025 14:12:39 +0200
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1ueYRz-0005qr-7P
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:20:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1ueYRu-0006ER-Jh
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:19:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753273189;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5Aq4nwzr5Fnj4rdKWdq+ouYC6a5Qy0PycDLnmVny5IM=;
+ b=fzPFhAik0NTU5sYgqoiWE0PU7qrsPhejrajpYDU/Bf2PaQWI6kl/Pzwx5X8601AuXMTi3e
+ DAvzlpHMkb5UvIIwbCIQJ0lqhE67YLzdNKm4dPTLuwX0dz9oKojLL5ixkjf6PRHS3mKtdF
+ IqbUd2ovgwaDKJ5VOq9QLc7DqWQYD1w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-9GR5vGGdPWKS6cAAROskqw-1; Wed,
+ 23 Jul 2025 08:19:45 -0400
+X-MC-Unique: 9GR5vGGdPWKS6cAAROskqw-1
+X-Mimecast-MFC-AGG-ID: 9GR5vGGdPWKS6cAAROskqw_1753273184
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73C0918001DA; Wed, 23 Jul 2025 12:19:44 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.44.33.245])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 01FED19560AF; Wed, 23 Jul 2025 12:19:38 +0000 (UTC)
+From: Albert Esteve <aesteve@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, peterx@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Albert Esteve <aesteve@redhat.com>
+Subject: [RFC] memory.c: improve refcounting for RAM vs MMIO regions
+Date: Wed, 23 Jul 2025 14:19:20 +0200
+Message-ID: <20250723121920.1184928-1-aesteve@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: fix TLB huge page check to use 64-bit shift
-To: gerben@altlinux.org, qemu-devel@nongnu.org
-Cc: sdl.qemu@linuxtesting.org
-References: <20250722101816.16528-1-gerben@altlinux.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250722101816.16528-1-gerben@altlinux.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.377,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +84,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Denis,
+In the last version of the SHMEM MAP/UNMAP [1] there was a
+comment [2] from Stefan about the lifecycle of the memory
+regions.
 
-On 22/7/25 12:17, gerben@altlinux.org wrote:
-> From: Denis Rastyogin <gerben@altlinux.org>
-> 
-> Use 1ULL << psn to ensure the shift is done in 64-bit arithmetic,
-> avoiding overflow for large psn values. The 6-bit psn field allows
-> values up to 63, so 64-bit shift is required for correctness.
+After some discussion, David Hildenbrand proposed
+to detect RAM regions and handle refcounting differently
+to clear the initial concern. This RFC patch is
+meant for gathering feedback from others
+(i.e., Paolo Bonzini and Peter Xu).
 
-If you are really worried about that, please use the simpler
-extract64() method instead, it is much clearer to understand
-when reviewing than (unsigned long long) casts.
+[1] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=460121
+[2] https://patchwork.ozlabs.org/comment/3528600/
 
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-> ---
->   target/mips/tcg/system/tlb_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-> index eccaf3624c..b8b8747064 100644
-> --- a/target/mips/tcg/system/tlb_helper.c
-> +++ b/target/mips/tcg/system/tlb_helper.c
-> @@ -652,7 +652,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
->           return 0;
->       }
->   
-> -    if ((entry & (1 << psn)) && hugepg) {
-> +    if ((entry & (1ULL << psn)) && hugepg) {
->           *huge_page = true;
->           *hgpg_directory_hit = true;
->           entry = get_tlb_entry_layout(env, entry, leaf_mop, pf_ptew);
+---
+
+This patch enhances memory_region_ref() and memory_region_unref()
+to handle RAM and MMIO memory regions differently, improving
+reference counting semantics.
+
+RAM regions now reference/unreference the memory region object
+itself, while MMIO continue to reference/unreference the owner
+device as before.
+
+An additional qtest has been added to stress the memory
+lifecycle. All tests pass as these changes keep backward
+compatibility (prior behaviour is kept for MMIO regions).
+
+Signed-off-by: David Hildenbrand <david@redhat.com >
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+---
+ system/memory.c            | 22 +++++++++++++----
+ tests/qtest/ivshmem-test.c | 50 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 5 deletions(-)
+
+diff --git a/system/memory.c b/system/memory.c
+index 5646547940..48ab6e5592 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1826,6 +1826,14 @@ Object *memory_region_owner(MemoryRegion *mr)
+ 
+ void memory_region_ref(MemoryRegion *mr)
+ {
++    /* Regions without an owner are considered static. */
++    if (!mr || !mr->owner) {
++        return;
++    }
++    if (mr->ram) {
++        object_ref(OBJECT(mr));
++        return;
++    }
+     /* MMIO callbacks most likely will access data that belongs
+      * to the owner, hence the need to ref/unref the owner whenever
+      * the memory region is in use.
+@@ -1836,16 +1844,20 @@ void memory_region_ref(MemoryRegion *mr)
+      * Memory regions without an owner are supposed to never go away;
+      * we do not ref/unref them because it slows down DMA sensibly.
+      */
+-    if (mr && mr->owner) {
+-        object_ref(mr->owner);
+-    }
++    object_ref(mr->owner);
+ }
+ 
+ void memory_region_unref(MemoryRegion *mr)
+ {
+-    if (mr && mr->owner) {
+-        object_unref(mr->owner);
++    /* Regions without an owner are considered static. */
++    if (!mr || !mr->owner) {
++        return;
++    }
++    if (mr->ram) {
++        object_unref(OBJECT(mr));
++        return;
+     }
++    object_unref(mr->owner);
+ }
+ 
+ uint64_t memory_region_size(MemoryRegion *mr)
+diff --git a/tests/qtest/ivshmem-test.c b/tests/qtest/ivshmem-test.c
+index fb45fdeb07..44f712e9ae 100644
+--- a/tests/qtest/ivshmem-test.c
++++ b/tests/qtest/ivshmem-test.c
+@@ -194,6 +194,55 @@ static void test_ivshmem_single(void)
+     cleanup_vm(s);
+ }
+ 
++static void test_memory_region_lifecycle(void)
++{
++    /* Device creation triggers memory region mapping (calls ref) */
++    IVState state1, state2;
++    uint32_t test_data, read_data;
++    int i;
++
++    setup_vm(&state1);
++
++    /* Basic verification that device works */
++    test_data = 0x12345678;
++    write_mem(&state1, 0, &test_data, sizeof(test_data));
++    read_mem(&state1, 0, &read_data, sizeof(read_data));
++    g_assert_cmpuint(read_data, ==, test_data);
++
++    /* Multiple devices stress test memory region ref counting */
++    setup_vm(&state2);
++
++    /* Verify both devices work independently */
++    test_data = 0xDEADBEEF;
++    write_mem(&state2, 4, &test_data, sizeof(test_data));
++    read_mem(&state2, 4, &read_data, sizeof(read_data));
++    g_assert_cmpuint(read_data, ==, test_data);
++
++    /* Device destruction triggers memory region unmapping (calls unref) */
++    cleanup_vm(&state1);
++
++    /* Verify remaining device still works after first device cleanup */
++    read_mem(&state2, 4, &read_data, sizeof(read_data));
++    g_assert_cmpuint(read_data, ==, test_data);
++
++    /* Final cleanup */
++    cleanup_vm(&state2);
++
++    /* Quick lifecycle stress test - multiple create/destroy cycles */
++    for (i = 0; i < 5; i++) {
++        IVState temp_state;
++        setup_vm(&temp_state);
++
++        /* Quick test to ensure device works */
++        test_data = 0x1000 + i;
++        write_mem(&temp_state, 0, &test_data, sizeof(test_data));
++        read_mem(&temp_state, 0, &read_data, sizeof(read_data));
++        g_assert_cmpuint(read_data, ==, test_data);
++
++        cleanup_vm(&temp_state);
++    }
++}
++
+ static void test_ivshmem_pair(void)
+ {
+     IVState state1, state2, *s1, *s2;
+@@ -503,6 +552,7 @@ int main(int argc, char **argv)
+     tmpserver = g_strconcat(tmpdir, "/server", NULL);
+ 
+     qtest_add_func("/ivshmem/single", test_ivshmem_single);
++    qtest_add_func("/ivshmem/memory-lifecycle", test_memory_region_lifecycle);
+     qtest_add_func("/ivshmem/hotplug", test_ivshmem_hotplug);
+     qtest_add_func("/ivshmem/memdev", test_ivshmem_memdev);
+     if (g_test_slow()) {
+-- 
+2.49.0
 
 
