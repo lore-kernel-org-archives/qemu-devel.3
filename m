@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48349C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A42C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uec29-0002Ev-Ab; Wed, 23 Jul 2025 12:09:34 -0400
+	id 1uec2B-0002GZ-8m; Wed, 23 Jul 2025 12:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uec20-00029A-GD
+ id 1uec22-00029Y-Ll
  for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:09:27 -0400
-Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uec1y-0004Af-1A
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:09:24 -0400
-Received: by mail-pj1-x1044.google.com with SMTP id
- 98e67ed59e1d1-3137c20213cso1847a91.3
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:09:21 -0700 (PDT)
+ id 1uec21-0004Ax-3W
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:09:26 -0400
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-b321bd36a41so106517a12.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753286961; x=1753891761; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1753286963; x=1753891763; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FHffcDkEd5IyvSc6NJ5MksKSKbYft6cFEVxYiWUulo0=;
- b=PUYM4WSExPPZD2aVnXvMB/dS5ZUoHiri8rzSBgxd+nvOMmo/TRzYb9rsqbCUHnXzYr
- 755WF/4VD03SBJEFA1Bvj2ik5jO9nh0dTBNiWgeReGwc/tFjycaEBfRwbjTz70oragVv
- L2yvoXi/o17QybzTUpQ27GRByDfC/FVrwZFKKzm8IZhmpiYs1f3BuzXLc4rAWa3fvnz9
- PHyCx2PBzHxLtkY2sta3fBQnrBpmnU9AqOC10EfeOHi/FjTlT5/vrw/5LVJSwOTBTBdS
- Lfr+jo2RMHcxjX+gZJOA2m5lhGVAYA1zA9LQeMhWTpa+vP0Z4wMMWaKUiiYtkG9sqvTs
- Tdgg==
+ bh=WXm2Lhh0irodL+aVAw/JV0Qy+oR2s/H9XmkkNHBbafY=;
+ b=OIj9N5sNrgVdJfGClPDh19sWFfxnTOOC54WTsAWKvnsPs1zbIx8tk0/+Y1f9vc4pZP
+ +0RKmDBNTCQau6IHdqGZ54ovb2ogssQz8/MwieeNq+ETxuSp7F1gOjOWfF4mKSMygGH0
+ lukbJIp6pC3SIAdt4/m/4MYGNS9wa871ybCeDby/yGKPLmQTFmnmkQcfpS2hoIV8BFqe
+ Xwuh4gJoSQGYHuRqKjEDFPiSfWn88YkWgcZhmDt0OxNPJ9CzOrEHsOb3yQBxQs5shayp
+ N5QySxVKk3L+qInHSlY/hWs1LvC6bsJmbPRE/WmIwmVN3OYSkSjKsVbfMAx8qfWAZOp1
+ dzfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753286961; x=1753891761;
+ d=1e100.net; s=20230601; t=1753286963; x=1753891763;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FHffcDkEd5IyvSc6NJ5MksKSKbYft6cFEVxYiWUulo0=;
- b=RPNhmjcCkaSdJC09SR2tpC5veaLzEnXzk6/wSE3idanKhqQXYMhc+QvcZI7evQRnIo
- VqqB5Yaewx6iaqzaGZ+RodhA6qflQQk9bzlZWo24LoY7HPYyb113/HlTbcPotdWDnoaH
- QvLDg0NHheszj9I0bFu8y5SQ8wp7c2qk8rgCrXPY66kkb+Yg2zrMrv7dY37G237gXVzx
- r1sQ0FC/pqOKIlgJtsDnhnxdME5y9Av8IBSRrzy8dYvlG/noz7FTbiP05gI44MQpbpWx
- 0lPBuaZX1QchIdWCzJuouImLL1NPf6LBV7XgAwrYSrdW84/mZu6+h2A7TjKiTcAHM2zI
- m/fA==
-X-Gm-Message-State: AOJu0Yzart5gF8yAK7yhEl65xrauBsPzY4ZrxkEaoQPtJAfP/C0kSUjW
- XVQML34VfD+OlX/3dW+1CBvEy71ig5vmOXqCwqoclSBuAre0T2gWC6p37V5CWbeQ0w==
-X-Gm-Gg: ASbGnctbjLbJuLgR1/hm+8LheiKKpYBpWSUoZwebnc8GZt263VytXrEZpMvmge7tXvX
- 45dx0L4cBVj+ETEx98DfFk3G3e2eDwV/4OZtNsIKksmoC8Si5LHRWA8BEjBjxZNVqU7hr6Dr1sb
- 2FsKGxlfaTUWABDjO/rRYBm//sQF7lzY/bF8lKP1T2Am/pdJfNiOEPuIZjdDsNAnYCNWoGmqlaR
- K4xJQBknG4sMlVkgijf/qrLh/o/3y0m5meKytHqsp/dSRHEV//R13OEW8C0sUMBIPKwrToqi2UL
- NhS1KQLoG14TIJS0EPywTsvckIY4ICThvc2ujaDkOZfHBzI3xxb29pa8LVS0BFqTYxo6KeTrBrZ
- mvyDzKJ3xSzV1Sh+vMIQOCqk9LDe5LjtGhps=
-X-Google-Smtp-Source: AGHT+IHu1uKVDT6THDnmjzvTRoJps5DVnAzqyrGhcxNEMg/7oYbxFAVfahkh3RVl3vPZpI8WJopYMA==
-X-Received: by 2002:a17:90b:2686:b0:311:ab20:159a with SMTP id
- 98e67ed59e1d1-31e507ce0d9mr5211127a91.29.1753286960266; 
- Wed, 23 Jul 2025 09:09:20 -0700 (PDT)
+ bh=WXm2Lhh0irodL+aVAw/JV0Qy+oR2s/H9XmkkNHBbafY=;
+ b=n/TLkXKvm+JBkdiYQgFHE8iCD6T4V5rBUCcZpcXNZ7MsNC4RodX26DxRxiOkq8/FtD
+ fWSn3sVGanlk6Hqv95ZnbonZw0H+InWTvk4fFVyG5kHJpwC+oKNt386pGrlqgLugctXQ
+ 63lc7/Qf2oeaL8Dw7T+syaNdVlmmLw0Vv+hqcgzt8YcA+XTC62g2bChm/iyh3dzFO70h
+ aPac0r+Szm6mhX4VkEdGV9ZqboFbv+qVhlbyDbGIiBtjHkslRD4vCr5/3yKFCQTkppYk
+ Q1wsXtQ1CbTUbHHtaXvRLPlTc3wppsfZskdrxFxYioZjqfk94SU+q8F/u41ViaibFJhc
+ n3FA==
+X-Gm-Message-State: AOJu0Yz2jDtRaBRGGNEMB7FQjiP7EWjfvDX6k9RHg4Ym88cyBOLAR2ft
+ /exGMxxjyDxSQhnVRkVh1Kj5uvG7ZHsAGKsZkp/936uTUS86vk2MwsUhTqHBAW0UCg==
+X-Gm-Gg: ASbGnctHwmDdVA9mGgzAyMcDn3u53IDSwuP73qQ1koHEmj/mTxEAbT3/gjEMNW7LD/V
+ tWI9mO4J9864B27hDjAdPLbPSFZUtfZB3EKmfCpaEEUQXWLexq+9UenLPZpg2zcb2b2u5+qzrny
+ Nk+Xxz6lCH2USNCgd2iPSS9vncDL+VomIExMc/kFknRb3KxCxN3Jsme9WyXLIrrwXDbHnMzp3kN
+ QwAbXdGxSGzvwX4zBEjW61Dr6OWaz1+bH2fHdUzWheyXRNs3yrOAdDb6Ygo4wmSjWKT/QunGzio
+ PMVgCev1uu/Htc763W2pSXs9VTVlqgaW3SONi1AspOveLi6Plv60bErLO5yDXaP1RDhtnEIYlep
+ KIGh+daXfA5OMsxwSBnuBG8JJowaKaeTSQb0=
+X-Google-Smtp-Source: AGHT+IFkj18Jydq8s09MP7X1mJ3ft1iOFLNLcHKEp9bYQGgVxY8DEo34qX5AWfC+lU0kzWg71lLKOA==
+X-Received: by 2002:a17:90b:5844:b0:311:9c9a:58ca with SMTP id
+ 98e67ed59e1d1-31e507b3c87mr5333579a91.8.1753286963517; 
+ Wed, 23 Jul 2025 09:09:23 -0700 (PDT)
 Received: from localhost.localdomain ([139.227.17.46])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e519f61eesm1968353a91.14.2025.07.23.09.09.17
+ 98e67ed59e1d1-31e519f61eesm1968353a91.14.2025.07.23.09.09.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Jul 2025 09:09:19 -0700 (PDT)
+ Wed, 23 Jul 2025 09:09:23 -0700 (PDT)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] vfio/igd: Require host VGA decode for legacy mode
-Date: Thu, 24 Jul 2025 00:09:05 +0800
-Message-ID: <20250723160906.44941-2-tomitamoeko@gmail.com>
+Subject: [PATCH 2/2] vfio/igd: Fix VGA regions are not exposed in legacy mode
+Date: Thu, 24 Jul 2025 00:09:06 +0800
+Message-ID: <20250723160906.44941-3-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250723160906.44941-1-tomitamoeko@gmail.com>
 References: <20250723160906.44941-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1044.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,73 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a59d06305fff ("vfio/pci: Introduce x-pci-class-code option")
-allows user to expose non-VGA IGD device as VGA controller to the
-guest. However, legacy mode requires host VGA range access. Check
-that GGC.IVD == 0 before enabling legacy mode to ensure IGD is a real
-VGA device claiming host VGA ranges.
+In commit a59d06305fff ("vfio/pci: Introduce x-pci-class-code option"),
+pci_register_vga() has been moved ouside of vfio_populate_vga(). As a
+result, IGD VGA ranges are no longer properly exposed to guest.
 
+To fix this, call pci_register_vga() after vfio_populate_vga() legacy
+mode. A wrapper function vfio_pci_config_register_vga() is introduced
+to handle it.
+
+Fixes: a59d06305fff ("vfio/pci: Introduce x-pci-class-code option")
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- docs/igd-assign.txt |  1 +
- hw/vfio/igd.c       | 11 ++++++-----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ hw/vfio/igd.c | 10 +++++++---
+ hw/vfio/pci.c | 13 ++++++++++---
+ hw/vfio/pci.h |  1 +
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-index af4e8391fc..e54040335b 100644
---- a/docs/igd-assign.txt
-+++ b/docs/igd-assign.txt
-@@ -48,6 +48,7 @@ Intel document [1] shows how to dump VBIOS to file. For UEFI Option ROM, see
- QEMU also provides a "Legacy" mode that implicitly enables full functionality
- on IGD, it is automatically enabled when
- * IGD generation is 6 to 9 (Sandy Bridge to Comet Lake)
-+* IGD claims VGA cycles on host (IGD is VGA controller on host)
- * Machine type is i440fx
- * IGD is assigned to guest BDF 00:02.0
- * ROM BAR or romfile is present
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index e7a9d1ffc1..5b1ad1a804 100644
+index 5b1ad1a804..ee0767b0b8 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -113,6 +113,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
- #define IGD_BDSM 0x5c /* Base Data of Stolen Memory */
- #define IGD_BDSM_GEN11 0xc0 /* Base Data of Stolen Memory of gen 11 and later */
- 
-+#define IGD_GMCH_VGA_DISABLE        BIT(1)
- #define IGD_GMCH_GEN6_GMS_SHIFT     3       /* SNB_GMCH in i915 */
- #define IGD_GMCH_GEN6_GMS_MASK      0x1f
- #define IGD_GMCH_GEN8_GMS_SHIFT     8       /* BDW_GMCH in i915 */
-@@ -533,12 +534,14 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     /*
-      * For backward compatibility, enable legacy mode when
-      * - Device geneation is 6 to 9 (including both)
-+     * - IGD claims VGA cycles on host
-      * - Machine type is i440fx (pc_piix)
-      * - IGD device is at guest BDF 00:02.0
-      * - Not manually disabled by x-igd-legacy-mode=off
-      */
-     if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
-         (gen >= 6 && gen <= 9) &&
-+        !(gmch & IGD_GMCH_VGA_DISABLE) &&
-         !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
-         (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
-         0, PCI_DEVFN(0x2, 0)))) {
-@@ -568,12 +571,10 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-         }
- 
-         /*
--         * If IGD VGA Disable is clear (expected) and VGA is not already
--         * enabled, try to enable it. Probably shouldn't be using legacy mode
--         * without VGA, but also no point in us enabling VGA if disabled in
--         * hardware.
-+         * If VGA is not already enabled, try to enable it. We shouldn't be
-+         * using legacy mode without VGA.
+@@ -574,9 +574,13 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+          * If VGA is not already enabled, try to enable it. We shouldn't be
+          * using legacy mode without VGA.
           */
--        if (!(gmch & 0x2) && !vdev->vga && !vfio_populate_vga(vdev, &err)) {
-+        if (!vdev->vga && !vfio_populate_vga(vdev, &err)) {
-             error_setg(&err, "Unable to enable VGA access");
-             goto error;
+-        if (!vdev->vga && !vfio_populate_vga(vdev, &err)) {
+-            error_setg(&err, "Unable to enable VGA access");
+-            goto error;
++        if (!vdev->vga) {
++            if (vfio_populate_vga(vdev, &err)) {
++                vfio_pci_config_register_vga(vdev);
++            } else {
++                error_setg(&err, "Unable to enable VGA access");
++                goto error;
++            }
          }
+ 
+         /* Enable OpRegion and LPC bridge quirk */
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 15136f94f8..d5ea4a5a83 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3172,6 +3172,15 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
+     vdev->req_enabled = false;
+ }
+ 
++void vfio_pci_config_register_vga(VFIOPCIDevice *vdev)
++{
++    assert(vdev->vga != NULL);
++
++    pci_register_vga(&vdev->pdev, &vdev->vga->region[QEMU_PCI_VGA_MEM].mem,
++                     &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
++                     &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
++}
++
+ bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
+ {
+     PCIDevice *pdev = &vdev->pdev;
+@@ -3293,9 +3302,7 @@ bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
+     vfio_bars_register(vdev);
+ 
+     if (vdev->vga && vfio_is_vga(vdev)) {
+-        pci_register_vga(&vdev->pdev, &vdev->vga->region[QEMU_PCI_VGA_MEM].mem,
+-                         &vdev->vga->region[QEMU_PCI_VGA_IO_LO].mem,
+-                         &vdev->vga->region[QEMU_PCI_VGA_IO_HI].mem);
++        vfio_pci_config_register_vga(vdev);
+     }
+ 
+     return true;
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 44cae5afd6..810a842f4a 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -255,6 +255,7 @@ extern const VMStateDescription vfio_display_vmstate;
+ 
+ void vfio_pci_bars_exit(VFIOPCIDevice *vdev);
+ bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp);
++void vfio_pci_config_register_vga(VFIOPCIDevice *vdev);
+ bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp);
+ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp);
+ void vfio_pci_intx_eoi(VFIODevice *vbasedev);
 -- 
 2.47.2
 
