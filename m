@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F43C83F1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 13:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455B7C83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 13:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueZ4H-0003sB-1N; Wed, 23 Jul 2025 08:59:33 -0400
+	id 1ueZ5r-0004gV-Ol; Wed, 23 Jul 2025 09:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ueYyf-0001Lr-Kw
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:53:45 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ueZ00-0002GB-UR
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:55:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ueYyc-0004F2-UT
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:53:45 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ueYzv-0004KM-QP
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 08:55:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753275220;
+ s=mimecast20190719; t=1753275295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dtiUzUzFuUKAmSbSMZbLfj5x5lMuBUIfkEhyAvTdwJE=;
- b=Nco8jy5t8RXC8Hjj+7YlyG3oWEcgczykWKUAG8rIfIzGcEYhXGe18qWrOzylk9AnCkWbaj
- Lp03RSv2GfB2YpYIS/Mp6X5BG8b3L+3NJvJNjYxQP58fGJO5QjLoD+ojswpjWZecGaVnfk
- gIUWmWDupeCmxd1VX7nKLx6Y33vTHio=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Btsz5QenQejzPlNOlJUpEkSjyEdeWx/+jO0MFxpQPEU=;
+ b=DSB5M5KBNX3b6JYEckNiB0FYI/0vCy6aV0FmuZba9QBaUdx5ANSRW1teffgIc91cZB3RSy
+ ZudSM0O9HYmwMW1KtgPTQywdO7wBk/6j8jemZlazZMDjnlpg3a9j8LUQrjgtWcB63Vjaaz
+ NlKOULhvvDeJnWRGRh8EgP4OTEXLuqI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-g036saPTMOim9yckHJ1qrA-1; Wed, 23 Jul 2025 08:53:37 -0400
-X-MC-Unique: g036saPTMOim9yckHJ1qrA-1
-X-Mimecast-MFC-AGG-ID: g036saPTMOim9yckHJ1qrA_1753275216
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4e713e05bso2863081f8f.3
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 05:53:36 -0700 (PDT)
+ us-mta-606-elDF6YnROT6cubQtC4Z_dQ-1; Wed, 23 Jul 2025 08:54:54 -0400
+X-MC-Unique: elDF6YnROT6cubQtC4Z_dQ-1
+X-Mimecast-MFC-AGG-ID: elDF6YnROT6cubQtC4Z_dQ_1753275293
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3af3c860ed7so2755700f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 05:54:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753275216; x=1753880016;
+ d=1e100.net; s=20230601; t=1753275293; x=1753880093;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
+ :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=dtiUzUzFuUKAmSbSMZbLfj5x5lMuBUIfkEhyAvTdwJE=;
- b=TY2emV67ba5yteWO6Bi45HDWd7EhsOCMa849/E8exaCx3UmuQXODV+Xv4NnsNIHHsJ
- 38ObqIInBBjHer4h89JN29hPVrgYLP+I2jhOJBEFwSe7SS2NYQNlACQ8ESQFGsh+XfcA
- xb+3I99gcs9GKTw+IMJQtDW4e4jShlt0GsUSrkc6fKjgf6KmrWrTfBQrf/sXla14FgDr
- QYbeULQNu18vC26Ofd/py+sbd7hLHpld6cnipT6zAdwe2j23lzwGvR1C9ExCy8OJ0xO8
- SNwUvmILUbKsjJRF17/8bVANDcdhgcSzKcWYt5x3C3AOW911OtOMpAYQ3B2tsePKSrsO
- gHpw==
-X-Gm-Message-State: AOJu0Yykzi2zvSaBsx54l+wihJ7n/uZC9mkX7X3HY29S2215ulmM0wKp
- Dnvan6PWUzjLgoBy0kQFhYfXopVL9wUbX+jLPjJXKkGFs1esEI35llWPTKM50il2n2+/3fbmw7Y
- 2MhjBY0XmBf76XrWKKJfBVtgWDZaHtFrybB5m2De7ZHlnfnOGz3tuBnNx
-X-Gm-Gg: ASbGncuusFIz3wX2Qq76j48qZBW8bvgYuAo23nCQaAfS9GOLCqb0+0TmXBzfWA9njhP
- D0Af6qBrBAUXBQ9/F/IJ8nFYgh5hlT3b12jNvBkvuSzaD/Suuvow3C0p9BSYGCNo2+H3fgXiyor
- TyExXTFVqTHKK/Ijiqxb0tAw9f7nslci/Iv1HUQJslJ3MXIHD+PhwhGvGxT/5QZn3JlJ8VS4s7p
- uAuw8iPeYu83K2nj/P5bSC4Yg+Z9t0BJmwG2AtANFi50kPxgcHdEJgKo7e5YmIBtR9A205Yx63v
- YndEjpIn81R3gSucZZhTqMckEDvP2PE+LQC91h1Y5it6cE9WBTb7EHy0AMeIJBRuEWmtMiAPP1x
- KFymVp0eqx+8iZ1/R1qZQ+vVkMrgkOi+asi33YuDapMgkNHacIZdZULQS7QZk9t4+H9Q=
-X-Received: by 2002:a05:6000:40dd:b0:3a4:e609:dc63 with SMTP id
- ffacd0b85a97d-3b768ea059dmr2767544f8f.20.1753275215534; 
- Wed, 23 Jul 2025 05:53:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/jmuuHvys3VET2D3bnU3sEBY7CurdItO2+wjnVOvS9VdhdL2NG3hbLIsNTmRNPx5/39vtuA==
-X-Received: by 2002:a05:6000:40dd:b0:3a4:e609:dc63 with SMTP id
- ffacd0b85a97d-3b768ea059dmr2767513f8f.20.1753275215006; 
- Wed, 23 Jul 2025 05:53:35 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f00:4000:a438:1541:1da1:723a?
- (p200300d82f004000a43815411da1723a.dip0.t-ipconnect.de.
- [2003:d8:2f00:4000:a438:1541:1da1:723a])
+ bh=Btsz5QenQejzPlNOlJUpEkSjyEdeWx/+jO0MFxpQPEU=;
+ b=IlGAsDyRH9J9OkwT+pdl5/M/eOHpFYan7mb3sncJCXC23yl/vrD4hsj53eUTRJNoIY
+ Qr8rPE7ayMAug1ZTxHCAfQs4n4IIwJkjbBTjeVJrPVOR49ULipgR0OC2ca7GzFzyzkuL
+ PtDeC+yhVHCzMjyRLDpI9Yf8CeQcKtQfBgBE5XgQjf+LreaDFMi9f+A2goE5UHvAR74o
+ lgNUCXZS+UhJrRFcBgWkeOtBwrCR5Z69iUbBR98qTCkkFzOe4jW1dSRRnwfAWFRPT5g6
+ g+9TgUziMhCe8DhoPKB86BWDAkgAptSVJRUHmIsjR6/DdW5CWlOyAffNU3BcAa7XCuIx
+ m+Yg==
+X-Gm-Message-State: AOJu0YzfPpAA2fNEcidJmoU4OPDFEyD+gLg2WChcx40zqF1uV2xF7uox
+ 4qT7c7TiqE/yIYlYIbDIsKtpXcSspR/oTFVYZlmUU32NVDEb4Qp9/IlvxA4ORS9pwYdWgJdQshl
+ dX7/PzLzu2mK+dwFV1xPWpKyJcF73sPkfnzYJcnLdgUyJNyEUpLxXpNka
+X-Gm-Gg: ASbGnctE/tPy/hv8B0GWQp2ERDaBzXVSNvtAlXEvQPJgnmVDGE9lvyKKdtT3xHhTKtS
+ QQLk+gBoxm2syDJv+xeMMDSGyi5s8Yf0eEJb5eQvjaDiU78dEUL6uiZOqO250UmFb+RJ+zADfVh
+ YJbxwaTJ0K/kNBrXGiwhG5ZRjcFad8BZqB91rZgL+1s5gBrvZFlLUNqtAQLUESx1v++PLS7u2AM
+ IMZyqO2BZD1MzEbjEuYcsF3UBveYudNg5+DhnXtcwMd7Fk4vyUUYhAck8Fa9ZtqQQ5yczT7yLga
+ xkIoyt9vUPyc0zumrTSe6e68zvXa89GwVnyDhnyV7xr8Fy1y8qraYFCSlrV6IfbZVAIsNg==
+X-Received: by 2002:a05:6000:2911:b0:3b4:9721:2b16 with SMTP id
+ ffacd0b85a97d-3b768ef3c9bmr2407861f8f.36.1753275293017; 
+ Wed, 23 Jul 2025 05:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJKkW/BhnxqiCt1Agfpr0Nf5CE+kgehriLQ5WNRQquMrzmncsRFqJLI++SnHvrBhTvzhPrOw==
+X-Received: by 2002:a05:6000:2911:b0:3b4:9721:2b16 with SMTP id
+ ffacd0b85a97d-3b768ef3c9bmr2407834f8f.36.1753275292537; 
+ Wed, 23 Jul 2025 05:54:52 -0700 (PDT)
+Received: from [192.168.3.141] (p57a1af43.dip0.t-ipconnect.de. [87.161.175.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458691aaeb4sm22357295e9.22.2025.07.23.05.53.33
+ ffacd0b85a97d-3b76773a0e3sm3181411f8f.17.2025.07.23.05.54.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 05:53:34 -0700 (PDT)
-Message-ID: <e036f01a-1f8d-4582-a996-125585563368@redhat.com>
-Date: Wed, 23 Jul 2025 14:53:33 +0200
+ Wed, 23 Jul 2025 05:54:52 -0700 (PDT)
+Message-ID: <e5c93bdf-4ee4-400f-ab45-c0869dc47b1e@redhat.com>
+Date: Wed, 23 Jul 2025 14:54:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC] memory.c: improve refcounting for RAM vs MMIO regions
-From: David Hildenbrand <david@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>
 Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
  Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250723121920.1184928-1-aesteve@redhat.com>
- <f35f2cfc-2bc1-40b4-8dd2-f7ac34cbd317@linaro.org>
- <CADSE00Lp0W_nsUqqTz7=JmyzLuJjMdOq8WkFXeBAtOxe-yDCPg@mail.gmail.com>
- <0d2f8367-449a-48b1-a7c5-f4c272bb7c15@redhat.com>
+ <98df482d-c75a-46e7-8c39-5aa26eaf1700@redhat.com>
+ <CADSE00KkhKKQBSk_iLo4xCkPRcWQqUUumD_xsNDOk_YoSDoNeQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -135,7 +130,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  WBe5lqcozu9LpNDH/brVSzHCSb7vjNGvvSVESDuoiHK8gNlf0v+epy5WYd7CGAgODPvDShGN
  g3eXuA==
 Organization: Red Hat
-In-Reply-To: <0d2f8367-449a-48b1-a7c5-f4c272bb7c15@redhat.com>
+In-Reply-To: <CADSE00KkhKKQBSk_iLo4xCkPRcWQqUUumD_xsNDOk_YoSDoNeQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -163,92 +158,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.07.25 14:45, David Hildenbrand wrote:
-> On 23.07.25 14:42, Albert Esteve wrote:
->> On Wed, Jul 23, 2025 at 2:32 PM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>>
->>> Hi,
->>>
->>> On 23/7/25 14:19, Albert Esteve wrote:
->>>> In the last version of the SHMEM MAP/UNMAP [1] there was a
->>>> comment [2] from Stefan about the lifecycle of the memory
->>>> regions.
->>>>
->>>> After some discussion, David Hildenbrand proposed
->>>> to detect RAM regions and handle refcounting differently
->>>> to clear the initial concern. This RFC patch is
->>>> meant for gathering feedback from others
->>>> (i.e., Paolo Bonzini and Peter Xu).
->>>>
->>>> [1] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=460121
->>>> [2] https://patchwork.ozlabs.org/comment/3528600/
->>>>
->>>> ---
->>>>
->>>> This patch enhances memory_region_ref() and memory_region_unref()
->>>> to handle RAM and MMIO memory regions differently, improving
->>>> reference counting semantics.
->>>>
->>>> RAM regions now reference/unreference the memory region object
->>>> itself, while MMIO continue to reference/unreference the owner
->>>> device as before.
->>>>
->>>> An additional qtest has been added to stress the memory
->>>> lifecycle. All tests pass as these changes keep backward
->>>> compatibility (prior behaviour is kept for MMIO regions).
->>>>
->>>> Signed-off-by: David Hildenbrand <david@redhat.com >
->>>> Signed-off-by: Albert Esteve <aesteve@redhat.com>
->>>> ---
->>>>     system/memory.c            | 22 +++++++++++++----
->>>>     tests/qtest/ivshmem-test.c | 50 ++++++++++++++++++++++++++++++++++++++
->>>>     2 files changed, 67 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/system/memory.c b/system/memory.c
->>>> index 5646547940..48ab6e5592 100644
->>>> --- a/system/memory.c
->>>> +++ b/system/memory.c
->>>> @@ -1826,6 +1826,14 @@ Object *memory_region_owner(MemoryRegion *mr)
->>>>
->>>>     void memory_region_ref(MemoryRegion *mr)
->>>>     {
->>>> +    /* Regions without an owner are considered static. */
->>>> +    if (!mr || !mr->owner) {
->>>> +        return;
->>>> +    }
->>>> +    if (mr->ram) {
->>>> +        object_ref(OBJECT(mr));
->>>> +        return;
->>>> +    }
->>>>         /* MMIO callbacks most likely will access data that belongs
->>>>          * to the owner, hence the need to ref/unref the owner whenever
->>>>          * the memory region is in use.
->>>> @@ -1836,16 +1844,20 @@ void memory_region_ref(MemoryRegion *mr)
->>>>          * Memory regions without an owner are supposed to never go away;
->>>
->>> What are the use cases for MRs without QOM owner?
+On 23.07.25 14:48, Albert Esteve wrote:
+> On Wed, Jul 23, 2025 at 2:43 PM David Hildenbrand <david@redhat.com> wrote:
 >>
->> Not sure if you are asking about the logic or the actual usecases
->> where these MRs would make sense.
+>> On 23.07.25 14:19, Albert Esteve wrote:
+>>> In the last version of the SHMEM MAP/UNMAP [1] there was a
+>>> comment [2] from Stefan about the lifecycle of the memory
+>>> regions.
+>>>
+>>> After some discussion, David Hildenbrand proposed
+>>> to detect RAM regions and handle refcounting differently
+>>> to clear the initial concern. This RFC patch is
+>>> meant for gathering feedback from others
+>>> (i.e., Paolo Bonzini and Peter Xu).
+>>>
+>>> [1] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=460121
+>>> [2] https://patchwork.ozlabs.org/comment/3528600/
+>>>
+>>> ---
+>>>
+>>> This patch enhances memory_region_ref() and memory_region_unref()
+>>> to handle RAM and MMIO memory regions differently, improving
+>>> reference counting semantics.
+>>>
+>>> RAM regions now reference/unreference the memory region object
+>>> itself, while MMIO continue to reference/unreference the owner
+>>> device as before.
+>>>
+>>> An additional qtest has been added to stress the memory
+>>> lifecycle. All tests pass as these changes keep backward
+>>> compatibility (prior behaviour is kept for MMIO regions).
+>>>
+>>> Signed-off-by: David Hildenbrand <david@redhat.com >
+>>> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>>> ---
+>>>    system/memory.c            | 22 +++++++++++++----
+>>>    tests/qtest/ivshmem-test.c | 50 ++++++++++++++++++++++++++++++++++++++
+>>>    2 files changed, 67 insertions(+), 5 deletions(-)
 >>
->> Regarding the logic, note the early return at the beginning of the
->> function, so that this comment is kept valid. In short, nothing
->> changes.
->>
->> Regarding the usecases for these type of memories, I can think of
->> system memory or container regions as examples. But there are
->> certainly more experienced people in this thread that can answer you
->> better than me.
+>> Did we discuss extending the doc as well, to clarify which scenario is
+>> now supported?
 > 
-> The thing is: these MRs have an owner, but to make the limitation
-> spelled out in the doc (see my comment) work, we must refcount the MR
-> itself.
-> 
-> We could likely ref both (RAM region and the owner), but it's documented
-> that that results in a performance problem.
+> Not that I remember? But it is a good idea. I will update the docs for
+> the next version of this patch.
 
-Correction: we can't easily, because of the object_unparent IIRC.
+Maybe I never sent it to you while brainstorming. Here is what I had:
+
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 57fb2aec76..5c4bc9ced5 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -143,11 +143,13 @@ Region lifecycle
+  ----------------
+  
+  A region is created by one of the memory_region_init*() functions and
+-attached to an object, which acts as its owner or parent.  QEMU ensures
+-that the owner object remains alive as long as the region is visible to
+-the guest, or as long as the region is in use by a virtual CPU or another
+-device.  For example, the owner object will not die between an
+-address_space_map operation and the corresponding address_space_unmap.
++attached to an object, which acts as its owner or parent.
++
++For non-RAM regions, QEMU ensures that the owner object remains alive as
++long as the region is visible to the guest, or as long as the region is in
++use by a virtual CPU or another device.  For example, the owner object will
++not die between an address_space_map operation and the corresponding
++address_space_unmap. For RAM regions, this is not guaranteed.
+  
+  After creation, a region can be added to an address space or a
+  container with memory_region_add_subregion(), and removed using
+@@ -174,7 +176,8 @@ callback.  The dynamically allocated data structure that contains the
+  memory region then should obviously be freed in the instance_finalize
+  callback as well.
+  
+-If you break this rule, the following situation can happen:
++If you break this rule, the following situation can happen for non-RAM
++regions:
+  
+  - the memory region's owner had a reference taken via memory_region_ref
+    (for example by address_space_map)
+
 
 -- 
 Cheers,
