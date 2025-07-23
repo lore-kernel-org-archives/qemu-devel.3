@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B9EC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 19:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D5AC83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 19:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uefF2-0004DR-K8; Wed, 23 Jul 2025 15:35:04 -0400
+	id 1uefFb-0004x7-FA; Wed, 23 Jul 2025 15:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCs-00021q-PV
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefD3-00027e-VD
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:33:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCq-0005tY-Vr
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:50 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCy-0005xk-6g
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753299168;
+ s=mimecast20190719; t=1753299175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zY+O/av+ttuGolLcE789/VNoP3Dlsf5A+gXkmoM5tQU=;
- b=XJfh2rJAU0/PzW1tCCaa3d7r6CY/RiXZCkBWFuuJ9Cm0Jm3QrWiNgjxt6Ewse6pVQ77hzk
- +Rm6c5N7GOij9Goz5NLHxpninudiKVt+5WQj07KxrwGSxFRvnawRkI7/bg+yj3UHxRpDJX
- P6KKnOzLr7N8PAQI9VWnfJXiRW7JwzY=
+ bh=nWr97O/YlfLNVK1Txq8tlyND9UIGZnBSrWAZpoDA6bw=;
+ b=WNRJPZGnpgzXGV1EaE/Q50NvDqU6c3/MrLztxGSZu8jAUqDx1wJgwRRcORdqKTS5V2xJoa
+ vQUqgfMylhj1gO4V3TGDbWHP4za9w3i399GI/txLi+eCNd2HVslUscRxm6KOY97pkK5BTU
+ DgXOKR7UBqViPdhpUIPYMQRyEUmo/Q0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-QJx3k2gZONau1hvbbtzKCA-1; Wed,
- 23 Jul 2025 15:32:44 -0400
-X-MC-Unique: QJx3k2gZONau1hvbbtzKCA-1
-X-Mimecast-MFC-AGG-ID: QJx3k2gZONau1hvbbtzKCA_1753299163
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-V5O9S0ZCO0yKEmFcZw39Jg-1; Wed,
+ 23 Jul 2025 15:32:49 -0400
+X-MC-Unique: V5O9S0ZCO0yKEmFcZw39Jg-1
+X-Mimecast-MFC-AGG-ID: V5O9S0ZCO0yKEmFcZw39Jg_1753299168
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 16C2A18001F7; Wed, 23 Jul 2025 19:32:43 +0000 (UTC)
+ id 63FE41800878; Wed, 23 Jul 2025 19:32:48 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1653518003FC; Wed, 23 Jul 2025 19:32:37 +0000 (UTC)
+ id 993C918003FC; Wed, 23 Jul 2025 19:32:43 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,16 +58,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
+Subject: [RFC PATCH v4 08/14] vhost: add support for negotiating extended
  features
-Date: Wed, 23 Jul 2025 21:31:27 +0200
-Message-ID: <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
+Date: Wed, 23 Jul 2025 21:31:28 +0200
+Message-ID: <c5fe056528937a9eb8d12134c3dbd6da11f35654.1753297661.git.pabeni@redhat.com>
 In-Reply-To: <cover.1753297661.git.pabeni@redhat.com>
 References: <cover.1753297661.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -92,186 +92,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the features configuration space to 128 bits. If the virtio
-device supports any extended features, allow the common read/write
-operation to access all of it, otherwise keep exposing only the
-lower 64 bits.
+Similar to virtio infra, vhost core maintains the features status
+in the full extended format and allows the devices to implement
+extended version of the getter/setter.
 
-On migration, save the 128 bit version of the features only if the
-upper bits are non zero. Relay on reset to clear all the feature
-space before load.
+Note that 'protocol_features' are not extended: they are only
+used by vhost-user, and the latter device is not going to implement
+extended features soon.
 
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
 v3 -> v4:
+  - fix compile warning for real :(
+  - de-duplicate code from vhost_{get,ack}_features and
+    vhost_{get,ack}_features_ex
   - use new virtio_features macro names
-  - move the build bug before vmstate_virtio_pci_modern_state_sub
 
 v2 -> v3:
-  - drop the pre_load/post_load trickery and relay on reset zeroing
-    the features instead.
-  - avoid union usage, just increase guest_features size and use
-    SUB_ARRAY.
-  - drop unneeded '!!'
+  - fix compile warning
   - _array -> _ex
 
 v1 -> v2:
-  - use separate VMStateDescription and pre/post load to avoid breaking
-    migration
-  - clear proxy features on device reset
+  - uint128_t -> uint64_t[]
+  - add _ex() variant of features manipulation helpers
 ---
- hw/virtio/virtio-pci.c         | 69 +++++++++++++++++++++++++++++-----
- include/hw/virtio/virtio-pci.h |  2 +-
- 2 files changed, 61 insertions(+), 10 deletions(-)
+ hw/virtio/vhost.c                 | 68 ++++++++++++++++++++++---------
+ include/hw/virtio/vhost-backend.h |  6 +++
+ include/hw/virtio/vhost.h         | 56 +++++++++++++++++++++----
+ 3 files changed, 103 insertions(+), 27 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 767216d795..bcc4d48c2c 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -109,6 +109,29 @@ static const VMStateDescription vmstate_virtio_pci_modern_queue_state = {
-     }
- };
- 
-+static bool virtio_pci_modern_state_features128_needed(void *opaque)
-+{
-+    VirtIOPCIProxy *proxy = opaque;
-+    uint32_t features = 0;
-+    int i;
-+
-+    for (i = 2; i < ARRAY_SIZE(proxy->guest_features); ++i) {
-+        features |= proxy->guest_features[i];
-+    }
-+    return features;
-+}
-+
-+static const VMStateDescription vmstate_virtio_pci_modern_state_features128 = {
-+    .name = "virtio_pci/modern_state/features128",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = &virtio_pci_modern_state_features128_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 2, 2),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static bool virtio_pci_modern_state_needed(void *opaque)
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c30ea1156e..d3e409b529 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -972,20 +972,34 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
+ static int vhost_dev_set_features(struct vhost_dev *dev,
+                                   bool enable_log)
  {
-     VirtIOPCIProxy *proxy = opaque;
-@@ -116,6 +139,11 @@ static bool virtio_pci_modern_state_needed(void *opaque)
-     return virtio_pci_modern(proxy);
+-    uint64_t features = dev->acked_features;
++    uint64_t features[VIRTIO_FEATURES_NU64S];
+     int r;
++
++    virtio_features_copy(features, dev->acked_features_ex);
+     if (enable_log) {
+-        features |= 0x1ULL << VHOST_F_LOG_ALL;
++        virtio_add_feature_ex(features, VHOST_F_LOG_ALL);
+     }
+     if (!vhost_dev_has_iommu(dev)) {
+-        features &= ~(0x1ULL << VIRTIO_F_IOMMU_PLATFORM);
++        virtio_clear_feature_ex(features, VIRTIO_F_IOMMU_PLATFORM);
+     }
+     if (dev->vhost_ops->vhost_force_iommu) {
+         if (dev->vhost_ops->vhost_force_iommu(dev) == true) {
+-            features |= 0x1ULL << VIRTIO_F_IOMMU_PLATFORM;
++            virtio_add_feature_ex(features, VIRTIO_F_IOMMU_PLATFORM);
+        }
+     }
+-    r = dev->vhost_ops->vhost_set_features(dev, features);
++
++    if (virtio_features_use_ex(features) &&
++        !dev->vhost_ops->vhost_set_features_ex) {
++        r = -EINVAL;
++        VHOST_OPS_DEBUG(r, "extended features without device support");
++        goto out;
++    }
++
++    if (dev->vhost_ops->vhost_set_features_ex) {
++        r = dev->vhost_ops->vhost_set_features_ex(dev, features);
++    } else {
++        r = dev->vhost_ops->vhost_set_features(dev, features[0]);
++    }
+     if (r < 0) {
+         VHOST_OPS_DEBUG(r, "vhost_set_features failed");
+         goto out;
+@@ -1506,12 +1520,27 @@ static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
+     }
  }
  
-+/*
-+ * Avoid silently breaking migration should the feature space increase
-+ * even more in the (far away) future
++static int vhost_dev_get_features(struct vhost_dev *hdev,
++                                  uint64_t *features)
++{
++    uint64_t features64;
++    int r;
++
++    if (hdev->vhost_ops->vhost_get_features_ex) {
++        return hdev->vhost_ops->vhost_get_features_ex(hdev, features);
++    }
++
++    r = hdev->vhost_ops->vhost_get_features(hdev, &features64);
++    virtio_features_from_u64(features, features64);
++    return r;
++}
++
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+ {
++    uint64_t features[VIRTIO_FEATURES_NU64S];
+     unsigned int used, reserved, limit;
+-    uint64_t features;
+     int i, r, n_initialized_vqs = 0;
+ 
+     hdev->vdev = NULL;
+@@ -1531,7 +1560,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
+     }
+ 
+-    r = hdev->vhost_ops->vhost_get_features(hdev, &features);
++    r = vhost_dev_get_features(hdev, features);
+     if (r < 0) {
+         error_setg_errno(errp, -r, "vhost_get_features failed");
+         goto fail;
+@@ -1569,7 +1598,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         }
+     }
+ 
+-    hdev->features = features;
++    virtio_features_copy(hdev->features_ex, features);
+ 
+     hdev->memory_listener = (MemoryListener) {
+         .name = "vhost",
+@@ -1592,7 +1621,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     };
+ 
+     if (hdev->migration_blocker == NULL) {
+-        if (!(hdev->features & (0x1ULL << VHOST_F_LOG_ALL))) {
++        if (!virtio_has_feature_ex(hdev->features_ex, VHOST_F_LOG_ALL)) {
+             error_setg(&hdev->migration_blocker,
+                        "Migration disabled: vhost lacks VHOST_F_LOG_ALL feature.");
+         } else if (vhost_dev_log_is_shared(hdev) && !qemu_memfd_alloc_check()) {
+@@ -1857,28 +1886,27 @@ static void vhost_start_config_intr(struct vhost_dev *dev)
+     }
+ }
+ 
+-uint64_t vhost_get_features(struct vhost_dev *hdev, const int *feature_bits,
+-                            uint64_t features)
++void vhost_get_features_ex(struct vhost_dev *hdev,
++                           const int *feature_bits,
++                           uint64_t *features)
+ {
+     const int *bit = feature_bits;
++
+     while (*bit != VHOST_INVALID_FEATURE_BIT) {
+-        uint64_t bit_mask = (1ULL << *bit);
+-        if (!(hdev->features & bit_mask)) {
+-            features &= ~bit_mask;
++        if (!virtio_has_feature_ex(hdev->features_ex, *bit)) {
++            virtio_clear_feature_ex(features, *bit);
+         }
+         bit++;
+     }
+-    return features;
+ }
+ 
+-void vhost_ack_features(struct vhost_dev *hdev, const int *feature_bits,
+-                        uint64_t features)
++void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bits,
++                           const uint64_t *features)
+ {
+     const int *bit = feature_bits;
+     while (*bit != VHOST_INVALID_FEATURE_BIT) {
+-        uint64_t bit_mask = (1ULL << *bit);
+-        if (features & bit_mask) {
+-            hdev->acked_features |= bit_mask;
++        if (virtio_has_feature_ex(features, *bit)) {
++            virtio_add_feature_ex(hdev->acked_features_ex, *bit);
+         }
+         bit++;
+     }
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index d6df209a2f..ff94fa1734 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -95,6 +95,10 @@ typedef int (*vhost_new_worker_op)(struct vhost_dev *dev,
+                                    struct vhost_worker_state *worker);
+ typedef int (*vhost_free_worker_op)(struct vhost_dev *dev,
+                                     struct vhost_worker_state *worker);
++typedef int (*vhost_set_features_ex_op)(struct vhost_dev *dev,
++                                        const uint64_t *features);
++typedef int (*vhost_get_features_ex_op)(struct vhost_dev *dev,
++                                        uint64_t *features);
+ typedef int (*vhost_set_features_op)(struct vhost_dev *dev,
+                                      uint64_t features);
+ typedef int (*vhost_get_features_op)(struct vhost_dev *dev,
+@@ -186,6 +190,8 @@ typedef struct VhostOps {
+     vhost_free_worker_op vhost_free_worker;
+     vhost_get_vring_worker_op vhost_get_vring_worker;
+     vhost_attach_vring_worker_op vhost_attach_vring_worker;
++    vhost_set_features_ex_op vhost_set_features_ex;
++    vhost_get_features_ex_op vhost_get_features_ex;
+     vhost_set_features_op vhost_set_features;
+     vhost_get_features_op vhost_get_features;
+     vhost_set_backend_cap_op vhost_set_backend_cap;
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 66be6afc88..08bbb4dfe9 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -107,9 +107,9 @@ struct vhost_dev {
+      * future use should be discouraged and the variable retired as
+      * its easy to confuse with the VirtIO backend_features.
+      */
+-    uint64_t features;
+-    uint64_t acked_features;
+-    uint64_t backend_features;
++    VIRTIO_DECLARE_FEATURES(features);
++    VIRTIO_DECLARE_FEATURES(acked_features);
++    VIRTIO_DECLARE_FEATURES(backend_features);
+ 
+     /**
+      * @protocol_features: is the vhost-user only feature set by
+@@ -320,6 +320,20 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n);
+ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+                           bool mask);
+ 
++/**
++ * vhost_get_features_ex() - sanitize the extended features set
++ * @hdev: common vhost_dev structure
++ * @feature_bits: pointer to terminated table of feature bits
++ * @features: original features set, filtered out on return
++ *
++ * This is the extended variant of vhost_get_features(), supporting the
++ * the extended features set. Filter it with the intersection of what is
++ * supported by the vhost backend (hdev->features) and the supported
++ * feature_bits.
 + */
-+QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_NU32S != 4);
- static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
-     .name = "virtio_pci/modern_state",
-     .version_id = 1,
-@@ -124,11 +152,15 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
-         VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
--        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
-+        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 0, 2),
-         VMSTATE_STRUCT_ARRAY(vqs, VirtIOPCIProxy, VIRTIO_QUEUE_MAX, 0,
-                              vmstate_virtio_pci_modern_queue_state,
-                              VirtIOPCIQueue),
-         VMSTATE_END_OF_LIST()
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_virtio_pci_modern_state_features128,
-+        NULL
-     }
- };
- 
-@@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
-     return virtio_pci_add_mem_cap(proxy, &cap.cap);
- }
- 
-+static int virtio_pci_select_max(const VirtIODevice *vdev)
++void vhost_get_features_ex(struct vhost_dev *hdev,
++                           const int *feature_bits,
++                           uint64_t *features);
+ /**
+  * vhost_get_features() - return a sanitised set of feature bits
+  * @hdev: common vhost_dev structure
+@@ -330,8 +344,28 @@ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+  * is supported by the vhost backend (hdev->features), the supported
+  * feature_bits and the requested feature set.
+  */
+-uint64_t vhost_get_features(struct vhost_dev *hdev, const int *feature_bits,
+-                            uint64_t features);
++static inline uint64_t vhost_get_features(struct vhost_dev *hdev,
++                                          const int *feature_bits,
++                                          uint64_t features)
 +{
-+    return virtio_features_use_ex(vdev->host_features_ex) ?
-+           VIRTIO_FEATURES_NU32S :
-+           2;
++    uint64_t features_ex[VIRTIO_FEATURES_NU64S];
++
++    virtio_features_from_u64(features_ex, features);
++    vhost_get_features_ex(hdev, feature_bits, features_ex);
++    return features_ex[0];
 +}
 +
- static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
-                                        unsigned size)
- {
-@@ -1494,18 +1533,21 @@ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
-         val = proxy->dfselect;
-         break;
-     case VIRTIO_PCI_COMMON_DF:
--        if (proxy->dfselect <= 1) {
-+        if (proxy->dfselect < virtio_pci_select_max(vdev)) {
-             VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
++/**
++ * vhost_ack_features_ex() - set vhost full set of acked_features
++ * @hdev: common vhost_dev structure
++ * @feature_bits: pointer to terminated table of feature bits
++ * @features: requested feature set
++ *
++ * This sets the internal hdev->acked_features to the intersection of
++ * the backends advertised features and the supported feature_bits.
++ */
++void vhost_ack_features_ex(struct vhost_dev *hdev, const int *feature_bits,
++                           const uint64_t *features);
  
--            val = (vdev->host_features & ~vdc->legacy_features) >>
--                (32 * proxy->dfselect);
-+            val = vdev->host_features_ex[proxy->dfselect >> 1] >>
-+                  (32 * (proxy->dfselect & 1));
-+            if (proxy->dfselect <= 1) {
-+                val &= (~vdc->legacy_features) >> (32 * proxy->dfselect);
-+            }
-         }
-         break;
-     case VIRTIO_PCI_COMMON_GFSELECT:
-         val = proxy->gfselect;
-         break;
-     case VIRTIO_PCI_COMMON_GF:
--        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
-+        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
-             val = proxy->guest_features[proxy->gfselect];
-         }
-         break;
-@@ -1588,11 +1630,18 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
-         proxy->gfselect = val;
-         break;
-     case VIRTIO_PCI_COMMON_GF:
--        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
-+        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
-+            uint64_t features[VIRTIO_FEATURES_NU64S];
-+            int i;
+ /**
+  * vhost_ack_features() - set vhost acked_features
+@@ -342,8 +376,16 @@ uint64_t vhost_get_features(struct vhost_dev *hdev, const int *feature_bits,
+  * This sets the internal hdev->acked_features to the intersection of
+  * the backends advertised features and the supported feature_bits.
+  */
+-void vhost_ack_features(struct vhost_dev *hdev, const int *feature_bits,
+-                        uint64_t features);
++static inline void vhost_ack_features(struct vhost_dev *hdev,
++                                      const int *feature_bits,
++                                      uint64_t features)
++{
++    uint64_t features_ex[VIRTIO_FEATURES_NU64S];
 +
-             proxy->guest_features[proxy->gfselect] = val;
--            virtio_set_features(vdev,
--                                (((uint64_t)proxy->guest_features[1]) << 32) |
--                                proxy->guest_features[0]);
-+            virtio_features_clear(features);
-+            for (i = 0; i < ARRAY_SIZE(proxy->guest_features); ++i) {
-+                uint64_t cur = proxy->guest_features[i];
++    virtio_features_from_u64(features_ex, features);
++    vhost_ack_features_ex(hdev, feature_bits, features_ex);
++}
 +
-+                features[i >> 1] |= cur << ((i & 1) * 32);
-+            }
-+            virtio_set_features_ex(vdev, features);
-         }
-         break;
-     case VIRTIO_PCI_COMMON_MSIX:
-@@ -2311,6 +2360,8 @@ static void virtio_pci_reset(DeviceState *qdev)
-     virtio_bus_reset(bus);
-     msix_unuse_all_vectors(&proxy->pci_dev);
+ unsigned int vhost_get_max_memslots(void);
+ unsigned int vhost_get_free_memslots(void);
  
-+    memset(proxy->guest_features, 0, sizeof(proxy->guest_features));
-+
-     for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
-         proxy->vqs[i].enabled = 0;
-         proxy->vqs[i].reset = 0;
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index eab5394898..639752977e 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -158,7 +158,7 @@ struct VirtIOPCIProxy {
-     uint32_t nvectors;
-     uint32_t dfselect;
-     uint32_t gfselect;
--    uint32_t guest_features[2];
-+    uint32_t guest_features[VIRTIO_FEATURES_NU32S];
-     VirtIOPCIQueue vqs[VIRTIO_QUEUE_MAX];
- 
-     VirtIOIRQFD *vector_irqfd;
 -- 
 2.50.0
 
