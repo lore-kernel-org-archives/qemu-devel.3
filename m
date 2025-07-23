@@ -4,69 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45070C83F25
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 03:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E981C83F25
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 03:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueQ4h-0007dp-AJ; Tue, 22 Jul 2025 23:23:23 -0400
+	id 1ueQJ5-0007Sz-M5; Tue, 22 Jul 2025 23:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ueQ4e-0007bR-AL
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 23:23:20 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ueQ4a-0006E9-DY
- for qemu-devel@nongnu.org; Tue, 22 Jul 2025 23:23:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxaeGMVYBocwkwAQ--.54137S3;
- Wed, 23 Jul 2025 11:22:52 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxVOSJVYBoXqUiAA--.48900S3;
- Wed, 23 Jul 2025 11:22:51 +0800 (CST)
-Subject: Re: [PATCH 1/1] hw/intc/loongarch_ipi: use physical CPU ID for
- kvm_ipi_access_regs
-To: Song Gao <gaosong@loongson.cn>, lixianglai@loongson.cn
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.co
-References: <20250723014054.742353-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <fb9b7c23-d85a-819b-a950-2e57d52caa02@loongson.cn>
-Date: Wed, 23 Jul 2025 11:21:09 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <20250723014054.742353-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxVOSJVYBoXqUiAA--.48900S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7XFyxAr4rJFyfCw47AF1xtFc_yoW8Jryxpr
- W7u3W3ur48AFyUAayqqa4DWFnrWrn7JF1S9a1IkFyxAFnxurnY934vkr93KFyjy34UtFWY
- v3W3tFy2va9rAabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
- e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -33
-X-Spam_score: -3.4
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1ueQJ3-0007Og-5m; Tue, 22 Jul 2025 23:38:13 -0400
+Received: from mxct.zte.com.cn ([183.62.165.209])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1ueQIz-0008NF-Mc; Tue, 22 Jul 2025 23:38:12 -0400
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4bn0Fq56thz4x6Cj;
+ Wed, 23 Jul 2025 11:37:51 +0800 (CST)
+Received: from xaxapp05.zte.com.cn ([10.99.98.109])
+ by mse-fl1.zte.com.cn with SMTP id 56N3bcDr043199;
+ Wed, 23 Jul 2025 11:37:38 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp01[null]) by mapi (Zmail) with MAPI id mid32;
+ Wed, 23 Jul 2025 11:37:39 +0800 (CST)
+Date: Wed, 23 Jul 2025 11:37:39 +0800 (CST)
+X-Zmail-TransId: 2af968805903ffffffffa82-fbafe
+X-Mailer: Zmail v1.0
+Message-ID: <20250723113739751COZ5PkRzx6aXEuKzsHhm_@zte.com.cn>
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <sunilvl@ventanamicro.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
+Subject: =?UTF-8?B?W1BBVENIIHYzIFJFU0VORF0gaHcvcmlzY3YvdmlydDogQWRkIGFjcGkgZ2VkIGFuZCBwb3dlcmRvd24gc3VwcG9ydA==?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl1.zte.com.cn 56N3bcDr043199
+X-TLS: YES
+X-SPF-DOMAIN: zte.com.cn
+X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
+X-SPF: None
+X-SOURCE-IP: 10.5.228.132 unknown Wed, 23 Jul 2025 11:37:51 +0800
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6880590F.002/4bn0Fq56thz4x6Cj
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.517,
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.638,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,42 +76,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
+This adds powerdown support by implementing the ACPI GED.
 
-On 2025/7/23 上午9:40, Song Gao wrote:
-> QEMU reboot after inserting no-configuous cpus may start failed
-> becaue the vcpu context may not have created on KVM, On QEMU side use physical CPU ID
-> for kvm_ipi_access_regs and do some check. On KVM use kvm_get_vcpu_by_cpuid get vcpu.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/intc/loongarch_ipi_kvm.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
-> index 4cb3acc921..1c26fdcb10 100644
-> --- a/hw/intc/loongarch_ipi_kvm.c
-> +++ b/hw/intc/loongarch_ipi_kvm.c
-> @@ -31,6 +31,11 @@ static void kvm_ipi_access_regs(void *opaque, bool write)
->   
->       for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
->           core = &ipi->cpu[cpu];
-> +        if (core == NULL || core->cpu == NULL ) {
-> +            continue;
-> +        }
-> +        cpu = core->cpu->cpu_index;
-Can we use another variable since cpu is used in loop sentence already?
-      for (cpu = 0; cpu < ipi->num_cpu; cpu++)
-Here modification with cpu will change loop sentence flow.
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
+---
+Changes in v3:
+- Added missing param to virt_is_acpi_enabled
+- Fixed failure of bios-tables-test
 
-Or direct use attr = (core->cpu->cpu_index << 16) | CORE_STATUS_OFF;
+ hw/riscv/Kconfig                  |   1 +
+ hw/riscv/virt-acpi-build.c        |  10 +++++++++
+ hw/riscv/virt.c                   |  35 ++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h           |   4 ++++
+ tests/data/acpi/riscv64/virt/DSDT | Bin 3538 -> 3681 bytes
+ 5 files changed, 50 insertions(+)
 
-Regards
-Bibo Mao
-> +
->           attr = (cpu << 16) | CORE_STATUS_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->status, write);
->   
-> 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index fc9c35bd98..f89a6e3672 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -68,6 +68,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select ACPI_HW_REDUCED
 
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index ee1416d264..93f22f9c1a 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -27,6 +27,7 @@
+ #include "hw/acpi/acpi-defs.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "hw/acpi/pci.h"
+ #include "hw/acpi/utils.h"
+ #include "hw/intc/riscv_aclint.h"
+@@ -498,6 +499,15 @@ static void build_dsdt(GArray *table_data,
+         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
+     }
+
++    if (s->acpi_ged) {
++        build_ged_aml(scope, "\\_SB."GED_DEVICE,
++                      HOTPLUG_HANDLER(s->acpi_ged),
++                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
++                      s->memmap[VIRT_ACPI_GED].base);
++    }
++
++    acpi_dsdt_add_power_button(scope);
++
+     aml_append(dsdt, scope);
+
+     /* copy AML table into ACPI tables blob and patch header there */
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 47e573f85a..5bb1504498 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -51,10 +51,12 @@
+ #include "system/kvm.h"
+ #include "system/tpm.h"
+ #include "system/qtest.h"
++#include "system/runstate.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
+@@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_ACPI_GED] =     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -1270,6 +1273,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     return dev;
+ }
+
++static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
++{
++    DeviceState *dev;
++    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++
++    dev = qdev_new(TYPE_ACPI_GED);
++    qdev_prop_set_uint32(dev, "ged-event", event);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
++                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
++
++    return dev;
++}
++
+ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ {
+     FWCfgState *fw_cfg;
+@@ -1428,6 +1447,14 @@ static void virt_build_smbios(RISCVVirtState *s)
+     }
+ }
+
++static void virt_powerdown_req(Notifier *notifier, void *opaque)
++{
++    RISCVVirtState *s;
++
++    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
++    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
++}
++
+ static void virt_machine_done(Notifier *notifier, void *data)
+ {
+     RISCVVirtState *s = container_of(notifier, RISCVVirtState,
+@@ -1701,6 +1728,11 @@ static void virt_machine_init(MachineState *machine)
+
+     create_platform_bus(s, mmio_irqchip);
+
++    /* acpi ged */
++    if (virt_is_acpi_enabled(s)) {
++        s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
++    }
++
+     serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
+         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+         serial_hd(0), DEVICE_LITTLE_ENDIAN);
+@@ -1742,6 +1774,9 @@ static void virt_machine_init(MachineState *machine)
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
+
++    s->powerdown_notifier.notify = virt_powerdown_req;
++    qemu_register_powerdown_notifier(&s->powerdown_notifier);
++
+     s->machine_done.notify = virt_machine_done;
+     qemu_add_machine_init_done_notifier(&s->machine_done);
+ }
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 7b4c2c8b7d..9422b45d0c 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -47,6 +47,8 @@ struct RISCVVirtState {
+
+     /*< public >*/
+     Notifier machine_done;
++    Notifier powerdown_notifier;
++    DeviceState *acpi_ged;
+     DeviceState *platform_bus_dev;
+     RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
+     DeviceState *irqchip[VIRT_SOCKETS_MAX];
+@@ -88,9 +90,11 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_ACPI_GED,
+ };
+
+ enum {
++    ACPI_GED_IRQ = 9,
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
+index 527f239dab13a00ad42e5a70b8dc2b89f12aa84a..caeb46842ad39f7b5f8a8e1d99befd58a268340a 100644
+GIT binary patch
+delta 170
+zcmca4{ZNL>CD<h-k&l6a>Gwn~X(pe?8`W3y)<-uvvB&7e2Rp^PySl`4#Cv$U@H#pN
+zcp4ZO8Z&UjhXT1k2_VZkC|Hn>i@TGJftit$fq|itA-cge$km;Jhe1F<fQu!%ksHKy
+zb`5s*Q4o=hcMS{SEC6v576?qPPT*o<;9_bE2oG}NYKU%<1TjFC3ApeE_yrg^8#qHO
+GV*mhKP$?$>
+
+delta 25
+hcmaDTb4i-ZCD<k85-$S-lgdOcX(r!W8`W3y0sv*E2bcf=
+
+-- 
+2.27.0
 
