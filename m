@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7749AC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D00DC83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uebzV-0006br-AE; Wed, 23 Jul 2025 12:06:49 -0400
+	id 1uec1z-00028E-P8; Wed, 23 Jul 2025 12:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uebz5-0005xW-IQ
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:06:23 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uec1u-00026m-RB
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:09:19 -0400
+Received: from mail-pj1-x1042.google.com ([2607:f8b0:4864:20::1042])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uebz3-0003p5-Q9
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:06:23 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-70f94fe1e40so12417047b3.1
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:06:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uec1t-00049v-EB
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:09:18 -0400
+Received: by mail-pj1-x1042.google.com with SMTP id
+ 98e67ed59e1d1-313bb9b2f5bso1887a91.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753286780; x=1753891580; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0vSGrhNHEwYU0lQMKHvf2QPzMKfk0ILIx2rv+NoDssE=;
- b=n7Dn1o5cIZ29weba0PBH8VOpGSv6u0WEqEPprZnyWxFJwIGsphoBwWuXth0d2BcbwS
- yQIujnwZYN7oxDT8ntWewNppGjixm2X85v4pcP3Y0OxfamVkhaIKBWzghd4P9tGXigbg
- B7KHiafHDm08BQf51qTK2H1kw0Mbh+Q68z6ON/wNI/1FXm4CV2kGKp/VlLT4fsAJvYYX
- iyFhDEadvT9MKgLrYA5HqnboTI3vQMjA6A3Uz7cK5W7CNpMmDlDxAYoLN6L70hq2mSBm
- llWU3l682bOsJCSi47ZfKqb7RdypAtycXpQFVQ0AHoy4AdbL9fJI2iVw5ssaI9jkzpAu
- C+9Q==
+ d=gmail.com; s=20230601; t=1753286955; x=1753891755; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ryJs4fnsAEOocYYXtesa1hTFW3TNwArTaKjHOpZPxFc=;
+ b=Qit9WxnYBu10uAfXgoIK7w4AQUKNFvtGxpAEOswls0Evo7iYDLw7yBp2xRU5nVtcKx
+ 3FqGic0GoimdRvSltevfesf2pTH1hy5ZGkgzA9X/vKtqKHEZrYcGUliiAu84HnpugviG
+ +wHjHz10yk7J1PA1pSDUJgTJNPHOkxH/aMZ19HU6VRRVBCYxa/yqbKf9W7hxKvn6HS9r
+ sCuLWbw2ELtPRuHifRvnY6aJejw1ynWXGezTz47p5JnAuKJNUqYYxQt+nh5zT59887MW
+ h2TLW0zTOOOlZBpDH3tmPUy1koRMVnwbM91cWj9jUQYxBXHYptu8jhjW0gHmREYvXAd5
+ 28jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753286780; x=1753891580;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0vSGrhNHEwYU0lQMKHvf2QPzMKfk0ILIx2rv+NoDssE=;
- b=p0WMz1wBM+9xnFLVwuAUkgUoObpTsmaV+5FkiGITKurp90jnbjeoT070fKBeflx2TP
- z4Rrfx9judTOs/jRWbnvIdyLyS1/XphJCKPwWua52XolkWmvl8a/YKZnyFvQfbthN5RU
- yOi92AxSjzEoMNG/oB4Ld1FiFv+eTM36TYU+BgcFSsM5hPBjuziSR9guiRPhsdsJRHaQ
- ZkHEXy3DBq6xXjBfzKojDomWMCQ7Xb1X3iOl5/MlMgOEl5aX/UXy/nEmdTVU/fw9r625
- vfLqES2VmliAZ6mOowvAdNECrCMHoP/t6ywYM3NEIwgwNu1KnCHPKPoAsWopkeZtvC5c
- ds6A==
-X-Gm-Message-State: AOJu0Yxg7uh013EX8O+LVtJhTmYw5Z1rQ3FIlgzYSH8Ec4q8wrbd5uBJ
- K6fow6L1IP+g2PXuFLAEtjesK+2e7gslOpL2hIXHyWDeSS/+iJFIbo96S215ZoN1fmtFmECRSEt
- pfCFsSJwXCoCdLygWfMNd/TALzUPjiBhuRzPkZRizpQ==
-X-Gm-Gg: ASbGncvj3I+FENg9DU/Vgn7Gfiges9iATjR5sR7FhGtGz4MYpMTo3WtLPmBq8VEOb23
- B7+MrK96YoveK4reMRLpVPK41qTUuWbMVkotZsoAIQ0J2R+r8NlEDWyTInH7ftLiL2p2MIkzN7h
- X7hn4+1axj+2QCKxOSUe0GCXjJRyY6vC6a1kC/AMhl7DaVBoNXmAzR3UiZsMRrPz+EQdr0nVD72
- yuMq586
-X-Google-Smtp-Source: AGHT+IEh5pBHeb66mo0LTS4E4tZfL/BcjEb0VgDJ2TNUmnsvDjiF/q+TJuGahequE60YQ67TZe4kKLaNYJKGlw0dyIo=
-X-Received: by 2002:a05:690c:7107:b0:70e:2daa:65b7 with SMTP id
- 00721157ae682-719a0b53556mr102529697b3.12.1753286780320; Wed, 23 Jul 2025
- 09:06:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753286955; x=1753891755;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ryJs4fnsAEOocYYXtesa1hTFW3TNwArTaKjHOpZPxFc=;
+ b=f1tjZFh0ZzlhOd79p54QkBg/Ic0DSe8f3frd5fWo3xvf5HMBsukU7AQXtodmvcR3ny
+ 3BVM82xZw3lstnd9rUB791zP0u9XhDwRXXgcay3oDTaFEOJLrIA444O9IDACYzFoD0nA
+ ZXHKchVXTW+E074zgOIfja+05D8+yJB9tIrTVvWKaV/pLPD6tZKNbME8Zegw6TVL3i3C
+ zzAcbHvVFIwQ9nrLjOqP4QcZqeVkUnbQpfvICcR1ncJh3VPkxEViIj5e47wI0ckm8oOl
+ 7Wwg0XOK24JlAhydejbqoY6KHZYSN0x9XSorDIP3U/ptZ6259f6d/DkC+BUCKSJnzBoc
+ 0xNg==
+X-Gm-Message-State: AOJu0YwNTvAbCXj44g9PrUEsQWwjJvbq2FtsE147xh1QVW3YpRkqrt9c
+ 1zRky7RvHXn8CUizdp5kIBe7CVN+UCr9zCkXy7SgwBJSq29XkbScmAc=
+X-Gm-Gg: ASbGncvHL1yAjxR9Z3ktbsjWgUFKcpuspOyUvwZcWN/Tf1hGqIxv0+Ju0FaZaO0ZV3z
+ 9FuYfzyJreP/v4HQqFVQ0gLMA54g3x17LtxJBS4jOmJjA+KH0Cr6FMVfvEjS5jNjKF8zXMogqDF
+ O8KN/723HRAfTgB6Lg0VPzKjdGC0j4U8rLqGy6ZaQiMF6MY7JoEbxZ3xLJY8mciwd0odm15nneh
+ 5k1YlqKzzloqFDQnp38b2+tBGc+lhOnr4/buo4+S2Puu3ZBXJCNhwymIfoMepAmpWBj3c73SFIV
+ KL8FKmRIQs75q2QW1n9iCwSudV+39XGDkfN7xd3HCC356uswSZw5PivWVY18JoLiybATido+aGZ
+ Fb7j664XKWsc6A2i1hlRUjldEuEw27kBjrWY=
+X-Google-Smtp-Source: AGHT+IHaHrHMc3cjQtsJE7erJRTun7smKt8p9riAreEVtH7cW0Vlj0ufLpevHAuxWxiODetbvrpRzQ==
+X-Received: by 2002:a17:90b:1c01:b0:313:d6ce:6c6e with SMTP id
+ 98e67ed59e1d1-31e507a852bmr5353323a91.8.1753286955097; 
+ Wed, 23 Jul 2025 09:09:15 -0700 (PDT)
+Received: from localhost.localdomain ([139.227.17.46])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31e519f61eesm1968353a91.14.2025.07.23.09.09.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Jul 2025 09:09:14 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH 0/2] vfio/igd: Legacy mode fixes after introduction of
+Date: Thu, 24 Jul 2025 00:09:04 +0800
+Message-ID: <20250723160906.44941-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-References: <20250723135156.85426-1-philmd@linaro.org>
- <20250723135156.85426-5-philmd@linaro.org>
-In-Reply-To: <20250723135156.85426-5-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 23 Jul 2025 17:06:08 +0100
-X-Gm-Features: Ac12FXwEs_KJkhbGkhaYXW4dnpaJQ9Exigs3r_seXukmG1-qzLvHFqhfqXBXMM0
-Message-ID: <CAFEAcA8gp3v2D08hmR0CCtE9G8Jv6LgcQbKxN5sz6gYq8ODcrw@mail.gmail.com>
-Subject: Re: [PATCH-for-10.1 v4 4/4] target/arm/hvf: Really set Generic Timer
- counter frequency
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1042;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj1-x1042.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,76 +98,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Jul 2025 at 14:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Setting ARMCPU::gt_cntfrq_hz in hvf_arch_init_vcpu() is
-> not correct because the timers have already be initialized
-> with the default frequency.
->
-> Set it earlier in the AccelOpsClass::cpu_target_realize()
-> handler instead, and assert the value is correct when
-> reaching hvf_arch_init_vcpu().
+This patchset aims to fix 2 bugs on legacy mode brought by commit
+a59d06305fff ("vfio/pci: Introduce x-pci-class-code option").
 
-Could we say here what the user-visible consequences of
-getting this wrong were ?
-
-> Fixes: a1477da3dde ("hvf: Add Apple Silicon support")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/hvf/hvf.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 7de770da4f3..ea9e6b1c0c6 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1007,6 +1007,13 @@ cleanup:
->      return ret;
->  }
->
-> +static uint64_t get_cntfrq_el0(void)
-> +{
-> +    uint64_t freq_hz =3D 0;
-> +    asm volatile("mrs %0, cntfrq_el0" : "=3Dr"(freq_hz));
-> +    return freq_hz;
-> +}
-> +
->  int hvf_arch_init_vcpu(CPUState *cpu)
->  {
->      ARMCPU *arm_cpu =3D ARM_CPU(cpu);
-> @@ -1018,7 +1025,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->      int i;
->
->      env->aarch64 =3D true;
-> -    asm volatile("mrs %0, cntfrq_el0" : "=3Dr"(arm_cpu->gt_cntfrq_hz));
-> +
-> +    /* system count frequency sanity check */
-> +    assert(arm_cpu->gt_cntfrq_hz =3D=3D get_cntfrq_el0());
->
->      /* Allocate enough space for our sysreg sync */
->      arm_cpu->cpreg_indexes =3D g_renew(uint64_t, arm_cpu->cpreg_indexes,
-> @@ -1083,6 +1092,10 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->
->  bool hvf_arch_cpu_realize(CPUState *cs, Error **errp)
->  {
-> +    ARMCPU *cpu =3D ARM_CPU(cs);
-> +
-> +    cpu->gt_cntfrq_hz =3D get_cntfrq_el0();
-
-Maybe worth a short comment
-/*
- * We must set the counter frequency hvf will be using
- * early, before arm_cpu_realizefn initializes the timers
- * with it.
- */
+1. QEMU tries to enable VGA access on device emulated to VGA controller.
+2. pci_register_vga() is not called after calling vfio_populate_vga().
 
 
-What happens in the case where we're doing "try hvf, fall
-back to tcg if hvf not possible" ? I guess we must figure out
-that hvf won't work quite early, and well before we get to the
-hvf_arch_cpu_realize() hook?
+Tomita Moeko (2):
+  vfio/igd: Require host VGA decode for legacy mode
+  vfio/igd: Fix VGA regions are not exposed in legacy mode
 
--- PMM
+ docs/igd-assign.txt |  1 +
+ hw/vfio/igd.c       | 19 ++++++++++++-------
+ hw/vfio/pci.c       | 13 ++++++++++---
+ hw/vfio/pci.h       |  1 +
+ 4 files changed, 24 insertions(+), 10 deletions(-)
+
+-- 
+2.47.2
+
 
