@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E680C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DC9C83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uecBU-0005zM-Op; Wed, 23 Jul 2025 12:19:12 -0400
+	id 1uecNu-0007Y4-30; Wed, 23 Jul 2025 12:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecBS-0005nT-Bh
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:19:10 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecMg-0006RH-PD
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:30:52 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecBQ-0005yK-8R
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:19:09 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4563cfac2d2so56645235e9.3
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:19:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecMe-00016J-1f
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:30:45 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45634205adaso14515e9.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753287547; x=1753892347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753288241; x=1753893041; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cWi1xg6TqVJV9Q3V1vDbJp1BsIWYYwrENbU8rPFEc48=;
- b=gYhrZlbG7BDF57GdVCsIr8CC0Lq2v0nb+KtFCozAHakE6N5774B7OIr5BxYjrlmYdc
- PXw0S/SKgkwO04zLNBI+3IiDspZwbdwk2yekX/xkSfspHLDmB/ErREbL2jbPTQgPEnxX
- eRtiYMSpeyG//m3IoLTxs2CK6/ge2eqBTPvOTbddJbmwca+A+kAdMaytt+v9B2Bu/57M
- MqQamLOeMfS3riFwa7AaZBBf9etgEPG2Aq09egQr2nvItRGNvYiT5Vd4UC1rm765V4s3
- qzjyX2l2NW7AsYHrppcivgVKhmBukS+PI8kOCX87xLNPQDUAVwAbW+wf41O/W2d/V0+s
- NsaA==
+ bh=EQYk6kOfqtibST9KYSIBiUBNtBx7RNFAZiQmFHE7G4Q=;
+ b=UAqw+6MPN70dgXQ49EA0AoJhiWi8KO3hrmaosOuI9EyI3v0yBKmo65k1vQTNugKF7T
+ V8A17MvgRR4eycpmsHeznPCjWDq99B/UXBE1rUafCN1q3uMKTuxfjPVy46cdXw+jEJPs
+ whYwdtXijLX6EGTHuSVDQXgyJOTXyqFin/0rCmROOJ/DgarrAiFVa89atDZus4oGjoec
+ WlourMRYgBKYJ4j6vNYeMWoo8e2F8gnu3kZ8aitRnv2kTFjZuKfGEg0NwFrCQH0c5ypD
+ p+/HZHujF8fCE1ItqTnqFHlebHsptu8RHso44lozj6KDO5biOYYITY8xWk5rHcJviSTr
+ l1YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753287547; x=1753892347;
+ d=1e100.net; s=20230601; t=1753288241; x=1753893041;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cWi1xg6TqVJV9Q3V1vDbJp1BsIWYYwrENbU8rPFEc48=;
- b=hnCQs7kaoxwuYLF80GKHhGTjbtYANj8Q7VvZtkxQ/8OXvVoHaZByLtGnGd6b7q++jo
- 5qSx/uGGfnD6aoAEquI9f12j0B4DuaVfKhZvcEVIZoDZNWwZuSBCnz8H3A7umP2MuvP8
- KVBE0rLezTg7JdKT8XC7tlbx1PheTEbqYZ8M+ZVKyyF8H/4UA3sDo4CHf86ky88R0YeB
- GtlVAXhBajRTO27cQWTXWDHfm2b6urIXNbXT8Le2VBhmXcD4A4jQQp5m8w1KnDHzxlCS
- NoVa5cQDSfGBEXmzdvqjJ7k0OjERfCB48GKeAmLA7eDXZ4inbuDE1phuokZrsJS0btpV
- oY2A==
-X-Gm-Message-State: AOJu0Yw0aLtj2wez4Um12Vp4jCpmaM8+SMHlyf47YvLINF/mDIEg5KD6
- WYNzQJs3YY13djO3x03EQnXpZmsoIu8ipS8rQ8G3IWNTF0T0C9QOdYZePfG4sclrVTQ=
-X-Gm-Gg: ASbGncuEotyOgLiUOis+TKCk8zHNPNf0/T3SKgMiTtcG/XZ5wfbJmkgzXuhNuJmbMP1
- 4vTNLO9KLAYBOvd6DgL5yH4GGN3XrdhjQU4H+PiDuu1QHofcK5rcS3+WNEMCdeomJrgZXmPcZ7u
- c+YsY/EhIa/VhlTRGTnCRQNj/V039kyaOEnCU+/tnytA9JcePGfMqJDbGfCrqdUZhRfpTCilSNU
- EZSR3ao3Ut7zm+e3UUbXfmbcn+NSiyxJDc1vnPb25rg4awnj204gOTtdKaV/i7VujiM5QFjRXFM
- zSnhbcqyRrpM4DXi3H0wK+edmZIN+yg/wJUbB+/ZHJ4laRysqgTj0y1TQjzkeSxw0Mww6z1Iqqn
- 8s0WnlIUaKYqpoMLrofJdozc9Thb6KFPsMQfqm5PSjEuPXO38OXD3MLM3J4PyhtI4ng==
-X-Google-Smtp-Source: AGHT+IEXEMGg5xs/yyxPHcDZhF9g5nIvzjn+zvmuny0Ia6ajv+Oj9VxRvR/CrN5BMb1Hzc/z9xASbw==
-X-Received: by 2002:a05:600c:198d:b0:453:483b:626c with SMTP id
- 5b1f17b1804b1-45868d256a7mr27246935e9.23.1753287546599; 
- Wed, 23 Jul 2025 09:19:06 -0700 (PDT)
+ bh=EQYk6kOfqtibST9KYSIBiUBNtBx7RNFAZiQmFHE7G4Q=;
+ b=O1vMhI5Y7f+LPXX7HRSyTX8KEP8Ve7ZRX0imwo1Y6IWu2fdB9P6uzdxyNjbUvhtTdZ
+ s0kDZgxLfNM6jP93dDdAPvcyOaGUZLPz/fkoZ+xD61FT5q3xyYNKu9Yyh8VIYWNrkapF
+ WRCLHQrme/gJnAr3T+NMKsz7qUFF9wot/qYutbfQskXWS2sSpkH1Ow0FRSIrw2QULiwP
+ /MVtmT5g9CU4K9lKmdgf7QD6pc1EmgwrvMfJpIe5T84yzuiOCQVeE/h0bUkExuubxiab
+ CsI8fpyEgAGP+AoXXuSDc2GNGBBngHrzNkE3a9JpSLssCZ+d+cxPB8+XwOEG+zd13z8M
+ t3dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5J49Rb9gQ1U0yrqDqWxSe6CVTpTMTmX4QMfPXxcllBc0aQ5zJIwfO5hMgT07Pe4bMGowklbhXCyRa@nongnu.org
+X-Gm-Message-State: AOJu0YyKYXzEJjcnHBuPrB0aoCfthqgZ7hZinThstqBbjej5ggf5DM0p
+ omDmhigxaZI3/KHhinx88p6ylzsU6VkcF9mPy3QHBSimmExBI+OM0AF8y1UcCqw84+g=
+X-Gm-Gg: ASbGnctM4eJIa+O2su1ubP6htfo+57UbsXhRKUyN0WUh5r7cLlNh6ohmWHv4PR3YLLE
+ iPkVEBJPBnMhZ19FYyCl5t3hqcVnGP5lYuOQacUbWMTHenrXkaB1Nn9LoT6pp0Rdu3nv27484Yc
+ kuQ0oMG3E7zpqdAmnsHfC3FLBHWWRYWQ1Mgsa+BswnQkDtzBAgKgke6EFJJ/Dl1ffJT7DmdjwCw
+ i4qhjslfe2YMSC3p1L9G1qIotmMszywkCTSSnpd2E4dhykCUVBD5HtPK/q67xvW39xLci065bkX
+ pcbZ4Ivb/QBNYQrZ8gobm+W/xvGsjK0nATUTJUqfXicqRSxyenpk+OZ82RfkHMzls9gCm4jEg+w
+ lr6aHdkbmwarqOm4waF7DEy5Moplrr2jPk4dZPUJMGdUCR7ijOfO/T56WUzoYjawp4Q==
+X-Google-Smtp-Source: AGHT+IFR1knPCSTW1Wkdf6jyB5/1useBV3JUaa7YIi2NiLeJdIvuwyB7AAARDup0RRtzgdqkTGBgyQ==
+X-Received: by 2002:a05:600c:3544:b0:456:a1b:e906 with SMTP id
+ 5b1f17b1804b1-45868d78a92mr30825905e9.33.1753288241001; 
+ Wed, 23 Jul 2025 09:30:41 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45869180a00sm28100955e9.3.2025.07.23.09.19.05
+ 5b1f17b1804b1-45863a131aasm42698745e9.2.2025.07.23.09.30.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 09:19:06 -0700 (PDT)
-Message-ID: <bb780015-f5fa-4036-972c-a233b2b2af52@linaro.org>
-Date: Wed, 23 Jul 2025 18:19:05 +0200
+ Wed, 23 Jul 2025 09:30:40 -0700 (PDT)
+Message-ID: <f20200a3-1391-45d9-961d-df2fc5996341@linaro.org>
+Date: Wed, 23 Jul 2025 18:30:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v4 3/4] target/arm: Create GTimers *after*
- features finalized / accel realized
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250723135156.85426-1-philmd@linaro.org>
- <20250723135156.85426-4-philmd@linaro.org>
- <CAFEAcA9HMvDjKa06iWMUTYsmM6zPQJZ3fAcZHcyF_pwa5pczvQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/sd: print bad s->arglen in unexpected response
+To: Ben Dooks <ben.dooks@codethink.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+References: <20250722090547.109117-1-ben.dooks@codethink.co.uk>
+ <87seinulb7.fsf@draig.linaro.org>
+ <CAFEAcA8c0GRxvXUANBbNvMdTqBwBgCjTZkqc2RNjE8bRQo772w@mail.gmail.com>
+ <197dd05a-eda5-44e0-9592-b886e953086f@codethink.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9HMvDjKa06iWMUTYsmM6zPQJZ3fAcZHcyF_pwa5pczvQ@mail.gmail.com>
+In-Reply-To: <197dd05a-eda5-44e0-9592-b886e953086f@codethink.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,24 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/25 18:00, Peter Maydell wrote:
-> On Wed, 23 Jul 2025 at 14:52, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Call generic (including accelerator) cpu_realize() handlers
->> *before* setting @gt_cntfrq_hz default
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/cpu.c | 65 ++++++++++++++++++++++++------------------------
->>   1 file changed, 33 insertions(+), 32 deletions(-)
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> (I think my previous misgivings about this patch were due to
-> not looking closely enough at it -- it looks at first glance
-> as if it might be moving the cpu_exec_realizefn calls above
-> more code than just the timer stuff, but it does not.)
+Hi Ben,
 
-I agree the default git diff output is misleading.
+On 23/7/25 16:55, Ben Dooks wrote:
+
+> I am currently trying to track down two errors with mmc-spi.
+> 
+> The first looks like u-boot is sending a couple of CMDs (9, 10)
+> in the wrong state (currently this works however with a real SD
+> card) so I have a tmp-fix in to just ignore the two checks in
+> these and u-boot is now working.
+> 
+> I'm also getting multiple versions of linux failing with QEMU10
+> on Debian/testing and my own close to the current git tree with
+> Linux and CMD13...
+> 
+> [    0.579845] EXT4-fs (mmcblk0): INFO: recovery required on readonly 
+> filesystem
+> [    0.580222] EXT4-fs (mmcblk0): write access will be enabled during 
+> recovery
+> ssi_sd: error: Unexpected response to cmd 13, arglen=16
+> ssi_sd: error: Unexpected response to cmd 13, arglen=16
+> ssi_sd: error: Unexpected response to cmd 13, arglen=16
+> ssi_sd: error: Unexpected response to cmd 13, arglen=16
+
+CMD13's arg len should be 2 in SSI mode.
+
+> Then the system stops working.
+> 
+> Systems are riscv sifive_u and my own cva6 machine
+Do you mind sharing a reproducer?
+
+Even better if contributed as a functional test :)
+(see tests/functional/test_arm_sx1.py for example).
+
+Regards,
+
+Phil.
 
