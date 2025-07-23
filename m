@@ -4,110 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C672DC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 22:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87A3C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 22:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uehkX-0004zd-PA; Wed, 23 Jul 2025 18:15:45 -0400
+	id 1uehmL-0006GN-KQ; Wed, 23 Jul 2025 18:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uehkT-0004vs-13; Wed, 23 Jul 2025 18:15:41 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1uehmG-0006Dk-Fp
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 18:17:32 -0400
+Received: from mail-dm6nam11on2088.outbound.protection.outlook.com
+ ([40.107.223.88] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uehkQ-0001pD-Mv; Wed, 23 Jul 2025 18:15:40 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NKVtLS027632;
- Wed, 23 Jul 2025 22:15:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/K4jlx
- bgupkrqCbdD0nVrT0XeuQ2EZcrUs9wMlv+t+U=; b=K93Lhsm3ZuiBhJBrfAkNF0
- 3+xwiQIySEXcy3Ww0j8YtIuKeq9ngT2LI3m6OUJ9yJ1B0LCiMxg/PbRZXI298KB6
- bz8A39UZCke0vkA9BCYgoXY1BD9Z2syRmg5mMqcbivwq+zHH47uNljv3KDKmY13E
- Uer5wlDwLxJJpUd2xd7+rA3xObKj5OrxafKyJYfBHdR6uR926TJWv7GGzOHIbDEp
- JPd2aLN/sKayjTpByFkzIDTu8qZcXtDDr/OA2dcXqdG9Xr8ZaKyu23t3X5lOdoNo
- 9iI7/ThrIlnRJaodYKoi3hdhlLowlqAv90XHsjfk/M1TAhW8oqU9My4VUkPz8g1w
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ff5qa3v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Jul 2025 22:15:34 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56NKbeaw005057;
- Wed, 23 Jul 2025 22:15:34 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 480u8g0x1u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Jul 2025 22:15:34 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56NMFWMT18940654
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Jul 2025 22:15:32 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCAE25805B;
- Wed, 23 Jul 2025 22:15:32 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8B12E58058;
- Wed, 23 Jul 2025 22:15:31 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 23 Jul 2025 22:15:31 +0000 (GMT)
-Message-ID: <6bc858c5-ad3a-4445-900f-5aba34011553@linux.ibm.com>
-Date: Wed, 23 Jul 2025 18:15:30 -0400
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1uehmE-0002l4-4H
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 18:17:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZPn3/yI3mxRcimmXgzP/Gq1MwrpQseckootb/4PkqxNoeQjtaTHUrTDjwGDMgaWavLBrwtWVqqtbRGaRDv8SNG30UIzp8nQReFG9tLguXAWJiC8Wx9mL5QJOdHM9ddrhLrinhB8G1gfcIB87gjQcWHB0us4BDuENSsaaIMh4iSjyKqVbtIs+vRFxtWZ3noGAlZAYrJs9kMwEYP3wCF77GzmgqoSMsRk7fW0oG94mdgvlaERBXOub/KEN/IGp4rbbauMWurrtAB15a2uHuN1vligKLvnS6zEKMegAWIriybsqyq8ER97jIZPxKzPA1dtdD+XrcNZrq0MCmcUBTBznYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Is35CfYhkDahk3QY2IkosIUPdxi+6y8Hx4TEIJwlXKc=;
+ b=cS+3Cp81cxWHow/DNR8HVjkRbFgdKcx9iIOjBBOuRKZUbe/cr/3fQZ46PCF2aro3Yp/tkQ6oKEXyMX7jHg4w9wxBBog7AYbwwkqrpQePLjVIMKZb5ZkHIXtDX7aDL9wWNcHIJohXLWzOCIj35ebMgvxLG5koz1VS2th3biAb/iLPzcwlgHS5MOtJT10pqL4ttN893ZmmKoGHP3NwlE63QsBjf/jjOfnpmSCAVuFmdXgv2li2cnqPAE/vKeUtip4ctLCxauVyvsMVWyFu9rz426TQrRNtN/6mJhaj5zJuTTp2z1v/4riIFS0I4v/moN1jPZREEqdAh/0kdkpzFyZTkQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Is35CfYhkDahk3QY2IkosIUPdxi+6y8Hx4TEIJwlXKc=;
+ b=exDbMRQa6YMs3G7oc6zMGj8MHaZT+2AKzIaajVVZ2XsWcm/yxjZ+uLTBmQ8l2v8rhMlPDmp1r4Y4/fL58J9xZxxMZTamm2u3Ei0imsqxIuy4x0eoxn1R9A1hDUyAXfn/BkVdxyI/DTGQPb19R+Z6VTXos+8NdpYKhuqtVoMEJmA=
+Received: from MN2PR15CA0061.namprd15.prod.outlook.com (2603:10b6:208:237::30)
+ by DS0PR12MB8503.namprd12.prod.outlook.com (2603:10b6:8:15a::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Wed, 23 Jul
+ 2025 22:12:23 +0000
+Received: from BN1PEPF0000467F.namprd03.prod.outlook.com
+ (2603:10b6:208:237:cafe::2f) by MN2PR15CA0061.outlook.office365.com
+ (2603:10b6:208:237::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8964.21 via Frontend Transport; Wed,
+ 23 Jul 2025 22:12:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN1PEPF0000467F.mail.protection.outlook.com (10.167.243.84) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8964.20 via Frontend Transport; Wed, 23 Jul 2025 22:12:22 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 23 Jul
+ 2025 17:12:22 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/28] s390x/diag: Implement DIAG 320 subcode 1
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-8-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20250711211105.439554-8-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MCBTYWx0ZWRfX+Yu0oY2lGirq
- d5iGXGdkab6BTy0ql7AmNLnpm11JDFtwxo4SkiiKw+vOXmeCueG7F1L53zbsyV7/oAP0aCE/Qlc
- VFvPOM4YL0xYYX+AAmFV1hQ7xXkZhKZD+E1N/1dDUaAb3f4zLTA8o6PpKtntZDJEfIqSVjzapd6
- QEF8F/VWzJzfIhDKGuDJwsS6xzFfl8HYCWfHvHGrclzWRO3fJLXaK0NW3OMjjFynxRFABZgcTnr
- TQnff3nVzW3IxD/Is6Gp8uL8iuZDIf1R1tm/vWNBmZEwW3S8TAX9NSR9sMobxJBl8wf5x+9i8Kv
- HOURj9/fVa9gx0Mqesm9ix2uwjjd2d7i71OL1ZPwGLSjmBKEGdh3Hc+KxVYnm+Q6R5mReQMk3oM
- 3T9ub2ILybmSi2h4aegeqETw0KRT+rxh+2USvMFghDvObwSotzr4gAM4IXf+Ek7BlAIuHCG+
-X-Authority-Analysis: v=2.4 cv=evLfzppX c=1 sm=1 tr=0 ts=68815f06 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=ge0uEXs9HacO7RU2KJYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: TBOXDnnp_HqJahL8sF9uitJuoqZPjvxB
-X-Proofpoint-ORIG-GUID: TBOXDnnp_HqJahL8sF9uitJuoqZPjvxB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 mlxscore=0 suspectscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507230190
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.1.0-rc0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+Date: Wed, 23 Jul 2025 17:11:55 -0500
+Message-ID: <175330871526.2488448.4100316387161263035@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF0000467F:EE_|DS0PR12MB8503:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6e2f1291-7224-4fc1-a5b3-08ddca35ffbf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|36860700013|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?R1M1RENJTG53Z2M4OTFOK3RkeWkwUlZEMjFMRmh6dmhiS3lVeGxyTlYzTHVs?=
+ =?utf-8?B?UXBNcnZtVng1QjFTZ29sbW0wUFQyaldCVXlxYVBXTUVhcHJxQmZoYnZDUU1B?=
+ =?utf-8?B?M2Q5YWhNSXYyUVpoTWlwVDZxL1RQUlc1OVc1STRucEwvQS9US2NJdWMyWlJ6?=
+ =?utf-8?B?MU4wa3oyd0hydXRSVkZmMDQvOWRNZGNSSUM0NDl4dm02NG5JcVhVMzQydlRK?=
+ =?utf-8?B?OTVHK2s3ZGV6dUcyaGtBTWhQV1JWV3Z1ZTN2cGhkdmhCOW5DOG0rSTVoaDZ6?=
+ =?utf-8?B?b3lPKzZFSFFuejNHWWhvN0lUS1NHSTRHTmZrUUpjRDZjcDBoUnFzS0V5dWsw?=
+ =?utf-8?B?L1ZyM3h2UTVVd1R5QUFtYlVpZHlGaTM0Zm16cHRtMXFTYWU2SGh5V2xyOEFr?=
+ =?utf-8?B?azdJanAvaXJBN0c0dFE4SGR4Y0pseVoyNVFxYjdZN2kvMllOZHN2UnBzUUxH?=
+ =?utf-8?B?cnZIRHZOZXltZjFiU2YrSy83Y0hiTmVKbDNjY2YrQnE1Q01IRXA2WktXakVy?=
+ =?utf-8?B?ZjUyUUFRcVA5bkdvYVRMT3IvZXFMOVB0bFZndElkV0g2dmJvZHRtOUFaSk9W?=
+ =?utf-8?B?RGZSeTRQdXNqMkhYK251TDErVkVST0R1c3VUNmZramJ6WVZURVRLOEhtTXhn?=
+ =?utf-8?B?YWs2OWc4MXVLMDV2MjhQSDBwdVhPL0Nvb1V3RVR0OTZnRiswNWFDNUpFVUpq?=
+ =?utf-8?B?UkFwZm9XQ1NUWXNzV3pnejh3UDIvc1FxbDdJYWcxSDdoNzh3dXBiMHBqQXo1?=
+ =?utf-8?B?K3p2TFpNR3JZUlI2aCtrZ2RXbzhNaTBaUWlxM3ZIbmdOT0NzRzdJbkFFZ08y?=
+ =?utf-8?B?QnE5RGF3S3pNVFVYQUh4QjJFYWFOTHVMcWZYU2NTVDZSamlITU9RZlZ0Y08v?=
+ =?utf-8?B?UUtRYWtZaTE0amVtY2V4MHZ5VVJpVHp4MzY3MHJRdEk5Y212QitaVTNwWUU3?=
+ =?utf-8?B?aUc1a2s5RVo4ZFFnMFNpb0x4L0xDQXpSR0IxTjMyajJaQ1dpY3hIVnM4RG14?=
+ =?utf-8?B?N3hnRnhkK2psMkNEVHNzRHJneU5pQzZSYUhQZ1M2enBNb2s0c2RDUThxZjVD?=
+ =?utf-8?B?UVl2dXR6S2FNVjRoQjRXOHpXU1JjTVFoaE0zMmdlQWMwM3dqWTJqQzJ5SkVp?=
+ =?utf-8?B?Z2E1V3VYZ2dEN1N6UkFyYzd4OGtWc0NDNFJuVzUrRTN4ODB2YnAvSmhnSW1y?=
+ =?utf-8?B?NStIaCthR1Q3c3BPZlIwaUVITmluZ2hRNWg3V210N2NBblFmSEI2OStVVnor?=
+ =?utf-8?B?L1hHRFdiaTgzTHk3ME5iUlBiYmxUWU01aG5FeTRTMHJSbGVlRGRHNTQzVkY4?=
+ =?utf-8?B?TXVMK05maFdCazNnN0MySEpIM2UybVY2d3dFZm5oOGhqME9kUDI1ZXlpK1ZS?=
+ =?utf-8?B?NE9BV2xvMDNKY2UrY0l4aXl2a1lJTVB1TEJ6TzhWVkw3QUcyN1cyM2hGVmNG?=
+ =?utf-8?B?eEg2ditIM2UyYStuS2RVYmdBTmVxY0dGcDJWd0lSRUQxcUdhR3R1MkQ5Ymgv?=
+ =?utf-8?B?WThFMGRGZUFlbkNjSDJKZEM3eVJnNFhZR1d2bVhkUW95UjFzaUo1NldYb09E?=
+ =?utf-8?B?WTFBdVFMcFcwS21OTjJXaW5nMncxVjZpaWpVTjdsU0hKZTJMajRmNWl1RTRX?=
+ =?utf-8?B?SjIvcVhScERLN1ZkcS9KazlxdCtJWDk4MW1MQnR1bDhrcm02b2Z6dHNMZlBk?=
+ =?utf-8?B?Z1ZmQUliZS9EUm9LeWNKKzFlZWp1QXZCSkhhNmRacU96UkI5M1QzUGRHVUJZ?=
+ =?utf-8?B?Y1g1UkhOa25UZkxRRUpoSWF1Y1Q1VkhaS3lpanZUOXFwNGN4Qjhvc25PVHFR?=
+ =?utf-8?B?VGlkTFhFMmtaNXNON3ppSUhjaDFaUHE5OUhEMk1lK21JS2Z6SUdaYTVZaGN5?=
+ =?utf-8?B?aDl3RXd1UCtPN3VQYVh0WTFTM3hGaDRvNDBVRFVidG9vMkxvaCtBeGp4SmhY?=
+ =?utf-8?B?cjhaZTE1S0lFYjY5N0E5QkVUME1EbXF6UjRzczZ1cnkvU0w0dmlibnBvZk92?=
+ =?utf-8?B?TnZ6NFlzQ3hBPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2025 22:12:22.8891 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e2f1291-7224-4fc1-a5b3-08ddca35ffbf
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0000467F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8503
+Received-SPF: permerror client-ip=40.107.223.88;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.377,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,171 +155,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 17:10, Zhuoying Cai wrote:
-> DIAG 320 subcode 1 provides information needed to determine
-> the amount of storage to store one or more certificates.
-> 
-> The subcode value is denoted by setting the left-most bit
-> of an 8-byte field.
+Hello,
 
-This is general DIAG knowledge.  Remove this sentence.
+On behalf of the QEMU Team, I'd like to announce the availability of the
+first release candidate for the QEMU 10.1 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-> 
-> The verification-certificate-storage-size block (VCSSB) contains
-> the output data when the operation completes successfully.
-> 
+  http://download.qemu.org/qemu-10.1.0-rc0.tar.xz
+  http://download.qemu.org/qemu-10.1.0-rc0.tar.xz.sig
 
-Please add more detail describing where the data that the VCSSB gets
-filled with comes from (s390 cert store), how this subcode is useful
-(e.g. getting num of certs, knowing how much space may need to be
-allocated to store a cert).
+You can help improve the quality of the QEMU 10.1 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
-There are some #defines for the VCE (cert entries) and VCB (subcode 2
-data structure).  Please elaborate on them in the commit message.
+  https://gitlab.com/qemu-project/qemu/-/milestones/16
 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  include/hw/s390x/ipl/diag320.h | 23 ++++++++++++++++++++++
->  target/s390x/diag.c            | 36 +++++++++++++++++++++++++++++++++-
->  2 files changed, 58 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
-> index 713570545d..3916a2915e 100644
-> --- a/include/hw/s390x/ipl/diag320.h
-> +++ b/include/hw/s390x/ipl/diag320.h
-> @@ -11,7 +11,30 @@
->  #define S390X_DIAG320_H
->  
->  #define DIAG_320_SUBC_QUERY_ISM     0
-> +#define DIAG_320_SUBC_QUERY_VCSI    1
->  
->  #define DIAG_320_RC_OK              0x0001
->  
-> +#define VCSSB_MAX_LEN   128
+The release plan, as well a documented known issues for release
+candidates, are available at:
 
-This is just the size of the struct, right?  Why not just use sizeof
-instead of this define?
+  http://wiki.qemu.org/Planning/10.1
 
-> +#define VCE_HEADER_LEN  128
-> +#define VCB_HEADER_LEN  64
-> +
-> +#define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
+Please add entries to the ChangeLog for the 10.1 release below:
 
-FYI: need a bit for subcode 0 (as Eric mentioned)
+  http://wiki.qemu.org/ChangeLog/10.1
 
-> +
-> +struct VCStorageSizeBlock {
-> +    uint32_t length;
-> +    uint8_t reserved0[3];
-> +    uint8_t version;
-> +    uint32_t reserved1[6];
-> +    uint16_t total_vc_ct;
-> +    uint16_t max_vc_ct;
-> +    uint32_t reserved3[7];
-> +    uint32_t max_vce_len;
-> +    uint32_t reserved4[3];
-> +    uint32_t max_single_vcb_len;
-> +    uint32_t total_vcb_len;
-> +    uint32_t reserved5[10];
-> +};
-> +typedef struct VCStorageSizeBlock VCStorageSizeBlock;
-> +
->  #endif
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index 7b9b47a171..1f7d0cb2f6 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -191,9 +191,13 @@ out:
->      }
->  }
->  
-> +QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != 128,
-> +                   "size of VCStorageSizeBlock is wrong");
-> +
-
-I'm unsure of why this is needed?  It's not necessarily up to the build
-to determine that the data structure sizing hasn't been tampered with.
-See below, which may help clarify where the 128 bytes need to be checked.
-
->  void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->  {
->      S390CPU *cpu = env_archcpu(env);
-> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
->      uint64_t subcode = env->regs[r3];
->      uint64_t addr = env->regs[r1];
->      int rc;
-> @@ -215,13 +219,43 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->  
->      switch (subcode) {
->      case DIAG_320_SUBC_QUERY_ISM:
-> -        uint64_t ism =  0;
-> +        uint64_t ism = cpu_to_be64(DIAG_320_ISM_QUERY_VCSI);
->  
->          if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism))) {
->              s390_cpu_virt_mem_handle_exc(cpu, ra);
->              return;
->          }
->  
-> +        rc = DIAG_320_RC_OK;
-> +        break;
-> +    case DIAG_320_SUBC_QUERY_VCSI:
-> +        VCStorageSizeBlock vcssb;
-> +
-> +        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock),
-> +                                  true)) {
-> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-> +            return;
-> +        }
-
-There is a piece missing of the "negotiation" between here and the
-userspace.  Userspace must set the length to a "minimum of 128 [bytes]
-...; otherwise, a response code of 0x0202 is returned ..."
-
-So, you're going to need to read the VCSSB denoted by addr and check
-that the length field is >= 128.  Otherwise set that response code.
-
-Check out function `get_vcssb` in the kernel cert_store.c file for guidance.
-
-> +
-> +        if (!qcs || !qcs->count) {
-> +            vcssb.length = cpu_to_be32(4);
-
-Please use a #define instead of a literal.  4 is denoted as the length
-set if no certs are found.
-
-> +        } else {
-> +            vcssb.length = cpu_to_be32(VCSSB_MAX_LEN);
-> +            vcssb.version = 0;
-> +            vcssb.total_vc_ct = cpu_to_be16(qcs->count);
-> +            vcssb.max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
-> +            vcssb.max_vce_len = cpu_to_be32(VCE_HEADER_LEN + qcs->max_cert_size);
-
-This field is suppose to represent a constraint imposed by the cert
-store that denotes the largest sized cert that it will allow to be
-stored, not necessarily the "size of the largest cert currently stored"
-(that is reserved for max_single_vcb_len below).  I do not think you
-have such a limitation in place, so it may be safe to ignore it?
-
-Kernel only prints this field for debugging.  Your code later on doesn't
-utilize it.
-
-> +            vcssb.max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
-> +                                                   qcs->max_cert_size);
-> +            vcssb.total_vcb_len = cpu_to_be32(VCB_HEADER_LEN +
-> +                                              qcs->count * VCE_HEADER_LEN +
-> +                                              qcs->total_bytes);
-> +        }
-> +
-> +        if (s390_cpu_virt_mem_write(cpu, addr, r1, &vcssb, sizeof(VCStorageSizeBlock))) {
-> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +            return;
-> +        }
->          rc = DIAG_320_RC_OK;
->          break;
->      default:
-
-
--- 
-Regards,
-  Collin
+Thank you to everyone involved!
 
