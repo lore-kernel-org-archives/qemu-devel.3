@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAC4C83F1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2A4C87FC5
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueckQ-0006ew-Iw; Wed, 23 Jul 2025 12:55:18 -0400
+	id 1ueckR-0006ge-Hk; Wed, 23 Jul 2025 12:55:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ueckL-0006SD-Qb
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:55:13 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1ueckN-0006Yu-7W
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:55:15 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ueckI-0007Bs-Up
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:55:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45600581226so375355e9.1
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:55:10 -0700 (PDT)
+ id 1ueckK-0007CB-Ci
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:55:14 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so52573f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753289709; x=1753894509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753289710; x=1753894510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YgGqaIHsbVQXAi+NjeZQAHrhXcK+K5i9LycDUSR887M=;
- b=uLdsifBTi37lDOpnNB3v0oUBdOa3htt0vMZNP2dUv7xMLZJBnw17a8H8hCqlk1Sb0M
- Er4dGz0/GnzzD872dvdmCN/cvEHuhcK9y9pGSuoC+FRld0Eo3nyJC6cBITO/kfI4jUzT
- qMhoEFnRn3cBZ9cuGEe4+87MiA1v8UX0qTaWuRCG31hKTRuknPR8CGgiG/7eIDDTSfsP
- 63Ysi82+05vqO9zEILaOZuFE2Z+qTcUVfpOaMEQDWzReSoec7EqBKxv2SNxuZRaLYKxP
- GYyJPdnT+5vea2mGBmU8Nuy/cl4dmrWJplKwTGoRuu0c2YU8r9nx/FKxRaBijFrY6bbw
- t0dg==
+ bh=xPRVtFyOEs0a/mnfXfxmFYMGExKwtE9UrYxqSOjaOvc=;
+ b=pGgmJNTiicDHXT4IL3r+0gAMEYxKemHk8AcUUA/PjQcaJ8kmhiALkqvV+DtN/4rHBA
+ MrObCv9BxsLv3sMj8sGTLUeskCbk7ZScvxrj5u7JHgZMDwWhbC9iWCDoAtNokCwDB9QB
+ 3VngQDZrMygjD25Qh3l+WZXLO4nPnDGVPvzt1iwNWS6vEtM7bu43Md9C/6dkBdbakKXm
+ /T0KquRa6c4ipyAjnu+SGkLZAOpdTAbIcnW+pXhTVFoubJAFxQWxCmuBo0krhM5/OW7m
+ XpbMJJU76ikS9sWjktsWnZWav+LWz/EiMD2HwP9g+5DOVxSCjjYD/x/8utejM1DzDlh6
+ 6bCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753289709; x=1753894509;
+ d=1e100.net; s=20230601; t=1753289710; x=1753894510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YgGqaIHsbVQXAi+NjeZQAHrhXcK+K5i9LycDUSR887M=;
- b=wnGIeh+bbUuFWzG6U4R2F0cLCTvEcPG7vo5+bV17uuplH3G91+ui7tgNmUmqL2e+1D
- vQgf7y2eFzjbVDy9JWn+ALFfNvsrMZGwqdrTdyIrXkr8t8+ww9WJcXqEi1TlgdBBeuTd
- xIhFIopIF3Vt9tz004xyfZN9fqRvahNTCTpiOst+JNAv/0xY1QrzX6IWufejTih/7op9
- Jsnx4CUefKiKue2s6x6dODcV7I528BgBvZaxhwqx9aDT0CU7S8ZNlbRsTTNNq2swUcdd
- sXtKWUhEm6SBRQ35WX5TX0JONfNnoMyxHMBWdZr3ObHodNVqW/0rwIJYimV7Y/gw6NBe
- YLWg==
+ bh=xPRVtFyOEs0a/mnfXfxmFYMGExKwtE9UrYxqSOjaOvc=;
+ b=fbs7rphk9EeNEsluZpbQTaMR86xXTv6QpYtW+mwe0ka18gfoJp22DGQq7gLCHy4a05
+ 94ZgMvNE4OpIbBKTIrtVqMqbewMpBc5A/zQimh1HZP4rsrfMaPkqvhqHStnyTW7jYd64
+ MysJFnY9co09b55jyyw8MRJwc0XGq7gQW+0st11RgwVgAsWkHJy58D903N7Mte35nDiq
+ USP82FeDOk7iR0wRf80YATVefiBUdhf1BBjoSpn7a8Xssowe6PmojjrkACgu5pJG/rfP
+ jn/wfaIqiJQhbacUPhFmmWB+Jt9+MqIlEYVyhBM64lZb9cIIKhhR+iY0v6GgHXyP/SuX
+ k3JA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkTPfChh99NARHyF55bDAnk28K+L+In1kxu1BFl/SmSUuu3Lf4mSTShDjBy0fULcut8QuHF2gZddU/@nongnu.org
-X-Gm-Message-State: AOJu0Yx/S08taBxri5mW6RhWw21dW1sanOMLCactyhHxKC+ZpY9U8FWO
- q7HPil9cjeoU5EjoX6Caa9RB91ZSbVj1TtsGLl4i+3+bXOEgq6JEitJ659UMuHMZAf8=
-X-Gm-Gg: ASbGnctuB02Vp7cPXBzdnIRDcNCno91gUQO6PO+jBXSccmF4J9NXhncDCAwgKm9R1PM
- iNRxMHiUBcbSkdUQMGTbDfsq8jXOWTURidGtvQalT0+n2v06J/ydyuAF1xA0gH4ubFz6xBe+dOT
- OBTr05XkTGveRERPO+R1eWM0JXyCGflfDerSktvKe0tpRpmmZ6K4+vR8Wz7TtAdM27/zbGCmfw7
- 2RTLBu4EciJT1enojN+Q3Z+OiOxcMwesm5iMa7MwQvh9sOAT96b5qGr2zygoT/WZgHQ64TGIrgp
- YPF3P0XB/4Kmg/bb1Di5iCT5wF8jAHumImjNiN0sZ4I4rvv7g1+Lsyl/Shea+DkKyfsJUeQRhP9
- Jahz2vh1eVfvfFsjHheXRdmxJnCPB
-X-Google-Smtp-Source: AGHT+IGUHzp2t14xcxnogL5suHHHiFaBprX6aNR7y2fQPnsvlhfssAORLHkjuyMjJHzWNmI86vLlcA==
-X-Received: by 2002:a05:600c:6307:b0:456:1923:7549 with SMTP id
- 5b1f17b1804b1-4586d6db9e7mr10451365e9.26.1753289709078; 
- Wed, 23 Jul 2025 09:55:09 -0700 (PDT)
+ AJvYcCWr9Px8QCkJfobmD8vxeSEZrRdCH0pk0k67FQcCdMxURuh4LLNEChFzr/Mv/UR4Q8vAhVR5WGhMZaha@nongnu.org
+X-Gm-Message-State: AOJu0Yx7CixxoMHSwexhrLU9gNPChwo7BAsdQJjWFSy0meK8fQ/7pLHT
+ bMCzFOoEtUiQ21s040i+K89wFtFD82NdRZX3vPX7CJJ00Rmn83OXz+xAUJYMm6D6CbtgL1Mue6t
+ /4+aM
+X-Gm-Gg: ASbGnctwVKFlGBo/4nSyKL4hHSRSCmq6G6zfKNrdt1763ew6urDs8nt0qQh2tacElVr
+ ikF2CDnskXCGc0X8X8El9x+cOUTqKF4ABI+N8BmXiwsbkAy4J51JQuquzQRiJwLlu1Uw3fV7oRT
+ uWc2xMKA4xSG6+YQmixaZVYvwF9Xn7ygCH5+TcqDytGGfBtiOGSq1snTHM8lIdTgC+P8ZOEgshx
+ w3wtvS2N6MsgNotGqbdrv9UIWpFd6Ihrj6MWS4CEJvMZzOvV1cwLw5OaDnSRATRdmiSC/qY5tOG
+ FWMlY2odJC0XpPvqckopUClGIVKt7gxf/Kfj4p02d5an23y4xHGzwg5rUSe2jqS73jv49wJ3xGm
+ uI5LIt5z4u0vAPAonNrnl0ByfFLuy
+X-Google-Smtp-Source: AGHT+IFJdjRZrY/S3niiPLVHZKOWDLC/3BuP8ocpwN3JSOYD0JGgcdZwhnpRQi8HuQ+C/2JcNoe/og==
+X-Received: by 2002:a05:6000:401e:b0:3b7:5802:f51d with SMTP id
+ ffacd0b85a97d-3b768ef3c11mr2964410f8f.27.1753289710185; 
+ Wed, 23 Jul 2025 09:55:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458693cd224sm28559825e9.21.2025.07.23.09.55.08
+ 5b1f17b1804b1-458693cd224sm28559825e9.21.2025.07.23.09.55.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Jul 2025 09:55:08 -0700 (PDT)
+ Wed, 23 Jul 2025 09:55:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH for-10.1 4/6] target/arm: LD1Q, ST1Q are vector + scalar,
- not scalar + vector
-Date: Wed, 23 Jul 2025 17:54:56 +0100
-Message-ID: <20250723165458.3509150-5-peter.maydell@linaro.org>
+Subject: [PATCH for-10.1 5/6] target/arm: Pass correct esize to sve_st1_z()
+ for LD1Q, ST1Q
+Date: Wed, 23 Jul 2025 17:54:57 +0100
+Message-ID: <20250723165458.3509150-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250723165458.3509150-1-peter.maydell@linaro.org>
 References: <20250723165458.3509150-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,170 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike the "LD1D (scalar + vector)" etc instructions, LD1Q is
-vector + scalar. This means that:
- * the vector and the scalar register are in opposite fields
-   in the encoding
- * 31 in the scalar register field is XZR, not XSP
+Our implementation of the helper functions for the LD1Q and ST1Q
+insns reused the existing DO_LD1_ZPZ_D and DO_ST1_ZPZ_D macros.  This
+passes the wrong esize (8, not 16) to sve_ldl_z().
 
-The same applies for ST1Q.
+Create new macros DO_LD1_ZPZ_Q and DO_ST1_ZPZ_Q which pass the
+correct esize, and use them for the LD1Q and ST1Q helpers.
 
-This means we can't reuse the trans_LD1_zprz() and trans_ST1_zprz()
-functions for LD1Q and ST1Q. Split them out to use their own
-trans functions.
-
-Note that the change made here to sve.decode requires the decodetree
-bugfix "decodetree: Infer argument set before inferring format" to
-avoid a spurious compile-time error about "dtype".
-
-Fixes: d2aa9a804ee678f ("target/arm: Implement LD1Q, ST1Q for SVE2p1")
+Fixes: d2aa9a804ee ("target/arm: Implement LD1Q, ST1Q for SVE2p1")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      | 12 +++----
- target/arm/tcg/translate-sve.c | 65 ++++++++++++++++++++++++++--------
- 2 files changed, 57 insertions(+), 20 deletions(-)
+ target/arm/tcg/sve_helper.c | 36 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index aea7f519730..ab63cfaa0f0 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1343,9 +1343,9 @@ LD1_zprz        1100010 10 1. ..... 1.. ... ..... ..... \
- LD1_zprz        1100010 11 1. ..... 11. ... ..... ..... \
-                 @rprr_g_load_sc esz=3 msz=3 u=1
- 
--# LD1Q
--LD1_zprz        1100 0100 000 rm:5 101 pg:3 rn:5 rd:5 \
--                &rprr_gather_load u=1 ff=0 xs=2 esz=4 msz=4 scale=0
-+# LD1Q. Note that this is subtly different from LD1_zprz because
-+# it is vector + scalar, not scalar + vector.
-+LD1Q            1100 0100 000 rm:5 101 pg:3 rn:5 rd:5
- 
- # SVE 64-bit gather load (vector plus immediate)
- LD1_zpiz        1100010 .. 01 ..... 1.. ... ..... ..... \
-@@ -1450,9 +1450,9 @@ ST1_zprz        1110010 .. 01 ..... 101 ... ..... ..... \
- ST1_zprz        1110010 .. 00 ..... 101 ... ..... ..... \
-                 @rprr_scatter_store xs=2 esz=3 scale=0
- 
--# ST1Q
--ST1_zprz        1110 0100 001 rm:5 001 pg:3 rn:5 rd:5 \
--                &rprr_scatter_store xs=2 msz=4 esz=4 scale=0
-+# ST1Q. Note that this is subtly different from ST1_zprz because
-+# it is vector + scalar, not scalar + vector.
-+ST1Q            1110 0100 001 rm:5 001 pg:3 rn:5 rd:5
- 
- # SVE 64-bit scatter store (vector plus immediate)
- ST1_zpiz        1110010 .. 10 ..... 101 ... ..... ..... \
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 5cba7b87bdc..07b827fa8e8 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -6179,9 +6179,7 @@ static bool trans_LD1_zprz(DisasContext *s, arg_LD1_zprz *a)
-     bool be = s->be_data == MO_BE;
-     bool mte = s->mte_active[0];
- 
--    if (a->esz < MO_128
--        ? !dc_isar_feature(aa64_sve, s)
--        : !dc_isar_feature(aa64_sve2p1, s)) {
-+    if (!dc_isar_feature(aa64_sve, s)) {
-         return false;
-     }
-     s->is_nonstreaming = true;
-@@ -6196,10 +6194,6 @@ static bool trans_LD1_zprz(DisasContext *s, arg_LD1_zprz *a)
-     case MO_64:
-         fn = gather_load_fn64[mte][be][a->ff][a->xs][a->u][a->msz];
-         break;
--    case MO_128:
--        assert(!a->ff && a->u && a->xs == 2 && a->msz == MO_128);
--        fn = gather_load_fn128[mte][be];
--        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -6210,6 +6204,32 @@ static bool trans_LD1_zprz(DisasContext *s, arg_LD1_zprz *a)
-     return true;
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index d0fb4138d21..c4aaf0cc45f 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -7219,6 +7219,20 @@ void HELPER(sve_ld##MEM##_##OFS##_mte)(CPUARMState *env, void *vd, void *vg, \
+                   off_##OFS##_d, sve_ld1##MEM##_host, sve_ld1##MEM##_tlb);   \
  }
  
-+static bool trans_LD1Q(DisasContext *s, arg_LD1Q *a)
-+{
-+    gen_helper_gvec_mem_scatter *fn = NULL;
-+    bool be = s->be_data == MO_BE;
-+    bool mte = s->mte_active[0];
-+
-+    if (!dc_isar_feature(aa64_sve2p1, s)) {
-+        return false;
-+    }
-+    s->is_nonstreaming = true;
-+    if (!sve_access_check(s)) {
-+        return true;
-+    }
-+
-+    fn = gather_load_fn128[mte][be];
-+    assert(fn != NULL);
-+
-+    /*
-+     * Unlike LD1_zprz, a->rm is the scalar register and it can be XZR, not XSP.
-+     * a->rn is the vector register.
-+     */
-+    do_mem_zpz(s, a->rd, a->pg, a->rn, 0,
-+               cpu_reg(s, a->rm), MO_128, false, fn);
-+    return true;
++#define DO_LD1_ZPZ_Q(MEM, OFS, MSZ)                                          \
++void HELPER(sve_ld##MEM##_##OFS)(CPUARMState *env, void *vd, void *vg,       \
++                                 void *vm, target_ulong base, uint64_t desc) \
++{                                                                            \
++    sve_ld1_z(env, vd, vg, vm, base, desc, GETPC(), 0, 16, 1 << MSZ,         \
++              off_##OFS##_d, sve_ld1##MEM##_host, sve_ld1##MEM##_tlb);       \
++}                                                                            \
++void HELPER(sve_ld##MEM##_##OFS##_mte)(CPUARMState *env, void *vd, void *vg, \
++    void *vm, target_ulong base, uint64_t desc)                              \
++{                                                                            \
++    sve_ld1_z_mte(env, vd, vg, vm, base, desc, GETPC(), 16, 1 << MSZ,        \
++                  off_##OFS##_d, sve_ld1##MEM##_host, sve_ld1##MEM##_tlb);   \
 +}
 +
- static bool trans_LD1_zpiz(DisasContext *s, arg_LD1_zpiz *a)
- {
-     gen_helper_gvec_mem_scatter *fn = NULL;
-@@ -6386,9 +6406,7 @@ static bool trans_ST1_zprz(DisasContext *s, arg_ST1_zprz *a)
-     if (a->esz < a->msz || (a->msz == 0 && a->scale)) {
-         return false;
-     }
--    if (a->esz < MO_128
--        ? !dc_isar_feature(aa64_sve, s)
--        : !dc_isar_feature(aa64_sve2p1, s)) {
-+    if (!dc_isar_feature(aa64_sve, s)) {
-         return false;
-     }
-     s->is_nonstreaming = true;
-@@ -6402,10 +6420,6 @@ static bool trans_ST1_zprz(DisasContext *s, arg_ST1_zprz *a)
-     case MO_64:
-         fn = scatter_store_fn64[mte][be][a->xs][a->msz];
-         break;
--    case MO_128:
--        assert(a->xs == 2 && a->msz == MO_128);
--        fn = scatter_store_fn128[mte][be];
--        break;
-     default:
-         g_assert_not_reached();
-     }
-@@ -6414,6 +6428,29 @@ static bool trans_ST1_zprz(DisasContext *s, arg_ST1_zprz *a)
-     return true;
+ DO_LD1_ZPZ_S(bsu, zsu, MO_8)
+ DO_LD1_ZPZ_S(bsu, zss, MO_8)
+ DO_LD1_ZPZ_D(bdu, zsu, MO_8)
+@@ -7283,8 +7297,8 @@ DO_LD1_ZPZ_D(dd_be, zsu, MO_64)
+ DO_LD1_ZPZ_D(dd_be, zss, MO_64)
+ DO_LD1_ZPZ_D(dd_be, zd, MO_64)
+ 
+-DO_LD1_ZPZ_D(qq_le, zd, MO_128)
+-DO_LD1_ZPZ_D(qq_be, zd, MO_128)
++DO_LD1_ZPZ_Q(qq_le, zd, MO_128)
++DO_LD1_ZPZ_Q(qq_be, zd, MO_128)
+ 
+ #undef DO_LD1_ZPZ_S
+ #undef DO_LD1_ZPZ_D
+@@ -7632,6 +7646,20 @@ void HELPER(sve_st##MEM##_##OFS##_mte)(CPUARMState *env, void *vd, void *vg, \
+                   off_##OFS##_d, sve_st1##MEM##_host, sve_st1##MEM##_tlb); \
  }
  
-+static bool trans_ST1Q(DisasContext *s, arg_ST1Q *a)
-+{
-+    gen_helper_gvec_mem_scatter *fn;
-+    bool be = s->be_data == MO_BE;
-+    bool mte = s->mte_active[0];
-+
-+    if (!dc_isar_feature(aa64_sve2p1, s)) {
-+        return false;
-+    }
-+    s->is_nonstreaming = true;
-+    if (!sve_access_check(s)) {
-+        return true;
-+    }
-+    fn = scatter_store_fn128[mte][be];
-+    /*
-+     * Unlike ST1_zprz, a->rm is the scalar register, and it
-+     * can be XZR, not XSP. a->rn is the vector register.
-+     */
-+    do_mem_zpz(s, a->rd, a->pg, a->rn, 0,
-+               cpu_reg(s, a->rm), MO_128, true, fn);
-+    return true;
++#define DO_ST1_ZPZ_Q(MEM, OFS, MSZ)                                     \
++void HELPER(sve_st##MEM##_##OFS)(CPUARMState *env, void *vd, void *vg,  \
++                                 void *vm, target_ulong base, uint64_t desc) \
++{                                                                       \
++    sve_st1_z(env, vd, vg, vm, base, desc, GETPC(), 0, 16, 1 << MSZ,    \
++              off_##OFS##_d, sve_st1##MEM##_host, sve_st1##MEM##_tlb);  \
++}                                                                       \
++void HELPER(sve_st##MEM##_##OFS##_mte)(CPUARMState *env, void *vd, void *vg, \
++    void *vm, target_ulong base, uint64_t desc)                         \
++{                                                                       \
++    sve_st1_z_mte(env, vd, vg, vm, base, desc, GETPC(), 16, 1 << MSZ,   \
++                  off_##OFS##_d, sve_st1##MEM##_host, sve_st1##MEM##_tlb); \
 +}
 +
- static bool trans_ST1_zpiz(DisasContext *s, arg_ST1_zpiz *a)
- {
-     gen_helper_gvec_mem_scatter *fn = NULL;
+ DO_ST1_ZPZ_S(bs, zsu, MO_8)
+ DO_ST1_ZPZ_S(hs_le, zsu, MO_16)
+ DO_ST1_ZPZ_S(hs_be, zsu, MO_16)
+@@ -7668,8 +7696,8 @@ DO_ST1_ZPZ_D(sd_be, zd, MO_32)
+ DO_ST1_ZPZ_D(dd_le, zd, MO_64)
+ DO_ST1_ZPZ_D(dd_be, zd, MO_64)
+ 
+-DO_ST1_ZPZ_D(qq_le, zd, MO_128)
+-DO_ST1_ZPZ_D(qq_be, zd, MO_128)
++DO_ST1_ZPZ_Q(qq_le, zd, MO_128)
++DO_ST1_ZPZ_Q(qq_be, zd, MO_128)
+ 
+ #undef DO_ST1_ZPZ_S
+ #undef DO_ST1_ZPZ_D
 -- 
 2.43.0
 
