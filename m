@@ -4,113 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA47C83F1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 17:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D164C83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 18:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uedcG-00061c-Oh; Wed, 23 Jul 2025 13:50:56 -0400
+	id 1uee7H-0005YQ-NW; Wed, 23 Jul 2025 14:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1uedcE-00060h-Sc; Wed, 23 Jul 2025 13:50:54 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1uee6o-0004jU-F3
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 14:22:32 -0400
+Received: from terminus.zytor.com ([2607:7c80:54:3::136] helo=mail.zytor.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1uedcC-0004jA-02; Wed, 23 Jul 2025 13:50:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NAQM1G014140;
- Wed, 23 Jul 2025 17:50:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9Uh96q
- DPsRzw8zbE7pWAQCrWn8adI8IoAcAJb580FmI=; b=Hh0v9f/6eO/jw+Tsg+ldja
- hPjLZNOtVEStzP1kyRxvL3mTKvyBLdbGj9QfV2L3w5/zS5uAp0MFq5AuL+hP3dHw
- ACP/2AtMrLMl6hRkAjlXbkkGFI4eV3kyFtdUToKd02pKfi4NF7X/8iIUmwFTa4M+
- 8BFfa1i22CTUU/oddSP6KhGp9EJF9a4btmPg5Mh7Ehv0eqv40Y9ql7Cx83/kJNOz
- 0eypSVWpLSHmJ63ITLu7wOlxfgsDpTdhzemG/0NLzQx3/vthhcBop0POnyyU+0wG
- PNQKNDYx99QFPsEZaWiIKayvjdCGWlrdWTwdwqwaeFVy9fckGEgyze18aANlVUuQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482kdyn204-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Jul 2025 17:50:08 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56NGPrGR025138;
- Wed, 23 Jul 2025 17:50:07 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 480npts283-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Jul 2025 17:50:07 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56NHo6iS26935890
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Jul 2025 17:50:06 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B5EB5805F;
- Wed, 23 Jul 2025 17:50:06 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C97D858053;
- Wed, 23 Jul 2025 17:50:04 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.103.85]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Jul 2025 17:50:04 +0000 (GMT)
-Message-ID: <f5b6de2e63054fa0e287d15e8b62f5b5aa75480a.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 05/28] s390x/diag: Introduce DIAG 320 for certificate
- store facility
-From: Eric Farman <farman@linux.ibm.com>
-To: Collin Walling <walling@linux.ibm.com>, Zhuoying Cai
- <zycai@linux.ibm.com>, thuth@redhat.com,
- berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com
-Date: Wed, 23 Jul 2025 13:50:04 -0400
-In-Reply-To: <5847016f-f4e7-49ca-82dd-3fb062a8ec0c@linux.ibm.com>
-References: <20250711211105.439554-1-zycai@linux.ibm.com>
- <20250711211105.439554-6-zycai@linux.ibm.com>
- <5847016f-f4e7-49ca-82dd-3fb062a8ec0c@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1uee6l-0001pJ-KV
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 14:22:30 -0400
+Received: from terminus.zytor.com (terminus.zytor.com
+ [IPv6:2607:7c80:54:3:0:0:0:136]) (authenticated bits=0)
+ by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 56NIMBAD1299786
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+ Wed, 23 Jul 2025 11:22:14 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 56NIMBAD1299786
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+ s=2025072201; t=1753294935;
+ bh=RPBt+AF2dCEcK0XM8sYhPFxdEaBCmzbjk0cfLAbZ6nQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=KdPdZy8/dNuFuqVX55JlNQ//bbH/FZqKJ7JzM/RWJOUV/6YQ7dzf4aYTlaL6RMVz4
+ DXfKaY/OSeislQ39CSugMtXxMg5gfnOmdoYcWOZiI2u1zPK+QK+UjNUu/Mnw5ilDqY
+ xpRb+Rahfqk4GyHTaXZFpY5GMJfb8kCgHLgrYZSKaVoJEG8qWrw5lqYqFzRcfNlCns
+ vxR2rIw68SVER1CWvw4QMOlo1pUm6zmObdwC4oJqoy6n/QJ89sLgkJDIL8eWz+PZ3A
+ LMhQ+YaplKSvVTRD/SgR6RxTS5TpqJs99uhqfjyG1X6iksqGfvvWg6DQt8MRMJqrKg
+ e/7GCflNsQRPw==
+From: "Xin Li (Intel)" <xin@zytor.com>
+To: kvm@vger.kernel.org, qemu-devel@nongnu.org
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ zhao1.liu@intel.com, mtosatti@redhat.com, seanjc@google.com,
+ hpa@zytor.com, xin@zytor.com, andrew.cooper3@citrix.com, chao.gao@intel.com
+Subject: [PATCH v1 1/1] target/i386: Save/restore the nested flag of an
+ exception
+Date: Wed, 23 Jul 2025 11:22:11 -0700
+Message-ID: <20250723182211.1299776-1-xin@zytor.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: t1X4Vika5iWpKmhJHXcFyVSgr89eH_oC
-X-Authority-Analysis: v=2.4 cv=XP0wSRhE c=1 sm=1 tr=0 ts=688120d0 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=4eLdKeRZV02X4Tf2mPYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: t1X4Vika5iWpKmhJHXcFyVSgr89eH_oC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE1MyBTYWx0ZWRfX7XqfQZXeR+jg
- Em2AX2T0f0mbaajWiLrQJEDi+TD98mWG8zKHi2bPUnzjIyV9s5Nbve+PTPRXHtir7kqBiJAcWlz
- J7kt6UEXUmxLwut4NMqofC0zg0IIg4jzKykU4v4DBKsGU6ul3Z4Z40HYiL52z2GnApschzO9WRd
- ShUvJAcf5eP3P89XPUKuA0wdwZF2pTKqueMYqYSb/liFD8C3OVZAqHw1Xq6wwidl1OwY8yyeDGv
- i8Vc08r9yBh8LIup/D8L53+HtgPigbEPxhtLxJTmLON38ZQz5F1fxyDv3Wz9U7awoC+DaR/pfT7
- JeYKTvjBSCUygircj4TJNkVSgMh2Lx8gMMurJCwpymXJ9XQWA//BRR6h916mmcSHEAjBWysMTD/
- irDaYCVGhv/GbvZVJI8Er1ZdqcduYrY2JYt+c7+qsKsQW8T5D7fIiTBAGF9ZXERLju34Kz2Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
- suspectscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 phishscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2507230153
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:7c80:54:3::136; envelope-from=xin@zytor.com;
+ helo=mail.zytor.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,235 +69,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-07-21 at 17:26 -0400, Collin Walling wrote:
-> On 7/11/25 17:10, Zhuoying Cai wrote:
-> > DIAGNOSE 320 is introduced to support certificate store facility,
-> > which includes operations such as query certificate storage
-> > information and provide certificates in the certificate store.
-> >=20
-> > Currently, only subcode 0 is supported with this patch, which is
-> > used to query a bitmap of which subcodes are supported.
->=20
-> Change to: "used to query the Installed Subcodes Mask (ISM)."
->=20
-> Based on my feedback below, make sure to include a statement that this
-> subcode is only supported when the Certificate Store facility is enabled.
->=20
-> >=20
-> > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> > ---
-> >  include/hw/s390x/ipl/diag320.h | 17 ++++++++++++++
-> >  target/s390x/diag.c            | 41 ++++++++++++++++++++++++++++++++++
-> >  target/s390x/kvm/kvm.c         | 14 ++++++++++++
-> >  target/s390x/s390x-internal.h  |  2 ++
-> >  target/s390x/tcg/misc_helper.c |  7 ++++++
-> >  5 files changed, 81 insertions(+)
-> >  create mode 100644 include/hw/s390x/ipl/diag320.h
-> >=20
-> > diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag=
-320.h
-> > new file mode 100644
-> > index 0000000000..713570545d
-> > --- /dev/null
-> > +++ b/include/hw/s390x/ipl/diag320.h
-> > @@ -0,0 +1,17 @@
-> > +/*
-> > + * S/390 DIAGNOSE 320 definitions and structures
-> > + *
-> > + * Copyright 2025 IBM Corp.
-> > + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef S390X_DIAG320_H
-> > +#define S390X_DIAG320_H
-> > +
-> > +#define DIAG_320_SUBC_QUERY_ISM     0
-> > +
-> > +#define DIAG_320_RC_OK              0x0001
-> > +
-> > +#endif
-> > diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> > index cff9fbc4b0..d33c5daf38 100644
-> > --- a/target/s390x/diag.c
-> > +++ b/target/s390x/diag.c
-> > @@ -18,6 +18,7 @@
-> >  #include "hw/watchdog/wdt_diag288.h"
-> >  #include "system/cpus.h"
-> >  #include "hw/s390x/ipl.h"
-> > +#include "hw/s390x/ipl/diag320.h"
-> >  #include "hw/s390x/s390-virtio-ccw.h"
-> >  #include "system/kvm.h"
-> >  #include "kvm/kvm_s390x.h"
-> > @@ -191,3 +192,43 @@ out:
-> >          break;
-> >      }
-> >  }
-> > +
-> > +void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uin=
-tptr_t ra)
-> > +{
-> > +    S390CPU *cpu =3D env_archcpu(env);
-> > +    uint64_t subcode =3D env->regs[r3];
-> > +    uint64_t addr =3D env->regs[r1];
-> > +    int rc;
->=20
-> Even though "rc" likely means "response code" in the context of DIAG, it
-> screams "return code" in a void function, which looks a little odd.  I'd
-> remove this variable and simply set `env->regs[r1 + 1] =3D DIAG_320_RC_*`
-> instead, similar to how DIAG 308 handles this.
->=20
-> > +
-> > +    if (env->psw.mask & PSW_MASK_PSTATE) {
-> > +        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
-> > +        return;
-> > +    }
-> > +
-> > +    if (!s390_has_feat(S390_FEAT_DIAG_320)) {
-> > +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> > +        return;
-> > +    }
-> > +
-> > +    if (r1 & 1) {
-> > +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> > +        return;
-> > +    }
-> > +
-> > +    switch (subcode) {
->=20
-> In patch 4, you introduce the feature bit for DIAG 320.  It is
-> documented that subcodes 0-3 are only supported if this feature bit is
-> on.  Please add a check for this feature.  Subcode 0 (and later 1 and 2)
-> should not be handled if this feature bit is not present.
->=20
-> > +    case DIAG_320_SUBC_QUERY_ISM:
-> > +        uint64_t ism =3D  0;
->=20
-> Technically, this subcode is suppose to write to an 8-word installed
-> subcodes block (ISB).  Though I can't imagine that we'll grow beyond
-> even the first word for quite some time.  I guess it's up to the caller
-> to provide a proper ISB anyway.
->=20
-> I'd suggest the following:
->=20
-> change from `uint64_t` to `uint32_t ism_word0`
->=20
-> Add a comment:
->=20
-> /*
->  * The Installed Subcode Block (ISB) can be up 8 words in size,
->  * but the current set of subcodes can fit within a single word
->  * for now.
->  */
->=20
-> > +
-> > +        if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism)))=
+Save/restore the nested flag of an exception during VM save/restore
+and live migration to ensure a correct event stack level is chosen
+when a nested exception is injected through FRED event delivery.
+
+The event stack level used by FRED event delivery depends on whether
+the event was a nested exception encountered during delivery of an
+earlier event, because a nested exception is "regarded" as happening
+on ring 0.  E.g., when #PF is configured to use stack level 1 in
+IA32_FRED_STKLVLS MSR:
+  - nested #PF will be delivered on the stack pointed by IA32_FRED_RSP1
+    MSR when encountered in ring 3 and ring 0.
+  - normal #PF will be delivered on the stack pointed by IA32_FRED_RSP0
+    MSR when encountered in ring 3.
+  - normal #PF will be delivered on the stack pointed by IA32_FRED_RSP1
+    MSR when encountered in ring 0.
+
+As such Qemu needs to track if an event is a nested event during VM
+context save/restore and live migration.
+
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+---
+ linux-headers/asm-x86/kvm.h |  4 +++-
+ linux-headers/linux/kvm.h   |  1 +
+ target/i386/cpu.c           |  1 +
+ target/i386/cpu.h           |  1 +
+ target/i386/kvm/kvm.c       | 35 +++++++++++++++++++++++++++++++++++
+ target/i386/kvm/kvm_i386.h  |  1 +
+ target/i386/machine.c       |  1 +
+ 7 files changed, 43 insertions(+), 1 deletion(-)
+
+diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+index f0c1a730d9..f494509b94 100644
+--- a/linux-headers/asm-x86/kvm.h
++++ b/linux-headers/asm-x86/kvm.h
+@@ -324,6 +324,7 @@ struct kvm_reinject_control {
+ #define KVM_VCPUEVENT_VALID_SMM		0x00000008
+ #define KVM_VCPUEVENT_VALID_PAYLOAD	0x00000010
+ #define KVM_VCPUEVENT_VALID_TRIPLE_FAULT	0x00000020
++#define KVM_VCPUEVENT_VALID_NESTED_FLAG	0x00000040
+ 
+ /* Interrupt shadow states */
+ #define KVM_X86_SHADOW_INT_MOV_SS	0x01
+@@ -361,7 +362,8 @@ struct kvm_vcpu_events {
+ 	struct {
+ 		__u8 pending;
+ 	} triple_fault;
+-	__u8 reserved[26];
++	__u8 reserved[25];
++	__u8 exception_is_nested;
+ 	__u8 exception_has_payload;
+ 	__u64 exception_payload;
+ };
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 32c5885a3c..521ec3af37 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -952,6 +952,7 @@ struct kvm_enable_cap {
+ #define KVM_CAP_ARM_EL2 240
+ #define KVM_CAP_ARM_EL2_E2H0 241
+ #define KVM_CAP_RISCV_MP_STATE_RESET 242
++#define KVM_CAP_EXCEPTION_NESTED_FLAG 243
+ 
+ struct kvm_irq_routing_irqchip {
+ 	__u32 irqchip;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 251d5760a0..4483bf9d10 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8723,6 +8723,7 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+     env->exception_injected = 0;
+     env->exception_has_payload = false;
+     env->exception_payload = 0;
++    env->exception_is_nested = false;
+     env->nmi_injected = false;
+     env->triple_fault_pending = false;
+ #if !defined(CONFIG_USER_ONLY)
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index f977fc49a7..a9116bfd2c 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2097,6 +2097,7 @@ typedef struct CPUArchState {
+     uint8_t has_error_code;
+     uint8_t exception_has_payload;
+     uint64_t exception_payload;
++    uint8_t exception_is_nested;
+     uint8_t triple_fault_pending;
+     uint32_t ins_len;
+     uint32_t sipi_vector;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 369626f8c8..db4af9ec2d 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -174,6 +174,7 @@ static int has_xsave2;
+ static int has_xcrs;
+ static int has_sregs2;
+ static int has_exception_payload;
++static int has_exception_nested_flag;
+ static int has_triple_fault_event;
+ 
+ static bool has_msr_mcg_ext_ctl;
+@@ -259,6 +260,11 @@ bool kvm_has_exception_payload(void)
+     return has_exception_payload;
+ }
+ 
++bool kvm_has_exception_nested_flag(void)
++{
++    return has_exception_nested_flag;
++}
++
+ static bool kvm_x2apic_api_set_flags(uint64_t flags)
  {
-> > +            s390_cpu_virt_mem_handle_exc(cpu, ra);
-> > +            return;
-> > +        }
-> > +
-> > +        rc =3D DIAG_320_RC_OK;
->=20
-> env->regs[r1 + 1] =3D DIAG_320_RC_OK;
->=20
-> > +        break;
-> > +    default:
-> > +        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> > +        return;
->=20
-> As specified in the documentation, "response code 0x0102 indicates that
-> the subcode is reserved or not supported on this model". There is no
-> program specification when an incorrect subcode has been provided.
+     KVMState *s = KVM_STATE(current_accel());
+@@ -3075,6 +3081,21 @@ static int kvm_vm_enable_exception_payload(KVMState *s)
+     return ret;
+ }
+ 
++static int kvm_vm_enable_exception_nested_flag(KVMState *s)
++{
++    int ret = 0;
++    has_exception_nested_flag = kvm_check_extension(s, KVM_CAP_EXCEPTION_NESTED_FLAG);
++    if (has_exception_nested_flag) {
++        ret = kvm_vm_enable_cap(s, KVM_CAP_EXCEPTION_NESTED_FLAG, 0, true);
++        if (ret < 0) {
++            error_report("kvm: Failed to enable exception nested flag cap: %s",
++                         strerror(-ret));
++        }
++    }
++
++    return ret;
++}
++
+ static int kvm_vm_enable_triple_fault_event(KVMState *s)
+ {
+     int ret = 0;
+@@ -3255,6 +3276,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+ 
++    ret = kvm_vm_enable_exception_nested_flag(s);
++    if (ret < 0) {
++        return ret;
++    }
++
+     ret = kvm_vm_enable_triple_fault_event(s);
+     if (ret < 0) {
+         return ret;
+@@ -5041,6 +5067,10 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
+         events.exception_has_payload = env->exception_has_payload;
+         events.exception_payload = env->exception_payload;
+     }
++    if (has_exception_nested_flag) {
++        events.flags |= KVM_VCPUEVENT_VALID_NESTED_FLAG;
++        events.exception_is_nested = env->exception_is_nested;
++    }
+     events.exception.nr = env->exception_nr;
+     events.exception.injected = env->exception_injected;
+     events.exception.has_error_code = env->has_error_code;
+@@ -5109,6 +5139,11 @@ static int kvm_get_vcpu_events(X86CPU *cpu)
+         env->exception_pending = 0;
+         env->exception_has_payload = false;
+     }
++    if (events.flags & KVM_VCPUEVENT_VALID_NESTED_FLAG) {
++        env->exception_is_nested = events.exception_is_nested;
++    } else {
++        env->exception_is_nested = false;
++    }
+     env->exception_injected = events.exception.injected;
+     env->exception_nr =
+         (env->exception_pending || env->exception_injected) ?
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 5f83e8850a..7e765b6833 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -54,6 +54,7 @@ typedef struct KvmCpuidInfo {
+ bool kvm_is_vm_type_supported(int type);
+ bool kvm_has_adjust_clock_stable(void);
+ bool kvm_has_exception_payload(void);
++bool kvm_has_exception_nested_flag(void);
+ void kvm_synchronize_all_tsc(void);
+ 
+ void kvm_get_apic_state(DeviceState *d, struct kvm_lapic_state *kapic);
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index dd2dac1d44..a452d2c97e 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -458,6 +458,7 @@ static const VMStateDescription vmstate_exception_info = {
+         VMSTATE_UINT8(env.exception_injected, X86CPU),
+         VMSTATE_UINT8(env.exception_has_payload, X86CPU),
+         VMSTATE_UINT64(env.exception_payload, X86CPU),
++        VMSTATE_UINT8(env.exception_is_nested, X86CPU),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 
-Yes to this, but subcode is limited to one byte so we still need to do a sp=
-ec exception if r3 is
-greater than 255 (you can do it before the switch, like is done to r1).
+base-commit: 9e601684dc24a521bb1d23215a63e5c6e79ea0bb
+-- 
+2.50.1
 
->=20
-> > +    }
-> > +    env->regs[r1 + 1] =3D rc;
->=20
-> Remove this line.
->=20
-> > +}
-> > diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> > index 8f655a4b7f..d5b3694600 100644
-> > --- a/target/s390x/kvm/kvm.c
-> > +++ b/target/s390x/kvm/kvm.c
-> > @@ -98,6 +98,7 @@
-> >  #define DIAG_TIMEREVENT                 0x288
-> >  #define DIAG_IPL                        0x308
-> >  #define DIAG_SET_CONTROL_PROGRAM_CODES  0x318
-> > +#define DIAG_CERT_STORE                 0x320
-> >  #define DIAG_KVM_HYPERCALL              0x500
-> >  #define DIAG_KVM_BREAKPOINT             0x501
-> > =20
-> > @@ -1560,6 +1561,16 @@ static void handle_diag_318(S390CPU *cpu, struct=
- kvm_run *run)
-> >      }
-> >  }
-> > =20
-> > +static void kvm_handle_diag_320(S390CPU *cpu, struct kvm_run *run)
-> > +{
-> > +    uint64_t r1, r3;
-> > +
-> > +    r1 =3D (run->s390_sieic.ipa & 0x00f0) >> 4;
-> > +    r3 =3D run->s390_sieic.ipa & 0x000f;
-> > +
-> > +    handle_diag_320(&cpu->env, r1, r3, RA_IGNORED);
-> > +}
-> > +
-> >  #define DIAG_KVM_CODE_MASK 0x000000000000ffff
-> > =20
-> >  static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb=
-)
-> > @@ -1590,6 +1601,9 @@ static int handle_diag(S390CPU *cpu, struct kvm_r=
-un *run, uint32_t ipb)
-> >      case DIAG_KVM_BREAKPOINT:
-> >          r =3D handle_sw_breakpoint(cpu, run);
-> >          break;
-> > +    case DIAG_CERT_STORE:
-> > +        kvm_handle_diag_320(cpu, run);
-> > +        break;
-> >      default:
-> >          trace_kvm_insn_diag(func_code);
-> >          kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
-> > diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-interna=
-l.h
-> > index a4ba6227ab..86a652f833 100644
-> > --- a/target/s390x/s390x-internal.h
-> > +++ b/target/s390x/s390x-internal.h
-> > @@ -400,6 +400,8 @@ int mmu_translate_real(CPUS390XState *env, target_u=
-long raddr, int rw,
-> >  int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3);
-> >  void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
-> >                       uintptr_t ra);
-> > +void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3,
-> > +                     uintptr_t ra);
-> > =20
-> > =20
-> >  /* translate.c */
-> > diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_hel=
-per.c
-> > index f7101be574..412c34ed93 100644
-> > --- a/target/s390x/tcg/misc_helper.c
-> > +++ b/target/s390x/tcg/misc_helper.c
-> > @@ -142,6 +142,13 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1,=
- uint32_t r3, uint32_t num)
-> >          /* time bomb (watchdog) */
-> >          r =3D handle_diag_288(env, r1, r3);
-> >          break;
-> > +    case 0x320:
-> > +        /* cert store */
-> > +        bql_lock();
-> > +        handle_diag_320(env, r1, r3, GETPC());
-> > +        bql_unlock();
-> > +        r =3D 0;
-> > +        break;
-> >      default:
-> >          r =3D -1;
-> >          break;
->=20
 
