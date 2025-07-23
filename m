@@ -4,142 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87A3C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 22:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5893C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 22:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uehmL-0006GN-KQ; Wed, 23 Jul 2025 18:17:37 -0400
+	id 1uehoy-0007jx-8K; Wed, 23 Jul 2025 18:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1uehmG-0006Dk-Fp
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 18:17:32 -0400
-Received: from mail-dm6nam11on2088.outbound.protection.outlook.com
- ([40.107.223.88] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1uehov-0007gh-L2; Wed, 23 Jul 2025 18:20:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1uehmE-0002l4-4H
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 18:17:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZPn3/yI3mxRcimmXgzP/Gq1MwrpQseckootb/4PkqxNoeQjtaTHUrTDjwGDMgaWavLBrwtWVqqtbRGaRDv8SNG30UIzp8nQReFG9tLguXAWJiC8Wx9mL5QJOdHM9ddrhLrinhB8G1gfcIB87gjQcWHB0us4BDuENSsaaIMh4iSjyKqVbtIs+vRFxtWZ3noGAlZAYrJs9kMwEYP3wCF77GzmgqoSMsRk7fW0oG94mdgvlaERBXOub/KEN/IGp4rbbauMWurrtAB15a2uHuN1vligKLvnS6zEKMegAWIriybsqyq8ER97jIZPxKzPA1dtdD+XrcNZrq0MCmcUBTBznYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Is35CfYhkDahk3QY2IkosIUPdxi+6y8Hx4TEIJwlXKc=;
- b=cS+3Cp81cxWHow/DNR8HVjkRbFgdKcx9iIOjBBOuRKZUbe/cr/3fQZ46PCF2aro3Yp/tkQ6oKEXyMX7jHg4w9wxBBog7AYbwwkqrpQePLjVIMKZb5ZkHIXtDX7aDL9wWNcHIJohXLWzOCIj35ebMgvxLG5koz1VS2th3biAb/iLPzcwlgHS5MOtJT10pqL4ttN893ZmmKoGHP3NwlE63QsBjf/jjOfnpmSCAVuFmdXgv2li2cnqPAE/vKeUtip4ctLCxauVyvsMVWyFu9rz426TQrRNtN/6mJhaj5zJuTTp2z1v/4riIFS0I4v/moN1jPZREEqdAh/0kdkpzFyZTkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Is35CfYhkDahk3QY2IkosIUPdxi+6y8Hx4TEIJwlXKc=;
- b=exDbMRQa6YMs3G7oc6zMGj8MHaZT+2AKzIaajVVZ2XsWcm/yxjZ+uLTBmQ8l2v8rhMlPDmp1r4Y4/fL58J9xZxxMZTamm2u3Ei0imsqxIuy4x0eoxn1R9A1hDUyAXfn/BkVdxyI/DTGQPb19R+Z6VTXos+8NdpYKhuqtVoMEJmA=
-Received: from MN2PR15CA0061.namprd15.prod.outlook.com (2603:10b6:208:237::30)
- by DS0PR12MB8503.namprd12.prod.outlook.com (2603:10b6:8:15a::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Wed, 23 Jul
- 2025 22:12:23 +0000
-Received: from BN1PEPF0000467F.namprd03.prod.outlook.com
- (2603:10b6:208:237:cafe::2f) by MN2PR15CA0061.outlook.office365.com
- (2603:10b6:208:237::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8964.21 via Frontend Transport; Wed,
- 23 Jul 2025 22:12:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN1PEPF0000467F.mail.protection.outlook.com (10.167.243.84) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8964.20 via Frontend Transport; Wed, 23 Jul 2025 22:12:22 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 23 Jul
- 2025 17:12:22 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1uehot-0003KD-M6; Wed, 23 Jul 2025 18:20:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56NFF8wC027835;
+ Wed, 23 Jul 2025 22:20:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YN2teq
+ c4F1X47HCE/PlkuRLgY0GqZ1ReQowyPxlquW0=; b=e9Obr/9IhNIkI2SZgzYnil
+ y0121EeMKKWf1/HX3MPvzjzOWY1zAqkJfDzCSch9pK95yGwGnl1o/6amzEdfQ5C2
+ go5jEY+BW5TCWt5BpCq4LOiWAeCf1/lRSD/Kli7e7+iuTCTgCZBS8XwajLdyclDt
+ iQwsB52CaT6DnaF1X5mgf95274EEn18EKLczemRZI/UwcEFTh3GcN5ccazVhRO1o
+ Sk1j6tMtrrNsnBc8tw5V14OPbS05ciIZVKv4OcwmeGLD79piO2fAEFsqT/dwVXif
+ kfzfB27l+vG1CeL1qqG5e5vC1ru0TQMOD8QI/O+Pv9JcYxLJN3ewTE0xZnMRRDhw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ff5qanx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Jul 2025 22:20:13 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56NLWOCA005445;
+ Wed, 23 Jul 2025 22:20:12 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 480tvr0y46-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Jul 2025 22:20:12 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56NMKBJd9962158
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Jul 2025 22:20:11 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 477CA58058;
+ Wed, 23 Jul 2025 22:20:11 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EFC4858061;
+ Wed, 23 Jul 2025 22:20:09 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 23 Jul 2025 22:20:09 +0000 (GMT)
+Message-ID: <8fea0206-180c-468a-bbfe-4cc1244afc54@linux.ibm.com>
+Date: Wed, 23 Jul 2025 18:20:09 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 10.1.0-rc0 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-Date: Wed, 23 Jul 2025 17:11:55 -0500
-Message-ID: <175330871526.2488448.4100316387161263035@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF0000467F:EE_|DS0PR12MB8503:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e2f1291-7224-4fc1-a5b3-08ddca35ffbf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|82310400026|36860700013|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R1M1RENJTG53Z2M4OTFOK3RkeWkwUlZEMjFMRmh6dmhiS3lVeGxyTlYzTHVs?=
- =?utf-8?B?UXBNcnZtVng1QjFTZ29sbW0wUFQyaldCVXlxYVBXTUVhcHJxQmZoYnZDUU1B?=
- =?utf-8?B?M2Q5YWhNSXYyUVpoTWlwVDZxL1RQUlc1OVc1STRucEwvQS9US2NJdWMyWlJ6?=
- =?utf-8?B?MU4wa3oyd0hydXRSVkZmMDQvOWRNZGNSSUM0NDl4dm02NG5JcVhVMzQydlRK?=
- =?utf-8?B?OTVHK2s3ZGV6dUcyaGtBTWhQV1JWV3Z1ZTN2cGhkdmhCOW5DOG0rSTVoaDZ6?=
- =?utf-8?B?b3lPKzZFSFFuejNHWWhvN0lUS1NHSTRHTmZrUUpjRDZjcDBoUnFzS0V5dWsw?=
- =?utf-8?B?L1ZyM3h2UTVVd1R5QUFtYlVpZHlGaTM0Zm16cHRtMXFTYWU2SGh5V2xyOEFr?=
- =?utf-8?B?azdJanAvaXJBN0c0dFE4SGR4Y0pseVoyNVFxYjdZN2kvMllOZHN2UnBzUUxH?=
- =?utf-8?B?cnZIRHZOZXltZjFiU2YrSy83Y0hiTmVKbDNjY2YrQnE1Q01IRXA2WktXakVy?=
- =?utf-8?B?ZjUyUUFRcVA5bkdvYVRMT3IvZXFMOVB0bFZndElkV0g2dmJvZHRtOUFaSk9W?=
- =?utf-8?B?RGZSeTRQdXNqMkhYK251TDErVkVST0R1c3VUNmZramJ6WVZURVRLOEhtTXhn?=
- =?utf-8?B?YWs2OWc4MXVLMDV2MjhQSDBwdVhPL0Nvb1V3RVR0OTZnRiswNWFDNUpFVUpq?=
- =?utf-8?B?UkFwZm9XQ1NUWXNzV3pnejh3UDIvc1FxbDdJYWcxSDdoNzh3dXBiMHBqQXo1?=
- =?utf-8?B?K3p2TFpNR3JZUlI2aCtrZ2RXbzhNaTBaUWlxM3ZIbmdOT0NzRzdJbkFFZ08y?=
- =?utf-8?B?QnE5RGF3S3pNVFVYQUh4QjJFYWFOTHVMcWZYU2NTVDZSamlITU9RZlZ0Y08v?=
- =?utf-8?B?UUtRYWtZaTE0amVtY2V4MHZ5VVJpVHp4MzY3MHJRdEk5Y212QitaVTNwWUU3?=
- =?utf-8?B?aUc1a2s5RVo4ZFFnMFNpb0x4L0xDQXpSR0IxTjMyajJaQ1dpY3hIVnM4RG14?=
- =?utf-8?B?N3hnRnhkK2psMkNEVHNzRHJneU5pQzZSYUhQZ1M2enBNb2s0c2RDUThxZjVD?=
- =?utf-8?B?UVl2dXR6S2FNVjRoQjRXOHpXU1JjTVFoaE0zMmdlQWMwM3dqWTJqQzJ5SkVp?=
- =?utf-8?B?Z2E1V3VYZ2dEN1N6UkFyYzd4OGtWc0NDNFJuVzUrRTN4ODB2YnAvSmhnSW1y?=
- =?utf-8?B?NStIaCthR1Q3c3BPZlIwaUVITmluZ2hRNWg3V210N2NBblFmSEI2OStVVnor?=
- =?utf-8?B?L1hHRFdiaTgzTHk3ME5iUlBiYmxUWU01aG5FeTRTMHJSbGVlRGRHNTQzVkY4?=
- =?utf-8?B?TXVMK05maFdCazNnN0MySEpIM2UybVY2d3dFZm5oOGhqME9kUDI1ZXlpK1ZS?=
- =?utf-8?B?NE9BV2xvMDNKY2UrY0l4aXl2a1lJTVB1TEJ6TzhWVkw3QUcyN1cyM2hGVmNG?=
- =?utf-8?B?eEg2ditIM2UyYStuS2RVYmdBTmVxY0dGcDJWd0lSRUQxcUdhR3R1MkQ5Ymgv?=
- =?utf-8?B?WThFMGRGZUFlbkNjSDJKZEM3eVJnNFhZR1d2bVhkUW95UjFzaUo1NldYb09E?=
- =?utf-8?B?WTFBdVFMcFcwS21OTjJXaW5nMncxVjZpaWpVTjdsU0hKZTJMajRmNWl1RTRX?=
- =?utf-8?B?SjIvcVhScERLN1ZkcS9KazlxdCtJWDk4MW1MQnR1bDhrcm02b2Z6dHNMZlBk?=
- =?utf-8?B?Z1ZmQUliZS9EUm9LeWNKKzFlZWp1QXZCSkhhNmRacU96UkI5M1QzUGRHVUJZ?=
- =?utf-8?B?Y1g1UkhOa25UZkxRRUpoSWF1Y1Q1VkhaS3lpanZUOXFwNGN4Qjhvc25PVHFR?=
- =?utf-8?B?VGlkTFhFMmtaNXNON3ppSUhjaDFaUHE5OUhEMk1lK21JS2Z6SUdaYTVZaGN5?=
- =?utf-8?B?aDl3RXd1UCtPN3VQYVh0WTFTM3hGaDRvNDBVRFVidG9vMkxvaCtBeGp4SmhY?=
- =?utf-8?B?cjhaZTE1S0lFYjY5N0E5QkVUME1EbXF6UjRzczZ1cnkvU0w0dmlibnBvZk92?=
- =?utf-8?B?TnZ6NFlzQ3hBPT0=?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013)(13003099007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2025 22:12:22.8891 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e2f1291-7224-4fc1-a5b3-08ddca35ffbf
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0000467F.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8503
-Received-SPF: permerror client-ip=40.107.223.88;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/28] s390x/diag: Implement DIAG 320 subcode 1
+From: Collin Walling <walling@linux.ibm.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-8-zycai@linux.ibm.com>
+ <6bc858c5-ad3a-4445-900f-5aba34011553@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <6bc858c5-ad3a-4445-900f-5aba34011553@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIzMDE5MCBTYWx0ZWRfXyKOOQsnUr9OG
+ EFVtkz7eFAYjAfhEza6eFRVKoGhYbYvk998veq039yj0HUSlQBIaTqUfgDkoxSabkPt9RYANhQb
+ tPFb5Vc0fYSUEv4LcmVAfQ762f0QMBVWl2/6UZeAXrVnKfzJViZXghbG/qAnY3Zw1WEQ2P3F1DK
+ bjonCuA3WRlD63UquO9IvG1A47Nj+bjAV6lu/DNlcJTfw5tMAzh0bM96gad92x0LJK0sz5Dsgj4
+ v0qRuGVjju25q6KBLWtzttc5AtkP8Yx+ZdwAI64nyLXpv43xVz09OCbvgNxv9wigUx1phG4TvzI
+ ByoSIebq8W/Fmwq2XalqMRas4MeQ7ZwD1eTptBiNtjakQCC+HqeAvlx/vznOzzjfxNVE4Myd7N5
+ W4yDOoDVb/7fKXtMxV6/kfQrQ5jQ/aDWpPFL+SSQ+6Vh2rQVn5rpbx1jJJK9o2H30bDX2zbU
+X-Authority-Analysis: v=2.4 cv=evLfzppX c=1 sm=1 tr=0 ts=6881601d cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=do-8Exzwan7GSTbcn_MA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: uJqrsKbvTiCLxVct0aG1zCltlXMB00xN
+X-Proofpoint-ORIG-GUID: uJqrsKbvTiCLxVct0aG1zCltlXMB00xN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-23_03,2025-07-23_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=957 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507230190
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.377,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,28 +124,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 7/23/25 18:15, Collin Walling wrote:
+> On 7/11/25 17:10, Zhuoying Cai wrote:
+>> DIAG 320 subcode 1 provides information needed to determine
+>> the amount of storage to store one or more certificates.
+>>
+>> The subcode value is denoted by setting the left-most bit
+>> of an 8-byte field.
+> 
+> This is general DIAG knowledge.  Remove this sentence.
+> 
+>>
+>> The verification-certificate-storage-size block (VCSSB) contains
+>> the output data when the operation completes successfully.
+>>
+> 
+> Please add more detail describing where the data that the VCSSB gets
+> filled with comes from (s390 cert store), how this subcode is useful
+> (e.g. getting num of certs, knowing how much space may need to be
+> allocated to store a cert).
+> 
+> There are some #defines for the VCE (cert entries) and VCB (subcode 2
+> data structure).  Please elaborate on them in the commit message.
+> 
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-first release candidate for the QEMU 10.1 release. This release is meant
-for testing purposes and should not be used in a production environment.
+This may get satisfied when merging in the relevant documentation from
+patch 28, but it's still good practice to summarize things in the commit
+message.
 
-  http://download.qemu.org/qemu-10.1.0-rc0.tar.xz
-  http://download.qemu.org/qemu-10.1.0-rc0.tar.xz.sig
 
-You can help improve the quality of the QEMU 10.1 release by testing this
-release and reporting bugs using our GitLab issue tracker:
-
-  https://gitlab.com/qemu-project/qemu/-/milestones/16
-
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/10.1
-
-Please add entries to the ChangeLog for the 10.1 release below:
-
-  http://wiki.qemu.org/ChangeLog/10.1
-
-Thank you to everyone involved!
+-- 
+Regards,
+  Collin
 
