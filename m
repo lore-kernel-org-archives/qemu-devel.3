@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0724DC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E680C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 16:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uecAv-0004zW-WC; Wed, 23 Jul 2025 12:18:38 -0400
+	id 1uecBU-0005zM-Op; Wed, 23 Jul 2025 12:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecAk-0004ki-SL
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:18:30 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecBS-0005nT-Bh
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:19:10 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecAi-0005ta-M1
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:18:26 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45610582d07so53435e9.0
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:18:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uecBQ-0005yK-8R
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 12:19:09 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4563cfac2d2so56645235e9.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 09:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753287503; x=1753892303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753287547; x=1753892347; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PgMZti/53Goy6TgiBoJAWym2zeQbCAgT/SnCcoSAQ44=;
- b=kjFMXDCAzZeO4IC2nHh9kvYivw4bkuCI1o9e2oJIGDcSL2U6LY6Sm9DlFO/0Z5obWw
- G/rNQyZ0F4dt6xjcwdzTLOKtO+ladvF77YVjUqNZ/1BvoW0CPXucX//U+7h2tikPcDKy
- V3OutIq3jFbnHZUPq7nWryjBztV1FjSx4i3ulgHNHIFK8juvP7BOJa2PmiNMjQ4mplmK
- H/CG3S75uIjb9kdk7kqhUAVBbkFxl+KZMJ7DechmIka5pj/YQDhuLfrXRTdWtlyP7V9B
- 9lAtMzfKLyUJvK+CzDe6vxQF2YOwqY7/xKVI3baT2H9poYRKxkZVfPnbgxhzqqRwvaBX
- P44Q==
+ bh=cWi1xg6TqVJV9Q3V1vDbJp1BsIWYYwrENbU8rPFEc48=;
+ b=gYhrZlbG7BDF57GdVCsIr8CC0Lq2v0nb+KtFCozAHakE6N5774B7OIr5BxYjrlmYdc
+ PXw0S/SKgkwO04zLNBI+3IiDspZwbdwk2yekX/xkSfspHLDmB/ErREbL2jbPTQgPEnxX
+ eRtiYMSpeyG//m3IoLTxs2CK6/ge2eqBTPvOTbddJbmwca+A+kAdMaytt+v9B2Bu/57M
+ MqQamLOeMfS3riFwa7AaZBBf9etgEPG2Aq09egQr2nvItRGNvYiT5Vd4UC1rm765V4s3
+ qzjyX2l2NW7AsYHrppcivgVKhmBukS+PI8kOCX87xLNPQDUAVwAbW+wf41O/W2d/V0+s
+ NsaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753287503; x=1753892303;
+ d=1e100.net; s=20230601; t=1753287547; x=1753892347;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PgMZti/53Goy6TgiBoJAWym2zeQbCAgT/SnCcoSAQ44=;
- b=tmfL5DiyCA8vBvo1pXN0kYPriBwG264Arh6h+T8/UOS7lkIHdB5nZGpzNIlV3wG+w4
- z0KX+mgfd2fmkdV3gfWEu6r22MISJECjA5CWT6FUFbrIp8pJ/vtbm9isrZM/+sPxbQB8
- ln3jXJi/n4QlxN3cdMGOzwvLn2U7uEJWODwwTZ1/tAcrw9a5lI1ofULBY9qTmpuMEO/q
- uQBIN81ZZskVsJUBvRPy+Ol9XzJVkQKcQMXzlVyy6iO/9pthVTydnOSE5Dt1PTzC76/P
- lF3zLesB2E9CovZTXiJZzmldI4FM8Xk/uOaB+XggTIpnHU0QT6I5TfYO1FkIiMkaPGC/
- ePZw==
-X-Gm-Message-State: AOJu0Yy3waXRTMkSFitZc9LNvhwpt8DShhf9qTo/WFxWWFknDOB8jQEs
- gAUCScYfc4BETeVq9DCuP243d/M6exJ5ujvQyy0bLsZuPUSKT8aBi2uP4+YsWXyWV/0=
-X-Gm-Gg: ASbGncvv0sP7Qe/S5ZwFapKXXHHSdKUk1hCLOmko8TTrMj98daClmoCF/KvC9KZP074
- zL6MmPKrCKrfDU2hBCNOC07sY4f9W+G/ScHsxNLMH5/Hc4GtIp5x8vIIsREKjteVqe4i/0ApKNK
- 7Ve1ASQE/FMxfZPiSPVAmkIFRirJjZxyu6FrMlUFMumxPzB5ssF0m0dfVzTTdWCqqGd1oPjI26W
- Ml9hVELRYAklPHJKFX0Lwd5mRHbeX8uG+tMPlFQWPS38FN33epQwJrpJoVqKZGcEseANgC/FcH8
- WoFjuEVYflBk39N0RhvONlRk54XEscEvZrZ/7mus91XRuDYW25kDyMqpKECIDL9RZyjOmka9zPD
- 0x179gUOJSuRBcCVj1OOMRKzTKT5pac2i5sty+DpFsukZZi9i/6go4NdzUi+UYdXjjg==
-X-Google-Smtp-Source: AGHT+IGfaOIkPRvhm3A/mYHIebDUBN1xrQgbRrVr1VV0m/JQH7ejrfqw+c43QeV8vWNa0d/hhAVQxQ==
-X-Received: by 2002:a05:6000:4029:b0:3a5:1cc5:aa6f with SMTP id
- ffacd0b85a97d-3b768f1627cmr3243706f8f.34.1753287502922; 
- Wed, 23 Jul 2025 09:18:22 -0700 (PDT)
+ bh=cWi1xg6TqVJV9Q3V1vDbJp1BsIWYYwrENbU8rPFEc48=;
+ b=hnCQs7kaoxwuYLF80GKHhGTjbtYANj8Q7VvZtkxQ/8OXvVoHaZByLtGnGd6b7q++jo
+ 5qSx/uGGfnD6aoAEquI9f12j0B4DuaVfKhZvcEVIZoDZNWwZuSBCnz8H3A7umP2MuvP8
+ KVBE0rLezTg7JdKT8XC7tlbx1PheTEbqYZ8M+ZVKyyF8H/4UA3sDo4CHf86ky88R0YeB
+ GtlVAXhBajRTO27cQWTXWDHfm2b6urIXNbXT8Le2VBhmXcD4A4jQQp5m8w1KnDHzxlCS
+ NoVa5cQDSfGBEXmzdvqjJ7k0OjERfCB48GKeAmLA7eDXZ4inbuDE1phuokZrsJS0btpV
+ oY2A==
+X-Gm-Message-State: AOJu0Yw0aLtj2wez4Um12Vp4jCpmaM8+SMHlyf47YvLINF/mDIEg5KD6
+ WYNzQJs3YY13djO3x03EQnXpZmsoIu8ipS8rQ8G3IWNTF0T0C9QOdYZePfG4sclrVTQ=
+X-Gm-Gg: ASbGncuEotyOgLiUOis+TKCk8zHNPNf0/T3SKgMiTtcG/XZ5wfbJmkgzXuhNuJmbMP1
+ 4vTNLO9KLAYBOvd6DgL5yH4GGN3XrdhjQU4H+PiDuu1QHofcK5rcS3+WNEMCdeomJrgZXmPcZ7u
+ c+YsY/EhIa/VhlTRGTnCRQNj/V039kyaOEnCU+/tnytA9JcePGfMqJDbGfCrqdUZhRfpTCilSNU
+ EZSR3ao3Ut7zm+e3UUbXfmbcn+NSiyxJDc1vnPb25rg4awnj204gOTtdKaV/i7VujiM5QFjRXFM
+ zSnhbcqyRrpM4DXi3H0wK+edmZIN+yg/wJUbB+/ZHJ4laRysqgTj0y1TQjzkeSxw0Mww6z1Iqqn
+ 8s0WnlIUaKYqpoMLrofJdozc9Thb6KFPsMQfqm5PSjEuPXO38OXD3MLM3J4PyhtI4ng==
+X-Google-Smtp-Source: AGHT+IEXEMGg5xs/yyxPHcDZhF9g5nIvzjn+zvmuny0Ia6ajv+Oj9VxRvR/CrN5BMb1Hzc/z9xASbw==
+X-Received: by 2002:a05:600c:198d:b0:453:483b:626c with SMTP id
+ 5b1f17b1804b1-45868d256a7mr27246935e9.23.1753287546599; 
+ Wed, 23 Jul 2025 09:19:06 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76773a2c2sm3728122f8f.0.2025.07.23.09.18.21
+ 5b1f17b1804b1-45869180a00sm28100955e9.3.2025.07.23.09.19.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 09:18:22 -0700 (PDT)
-Message-ID: <fc09711d-7b1b-43fc-be0f-01663593ddf3@linaro.org>
-Date: Wed, 23 Jul 2025 18:18:21 +0200
+ Wed, 23 Jul 2025 09:19:06 -0700 (PDT)
+Message-ID: <bb780015-f5fa-4036-972c-a233b2b2af52@linaro.org>
+Date: Wed, 23 Jul 2025 18:19:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v4 1/4] accel: Introduce
- AccelOpsClass::cpu_target_realize() hook
+Subject: Re: [PATCH-for-10.1 v4 3/4] target/arm: Create GTimers *after*
+ features finalized / accel realized
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -77,15 +77,15 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Cameron Esfahani <dirty@apple.com>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20250723135156.85426-1-philmd@linaro.org>
- <20250723135156.85426-2-philmd@linaro.org>
- <CAFEAcA-HH3pyWv4sF6ujLFdMAhtYV8H0TxjJ1Z6myHu5hbWusQ@mail.gmail.com>
+ <20250723135156.85426-4-philmd@linaro.org>
+ <CAFEAcA9HMvDjKa06iWMUTYsmM6zPQJZ3fAcZHcyF_pwa5pczvQ@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-HH3pyWv4sF6ujLFdMAhtYV8H0TxjJ1Z6myHu5hbWusQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9HMvDjKa06iWMUTYsmM6zPQJZ3fAcZHcyF_pwa5pczvQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,50 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/7/25 17:49, Peter Maydell wrote:
+On 23/7/25 18:00, Peter Maydell wrote:
 > On Wed, 23 Jul 2025 at 14:52, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 >>
->> Allow accelerators to set vCPU properties before its realization.
+>> Call generic (including accelerator) cpu_realize() handlers
+>> *before* setting @gt_cntfrq_hz default
 >>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 >> ---
->>   include/accel/accel-cpu-ops.h | 1 +
->>   accel/accel-common.c          | 5 +++++
->>   2 files changed, 6 insertions(+)
->>
->> diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
->> index 0674764914f..9c07a903ea0 100644
->> --- a/include/accel/accel-cpu-ops.h
->> +++ b/include/accel/accel-cpu-ops.h
->> @@ -34,6 +34,7 @@ struct AccelOpsClass {
->>       /* initialization function called when accel is chosen */
->>       void (*ops_init)(AccelClass *ac);
->>
->> +    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
->>       bool (*cpus_are_resettable)(void);
->>       void (*cpu_reset_hold)(CPUState *cpu);
->>
->> diff --git a/accel/accel-common.c b/accel/accel-common.c
->> index 850c5ab4b8e..eecb2a292af 100644
->> --- a/accel/accel-common.c
->> +++ b/accel/accel-common.c
->> @@ -106,6 +106,11 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
->>       if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
->>           return false;
->>       }
->> +    if (acc->ops
->> +        && acc->ops->cpu_target_realize
->> +        && !acc->ops->cpu_target_realize(cpu, errp)) {
->> +        return false;
->> +    }
+>>   target/arm/cpu.c | 65 ++++++++++++++++++++++++------------------------
+>>   1 file changed, 33 insertions(+), 32 deletions(-)
 > 
-> You don't need to check if acc->ops is NULL here: per the
-> comment in accel_init_ops_interfaces(), all accelerators
-> need to define ops, and we would have already crashed if
-> it was NULL.
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> (I think my previous misgivings about this patch were due to
+> not looking closely enough at it -- it looks at first glance
+> as if it might be moving the cpu_exec_realizefn calls above
+> more code than just the timer stuff, but it does not.)
 
-Only system-mode registers @ops, so unfortunately we need this check
-for user-mode emulation... Richard and myself are aware of this and
-plan to work on exposing AccelOpsClass to user code (after v10.1).
+I agree the default git diff output is misleading.
 
