@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E160C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 07:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512B4C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 07:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueTmm-0004fH-NO; Wed, 23 Jul 2025 03:21:09 -0400
+	id 1ueTmx-0004qo-4Y; Wed, 23 Jul 2025 03:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ueTkQ-0003LA-CX
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 03:18:48 -0400
+ id 1ueTkM-0003Kh-Hc
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 03:18:41 -0400
 Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ueTkM-00045r-TO
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 03:18:41 -0400
+ id 1ueTkG-00046A-KL
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 03:18:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753255119; x=1784791119;
+ t=1753255113; x=1784791113;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=52oT5Itnfiv37Yuay+npj8js5KUzQMhQ5rorHPwD6W0=;
- b=WjoC7klbyXTAOxP7Pgvmw/PInskhH4WleynwPXBRnZS234vcZQs+MyXH
- TQr9b9rgziHIOdnmdGnvVdllAqSPoJbyl6FFf5862yWzOli/gH4aXb4QK
- D8Bf8YlFfowPLfREBNdOy2lc2J4r/2eLgQyBWGp24X/PRH5jRJA/sAQB6
- 6ZH3pCg457JNSvq5cXtI6HW1c46qU+RUQrmgrO0FTFfDWG8Vzc2aLzQa4
- Ol6sZ8Ywqq2QaL7TvWXk66emDS+ZTaa5Ad21A9tej2lVOTDrW5UGLwU0+
- d29V3PEw/afNDsq3oPWnkCHdIJaULUSCLOxq8YEU6SPerZdpjuz3vNxX8 g==;
-X-CSE-ConnectionGUID: gkSq5w0eRTqkpxjJCYoqjA==
-X-CSE-MsgGUID: GtnUo8lxR7eZcDn7zTzNog==
-X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="55480932"
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="55480932"
+ bh=qJZpNmIiyzLZ+1AQHuc1dq2zIeu4XixLkbA12OZ7a+k=;
+ b=PRb1drwd3w0XEsSzXHk6m2gjferbhaSKpQT8XABN9VyStaotCHPOhupH
+ 59PyhWUXBodx4UEv+2GBU0JyIDGnhKZUd5CO/O8EtYISY5LazGXfrsZA0
+ efADUSremSv44o8kyqF1J2wAaEp+gJTD3abWWL0HTmMlrTSiAdHeFPCD2
+ fwcx1ZFs65rGra+zcQzATePyN+IbK25TPJy1kbsoU1tbK3tW2nXEB9Wi9
+ nmN0+18LMhR7t+x5PgfAH/O664MRAClNawIjPF7CN+NQUfWkRk2nSU6go
+ M4ssfMW2J5Fz+5/5hNWJXAMtNzo0KC75rdb1vHuEbrTrAZ0qRIdwgBVFk Q==;
+X-CSE-ConnectionGUID: Txvnx8XQSG+oI/MrV0ss1g==
+X-CSE-MsgGUID: JvBZ8XwpR+yNfgh9PNoG1Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="55480929"
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="55480929"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jul 2025 00:18:28 -0700
-X-CSE-ConnectionGUID: 65/Bv/Q6RaKIHJy/0Rxgww==
-X-CSE-MsgGUID: Eu7Bn4nmSw2igAIZ/X7Atw==
+ 23 Jul 2025 00:18:27 -0700
+X-CSE-ConnectionGUID: fJ4CRkcgQTKpSoww9sNvFg==
+X-CSE-MsgGUID: tC4EPSiJR4mPv5b1062cEw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="158662236"
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="158662233"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa010.jf.intel.com with ESMTP; 23 Jul 2025 00:18:27 -0700
+ by orviesa010.jf.intel.com with ESMTP; 23 Jul 2025 00:18:25 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH 3/3] accel/kvm: Set mem.guest_memfd_offset only when
- guest_memfd is valid
-Date: Wed, 23 Jul 2025 15:09:51 +0800
-Message-ID: <20250723070951.1134374-4-xiaoyao.li@intel.com>
+Subject: [PATCH 2/3] accel/kvm: Zero out mem explicitly in
+ kvm_set_user_memory_region()
+Date: Wed, 23 Jul 2025 15:09:50 +0800
+Message-ID: <20250723070951.1134374-3-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250723070951.1134374-1-xiaoyao.li@intel.com>
 References: <20250723070951.1134374-1-xiaoyao.li@intel.com>
@@ -83,37 +83,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current QEMU unconditionally sets the mmem.guest_memfd_offset in
-kvm_set_user_memory_region(), which leads to the trace of kvm_set_user_memory
-look as:
+Zero out the entire mem explicitly before it's used, to ensure the unused
+feilds (pad1, pad2) are all zeros. Otherwise, it might cause problem when
+the pad fields are extended by future KVM.
 
-kvm_set_user_memory AddrSpace#0 Slot#4 flags=0x2 gpa=0xe0000 size=0x20000 ua=0x7f5840de0000 guest_memfd=-1 guest_memfd_offset=0x3e0000 ret=0
-
-It's confusing that the guest_memfd_offset has a non-zero value while
-the guest_memfd is invalid (-1).
-
-Change to only set guest_memfd_offset when guest_memfd is valid.
-
+Fixes: ce5a983233b4 ("kvm: Enable KVM_SET_USER_MEMORY_REGION2 for memslot")
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- accel/kvm/kvm-all.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ accel/kvm/kvm-all.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 4f4c30fc84b2..2b6fbf58a127 100644
+index 14d47246ca63..4f4c30fc84b2 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -367,7 +367,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
-     mem.userspace_addr = (unsigned long)slot->ram;
-     mem.flags = slot->flags;
-     mem.guest_memfd = slot->guest_memfd;
--    mem.guest_memfd_offset = slot->guest_memfd_offset;
-+    if (slot->guest_memfd >= 0) {
-+        mem.guest_memfd_offset = slot->guest_memfd_offset;
-+    }
+@@ -361,6 +361,7 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+     struct kvm_userspace_memory_region2 mem;
+     int ret;
  
-     if (slot->memory_size && !new && (mem.flags ^ slot->old_flags) & KVM_MEM_READONLY) {
-         /* Set the slot size to 0 before setting the slot to the desired
++    memset(&mem, 0, sizeof(mem));
+     mem.slot = slot->slot | (kml->as_id << 16);
+     mem.guest_phys_addr = slot->start_addr;
+     mem.userspace_addr = (unsigned long)slot->ram;
 -- 
 2.43.0
 
