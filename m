@@ -4,109 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF0FC83F1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 11:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFD3C83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 11:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueXXd-0001Jw-E7; Wed, 23 Jul 2025 07:21:45 -0400
+	id 1ueY2J-0005VB-0V; Wed, 23 Jul 2025 07:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ueXXb-0001HU-KL
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 07:21:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ueXXZ-0002RG-8A
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 07:21:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753269695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X1lA4RVpUjgBcsj+aeBSNMNXOP7zIQ3vZo+fiwCXxcA=;
- b=H3JiR9POGUoNqb095cAsBQkD5RsYQeDZBEd9+qAo9JulymF1ExYibxzzEJH++RkrMzwQdM
- N0V5Q7Sggqy9vRQp9NkuqoDry268nXOYeb0799KLZxt5n0Jyc17la/HqLtfuk0U2IllwWz
- 8huuEz23prykd8NR0ZFRPSorIZ6aekc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-DelmGHCmOqel7D0najNlFg-1; Wed, 23 Jul 2025 07:21:34 -0400
-X-MC-Unique: DelmGHCmOqel7D0najNlFg-1
-X-Mimecast-MFC-AGG-ID: DelmGHCmOqel7D0najNlFg_1753269693
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-455f7b86aeeso33059305e9.0
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 04:21:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueY2H-0005Ne-HV
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 07:53:25 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueY2D-0003lR-9R
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 07:53:25 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45622a1829eso21443865e9.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 04:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753271596; x=1753876396; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rfPXPK+dspT492ooD9gL2ktzyRKmsEWC1OvkOILQ3tU=;
+ b=Ge9GRO2qafHLxvpyV4ybDzy4gIee3qK9thozQeWm8tj0QOPyU8+7QX1l5MLREWTT9w
+ rSAV1Z5RjmsrAlIPExwjolKZ6mObN6tnnLhMhbeTEusWcoKq9KQwjNjZ7kRYp+x8Xf3i
+ pdpQGpe0Y3kjZPnGZ/imiiIGsarbFpOxU+2n5n3bt4yxNaqaqzKXi2vTcLFKnJqoWHLB
+ 6qBLUnt3EKdBtEG9iwnABebsyoO2yOQ6ZLTZFSPZ6wiahNXYICjDLTEWEWdIosGiHw9+
+ g0G+otFv988gGQL+w++ef8qVC3iQzU0zeYzdkmAo8oQTmtkiDXa46uYaw6GLff195Bgw
+ kZ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753269693; x=1753874493;
+ d=1e100.net; s=20230601; t=1753271596; x=1753876396;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X1lA4RVpUjgBcsj+aeBSNMNXOP7zIQ3vZo+fiwCXxcA=;
- b=Q3tMM4Xtha6FwKiWYU6/jRdOAtTGtyggXzMLiY/VPtT6ZhXlTFGMSyQNi3a19fC6u0
- n80W95CsqMbJE+IF4mWuFWBy2GS0vdHay6Qz4mdoJgn//evw/Rx9QM95mMO6ELBK2GmF
- 4hzmJFIQZWADZoYNDLSg9SxKVs5kpIgIBQ85dU45O5iPNAkY2wu5qOdHR9Fny3MUgdqI
- QoLk958fqJATgoToTgWPacc7vHhInofTYfDpFJ0LoW1FYrGOlpobXNhT0SDG9njlTmwg
- k5vjwO/m2g1vZsv78g2gCMGHH4JetI22qJIeg/ILhqsXtyBcuj/THs6VLi4Za+MSjxSB
- hnZQ==
-X-Gm-Message-State: AOJu0Yz+Bi5FrCo3GBtRLL73gNnijp6NdFQsSKZYg1n5W3pd5GJxeA8O
- Iq7LWjVcHas02IvqaKZuGSETNVVbYIvRpdnF2f3PhKHhNuIexSTNYto8Q8dVRxwEJq3OjH3cfn/
- a1NvSr0on7EZ6YhL/zz5KmvFsudwdElVTK1onFp6/jSoonZEr0PtzLPsb
-X-Gm-Gg: ASbGncvKskZ6MEWWh04KqcBF7dZ0HaQcUrG/ySmVuwlLBZwIm2ZLi4EYiGoNkQYRf7V
- FLK8g+fLvN6QpZAlT3mwYp7vJ6a7u6EUbdAQq4R+aIo7Wo3jmp0GjUGpb1hPqOvfnuHw6Y/LSVZ
- kUXmHqYlmEHN7LMhfl23dQVQj9vFWk282U7DrXr5ZpxjH4han6QcjpSaAqka0cWgWgeiotuTJWa
- lIz8tpfoKkP5zQnU/b4RCjXPqfOc/lR9ImCXH/NgM7hcudMk/ibNNwMJBE9vX80UZEQlCX3RyIg
- bL6YCjQwVE6pNXaODlV2C9wnLs9BNKzjv4KyHbVXR+rGtE2SIEpkj7TDJCkaMvwJJIkbxcBHlkl
- rEtAznWlUxNA=
-X-Received: by 2002:a05:600c:4746:b0:456:d1c:ef38 with SMTP id
- 5b1f17b1804b1-45868d65ee7mr18720285e9.24.1753269692814; 
- Wed, 23 Jul 2025 04:21:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzW2OS8kVW5nGxW6YUXuwdlK79F38P6OhxWgk4vapoS4g5JToJGA3aNiZ9UpRunMMQq6ZYdA==
-X-Received: by 2002:a05:600c:4746:b0:456:d1c:ef38 with SMTP id
- 5b1f17b1804b1-45868d65ee7mr18719985e9.24.1753269692366; 
- Wed, 23 Jul 2025 04:21:32 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4586918c6c4sm19960055e9.11.2025.07.23.04.21.31
+ bh=rfPXPK+dspT492ooD9gL2ktzyRKmsEWC1OvkOILQ3tU=;
+ b=s60Wfvrc8RMwrP2TVe+v9iKsRhk5l00E1tSyYaXiU1Mrf7Z9PRJUVWf8J7QyJgqupa
+ h5y2W/61lMSBrprX2HpnFtnAl2T4Dc2/SG6kDk636gxmMR47XcIOEdyAm+CU0lxFvj7a
+ FnR3euTVScSDPsWVoS9ccFs7Nx94yWGvWKsRs3exFe7b8iY2y5CLtMe2az/8ptA8G7E0
+ b3gnhrQ8YtQtv4Bcc53nNT6op8EYhT/7LZIZKCGelrfpxZ7ksHqbsE7+jEOatySpD2oF
+ wJ0s+iVRFIjziGUQGUYffJTjd2HTeudNS8rdrWPQHx3l6uNDxnVlAZmFohycusicMvNY
+ tung==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVl7tsdfDRqDVe/Jx9F7yxtD8LFyJd3EcsiIKEtmFbo6Kg0egSXvPCebAhF6VMOodme1+4Zv08v9qLM@nongnu.org
+X-Gm-Message-State: AOJu0YwecvxDi8fr+8bzr9HL/Eur79pRV4hs9ugb7Fxp6lDyLyqd823D
+ fmeGGrHOB5MFBYECAaTgGuhcpyByN4IFyOawhDFAp+K2jFeI3uBSPYS8eRJH7VwsSSg=
+X-Gm-Gg: ASbGncv6MgaZ1cwNY2kW6YrXjCQQyZqql4pRhwffNZh7bDapXlWr1fO2bZ4rorqgNhi
+ 6GA7/cY5TLTp2bmFNn0nmQ1g7dTeT6r53fQxONE7lcZzOVkZuA46f6ITRctCgEVnI8yN8w8HF/h
+ 32DSqTyEC48/KW+gXldBG827J+KYAGR9meRX0gyhTPzwv1df5flnSCvc/9Xfx9ivjM9/fbdMvKe
+ wM7FXoe6ZR/UP7DMolpaoKVsGiKHGGghxyZ/8OjbeAM+TJr3fT/+B2QYV77sZgAZ1JdvbYx+GVf
+ FfcCg9AjM89oWTIzyj29duOPnEJ9GlKvyA5tgyiIfWwCRKh2N7F3r8WR6NXPbshQ7XHt2XLqwqk
+ L3ijH8OBkWmkMtDd4JsegAwoEC10hRT3rvTCPo/jrH/NivhVbp9//7U9kur9Fp/ylrS4MJZyUWC
+ eECQcFBA==
+X-Google-Smtp-Source: AGHT+IGzbr/fy3Mug62W4tAv9c6ICJvtNwV3ugQAvvM5FRQNOWeMBTA1JgZvXBbZKZOYHI1wUctKAg==
+X-Received: by 2002:a05:600c:46d2:b0:456:19b2:6aa8 with SMTP id
+ 5b1f17b1804b1-45868d48911mr23807665e9.19.1753271596249; 
+ Wed, 23 Jul 2025 04:53:16 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458693cd0e3sm20568985e9.23.2025.07.23.04.53.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Jul 2025 04:21:31 -0700 (PDT)
-Message-ID: <f215ad18-16b6-4232-a79d-b04d85ff3015@redhat.com>
-Date: Wed, 23 Jul 2025 13:21:30 +0200
+ Wed, 23 Jul 2025 04:53:15 -0700 (PDT)
+Message-ID: <2e33ae2c-3804-4307-b109-4e8b34e19f87@linaro.org>
+Date: Wed, 23 Jul 2025 13:53:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 06/13] virtio-pci: implement support for extended
- features
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1752828082.git.pabeni@redhat.com>
- <253cd85bc76ded8259fc9d12ed3764e2507bcb75.1752828082.git.pabeni@redhat.com>
- <CACGkMEvBr0dQdNqtYNdOT+oN13aOWh1Hob7C6NLbSKCcEDPtLg@mail.gmail.com>
- <6a1e2b06-4f4f-45b7-8875-ecb60f74aa8d@redhat.com>
- <CACGkMEvoNZp=bsV_VtsxCE1zKMpS=DdXZQ+-aVcwtb5tibTckg@mail.gmail.com>
+Subject: Re: [PATCH] decodetree: Infer argument set before inferring format
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20250722183343.273533-1-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CACGkMEvoNZp=bsV_VtsxCE1zKMpS=DdXZQ+-aVcwtb5tibTckg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250722183343.273533-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.377,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,37 +101,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/25 7:47 AM, Jason Wang wrote:
-> On Tue, Jul 22, 2025 at 3:37 PM Paolo Abeni <pabeni@redhat.com> wrote:
->>
->> On 7/22/25 5:28 AM, Jason Wang wrote:
->>> On Fri, Jul 18, 2025 at 4:53 PM Paolo Abeni <pabeni@redhat.com> wrote:
->>>>
->>>> Extend the features configuration space to 128 bits, and allow the
->>>> common read/write operation to access all of it.
->>>>
->>>> On migration, save the 128 bit version of the features only if the
->>>> upper bits are non zero. Relay reset to clear all the feature
->>>> space before load.
->>>>
->>>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->>>
->>> This is a guest noticeable behaviour change. I wonder if we need a
->>> command line option to enable and disable this feature for migration
->>> compatibility.
->>
->> This point is not clear to me, could you please elaborate a bit more? do
->> you mean we need i.e. a DEFINE_PROP_BOOL() or the like to enable the 128
->> bit space usage?
+On 22/7/25 20:33, Richard Henderson wrote:
+> Failure to confirm an argument set first may result in
+> the selection of a format which leaves extra arguments
+> to be filled in by the pattern.
 > 
-> Yes, or maybe have a way to let the device to enable it automatically
-> E.g when UDP GSO is enabled for virtio-net.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   scripts/decodetree.py           | 7 ++++---
+>   tests/decode/meson.build        | 1 +
+>   tests/decode/succ_infer1.decode | 4 ++++
+>   3 files changed, 9 insertions(+), 3 deletions(-)
+>   create mode 100644 tests/decode/succ_infer1.decode
 
-I think we can safely enable the extended space access (read/write) if
-virtio_features_use_ex(vdev->host_features_ex). That should cover also
-any eventual future addition of more extended features - even of
-different devices.
-
-/P
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
