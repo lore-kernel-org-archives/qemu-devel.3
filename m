@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC59CC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 19:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B9EC83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 19:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uefEy-0004Al-QN; Wed, 23 Jul 2025 15:35:00 -0400
+	id 1uefF2-0004DR-K8; Wed, 23 Jul 2025 15:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCS-0001kY-6E
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:32 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCs-00021q-PV
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCP-0005o6-I4
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:22 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uefCq-0005tY-Vr
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 15:32:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753299140;
+ s=mimecast20190719; t=1753299168;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nRIiWca6+9PzHHHFFJH01QG1lomZGlMJJWN7/y/1r1I=;
- b=adbOGISm+5TlgX5fLK+x1kAi30HBivFwLyaASAWgOYZltV4dbngar3ufMoDQ0SSMs1shNb
- zi3cKELB4wr/ehk0h2QYOEoCk+6I2xG2U6p7iif8iEp2TqODWXDYfZZWU1IBZJhOEKgNmY
- YCIoXbzIP9B8eYxtlJJ1AGmGY6aeTdA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zY+O/av+ttuGolLcE789/VNoP3Dlsf5A+gXkmoM5tQU=;
+ b=XJfh2rJAU0/PzW1tCCaa3d7r6CY/RiXZCkBWFuuJ9Cm0Jm3QrWiNgjxt6Ewse6pVQ77hzk
+ +Rm6c5N7GOij9Goz5NLHxpninudiKVt+5WQj07KxrwGSxFRvnawRkI7/bg+yj3UHxRpDJX
+ P6KKnOzLr7N8PAQI9VWnfJXiRW7JwzY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-fntGsmBjN8udb9g-cZxWfg-1; Wed,
- 23 Jul 2025 15:32:16 -0400
-X-MC-Unique: fntGsmBjN8udb9g-cZxWfg-1
-X-Mimecast-MFC-AGG-ID: fntGsmBjN8udb9g-cZxWfg_1753299135
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-QJx3k2gZONau1hvbbtzKCA-1; Wed,
+ 23 Jul 2025 15:32:44 -0400
+X-MC-Unique: QJx3k2gZONau1hvbbtzKCA-1
+X-Mimecast-MFC-AGG-ID: QJx3k2gZONau1hvbbtzKCA_1753299163
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B6A018002A2; Wed, 23 Jul 2025 19:32:14 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16C2A18001F7; Wed, 23 Jul 2025 19:32:43 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.60])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2764618003FC; Wed, 23 Jul 2025 19:32:08 +0000 (UTC)
+ id 1653518003FC; Wed, 23 Jul 2025 19:32:37 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,9 +58,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH v4 02/14] linux-headers: deal with counted_by annotation
-Date: Wed, 23 Jul 2025 21:31:22 +0200
-Message-ID: <042cefed81bac3a4f4cc52739100654f06ddac2d.1753297661.git.pabeni@redhat.com>
+Subject: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
+ features
+Date: Wed, 23 Jul 2025 21:31:27 +0200
+Message-ID: <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
 In-Reply-To: <cover.1753297661.git.pabeni@redhat.com>
 References: <cover.1753297661.git.pabeni@redhat.com>
 MIME-Version: 1.0
@@ -91,27 +92,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Such annotation is present into the kernel uAPI headers since
-v6.7, and will be used soon by the vhost_type.h. Deal with it
-just stripping it.
+Extend the features configuration space to 128 bits. If the virtio
+device supports any extended features, allow the common read/write
+operation to access all of it, otherwise keep exposing only the
+lower 64 bits.
+
+On migration, save the 128 bit version of the features only if the
+upper bits are non zero. Relay on reset to clear all the feature
+space before load.
 
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
- scripts/update-linux-headers.sh | 1 +
- 1 file changed, 1 insertion(+)
+v3 -> v4:
+  - use new virtio_features macro names
+  - move the build bug before vmstate_virtio_pci_modern_state_sub
 
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index b43b8ef75a..aafff9caad 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -90,6 +90,7 @@ cp_portable() {
-         -e 's/<linux\/\([^>]*\)>/"standard-headers\/linux\/\1"/' \
-         -e "$arch_cmd" \
-         -e 's/__bitwise//' \
-+        -e 's/__counted_by(\w*)//' \
-         -e 's/__attribute__((packed))/QEMU_PACKED/' \
-         -e 's/__inline__/inline/' \
-         -e 's/__BITS_PER_LONG/HOST_LONG_BITS/' \
+v2 -> v3:
+  - drop the pre_load/post_load trickery and relay on reset zeroing
+    the features instead.
+  - avoid union usage, just increase guest_features size and use
+    SUB_ARRAY.
+  - drop unneeded '!!'
+  - _array -> _ex
+
+v1 -> v2:
+  - use separate VMStateDescription and pre/post load to avoid breaking
+    migration
+  - clear proxy features on device reset
+---
+ hw/virtio/virtio-pci.c         | 69 +++++++++++++++++++++++++++++-----
+ include/hw/virtio/virtio-pci.h |  2 +-
+ 2 files changed, 61 insertions(+), 10 deletions(-)
+
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 767216d795..bcc4d48c2c 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -109,6 +109,29 @@ static const VMStateDescription vmstate_virtio_pci_modern_queue_state = {
+     }
+ };
+ 
++static bool virtio_pci_modern_state_features128_needed(void *opaque)
++{
++    VirtIOPCIProxy *proxy = opaque;
++    uint32_t features = 0;
++    int i;
++
++    for (i = 2; i < ARRAY_SIZE(proxy->guest_features); ++i) {
++        features |= proxy->guest_features[i];
++    }
++    return features;
++}
++
++static const VMStateDescription vmstate_virtio_pci_modern_state_features128 = {
++    .name = "virtio_pci/modern_state/features128",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = &virtio_pci_modern_state_features128_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 2, 2),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool virtio_pci_modern_state_needed(void *opaque)
+ {
+     VirtIOPCIProxy *proxy = opaque;
+@@ -116,6 +139,11 @@ static bool virtio_pci_modern_state_needed(void *opaque)
+     return virtio_pci_modern(proxy);
+ }
+ 
++/*
++ * Avoid silently breaking migration should the feature space increase
++ * even more in the (far away) future
++ */
++QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_NU32S != 4);
+ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
+     .name = "virtio_pci/modern_state",
+     .version_id = 1,
+@@ -124,11 +152,15 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
+         VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
+-        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
++        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 0, 2),
+         VMSTATE_STRUCT_ARRAY(vqs, VirtIOPCIProxy, VIRTIO_QUEUE_MAX, 0,
+                              vmstate_virtio_pci_modern_queue_state,
+                              VirtIOPCIQueue),
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_virtio_pci_modern_state_features128,
++        NULL
+     }
+ };
+ 
+@@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+     return virtio_pci_add_mem_cap(proxy, &cap.cap);
+ }
+ 
++static int virtio_pci_select_max(const VirtIODevice *vdev)
++{
++    return virtio_features_use_ex(vdev->host_features_ex) ?
++           VIRTIO_FEATURES_NU32S :
++           2;
++}
++
+ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
+                                        unsigned size)
+ {
+@@ -1494,18 +1533,21 @@ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
+         val = proxy->dfselect;
+         break;
+     case VIRTIO_PCI_COMMON_DF:
+-        if (proxy->dfselect <= 1) {
++        if (proxy->dfselect < virtio_pci_select_max(vdev)) {
+             VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+ 
+-            val = (vdev->host_features & ~vdc->legacy_features) >>
+-                (32 * proxy->dfselect);
++            val = vdev->host_features_ex[proxy->dfselect >> 1] >>
++                  (32 * (proxy->dfselect & 1));
++            if (proxy->dfselect <= 1) {
++                val &= (~vdc->legacy_features) >> (32 * proxy->dfselect);
++            }
+         }
+         break;
+     case VIRTIO_PCI_COMMON_GFSELECT:
+         val = proxy->gfselect;
+         break;
+     case VIRTIO_PCI_COMMON_GF:
+-        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
++        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
+             val = proxy->guest_features[proxy->gfselect];
+         }
+         break;
+@@ -1588,11 +1630,18 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+         proxy->gfselect = val;
+         break;
+     case VIRTIO_PCI_COMMON_GF:
+-        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
++        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
++            uint64_t features[VIRTIO_FEATURES_NU64S];
++            int i;
++
+             proxy->guest_features[proxy->gfselect] = val;
+-            virtio_set_features(vdev,
+-                                (((uint64_t)proxy->guest_features[1]) << 32) |
+-                                proxy->guest_features[0]);
++            virtio_features_clear(features);
++            for (i = 0; i < ARRAY_SIZE(proxy->guest_features); ++i) {
++                uint64_t cur = proxy->guest_features[i];
++
++                features[i >> 1] |= cur << ((i & 1) * 32);
++            }
++            virtio_set_features_ex(vdev, features);
+         }
+         break;
+     case VIRTIO_PCI_COMMON_MSIX:
+@@ -2311,6 +2360,8 @@ static void virtio_pci_reset(DeviceState *qdev)
+     virtio_bus_reset(bus);
+     msix_unuse_all_vectors(&proxy->pci_dev);
+ 
++    memset(proxy->guest_features, 0, sizeof(proxy->guest_features));
++
+     for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+         proxy->vqs[i].enabled = 0;
+         proxy->vqs[i].reset = 0;
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index eab5394898..639752977e 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -158,7 +158,7 @@ struct VirtIOPCIProxy {
+     uint32_t nvectors;
+     uint32_t dfselect;
+     uint32_t gfselect;
+-    uint32_t guest_features[2];
++    uint32_t guest_features[VIRTIO_FEATURES_NU32S];
+     VirtIOPCIQueue vqs[VIRTIO_QUEUE_MAX];
+ 
+     VirtIOIRQFD *vector_irqfd;
 -- 
 2.50.0
 
