@@ -4,89 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113A0C83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 17:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790C2C83F17
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 17:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uedLN-00049W-DR; Wed, 23 Jul 2025 13:33:29 -0400
+	id 1uedMe-0001Pc-7Q; Wed, 23 Jul 2025 13:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uebpB-0002B6-3O
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 11:56:09 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uebp6-0006BH-TB
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 11:56:08 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7de159778d4so5280685a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 08:56:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753286162; x=1753890962; darn=nongnu.org;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :sender:from:to:cc:subject:date:message-id:reply-to;
- bh=47TKKbxsCCoCF9lyNl1H6xE8CiDY2c0kJhWrkrUvpM4=;
- b=YujjNLCx5l/oFuPkhitU+NR6YlwrV6bjUNKpF25YUiX9sytfcqDvyCJUFT7zj7wRUL
- xn0T7vs+GZN4ZtjK/cva2JIX/gPlfeD52XUO1CipwbMgp+9jnPwVXiATosNSi0ZF6ZB9
- nz9LqdPt9zkqJ1eEXcXq2/GtvtiezJ/iu5Eed5kocg80SRNBf5Efm+fbtPwuqGBkXNZy
- 0tEJwGcdbefGg1UA58vBY98dJPp9fM+f/FU5R5jBzxi59wSLv4UGvomLThI5LFldHe4i
- UCPeHHJJCQFpcUxrVW5nS+oiMROw++/6YbEbdLFVNkEzJkGPNuP7mzzHvIF5cv+yWFe3
- MCfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753286162; x=1753890962;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :sender:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=47TKKbxsCCoCF9lyNl1H6xE8CiDY2c0kJhWrkrUvpM4=;
- b=Fk5cfTbO855xWniC98SRq/Nb80osD0zk/3gZW5jQtpz+/jhCZPqdoC8+C6DfJdCw3E
- ssOVfEKOPHS9caeKADj4/51GhoHOpy+rfhFLG8HI0kEo5p49Lqt2/1kRmP++rpEgdZxv
- QfwXIs0TupzJofVdbxNUECGvBd9hF2EHAP0iv5fmzsCsHEz0guzIuTmS6S9fPT14axit
- Qm148Yru55+EO1nQYT3zX1OptzNHNNbItLqn5NnwwkJOkxSzlVYIr3Vv2QMORBqtDVG+
- P3EGBUo+ouYxQhXjU9NZiimyxXOSuhjccqdcO92sUPlZdw6KEKZtbHwsKWIg86iL4CXf
- 7m1g==
-X-Gm-Message-State: AOJu0Yy9T22gvHMYEcUKCiouV33OsJdzOSC5LtDBanAagsVjP4kPY10Q
- zeYWs/JxKr6/ferSlPlt/fcOl0/D+YLXh/kgSTgUKiDfup8PnJCKcstfT+xsGMLsjl4=
-X-Gm-Gg: ASbGnctVFQG+hU78W7ux/m4na0rYZDsQjqjWysr5/pI85yeApox0GN+Nh9l2zA0mOJ5
- vQdNlxDcpGxjSEFWmRdktsvwzBGDIWme0T5eOj2SbyIgx3tQpwMSiAYOJ3PELnltOBBck0lJlGF
- GxZ73iWMn3WVZl4NpQLIlsdU2lCw8lbDMP4qXaf7NKOeWPKmm8m3FQAdp/R1YCF1SK3EUbMtT0U
- 5uruzdGiFxyqAP/IJntoL0WOX53mXbZNdq1LkNPVjBryhrqMwoagmi2znWCJ+QgdiU8blX9+I/u
- ebAZ/WpHBvlAD07dr7/QnuViTq0P4hEOyJys8ijsVi4nMvLJ1h4w7JTQHlqMUtYEiE1+/meZD3F
- XdnAWFUNkEaNrHkzhqIYq538OyhRr0YX04HbV
-X-Google-Smtp-Source: AGHT+IEHqzn2QKI6/Z+wD2jWQxWZHINI7DgYnwl9GWiuJZodgxEu3HpqlnNiyIXJpE+QYMBTr65g6w==
-X-Received: by 2002:a05:620a:4d12:b0:7e3:685e:4160 with SMTP id
- af79cd13be357-7e62a1bde76mr308959685a.59.1753286161571; 
- Wed, 23 Jul 2025 08:56:01 -0700 (PDT)
-Received: from nuc (192-0-220-237.cpe.teksavvy.com. [192.0.220.237])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e356c767dfsm680283885a.83.2025.07.23.08.56.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Jul 2025 08:56:01 -0700 (PDT)
-Date: Wed, 23 Jul 2025 11:55:58 -0400
-From: Mark Johnston <markj@freebsd.org>
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: [PATCH] 9pfs: Add FreeBSD support
-Message-ID: <aIEGDjMex-DG-pmr@nuc>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1uedK7-0001If-0b
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 13:32:12 -0400
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1uedK3-0005s6-UA
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 13:32:10 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I4oBlcqph8cI0zRUUtAdPVfNM0jRFM8/gIPQCJnLRhkyMlFSBiD/pMZLuhionSDbZVeUs8fQxKkfuJIFmpOXxsCbdENzbsg8nKjyJJVLhCmiNgGnGTObPTvq1+//eVlRNXtqBAamziD8MyzvyFfDLtycSDutuk9+JVO5/6afL2MtfMeu97M1mS6i731YG+sFnhJuNULmw1nUyhVyuwNgnzeslJ5VCp73EG0DQJpLEBEz2gn/r/cQLXrqZEZ9LRLlHI7kNmDW5u53CX35lHls6B9D7vctVs3ndUXJhQjgDYL8qWs1ylMZ91soP1mCgZLdovMWQl4DW+2Vn5n0SVUG1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F3ivPwE6Lw4Wyf7hpg+/NQz+51c32aEi6IBvwL3X9mU=;
+ b=L8hoLrePA9sjPg0sZg4T1G+0/EPKlnCyEcSsaTPEA8VWU3wsM7PCgPkHstOinHpeDsPjITVMnzuskgjQztRvKToeh9pi1mZYKiCLBR16OisH1D8FN3zSNoOB1x7xNRvLFWdzp1pAuHeNMpFp/JhHzFWSRIZ8f5cD0mfHxEMalm9djj4Kj0FJ9cnHTKPXLvqhmkyo5I2FlTACcYw5YqmNyo/bGa0GfxWskhHXqaZNnh3OTzxFmXoK7LG09Zq5hV3/UcIcI+1m/c/SbuuIZjTJZ/EG2cDUYozbu3aTjiYT615IYuMaGiNg9npi5NGa3iGeuU0PRzjbPPecIKpYu80LbQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F3ivPwE6Lw4Wyf7hpg+/NQz+51c32aEi6IBvwL3X9mU=;
+ b=ezRP9PWMWwUhencVFAWKARSGOYyJq8odk9E7kCh4OBRvZGBE0eOVvOhcNrbCi2IySR8zPEXyRNJ/JHcs6NmLAuqN6nsrBO3EAc4HVp85Mc22DA8hQgq6mzisrMdCjRHCQLxPYTC4XLtwg3RDGk3RyNc5fQ+irRAU4CugEjQERIAc+gw1oE2mC2r9OuUWzT6hl5iixXeGcE+4c/Dg6PZf9sqavemNkHhmZJji1j983BM69PY5cdIG6+VqbtqBIfGLi9r/QKfg8g82D7ev9usciFW+qOsXvoRExalLxyth3ll17YBpNDIE+oV89OOIlvp2//RqjrQK2kQhRAri+F7u8Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from DB9PR08MB6957.eurprd08.prod.outlook.com (2603:10a6:10:2bc::10)
+ by VI0PR08MB11170.eurprd08.prod.outlook.com (2603:10a6:800:251::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Wed, 23 Jul
+ 2025 17:32:01 +0000
+Received: from DB9PR08MB6957.eurprd08.prod.outlook.com
+ ([fe80::eb0e:8527:5bb3:a9eb]) by DB9PR08MB6957.eurprd08.prod.outlook.com
+ ([fe80::eb0e:8527:5bb3:a9eb%2]) with mapi id 15.20.8964.019; Wed, 23 Jul 2025
+ 17:32:00 +0000
+Message-ID: <584056e0-0507-4a24-b4be-8f31ebc75f65@virtuozzo.com>
+Date: Wed, 23 Jul 2025 19:31:58 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dump: enhance win_dump_available to report properly
+To: Nikolai Barybin <nikolai.barybin@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250723170402.75798-1-nikolai.barybin@virtuozzo.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20250723170402.75798-1-nikolai.barybin@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR0102CA0102.eurprd01.prod.exchangelabs.com
+ (2603:10a6:803:15::43) To DB9PR08MB6957.eurprd08.prod.outlook.com
+ (2603:10a6:10:2bc::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=markjdb@gmail.com; helo=mail-qk1-x732.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.158,
- HK_RANDOM_ENVFROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB9PR08MB6957:EE_|VI0PR08MB11170:EE_
+X-MS-Office365-Filtering-Correlation-Id: 314fb27b-ede2-42ed-57b2-08ddca0ed491
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?a0FVcjkrYlVkUEZyS0paSDVaYWRSaS9USC9HL09JT3FnS0dpL2VVbWFwRU5n?=
+ =?utf-8?B?NDBQV1Arc3dQRGFWWmdXa0x3cG5nS0NaczV1RExHbXF6cFdoZDIvVWhuZjZR?=
+ =?utf-8?B?M01id1RONURESERZVjRWNnpkK2ZoR1U1RjZ4aDZZcXBxaTNDMEVvRnA5Ykc2?=
+ =?utf-8?B?MDdpQmJPY1VrT1RHWWxFalhtZk1ZeTQraTkzeDZYcVhIUzVYMlZPTEkvdnli?=
+ =?utf-8?B?UWlSMnRIUGtLSmhHVWhCMG9vS2hWdjNLT2szRmtCYVpqTjZab1pkTFdHZ0JJ?=
+ =?utf-8?B?QUhPYTAwNXhLeXlkMVRBcm1wT3o2MUNEOUJadGNDVXdMclpNeHF2WFF4U1do?=
+ =?utf-8?B?djFqWVl0WnZTaXpRclJBdjJCMnEwZUZvWGhTY3FmY21uS1BEVDVkdFNlSTlp?=
+ =?utf-8?B?WEJyRTJhSkN6TmpXUnpJS2F5L05zVWFDOVI2Z1JjRHpEbDYzeVUyakc5a2t0?=
+ =?utf-8?B?T3ZqSzFuL3E4ZFZra2VRdGM1dWpTVEtkTC9kWmFSbGRRbFlmMy9QTjFISWZK?=
+ =?utf-8?B?cFB6WnJuYS9FekIrcFZ6MnFaUDVvN0hCeG50M3JNNHp4N1FUcm5pZHNYYVFD?=
+ =?utf-8?B?QitPUlcwWXBjMmRRVVRqcFBYTVBETDcvUE9uQmpGVTFKVlYxWjFtb3dna1gz?=
+ =?utf-8?B?aTM1V3BMUFNDSzBZRXRwREtSdWxTdTE1TTlOSXh3em1PdFJDdUEwWTlwSUtx?=
+ =?utf-8?B?NFN5NEdvMDcyMWg2cGV6OVluM0hOVXhTeUlTN0R6QWYyekpBbHZCbFdIMGJV?=
+ =?utf-8?B?SHJ0NXlMQTBRV2hvdVQybkNidFl4TlRQc3Y2eXVyeG5GTVZyU2tqN2FpZVlk?=
+ =?utf-8?B?SmxSdDlHU2NMRFIxbFVWckM5aUZHU1ZtbmxkeTZFVTNBNzNqZVlpbkZQS0Zp?=
+ =?utf-8?B?dldVaDI5THd4M2JwbE1tbWpSVTZNSENleDE5V2xQVk1NV1MxREVXRlozYmlz?=
+ =?utf-8?B?U2hoMit2SVdhR254bWU4RHBGNlgzYXlZOVgzaFpQWStsUiswMThpdk93TUt4?=
+ =?utf-8?B?YzY2d2dBQU1OTkpscXpzdVVoQkwwdzArOUJoVFJSUytrNkdleEc0MkppVWJi?=
+ =?utf-8?B?SGZYalFOWnNFZXJvQXlwU0xwUHpOcEZYYi9pVkNuVHBnQUlCMUNTbDh5N1hi?=
+ =?utf-8?B?aXZHU3BZQnRXd1NEMU9Ddm10SngrNm1ZQUovTXhBUG9xU0U1N1dKT1U0cG5K?=
+ =?utf-8?B?TGVHUFJQWno5WCtPVkRBYnRRK3hXaDVZT1F1eG5PbFNWQTZoWDZyakUvUVJo?=
+ =?utf-8?B?MGt0Wk9RVU50Kzk0OXp0WDVyaGRsWE15djNXUlBDSUg2NGFMS0Y2SWwxZ3Jk?=
+ =?utf-8?B?eHVhVTJSL1dnUUtSQTZDVWNvQml0MURBc1hXWDlqUkx5QlpjVkFlbCt6dXoy?=
+ =?utf-8?B?L3VhRjRSLzhUalNyMmVWVEhUc0lJSjBNL1dRdk1lbzFpT3g0cnpYZUpjN0ly?=
+ =?utf-8?B?dEVvQ2pEbk5DeXVSaDBvaFo2YmZSSzgwZFg3UUdraiswV2FlMm5KQlJJUmxm?=
+ =?utf-8?B?Z01rK3ZacVRSWnJFZlZBSEtvdkFPbVpMYm5BbjdRSEhIeklTRExvNjE5clUx?=
+ =?utf-8?B?cEUwYnJJUFlwQVZDWTNuQm5idFlEazZIazlCMzlVV09qVnhpSDNBTXJXb2RM?=
+ =?utf-8?B?RmhuZEdCU002RXAzUEI5MTJibVVPeWRzWTJsODFPVlRmdmtPVndOMkFmNHlN?=
+ =?utf-8?B?RitQRzZGWDQvZDdZSk9XNFdFaFgvSm9QZWJYK3NNd1J3VXV2b3VDT1I3Mktr?=
+ =?utf-8?B?RTdRTHVhdUxXVVZRcDVpazdweThhbUpUMDJrYzhyTjhRZ0NiLzdXK1UydUtW?=
+ =?utf-8?Q?jsIIvHCja2APOVifgH9/l3S6tTVqTTntpQzwE=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DB9PR08MB6957.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a054cjl4eGRRVEQ3S0ZBS2tNUzNRR0pUbVlaTW1lMGdZRGdxbjJlVjVKNStG?=
+ =?utf-8?B?b2dybWx0clV2UlFaZmx0YkFXWG9TVXlIRmZTamdHbzV3L1A5V1lFUGY3THhD?=
+ =?utf-8?B?U0lLRTdVdE5GeXBpUnZNMHpZenByWFRFcEFRaWNuM1JnbkhQeXpyUW5SMFlt?=
+ =?utf-8?B?WUI2Wmw0ajlKc3dxNVJMeUc3WGd5T0FqaG9vR044WGFTdlM3WDZHUDVDaXgw?=
+ =?utf-8?B?eVQ3YS93QVV4eE9qbHgzNkpIWG1JRDVseno3Tk5KQ0xLNUtLaXE4OWV2ZkpF?=
+ =?utf-8?B?cENYMzZVLzREUGFyS3pSRlZ5ckxFN1JuaS9qclZNeFdQcnpUOUR1bVJBS3Z6?=
+ =?utf-8?B?THRac0RUcS9SNDY5L1NWYm53bHBpdGg5WHhPWHh1bnpzNUJTWWtlUnZONm54?=
+ =?utf-8?B?UTk1NHVpV0VpWDV3TlFtZEFHNVZTQjlGaHBOLzA4YjBEUm5JTEt0M3BuTE9v?=
+ =?utf-8?B?ajNhZ2ZMMTk5THVMMW8yaVc1a3laU1FXQW1GVmMrZVJkbkh2Q3oyQ0thYlJo?=
+ =?utf-8?B?M3pQaDJicGlua0drdmhxbTNZTStpQjQydkdWeVdMc0IwY0RHeTFjQS80TTRy?=
+ =?utf-8?B?RUgwOHE1UlVjUHllYzZOdUhJZlZjV1AwZ0RIMHZZWXl0Y0NRaTdDOVg0cUVR?=
+ =?utf-8?B?QW5hanVKcGMwSk14by9YbEtWM21idWZ3MUFacnpsamVtcnVST1c5ZytzdHdQ?=
+ =?utf-8?B?WTJYNStpak5WbzZ6ZVZuZXJCWSt3L25WbWVjT2p4ckVKZDVEbVZCK3RVQ1lp?=
+ =?utf-8?B?Q3hHOW1VQVkybk5YY2V6ckNFdEdDSGprRE90NnBnQ20xZzBwemRuZnNYSHJU?=
+ =?utf-8?B?UnlpaFpZVDVqZmQ2bElPTHFhbGF4WXI3cnhiNXJEeDZCK2loN1RhNHJQSStt?=
+ =?utf-8?B?UktESUQxWVVuNWpCSC84cUUxa2tyWE5iOTN6Smpmckt5eGJwcUtPT3VsWUxN?=
+ =?utf-8?B?YUEwTjNyak9nRTducjZ6U0pZS2dXelhkMWpmZEcwRWZ5K0s5eWRmeVZJTUsv?=
+ =?utf-8?B?SFpicEtZOUd1M2NnYmlrVDR4TjgyOEN0dFo4Ry96cEFyaXBNNk01ZnBaVnNH?=
+ =?utf-8?B?Z3Q1NkpvV3NKZmwxdWp6WElDTG5NSGs4MjY0NnM0aG5DazVsU1ExYXV2T096?=
+ =?utf-8?B?MEM0UEhVbkhJRGZzMk1YYUcxanpseGNYOHAxT0NXM1hSSFREaHBCL3RpTWtN?=
+ =?utf-8?B?WVZQMCsrOFBTSTNvbVZybEtzcHk5dUlvZ3lhWmpJdjhyUHR5Z05qQzltQUw5?=
+ =?utf-8?B?TXRhNm9DS2tnd3NHYXhOeHNwM0JBVXRndFZHb1dQb2pGUUhlUkkwRjNCSXZR?=
+ =?utf-8?B?SWN2V3ZLL0QxMzdzaktuSDZ6OHIreEIxWWFxQXlsNkRJcDBLMHRVdEIyQzRX?=
+ =?utf-8?B?djhDZ0xPT3pwT0d2ZkU3a1lMM1lxd1QvQTk1WVlNT1ZWOTcvQkR1c2J5bXpq?=
+ =?utf-8?B?T1l4dXU3cEM1eHVhalBjQU52OEJ6VzgyaWZKMTlzS2J5REw5S0lQSEg5bVlt?=
+ =?utf-8?B?eUR5Yk9rWldQd1hLZFVaRndtVFMxS1VmR0t3UFhKR3hYcjhGYWtad3BlRVN3?=
+ =?utf-8?B?WnkwZDhDVk1EdWppUmNwNmx1L1ZldXYwZVBRK3BuNkxMTmF5QU9lek9Bakpn?=
+ =?utf-8?B?MzRvRUlrK1NkQ2x4cUtMWGtZZXozaWc0UE1GcnduYTBLTWk0di9VTXBXVkNR?=
+ =?utf-8?B?dDFQQU5QRUZ2d2VCczRaR2F2RC8rYzdFWHlyWm04U1BWYlF3NVhEWHBLV0sw?=
+ =?utf-8?B?KzVjQjlqQUVLOGQwRmVYTEgxUlNXTXhrSFlUNU92N2F3Y3ZkYzR5ejZIRDI4?=
+ =?utf-8?B?czFKMGVkdHhnOXlvU3lLOXVsSnQxNklsVWlNRkMrempSc1lrcStYSSswWkJO?=
+ =?utf-8?B?cnlTVWdJUVdNbzNsa201TURqMHgrZE93M3hXcGtXRDJOUHVFcFRVZTJOMXlX?=
+ =?utf-8?B?bW5tbVRmc251aUdTemZ1NW9TUGVPYjZZczFlcVVQcytxUUN6OHNFZE0rSkNM?=
+ =?utf-8?B?TjFiZW5VQnMwZEM2bXR3dlpkOGJqbkxHSXJhbTI1NmJoZW1pRlNhLy95Zndp?=
+ =?utf-8?B?S29lTWRKb1hCK05BK2RhY0FPemZOUnNyd2w2TjZNbVdvcTU3Ty9NZkF1Mits?=
+ =?utf-8?Q?imgWLEBNVaRxUVmUYCFmdsQM5?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 314fb27b-ede2-42ed-57b2-08ddca0ed491
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR08MB6957.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2025 17:32:00.9209 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: v+UCcf/dwV6XgQ9td3+anvOR5aS9y9ILHlKHHJ/nqWtIIeMGOsLnINZmrALJh4QT5pK3xz/uk41peUwJCz+s5A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR08MB11170
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 23 Jul 2025 13:32:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,357 +174,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is largely derived from existing Darwin support.  FreeBSD
-apparently has better support for *at() system calls so doesn't require
-workarounds for a missing mknodat().  The implementation has a couple of
-warts however:
-- The extattr(2) system calls don't support anything akin to
-  XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
-- Attribute names cannot begin with "user." on ZFS, so the prefix is
-  trimmed off.  FreeBSD's extattr system calls sport an extra
-  "namespace" identifier, and attributes created by the 9pfs backend
-  live in the universal user namespace, so this seems innocent enough.
+On 7/23/25 19:04, Nikolai Barybin wrote:
+> QMP query-dump-guest-memory-capability reports win dump as available for
+> any x86 VM, which is false.
+>
+> This patch implements proper query of vmcoreinfo and calculation of
+> guest note size. Based on that we can surely report whether win dump
+> available or not.
+>
+> For further reference one may review this libvirt discussion:
+> https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB/#HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB
+> [PATCH 0/4] Allow xml-configured coredump format on VM crash
+>
+> Signed-off-by: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
+> ---
+>   dump/win_dump.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 60 insertions(+)
+>
+> diff --git a/dump/win_dump.c b/dump/win_dump.c
+> index 3162e8bd48..4bb1b28e63 100644
+> --- a/dump/win_dump.c
+> +++ b/dump/win_dump.c
+> @@ -14,14 +14,74 @@
+>   #include "qemu/error-report.h"
+>   #include "exec/cpu-defs.h"
+>   #include "hw/core/cpu.h"
+> +#include "hw/misc/vmcoreinfo.h"
+>   #include "qemu/win_dump_defs.h"
+>   #include "win_dump.h"
+>   #include "cpu.h"
+> +#include "elf.h"
+>   
+>   #if defined(TARGET_X86_64)
+>   
+> +#define ELF_NOTE_SIZE(hdr_size, name_size, desc_size)   \
+> +    ((DIV_ROUND_UP((hdr_size), 4) +                     \
+> +      DIV_ROUND_UP((name_size), 4) +                    \
+> +      DIV_ROUND_UP((desc_size), 4)) * 4)
+> +
+>   bool win_dump_available(Error **errp)
+>   {
+> +    uint64_t addr, note_head_size, name_size, desc_size;
+> +    uint32_t size;
+> +    uint16_t guest_format;
+> +    uint8_t *guest_note = NULL;
+> +    size_t guest_note_size = 0;
+> +    VMCoreInfoState *vmci = vmcoreinfo_find();
+> +    ArchDumpInfo dump_info = {};
+> +    GuestPhysBlockList blocks = {};
+> +    int ret;
+> +
+> +    if (!vmci || !vmci->has_vmcoreinfo)
+> +        return false;
+> +
+> +    ret = cpu_get_dump_info(&dump_info, &blocks);
+This will not work IMHO. cpu_get_dump_info tries to operate
+with a real guest memory, which is not provided. This means
+that guest executable is impossible to find.
 
-The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
-filesystems.
+For me this is looking like Windows dump could not be enabled
+after the patch.
 
-Signed-off-by: Mark Johnston <markj@FreeBSD.org>
----
- fsdev/file-op-9p.h        |   6 +-
- fsdev/meson.build         |   2 +-
- hw/9pfs/9p-synth.c        |   2 +-
- hw/9pfs/9p-util-freebsd.c | 124 ++++++++++++++++++++++++++++++++++++++
- hw/9pfs/9p-util.h         |  19 ++++--
- hw/9pfs/9p.c              |  16 ++++-
- hw/9pfs/meson.build       |   2 +
- include/qemu/xattr.h      |   6 +-
- meson.build               |   8 +--
- 9 files changed, 170 insertions(+), 15 deletions(-)
- create mode 100644 hw/9pfs/9p-util-freebsd.c
+> +    if (ret < 0)
+> +        return false;
+> +
+> +    guest_format = le16_to_cpu(vmci->vmcoreinfo.guest_format);
+> +    if (guest_format != FW_CFG_VMCOREINFO_FORMAT_ELF)
+> +        return false;
+> +
+> +    size = le32_to_cpu(vmci->vmcoreinfo.size);
+> +    addr = le64_to_cpu(vmci->vmcoreinfo.paddr);
+> +    note_head_size = dump_info.d_class == ELFCLASS64 ?
+> +        sizeof(Elf64_Nhdr) : sizeof(Elf32_Nhdr);
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b9dae8c84c..b85c9934de 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -21,9 +21,11 @@
- 
- #ifdef CONFIG_LINUX
- # include <sys/vfs.h>
--#endif
--#ifdef CONFIG_DARWIN
-+#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
- # include <sys/param.h>
-+# ifdef CONFIG_FREEBSD
-+#  undef MACHINE /* work around some unfortunate namespace pollution */
-+# endif
- # include <sys/mount.h>
- #endif
- 
-diff --git a/fsdev/meson.build b/fsdev/meson.build
-index c751d8cb62..95fe816604 100644
---- a/fsdev/meson.build
-+++ b/fsdev/meson.build
-@@ -5,6 +5,6 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
-   '9p-marshal.c',
-   'qemu-fsdev.c',
- ), if_false: files('qemu-fsdev-dummy.c'))
--if host_os in ['linux', 'darwin']
-+if host_os in ['linux', 'darwin', 'freebsd']
-   system_ss.add_all(fsdev_ss)
- endif
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 9cd1884224..b3743f6169 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -451,7 +451,7 @@ static int synth_statfs(FsContext *s, V9fsPath *fs_path,
-     stbuf->f_bsize = 512;
-     stbuf->f_blocks = 0;
-     stbuf->f_files = synth_node_count;
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-     stbuf->f_namelen = NAME_MAX;
- #endif
-     return 0;
-diff --git a/hw/9pfs/9p-util-freebsd.c b/hw/9pfs/9p-util-freebsd.c
-new file mode 100644
-index 0000000000..e649f79d4b
---- /dev/null
-+++ b/hw/9pfs/9p-util-freebsd.c
-@@ -0,0 +1,124 @@
-+/*
-+ * 9p utilities (FreeBSD Implementation)
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+/*
-+ * Not so fast! You might want to read the 9p developer docs first:
-+ * https://wiki.qemu.org/Documentation/9p
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/xattr.h"
-+#include "9p-util.h"
-+
-+static const char *mangle_xattr_name(const char *name)
-+{
-+    /*
-+     * ZFS forbits attributes in the user namespace starting with "user.".
-+     */
-+    if (strncmp(name, "user.", 5) == 0) {
-+        return name + 5;
-+    }
-+    return name;
-+}
-+
-+ssize_t fgetxattr(int fd, const char *name, void *value, size_t size)
-+{
-+    name = mangle_xattr_name(name);
-+    return extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
-+}
-+
-+ssize_t fgetxattrat_nofollow(int dirfd, const char *filename, const char *name,
-+                             void *value, size_t size)
-+{
-+    ssize_t ret;
-+    int fd;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    name = mangle_xattr_name(name);
-+    ret = extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+ssize_t flistxattrat_nofollow(int dirfd, const char *filename,
-+                              char *list, size_t size)
-+{
-+    ssize_t ret;
-+    int fd;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    ret = extattr_list_fd(fd, EXTATTR_NAMESPACE_USER, list, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+ssize_t fremovexattrat_nofollow(int dirfd, const char *filename,
-+                                const char *name)
-+{
-+    int fd, ret;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    name = mangle_xattr_name(name);
-+    ret = extattr_delete_fd(fd, EXTATTR_NAMESPACE_USER, name);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+int fsetxattrat_nofollow(int dirfd, const char *filename, const char *name,
-+                         void *value, size_t size, int flags)
-+{
-+    ssize_t ret;
-+    int fd;
-+
-+    name = mangle_xattr_name(name);
-+    if (flags == (XATTR_CREATE | XATTR_REPLACE)) {
-+        errno = EINVAL;
-+        return -1;
-+    }
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    if (flags & (XATTR_CREATE | XATTR_REPLACE)) {
-+        ret = extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, NULL, 0);
-+        if (ret == -1 && errno != ENOATTR) {
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+        if (ret >= 0 && (flags & XATTR_CREATE)) {
-+            errno = EEXIST;
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+        if (ret == -1 && (flags & XATTR_REPLACE)) {
-+            errno = ENOATTR;
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+    }
-+    ret = extattr_set_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+int qemu_mknodat(int dirfd, const char *filename, mode_t mode, dev_t dev)
-+{
-+    return mknodat(dirfd, filename, mode, dev);
-+}
-diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
-index a1924fe3f0..7315b32591 100644
---- a/hw/9pfs/9p-util.h
-+++ b/hw/9pfs/9p-util.h
-@@ -21,6 +21,14 @@
- #define O_PATH_9P_UTIL 0
- #endif
- 
-+#ifdef CONFIG_FREEBSD
-+/*
-+ * FreeBSD does not have these flags, so we can only emulate them (racily).
-+ */
-+#define XATTR_CREATE    0x1
-+#define XATTR_REPLACE   0x2
-+#endif
-+
- #if !defined(CONFIG_LINUX)
- 
- /*
-@@ -64,9 +72,9 @@ static inline uint64_t host_dev_to_dotl_dev(dev_t dev)
- static inline int errno_to_dotl(int err) {
- #if defined(CONFIG_LINUX)
-     /* nothing to translate (Linux -> Linux) */
--#elif defined(CONFIG_DARWIN)
-+#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
-     /*
--     * translation mandatory for macOS hosts
-+     * translation mandatory for non-Linux hosts
-      *
-      * FIXME: Only most important errnos translated here yet, this should be
-      * extended to as many errnos being translated as possible in future.
-@@ -155,13 +163,13 @@ static inline int openat_file(int dirfd, const char *name, int flags,
- {
-     int fd, serrno, ret;
- 
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
- again:
- #endif
-     fd = qemu_openat(dirfd, name, flags | O_NOFOLLOW | O_NOCTTY | O_NONBLOCK,
-                      mode);
-     if (fd == -1) {
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-         if (errno == EPERM && (flags & O_NOATIME)) {
-             /*
-              * The client passed O_NOATIME but we lack permissions to honor it.
-@@ -202,6 +210,9 @@ again:
-     return fd;
- }
- 
-+#ifdef CONFIG_FREEBSD
-+ssize_t fgetxattr(int dirfd, const char *name, void *value, size_t size);
-+#endif
- ssize_t fgetxattrat_nofollow(int dirfd, const char *path, const char *name,
-                              void *value, size_t size);
- int fsetxattrat_nofollow(int dirfd, const char *path, const char *name,
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index acfa7db4e1..bc4a016ee3 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -136,8 +136,10 @@ static int dotl_to_open_flags(int flags)
-         { P9_DOTL_NONBLOCK, O_NONBLOCK } ,
-         { P9_DOTL_DSYNC, O_DSYNC },
-         { P9_DOTL_FASYNC, FASYNC },
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-         { P9_DOTL_NOATIME, O_NOATIME },
-+#endif
-+#ifndef CONFIG_DARWIN
-         /*
-          *  On Darwin, we could map to F_NOCACHE, which is
-          *  similar, but doesn't quite have the same
-@@ -3658,7 +3660,7 @@ static int v9fs_fill_statfs(V9fsState *s, V9fsPDU *pdu, struct statfs *stbuf)
-     f_bavail = stbuf->f_bavail / bsize_factor;
-     f_files  = stbuf->f_files;
-     f_ffree  = stbuf->f_ffree;
--#ifdef CONFIG_DARWIN
-+#if defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
-     fsid_val = (unsigned int)stbuf->f_fsid.val[0] |
-                (unsigned long long)stbuf->f_fsid.val[1] << 32;
-     f_namelen = NAME_MAX;
-@@ -4050,6 +4052,16 @@ out_nofid:
-  * Linux guests.
-  */
- #define P9_XATTR_SIZE_MAX 65536
-+#elif defined(CONFIG_FREEBSD)
-+/*
-+ * FreeBSD similarly doesn't define a maximum xattr size, the limit is
-+ * filesystem dependent.  On UFS filesystems it's 2 times the filesystem block
-+ * size, typically 32KB.  On ZFS it depends on the value of the xattr property;
-+ * with the default value there is no limit, and with xattr=sa it is 64KB.
-+ *
-+ * So, a limit of 64k seems reasonable here too.
-+ */
-+#define P9_XATTR_SIZE_MAX 65536
- #else
- #error Missing definition for P9_XATTR_SIZE_MAX for this host system
- #endif
-diff --git a/hw/9pfs/meson.build b/hw/9pfs/meson.build
-index d35d4f44ff..7f4d6e3a45 100644
---- a/hw/9pfs/meson.build
-+++ b/hw/9pfs/meson.build
-@@ -15,6 +15,8 @@ fs_ss.add(files(
- ))
- if host_os == 'darwin'
-   fs_ss.add(files('9p-util-darwin.c'))
-+elif host_os == 'freebsd'
-+  fs_ss.add(files('9p-util-freebsd.c'))
- elif host_os == 'linux'
-   fs_ss.add(files('9p-util-linux.c'))
- endif
-diff --git a/include/qemu/xattr.h b/include/qemu/xattr.h
-index b08a934acc..224ba1276e 100644
---- a/include/qemu/xattr.h
-+++ b/include/qemu/xattr.h
-@@ -26,7 +26,11 @@
- #    define ENOATTR ENODATA
- #  endif
- #  ifndef CONFIG_WIN32
--#    include <sys/xattr.h>
-+#    ifdef CONFIG_FREEBSD
-+#      include <sys/extattr.h>
-+#    else
-+#      include <sys/xattr.h>
-+#    endif
- #  endif
- #endif
- 
-diff --git a/meson.build b/meson.build
-index c2bc3eeedc..4c681bd2e8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2382,11 +2382,11 @@ dbus_display = get_option('dbus_display') \
-   .allowed()
- 
- have_virtfs = get_option('virtfs') \
--    .require(host_os == 'linux' or host_os == 'darwin',
--             error_message: 'virtio-9p (virtfs) requires Linux or macOS') \
--    .require(host_os == 'linux' or cc.has_function('pthread_fchdir_np'),
-+    .require(host_os == 'linux' or host_os == 'darwin' or host_os == 'freebsd',
-+             error_message: 'virtio-9p (virtfs) requires Linux or macOS or FreeBSD') \
-+    .require(host_os != 'darwin' or cc.has_function('pthread_fchdir_np'),
-              error_message: 'virtio-9p (virtfs) on macOS requires the presence of pthread_fchdir_np') \
--    .require(host_os == 'darwin' or libattr.found(),
-+    .require(host_os != 'linux' or libattr.found(),
-              error_message: 'virtio-9p (virtfs) on Linux requires libattr-devel') \
-     .disable_auto_if(not have_tools and not have_system) \
-     .allowed()
--- 
-2.49.0
+note_head_size assignment could go to if below saving conditional
+
+> +
+> +    guest_note = g_malloc(size + 1);
+leaked at the end of the call
+
+> +    cpu_physical_memory_read(addr, guest_note, size);
+> +    if (dump_info.d_class == ELFCLASS64) {
+> +        const Elf64_Nhdr *hdr = (void *)guest_note;
+> +        if (dump_info.d_endian == ELFDATA2LSB) {
+> +            name_size = cpu_to_le64(hdr->n_namesz);
+> +            desc_size = cpu_to_le64(hdr->n_descsz);
+you are going to use these values as integers below,
+thus it is required to do conversion from the guest
+endianity to the local one, i.e. le64_to_cpu
+
+
+> +        } else {
+> +            name_size = cpu_to_be64(hdr->n_namesz);
+> +            desc_size = cpu_to_be64(hdr->n_descsz);
+same as above
+
+> +        }
+> +    } else {
+> +        const Elf32_Nhdr *hdr = (void *)guest_note;
+> +        if (dump_info.d_endian == ELFDATA2LSB) {
+> +            name_size = cpu_to_le32(hdr->n_namesz);
+> +            desc_size = cpu_to_le32(hdr->n_descsz);
+same as above
+
+> +        } else {
+> +            name_size = cpu_to_be32(hdr->n_namesz);
+> +            desc_size = cpu_to_be32(hdr->n_descsz);
+same as above
+
+> +        }
+> +    }
+> +
+> +    guest_note_size = ELF_NOTE_SIZE(note_head_size, name_size, desc_size);
+> +    if (guest_note_size != VMCOREINFO_WIN_DUMP_NOTE_SIZE64 &&
+> +        guest_note_size != VMCOREINFO_WIN_DUMP_NOTE_SIZE32)
+> +        return false;
+> +
+personally I prefer
+return guest_note_size == VMCOREINFO_WIN_DUMP_NOTE_SIZE64 || 
+guest_note_size == VMCOREINFO_WIN_DUMP_NOTE_SIZE32;
+
+>       return true;
+>   }
+>   
 
 
