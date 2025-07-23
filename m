@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4E4C83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E357C83F1A
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 09:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueVzf-0004MM-Cr; Wed, 23 Jul 2025 05:42:35 -0400
+	id 1ueVzc-0004JA-SX; Wed, 23 Jul 2025 05:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ueVzd-0004K3-2w
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 05:42:33 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1ueVzb-0004I0-D7
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 05:42:31 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ueVzX-0005lK-SC
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 05:42:32 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-23dc5bcf49eso80746625ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 02:42:26 -0700 (PDT)
+ id 1ueVzZ-0005m3-DG
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 05:42:31 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-237311f5a54so51856175ad.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 02:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1753263745; x=1753868545; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0MrgxsI1odmrb/YPjNLodWdZqYACxXeEs3w3/m5PvV0=;
- b=cMyWCM8LfL0y4O0V9zmoC6SsQ+pwzUHNIr4XqwXwj03KqHuPHNgo+E5yQL7b5jhGT0
- jgT+rUmSlu7Z/AVAbn+stjcm4hvu2jFFOarulvwlzIAj+sTb+0srxDHHXjgyRRwGjHWo
- TlMBMV4wvw8nAme1r5tvO0kV3Fy5n/BZJxEaMccSQQrkCjiQFx2aX7/SsvXDMgtVsMMX
- HsXu6YRUEwonJF59KGJID7dNGHixrnV8OK3mZmOegOfhwkysi7BYCg+ZKflNmpVLbqjX
- czzpd/zUU6/GCW5klQgDhi9DzLRJflo+PGo3aKCq0xTqJXyLnOE9ZONGxsL1CGptbICf
- Ozwg==
+ d=ventanamicro.com; s=google; t=1753263747; x=1753868547; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mxJ9997vLSNcd0hQskYWllp+aKzQqhaB9PVyEgB28CE=;
+ b=ew1cPO/oTobcay5oxduj2HkqotyEWqWsVfBqTOx39EQJC+cEVf/eaTg0Rl302BkFmg
+ JMVTuX71cOpT3m++ajNxnjJHxyOZk9UrVQB6U0Sx0Cm6hWQR4uIXbSLvttFUB9XJCtSs
+ eoaisqQQzNE+FrF6XS/twaLtoApqZumLzKv5pf5tjcWWxFaqZLcP4tK50A5Ys5i2Abfe
+ KuNWp0oQsOVTJ1sG7tfbsbhnOCt/+H9rUNZNLvq8P9r8QCwKIIIF4r1QOpIDtGS4Pp/w
+ qoI86QEzZd3/8v8VnkryDpPfxT+KZEGBBmOd5XO4iHvcd3AhHRpVelf8HBnlR+Alr0Sb
+ VZ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753263745; x=1753868545;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0MrgxsI1odmrb/YPjNLodWdZqYACxXeEs3w3/m5PvV0=;
- b=JrcgpYIw3R3Xhv4W3cSKN9GG4ECS4spzamZi87YOo1FJY0TVb5+NsLTCOJLa+E+Cdv
- oemBbFUx9yKzZkr2Y1yTZS0LhwUcr3SqoOfeqt8JPBFOPchIh/QCYdnVyBr++hztSQ9L
- 1eeMDLyGNhMwgbR8gQgir9H6WbC0j8bR+iaulHxATaChcnUIsTT4HTad4L+90tRwR8pK
- 4fqMpOUSGWIsam/N8ayzSStz+0K1wANSgfpeQlXg8qTFNG7tCbscM3L/OOYnjvqeNj28
- PeAaR8fbvcU7TYkrdmXM8UW+ieIfb1lJVvZa9HakcD49pQ0cr34Rsas/1fru8T+STUzL
- MoYg==
-X-Gm-Message-State: AOJu0Yzm0hYUVmlPxU4WAv1/CQ3vEDUGcPTN3oMF/kWUphKBmcbaDAQ6
- A99xrpTvpshopADsKqNodL/ai9thv0ZswItv7/pcmeMwALknvqdJqHv6z/Yodp3n8ulp6HTfe8m
- mc4QN
-X-Gm-Gg: ASbGncuyzJrrb/y0I5MmCs04OJzcOzTiqzmoqL/H9pfbipuik9IQwIyq1oQdCKaSkzp
- cIRTWxXxrpZqMgzUMrdOLuziVl14KTDloyvp/qjUph9IKVkm+TRWzuImR36x3bZ0DjGQEwhdfd5
- R1iblBhPUNsUoySzkyyKskE66qUSLm6/sePT67jnu1Jiya1nM19T/Yuykak4K7DuKP4W3plT9DE
- emQM55P0HFF6DKnJ0uRw+Pe3e/5vkIeDoGJ8RG9sVwGGmTTYXjmTuqihT1vEfns/gs7sFYQ5g8b
- g7TMq4Afhtc8Wk1gKTJUUGfHQEeyPzzzcejhyHdr79zpDr9c0zhCp/abk7ExicCNf99In+24iTd
- ou6TdLLoluTwO8WrhNOe1uNA=
-X-Google-Smtp-Source: AGHT+IHgXjAXY1RLDtEouEOULJcEX7AoF5l4lNQQ3cW0tMnoM52kMza6wfAlc3pr5/0HcnqzgN5izg==
-X-Received: by 2002:a17:902:d4cc:b0:236:7079:fafd with SMTP id
- d9443c01a7336-23f981b346emr32790795ad.36.1753263744838; 
- Wed, 23 Jul 2025 02:42:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753263747; x=1753868547;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mxJ9997vLSNcd0hQskYWllp+aKzQqhaB9PVyEgB28CE=;
+ b=lSJf1KE5wwghzax5mfEeAujD7/4MxIOTvJy4LxcJUGNz8Qtj3u/RMYOgcCwRVGrnm3
+ gNH+XfZ/l8GOC546SQ+oQ+sSXfRbqAKHYBgomb85fFEXT6F1fpIJ6/5BYN8k7aWJkW9E
+ R7oim9fkUxSJ7CBnINLbzSHtjQ1Wl4ExF7leX733pS60fT1TcxeauMtNYoLNyLTEicPe
+ uxuEO4a4cGC6+JtVrJmmTfmISflulQWQtGvTHHSG5U9AIwJOGFG7eddDFLCMTXm3OFAq
+ cS+vshVkbhhxbaSztqMNxYh5vfKLmald1NvC1ojGggAcqgzo1BW9Qlq1jR4k+aR5dvoa
+ hSZA==
+X-Gm-Message-State: AOJu0YwOkzCqU/FpWqrDpRr8Q6NoL2wnWs4aPBpA1GPpp3MaPeunIyuL
+ 1MnoQ19r3HRf2xcu5otN1kU3QvDj5TbA2CZCTUnfzxNO71dVVQzwfAaNM1B5j8n9po/9otU2rjq
+ okMug
+X-Gm-Gg: ASbGncvqfrMwpfJTjUrdhdo8N5PkW3lHAHZH/kcn68h+1AzH10eJlPxxB7d4RzOoip5
+ NBgow3HRMxP8xI0MFprDgxvmVF/vuKSX4L34MkyHbShNN7ySD8AW1eUBOZWY8DJwHsjP2Vyp0UV
+ 19Un5VI1RQuJ9nDWNYUpNkX46fTHqaQ9fBX53Z5MJC+DRTzwWK2f4KjLR4L1bx30DAtGedoRPil
+ xt0RLUQbd6Z/3tLbVGx3/o3OaWJXCt4mDA+C+Hbm4CJvHef9MtsecQzoQG7hX8wCWLNofDFtgD7
+ IWxbKZJjZY1EOppb7KKp6DTVbAGg3N6vkB+h4hjvehktI1h3hZB10Mgi9LunK+kDfuHdpDPYZOP
+ lU7bUFnmK7vmPsplzko7plCkYdCJmAV+7Mg==
+X-Google-Smtp-Source: AGHT+IFd/nmgiDQ99wsIkjYLR3F3gniHKyps0Q79iQmZKI+OFypcdQWKSeKnSAClo5b5NbqvAkMulA==
+X-Received: by 2002:a17:903:28c:b0:234:f182:a735 with SMTP id
+ d9443c01a7336-23f981b42a6mr34786885ad.34.1753263747616; 
+ Wed, 23 Jul 2025 02:42:27 -0700 (PDT)
 Received: from grind ([177.170.118.252]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23e3b6b4a88sm92732205ad.131.2025.07.23.02.42.22
+ d9443c01a7336-23e3b6b4a88sm92732205ad.131.2025.07.23.02.42.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Jul 2025 02:42:24 -0700 (PDT)
+ Wed, 23 Jul 2025 02:42:27 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-10.1 0/1] roms/opensbi: Update to v1.7
-Date: Wed, 23 Jul 2025 06:42:12 -0300
-Message-ID: <20250723094213.2975268-1-dbarboza@ventanamicro.com>
+Subject: [PATCH for-10.1 1/1] roms/opensbi: Update to v1.7
+Date: Wed, 23 Jul 2025 06:42:13 -0300
+Message-ID: <20250723094213.2975268-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250723094213.2975268-1-dbarboza@ventanamicro.com>
+References: <20250723094213.2975268-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Update OpenSBI and the pre-built opensbi32 and opensbi64 images to
+version 1.7.
 
-It has been awhile since we last updated OpenSBI - we're still running
-v1.5.1, updated almost a year ago. We're missing out a lot of fixes and
-goodies (including SBI 3.0) from v1.6 and v1.7.
+It has been almost an year since we last updated OpenSBI (at the time,
+up to v1.5.1) and we're missing a lot of good stuff from both v1.6 and
+v1.7, including SBI 3.0 and RPMI 1.0.
 
-This update didn't trigger any regressions in our opensbi tests so I
-would like to update the roms for 10.1 to avoid yet another release with
-OpenSBI v1.5.1.
+The changelog is too large and tedious to post in the commit msg so I
+encourage referring to [1] and [2] to see the new features we're adding
+into the QEMU roms.
 
-Please download the roms from:
+[1] https://github.com/riscv-software-src/opensbi/releases/tag/v1.6
+[2] https://github.com/riscv-software-src/opensbi/releases/tag/v1.7
 
-https://gitlab.com/danielhb/qemu/-/tree/opensbi_update
-
-
-Daniel Henrique Barboza (1):
-  roms/opensbi: Update to v1.7
-
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
  .../opensbi-riscv32-generic-fw_dynamic.bin    | Bin 268312 -> 268752 bytes
  .../opensbi-riscv64-generic-fw_dynamic.bin    | Bin 272504 -> 273048 bytes
  roms/opensbi                                  |   2 +-
  3 files changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin b/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin
+index b2e740010b..02be3a72a8 100644
+Binary files a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin and b/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin differ
+diff --git a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin b/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin
+index 018b4731a7..cce35c65c2 100644
+Binary files a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin and b/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin differ
+diff --git a/roms/opensbi b/roms/opensbi
+index 43cace6c36..a32a910691 160000
+--- a/roms/opensbi
++++ b/roms/opensbi
+@@ -1 +1 @@
+-Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
++Subproject commit a32a91069119e7a5aa31e6bc51d5e00860be3d80
 -- 
 2.50.1
 
