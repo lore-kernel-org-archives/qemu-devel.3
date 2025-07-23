@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9B0C83F1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 13:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56652C83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 13:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueZrC-0001Du-W2; Wed, 23 Jul 2025 09:50:07 -0400
+	id 1ueZxl-0004ng-Nc; Wed, 23 Jul 2025 09:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1ueZr4-0001BI-IL
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 09:50:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1ueZr1-0000kg-A9
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 09:49:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753278592;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7VoeJRaZDxOhCaABj1EVH3adB5DrXHOoAi/AckRJUNE=;
- b=BhOdma5V1ub8oiC2bBE3NvrOemy9waFV0h7DxGBz7fZUkZhJigappEOz1GnFJdG9yCki1N
- d9cSdd2d4uDmOZmHuu9NUJSLuYxAONhmYLHt6LfYVBefT7SqoBzL8JR0znam5oNNPqz2ao
- WQSyb/BcU/ybYDCRvxnqL2oDesNEGIQ=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-XUz_oAa0NxeYD5znwkR4FA-1; Wed, 23 Jul 2025 09:49:51 -0400
-X-MC-Unique: XUz_oAa0NxeYD5znwkR4FA-1
-X-Mimecast-MFC-AGG-ID: XUz_oAa0NxeYD5znwkR4FA_1753278589
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-313d346dc8dso10197572a91.1
- for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 06:49:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueZt5-0002nG-Ky
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 09:52:07 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ueZt3-0002oL-Eq
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 09:52:03 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45618ddd62fso69540535e9.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Jul 2025 06:52:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753278719; x=1753883519; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WzSVwRjlmLr6uY4Fxwa1RWwINPFTTiRXdeHymvaEdJs=;
+ b=doVvQgxUA5EP5fW3U9XuygcdqOMdElXcXKPYHWrKSni46S2TW1qoolysg7vrBy8fv4
+ qmEEWVH30jGpSjnysE0b17sOfgOo6aDuMDdSIe1UuXgLm2J7tnxcchGikq02nMGc6MP3
+ 05V9LyUhDL4/TkmK1x7JMsIMrroTj6Oc+A9sptBnK/LxAZnpdP//ZzD/K67206wrgOOM
+ M75NroSrC3wMKy4FzPhxm7S4OD69345jEb8f863qtDHUqcDGGKxriyyz/jFk4Qefo2a6
+ AHMK7LcqXX92x0cj6Yc280N2PEZnIO5wSw021hRCiceOOV0V6rCNMmkj2soUesyEsHSf
+ tPyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753278589; x=1753883389;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1753278719; x=1753883519;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7VoeJRaZDxOhCaABj1EVH3adB5DrXHOoAi/AckRJUNE=;
- b=aLyj+lTq5qWGVaFDJwYxckx0MxEVVRGnBcxH0wZDpxLBhB+lGcbAOEKXKwEiMnE7Ms
- Jz0fVvFVMpoZePe1+USUhdVQlQZXoa5VPQJkqWGrdHSxBqqLodPvUyPzF8CN/AwJMvv/
- ViQzqo2wDd4VfIwD2rYGi+SRWmSrM0U3ezkcVX3nXnf5WdVX8eEUMc4Vl7flphdFENGG
- 7BMK6zFE32ibDmMSlZki7p/KdTYHv8+ec6gAy08wOycO6MUq9a0P0EcaORKOhnt9zHK1
- 95rHgZCAtIZGTrZyIEHgrESnqhlWDz8MAgw08Hnpy5i09WUlS8fE5Z8h8hi1RimEYeiP
- O2SA==
-X-Gm-Message-State: AOJu0YwhqoxQRXDufk/A9NW6H3lORyzlTnYI9VosCPy6h2RwfC6+KiHv
- JibVsJbI3CoFDvwl9kNJ5c6zlkpuVdjhYeUrK/9+CLIsh+tOacZEAYvY14yGQdt656d2KgE//og
- K1hg2Nn9BsDQM5zKWZE4uDiHbUxnDY+S3s/+orO8ua604JjRkV6dp0TL0EQGpsEUsKABYDrV7Mt
- k1ZKBMq8ZBJSXBlpOm57pWPDnMzcOxPIqGtQgdt3Xdpn1e
-X-Gm-Gg: ASbGncvvwzVcttqxiJ5Bjd8iq9OBF6cibZIyOTsrUCN7tXLu1YIM0Qh5qwZ0/z/py38
- y+GEuB2V0BQhTjT4kBlJdw3w8seUNi4eX/iQFclQfyD7PbsWs5YMTcWZC7eYu2qUOXAKRLMeo71
- olEtPQUyP+iQ5P4zbTY5BE3JBBcSTdexl0Af4ALO1rqZ3CTyqbqdL1yA==
-X-Received: by 2002:a17:90b:2e0e:b0:313:23ed:701 with SMTP id
- 98e67ed59e1d1-31e5078eb95mr4560471a91.4.1753278588916; 
- Wed, 23 Jul 2025 06:49:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGLA6MIkR+cE9PwRaf0PyIONp1S0egj+Yd6L6rmY1O+oFD9PnyoOr86o4RROEbD1g1QePz1WWYFaOfCxd96TM=
-X-Received: by 2002:a17:90b:2e0e:b0:313:23ed:701 with SMTP id
- 98e67ed59e1d1-31e5078eb95mr4560431a91.4.1753278588435; Wed, 23 Jul 2025
- 06:49:48 -0700 (PDT)
+ bh=WzSVwRjlmLr6uY4Fxwa1RWwINPFTTiRXdeHymvaEdJs=;
+ b=YQQ5q6kZB/mrRa40wQSf7E0OUHhxob5cCaZ/Wa7Gt1TfvVJ+OAH4vTKSsxPURe7zTp
+ WLwysYOPDZzjW3cjcMrDie7tOMbWmxpKwYGut/dK9JmJ+cBUn6+BrxIVp6jKk5+6A4Fn
+ suhV2w3xB0gJjrELkl9I3TmIcbvy9Fslw6ETlyszzz2tfPAE58DJYqDvFm3QgGzuf5l/
+ qHP480DvvoORFUSuNZXLdV46IxhEslWudPTN9uPSTaOBTL/rWs1Ww8Wxv0boYmO5+/xJ
+ yq0RmZCDdEUIhT4+XciAKxeXfLx83qmQ/c/Ydeikl1fBfFYVH5ARIxK7fdDykGQJtGt+
+ cB+g==
+X-Gm-Message-State: AOJu0YznRxs2Zp2UYiXS07NplGtJOkyJPzwqS65uo1CjJNsfAs7sQPal
+ eoo0p433KywWC3/Latvv9XcbLEsq1gIGN0Jrl4er7Zd0cAiVf+DC6pv0M0zfl0bnC+q4hzVZEW7
+ 9RAda
+X-Gm-Gg: ASbGnctAaa+LRnU1EEPHKWl34EBvbUTHa2GPXf7V4dpjIs4K3lwLxMu+kyNVEbKJzX3
+ WdHuGLCMj5tGxeuPKOWV1im4B8B6xiIFNfzugp8Q3PqYWjO1JtB3UOxWj2w+vcI8vvZh9Xl1PN+
+ /Ga9ip9PNJYiGZfpKnKdK901q4XiVnZV/URmUiBhr6tt3t6p9LTJTb32ZajhAxOPWTQwOteNWJ3
+ qS29T+XGFglZ6jelMcBHCReybkudj/BcQcK3f/s/+GLOjpDcEMqbnZTGwq+52/lYY8/bGfz8Eoi
+ HXloTHwwMrb52vmcxSb942DMEOIksyWoZ8nme78KuKrIhRw4BIWIlvYaUIgyRHqa5D2kM4KSykP
+ gBNMqqOFvWBQw3D6mDV2WzPkRAOO5oOqYTvt6sPnSSSJGBRESl1SmSaYym1+uXbVqsPlFsr7QWZ
+ qjVSuDKUw=
+X-Google-Smtp-Source: AGHT+IEc93Ma6j0dB6V2FLi8g/Nh9GU0+I9wCbsnl2XWN0vm4qaw4eqC/NRvzL2FxnRDdEM9Mmq2Dw==
+X-Received: by 2002:a05:600c:540e:b0:453:6b3a:6c06 with SMTP id
+ 5b1f17b1804b1-4586bddfd36mr17214885e9.29.1753278718833; 
+ Wed, 23 Jul 2025 06:51:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b61ca48a2esm16505085f8f.51.2025.07.23.06.51.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 23 Jul 2025 06:51:58 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 v4 0/4] target/arm/hvf: Correctly set Generic Timer
+ frequency
+Date: Wed, 23 Jul 2025 15:51:52 +0200
+Message-ID: <20250723135156.85426-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-References: <20250723131504.1482657-1-armbru@redhat.com>
-In-Reply-To: <20250723131504.1482657-1-armbru@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Jul 2025 17:49:37 +0400
-X-Gm-Features: Ac12FXwLVCS0mQEcREg9HVxloGolJOYFlsAHWSmBO-UGhEVTIGBAdcBNfxAofaY
-Message-ID: <CAMxuvay2YWOOWB0ak7y+eRpKwAUa68r0cym_MSsTqEcEHw1Fng@mail.gmail.com>
-Subject: Re: [PATCH] ui/keymaps: Avoid trace crash and improve error messages
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Content-Type: multipart/alternative; boundary="00000000000074d3b5063a98fb84"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.377,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,148 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000074d3b5063a98fb84
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+(Series fully reviewed)
 
-On Wed, Jul 23, 2025 at 5:15=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+When using HVF, the accelerator gets the host Generic Timer
+frequency and update cpu->gt_cntfrq_hz; it is however too
+late, as the timers have been created in arm_cpu_realizefn()
+using the default frequency. Then guest virtualization code
+depending on timers ends very slow (experienced on Silicon M1,
+timer running at 24MHz but QEMU timer a 1GHz, ~70x slower).
 
-> parse_keyboard_layout() passes a possibly null @filename to
-> trace_keymap_parse().  Trace backend log then formats it with %s,
-> which crashes on some systems.
->
-> Fix by moving the null check before the trace_keymap_parse().
->
-> While there, improve the error messages a bit.
->
-> Fixes: d3b787fa7dde (keymaps: add tracing)
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->
+This series fixes that by introducing a cpu_target_realize()
+callback for accelerators, creating ARM timers *after* calling
+this callback, and correctly setting the per-cpu timer freq
+there.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Philippe Mathieu-Daudé (4):
+  accel: Introduce AccelOpsClass::cpu_target_realize() hook
+  accel/hvf: Add hvf_arch_cpu_realize() stubs
+  target/arm: Create GTimers *after* features finalized / accel realized
+  target/arm/hvf: Really set Generic Timer counter frequency
 
+ include/accel/accel-cpu-ops.h |  1 +
+ include/system/hvf_int.h      |  2 ++
+ accel/accel-common.c          |  5 +++
+ accel/hvf/hvf-accel-ops.c     |  2 ++
+ target/arm/cpu.c              | 65 ++++++++++++++++++-----------------
+ target/arm/hvf/hvf.c          | 20 ++++++++++-
+ target/i386/hvf/hvf.c         |  5 +++
+ 7 files changed, 67 insertions(+), 33 deletions(-)
 
-> ---
->  ui/keymaps.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/ui/keymaps.c b/ui/keymaps.c
-> index 6ceaa97085..2359dbfe7e 100644
-> --- a/ui/keymaps.c
-> +++ b/ui/keymaps.c
-> @@ -86,19 +86,25 @@ static int parse_keyboard_layout(kbd_layout_t *k,
->                                   const name2keysym_t *table,
->                                   const char *language, Error **errp)
->  {
-> +    g_autofree char *filename =3D NULL;
->      int ret;
->      FILE *f;
-> -    char * filename;
->      char line[1024];
->      char keyname[64];
->      int len;
->
->      filename =3D qemu_find_file(QEMU_FILE_TYPE_KEYMAP, language);
-> +    if (!filename) {
-> +        error_setg(errp, "could not find keymap file for language '%s'",
-> +                   language);
-> +        return -1;
-> +    }
-> +
->      trace_keymap_parse(filename);
-> -    f =3D filename ? fopen(filename, "r") : NULL;
-> -    g_free(filename);
-> +
-> +    f =3D fopen(filename, "r");
->      if (!f) {
-> -        error_setg(errp, "could not read keymap file: '%s'", language);
-> +        error_setg_file_open(errp, errno, filename);
->          return -1;
->      }
->
-> --
-> 2.49.0
->
->
-
---00000000000074d3b5063a98fb84
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 23,=
- 2025 at 5:15=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">parse_keyboard_layout() passes a possibly null @f=
-ilename to<br>
-trace_keymap_parse().=C2=A0 Trace backend log then formats it with %s,<br>
-which crashes on some systems.<br>
-<br>
-Fix by moving the null check before the trace_keymap_parse().<br>
-<br>
-While there, improve the error messages a bit.<br>
-<br>
-Fixes: d3b787fa7dde (keymaps: add tracing)<br>
-Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
-arget=3D"_blank">armbru@redhat.com</a>&gt;<br></blockquote><div><br></div><=
-div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lur=
-eau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0ui/keymaps.c | 14 ++++++++++----<br>
-=C2=A01 file changed, 10 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/ui/keymaps.c b/ui/keymaps.c<br>
-index 6ceaa97085..2359dbfe7e 100644<br>
---- a/ui/keymaps.c<br>
-+++ b/ui/keymaps.c<br>
-@@ -86,19 +86,25 @@ static int parse_keyboard_layout(kbd_layout_t *k,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const name2keysym_t *table,<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *language, Error *=
-*errp)<br>
-=C2=A0{<br>
-+=C2=A0 =C2=A0 g_autofree char *filename =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0int ret;<br>
-=C2=A0 =C2=A0 =C2=A0FILE *f;<br>
--=C2=A0 =C2=A0 char * filename;<br>
-=C2=A0 =C2=A0 =C2=A0char line[1024];<br>
-=C2=A0 =C2=A0 =C2=A0char keyname[64];<br>
-=C2=A0 =C2=A0 =C2=A0int len;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0filename =3D qemu_find_file(QEMU_FILE_TYPE_KEYMAP, lang=
-uage);<br>
-+=C2=A0 =C2=A0 if (!filename) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;could not find keymap f=
-ile for language &#39;%s&#39;&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0langu=
-age);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0trace_keymap_parse(filename);<br>
--=C2=A0 =C2=A0 f =3D filename ? fopen(filename, &quot;r&quot;) : NULL;<br>
--=C2=A0 =C2=A0 g_free(filename);<br>
-+<br>
-+=C2=A0 =C2=A0 f =3D fopen(filename, &quot;r&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0if (!f) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;could not read keymap f=
-ile: &#39;%s&#39;&quot;, language);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_file_open(errp, errno, filename);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.49.0<br>
-<br>
-</blockquote></div></div>
-
---00000000000074d3b5063a98fb84--
+-- 
+2.49.0
 
 
