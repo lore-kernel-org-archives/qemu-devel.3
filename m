@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9432AC83F17
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 08:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF0FC83F1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Jul 2025 08:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueV6v-0000ax-TY; Wed, 23 Jul 2025 04:46:05 -0400
+	id 1ueVBq-0004kg-Qx; Wed, 23 Jul 2025 04:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ueV6S-0000SX-3y
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 04:45:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ueVBa-0004iR-28
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 04:50:50 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1ueV6G-0002SH-5s
- for qemu-devel@nongnu.org; Wed, 23 Jul 2025 04:45:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753260316;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dC3q7/A3Y6Pxh9In9/dxZIjQlz5k+cSO84uBmObuEaY=;
- b=DAewJIbnBRG5vYVbfRtUJgjsR5YhA1fzihr2xkvmY2EdcxgPOFTt4hNpW8I+7LafgTE4OA
- BO0OTFntperXB6L3CgXmSL5TaUtJn9Wq8C5Xeo4xhXX2JhG6rNCq2hA2P3slFu7bFFWJ52
- DoRexTk6XamIw9f15tl3C0XoIBo+/Ek=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-1XVdBrp_PYSG-JCD3eJlvQ-1; Wed,
- 23 Jul 2025 04:45:14 -0400
-X-MC-Unique: 1XVdBrp_PYSG-JCD3eJlvQ-1
-X-Mimecast-MFC-AGG-ID: 1XVdBrp_PYSG-JCD3eJlvQ_1753260313
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7866B195FE11; Wed, 23 Jul 2025 08:45:13 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.154])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E78F1956094; Wed, 23 Jul 2025 08:45:12 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 4DD021800382; Wed, 23 Jul 2025 10:45:10 +0200 (CEST)
-Date: Wed, 23 Jul 2025 10:45:10 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, 
- Shaoqin Huang <shahuang@redhat.com>
-Subject: Re: [PATCH] hw/i386: Fix 'use-legacy-x86-rom' property compatibility
-Message-ID: <7jxttgt6lpiodvrzjqugdbm342ypi4xkle43b6donsju4gwd6a@yrypxamrqip5>
-References: <20250723062714.1245826-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ueVBU-0005KJ-2q
+ for qemu-devel@nongnu.org; Wed, 23 Jul 2025 04:50:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1753260644; x=1784796644;
+ h=message-id:date:mime-version:subject:from:to:cc:
+ references:in-reply-to:content-transfer-encoding;
+ bh=TK8DYv1PHjhFjScJ5kLfKZ8i0nW2pZl+oHS3/788X54=;
+ b=L6yOCh6vpLs6/SH9XZ3I+3eXgKoKHqM40Y/zGQSuGspsXu2L6gA7Xhhe
+ +vInywcixrKBvTX9rNZRjYAOvVL5C0jDcvCgpI06VGcLRwsBv2b05Vzan
+ 1WMAKotjwPVOsxH3xrrhpb08JP9mKwmTNw5/i7jH+07OH7sAqs56LfILq
+ UJi9vuqQ6MzbPPLIroeaE/+Fa6K7bXbcvADlq1/z+Rt+x5icg3AZdHb0O
+ D8kYUbOwb5NHumVYPzZXwOoL/i2s3KKkecV7KJWsiDW3dVBg8hTKeggP2
+ 2+2AWLhXyL2aewe6GCVH9kGxaHgsAcqoyIFO2mDRSZzAr+n6BUhXTW8Gf w==;
+X-CSE-ConnectionGUID: dRxzaDLqTpOTL/J2C8mXcg==
+X-CSE-MsgGUID: sgw37Jg2Q76MRgzHOw/maQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11500"; a="59335275"
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="59335275"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2025 01:50:31 -0700
+X-CSE-ConnectionGUID: 1s2nVqlOQtCqcn9JBNMT0w==
+X-CSE-MsgGUID: ipSRNVPtSJu4rgY2T5akTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,333,1744095600"; d="scan'208";a="163646079"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2025 01:50:29 -0700
+Message-ID: <c787981c-dc21-4b74-b219-03255781f927@intel.com>
+Date: Wed, 23 Jul 2025 16:50:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] i386/kvm: Disable hypercall patching quirk by default
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Mathias Krause <minipli@grsecurity.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ Oliver Upton <oliver.upton@linux.dev>,
+ Sean Christopherson <seanjc@google.com>
+References: <20250722204316.1186096-1-minipli@grsecurity.net>
+ <206a04b9-91cb-41e4-b762-92201c659d78@intel.com>
+ <ebbb7c3c-b8cb-49b6-a029-e291105300fd@grsecurity.net>
+ <fbd47fb6-838e-47bf-a344-f90be06eed99@intel.com>
+Content-Language: en-US
+In-Reply-To: <fbd47fb6-838e-47bf-a344-f90be06eed99@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250723062714.1245826-1-clg@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,20 +91,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 23, 2025 at 08:27:14AM +0200, C�dric Le Goater wrote:
-> Commit 350785d41d8b ("ramfb: Add property to control if load the
-> romfile") introduced the `use-legacy-x86-rom` property for the
-> `vfio-pci-nohotplug` device, allowing control over VGA BIOS ROM
-> loading. However, the property compatibility setting was incorrectly
-> applied to the `vfio-pci` device instead, which causes all `vfio-pci`
-> devices to fail to load. This change fixes the issue by ensuring the
-> property is set on the correct device.
+On 7/23/2025 4:42 PM, Xiaoyao Li wrote:
+> On 7/23/2025 3:53 PM, Mathias Krause wrote:
+>>> I would leave it to Paolo to decide whether a compat property is needed
+>>> to disable the hypercall patching by default for newer machine, and keep
+>>> the old machine with old behavior (hypercall patching is enabled) by
+>>> default.
+>> Bleh, I just noticed that there are KUT tests that actually rely on the
+>> feature[1]. I'll fix these but, looks like, we need to default on for
+>> the feature -- at least for existing machine definitions 🙁
 > 
-> Fixes: d5fcf0d960d8 ("hw/i386: Add the ramfb romfile compatibility")
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Shaoqin Huang <shahuang@redhat.com>
-> Signed-off-by: C�dric Le Goater <clg@redhat.com>
+> You reminds me.
+> 
+> There is also even a specific KUT hypercall.c, and default off fails it 
+> as well.
+> 
+> enabling apic
+> smp: waiting for 0 APs
+> Hypercall via VMCALL: OK
+> Unhandled exception 6 #UD at ip 00000000004003dd
+> error_code=0000      rflags=00010002      cs=00000008
+> rax=00000000ffffffff rcx=00000000000003fd rdx=00000000000003f8 
+> rbx=0000000000000001
+> rbp=0000000000710ff0 rsi=00000000007107b1 rdi=000000000000000a
+>   r8=00000000007107b1  r9=00000000000003f8 r10=000000000000000d 
+> r11=0000000000000020
+> r12=0000000000000001 r13=0000000000000000 r14=0000000000000000 
+> r15=0000000000000000
+> cr0=0000000080000011 cr2=0000000000000000 cr3=000000000040c000 
+> cr4=0000000000000020
+> cr8=0000000000000000
+>      STACK: @4003dd 4001ad
 
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+>> Looks like I have to go the compat property route.
+
+BTW, the compat property doesn't fix KUT issues actually.
+
+Since KUT doesn't use versioned machine, instead of it always uses the 
+latest machine.
+
+>>
+>> [1]
+>> https://gitlab.com/kvm-unit-tests/kvm-unit-tests/-/blob/master/x86/ 
+>> vmexit.c?ref_type=heads#L36
+> 
+> 
 
 
