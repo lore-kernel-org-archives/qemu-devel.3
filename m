@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207D3C87FC5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 17:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5232FC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 19:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uezuo-0008Ju-6b; Thu, 24 Jul 2025 13:39:38 -0400
+	id 1uf1C2-00050A-Bh; Thu, 24 Jul 2025 15:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uezuR-0007rF-7w
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 13:39:11 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uezuO-0000Ue-GC
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 13:39:10 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-3122368d7c4so1083357a91.1
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 10:39:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1753378747; x=1753983547; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x0du0LYYRFJZvrVUEdmkuufspPWls3rIB5vgE9O3f6E=;
- b=o9KfMOX9VbyiSiJNPUkZdcUn8R/ye5wbxR9obFnHUQ8URTDszyATWWRizbI3oQf9EW
- 7m9CVpmzFKsRuBKgR4Qnx59uyBcu61SdNtGup1T9eOsq2M/CpOKJ+K1rAyUFfhLBeLSb
- pDfW+bTdl+8h7FX1gumZWNq5Rd09tEf9IniIHhepyeFoSdQMKeo9zdTQuG9MXGVnHX6f
- vAYwaBeDPS3wAh9i57mQqhh2Eci0fxqBlSk4ubOjI12l3EaRBUOpApNyjg+pdni0LG8z
- ygSgYOfw3w0LXO5253tIDMjNnOK5T/eC5XKpZW0+oX3A2zfAtoB3FAfj7vt1uPTBEIIz
- uvLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753378747; x=1753983547;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x0du0LYYRFJZvrVUEdmkuufspPWls3rIB5vgE9O3f6E=;
- b=CPWoiIfTXg3y/X5/FANe5Gh+SdeeCDlLlm6ir2Yxr1jGBEUVtFm8HXNN/ps34Y6zql
- kbvqjg+wpATVIYXRlK79XDDrFsz/53J13Xk5ZDUY4jLUVUKAIkmxoCFT/+uay/Nv679S
- iOB4e2b1DOsisJx5RJGdWAO3qu4vKjWqLQP+DJo06Wkl/TINcvt5lRQyj3K3VBJXL5Fs
- O6KL4gRyITMyvWXPvWWk3HNB1KJm/b380uAnO0d4O8DWQWFn/xYd5TATFxI1EpJT3ypy
- aPrzCNs6l9E8I1e+qszx0cXnrqY44lZtoUWWsSxdYvniNjoC8C7+Za+LrdZjn5K7uqNi
- Jzsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU74j7GUnXZvqs5yCnWLPyUby32SEUub6pSb+6pCrRrCNRRSJkx56N1t5cqQfrjxYa0xxOIoMQGURYp@nongnu.org
-X-Gm-Message-State: AOJu0YxCIq+DP3RUhL2suhLoV7XBtGGIEY3KYvcfZ6LRyT+NEvaNHsgI
- L17spgqj7i00/ZOcw/O/5gFg38gMNuhkXVNnmnb6BtD3cORer4maBqFquj8u3jRTfSI=
-X-Gm-Gg: ASbGncv6actRe0xlgjpHM53umeXJ0/4YWPtZRSCkwMeF2yD7BfqeGtopBJIswYZg/2G
- bEAxswWfTmnA3zKu9Yen1jLxjmBVbWq5vc7pvHNjAl3rQLnN1lXBL++TZlXdDIKYoqLl12qly31
- FihgIsqLr94spanYBbdr7Ug1UFRipAoisS8eFJmsCDVx66qdkCFhdQRGDgc/8OGK7eXXI45gT83
- 12TrXXB/PKToFgdCfwUN06XRCjqRUjzNUVAxXUF4JBLiNDKuXV0OCu2mDjwhoMj9Y9GuF2h4ymq
- SB7i3wK91IA+jw43tp2paBEFiBCN8w/yox867wFJT33V7b8yztDBLbYVcsbYe1UYEdvQoYU7QFM
- uRO80iCLD5GRtgwqTIcq/TTK1ElSs8gwr7bxU8Q==
-X-Google-Smtp-Source: AGHT+IER5T53oeuGsx9QICBOtD8cWXd04JSOuCeetDQT57rTumCMvTY0K230C64ZktGHPns+I3Znxw==
-X-Received: by 2002:a17:90b:3809:b0:2fe:e9c6:689e with SMTP id
- 98e67ed59e1d1-31e50768ab4mr10668563a91.8.1753378746781; 
- Thu, 24 Jul 2025 10:39:06 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.118.252])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e662dd014sm1816136a91.30.2025.07.24.10.39.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 10:39:06 -0700 (PDT)
-Message-ID: <a779c4ed-913e-4886-a2c6-7d3b505077c1@ventanamicro.com>
-Date: Thu, 24 Jul 2025 14:39:00 -0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uf1C0-0004wE-9V
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 15:01:24 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uf1Bx-00035A-Ff
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 15:01:23 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 10FB8139EE8;
+ Thu, 24 Jul 2025 22:01:06 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9763624F215;
+ Thu, 24 Jul 2025 22:01:06 +0300 (MSK)
+Message-ID: <afddf3fc-5561-40b4-b61c-1301b079b0b8@tls.msk.ru>
+Date: Thu, 24 Jul 2025 22:01:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] intc/riscv_aplic: Fix target register read when source
- is inactive
-To: Yang Jialong <z_bajeer@yeah.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: yangjialong@rvcore.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250724093426.4179617-1-z_bajeer@yeah.net>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250724093426.4179617-1-z_bajeer@yeah.net>
+Subject: Re: [PATCH] system/physmem: fix use-after-free with dispatch
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,59 +113,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/24/25 6:34 AM, Yang Jialong wrote:
-> The RISC-V Advanced interrupt Architecture:
-> 4.5.16. Interrupt targets:
-> If interrupt source i is inactive in this domain, register target[i] is
-> read-only zero.
+On 24.07.2025 19:11, Pierrick Bouvier wrote:
+> A use-after-free bug was reported when booting a Linux kernel during the
+> pci setup phase. It's quite hard to reproduce (needs smp, and favored by
+> having several pci devices with BAR and specific Linux config, which
+> is Debian default one in this case).
 > 
-> Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
-> ---
->   hw/intc/riscv_aplic.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+> After investigation (see the associated bug ticket), it appears that,
+> under specific conditions, we might access a cached AddressSpaceDispatch
+> that was reclaimed by RCU thread meanwhile.
+> In the Linux boot scenario, during the pci phase, memory region are
+> destroyed/recreated, resulting in exposition of the bug.
 > 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 4fa5f75..cfef69f 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -628,7 +628,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
->   
->   static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
->   {
-> -    uint32_t irq, word, idc;
-> +    uint32_t irq, word, idc, sm;
->       RISCVAPLICState *aplic = opaque;
->   
->       /* Reads must be 4 byte words */
-> @@ -696,6 +696,10 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
->       } else if ((APLIC_TARGET_BASE <= addr) &&
->               (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
->           irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
-> +        sm = aplic->sourcecfg[irq] * APLIC_SOURCECFG_SM_MASK;
+> The core of the issue is that we cache the dispatch associated to
+> current cpu in cpu->cpu_ases[asidx].memory_dispatch. It is updated with
+> tcg_commit, which runs asynchronously on a given cpu.
+> At some point, we leave the rcu critial section, and the RCU thread
+> starts reclaiming it, but tcg_commit is not yet invoked, resulting in
+> the use-after-free.
+> 
+> It's not the first problem around this area, and this patch [1] already
+> tried to address it. It did a good job, but it seems that we found a
+> specific situation where it's not enough.
+> 
+> This patch takes a simple approach: remove the cached value creating the
+> issue, and make sure we always get the current mapping for address
+> space, using address_space_to_dispatch(cpu->cpu_ases[asidx].as).
+> It's equivalent to qatomic_rcu_read(&as->current_map)->dispatch;
+> This is not really costly, we just need two dereferences,
+> including one atomic (rcu) read, which is negligible considering we are
+> already on mmu slow path anyway.
+> 
+> Note that tcg_commit is still needed, as it's taking care of flushing
+> TLB, removing previously mapped entries.
+> 
+> Another solution would be to cache directly values under the dispatch
+> (dispatch themselves are not ref counted), keep an active reference on
+> associated memory section, and release it when appropriate (tricky).
+> Given the time already spent debugging this area now and previously, I
+> strongly prefer eliminating the root of the issue, instead of adding
+> more complexity for a hypothetical performance gain. RCU is precisely
+> used to ensure good performance when reading data, so caching is not as
+> beneficial as it might seem IMHO.
+> 
+> [1] https://gitlab.com/qemu-project/qemu/-/commit/0d58c660689f6da1e3feff8a997014003d928b3b
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3040
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-I believe you want '&' here:
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
 
+Thank you for this work!
 
-sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
-
-Otherwise, given that APLIC_SOURCECFG_SM_INACTIVE is 0x0, the only way
-
-sm == APLIC_SOURCECFG_SM_INACTIVE
-
-will happen is aplic->sourcecfg[irq] being 0.
-
-
-Thanks,
-
-Daniel
-
-> +        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-> +            return 0;
-> +        }
->           return aplic->target[irq];
->       } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
->               (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
-
+/mjt
 
