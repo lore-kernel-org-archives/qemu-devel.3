@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDCC1C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1F7C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uettI-0005vM-BP; Thu, 24 Jul 2025 07:13:36 -0400
+	id 1uetue-0000dT-PA; Thu, 24 Jul 2025 07:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uettF-0005sL-0u
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:13:33 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1uetuc-0000W0-Ez
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:14:58 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uettD-0004Of-Ag
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:13:32 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-607cc1a2bd8so1475156a12.2
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 04:13:30 -0700 (PDT)
+ id 1uetua-0004vM-OP
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:14:58 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-60700a745e5so1895693a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 04:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753355609; x=1753960409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753355694; x=1753960494; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZSoVFTJPenVgcfO5mcfZXQWTQXpJCNT8yze8wn3wrUA=;
- b=Kn4N42pZWp8UVNhefv03fLfTU65iPI9Oek3zAivhp10eAgzS6N1zsV1Gmg/FphJ55j
- IJxCdqIWBjnZ5BJ1HVGc2XWOI2TRKBmoQ+UsM44Jh5vw2hvPeoRxDRgudszFnuprlUY7
- R5+Y9lGXlXykZiKjqPLwBPNUiOLjeJGnhYUlTJ45scNcOxJXbL3CLFlUHxOaLkKoZqQW
- eCy+Nmi1qd/mKSw3CfMHwyqznNMD6vKu7InLuxkfcLoLmsDdP4XmTcno3aje5jgSAPmy
- Ye8aMIcN6JbjYJKJukr41B24y7kgDzT9zoF3S/60W7+wwx07niAve0ddGGaKoB5y2rZE
- 6NQA==
+ bh=Drum6qJTdpgtrrmdh/2Ucfswie7lSiFugC5lvWpzULY=;
+ b=RXV9xEoaHemIUfXwARP8q3MOntlhbzqe93GwZcHNq3JYVIn4eQeEMO1uY1erzamYs7
+ ElO33PP0rCKLL8GwUYG69/gKpXh37/LlakH+4mIhC0UJoyTdV+ORM9vlzQftymVONM2V
+ Gp4ZX2Hsvv4DAxg8+x6ee+W/4DCETzOqr/+GWIqKYYDM33D58qXn4k117vbXbFI2IXEY
+ VuzHH4hug57MsMhpv95egkeBULdn4MkQEAs3fiB1JCr0/ekNmHICLwvnxhn3HlXknclF
+ TRUCQcoMie7I3HTq6hqnsq92dYh/shZs2dwLYgAc83mqiG4UbjDrLFdgeZBhNzD9i1Ja
+ wNug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753355609; x=1753960409;
+ d=1e100.net; s=20230601; t=1753355694; x=1753960494;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZSoVFTJPenVgcfO5mcfZXQWTQXpJCNT8yze8wn3wrUA=;
- b=auKjwDmlJgTsek9TNfCSLtk4TKD5kpFBxpfrlfEmz1AzNPRpKC/JCdMCP1StF+DOcv
- aAfE2lYDlO6B2gTo7AzHTVI3ca+TIVYxYa4/UDOH9CRdQkvUN9YlVwE+a/oUW4RNttN4
- SoA5bbaUIHuRZpFuULNYSAeorbKsxrdImsyxHyNb0GXpcIVetHHdz85QSgHVlMmtFWvj
- 5WVshVHusn/u/lKhsZBwZTGdWEVBi+QEgiirY2h4j3x8EIruJT77jsX0Run0aCeRQGDA
- AX7JrDdVHVaZR1mYscmuFNGkbgrciuIunXN83Kgd8ZJCTl4mo1A/oky7GcrHHsrTL1ji
- 1UAA==
-X-Gm-Message-State: AOJu0YwvslIUeDwk1FEp0phSj/Kpmu4w4y4sXRkYEINQOKGT4P1V+n7t
- toCIUUP/4f9BMsXKSfW79JJOBvOywWGcl0HAbfQAZ1rmmVB6NqoiGVMGOrnP/QWvqubj1J0Zt/6
- 0MxhFQ0ken3d+htEHXjkcHhZ8CiJ84bKu3rvqkliNWg==
-X-Gm-Gg: ASbGncs03Cmke9K4DfUVGKw5JXQmpd1/X2X5tpVMmgJdnR+rslQYaml3Kjpx+OB4Dtq
- F8NyMDuODu380OL3lFXD5U1aoccU6Ebd+rAtz8GpnsTqwA1piZVH0XbSGJBpSw+mt1vr3HjIGea
- XNMjBKBvenFv9cmng5Ih4PnttuLsPMkaflU/bZHraNPCdVD0n4GtssfmylJlpgNfBBBwQCqgF88
- tF6EA==
-X-Google-Smtp-Source: AGHT+IEI7/Qo8Zs6opOzvTlk+a1B4I04MJxyvNhxVGexO81AMOwPCF1GGmPOYsGjKGr+QPEhyAHurHXGqmB8Xp/7qqs=
-X-Received: by 2002:a05:6402:34c4:b0:612:dc41:c622 with SMTP id
- 4fb4d7f45d1cf-6149b42ee6fmr5876465a12.9.1753355609482; Thu, 24 Jul 2025
- 04:13:29 -0700 (PDT)
+ bh=Drum6qJTdpgtrrmdh/2Ucfswie7lSiFugC5lvWpzULY=;
+ b=gdQnSRs/kghp19yWw2PxQ/9r84V1XAzDyNvzbR0ja6Je7P3n+JYtgfX204EUH/ySXk
+ RUB4F+LkRi3k0ii9uFYEJM6UhJ490AtIq+YzTCTfR4EEagRZQoxnwJsFrXHc2ZX++HMk
+ 5L7LSgKvJZ59KmqdyEGDnEzAfOU2biDF03oVpTddEyHj2SebkyMy/nx1gB20fldDU5E8
+ AFg4RIKIxmgCh5MyhoxlfyJrftgX7L+XLcrjqIReltuIvMJGTqMYF7Z8c6eaL20Z5yi1
+ wwPdsfGuFUgwuNmmQvFztUQFmdJUWIWZgOEZbUIpyiU0l0xHmH0J24O9EcQiQ9cQ8Ur3
+ nelA==
+X-Gm-Message-State: AOJu0YxqvjKOq0QdbRwhitBl8YEqK2aF4ScE2qmBC1g4MSQrQW8lUWBA
+ 9fpjsN+HtDHkj/U7D7Z0bWLMDeujU3mqFMECdWZ2oStwhyIb43PizAb+Xoel48iiF5Ue0gNV/ee
+ MfFhtHZSyPXhbV3bmThkMCmtg71IvkEHhC54FxkZloQ==
+X-Gm-Gg: ASbGncuxVlOR5gujoOrb8k2z7K0L3jBuREo67tIFKeWyYMALB/XbB/LsHLa6dReVyee
+ dRGNMkVwewPwYYBVOY1Hf6YogPmIxhdHvUxfIaXDz+VZup0NUdPrqIIZwre/HEh6Hbu2RGE7TBR
+ 0aZ5nkGbc1x8wwMT8diI5GXQNDznK1le+oBIWTjesS53oZ3nP7RBN/TDBcwDeVK2DfH6MOZDUGT
+ MfBlA==
+X-Google-Smtp-Source: AGHT+IF/7vAOGy920bNbpZutkcvA/EE+QW5IylWdaQp+Yf86WnXmzJydO8ZsURD+M53ciVEnV2bXFUInEq5tm1D7s08=
+X-Received: by 2002:a05:6402:51c8:b0:605:878:3553 with SMTP id
+ 4fb4d7f45d1cf-6149b586a40mr5937269a12.16.1753355694467; Thu, 24 Jul 2025
+ 04:14:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250724105939.2393230-1-alex.bennee@linaro.org>
- <20250724105939.2393230-6-alex.bennee@linaro.org>
-In-Reply-To: <20250724105939.2393230-6-alex.bennee@linaro.org>
+ <20250724105939.2393230-8-alex.bennee@linaro.org>
+In-Reply-To: <20250724105939.2393230-8-alex.bennee@linaro.org>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 24 Jul 2025 14:13:01 +0300
-X-Gm-Features: Ac12FXwE54V8rnzUk_t4sutDzLg4OBu_z6t8BZamH-emXhv2BaKL2IXoomRFoVY
-Message-ID: <CAAjaMXYw-cva47LOk0KHxDYOOXm+LfpDRtGTzhgnTyqKAQ_Xog@mail.gmail.com>
-Subject: Re: [PATCH for 10.1 05/13] docs/user: expand section on threading
+Date: Thu, 24 Jul 2025 14:14:27 +0300
+X-Gm-Features: Ac12FXzgO0qHuNOK9zohX0h-kqAsSikmVjz1ys77lD_ooFlOT05ozR8BVt_uTkk
+Message-ID: <CAAjaMXZXLM6+A8T7UvF5MxZZ9QJ=pGM_Hyd0fQnGr2neWoB7tA@mail.gmail.com>
+Subject: Re: [PATCH for 10.1 07/13] tests/tcg: skip libsyscall.so on softmmu
+ tests
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,53 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 2:02=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+On Thu, Jul 24, 2025 at 2:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
 o.org> wrote:
 >
-> Potentially too many weasel words when describing atomic and memory
-> order issues.
+> It isn't testing anything and just expanding the runtime of testing.
 >
 > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
->  docs/user/main.rst | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+>  tests/tcg/Makefile.target | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> diff --git a/docs/user/main.rst b/docs/user/main.rst
-> index 05de904225c..449acd4a324 100644
-> --- a/docs/user/main.rst
-> +++ b/docs/user/main.rst
-> @@ -46,9 +46,14 @@ Threading
->
->  On Linux, QEMU can emulate the ``clone`` syscall and create a real
->  host thread (with a separate virtual CPU) for each emulated thread.
-> -Note that not all targets currently emulate atomic operations
-> -correctly. x86 and Arm use a global lock in order to preserve their
-> -semantics.
-> +However as QEMU relies on the system libc to call ``clone`` on its
-> +behalf we are limit the flags accepted to those it uses. Specifically
-
-s/we are limit/we limit
-
-> +this means flags affecting namespaces (e.g. container runtimes) are
-> +not supported. QEMU guest can still be run inside containers though.
-
-QEMU guest? Maybe write "QEMU user-mode" instead?
-
-
+> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+> index af68f11664f..3d96182a7b9 100644
+> --- a/tests/tcg/Makefile.target
+> +++ b/tests/tcg/Makefile.target
+> @@ -155,6 +155,12 @@ VPATH+=3D$(PLUGIN_LIB)
+>  # For example, libpatch.so only needs to run against the arch-specific p=
+atch
+>  # target test, so we explicitly run it in the arch-specific Makefile.
+>  DISABLE_PLUGINS=3Dlibpatch.so
 > +
-> +While QEMU does its best to emulate atomic operations properly
-> +differences between the host and guest memory models can cause issues
-> +for software that makes assumptions about the memory model.
+> +# Likewise don't bother with the syscall plugin for softmmu
+> +ifneq ($(filter %-softmmu, $(TARGET)),)
+> +DISABLE_PLUGINS +=3D libsyscall.so
+> +endif
+> +
+>  PLUGINS=3D$(filter-out $(DISABLE_PLUGINS), \
+>         $(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))=
+)
 >
->  QEMU was conceived so that ultimately it can emulate itself. Although it
->  is not very useful, it is an important test to show the power of the
 > --
 > 2.47.2
 >
 >
 
-
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
