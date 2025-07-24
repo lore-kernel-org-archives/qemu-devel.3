@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21911C87FC5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 16:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1196C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 16:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueyaK-0001pR-8B; Thu, 24 Jul 2025 12:14:20 -0400
+	id 1ueytO-0001wE-Gz; Thu, 24 Jul 2025 12:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ueyaE-0001nf-Kf
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:14:14 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ueytM-0001oU-I0
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:34:00 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ueyaC-0006Ij-GR
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:14:14 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b391ca6146eso1099330a12.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 09:14:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ueytK-0004XX-Kc
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:34:00 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-b34c068faf8so1303860a12.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 09:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753373650; x=1753978450; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1753374836; x=1753979636; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TZQ3WCV1wQWpewxVTW0Rr3ReeURQ/MoLhiKPbmuJpto=;
- b=v8TjjN6yw2CFptYNuhMknY9YND5HoiForpM4j10FEwmWR/a6Awghfooile6GcdHpde
- /+ZHMWGyvrG4KYPbkmQbYzBqQFIIobYoNH6uYxJBV4L5cctwWT53ZpNVwHlTaokbLLPY
- kfZP/0RLTuExOQMtiRwfOrH++YxfdQfNgmaUBF6Us7OzQQLvKVWW7BCdQjXA8Q+7kX1c
- cRKG7XrnQ4DB4OpqXyU5S05y/UH1hrvkfzPHCpIgo2E2XPvYy1AZfRquhakthi980qRn
- frUhLazz5EQjis6RQG1CZmeg+SFKLhAgNFxrQuCAE+/Dd7IIfpX0Iyk47oX5xzZMLcC+
- ODGg==
+ bh=+YIFa0JQZblYYo6z08SdWvtMeAHwI4go0flw2jU5A+E=;
+ b=qwiG1fPOHXSHZigudwcGNrccZxSN0P1yMeMlXhrpws5rrv1OHSpCd0nDZxfDrEOLT+
+ OlMYYpnvi00SsWiHZZTVwsM/Z1955rsIgLQj/R4897ui8mga2BYVHouNv4g58TZ9RP1j
+ MCHbH7qa4fL3cUJSq25pH8ekfxFjlVJyPt71qO/XP8uF0vyDP/HNPjNzG1piqoV+AZFL
+ EJgVJ54+qAXuBIAZwfTYiPHFIUkebKdqCKc1cXYEkbPyltfBab+5LAOBStSefDZt0FvZ
+ ccAqDT5frMHRwCxsyMYvhoTrrHBAPim5WJINKyY1FZ3QiA1J47Kjn/gzC34d1su2cQgg
+ 7NbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753373650; x=1753978450;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753374836; x=1753979636;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TZQ3WCV1wQWpewxVTW0Rr3ReeURQ/MoLhiKPbmuJpto=;
- b=kYjWqg8UYeem2RzRvZY5Dc2mrC3/6eNhAYUeewXQE9CmbTyg9GykQXvatUR7Z0Aej3
- i+zt1lHMv0LIsDqCnQ2izYHmATy00ewhlBUcblevczu2xchsK2MUcm7zvXD44xd+kIZk
- or6u5m77Qd6PG0Hrr3Gi0XxNOLXWR1g2JEFjmOUpigcNDO1ZrmGGXnYJnO4WQbapePyk
- LImB4rCFRAdD77DGT08U6hPg5Y8fHpcr9hw0nxZ9y/j0TH11cdsouVkAeKP+eXgG9vQ9
- pz/Usc20I0sQSiKZt841+u/0niVwENvrgwTxNOiDUffuylGtQwzVSWc0QPopW05VkZyF
- 30pw==
-X-Gm-Message-State: AOJu0Yw/aj1+QzXgIyRMJM/t0M6fvJSig/2MDbPyKdf8cMG0OKzLkLQi
- nX02yhbDrA2nOTXpori3p2EEYOHvmfoAtfod5jzzPLJG47PhTCcApDr5/HId52BhNct5uZHhHkm
- S3dJK
-X-Gm-Gg: ASbGncu3ZxUwVQ7zbSglHk1w4rGFTMdF4GYNSnFNYeyvMT3Iz6GFcoM9SYG+3w2Kn7y
- pRIcN+LQbZMIRtEVPEySCe5A9V9nKBfqAOfrzrkHAt/NnyXUTF/EBzaf9W3ReNuPdCaW51iom5/
- LR2XpK2zPjCoF+f5TNlL4hiDUJpJvjz0zbozSLTFDHb0hhdpQChIDoKM9N6YQi/ZdtmDJ9uZHm5
- wp7+gc4Mk32lakyIyfFn+JD9HxdpT6V66TXM5CtxzDXJJckPAHWQxz4rNsY+leA6Xkpw/yrIrt2
- mCJtAj1Om6wOTLM+5g668wstxqAf7doSAKhuLQppsdVyIF6E+KfiuB/ADBQAGGEMaEuPagyR90d
- bFpCsShEKxrUZ4Xegzu661Yno6lEsSmzL/RNR+xSZ/dxqnQ==
-X-Google-Smtp-Source: AGHT+IGaRUd/pKnI8oMozO4+xa6RM+YrAh6kU4yMr9ylIy6uHjQpw1u81mYGy3k2g67fVS6o9XZp4w==
-X-Received: by 2002:a05:6a20:12d3:b0:230:8b26:9d47 with SMTP id
- adf61e73a8af0-23d49029880mr12297638637.10.1753373650535; 
- Thu, 24 Jul 2025 09:14:10 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ bh=+YIFa0JQZblYYo6z08SdWvtMeAHwI4go0flw2jU5A+E=;
+ b=Hm4pcyDqDfCe9KFS0nOtKEPsfcK+Suh4Fw7qLiDsVr2QxYdhUAehbUPqRQE+g+E0s7
+ uRDZUuh7z5L2R1WD9n+ZZ2ajt5lmHjZ+BJdRez7R/nHGa2v8HsiJ1PFdKdagGNQz5lVG
+ q4W3H/PUdOdg2iv4Jks6Y4eOH5o+egszyLTBGtkhGxisma3M6Li3GUZG33mWbugBNJOY
+ KL9b3a8nDlyhKqADf44kxOyn0XM3s1QbVyfYktp8Jkg3T1LPUtRoxhRuQ+etlR+TvDxg
+ ve/AVeE9vTO6pMRzEd6ugmN/KlA74P6OJUoiX/q5GpW0Tjg3mmi1bJ0hR7acQA7sEUK/
+ O+yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUG6Uel9EbM2zLuDyrHOddYda1O/ub67Qd3fepFU9O8cEUthyOch2GDbTLiVEvOSyUPsS7TiGX+q4Nb@nongnu.org
+X-Gm-Message-State: AOJu0Ywi3f4yMLml7dmmIRAWtFwJM3f/AVpqr51aAIepwdEPDYaqzTSo
+ zQE3/Takm+LE+XrnHFq2ojgXNE7ZSLz4DZ1QLaI1mzdnsU8KH33UITTXG0Q/6cbs6P4=
+X-Gm-Gg: ASbGnctYcR1rUgnCxth3Uf5JPLtOnzieElhvGmIPvP1fwTKstpHFL39a6fF3JeOKsmN
+ 03Kpbcm7oEkEr7HQnUztSBmHoRkXUTVP6LnonPmLdisTDBRno6t9Z/Kh/8kUpd0+y3oZMkhLNCS
+ dwhzPXIw6qGxV1gIUCxKy1bkcXqSTbfaMFVypYPIcN/WOAVLv3PgAzhYPbiEPRxAnuL03ItmY7Q
+ GBW9SZkrU/eY6UdjsZBojNRgOVEFMSWIKPEi/2czjqZgHOvMF0GD/oGmzFJvtLPru1Wk98zBsvn
+ 7tbkmVTVHcsysWwS+XjEgz79njs3W9bPfsd6TO9yYx3VyCdl+ezLuw007ExAzqRhMMy1TfXbHh2
+ 8c9jzTSDUuTP89KN06m8APu2AcDu/ZAygoTWWq1mGMtexO2GpkYR9CVdrRAEraTWuA2M50txuV8
+ pt/BB69SVRA9J+UwdG9Q==
+X-Google-Smtp-Source: AGHT+IHWJeFMMrSf4d7u8k3kEvDnIu0adEDZ1tZeagSPLyXmDUnCanZSBZBV3DvOyWzx0/dxxipcFw==
+X-Received: by 2002:a17:903:198d:b0:210:f706:dc4b with SMTP id
+ d9443c01a7336-23f9813e7fdmr108791225ad.13.1753374836326; 
+ Thu, 24 Jul 2025 09:33:56 -0700 (PDT)
+Received: from ?IPV6:2607:fb91:1ee6:5be8:2af4:40ea:5991:dc59?
+ ([2607:fb91:1ee6:5be8:2af4:40ea:5991:dc59])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-761b061b14dsm2013158b3a.117.2025.07.24.09.14.09
+ d9443c01a7336-23fa475fc12sm19378545ad.5.2025.07.24.09.33.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 09:14:10 -0700 (PDT)
-Message-ID: <173c1c78-1432-48a4-8251-65c65568c112@linaro.org>
-Date: Thu, 24 Jul 2025 09:14:09 -0700
+ Thu, 24 Jul 2025 09:33:55 -0700 (PDT)
+Message-ID: <b76024ad-abd6-4606-862a-41cc1d39eab1@linaro.org>
+Date: Thu, 24 Jul 2025 09:33:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] system/physmem: fix use-after-free with dispatch
-Content-Language: en-US
-To: qemu-devel@nongnu.org
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>, Michael Tokarev
  <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -79,17 +81,16 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  David Hildenbrand <david@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, Peter Xu
+ <peterx@redhat.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 References: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,29 +113,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/25 9:11 AM, Pierrick Bouvier wrote:
-> A use-after-free bug was reported when booting a Linux kernel during the
-> pci setup phase. It's quite hard to reproduce (needs smp, and favored by
-> having several pci devices with BAR and specific Linux config, which
-> is Debian default one in this case).
-> 
-> After investigation (see the associated bug ticket), it appears that,
-> under specific conditions, we might access a cached AddressSpaceDispatch
-> that was reclaimed by RCU thread meanwhile.
-> In the Linux boot scenario, during the pci phase, memory region are
-> destroyed/recreated, resulting in exposition of the bug.
-> 
-> The core of the issue is that we cache the dispatch associated to
-> current cpu in cpu->cpu_ases[asidx].memory_dispatch. It is updated with
-> tcg_commit, which runs asynchronously on a given cpu.
-> At some point, we leave the rcu critial section, and the RCU thread
-> starts reclaiming it, but tcg_commit is not yet invoked, resulting in
-> the use-after-free.
-> 
-> It's not the first problem around this area, and this patch [1] already
-> tried to address it. It did a good job, but it seems that we found a
-> specific situation where it's not enough.
-> 
+On 7/24/25 09:11, Pierrick Bouvier wrote:
 > This patch takes a simple approach: remove the cached value creating the
 > issue, and make sure we always get the current mapping for address
 > space, using address_space_to_dispatch(cpu->cpu_ases[asidx].as).
@@ -142,29 +121,16 @@ On 7/24/25 9:11 AM, Pierrick Bouvier wrote:
 > This is not really costly, we just need two dereferences,
 > including one atomic (rcu) read, which is negligible considering we are
 > already on mmu slow path anyway.
-> 
-> Note that tcg_commit is still needed, as it's taking care of flushing
-> TLB, removing previously mapped entries.
-> 
-> Another solution would be to cache directly values under the dispatch
-> (dispatch themselves are not ref counted), keep an active reference on
-> associated memory section, and release it when appropriate (tricky).
-> Given the time already spent debugging this area now and previously, I
-> strongly prefer eliminating the root of the issue, instead of adding
-> more complexity for a hypothetical performance gain. RCU is precisely
-> used to ensure good performance when reading data, so caching is not as
-> beneficial as it might seem IMHO.
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/commit/0d58c660689f6da1e3feff8a997014003d928b3b
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3040
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   system/physmem.c | 15 +++------------
->   1 file changed, 3 insertions(+), 12 deletions(-)
->
 
-This was tested with reproduced in bug report, doing more than 5'000 
-boot without any failure.
-As well, all QEMU tests were ran on aarch64 and x64 linux hosts.
+We're not just on the slow path, we're on the tlb fill path, which is even rarer.  Once 
+upon a time, memory_dispatch was used along the mmio path, but even then I think it must 
+have been premature optimization.
+
+This looks like an excellent solution.
+Thanks for all the detective work.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
