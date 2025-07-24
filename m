@@ -4,84 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A615C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7243FC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uevlG-00022d-2V; Thu, 24 Jul 2025 09:13:26 -0400
+	id 1uevlY-0002lC-5z; Thu, 24 Jul 2025 09:13:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uevlC-00020v-5u
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:13:22 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uevlA-00040h-2m
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:13:21 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6077dea37easo1845580a12.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 06:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753362797; x=1753967597; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xIhXE+3LskBlDP9Giy4jHTvR9om9iXJsO+fQ/F6U8zE=;
- b=Df5fLBUQuxdbGX6rJhcxFSpmF5Fgnl5Fpj21ix5bAiFnMkRX5XUcUjCTOAfldkbYKv
- XK47HwQkQqczdtShmL2JmY0/EYH7913s8iiIsnQnmdn1rWNXi40TuRKoUEy0jgTNpJ+X
- WmsEFQW/j+N082MuCJiCvB5Z/3ngeB/XB7vommjwv7lj4njNAzu/xjq8INbkMrgBgT6I
- ZnFjxPuM0P9QjlQVLrBcK4j9RrF+x31HjBTPgXssKmbS7DXVlcMqV2M3zbN/fNYsBiPT
- 1mQVBETXn1JUcHY0J7ZAD68elOLawwehTElPdPBGvbStp3rCA2JTxwGQIYd5E0gBWxhJ
- a9wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753362797; x=1753967597;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xIhXE+3LskBlDP9Giy4jHTvR9om9iXJsO+fQ/F6U8zE=;
- b=lC4hkIn1vsZZl6rs6thykEpeVx2wdZCR/9tPT7WXNFQo++Lc9JO89NwjKnoFvOxdpQ
- YzNd6fkTw9/8q9RKe9FG1lbz/GEGPYb6DEaHMG/Tt3OIR4v2G8b0y1t8niTu8tKrEA2s
- HZpsoYUm0S4Z6e0xkIRMrPiJfBlDhTylS2wSC/Qp//IpaRGwfE4aXYyKGohaY4TjsMjK
- 2jnsFpkPzlb3HhetRH7zcEheLyuqam8rZPQ20MXYBRE2PdRtG7PPti6pbENCNX1HeqFv
- escGHy3tUL0wTyaBLN1rMyCJXfowCJ+jJ3iPnI53IRGJlAmdJAqlByoon9Kz16vvuFhK
- AzWg==
-X-Gm-Message-State: AOJu0YzdCTPzF6liR/Rf5DFi0nTSAGTdswbgRfByU4r+AxBOCsS0TaJh
- OvTJjT1ThsbMhL6KJ9FEorrl4JSU5bI+REjllvKfBo48iPYY+ebbRZyJxg9ecE89Vy7iSABmN+2
- Ry30M6tvdPO89cb1D4jJwIY0+yC38OefWzCZi8gkuQA==
-X-Gm-Gg: ASbGncuQSvq9qRRfF63mDS9B2tROaInDiGtT48Zx7uyTIXnwaSBt2qK4NUJJ92T57sx
- votZUfegRgGlQ35SvwKFIKaRZqvUEuMwxnaKFkQ6sF9D3G97lJUOu+hYfQ7s0PlKo9n6Kxy4vMy
- Egvd494GE3YRDAptEzxaAJ0ziAfKjPyBIs8y/KLp7Tk7BEI5W5r6RVa+XbEahzm/ByzFnS2GTyQ
- +ZDtg==
-X-Google-Smtp-Source: AGHT+IGLlU+shQNwIbIGbcrAq9IE3B4zWJCLbnQBa2GjM52Azc2qFHwHM0FTkPRn1Jsfwj/bC6AOrKEoQPyHhSXaalM=
-X-Received: by 2002:a05:6402:3591:b0:607:e3ec:f8ea with SMTP id
- 4fb4d7f45d1cf-6149b45d5e9mr5561450a12.6.1753362796884; Thu, 24 Jul 2025
- 06:13:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
+ id 1uesXI-0000OR-JY; Thu, 24 Jul 2025 05:46:48 -0400
+Received: from mail-m16.yeah.net ([1.95.21.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
+ id 1uesX9-0008DS-5m; Thu, 24 Jul 2025 05:46:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=U+
+ bEyJCRkOOjW2WuDRHjgnixsRl5GRu1j6nn0Pr0hMQ=; b=GE0QmRhyvM7c7TtqMd
+ JzZLTxVNsB/soA6HyzTYo5Bqgh3Mh/h/zcN5fZ/UwLEPI7ltatX451bU2Gap5+5k
+ 8A4ft0YL266FnT6v+syKQkTvq4hHp3r/QohGj/+Gn7APRLAaU/DPipD8Q+UVW+s0
+ YhBDAtSG8amL4CwAhnDXT1z+A=
+Received: from vcore-181.. (unknown [])
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgD3P93kAIJoQlVNAQ--.8853S2;
+ Thu, 24 Jul 2025 17:46:14 +0800 (CST)
+From: Yang Jialong <z_bajeer@yeah.net>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: yangjialong@rvcore.com, Yang Jialong <z_bajeer@yeah.net>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v1] intc/riscv_aplic: Fix target register read when source is
+ inactive
+Date: Thu, 24 Jul 2025 17:34:26 +0800
+Message-Id: <20250724093426.4179617-1-z_bajeer@yeah.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250724125928.61045-1-hreitz@redhat.com>
- <20250724125928.61045-2-hreitz@redhat.com>
-In-Reply-To: <20250724125928.61045-2-hreitz@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 24 Jul 2025 16:12:50 +0300
-X-Gm-Features: Ac12FXy2upb67-rzohndXkHzOvNU_EDJQfq5vAa6EzjFhAVe3cOvlhhyZl19REk
-Message-ID: <CAAjaMXbBFE5zhwf+JLUG2TZ3GZ2v79rvUoD5KUw9hSrZfHkkfQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] vhost: Do not abort on log-start error
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: Mc8vCgD3P93kAIJoQlVNAQ--.8853S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Kr4UAFy3ZFWDKF18AFWDArb_yoW8JFW5pr
+ s3GFsIvrs8tF1UGa1kJr18XF4UGr98Wr98ur1DuryIkwsxtw4FgrykK345Zr48CFy5Cr1Y
+ vFZ0kr13CF4jv3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UeBT5UUUUU=
+X-Originating-IP: [103.233.53.226]
+X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiNQbzF2iCAOb+RQAA3g
+Received-SPF: pass client-ip=1.95.21.14; envelope-from=z_bajeer@yeah.net;
+ helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 24 Jul 2025 09:13:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,44 +75,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 4:00=E2=80=AFPM Hanna Czenczek <hreitz@redhat.com> =
-wrote:
->
-> Commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
-> handler") enabled vhost_log_global_start() to return a proper error, but
-> did not change it to do so; instead, it still aborts the whole process
-> on error.
->
-> This crash can be reproduced by e.g. killing a virtiofsd daemon before
-> initiating migration.  In such a case, qemu should not crash, but just
-> make the attempted migration fail.
->
-> Buglink: https://issues.redhat.com/browse/RHEL-94534
-> Reported-by: Tingting Mao <timao@redhat.com>
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  hw/virtio/vhost.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index c30ea1156e..05ad5de629 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1110,7 +1110,8 @@ static bool vhost_log_global_start(MemoryListener *=
-listener, Error **errp)
->
->      r =3D vhost_migration_log(listener, true);
->      if (r < 0) {
-> -        abort();
-> +        error_setg_errno(errp, -r, "vhost: Failed to start logging");
-> +        return false;
->      }
->      return true;
->  }
-> --
-> 2.50.1
->
->
+The RISC-V Advanced interrupt Architecture:
+4.5.16. Interrupt targets:
+If interrupt source i is inactive in this domain, register target[i] is
+read-only zero.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
+---
+ hw/intc/riscv_aplic.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 4fa5f75..cfef69f 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -628,7 +628,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
+ 
+ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+ {
+-    uint32_t irq, word, idc;
++    uint32_t irq, word, idc, sm;
+     RISCVAPLICState *aplic = opaque;
+ 
+     /* Reads must be 4 byte words */
+@@ -696,6 +696,10 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+     } else if ((APLIC_TARGET_BASE <= addr) &&
+             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
++        sm = aplic->sourcecfg[irq] * APLIC_SOURCECFG_SM_MASK;
++        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
++            return 0;
++        }
+         return aplic->target[irq];
+     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
+             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
+-- 
+2.34.1
+
 
