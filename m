@@ -4,116 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E6AC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 09:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73254C83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 09:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ues01-0001V8-8b; Thu, 24 Jul 2025 05:12:25 -0400
+	id 1uesT3-0002Ca-Ko; Thu, 24 Jul 2025 05:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1uerzz-0001Tv-Ep; Thu, 24 Jul 2025 05:12:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1uerzw-0004c8-QK; Thu, 24 Jul 2025 05:12:23 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56O0QTBp021841;
- Thu, 24 Jul 2025 09:12:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YWeN6P
- 16hM/JJngI1E0NmB+bVhdOesRhZGIy+rGLZho=; b=J2W/hzTYesMig+6j8eySpn
- oIGE5lJHC/ilBE7osTzh/bYIzWoCt7HYluy0dygPXnQaMGSNhrXZz0sgEx/htLai
- Ip+Sf+F+dbpKh/DDEXhZisWgDP4Q8+7gu+g8jVsJoYXUWMlYUEd4u71gZU9BW4mf
- IYGGYly7VPOMBpTkciyJscr+/Dvuf1uz7Y06LIYU9ztCiiBRwUpOi1+WL9mBtVwr
- iFVgsG5mIvRNwVBgb8lcYQ/xdAntUSHwdU6j8GHpfET0AufagbX79+fao6knp85j
- yqA7Z1oSa+MDgdTlFCnkKDhGPl33z4reorzXJM8ba9nXBY9C0ewAx981uyHCHGWw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ffbhq4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Jul 2025 09:12:16 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56O9CGFG007628;
- Thu, 24 Jul 2025 09:12:16 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ffbhq4r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Jul 2025 09:12:16 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56O6SxnE005457;
- Thu, 24 Jul 2025 09:12:15 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 480tvr30h8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Jul 2025 09:12:15 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 56O9CDRQ41943318
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Jul 2025 09:12:13 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9DED558061;
- Thu, 24 Jul 2025 09:12:13 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA80B58053;
- Thu, 24 Jul 2025 09:12:10 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Jul 2025 09:12:10 +0000 (GMT)
-Message-ID: <74e8e729-3bae-4315-9519-5bd0b6f08731@linux.ibm.com>
-Date: Thu, 24 Jul 2025 14:42:09 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesT1-000297-AY
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:42:23 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesSx-0006lT-UN
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:42:23 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-45618ddd62fso8216065e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 02:42:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753350136; x=1753954936; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m+IjG+CRjaKatMyTbAgaxzfHSRUlW1Vf8eZ7rtdqBRw=;
+ b=spROvAEILVpjJQTgKq+pDzLTvLfasF4LBX3+jWOzv/N23i29S5yu27CqcecVwlnxDv
+ ZW4MePHPAXLUF7dD6o0O0Mudh1AymBclAA6o/U6I4aXgG6kO4pot4E0vNb03EUU403Bs
+ eIbXxsU0CBo5CFaenV+UOlzPk7XYjjeHcdYEnV5OCyWGoC1BQ6jhe42wcGBWO+UaBEyN
+ HimYIUuGZEXA0/x5zepwmEh+KgnpW98XqMvDZ6tkVCLD8uRLCsPT2pdb7KUXu79YC/WI
+ eJiCKpVTiaZz2MjybLGQ69PABBmINTBR+GXxwIJYoPpbZaSLe6f8nUfaBzrKC1JZz5Ov
+ 37cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753350136; x=1753954936;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m+IjG+CRjaKatMyTbAgaxzfHSRUlW1Vf8eZ7rtdqBRw=;
+ b=jxOW0NN6ls+u6jG8UgqPiFpO+vgJm0NuVAam4LPyc2Lx/ccxVbIMMteVzyO8VYNCda
+ LoKaj0iX7XjV1Uj+aJsbDqM4eeuRRlDotUscAxMsTN141H3ZKBhLP0Vos9S+jOHCVSh6
+ 2uFN+CWgqXQBCuvfRLPAi9SvSPUjr/5+Tncd23/JZ1ihlVF79VVNTJQME82zxhEcxTPJ
+ X2JDSbQAo8mgpOf0ceWkgVbths9tlBKXQi6uWgzX6WtGsIKnLhVJhV32O4Ci10aXY9R4
+ XOdfT0VWbERZ7H0GBOYU3lr+qtKUeA4Ll3KywNWoMGPULD9y3g6VJnV2cZhw9B+3tLzI
+ bQzg==
+X-Gm-Message-State: AOJu0Yzvj8ff1GWLhLQzPTTLKXX9KtovJVJY6Js07Y/ZrXMFcXuxB2h8
+ e4n3jtw/HoJ7TS6zEbBRAqgF6yoDyE/VgIlOd01JwfUoReUFcENVO830KJ7yHKa4KxbxsL8ZA90
+ //jKK
+X-Gm-Gg: ASbGncuUorTwYvqvwV9MfJfNr8dBVhGYH+FrS0FXY/x4f+Dpaee+njP8ltfLYj9+KUq
+ mXpkM4R3zvCuiv8GJycMNV+6xPu10hy0DouJye4/DtotaNRpE5Xq1gqmcUe2avRL4sjVA9D6co0
+ I3RO4xfYL1IuL6UjecoWOuQwdCYhi7kVZYymP5IPvL1tHnPVenNPNxYuhQcvz1B9eTwcadoIQtz
+ fAd8kl9zeP8iiMrQVPMaGt3L7TIS8QfJHBSUf0EMQjqxmDK3DfQ/RCDtOYtJjjVGKad2zX9K6k4
+ rnxaOhD8dvovhZgZTVpuE6VYSZyLNghte54qx4XXrdGL1zWuLLWDV87/3jfZBXfdFRAI6VooTQD
+ OVEHVDp3JAtg7Dn13BylphXG3d7wtiknZXBX2AeSpktsQ0mBl1R/JN7KwyrKFEyT7IIDK5aot
+X-Google-Smtp-Source: AGHT+IHWUYburSzVbprQxj5q78FjM1k7dBj/K7UKTmI1xCJLVmAUxWRw54duk6Y2N+EspeStI/p00A==
+X-Received: by 2002:a05:6000:1ac6:b0:3a4:f8e9:cef2 with SMTP id
+ ffacd0b85a97d-3b768f1e40cmr4669106f8f.36.1753350136317; 
+ Thu, 24 Jul 2025 02:42:16 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b76fcad291sm1580809f8f.50.2025.07.24.02.42.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 24 Jul 2025 02:42:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Burton <mburton@qti.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] tests/functional: add hypervisor test for aarch64
+Date: Thu, 24 Jul 2025 11:42:14 +0200
+Message-ID: <20250724094214.93330-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, npiggin@gmail.com
-Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
- adityag@linux.ibm.com, gautam@linux.ibm.com
-References: <20250724063623.3038984-1-harshpb@linux.ibm.com>
- <642a5b59-a306-4fbd-a55c-008b9fd8ace0@redhat.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <642a5b59-a306-4fbd-a55c-008b9fd8ace0@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: mzCmtn3EGKUdbjeluSTBeLSHLwvR_Xcz
-X-Authority-Analysis: v=2.4 cv=De8XqutW c=1 sm=1 tr=0 ts=6881f8f0 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=f7IdgyKtn90A:10 a=20KFwNOVAAAA:8
- a=cwfGbltsdXE1nG5_tOEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WxzgKJbpzVRh2RF9JKRlF89z4i2rxYoV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA2NyBTYWx0ZWRfX2F4AKuyXCk4f
- KCKLT/P1pwvwXEPV/hgxf0aTY2/yfEe86lqmq04kfsfpPBeARXfsPLnhVkcaQmJ9NfiPF0RjRib
- +QS4cRozqVRz0FgV63vxljny1/VEzrGG0lzHzftZv1hsNGzmNW4qmw5XR2rWNQtotQR/Tg+ildj
- 1ERA4YKwGd0WGBwOb/Cnw7EEwOEjHT7r8CsLgxDIVDy9bP462tKczGm06l7xKiIPM916DG41rOA
- ffNGvMXAo/QucSCNWFee6I+Udw+FAuBcRsjcNG+WspnHm49f4pPR++LESJyg8oXK/qTzJh2uGAV
- sTFAqahLBNqxaRQtFyTQKk9EWILsj68vSnN03ujFhYlV9HiZekz+CNgV1T9y/lzrDnakHb/CU0V
- 8sfbtF4j3Kjrh4J4BOXA5H3DsW6V6vvX1N7aLbmdWV4bj3PitxVqSa0S718QaHJTdvcVmygY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=663
- suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2507240067
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,50 +99,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Alex Bennée <alex.bennee@linaro.org>
 
+This is a simple test case that runs an image with kvmtool and
+kvm-unit-tests which can validate virtualisation works. This is useful
+for exercising TCG but can also be applied to any nested virt setup
+which is why it doesn't specify an accelerator.
 
-On 7/24/25 13:10, Cédric Le Goater wrote:
-> On 7/24/25 08:36, Harsh Prateek Bora wrote:
->> Some of us at IBM have been actively working/contributing in
->> ppc/spapr/pnv/xive and would like to step up to help with
->> reviews and co-maintainer activities. I have also included proposal
->> patches from Chinmay and Aditya in this patchset which had already
->> been posted to list earlier to request for merge.
->>
->> Thanks
->> Harsh
->>
->> Aditya Gupta (1):
->>    MAINTAINERS: Add myself as a reviewer of PowerNV emulation
->>
->> Chinmay Rath (1):
->>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
->>
->> Gautam Menghani (1):
->>    MAINTAINERS: Add myself as a reviewer for XIVE
->>
->> Harsh Prateek Bora (2):
->>    MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
->>    MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
->>
->>   MAINTAINERS | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
-> 
-> I can merge these changes through the vfio queue.
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250721153326.783646-1-alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+v2: Addressed Manos review comments
+---
+ tests/functional/meson.build         |  1 +
+ tests/functional/test_aarch64_kvm.py | 80 ++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+)
+ create mode 100755 tests/functional/test_aarch64_kvm.py
 
-Thanks Cedric !
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 7699af9e2d2..2f7bc4ed65c 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -89,6 +89,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_device_passthrough',
+   'aarch64_hotplug_pci',
+   'aarch64_imx8mp_evk',
++  'aarch64_kvm',
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+   'aarch64_replay',
+diff --git a/tests/functional/test_aarch64_kvm.py b/tests/functional/test_aarch64_kvm.py
+new file mode 100755
+index 00000000000..add89c58c5e
+--- /dev/null
++++ b/tests/functional/test_aarch64_kvm.py
+@@ -0,0 +1,80 @@
++#!/usr/bin/env python3
++#
++# Functional test that runs subsets of kvm-unit-tests on Aarch64.
++# These can run on TCG and any accelerator supporting nested
++# virtualisation.
++#
++# Copyright (c) 2025 Linaro
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu.machine.machine import VMLaunchFailure
++
++from qemu_test import Asset
++from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
++from qemu_test.linuxkernel import LinuxKernelTest
++
++
++class Aarch64VirtKVMTests(LinuxKernelTest):
++
++    ASSET_KVM_TEST_KERNEL = Asset(
++        'https://fileserver.linaro.org/s/HmjaxXXYHYSqbes/'
++        'download?path=%2F&files='
++        'image-with-kvm-tool-and-unit-tests.gz',
++        '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
++
++    # make it easier to detect successful return to shell
++    PS1 = 'RES=[$?] # '
++    OK_CMD = 'RES=[0] # '
++
++    # base of tests
++    KUT_BASE = '/usr/share/kvm-unit-tests/'
++
++    def _launch_guest(self, kvm_mode):
++
++        self.set_machine('virt')
++        kernel_path = self.ASSET_KVM_TEST_KERNEL.fetch()
++
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               f'console=ttyAMA0 kvm-arm.mode={kvm_mode}')
++
++        self.vm.add_args('-accel', 'tcg')
++        self.vm.add_args('-cpu', 'cortex-a72')
++        self.vm.add_args('-machine', 'virt,gic-version=3,virtualization=on',
++                         '-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.add_args('-smp', '2', '-m', '320')
++
++        try:
++            self.vm.launch()
++        except VMLaunchFailure as excp:
++            self.log.info('unhandled launch failure: %s', excp.output)
++            raise excp
++
++        self.wait_for_console_pattern('buildroot login:')
++        ec_and_wait(self, 'root', '#')
++        ec_and_wait(self, f'export PS1="{self.PS1}"', self.OK_CMD)
++
++    def _run_kut(self, kvm_mode):
++        ec_and_wait(self, f'{self.KUT_BASE}/selftest-setup', self.OK_CMD)
++        ec_and_wait(self, f'{self.KUT_BASE}/selftest-vectors-kernel', self.OK_CMD)
++        ec_and_wait(self, f'{self.KUT_BASE}/selftest-vectors-user', self.OK_CMD)
++        ec_and_wait(self, f'{self.KUT_BASE}/selftest-smp', self.OK_CMD)
++
++    def do_test(self, kvm_mode='nvhe', accel='tcg'):
++        self.require_accelerator(accel)
++        self._launch_guest(kvm_mode)
++        self._run_kut(kvm_mode)
++
++    def test_aarch64_vhe_selftest_tcg(self):
++        self.do_test('vhe')
++
++    def test_aarch64_nvhe_selftest_tcg(self):
++        self.do_test('nvhe')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
+-- 
+2.49.0
 
-regards,
-Harsh
-
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
 
