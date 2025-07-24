@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22A6C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 14:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE01C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 16:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uexPH-0000Wc-FM; Thu, 24 Jul 2025 10:58:51 -0400
+	id 1ueyZA-0007RD-Gk; Thu, 24 Jul 2025 12:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uexP8-0000Qh-Mk
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 10:58:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uexP6-0005ZL-7v
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 10:58:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753369118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pEqy0tAc3L+CYRIUpCnvDxZj0h/6TvXwXjuHcM6Lcrc=;
- b=fQS/p+ADw5De9EXozQQHcgKVJiqBA0lqNnMwpkZVOlQ5Dy2vIBikjqiUuYBOkByvO6+eM9
- LbVL4JHn6K+H9dXt6/lWVzUK/K8XKEuIQYRMGq6vKep2PZnx44O4bfCSSG2LQabw1UGYAP
- 9h5c0Auuz6KJIz+AjWpZ6Xl5y2bGXtA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-OzmhLDcwNMqWmjdpU4FVUw-1; Thu, 24 Jul 2025 10:58:37 -0400
-X-MC-Unique: OzmhLDcwNMqWmjdpU4FVUw-1
-X-Mimecast-MFC-AGG-ID: OzmhLDcwNMqWmjdpU4FVUw_1753369116
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a50816cc58so563115f8f.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 07:58:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ueyY0-0005Lr-1U
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:11:58 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ueyXw-0005HD-Ei
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:11:55 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2353a2bc210so11861835ad.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 09:11:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753373510; x=1753978310; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mCaLPkN3ohgTzVMHrTi60qnm+SLpGkWz5fE/sVOTQYs=;
+ b=fiDSV3cpcaU0OrRv3Xuuq8bMWTCrTvvShULyF18NtoYDgrtQkwW0q7hEPeqUmXkDQM
+ KO67TXUzdFFpZ1doCC/HQF9aSNYydSVdSdFXe/dDFMD4Qky5jrDibUl02OQZQmUwrgvC
+ JWyDwHJ3VcjzJDKEXRJKiGUuV5C+6VQmT3HJntIhtBO+tyV/LQ7jjxVADnXtizpZCud5
+ W+1/KN1g0DiweDi/0co3gSG0v62L8TqhHXkUlZPtw+lQk31/Aijv8umTQA0q6O8tHZK9
+ XUgDC+NIqWfsVCUAR/2ajVbxnJp+S4DLYrSTft4uOp2lbonhvBAKYSxgDRgIhIEuSEo4
+ JacQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753369116; x=1753973916;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pEqy0tAc3L+CYRIUpCnvDxZj0h/6TvXwXjuHcM6Lcrc=;
- b=XstQwKGp2oRf1pyv1oAVAb3wSugBPZxyWqTz3wlzlKA/HrE3w5P9HqyqDIdRiHsvas
- RoH/72+Iq2M2Bnbuk7ySbwn7IDUiyzW8JaKBCu1FJ0NFUSxAYKzxHvXdnPCBTy5SRVN5
- 2TYpkDPFooKBdKSpmIoCYsdHDQnAWyY2XniVTAQuMXXaPyQNVvSKyf/yIHEADNmdNEe4
- r5uvSKozbPgtxytgYvrodN3qLhg8EbuZ+qUWO26qkOT17DjX7YfuWwDTZ0ShRW/ceCbk
- 46ZlzXh8wqG00RPkkDjjjOivdrhBzFe/TeXNCqMwaOMk9u3L0yk7KVWHCPtYzVmDZXeM
- +90A==
-X-Gm-Message-State: AOJu0YwtpokrsWcPItaO0QDiaJDGvxeLXEA85gaYI+fpnkNU3QTMaatj
- JDR7Uaq7arH1hdrlCdmoHWw7vw0SfrOAH52Rb1VyhTaDuE60Mv57q2tUV0u07wj9Tn5/0s544PU
- LpsCRf0ZL1XmqHmDkXXipHB+baQf8IrYsta0Ylvrh0979BWye0hurftwM
-X-Gm-Gg: ASbGnctN5Zl3NPV9z4s7wnaqOZhcx8KPt8bVHjBc9dmkC1Stwe0+1R/R3sDcwReIgmm
- oJR4NKaFjvJagNgNz5yYhSisCmDaPZLAOAiTIWK8YYaVn8soFFIkFO54YjRQsUq0zZ8jay7hZlN
- 1yXulQXoI6OsuYdvFDD2iYKD3XIS3JufpYzMss/38Ai7qYxwnfuMxAfTmKpv4jSOHYDhjY5QPDy
- 7c6EK4MXDY9fRiVRXxRiJkcM1utW5AD+jVtvsdq6tbYqAkGYnTfCZkbhdCxA/G0xiY6wk9HihIo
- wb3Qio7vC9IvGQd1XC2D0iPeNI9chC1HwDr9ioD4iMx0bS5dU3TDqs7vwX+wVn+gw74Q4IoJmtj
- 9QmSo/7sqY5hsZfOUqv3S6+JyXf7ZP5n6m3DOCPXdgdRYpYs9ABv3KkZddb75dB8DXEQJ
-X-Received: by 2002:a05:6000:2887:b0:3a1:f5c4:b81b with SMTP id
- ffacd0b85a97d-3b768edb95amr5688773f8f.23.1753369115621; 
- Thu, 24 Jul 2025 07:58:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEP2/bM78+AEfjMSPv8fPajTVBgfyz3sll40t8GAP/naK8pYi7f4Ob24k8f+NU/KQG7pgLQaA==
-X-Received: by 2002:a05:6000:2887:b0:3a1:f5c4:b81b with SMTP id
- ffacd0b85a97d-3b768edb95amr5688752f8f.23.1753369115152; 
- Thu, 24 Jul 2025 07:58:35 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d706:376d:ff28:b03a:a15f:3cdf?
- (p200300cfd706376dff28b03aa15f3cdf.dip0.t-ipconnect.de.
- [2003:cf:d706:376d:ff28:b03a:a15f:3cdf])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76fc60501sm2464999f8f.2.2025.07.24.07.58.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 07:58:34 -0700 (PDT)
-Message-ID: <e62d351c-0fe7-4987-bbbf-d99704cc3e9b@redhat.com>
-Date: Thu, 24 Jul 2025 16:58:32 +0200
+ d=1e100.net; s=20230601; t=1753373510; x=1753978310;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mCaLPkN3ohgTzVMHrTi60qnm+SLpGkWz5fE/sVOTQYs=;
+ b=B1JPKy09zjNdeP8JzbvGraK934GeXnoHSfY65DZ9VM/p2b6ZgV8rNeJ4Z4ZYhVZq1q
+ fLWPs7ILyp9BDtX/y4nLqHUS9vbn7ARz76h96o3MPU9ZPnOe8/N6QqQ+eR2O49UJiAuU
+ Da2mUoVKxMypQl/HB85SHGbOetOgioipEmCvHugJ3Aa3UI2njKwzjhySk16nQIookYiz
+ 05a2fxl1Qnv6Xi4c+X40Ga1YQ7rqTs4vjGAQ9G75tZhvug0TjePR23NqM6dyFehamnnG
+ DittVXVK+HlGg8/zY5xPVnm4a2b4FO147+y1hmoYjNpf0kCeNMNH2RsGjKaV8+M/fC1J
+ fZhQ==
+X-Gm-Message-State: AOJu0YxtHFr2h6t4kBZTERVdpfFiBZoDrfGzoGxnV4usHNO4khBVKTjU
+ BhlvgQLzGuPd761NOkyrtRYX5gotJvUKk5BV9/9bAP+gDUcJ+ZmA2KiVIwPulgjOt9x26HutxwD
+ mU3zR
+X-Gm-Gg: ASbGncvkPPVUJk5fr+evYfSM8bjduZxLifewq4G1BrEVXeg0tD2C7Y0iDjUjgU3hbj7
+ d8qV49JucKYuDt0idu7f5pJir1sAgGV9/OIbTcQjZEx/1p9N76ihv+sgznrlM4X74Rht+aEy0rW
+ TYrIg7K9wJ+Ej18V2D+k1heXnIfCB58jXTcbXLP6p/pkk/CdNF9TbMELfmTa1Cb7PTsXBU+ZseD
+ 3qaczpA/NpFyw1f3A5Mu+uYK7r8/W5GRQcxmEEje/eOpdTj1hXe9q4vF7wquXeJhL8cMO4icfxl
+ 5fbsjeZGMIFbQ4cA2fCe6U1/0o4AH2+J3ol0BhwYqu61wuIYKftaXkubFuRoAmFab7xEcKAIOJr
+ WRppYfi2vsEDkBnFxj8EOEEQgdFj8iWSZ
+X-Google-Smtp-Source: AGHT+IHR9XpcPyw4JMiCf/4RCt/MNJUEg2DhLFAgJva98oIlJVg3fzHkuaZ0GlRWKLOVz0HWb3JnPw==
+X-Received: by 2002:a17:902:c409:b0:234:c8f6:1b05 with SMTP id
+ d9443c01a7336-23f9824cb15mr88565665ad.52.1753373509897; 
+ Thu, 24 Jul 2025 09:11:49 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23fa48f03e3sm18835925ad.156.2025.07.24.09.11.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Jul 2025 09:11:49 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Xu <peterx@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] system/physmem: fix use-after-free with dispatch
+Date: Thu, 24 Jul 2025 09:11:42 -0700
+Message-ID: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vhost: Do not abort on log-start error
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>
-References: <20250724125928.61045-1-hreitz@redhat.com>
- <20250724125928.61045-2-hreitz@redhat.com>
- <tjqbvfrpzqgp65ibiasyct7k2ibzkhdrlev4ov45i3xsaxox2g@wwojtijmv6hs>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <tjqbvfrpzqgp65ibiasyct7k2ibzkhdrlev4ov45i3xsaxox2g@wwojtijmv6hs>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,59 +108,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.07.25 16:24, Stefano Garzarella wrote:
-> On Thu, Jul 24, 2025 at 02:59:27PM +0200, Hanna Czenczek wrote:
->> Commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
->> handler") enabled vhost_log_global_start() to return a proper error, but
->> did not change it to do so; instead, it still aborts the whole process
->> on error.
->>
->> This crash can be reproduced by e.g. killing a virtiofsd daemon before
->> initiating migration.  In such a case, qemu should not crash, but just
->> make the attempted migration fail.
->>
->> Buglink: https://issues.redhat.com/browse/RHEL-94534
->> Reported-by: Tingting Mao <timao@redhat.com>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
->> ---
->> hw/virtio/vhost.c | 3 ++-
->> 1 file changed, 2 insertions(+), 1 deletion(-)
->
-> IIUC we always had the problem, so it's not a regression, but should 
-> we queue the patch in stable as well?
+A use-after-free bug was reported when booting a Linux kernel during the
+pci setup phase. It's quite hard to reproduce (needs smp, and favored by
+having several pci devices with BAR and specific Linux config, which
+is Debian default one in this case).
 
-That’s my impression as well.  I think it fits and makes sense for 
-stable, but it isn’t absolutely necessary; it’s not a regression, and 
-abort()-ing is not a critical problem.
+After investigation (see the associated bug ticket), it appears that,
+under specific conditions, we might access a cached AddressSpaceDispatch
+that was reclaimed by RCU thread meanwhile.
+In the Linux boot scenario, during the pci phase, memory region are
+destroyed/recreated, resulting in exposition of the bug.
 
-> Anyway, it LGTM!
->
-> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+The core of the issue is that we cache the dispatch associated to
+current cpu in cpu->cpu_ases[asidx].memory_dispatch. It is updated with
+tcg_commit, which runs asynchronously on a given cpu.
+At some point, we leave the rcu critial section, and the RCU thread
+starts reclaiming it, but tcg_commit is not yet invoked, resulting in
+the use-after-free.
 
-Thanks!
+It's not the first problem around this area, and this patch [1] already
+tried to address it. It did a good job, but it seems that we found a
+specific situation where it's not enough.
 
-Hanna
+This patch takes a simple approach: remove the cached value creating the
+issue, and make sure we always get the current mapping for address
+space, using address_space_to_dispatch(cpu->cpu_ases[asidx].as).
+It's equivalent to qatomic_rcu_read(&as->current_map)->dispatch;
+This is not really costly, we just need two dereferences,
+including one atomic (rcu) read, which is negligible considering we are
+already on mmu slow path anyway.
 
->
->>
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index c30ea1156e..05ad5de629 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -1110,7 +1110,8 @@ static bool 
->> vhost_log_global_start(MemoryListener *listener, Error **errp)
->>
->>     r = vhost_migration_log(listener, true);
->>     if (r < 0) {
->> -        abort();
->> +        error_setg_errno(errp, -r, "vhost: Failed to start logging");
->> +        return false;
->>     }
->>     return true;
->> }
->> -- 
->> 2.50.1
->>
->
+Note that tcg_commit is still needed, as it's taking care of flushing
+TLB, removing previously mapped entries.
+
+Another solution would be to cache directly values under the dispatch
+(dispatch themselves are not ref counted), keep an active reference on
+associated memory section, and release it when appropriate (tricky).
+Given the time already spent debugging this area now and previously, I
+strongly prefer eliminating the root of the issue, instead of adding
+more complexity for a hypothetical performance gain. RCU is precisely
+used to ensure good performance when reading data, so caching is not as
+beneficial as it might seem IMHO.
+
+[1] https://gitlab.com/qemu-project/qemu/-/commit/0d58c660689f6da1e3feff8a997014003d928b3b
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3040
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ system/physmem.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 130c148ffb5..e5dd760e0bc 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -165,13 +165,11 @@ static bool ram_is_cpr_compatible(RAMBlock *rb);
+  * CPUAddressSpace: all the information a CPU needs about an AddressSpace
+  * @cpu: the CPU whose AddressSpace this is
+  * @as: the AddressSpace itself
+- * @memory_dispatch: its dispatch pointer (cached, RCU protected)
+  * @tcg_as_listener: listener for tracking changes to the AddressSpace
+  */
+ typedef struct CPUAddressSpace {
+     CPUState *cpu;
+     AddressSpace *as;
+-    struct AddressSpaceDispatch *memory_dispatch;
+     MemoryListener tcg_as_listener;
+ } CPUAddressSpace;
+ 
+@@ -692,7 +690,7 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+     IOMMUTLBEntry iotlb;
+     int iommu_idx;
+     hwaddr addr = orig_addr;
+-    AddressSpaceDispatch *d = cpu->cpu_ases[asidx].memory_dispatch;
++    AddressSpaceDispatch *d = address_space_to_dispatch(cpu->cpu_ases[asidx].as);
+ 
+     for (;;) {
+         section = address_space_translate_internal(d, addr, &addr, plen, false);
+@@ -753,7 +751,7 @@ MemoryRegionSection *iotlb_to_section(CPUState *cpu,
+ {
+     int asidx = cpu_asidx_from_attrs(cpu, attrs);
+     CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
+-    AddressSpaceDispatch *d = cpuas->memory_dispatch;
++    AddressSpaceDispatch *d = address_space_to_dispatch(cpuas->as);
+     int section_index = index & ~TARGET_PAGE_MASK;
+     MemoryRegionSection *ret;
+ 
+@@ -2780,9 +2778,6 @@ static void tcg_log_global_after_sync(MemoryListener *listener)
+ 
+ static void tcg_commit_cpu(CPUState *cpu, run_on_cpu_data data)
+ {
+-    CPUAddressSpace *cpuas = data.host_ptr;
+-
+-    cpuas->memory_dispatch = address_space_to_dispatch(cpuas->as);
+     tlb_flush(cpu);
+ }
+ 
+@@ -2798,11 +2793,7 @@ static void tcg_commit(MemoryListener *listener)
+     cpu = cpuas->cpu;
+ 
+     /*
+-     * Defer changes to as->memory_dispatch until the cpu is quiescent.
+-     * Otherwise we race between (1) other cpu threads and (2) ongoing
+-     * i/o for the current cpu thread, with data cached by mmu_lookup().
+-     *
+-     * In addition, queueing the work function will kick the cpu back to
++     * Queueing the work function will kick the cpu back to
+      * the main loop, which will end the RCU critical section and reclaim
+      * the memory data structures.
+      *
+-- 
+2.47.2
 
 
