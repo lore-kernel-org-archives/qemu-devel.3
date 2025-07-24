@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427DBC87FC5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B2CC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf2qu-0007R8-Tz; Thu, 24 Jul 2025 16:47:44 -0400
+	id 1uf2qs-0007JR-GT; Thu, 24 Jul 2025 16:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uf2qa-0006vs-Gf
+ id 1uf2qZ-0006vZ-9g
  for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:47:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uf2qX-0007WD-Fw
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:47:24 -0400
+ id 1uf2qW-0007Vz-LS
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:47:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753390037;
+ s=mimecast20190719; t=1753390036;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=54Uyx9v0sUl+tZRKzDaCd1E6kr+H1FTytSmUg5Bty6s=;
- b=NsDYTKc9nW3aUNDZsfPAc0X/l4SdgSvVtVmd4c/F8JVuJsjxxuUJRwvGzRNe5s6wKBusQe
- fUsgYf+eE+A7NCXcU2g33G0AbGZsi0Obsyq0PFWMfZUCBWYWRk1rOwZGWMHou2hcloBFrH
- ypHIIZKrsR9s3Zx/FFlji60rAB48Zt8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=rbYs+8k6eVMUp1Wr8L7PFzngQ03/Wf+JnHjPQ19gOec=;
+ b=SjHO0hku3IM7PgAev8ASI+2jI4Cs55o2b/x3rDQzulWlFoTIRi6y1m3LXnrsZTqnAYdqL0
+ zubdTWl0IpvdgRHR6i/FeEFC8mLLmknbk6k5fBKVAqCBg/+nn6ldkdsEWI2Apjqa1Vbm39
+ FBREwQ5bcPrZtqp+FaSitfIhX9VHxW8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-H9uZTvTkOhmESyzTEz0Mig-1; Thu,
- 24 Jul 2025 16:47:14 -0400
-X-MC-Unique: H9uZTvTkOhmESyzTEz0Mig-1
-X-Mimecast-MFC-AGG-ID: H9uZTvTkOhmESyzTEz0Mig_1753390033
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-4DwYgUKeNzODL8yqGn8pVw-1; Thu,
+ 24 Jul 2025 16:47:09 -0400
+X-MC-Unique: 4DwYgUKeNzODL8yqGn8pVw-1
+X-Mimecast-MFC-AGG-ID: 4DwYgUKeNzODL8yqGn8pVw_1753390028
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 086F0180034A; Thu, 24 Jul 2025 20:47:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E97591956048; Thu, 24 Jul 2025 20:47:07 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.247])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 048FD18001DB; Thu, 24 Jul 2025 20:47:11 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EB34D1956089; Thu, 24 Jul 2025 20:47:06 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Brian Song <hibriansong@gmail.com>,
  qemu-block@nongnu.org, Bernd Schubert <bschubert@ddn.com>,
  Kevin Wolf <kwolf@redhat.com>, h0lyalg0rithm@git.sr.ht,
  Fam Zheng <fam@euphon.net>
-Subject: [RFC 3/3] aio-posix: enable IORING_SETUP_COOP_TASKRUN |
- IORING_SETUP_TASKRUN_FLAG
-Date: Thu, 24 Jul 2025 16:47:02 -0400
-Message-ID: <20250724204702.576637-4-stefanha@redhat.com>
+Subject: [RFC 1/3] iothread: create AioContext in iothread_run()
+Date: Thu, 24 Jul 2025 16:47:00 -0400
+Message-ID: <20250724204702.576637-2-stefanha@redhat.com>
 In-Reply-To: <20250724204702.576637-1-stefanha@redhat.com>
 References: <20250724204702.576637-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -87,53 +86,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IORING_SETUP_COOP_TASKRUN flag reduces interprocessor interrupts
-when an io_uring event occurs on a different CPU. The idea is that the
-QEMU thread will wait for a CQE anyway, so there is no need to interrupt
-the CPU that it is on.
+The IOThread's AioContext is currently created in iothread_init() where
+it's easy to propagate errors before spawning the thread that runs
+iothread_run(). However, this means that aio_context_new() is called
+from the main loop thread rather than from the IOThread.
 
-The IORING_SETUP_TASKRUN_FLAG ensures that QEMU's io_uring CQ ring
-polling still works with COOP_TASKRUN. The kernel will set a flag in the
-SQ ring (this is not a typo, the flag is located in the SQ ring even
-though it pertains to the CQ ring) that can be polled from userspace.
+In order to use Linux io_uring's IORING_SETUP_SINGLE_ISSUER feature in
+the next commit, only one thread can use the io_uring context and
+therefore iothread.c must call aio_context_new() from iothread_run()
+instead of iothread_init().
+
+Extract the iothread_run() arguments into an IOThreadRunArgs struct
+where an Error *error field can be used to report back initialization
+errors. This works pretty well thanks to the init_done_sem semaphore
+that is already used by iothread_init() to wait for iothread_run() to
+initialize.
+
+Move iothread_run() further down for proximity with iothread_init() and
+to avoid adding a function prototype for
+iothread_set_aio_context_params().
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- util/fdmon-io_uring.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/system/iothread.h |   1 -
+ iothread.c                | 140 +++++++++++++++++++++-----------------
+ 2 files changed, 78 insertions(+), 63 deletions(-)
 
-diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index 4798439097..649dc18907 100644
---- a/util/fdmon-io_uring.c
-+++ b/util/fdmon-io_uring.c
-@@ -428,13 +428,16 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
+diff --git a/include/system/iothread.h b/include/system/iothread.h
+index d95c17a645..ec4e798d5e 100644
+--- a/include/system/iothread.h
++++ b/include/system/iothread.h
+@@ -29,7 +29,6 @@ struct IOThread {
+     bool run_gcontext;          /* whether we should run gcontext */
+     GMainContext *worker_context;
+     GMainLoop *main_loop;
+-    QemuSemaphore init_done_sem; /* is thread init done? */
+     bool stopping;              /* has iothread_stop() been called? */
+     bool running;               /* should iothread_run() continue? */
+     int thread_id;
+diff --git a/iothread.c b/iothread.c
+index 8810376dce..c6547779d0 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -36,46 +36,6 @@
+ #define IOTHREAD_POLL_MAX_NS_DEFAULT 0ULL
+ #endif
  
- static bool fdmon_io_uring_need_wait(AioContext *ctx)
+-static void *iothread_run(void *opaque)
+-{
+-    IOThread *iothread = opaque;
+-
+-    rcu_register_thread();
+-    /*
+-     * g_main_context_push_thread_default() must be called before anything
+-     * in this new thread uses glib.
+-     */
+-    g_main_context_push_thread_default(iothread->worker_context);
+-    qemu_set_current_aio_context(iothread->ctx);
+-    iothread->thread_id = qemu_get_thread_id();
+-    qemu_sem_post(&iothread->init_done_sem);
+-
+-    while (iothread->running) {
+-        /*
+-         * Note: from functional-wise the g_main_loop_run() below can
+-         * already cover the aio_poll() events, but we can't run the
+-         * main loop unconditionally because explicit aio_poll() here
+-         * is faster than g_main_loop_run() when we do not need the
+-         * gcontext at all (e.g., pure block layer iothreads).  In
+-         * other words, when we want to run the gcontext with the
+-         * iothread we need to pay some performance for functionality.
+-         */
+-        aio_poll(iothread->ctx, true);
+-
+-        /*
+-         * We must check the running state again in case it was
+-         * changed in previous aio_poll()
+-         */
+-        if (iothread->running && qatomic_read(&iothread->run_gcontext)) {
+-            g_main_loop_run(iothread->main_loop);
+-        }
+-    }
+-
+-    g_main_context_pop_thread_default(iothread->worker_context);
+-    rcu_unregister_thread();
+-    return NULL;
+-}
+-
+ /* Runs in iothread_run() thread */
+ static void iothread_stop_bh(void *opaque)
  {
-+    struct io_uring *ring = &ctx->fdmon_io_uring;
+@@ -104,7 +64,6 @@ static void iothread_instance_init(Object *obj)
+ 
+     iothread->poll_max_ns = IOTHREAD_POLL_MAX_NS_DEFAULT;
+     iothread->thread_id = -1;
+-    qemu_sem_init(&iothread->init_done_sem, 0);
+     /* By default, we don't run gcontext */
+     qatomic_set(&iothread->run_gcontext, 0);
+ }
+@@ -135,7 +94,6 @@ static void iothread_instance_finalize(Object *obj)
+         g_main_loop_unref(iothread->main_loop);
+         iothread->main_loop = NULL;
+     }
+-    qemu_sem_destroy(&iothread->init_done_sem);
+ }
+ 
+ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
+@@ -176,47 +134,105 @@ static void iothread_set_aio_context_params(EventLoopBase *base, Error **errp)
+                                        base->thread_pool_max, errp);
+ }
+ 
++typedef struct {
++    IOThread *iothread;
++    const char *thread_name;
++    QemuSemaphore init_done_sem; /* is thread init done? */
++    Error *error; /* filled in before init_done_sem is posted */
++} IOThreadRunArgs;
+ 
+-static void iothread_init(EventLoopBase *base, Error **errp)
++static void *iothread_run(void *opaque)
+ {
+-    Error *local_error = NULL;
+-    IOThread *iothread = IOTHREAD(base);
+-    g_autofree char *thread_name = NULL;
++    IOThreadRunArgs *args = opaque;
++    IOThread *iothread = args->iothread;
+ 
+-    iothread->stopping = false;
+-    iothread->running = true;
+-    iothread->ctx = aio_context_new(errp);
++    rcu_register_thread();
 +
-     /* Have io_uring events completed? */
--    if (io_uring_cq_ready(&ctx->fdmon_io_uring)) {
-+    if (io_uring_cq_ready(ring) ||
-+        IO_URING_READ_ONCE(*ring->sq.kflags) & IORING_SQ_TASKRUN) {
-         return true;
++    iothread->ctx = aio_context_new(&args->error);
+     if (!iothread->ctx) {
+-        return;
++        goto out;
      }
  
-     /* Are there pending sqes to submit? */
--    if (io_uring_sq_ready(&ctx->fdmon_io_uring)) {
-+    if (io_uring_sq_ready(ring)) {
-         return true;
+-    thread_name = g_strdup_printf("IO %s",
+-                        object_get_canonical_path_component(OBJECT(base)));
++    iothread_set_aio_context_params(EVENT_LOOP_BASE(iothread), &args->error);
++    if (args->error) {
++        aio_context_unref(iothread->ctx);
++        iothread->ctx = NULL;
++        goto out;
++    }
+ 
+     /*
+      * Init one GMainContext for the iothread unconditionally, even if
+      * it's not used
+      */
+-    iothread_init_gcontext(iothread, thread_name);
++    iothread_init_gcontext(iothread, args->thread_name);
+ 
+-    iothread_set_aio_context_params(base, &local_error);
+-    if (local_error) {
+-        error_propagate(errp, local_error);
+-        aio_context_unref(iothread->ctx);
+-        iothread->ctx = NULL;
+-        return;
++    /*
++     * g_main_context_push_thread_default() must be called before anything
++     * in this new thread uses glib.
++     */
++    g_main_context_push_thread_default(iothread->worker_context);
++    qemu_set_current_aio_context(iothread->ctx);
++
++    iothread->stopping = false;
++    iothread->running = true;
++
++    iothread->thread_id = qemu_get_thread_id();
++    qemu_sem_post(&args->init_done_sem);
++
++    while (iothread->running) {
++        /*
++         * Note: from functional-wise the g_main_loop_run() below can
++         * already cover the aio_poll() events, but we can't run the
++         * main loop unconditionally because explicit aio_poll() here
++         * is faster than g_main_loop_run() when we do not need the
++         * gcontext at all (e.g., pure block layer iothreads).  In
++         * other words, when we want to run the gcontext with the
++         * iothread we need to pay some performance for functionality.
++         */
++        aio_poll(iothread->ctx, true);
++
++        /*
++         * We must check the running state again in case it was
++         * changed in previous aio_poll()
++         */
++        if (iothread->running && qatomic_read(&iothread->run_gcontext)) {
++            g_main_loop_run(iothread->main_loop);
++        }
      }
  
-@@ -465,7 +468,7 @@ void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
- {
-     int ret;
-     /* TODO only enable these flags if they are available in the host's kernel headers */
--    unsigned flags = 0;
-+    unsigned flags = IORING_SETUP_COOP_TASKRUN | IORING_SETUP_TASKRUN_FLAG;
++    g_main_context_pop_thread_default(iothread->worker_context);
++out:
++    rcu_unregister_thread();
++    return NULL;
++}
++
++static void iothread_init(EventLoopBase *base, Error **errp)
++{
++    IOThread *iothread = IOTHREAD(base);
++    g_autofree char *thread_name = NULL;
++    IOThreadRunArgs args = {
++        .iothread = iothread,
++    };
++
++    qemu_sem_init(&args.init_done_sem, 0);
++
++    thread_name = g_strdup_printf("IO %s",
++                        object_get_canonical_path_component(OBJECT(base)));
++    args.thread_name = thread_name;
++
+     /* This assumes we are called from a thread with useful CPU affinity for us
+      * to inherit.
+      */
+-    qemu_thread_create(&iothread->thread, thread_name, iothread_run,
+-                       iothread, QEMU_THREAD_JOINABLE);
++    qemu_thread_create(&iothread->thread, thread_name, iothread_run, &args,
++                       QEMU_THREAD_JOINABLE);
  
-     ctx->io_uring_fd_tag = NULL;
+     /* Wait for initialization to complete */
+     while (iothread->thread_id == -1) {
+-        qemu_sem_wait(&iothread->init_done_sem);
++        qemu_sem_wait(&args.init_done_sem);
+     }
++
++    qemu_sem_destroy(&args.init_done_sem);
++    error_propagate(errp, args.error);
+ }
  
+ typedef struct {
 -- 
 2.50.1
 
