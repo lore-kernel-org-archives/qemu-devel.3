@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ECB6C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4789DC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uetg0-0007Q2-Na; Thu, 24 Jul 2025 06:59:52 -0400
+	id 1uetg1-0007S0-8b; Thu, 24 Jul 2025 06:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uetfw-0007Hw-Kc
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 06:59:48 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1uetfx-0007Km-HJ
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 06:59:49 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uetft-0007xO-Jp
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 06:59:48 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ae6f8d3bcd4so157013366b.1
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 03:59:45 -0700 (PDT)
+ id 1uetfv-0007xw-In
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 06:59:49 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-aec46b50f33so135079166b.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 03:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753354784; x=1753959584; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753354786; x=1753959586; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PE0ygnCXxcMjKWqLld40Yn+pNBLfsKsnunVdasDUmpw=;
- b=kPbpRs/v8VmJ2ID7Ph3HotHMRjvpOLF5wVTTI0WnngR2oNIpcbn1oy3EF4CasfN+n+
- TXWeMgkFewOu/qsLN5B59IDtbjEPllmolJWEj4SY8kmBs8otb/L5i57ZLpjs/cwGj2ur
- VIjmKxs2TH2lzlKEYmtObPx07dH4+sa8T+v/f2ztnjrIjcTMPLaPuwxL4bN4ieGHP73H
- L+tEF6h/Uc3IiD3+nAGPYQOzLy6gvi5YQyVJwIL4o9JSqnvhB+uOoE3OQHsFeolsHTXU
- PL+2sNPeH1RHZduVBboMDGzyRcJlSqUEn0f9prKWXk7DQaRn9Z9U06FVq2hJjs0hOQpA
- 1AkQ==
+ bh=kBRZ04wX0MzyglrriRi9JfcL05p9dBe8tgATnNn/jvk=;
+ b=bWZ+ePKJ7OnoycxUjuY9mUdu0WKir8VAeo47v+EXl8APugFRQ1FTTuQ9kDZSwttGfZ
+ EMGkmHaSYBk0mTY/MP/5v2k/MgREn90nYE57J9K9uPc/biqYZOwO0t4HXfaalkesJWiU
+ +oO4D4fDZXGx57Jzv694sr8tq9j50gB517pYJjGm2K4OVe171ZXoRonqboAQEFhOVphH
+ gfLk/frI8S6m5ZXO4K65NmgDC0AK9Fugh4eqSQL16V8HIn4sFyVEtdZtfmsuPEmMI9cK
+ A9yV04vU54qlIFVJAUWMlYYmTmUSN6cH3q1O2sW5PPDueaFGkDO67hZwn36kS//1/Pqp
+ /pSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753354784; x=1753959584;
+ d=1e100.net; s=20230601; t=1753354786; x=1753959586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PE0ygnCXxcMjKWqLld40Yn+pNBLfsKsnunVdasDUmpw=;
- b=v2VfO30IIUBdQvOWAbmz3eYFvKXQc28YfNxbfcazcS2dllEGdWD09XkEqPvn7PG+Q6
- wgByxzpHGi+j1PhGgTQR/65erVMrOU5xCWCXf5vT1TwdKOzIrA/y1wmZygE5aYqgmu7q
- xsVUqVWu/BYuTwwtrrVryYK12vQ01YcnlHGRlU/VFKLADYpbSIpWlUkZ0JYX0K4S2WAZ
- wLkZtkqmmOgBD+G+cmRofcLBmm9ms/SeZzJvJo2FHdkUXuo8BmhWi3MzB+xxRJJAs+1K
- DbAlS9mL+FB4/svAlPbSkrpAzp1cMiwkcIpihAjs6IhVh5qhU8U8AKIC8PRUEYDwiF0g
- NCFg==
-X-Gm-Message-State: AOJu0Yxz9aGTLLdTIv3gZon2R3dgq2OjOQ+V8bjmehfMm5OQOgeDKI1M
- iB/iVpkjk3RRp0D4lV9OuXIkAmtVHNjQavLltDxIMH14CSGjIZGwtrF1rYncTREs+5Q=
-X-Gm-Gg: ASbGncvVWQ3q69Et825ul8ptoyH7Wi4sVhVXUMkqaov48X6doaRcSWa5OPhfbPuP8OZ
- hnUSuhhUNdOHBLhv3mPt/UHlf7JoibPnCgyRRQYMwYyyYjWGJw8nLTs1A1PtBhGTqFaT6YWlSn7
- V9rIkYGHUVSb8g5TWI7PvSLQhmiOb6ytonJcU/RYW6oCv7jv9hktgFNhbdpF0CzEHedyi3347ep
- mHr3wRXGOdgABGyv4bjNDqyYO+vM+JFr4PmwH3hBo9BluxfxxG12UuWal2Ocx5k8g3dMCIEM3YB
- WfNvLYrwlhIUfGOhGkEBAjgor8ucdvN2DFJyZNcQpajSnROSLAtaKY5N08Oj3a5gFzEUKWWclwH
- SW20VuYk0H7mlKY9CCoOjlzI=
-X-Google-Smtp-Source: AGHT+IEpe9vt926DfsbFEtvLt4SOFalPvWmbD3v+bJie3ICf4S6I+UGntGrvnIMVEwfsWxEybn28gg==
-X-Received: by 2002:a17:907:3e1d:b0:ad5:74cd:1824 with SMTP id
- a640c23a62f3a-af2f865bea7mr619287066b.38.1753354783930; 
- Thu, 24 Jul 2025 03:59:43 -0700 (PDT)
+ bh=kBRZ04wX0MzyglrriRi9JfcL05p9dBe8tgATnNn/jvk=;
+ b=qfw54Hr18/2RuaTgGzawmN+YKAWfCUivGa+us3EX1fa9NV0BhK4RwhQEVqOLqYm2WQ
+ kT09cSJbexPETA0HRyDEOMtcRXHr5zJkfvQN8JiyRTh1zB6SHa7OjvVYyui9HaMpltVa
+ jAVngRUmDtyDJFi4CA6z8cXXWJf5s8Ix6Ne6SX8vacgy4VjcZjJLoZDdgZl2RKp60i4c
+ ltQsWTaYewHdAuK7CEfLLTlBG+cXOR0jsCNnfVDB6fX/IBdM4cb2A1Z2bezEGbP+S9EK
+ ZmpGyipMqQJ0emo7fR8ppLE1GyEsvFPpM6eRg61Gkeo5tuZzOZ6djnkIKWYb9Xy+4e0g
+ pxyw==
+X-Gm-Message-State: AOJu0Yw/FEudI7q3Z1Lroj9M/WaafCOlWtKQnnZyqEZuMk+6NU05Usrv
+ VyENXy2W9gRme2Z/xOZ/B7DvmZKdBZ91VvJh65fUc33C9/ixy2+qYiO9zsXCvNjI7O0=
+X-Gm-Gg: ASbGncsWDU4iC68j7Vq1d6JgLOxh0yLh3RfiT7rY7tobVyEgriAFWQ1epv5zmkjP8zc
+ if/FNnzAuFtWFZBDqoI+r7GzSFB6EjnlIyapv0OYs8nALR+3nVpwmOp3xx0NmHya/QmzOxh0vxa
+ +78Hhgd6rG8qOAm7SDAW/te6SnTZdryCGI+pZdDcqNoyIdhZgMcwsrtqHN6x6DKMDHJxVA6gEs6
+ IA7j14BHW2syiWbULkANGRBSSdE4f7IdEanWTPG3F+u7jmFHGAPULJa0hRJgN9FCncNxFdvSC1U
+ om0e6sLIcibeYBiuFDhnlZCPZkarEnG7QwWb7TiYnosgXzlI8HcsPyjxab1iTJHjEYPcANIuD9+
+ sJ0t6GWqU+tZotb5bk41en0g=
+X-Google-Smtp-Source: AGHT+IGqxbHC6uIJXmpyz6M8zxfyL+GuF0lDTGbv2ideeluG8Qaqj9/yIpaiply8YrlEBS6gnc/lZQ==
+X-Received: by 2002:a17:907:7209:b0:ae6:c561:764a with SMTP id
+ a640c23a62f3a-af2f66c20a2mr630420466b.2.1753354785620; 
+ Thu, 24 Jul 2025 03:59:45 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af47f44eb00sm92874166b.73.2025.07.24.03.59.40
+ a640c23a62f3a-af47cc6e841sm96783466b.52.2025.07.24.03.59.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 03:59:40 -0700 (PDT)
+ Thu, 24 Jul 2025 03:59:44 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 33CF05F89B;
+ by draig.lan (Postfix) with ESMTP id 753635F8C8;
  Thu, 24 Jul 2025 11:59:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH for 10.1 03/13] docs/user: clean up headings
-Date: Thu, 24 Jul 2025 11:59:29 +0100
-Message-ID: <20250724105939.2393230-4-alex.bennee@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Mark Burton <mburton@qti.qualcomm.com>
+Subject: [PATCH for 10.1 06/13] tests/functional: add hypervisor test for
+ aarch64
+Date: Thu, 24 Jul 2025 11:59:32 +0100
+Message-ID: <20250724105939.2393230-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250724105939.2393230-1-alex.bennee@linaro.org>
 References: <20250724105939.2393230-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,74 +106,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was a slightly duff format for rst, make it use proper headings.
+This is a simple test case that runs an image with kvmtool and
+kvm-unit-tests which can validate virtualisation works. This is useful
+for exercising TCG but can also be applied to any nested virt setup
+which is why it doesn't specify an accelerator.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Mark Burton <mburton@qti.qualcomm.com>
 ---
- docs/user/main.rst | 50 ++++++++++++++++++++++++++--------------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ tests/functional/meson.build         |  1 +
+ tests/functional/test_aarch64_kvm.py | 83 ++++++++++++++++++++++++++++
+ 2 files changed, 84 insertions(+)
+ create mode 100755 tests/functional/test_aarch64_kvm.py
 
-diff --git a/docs/user/main.rst b/docs/user/main.rst
-index 9a1c60448c5..b8ff203c212 100644
---- a/docs/user/main.rst
-+++ b/docs/user/main.rst
-@@ -17,28 +17,34 @@ Features
- 
- QEMU user space emulation has the following notable features:
- 
--**System call translation:**
--   QEMU includes a generic system call translator. This means that the
--   parameters of the system calls can be converted to fix endianness and
--   32/64-bit mismatches between hosts and targets. IOCTLs can be
--   converted too.
--
--**POSIX signal handling:**
--   QEMU can redirect to the running program all signals coming from the
--   host (such as ``SIGALRM``), as well as synthesize signals from
--   virtual CPU exceptions (for example ``SIGFPE`` when the program
--   executes a division by zero).
--
--   QEMU relies on the host kernel to emulate most signal system calls,
--   for example to emulate the signal mask. On Linux, QEMU supports both
--   normal and real-time signals.
--
--**Threading:**
--   On Linux, QEMU can emulate the ``clone`` syscall and create a real
--   host thread (with a separate virtual CPU) for each emulated thread.
--   Note that not all targets currently emulate atomic operations
--   correctly. x86 and Arm use a global lock in order to preserve their
--   semantics.
-+System call translation
-+~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 8bebcd4d94e..ecf965adc6c 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -89,6 +89,7 @@ tests_aarch64_system_thorough = [
+   'aarch64_device_passthrough',
+   'aarch64_hotplug_pci',
+   'aarch64_imx8mp_evk',
++  'aarch64_kvm',
+   'aarch64_raspi3',
+   'aarch64_raspi4',
+   'aarch64_replay',
+diff --git a/tests/functional/test_aarch64_kvm.py b/tests/functional/test_aarch64_kvm.py
+new file mode 100755
+index 00000000000..a42d82872af
+--- /dev/null
++++ b/tests/functional/test_aarch64_kvm.py
+@@ -0,0 +1,83 @@
++#!/usr/bin/env python3
++#
++# Functional test that runs subsets of kvm-unit-tests on Aarch64.
++# These can run on TCG and any accelerator supporting nested
++# virtualisation.
++#
++# Copyright (c) 2025 Linaro
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+QEMU includes a generic system call translator. This means that the
-+parameters of the system calls can be converted to fix endianness
-+and 32/64-bit mismatches between hosts and targets. IOCTLs can be
-+converted too.
++from qemu.machine.machine import VMLaunchFailure
 +
-+POSIX signal handling
-+~~~~~~~~~~~~~~~~~~~~~
++from qemu_test import Asset
++from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
++from qemu_test.linuxkernel import LinuxKernelTest
 +
-+QEMU can redirect to the running program all signals coming from the
-+host (such as ``SIGALRM``), as well as synthesize signals from
-+virtual CPU exceptions (for example ``SIGFPE`` when the program
-+executes a division by zero).
 +
-+QEMU relies on the host kernel to emulate most signal system calls,
-+for example to emulate the signal mask. On Linux, QEMU supports both
-+normal and real-time signals.
++class Aarch64VirtKVMTests(LinuxKernelTest):
 +
-+Threading
-+~~~~~~~~~
++    ASSET_KVM_TEST_KERNEL = Asset(
++        'https://fileserver.linaro.org/s/HmjaxXXYHYSqbes/'
++        'download?path=%2F&files='
++        'image-with-kvm-tool-and-unit-tests.gz',
++        '34de4aaea90db5da42729e7d28b77f392c37a2f4da859f889a5234aaf0970696')
 +
-+On Linux, QEMU can emulate the ``clone`` syscall and create a real
-+host thread (with a separate virtual CPU) for each emulated thread.
-+Note that not all targets currently emulate atomic operations
-+correctly. x86 and Arm use a global lock in order to preserve their
-+semantics.
- 
- QEMU was conceived so that ultimately it can emulate itself. Although it
- is not very useful, it is an important test to show the power of the
++    # make it easier to detect successful return to shell
++    PS1 = 'RES=[$?] # '
++    OK_CMD = 'RES=[0] # '
++
++    # base of tests
++    KUT_BASE = "/usr/share/kvm-unit-tests/"
++
++    def _launch_guest(self, kvm_mode="nvhe"):
++
++        self.set_machine('virt')
++        kernel_path = self.ASSET_KVM_TEST_KERNEL.fetch()
++
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               f"console=ttyAMA0 kvm-arm.mode={kvm_mode}")
++
++        self.vm.add_args("-cpu", "cortex-a72")
++        self.vm.add_args("-machine", "virt,gic-version=3,virtualization=on",
++                         '-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.add_args("-smp", "2", "-m", "320")
++
++        try:
++            self.vm.launch()
++        except VMLaunchFailure as excp:
++            self.log.info("unhandled launch failure: %s", excp.output)
++            raise excp
++
++        self.wait_for_console_pattern('buildroot login:')
++        ec_and_wait(self, 'root', '#')
++        ec_and_wait(self, f"export PS1='{self.PS1}'", self.OK_CMD)
++
++
++    def test_aarch64_nvhe_selftest(self):
++
++        self._launch_guest("nvhe")
++
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-setup", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-smp", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-kernel", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-user", self.OK_CMD)
++
++
++    def test_aarch64_vhe_selftest(self):
++
++        self._launch_guest("vhe")
++
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-setup", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-smp", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-kernel", self.OK_CMD)
++        ec_and_wait(self, f"{self.KUT_BASE}/selftest-vectors-user", self.OK_CMD)
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.47.2
 
