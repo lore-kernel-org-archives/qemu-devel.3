@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B29F1C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E269C87FC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf2pF-0005EB-41; Thu, 24 Jul 2025 16:46:01 -0400
+	id 1uf2p9-00059s-PA; Thu, 24 Jul 2025 16:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uf2p8-00058x-Rn
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:54 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1uf2p5-00055j-M5
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:51 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uf2p2-0007Mt-JG
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:54 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-236377f00a1so12761795ad.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 13:45:40 -0700 (PDT)
+ id 1uf2p2-0007MY-1Y
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:51 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b3bcb168fd5so1426021a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 13:45:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753389939; x=1753994739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753389937; x=1753994737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=i7OQR9R8q9wp+8i4LxJNvMe9jwjtqjqO/UplM+5/k2jiz0BzzCjsSyIMV9+vORjxh6
- OG0OVwYhvCsssjx3qXUV/QBcbHs0R6tA4wEGwhjEYd0VaH9gIkz5852f6tpsn40ywpU8
- rG5TNVbf34sQGlvZ87rgku1J2Gme+EJQzO7pw40uxq4MOL9CpF2U+r8erHERgjSdf9df
- 0xgd7ft/YHPoWtJR9CguPbWQMMK1HyNdA11YZ2+TvREUw6K1Zhn5s9YXIJn33TQfp5Gl
- Rx6TXJcL803s8kbQKKJUxVJpD4iVr4yo62W2ymjNkfusrswNFLPjH9QebNxAwQjRHUUn
- J2sw==
+ bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
+ b=MlU2HOTSxYQLjY+b/JfeBqMAWS7fupKfU0PkwVAkdbAZQcl4pwVt+OyZJuQKd0/RWK
+ DChoB75+2dIJSfFOtf9bhNVayJ4OU++QS4znJiWyDgfYsWcM0Dybw4OJ21PwvTfjWtIZ
+ 1aGs9xPJknVdRWvhmSV186WUEVngM1LNwtm/VPNb8KxbVOVfqvDsPggrfQD7bVXj0VHn
+ N90pGC1m16HnbGCxqTH5ysgrQqIq72KgugX1Tx2MBNxURHTRkTCPJf3smqssPe4aXHUr
+ 5x5UCN7Q7xKqNopz/79CK6RGu3DHpZZH2dm5/rBJ6+FHPRi0ZFMb7ICHcDjKEmHI+HCY
+ /fNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753389939; x=1753994739;
+ d=1e100.net; s=20230601; t=1753389937; x=1753994737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6LQZIHbBuXid8iCd4uQRcE8cD4Q27Dve1/07zd+zCHI=;
- b=pDSED3/26URoAKCZk71gDCDPvWZZZq2lM5GudJAyXhP4eWz/UQoyyAamrP7egif8ib
- uHY0RX2JXX7suy73HAy0znn1gtMiBsHPlfJ1nOUTGpazzvyEaV9fcNmKtyTia66TKUfb
- 9vzs/DEzHBEBx5FhTixFzY8h++uZ7p/a1KH3zydrFAANHmcOSLiT0AQdbW7pbAt7Nbd/
- Hk6afpwDyd/CHJOlm2j6XqF9xQJT+v4ruv7Az1GHkDkSabbHDmDa8sipQZ8NsAz0nOHP
- dx/yPvpToGsMEVHMxV0KG0+9XrxZ62/1/VJDKMI6LGTxGeQeZEts6jGaxX6JsCqr2N+F
- e6NQ==
-X-Gm-Message-State: AOJu0YyUUHPWfiZU0bRTPDaEDFNMKHp29qWovLKUhvrmLHrmoz95PjI3
- ZohqFP1OQ4yCK68QXjKObZwQC0XCp0dF19y4Byn0OMyhhAslQUzOPg977auseJiCFo5ttWq+60n
- 9c/e8
-X-Gm-Gg: ASbGncu1w85+7agxczWTtmLaR3bY77fZqGYZ5XNU+l6Dmkhqps+1ttDTelm2trmAzMF
- DQMkvEffxcKpHY5WxNmUwiZ/DfeSJxCCSyejs3ftFZrKK5+KwdnqvdugT0JecEvmSE854CbEReV
- 1o/XrYgrqv0tVBo0CiBoSaEsf+sjULCZblwMLNwGVTHk3jePdaY0cneXqsbLBmCnNFq1ksWpidL
- BKIFZitoUJxsZ3ke3n3CovifEcOJVXc5iXFIyvo2d52igV8kqxym/wp0r9YELJcK8+h5419+w0E
- /EUsiByywht9O62Gk0T4X9iXQqnszFn0RAJeg1mukkK5uZXIG2vBzTqWXBb8Ca6CTpWfEwqCICB
- s/Wr50VO3WDsua5jiPYRbdA==
-X-Google-Smtp-Source: AGHT+IF/nbCDDTyPg5kJzn/v76E0tpt3IzpkLeJG+EvFB/xou1txSI2zyiRfK8KJ/Cv9UcRn8NJP8A==
-X-Received: by 2002:a17:903:1b06:b0:235:779:edea with SMTP id
- d9443c01a7336-23f981e0223mr132216245ad.38.1753389939563; 
- Thu, 24 Jul 2025 13:45:39 -0700 (PDT)
+ bh=aM+LEv7qMdQSxk6AvcKBeuN8XSEE2/g7YYBoLvBkt14=;
+ b=F9DJM+4IdzMt7jjSNW0bLiC+FxVNtS45pH9tDAMNvs6vQmpuGiiAuqvShWcAnAr62j
+ b9s/uvCiOojRtBQO/mdqql7+mcmXmoYjSgz/jktdKgz4DsfS14IpGA4Z94CPS8xka9rY
+ TBWI2LJwdHH/29N9Jo0dqfTXtd1PS+UV4EVR+dgl4hju+FN/8Ikhk8rZTu5VR3KO7uoB
+ h9fLye786llXXDjhWrfgJ8aauf/M8rlZ69yK668LpKv69lPF4U/c24fK5dylNeSdS7zQ
+ zMERL7olrDhldpY3AB+hbVvEznOAdGHyELayGP5ICAxJgZmB73zg+2oj2FHvFlMKl8xC
+ z8AA==
+X-Gm-Message-State: AOJu0YwBSxHkjfey+Ts8t0AWriQAK+J5i8jVYwwdQQj6PWl8shAeDrXA
+ f2c4++FJ4M96D/EhhSUIne5gN3FwM6NztK3etduNryGMHDl1l6TvymW1NfO0BfnKAs282slPHTA
+ YeDTY
+X-Gm-Gg: ASbGnctDbdvrfZwZyVzaZ7x657+b1trgxYBEF/a6p0mtQhmxE2JZztd6IcjkB96Af92
+ nI1P2aBL84hu8/qjkqy83wOZRI7bKYmSR7PfhpNqJOr2rOOUcig+o9VMenSf8iX7tacGZ3CUuVl
+ fEosogkw6SGGZzpp+WRABZ9HMTkON/2zXhek/DEglX4n9lJ4Qe8pdlN5DO0wA3WuvBBkg/oYP/X
+ 9ZTrEu3CpB9k40ePRWgZCMe7JqBdFjaF211MB8rmnogQs9FEl23mp45lvE95kdMdDtgxkmIRXFu
+ hnAHs8UZtWWVhZDDCa1uSti8dvSNGe6k+deyKXDf0CHkIwzoBHt29k81gw+Yq7l/rWTDxWXcKHB
+ apQyJoouXI6pITZKam9VN+A==
+X-Google-Smtp-Source: AGHT+IFwlU2lTF2PjWKRraQv0HeO2Ytpz3zDW5Sv6Z4ZWyDPa84YGOmd19ZvcJ28wSgdO9aiz3e3CQ==
+X-Received: by 2002:a17:903:1b28:b0:235:f70:fd37 with SMTP id
+ d9443c01a7336-23f9814b043mr115832965ad.19.1753389936771; 
+ Thu, 24 Jul 2025 13:45:36 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e662f6be0sm2008849a91.35.2025.07.24.13.45.38
+ 98e67ed59e1d1-31e662f6be0sm2008849a91.35.2025.07.24.13.45.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 13:45:39 -0700 (PDT)
+ Thu, 24 Jul 2025 13:45:36 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -75,16 +75,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 5/7] contrib/plugins/uftrace_symbols.py
-Date: Thu, 24 Jul 2025 13:45:24 -0700
-Message-ID: <20250724204527.3175839-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 2/7] contrib/plugins/uftrace: add trace-sample option
+Date: Thu, 24 Jul 2025 13:45:21 -0700
+Message-ID: <20250724204527.3175839-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
 References: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,187 +107,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-usage:  contrib/plugins/uftrace_symbols.py \
-        --prefix-symbols \
-        arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
-        arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
-        arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
-        u-boot/u-boot:0x60000000 \
-        u-boot/u-boot.relocated:0x000000023f6b6000 \
-        linux/vmlinux
+usage: trace-sample=N
 
-Will generate symbols and memory mapping files for uftrace, allowing to
-have an enhanced trace, instead of raw addresses.
-
-It takes a collection of elf files, and automatically find all their
-symbols, and generate an ordered memory map based on that.
-
-This script uses the python (native) pyelftools module.
+Allow to use sampling (every N instructions) for tracking the stack.
+We implement a fast mode, where instrumentation is only per tb, and
+simply dump current stack, and unwind new one, instead of tracking every
+frame pointer change.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace_symbols.py | 152 +++++++++++++++++++++++++++++
- 1 file changed, 152 insertions(+)
- create mode 100755 contrib/plugins/uftrace_symbols.py
+ contrib/plugins/uftrace.c | 111 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 105 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-new file mode 100755
-index 00000000000..b49e03203c8
---- /dev/null
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -0,0 +1,152 @@
-+#!/usr/bin/env python3
-+# -*- coding: utf-8 -*-
-+#
-+# Create symbols and mapping files for uftrace.
-+#
-+# Copyright 2025 Linaro Ltd
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 4ca6d3fd68d..a626030b7da 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -44,6 +44,9 @@ typedef struct {
+ 
+ typedef struct Cpu {
+     uint64_t insn_count;
++    uint64_t sample_insn_count;
++    uint64_t sample_timestamp;
++    callstack *sample_cs;
+     trace *trace;
+     callstack *cs;
+     GArray *callstacks; /* callstack *callstacks[] */
+@@ -70,6 +73,7 @@ enum uftrace_record_type {
+ };
+ 
+ static struct qemu_plugin_scoreboard *score;
++static uint64_t trace_sample;
+ static CpuOps arch_ops;
+ 
+ static void uftrace_write_map(bool system_emulation)
+@@ -199,6 +203,13 @@ static callstack *callstack_new(void)
+     return cs;
+ }
+ 
++static callstack *callstack_clone(const callstack *cs)
++{
++    callstack *clone = g_malloc0(sizeof(callstack));
++    clone->s = g_array_copy(cs->s);
++    return clone;
++}
 +
-+import argparse
-+import elftools # pip install pyelftools
-+import os
+ static void callstack_free(callstack *cs)
+ {
+     g_array_free(cs->s, true);
+@@ -391,6 +402,26 @@ static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
+     }
+ }
+ 
++static void cpu_trace_last_sample(Cpu *cpu, uint64_t timestamp)
++{
++    if (!cpu->sample_cs) {
++        return;
++    }
++    uint64_t elapsed = timestamp - cpu->sample_timestamp;
++    uint64_t middle_timestamp = cpu->sample_timestamp + (elapsed / 2);
++    trace_exit_stack(cpu->trace, cpu->sample_cs, middle_timestamp);
++    callstack_free(cpu->sample_cs);
++    cpu->sample_cs = NULL;
++    trace_enter_stack(cpu->trace, cpu->cs, middle_timestamp);
++}
 +
-+from elftools.elf.elffile import ELFFile
-+from elftools.elf.sections import SymbolTableSection
++static void cpu_set_new_sample(Cpu *cpu, uint64_t timestamp)
++{
++    cpu->sample_insn_count = 0;
++    cpu->sample_cs = callstack_clone(cpu->cs);
++    cpu->sample_timestamp = timestamp;
++}
 +
-+def elf_func_symbols(elf):
-+    symbol_tables = [(idx, s) for idx, s in enumerate(elf.iter_sections())
-+                  if isinstance(s, SymbolTableSection)]
-+    symbols = []
-+    for _, section in symbol_tables:
-+        for _, symbol in enumerate(section.iter_symbols()):
-+            if symbol_size(symbol) == 0:
-+                continue
-+            type = symbol['st_info']['type']
-+            if type == 'STT_FUNC' or type == 'STT_NOTYPE':
-+                symbols.append(symbol)
-+    symbols.sort(key = lambda x: symbol_addr(x))
-+    return symbols
+ static uint64_t cpu_get_timestamp(const Cpu *cpu)
+ {
+     return cpu->insn_count;
+@@ -451,6 +482,13 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     callstack *cs = cpu->cs;
+     trace *t = cpu->trace;
+ 
++    if (trace_sample && cpu->sample_insn_count >= trace_sample) {
++        cpu_trace_last_sample(cpu, timestamp);
++        cpu_set_new_sample(cpu, timestamp);
++    }
 +
-+def symbol_size(symbol):
-+    return symbol['st_size']
++    bool trace_change = !trace_sample;
 +
-+def symbol_addr(symbol):
-+    addr = symbol['st_value']
-+    # clamp addr to 48 bits, like uftrace entries
-+    return addr & 0xffffffffffff
+     uint64_t fp = cpu->ops.get_frame_pointer(cpu);
+     if (!fp && callstack_empty(cs)) {
+         /*
+@@ -459,7 +497,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+          */
+         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
+                                                .pc = pc});
+-        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+@@ -473,7 +513,9 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     if (fp == caller.frame_pointer) {
+         /* return */
+         callstack_entry e = callstack_pop(cs);
+-        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+@@ -482,27 +524,65 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+         /* call */
+         callstack_push(cs, (callstack_entry){.frame_pointer = fp,
+                 .pc = pc});
+-        trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        if (trace_change) {
++            trace_enter_function(t, timestamp, pc, callstack_depth(cs));
++        }
+         return;
+     }
+ 
+     /* discontinuity, exit current stack and unwind new one */
+-    trace_exit_stack(t, cs, timestamp);
++    if (trace_change) {
++        trace_exit_stack(t, cs, timestamp);
++    }
+     callstack_clear(cs);
+ 
+     cpu_unwind_stack(cpu, fp, pc);
+-    trace_enter_stack(t, cs, timestamp);
++    if (trace_change) {
++        trace_enter_stack(t, cs, timestamp);
++    }
++}
 +
-+def symbol_name(symbol):
-+    return symbol.name
++static void sample_callstack(unsigned int cpu_index, void *udata)
++{
++    uint64_t pc = (uintptr_t) udata;
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    uint64_t timestamp = cpu_get_timestamp(cpu);
 +
-+class BinaryFile:
-+    def __init__(self, path, map_offset):
-+        self.fullpath = os.path.realpath(path)
-+        self.map_offset = map_offset
-+        with open(path, 'rb') as f:
-+            self.elf = ELFFile(f)
-+            self.symbols = elf_func_symbols(self.elf)
++    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
++    callstack_clear(cpu->cs);
 +
-+    def path(self):
-+        return self.fullpath
++    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
++    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
 +
-+    def addr_start(self):
-+        return self.map_offset
++    /* reset counter */
++    cpu->sample_insn_count = 0;
+ }
+ 
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
+     size_t n_insns = qemu_plugin_tb_n_insns(tb);
++    uintptr_t tb_pc = qemu_plugin_tb_vaddr(tb);
+ 
+     qemu_plugin_u64 insn_count = qemu_plugin_scoreboard_u64_in_struct(
+                                       score, Cpu, insn_count);
++    qemu_plugin_u64 sample_insn_count = qemu_plugin_scoreboard_u64_in_struct(
++                                            score, Cpu, sample_insn_count);
 +
-+    def addr_end(self):
-+        last_sym = self.symbols[-1]
-+        return symbol_addr(last_sym) + symbol_size(last_sym) + self.map_offset
++    if (trace_sample) {
++        /* We can do a light instrumentation, per tb only */
++        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++            tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
++        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++            tb, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, n_insns);
++        qemu_plugin_register_vcpu_tb_exec_cond_cb(
++            tb, sample_callstack, QEMU_PLUGIN_CB_R_REGS,
++            QEMU_PLUGIN_COND_GE, sample_insn_count, trace_sample,
++            (void *) tb_pc);
++        return;
++    }
+ 
+     /*
+-     * We instrument all instructions following one that might have updated
++     * We now instrument all instructions following one that might have updated
+      * the frame pointer. We always instrument first instruction in block, as
+      * last executed instruction, in previous tb, may have modified it.
+      */
+@@ -511,6 +591,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+         qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+                 insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
++        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++                insn, QEMU_PLUGIN_INLINE_ADD_U64, sample_insn_count, 1);
+ 
+         if (instrument_insn) {
+             uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+@@ -536,6 +618,7 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+     cpu->buf = g_byte_array_new();
+     cpu->callstacks = g_array_new(0, 0, sizeof(callstack *));
+     cpu->traces = g_array_new(0, 0, sizeof(trace *));
++    cpu->sample_timestamp = cpu_get_timestamp(cpu);
+ 
+     g_assert(vcpu_index < 1000);
+     uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
+@@ -613,6 +696,22 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info,
+                                            int argc, char **argv)
+ {
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "trace-sample") == 0) {
++            gint64 value = g_ascii_strtoll(tokens[1], NULL, 10);
++            if (value <= 0) {
++                fprintf(stderr, "bad trace-sample value: %s\n", tokens[1]);
++                return -1;
++            }
++            trace_sample = value;
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
 +
-+    def generate_symbol_file(self, prefix_symbols):
-+        binary_name = os.path.basename(self.fullpath)
-+        sym_file_path = f'./uftrace.data/{binary_name}.sym'
-+        print(f'{sym_file_path} ({len(self.symbols)} symbols)')
-+        with open(sym_file_path, 'w') as sym_file:
-+            # print hexadecimal addresses on 48 bits
-+            addrx = "0>12x"
-+            for s in self.symbols:
-+                addr = symbol_addr(s)
-+                addr = f'{addr:{addrx}}'
-+                size = f'{symbol_size(s):{addrx}}'
-+                name = symbol_name(s)
-+                if prefix_symbols:
-+                    name = f'{binary_name}:{name}'
-+                print(addr, size, 'T', name, file=sym_file)
-+
-+def parse_parameter(p):
-+    s = p.split(":")
-+    path = s[0]
-+    if len(s) == 1:
-+        return path, 0
-+    if len(s) > 2:
-+        raise ValueError('only one offset can be set')
-+    offset = s[1]
-+    if not offset.startswith('0x'):
-+        err = f'offset "{offset}" is not an hexadecimal constant. '
-+        err += 'It should starts with "0x".'
-+        raise ValueError(err)
-+    offset = int(offset, 16)
-+    return path, offset
-+
-+def is_from_user_mode(map_file_path):
-+    if os.path.exists(map_file_path):
-+        with open(map_file_path, 'r') as map_file:
-+            if not map_file.readline().startswith('# map stack on'):
-+                return True
-+    return False
-+
-+def generate_map(binaries):
-+    map_file_path = './uftrace.data/sid-0.map'
-+
-+    if is_from_user_mode(map_file_path):
-+        print(f'do not overwrite {map_file_path} generated from qemu-user')
-+        return
-+
-+    mappings = []
-+
-+    # print hexadecimal addresses on 48 bits
-+    addrx = "0>12x"
-+
-+    mappings += ['# map stack on highest address possible, to prevent uftrace']
-+    mappings += ['# from considering any kernel address']
-+    mappings += ['ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]']
-+
-+    for b in binaries:
-+        m = f'{b.addr_start():{addrx}}-{b.addr_end():{addrx}}'
-+        m += f' r--p 00000000 00:00 0 {b.path()}'
-+        mappings.append(m)
-+
-+    with open(map_file_path, 'w') as map_file:
-+        print('\n'.join(mappings), file=map_file)
-+    print(f'{map_file_path}')
-+    print('\n'.join(mappings))
-+
-+def main():
-+    parser = argparse.ArgumentParser(description=
-+                                     'generate symbol files for uftrace')
-+    parser.add_argument('elf_file', nargs='+',
-+                        help='path to an ELF file. '
-+                        'Use /path/to/file:0xdeadbeef to add a mapping offset.')
-+    parser.add_argument('--prefix-symbols',
-+                        help='prepend binary name to symbols',
-+                        action=argparse.BooleanOptionalAction)
-+    args = parser.parse_args()
-+
-+    if not os.path.exists('./uftrace.data'):
-+        os.mkdir('./uftrace.data')
-+
-+    binaries = []
-+    for file in args.elf_file:
-+        path, offset = parse_parameter(file)
-+        b = BinaryFile(path, offset)
-+        binaries.append(b)
-+    binaries.sort(key = lambda b: b.addr_end());
-+
-+    for b in binaries:
-+        b.generate_symbol_file(args.prefix_symbols)
-+
-+    generate_map(binaries)
-+
-+if __name__ == '__main__':
-+    main()
+     if (!strcmp(info->target_name, "aarch64")) {
+         arch_ops = aarch64_ops;
+     } else {
 -- 
 2.47.2
 
