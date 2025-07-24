@@ -4,96 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90381C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04023C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uevBi-0004T9-1B; Thu, 24 Jul 2025 08:36:42 -0400
+	id 1uevEE-0003V5-1C; Thu, 24 Jul 2025 08:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uevBE-0003ru-Pg
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:36:15 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uevB9-0007wu-El
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:36:12 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ae3b336e936so178899066b.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 05:36:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753360565; x=1753965365; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ityP9BPRXs9lGBmM75seOMPOKzPu4M4k6GTyNLaUSGw=;
- b=hOQDPMaZ+08HuVd8BplmWAbIAgdEwatsoLlL0kjLW0l2V5cROxQmxd8+QV9d3kiaxy
- D0nkSwHkt4GTmH2GsRMRxcHJZ6HVkMvnkcA2JLykSltl7p16fvdxIBFYDgQJFOXUHazO
- la+cF1SHuYRRPhleL1GwuuEK78y4ZaFYmXgGeliYz5stCgIjsE700blJ4+ZelzlAjd3T
- 5sHHrFgX6R/ZSdVQ+IOGiHo9D8cGdQA/WgX7cGt0Fwd3pF30psOnz7TzbsaeSCsIDk9s
- GW37CfZrAlxgzlR1K4/h3OjMkMq40CMCicYdo/oEEeR30LwBBbl62AlVK9ifoAQ3w9i3
- /ouQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevEB-0003TZ-N2
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:39:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevE8-0000PJ-AV
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:39:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753360750;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cr4mA/0k2d9BXE6HfBnZX0knuh3SqhmHKuiDB0LtU9Q=;
+ b=D6u6eSckXs8P8ibYWrGQH7MEVx7HiTWAUAsSa2762HhvtUeERfN47A2B4dM1HFRjpb2Ihz
+ 3hdpaybwv3D3YR3viZkLauDw6CZK8Z/A6yM+9w/8QSH9SpEiZMwXRVOsStdHWwT8DxzGJn
+ wtbscbwtGsR56LkXkb4KlM9t48s4H64=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-7k68fflDP4CdCVVmWYmgZw-1; Thu, 24 Jul 2025 08:39:09 -0400
+X-MC-Unique: 7k68fflDP4CdCVVmWYmgZw-1
+X-Mimecast-MFC-AGG-ID: 7k68fflDP4CdCVVmWYmgZw_1753360748
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-455f79a2a16so7470845e9.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 05:39:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753360565; x=1753965365;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ityP9BPRXs9lGBmM75seOMPOKzPu4M4k6GTyNLaUSGw=;
- b=mQzwPgXsTJZqU8T/2h/oFlikGAENxYmfmyCjqiCTOJY0JC/UmDElF7pHmXoUD909u0
- 9z0liPz500Bs0tQLRjoEJ4Yy60+25MMqcoDLBl7xp7pBHBthZdlGKN5rjvc7Q+6oZ9aZ
- Tjz+GSAExm0Vcqn8qep0Pd9GjE4koAZDMLK0YeUb9HI6qH/QviZqdHbft54glUzqxFoQ
- duA0SvfvaISlFrt+q0ICYgZ8b1MNDkbNk6QyWq1oHDttDJrx4L4Qp0omL3/9Jjh8WswE
- y9Ecu8/TWjM23ZE+4uaeiPFpLc7JjM+L8uKhr/+Np9qaqqbt9HkuXVg3tiBpFws/uYE6
- 2XMw==
-X-Gm-Message-State: AOJu0YyrGWYTyNgHRRoHJqj7oiKMKdIsQylDWLYQm8wP6Peine8p/gCC
- 9uQmaMp0Ky58mLegavBK/4bV9+ZnJ4E5DJhu1tGt6QwlEeMvjWmCQguzQwEQ6BWt14HXBbpvYar
- nqxUR
-X-Gm-Gg: ASbGncvWw379tqntVXS2bULavXKXXM2cI2h1EAdlTiXbR+OMbVWwuxFwc1hjf/eE9Qs
- nIZklfXK+Np3oAe7UlZ55tC4zcTbk3UaYXkeHFjVEOdhCRkQv/XBDGmoGpMZ+0soduhl8/RDEoD
- YhaahM0dGRModADzI50sHpxXo+nZpXKZtm71ow5qk9TH3p/ij6uLeMDt3HLeA3t+BjCiY8D20ET
- N6bxUkP7rxN+UeliSn3/ARzMs63fKLYiGVuKqhLBTK3L6T7pivshfIuoWf1+Dfcp9eUwl43IKT/
- w5BP/3LjDQlSy21KdDHQCjrXz40b1EV0J/aCJ9fjXuA9Vii/WQGPbDOXJP5KmG57+LpUa5hRAdP
- Egs/dLyfMELjafRFTPtkj6xI=
-X-Google-Smtp-Source: AGHT+IEe1mlm4Jh9/xcFs9tIGdsTFGldQ12oZPU0zP97tb6WPwHv5Aqu3Izv3XRJaG/HeC2CRD7q0Q==
-X-Received: by 2002:a17:907:9693:b0:ade:3bec:ea40 with SMTP id
- a640c23a62f3a-af2f66c09a6mr783349966b.10.1753360564990; 
- Thu, 24 Jul 2025 05:36:04 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af47f861d70sm107040366b.120.2025.07.24.05.36.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 05:36:04 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 38E9F5F7B0;
- Thu, 24 Jul 2025 13:36:03 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH for 10.1 13/13] tests/docker: handle host-arch selection
- for all-test-cross
-In-Reply-To: <CAAjaMXau4GyWidMNdYXgnMQTrv0mhVuCamDtaMLLJPeEDgyOQQ@mail.gmail.com>
- (Manos Pitsidianakis's message of "Thu, 24 Jul 2025 14:29:42 +0300")
-References: <20250724105939.2393230-1-alex.bennee@linaro.org>
- <20250724105939.2393230-14-alex.bennee@linaro.org>
- <CAAjaMXau4GyWidMNdYXgnMQTrv0mhVuCamDtaMLLJPeEDgyOQQ@mail.gmail.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Thu, 24 Jul 2025 13:36:03 +0100
-Message-ID: <875xfhvk98.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1753360747; x=1753965547;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cr4mA/0k2d9BXE6HfBnZX0knuh3SqhmHKuiDB0LtU9Q=;
+ b=Gc9YXN7klFYp5ioFbPEfzbyioY6YORGnVkV2u5d4gup6htqod0spDiVdlIoma98sgh
+ uEnxKWZ/5RSgQY2afYqrxsXz/59fBh2Ler0iN7ncFFm3pyvXSVJD+0kQHeJNPmBxABMc
+ sZtyCTFjQz5qWqSBPEZTnx7bNloLts8YVTuBJvTrcCcAOJDyEtXhTfKa1JW5htBcK00q
+ RhyQGRhHjWxQaE/ze1bi2wHm+v4Prn1/EYtCUz1DF4Ns9tVpxu+HgVUobNWtPkbBiht2
+ lZAb9EYSQ6H8br3pU8e5GdwUFxx/JC9OpwqXu3S+hDwEa6DHsxzGTsOb1iVRr40Mv8jq
+ x3Pw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQRUMQmnsrWTBeqUhyMOmeJOCQwYc9+aS/pw5kn1Zp8rgHb6b636VNbq2E3poYz6FZI22eN0b66zJF@nongnu.org
+X-Gm-Message-State: AOJu0YzrBn/uSk0K+XbnTNhYLWMIGliIUi4luUxwcsAMAhVwYOJ2+gCJ
+ ZmwwRKR05Y/aBjsNlhJk3eMIdtcAZVe8YiP5KofAAa4iyaoDP+bxxRJhpjC+NdXjqKzob+RTUGc
+ AGw6cJiUCene3eDo70IZF3XLyilaWXxxKuOT8e8zx/4aLOeBWmMVFx5YKSq9QBf7F
+X-Gm-Gg: ASbGncsRXVJIHX4N4Xi3ggP25gp0efV0rKdiF2l/6rbWGf7VC0f80m3SACRqd7ZxH29
+ km7+jN5s5aATOxyeoLo6KaJdusvS2A2CKuXIeWhiHQt9X/K68ZeRi/tD+iXGc6h69RFu3Y/I4lI
+ 3FnoHVHneFm/0NetboUiCBKga+HyUuJ3fTiKzEK0eOdtq5R7FMHmZM0z4/iZIYdC9jIKz6iWgr3
+ 9UAO31BlJ4A7l2w6xFRCSn9mkewQvjCWEbDGQ7QW+p/mKcZ7IeG35O5kThdJDEcieRsGi6qLflC
+ n4zcpR7kM0o1N+wqr/s5mynJzr5VpxN483Rt3BApA2+lGP9Ud0bB6XCW0fRoFkyUpswlXkMM+Cu
+ dZQ==
+X-Received: by 2002:a05:600c:3b9a:b0:456:1ab0:d56d with SMTP id
+ 5b1f17b1804b1-45868c8bcbdmr56984955e9.7.1753360746945; 
+ Thu, 24 Jul 2025 05:39:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwcxTyoDI1f0WtInE4UJZm/unCAhbD6by84DeMLTvGkTB0eYpF1gGcXAOtOtR/wzE7waZxtQ==
+X-Received: by 2002:a05:600c:3b9a:b0:456:1ab0:d56d with SMTP id
+ 5b1f17b1804b1-45868c8bcbdmr56984695e9.7.1753360746403; 
+ Thu, 24 Jul 2025 05:39:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4587054e37dsm18698845e9.14.2025.07.24.05.39.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 05:39:05 -0700 (PDT)
+Message-ID: <64c2231e-94cb-43dc-9606-2ad1e0c0295e@redhat.com>
+Date: Thu, 24 Jul 2025 14:39:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: remove myself as ppc maintainer/reviewer
+To: Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+References: <20250724123416.3115941-1-danielhb413@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250724123416.3115941-1-danielhb413@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,111 +155,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+On 7/24/25 14:34, Daniel Henrique Barboza wrote:
+> It has been awhile since I actively did anything for qemu-ppc aside from
+> reading the qemu-ppc inbox a couple of times each month. It's not enough
+> to justify a reviewer role, let alone being a maintainer.
+> 
+> Given that we're doing qemu-ppc maintainership changes across the board
+> I'll take the opportunity and remove myself from the premises too. Feel
+> free to reach out with questions about code I did in the past, but at
+> this moment I'm no longer able to keep up with qemu-ppc activities.
+> 
+> Signed-off-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+> ---
+>   MAINTAINERS | 3 ---
+>   1 file changed, 3 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a462345618..088b561aa0 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -295,7 +295,6 @@ F: tests/tcg/openrisc/
+>   
+>   PowerPC TCG CPUs
+>   M: Nicholas Piggin <npiggin@gmail.com>
+> -M: Daniel Henrique Barboza <danielhb413@gmail.com>
+>   L: qemu-ppc@nongnu.org
+>   S: Odd Fixes
+>   F: target/ppc/
+> @@ -452,7 +451,6 @@ F: target/mips/system/
+>   
+>   PPC KVM CPUs
+>   M: Nicholas Piggin <npiggin@gmail.com>
+> -R: Daniel Henrique Barboza <danielhb413@gmail.com>
+>   S: Odd Fixes
+>   F: target/ppc/kvm.c
+>   
+> @@ -1550,7 +1548,6 @@ F: tests/functional/test_ppc_40p.py
+>   
+>   sPAPR (pseries)
+>   M: Nicholas Piggin <npiggin@gmail.com>
+> -R: Daniel Henrique Barboza <danielhb413@gmail.com>
+>   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>   L: qemu-ppc@nongnu.org
+>   S: Odd Fixes
 
-> On Thu, Jul 24, 2025 at 2:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
->>
->> When building on non-x86 we get a bunch but not all of the compilers.
->> Handle this in the Dockerfile by probing the arch and expanding the
->> list available.
->>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>  .../dockerfiles/debian-all-test-cross.docker  | 31 ++++++++++---------
->>  1 file changed, 17 insertions(+), 14 deletions(-)
->>
->> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tes=
-ts/docker/dockerfiles/debian-all-test-cross.docker
->> index 5aa43749ebe..16a83241270 100644
->> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
->> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
->> @@ -23,7 +23,9 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
->>          bison \
->>          ccache \
->>          clang  \
->> +        dpkg-dev \
->>          flex \
->> +        gcc \
->>          git \
->>          libclang-rt-dev \
->>          ninja-build \
->> @@ -33,16 +35,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
->>          python3-venv \
->>          python3-wheel
->>
->> -RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
->> -        apt install -y --no-install-recommends \
->> -        gcc-aarch64-linux-gnu \
->> +# All the generally available compilers
->> +ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
->>          libc6-dev-arm64-cross \
->>          gcc-arm-linux-gnueabihf \
->>          libc6-dev-armhf-cross \
->> -        gcc-hppa-linux-gnu \
->> -        libc6-dev-hppa-cross \
->> -        gcc-m68k-linux-gnu \
->> -        libc6-dev-m68k-cross \
->>          gcc-mips-linux-gnu \
->>          libc6-dev-mips-cross \
->>          gcc-mips64-linux-gnuabi64 \
->> @@ -51,18 +48,24 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
->>          libc6-dev-mips64el-cross \
->>          gcc-mipsel-linux-gnu \
->>          libc6-dev-mipsel-cross \
->> -        gcc-powerpc-linux-gnu \
->> -        libc6-dev-powerpc-cross \
->> -        gcc-powerpc64-linux-gnu \
->> -        libc6-dev-ppc64-cross \
->>          gcc-powerpc64le-linux-gnu \
->>          libc6-dev-ppc64el-cross \
->>          gcc-riscv64-linux-gnu \
->>          libc6-dev-riscv64-cross \
->>          gcc-s390x-linux-gnu \
->> -        libc6-dev-s390x-cross \
->> -        gcc-sparc64-linux-gnu \
->> -        libc6-dev-sparc64-cross && \
->> +        libc6-dev-s390x-cross
->> +
->> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"$=
-{AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; fi
->> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"$=
-{AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; fi
->> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"$=
-{AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; fi
->> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"$=
-{AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; fi
->> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"$=
-{AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; fi
->> +
->> +RUN echo "compilers: ${AVAILABLE_COMPILERS}"
->
-> Nitpick, each `RUN` command will create a new cached layer for the
-> container build. It makes more sense to fold them in a single `RUN`
-> step to avoid unnecessary layers. Does not make a big difference so
-> feel free to ignore.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-I did try to figure out how to do a multi-line shell with an env
-expansion but wasn't able to get the escaping right. If you can suggest
-the right runes please do ;-)
+Thanks,
 
->
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->
->> +
->> +RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
->> +        apt install -y --no-install-recommends \
->> +        ${AVAILABLE_COMPILERS} && \
->>          dpkg-query --showformat '${Package}_${Version}_${Architecture}\=
-n' --show > /packages.txt
->>
->>
->> --
->> 2.47.2
->>
->>
+C.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
 
