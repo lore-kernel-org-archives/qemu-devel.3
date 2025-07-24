@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EFDC83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC2DC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 20:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf2fo-0006pa-1w; Thu, 24 Jul 2025 16:36:16 -0400
+	id 1uf2p7-00057S-L9; Thu, 24 Jul 2025 16:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uf2fm-0006oW-Cp
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:36:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uf2fi-0003r4-SS
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:36:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753389369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Q9j8tztAk4Xr6RPsbDf10tm+asdf4cqfdJb6PqDBRQE=;
- b=fLnSnjmtPwboxBYyKXn7LqAbAyhMhJuvdEi8C+ZAh1ymPFWogndH2mHunEPs6W43ysmzcJ
- AjrpiyJW7CqWJbYTcAUG7n7YSC55+WxhaPyRZ3ZzkuwKs9PD6j8twzeZJP+MM3qmZa+0mL
- fIUDOtBDTjivyktWkCYvEvIE6QloIjw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-dnd1kVRnNVCvHilZ4iu4tg-1; Thu,
- 24 Jul 2025 16:36:07 -0400
-X-MC-Unique: dnd1kVRnNVCvHilZ4iu4tg-1
-X-Mimecast-MFC-AGG-ID: dnd1kVRnNVCvHilZ4iu4tg_1753389366
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4BCD31956087; Thu, 24 Jul 2025 20:36:06 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.247])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 323371956089; Thu, 24 Jul 2025 20:36:04 +0000 (UTC)
-Date: Thu, 24 Jul 2025 16:36:03 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Bernd Schubert <bschubert@ddn.com>
-Cc: Brian Song <hibriansong@gmail.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "armbru@redhat.com" <armbru@redhat.com>, "fam@euphon.net" <fam@euphon.net>,
- "hreitz@redhat.com" <hreitz@redhat.com>,
- "kwolf@redhat.com" <kwolf@redhat.com>
-Subject: Re: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for
- QEMU FUSE Exports
-Message-ID: <20250724203603.GA573965@fedora>
-References: <20250716183824.216257-1-hibriansong@gmail.com>
- <20250716183824.216257-2-hibriansong@gmail.com>
- <e13f8119-7c60-4aa6-91b0-860ac0a462f5@ddn.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uf2p4-00055B-5l
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:51 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uf2p1-0007Mh-P1
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 16:45:49 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b39011e5f8eso1389094a12.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 13:45:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753389938; x=1753994738; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LHM/wlC23GB8B+z+ofUSGekwvcloMeBSPT2vdT511OU=;
+ b=RILjVQYMk2jF5K+yCHYJGEVYZv0MOm+aSEZUoDcy8LzJ+qIB1vd7+YIrJ7xBnDHN5Z
+ gv6i+EC4f1urCOcErZFisHEkSKPaUrTFyD6vJUgvw7HQjPqVQq2hg8yjUSiFHNFuktxT
+ BSvQoAqeLSs/GmcsalonJvgII7qbZEuXJojGQfdGOno0P6woIXhTNRG4IfQ3V2wrcX9s
+ HQQE7ZccV0J945d6rocAezbAYAzAXED/1k1l+xtqR5gOCdGrkDDQjoM/l085Q35GXulJ
+ x9In+D915YN5cqWTdvSdnQMnwYkIdXz3m0OYCd5Cj3PftXhr9qf/SVCxXhwK4DeOMfvC
+ R2rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753389938; x=1753994738;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LHM/wlC23GB8B+z+ofUSGekwvcloMeBSPT2vdT511OU=;
+ b=I3saPdJSXXESmdoAAJKeyS7HKaq5ksgkafrpBYc0yofcDCFV29EvKpNllB1kzAR0nV
+ UE6gTYMYNOvUANeo5U8w2HnzLItaUxjiao6luNUg0XXqJSP04L39Uv8/JweGn1FrtBhh
+ I5cpsSFV7wKS3k0ddSOa/v7wTMP0TF5IMNylCk2So5wMMzPqiLY6I4O0LHj9q3IRww7L
+ RHy4gT8V6RPD1E38Xs2kP0GtcL/rezmdyjxA6VlL6yTrvJ8CDUZNfeZpIRTWgYP5v5E7
+ cRWZucqWYa0YViBkn/HIR57hRRsA9NizrsBEt+zA3OIoVxA1htmZGlPLG34l2ksRKvyr
+ ETIw==
+X-Gm-Message-State: AOJu0YzeQ4Vah8uH4Ozkol2j87ULJkuCCYO/iYqi7Jb+16R9FO2OeAWl
+ zJZ9lKooHMavsya1gR8zu75LNPSKZQ6vCIgTbjx1IR9Dh759pQcqzgDHgbfRkhJ/nHpZ+oESe0a
+ DsH8Z
+X-Gm-Gg: ASbGnctZtbfQond5CYPQaYX5N9cL2Dkr3qaTHBvhNUGvkBw9bCMXCx+cXIyrKhyO5oD
+ X5kjrL7oe+9igUyv+vIuTHImDWTc0wZhy29hLjaShywlGVisk8cEiTID3niMvQGZ7rvsbYRMWBg
+ dTc3XWelIj72L+IsDgX7SN5QGXSM4ZaYy60CxwnMAaqEl9IciFb6542ZeVYOhc5P+oGCURpVLF8
+ wnuxuvydDYTkwo+Xs0Hw5FjDrWJbReKVlLU9UvXvpKwGRPs6otFVZb/ZvLbyuYs8+HQM+ehrmM6
+ a2szk29QR7BZH4TwAHy9zwxHqyA1Pr9naL2qqQusAKVaprCEayE45ibHTeEv0GKHY9AISOOOm4H
+ P5JJF39eYqmHsHsmAhE15FQ==
+X-Google-Smtp-Source: AGHT+IFTGNYN9W6ytkrwjutxatYSjx/LNt2mL0x8ES5EXH/Dzj2ZCkfgrvlpiEOPLEz15JSIhLNxcQ==
+X-Received: by 2002:a17:90b:3b4c:b0:313:352f:6620 with SMTP id
+ 98e67ed59e1d1-31e5079f78bmr10091706a91.4.1753389937719; 
+ Thu, 24 Jul 2025 13:45:37 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31e662f6be0sm2008849a91.35.2025.07.24.13.45.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Jul 2025 13:45:37 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, rowan Hart <rowanbhart@gmail.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 3/7] contrib/plugins/uftrace: add trace-privilege-level
+ option
+Date: Thu, 24 Jul 2025 13:45:22 -0700
+Message-ID: <20250724204527.3175839-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
+References: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="CZFVtOZlLmvJyApo"
-Content-Disposition: inline
-In-Reply-To: <e13f8119-7c60-4aa6-91b0-860ac0a462f5@ddn.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,79 +108,310 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+usage: trace-privilege-level=[on|off]
 
---CZFVtOZlLmvJyApo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This option generates different traces (represented as different
+processes in uftrace), allowing to follow privilege level changes.
 
-On Mon, Jul 21, 2025 at 01:51:44PM +0000, Bernd Schubert wrote:
-> On 7/16/25 20:38, Brian Song wrote:
-> > -    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io=
-_uring, 0);
-> > +    ret =3D io_uring_queue_init(FDMON_IO_URING_ENTRIES,
-> > +                            &ctx->fdmon_io_uring, flags);
-> >      if (ret !=3D 0) {
-> >          error_setg_errno(errp, -ret, "Failed to initialize io_uring");
-> >          return;
->=20
-> I need test these flags again, might be worthful for qemu as well
->=20
-> 	/* These flags should help to increase performance, but actually
-> 	 * make it a bit slower - reason should get investigated.
-> 	 */
-> 	if (0) {
-> 		/* Has the main slow down effect */
-> 		params.flags |=3D IORING_SETUP_SINGLE_ISSUER;
->=20
-> 		// params.flags |=3D IORING_SETUP_DEFER_TASKRUN;
-> 		params.flags |=3D IORING_SETUP_TASKRUN_FLAG;
->=20
-> 		/* Second main effect to make it slower */
-> 		params.flags |=3D IORING_SETUP_COOP_TASKRUN;
-> 	}
+For aarch64, we track current EL and Security State.
 
-I measured the following using fio bs=3D4k in a 4 vCPU guest with 1
-IOThread using a virtio-blk disk backed by a local NVMe drive:
+As well, we make sure that sampling works correctly with this option. If
+user requests sampling and privilege-level tracing, we perform an
+accurate callstack tracking (slower), and only sample the information we
+present.
 
-                      IOPS               IOPS
-Benchmark             SINGLE_ISSUER      SINGLE_ISSUER|COOP_TASKRUN|TASKRUN=
-_FLAG
-randread  iodepth=3D1   54,045 (+1.2%)     54,189 (+1.5%)
-randread  iodepth=3D64  318,135 (+0.1%)    315,632 (-0.68%)
-randwrite iodepth=3D1   141,918 (-0.44%)   143,337 (+0.55%)
-randwrite iodepth=3D64  323,948 (-0.015%)  322,755 (-0.38%)
+This gives accurate backtraces on all privilege switches, while keeping
+the trace sampled if needed.
 
-The differences are so small that I'd rather not merge the code changes.
-I will post an RFC series just to archive the patches in case they are
-needed again in the future.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 182 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 171 insertions(+), 11 deletions(-)
 
-You can find detailed benchmarking results here including the fio
-output, fio command-line, and guest libvirt domain XML:
-https://gitlab.com/stefanha/virt-playbooks/-/tree/io_uring-flags/notebook/f=
-io-output
-https://gitlab.com/stefanha/virt-playbooks/-/blob/io_uring-flags/files/fio.=
-sh
-https://gitlab.com/stefanha/virt-playbooks/-/blob/io_uring-flags/files/test=
-=2Exml.j2
-
-Stefan
-
---CZFVtOZlLmvJyApo
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiCmTMACgkQnKSrs4Gr
-c8i5UAf/cmTZvXwKqKW9K3WDBgvxgjhteqGzKC7HcG6CIDNDHnMrssTlB27fp3om
-buhiwYtpWYgVAxGJbzwa7X5N+i1d2gL92oov7VIYP/gqLtrOwQIdsdt9UVW/le2i
-F4MTUvNXEzvPBp5aRiSrtSrW5boEcijFnkG5jF74o7sAJDmn2UIxkFNLVA5OEjHP
-WZzF4awZDKPPWJAxXTv3EAbgQHAVN0Gydd6aPpjv56AJ6dHgDtRREfuvH6yPUN8l
-55cPf714lGWNGhocNBEPTLxNJcqjwU+AWEiLOzHhBndZMp9Q/PqvX3T34UHiyUNo
-aW053cQMjhsGS5Tnbw6Lcd22IZNqwQ==
-=cmZF
------END PGP SIGNATURE-----
-
---CZFVtOZlLmvJyApo--
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index a626030b7da..bd4219db693 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -39,6 +39,9 @@ typedef struct {
+     void (*init)(Cpu *cpu);
+     void (*end)(Cpu *cpu);
+     uint64_t (*get_frame_pointer)(Cpu *cpu);
++    uint8_t (*get_privilege_level)(Cpu *cpu);
++    uint8_t (*num_privilege_levels)(void);
++    const char *(*get_privilege_level_name)(uint8_t pl);
+     bool (*does_insn_modify_frame_pointer)(const char *disas);
+ } CpuOps;
+ 
+@@ -49,6 +52,7 @@ typedef struct Cpu {
+     callstack *sample_cs;
+     trace *trace;
+     callstack *cs;
++    uint8_t privilege_level;
+     GArray *callstacks; /* callstack *callstacks[] */
+     GArray *traces; /* trace *traces [] */
+     GByteArray *buf;
+@@ -56,8 +60,23 @@ typedef struct Cpu {
+     void *arch;
+ } Cpu;
+ 
++typedef enum {
++    AARCH64_EL0_SECURE,
++    AARCH64_EL0_NONSECURE,
++    AARCH64_EL0_REALM,
++    AARCH64_EL1_SECURE,
++    AARCH64_EL1_NONSECURE,
++    AARCH64_EL1_REALM,
++    AARCH64_EL2_SECURE,
++    AARCH64_EL2_NONSECURE,
++    AARCH64_EL2_REALM,
++    AARCH64_EL3,
++} Aarch64PrivilegeLevel;
++
+ typedef struct {
+     struct qemu_plugin_register *reg_fp;
++    struct qemu_plugin_register *reg_cpsr;
++    struct qemu_plugin_register *reg_scr_el3;
+ } Aarch64Cpu;
+ 
+ typedef struct {
+@@ -74,6 +93,7 @@ enum uftrace_record_type {
+ 
+ static struct qemu_plugin_scoreboard *score;
+ static uint64_t trace_sample;
++static bool trace_privilege_level;
+ static CpuOps arch_ops;
+ 
+ static void uftrace_write_map(bool system_emulation)
+@@ -358,6 +378,16 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+     return *((uint64_t *) buf->data);
+ }
+ 
++static uint32_t cpu_read_register32(Cpu *cpu, struct qemu_plugin_register *reg)
++{
++    GByteArray *buf = cpu->buf;
++    g_byte_array_set_size(buf, 0);
++    size_t sz = qemu_plugin_read_register(reg, buf);
++    g_assert(sz == 4);
++    g_assert(buf->len == 4);
++    return *((uint32_t *) buf->data);
++}
++
+ static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
+ {
+     g_assert(addr);
+@@ -427,6 +457,68 @@ static uint64_t cpu_get_timestamp(const Cpu *cpu)
+     return cpu->insn_count;
+ }
+ 
++static uint8_t aarch64_num_privilege_levels(void)
++{
++    return AARCH64_EL3 + 1;
++}
++
++static const char *aarch64_get_privilege_level_name(uint8_t pl)
++{
++    switch (pl) {
++    case AARCH64_EL0_SECURE: return "S-EL0";
++    case AARCH64_EL0_NONSECURE: return "NS-EL0";
++    case AARCH64_EL0_REALM: return "R-EL0";
++    case AARCH64_EL1_SECURE: return "S-EL1";
++    case AARCH64_EL1_NONSECURE: return "NS-EL1";
++    case AARCH64_EL1_REALM: return "R-EL1";
++    case AARCH64_EL2_SECURE: return "S-EL2";
++    case AARCH64_EL2_NONSECURE: return "NS-EL2";
++    case AARCH64_EL2_REALM: return "R-EL2";
++    case AARCH64_EL3: return "EL3";
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint8_t aarch64_get_privilege_level(Cpu *cpu_)
++{
++    Aarch64Cpu *cpu = cpu_->arch;
++    /*
++     * QEMU gdbstub does not provide access to CurrentEL,
++     * so we use CPSR instead.
++     */
++    uint8_t el = cpu_read_register32(cpu_, cpu->reg_cpsr) >> 2 & 0b11;
++
++    if (el == 3) {
++        return AARCH64_EL3;
++    }
++
++    uint8_t ss = AARCH64_EL0_SECURE;
++    if (!cpu->reg_scr_el3) {
++        ss = AARCH64_EL0_NONSECURE;
++    }
++    uint64_t scr_el3 = cpu_read_register64(cpu_, cpu->reg_scr_el3);
++    uint64_t ns = (scr_el3 >> 0) & 0b1;
++    uint64_t nse = (scr_el3 >> 62) & 0b1;
++    switch (nse << 1 | ns) {
++    case 0b00:
++        ss = AARCH64_EL0_SECURE;
++        break;
++    case 0b01:
++        ss = AARCH64_EL0_NONSECURE;
++        break;
++    case 0b11:
++        ss = AARCH64_EL0_REALM;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    const uint8_t num_ss = 3;
++    Aarch64PrivilegeLevel pl = el * num_ss + ss;
++    return pl;
++}
++
+ static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
+ {
+     Aarch64Cpu *cpu = cpu_->arch;
+@@ -443,6 +535,10 @@ static void aarch64_init(Cpu *cpu_)
+         reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
+         if (!strcmp(reg->name, "x29")) {
+             cpu->reg_fp = reg->handle;
++        } else if (!strcmp(reg->name, "cpsr")) {
++            cpu->reg_cpsr = reg->handle;
++        } else if (!strcmp(reg->name, "SCR_EL3")) {
++            cpu->reg_scr_el3 = reg->handle;
+         }
+     }
+     if (!cpu->reg_fp) {
+@@ -450,6 +546,8 @@ static void aarch64_init(Cpu *cpu_)
+                         "available. Please use an AArch64 cpu (or -cpu max).\n");
+         g_abort();
+     }
++    g_assert(cpu->reg_cpsr);
++    /* scr_el3 is optional */
+ }
+ 
+ static void aarch64_end(Cpu *cpu)
+@@ -471,9 +569,43 @@ static CpuOps aarch64_ops = {
+     .init = aarch64_init,
+     .end = aarch64_end,
+     .get_frame_pointer = aarch64_get_frame_pointer,
++    .get_privilege_level = aarch64_get_privilege_level,
++    .num_privilege_levels = aarch64_num_privilege_levels,
++    .get_privilege_level_name = aarch64_get_privilege_level_name,
+     .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
+ };
+ 
++static void track_privilege_change(unsigned int cpu_index, void *udata)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    uint8_t new_pl = cpu->ops.get_privilege_level(cpu);
++
++    if (new_pl == cpu->privilege_level) {
++        return;
++    }
++
++    uint64_t pc = (uintptr_t) udata;
++    uint64_t timestamp = cpu_get_timestamp(cpu);
++
++    if (trace_sample) {
++        cpu_trace_last_sample(cpu, timestamp);
++    }
++
++    trace_exit_stack(cpu->trace, cpu->cs, timestamp);
++    callstack_clear(cpu->cs);
++
++    cpu->privilege_level = new_pl;
++    cpu->cs = g_array_index(cpu->callstacks, callstack*, new_pl);
++    cpu->trace = g_array_index(cpu->traces, trace*, new_pl);
++
++    cpu_unwind_stack(cpu, cpu->ops.get_frame_pointer(cpu), pc);
++    trace_enter_stack(cpu->trace, cpu->cs, timestamp);
++
++    if (trace_sample) {
++        cpu_set_new_sample(cpu, timestamp);
++    }
++}
++
+ static void track_callstack(unsigned int cpu_index, void *udata)
+ {
+     uint64_t pc = (uintptr_t) udata;
+@@ -568,7 +700,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     qemu_plugin_u64 sample_insn_count = qemu_plugin_scoreboard_u64_in_struct(
+                                             score, Cpu, sample_insn_count);
+ 
+-    if (trace_sample) {
++    if (trace_sample && !trace_privilege_level) {
+         /* We can do a light instrumentation, per tb only */
+         qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+             tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
+@@ -581,6 +713,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         return;
+     }
+ 
++    if (trace_privilege_level) {
++        qemu_plugin_register_vcpu_tb_exec_cb(tb, track_privilege_change,
++                                             QEMU_PLUGIN_CB_R_REGS,
++                                             (void *) tb_pc);
++    }
++
+     /*
+      * We now instrument all instructions following one that might have updated
+      * the frame pointer. We always instrument first instruction in block, as
+@@ -623,17 +761,33 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+     g_assert(vcpu_index < 1000);
+     uint32_t trace_id = 1000 * 1000 + vcpu_index * 1000;
+ 
+-    g_autoptr(GString) trace_name = g_string_new(NULL);
+-    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
+-    trace *t = trace_new(trace_id, trace_name);
+-    g_array_append_val(cpu->traces, t);
+-    callstack *cs = callstack_new();
+-    g_array_append_val(cpu->callstacks, cs);
+-    /* create/truncate trace file */
+-    trace_flush(t, false);
++    if (trace_privilege_level) {
++        for (uint8_t pl = 0; pl < cpu->ops.num_privilege_levels(); ++pl) {
++            g_autoptr(GString) trace_name = g_string_new(NULL);
++            g_string_append_printf(trace_name, "cpu%u %s", vcpu_index,
++                                   cpu->ops.get_privilege_level_name(pl));
++            trace *t = trace_new(trace_id + pl, trace_name);
++            g_array_append_val(cpu->traces, t);
++            callstack *cs = callstack_new();
++            g_array_append_val(cpu->callstacks, cs);
++        }
++    } else {
++        g_autoptr(GString) trace_name = g_string_new(NULL);
++        g_string_append_printf(trace_name, "cpu%u", vcpu_index);
++        trace *t = trace_new(trace_id, trace_name);
++        g_array_append_val(cpu->traces, t);
++        callstack *cs = callstack_new();
++        g_array_append_val(cpu->callstacks, cs);
++    }
+ 
+-    cpu->cs = cs;
+-    cpu->trace = t;
++    for (size_t i = 0; i < cpu->traces->len; ++i) {
++        /* create/truncate trace files */
++        trace *t = g_array_index(cpu->traces, trace*, i);
++        trace_flush(t, false);
++    }
++
++    cpu->cs = g_array_index(cpu->callstacks, callstack*, cpu->privilege_level);
++    cpu->trace = g_array_index(cpu->traces, trace*, cpu->privilege_level);
+ }
+ 
+ static void vcpu_end(unsigned int vcpu_index)
+@@ -706,6 +860,12 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 return -1;
+             }
+             trace_sample = value;
++        } else if (g_strcmp0(tokens[0], "trace-privilege-level") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
++                                        &trace_privilege_level)) {
++                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
++                return -1;
++            }
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+             return -1;
+-- 
+2.47.2
 
 
