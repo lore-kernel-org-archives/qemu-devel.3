@@ -4,64 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF75C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 07:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2837AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 07:41:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueqP5-0001gv-8G; Thu, 24 Jul 2025 03:30:11 -0400
+	id 1ueqZP-0000Qx-3G; Thu, 24 Jul 2025 03:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ueqP2-0001f1-RY
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:30:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ueqZG-0000Op-Vu
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:40:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ueqOy-0001gj-8O
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:30:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ueqZE-0004RY-JJ
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:40:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753342201;
+ s=mimecast20190719; t=1753342837;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=c5T3mHBa2Yg68PItwNXTMDBy+KX15nUF6DzKxKFryWo=;
- b=eSqIT/9f23W0PusrtMSz7V+3DVDQ0J9xwpN8KVYf6Opy1fvZ3uL6HKXqE5F5nLMIbkCLPA
- 4NTUy04nbXRJWP2ZGqSvXNt55Z2bDx1xp8dx8nAS5aOnSNq0sx6EW+PyHTIJWlPoaMRHAI
- 1u4c/evqjefOHDOhr7gk8+oUroPA+gw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-H8R7fwIxMrScQhBhOI9XFQ-1; Thu,
- 24 Jul 2025 03:29:59 -0400
-X-MC-Unique: H8R7fwIxMrScQhBhOI9XFQ-1
-X-Mimecast-MFC-AGG-ID: H8R7fwIxMrScQhBhOI9XFQ_1753342198
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C0B11800447; Thu, 24 Jul 2025 07:29:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96E4B1800286; Thu, 24 Jul 2025 07:29:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 033B121E6A27; Thu, 24 Jul 2025 09:29:55 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 1/1] docs/qapi-domain: Improve QAPI indices
-In-Reply-To: <20250523180809.41211-2-jsnow@redhat.com> (John Snow's message of
- "Fri, 23 May 2025 14:08:09 -0400")
-References: <20250523180809.41211-1-jsnow@redhat.com>
- <20250523180809.41211-2-jsnow@redhat.com>
-Date: Thu, 24 Jul 2025 09:29:54 +0200
-Message-ID: <87qzy6qc5p.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qMO1RLk5Q4IGJdflYz02+Chm2UefTvj71z/mf91yS1I=;
+ b=QxzVDyVEv6k+CeJv5qnhO3iziL3XYqIfvPUxXOkW1fPGGw7hpEKXoxjnfYOG+IasCLrn6/
+ PZgN6ANfKcj3kMAlg+arrqwJpmvnEVHqsbZXwqpRbs5KikKBqPEuJKCi4Hl9CuDFW0hRSW
+ ZafzFpdEdK13bTGNMB8kySYVtiWfabo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-87MEVTJDOYq1mYlgV0M3Ig-1; Thu, 24 Jul 2025 03:40:35 -0400
+X-MC-Unique: 87MEVTJDOYq1mYlgV0M3Ig-1
+X-Mimecast-MFC-AGG-ID: 87MEVTJDOYq1mYlgV0M3Ig_1753342834
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43e9b0fd00cso4129335e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 00:40:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753342834; x=1753947634;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qMO1RLk5Q4IGJdflYz02+Chm2UefTvj71z/mf91yS1I=;
+ b=aRmsdHgB8S9oCiedh79Fo1/zsTo6eJKMhufti+P7aKj/dSrJywqOqKcf1idnB+MBZM
+ AVHmmXNXkLVXDnz6ZS6xDqdoQBpMF4lA8EEwaH3DqwJLMlgoWGaBtgONpMegCNznAjSI
+ Ka2bUOpSjfX8JLe+1nHrzf40NxhJFC/f0v9Qw3vs6oV2K1F8f3KmwHNMZem/eWK8SKvb
+ 3RJ39rHbczzhHVyOSTFBkiHAZBbA6LRtZHuwWKHD1VmPHB2p3TQ9YHL2Vw+ZjJqfWdAp
+ qt14hkCDZJlznUFSe8LPbhFfHPsG8RA2dwillEGIBOgSSg235w4wcCDARMgo5BhWyjjs
+ /52w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBiKKRsVjaSexa/135SNBVhUBuNV2El/Tye4r1wLW76s+DNGbMCcG8wyOmYjvOZXdcCaiUrqeoXTQ4@nongnu.org
+X-Gm-Message-State: AOJu0YzoBwCq4LaTDwFGa68plm8GaFHmWirBfm7cN5gCV6ZQrPYwCWEY
+ MotbUekq1mo7zUaYIzmWrylFwPn8GfNGVzhfUhCbFajMwhkogfPQof+JB+3BZZwEx/9bKHXoZ5j
+ aRN+K/+jzfen65yQdmHLb0biFt2z6kUlbGNRMdje29zTfQepN/RR2hN2A
+X-Gm-Gg: ASbGncs2kTuKqPtOUtSDSWHcKqbplS+40P8x1Y47FZnutp1G3m5eyg2RwzPhvvFvGw/
+ BoT5eXXntcKy2NGUH7qNTJXrxaIbZvNKy6iCCkFCxIGEG7EQRnWkMzNvULqZD7i7kFhi0YWAxjQ
+ 927lvU2P2hBWPjTABoyomxkcXAbhngNPUTvakAb68qQfxTpNKRQb/AALl98rvzyQDpAu+/NcBVw
+ fPm6Q+cV1VKFhq1XtVZ3tJQpJLpVkrnBfLrDJadUoUG8QsrTEk33VNDeYK4Xciu+VGevh1z+esS
+ kAeNrxjzLw7RkDT4/iXd2qgFz48TJ+HvjtYI+E34lSJqCTRbToolaIjVdZd1NHY+aQQxbaEUNj9
+ tGw==
+X-Received: by 2002:a05:600c:12d4:b0:456:23e7:2568 with SMTP id
+ 5b1f17b1804b1-45870580784mr5529835e9.13.1753342833826; 
+ Thu, 24 Jul 2025 00:40:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTcIoEi0wmH/vdO0OExNz7Nxj1DOnXCUGelCY8u0Z7SYxtlzcJfBJsop8QfzPtVUHx9jX6fw==
+X-Received: by 2002:a05:600c:12d4:b0:456:23e7:2568 with SMTP id
+ 5b1f17b1804b1-45870580784mr5529555e9.13.1753342833377; 
+ Thu, 24 Jul 2025 00:40:33 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b76fc60525sm1311309f8f.10.2025.07.24.00.40.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 00:40:32 -0700 (PDT)
+Message-ID: <642a5b59-a306-4fbd-a55c-008b9fd8ace0@redhat.com>
+Date: Thu, 24 Jul 2025 09:40:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com
+Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
+ adityag@linux.ibm.com, gautam@linux.ibm.com
+References: <20250724063623.3038984-1-harshpb@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250724063623.3038984-1-harshpb@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -86,204 +157,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I refreshed my memory on this.  It's been a while.  Instead of replying
-to your replies long after you wrote them, I'm going to write up my
-thoughts in one place.
+On 7/24/25 08:36, Harsh Prateek Bora wrote:
+> Some of us at IBM have been actively working/contributing in
+> ppc/spapr/pnv/xive and would like to step up to help with
+> reviews and co-maintainer activities. I have also included proposal
+> patches from Chinmay and Aditya in this patchset which had already
+> been posted to list earlier to request for merge.
+> 
+> Thanks
+> Harsh
+> 
+> Aditya Gupta (1):
+>    MAINTAINERS: Add myself as a reviewer of PowerNV emulation
+> 
+> Chinmay Rath (1):
+>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
+> 
+> Gautam Menghani (1):
+>    MAINTAINERS: Add myself as a reviewer for XIVE
+> 
+> Harsh Prateek Bora (2):
+>    MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
+>    MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
+> 
+>   MAINTAINERS | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+
+I can merge these changes through the vfio queue.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
 
-
-= General observations =
-
-* We have three QAPI-generated manuals: QEMU QMP Reference Manual, QEMU
-  Storage Daemon QMP Reference Manual, QEMU Guest Agent Protocol
-  Reference.
-
-* We generate an index for each manual: qapi-qmp-index.html,
-  qapi-qst-index.html, qapi-qga-index.html.
-
-* The doc generator does not link to these indexes by itself.  Instead,
-  each manual links to its index in its introduction section.  This
-  makes the index really easy to miss.  Even if you're aware, jumping to
-  the index is bothersome once this lone link is out of sight.  Until
-  that changes, the practical value of improvements to the index is in
-  doubt.  Doesn't mean improvements should not be made, only that they
-  better be cheap.
-
-* You're proposing to additionally generate a "main" QAPI index
-  qapi-index.html for everything documented in any QAPI-generated
-  manual.  Not linked from anywhere.
-
-* Modules let developers structure the schema and the generated code.
-  They are not a thing at the QMP interface.  Letting such internals
-  bleed into QMP documentation is *wrong*.  The excuse for doing it
-  anyway is that the module tree is close to the section tree in
-  practice, and we can use the modules (which are readily available in
-  the doc generator) as an approximation for sections (which we don't
-  have there at this time).
-
-
-= Indexes before the patch =
-
-An index page starts with links
-
-    Alternates | Commands | Enums | Events | Modules | Objects | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z 
-
-Then we have flat lists of the alternates, commands, enums, events,
-modules, objects, entities starting with "A" or "a", ..., "Z" or "z".
-Each list is alphabetically sorted.
-
-The links at the top take you to the heading of the respective list.
-
-The list entries link to entity documentation, except for "Modules",
-which link to the beginning of the doc generated for a QAPI module.
-The entries under "A", ..., "Z" have a (meta-type) suffix.
-
-Every entity is listed twice, once under its meta-type (Alternates,
-Commands, Enums, Events, Objects), and once under its first letter.
-
-
-= Indexes after the patch =
-
-An index page starts with links
-
-    By module | By type | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
-
-Then a two level list module / entity name (meta-type) linking to the
-entity's doc.  Link "By module" takes you to its heading.
-
-Then a two level list meta-type / entity name linking to the entity's
-doc.  Link "By type" takes you to its heading.  This replaces the flat
-lists Alternates, Commands, Enums, Events, Objects.
-
-In both two level lists the outer level is collapsible.
-
-Then flat lists "A", ..., "Z" as before.
-
-Flat list "Modules" is gone.
-
-The links at the top take you to the heading of the respective list.
-
-Every entity is listed twice, once under its meta-type under "By type",
-and once under its first letter.
-
-The lists are now sorted case-insensitively.
-
-
-= Critique =
-
-Here's the one question that matters: what are readers trying to do when
-they use the index page?
-
-Assuming they find the index page in the first place (see "lone link"
-under "General observations" above), but that issue is out of scope
-here.
-
-I believe readers use the index to jump to the doc for X, where X is
-something they encountered in the QMP interface.
-
-I don't think they'll use the index to jump to the doc of an Y they
-encounter in documentation, because that Y will be a link.
-
-X obviously includes commands and events.
-
-I doubt it includes types.  Type names are not a thing in the QMP
-interface.  You run into them only in documentation, but again, they are
-links there.
-
-We should make looking up a command / event as easy and quick as we can.
-
-Let's examine how users can navigate to the index entry that takes them
-to the command / event doc.
-
-Before the patch:
-
-1. Find the index page somehow (out of scope here).
-
-2. Click on Commands / Events.  For commands, can instead visually skip
-   over the alternates (which is just a few lines) to Commands.
-
-3. Visually scan an alphabetically sorted list of ~250 commands (almost
-   seven screen-fulls for me) or ~50 events (a bit over one).
-
-Alternatively:
-
-2. Click on the letter the command / event starts with.
-
-3. Visually scan an alphabetically sorted list of up to ~200 entries
-   (five screen-fulls for me).
-
-Alternatively:
-
-2. Have the browser search the index page for the name.
-
-Alternatively:
-
-1. Screw the index, search the entire manual (single page) for the name.
-
-After the patch:
-
-1. Same.
-
-2. Click on "By type".  If you can somehow divine that's where the
-   commands / events hide.
-
-3. For commands, visually skip over the alternates (which is just a few
-   lines) to Command (could also collapse Alternate, but why bother).
-
-   For events, either scroll down a lot looking for the events, or
-   search for "event" (for me, that jumps right back to the top of the
-   page to show me the first event under "By modules").  Could also
-   collapse Alternate, Command, and Enum, but most likely just give up
-   and try an alternative.
-
-4. As before, visually scan an alphabetically sorted list of ~250
-   commands (almost seven screen-fulls for me) or ~50 events (a bit over
-   one).
-
-The alternatives are unaffected by the patch.
-
-I'm afraid the patch makes the index harder to use.
-
-Minor quibbles:
-
-* The "type" in "By type" is wrong.  It's by QAPI meta-type, which is
-  not the same as QAPI type.  Casual readers will likely not be familiar
-  with the term "meta-type".  Calling the thing type risks confusion
-  nevertheless.
-
-* The Modules sub-index before the patch is useless.  The navigation bar
-  on the left is much, much easier to use.  It also shows the *actual*
-  section structure, not an approximation.
-
-* The "By Modules" index after the patch is debatable.
-
-* I can't see a use for the "main" QAPI index.
-
-
-= Recommendations =
-
-* Consider dropping types from the index entirely.  This would make
-  navigating to commands and events via first letter links *much*
-  easier.  No need for Commands and Events lists, the "A", ..., "Z"
-  suffice.
-
-* Else, keep an obvious, one click path from top of index page to
-  commands and to events.
-
-  However, the list of commands is too long to quickly scan visually.
-  Consider breaking it up by first letter.
-
-* Keep the switch to case-insensitive sorting.
-
-* Definitely drop the Modules sub-index.  I don't care for the "By
-  modules" thing, either.  The navigation bar on the left does that job
-  better.
-
-* Drop the "main" QAPI index.
-
-* Out of scope for this patch: a manual's index page should be easy to
-  reach from anywhere in the manual.
-
-
-Thoughts?
 
 
