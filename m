@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EF1C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 08:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119B7C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 08:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uerg8-00025N-80; Thu, 24 Jul 2025 04:51:52 -0400
+	id 1uerga-0002TG-0s; Thu, 24 Jul 2025 04:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabelova31@gmail.com>)
- id 1uerg2-0001zG-JA; Thu, 24 Jul 2025 04:51:47 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uergP-0002MP-M7
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 04:52:10 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabelova31@gmail.com>)
- id 1uerg0-0005g7-HU; Thu, 24 Jul 2025 04:51:46 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-553b3316160so727252e87.2; 
- Thu, 24 Jul 2025 01:51:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uergN-0005jW-Rj
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 04:52:09 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45629703011so4733605e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 01:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753347101; x=1753951901; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OPIxdBYnhuclbLht9t6EtWZfDez/9GhRUEOFNKEfVP0=;
- b=TW3H2SY6iIbJHZGXSc2XTS75JjkKbqilwcWcW7wSR49wSHuL8blMhAfVqbLHoE5Ntj
- To7MUV59NeC5VVMy246yWKJPSbzmZ3ebdAa8Co7DKTyI7PM8LhU5w/8lH+7DTMY/m6l8
- ThTV6RR2NNq671Hu+WSK8M5sLvWukaZfL0FHIfGqJj8dvqYO77a1uYdEuFrCJ/ZgABlB
- zjPH9AVie1YCTeGr985qf9tHtukaaUmQkDU8Ci+XeqnEdaz6E2hAHUTrgOSV0A1Q+73e
- spzM2C7o6EowldhX86+BLjtPk/5pQqyBhZGA7yy/OoyFDXSl+Jul3KwOIMnqKMPnRZky
- Y/Sg==
+ d=linaro.org; s=google; t=1753347126; x=1753951926; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=J/Agva/uaBmY+2rCnSNmB/Rgl0AZCDHV58eYSWguttk=;
+ b=M53oHSqBJoUROMGRUPTYFCKvilK5FQAavZKPaeMmLWDUTQZ7UXaq3jwLvzKO/VpmXU
+ vsJCtB+z4jcyrBl5Pbwd32VT4ETArPBwx3gK7s3m2AGVoBfuCGi1rFTwy5nOqwM8Ex/1
+ qZkiYzGmmAXdHGZOZVnZKi24kb0sAYyTzmJInhIK8RlIjwVzqzEzOdK8eeuYdWtjikZA
+ P7VeZtnhzuFu8ymCPWoqrqv690DUOdSPGEita9412RbiaeNK0v60dExNX2EKpzecM1sr
+ B7scb+fa7MSAn1roP2lL5IqarN/57mY8tL8Q9eBMoLQ4UT1PYCLpDj0cmiOjVPqoqq88
+ pZ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753347101; x=1753951901;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OPIxdBYnhuclbLht9t6EtWZfDez/9GhRUEOFNKEfVP0=;
- b=WoW6cur9C81xey2S+ARsjqTXSVfPYG61GdR1o+SWo1E7GhS43fAIZxjVqyrPQtYumV
- v3kVj6gc7vFGjYxA13x6n87MYr4Ik39txaYkAlM3tkTDd8MW88TBIVkxxIV7b94cTXPh
- vWtv7X3fXKrVpeZGlC2uYF8FgRh1h/o3PolYAGEy8aK9/xVIhw4wL/QYHQyUFganwrbr
- 9ow/dHvVltKvk3DWRPe2kubsGt7+34sRTSLUcjlkq/NyhqhvgfJWDodzO/rIeQtQ7Hnu
- YjFo485VV0v3TowcahTuRbQhtdno+fMuXtSJIbInIpouk/FRvbQbR3VxA7qP0ir7LsEc
- pVTA==
+ d=1e100.net; s=20230601; t=1753347126; x=1753951926;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=J/Agva/uaBmY+2rCnSNmB/Rgl0AZCDHV58eYSWguttk=;
+ b=KATccPIo4vHYojubV1I55SJ4U1zjXMP2WTxoMZk9WZIg4nMxXKFbTDiLBKn4vTFUTN
+ GkSVfttGxdkjDvyi2LQFNlQBu9ysYWO4M+eDzWZ2EI4fPGZzniwMOW2K8+Chgsj5in6h
+ JP2660IaCa0Ul+TsNosKFaf/Iv9gr2sgTZOiMdEJH+F5nR2Xylq0WBvd8ttep3EysVNj
+ XSCR5GgNqoavICNEfb3oPLBRRO74Us+2muUsVoAEmQAL7fMZBFwOvWa1REkVIj88bANT
+ pCfT11jEjjNoXuPBBRH9F8zKgZnhJeq0c9YulKjFJ2Y+vfT8TO6Ro2HMbUs3LDbHrK1M
+ AkRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFk7xx0/k8rPZWmlB+MyDgTJdmqEaiSZsZTDmXuD+0L+zijJ98CbzyrFzocOegjVjPLoWym0moeg==@nongnu.org
-X-Gm-Message-State: AOJu0YyRLsYAFxqjT/tW7F1mW1t5t9XrJ+2h2cpfC+tfR/E2mr3XWm2h
- y+4KUsaDKLZzfYakBr6SJ5Th1LI6Ysn01evJercsaUTUEc7BoWWo9wRpxdTtAkfpMgY=
-X-Gm-Gg: ASbGnculhaZI+JVeqj+3AwGC4/VJYmrTiujHgU7hh8A/FEqL3SGu3Oe9Ilb0KXUbt2n
- yVYOA46yxaUvhznk6D/e8rDwQD3+wN8oYUuBGuoNgsdwrv16wexQahG5kVK7ETebxB/e/GG+dJJ
- oBmEgO++7skw/Z2CS5TE/sgdTmKN8xQBHUBzne8stMT0M841Y9ZQPuq/L9WkfaH0yVFKkAveZOe
- SH40UclG+PtQhZXcmTv5wGUSg6mcJZcMjc+18UwakJjbi6tr4A90xqQyMB7zJX/cbYSwS7wSfrJ
- BIvbjf8JxU65jx1ZJyRVnv5Zjc7QHmMrbajWwZrmD5OqINS4GZlb6m+mVOQCjpy5kHavKmZiTS7
- X5B+rRkW6U/eFhufG6xtXBKw2Xjf4Ap6oe8PS2eD2Vxs5
-X-Google-Smtp-Source: AGHT+IEHtrDV3Ln7HGYTOhAmtb1VBCFzgvZ7458RSnL4XMhwe65U/A8oFkSZbNSNqb/Z8c/yEs5s9A==
-X-Received: by 2002:a05:6512:ea9:b0:553:3492:b712 with SMTP id
- 2adb3069b0e04-55a51432ba9mr1781298e87.54.1753347100976; 
- Thu, 24 Jul 2025 01:51:40 -0700 (PDT)
-Received: from rbta-msk-lt-106062.astralinux.ru ([81.9.21.4])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-55b53b21f16sm254940e87.26.2025.07.24.01.51.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 01:51:40 -0700 (PDT)
-From: Anastasia Belova <nabelova31@gmail.com>
-To: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: Anastasia Belova <nabelova31@gmail.com>, qemu-arm@nongnu.org,
- sdl.qemu@linuxtesting.org, Anastasia Belova <abelova@astralinux.ru>
-Subject: [PATCH] target/arm: add bounding a->imm assertion
-Date: Thu, 24 Jul 2025 11:52:06 +0300
-Message-Id: <20250724085206.22398-1-nabelova31@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ AJvYcCUKnbuxGyGBlPP3gjPu32PV8G+dsZUOuvZ50g/zpC/u5rD/BxM1ScoWAHYqSmtIJPpB4N42fdunqYG+@nongnu.org
+X-Gm-Message-State: AOJu0YzECAMAeXfkhhHrjQmpLlvS6XKY7NOyBpA3X8uvxkEw1bPn+pQL
+ tPHc8pJ7RE/9Pz8w3puKYAFxYekxSnIIVyW+Q/1RPKJZRyYBPakF2/1/3ODEgNm5sqE=
+X-Gm-Gg: ASbGnctzpxB3pdH8tqOCpwG0srwHHBRGIRDuWH3zlWV72oHtk76UdSm7Z8Qof+5sxQ4
+ bjZ7urt3VDX3CjIqULOWE5eyiLTsdhyJSr5Z478ILa5lDWCWwuhdP6MEtZRtfJN/W+SobwRuC2B
+ EdUGlWAwcRfPWpRcPpUXNkxCfsBMPpRXh5f3/W+Xg8kZo34sHh2oH04Sgg+BMLPr8ekjWAif+P8
+ SNHa6I87Abls/ZPel8oxS+KZvCb85s/72+DztPzV8i3qLVYMIk3AaK8cTcGsBtlQ4j6ZdgNTaeK
+ fZw+SlR1YF7H3La0aH3sUjzZfHZCDbF12jSLdw0pAfEbuMILeGVDoZ5gd17Z3ea79kk8CR1we6r
+ Ni+GmmgtuH3gD2pAYzXDChhNFfzDuBsrkUyAI7ftxJsZ//Gno3SHLxkZsAs81O6yENA==
+X-Google-Smtp-Source: AGHT+IGv7E/XDc4n9DH0KdchYEb6Eth0k7aORxmYQl4tj3Pf4InLYGVyN5arLehtAEglGrQxu5y07Q==
+X-Received: by 2002:a05:600c:1ca4:b0:455:bd8a:7e7 with SMTP id
+ 5b1f17b1804b1-4586fd1a863mr12611055e9.9.1753347125687; 
+ Thu, 24 Jul 2025 01:52:05 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4587054e37dsm11600655e9.14.2025.07.24.01.52.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 01:52:05 -0700 (PDT)
+Message-ID: <c6891bd3-eee9-425a-a785-f503284145af@linaro.org>
+Date: Thu, 24 Jul 2025 10:52:04 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=nabelova31@gmail.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] hw/i386/amd_iommu: Support MMIO writes to the
+ status register
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ eduardo@habkost.net, richard.henderson@linaro.org,
+ alejandro.j.jimenez@oracle.com, vasant.hegde@amd.com
+References: <20250724064745.4091-1-sarunkod@amd.com>
+ <20250724064745.4091-6-sarunkod@amd.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250724064745.4091-6-sarunkod@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,29 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an assertion similar to that in the do_shr_narrow().
-This will make sure that functions from sshll_ops
-have correct arguments.
+On 24/7/25 08:47, Sairaj Kodilkar wrote:
+> Support the writes to the status register so that guest can reset the
+> EventOverflow, EventLogInt, ComWaitIntr, etc bits after servicing the
+> respective interrupt.
+> 
+> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+> ---
+>   hw/i386/amd_iommu.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index bbffd07b4e48..7c2fa80d14ff 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -850,6 +850,9 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
+>           amdvi_mmio_reg_write(s, size, val, addr);
+>           amdvi_handle_pprtail_write(s);
+>           break;
+> +    case AMDVI_MMIO_STATUS:
+> +        amdvi_mmio_reg_write(s, size, val, addr);
+> +        break;
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Should we add:
 
-Signed-off-by: Anastasia Belova <nabelova31@gmail.com>
----
- target/arm/tcg/translate-sve.c | 1 +
- 1 file changed, 1 insertion(+)
+         default:
+             g_assert_not_reached();
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index d23be477b4..47ada85c92 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -6250,6 +6250,7 @@ static bool do_shll_tb(DisasContext *s, arg_rri_esz *a,
-     if (a->esz < 0 || a->esz > 2) {
-         return false;
-     }
-+    assert(a->imm > 0 && a->imm <= (8 << a->esz));
-     if (sve_access_check(s)) {
-         unsigned vsz = vec_full_reg_size(s);
-         tcg_gen_gvec_2i(vec_full_reg_offset(s, a->rd),
--- 
-2.47.0
+to catch unimplemented cases?
+
+>       }
+>   }
+>   
+
 
