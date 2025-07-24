@@ -4,63 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7243FC83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA0DC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uevlY-0002lC-5z; Thu, 24 Jul 2025 09:13:44 -0400
+	id 1uevpV-0007gP-WE; Thu, 24 Jul 2025 09:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1uesXI-0000OR-JY; Thu, 24 Jul 2025 05:46:48 -0400
-Received: from mail-m16.yeah.net ([1.95.21.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1uesX9-0008DS-5m; Thu, 24 Jul 2025 05:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=U+
- bEyJCRkOOjW2WuDRHjgnixsRl5GRu1j6nn0Pr0hMQ=; b=GE0QmRhyvM7c7TtqMd
- JzZLTxVNsB/soA6HyzTYo5Bqgh3Mh/h/zcN5fZ/UwLEPI7ltatX451bU2Gap5+5k
- 8A4ft0YL266FnT6v+syKQkTvq4hHp3r/QohGj/+Gn7APRLAaU/DPipD8Q+UVW+s0
- YhBDAtSG8amL4CwAhnDXT1z+A=
-Received: from vcore-181.. (unknown [])
- by gzsmtp1 (Coremail) with SMTP id Mc8vCgD3P93kAIJoQlVNAQ--.8853S2;
- Thu, 24 Jul 2025 17:46:14 +0800 (CST)
-From: Yang Jialong <z_bajeer@yeah.net>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: yangjialong@rvcore.com, Yang Jialong <z_bajeer@yeah.net>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v1] intc/riscv_aplic: Fix target register read when source is
- inactive
-Date: Thu, 24 Jul 2025 17:34:26 +0800
-Message-Id: <20250724093426.4179617-1-z_bajeer@yeah.net>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uevpQ-0007dc-Pr
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:17:45 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uevpP-00066n-3D
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:17:44 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-ae3a604b43bso153804766b.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 06:17:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753363060; x=1753967860; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PKa9Xfs+jC54utoZbp9wWbdGbgaNPTNBJbxU8B9LYEk=;
+ b=edbLXvN5os8yrMXxA8N0ZgmWwXbZJjN+iv5THa1HtoQkeyVVvv0qU25HVHgnWfBezQ
+ 0d4YOtd/7iF8VACQaAp8tq2ax/T923keEvk5NIQyS0tDlZG9pPbqnn2xz3t6OM6Ehc+o
+ Qn3z3JsE9JtRqTd+IvhV4CIXLmg88EmrMOXln/dA8eJoMr6fSeEexcSaVpX8wmdt8rJh
+ 5DNTITO+BC+Ka+tK0BRrutMWzSQeZI4bwQdhuUsVrDKW6HvYwlI4ufe4oHAGU0+FQVZB
+ mugK/0C+Kvk8LvIdF25It8A7/jPU7KzvT+mpLU0I3I6FGZoTkcOpvpR7AoNWa0U1mf2t
+ W58w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753363060; x=1753967860;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PKa9Xfs+jC54utoZbp9wWbdGbgaNPTNBJbxU8B9LYEk=;
+ b=jfWWJeQkWWCc7DQ4nYB6W5zsgA33b/fyzjA/fnW5fcDpUWkSf2J9hrownCiUBmaAMU
+ DyKS8wTfOsi+LTkhTirwxw0u1R4h5nHlWtnxLu4aVg5+i46tARG8FIrbOHlafrjjoT/6
+ 3UlEs/fdbyfb3tC0N02HtEgE70IIx6QM2Xt4Bp9neDGVgCGV7uxdw0hMzxwhbwlSmM17
+ SnDzShvnRFU2Xe/uioaw6UACy4VrmQ/F7aDy7/QgFCXE+truK7JuYSOIJPneYN1ozzlg
+ vh24kpPCyeCM4c4/KFiGjSSd/wpSsUoq9NkLxIB0fthB2I/0E9ugtMXbLTuPQG3RNiP1
+ b9dA==
+X-Gm-Message-State: AOJu0Yw0jnihPCbWw4Zx9lh5Nj0Lq72bvO2dr73GWz/RPojp7lKFjyQd
+ 5q5p5pl8ovIq1JP3vGqmvmqb+tb46bAnWu1wwPe7+6P7EWOaA6YlmsSgzju41WOHss75UiW+rvG
+ ng5YJVCuUjl8Gmr2/h5n+6f7nAsv/4HUWXW4QbnvRvA==
+X-Gm-Gg: ASbGnctmB8625P/8NIDofkTiv9jiFCmPSIVWvcqa6rHwLeIhuapz7lLJWmATbfUiwBi
+ O+9nEleQKTGhxfnorXoQu1azZIjQwPTQRXD1hLynGpRhnByi8XtVK5EGd+Fy4c3+2JjPnjvQMpK
+ 6c6Vu+ec9fLPMUMJWWV2Bch2okrK0YwRczWzwMQbQhEcuEoP4/aCTWgdpWMA6jbxRAOzwqAqMmO
+ 2cDiA==
+X-Google-Smtp-Source: AGHT+IEaM5fGR+ucdMcIE/Zyo2rH+mc8wvrQk14WM0wfEtU/y6romPuYcWCKjx1vH4uoghWVZWhk/2RYA1FVaEpzWPk=
+X-Received: by 2002:a17:906:c14e:b0:ae0:635c:a400 with SMTP id
+ a640c23a62f3a-af2f8d4e87bmr650990266b.51.1753363059961; Thu, 24 Jul 2025
+ 06:17:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Mc8vCgD3P93kAIJoQlVNAQ--.8853S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Kr4UAFy3ZFWDKF18AFWDArb_yoW8JFW5pr
- s3GFsIvrs8tF1UGa1kJr18XF4UGr98Wr98ur1DuryIkwsxtw4FgrykK345Zr48CFy5Cr1Y
- vFZ0kr13CF4jv3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UeBT5UUUUU=
-X-Originating-IP: [103.233.53.226]
-X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiNQbzF2iCAOb+RQAA3g
-Received-SPF: pass client-ip=1.95.21.14; envelope-from=z_bajeer@yeah.net;
- helo=mail-m16.yeah.net
+References: <20250724125928.61045-1-hreitz@redhat.com>
+ <20250724125928.61045-3-hreitz@redhat.com>
+In-Reply-To: <20250724125928.61045-3-hreitz@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 24 Jul 2025 16:17:14 +0300
+X-Gm-Features: Ac12FXwOj1GLQpZBQWGaH2C4gLbt0_D2cd48O4OYBDmTbhwoltKtpmDf-gTfRh4
+Message-ID: <CAAjaMXb7SuHrCh_oCAoVKmfo8eNXoaR=8ay5sDAMrS4Qdtxk6w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] vhost: Do not abort on log-stop error
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 24 Jul 2025 09:13:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,41 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RISC-V Advanced interrupt Architecture:
-4.5.16. Interrupt targets:
-If interrupt source i is inactive in this domain, register target[i] is
-read-only zero.
+On Thu, Jul 24, 2025 at 4:00=E2=80=AFPM Hanna Czenczek <hreitz@redhat.com> =
+wrote:
+>
+> Failing to stop logging in a vhost device is not exactly fatal.  We can
+> log such an error, but there is no need to abort the whole qemu process
+> because of it.
+>
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  hw/virtio/vhost.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 05ad5de629..6557c58d12 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1122,7 +1122,8 @@ static void vhost_log_global_stop(MemoryListener *l=
+istener)
+>
+>      r =3D vhost_migration_log(listener, false);
+>      if (r < 0) {
+> -        abort();
+> +        /* Not fatal, so report it, but take no further action */
+> +        warn_report("vhost: Failed to stop logging");
+>      }
+>  }
+>
+> --
+> 2.50.1
+>
+>
 
-Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
----
- hw/intc/riscv_aplic.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 4fa5f75..cfef69f 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -628,7 +628,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
- 
- static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
- {
--    uint32_t irq, word, idc;
-+    uint32_t irq, word, idc, sm;
-     RISCVAPLICState *aplic = opaque;
- 
-     /* Reads must be 4 byte words */
-@@ -696,6 +696,10 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
-     } else if ((APLIC_TARGET_BASE <= addr) &&
-             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
-         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
-+        sm = aplic->sourcecfg[irq] * APLIC_SOURCECFG_SM_MASK;
-+        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+            return 0;
-+        }
-         return aplic->target[irq];
-     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
-             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
--- 
-2.34.1
-
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
