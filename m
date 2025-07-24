@@ -4,81 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C10CC83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B98C83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uev9j-0000jb-8i; Thu, 24 Jul 2025 08:34:39 -0400
+	id 1uevAj-0002pI-CV; Thu, 24 Jul 2025 08:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
- id 1uev9h-0000g6-4w; Thu, 24 Jul 2025 08:34:37 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danielhb413@gmail.com>)
- id 1uev9b-0007dH-QM; Thu, 24 Jul 2025 08:34:36 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-23f8d27eeeaso8168045ad.2; 
- Thu, 24 Jul 2025 05:34:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753360468; x=1753965268; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sv7TuTTulTpQhb+LyN9VrSVbtD9Mj8UZkIFdY0nNhwU=;
- b=SYqqmBskl/N7RkAnTOax1rQlgsnf9AZG2X34/EY6+FUHHuj4RVGMr/T7oRuj9BHywb
- Fg+k4StjH5hyLYzNAwKamiUK9nC/oezEpOJ0BKgxU2009/Nu/NO3Tvo3fSCgQ3ggX4QN
- M7tITc+hJk81TVI/4HFsxSRHQtVFmMgiz3Mv8LrCnv81cuWb7kwo96chG3kulS0HRMv5
- TeDFqBNDCNU8yOInBH08AFY2uyDIdSh1EGwM8iqb22e/pgyLLzBYzAeLpv9H+EO+O7g8
- oKLugwmhYy+WZN3R4Ky+gIfSBI7+3KIYQz1oSfBKHgOBeB8wD7jZ+ihC2XwOksv1WyMO
- nB8g==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevAe-0002iI-Jy
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:35:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevAZ-0007ti-W9
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:35:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753360530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aAoKy/U+1teVsXU//njaZVP1Q0B75XHaoEQs/4JkTN0=;
+ b=OFcZjdBe/4NHQupW5IUvGjpf+ynhCqzlYBtHBvqJ4I1dFSEJtpcu3nEilYpcLyuI1FxTCQ
+ 3rfGE3VRjXmKSGHSw6LbDUGIcVe0YlRpDYiT2mqczHQZvbCr4mgwQmiDfvQ0rzsK5raaNo
+ G/Gux1kv/bVh6T+FDGn8UUWUc8xSaiA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-86_UyUfIPtWX96t_Yoge5Q-1; Thu, 24 Jul 2025 08:35:28 -0400
+X-MC-Unique: 86_UyUfIPtWX96t_Yoge5Q-1
+X-Mimecast-MFC-AGG-ID: 86_UyUfIPtWX96t_Yoge5Q_1753360527
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eee2398bso359537f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 05:35:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753360468; x=1753965268;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sv7TuTTulTpQhb+LyN9VrSVbtD9Mj8UZkIFdY0nNhwU=;
- b=doGy8CviCB9tEgicDFc1adFdAzmMGnTyv/1zlGsCavCFt+cSiLG5WsMyMX9KmnrvQc
- mEalvzyO0W+LCDk3dgkuJJCeYHK7OJdIZRl/BVpBWHa1ZmW91RDnT+nMC1ilpb9350x8
- t+cWewS/Gh7syMcXpyDjpzYAzhPY2LrY2vcfDxNBo5z13Tp7aOzkRGhZ6FKBNBorQACd
- U+hhCUl13yzymPviL6SlWBPV+0DJGFmGL1sWqEJxpfTsllHHaa4qCnK38iamZ4asZn4A
- xY2Q/OXJG4mBQZ2ZWivlZbDgBtio5GTTn/wQnoHVLc1xbYFpxKEdWozDTK4z4zzq16/3
- Zv5g==
-X-Gm-Message-State: AOJu0YwK0teOnmPsLm+NsL5NmhkJS6dNSF7jNcwXaWlbUzwOsxQjOUQE
- 1t3mLtB3vx+P36RL9aSa1eb90A1XqQ6tOv2t8wZ+W/kiiCKBEMSiduIeKMMVrg==
-X-Gm-Gg: ASbGncvF4WGE1ZIZza7b8iWXMpPyQqofNRXDowXdz6TE9S/6kAATvk00tjvszQaV9Mk
- OqoSwHHJWPvFfT+YXpi9XGjl0/9fH+wX3YpeIoZPLEoQOhoZfdRNBHHOAnshbtY/w/pyCT2A0G2
- YQKqIMBEavaX0e5XxLZHCuD3tkyu1WTJ4tTSYoyX/nMtQ6Z9lGVFhTAOnhUB5CmNDHKOKxupgWq
- VbbrhnICoZnfDU+SPvx8a+qVswE53X+xryq6ZQXr4zmT9/do+6RZ/ayuA/z3bGN++oaETjvgyOT
- Uo+3oX1CGVewPFVo8VygCsJaxMon0UEEFqGvxLIDZw9ajCu1MAIh5kPEYah8AeF5c5IVqc4QJ+n
- kxEiS+Lrnc3f6QyJL7g==
-X-Google-Smtp-Source: AGHT+IFx0qTletkz5WsZXiHS7VW3HdROzMD7YLy55H+selBrGQBMLEXBr4afEVPPdYPzoKJHZ1Ve3A==
-X-Received: by 2002:a17:902:f788:b0:23f:8d56:b75b with SMTP id
- d9443c01a7336-23f981b18d7mr93353265ad.41.1753360467735; 
- Thu, 24 Jul 2025 05:34:27 -0700 (PDT)
-Received: from grind ([177.170.118.252]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fa48bc6c8sm14874925ad.81.2025.07.24.05.34.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 05:34:27 -0700 (PDT)
-From: Daniel Henrique Barboza <danielhb413@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: [PATCH] MAINTAINERS: remove myself as ppc maintainer/reviewer
-Date: Thu, 24 Jul 2025 09:34:16 -0300
-Message-ID: <20250724123416.3115941-1-danielhb413@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ d=1e100.net; s=20230601; t=1753360527; x=1753965327;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aAoKy/U+1teVsXU//njaZVP1Q0B75XHaoEQs/4JkTN0=;
+ b=AH1Vck+ia9C7tQbcw2Ekfu3SRr8hka+iB6nGwj9QGqQnriVWZctHEs3Q3EPtUvVg0A
+ y4fprS5UhlXe3GcMzcaoR3oyRNdpKhjRPHpj/4vsKHAJAp5LkxvoNlsatzf0S327Gxue
+ VtZY+92Q4Bc7Ltn2x1ZBIJQxv2Uq8/vM61L/9vJVEJQhX4ADSiLZHm2q4QU5sUp2/A0e
+ SKL+vtrq4TJeYa4asPa2svrH6ESkRn4SGGo/PbnvtGAJpxkMsoRwPJPKwFCSCytK18h3
+ XAXkv4XaMOxEg375+0oAQ28BC/O2kumQWjeR3xKjYutgBIdew4RNsSzSsaLH7RuBNqqI
+ /L+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtHm5nscRnyU9uXnSl/l2jSXKW8MTMl/+cYwAf13cTZ5bCZyJuUVJSNHP5mIzLbhB7IMYEuM7UCxi7@nongnu.org
+X-Gm-Message-State: AOJu0Yw9jQKOn+sKwMN41JnxGwCr6DdAYJW0PFSXdBDbxsbFl3Z9HPif
+ QaozWbM12HrJfVT8c7eGx1J+0lFE9CkZDVonkv/zZW6Cdih4lAlytYJiZHfT0nnmUjdPD+cMfGE
+ A7GB0jLsMhzEMd4nE1NJLi2oI5wyIx5pMPlttymgPqrLDQfJLX9betGmu
+X-Gm-Gg: ASbGncsl2zJRwS9NqPC9teIlE52dpbPy48h3r1pZZmqIKX7skVP2pNcGAYPBabAhpBG
+ rIcCA3uos93aVeIasvKVk2WJ7+gYhonIbPlkHbnuSCOxE+kFkRVSok8aflk/ms6Zk2br/agj24T
+ 55uHF6pH09nbUHjI5f3rMjRIX4N0w6E7EGl07RwVALR9T8TvD7XDMV2rKHA8zkVPraagU9wLxvF
+ tQ027UTRRNqlD5PMvawLATyVwIyBiNWTT3FlhOpyED0HXnZG7st2UFmcFouDiFySbWYn9weCjp2
+ YnPcLePWcfqZ9S16e+48a6zGMmVnFBFXMGwfodHGCzBLK2VoMlMwcnFf+CESuQnaFG9RwjFUetE
+ +ow==
+X-Received: by 2002:a05:6000:2483:b0:3a6:d95e:f38c with SMTP id
+ ffacd0b85a97d-3b768ef956bmr5459444f8f.33.1753360527221; 
+ Thu, 24 Jul 2025 05:35:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBXQr2qWTzXd4np/LtY5AU6jYiUwJvS3eT0YF/9G8GaelqeVJ5qclSw0mVd+xBzkpeOX5GJA==
+X-Received: by 2002:a05:6000:2483:b0:3a6:d95e:f38c with SMTP id
+ ffacd0b85a97d-3b768ef956bmr5459418f8f.33.1753360526712; 
+ Thu, 24 Jul 2025 05:35:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b76fcad036sm2106362f8f.46.2025.07.24.05.35.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 05:35:26 -0700 (PDT)
+Message-ID: <5dc19aea-115b-4af2-8854-f4433be541fc@redhat.com>
+Date: Thu, 24 Jul 2025 14:35:25 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?B?UmU6IFtQQVRDSF0gTUFJTlRBSU5FUlM6IFJlbW92ZSBGcsOpZMOpcmlj?=
+ =?UTF-8?Q?_as_reviewer?=
+To: Frederic Barrat <fbarrat@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20250724075916.1593420-1-clg@redhat.com>
+ <d28741e9-1e47-4a83-a37e-20e516ec7deb@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <d28741e9-1e47-4a83-a37e-20e516ec7deb@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=danielhb413@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,49 +160,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It has been awhile since I actively did anything for qemu-ppc aside from
-reading the qemu-ppc inbox a couple of times each month. It's not enough
-to justify a reviewer role, let alone being a maintainer.
+On 7/24/25 10:05, Frederic Barrat wrote:
+> 
+> Le 24/07/2025 à 09:59, Cédric Le Goater a écrit :
+>> Frédéric has moved to other tasks within IBM and no longer does QEMU
+>> development.
+>>
+>> Cc: Frédéric Barrat<fbarrat@linux.ibm.com>
+>> Signed-off-by: Cédric Le Goater<clg@redhat.com>
+>> ---
+> 
+> 
+> Acked-by: Frédéric Barrat<fbarrat@linux.ibm.com>
 
-Given that we're doing qemu-ppc maintainership changes across the board
-I'll take the opportunity and remove myself from the premises too. Feel
-free to reach out with questions about code I did in the past, but at
-this moment I'm no longer able to keep up with qemu-ppc activities.
+Curiously, this email is taking a long time to reach lore.
 
-Signed-off-by: Daniel Henrique Barboza <danielhb413@gmail.com>
----
- MAINTAINERS | 3 ---
- 1 file changed, 3 deletions(-)
+C.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a462345618..088b561aa0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -295,7 +295,6 @@ F: tests/tcg/openrisc/
- 
- PowerPC TCG CPUs
- M: Nicholas Piggin <npiggin@gmail.com>
--M: Daniel Henrique Barboza <danielhb413@gmail.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: target/ppc/
-@@ -452,7 +451,6 @@ F: target/mips/system/
- 
- PPC KVM CPUs
- M: Nicholas Piggin <npiggin@gmail.com>
--R: Daniel Henrique Barboza <danielhb413@gmail.com>
- S: Odd Fixes
- F: target/ppc/kvm.c
- 
-@@ -1550,7 +1548,6 @@ F: tests/functional/test_ppc_40p.py
- 
- sPAPR (pseries)
- M: Nicholas Piggin <npiggin@gmail.com>
--R: Daniel Henrique Barboza <danielhb413@gmail.com>
- R: Harsh Prateek Bora <harshpb@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
--- 
-2.50.1
+
+> 
+>>   MAINTAINERS | 2 --
+>>   1 file changed, 2 deletions(-)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index f3f981f90deb..9481a21c8018 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -1578,7 +1578,6 @@ F: tests/functional/test_ppc64_tuxrun.py
+>>   
+>>   PowerNV (Non-Virtualized)
+>>   M: Nicholas Piggin<npiggin@gmail.com>
+>> -R: Frédéric Barrat<fbarrat@linux.ibm.com>
+>>   R: Aditya Gupta<adityag@linux.ibm.com>
+>>   L:qemu-ppc@nongnu.org
+>>   S: Odd Fixes
+>> @@ -2780,7 +2779,6 @@ F: tests/qtest/fw_cfg-test.c
+>>   T: githttps://github.com/philmd/qemu.git fw_cfg-next
+>>   
+>>   XIVE
+>> -R: Frédéric Barrat<fbarrat@linux.ibm.com>
+>>   R: Gautam Menghani<gautam@linux.ibm.com>
+>>   L:qemu-ppc@nongnu.org
+>>   S: Odd Fixes
 
 
