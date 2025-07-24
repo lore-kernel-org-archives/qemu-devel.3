@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588FCC83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 07:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2FAC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 07:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueqch-0004sW-C5; Thu, 24 Jul 2025 03:44:15 -0400
+	id 1ueqeY-0007KG-QZ; Thu, 24 Jul 2025 03:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ueqcc-0004nB-BP
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:44:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ueqeM-0007G8-MF
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:45:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ueqcZ-0005qv-8P
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:44:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ueqeK-0006wT-4L
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 03:45:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753343045;
+ s=mimecast20190719; t=1753343155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AsMs+hTXpOhnnm2IoD38T+4FAzcrBd+o6vY4v5w8Q3Q=;
- b=B7nksCmuTQYcBvuHHqcuyRMuURmJKJ8roJwNSffzxzyAm1hW1LPsewGzjKrqkkSNiD5Dfj
- s9iKTcfFSD1IPZ60EuHAUP51wnI3IJalkoKM+k1ug009wnlZe2gYB1s2jKBaPSkNp1z6rH
- NPgWDW+NMBHVz27GVdKpag1dAI4aBrA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wX6HZ+UeM9JnvUfbodj8PdWMexklfZdlXskcrxQ81do=;
+ b=feAzkgth35QZM6vsOmR2ia1r6KUQKIU0t7x3m1Dbh2+jNaKHhpdDcXWSlMHO8S5kibUaiG
+ 7CnWohuizJMWO1yur826+6gEiK0ob0XjkwwlkkcfHllircqyoMNO+5fQJjZ+rcW/1Nmjpx
+ TZgNiYi3VIT1bZjM4j2Vyv/v166KF9Y=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-VQTZiopsPZCv49ysm69tvg-1; Thu, 24 Jul 2025 03:44:01 -0400
-X-MC-Unique: VQTZiopsPZCv49ysm69tvg-1
-X-Mimecast-MFC-AGG-ID: VQTZiopsPZCv49ysm69tvg_1753343040
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45600d19a2aso4821075e9.1
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 00:44:01 -0700 (PDT)
+ us-mta-1-SeUXL8wuM-SQ9m2SDqmAzQ-1; Thu, 24 Jul 2025 03:45:52 -0400
+X-MC-Unique: SeUXL8wuM-SQ9m2SDqmAzQ-1
+X-Mimecast-MFC-AGG-ID: SeUXL8wuM-SQ9m2SDqmAzQ_1753343152
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45359bfe631so3518885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 00:45:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753343040; x=1753947840;
+ d=1e100.net; s=20230601; t=1753343151; x=1753947951;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AsMs+hTXpOhnnm2IoD38T+4FAzcrBd+o6vY4v5w8Q3Q=;
- b=Q5oNLrHTMm/bWTllYmhzQ+RGQfcZqyktpN3vT52Bq/3XtczihP1T2NfbpzDOoRtF5e
- 9z6E4sKmLwVuVvgdhqxInqhAVT0yiJVFfa95KcOVpwlobr48ZXzLK2VWJR9KOpdS9dx3
- Q3ldILjxFVe/bVPQX3/S91YKH1Ei5T/qELvSJjFJrv/alEXS6VKMEHPfCGGjOrmnIjwa
- Cqhw2z3RB/bx1D5aABxD2wM1IDS6PnKVtkbb8kCzui3T3OvbrcZh4X1h6oymYGhQv1rp
- 7XrRCydmV/ZO0WN2uxJXuCKmVEQ0VwwjoyTDUmsnrOULOKb1On3muedmxZmfSBxEBMLg
- 6XxA==
+ bh=wX6HZ+UeM9JnvUfbodj8PdWMexklfZdlXskcrxQ81do=;
+ b=So573XjjhcNk8ovF6Le/kQPa03bINqIVZwcLqHfXkpptGU5Pf8zpFxQG/EStUaxiYX
+ 9y3k7Xd/DFpIfrQoU2eq10FuKZSfXOdMsJqjfFGoaZ4K6O/gs/1LdTvsMM7vD2avi6TA
+ bsWTIXzJbWw0dv0kNyJuA/KFDD2OLVOve5VqrBLyylN9/9k+Y3jeCqEd4Z4X5FD+nERx
+ wEe0GjrA0Oww9rbAM2rfp0jyi5LPBK0CombiW1uYKB1zr8Q1YzrD5qYxOmRfWy7dmJBn
+ /FOuNnX0nLuc3rJiuN6JhUGdjpE52H6258ztPA4O0Jr8KtzOFd77Hq4mEkv7aouO1Fhf
+ ewEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX93sITuNFeoiECt6o0p8YlVECCYYuazSdZvqf0EOgBztIldCjL0urXBzABZj/cyTVWf13+qdPvKNJ2@nongnu.org
-X-Gm-Message-State: AOJu0YxWph8BpInWB1ravQYOyHC4DzFeTEuDI6h4r56hyjPFkAtXTQnE
- awOdzkfsDgxl5uLhRYbQFOLNQ8Af8bymPXlpS3uE7u1EvPzWc1ejAOKc5aLRpNriJdEC9s8L6ZB
- 9AVTXwcqgNcl0xPXB0oI+t50/qseZyB0GwTi3qaA6ZfjBRjPP8inp0JUP
-X-Gm-Gg: ASbGncsyCu7mw5Cp2VSNvlJ87tXh+ajZBWuQtJveGbC1JxDxznH160gZtJLUl4CE/fb
- pLOdVvpKyeVtv2LS1Qi83bCe/IjjITk/IxsUpF/tVJlDY+EXlT/WRiVRo0x1HVFviOmkl0V0loQ
- dV2QitRMu7GessX8DRWfyI9SgFzAF/gdM+Bzd6PJMtuPKvM+kzmr8XIyNlIX/kfttNvQtkGBsEo
- xCsU5w/HDSIA7kKa7A3SIuJgz+B4OXiyNvpWn8NFZbGm0FBKztVzcFazl6NZdQHC87DAxBDBwDe
- f33WvGG1kGDs0IWlgpEW7Xxy3fBrt8EcdsU=
-X-Received: by 2002:a05:600c:1c22:b0:455:eda0:8a8e with SMTP id
- 5b1f17b1804b1-45868d22a5dmr50546755e9.27.1753343040317; 
- Thu, 24 Jul 2025 00:44:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUwhURWyMtQLQaEKbzpcAd6IbEiR7/GvDVakSMVnMwZuQouWq1Sn5gifZh2kC45cJaxFdmpw==
-X-Received: by 2002:a05:600c:1c22:b0:455:eda0:8a8e with SMTP id
- 5b1f17b1804b1-45868d22a5dmr50546525e9.27.1753343039850; 
- Thu, 24 Jul 2025 00:43:59 -0700 (PDT)
+ AJvYcCWLLwxycfjeakmLNalmtnCpZLKf3YEXtIcC/VB2Rn9e906sQXDwXgy2QpqL4f/zEckA3AfcU9tP93FL@nongnu.org
+X-Gm-Message-State: AOJu0YyF1JF7RhneBakExUJ+oG9hAxcQgZhffS20tW2mM/IESKSBuFOs
+ 3PXtFHoVCu+MbkLoce/wg3hSq9fuk0Qer7W4tX//jvTRox0LaE2SqLvBiwpKSsLUJ11P7sHyXMt
+ 2junnJUJ+fL00bg+720QCz/SiB/WQyviiTBX2wM7LF0n9P3v13UI6htzY
+X-Gm-Gg: ASbGncvcItFmyeb0C0DzrWzWqytqWsg2kXzoh/Ub99TbxM/nDkECJIb0U22jxc4ixwT
+ yRJPFfCMbdyQYdfNvAJUgW7NRS7F+g2zViTHty27M9CZjXWZYTBrdORldVSmtSz3h4EfFFBsogi
+ lKEoy/JjvYkA1/0kDacIdHVrpXoErFmYUxE1kw+Naa9UFS2SXBY/pkVMjNl90uGh4qpP52Pz4IM
+ /RiKhIbx44YX7qWH8N02xsmKe0lCmyvj+YLR/wLirZGzw7mABsvRNsj3+T5jtWhnK2HLlkOEy0P
+ QxNb3v5qwOiUlPS6U7PijmvpGYKSo5wuLmM=
+X-Received: by 2002:a05:600c:1d8c:b0:456:161c:3d6f with SMTP id
+ 5b1f17b1804b1-45868c8da9amr46915435e9.11.1753343151470; 
+ Thu, 24 Jul 2025 00:45:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEliXnBkWxaouRo5J9gQJ4X2acNO2T4Ecwo6Yv/gA9h1Szojig/Xxuo4eOF755uQznkEojn1A==
+X-Received: by 2002:a05:600c:1d8c:b0:456:161c:3d6f with SMTP id
+ 5b1f17b1804b1-45868c8da9amr46915275e9.11.1753343151072; 
+ Thu, 24 Jul 2025 00:45:51 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:153d:b500:b346:7481:16b2:6b23])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76fcc43c2sm1246772f8f.83.2025.07.24.00.43.58
+ 5b1f17b1804b1-4587054c819sm9267675e9.13.2025.07.24.00.45.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 00:43:59 -0700 (PDT)
-Date: Thu, 24 Jul 2025 03:43:56 -0400
+ Thu, 24 Jul 2025 00:45:50 -0700 (PDT)
+Date: Thu, 24 Jul 2025 03:45:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: peng guo <engguopeng@buaa.edu.cn>
-Cc: marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, wyguopeng@163.com,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-Message-ID: <20250724034335-mutt-send-email-mst@kernel.org>
-References: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Andrew Jones <ajones@ventanamicro.com>, Anup Patel <anup@brainfault.org>,
+ Atish Kumar Patra <atishp@rivosinc.com>
+Subject: Re: [PATCH 0/3] RISC-V: ACPI: Update FADT and MADT versions
+Message-ID: <20250724034501-mutt-send-email-mst@kernel.org>
+References: <20250716144140.3954431-1-sunilvl@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
+In-Reply-To: <20250716144140.3954431-1-sunilvl@ventanamicro.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -110,79 +114,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 09:35:45PM +0800, peng guo wrote:
-> When using a CXL Type 3 device together with a virtio 9p device in QEMU, the
-> 9p device fails to initialize properly. The kernel reports the following:
-> 
->     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
->     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
-> 
-> Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-> device was overlapped by the memory window allocated for the CXL devices. As a
-> result, the kernel could not correctly access the BAR region, causing the
-> virtio device to malfunction.
-> 
-> An excerpt from /proc/iomem shows:
-> 
->     480010000-cffffffff : CXL Window 0
->       480010000-4bfffffff : PCI Bus 0000:00
->       4c0000000-4c01fffff : PCI Bus 0000:0c
->         4c0000000-4c01fffff : PCI Bus 0000:0d
->       4c0200000-cffffffff : PCI Bus 0000:00
->         4c0200000-4c0203fff : 0000:00:03.0
->           4c0200000-4c0203fff : virtio-pci-modern
-> 
-> To address this issue, this patch uses the value of `cxl_resv_end` to reserve
-> sufficient address space and ensure that CXL memory windows are allocated
-> beyond all PCI 64-bit BARs. This prevents overlap with 64-bit BARs regions such 
-> as those used by virtio or other pcie devices, resolving the conflict.
-> 
-> QEMU Build Configuration:
-> 
->     ./configure --prefix=/home/work/qemu_master/build/ \
->                 --target-list=x86_64-softmmu \
->                 --enable-kvm \
->                 --enable-virtfs
-> 
-> QEMU Boot Command:
-> 
->     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
->         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
->         -hda /home/work/gp_qemu/rootfs.img \
->         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
->         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
->         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
->         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
->         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
->         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
->         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
->         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-> 
-> Tested in a QEMU setup with a CXL Type 3 device and a 9pnet virtio device.
-> 
-> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-
-Cc Jonathan.
-Any input on this?
+On Wed, Jul 16, 2025 at 08:11:37PM +0530, Sunil V L wrote:
+> Since RISC-V support is added only in ACPI 6.6, it should adhere to the
+> expected FADT and MADT versions. Update them.
 
 
-> ---
->  hw/i386/pc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Seems legit
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+Risc maintainers, any feedback?
+
+> Sunil V L (3):
+>   bios-tables-test-allowed-diff.h: Allow RISC-V FADT and MADT changes
+>   hw/riscv/virt-acpi-build.c: Update FADT and MADT versions
+>   tests/data/acpi/riscv64: Update expected FADT and MADT
 > 
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 2f58e73d3347..180bc615f3f0 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -975,7 +975,7 @@ void pc_memory_init(PCMachineState *pcms,
->  
->      rom_set_fw(fw_cfg);
->  
-> -    if (machine->device_memory) {
-> +    if (machine->device_memory || cxl_resv_end) {
->          uint64_t *val = g_malloc(sizeof(*val));
->          uint64_t res_mem_end;
->  
+>  hw/riscv/virt-acpi-build.c        |   4 ++--
+>  tests/data/acpi/riscv64/virt/APIC | Bin 116 -> 116 bytes
+>  tests/data/acpi/riscv64/virt/FACP | Bin 276 -> 276 bytes
+>  3 files changed, 2 insertions(+), 2 deletions(-)
+> 
 > -- 
 > 2.43.0
 
