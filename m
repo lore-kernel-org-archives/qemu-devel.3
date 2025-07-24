@@ -4,92 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119B7C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 08:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E6AC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 09:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uerga-0002TG-0s; Thu, 24 Jul 2025 04:52:22 -0400
+	id 1ues01-0001V8-8b; Thu, 24 Jul 2025 05:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uergP-0002MP-M7
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 04:52:10 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uergN-0005jW-Rj
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 04:52:09 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45629703011so4733605e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 01:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753347126; x=1753951926; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=J/Agva/uaBmY+2rCnSNmB/Rgl0AZCDHV58eYSWguttk=;
- b=M53oHSqBJoUROMGRUPTYFCKvilK5FQAavZKPaeMmLWDUTQZ7UXaq3jwLvzKO/VpmXU
- vsJCtB+z4jcyrBl5Pbwd32VT4ETArPBwx3gK7s3m2AGVoBfuCGi1rFTwy5nOqwM8Ex/1
- qZkiYzGmmAXdHGZOZVnZKi24kb0sAYyTzmJInhIK8RlIjwVzqzEzOdK8eeuYdWtjikZA
- P7VeZtnhzuFu8ymCPWoqrqv690DUOdSPGEita9412RbiaeNK0v60dExNX2EKpzecM1sr
- B7scb+fa7MSAn1roP2lL5IqarN/57mY8tL8Q9eBMoLQ4UT1PYCLpDj0cmiOjVPqoqq88
- pZ5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753347126; x=1753951926;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J/Agva/uaBmY+2rCnSNmB/Rgl0AZCDHV58eYSWguttk=;
- b=KATccPIo4vHYojubV1I55SJ4U1zjXMP2WTxoMZk9WZIg4nMxXKFbTDiLBKn4vTFUTN
- GkSVfttGxdkjDvyi2LQFNlQBu9ysYWO4M+eDzWZ2EI4fPGZzniwMOW2K8+Chgsj5in6h
- JP2660IaCa0Ul+TsNosKFaf/Iv9gr2sgTZOiMdEJH+F5nR2Xylq0WBvd8ttep3EysVNj
- XSCR5GgNqoavICNEfb3oPLBRRO74Us+2muUsVoAEmQAL7fMZBFwOvWa1REkVIj88bANT
- pCfT11jEjjNoXuPBBRH9F8zKgZnhJeq0c9YulKjFJ2Y+vfT8TO6Ro2HMbUs3LDbHrK1M
- AkRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKnbuxGyGBlPP3gjPu32PV8G+dsZUOuvZ50g/zpC/u5rD/BxM1ScoWAHYqSmtIJPpB4N42fdunqYG+@nongnu.org
-X-Gm-Message-State: AOJu0YzECAMAeXfkhhHrjQmpLlvS6XKY7NOyBpA3X8uvxkEw1bPn+pQL
- tPHc8pJ7RE/9Pz8w3puKYAFxYekxSnIIVyW+Q/1RPKJZRyYBPakF2/1/3ODEgNm5sqE=
-X-Gm-Gg: ASbGnctzpxB3pdH8tqOCpwG0srwHHBRGIRDuWH3zlWV72oHtk76UdSm7Z8Qof+5sxQ4
- bjZ7urt3VDX3CjIqULOWE5eyiLTsdhyJSr5Z478ILa5lDWCWwuhdP6MEtZRtfJN/W+SobwRuC2B
- EdUGlWAwcRfPWpRcPpUXNkxCfsBMPpRXh5f3/W+Xg8kZo34sHh2oH04Sgg+BMLPr8ekjWAif+P8
- SNHa6I87Abls/ZPel8oxS+KZvCb85s/72+DztPzV8i3qLVYMIk3AaK8cTcGsBtlQ4j6ZdgNTaeK
- fZw+SlR1YF7H3La0aH3sUjzZfHZCDbF12jSLdw0pAfEbuMILeGVDoZ5gd17Z3ea79kk8CR1we6r
- Ni+GmmgtuH3gD2pAYzXDChhNFfzDuBsrkUyAI7ftxJsZ//Gno3SHLxkZsAs81O6yENA==
-X-Google-Smtp-Source: AGHT+IGv7E/XDc4n9DH0KdchYEb6Eth0k7aORxmYQl4tj3Pf4InLYGVyN5arLehtAEglGrQxu5y07Q==
-X-Received: by 2002:a05:600c:1ca4:b0:455:bd8a:7e7 with SMTP id
- 5b1f17b1804b1-4586fd1a863mr12611055e9.9.1753347125687; 
- Thu, 24 Jul 2025 01:52:05 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4587054e37dsm11600655e9.14.2025.07.24.01.52.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 01:52:05 -0700 (PDT)
-Message-ID: <c6891bd3-eee9-425a-a785-f503284145af@linaro.org>
-Date: Thu, 24 Jul 2025 10:52:04 +0200
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uerzz-0001Tv-Ep; Thu, 24 Jul 2025 05:12:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uerzw-0004c8-QK; Thu, 24 Jul 2025 05:12:23 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56O0QTBp021841;
+ Thu, 24 Jul 2025 09:12:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YWeN6P
+ 16hM/JJngI1E0NmB+bVhdOesRhZGIy+rGLZho=; b=J2W/hzTYesMig+6j8eySpn
+ oIGE5lJHC/ilBE7osTzh/bYIzWoCt7HYluy0dygPXnQaMGSNhrXZz0sgEx/htLai
+ Ip+Sf+F+dbpKh/DDEXhZisWgDP4Q8+7gu+g8jVsJoYXUWMlYUEd4u71gZU9BW4mf
+ IYGGYly7VPOMBpTkciyJscr+/Dvuf1uz7Y06LIYU9ztCiiBRwUpOi1+WL9mBtVwr
+ iFVgsG5mIvRNwVBgb8lcYQ/xdAntUSHwdU6j8GHpfET0AufagbX79+fao6knp85j
+ yqA7Z1oSa+MDgdTlFCnkKDhGPl33z4reorzXJM8ba9nXBY9C0ewAx981uyHCHGWw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ffbhq4t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Jul 2025 09:12:16 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56O9CGFG007628;
+ Thu, 24 Jul 2025 09:12:16 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 482ffbhq4r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Jul 2025 09:12:16 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56O6SxnE005457;
+ Thu, 24 Jul 2025 09:12:15 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 480tvr30h8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Jul 2025 09:12:15 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56O9CDRQ41943318
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 24 Jul 2025 09:12:13 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9DED558061;
+ Thu, 24 Jul 2025 09:12:13 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA80B58053;
+ Thu, 24 Jul 2025 09:12:10 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Jul 2025 09:12:10 +0000 (GMT)
+Message-ID: <74e8e729-3bae-4315-9519-5bd0b6f08731@linux.ibm.com>
+Date: Thu, 24 Jul 2025 14:42:09 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] hw/i386/amd_iommu: Support MMIO writes to the
- status register
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- eduardo@habkost.net, richard.henderson@linaro.org,
- alejandro.j.jimenez@oracle.com, vasant.hegde@amd.com
-References: <20250724064745.4091-1-sarunkod@amd.com>
- <20250724064745.4091-6-sarunkod@amd.com>
+Subject: Re: [PATCH 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com
+Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
+ adityag@linux.ibm.com, gautam@linux.ibm.com
+References: <20250724063623.3038984-1-harshpb@linux.ibm.com>
+ <642a5b59-a306-4fbd-a55c-008b9fd8ace0@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250724064745.4091-6-sarunkod@amd.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <642a5b59-a306-4fbd-a55c-008b9fd8ace0@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: mzCmtn3EGKUdbjeluSTBeLSHLwvR_Xcz
+X-Authority-Analysis: v=2.4 cv=De8XqutW c=1 sm=1 tr=0 ts=6881f8f0 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=f7IdgyKtn90A:10 a=20KFwNOVAAAA:8
+ a=cwfGbltsdXE1nG5_tOEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: WxzgKJbpzVRh2RF9JKRlF89z4i2rxYoV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA2NyBTYWx0ZWRfX2F4AKuyXCk4f
+ KCKLT/P1pwvwXEPV/hgxf0aTY2/yfEe86lqmq04kfsfpPBeARXfsPLnhVkcaQmJ9NfiPF0RjRib
+ +QS4cRozqVRz0FgV63vxljny1/VEzrGG0lzHzftZv1hsNGzmNW4qmw5XR2rWNQtotQR/Tg+ildj
+ 1ERA4YKwGd0WGBwOb/Cnw7EEwOEjHT7r8CsLgxDIVDy9bP462tKczGm06l7xKiIPM916DG41rOA
+ ffNGvMXAo/QucSCNWFee6I+Udw+FAuBcRsjcNG+WspnHm49f4pPR++LESJyg8oXK/qTzJh2uGAV
+ sTFAqahLBNqxaRQtFyTQKk9EWILsj68vSnN03ujFhYlV9HiZekz+CNgV1T9y/lzrDnakHb/CU0V
+ 8sfbtF4j3Kjrh4J4BOXA5H3DsW6V6vvX1N7aLbmdWV4bj3PitxVqSa0S718QaHJTdvcVmygY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=663
+ suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
+ malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507240067
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,38 +129,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/25 08:47, Sairaj Kodilkar wrote:
-> Support the writes to the status register so that guest can reset the
-> EventOverflow, EventLogInt, ComWaitIntr, etc bits after servicing the
-> respective interrupt.
+
+
+On 7/24/25 13:10, Cédric Le Goater wrote:
+> On 7/24/25 08:36, Harsh Prateek Bora wrote:
+>> Some of us at IBM have been actively working/contributing in
+>> ppc/spapr/pnv/xive and would like to step up to help with
+>> reviews and co-maintainer activities. I have also included proposal
+>> patches from Chinmay and Aditya in this patchset which had already
+>> been posted to list earlier to request for merge.
+>>
+>> Thanks
+>> Harsh
+>>
+>> Aditya Gupta (1):
+>>    MAINTAINERS: Add myself as a reviewer of PowerNV emulation
+>>
+>> Chinmay Rath (1):
+>>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
+>>
+>> Gautam Menghani (1):
+>>    MAINTAINERS: Add myself as a reviewer for XIVE
+>>
+>> Harsh Prateek Bora (2):
+>>    MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
+>>    MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
+>>
+>>   MAINTAINERS | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
 > 
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-> ---
->   hw/i386/amd_iommu.c | 3 +++
->   1 file changed, 3 insertions(+)
+> I can merge these changes through the vfio queue.
 > 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index bbffd07b4e48..7c2fa80d14ff 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -850,6 +850,9 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
->           amdvi_mmio_reg_write(s, size, val, addr);
->           amdvi_handle_pprtail_write(s);
->           break;
-> +    case AMDVI_MMIO_STATUS:
-> +        amdvi_mmio_reg_write(s, size, val, addr);
-> +        break;
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Should we add:
+Thanks Cedric !
 
-         default:
-             g_assert_not_reached();
+regards,
+Harsh
 
-to catch unimplemented cases?
-
->       }
->   }
->   
-
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
 
