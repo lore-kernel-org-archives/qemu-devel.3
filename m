@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B98C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BD0C87FC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 12:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uevAj-0002pI-CV; Thu, 24 Jul 2025 08:35:41 -0400
+	id 1uevBS-0003yH-TK; Thu, 24 Jul 2025 08:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevAe-0002iI-Jy
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:35:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevB7-0003ki-I9
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:36:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevAZ-0007ti-W9
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:35:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uevB5-0007w7-FS
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 08:36:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753360530;
+ s=mimecast20190719; t=1753360561;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aAoKy/U+1teVsXU//njaZVP1Q0B75XHaoEQs/4JkTN0=;
- b=OFcZjdBe/4NHQupW5IUvGjpf+ynhCqzlYBtHBvqJ4I1dFSEJtpcu3nEilYpcLyuI1FxTCQ
- 3rfGE3VRjXmKSGHSw6LbDUGIcVe0YlRpDYiT2mqczHQZvbCr4mgwQmiDfvQ0rzsK5raaNo
- G/Gux1kv/bVh6T+FDGn8UUWUc8xSaiA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ntz2fbVC/3nujd/5PeN0BPI+qkV+Yg+n98hldBf8yvE=;
+ b=b2lvkl0mTY5GPsdiCZkD7K196vE3UEWHfUMfYT9BCKv6F+0/mcp9JmLZJykiodQFxmlLfQ
+ LCAPOMwFz53zZaT163R86KUf4uxpvAyDZqbzRn1tJInl6ExgfYfu3a+QdqXondx7MGFVrd
+ 11T2NPBJhJZzquv3yi/r2zIOgIDngQw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-86_UyUfIPtWX96t_Yoge5Q-1; Thu, 24 Jul 2025 08:35:28 -0400
-X-MC-Unique: 86_UyUfIPtWX96t_Yoge5Q-1
-X-Mimecast-MFC-AGG-ID: 86_UyUfIPtWX96t_Yoge5Q_1753360527
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eee2398bso359537f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 05:35:28 -0700 (PDT)
+ us-mta-99-p7v8wGenPrqMNx4EcdzGEw-1; Thu, 24 Jul 2025 08:36:00 -0400
+X-MC-Unique: p7v8wGenPrqMNx4EcdzGEw-1
+X-Mimecast-MFC-AGG-ID: p7v8wGenPrqMNx4EcdzGEw_1753360559
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-455e918d690so12935735e9.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 05:36:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753360527; x=1753965327;
+ d=1e100.net; s=20230601; t=1753360559; x=1753965359;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aAoKy/U+1teVsXU//njaZVP1Q0B75XHaoEQs/4JkTN0=;
- b=AH1Vck+ia9C7tQbcw2Ekfu3SRr8hka+iB6nGwj9QGqQnriVWZctHEs3Q3EPtUvVg0A
- y4fprS5UhlXe3GcMzcaoR3oyRNdpKhjRPHpj/4vsKHAJAp5LkxvoNlsatzf0S327Gxue
- VtZY+92Q4Bc7Ltn2x1ZBIJQxv2Uq8/vM61L/9vJVEJQhX4ADSiLZHm2q4QU5sUp2/A0e
- SKL+vtrq4TJeYa4asPa2svrH6ESkRn4SGGo/PbnvtGAJpxkMsoRwPJPKwFCSCytK18h3
- XAXkv4XaMOxEg375+0oAQ28BC/O2kumQWjeR3xKjYutgBIdew4RNsSzSsaLH7RuBNqqI
- /L+A==
+ bh=Ntz2fbVC/3nujd/5PeN0BPI+qkV+Yg+n98hldBf8yvE=;
+ b=B21LmFImg2Fi5ZOiAvmzXDRrEEayaawXwSdCWfRmjqdMqnWlRr91NoXr8lUgvKBGOh
+ 5UJE3WDXnNINQJU2Q2F3BOIPbOMt2dkyuiU1KbS3C8s6vXgzT93Y4b9ysD7lwgz2KvRa
+ EmIsot9a4olDMMZry3dEHt6NAYc0XArkfrzk02/mg7B2SOhtTpPXGH5lw28kH/y0Wqr3
+ U7ltHWSaidYHl6IQhQWT0gImUXR5D2y/ofw/w5T59rIoYOd8efgP3Vb19AjtDriN5JUp
+ I9k7oA7xvIUZKRE4ohcUEVY1Ik5ft4p0YSle/6fzGT+u9nCkjQql87YfVSspDMoiAC9l
+ GSAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtHm5nscRnyU9uXnSl/l2jSXKW8MTMl/+cYwAf13cTZ5bCZyJuUVJSNHP5mIzLbhB7IMYEuM7UCxi7@nongnu.org
-X-Gm-Message-State: AOJu0Yw9jQKOn+sKwMN41JnxGwCr6DdAYJW0PFSXdBDbxsbFl3Z9HPif
- QaozWbM12HrJfVT8c7eGx1J+0lFE9CkZDVonkv/zZW6Cdih4lAlytYJiZHfT0nnmUjdPD+cMfGE
- A7GB0jLsMhzEMd4nE1NJLi2oI5wyIx5pMPlttymgPqrLDQfJLX9betGmu
-X-Gm-Gg: ASbGncsl2zJRwS9NqPC9teIlE52dpbPy48h3r1pZZmqIKX7skVP2pNcGAYPBabAhpBG
- rIcCA3uos93aVeIasvKVk2WJ7+gYhonIbPlkHbnuSCOxE+kFkRVSok8aflk/ms6Zk2br/agj24T
- 55uHF6pH09nbUHjI5f3rMjRIX4N0w6E7EGl07RwVALR9T8TvD7XDMV2rKHA8zkVPraagU9wLxvF
- tQ027UTRRNqlD5PMvawLATyVwIyBiNWTT3FlhOpyED0HXnZG7st2UFmcFouDiFySbWYn9weCjp2
- YnPcLePWcfqZ9S16e+48a6zGMmVnFBFXMGwfodHGCzBLK2VoMlMwcnFf+CESuQnaFG9RwjFUetE
- +ow==
-X-Received: by 2002:a05:6000:2483:b0:3a6:d95e:f38c with SMTP id
- ffacd0b85a97d-3b768ef956bmr5459444f8f.33.1753360527221; 
- Thu, 24 Jul 2025 05:35:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBXQr2qWTzXd4np/LtY5AU6jYiUwJvS3eT0YF/9G8GaelqeVJ5qclSw0mVd+xBzkpeOX5GJA==
-X-Received: by 2002:a05:6000:2483:b0:3a6:d95e:f38c with SMTP id
- ffacd0b85a97d-3b768ef956bmr5459418f8f.33.1753360526712; 
- Thu, 24 Jul 2025 05:35:26 -0700 (PDT)
+ AJvYcCWF0yv1p75FOWlrtluiHXFeAEApEEnIDfwJIyYCHBE1JOBEkvmSwOzho+YriemF61cKLjnsghkJQIn6@nongnu.org
+X-Gm-Message-State: AOJu0YyHrlC88dvz67cnk/5iyPpnb17nSzypiCwc2Aj42nQTSYKp73dL
+ glLmoXpnw+1S6Q6NbVmR4IOqtze55wx1zVWjbmSX4sP0Ua63sKLm0srKlx3XfcSYOZWf+jeaLbp
+ R56lsi8OevGaaIlUDV4jzur0pI5OrSIzHiUCLNbgpGZClhomEdKuz/GU/
+X-Gm-Gg: ASbGncvasnYtEWNDZX85o0KlPsH5Vn8QqcX2nzUkuUOkE8oE0GL60eunjU2M62oYhRo
+ 0uqH+bX6clujUxJz+QRWav7Tv+zBhmrR+ju2qkxvUZyOvmY+uLb82wSSYzEjzm9RUinhxS2VYQk
+ CoFZjHSzLImEP6MKX2bNowhAfn5i8w7c8TLwSx7zENZtXNgUvZmQqiNkyLKXKxioNYkK2gAorRi
+ rRmsZPrlMWS7DyBYNM9rBsZPqs0xu8FPxE8p4Q53bFBimxZOgOYtsQGfyGbai0wqvN92RhjLLtG
+ i77rhy03je1LCzEkgdql2D76UuOl8jS++Hk3ht7LYeZlkFyWFrjxOFrskxgaUDwFWzcJGexs0ff
+ FKw==
+X-Received: by 2002:a05:600c:4f06:b0:450:c9e3:91fe with SMTP id
+ 5b1f17b1804b1-45870973ccbmr14847735e9.0.1753360558855; 
+ Thu, 24 Jul 2025 05:35:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcPf71dXnO3kbJTeb7p7+zDvZLefi4dmnIgVARxMOJvVh3IaY35BRmBEZClquAZFwMkSKjSw==
+X-Received: by 2002:a05:600c:4f06:b0:450:c9e3:91fe with SMTP id
+ 5b1f17b1804b1-45870973ccbmr14847385e9.0.1753360558290; 
+ Thu, 24 Jul 2025 05:35:58 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76fcad036sm2106362f8f.46.2025.07.24.05.35.25
+ 5b1f17b1804b1-4587054f22esm19964105e9.9.2025.07.24.05.35.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 05:35:26 -0700 (PDT)
-Message-ID: <5dc19aea-115b-4af2-8854-f4433be541fc@redhat.com>
-Date: Thu, 24 Jul 2025 14:35:25 +0200
+ Thu, 24 Jul 2025 05:35:57 -0700 (PDT)
+Message-ID: <fae58b6e-62bd-45fe-9e41-a19d30ea3bb9@redhat.com>
+Date: Thu, 24 Jul 2025 14:35:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?B?UmU6IFtQQVRDSF0gTUFJTlRBSU5FUlM6IFJlbW92ZSBGcsOpZMOpcmlj?=
- =?UTF-8?Q?_as_reviewer?=
-To: Frederic Barrat <fbarrat@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20250724075916.1593420-1-clg@redhat.com>
- <d28741e9-1e47-4a83-a37e-20e516ec7deb@linux.ibm.com>
+Subject: Re: [PATCH v2 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com
+Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
+ adityag@linux.ibm.com, gautam@linux.ibm.com, philmd@linaro.org
+References: <20250724100623.3071131-1-harshpb@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +129,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <d28741e9-1e47-4a83-a37e-20e516ec7deb@linux.ibm.com>
+In-Reply-To: <20250724100623.3071131-1-harshpb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -144,7 +141,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,47 +157,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/25 10:05, Frederic Barrat wrote:
+On 7/24/25 12:06, Harsh Prateek Bora wrote:
+> Some of us at IBM have been actively working/contributing in
+> ppc/spapr/pnv/xive and would like to step up to help with
+> reviews and co-maintainer activities. I have also included proposal
+> patches from Chinmay and Aditya in this patchset which had already
+> been posted to list earlier to request for merge.
 > 
-> Le 24/07/2025 à 09:59, Cédric Le Goater a écrit :
->> Frédéric has moved to other tasks within IBM and no longer does QEMU
->> development.
->>
->> Cc: Frédéric Barrat<fbarrat@linux.ibm.com>
->> Signed-off-by: Cédric Le Goater<clg@redhat.com>
->> ---
+> Thanks
+> Harsh
 > 
+> Changelog:
+> v2: Added my S-o-b as suggested by Philippe, Cedric
+> v1: Initial patchset
 > 
-> Acked-by: Frédéric Barrat<fbarrat@linux.ibm.com>
+> Aditya Gupta (1):
+>    MAINTAINERS: Add myself as a reviewer of PowerNV emulation
+> 
+> Chinmay Rath (1):
+>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
+> 
+> Gautam Menghani (1):
+>    MAINTAINERS: Add myself as a reviewer for XIVE
+> 
+> Harsh Prateek Bora (2):
+>    MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
+>    MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
+> 
+>   MAINTAINERS | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
 
-Curiously, this email is taking a long time to reach lore.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
 
 C.
 
-
-> 
->>   MAINTAINERS | 2 --
->>   1 file changed, 2 deletions(-)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index f3f981f90deb..9481a21c8018 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1578,7 +1578,6 @@ F: tests/functional/test_ppc64_tuxrun.py
->>   
->>   PowerNV (Non-Virtualized)
->>   M: Nicholas Piggin<npiggin@gmail.com>
->> -R: Frédéric Barrat<fbarrat@linux.ibm.com>
->>   R: Aditya Gupta<adityag@linux.ibm.com>
->>   L:qemu-ppc@nongnu.org
->>   S: Odd Fixes
->> @@ -2780,7 +2779,6 @@ F: tests/qtest/fw_cfg-test.c
->>   T: githttps://github.com/philmd/qemu.git fw_cfg-next
->>   
->>   XIVE
->> -R: Frédéric Barrat<fbarrat@linux.ibm.com>
->>   R: Gautam Menghani<gautam@linux.ibm.com>
->>   L:qemu-ppc@nongnu.org
->>   S: Odd Fixes
 
 
