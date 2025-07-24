@@ -4,67 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F09C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 23:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB9AC87FC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 23:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf5BO-0002iR-E0; Thu, 24 Jul 2025 19:17:02 -0400
+	id 1uf5BI-0002eF-Vu; Thu, 24 Jul 2025 19:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uf5BK-0002gR-Fn
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 19:16:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1uf5BG-0002b9-Un
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 19:16:54 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uf5BH-0006yX-N1
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 19:16:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753399012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=TkyBv1MpbJDZgBO9SChPj8lFjZ+sxQq6VnJGF/7U1ys=;
- b=gxDzW1ybLFI7fsY4mgVGmDWTgHjjjmpTXzEi8rkO9uGMNGAM3id9JRghBpz9hCRw0oWKrv
- yl76hSUV22l5ug1XGiZIAlbc8L2JlvIeFfHDQhenNyGg12kQXpCTyom80VSCJHCmlxa41R
- 71rof1HyttlttM5CokawQpT9av7E1fw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-LWNXuWbkPNijx9BMzx0AHQ-1; Thu,
- 24 Jul 2025 19:16:49 -0400
-X-MC-Unique: LWNXuWbkPNijx9BMzx0AHQ-1
-X-Mimecast-MFC-AGG-ID: LWNXuWbkPNijx9BMzx0AHQ_1753399009
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA54A195608F; Thu, 24 Jul 2025 23:16:48 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.38])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A19861800242; Thu, 24 Jul 2025 23:16:47 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1uf5BE-0006xt-T3
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 19:16:54 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id B8A6343862;
+ Thu, 24 Jul 2025 23:16:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A322DC4CEED;
+ Thu, 24 Jul 2025 23:16:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1753399010;
+ bh=Ey7PjDwiz2S9ES1vVkTER9dvfutMI7NS7IvXb4iA4UY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=KG8LLlOaFWwFBWn70eAgd9lP5Xaepfp0Miur76fVwJ+6BZdYxWjKfckvN/HgEfIn3
+ 5FVbpo972fkBxp4icEWqmQwOiZDSDW9xgxyFdSHbgr7OZdRgwRXQk0xOeU8du3HXEc
+ zhzTRaXybA3pMep965zhOhd4VaaPsMfogN8Fg2KX8skwkOSli/vb8LXUbEzIhtTvh/
+ c8xNdXM6NFKtr9gcYnlP5FV9tAdQMaMMavfudgDJ1rv4RHVe5XP2o0OXZU7oDC9/TN
+ 84klRGAygHqDHW/jQtWZDPJnxU1AnOA5elEy0GA4HWpr2yoHu2UuDq0hvEvVWhXKJL
+ k4WTcyBwLoc4w==
+Date: Thu, 24 Jul 2025 16:16:42 -0700
+From: Eric Biggers <ebiggers@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH] docs/qapi-code-gen: change recommendations for
- cross-reference syntax
-Date: Thu, 24 Jul 2025 19:16:46 -0400
-Message-ID: <20250724231646.390181-1-jsnow@redhat.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Guenter Roeck <linux@roeck-us.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [QEMU bug] [x86_64] Incorrect emulation of vinserti128 instruction
+Message-ID: <20250724231642.GC1409@quark>
+References: <20250724225031.GA1409@quark>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250724225031.GA1409@quark>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=ebiggers@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,50 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The blurb about @foo style references in qapi-code-gen.rst is out of
-date now, update it.
+On Thu, Jul 24, 2025 at 03:50:36PM -0700, Eric Biggers wrote:
+> Another QEMU bug found by the Linux kernel's crypto tests
+> (https://lore.kernel.org/linux-crypto/20250724173657.GB26800@sol/):
+> 
+> When KVM is disabled, QEMU's implementation of the AVX2 instruction
+> 'vinserti128' with a memory source operand incorrectly reads 32 bytes
+> from memory.  This differs from the real CPUs which read only 16 bytes,
+> as per the spec
+> (https://www.felixcloutier.com/x86/vinserti128:vinserti32x4:vinserti64x2:vinserti32x8:vinserti64x4)
+> which defines the operand as xmm3/m128.
+> 
+> This can be reproduced by the recently-added poly1305_kunit test in
+> linux-next, or alternatively by the following userspace program:
+> 
+>     #include <stddef.h>
+>     #include <sys/mman.h>
+>     int main()
+>     {
+>             unsigned char *buf = mmap(NULL, 8192, PROT_READ|PROT_WRITE,
+>                                       MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+> 
+>             munmap(buf + 4096, 4096);
+>             asm volatile("vinserti128 $1, %0, %%ymm0, %%ymm0\n"
+>                          :: "m" (buf[4080]));
+>     }
+> 
+> That executes vinserti128 with a memory operand with 16 valid bytes
+> followed by an unmapped page.  This works fine on the real CPUs, but it
+> segfaults when run with qemu-x86_64.  To avoid the segfault in QEMU, we
+> have to go down to buf[4064], which implies it reads 32 bytes.
+> 
+> This bug exists on the master branch of QEMU as well as v8.2.10 and
+> v7.2.19.  So probably it's not new.
+> 
+> - Eric
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/devel/qapi-code-gen.rst | 11 ++++++++---
- docs/devel/qapi-domain.rst   |  1 +
- 2 files changed, 9 insertions(+), 3 deletions(-)
+It looks like support for this instruction was added by the following
+commit:
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index dfdbeac5a5a..51993a6eb0c 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -943,9 +943,14 @@ The usual ****strong****, *\*emphasized\** and ````literal```` markup
- should be used.  If you need a single literal ``*``, you will need to
- backslash-escape it.
- 
--Use ``@foo`` to reference a name in the schema.  This is an rST
--extension.  It is rendered the same way as ````foo````, but carries
--additional meaning.
-+Use ```foo``` to reference a name in the schema and generate a
-+cross-reference link. In the event that a cross-reference is ambiguous
-+and the manual compilation fails, `QAPI cross-reference roles
-+<QAPI-XREF>` can be used to narrow the cross-reference results.
-+
-+Use ``@foo`` to reference members, which do not currently have a
-+cross-reference target. This is an rST extension.  It is rendered the
-+same way as ````foo````, but carries additional meaning.
- 
- Example::
- 
-diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-index b71890f6609..8d9fc866bc3 100644
---- a/docs/devel/qapi-domain.rst
-+++ b/docs/devel/qapi-domain.rst
-@@ -375,6 +375,7 @@ Will allow you to add arbitrary field lists in QAPI directives::
- 
-       :see also: Lorem ipsum, dolor sit amet ...
- 
-+.. _QAPI-XREF:
- 
- Cross-references
- ================
--- 
-2.50.1
+    commit 7906847768613ea6b6e737f3295c77cdb4ff67f4
+    Author: Paolo Bonzini <pbonzini@redhat.com>
+    Date:   Tue Sep 6 10:34:11 2022 +0200
 
+        target/i387: reimplement 0x0f 0x3a, add AVX
 
