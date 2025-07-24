@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1196C83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 16:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ABA6C87FC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 16:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueytO-0001wE-Gz; Thu, 24 Jul 2025 12:34:02 -0400
+	id 1uezDN-00086u-BX; Thu, 24 Jul 2025 12:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ueytM-0001oU-I0
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:34:00 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1uezDL-000800-RA
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:54:39 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ueytK-0004XX-Kc
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:34:00 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-b34c068faf8so1303860a12.2
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 09:33:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1uezDK-0002wD-5d
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 12:54:39 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-4ab86a29c98so13471cf.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 09:54:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753374836; x=1753979636; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+YIFa0JQZblYYo6z08SdWvtMeAHwI4go0flw2jU5A+E=;
- b=qwiG1fPOHXSHZigudwcGNrccZxSN0P1yMeMlXhrpws5rrv1OHSpCd0nDZxfDrEOLT+
- OlMYYpnvi00SsWiHZZTVwsM/Z1955rsIgLQj/R4897ui8mga2BYVHouNv4g58TZ9RP1j
- MCHbH7qa4fL3cUJSq25pH8ekfxFjlVJyPt71qO/XP8uF0vyDP/HNPjNzG1piqoV+AZFL
- EJgVJ54+qAXuBIAZwfTYiPHFIUkebKdqCKc1cXYEkbPyltfBab+5LAOBStSefDZt0FvZ
- ccAqDT5frMHRwCxsyMYvhoTrrHBAPim5WJINKyY1FZ3QiA1J47Kjn/gzC34d1su2cQgg
- 7NbA==
+ d=google.com; s=20230601; t=1753376076; x=1753980876; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/iQMuK281cC7mzmEq7Xw5rOLZKueqkv92FzxVLsmWFI=;
+ b=MyIPTyN0lRVZ559nlaxbKSpwu2Edn9tDLVWQnbbuoxLAdn8GKW4yXxrla52blacqqG
+ jlyGHab7IgWLBh8HF+Ny8NnjPFjx38RdNdOboJ3nwWKN4vFnhujmmG5RHWE3K+hEUmlV
+ 3N3q5h1hGdRPJyYWm4r65mX51CmeMv8Tp4nhUgZ4tbj/nHAd7NmBOs0GvwCQvxmd7CAk
+ ED6fhM95lPnSzYGj11pPRERoYs3q9XMXFcUSS42RlSTiGR3SNKkPn+7RjWsY2rr9g/7J
+ S+g2E15vxEqDFAp53EdNLnq4JABbzYP5uP994i+hztmtQxvHeftWHozLunEssQ29SWV8
+ bj4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753374836; x=1753979636;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+YIFa0JQZblYYo6z08SdWvtMeAHwI4go0flw2jU5A+E=;
- b=Hm4pcyDqDfCe9KFS0nOtKEPsfcK+Suh4Fw7qLiDsVr2QxYdhUAehbUPqRQE+g+E0s7
- uRDZUuh7z5L2R1WD9n+ZZ2ajt5lmHjZ+BJdRez7R/nHGa2v8HsiJ1PFdKdagGNQz5lVG
- q4W3H/PUdOdg2iv4Jks6Y4eOH5o+egszyLTBGtkhGxisma3M6Li3GUZG33mWbugBNJOY
- KL9b3a8nDlyhKqADf44kxOyn0XM3s1QbVyfYktp8Jkg3T1LPUtRoxhRuQ+etlR+TvDxg
- ve/AVeE9vTO6pMRzEd6ugmN/KlA74P6OJUoiX/q5GpW0Tjg3mmi1bJ0hR7acQA7sEUK/
- O+yQ==
+ d=1e100.net; s=20230601; t=1753376076; x=1753980876;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/iQMuK281cC7mzmEq7Xw5rOLZKueqkv92FzxVLsmWFI=;
+ b=RhG7eqIkpREOoRCiJJzQE2UkkDck0oQBrEZxW/CRetjrkfR21vrNNSXg5ZEM5vm6sA
+ B2VLPQgrg+fX7g2y344/CAHxNbuwwQsCYTCq6eYrc7ctK6g9cm/sN3+MR0v3unJ8s92K
+ 0yAKS6WorKrw/wS7zq4H5MkEV8H0pI5QQ4/3xqtuXunJ+O6qjMdERe7hEWxfJKEpy3Rf
+ FBl5W6UBFvUWslaXKVfhzDEnshBKZ/SzGYU6vSu7rvhsZ36afKcB3GRFu7jJWaWD9wYE
+ jG++X6wuNehB8fJX8cXZpeSYy8hoYW8KsHHoIRntMmJlIK3OnBMrfTxO7oRZyJgExAHS
+ r8vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG6Uel9EbM2zLuDyrHOddYda1O/ub67Qd3fepFU9O8cEUthyOch2GDbTLiVEvOSyUPsS7TiGX+q4Nb@nongnu.org
-X-Gm-Message-State: AOJu0Ywi3f4yMLml7dmmIRAWtFwJM3f/AVpqr51aAIepwdEPDYaqzTSo
- zQE3/Takm+LE+XrnHFq2ojgXNE7ZSLz4DZ1QLaI1mzdnsU8KH33UITTXG0Q/6cbs6P4=
-X-Gm-Gg: ASbGnctYcR1rUgnCxth3Uf5JPLtOnzieElhvGmIPvP1fwTKstpHFL39a6fF3JeOKsmN
- 03Kpbcm7oEkEr7HQnUztSBmHoRkXUTVP6LnonPmLdisTDBRno6t9Z/Kh/8kUpd0+y3oZMkhLNCS
- dwhzPXIw6qGxV1gIUCxKy1bkcXqSTbfaMFVypYPIcN/WOAVLv3PgAzhYPbiEPRxAnuL03ItmY7Q
- GBW9SZkrU/eY6UdjsZBojNRgOVEFMSWIKPEi/2czjqZgHOvMF0GD/oGmzFJvtLPru1Wk98zBsvn
- 7tbkmVTVHcsysWwS+XjEgz79njs3W9bPfsd6TO9yYx3VyCdl+ezLuw007ExAzqRhMMy1TfXbHh2
- 8c9jzTSDUuTP89KN06m8APu2AcDu/ZAygoTWWq1mGMtexO2GpkYR9CVdrRAEraTWuA2M50txuV8
- pt/BB69SVRA9J+UwdG9Q==
-X-Google-Smtp-Source: AGHT+IHWJeFMMrSf4d7u8k3kEvDnIu0adEDZ1tZeagSPLyXmDUnCanZSBZBV3DvOyWzx0/dxxipcFw==
-X-Received: by 2002:a17:903:198d:b0:210:f706:dc4b with SMTP id
- d9443c01a7336-23f9813e7fdmr108791225ad.13.1753374836326; 
- Thu, 24 Jul 2025 09:33:56 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1ee6:5be8:2af4:40ea:5991:dc59?
- ([2607:fb91:1ee6:5be8:2af4:40ea:5991:dc59])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fa475fc12sm19378545ad.5.2025.07.24.09.33.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 09:33:55 -0700 (PDT)
-Message-ID: <b76024ad-abd6-4606-862a-41cc1d39eab1@linaro.org>
-Date: Thu, 24 Jul 2025 09:33:52 -0700
+ AJvYcCXM80C80aOlnytabrdFEDatRWJkfbBYes3bncH4OXYJ9GnhnuAl0elvkA/DOOnfIBn1JLpxXmllDKdZ@nongnu.org
+X-Gm-Message-State: AOJu0YxiyAsQdHBCzTIppSrtrVpmYYa3cjBwwZaieY+qqeTxJWR7mkpx
+ OVFKu+8rSTaY2rR9JTqL1/HXE1YrZEHAQ6Bpc7HsoIj5LuZz3xi5wJf4ZRCUUwkoBLNNDGf8BFR
+ 6m6ZGlvZnUK/9R2zd+55t65B0tduedIgbxRCPvJuP
+X-Gm-Gg: ASbGncvmnl/6jzi7E8pnjEZjBc98u/ors0HTD40/8xuFCdbNNqKZfMVeI/OHxT3ZIOS
+ Z1iZt4oYIMp29pGg8vEgICEgxAkA+jTRanhDQEkM4PN4GSQZ/QyX/qX2/2WwqfmOeO0XmI3oXho
+ 9JIguzj7/dnWBcJwv9+8jCSXyVjdY190VjyZjlEEHAKhPnYFfolgUXIJTQN3CsEv0rQZslqDxQf
+ 6dMntyHtqT2/G2B5iEm75oapiFkCW5SUvrgSg==
+X-Google-Smtp-Source: AGHT+IEGH9pS8hhuzYXRIFNJtpoYUEcALbJ3jr+8pzx0K/mT9hj27cEUpegmL7rCuVz+zzYE9MGRFFp9c4kx1MevSXM=
+X-Received: by 2002:a05:622a:1443:b0:4ab:3f28:9c7c with SMTP id
+ d75a77b69052e-4ae7e1d7535mr3697371cf.5.1753376075955; Thu, 24 Jul 2025
+ 09:54:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: fix use-after-free with dispatch
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Michael Tokarev
- <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, Peter Xu
- <peterx@redhat.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250214072029.515379-1-jansef.jian@hj-micro.com>
+ <bf6df47b-8815-4d84-a01b-010281187d24@linaro.org>
+In-Reply-To: <bf6df47b-8815-4d84-a01b-010281187d24@linaro.org>
+From: Roman Kiryanov <rkir@google.com>
+Date: Thu, 24 Jul 2025 09:54:24 -0700
+X-Gm-Features: Ac12FXzOdfG-Un591XVw_O2N7RYoevz2B0da3ctAO2K6MDSfYlcMico_jslhzcw
+Message-ID: <CAOGAQepyzkZS-kK-rH=rv_pNRCwLBG1UJJ4q4oWztJfCnA=YXw@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1] hw/arm/smmu-common: Avoid using inlined
+ functions with external linkage
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: JianChunfu <jansef.jian@hj-micro.com>, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, qemu-devel@nongnu.org, 
+ Will Hollins <whollins@google.com>, Nabih Estefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=rkir@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,24 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/25 09:11, Pierrick Bouvier wrote:
-> This patch takes a simple approach: remove the cached value creating the
-> issue, and make sure we always get the current mapping for address
-> space, using address_space_to_dispatch(cpu->cpu_ases[asidx].as).
-> It's equivalent to qatomic_rcu_read(&as->current_map)->dispatch;
-> This is not really costly, we just need two dereferences,
-> including one atomic (rcu) read, which is negligible considering we are
-> already on mmu slow path anyway.
+Hi Philippe, thank you for looking into this.
 
-We're not just on the slow path, we're on the tlb fill path, which is even rarer.  Once 
-upon a time, memory_dispatch was used along the mmio path, but even then I think it must 
-have been premature optimization.
+On Thu, Jul 17, 2025 at 11:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> (sorry for previously missing this patch)
+>
+> (cc'ing Google folks for
+> https://lore.kernel.org/qemu-devel/20250717205735.2345674-1-rkir@google.c=
+om/)
 
-This looks like an excellent solution.
-Thanks for all the detective work.
+Will this patch be included into 10.1?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+> On 14/2/25 08:20, JianChunfu wrote:
+> > Similarly to commit 9de9fa5c ("hw/arm/smmu-common: Avoid using
+> > inlined functions with external linkage"):
+> >
+> >    None of our code base require / use inlined functions with external
+> >    linkage. Some places use internal inlining in the hot path. These
+> >    two functions are certainly not in any hot path and don't justify
+> >    any inlining, so these are likely oversights rather than intentional=
+.
+> >
+> > Fixes: b8fa4c23 (hw/arm/smmu: Support nesting in the rest of commands)
+>
+> I suppose b8fa4c233bd was copy/pasted before 0b796f38106 ("hw/arm/smmu:
+> Avoid using inlined functions with external linkage again").
+>
+> > Signed-off-by: JianChunfu <jansef.jian@hj-micro.com>
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
