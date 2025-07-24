@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 716E2C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32CFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 11:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ueu9f-0002Bi-ID; Thu, 24 Jul 2025 07:30:31 -0400
+	id 1ueu9W-0000BI-3x; Thu, 24 Jul 2025 07:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ueu9d-0001nv-8Z
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:30:29 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ueu9N-00089P-Gg
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:30:14 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ueu9b-0003PB-16
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:30:28 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2352400344aso7194535ad.2
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 04:30:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ueu9L-0003MU-7B
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 07:30:13 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-60c4f796446so1511409a12.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 04:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1753356625; x=1753961425; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pY3mZN2ThEQo9fBqak9v2U5Bt/vr5h53HZ4uvSNiqYc=;
- b=UyXwr8bIGJMpKkModqyBa27dd35whqWU6Hz+6a6Gbyr18bhgIWiR4PcNRznpztrHw+
- QCgIlqbwYzy2Bcj/HB9o8KHmCAZWeTWfrRMrQMptk9UwlSiLNnm/OCtafXiVSmlWL+sG
- YtUc/ysvNr4+vXvYwiQzV9jmz9mN7Fv1r5TgLKIlWS6Jl+3AaBzzI5eG6xuIE9EFT/Le
- 0Q60B6KhTnXsQ8HJFKP+4EqqGqZmGOzHwd2TMjHyXP2ccrvBCk1EsKgHRbM8wRmBZS6+
- SiQxylI+5f/RdR2dcFr8oHNkPeVmGx2hCpyqhV5HoqMdKoO9+pJybLDWN/1CrKQBDh6p
- hMFQ==
+ d=linaro.org; s=google; t=1753356609; x=1753961409; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XLsNCLAgQY25GsAUu49EVCWatsso57MaoWS8EpJ/U3Y=;
+ b=TJI1Au7zO1567gMct1y4s5WFOd/XJvfRFRvBl4SFOUQPCoNv5WguvBQTY3mmUivrJ+
+ nRkOOnZP3kSIBLUgxmfvdEpd4/1tMdKEDhfMQYXwkwn6eYbIsFImevRgdMwhXPmZYlg4
+ vCP5p+IK3OgFju+of3+bqrtFqAaMh31SBbH49rHYBrCq2EP16kMJzSYMmM4+EdIF83oh
+ C1tDnqaZJrWmMtA63Om6dV/qw1eNC417yNdNXGeoQHRC5Zm0vBlWHPLIvJuJgC+2QEV0
+ Ivr1ON1gL1rSqBhvGBl+zBEyP7B4VjQ8TsYnu+ecIPotXyXZG3cZSIl9z2+WRzYlkVgd
+ uugg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753356625; x=1753961425;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pY3mZN2ThEQo9fBqak9v2U5Bt/vr5h53HZ4uvSNiqYc=;
- b=ks/D3mjr3t09iWHP65PI4yU4FlO0WILnEoN/02fKQqlE1ga6MFc58NDgKXlBDuEgSL
- Tq0QB8egMcnTQmTsIvmXi0n75lsB0dvTA858hT5WUp9zV2jGVIvSFcSHE1GXvJn30Xkn
- wTsoDp02LnbzuWjbUzek8wVLSTf9EQO1Yzp0ckR/LfHZ4TF+RfjftAL9B/b0rvFD0ZL2
- u49aVzpsjHEmpXEhnUA5PnP9A9v4A76/htEumH/IWdPP9sWmX7nY2uzw2Oeh1Q01zyY5
- Hsyr5XxBXlIpXLibnn5AAUlPFKMurBu49gBZEY/nhRtQFvpB9ntCN2NXY2DIaxjX/3oq
- qPog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSYy5fYPlflFYkpUmCRiwvO3Hn7caX0ToK/ziijVxLO3z3X0iiqMB4/USeVqenw3wnG6cxT5GE7FVM@nongnu.org
-X-Gm-Message-State: AOJu0YwfLidSJqfZ2/CQ4Aaatiab1DosI2wrDLkaI1/UkL8g+5bEj3OS
- ATMlaso20Nz0UeUgVR3CnDh6MTz5SCXj40YCReysXA8hPNlY15ye60b2H+UaoXdIpmo=
-X-Gm-Gg: ASbGncssEURgjw2IsoK8wrTSKlP2t+wBLT2Ng0Tj9S2LiJg3bHLYLglJst9D+TpY4+f
- NNaRGwY8wQIE7+Uq46JY5+hNg8wjS1eQ+YcdHELLTVIdwSGZ4M9UE/nsXRj84pb8uZo8pbVijTI
- UPkWiTadmYekLhurwagfY/r/fraLuGpzB4G3rDUmMK0NRP1xaOL0nJwx/a6CGowMlwMKRiq9KmT
- MH0HaDDKM6g9vPzW8u/M8IYpcl9gxQ2K+NrzsqVoIRjHdOFRKqLDs7D3DHKTE8gM1zh1chnNXbH
- PCQqjXfs/alcHj1AJdqhEMo3AYv/bEsX7l7s+wX1ZM3yFqT3LV6oUeOPw/v42+ldrWwbODfIbpO
- 6/GQNM2bP3XOqt64UZoveZu0ov6qNsdivA5dbVObHOO64KETdp32PQXWDJwE5Yo0IlNv0t4wRq8
- nl
-X-Google-Smtp-Source: AGHT+IE3B/iIREJvLUUKRLcSWziIgVOBVxORPBCoVtTHcrsyA0EAPPj2FbDiZ6s7J5bCUzSJLV1+qQ==
-X-Received: by 2002:a17:902:cf05:b0:236:15b7:62e4 with SMTP id
- d9443c01a7336-23f9821d167mr115334195ad.38.1753356624822; 
- Thu, 24 Jul 2025 04:30:24 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:8924:370b:6e58:6804:59a0?
- ([2804:7f0:bcc0:8924:370b:6e58:6804:59a0])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fa48bbe95sm13642045ad.86.2025.07.24.04.30.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 04:30:24 -0700 (PDT)
-Message-ID: <cca41cc9-a481-466a-a233-706ffd027f52@ventanamicro.com>
-Date: Thu, 24 Jul 2025 08:30:19 -0300
+ d=1e100.net; s=20230601; t=1753356609; x=1753961409;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XLsNCLAgQY25GsAUu49EVCWatsso57MaoWS8EpJ/U3Y=;
+ b=gSVi/X8r/AA0JTSKN7Jkf8J0eACLrXpiuHtQsCpJ8xPhANnNBWAsCK/bf2Jc4/96hB
+ L0Meqim032N/cRJhVFVMPU0CwWd+nuez87FUKo4CAnnkGQxmgCzCZt8cAQN4bQEdzOj9
+ 1wr1TzBAZJcX9ofgqcNlQSP9SftvZ3BnpjveKpnzCDAbsLTcS34LQiWtXqI4e+6ZMiTW
+ B0vVL8JgTYfUz3iHJ4QmP9+pOhzMqyZwLjw2u8U2bCKIrvJCTihpA5KaSNKnq0gUHBTk
+ zVbGeNR6hp9RsPcN3ccQJqT1YCHJLswIDkasvy7f5ijdtxwQjwy/PF9QpxZ9xEXuBB93
+ zWkQ==
+X-Gm-Message-State: AOJu0YxmljNo+1JU/w+YtIGUDJMvhbz762zROF/b4v0FlJ3oKwEP6zDR
+ 56SCupFZwZJgbsLhbJ0qopbW7BS2qabKy7ANVACqu5Xow5VWrTwHN+YFDmne43sQfoa7fPDAqZR
+ C1aMBUx0NaSFiBuyAhll89gxGgjezuyfU2H+sQHMJGQ==
+X-Gm-Gg: ASbGncuNtmewW66iFM4Rk0c2V+5R0hBxCme9qc5pmlzxyCtB82nauA3NJauV0FsXv9A
+ wr9bitIvIn392krUhhwzhKk/4r4BnrNl+t9J0hIlvMZ4TV6yFRmSVOA+yRMWADbDl9WYC1Qr4MW
+ 5aPMfwu5n+cNUgZLnOEoELQNF4uEuPVpOca4SjPz4bXs0tM/hSGINBU887eu7dnimn4W1C4RNq4
+ 6iAfiEBLocm30MB
+X-Google-Smtp-Source: AGHT+IG9M7JG3+egYJEUNgJnjmD3VnU0cF/HaWeex+0iBmRYnIxgoZD+N7u38A+ut0GSEQdQnY6i7E/fv/B/j0K4REc=
+X-Received: by 2002:a05:6402:90c:b0:612:dff3:2ffb with SMTP id
+ 4fb4d7f45d1cf-6149b427029mr5723871a12.11.1753356608758; Thu, 24 Jul 2025
+ 04:30:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/riscv/virt-acpi-build.c: Update FADT and MADT
- versions
-To: Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- Anup Patel <anup@brainfault.org>, Atish Kumar Patra <atishp@rivosinc.com>
-References: <20250724110350.452828-1-sunilvl@ventanamicro.com>
- <20250724110350.452828-3-sunilvl@ventanamicro.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250724110350.452828-3-sunilvl@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
+References: <20250724105939.2393230-1-alex.bennee@linaro.org>
+ <20250724105939.2393230-14-alex.bennee@linaro.org>
+In-Reply-To: <20250724105939.2393230-14-alex.bennee@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 24 Jul 2025 14:29:42 +0300
+X-Gm-Features: Ac12FXz3_xjyMlWLZv1NSiN_dVw_b3zHyllUzeiXq1abD3FpGwkiGCq5bqRfTQU
+Message-ID: <CAAjaMXau4GyWidMNdYXgnMQTrv0mhVuCamDtaMLLJPeEDgyOQQ@mail.gmail.com>
+Subject: Re: [PATCH for 10.1 13/13] tests/docker: handle host-arch selection
+ for all-test-cross
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,98 +98,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/24/25 8:03 AM, Sunil V L wrote:
-> RISC-V support is added only in ACPI 6.6. According to the ACPI 6.6
-> specification, the minor version of the Fixed ACPI Description Table
-> (FADT) should be 6, and the Multiple APIC Description Table (MADT)
-> should use revision 7. So, update the RISC-V FADT and MADT to reflect
-> correct versions.
-> 
-> Update the code comments to reflect ACPI 6.6 version details.
-> 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+On Thu, Jul 24, 2025 at 2:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> When building on non-x86 we get a bunch but not all of the compilers.
+> Handle this in the Dockerfile by probing the arch and expanding the
+> list available.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > ---
+>  .../dockerfiles/debian-all-test-cross.docker  | 31 ++++++++++---------
+>  1 file changed, 17 insertions(+), 14 deletions(-)
+>
+> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/test=
+s/docker/dockerfiles/debian-all-test-cross.docker
+> index 5aa43749ebe..16a83241270 100644
+> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+> @@ -23,7 +23,9 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>          bison \
+>          ccache \
+>          clang  \
+> +        dpkg-dev \
+>          flex \
+> +        gcc \
+>          git \
+>          libclang-rt-dev \
+>          ninja-build \
+> @@ -33,16 +35,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>          python3-venv \
+>          python3-wheel
+>
+> -RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+> -        apt install -y --no-install-recommends \
+> -        gcc-aarch64-linux-gnu \
+> +# All the generally available compilers
+> +ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
+>          libc6-dev-arm64-cross \
+>          gcc-arm-linux-gnueabihf \
+>          libc6-dev-armhf-cross \
+> -        gcc-hppa-linux-gnu \
+> -        libc6-dev-hppa-cross \
+> -        gcc-m68k-linux-gnu \
+> -        libc6-dev-m68k-cross \
+>          gcc-mips-linux-gnu \
+>          libc6-dev-mips-cross \
+>          gcc-mips64-linux-gnuabi64 \
+> @@ -51,18 +48,24 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>          libc6-dev-mips64el-cross \
+>          gcc-mipsel-linux-gnu \
+>          libc6-dev-mipsel-cross \
+> -        gcc-powerpc-linux-gnu \
+> -        libc6-dev-powerpc-cross \
+> -        gcc-powerpc64-linux-gnu \
+> -        libc6-dev-ppc64-cross \
+>          gcc-powerpc64le-linux-gnu \
+>          libc6-dev-ppc64el-cross \
+>          gcc-riscv64-linux-gnu \
+>          libc6-dev-riscv64-cross \
+>          gcc-s390x-linux-gnu \
+> -        libc6-dev-s390x-cross \
+> -        gcc-sparc64-linux-gnu \
+> -        libc6-dev-sparc64-cross && \
+> +        libc6-dev-s390x-cross
+> +
+> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"${=
+AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; fi
+> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"${=
+AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; fi
+> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"${=
+AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; fi
+> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"${=
+AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; fi
+> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=3D"${=
+AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; fi
+> +
+> +RUN echo "compilers: ${AVAILABLE_COMPILERS}"
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Nitpick, each `RUN` command will create a new cached layer for the
+container build. It makes more sense to fold them in a single `RUN`
+step to avoid unnecessary layers. Does not make a big difference so
+feel free to ignore.
 
->   hw/riscv/virt-acpi-build.c | 25 ++++++++++---------------
->   1 file changed, 10 insertions(+), 15 deletions(-)
-> 
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index ee1416d264..f1406cb683 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -270,11 +270,8 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
->   #define RHCT_NODE_ARRAY_OFFSET 56
->   
->   /*
-> - * ACPI spec, Revision 6.5+
-> - * 5.2.36 RISC-V Hart Capabilities Table (RHCT)
-> - * REF: https://github.com/riscv-non-isa/riscv-acpi/issues/16
-> - *      https://drive.google.com/file/d/1nP3nFiH4jkPMp6COOxP6123DCZKR-tia/view
-> - *      https://drive.google.com/file/d/1sKbOa8m1UZw1JkquZYe3F1zQBN1xXsaf/view
-> + * ACPI spec, Revision 6.6
-> + * 5.2.37 RISC-V Hart Capabilities Table (RHCT)
->    */
->   static void build_rhct(GArray *table_data,
->                          BIOSLinker *linker,
-> @@ -421,7 +418,10 @@ static void build_rhct(GArray *table_data,
->       acpi_table_end(linker, &table);
->   }
->   
-> -/* FADT */
-> +/*
-> + * ACPI spec, Revision 6.6
-> + * 5.2.9 Fixed ACPI Description Table (MADT)
-> + */
->   static void build_fadt_rev6(GArray *table_data,
->                               BIOSLinker *linker,
->                               RISCVVirtState *s,
-> @@ -429,7 +429,7 @@ static void build_fadt_rev6(GArray *table_data,
->   {
->       AcpiFadtData fadt = {
->           .rev = 6,
-> -        .minor_ver = 5,
-> +        .minor_ver = 6,
->           .flags = 1 << ACPI_FADT_F_HW_REDUCED_ACPI,
->           .xdsdt_tbl_offset = &dsdt_tbl_offset,
->       };
-> @@ -508,11 +508,8 @@ static void build_dsdt(GArray *table_data,
->   }
->   
->   /*
-> - * ACPI spec, Revision 6.5+
-> + * ACPI spec, Revision 6.6
->    * 5.2.12 Multiple APIC Description Table (MADT)
-> - * REF: https://github.com/riscv-non-isa/riscv-acpi/issues/15
-> - *      https://drive.google.com/file/d/1R6k4MshhN3WTT-hwqAquu5nX6xSEqK2l/view
-> - *      https://drive.google.com/file/d/1oMGPyOD58JaPgMl1pKasT-VKsIKia7zR/view
->    */
->   static void build_madt(GArray *table_data,
->                          BIOSLinker *linker,
-> @@ -537,7 +534,7 @@ static void build_madt(GArray *table_data,
->   
->       hart_index_bits = imsic_num_bits(imsic_max_hart_per_socket);
->   
-> -    AcpiTable table = { .sig = "APIC", .rev = 6, .oem_id = s->oem_id,
-> +    AcpiTable table = { .sig = "APIC", .rev = 7, .oem_id = s->oem_id,
->                           .oem_table_id = s->oem_table_id };
->   
->       acpi_table_begin(&table, table_data);
-> @@ -812,10 +809,8 @@ static void build_rimt(GArray *table_data, BIOSLinker *linker,
->   }
->   
->   /*
-> - * ACPI spec, Revision 6.5+
-> + * ACPI spec, Revision 6.6
->    * 5.2.16 System Resource Affinity Table (SRAT)
-> - * REF: https://github.com/riscv-non-isa/riscv-acpi/issues/25
-> - *      https://drive.google.com/file/d/1YTdDx2IPm5IeZjAW932EYU-tUtgS08tX/view
->    */
->   static void
->   build_srat(GArray *table_data, BIOSLinker *linker, RISCVVirtState *vms)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
+> +
+> +RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+> +        apt install -y --no-install-recommends \
+> +        ${AVAILABLE_COMPILERS} && \
+>          dpkg-query --showformat '${Package}_${Version}_${Architecture}\n=
+' --show > /packages.txt
+>
+>
+> --
+> 2.47.2
+>
+>
 
