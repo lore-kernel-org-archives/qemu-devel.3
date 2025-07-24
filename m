@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA0DC83F26
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22FFC83F1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 13:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uevpV-0007gP-WE; Thu, 24 Jul 2025 09:17:50 -0400
+	id 1uew3I-0001jz-HV; Thu, 24 Jul 2025 09:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uevpQ-0007dc-Pr
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:17:45 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uevpP-00066n-3D
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:17:44 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ae3a604b43bso153804766b.0
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 06:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753363060; x=1753967860; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PKa9Xfs+jC54utoZbp9wWbdGbgaNPTNBJbxU8B9LYEk=;
- b=edbLXvN5os8yrMXxA8N0ZgmWwXbZJjN+iv5THa1HtoQkeyVVvv0qU25HVHgnWfBezQ
- 0d4YOtd/7iF8VACQaAp8tq2ax/T923keEvk5NIQyS0tDlZG9pPbqnn2xz3t6OM6Ehc+o
- Qn3z3JsE9JtRqTd+IvhV4CIXLmg88EmrMOXln/dA8eJoMr6fSeEexcSaVpX8wmdt8rJh
- 5DNTITO+BC+Ka+tK0BRrutMWzSQeZI4bwQdhuUsVrDKW6HvYwlI4ufe4oHAGU0+FQVZB
- mugK/0C+Kvk8LvIdF25It8A7/jPU7KzvT+mpLU0I3I6FGZoTkcOpvpR7AoNWa0U1mf2t
- W58w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753363060; x=1753967860;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PKa9Xfs+jC54utoZbp9wWbdGbgaNPTNBJbxU8B9LYEk=;
- b=jfWWJeQkWWCc7DQ4nYB6W5zsgA33b/fyzjA/fnW5fcDpUWkSf2J9hrownCiUBmaAMU
- DyKS8wTfOsi+LTkhTirwxw0u1R4h5nHlWtnxLu4aVg5+i46tARG8FIrbOHlafrjjoT/6
- 3UlEs/fdbyfb3tC0N02HtEgE70IIx6QM2Xt4Bp9neDGVgCGV7uxdw0hMzxwhbwlSmM17
- SnDzShvnRFU2Xe/uioaw6UACy4VrmQ/F7aDy7/QgFCXE+truK7JuYSOIJPneYN1ozzlg
- vh24kpPCyeCM4c4/KFiGjSSd/wpSsUoq9NkLxIB0fthB2I/0E9ugtMXbLTuPQG3RNiP1
- b9dA==
-X-Gm-Message-State: AOJu0Yw0jnihPCbWw4Zx9lh5Nj0Lq72bvO2dr73GWz/RPojp7lKFjyQd
- 5q5p5pl8ovIq1JP3vGqmvmqb+tb46bAnWu1wwPe7+6P7EWOaA6YlmsSgzju41WOHss75UiW+rvG
- ng5YJVCuUjl8Gmr2/h5n+6f7nAsv/4HUWXW4QbnvRvA==
-X-Gm-Gg: ASbGnctmB8625P/8NIDofkTiv9jiFCmPSIVWvcqa6rHwLeIhuapz7lLJWmATbfUiwBi
- O+9nEleQKTGhxfnorXoQu1azZIjQwPTQRXD1hLynGpRhnByi8XtVK5EGd+Fy4c3+2JjPnjvQMpK
- 6c6Vu+ec9fLPMUMJWWV2Bch2okrK0YwRczWzwMQbQhEcuEoP4/aCTWgdpWMA6jbxRAOzwqAqMmO
- 2cDiA==
-X-Google-Smtp-Source: AGHT+IEaM5fGR+ucdMcIE/Zyo2rH+mc8wvrQk14WM0wfEtU/y6romPuYcWCKjx1vH4uoghWVZWhk/2RYA1FVaEpzWPk=
-X-Received: by 2002:a17:906:c14e:b0:ae0:635c:a400 with SMTP id
- a640c23a62f3a-af2f8d4e87bmr650990266b.51.1753363059961; Thu, 24 Jul 2025
- 06:17:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uew2t-0001eU-1p
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:31:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uew2q-0003Oj-9Y
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 09:31:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753363894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=IP82vxLzWgYzmeMEQu/K4hm5xBY1qJLWbAB67U0WW/A=;
+ b=KWm0aofo2lTkiNwthUQJeQvZn9c7V5JJtrGt64yGl/ar/+zxQVLC2l5uT+dgQ+QoexGyNH
+ DReSPMu2Cj/dcyEm76h9K4KQE238dbcFPcEX8S64ANyatmSqZqvpdUJvq92jgedBE6yR4J
+ yHGNf/sPTyuy0B9NAADm8+UcnOzYxUY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-QdDc7-N0PP-Fcjeq_hGYTQ-1; Thu,
+ 24 Jul 2025 09:31:33 -0400
+X-MC-Unique: QdDc7-N0PP-Fcjeq_hGYTQ-1
+X-Mimecast-MFC-AGG-ID: QdDc7-N0PP-Fcjeq_hGYTQ_1753363892
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5091A1955D95
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 13:31:32 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.19])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D0F721800285; Thu, 24 Jul 2025 13:31:30 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 0/7] ppc queue
+Date: Thu, 24 Jul 2025 15:31:19 +0200
+Message-ID: <20250724133126.1695824-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20250724125928.61045-1-hreitz@redhat.com>
- <20250724125928.61045-3-hreitz@redhat.com>
-In-Reply-To: <20250724125928.61045-3-hreitz@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 24 Jul 2025 16:17:14 +0300
-X-Gm-Features: Ac12FXwOj1GLQpZBQWGaH2C4gLbt0_D2cd48O4OYBDmTbhwoltKtpmDf-gTfRh4
-Message-ID: <CAAjaMXb7SuHrCh_oCAoVKmfo8eNXoaR=8ay5sDAMrS4Qdtxk6w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] vhost: Do not abort on log-stop error
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,41 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 4:00=E2=80=AFPM Hanna Czenczek <hreitz@redhat.com> =
-wrote:
->
-> Failing to stop logging in a vhost device is not exactly fatal.  We can
-> log such an error, but there is no need to abort the whole qemu process
-> because of it.
->
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  hw/virtio/vhost.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 05ad5de629..6557c58d12 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -1122,7 +1122,8 @@ static void vhost_log_global_stop(MemoryListener *l=
-istener)
->
->      r =3D vhost_migration_log(listener, false);
->      if (r < 0) {
-> -        abort();
-> +        /* Not fatal, so report it, but take no further action */
-> +        warn_report("vhost: Failed to stop logging");
->      }
->  }
->
-> --
-> 2.50.1
->
->
+The following changes since commit 9e601684dc24a521bb1d23215a63e5c6e79ea0bb:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+  Update version for the v10.1.0-rc0 release (2025-07-22 15:48:48 -0400)
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+are available in the Git repository at:
+
+  https://github.com/legoater/qemu/ tags/pull-ppc-20250724
+
+for you to fetch changes up to 0fb961e392e2055adc5429236989b01bb763f12c:
+
+  MAINTAINERS: remove myself as ppc maintainer/reviewer (2025-07-24 15:16:59 +0200)
+
+----------------------------------------------------------------
+ppc queue:
+
+* Update maintainers
+
+----------------------------------------------------------------
+Aditya Gupta (1):
+      MAINTAINERS: Add myself as a reviewer of PowerNV emulation
+
+Chinmay Rath (1):
+      MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
+
+Cédric Le Goater (1):
+      MAINTAINERS: Remove Frédéric as reviewer
+
+Daniel Henrique Barboza (1):
+      MAINTAINERS: remove myself as ppc maintainer/reviewer
+
+Gautam Menghani (1):
+      MAINTAINERS: Add myself as a reviewer for XIVE
+
+Harsh Prateek Bora (2):
+      MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
+      MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
+
+ MAINTAINERS | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
 
