@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C27C83F1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 09:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAAFC83F26
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Jul 2025 09:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uesU3-0003Cu-Io; Thu, 24 Jul 2025 05:43:27 -0400
+	id 1uesUa-00045A-V7; Thu, 24 Jul 2025 05:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesTv-00036K-Sv
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:43:22 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesUI-0003vI-Dz
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:43:43 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesTt-00073h-Fg
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:43:19 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-455b00339c8so4723225e9.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 02:43:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uesUG-00077A-E0
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 05:43:42 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-455b00283a5so4683735e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 02:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753350194; x=1753954994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753350218; x=1753955018; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pgyD+3HLshz5yn2oNV5hwV9bMTPuj58o7JY+Yea3O9c=;
- b=I/cxYBiF4ubuQbNNXlSVH4yJDfn0CAEu8CQ92aEI0wvqixe0egtgmaIcegZCQFMmR9
- 7VQQJVkz9U8r8dGZDsmHeQaEp1kpIIwXgkFxZyGQ59yI6q3UG2WO+kgDVygSANMQ1ZEp
- 0iGMETr6dB7QOFsfHW9yLYtnfDJ0J3JhDOqsfkWA/VfsfYPoOB+Aw2NxC3Fng5izhq5n
- dDYFbzV7z6ukIXfwh2GUPw1TrBFi+UB1IK7+OK4mqD4tjAVobGCD7CLGkvCj9gH+iohQ
- fX+Q/NU1auAk1q/eRcQKC6c5W1d+uJ15B76cyzCNlLtVqtmR6T0e4cMDziA0WPRB7tXI
- 9gIA==
+ bh=FxEe3tvHPZUMb5s9JGfa9aJ4y1IP9SlYvu2YCVJXpeI=;
+ b=mtHA+fxPZAVxeNq0TBpK3WrHT8nr3HwjV5YEt0VZgG3p6R0DijzjCRqKgrvsckAsmX
+ UePUsYBeNOMKdNkSyrMu5hIjBqVJ9W/9vbxPLmoT6imPyvAHyy75xpvXbhmCCIjBmYyK
+ IgIgnKAtml7/DETaxOibfqZcyzrOSJpbtgy+dIiNPkyPf+uLQmgi93AggXgtk9/dR/L+
+ On43/1bL63Kw984kgf9yBBjiajDM8+qLe2fbkbPTbhWB0WU541s85UIYpu5EGEgeSurY
+ jki+z256PoMHxp9GemfErXxo/UNeQD+aIzAeW0VZozZ0/V2xPpZwrpPcRcoRgJjgVwXU
+ KPmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753350194; x=1753954994;
+ d=1e100.net; s=20230601; t=1753350218; x=1753955018;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pgyD+3HLshz5yn2oNV5hwV9bMTPuj58o7JY+Yea3O9c=;
- b=GXos39fGdSSwZzgtz6UUdYFVx6+pq6EVKTTyKfK+1bE71jUtJxvr2ldkju+bzT4kcF
- EDr9b6qBJ4ybpgpGiJthrVWQb9BaahKNPIUYkAOiEZfE5Nk03IfutTg0GAXU1dRt/qNL
- G92GHLMk8OCEDqQagqQsapMscXybBVqSA0g1jGl3/LLvtV9ah53S0imnBkMUqzz9xxC3
- Ml4/PLngkP04S7bqC2RQeGZ1bIpzplmaQHKcxYM1lSy95ujwbwcPUTejGObkerkB7gTM
- Sdoy3E3QmFki2Lt0dEBACcyrkC0pxuZBnv9F2b3Ww//8DmwvMQmq/rfCYQu7FkxQ+o+8
- KzLw==
+ bh=FxEe3tvHPZUMb5s9JGfa9aJ4y1IP9SlYvu2YCVJXpeI=;
+ b=K8T14u4uhEtXs1skZrgJ78GsLQzLau5GW6fyEeLFrp7wJ60tRp9IdPnlGFeeXEyX6O
+ I4wxr3JMJQDV7ORjAgo2stnNtV1n4SN4cR+rPyGEn62yABeZFE0AAFK4cd33HfISPIBF
+ T2NaGGKE2fqcEcBXeLvawIzx4hvnDgyFVSTSkLa0+b8Z8jHkG3gWIjut79+PCN8pksFW
+ CQz+jJX4loRKvflnRRfXuNiKP6i1no2jRYZWtxMo+PnfJqglbOBCJGRbYjZosnxosfkq
+ 9ktpKw/JZ+toO7/gXbL4fMbfS+f9kVj1x6B3+9IZG82gKuOuxQHtH7fKJxe6MRZeRbAe
+ Ki6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3tWN1w0676IhpJCE7hkinqJq094jNxdjvKJ7duwFXv3Y8ufZ6NhFVSf2Ga9PzT2nsF7BRiWwezxGy@nongnu.org
-X-Gm-Message-State: AOJu0YzI449wo/Wijt4lPoVVEEisy5agiGGSkyhiJPO3+93BsEx1KTGl
- 2GebYnDdn4uKld/uwkKgkXcNgU/BaVhdFu/R9IysmfY8t3gICB1MjxymCd1+99QJn0Q=
-X-Gm-Gg: ASbGncvC2ZvCwxsJXSz1vxypRTf0DNep+mMhvLFYUU7Om0LomNnPaEAvOI6JpK3WdhX
- m7rapLLMNhixJtXeLk07PwRspGHg+7vVHDpoyHS1iTV4GoKoqx0Mm4Q4vF4uKfhpC58DZllbN/E
- DEnnl+Vn++IPOAkfVNLZQxsPMNin5lMVs9Tvka46N6V+dX3eWdvhWnr6E6T7eTUpqMYa8Cuhr61
- sBdjJ+avOY63tvH0qRG12VTrOgpZeSPBTUWQAWkd4rwIWQMF9Z+0d4L2lNVKA2jYVmwmPnRT3bP
- rpEBLzlLSbIKR9W3bPUYUBl0X6wxXYT8nbPyHBHG5zeEqXy8trOJ7DrLhObIXHM8NN9LYRmnGtE
- FFb2E+TWYv7RDdjJJ21s7Z8HgDEqUQxQ7MtZZJECd0qjSYs6XvmKpUQ3fa2aAd1gDuA==
-X-Google-Smtp-Source: AGHT+IGPIDpR+N2d4tEUZ2CbJjZi7KUVMMUBQoQwHEV7Kcl0kVg2+mKfJAEXERElNYxZDm4WidqLoQ==
-X-Received: by 2002:a05:6000:2c06:b0:3b5:dafc:1525 with SMTP id
- ffacd0b85a97d-3b768ef5b95mr5169930f8f.33.1753350193887; 
- Thu, 24 Jul 2025 02:43:13 -0700 (PDT)
+ AJvYcCWvESrLIPFX3TLDdqZkYFYtTYk4xbxKZ+gPRSiLQv7JoA0dPC5ZK5Iwu3MwSmuuKXZLjFjHGHvhNdOd@nongnu.org
+X-Gm-Message-State: AOJu0YyIBbr62EkAO9qOInr52KFlAIC0qq+dnxW/bwC7Us7tQT4fGw9l
+ vWt3TettbJCzMk5oWzjLZ8hrvT9lOBUxfFSKzrxC9a00lkroeZnvG9vEsRhADcyUEW4=
+X-Gm-Gg: ASbGnct78lS03Z3bOHpldLiUQQtnE4C7kI48wSgc5+Aocc3855kIkseiPImFEDEBvq4
+ ekgCc4dZ7eIDJ1EBnoUdgh1Y/DaOppSJlHhp0WhIUuO8aRMZr3XfN2K/Nrsqep1lxcYSRJ5XaJe
+ VbYxZERobfuXmk0uWC64dhJTT65DY1WqY1IWMa4a6TRoC97oslzPLrqClol49FilzIUWnFygzSn
+ w4f4vAVJCTl3oq6Ou52M/1L0lQgR5sS8e7gP/GBx8oSXB0xwJtzqQKAa+G7owO1dpjDzrlprdx+
+ LIzkCgZU3D3g9NSPqV999+Jobgu+KBDVpsXGCHpNYoj8zIvU4sNlreDitFZUcKFP7NdLp3gL6/k
+ 2hk4OEfYG7ZUrTnrUW8JVV3WilPrdjO+3+eyOTbdZreJyMLztGjxEWP2Y43ypl6Thqw==
+X-Google-Smtp-Source: AGHT+IGc7IZqq0yUZpfg5J2WUKfe2ZlNiM7+ltDcfuEea1JtZGk9F5vqwX244kfSUDus/dmkgKyChg==
+X-Received: by 2002:a05:600c:524b:b0:456:1d4e:c14f with SMTP id
+ 5b1f17b1804b1-45868d69f9bmr49060855e9.28.1753350218331; 
+ Thu, 24 Jul 2025 02:43:38 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458705e39b1sm12908825e9.34.2025.07.24.02.43.12
+ 5b1f17b1804b1-45870532a4csm13625945e9.7.2025.07.24.02.43.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 02:43:13 -0700 (PDT)
-Message-ID: <d2388d3b-60e6-40f7-beac-ae965175e997@linaro.org>
-Date: Thu, 24 Jul 2025 11:43:12 +0200
+ Thu, 24 Jul 2025 02:43:37 -0700 (PDT)
+Message-ID: <7b562204-0add-45bb-ba3c-f497dc38464e@linaro.org>
+Date: Thu, 24 Jul 2025 11:43:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] MAINTAINERS: Add myself as reviewer for PowerPC TCG
- CPUs
+Subject: Re: [PATCH 5/5] MAINTAINERS: Add myself as a reviewer for XIVE
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org, npiggin@gmail.com, clg@redhat.com
 Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
  adityag@linux.ibm.com, gautam@linux.ibm.com
 References: <20250724063623.3038984-1-harshpb@linux.ibm.com>
- <20250724063623.3038984-4-harshpb@linux.ibm.com>
+ <20250724063623.3038984-6-harshpb@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250724063623.3038984-4-harshpb@linux.ibm.com>
+In-Reply-To: <20250724063623.3038984-6-harshpb@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,16 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/7/25 08:36, Harsh Prateek Bora wrote:
-> From: Chinmay Rath <rathc@linux.ibm.com>
+> From: Gautam Menghani <gautam@linux.ibm.com>
 > 
-> I have been working on Power ISA for a long time now and have mostly
-> contributed in TCG instruction translation area (moved 300+ instructions to
-> decodetree as of yet) and would like to continue contributing to PPC TCG in
-> best possible ways I can. I think it's time to step up and assist in reviewing
-> related patches to enable myself contribute more effectively in this direction.
+> Proposing myself as a reviewer for XIVE on PPC.
 > 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> I have been looking at XIVE in context of KVM internally at IBM for some time
+> in addition to testing a few XIVE upstream patches; and I'll be closely looking
+> at XIVE going forward.
+> 
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 
 Missing:
 
@@ -126,16 +124,16 @@ Missing:
 >   1 file changed, 1 insertion(+)
 > 
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6e95ef00c1..31bcb82e93 100644
+> index 1ba161d75b..f3f981f90d 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -296,6 +296,7 @@ F: tests/tcg/openrisc/
->   PowerPC TCG CPUs
->   M: Nicholas Piggin <npiggin@gmail.com>
->   M: Daniel Henrique Barboza <danielhb413@gmail.com>
-> +R: Chinmay Rath <rathc@linux.ibm.com>
+> @@ -2781,6 +2781,7 @@ T: git https://github.com/philmd/qemu.git fw_cfg-next
+>   
+>   XIVE
+>   R: Frédéric Barrat <fbarrat@linux.ibm.com>
+> +R: Gautam Menghani <gautam@linux.ibm.com>
 >   L: qemu-ppc@nongnu.org
 >   S: Odd Fixes
->   F: target/ppc/
+>   F: hw/*/*xive*
 
 
