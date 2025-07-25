@@ -4,64 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571A7C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBF6C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufIQM-0006Mv-Pb; Fri, 25 Jul 2025 09:25:22 -0400
+	id 1ufIRL-00072q-68; Fri, 25 Jul 2025 09:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1ufIQI-0006DX-5h
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:25:19 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ufIR0-0006rB-3H
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1ufIQE-000762-E3
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:25:17 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:d42b:0:640:f3fc:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3F82E80668;
- Fri, 25 Jul 2025 16:25:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:82d::1:4] (unknown [2a02:6bf:8080:82d::1:4])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 7PV2l25Gwa60-Jo67cp3K; Fri, 25 Jul 2025 16:25:08 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1753449908;
- bh=8Q/H++GzhMUkxXDXg8StqG+YdJoAlJcGOy0cM44I+J0=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=gi6sOwqJ71Kfe7HZ8ndkchd9pbm74ua8EOO05S8Kz4JUThEPMllL3Imp9KLJvTiPd
- /U67pFjLdWEcriFsRkHyctNsh9sBj8uHS+SCVGrktGcADakou3jVnBG75qjWyPSw1f
- Eg0F6otNhCCNMhqUnCK/VT0sqjFlqMv5hpCC8WLg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4d7e4439-5e67-4c5f-aed1-199015329c25@yandex-team.ru>
-Date: Fri, 25 Jul 2025 16:25:07 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ufIQx-0007LO-GZ
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753449956;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Z1i3FVYU9T3t9EoypQId4dBbYTnT4nfA30gvE8ZVzgo=;
+ b=EqHg/HiykNbCXStBb8Ji/qA4JI6SjxACMk8Oh7Q0Lq/LcX4LukabIRRSjvdm8U30g7vOEm
+ wGT28vxt514REMrdizabazoNv3keouLoApj727WlfpvYu6xZLV5QP44oQd7o/kTi5hnud5
+ J59EUv5Ylq7JxZpfN2WbpB4aC7Eg6RQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-undCfIV4NlWgGFbXHtDKhA-1; Fri,
+ 25 Jul 2025 09:25:54 -0400
+X-MC-Unique: undCfIV4NlWgGFbXHtDKhA-1
+X-Mimecast-MFC-AGG-ID: undCfIV4NlWgGFbXHtDKhA_1753449952
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3722E1955D90; Fri, 25 Jul 2025 13:25:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.162])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED398300018D; Fri, 25 Jul 2025 13:25:49 +0000 (UTC)
+Date: Fri, 25 Jul 2025 14:25:46 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 4/4] tests/functional: add -k TEST_NAME_PATTERN CLI arg
+Message-ID: <aIOF2gPa8nbec2qp@redhat.com>
+References: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
+ <20250725-functional_tests_debug_arg-v3-4-b89921baf810@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/smbios: allow clearing the VM bit in SMBIOS table 0
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com
-References: <20250724195409.43499-1-d-tatianin@yandex-team.ru>
- <20250725091651-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <20250725091651-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250725-functional_tests_debug_arg-v3-4-b89921baf810@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,116 +87,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jul 25, 2025 at 12:41:25PM +0300, Manos Pitsidianakis wrote:
+> Add a CLI argument that takes fnmatch(3)-style patterns as value and can
+> be specified many times. Only tests that match the pattern will be
+> executed. This argument is passed to unittest.main which takes the same
+> argument.
+> 
+> Acked-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  tests/functional/qemu_test/testcase.py | 23 +++++++++++++++++++++--
+>  1 file changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index ab564f873c303bcc28c3bf7bec8c8c4569fae91c..b045d82caa79d9d161fb868b0b0748ad7de453d9 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -16,6 +16,7 @@
+>  import os
+>  from pathlib import Path
+>  import pycotap
+> +import itertools
+>  import shutil
+>  from subprocess import run
+>  import sys
+> @@ -37,6 +38,7 @@ class QemuBaseTest(unittest.TestCase):
+>      debug: bool = False
+>      keep_scratch: bool = "QEMU_TEST_KEEP_SCRATCH" in os.environ
+>      list_tests: bool = False
+> +    test_name_patterns: list[str] = []
+>  
+>      """
+>      Class method that initializes class attributes from given command-line
+> @@ -67,10 +69,19 @@ def parse_args():
+>              action="store_true",
+>              help="List all tests that would be executed and exit.",
+>          )
+> +        parser.add_argument(
+> +            "-k",
+> +            dest="test_name_patterns",
+> +            action="append",
+> +            type=str,
+> +            help="Only run tests which match the given substring. "
+> +            "This argument is passed to unittest.main verbatim.",
+> +        )
+>          args = parser.parse_args()
+>          QemuBaseTest.debug = args.debug
+>          QemuBaseTest.keep_scratch |= args.keep_scratch
+>          QemuBaseTest.list_tests = args.list_tests
+> +        QemuBaseTest.test_name_patterns = args.test_name_patterns
+>          return
+>  
+>      '''
+> @@ -313,8 +324,16 @@ def main():
+>  
+>          tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+>                                     test_output_log = pycotap.LogMode.LogToError)
+> -        res = unittest.main(module = None, testRunner = tr, exit = False,
+> -                            argv=["__dummy__", path])
+> +        argv = ["__dummy__", path] + (
+> +            list(
+> +                itertools.chain.from_iterable(
+> +                    ["-k", x] for x in QemuBaseTest.test_name_patterns
+> +                )
+> +            )
+> +            if QemuBaseTest.test_name_patterns
+> +            else []
+> +        )
+> +        res = unittest.main(module=None, testRunner=tr, exit=False, argv=argv)
 
-On 7/25/25 4:20 PM, Michael S. Tsirkin wrote:
-> On Thu, Jul 24, 2025 at 10:54:09PM +0300, Daniil Tatianin wrote:
->> This is useful to be able to freeze a specific version of SeaBIOS to
->> prevent guest visible changes between BIOS updates. This is currently
->> not possible since the extension byte 2 provided by SeaBIOS does not
->> set the VM bit, whereas QEMU sets it unconditionally.
->>
->> Allowing to clear it also seems useful if we want to hide the fact that
->> the guest system is running inside a virtual machine.
->>
->> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
->> ---
->>
->> After talking to Michael:
->> Supersedes: <20250723090128.977364-1-d-tatianin@yandex-team.ru>
->>
->> v2:
->> - Add the new option to qemu-options.hx
->>
->> ---
->>   hw/smbios/smbios.c           | 11 ++++++++++-
->>   include/hw/firmware/smbios.h |  2 +-
->>   qemu-options.hx              |  2 +-
->>   3 files changed, 12 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
->> index 1ac063cfb4..13e21a9c43 100644
->> --- a/hw/smbios/smbios.c
->> +++ b/hw/smbios/smbios.c
->> @@ -179,6 +179,10 @@ static const QemuOptDesc qemu_smbios_type0_opts[] = {
->>           .name = "uefi",
->>           .type = QEMU_OPT_BOOL,
->>           .help = "uefi support",
->> +    },{
->> +        .name = "vm",
->> +        .type = QEMU_OPT_BOOL,
->> +        .help = "virtual machine",
->>       },
->>       { /* end of list */ }
->>   };
->
-> Can/should we just poke at "hypervisor" CPU property?
+unittest.main() supports a whole bunch of CLI args beyond '-k', but none
+of them are accessible as we're not forwarding the sys.argv that we have
+received. eg we're missing
 
-Well that property is part of the CPUID flags, and this one is part of 
-SMBIOS.
-Sometimes you may wish to have one set, but the other clear.
-For example for SeaBIOS compatibility, like some fields already do here 
-(look at the comments for some of them).
-SeaBIOS never sets the VM flag at all, so IMO QEMU shouldn't have as 
-well, but since that's already the default
-we can at least add an option to make it not do that if going for 
-SeaBIOS compatibility.
+$ git diff
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2a78e735f1..5caf7b13fe 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -249,7 +249,7 @@ def main():
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+         res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=["__dummy__", path])
++                            argv=[sys.argv[0], path] + sys.argv[1:])
+         for (test, message) in res.result.errors + res.result.failures:
+ 
+             if hasattr(test, "log_filename"):
 
->
-> Cc Paolo for comments.
->
->> @@ -574,10 +578,14 @@ static void smbios_build_type_0_table(void)
->>   
->>       t->bios_characteristics = cpu_to_le64(0x08); /* Not supported */
->>       t->bios_characteristics_extension_bytes[0] = 0;
->> -    t->bios_characteristics_extension_bytes[1] = 0x14; /* TCD/SVVP | VM */
->> +
->> +    t->bios_characteristics_extension_bytes[1] = 0x04; /* TCD/SVVP */
->>       if (smbios_type0.uefi) {
->>           t->bios_characteristics_extension_bytes[1] |= 0x08; /* |= UEFI */
->>       }
->> +    if (smbios_type0.vm) {
->> +        t->bios_characteristics_extension_bytes[1] |= 0x10; /* |= VM */
->> +    }
->>   
->>       if (smbios_type0.have_major_minor) {
->>           t->system_bios_major_release = smbios_type0.major;
->> @@ -1405,6 +1413,7 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
->>               save_opt(&smbios_type0.version, opts, "version");
->>               save_opt(&smbios_type0.date, opts, "date");
->>               smbios_type0.uefi = qemu_opt_get_bool(opts, "uefi", false);
->> +            smbios_type0.vm = qemu_opt_get_bool(opts, "vm", true);
->>   
->>               val = qemu_opt_get(opts, "release");
->>               if (val) {
->> diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
->> index f066ab7262..3ea732f4e6 100644
->> --- a/include/hw/firmware/smbios.h
->> +++ b/include/hw/firmware/smbios.h
->> @@ -22,7 +22,7 @@ extern GArray *usr_blobs_sizes;
->>   
->>   typedef struct {
->>       const char *vendor, *version, *date;
->> -    bool have_major_minor, uefi;
->> +    bool have_major_minor, uefi, vm;
->>       uint8_t major, minor;
->>   } smbios_type0_t;
->>   extern smbios_type0_t smbios_type0;
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index ab23f14d21..11204c47eb 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -2693,7 +2693,7 @@ DEF("smbios", HAS_ARG, QEMU_OPTION_smbios,
->>       "-smbios file=binary\n"
->>       "                load SMBIOS entry from binary file\n"
->>       "-smbios type=0[,vendor=str][,version=str][,date=str][,release=%d.%d]\n"
->> -    "              [,uefi=on|off]\n"
->> +    "              [,uefi=on|off][,vm=on|off]\n"
->>       "                specify SMBIOS type 0 fields\n"
->>       "-smbios type=1[,manufacturer=str][,product=str][,version=str][,serial=str]\n"
->>       "              [,uuid=uuid][,sku=str][,family=str]\n"
->> -- 
->> 2.34.1
+which would unlock
+
+$ QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64  PYTHONPATH=`pwd`/python ./tests/functional/test_version.py  -h
+usage: test_version.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [tests ...]
+
+positional arguments:
+  tests                a list of any number of test modules, classes and test methods.
+
+options:
+  -h, --help           show this help message and exit
+  -v, --verbose        Verbose output
+  -q, --quiet          Quiet output
+  --locals             Show local variables in tracebacks
+  --durations N        Show the N slowest test cases (N=0 for all)
+  -f, --failfast       Stop on first fail or error
+  -c, --catch          Catch Ctrl-C and display results so far
+  -b, --buffer         Buffer stdout and stderr during tests
+  -k TESTNAMEPATTERNS  Only run tests which match the given substring
+
+
+
+One of the goals with the new functional test system was that we stop trying
+to (re-)invent a custom test runner harness, as was the case with Avocado,
+in favour of relying on the pre-existing python infrastructure to the
+greatest extent possible.
+
+Seeing this, and all the other CLI arg handling added in this series, makes
+me fairly uncomfortable, as it is effectively inventing a custom test runner
+once again which is exactly what we wanted to get away from.
+
+At the same time, there are some pieces in this series that do things that
+unittest.main() can't do on its own.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
