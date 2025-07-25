@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0046EC87FCC
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 01:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7814FC87FCC
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 01:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf7PP-0001xL-LW; Thu, 24 Jul 2025 21:39:39 -0400
+	id 1uf7Wq-0007GZ-T1; Thu, 24 Jul 2025 21:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uf7Nh-0000jS-1w
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:37:53 -0400
+ id 1uf7Wm-0007EP-Vj
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:47:17 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uf7Nc-0002Z7-Rn
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:37:52 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1uf7Wk-00053Y-Un
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:47:16 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxnnPl34JogpAxAQ--.64627S3;
- Fri, 25 Jul 2025 09:37:41 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxaWog4oJo3ZExAQ--.38534S3;
+ Fri, 25 Jul 2025 09:47:12 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCxdOTk34Joz5wlAA--.62171S4;
- Fri, 25 Jul 2025 09:37:41 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDx_8Mf4oJosZ8lAA--.61777S2;
+ Fri, 25 Jul 2025 09:47:11 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 02/17] target/loongarch: Define function
- loongarch_cpu_post_init as static
-Date: Fri, 25 Jul 2025 09:37:24 +0800
-Message-Id: <20250725013739.994437-3-maobibo@loongson.cn>
+Subject: [PATCH v3 15/17] target/loongarch: Add parameter tlb pointer with
+ fill_tlb_entry
+Date: Fri, 25 Jul 2025 09:47:11 +0800
+Message-Id: <20250725014711.1025794-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250725013739.994437-1-maobibo@loongson.cn>
 References: <20250725013739.994437-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOTk34Joz5wlAA--.62171S4
+X-CM-TRANSID: qMiowJDx_8Mf4oJosZ8lAA--.61777S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,228 +66,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function loongarch_cpu_post_init() is implemented and used in the
-same file target/loongarch/cpu.c, it can be defined as static function.
-
-This patch moves implementation about function loongarch_cpu_post_init()
-before it is referenced. And it is only code movement, no function
-change.
+With function fill_tlb_entry(), it will update LoongArch emulated
+TLB information. Here parameter tlb pointer is added so that TLB
+entry will be updated based on relative TLB CSR registers.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c | 180 ++++++++++++++++++++---------------------
- target/loongarch/cpu.h |   2 -
- 2 files changed, 90 insertions(+), 92 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index abad84c054..b96429ffb1 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -422,6 +422,96 @@ static void loongarch_la464_init_csr(Object *obj)
- #endif
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index d18b382e56..1ed2471e0a 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -167,9 +167,8 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
+     invalidate_tlb_entry(env, index);
  }
  
-+static bool loongarch_get_lsx(Object *obj, Error **errp)
-+{
-+    return LOONGARCH_CPU(obj)->lsx != ON_OFF_AUTO_OFF;
-+}
-+
-+static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t val;
-+
-+    cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    if (cpu->lsx == ON_OFF_AUTO_OFF) {
-+        cpu->lasx = ON_OFF_AUTO_OFF;
-+        if (cpu->lasx == ON_OFF_AUTO_ON) {
-+            error_setg(errp, "Failed to disable LSX since LASX is enabled");
-+            return;
-+        }
-+    }
-+
-+    if (kvm_enabled()) {
-+        /* kvm feature detection in function kvm_arch_init_vcpu */
-+        return;
-+    }
-+
-+    /* LSX feature detection in TCG mode */
-+    val = cpu->env.cpucfg[2];
-+    if (cpu->lsx == ON_OFF_AUTO_ON) {
-+        if (FIELD_EX32(val, CPUCFG2, LSX) == 0) {
-+            error_setg(errp, "Failed to enable LSX in TCG mode");
-+            return;
-+        }
-+    } else {
-+        cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, 0);
-+        val = cpu->env.cpucfg[2];
-+    }
-+
-+    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LSX, value);
-+}
-+
-+static bool loongarch_get_lasx(Object *obj, Error **errp)
-+{
-+    return LOONGARCH_CPU(obj)->lasx != ON_OFF_AUTO_OFF;
-+}
-+
-+static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t val;
-+
-+    cpu->lasx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
-+        error_setg(errp, "Failed to enable LASX since lSX is disabled");
-+        return;
-+    }
-+
-+    if (kvm_enabled()) {
-+        /* kvm feature detection in function kvm_arch_init_vcpu */
-+        return;
-+    }
-+
-+    /* LASX feature detection in TCG mode */
-+    val = cpu->env.cpucfg[2];
-+    if (cpu->lasx == ON_OFF_AUTO_ON) {
-+        if (FIELD_EX32(val, CPUCFG2, LASX) == 0) {
-+            error_setg(errp, "Failed to enable LASX in TCG mode");
-+            return;
-+        }
-+    }
-+
-+    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
-+}
-+
-+static void loongarch_cpu_post_init(Object *obj)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    cpu->lbt = ON_OFF_AUTO_OFF;
-+    cpu->pmu = ON_OFF_AUTO_OFF;
-+    cpu->lsx = ON_OFF_AUTO_AUTO;
-+    cpu->lasx = ON_OFF_AUTO_AUTO;
-+    object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-+                             loongarch_set_lsx);
-+    object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-+                             loongarch_set_lasx);
-+    /* lbt is enabled only in kvm mode, not supported in tcg mode */
-+    if (kvm_enabled()) {
-+        kvm_loongarch_cpu_post_init(cpu);
-+    }
-+}
-+
- static void loongarch_la464_initfn(Object *obj)
+-static void fill_tlb_entry(CPULoongArchState *env, int index)
++static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb)
  {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-@@ -683,96 +773,6 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
-     lacc->parent_unrealize(dev);
+-    LoongArchTLB *tlb = &env->tlb[index];
+     uint64_t lo0, lo1, csr_vppn;
+     uint16_t csr_asid;
+     uint8_t csr_ps;
+@@ -337,7 +336,7 @@ void helper_tlbwr(CPULoongArchState *env)
+         return;
+     }
+ 
+-    fill_tlb_entry(env, index);
++    fill_tlb_entry(env, env->tlb + index);
  }
  
--static bool loongarch_get_lsx(Object *obj, Error **errp)
--{
--    return LOONGARCH_CPU(obj)->lsx != ON_OFF_AUTO_OFF;
--}
--
--static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
--{
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--    uint32_t val;
--
--    cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
--    if (cpu->lsx == ON_OFF_AUTO_OFF) {
--        cpu->lasx = ON_OFF_AUTO_OFF;
--        if (cpu->lasx == ON_OFF_AUTO_ON) {
--            error_setg(errp, "Failed to disable LSX since LASX is enabled");
--            return;
--        }
--    }
--
--    if (kvm_enabled()) {
--        /* kvm feature detection in function kvm_arch_init_vcpu */
--        return;
--    }
--
--    /* LSX feature detection in TCG mode */
--    val = cpu->env.cpucfg[2];
--    if (cpu->lsx == ON_OFF_AUTO_ON) {
--        if (FIELD_EX32(val, CPUCFG2, LSX) == 0) {
--            error_setg(errp, "Failed to enable LSX in TCG mode");
--            return;
--        }
--    } else {
--        cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, 0);
--        val = cpu->env.cpucfg[2];
--    }
--
--    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LSX, value);
--}
--
--static bool loongarch_get_lasx(Object *obj, Error **errp)
--{
--    return LOONGARCH_CPU(obj)->lasx != ON_OFF_AUTO_OFF;
--}
--
--static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
--{
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--    uint32_t val;
--
--    cpu->lasx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
--    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
--        error_setg(errp, "Failed to enable LASX since lSX is disabled");
--        return;
--    }
--
--    if (kvm_enabled()) {
--        /* kvm feature detection in function kvm_arch_init_vcpu */
--        return;
--    }
--
--    /* LASX feature detection in TCG mode */
--    val = cpu->env.cpucfg[2];
--    if (cpu->lasx == ON_OFF_AUTO_ON) {
--        if (FIELD_EX32(val, CPUCFG2, LASX) == 0) {
--            error_setg(errp, "Failed to enable LASX in TCG mode");
--            return;
--        }
--    }
--
--    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
--}
--
--void loongarch_cpu_post_init(Object *obj)
--{
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--
--    cpu->lbt = ON_OFF_AUTO_OFF;
--    cpu->pmu = ON_OFF_AUTO_OFF;
--    cpu->lsx = ON_OFF_AUTO_AUTO;
--    cpu->lasx = ON_OFF_AUTO_AUTO;
--    object_property_add_bool(obj, "lsx", loongarch_get_lsx,
--                             loongarch_set_lsx);
--    object_property_add_bool(obj, "lasx", loongarch_get_lasx,
--                             loongarch_set_lasx);
--    /* lbt is enabled only in kvm mode, not supported in tcg mode */
--    if (kvm_enabled()) {
--        kvm_loongarch_cpu_post_init(cpu);
--    }
--}
--
- static void loongarch_cpu_init(Object *obj)
- {
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index bbe6db33f1..7731f6acdc 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -494,6 +494,4 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
+ void helper_tlbfill(CPULoongArchState *env)
+@@ -375,7 +374,7 @@ void helper_tlbfill(CPULoongArchState *env)
+     }
  
- #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+     invalidate_tlb(env, index);
+-    fill_tlb_entry(env, index);
++    fill_tlb_entry(env, env->tlb + index);
+ }
  
--void loongarch_cpu_post_init(Object *obj);
--
- #endif /* LOONGARCH_CPU_H */
+ void helper_tlbclr(CPULoongArchState *env)
 -- 
 2.39.3
 
