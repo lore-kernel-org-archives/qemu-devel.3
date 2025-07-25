@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B53C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 12:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEF5C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 12:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufHwn-0006lR-NV; Fri, 25 Jul 2025 08:54:49 -0400
+	id 1ufHxp-0007v6-D6; Fri, 25 Jul 2025 08:55:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ufHwO-0006IF-P9
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:25 -0400
+ id 1ufHwV-0006VQ-M1
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ufHwN-0007w4-1X
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:24 -0400
+ id 1ufHwS-0007xV-Oj
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753448061;
+ s=mimecast20190719; t=1753448067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SKZhYrhLklT7wy5r7XGVHBie6wvhRMRWF/tewAfL1Jk=;
- b=N+vuv0nl0uvwMJJA+R7MbDx9EPx36Ncqjgq1yJnIi31bUOWf/7QeAlu4tDRPt9gMQW/kCB
- cr8Rd6q52D1aSe1B32Ggg5gudpxIOA2lcoQ2EKwL2pQRZl86kEKiymR4dtnRjAK3o/Hgv/
- 0Y7kI5oh99IohnVD7Qc8VvSZbmedVuM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EbTMLHA3rj3U1tHOFnDcGjbFJRKDBX4Jln5VLvOEkGU=;
+ b=MyODRDybzgqBSnjSp7Tf6ThUkaJeeXakhg3PfDuJ7RX8emG7gTS1A4JwdjGWEHd2EufCKA
+ rLOCXhRDia7bhnTejtnj6Arzt9iN455Dub/FBkFd4owoEKVBdivVmYwc6Y1gPGFSAh2gZH
+ SUvjYndXORwVFocEcmBM+v1w/cm6yi0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140-d3CVZcplOK-8Hp3hU_6giw-1; Fri, 25 Jul 2025 08:54:19 -0400
-X-MC-Unique: d3CVZcplOK-8Hp3hU_6giw-1
-X-Mimecast-MFC-AGG-ID: d3CVZcplOK-8Hp3hU_6giw_1753448058
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-451d2037f1eso12768305e9.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 05:54:18 -0700 (PDT)
+ us-mta-122-fsgKrMR8NZCrTXavlHXPpQ-1; Fri, 25 Jul 2025 08:54:26 -0400
+X-MC-Unique: fsgKrMR8NZCrTXavlHXPpQ-1
+X-Mimecast-MFC-AGG-ID: fsgKrMR8NZCrTXavlHXPpQ_1753448065
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so1033029f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 05:54:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753448056; x=1754052856;
+ d=1e100.net; s=20230601; t=1753448064; x=1754052864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SKZhYrhLklT7wy5r7XGVHBie6wvhRMRWF/tewAfL1Jk=;
- b=kR1HnbjfMhRUCyegoliBtr3BY4V4pdh9UPWOmQeZQoIOSGtGvCYk4Z31pbYmtr9YdN
- VW3zVN5oKpLbgPrU/4gmMsSF5E0CViz8zoGfnlp2AFqVISbQP5SW0BZPUy4wa9x13nR0
- 8KjLhx59dHnbSdJkl09WFULQxaBp5YF88rhgLecRwnUcxQS0mND3Lnv7RJN/DthKoLQs
- /TgriruxKRJZQD4vKNsoeN54GMCdUj0k8bEGNroH7v0j4J8oo/tCXjcgXKlN/C2kd2+X
- Y5gdLgo9CxZ9eUHGFHyVVdLcjVEp21fwsB5LRkBhl7egKjYssn6vyWALVpHLYVWMsSZ7
- /oMg==
-X-Gm-Message-State: AOJu0Yyp3I5OfhvIKrSGgjY05/fuw+8qlhcAOuS/dvk5t0eeCs4bKRqK
- gOTC89q6VtmvRReC6YyKAfwsCv7H0vLJMfNgNSEHuL+LXIpA7bPbeGDHe+cHVi/Z9kNu6Qt/Aab
- z/L0DHSQ0qXZHvSJBPAaSjnRT8wiaHKy9Dh6GuRCFr0oTbFjpCnr7N69ETSaR08hxPUrlfH7iQu
- PpAnglyqUlsUVbPyyrRg1yOvwKGcx4NlLTDbU8kgi/
-X-Gm-Gg: ASbGncvt10Xd/OzxGb13gNHhbm+BEBdG6AttdAZUVlwW3bwUYQSacO67YzbxjlSAMSU
- 865NxdMLaZxDpuNUO8RlaixkA9//y4akf04pRazi3WMv+iaGnE4gReIQ/heqpITwDjpv1+rgSgo
- Zp/V0SZowOY8TBeNqwi07BzMPc+psOId+ry/u+JECMmoWqZUqcYsMIb5eUx86JIxfS8Unen0g3m
- yHKKZBoBmE7kt8g5iMTvE1/oi6fPSoo5RxLvX3WuSHr62bva4LqUDKEr58TtWDG7KS8AXSv8wTM
- Jbmi8u3uFUt8lH3E2Afdpk6kdDNsxrZ9sQ2b5093PIjs
-X-Received: by 2002:a05:600c:529a:b0:456:c48:491f with SMTP id
- 5b1f17b1804b1-458763117f3mr20134055e9.10.1753448055736; 
- Fri, 25 Jul 2025 05:54:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrkZVgPj7areL+BjU/gsayfQGBhJmb4UEYKxaDz/IBcyEC8ujD8THpECqG8T2sHGP49H3xAg==
-X-Received: by 2002:a05:600c:529a:b0:456:c48:491f with SMTP id
- 5b1f17b1804b1-458763117f3mr20133725e9.10.1753448055225; 
- Fri, 25 Jul 2025 05:54:15 -0700 (PDT)
+ bh=EbTMLHA3rj3U1tHOFnDcGjbFJRKDBX4Jln5VLvOEkGU=;
+ b=B/TkTri7a/83vilfJHSuJp7pwS9sAUFv++t3Y/+gP4V2P/Ak7q6LJQWthYTRgQCC1l
+ tTLEpmajRu22GFw0zrHruy/t8nKsFh6sSX1PDvv4P3nY1ckJRLD+4SyfwMTC3SRQcsfN
+ 0VjcDTKQpagAnqHFRv9fC3EGdnYLobhlqyUfKk/aEV5XzFyDBPR718zODynmX1Q8sQho
+ wBAO3nyj/T2Hnm5OhB9AWdtP1ZLG664r3sD4ajKqs6g57MXb28XNx+d2MqDnvudZHXtc
+ eSmxLVpz3BmRLGz1ucCHQluULRN+G/5wPp2TyKCwBl3DSVRjnY48b2r+IxQG3nPs1z9+
+ MPug==
+X-Gm-Message-State: AOJu0YwrZLNOnFV6HjAbgRRo48ajdqCkI9N+93oAcZgYQzloxTYlPGGz
+ q3yyA+AS1z9ujualWfUNwuylNazJZJrlV81FDpyjJwyQCLtYRq0h+DDKLH5lk8VsKrn7cByVHB7
+ XcLIlndLT4Di6IhW7hfoSfmiufK9JTxWX3BInCpSGGcDFbZYHO6fgV+PwiDEIZTFdIdWPo7Z7Xt
+ VaBzBfv34/5Kc8JlCa0UPal5wS8AtUw6etJgcOogAs
+X-Gm-Gg: ASbGncviO1LRwHge+TM1Egk5tO0VaPk+XYGxS4XjXGrHk4fen9MFS0/ihgRv0m+KC5V
+ Ri4zPhCmAFPBAZSTFFMO/Ft6b8ctZpMLxa6IM3oWQa/IVJvRYCCCuITbd1hleCwyKbz0/YQwdpo
+ kV1gjk8OKtX6QA9+17Vo8UwI2yWh0baAHlCco1gVB0C69ptixBx+HYmIBTyMbt8FaDX8HomXkJG
+ EFKTwYDF6fjGqYYMulP05pauv4TfoFUTogTfL30CGqFyc5YM8s74Bq5K89dcLGCWYd+H7qPMFAp
+ BHGwHbtTq7Ta3xxwZhuLGqJj83pTLnaLDPaLlqGgdmRF
+X-Received: by 2002:a05:6000:401e:b0:3a5:6860:f47f with SMTP id
+ ffacd0b85a97d-3b7765e6070mr1925554f8f.6.1753448064060; 
+ Fri, 25 Jul 2025 05:54:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/M1TFfzcdD4CRVZ2W8B2Vy1QSjMjmCjznguokabjxaGRosDg9c4USOB4VdYWaiMY90593yQ==
+X-Received: by 2002:a05:6000:401e:b0:3a5:6860:f47f with SMTP id
+ ffacd0b85a97d-3b7765e6070mr1925526f8f.6.1753448063573; 
+ Fri, 25 Jul 2025 05:54:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.154.122])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870532baesm53712305e9.1.2025.07.25.05.54.14
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3b76fcad219sm5011326f8f.39.2025.07.25.05.54.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 05:54:14 -0700 (PDT)
+ Fri, 25 Jul 2025 05:54:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/4] rust: devices are not staticlibs
-Date: Fri, 25 Jul 2025 14:54:00 +0200
-Message-ID: <20250725125412.1128617-2-pbonzini@redhat.com>
+Cc: Eric Biggers <ebiggers@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Guenter Roeck <linux@roeck-us.net>,
+ qemu-stable@nongnu.org
+Subject: [PULL 4/4] target/i386: fix width of third operand of VINSERTx128
+Date: Fri, 25 Jul 2025 14:54:03 +0200
+Message-ID: <20250725125412.1128617-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250725125412.1128617-1-pbonzini@redhat.com>
 References: <20250725125412.1128617-1-pbonzini@redhat.com>
@@ -92,7 +94,7 @@ X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,44 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is only cosmetic for now, but hopefully later on Meson will parse more
-of Cargo.toml.  Devices are linked into a staticlib but are not staticlibs
-themselves.
+Table A-5 of the Intel manual incorrectly lists the third operand of
+VINSERTx128 as Wqq, but it is actually a 128-bit value.  This is
+visible when W is a memory operand close to the end of the page.
 
+Fixes the recently-added poly1305_kunit test in linux-next.
+
+(No testcase yet, but I plan to modify test-avx2 to use memory
+close to the end of the page.  This would work because the test
+vectors correctly have the memory operand as xmm2/m128).
+
+Reported-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: qemu-stable@nongnu.org
+Fixes: 79068477686 ("target/i386: reimplement 0x0f 0x3a, add AVX", 2022-10-18)
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/Cargo.toml | 3 ---
- rust/hw/timer/hpet/Cargo.toml | 3 ---
- 2 files changed, 6 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index 003ef9613d4..88ef110507d 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -12,9 +12,6 @@ license.workspace = true
- repository.workspace = true
- rust-version.workspace = true
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 853b1c8bf95..51038657f0f 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -878,10 +878,10 @@ static const X86OpEntry opcodes_0F3A[256] = {
+     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
+     [0x0f] = X86_OP_ENTRY4(PALIGNR,    V,x,  H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
  
--[lib]
--crate-type = ["staticlib"]
--
- [dependencies]
- bilge = { version = "0.2.0" }
- bilge-impl = { version = "0.2.0" }
-diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
-index 6f075027843..ac5df23c1d0 100644
---- a/rust/hw/timer/hpet/Cargo.toml
-+++ b/rust/hw/timer/hpet/Cargo.toml
-@@ -10,9 +10,6 @@ license.workspace = true
- repository.workspace = true
- rust-version.workspace = true
+-    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX) p_66),
++    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX) p_66),
+     [0x19] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX) p_66),
  
--[lib]
--crate-type = ["staticlib"]
--
- [dependencies]
- qemu_api = { path = "../../../qemu-api" }
- qemu_api_macros = { path = "../../../qemu-api-macros" }
+-    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX2) p_66),
++    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX2) p_66),
+     [0x39] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX2) p_66),
+ 
+     /* Listed incorrectly as type 4 */
 -- 
 2.50.1
 
