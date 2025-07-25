@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EC1C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 14:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E633FC87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 14:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufJZ4-00054y-LU; Fri, 25 Jul 2025 10:38:27 -0400
+	id 1ufJb3-0002Oc-Aq; Fri, 25 Jul 2025 10:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ufJYu-0004hq-5e
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:38:16 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1ufJaN-0000bD-Rm
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:39:49 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ufJYs-0002Cg-GK
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:38:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-234bfe37cccso19052165ad.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 07:38:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1ufJaL-0002Z6-NP
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:39:47 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-75bd436d970so1453700b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 07:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753454292; x=1754059092; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/Wz2BNiYoiP5762BvBbM2ntZFH1GD69odO+hoPGRlsI=;
- b=UCVIViausw6fnuZkhCYhVBBLt0O77JU1uQoEnHb94NqS/1+/vVWHkagkhHySngV0KQ
- X5VplObF3jB1pIO+dVCbj3IVwv5cBXI8MHnh//axEyyENp+r8+HmAXj/wmNBxbzMHYKL
- pHmNkZCNB40K+rz5qSk2Z3eZesgxOAb9FN/BM0josIV5Bl9zCgAQgQ1jZv52lPZinfOr
- 1vBahPWzj58anIgyjEFpnUOzVufEKq4uAtLy6KWJpbZklxcNnzfRbsP7TFNnsbnM3Not
- j0ajdNDaR+o5x2FSfsTV0vnjZLUcWajp+R/y/wu1IkQH5ytnMa/WVhzIyR7oTQLG0ehr
- ra2g==
+ d=gmail.com; s=20230601; t=1753454382; x=1754059182; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=4wBC4D7PFJnUTB75FTM4xHFiZJYL3lpvMIyKjiSj5s4=;
+ b=A2CGtAK/QRi9yEKMfDC/vr4BB+fPE/LbJtfkwk2ncsJ768Ocn/ut7qBKPDaGPmPgxD
+ beBwQp/U9xGk1EqTVHvaROXA9knBzWxMrU3dcpqEBYUal3Op1SNcQD8J5By7CkiH7r+k
+ E229je7WtBZG3bjF2GaQjxcR6TSCoCB3riHU9mcrZk9r9Ea869vCRwYcl446b/KZB7JZ
+ ufhgQh5EM+6CuLdjrfuGnr5l1qISkdLXInrB+Ah1YRVwpERclXY2MMQbRADC3/JHCF0T
+ ngGKg/K5kfP0btGpsoV1dFickE+HJ3JOKFh0I7g05oGS8ssRI1Z2jcwlddNS0y7+hZ54
+ qCyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753454292; x=1754059092;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/Wz2BNiYoiP5762BvBbM2ntZFH1GD69odO+hoPGRlsI=;
- b=dQw07D35jObXvloSNjy+onIcB2By2GqEYY7lzfakZD9BgPwyb3oLPyQfOriDDQ2huh
- 7CZBQL0HRDWBszpTHW08bTqCVihmE3yUSGhfnxO6ZRNSOrKanR5nJ069vE6WkAkixrZf
- 1tofHvdzsZ5r9VDjSRvyVE7Sl/w+NhWPyV+8lIZwlM8MPg62Vce1gcqBYOMzzjtbMdim
- ss+f1uL1gVdFMr9HgiCkt6bL899VVy64rhfD0YcID0jIa3G3H0wyD2I3knLEVjWwPesd
- D7iGBcpJVMN6VQt9TpgsUniWINMvUB0XMwuN2hO0OzxnJOZPm8c1lYvuUsqgqrtcYQV2
- aBbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCMjSYiiXdtB8t75PyN6kTfxpQuhaPyq50r/BtNZmvLny8/OkoXngQQx+yotN54clacHmXX5+BhPPh@nongnu.org
-X-Gm-Message-State: AOJu0YxJuWVDguS4/wPXm8Wc1dmADk0zW6wTFx/dNOHolSGozOjcdKrp
- ty85RBVpnn+LSt5Gr9hNR35cius7QgrBOkylpFMarXafN292HlVup7VmUZZ0pCYiuGWPv2Spqzm
- cYHW17EU=
-X-Gm-Gg: ASbGncvoDvpd/7oiyC2zkUsQpa9vdlvhX1aX2CnuhDdXpfhuOhPRyfrS1tDbZGe53EZ
- 4Q8DhnYh7AZFUmb0ClUYpZyd1hif0s7lLttUcAqi+QjYSioDCkJNpbA3rUqNc89M7pw98V9EPqD
- pdLtuxop8QOAyxOm4hn+eujUpCyX822/4HAzqmVKA/JcyJzzl3LxNK63L79rkmgvQI+ZdUpS0X5
- ISYfzPY0YiXwLA2ELlaj/aEjlWEPwChSlk5B4yPw9rHwp4zmnke0CRlPmiyyq5zHIxcVDwd9CH6
- F+FFsEMmatwfQi4mfIWHPm2wKhVrKTmWsJzKZgcaoJM6nFALSIWHB6VyZUR56pNuiNGqRtieJdV
- B7+Ftp/P3Q+qA9j6QKvK2rRCTwnwbBrpiiw==
-X-Google-Smtp-Source: AGHT+IHXqgdV1VBd7n3lEXtGGNKU6MxbLxfcrfdGyogWou0f57/FPlDAqqqnmKNAeFvScFwg6Mu5Wg==
-X-Received: by 2002:a17:903:1aee:b0:236:6fbb:a5f3 with SMTP id
- d9443c01a7336-23fb30e8023mr33117895ad.40.1753454292454; 
- Fri, 25 Jul 2025 07:38:12 -0700 (PDT)
-Received: from [192.168.0.102] ([187.75.37.236])
+ d=1e100.net; s=20230601; t=1753454382; x=1754059182;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4wBC4D7PFJnUTB75FTM4xHFiZJYL3lpvMIyKjiSj5s4=;
+ b=RrXCooZHpYwyi9n84tZ1JJGhdbzTsMBQvx0+lWAVKt3khYVr6kNx+Pc2wHvYfagc0m
+ tmjY0TxvzrTxyMOj2TBosBoH/rXCW42BZNXL6803SlRZKep/aP0qbIf4kdLO0CY//8fz
+ ELrPw10r0Bour6xEf93pWqbMEI9bnfUH6hABGBEioO/Et7bMMc7XgOv8Q19umcMjby1O
+ 05rrxcngmaqVuo77sZU4DJ/XUURCFfkNhVp7R+buspBnZR0KVvDYx5fUrXVRQNh61fYh
+ MfS3tXhlv0Z+6GXnlpEImNCVbhWHwm38oiB6aomA+77CUHdXeLnr/JO8Rzse/n8bdQhm
+ nd3Q==
+X-Gm-Message-State: AOJu0YzVKs/i8WEbsByaKv0UYYeSWDn8TUen480+rI2785Q3pQAfMJOS
+ /CnbeqhNj0Qm6acRuxHVdvUQV9NVAqbQNU80bsfEUmzOLg2wEXlF1B1OwwT/Eg==
+X-Gm-Gg: ASbGncsY5TgcQfbhtQpAEmOG0cY0sBtmDdbiLKsnhEmYkBd/ZCSqueOet8XKZsYXC0J
+ PmLzvLihgGtOWckL4PeXCfYvjolzI6CeMuvqtKQpwoEiSu1W2jAIA3o4LGLDZWc8vmYzW2P1mDo
+ pkKwYUoaWQUF3VsvPVQzwzNo4kdQELnBlBx9y4ly5qdFRLr6kcFEd6KwUWSDKPo0vc6GIeZ5nbB
+ LkhBsOqJKCAgYIzkWngv6DGe8X2mAJn/PIdCFzmFRHKeE/HEqKNHBYuySmfxiGJQq8f9aSQCTJ7
+ e3CFi6Sk0m5HESA0k4TZZ5/8eVL7jXHZlonnZAQZ15lGBU09qaOpRDXcWXsPoBnJ16TlJWgCqCZ
+ Nqvk1HkL+6tLQo6DP5hUUuG+GgP9Q2Kd3m6s=
+X-Google-Smtp-Source: AGHT+IGgkN1YSpzybq/Z4hbt7iXj02WG3Sb6Q1a0miUulmFms9dknAlMnsuU+P5RXAhjnTJTQ1AIVA==
+X-Received: by 2002:a05:6a20:9147:b0:234:216b:cf98 with SMTP id
+ adf61e73a8af0-23d7021bb59mr3825109637.35.1753454382290; 
+ Fri, 25 Jul 2025 07:39:42 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fa475f3a6sm39036565ad.6.2025.07.25.07.38.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 07:38:12 -0700 (PDT)
-Message-ID: <aad0c640-b736-4f5a-a6cf-e5459f60630d@linaro.org>
-Date: Fri, 25 Jul 2025 11:39:09 -0300
+ d2e1a72fcca58-761b04b3517sm4066021b3a.84.2025.07.25.07.39.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Jul 2025 07:39:40 -0700 (PDT)
+Date: Fri, 25 Jul 2025 07:39:38 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Biggers <ebiggers@kernel.org>,
+ Ard Biesheuvel <ardb@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [PATCH] target/i386: fix width of third operand of VINSERTx128
+Message-ID: <f8862cc4-d0ea-4295-a16b-1d96c56a021f@roeck-us.net>
+References: <20250725061736.1096206-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Clean up of register field definitions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org
-References: <20250725014755.2122579-1-gustavo.romero@linaro.org>
- <17254b66-4902-4ee0-8c9a-4082146255e3@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <17254b66-4902-4ee0-8c9a-4082146255e3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250725061736.1096206-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.159, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,71 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
-
-On 7/25/25 10:18, Philippe Mathieu-Daudé wrote:
-> Hi Gustavo,
+On Fri, Jul 25, 2025 at 08:17:36AM +0200, Paolo Bonzini wrote:
+> Table A-5 of the Intel manual incorrectly lists the third operand of
+> VINSERTx128 as Wqq, but it is actually a 128-bit value.  This is
+> visible when W is a memory operand close to the end of the page.
 > 
-> On 25/7/25 03:47, Gustavo Romero wrote:
->> Clean up the definitions of NSW and NSA fields in the VTCR register.
->> These two fields are already defined properly using FIELD() so they are
->> actually duplications. Also, define the NSW and NSA fields in the
->> VSTCR register using FIELD() and remove their definitions based on VTCR
->> fields.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   target/arm/internals.h | 8 +++-----
->>   target/arm/ptw.c       | 8 ++++----
->>   2 files changed, 7 insertions(+), 9 deletions(-)
->>
->> diff --git a/target/arm/internals.h b/target/arm/internals.h
->> index c4765e4489..052f7b641c 100644
->> --- a/target/arm/internals.h
->> +++ b/target/arm/internals.h
->> @@ -113,11 +113,6 @@ FIELD(DBGWCR, WT, 20, 1)
->>   FIELD(DBGWCR, MASK, 24, 5)
->>   FIELD(DBGWCR, SSCE, 29, 1)
->> -#define VTCR_NSW (1u << 29)
->> -#define VTCR_NSA (1u << 30)
->> -#define VSTCR_SW VTCR_NSW
->> -#define VSTCR_SA VTCR_NSA
->> -
->>   /* Bit definitions for CPACR (AArch32 only) */
->>   FIELD(CPACR, CP10, 20, 2)
->>   FIELD(CPACR, CP11, 22, 2)
->> @@ -220,6 +215,9 @@ FIELD(VTCR, NSA, 30, 1)
->>   FIELD(VTCR, DS, 32, 1)
->>   FIELD(VTCR, SL2, 33, 1)
->> +FIELD(VSTCR, SW, 29, 1)
->> +FIELD(VSTCR, SA, 30, 1)
->> +
->>   #define HCRX_ENAS0    (1ULL << 0)
->>   #define HCRX_ENALS    (1ULL << 1)
->>   #define HCRX_ENASR    (1ULL << 2)
->> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
->> index 561bf2678e..ed5c728eab 100644
->> --- a/target/arm/ptw.c
->> +++ b/target/arm/ptw.c
->> @@ -193,9 +193,9 @@ static ARMMMUIdx ptw_idx_for_stage_2(CPUARMState *env, ARMMMUIdx stage2idx)
->>           return ARMMMUIdx_Phys_Realm;
->>       case ARMSS_Secure:
->>           if (stage2idx == ARMMMUIdx_Stage2_S) {
->> -            s2walk_secure = !(env->cp15.vstcr_el2 & VSTCR_SW);
->> +            s2walk_secure = !(env->cp15.vstcr_el2 & R_VSTCR_SW_MASK);
+> Fixes the recently-added poly1305_kunit test in linux-next.
 > 
-> FYI register API provides helper macros:
+> (No testcase yet, but I plan to modify test-avx2 to use memory
+> close to the end of the page.  This would work because the test
+> vectors correctly have the memory operand as xmm2/m128).
 > 
->              s2walk_secure = !FIELD_EX32(env->cp15.vstcr_el2, VSTCR, SW);
-> 
+> Reported-by: Eric Biggers <ebiggers@kernel.org>
+> Cc: Ard Biesheuvel <ardb@kernel.org>
+> Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Do you know which form is currently preferred? I see that R_<REGNAME>_<FIELD>_MASK is used a lot, .e.g, in helper.c.
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-Also, even tho the SW field in VSTCR is <= 31, VSTCR is a 64-bit register, so should I really use FIELD_EX32 (which works) or FIELD_EX64 (my first thought would be to use it, i.e. based on the register size, not the field)?
+Thanks a lot for the quick fix!
 
-Thanks.
-
-
-Cheers,
-Gustavo
+Guenter
 
