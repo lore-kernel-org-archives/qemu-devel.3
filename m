@@ -4,73 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA471C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 21:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F105CC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 21:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufPeh-0003uC-C4; Fri, 25 Jul 2025 17:08:39 -0400
+	id 1ufPhh-0006GB-DK; Fri, 25 Jul 2025 17:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chefkiss@icloud.com>)
- id 1ufNbi-00032c-N5
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 14:57:26 -0400
-Received: from p-east1-cluster3-host6-snip4-8.eps.apple.com ([57.103.91.189]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chefkiss@icloud.com>)
- id 1ufNbg-0005tO-G1
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 14:57:25 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPS id
- 19608180029F
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:57:18 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
- bh=7Quw/78iJSaoYXFcOSt88FpPCtI4SOYR/Tt4K9/K0cA=;
- h=From:Content-Type:Mime-Version:Subject:Date:To:Message-Id:x-icloud-hme;
- b=Y1zQoN+UZ3q4Tmt/WWcPpVd9xhXNU679ekfVkhhoF32i2LTcWyT/ng0CqGsKV/JWGYqhC65oHwNdRKk6fefPeljAazOCdJ8AUhq4SwSWYWv3AaDCLUftmHAgRpmH7UDUA7hc0rmuq//N18KXntK6TTSb/UXt/iE2XRLhxWf9ugTZlFCLV+cXWrfaBdc4TrWbgNx/3j98wqoz7hCvsRQ9xwYWnQx8z2xELTaSuetqe2/X/lfnXq8wyzrns5Tix90Z8wvSvCBpf6zzicoyQkaHtbAGuDYEn2Orqi0CsrWZUJ9ZtBWTHW23gDd3dGvBlmwGRJlKn7uStUrDFbs65AKtFw==
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPSA id
- D51A3180014D
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:57:17 +0000 (UTC)
-From: chefkiss@icloud.com
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: NVMe VMStateDescription
-Date: Fri, 25 Jul 2025 21:57:05 +0300
-References: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
-To: qemu-devel@nongnu.org
-In-Reply-To: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
-Message-Id: <A48BB1DD-2E71-4F23-A86C-E64E318A707A@icloud.com>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-ORIG-GUID: 3n7z_vD6gTSVXAb24r4pQrpyu185cT5X
-X-Proofpoint-GUID: 3n7z_vD6gTSVXAb24r4pQrpyu185cT5X
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDE2MiBTYWx0ZWRfX53ax/TIXSdx/
- PjqAax2FrPwi2ERrrParK2vF7OJW/gx/TYGFpURjeODu7l/5CK3JBqSajlAp0ZtZEAjFhOEnkos
- A6cptogsA8gv/6KL/7uu+L+q7RtBnSZwNLK8cTJzejiajyOisg94VxgtZfP8fquBe9MRX56FpeF
- t5LnHyzRwC7EDWWs3oKV0Oa5Qj4igMweRUo2/G3SePhVnrMhifzpy0cwLov3vn6SwuRS8DuGw11
- 1XwpPevkdXgnKX1tsvUeCyKnkB2erf0XMSw3Q5gsnlB8OxWkrYZlT6VrXkRuoGri69fdvpBTo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-25_05,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- mlxlogscore=999 spamscore=0 clxscore=1015 adultscore=0 bulkscore=0
- malwarescore=0 phishscore=0 suspectscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2507250162
-Received-SPF: pass client-ip=57.103.91.189; envelope-from=chefkiss@icloud.com;
- helo=outbound.ci.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ufPhc-0006Fm-Sr
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 17:11:40 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ufPhb-0008SD-5W
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 17:11:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 06A941F387;
+ Fri, 25 Jul 2025 21:11:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1753477897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BtujC/o0vQWg2MMv6eRfGTXljzWfxisL7BNnXKAfP/Q=;
+ b=keIxCikWixpL79RPrIX4PYrX9VcpReEfX77Z51+V3ocziR4BiRYhmr2LTL6ZVfNWSqCaLU
+ THus8lHoZUdR3+qN4ZdV0H5nw4CPuFFxMTSrElYAEAvSJZ41cuAPXr8MdJBpIVwKcKdkMn
+ mMiOLREfd57aDyiCTFpHSuSYN7S03h8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1753477897;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BtujC/o0vQWg2MMv6eRfGTXljzWfxisL7BNnXKAfP/Q=;
+ b=74HDniRGsfrzhg2Avo+wr9+zBrtEsMgHPp9k9VYLT0M9B+UY3HtjOpGpsUztoKCAg9Wr4A
+ Zjo5GbsbUsaw+cDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=keIxCikW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=74HDniRG
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1753477897; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BtujC/o0vQWg2MMv6eRfGTXljzWfxisL7BNnXKAfP/Q=;
+ b=keIxCikWixpL79RPrIX4PYrX9VcpReEfX77Z51+V3ocziR4BiRYhmr2LTL6ZVfNWSqCaLU
+ THus8lHoZUdR3+qN4ZdV0H5nw4CPuFFxMTSrElYAEAvSJZ41cuAPXr8MdJBpIVwKcKdkMn
+ mMiOLREfd57aDyiCTFpHSuSYN7S03h8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1753477897;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BtujC/o0vQWg2MMv6eRfGTXljzWfxisL7BNnXKAfP/Q=;
+ b=74HDniRGsfrzhg2Avo+wr9+zBrtEsMgHPp9k9VYLT0M9B+UY3HtjOpGpsUztoKCAg9Wr4A
+ Zjo5GbsbUsaw+cDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 74F14134E8;
+ Fri, 25 Jul 2025 21:11:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id vNEqDQjzg2jqRAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 25 Jul 2025 21:11:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 0/3] single-binary: compile once migration files
+In-Reply-To: <20250725201729.17100-1-pierrick.bouvier@linaro.org>
+References: <20250725201729.17100-1-pierrick.bouvier@linaro.org>
+Date: Fri, 25 Jul 2025 18:11:33 -0300
+Message-ID: <87jz3w3ri2.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 06A941F387
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Jul 2025 17:08:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,30 +119,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-I have received no response about this. If I could please get an answer =
-on this, it would help a lot.
+> This series removes target dependencies in migration code.
+>
+> Pierrick Bouvier (3):
+>   migration: compile migration/ram.c once
+>   migration: rename target.c to vfio.c
+>   migration/vfio: compile only once
+>
+>  migration/vfio-stub.c          | 16 ++++++++++++++++
+>  migration/{target.c => vfio.c} | 16 +---------------
+>  migration/meson.build          |  8 ++++----
+>  3 files changed, 21 insertions(+), 19 deletions(-)
+>  create mode 100644 migration/vfio-stub.c
+>  rename migration/{target.c => vfio.c} (67%)
 
-Regards,
-Visual.
+Series:
 
-Cc: Klaus Jensen <k.jen...@samsung.com>
-
-> On 9 Jul 2025, at 21:26, chefkiss@icloud.com wrote:
->=20
-> Hello,
->=20
-> I am working with an SoC that only supports NVMe, and would like to be =
-able to savevm/loadvm, and maybe also record/replay.
-> The NVMe has a VMStateDescription with just unmigratable =3D 1 ever =
-since it was first added in 2013.
-> Is there a technical or other limitation/reason for why this is the =
-case?
->=20
-> Regards,
-> Visual.
->=20
-> Cc: Klaus Jensen <its@irrelevant.dk>
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
