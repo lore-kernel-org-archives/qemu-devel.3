@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1BEC87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 11:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5C38C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 11:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufGoj-00027l-Rd; Fri, 25 Jul 2025 07:42:25 -0400
+	id 1ufH4K-0002Eg-6q; Fri, 25 Jul 2025 07:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ufGoZ-0006LS-4G
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:16 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufH3x-0000JU-FD
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:58:11 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ufGoW-0000Nt-B2
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:14 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3b77377858bso1203260f8f.3
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 04:42:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufH3r-0003It-AF
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:58:07 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-612a338aed8so3265657a12.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 04:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753443731; x=1754048531; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S7dUODUWWd+agD+0iis1dgtZor5mLl9A30mFizv3r1k=;
- b=Jf0U083jp5Hvp/ARMRm98yVpsCVn0mxWfoI+Uy1uO9HlS27MKy04xzn9QfEOT7geMP
- 88Y4sQmZxaSfweuECulFjr/SgfjOIg6pKSeWk41tUir8AOXNaRC2BL5AUi2mgBMCJqQp
- kWgGlNQQBBbiSAwsP3gezpL8xxEvx768kAqfE5kxRCMWNN19DYUTsLoFUvbZauDOgLbr
- WZmfKRmPD2UU/xXoFQkyk689YKI/oBq7bBLXW54b48VuMFoYaJnWvOKxeN+4p+d4KjKs
- TIks+PqcbaFJMvHCxyxZxRKDPz2RdaDlRTl7k+nHGCxRLxztYtuTPjEO3bkhynWSgN+F
- /OPw==
+ d=linaro.org; s=google; t=1753444678; x=1754049478; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jDzq84X3al9Fq0d4saSA7ND4nlFnJzpOxnoSzp0c3YI=;
+ b=f0XLEsHmk9LtkVByMb0AxgHh4Xej4ypOTNdPpTLLmJAafejnx5lcZz7+Ez3Hu4vrfp
+ Ib7nVWAkgS4UDNZkLPwmGNhwT48fnjbypmAbzOnSnallMl+C2Nvjdzh7GCm1AyDMsowa
+ x2leWp+NttU7w0w091sTr3IyuYidbs/vChxIA9QIiJG5zdvgRsmvpPu6hFXpnlCnwp5e
+ FNOJ2ZzhGvHflwxVlCbTeg5so80l/QHnbUfKR6VXnuXzEQy/QByp6wDAnAv6Lz2oCz56
+ 2TxXu8ZaK9HOshYrZKVKXDVktXmkBgrR1u4cgW4VqpKhdYmjmxXUh1XISW94xYeDTgAq
+ njCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753443731; x=1754048531;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S7dUODUWWd+agD+0iis1dgtZor5mLl9A30mFizv3r1k=;
- b=ib58w8oK2E2PrpK04I+Kn36Vd5HtliSesJRnaYPLNDFr6HPdKEInbmc05VjyMgRWbO
- Aj6HAbGUnK/F0F4qYQ+Y2cr4fT5747CAutENSpkMHerfofYgTmZvmGRgHbsWuw6+D6vJ
- 2nLOxvvBIqWRtA452HIAZaLW7lAdFKPKkTOFtOdUZojqu063d0o+a4K73wWRnOx9iWdE
- TNg3QMQTIVbaAmiySXKYBDFIRxksKU+E23RuNiMEAOQLvsgxuAES65nOV2kNArDHjzhZ
- 7AxEyxmsLjgTXoeFpaZ1KaNTRu4qismkFOFIFc6ogjUY9Ehua1E29kYHeL6MNBMnON8M
- PZ1g==
-X-Gm-Message-State: AOJu0YwScQOJeD0tLa19yN5O9RzybTcruFbXNhDldOoHuWZ8qdDssSFr
- TDOrF8KOeDz3CH68BYhvlTpqlztWy1Rw6cyoBeEjyD9vGVCUIOi7mFRJaMsH5CYzGzbrkivmdiR
- SEDSN
-X-Gm-Gg: ASbGncvTCcoiwOWwf1ZXHBqM+G67GCcQ8Ih5w1Y8AzuIRS7OjS0Kn1JXUJVGf0VNqN5
- H+/iHgf0HcdtTwDeDvx6ngmGzoMsZriv7MAV/Whc8870fCvhTxxo4Sx5AQ6Qo0/aflu1bqp75EA
- WlWAn4sCi0laz/SpJIm0Rzf+mPFED7W7He6b6J+4oNt+QPdp7UyTfdl2e7ZyVOVpxliYPFW1+sb
- +ihJ92aUr3UnVMsVoeEJJOQeP0hl8sHZEAkVKVHwkColhTqgnx5Zrwjd7HLeoIMeGzSJojD1iJO
- avBKwI4ggiJj+WSgILLvaIs5JVbecvOHqNXMLvsN+n+OKkpoi9GWXRPA3ufXf6N+ItBl2H2lYsR
- WVeBUKA1ytCr8kdfO0+fR8tH9r+MV
-X-Google-Smtp-Source: AGHT+IE97OdWrtbLZRA/XEzAxWTsnqQQ6MUjB6CLBwRp7J8YSJp4tODg0Un6PYYLXE730GH82M3QDw==
-X-Received: by 2002:a5d:5f8d:0:b0:3a4:f644:95f0 with SMTP id
- ffacd0b85a97d-3b77679a449mr1415909f8f.54.1753443730579; 
- Fri, 25 Jul 2025 04:42:10 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870568fb1sm51230105e9.27.2025.07.25.04.42.09
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1753444678; x=1754049478;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jDzq84X3al9Fq0d4saSA7ND4nlFnJzpOxnoSzp0c3YI=;
+ b=wku/UpljXQfoo8yl0GGxroIGEu1bydNQIYoVkFuA5GNdZVs37VZFC2CNqIXb9wAOeP
+ IZIPDh5yEXuKG1ouLhkUa/4n+FpvqBSCPH2uwDzTE9wxeV7YxaG5Nn1zxqyTF2WwFsS8
+ zif2dmSwP3yHDGGSrsCp0c18QtoLMWvtGAGEDeYOH68jZ0oK4Q3OtkHoO+1EDIOtOebC
+ Vd0G/h3zJlQe50Ag5L9TXDFa97gCbcShZnYaD460+eAvS4NlVjcj5uRYycefVDNBLHau
+ azJ1JKoNDNHHd8V0jYbnWCxltyurizviscfgFUoeR1HMtAgaYDoACpPEQ2IHYuPS3iQw
+ oXBQ==
+X-Gm-Message-State: AOJu0Yx5RXCYrc8R7ASD6Mh6JS+9bHRQR0zEoaTaThR+wblHO9nlo+ex
+ mdF7jvjvHUjpLU9vC4O5Rv+0V/XIeONh8VhbyN8LGYGKI8rvBBi7aWyxlChgWd9b5YQ=
+X-Gm-Gg: ASbGncv/WAljSQwK7Cxk2OWybvgeAK2q+YvJj7H/lEPkjn8Uohh5rpGQtrgrngw9fbX
+ REh8XQnffrL85gujwYXRiQGzCvDRDxiliPRxAvIxYF55B6kQBAuV49VvYflZWGOAplGSnZSy33h
+ bsCyrDFu9/OxgQCXnajXYtyVqbRhxkfI0I0xH3iqmxJiP4rx85+rP1Uq48r4WumSSI9s5JlK7mi
+ epv+8okaLM1iwVWCVsWRvH2E00qxw0WBLE2iykRI3TOOIm3X+admrUS2+kR8r4PJpFg+RvFswuw
+ 9rO+6v2/BLYjFBVOFW43mhpZa3d/9ZriYQZQcHep6dIxZLQ9/yVl9OS7aRzi/AleKpOFPiaz5G2
+ wR4F0LJ+9zS8iYQCVNtLXAno=
+X-Google-Smtp-Source: AGHT+IGeyZnjG4MfPm56/RNbu7MUJ/ajPSi+z8q79JkTkH9EkWUpHGV41yntXEbi6VFTEejQ+jdR2A==
+X-Received: by 2002:a05:6402:2685:b0:607:6619:1092 with SMTP id
+ 4fb4d7f45d1cf-614f1bd9142mr1691208a12.13.1753444677627; 
+ Fri, 25 Jul 2025 04:57:57 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-614cd0f9243sm2023421a12.23.2025.07.25.04.57.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 04:42:09 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 8/8] target/arm: hvf: stubbing reads to LORC_EL1
-Date: Fri, 25 Jul 2025 12:41:58 +0100
-Message-ID: <20250725114158.3703254-9-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250725114158.3703254-1-peter.maydell@linaro.org>
-References: <20250725114158.3703254-1-peter.maydell@linaro.org>
+ Fri, 25 Jul 2025 04:57:56 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D3D425F7EE;
+ Fri, 25 Jul 2025 12:57:55 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH for 10.1 13/13] tests/docker: handle host-arch selection
+ for all-test-cross
+In-Reply-To: <CAAjaMXaUefn-3tYXgV5itg_=rg4_hwqRAugO_nHHM7RD3v1Nsw@mail.gmail.com>
+ (Manos Pitsidianakis's message of "Thu, 24 Jul 2025 15:49:24 +0300")
+References: <20250724105939.2393230-1-alex.bennee@linaro.org>
+ <20250724105939.2393230-14-alex.bennee@linaro.org>
+ <CAAjaMXau4GyWidMNdYXgnMQTrv0mhVuCamDtaMLLJPeEDgyOQQ@mail.gmail.com>
+ <875xfhvk98.fsf@draig.linaro.org>
+ <CAAjaMXaUefn-3tYXgV5itg_=rg4_hwqRAugO_nHHM7RD3v1Nsw@mail.gmail.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Fri, 25 Jul 2025 12:57:55 +0100
+Message-ID: <87v7ngscsc.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +110,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-Linux zeroes LORC_EL1 on boot at EL2, without further interaction with FEAT_LOR afterwards.
+> On Thu, Jul 24, 2025 at 3:36=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>>
+>> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+>>
+>> > On Thu, Jul 24, 2025 at 2:00=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@=
+linaro.org> wrote:
+>> >>
+>> >> When building on non-x86 we get a bunch but not all of the compilers.
+>> >> Handle this in the Dockerfile by probing the arch and expanding the
+>> >> list available.
+>> >>
+>> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> >> ---
+>> >>  .../dockerfiles/debian-all-test-cross.docker  | 31 ++++++++++-------=
+--
+>> >>  1 file changed, 17 insertions(+), 14 deletions(-)
+>> >>
+>> >> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/=
+tests/docker/dockerfiles/debian-all-test-cross.docker
+>> >> index 5aa43749ebe..16a83241270 100644
+>> >> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
+>> >> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+>> >> @@ -23,7 +23,9 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>> >>          bison \
+>> >>          ccache \
+>> >>          clang  \
+>> >> +        dpkg-dev \
+>> >>          flex \
+>> >> +        gcc \
+>> >>          git \
+>> >>          libclang-rt-dev \
+>> >>          ninja-build \
+>> >> @@ -33,16 +35,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>> >>          python3-venv \
+>> >>          python3-wheel
+>> >>
+>> >> -RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>> >> -        apt install -y --no-install-recommends \
+>> >> -        gcc-aarch64-linux-gnu \
+>> >> +# All the generally available compilers
+>> >> +ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
+>> >>          libc6-dev-arm64-cross \
+>> >>          gcc-arm-linux-gnueabihf \
+>> >>          libc6-dev-armhf-cross \
+>> >> -        gcc-hppa-linux-gnu \
+>> >> -        libc6-dev-hppa-cross \
+>> >> -        gcc-m68k-linux-gnu \
+>> >> -        libc6-dev-m68k-cross \
+>> >>          gcc-mips-linux-gnu \
+>> >>          libc6-dev-mips-cross \
+>> >>          gcc-mips64-linux-gnuabi64 \
+>> >> @@ -51,18 +48,24 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>> >>          libc6-dev-mips64el-cross \
+>> >>          gcc-mipsel-linux-gnu \
+>> >>          libc6-dev-mipsel-cross \
+>> >> -        gcc-powerpc-linux-gnu \
+>> >> -        libc6-dev-powerpc-cross \
+>> >> -        gcc-powerpc64-linux-gnu \
+>> >> -        libc6-dev-ppc64-cross \
+>> >>          gcc-powerpc64le-linux-gnu \
+>> >>          libc6-dev-ppc64el-cross \
+>> >>          gcc-riscv64-linux-gnu \
+>> >>          libc6-dev-riscv64-cross \
+>> >>          gcc-s390x-linux-gnu \
+>> >> -        libc6-dev-s390x-cross \
+>> >> -        gcc-sparc64-linux-gnu \
+>> >> -        libc6-dev-sparc64-cross && \
+>> >> +        libc6-dev-s390x-cross
+>> >> +
+>> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
+=3D"${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; fi
+>> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
+=3D"${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; fi
+>> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
+=3D"${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; =
+fi
+>> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
+=3D"${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; =
+fi
+>> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
+=3D"${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; =
+fi
+>> >> +
+>> >> +RUN echo "compilers: ${AVAILABLE_COMPILERS}"
+>> >
+>> > Nitpick, each `RUN` command will create a new cached layer for the
+>> > container build. It makes more sense to fold them in a single `RUN`
+>> > step to avoid unnecessary layers. Does not make a big difference so
+>> > feel free to ignore.
+>>
+>> I did try to figure out how to do a multi-line shell with an env
+>> expansion but wasn't able to get the escaping right. If you can suggest
+>> the right runes please do ;-)
+>
+> Like this?
+>
+> RUN if dpkg-architecture -e amd64; then \
+>   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
+> gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
+>   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
+> gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
+>   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
+> gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
+>   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
+> gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
+>   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
+> gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
+>   fi && \
+>   echo "compilers: ${AVAILABLE_COMPILERS}"
+>
 
-Stub out LORC_EL1 accesses as FEAT_LOR is a mandatory extension on Armv8.1+.
+Nope, the continuation has to run for all the lines of the RUN
+statement.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/hvf/hvf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+  Processing triggers for libc-bin (2.36-9+deb12u10) ...
+  --> 703d5c21c6e4
+  STEP 5/18: ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu         libc6-de=
+v-arm64-cross         gcc-arm-linux-gnueabihf         libc6-dev-armhf-cross=
+         gcc-mips-linux-gnu         libc6-dev-mips-cross         gcc-mips64=
+-linux-gnuabi64         libc6-dev-mips64-cross         gcc-mips64el-linux-g=
+nuabi64         libc6-dev-mips64el-cross         gcc-mipsel-linux-gnu      =
+   libc6-dev-mipsel-cross         gcc-powerpc64le-linux-gnu         libc6-d=
+ev-ppc64el-cross         gcc-riscv64-linux-gnu         libc6-dev-riscv64-cr=
+oss         gcc-s390x-linux-gnu         libc6-dev-s390x-cross
+  --> e6fa99881c94
+  STEP 6/18: RUN if dpkg-architecture -e amd64; then   export AVAILABLE_COM=
+PILERS=3D"${AVAILABLE_COMPILERS}
+  /bin/sh: 1: Syntax error: Unterminated quoted string
+  Error: building at STEP "RUN if dpkg-architecture -e amd64; then   export=
+ AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}": while running runtime: exi=
+t status 2
+  make: *** [tests/docker/Makefile.include:40: docker-image-debian-all-test=
+-cross] Error 2
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index bd6b5d11de8..47b0cd3a351 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -186,6 +186,7 @@ void hvf_arm_init_debug(void)
- #define SYSREG_OSLAR_EL1      SYSREG(2, 0, 1, 0, 4)
- #define SYSREG_OSLSR_EL1      SYSREG(2, 0, 1, 1, 4)
- #define SYSREG_OSDLR_EL1      SYSREG(2, 0, 1, 3, 4)
-+#define SYSREG_LORC_EL1       SYSREG(3, 0, 10, 4, 3)
- #define SYSREG_CNTPCT_EL0     SYSREG(3, 3, 14, 0, 1)
- #define SYSREG_CNTP_CTL_EL0   SYSREG(3, 3, 14, 2, 1)
- #define SYSREG_PMCR_EL0       SYSREG(3, 3, 9, 12, 0)
-@@ -1657,6 +1658,9 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-     case SYSREG_OSDLR_EL1:
-         /* Dummy register */
-         return 0;
-+    case SYSREG_LORC_EL1:
-+        /* Dummy register */
-+        return 0;
-     case SYSREG_ICC_AP0R0_EL1:
-     case SYSREG_ICC_AP0R1_EL1:
-     case SYSREG_ICC_AP0R2_EL1:
--- 
-2.43.0
+>
+>>
+>> >
+>> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> >
+>> >> +
+>> >> +RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+>> >> +        apt install -y --no-install-recommends \
+>> >> +        ${AVAILABLE_COMPILERS} && \
+>> >>          dpkg-query --showformat '${Package}_${Version}_${Architectur=
+e}\n' --show > /packages.txt
+>> >>
+>> >>
+>> >> --
+>> >> 2.47.2
+>> >>
+>> >>
+>>
+>> --
+>> Alex Benn=C3=A9e
+>> Virtualisation Tech Lead @ Linaro
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
