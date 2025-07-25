@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5014CC83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58E3C83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufBpQ-0000B5-GV; Fri, 25 Jul 2025 02:22:48 -0400
+	id 1ufBrg-0002xl-UP; Fri, 25 Jul 2025 02:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ufBkY-0003y8-0Q
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:17:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufBrN-0002qP-5x
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:24:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ufBkV-0005ks-RT
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:17:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufBrD-0007VL-ML
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:24:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753424261;
+ s=mimecast20190719; t=1753424675;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=I/GZQOo3ZaJSzz/4xyMlDsU9NRkcWDb1U9mkur5TLoE=;
- b=Es0NzdQJX2dHE+b1FvoXv/QPtVCw0R65OKO1UYfupe6+sWkOOJWUjHzj6h30tc+B6VS6iy
- exsa8HyvZYSnn8fq3EvtgwAx0Q+IfBqOtC9uWG8mW2sxr8jCK+Clx4kXHL+ytOHGzafJLD
- 9hPTg/6B+ryd53nPQQ+FZiFoPbA1ttE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AeQ7Z5jHh0tdelWQ9L9irAjCcWPnkuMCwU1yNoGwdXg=;
+ b=aTBr/YwU0fp4/5996+7Wh5H9XIWWUBhI9FCyqvum+Z4qStNCKd3eC12OE66xEIVn9ed6A6
+ BPgEh9NnBN6QfaNNou7ywX1nBOIjGDjF6QX36Vceor3hOZRVk4QyTqXmK1iAuFb3sFwmQ6
+ 1bITyAsHHxZ3TPwAXJ2F+gfyW0fLuP8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-H7gwHZztOceQ-FJL8tW0Mw-1; Fri, 25 Jul 2025 02:17:40 -0400
-X-MC-Unique: H7gwHZztOceQ-FJL8tW0Mw-1
-X-Mimecast-MFC-AGG-ID: H7gwHZztOceQ-FJL8tW0Mw_1753424259
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-454dee17a91so13086085e9.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 23:17:39 -0700 (PDT)
+ us-mta-679-9RvqcWN8OvqwhM4HlWzBPA-1; Fri, 25 Jul 2025 02:24:33 -0400
+X-MC-Unique: 9RvqcWN8OvqwhM4HlWzBPA-1
+X-Mimecast-MFC-AGG-ID: 9RvqcWN8OvqwhM4HlWzBPA_1753424672
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4560f28b2b1so6137705e9.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 23:24:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753424258; x=1754029058;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I/GZQOo3ZaJSzz/4xyMlDsU9NRkcWDb1U9mkur5TLoE=;
- b=ZaPaCm7GWcxR+5A0ZgA9QJmELhrwK3c2aLQ+U+dJtWvg9PrCJprV9sqfdbLoB3jrbw
- g/XhAwREjXqXzFZeqcW1GP/Zp47nHWAy5+8wPjz53plZYiIPiuNprToMo0vdRu/nQY9G
- B2Je2RB+FXMT1BB459HY2HvbIbiGYXyJ0X91VHmPRsYMfdo/Ic5JHiuy08g/6dOJHQ0H
- FwzGcCZ1zaxTXsy0MPxZ8I+exN455N24+9u2pZghCZANyOKMz8QsiWOwBzkJnAKKkefF
- ORp4AYPV3n5AW/8/IyFp782IKMzbVyYFOnko2cVoNVVTxX1wZZGMFYKCDg6oddwrgGtW
- /mIA==
-X-Gm-Message-State: AOJu0YwNZEI6I1Hbr7dwJwEFhuv8k3rpIEeyEXGxkIsv1M/f2t59JLFe
- kvvs5pvVLJKVEP/YyWWELZFaZbIpWt08RnliC1app7V1h8qub5yf4gzRAZI87yg9PV9aSmfw3PX
- IX56xUA5cwia22xXtlnTc2PfaPsiV6qjT2zMt2deYTMXytbjTtVjJSpcGjaRweKj4tTjOLnkjL1
- IJ5Gvoh5GoQr9DrvYl+Kootv2EDmUHCABSfJMUIsX+
-X-Gm-Gg: ASbGncsQkYqIHXGssc7X9Ipoclo8KPLq7mPd3hyULWAlZ1PduBe10qER7p6LgESnLqC
- 4vtFaCdyvdw94+xCJZzW+LiCAHBV1Oklg6zpnGD/hZvcliSmP2aLgkU/xQNwPO5SNLX1839fOwV
- xwuq8rZUliHpa5sBw1tsc1SSaT77H5QzoIP20MuB+YXFQwTt+V94w6/U2y8ef1EBbNqZTGr42+V
- pZ8r4si4fbjYz1p7bcKjnqmsr/7MDu8yBeHNKfq4apR0hsoK5OQqisRbvCv8x21DlrixavAMpRU
- XbrR4AxXzUx2fos5fYUb5d+ap10EeQ8EAAnmEo6Z0nPm
-X-Received: by 2002:a05:600c:3b83:b0:454:ab1a:8c39 with SMTP id
- 5b1f17b1804b1-458769ce757mr3632595e9.26.1753424258222; 
- Thu, 24 Jul 2025 23:17:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IER/kqCYEcfl2c4w1oXUkJrgxl13KSswoIoDXWXpM5500wlz5PhwJ13O+vCnpvgmIRIwW+OEg==
-X-Received: by 2002:a05:600c:3b83:b0:454:ab1a:8c39 with SMTP id
- 5b1f17b1804b1-458769ce757mr3632355e9.26.1753424257777; 
- Thu, 24 Jul 2025 23:17:37 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.154.122])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45872d57506sm16405195e9.28.2025.07.24.23.17.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jul 2025 23:17:37 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Biggers <ebiggers@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] target/i386: fix width of third operand of VINSERTx128
-Date: Fri, 25 Jul 2025 08:17:36 +0200
-Message-ID: <20250725061736.1096206-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ d=1e100.net; s=20230601; t=1753424672; x=1754029472;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AeQ7Z5jHh0tdelWQ9L9irAjCcWPnkuMCwU1yNoGwdXg=;
+ b=HI5HS4dq9kq7XWprLmnAmiy7YhEnfOKQyHH9WkRkarc8j8QJUgnqNxJhGV4kDTzYuw
+ bMd2BPCfxFrs+5q5voTwL7SOD+OkIje7u7rIwPBTjC7xg/BwsuTxnvRGufwhgRjaKjGR
+ W/tr/CoyRJQHMTzZjSxdJTdZvc2IpkoO3Axcbgi+m82vYSMfhjgPcEB2ex/V6MkmUPbI
+ 1w8SmI7E1XALIQ68sotWfWlY5ubDg7XT1a470W7lIDmdKzPnQkPV8IIg4LpP5WLyYQEt
+ MA/SMngyZEu9KiXxWJeDYSgYq1S5z3/icY9dd9y1ZyQF1gbiCVDcS2ULJVBtolEaZN9s
+ F2qg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCpdhia3/m+EotU85gEqhgTMZp92N6rDlQmHAncB3BRhGoZoLMXmjsI9kwbOzrMkSvJxK2qPaOehA1@nongnu.org
+X-Gm-Message-State: AOJu0YzBCT9aeA+jbhTvhSUZLeI6IM1TZG+EG5zgV/4T43HLxGu5Prmy
+ fnaAf4/oba/Hzpdqa+FG3gjbVkXs9NkreLtEhsTkMyZBD0vjVApLgdZy1DszYV/4Cu4Z0cGJli4
+ utSyj5nweQFbAql9T7CwNOYXVcE2jP1F0qq46znHxoSS8tvezt3mRsgp+
+X-Gm-Gg: ASbGnctNZqVd8H1QsqXOcKnTsr8GL9NJph00UqoWzAGWDWliTmi7vTuBzM1/4tmb5ny
+ XAl/7Zkk7l8Oh6z+nSF1V8l81TLoAzVGlNap2hZ8/4ixMLfe/lHcqEst1OgZY31ucyP8j1zRp4+
+ +MQ1rUD3jE+DwsKZUvz88Om04VzLGLCDAcZz+uepQMI/m4nm/K4Z4tsdMQmNvyW+1JqYq527Qt0
+ SSoInMR1ZdGh1sMMwKo3j66McGbrK+GYyN3NleOYTRuwnhoRlS35LMW01puFzuo8tULe8ba74Sy
+ WwirH1hhNejUjhoEMT9oLznZf2h+aSdoiWmuWcGALrTtwKsXRVEJ4qklDVZvMyje7EXIVFq9s7l
+ 9oWY=
+X-Received: by 2002:a05:600c:4ed1:b0:453:1058:f8c1 with SMTP id
+ 5b1f17b1804b1-45876304c42mr5110975e9.3.1753424671921; 
+ Thu, 24 Jul 2025 23:24:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGC1Sbgn4lbb/WPvRg0+4drCfb7cCreuRZtunbliTntCYlbDaf48+IL8SoHo+R0UENJNsVoCg==
+X-Received: by 2002:a05:600c:4ed1:b0:453:1058:f8c1 with SMTP id
+ 5b1f17b1804b1-45876304c42mr5110735e9.3.1753424671483; 
+ Thu, 24 Jul 2025 23:24:31 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-115-089.pools.arcor-ip.net.
+ [47.64.115.89]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45870532b5asm41551685e9.5.2025.07.24.23.24.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 23:24:30 -0700 (PDT)
+Message-ID: <cef1f755-aaf0-4411-8e1c-2c50e3a57770@redhat.com>
+Date: Fri, 25 Jul 2025 08:24:29 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk
+ size calculation
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paul Durrant <paul@xen.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20250221134856.478806-1-mjt@tls.msk.ru>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250221134856.478806-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -90,7 +141,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,43 +157,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Table A-5 of the Intel manual incorrectly lists the third operand of
-VINSERTx128 as Wqq, but it is actually a 128-bit value.  This is
-visible when W is a memory operand close to the end of the page.
+On 21/02/2025 14.48, Michael Tokarev wrote:
+> In case of multiple chunks, code in qxl_unpack_chunks() takes size of the
+> wrong (next in the chain) chunk, instead of using current chunk size.
+> This leads to wrong number of bytes being copied, and to crashes if next
+> chunk size is larger than the current one.
+> 
+> Based on the code by Gao Yong.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1628
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>   hw/display/qxl-render.c | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+> index eda6d3de37..c6a9ac1da1 100644
+> --- a/hw/display/qxl-render.c
+> +++ b/hw/display/qxl-render.c
+> @@ -222,6 +222,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+>       uint32_t max_chunks = 32;
+>       size_t offset = 0;
+>       size_t bytes;
+> +    QXLPHYSICAL next_chunk_phys = 0;
+>   
+>       for (;;) {
+>           bytes = MIN(size - offset, chunk->data_size);
+> @@ -230,7 +231,15 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+>           if (offset == size) {
+>               return;
+>           }
+> -        chunk = qxl_phys2virt(qxl, chunk->next_chunk, group_id,
+> +        next_chunk_phys = chunk->next_chunk;
+> +        /* fist time, only get the next chunk's data size */
+> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
+> +                              sizeof(QXLDataChunk));
+> +        if (!chunk) {
+> +            return;
+> +        }
+> +        /* second time, check data size and get data */
+> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
+>                                 sizeof(QXLDataChunk) + chunk->data_size);
 
-Fixes the recently-added poly1305_kunit test in linux-next.
+Looks reasonable to me, and I think it's also simple enough for qemu-trivial 
+(now on CC:).
 
-(No testcase yet, but I plan to modify test-avx2 to use memory
-close to the end of the page.  This would work because the test
-vectors correctly have the memory operand as xmm2/m128).
-
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 853b1c8bf95..51038657f0f 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -878,10 +878,10 @@ static const X86OpEntry opcodes_0F3A[256] = {
-     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
-     [0x0f] = X86_OP_ENTRY4(PALIGNR,    V,x,  H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
- 
--    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX) p_66),
-+    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX) p_66),
-     [0x19] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX) p_66),
- 
--    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX2) p_66),
-+    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX2) p_66),
-     [0x39] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX2) p_66),
- 
-     /* Listed incorrectly as type 4 */
--- 
-2.50.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
