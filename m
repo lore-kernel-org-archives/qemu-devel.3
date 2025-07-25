@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DDEC83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 10:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF2AC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 11:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufFYc-0000T8-SR; Fri, 25 Jul 2025 06:21:42 -0400
+	id 1ufGay-0008JZ-16; Fri, 25 Jul 2025 07:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufFYa-0000OJ-97
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 06:21:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ufGav-00087O-Sh; Fri, 25 Jul 2025 07:28:09 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufFYX-0000JT-0N
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 06:21:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753438893;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=xOUpPrbia1s7oZxsLo+FknE80KaTVSRba1HXNVXk4rA=;
- b=dNRwmJuAMehfbCwnFfPW09DwTTIjTRqnpLeYS7eZ/VxbJ0eHZT5dGJClFpJNiHb49VLxw6
- FNip95qJMZQ8Mk3YvYGg5c0VH3N8dkj3d6WwFytb1QoT+tqHMjxg/93+tYQoBAyLOewvBP
- Gnotp7RhE+1HLtllIQ4irHF1zIJV+ks=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-_Dx563h7NZGkEwC1rHsYlQ-1; Fri,
- 25 Jul 2025 06:21:31 -0400
-X-MC-Unique: _Dx563h7NZGkEwC1rHsYlQ-1
-X-Mimecast-MFC-AGG-ID: _Dx563h7NZGkEwC1rHsYlQ_1753438890
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 909F11800256; Fri, 25 Jul 2025 10:21:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.162])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC7A5195608D; Fri, 25 Jul 2025 10:21:28 +0000 (UTC)
-Date: Fri, 25 Jul 2025 11:21:25 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, den@virtuozzo.com, Ani Sinha <anisinha@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] dump: enhance win_dump_available to report properly
-Message-ID: <aINapSq8Dk4z6ozj@redhat.com>
-References: <20250723170402.75798-1-nikolai.barybin@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ufGat-0005fq-NQ; Fri, 25 Jul 2025 07:28:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 30CD513A254;
+ Fri, 25 Jul 2025 14:27:58 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10EB624F9D4;
+ Fri, 25 Jul 2025 14:28:00 +0300 (MSK)
+Message-ID: <05448f8b-cbcc-45b9-8ab8-a989dec50291@tls.msk.ru>
+Date: Fri, 25 Jul 2025 14:27:59 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250723170402.75798-1-nikolai.barybin@virtuozzo.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pcie_sriov: Fix configuration and state synchronization
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ Corentin BAYET <corentin.bayet@reversetactics.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250713-wmask-v1-1-4c744cdb32c0@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250713-wmask-v1-1-4c744cdb32c0@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,119 +104,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 23, 2025 at 08:04:02PM +0300, Nikolai Barybin wrote:
-> QMP query-dump-guest-memory-capability reports win dump as available for
-> any x86 VM, which is false.
+On 13.07.2025 12:27, Akihiko Odaki wrote:
+> Fix issues in PCIe SR-IOV configuration register handling that caused
+> inconsistent internal state due to improper write mask handling and
+> incorrect migration behavior.
 > 
-> This patch implements proper query of vmcoreinfo and calculation of
-> guest note size. Based on that we can surely report whether win dump
-> available or not.
+> Two main problems were identified:
 > 
-> For further reference one may review this libvirt discussion:
-> https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB/#HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB
-> [PATCH 0/4] Allow xml-configured coredump format on VM crash
+> 1. VF Enable bit write mask handling:
+>     pcie_sriov_config_write() incorrectly assumed that its val parameter
+>     was already masked, causing it to ignore the actual write mask.
+>     This led to the VF Enable bit being processed even when masked,
+>     resulting in incorrect VF registration/unregistration.
 > 
-> Signed-off-by: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
-> ---
->  dump/win_dump.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 60 insertions(+)
+> 2. Migration state inconsistency:
+>     pcie_sriov_pf_post_load() unconditionally called register_vfs()
+>     regardless of the VF Enable bit state, creating inconsistent
+>     internal state when VFs should not be enabled. Additionally,
+>     it failed to properly update the NumVFs write mask based on
+>     the current configuration.
 > 
-> diff --git a/dump/win_dump.c b/dump/win_dump.c
-> index 3162e8bd48..4bb1b28e63 100644
-> --- a/dump/win_dump.c
-> +++ b/dump/win_dump.c
-> @@ -14,14 +14,74 @@
->  #include "qemu/error-report.h"
->  #include "exec/cpu-defs.h"
->  #include "hw/core/cpu.h"
-> +#include "hw/misc/vmcoreinfo.h"
->  #include "qemu/win_dump_defs.h"
->  #include "win_dump.h"
->  #include "cpu.h"
-> +#include "elf.h"
->  
->  #if defined(TARGET_X86_64)
->  
-> +#define ELF_NOTE_SIZE(hdr_size, name_size, desc_size)   \
-> +    ((DIV_ROUND_UP((hdr_size), 4) +                     \
-> +      DIV_ROUND_UP((name_size), 4) +                    \
-> +      DIV_ROUND_UP((desc_size), 4)) * 4)
-> +
->  bool win_dump_available(Error **errp)
->  {
-> +    uint64_t addr, note_head_size, name_size, desc_size;
-> +    uint32_t size;
-> +    uint16_t guest_format;
-> +    uint8_t *guest_note = NULL;
-> +    size_t guest_note_size = 0;
-> +    VMCoreInfoState *vmci = vmcoreinfo_find();
-> +    ArchDumpInfo dump_info = {};
-> +    GuestPhysBlockList blocks = {};
-> +    int ret;
-> +
-> +    if (!vmci || !vmci->has_vmcoreinfo)
-> +        return false;
-> +
-> +    ret = cpu_get_dump_info(&dump_info, &blocks);
-> +    if (ret < 0)
-> +        return false;
-> +
-> +    guest_format = le16_to_cpu(vmci->vmcoreinfo.guest_format);
-> +    if (guest_format != FW_CFG_VMCOREINFO_FORMAT_ELF)
-> +        return false;
-> +
-> +    size = le32_to_cpu(vmci->vmcoreinfo.size);
-> +    addr = le64_to_cpu(vmci->vmcoreinfo.paddr);
-> +    note_head_size = dump_info.d_class == ELFCLASS64 ?
-> +        sizeof(Elf64_Nhdr) : sizeof(Elf32_Nhdr);
-> +
-> +    guest_note = g_malloc(size + 1);
-> +    cpu_physical_memory_read(addr, guest_note, size);
-> +    if (dump_info.d_class == ELFCLASS64) {
-> +        const Elf64_Nhdr *hdr = (void *)guest_note;
-> +        if (dump_info.d_endian == ELFDATA2LSB) {
-> +            name_size = cpu_to_le64(hdr->n_namesz);
-> +            desc_size = cpu_to_le64(hdr->n_descsz);
-> +        } else {
-> +            name_size = cpu_to_be64(hdr->n_namesz);
-> +            desc_size = cpu_to_be64(hdr->n_descsz);
-> +        }
-> +    } else {
-> +        const Elf32_Nhdr *hdr = (void *)guest_note;
-> +        if (dump_info.d_endian == ELFDATA2LSB) {
-> +            name_size = cpu_to_le32(hdr->n_namesz);
-> +            desc_size = cpu_to_le32(hdr->n_descsz);
-> +        } else {
-> +            name_size = cpu_to_be32(hdr->n_namesz);
-> +            desc_size = cpu_to_be32(hdr->n_descsz);
-> +        }
-> +    }
-> +
-> +    guest_note_size = ELF_NOTE_SIZE(note_head_size, name_size, desc_size);
+> Root cause analysis revealed that both functions relied on incorrect
+> special-case assumptions instead of properly reading and consuming
+> the actual configuration values. This change introduces a unified
+> consume_config() function that reads actual configuration values and
+> synchronize the internal state without special-case assumptions.
+> 
+> The solution only adds register read overhead in non-hot-path code
+> while ensuring correct SR-IOV state management across configuration
+> writes and migration scenarios.
+> 
+> Fixes: 5e7dd17e4348 ("pcie_sriov: Remove num_vfs from PCIESriovPF")
+> Fixes: f9efcd47110d ("pcie_sriov: Register VFs after migration")
+> Reported-by: Corentin BAYET <corentin.bayet@reversetactics.com>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-It feels like there is overlap between what this method has to do upto
-here, with what the existing 'dump_init' has to do. Any possibility to
-have a common helper to share logic ?
+This issue has been assigned two CVEs, CVE-2025-54566 and CVE-2025-54567.
 
-> +    if (guest_note_size != VMCOREINFO_WIN_DUMP_NOTE_SIZE64 &&
-> +        guest_note_size != VMCOREINFO_WIN_DUMP_NOTE_SIZE32)
-> +        return false;
+Should we apply this fix for 10.1 and to stable-10.0 series too?
 
-This dupes a check in create_win_dump, but  misses the extra sanity
-check from check_header. I think we should move the guest_note_size
-check out of 'create_win_dump' and into 'check_header', then call
-that from this code.
+Thanks,
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+/mjt
 
