@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294C7C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8018BC83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufEm5-0002Yk-6k; Fri, 25 Jul 2025 05:31:36 -0400
+	id 1ufEmB-0002aX-TE; Fri, 25 Jul 2025 05:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ufElu-0002Vj-PE
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:31:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ufElv-0002X3-QC
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:31:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ufElr-0003Xv-Et
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:31:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ufEls-0003Xx-Cy
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:31:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1753435876;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xdJR03+6vmW7dLiuQ0jADDl3N4/4pkTzYi5yocmoVG0=;
- b=cRsV1eypAmxqSAH5Mt0Jnht2LU/OQgmEyCTCMqMZs1AnqlnTVkIJMAgLf0cwJQifjZYfvy
- nJkHalxyEtFNXDzRR+8XRVwu5hxJFF90rgLCs5jAM1F2kVqR7dWRG5QbpRnD2y1iRIFyBU
- ykcPDNBslAwWS6+4G8kcZXVEOwG8tWI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lRJhqh7LI3ZiGSIo3rgH+PGi4v/pg8XWekfAXScvweg=;
+ b=X06U/LM9N+VKuvYIV90YSzOAwIDF4kTNzu6UHBjIDuGwdEuF/zL1scNCqOmxGARUq9Z07e
+ ECl2lb7DbJsndZia9V7RnWsUUSqoU74uAxIN2TsMcSzsT/n3n++loCq7ll9aImgqyqKjCf
+ o2CADUachRA+ZrSD/NYzhIwGQU8jCYc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-7W-eYJ7xMfyGd41Tx0cbMg-1; Fri, 25 Jul 2025 05:31:14 -0400
-X-MC-Unique: 7W-eYJ7xMfyGd41Tx0cbMg-1
-X-Mimecast-MFC-AGG-ID: 7W-eYJ7xMfyGd41Tx0cbMg_1753435873
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ae9cd38721aso173980866b.0
+ us-mta-512-JjG-FldIMQewAnvmhIEovQ-1; Fri, 25 Jul 2025 05:31:14 -0400
+X-MC-Unique: JjG-FldIMQewAnvmhIEovQ-1
+X-Mimecast-MFC-AGG-ID: JjG-FldIMQewAnvmhIEovQ_1753435873
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b604541741so1390566f8f.3
  for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:31:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1753435873; x=1754040673;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xdJR03+6vmW7dLiuQ0jADDl3N4/4pkTzYi5yocmoVG0=;
- b=IAa+ZGKwOolG0bI529/mxhmb/QvSn0DmcgomQgmYNDgr6HQEpjOAlQ/A75UxO9l2ns
- Eo7nSJqicyq+BUnghkZ3suhsqfAXhK9CquHA6OuS6P0UtyWpJWapqXtIO8+Nm3mfIi4V
- yatr47tgRW4Acv9nWwc7D7BNoI+eRJj/s0STywItSph6HEb1NtPbeHj7P7tfEKr+/JQq
- sA5M31fy+BJp9buGzPzwZ44zo/ztzNLbUJcsQh3oJxzi5MTnpVFkoAca6PZxr3uYTC7+
- YfndMCYxQ+6Ns92f45AmSzH7QpeWWhyAXeUBPPfwCKkIncbZmcgG1dEw6WZMEREWzayI
- bL3w==
-X-Gm-Message-State: AOJu0Yx5tzLYx0h3T//Rn3I8KwTJTXHBl05caXkwkzNkIhMZPy/ONSyv
- 8GfBWuPlb6RRXrgITrABatpuPpn+ywmQFqD/8Rrced/6lgtWZpzdlTKh6raya2bGnQi9Ip2IqC6
- eMiBaonQckAUZobdDyjrGzVEHmiVyd/+0a9LDJ0wzD1JFQT4BTNmktbJVzEIU55lxRjgNDo0Bcq
- zvgGgozo7ObGb8XrAHq6t5rPWyJ7TIxbg=
-X-Gm-Gg: ASbGncsmQDcI2oAJqs98eRHAgaxEp1S9dDSc69vaxQmRmnI4Z+aRvvlT/BUFyuIFZJ1
- 2FI2uiHkm2R1vNibrdfMWwEn1rzbeaPne2N69OZ3/nZMb+SqM9wgl7tNlPYGSvRIBaCJ1j6+/CS
- nWQZO/6MRLAhj2SAATa2SW/A==
-X-Received: by 2002:a17:907:c1f:b0:af2:b9b5:1c06 with SMTP id
- a640c23a62f3a-af61c8aa24fmr135234166b.14.1753435872957; 
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lRJhqh7LI3ZiGSIo3rgH+PGi4v/pg8XWekfAXScvweg=;
+ b=iJiOBsZwCytIpycEs2H8b5Nq7X/OPr++/1/kox0uPfsZS7oAjgkLbI17dr8vvGVITa
+ 2s/LQjDOdfq6rPZ7EK8/HjVxFJ8Z8RL8jm62ykzO00jIkq3CCWa9MhExqlfS6VbbgiMa
+ vEVOUIaIoSiO42fPm3j/5Dn1RDNpPyu9Mlm8e4/3FfbnnUuWYR1a1Pdhmt7u0GJi2i4F
+ ToGNb0vc2Ad4sb34DlajLPtVplyyC9jnFKLZgIbfUPPxdI5GTV1eID9LxEcmgTmEOmxh
+ Zitfa4leQv9X0Q5UlTQQHaj6IbuKxdtnr8TnEysNve9RHCZFxSvy039POy7+nz/VHKlJ
+ UXhQ==
+X-Gm-Message-State: AOJu0YwJUMvd/TbKQ/6NYihSFLcWGfgHNVMQfTqRVk5G+XWVGvh1+11v
+ C+syNN3D1LuM3OkZ8anTOYbWuNYfsW2VMHJoxpWQgSK33Ki8P4veWjshU7SYRAE5rc0adKcKD4W
+ TbXOdHnZZPyZHDvzV9jxaaqPljWNVa9bvL9fe3DyN9Qt5fyVBPmWw/zMv
+X-Gm-Gg: ASbGncvNvvhGeinIZKrN2CSgv2qDz63XaKx2av9xp7VtJYzX6AAquy9Gn8H9dBhsBdZ
+ sSuBoOx0rtpXrAVR8/I8GZeEgYCHn5NhfRBVxbzxGoJFUhfwciVRlC8Uat4SCzW0Tkzu8kTSMRF
+ h1QfGZ4Rbg1biecqfM78iJH5QDwdPFXl50Yau9E8mzAicR3iJyIYCRx0eee95JtkZCrfe6/Ng90
+ tsMP9657I7kjuzSRRriPRThZOrrkJt/W8M//+qaF6S1XCc+T5c+DrwZwBBOslzKEiaoaC+HWXBk
+ LpQ63dFfI4IaZpikJhyGDWpbEOCJqhnHiA==
+X-Received: by 2002:a05:6000:40db:b0:3b5:f8d5:5dba with SMTP id
+ ffacd0b85a97d-3b776666f76mr1348074f8f.30.1753435873123; 
+ Fri, 25 Jul 2025 02:31:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5KeITPEv4nABSBz6l3k8HGPnae2Ft7VdfdC+NJdKgMspGWWDJK2mNNFZwPAs0Utra/i+bIg==
+X-Received: by 2002:a05:6000:40db:b0:3b5:f8d5:5dba with SMTP id
+ ffacd0b85a97d-3b776666f76mr1348035f8f.30.1753435872502; 
  Fri, 25 Jul 2025 02:31:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPHAxLYvw1bnRIc7gerZjv2Uw7xhF3p0qyiCW8gfT8nkoXjpmsubxCrY6zBr0QH1j8NmBHetqlrbJZXnNt8qM=
-X-Received: by 2002:a17:907:c1f:b0:af2:b9b5:1c06 with SMTP id
- a640c23a62f3a-af61c8aa24fmr135230766b.14.1753435872559; Fri, 25 Jul 2025
- 02:31:12 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:153d:b500:b346:7481:16b2:6b23])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458705bccc5sm47254695e9.22.2025.07.25.02.31.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Jul 2025 02:31:11 -0700 (PDT)
+Date: Fri, 25 Jul 2025 05:31:09 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
+ eblake@redhat.com, armbru@redhat.com, jasowang@redhat.com,
+ si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com
+Subject: Re: [RFC 4/6] virtio-net: iter live migration - migrate vmstate
+Message-ID: <20250725052825-mutt-send-email-mst@kernel.org>
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-5-jonah.palmer@oracle.com>
+ <20250723024406-mutt-send-email-mst@kernel.org>
+ <e6ab2cdc-5f5f-454b-9795-e8016ce16248@oracle.com>
 MIME-Version: 1.0
-References: <20250724125928.61045-1-hreitz@redhat.com>
-In-Reply-To: <20250724125928.61045-1-hreitz@redhat.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 25 Jul 2025 17:30:36 +0800
-X-Gm-Features: Ac12FXzuDstt968WBww2w7gkb8V_UlOJAwlUo5yRNdEUFJ_CBIga153krsHg4w8
-Message-ID: <CAPpAL=whSGf12R8=hxW+SdNWZZLVKqH2duR1838mGUNHFNeQGg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Do not abort on log-start/stop errors
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e6ab2cdc-5f5f-454b-9795-e8016ce16248@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -103,42 +111,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this series of patches with vhost-net regression tests,
-everything works fine.
+On Thu, Jul 24, 2025 at 10:45:34AM -0400, Jonah Palmer wrote:
+> 
+> 
+> On 7/23/25 2:51 AM, Michael S. Tsirkin wrote:
+> > On Tue, Jul 22, 2025 at 12:41:25PM +0000, Jonah Palmer wrote:
+> > > Lays out the initial groundwork for iteratively migrating the state of a
+> > > virtio-net device, starting with its vmstate (via vmstate_save_state &
+> > > vmstate_load_state).
+> > > 
+> > > The original non-iterative vmstate framework still runs during the
+> > > stop-and-copy phase when the guest is paused, which is still necessary
+> > > to migrate over the final state of the virtqueues once the sourced has
+> > > been paused.
+> > > 
+> > > Although the vmstate framework is used twice (once during the iterative
+> > > portion and once during the stop-and-copy phase), it appears that
+> > > there's some modest improvement in guest-visible downtime when using a
+> > > virtio-net device.
+> > > 
+> > > When tracing the vmstate_downtime_save and vmstate_downtime_load
+> > > tracepoints, for a virtio-net device using iterative live migration, the
+> > > non-iterative downtime portion improved modestly, going from ~3.2ms to
+> > > ~1.4ms:
+> > > 
+> > > Before:
+> > > -------
+> > > vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
+> > >    instance_id=0 downtime=3594
+> > > 
+> > > After:
+> > > ------
+> > > vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
+> > >    instance_id=0 downtime=1607
+> > > 
+> > > This improvement is likely due to the initial vmstate_load_state call
+> > > (while the guest is still running) "warming up" all related pages and
+> > > structures on the destination. In other words, by the time the final
+> > > stop-and-copy phase starts, the heavy allocations and page-fault
+> > > latencies are reduced, making the device re-loads slightly faster and
+> > > the guest-visible downtime window slightly smaller.
+> > 
+> > did I get it right it's just the vmstate load for this single device?
+> > If the theory is right, is it not possible that while the
+> > tracepoints are now closer together, you have pushed something
+> > else out of the cache, making the effect on guest visible downtime
+> > unpredictable? how about the total vmstate load time?
+> > 
+> 
+> Correct, the data above is just from the virtio-net device's downtime
+> contribution (specifically during the stop-and-copy phase).
+> 
+> Theoretically, yes I believe so. To try and get a feel on this, I ran some
+> slightly heavier testing for the virtio-net device: vhost-net + 4 queue
+> pairs (the one above was just a virtio-net device with 1 queue pair).
+> 
+> I traced the reported downtimes of the devices that come right before and
+> after virtio-net's vmstate_load_state call with and without iterative
+> migration on the virtio-net device.
+> 
+> The downtimes below are all from the vmstate_load_state calls that happen
+> while the source has been stopped:
+> 
+> With iterative migration for virtio-net:
+> ----------------------------------------
+> vga:             1.50ms |  1.39ms |  1.37ms |  1.50ms |  1.63ms |
+> virtio-console: 13.78ms | 14.24ms | 13.74ms | 13.89ms | 13.60ms |
+> virtio-net:	13.91ms | 13.52ms | 13.09ms | 13.59ms | 13.37ms |
+> virtio-scsi:	18.71ms | 13.96ms | 14.05ms | 16.55ms | 14.30ms |
+> 
+> vga:		Avg.  1.47ms | Var: 0.0109ms² | Std. Dev (σ): 0.104ms
+> virtio-console: Avg. 13.85ms | Var: 0.0583ms² | Std. Dev (σ): 0.241ms
+> virtio-net:	Avg. 13.49ms | Var: 0.0904ms² | Std. Dev (σ): 0.301ms
+> virtio-scsi:	Avg. 15.51ms | Var: 4.3299ms² | Std. Dev (σ): 2.081ms
+> 
+> Without iterative migration for virtio-net:
+> -------------------------------------------
+> vga:		 1.47ms |  1.28ms |  1.55ms |  1.36ms |  1.22ms |
+> virtio-console: 13.39ms | 13.40ms | 14.37ms | 13.93ms | 13.36ms |
+> virtio-net:	18.52ms | 17.77ms | 17.52ms | 15.52ms | 17.32ms |
+> virtio-scsi:	13.35ms | 13.94ms | 15.17ms | 16.01ms | 14.08ms |
+> 
+> vga:		Avg.  1.37ms | Var: 0.0182ms² | Std. Dev (σ): 0.135ms
+> virtio-console: Avg. 13.69ms | Var: 0.2007ms² | Std. Dev (σ): 0.448ms
+> virtio-net:	Avg. 17.33ms | Var: 1.2305ms² | Std. Dev (σ): 1.109ms
+> virtio-scsi:	Avg. 14.51ms | Var: 1.1352ms² | Std. Dev (σ): 1.065ms
+> 
+> The most notable difference here is the standard deviation of virtio-scsi's
+> migration downtime, which comes after virtio-net's migration: virtio-scsi's
+> σ rises from ~1.07ms to ~2.08ms when virtio-net is iteratively migrated.
+> 
+> However, since I only got 5 samples per device, the trend is indicative but
+> not definitive.
+> 
+> Total vmstate load time per device ≈ downtimes reported above, unless you're
+> referring to overall downtime across all devices?
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+Indeed.
 
-On Thu, Jul 24, 2025 at 9:01=E2=80=AFPM Hanna Czenczek <hreitz@redhat.com> =
-wrote:
->
-> Hi,
->
-> vhost_log_global_start() and vhost_log_global_stop() abort the whole
-> qemu process on error.  Not least because vhost devices are generally
-> outside of qemu (i.e. use a foreign code base), that is not great, as we
-> can basically be forced to abort because of bugs (or maybe even properly
-> behaving, just unexpectedly so) in other code bases.
->
-> In case of vhost_log_global_start(), the solution is simple: Ever since
-> commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
-> handler"), it can just return proper errors, so do that instead of
-> aborting.
->
-> In case of vhost_log_global_stop(), we cannot return errors; but we can
-> just ignore them.  In the worst case, some other process will keep
-> logging into shared memory we have already unmapped.  That's fine.
->
->
-> Hanna Czenczek (2):
->   vhost: Do not abort on log-start error
->   vhost: Do not abort on log-stop error
->
->  hw/virtio/vhost.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> --
-> 2.50.1
->
->
+I also wonder, if preheating cache is a big gain, why don't we just
+do it for all devices? there is nothing special in virtio: just
+call save for all devices, send the state, call load on destination
+then call reset to discard the state.
+
+
+
+> ----------
+> 
+> Having said all this, this RFC is just an initial, first-step for iterative
+> migration of a virtio-net device. This second vmstate_load_state call during
+> the stop-and-copy phase isn't optimal. A future version of this series could
+> do away with this second call and only send the deltas instead of the entire
+> state again.
+
+I see how this could be a win, in theory, if the state is big.
+
+
+> > > Future patches could improve upon this by skipping the second
+> > > vmstate_save/load_state calls (during the stop-and-copy phase) and
+> > > instead only send deltas right before/after the source is stopped.
+> > > 
+> > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> > > ---
+> > >   hw/net/virtio-net.c            | 37 ++++++++++++++++++++++++++++++++++
+> > >   include/hw/virtio/virtio-net.h |  8 ++++++++
+> > >   2 files changed, 45 insertions(+)
+> > > 
+> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > > index 19aa5b5936..86a6fe5b91 100644
+> > > --- a/hw/net/virtio-net.c
+> > > +++ b/hw/net/virtio-net.c
+> > > @@ -3808,16 +3808,31 @@ static bool virtio_net_is_active(void *opaque)
+> > >   static int virtio_net_save_setup(QEMUFile *f, void *opaque, Error **errp)
+> > >   {
+> > > +    VirtIONet *n = opaque;
+> > > +
+> > > +    qemu_put_be64(f, VNET_MIG_F_INIT_STATE);
+> > > +    vmstate_save_state(f, &vmstate_virtio_net, n, NULL);
+> > > +    qemu_put_be64(f, VNET_MIG_F_END_DATA);
+> > > +
+> > >       return 0;
+> > >   }
+> > >   static int virtio_net_save_live_iterate(QEMUFile *f, void *opaque)
+> > >   {
+> > > +    bool new_data = false;
+> > > +
+> > > +    if (!new_data) {
+> > > +        qemu_put_be64(f, VNET_MIG_F_NO_DATA);
+> > > +        return 1;
+> > > +    }
+> > > +
+> > > +    qemu_put_be64(f, VNET_MIG_F_END_DATA);
+> > >       return 1;
+> > >   }
+> > >   static int virtio_net_save_live_complete_precopy(QEMUFile *f, void *opaque)
+> > >   {
+> > > +    qemu_put_be64(f, VNET_MIG_F_NO_DATA);
+> > >       return 0;
+> > >   }
+> > > @@ -3833,6 +3848,28 @@ static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
+> > >   static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
+> > >   {
+> > > +    VirtIONet *n = opaque;
+> > > +    uint64_t flag;
+> > > +
+> > > +    flag = qemu_get_be64(f);
+> > > +    if (flag == VNET_MIG_F_NO_DATA) {
+> > > +        return 0;
+> > > +    }
+> > > +
+> > > +    while (flag != VNET_MIG_F_END_DATA) {
+> > > +        switch (flag) {
+> > > +        case VNET_MIG_F_INIT_STATE:
+> > > +        {
+> > > +            vmstate_load_state(f, &vmstate_virtio_net, n, VIRTIO_NET_VM_VERSION);
+> > > +            break;
+> > > +        }
+> > > +        default:
+> > > +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Uknown flag 0x%"PRIx64, __func__, flag);
+> > > +            return -EINVAL;
+> > > +        }
+> > > +
+> > > +        flag = qemu_get_be64(f);
+> > > +    }
+> > >       return 0;
+> > >   }
+> > > diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+> > > index b9ea9e824e..d6c7619053 100644
+> > > --- a/include/hw/virtio/virtio-net.h
+> > > +++ b/include/hw/virtio/virtio-net.h
+> > > @@ -163,6 +163,14 @@ typedef struct VirtIONetQueue {
+> > >       struct VirtIONet *n;
+> > >   } VirtIONetQueue;
+> > > +/*
+> > > + * Flags to be used as unique delimiters for virtio-net devices in the
+> > > + * migration stream.
+> > > + */
+> > > +#define VNET_MIG_F_INIT_STATE          (0xffffffffef200000ULL)
+> > > +#define VNET_MIG_F_END_DATA            (0xffffffffef200001ULL)
+> > > +#define VNET_MIG_F_NO_DATA             (0xffffffffef200002ULL)
+> > > +
+> > >   struct VirtIONet {
+> > >       VirtIODevice parent_obj;
+> > >       uint8_t mac[ETH_ALEN];
+> > > -- 
+> > > 2.47.1
+> > 
 
 
