@@ -4,120 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D910C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 07:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CCAC83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 07:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufCf0-0002ai-BC; Fri, 25 Jul 2025 03:16:06 -0400
+	id 1ufClL-0005tc-Uo; Fri, 25 Jul 2025 03:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ufCea-0001Py-QY
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:15:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ufCeY-0004wK-0u
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:15:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753427737;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vjlN6/shpOuSTQ1cw054Poinrgw5N65yJFevY73X55U=;
- b=U2+K1VuRkZJXtCK+rYANLEfU78460oeeQPseyRAm+PweVt2cpHsnmpq7MKO31jc2juKeT4
- T3yuLHfBBtrzN9lokXncf/S+lF5ZdiCPfc7zMypSSyt0wTP53LKY9di9C5H0Jp1e9aVwmQ
- 3lGd8h/S2WfAo9nszn5+P3GjK4htyuY=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-368-pWyANcMNOn6xGhwdLeVRWQ-1; Fri, 25 Jul 2025 03:15:35 -0400
-X-MC-Unique: pWyANcMNOn6xGhwdLeVRWQ-1
-X-Mimecast-MFC-AGG-ID: pWyANcMNOn6xGhwdLeVRWQ_1753427734
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b3f71e509d6so1418961a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 00:15:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ufClB-0005nz-HJ
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:22:33 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ufCl8-0006cx-10
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:22:29 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a588da60dfso1099126f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 00:22:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753428143; x=1754032943; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=r22EFJ74HxynTaDmnGweCoJcGF7P8MUsVDsDrxBpLFw=;
+ b=Rb/fNaRlqsCJU2FMm2cb8Dg5t1QNsD30LbdyEi+/fryQCwGPqNC+wRpTK++eDEoF5m
+ bIQfLX4QrJaeYEuuB++BEvALIdaj6todT0zK3Ozw07w0Osbm32kpfPezkR1zsOidS2Jp
+ 1cwao9JwJFPZvxCzquZSU+x4s6rsmcpGh5oJlNgJn5WOpwQB316qidToiJr5RB+e8AM+
+ FQ9p0ekxVBskc+5iJWSBe+NgxwmVUi4hcgwqyono1A5/QCOsr4pspy00K8fg4SL+NDVl
+ vI6RFVB0jmNPJ5C5VAg2hmRUDLS7LIutawfaBDb/xU1thrg6PviF5JG2SB33fcqF+ieU
+ 4a6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753427734; x=1754032534;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1753428143; x=1754032943;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vjlN6/shpOuSTQ1cw054Poinrgw5N65yJFevY73X55U=;
- b=wcn8aIF83Rf0GUGQ52PLpdooF270GZvUv34HsyINqpLo0CRSsShCKeJGHYHqdGCD2Q
- /vcVoisNUTH2r/uwr4BvIMX/J8FGKEqdNkDab6lLSLGxmFfG76Xsw92f2BRvJ4gdF9jL
- veFE4yvuO0KSPHpVKN7XCr3vCDuo86kk7eNghRTQFUYKT7QQ4M1FEOORTq8qw7Y1yvPb
- 83HlIbavq0/MXnzFDk0I4Bm4uMPgfkEwUwH6clxNtlD1jqMYCWUjtJsC6X7jT6XV/YUW
- Qpe+fXW6exjW9W6gM9mlZkAqX/siwQI1Rmd7xyhbIrSR7gw5aFyDRLoESbNaXhdHG731
- NOwA==
-X-Gm-Message-State: AOJu0YwGei3Mf6EJ2NYfq/h15ckqjYtoebHIoOKCa9ZQNs6xbKeNidNG
- r9bzKFC02YpgrduaA6bjoe2MWKe6Wl1KwwfjKo0LFr8sh63cje5Q0N157ZGzYfPdB8nX/jFFyjB
- yKW4ZF5xC/UaTdK3pcH61AXQTpizS0jbUMuJy/FUaXt41QiaLwztHBgQW
-X-Gm-Gg: ASbGnctSvG9FY1dq0NV5hsQVl+YubQu9536e7hsgjG1j0ZOcseCMapHPWjTB08Fjzrs
- ZVUj6amEVK4OUi2GJ3xhzFLGtbeT0PwvzOCJ9Gxhq4BThOUDFbl2pPefwUd8BcBD/6/efhdjSIM
- ghCJzWu+rcorhFPFxchmN01f2nNeSZFHLmB9LjuSy1bPSbX3IM63AYF4Yg06vTOULfVb0ytyt/i
- K5qFs1Zx95NDWK0PIgzI7dlzpw7SE9odla7nQbHWSMGRramllWnk34P7sCNSX5Z2aZrjSXVWO+w
- yO0xD5eC4jrQRcVw3QQpxC94EpX/WMgaLXfcY6JiXm42FSS87xaI
-X-Received: by 2002:a05:6300:210b:b0:238:351a:643a with SMTP id
- adf61e73a8af0-23d7021303cmr1337121637.46.1753427734155; 
- Fri, 25 Jul 2025 00:15:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKyuN/RPO44vcM3dwmKz7SA3nUdgQK+W6Lpq5Q8BdPSZaoyWn3TD6Tozhbcrhx4sQDO40FcA==
-X-Received: by 2002:a05:6300:210b:b0:238:351a:643a with SMTP id
- adf61e73a8af0-23d7021303cmr1337004637.46.1753427733634; 
- Fri, 25 Jul 2025 00:15:33 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.101.73])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e66270edasm2861930a91.9.2025.07.25.00.15.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 00:15:33 -0700 (PDT)
-Date: Fri, 25 Jul 2025 12:45:22 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v6 15/24] migration: make loadvm_postcopy_handle_resume()
- void
-Message-ID: <aIMvCpR7kHnYq00R@armenon-kvm.bengluru.csb>
-References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
- <20250721-propagate_tpm_error-v6-15-fef740e15e17@redhat.com>
- <af32a0a2-96f1-4e8d-b7ea-aa6bdecbfc75@rsg.ci.i.u-tokyo.ac.jp>
+ bh=r22EFJ74HxynTaDmnGweCoJcGF7P8MUsVDsDrxBpLFw=;
+ b=AYHxb0szSnREm7oYC8LhKf2UqT0tzxwPVucJDx/6e8tVZzYA7nze4m0h21dC6St+Vj
+ rqBvCu6xql6sD/1hgqHl8nhnuC8S+ug7xj6JtSToSyyb5Jx99ma3Ou9hv9+6FxW+CJTi
+ 4cnpImwdSSnP22cXRo9Awiat84zOv138bGfIsyaVsaukfahBkdTSzEuJyU0NCl03vUyp
+ 18k9UQMrGkMRnHnIgenhPJw/6yLSXK6uJnbtIiVDyE7Jv25/CQkjz2YYQ3JThjdkmvaw
+ ZPvp8NSswEWpZv+w9eH4DNgLDfDgOmmep7KpX9WwTAErwunORWg6RF4an0EI7PiUbyu+
+ zf0g==
+X-Gm-Message-State: AOJu0YydiJAZj5GLOHytrWgfjbvc8tuKBmElfrTD5Mxtbb8/0BaHO6lS
+ ibi1dtFodkBX65tU8ZpmrrPltb16foFuWIhqE83q4KQClGm+aq34sj4OeM6y8nqYrbA=
+X-Gm-Gg: ASbGncsZoEpAn77rp2ToPc/LdvnZQZB7d3Xw0l6pIiOWXC6UvYS2SaNcCPYfWj55YSu
+ n7djSauOYcn0jM/Mtdfk8ezIAJ9AJc09Rbx5/noMiRTqPQb5Ca0nZt1CDF+u/eKXQ83hB4q+N2/
+ 0cQvQIFyG4OMk0ARSCTr62Dgtbmj+XL8dhZdXXUeLsXuWTQACY0Q1a0Pc7MmU7Nh7MSJ17fExfc
+ fC67D2S0ZvEYDwkB3iJyj5vKCLbFbgZD8fKqdbaNeHQ0/fWLDXGSwC1Les4a5tVrlcHs8JvE3b3
+ vhqBecS6tDBqRLCa7Igc9l+aYizlaZkWiGjQoLBl+Xo7uF64RsoLaYQJK+YXHxZl9zHnRAWCkci
+ Jc+yzIwdSD27SKC00lYjzb3SNeRRua3WW5Xw+gVnH2b4V4t4Cv0U+7gd/a++KhanA7Q==
+X-Google-Smtp-Source: AGHT+IEve8a9+a74TBdge2Cysfinz6qo485KhGCASFlqAZs9K5ZH9Pd+LMowwG6URvcmQbKgt0Yhlw==
+X-Received: by 2002:a05:6000:1a87:b0:3a0:b84d:60cc with SMTP id
+ ffacd0b85a97d-3b7765e691fmr728776f8f.2.1753428142982; 
+ Fri, 25 Jul 2025 00:22:22 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45870554457sm46064195e9.18.2025.07.25.00.22.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Jul 2025 00:22:22 -0700 (PDT)
+Message-ID: <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
+Date: Fri, 25 Jul 2025 09:22:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <af32a0a2-96f1-4e8d-b7ea-aa6bdecbfc75@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/intc/loongarch_ipi: use logical CPU ID for
+ kvm_ipi_access_regs
+To: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn, lixianglai@loongson.cn
+Cc: qemu-devel@nongnu.org, jiaxun.yang@flygoat.com
+References: <20250725012528.2582498-1-gaosong@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250725012528.2582498-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,68 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-Thanks for the review.
+On 25/7/25 03:25, Song Gao wrote:
+> QEMU reboot after inserting no-configuous cpus may start failed
+> becaue the vcpu context may not have created on KVM, On QEMU side use logical CPU ID
+> for kvm_ipi_access_regs and do some check. On KVM use kvm_get_vcpu_by_id() get vcpu.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/intc/loongarch_ipi_kvm.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
+> index 4cb3acc921..d0a2f2343f 100644
+> --- a/hw/intc/loongarch_ipi_kvm.c
+> +++ b/hw/intc/loongarch_ipi_kvm.c
+> @@ -23,14 +23,19 @@ static void kvm_ipi_access_regs(void *opaque, bool write)
+>       LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
+>       IPICore *core;
+>       uint64_t attr;
+> -    int cpu, fd = lis->dev_fd;
+> +    int i, cpu, fd = lis->dev_fd;
 
-On Mon, Jul 21, 2025 at 09:46:59PM +0900, Akihiko Odaki wrote:
-> On 2025/07/21 20:29, Arun Menon wrote:
-> > This is an incremental step in converting vmstate loading
-> > code to report error via Error objects instead of directly
-> > printing it to console/monitor.
-> > 
-> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Signed-off-by: Arun Menon <armenon@redhat.com>
-> > ---
-> >   migration/savevm.c | 16 +++++-----------
-> >   1 file changed, 5 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index e472f79d5d5c4fb4410a28cbf43c298be028f4b4..6887877f2f8648f66e34bdb1cc3ca6dc7514f9df 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -2339,12 +2339,12 @@ static void migrate_send_rp_req_pages_pending(MigrationIncomingState *mis)
-> >       }
-> >   }
-> > -static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-> > +static void loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-> >   {
-> >       if (mis->state != MIGRATION_STATUS_POSTCOPY_RECOVER) {
-> > -        error_report("%s: illegal resume received", __func__);
-> > +        warn_report("%s: illegal resume received", __func__);
-> >           /* Don't fail the load, only for this. */
-> > -        return 0;
-> > +        return;
-> >       }
-> >       /*
-> > @@ -2396,8 +2396,6 @@ static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-> >           /* Kick the fast ram load thread too */
-> >           qemu_sem_post(&mis->postcopy_pause_sem_fast_load);
-> >       }
-> > -
-> > -    return 0;
-> >   }
-> >   /**
-> > @@ -2635,12 +2633,8 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
-> >           return loadvm_postcopy_ram_handle_discard(mis, len, errp);
-> >       case MIG_CMD_POSTCOPY_RESUME:
-> > -        ret = loadvm_postcopy_handle_resume(mis);
-> > -        if (ret < 0) {
-> > -            error_setg(errp, "Failed to load device state command: %d", ret);
-> > -            return -1;
-> > -        }
-> > -        return ret;
-> > +        loadvm_postcopy_handle_resume(mis);
-> > +        return 0;
-> 
-> This patch can be moved before "[PATCH v6 08/24] migration: push Error
-> **errp into loadvm_process_command()" to make it smaller.
-Agreed. Will do.
-> 
-> >       case MIG_CMD_RECV_BITMAP:
-> >           ret = loadvm_handle_recv_bitmap(mis, len);
-> > 
-> 
-Regards,
-Arun
+While here, we could rename s/cpu/cpu_index/,>
+>       if (fd == 0) {
+>           return;
+>       }
+>   
+> -    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
+
+and declare @i here: for (int i = 0; ...).
+
+> -        core = &ipi->cpu[cpu];
+> +    for (i = 0; i < ipi->num_cpu; i++) {
+> +        core = &ipi->cpu[i];
+> +        if (core == NULL || core->cpu == NULL) {
+> +            continue;
+> +        }
+> +        cpu = core->cpu->cpu_index;
+> +
+>           attr = (cpu << 16) | CORE_STATUS_OFF;
+>           kvm_ipi_access_reg(fd, attr, &core->status, write);
+>   
 
 
