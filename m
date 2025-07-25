@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B090C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3039DC87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufM7T-0005qQ-KM; Fri, 25 Jul 2025 13:22:07 -0400
+	id 1ufMPv-0000RJ-9C; Fri, 25 Jul 2025 13:41:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufM67-0004Hs-6t
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:20:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufM5r-0007BE-4s
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:20:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753464023;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tsLiLHkwsz8g8spD/DLi4l90qtXVsyiESamOaqGPyyw=;
- b=G4UOm6QxPMpj9CJG/wKNYzj4x2Hv/3Y3447Uor1jfP1tV3UZ/y/A1g/01x4/dho8SlkoRl
- V2j9g9k05TupZv03G1e5LMfFe/+jEl83EVAiyqTccQAi+gaZJ+XlRDQ+hVZCpytGu0QyfC
- BnSQb5v/UJlJAXffOKXSTRo9dtTtu3c=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-922f_2qaM5ihOWlQx_up-A-1; Fri,
- 25 Jul 2025 13:20:19 -0400
-X-MC-Unique: 922f_2qaM5ihOWlQx_up-A-1
-X-Mimecast-MFC-AGG-ID: 922f_2qaM5ihOWlQx_up-A_1753464018
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8366019560AD; Fri, 25 Jul 2025 17:20:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.162])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59A1B1800242; Fri, 25 Jul 2025 17:20:14 +0000 (UTC)
-Date: Fri, 25 Jul 2025 18:20:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Mads Ynddal <mads@ynddal.dk>, Alexandre Iooss <erdnaxe@crans.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PULL 1/1] log: make '-msg timestamp=on' apply to all qemu_log
- usage
-Message-ID: <aIO8y1bFeYRmUeOa@redhat.com>
-References: <20250724144636.107828-1-stefanha@redhat.com>
- <20250724144636.107828-2-stefanha@redhat.com>
- <d0e8ec94-1430-4db3-8c77-9dcdec3e67dc@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ufMPp-0000Nt-Tq
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:41:06 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ufMPm-0005cK-JM
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:41:05 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-70e75f30452so17088437b3.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 10:41:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753465260; x=1754070060; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6ptGeKefNfVsGvOWbsC6afkNZAVEXj4XDKjGFCrdbOI=;
+ b=mXdeAOt68U4lrpbqzEHWDel/YQ/Oudud9FN87XVngWDuVIk41sRs44SdnqbJ+mgBYi
+ 9KHFVYFNUb4Pq/5uGsIJKN9usxJFxs/dbJ3Z+tOv5pb+VWtvQSII0aTyfIHkx9bkF82n
+ Am0itTrTizDDFlvdmx9bTq4fmjQaNDfQRXPKwax6cLQ/iLKSvAwEHh86cjNXbbU0rg8d
+ VX2ME4xrmgV8ROmRBZZVrFfuUTXZc9l0ksvAQFTLXJgq6Ymx6jeHxoO0CEtwc4wIUN32
+ jGARXzGi/vTtEjGllfApUkob0SoVEKLMwMnfXEv9h4AQZGqGFwhBjmr3nbUZyi9HFwtX
+ hOeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753465260; x=1754070060;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6ptGeKefNfVsGvOWbsC6afkNZAVEXj4XDKjGFCrdbOI=;
+ b=PLPS0Pap1NEQK3TRsMwifRSeZrQBjjy5K+uy4ZMPmUrN3dM7TLvRaz6w/agTYvyJ6C
+ 6AN5FkpXccaubKb4RSCGOYbCR50E5EVLXsS+uuPRSx6EoFM2IrQIAD3e3ORglOWBZiCQ
+ /kgkSKUjXSIolBwwzEkdhk4+BneXfvqyg+XJzq3lOdifahWwuVe59IAqOsu3p41nIYv7
+ vZJDb9I2R0tTuxZql0rVou+mflo4GdApZn1LO4cLYb2pgY4PGAOFr9bEjLy+3jIt5U4q
+ F+1pdaWjSVSLbJWVBX+AoXHZbdr74r2QAzZSf/MUAer6FRgIVRSqqK+yX7MV+fGH8Gv2
+ sfwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYHdt/XviBVg/xWoFgxOQBoGdmI6dxJ573HJ0qCVqHtbQhUi28a1beX/nUl2iiYxuoRjVfbqmkXLt2@nongnu.org
+X-Gm-Message-State: AOJu0YwBOr2ijFyZQs6lAtM9W4uPWYexUu2S8neq542yEAvaOgPfX6si
+ oZbbGeEMboLQaP+sUkqXrmcevfyvPwxfslcJxgsrqsWFMM8Hm6OqLrzB4u2NOFWtJO/JWuQRXYV
+ pv4tUG3aXbBO9t+QZOA8tPJ9ov70IaG7cY13+J+0TGg==
+X-Gm-Gg: ASbGncvtteij7GxytCp06fybrOXYWDIpm/5PTTdf7fMPs3R16jzni6ArDI7gm/fMX0i
+ 2LasvsX5nVl2YxRjpJcerHMaZBFRuIw9oU+LGkrEA1bnHp2OyT7lzhQXEPD2o1eHrbGqLf4sXWs
+ E21Ky0HEkOYDur8M5IPW/nzZu2qnyEvh1ZJwmxQaq48j9RiVN5Amf7ybi5xtTtwhcmLNhVXCI7x
+ zasRJSx
+X-Google-Smtp-Source: AGHT+IHESCqJn1NoZf6mIydjYRdyvvCbq6mHxkbsJ6RuQt3AbFAtMuX3hjsjmeHAYS8azB/BqiJ0uPalEl3lwwndAls=
+X-Received: by 2002:a05:690c:688e:b0:70e:7503:1180 with SMTP id
+ 00721157ae682-719e329b188mr34111057b3.1.1753465260377; Fri, 25 Jul 2025
+ 10:41:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d0e8ec94-1430-4db3-8c77-9dcdec3e67dc@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20250725142240.3760452-1-peter.maydell@linaro.org>
+ <20250725142240.3760452-2-peter.maydell@linaro.org>
+ <0b0882e6-906e-4a76-98cf-91c9284c4a52@linaro.org>
+In-Reply-To: <0b0882e6-906e-4a76-98cf-91c9284c4a52@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 25 Jul 2025 18:40:48 +0100
+X-Gm-Features: Ac12FXyVw8GKj3FuuJbg2CNAIghMs0ewFNXOhAsFMRQ9FjKUq8LonAj-_NUMKzM
+Message-ID: <CAFEAcA9eH=n+uR2EupfUFNa5TacMHL=8XdSPdQ1nGw5ctuFaQA@mail.gmail.com>
+Subject: Re: [PATCH for-10.1 1/3] linux-user/aarch64: Clear TPIDR2_EL0 when
+ delivering signals
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,196 +95,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 10:04:50AM -0700, Pierrick Bouvier wrote:
-> On 7/24/25 7:46 AM, Stefan Hajnoczi wrote:
-> > From: Daniel P. Berrangé <berrange@redhat.com>
-> > 
-> > Currently the tracing 'log' back emits special code to add timestamps
-> > to trace points sent via qemu_log(). This current impl is a bad design
-> > for a number of reasons.
-> > 
-> >   * It changes the QEMU headers, such that 'error-report.h' content
-> >     is visible to all files using tracing, but only when the 'log'
-> >     backend is enabled. This has led to build failure bugs as devs
-> >     rarely test without the (default) 'log' backend enabled, and
-> >     CI can't cover every scenario for every trace backend.
-> > 
-> >   * It bloats the trace points definitions which are inlined into
-> >     every probe location due to repeated inlining of timestamp
-> >     formatting code, adding MBs of overhead to QEMU.
-> > 
-> >   * The tracing subsystem should not be treated any differently
-> >     from other users of qemu_log. They all would benefit from
-> >     having timestamps present.
-> > 
-> >   * The timestamp emitted with the tracepoints is in a needlessly
-> >     different format to that used by error_report() in response
-> >     to '-msg timestamp=on'.
-> > 
-> > This fixes all these issues simply by moving timestamp formatting
-> > into qemu_log, using the same approach as for error_report.
-> > 
-> > The code before:
-> > 
-> >    static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * creds, const char * filename, const char * path)
-> >    {
-> >        if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu_loglevel_mask(LOG_TRACE)) {
-> >            if (message_with_timestamp) {
-> >                struct timeval _now;
-> >                gettimeofday(&_now, NULL);
-> >                qemu_log("%d@%zu.%06zu:qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n",
-> >                         qemu_get_thread_id(),
-> >                         (size_t)_now.tv_sec, (size_t)_now.tv_usec
-> >                         , creds, filename, path);
-> >            } else {
-> >                qemu_log("qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n", creds, filename, path);
-> >            }
-> >        }
-> >    }
-> > 
-> > and after:
-> > 
-> >    static inline void _nocheck__trace_qcrypto_tls_creds_get_path(void * creds, const char * filename, const char * path)
-> >    {
-> >        if (trace_event_get_state(TRACE_QCRYPTO_TLS_CREDS_GET_PATH) && qemu_loglevel_mask(LOG_TRACE)) {
-> >            qemu_log("qcrypto_tls_creds_get_path " "TLS creds path creds=%p filename=%s path=%s" "\n", creds, filename, path);
-> >        }
-> >    }
-> > 
-> > The log and error messages before:
-> > 
-> >    $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=tls0,dir=$HOME/tls -msg timestamp=on
-> >    2986097@1753122905.917608:qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55d925bd9490 dir=/var/home/berrange/tls
-> >    2986097@1753122905.917621:qcrypto_tls_creds_get_path TLS creds path creds=0x55d925bd9490 filename=ca-cert.pem path=<none>
-> >    2025-07-21T18:35:05.917626Z qemu-system-x86_64: Unable to access credentials /var/home/berrange/tls/ca-cert.pem: No such file or directory
-> > 
-> > and after:
-> > 
-> >    $ qemu-system-x86_64 -trace qcrypto* -object tls-creds-x509,id=tls0,dir=$HOME/tls -msg timestamp=on
-> >    2025-07-21T18:43:28.089797Z qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55bf5bf12380 dir=/var/home/berrange/tls
-> >    2025-07-21T18:43:28.089815Z qcrypto_tls_creds_get_path TLS creds path creds=0x55bf5bf12380 filename=ca-cert.pem path=<none>
-> >    2025-07-21T18:43:28.089819Z qemu-system-x86_64: Unable to access credentials /var/home/berrange/tls/ca-cert.pem: No such file or directory
-> > 
-> > The binary size before:
-> > 
-> >    $ ls -alh qemu-system-x86_64
-> >    -rwxr-xr-x. 1 berrange berrange 87M Jul 21 19:39 qemu-system-x86_64
-> >    $ strip qemu-system-x86_64
-> >    $ ls -alh qemu-system-x86_64
-> >    -rwxr-xr-x. 1 berrange berrange 30M Jul 21 19:39 qemu-system-x86_64
-> > 
-> > and after:
-> > 
-> >    $ ls -alh qemu-system-x86_64
-> >    -rwxr-xr-x. 1 berrange berrange 85M Jul 21 19:41 qemu-system-x86_64
-> >    $ strip qemu-system-x86_64
-> >    $ ls -alh qemu-system-x86_64
-> >    -rwxr-xr-x. 1 berrange berrange 29M Jul 21 19:41 qemu-system-x86_64
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> > Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > Message-id: 20250721185452.3016488-1-berrange@redhat.com
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> >   util/log.c                       | 20 +++++++++++++++++++-
-> >   scripts/tracetool/backend/log.py | 14 +-------------
-> >   2 files changed, 20 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/util/log.c b/util/log.c
-> > index 58d24de48a..abdcb6b311 100644
-> > --- a/util/log.c
-> > +++ b/util/log.c
-> > @@ -145,10 +145,28 @@ void qemu_log_unlock(FILE *logfile)
-> >   void qemu_log(const char *fmt, ...)
-> >   {
-> > -    FILE *f = qemu_log_trylock();
-> > +    FILE *f;
-> > +    g_autofree const char *timestr = NULL;
-> > +
-> > +    /*
-> > +     * Prepare the timestamp *outside* the logging
-> > +     * lock so it better reflects when the message
-> > +     * was emitted if we are delayed acquiring the
-> > +     * mutex
-> > +     */
-> > +    if (message_with_timestamp) {
-> > +        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-> > +        timestr = g_date_time_format_iso8601(dt);
+On Fri, 25 Jul 2025 at 17:46, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 7/25/25 04:22, Peter Maydell wrote:
+> > A recent change to the kernel (Linux commit b376108e1f88
+> > "arm64/fpsimd: signal: Clear TPIDR2 when delivering signals") updated
+> > the signal-handler entry code to always clear TPIDR2_EL0.
+>
+> Ah, I missed seeing that.
+>
+> >       /* Invoke the signal handler with both SM and ZA disabled. */
+> >       aarch64_set_svcr(env, 0, R_SVCR_SM_MASK | R_SVCR_ZA_MASK);
+> > +    if (cpu_isar_feature(aa64_sme, env_archcpu(env))) {
+> > +        env->cp15.tpidr2_el0 = 0;
 > > +    }
-> > +
-> > +    f = qemu_log_trylock();
-> >       if (f) {
-> >           va_list ap;
-> > +        if (timestr) {
-> > +            fprintf(f, "%s ", timestr);
-> > +        }
-> > +
-> >           va_start(ap, fmt);
-> >           vfprintf(f, fmt, ap);
-> >           va_end(ap);
-> > diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-> > index 5c9d09dd11..eb50ceea34 100644
-> > --- a/scripts/tracetool/backend/log.py
-> > +++ b/scripts/tracetool/backend/log.py
-> > @@ -20,7 +20,6 @@
-> >   def generate_h_begin(events, group):
-> >       out('#include "qemu/log-for-trace.h"',
-> > -        '#include "qemu/error-report.h"',
-> >           '')
-> > @@ -32,20 +31,9 @@ def generate_h(event, group):
-> >       cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
-> >       out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
-> > -        '        if (message_with_timestamp) {',
-> > -        '            struct timeval _now;',
-> > -        '            gettimeofday(&_now, NULL);',
-> >           '#line %(event_lineno)d "%(event_filename)s"',
-> > -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",',
-> > -        '                     qemu_get_thread_id(),',
-> > -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
-> > -        '                     %(argnames)s);',
-> > +        '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
-> >           '#line %(out_next_lineno)d "%(out_filename)s"',
-> > -        '        } else {',
-> > -        '#line %(event_lineno)d "%(event_filename)s"',
-> > -        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
-> > -        '#line %(out_next_lineno)d "%(out_filename)s"',
-> > -        '        }',
-> >           '    }',
-> >           cond=cond,
-> >           event_lineno=event.lineno,
-> 
-> This broke compilation in debug on linux with all targets due to missing
-> include. Not a big deal, but it's a bit surprising it passed our CI. Do we
-> sometimes skip it for "simple" patches?
+>
+> You can omit the IF and unconditionally clear the memory.
+>
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Actually this patch did not break this. Xen was already broken for any
-scenario which turned off the 'log' trace backend, which is what prompted
-creation of this patch. See the thread here:
+Thanks -- just noticed also that it would be reasonable to
+update the comment:
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2025-07/msg04831.html
++    /*
++     * Invoke the signal handler with a clean SME state: both SM and ZA
++     * disabled and TPIDR2_EL0 cleared.
++     */
 
-WRT CI, the Xen issue only exists if building against fairly new Xen
-versions, and have turned off the log trace backend. Given limited
-resources we can't test every possible build scenario in our CI, and
-this is unfortunately an example of this limitation.
+since all three things are SME related.
 
-This patch will avoid such bugs recurring in future by ensuring that
-configure arg choices won't affect whether error-report.h is included
-by default or not.
-
-> Fix: https://lore.kernel.org/qemu-devel/20250725165749.3893240-1-pierrick.bouvier@linaro.org/T/#u
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
