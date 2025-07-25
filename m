@@ -4,136 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D13FC83F27
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 04:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5014CC83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufAGa-0003bL-Cg; Fri, 25 Jul 2025 00:42:44 -0400
+	id 1ufBpQ-0000B5-GV; Fri, 25 Jul 2025 02:22:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufAGH-0003Q4-DF
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:42:41 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ufBkY-0003y8-0Q
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:17:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufAGF-0003TQ-ML
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:42:25 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ufBkV-0005ks-RT
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:17:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753418541;
+ s=mimecast20190719; t=1753424261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sj0HMzqkFVF8317cnNxzIFEyp+WFosPbIUhXd2nOJKc=;
- b=cscfiBNLDOyiLD3HOs5WNDKGQZJArb0U2xQjdGxnoJ8ohUbzMJpYBeM1jPyggVqkbJ3A0c
- iREYj7fvMFdOy6J0zMYYAE2RYjBJASI4IOzmbPzEGhhwtz+N61E16BTL80fxVtEUAkFPJu
- doJ8aOouK/AQ+jEuryCNzT76LzZZ/6w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=I/GZQOo3ZaJSzz/4xyMlDsU9NRkcWDb1U9mkur5TLoE=;
+ b=Es0NzdQJX2dHE+b1FvoXv/QPtVCw0R65OKO1UYfupe6+sWkOOJWUjHzj6h30tc+B6VS6iy
+ exsa8HyvZYSnn8fq3EvtgwAx0Q+IfBqOtC9uWG8mW2sxr8jCK+Clx4kXHL+ytOHGzafJLD
+ 9hPTg/6B+ryd53nPQQ+FZiFoPbA1ttE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-Oqe1Cs58OZCrQAh6mEWf4A-1; Fri, 25 Jul 2025 00:42:17 -0400
-X-MC-Unique: Oqe1Cs58OZCrQAh6mEWf4A-1
-X-Mimecast-MFC-AGG-ID: Oqe1Cs58OZCrQAh6mEWf4A_1753418537
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451ac1b43c4so8526575e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 21:42:17 -0700 (PDT)
+ us-mta-450-H7gwHZztOceQ-FJL8tW0Mw-1; Fri, 25 Jul 2025 02:17:40 -0400
+X-MC-Unique: H7gwHZztOceQ-FJL8tW0Mw-1
+X-Mimecast-MFC-AGG-ID: H7gwHZztOceQ-FJL8tW0Mw_1753424259
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-454dee17a91so13086085e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 23:17:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753418536; x=1754023336;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1753424258; x=1754029058;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sj0HMzqkFVF8317cnNxzIFEyp+WFosPbIUhXd2nOJKc=;
- b=CeHFxtomZwe8DQQUZSoB2n31TgTKvmKoWQyoEUT5rVMJmREz5jCN8UxPvJxM/oLwI3
- barJK79nX4O+d8KnT8RtRr5xLb/V4xw8QhQR10ZFofRlbyGHcmlWO/hBmQbo8D8dftCf
- ZxgDi3285oUJdMjr6L3L52xMIEk8VEWAGjwOlRh9fnYHhY6OmER+em5d5tjFQpwBF6gO
- wpYlCnjRlybFETnaELoDnkHs+iY651q8/mUqTVF/0ciJ4HUxBd/MFr1kHLtwlDtG3fQN
- /zzEIruB++YnY6Ic9ks7HoiPa8rLFEMadMbVfDMOG54WF8f6PqobBra8fDi1yVDcPIL2
- ntOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuLoFiq4szEfSBhu0o6aOgbvZ6NXBj6jrQy/sTqDNYfAl7L1Mh69f66Szy5YogSe0yq0XQeg4tAMI/@nongnu.org
-X-Gm-Message-State: AOJu0YzhQkqP+SHp0Bilwpz1BMTotV9904z9GJU88XTaVCu/al8xBUB1
- DR5M/mZu/Ey5p7gmnMtY7LEaogFzu1vLZwPXH6eoqZwtbQnnHXWjr1fFtC3qdIqKvXPt5qafDNl
- 42LuVDgmyxhLurFjE69//XC6P5DGhXmxVTEswghVZTdLdioGxZcu8I4kG
-X-Gm-Gg: ASbGncuIoEWDk4lteWj4eiFPJgu+xiUlZbv/rmD1msA6zBxxooCn37xs642b8eRhc8F
- NYxM+IY3W/ZGrWtRL4TeBbfVE4UbUkpl5CtX1wCaAuZPfcCDI0yCQr8juIYnyeHcA1OjGTeIQGw
- 6L1EDlOyecy1YtxvyUMN5DaSjC2F/7ra8rmT2n6Im+2oEWEIA55CnYjncnAParupUas7SjFUOHP
- 2uPBgM2JcabkG3AvCGY0FFcPxJrEi3467uxAdeMYiqUbWwMdEoR+aXvRbLexeglvnVVtVpWuEpQ
- fVfF5b6JM1QcSMEiHE1elfi1v3VaV1vNmupyTBWxJJuHbvaFpkd4SOkuwjq+C0yC8uxsszkf5z7
- 4lNQ=
-X-Received: by 2002:a05:600c:6217:b0:456:1b8b:b8ab with SMTP id
- 5b1f17b1804b1-45876662f8emr2748025e9.30.1753418536506; 
- Thu, 24 Jul 2025 21:42:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFppTDsaJ7XI7T+ZRW4wSsXoa53rDN4MK+QPN7u5cKxeYDrH3Jnrn4ZOogcSS5w+ZoKzyTQTQ==
-X-Received: by 2002:a05:600c:6217:b0:456:1b8b:b8ab with SMTP id
- 5b1f17b1804b1-45876662f8emr2747885e9.30.1753418536124; 
- Thu, 24 Jul 2025 21:42:16 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-115-089.pools.arcor-ip.net.
- [47.64.115.89]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b76fcad2b4sm3925506f8f.47.2025.07.24.21.42.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 21:42:15 -0700 (PDT)
-Message-ID: <53477554-e665-4402-87b8-4e07cd3f45b9@redhat.com>
-Date: Fri, 25 Jul 2025 06:42:14 +0200
+ bh=I/GZQOo3ZaJSzz/4xyMlDsU9NRkcWDb1U9mkur5TLoE=;
+ b=ZaPaCm7GWcxR+5A0ZgA9QJmELhrwK3c2aLQ+U+dJtWvg9PrCJprV9sqfdbLoB3jrbw
+ g/XhAwREjXqXzFZeqcW1GP/Zp47nHWAy5+8wPjz53plZYiIPiuNprToMo0vdRu/nQY9G
+ B2Je2RB+FXMT1BB459HY2HvbIbiGYXyJ0X91VHmPRsYMfdo/Ic5JHiuy08g/6dOJHQ0H
+ FwzGcCZ1zaxTXsy0MPxZ8I+exN455N24+9u2pZghCZANyOKMz8QsiWOwBzkJnAKKkefF
+ ORp4AYPV3n5AW/8/IyFp782IKMzbVyYFOnko2cVoNVVTxX1wZZGMFYKCDg6oddwrgGtW
+ /mIA==
+X-Gm-Message-State: AOJu0YwNZEI6I1Hbr7dwJwEFhuv8k3rpIEeyEXGxkIsv1M/f2t59JLFe
+ kvvs5pvVLJKVEP/YyWWELZFaZbIpWt08RnliC1app7V1h8qub5yf4gzRAZI87yg9PV9aSmfw3PX
+ IX56xUA5cwia22xXtlnTc2PfaPsiV6qjT2zMt2deYTMXytbjTtVjJSpcGjaRweKj4tTjOLnkjL1
+ IJ5Gvoh5GoQr9DrvYl+Kootv2EDmUHCABSfJMUIsX+
+X-Gm-Gg: ASbGncsQkYqIHXGssc7X9Ipoclo8KPLq7mPd3hyULWAlZ1PduBe10qER7p6LgESnLqC
+ 4vtFaCdyvdw94+xCJZzW+LiCAHBV1Oklg6zpnGD/hZvcliSmP2aLgkU/xQNwPO5SNLX1839fOwV
+ xwuq8rZUliHpa5sBw1tsc1SSaT77H5QzoIP20MuB+YXFQwTt+V94w6/U2y8ef1EBbNqZTGr42+V
+ pZ8r4si4fbjYz1p7bcKjnqmsr/7MDu8yBeHNKfq4apR0hsoK5OQqisRbvCv8x21DlrixavAMpRU
+ XbrR4AxXzUx2fos5fYUb5d+ap10EeQ8EAAnmEo6Z0nPm
+X-Received: by 2002:a05:600c:3b83:b0:454:ab1a:8c39 with SMTP id
+ 5b1f17b1804b1-458769ce757mr3632595e9.26.1753424258222; 
+ Thu, 24 Jul 2025 23:17:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IER/kqCYEcfl2c4w1oXUkJrgxl13KSswoIoDXWXpM5500wlz5PhwJ13O+vCnpvgmIRIwW+OEg==
+X-Received: by 2002:a05:600c:3b83:b0:454:ab1a:8c39 with SMTP id
+ 5b1f17b1804b1-458769ce757mr3632355e9.26.1753424257777; 
+ Thu, 24 Jul 2025 23:17:37 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.154.122])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45872d57506sm16405195e9.28.2025.07.24.23.17.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Jul 2025 23:17:37 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Biggers <ebiggers@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH] target/i386: fix width of third operand of VINSERTx128
+Date: Fri, 25 Jul 2025 08:17:36 +0200
+Message-ID: <20250725061736.1096206-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/functional: add -k TEST_NAME_PATTERN CLI arg
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250718-functional_tests_args-v2-0-cde6e08bf98e@linaro.org>
- <20250718-functional_tests_args-v2-3-cde6e08bf98e@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250718-functional_tests_args-v2-3-cde6e08bf98e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -158,67 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/07/2025 13.04, Manos Pitsidianakis wrote:
-> Add a CLI argument that takes fnmatch(3)-style patterns as value and can
-> be specified many times. Only tests that match the pattern will be
-> executed. This argument is passed to unittest.main which takes the same
-> argument.
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   tests/functional/qemu_test/testcase.py | 21 +++++++++++++++++++--
->   1 file changed, 19 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index bfee6638edf6f9853ead1e3809ae3c9152089406..e137c05baf91f6f88d6228d86d98aa9498797382 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -16,6 +16,7 @@
->   import os
->   from pathlib import Path
->   import pycotap
-> +import itertools
->   import shutil
->   from subprocess import run
->   import sys
-> @@ -55,6 +56,14 @@ def parse_args(test_name: str) -> argparse.Namespace:
->           action="store_true",
->           help="List all tests that would be executed and exit.",
->       )
-> +    parser.add_argument(
-> +        "-k",
-> +        dest="test_name_patterns",
-> +        action="append",
-> +        type=str,
-> +        help="Only run tests which match the given substring. "
-> +        "This argument is passed to unittest.main verbatim.",
-> +    )
->       return parser.parse_args()
->   
->   
-> @@ -300,8 +309,16 @@ def main():
->   
->           tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
->                                      test_output_log = pycotap.LogMode.LogToError)
-> -        res = unittest.main(module = None, testRunner = tr, exit = False,
-> -                            argv=["__dummy__", path])
-> +        argv = ["__dummy__", path] + (
-> +            list(
-> +                itertools.chain.from_iterable(
-> +                    ["-k", x] for x in args.test_name_patterns
-> +                )
-> +            )
-> +            if args.test_name_patterns
-> +            else []
-> +        )
-> +        res = unittest.main(module=None, testRunner=tr, exit=False, argv=argv)
->           for (test, message) in res.result.errors + res.result.failures:
->   
->               if hasattr(test, "log_filename"):
-> 
+Table A-5 of the Intel manual incorrectly lists the third operand of
+VINSERTx128 as Wqq, but it is actually a 128-bit value.  This is
+visible when W is a memory operand close to the end of the page.
 
-Good idea!
+Fixes the recently-added poly1305_kunit test in linux-next.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+(No testcase yet, but I plan to modify test-avx2 to use memory
+close to the end of the page.  This would work because the test
+vectors correctly have the memory operand as xmm2/m128).
+
+Reported-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/decode-new.c.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 853b1c8bf95..51038657f0f 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -878,10 +878,10 @@ static const X86OpEntry opcodes_0F3A[256] = {
+     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
+     [0x0f] = X86_OP_ENTRY4(PALIGNR,    V,x,  H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
+ 
+-    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX) p_66),
++    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX) p_66),
+     [0x19] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX) p_66),
+ 
+-    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX2) p_66),
++    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX2) p_66),
+     [0x39] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX2) p_66),
+ 
+     /* Listed incorrectly as type 4 */
+-- 
+2.50.1
 
 
