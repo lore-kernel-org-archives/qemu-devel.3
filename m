@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36417C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA399C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufKcJ-0003SG-EO; Fri, 25 Jul 2025 11:45:52 -0400
+	id 1ufKcb-0003kh-L3; Fri, 25 Jul 2025 11:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufKbt-0002nH-8J
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:27 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1ufKby-00032O-Jm
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:34 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufKbr-0002Qg-5M
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:24 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ae708b0e83eso437951166b.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 08:45:22 -0700 (PDT)
+ id 1ufKbv-0002Rw-GS
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:30 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-ae361e8ec32so374364266b.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 08:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753458321; x=1754063121; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1IMtRnTmX5Lhb1N1GyrYkTv6JgaPYpb4Fh7da53dX9k=;
- b=B9UI0IZDobteG4glRROJXYk3FCYtoZJoQMRQi96MJK+j+7/4tK8XzK58x6PhSjfpPU
- ku+arK0jqNDXpUR11BawvT6QrDQTCxmh3vBmqqXQL8vpcVEJ2o/Jy2UYjFgMjaxgXPBH
- p5Bq15bidNq8PRc93DL4xFVM03J2u6HFDyq0tBIcg2o9zyjLqLqI48t7gWdPgeOyf9rh
- DG2jATDZReh15ja/VnviUM2HCAlgXAMv7UUqJIzqg302146dPU5ySt8RCflX335RMCee
- 28WboesAY7bJGyyKjTvY6cW5t183LNv5mAQZDSPhdrHbE1HOFPNU84GcHQaHtyhtlXMu
- Fvwg==
+ d=linaro.org; s=google; t=1753458325; x=1754063125; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bIabl8p/7XQ226I10wjA7oVAu+HYDoNW8uJ8FZl1Lqc=;
+ b=Q6Xfvra23FueRnXMvnjvuPgpwoyRObRBMgv1XBaM3YXNwlD3azzjJcWBGbYTK7GLX2
+ zCJJtLzRHmG8EWiK5Nh8lab4MUf1FMVcBUa8b8dFhkfRNeg0/mGCyBOLGLxbG2Xv96Fj
+ DlES/2M0CDqcAJvy2MDVw9mcBzInHZZhTuFHCBH1TRsMBAXTGn9LxvuoF7iCCKC5hqM6
+ F0VEirZYVq5N5iOo3u33Cf9I6oOPZPJsZbmZel/BS+y6vLhgcWeHYQ8FwxNJ+6Z4kiIZ
+ tEN0kzfJKqXOhEyTKS/b4HV2YgukBmsiOHSOaoqX+9OyA9/oHAN/AzI/0lUJCOFi6exZ
+ UhUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753458321; x=1754063121;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1IMtRnTmX5Lhb1N1GyrYkTv6JgaPYpb4Fh7da53dX9k=;
- b=Ngx1xOdwgM01fz2/sDiLqv9oqtVAw9G3RIuWJa8vZZpT6jen5+XnHqhH5Ty1FXNfcD
- 2WFIi91s6/FZ6NhRovuT+MFWRPKyTlUdhcO1Hmc0Mk2u9KYPLQHlTe2C5QgvqjJnlg3X
- NuW/v6GR6hFoFQ7vutrXw0o6hBgDbA3NKHn+vnCLtMuP6+gNeK4L1mnL3Ys/NpBKG2R2
- eDejIEV8jKSP4krWG2OHnjYWJCQZzYNdozrzvARIm781nHenxw16R5EppNX0U9mUxbN2
- QIaMylQyaXkci1CcTyhvCc0hNRk9nVVGtx0vuZP3HSJ18LW0GgDN1EmhY+4ybo1FN/ma
- WqdQ==
-X-Gm-Message-State: AOJu0YxjvfJ3gjP7/VkUBLGmXU0J+xqGOvGPXOwvkgqVJQIdWQ1tJxOV
- ue5q3cnRyrLzoc6KyGlU8Zmb8OSN+CpX3UVxnZydonpvIKoNWLRWWnvNRo1ULoMV/ck=
-X-Gm-Gg: ASbGncsSW5p/+F941+krMzACW1eLT72qVFHJBvM0hbZmf9GLL3vfp3hmRobgoR18F+i
- 7jWOhXzaeliA0cuzbGOUsELn/qHHlJnXSVdiPYmIL9+qUqxEO7wWW2wX8XaVRVdKpfc+GBHSWFL
- TMDwF9Piqac6CXRZ+22cE8wqqiDwurPkAiD+MNqUPmv9UEchQGkqDR08278Pq0jnxb9pyDs2l2k
- uSi77GGoQeVHsmKQiRU/5U9ZbFwQqqj9xFp3bH/6YwplANZXwhMVlDRcSx9W4RzEr3pdJU1MHr2
- XivkoromMn53NG5BTtuVxddI13u6fxb18GoPIEkQ6ISnDumA9Hwtntp+gGp7UnRbJw+QdBSSZrm
- W2KEbrjRHtv4aF0PY1xwI9WI=
-X-Google-Smtp-Source: AGHT+IFumtDaidpLhSD9rz67d/MAitKu89CK45a8NYoJDU75EBYX9yOSwDbCFIgxGE9wEr97t1NMOg==
-X-Received: by 2002:a17:907:3cc4:b0:ae0:d08b:e85 with SMTP id
- a640c23a62f3a-af619c0ca37mr333350366b.61.1753458320720; 
- Fri, 25 Jul 2025 08:45:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753458325; x=1754063125;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bIabl8p/7XQ226I10wjA7oVAu+HYDoNW8uJ8FZl1Lqc=;
+ b=tzecT+iwHUhtZ/SVj4canqN2XTrcfpAcNAI0/YsRTlNqKp5FXu4YXXCCEEyxUkM4/F
+ 4tAK6kqk1P9AHe+bz3v83aXoGBx1Z8g6mhYsJ3Q3KkOMdPi+xFomAKu0wNpav+ZtY902
+ bSFLOCtntnYtIKMsNZ5ev9vFoQi1EqElV/fmnRJbiYVgfWFDNoq5kA4tEZyzdR1SJPgj
+ 49lmIs9i2IkUjuuLVOKhOfq9ApUFZpUbkFmtS0czELKUb1HtvZiyjfJt5Wvq5ZEQV2WJ
+ So2S+nTy2D0uS7hvasXg+cr+me8OGKEJovZIzRRQDZGVV8szqMrx3XFv3tbTapoGf4cZ
+ DdYA==
+X-Gm-Message-State: AOJu0Yy0ep0JXQaqS0Mn1fBcCD0aIHswPKWn/nUsimkuDVwbQ6qxsgHb
+ irQG0SU7vTYw7xjXag1MTcNskPWi6vZAv86YBCyNCgUm4fDYDY0sPXGwMbsZaa2dlWc=
+X-Gm-Gg: ASbGncvX5bAt993JMLXN5lXX8VxZAKJPvPH7qwuIGGSU9T9YVDeVsdymZ0mcFzXYSrF
+ LwCaaBX+rKTO+J4MMrIimeYSlHn7P58CRhuOh0sDC3L6TjNMgIDZiryQYp3kPs2ymJ0YvrtXcPM
+ /c1PfnOSusu9HtExKL/SzDYvTwteZIy5NHedaVHZpLJWHconKRBjfkBDRbD/VWLmB1SI5+l87xl
+ q4LMgjxKzxCxLEZwUsb72+UmzhbFgdRK0PC7QAfd9c/8wGRfbQvVmPMAlL/hm0PNoY5Bqo3M80U
+ qH3F+dSuY6yQbSNYTNJf0xY+XzeRCE17iVkXeiPN85ZwBZ6ctURTW2psz8aKo6TNANtbMaBVBPG
+ oRq/oz5WiSG11wUgEvDYNPrU=
+X-Google-Smtp-Source: AGHT+IGUHgGU9K5KfE7qyK/BSFlnnFrvzH/XwqMn0NT9jZ7X9voCtyepF8BDOavjc7QbDmzXrrJSTg==
+X-Received: by 2002:a17:907:5c7:b0:ad5:7bc4:84be with SMTP id
+ a640c23a62f3a-af619dffbc2mr324176966b.52.1753458325085; 
+ Fri, 25 Jul 2025 08:45:25 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af635b08846sm8317366b.140.2025.07.25.08.45.18
+ a640c23a62f3a-af635860003sm10452266b.10.2025.07.25.08.45.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 08:45:18 -0700 (PDT)
+ Fri, 25 Jul 2025 08:45:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D5C095F7EE;
- Fri, 25 Jul 2025 16:45:17 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0B4455F876;
+ Fri, 25 Jul 2025 16:45:18 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH for 10.1 v2 00/14] documentation updates and test tweaks pre-PR
-Date: Fri, 25 Jul 2025 16:45:03 +0100
-Message-ID: <20250725154517.3523095-1-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH for 10.1 v2 02/14] docs/system: reword the TAP notes to remove
+ tarball ref
+Date: Fri, 25 Jul 2025 16:45:05 +0100
+Message-ID: <20250725154517.3523095-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250725154517.3523095-1-alex.bennee@linaro.org>
+References: <20250725154517.3523095-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,59 +108,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I did a quick pass of some of the documentation bugs and tried to
-clean-up the linux-user documentation some more.
+We don't ship the tarball and users should generally look to the
+distribution specific packaging.
 
-I've also tackled the exploding number of TCG tests by rotating the
-plugin run against test rather than having every combination. We now
-have enough multiarch tests I'm fairly confident this gives good
-enough coverage of the APIs. Some plugins have explicit test programs
-they need to be run against and these are still added manually.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/560
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/system/devices/net.rst | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-For v2
-  - mostly collecting review tags
-  - a few fixes (see commit message log)
-  - add sysv.argv passthrough for unittests
-
-I'm away for a week so if I don't post the PR on Saturday another
-maintainer is free to merge it via their tree.
-
-The following need review:
-
-  docs/user: expand section on threading
-
-Alex.
-
-Alex Bennée (14):
-  docs/user: clarify user-mode expects the same OS
-  docs/system: reword the TAP notes to remove tarball ref
-  docs/user: clean up headings
-  docs/user: slightly reword section on system calls
-  docs/user: expand section on threading
-  tests/functional: add hypervisor test for aarch64
-  tests/tcg: skip libsyscall.so on softmmu tests
-  tests/tcg: remove ADDITIONAL_PLUGINS_TESTS
-  tests/tcg: don't include multiarch tests if not supported
-  configure: expose PYTHON to test/tcg/config-host.mak
-  tests/tcg: reduce the number of plugin tests combinations
-  tests/docker: add --arch-only to qemu deps for all-test-cross
-  tests/docker: handle host-arch selection for all-test-cross
-  tests/functional: expose sys.argv to unittest.main
-
- docs/system/devices/net.rst                   | 16 +++--
- docs/user/index.rst                           |  5 +-
- docs/user/main.rst                            | 60 ++++++++++------
- configure                                     |  1 +
- .../dockerfiles/debian-all-test-cross.docker  | 34 +++++----
- tests/functional/meson.build                  |  1 +
- tests/functional/qemu_test/testcase.py        |  2 +-
- tests/functional/test_aarch64_kvm.py          | 71 +++++++++++++++++++
- tests/tcg/Makefile.target                     | 36 ++++++++--
- tests/tcg/multiarch/Makefile.target           |  8 ++-
- .../multiarch/system/Makefile.softmmu-target  | 16 +++--
- 11 files changed, 192 insertions(+), 58 deletions(-)
- create mode 100755 tests/functional/test_aarch64_kvm.py
-
+diff --git a/docs/system/devices/net.rst b/docs/system/devices/net.rst
+index 4d787c3aeb0..7d76fe88c45 100644
+--- a/docs/system/devices/net.rst
++++ b/docs/system/devices/net.rst
+@@ -21,11 +21,17 @@ configure it as if it was a real ethernet card.
+ Linux host
+ ^^^^^^^^^^
+ 
+-As an example, you can download the ``linux-test-xxx.tar.gz`` archive
+-and copy the script ``qemu-ifup`` in ``/etc`` and configure properly
+-``sudo`` so that the command ``ifconfig`` contained in ``qemu-ifup`` can
+-be executed as root. You must verify that your host kernel supports the
+-TAP network interfaces: the device ``/dev/net/tun`` must be present.
++A distribution will generally provide specific helper scripts when it
++packages QEMU. By default these are found at ``/etc/qemu-ifup`` and
++``/etc/qemu-ifdown`` and are called appropriately when QEMU wants to
++change the network state.
++
++If QEMU is being run as a non-privileged user you may need properly
++configure ``sudo`` so that network commands in the scripts can be
++executed as root.
++
++You must verify that your host kernel supports the TAP network
++interfaces: the device ``/dev/net/tun`` must be present.
+ 
+ See :ref:`sec_005finvocation` to have examples of command
+ lines using the TAP network interfaces.
 -- 
 2.47.2
 
