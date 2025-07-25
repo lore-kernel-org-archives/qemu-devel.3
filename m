@@ -4,90 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75953C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68B3C83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufCGu-000354-L3; Fri, 25 Jul 2025 02:51:12 -0400
+	id 1ufCGu-000353-V5; Fri, 25 Jul 2025 02:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ufCAd-0005Xj-J8
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:44:44 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ufCB0-0005rJ-4R
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:45:08 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ufCAa-0004cE-SF
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:44:43 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FCB713A0A5;
- Fri, 25 Jul 2025 09:44:34 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1E48424F617;
- Fri, 25 Jul 2025 09:44:36 +0300 (MSK)
-Message-ID: <85898844-9ecf-48f0-baea-6bc8f3a9e3dc@tls.msk.ru>
-Date: Fri, 25 Jul 2025 09:44:35 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ufCAw-0004hs-DV
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:45:05 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56P6iVIu098608
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 25 Jul 2025 15:44:31 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=4/SDYGRX5WDjO0jRkqHLU3J4ndKvJa3D56GFRJ2nNn8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1753425871; v=1;
+ b=VNBnv0iGm1SXMm9VprK65A1O+OCpeQwJxn+ou7V/y4vkMGmHKcqpjGnGplZPMwXL
+ zIpU45rf0yrMakmK+aXVGqVhbrouk8myG8XmtiIpeU7/J6GxmG9KavLVj0wazGL2
+ nBILNdg+PNdtkXXxzw5RPLtK34qFblk+scggjoGRq0zrKl9aQ3aDtHLXBQIOTDhI
+ S5S7dNm1J7QxAOkZiNEnpFF/eV5NJ44pznbwmY0z/DXbilSN7FPYOfXxXLbuKk93
+ MIeCcFi7wH6itk5LzZYRHEWHnFsdlGAaWmmbHIPiKFhsu8ct2mSXkSsbpQd1pS6l
+ NM1eD5NxR5zYiH2Z18UMdg==
+Message-ID: <b536f95c-a1e2-4ab5-9c58-d66c61110c8d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 25 Jul 2025 15:44:30 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [ANNOUNCE] QEMU 10.0.3 Stable released
-To: Helge Konetzka <hk@zapateado.de>, qemu-devel@nongnu.org
-References: <1753336684.713829.226974.nullmailer@tls.msk.ru>
- <d45a2008-a8c0-4f49-b8d7-204a1884476b@zapateado.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <d45a2008-a8c0-4f49-b8d7-204a1884476b@zapateado.de>
+Subject: Re: [RFC PATCH v4 04/14] virtio: introduce extended features type
+To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
+ <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1753297661.git.pabeni@redhat.com>
+ <5d72c214940943f2863977539e337cc9ec17c8ea.1753297661.git.pabeni@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <5d72c214940943f2863977539e337cc9ec17c8ea.1753297661.git.pabeni@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,19 +82,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.07.2025 17:31, Helge Konetzka wrote:
-> Hi Micheal,
+On 2025/07/24 4:31, Paolo Abeni wrote:
+> The virtio specifications allows for up to 128 bits for the
+> device features. Soon we are going to use some of the 'extended'
+> bits features (bit 64 and above) for the virtio net driver.
 > 
-> trying to download results in:
+> Represent the virtio features bitmask with a fixes size array, and
+> introduce a few helpers to help manipulate them.
 > 
-> curl https://download.qemu.org/qemu-10.0.3.tar.xz
-> <html>
-> <head><title>404 Not Found</title></head>
+> Most drivers will keep using only 64 bits features space: use union
+> to allow them access the lower part of the extended space without any
+> per driver change.
+> 
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> ---
+> v3 -> v4:
+>    - VIRTIO_FEATURES_DWORDS -> VIRTIO_FEATURES_NU64S
+>    - VIRTIO_FEATURES_WORDS -> VIRTIO_FEATURES_NU32S
+>    - VIRTIO_DWORD ->  VIRTIO_FEATURES_U64
+>    - VIRTIO_BIT -> VIRTIO_FEATURES_BIT
+>    - virtio_features_use_extended -> virtio_features_use_ex
+>    - move DEFINE_PROP_FEATURE definition here
+> 
+> v2 -> v3:
+>    - fix preprocessor guard name
+>    - use BIT_ULL
+>    - add missing parentheses
+>    - use memcmp()
+>    - _is_empty() -> _empty()
+>    - _andnot() returns a bool, true if dst has any non zero bits
+>    - _array -> _ex
+> 
+> v1 -> v2:
+>    - use a fixed size array for features instead of uint128
+>    - use union with u64 to reduce the needed code churn
+> ---
+>   include/hw/virtio/virtio-features.h | 127 ++++++++++++++++++++++++++++
+>   include/hw/virtio/virtio.h          |   7 +-
+>   2 files changed, 131 insertions(+), 3 deletions(-)
+>   create mode 100644 include/hw/virtio/virtio-features.h
+> 
+> diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
+> new file mode 100644
+> index 0000000000..7abdf8601a
+> --- /dev/null
+> +++ b/include/hw/virtio/virtio-features.h
+> @@ -0,0 +1,127 @@
+> +/*
+> + * Virtio features helpers
+> + *
+> + * Copyright 2025 Red Hat, Inc.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QEMU_VIRTIO_FEATURES_H
+> +#define QEMU_VIRTIO_FEATURES_H
+> +
+> +#include "qemu/bitops.h"
+> +
+> +#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
+> +#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
+> +
+> +#define VIRTIO_FEATURES_MAX        128
+> +#define VIRTIO_FEATURES_BIT(b)     BIT_ULL((b) % 64)
+> +#define VIRTIO_FEATURES_U64(b)     ((b) / 64)
+> +#define VIRTIO_FEATURES_NU32S      (VIRTIO_FEATURES_MAX / 32)
+> +#define VIRTIO_FEATURES_NU64S      (VIRTIO_FEATURES_MAX / 64)
+> +
+> +#define VIRTIO_DECLARE_FEATURES(name)                        \
+> +    union {                                                  \
+> +        uint64_t name;                                       \
+> +        uint64_t name##_ex[VIRTIO_FEATURES_NU64S];         \
+> +    }
+> +
+> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)          \
 
-Yup, we forgot to perform the actual upload of 10.0.3
-(but uploaded 7.2.19).  It should be there now.
+This should contain "VIRTIO" in its name just like other identifiers in 
+this file.
 
-Thanks,
+> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_FEATURES_U64(_bit)],    \
+> +                      (_bit) % 64, _defval)
+> +
+> +static inline void virtio_features_clear(uint64_t *features)
+> +{
+> +    memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_NU64S);
+> +}
+> +
+> +static inline void virtio_features_from_u64(uint64_t *features, uint64_t from)
+> +{
+> +    virtio_features_clear(features);
+> +    features[0] = from;
+> +}
+> +
+> +static inline bool virtio_has_feature_ex(const uint64_t *features,
+> +                                         unsigned int fbit)
+> +{
+> +    assert(fbit < VIRTIO_FEATURES_MAX);
+> +    return features[VIRTIO_FEATURES_U64(fbit)] & VIRTIO_FEATURES_BIT(fbit);
+> +}
+> +
+> +static inline void virtio_add_feature_ex(uint64_t *features,
+> +                                         unsigned int fbit)
+> +{
+> +    assert(fbit < VIRTIO_FEATURES_MAX);
+> +    features[VIRTIO_FEATURES_U64(fbit)] |= VIRTIO_FEATURES_BIT(fbit);
+> +}
+> +
+> +static inline void virtio_clear_feature_ex(uint64_t *features,
+> +                                           unsigned int fbit)
+> +{
+> +    assert(fbit < VIRTIO_FEATURES_MAX);
+> +    features[VIRTIO_FEATURES_U64(fbit)] &= ~VIRTIO_FEATURES_BIT(fbit);
+> +}
+> +
+> +static inline bool virtio_features_equal(const uint64_t *f1,
+> +                                         const uint64_t *f2)
+> +{
+> +    return !memcmp(f1, f2, sizeof(uint64_t) * VIRTIO_FEATURES_NU64S);
+> +}
+> +
+> +static inline bool virtio_features_use_ex(const uint64_t *features)
+> +{
+> +    int i;
+> +
+> +    for (i = 1; i < VIRTIO_FEATURES_NU64S; ++i) {
+> +        if (features[i]) {
+> +            return true;
+> +        }
+> +    }
+> +    return false;
+> +}
+> +
+> +static inline bool virtio_features_empty(const uint64_t *features)
+> +{
+> +    return !virtio_features_use_ex(features) && !features[0];
+> +}
+> +
+> +static inline void virtio_features_copy(uint64_t *to, const uint64_t *from)
+> +{
+> +    memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_NU64S);
+> +}
+> +
+> +static inline bool virtio_features_andnot(uint64_t *to, const uint64_t *f1,
+> +                                           const uint64_t *f2)
+> +{
+> +    uint64_t diff = 0;
+> +    int i;
+> +
+> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> +        to[i] = f1[i] & ~f2[i];
+> +        diff |= to[i];
+> +    }
+> +    return diff;
+> +}
+> +
+> +static inline void virtio_features_and(uint64_t *to, const uint64_t *f1,
+> +                                       const uint64_t *f2)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> +        to[i] = f1[i] & f2[i];
+> +    }
+> +}
+> +
+> +static inline void virtio_features_or(uint64_t *to, const uint64_t *f1,
+> +                                       const uint64_t *f2)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> +        to[i] = f1[i] | f2[i];
+> +    }
+> +}
+> +
+> +#endif
+> +
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index c594764f23..39e4059a66 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -16,6 +16,7 @@
+>   
+>   #include "system/memory.h"
+>   #include "hw/qdev-core.h"
+> +#include "hw/virtio/virtio-features.h"
+>   #include "net/net.h"
+>   #include "migration/vmstate.h"
+>   #include "qemu/event_notifier.h"
+> @@ -121,9 +122,9 @@ struct VirtIODevice
+>        * backend (e.g. vhost) and could potentially be a subset of the
+>        * total feature set offered by QEMU.
+>        */
+> -    uint64_t host_features;
+> -    uint64_t guest_features;
+> -    uint64_t backend_features;
+> +    VIRTIO_DECLARE_FEATURES(host_features);
+> +    VIRTIO_DECLARE_FEATURES(guest_features);
+> +    VIRTIO_DECLARE_FEATURES(backend_features);
+>   
+>       size_t config_len;
+>       void *config;
 
-/mjt
 
