@@ -4,115 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE666C87FCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FFFC87FCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 10:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufEw8-0008Ab-3N; Fri, 25 Jul 2025 05:41:56 -0400
+	id 1ufFDA-0000ap-4r; Fri, 25 Jul 2025 05:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufEvv-0007wM-R8
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:47 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufEvt-0006Nk-W2
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:43 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-ae3be3eabd8so426157666b.1
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:41:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753436500; x=1754041300; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XM5OB303OsLObnsO70x9zZIJY/dDj9tedjFVb26nI4Q=;
- b=XfXpOuo6Kbv+p8yrp3ixg2OpSNa+6yrrDvhCilxRYspHcouKbG+g6hP1vjHp3b8hUY
- SDg97aeVclQRzG5ajPabpK+b/I4ruPN7sL1RvlucRYgvi1M35uUg/pINfLLnyBz9of1H
- IADH/vHvkY+vIkq1FO1kKto7/Z4rqxNKd2jgu69YZzZRcbu9E/ATrr0pg5bfkdwhtsky
- XDqqNQLspALoH7fbmHATydeP6OQ6KrXKRQ1cH2eEHPPlhqFxND+aSbOeRsImg+/ZMOF/
- AbfSw8tqMM20oVuf2WYT7AGpRNdhIz59uP9Z1LwjSB8QSh9JfPcP311Eu+G44WPJI5Fr
- KSiA==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1ufFD2-0000TY-Se
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:59:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1ufFCx-0001r8-48
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:59:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753437555;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=07e8GqMSMwUqCTgqlqzBntBEnHTNY1nfJdmK7DnZNqk=;
+ b=ME53YdBktU1EqRP16FZd98lG3+ZVVvB2ShCNvGEQogJ1L7iloKLJPA9v+5sLFu2UZU954v
+ DSjMeKxWLNrQAZTfbixGxwoXYQxJ9sZ2IfQIlwO/RzEr2mDTNpfKavfbTeBnpGCXGk3397
+ X5Gj2rIUm0hraP+faI6P5HI3dQ1m6vM=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-628-bImsJrVFM9OQHnIs2cl3cQ-1; Fri, 25 Jul 2025 05:59:13 -0400
+X-MC-Unique: bImsJrVFM9OQHnIs2cl3cQ-1
+X-Mimecast-MFC-AGG-ID: bImsJrVFM9OQHnIs2cl3cQ_1753437553
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6fab979413fso35520856d6.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:59:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753436500; x=1754041300;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XM5OB303OsLObnsO70x9zZIJY/dDj9tedjFVb26nI4Q=;
- b=ItACm20KvcfCQ16FVvpdxy2BBTA8MNISJpl63NGVrritSx9Xqn7i1e05d04j3c1nUy
- o21oh3P8LYlYMRd70xMcVG/R8qhFM8wI8YY/KOAKyQj8KqKWrZAA2PTQ4My+FxHk8j9F
- ootsyTy9r8Q3oZut9c07aOxaKYMMDGaqMq7IVPmyLBEmA24SPUCioUSL1CboG4cgsf7B
- rj3f6IMGxfGp34DQF1lQnTADA1oyoIk7SfUShGREbAs5uJFcR3NOyEYFFTh5VLGpu83G
- 7rRtbbWaEen3+g5d5V5/rycb96S1qbiJqig0Az3F2ibF0zUow4z/z/iEO3SxCCWY9DEs
- h6wA==
-X-Gm-Message-State: AOJu0Yx/HwSw/epwf07dff+Llt0z7qZkIZC63M9LI7yr4uL9N/fVsyV+
- PwvBcD+BJrClh4mZzl2BC3VH9zBen1j5Ah63gXf9mivadcj1xfrHkh3+92VkmJOdb8ivfSw4GrO
- qn+4R
-X-Gm-Gg: ASbGnctDfjcOeT9MOKZ+xdF3FcKIGzEq8mYTg6U7KEpCawpGucDr+63eT1dE1a3681t
- Mk2EzFmI2dPIfzBCqmXoogfuwQmXT6Wcq7JZmIQLLrxTyzUO7ZkG90dPHbS4sjGO2Okt/Sg6urX
- KJ98L0PlI4NRUqXWibLK60ZdWEopKspaIdcl1P/eqgD9eNF5KeddN4zGT6azDfE/47sWBW2c6Y0
- N960yhqflCJTKYo6vcSFTBd6JXYehi6b5hUGt0bFYwsQmyUGJaeTex7Ouva89B7Ydx3NKrDAHVa
- JKR+Y/+UQ6AU7EahGklVq36Pi2bUBnSamRZ6vY/R0emkQ7VjKvHEuNb/Qh7Pncgy0VGPsXtVSSD
- tI4l8svfGPktsxaPPvH+ci3L5LBCBp99uH00l7uHB6/UFcs+U5ov/yjU10VaEKvcXdpU=
-X-Google-Smtp-Source: AGHT+IHgQyhFlUJs2PEJu+gYnhmMJabWpzZ4B5zplCflJHyBTajVvjsRm7PEO03elzmKtjJEtVVjBQ==
-X-Received: by 2002:a17:906:4fd6:b0:adb:2f9b:e16f with SMTP id
- a640c23a62f3a-af61df590eemr145282266b.16.1753436500060; 
- Fri, 25 Jul 2025 02:41:40 -0700 (PDT)
-Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af47ff42fc5sm243280266b.143.2025.07.25.02.41.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 02:41:39 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 25 Jul 2025 12:41:23 +0300
-Subject: [PATCH v3 2/4] tests/functional: add --keep-scratch CLI arg
+ d=1e100.net; s=20230601; t=1753437553; x=1754042353;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=07e8GqMSMwUqCTgqlqzBntBEnHTNY1nfJdmK7DnZNqk=;
+ b=aZWN6v8V+Bw5X4CTmHBput1KJeeuhiRopsaxO3oZ5rqH6Loy6BhFzDQS272MVOhZ5S
+ 05VSGY1McXxHsJb7Zziy8puh7zljhLG93KiHnFYU9vhXixG6srIVI6cy1cVWht5X5KoP
+ j92o4kNr52/EJyFzFexDZK+w4xktZgQNGt2YY77juOY4d5T+imehxZ140j7wSKpo9ZtI
+ BQmcMCPyKLrM+F8ynjPYw9AIv167jAER14Iyk2O27+4+qJ8wYsOIZlTgwWFP28nPwp4m
+ 7JlZJ0DJCF+itb4TJ+i41CDECJkxZ/DKetFRWblay1/YkndQG5Dubd/YLE+RXAnnwvN+
+ d1dg==
+X-Gm-Message-State: AOJu0YyM8pxUX1secob95PdzGzH34cSYkc894dk/q1NoqRom4vMfpCMO
+ kKu6ufOWquWPFeoXV/Jp1tIeu8q/IuncH7Vc+43MJjv5s3lI1MkKOSoh6SQ1t16CgIy4yl3lrx7
+ 9pQ0963U7q8FiGXOpFHptLsnNhOYf9XDQDHyIJzSwEc9i8LVSTFFjf75+TnKK6rARljEiaSptVM
+ k5NRPfieckZcBozNm613hbd28Pu/TMn5s=
+X-Gm-Gg: ASbGncuLLUmj4qfWDWLlAVFBZ9dvARXshIbJ3fvCMHi4tAOXL3rV97ns75UYM90JxZu
+ pshXSH27/hPlBkWFfnVZgQfLsjWVw9omawe1+t/lnMuzL8uv9bUdB4YXw1iYxvf02AU9DBSzh5r
+ itOCZP3W8NV2GSTQNsBB04tI8=
+X-Received: by 2002:ad4:5cec:0:b0:700:c39c:9d12 with SMTP id
+ 6a1803df08f44-707205ea7d6mr12961346d6.43.1753437553093; 
+ Fri, 25 Jul 2025 02:59:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxaxOCZ0/Ta1ZD2W+nH3+Z65QNOggZG1+y0BiO/z/AbKu7tXxSZGyyjMoMHUkj7fOouoCVGvxmngVJgcb6BYk=
+X-Received: by 2002:ad4:5cec:0:b0:700:c39c:9d12 with SMTP id
+ 6a1803df08f44-707205ea7d6mr12961116d6.43.1753437552645; Fri, 25 Jul 2025
+ 02:59:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250725-functional_tests_debug_arg-v3-2-b89921baf810@linaro.org>
-References: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
-In-Reply-To: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2095;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=lTEBmaVIcOg7XE2IMXRsNH+9p1M+nUMOfAZ/dVUkjyk=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9nMUZQd3lXRy9YTk9ITHVCUllJeWh6eENBYmM3CmpkNzZoN3R3VEJqSnoyVnpC
- YnVKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUlOUlR3QUt
- DUkIzS2Nkd2YzNEowSHloRC8wZHl1RU9mQkQ3a2lOVEJlSGRzV1lNUE5HNlQ3dmFYQjdiY3VKbw
- pxVDV4cWpDRVFFUm9xZ1Vwc2U2aFVFVERRM3NmcUtjb0w1c2pYNmhHS0FiUEE1NThVZTFJWGFjO
- XFXbnk3c0xHCnBIZ2ZVWFdGVHI0WHJveVRZZGlFRjVNR01kdG00Q05MaXl1VVdDUkEwQ0JkWWxX
- aVU4WUlrYlhMTkRRdVRaUkkKRVNIQkk4TWk4UTgwc013eXdmWWEvK0g1MVNoQUdPVUVmc3ZRdm1
- 3eEkxQzFMaE95ZmdhOGtZZFBLSmpDdDNmQQpuZUFxZjVER2QxcHcveDErTHZLWVZJV2pubXZoSk
- F5ZGg4T3N0Zk5QUGVxSXhnU0Z5VkhtV2RnOXZrYXhlWW16Cjg4eG1uaTU0NEJ5QnRoSC9SM2I5S
- kYrRnhieHZQbm1WaHJYek5UK2tRcS9yRmRRUEQzN3NjOC83QlEyVFBheW8KUGNYa29yTDFnMXUy
- MkV3TUJTOWgveGlodHp5M25XLzA4NFFEZXAvVEZGdWM5S0F0SDJTVW1uUnhZK0xnM1pFcApROEh
- SRGkyY2JHTHhkMURQM3ZzOUR6aFpkR04rUy94QUs2Rll5eFZZQlVPTFZ1TXFzWkJUQUtCU3hNQn
- FIMjFoCitXMVRncWNUcDArbEpSU1pndko4amtqd3hpV3d4Ym1VK0FCbjVDb2FtYUx2bm9UR0lQR
- DZhVjVOYTByUFRQQ0QKV3hueWM4dndnTnpvVFF3a3NPNEVRdG1ZaTNjTzYyaGpaaUhyY0EzUEdN
- MUoxU2U2bk5kTXBiQWxmWGc4S2IxTwpOcXFXTWhtVDhBUjBGTEEzU0ljVzlGK1hhZFFvWEVmVFl
- CRzA1Tjh1WHlxaXJlbzRvZS9kN2JSYVB2Z1dTRnZWCkMzQ3N3QT09Cj1nbmNnCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250717145948.77870-1-kkostiuk@redhat.com>
+ <87pldwbspt.fsf@pond.sub.org>
+ <CAPMcbCp=PBMSxtTxCMkxigdovaY=MTNLRo6f3BBXNRT6vu4wmw@mail.gmail.com>
+ <87seipkif5.fsf@pond.sub.org>
+ <CAPMcbCrTTkr5sX11wn1WaXOLgqQTAD-1oxUuqOc+oEmUxcotkw@mail.gmail.com>
+ <c3afe3f5-962d-40ba-a778-716ef9929053@linaro.org>
+In-Reply-To: <c3afe3f5-962d-40ba-a778-716ef9929053@linaro.org>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Fri, 25 Jul 2025 12:59:00 +0300
+X-Gm-Features: Ac12FXwxlgs9sMv1uVM36RpblRpq_bKnnDtj-orbtlJ3Se2FBXuDpQ99uPIIh-M
+Message-ID: <CAPMcbCp5BuLADQoDijw811G4-u-ssBJ+eFrzyiU8_G9Tr7uLHA@mail.gmail.com>
+Subject: Re: [PATCH] util: win32: Write hex value when can't get error message
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Yan Vugenfirer <yvugenfi@redhat.com>, 
+ =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000762d08063abdfe9d"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,59 +108,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CLI arg to keep scratch files after test execution, equivalent to
-setting QEMU_TEST_KEEP_SCRATCH env var.
+--000000000000762d08063abdfe9d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- tests/functional/qemu_test/testcase.py | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+Issue reported to GLib https://gitlab.gnome.org/GNOME/glib/-/issues/3740
+PR with fix https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4716
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index eedca7f1ad29c9e654cf56535acf9639d679f5c4..f7e306cf749e8b24a712b09dfe8673660cbb5085 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -35,6 +35,7 @@
- 
- class QemuBaseTest(unittest.TestCase):
-     debug: bool = False
-+    keep_scratch: bool = "QEMU_TEST_KEEP_SCRATCH" in os.environ
- 
-     """
-     Class method that initializes class attributes from given command-line
-@@ -53,8 +54,16 @@ def parse_args():
-             help="Also print test and console logs on stdout. This will make "
-             "the TAP output invalid and is meant for debugging only.",
-         )
-+        parser.add_argument(
-+            "--keep-scratch",
-+            action="store_true",
-+            help="Do not purge any scratch files created during the tests. "
-+            "This is equivalent to setting QEMU_TEST_KEEP_SCRATCH=1 in the "
-+            "environment.",
-+        )
-         args = parser.parse_args()
-         QemuBaseTest.debug = args.debug
-+        QemuBaseTest.keep_scratch |= args.keep_scratch
-         return
- 
-     '''
-@@ -262,8 +271,10 @@ def setUp(self):
-             self.skipTest('One or more assets is not available')
- 
-     def tearDown(self):
--        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
-+        if not QemuBaseTest.keep_scratch:
-             shutil.rmtree(self.workdir)
-+        else:
-+            self.log.info(f"Kept scratch files in {self.workdir}")
-         if self.socketdir is not None:
-             shutil.rmtree(self.socketdir.name)
-             self.socketdir = None
+@Markus Armbruster <armbru@redhat.com>
+Based on the documentation from this PR, do you have any other objections
+to this patch?
 
--- 
-2.47.2
+Best Regards,
+Konstantin Kostiuk.
+
+
+On Mon, Jul 21, 2025 at 2:53=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
+
+> On 21/7/25 12:12, Kostiantyn Kostiuk wrote:
+> >
+> >
+> > On Mon, Jul 21, 2025 at 12:22=E2=80=AFPM Markus Armbruster <armbru@redh=
+at.com
+> > <mailto:armbru@redhat.com>> wrote:
+> >
+> >     Kostiantyn Kostiuk <kkostiuk@redhat.com
+> >     <mailto:kkostiuk@redhat.com>> writes:
+> >
+> >      > On Sat, Jul 19, 2025 at 9:27=E2=80=AFAM Markus Armbruster
+> >     <armbru@redhat.com <mailto:armbru@redhat.com>> wrote:
+> >      >
+> >      >> Kostiantyn Kostiuk <kkostiuk@redhat.com
+> >     <mailto:kkostiuk@redhat.com>> writes:
+> >      >>
+> >      >> > g_win32_error_message - translate a Win32 error code
+> >      >> > (as returned by GetLastError()) into the corresponding messag=
+e.
+> >      >> >
+> >      >> > In the same time, we call error_setg_win32_internal with
+> >      >> > error codes from different Windows componets like VSS or
+> >      >> > Performance monitor that provides different codes and
+> >      >> > can't be converted with g_win32_error_message.
+> >      >>
+> >      >> Are these error codes from GetLastError()?
+> >      >>
+> >      >
+> >      > No.
+> >      > VSS functions directly return an error code.
+> >      > Section: Return value -
+> >      > https://learn.microsoft.com/en-us/windows/win32/api/vsbackup/nf-
+> >     vsbackup-ivssbackupcomponents-addtosnapshotset <https://
+> >     learn.microsoft.com/en-us/windows/win32/api/vsbackup/nf-vsbackup-
+> >     ivssbackupcomponents-addtosnapshotset>
+> >      >
+> >      > Performance Counters API can return a system error code or a PDH
+> >     error code.
+> >      > Section: Return value -
+> >      > https://learn.microsoft.com/en-us/windows/win32/api/pdh/nf-pdh-
+> >     pdhopenqueryw <https://learn.microsoft.com/en-us/windows/win32/api/
+> >     pdh/nf-pdh-pdhopenqueryw>
+> >      > System error code =3D GetLastError, PDH error code, something el=
+se.
+> >      >
+> >      > https://learn.microsoft.com/en-us/windows/win32/perfctrs/pdh-
+> >     error-codes <https://learn.microsoft.com/en-us/windows/win32/
+> >     perfctrs/pdh-error-codes>
+> >      > FormatMessage requires LoadLibrary(L"pdh.dll") to work properly.
+> >
+> >     The error code error_setg_win32() takes is passed to
+> >     g_win32_error_message().  Contract:
+> >
+> >          g_win32_error_message ()
+> >
+> >          gchar *
+> >          g_win32_error_message (gint error);
+> >
+> >          Translate a Win32 error code (as returned by GetLastError() or
+> >          WSAGetLastError()) into the corresponding message.  The messag=
+e
+> is
+> >          either language neutral, or in the thread's language, or the
+> user's
+> >          language, the system's language, or US English (see docs for
+> >          FormatMessage()).  The returned string is in UTF-8.  It should
+> be
+> >          deallocated with g_free().
+> >
+> >          Parameters
+> >
+> >              error error code.
+> >
+> >          Returns
+> >
+> >              newly-allocated error message
+> >
+> >     https://www.manpagez.com/html/glib/glib-2.46.0/glib-Windows-
+> >     Compatibility-Functions.php#g-win32-error-message <https://
+> >     www.manpagez.com/html/glib/glib-2.46.0/glib-Windows-Compatibility-
+> >     Functions.php#g-win32-error-message>
+> >
+> >     Passing error codes from sources other than GetLastError() or
+> >     WSAGetLastError() violates this contract.
+> >
+> >     Apparently, g_win32_error_message() returns NULL then.  This is not
+> >     documented behavior.
+> >
+> >
+> > It returns an empty string, not NULL.
+> > https://gitlab.gnome.org/GNOME/glib/-/blob/
+> > a205d01adc3fbc4f243e0b0fb52a3a0a8a0d9ae7/glib/gwin32.c#L216 <https://
+> > gitlab.gnome.org/GNOME/glib/-/blob/
+> > a205d01adc3fbc4f243e0b0fb52a3a0a8a0d9ae7/glib/gwin32.c#L216>
+>
+> Worth reporting to GLib IMHO.
+>
+>
+
+--000000000000762d08063abdfe9d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Issue reported to GLib <a href=3D"https://gitlab.gnom=
+e.org/GNOME/glib/-/issues/3740">https://gitlab.gnome.org/GNOME/glib/-/issue=
+s/3740</a></div><div>PR with fix <a href=3D"https://gitlab.gnome.org/GNOME/=
+glib/-/merge_requests/4716">https://gitlab.gnome.org/GNOME/glib/-/merge_req=
+uests/4716</a></div><div><br></div><div><a class=3D"gmail_plusreply" id=3D"=
+plusReplyChip-0" href=3D"mailto:armbru@redhat.com" tabindex=3D"-1">@Markus =
+Armbruster</a>=C2=A0<br></div><div>Based on the documentation from this PR,=
+ do you have any other objections to this patch?<br></div><div><br></div><d=
+iv><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signa=
+ture"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</di=
+v></div></div></div><br></div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 21, 2025 at 2:53=
+=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro=
+.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">On 21/7/25 12:12, Kostiantyn Kostiuk wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; On Mon, Jul 21, 2025 at 12:22=E2=80=AFPM Markus Armbruster &lt;<a href=
+=3D"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:armbru@redhat.com" target=3D"_blank">armb=
+ru@redhat.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@r=
+edhat.com" target=3D"_blank">kkostiuk@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:kkostiuk@redhat.com" t=
+arget=3D"_blank">kkostiuk@redhat.com</a>&gt;&gt; writes:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Sat, Jul 19, 2025 at 9:27=E2=80=AFAM Marku=
+s Armbruster<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"mailto:armbru@redhat.com" target=3D"=
+_blank">armbru@redhat.com</a> &lt;mailto:<a href=3D"mailto:armbru@redhat.co=
+m" target=3D"_blank">armbru@redhat.com</a>&gt;&gt; wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Kostiantyn Kostiuk &lt;<a href=3D"mailto:=
+kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:kkostiuk@redhat.com" t=
+arget=3D"_blank">kkostiuk@redhat.com</a>&gt;&gt; writes:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; g_win32_error_message - translate a =
+Win32 error code<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; (as returned by GetLastError()) into=
+ the corresponding message.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; In the same time, we call error_setg=
+_win32_internal with<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; error codes from different Windows c=
+omponets like VSS or<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; Performance monitor that provides di=
+fferent codes and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; &gt; can&#39;t be converted with g_win32_=
+error_message.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Are these error codes from GetLastError()=
+?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; No.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; VSS functions directly return an error code.<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Section: Return value -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; <a href=3D"https://learn.microsoft.com/en-us/=
+windows/win32/api/vsbackup/nf-" rel=3D"noreferrer" target=3D"_blank">https:=
+//learn.microsoft.com/en-us/windows/win32/api/vsbackup/nf-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0vsbackup-ivssbackupcomponents-addtosnapshotset &lt;=
+https://<br>
+&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"http://learn.microsoft.com/en-us/windows=
+/win32/api/vsbackup/nf-vsbackup-" rel=3D"noreferrer" target=3D"_blank">lear=
+n.microsoft.com/en-us/windows/win32/api/vsbackup/nf-vsbackup-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0ivssbackupcomponents-addtosnapshotset&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Performance Counters API can return a system =
+error code or a PDH<br>
+&gt;=C2=A0 =C2=A0 =C2=A0error code.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Section: Return value -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; <a href=3D"https://learn.microsoft.com/en-us/=
+windows/win32/api/pdh/nf-pdh-" rel=3D"noreferrer" target=3D"_blank">https:/=
+/learn.microsoft.com/en-us/windows/win32/api/pdh/nf-pdh-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0pdhopenqueryw &lt;<a href=3D"https://learn.microsof=
+t.com/en-us/windows/win32/api/" rel=3D"noreferrer" target=3D"_blank">https:=
+//learn.microsoft.com/en-us/windows/win32/api/</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0pdh/nf-pdh-pdhopenqueryw&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; System error code =3D GetLastError, PDH error=
+ code, something else.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; <a href=3D"https://learn.microsoft.com/en-us/=
+windows/win32/perfctrs/pdh-" rel=3D"noreferrer" target=3D"_blank">https://l=
+earn.microsoft.com/en-us/windows/win32/perfctrs/pdh-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0error-codes &lt;<a href=3D"https://learn.microsoft.=
+com/en-us/windows/win32/" rel=3D"noreferrer" target=3D"_blank">https://lear=
+n.microsoft.com/en-us/windows/win32/</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0perfctrs/pdh-error-codes&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; FormatMessage requires LoadLibrary(L&quot;pdh=
+.dll&quot;) to work properly.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0The error code error_setg_win32() takes is passed t=
+o<br>
+&gt;=C2=A0 =C2=A0 =C2=A0g_win32_error_message().=C2=A0 Contract:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_win32_error_message ()<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gchar *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_win32_error_message (gint error);<=
+br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Translate a Win32 error code (as ret=
+urned by GetLastError() or<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 WSAGetLastError()) into the correspo=
+nding message.=C2=A0 The message is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 either language neutral, or in the t=
+hread&#39;s language, or the user&#39;s<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 language, the system&#39;s language,=
+ or US English (see docs for<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 FormatMessage()).=C2=A0 The returned=
+ string is in UTF-8.=C2=A0 It should be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 deallocated with g_free().<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Parameters<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error error code.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Returns<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 newly-allocated error =
+message<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://www.manpagez.com/html/glib/glib-=
+2.46.0/glib-Windows-" rel=3D"noreferrer" target=3D"_blank">https://www.manp=
+agez.com/html/glib/glib-2.46.0/glib-Windows-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0Compatibility-Functions.php#g-win32-error-message &=
+lt;https://<br>
+&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"http://www.manpagez.com/html/glib/glib-2=
+.46.0/glib-Windows-Compatibility-" rel=3D"noreferrer" target=3D"_blank">www=
+.manpagez.com/html/glib/glib-2.46.0/glib-Windows-Compatibility-</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0Functions.php#g-win32-error-message&gt;<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Passing error codes from sources other than GetLast=
+Error() or<br>
+&gt;=C2=A0 =C2=A0 =C2=A0WSAGetLastError() violates this contract.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Apparently, g_win32_error_message() returns NULL th=
+en.=C2=A0 This is not<br>
+&gt;=C2=A0 =C2=A0 =C2=A0documented behavior.<br>
+&gt; <br>
+&gt; <br>
+&gt; It returns an empty string, not NULL.<br>
+&gt; <a href=3D"https://gitlab.gnome.org/GNOME/glib/-/blob/" rel=3D"norefer=
+rer" target=3D"_blank">https://gitlab.gnome.org/GNOME/glib/-/blob/</a> <br>
+&gt; a205d01adc3fbc4f243e0b0fb52a3a0a8a0d9ae7/glib/gwin32.c#L216 &lt;https:=
+// <br>
+&gt; <a href=3D"http://gitlab.gnome.org/GNOME/glib/-/blob/" rel=3D"noreferr=
+er" target=3D"_blank">gitlab.gnome.org/GNOME/glib/-/blob/</a> <br>
+&gt; a205d01adc3fbc4f243e0b0fb52a3a0a8a0d9ae7/glib/gwin32.c#L216&gt;<br>
+<br>
+Worth reporting to GLib IMHO.<br>
+<br>
+</blockquote></div>
+
+--000000000000762d08063abdfe9d--
 
 
