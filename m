@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69392C87FCD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D27C87FCE
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufEw6-00086v-PE; Fri, 25 Jul 2025 05:41:54 -0400
+	id 1ufEw6-00085R-Ap; Fri, 25 Jul 2025 05:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufEvx-0007ww-An
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:49 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1ufEvt-0007uN-BY
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:42 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufEvv-0006O5-FX
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:45 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ae0c571f137so405236666b.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:41:43 -0700 (PDT)
+ id 1ufEvr-0006N4-4t
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:41:41 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-60c4521ae2cso3468317a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753436501; x=1754041301; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=81X9JWZLMcoyz9677dNtF74dQOQRKg/cSylyBcaNqrc=;
- b=WNZDi7e6smm/Abvm4/lug7QMrI12gnpTQTvEf8hy9QxlbVeU8yY60Cvh13+1H4Jksi
- Sq40rMZd9vGEDdwZV9dF3/zo6bE+B4jVxoIUAZra2WVywYQ12AeYKixypLE3AEmAnFNN
- LPNepqT20J6XUkNzoFB468DZPS6hwvnZbgECuyno9R7XaPt/KU7AusDbOo045ELPAxJi
- h2zd3Mkd8rJNlg56UWZMBQnQFMIRbBjV5gxOfgIDt/zCvUl+lvvOPbKsFEGoduuuw3OH
- g7LD5aBxBCIlAXv905xXsZQcEEwWaqtkqqJZS5BmesfAY9iNAvT1WtGE/geumyinbGJY
- 9WuQ==
+ d=linaro.org; s=google; t=1753436497; x=1754041297; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0UFH0U9J42hJqVY9BwnRayelwThvtCZGW+7aPdEGwJY=;
+ b=TiXIrz0Dd08xaWbsZ82VuBX7hvqtWcWh2lEce9WfZenkkmTFbfyc2Ez7/TuhagXI0F
+ kb4fNSStEf34+fSAcnsdRR1RqoXrv8K1hgFrrcpvfCUutxqj+BTQDuwWRPMl72y4iux2
+ msU2dhVwwAASDz8JcQhkgGkcNzlxThvMofA7P2tzcgX4a0iur5YeNZuHSIYR5RNmJi7p
+ SYYnLY3nAmvFwSrkUu3Mcz/YoBkw9o6DpfSjIRrX6qaDx5fLd7RoQ1m6VRz9g/PLQsbC
+ 1hYCr4IdMZV87A+yeA7Z6P2+7CUdYAV+1h2yOTdrwgPUPA48MjhjPuwlxkZGf2lhV1iz
+ 9Mrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753436501; x=1754041301;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=81X9JWZLMcoyz9677dNtF74dQOQRKg/cSylyBcaNqrc=;
- b=gqDZP5biYlq198WiUR9QKEB4mRtxjThY6VXM/sdI78QJn/Bnt+vbQhgdPJ2K858AlD
- 9N/OWKc1f03Vxc4tdNeeqwEhUjJaZbZFTuFTmz5JI9j/ravW4qczpuZcfztXMjuGgnJx
- 0suYVkbkHqBKKOrhKkFOnUMP6uraDQhqTgsF4wZqnlktV86uzXX26hf+te/CLXBiTtv/
- bXu0t4H8yPdkXmTFepFQm1opxUJlaE1SyuHXUNFQwZEp+k03lx9zMIlwRweieQt45Hwh
- wto4n2iD16v3BHtfEEUgYQvLtjwKNNo/J9RkEszpAl/PcpvJHfBqvHa1nC/E865KJovo
- bG8Q==
-X-Gm-Message-State: AOJu0YxQALw9wszSf1QWskFmQuNlhhRibGEs95gcEJlNkSf/bO/e70ZN
- RR62nKXKzpWcgGPdXJrPiZnkuH29LYosNwMjOZYggPRsKZmWvwVERRj235w+SwQS2v62DIZM9lw
- jJ5S/
-X-Gm-Gg: ASbGncsot5s+wHZL+bAHJOaM1ZNI1SM2Z1svVFU2MFP64GoyT9QTFTmOU1JyCt0e62C
- 5l9V46JcoikblmCwgBw+KKNKE9IhTjpyD63XHIKznpq10af3OLbopmcvZo0OZp+UbI8k2Yi1PIc
- IUBF0uYkI3aUSmXNDcpygJTEHGFk7A3lCqSxSUzaC8Hx4F6sd1kqwSa7keHIXyLaQEuhvK5GBeT
- bakQFH82HP/Y9rwdTLwEfVQiSJ5J50teW9391SlQhMfOvsg9IRcuSwbIJ9FzNBmtHQaYt6UbYNZ
- GDahoQ0yGyKPmMc8R1keWg2sWltqU7hvdGYfDdDj2opyaEsizALqSgq4dtVVOeCUnioCVDZCTKe
- yO1MZyQdTmxxPW4u7p3YDIZyQm23HbiHKievhnnsKttHGBAEpfGhEamxuYLN6usb1vmY=
-X-Google-Smtp-Source: AGHT+IF22fBq65tZ3cIRKezujYQzES6STcdPHk8+DGMGsC3h+rQ3mt36Hp5EuP+NyubEQhNzTCK+8w==
-X-Received: by 2002:a17:907:db16:b0:ad5:5210:749c with SMTP id
- a640c23a62f3a-af6175096b5mr143516766b.22.1753436501304; 
- Fri, 25 Jul 2025 02:41:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753436497; x=1754041297;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0UFH0U9J42hJqVY9BwnRayelwThvtCZGW+7aPdEGwJY=;
+ b=WRkRlB26EV+qlNfU4W1/ojp16g4TdyYA2QzN4ydWGNUM4cTT2rDfyms/nS8i6+4+3y
+ KWFd94YBAWAMtxNp9FrRrg3fNiS4RJCUQpnzlUNkP061OMObYzCoYBMDLKosVyLevYiL
+ L0vova1uWMBEVF1w7JqesQmZv69303w58ZrtvQd+EzQswc8RzVQ4fGkzebOLVtzfwHUQ
+ 2U4AAOvDTyafxT3jNywHIacN1wbi5fHuyc/gM+XiytwyINi0cx2KKe92g24SCl9EWI8Z
+ jPMHraBJ/EmnHN63KMe4QKRIsLCHsFLnai+tY2733CZM9ENT5/8T6Qwptl0Ohg9hHvuI
+ 4atA==
+X-Gm-Message-State: AOJu0YygMCtp2hVNp8Vk8LYc85Tqj/7RvMI37iS9AFAqMDVKOI8Lua6r
+ J/FckYp29joVvoZtRhJCaDv/NHkhOmlmt2BVfF3q/HW33KEq1XEf4Ux1AZhJ2TzQ0byNDHIL/vw
+ ABHma
+X-Gm-Gg: ASbGncvd4s9cV8UmvCkOMOya6kCgdFcmbR1YWU0NQM3YorzoQ6OLM58B0P5XJd/f2Xf
+ lSpxkLc9iVhIinOuKxoQQY5Z7RGiEc8RD4muPCTWN7Zs4ZZUAjirbekXoXW+xjLePEYDZp7hIjA
+ KboWLJrmuyAxbiVATd1DfTEUp8iJ11LnhinIwQMTStYxXOSp88agGA1ZHoFs9btRkfg/x/5DQp8
+ yuxVOKn8852Sa0JXlBLwNYsqCVtgViShOS1qsrERE26F8LvaAzd/PMovURMP/+FvVrtcAAXnZRZ
+ oss2v/fOBSVZ+nNg9aBO3Oxr5MzX7qlMufkW9pEIIaUOZB0kXVVLdNMi+tJPCLfx7l35nSdd/zJ
+ qAr/Xp70Dp9YxDJ1rZLD21jwXIaB1GqkIS94P8jjldCJOsx/eN0Ko1JmeVUKvpbUhGfKHngutvD
+ ROaA==
+X-Google-Smtp-Source: AGHT+IH5L+13QT6j3GYFqxtj0wesQKdgNCyNH+YvW/t3iihDjO+ovbWZsWwYgfArWxgnUrFsvTReaQ==
+X-Received: by 2002:a17:907:9404:b0:ae0:35fb:5c83 with SMTP id
+ a640c23a62f3a-af618f03c51mr152363866b.28.1753436497075; 
+ Fri, 25 Jul 2025 02:41:37 -0700 (PDT)
 Received: from [127.0.1.1] (ppp-2-86-210-241.home.otenet.gr. [2.86.210.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af47ff42fc5sm243280266b.143.2025.07.25.02.41.40
+ a640c23a62f3a-af47ff42fc5sm243280266b.143.2025.07.25.02.41.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 02:41:40 -0700 (PDT)
+ Fri, 25 Jul 2025 02:41:36 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 25 Jul 2025 12:41:24 +0300
-Subject: [PATCH v3 3/4] tests/functional: add --list-tests CLI arg
+Subject: [PATCH v3 0/4] tests/functional: add CLI args
+Date: Fri, 25 Jul 2025 12:41:21 +0300
+Message-Id: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250725-functional_tests_debug_arg-v3-3-b89921baf810@linaro.org>
-References: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
-In-Reply-To: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAEFRg2gC/43N3wrCIBiH4VsZHmeoazo76j4ihs4/E0JDnRRj9
+ 57bUZ1Eh++Pj+dbQNLR6QTOzQKiLi654Gu0hwaMk/BWQ6dqA4JIhxim0Mx+zPVI3IesU06D0nK
+ 2g4gWCoFEZ6jkLetABR5RG/fc8eut9uRSDvG1/yp4W/9iC4YYUsFHRfsW91Je7s6LGI4hWrC5h
+ Xxa7KdFqnUySHGONaaGfVnrur4BhYLgXREBAAA=
+X-Change-ID: 20250716-functional_tests_debug_arg-aa0a5f6b9375
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -83,30 +87,30 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2401;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1354;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=xoXEOsuC3Si79RsCr5E0Hl1RUWvEca1gYm5ywI/ZdJ8=;
+ bh=doq9BfAZx7ETAExc6LlxvweGer5vZrQy0wjhotqmpcw=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9nMUZQdmNFNmxoU29OV0lNamorMmFDaEZqSVBaCkhrYUZ1dUZzRzA2cmlLVHJB
- MmVKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUlOUlR3QUt
- DUkIzS2Nkd2YzNEowTmFxRUFDTnRqU3ErQTZFQXk3c3hXN25EVDVLcDNTRzJEOGVjMUVNTnRyZA
- pMVUFUNERoRDdEYkU4aDVMRkZPOC84ZXJlQ2FZTFFqcmViakdVMTJvb0paQTBqWTVXeEVaOHRzV
- jFxQ012ZVdXCnZJWTFVakI0ZUtKTlh2Yk1LZ00reFZ4VStMR0EvT25lN2RGdk1YRWsyZ3ZHZ3ky
- YklpcHpuZFhBaTkxeVhFcmEKdDZvNWd5b2hnM1pqemdvNDR0b21nRzhEQkUvM2lNUHhleVk4M1Z
- PenRiWld0UmZtM3puZHZHb002ejhIL2F0cwpPWk12Y2Y3ZEcxZTBKSDBIZE4rZE1HejUzeVdPck
- 9uZng0YlhxSkRDWVlWcUQ2U0JQdTZXakhuS3MyYVlrby9HClp3a3U5VjRsL205anloSGt6QWlPM
- GI4K2pSc2RFUEQ5SmRhVjcvTzM0ZkdTN2k0b3pnT3A2bXZMYStLQUxZUGgKSVcvZW9Hb0dSNXV1
- eEFUNzFRNUpVbjc5QmFLY3pFOGpmWEIrSjJzVmZ5R0JOZVgyeTVubTI5aTJnRFQ1R2Q4RworNjd
- qaytUUUgvNk1NTHdKczc0bjRSaXA4RThXR3NiZ2w4NXN5K2VjdVIrMi9ZQ1EyVXJkRjNuSXJ4Un
- Q3UU5sClhReUhFUTR6WWhoVkpEdU9wNHpKVld0SXZGY1dTMmNPVHU5WjU3SXArNTFGakRKRmVvW
- GQ2OXV1MVVFYXdqUnkKQkNERFAxbHBSYzRuMm96dU05VjNPQXdWQUtTdzRFMnhIc29HUHNZemhk
- NVVYaGN0N0JRamwxTGpjWDZTTUprdwphUVdyNTEwYTV6cEsydzVjSVNVaDcwVktYRFIzeGJkY1B
- sTC9vdWJUNXQyc1ZxY2MxcWJoMWJmVzdYSG8zY0tFClFEWUJUZz09Cj0rQSt1Ci0tLS0tRU5EIF
+ 25RQWNzbVlnQm9nMUZQTnlvNmlnVGh5dW5ESm80ZGpiak9ZVktCCndQU0dUTVUxQ04yMm9ocmRG
+ SWVKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUlOUlR3QUt
+ DUkIzS2Nkd2YzNEowSjkzRC80c1NXUW41WHNtbC9Mem5nYXk0MGZIN2V4RDIwNXR6Z2dPSFNuaA
+ phZVhzMGZuMThEK21QTmhhcTJxV044NFQ0bWh4UmY0MW5zdWhpN1huYjAwL082VTE1b2lXN3Jla
+ 0J0Vk5SNDRtCkE4cmFjQStwV0Jkd29WWHBIeFZXSUY1aFhUTUdKWlMyK0wyc3BYdGtnaFJNaklR
+ blpXbWE0TnNSbGlnL3ZIeHoKSmZMeGhYcDNlR0t5WDMyYW9sOWxVU3VNVG1LVTBvNVRnaUNSM0d
+ 1Sll2WlFTeXFJaUZwZ01YSFozaDZHQjdPVgowSHdSWW1yaTVRdG9MeHI4aGIrYkppc21JSGNDRz
+ ZuTlZMY0FuTmNhM2ZXMjBMWVZRclJEUlVWcXpyK1dubzJnCjhqMmZBOFljaE12elZncDdENHNwW
+ HZLV0U0eVRDMTZxbEk2ZEYwQjROOTREeXZBQUdLSHArRlVCRzVuREZnbEsKaWdzdmEwanRWSUVJ
+ aTZveWVVdUFEUmZoRWI5dVRIaVFodkkxSTE1WGV5QVhDek9id1hoazRxOGwyMnZJVnNyRQpCRWV
+ NTGk4UEVrK2JUNzRzSUdzREVrQjYwVDI4N3lFejNONC9PMnluS1M4UkZueTdXWERrVWVOQ2h6R2
+ J5SDhCCkdVbzRDcEFIUnplWEY4WlNORHU5U0JWcWZxLzU0NmxjY3ZmcCtLWUppVGpHRmpHdW9ZU
+ G1UMHpVRzZQS1hKbWoKaFpieHVQZURVOW1tZk5SbSt1ak9wMWh3NFJSR0pING9FY1RGUmF1MWFF
+ OFJIQTVNRVdsTUtmQWRkckIvWHVzWgpsOWtaTjVHUUxrc3lVZktTRmJtaEIxdVZNNTFTck5lSmp
+ od0RlNlMzWW9hSFhhU3R5eDgwRHJSeVpmRmhrNWhZCmhucjArUT09Cj1ST1Z0Ci0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,66 +133,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CLI argument to list tests and exit.
-
-Example output (current dir is build directory under root dir):
-
-  $ export PYTHONPATH=../python:../tests/functional
-  $ export QEMU_TEST_QEMU_BINARY="$(pwd)/qemu-system-aarch64"
-  $ ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --list-tests
-  test_aarch64_virt_gicv2 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv2)
-  test_aarch64_virt_gicv3 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv3)
-  test_alpine_virt_tcg_gic_max (test_aarch64_virt.Aarch64VirtMachine.test_alpine_virt_tcg_gic_max)
+This series adds extra CLI args for functional tests, useful for
+developers that run test files directly.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- tests/functional/qemu_test/testcase.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Changes in v3:
+- Merged with other patch series
+- Made argument values into class attributes, and parse_args into a
+  class method (staticmethod) (suggested by Thomas)
+- Link to v2: https://lore.kernel.org/qemu-devel/20250717-functional_tests_debug_arg-v2-1-4f0d991e16f7@linaro.org
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index f7e306cf749e8b24a712b09dfe8673660cbb5085..ab564f873c303bcc28c3bf7bec8c8c4569fae91c 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -36,6 +36,7 @@
- class QemuBaseTest(unittest.TestCase):
-     debug: bool = False
-     keep_scratch: bool = "QEMU_TEST_KEEP_SCRATCH" in os.environ
-+    list_tests: bool = False
- 
-     """
-     Class method that initializes class attributes from given command-line
-@@ -61,9 +62,15 @@ def parse_args():
-             "This is equivalent to setting QEMU_TEST_KEEP_SCRATCH=1 in the "
-             "environment.",
-         )
-+        parser.add_argument(
-+            "--list-tests",
-+            action="store_true",
-+            help="List all tests that would be executed and exit.",
-+        )
-         args = parser.parse_args()
-         QemuBaseTest.debug = args.debug
-         QemuBaseTest.keep_scratch |= args.keep_scratch
-+        QemuBaseTest.list_tests = args.list_tests
-         return
- 
-     '''
-@@ -292,6 +299,13 @@ def main():
-         path = os.path.basename(sys.argv[0])[:-3]
-         QemuBaseTest.parse_args()
- 
-+        if QemuBaseTest.list_tests:
-+            loader = unittest.TestLoader()
-+            for test_suite in loader.loadTestsFromName(path):
-+                for test in test_suite:
-+                    print(test)
-+            return
-+
-         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-         if cache is not None:
-             Asset.precache_suites(path, cache)
+Changes in v2:
+- Store stdout handler in `self` object (thanks Daniel)
+- Deduplicate handler removal code (Daniel)
+- Amend commit description to mention PYTHONPATH (thanks Alex)
+- Link to v1: https://lore.kernel.org/qemu-devel/20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org
 
--- 
-2.47.2
+---
+Manos Pitsidianakis (4):
+      tests/functional: add --debug CLI arg
+      tests/functional: add --keep-scratch CLI arg
+      tests/functional: add --list-tests CLI arg
+      tests/functional: add -k TEST_NAME_PATTERN CLI arg
+
+ docs/devel/testing/functional.rst      |   2 +
+ tests/functional/qemu_test/testcase.py | 104 ++++++++++++++++++++++++++++++---
+ 2 files changed, 99 insertions(+), 7 deletions(-)
+---
+base-commit: 4bc8fb0135ac48cd1c8f0698976b7d73c60b7caa
+change-id: 20250716-functional_tests_debug_arg-aa0a5f6b9375
+
+--
+γαῖα πυρί μιχθήτω
 
 
