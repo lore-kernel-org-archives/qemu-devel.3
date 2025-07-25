@@ -4,51 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 084C3C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 08:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C9BC83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 08:38:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufDts-0006Ov-4V; Fri, 25 Jul 2025 04:35:32 -0400
+	id 1ufDtj-0006FN-5Q; Fri, 25 Jul 2025 04:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ufDtj-0006Fy-Fq
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:35:23 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ufDtf-0003WG-W6
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:35:23 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxjXLBQYNolMExAQ--.35232S3;
- Fri, 25 Jul 2025 16:35:13 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxdOS_QYNoKBsmAA--.64433S2;
- Fri, 25 Jul 2025 16:35:12 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn,
-	lixianglai@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH] hw/intc/loongarch_ipi: Fix start fail with smp cpu < smp
- maxcpus on KVM
-Date: Fri, 25 Jul 2025 16:12:13 +0800
-Message-Id: <20250725081213.3867592-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ufDtT-0005vQ-SB
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:35:09 -0400
+Received: from p-west3-cluster2-host3-snip4-5.eps.apple.com ([57.103.74.68]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ufDtR-0003SV-RC
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:35:07 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPS id
+ 4F5CB1800140; Fri, 25 Jul 2025 08:35:02 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=5NVn3yLv2ZDRyxSu/Q1jby3kMsDzW8ip8jJEBOb/zSY=;
+ h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
+ b=A7v1FnshsdoRYu6SVNw931YBq0Of7sc55nBGCSEQfcJW4qo9L6JkHo6fuMlwsCtEQ45NsK8fFMUE/EUhRV1Mm0D1zY3wpaKlufwmQkdAO6Zr+jInp0K3h8ZZks2rCgMX+y6l9TIRuhhMnPWJgVHXItWzfywb3Rynxtn0cp3AfzH2y0UoELshVJvxUCqODe9VcNQOF0cfDBK6TSTE6xOAw0hfD5hFciD4wRBAlbNcGTiwZq6CCgdQA2rtRqJqWO5xDAk7hnDJdIIAIkD/ybhKzXMJ3KIsZVmuFnYx4oXDllx4j/M+4H52ucqwt61y+sAeNq82mnJsJTQpTB9lrLcjNg==
+X-Client-IP: 46.189.47.18
+Received: from localhost.localdomain (ms-asmtp-me-k8s.p00.prod.me.com
+ [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPSA id
+ 64A1518000B4; Fri, 25 Jul 2025 08:34:59 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH 8/9] hw/arm: virt: add GICv2m for the case when ITS is not
+ available
+Date: Fri, 25 Jul 2025 10:34:30 +0200
+Message-Id: <20250725083431.91450-9-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250725083431.91450-1-mohamed@unpredictable.fr>
+References: <20250725083431.91450-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOS_QYNoKBsmAA--.64433S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Proofpoint-GUID: uLxWsWDEbXRdj8uUN57sHYsQfWKKgnnr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDA3MiBTYWx0ZWRfX3AhXq4XQjvov
+ pJWry/ZF/G7k8Xe/I+RBAHO9SwqS6GYVN0WkroS9RkdaOxOwM1d57uKXKwie7Ow3FFIP0lwLYAp
+ 6zAUgoh9kBSlzGGtNfJJsUFaWaEjqs5MDmm81Z8378mfumSNLkfyAQgMuuHLz5QEhJaQ1gibFjr
+ 6VcXN4U3jukL3TEpgW0Row+MFIupEIcKHOpsWV3AFOlUFi7x7BL2NUL3MlwbSwm32nZeDXc3Ff8
+ tQmzFhc/XucDNFHvJ434b/bvZ6gjoybpMYJ1Q7GDe1ImfJTV6uomkRGuQh4D7CdvxiC88u7WE=
+X-Proofpoint-ORIG-GUID: uLxWsWDEbXRdj8uUN57sHYsQfWKKgnnr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-25_02,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ bulkscore=0 clxscore=1030 adultscore=0 phishscore=0 malwarescore=0
+ mlxlogscore=999 spamscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2507250072
+Received-SPF: pass client-ip=57.103.74.68;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,78 +91,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU start failed when smp cpu < smp maxcpus , because qemu send a NULL
-cpu to KVM, this patch adds a check for kvm_ipi_access_regs() to fix it.
+On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
 
-run with '-smp 1,maxcpus=4,sockets=4,cores=1,threads=1'
+As such, support a GICv3 w/ GICv2m for that scenario.
 
-we got:
-Unexpected error in kvm_device_access() at ../accel/kvm/kvm-all.c:3477:
-qemu-system-loongarch64: KVM_SET_DEVICE_ATTR failed: Group 1073741825 attr 0x0000000000010000: Invalid argument
-
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/intc/loongarch_ipi_kvm.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ hw/arm/virt-acpi-build.c | 4 +++-
+ hw/arm/virt.c            | 8 ++++++++
+ include/hw/arm/virt.h    | 2 ++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
-index 4cb3acc921..dd4c367abf 100644
---- a/hw/intc/loongarch_ipi_kvm.c
-+++ b/hw/intc/loongarch_ipi_kvm.c
-@@ -23,36 +23,41 @@ static void kvm_ipi_access_regs(void *opaque, bool write)
-     LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
-     IPICore *core;
-     uint64_t attr;
--    int cpu, fd = lis->dev_fd;
-+    int i, cpu_index, fd = lis->dev_fd;
- 
-     if (fd == 0) {
-         return;
-     }
- 
--    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
--        core = &ipi->cpu[cpu];
--        attr = (cpu << 16) | CORE_STATUS_OFF;
-+    for (i = 0; i < ipi->num_cpu; i++) {
-+        core = &ipi->cpu[i];
-+        if (core->cpu == NULL) {
-+            continue;
-+        }
-+        cpu_index = i;
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index b01fc4f8ef..969fa3f686 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -848,7 +848,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+             build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+         }
+-    } else {
++    }
 +
-+        attr = (cpu_index << 16) | CORE_STATUS_OFF;
-         kvm_ipi_access_reg(fd, attr, &core->status, write);
++    if (!vms->its && !vms->no_gicv3_with_gicv2m) {
+         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
  
--        attr = (cpu << 16) | CORE_EN_OFF;
-+        attr = (cpu_index << 16) | CORE_EN_OFF;
-         kvm_ipi_access_reg(fd, attr, &core->en, write);
+         /* 5.2.12.16 GIC MSI Frame Structure */
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index df77a1d911..3ac1e129b5 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -952,6 +952,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  
--        attr = (cpu << 16) | CORE_SET_OFF;
-+        attr = (cpu_index << 16) | CORE_SET_OFF;
-         kvm_ipi_access_reg(fd, attr, &core->set, write);
- 
--        attr = (cpu << 16) | CORE_CLEAR_OFF;
-+        attr = (cpu_index << 16) | CORE_CLEAR_OFF;
-         kvm_ipi_access_reg(fd, attr, &core->clear, write);
- 
--        attr = (cpu << 16) | CORE_BUF_20;
-+        attr = (cpu_index << 16) | CORE_BUF_20;
-         kvm_ipi_access_reg(fd, attr, &core->buf[0], write);
- 
--        attr = (cpu << 16) | CORE_BUF_28;
-+        attr = (cpu_index << 16) | CORE_BUF_28;
-         kvm_ipi_access_reg(fd, attr, &core->buf[2], write);
- 
--        attr = (cpu << 16) | CORE_BUF_30;
-+        attr = (cpu_index << 16) | CORE_BUF_30;
-         kvm_ipi_access_reg(fd, attr, &core->buf[4], write);
- 
--        attr = (cpu << 16) | CORE_BUF_38;
-+        attr = (cpu_index << 16) | CORE_BUF_38;
-         kvm_ipi_access_reg(fd, attr, &core->buf[6], write);
+     if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
+         create_its(vms);
++    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
++        create_v2m(vms);
+     } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
+         create_v2m(vms);
      }
+@@ -2407,6 +2409,8 @@ static void machvirt_init(MachineState *machine)
+     vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
+         !vmc->no_ns_el2_virt_timer_irq;
+ 
++    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
++
+     fdt_add_timer_nodes(vms);
+     fdt_add_cpu_nodes(vms);
+ 
+@@ -3415,6 +3419,7 @@ static void virt_instance_init(Object *obj)
+     vms->its = true;
+     /* Allow ITS emulation if the machine version supports it */
+     vms->tcg_its = !vmc->no_tcg_its;
++    vms->no_gicv3_with_gicv2m = false;
+ 
+     /* Default disallows iommu instantiation */
+     vms->iommu = VIRT_IOMMU_NONE;
+@@ -3467,8 +3472,11 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
+ 
+ static void virt_machine_10_0_options(MachineClass *mc)
+ {
++    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
++
+     virt_machine_10_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
++    vmc->no_gicv3_with_gicv2m = true;
  }
+ DEFINE_VIRT_MACHINE(10, 0)
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 365a28b082..725ec18fd2 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -131,6 +131,7 @@ struct VirtMachineClass {
+     bool no_cpu_topology;
+     bool no_tcg_lpa2;
+     bool no_ns_el2_virt_timer_irq;
++    bool no_gicv3_with_gicv2m;
+     bool no_nested_smmu;
+ };
+ 
+@@ -178,6 +179,7 @@ struct VirtMachineState {
+     char *oem_id;
+     char *oem_table_id;
+     bool ns_el2_virt_timer_irq;
++    bool no_gicv3_with_gicv2m;
+     CXLState cxl_devices_state;
+ };
+ 
 -- 
-2.43.0
+2.39.5 (Apple Git-154)
 
 
