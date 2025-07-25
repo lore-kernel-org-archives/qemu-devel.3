@@ -4,135 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58E3C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E55C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufBrg-0002xl-UP; Fri, 25 Jul 2025 02:25:09 -0400
+	id 1ufCAW-0005JM-0w; Fri, 25 Jul 2025 02:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufBrN-0002qP-5x
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:24:49 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ufC63-0008Kt-2o
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:40:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufBrD-0007VL-ML
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:24:41 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ufC5x-0003cl-OM
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:39:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753424675;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1753425591;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AeQ7Z5jHh0tdelWQ9L9irAjCcWPnkuMCwU1yNoGwdXg=;
- b=aTBr/YwU0fp4/5996+7Wh5H9XIWWUBhI9FCyqvum+Z4qStNCKd3eC12OE66xEIVn9ed6A6
- BPgEh9NnBN6QfaNNou7ywX1nBOIjGDjF6QX36Vceor3hOZRVk4QyTqXmK1iAuFb3sFwmQ6
- 1bITyAsHHxZ3TPwAXJ2F+gfyW0fLuP8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Aw18Ri+vRPMoJlw3PDD35p9YtRVqu7F/ClYIxAYbxuo=;
+ b=jLt4ah3UJfEL7O3lPMXglHITtNvcXVSBoN04/1nLN0SBI+Fv43Z39pLHbuYf1yLMTv/LGf
+ yLa/i3nEoTNSC52Qe8hZgQL5m/vbH56enyJg1IkYHo5hnjaljc4cZmscY7AqnC7OITGVXb
+ f4q0wqtxwLlq7O7zeN2hzEWe4AFK33o=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-9RvqcWN8OvqwhM4HlWzBPA-1; Fri, 25 Jul 2025 02:24:33 -0400
-X-MC-Unique: 9RvqcWN8OvqwhM4HlWzBPA-1
-X-Mimecast-MFC-AGG-ID: 9RvqcWN8OvqwhM4HlWzBPA_1753424672
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4560f28b2b1so6137705e9.2
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 23:24:32 -0700 (PDT)
+ us-mta-35-iBNuXjfoNt-ovjCafunR4g-1; Fri, 25 Jul 2025 02:39:49 -0400
+X-MC-Unique: iBNuXjfoNt-ovjCafunR4g-1
+X-Mimecast-MFC-AGG-ID: iBNuXjfoNt-ovjCafunR4g_1753425588
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b38ec062983so1262034a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 23:39:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753424672; x=1754029472;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AeQ7Z5jHh0tdelWQ9L9irAjCcWPnkuMCwU1yNoGwdXg=;
- b=HI5HS4dq9kq7XWprLmnAmiy7YhEnfOKQyHH9WkRkarc8j8QJUgnqNxJhGV4kDTzYuw
- bMd2BPCfxFrs+5q5voTwL7SOD+OkIje7u7rIwPBTjC7xg/BwsuTxnvRGufwhgRjaKjGR
- W/tr/CoyRJQHMTzZjSxdJTdZvc2IpkoO3Axcbgi+m82vYSMfhjgPcEB2ex/V6MkmUPbI
- 1w8SmI7E1XALIQ68sotWfWlY5ubDg7XT1a470W7lIDmdKzPnQkPV8IIg4LpP5WLyYQEt
- MA/SMngyZEu9KiXxWJeDYSgYq1S5z3/icY9dd9y1ZyQF1gbiCVDcS2ULJVBtolEaZN9s
- F2qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCpdhia3/m+EotU85gEqhgTMZp92N6rDlQmHAncB3BRhGoZoLMXmjsI9kwbOzrMkSvJxK2qPaOehA1@nongnu.org
-X-Gm-Message-State: AOJu0YzBCT9aeA+jbhTvhSUZLeI6IM1TZG+EG5zgV/4T43HLxGu5Prmy
- fnaAf4/oba/Hzpdqa+FG3gjbVkXs9NkreLtEhsTkMyZBD0vjVApLgdZy1DszYV/4Cu4Z0cGJli4
- utSyj5nweQFbAql9T7CwNOYXVcE2jP1F0qq46znHxoSS8tvezt3mRsgp+
-X-Gm-Gg: ASbGnctNZqVd8H1QsqXOcKnTsr8GL9NJph00UqoWzAGWDWliTmi7vTuBzM1/4tmb5ny
- XAl/7Zkk7l8Oh6z+nSF1V8l81TLoAzVGlNap2hZ8/4ixMLfe/lHcqEst1OgZY31ucyP8j1zRp4+
- +MQ1rUD3jE+DwsKZUvz88Om04VzLGLCDAcZz+uepQMI/m4nm/K4Z4tsdMQmNvyW+1JqYq527Qt0
- SSoInMR1ZdGh1sMMwKo3j66McGbrK+GYyN3NleOYTRuwnhoRlS35LMW01puFzuo8tULe8ba74Sy
- WwirH1hhNejUjhoEMT9oLznZf2h+aSdoiWmuWcGALrTtwKsXRVEJ4qklDVZvMyje7EXIVFq9s7l
- 9oWY=
-X-Received: by 2002:a05:600c:4ed1:b0:453:1058:f8c1 with SMTP id
- 5b1f17b1804b1-45876304c42mr5110975e9.3.1753424671921; 
- Thu, 24 Jul 2025 23:24:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGC1Sbgn4lbb/WPvRg0+4drCfb7cCreuRZtunbliTntCYlbDaf48+IL8SoHo+R0UENJNsVoCg==
-X-Received: by 2002:a05:600c:4ed1:b0:453:1058:f8c1 with SMTP id
- 5b1f17b1804b1-45876304c42mr5110735e9.3.1753424671483; 
- Thu, 24 Jul 2025 23:24:31 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-115-089.pools.arcor-ip.net.
- [47.64.115.89]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870532b5asm41551685e9.5.2025.07.24.23.24.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 23:24:30 -0700 (PDT)
-Message-ID: <cef1f755-aaf0-4411-8e1c-2c50e3a57770@redhat.com>
-Date: Fri, 25 Jul 2025 08:24:29 +0200
+ d=1e100.net; s=20230601; t=1753425588; x=1754030388;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Aw18Ri+vRPMoJlw3PDD35p9YtRVqu7F/ClYIxAYbxuo=;
+ b=Qv0rPJKoibYKyXOI4Y22mz5NxwrUIApy2FmGqkqqNzl2QNk+l5y/gHqfWhpd1XxYT6
+ gY9gSXQq1HmYTWi/27CgCUvXb/dRDQNG/bu36XMZBumtU0c1PL1njBxSQiJsjqqmOHlI
+ 15e+Fbzth3czVj6kvC1qTZDfXl0GIbV8/PNOcH/7X2sTbPfxPr+pned0yFR7JLqx2MmG
+ 6DBJTTwkGYsVAFF5MNj+g1XEdvYuzNrlJvoZleWMHR320pDH+KCl2SJr+WrAUHWSlV6A
+ 2fZjGoIuflAlrSm2Z9qvvnXnGmwvUqU2ETPm4EZUNoZDfzltjvodA5p2QIy3CcCEOcF+
+ rqIA==
+X-Gm-Message-State: AOJu0YyknMnS65G2pYqTif4YrcS5Mk8PKlEXPc+vNpccuprnABQau8wF
+ 2UJOhZoGsi6YIT3qNr1DWZNyOOG5/ERfTp+A/4M+3ijXWtlrov5CItou348aeCj+WVLE+yYY2Cm
+ sqVeBqJjw5TWFcXUkZTbkxsoCJB64HYQnlqbG1XlS3WeiBaIYy0ph42zw
+X-Gm-Gg: ASbGncvhlBAwnkKjeIYBnsH9Va2r1YcS6hD12mrXxMQc1Jxei/dzqVj9iYr8iCRb93j
+ kQJUsrLzZV1+WGmrBrnJCUU2nA+SZFlkIjvHNDUvb6zTc5Rn5V0huddDtV5kl5wC9G7og666Rlu
+ qQDdqG37kn/D4+OWkm1ObsdeFyjnyTAnBZ8SAMeeDuxcxO7KFu9ivLpN+2N4L1VYQ8RtyLSIdCS
+ jUQIJhmQLs2Z/msUri9pFOazz+0bCXVxpoJX9DnKa7LYETeUSn9VjUWwtErG+H1MvFdbj375Tpf
+ l6aJyXZgevlco/DHuxqjIt5rzFt/KwYFlSRmGQiK87oaKi5LLtCc
+X-Received: by 2002:a05:6a20:12ca:b0:220:842f:2760 with SMTP id
+ adf61e73a8af0-23d6ffd1231mr1308439637.4.1753425587778; 
+ Thu, 24 Jul 2025 23:39:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExRJaEPRx7+8V2ZeoA8Mlbv3FlMpzjOHvN/T9ZLOiv/zgcXLgouNZprOq5bMWHkLXSmkh5og==
+X-Received: by 2002:a05:6a20:12ca:b0:220:842f:2760 with SMTP id
+ adf61e73a8af0-23d6ffd1231mr1308391637.4.1753425587290; 
+ Thu, 24 Jul 2025 23:39:47 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.101.73])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-761ae158001sm3107551b3a.31.2025.07.24.23.39.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Jul 2025 23:39:46 -0700 (PDT)
+Date: Fri, 25 Jul 2025 12:09:35 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v6 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+Message-ID: <aIMmp1G6l4BtKmq3@armenon-kvm.bengluru.csb>
+References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
+ <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
+ <aH5BgAVc2x_tjsHJ@redhat.com>
+ <aH5Gj61ZmtZ0NzEv@armenon-kvm.bengluru.csb>
+ <aH5JR-58iMk0ArSl@redhat.com>
+ <aH5YUmz5pAdxznAI@armenon-kvm.bengluru.csb>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk
- size calculation
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paul Durrant <paul@xen.org>, Gerd Hoffmann <kraxel@redhat.com>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20250221134856.478806-1-mjt@tls.msk.ru>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250221134856.478806-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aH5YUmz5pAdxznAI@armenon-kvm.bengluru.csb>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -141,7 +121,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,54 +134,160 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/02/2025 14.48, Michael Tokarev wrote:
-> In case of multiple chunks, code in qxl_unpack_chunks() takes size of the
-> wrong (next in the chain) chunk, instead of using current chunk size.
-> This leads to wrong number of bytes being copied, and to crashes if next
-> chunk size is larger than the current one.
-> 
-> Based on the code by Gao Yong.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1628
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   hw/display/qxl-render.c | 11 ++++++++++-
->   1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-> index eda6d3de37..c6a9ac1da1 100644
-> --- a/hw/display/qxl-render.c
-> +++ b/hw/display/qxl-render.c
-> @@ -222,6 +222,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
->       uint32_t max_chunks = 32;
->       size_t offset = 0;
->       size_t bytes;
-> +    QXLPHYSICAL next_chunk_phys = 0;
->   
->       for (;;) {
->           bytes = MIN(size - offset, chunk->data_size);
-> @@ -230,7 +231,15 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
->           if (offset == size) {
->               return;
->           }
-> -        chunk = qxl_phys2virt(qxl, chunk->next_chunk, group_id,
-> +        next_chunk_phys = chunk->next_chunk;
-> +        /* fist time, only get the next chunk's data size */
-> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-> +                              sizeof(QXLDataChunk));
-> +        if (!chunk) {
-> +            return;
-> +        }
-> +        /* second time, check data size and get data */
-> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
->                                 sizeof(QXLDataChunk) + chunk->data_size);
+Hi Daniel,
 
-Looks reasonable to me, and I think it's also simple enough for qemu-trivial 
-(now on CC:).
+On Mon, Jul 21, 2025 at 08:40:10PM +0530, Arun Menon wrote:
+> On Mon, Jul 21, 2025 at 03:05:59PM +0100, Daniel P. Berrangé wrote:
+> > On Mon, Jul 21, 2025 at 07:24:23PM +0530, Arun Menon wrote:
+> > > Hi,
+> > > Thank you for the review.
+> > > 
+> > > On Mon, Jul 21, 2025 at 02:32:48PM +0100, Daniel P. Berrangé wrote:
+> > > > On Mon, Jul 21, 2025 at 04:59:28PM +0530, Arun Menon wrote:
+> > > > > - We need to have good error reporting in the callbacks in
+> > > > >   VMStateDescription struct. Specifically pre_save, post_save,
+> > > > >   pre_load and post_load callbacks.
+> > > > > - It is not possible to change these functions everywhere in one
+> > > > >   patch, therefore, we introduce a duplicate set of callbacks
+> > > > >   with Error object passed to them.
+> > > > > - So, in this commit, we implement 'errp' variants of these callbacks,
+> > > > >   introducing an explicit Error object parameter.
+> > > > > - This is a functional step towards transitioning the entire codebase
+> > > > >   to the new error-parameterized functions.
+> > > > > - Deliberately called in mutual exclusion from their counterparts,
+> > > > >   to prevent conflicts during the transition.
+> > > > > - New impls should preferentally use 'errp' variants of
+> > > > >   these methods, and existing impls incrementally converted.
+> > > > >   The variants without 'errp' are intended to be removed
+> > > > >   once all usage is converted.
+> > > > > 
+> > > > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > > > ---
+> > > > >  include/migration/vmstate.h | 11 +++++++++++
+> > > > >  migration/vmstate.c         | 47 +++++++++++++++++++++++++++++++++++++++------
+> > > > >  2 files changed, 52 insertions(+), 6 deletions(-)
+> > > > > 
+> > > > 
+> > > > > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > > > > index 288b57e1ed778cce21247b64d5e97dfef41ad586..d96908d12ccffaef421e5d399a48e26cada2cb77 100644
+> > > > > --- a/migration/vmstate.c
+> > > > > +++ b/migration/vmstate.c
+> > > > 
+> > > > > @@ -524,7 +548,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> > > > >                  if (ret) {
+> > > > >                      error_setg(errp, "Save of field %s/%s failed",
+> > > > >                                  vmsd->name, field->name);
+> > > > > -                    if (vmsd->post_save) {
+> > > > > +                    if (vmsd->post_save_errp) {
+> > > > > +                        ret = vmsd->post_save_errp(opaque, &local_err);
+> > > > > +                        if (ret < 0) {
+> > > > > +                            error_propagate(errp, local_err);
+> > > > > +                        }
+> > > > 
+> > > > This is still broken. 'errp' is already set a few lines earlier, so you
+> > > > can't propagate a new error over the top
+> > > 
+> > > I was wondering that we should preserve the first error that was encountered.
+> > > So even if local_err was set, and in case errp already has an error, then it will
+> > > be a no-op and local_err will be freed.
+> > 
+> > We know that 'local_err' is definitely set when 'post_save_errp' is called,
+> > because there's a call to 'error_setg' right above it.
+> 
+> mmm, error_setg() above that sets errp, local_err is set only of post_save_errp() has
+> errors. Do we want both the erros to be propagated? or is it okay to propagate the first
+> error that was encountered.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I see your point. If we set errp, then there is no point in writing error_propagate()
+because that will never allow local_err to be propagated because the first param is set.
+
+I am intending to catch both the errors,
+a. from vmstate_save_state_v() or explicitly set by us using error_setg(), in errp
+b. from calling post_save_errp() , in local_err
+and then, if we have both a and b, then we propagate  b.
+and if we only have a, then a will be propagated.
+
+I think this will be consistent with the original logic of setting the error using 
+error_setg() and calling vmsd->post_save() only in the failure path. Please correct me
+if I am wrong.
+
+> > 
+> > 
+> > 
+> > > > > +                    } else if (vmsd->post_save) {
+> > > > >                          vmsd->post_save(opaque);
+> > > > >                      }
+> > 
+> > ... pre-existing mistake not checking return value of
+> > post_save.
+> > 
+> > > > >                      return ret;
+> > > > > @@ -552,7 +581,13 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> > > > >  
+> > > > >      ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+> > > > >  
+> > > > > -    if (vmsd->post_save) {
+> > > > > +    if (vmsd->post_save_errp) {
+> > > > > +        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
+> > > > > +        if (!ret && ps_ret) {
+> > > > > +            ret = ps_ret;
+> > > > > +            error_propagate(errp, local_err);
+> > > > > +        }
+> > > > 
+> > > > Again, propagating over the top of an existing error
+> > > 
+> > > Sorry, correct me if I am wrong.
+> > > Since we have 'if (!ret && ps_ret)' ,
+> > > if vmstate_subsection_save() fails, the above condition will not hold true.
+> > > Only if the first function call vmstate_subsection_save() is successful and the second one
+> > > post_save_errp() fails then we try to propagate, again hoping to preserve the first error.
+> > 
+> > Opps, yes, you're right - I missed the 'ps_ret' check. That means this
+> > code is a memory leak when 'ret' is non-zero, as nothing frees 'local_err'
+> > in that case.
+> 
+> Yes, maybe I can null check local_err and error_free() it.
+> 
+> > 
+> > > 
+> > > > 
+> > > > > +    } else if (vmsd->post_save) {
+> > > > >          int ps_ret = vmsd->post_save(opaque);
+> > > > >          if (!ret && ps_ret) {
+> > > > >              ret = ps_ret;
+> > > > > 
+> > > > > -- 
+> > > > > 2.50.0
+> > > > > 
+> > > > > 
+> > > > 
+> > > > With regards,
+> > > > Daniel
+> > > > -- 
+> > > > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > > > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > > > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > > > 
+> > > 
+> > > Regards,
+> > > Arun Menon
+> > > 
+> > 
+> > With regards,
+> > Daniel
+> > -- 
+> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > 
+> Regards,
+> Arun
+
+Regards,
+Arun
 
 
