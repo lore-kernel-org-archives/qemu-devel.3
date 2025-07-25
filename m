@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797BFC87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421BBC83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufEaH-0007sj-Bn; Fri, 25 Jul 2025 05:19:21 -0400
+	id 1ufEgA-0008JD-Az; Fri, 25 Jul 2025 05:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ufEaE-0007nb-5W
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:19:18 -0400
+ id 1ufEg6-0008GI-Tn
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:25:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ufEaB-0000Xn-B1
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:19:17 -0400
+ id 1ufEg3-0002Ap-Rn
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:25:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753435150;
+ s=mimecast20190719; t=1753435518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8jDPIlW3qnT9v6CbF1D7ueXTAB06Yu3PZBOgce6Zy+w=;
- b=hJmTP+2//rpP3dET1JbCgxCLKAXk8TbqlSfVM0XLQjzNeCAJBJl1ilp9qXotrbiFtjoMcg
- 0DQpPR7yXrqimix6DsEQK/SuhBtw2qvmLGBR5tfe8nJkScfYQngIKIVOqmm7sIg9uLe7tQ
- 90TuYEHkesxNWQXtFPQpGtG3OtBRW8o=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NRkxf0Co3kE3u/wpZULXKwkvWTQBZftXMbsqImP+Q3I=;
+ b=QQJtfeQdGhmw0FjrHhQmjcGTGmY5g+oSPyNNq7uPaRsbNChYG80WKuZ7L5ePEF+6r/cxAP
+ y2H3qM8cNXcvao32RWeavMyb15H1dtf6VgJ0K513sqS37o6hLq7cAyVXpj9dqUkPB/IiDJ
+ V2nhT4TlPx0SBTsS4n84SPinP9MBPpo=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-aECxVZ6nOVW3QaUXezQJAg-1; Fri, 25 Jul 2025 05:19:09 -0400
-X-MC-Unique: aECxVZ6nOVW3QaUXezQJAg-1
-X-Mimecast-MFC-AGG-ID: aECxVZ6nOVW3QaUXezQJAg_1753435148
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad56a52edc5so252811466b.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:19:08 -0700 (PDT)
+ us-mta-695-aeV_j7ZcOGCiG-XmZU0JYA-1; Fri, 25 Jul 2025 05:25:16 -0400
+X-MC-Unique: aeV_j7ZcOGCiG-XmZU0JYA-1
+X-Mimecast-MFC-AGG-ID: aeV_j7ZcOGCiG-XmZU0JYA_1753435515
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ae401eba66aso126077266b.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:25:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753435148; x=1754039948;
+ d=1e100.net; s=20230601; t=1753435515; x=1754040315;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8jDPIlW3qnT9v6CbF1D7ueXTAB06Yu3PZBOgce6Zy+w=;
- b=Gvyhkr2I2X/gCOY/H3Vp7UVWnMxUa+g0RAq3OuUp4CCnCzr4Dehy5jHVZLiEBsgGld
- KSExHXCCVVZxc0c058mWs4BYCO9pVXePhjkqsHSkWPOFqxoJpABXIaQw7FIaXtDjsAex
- mW/tXslZCFJ47PhGL1CJXiN9TVZiOFuj9ywSFq/I20riq5u8MO8f1pefk3Mlcxy5w1Eh
- qn5yR0rJqDWu6FxXaio9sQ/869ITKr36WUz9cB1T9C8vaIhdU+Ta79Xb64xrJE4JFKvY
- fr2X4o0b6Aob+Sfkpgi9ZYWwzbc4wl4raf9kGUpxRuasDAUruP55CTOCmonzniOW+D4T
- 7J4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0YTa94NrirD4aOgD1PLc1qPFOHVdHrW+sm2WtFYRnb1NrKsKJDqzHhXlfW5wMuliLyiKl8p+Fahjv@nongnu.org
-X-Gm-Message-State: AOJu0Ywylag8L0aGBRAgOxGBDV09zM+eWQ+tFerVZWGHpQavZcCtL1Hw
- IOLuJfpNP1O3GZ8FrNxS1+ha5zD9xJuMv31r9f/b8l5Lfn5kJzEe3FEQAWXP8jDMTuFSUNK0diz
- hVqOKoX0BLae2meQToHwmLfeMhNFlBBcETtwpE8VDK2on7z2VICwvSZpsDRAncFFHJQ3cyLaM0m
- DkCaLvQMGWl8220lE7vNQlv2keAyjvqzs=
-X-Gm-Gg: ASbGncsmA/mD+F6FY4pYR58kRqd+qbwU9JZZ9HcHkqQuL0iX+8RIcMRtqdhcJFm5t0f
- pZvfd3mf04fhQN9z2My6qs7tZmwTRLt0laZvZDOb9eaWHU8LTKy2LrK7lKTWK+NRo9KomOWLXyV
- enpKMaPWaDQ+pd4bJgjk1LHQ==
-X-Received: by 2002:a17:906:478e:b0:ad5:2328:e39b with SMTP id
- a640c23a62f3a-af618f02ee2mr155829766b.31.1753435147715; 
- Fri, 25 Jul 2025 02:19:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGCmAtangdJR67mgMhkkx0dJKbuVP1F4Gmw43IR2exqn3s/1/POlfkPi+kXYS1ufqYLiANn6C8SriZP3BRqoYQ=
-X-Received: by 2002:a17:906:478e:b0:ad5:2328:e39b with SMTP id
- a640c23a62f3a-af618f02ee2mr155826866b.31.1753435147251; Fri, 25 Jul 2025
- 02:19:07 -0700 (PDT)
+ bh=NRkxf0Co3kE3u/wpZULXKwkvWTQBZftXMbsqImP+Q3I=;
+ b=o2eZneqpZMKhZgYEnzlAEuxcAuSSzPsVp0xIHtF93EhGHW0Mn8Ys1DGDg1u2laQOGQ
+ W7XYUUTjWU2S8N6bAb6NSykvlxM553Vsh1DiTXmgSyGY8CPsxQGIZNiUIK+adgWXH7sS
+ 77tLGrMGPls37ahKfx5QSAq5Im2RA2GFHzhPqUNalFOoetzxcnaet/wm7DI7CNmj9CaD
+ MfU29F+mjazlHDOJWmiiFR9bxXLuPkrqd97hYaWL8hI5tkMWGbKsj9PVWn/727Rc1ogT
+ +IcalmuiMcpN6TTqa8l+TH3u76Cn+NRg39/6D+8RE0XEjBaMOM+rIfgdjcUUO5pGgg7A
+ GfoQ==
+X-Gm-Message-State: AOJu0YyuRuMyESMaDFGE6nIGe3havbP4lTcK1nal+8H4DMtEBVx5VYDb
+ 2BFuCURL3MVxvildVnGJ8gqyN5YhVWtokquZ54qLIh04gest6Gzw9X+kEeRw+ICMpJu47cxygSh
+ 52/dX8P+Jk0NmvD+668ze5i+7rasZfZOu7OXyYucJWy1Y3puUXGeIQ5VwjQWYiQAV10MguFqph3
+ JlSBFF+dtFJ5oFidD8saAlFUISWQX7qZw=
+X-Gm-Gg: ASbGnctufol0ba+pO13uuFdR4p4uyZMVNn/aDXUYlEl1oYOpoXtzleWUYMH65GDBAKP
+ SYqqyrgEE4CDfyb/8bOnovX4zIRQjezetBxMDCFlwEacFALywQHgc4mph2tL4JurXEx06unDoWW
+ Hl6ZcdNhaaIz9rqk8DoclfbA==
+X-Received: by 2002:a17:907:a088:b0:ae6:d94f:4326 with SMTP id
+ a640c23a62f3a-af61e922340mr180660666b.57.1753435515220; 
+ Fri, 25 Jul 2025 02:25:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUjdFwywN1/0Zo0IMG8xLmYMMhI7inplJ7T1c/JwRCgnv1I4L0cxrd0BUl7BiSiAyyNtKsauPo8dpMuVyeSFw=
+X-Received: by 2002:a17:907:a088:b0:ae6:d94f:4326 with SMTP id
+ a640c23a62f3a-af61e922340mr180656566b.57.1753435514805; Fri, 25 Jul 2025
+ 02:25:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <CACGkMEvrgAqSr9sgvq6F4oKBitZncqhsB_MEsbaNB7p0ZN5fEA@mail.gmail.com>
- <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
-In-Reply-To: <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
+References: <cover.1753297661.git.pabeni@redhat.com>
+In-Reply-To: <cover.1753297661.git.pabeni@redhat.com>
 From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 25 Jul 2025 17:18:29 +0800
-X-Gm-Features: Ac12FXxNaJDF3CtvDPCAFwq4PxP5-goq1dkn-oKB8_TNkfTD5S4ow3qOMizUkXY
-Message-ID: <CAPpAL=yRCpsY6VnDs069MmQ6cfGa9hguA1gdzuUw=0VwZZSK5A@mail.gmail.com>
-Subject: Re: [RFC 0/6] virtio-net: initial iterative live migration support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, peterx@redhat.com,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com, mst@redhat.com, 
- si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com
+Date: Fri, 25 Jul 2025 17:24:37 +0800
+X-Gm-Features: Ac12FXwet-qMRB90hWKFN5OEtYP4Bm8PCWfwVSb7olzrhLWFwV56Yo1M3Nwj14A
+Message-ID: <CAPpAL=yYgqQk572yaRkNaKnoBbw7OcBGZ0HdXAJXz9mo5F6W5A@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 00/14] virtio: introduce support for GSO over UDP
+ tunnel
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
@@ -108,212 +112,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this series of patches with virtio-net regression tests,
+Tested this series of patches V4 with virtio-net regression tests,
 everything works fine.
 
 Tested-by: Lei Yang <leiyang@redhat.com>
 
-
-On Fri, Jul 25, 2025 at 6:01=E2=80=AFAM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
+On Thu, Jul 24, 2025 at 3:34=E2=80=AFAM Paolo Abeni <pabeni@redhat.com> wro=
+te:
 >
+> Some virtualized deployments use UDP tunnel pervasively and are impacted
+> negatively by the lack of GSO support for such kind of traffic in the
+> virtual NIC driver.
 >
+> The virtio_net specification recently introduced support for GSO over
+> UDP tunnel, and the kernel side of the implementation has been merged
+> into the net-next tree; this series updates the virtio implementation to
+> support such a feature.
 >
-> On 7/23/25 1:51 AM, Jason Wang wrote:
-> > On Tue, Jul 22, 2025 at 8:41=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> This series is an RFC initial implementation of iterative live
-> >> migration for virtio-net devices.
-> >>
-> >> The main motivation behind implementing iterative migration for
-> >> virtio-net devices is to start on heavy, time-consuming operations
-> >> for the destination while the source is still active (i.e. before
-> >> the stop-and-copy phase).
-> >
-> > It would be better to explain which kind of operations were heavy and
-> > time-consuming and how iterative migration help.
-> >
+> Currently the qemu virtio support limits the feature space to 64 bits,
+> while the virtio specification allows for a larger number of features.
+> Specifically the GSO-over-UDP-tunnel-related virtio features use bits
+> 65-69; the larger part of this series (patches 4-12) actually deals with
+> extending the features space.
 >
-> You're right. Apologies for being vague here.
+> The extended features are carried by fixed size uint64_t arrays,
+> bringing the current maximum features number to 128.
 >
-> I did do some profiling of the virtio_load call for virtio-net to try
-> and narrow down where exactly most of the downtime is coming from during
-> the stop-and-copy phase.
+> The patches use some syntactic sugar to try to minimize the otherwise
+> very large code churn. Specifically the extended features are boundled
+> in an union with 'legacy' features definition, allowing no changes in
+> the virtio devices not needing the extended features set.
 >
-> Pretty much the entirety of the downtime comes from the
-> vmstate_load_state call for the vmstate_virtio's subsections:
+> The actual offload implementation is in patches 13 and 14 and boils down
+> to propagating the new offload to the tun devices and the vhost backend.
 >
-> /* Subsections */
-> ret =3D vmstate_load_state(f, &vmstate_virtio, vdev, 1);
-> if (ret) {
->      return ret;
-> }
+> Patch 1 is a small pre-req refactor that ideally could enter the
+> tree separately; it's presented here in the same series to help
+> reviewers more easily getting the full picture, patch 2 updates to
+> linux headers update script to deal with annotations recently introduce
+> in the kernel and patch 3 is a needed linux headers update.
 >
-> More specifically, the vmstate_virtio_virtqueues and
-> vmstate_virtio_extra_state subsections.
+> Tested with basic stream transfer with all the possible permutations of
+> host kernel/qemu/guest kernel with/without GSO over UDP tunnel support,
+> vs snapshots creation and restore and vs migration.
 >
-> For example, currently (with no iterative migration), for a virtio-net
-> device, the virtio_load call took 13.29ms to finish. 13.20ms of that
-> time was spent in vmstate_load_state(f, &vmstate_virtio, vdev, 1).
+> Sharing again as RFC as the kernel bits have not entered the Linus tree
+> yet - but they should on next merge window.
 >
-> Of that 13.21ms, ~6.83ms was spent migrating vmstate_virtio_virtqueues
-> and ~6.33ms was spent migrating the vmstate_virtio_extra_state
-> subsections. And I believe this is from walking VIRTIO_QUEUE_MAX
-> virtqueues, twice.
+> ---
+> Note: next revision will be after the Linux merge window to allow
+> dropping the 'RFC' tag and also due to myself being off-the-grid
+> meanwhile.
 >
-> vmstate_load_state virtio-net v11
-> vmstate_load_state PCIDevice v2
-> vmstate_load_state_end PCIDevice end/0
-> vmstate_load_state virtio-net-device v11
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-vnet v0
-> vmstate_load_state_end virtio-net-vnet end/0
-> vmstate_load_state virtio-net-ufo v0
-> vmstate_load_state_end virtio-net-ufo end/0
-> vmstate_load_state virtio-net-tx_waiting v0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state_end virtio-net-tx_waiting end/0
-> vmstate_load_state_end virtio-net-device end/0
-> vmstate_load_state virtio v1
-> vmstate_load_state virtio/64bit_features v1
-> vmstate_load_state_end virtio/64bit_features end/0
-> vmstate_load_state virtio/virtqueues v1
-> vmstate_load_state virtqueue_state v1  <--- Queue idx 0
-> ...
-> vmstate_load_state_end virtqueue_state end/0
-> vmstate_load_state virtqueue_state v1  <--- Queue idx 1023
-> vmstate_load_state_end virtqueue_state end/0
-> vmstate_load_state_end virtio/virtqueues end/0
-> vmstate_load_state virtio/extra_state v1
-> vmstate_load_state virtio_pci v1
-> vmstate_load_state virtio_pci/modern_state v1
-> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 0
-> vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> ...
-> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 1023
-> vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> vmstate_load_state_end virtio_pci/modern_state end/0
-> vmstate_load_state_end virtio_pci end/0
-> vmstate_load_state_end virtio/extra_state end/0
-> vmstate_load_state virtio/started v1
-> vmstate_load_state_end virtio/started end/0
-> vmstate_load_state_end virtio end/0
-> vmstate_load_state_end virtio-net end/0
-> vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virtio-net
-> instance_id=3D0 downtime=3D13260
+> v3 -> v4:
+>   - more sparse cleanups
+>   - fix build failures on a couple of targets
 >
-> With iterative migration for virtio-net (maybe all virtio devices?), we
-> can send this early while the source is still running and then only send
-> the deltas during the stop-and-copy phase. It's likely that the source
-> wont be using all VIRTIO_QUEUE_MAX virtqueues during the migration
-> period, so this could really minimize a large majority of the downtime
-> contributed by virtio-net.
+> v2 -> v3:
+>   - consolidated suffixes for new fields to '_ex'
+>   - avoid pre/post load trickery and relay on reset zeroing the features
+>   - cleaned-up virtio store implementation deduplicating a bit of code
+>   - many more cleanups, see the individual patches changelog for the
+>     details
+>   - I left patch 1 unmodified, still some hope we could live with that;)
 >
-> This could be one example.
+> Paolo Abeni (14):
+>   net: bundle all offloads in a single struct
+>   linux-headers: deal with counted_by annotation
+>   linux-headers: Update to Linux ~v6.16-rc7 net-next
+>   virtio: introduce extended features type
+>   virtio: serialize extended features state
+>   virtio: add support for negotiating extended features
+>   virtio-pci: implement support for extended features
+>   vhost: add support for negotiating extended features
+>   qmp: update virtio features map to support extended features
+>   vhost-backend: implement extended features support
+>   vhost-net: implement extended features support
+>   virtio-net: implement extended features support
+>   net: implement tunnel probing
+>   net: implement UDP tunnel features offloading
 >
-> >>
-> >> The motivation behind this RFC series specifically is to provide an
-> >> initial framework for such an implementation and get feedback on the
-> >> design and direction.
-> >> -------
-> >>
-> >> This implementation of iterative live migration for a virtio-net devic=
-e
-> >> is enabled via setting the migration capability 'virtio-iterative' to
-> >> on for both the source & destination, e.g. (HMP):
-> >>
-> >> (qemu) migrate_set_capability virtio-iterative on
-> >>
-> >> The virtio-net device's SaveVMHandlers hooks are registered/unregister=
-ed
-> >> during the device's realize/unrealize phase.
-> >
-> > I wonder about the plan for libvirt support.
-> >
+>  hw/net/e1000e_core.c                         |   5 +-
+>  hw/net/igb_core.c                            |   5 +-
+>  hw/net/vhost_net-stub.c                      |   8 +-
+>  hw/net/vhost_net.c                           |  45 ++--
+>  hw/net/virtio-net.c                          | 222 +++++++++++++------
+>  hw/net/vmxnet3.c                             |  13 +-
+>  hw/virtio/vhost-backend.c                    |  62 +++++-
+>  hw/virtio/vhost.c                            |  68 ++++--
+>  hw/virtio/virtio-bus.c                       |  11 +-
+>  hw/virtio/virtio-hmp-cmds.c                  |   3 +-
+>  hw/virtio/virtio-pci.c                       |  69 +++++-
+>  hw/virtio/virtio-qmp.c                       |  91 +++++---
+>  hw/virtio/virtio-qmp.h                       |   3 +-
+>  hw/virtio/virtio.c                           | 102 ++++++---
+>  include/hw/virtio/vhost-backend.h            |   6 +
+>  include/hw/virtio/vhost.h                    |  56 ++++-
+>  include/hw/virtio/virtio-features.h          | 127 +++++++++++
+>  include/hw/virtio/virtio-net.h               |   2 +-
+>  include/hw/virtio/virtio-pci.h               |   2 +-
+>  include/hw/virtio/virtio.h                   |  11 +-
+>  include/net/net.h                            |  20 +-
+>  include/net/vhost_net.h                      |  33 ++-
+>  include/standard-headers/linux/ethtool.h     |   4 +-
+>  include/standard-headers/linux/vhost_types.h |   5 +
+>  include/standard-headers/linux/virtio_net.h  |  33 +++
+>  linux-headers/linux/vhost.h                  |   7 +
+>  net/net.c                                    |  17 +-
+>  net/netmap.c                                 |   3 +-
+>  net/tap-bsd.c                                |   8 +-
+>  net/tap-linux.c                              |  38 +++-
+>  net/tap-linux.h                              |   9 +
+>  net/tap-solaris.c                            |   9 +-
+>  net/tap-stub.c                               |   8 +-
+>  net/tap.c                                    |  21 +-
+>  net/tap_int.h                                |   5 +-
+>  qapi/virtio.json                             |   9 +-
+>  scripts/update-linux-headers.sh              |   1 +
+>  37 files changed, 875 insertions(+), 266 deletions(-)
+>  create mode 100644 include/hw/virtio/virtio-features.h
 >
-> Could you elaborate on this a bit?
->
-> >>
-> >> Currently, this series only sends and loads the vmstate at the start o=
-f
-> >> migration. The vmstate is still sent (again) during the stop-and-copy
-> >> phase, as it is today, to handle any deltas in the state since it was
-> >> initially sent. A future patch in this series could avoid having to
-> >> re-send and re-load the entire state again and instead focus only on t=
-he
-> >> deltas.
-> >>
-> >> There is a slight, modest improvement in guest-visible downtime from
-> >> this series. More specifically, when using iterative live migration wi=
-th
-> >> a virtio-net device, the downtime contributed by migrating a virtio-ne=
-t
-> >> device decreased from ~3.2ms to ~1.4ms on average:
-> >
-> > Are you testing this via a software virtio device or hardware one?
-> >
->
-> Just software (virtio-device, vhost-net) with these numbers. I can run
-> some tests with vDPA hardware though.
->
-> Those numbers were from a simple, 1 queue-pair virtio-net device.
->
-> >>
-> >> Before:
-> >> -------
-> >> vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virtio-=
-net
-> >>    instance_id=3D0 downtime=3D3594
-> >>
-> >> After:
-> >> ------
-> >> vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virtio-=
-net
-> >>    instance_id=3D0 downtime=3D1607
-> >>
-> >> This slight improvement is likely due to the initial vmstate_load_stat=
-e
-> >> call "warming up" pages in memory such that, when it's called a second
-> >> time during the stop-and-copy phase, allocation and page-fault latenci=
-es
-> >> are reduced.
-> >> -------
-> >>
-> >> Comments, suggestions, etc. are welcome here.
-> >>
-> >> Jonah Palmer (6):
-> >>    migration: Add virtio-iterative capability
-> >>    virtio-net: Reorder vmstate_virtio_net and helpers
-> >>    virtio-net: Add SaveVMHandlers for iterative migration
-> >>    virtio-net: iter live migration - migrate vmstate
-> >>    virtio,virtio-net: skip consistency check in virtio_load for iterat=
-ive
-> >>      migration
-> >>    virtio-net: skip vhost_started assertion during iterative migration
-> >>
-> >>   hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++----=
---
-> >>   hw/virtio/virtio.c             |  32 +++--
-> >>   include/hw/virtio/virtio-net.h |   8 ++
-> >>   include/hw/virtio/virtio.h     |   7 +
-> >>   migration/savevm.c             |   1 +
-> >>   qapi/migration.json            |   7 +-
-> >>   6 files changed, 247 insertions(+), 54 deletions(-)
-> >>
-> >> --
-> >> 2.47.1
-> >
-> > Thanks
-> >
-> >>
-> >
+> --
+> 2.50.0
 >
 >
 
