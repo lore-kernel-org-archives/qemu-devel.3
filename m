@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA079C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 11:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3810C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 11:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufGog-0000b4-D5; Fri, 25 Jul 2025 07:42:22 -0400
+	id 1ufGoi-0001Kq-8p; Fri, 25 Jul 2025 07:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ufGoX-0005pQ-VI
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:16 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1ufGoV-0004mo-U0
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:12 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ufGoV-0000NT-Jz
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:13 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45618ddd62fso21610875e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 04:42:10 -0700 (PDT)
+ id 1ufGoQ-0000Mq-J4
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 07:42:10 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-451dbe494d6so23062525e9.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 04:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753443729; x=1754048529; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753443725; x=1754048525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Sy3GkHHO6LLMK4u+dTHrbts4rqpX7n8XXc8OUmNGqkk=;
- b=bTV8JQvwZ9/M8xrFWJegNSU3qgmjucyYhERDV9y7AbN5+Umwj/l+oWMPs2iUMfhfEu
- tR2HMjoZP5EjRNV5/sR5daxvTxZO1f1g6abgedF7EsKeiFQUg8fQA3wP0ftI8RT8KihQ
- 9y/zQcSr9d/ryDp18TuxYMW055v4XZ/5iY74cEPxbXcy6ikvUwEjkCGhtr3kwjPYEk48
- YIonlqqzBnUrxhDVrlpqxvw4j2fIIehTxuhk2KYX0OQgSMcLjyuzMEro+MnHIXZN9Vk7
- kb0MTrLqbwfuUhz+8rB2ITDtoHd343pzdBzvmBTk4Dnf6qPIYFxUP7HlBds8HAG5pZhw
- urOw==
+ :reply-to; bh=5hME3X1HHlYx7jug7j1WjMyRf8G3SfkM4to7g0GptTI=;
+ b=FpxIpfKt4dCsG0VEDwklOYqHroYHBYXe0yB+yEdCwl30osdbrg0eaHYVqKhoScUM4b
+ OipmZuaHE2Cd2m+wsRO2+2QnAb4ZPCf5EDJmriTzfwvakPU8KlWwflrvViiSMH0ZUfH0
+ t4x65Qn8xPUOS2rT7sS1EsGubS45xowUHwetbc7sI304Qe2vI0zI78TdcFZk1RAWFOam
+ vxooArpmurhxAj5fRWVH0R3U9AlwBbLil1mfVYHVWQ40ZmccbHnWG/vPgsXYckxRxCe8
+ I0gyTMfS48bLNchEQzHECOdAe99JYEHu4goVFgjMBg/6EMJW7Ge6PPFjRQ6IJC9RXxDG
+ LhTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753443729; x=1754048529;
+ d=1e100.net; s=20230601; t=1753443725; x=1754048525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Sy3GkHHO6LLMK4u+dTHrbts4rqpX7n8XXc8OUmNGqkk=;
- b=rlq0dGqf+E3/jBheal0n7XFia9V+5kPwhWRXpvmE68FKL83CfYeUjdjvFkkzFxfxGq
- 6AvjG+ALAJXh4taGvQ7g8Tt3CIRUzUQv4EMKMy/guarWT0rc4Mqj7GC6dZ/FGKDhFl10
- 8a+mefe8Ep6+Lixr54dOSr+xMY690A2aGsZCql0R0FAPP0JjF3rPbrIsFLmF1eFQGE8/
- Y/uj6gXg1MEZpnWI8ZTheIaetLwAaviD0W3em7WiKSriWtdCJ8C1jkxbkIT9eU2BHvYP
- 4qiWTTSy7gT4yieOL4Eo0nWqU1DyJ0kgZ4CnJ7WWkqdEw+T5r4kt6MfLWU4wnFv3wSXN
- +/nw==
-X-Gm-Message-State: AOJu0YyvW3++7gRVydlLz0ePfWY82iN3Yqm1GBuTrwLNM57oOdZrc13m
- BPCXk9egESG6vwavKjY7Re1phR9Ei6h317tkoVMRnRezBZ0YANGlDQkXCIiJWOCvhtNdgAXQlG2
- ig/1r
-X-Gm-Gg: ASbGncv55ga/4Ylm0iG3qCICv7xWpSgWodbbHRGKHNPyc8B7FnMxb1ygJ3+5sxp6H2h
- pWpS6qpE08HMi7tRU5mG7YE2w+N1VkT0LV0QxZlFe4WoKG0fuQE3jpzsHrxthinNNbvAWFd2D0G
- UUHF9OZcL4VHzSW3cjVDqTCuQX1yVf507b5GwpruzhoO9mS4xTZzrHDkhcS1/HuzFS86LU/rHs/
- Wj3I6ixnUzm91IAn1CGx2J+MW1aWnko+3aATlu2RdvridXwurX5W9qDErUv/6Gzl0JflH/wXB4Z
- gLb4PDNbYk5AtZKo3+ni7ybYBPld0rSwp3mxSxfBmbk6u3z1aO63XEDQMbh5QvMPLbw6ZHNxrXi
- CoNzJwKzHSrsOZHR1qM+FN9l23BQa
-X-Google-Smtp-Source: AGHT+IHKSvxCzeWlx2NyQoXWlsnrElYySlb0c5UpjXZPR3WbhtDMC66CXrZQGEyyNKphsddFL+adxg==
-X-Received: by 2002:a05:600c:528e:b0:456:1a69:950b with SMTP id
- 5b1f17b1804b1-45876547700mr12499835e9.22.1753443728580; 
- Fri, 25 Jul 2025 04:42:08 -0700 (PDT)
+ bh=5hME3X1HHlYx7jug7j1WjMyRf8G3SfkM4to7g0GptTI=;
+ b=OUL0wAHDE7rG7K4AgApwu6Q2hVyLd9wmvW2OCDoVKfiQjQz1cb4civvFGGyeEZA/73
+ CnOVbl9UEpkEuvWo6dFB+FdiXNQMy6Wm3y7UeWBfpqDh1Vj4z0hJZYfFDhb6qD/AyquJ
+ 9fflO9bR87E3L3XSr9IsET4lSLFtrd767nB7lPVmTsuTon1NAPGSSctcXr5ZdabAyCHy
+ HoONJVUczeyfsVOs9eSkoctJU6wxgqfJcwqiNZMbWUiDGi1tApKL5ecZF4cw9zyg8XGx
+ ev33vCTwH2TeodRqvHV15hQeHzNNsKlDip7o5JvTDKLLjOOtJI6/cvZMAiEZDEERVL7k
+ 5Kzw==
+X-Gm-Message-State: AOJu0YxSvDoZbxLKDF121EnolvI7dCnBpwOr4UESsTBFqjsWssfbb3PZ
+ Sngfk5GYr0WdWKuZ7DKIY8hsBqb6tVe1DjYjH127zDhF31+6HFnnEW+6IOQxu4hI10ThzHzU/G8
+ YT25T
+X-Gm-Gg: ASbGnct4W+2Ue4y9UfDDmva6rAxzGF4NHdujwrt843ZHYRP1Uejlhf0Y4YXDOC+hXdw
+ MuHNYOHxNdor9dFIOxnEeYIrKpnjlzdyk3DlrEkIGE4DYE58ydNqxnsRuUZKVwS0hfooM2E8zk1
+ MiULKqxocVT431DWzvfTuKNLFBZTABHcO5UMLeQxyxnqm7fcohwFjREtKTK6OFz3I1ndeDccnZd
+ 1T3MSjOr4xlpHK1d7MGlbUs/WUzhY7QAAIneuZH6//Or3KJO2FO7an3G81WXuOTzmefg5WIeOMu
+ P2Po+Dz2enOWL5bM1isedJmZAmoAiPG8PZMMNtH0hA3lHGAilnhTEUp7ty0fPZ6FFcu5BmCY2i+
+ qbbykXFyNTNUmDBW0AuLO1a37WMd+9+2MG+4725E=
+X-Google-Smtp-Source: AGHT+IHep78982ZC92XsGEr/9P8kxrC/DogZkAps0PGOHGCwlEqTMoAJ8BzzXj+yd/Xn2g/GA+Jd3w==
+X-Received: by 2002:a05:600c:4444:b0:456:1611:cea5 with SMTP id
+ 5b1f17b1804b1-45876549d1amr16664485e9.18.1753443724537; 
+ Fri, 25 Jul 2025 04:42:04 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870568fb1sm51230105e9.27.2025.07.25.04.42.07
+ 5b1f17b1804b1-45870568fb1sm51230105e9.27.2025.07.25.04.42.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 04:42:07 -0700 (PDT)
+ Fri, 25 Jul 2025 04:42:03 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/8] target/arm: Fix LD1W, LD1D to 128-bit elements
-Date: Fri, 25 Jul 2025 12:41:56 +0100
-Message-ID: <20250725114158.3703254-7-peter.maydell@linaro.org>
+Subject: [PULL 3/8] decodetree: Infer argument set before inferring format
+Date: Fri, 25 Jul 2025 12:41:53 +0100
+Message-ID: <20250725114158.3703254-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250725114158.3703254-1-peter.maydell@linaro.org>
 References: <20250725114158.3703254-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In our implementation of the SVE2p1 contiguous load to 128-bit
-element insns such as LD1D (scalar plus scalar, single register), we
-got the order of the arguments to the DO_LD1_2() macro wrong.  Here
-the first argument is the element size and the second is the memory
-size, and the element size is always the same size or larger than
-the memory size.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-For the 128-bit versions, we want to load either 32-bit or 64-bit
-values from memory and extend them to the 128-bit vector element, but
-were trying to load 128 bit values and then stuff them into 32-bit or
-64-bit vector elements.  Correct the macro ordering.
+Failure to confirm an argument set first may result in
+the selection of a format which leaves extra arguments
+to be filled in by the pattern.
 
-Fixes: fc5f060bcb7b ("target/arm: Implement {LD1, ST1}{W, D} (128-bit element) for SVE2p1")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250723165458.3509150-7-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20250723165458.3509150-4-peter.maydell@linaro.org
+Message-id: 20250722183343.273533-1-richard.henderson@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/decode/succ_infer1.decode | 4 ++++
+ scripts/decodetree.py           | 7 ++++---
+ tests/decode/meson.build        | 1 +
+ 3 files changed, 9 insertions(+), 3 deletions(-)
+ create mode 100644 tests/decode/succ_infer1.decode
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index c4aaf0cc45f..c442fcb540d 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -6439,8 +6439,8 @@ DO_LD1_2(ld1sds, MO_64, MO_32)
+diff --git a/tests/decode/succ_infer1.decode b/tests/decode/succ_infer1.decode
+new file mode 100644
+index 00000000000..6fa40bada5c
+--- /dev/null
++++ b/tests/decode/succ_infer1.decode
+@@ -0,0 +1,4 @@
++&rprr_load      rd pg rn rm dtype nreg
++@rprr_load      .... .... ... rm:5 ... pg:3 rn:5 rd:5            &rprr_load
++
++LD1Q            1100 0100 000 rm:5 101 pg:3 rn:5 rd:5
+diff --git a/scripts/decodetree.py b/scripts/decodetree.py
+index e8b72da3a97..f992472b73e 100644
+--- a/scripts/decodetree.py
++++ b/scripts/decodetree.py
+@@ -1016,9 +1016,12 @@ def infer_format(arg, fieldmask, flds, width):
+         else:
+             var_flds[n] = c
  
- DO_LD1_2(ld1dd,  MO_64, MO_64)
++    if not arg:
++        arg = infer_argument_set(flds)
++
+     # Look for an existing format with the same argument set and fields
+     for fmt in formats.values():
+-        if arg and fmt.base != arg:
++        if fmt.base != arg:
+             continue
+         if fieldmask != fmt.fieldmask:
+             continue
+@@ -1029,8 +1032,6 @@ def infer_format(arg, fieldmask, flds, width):
+         return (fmt, const_flds)
  
--DO_LD1_2(ld1squ, MO_32, MO_128)
--DO_LD1_2(ld1dqu, MO_64, MO_128)
-+DO_LD1_2(ld1squ, MO_128, MO_32)
-+DO_LD1_2(ld1dqu, MO_128, MO_64)
+     name = decode_function + '_Fmt_' + str(len(formats))
+-    if not arg:
+-        arg = infer_argument_set(flds)
  
- #undef DO_LD1_1
- #undef DO_LD1_2
+     fmt = Format(name, 0, arg, 0, 0, 0, fieldmask, var_flds, width)
+     formats[name] = fmt
+diff --git a/tests/decode/meson.build b/tests/decode/meson.build
+index b13fada9800..63405ca08fd 100644
+--- a/tests/decode/meson.build
++++ b/tests/decode/meson.build
+@@ -41,6 +41,7 @@ succ_tests = [
+     'succ_argset_type1.decode',
+     'succ_function.decode',
+     'succ_ident1.decode',
++    'succ_infer1.decode',
+     'succ_named_field.decode',
+     'succ_pattern_group_nest1.decode',
+     'succ_pattern_group_nest2.decode',
 -- 
 2.43.0
 
