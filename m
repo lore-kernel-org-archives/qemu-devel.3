@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1414C87FCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 20:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AD5C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 20:26:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufOym-00053K-7W; Fri, 25 Jul 2025 16:25:20 -0400
+	id 1ufOzE-00061C-S9; Fri, 25 Jul 2025 16:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufOsu-0006gO-7l
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 16:19:16 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufOtu-0007Xe-3X
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 16:20:18 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufOss-0000vY-HP
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 16:19:15 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-af51596da56so2119826a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 13:19:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufOtr-0001DC-70
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 16:20:17 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b39011e5f8eso2427424a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 13:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753474753; x=1754079553; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5K1qtAriFHoDI4vOaduYpqQ8oUEBiN45bpDENPmumJY=;
- b=SwxqZTJ08jpc/Eqg5qVNU4WZMuFFJeUqCJQxSOY3KCREmRRAdj82CPqhvVQNte5i9Z
- wJxWUMg3Mk4N+hm3JQMPewSHteXEboab1/7IAABvYMBQP/WFs39DOGi0MVo9ZxcStVDr
- ivrd/G/Ebq5wx4Ev/wNQBBCuoEwwI4oorT9Ozb4QuSfjbBrhffLx/pIGPPq2BTwnGJYl
- /HwZuN5bWSn5wLkJmXE8DGcusTfRHFwzdnfm3JRyCqMKNnyr7sbpDwckT/j5l8dBAAaf
- Gf0sKaFuBJYMfCaZaQaBhAChgF+EScY07EZeyfLD0FZA3VEpqOGtkdw12d/EXeROOd/n
- 7kfQ==
+ d=linaro.org; s=google; t=1753474814; x=1754079614; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AyWSNk9VhJtrq59zL3a9YYwEAVv47A5L+XLtB3a7gKc=;
+ b=UOlQJcmZF+xp1ZAYmSadZgkLV0jhIxyAKgTNY84U/SDhVIYi+rUeonSKyT0WdEvIo1
+ N0mAPdvGS8rEdRKnUUU7xIpsl/H6Rxpbp5zDU9kG3I57JmBkyTjyGx7yFOohW9tLLuIo
+ t7pw45GchdnfonCuNJJqYpF5eLDKtd498x4/pMNwvG0vd9txNOWkSu3PubXDYNxDLK1m
+ xS+mlztnLFoxWE4ajtwMl2mky2/PWMWF2EJRoxg0S7J9Nn4TyysuJZohQg4lEs1evUc9
+ ecuUkynXmZz60b5+qbzm1xC8MeRll1fdvo+EmAqZde8lpy8j1nno/9mwFk1KYNb4ynHz
+ Sb0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753474753; x=1754079553;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5K1qtAriFHoDI4vOaduYpqQ8oUEBiN45bpDENPmumJY=;
- b=rhSHU6Jhw5IBoEoOifaeCumLPkzaEDKpUqATHtDQUFdB6B+uSMo12wl/8OBQtC/oKu
- 3LDy0bh4sQgGIcnOSPowOA4hweYlpcN9V1tqr3YlLowIeZ0/f+/tN3JNtLrc4gFC8vs1
- Zr71ENJ3SZ2p3IGAqXjzyWkbStFeUnIkfsdv8ji2YIYBQ79Saj9cJm7sfZLfGquvWkCQ
- vxN5roE83BFz0ewy+gXh6MI6jQ1jvcimSBjXQijMzTPA8JUazqJEkgS6a/QNB194kjcM
- HVtL2+dnrYYMNnc5vebLwFZlCNPdd25F/fvU4WPhyhc4PupIv7AIRFqu0+PQcfKLDAIH
- /1QA==
-X-Gm-Message-State: AOJu0YyDfRCel1nAoDL4RX5Q9nI8e1rFV/WV8GqGpw1+155yWqqlA2vv
- 8PpTHiwka45xQae1R68Zy0AhiNuXaJ0oqFcRCSfXQwCYp9Lin7PQenDZm2W23fQuAe19a2sNLG7
- uClf6
-X-Gm-Gg: ASbGnctYZGBrAV0LdKPuDCRpZCeKrP8ZT5cizWoBCICMAexbQEfb2BLON7cZ9lMpNvh
- lhvZTceBEjaLo7saCnZ3NvaiGKb5FHcKMSEppATWaIvgwZeO1Ko75S6lnH4vAIPsgA1zDdR3xZX
- PGGxXJmS/SxK/HCCnDVgkzKuBqWwg/Z8QgTbtRJIBrKvBAHGFFbeUgS9Qs4MPS4wVTiloLTq9ZO
- g5H3wRrK/lGpP7NTICuWhgroXaO2lj5CkH3uJfXxgFGQ3LBW+VrjTjWvp4QShNw8gjDT6z5g+iQ
- IwXBsbkOASqvkAbQwiGMSGfvkkvoKY+zS0x1e4a1Gd/6jytyhzNaudU07A9k1r/Y10Ck/C3B++G
- NAuVHOqfsdpoLgTchCThzhiVAl7iShl+w
-X-Google-Smtp-Source: AGHT+IFUxwD/snBE4ljS+0QN/557jbRNFw2KOEoNBB2wTCbbuq+V+o1vyzhWlugVy8o0+7ckdQojXA==
-X-Received: by 2002:a17:903:41d1:b0:234:b735:dca8 with SMTP id
- d9443c01a7336-23fb307afd9mr40344335ad.6.1753474752771; 
- Fri, 25 Jul 2025 13:19:12 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e6635f0a0sm4143309a91.24.2025.07.25.13.19.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 13:19:12 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
-Date: Fri, 25 Jul 2025 13:19:03 -0700
-Message-ID: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-Content-Type: text/plain; charset="utf-8"
+ d=1e100.net; s=20230601; t=1753474814; x=1754079614;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AyWSNk9VhJtrq59zL3a9YYwEAVv47A5L+XLtB3a7gKc=;
+ b=tR7XHlwZjMHxV+nCDSU5ESyJqbBZyGJ39rmd66QBx+QuMzmDk21yZg92odJVZe190i
+ 1bEbGDfMiTEEEDa3CZ2C3dHzGBYX/AYXAS68NQcxijOZ8RKVDyQBChbBLZfuCoZ/NXWL
+ 8ZeI9+xez6vAvBT2QlddUr+n4X2PSd8gdFzwNMhqoHl07pLlIIN8XEjgZhQ0VqTcDEaD
+ pm6liuoS+q6/PWmFJa2olxspqny756WdgihC5r+vXHvDFUhu74uEvkDnB+dgylLvbMy1
+ 1Tw0WvT1P5M721iaeEnbOpbNMaohpCfpBDGVKjfk/8SZyv9g7vuiC7CU7qHV9ko5vDof
+ STsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBmhzvnm0NTp4LmvKBqhu8ByWaNDI2+AUoJF666hMhB0jiiHc3D4fT/n4UMgVP9Oba/2maLKxRn3Rd@nongnu.org
+X-Gm-Message-State: AOJu0Yz/3XRfUml89LxpoQpVegkscCBNH9Egqz9dmqhy5pksKEpWGU/H
+ 9zyuZc9kz8b6ls75+bRFFi4/DEH6Ix8A2U7lCOkp9uZ8jXiLxjjIkk+NM14JfTalYjA=
+X-Gm-Gg: ASbGncvpLo9Wqc7x7r1YjRrsciIkofQz5fEX/y158AYnZSPhV/eW9sxuZowGMwfnRYy
+ 3Q/Xn+CA2cLZh4xvjKOVAwQKOlHjOW+Asav5F7E1r1Nr1zZPtvL9UGW3LvDTUlBQsZ+Iyvp8783
+ 6u9YtASEHpUyAja4WzLaL00zlZBr2DYS2xdRutH3xBME6w0h91LByX/tc6TN0SOQZ8rj0rqzh9U
+ 5lMhWRXDTP8HK2Bt4sGXZLfVP/+v9SiaQzVQbqUVyVeK0NZ9GdQjBUTuuwS0Ay5epLOo0QuWWGZ
+ BHoBZ0Eo1wD5sGBht9zsOgSM9J2tZsEjCTN91CRCOAH15f0laepv13Akv0BD0FmrXcjFi2f9Ix+
+ WQg31v9EZQJ5FPUY/uHtltAzbfDWXftI50P6JIs9pLFwm0XovKUrx5xbkbvnmU0iLRFTMOkxRwz
+ VU3g==
+X-Google-Smtp-Source: AGHT+IHj7DCESW2EGDTSJJT1JfeUz7o+qNlJTlKO76v9q7LxZHZrgU/hRULMCMvA6krUBc2fwmV6Ug==
+X-Received: by 2002:a17:90b:2750:b0:311:ff02:3fcc with SMTP id
+ 98e67ed59e1d1-31e778a0660mr5024375a91.14.1753474813645; 
+ Fri, 25 Jul 2025 13:20:13 -0700 (PDT)
+Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
+ [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31e83563b06sm334896a91.32.2025.07.25.13.20.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Jul 2025 13:20:12 -0700 (PDT)
+Message-ID: <aa815125-d007-4866-a928-a0d1d08cb486@linaro.org>
+Date: Fri, 25 Jul 2025 10:20:10 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 for-10.1 2/3] linux-user/aarch64: Support TPIDR2_MAGIC
+ signal frame record
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250725175510.3864231-1-peter.maydell@linaro.org>
+ <20250725175510.3864231-3-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250725175510.3864231-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,26 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move those files to hw/arm, as they depend on arm target code.
+On 7/25/25 07:55, Peter Maydell wrote:
+> FEAT_SME adds the TPIDR2 userspace-accessible system register, which
+> is used as part of the procedure calling standard's lazy saving
+> scheme for the ZA registers:
+>   https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving- 
+> scheme
+> 
+> The Linux kernel has a signal frame record for saving
+> and restoring this value when calling signal handlers, but
+> we forgot to implement this. The result is that code which
+> tries to unwind an exception out of a signal handler will
+> not work correctly.
+> 
+> Add support for the missing record.
+> 
+> Cc:qemu-stable@nongnu.org
+> Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   linux-user/aarch64/signal.c | 42 +++++++++++++++++++++++++++++++++++--
+>   1 file changed, 40 insertions(+), 2 deletions(-)
 
-Pierrick Bouvier (3):
-  hw/arm/arm_gicv3_cpuif_common: move to hw/arm and compile only once
-  hw/arm/arm_gicv3_cpuif: move to hw/arm and compile only once
-  hw/arm/armv7m_nvic: move to hw/arm and compile only once
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
- hw/{intc => arm}/arm_gicv3_cpuif.c        |  2 +-
- hw/{intc => arm}/arm_gicv3_cpuif_common.c |  2 +-
- hw/{intc => arm}/armv7m_nvic.c            |  0
- hw/arm/meson.build                        |  3 +
- hw/arm/trace-events                       | 79 +++++++++++++++++++++++
- hw/intc/meson.build                       |  3 -
- hw/intc/trace-events                      | 79 -----------------------
- 7 files changed, 84 insertions(+), 84 deletions(-)
- rename hw/{intc => arm}/arm_gicv3_cpuif.c (99%)
- rename hw/{intc => arm}/arm_gicv3_cpuif_common.c (92%)
- rename hw/{intc => arm}/armv7m_nvic.c (100%)
-
--- 
-2.47.2
-
+r~
 
