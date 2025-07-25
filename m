@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E633FC87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 14:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0350FC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 14:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufJb3-0002Oc-Aq; Fri, 25 Jul 2025 10:40:29 -0400
+	id 1ufJcj-0001KD-3T; Fri, 25 Jul 2025 10:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1ufJaN-0000bD-Rm
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:39:49 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufJcO-0000iP-V5
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:41:56 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1ufJaL-0002Z6-NP
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:39:47 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-75bd436d970so1453700b3a.3
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 07:39:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufJcN-0003N7-3H
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 10:41:52 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-ae360b6249fso371141266b.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 07:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753454382; x=1754059182; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
- :reply-to; bh=4wBC4D7PFJnUTB75FTM4xHFiZJYL3lpvMIyKjiSj5s4=;
- b=A2CGtAK/QRi9yEKMfDC/vr4BB+fPE/LbJtfkwk2ncsJ768Ocn/ut7qBKPDaGPmPgxD
- beBwQp/U9xGk1EqTVHvaROXA9knBzWxMrU3dcpqEBYUal3Op1SNcQD8J5By7CkiH7r+k
- E229je7WtBZG3bjF2GaQjxcR6TSCoCB3riHU9mcrZk9r9Ea869vCRwYcl446b/KZB7JZ
- ufhgQh5EM+6CuLdjrfuGnr5l1qISkdLXInrB+Ah1YRVwpERclXY2MMQbRADC3/JHCF0T
- ngGKg/K5kfP0btGpsoV1dFickE+HJ3JOKFh0I7g05oGS8ssRI1Z2jcwlddNS0y7+hZ54
- qCyQ==
+ d=linaro.org; s=google; t=1753454507; x=1754059307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fp3rANB6e3UZ3QZOsP6Ardf9/Q9yTTpkKQjzaSnZXuw=;
+ b=hdBTvnhIH+4Wb/tsXwog6L7dvkMvrb4mzZHgBY+zkOMIAxL/sfDWwIndunsbqTPO/x
+ ThlhJleNN65dQc46RE5KV+ADoJVhFe23tmNVDQoz7xwRU/s5Q/fxjLsrl1oFsvtszZVC
+ Sw3W0xPYPBTsNJKvgztUV6vXam/ACo7/8lr95TfRVQHtWugXCJEU/SLGDmx/IOjJQjuC
+ aVgJlozRJueZLDFHxMP636a8mh9PehJ4tXQH9mfZW/FPLFmBk5KFI7tmtPL4Hwr4GbPX
+ +fwwxCaebElj9J9d9r9WrD37dTIF+FtPhCzprpg2zJ135XKaanearPhz/JiqQw3oYO0O
+ saKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753454382; x=1754059182;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4wBC4D7PFJnUTB75FTM4xHFiZJYL3lpvMIyKjiSj5s4=;
- b=RrXCooZHpYwyi9n84tZ1JJGhdbzTsMBQvx0+lWAVKt3khYVr6kNx+Pc2wHvYfagc0m
- tmjY0TxvzrTxyMOj2TBosBoH/rXCW42BZNXL6803SlRZKep/aP0qbIf4kdLO0CY//8fz
- ELrPw10r0Bour6xEf93pWqbMEI9bnfUH6hABGBEioO/Et7bMMc7XgOv8Q19umcMjby1O
- 05rrxcngmaqVuo77sZU4DJ/XUURCFfkNhVp7R+buspBnZR0KVvDYx5fUrXVRQNh61fYh
- MfS3tXhlv0Z+6GXnlpEImNCVbhWHwm38oiB6aomA+77CUHdXeLnr/JO8Rzse/n8bdQhm
- nd3Q==
-X-Gm-Message-State: AOJu0YzVKs/i8WEbsByaKv0UYYeSWDn8TUen480+rI2785Q3pQAfMJOS
- /CnbeqhNj0Qm6acRuxHVdvUQV9NVAqbQNU80bsfEUmzOLg2wEXlF1B1OwwT/Eg==
-X-Gm-Gg: ASbGncsY5TgcQfbhtQpAEmOG0cY0sBtmDdbiLKsnhEmYkBd/ZCSqueOet8XKZsYXC0J
- PmLzvLihgGtOWckL4PeXCfYvjolzI6CeMuvqtKQpwoEiSu1W2jAIA3o4LGLDZWc8vmYzW2P1mDo
- pkKwYUoaWQUF3VsvPVQzwzNo4kdQELnBlBx9y4ly5qdFRLr6kcFEd6KwUWSDKPo0vc6GIeZ5nbB
- LkhBsOqJKCAgYIzkWngv6DGe8X2mAJn/PIdCFzmFRHKeE/HEqKNHBYuySmfxiGJQq8f9aSQCTJ7
- e3CFi6Sk0m5HESA0k4TZZ5/8eVL7jXHZlonnZAQZ15lGBU09qaOpRDXcWXsPoBnJ16TlJWgCqCZ
- Nqvk1HkL+6tLQo6DP5hUUuG+GgP9Q2Kd3m6s=
-X-Google-Smtp-Source: AGHT+IGgkN1YSpzybq/Z4hbt7iXj02WG3Sb6Q1a0miUulmFms9dknAlMnsuU+P5RXAhjnTJTQ1AIVA==
-X-Received: by 2002:a05:6a20:9147:b0:234:216b:cf98 with SMTP id
- adf61e73a8af0-23d7021bb59mr3825109637.35.1753454382290; 
- Fri, 25 Jul 2025 07:39:42 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-761b04b3517sm4066021b3a.84.2025.07.25.07.39.40
+ d=1e100.net; s=20230601; t=1753454507; x=1754059307;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Fp3rANB6e3UZ3QZOsP6Ardf9/Q9yTTpkKQjzaSnZXuw=;
+ b=w2CCVSodKkpSVRZiVcL/PAcTVFuBhV0KxhXfnC+cB9r7mai/C9GtfoXYYHQwP0+t/x
+ A/77vRKs3gMSjetvUTQ8c36IjbzZ2komieV/3NgAF13mSlKWJD7pwMzEASaPHGHBrp5B
+ 6Wi1x3TGiD+HAmovAGod7h0j1AOaY/YWVYIsYD6SH+Rq0hFLMpUyKyrilsHEfDiUuWDr
+ NGgoIoV6CysZFIgWpwqUdumvfIerDBmd+p1KEQoFqUW1B9d3+pJ9cdetX8y1tJJH10OT
+ nCXyaf8RzaSVcFNs4VAJHODEtL7Shg19IIBiZ6MSzbtigjolgLw4LRPE3Wah0OOXNvH+
+ YRhw==
+X-Gm-Message-State: AOJu0YxB43ElqWu9fM9mONWQ3Ynm1+b1vnoNb5sQiZNK7sh0Bt4NxhCx
+ Srf4EFe5168RLeY2bHgQnYiN3ROK6sk38T052vmTkzi7vr/RhJYHN+a6YRRedHY9XLQ=
+X-Gm-Gg: ASbGnctVh/lMWtqdJtdUPZj5Gumuk4Cb06941ipV/8L4kfqOeyd3xsH8VItfWz+Sqr/
+ xyz2LNmpwoIcQScwP2vJYl4/zlMpyQ9KuL26m81YnB1+0aq3ILNyjGg1U+Xl5YprV+yv/RHfOxV
+ Yt5tJDAwdwpTEOIvO23Y4iUlmFoQcKS2yWMvdkXZXkaiokeso+NfR912PIKH82n1SX3N5pBZAO2
+ VNJjU4Gqvu2lcss8Onw4gH4+bycRT3T/nrXvsOyx/oHCEiCCTVc0DirIDukOlIr7WpAKg1QXirk
+ wRBtZOXdPiUBkWoaAlURczJo0nrpx2NbGx2gmAOesqAx2qu/RYesY/Jk0+eVHLx2TUKFdIYrDgZ
+ YW2D+aer/9pxJJG9gmEt4YPs=
+X-Google-Smtp-Source: AGHT+IFzzSZSdZHWo9NKMx8xAx4WePZ05RZUYPDXVmdHYIDHVbw9U91KRQRS/tbvB8WGQLquj9vHXw==
+X-Received: by 2002:a17:906:c14a:b0:ae3:6705:8918 with SMTP id
+ a640c23a62f3a-af61e637c4bmr263629066b.49.1753454507066; 
+ Fri, 25 Jul 2025 07:41:47 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-af635aa21fcsm2100566b.95.2025.07.25.07.41.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 07:39:40 -0700 (PDT)
-Date: Fri, 25 Jul 2025 07:39:38 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Biggers <ebiggers@kernel.org>,
- Ard Biesheuvel <ardb@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [PATCH] target/i386: fix width of third operand of VINSERTx128
-Message-ID: <f8862cc4-d0ea-4295-a16b-1d96c56a021f@roeck-us.net>
-References: <20250725061736.1096206-1-pbonzini@redhat.com>
+ Fri, 25 Jul 2025 07:41:46 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 807CC5F7EE;
+ Fri, 25 Jul 2025 15:41:45 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] tests/functional: expose sys.argv to unittest.main
+Date: Fri, 25 Jul 2025 15:41:42 +0100
+Message-ID: <20250725144142.3041931-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250725061736.1096206-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.159, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,26 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 08:17:36AM +0200, Paolo Bonzini wrote:
-> Table A-5 of the Intel manual incorrectly lists the third operand of
-> VINSERTx128 as Wqq, but it is actually a 128-bit value.  This is
-> visible when W is a memory operand close to the end of the page.
-> 
-> Fixes the recently-added poly1305_kunit test in linux-next.
-> 
-> (No testcase yet, but I plan to modify test-avx2 to use memory
-> close to the end of the page.  This would work because the test
-> vectors correctly have the memory operand as xmm2/m128).
-> 
-> Reported-by: Eric Biggers <ebiggers@kernel.org>
-> Cc: Ard Biesheuvel <ardb@kernel.org>
-> Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> Cc: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+With this we can call the supported we can take advantage of the
+argument the module supports:
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+  env PYTHONPATH=/home/alex/lsrc/qemu.git/python:/home/alex/lsrc/qemu.git/tests/functional ./pyvenv/bin/python /home/alex/lsrc/qemu.git/tests/functional/test_aarch64_kvm.py --help
+  usage: test_aarch64_kvm.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [tests ...]
 
-Thanks a lot for the quick fix!
+  positional arguments:
+    tests                a list of any number of test modules, classes and test methods.
 
-Guenter
+  options:
+    -h, --help           show this help message and exit
+    -v, --verbose        Verbose output
+    -q, --quiet          Quiet output
+    --locals             Show local variables in tracebacks
+    --durations N        Show the N slowest test cases (N=0 for all)
+    -f, --failfast       Stop on first fail or error
+    -c, --catch          Catch Ctrl-C and display results so far
+    -b, --buffer         Buffer stdout and stderr during tests
+    -k TESTNAMEPATTERNS  Only run tests which match the given substring
+
+  Examples:
+    test_aarch64_kvm.py test_module               - run tests from test_module
+    test_aarch64_kvm.py module.TestClass          - run tests from module.TestClass
+    test_aarch64_kvm.py module.Class.test_method  - run specified test method
+    test_aarch64_kvm.py path/to/test_file.py      - run tests from test_file.py
+
+  usage: test_aarch64_kvm.py discover [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [-s START] [-p PATTERN] [-t TOP]
+
+  options:
+    -h, --help            show this help message and exit
+    -v, --verbose         Verbose output
+    -q, --quiet           Quiet output
+    --locals              Show local variables in tracebacks
+    --durations N         Show the N slowest test cases (N=0 for all)
+    -f, --failfast        Stop on first fail or error
+    -c, --catch           Catch Ctrl-C and display results so far
+    -b, --buffer          Buffer stdout and stderr during tests
+    -k TESTNAMEPATTERNS   Only run tests which match the given substring
+    -s, --start-directory START
+                          Directory to start discovery ('.' default)
+    -p, --pattern PATTERN
+                          Pattern to match tests ('test*.py' default)
+    -t, --top-level-directory TOP
+                          Top level directory of project (defaults to start directory)
+
+  For test discovery all test modules must be importable from the top level directory of the project.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/functional/qemu_test/testcase.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2a78e735f16..5caf7b13fe3 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -249,7 +249,7 @@ def main():
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+         res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=["__dummy__", path])
++                            argv=[sys.argv[0], path] + sys.argv[1:])
+         for (test, message) in res.result.errors + res.result.failures:
+ 
+             if hasattr(test, "log_filename"):
+-- 
+2.47.2
+
 
