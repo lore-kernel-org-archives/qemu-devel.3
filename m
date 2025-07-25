@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAC9C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 08:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8D8C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 08:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufDtK-0005em-6Y; Fri, 25 Jul 2025 04:34:58 -0400
+	id 1ufEDr-0007d4-U4; Fri, 25 Jul 2025 04:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ufDtI-0005ah-Da
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:34:56 -0400
-Received: from p-west3-cluster4-host5-snip4-10.eps.apple.com ([57.103.74.201]
+ id 1ufEDp-0007Yf-LK
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:56:09 -0400
+Received: from p-west3-cluster2-host4-snip4-10.eps.apple.com ([57.103.74.83]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ufDtF-0003Nr-Cx
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:34:56 -0400
+ id 1ufEDn-0001u8-OL
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:56:09 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPS id
- 4257C180009B; Fri, 25 Jul 2025 08:34:48 +0000 (UTC)
+ by p00-icloudmta-asmtp-us-west-3a-20-percent-0 (Postfix) with ESMTPS id
+ A5C11180021B; Fri, 25 Jul 2025 08:56:00 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
  s=sig1; bh=DekRPyqD95GZgQR0lU+JTQs/LwEyYeukO06spM11U3Q=;
  h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
- b=MXvO0776xp6NxXJ66wmkNd+z9cPJMK9svT8dPWXOAWTnFsW8Z50Cs4QEtYLuTyQeFSfg5l+I8zZTSubnU6uoz7rVv7cvogMFhYC2zcQ8PBjTlJeDZeWIQ2mCgTVVm0MCZGhnWM2UqP6gbDpq1C4ojMrQ38o4bwtN7G/9YfslYIClt28QuanPQ0tsVjwgdQWL80kZd6dH91uOdWbXGN33y2r+dsGPtyJdYdys8yTtcq+TaGynJH9hzctcYECYLwWvNkP0KlSxoHWcN5TLNaoJR4fgRJDZYH/JHQG0w5YotcLtqsDy/yqaaMR4Om8B6CfrE93coKjYHDKQFVJVEgjmqQ==
+ b=Thln2EomONlKzHqNB+G2GRJQPfuddeDNrcgE4LcU1mKm0X6sek9P+IkaaMoO9fabpggM+kYTwvUg76XtXnhrfaC5+GXIfOE9jZv46QpSEO2GOMp4VRBa8clTOmcWrIxwhILB8cMqgmNEzr36thnyMPpbtdwhIBV1GZUSCzHYTV7A3bDUg2Q8WBWcVFzocCJlmOPWQ15Z5apvlW87d5nwWyMQ2T8gdNof0qcBWa/0GAVwxyoC34zF9e9KzM3DZr8lnFYT+pXrHKQrFLZABS0gCZAC61jSHGqcaUY+gtUxhHsbksRTLbPu4pLwKkxMAK21JKdfrc7E+bx1zvfPdMA+9A==
 X-Client-IP: 46.189.47.18
 Received: from localhost.localdomain (ms-asmtp-me-k8s.p00.prod.me.com
  [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPSA id
- 5999B1800173; Fri, 25 Jul 2025 08:34:45 +0000 (UTC)
+ by p00-icloudmta-asmtp-us-west-3a-20-percent-0 (Postfix) with ESMTPSA id
+ 7B9311800094; Fri, 25 Jul 2025 08:55:57 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
+Cc: Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
  Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
- Ani Sinha <anisinha@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 3/9] target/arm: hvf: instantiate GIC early
-Date: Fri, 25 Jul 2025 10:34:25 +0200
-Message-Id: <20250725083431.91450-4-mohamed@unpredictable.fr>
+Subject: [PATCH v2 3/9] target/arm: hvf: instantiate GIC early
+Date: Fri, 25 Jul 2025 10:55:39 +0200
+Message-Id: <20250725085545.93619-4-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250725083431.91450-1-mohamed@unpredictable.fr>
-References: <20250725083431.91450-1-mohamed@unpredictable.fr>
+In-Reply-To: <20250725085545.93619-1-mohamed@unpredictable.fr>
+References: <20250725085545.93619-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: CBxKlz8z2sKi-nocsWnHhaH7DJm8VlV2
-X-Proofpoint-GUID: CBxKlz8z2sKi-nocsWnHhaH7DJm8VlV2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDA3MiBTYWx0ZWRfX7rNyuh7Wa9WR
- THFETotIyHX5X6HqbJZUiHre6Z/HXmIwuIBHOYDCD2J0maMzvQvtomq34zW5qfB9PfDh5GBkBrq
- 9m1dbYnm5zHiuoThhuPSPyv3EaBC4PIDWCLKuN1H2jepOxNZafzzFk9z+DN7egee975qLQTVWEf
- 0Zv0BpoahZLKwSQ1V0oQ/mtGE5J0INm/MkIHbJTpCAKrZqGJq9NN94XKzj7NHtwhWWuC50r1KpZ
- Q3g0fMHzJp08wUB8cSB5jrMIO21pjZD4heprScdBxioKOh2SavupJiKSE+AtVgkNGLo3tIM5U=
+X-Proofpoint-GUID: uQqfgiQS5rkAUghiTINqXPCd_W7IXyu4
+X-Proofpoint-ORIG-GUID: uQqfgiQS5rkAUghiTINqXPCd_W7IXyu4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDA3NSBTYWx0ZWRfX4uky9Uno6ecS
+ IJZoEpAMfKDpQyRyUz2Md8B6eMVzbU1wglWGEqJLdiF6DoIQamOYAgYo7CK5lNJKOXYFjhUAuAf
+ NUCaI9TV70rEkLt4Ii1Kv76v+fx4b7wKQ4i+ZwcvfkSLrPG7FV6jRByqFKv/4jabWOWWXXOK+0f
+ Dn3zEZqLo5M6JCir5WqNdajyo3TUiqTV3iE7fMW2rMJxCLaDY+qRAbGyPviYf45uJlOgAISK9xS
+ AAxAlXMyF7zquCyR4DnpLLO03j0tdlSaNscieBqCDCsKY8h+WlMMdKUzPcb3j++9xyAlmZGbk=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-25_02,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- adultscore=0 mlxlogscore=616 mlxscore=0
- malwarescore=0 bulkscore=0
- phishscore=0 spamscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2507250072
-Received-SPF: pass client-ip=57.103.74.201;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ suspectscore=0 spamscore=0 mlxlogscore=616 malwarescore=0 phishscore=0
+ bulkscore=0 mlxscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507250075
+Received-SPF: pass client-ip=57.103.74.83;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -76,7 +75,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
