@@ -4,79 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F74C87FC5
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 00:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDFFC87FCC
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 01:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf60G-00066X-D3; Thu, 24 Jul 2025 20:09:36 -0400
+	id 1uf70R-0006no-6T; Thu, 24 Jul 2025 21:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3LsuCaA4KChs1C5OI9381I4JFE7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--alexrichardson.bounces.google.com>)
- id 1uf603-00061C-6g
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 20:09:23 -0400
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uf6zx-0006Mh-Et
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:13:21 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3LsuCaA4KChs1C5OI9381I4JFE7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--alexrichardson.bounces.google.com>)
- id 1uf601-0004SC-Cm
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 20:09:22 -0400
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-23fae3a808bso1628355ad.3
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 17:09:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uf6zv-0003tF-Vf
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:13:21 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-315cd33fa79so1052720a91.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 18:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1753402158; x=1754006958; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=xeTKs6Akw7bNbP9o2V9XNUY70Fjt6JXSC9NzDIMyQ08=;
- b=o+yB0WINm8+cV5fJ21dpTBH/YIn80cMNKsuLQ1IhWZz5Her9kn9NmKkphPmxKcCOgP
- kQqtdrX062r5rpHqp6DkiksxOdVJrY2y1TEv/eFxJh1ZaH3b4NKyQNTayrJzSMRb6seb
- 7uJyTLDoLRXePTFYM+z6WKQ5eU7E7CkKEWD/r0cnMYWbK8jhaJEhQdGQSRkMR2NC1wSJ
- vhXzB44YUrCtQ57BCKOYF7zGEe92vG3dHkhyRiASI0VLO21npzpNpcXWpRDyuplVmoYy
- +QMdtO663CN6/z7kLkvimQCVqRxW6hbCQvYQwC6tL83n9CZF4Cv8D9+wRPTQCCEoYoZM
- A2xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753402158; x=1754006958;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=linaro.org; s=google; t=1753405997; x=1754010797; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xeTKs6Akw7bNbP9o2V9XNUY70Fjt6JXSC9NzDIMyQ08=;
- b=Ld3d99hi3MMbhbgzPZRVUDJ7dcGrvKSsBVkoHtsMODESwaYvr2TOEE7fGfwnHunfps
- p2OYfMfPIEDeqoxLXMFtn27SwnsDrQXL+J9LOr//jMMtahes1glvkVbVJwemZJObNAXh
- itz6IrdN7TsXRImNUDaZlyT4Bbhov+pNhUnqVBxvQEgqcs6q/h5cewWdZcI5OaNC+wyT
- AzVImidNA0/oT1UoQ0WeBHF8C4ii2c3vV6N91XHoeOscUW0NKcpBRre+E2AbiPGaP44w
- WNNFMz9iEv8apdj5sn337QzeT8Ul98/OOL60U2ErZetrgg4cJYNLG1FC/WSzr5kIKdDo
- 229A==
-X-Gm-Message-State: AOJu0Yxd5Gt/uVX9SaTCiOeHAQF+RFnH81FK63WqiHQuNhsv4ClqYkAc
- S+shhJEB2hn4BeNQkOrq88yppntjB4BJXHdaL0oMJMye1YR0Lrxq5TC2mm7isegjtd1OTJ7djtK
- +6HBM5xLt9dhzOwhMwQHK7KD13DtY+w+E7VaY7kewjaiBCmLmYxwJ0i8yBUo+QEEd+aJHZYEig9
- Z6RqjfzQhjj0pW/oCOI/En0kCW8swd2i6Jo+aN6UhFXA/OQyAQ134ujhFtcw61dzI+YHTtr/EVZ
- cBP6A==
-X-Google-Smtp-Source: AGHT+IFAqppbpPB5ofki4xRY8Z1XFXJIf0rWhTkJoX4YHi6ECIy4dOTHH5KSbOCNN/bpOvVxxZFV1ulo0CCFvim6IclZQQ==
-X-Received: from plhd15.prod.google.com ([2002:a17:903:230f:b0:234:a0aa:5b34])
- (user=alexrichardson job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:b87:b0:235:f45f:ed2b with SMTP id
- d9443c01a7336-23f981619c9mr118846055ad.1.1753402158302; 
- Thu, 24 Jul 2025 17:09:18 -0700 (PDT)
-Date: Thu, 24 Jul 2025 17:09:01 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.50.1.470.g6ba607880d-goog
-Message-ID: <20250725000901.1204536-1-alexrichardson@google.com>
-Subject: [PATCH v2] target/arm: add support for 64-bit PMCCNTR in AArch32 mode
-From: Alex Richardson <alexrichardson@google.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Alex Richardson <alexrichardson@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3LsuCaA4KChs1C5OI9381I4JFE7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--alexrichardson.bounces.google.com;
- helo=mail-pl1-x649.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ bh=mlr0Rl/oYzxzJWALypTT5LOL1eb2LynbzxFo+Y5slcI=;
+ b=SMbUpI7JYtDYM/qP8+PVvRX5jLn9FLGoAwoRUYtsMvO6b+I31L5dIERTpF9VTjswQu
+ 1Mkywih/V8tMzXPAXK68L2cpmRLCfSjrfzGTnwYc297PGIOXazWN0n3PSPfk5rHBsT04
+ Aa5p8AkX/lMfn76TkUz45/PHjT4fHppWVm4Vxhp8wI0kZozYcgfPxpp7glIle9c/BP98
+ kmqHfWEx2DvQmN528/c+/tVT1Fl3TErTAz4wsV2ZnXuHA6FgzB63455lVYT7HmgUEC4i
+ DXJqxRhAoilFfU5/1FaH1ZImk4QsW/vWc6a0ANl145QId8cvANu/XFBq27CNLjxEEJ8D
+ 1XqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753405997; x=1754010797;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mlr0Rl/oYzxzJWALypTT5LOL1eb2LynbzxFo+Y5slcI=;
+ b=QPJOCf58E+lDEbHvvvolRMt+KA07QZPIs1KQNG4O9HdOJ5S3cIytNm4uG4SDhdr3iO
+ PiCmbdfXD8q5f8GBFXvoZGErLhXdDgz+l+O+wvyp2/lMPxOR0/XO5TDqlKlOMdzcpH09
+ 59S+Vi1pBh6miYcwSYhYZKE/q0O2R5Ico0RWTDnZC3QFyR/CU0p+v76mf+2qQd8rs1v/
+ M4H47633x9NwOgQF8flu+pX6Iou62aIrrIVWBHfhg3ksdJI5HrTMiN6nA2P76EycJYV9
+ JP2IUkECFax/iLacgP2MaLSMgbAnO6FBF8yKPDCfaqn4z1CLB65W9jeWQsrpyDslCJfn
+ Q4GQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnitmq9Ylaw2n455dT6ynR3RoUqIRfXTpXPN4XsfiuP6VleTEfnNztdi+2JvR4gVWdOJztxgBdVXLP@nongnu.org
+X-Gm-Message-State: AOJu0Yz6SI1T9QEBPSZw0xVyyUcDolhacwPNh75gemn2ychDC2OJL4WM
+ J4Oq0J4sJc0iOlIqfw46wVoZc69XDmgmESEWKefn0+CuQwaCebE1YRQmot+APdzh3Y8=
+X-Gm-Gg: ASbGncujDHHA1lSy4P1yr5VKg+d4n+lBVtC3s6AN5q93Tlr4WeGOUIli3GYPm0fx79V
+ KzmNhWw4Zhl+PxdO/0Mnusc0QnlgbOQc4O7DZ3PPXgRGaWKBVB7K/gtXf1JAedZVuf/bWlJxNzG
+ 0PCKRibsaOeD0xJojoNyoqCXdPQjbP+W0DNKPV+G85lCzF7KLRGHRWC6s6aFkvqBhq0ifK20sBZ
+ ohVg4YOeops9o9b57QJ1XNkjnU5FGfjPQIYdRIP90FknLujZNZ+5RLOewe4zYh6YSmKr74m7tso
+ ZYAeyODzeIE/HapN442UicmwVhYFSytkJSTz4QfVMWwA7sF1ujyVn89sC6Eou2pB8TFae1ASZkc
+ 9I3MP7Dmen7AaPT4BMCpiX2ggPeea0T7S7djxhSlaLj1OVrDfa82UQVZU4J6RYoxFpk52YHv/4d
+ Pr8Djgp8XZmwVW
+X-Google-Smtp-Source: AGHT+IGMoEcRvAci26ilgEt0JyBkUEF7eHANKq/Ev9txY6M0SoTFcYltePs2o65jz5cvxUkGB+F/LQ==
+X-Received: by 2002:a17:90b:5284:b0:311:9c1f:8522 with SMTP id
+ 98e67ed59e1d1-31e50769752mr12159395a91.10.1753405997531; 
+ Thu, 24 Jul 2025 18:13:17 -0700 (PDT)
+Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
+ [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31e6635f10esm2256825a91.21.2025.07.24.18.13.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Jul 2025 18:13:17 -0700 (PDT)
+Message-ID: <0d977125-473e-49f1-be25-c8221a3601bb@linaro.org>
+Date: Thu, 24 Jul 2025 15:13:13 -1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 10.1 03/13] docs/user: clean up headings
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20250724105939.2393230-1-alex.bennee@linaro.org>
+ <20250724105939.2393230-4-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250724105939.2393230-4-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,48 +107,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the PMUv3, a new AArch32 64-bit (MCRR/MRRC) accessor for the
-PMCCNTR was added. In QEMU we forgot to implement this, so only
-provide the 32-bit accessor. Since we have a 64-bit PMCCNTR
-sysreg for AArch64, adding the 64-bit AArch32 version is easy.
+On 7/24/25 00:59, Alex Bennée wrote:
+> +Threading
+> +~~~~~~~~~
+> +
+> +On Linux, QEMU can emulate the ``clone`` syscall and create a real
+> +host thread (with a separate virtual CPU) for each emulated thread.
 
-We add the PMCCNTR to the v8_cp_reginfo because PMUv3 was added
-in the ARMv8 architecture. This is consistent with how we
-handle the existing PMCCNTR support, where we always implement
-it for all v7 CPUs. This is arguably something we should
-clean up so it is gated on ARM_FEATURE_PMU and/or an ID
-register check for the relevant PMU version, but we should
-do that as its own tidyup rather than being inconsistent between
-this PMCCNTR accessor and the others.
 
-Since the register name is the same as the 32-bit PMCCNTR, we set
-ARM_CP_NO_GDB to avoid generating an invalid GDB XML.
+We might say something here about limited emulation of clone.
+See CLONE_INVALID_THREAD_FLAGS.
 
-See https://developer.arm.com/documentation/ddi0601/2024-06/AArch32-Registers/PMCCNTR--Performance-Monitors-Cycle-Count-Register?lang=en
+> +Note that not all targets currently emulate atomic operations
+> +correctly. x86 and Arm use a global lock in order to preserve their
+> +semantics.
 
-Signed-off-by: Alex Richardson <alexrichardson@google.com>
----
- target/arm/cpregs-pmu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Wow, that's out of date.
 
-diff --git a/target/arm/cpregs-pmu.c b/target/arm/cpregs-pmu.c
-index 0f295b1376..ef176e4045 100644
---- a/target/arm/cpregs-pmu.c
-+++ b/target/arm/cpregs-pmu.c
-@@ -1276,6 +1276,12 @@ void define_pm_cpregs(ARMCPU *cpu)
-               .access = PL0_R, .accessfn = pmreg_access, .type = ARM_CP_CONST,
-               .fgt = FGT_PMCEIDN_EL0,
-               .resetvalue = cpu->pmceid1 },
-+            { .name = "PMCCNTR", .state = ARM_CP_STATE_AA32,
-+              .cp = 15, .crm = 9, .opc1 = 0,
-+              .access = PL0_RW, .accessfn = pmreg_access_ccntr, .resetvalue = 0,
-+              .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_64BIT | ARM_CP_NO_GDB,
-+              .fgt = FGT_PMCCNTR_EL0, .readfn = pmccntr_read,
-+              .writefn = pmccntr_write,  },
-         };
-         define_arm_cp_regs(cpu, v8_pm_reginfo);
-     }
--- 
-2.50.1.470.g6ba607880d-goog
+
+r~
 
 
