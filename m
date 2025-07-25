@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC51C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 23:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D27DC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 23:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufRya-0002TK-4H; Fri, 25 Jul 2025 19:37:20 -0400
+	id 1ufRzX-000348-J8; Fri, 25 Jul 2025 19:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRyX-0002RL-U9
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:37:18 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1ufRzT-00032w-Ch
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:38:16 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRyS-0006JX-MM
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:37:17 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-3135f3511bcso2250656a91.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 16:37:12 -0700 (PDT)
+ id 1ufRzQ-0006S8-D7
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:38:14 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-31c38e75dafso2158699a91.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 16:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753486631; x=1754091431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753486691; x=1754091491; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=39WnHk1Ef1m1rrroEu3T7Bp1/++nz2Cts187zD/UmVU=;
- b=zc5Suje9CeNuQElUqMkm8Z9+SaP3VIeKQTu5f/n+U+tzYeeaURpbynd4474tv8p7ep
- 7gxyDNCjy+jCBalkkS8x84MkHluki1cWBD8b2LnRkPLLr3WEAxYCPqs1O0XSlJupLlDM
- CMPoIphwhMX6NAGWQupeEml4TdqNaeutLeYv4sVNYWf8PWrYAyimPrTaFJ7C7VJcDPsX
- R1vx6agVFgsrCdwDQN4ugI9N35XkkpdiOVzjuL5GkXyjf/a/K9CFTU/5+h6m03juqdNP
- WC3Z9o9bxwxTxbgKt3Jo5XJi5VMTcrkbLIzSzLZwfyyEvQ0VAldqf7yZtzdJKHlGvEkO
- IHQw==
+ bh=Ha3DrFl4U6QPqwJ3Kd7efkOpaf9bsTsDGDz91R6u030=;
+ b=LXbZzULixbq18OysbAWjY3nO3AcjIRcG/EPi8fMGmCU42dofEb/zmrb5EPwbrWVaX/
+ 1QNg/TDBskxMaoOU/ZS+clRwBGB5Z4u7w+QNIcmY9CmfENoGSL7CnMNx2UdDFAeAJL0d
+ 6HJz3LuJ2hhMeUCCIBnfuC75owehQx31C4DuipsKM3plNg8doPWO/YdydQwyzLudVCRZ
+ pyE23y1TQGbzT8TMK7Uk8xC5KqbYnBXwF6K0nHuPpxscRw+gYAf/UBN6HedtaH6MEwH5
+ hwdfSBROVw/okE+qrOPVs/0DaReT9zci8Lz6IOLk9kWbPmqQ+RWR+w2CVvW7X5kbipfG
+ fiIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753486631; x=1754091431;
+ d=1e100.net; s=20230601; t=1753486691; x=1754091491;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=39WnHk1Ef1m1rrroEu3T7Bp1/++nz2Cts187zD/UmVU=;
- b=bGQ08489Y6D/DSy03Y05LOhk+YJILnkCnIYYy3dIx9PXXCf6MSoJxx/DDTiR9NDBC5
- v8nEUe4a0QPi+kL5yLK7Q+tXEXcPOoQLe16Ywj7r/iLMeGiIb2mNOFMD/qsDdJgOxn8Q
- k0rhxzejsXOOS9PeaQWd57hP7cL9oYMWV7d8eJypLDOKRNIiTPTz5CeGXT31oSC2G7RL
- XeEiSSw6zdJorWxMtGTvmNhtB7F0e1W2C/M/3oQm+ct2N8U7+Ni22q+t/0a+zNt7ynsB
- fcUsSVxy4FNloseLPQBVHsQV/SDLPeW4D9DpEZ2SAW2Ilsf0Vydh3aBcX1GAeE5YwBhU
- PqTw==
-X-Gm-Message-State: AOJu0YxlA3ET+ivjh/bP70ZVIJ1PmrpuBd6nHvkMOZK+wB3yLCioHvn6
- kquf2quxUEVRms2BeJT7e/WFGpPgxZMsE95/Qcp5OVgGYF0wO+ga0M8h8HYtLXdKDogiIHpnMrN
- t0bji
-X-Gm-Gg: ASbGncspvvMyiUMIFW/JztbBDMNEX0rp+4F2tFQYzZTqY8fVb475cjdb0qZG5YNIAjA
- VlGlDAEHREH2MM8euoG2fxuGhXEDr/8jiYKpd1+WXwLSB90iPJlRTkaDdHdBd0iWKLmcwIO9utc
- MOi4U0bbaLotV0Lmq0UswoviVMArr/ERl0kqGH1M69e5IS4vFO8rtMBR7dRcI0+Z9NNHWWwwuzK
- 8ylrfoGy07mas4xV/yzAllS7xpR1TJyTQnwvvF76nmEJS7lOzErhe6h+CB0FfBRRFVu8CnbpELo
- AahNg0uKvd7rbzw7uT2YDm38bvSQcryYkvgRQjG+uUlzvaa7OsLWhAQizf3nLu0h5ccL48L+1ut
- XHQ69pSGy5qO+mnDlDW6FnSV9njMxPj4iLxMwzSdKMd3fw22GucyWWCkwWdgG3iPHQnbfyBnGZR
- BOqFwMXO7XXTg4
-X-Google-Smtp-Source: AGHT+IEiFfLTFlMowac3W/nglsYCJb8hML4lfcoqmNcyUGpbYwfAFnj9/dGy0kijPxHgJu8I2QKXtg==
-X-Received: by 2002:a17:90b:584b:b0:312:1508:fb4e with SMTP id
- 98e67ed59e1d1-31e77a00822mr6134297a91.17.1753486630816; 
- Fri, 25 Jul 2025 16:37:10 -0700 (PDT)
+ bh=Ha3DrFl4U6QPqwJ3Kd7efkOpaf9bsTsDGDz91R6u030=;
+ b=dMlVkKTl3OpG+odDeK3Y83wq+/fpJO6v2OQYITLUOipDLpblH/U69QB1Kfd1+k29U3
+ 8GnaRpJpRR9tLm+FV3+XJEjEsqJHhJVl/wGarvyNVfiOSFYQovNdlEL/8vR1EHK6YwJ8
+ T1OPr4JjUO+i72HCQuE8bxQicPAb6m8VT7HA3ya9mbtsta1Ed6mYJKFMMzHU2EzpmTW0
+ 0jTqHCtC8pT4lIJE0SQ4P0nbXoSXQ4vL7DQdhVbsctfxfOjz3MUDmW3kff6SNSZAJxew
+ 0WHev1BGEoJCuMa/c1ntOpSH3SXIVR2Wpc3p62o5VLGTa6KzgRwT/k2khAToroPuLdZ4
+ 3NBA==
+X-Gm-Message-State: AOJu0YyoovzSNNxa8Jj5yXm6u7MAK5uVYYn/ylXCi25ace3MMPeu+IGE
+ iHySl7EkouEjcHNqWUVgLjNPpdBHF9FsOEUX+VtBjlevCedexiwUq5yltZrLVTKbXPTnTfjG7+s
+ XGhah
+X-Gm-Gg: ASbGncuxlMSAvZQX2UZrZJoG87D9/yW39AsUh9qMbuydQFz8M9Lhp3vWoxPaIuf2Na6
+ NzB/kT2lhcYxWYX1FvvesxfE14mUW/WqV38G9RC4G+tbzGGYgrX7Vd1xgKiGKWlHK1R/VWpWOUm
+ HYX1yFdeucpPDY/AVFutCQVTa0qZ56yeI3vwaEWImvk7/a8jVwm3Sqo4pkaR/amyP5SQucbMKPb
+ XozjQpg+HdvhAEEs1s1wPn1uRkgJoGxnLipPcc34auFiJMBWXd8DeoAyoIXpe/gxbt61VPfxukO
+ cbUHetKD1It/Wb5dzGbXWsQ6RqcAnwmiCifeRuYlK5zQvRhkkBoNmhnxWc2saL4DAp19opWzR+1
+ De53j/NAVxfo4XEin65+3ZPwDyUDEjfij+R5Y1KRvxwwE4M0Mh3blARYp2XO+g2JELPGLhAvTHk
+ A/bw==
+X-Google-Smtp-Source: AGHT+IGwactT6WB6ojHSZ61wGje/I2rd/NEoyzn5jBNKo0VlOV1T8B8w+YiWTywRPCDNj9LNzSjSdQ==
+X-Received: by 2002:a17:90b:4e87:b0:312:f2ee:a895 with SMTP id
+ 98e67ed59e1d1-31e77a19c6emr5252730a91.31.1753486690812; 
+ Fri, 25 Jul 2025 16:38:10 -0700 (PDT)
 Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3f7f568a3asm621205a12.6.2025.07.25.16.37.09
+ 98e67ed59e1d1-31e6226adfasm3038037a91.2.2025.07.25.16.38.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 16:37:10 -0700 (PDT)
-Message-ID: <8a2db402-7193-4d73-ac0e-09390c2525c4@linaro.org>
-Date: Fri, 25 Jul 2025 13:37:07 -1000
+ Fri, 25 Jul 2025 16:38:10 -0700 (PDT)
+Message-ID: <ec18def4-5f3d-4bbc-aee0-19d0b8eab033@linaro.org>
+Date: Fri, 25 Jul 2025 13:38:08 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/17] target/loongarch: Move some function definition
- to kvm directory
+Subject: Re: [PATCH v3 02/17] target/loongarch: Define function
+ loongarch_cpu_post_init as static
 To: qemu-devel@nongnu.org
 References: <20250725013739.994437-1-maobibo@loongson.cn>
- <20250725013739.994437-2-maobibo@loongson.cn>
+ <20250725013739.994437-3-maobibo@loongson.cn>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250725013739.994437-2-maobibo@loongson.cn>
+In-Reply-To: <20250725013739.994437-3-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,16 +106,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/24/25 15:37, Bibo Mao wrote:
-> Move function definition specified with kvm to the corresponding
-> directory. Also remove header file "cpu.h" including outside of
-> macro QEMU_KVM_LOONGARCH_H.
+> Function loongarch_cpu_post_init() is implemented and used in the
+> same file target/loongarch/cpu.c, it can be defined as static function.
+> 
+> This patch moves implementation about function loongarch_cpu_post_init()
+> before it is referenced. And it is only code movement, no function
+> change.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/loongarch/virt.c                  | 1 +
->   target/loongarch/cpu.h               | 9 ---------
->   target/loongarch/kvm/kvm_loongarch.h | 4 ++--
->   3 files changed, 3 insertions(+), 11 deletions(-)
+>   target/loongarch/cpu.c | 180 ++++++++++++++++++++---------------------
+>   target/loongarch/cpu.h |   2 -
+>   2 files changed, 90 insertions(+), 92 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
