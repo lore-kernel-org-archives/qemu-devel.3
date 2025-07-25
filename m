@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E0CC87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9275BC87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufMfb-0002gX-Gc; Fri, 25 Jul 2025 13:57:23 -0400
+	id 1ufMgA-0003pE-Cj; Fri, 25 Jul 2025 13:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufMfO-0002FZ-Re
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:57:17 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1ufMg2-0003Vg-Qp
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:57:52 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufMfJ-000241-RE
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:57:09 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso2842981b3a.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 10:57:05 -0700 (PDT)
+ id 1ufMg0-00029f-20
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:57:50 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-74801bc6dc5so2391695b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 10:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753466224; x=1754071024; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753466259; x=1754071059; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PeVQPZhEZfWReNJfn1LTpHfqampo0f2QC9qeRIBkVbA=;
- b=Ny/WmC9Ld+vx3zIuLur1i96czRM/STOsYqRi6x9aWRSoJCjgnfZ8xelwRzrmn1Ptm8
- T/Hx/qHI1KZVU7Lh+0QUu4EbbtNqxtua498Xnb2R9c7IWkt+ovsLxe+BPECDc/B+9hQF
- wT6iTV/wxJ1cGEIvOuV7+s66n+pPpqVy3B9QghbYCU+mnqmGyHNzqb+5bfkg2Xk6vRXr
- C8NDYXK5F8/LCttLUDMG6j5nT70ZrvFlKP10WSIV7SZNzD+jXo0CLhxJGPPTK0B6U9zg
- mNUYQqVKz6nGlwduyFM0dz8orv5pTPn9DNlHC63qKl0ef+Po2Ty1p9sFuwSpu3U37ZY4
- 6T+w==
+ bh=QkoZ7faUGgVx+/uaY1cFHpymKuZRj4E0OClgFoDJM/0=;
+ b=tzHhy70AfiK2Nxuiq9vkJP9Z1r/5DPltgHJGipxHog7PGN2aTxyQqJuk7fLkVm9+PS
+ gWAr3vFxVoTordUWmg9jMvS4bADKe9RxiwzLwdzXXN2FvYVnPUzMfxadcyer2FQW2M1k
+ xNeBipqTZw3B9acqHAAL3WzYCEzi+IRODmQygCmZyNwsU45UXGh89EPlJvZYckbSV2OH
+ oqHu7ZWp2ZKpn7YJHajcfmUJFhUUKl+86g5VBfCCZPvjLXwGHEa/mSvBx6b89v8f+KxR
+ RvoChZEbr0/lqztWyU0EvCnPdqXjcgAe5FqwHh9WTk5RMI3Oel1QgcWvRQDECBF+GRSh
+ ApkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753466224; x=1754071024;
+ d=1e100.net; s=20230601; t=1753466259; x=1754071059;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PeVQPZhEZfWReNJfn1LTpHfqampo0f2QC9qeRIBkVbA=;
- b=I7WoK4Z4EJzUvB5QFYG5zvXG11StgHViXFA967/IBcbpsozLLExPq7Le9FY48yrdyp
- ca066M1IibTHCHz8nZSR8N4JapznmX8Bdt+8tDh1OKoizcC50XngtvMeyAvrCcOWotKy
- 8WoR5o2yAfuw90+R1cEs14b+ugnJvXE1EJeJH1dxao2r+au73K6mtpLKdo99f5PEiNG/
- CP+N7Jxx5RWDNTzWdIx1abnsm4yJp6frwnz6MV90iTkDERvcD+CwqzpmVSACGN5238wM
- pjuUO5OwYEJxrI4P49IZg3Jx+3SBhM+V7VC/8seGjmmj/euYFOaTZuqLr183DN08aYjz
- 4k/w==
+ bh=QkoZ7faUGgVx+/uaY1cFHpymKuZRj4E0OClgFoDJM/0=;
+ b=vspwpuRWEFnBjnafzlHDrbRSuttjE3QzsnCWg7A+3HDHI2yTHhqss7pRCfu69cHIiB
+ /s8FZB8QBkvT8TkkGIsG3viZE6sMgezdNIXcvHhMApSLCPcGaxp/vWs7CfHKvlGJORpF
+ zD9C5sNRgaq7l5QxeDpIx0mEJE8OA4xYrQq/aV2kDOHor50eyKR2AmgI9dkYNPg1p/IJ
+ ClEQUk1McHCyVQyaZYHEiGl3plFpG5sfiQQDz0ZGvEFrmYbaljuNBHGSWNTDks1NS1iV
+ oRqc3DNlpeXc2zVe9AhuTc274UqYe1BMmA4P6jPzF/CAWZCTlGbkALwSyZWX2A3PjBCN
+ EeIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXePNnPg99HHVZpsDeeJxmqFeMjuVSNrnTBEbWBiEhDPpd9Ec4gT4OiazAquxOKwBsA06ITC9V4VZXk@nongnu.org
-X-Gm-Message-State: AOJu0YzcpkA1PErSg3CFiEpLQMk08nVXEnbsY3DgR9ditXneI7uO8hXF
- gB/M5/o4LFFBokh5Faup6GJXG+f5GIcsYO82ZwKWpBYarVr7A/PsqTexM57pk22gJpc=
-X-Gm-Gg: ASbGnctUtCGnP/ZrTnIizuKVGBerTEArmfTsOp1jZQBd4neDAfU4zaHYHUjN6zeqGf8
- vsAbfFHHDUNZpPq58c+yFvRf8QQG5hV97ySpAjFg/KKnmHEIMOc0J3VHLSv/mwr3h9VkMWT0LTU
- w8X5QGviJfQ6Hb5ELBei1YeIUq9VGT+6QqmP7BYyVHz5/Sw09o7ZPbkc//eYQwAjG88f9EQj6Ci
- UeegNK/nTRs7Hgtluu80lGidBNZ9W0n1c+TjQVVJ2Witqc0/E7Cbk3wSEA8/y/vK0iTERrNnPxm
- oCeP9UOdPt63TNWTnWDQ20tgqRQgjrV7y1o+aGE1dE5/FXILKDUE28KQ9b3QjKKmS7TVTIvDNnA
- v/kNcTIzuh2fRCuA5DV0fmUu240iMDCp7haA=
-X-Google-Smtp-Source: AGHT+IFsY7+n4Dnp/cpaVCT4tmgOUjj1Od7LjBbdrcR7Chum8+QjTNs2+yqQ7tJxuHxoQ3mR7rwccQ==
-X-Received: by 2002:a05:6a00:8cb:b0:740:5927:bb8b with SMTP id
- d2e1a72fcca58-7633322c898mr4538873b3a.0.1753466224001; 
- Fri, 25 Jul 2025 10:57:04 -0700 (PDT)
+ AJvYcCXDenIS1yTS4t7m27HBlwU0BW2E1BU5yKyl0eSXF9f0U10sGS9AzyfOqBmseaFBxegWI69fl/8HM09f@nongnu.org
+X-Gm-Message-State: AOJu0YzR5/HxxQBcSsezWwBNTQOv+CB4Ivnkh7r9iPmiUmWWfghwXZ+r
+ IZwdjNxqCSY6P0WIqumkCENLe1O1t4v6hyuqE7xHjnEO0QEowbE6xqwQd78z14d8syk=
+X-Gm-Gg: ASbGnct+6E11X6rVkfxsmNpO9AGMbtkTsdtdh9ctv+7Q5qjrwt25iSg8gsDml3OfP6l
+ VD/Z04lH/bO1LMfWjZoKYsSrjzSTGcFg3sii5l5TayatjkOakvfRTO38a+MI61MAidClvB8bQ6l
+ oUiyBjqo/yBD+VIF/iUZGc+cejG5kFssd9e5PK58SjE9AALS/PHUtxRZEwVY5V1KAJFIu0sVb/Y
+ S6uZcgeHKCmk8ZJ8eN9VfN4xQv2Y0apJTS0ghANIeResGOuVPgwFrfYdE8ft1OVSxWawuij7Fkl
+ mzR5Osujz7VHGzf9YneCGNtUyQoHmom/P0F58CQMJYvgdw0dNIybHd+l3muCQ8m1DDgsDUcD74d
+ r/q9kHzQKxBD/DLO8VhBoD5hTDqZzQeJ63y8=
+X-Google-Smtp-Source: AGHT+IGgr5I8y94vMBcNtcU+TDplJ5N4GpzxFgc4vpftjzx+e4wFZEcvvXSl2UfOpPsDfnUA9gtEWA==
+X-Received: by 2002:a05:6a00:3a12:b0:746:25d1:b712 with SMTP id
+ d2e1a72fcca58-76333fe47b9mr4619385b3a.7.1753466259079; 
+ Fri, 25 Jul 2025 10:57:39 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764163074edsm137671b3a.28.2025.07.25.10.57.03
+ d2e1a72fcca58-7640b2de006sm191650b3a.108.2025.07.25.10.57.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 10:57:03 -0700 (PDT)
-Message-ID: <7c817779-081e-4064-9e23-95b7d9ca2322@linaro.org>
-Date: Fri, 25 Jul 2025 10:57:03 -0700
+ Fri, 25 Jul 2025 10:57:38 -0700 (PDT)
+Message-ID: <1b99fd71-d32a-459c-b85c-7185597ac537@linaro.org>
+Date: Fri, 25 Jul 2025 10:57:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 for-10.1 1/3] linux-user/aarch64: Clear TPIDR2_EL0 when
- delivering signals
+Subject: Re: [PATCH v2 for-10.1 2/3] linux-user/aarch64: Support TPIDR2_MAGIC
+ signal frame record
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
 References: <20250725175510.3864231-1-peter.maydell@linaro.org>
- <20250725175510.3864231-2-peter.maydell@linaro.org>
+ <20250725175510.3864231-3-peter.maydell@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250725175510.3864231-2-peter.maydell@linaro.org>
+In-Reply-To: <20250725175510.3864231-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,36 +107,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/25/25 10:55 AM, Peter Maydell wrote:
-> A recent change to the kernel (Linux commit b376108e1f88
-> "arm64/fpsimd: signal: Clear TPIDR2 when delivering signals") updated
-> the signal-handler entry code to always clear TPIDR2_EL0.
+> FEAT_SME adds the TPIDR2 userspace-accessible system register, which
+> is used as part of the procedure calling standard's lazy saving
+> scheme for the ZA registers:
+>   https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving-scheme
 > 
-> This is necessary for the userspace ZA lazy saving scheme to work
-> correctly when unwinding exceptions across a signal boundary.
-> (For the essay-length description of the incorrect behaviour and
-> why this is the correct fix, see the commit message for the
-> kernel commit.)
+> The Linux kernel has a signal frame record for saving
+> and restoring this value when calling signal handlers, but
+> we forgot to implement this. The result is that code which
+> tries to unwind an exception out of a signal handler will
+> not work correctly.
 > 
-> Make QEMU also clear TPIDR2_EL0 on signal entry, applying the
-> equivalent bugfix to our implementation.
-> 
-> Note that getting this unwinding to work correctly also requires
-> changes to the userspace code, e.g.  as implemented in gcc in
-> https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=b5ffc8e75a8
-> 
-> This change is technically an ABI change; from the kernel's
-> point of view SME was never enabled (it was hidden behind
-> CONFIG_BROKEN) before the change. From QEMU's point of view
-> our SME-related signal handling was broken anyway as we weren't
-> saving and restoring TPIDR2_EL0.
+> Add support for the missing record.
 > 
 > Cc: qemu-stable@nongnu.org
 > Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/aarch64/signal.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+>   linux-user/aarch64/signal.c | 42 +++++++++++++++++++++++++++++++++++--
+>   1 file changed, 40 insertions(+), 2 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
