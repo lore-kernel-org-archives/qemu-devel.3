@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE1AC87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 07:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01458C83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 08:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufCs2-0006SW-0a; Fri, 25 Jul 2025 03:29:34 -0400
+	id 1ufDtF-0005T4-TK; Fri, 25 Jul 2025 04:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1ufCry-0006Pe-6D
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:29:30 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1ufCrv-0008EM-8j
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:29:29 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxLGtQMoNoXLkxAQ--.35185S3;
- Fri, 25 Jul 2025 15:29:20 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJAxT+ZOMoNomAUmAA--.63460S3;
- Fri, 25 Jul 2025 15:29:20 +0800 (CST)
-Subject: Re: [PATCH v2] hw/intc/loongarch_ipi: use logical CPU ID for
- kvm_ipi_access_regs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- maobibo@loongson.cn, lixianglai@loongson.cn
-Cc: qemu-devel@nongnu.org, jiaxun.yang@flygoat.com
-References: <20250725012528.2582498-1-gaosong@loongson.cn>
- <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <3358c70d-5d12-2d63-cf02-077d0b5c39c6@loongson.cn>
-Date: Fri, 25 Jul 2025 15:32:18 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ufDtC-0005OW-7d
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:34:50 -0400
+Received: from p-west3-cluster2-host3-snip4-2.eps.apple.com ([57.103.74.65]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ufDt9-0003LN-NP
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 04:34:49 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPS id
+ 2DC0B180017A; Fri, 25 Jul 2025 08:34:39 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=d6Y0v3JmhbVH8a1yrcqq1A0CM6+1c1neXJ8NeseTam0=;
+ h=From:To:Subject:Date:Message-Id:Content-Type:MIME-Version:x-icloud-hme;
+ b=RhNYDcV37W91JHdoglLYE3nG5qqeQxGNKbk1ckZ62QiZOP5HpaVfj+Sq6WcfTToyS9n25K0lGh/92NYc2HO4C4wmpHpPTgWCbJwfkLC21oAoJYdosgN9tTbBRh2g2/N1Djl+ukc7uFZpI/xFRBiGoXJOdVgy6u5at6n9NwGgvsKhO03l+eSMYUv1v4Q6YnF1deLsPlQj8Kswtyz7NhrWsb93MSy+5JyCht6mtSWVwJNoUNQOQvyNGZrehbm0gIAp5i+4KfDZCUXCvyzWhPDOPSA4JdVPc3nw5m7Z9kyOOD4fGjdMbUPbT981StxyGjcawKPi6uPLYApnWD8j7XlZOw==
+X-Client-IP: 46.189.47.18
+Received: from localhost.localdomain (ms-asmtp-me-k8s.p00.prod.me.com
+ [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-2 (Postfix) with ESMTPSA id
+ EFF0F180030D; Fri, 25 Jul 2025 08:34:34 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH 0/9] HVF: Add support for platform vGIC and nested
+ virtualisation
+Date: Fri, 25 Jul 2025 10:34:22 +0200
+Message-Id: <20250725083431.91450-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJAxT+ZOMoNomAUmAA--.63460S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7urW7tr45Gw4Utr43XFy5GFX_yoW8Cw1kpr
- WkAr4Y9rW8Cr95Jw4jy34DWFyDWr1xJ3ZrXw4fKFyUAF47Zr10gry8XryvgFyUJr48CF15
- XF17KF12vFy3JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAF
- wI0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
- AF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
- IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
- CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
- xhVjvjDU0xZFpf9x07jUsqXUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Proofpoint-GUID: k3HL4L1UKtPHbkD4MF3qEouoDQK11pPk
+X-Proofpoint-ORIG-GUID: k3HL4L1UKtPHbkD4MF3qEouoDQK11pPk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDA3MiBTYWx0ZWRfX2To1LoNDqCtu
+ XswwVwbr/B/JdKwludFe2/mcJj/RuRnP6tXpu3xWPTnzGL2hFTgh1J4T+4o9gEcFLH74i7u3CH5
+ L6e2kjR1D/J40cTOt4a2d9MxzUc13Bfjl5MQ//C5hn82b8SKVGvfHKW6PEUEjk3s9O4qrCFfm1d
+ pOHK6mcaPa3WO2JfAgc0MHy7eM5ID4w9kVIFdgv3+yYTjGA0PecMfaedIHw/jCbEiYoyHI9kjvE
+ M6pwbAe3KWf/ZDWBVAWZ6x5CsFbGHf3lN+Ocr4GJjJ8UEpA+6nfKMqTCgC0mhysF+cPkKP9VM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-25_02,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 malwarescore=0 mlxlogscore=770 phishscore=0 spamscore=0
+ adultscore=0 suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507250072
+Received-SPF: pass client-ip=57.103.74.65;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.672,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,58 +91,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/7/25 下午3:22, Philippe Mathieu-Daudé 写道:
-> On 25/7/25 03:25, Song Gao wrote:
->> QEMU reboot after inserting no-configuous cpus may start failed
->> becaue the vcpu context may not have created on KVM, On QEMU side use 
->> logical CPU ID
->> for kvm_ipi_access_regs and do some check. On KVM use 
->> kvm_get_vcpu_by_id() get vcpu.
->>
-Hi,
-Sorry
-this patch not fix this problem ,
-This patch  just  fix qemu start fail with smp cpu < smp maxcpus on KVM.
-e.g '-smp 1,maxcpus=4,sockets=4,cores=1,threads=1'
+Early series.
 
-I 'll send a new patch,
+Known issues:
+- when nested virt is enabled, no UI response within EDK2
+and a permanent wait. Workaround: -boot menu=on,splash-time=0
+- Save/restore of GIC state isn't complete yet.
+- Save/restore of HVF state when EL2 is enabled isn't complete yet.
+- This series doesn't contain EL2 physical timer emulation, which is
+needed if not leveraging the Apple vGIC.
 
-Thanks.
-Song Gao.
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   hw/intc/loongarch_ipi_kvm.c | 11 ++++++++---
->>   1 file changed, 8 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
->> index 4cb3acc921..d0a2f2343f 100644
->> --- a/hw/intc/loongarch_ipi_kvm.c
->> +++ b/hw/intc/loongarch_ipi_kvm.c
->> @@ -23,14 +23,19 @@ static void kvm_ipi_access_regs(void *opaque, 
->> bool write)
->>       LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
->>       IPICore *core;
->>       uint64_t attr;
->> -    int cpu, fd = lis->dev_fd;
->> +    int i, cpu, fd = lis->dev_fd;
->
-> While here, we could rename s/cpu/cpu_index/,>
->>       if (fd == 0) {
->>           return;
->>       }
->>   -    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
->
-> and declare @i here: for (int i = 0; ...).
->
->> -        core = &ipi->cpu[cpu];
->> +    for (i = 0; i < ipi->num_cpu; i++) {
->> +        core = &ipi->cpu[i];
->> +        if (core == NULL || core->cpu == NULL) {
->> +            continue;
->> +        }
->> +        cpu = core->cpu->cpu_index;
->> +
->>           attr = (cpu << 16) | CORE_STATUS_OFF;
->>           kvm_ipi_access_reg(fd, attr, &core->status, write);
+However, this is usable and there seems to be some interest for it. Hopefully
+it'll be at least somewhat useful.
+
+PS: I can step up to maintain HVF support if needed. WHPX arm64 patch series
+is coming soon too.
+
+Mohamed Mediouni (9):
+  target/arm: hvf: stubbing writes to LORC_EL1
+  accel, hw/arm, include/system/hvf: plumbing changes for HVF vGIC
+  target/arm: hvf: instantiate GIC early
+  target/arm: add asserts for code paths not leveraged when using the
+    vGIC
+  hw/intc: Add hvf vGIC interrupt controller support
+  hw/arm, target/arm: nested virtualisation on HVF
+  target/arm: hvf: pass through CNTHCTL_EL2 and MDCCINT_EL1
+  hw/arm: virt: add GICv2m for the case when ITS is not available
+  target/arm: hvf: use LOG_UNIMP for CNTP_CVAL_EL0/SYSREG_CNTP_CTL_EL0
+
+ accel/hvf/hvf-all.c        |  44 +++
+ accel/stubs/hvf-stub.c     |   1 +
+ hw/arm/virt-acpi-build.c   |   4 +-
+ hw/arm/virt.c              |  31 +-
+ hw/intc/arm_gicv3_common.c |   3 +
+ hw/intc/arm_gicv3_hvf.c    | 624 +++++++++++++++++++++++++++++++++++++
+ hw/intc/meson.build        |   1 +
+ include/hw/arm/virt.h      |   2 +
+ include/system/hvf.h       |   3 +
+ system/vl.c                |   2 +
+ target/arm/hvf-stub.c      |  15 +
+ target/arm/hvf/hvf.c       |  91 ++++++
+ target/arm/hvf_arm.h       |   3 +
+ 13 files changed, 814 insertions(+), 10 deletions(-)
+ create mode 100644 hw/intc/arm_gicv3_hvf.c
+
+-- 
+2.39.5 (Apple Git-154)
 
 
