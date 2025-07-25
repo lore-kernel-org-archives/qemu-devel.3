@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C10FC87FCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8435BC87FCA
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 23:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufRXB-0002r4-Cf; Fri, 25 Jul 2025 19:09:01 -0400
+	id 1ufRXF-0002uT-MN; Fri, 25 Jul 2025 19:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRXA-0002qU-CG
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:09:00 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ufRXE-0002tY-6o
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:09:04 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRX8-0001of-Np
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:09:00 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-23694cec0feso24954045ad.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 16:08:58 -0700 (PDT)
+ id 1ufRXC-0001pg-DV
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:09:03 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-23dc5bcf49eso34933925ad.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 16:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753484937; x=1754089737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753484941; x=1754089741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WwS5enWBqWLAF6dbF1XYZSIiH0+6jDOiUSGG3x6eJCk=;
- b=XYLhxozxxLd8x9uj0fLeLfKfoUtc8dtxgGRgdIFMhsZ3J/xtAy/SQBVeiCQKn+s+HG
- sfjaKxRHeKGKY570hacUzhej/sLgRyVlLOEyE5m/rRJ6nSuCNqK4+z4g7WIDkep+Mbe7
- 3vsXnYjyMQFaoU8+iQzYfoeG6DlUxtjLx16EzJ9WJ2iZs/bbQcmhJLxhWHQ4jQ/0gTvr
- lHYbf3Tsm7bz6rl8fhSvmvFwLG+gCjjdbXCIClvtbLoFkRAGQ+dAFoc7ToN2DJR2eixP
- 0tomgKbJMjUfj8rWVnFU1TXNatlbY3KrYwCnjWuAQWv+syfqCHsOYhl3fkWQk3EV8re3
- ciCw==
+ bh=BsvBS8RBB7nukj1RPR1Xen8yV7uvDqzTtw/ihslv+1c=;
+ b=U+XOLW1JlbYr+73+RwgwnlZZD/1ymv6f+8modRYIx0rult4z95vazNVnY74eR48G9P
+ 3+e9R/Td2KUmMdxuTqXfxEijKIXthNIMqayLyWrjMM9M3NKSUk317gyK7K0cS79LWZWF
+ j5zZ05K6r/j+z65aOg/UDaT1zpBH861oCrhQMO9UzWw0NxKJtR8whzq3zfdjNz0/zcLu
+ zKXwIygiZvA80H9DPm4AVrhb67XTnUv/F0321YlgSaKEjKUJXsNy9+Q/YiLkZc9rx5M7
+ qgLchf66O/6Y3ccNBbvptac08RYm+H9hyLrVmRwln6jcnlszmtn2oE/Y0+nlZFTSPHPH
+ NjHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753484937; x=1754089737;
+ d=1e100.net; s=20230601; t=1753484941; x=1754089741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WwS5enWBqWLAF6dbF1XYZSIiH0+6jDOiUSGG3x6eJCk=;
- b=edjaPlTmA6CBGDyQyJOw4BPjDR1chTnTXj1kaZXLLSZXXe9ABa2v/IIchrZx6wvY3V
- t0ow5wLkgoTuiS+0lPuWa+LrnxqKiRSVyIjbZck3qCtzWFoZ1R7gyCTqYyQ0tW8IkPkt
- ZqjH6qTKYhiQH4Pf11BGjO3qi3Rb4wcDLi52sh9Fqi2uUWKHIEKgjxzW3Qg0jNGBvGcH
- xCYxDzWhsAtA/F3setA0BFx7k1U+iVqHarNkfIpQ7zbWKT5HR1nr+DyA3MlAp7VNuPW4
- LFdRnHsf9kWdbLzLApPzgx8aCTgGlmVWf6AYsbWW0Qj8KdZxdYLLBqddJTVDjqxMU9xE
- lgKw==
-X-Gm-Message-State: AOJu0YyZpCR+ieBu9eiER6mA5vnqQDqltd2iAgSMOzAbCKV7thgY0Ucj
- dAhaAMjTxOz02rJlB09Roc6G6M2PgMCJO/xzbsyAqz4dmUNPLKh5vYZu1Kkoqc9gFVVd41nBVVR
- rhkDl
-X-Gm-Gg: ASbGnctZNZQZ0WlAlsaho2rfT5Hk/V25jHi2mNnBHQv87Gi0sLU545/gbtjZ/BgnIiX
- LxzGjDRav0cZqdoonPXVC055grsajW+h1ip+kE1wiNRAGbUAAm6H520uDIYFfL8PiWLFWtKId0J
- 3GNJ6TReWMenz6GMb1OraL+AxiAWiGZOjpaTjnbpDzcjyFlvsci5MCkvU8n9dLvDsI+bURWBheT
- 56eWfJwUF2t9RSG0xVxS8/qUQnWrFmX3v/tGgyZKfMb5sI+50yAPds+AP21o8eiEaDpWdMUqzdV
- cxrZahD36+9ssIGKF3qSShHJLka0k1fIoKn1Nei4HYYL/vGqRO8u4tsNsc8D0uCs9pcK0a+tiCP
- 7fsHAg+SvwSmOBFNAiQupfepF72VuNdaHa4EW4P1kk9ENw+iq/0SSSezGhOUgFx06hBH7p5Wfto
- LZGfy250feF4WphPpKSmAo
-X-Google-Smtp-Source: AGHT+IHzZg9Xatj5BxMqVD8nP1xF0HLa6TbnWyPZ+sAPC9nIj89ZWnTgMagW9M8kslh8ptHKwaLmAQ==
-X-Received: by 2002:a17:902:f252:b0:234:ed31:fc94 with SMTP id
- d9443c01a7336-23fb30bb5edmr26394585ad.26.1753484937073; 
- Fri, 25 Jul 2025 16:08:57 -0700 (PDT)
+ bh=BsvBS8RBB7nukj1RPR1Xen8yV7uvDqzTtw/ihslv+1c=;
+ b=UdolHKa+341YZvxhmnko59tVBnbx1z2Q3fCtlJXZDbzk+EcJyMywaigY/R87OgAaB6
+ uj8LcLBj9IisP/RPPv0RLZYtmh5VycMgghK+97yMEDorTtNhHC9XJOWKPd9/CpceM+P/
+ hgTjYdH2iKQmkG8K5cTImtoVcNnqk1oBgSsS7A/5WusziCWOxKNUcOKLkkBDXIY1jniU
+ nMSYtxJ6UYvTD2kd3oWPfybU5Ih3ueaOr42Nyvh32S3nvxFNkMUitVf1Mx+eOE35sHmc
+ oM5RcE4p8CvSU1gU0bqyDXr2lVSfA0VOxEAIXpZYibh5vSOPES2WHxMA9eaDZMr4ebyf
+ zBRA==
+X-Gm-Message-State: AOJu0YzWKohbCacps3EtXQNSKLkqN9AcoH583qHq14ebfUWrUYhGSfoQ
+ ik12bfhN1AulRyZRQ3vSiU8/iQdbBTHG57XpDu568We7AuZf6uG8+N5QE2QME/WU9vqbFYH0u8U
+ 2jztc
+X-Gm-Gg: ASbGncvO8EYSuyrKrIJJtM9BV/E1/mltvryODYbPbMKsRtvIVjrTe3pA8foQupSapmu
+ ye/gqoZegk0xEfxsAjO10eR7MraswWotIwLizUTgYli1GFdlIDi3MaWCV/kLYv+FNe1Hp+wVHZo
+ Gbo/+yLXNeltwcMt6dhFyMKpw8sv0NdyN36dDttBz1mjGv70FNDeh9V1BnDQBHlm5izUO4eeq6w
+ t53Xo2Xr8LRfAUJz09KXegJU0+xgNyQNtKGrc26FBf+4I6qn061V+piCZEanbgjQpH+Hcvr7yjx
+ fBly5JYXTw7LDI4JPhFZbqPQw0k1EVBZM0Y+2A4nuFSukDFLait0MDWDHVi9buRS1tCJ63v6Pw/
+ aD0BF0BOfrIXdiD25sRnYIskBe2AzfAvC9nJNsUIT10BdbubN9ResEE7EaPttYsYtHINi75w3E8
+ qIPH3g+2nxuA==
+X-Google-Smtp-Source: AGHT+IH/89yTIVTKk7THzRKY4KiWdJzGtX+b4B9vcy2j2FvBwvr99YfL/Ra6zzBZKU/iB2X/XnLCVg==
+X-Received: by 2002:a17:902:e84e:b0:23c:7b9e:1638 with SMTP id
+ d9443c01a7336-23fb3166c84mr59855855ad.35.1753484940923; 
+ Fri, 25 Jul 2025 16:09:00 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe545368sm5033375ad.172.2025.07.25.16.08.55
+ d9443c01a7336-23fbe545368sm5033375ad.172.2025.07.25.16.08.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 16:08:56 -0700 (PDT)
+ Fri, 25 Jul 2025 16:09:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 1/3] linux-user/aarch64: Split out signal_for_exception
-Date: Fri, 25 Jul 2025 13:08:47 -1000
-Message-ID: <20250725230849.13026-2-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 3/3] linux-user/aarch64: Generate ESR signal records
+Date: Fri, 25 Jul 2025 13:08:49 -1000
+Message-ID: <20250725230849.13026-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250725230849.13026-1-richard.henderson@linaro.org>
 References: <20250725230849.13026-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,117 +102,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/cpu_loop.c | 84 ++++++++++++++++++++---------------
- 1 file changed, 47 insertions(+), 37 deletions(-)
+ linux-user/aarch64/cpu_loop.c |  3 +++
+ linux-user/aarch64/signal.c   | 34 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
 
 diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index fea43cefa6..85d455d018 100644
+index 098578978e..7e9788abfb 100644
 --- a/linux-user/aarch64/cpu_loop.c
 +++ b/linux-user/aarch64/cpu_loop.c
-@@ -27,11 +27,56 @@
- #include "target/arm/syndrome.h"
- #include "target/arm/cpu-features.h"
+@@ -33,6 +33,9 @@ static void signal_for_exception(CPUARMState *env, vaddr addr)
+     uint32_t syn = env->exception.syndrome;
+     int si_code, si_signo;
  
-+/* Use the exception syndrome to map a cpu exception to a signal. */
-+static void signal_for_exception(CPUARMState *env, vaddr addr)
++    /* Let signal delivery see that ESR is live. */
++    env->cp15.esr_el[1] = syn;
++
+     switch (syn_get_ec(syn)) {
+     case EC_DATAABORT:
+     case EC_INSNABORT:
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index 668353bbda..ef97be3ac7 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -65,6 +65,13 @@ struct target_fpsimd_context {
+     uint64_t vregs[32 * 2]; /* really uint128_t vregs[32] */
+ };
+ 
++#define TARGET_ESR_MAGIC    0x45535201
++
++struct target_esr_context {
++    struct target_aarch64_ctx head;
++    uint64_t esr;
++};
++
+ #define TARGET_EXTRA_MAGIC  0x45585401
+ 
+ struct target_extra_context {
+@@ -201,6 +208,14 @@ static void target_setup_fpsimd_record(struct target_fpsimd_context *fpsimd,
+     }
+ }
+ 
++static void target_setup_esr_record(struct target_esr_context *ctx,
++                                    CPUARMState *env)
 +{
-+    uint32_t syn = env->exception.syndrome;
-+    int si_code, si_signo;
-+
-+    switch (syn_get_ec(syn)) {
-+    case EC_DATAABORT:
-+    case EC_INSNABORT:
-+        /* Both EC have the same format for FSC, or close enough. */
-+        switch (extract32(syn, 0, 6)) {
-+        case 0x04 ... 0x07: /* Translation fault, level {0-3} */
-+            si_signo = TARGET_SIGSEGV;
-+            si_code = TARGET_SEGV_MAPERR;
-+            break;
-+        case 0x09 ... 0x0b: /* Access flag fault, level {1-3} */
-+        case 0x0d ... 0x0f: /* Permission fault, level {1-3} */
-+            si_signo = TARGET_SIGSEGV;
-+            si_code = TARGET_SEGV_ACCERR;
-+            break;
-+        case 0x11: /* Synchronous Tag Check Fault */
-+            si_signo = TARGET_SIGSEGV;
-+            si_code = TARGET_SEGV_MTESERR;
-+            break;
-+        case 0x21: /* Alignment fault */
-+            si_signo = TARGET_SIGBUS;
-+            si_code = TARGET_BUS_ADRALN;
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+        break;
-+
-+    case EC_PCALIGNMENT:
-+        si_signo = TARGET_SIGBUS;
-+        si_code = TARGET_BUS_ADRALN;
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    force_sig_fault(si_signo, si_code, addr);
++    __put_user(TARGET_ESR_MAGIC, &ctx->head.magic);
++    __put_user(sizeof(*ctx), &ctx->head.size);
++    __put_user(env->cp15.esr_el[1], &ctx->esr);
 +}
 +
- /* AArch64 main loop */
- void cpu_loop(CPUARMState *env)
+ static void target_setup_extra_record(struct target_extra_context *extra,
+                                       uint64_t datap, uint32_t extra_size)
  {
-     CPUState *cs = env_cpu(env);
--    int trapnr, ec, fsc, si_code, si_signo;
-+    int trapnr;
-     abi_long ret;
+@@ -531,6 +546,9 @@ static int target_restore_sigframe(CPUARMState *env,
+             fpsimd = (struct target_fpsimd_context *)ctx;
+             break;
  
-     for (;;) {
-@@ -67,42 +112,7 @@ void cpu_loop(CPUARMState *env)
-             break;
-         case EXCP_PREFETCH_ABORT:
-         case EXCP_DATA_ABORT:
--            ec = syn_get_ec(env->exception.syndrome);
--            switch (ec) {
--            case EC_DATAABORT:
--            case EC_INSNABORT:
--                /* Both EC have the same format for FSC, or close enough. */
--                fsc = extract32(env->exception.syndrome, 0, 6);
--                switch (fsc) {
--                case 0x04 ... 0x07: /* Translation fault, level {0-3} */
--                    si_signo = TARGET_SIGSEGV;
--                    si_code = TARGET_SEGV_MAPERR;
--                    break;
--                case 0x09 ... 0x0b: /* Access flag fault, level {1-3} */
--                case 0x0d ... 0x0f: /* Permission fault, level {1-3} */
--                    si_signo = TARGET_SIGSEGV;
--                    si_code = TARGET_SEGV_ACCERR;
--                    break;
--                case 0x11: /* Synchronous Tag Check Fault */
--                    si_signo = TARGET_SIGSEGV;
--                    si_code = TARGET_SEGV_MTESERR;
--                    break;
--                case 0x21: /* Alignment fault */
--                    si_signo = TARGET_SIGBUS;
--                    si_code = TARGET_BUS_ADRALN;
--                    break;
--                default:
--                    g_assert_not_reached();
--                }
--                break;
--            case EC_PCALIGNMENT:
--                si_signo = TARGET_SIGBUS;
--                si_code = TARGET_BUS_ADRALN;
--                break;
--            default:
--                g_assert_not_reached();
--            }
--            force_sig_fault(si_signo, si_code, env->exception.vaddress);
-+            signal_for_exception(env, env->exception.vaddress);
-             break;
-         case EXCP_DEBUG:
-         case EXCP_BKPT:
++        case TARGET_ESR_MAGIC:
++            break; /* ignore */
++
+         case TARGET_SVE_MAGIC:
+             if (sve || size < sizeof(struct target_sve_context)) {
+                 goto err;
+@@ -683,7 +701,7 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+                                uc.tuc_mcontext.__reserved),
+     };
+     int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
+-    int zt_ofs = 0;
++    int zt_ofs = 0, esr_ofs = 0;
+     int sve_size = 0, za_size = 0, tpidr2_size = 0, zt_size = 0;
+     struct target_rt_sigframe *frame;
+     struct target_rt_frame_record *fr;
+@@ -693,6 +711,15 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+     fpsimd_ofs = alloc_sigframe_space(sizeof(struct target_fpsimd_context),
+                                       &layout);
+ 
++    /*
++     * In user mode, ESR_EL1 is only set by cpu_loop while queueing the
++     * signal, and it's only valid for the one sync insn.
++     */
++    if (env->cp15.esr_el[1]) {
++        esr_ofs = alloc_sigframe_space(sizeof(struct target_esr_context),
++                                       &layout);
++    }
++
+     /* SVE state needs saving only if it exists.  */
+     if (cpu_isar_feature(aa64_sve, env_archcpu(env)) ||
+         cpu_isar_feature(aa64_sme, env_archcpu(env))) {
+@@ -754,6 +781,11 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+ 
+     target_setup_general_frame(frame, env, set);
+     target_setup_fpsimd_record((void *)frame + fpsimd_ofs, env);
++    if (esr_ofs) {
++        target_setup_esr_record((void *)frame + esr_ofs, env);
++        /* Leave ESR_EL1 clear while it's not relevant. */
++        env->cp15.esr_el[1] = 0;
++    }
+     target_setup_end_record((void *)frame + layout.std_end_ofs);
+     if (layout.extra_ofs) {
+         target_setup_extra_record((void *)frame + layout.extra_ofs,
 -- 
 2.43.0
 
