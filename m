@@ -4,59 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5851C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88795C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufKXJ-00077b-7t; Fri, 25 Jul 2025 11:40:41 -0400
+	id 1ufKcN-0003bm-3j; Fri, 25 Jul 2025 11:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ufKXG-00076a-H4
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:40:38 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ufKXA-00017t-89
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:40:35 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bpX8W6Ywsz6L4wj;
- Fri, 25 Jul 2025 23:38:35 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id CBE8F1400C8;
- Fri, 25 Jul 2025 23:40:15 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 25 Jul
- 2025 17:40:15 +0200
-Date: Fri, 25 Jul 2025 16:40:13 +0100
-To: wangyuquan <wangyuquan1236@phytium.com.cn>
-CC: <fan.ni@samsung.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: Re: [RFC PATCH v3 2/2] pci-host/cxl: Support creation of a new CXL
- Host Bridge
-Message-ID: <20250725164013.00006430@huawei.com>
-In-Reply-To: <20250617040649.81303-3-wangyuquan1236@phytium.com.cn>
-References: <20250617040649.81303-1-wangyuquan1236@phytium.com.cn>
- <20250617040649.81303-3-wangyuquan1236@phytium.com.cn>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufKc4-0003O9-ET
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:42 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ufKc1-0002U3-K6
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:45:35 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-60700a745e5so4816165a12.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 08:45:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753458330; x=1754063130; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7g+EQl4FO2y9seoDYtW7fldlHVS7rtc0zlRHDP7pw3A=;
+ b=QWU3yvlUZc38sqUvVp3K1sFOC/IFtG+UKxgQGf0bqZ+fAftF+8b0zeulO76mjsZSVg
+ K4W0p/H9mWrrOoHhRiDup2FaUC6VPo+08aZDjFK7djBFgO9kn1vJcqV4BefA2HmHQUGa
+ GQVOWlRB/vFNn7H2ZeHjyGw8gEgoM40HlIH57tO7OOcrKlbaENDRCkqGdjaSY88y9j/i
+ +zNb1gea/DqX0YLIi7UXkEGmDgXLNh8/STcUO9fWzeOKbFVSSFt+94XO/caqDHJVRewG
+ lvzNAIaQP8ylW92n6qGJZRDR8bw8G4DH4Iwc5jLjB/64HBDzcOAlRjx8d74nFhlV2eBI
+ yg9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753458330; x=1754063130;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7g+EQl4FO2y9seoDYtW7fldlHVS7rtc0zlRHDP7pw3A=;
+ b=nGrpBod+BQc8iPjUfxeTn3JGUUDR25A9S5sc4bY4nj7ju4RXlQTHI0MaQBp5PGTcrC
+ hH0XnZFlwuWccG2RPCc7Ii1wRuD6LxlKWCE3n/xtWmET3WXFp7TTHDoNZVLSGsryZpU+
+ tWWTv8OVxB6DUWFwSFTuXflNgf0T4lSsS5ShNg5F5YfPaO5InISlzW4EVKbt19M00H8v
+ nffqXNNvdcjLoyku023be6qV4dNIz7vr7JR05tOfndDuEH79wW1WCU6V5rAi6u2MMY3X
+ XqJhItOeV01m46lTja9kFX3oDx1fGKfajzcfCdF8xbPL+v0iGCsFqCWsWZ+dy88iXyNR
+ Ucvg==
+X-Gm-Message-State: AOJu0YxO8ybF7oesK3Pa6H0MZ5coV5q62Nn/pn3e9l3lQkjUI416olXI
+ uZJfXYnnbqMYjYpASZwpd0I1BxPnaVhRLLyCZ/oqwMBY11UjMJnDiiyp6Yy9itn4+TU=
+X-Gm-Gg: ASbGncvHLCAqiTtAfgnMv9i5SiCeNV7j49V1qMd+twB7CY8jgIHp0WLztvGLTI8Fufk
+ GN3qeGCjnTQPlzRQOixITHAjvXRkAlJDoQW2a3KC7O3VlSJRPpe/lm7gnsT3UKcJCqSUkKoWo9p
+ KQK5NMEAi7Z65BuKAmKI9/LuMSTd3r975tsol1FzVsOqIBIhdv5hgCHjQ/bsWb5c2zOKr6I3GiW
+ l8RYv/quwWCRCTcL0LSZ6j+OaJZBkSDX8l55iRYQOlPCHxpPBHiQffQREJUNcK1zy2VO97CQZjL
+ S3At0X2kVSJHAl4FNdAHZRgu0QJsH7j21Hyt1X0yCothjmqGIJfVwSHMeJfPJRnpw2llmuytLd6
+ enR3jqAa5A0vOQ2XPdGdJ4A4=
+X-Google-Smtp-Source: AGHT+IFN2pqk8ejQbfoRSTG+yahE5WGO13sjEFuibdnT1MdF0LGYtgsOYS2eVTnaMU9rfBMeAu4dgw==
+X-Received: by 2002:a05:6402:50cc:b0:602:1b8b:2925 with SMTP id
+ 4fb4d7f45d1cf-614f1dfab00mr1986895a12.29.1753458330238; 
+ Fri, 25 Jul 2025 08:45:30 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-61500ad286esm7112a12.35.2025.07.25.08.45.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Jul 2025 08:45:25 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BC7DA5F8ED;
+ Fri, 25 Jul 2025 16:45:18 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH for 10.1 v2 10/14] configure: expose PYTHON to
+ test/tcg/config-host.mak
+Date: Fri, 25 Jul 2025 16:45:13 +0100
+Message-ID: <20250725154517.3523095-11-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250725154517.3523095-1-alex.bennee@linaro.org>
+References: <20250725154517.3523095-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,218 +105,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Jun 2025 12:06:49 +0800
-wangyuquan <wangyuquan1236@phytium.com.cn> wrote:
+This will be useful for making $shell calls to something more flexible
+than the shell builtins.
 
-> From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-> 
-> Define a new CXL host bridge type (TYPE_CXL_HOST). This is an
-> independent CXL host bridge which combined GPEX features (ECAM, MMIO
-> windows and irq) and CXL Host Bridge Component Registers (CHBCR).
-> 
-> The root bus path of CXL_HOST is "0001:00", that would not affect the
-> original PCIe host topology on some platforms. In the previous, the
-> pxb-cxl-host with any CXL root ports and CXL endpoint devices would
-> share the resources (like BDF, MMIO space) of the original pcie
-> domain, but it would cause some platforms like sbsa-ref are unable to
-> support the original number of PCIe devices. The new type provides a
-> solution to resolve the problem.
-> 
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-A few trivial things inline.  To me this looks fine but it needs more
-eyes, particularly form PCI folk on whether anything is missing for the
-host bridge.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ configure | 1 +
+ 1 file changed, 1 insertion(+)
 
-> diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
-> index 35c0415242..05c772bcf4 100644
-> --- a/hw/pci-host/Kconfig
-> +++ b/hw/pci-host/Kconfig
-> @@ -74,6 +74,10 @@ config PCI_POWERNV
->      select MSI_NONBROKEN
->      select PCIE_PORT
->  
-> +config CXL_HOST_BRIDGE
-> +    bool
-> +    select PCI_EXPRESS
-> +
->  config REMOTE_PCIHOST
->      bool
->  
-> diff --git a/hw/pci-host/cxl.c b/hw/pci-host/cxl.c
-> new file mode 100644
-> index 0000000000..74c8c83314
-> --- /dev/null
-> +++ b/hw/pci-host/cxl.c
-> @@ -0,0 +1,152 @@
-> +/*
-> + * QEMU CXL Host Bridge Emulation
-> + *
-> + * Copyright (C) 2025, Phytium Technology Co, Ltd. All rights reserved.
-> + *
-> + * Based on gpex.c
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/pci/pci_bus.h"
-> +#include "hw/pci-host/cxl_host_bridge.h"
-> +
-> +static void cxl_host_set_irq(void *opaque, int irq_num, int level)
-> +{
-> +    CXLHostBridge *host = opaque;
-> +
-> +    qemu_set_irq(host->irq[irq_num], level);
-> +}
-> +
-> +int cxl_host_set_irq_num(CXLHostBridge *host, int index, int gsi)
-> +{
-> +    if (index >= PCI_NUM_PINS) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    host->irq_num[index] = gsi;
-> +    return 0;
-> +}
-> +
-> +static PCIINTxRoute cxl_host_route_intx_pin_to_irq(void *opaque, int pin)
-> +{
-> +    PCIINTxRoute route;
-> +    CXLHostBridge *host = opaque;
-> +    int gsi = host->irq_num[pin];
-> +
-> +    route.irq = gsi;
-> +    if (gsi < 0) {
-> +        route.mode = PCI_INTX_DISABLED;
-> +    } else {
-> +        route.mode = PCI_INTX_ENABLED;
-> +    }
-> +
-> +    return route;
-    CXLHostBridge *host = opaque;
-    int gsi = host->irq_num[pin];
-    PCIINTxRoute route = {
-       .irq = gsi,
-       .mode = gsi < 0 ? PCI_INTX_DISABLED : PCI_INTX_ENABLED,
-    }
-
-    return route;
-
-perhaps?  Or maybe not worth bothering.
-
-    
-> +}
-
-> +static void cxl_host_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    CXLHostBridge *host = CXL_HOST(dev);
-> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
-> +    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
-> +    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
-> +    PCIBus *cxlbus;
-> +    int i;
-> +
-> +    cxl_host_reset(host);
-> +    cxl_component_register_block_init(OBJECT(dev), cxl_cstate, TYPE_CXL_HOST);
-> +    sysbus_init_mmio(sbd, mr);
-> +
-> +    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
-> +    sysbus_init_mmio(sbd, &pex->mmio);
-> +
-> +    memory_region_init(&host->io_mmio, OBJECT(host), "cxl_host_mmio",
-> +                        UINT64_MAX);
-> +
-> +    memory_region_init_io(&host->io_mmio_window, OBJECT(host),
-> +                              &unassigned_io_ops, OBJECT(host),
-
-Odd code alignment.  The & should be under the &
-Check for other instances of this.
-
-> +                              "cxl_host_mmio_window", UINT64_MAX);
-> +
-> +    memory_region_add_subregion(&host->io_mmio_window, 0, &host->io_mmio);
-> +    sysbus_init_mmio(sbd, &host->io_mmio_window);
-> +
-> +    /* ioport window init, 64K is the legacy size in x86 */
-> +    memory_region_init(&host->io_ioport, OBJECT(host), "cxl_host_ioport",
-> +                        64 * 1024);
-> +
-> +    memory_region_init_io(&host->io_ioport_window, OBJECT(host),
-> +                              &unassigned_io_ops, OBJECT(host),
-> +                              "cxl_host_ioport_window", 64 * 1024);
-> +
-> +    memory_region_add_subregion(&host->io_ioport_window, 0, &host->io_ioport);
-> +    sysbus_init_mmio(sbd, &host->io_ioport_window);
-> +
-> +    /* PCIe host bridge use 4 legacy IRQ lines */
-> +    for (i = 0; i < PCI_NUM_PINS; i++) {
-> +        sysbus_init_irq(sbd, &host->irq[i]);
-> +        host->irq_num[i] = -1;
-> +    }
-> +
-> +    pci->bus = pci_register_root_bus(dev, "cxlhost.0", cxl_host_set_irq,
-> +                                 pci_swizzle_map_irq_fn, host, &host->io_mmio,
-> +                                 &host->io_ioport, 0, 4, TYPE_CXL_BUS);
-> +    cxlbus = pci->bus;
-> +    cxlbus->flags |= PCI_BUS_CXL;
-As cxlbus is only used for flags, why not simply
-    pci->bus->flags |= PCI_BUS_CXL;
-
-and drop the local variable. Or... 
-
-> +
-> +    pci_bus_set_route_irq_fn(pci->bus, cxl_host_route_intx_pin_to_irq);
-
-Use cxlbus here instead of pci->bus giving a second user.
-
-> +}
-
-
-> diff --git a/include/hw/pci-host/cxl_host_bridge.h b/include/hw/pci-host/cxl_host_bridge.h
-> new file mode 100644
-> index 0000000000..833e460f01
-> --- /dev/null
-> +++ b/include/hw/pci-host/cxl_host_bridge.h
-> @@ -0,0 +1,23 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/irq.h"
-> +#include "hw/pci/pcie_host.h"
-
-We should follow approx include what you use principles.
-So need the header for MemoryRegion as well here.
-"system/memory.h" seems to be most likely choice for that.
-
-
-> +
-> +typedef struct CXLHostBridge {
-> +    PCIExpressHost parent_obj;
-> +
-> +    CXLComponentState cxl_cstate;
-> +
-> +    MemoryRegion io_ioport;
-
-I'm not sure the io_ prefix is adding much given this is all in
-an CXLHostBridge object?
-
-> +    MemoryRegion io_mmio;
-> +    MemoryRegion io_ioport_window;
-> +    MemoryRegion io_mmio_window;
-> +    qemu_irq irq[PCI_NUM_PINS];
-> +    int irq_num[PCI_NUM_PINS];
-> +} CXLHostBridge;
-> +
-> +int cxl_host_set_irq_num(CXLHostBridge *host, int index, int gsi);
-> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host);
+diff --git a/configure b/configure
+index 95f67c1a827..825057ebf15 100755
+--- a/configure
++++ b/configure
+@@ -1800,6 +1800,7 @@ echo "SRC_PATH=$source_path" >> tests/tcg/$config_host_mak
+ if test "$plugins" = "yes" ; then
+     echo "CONFIG_PLUGIN=y" >> tests/tcg/$config_host_mak
+ fi
++echo "PYTHON=$python" >> tests/tcg/$config_host_mak
+ 
+ tcg_tests_targets=
+ for target in $target_list; do
+-- 
+2.47.2
 
 
