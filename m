@@ -4,69 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68B3C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5F7C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 06:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufCGu-000353-V5; Fri, 25 Jul 2025 02:51:13 -0400
+	id 1ufCJW-0007GJ-VP; Fri, 25 Jul 2025 02:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufCB0-0005rJ-4R
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:45:08 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1ufCDx-0000Cs-CM
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:48:09 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufCAw-0004hs-DV
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:45:05 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56P6iVIu098608
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 25 Jul 2025 15:44:31 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4/SDYGRX5WDjO0jRkqHLU3J4ndKvJa3D56GFRJ2nNn8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753425871; v=1;
- b=VNBnv0iGm1SXMm9VprK65A1O+OCpeQwJxn+ou7V/y4vkMGmHKcqpjGnGplZPMwXL
- zIpU45rf0yrMakmK+aXVGqVhbrouk8myG8XmtiIpeU7/J6GxmG9KavLVj0wazGL2
- nBILNdg+PNdtkXXxzw5RPLtK34qFblk+scggjoGRq0zrKl9aQ3aDtHLXBQIOTDhI
- S5S7dNm1J7QxAOkZiNEnpFF/eV5NJ44pznbwmY0z/DXbilSN7FPYOfXxXLbuKk93
- MIeCcFi7wH6itk5LzZYRHEWHnFsdlGAaWmmbHIPiKFhsu8ct2mSXkSsbpQd1pS6l
- NM1eD5NxR5zYiH2Z18UMdg==
-Message-ID: <b536f95c-a1e2-4ab5-9c58-d66c61110c8d@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 25 Jul 2025 15:44:30 +0900
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1ufCDv-0005nJ-M7
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 02:48:09 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9E62643E0F;
+ Fri, 25 Jul 2025 06:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517BDC4CEE7;
+ Fri, 25 Jul 2025 06:48:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1753426085;
+ bh=ShuoGeySIEBOdub3tSr/OlnmMPsbiuchGXXr34fF4sg=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Cmpj7PH4NaG+xPw2a7DFIzd323FNxqcu9NvNyvzljiz5OCQ2SuwhtjXf0oZjB3KbH
+ C1c4LQeM8pAbkA1kPLaNq8tdIuU3DaRGCJlbG13ELkDbFJ4p4ESH0EIKtf06ifiZX7
+ /8D40EC6tSpJjr5pKH1GafHqU/kOBsLgp3GdEEPv7iXS1oNNSf2nE87mUQ8tdONma5
+ qrHsH5Zz3BK6mg4z4TUf3QZI1jV27bFpaToUUFUec3X437LtJ7KfDOWlnze3TVvMrI
+ 6Nbs5AnK3hkS3BVJ4ZO8siBZiHHGq9cmJqgiGdWPyrT+IlV75fB4IIb+X07pvxn4aw
+ WaPX0m4fdr3Dw==
+Date: Thu, 24 Jul 2025 23:47:15 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH] target/i386: fix width of third operand of VINSERTx128
+Message-ID: <20250725064715.GB37178@sol>
+References: <20250725061736.1096206-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 04/14] virtio: introduce extended features type
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1753297661.git.pabeni@redhat.com>
- <5d72c214940943f2863977539e337cc9ec17c8ea.1753297661.git.pabeni@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <5d72c214940943f2863977539e337cc9ec17c8ea.1753297661.git.pabeni@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250725061736.1096206-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=ebiggers@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,207 +70,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/24 4:31, Paolo Abeni wrote:
-> The virtio specifications allows for up to 128 bits for the
-> device features. Soon we are going to use some of the 'extended'
-> bits features (bit 64 and above) for the virtio net driver.
+On Fri, Jul 25, 2025 at 08:17:36AM +0200, Paolo Bonzini wrote:
+> Table A-5 of the Intel manual incorrectly lists the third operand of
+> VINSERTx128 as Wqq, but it is actually a 128-bit value.
+
+That's annoying.  I wonder what the way to report that is.
+
+FWIW, AMD's manual gets it right.
+
+> This is
+> visible when W is a memory operand close to the end of the page.
 > 
-> Represent the virtio features bitmask with a fixes size array, and
-> introduce a few helpers to help manipulate them.
+> Fixes the recently-added poly1305_kunit test in linux-next.
 > 
-> Most drivers will keep using only 64 bits features space: use union
-> to allow them access the lower part of the extended space without any
-> per driver change.
+> (No testcase yet, but I plan to modify test-avx2 to use memory
+> close to the end of the page.  This would work because the test
+> vectors correctly have the memory operand as xmm2/m128).
 > 
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Reported-by: Eric Biggers <ebiggers@kernel.org>
+> Cc: Ard Biesheuvel <ardb@kernel.org>
+> Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
-> v3 -> v4:
->    - VIRTIO_FEATURES_DWORDS -> VIRTIO_FEATURES_NU64S
->    - VIRTIO_FEATURES_WORDS -> VIRTIO_FEATURES_NU32S
->    - VIRTIO_DWORD ->  VIRTIO_FEATURES_U64
->    - VIRTIO_BIT -> VIRTIO_FEATURES_BIT
->    - virtio_features_use_extended -> virtio_features_use_ex
->    - move DEFINE_PROP_FEATURE definition here
+>  target/i386/tcg/decode-new.c.inc | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> v2 -> v3:
->    - fix preprocessor guard name
->    - use BIT_ULL
->    - add missing parentheses
->    - use memcmp()
->    - _is_empty() -> _empty()
->    - _andnot() returns a bool, true if dst has any non zero bits
->    - _array -> _ex
-> 
-> v1 -> v2:
->    - use a fixed size array for features instead of uint128
->    - use union with u64 to reduce the needed code churn
-> ---
->   include/hw/virtio/virtio-features.h | 127 ++++++++++++++++++++++++++++
->   include/hw/virtio/virtio.h          |   7 +-
->   2 files changed, 131 insertions(+), 3 deletions(-)
->   create mode 100644 include/hw/virtio/virtio-features.h
-> 
-> diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
-> new file mode 100644
-> index 0000000000..7abdf8601a
-> --- /dev/null
-> +++ b/include/hw/virtio/virtio-features.h
-> @@ -0,0 +1,127 @@
-> +/*
-> + * Virtio features helpers
-> + *
-> + * Copyright 2025 Red Hat, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef QEMU_VIRTIO_FEATURES_H
-> +#define QEMU_VIRTIO_FEATURES_H
-> +
-> +#include "qemu/bitops.h"
-> +
-> +#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
-> +#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
-> +
-> +#define VIRTIO_FEATURES_MAX        128
-> +#define VIRTIO_FEATURES_BIT(b)     BIT_ULL((b) % 64)
-> +#define VIRTIO_FEATURES_U64(b)     ((b) / 64)
-> +#define VIRTIO_FEATURES_NU32S      (VIRTIO_FEATURES_MAX / 32)
-> +#define VIRTIO_FEATURES_NU64S      (VIRTIO_FEATURES_MAX / 64)
-> +
-> +#define VIRTIO_DECLARE_FEATURES(name)                        \
-> +    union {                                                  \
-> +        uint64_t name;                                       \
-> +        uint64_t name##_ex[VIRTIO_FEATURES_NU64S];         \
-> +    }
-> +
-> +#define DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)          \
+> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+> index 853b1c8bf95..51038657f0f 100644
+> --- a/target/i386/tcg/decode-new.c.inc
+> +++ b/target/i386/tcg/decode-new.c.inc
+> @@ -878,10 +878,10 @@ static const X86OpEntry opcodes_0F3A[256] = {
+>      [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
+>      [0x0f] = X86_OP_ENTRY4(PALIGNR,    V,x,  H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
+>  
+> -    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX) p_66),
+> +    [0x18] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX) p_66),
+>      [0x19] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX) p_66),
+>  
+> -    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,qq, vex6 chk(W0) cpuid(AVX2) p_66),
+> +    [0x38] = X86_OP_ENTRY4(VINSERTx128,  V,qq, H,qq, W,dq, vex6 chk(W0) cpuid(AVX2) p_66),
+>      [0x39] = X86_OP_ENTRY3(VEXTRACTx128, W,dq, V,qq, I,b,  vex6 chk(W0) cpuid(AVX2) p_66),
+>  
+>      /* Listed incorrectly as type 4 */
 
-This should contain "VIRTIO" in its name just like other identifiers in 
-this file.
+Tested-by: Eric Biggers <ebiggers@kernel.org>
 
-> +    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_FEATURES_U64(_bit)],    \
-> +                      (_bit) % 64, _defval)
-> +
-> +static inline void virtio_features_clear(uint64_t *features)
-> +{
-> +    memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_NU64S);
-> +}
-> +
-> +static inline void virtio_features_from_u64(uint64_t *features, uint64_t from)
-> +{
-> +    virtio_features_clear(features);
-> +    features[0] = from;
-> +}
-> +
-> +static inline bool virtio_has_feature_ex(const uint64_t *features,
-> +                                         unsigned int fbit)
-> +{
-> +    assert(fbit < VIRTIO_FEATURES_MAX);
-> +    return features[VIRTIO_FEATURES_U64(fbit)] & VIRTIO_FEATURES_BIT(fbit);
-> +}
-> +
-> +static inline void virtio_add_feature_ex(uint64_t *features,
-> +                                         unsigned int fbit)
-> +{
-> +    assert(fbit < VIRTIO_FEATURES_MAX);
-> +    features[VIRTIO_FEATURES_U64(fbit)] |= VIRTIO_FEATURES_BIT(fbit);
-> +}
-> +
-> +static inline void virtio_clear_feature_ex(uint64_t *features,
-> +                                           unsigned int fbit)
-> +{
-> +    assert(fbit < VIRTIO_FEATURES_MAX);
-> +    features[VIRTIO_FEATURES_U64(fbit)] &= ~VIRTIO_FEATURES_BIT(fbit);
-> +}
-> +
-> +static inline bool virtio_features_equal(const uint64_t *f1,
-> +                                         const uint64_t *f2)
-> +{
-> +    return !memcmp(f1, f2, sizeof(uint64_t) * VIRTIO_FEATURES_NU64S);
-> +}
-> +
-> +static inline bool virtio_features_use_ex(const uint64_t *features)
-> +{
-> +    int i;
-> +
-> +    for (i = 1; i < VIRTIO_FEATURES_NU64S; ++i) {
-> +        if (features[i]) {
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
-> +static inline bool virtio_features_empty(const uint64_t *features)
-> +{
-> +    return !virtio_features_use_ex(features) && !features[0];
-> +}
-> +
-> +static inline void virtio_features_copy(uint64_t *to, const uint64_t *from)
-> +{
-> +    memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_NU64S);
-> +}
-> +
-> +static inline bool virtio_features_andnot(uint64_t *to, const uint64_t *f1,
-> +                                           const uint64_t *f2)
-> +{
-> +    uint64_t diff = 0;
-> +    int i;
-> +
-> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
-> +        to[i] = f1[i] & ~f2[i];
-> +        diff |= to[i];
-> +    }
-> +    return diff;
-> +}
-> +
-> +static inline void virtio_features_and(uint64_t *to, const uint64_t *f1,
-> +                                       const uint64_t *f2)
-> +{
-> +    int i;
-> +
-> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
-> +        to[i] = f1[i] & f2[i];
-> +    }
-> +}
-> +
-> +static inline void virtio_features_or(uint64_t *to, const uint64_t *f1,
-> +                                       const uint64_t *f2)
-> +{
-> +    int i;
-> +
-> +    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
-> +        to[i] = f1[i] | f2[i];
-> +    }
-> +}
-> +
-> +#endif
-> +
-> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index c594764f23..39e4059a66 100644
-> --- a/include/hw/virtio/virtio.h
-> +++ b/include/hw/virtio/virtio.h
-> @@ -16,6 +16,7 @@
->   
->   #include "system/memory.h"
->   #include "hw/qdev-core.h"
-> +#include "hw/virtio/virtio-features.h"
->   #include "net/net.h"
->   #include "migration/vmstate.h"
->   #include "qemu/event_notifier.h"
-> @@ -121,9 +122,9 @@ struct VirtIODevice
->        * backend (e.g. vhost) and could potentially be a subset of the
->        * total feature set offered by QEMU.
->        */
-> -    uint64_t host_features;
-> -    uint64_t guest_features;
-> -    uint64_t backend_features;
-> +    VIRTIO_DECLARE_FEATURES(host_features);
-> +    VIRTIO_DECLARE_FEATURES(guest_features);
-> +    VIRTIO_DECLARE_FEATURES(backend_features);
->   
->       size_t config_len;
->       void *config;
+Thanks,
 
+- Eric
 
