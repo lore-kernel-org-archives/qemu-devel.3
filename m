@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8BAC83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 04:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9D7C83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 04:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufA6y-0004PB-VV; Fri, 25 Jul 2025 00:32:49 -0400
+	id 1ufADp-00011M-12; Fri, 25 Jul 2025 00:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufA6Z-0004HW-IO
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:32:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufADO-0000fh-HY
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:39:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufA6X-0008Uj-D8
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:32:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ufADH-0002FG-Kr
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 00:39:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753417940;
+ s=mimecast20190719; t=1753418357;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fPcqmt9pOXNUutSj4zxW9FlQyVxeJvrE58L66rg+b3I=;
- b=d/VZoiN9rH6YZVF8NdnW+6VnJUIEFLKgrAlzSAr7oVJcHOiapN7s/ODtjEQ0s/RQ4BNdOl
- 9eO18LTLNqDY2cKL8VLK2eHYZFFIwPmCbaOq1AlSSMYRLvgE6+NHC+UkWjxP2FynoN5ZUA
- 8SCVsOMeAGeKAXvZcKsCzW31LzwTSx4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bKTfUxiko+2ovI6qASIBHAMqFkFdLnLVklXMV/ksKkc=;
+ b=Rg+vCFPfxiBbHyHlseteBN3uEp8vI5WatMqefRQY/jeC4o2uRtb0Xh1w3nKndBajjYdIqg
+ G/xYajkwwASpRIx5G2UqYJ885Ovmb4pMn1We8BUFu9JMfXWObXMGSKVgnWRRMe2ntV6/gD
+ j/aLqfkzqy5CGdKdYporFLSErBIyj2M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-p4566RzoPS-IW7cKyzd6cw-1; Fri, 25 Jul 2025 00:32:18 -0400
-X-MC-Unique: p4566RzoPS-IW7cKyzd6cw-1
-X-Mimecast-MFC-AGG-ID: p4566RzoPS-IW7cKyzd6cw_1753417937
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d30992bcso11841725e9.2
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 21:32:17 -0700 (PDT)
+ us-mta-512-yyeRXHKeNSOAiEYHKJfAeg-1; Fri, 25 Jul 2025 00:39:15 -0400
+X-MC-Unique: yyeRXHKeNSOAiEYHKJfAeg-1
+X-Mimecast-MFC-AGG-ID: yyeRXHKeNSOAiEYHKJfAeg_1753418355
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-451d3f03b74so9383585e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 21:39:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753417937; x=1754022737;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fPcqmt9pOXNUutSj4zxW9FlQyVxeJvrE58L66rg+b3I=;
- b=em65sdAHhYePCT86bnvRN7K7GNB4u7ee3xP2JaCwebe6qovXjJN2p+Xqzei2zlk0BY
- gARpr/71uOgqTr80bHPV+AovBz/i0NuMXiVDk+wzGxRRszExSI9YUvHUxUmF7mEru91c
- 2TJMgPy7pcrj+fNodXuBma8nhGdXiwHQkgIW+AaVcypDPKDSgiMlSOeDy7vooa7MKY6+
- 6qfjCqU58ZA+idNSniRoyQQ/sx7mVFyVABV16L+wt6PbNs7GjkvQKuKgImemz1QcLJFX
- YZaND7HtMavnJ0KpItbvMMyTKnM1KJ7kX4Tk4lZL8uev+jWX7YNoTB8vHl9B3YueHhHg
- d+dQ==
+ d=1e100.net; s=20230601; t=1753418354; x=1754023154;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bKTfUxiko+2ovI6qASIBHAMqFkFdLnLVklXMV/ksKkc=;
+ b=EmCcbunQFqWLyfwd/91UaP5+A1489OWACXpggZcCsK031oS0bpt30yn89922ng4dhA
+ uilA5qy160HKv8fQzvmOr6QMf2fQqCr/haPwzsEx1ZlVW2wCDQRqubIa2+3G1SJPOOMT
+ rHEYOrDYzOPvTO0m+1cZNj3gx9D7x/EIW0JmGuQyKKGi/v4zS6yRgqgXUJBXuvt0Pac8
+ 9nRbfWJIUXQ2PdTbqA8ec0OvZTchBJiDvsmOTQVzTMADZ6rMgOesvFtHXwLnR5Gk0K14
+ 3H9N8oHsLg1M7sdWZHq4P0EggbBR573eNg5oJZG5asPdqpGMuUZPwV9WsdBc68pf7/qx
+ 0/xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZNfekYGYA7UlIuk77ppVLRf3mxE06zrAXFO6shdjigOIh04a2qxI+n9MRExQRxOiC1wOn2pV79wZ8@nongnu.org
-X-Gm-Message-State: AOJu0YzFi5C/5il92NJykgEXrmeyha7JDnWSLgLhZM4LZYAq7wt1AIo9
- mc7Gipv16+wqGINZpZWADm5e9zK8RCMDbnnFyyh3DRBc9glQRklw8XNLnO3f9b3/POql44fjOQ3
- C8AYzWbkzyvpDA1qGAovpFu/kOiDhLpXxwiMTrTa2jCkSShfNYE+f0SAR
-X-Gm-Gg: ASbGncub3QOr18URDWZjldYbzE5wDe5njTXY6ig9TiwdroLqgmoqRjqH1WHSgCJ3Riv
- S6taAzn7+p1n1pEQMuW6SrCZjbUv+meE3Ypis4lWb537Rt0hfYkLDLcQCYYKrQm6dcprhjQ/jP7
- BnGlAzoHOE7pfOszozDMU2YUCLTY3hR64Jz7e89RlnL/GrdtCIXb2bhE7AhgByb0dqKLKKON4sH
- afWU8zNjMSbvJROFQLOzQRrnUoLgFwapFkqAZWqQeldkuB1tjFopbXZjjwi6xLCc0tUFXWM5EPg
- b2EuXHUl1dMBLD/nfCKOe4X4BcSZYqNV6isd85/BXpZ5yzu0z1eDwgvbY+Ek852wc8aNzu+3y+K
- Ednk=
-X-Received: by 2002:a05:600c:3ace:b0:456:25aa:e9b0 with SMTP id
- 5b1f17b1804b1-4587654b626mr2764955e9.16.1753417936763; 
- Thu, 24 Jul 2025 21:32:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrJ4zazujOnsJSYCSUyVz7oDaeWPFuxZKtIt9XLBY7c3jMPfaCg6PZxVLqQj42TiHPB2KoVA==
-X-Received: by 2002:a05:600c:3ace:b0:456:25aa:e9b0 with SMTP id
- 5b1f17b1804b1-4587654b626mr2764785e9.16.1753417936389; 
- Thu, 24 Jul 2025 21:32:16 -0700 (PDT)
+ AJvYcCUGYgtWBdivES5QBpu7TAOv6HTL+ugFhfPvyGwhciaxjAGR7HPjDUIXP6WoniYaUFtrTKoWej2dnvqD@nongnu.org
+X-Gm-Message-State: AOJu0Yx6yaQfRMMGt/2qQ2Oumd1w3lk6MlpCp9NcS6dAE1l0k4yck9WO
+ 2AE5MY2RDYzpqj9To+AXTSQyVu16shyoLWQSfTdD9cYzXEhgg+52zZuV+UJU942039Y2/AlIR6e
+ VZ10QytipCXs9aiZXxw+MG7yFsJOJid8cv6+XXzPM+RjjHIqf1oSpaPiM
+X-Gm-Gg: ASbGncuijRHipva3UsAwcWTMZx0fAtlrWuTvdw9Zir3Lif3iUfAf/LpwT93xYFOczgd
+ cQ1Tf3pRc3KtHWvVK+pMVrPeJXlAHUgDt1CmQbKuj9cJXceG0zMpSClZeyxrrF27tM0PG71KuNl
+ fcPC2MTZ26nZN3R0QSOk/Vy5hnp7MnpHZR/ZgX+UdDv+MVa224K0VWpeEtGGKhhb9KzcfyL+Fo8
+ tgPIfJ+lZMTqIcQigDWsSdVJAUmgfsJSgZxz90FmE+LesHbFgtJhjuf5TqslKgfa4xeipc5KWSv
+ U0abMbYgdIA5hEQw7x3gU+D7khEJjO3IX24byIxhyPUHoejlKbJehgK7goZ+qs66x8hW/cTzFsP
+ LwUE=
+X-Received: by 2002:a05:600c:4f0d:b0:456:2020:166a with SMTP id
+ 5b1f17b1804b1-458764394b2mr2150995e9.20.1753418354670; 
+ Thu, 24 Jul 2025 21:39:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4koz+K76OP2DubS/o8uJr8zJ2TSJjvhiiAj7vw6BWpshWa4/slTr7hzxEfSc7B+PSPHf0tw==
+X-Received: by 2002:a05:600c:4f0d:b0:456:2020:166a with SMTP id
+ 5b1f17b1804b1-458764394b2mr2150825e9.20.1753418354185; 
+ Thu, 24 Jul 2025 21:39:14 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-115-089.pools.arcor-ip.net.
  [47.64.115.89]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870554a02sm40315375e9.21.2025.07.24.21.32.15
+ 5b1f17b1804b1-458705bcbfbsm41710955e9.16.2025.07.24.21.39.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 21:32:15 -0700 (PDT)
-Message-ID: <5510b8fb-82af-474b-a735-6f2334608f46@redhat.com>
-Date: Fri, 25 Jul 2025 06:32:14 +0200
+ Thu, 24 Jul 2025 21:39:13 -0700 (PDT)
+Message-ID: <b5d0c17b-cd99-494b-8919-665fd2519233@redhat.com>
+Date: Fri, 25 Jul 2025 06:39:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] tests/functional: add --keep-scratch CLI arg
+Subject: Re: [PATCH v2 2/3] tests/functional: add --list-tests CLI arg
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -85,9 +85,9 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250718-functional_tests_args-v2-0-cde6e08bf98e@linaro.org>
- <20250718-functional_tests_args-v2-1-cde6e08bf98e@linaro.org>
-Content-Language: en-US
+ <20250718-functional_tests_args-v2-2-cde6e08bf98e@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -130,9 +130,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250718-functional_tests_args-v2-1-cde6e08bf98e@linaro.org>
+In-Reply-To: <20250718-functional_tests_args-v2-2-cde6e08bf98e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -159,57 +159,63 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/07/2025 13.04, Manos Pitsidianakis wrote:
-> Add CLI arg to keep scratch files after test execution, equivalent to
-> setting QEMU_TEST_KEEP_SCRATCH env var.
+> Add CLI argument to list tests and exit.
 > 
-> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+> Example output (current dir is build directory under root dir):
+> 
+>    $ export PYTHONPATH=../python:../tests/functional
+>    $ export QEMU_TEST_QEMU_BINARY="$(pwd)/qemu-system-aarch64"
+>    $ ./pyvenv/bin/python3 ../tests/functional/test_aarch64_virt.py --list-tests
+>    test_aarch64_virt_gicv2 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv2)
+>    test_aarch64_virt_gicv3 (test_aarch64_virt.Aarch64VirtMachine.test_aarch64_virt_gicv3)
+>    test_alpine_virt_tcg_gic_max (test_aarch64_virt.Aarch64VirtMachine.test_alpine_virt_tcg_gic_max)
+> 
 > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->   tests/functional/qemu_test/testcase.py | 14 +++++++++++++-
->   1 file changed, 13 insertions(+), 1 deletion(-)
+>   tests/functional/qemu_test/testcase.py | 16 ++++++++++++----
+>   1 file changed, 12 insertions(+), 4 deletions(-)
 > 
 > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 3ecaaeffd4df2945fb4c44b4ddef6911527099b9..9b00c63e6ca7a2a669fd456f1d1b51501ce4a726 100644
+> index 9b00c63e6ca7a2a669fd456f1d1b51501ce4a726..bfee6638edf6f9853ead1e3809ae3c9152089406 100644
 > --- a/tests/functional/qemu_test/testcase.py
 > +++ b/tests/functional/qemu_test/testcase.py
-> @@ -43,6 +43,13 @@ def parse_args(test_name: str) -> argparse.Namespace:
->           help="Also print test and console logs on stdout. This will make the"
->           " TAP output invalid and is meant for debugging only.",
+> @@ -50,6 +50,11 @@ def parse_args(test_name: str) -> argparse.Namespace:
+>           "This is equivalent to setting QEMU_TEST_KEEP_SCRATCH=1 in the "
+>           "environment.",
 >       )
 > +    parser.add_argument(
-> +        "--keep-scratch",
+> +        "--list-tests",
 > +        action="store_true",
-> +        help="Do not purge any scratch files created during the tests. "
-> +        "This is equivalent to setting QEMU_TEST_KEEP_SCRATCH=1 in the "
-> +        "environment.",
+> +        help="List all tests that would be executed and exit.",
 > +    )
 >       return parser.parse_args()
 >   
 >   
-> @@ -214,6 +221,9 @@ def setUp(self):
->           path = os.path.basename(sys.argv[0])[:-3]
->           args = parse_args(path)
->           self.stdout_handler = None
-> +        self.keep_scratch = (
-> +            "QEMU_TEST_KEEP_SCRATCH" in os.environ or args.keep_scratch
-> +        )
->           if args.debug:
->               self.stdout_handler = logging.StreamHandler(sys.stdout)
->               self.stdout_handler.setLevel(logging.DEBUG)
-> @@ -255,8 +265,10 @@ def setUp(self):
->               self.skipTest('One or more assets is not available')
+> @@ -280,10 +285,13 @@ def tearDown(self):
 >   
->       def tearDown(self):
-> -        if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
-> +        if not self.keep_scratch:
->               shutil.rmtree(self.workdir)
-> +        else:
-> +            self.log.info(f"Kept scratch files in {self.workdir}")
->           if self.socketdir is not None:
->               shutil.rmtree(self.socketdir.name)
->               self.socketdir = None
-> 
+>       def main():
+>           path = os.path.basename(sys.argv[0])[:-3]
+> -        # If argparse receives --help or an unknown argument, it will raise a
+> -        # SystemExit which will get caught by the test runner. Parse the
+> -        # arguments here too to handle that case.
+> -        parse_args(path)
+> +        args = parse_args(path)
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+As mentioned for the initial --debug patch already: How's about changing 
+that "args" into a class variable instead and get rid of the parse_args() in 
+the setUp() function?
+
+  Thomas
+
+> +        if args.list_tests:
+> +            loader = unittest.TestLoader()
+> +            for test_suite in loader.loadTestsFromName(path):
+> +                for test in test_suite:
+> +                    print(test)
+> +            return
+>   
+>           cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+>           if cache is not None:
+> 
 
 
