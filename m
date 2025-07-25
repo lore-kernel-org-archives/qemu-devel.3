@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CCAC83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 07:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE1AC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 07:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufClL-0005tc-Uo; Fri, 25 Jul 2025 03:22:39 -0400
+	id 1ufCs2-0006SW-0a; Fri, 25 Jul 2025 03:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ufClB-0005nz-HJ
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:22:33 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ufCl8-0006cx-10
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:22:29 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3a588da60dfso1099126f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 00:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753428143; x=1754032943; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r22EFJ74HxynTaDmnGweCoJcGF7P8MUsVDsDrxBpLFw=;
- b=Rb/fNaRlqsCJU2FMm2cb8Dg5t1QNsD30LbdyEi+/fryQCwGPqNC+wRpTK++eDEoF5m
- bIQfLX4QrJaeYEuuB++BEvALIdaj6todT0zK3Ozw07w0Osbm32kpfPezkR1zsOidS2Jp
- 1cwao9JwJFPZvxCzquZSU+x4s6rsmcpGh5oJlNgJn5WOpwQB316qidToiJr5RB+e8AM+
- FQ9p0ekxVBskc+5iJWSBe+NgxwmVUi4hcgwqyono1A5/QCOsr4pspy00K8fg4SL+NDVl
- vI6RFVB0jmNPJ5C5VAg2hmRUDLS7LIutawfaBDb/xU1thrg6PviF5JG2SB33fcqF+ieU
- 4a6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753428143; x=1754032943;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r22EFJ74HxynTaDmnGweCoJcGF7P8MUsVDsDrxBpLFw=;
- b=AYHxb0szSnREm7oYC8LhKf2UqT0tzxwPVucJDx/6e8tVZzYA7nze4m0h21dC6St+Vj
- rqBvCu6xql6sD/1hgqHl8nhnuC8S+ug7xj6JtSToSyyb5Jx99ma3Ou9hv9+6FxW+CJTi
- 4cnpImwdSSnP22cXRo9Awiat84zOv138bGfIsyaVsaukfahBkdTSzEuJyU0NCl03vUyp
- 18k9UQMrGkMRnHnIgenhPJw/6yLSXK6uJnbtIiVDyE7Jv25/CQkjz2YYQ3JThjdkmvaw
- ZPvp8NSswEWpZv+w9eH4DNgLDfDgOmmep7KpX9WwTAErwunORWg6RF4an0EI7PiUbyu+
- zf0g==
-X-Gm-Message-State: AOJu0YydiJAZj5GLOHytrWgfjbvc8tuKBmElfrTD5Mxtbb8/0BaHO6lS
- ibi1dtFodkBX65tU8ZpmrrPltb16foFuWIhqE83q4KQClGm+aq34sj4OeM6y8nqYrbA=
-X-Gm-Gg: ASbGncsZoEpAn77rp2ToPc/LdvnZQZB7d3Xw0l6pIiOWXC6UvYS2SaNcCPYfWj55YSu
- n7djSauOYcn0jM/Mtdfk8ezIAJ9AJc09Rbx5/noMiRTqPQb5Ca0nZt1CDF+u/eKXQ83hB4q+N2/
- 0cQvQIFyG4OMk0ARSCTr62Dgtbmj+XL8dhZdXXUeLsXuWTQACY0Q1a0Pc7MmU7Nh7MSJ17fExfc
- fC67D2S0ZvEYDwkB3iJyj5vKCLbFbgZD8fKqdbaNeHQ0/fWLDXGSwC1Les4a5tVrlcHs8JvE3b3
- vhqBecS6tDBqRLCa7Igc9l+aYizlaZkWiGjQoLBl+Xo7uF64RsoLaYQJK+YXHxZl9zHnRAWCkci
- Jc+yzIwdSD27SKC00lYjzb3SNeRRua3WW5Xw+gVnH2b4V4t4Cv0U+7gd/a++KhanA7Q==
-X-Google-Smtp-Source: AGHT+IEve8a9+a74TBdge2Cysfinz6qo485KhGCASFlqAZs9K5ZH9Pd+LMowwG6URvcmQbKgt0Yhlw==
-X-Received: by 2002:a05:6000:1a87:b0:3a0:b84d:60cc with SMTP id
- ffacd0b85a97d-3b7765e691fmr728776f8f.2.1753428142982; 
- Fri, 25 Jul 2025 00:22:22 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45870554457sm46064195e9.18.2025.07.25.00.22.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 00:22:22 -0700 (PDT)
-Message-ID: <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
-Date: Fri, 25 Jul 2025 09:22:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1ufCry-0006Pe-6D
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:29:30 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1ufCrv-0008EM-8j
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 03:29:29 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxLGtQMoNoXLkxAQ--.35185S3;
+ Fri, 25 Jul 2025 15:29:20 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxT+ZOMoNomAUmAA--.63460S3;
+ Fri, 25 Jul 2025 15:29:20 +0800 (CST)
 Subject: Re: [PATCH v2] hw/intc/loongarch_ipi: use logical CPU ID for
  kvm_ipi_access_regs
-To: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn, lixianglai@loongson.cn
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ maobibo@loongson.cn, lixianglai@loongson.cn
 Cc: qemu-devel@nongnu.org, jiaxun.yang@flygoat.com
 References: <20250725012528.2582498-1-gaosong@loongson.cn>
+ <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <3358c70d-5d12-2d63-cf02-077d0b5c39c6@loongson.cn>
+Date: Fri, 25 Jul 2025 15:32:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <7820abd3-4f11-438a-8047-bc036380cc4c@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250725012528.2582498-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowJAxT+ZOMoNomAUmAA--.63460S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7urW7tr45Gw4Utr43XFy5GFX_yoW8Cw1kpr
+ WkAr4Y9rW8Cr95Jw4jy34DWFyDWr1xJ3ZrXw4fKFyUAF47Zr10gry8XryvgFyUJr48CF15
+ XF17KF12vFy3JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAF
+ wI0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+ AF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
+ IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
+ CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
+ xhVjvjDU0xZFpf9x07jUsqXUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.672,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,46 +84,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/7/25 03:25, Song Gao wrote:
-> QEMU reboot after inserting no-configuous cpus may start failed
-> becaue the vcpu context may not have created on KVM, On QEMU side use logical CPU ID
-> for kvm_ipi_access_regs and do some check. On KVM use kvm_get_vcpu_by_id() get vcpu.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/intc/loongarch_ipi_kvm.c | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
-> index 4cb3acc921..d0a2f2343f 100644
-> --- a/hw/intc/loongarch_ipi_kvm.c
-> +++ b/hw/intc/loongarch_ipi_kvm.c
-> @@ -23,14 +23,19 @@ static void kvm_ipi_access_regs(void *opaque, bool write)
->       LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
->       IPICore *core;
->       uint64_t attr;
-> -    int cpu, fd = lis->dev_fd;
-> +    int i, cpu, fd = lis->dev_fd;
+在 2025/7/25 下午3:22, Philippe Mathieu-Daudé 写道:
+> On 25/7/25 03:25, Song Gao wrote:
+>> QEMU reboot after inserting no-configuous cpus may start failed
+>> becaue the vcpu context may not have created on KVM, On QEMU side use 
+>> logical CPU ID
+>> for kvm_ipi_access_regs and do some check. On KVM use 
+>> kvm_get_vcpu_by_id() get vcpu.
+>>
+Hi,
+Sorry
+this patch not fix this problem ,
+This patch  just  fix qemu start fail with smp cpu < smp maxcpus on KVM.
+e.g '-smp 1,maxcpus=4,sockets=4,cores=1,threads=1'
 
-While here, we could rename s/cpu/cpu_index/,>
->       if (fd == 0) {
->           return;
->       }
->   
-> -    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
+I 'll send a new patch,
 
-and declare @i here: for (int i = 0; ...).
-
-> -        core = &ipi->cpu[cpu];
-> +    for (i = 0; i < ipi->num_cpu; i++) {
-> +        core = &ipi->cpu[i];
-> +        if (core == NULL || core->cpu == NULL) {
-> +            continue;
-> +        }
-> +        cpu = core->cpu->cpu_index;
-> +
->           attr = (cpu << 16) | CORE_STATUS_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->status, write);
->   
+Thanks.
+Song Gao.
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   hw/intc/loongarch_ipi_kvm.c | 11 ++++++++---
+>>   1 file changed, 8 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
+>> index 4cb3acc921..d0a2f2343f 100644
+>> --- a/hw/intc/loongarch_ipi_kvm.c
+>> +++ b/hw/intc/loongarch_ipi_kvm.c
+>> @@ -23,14 +23,19 @@ static void kvm_ipi_access_regs(void *opaque, 
+>> bool write)
+>>       LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
+>>       IPICore *core;
+>>       uint64_t attr;
+>> -    int cpu, fd = lis->dev_fd;
+>> +    int i, cpu, fd = lis->dev_fd;
+>
+> While here, we could rename s/cpu/cpu_index/,>
+>>       if (fd == 0) {
+>>           return;
+>>       }
+>>   -    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
+>
+> and declare @i here: for (int i = 0; ...).
+>
+>> -        core = &ipi->cpu[cpu];
+>> +    for (i = 0; i < ipi->num_cpu; i++) {
+>> +        core = &ipi->cpu[i];
+>> +        if (core == NULL || core->cpu == NULL) {
+>> +            continue;
+>> +        }
+>> +        cpu = core->cpu->cpu_index;
+>> +
+>>           attr = (cpu << 16) | CORE_STATUS_OFF;
+>>           kvm_ipi_access_reg(fd, attr, &core->status, write);
 
 
