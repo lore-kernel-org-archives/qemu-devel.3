@@ -4,112 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EC4C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D05C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufItO-00014Z-MA; Fri, 25 Jul 2025 09:55:22 -0400
+	id 1ufIvI-0005kB-DX; Fri, 25 Jul 2025 09:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1ufIpa-0000tO-Sg
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:51:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufIrw-0005yp-GB
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:53:54 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1ufIpY-0005kE-6s
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:51:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753451483;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ueieLiV1CXveVeB/MLUaICSjIjI4DgoYTN/JLntUNS0=;
- b=ClI81xhL1SMxnflwauvcJmhm9Uyb6pehD4grI6m8tWlIKF8aLl10jlTlEfs+CP5KY47XNj
- gCJtGWIP2JV1LLm6e9Jnx0ICHo6Inv4+QAYnh3otYPNgLlW9ndTxFta5d6ehAFOTekAWlm
- YyVSAEieGO/IdZaPVyPHkmZq6wgPCBg=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-sxeuh2bzMBa2aKHkmIy9VA-1; Fri, 25 Jul 2025 09:51:19 -0400
-X-MC-Unique: sxeuh2bzMBa2aKHkmIy9VA-1
-X-Mimecast-MFC-AGG-ID: sxeuh2bzMBa2aKHkmIy9VA_1753451479
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2356ce66d7cso34233435ad.1
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 06:51:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753451478; x=1754056278;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ueieLiV1CXveVeB/MLUaICSjIjI4DgoYTN/JLntUNS0=;
- b=hoIZCtl52YgH7HjKkpzE5ESFDVJtWM8RmdQRXUPxl/tnPhiA7Ea+jdpltBj5IWW9Ta
- Lq3V/9IxJ+LpOWlU2LnHL3O6O9kKqb7CehQqUcaFuN9JSaEP3E1PE3mTQNwpXxN9iDiB
- 9FQUSEd3eXPDkeUV6xYZCRxtY9YvJkylT8WekspcmygleHMh0yiXJqkgvMHvdeaeCeAj
- CcFS61nU8WRJ+Sv3ylXY9EOiiRreqevwf9J12QV7wGHQnGuan/TYRaUJAYEyPhJRLR9b
- DEIJE384noyVc0kXlzx22PXNhAT1wLbsENp9yt17C0HJ487zOTaCszv2gVTI487JIvZq
- us2Q==
-X-Gm-Message-State: AOJu0YyNWrJcRtFupGYFoRkjL6J9Vq+XOgvW4Qna4ek+INknkU7ui1vP
- 1yTsLkGvlhKyRdxtSU8Ub0SlR7cWGpQHoCW+iHqx3VFcv2XVcfXB2EuqLzpPhX/C4gowq+qG1hk
- otS3e1aLjzVx4fSZLAIW3UenoWAR31NwH2ultpiggcwFnjDFaVbnpASIZw0r5/wcpobubZAvD+y
- sLsM8GyH53miYoR6mCFO0teMM3PTUSlgg=
-X-Gm-Gg: ASbGncsFNiYlBNZilxWK1kimG+bz0yqcnoybhLRKruYs47rIg8bCzcVWl7HfpcWN8a8
- 6jJSqBjB3RZnY8KGpu+IArkEV1zqyx5tYur8BMzaRDI/d+DF12CD6Q4QJk3bs02Cg+e7vm+0p9+
- K+W55okrF5Vr+i/4mAmZuCwUncB9XtWC8zoaIMDCRCfD+vrZnuFiyVEA==
-X-Received: by 2002:a17:903:32d1:b0:234:b44c:d3c8 with SMTP id
- d9443c01a7336-23fb31b3056mr26517825ad.37.1753451478620; 
- Fri, 25 Jul 2025 06:51:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJdZbEqYdfz6HgVgAueSYXdy/+NhAHlUNyosxO7T6hd2MW0UKRUJuv7yqGswJg/4kNdUB7aptSZ0FmkKIyebM=
-X-Received: by 2002:a17:903:32d1:b0:234:b44c:d3c8 with SMTP id
- d9443c01a7336-23fb31b3056mr26517515ad.37.1753451478203; Fri, 25 Jul 2025
- 06:51:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufIrt-0006C6-5j
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:53:52 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bpTkr48Yqz6HJdJ;
+ Fri, 25 Jul 2025 21:49:40 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 626BA1400DC;
+ Fri, 25 Jul 2025 21:53:39 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 25 Jul
+ 2025 15:53:38 +0200
+Date: Fri, 25 Jul 2025 14:53:37 +0100
+To: peng guo <engguopeng@buaa.edu.cn>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <eduardo@habkost.net>,
+ <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <wyguopeng@163.com>
+Subject: Re: [PATCH] hw/i386/pc: Avoid overlap between CXL window and PCI
+ 64bit BARs in QEMU
+Message-ID: <20250725145337.00003c91@huawei.com>
+In-Reply-To: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
+References: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
- <20250725-propagate_tpm_error-v7-3-d52704443975@redhat.com>
-In-Reply-To: <20250725-propagate_tpm_error-v7-3-d52704443975@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 25 Jul 2025 17:51:06 +0400
-X-Gm-Features: Ac12FXx1on4sHfzfC89_264kmBCJjZW5buWuJ-_scZPOGKqRR2h0weW91pa1moI
-Message-ID: <CAMxuvaz3GhwFqBSA6VsKNAOhxiS-XcCcbkTjVX4upJiN1bmucA@mail.gmail.com>
-Subject: Re: [PATCH v7 03/24] migration: push Error **errp into
- qemu_loadvm_state_header()
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fam Zheng <fam@euphon.net>, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000007d52f3063ac13cf1"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,233 +70,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007d52f3063ac13cf1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, 18 Jul 2025 21:35:45 +0800
+peng guo <engguopeng@buaa.edu.cn> wrote:
 
-On Fri, Jul 25, 2025 at 4:19=E2=80=AFPM Arun Menon <armenon@redhat.com> wro=
-te:
+> When using a CXL Type 3 device together with a virtio 9p device in QEMU, the
+> 9p device fails to initialize properly. The kernel reports the following:
+> 
+>     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
+>     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
+> 
+> Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
+> device was overlapped by the memory window allocated for the CXL devices. As a
+> result, the kernel could not correctly access the BAR region, causing the
+> virtio device to malfunction.
+> 
+> An excerpt from /proc/iomem shows:
+> 
+>     480010000-cffffffff : CXL Window 0
+>       480010000-4bfffffff : PCI Bus 0000:00
+>       4c0000000-4c01fffff : PCI Bus 0000:0c
+>         4c0000000-4c01fffff : PCI Bus 0000:0d
+>       4c0200000-cffffffff : PCI Bus 0000:00
+>         4c0200000-4c0203fff : 0000:00:03.0
+>           4c0200000-4c0203fff : virtio-pci-modern
+> 
+> To address this issue, this patch uses the value of `cxl_resv_end` to reserve
+> sufficient address space and ensure that CXL memory windows are allocated
+> beyond all PCI 64-bit BARs. This prevents overlap with 64-bit BARs regions such 
+> as those used by virtio or other pcie devices, resolving the conflict.
+> 
+> QEMU Build Configuration:
+> 
+>     ./configure --prefix=/home/work/qemu_master/build/ \
+>                 --target-list=x86_64-softmmu \
+>                 --enable-kvm \
+>                 --enable-virtfs
+> 
+> QEMU Boot Command:
+> 
+>     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
+>         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
+>         -hda /home/work/gp_qemu/rootfs.img \
+>         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
+>         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
+>         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
+>         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
+>         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+>         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
+>         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
+>         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
+> 
+> Tested in a QEMU setup with a CXL Type 3 device and a 9pnet virtio device.
+> 
+> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+Analysis looks good.
 
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that qemu_loadvm_state_header() must report an error
-> in errp, in case of failure.
->
-> Signed-off-by: Arun Menon <armenon@redhat.com>
->
+For the patch I wonder if we should match the check that follows
+for pcms->cxl_devices_state.is_enabled rather than checking cxl_resv_end
+(which is only set to non 0 if that is_enabled is set).
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Probably better to use a consistent condition for checking if CXL is
+there or not.
 
+We also ideally need a suitable fixes tag.  I couldn't immediately find one
+so maybe it goes a long way back.
 
 > ---
->  migration/savevm.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
->
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index
-> ab947620f724874f325fb9fb59bef50b7c16fb51..842ff3dc6d5ccb05f7d33cef9f7319b=
-141419501
-> 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -2814,35 +2814,44 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t
-> type)
->      return 0;
->  }
->
-> -static int qemu_loadvm_state_header(QEMUFile *f)
-> +static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)
->  {
->      unsigned int v;
->      int ret;
->
->      v =3D qemu_get_be32(f);
->      if (v !=3D QEMU_VM_FILE_MAGIC) {
-> -        error_report("Not a migration stream");
-> +        error_setg(errp, "Not a migration stream, magic: %x !=3D %x",
-> +                   v, QEMU_VM_FILE_MAGIC);
->          return -EINVAL;
->      }
->
->      v =3D qemu_get_be32(f);
->      if (v =3D=3D QEMU_VM_FILE_VERSION_COMPAT) {
-> -        error_report("SaveVM v2 format is obsolete and don't work
-> anymore");
-> +        error_setg(errp,
-> +                   "SaveVM v2 format is obsolete and no longer supported=
-,
-> "
-> +                   "file version %x !=3D %x",
-> +                   v, QEMU_VM_FILE_VERSION_COMPAT);
-> +
->          return -ENOTSUP;
->      }
->      if (v !=3D QEMU_VM_FILE_VERSION) {
-> -        error_report("Unsupported migration stream version");
-> +        error_setg(errp, "Unsupported migration stream version, "
-> +                   "file version %x !=3D %x",
-> +                   v, QEMU_VM_FILE_VERSION);
->          return -ENOTSUP;
->      }
->
->      if (migrate_get_current()->send_configuration) {
-> -        if (qemu_get_byte(f) !=3D QEMU_VM_CONFIGURATION) {
-> -            error_report("Configuration section missing");
-> +        v =3D qemu_get_byte(f);
-> +        if (v !=3D QEMU_VM_CONFIGURATION) {
-> +            error_setg(errp, "Configuration section missing, %x !=3D %x"=
-,
-> +                       v, QEMU_VM_CONFIGURATION);
->              return -EINVAL;
->          }
-> -        ret =3D vmstate_load_state(f, &vmstate_configuration,
-> &savevm_state, 0,
-> -                                 NULL);
->
-> +        ret =3D vmstate_load_state(f, &vmstate_configuration,
-> &savevm_state, 0,
-> +                                 errp);
->          if (ret) {
->              return ret;
->          }
-> @@ -3119,7 +3128,7 @@ int qemu_loadvm_state(QEMUFile *f)
->
->      qemu_loadvm_thread_pool_create(mis);
->
-> -    ret =3D qemu_loadvm_state_header(f);
-> +    ret =3D qemu_loadvm_state_header(f, NULL);
->      if (ret) {
->          return ret;
->      }
->
-> --
-> 2.50.0
->
->
-
---0000000000007d52f3063ac13cf1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 25,=
- 2025 at 4:19=E2=80=AFPM Arun Menon &lt;<a href=3D"mailto:armenon@redhat.co=
-m">armenon@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">This is an incremental step in converting vmstate load=
-ing<br>
-code to report error via Error objects instead of directly<br>
-printing it to console/monitor.<br>
-It is ensured that qemu_loadvm_state_header() must report an error<br>
-in errp, in case of failure.<br>
-<br>
-Signed-off-by: Arun Menon &lt;<a href=3D"mailto:armenon@redhat.com" target=
-=3D"_blank">armenon@redhat.com</a>&gt;<br></blockquote><div><br></div><div>=
-Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@=
-redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0migration/savevm.c | 27 ++++++++++++++++++---------<br>
-=C2=A01 file changed, 18 insertions(+), 9 deletions(-)<br>
-<br>
-diff --git a/migration/savevm.c b/migration/savevm.c<br>
-index ab947620f724874f325fb9fb59bef50b7c16fb51..842ff3dc6d5ccb05f7d33cef9f7=
-319b141419501 100644<br>
---- a/migration/savevm.c<br>
-+++ b/migration/savevm.c<br>
-@@ -2814,35 +2814,44 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t t=
-ype)<br>
-=C2=A0 =C2=A0 =C2=A0return 0;<br>
-=C2=A0}<br>
-<br>
--static int qemu_loadvm_state_header(QEMUFile *f)<br>
-+static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0unsigned int v;<br>
-=C2=A0 =C2=A0 =C2=A0int ret;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0v =3D qemu_get_be32(f);<br>
-=C2=A0 =C2=A0 =C2=A0if (v !=3D QEMU_VM_FILE_MAGIC) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Not a migration stream&quot=
-;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Not a migration stream,=
- magic: %x !=3D %x&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v, QE=
-MU_VM_FILE_MAGIC);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -EINVAL;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0v =3D qemu_get_be32(f);<br>
-=C2=A0 =C2=A0 =C2=A0if (v =3D=3D QEMU_VM_FILE_VERSION_COMPAT) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;SaveVM v2 format is obsolet=
-e and don&#39;t work anymore&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
-;SaveVM v2 format is obsolete and no longer supported, &quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
-;file version %x !=3D %x&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v, QE=
-MU_VM_FILE_VERSION_COMPAT);<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENOTSUP;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0if (v !=3D QEMU_VM_FILE_VERSION) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Unsupported migration strea=
-m version&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Unsupported migration s=
-tream version, &quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot=
-;file version %x !=3D %x&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v, QE=
-MU_VM_FILE_VERSION);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENOTSUP;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (migrate_get_current()-&gt;send_configuration) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qemu_get_byte(f) !=3D QEMU_VM_CONFIGURATIO=
-N) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Configuration=
- section missing&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 v =3D qemu_get_byte(f);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (v !=3D QEMU_VM_CONFIGURATION) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Configura=
-tion section missing, %x !=3D %x&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0v, QEMU_VM_CONFIGURATION);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -EINVAL;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vmstate_load_state(f, &amp;vmstate_con=
-figuration, &amp;savevm_state, 0,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL);<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vmstate_load_state(f, &amp;vmstate_con=
-figuration, &amp;savevm_state, 0,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0errp);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-@@ -3119,7 +3128,7 @@ int qemu_loadvm_state(QEMUFile *f)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0qemu_loadvm_thread_pool_create(mis);<br>
-<br>
--=C2=A0 =C2=A0 ret =3D qemu_loadvm_state_header(f);<br>
-+=C2=A0 =C2=A0 ret =3D qemu_loadvm_state_header(f, NULL);<br>
-=C2=A0 =C2=A0 =C2=A0if (ret) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.50.0<br>
-<br>
-</blockquote></div></div>
-
---0000000000007d52f3063ac13cf1--
+>  hw/i386/pc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2f58e73d3347..180bc615f3f0 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -975,7 +975,7 @@ void pc_memory_init(PCMachineState *pcms,
+>  
+>      rom_set_fw(fw_cfg);
+>  
+> -    if (machine->device_memory) {
+> +    if (machine->device_memory || cxl_resv_end) {
+>          uint64_t *val = g_malloc(sizeof(*val));
+>          uint64_t res_mem_end;
+>  
 
 
