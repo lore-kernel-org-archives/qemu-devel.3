@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778B9C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 12:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1F9C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 12:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufHpQ-0007ka-0U; Fri, 25 Jul 2025 08:47:12 -0400
+	id 1ufHwk-0006gQ-6B; Fri, 25 Jul 2025 08:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufHpK-0007c2-DT
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:47:08 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ufHpH-0006K9-UO
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:47:06 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-60789b450ceso3805118a12.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 05:47:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753447621; x=1754052421; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=upNuj9KaC5+zlU1E688mzOCPe/mp0iOJhSWj8QnXfGs=;
- b=peGI28RS0gCfHPkZZATearn0F1xUtuNbCAou1JtBqGDWGrZim04IRpbQobmmBA/r+q
- BSeT3oxR33Whx0YUuKVp+WCRuFcZnvFj6cfbXNCuW5y7Xc8u3RLrBz1RU4FY+9cgBJta
- BsJ+Gi4usKQF7fo+J3qya2/JUinoUpFrUutfqqfpcxEz2wFhUkArxlY9cAQzfxxUJzXV
- VA1wZdmFFfyZP/b2UM1kUFsCWqaR1VU49YKu50waDQQvVEhuxw+Z2TUfeZ/iSdx0LG5Y
- 2HdlzzQRYNCLPZ3kFix0SIY9VWir5zyGwbrAyrFQ9Bx1ypnVIMogXKQuAT7H/31bPvmK
- dcaw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ufHwQ-0006Kq-0Z
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ufHwL-0007vk-Kn
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 08:54:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753448058;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HcsP+DKAx+d2yZXMZFx93ydecLEnUazc4oLS6lFAV8Q=;
+ b=YVWG3yjPoReIceNLsd94tVKoF4WWLra9UW6xoFfv/kQwk34yzc7G1W0jo3wwlZUZYHi5pk
+ iTCayURRb26zyA/i/O9v7ZKlFGMH12UPFTge29IAbYHpZmd51TTXT53Vnij31REyfXduoy
+ X/1tY0pG9dVvbyWovcLQjUZ/ZqEZkhY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-XSEEDmYoN1em8UzGYOtdPw-1; Fri, 25 Jul 2025 08:54:16 -0400
+X-MC-Unique: XSEEDmYoN1em8UzGYOtdPw-1
+X-Mimecast-MFC-AGG-ID: XSEEDmYoN1em8UzGYOtdPw_1753448056
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4561611dc2aso16842835e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 05:54:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753447621; x=1754052421;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=upNuj9KaC5+zlU1E688mzOCPe/mp0iOJhSWj8QnXfGs=;
- b=iHuujyMpTyPBlqkUB1CUa0itPecewXcm60IJ3HprbfzIaSMJt9ZW98f+zKguHq8f3k
- 9yriXuICPov+pF+EPYiLaghP1hHkxPIK2lwjaHvE13gQHDXgOOVJPJzwKYchsvkKFMQ+
- weQHanDY+RwsE8bGn5moloetsqmMtHtpud/5jtIDFI4JPBXsTwMnWZV6yTtewFGHYbOD
- SEQgguzE8AeQN2cinJCmFATjQVyqpFDcV9anTj+wXgtRJ8U6Fi+/Wm72lT05fUm9jCiH
- UgV8jIGrVQNph4ABwmynWXlidfbZST0WXQWJciCZisvkV5aqQcVWJfPckNRPIglJhB6g
- N5fQ==
-X-Gm-Message-State: AOJu0YyAgVKVfUkj6NA34PJLnXaLyTpVVOb8KXNKGt9x8YqYE2eEi9tH
- 8AVxf+YWzphiYA4ExYq8nKLnVPCK+/chmf3XHz4gxfU1EMCavuF6dtwxkJ03q8cJCj1zCW0dc/s
- 24PBcU+1sRai55Hh1ggLJJxHXeNe2wEtF/puonideiw==
-X-Gm-Gg: ASbGncuDVJ64LsfnZXJOjzfBYB9HZ9klRz16ONgoqGpUqxhsiQmXx3XUibqd8RsydZ9
- DeUOn3tSiveony+pKORoiFpx19NddrW9jx2/lBkLa4nbR1Z3JzF2Nkd/fm8tESlx+JlBODFpSdH
- JijgA6Ggv8r857JFqbVfEXWRcKcelND0EGTlhB1itAB6KrYy1XMzfSeCHD+nLA8gF8voACUMxrO
- oK9aA==
-X-Google-Smtp-Source: AGHT+IEXKmhyDe6dzT0SgK+GrWFKKAs13xMV8dgdnoqGA7TnSiWCY3oHX1RYYhE/7pWIhMzyFaUFOWGFcnOOiuih9NI=
-X-Received: by 2002:a05:6402:84f:b0:607:f431:33fb with SMTP id
- 4fb4d7f45d1cf-614f1bd5ef3mr1848180a12.3.1753447621403; Fri, 25 Jul 2025
- 05:47:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753448054; x=1754052854;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HcsP+DKAx+d2yZXMZFx93ydecLEnUazc4oLS6lFAV8Q=;
+ b=A4fSc+m+68QLZO5T9a9z5/RfJvI9i/oKtyfZLcTa4FFC6krHYpxldCFR4sJ00LA0qs
+ yv8QUn25gnrUzhNO+m7SD8ra/vbd1IVlbL3EFpRDf2lKsJVQW2Cdr0huTQFTIfEYYIse
+ RjmuRB8SG7Zbv4pxtVpOFR1mkihv9hha5FcnzikCnNohZGrM0UGcxbTrju+TehGgrRNJ
+ dMaVo/UCz50cfEF3OcnZE5CpVee4PIraQAhAcJPFSa8Fwre6XIr2V4UyPi0M2kb2kbOG
+ qP7Hb9JRFqDGfpJpRYA7URlYWithw27u9AK1f5e0GlkoiYon6zSpecrUNFf8CTab4TXG
+ uNtg==
+X-Gm-Message-State: AOJu0Yz7ST4LrOd1pO2BLyw7lY0zQ1z3oYoRkt0vpB7fORp0XmDnIQLV
+ 2//sQi0LfT7eTl3V/+csAKatEe7zJ3R8+dErdaFO0a0EEPi2kPoR6KCw9XAmtsRGdiegJ5buljv
+ BK7dc6Ue0yGno9bkihSBtg50zoYbaS66TN6nyaxVLiwRP4+zssis44VEFkrE3kkkKyqljyCAApG
+ kgmhRnbfUDSoWuQbggRqWwPU1F9EP2Y75P7Bd6xlpP
+X-Gm-Gg: ASbGncuPFDAOyUfvHun1isVqE0M+Y+TlNGDnHNYn8EoGWzBolzd9xRwLpcVq/20fGLO
+ NPHDyhT1+zSjqa4TVq/Z4qG+Hxwy+ZsffN+iL2FWaBleKgMfnC8i9x/jeFeTH2XDd6zSgnamEX0
+ oB+pS0ROnTGqxjpmo0bbf7OcGOVNmypIA9Lv4Zex13tpgK5VhNWMqZihTEnuTI8NcjF0bTEn1/A
+ z7R+q7VzPdep2E8ULxg8kZNLuJ+ccprhRVBynLFniFsc3paE0MBC936/cT934+Q3ZLnrPFwpeS2
+ C85UfSKKjaV5Ky2Rsfvxsfx7H4g00zV753u+KeAkRM17
+X-Received: by 2002:a05:600c:35cc:b0:442:e9eb:cba2 with SMTP id
+ 5b1f17b1804b1-45875f73f0amr16698095e9.0.1753448054389; 
+ Fri, 25 Jul 2025 05:54:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHaTPGogp+fW/mHLsZ5dEdd9d/dGzglCtiwidTgamvgSrKQHkzGwxiqqyspxCXgc3mPdX6OQ==
+X-Received: by 2002:a05:600c:35cc:b0:442:e9eb:cba2 with SMTP id
+ 5b1f17b1804b1-45875f73f0amr16697815e9.0.1753448053826; 
+ Fri, 25 Jul 2025 05:54:13 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.154.122])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b76fcc3c4csm5108091f8f.76.2025.07.25.05.54.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Jul 2025 05:54:13 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/4] Rust, target/i386 patches for 10.1-rc1
+Date: Fri, 25 Jul 2025 14:53:59 +0200
+Message-ID: <20250725125412.1128617-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20250724105939.2393230-1-alex.bennee@linaro.org>
- <20250724105939.2393230-14-alex.bennee@linaro.org>
- <CAAjaMXau4GyWidMNdYXgnMQTrv0mhVuCamDtaMLLJPeEDgyOQQ@mail.gmail.com>
- <875xfhvk98.fsf@draig.linaro.org>
- <CAAjaMXaUefn-3tYXgV5itg_=rg4_hwqRAugO_nHHM7RD3v1Nsw@mail.gmail.com>
- <87v7ngscsc.fsf@draig.linaro.org>
-In-Reply-To: <87v7ngscsc.fsf@draig.linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 25 Jul 2025 15:46:34 +0300
-X-Gm-Features: Ac12FXxsn4q4HnHHZSJ-xDYItFwcp2PrScv8MqtYDel9zhB9zwzD-iOONbQ1uX4
-Message-ID: <CAAjaMXZThujp_JZYKBijg2dkqQpBfkxaswsmyxUvRCN+ZcTnyA@mail.gmail.com>
-Subject: Re: [PATCH for 10.1 13/13] tests/docker: handle host-arch selection
- for all-test-cross
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,178 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 2:57=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->
-> > On Thu, Jul 24, 2025 at 3:36=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@l=
-inaro.org> wrote:
-> >>
-> >> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
-> >>
-> >> > On Thu, Jul 24, 2025 at 2:00=E2=80=AFPM Alex Benn=C3=A9e <alex.benne=
-e@linaro.org> wrote:
-> >> >>
-> >> >> When building on non-x86 we get a bunch but not all of the compiler=
-s.
-> >> >> Handle this in the Dockerfile by probing the arch and expanding the
-> >> >> list available.
-> >> >>
-> >> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >> >> ---
-> >> >>  .../dockerfiles/debian-all-test-cross.docker  | 31 ++++++++++-----=
-----
-> >> >>  1 file changed, 17 insertions(+), 14 deletions(-)
-> >> >>
-> >> >> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker =
-b/tests/docker/dockerfiles/debian-all-test-cross.docker
-> >> >> index 5aa43749ebe..16a83241270 100644
-> >> >> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-> >> >> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-> >> >> @@ -23,7 +23,9 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> >> >>          bison \
-> >> >>          ccache \
-> >> >>          clang  \
-> >> >> +        dpkg-dev \
-> >> >>          flex \
-> >> >> +        gcc \
-> >> >>          git \
-> >> >>          libclang-rt-dev \
-> >> >>          ninja-build \
-> >> >> @@ -33,16 +35,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata =
-\
-> >> >>          python3-venv \
-> >> >>          python3-wheel
-> >> >>
-> >> >> -RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> >> >> -        apt install -y --no-install-recommends \
-> >> >> -        gcc-aarch64-linux-gnu \
-> >> >> +# All the generally available compilers
-> >> >> +ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
-> >> >>          libc6-dev-arm64-cross \
-> >> >>          gcc-arm-linux-gnueabihf \
-> >> >>          libc6-dev-armhf-cross \
-> >> >> -        gcc-hppa-linux-gnu \
-> >> >> -        libc6-dev-hppa-cross \
-> >> >> -        gcc-m68k-linux-gnu \
-> >> >> -        libc6-dev-m68k-cross \
-> >> >>          gcc-mips-linux-gnu \
-> >> >>          libc6-dev-mips-cross \
-> >> >>          gcc-mips64-linux-gnuabi64 \
-> >> >> @@ -51,18 +48,24 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata =
-\
-> >> >>          libc6-dev-mips64el-cross \
-> >> >>          gcc-mipsel-linux-gnu \
-> >> >>          libc6-dev-mipsel-cross \
-> >> >> -        gcc-powerpc-linux-gnu \
-> >> >> -        libc6-dev-powerpc-cross \
-> >> >> -        gcc-powerpc64-linux-gnu \
-> >> >> -        libc6-dev-ppc64-cross \
-> >> >>          gcc-powerpc64le-linux-gnu \
-> >> >>          libc6-dev-ppc64el-cross \
-> >> >>          gcc-riscv64-linux-gnu \
-> >> >>          libc6-dev-riscv64-cross \
-> >> >>          gcc-s390x-linux-gnu \
-> >> >> -        libc6-dev-s390x-cross \
-> >> >> -        gcc-sparc64-linux-gnu \
-> >> >> -        libc6-dev-sparc64-cross && \
-> >> >> +        libc6-dev-s390x-cross
-> >> >> +
-> >> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
-=3D"${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; fi
-> >> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
-=3D"${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; fi
-> >> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
-=3D"${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; =
-fi
-> >> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
-=3D"${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; =
-fi
-> >> >> +RUN if dpkg-architecture -e amd64; then export AVAILABLE_COMPILERS=
-=3D"${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; =
-fi
-> >> >> +
-> >> >> +RUN echo "compilers: ${AVAILABLE_COMPILERS}"
-> >> >
-> >> > Nitpick, each `RUN` command will create a new cached layer for the
-> >> > container build. It makes more sense to fold them in a single `RUN`
-> >> > step to avoid unnecessary layers. Does not make a big difference so
-> >> > feel free to ignore.
-> >>
-> >> I did try to figure out how to do a multi-line shell with an env
-> >> expansion but wasn't able to get the escaping right. If you can sugges=
-t
-> >> the right runes please do ;-)
-> >
-> > Like this?
-> >
-> > RUN if dpkg-architecture -e amd64; then \
-> >   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
-> > gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
-> >   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
-> > gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
-> >   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
-> > gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
-> >   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
-> > gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
-> >   export AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}
-> > gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
-> >   fi && \
-> >   echo "compilers: ${AVAILABLE_COMPILERS}"
-> >
->
-> Nope, the continuation has to run for all the lines of the RUN
-> statement.
+The following changes since commit 56a3033abcfcf72a2f4f1376a605a0b1ad526b67:
 
-Sorry, it seems Gmail textwrapped the lines. The ones without
-continuation should be merged with the following one.
+  Merge tag 'pull-request-2025-07-21' of https://gitlab.com/thuth/qemu into staging (2025-07-21 06:34:56 -0400)
 
+are available in the Git repository at:
 
->
->   Processing triggers for libc-bin (2.36-9+deb12u10) ...
->   --> 703d5c21c6e4
->   STEP 5/18: ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu         libc6-=
-dev-arm64-cross         gcc-arm-linux-gnueabihf         libc6-dev-armhf-cro=
-ss         gcc-mips-linux-gnu         libc6-dev-mips-cross         gcc-mips=
-64-linux-gnuabi64         libc6-dev-mips64-cross         gcc-mips64el-linux=
--gnuabi64         libc6-dev-mips64el-cross         gcc-mipsel-linux-gnu    =
-     libc6-dev-mipsel-cross         gcc-powerpc64le-linux-gnu         libc6=
--dev-ppc64el-cross         gcc-riscv64-linux-gnu         libc6-dev-riscv64-=
-cross         gcc-s390x-linux-gnu         libc6-dev-s390x-cross
->   --> e6fa99881c94
->   STEP 6/18: RUN if dpkg-architecture -e amd64; then   export AVAILABLE_C=
-OMPILERS=3D"${AVAILABLE_COMPILERS}
->   /bin/sh: 1: Syntax error: Unterminated quoted string
->   Error: building at STEP "RUN if dpkg-architecture -e amd64; then   expo=
-rt AVAILABLE_COMPILERS=3D"${AVAILABLE_COMPILERS}": while running runtime: e=
-xit status 2
->   make: *** [tests/docker/Makefile.include:40: docker-image-debian-all-te=
-st-cross] Error 2
->
-> >
-> >>
-> >> >
-> >> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> >> >
-> >> >> +
-> >> >> +RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
-> >> >> +        apt install -y --no-install-recommends \
-> >> >> +        ${AVAILABLE_COMPILERS} && \
-> >> >>          dpkg-query --showformat '${Package}_${Version}_${Architect=
-ure}\n' --show > /packages.txt
-> >> >>
-> >> >>
-> >> >> --
-> >> >> 2.47.2
-> >> >>
-> >> >>
-> >>
-> >> --
-> >> Alex Benn=C3=A9e
-> >> Virtualisation Tech Lead @ Linaro
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to feea87cd6b645d5166bdd304aac88f47f63dc2ef:
+
+  target/i386: fix width of third operand of VINSERTx128 (2025-07-25 14:51:11 +0200)
+
+I would like to include this script in QEMU 10.1, after talking to members of
+the Fedora Rust SIG, in order to experiment with RPM packaging and be ready
+for possible enabling of Rust in QEMU 10.2.
+
+Paolo
+
+----------------------------------------------------------------
+* rust: small cleanups + script to update packages
+* target/i386: AVX bugfix
+
+----------------------------------------------------------------
+Manos Pitsidianakis (1):
+      rust/pl011: merge device_class.rs into device.rs
+
+Paolo Bonzini (3):
+      rust: devices are not staticlibs
+      scripts: add script to help distros use global Rust packages
+      target/i386: fix width of third operand of VINSERTx128
+
+ MAINTAINERS                              |   1 +
+ docs/about/build-platforms.rst           |   8 ++
+ target/i386/tcg/decode-new.c.inc         |   4 +-
+ rust/hw/char/pl011/Cargo.toml            |   3 -
+ rust/hw/char/pl011/src/device.rs         | 103 +++++++++++++++--
+ rust/hw/char/pl011/src/device_class.rs   | 103 -----------------
+ rust/hw/char/pl011/src/lib.rs            |   1 -
+ rust/hw/timer/hpet/Cargo.toml            |   3 -
+ scripts/get-wraps-from-cargo-registry.py | 190 +++++++++++++++++++++++++++++++
+ 9 files changed, 297 insertions(+), 119 deletions(-)
+ delete mode 100644 rust/hw/char/pl011/src/device_class.rs
+ create mode 100755 scripts/get-wraps-from-cargo-registry.py
+-- 
+2.50.1
+
 
