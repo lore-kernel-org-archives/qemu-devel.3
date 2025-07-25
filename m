@@ -4,95 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14887C83F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 01:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719D9C87FCD
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 01:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uf71D-0007Id-TO; Thu, 24 Jul 2025 21:14:39 -0400
+	id 1uf7Ox-0001bl-5E; Thu, 24 Jul 2025 21:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uf716-0007GG-To
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:14:34 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uf714-0004AS-SA
- for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:14:32 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-748e378ba4fso2106026b3a.1
- for <qemu-devel@nongnu.org>; Thu, 24 Jul 2025 18:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753406069; x=1754010869; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=LCuAMWKJAWTYGfdzp8KbLWq13FriRFVk9n3WfTj7UWg=;
- b=kQVC8MlIKZUvXdqDTbfndnbQrX3RjHg5pfpgfXPxYrJv80YbAs8C9w1ZAyRWO8y8k2
- 5HVrQQ+zva7O2amlnohVb98v7BxrH99QBoQ3BUIcnPoVhvU4YmbmXVL98okKjaH3NSbk
- 6cYoMqRQ/Qhdl5VzEllpX7zapZC0/zK3ED1cn8huHKOceVLcK1d/x9dIyxakRpi+yrFA
- ECwpyHnctM+SE6XCebjYU8tNAohjj8KigO8y0OSnhBmciW8YoouAmxO0c4CsSIqbpEH2
- qNQcqrtXNt9lSHibEvrvkZeaMKhFD7YpklX4/QQa4Lj0PGGnxETtq3gUCVu46sQQNW/t
- LdJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753406069; x=1754010869;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LCuAMWKJAWTYGfdzp8KbLWq13FriRFVk9n3WfTj7UWg=;
- b=O+j9hXPb6Ahu3doiYMOuXMfCkOSKLqqsg80rJliUch5MJFQ8rwBVVgtF8ihUtPe833
- vn2mTzFa6d1rjWc1LMiOO6BC2+QcTgzrf24G5+Qg7igbJN1DuqmV2YQ0q8OHu+HAygTn
- C0QuOiGtOLup6LN1OIQ8ZyJRTzJQ0DVXuyr+3eKC24Pw/g+9TJ1jLbWJzetx1jKJCrZS
- hmg/lISBOlsn5daI70gZ7IuUYrUBLdafUV/6lLspmZljbBh489feahmFxMsfhwtYak4D
- TJVniunBNoBfsyv5ySHJF6sGYy2erBNtU41tQnRBXPvdlFZaWxToaJ8F76pJv4gPR8Ig
- YCkQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVStEs3oIxvh2LEs74zgBdxla8AAK4zP++JmB2P11iVTgIErn6PGvX7BpqR38JH9T2wSELKYRbrA+ME@nongnu.org
-X-Gm-Message-State: AOJu0YyLR//DjJez/EeoPG4ZGFSCfavHkjNEGicGnJ5QnTe8yoTCqIaC
- QVcrxA1aYBHI46aqHis6TVzDaORFELPF0qVqJUB88mAOi8zlqEjXwEpW7t2wmvlhXSk=
-X-Gm-Gg: ASbGncv5fblzAvp+OlebYM6YGEi0OvzlzxBa6a9wVh356halHVrm2Luj7EoxXhJpQai
- YXRMM0yTxJCj51utgrtzjKkz+0DiCDrO8O14XnSfLJQOQqysioGJJio4/U6za1d9D4g5YeTEwWA
- kIpLscGdqkHkVXinmOHrcjkvt6eeh8kyxTXv2y32WKS30H3jsIW/ioLN6+nuK1+qJ0IiFVfUPdI
- x3TodK1Ksgv9u7ZkgjnGPKQUbRqKfQyw2mtRHeya0yVTTBM3u+2YlnTBkLetDXw49TjAUI3iY8N
- mtrxhfQyitGsNlR6sYFF3cHbvfuLaGq9vdZJEdMwXKagMeOaNhQicghACp80fHK6NP6HV2rT7ar
- FHEyR6IByCOmiG6SWc40vcxn1OQ/GGTncNWjCwWQUpCXtmk3oD8AU+HPnLR/iYpPvIYTj7LX0QN
- Y3Mw==
-X-Google-Smtp-Source: AGHT+IHVb0fYtXZpqBNQTDihJ/FN+fhntoP5XYOImyJ+zuRVA7+wNCOPEFSD1voIe28zdd/bsgOT5w==
-X-Received: by 2002:a05:6a20:cd91:b0:21f:5598:4c2c with SMTP id
- adf61e73a8af0-23d49032907mr15625978637.13.1753406069013; 
- Thu, 24 Jul 2025 18:14:29 -0700 (PDT)
-Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
- [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3f6c09a1absm2253655a12.23.2025.07.24.18.14.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Jul 2025 18:14:28 -0700 (PDT)
-Message-ID: <23e19896-f28b-4a90-b9c7-95ba9489e4ca@linaro.org>
-Date: Thu, 24 Jul 2025 15:14:25 -1000
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uf7Ng-0000jR-UH
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:37:53 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uf7Nc-0002az-FQ
+ for qemu-devel@nongnu.org; Thu, 24 Jul 2025 21:37:52 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Bxlmno34JojJAxAQ--.34631S3;
+ Fri, 25 Jul 2025 09:37:44 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJCxdOTk34Joz5wlAA--.62171S9;
+ Fri, 25 Jul 2025 09:37:43 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v3 07/17] target/loongarch: Add parameter mmu_context with
+ loongarch_page_table_walker
+Date: Fri, 25 Jul 2025 09:37:29 +0800
+Message-Id: <20250725013739.994437-8-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250725013739.994437-1-maobibo@loongson.cn>
+References: <20250725013739.994437-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 10.1 03/13] docs/user: clean up headings
-From: Richard Henderson <richard.henderson@linaro.org>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20250724105939.2393230-1-alex.bennee@linaro.org>
- <20250724105939.2393230-4-alex.bennee@linaro.org>
- <0d977125-473e-49f1-be25-c8221a3601bb@linaro.org>
-Content-Language: en-US
-In-Reply-To: <0d977125-473e-49f1-be25-c8221a3601bb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJCxdOTk34Joz5wlAA--.62171S9
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +66,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/25 15:13, Richard Henderson wrote:
-> On 7/24/25 00:59, Alex Bennée wrote:
->> +Threading
->> +~~~~~~~~~
->> +
->> +On Linux, QEMU can emulate the ``clone`` syscall and create a real
->> +host thread (with a separate virtual CPU) for each emulated thread.
-> 
-> 
-> We might say something here about limited emulation of clone.
-> See CLONE_INVALID_THREAD_FLAGS.
-> 
->> +Note that not all targets currently emulate atomic operations
->> +correctly. x86 and Arm use a global lock in order to preserve their
->> +semantics.
-> 
-> Wow, that's out of date.
+With function loongarch_page_table_walker(), some output parameters
+such as physical address and prot can be moved to structure mmu_context.
 
-I should have waited until patch 5.  :-)
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu_helper.c | 27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 9e6de2908f..a26bb8b11b 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -106,17 +106,18 @@ int loongarch_check_pte(CPULoongArchState *env, mmu_context *context,
+     return TLBRET_MATCH;
+ }
+ 
+-static int loongarch_page_table_walker(CPULoongArchState *env, hwaddr *physical,
+-                                       int *prot, target_ulong address,
++static int loongarch_page_table_walker(CPULoongArchState *env,
++                                       mmu_context *context,
+                                        int access_type, int mmu_idx)
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong index, phys;
+     uint64_t dir_base, dir_width;
+     uint64_t base;
+-    int level, ret;
+-    mmu_context context;
++    int level;
++    target_ulong address;
+ 
++    address = context->vaddr;
+     if ((address >> 63) & 0x1) {
+         base = env->CSR_PGDH;
+     } else {
+@@ -158,16 +159,9 @@ static int loongarch_page_table_walker(CPULoongArchState *env, hwaddr *physical,
+         base = ldq_phys(cs->as, phys);
+     }
+ 
+-    context.vaddr = address;
+-    context.ps = dir_base;
+-    context.pte = base;
+-    ret = loongarch_check_pte(env, &context, access_type, mmu_idx);
+-    if (ret == TLBRET_MATCH) {
+-        *physical = context.physical;
+-        *prot = context.prot;
+-    }
+-
+-    return ret;
++    context->ps = dir_base;
++    context->pte = base;
++    return loongarch_check_pte(env, context, access_type, mmu_idx);
+ }
+ 
+ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+@@ -176,7 +170,9 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+                                  int is_debug)
+ {
+     int ret;
++    mmu_context context;
+ 
++    context.vaddr = address;
+     if (tcg_enabled()) {
+         ret = loongarch_get_addr_from_tlb(env, physical, prot, address,
+                                           access_type, mmu_idx);
+@@ -191,8 +187,7 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+          * legal mapping, even if the mapping is not yet in TLB. return 0 if
+          * there is a valid map, else none zero.
+          */
+-        return loongarch_page_table_walker(env, physical, prot, address,
+-                                           access_type, mmu_idx);
++        return loongarch_page_table_walker(env, &context, access_type, mmu_idx);
+     }
+ 
+     return TLBRET_NOMATCH;
+-- 
+2.39.3
 
-r~
 
