@@ -4,106 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B52C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 21:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA471C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 21:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufPdP-0002zm-6M; Fri, 25 Jul 2025 17:07:19 -0400
+	id 1ufPeh-0003uC-C4; Fri, 25 Jul 2025 17:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ufPdA-0002sL-VX
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 17:07:08 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ufPd3-0007i7-TQ
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 17:07:04 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 78B4F1F387;
- Fri, 25 Jul 2025 21:06:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753477613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ETkwh/0BiOYIq+YeFKlZ0fSlceL4X9mMrsOM3M0SnuY=;
- b=VZ/A9qH2j/SurDS74X6aBkaPlLaIOhrntfr18TtTsHOusYQUqMg7hjD/132MXWcZneI5rl
- N73QCZOC3oICDhIbDc+XZ39HCAqnthjdmz+CJVQI9nV/4xJA/Oko15uqvhs/ZiZUbZEcJm
- 9JW32FGd81w06c4Py9V41woi/Njm1OI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753477613;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ETkwh/0BiOYIq+YeFKlZ0fSlceL4X9mMrsOM3M0SnuY=;
- b=hjJFwa/1R+4l8XESbGueH53e0p2+Jer05s273Q9V+ziQrGjqLSJAsqCaNcZ/4iiAy/uVcR
- hKjJCiSyPtprRHDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1753477613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ETkwh/0BiOYIq+YeFKlZ0fSlceL4X9mMrsOM3M0SnuY=;
- b=VZ/A9qH2j/SurDS74X6aBkaPlLaIOhrntfr18TtTsHOusYQUqMg7hjD/132MXWcZneI5rl
- N73QCZOC3oICDhIbDc+XZ39HCAqnthjdmz+CJVQI9nV/4xJA/Oko15uqvhs/ZiZUbZEcJm
- 9JW32FGd81w06c4Py9V41woi/Njm1OI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1753477613;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ETkwh/0BiOYIq+YeFKlZ0fSlceL4X9mMrsOM3M0SnuY=;
- b=hjJFwa/1R+4l8XESbGueH53e0p2+Jer05s273Q9V+ziQrGjqLSJAsqCaNcZ/4iiAy/uVcR
- hKjJCiSyPtprRHDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E5250134E8;
- Fri, 25 Jul 2025 21:06:52 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WtVhKOzxg2ilQwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 25 Jul 2025 21:06:52 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Peter Xu
- <peterx@redhat.com>, qemu-arm <qemu-arm@nongnu.org>
-Subject: Re: [PULL 02/20] target/arm: Correct encoding of Debug
- Communications Channel registers
-In-Reply-To: <87pldo3x3y.fsf@suse.de>
-References: <20250721132718.2835729-1-peter.maydell@linaro.org>
- <20250721132718.2835729-3-peter.maydell@linaro.org>
- <87ms8uh7ln.fsf@suse.de>
- <CAFEAcA9kxDdkEyLguTsEV_nDX9L5mAT+Rw_4Rmk68YQq50ee-A@mail.gmail.com>
- <87pldo3x3y.fsf@suse.de>
-Date: Fri, 25 Jul 2025 18:06:50 -0300
-Message-ID: <87ms8s3rpx.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_FIVE(0.00)[5]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chefkiss@icloud.com>)
+ id 1ufNbi-00032c-N5
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 14:57:26 -0400
+Received: from p-east1-cluster3-host6-snip4-8.eps.apple.com ([57.103.91.189]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chefkiss@icloud.com>)
+ id 1ufNbg-0005tO-G1
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 14:57:25 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPS id
+ 19608180029F
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:57:18 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ bh=7Quw/78iJSaoYXFcOSt88FpPCtI4SOYR/Tt4K9/K0cA=;
+ h=From:Content-Type:Mime-Version:Subject:Date:To:Message-Id:x-icloud-hme;
+ b=Y1zQoN+UZ3q4Tmt/WWcPpVd9xhXNU679ekfVkhhoF32i2LTcWyT/ng0CqGsKV/JWGYqhC65oHwNdRKk6fefPeljAazOCdJ8AUhq4SwSWYWv3AaDCLUftmHAgRpmH7UDUA7hc0rmuq//N18KXntK6TTSb/UXt/iE2XRLhxWf9ugTZlFCLV+cXWrfaBdc4TrWbgNx/3j98wqoz7hCvsRQ9xwYWnQx8z2xELTaSuetqe2/X/lfnXq8wyzrns5Tix90Z8wvSvCBpf6zzicoyQkaHtbAGuDYEn2Orqi0CsrWZUJ9ZtBWTHW23gDd3dGvBlmwGRJlKn7uStUrDFbs65AKtFw==
+Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
+ [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-1 (Postfix) with ESMTPSA id
+ D51A3180014D
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:57:17 +0000 (UTC)
+From: chefkiss@icloud.com
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
+Subject: Re: NVMe VMStateDescription
+Date: Fri, 25 Jul 2025 21:57:05 +0300
+References: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
+To: qemu-devel@nongnu.org
+In-Reply-To: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
+Message-Id: <A48BB1DD-2E71-4F23-A86C-E64E318A707A@icloud.com>
+X-Mailer: Apple Mail (2.3860.100.5.1.1)
+X-Proofpoint-ORIG-GUID: 3n7z_vD6gTSVXAb24r4pQrpyu185cT5X
+X-Proofpoint-GUID: 3n7z_vD6gTSVXAb24r4pQrpyu185cT5X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI1MDE2MiBTYWx0ZWRfX53ax/TIXSdx/
+ PjqAax2FrPwi2ERrrParK2vF7OJW/gx/TYGFpURjeODu7l/5CK3JBqSajlAp0ZtZEAjFhOEnkos
+ A6cptogsA8gv/6KL/7uu+L+q7RtBnSZwNLK8cTJzejiajyOisg94VxgtZfP8fquBe9MRX56FpeF
+ t5LnHyzRwC7EDWWs3oKV0Oa5Qj4igMweRUo2/G3SePhVnrMhifzpy0cwLov3vn6SwuRS8DuGw11
+ 1XwpPevkdXgnKX1tsvUeCyKnkB2erf0XMSw3Q5gsnlB8OxWkrYZlT6VrXkRuoGri69fdvpBTo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-25_05,2025-07-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2507250162
+Received-SPF: pass client-ip=57.103.91.189; envelope-from=chefkiss@icloud.com;
+ helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 25 Jul 2025 17:08:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,131 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Hello,
 
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
->> On Wed, 23 Jul 2025 at 23:20, Fabiano Rosas <farosas@suse.de> wrote:
->>>
->>> Peter Maydell <peter.maydell@linaro.org> writes:
->>>
->>> > We don't implement the Debug Communications Channel (DCC), but
->>> > we do attempt to provide dummy versions of its system registers
->>> > so that software that tries to access them doesn't fall over.
->>> >
->>> > However, we got the tx/rx register definitions wrong. These
->>> > should be:
->>> >
->>> > AArch32:
->>> >   DBGDTRTX   p14 0 c0 c5 0  (on writes)
->>> >   DBGDTRRX   p14 0 c0 c5 0  (on reads)
->>> >
->>> > AArch64:
->>> >   DBGDTRTX_EL0  2 3 0 5 0 (on writes)
->>> >   DBGDTRRX_EL0  2 3 0 5 0 (on reads)
->>> >   DBGDTR_EL0    2 3 0 4 0 (reads and writes)
->>> >
->>> > where DBGDTRTX and DBGDTRRX are effectively different names for the
->>> > same 32-bit register, which has tx behaviour on writes and rx
->>> > behaviour on reads.  The AArch64-only DBGDTR_EL0 is a 64-bit wide
->>> > register whose top and bottom halves map to the DBGDTRRX and DBGDTRTX
->>> > registers.
->>> >
->>> > Currently we have just one cpreg struct, which:
->>> >  * calls itself DBGDTR_EL0
->>> >  * uses the DBGDTRTX_EL0/DBGDTRRX_EL0 encoding
->>> >  * is marked as ARM_CP_STATE_BOTH but has the wrong opc1
->>> >    value for AArch32
->>> >  * is implemented as RAZ/WI
->>> >
->>> > Correct the encoding so:
->>> >  * we name the DBGDTRTX/DBGDTRRX register correctly
->>> >  * we split it into AA64 and AA32 versions so we can get the
->>> >    AA32 encoding right
->>> >  * we implement DBGDTR_EL0 at its correct encoding
->>> >
->>> > Cc: qemu-stable@nongnu.org
->>> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2986
->>> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> > Message-id: 20250708141049.778361-1-peter.maydell@linaro.org
->>> > ---
->>> >  target/arm/debug_helper.c | 13 +++++++++++--
->>> >  1 file changed, 11 insertions(+), 2 deletions(-)
->>> >
->>> > diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
->>> > index 69fb1d0d9ff..aee06d4d426 100644
->>> > --- a/target/arm/debug_helper.c
->>> > +++ b/target/arm/debug_helper.c
->>> > @@ -988,11 +988,20 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
->>> >        .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 2,
->>> >        .access = PL1_RW, .accessfn = access_tdcc,
->>> >        .type = ARM_CP_CONST, .resetvalue = 0 },
->>> > -    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
->>> > -    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_BOTH, .cp = 14,
->>> > +    /* Architecturally DBGDTRTX is named DBGDTRRX when used for reads */
->>> > +    { .name = "DBGDTRTX_EL0", .state = ARM_CP_STATE_AA64,
->>> >        .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
->>> >        .access = PL0_RW, .accessfn = access_tdcc,
->>> >        .type = ARM_CP_CONST, .resetvalue = 0 },
->>> > +    { .name = "DBGDTRTX", .state = ARM_CP_STATE_AA32, .cp = 14,
->>> > +      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
->>> > +      .access = PL0_RW, .accessfn = access_tdcc,
->>> > +      .type = ARM_CP_CONST, .resetvalue = 0 },
->>> > +    /* This is AArch64-only and is a combination of DBGDTRTX and DBGDTRRX */
->>> > +    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
->>> > +      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 4, .opc2 = 0,
->>> > +      .access = PL0_RW, .accessfn = access_tdcc,
->>> > +      .type = ARM_CP_CONST, .resetvalue = 0 },
->>> >      /*
->>> >       * OSECCR_EL1 provides a mechanism for an operating system
->>> >       * to access the contents of EDECCR. EDECCR is not implemented though,
->>>
->>> Hi, this patch breaks migration. I'm leaving for the day and will take a
->>> closer look in the morning. But since we have timezones, here it is:
->>
->> Thanks for the report; I can repro this. It happens because
->> the loop in cpu_post_load hits the "register in their list but
->> not ours" check, because the source VM has the AArch32
->> {.cp = 14, .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0}
->> register which should never have existed.
->>
->
-> My debugging (in dst) shows:
->
-> (gdb) x/16x 0x555557ad5d20 //cpu->cpreg_vmstate_indexes[0x18 to 0x1c]
-> 0x555557ad5d20: 0x200e0205      0x40200000      0x200e0284<     0x40200000
-> 0x555557ad5d30: 0x200e0285      0x40200000      0x200e0298      0x40200000
-> 0x555557ad5d40: 0x200e0302      0x40200000      0x200e0380      0x40200000
-> 0x555557ad5d50: 0x200e0800      0x40200000      0x200e0838      0x40200000
->
-> (gdb) x/16x 0x555557ad4ac0 //cpu->cpreg_indexes[0x18 to 0x1c]
-> p0x555557ad4ac0: 0x200e0205      0x40200000      0x200e0280<     0x40200000
-> 0x555557ad4ad0: 0x200e0284      0x40200000      0x200e0285      0x40200000
-> 0x555557ad4ae0: 0x200e0302      0x40200000      0x200e0380      0x40200000
-> 0x555557ad4af0: 0x200e0800      0x40200000      0x200e0838      0x40200000
->
->
->> I'm not sure how to handle this, as we have no mechanism for
->> "ignore this incoming register value, it is bogus". I'm surprised
->> we've never run into this before...
->>
->
-> I was thinking the same.
->
-> I actually don't understand what the encoding in cpu->cpreg_indexes is
-> supposed to represent. How does comparing the indexes implies "in our
-> list"/"in their list"? Is there some sort of ISA level assumption?
->
->        if (cpu->cpreg_vmstate_indexes[v] > cpu->cpreg_indexes[i]) {
->             /* register in our list but not incoming : skip it */
->             continue;
->         }
->         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
->             /* register in their list but not ours: fail migration */
->             return -1;
->         }
->  
+I have received no response about this. If I could please get an answer =
+on this, it would help a lot.
 
-Ok, I spotted the sorting now. 
+Regards,
+Visual.
+
+Cc: Klaus Jensen <k.jen...@samsung.com>
+
+> On 9 Jul 2025, at 21:26, chefkiss@icloud.com wrote:
+>=20
+> Hello,
+>=20
+> I am working with an SoC that only supports NVMe, and would like to be =
+able to savevm/loadvm, and maybe also record/replay.
+> The NVMe has a VMStateDescription with just unmigratable =3D 1 ever =
+since it was first added in 2013.
+> Is there a technical or other limitation/reason for why this is the =
+case?
+>=20
+> Regards,
+> Visual.
+>=20
+> Cc: Klaus Jensen <its@irrelevant.dk>
+
 
