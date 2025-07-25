@@ -4,94 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5145CC87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF28AC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 15:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufK14-0002hT-0q; Fri, 25 Jul 2025 11:07:22 -0400
+	id 1ufK94-0005Ma-KI; Fri, 25 Jul 2025 11:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ufK0c-0002A0-0Q
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:06:54 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ufK0a-0001Vn-Bn
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:06:53 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-23dc5bcf49eso29556965ad.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 08:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753456010; x=1754060810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=z6Py8ZwS0kfqeDhym1u+VYnJ4E+KS3P82qJoNRkABKk=;
- b=O9Luj0goe15UWMH9/lQpVzWA29OMVDbnf+jS9eKs4WkrCPBLi/rYl7P7nhGejCv5Qp
- XproAf2b2H57mW1SRuctET4OSOD9L87OvNRQTd5EQWYk+7Fw1GUj0nJIv6t5xYZ9CTZZ
- /I4SHxpL8VGNXL8lDCRwcA6RmJQ/okwF2EU75/1I8Ff/Np2jsCo8zKyc1MvnKnMO9mnn
- 27BlGNzl2Ru1d2Uib4NZylSCFbIBVR5mtzaVQD/0F0XtFDGX764YnNxGGiAp/xDf/DrE
- J4JEHF3Ejr8MQ+izQg0M1NI7Wr3YUEC7CzOzN6FAhOynNVOBIjxAVTd3ja4DlgvXvzmq
- 2wRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753456010; x=1754060810;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z6Py8ZwS0kfqeDhym1u+VYnJ4E+KS3P82qJoNRkABKk=;
- b=mwkatZfCgPSACFBBIXjRWxsMwPH2eT+xzS/aGKv1M/Rh5nC0LwhthrF78gr9KyV8S6
- aXJyUhvGegnl1+Q7Dy2pT3366dm5FHhxeU/FTEKm23t5Bf0dlavCpq27s1DVE7N9jnEg
- bhTc5glb6zDKdLuiPGOqMq5RDlsPzUHEA57HsH1yrO2DOa4NozXiAauSRjxeWo5OXKvq
- yZFoazzkpwI+GeSli4RMQoPTZucEiNFE0c0gJMXBrJVS6ODrIvNXMv7+ExaCjk7k/0LX
- tQsSokozbBhKYizqae2s2kkbu18/DorQISnD3IJK6fFkB1eOnw5BJli3EF0918+qXm6c
- dxyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUv086oITTfr5YZ/MEF8Ez+0ehUR+odOli3+/sk6neTYniuqK+JPlheIilZ3UAPI4HXmJJdQ0ucAbKJ@nongnu.org
-X-Gm-Message-State: AOJu0YwGAmye8K/MEhpYmOM0/ruCF8/8gjM8dA0KsoEO3u3fdl5js69X
- 0taEt2ACK8BwXFp8OROr20IvzRWnnWJrLB8PYUDn+6M5K4joGr9udkYXtq2kOfsXb5M=
-X-Gm-Gg: ASbGncsFY6DYt3yWVnN06sI/f3WbEv7hsgRvKCS1IooewJuliww7xzmACR2Y2Il9NUL
- /aOyZPDJ9xPmL/067+szUZSmWk/P8LCp0jxttSWOt2yKQxNujUL05fAqeMnv8DLINlnkOh7I5H0
- 5jtda7ZXofouwagRxaaQTV5EA4JH7FFI4D7FGKoEb2VeZ8qyHKaKsllCjoLKeKfmBZzqijn+bAI
- w0KGc/avU9NcJR5Ys2JsfpsIKBrfOaR6/ouuWc5N8+3msxG5ovZOTzoyLECrD6HsDOUHshNjbTH
- KBzYFLaFsxwznenQ7V+U2jE9CNF50drsPVkY3rxazUS/4Z9AK1cwkVK17oO74+Tww2KhUoi6zq9
- AbbVE/233SBWa4v1/GKGyP+eaN0y2CK1o6A==
-X-Google-Smtp-Source: AGHT+IHP69mvkV6J1NoYGMnKr/W4aNwIS8AKl897sDFXRo/m5F6BIEskvMxCmP4+rHJxasf6FE2aiQ==
-X-Received: by 2002:a17:903:246:b0:235:ed01:18cd with SMTP id
- d9443c01a7336-23fb317ae95mr32840655ad.44.1753456010440; 
- Fri, 25 Jul 2025 08:06:50 -0700 (PDT)
-Received: from [192.168.0.102] ([187.75.37.236])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fa491804bsm39106985ad.206.2025.07.25.08.06.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 08:06:50 -0700 (PDT)
-Message-ID: <29a7b7ac-831d-4124-9f93-427bec6205ff@linaro.org>
-Date: Fri, 25 Jul 2025 12:07:48 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufK8x-00055u-DL
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:15:34 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufK8t-0003WE-Jc
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 11:15:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bpWbz2pRHz6M4nb;
+ Fri, 25 Jul 2025 23:13:51 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id E7E4C1400C8;
+ Fri, 25 Jul 2025 23:15:19 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 25 Jul
+ 2025 17:15:19 +0200
+Date: Fri, 25 Jul 2025 16:15:18 +0100
+To: wangyuquan <wangyuquan1236@phytium.com.cn>
+CC: <rad@semihalf.com>, <peter.maydell@linaro.org>,
+ <leif.lindholm@oss.qualcomm.com>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [RFC PATCH v6] hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW
+Message-ID: <20250725161518.000027b3@huawei.com>
+In-Reply-To: <20250617041946.82587-1-wangyuquan1236@phytium.com.cn>
+References: <20250617041946.82587-1-wangyuquan1236@phytium.com.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Clean up of register field definitions
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org
-References: <20250725014755.2122579-1-gustavo.romero@linaro.org>
- <17254b66-4902-4ee0-8c9a-4082146255e3@linaro.org>
- <aad0c640-b736-4f5a-a6cf-e5459f60630d@linaro.org>
- <CAFEAcA8CN2GEGGrPZGweFHffSsBLF5Q-kfHwYhiRXfrgqGJ_Mg@mail.gmail.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <CAFEAcA8CN2GEGGrPZGweFHffSsBLF5Q-kfHwYhiRXfrgqGJ_Mg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,68 +69,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Tue, 17 Jun 2025 12:19:46 +0800
+wangyuquan <wangyuquan1236@phytium.com.cn> wrote:
 
-On 7/25/25 11:47, Peter Maydell wrote:
-> On Fri, 25 Jul 2025 at 15:38, Gustavo Romero <gustavo.romero@linaro.org> wrote:
->>
->> Hi Phil,
->>
->> On 7/25/25 10:18, Philippe Mathieu-Daudé wrote:
->>> Hi Gustavo,
->>>
->>> On 25/7/25 03:47, Gustavo Romero wrote:
->>>>            if (stage2idx == ARMMMUIdx_Stage2_S) {
->>>> -            s2walk_secure = !(env->cp15.vstcr_el2 & VSTCR_SW);
->>>> +            s2walk_secure = !(env->cp15.vstcr_el2 & R_VSTCR_SW_MASK);
->>>
->>> FYI register API provides helper macros:
->>>
->>>               s2walk_secure = !FIELD_EX32(env->cp15.vstcr_el2, VSTCR, SW);
->>>
->>
->> Do you know which form is currently preferred? I see that R_<REGNAME>_<FIELD>_MASK is used a lot, .e.g, in helper.c.
+> From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 > 
-> Where a mask is the most simple or useful way to get what
-> you want, it's fine to use R_*_MASK directly; for instance
-> in this patch
->   (env->cp15.vstcr_el2 & (R_VSTCR_SA_MASK | R_VSTCR_SW_MASK)
-> is better than
->   (FIELD_EX64(env->cp15.vstcr_el2, VSTCR, SA) ||
->    FIELD_EX64(env->cp15.vstcr_el2, VSTCR, SW))
-> and
->    value |= R_FOO_BAR_MASK;
-> seems simpler than
->    value = FIELD_DP64(value, FOO, BAR, 1);
+> This creates a specific CXL host bridge (0001:00) with two cxl
+> root ports on sbsa-ref. And the memory layout provides separate
+> space windows for the cxl host bridge in the sbsa-ref memmap:
 > 
-> I think (though this is to some extent a matter of personal taste).
-
-I also prefer the mask for the most simple cases, like in 1 bit masks and where the code becomes more succinct.
-
-
-> Where we're using the mask to test whether a single bit field
-> is set or not, you could do it either way. I think in new code
-> I would probably use the FIELD_EX64 macro, but a test against
-> the mask value is fine too.
+> - 64K  CXL Host Bridge Component Registers (CHBCR)
+> - 64K  CXL_PIO
+> - 128M CXL_MMIO
+> - 256M CXL_ECAM
+> - 4G   CXL_MMIO_HIGH
 > 
->> Also, even tho the SW field in VSTCR is <= 31, VSTCR is a 64-bit register, so should I really use FIELD_EX32 (which works) or FIELD_EX64 (my first thought would be to use it, i.e. based on the register size, not the field)?
+> To provide CFMWs on sbsa-ref, this extends 1TB space from the
+> hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window:
 > 
-> Use FIELD_EX64 for working on 64-bit values, yes.
-
-Thanks for the clarifications.
-
-
-> Personally I don't feel strongly about any of this, so I
-> would be happy taking this patch the way it is.
+> - 1T   CXL_FIXED_WINDOW
 > 
-> -- PMM
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
 
-OK, thanks.
+A few comments inline.  Mostly code style things.
 
+Jonathan
 
-Cheers,
-Gustavo
+>  docs/system/arm/sbsa.rst |   4 ++
+>  hw/arm/Kconfig           |   1 +
+>  hw/arm/sbsa-ref.c        | 137 ++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 141 insertions(+), 1 deletion(-)
+> 
+
+> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+
+> +static void create_cxl(SBSAMachineState *sms)
+> +{
+> +    hwaddr base_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].base;
+This is a lot of local variables. Some of them are only used once
+I think.  Maybe just push the look ups in sbsa_ref_memmap to where
+they are used?
+
+> +    hwaddr size_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].size;
+> +    hwaddr base_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].base;
+> +    hwaddr size_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].size;
+> +    hwaddr base_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].base;
+> +    hwaddr size_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].size;
+> +    hwaddr base_pio = sbsa_ref_memmap[SBSA_CXL_PIO].base;
+> +    hwaddr base_chbcr = sbsa_ref_memmap[SBSA_CXL_CHBCR].base;
+> +    hwaddr size_chbcr = sbsa_ref_memmap[SBSA_CXL_CHBCR].size;
+> +    int irq = sbsa_ref_irqmap[SBSA_CXL];
+> +    MemoryRegion *mmio_alias, *mmio_alias_high, *mmio_reg;
+> +    MemoryRegion *ecam_alias, *ecam_reg;
+> +    MemoryRegion *sysmem = get_system_memory();
+> +    MemoryRegion *chbcr = &sms->cxl_devices_state.host_mr;
+> +    DeviceState *dev;
+> +    CXLHostBridge *host;
+> +    PCIHostState *cxl;
+> +    PCIDevice *cxlrp;
+> +    PCIEPort *p;
+> +    PCIESlot *s;
+> +    int i;
+> +
+> +    dev = qdev_new(TYPE_CXL_HOST);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    sms->cxl_devices_state.is_enabled = true;
+> +
+> +    /* Map CXL ECAM space */
+
+Superficially seems to me that the naming makes this obvious (excellent)
+so no need for comment?
+
+> +    ecam_alias = g_new0(MemoryRegion, 1);
+> +    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+> +    memory_region_init_alias(ecam_alias, OBJECT(dev), "cxl-ecam",
+> +                             ecam_reg, 0, size_ecam);
+    memory_region_init_alias(ecam_alias, OBJECT(dev), "cxl-ecam",
+                             sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1)),
+                             0, sbsa_ref_memmap[SBSA_CXL_ECAM].size);
+
+> +    memory_region_add_subregion(get_system_memory(), base_ecam, ecam_alias);
+    memory_region_add_subregion(get_system_memory(),
+                                sbsa_ref_memmap[SBSA_CXL_ECAM].base,
+                                ecam_alias);
+
+both look simple enough to read to me and cut down on code length.
+
+Maybe don't go quite that far, but in general it feels like this code
+could be more compact whilst retaining it's readability.
+
+> +
+> +    /* Map CXL MMIO space */
+> +    mmio_alias = g_new0(MemoryRegion, 1);
+> +    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 2);
+> +    memory_region_init_alias(mmio_alias, OBJECT(dev), "cxl-mmio",
+> +                             mmio_reg, base_mmio, size_mmio);
+> +    memory_region_add_subregion(get_system_memory(), base_mmio, mmio_alias);
+
+Similar to above. Bringing as much as possible inline probably makes sense.
+
+> +
+> +    /* Map CXL MMIO_HIGH space */
+> +    mmio_alias_high = g_new0(MemoryRegion, 1);
+> +    memory_region_init_alias(mmio_alias_high, OBJECT(dev), "cxl-mmio-high",
+> +                             mmio_reg, base_mmio_high, size_mmio_high);
+> +    memory_region_add_subregion(get_system_memory(),
+> +                                base_mmio_high, mmio_alias_high);
+> +
+> +    /* Map CXL IO port space */
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, base_pio);
+> +
+> +    for (i = 0; i < PCI_NUM_PINS; i++) {
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+> +                           qdev_get_gpio_in(sms->gic, irq + i));
+> +        cxl_host_set_irq_num(CXL_HOST(dev), i, irq + i);
+> +    }
+> +
+> +    /* Map CXL CHBCR space */
+> +    memory_region_init(chbcr, OBJECT(sms), "cxl_host_reg", size_chbcr);
+> +    memory_region_add_subregion(sysmem, base_chbcr, chbcr);
+> +
+> +    cxl = PCI_HOST_BRIDGE(dev);
+
+> +
+> +    for (i = 0; i < 4; i++) {
+> +        cxlrp = pci_new(-1, "cxl-rp");
+> +        p = PCIE_PORT(cxlrp);
+> +        s = PCIE_SLOT(cxlrp);
+
+Could just do
+
+         PCIE_PORT(cxlrp)->port = i;
+and similar for slot. Seems simper than the local
+variables. If not drag those variables in this scope so it is
+clear they only effect this code.
+
+> +        p->port = i;
+> +        s->slot = i;
+> +        pci_realize_and_unref(cxlrp, cxl->bus, &error_fatal);
+
+       pci_realize_and_unref(cxlrp, PCI_HOST_BRIDGE(dev)->bus, &error_fatal);
+
+> +    }
+> +
+> +    host = CXL_HOST(dev);
+> +    cxl_host_hook_up_registers(&sms->cxl_devices_state, host);
+> +
+> +    create_cxl_fixed_window(sms, sysmem, host);
+> +}
+> +
+>  static void create_pcie(SBSAMachineState *sms)
+>  {
+>      hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+> @@ -823,6 +956,8 @@ static void sbsa_ref_init(MachineState *machine)
+>  
+>      create_pcie(sms);
+>  
+> +    create_cxl(sms);
+> +
+>      create_secure_ec(secure_sysmem);
+>  
+>      sms->bootinfo.ram_size = machine->ram_size;
+
 
