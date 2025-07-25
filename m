@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC66C87FCD
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4000C83F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 09:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufEoN-0005Sr-EF; Fri, 25 Jul 2025 05:33:55 -0400
+	id 1ufEr3-0001E9-Bg; Fri, 25 Jul 2025 05:36:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ufEoL-0005QS-CJ
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:33:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ufEoH-00041S-Rv
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:33:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753436027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7rL0Matmprxl01fcbgOhcHoFBx3mgBsBOELf5LsdOdA=;
- b=IjCe2xLHwZV03lE4y6R9pp3fsNWylVdNwUlqzsEZ0009MKhm2AzRTXtbCZft8OlJHBMXo1
- Iw6rj9obfhcqSvGz2U/g/xzfbgHH3K4hYGLJUE+i302odjiUYuWSv6ivy2lGSwVvZvsQr8
- EILXp+HACFefld1L231kGRDWZ4QkINc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-OtZiUfpIOvekzjrGX4To3g-1; Fri, 25 Jul 2025 05:33:45 -0400
-X-MC-Unique: OtZiUfpIOvekzjrGX4To3g-1
-X-Mimecast-MFC-AGG-ID: OtZiUfpIOvekzjrGX4To3g_1753436024
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a54a8a0122so1089455f8f.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:33:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ufEqv-0001AA-FV
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:36:37 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ufEqt-0004e6-Ok
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 05:36:33 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-712be7e034cso20050117b3.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 02:36:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753436189; x=1754040989; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=p4uEUzrIk6LOMJMKBqZfajhIJWzEv6qlLKpv6Dm5+tM=;
+ b=zb+848ZsEkicpeLPUETrZYC2vDJm/j80YhYTAIyAfULTiP8OLP/DMZ7uAtZz7mlnEU
+ l1jQgGmhg0PrLIXuJsm7N16xUGctVw554Ek9yM0eRzF9ja/aQdUuN1V/Oeat9ul8DRPI
+ 5/RZxmuI4QSIjbeLLjH2PoAbN5Mxh9yalNV4RHrHEshpJwVCewsI350uMJNodnwE4Iq/
+ BP43rc0oK4BNZwAOGOkp53u+cnScObxnvEmNKKuM3+TQUiO09uwW7/gcgArwRtTO4jWW
+ Vmnxu1YoIs0lT0AxwQoJ60zExXl++KGTaArCNZ0vGsWcWc6rm0Sh3WjgwuEEBv7VngIZ
+ W+7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753436024; x=1754040824;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7rL0Matmprxl01fcbgOhcHoFBx3mgBsBOELf5LsdOdA=;
- b=MEcMcbbKK5Uv+Dt5uMnz6vrQ/YOsvrX+LATTaZFfbTCSWqBOsJoxvXgnz/ZpM1/+X6
- bYxYUMh1L5AiVS6yw6FwhCgu8CAEvjnL685GyeAdhheU2wiyRPRDQ512iAG0C09iUHaF
- b6mXFroScIycWPhHd95Hiw954/Su7JO4Uwk04AFu+1KOYvCGyDTkgZcCzCeKm5o/uyKz
- E5EtuGbISTW/4EF7g7DvkB07JYrslHWyhhzRoz+U5Pjqpn2DLBLGMHP0MmW8Ub+NPOJK
- xGLw5ZKEj89Bopi0nQ8hdTtiI5QaNuJF8Ojx50+dfVL7NpMfrH8Dz2hn7F1P0/ngKAJG
- N4Ug==
+ d=1e100.net; s=20230601; t=1753436189; x=1754040989;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=p4uEUzrIk6LOMJMKBqZfajhIJWzEv6qlLKpv6Dm5+tM=;
+ b=hZ3caselh36MzjC9vVYDSs7H8hzFAWt53VBXfIaQogbX4kHXsktR7tz+fDRZY+lVY6
+ TGW+M36arTKddiULW3gj/+c8ae3FswbMakOHQ2vAJjP0p1hEmBWNn7YJ995t85Asq2Gs
+ GvcCQvmvPfdbeVJSbTxDREJCg6tWz6IdvVsq/eUnqa4+uXTOrtmDMSU+6FRW0b1NSVx4
+ qtzJ4nI1yE2DFN3jXsCQeLe1a1BwclEOPcVYOkyUxNS2lsOeFNtno+SDEMsz9Xc4yBXE
+ wu/8xfffBn8Sye9zHcs3QjuZWjDpboPW4Cg6FGmJq9MgmEz5galmHYaPn8K+sgTVmglS
+ 1EfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHoF81yVjq2W43SOPdlTk6B9rB+cGI+XgC5zuc6mh+kRW2S+PfXFgXVIP4Wy5VVXVi14W70iwlJO+J@nongnu.org
-X-Gm-Message-State: AOJu0YyqB8uEYivWuPIjcPvM2boB8Be0TWSsHCysno+Cr0/z6QIgX0hd
- AMQ2FbJ86YkNQfrSiSXgsiBZKir/QAeAstrDHNUulq7aLZKkkN2UoxdjiDgymuB7Qjhdtu0+jxC
- 4spnST1zSpHBGATnL181ooIA0AVxSFgvF6re88+mTo4MwTzS50t/XD/F9
-X-Gm-Gg: ASbGncv1mkDtZomXIxLdFpexGfke0AXjUgEUeO/fjsYtLYrsrjw4dMluKvL+sfqvIqe
- oy0JicphWgdY9bl4PWyFSJ9ADfTByglPPlzaGllpR58SwIYaPCBzR/Af8CVHlEyRN6BICODfTxh
- A/FLK9v7BE4YzHFa3Pt/cCDIzoTTGXIhZmy3IWiLK5hCNY7uKhin3A3ilhF1sm52+y4Cz3QCdFW
- uz75EbMdlijGtaNiACSTsVfrP1BrWG8U3K5C6hrkklPk3bcG5/OI+sMhRSSH2BIj0Gai2QifPnc
- UJOGO0mrtLlntvGD27LV+YQUp2OaTj6G2g==
-X-Received: by 2002:a5d:5c84:0:b0:3a5:39d7:3f17 with SMTP id
- ffacd0b85a97d-3b776673c95mr1070308f8f.47.1753436023625; 
- Fri, 25 Jul 2025 02:33:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8M66MGNGKwJtkbqQqhhcfivz2zXSXf0Iv2ZMe8NubhKPP/TfZqJpPVNsA9RZIG2gCIgaIDg==
-X-Received: by 2002:a5d:5c84:0:b0:3a5:39d7:3f17 with SMTP id
- ffacd0b85a97d-3b776673c95mr1070284f8f.47.1753436023068; 
- Fri, 25 Jul 2025 02:33:43 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:153d:b500:b346:7481:16b2:6b23])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4586e7cccdfsm42489005e9.0.2025.07.25.02.33.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Jul 2025 02:33:42 -0700 (PDT)
-Date: Fri, 25 Jul 2025 05:33:40 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com,
- armbru@redhat.com, si-wei.liu@oracle.com, eperezma@redhat.com,
- boris.ostrovsky@oracle.com
-Subject: Re: [RFC 0/6] virtio-net: initial iterative live migration support
-Message-ID: <20250725053122-mutt-send-email-mst@kernel.org>
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <CACGkMEvrgAqSr9sgvq6F4oKBitZncqhsB_MEsbaNB7p0ZN5fEA@mail.gmail.com>
- <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
+ AJvYcCX1p4e6OrrfPZ23ghiGjBkea+Vo/DfG3FcAGUQa1xwxVDkIU3TDYk+Ux4kp49zXalMhLiuCI1jKgb/S@nongnu.org
+X-Gm-Message-State: AOJu0YwfumW1fQplwsRKAPAx00DScgrreLRfpz5bUvUHkfVIsSulpITC
+ fbGSU51zK42hWbkYjCI30rmVVOEaBRFCUBXL23mHYDEBIkPo7MC13+HICmKUlzu6LyjAgLtnuji
+ DYJHhlTtlj3cwzD1srSj4zsCsTtMZ2k6a1xa/MxsUsQ==
+X-Gm-Gg: ASbGncsc161MQiAqTFW+HZNoj+q/S+8C6L5ti+uPP6RGER2Oq2YvhYvTqMV6TR20wCy
+ zkmiGWI0BjY0nvtjqIf+yCvHzJrbuVTthcPs3bnpBArp8CgHHspKTI/jwDDjTLxrYtojzyUfv/j
+ mdsqH64F4icJLdzKSgu0xI5YWOpJtYcZtDOvy9uM/LZcGh4hErMjxqpscejbjQwvB5qf/T8c4DJ
+ Dq2bIMM
+X-Google-Smtp-Source: AGHT+IEKNEtdpyUTS90Jq/yPJWm8KGrcqMzLUwpGJhRCuhqda6GI4mZz3dYUI+EB3yg3p9i4IUxkQ2YiIJosg4nC1ZA=
+X-Received: by 2002:a05:690c:311:b0:70e:2ba2:659d with SMTP id
+ 00721157ae682-719e341e852mr13522127b3.23.1753436188888; Fri, 25 Jul 2025
+ 02:36:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250214072029.515379-1-jansef.jian@hj-micro.com>
+ <bf6df47b-8815-4d84-a01b-010281187d24@linaro.org>
+ <CAOGAQepyzkZS-kK-rH=rv_pNRCwLBG1UJJ4q4oWztJfCnA=YXw@mail.gmail.com>
+In-Reply-To: <CAOGAQepyzkZS-kK-rH=rv_pNRCwLBG1UJJ4q4oWztJfCnA=YXw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 25 Jul 2025 10:36:17 +0100
+X-Gm-Features: Ac12FXwrklE9lp7DkWkk_OlZa51gT1l4oMz6XZWWvXtZ29qLWznjH0U5PwtFGZY
+Message-ID: <CAFEAcA8pmNjrWtWOTF=ekomKNU1SNT963=JtL1OYEbvj+D=2yw@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1] hw/arm/smmu-common: Avoid using inlined
+ functions with external linkage
+To: Roman Kiryanov <rkir@google.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ JianChunfu <jansef.jian@hj-micro.com>, eric.auger@redhat.com,
+ qemu-devel@nongnu.org, 
+ Will Hollins <whollins@google.com>, Nabih Estefan <nabihestefan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.45,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,191 +102,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 05:59:20PM -0400, Jonah Palmer wrote:
-> 
-> 
-> On 7/23/25 1:51 AM, Jason Wang wrote:
-> > On Tue, Jul 22, 2025 at 8:41 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
-> > > 
-> > > This series is an RFC initial implementation of iterative live
-> > > migration for virtio-net devices.
-> > > 
-> > > The main motivation behind implementing iterative migration for
-> > > virtio-net devices is to start on heavy, time-consuming operations
-> > > for the destination while the source is still active (i.e. before
-> > > the stop-and-copy phase).
-> > 
-> > It would be better to explain which kind of operations were heavy and
-> > time-consuming and how iterative migration help.
-> > 
-> 
-> You're right. Apologies for being vague here.
-> 
-> I did do some profiling of the virtio_load call for virtio-net to try and
-> narrow down where exactly most of the downtime is coming from during the
-> stop-and-copy phase.
-> 
-> Pretty much the entirety of the downtime comes from the vmstate_load_state
-> call for the vmstate_virtio's subsections:
-> 
-> /* Subsections */
-> ret = vmstate_load_state(f, &vmstate_virtio, vdev, 1);
-> if (ret) {
->     return ret;
-> }
-> 
-> More specifically, the vmstate_virtio_virtqueues and
-> vmstate_virtio_extra_state subsections.
-> 
-> For example, currently (with no iterative migration), for a virtio-net
-> device, the virtio_load call took 13.29ms to finish. 13.20ms of that time
-> was spent in vmstate_load_state(f, &vmstate_virtio, vdev, 1).
-> 
-> Of that 13.21ms, ~6.83ms was spent migrating vmstate_virtio_virtqueues and
-> ~6.33ms was spent migrating the vmstate_virtio_extra_state subsections. And
-> I believe this is from walking VIRTIO_QUEUE_MAX virtqueues, twice.
+On Thu, 24 Jul 2025 at 17:54, Roman Kiryanov <rkir@google.com> wrote:
+>
+> Hi Philippe, thank you for looking into this.
+>
+> On Thu, Jul 17, 2025 at 11:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+> >
+> > (sorry for previously missing this patch)
+> >
+> > (cc'ing Google folks for
+> > https://lore.kernel.org/qemu-devel/20250717205735.2345674-1-rkir@google=
+.com/)
+>
+> Will this patch be included into 10.1?
 
-Can we optimize it simply by sending a bitmap of used vqs?
+Yes, I'll pick it up for target-arm.next; thanks.
 
-> vmstate_load_state virtio-net v11
-> vmstate_load_state PCIDevice v2
-> vmstate_load_state_end PCIDevice end/0
-> vmstate_load_state virtio-net-device v11
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-vnet v0
-> vmstate_load_state_end virtio-net-vnet end/0
-> vmstate_load_state virtio-net-ufo v0
-> vmstate_load_state_end virtio-net-ufo end/0
-> vmstate_load_state virtio-net-tx_waiting v0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state virtio-net-queue-tx_waiting v0
-> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> vmstate_load_state_end virtio-net-tx_waiting end/0
-> vmstate_load_state_end virtio-net-device end/0
-> vmstate_load_state virtio v1
-> vmstate_load_state virtio/64bit_features v1
-> vmstate_load_state_end virtio/64bit_features end/0
-> vmstate_load_state virtio/virtqueues v1
-> vmstate_load_state virtqueue_state v1  <--- Queue idx 0
-> ...
-> vmstate_load_state_end virtqueue_state end/0
-> vmstate_load_state virtqueue_state v1  <--- Queue idx 1023
-> vmstate_load_state_end virtqueue_state end/0
-> vmstate_load_state_end virtio/virtqueues end/0
-> vmstate_load_state virtio/extra_state v1
-> vmstate_load_state virtio_pci v1
-> vmstate_load_state virtio_pci/modern_state v1
-> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 0
-> vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> ...
-> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 1023
-> vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> vmstate_load_state_end virtio_pci/modern_state end/0
-> vmstate_load_state_end virtio_pci end/0
-> vmstate_load_state_end virtio/extra_state end/0
-> vmstate_load_state virtio/started v1
-> vmstate_load_state_end virtio/started end/0
-> vmstate_load_state_end virtio end/0
-> vmstate_load_state_end virtio-net end/0
-> vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
-> instance_id=0 downtime=13260
-> 
-> With iterative migration for virtio-net (maybe all virtio devices?), we can
-> send this early while the source is still running and then only send the
-> deltas during the stop-and-copy phase. It's likely that the source wont be
-> using all VIRTIO_QUEUE_MAX virtqueues during the migration period, so this
-> could really minimize a large majority of the downtime contributed by
-> virtio-net.
-> 
-> This could be one example.
-> 
-> > > 
-> > > The motivation behind this RFC series specifically is to provide an
-> > > initial framework for such an implementation and get feedback on the
-> > > design and direction.
-> > > -------
-> > > 
-> > > This implementation of iterative live migration for a virtio-net device
-> > > is enabled via setting the migration capability 'virtio-iterative' to
-> > > on for both the source & destination, e.g. (HMP):
-> > > 
-> > > (qemu) migrate_set_capability virtio-iterative on
-> > > 
-> > > The virtio-net device's SaveVMHandlers hooks are registered/unregistered
-> > > during the device's realize/unrealize phase.
-> > 
-> > I wonder about the plan for libvirt support.
-> > 
-> 
-> Could you elaborate on this a bit?
-> 
-> > > 
-> > > Currently, this series only sends and loads the vmstate at the start of
-> > > migration. The vmstate is still sent (again) during the stop-and-copy
-> > > phase, as it is today, to handle any deltas in the state since it was
-> > > initially sent. A future patch in this series could avoid having to
-> > > re-send and re-load the entire state again and instead focus only on the
-> > > deltas.
-> > > 
-> > > There is a slight, modest improvement in guest-visible downtime from
-> > > this series. More specifically, when using iterative live migration with
-> > > a virtio-net device, the downtime contributed by migrating a virtio-net
-> > > device decreased from ~3.2ms to ~1.4ms on average:
-> > 
-> > Are you testing this via a software virtio device or hardware one?
-> > 
-> 
-> Just software (virtio-device, vhost-net) with these numbers. I can run some
-> tests with vDPA hardware though.
-> 
-> Those numbers were from a simple, 1 queue-pair virtio-net device.
-> 
-> > > 
-> > > Before:
-> > > -------
-> > > vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
-> > >    instance_id=0 downtime=3594
-> > > 
-> > > After:
-> > > ------
-> > > vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
-> > >    instance_id=0 downtime=1607
-> > > 
-> > > This slight improvement is likely due to the initial vmstate_load_state
-> > > call "warming up" pages in memory such that, when it's called a second
-> > > time during the stop-and-copy phase, allocation and page-fault latencies
-> > > are reduced.
-> > > -------
-> > > 
-> > > Comments, suggestions, etc. are welcome here.
-> > > 
-> > > Jonah Palmer (6):
-> > >    migration: Add virtio-iterative capability
-> > >    virtio-net: Reorder vmstate_virtio_net and helpers
-> > >    virtio-net: Add SaveVMHandlers for iterative migration
-> > >    virtio-net: iter live migration - migrate vmstate
-> > >    virtio,virtio-net: skip consistency check in virtio_load for iterative
-> > >      migration
-> > >    virtio-net: skip vhost_started assertion during iterative migration
-> > > 
-> > >   hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++------
-> > >   hw/virtio/virtio.c             |  32 +++--
-> > >   include/hw/virtio/virtio-net.h |   8 ++
-> > >   include/hw/virtio/virtio.h     |   7 +
-> > >   migration/savevm.c             |   1 +
-> > >   qapi/migration.json            |   7 +-
-> > >   6 files changed, 247 insertions(+), 54 deletions(-)
-> > > 
-> > > --
-> > > 2.47.1
-> > 
-> > Thanks
-> > 
-> > > 
-> > 
-
+-- PMM
 
