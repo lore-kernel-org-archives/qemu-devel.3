@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF22C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484F7C87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 17:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufLx9-00036c-CA; Fri, 25 Jul 2025 13:11:27 -0400
+	id 1ufLzO-0000n2-LQ; Fri, 25 Jul 2025 13:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufLx7-00035P-7j
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:11:25 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ufLzM-0000bT-AY
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:13:44 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ufLx5-00055R-6H
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:11:24 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-23f8df98e41so20906885ad.0
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 10:11:22 -0700 (PDT)
+ id 1ufLzK-0005Pc-Iw
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 13:13:44 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b3bcb168fd5so2309140a12.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 10:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753463481; x=1754068281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753463621; x=1754068421; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YfO6VYaR8QcO9j6pSNec1EV6+ztCInL98SlaMcONWk8=;
- b=jcAE0wqok6bom73vL+1UD+/Fi1uLe19rUzcu7Rb8LoeVQvBOlgwJW8m3UyKeEB+U4W
- 5c+0JYhK8MgUI4OS3gqcEYP3FitqBpiJmaIsy3016WfOy7pBxcKnBzVPMc9SL2XAzHxM
- 8KVNhlfC8OOv7sk2XwrZOeyVQryj9dUdewKXFIrY3V5hTDni4veNitP13IgiGS150Rbb
- TnUe9BgoscFM37qW687K9ddZOMs+V37Q/ZtkhyhZsm0ChbxORvWeosqGiskYbMYQm5el
- Dttz4GCFiosx1S/DeUhkJSRh/Di+aSHeEOcFsd3uPRIAxuPxQLdPoEdN3y+EJ121QBYj
- VfWg==
+ bh=j7f0JfhmFjswOaMNGxW0UFwA3ZONKSqmHrbHvbGvjgw=;
+ b=kQYtOqaGXWBSHCa4/17NG59bFoR6s5L9I++BejPJU/3DKttyuYi4TSagX/+2B0wmDM
+ OOaDdsLTkJGaIzRiDVPGVlhMl2uv5U8rVXa5zqa53sw/r+KRprcJ76PDKgiTxJjQVjiI
+ mGf7EJlaJrVRDbQgZVJ782T4LkotEecqPIM3q2pE/iCHw/sTfP0HOzOYrXu9T5N4/qav
+ O1sCK5qsjMCsmZZNjF5O28R6ZTJg++jMzq20lsXt1irlClvNFxAmNS91/fgtt3Iuh08K
+ JLLZW7xekE7HpWvOdBPu8PfBXy15qjx2B0sRTquptwTUDbowQ3jSMADbLfsXeD4SQFt6
+ BWIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753463481; x=1754068281;
+ d=1e100.net; s=20230601; t=1753463621; x=1754068421;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YfO6VYaR8QcO9j6pSNec1EV6+ztCInL98SlaMcONWk8=;
- b=s+LEOcrmCYQ/p4s/8XfI5Z4ud0yKSMfoR/zNRpreArAeEynJuzz0h0bg/xGYMaiiGB
- n3ElySDbySx0+QGt9zHVUX+gri3yChMR2AH34uxUZ40uNvA04COZx1IhahgtbWV7Nklr
- 3WfFhPBPKM5m3q5acwD+o6YS9VKELrtk6mA+buTNQGpilaNV3Nk8bb5ooYdwDo6dm7z3
- sCT5eyHUixSaMGNP1efNtji4PxK/tra/23Sp1h7L/mV2bztfL+WRUIm+Rsq8ampZ+FOc
- 9c4wgxbhi8xmpqLz0MYkIM5vFRZjUND/Ph/JDYaByGKP9ptErv6fkTjve6h90/9HV/rJ
- I3MQ==
+ bh=j7f0JfhmFjswOaMNGxW0UFwA3ZONKSqmHrbHvbGvjgw=;
+ b=isq65yylvneJMamG1n3facbYFAKh51UZ0JTrhRd7JhraI4Rn/s2tGq4t5WwgUWr6PF
+ KImBWrxAmD+ULR8spuuS+z28QXVAcFn91VXgFFwy1Pjp+DIcmnweVHt07KK53YshjQCC
+ Oditnw2FWSpIZvidDy8ihs1cTcjJgCYn6x/Met74RtKYDEH+FPPNfrPl8eges2Eoz7Dy
+ hkS3YkcuokAem9r/N9VtY8OC/TMK1/lmNnVGjzm13KHsdHmJg/Oo36JJCG/T0Osir2ty
+ vP5WEXiMn++S/PWKZcvlZiYo6IRJHwDUow3BTKvWRGgVqMSedypq23t2Oxhu0bR7bu/I
+ 52hQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9K3/2hZTZynKVNUwGc4ZwGhTyzKblxrfnwS98t9uSYOcOFfhAnmzIA8vKoz3hURvgYeEXl7oFNnB/@nongnu.org
-X-Gm-Message-State: AOJu0YxNfQJmOQBYQdDbD7lpkPYvaSLmtv6lPrMOBQEZWX47sEYiQzu0
- dyowWcyIHk4EdNu+pfDXSSzrEP4tFQ755K20iXHgVHiTtKFgEsBnx8ko+uhhMN9yjD4=
-X-Gm-Gg: ASbGncuZMLvxXG5erJnhfcrSxRpaoQ52S0beiUG2HdfAgmpoEMaBfmdQess8MQUAX7x
- sFmpTVOienHClS8otXVVmmVh/D06sBhCziNAyCgz9xRZaMdjQfEqkFzwrHSLHvQgzDnRVcdhYg+
- QURnEveO2nfPZapHJWlgUgJ7FQ+eVYuLoBZpgPUyLZ02DCJpfiiKdGldH+l6dZPrx9WhFEBLCX/
- R/bdibbeXsFGHUF9hBXX/rhIagqz8V1Ul4D+IFDrrLCXN5achpkWSlT+81EucIrDBFtF+WCUbkm
- o0b3wNt7sSEYivNG8Eg1LbiSl2NYFrNTrAr7pajr2JBtZ8eBmbodmYuA8+wMQaFp7ZYMIk74xLk
- vm8PC4kHFPgZiMHwSm34DGdbQow8YtfXjqsU=
-X-Google-Smtp-Source: AGHT+IE4jcDvUtmPvPLcBORp9NDUKwJG0bF8k57DF13kbnjfsYoofhKMT96aIzLBjInn15Z082MW3Q==
-X-Received: by 2002:a17:903:11ce:b0:234:d292:be95 with SMTP id
- d9443c01a7336-23fb30e7f54mr39334995ad.42.1753463481035; 
- Fri, 25 Jul 2025 10:11:21 -0700 (PDT)
+ AJvYcCV91ZcYyfOpXMnM69GfYymJV31v3onu7xVFtjGbSnpZa6R7y9viPW0lm1Ec9+qmgDOQM51ssRm/wHfo@nongnu.org
+X-Gm-Message-State: AOJu0YympLNc4HlnlUE/csXYpcy1NBdLGyUeSJbFKK5yaOwbbq76gyhg
+ ViGKMAihdbkH/V0SDLytZ+MT3stG+GXbPAGsAQEglN92Ma5M6pBKoEMldCKfRFXMNV8=
+X-Gm-Gg: ASbGncvbUpEQvNXW/YCz02tpfQTeZFGUl6ZgEQXCq2m/6e803LUXNe+pM5Kx0Ae0K4Y
+ beHPXvTfCFCzZJ8pyNojHfjTTy18L/6reUn1qv68m6YBeTjgDXwvb/AuWet4hu0x0K/rKespEtU
+ Q7tVjwxWZB4LkstTzhPKQvd6wUv6oO+4qJpzq8C5kARyri5Mhk7S3Nlo9MFyqEbnz2+UwTm6+9T
+ /7ZPAGbjRncrIWLx+jg9SDcPjsvgk/kmXVtptX3WasZQgABOclOhlRGbojXgik9Hv1c9IyuKwJe
+ MFOpx/4c++dstWGPoD8ItEIOVfx+3rHgthOXfCz+++Zw587lvsT+lKUDNjCoI64AhvComgDh1TG
+ tfikOnwtCGBxzgQMcOC+wIRVCkOVaH9x+8p/QWr/yByAvDw==
+X-Google-Smtp-Source: AGHT+IHi5OtTgWklN0cJzVtMw0pPQiRMXZU8Cs/2BWVU0vWLb7BdbGMhqoL9nA32GBQpmlnCDFPi8w==
+X-Received: by 2002:a17:90b:3c81:b0:313:fab4:1df6 with SMTP id
+ 98e67ed59e1d1-31e77a4a468mr3723588a91.32.1753463620846; 
+ Fri, 25 Jul 2025 10:13:40 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe343aecsm1573705ad.78.2025.07.25.10.11.20
+ 98e67ed59e1d1-31e662937c5sm3887608a91.18.2025.07.25.10.13.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 10:11:20 -0700 (PDT)
-Message-ID: <6f24a5df-d191-4581-a02d-753a98c6bbf1@linaro.org>
-Date: Fri, 25 Jul 2025 10:11:20 -0700
+ Fri, 25 Jul 2025 10:13:40 -0700 (PDT)
+Message-ID: <833aa4ea-562e-4e3f-a2dc-8c7d3ee189e3@linaro.org>
+Date: Fri, 25 Jul 2025 10:13:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 1/2] linux-user/aarch64: Check syndrome for
- EXCP_UDEF
+Subject: Re: [PATCH for-10.2? 2/2] linux-user/aarch64: Generate ESR signal
+ records
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20250725165106.37105-1-richard.henderson@linaro.org>
- <20250725165106.37105-2-richard.henderson@linaro.org>
+ <20250725165106.37105-3-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250725165106.37105-2-richard.henderson@linaro.org>
+In-Reply-To: <20250725165106.37105-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,65 +106,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/25/25 9:51 AM, Richard Henderson wrote:
-> Note that we have been passing the incorrect code for
-> uncategorized and bti faults.
-> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/aarch64/cpu_loop.c | 18 +++++++++++++++---
->   1 file changed, 15 insertions(+), 3 deletions(-)
-> 
-> diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-> index fea43cefa6..43a471b535 100644
-> --- a/linux-user/aarch64/cpu_loop.c
-> +++ b/linux-user/aarch64/cpu_loop.c
-> @@ -32,6 +32,7 @@ void cpu_loop(CPUARMState *env)
->   {
->       CPUState *cs = env_cpu(env);
->       int trapnr, ec, fsc, si_code, si_signo;
-> +    uint64_t addr;
->       abi_long ret;
->   
->       for (;;) {
-> @@ -63,10 +64,12 @@ void cpu_loop(CPUARMState *env)
->               /* just indicate that signals should be handled asap */
->               break;
->           case EXCP_UDEF:
-> -            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->pc);
-> -            break;
-> +            addr = env->pc;
-> +            goto do_syndrome;
->           case EXCP_PREFETCH_ABORT:
->           case EXCP_DATA_ABORT:
-> +            addr = env->exception.vaddress;
-> +        do_syndrome:
->               ec = syn_get_ec(env->exception.syndrome);
->               switch (ec) {
->               case EC_DATAABORT:
-> @@ -99,10 +102,19 @@ void cpu_loop(CPUARMState *env)
->                   si_signo = TARGET_SIGBUS;
->                   si_code = TARGET_BUS_ADRALN;
->                   break;
-> +            case EC_UNCATEGORIZED:
-> +            case EC_BTITRAP:
-> +                si_signo = TARGET_SIGILL;
-> +                si_code = TARGET_ILL_ILLOPC;
-> +                break;
-> +            case EC_PACFAIL:
-> +                si_signo = TARGET_SIGILL;
-> +                si_code = TARGET_ILL_ILLOPN;
-> +                break;
->               default:
->                   g_assert_not_reached();
->               }
-> -            force_sig_fault(si_signo, si_code, env->exception.vaddress);
-> +            force_sig_fault(si_signo, si_code, addr);
->               break;
->           case EXCP_DEBUG:
->           case EXCP_BKPT:
-
-It may be worth for lisibility to extract do_syndrome to a proper 
-function. It's just a recommendation though.
+>   linux-user/aarch64/cpu_loop.c |  2 ++
+>   linux-user/aarch64/signal.c   | 34 +++++++++++++++++++++++++++++++++-
+>   2 files changed, 35 insertions(+), 1 deletion(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
