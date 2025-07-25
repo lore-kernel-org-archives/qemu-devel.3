@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDD3C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 16:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC6FC87FCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 16:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufLOe-0002g2-RJ; Fri, 25 Jul 2025 12:35:48 -0400
+	id 1ufLSd-00072h-UF; Fri, 25 Jul 2025 12:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1ufLOW-0002d6-RX
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 12:35:41 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1ufLOT-0005LB-Ki
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 12:35:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753461338; x=1784997338;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=d9jWZHAUAB3ilhRyQwasHrf8/j931YewnAlfeo/ZYtw=;
- b=LGEuOz7kBUuUzb4O7YtYL2MqNNJo/FALjMZomqgdSyaPuVdkS46WFvg4
- zO5byfIOgQFMtK6TpVbUJRPXUDjwBSF1XBzkY198BPTc4xHEr16HKJwqH
- GYLjs+x6z5Dplpf1PyXUN9UivmGaQv1+itBhTUuOCjvNFNWJAL3H3iZ3F
- 254/aWaYdRaOmgaj/z8VxA/dAaWK9369SJxcO5WbRXfOB6/s9HcwQ4pbb
- 03hTrGOcxWVgZ3j5iyB/bQeNVXJbK4iNA4BKlBfIIRkL38fCOMSHo4pPh
- NcrVlV7w59OZybiXx5aDypTNik8p6SDeGBY4jISiMaUtOPKPTmquqzHsz w==;
-X-CSE-ConnectionGUID: 5xZ3R6JaTeaF21yo6jn43Q==
-X-CSE-MsgGUID: vwitdfWbT2O9FT/grp451g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11503"; a="78350828"
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; d="scan'208";a="78350828"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2025 09:32:50 -0700
-X-CSE-ConnectionGUID: 6RaQ1+gFQLKcKJzHlk+TYw==
-X-CSE-MsgGUID: gy5IyvLWSQm7gV9qOdWDdQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; d="scan'208";a="161333497"
-Received: from bvivekan-mobl1.gar.corp.intel.com (HELO [10.247.118.216])
- ([10.247.118.216])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jul 2025 09:32:42 -0700
-Message-ID: <86a015d5-7b49-4b23-8a26-2155871bd08e@intel.com>
-Date: Fri, 25 Jul 2025 09:32:41 -0700
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufLSY-0006n3-PZ
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 12:39:50 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufLSW-0006K5-NJ
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 12:39:50 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-235a3dd4f0dso15191645ad.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 09:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753461587; x=1754066387; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JfjDVeNjaULSh7UaTSUhYvK9n1gRTeU1CePdo/RNE6k=;
+ b=lNyLql6y8AZtaZ9sH8qIorCi0y0mlgsEG8fm8N/3TFphNfioUhvgqg5a40jLOZSr6F
+ xMkx79dRPDQBor3lBUMPni7dg0djqoVKbflmhY/+moBvRlQYsFKu52qBLOK9tDAwooVK
+ BeQKpJNd6RD1BC7WWZDI6X6yUh1mnYb7GxTDwh7D5O2U5oEoyc/kyU34BPT3zJ4FrPTo
+ /2cfxQLyCtL4ee1sZAXwIyvD2C7dM6cQgY6MzCKWTwtrNDTzRy+hVDddgfWEO8yeuIXZ
+ k+xnkUXr8pWwgTIkB59X9QEhdfKfWzDaVUUq9a+PglfNKtdQIs9tm3NPFCVy/xLjgyyq
+ M1XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753461587; x=1754066387;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JfjDVeNjaULSh7UaTSUhYvK9n1gRTeU1CePdo/RNE6k=;
+ b=WY+BofXlUGZ9nNgP3RZpHiO40P2/McPobSPcZiyx0k0gTfNrzhcoQ0L6uMpsw70WhK
+ 0KJsSKPoAd7T3dCPVdxqjodzAHS074ibra278DSOzsh6doakP8KPcovgdgWWhiPcsk0o
+ bndQx/0aJit3Ji0rtdfiIyJXJ8bXgW6M9q7n7fV0Ms8RTXQJD2RFMfwp7Eyq2VvWc32T
+ O8FMGd3ojPI80tSisg8BkJPVPr1wkkPjgSBlA6cZEOhll1E+IVjI7TnBQSTkUIoyTRLU
+ KddY2Td9MISpJLC8nE66F8M52DbTMUkXWtYQZNZXxTuo/Ko7Pya/3rHSlVFIeIJoZwpp
+ IW2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBNvu1Z/DzYLE7Ee9AWwhw59bUvWhm2eis/Xa6EhYvbi9GMWtY6kzTjnBxQKnRPRgm2J+D7IsNOMps@nongnu.org
+X-Gm-Message-State: AOJu0YyIrOxt839BYaG4EgNsOi+06Ki/aty9BkEYXiRLBm8ArOJLGs6D
+ EB+50RW2Ods7xrqlhTRkhRFfrf0OXFBDez15oinhrmDJuFRJobqlStNZ/gd1JeHYNn7eDP6TQmM
+ TFqJX
+X-Gm-Gg: ASbGncsp+2FSqbH9GVke/ameCh5j30gA0aKdjHybvaqDzBrnU3K9k+McAhL3G5RC7E8
+ 5JC5w1+rVOylXB4ZtDBpyzg/XdgjyXiBWkoe0mbePxYh1ZoiEtj6i1+g1jk/CyZpHqAIx7ksxeX
+ 6Sgva1QF5hni+Am0aCuRVIj0qO2GNpYYSorfbZ2bxT+7eN7Y9e3YC+4Ny8gYbbAvEKDzh57tXOh
+ yevCNuWrCz9CLrZ5s79aVMl9+3uwGjVMQpDQEliFGKBmFcYzo1WVHFq67ZPSgxlBPYMJhBzwYQJ
+ 4D9B8FYAuDHlLfTOeweTr2XeBzkz1hhmzDsXzZSjniZh7qdWmfGrv0KB5BhSQliCDg1n8Md+JPT
+ VJ6cbHs8/AFnlPyyPcTcjDSfCOa/P22MiWRIYz81vmm0I4ugj6whLCwXB1INe1YmK6BOldQoXXL
+ mhEQ==
+X-Google-Smtp-Source: AGHT+IF8epbljUDDAhCzwvD6lTp0HeEtnOANzt/L9WHDaQXhB+zPQ7cQ7KYo4K5Iu2OBgyKLxMZzLg==
+X-Received: by 2002:a17:902:f711:b0:23c:8f13:1381 with SMTP id
+ d9443c01a7336-23fb3041006mr37388005ad.19.1753461586865; 
+ Fri, 25 Jul 2025 09:39:46 -0700 (PDT)
+Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
+ [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23fbe4fc732sm986735ad.90.2025.07.25.09.39.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Jul 2025 09:39:46 -0700 (PDT)
+Message-ID: <f747d280-6d43-4672-9ebe-14151c852cdb@linaro.org>
+Date: Fri, 25 Jul 2025 06:39:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 0/2] cxl: Support creation of a new CXL Host Bridge
-To: wangyuquan <wangyuquan1236@phytium.com.cn>, jonathan.cameron@huawei.com,
- fan.ni@samsung.com, mst@redhat.com, marcel.apfelbaum@gmail.com
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-References: <20250617040649.81303-1-wangyuquan1236@phytium.com.cn>
+Subject: Re: [PATCH for-10.1 2/3] linux-user/aarch64: Support TPIDR2_MAGIC
+ signal frame record
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20250725142240.3760452-1-peter.maydell@linaro.org>
+ <20250725142240.3760452-3-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20250617040649.81303-1-wangyuquan1236@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250725142240.3760452-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=dave.jiang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,66 +108,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/25/25 04:22, Peter Maydell wrote:
+> FEAT_SME adds the TPIDR2 userspace-accessible system register, which
+> is used as part of the procedure calling standard's lazy saving
+> scheme for the ZA registers:
+>   https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving-scheme
+> 
+> The Linux kernel has a signal frame record for saving
+> and restoring this value when calling signal handlers, but
+> we forgot to implement this. The result is that code which
+> tries to unwind an exception out of a signal handler will
+> not work correctly.
+> 
+> Add support for the missing record.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   linux-user/aarch64/signal.c | 46 +++++++++++++++++++++++++++++++++++--
+>   1 file changed, 44 insertions(+), 2 deletions(-)
+
+Oh my.  I spent yesterday working on this and other signal handling fixes.  Though from a 
+FEAT_GCS starting point, so I still hadn't seen the clear tpidr2 on signal delivery change.
 
 
-On 6/16/25 9:06 PM, wangyuquan wrote:
-> v2 -> v3:
-> - Update the commit message
-> - Fix some alignment and space problems
-> - Add a SPDX header for the new file
-> - Remove unnecessary comments
-> - Add CXL_HOST_BRIDGE config
-> v1 -> v2:
-> - Move the code of new bridge to hw/pci-host/cxl.c
-> - Fix and simplify some logic on handling the different bridge types
+> +static void target_setup_tpidr2_record(struct target_tpidr2_context *tpidr2,
+> +                                       CPUARMState *env, int size)
+> +{
+> +    __put_user(TARGET_TPIDR2_MAGIC, &tpidr2->head.magic);
+> +    __put_user(sizeof(struct target_tpidr2_context), &tpidr2->head.size);
+> +    __put_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
+> +}
 
-Hi Yuquan, can you please add qemu to your patch subject prefix in the future? i.e. [QEMU PATCH v4 0/2]. It would help the maintainers on linux-cxl to know they are not kernel patches. Thank you!
+Drop the unused size argument.
 
-> 
-> Background
-> ==========
-> Currently the base CXL support for arm platforms is only on Jonathan's
-> patches[1]. Some platform like SBSA-REF can be more like a real machine,
-> thus the support of CXL could be meaningful. However, the pxb-cxl-host
-> realization on this platform seems not satisfying their requirements[2].
-> 
-> New CXL HOST design
-> ===================
-> Defines a new CXL host bridge type (TYPE_CXL_HOST). This is an
-> independent CXL host bridge which combined GPEX features (ECAM, MMIO
-> windows and irq) and CXL Host Bridge Component Registers (CHBCR).
-> 
-> The root bus path of CXL_HOST is "0001:00", that would not affect the
-> original pcie host topology. In the previous, the pxb-cxl-host with
-> any CXL root ports and CXL endpoint devices would occupy the BDF
-> number of the original pcie domain. This new type provide a solution
-> to resolve the problem.
-> 
-> Remaining problems
-> ==================
-> I tried to use 'object_resolve_path' but it could not work in
-> 'cxl_fmws_link_targets', so I used 'TYPE_DEVICE' to match that.
-> 
-> Link:
-> [1]: https://lore.kernel.org/linux-cxl/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
-> [2]: https://lists.nongnu.org/archive/html/qemu-arm/2024-11/msg00522.html
-> 
-> Yuquan Wang (2):
->   pci-host/cxl: Support creation of a new CXL Host Bridge
->   hw/pxb-cxl: Rename the pxb cxl host bridge
-> 
->  hw/cxl/cxl-host-stubs.c               |   3 +
->  hw/cxl/cxl-host.c                     |  64 ++++++++---
->  hw/pci-bridge/pci_expander_bridge.c   |   8 +-
->  hw/pci-host/Kconfig                   |   4 +
->  hw/pci-host/cxl.c                     | 152 ++++++++++++++++++++++++++
->  hw/pci-host/meson.build               |   1 +
->  include/hw/cxl/cxl.h                  |   7 +-
->  include/hw/cxl/cxl_host.h             |   3 +
->  include/hw/pci-host/cxl_host_bridge.h |  23 ++++
->  9 files changed, 244 insertions(+), 21 deletions(-)
->  create mode 100644 hw/pci-host/cxl.c
->  create mode 100644 include/hw/pci-host/cxl_host_bridge.h
-> 
+> +static bool target_restore_tpidr2_record(CPUARMState *env,
+> +                                         struct target_tpidr2_context *tpidr2)
+> +{
+> +    if (!cpu_isar_feature(aa64_sme, env_archcpu(env))) {
+> +        return false;
+> +    }
+> +    __get_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
+> +    return true;
+> +}
 
+The sme check is better placed in target_restore_sigframe ...
+
+> +        case TARGET_TPIDR2_MAGIC:
+> +            if (tpidr2 || size != sizeof(struct target_tpidr2_context)) {
+> +                goto err;
+> +            }
+
+... here.  Then target_restore_tpidr2_record has no failure modes and can return void ...
+
+> @@ -497,6 +530,9 @@ static int target_restore_sigframe(CPUARMState *env,
+>       if (za && !target_restore_za_record(env, za, za_size, &svcr)) {
+>           goto err;
+>       }
+> +    if (tpidr2 && !target_restore_tpidr2_record(env, tpidr2)) {
+> +        goto err;
+> +    }
+
+... which simplifies this.
+
+
+r~
 
