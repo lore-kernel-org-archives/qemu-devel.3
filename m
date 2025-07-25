@@ -4,77 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBF6C87FCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13615C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 13:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufIRL-00072q-68; Fri, 25 Jul 2025 09:26:23 -0400
+	id 1ufISC-0007kM-3V; Fri, 25 Jul 2025 09:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufIR0-0006rB-3H
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufIRm-0007Uh-0q
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:51 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ufIQx-0007LO-GZ
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753449956;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Z1i3FVYU9T3t9EoypQId4dBbYTnT4nfA30gvE8ZVzgo=;
- b=EqHg/HiykNbCXStBb8Ji/qA4JI6SjxACMk8Oh7Q0Lq/LcX4LukabIRRSjvdm8U30g7vOEm
- wGT28vxt514REMrdizabazoNv3keouLoApj727WlfpvYu6xZLV5QP44oQd7o/kTi5hnud5
- J59EUv5Ylq7JxZpfN2WbpB4aC7Eg6RQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-undCfIV4NlWgGFbXHtDKhA-1; Fri,
- 25 Jul 2025 09:25:54 -0400
-X-MC-Unique: undCfIV4NlWgGFbXHtDKhA-1
-X-Mimecast-MFC-AGG-ID: undCfIV4NlWgGFbXHtDKhA_1753449952
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3722E1955D90; Fri, 25 Jul 2025 13:25:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.162])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED398300018D; Fri, 25 Jul 2025 13:25:49 +0000 (UTC)
-Date: Fri, 25 Jul 2025 14:25:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 4/4] tests/functional: add -k TEST_NAME_PATTERN CLI arg
-Message-ID: <aIOF2gPa8nbec2qp@redhat.com>
-References: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
- <20250725-functional_tests_debug_arg-v3-4-b89921baf810@linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ufIRh-0007U6-2z
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 09:26:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bpTBX59DTz6M4V2;
+ Fri, 25 Jul 2025 21:25:08 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1BB591402FE;
+ Fri, 25 Jul 2025 21:26:37 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 25 Jul
+ 2025 15:26:36 +0200
+Date: Fri, 25 Jul 2025 14:26:35 +0100
+To: <shiju.jose@huawei.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <fan.ni@samsung.com>, <dave@stgolabs.net>, <linuxarm@huawei.com>
+Subject: Re: [PATCH qemu v4 6/7] hw/cxl: Add Maintenance support
+Message-ID: <20250725142635.000014fa@huawei.com>
+In-Reply-To: <20250721172228.2118-7-shiju.jose@huawei.com>
+References: <20250721172228.2118-1-shiju.jose@huawei.com>
+ <20250721172228.2118-7-shiju.jose@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250725-functional_tests_debug_arg-v3-4-b89921baf810@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.175,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,136 +69,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 12:41:25PM +0300, Manos Pitsidianakis wrote:
-> Add a CLI argument that takes fnmatch(3)-style patterns as value and can
-> be specified many times. Only tests that match the pattern will be
-> executed. This argument is passed to unittest.main which takes the same
-> argument.
+On Mon, 21 Jul 2025 18:22:27 +0100
+<shiju.jose@huawei.com> wrote:
+
+> From: Davidlohr Bueso <dave@stgolabs.net>
+
+I tweaked the title to mention Post Package Repair.  If anyone is ever
+looking for that particular maintenance command they might want to know
+it is in here from the title.
+
 > 
-> Acked-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->  tests/functional/qemu_test/testcase.py | 23 +++++++++++++++++++++--
->  1 file changed, 21 insertions(+), 2 deletions(-)
+> This adds initial support for the Maintenance command, specifically
+> the soft and hard PPR operations on a dpa. The implementation allows
+> to be executed at runtime, therefore semantically, data is retained
+> and CXL.mem requests are correctly processed.
 > 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index ab564f873c303bcc28c3bf7bec8c8c4569fae91c..b045d82caa79d9d161fb868b0b0748ad7de453d9 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -16,6 +16,7 @@
->  import os
->  from pathlib import Path
->  import pycotap
-> +import itertools
->  import shutil
->  from subprocess import run
->  import sys
-> @@ -37,6 +38,7 @@ class QemuBaseTest(unittest.TestCase):
->      debug: bool = False
->      keep_scratch: bool = "QEMU_TEST_KEEP_SCRATCH" in os.environ
->      list_tests: bool = False
-> +    test_name_patterns: list[str] = []
+> Keep track of the requests upon a general media or DRAM event.
+> 
+> Post Package Repair (PPR) maintenance operations may be supported by CXL
+> devices that implement CXL.mem protocol. A PPR maintenance operation
+> requests the CXL device to perform a repair operation on its media.
+> For example, a CXL device with DRAM components that support PPR features
+> may implement PPR Maintenance operations. DRAM components may support two
+> types of PPR, hard PPR (hPPR), for a permanent row repair, and Soft PPR
+> (sPPR), for a temporary row repair. Soft PPR is much faster than hPPR,
+> but the repair is lost with a power cycle.
+> 
+> CXL spec 3.2 section 8.2.10.7.1.2 describes the device's sPPR (soft PPR)
+> maintenance operation and section 8.2.10.7.1.3 describes the device's
+> hPPR (hard PPR) maintenance operation feature.
+> 
+> CXL spec 3.2 section 8.2.10.7.2.1 describes the sPPR feature discovery and
+> configuration.
+> 
+> CXL spec 3.2 section 8.2.10.7.2.2 describes the hPPR feature discovery and
+> configuration.
+> 
+> CXL spec 3.2 section 8.2.10.2.1.4 Table 8-60 describes the Memory Sparing
+> Event Record.
+> 
+> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+> Co-developed-by: Shiju Jose <shiju.jose@huawei.com>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+2x SoB for Shiju.
+
+Main question I have on this is why we currently track things marked
+for maintenance in injected error records, but don't act on that in any
+way.  I'm also thinking we could easily pass on any provided geometry so
+the sparing record reflects what was injected if that's where it came from.
+
+If we do PPR on something not injected we might still want to make some
+plausible geometry up.
+
+> +static void cxl_mbox_create_mem_sparing_event_records(CXLType3Dev *ct3d,
+> +                            uint8_t class, uint8_t sub_class)
+> +{
+> +    CXLEventSparing event_rec = {};
+> +
+> +    cxl_assign_event_header(&event_rec.hdr,
+> +                            &sparing_uuid,
+> +                            (1 << CXL_EVENT_TYPE_INFO),
+> +                            sizeof(event_rec),
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
+> +                            1, class, 1, sub_class, 0, 0, 0, 0);
+> +
+> +    event_rec.flags = 0;
+> +    event_rec.result = 0;
+> +    event_rec.validity_flags = CXL_MSER_VALID_CHANNEL |
+> +                               CXL_MSER_VALID_RANK |
+> +                               CXL_MSER_VALID_NIB_MASK |
+> +                               CXL_MSER_VALID_BANK_GROUP |
+> +                               CXL_MSER_VALID_BANK |
+> +                               CXL_MSER_VALID_ROW |
+> +                               CXL_MSER_VALID_COLUMN |
+> +                               CXL_MSER_VALID_SUB_CHANNEL;
+> +
+> +    event_rec.res_avail = 1;
+> +    event_rec.channel = 2;
+> +    event_rec.rank = 5;
+> +    st24_le_p(event_rec.nibble_mask, 0xA59C);
+> +    event_rec.bank_group = 2;
+> +    event_rec.bank = 4;
+> +    st24_le_p(event_rec.row, 13);
+> +    event_rec.column = 23;
+> +    event_rec.sub_channel = 7;
+
+At some point we should cycle back and make up some 'geometry' for the
+memory so we can map different DPAs to different places.  This is fine
+for now though.
+
+> +
+> +    if (cxl_event_insert(&ct3d->cxl_dstate,
+> +                         CXL_EVENT_TYPE_INFO,
+> +                         (CXLEventRecordRaw *)&event_rec)) {
+> +        cxl_event_irq_assert(ct3d);
+> +    }
+> +}
+> +
+> +
+> +static void cxl_perform_ppr(CXLType3Dev *ct3d, uint64_t dpa)
+> +{
+> +    CXLMaintenance *ent, *next;
+> +
+> +    QLIST_FOREACH_SAFE(ent, &ct3d->maint_list, node, next) {
+
+If we did want to generate the right geometry to match the injected
+event we'd want to retrieve it here (having stashed it in the ent)
+
+> +        if (dpa == ent->dpa) {
+> +            QLIST_REMOVE(ent, node);
+
+What is this actually for at the moment?  We track them on a list but
+don't enforce anything with it?  I don't think we should enforce this
+as you can issue PPR on stuff that was never in error if you like.
+
+> +            g_free(ent);
+> +            break;
+> +        }
+> +    }
+> +
+> +    /* Produce a Memory Sparing Event Record */
+> +    if (ct3d->soft_ppr_attrs.sppr_op_mode &
+> +        CXL_MEMDEV_SPPR_OP_MODE_MEM_SPARING_EV_REC_EN) {
+> +        cxl_mbox_create_mem_sparing_event_records(ct3d,
+> +                                CXL_MEMDEV_MAINT_CLASS_SPARING,
+> +                                CXL_MEMDEV_MAINT_SUBCLASS_CACHELINE_SPARING);
+> +    }
+> +}
+
+>  /* Component ID is device specific.  Define this as a string. */
+>  void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>                                          uint32_t flags, bool has_maint_op_class,
+> @@ -1715,6 +1756,11 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>          error_setg(errp, "Unhandled error log type");
+>          return;
+>      }
+> +    if (rc == CXL_EVENT_TYPE_INFO &&
+> +        (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED)) {
+> +        error_setg(errp, "Informational event cannot require maintenance");
+> +        return;
+> +    }
+>      enc_log = rc;
 >  
->      """
->      Class method that initializes class attributes from given command-line
-> @@ -67,10 +69,19 @@ def parse_args():
->              action="store_true",
->              help="List all tests that would be executed and exit.",
->          )
-> +        parser.add_argument(
-> +            "-k",
-> +            dest="test_name_patterns",
-> +            action="append",
-> +            type=str,
-> +            help="Only run tests which match the given substring. "
-> +            "This argument is passed to unittest.main verbatim.",
-> +        )
->          args = parser.parse_args()
->          QemuBaseTest.debug = args.debug
->          QemuBaseTest.keep_scratch |= args.keep_scratch
->          QemuBaseTest.list_tests = args.list_tests
-> +        QemuBaseTest.test_name_patterns = args.test_name_patterns
->          return
+>      memset(&gem, 0, sizeof(gem));
+> @@ -1773,6 +1819,10 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>      if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
+>          cxl_event_irq_assert(ct3d);
+>      }
+> +
+> +    if (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED) {
+> +        cxl_maintenance_insert(ct3d, dpa);
+
+Same as below.
+
+> +    }
+
 >  
->      '''
-> @@ -313,8 +324,16 @@ def main():
+>      memset(&dram, 0, sizeof(dram));
+> @@ -1935,6 +1990,10 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
+>      if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&dram)) {
+>          cxl_event_irq_assert(ct3d);
+>      }
+> +
+> +    if (flags & CXL_EVENT_REC_FLAGS_MAINT_NEEDED) {
+> +        cxl_maintenance_insert(ct3d, dpa);
+We make up the geometry details for the sparing record, but we 'could'
+store them here if they were injected and hence spit out an appropriate
+sparing record?
+
+Do you think it's worth doing at this stage?
+
+Jonathan
+
+> +    }
+>  }
 >  
->          tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
->                                     test_output_log = pycotap.LogMode.LogToError)
-> -        res = unittest.main(module = None, testRunner = tr, exit = False,
-> -                            argv=["__dummy__", path])
-> +        argv = ["__dummy__", path] + (
-> +            list(
-> +                itertools.chain.from_iterable(
-> +                    ["-k", x] for x in QemuBaseTest.test_name_patterns
-> +                )
-> +            )
-> +            if QemuBaseTest.test_name_patterns
-> +            else []
-> +        )
-> +        res = unittest.main(module=None, testRunner=tr, exit=False, argv=argv)
+>  #define CXL_MMER_VALID_COMPONENT                        BIT(0)
 
-unittest.main() supports a whole bunch of CLI args beyond '-k', but none
-of them are accessible as we're not forwarding the sys.argv that we have
-received. eg we're missing
-
-$ git diff
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 2a78e735f1..5caf7b13fe 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -249,7 +249,7 @@ def main():
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
-         res = unittest.main(module = None, testRunner = tr, exit = False,
--                            argv=["__dummy__", path])
-+                            argv=[sys.argv[0], path] + sys.argv[1:])
-         for (test, message) in res.result.errors + res.result.failures:
- 
-             if hasattr(test, "log_filename"):
-
-which would unlock
-
-$ QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64  PYTHONPATH=`pwd`/python ./tests/functional/test_version.py  -h
-usage: test_version.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [tests ...]
-
-positional arguments:
-  tests                a list of any number of test modules, classes and test methods.
-
-options:
-  -h, --help           show this help message and exit
-  -v, --verbose        Verbose output
-  -q, --quiet          Quiet output
-  --locals             Show local variables in tracebacks
-  --durations N        Show the N slowest test cases (N=0 for all)
-  -f, --failfast       Stop on first fail or error
-  -c, --catch          Catch Ctrl-C and display results so far
-  -b, --buffer         Buffer stdout and stderr during tests
-  -k TESTNAMEPATTERNS  Only run tests which match the given substring
-
-
-
-One of the goals with the new functional test system was that we stop trying
-to (re-)invent a custom test runner harness, as was the case with Avocado,
-in favour of relying on the pre-existing python infrastructure to the
-greatest extent possible.
-
-Seeing this, and all the other CLI arg handling added in this series, makes
-me fairly uncomfortable, as it is effectively inventing a custom test runner
-once again which is exactly what we wanted to get away from.
-
-At the same time, there are some pieces in this series that do things that
-unittest.main() can't do on its own.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
