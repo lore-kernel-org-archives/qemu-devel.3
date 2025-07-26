@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D27DC87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Jul 2025 23:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B0EC87FCA
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 01:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufRzX-000348-J8; Fri, 25 Jul 2025 19:38:19 -0400
+	id 1ufTR6-000375-Hf; Fri, 25 Jul 2025 21:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRzT-00032w-Ch
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:38:16 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1ufTR4-00036L-Qx
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:10:50 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufRzQ-0006S8-D7
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 19:38:14 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-31c38e75dafso2158699a91.2
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 16:38:11 -0700 (PDT)
+ id 1ufTR3-0005fo-0L
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:10:50 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-234c5b57557so23748015ad.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753486691; x=1754091491; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753492247; x=1754097047; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ha3DrFl4U6QPqwJ3Kd7efkOpaf9bsTsDGDz91R6u030=;
- b=LXbZzULixbq18OysbAWjY3nO3AcjIRcG/EPi8fMGmCU42dofEb/zmrb5EPwbrWVaX/
- 1QNg/TDBskxMaoOU/ZS+clRwBGB5Z4u7w+QNIcmY9CmfENoGSL7CnMNx2UdDFAeAJL0d
- 6HJz3LuJ2hhMeUCCIBnfuC75owehQx31C4DuipsKM3plNg8doPWO/YdydQwyzLudVCRZ
- pyE23y1TQGbzT8TMK7Uk8xC5KqbYnBXwF6K0nHuPpxscRw+gYAf/UBN6HedtaH6MEwH5
- hwdfSBROVw/okE+qrOPVs/0DaReT9zci8Lz6IOLk9kWbPmqQ+RWR+w2CVvW7X5kbipfG
- fiIQ==
+ bh=zQgHPVb5qvks0W0iSB5fjgaH9U0zRJR9mCcAsfh1/0I=;
+ b=M0upvEpOV2EZtAAnwZrPGVPaQ6xH1xrvuvA45/wzKB2xl2oyTW6lNB5mXla38dQl2A
+ brDx9eSoqEgSYenSvpzc6N0jxd1feJJY+qCIBuIiHo08B0NGDRGiIiazcNysKKV4syJQ
+ qRiYfd+h1UC/n6m0sghRU13Qq9NF3fR1bnNhQvYQvOP9V3i13FILazG00haqhY54FBVL
+ qkSomTPUjlAXjtNY1QIEbaj4G/nEDF+adMCWcC79O9incPXfo1DiZkLGLCzoQe81v/Jl
+ ONnau8wLpM4wpGPIkFviyJMGOwHUMsvg0ekzZ6IoJ60/oh2TuAth2qo9byRbi+cUDSQg
+ omOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753486691; x=1754091491;
+ d=1e100.net; s=20230601; t=1753492247; x=1754097047;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ha3DrFl4U6QPqwJ3Kd7efkOpaf9bsTsDGDz91R6u030=;
- b=dMlVkKTl3OpG+odDeK3Y83wq+/fpJO6v2OQYITLUOipDLpblH/U69QB1Kfd1+k29U3
- 8GnaRpJpRR9tLm+FV3+XJEjEsqJHhJVl/wGarvyNVfiOSFYQovNdlEL/8vR1EHK6YwJ8
- T1OPr4JjUO+i72HCQuE8bxQicPAb6m8VT7HA3ya9mbtsta1Ed6mYJKFMMzHU2EzpmTW0
- 0jTqHCtC8pT4lIJE0SQ4P0nbXoSXQ4vL7DQdhVbsctfxfOjz3MUDmW3kff6SNSZAJxew
- 0WHev1BGEoJCuMa/c1ntOpSH3SXIVR2Wpc3p62o5VLGTa6KzgRwT/k2khAToroPuLdZ4
- 3NBA==
-X-Gm-Message-State: AOJu0YyoovzSNNxa8Jj5yXm6u7MAK5uVYYn/ylXCi25ace3MMPeu+IGE
- iHySl7EkouEjcHNqWUVgLjNPpdBHF9FsOEUX+VtBjlevCedexiwUq5yltZrLVTKbXPTnTfjG7+s
- XGhah
-X-Gm-Gg: ASbGncuxlMSAvZQX2UZrZJoG87D9/yW39AsUh9qMbuydQFz8M9Lhp3vWoxPaIuf2Na6
- NzB/kT2lhcYxWYX1FvvesxfE14mUW/WqV38G9RC4G+tbzGGYgrX7Vd1xgKiGKWlHK1R/VWpWOUm
- HYX1yFdeucpPDY/AVFutCQVTa0qZ56yeI3vwaEWImvk7/a8jVwm3Sqo4pkaR/amyP5SQucbMKPb
- XozjQpg+HdvhAEEs1s1wPn1uRkgJoGxnLipPcc34auFiJMBWXd8DeoAyoIXpe/gxbt61VPfxukO
- cbUHetKD1It/Wb5dzGbXWsQ6RqcAnwmiCifeRuYlK5zQvRhkkBoNmhnxWc2saL4DAp19opWzR+1
- De53j/NAVxfo4XEin65+3ZPwDyUDEjfij+R5Y1KRvxwwE4M0Mh3blARYp2XO+g2JELPGLhAvTHk
- A/bw==
-X-Google-Smtp-Source: AGHT+IGwactT6WB6ojHSZ61wGje/I2rd/NEoyzn5jBNKo0VlOV1T8B8w+YiWTywRPCDNj9LNzSjSdQ==
-X-Received: by 2002:a17:90b:4e87:b0:312:f2ee:a895 with SMTP id
- 98e67ed59e1d1-31e77a19c6emr5252730a91.31.1753486690812; 
- Fri, 25 Jul 2025 16:38:10 -0700 (PDT)
+ bh=zQgHPVb5qvks0W0iSB5fjgaH9U0zRJR9mCcAsfh1/0I=;
+ b=SEP4Ficxa0hWpmCtnIhOzFRX6RqpwzqNKCqJPwX1kI2sCOsFX9kKEPVuxw28JET76e
+ RWve3Mt4m/6AJqjpG0xoX9g6DPNEb3XRniHokuNtPE7GRq7oLahqgCHwAcBjwNOrhSFA
+ Y4Z+4VSXUn4n84ZnoL7c9VXBl6BqHlugrfC58u0BoetwXjGpqqQyn0RoVCtobh5kT+s9
+ RlXvRw6mxG43nH8UjqBamdWet1eQRZCN/XJP/xMdOguRi22pgoO+M+4lHxtlhhrP55qv
+ IqYj41vLgOfu8BT0aoIBMpCJBBK3Ls/gwFZzzCAvWlrgLVTOlQccfUxxBNyKjHNrEgOZ
+ 4GWQ==
+X-Gm-Message-State: AOJu0YzS8b8UgBgG/syJqdXSx14flFNo7obVAWbcR17jQWMHQ2r5w3gE
+ HBEA9m/WZ+qSbTi3cgMjgvtN5GVTGhE/TtXxldFN0ub6Mda3hEuAo4J2kVcYltc8+8zT8YhPPcu
+ fwjYx
+X-Gm-Gg: ASbGncsTUJHXcHLS0FSi1JYLD61ERbOEkwadW1xR81PdvsWLSNi4idjWfq1w1uik4mU
+ 8EX5z8V5OkByEWb7WZLSyTxrh4Xxqr6rQZmQJD20p5zXSzdMxsvlTc+MA0mkf+/y2XK5HiNXhIL
+ UW5MftD9sjFjIGlTUfcRvYvf4RzXqI10KiJAftXFJaozsT7NpbJBGDyowoLt26zrM3LzeGusxaH
+ Vq/B0jcuiWHEvB9rYZqYmSB8/EajX+G67NO+7EHo9byejL5FIs50+VSY+mDFUVZ/Qjr7hRpNzNN
+ Pja1cNmLuIktXfBkbvfeIvNCQQAwRRh/UaRgrLtGGbYscAq1oKYoLPgCvdaQ5nGWhM0QpyBt9MF
+ LxKpk+82L6OJwT/i0km9emfkFh0VMACDiN6ThhvThnMT6qkd3DM2P/Am53kvNkvNEZH1LzwdAmo
+ I9pA==
+X-Google-Smtp-Source: AGHT+IG95jAFvb5Dl0jyM5NaMQ8KFU5zGlXv1NPcYWb4rYteSssTgsQGnRmi45FbY5npTkAMeSACrg==
+X-Received: by 2002:a17:903:234c:b0:237:f7f8:7453 with SMTP id
+ d9443c01a7336-23fb313a5d9mr63344975ad.51.1753492246704; 
+ Fri, 25 Jul 2025 18:10:46 -0700 (PDT)
 Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31e6226adfasm3038037a91.2.2025.07.25.16.38.09
+ d9443c01a7336-23fbe30ff79sm6367065ad.9.2025.07.25.18.10.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 16:38:10 -0700 (PDT)
-Message-ID: <ec18def4-5f3d-4bbc-aee0-19d0b8eab033@linaro.org>
-Date: Fri, 25 Jul 2025 13:38:08 -1000
+ Fri, 25 Jul 2025 18:10:46 -0700 (PDT)
+Message-ID: <c3eb69e9-41ea-4881-b3e6-578fb7045b3b@linaro.org>
+Date: Fri, 25 Jul 2025 15:10:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/17] target/loongarch: Define function
- loongarch_cpu_post_init as static
+Subject: Re: [PATCH v3 04/17] target/loongarch: Add header file cpu-mmu.h
 To: qemu-devel@nongnu.org
 References: <20250725013739.994437-1-maobibo@loongson.cn>
- <20250725013739.994437-3-maobibo@loongson.cn>
+ <20250725013739.994437-5-maobibo@loongson.cn>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250725013739.994437-3-maobibo@loongson.cn>
+In-Reply-To: <20250725013739.994437-5-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,20 +105,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/24/25 15:37, Bibo Mao wrote:
-> Function loongarch_cpu_post_init() is implemented and used in the
-> same file target/loongarch/cpu.c, it can be defined as static function.
-> 
-> This patch moves implementation about function loongarch_cpu_post_init()
-> before it is referenced. And it is only code movement, no function
-> change.
+> New header file cpu-mmu.h is added and move mmu relative function
+> declaration to this file.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   target/loongarch/cpu.c | 180 ++++++++++++++++++++---------------------
->   target/loongarch/cpu.h |   2 -
->   2 files changed, 90 insertions(+), 92 deletions(-)
+>   target/loongarch/cpu-mmu.h        | 30 ++++++++++++++++++++++++++++++
+>   target/loongarch/cpu.c            |  1 +
+>   target/loongarch/cpu_helper.c     |  1 +
+>   target/loongarch/internals.h      | 20 --------------------
+>   target/loongarch/tcg/csr_helper.c |  1 +
+>   target/loongarch/tcg/tlb_helper.c |  1 +
+>   6 files changed, 34 insertions(+), 20 deletions(-)
+>   create mode 100644 target/loongarch/cpu-mmu.h
+
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
