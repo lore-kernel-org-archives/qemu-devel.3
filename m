@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED500C87FCA
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 12:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B9DC83F17
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 14:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufeMk-0000jH-Lx; Sat, 26 Jul 2025 08:51:06 -0400
+	id 1ufg1p-00039J-RZ; Sat, 26 Jul 2025 10:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <engguopeng@buaa.edu.cn>)
- id 1ufeMg-0000ik-F2
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 08:51:02 -0400
-Received: from azure-sdnproxy.icoremail.net ([52.229.205.26])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <engguopeng@buaa.edu.cn>) id 1ufeMb-00056L-HM
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 08:51:02 -0400
+ (Exim 4.90_1) (envelope-from <muhammadievsamandar2@gmail.com>)
+ id 1ufebU-00027o-FM
+ for qemu-devel@nongnu.org; Sat, 26 Jul 2025 09:06:21 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <muhammadievsamandar2@gmail.com>)
+ id 1ufebS-0007XV-FN
+ for qemu-devel@nongnu.org; Sat, 26 Jul 2025 09:06:20 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-73e586fcc28so1998862a34.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Jul 2025 06:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=buaa.edu.cn; s=buaa; h=Received:Date:From:To:Cc:Subject:
- Message-ID:References:MIME-Version:Content-Type:
- Content-Disposition:In-Reply-To; bh=PNFerZVdr2mLQkd+9Phexr03FUsp
- 45TrLh1utCgeVrU=; b=wBzQcSjO8ReFgavmM3l2FZi78nScxf7yqQlEKZz3xSeK
- zil0W93qzhY9CYY/IrW1R4Sya6eeB+Gto2SBXouKvJNEdkIHqpGtuHISX+RR7I22
- feJxDHP9/ZWo34A6Y97+S+dJj53gcPpqchNUBIWP3ZQ1onMDcbJtyxL3BCokUJ0=
-Received: from localhost (unknown [139.227.252.237])
- by coremail-app2 (Coremail) with SMTP id Nyz+CgDHwHEbz4RoW6UaAA--.6253S2;
- Sat, 26 Jul 2025 20:50:37 +0800 (CST)
-Date: Sat, 26 Jul 2025 20:50:35 +0800
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, wyguopeng@163.com
-Subject: Re: [PATCH] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-Message-ID: <aITPG_ZeM_PqsFgh@gp-VMware-Virtual-Platform>
-References: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
- <20250725145337.00003c91@huawei.com>
+ d=gmail.com; s=20230601; t=1753535175; x=1754139975; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=zhR1Uexy719pKeaIHTRmdY8v/5/DE15ebRJKKzQ6G5Y=;
+ b=GeVqqEgyW/pOPsVp/g+NXNOa9r8NQO98lQxOQoLVYpBVBGTZA7vzcjm3H3uGx3Db/s
+ OKpLWYkA0R29vdd++Up6avRMZZWDzqTEis5pFH6KoJm5hURJGVjGORxUc3Px5tRRx4bh
+ kIO/xHPHNehhYR9gaJkdWVigwfPhj1E8QbR4y0VCvZ7slK2ncLbdaNK3zeEup0QnhDo7
+ g/du/HSkmxQ3DH0uwEJsNnV+K2NhYQzhwnhUltE++e0eV29RGhFmZJ4fGxtv5QPNU5WA
+ CzU419KB9uAcm4l1QXOYxs4pEYmWhU46piEREPvC1A2tPeferFfvRSsxV6WL8kfj9sGS
+ sr6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753535175; x=1754139975;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zhR1Uexy719pKeaIHTRmdY8v/5/DE15ebRJKKzQ6G5Y=;
+ b=W0+XOLcJP+AFTGEoBlJE1kHGSlAuMx+EnP7ztIfyCdcTdbOWKtdK5i0jSiDtK3ca8o
+ nhv6KEYET+hPSfVyKIAG62sRY/yd/kLhubCZ2pbIxIDq0Gw152sGLOSlRfaFul0oSSja
+ VK3G+HQ3dD0V6s0GtTK5ZTz326yCxq/63GlItQxpJgzJEU0w0iwuunVdCmrBAhKqHGh3
+ 3HCkY9viRLHPDAXZLlOeGkXUuxYEuJ20ciYiA0mmDplg8yOOCObmH/Md9fb+Bi4uAFie
+ 6DIIFgycNa/A6xeDtdYNswOdHZ85ZRDZL2GCEkh+uFuTsU+sj/jHxg+WTkfnCkF3pY/v
+ RsEw==
+X-Gm-Message-State: AOJu0YxHaT0FeBrc1i2Am1FJ4Zem4R0ecEX7gzlDvSM3IvzlXaQMcZPm
+ I+L6hmJNZ00m2oa7cUuyKL/SiemI1OqZaS2Ca1APiWl5y0q6LDS+zUHfvw54ZQAHC+fWwm6wyH2
+ 7Vs34EPATvc0kFE7Noe+YeYmr5zs0vbZ505p8XNZXxQ==
+X-Gm-Gg: ASbGncsHkG6hhlZ71BbuxFOQaXm1QrYfsfQiMX7xSqPyotKVH1BY3YyOGO7QMHU+VCg
+ zqg1cieTgEVuiw0VLFfsHw0ib5ED5cEveSvEzq2SeiE/X58RJxsriPmhvIjRRUKTKwbIjFyj0BY
+ eonQkt9SY7cq9Iu/foOgkEh0tO8dVsWNOOIEPinavtp+orNoQaCuDXqLcFmI5sN07/Xi9FjUBQx
+ 8Ee07+/
+X-Google-Smtp-Source: AGHT+IGDraJifQ5QxtMGBs7kR6IOKHTFVpc0o7xw7siV7v0sxcBoMktA81jlIsmrSnzY/4T9nMm7ljdnLE0jzjYztVA=
+X-Received: by 2002:a05:6808:4f22:b0:40b:9527:8e9b with SMTP id
+ 5614622812f47-42a5643bad5mr4475821b6e.7.1753535174568; Sat, 26 Jul 2025
+ 06:06:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250725145337.00003c91@huawei.com>
-X-CM-TRANSID: Nyz+CgDHwHEbz4RoW6UaAA--.6253S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxWF4rXr1UuF1xXFyrWw1UAwb_yoWrAr1rpr
- yDJa4UKaykXryxGFZ2vF9YyF1UuF4vk3WUCFn3Kw1I9rnxGrn8A34vyrWFva48Xrs3GFyx
- XFZ8tas3tw4DZaUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUylb7Iv0xC_tr1lb4IE77IF4wAFc2x0x2IEx4CE42xK8VAvwI8I
- cIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2
- AK021l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v2
- 6r4j6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26r
- xl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
- 6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr
- 0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW7tr1U
- Jr1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
- xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0
- cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
- AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
- 14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUc9mRUUUUU
-X-CM-SenderInfo: d2isijirrujqpexdthxhgxhubq/
-Received-SPF: pass client-ip=52.229.205.26;
- envelope-from=engguopeng@buaa.edu.cn; helo=azure-sdnproxy.icoremail.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+From: =?UTF-8?B?0KHQsNC80LDQvQ==?= <muhammadievsamandar2@gmail.com>
+Date: Sat, 26 Jul 2025 18:06:03 +0500
+X-Gm-Features: Ac12FXziVzS3xbBkEg2BWAwJEAFGUhlx-8jYeav0Ai_RUyn1wmFUrGD2_pnMm2I
+Message-ID: <CAHqnKtft5rsBcc5A7ARVHL+YE_YQixoY2V3TTRKK1bbOoij8Vg@mail.gmail.com>
+Subject: =?UTF-8?Q?How_to_fully_hide_QEMU_VM_from_detection_=28BIOSVersio?=
+ =?UTF-8?Q?n_still_exposes_=E2=80=9CBOCHS=E2=80=9D_and_=E2=80=9CEDK_II=E2=80=9D=29?=
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000002e6d81063ad4b9a7"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=muhammadievsamandar2@gmail.com; helo=mail-ot1-x32c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 26 Jul 2025 10:37:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,106 +88,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  peng guo <engguopeng@buaa.edu.cn>
-From:  peng guo via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 02:53:37PM +0100, Jonathan Cameron wrote:
-> On Fri, 18 Jul 2025 21:35:45 +0800
-> peng guo <engguopeng@buaa.edu.cn> wrote:
-> 
-> > When using a CXL Type 3 device together with a virtio 9p device in QEMU, the
-> > 9p device fails to initialize properly. The kernel reports the following:
-> > 
-> >     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
-> >     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
-> > 
-> > Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-> > device was overlapped by the memory window allocated for the CXL devices. As a
-> > result, the kernel could not correctly access the BAR region, causing the
-> > virtio device to malfunction.
-> > 
-> > An excerpt from /proc/iomem shows:
-> > 
-> >     480010000-cffffffff : CXL Window 0
-> >       480010000-4bfffffff : PCI Bus 0000:00
-> >       4c0000000-4c01fffff : PCI Bus 0000:0c
-> >         4c0000000-4c01fffff : PCI Bus 0000:0d
-> >       4c0200000-cffffffff : PCI Bus 0000:00
-> >         4c0200000-4c0203fff : 0000:00:03.0
-> >           4c0200000-4c0203fff : virtio-pci-modern
-> > 
-> > To address this issue, this patch uses the value of `cxl_resv_end` to reserve
-> > sufficient address space and ensure that CXL memory windows are allocated
-> > beyond all PCI 64-bit BARs. This prevents overlap with 64-bit BARs regions such 
-> > as those used by virtio or other pcie devices, resolving the conflict.
-> > 
-> > QEMU Build Configuration:
-> > 
-> >     ./configure --prefix=/home/work/qemu_master/build/ \
-> >                 --target-list=x86_64-softmmu \
-> >                 --enable-kvm \
-> >                 --enable-virtfs
-> > 
-> > QEMU Boot Command:
-> > 
-> >     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
-> >         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
-> >         -hda /home/work/gp_qemu/rootfs.img \
-> >         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
-> >         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
-> >         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
-> >         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
-> >         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-> >         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-> >         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
-> >         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-> > 
-> > Tested in a QEMU setup with a CXL Type 3 device and a 9pnet virtio device.
-> > 
-> > Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-> Analysis looks good.
-> 
-> For the patch I wonder if we should match the check that follows
-> for pcms->cxl_devices_state.is_enabled rather than checking cxl_resv_end
-> (which is only set to non 0 if that is_enabled is set).
-> 
-> Probably better to use a consistent condition for checking if CXL is
-> there or not.
-> 
-> We also ideally need a suitable fixes tag.  I couldn't immediately find one
-> so maybe it goes a long way back.
-> 
+--0000000000002e6d81063ad4b9a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Checking `is_enabled` instead of `cxl_resv_end` makes sense.
+Dear QEMU developers,
 
-Building on that, I wonder if it would be worthwhile to move the assignment of 
-`res_mem_end` outside the conditional block. Then simply use `res_mem_end` 
-itself as the condition. That would eliminate the need to check `is_enabled` 
-directly in this spot and simplify the logic slighly. The benefit may 
-be minor, but it might help unify the logic around how `res_mem_end` is used.
+I hope this message finds you well.
 
-I will make an effort to identify the appropriate fixes tags related to this. My 
-guess is that it relates to the patch where the CXL windows were originally 
-introduced and activated in the system.
+My goal is to run a Windows virtual machine in such a way that software
+like Safe Exam Browser (SEB) cannot detect that it=E2=80=99s running inside=
+ a
+virtual machine.
 
-> > ---
-> >  hw/i386/pc.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index 2f58e73d3347..180bc615f3f0 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -975,7 +975,7 @@ void pc_memory_init(PCMachineState *pcms,
-> >  
-> >      rom_set_fw(fw_cfg);
-> >  
-> > -    if (machine->device_memory) {
-> > +    if (machine->device_memory || cxl_resv_end) {
-> >          uint64_t *val = g_malloc(sizeof(*val));
-> >          uint64_t res_mem_end;
-> >  
+Currently, I=E2=80=99m using QEMU with virt-manager on Arch Linux to run a =
+Windows
+10 guest. I want to hide **all** virtualization traces =E2=80=94 including =
+BIOS
+strings and firmware signatures.
 
+The only remaining field that still exposes the VM is the BIOS version
+string. When running the following command inside the Windows guest:
+
+    wmic bios get BIOSVersion
+
+I get the output:
+
+    BIOSVersion
+    {"BOCHS  - 1", "unknown", "EDK II" - 10000"}
+
+The presence of =E2=80=9CBOCHS=E2=80=9D and =E2=80=9CEDK II=E2=80=9D are st=
+rong indicators of
+virtualization and are easily detected.
+
+Here is what I=E2=80=99ve already done:
+
+1. Modified the libvirt XML configuration.
+2. Built my own `OVMF_CODE.fd` and `OVMF_VARS.fd` using the
+[tianocore/edk2](https://github.com/tianocore/edk2) repository. I removed
+all references to BOCHS and EDK inside the firmware.
+3. Installed a clean Windows 11 system via ISO in this customized
+environment.
+
+I switched to QEMU because VMware and VirtualBox don=E2=80=99t offer deep e=
+nough
+control over SMBIOS or firmware =E2=80=94 e.g., `SMBIOS.reflectHost =3D "TR=
+UE"`
+doesn=E2=80=99t help.
+
+This is my first time working this deeply with VMs, and despite days of
+effort, I still haven=E2=80=99t succeeded. I=E2=80=99m reaching out to the =
+experts here in
+hopes that you might point me in the right direction or offer a better
+method for achieving full VM concealment.
+
+For your convenience, I=E2=80=99ve uploaded all the relevant files and deta=
+ils
+[here](https://t.me/qemuvmwin10) for further inspection.
+
+Thank you so much for your time and for maintaining such a powerful project=
+.
+
+Best regards,
+Mukhammadiev Samandar
+
+--0000000000002e6d81063ad4b9a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Dear QEMU developers,<br><br>I hope this message finds you=
+ well.<br><br>My goal is to run a Windows virtual machine in such a way tha=
+t software like Safe Exam Browser (SEB) cannot detect that it=E2=80=99s run=
+ning inside a virtual machine.<br><br>Currently, I=E2=80=99m using QEMU wit=
+h virt-manager on Arch Linux to run a Windows 10 guest. I want to hide **al=
+l** virtualization traces =E2=80=94 including BIOS strings and firmware sig=
+natures.<br><br>The only remaining field that still exposes the VM is the B=
+IOS version string. When running the following command inside the Windows g=
+uest:<br><br>=C2=A0 =C2=A0 wmic bios get BIOSVersion<br><br>I get the outpu=
+t:<br><br>=C2=A0 =C2=A0 BIOSVersion<br>=C2=A0 =C2=A0 {&quot;BOCHS =C2=A0- 1=
+&quot;, &quot;unknown&quot;, &quot;EDK II&quot; - 10000&quot;}<br><br>The p=
+resence of =E2=80=9CBOCHS=E2=80=9D and =E2=80=9CEDK II=E2=80=9D are strong =
+indicators of virtualization and are easily detected.<br><br>Here is what I=
+=E2=80=99ve already done:<br><br>1. Modified the libvirt XML configuration.=
+<br>2. Built my own `OVMF_CODE.fd` and `OVMF_VARS.fd` using the [tianocore/=
+edk2](<a href=3D"https://github.com/tianocore/edk2">https://github.com/tian=
+ocore/edk2</a>) repository. I removed all references to BOCHS and EDK insid=
+e the firmware.<br>3. Installed a clean Windows 11 system via ISO in this c=
+ustomized environment.<br><br>I switched to QEMU because VMware and Virtual=
+Box don=E2=80=99t offer deep enough control over SMBIOS or firmware =E2=80=
+=94 e.g., `SMBIOS.reflectHost =3D &quot;TRUE&quot;` doesn=E2=80=99t help.<b=
+r><br>This is my first time working this deeply with VMs, and despite days =
+of effort, I still haven=E2=80=99t succeeded. I=E2=80=99m reaching out to t=
+he experts here in hopes that you might point me in the right direction or =
+offer a better method for achieving full VM concealment.<br><br>For your co=
+nvenience, I=E2=80=99ve uploaded all the relevant files and details [here](=
+<a href=3D"https://t.me/qemuvmwin10">https://t.me/qemuvmwin10</a>) for furt=
+her inspection.<br><br>Thank you so much for your time and for maintaining =
+such a powerful project.<br><br>Best regards, =C2=A0<br>Mukhammadiev Samand=
+ar<br></div>
+
+--0000000000002e6d81063ad4b9a7--
 
