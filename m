@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B0EC87FCA
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 01:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7705BC87FCE
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 01:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufTR6-000375-Hf; Fri, 25 Jul 2025 21:10:52 -0400
+	id 1ufTXc-0007MP-0W; Fri, 25 Jul 2025 21:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufTR4-00036L-Qx
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:10:50 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1ufTX6-00079X-VE
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:17:06 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufTR3-0005fo-0L
- for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:10:50 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-234c5b57557so23748015ad.3
- for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:10:48 -0700 (PDT)
+ id 1ufTX4-0006qp-Uk
+ for qemu-devel@nongnu.org; Fri, 25 Jul 2025 21:17:04 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7600271f3e9so2443486b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Jul 2025 18:17:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753492247; x=1754097047; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753492621; x=1754097421; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zQgHPVb5qvks0W0iSB5fjgaH9U0zRJR9mCcAsfh1/0I=;
- b=M0upvEpOV2EZtAAnwZrPGVPaQ6xH1xrvuvA45/wzKB2xl2oyTW6lNB5mXla38dQl2A
- brDx9eSoqEgSYenSvpzc6N0jxd1feJJY+qCIBuIiHo08B0NGDRGiIiazcNysKKV4syJQ
- qRiYfd+h1UC/n6m0sghRU13Qq9NF3fR1bnNhQvYQvOP9V3i13FILazG00haqhY54FBVL
- qkSomTPUjlAXjtNY1QIEbaj4G/nEDF+adMCWcC79O9incPXfo1DiZkLGLCzoQe81v/Jl
- ONnau8wLpM4wpGPIkFviyJMGOwHUMsvg0ekzZ6IoJ60/oh2TuAth2qo9byRbi+cUDSQg
- omOA==
+ bh=9ejGuEgT/fVxSnG98nwZxYJh7UrCzWphAHkA4+BEC1s=;
+ b=IqS+8kciHdMB5ST2XCP/WKX7TSYQLH/v17lsnHV6m1IPd1hhXaB7GDF1+Uug+S9HMB
+ ftLCRggm8Xf6UMFTZyVO19wi5GjFoRS6nIaMCDba7tx+D7Wh6pT4q0zw07yrqko2yi4i
+ ceERp7gJwCNR0rCTN+UFunj2x51z0oocjgqqpd3EKu1JgnN/FDSHFkJPucWmtRAja3Al
+ xfufv8lpUMtTePBkM2//ctbK34mROMpHod1HL0ZHCKve/bxWdJJzB5mZa8KPo0qkFQPB
+ qbmNBhL60FVBXTtfDLMP3nsodscIZUx4cRqLkq/NnXaynRd1ZMsrazzCQ40XleXC6cAO
+ MItQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753492247; x=1754097047;
+ d=1e100.net; s=20230601; t=1753492621; x=1754097421;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zQgHPVb5qvks0W0iSB5fjgaH9U0zRJR9mCcAsfh1/0I=;
- b=SEP4Ficxa0hWpmCtnIhOzFRX6RqpwzqNKCqJPwX1kI2sCOsFX9kKEPVuxw28JET76e
- RWve3Mt4m/6AJqjpG0xoX9g6DPNEb3XRniHokuNtPE7GRq7oLahqgCHwAcBjwNOrhSFA
- Y4Z+4VSXUn4n84ZnoL7c9VXBl6BqHlugrfC58u0BoetwXjGpqqQyn0RoVCtobh5kT+s9
- RlXvRw6mxG43nH8UjqBamdWet1eQRZCN/XJP/xMdOguRi22pgoO+M+4lHxtlhhrP55qv
- IqYj41vLgOfu8BT0aoIBMpCJBBK3Ls/gwFZzzCAvWlrgLVTOlQccfUxxBNyKjHNrEgOZ
- 4GWQ==
-X-Gm-Message-State: AOJu0YzS8b8UgBgG/syJqdXSx14flFNo7obVAWbcR17jQWMHQ2r5w3gE
- HBEA9m/WZ+qSbTi3cgMjgvtN5GVTGhE/TtXxldFN0ub6Mda3hEuAo4J2kVcYltc8+8zT8YhPPcu
- fwjYx
-X-Gm-Gg: ASbGncsTUJHXcHLS0FSi1JYLD61ERbOEkwadW1xR81PdvsWLSNi4idjWfq1w1uik4mU
- 8EX5z8V5OkByEWb7WZLSyTxrh4Xxqr6rQZmQJD20p5zXSzdMxsvlTc+MA0mkf+/y2XK5HiNXhIL
- UW5MftD9sjFjIGlTUfcRvYvf4RzXqI10KiJAftXFJaozsT7NpbJBGDyowoLt26zrM3LzeGusxaH
- Vq/B0jcuiWHEvB9rYZqYmSB8/EajX+G67NO+7EHo9byejL5FIs50+VSY+mDFUVZ/Qjr7hRpNzNN
- Pja1cNmLuIktXfBkbvfeIvNCQQAwRRh/UaRgrLtGGbYscAq1oKYoLPgCvdaQ5nGWhM0QpyBt9MF
- LxKpk+82L6OJwT/i0km9emfkFh0VMACDiN6ThhvThnMT6qkd3DM2P/Am53kvNkvNEZH1LzwdAmo
- I9pA==
-X-Google-Smtp-Source: AGHT+IG95jAFvb5Dl0jyM5NaMQ8KFU5zGlXv1NPcYWb4rYteSssTgsQGnRmi45FbY5npTkAMeSACrg==
-X-Received: by 2002:a17:903:234c:b0:237:f7f8:7453 with SMTP id
- d9443c01a7336-23fb313a5d9mr63344975ad.51.1753492246704; 
- Fri, 25 Jul 2025 18:10:46 -0700 (PDT)
+ bh=9ejGuEgT/fVxSnG98nwZxYJh7UrCzWphAHkA4+BEC1s=;
+ b=Fjxok7vCyl3UMkFJqR/hCIoNkfVp/JIBakUdNDlxjF4TmQJlYBNS4qgbDojX1AQixB
+ jjIgUNBrZHKHbTYkO6vJLiPN/Ir2CjvQn9NYIAp2BjA5JoTa97Cf/6lyqL34trJDscCz
+ q3cg+DGzLME91HiK/+kJGxSL93V4KvztRv18TbTHNDZiZv5qJjog0/X9XzTcy8p+WBvM
+ rgoHtX1/UxxzSzzSTApBohR2ujkQ2RzsdIjK+JqzQP2l7vRnyg+NjYwtNIfgXN+afzp7
+ e1sCXsO7do2kPjb8GilvkKTZY9DIDqqqSCXtolYXSS7MmTuVG1LXkCl0IaH2VcJdAT7f
+ d/Xg==
+X-Gm-Message-State: AOJu0Yy761tZ+7A4a4b1wFbqtQkD+QMQJubea/gnTfVC2PJUJFFJ8ob5
+ lEx/n0P0UpZ1dvppGqWYnZ/4rjqZNE6BMYbsvwtNhpeO8rajptchz8dnYZ2MfeL9Wwd2zMjhfoV
+ SRLtt
+X-Gm-Gg: ASbGnctTIssO5scnV/hBzyi7ujCgEdbDfQC20ipcUWt0xOzdGA9VLm/6sHOQl3Q44oK
+ oGiDztEjXnnt7d2n1noXU6OHZXwn3jjGJSIrHK87nRrfivNEFMCKZNeT/gwvChnj/aU5v8syn6R
+ RWg3Cr2wSox5qt52XOyoUb0QmqeIEEpyweibJHarzUXdFnSYjvqE1rYszUcuZSklFlprCxeoZUp
+ Wo7a0FUORTKRL24UMjGYEPDEMrd0w43TW/NLgbfT5SPEERNP5n4qM7Vo6z+FqU6OoUkBdhioyFx
+ VNvLffXpBTIW9ugwF1sd7xKRENuvAKj+Inx8pW0EeQsaPYMPEMqcg3v4hMrHFRXMWH+VKH3vuQW
+ 7O0hEvu7vBUgWpdLmceof5eN7x8QZe3nvbPk0q1NLZz7IDwXtP/KqS6VWFL7qrCONdrayuW7S6v
+ GlRA==
+X-Google-Smtp-Source: AGHT+IEAbyrGMxN5W/oizPMI5xPCToNjPlpa7lwVF4ZE8+l+BZzAMRooz3yXMSa6x6jLT2pIXdPQDw==
+X-Received: by 2002:a05:6a20:244e:b0:234:21aa:b538 with SMTP id
+ adf61e73a8af0-23d6df76501mr6771558637.1.1753492620784; 
+ Fri, 25 Jul 2025 18:17:00 -0700 (PDT)
 Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe30ff79sm6367065ad.9.2025.07.25.18.10.45
+ d2e1a72fcca58-76411ecc8acsm603321b3a.40.2025.07.25.18.16.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Jul 2025 18:10:46 -0700 (PDT)
-Message-ID: <c3eb69e9-41ea-4881-b3e6-578fb7045b3b@linaro.org>
-Date: Fri, 25 Jul 2025 15:10:43 -1000
+ Fri, 25 Jul 2025 18:17:00 -0700 (PDT)
+Message-ID: <97316cdc-03c6-4f7f-aab9-d1064dcb77a7@linaro.org>
+Date: Fri, 25 Jul 2025 15:16:57 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 04/17] target/loongarch: Add header file cpu-mmu.h
@@ -80,8 +80,8 @@ From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20250725013739.994437-5-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +105,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/24/25 15:37, Bibo Mao wrote:
-> New header file cpu-mmu.h is added and move mmu relative function
-> declaration to this file.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu-mmu.h        | 30 ++++++++++++++++++++++++++++++
->   target/loongarch/cpu.c            |  1 +
->   target/loongarch/cpu_helper.c     |  1 +
->   target/loongarch/internals.h      | 20 --------------------
->   target/loongarch/tcg/csr_helper.c |  1 +
->   target/loongarch/tcg/tlb_helper.c |  1 +
->   6 files changed, 34 insertions(+), 20 deletions(-)
->   create mode 100644 target/loongarch/cpu-mmu.h
+> +enum {
+> +    TLBRET_MATCH = 0,
+> +    TLBRET_BADADDR = 1,
+> +    TLBRET_NOMATCH = 2,
+> +    TLBRET_INVALID = 3,
+> +    TLBRET_DIRTY = 4,
+> +    TLBRET_RI = 5,
+> +    TLBRET_XI = 6,
+> +    TLBRET_PE = 7,
+> +};
 
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+For a follow-up patch, name this enumeration and use it instead of 'int'.
+It would make it self-documenting what a function is computing.
 
 
 r~
