@@ -4,59 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B18C87FCA
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 11:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0728CC83F17
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 12:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufdSq-00055u-I9; Sat, 26 Jul 2025 07:53:21 -0400
+	id 1ufeKW-0006sC-2e; Sat, 26 Jul 2025 08:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufdSm-0003GI-90
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 07:53:17 -0400
+ id 1ufeKS-0006nz-WB; Sat, 26 Jul 2025 08:48:45 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufdSi-00069P-Sh
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 07:53:15 -0400
+ id 1ufeKP-0004e5-IG; Sat, 26 Jul 2025 08:48:44 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56QBqjvJ069943
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56QCmCZ9082853
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 26 Jul 2025 20:52:45 +0900 (JST)
+ Sat, 26 Jul 2025 21:48:12 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Rpt/lnrq9ghMYZon4PdKAPNFuzlcm6YeYY9ZEfhuJxc=; 
+DKIM-Signature: a=rsa-sha256; bh=BCKxxOnds2qLLv9YuTT9XNTWzMy0II+wkBdqyEWwCj4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753530765; v=1;
- b=K1T5BZQ3rEDz6l8nBD+66I5Loel4Xw3oqahiKDUe+weJOKOuURUEnz0r32KEmJJ2
- whecShmNC2D0pkGt+jL1r84VfY+kNm1VXR8JdIfDVI/4Xd0FbZURB0Fr4BqqUgjk
- Twu8Dq9Bv6bd9iEIj38S764xcZV+ljZMOGt4ZJSx2XLqjP1f7v8DdMebrGekYA07
- ZkO1aV82JgY0XYaRuRBin2NZENr2dsTo42tVhiqas4OAewEpOgCbWChQt0tg1PWb
- z+TiWNRiCiq3DO7go5WFfsm0dvROFhBSSKfyP3/4Aeexjmx2LU+zj2Fs2Niwuewh
- YW3yt3SYK5eFWB4A+FymRQ==
-Message-ID: <de3c69a8-d874-44a3-bd47-91b6b298e184@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 26 Jul 2025 20:52:44 +0900
+ s=rs20250326; t=1753534093; v=1;
+ b=Y87Grg4Yuwcb6g7CYLKTyrGAImvtYsvz40KIS7FClZ20o1lwUC9TrFnBbRRwOuoe
+ XSxN8l4gDSvZeot/9f5md7gZPjojt5H12IPlReh2M6D4nWzGCEdY4hCiaCNvWSCW
+ VLa9rEpf04pRTV/gZM15Jrc3+oVfA5P8qVe1f0lG/A0c8qIBymRLUmaZxZpV0rLi
+ yTlkVkjQmOFpSw5AcJIV2/6hpQdeyK1Ga2OKik+d21FvHj3MKMm4Vh7ZiPRlhkaw
+ QqUCbm6a8vo3U5+tlS1aY57KUBUEKUHBJQ1LmjJbhYfAWu9Xdosv+G/GE77cSzqS
+ droOTaolAz6tuDiX02HmNg==
+Message-ID: <848e0e7e-2ad5-4d94-99eb-8314540ea0de@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 26 Jul 2025 21:48:12 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
- features
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Jason Wang
- <jasowang@redhat.com>, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1753297661.git.pabeni@redhat.com>
- <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
+Subject: Re: [PATCH v7 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
+ <20250725-propagate_tpm_error-v7-23-d52704443975@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
+In-Reply-To: <20250725-propagate_tpm_error-v7-23-d52704443975@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -83,203 +94,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/24 4:31, Paolo Abeni wrote:
-> Extend the features configuration space to 128 bits. If the virtio
-> device supports any extended features, allow the common read/write
-> operation to access all of it, otherwise keep exposing only the
-> lower 64 bits.
+On 2025/07/25 21:19, Arun Menon wrote:
+> - We need to have good error reporting in the callbacks in
+>    VMStateDescription struct. Specifically pre_save, post_save,
+>    pre_load and post_load callbacks.
+> - It is not possible to change these functions everywhere in one
+>    patch, therefore, we introduce a duplicate set of callbacks
+>    with Error object passed to them.
+> - So, in this commit, we implement 'errp' variants of these callbacks,
+>    introducing an explicit Error object parameter.
+> - This is a functional step towards transitioning the entire codebase
+>    to the new error-parameterized functions.
+> - Deliberately called in mutual exclusion from their counterparts,
+>    to prevent conflicts during the transition.
+> - New impls should preferentally use 'errp' variants of
+>    these methods, and existing impls incrementally converted.
+>    The variants without 'errp' are intended to be removed
+>    once all usage is converted.
 > 
-> On migration, save the 128 bit version of the features only if the
-> upper bits are non zero. Relay on reset to clear all the feature
-> space before load.
-> 
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
-> v3 -> v4:
->    - use new virtio_features macro names
->    - move the build bug before vmstate_virtio_pci_modern_state_sub
+>   include/migration/vmstate.h | 11 ++++++++
+>   migration/vmstate.c         | 62 +++++++++++++++++++++++++++++++++++++++------
+>   2 files changed, 65 insertions(+), 8 deletions(-)
 > 
-> v2 -> v3:
->    - drop the pre_load/post_load trickery and relay on reset zeroing
->      the features instead.
->    - avoid union usage, just increase guest_features size and use
->      SUB_ARRAY.
->    - drop unneeded '!!'
->    - _array -> _ex
-> 
-> v1 -> v2:
->    - use separate VMStateDescription and pre/post load to avoid breaking
->      migration
->    - clear proxy features on device reset
-> ---
->   hw/virtio/virtio-pci.c         | 69 +++++++++++++++++++++++++++++-----
->   include/hw/virtio/virtio-pci.h |  2 +-
->   2 files changed, 61 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 767216d795..bcc4d48c2c 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -109,6 +109,29 @@ static const VMStateDescription vmstate_virtio_pci_modern_queue_state = {
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc8745fdbb79bfd7c8 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -200,15 +200,26 @@ struct VMStateDescription {
+>        * exclusive. For this reason, also early_setup VMSDs are migrated in a
+>        * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+>        * a QEMU_VM_SECTION_START section.
+> +     *
+> +     * There are duplicate impls of the post/pre save/load hooks.
+> +     * New impls should preferentally use 'errp' variants of these
+> +     * methods and existing impls incrementally converted.
+> +     * The variants without 'errp' are intended to be removed
+> +     * once all usage is converted.
+>        */
+> +
+>       bool early_setup;
+>       int version_id;
+>       int minimum_version_id;
+>       MigrationPriority priority;
+>       int (*pre_load)(void *opaque);
+> +    int (*pre_load_errp)(void *opaque, Error **errp);
+>       int (*post_load)(void *opaque, int version_id);
+> +    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>       int (*pre_save)(void *opaque);
+> +    int (*pre_save_errp)(void *opaque, Error **errp);
+>       int (*post_save)(void *opaque);
+> +    int (*post_save_errp)(void *opaque, Error **errp);
+>       bool (*needed)(void *opaque);
+>       bool (*dev_unplug_pending)(void *opaque);
+>   
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index bb5e9bf38d6ee7619ceb3e9da29209581c3c12eb..e427ef49b2b1991b0a3cdb14d641c197e00014b0 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -152,7 +152,16 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>           trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+>           return -EINVAL;
 >       }
->   };
->   
-> +static bool virtio_pci_modern_state_features128_needed(void *opaque)
-> +{
-> +    VirtIOPCIProxy *proxy = opaque;
-> +    uint32_t features = 0;
-> +    int i;
-> +
-> +    for (i = 2; i < ARRAY_SIZE(proxy->guest_features); ++i) {
-> +        features |= proxy->guest_features[i];
-> +    }
-> +    return features;
-> +}
-> +
-> +static const VMStateDescription vmstate_virtio_pci_modern_state_features128 = {
-> +    .name = "virtio_pci/modern_state/features128",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = &virtio_pci_modern_state_features128_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 2, 2),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   static bool virtio_pci_modern_state_needed(void *opaque)
->   {
->       VirtIOPCIProxy *proxy = opaque;
-> @@ -116,6 +139,11 @@ static bool virtio_pci_modern_state_needed(void *opaque)
->       return virtio_pci_modern(proxy);
->   }
->   
-> +/*
-> + * Avoid silently breaking migration should the feature space increase
-> + * even more in the (far away) future
-> + */
-> +QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_NU32S != 4);
-
-Another nitpick: there is a blank line after QEMU_BUILD_BUG_ON() in 
-"[RFC PATCH v4 05/14] virtio: serialize extended features state" but 
-this patch doesn't have a corresponding one. Please keep them consistent.
-
->   static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
->       .name = "virtio_pci/modern_state",
->       .version_id = 1,
-> @@ -124,11 +152,15 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
->           VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
-> -        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
-> +        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 0, 2),
->           VMSTATE_STRUCT_ARRAY(vqs, VirtIOPCIProxy, VIRTIO_QUEUE_MAX, 0,
->                                vmstate_virtio_pci_modern_queue_state,
->                                VirtIOPCIQueue),
->           VMSTATE_END_OF_LIST()
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_virtio_pci_modern_state_features128,
-> +        NULL
+> -    if (vmsd->pre_load) {
+> +    if (vmsd->pre_load_errp) {
+> +        ret = vmsd->pre_load_errp(opaque, errp);
+> +        if (ret) {
+> +            error_prepend(errp, "VM pre load failed for: '%s', "
+> +                          "version_id: '%d', minimum version_id: '%d', "
+> +                          "ret: %d: ", vmsd->name, vmsd->version_id,
+> +                          vmsd->minimum_version_id, ret);
+> +            return ret;
+> +        }
+> +    } else if (vmsd->pre_load) {
+>           ret = vmsd->pre_load(opaque);
+>           if (ret) {
+>               error_setg(errp, "VM pre load failed for: '%s', "
+> @@ -236,7 +245,14 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>           qemu_file_set_error(f, ret);
+>           return ret;
 >       }
->   };
->   
-> @@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
->       return virtio_pci_add_mem_cap(proxy, &cap.cap);
->   }
->   
-> +static int virtio_pci_select_max(const VirtIODevice *vdev)
-> +{
-> +    return virtio_features_use_ex(vdev->host_features_ex) ?
-> +           VIRTIO_FEATURES_NU32S :
-> +           2;
-
-This function could be simplified by replacing VIRTIO_FEATURES_NU32S 
-without any functional difference:
-
-1. For writes: virtio_set_features_ex() already ignores extended 
-features when !virtio_features_use_ex(vdev->host_features_ex)
-2. For reads: When !virtio_features_use_ex(vdev->host_features_ex), the 
-upper bits of host_features_ex are zero, and guest_features upper bits 
-remain zero (since they can't be set per point 1)
-
-So the conditional logic is redundant here.
-
-> +}
-> +
->   static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
->                                          unsigned size)
+> -    if (vmsd->post_load) {
+> +    if (vmsd->post_load_errp) {
+> +        ret = vmsd->post_load_errp(opaque, version_id, errp);
+> +        if (ret < 0) {
+> +            error_prepend(errp, "VM Post load failed for: %s, version_id: %d, "
+> +                          "minimum_version: %d, ret: %d: ", vmsd->name,
+> +                          vmsd->version_id, vmsd->minimum_version_id, ret);
+> +        }
+> +    } else if (vmsd->post_load) {
+>           ret = vmsd->post_load(opaque, version_id);
+>           if (ret < 0) {
+>               error_setg(errp,
+> @@ -412,11 +428,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                            void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
 >   {
-> @@ -1494,18 +1533,21 @@ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
->           val = proxy->dfselect;
->           break;
->       case VIRTIO_PCI_COMMON_DF:
-> -        if (proxy->dfselect <= 1) {
-> +        if (proxy->dfselect < virtio_pci_select_max(vdev)) {
->               VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+>       int ret = 0;
+> +    Error *local_err = NULL;
+>       const VMStateField *field = vmsd->fields;
 >   
-> -            val = (vdev->host_features & ~vdc->legacy_features) >>
-> -                (32 * proxy->dfselect);
-> +            val = vdev->host_features_ex[proxy->dfselect >> 1] >>
-> +                  (32 * (proxy->dfselect & 1));
-> +            if (proxy->dfselect <= 1) {
-> +                val &= (~vdc->legacy_features) >> (32 * proxy->dfselect);
-> +            }
->           }
->           break;
->       case VIRTIO_PCI_COMMON_GFSELECT:
->           val = proxy->gfselect;
->           break;
->       case VIRTIO_PCI_COMMON_GF:
-> -        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
-> +        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
->               val = proxy->guest_features[proxy->gfselect];
->           }
->           break;
-> @@ -1588,11 +1630,18 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
->           proxy->gfselect = val;
->           break;
->       case VIRTIO_PCI_COMMON_GF:
-> -        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
-> +        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
-> +            uint64_t features[VIRTIO_FEATURES_NU64S];
-> +            int i;
-> +
->               proxy->guest_features[proxy->gfselect] = val;
-> -            virtio_set_features(vdev,
-> -                                (((uint64_t)proxy->guest_features[1]) << 32) |
-> -                                proxy->guest_features[0]);
-> +            virtio_features_clear(features);
-> +            for (i = 0; i < ARRAY_SIZE(proxy->guest_features); ++i) {
-> +                uint64_t cur = proxy->guest_features[i];
-> +
-> +                features[i >> 1] |= cur << ((i & 1) * 32);
-> +            }
-> +            virtio_set_features_ex(vdev, features);
->           }
->           break;
->       case VIRTIO_PCI_COMMON_MSIX:
-> @@ -2311,6 +2360,8 @@ static void virtio_pci_reset(DeviceState *qdev)
->       virtio_bus_reset(bus);
->       msix_unuse_all_vectors(&proxy->pci_dev);
+>       trace_vmstate_save_state_top(vmsd->name);
 >   
-> +    memset(proxy->guest_features, 0, sizeof(proxy->guest_features));
-> +
->       for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->           proxy->vqs[i].enabled = 0;
->           proxy->vqs[i].reset = 0;
-> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> index eab5394898..639752977e 100644
-> --- a/include/hw/virtio/virtio-pci.h
-> +++ b/include/hw/virtio/virtio-pci.h
-> @@ -158,7 +158,7 @@ struct VirtIOPCIProxy {
->       uint32_t nvectors;
->       uint32_t dfselect;
->       uint32_t gfselect;
-> -    uint32_t guest_features[2];
-> +    uint32_t guest_features[VIRTIO_FEATURES_NU32S];
->       VirtIOPCIQueue vqs[VIRTIO_QUEUE_MAX];
+> -    if (vmsd->pre_save) {
+> +    if (vmsd->pre_save_errp) {
+> +        ret = vmsd->pre_save_errp(opaque, errp);
+> +        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+> +        if (ret) {
+> +            error_prepend(errp, "pre-save failed: %s: ", vmsd->name);
+> +            return ret;
+> +        }
+> +    } else if (vmsd->pre_save) {
+>           ret = vmsd->pre_save(opaque);
+>           trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+>           if (ret) {
+> @@ -524,10 +548,22 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                   }
 >   
->       VirtIOIRQFD *vector_irqfd;
+>                   if (ret) {
+> -                    error_setg(errp, "Save of field %s/%s failed",
+> -                                vmsd->name, field->name);
+> -                    if (vmsd->post_save) {
+> -                        vmsd->post_save(opaque);
+> +                    if (*errp == NULL) {
+
+include/qapi/error.h says:
+ >  * - You may pass NULL to not receive the error, &error_abort to abort
+ >  *   on error, &error_fatal to exit(1) on error, or a pointer to a
+ >  *   variable containing NULL to receive the error.
+
+ >  * - The function may pass @errp to functions it calls to pass on
+ >  *   their errors to its caller.  If it dereferences @errp to check
+ >  *   for errors, it must use ERRP_GUARD().
+
+I also think this change is irrelevant with the addition of the new 
+'errp' variants; it fixes an assertion failure when 
+vmstate_save_state_v() failed and set errp. It is not a new problem 
+caused by the 'errp' variants.
+
+If that's true, this change should have its own explanation in the patch 
+message, and also be split into another patch as "a commit message that 
+mentions 'Also, ...' is often a good candidate for splitting into 
+multiple patches." (docs/devel/submitting-a-patch.rst)
+
+> +                        error_setg(errp, "Save of field %s/%s failed",
+> +                                   vmsd->name, field->name);
+> +                    }
+> +                    if (vmsd->post_save_errp) {
+> +                        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
+> +                        if (ps_ret < 0) {
+
+The error checks else this and next ps_ret checks only care if it's zero 
+or not, but this checks for the sign, leading to inconsistency.
+
+> +                            error_free_or_abort(errp);
+> +                            error_propagate(errp, local_err);
+> +                            ret = ps_ret;
+> +                        }
+> +                    } else if (vmsd->post_save) {
+> +                        int ps_ret = vmsd->post_save(opaque);
+> +                        if (ps_ret < 0) {
+> +                            ret = ps_ret;
+> +                        }
+>                       }
+>                       return ret;
+>                   }
+> @@ -554,7 +590,17 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>   
+>       ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+>   
+> -    if (vmsd->post_save) {
+> +    if (vmsd->post_save_errp) {
+> +        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
+> +        if (!ret && ps_ret) {
+> +            ret = ps_ret;
+> +            error_propagate(errp, local_err);
+> +        } else if (ret && ps_ret) {
+> +            error_free_or_abort(errp);
+> +            error_propagate(errp, local_err);
+> +            ret = ps_ret;
+> +        }
+
+Simpler:
+
+if (ps_ret) {
+     if (ret) {
+       error_free_or_abort(errp);
+     }
+     ret = ps_ret;
+     error_propagate(errp, local_err);
+}
+
+> +    } else if (vmsd->post_save) {
+>           int ps_ret = vmsd->post_save(opaque);
+>           if (!ret && ps_ret) {
+>               ret = ps_ret;
+
+When there is a preceding error, this code still returns it and 
+dismisses the post_save() error although the other part of this function 
+is changed to propagate the error of post-save unconditionally. Please 
+keep them consistent.
+
+> 
 
 
