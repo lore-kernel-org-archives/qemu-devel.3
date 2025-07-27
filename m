@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65A61C87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BB2C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwMU-0000Bo-VA; Sun, 27 Jul 2025 04:04:03 -0400
+	id 1ufwUG-0003is-U0; Sun, 27 Jul 2025 04:12:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLs-0005Jq-Bk
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:26 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1ufwSu-0000C9-SQ
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:10:41 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLq-000477-8S
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:23 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-24014cd385bso1420415ad.0
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:21 -0700 (PDT)
+ id 1ufwSq-0005R7-PW
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:10:40 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-74af4af04fdso3302764b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603401; x=1754208201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603835; x=1754208635; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZV74/jk180skCcP64aNSwWKDejXWoEgBfJ7ZrJzLYQs=;
- b=zJuxPc42cZv3cXbeL1tcPTFk3NX1ZSSOYVijbLmH3ng8OICHYJnZ6QgbyKu2sl6EmN
- MxPaIIGYE37ooY/ZaLXi8sQPnFMCJjx8T/LHErPedBs/uOkxrL9VDBYs/s6sAd3MtDRY
- F5TbdrihPYPYT9+/fh81zDbseTijHttLt07ElfeCTOSXOOb2AFHX4qfwELhE1ks8xySx
- tuebPW8qLlytAe13bdaLaYCRK8MYZW80UJzA07zTHZ+h4FSpv4qdE9dEh1WQCsBddyoN
- Y2ANllhmqX5XCk8S9s8XTFe5oPTYBC2dzlLP7xizwapCHhizhnFy0/Otuy0+Ey4rW/VG
- x+6A==
+ bh=mAfnYZFojtklCwJRxymdFpeNN7gNQpULrXmCsUVIRjI=;
+ b=w3tlnSnCioUiLKwALz9I5PlL8rT0RgExpLGitYUDQQAsRh+K7pECDT7sccDXKFPyf2
+ cRjlJIeFZ6mF81P8MHduIoSvPSxnMK2FQOgmxHVxlwbjUfuzaKSHI6yVBTkBp9XwkeoP
+ EK/xRhe0nl231p3yPo1H8FUTNvdB1MRVgjrtuSj2KVJfzwM8ehVwPX3vwmWa6h34/OFu
+ MVXv3bV6cvWWVHEtOTyrTYdjkIhXYFbGgcjfSRim5BGPwkHbIXkC4kgsZg9vsLKnwz8K
+ eNMWZj/kGaVq6YjP4WOSG0B+x34P5ykCa6BV/ShO0YR0u6L/sXuwIrM4W2jCbM+/YQia
+ Z/Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603401; x=1754208201;
+ d=1e100.net; s=20230601; t=1753603835; x=1754208635;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZV74/jk180skCcP64aNSwWKDejXWoEgBfJ7ZrJzLYQs=;
- b=YTKS0BohmkJJrS4jmkhnzrB/0tnPThmDv4/8iKA8NEuIyq473oSvhuyL4L65dx3/rR
- 4zHRdaEwmlJeaFY8sWSOwNKvqRhMluvrtgQl+FXnotRxNjH43n0CY2omS0kQCuMUeKRI
- C3uJInaiM5cYYZOeZOLrou4rX1hdD6Plm6I7rIIiHPGgVuOmQWVGC4fOSTtHGuuxmTWC
- +l7QBKkxgRNbqY2M1X6zfl4+3SuqkE1VYW1f6SZPd5YP+4QcLBCjuoA6FGe1qQLy58Nv
- kOJb6rl2irl29JvZL2mZXTL1OkmHDaFBMcLRrYw4kYT88gN8ystn7m/miyYtChR+7b8M
- TG2g==
-X-Gm-Message-State: AOJu0Yz88sq53NAkl0gAldIWyEJ6DL3Cn5jqBSD9gaFG5fptwYCF9hXe
- AUjqcyikd09lTYV/USzAJ6CbYAijrOE7dq0zMGNmcDSw46W9oGlb79oFTIhme1a9BPwXPaLpTwc
- Iu0qA
-X-Gm-Gg: ASbGncvLNKlSglfGvQ7w3EJnAuGXAGzxtA9S2bOiYCB4XaC5tn1DKxMmCpLR1B1ADTg
- 8Er0J3YdvIlIOfdspS8DXhk1R/JIP5h5cw7wWwuJUWM8CzboHEf59Ei38kqqDQ9Na6/zQ4djDtx
- ckxJTjGgslLS+kD5ZL6Em5qLuCho5NydNT5NYms/eQwIMQhIIeEAJ4apy0ScZQbkdO2Yl7MtQvg
- 0tV4e907oz4XO2Myngx92lxPZDx3GXHFpWq4N/2VBHJZnCfUL3mdKlj2h27N9u0OKTan0bt2ekf
- YZy0+7S8Rb4EMs0K3SHFgFZ8gDAvtgOXCAALA/2m7YqU42RxaobNfsADlNBFyp258RC7OHBC6e/
- NonTj1CglAUkpq7GAajuILCu9ilEdIl7V03ILBeaAJ50eEu/FfCEnmiu/+o/KrvXNWk4kspiiTz
- My5I6nn6HunxqzRNtHOip8
-X-Google-Smtp-Source: AGHT+IF8szVz0tmnKhIlULobTD/BqkVWwZSRDel+zMsmDzGILYrcF7VbnskPCmgMAIsQawLb5hTLrA==
-X-Received: by 2002:a17:902:ef07:b0:235:cb94:1399 with SMTP id
- d9443c01a7336-23fb309bfe3mr107953615ad.6.1753603400931; 
- Sun, 27 Jul 2025 01:03:20 -0700 (PDT)
+ bh=mAfnYZFojtklCwJRxymdFpeNN7gNQpULrXmCsUVIRjI=;
+ b=NTm2EMqTvp0x8LHCEP+Y6O3JC/fITX/xjCrpFfzv/X4o5DqKUz8BYTX7+nqfKpVrLl
+ EXk55p4N2ePnJvvM+z2Yv8UX6lIEntciZ4zIPR2d6NVwvZxaUV+yP07Ph5fZNp+vVeJ+
+ MbblctjHoGWqq5G2OKdqRjszsRmstmJhLyhvwYkWUcbQB+B7cdsfrdamiUJlJOmBrJlC
+ qIimulq47WMkUOUMEAxxIHOh/4fsL6cUIUNI4Nhoh71mIFHQ5x5ko+mJ7wUvNO3a1h0R
+ NwQXE1bt6A62eiJF/IYRnsbInQZvstJgZ4ltGeU0YcNfYVcfmcvxBP81t44mh3CQZtBP
+ tfBQ==
+X-Gm-Message-State: AOJu0YyCKQOBIK9Vu97hUWWkWcpvEsXmKI6o7WB7WVFlbbFPZq+8PhpS
+ Cyzrx68I6TbLx38rtr6xOBH2jgmYHiKbBtAJvcszNV2eRT14QY6LefyGI3wwAomIBtP/J2t8tzY
+ 3rPBM
+X-Gm-Gg: ASbGnctc1df0idvXoEuJit/Infj2OXlyh6yMlfIcBbxPBHWIcWmhQW1MFH9ogzrGpdF
+ snR2jzo98MFrSiOIx0czD+MQmumozvlN1igZqquATtfTbX0hRbgYxL+Gg0ud8Yt6JWQvI54WBAZ
+ IRC8NpBRgcUnowm4XaIxH0W1qNb9CS5EpMpE9c/0KKN7aqcrLdpVgbZGMB9mG4y09BmQgQq+pHG
+ SLDEg0wcDpAvcY/3L7xP4yqzIPnRZzyqGqnVqN+zCOokAxPwkqBCFmidsXIS8mOkj6ZGpP84Bjy
+ wI9BGNH9BwN8KpCHoCO/7dbDWEfSaPg73KhfZQ86avCYB+QU9+DPPbctXCIrtAlHoyBHEwDYPmm
+ DQ+l7NE698ojuaa9NMNmaKJv6W6AEx6z5r6OaKIxvbu5W7ZQiIg337+vMN7ba383eoKGbr7q4fx
+ 01RPigEzj/Gg==
+X-Google-Smtp-Source: AGHT+IGEDv1rKx+ii9+DsUIH0u3zZgy2AbMLB5Sk/qBDzZpLvN5BKGULoBO4iBDaWkaloNky4Q1Tmw==
+X-Received: by 2002:a05:6a20:914c:b0:21f:53e4:1919 with SMTP id
+ adf61e73a8af0-23d6df7ea1dmr12511667637.3.1753603834878; 
+ Sun, 27 Jul 2025 01:10:34 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.20
+ d2e1a72fcca58-76408c0271csm3085491b3a.49.2025.07.27.01.10.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:03:20 -0700 (PDT)
+ Sun, 27 Jul 2025 01:10:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 20/82] target/arm: Expand syndrome parameter to
- raise_exception*
-Date: Sat, 26 Jul 2025 22:01:52 -1000
-Message-ID: <20250727080254.83840-21-richard.henderson@linaro.org>
+Subject: [PATCH 81/82] tests/tcg/aarch64: Add gcspushm
+Date: Sat, 26 Jul 2025 22:02:53 -1000
+Message-ID: <20250727080254.83840-82-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,72 +101,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for raising exceptions with 64-bit syndromes.
+Validate successful and trapped executions of GCSPUSHM, GCSPOPM.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h     | 6 +++---
- target/arm/tcg-stubs.c     | 2 +-
- target/arm/tcg/op_helper.c | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ tests/tcg/aarch64/gcspushm.c      | 77 +++++++++++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.target |  2 +-
+ 2 files changed, 78 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/aarch64/gcspushm.c
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f0e888ff93..fc82dd65e8 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -306,14 +306,14 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
-  * and never returns because we will longjump back up to the CPU main loop.
-  */
- G_NORETURN void raise_exception(CPUARMState *env, uint32_t excp,
--                                uint32_t syndrome, uint32_t target_el);
-+                                uint64_t syndrome, uint32_t target_el);
+diff --git a/tests/tcg/aarch64/gcspushm.c b/tests/tcg/aarch64/gcspushm.c
+new file mode 100644
+index 0000000000..0c7cc09065
+--- /dev/null
++++ b/tests/tcg/aarch64/gcspushm.c
+@@ -0,0 +1,77 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "gcs.h"
++
++
++#define GCSPUSHM  "sys #3, c7, c7, #0, %[push]"
++#define GCSPOPM   "sysl %[pop], #3, c7, c7, #1"
++
++static volatile uint64_t test_pc;
++
++static void test_sigsegv(int sig, siginfo_t *info, void *vuc)
++{
++    ucontext_t *uc = vuc;
++
++    assert(uc->uc_mcontext.pc == test_pc);
++    assert(info->si_code == SEGV_CPERR);
++    /* TODO: Dig for ESR and verify syndrome. */
++    uc->uc_mcontext.pc += 4;
++}
++
++static void test_sigill(int sig, siginfo_t *info, void *vuc)
++{
++    ucontext_t *uc = vuc;
++
++    assert(uc->uc_mcontext.pc == test_pc);
++    assert(info->si_code == ILL_ILLOPC);
++    uc->uc_mcontext.pc += 4;
++}
++
++int main()
++{
++    struct sigaction sa = { .sa_flags = SA_SIGINFO };
++    uint64_t tmp, old, new;
++
++    enable_gcs(PR_SHADOW_STACK_PUSH);
++
++    /* Valid value -- low 2 bits clear */
++    old = 0xdeadbeeffeedcaec;
++    asm volatile(GCSPUSHM "\n\t" GCSPOPM
++                 : [pop] "=r" (new)
++                 : [push] "r" (old));
++    assert(old == new);
++
++    sa.sa_sigaction = test_sigsegv;
++    if (sigaction(SIGSEGV, &sa, NULL) < 0) {
++        perror("sigaction");
++        exit(1);
++    }
++
++    /* Invalid value -- SIGSEGV via EC_GCS */
++    asm volatile("adr %[tmp], 0f\n\t"
++                 "str %[tmp], %[test]\n\t"
++                 GCSPUSHM "\n"
++                 "0:" GCSPOPM
++                 : [tmp] "=&r" (tmp),
++                   [test] "=m" (test_pc),
++                   [pop] "=r" (new)
++                 : [push] "r" (1));
++
++    enable_gcs(0);
++
++    sa.sa_sigaction = test_sigill;
++    if (sigaction(SIGILL, &sa, NULL) < 0) {
++        perror("sigaction");
++        exit(1);
++    }
++
++    /* Pushm is disabled -- SIGILL via EC_SYSTEMREGISTERTRAP */
++    asm volatile("adr %[tmp], 0f\n\t"
++                 "str %[tmp], %[test]\n"
++                 "0:\t" GCSPUSHM
++                 : [tmp] "=&r" (tmp),
++                   [test] "=m" (test_pc)
++                 : [push] "r" (1));
++
++    exit(0);
++}
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 0347a36e8d..c6f401c317 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -76,7 +76,7 @@ $(SME_TESTS): CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
+ endif
  
- /*
-  * Similarly, but also use unwinding to restore cpu state.
-  */
- G_NORETURN void raise_exception_ra(CPUARMState *env, uint32_t excp,
--                                      uint32_t syndrome, uint32_t target_el,
--                                      uintptr_t ra);
-+                                   uint64_t syndrome, uint32_t target_el,
-+                                   uintptr_t ra);
+ # GCS Tests
+-GCS_TESTS += gcsstr
++GCS_TESTS += gcsstr gcspushm
+ AARCH64_TESTS += $(GCS_TESTS)
+ $(GCS_TESTS): gcs.h
  
- /*
-  * For AArch64, map a given EL to an index in the banked_spsr array.
-diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
-index aac99b2672..aeeede8066 100644
---- a/target/arm/tcg-stubs.c
-+++ b/target/arm/tcg-stubs.c
-@@ -16,7 +16,7 @@ void write_v7m_exception(CPUARMState *env, uint32_t new_exc)
-     g_assert_not_reached();
- }
- 
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
-+void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-                         uint32_t target_el, uintptr_t ra)
- {
-     g_assert_not_reached();
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 575e566280..46a3b911ec 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -46,7 +46,7 @@ int exception_target_el(CPUARMState *env)
- }
- 
- void raise_exception(CPUARMState *env, uint32_t excp,
--                     uint32_t syndrome, uint32_t target_el)
-+                     uint64_t syndrome, uint32_t target_el)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -70,7 +70,7 @@ void raise_exception(CPUARMState *env, uint32_t excp,
-     cpu_loop_exit(cs);
- }
- 
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
-+void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-                         uint32_t target_el, uintptr_t ra)
- {
-     CPUState *cs = env_cpu(env);
 -- 
 2.43.0
 
