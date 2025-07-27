@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 670CBC87FD1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D74C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwOk-0006zq-CZ; Sun, 27 Jul 2025 04:06:25 -0400
+	id 1ufwMa-0000yQ-3W; Sun, 27 Jul 2025 04:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwM0-0006AT-6b
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:32 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ufwLt-0005LO-Qo
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:26 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLy-00049y-IR
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:31 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-23fd3fe0d81so8010535ad.3
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:30 -0700 (PDT)
+ id 1ufwLs-00047g-4V
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:25 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2363616a1a6so27449275ad.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603409; x=1754208209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603402; x=1754208202; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aOJZIZJj/tIs5sXQuR3l8mzb1hhaa8gRwgUU6Thg5os=;
- b=ngAtlPtsJncqr06iep+oPXpQHy7aKiXvkQ+7gqQqUXhIYA1GP65VoM64zJozqMtkba
- 7FRBPzeL6nIvrxtum47SwdYTn/GELQ9gdcZd7fHo4LE3lABak/rgGdUfbdbkKkBL1s9B
- KzOzP/cnfaRE8leH/Cn98HIz7nGpSi24S874J3W6l4SNXZoL4EJ/Br/2PdzwnaBsXpI9
- MnSKbPqtVHn7dkQYlHfflsHTO+x65UfW8536X0rEheFlto/SwYXNozK01fd/yrUXqOYV
- WTcsKyOG7ZTnfK1qJRqiXvFuVPvqOx3Oad2jmwt3Ar1WTlTgfFeFCYYpjd4OZt6+7fsn
- svPw==
+ bh=LYZh6fiTUe+0EQpcXU4sHMxQ8Ins9Igi8YtaAq4VDew=;
+ b=NvIHBjhG7FbRW/zEcIJpE1GOnwUk50TOt8cyWb+pRCNP/ZfbrhkAhUUkUSzs4JTdaO
+ PE68a3fbxyI+e1V7iu3BhY8PF0YPc6A2d9NIXK8LFd7+hEcB4nJHXZe1jujGEGHicYDA
+ xnqFP3757r8aSBzvbY/OSLyfvxLfw8kGmX9veuRwVRqdQef6O4IWRNE4gRJG04pt3Jri
+ SClhmh17GltR1yua7sD69bSboziJhuEky9MZ9XnZACTq+uOTVYfJMCKAMIO3WR53s6Vg
+ eYb8dEVD3WRK8WKDRWX1rN1n3D2c/4pkfXmdnvHvLYpCMhBGuVu7x6a6nCZE4oA4MyLz
+ OsfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603409; x=1754208209;
+ d=1e100.net; s=20230601; t=1753603402; x=1754208202;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aOJZIZJj/tIs5sXQuR3l8mzb1hhaa8gRwgUU6Thg5os=;
- b=Qu3ADAHmQdaiRtf+0Pngfuuimj47mBmJT0Pl4jtxVro/HoK2enfI/ry5JfFhR/9gRM
- O0G/K4WU46RsrNtqRPwSgkmq+hIN1NygYL5ru+DtIpcSV7vqBmLtfSpjVXk5kBztUZ07
- DjFmcBmj/FKG7/lt+xnhNOIi1THL/T1acLIl2IDMmzcL6g3x5GIWA60mOGy8oxO3omwF
- S6/3cRhgZ69KJglfp7TbkagtYyb6o8lBaCUCv9tLvoP/N4FbZ6MqDoS6KTFyyzmm5Hyr
- R8nAhgQaJqqEOdk3TTlBeeQcLuPRGD1nJd9d7IOLU/Db/EiPNNI3hoPApcMhMGypMCRq
- G5Uw==
-X-Gm-Message-State: AOJu0Yzt9lwRTaaJn4Sof9404KTKSkzTHRWeFAxYs6NQa4IMlk0eJI8W
- Wqk4CR3lfldGKhew8ECX4Oyo4OzV6pAIOmesjcQxDCUHZNtFmbr6prDfoNdl8Yws3HZCB/J3dbV
- eZRnM
-X-Gm-Gg: ASbGnctFOJcKXbKJ7Eb3MpT+NqTo5vuL5TT78ckW2pUibcffMx891sqNOGnQ2qfokU3
- WlqdbMJ88FUbp7KLIUypChCtBy3ly76PTeRw8xsJOKsYw0k16UDrnhIdeizeiyBLTVnsi7asRma
- f92kSVdGJI0eofm6WpePpB1f8XuiacglsRjOljQY/txBQ/jvJEs0brYLzNaD0XdtSr1YTF1QK6a
- hf74GqCoC8RrXufVMLYvfbukJLgvnrPIjOFzqLzLBPIY/mHO4A4ltithEX4/ifmcSkR+uutLIDV
- OFMmwqMkIDoBhPrbJr67HrTjiWMUsIQaero8LQl5GTG06VnPZbXuOIbrVh+CmQqwRx0SypzySuW
- +Fxyk1ujge+7J86XRhE4W3emobcWOoQaJRli0uz8Yt4rzT7aUxWAT0r3Ij6wXrKOabJ+7omGspd
- 8JyBjve95EkA==
-X-Google-Smtp-Source: AGHT+IE38hch7fbzFLmFmhk0gVXu4FVu04ds4WO/+HboMxMk6/MfAwsZjKFErX691bsc8n/IpFVfGw==
-X-Received: by 2002:a17:903:2ac3:b0:235:15f3:ef16 with SMTP id
- d9443c01a7336-23fb2ffc4a3mr110180555ad.13.1753603409284; 
- Sun, 27 Jul 2025 01:03:29 -0700 (PDT)
+ bh=LYZh6fiTUe+0EQpcXU4sHMxQ8Ins9Igi8YtaAq4VDew=;
+ b=fjyWQtQKShy5h51+wnKM3L2sjTZCpFryhC3C3E0vF7kt55fkqcbV3EJugSdY0Dalux
+ Nv/t/wYMOMlpMVQD/ifBxc7tCLBvz5ABw0YIcMkwwKE53VVnhULIg495Tr5oegcabezB
+ oqmUGy93ux2squwr5DfAA9H7Uw4Rj2S/NT4vaWPBhAHXtPfAo5688lMNPpvWnykjV8n5
+ 7zfvbtTaDvUOGkpmzgYYzyKAmxmzwfEZHwvPy4ijYjimUjzqlsN0ZvsOMyRGus07tjCj
+ W4lN14DZJbZPbZnylLf+yzYc0zK4Zxl/xUG8lmAT0QVNz8Gc7g3qrY59YIYX7xv500z6
+ CjoA==
+X-Gm-Message-State: AOJu0YxrXW+qP+9yZOMnTKqrqfELa5p6EBA1MKhhl8d5WentoYgxytlG
+ eGMy1EIS5PAIlysaXtcP46vfn4OvYBrWmUWD9QAANOyJSpN0Mdzvizj2x2yzzekGNv7caNDqHgg
+ vibAg
+X-Gm-Gg: ASbGnctZSM4fBxfgg8p/nr61jkBSEe1y5PIDtRhxK+etwUac6zvjZZozp6gWrXLVg5l
+ JYY9QXh/h+mvpmccC3l3YhHcZiH9Yi90vfytTt8R2Bo0nlwWY/ZzDKFUk3/LozfRZG9/S+r4kgc
+ aAlubI8DsisvceuE1X+kMgbMWc9FEgPa9lDDuiReJezFE/J6qHp9q5IbgMh4v2CpFeBGUh8vUVL
+ 9K+3oc0fcw3wejkaR4rnEQk2ZV6CW9E5Rc7WI8jTPthwnyRRbkCKaui1e5qOP6TZzYVWuWcGmvj
+ USAJkpPaJvIw5PEGnnigP6lMxqoo+S4oJrRwjanC95iHOZxxHvGBs+uzanVLCDMGBJDoEKZr+LW
+ FafyJHwdLTvQoLDeJ6ofxNP45Vfy/4T8SNVlD9mDPWUWEVdiqzTnow90yqQOFBGDJ39+6URwYMk
+ kEGHrqgtxbDw==
+X-Google-Smtp-Source: AGHT+IH1eeAT8s6Oqma5zyC8EDC3TH1shCkQQPCskWKrxdp5WvgGWV1a7lYDQKl1J7lCQGcB9dT2sA==
+X-Received: by 2002:a17:902:d4d2:b0:240:11cd:8502 with SMTP id
+ d9443c01a7336-24011cd8924mr7638015ad.13.1753603401960; 
+ Sun, 27 Jul 2025 01:03:21 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.28
+ d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:03:28 -0700 (PDT)
+ Sun, 27 Jul 2025 01:03:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 27/82] include/exec/memopidx: Adjust for 32 mmu indexes
-Date: Sat, 26 Jul 2025 22:01:59 -1000
-Message-ID: <20250727080254.83840-28-richard.henderson@linaro.org>
+Subject: [PATCH 21/82] target/arm: Implement dirtybit check for PIE
+Date: Sat, 26 Jul 2025 22:01:53 -1000
+Message-ID: <20250727080254.83840-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +101,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Both S1PIE and S2PIE have a bit to make software tracking
+of dirty pages easier.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/memopidx.h | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ target/arm/internals.h      |  1 +
+ target/arm/ptw.c            | 16 ++++++++++++++++
+ target/arm/tcg/tlb_helper.c | 12 +++++++++---
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/memopidx.h b/include/exec/memopidx.h
-index eb7f1591a3..66d9c58b3a 100644
---- a/include/exec/memopidx.h
-+++ b/include/exec/memopidx.h
-@@ -25,9 +25,10 @@ typedef uint32_t MemOpIdx;
- static inline MemOpIdx make_memop_idx(MemOp op, unsigned idx)
- {
- #ifdef CONFIG_DEBUG_TCG
--    assert(idx <= 15);
-+    assert(idx <= 31);
-+    assert(clz32(op) >= 5);
- #endif
--    return (op << 4) | idx;
-+    return (op << 5) | idx;
- }
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index fc82dd65e8..b6499683cc 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -754,6 +754,7 @@ struct ARMMMUFaultInfo {
+     bool s1ptw;
+     bool s1ns;
+     bool ea;
++    bool dirtybit;  /* FEAT_S1PIE, FEAT_S2PIE */
+ };
  
  /**
-@@ -38,7 +39,7 @@ static inline MemOpIdx make_memop_idx(MemOp op, unsigned idx)
-  */
- static inline MemOp get_memop(MemOpIdx oi)
- {
--    return oi >> 4;
-+    return oi >> 5;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 323fc8052d..820d5e65a0 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2306,6 +2306,22 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         goto do_fault;
+     }
+ 
++    /* S1PIE and S2PIE both have a bit for software dirty page tracking. */
++    if (access_type == MMU_DATA_STORE && param.pie) {
++        /*
++         * For S1PIE, bit 7 is nDirty and both HA and HD are checked.
++         * For S2PIE, bit 7 is Dirty and only HD is checked.
++         */
++        bool bit7 = extract64(attrs, 7, 1);
++        if (regime_is_stage2(mmu_idx)
++            ? !bit7 && !param.hd
++            : bit7 && !(param.ha && param.hd)) {
++            fi->type = ARMFault_Permission;
++            fi->dirtybit = true;
++            goto do_fault;
++        }
++    }
++
+     /* If FEAT_HAFDBS has made changes, update the PTE. */
+     if (new_descriptor != descriptor) {
+         new_descriptor = arm_casq_ptw(env, descriptor, new_descriptor, ptw, fi);
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index 23c72a99f5..ae2acd6727 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -24,13 +24,13 @@ bool arm_s1_regime_using_lpae_format(CPUARMState *env, ARMMMUIdx mmu_idx)
+     return regime_using_lpae_format(env, mmu_idx);
  }
  
- /**
-@@ -49,7 +50,7 @@ static inline MemOp get_memop(MemOpIdx oi)
-  */
- static inline unsigned get_mmuidx(MemOpIdx oi)
+-static inline uint32_t merge_syn_data_abort(uint32_t template_syn,
++static inline uint64_t merge_syn_data_abort(uint32_t template_syn,
+                                             ARMMMUFaultInfo *fi,
+                                             unsigned int target_el,
+                                             bool same_el, bool is_write,
+                                             int fsc)
  {
--    return oi & 15;
-+    return oi & 31;
+-    uint32_t syn;
++    uint64_t syn;
+ 
+     /*
+      * ISV is only set for stage-2 data aborts routed to EL2 and
+@@ -75,6 +75,10 @@ static inline uint32_t merge_syn_data_abort(uint32_t template_syn,
+         /* Merge the runtime syndrome with the template syndrome.  */
+         syn |= template_syn;
+     }
++
++    /* Form ISS2 at the top of the syndrome. */
++    syn |= (uint64_t)fi->dirtybit << 37;
++
+     return syn;
  }
  
- #endif
+@@ -176,7 +180,9 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
+     int target_el = exception_target_el(env);
+     int current_el = arm_current_el(env);
+     bool same_el;
+-    uint32_t syn, exc, fsr, fsc;
++    uint32_t exc, fsr, fsc;
++    uint64_t syn;
++
+     /*
+      * We know this must be a data or insn abort, and that
+      * env->exception.syndrome contains the template syndrome set
 -- 
 2.43.0
 
