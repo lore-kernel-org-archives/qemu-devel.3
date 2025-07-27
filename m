@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D34C87FCE
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 07:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F24C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 07:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufvx2-0001s3-F3; Sun, 27 Jul 2025 03:37:44 -0400
+	id 1ufw1W-0006bA-KU; Sun, 27 Jul 2025 03:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufvwz-0001bb-UW
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:37:41 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1ufw1O-0006I6-Pw
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:42:16 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufvwu-0000Qt-1H
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:37:41 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-879d2e419b9so2399752a12.2
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 00:37:35 -0700 (PDT)
+ id 1ufw1L-000152-Pm
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:42:14 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2350fc2591dso39774975ad.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 00:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753601854; x=1754206654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753602130; x=1754206930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1DLT5kPT2st9uLIffRQa9ZE7Wu7o06Vv+AiBdjjBCGA=;
- b=ro12tOjRLjPVD8iIgR2erZyOOx/kVYmwOoKNmucu2xPzSH1jnOnX7giD0UFWu9MyV5
- rosfhZQ52FYmCd9U/tuJuBF6vc6cCjyuy+1bmX5UmkBTRPmCCkeP8644ThwerH3A8LqB
- UKtFWdDIwLzT/3qtD+dnom6ukEArEO3LVUZ1yqDGcn5SlJLeTSQV5JBRC0xiVI2HNxpx
- X9j1c4gegPKdfJZwxVljHFuY2FixyDmjYQvOHDxVKROYvSngFijWlUZbE0/rCQ2chEaz
- /hAnX4Cf3NlnKuOmWF+J6wTE6DYpJ3gVQLLPmDq1zfjMD2jB+wc0SNn1IkvNdwuObvsU
- sHDA==
+ bh=HolV9X4BkVapdOFNAuZ95FskSHr7YQ0pnoaUzo/RGgg=;
+ b=TDodKcjTBJwzNKL2KIdzdsjFxLg6XL6/9Fdr5nzTR0RlNAvTvT74zDHirQIqm77JdU
+ N+RcQAb/xUVhLXgrTGpbpogPzCH46zSNCUHKYLqFf+n5us1/YGfMvja7itDCa5hweHvM
+ AJ1b05DeAp4Go8S1zVKsTymhvzyEOVTzIrn7YOAmV1EYlfwGgCGjaBCjA/gbNEKajKq+
+ HFxRac+Y/uTgRYVmVAJGlfHgjKdaa3aL/Z9tyTB5V7e8KjJ2YODZp9KotSz4bfaggNqP
+ QcszdM9ZD71kiDC30TiaALlHmKkb6k+nwyxD1gUYxcxS4q0eRI5GQOuk47b3keuyfGCC
+ tQdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753601854; x=1754206654;
+ d=1e100.net; s=20230601; t=1753602130; x=1754206930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1DLT5kPT2st9uLIffRQa9ZE7Wu7o06Vv+AiBdjjBCGA=;
- b=EgKg7tykOpHx+2zSAs/MDsfAv2cBXymWbof6bTaSsUOYlts/nvP4QySeJASVf+eksF
- 6ymkKZtjtdshMbIgiwjomuS0PDyRkSg8ZFjTzg9hV7mY0NBdBYS0xM6e7mh42FhMUyQu
- 0E6WEnbrlK5HdqMs7XeB5uZPbcCBiHESwiZi0a3G58ndvrdSbdHMapKAuCogL92zybXz
- 8rklgx8M5UGT6qRJcmv8jTgzH3ZNwtCGDiptRHt1wXADA+8mt7je4j4k3UCpqS9LOIAH
- j02Dr9+ReAeet9gEuot3RRWJhiuVU65VMgKj8QiE5RpiBC9++f2k/5blNaBD7FQXl+fG
- 6GBA==
-X-Gm-Message-State: AOJu0YwsZUlRz+zp/BwpVS0ukGcYgJQNnTMmzFF/hn2ZSNqkDvRvJaaj
- c8OALORXtuw+pGHh2SdHBbF7I07l9VrZDblggP3hTsxxnP8Au4FrevU2fp2hMFZn3KTCGZ7CF4F
- 62pk9
-X-Gm-Gg: ASbGncuoSRfV2FcAk6dZ+8omZE0Ma1Fhkl9dS01x3OXbZ1/Wdpu7s9u4ibhgqJNX5Qb
- nBDQGPv3BxMYjejwQP/UcjTa4yKUnG1YZmqnUyghp8FXr+rvb65ENcZKdftqepy7+dTZZuiqbvw
- 782BGBEXEsVfYXJmJ2dzy5n6QlBa8TmT9q2ojSgK83IDZK2igvthlAMrzSTAWBMBbx24t/2kPra
- kVWV4aEismKOiFf1oO23WLp1dSuzaiFUMasM8JOcm/dg+iRN++3PKWgBk5Tk4CCJUwsEq2yhHC0
- DwZvN6q90Y8ksr0P0w+AsOP9cy92MbPnYsJrldLfguhOmEsQjGDYbDpHn9XnH9mSinbQxKx9ywf
- O88MK7knSEvyOp3hrrSbNag2JcA30kzq0n1/XZnMKt5gFjfu3QNFoSCgyPNoJKHqGVmaPztNofC
- mEb2gJ8WwhId7EHwbFKC4D
-X-Google-Smtp-Source: AGHT+IFGHiB7Q5s86AukR0H5ftiP0DscZzZnoFX+By4Iu5OBY+p/awupF8lO7QSr6V3lRtOwFjtdWw==
-X-Received: by 2002:a17:902:c78c:b0:23f:f39b:eae8 with SMTP id
- d9443c01a7336-23ff39bee2amr24259705ad.19.1753601854479; 
- Sun, 27 Jul 2025 00:37:34 -0700 (PDT)
+ bh=HolV9X4BkVapdOFNAuZ95FskSHr7YQ0pnoaUzo/RGgg=;
+ b=Xaqb7JbHxD0MrvnNDV65Z/rXbkYrhqPK7uF+EL9dnOIxWhcqXFNpYFg5vLeihyejj7
+ me7zdcCpePD9B38JxA5P2zTz+PHXQsQ+ryFsekkHHFbQMz8t7Lh8sYFRpuu7Un/wlHrg
+ FD3I6CKtL9T78Xrxt0EGybTsnrB2+OnuXt/qpC2F6Wl8GQk16piTg7EhVGcd9meeWzYY
+ 8dNn9IkkOYxHJ4sAmi7rsQPD2H1P6s12eC921PToindpifANjOHAU5XnCChcZedMZgAV
+ MXiJUfP6oizpMXuGywq5nTD/VC7lQx+r2jNI19cAGkwNyTI1r6MLhGfmgLGTVA+1O830
+ nZ2g==
+X-Gm-Message-State: AOJu0YxK0Vs7hfA9iS6jj4iX5O342qmPp5JZJWAs6F/5be8T6mStVx0/
+ VnuNRMCcFYv1wHO4wbL9ZwVcxrOU6NMgkBv+y0Q1fV5J3sB3loEhWhUSyptCJ7uL/R7X9tsLVs0
+ aTATk
+X-Gm-Gg: ASbGncsDkNT2QBm8//4TkfYKo8OAI5U1lwvAuW4lN9dlnLdxcmr/zRVdEUjYlaAG7vH
+ 7u2HQhQb8PxDHaL+hW/ZYpg4XuSh2ZVe4xHDkX/7D7r499p7VH4Sn/eq2hzfEK71UuML8C7hu2J
+ 3dMBBOSgthYlaCMTe9BPFqWzBVwajhL+Dc0Wx/pe1VYc6oqr6vOOrxrgTig/FW/Id8Km+pWT+p7
+ Kunkas4hSalKpCMuAcZltSwHwtmjjyM/yvybSPXDskHBLOfOVoNolPWtAW7tb8xUUhSJSsl97Gy
+ P/Iej//QroY0qlVQy9+tOZdzXWtrCcPZgWiU+4KjE/UNvqWBz7kr/J39/lZtLbEskcOA4P0GODs
+ 4U58e5CA+e3U4mkhhHmOsce8EDSABlQJcUF8nXtVuEmZ2Qb2pCX6Ou/ekrSRqIZfSqU5Cv8XLNE
+ WeTFKHXAuCiA==
+X-Google-Smtp-Source: AGHT+IGgbIPDqR/0dS1vLD1FRaP6Zr4Wl/SyOGVyUerc20avUG9AN4+6cjQh+CQ2W9k6rNhQ0/8g+Q==
+X-Received: by 2002:a17:902:cccd:b0:23f:75d1:3691 with SMTP id
+ d9443c01a7336-23fb2b5c028mr104499585ad.15.1753602130119; 
+ Sun, 27 Jul 2025 00:42:10 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe327443sm29824635ad.44.2025.07.27.00.37.32
+ d9443c01a7336-23fbe53b546sm29633055ad.177.2025.07.27.00.42.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 00:37:34 -0700 (PDT)
+ Sun, 27 Jul 2025 00:42:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 2/3] linux-user/aarch64: Support TPIDR2_MAGIC signal frame
- record
-Date: Sat, 26 Jul 2025 21:37:27 -1000
-Message-ID: <20250727073728.82913-3-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v9 2/6] tests/functional/test_aarch64_rme: update image
+Date: Sat, 26 Jul 2025 21:41:58 -1000
+Message-ID: <20250727074202.83141-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250727073728.82913-1-richard.henderson@linaro.org>
-References: <20250727073728.82913-1-richard.henderson@linaro.org>
+In-Reply-To: <20250727074202.83141-1-richard.henderson@linaro.org>
+References: <20250727074202.83141-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,141 +102,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-FEAT_SME adds the TPIDR2 userspace-accessible system register, which
-is used as part of the procedure calling standard's lazy saving
-scheme for the ZA registers:
- https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving-scheme
+TF-A needs to be patched to enable support for FEAT_TCR2 and
+FEAT_SCTLR2. This new image contains updated firmware.
 
-The Linux kernel has a signal frame record for saving
-and restoring this value when calling signal handlers, but
-we forgot to implement this. The result is that code which
-tries to unwind an exception out of a signal handler will
-not work correctly.
-
-Add support for the missing record.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250725175510.3864231-3-peter.maydell@linaro.org>
+Message-ID: <20250719035838.2284029-3-pierrick.bouvier@linaro.org>
 ---
- linux-user/aarch64/signal.c | 42 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
+ tests/functional/test_aarch64_rme_sbsaref.py | 64 ++++++++-------
+ tests/functional/test_aarch64_rme_virt.py    | 85 +++++++-------------
+ 2 files changed, 66 insertions(+), 83 deletions(-)
 
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index 6514b73ad9..f28ba80754 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -121,6 +121,13 @@ struct target_za_context {
- #define TARGET_ZA_SIG_CONTEXT_SIZE(VQ) \
-     TARGET_ZA_SIG_ZAV_OFFSET(VQ, VQ * TARGET_SVE_VQ_BYTES)
+diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
+index 746770e776..cd6390b548 100755
+--- a/tests/functional/test_aarch64_rme_sbsaref.py
++++ b/tests/functional/test_aarch64_rme_sbsaref.py
+@@ -10,21 +10,23 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-+#define TARGET_TPIDR2_MAGIC 0x54504902
-+
-+struct target_tpidr2_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t tpidr2;
-+};
-+
- struct target_rt_sigframe {
-     struct target_siginfo info;
-     struct target_ucontext uc;
-@@ -253,6 +260,14 @@ static void target_setup_za_record(struct target_za_context *za,
-     }
- }
+ import os
++from os.path import join
++import shutil
  
-+static void target_setup_tpidr2_record(struct target_tpidr2_context *tpidr2,
-+                                       CPUARMState *env)
-+{
-+    __put_user(TARGET_TPIDR2_MAGIC, &tpidr2->head.magic);
-+    __put_user(sizeof(struct target_tpidr2_context), &tpidr2->head.size);
-+    __put_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static void target_restore_general_frame(CPUARMState *env,
-                                          struct target_rt_sigframe *sf)
- {
-@@ -403,6 +418,12 @@ static bool target_restore_za_record(CPUARMState *env,
-     return true;
- }
+ from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+-from test_aarch64_rme_virt import test_realms_guest
  
-+static void target_restore_tpidr2_record(CPUARMState *env,
-+                                         struct target_tpidr2_context *tpidr2)
-+{
-+    __get_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static int target_restore_sigframe(CPUARMState *env,
-                                    struct target_rt_sigframe *sf)
- {
-@@ -410,6 +431,7 @@ static int target_restore_sigframe(CPUARMState *env,
-     struct target_fpsimd_context *fpsimd = NULL;
-     struct target_sve_context *sve = NULL;
-     struct target_za_context *za = NULL;
-+    struct target_tpidr2_context *tpidr2 = NULL;
-     uint64_t extra_datap = 0;
-     bool used_extra = false;
-     int sve_size = 0;
-@@ -460,6 +482,14 @@ static int target_restore_sigframe(CPUARMState *env,
-             za_size = size;
-             break;
  
-+        case TARGET_TPIDR2_MAGIC:
-+            if (tpidr2 || size != sizeof(struct target_tpidr2_context) ||
-+                !cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+                goto err;
-+            }
-+            tpidr2 = (struct target_tpidr2_context *)ctx;
-+            break;
-+
-         case TARGET_EXTRA_MAGIC:
-             if (extra || size != sizeof(struct target_extra_context)) {
-                 goto err;
-@@ -497,6 +527,9 @@ static int target_restore_sigframe(CPUARMState *env,
-     if (za && !target_restore_za_record(env, za, za_size, &svcr)) {
-         goto err;
-     }
-+    if (tpidr2) {
-+        target_restore_tpidr2_record(env, tpidr2);
-+    }
-     if (env->svcr != svcr) {
-         env->svcr = svcr;
-         arm_rebuild_hflags(env);
-@@ -568,8 +601,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         .total_size = offsetof(struct target_rt_sigframe,
-                                uc.tuc_mcontext.__reserved),
-     };
--    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0;
--    int sve_size = 0, za_size = 0;
-+    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
-+    int sve_size = 0, za_size = 0, tpidr2_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-     abi_ulong frame_addr, return_addr;
-@@ -585,6 +618,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         sve_ofs = alloc_sigframe_space(sve_size, &layout);
-     }
-     if (cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+        tpidr2_size = sizeof(struct target_tpidr2_context);
-+        tpidr2_ofs = alloc_sigframe_space(tpidr2_size, &layout);
-         /* ZA state needs saving only if it is enabled.  */
-         if (FIELD_EX64(env->svcr, SVCR, ZA)) {
-             za_size = TARGET_ZA_SIG_CONTEXT_SIZE(sme_vq(env));
-@@ -644,6 +679,9 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-     if (za_ofs) {
-         target_setup_za_record((void *)frame + za_ofs, env, za_size);
-     }
-+    if (tpidr2_ofs) {
-+        target_setup_tpidr2_record((void *)frame + tpidr2_ofs, env);
-+    }
+ class Aarch64RMESbsaRefMachine(QemuSystemTest):
  
-     /* Set up the stack frame for unwinding.  */
-     fr = (void *)frame + fr_ofs;
+-    # Stack is built with OP-TEE build environment from those instructions:
++    # Stack is inspired from:
+     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
+-    # https://github.com/pbo-linaro/qemu-rme-stack
++    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_sbsa_release
++    # ./build.sh && ./archive_artifacts.sh out.tar.xz
+     ASSET_RME_STACK_SBSA = Asset(
+-        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
+-         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
+-         'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
++        ('https://github.com/pbo-linaro/qemu-linux-stack/'
++         'releases/download/build/rme_sbsa_release-a7f02cf.tar.xz'),
++         '27d8400b11befb828d6db0cab97e7ae102d0992c928d3dfbf38b24b6cf6c324c')
+ 
+     # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
+     # and launching a nested VM using it.
+@@ -35,35 +37,41 @@ def test_aarch64_rme_sbsaref(self):
+ 
+         self.vm.set_console()
+ 
+-        stack_path_tar_gz = self.ASSET_RME_STACK_SBSA.fetch()
+-        self.archive_extract(stack_path_tar_gz, format="tar")
++        stack_path_tar = self.ASSET_RME_STACK_SBSA.fetch()
++        self.archive_extract(stack_path_tar, format="tar")
+ 
+-        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-sbsa')
+-        pflash0 = os.path.join(rme_stack, 'images', 'SBSA_FLASH0.fd')
+-        pflash1 = os.path.join(rme_stack, 'images', 'SBSA_FLASH1.fd')
+-        virtual = os.path.join(rme_stack, 'images', 'disks', 'virtual')
+-        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
++        rme_stack = self.scratch_file('.')
++        pflash0 = join(rme_stack, 'out', 'SBSA_FLASH0.fd')
++        pflash1 = join(rme_stack, 'out', 'SBSA_FLASH1.fd')
++        rootfs = join(rme_stack, 'out', 'host.ext4')
+ 
+-        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
++        efi = join(rme_stack, 'out', 'EFI')
++        os.mkdir(efi)
++        shutil.copyfile(join(rme_stack, 'out', 'Image'), join(efi, 'Image'))
++        with open(join(efi, 'startup.nsh'), 'w') as startup:
++            startup.write('fs0:Image nokaslr root=/dev/vda rw init=/init --'
++                          ' /host/out/lkvm run --realm'
++                          ' -m 256m'
++                          ' --restricted_mem'
++                          ' --kernel /host/out/Image'
++                          ' --disk /host/out/guest.ext4'
++                          ' --params "root=/dev/vda rw init=/init"')
++
++        self.vm.add_args('-cpu', 'max,x-rme=on')
++        self.vm.add_args('-smp', '2')
+         self.vm.add_args('-m', '2G')
+         self.vm.add_args('-M', 'sbsa-ref')
+         self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
+         self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
+-        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
+-        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
+-        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
+-        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
+-        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
+-        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+-        self.vm.add_args('-netdev', 'user,id=net0')
+-
++        self.vm.add_args('-drive', f'file=fat:rw:{efi},format=raw')
++        self.vm.add_args('-drive', f'format=raw,file={rootfs},if=virtio')
++        self.vm.add_args('-virtfs',
++                         f'local,path={rme_stack}/,mount_tag=host,'
++                         'security_model=mapped,readonly=off')
+         self.vm.launch()
+-        # Wait for host VM boot to complete.
+-        wait_for_console_pattern(self, 'Welcome to Buildroot',
+-                                 failure_message='Synchronous Exception at')
+-        exec_command_and_wait_for_pattern(self, 'root', '#')
+-
+-        test_realms_guest(self)
++        # Wait for host and guest VM boot to complete.
++        wait_for_console_pattern(self, 'root@guest',
++                                 failure_message='Kernel panic')
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+index 8452d27928..bb603aaa26 100755
+--- a/tests/functional/test_aarch64_rme_virt.py
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -9,50 +9,22 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import os
++from os.path import join
+ 
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+ 
+-def test_realms_guest(test_rme_instance):
+-
+-    # Boot the (nested) guest VM
+-    exec_command(test_rme_instance,
+-                 'qemu-system-aarch64 -M virt,gic-version=3 '
+-                 '-cpu host -enable-kvm -m 512M '
+-                 '-M confidential-guest-support=rme0 '
+-                 '-object rme-guest,id=rme0 '
+-                 '-device virtio-net-pci,netdev=net0,romfile= '
+-                 '-netdev user,id=net0 '
+-                 '-kernel /mnt/out/bin/Image '
+-                 '-initrd /mnt/out-br/images/rootfs.cpio '
+-                 '-serial stdio')
+-    # Detect Realm activation during (nested) guest boot.
+-    wait_for_console_pattern(test_rme_instance,
+-                             'SMC_RMI_REALM_ACTIVATE')
+-    # Wait for (nested) guest boot to complete.
+-    wait_for_console_pattern(test_rme_instance,
+-                             'Welcome to Buildroot')
+-    exec_command_and_wait_for_pattern(test_rme_instance, 'root', '#')
+-    # query (nested) guest cca report
+-    exec_command(test_rme_instance, 'cca-workload-attestation report')
+-    wait_for_console_pattern(test_rme_instance,
+-                             '"cca-platform-hash-algo-id": "sha-256"')
+-    wait_for_console_pattern(test_rme_instance,
+-                             '"cca-realm-hash-algo-id": "sha-512"')
+-    wait_for_console_pattern(test_rme_instance,
+-                             '"cca-realm-public-key-hash-algo-id": "sha-256"')
+-
+ class Aarch64RMEVirtMachine(QemuSystemTest):
+ 
+-    # Stack is built with OP-TEE build environment from those instructions:
++    # Stack is inspired from:
+     # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
+-    # https://github.com/pbo-linaro/qemu-rme-stack
++    # https://github.com/pbo-linaro/qemu-linux-stack/tree/rme_release
++    # ./build.sh && ./archive_artifacts.sh out.tar.xz
+     ASSET_RME_STACK_VIRT = Asset(
+-        ('https://fileserver.linaro.org/s/iaRsNDJp2CXHMSJ/'
+-         'download/rme-stack-op-tee-4.2.0-cca-v4-qemu_v8.tar.gz'),
+-         '1851adc232b094384d8b879b9a2cfff07ef3d6205032b85e9b3a4a9ae6b0b7ad')
++        ('https://github.com/pbo-linaro/qemu-linux-stack/'
++         'releases/download/build/rme_release-86101e5.tar.xz'),
++         'e42fef8439badb52a071ac446fc33cff4cb7d61314c7a28fdbe61a11e1faad3a')
+ 
+     # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
+     # and launching a nested VM using it.
+@@ -63,15 +35,16 @@ def test_aarch64_rme_virt(self):
+ 
+         self.vm.set_console()
+ 
+-        stack_path_tar_gz = self.ASSET_RME_STACK_VIRT.fetch()
+-        self.archive_extract(stack_path_tar_gz, format="tar")
++        stack_path_tar = self.ASSET_RME_STACK_VIRT.fetch()
++        self.archive_extract(stack_path_tar, format="tar")
+ 
+-        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-qemu_v8')
+-        kernel = os.path.join(rme_stack, 'out', 'bin', 'Image')
+-        bios = os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
+-        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
++        rme_stack = self.scratch_file('.')
++        kernel = join(rme_stack, 'out', 'Image')
++        bios = join(rme_stack, 'out', 'flash.bin')
++        rootfs = join(rme_stack, 'out', 'host.ext4')
+ 
+-        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
++        self.vm.add_args('-cpu', 'max,x-rme=on')
++        self.vm.add_args('-smp', '2')
+         self.vm.add_args('-m', '2G')
+         self.vm.add_args('-M', 'virt,acpi=off,'
+                          'virtualization=on,'
+@@ -79,23 +52,25 @@ def test_aarch64_rme_virt(self):
+                          'gic-version=3')
+         self.vm.add_args('-bios', bios)
+         self.vm.add_args('-kernel', kernel)
+-        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
+-        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
+-        self.vm.add_args('-device', 'virtio-9p-device,fsdev=shr0,mount_tag=shr0')
+-        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
+-        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+-        self.vm.add_args('-netdev', 'user,id=net0')
++        self.vm.add_args('-drive', f'format=raw,file={rootfs},if=virtio')
++        self.vm.add_args('-virtfs',
++                         f'local,path={rme_stack}/,mount_tag=host,'
++                         'security_model=mapped,readonly=off')
+         # We need to add nokaslr to avoid triggering this sporadic bug:
+         # https://gitlab.com/qemu-project/qemu/-/issues/2823
+-        self.vm.add_args('-append', 'root=/dev/vda nokaslr')
++        self.vm.add_args('-append',
++                         'nokaslr root=/dev/vda rw init=/init --'
++                         ' /host/out/lkvm run --realm'
++                         ' -m 256m'
++                         ' --restricted_mem'
++                         ' --kernel /host/out/Image'
++                         ' --disk /host/out/guest.ext4'
++                         ' --params "root=/dev/vda rw init=/init"')
+ 
+         self.vm.launch()
+-        # Wait for host VM boot to complete.
+-        wait_for_console_pattern(self, 'Welcome to Buildroot',
+-                                 failure_message='Synchronous Exception at')
+-        exec_command_and_wait_for_pattern(self, 'root', '#')
+-
+-        test_realms_guest(self)
++        # Wait for host and guest VM boot to complete.
++        wait_for_console_pattern(self, 'root@guest',
++                                 failure_message='Kernel panic')
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.43.0
 
