@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338B9C87FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854D5C87FCF
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwOb-0006Lk-UJ; Sun, 27 Jul 2025 04:06:16 -0400
+	id 1ufwSm-0007zW-50; Sun, 27 Jul 2025 04:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwMD-0006ba-SH
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:46 -0400
+ id 1ufwPq-0004R5-GG
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:33 -0400
 Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwMA-0004Cs-UG
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:45 -0400
+ id 1ufwPn-0004uH-9d
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:30 -0400
 Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-23fd3fe0d81so8011025ad.3
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:41 -0700 (PDT)
+ d9443c01a7336-236470b2dceso29632255ad.0
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603420; x=1754208220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603646; x=1754208446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P+7R5cwd/2Q0LtBzEZr6GfHkwiI/pvqCBPx4b4tvS3Y=;
- b=qL+cgDgfrEgXBe9b2rrTHJvImdZY6FL1TdCLhAU53F9Wfql31pDNhUsmt607tdUXoe
- 7R4GlQYB7YCgqS5M1ijKR5LxhL103udOjpifDUZ8iO0zDEpG0hR1zMCVgCEvsZXNmtTO
- 6pdYXRGYBXajtAycdu0+ohx9SDKQZ4A3FogvSNyW4TXRFetpqPQpCtY9j2dkUlBWANu6
- kgjKvNqpHQEXQAZSbymGYEIsu3XBAgJby0bBTeJCFA26LcgYStEKzZyditTfBBlSPEpu
- Y6I0nUQyFp2vRvx9j7fp28F0cChLnqVyj45SXIldtciDK1pUF75sPB5GhT36mXlASQBW
- 020w==
+ bh=i1XaTPiEo+FTtf/Cktl+jdbCdlFK1FMOPPILBOSb6P0=;
+ b=ORh6DisLjiAx2zW6SdEJExcqZ5Lh4TSj/n+atRZEy9gPF1BTi8LUYKVUZBUZl0GmVA
+ kDnswrvX/65TCyT5k3y9m9piDR6ARWRzn69V6MIl5oqbsSvQ9qetrQMQDZmvuRbR7HY1
+ iODyepVcgBUUgJckCsAoSuOE0LW1n6Q4Jj2edohhiJUNeY23/cN6zBLhoO6by4r0o0bm
+ dqy4kL+zExw9OHt9X1Lay7PguzG9/wcKraDOm8FMn9+fZnkAfH6MGUSehcKKhEcDqh1c
+ O5P8gGhypMtOb6McQQOtDbf1Vi9MSZzn9pP825i2XH49VyoIJdQ3JQSlFuLooF6xNUZI
+ 6eGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603420; x=1754208220;
+ d=1e100.net; s=20230601; t=1753603646; x=1754208446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=P+7R5cwd/2Q0LtBzEZr6GfHkwiI/pvqCBPx4b4tvS3Y=;
- b=w2HkFZhYVF71LYj8aGbYKORJbyTJtMIOiw72j3nQvLLvHuLf94ZYQiTE+sdsoQYWVy
- aDOIE13vMECM49s0ux1aP/RApOZe+HeQDEZNcD0hQusrEnFBGKpDoDvoxJ2l/wXut3bp
- rwboqexrwpkHzROh9G1JEMTmycP5VTmkWPINGL2G7ABVzpBt1bHx74Iak1R6QWb4mQAv
- wOKnjzyTa/JY1lCsn6vbkdYWeWYdAqyeP/YdCr7nYMzlnER8QXBdJb231nnDZaZG2rUq
- 5IrFDb/UlQE6uz3JdNrHLJRw75j/uZSy/po2zd2Hq4iurLOtUE6DlZfYU1yxaiU1sc1R
- 1O0w==
-X-Gm-Message-State: AOJu0YxweDSJ+lHjD7bytHuhLxxyly9L3dc4NXKzpUTD8YKw7rBPx29y
- 0vuPjiNtRKw/yKTgFZyaikAw1DcgewnSHXF8PBzaaX50zOVTU0Uz4k7L8Cg1ZPBFP8qL5oq826g
- dynGg
-X-Gm-Gg: ASbGncszTcTwbX5UWmtKJemakSyGK02bsXhwv6yiRRhiBXp7l9qCBbX5YFJiNIpsS5L
- EqzXoHVYInKM8uWbqOxq453oPmzQoyt9VcONtAic3xMDpok73SHtbqE3fx9cFgzTV+3axSQXnIC
- vOH12I9WxEdasLsYdayxovDYc/5ECdtS23PF96s1Y46RsD31P7wefVNHoSmqLZuAUF3aLD69COJ
- TGDynnHDGiAoflDl7a3TRn58SxxT+J0HgQ7SzPDbyXZlKXCrI91kByVjzeNMGWcKN0KlIujz3Bh
- wO4If4giWu6xXa9AI12V5i0mMbbN7cy4sXkSOowaA8ZTbIo7dtFhZZ6fe2NUWsPtFETAbuFg5JP
- Y0LCGGoJQse/j9xVcQC50BvZJsnnTrQL0hPdBorthTSEDc9Ug+WNJCtqzK5Kec/EX/BzZEDsq/p
- lnbGQmpS2igaxo1gly2UKC
-X-Google-Smtp-Source: AGHT+IEIqi++EfqOOvPwadQDVtDVG7jKssc5axOHTnXU/WixWBhIwLPSffx3B5gKVFBVM1KCqd7YIw==
-X-Received: by 2002:a17:902:f549:b0:237:e3a0:9d63 with SMTP id
- d9443c01a7336-23fb30e8635mr124077765ad.43.1753603420282; 
- Sun, 27 Jul 2025 01:03:40 -0700 (PDT)
+ bh=i1XaTPiEo+FTtf/Cktl+jdbCdlFK1FMOPPILBOSb6P0=;
+ b=p8nQYsd1uVcWAvgp9lKiSQY/OdL7sivKBOBSp22xRj9HYGvNJIpYfdXYDATONbK4jd
+ xqOuKrsW6yoXorbWGtpHd+S3qV6mRIenKFOfcDhBt5DXEakGrvwqc0h7QNdo0UjXkyDm
+ S1/lonnsTdDNbLghj7qiD9f0yj9PtxpLBPem7ajjkWGibzMOpHn6Z/jbtifhTCHR5E2l
+ ET0KYOV2UqWpODRxrTa+nZxU4vQrVEDMhz3aPe2m8sEoP/tUnk8g8DVk+1e3Fzmc0v33
+ iNqa0QYFkCunKUd67Zm/qdM5kOGWbPwxbenox0LVJKO3ecjLao+MrZudGaGSGJF8x1Iq
+ HT8g==
+X-Gm-Message-State: AOJu0Yx7mh5V+DPGkrdYdWIPicdCOVOjrAzOiCCiBG1xdpGN95tjLZw6
+ dgW84SDn9+Uco56nWH/4aF2pNPQU5ZfSSuF9nm2yIop7TcTe5KygEM7QQ2gdnDvuQxcnM6qZg2F
+ uwFwU
+X-Gm-Gg: ASbGncsaOIPaw7HGuxxsUwINYKZjad/mWQEb5cUdrVeTaGZ9K4bRbIGfyoi6B70HNQT
+ E2BKSdUjb4KODkqDZd17L3X9ORbcA1aqaAJtNC4bq81x41G/StQyRLdizbjqH4n90/jAcf9hDL2
+ 1QzmSsRXjuDP7JihoN08GfBJKtDTfOYXFVvkq4KP4h3JaVvY23LlXftUmI+wASEAgAtYtq1l59g
+ xLZTP1UuBmUyHiUbtWmfn2+6YHZuMSuxv2HECkZQC26W4doYoW6NAYsk/6B9FiFf04Em8RRZN7z
+ ISumeORCgF6OUC79y8likNSzN423lgPR35pY/qVswHZQx0R/EDy22RojPdUAoYpCKYn4TGBx6K6
+ MCYzHhU1eO1Q3KEchI7gXuvwl6DzY133ZsisUjxm/QiGOJaqvdsHonApZklyiF1LfrRRqFb/Naj
+ GGC7sHGvyI7g==
+X-Google-Smtp-Source: AGHT+IEkvi39PvKm1sNYDnna/cpO78Zsm8uiyQFmothKzox3JMiUh91wKtiGEbNTGZJZnTvaDAmwHA==
+X-Received: by 2002:a17:902:fc84:b0:23f:e51b:2189 with SMTP id
+ d9443c01a7336-23fe51b27dcmr49777135ad.17.1753603645855; 
+ Sun, 27 Jul 2025 01:07:25 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.39
+ d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:03:39 -0700 (PDT)
+ Sun, 27 Jul 2025 01:07:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 36/82] target/arm: Remove unused env argument from
- regime_is_user
-Date: Sat, 26 Jul 2025 22:02:08 -1000
-Message-ID: <20250727080254.83840-37-richard.henderson@linaro.org>
+Subject: [PATCH 74/82] linux-user/aarch64: Implement map_shadow_stack syscall
+Date: Sat, 26 Jul 2025 22:02:46 -1000
+Message-ID: <20250727080254.83840-75-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
@@ -104,113 +103,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h |  2 +-
- target/arm/helper.c    |  2 +-
- target/arm/ptw.c       | 16 ++++++++--------
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ linux-user/syscall.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f665971b97..ea210c7179 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1034,7 +1034,7 @@ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
-     return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
- }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index dfe114ceb3..0a7ce7a262 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6356,6 +6356,12 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+ # define PR_SET_SHADOW_STACK_STATUS  75
+ # define PR_LOCK_SHADOW_STACK_STATUS 76
+ #endif
++#ifndef SHADOW_STACK_SET_TOKEN
++# define SHADOW_STACK_SET_TOKEN  (1u << 0)
++#endif
++#ifndef SHADOW_STACK_SET_MARKER
++# define SHADOW_STACK_SET_MARKER (1u << 1)
++#endif
  
--static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
-+static inline bool regime_is_user(ARMMMUIdx mmu_idx)
- {
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_0:
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 461572f918..d82f2b1131 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9692,7 +9692,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         ds = extract64(tcr, 59, 1);
+ #include "target_prctl.h"
  
-         if (e0pd && cpu_isar_feature(aa64_e0pd, cpu) &&
--            regime_is_user(env, mmu_idx)) {
-+            regime_is_user(mmu_idx)) {
-             epd = true;
-         }
- 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index c75b15b263..493ec78c1a 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -964,7 +964,7 @@ static int ap_to_rw_prot(CPUARMState *env, ARMMMUIdx mmu_idx,
-                          int ap, int domain_prot)
- {
-    return ap_to_rw_prot_is_user(env, mmu_idx, ap, domain_prot,
--                                regime_is_user(env, mmu_idx));
-+                                regime_is_user(mmu_idx));
- }
- 
- /*
-@@ -990,7 +990,7 @@ static int simple_ap_to_rw_prot_is_user(int ap, bool is_user)
- 
- static int simple_ap_to_rw_prot(CPUARMState *env, ARMMMUIdx mmu_idx, int ap)
- {
--    return simple_ap_to_rw_prot_is_user(ap, regime_is_user(env, mmu_idx));
-+    return simple_ap_to_rw_prot_is_user(ap, regime_is_user(mmu_idx));
- }
- 
- static bool get_phys_addr_v5(CPUARMState *env, S1Translate *ptw,
-@@ -1377,7 +1377,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
-                       ARMSecuritySpace in_pa, ARMSecuritySpace out_pa)
- {
-     ARMCPU *cpu = env_archcpu(env);
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     bool have_wxn;
-     int wxn = 0;
- 
-@@ -1539,7 +1539,7 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
-         if ((u_perm & (PAGE_RWX | PAGE_GCS)) && regime_is_pan(mmu_idx)) {
-             p_perm &= ~(PAGE_READ | PAGE_WRITE);
-         }
--        perm = regime_is_user(env, mmu_idx) ? u_perm : p_perm;
-+        perm = regime_is_user(mmu_idx) ? u_perm : p_perm;
+@@ -6571,6 +6577,54 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
      }
+ }
  
-     if (in_pa != out_pa) {
-@@ -2384,7 +2384,7 @@ static bool get_phys_addr_pmsav5(CPUARMState *env,
-     uint32_t mask;
-     uint32_t base;
-     ARMMMUIdx mmu_idx = ptw->in_mmu_idx;
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
++#ifdef TARGET_AARCH64
++static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
++                                    abi_ulong size, abi_int flags)
++{
++    ARMCPU *cpu = env_archcpu(env);
++    abi_ulong alloc_size;
++
++    if (!cpu_isar_feature(aa64_gcs, cpu)) {
++        return -TARGET_EOPNOTSUPP;
++    }
++    if (flags & ~(SHADOW_STACK_SET_TOKEN | SHADOW_STACK_SET_MARKER)) {
++        return -TARGET_EINVAL;
++    }
++    if (addr & ~TARGET_PAGE_MASK) {
++        return -TARGET_EINVAL;
++    }
++    if (size == 8 || !QEMU_IS_ALIGNED(size, 8)) {
++        return -TARGET_EINVAL;
++    }
++
++    alloc_size = TARGET_PAGE_ALIGN(size);
++    if (alloc_size < size) {
++        return -TARGET_EOVERFLOW;
++    }
++
++    mmap_lock();
++    addr = gcs_alloc(addr, alloc_size);
++    if (addr != -1) {
++        if (flags & SHADOW_STACK_SET_TOKEN) {
++            abi_ptr cap_ptr = addr + size - 8;
++            uint64_t cap_val;
++
++            if (flags & SHADOW_STACK_SET_MARKER) {
++                /* Leave an extra empty frame at top-of-stack. */
++                cap_ptr -= 8;
++            }
++            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
++            if (put_user_u64(cap_val, cap_ptr)) {
++                /* Allocation succeeded above. */
++                g_assert_not_reached();
++            }
++        }
++    }
++    mmap_unlock();
++    return get_errno(addr);
++}
++#endif
++
+ #define NEW_STACK_SIZE 0x40000
  
-     if (regime_translation_disabled(env, mmu_idx, ptw->in_space)) {
-         /* MPU disabled.  */
-@@ -2551,7 +2551,7 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
-     ARMCPU *cpu = env_archcpu(env);
-     int n;
-     ARMMMUIdx mmu_idx = ptw->in_mmu_idx;
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     bool secure = arm_space_is_secure(ptw->in_space);
  
-     result->f.phys_addr = address;
-@@ -2771,7 +2771,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
-      * memory system to use a subpage.
-      */
-     ARMCPU *cpu = env_archcpu(env);
--    bool is_user = regime_is_user(env, mmu_idx);
-+    bool is_user = regime_is_user(mmu_idx);
-     int n;
-     int matchregion = -1;
-     bool hit = false;
-@@ -3651,7 +3651,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-         break;
-     }
+@@ -13945,6 +13999,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_riscv_hwprobe(cpu_env, arg1, arg2, arg3, arg4, arg5);
+ #endif
  
--    result->f.attrs.user = regime_is_user(env, mmu_idx);
-+    result->f.attrs.user = regime_is_user(mmu_idx);
- 
-     /*
-      * Fast Context Switch Extension. This doesn't exist at all in v8.
++#ifdef TARGET_AARCH64
++    case TARGET_NR_map_shadow_stack:
++        return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
++#endif
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         return -TARGET_ENOSYS;
 -- 
 2.43.0
 
