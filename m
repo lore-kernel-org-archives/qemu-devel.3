@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC11C87FCE
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 21:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E7AC87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 22:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ug9Ly-0004dM-94; Sun, 27 Jul 2025 17:56:22 -0400
+	id 1ug9iO-0000E4-NG; Sun, 27 Jul 2025 18:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ug9Ky-00043V-Lt; Sun, 27 Jul 2025 17:55:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ug9iL-0000Cc-Db
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 18:19:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ug9Kw-00073w-Lu; Sun, 27 Jul 2025 17:55:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ug9iJ-0001Ea-Ir
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 18:19:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A28AA13A97E;
- Mon, 28 Jul 2025 00:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 07CC113A985;
+ Mon, 28 Jul 2025 01:19:16 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8195F25118F;
- Mon, 28 Jul 2025 00:55:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3EFAB2511A8;
+ Mon, 28 Jul 2025 01:19:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
- Hao Wu <wuhaotsh@google.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH trivial for 10.1] roms/Makefile: fix npcmNxx_bootrom build
- rules
-Date: Mon, 28 Jul 2025 00:55:07 +0300
-Message-ID: <20250727215511.807880-1-mjt@tls.msk.ru>
+Cc: Hao Wu <wuhaotsh@google.com>, Havard Skinnemoen <hskinnemoen@google.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH for 10.1 1/2] roms/vbootrom: update to 601d410
+Date: Mon, 28 Jul 2025 01:19:18 +0300
+Message-ID: <2a89ad4c8f5665d07952a4f1749caa6ec0cd3d9c.1753654515.git.mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -58,37 +57,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 70ce076fa6dff60, the actual rom source dirs
-are subdirs of vbootrom/ submodule, not in top-level of it.
+Changes:
 
-Fixes: 70ce076fa6dff60 "roms: Update vbootrom to 1287b6e"
+601d410 ast27x0: Fix missing SCU module reset for SSP and TSP initialization
+80768e4 ast27x0: Initialize and enable SSP/TSP using SCU with reserved-memory from DTB
+f8ab635 ast27x0: Show build date and git version
+53294f5 Add initial support for AST27x0
+b1c2803 Dynamically detects NPCM8XX UBOOT destination and size.
+4f54dfc Automatically search for UBOOT location for NPCM8xx images.
+
+The actual bootroms are not updated yet.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- roms/Makefile | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Mjt: this is just the submodule update, not the actual ROM file(s)
+update.  There are at least 2 commits in there wich modifies NPCM8XX
+boot code -- we probably should update pc-bios/npcm8xx_bootrom.bin too.
 
-diff --git a/roms/Makefile b/roms/Makefile
-index beff58d9d5..6af68a922f 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -193,12 +193,12 @@ qboot:
- 	cp qboot/build/bios.bin ../pc-bios/qboot.rom
- 
- npcm7xx_bootrom:
--	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
--	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
-+	$(MAKE) -C vbootrom/npcm7xx CROSS_COMPILE=$(arm_cross_prefix)
-+	cp vbootrom/npcm7xx/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
- 
- npcm8xx_bootrom:
--	$(MAKE) -C vbootrom CROSS_COMPILE=$(aarch64_cross_prefix)
--	cp vbootrom/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
-+	$(MAKE) -C vbootrom/npcm8xx CROSS_COMPILE=$(aarch64_cross_prefix)
-+	cp vbootrom/npcm8xx/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
- 
- hppa-firmware:
- 	$(MAKE) -C seabios-hppa parisc
+ roms/vbootrom | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/roms/vbootrom b/roms/vbootrom
+index 1287b6e42e..f9eb0bb57d 160000
+--- a/roms/vbootrom
++++ b/roms/vbootrom
+@@ -1 +1 @@
+-Subproject commit 1287b6e42e839ba2ab0f06268c5b53ae60df3537
++Subproject commit f9eb0bb57decbab860a81712c56132c2102fa98e
 -- 
 2.47.2
 
