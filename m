@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B87C87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D37C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwok-0001cj-9E; Sun, 27 Jul 2025 04:33:15 -0400
+	id 1ufwp9-0002A9-EK; Sun, 27 Jul 2025 04:33:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwoc-0001SR-CQ
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:08 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1ufwop-0001ra-1k
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:19 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwoa-0000Bv-Df
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:05 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ae9c2754a00so681632566b.2
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:33:03 -0700 (PDT)
+ id 1ufwon-0000DY-2O
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:18 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6150be62be4so1405873a12.0
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753605183; x=1754209983; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753605189; x=1754209989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7OlA+ob74f5T4fFIB6Rp3n1iUC1Mv/XkkIeKTnYYocg=;
- b=q/34DsYM4FBc/KY00YKyvtriGva7e2YXj2j0vww2Arzv7jKUY+VSm9C+2y1PeVZq9a
- jeAW799MVASCMCdGoaCs2/SETj878nNkQ37TAc029Qc5hg1904utY0tvptO2gQargHTm
- rqFI5c3nJkeOfbFkhqMJP2+Lun52t5zMOsaXrxVLYswFpN11m8KzGcXlDyr+F57gmvRQ
- rSLICVX35uqeAGIzn8EVTOlRSfsTZrENf03rh9bKafa8D3rJH3uYYqDsBwPGW9m0rqJR
- u9yU/40XKFEolCFkO35WNtZa8In+I7lBUHv/UrjPhEL5/hz5QAYRwOWimBisdC2n2djd
- hBPg==
+ bh=+aJNsoz12Jzz1cfgiLb5ioOc3GXXwlv67s51A2mnpiA=;
+ b=wlY/U85x+oI95m1UxJSsrArYvgzpxAzg4pUUjJs7VvliG36NvzmqS7SdG1pBpHTWA+
+ ABS4aLT96sylNscCJSlDz/8D9ST/mnfytsVxp/7D71kTKl1Vmu78/n0jOlfQWGjZGlPI
+ Lv/9m1rfaevBAGIVHV3biVkLSWP51YKtTWEghAy8hkTWN8MRZ69uBy+GILG0S9cPeARY
+ +5i1hY4oQQKMAgATQkmW/oMcyPRkO6kSpDJ0+DpVe+VgNedZpfRUUAAD31O5ypZobJsU
+ y65WkjcWs0GkPmW712oyKY+lQQk7kHIUZH6rFDiIFip6DVTrJ9nOBDfwGYmX0j3CMF88
+ mlbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753605183; x=1754209983;
+ d=1e100.net; s=20230601; t=1753605189; x=1754209989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7OlA+ob74f5T4fFIB6Rp3n1iUC1Mv/XkkIeKTnYYocg=;
- b=pv91OONGYyo2GwPiktqOafa7J8OYqpnTGAJ9maon3CWbrV6aNGj/0eDaYJtuq6YKF+
- r0EDc96SajPe8yZtaoZ1nt10zR7APk5GWW4Ei3yYFtoq+3R/MeCQGBq5//jkCJCundpu
- m+kpP7HrQAShxomo/Rd2dS0t3Tb174WAN0kLuNQXcKYhy/eLaRNhmeXfecIDWRoofYnv
- GZqd5zX53iqfPBAk3tNPJ0P/qvyNuZ3h7tGuzK/kK6oLD6PJ4VJDh1b2QQl/PRMFPkxN
- 51H684yUWoa7RqduTZyVXNVm+sC5nh2eJ+CI6ii53VNNyn0rq3JfdWrPlCU7cJ7yFaZ1
- OaQw==
-X-Gm-Message-State: AOJu0YwZyIZzOPTHXaw3rL61D1J724jm0mC37SWS3BYMDTQ6dc+LEzdr
- 4ycHJhuDA2yXALYAINYQLhuQN6OfwvrSrO+bgQSw3kQKPU0oWyN+//OLPNLCbMKRTSTEKxHluMi
- z8w0S
-X-Gm-Gg: ASbGncviJtIIvb2hyhv3mzNeu/6116WBpgkA0Pz/3Z/HPAk0duDayCwo4Uv2FDeWT1E
- Gmtv95V/c2M5yeO746+FJIaWrYfnQLnWbZwElls41IPXlD8ghUL1IHvh3v8WKeHdIdo/ogyub0G
- hXWH5XNx9cw6v2D5zS21pDWqk69yOLG0qB/a3/jwn7FCAj2GX0j+EL5RPrCUWzWbqXFXx5J7RmG
- ciGnNsspjefrvIjW1OLbA70KBuVLPgYj6QDGH3xn9PuDGc0jmUBrx3KaehvK+62NzHoTUdGFEzO
- 0+Odu+RqbasyATEAuvThDYw96FdGBjTnG6JZPbyqbPhUBNKEeAEZrCZFcpH8+NNxVwzozlbh1DV
- J0ehV7r0TDLHJ+qUoFw/S/bc=
-X-Google-Smtp-Source: AGHT+IGOaCe4525XSZuTRKtS5UCWfxefw3vcJ56x7IIcJZPvUzf1uBax1vxGLqgwqxufmjMrZbiftw==
-X-Received: by 2002:a17:907:7242:b0:ae0:e18b:e92f with SMTP id
- a640c23a62f3a-af617704758mr842378066b.23.1753605182825; 
- Sun, 27 Jul 2025 01:33:02 -0700 (PDT)
+ bh=+aJNsoz12Jzz1cfgiLb5ioOc3GXXwlv67s51A2mnpiA=;
+ b=D0jQEYzRYQSwigcFN1ZEMa8cmY1PBBC61CCtcFp2FhnilfPgW8JDQLbEXKzua0pfql
+ qug8/EvOPztzB5IFYuqhYPPli/X1fBsEn7Gp3iT+ILVXR/kug5dHd9ZxnLQ39rDvnSX9
+ JD/XEUF/olRH8EM3u63N7ECXSb2Vb1yMgqpooWgauMF5Z2iFyi8ELZPN/5+fr5XEJ7gs
+ hI8K6CuG9m2006ja1dWn0Rg0F0AWoPhDoJxubIuoWKCnAmSArj+IruF+HtiBQ5jAvP6g
+ EIgpvG+M339OaQtkbfs7O43NPkLh2tdu1de+M14IwXDJaLJbFeVtvsc/CHdyvFgL1fYG
+ yNfQ==
+X-Gm-Message-State: AOJu0YwQEgpBhCP9mfizDButkZPw3ripPz+oZKM1yJ0WOxSZ6EUFgxWN
+ eTshc8QxrekYLPiBfVBcbuhWkkGlhtEitknZhd+gry98XNcp5bAGT3KAl0ybWsy5QWE=
+X-Gm-Gg: ASbGnctSLiW0+n2LMLtphF4V8E33dZNZHssI1lnzIq/XNjihrVopmrGoXNhiDE2vK2t
+ gOFuyUXjMkK8t82c3wj+CnyDQ0s/lfycpB8tRkmpbVfvp5mO0YKdwCsNZ6IYXvl/HzlSD5OghDT
+ t6aR54kOHx3XNXGT7aS/stwJYZRsZdwNdPYtMzMLAFUgkFJjmEQARgZ7bW892vX9cVpYl7WIWxS
+ HzupIekT1Kb1X1eQUhTBHddUHgjxVWTTJuMJjdxMjD61F9w5o5bSu6213EwZiy28RUejuw3a3ld
+ dqolf6goLETGuv+u0hO1TePXUf2BHR2eZqRcXAbf9k4PkqfODoLf2IeE313eQdGkt3FhortFpZr
+ 22YIV10npZX2GW6grvq9XJ0U=
+X-Google-Smtp-Source: AGHT+IFryohGXqcs4rxsENZoQU1TZK/75vwXh8Dzr7PB+FssbNcKAIROrsPghGGWbcZxsAilSvPxrQ==
+X-Received: by 2002:a05:6402:350e:b0:60c:3f77:3f4a with SMTP id
+ 4fb4d7f45d1cf-614f1d197f6mr7557780a12.4.1753605188823; 
+ Sun, 27 Jul 2025 01:33:08 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af635aa3ff1sm256753066b.101.2025.07.27.01.32.56
+ 4fb4d7f45d1cf-6153ae1e86fsm64522a12.40.2025.07.27.01.33.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:32:58 -0700 (PDT)
+ Sun, 27 Jul 2025 01:33:04 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 83BB85F8BD;
- Sun, 27 Jul 2025 09:32:54 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5C2FD5F8F6;
+ Sun, 27 Jul 2025 09:32:55 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/14] docs/user: expand section on threading
-Date: Sun, 27 Jul 2025 09:32:44 +0100
-Message-ID: <20250727083254.3826585-6-alex.bennee@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 14/14] tests/functional: expose sys.argv to unittest.main
+Date: Sun, 27 Jul 2025 09:32:53 +0100
+Message-ID: <20250727083254.3826585-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250727083254.3826585-1-alex.bennee@linaro.org>
 References: <20250727083254.3826585-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +105,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Potentially too many weasel words when describing atomic and memory
-order issues.
+With this we can call the supported we can take advantage of the
+argument the module supports:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+  env PYTHONPATH=/home/alex/lsrc/qemu.git/python:/home/alex/lsrc/qemu.git/tests/functional ./pyvenv/bin/python /home/alex/lsrc/qemu.git/tests/functional/test_aarch64_kvm.py --help
+  usage: test_aarch64_kvm.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [tests ...]
+
+  positional arguments:
+    tests                a list of any number of test modules, classes and test methods.
+
+  options:
+    -h, --help           show this help message and exit
+    -v, --verbose        Verbose output
+    -q, --quiet          Quiet output
+    --locals             Show local variables in tracebacks
+    --durations N        Show the N slowest test cases (N=0 for all)
+    -f, --failfast       Stop on first fail or error
+    -c, --catch          Catch Ctrl-C and display results so far
+    -b, --buffer         Buffer stdout and stderr during tests
+    -k TESTNAMEPATTERNS  Only run tests which match the given substring
+
+  Examples:
+    test_aarch64_kvm.py test_module               - run tests from test_module
+    test_aarch64_kvm.py module.TestClass          - run tests from module.TestClass
+    test_aarch64_kvm.py module.Class.test_method  - run specified test method
+    test_aarch64_kvm.py path/to/test_file.py      - run tests from test_file.py
+
+  usage: test_aarch64_kvm.py discover [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b] [-k TESTNAMEPATTERNS] [-s START] [-p PATTERN] [-t TOP]
+
+  options:
+    -h, --help            show this help message and exit
+    -v, --verbose         Verbose output
+    -q, --quiet           Quiet output
+    --locals              Show local variables in tracebacks
+    --durations N         Show the N slowest test cases (N=0 for all)
+    -f, --failfast        Stop on first fail or error
+    -c, --catch           Catch Ctrl-C and display results so far
+    -b, --buffer          Buffer stdout and stderr during tests
+    -k TESTNAMEPATTERNS   Only run tests which match the given substring
+    -s, --start-directory START
+                          Directory to start discovery ('.' default)
+    -p, --pattern PATTERN
+                          Pattern to match tests ('test*.py' default)
+    -t, --top-level-directory TOP
+                          Top level directory of project (defaults to start directory)
+
+  For test discovery all test modules must be importable from the top level directory of the project.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250725154517.3523095-6-alex.bennee@linaro.org>
+Message-ID: <20250725154517.3523095-15-alex.bennee@linaro.org>
 
-diff --git a/docs/user/main.rst b/docs/user/main.rst
-index 05de904225c..347bdfabf8c 100644
---- a/docs/user/main.rst
-+++ b/docs/user/main.rst
-@@ -46,9 +46,15 @@ Threading
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2a78e735f16..5caf7b13fe3 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -249,7 +249,7 @@ def main():
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+         res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=["__dummy__", path])
++                            argv=[sys.argv[0], path] + sys.argv[1:])
+         for (test, message) in res.result.errors + res.result.failures:
  
- On Linux, QEMU can emulate the ``clone`` syscall and create a real
- host thread (with a separate virtual CPU) for each emulated thread.
--Note that not all targets currently emulate atomic operations
--correctly. x86 and Arm use a global lock in order to preserve their
--semantics.
-+However as QEMU relies on the system libc to call ``clone`` on its
-+behalf we limit the flags accepted to those it uses. Specifically this
-+means flags affecting namespaces (e.g. container runtimes) are not
-+supported. QEMU user-mode processes can still be run inside containers
-+though.
-+
-+While QEMU does its best to emulate atomic operations properly
-+differences between the host and guest memory models can cause issues
-+for software that makes assumptions about the memory model.
- 
- QEMU was conceived so that ultimately it can emulate itself. Although it
- is not very useful, it is an important test to show the power of the
+             if hasattr(test, "log_filename"):
 -- 
 2.47.2
 
