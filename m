@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ECC6C87FCE
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B910BC87FCF
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwMX-0000XL-3M; Sun, 27 Jul 2025 04:04:05 -0400
+	id 1ufwRs-0005IL-Te; Sun, 27 Jul 2025 04:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLq-0005Je-PH
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:26 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ufwPq-0004SN-KS
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:33 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLp-00046e-3q
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:22 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-23dea2e01e4so45471695ad.1
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:20 -0700 (PDT)
+ id 1ufwPo-0004ue-Fx
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:30 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-23c8f179e1bso39877755ad.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603400; x=1754208200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603647; x=1754208447; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g/H+VBjLr5/lNaQTqOOTzzKgeKFHDBsmPau28iTb4mI=;
- b=gihswkdc1yG5zWDmxfP3qPRO3JMzQCb77ovU0Vja85xvReliclYePA/yW1SwEn3UXF
- 5kay344Otb+igmvZfU1kxKLPL/84iTfZ173TVN8cx1PIq42sfdluzxRTNcUFkeeMudgy
- ot8vD9dTgIeinoIn6QbnVLFcdMPyswbhqJQVWjyseIq5E6jaje2op+4+rae1I2OGaaB9
- sJE8bQrBSHq9h5GCbLgXaO9lkiDPp1JWhJDc/uCto1sKWMhtAjrsfhHSYd5J1+hrl2+j
- DAAy/ZS9ktt/0GW6EnHxt16kGdtrFEPkARo67xEmcxicYCKb0ywI8S1PA0wvnf8UtrHU
- zFIA==
+ bh=WR7r+Hh17fQ0ME4q6Jovo/isLIn3L83iyAvcPtqKwiQ=;
+ b=UTCbTJMOr6KISlFIU4i4RWufSMuLgT7hR7VyotV0lSV1ygvAokyAWKOv678JdUfpPl
+ 5qU/tuXGjIfyXkqwQmje7gyf3DhAo/ylwKipf+zTdRv78ASMZmvASHO7uVppVlmBd/rQ
+ z1bNPvy50n5rdA9x87taXmkpWjkM7pgcu/kDrRVM7B3oz0ihzrhNAFk/jL8nw61vnAxi
+ ksFaE/65wr9iYFHFEgtRP2fDHPhQbc7OdetIuhQlhXgCVF/KGDv0TB1vS0MH1vs/9jPh
+ kGSQdGsB8Wfb9Wj+Kgt9NVA+8Ec0DbJ5p7+DSWcRFD2mdL1vgBYwFVmwIjhYPglcEIFm
+ VfSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603400; x=1754208200;
+ d=1e100.net; s=20230601; t=1753603647; x=1754208447;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g/H+VBjLr5/lNaQTqOOTzzKgeKFHDBsmPau28iTb4mI=;
- b=I6vS805Lpm+d9mpbySGe+4hLo0u/0GwkPVEWXwgn64hjlmrgp0gRAE9i6TqYcj11BS
- bJxkvdKHKN6q+1ZXH7Jea5Y2X1hcUUPACmhg0amvDQkPcz9ktQ4EYKmDAeDNnwuY5EDM
- dkxjWMkYLcCwV1rPwqR+KFCYa2LZLTkKoLJCwwTnTxFLTkvqijkm5F2k5EknS8nZF476
- daA+ILDpkgHiKbOQLXVx/IVehCqBxnhMr09mdfD0vftPBLsJUIuuRaS3nn+xYocs5qhq
- Vso0mAfoRYcIjgm8ePtSZVHfazW5a5jjBZBCIV7xlbCtytnHs3mSRQemRzU0mrjxCq/v
- yMFg==
-X-Gm-Message-State: AOJu0Yz8Uf7ncT7nCVdPoL74j+oU1aq45x1jmmfZ4HPyWv93dDu/GzZ2
- vBxsqbC9TSLaQo96T9etFog/upwgmdSuixB5f8R+FNS0seiDfIvUNm5fpPWQQk3cVg1V2CHFIKK
- W9qah
-X-Gm-Gg: ASbGncv8XmlRxmV8aw0jwySHAb+p0rLkYAca076UJj9YJJAPGhOMO21z1Dlp4BREe1G
- DBpirc9Ls9dUVKOZ6yyAhK2+JLv9IJ3RWKqJdJq0tLCM/+J7w/3raH9UtUkB4RM5mQHvofay6Z/
- IWz15r+PUB8QTuCzCML+1082e0zr21oAry3pMvTed1edFrkW2cdRyl8A4uJKNzGTnLik/y7Laqy
- lovg88REvRKrlKDvQlgyG7Hstk1L8c1h+XlhWbMhU0FGUUa2oufGGW/EY0KviVaSTZmRd1DZAUD
- YCAQ5Ri2Za3JTM8bbF6yyX7P8dNhfrTgJPmV0iGfwy5pIWPBpY/+HLgYwydrhUvwSymYC9OF+hR
- EJM6xU2XW51rqKPyVJjqMgRknRRrKLmYLmY/zV6i59DDuG+yQ/NBzLMaFJdv2FmztvRfoLOHCIg
- n3qHLLo0VZnQ==
-X-Google-Smtp-Source: AGHT+IFWl3mYtL4BVjPxu7XrjmhNtAST6JwW8VgxkFgsUafWT5AcS3A379PaQEj7JzojeSE0JE6NBw==
-X-Received: by 2002:a17:902:cf12:b0:235:ecf2:393 with SMTP id
- d9443c01a7336-23fb313a940mr108350245ad.53.1753603399873; 
- Sun, 27 Jul 2025 01:03:19 -0700 (PDT)
+ bh=WR7r+Hh17fQ0ME4q6Jovo/isLIn3L83iyAvcPtqKwiQ=;
+ b=dslLL2I/w1iULjeOIZNW9JhyjGq3Ex+924i9wYTxVBpK/WWegDG+PJWlDI46S2Y075
+ xxZNiHfQce5q9ZlZa63BLRMZ1uc8mbSGqW833D4Qh7Jcpgau9OHqZQ28ytn5IwQZQPbq
+ qX/eZ3xE4mz1so6+xXOf8717jI8SAMaP2JkE7CXBFKAw7uR+IFz5fMt4xcbAfDoArb6d
+ MSHH5kmzDH3mRZd2tlfvasnwWtnjbQbOqn9CoMUWGwQwgFSc/XU2szSmC46t8OqNbFqP
+ zmWRjBtSLGMpL+eEOc8BwEcTHcFz7PU335bE35wTybAjMrecIDvsb1+ZMl/vN7iEhkC4
+ riPw==
+X-Gm-Message-State: AOJu0YyKA3NabTqB0Run2iKuKOQNoWUSWkyzi35e9Lz3Ew4V2sKLIw3q
+ Ff+TC+TFzxqWNdgXCsCHbiZsOEyP2RliMOSKCTpRfPYaddBOPb3WTMk6ve2k2NKEduDIiepm+VV
+ V9z9M
+X-Gm-Gg: ASbGncskcj4jsoB7B7UsC2pruYgP0o+jdNxJ8dEVk6v+2cBROf5/6CSzSXkvr9krke7
+ BhAxXdaTt5HzttTAshTTw1+ZD2am41DMIOF3moBCzyLTSygpRGVpojifDc87zhIADiG32/2+9js
+ MoBUwxaZqrtIBVDK3NuE+cjW9oM1cXoNFF1FCZK2f0QssmySDTfA6O1mwdtFLLIIF25q/7J8UwY
+ Wae69ZRSU9/+JkoWVIYIbjyke7Ljk9ENjPJzoA3u2ahaYhK9DhYOujyiNba+PpX6GMInlETqp2G
+ hW0xFT5TRMDlWCiJSyq3i/vfAhXxd7xzjnW67FpCWyTqIX8CwOWy8vZJA0YY2bIfCbr0HTFDw8M
+ I7LrBBQSlDMRkLDlfVoUZPTi5wz4FDfG1kAhS8y/a5c2eomi/qLblA67e8G6AQ5Pt1ZMqztdVsw
+ ZJDgIznidt9w==
+X-Google-Smtp-Source: AGHT+IH72wYXaufke0LU8TNswAbPJxGaBVoBKpbQ5s40qTUYYqEXcaFdM9cXKUSB3NrSFVmh/0HLkQ==
+X-Received: by 2002:a17:903:f87:b0:237:e818:30f2 with SMTP id
+ d9443c01a7336-23fb31e4605mr129353225ad.50.1753603646977; 
+ Sun, 27 Jul 2025 01:07:26 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.19
+ d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:03:19 -0700 (PDT)
+ Sun, 27 Jul 2025 01:07:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 19/82] target/arm: Expand CPUARMState.exception.syndrome to 64
- bits
-Date: Sat, 26 Jul 2025 22:01:51 -1000
-Message-ID: <20250727080254.83840-20-richard.henderson@linaro.org>
+Subject: [PATCH 75/82] target/arm: Enable GCSPR_EL0 for read in user-mode
+Date: Sat, 26 Jul 2025 22:02:47 -1000
+Message-ID: <20250727080254.83840-76-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,52 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be used for storing the ISS2 portion of the
-ESR_ELx registers in aarch64 state.  Re-order the fsr
-member to eliminate two structure holes.
-
-Drop the comment about "if we implement EL2" since we
-have already done so.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h    | 7 ++-----
- target/arm/helper.c | 2 +-
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ target/arm/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index fb87fcc3e6..4940bd6a45 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -644,13 +644,10 @@ typedef struct CPUArchState {
-      * entry process.
-      */
-     struct {
--        uint32_t syndrome; /* AArch64 format syndrome register */
--        uint32_t fsr; /* AArch32 format fault status register info */
-+        uint64_t syndrome; /* AArch64 format syndrome register */
-         uint64_t vaddress; /* virtual addr associated with exception, if any */
-+        uint32_t fsr; /* AArch32 format fault status register info */
-         uint32_t target_el; /* EL the exception should be targeted for */
--        /* If we implement EL2 we will also need to store information
--         * about the intermediate physical address for stage 2 faults.
--         */
-     } exception;
- 
-     /* Information associated with an SError */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index ecce93fb97..154bda3cd4 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9438,7 +9438,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-                   new_el);
-     if (qemu_loglevel_mask(CPU_LOG_INT)
-         && !excp_is_internal(cs->exception_index)) {
--        qemu_log_mask(CPU_LOG_INT, "...with ESR 0x%x/0x%" PRIx32 "\n",
-+        qemu_log_mask(CPU_LOG_INT, "...with ESR 0x%x/0x%" PRIx64 "\n",
-                       syn_get_ec(env->exception.syndrome),
-                       env->exception.syndrome);
-     }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ec63297165..284d1870ec 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -317,6 +317,10 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+         env->cp15.mdscr_el1 |= 1 << 12;
+         /* Enable FEAT_MOPS */
+         env->cp15.sctlr_el[1] |= SCTLR_MSCEN;
++        /* For Linux, GCSPR_EL0 is always readable. */
++        if (cpu_isar_feature(aa64_gcs, cpu)) {
++            env->cp15.gcscr_el[0] = GCSCRE0_NTR;
++        }
+ #else
+         /* Reset into the highest available EL */
+         if (arm_feature(env, ARM_FEATURE_EL3)) {
 -- 
 2.43.0
 
