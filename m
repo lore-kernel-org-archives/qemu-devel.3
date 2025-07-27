@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D61C87FCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D954AC87FD1
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwpL-0002Tm-8H; Sun, 27 Jul 2025 04:33:52 -0400
+	id 1ufwpV-0003Ln-UA; Sun, 27 Jul 2025 04:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwop-0001ul-US
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:20 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1ufwoo-0001qS-KB
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:18 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwon-0000DS-2p
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:19 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-61530559887so361515a12.1
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:33:09 -0700 (PDT)
+ id 1ufwol-0000DG-5h
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:18 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ae9be1697easo818515366b.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753605188; x=1754209988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753605187; x=1754209987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0P+T/rWVfYGmP03p8n51BDfhO6swy1gGfsWg4f3jEHE=;
- b=KeXAFb38Hx+sFNUs3LtL7AV7iyRf/jq9o3RSbkKKZyh6KSy583YJ2dhl4mkxMDteT/
- GR7cmBmehOA3PMNQj6MAFKEmff67z/RpOoAlRSDZgpAkUU3LXcYYaKloSI/hLKZsOlIi
- vCxktZnCFu8WrkNk2BpnrpMBWmCpOeOgaOuyAKNRJ3Edl1BVb8R4RqyJ5rvav31ncSJS
- FXTmJx0sEYdXgenZQDGeD/8HCa1v5j0wvRd5lljhc97/7SR42iW45TSlmJQpFyPTaedP
- VAxrg8uCbx+FJnVIQqMqLZL4t0clWHFNNfNiG2xH7C0AWnlmsS8TSHH+zzEaMsDzp0Dt
- UOzg==
+ bh=a8cNDP0uMMXLsCPUuS+qFgEBBy2TpFu7q/ONUBOGyD0=;
+ b=ZAwjV/V3XP7S4fuqJoF1tgIZ6zc1wu3COAnT33t5+Xwv+9rr1reP3kg6q3yAwyp1sl
+ hDpKpWxIwf3mLwzGBmCGdLeECf49EwP3Ks6NPXTuzJaiEEwEw5utA2qrgvZMZ4yqzdkR
+ Y0V0E34TVfq/TWSWySeKPSdxzd0wk9Mpgn1ewHdW4wJJe4+91HCtJBVV9Vwbt3Ha0UNe
+ xi77l18GurGVDtnstdZGl7AfzLIRLCP8czYu3YYQNuLOSQ+fIrgFpE9BjX97KyGV7QLO
+ B0Bu/sR25+k8MNoxHYuMY6V1WZ+gSiQyrrtUj2M3LUU2RTgjZMG9hnj9mKUqm7DmmraV
+ 77rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753605188; x=1754209988;
+ d=1e100.net; s=20230601; t=1753605187; x=1754209987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0P+T/rWVfYGmP03p8n51BDfhO6swy1gGfsWg4f3jEHE=;
- b=NOV6KQ5a5K4MMwXyJwQkSUH0/yrlhw+dz5yDObVEq7lGiB0F5tWtzoZ6jykBpzewEU
- 1+HApQSKxlFxNvPWqgU4VAMZfNwf/zyTJCvQ6uUk4mKWMw02X+Zr1ZxJqt9veNznMP7/
- KBN06frYZKaStKInvGjlhJVsx/UG16/8ckxhqw+zkAavMXxntDrSpBHlGjAV4wyz3iY9
- NnGYdXoTzG+rJMpA3yvhxtgjolKKljPOQ+vDayE5sGZKiqPYfQPMQHRoiIToW7Xci8Bm
- LAMWrgl1kAvmquCPRdl3XzaKlYVAFtWg64vadTPxiplZHqcUZt3pI5WWRQYpRwRA86GC
- hB4Q==
-X-Gm-Message-State: AOJu0YxEcVJiPumcdA6Vbt01Nb/8WTGcb8QMmPH9IE+D7j+tisvrcUkh
- 26YKwKdn/ycxAEgB1QfhozEP4xOTf27RS0Xtl/x7WCNNhXNclvrwmySYPx3OGqvO7RI=
-X-Gm-Gg: ASbGncsK4MI0HNKP26E73wXUf+6FXyToZKgAjsV3756H0YPGd6xqHERUPp+QP+ksXsU
- muvdH9Kue4qcMjilkIgTLtyCGZvuUdDXYe7uzhrgBJQTiHcP01felNA7Eex+Weq8oLbRAKlEH9D
- LnYsczqTLK3llWFGrM+a/6XchQrNyJZlda/4z5kOtPfj2d9SDPvgcy7zTdfx6CIG7NrEMrR2Io0
- tRsl74Ug1lx3x2VxhExA0C9QYWyLfoGGqN3R2Oun6AHgomjz+nOblSUDx6YvZWoo9z52XeozSU4
- 3ead2gjFkMjOaFcott5G0dftjbec6wuQ5Z8Uu6kvwGC/UoyoDHiLxOTWg6rxAsTE9KkXFsUamdO
- lc4fp7NtCS2oceZBRNY+kFYc=
-X-Google-Smtp-Source: AGHT+IH6kTk+HPrJ5IvoKo6LfSbVvXx702UwZlnSJzV6kKPU1U1L0MoSk+c18CnJ+LPAfeoV6dR6hA==
-X-Received: by 2002:a05:6402:354b:b0:607:ea0c:65b2 with SMTP id
- 4fb4d7f45d1cf-614f1e09062mr6930025a12.31.1753605188006; 
- Sun, 27 Jul 2025 01:33:08 -0700 (PDT)
+ bh=a8cNDP0uMMXLsCPUuS+qFgEBBy2TpFu7q/ONUBOGyD0=;
+ b=MNSVtAYr369kge9jR6dLNCfxoNiqludDdS0wjALNgq8MI7DvHtE0ki8cI/Ryy9gFdM
+ gCkcYOQvDj8vCjSKSUgsR+vU0ssLWGGh2Df1Lf7BiSQvqyQA6z//TtQTZ/pnyk70zSII
+ Pgqn8dnccFXd9NXaLv1sQ+J6EXwTXdPYkRBWdbTNyCMGKPUqzx9dO9Vnat8kSozIqOmF
+ 8jMhL1yMAxtJOneFeO9jYlBpQT9XgraL4s8J09JfPB1DtZ93jpV6ifzTOGT9s8cR+Qu5
+ 9WsXxl0Jivi15Kagd7knWUQJA2+GOha8BrEwpMRhbq8ijPimieWYM+N1/Uh5fTQ3JL1S
+ B4Mw==
+X-Gm-Message-State: AOJu0YyNQPMekaC2u4KtWCagRwqsZ8+8fv1ObIXL+S+7SCdOIw8E1KCL
+ ZUwx0EsNjAgTuyn2ZjU2ZfH6XcMwriTGRn2lStMwQ4typ6U+4P9fSLS1XBvuEXiS4Sk=
+X-Gm-Gg: ASbGncvTx2HDOcJ4jSEUP524SEPX74Uk+zi1ZzddZGNQ9T10E8j0wMdlenPt908Obtm
+ 5d8dUnTDVC/7vhnWOtIfBooKg0MtPBcLX9JE3Xu5C/GEuof/6NBbrnXRrn/aJE0w0la99XZp9fM
+ Pws5RvLxsiN8l4sahQOdgaloMzzlNAuryg2598z7FH0/yBUEhSA97CrtnAV1rxibqYKXkcicE7U
+ yGPGthYpru8eJW1en3HPgjej0tyaLylxOHRojN0fwBPQdY6/XgtOTw9lYOZC99r267zfc8OjxZ8
+ dfUtvJfB/a94FDyAsPbYHaercpVV/gkqRQNVWeopr1jLhp5g/6zc+0KxvzooZLuja2GzUFaCVMr
+ R5ayUFuQAaCS8mM5KokZqG+A=
+X-Google-Smtp-Source: AGHT+IEVddTEBE48JQk0kxFwpWsZDgjMCrWBKw+6iNCLBAiGzPaTXQuA6xXS37oblJ4TFi6kOXhDwQ==
+X-Received: by 2002:a17:907:968e:b0:ae2:3544:8121 with SMTP id
+ a640c23a62f3a-af61c8ad26cmr899207966b.9.1753605187216; 
+ Sun, 27 Jul 2025 01:33:07 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61500aedddfsm1796179a12.67.2025.07.27.01.33.00
+ a640c23a62f3a-af635b0317csm248700166b.138.2025.07.27.01.32.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:33:04 -0700 (PDT)
+ Sun, 27 Jul 2025 01:33:02 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 435725F8F3;
+ by draig.lan (Postfix) with ESMTP id 2BB9D5F8F2;
  Sun, 27 Jul 2025 09:32:55 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -72,18 +72,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PULL 13/14] tests/docker: handle host-arch selection for
+Subject: [PULL 12/14] tests/docker: add --arch-only to qemu deps for
  all-test-cross
-Date: Sun, 27 Jul 2025 09:32:52 +0100
-Message-ID: <20250727083254.3826585-14-alex.bennee@linaro.org>
+Date: Sun, 27 Jul 2025 09:32:51 +0100
+Message-ID: <20250727083254.3826585-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250727083254.3826585-1-alex.bennee@linaro.org>
 References: <20250727083254.3826585-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,80 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When building on non-x86 we get a bunch but not all of the compilers.
-Handle this in the Dockerfile by probing the arch and expanding the
-list available.
+If we want to build this container on non-x86 systems we might not
+have all the cross-compilers needed for the ROM blobs we don't
+actually build. Use --arch-only to avoid stalling on these missing
+bits.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250725154517.3523095-14-alex.bennee@linaro.org>
+Message-ID: <20250725154517.3523095-13-alex.bennee@linaro.org>
 
 diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index 5aa43749ebe..ef69bbc8a51 100644
+index 8ab244e018a..5aa43749ebe 100644
 --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
 +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -23,7 +23,9 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-         bison \
-         ccache \
-         clang  \
-+        dpkg-dev \
-         flex \
-+        gcc \
-         git \
-         libclang-rt-dev \
-         ninja-build \
-@@ -33,16 +35,11 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-         python3-venv \
-         python3-wheel
+@@ -15,7 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+     apt-get install -y eatmydata && \
+     eatmydata apt-get dist-upgrade -y && \
+-    apt build-dep -yy qemu
++    apt build-dep -yy --arch-only qemu
  
--RUN DEBIAN_FRONTEND=noninteractive eatmydata \
--        apt install -y --no-install-recommends \
--        gcc-aarch64-linux-gnu \
-+# All the generally available compilers
-+ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
-         libc6-dev-arm64-cross \
-         gcc-arm-linux-gnueabihf \
-         libc6-dev-armhf-cross \
--        gcc-hppa-linux-gnu \
--        libc6-dev-hppa-cross \
--        gcc-m68k-linux-gnu \
--        libc6-dev-m68k-cross \
-         gcc-mips-linux-gnu \
-         libc6-dev-mips-cross \
-         gcc-mips64-linux-gnuabi64 \
-@@ -51,18 +48,25 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-         libc6-dev-mips64el-cross \
-         gcc-mipsel-linux-gnu \
-         libc6-dev-mipsel-cross \
--        gcc-powerpc-linux-gnu \
--        libc6-dev-powerpc-cross \
--        gcc-powerpc64-linux-gnu \
--        libc6-dev-ppc64-cross \
-         gcc-powerpc64le-linux-gnu \
-         libc6-dev-ppc64el-cross \
-         gcc-riscv64-linux-gnu \
-         libc6-dev-riscv64-cross \
-         gcc-s390x-linux-gnu \
--        libc6-dev-s390x-cross \
--        gcc-sparc64-linux-gnu \
--        libc6-dev-sparc64-cross && \
-+        libc6-dev-s390x-cross
-+
-+RUN if dpkg-architecture -e amd64; then \
-+  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
-+  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
-+  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
-+  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
-+  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
-+  fi && \
-+  echo "compilers: ${AVAILABLE_COMPILERS}"
-+
-+RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-+        apt install -y --no-install-recommends \
-+        ${AVAILABLE_COMPILERS} && \
-         dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- 
+ # Add extra build tools and as many cross compilers as we can for testing
+ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
 -- 
 2.47.2
 
