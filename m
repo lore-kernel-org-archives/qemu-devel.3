@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E36C87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA79C87FCF
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwMM-0007Iu-Vb; Sun, 27 Jul 2025 04:03:55 -0400
+	id 1ufwOx-0007Bv-TZ; Sun, 27 Jul 2025 04:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLh-0005Bv-NZ
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:15 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1ufwMG-0006ea-AX
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:48 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwLg-00043z-46
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:13 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-234b9dfb842so30465085ad.1
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:11 -0700 (PDT)
+ id 1ufwMD-0004Dt-58
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:46 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2401b855635so328235ad.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603391; x=1754208191; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603424; x=1754208224; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3cpS/rQKc/KiLSv/x9q7oUeyX2cxzb+6hLrCr5m20LI=;
- b=LaLk2N9r5WGVELKQflY0REHxc6IW7RCttUU8yeOjxFYYY3/Ca7CRpKS23mIV+p53Dh
- /QIBRBz6fSpmz4VPErtwJOaNkgBd16sH1YKlBTJ3s7/lZIZkIljL50N479km4NiMVCvs
- Pjur+M4BfUVz6zC82aA7sToxT33Fgc4BFl9GdFJeJ5jFPiU5nGKfXmT8GIssVPy1P3Nc
- o8RBpQkLZEDUlH7UQmBgeY8kpIeAgFNQmo3/shxlLOiOKnfFOKU+nUOEALwv6m5htt+2
- GDhLnVJ+0J03mLTNHg2rNQOAOEECZQS9X/ls/mD94+CzSvmtLQgSKDWwZ8VEIwWH10ka
- tRsw==
+ bh=q3yL151P+dSoqNJcReBE7377GzJXEssI8OgEgpoGNy0=;
+ b=IAdKt8tZR/E8YkdfcWJuiUgSDNuQEjXclW+F5sxWro5BKX5EpoS0Kr+jH1xZnLwa7u
+ gZ4NjhlAOwmvqvkEOwsXSKx7XIyuWPqzCvjn2Tw2Rm+OuBwzykO9slbV39wVw9+t6OVo
+ DX/HpvVwWnSb3VbbMcltkaTceCXtOIxsTJqWT5igEQZPHp1c/xLTb68y8hltOKAVr2Lu
+ BJXtje8exvnLkw+KT3yzcbIKwNjt0vPV/i5ySX2J7/KUPX7Cbk9VkJzjr+7KR6DEZ0rW
+ xAwVCty4DUFN75PiAOt/R2IX8aP+Kopj0qOEHskKVkgJeo3sCZs2VfxazKQI+5IoDYBO
+ UuYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603391; x=1754208191;
+ d=1e100.net; s=20230601; t=1753603424; x=1754208224;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3cpS/rQKc/KiLSv/x9q7oUeyX2cxzb+6hLrCr5m20LI=;
- b=FWCXLrVQ1zO8CNp3rc1vDT+k76DXOKzq6O/sijObFYuc3dI7h5jKwgfwSoYugiucGy
- xO68Rt3BUK9bFNafiVB9/VxyUdVIPZgf8FLG5xr3ZhFiQZ1L6yh6Fdr4effFQyNKov9Z
- on4xODq/L/dBG+ZRPISBFPLJ0HDYviym5RxnJZH5hjVYf05gcwlPo/HblFCsiAyqcBVc
- kTGGvdiq/f75zQE7ciyATDLzKWhUrhHbrDkDCXUNCDt8ve8sQh7DznkON0khRWafFB6S
- 9SRPpeXLf+p4l3H3gJwqWUHDsYOmoFInXLLqLlEVdrv4YaLwLsHY2ysMjZoOSHxQL3nD
- i8Vw==
-X-Gm-Message-State: AOJu0Yxw0oMrivbCC/RQ/eRyQnK6jpMxSx2Z5xcqDxNx+pxoaoXB6IxN
- Y4pkpSEeZxc7jFrtZRCNdWhspE/AxDOBgGcrC5Cg9KygEB9ZX0+O6cebXZoTbTj/0/8qa43U3o7
- ryrE6
-X-Gm-Gg: ASbGncvZMpVw/8pGRtmhzPDN/ku0M3KGjsE37whLIHIOyNn1Wf0e97HTgUDAb7Hetw8
- 3LZMsRhyoCCm0QB2m5yQCU9ReHeo8TdPKgSV/20WEwjZcrviU6Ztmkw9a85mhbwyMiEw1Jxk+zx
- YXKsWrxPZ26Wr+Ts2CAxdy2chTGaeXVF/AkrPn9zdGY259RChM55s5xJmtwCuaB5Ag360ocxlwu
- atn93uMGsdw6galMB8qG09JA0O2MquRgMCU3WZI69RJQYYTYiYgHtdcRY6zFzZt+6n4TNL75kPn
- PBo+5Y7mDwOW9vZgr5UXP39/crL37jxRwTLSjQJcLt0CLBG+YKJsm9QpFqfjBemRyqeESAJb/5e
- HNnL/eVN59aX96gbmk2WRJUabOKsQ2dRviKV45WfJHIxjNzwAgg9xKULjXXr+JukicguKLgFi7d
- fReYceoixJGQ==
-X-Google-Smtp-Source: AGHT+IH+7Wbhl7q+tsyTaGSVUjkVhSeWJO75Vu4sJUBoMTEl3Jthz3XcGKZ/bxpWAZjkB5bDSo1JvQ==
-X-Received: by 2002:a17:903:fa3:b0:235:f298:cbbd with SMTP id
- d9443c01a7336-23fb30ac008mr133704455ad.21.1753603390804; 
- Sun, 27 Jul 2025 01:03:10 -0700 (PDT)
+ bh=q3yL151P+dSoqNJcReBE7377GzJXEssI8OgEgpoGNy0=;
+ b=mRMTF9FxurQCIG6BUb0mRKciNsGxJtvcXDxVD9NOPwr9gdNc49e10Qkczqn4MKLuUB
+ B1Hm/dIdd7uuvHi+kCgXLaA+tX3tH9gWmNEmfqrsaKfIcz40WEsoi/ZprWZVSdkV+Xad
+ d5bkQtKfJsRCfbsqmdqzN4B0AxT9Du1zk7pQztmrS0eVNeoUdmD9cDQbaIPWo7Py3viY
+ xcYXO+JY2c+n+XhGOovkaNG2HF2XPd946u6rXKOwiRqENo/qZIJ3YrP0EXCBTk3K8sKH
+ lZWEeEpzYteZbdmfY2PSO5t3AXdfsT6USfBSAXs5P6RLvV3w4rrysqaHWg+AFXEHWOwO
+ HM5Q==
+X-Gm-Message-State: AOJu0Yz1hr/n9x4dNf5tuVvsTlW0KPGkcbLAh44Va/t4jBXy/UioapNp
+ 5ky57w6PZ4L+MPoEdwARlqPReBfBdipP/TmJQs0Yqr4Hog6YPPYsLVoHuLOWZ0KgRfp/kwylsIC
+ G/15u
+X-Gm-Gg: ASbGncsCAfZoUhNDcNjDST8VfKH9GTli0b56MedLgWZIMqXKVYILQIvws14eOLqfcu5
+ p+eBDpt/mrjIqEUaawPXJdR2jn0ScAG5NVrJYjW8ZaIid/TiC0ztieC9MutaHl0NB3daLGv7+D0
+ KmgyMaOAP/t+tNRfIdyfV/qgtHTO74g6iR+QUaVb47aXjqwkbsx8APJt4Y5C7dEKZEcA/LgsJhs
+ Bd/bcl/wyviQEhKMrLV7HDMN6anWGVWhNPayYCd9DIY0a7Nthu7i5hc5Zit7MKES9ZILRIsg9vR
+ nI++9z9JnzLbx3i1v8WOeI1JS+8+KiYB6aoqsDCrFvDttll+recU0D/Iic75TDkSeNCLv/nqllX
+ CoP85lechnayzLXNXamrX7hfUWGZ0U+29x4rcXelcsC7j9lNovgfVM8XdQloo3UWHrzHa5k57gA
+ J35knd4jd2Ew==
+X-Google-Smtp-Source: AGHT+IFWtjbccSO+FpQWJvZahLzrOTog6H488t6so/U6K9lhBW7Q6W5Q2mk3I2W9iNLuNscMxUCRMQ==
+X-Received: by 2002:a17:902:c94a:b0:234:bc4e:4eb8 with SMTP id
+ d9443c01a7336-23fb3120755mr107039585ad.46.1753603423856; 
+ Sun, 27 Jul 2025 01:03:43 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.09
+ d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:03:10 -0700 (PDT)
+ Sun, 27 Jul 2025 01:03:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 11/82] target/arm: Enable TCR2_ELx.PIE
-Date: Sat, 26 Jul 2025 22:01:43 -1000
-Message-ID: <20250727080254.83840-12-richard.henderson@linaro.org>
+Subject: [PATCH 39/82] target/arm: Convert regime_is_stage2 to table
+Date: Sat, 26 Jul 2025 22:02:11 -1000
+Message-ID: <20250727080254.83840-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,45 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This wasn't using a switch, but two comparisons.
+Convert it to arm_mmuidx_table for consistency.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ target/arm/internals.h       | 5 -----
+ target/arm/mmuidx-internal.h | 8 ++++++++
+ target/arm/mmuidx.c          | 5 +++--
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index dc6c82b7e2..61ba9ba5b2 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6202,8 +6202,12 @@ static CPAccessResult tcr2_el1_access(CPUARMState *env, const ARMCPRegInfo *ri,
- static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                            uint64_t value)
- {
-+    ARMCPU *cpu = env_archcpu(env);
-     uint64_t valid_mask = 0;
- 
-+    if (cpu_isar_feature(aa64_s1pie, cpu)) {
-+        valid_mask |= TCR2_PIE;
-+    }
-     value &= valid_mask;
-     raw_write(env, ri, value);
- }
-@@ -6211,11 +6215,15 @@ static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
- static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                            uint64_t value)
- {
-+    ARMCPU *cpu = env_archcpu(env);
-     uint64_t valid_mask = 0;
- 
--    if (cpu_isar_feature(aa64_mec, env_archcpu(env))) {
-+    if (cpu_isar_feature(aa64_mec, cpu)) {
-         valid_mask |= TCR2_AMEC0 | TCR2_AMEC1;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 4f99ec69f8..805f4a1876 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1029,11 +1029,6 @@ static inline void arm_call_el_change_hook(ARMCPU *cpu)
      }
-+    if (cpu_isar_feature(aa64_s1pie, cpu)) {
-+        valid_mask |= TCR2_PIE;
-+    }
-     value &= valid_mask;
-     raw_write(env, ri, value);
  }
+ 
+-static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
+-{
+-    return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
+-}
+-
+ /* Return the SCTLR value which controls this address translation regime */
+ static inline uint64_t regime_sctlr(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
+index f297eefe2b..ecf43d7709 100644
+--- a/target/arm/mmuidx-internal.h
++++ b/target/arm/mmuidx-internal.h
+@@ -19,6 +19,7 @@ FIELD(MMUIDXINFO, 2RANGES, 6, 1)
+ FIELD(MMUIDXINFO, PAN, 7, 1)
+ FIELD(MMUIDXINFO, USER, 8, 1)
+ FIELD(MMUIDXINFO, STAGE1, 9, 1)
++FIELD(MMUIDXINFO, STAGE2, 10, 1)
+ 
+ extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ 
+@@ -82,4 +83,11 @@ static inline bool arm_mmu_idx_is_stage1_of_2(ARMMMUIdx idx)
+     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, STAGE1);
+ }
+ 
++/* Return true if this mmu index is stage 2 of a 2-stage translation. */
++static inline bool regime_is_stage2(ARMMMUIdx idx)
++{
++    tcg_debug_assert((unsigned)idx < ARRAY_SIZE(arm_mmuidx_table));
++    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, STAGE2);
++}
++
+ #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
+diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
+index c5b43a5932..61a682e655 100644
+--- a/target/arm/mmuidx.c
++++ b/target/arm/mmuidx.c
+@@ -14,6 +14,7 @@
+ #define PAN    R_MMUIDXINFO_PAN_MASK
+ #define USER   R_MMUIDXINFO_USER_MASK
+ #define S1     R_MMUIDXINFO_STAGE1_MASK
++#define S2     R_MMUIDXINFO_STAGE2_MASK
+ 
+ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     /*
+@@ -33,8 +34,8 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     [ARMMMUIdx_E30_0]           = EL(0) | REL(3),
+     [ARMMMUIdx_E30_3_PAN]       = EL(3) | REL(3) | PAN,
+ 
+-    [ARMMMUIdx_Stage2_S]        = REL(2),
+-    [ARMMMUIdx_Stage2]          = REL(2),
++    [ARMMMUIdx_Stage2_S]        = REL(2) | S2,
++    [ARMMMUIdx_Stage2]          = REL(2) | S2,
+ 
+     [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER,
+     [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1,
 -- 
 2.43.0
 
