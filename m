@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B910BC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC78C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwRs-0005IL-Te; Sun, 27 Jul 2025 04:09:38 -0400
+	id 1ufwR9-0007ug-30; Sun, 27 Jul 2025 04:08:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPq-0004SN-KS
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:33 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ufwPh-0003Me-1p
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:21 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPo-0004ue-Fx
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:30 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-23c8f179e1bso39877755ad.1
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:27 -0700 (PDT)
+ id 1ufwPf-0004qr-BB
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:20 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-235e1d710d8so45907395ad.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603647; x=1754208447; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603638; x=1754208438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WR7r+Hh17fQ0ME4q6Jovo/isLIn3L83iyAvcPtqKwiQ=;
- b=UTCbTJMOr6KISlFIU4i4RWufSMuLgT7hR7VyotV0lSV1ygvAokyAWKOv678JdUfpPl
- 5qU/tuXGjIfyXkqwQmje7gyf3DhAo/ylwKipf+zTdRv78ASMZmvASHO7uVppVlmBd/rQ
- z1bNPvy50n5rdA9x87taXmkpWjkM7pgcu/kDrRVM7B3oz0ihzrhNAFk/jL8nw61vnAxi
- ksFaE/65wr9iYFHFEgtRP2fDHPhQbc7OdetIuhQlhXgCVF/KGDv0TB1vS0MH1vs/9jPh
- kGSQdGsB8Wfb9Wj+Kgt9NVA+8Ec0DbJ5p7+DSWcRFD2mdL1vgBYwFVmwIjhYPglcEIFm
- VfSw==
+ bh=RB9M/NYV6NC+RrE1c3AzJNzEIqzbZfbB8TlpGuA3ub0=;
+ b=vQPImJToE0n8d5rEcHPO8+C1TFG2JW1qGOUJnFlpMGiiqoc0ZadBEUALTpnLobC8SN
+ 7wXMKNkyiWKqiFuODrYC/rlnMwq9xeSt0ynqye5EBlkr5kdmxSvzGywB5XgDe/dwo7NR
+ LR/j7O34hUzuYcQ1VgD19dO37EW5tFS555gOgFSs85qz8LYwFSf2kmH65EgOC181oIVB
+ CSRUdU+v70onFEpAZBzZrFiQhU58IPZ0qLcSqn+SPhefdpEl8vLqjY/NWls6VLWx8zDf
+ ws32DB3mu+hsXdf2CprVgPGxSM+tLS8rxNxddFoamkiEIi1hva50c1wideQLq3y9xvtl
+ rDVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603647; x=1754208447;
+ d=1e100.net; s=20230601; t=1753603638; x=1754208438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WR7r+Hh17fQ0ME4q6Jovo/isLIn3L83iyAvcPtqKwiQ=;
- b=dslLL2I/w1iULjeOIZNW9JhyjGq3Ex+924i9wYTxVBpK/WWegDG+PJWlDI46S2Y075
- xxZNiHfQce5q9ZlZa63BLRMZ1uc8mbSGqW833D4Qh7Jcpgau9OHqZQ28ytn5IwQZQPbq
- qX/eZ3xE4mz1so6+xXOf8717jI8SAMaP2JkE7CXBFKAw7uR+IFz5fMt4xcbAfDoArb6d
- MSHH5kmzDH3mRZd2tlfvasnwWtnjbQbOqn9CoMUWGwQwgFSc/XU2szSmC46t8OqNbFqP
- zmWRjBtSLGMpL+eEOc8BwEcTHcFz7PU335bE35wTybAjMrecIDvsb1+ZMl/vN7iEhkC4
- riPw==
-X-Gm-Message-State: AOJu0YyKA3NabTqB0Run2iKuKOQNoWUSWkyzi35e9Lz3Ew4V2sKLIw3q
- Ff+TC+TFzxqWNdgXCsCHbiZsOEyP2RliMOSKCTpRfPYaddBOPb3WTMk6ve2k2NKEduDIiepm+VV
- V9z9M
-X-Gm-Gg: ASbGncskcj4jsoB7B7UsC2pruYgP0o+jdNxJ8dEVk6v+2cBROf5/6CSzSXkvr9krke7
- BhAxXdaTt5HzttTAshTTw1+ZD2am41DMIOF3moBCzyLTSygpRGVpojifDc87zhIADiG32/2+9js
- MoBUwxaZqrtIBVDK3NuE+cjW9oM1cXoNFF1FCZK2f0QssmySDTfA6O1mwdtFLLIIF25q/7J8UwY
- Wae69ZRSU9/+JkoWVIYIbjyke7Ljk9ENjPJzoA3u2ahaYhK9DhYOujyiNba+PpX6GMInlETqp2G
- hW0xFT5TRMDlWCiJSyq3i/vfAhXxd7xzjnW67FpCWyTqIX8CwOWy8vZJA0YY2bIfCbr0HTFDw8M
- I7LrBBQSlDMRkLDlfVoUZPTi5wz4FDfG1kAhS8y/a5c2eomi/qLblA67e8G6AQ5Pt1ZMqztdVsw
- ZJDgIznidt9w==
-X-Google-Smtp-Source: AGHT+IH72wYXaufke0LU8TNswAbPJxGaBVoBKpbQ5s40qTUYYqEXcaFdM9cXKUSB3NrSFVmh/0HLkQ==
-X-Received: by 2002:a17:903:f87:b0:237:e818:30f2 with SMTP id
- d9443c01a7336-23fb31e4605mr129353225ad.50.1753603646977; 
- Sun, 27 Jul 2025 01:07:26 -0700 (PDT)
+ bh=RB9M/NYV6NC+RrE1c3AzJNzEIqzbZfbB8TlpGuA3ub0=;
+ b=S9ud3XGGxe+6WCXwkogr5JwoL+8R0IP9YCQV7W0iObZ6izRVH96ebjHWRUGp078YD1
+ 8US0LP3Sjyar+hMsUupszsDawHrLJzrQNtqm+zIQfFlnwS3KOhhdVY2IZCcp381VAniW
+ 2bB1bAFjFqUibbf3BCoNBNLhJErFz+QhJJYUi4SNec5enCR4dZoh0umX+AIybiR1xp+y
+ 7LUwfuZZ4mNy4/bztCq03mTSub5gJTfE5FQZsXBXVw+TNo0GQ2kDnxdCgvHj6U4zyStw
+ Bq0WFQIB2RhjlXyazZmcXqxOjVmtj6Ul1ZQ4PoOmARRPze+dHNLiERsxUhhB/y9vNO8Q
+ VsAw==
+X-Gm-Message-State: AOJu0YxAzjMCcIOU3m0BjqrG/AsLc1HcuBBTA9eZ/PQc1axRX/xdUGFf
+ sQWRU4xWhU1i3xGxXHjgaMdf20yLnS0rjOCHMr1edNcZRQcS9UaH4GpYO9wYA19ViMxeA8kuTA3
+ jxf64
+X-Gm-Gg: ASbGncsINaz0Dc3dv+/+aDAOSUWc10v7SrJEm8PZAPor1hVrZj5oIMEe3cErkmP4qzx
+ h+dzQLOo4dfDbjNulUsetkVewFKhzpB92lSUxw8SjbOJoP1IgwJIzN8XQZ8A+isvN/20Si6ftnr
+ MKSXd20+NxPdFgLVoqyM216cUmAusMCR5EgDNZu5fVBzzMw5ts1InZlqjE8f48fPjXXPoe5bRtY
+ IxbHB9gCntwZ6fXRWhMHbyj85KwUNaiIa3sNDbrjM0wGUYi0K07VHYaXbYm7L1Lff8iBebA7LFl
+ nKJ/4lkrOAm3UggrejDionDtiSISFzQeP6yk0CLd+jG010RCS0cD2/t1vrAgzRgaQYApIJkn2aL
+ 7Pf+2Ct9kD0eYCWLKDzT7poADEWm7ID6Kkb0Ah9kl4Tm5Iio0lcvCX8YYz1jAZcZrnIGRGWX490
+ SVe9L7vw46hw==
+X-Google-Smtp-Source: AGHT+IH5ZWHbmImMIHnHrPTrcRkEHEAN0dapUsFJvYyxKo/AcbUmGg978OW/x/pgvhMlcn11rQahrQ==
+X-Received: by 2002:a17:903:2b10:b0:234:f1ac:c036 with SMTP id
+ d9443c01a7336-23fb31c4de1mr129390315ad.50.1753603638014; 
+ Sun, 27 Jul 2025 01:07:18 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.26
+ d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:07:26 -0700 (PDT)
+ Sun, 27 Jul 2025 01:07:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 75/82] target/arm: Enable GCSPR_EL0 for read in user-mode
-Date: Sat, 26 Jul 2025 22:02:47 -1000
-Message-ID: <20250727080254.83840-76-richard.henderson@linaro.org>
+Subject: [PATCH 67/82] target/arm: Load gcs record for RET with PAuth
+Date: Sat, 26 Jul 2025 22:02:39 -1000
+Message-ID: <20250727080254.83840-68-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,24 +103,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/arm/tcg/translate-a64.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ec63297165..284d1870ec 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -317,6 +317,10 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-         env->cp15.mdscr_el1 |= 1 << 12;
-         /* Enable FEAT_MOPS */
-         env->cp15.sctlr_el[1] |= SCTLR_MSCEN;
-+        /* For Linux, GCSPR_EL0 is always readable. */
-+        if (cpu_isar_feature(aa64_gcs, cpu)) {
-+            env->cp15.gcscr_el[0] = GCSCRE0_NTR;
-+        }
- #else
-         /* Reset into the highest available EL */
-         if (arm_feature(env, ARM_FEATURE_EL3)) {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 49e17548c1..23186850f8 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1890,7 +1890,12 @@ static bool trans_RETA(DisasContext *s, arg_reta *a)
+     }
+ 
+     dst = auth_branch_target(s, cpu_reg(s, 30), cpu_X[31], !a->m);
+-    gen_a64_set_pc(s, dst);
++    if (s->gcs_en) {
++        GCSInstructionType it = a->m ? GCS_IT_RET_PauthB : GCS_IT_RET_PauthA;
++        gen_load_check_gcs_record(s, dst, it, 30);
++    } else {
++        gen_a64_set_pc(s, dst);
++    }
+     s->base.is_jmp = DISAS_JUMP;
+     return true;
+ }
 -- 
 2.43.0
 
