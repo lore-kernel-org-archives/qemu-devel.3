@@ -4,64 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8835AC87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 06:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128FBC87FCF
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 07:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufvDW-0002nE-8v; Sun, 27 Jul 2025 02:50:42 -0400
+	id 1ufvx0-0001cY-7L; Sun, 27 Jul 2025 03:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufvDS-0002hI-FZ; Sun, 27 Jul 2025 02:50:39 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufvDP-0001S9-BA; Sun, 27 Jul 2025 02:50:38 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56R6oEKn000426
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 27 Jul 2025 15:50:24 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Wq8xAuAt6EaJ8TlVNBeYq7edJc2plyaZgbm0lUivRpg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1753599024; v=1;
- b=mxzTZ3rteQpW1HB9BkSstv/98iHBwWfPgsds0qCUEnQ4V1bexXRGG9SX9hoST0+/
- UDoaWaLp7/6PIpNsGH8aJzdppiwrJl+YBr2maE1ml1SnS8TL/N81SI66etd4JMIq
- xp+ZOBNtKYn3Izk91AOQoebOWlmIujDIOfOAo0C0jLqgkAdT/bmyCdZm7YsmFU6q
- qUl9A0w+4ek0phtXVVCLhHCxDKInUG6s3dyKuWszmkGvGpZiqZeb76+lMg0sAzMu
- itS40acELkd+ueVhfuinlImU7KHNR/NQp5G84PKfuFWOpCZn81F/d2JWAeaM0s84
- 5vy0hTf8hVBjgCS9loRs6g==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 27 Jul 2025 15:50:08 +0900
-Subject: [PATCH v2] pcie_sriov: Fix configuration and state synchronization
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250727-wmask-v2-1-394910b1c0b6@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIACDMhWgC/y2OwY7CIBRFf6V5ayFAYUBX/sfEBby+KpqKQu1oT
- P9dbGd5bm5OzhsK5UgFds0bMk2xxHStoDYN4Mlfj8RiVxmUUEZYsWV/gy8XprbaGsQutN0P1O8
- tUx+fi+f3sHKm+6PqxnWE4AsxTMMQx13TC9taaVzQriVLqIIyUkltPPngnAuuymVv4es6xTKm/
- FoSJ7nI1hrZ/tdMkkmm0Wr9LVIo9rkcOUYe+YON6fJK3CM/3+Awz/MH9ahy7PMAAAA=
-X-Change-ID: 20250709-wmask-29475ccdb3d6
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufvwy-0001We-Pd
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:37:40 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ufvwr-0000QV-NF
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 03:37:40 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b390136ed88so2608377a12.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 00:37:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753601851; x=1754206651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OH4aLJlRBZdD5fXvlcl1QSignnUhy4EBtlnGLBq5wQI=;
+ b=xxhwRSGpX6UhumDWJGfrFY75kvmQVgoJDVx8u0JNaT6Fy1FX2DOBCvfIUaA34hderF
+ ZFYm1+YD7/q0AApJhXm7B7ST3KZznorF4KoFoR7Ji8uNYj38f2g5z4/0QTi5JXm0WSyA
+ gU80ySBfuEcDKladkjAfrtWSUVkznGtvWag0WhH/IQ7m0lxzdGPlLZP71FiuqVxPE3lq
+ 9MGMptclrxLRpsXfhV3UCVdV1bwo+8Rlh3xs+vivcwOpoD4QkKndq1+61l7fvdCQTT2E
+ yacvWbaYqIfl7MlRT+31hroorwAZJy+V5K3AAQvHSmBpTFZlvbHMYIMEcZDWyykThmA1
+ KGQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753601851; x=1754206651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OH4aLJlRBZdD5fXvlcl1QSignnUhy4EBtlnGLBq5wQI=;
+ b=cackNQ3fS4tQyaqKo3lSQY5m0DhIlaW67RV2ipUhdh0sx58ll1YcAJmoRaLyiT2i8J
+ JP0yI0xvXcge8wHlgAPMiok8Cbuchj9ljad9Kv8oqDmLT1DTM+5Vv5JDqa88/yBCyZpD
+ 6Q6TVmxetUgAmbd4lZ0N3MP3juZOJ/NX61q5vSFO+NXlpuwkJ7204B9/w8lbrq6w1jQp
+ jghUo4UXGQSVJrLihcczLtzjaT4n9HS34TZqcHIC2hOl+Gn2KvQdX6y4rRqcLzCR3wtL
+ QpMFowF+onOEB4/SF5GUQqd8fSPO4bRpGt7ti3x7zy1hg32yu/jQLF+E7Enn58oyDkK+
+ hpFw==
+X-Gm-Message-State: AOJu0Yw+ONyC9IuUjsuKEMxRaIe/lcuQuWSr423ojlGZ83i/vEml4UfU
+ CIFpAA2acU2/Gixx/Ji8R+b45tTsGOBgNpX28t4zYl2p7WiLPn0hI7yR0kmvAW9zu0et3gcRUbi
+ ijiIN
+X-Gm-Gg: ASbGncuuA4Nft5lt8podNOffgZL9kRuna2FUkkL1EoUAhw3OiueKsj9u1nZ8nlY3HPf
+ Vgj1wk5RAyLAgo1He6thyerE/XyE0/D8Ygj9FzGo1aDc2hy4ajfVs+p95e6xl11mO/LvPXL6TRC
+ fdd5slRDQ7xnKKamF0v3r3w1uqORlv3XtPp4Mb98gXCzY50d4nzEkqZezm7UQXzfjFI893S5vUA
+ MenmNMJLahCsdQs2aOg+mmCF+6Ft96xTee6Wv73V+Gan9JTHyL3093LYzYvcgXbgZ4E+CU0bZ9c
+ Dt0lRcBC9aj5O6LgTEHtjxgUKRUbMpafi8dzwx1XhKTZ0ZBWtIanekHxpccKboa1eVfP5QIEdW8
+ 7JqH+u/qFu4fK5i2n3GHa+lqjXEG2kyS6hO7E5UvP1+b501zX+5B7Hdc2E+TewHwhbLwvNUPQlC
+ caovf+Hhk5kw==
+X-Google-Smtp-Source: AGHT+IFcS8+bhDRqg2ERANrU4aXS+WoA1bVdo75cDuCP+lWXnDP2cVkqlIH86GIHargpepstuG/QIw==
+X-Received: by 2002:a17:903:2a86:b0:235:e1e4:ec5e with SMTP id
+ d9443c01a7336-23fb31252dfmr132106115ad.49.1753601851347; 
+ Sun, 27 Jul 2025 00:37:31 -0700 (PDT)
+Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
+ [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23fbe327443sm29824635ad.44.2025.07.27.00.37.30
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 27 Jul 2025 00:37:30 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Mauro Matteo Cascella <mcascell@redhat.com>, qemu-stable@nongnu.org,
- Corentin BAYET <corentin.bayet@reversetactics.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: [PULL 0/3] linux-user patch queue
+Date: Sat, 26 Jul 2025 21:37:25 -1000
+Message-ID: <20250727073728.82913-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,128 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix issues in PCIe SR-IOV configuration register handling that caused
-inconsistent internal state due to improper write mask handling and
-incorrect migration behavior.
+The following changes since commit c017386f28c03a03b8f14444f8671d3d8f7180fe:
 
-Two main problems were identified:
+  Merge tag 'pull-target-arm-20250725' of https://gitlab.com/pm215/qemu into staging (2025-07-25 08:24:52 -0400)
 
-1. VF Enable bit write mask handling:
-   pcie_sriov_config_write() incorrectly assumed that its val parameter
-   was already masked, causing it to ignore the actual write mask.
-   This led to the VF Enable bit being processed even when masked,
-   resulting in incorrect VF registration/unregistration. It is
-   identified as CVE-2025-54567.
+are available in the Git repository at:
 
-2. Migration state inconsistency:
-   pcie_sriov_pf_post_load() unconditionally called register_vfs()
-   regardless of the VF Enable bit state, creating inconsistent
-   internal state when VFs should not be enabled. Additionally,
-   it failed to properly update the NumVFs write mask based on
-   the current configuration. It is identified as CVE-2025-54566.
+  https://gitlab.com/rth7680/qemu.git tags/pull-lu-20250726
 
-Root cause analysis revealed that both functions relied on incorrect
-special-case assumptions instead of properly reading and consuming
-the actual configuration values. This change introduces a unified
-consume_config() function that reads actual configuration values and
-synchronize the internal state without special-case assumptions.
+for you to fetch changes up to e35215db401113867e20634622a370c0e8931797:
 
-The solution only adds register read overhead in non-hot-path code
-while ensuring correct SR-IOV state management across configuration
-writes and migration scenarios.
+  linux-user/aarch64: Support ZT_MAGIC signal frame record (2025-07-25 13:11:48 -1000)
 
-Fixes: 5e7dd17e4348 ("pcie_sriov: Remove num_vfs from PCIESriovPF")
-Fixes: f9efcd47110d ("pcie_sriov: Register VFs after migration")
-Fixes: CVE-2025-54566
-Fixes: CVE-2025-54567
-Cc: qemu-stable@nongnu.org
-Reported-by: Corentin BAYET <corentin.bayet@reversetactics.com>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Changes in v2:
-- Changed to perform the VFEnable write mask update only when the bit is
-  cleared. It clarifies the intention is to prevent setting the bit
-  (i.e., the bit is currently cleared) when the NumVF holds an invalid
-  value. The code execution when the bit is set will be also a bit
-  shorter.
-- Added references to the relevant CVEs.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250713-wmask-v1-1-4c744cdb32c0@rsg.ci.i.u-tokyo.ac.jp
----
- hw/pci/pcie_sriov.c | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+----------------------------------------------------------------
+linux-user/aarch64: Clear TPIDR2_EL0 when delivering signals
+linux-user/aarch64: Support TPIDR2_MAGIC signal frame record
+linux-user/aarch64: Support ZT_MAGIC signal frame record
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 3ad18744f4a8ed2b35144fafcdc8e7e00fec3672..8a4bf0d6f7c0c6e9ec30df2e9bc55967e48cf6c3 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -64,6 +64,27 @@ static void unregister_vfs(PCIDevice *dev)
-     pci_set_word(dev->wmask + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0xffff);
- }
- 
-+static void consume_config(PCIDevice *dev)
-+{
-+    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-+
-+    if (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) {
-+        register_vfs(dev);
-+    } else {
-+        uint8_t *wmask = dev->wmask + dev->exp.sriov_cap;
-+        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
-+        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
-+
-+        unregister_vfs(dev);
-+
-+        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
-+            wmask_val |= PCI_SRIOV_CTRL_VFE;
-+        }
-+
-+        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
-+    }
-+}
-+
- static bool pcie_sriov_pf_init_common(PCIDevice *dev, uint16_t offset,
-                                       uint16_t vf_dev_id, uint16_t init_vfs,
-                                       uint16_t total_vfs, uint16_t vf_offset,
-@@ -416,30 +437,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-     trace_sriov_config_write(dev->name, PCI_SLOT(dev->devfn),
-                              PCI_FUNC(dev->devfn), off, val, len);
- 
--    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
--        if (val & PCI_SRIOV_CTRL_VFE) {
--            register_vfs(dev);
--        } else {
--            unregister_vfs(dev);
--        }
--    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
--        uint8_t *cfg = dev->config + sriov_cap;
--        uint8_t *wmask = dev->wmask + sriov_cap;
--        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
--        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
--
--        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
--            wmask_val |= PCI_SRIOV_CTRL_VFE;
--        }
--
--        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
--    }
-+    consume_config(dev);
- }
- 
- void pcie_sriov_pf_post_load(PCIDevice *dev)
- {
-     if (dev->exp.sriov_cap) {
--        register_vfs(dev);
-+        consume_config(dev);
-     }
- }
- 
+----------------------------------------------------------------
+Peter Maydell (3):
+      linux-user/aarch64: Clear TPIDR2_EL0 when delivering signals
+      linux-user/aarch64: Support TPIDR2_MAGIC signal frame record
+      linux-user/aarch64: Support ZT_MAGIC signal frame record
 
----
-base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
-change-id: 20250709-wmask-29475ccdb3d6
-
-Best regards,
--- 
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
+ linux-user/aarch64/signal.c | 139 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 136 insertions(+), 3 deletions(-)
 
