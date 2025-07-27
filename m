@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C6AC87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7C5C87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:22:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwSO-0006on-1O; Sun, 27 Jul 2025 04:10:08 -0400
+	id 1ufwNV-0003NZ-FJ; Sun, 27 Jul 2025 04:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPm-00040u-J2
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:27 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1ufwM7-0006OH-A3
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:40 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPj-0004su-T7
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:26 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-234f17910d8so29669805ad.3
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:23 -0700 (PDT)
+ id 1ufwM4-0004BO-Gg
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:38 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-23f8d27eeeaso33828105ad.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603642; x=1754208442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603414; x=1754208214; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ydcyb65K2tz+QaP0rQj5OctHcXPpiWXEP1hQZYLCpDo=;
- b=vn5PFtM55QBczc0v4xXKu2BpdsrmpT3R0I07d/XUngZjthSyeLs4uTtTMHeYyzfI+P
- aGGRULBAXvlUBAOVHY5gau6frAFBttyEZI/ez+XvxzbndPjGju9R1/qvvuZqYJFLZieA
- FMh9MA4P3R6Np/6R60IYqlfWH0MWlJAME5kOsU9Vt5mPDUlyIr4jHHC4yKftB3Cy57XE
- 6sCNhoDqUyd7XVHWWJbg9PPLrayn35dSvaTKr5hAjQ3yUgThLqRD8vDJPSFJsbCTrkk4
- EpGQqqJmR+Ekms6KWm4HrqX2lYSQWKtFZTExf9m9lxeh+1dP7pypO+E7EjNv9L0YWpPZ
- /x0g==
+ bh=hMdapYeTXQMq/7/SV5QO5q/aUbpfOJUhhXVEaV+Zq1w=;
+ b=vtkuZR0k47aGWS1z9qXGXVUvuy6i/GII9LNaPJyBsrp/nR2u43oDwj87cROApm3obt
+ 5C+xwkH9oEcJeLDxuNx/n+GeBMJMm4l83GDeaBHBvg2cdObEZTW/x7+nAb8s+qblnpxH
+ WQcfbFqMe3gWZeguwUe8zHBchJ7JdeMwU80oiqKSt/kRtNBEw4KzmSXJbZJVRv/aLvpb
+ teg4hhCp86nMJpFoRQ9UAGq6qOS42VTuYjp/P9mqf3npPaxm2QUZrXoTsGavyliEMbG3
+ uZiwJX7ViJPKuRwEuNTEE5lscFReU4xp9QPwBI/UdpFrLZZz6lebNDrPoNRBzjurjfPL
+ KCSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603642; x=1754208442;
+ d=1e100.net; s=20230601; t=1753603414; x=1754208214;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ydcyb65K2tz+QaP0rQj5OctHcXPpiWXEP1hQZYLCpDo=;
- b=es0zTc9lxgPWuXvQ7Y6yaZrsFlk0kYaoJXL1DV2D7HT4dv/T58QQVJpN2FiDPd4DKr
- AszZ9vKuBpkYtJDgmVcl6MyXlWzYQ1+IBE8olUaHBKP4avWllRm0KFmeyWJwpeUD+/fU
- SxMb8tY+uGOT0+PQZbmgDDViUr6Qa0HTKYaD2gTlKQv4jr+T3kAsu6fzEhcO6NeW4oVx
- EyudnzfNsV09p+UGT/8fOaV0HZ0dG7TTiqWMrXRSntZlOzz6Z9tEvbtJ76oB88BX+mbW
- VZu0LgGmj6Adh9Fsk7VhVqGFwnbcYauZ101AUYrbtqURJOJgtwNwgAyy1k1j9/WKczsj
- qX1A==
-X-Gm-Message-State: AOJu0YwcEbVQHw4hFE4SJVpsJOgFPsevEYaNcVBNIRdBOS4MBT1xp3n0
- nffDkAlX4LlmCvoxJd5nTX3TFFz0bXD81x4EQQ98XDQPbMZ2e8SMwhQYPsR0neDm1E0uzQ6URzT
- JiGcA
-X-Gm-Gg: ASbGnctOVMGrCyDfL30JHBGYkb992qzxh55CzRdIBXCFkt8jvNuChF0/eW12WiOF8r9
- gXMpqWv3hf7UQ6zA0SUTQzuESG3L425MnkqWCRtpwb8OPyPdmTqPDPXMGGIrJB/QEjL4RrOxtUS
- 5pGrsDd8fUr5PLJIhD8wfcJr8B0tT5lvX3ctqG9zq6abkHCzLNLR1i6KUgSvXtx5ermqj/DwlTN
- JUIGNniV5TCna5Dd/L/rexbJp5SlQJugQL+EnrwBr4zs3DURxU0hWhle0HmdFmn2E6JM2DCqL39
- hgdmKy57KHS4ytyLQO7GBTV8/lYRoyntRoATN6Qt73i+4Ii6ukXV0+UVkKrsmCcjQXHbU0cCzVU
- DaNXBGSd/MU8Xn3+atPKwsBycLAibuTOdrgYsYXpkf66juOhf3M0SYfMrI4DwHBifZpB8n7dzUr
- 0mXP7bbwd3KfcjVyMbMLUq
-X-Google-Smtp-Source: AGHT+IHs5QMggS6SeDC+mWT8vPr6oPS5XWJaC2nalXW2MmpZY3Up5CyXrZMRr6ubzjRVReEoUoPHwg==
-X-Received: by 2002:a17:903:2346:b0:240:2145:e527 with SMTP id
- d9443c01a7336-2402145e8f6mr551625ad.25.1753603642359; 
- Sun, 27 Jul 2025 01:07:22 -0700 (PDT)
+ bh=hMdapYeTXQMq/7/SV5QO5q/aUbpfOJUhhXVEaV+Zq1w=;
+ b=OFyIuZGZV2im+78pEJmp/1alFmj6k/4qFA5D1ZC5N1tZg7sG2HuDJutHYGCxf2+ARS
+ +22lIW4ZLutj/dbgRV68Y3bR9popcdtneCXZD5OFpQT/EDn9uKFMYF6wppsPe08UJlZk
+ 3DUN06bTELnY2CCG9E7zokfpcarT68WsUO67fZv2bM/depZNO5+GrlBwyOTccasMFUNg
+ /teTa/sEv99SnCvkDTh08KPFmB/m7cfEclbik+tvJL5V6GM74yHAtntr8l/NRSMqKC5z
+ dDsa2wwDSnpyWo3t4aSaKGvvnrP4Lwp4XXS3mOr24NdM25jYzupygWUOx46DAIC2dTaA
+ RJjg==
+X-Gm-Message-State: AOJu0YzwDd3/YXaVyinS4DDeVK9FZWKD178iTPTha69VDhaCV/Isr6M2
+ wrds5rKQ3dzJxwc/VP9PAwDrodJxDz5oSxPVPFjIyA+eZapHSU080k8FL6qdOadlKcpyRxX2N5Q
+ l7e/F
+X-Gm-Gg: ASbGncvHXjz5En4MpvEcZmg7yeDbGS89mvscOCD5qomLzd5/uV0f7TOP5aK5oE9hoo9
+ vN4ne87T+uZuPqe2jMi76u6lOqJ9/AgiVKGCvuYNZ41okOqmxSAft/3M4FsAyx4xWyofNaNTGws
+ sbroqNSK+m5dMII8dbKJNrNqYpsJ/6qses13/KbPI1FnqynrLyiv7o6CNGboNYHYKCBk0E8GBQi
+ N5ooiCWvTcjPgVWr9Wf7+3mDvAEPtkqrsWtjOFO5Ww3Ee9YzrVktaeiKtc2ATygSC7G0y3WthXe
+ vifGgHp3ng1/plojN2A6zzYYJKHJjbUBMwp/B0joBVubEwKMD/EhbX/TUYMvczYxCtjz1zGhi4f
+ OOKjXvreK+4uNtAnpb1zo25kB9NENP4ZU3e95Zvg610/4g/oq/EsuySAwl566QbhPCapHqwlBVV
+ hlmAp0GGeSEq9ueBG06MDt
+X-Google-Smtp-Source: AGHT+IHzNivkBwhQ7sQ+jc8vSxfmi6LFD/Ei5V0Dd0x7j9NM9lWywS68xPS+AzhRNdsT0efEP6Wd1Q==
+X-Received: by 2002:a17:902:d4cd:b0:23f:e2df:a13f with SMTP id
+ d9443c01a7336-23fe2dfa232mr58530565ad.29.1753603414481; 
+ Sun, 27 Jul 2025 01:03:34 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.21
+ d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:07:22 -0700 (PDT)
+ Sun, 27 Jul 2025 01:03:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 71/82] linux-user/aarch64: Implement prctls for GCS
-Date: Sat, 26 Jul 2025 22:02:43 -1000
-Message-ID: <20250727080254.83840-72-richard.henderson@linaro.org>
+Subject: [PATCH 31/82] target/arm: Remove unused env argument from regime_el
+Date: Sat, 26 Jul 2025 22:02:03 -1000
+Message-ID: <20250727080254.83840-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,246 +101,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is PR_GET_SHADOW_STACK_STATUS, PR_SET_SHADOW_STACK_STATUS,
-and PR_LOCK_SHADOW_STACK_STATUS.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/gcs-internal.h | 38 ++++++++++++
- linux-user/aarch64/target_prctl.h | 96 +++++++++++++++++++++++++++++++
- linux-user/qemu.h                 |  5 ++
- linux-user/syscall.c              | 29 ++++++++++
- 4 files changed, 168 insertions(+)
- create mode 100644 linux-user/aarch64/gcs-internal.h
+ target/arm/internals.h      |  8 ++++----
+ target/arm/helper.c         |  2 +-
+ target/arm/ptw.c            | 34 +++++++++++++++++-----------------
+ target/arm/tcg/mte_helper.c |  2 +-
+ 4 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/linux-user/aarch64/gcs-internal.h b/linux-user/aarch64/gcs-internal.h
-new file mode 100644
-index 0000000000..e586c7e80e
---- /dev/null
-+++ b/linux-user/aarch64/gcs-internal.h
-@@ -0,0 +1,38 @@
-+/*
-+ * AArch64 gcs functions for linux-user
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef AARCH64_GCS_INTERNAL_H
-+#define AARCH64_GCS_INTERNAL_H
-+
-+#ifndef PR_SHADOW_STACK_ENABLE
-+# define PR_SHADOW_STACK_ENABLE  (1U << 0)
-+# define PR_SHADOW_STACK_WRITE   (1U << 1)
-+# define PR_SHADOW_STACK_PUSH    (1U << 2)
-+#endif
-+
-+static inline uint64_t gcs_get_el0_mode(CPUArchState *env)
-+{
-+    uint64_t cr = env->cp15.gcscr_el[0];
-+    abi_ulong flags = 0;
-+
-+    flags |= cr & GCSCR_PCRSEL ? PR_SHADOW_STACK_ENABLE : 0;
-+    flags |= cr & GCSCR_STREN ? PR_SHADOW_STACK_WRITE : 0;
-+    flags |= cr & GCSCR_PUSHMEN ? PR_SHADOW_STACK_PUSH : 0;
-+
-+    return flags;
-+}
-+
-+static inline void gcs_set_el0_mode(CPUArchState *env, uint64_t flags)
-+{
-+    uint64_t cr = GCSCRE0_NTR;
-+
-+    cr |= flags & PR_SHADOW_STACK_ENABLE ? GCSCR_RVCHKEN | GCSCR_PCRSEL : 0;
-+    cr |= flags & PR_SHADOW_STACK_WRITE ? GCSCR_STREN : 0;
-+    cr |= flags & PR_SHADOW_STACK_PUSH ? GCSCR_PUSHMEN : 0;
-+
-+    env->cp15.gcscr_el[0] = cr;
-+}
-+
-+#endif
-diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-index ed75b9e4b5..621be5727f 100644
---- a/linux-user/aarch64/target_prctl.h
-+++ b/linux-user/aarch64/target_prctl.h
-@@ -6,8 +6,10 @@
- #ifndef AARCH64_TARGET_PRCTL_H
- #define AARCH64_TARGET_PRCTL_H
- 
-+#include "qemu/units.h"
- #include "target/arm/cpu-features.h"
- #include "mte_user_helper.h"
-+#include "gcs-internal.h"
- 
- static abi_long do_prctl_sve_get_vl(CPUArchState *env)
- {
-@@ -206,4 +208,98 @@ static abi_long do_prctl_get_tagged_addr_ctrl(CPUArchState *env)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 2dc82330ec..4991d6ab7f 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1076,7 +1076,7 @@ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
  }
- #define do_prctl_get_tagged_addr_ctrl do_prctl_get_tagged_addr_ctrl
  
-+static abi_long do_prctl_get_shadow_stack_status(CPUArchState *env,
-+                                                 abi_long arg2)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+
-+    if (!cpu_isar_feature(aa64_gcs, cpu)) {
-+        return -TARGET_EINVAL;
-+    }
-+    return put_user_ual(gcs_get_el0_mode(env), arg2);
-+}
-+#define do_prctl_get_shadow_stack_status do_prctl_get_shadow_stack_status
-+
-+static abi_long gcs_alloc(abi_ulong hint, abi_ulong size)
-+{
-+    /*
-+     * Without softmmu, we cannot protect GCS memory properly.
-+     * Make do with normal read/write permissions.  This at least allows
-+     * emulation of correct programs which don't access the gcs stack
-+     * with normal instructions.
-+     */
-+    return target_mmap(hint, size, PROT_READ | PROT_WRITE,
-+                       MAP_PRIVATE | MAP_ANONYMOUS |
-+                       (hint ? MAP_FIXED_NOREPLACE : 0), -1, 0);
-+}
-+
-+static abi_ulong gcs_new_stack(TaskState *ts)
-+{
-+    /* Use guest_stack_size as a proxy for RLIMIT_STACK. */
-+    abi_ulong size = MIN(MAX(guest_stack_size / 2, TARGET_PAGE_SIZE), 2 * GiB);
-+    abi_ulong base = gcs_alloc(0, size);
-+
-+    if (base == -1) {
-+        return -1;
-+    }
-+
-+    ts->gcs_base = base;
-+    ts->gcs_size = size;
-+    return base + size - 8;
-+}
-+
-+static abi_long do_prctl_set_shadow_stack_status(CPUArchState *env,
-+                                                 abi_long new_mode)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    TaskState *ts = get_task_state(env_cpu(env));
-+    abi_long cur_mode;
-+
-+    if (!cpu_isar_feature(aa64_gcs, cpu)) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (new_mode & ~(PR_SHADOW_STACK_ENABLE |
-+                     PR_SHADOW_STACK_WRITE |
-+                     PR_SHADOW_STACK_PUSH)) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    cur_mode = gcs_get_el0_mode(env);
-+    if ((new_mode ^ cur_mode) & ts->gcs_el0_locked) {
-+        return -TARGET_EBUSY;
-+    }
-+
-+    if (new_mode & ~cur_mode & PR_SHADOW_STACK_ENABLE) {
-+        abi_long gcspr;
-+
-+        if (ts->gcs_base || env->cp15.gcspr_el[0]) {
-+            return -EINVAL;
-+        }
-+        gcspr = gcs_new_stack(ts);
-+        if (gcspr == -1) {
-+            return -TARGET_ENOMEM;
-+        }
-+        env->cp15.gcspr_el[0] = gcspr;
-+    }
-+
-+    gcs_set_el0_mode(env, new_mode);
-+    arm_rebuild_hflags(env);
-+    return 0;
-+}
-+#define do_prctl_set_shadow_stack_status do_prctl_set_shadow_stack_status
-+
-+static abi_long do_prctl_lock_shadow_stack_status(CPUArchState *env,
-+                                                  abi_long arg2)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    TaskState *ts = get_task_state(env_cpu(env));
-+
-+    if (!cpu_isar_feature(aa64_gcs, cpu)) {
-+        return -EINVAL;
-+    }
-+    ts->gcs_el0_locked |= arg2;
-+    return 0;
-+}
-+#define do_prctl_lock_shadow_stack_status do_prctl_lock_shadow_stack_status
-+
- #endif /* AARCH64_TARGET_PRCTL_H */
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 0b19fa43e6..6f0bfa83db 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -126,6 +126,11 @@ struct TaskState {
-     /* Extra fields for semihosted binaries.  */
-     abi_ulong heap_base;
-     abi_ulong heap_limit;
-+#endif
-+#if defined(TARGET_AARCH64)
-+    vaddr gcs_base;
-+    abi_ulong gcs_size;
-+    abi_ulong gcs_el0_locked;
- #endif
-     abi_ulong stack_base;
-     int used; /* non zero if used */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c..2f1e881046 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6351,6 +6351,11 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
- # define PR_SME_VL_LEN_MASK  0xffff
- # define PR_SME_VL_INHERIT   (1 << 17)
- #endif
-+#ifndef PR_GET_SHADOW_STACK_STATUS
-+# define PR_GET_SHADOW_STACK_STATUS  74
-+# define PR_SET_SHADOW_STACK_STATUS  75
-+# define PR_LOCK_SHADOW_STACK_STATUS 76
-+#endif
+ /* Return the exception level which controls this address translation regime */
+-static inline uint32_t regime_el(CPUARMState *env, ARMMMUIdx mmu_idx)
++static inline uint32_t regime_el(ARMMMUIdx mmu_idx)
+ {
+     switch (mmu_idx) {
+     case ARMMMUIdx_E20_0:
+@@ -1130,7 +1130,7 @@ static inline bool regime_is_user(CPUARMState *env, ARMMMUIdx mmu_idx)
+ /* Return the SCTLR value which controls this address translation regime */
+ static inline uint64_t regime_sctlr(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+-    return env->cp15.sctlr_el[regime_el(env, mmu_idx)];
++    return env->cp15.sctlr_el[regime_el(mmu_idx)];
+ }
  
- #include "target_prctl.h"
+ /*
+@@ -1162,13 +1162,13 @@ static inline uint64_t regime_tcr(CPUARMState *env, ARMMMUIdx mmu_idx)
+         v |= env->cp15.vtcr_el2 & VTCR_SHARED_FIELD_MASK;
+         return v;
+     }
+-    return env->cp15.tcr_el[regime_el(env, mmu_idx)];
++    return env->cp15.tcr_el[regime_el(mmu_idx)];
+ }
  
-@@ -6397,6 +6402,15 @@ static abi_long do_prctl_inval1(CPUArchState *env, abi_long arg2)
- #ifndef do_prctl_sme_set_vl
- #define do_prctl_sme_set_vl do_prctl_inval1
- #endif
-+#ifndef do_prctl_get_shadow_stack_status
-+#define do_prctl_get_shadow_stack_status do_prctl_inval1
-+#endif
-+#ifndef do_prctl_set_shadow_stack_status
-+#define do_prctl_set_shadow_stack_status do_prctl_inval1
-+#endif
-+#ifndef do_prctl_lock_shadow_stack_status
-+#define do_prctl_lock_shadow_stack_status do_prctl_inval1
-+#endif
+ /* Return true if the translation regime is using LPAE format page tables */
+ static inline bool regime_using_lpae_format(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+-    int el = regime_el(env, mmu_idx);
++    int el = regime_el(mmu_idx);
+     if (el == 2 || arm_el_is_aa64(env, el)) {
+         return true;
+     }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a97838a04e..461572f918 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9633,7 +9633,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
+     ARMGranuleSize gran;
+     ARMCPU *cpu = env_archcpu(env);
+     bool stage2 = regime_is_stage2(mmu_idx);
+-    int r_el = regime_el(env, mmu_idx);
++    int r_el = regime_el(mmu_idx);
  
- static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-                          abi_long arg3, abi_long arg4, abi_long arg5)
-@@ -6467,6 +6481,21 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-             return -TARGET_EINVAL;
+     if (!regime_has_2_ranges(mmu_idx)) {
+         select = 0;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 820d5e65a0..30c83334b6 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -232,9 +232,9 @@ static uint64_t regime_ttbr(CPUARMState *env, ARMMMUIdx mmu_idx, int ttbrn)
+         return env->cp15.vsttbr_el2;
+     }
+     if (ttbrn == 0) {
+-        return env->cp15.ttbr0_el[regime_el(env, mmu_idx)];
++        return env->cp15.ttbr0_el[regime_el(mmu_idx)];
+     } else {
+-        return env->cp15.ttbr1_el[regime_el(env, mmu_idx)];
++        return env->cp15.ttbr1_el[regime_el(mmu_idx)];
+     }
+ }
+ 
+@@ -1023,7 +1023,7 @@ static bool get_phys_addr_v5(CPUARMState *env, S1Translate *ptw,
+     }
+     type = (desc & 3);
+     domain = (desc >> 5) & 0x0f;
+-    if (regime_el(env, ptw->in_mmu_idx) == 1) {
++    if (regime_el(ptw->in_mmu_idx) == 1) {
+         dacr = env->cp15.dacr_ns;
+     } else {
+         dacr = env->cp15.dacr_s;
+@@ -1163,7 +1163,7 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
+         /* Page or Section.  */
+         domain = (desc >> 5) & 0x0f;
+     }
+-    if (regime_el(env, mmu_idx) == 1) {
++    if (regime_el(mmu_idx) == 1) {
+         dacr = env->cp15.dacr_ns;
+     } else {
+         dacr = env->cp15.dacr_s;
+@@ -1454,7 +1454,7 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+             xn = pxn || (user_rw & PAGE_WRITE);
          }
-         return do_prctl_get_tagged_addr_ctrl(env);
-+    case PR_GET_SHADOW_STACK_STATUS:
-+        if (arg3 || arg4 || arg5) {
-+            return -TARGET_EINVAL;
-+        }
-+        return do_prctl_get_shadow_stack_status(env, arg2);
-+    case PR_SET_SHADOW_STACK_STATUS:
-+        if (arg3 || arg4 || arg5) {
-+            return -TARGET_EINVAL;
-+        }
-+        return do_prctl_set_shadow_stack_status(env, arg2);
-+    case PR_LOCK_SHADOW_STACK_STATUS:
-+        if (arg3 || arg4 || arg5) {
-+            return -TARGET_EINVAL;
-+        }
-+        return do_prctl_lock_shadow_stack_status(env, arg2);
+     } else if (arm_feature(env, ARM_FEATURE_V7)) {
+-        switch (regime_el(env, mmu_idx)) {
++        switch (regime_el(mmu_idx)) {
+         case 1:
+         case 3:
+             if (is_user) {
+@@ -1510,7 +1510,7 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
+         /* F */ 0,             /* reserved */
+     };
  
-     case PR_GET_UNALIGN:
-         return do_prctl_get_unalign(env, arg2);
+-    uint32_t el = regime_el(env, mmu_idx);
++    uint32_t el = regime_el(mmu_idx);
+     uint64_t pir = env->cp15.pir_el[el];
+     uint64_t pire0 = 0;
+     int perm;
+@@ -1585,7 +1585,7 @@ static ARMVAParameters aa32_va_parameters(CPUARMState *env, uint32_t va,
+                                           ARMMMUIdx mmu_idx)
+ {
+     uint64_t tcr = regime_tcr(env, mmu_idx);
+-    uint32_t el = regime_el(env, mmu_idx);
++    uint32_t el = regime_el(mmu_idx);
+     int select, tsz;
+     bool epd, hpd;
+ 
+@@ -1811,7 +1811,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     int addrsize, inputsize, outputsize;
+     uint64_t tcr = regime_tcr(env, mmu_idx);
+     int ap, prot;
+-    uint32_t el = regime_el(env, mmu_idx);
++    uint32_t el = regime_el(mmu_idx);
+     uint64_t descaddrmask;
+     bool aarch64 = arm_el_is_aa64(env, el);
+     uint64_t descriptor, new_descriptor;
+@@ -2259,7 +2259,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+ 
+         /* Index into MAIR registers for cache attributes */
+         attrindx = extract32(attrs, 2, 3);
+-        mair = env->cp15.mair_el[regime_el(env, mmu_idx)];
++        mair = env->cp15.mair_el[regime_el(mmu_idx)];
+         assert(attrindx <= 7);
+         result->cacheattrs.is_s2_format = false;
+         result->cacheattrs.attrs = extract64(mair, attrindx * 8, 8);
+@@ -2737,7 +2737,7 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+ static uint32_t *regime_rbar(CPUARMState *env, ARMMMUIdx mmu_idx,
+                              uint32_t secure)
+ {
+-    if (regime_el(env, mmu_idx) == 2) {
++    if (regime_el(mmu_idx) == 2) {
+         return env->pmsav8.hprbar;
+     } else {
+         return env->pmsav8.rbar[secure];
+@@ -2747,7 +2747,7 @@ static uint32_t *regime_rbar(CPUARMState *env, ARMMMUIdx mmu_idx,
+ static uint32_t *regime_rlar(CPUARMState *env, ARMMMUIdx mmu_idx,
+                              uint32_t secure)
+ {
+-    if (regime_el(env, mmu_idx) == 2) {
++    if (regime_el(mmu_idx) == 2) {
+         return env->pmsav8.hprlar;
+     } else {
+         return env->pmsav8.rlar[secure];
+@@ -2779,7 +2779,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+     uint32_t addr_page_limit = addr_page_base + (TARGET_PAGE_SIZE - 1);
+     int region_counter;
+ 
+-    if (regime_el(env, mmu_idx) == 2) {
++    if (regime_el(mmu_idx) == 2) {
+         region_counter = cpu->pmsav8r_hdregion;
+     } else {
+         region_counter = cpu->pmsav7_dregion;
+@@ -2905,7 +2905,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+             xn = 1;
+         }
+ 
+-        if (regime_el(env, mmu_idx) == 2) {
++        if (regime_el(mmu_idx) == 2) {
+             result->f.prot = simple_ap_to_rw_prot_is_user(ap,
+                                             mmu_idx != ARMMMUIdx_E2);
+         } else {
+@@ -2914,7 +2914,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+ 
+         if (!arm_feature(env, ARM_FEATURE_M)) {
+             uint8_t attrindx = extract32(matched_rlar, 1, 3);
+-            uint64_t mair = env->cp15.mair_el[regime_el(env, mmu_idx)];
++            uint64_t mair = env->cp15.mair_el[regime_el(mmu_idx)];
+             uint8_t sh = extract32(matched_rlar, 3, 2);
+ 
+             if (regime_sctlr(env, mmu_idx) & SCTLR_WXN &&
+@@ -2922,7 +2922,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+                 xn = 0x1;
+             }
+ 
+-            if ((regime_el(env, mmu_idx) == 1) &&
++            if ((regime_el(mmu_idx) == 1) &&
+                 regime_sctlr(env, mmu_idx) & SCTLR_UWXN && ap == 0x1) {
+                 pxn = 0x1;
+             }
+@@ -3407,7 +3407,7 @@ static bool get_phys_addr_disabled(CPUARMState *env,
+         break;
+ 
+     default:
+-        r_el = regime_el(env, mmu_idx);
++        r_el = regime_el(mmu_idx);
+         if (arm_el_is_aa64(env, r_el)) {
+             int pamax = arm_pamax(env_archcpu(env));
+             uint64_t tcr = env->cp15.tcr_el[r_el];
+@@ -3659,7 +3659,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
+      */
+     if (address < 0x02000000 && mmu_idx != ARMMMUIdx_Stage2
+         && !arm_feature(env, ARM_FEATURE_V8)) {
+-        if (regime_el(env, mmu_idx) == 3) {
++        if (regime_el(mmu_idx) == 3) {
+             address += env->cp15.fcseidr_s;
+         } else {
+             address += env->cp15.fcseidr_ns;
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index 0efc18a181..ed30026b7d 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -604,7 +604,7 @@ void mte_check_fail(CPUARMState *env, uint32_t desc,
+     int el, reg_el, tcf;
+     uint64_t sctlr;
+ 
+-    reg_el = regime_el(env, arm_mmu_idx);
++    reg_el = regime_el(arm_mmu_idx);
+     sctlr = env->cp15.sctlr_el[reg_el];
+ 
+     switch (arm_mmu_idx) {
 -- 
 2.43.0
 
