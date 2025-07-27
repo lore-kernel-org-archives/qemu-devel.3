@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E29FC87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 06:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8835AC87FCC
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 06:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufunS-0007Bh-3Q; Sun, 27 Jul 2025 02:23:47 -0400
+	id 1ufvDW-0002nE-8v; Sun, 27 Jul 2025 02:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufun0-0006vi-50; Sun, 27 Jul 2025 02:23:20 -0400
+ id 1ufvDS-0002hI-FZ; Sun, 27 Jul 2025 02:50:39 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ufumv-0006eR-P2; Sun, 27 Jul 2025 02:23:17 -0400
+ id 1ufvDP-0001S9-BA; Sun, 27 Jul 2025 02:50:38 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56R6Ml3s093507
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56R6oEKn000426
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 27 Jul 2025 15:22:54 +0900 (JST)
+ Sun, 27 Jul 2025 15:50:24 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Akdb0YA3jwzUaEHtZ7YvqK6+migMLbF4VDzJ6CtcXI0=; 
+DKIM-Signature: a=rsa-sha256; bh=Wq8xAuAt6EaJ8TlVNBeYq7edJc2plyaZgbm0lUivRpg=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1753597374; v=1;
- b=PR4nWHnn+dOnW0hrKyhD6P5aXYAbmzEeKQFIyM4scb8zRrhizr3knYy5+EgJYd3F
- aah7CIs/VMSoX5ZW/S0fDMicPGZgAabSEkq7m4oMyHkck/2hWpziyGu98mMHovfb
- 2vXr6wuPJWI+8sObSZZg/IDfAhbU9vfOwxpd4QojRFlZ1gcammG7Ui/+3Tmm5I4u
- CgZbWGAGzRXd2q/XPXQlqvVmsr1pNalJgD5v03PcrqyvLLkjgLpibluZXGpODXo8
- 22Ll81t02Q+ZWpCXK2QjUh3e2Wk1cDvh7PLI7rt6fjILwroh/r2p+hjeoUK6swQZ
- GXbpG2i7lGhRhPB7567vwQ==
+ s=rs20250326; t=1753599024; v=1;
+ b=mxzTZ3rteQpW1HB9BkSstv/98iHBwWfPgsds0qCUEnQ4V1bexXRGG9SX9hoST0+/
+ UDoaWaLp7/6PIpNsGH8aJzdppiwrJl+YBr2maE1ml1SnS8TL/N81SI66etd4JMIq
+ xp+ZOBNtKYn3Izk91AOQoebOWlmIujDIOfOAo0C0jLqgkAdT/bmyCdZm7YsmFU6q
+ qUl9A0w+4ek0phtXVVCLhHCxDKInUG6s3dyKuWszmkGvGpZiqZeb76+lMg0sAzMu
+ itS40acELkd+ueVhfuinlImU7KHNR/NQp5G84PKfuFWOpCZn81F/d2JWAeaM0s84
+ 5vy0hTf8hVBjgCS9loRs6g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 27 Jul 2025 15:22:36 +0900
-Subject: [PATCH v3] virtio-net: Fix VLAN filter table reset timing
+Date: Sun, 27 Jul 2025 15:50:08 +0900
+Subject: [PATCH v2] pcie_sriov: Fix configuration and state synchronization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAKvFhWgC/3XMSwrCMBSF4a1IxiY0j74cuQ9xcJuk7VVpSlKDp
- XTvpsWBCA7/w+FbSLAebSCnw0K8jRjQDSnk8UB0D0NnKZrURGQiz0ouaXzAQCvNsxKKHEzNSbq
- O3rb42pnLNXWPYXJ+3tXIt/UHiJxyClK3WaNbKJQ6+9AxjQzZk07uPjsGmt1GsmlRfAvqI4gkC
- JNXdQPKaCP/Cuu6vgEiBzpQ5wAAAA==
-X-Change-ID: 20250713-vlan-8c107a65ad91
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com,
- jasowang@redhat.com, virtualization@lists.linux.dev,
- qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Lei Yang <leiyang@redhat.com>
+Message-Id: <20250727-wmask-v2-1-394910b1c0b6@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIACDMhWgC/y2OwY7CIBRFf6V5ayFAYUBX/sfEBby+KpqKQu1oT
+ P9dbGd5bm5OzhsK5UgFds0bMk2xxHStoDYN4Mlfj8RiVxmUUEZYsWV/gy8XprbaGsQutN0P1O8
+ tUx+fi+f3sHKm+6PqxnWE4AsxTMMQx13TC9taaVzQriVLqIIyUkltPPngnAuuymVv4es6xTKm/
+ FoSJ7nI1hrZ/tdMkkmm0Wr9LVIo9rkcOUYe+YON6fJK3CM/3+Awz/MH9ahy7PMAAAA=
+X-Change-ID: 20250709-wmask-29475ccdb3d6
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, qemu-stable@nongnu.org,
+ Corentin BAYET <corentin.bayet@reversetactics.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.14.2
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
@@ -76,125 +77,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Problem
--------
+Fix issues in PCIe SR-IOV configuration register handling that caused
+inconsistent internal state due to improper write mask handling and
+incorrect migration behavior.
 
-The expected initial state of the table depends on feature negotiation:
+Two main problems were identified:
 
-With VIRTIO_NET_F_CTRL_VLAN:
-  The table must be empty in accordance with the specification.
-Without VIRTIO_NET_F_CTRL_VLAN:
-  The table must be filled to permit all VLAN traffic.
+1. VF Enable bit write mask handling:
+   pcie_sriov_config_write() incorrectly assumed that its val parameter
+   was already masked, causing it to ignore the actual write mask.
+   This led to the VF Enable bit being processed even when masked,
+   resulting in incorrect VF registration/unregistration. It is
+   identified as CVE-2025-54567.
 
-Prior to commit 06b636a1e2ad ("virtio-net: do not reset vlan filtering
-at set_features"), virtio_net_set_features() always reset the VLAN
-table. That commit changed the behavior to skip table reset when
-VIRTIO_NET_F_CTRL_VLAN was negotiated, assuming the table would be
-properly cleared during device reset and remain stable.
+2. Migration state inconsistency:
+   pcie_sriov_pf_post_load() unconditionally called register_vfs()
+   regardless of the VF Enable bit state, creating inconsistent
+   internal state when VFs should not be enabled. Additionally,
+   it failed to properly update the NumVFs write mask based on
+   the current configuration. It is identified as CVE-2025-54566.
 
-However, this assumption breaks when a driver renegotiates features:
-1. Initial negotiation without VIRTIO_NET_F_CTRL_VLAN (table filled)
-2. Renegotiation with VIRTIO_NET_F_CTRL_VLAN (table will not be cleared)
+Root cause analysis revealed that both functions relied on incorrect
+special-case assumptions instead of properly reading and consuming
+the actual configuration values. This change introduces a unified
+consume_config() function that reads actual configuration values and
+synchronize the internal state without special-case assumptions.
 
-The problem was exacerbated by commit 0caed25cd171 ("virtio: Call
-set_features during reset"), which triggered virtio_net_set_features()
-during device reset, exposing the bug whenever VIRTIO_NET_F_CTRL_VLAN
-was negotiated after a device reset.
+The solution only adds register read overhead in non-hot-path code
+while ensuring correct SR-IOV state management across configuration
+writes and migration scenarios.
 
-Solution
---------
-
-Fix the issue by initializing the table when virtio_net_set_features()
-is called to change the VIRTIO_NET_F_CTRL_VLAN bit of
-vdev->guest_features.
-
-This approach ensures the correct table state regardless of feature
-negotiation sequence by performing initialization in
-virtio_net_set_features() as QEMU did prior to commit 06b636a1e2ad
-("virtio-net: do not reset vlan filtering at set_features").
-
-This change still preserves the goal of the commit, which was to avoid
-resetting the table during migration, by checking whether the
-VIRTIO_NET_F_CTRL_VLAN bit of vdev->guest_features is being changed;
-vdev->guest_features is set before virtio_net_set_features() gets called
-during migration.
-
-It also avoids resetting the table when the driver sets a feature
-bitmask with no change for the VIRTIO_NET_F_CTRL_VLAN bit, which makes
-the operation idempotent and its semantics cleaner.
-
-Additionally, this change ensures the table is initialized after
-feature negotiation and before the DRIVER_OK status bit being set for
-compatibility with the Linux driver before commit 50c0ada627f5
-("virtio-net: fix race between ndo_open() and virtio_device_ready()"),
-which did not ensure to set the DRIVER_OK status bit before modifying
-the table.
-
-Fixes: 06b636a1e2ad ("virtio-net: do not reset vlan filtering at set_features")
+Fixes: 5e7dd17e4348 ("pcie_sriov: Remove num_vfs from PCIESriovPF")
+Fixes: f9efcd47110d ("pcie_sriov: Register VFs after migration")
+Fixes: CVE-2025-54566
+Fixes: CVE-2025-54567
 Cc: qemu-stable@nongnu.org
-Reported-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Reported-by: Corentin BAYET <corentin.bayet@reversetactics.com>
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
 ---
-Not tested.
-
-Konstantin, I would also want you to test this new version. Please also
-give it Tested-by, and, if possible, Reviewed-by.
----
-Changes in v3:
-- Dropped RFC.
-- Rebased.
-- Link to v2: https://lore.kernel.org/qemu-devel/20250714-vlan-v2-1-2d589ba4dcd3@rsg.ci.i.u-tokyo.ac.jp
-
 Changes in v2:
-- Addressed a concern with old drivers that do not properly set
-  DRIVER_OK (pointed out by Michael S. Tsirkin).
-- Noted that this change does not simply revert commit 06b636a1e2ad
-  ("virtio-net: do not reset vlan filtering at set_features") but
-  preserves its goal.
-- Added Cc: qemu-stable@nongnu.org.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250713-vlan-v1-1-a3cf0bcfa644@rsg.ci.i.u-tokyo.ac.jp
+- Changed to perform the VFEnable write mask update only when the bit is
+  cleared. It clarifies the intention is to prevent setting the bit
+  (i.e., the bit is currently cleared) when the NumVF holds an invalid
+  value. The code execution when the bit is set will be also a bit
+  shorter.
+- Added references to the relevant CVEs.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250713-wmask-v1-1-4c744cdb32c0@rsg.ci.i.u-tokyo.ac.jp
 ---
- hw/net/virtio-net.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/pci/pcie_sriov.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index c4c49b0f9caa1e8f26fa2e03acc8786936877eba..6b5b5dace334af12e9b77a8a2765c88443cee235 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -929,8 +929,9 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-         vhost_net_save_acked_features(nc->peer);
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 3ad18744f4a8ed2b35144fafcdc8e7e00fec3672..8a4bf0d6f7c0c6e9ec30df2e9bc55967e48cf6c3 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -64,6 +64,27 @@ static void unregister_vfs(PCIDevice *dev)
+     pci_set_word(dev->wmask + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0xffff);
+ }
+ 
++static void consume_config(PCIDevice *dev)
++{
++    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
++
++    if (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) {
++        register_vfs(dev);
++    } else {
++        uint8_t *wmask = dev->wmask + dev->exp.sriov_cap;
++        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
++        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
++
++        unregister_vfs(dev);
++
++        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
++            wmask_val |= PCI_SRIOV_CTRL_VFE;
++        }
++
++        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
++    }
++}
++
+ static bool pcie_sriov_pf_init_common(PCIDevice *dev, uint16_t offset,
+                                       uint16_t vf_dev_id, uint16_t init_vfs,
+                                       uint16_t total_vfs, uint16_t vf_offset,
+@@ -416,30 +437,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+     trace_sriov_config_write(dev->name, PCI_SLOT(dev->devfn),
+                              PCI_FUNC(dev->devfn), off, val, len);
+ 
+-    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+-        if (val & PCI_SRIOV_CTRL_VFE) {
+-            register_vfs(dev);
+-        } else {
+-            unregister_vfs(dev);
+-        }
+-    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
+-        uint8_t *cfg = dev->config + sriov_cap;
+-        uint8_t *wmask = dev->wmask + sriov_cap;
+-        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
+-        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
+-
+-        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
+-            wmask_val |= PCI_SRIOV_CTRL_VFE;
+-        }
+-
+-        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
+-    }
++    consume_config(dev);
+ }
+ 
+ void pcie_sriov_pf_post_load(PCIDevice *dev)
+ {
+     if (dev->exp.sriov_cap) {
+-        register_vfs(dev);
++        consume_config(dev);
      }
+ }
  
--    if (!virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN)) {
--        memset(n->vlans, 0xff, MAX_VLAN >> 3);
-+    if (virtio_has_feature(vdev->guest_features ^ features, VIRTIO_NET_F_CTRL_VLAN)) {
-+        bool vlan = virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN);
-+        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
-     }
- 
-     if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
-@@ -3942,6 +3943,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
- 
-     n->vlans = g_malloc0(MAX_VLAN >> 3);
-+    memset(n->vlans, 0xff, MAX_VLAN >> 3);
- 
-     nc = qemu_get_queue(n->nic);
-     nc->rxfilter_notify_enabled = 1;
-@@ -4041,7 +4043,6 @@ static void virtio_net_reset(VirtIODevice *vdev)
-     memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
-     memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
-     qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
--    memset(n->vlans, 0, MAX_VLAN >> 3);
- 
-     /* Flush any async TX */
-     for (i = 0;  i < n->max_queue_pairs; i++) {
 
 ---
-base-commit: 9e601684dc24a521bb1d23215a63e5c6e79ea0bb
-change-id: 20250713-vlan-8c107a65ad91
+base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
+change-id: 20250709-wmask-29475ccdb3d6
 
 Best regards,
 -- 
