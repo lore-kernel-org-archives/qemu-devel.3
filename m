@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592E3C87FD1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08041C87FCC
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwSH-00067l-FL; Sun, 27 Jul 2025 04:10:01 -0400
+	id 1ufwPY-0002Tq-Hg; Sun, 27 Jul 2025 04:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPk-0003o6-KA
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:24 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1ufwMD-0006bd-US
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:46 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ufwPi-0004sJ-Qt
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:07:24 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-23c8f179e1bso39877395ad.1
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:07:22 -0700 (PDT)
+ id 1ufwMA-0004D7-Us
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:03:45 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-23fd3fe0d81so8011105ad.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753603641; x=1754208441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753603421; x=1754208221; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SDylAKOmltNGyLx2E37xE3a+pc0ueuM8z50fDJMoOME=;
- b=XM65+nOcE2uHXZ2YH/JN3giI5/9zZvvLPqigF0PO/ZBv39oVXVhfQ0TBrpqufUYHGb
- BgxRfuT1hySZmwoK/nMZe6sw1XHPYtWRn9wqaYKSlG/G6KBBXLSVOlNxt2ZamT56zUlZ
- Tw0Dzr+VLSYXs0jxNW5CW3rZkHcHXZdIj3/aeXgMsDuwVODZCrfXTCHweAKR97dU+/NW
- 6ilYMiRBl13JVKqEG+3L83S245RjMWUNsLP5KvfTVEBg2JNqLTZ3w1b73Qi/DUIy1opU
- Bu7ehQ2yyzVwJY43fEKfuc9ptpVtMFcT2BG64uMysIdt2oSEGj99vP64SM+tdNNTE6wl
- BdaQ==
+ bh=YV6leE4fgOKq8LWFBEf7PmSadRs+8Mz0dVJVLCLswgQ=;
+ b=iGwuU1mUCEK+dSv19rrLCnNXcl+oDLMQHgGNed1iwD+mxLVeRSEUBqZDe4CH9bBv84
+ 6V+QcNFBHPrq66I8Er532d2uPZ8tL9QaOzJBrgBN7LS6oQHmFYFMO9ayDcqQeLAw465T
+ I4SjQtUnxGUpkewcBwRVvmVOwkEQSlo7pCst31IPZlEXSQu79xzmFeDqk934+MigWbSl
+ e2ap+r9Ttkbi7oEuwjlu/nXmNBIdZYquW/R4w4L4lWyx1TH7yQSN2DHt36UCzfirfjNi
+ jqkPmbQj+SlCDokBGnLf7/nLaweWsX5RIjMFb7bHA6FQR0FN12KT/YQCuUBDm06q937F
+ EDCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753603641; x=1754208441;
+ d=1e100.net; s=20230601; t=1753603421; x=1754208221;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SDylAKOmltNGyLx2E37xE3a+pc0ueuM8z50fDJMoOME=;
- b=SM2fuv3vQDSXgkJGsqmghRfS27PoeT1NPlb/HiUZBzQcc80SZNCJ1jXVc/l5ZS2EIY
- y8hOwvwTihIdedj3lBJP/izLpwNpeVW+3NOU9mkb58pVcG0wCgbZ4FZ/snIq37ClvNfz
- PwtHD6XJhbVp7A1YmwEdwsQhgSvyfTYvZVwC3mwyhLrQZAx9urmAKnAD+3GSV4Nyv2AS
- h5xqA8gPKDenoUstYqi8KNi4xMhXKowdQjpO0uWyHUSNYzCzB3wrXajCwHyTJfFp3ero
- T8WQFYbHpDzT2RLhlS658SLSRPMqP6sxqYm0jJFidEgXIuY/aVWcgMxCj2DfzP5Z8/BU
- zVIQ==
-X-Gm-Message-State: AOJu0YzNa5E8mLA2HZH38p4SqFZDVMvAEp4me7nKLF9dYxSfkHlpw2Eu
- VYWQCWE8306VTl0KCtuRTO4ZYq/+WDc1AEGp42gz6PHz8NeHMTEd4VYNFhJwqWIbRpbsh1pZxBD
- 1f2QQ
-X-Gm-Gg: ASbGnctrly6FjDI846/MDTCcBW0yTpGiDrdXca52hXCdryS1JLAVrTYzbSvTumBqtgB
- exLj/PgbMasHiUgpTIriDISrVp0vjcbTHJkrUKxGGkj74G2KRz0U02/Jxm4co6WLDTLdipRjchl
- j+3dFparA4qGYf1f9caC627Tz3Hcm5zvUMAoKJP9MT3GIXjdpkmJULJcfTK+TiuWuxcjRLMoUTb
- IYMQzEVt+C8fsCZfYaOSEEuP7YjJFwEBr/kfqnrmPs4a45t4w3cfLMijuIRVaRlzorOUbC7O3Pb
- EGVYXXIM8tzXLjtZ4n8eGt1q5mduBSE4sI+5usthj+Rp/9NqH0Vt2RHT9llfBzwwRUulcgaewh+
- 8r4RDhCzUXsq/E9XFiwK4NglxjAAKimGdmQT0dGIVriYQWOCGbbmw0oZzjVohWnRvpUl8W/9lIJ
- r7sJ62bSwkng==
-X-Google-Smtp-Source: AGHT+IFR4QduveMs1gQmtG9cAKimd6lBjoMXSGruNmr8p5HBIBpWWCixESy6Hd0da+mAMQa3UGhSig==
-X-Received: by 2002:a17:902:c7cd:b0:23f:e869:9a25 with SMTP id
- d9443c01a7336-23fe8699c24mr27485075ad.44.1753603641234; 
- Sun, 27 Jul 2025 01:07:21 -0700 (PDT)
+ bh=YV6leE4fgOKq8LWFBEf7PmSadRs+8Mz0dVJVLCLswgQ=;
+ b=S+mD1EbLTyPsuv4D9ncmRdCQq7iA3tfqoeezO+W6bpiOQuO4FNsNns4Ff/l1CmAF24
+ ax1W1vSYqsOIduEGNnxrxlfcRkrmGfISaz1eKWURYWW6fSP+N1XKuYe6osMoMFCal5BI
+ 9AQZ6WuVc2MB+NSd5WLweydMdxAoEt1pDP9TJi8YPzwp3N+yGDFufuPUfBu9PSofczBH
+ 0zGXihXITY8AOIk3bdxahwwSbZwYLkxOLABUXVRgh2p0xA/++oUxWs5IZnyaJ+I86Ge3
+ 7J4y0KeWYNKM2JA7wpVTNdNi+mau8SJXFe0c3/1svVSUHsmg304/L4cJLuUoO9oot0T8
+ 86Pg==
+X-Gm-Message-State: AOJu0YzG2NRP8p6pnxIY2CyehMxO5rsL2k7oyMjA05vJTk25lBkCyw8b
+ cI4r7+FnoOqmMpIPHQjY4pS3T/dj07eVqZRFtZJbahctrd/J4SwXKHPr0BAQkrISQUagV8Y/bic
+ wI2Do
+X-Gm-Gg: ASbGncuFfQDA/WnMGV5gyFL6qTnV5po99Ub0G7No+jR+boXWqKHWOAHMJOfkCnLNENb
+ 3LjrFSSmf/1YJVy2RKxWRbbqrF5BFmPyLXxTLSiaCZwxUEFw9hqIXHLJOdTrvhR6R2uK+YVS3w1
+ ZteU+Rca4rktyJxsq+KZy7WbuSki2XSRmU+VWVEcXV0ku64zaArhn3k18hAoxkimtbQvuDZKpz3
+ w/3Q2lTGajfHLM6WwXlDAAqmuK10wpgL6yfNCcvwOOnz5DDkxZIrXFr/aygGdw0WUGUkkPO5OrJ
+ EnO9vjJb/nf4m/o0lEy+K/b6F0Nu6ZNtqoBK4m36/oi9OdEksiC5H13bw7qxMATMUK/06aCNUjT
+ +6WLLdWMqiuDOydbropF0cZe5YcZlhOCZDo3V5J0xkpXMLXQPkWwCgoMmSyLF7+GuD97BWbnPqV
+ 6IitD7T4hYnw==
+X-Google-Smtp-Source: AGHT+IEHRISwR3dMbs8ZHoA+Q5EJ/5dJ4grfCKxnBfPlukxzoLno1A4Ku6l5AUE3W/+Hz2Mv+dcvGA==
+X-Received: by 2002:a17:902:d585:b0:23f:b0f5:b73c with SMTP id
+ d9443c01a7336-23fb30e81c9mr115784245ad.44.1753603421595; 
+ Sun, 27 Jul 2025 01:03:41 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24011d5bcbesm3908065ad.10.2025.07.27.01.07.20
+ d9443c01a7336-23fbe333efesm30016415ad.65.2025.07.27.01.03.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:07:20 -0700 (PDT)
+ Sun, 27 Jul 2025 01:03:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 70/82] target/arm: Enable FEAT_GCS with -cpu max
-Date: Sat, 26 Jul 2025 22:02:42 -1000
-Message-ID: <20250727080254.83840-71-richard.henderson@linaro.org>
+Subject: [PATCH 37/82] target/arm: Convert regime_is_user from switch to table
+Date: Sat, 26 Jul 2025 22:02:09 -1000
+Message-ID: <20250727080254.83840-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250727080254.83840-1-richard.henderson@linaro.org>
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,34 +103,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/cpu64.c        | 1 +
- docs/system/arm/emulation.rst | 1 +
- 2 files changed, 2 insertions(+)
+ target/arm/internals.h       | 17 -----------------
+ target/arm/mmuidx-internal.h | 12 ++++++++++++
+ target/arm/mmuidx.c          |  6 ++++--
+ 3 files changed, 16 insertions(+), 19 deletions(-)
 
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index f4a41c854f..0c3408c0a0 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1205,6 +1205,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR1, SME, 2);       /* FEAT_SME2 */
-     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
-     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
-+    t = FIELD_DP64(t, ID_AA64PFR1, GCS, 1);       /* FEAT_GCS */
-     SET_IDREG(isar, ID_AA64PFR1, t);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index ea210c7179..c6f3ae470b 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1034,23 +1034,6 @@ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
+     return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
+ }
  
-     t = GET_IDREG(isar, ID_AA64MMFR0);
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index b894aced89..9e3df48e00 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -72,6 +72,7 @@ the following architecture extensions:
- - FEAT_FRINTTS (Floating-point to integer instructions)
- - FEAT_FlagM (Flag manipulation instructions v2)
- - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
-+- FEAT_GCS (Guarded Control Stack Extension)
- - FEAT_GTG (Guest translation granule size)
- - FEAT_HAFDBS (Hardware management of the access flag and dirty bit state)
- - FEAT_HBC (Hinted conditional branches)
+-static inline bool regime_is_user(ARMMMUIdx mmu_idx)
+-{
+-    switch (mmu_idx) {
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E20_0:
+-    case ARMMMUIdx_E30_0:
+-    case ARMMMUIdx_Stage1_E0:
+-    case ARMMMUIdx_MUser:
+-    case ARMMMUIdx_MSUser:
+-    case ARMMMUIdx_MUserNegPri:
+-    case ARMMMUIdx_MSUserNegPri:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+ /* Return the SCTLR value which controls this address translation regime */
+ static inline uint64_t regime_sctlr(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
+index 5a7259a557..ef1f94a23f 100644
+--- a/target/arm/mmuidx-internal.h
++++ b/target/arm/mmuidx-internal.h
+@@ -17,6 +17,7 @@ FIELD(MMUIDXINFO, REL, 3, 2)
+ FIELD(MMUIDXINFO, RELVALID, 5, 1)
+ FIELD(MMUIDXINFO, 2RANGES, 6, 1)
+ FIELD(MMUIDXINFO, PAN, 7, 1)
++FIELD(MMUIDXINFO, USER, 8, 1)
+ 
+ extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ 
+@@ -62,4 +63,15 @@ static inline bool regime_is_pan(ARMMMUIdx idx)
+     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, PAN);
+ }
+ 
++/*
++ * Return true if the exception level associated with this mmu index is 0.
++ * Differs from arm_mmu_idx_to_el(idx) == 0 in that this allows querying
++ * Stage1 and Stage2 mmu indexes.
++ */
++static inline bool regime_is_user(ARMMMUIdx idx)
++{
++    tcg_debug_assert((unsigned)idx < ARRAY_SIZE(arm_mmuidx_table));
++    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, USER);
++}
++
+ #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
+diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
+index 98db02b8e5..1c1e062bfe 100644
+--- a/target/arm/mmuidx.c
++++ b/target/arm/mmuidx.c
+@@ -7,10 +7,12 @@
+ #include "mmuidx-internal.h"
+ 
+ 
+-#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK)
++#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK | \
++                ((X == 0) << R_MMUIDXINFO_USER_SHIFT))
+ #define REL(X) ((X << R_MMUIDXINFO_REL_SHIFT) | R_MMUIDXINFO_RELVALID_MASK)
+ #define R2     R_MMUIDXINFO_2RANGES_MASK
+ #define PAN    R_MMUIDXINFO_PAN_MASK
++#define USER   R_MMUIDXINFO_USER_MASK
+ 
+ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     /*
+@@ -33,7 +35,7 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     [ARMMMUIdx_Stage2_S]        = REL(2),
+     [ARMMMUIdx_Stage2]          = REL(2),
+ 
+-    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2,
++    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
+     [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
+     [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
+ 
 -- 
 2.43.0
 
