@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF41C87FCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DAFC87FCE
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 08:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufwor-0001t5-AZ; Sun, 27 Jul 2025 04:33:23 -0400
+	id 1ufwp4-000241-8C; Sun, 27 Jul 2025 04:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwoc-0001SP-BM
+ id 1ufwod-0001Ts-Q1
  for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:08 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ufwoW-0000Aq-Rp
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:05 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ae0e0271d82so656632966b.3
- for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:32:59 -0700 (PDT)
+ id 1ufwob-0000CG-Sz
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 04:33:07 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6153a19dddfso97098a12.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 01:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753605177; x=1754209977; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lH95b4uBs0vcMVHT3CcmxeT0bpVwl2ygjWpRhTjtzNs=;
- b=TVi1h0MfnzgW0QaaE7ZFcvvAPXsJ0T0iaJUp767trh239uYGUoIxxx3FwcO+m5mFsJ
- WZwji9NfngYbf3HdebTAPSyXn6OP+kyNwDwSl9ahXL3qmHJG2hlQ5EoFlK3yELSQ9o6v
- Ig2MTo/lZH+unGMKYguh6jExcpdFryjSd3DPLmeuWjPIJbrfftP7wuQvwlzJfLzduZSr
- hsLc+7C8DJPbpSTOR8RVTm3UXUFWY+T4MkxrwOjtHMuZlu4HN95dChDzk1Q765Ko4xXj
- c0JnzJxX98eHKjPqm2CnXVWqo/x5cfcyr69+JFHng+SWtEpRIlz0IIw+61NX4aRfiGrs
- Q1hA==
+ d=linaro.org; s=google; t=1753605184; x=1754209984; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=p2m3SQZYfWKv+UrChBy8PfS+Pzpe60G8PEJwAKSc7FQ=;
+ b=oftDTxRmYvaQqMd+wuchp6BITllrCy8nlGXCcd7gU5N9nN1Jfbryuq2+wQyl+V1HUf
+ zMuaRS3XtwW/3QwFiigsl08kNwxQVjr3w9kgzj1KBgUBaQrPdKqMdwu297aci+g6YhQ8
+ LhT47xlvvcaYHRTw3DM+LnlQxJr56QAcTv3JdfsEs8t98KHKRjhyhdThYpD0JqeuwHY1
+ 57be3dGt9yINBFHPynHuVrr0RkVlrW7V2EzSFcq97btNP/hm7vIrkFvtW7S4ZuEgjrtp
+ uhzK4IwOjofyQkkDibiVNdfv6xpzCUQmRO6N8AO1SzEHyuZBnTTTlee3WSKVjeSNnkW7
+ DEIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753605177; x=1754209977;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lH95b4uBs0vcMVHT3CcmxeT0bpVwl2ygjWpRhTjtzNs=;
- b=LW7/7m1NFwTsPUUSTIaMWFW+M4sa/muRpblqOkC8ksVAOvUmiCvq07VlPLRQKprkr0
- aNpl0eQLaAz12/D08WBehUalPitbDyulsmcQV1Djqg7+62mCDVRSHu3TycvVwzgHtaYt
- JYePlLfbCOBO4EOVBclESmCCZ/v9iwEQHE7zdBDRfGNPhNfqP9FCz0ab+huNRcjVfDoo
- KTWlrByLOC4sEpT//f9H6dW82dco0SNdcSLYUz5GbPL3mASO7hMlE78bm/d/2gTOPfAG
- EOaH5F7DXUylCYDRF+mErHzTYrAY6o/4HDBMtRrXRtV/y6LqycNEHTi2DnRi8AQ/OzN3
- pBnw==
-X-Gm-Message-State: AOJu0YwopiDQKd5+W9yDkHyujGHXyfoCO/EkBjTe5P8dPzxk6564NwaL
- zq1HJw1KZ9i728s/d+ttifQfnTt93f54Kw6YN4zP0gAhHmG+69KcsKtUXmPXx05rhfGnAZKg8f+
- niYAf
-X-Gm-Gg: ASbGnctbjPJoWg20eJ+JNt1uvuxKMUOG/VD4nGUlghHiDnInGRn8x+AsUONxpx+TXxJ
- O2aPGytv5r6c9YbSAhMWZ1sjTIMGzW0f787IAoXFA4ZY1HTZJoGraW78PBUX28xmWr6zxhuxRkm
- +NE/DVGxfGj+fO0SdONVDHF5/RNqv4v4z4voa/adG8/rGx4VnMLoB9r+8ix07BNxYcbCHEQNC56
- GYgkVqK7Zo6MITiUYpmwpF4oUdAGV/8CBsc3utv8IC57vIHl0xrKpme1kBQSwb6bkSPpHisg+sW
- 3oa6dzxF8RMe9YmoncOgLXeskvYkvUADY/lqYURMmdJsmB405i5nYuf16Fmujl1Hq3fxZdOb2gA
- 5NAlw7s0zphgJzYJ4lO2XsVo=
-X-Google-Smtp-Source: AGHT+IHNtXDuKeHd8+xDU8qX5k+dA43cNuU55VBYw8VvFbomgdR8d8Xb8bT2exn311Wfc+xPt1HxiQ==
-X-Received: by 2002:a17:907:e84b:b0:ae7:ec3:ef41 with SMTP id
- a640c23a62f3a-af61950b3f4mr917442066b.45.1753605176852; 
- Sun, 27 Jul 2025 01:32:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753605184; x=1754209984;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=p2m3SQZYfWKv+UrChBy8PfS+Pzpe60G8PEJwAKSc7FQ=;
+ b=AfLwaBihxsde67JSctHtOmwrrreRSVVL5wGJ0Q5grx3MqEjsetew1BFEHJz05I3uGA
+ vrtuQHSocAj5Rk1/qpAtB3jct3uuzFucJCfyqtwXNSi/PaQTHrGWUsu6IBKdP33LNuJR
+ l7XPbP5xly5xfiy1IOmbinK6cke2lpcNuq45TLny8q9zQf111+LVdCn/sWQy/13TylIi
+ lyqcFgHvBv0NsJVf7u4b3LFIn8vQpGFTEOtudI8URz+boqSZSSwdqmm0zBvtTI82dCML
+ un08xyL4piP02apAg+vkK6SWQgJHss04vL6TDTbyCH3luUHDKuhH7umIjfjraOEpSh3z
+ hCOQ==
+X-Gm-Message-State: AOJu0YwsXfYnE2jV/v2rLCGVQM3neddcudPpUb9YlWp6sdqRc6JxqZRB
+ Ny/wshk+lP1zamt9lMg/x2UwmvmyIf+ofLTJej1WznBE3HFkqMZzoV14xK6L3ZsplghBkxwjsWu
+ uFPRp
+X-Gm-Gg: ASbGncv/5VtI6xLQT/7LW60ABPqRBZD+Tn5Xj7jUfITgLnuQzy4Wuy+ZwFPKsXorxIF
+ aXQAoVB6hXexzvnRT8Ja+nn6on/t6zO+xYRCUds+FdoF2TZWZlu6WWjygeI42rx+f+HLvpIT8DL
+ cJ5mns6fC5LST1pDCjmvpShAfE094hm08jUYwKqXrzeEZoYao3yWCbYiOhvV18VRLDYVz0gaR2X
+ 2wKzzOibTRx7NyldXKxH42+6g+8NE6r+eKd/wNDZaOBrIq6WcqITVAH63H3vh2PI0i4WkN3Ha3G
+ HHlWgNdECPnp/lbf7vzhSHPmdJIKT4hkB91JNpqo+eDna7kpzUSLMspMhtAaUkKZ8u9RZF+nQZ+
+ +Y+QnGmK9mdJWnQ5niL6LUlY=
+X-Google-Smtp-Source: AGHT+IGrYLbRqVCUsiNGrR5sdZ5thkb+19q6ayql8x2Qjm9c7UhyRAfWKJnNYePIlsp7JFsI2AAaww==
+X-Received: by 2002:a05:6402:51c7:b0:614:d585:35b3 with SMTP id
+ 4fb4d7f45d1cf-614f1bd3616mr6746684a12.1.1753605184133; 
+ Sun, 27 Jul 2025 01:33:04 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af63589fe4asm258360566b.41.2025.07.27.01.32.54
+ 4fb4d7f45d1cf-61500a5723bsm1911048a12.16.2025.07.27.01.32.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Jul 2025 01:32:55 -0700 (PDT)
+ Sun, 27 Jul 2025 01:32:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1809A5F7F1;
+ by draig.lan (Postfix) with ESMTP id 6E0F35F8B5;
  Sun, 27 Jul 2025 09:32:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL for 10.1-rc1 00/14] documentation an testing updates
-Date: Sun, 27 Jul 2025 09:32:39 +0100
-Message-ID: <20250727083254.3826585-1-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 04/14] docs/user: slightly reword section on system calls
+Date: Sun, 27 Jul 2025 09:32:43 +0100
+Message-ID: <20250727083254.3826585-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250727083254.3826585-1-alex.bennee@linaro.org>
+References: <20250727083254.3826585-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,59 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c017386f28c03a03b8f14444f8671d3d8f7180fe:
+Expand the description slightly and quote ioctl(). I did ponder
+mentioning something about why DRM ioctls are often missing but I see
+we have the I915 ones so I guess its just no one has done them.
 
-  Merge tag 'pull-target-arm-20250725' of https://gitlab.com/pm215/qemu into staging (2025-07-25 08:24:52 -0400)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20250725154517.3523095-5-alex.bennee@linaro.org>
 
-are available in the Git repository at:
-
-  https://gitlab.com/stsquad/qemu.git tags/pull-10.1-rc1-maintainer-260725-1
-
-for you to fetch changes up to cac08383f06dc378afb23913d65a95442bbd5516:
-
-  tests/functional: expose sys.argv to unittest.main (2025-07-26 23:04:35 +0100)
-
-----------------------------------------------------------------
-documentation and test cleanups
-
-  - improve clarity of user-mode docs
-  - remove reference to TAP tarball
-  - add new hypervisor test for aarch64 EL2
-  - reduce combinatorial explosion of plugin tests
-  - make docker-all-test-cross more friendly to non-x86 hosts
-  - expose unittests to sysv.args for embedded help
-
-----------------------------------------------------------------
-Alex Bennée (14):
-      docs/user: clarify user-mode expects the same OS
-      docs/system: reword the TAP notes to remove tarball ref
-      docs/user: clean up headings
-      docs/user: slightly reword section on system calls
-      docs/user: expand section on threading
-      tests/functional: add hypervisor test for aarch64
-      tests/tcg: skip libsyscall.so on softmmu tests
-      tests/tcg: remove ADDITIONAL_PLUGINS_TESTS
-      tests/tcg: don't include multiarch tests if not supported
-      configure: expose PYTHON to test/tcg/config-host.mak
-      tests/tcg: reduce the number of plugin tests combinations
-      tests/docker: add --arch-only to qemu deps for all-test-cross
-      tests/docker: handle host-arch selection for all-test-cross
-      tests/functional: expose sys.argv to unittest.main
-
- docs/system/devices/net.rst                        | 16 +++--
- docs/user/index.rst                                |  5 +-
- docs/user/main.rst                                 | 60 +++++++++++-------
- configure                                          |  1 +
- .../dockerfiles/debian-all-test-cross.docker       | 34 ++++++-----
- tests/functional/meson.build                       |  1 +
- tests/functional/qemu_test/testcase.py             |  2 +-
- tests/functional/test_aarch64_kvm.py               | 71 ++++++++++++++++++++++
- tests/tcg/Makefile.target                          | 36 ++++++++---
- tests/tcg/multiarch/Makefile.target                |  8 ++-
- tests/tcg/multiarch/system/Makefile.softmmu-target | 16 +++--
- 11 files changed, 192 insertions(+), 58 deletions(-)
- create mode 100755 tests/functional/test_aarch64_kvm.py
-
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index b8ff203c212..05de904225c 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -20,10 +20,14 @@ QEMU user space emulation has the following notable features:
+ System call translation
+ ~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-QEMU includes a generic system call translator. This means that the
+-parameters of the system calls can be converted to fix endianness
+-and 32/64-bit mismatches between hosts and targets. IOCTLs can be
+-converted too.
++System calls are the principle interface between user-space and the
++kernel. Generally the same system calls exist on all versions of the
++kernel so QEMU includes a generic system call translator. The
++translator takes care of adjusting endianess, 32/64 bit parameter size
++and then calling the equivalent host system call.
++
++QEMU can also adjust device specific ``ioctl()`` calls in a similar
++fashion.
+ 
+ POSIX signal handling
+ ~~~~~~~~~~~~~~~~~~~~~
 -- 
 2.47.2
 
