@@ -4,94 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5057AC87FCA
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Jul 2025 17:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E29FC87FCC
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 06:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ufiJf-0002zc-TW; Sat, 26 Jul 2025 13:04:11 -0400
+	id 1ufunS-0007Bh-3Q; Sun, 27 Jul 2025 02:23:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1ufiHD-0001nU-P3
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 13:01:40 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1ufiHB-0000pT-Eo
- for qemu-devel@nongnu.org; Sat, 26 Jul 2025 13:01:39 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-23fc5aedaf0so4195105ad.2
- for <qemu-devel@nongnu.org>; Sat, 26 Jul 2025 10:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753549294; x=1754154094; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=8o/hDLEr8mUgOt0ZGZLmOGoGk0JwTQovCF4wYoVGLuk=;
- b=mHME8T6jaeLI585ZbimMYLrPHR/BOU7p0piQfubAiU7xBFNXtpPc+bRNl+gBNRbWwq
- CW6xHXTtmb1rfmw7N5DK8pREyg5M9XCDJ5NZO0TFvlWAInEDYBnt4lNOxPNcAcGhhIX0
- YlG+hKdQQFG7DGnMABW1uetbjRms50FOtRz05f2XV6neBOHs5oYGTmJFoIPhtZzWewx9
- o5FxiGt4XzMMULe0V8D0a4BAm/YYgpsSuWfEShsPDSq+Xse5efw7Ak4sIh5cbw/GOdif
- 7qCQKq/vFb1Nbl9vuqGDyMBBQ9RiU5/kczc5TRfp/TiTjhLpfOOhvnEaYyGge2FcDTCP
- xLSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753549294; x=1754154094;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8o/hDLEr8mUgOt0ZGZLmOGoGk0JwTQovCF4wYoVGLuk=;
- b=dQD5SXZmyAIqvo7c5aK13jvfWcnf7JaHjynwaImTxFONIR1+7OUN25eUFTv4qctkyg
- 58GA1vCmA+4EqHBbQ1wGgJFuKNEUwG79V3Ib4JXiE3MiU/bVUOucvG51xXleWjT+1DEb
- ildLKYY8fDVIt7+9jgt5h83wp8zDP4kiC96bUp7SVeJNN9rjCcpmh0RkYaMpwTztecwT
- 5Vc1gnbVH1cRVMWbYUOa8AzW4U1OZ+zNXRU7BHR+zcFPMH3pY2FKYvILsJWUmRdOuliW
- 17Mb4Tn1N9wtISF4sLT2INLVW7AVPwgZf3bKsa5bW0h6Po/Fev810psXbZrP98tAJvzj
- FxZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6b4cjhebNL1fK6JorqkxdW32ca50hvBdsS1x0tx3Hy6o2UrAxwQTLRS9cX9qEHwD8Zd8bLH8rPXwM@nongnu.org
-X-Gm-Message-State: AOJu0YwtYZxMiq/GDI88iv13MnDNNrzPi3Ta4lBMXpXL1DuCt3DC0kch
- hrAxFM1Z7VgvxuBcwm3wD9lpsmUkfV2aIP/v2ARSFMRjXvEuUIIJFROs
-X-Gm-Gg: ASbGncv+SvW6pgkAhbXTtFiHbX5fWrqI6qsnh+bzw9FSItlFaC45TyG94OIIiAy2zpJ
- Tt07wLFMEHFGWpQ+AWRveITOGDQQ6enG1AOQg9UmfDxDiVPSsjfj70jSBbkjD1B0Mi1dwtsOMpV
- Xz7zBAmqgS27v0/gJhi5Jxfo5iirSuBzL8O9UahTd9mE0f1ajcPxmqOOKuGFPnxAUfZ2L5Hzua6
- kLYEBJdTPmFt8shqkUz5RMxdKRb9BYxRzPFOYtBTaw07/D0ca52UEyfDtPh/Wyfq2o+nmmH95lm
- 0003J/15CGe2x71maXkDHMKiBJC5yNdZYJejp7bptuqW7izt/Pwhw01EfKvy63upB4EF4fX4RhC
- zNK4TFte7S/y5jodFSIzQG1c50UjvuP4z5Cc=
-X-Google-Smtp-Source: AGHT+IGlegXpjgdJaL8nFWyXsI1WkXCMWteF5yj3D6ktWNdpCVJh1NBnt5d2ExeSsXkFB0x1yljJjQ==
-X-Received: by 2002:a17:903:22c9:b0:236:9726:7261 with SMTP id
- d9443c01a7336-23fb30dfd0cmr84719225ad.39.1753549294103; 
- Sat, 26 Jul 2025 10:01:34 -0700 (PDT)
-Received: from lg ([2601:646:8f03:9fee:6456:3d83:7c59:6543])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe329898sm20326575ad.46.2025.07.26.10.01.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Jul 2025 10:01:33 -0700 (PDT)
-Date: Sat, 26 Jul 2025 10:01:30 -0700
-From: Fan Ni <nifan.cxl@gmail.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: peng guo <engguopeng@buaa.edu.cn>, mst@redhat.com,
- marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, wyguopeng@163.com
-Subject: Re: [PATCH] hw/i386/pc: Avoid overlap between CXL window and PCI
- 64bit BARs in QEMU
-Message-ID: <aIUJ6jyd3oCXbzQi@lg>
-References: <20250718133545.5261-1-engguopeng@buaa.edu.cn>
- <20250725145337.00003c91@huawei.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ufun0-0006vi-50; Sun, 27 Jul 2025 02:23:20 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ufumv-0006eR-P2; Sun, 27 Jul 2025 02:23:17 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56R6Ml3s093507
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 27 Jul 2025 15:22:54 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Akdb0YA3jwzUaEHtZ7YvqK6+migMLbF4VDzJ6CtcXI0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1753597374; v=1;
+ b=PR4nWHnn+dOnW0hrKyhD6P5aXYAbmzEeKQFIyM4scb8zRrhizr3knYy5+EgJYd3F
+ aah7CIs/VMSoX5ZW/S0fDMicPGZgAabSEkq7m4oMyHkck/2hWpziyGu98mMHovfb
+ 2vXr6wuPJWI+8sObSZZg/IDfAhbU9vfOwxpd4QojRFlZ1gcammG7Ui/+3Tmm5I4u
+ CgZbWGAGzRXd2q/XPXQlqvVmsr1pNalJgD5v03PcrqyvLLkjgLpibluZXGpODXo8
+ 22Ll81t02Q+ZWpCXK2QjUh3e2Wk1cDvh7PLI7rt6fjILwroh/r2p+hjeoUK6swQZ
+ GXbpG2i7lGhRhPB7567vwQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 27 Jul 2025 15:22:36 +0900
+Subject: [PATCH v3] virtio-net: Fix VLAN filter table reset timing
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250725145337.00003c91@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAKvFhWgC/3XMSwrCMBSF4a1IxiY0j74cuQ9xcJuk7VVpSlKDp
+ XTvpsWBCA7/w+FbSLAebSCnw0K8jRjQDSnk8UB0D0NnKZrURGQiz0ouaXzAQCvNsxKKHEzNSbq
+ O3rb42pnLNXWPYXJ+3tXIt/UHiJxyClK3WaNbKJQ6+9AxjQzZk07uPjsGmt1GsmlRfAvqI4gkC
+ JNXdQPKaCP/Cuu6vgEiBzpQ5wAAAA==
+X-Change-ID: 20250713-vlan-8c107a65ad91
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, virtualization@lists.linux.dev,
+ qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Lei Yang <leiyang@redhat.com>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,234 +76,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 02:53:37PM +0100, Jonathan Cameron wrote:
-> On Fri, 18 Jul 2025 21:35:45 +0800
-> peng guo <engguopeng@buaa.edu.cn> wrote:
-> 
-> > When using a CXL Type 3 device together with a virtio 9p device in QEMU, the
-> > 9p device fails to initialize properly. The kernel reports the following:
-> > 
-> >     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
-> >     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
-> > 
-> > Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-> > device was overlapped by the memory window allocated for the CXL devices. As a
-> > result, the kernel could not correctly access the BAR region, causing the
-> > virtio device to malfunction.
-> > 
-> > An excerpt from /proc/iomem shows:
-> > 
-> >     480010000-cffffffff : CXL Window 0
-> >       480010000-4bfffffff : PCI Bus 0000:00
-> >       4c0000000-4c01fffff : PCI Bus 0000:0c
-> >         4c0000000-4c01fffff : PCI Bus 0000:0d
-> >       4c0200000-cffffffff : PCI Bus 0000:00
-> >         4c0200000-4c0203fff : 0000:00:03.0
-> >           4c0200000-4c0203fff : virtio-pci-modern
-> > 
-> > To address this issue, this patch uses the value of `cxl_resv_end` to reserve
-> > sufficient address space and ensure that CXL memory windows are allocated
-> > beyond all PCI 64-bit BARs. This prevents overlap with 64-bit BARs regions such 
-> > as those used by virtio or other pcie devices, resolving the conflict.
-> > 
-> > QEMU Build Configuration:
-> > 
-> >     ./configure --prefix=/home/work/qemu_master/build/ \
-> >                 --target-list=x86_64-softmmu \
-> >                 --enable-kvm \
-> >                 --enable-virtfs
-> > 
-> > QEMU Boot Command:
-> > 
-> >     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
-> >         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
-> >         -hda /home/work/gp_qemu/rootfs.img \
-> >         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
-> >         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
-> >         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
-> >         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
-> >         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-> >         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-> >         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
-> >         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-> > 
-> > Tested in a QEMU setup with a CXL Type 3 device and a 9pnet virtio device.
-> > 
-> > Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-> Analysis looks good.
-> 
-> For the patch I wonder if we should match the check that follows
-> for pcms->cxl_devices_state.is_enabled rather than checking cxl_resv_end
-> (which is only set to non 0 if that is_enabled is set).
-> 
-> Probably better to use a consistent condition for checking if CXL is
-> there or not.
-> 
-> We also ideally need a suitable fixes tag.  I couldn't immediately find one
-> so maybe it goes a long way back.
+Problem
+-------
 
-FYI. Commit histroy related to the line changed,
+The expected initial state of the table depends on feature negotiation:
 
+With VIRTIO_NET_F_CTRL_VLAN:
+  The table must be empty in accordance with the specification.
+Without VIRTIO_NET_F_CTRL_VLAN:
+  The table must be filled to permit all VLAN traffic.
 
-commit 78732a765986d5270d6b3d88afeb9e4d33092360
-Author: David Hildenbrand <david@redhat.com>
-Date:   Fri Jun 23 14:45:49 2023 +0200
+Prior to commit 06b636a1e2ad ("virtio-net: do not reset vlan filtering
+at set_features"), virtio_net_set_features() always reset the VLAN
+table. That commit changed the behavior to skip table reset when
+VIRTIO_NET_F_CTRL_VLAN was negotiated, assuming the table would be
+properly cleared during device reset and remain stable.
 
-    hw/i386/pc: Use machine_memory_devices_init()
+However, this assumption breaks when a driver renegotiates features:
+1. Initial negotiation without VIRTIO_NET_F_CTRL_VLAN (table filled)
+2. Renegotiation with VIRTIO_NET_F_CTRL_VLAN (table will not be cleared)
 
-    Let's use our new helper and stop always allocating ms->device_memory.
-    Once allcoated, we're sure that the size > 0 and that the base was
-    initialized.
+The problem was exacerbated by commit 0caed25cd171 ("virtio: Call
+set_features during reset"), which triggered virtio_net_set_features()
+during device reset, exposing the bug whenever VIRTIO_NET_F_CTRL_VLAN
+was negotiated after a device reset.
 
-    Adjust the code in pc_memory_init() to check for machine->device_memory
-    instead of pcmc->has_reserved_memory and machine->device_memory->base.
+Solution
+--------
 
-    Cc: Paolo Bonzini <pbonzini@redhat.com>
-    Cc: Richard Henderson <richard.henderson@linaro.org>
-    Cc: Eduardo Habkost <eduardo@habkost.net>
-    Cc: "Michael S. Tsirkin" <mst@redhat.com>
-    Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-    Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-    Acked-by: Michael S. Tsirkin <mst@redhat.com>
-    Signed-off-by: David Hildenbrand <david@redhat.com>
-    Message-Id: <20230623124553.400585-7-david@redhat.com>
-    Signed-off-by: David Hildenbrand <david@redhat.com>
+Fix the issue by initializing the table when virtio_net_set_features()
+is called to change the VIRTIO_NET_F_CTRL_VLAN bit of
+vdev->guest_features.
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1123,1 +1116,1 @@
--    if (pcmc->has_reserved_memory && machine->device_memory->base) {
-+    if (machine->device_memory) {
+This approach ensures the correct table state regardless of feature
+negotiation sequence by performing initialization in
+virtio_net_set_features() as QEMU did prior to commit 06b636a1e2ad
+("virtio-net: do not reset vlan filtering at set_features").
 
-commit b0c14ec4efe912ae6f14a4802574f7b6b6db0648
-Author: David Hildenbrand <david@redhat.com>
-Date:   Mon Apr 23 18:51:17 2018 +0200
+This change still preserves the goal of the commit, which was to avoid
+resetting the table during migration, by checking whether the
+VIRTIO_NET_F_CTRL_VLAN bit of vdev->guest_features is being changed;
+vdev->guest_features is set before virtio_net_set_features() gets called
+during migration.
 
-    machine: make MemoryHotplugState accessible via the machine
+It also avoids resetting the table when the driver sets a feature
+bitmask with no change for the VIRTIO_NET_F_CTRL_VLAN bit, which makes
+the operation idempotent and its semantics cleaner.
 
-    Let's allow to query the MemoryHotplugState directly from the machine.
-    If the pointer is NULL, the machine does not support memory devices. If
-    the pointer is !NULL, the machine supports memory devices and the
-    data structure contains information about the applicable physical
-    guest address space region.
+Additionally, this change ensures the table is initialized after
+feature negotiation and before the DRIVER_OK status bit being set for
+compatibility with the Linux driver before commit 50c0ada627f5
+("virtio-net: fix race between ndo_open() and virtio_device_ready()"),
+which did not ensure to set the DRIVER_OK status bit before modifying
+the table.
 
-    This allows us to generically detect if a certain machine has support
-    for memory devices, and to generically manage it (find free address
-    range, plug/unplug a memory region).
+Fixes: 06b636a1e2ad ("virtio-net: do not reset vlan filtering at set_features")
+Cc: qemu-stable@nongnu.org
+Reported-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+---
+Not tested.
 
-    We will rename "MemoryHotplugState" to something more meaningful
-    ("DeviceMemory") after we completed factoring out the pc-dimm code into
-    MemoryDevice code.
+Konstantin, I would also want you to test this new version. Please also
+give it Tested-by, and, if possible, Reviewed-by.
+---
+Changes in v3:
+- Dropped RFC.
+- Rebased.
+- Link to v2: https://lore.kernel.org/qemu-devel/20250714-vlan-v2-1-2d589ba4dcd3@rsg.ci.i.u-tokyo.ac.jp
 
-    Signed-off-by: David Hildenbrand <david@redhat.com>
-    Message-Id: <20180423165126.15441-3-david@redhat.com>
-    Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-    [ehabkost: rebased series, solved conflicts at spapr.c]
-    [ehabkost: squashed fix to use g_malloc0()]
-    Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
+Changes in v2:
+- Addressed a concern with old drivers that do not properly set
+  DRIVER_OK (pointed out by Michael S. Tsirkin).
+- Noted that this change does not simply revert commit 06b636a1e2ad
+  ("virtio-net: do not reset vlan filtering at set_features") but
+  preserves its goal.
+- Added Cc: qemu-stable@nongnu.org.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250713-vlan-v1-1-a3cf0bcfa644@rsg.ci.i.u-tokyo.ac.jp
+---
+ hw/net/virtio-net.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1432,1 +1435,1 @@
--    if (pcmc->has_reserved_memory && pcms->hotplug_memory.base) {
-+    if (pcmc->has_reserved_memory && machine->device_memory->base) {
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index c4c49b0f9caa1e8f26fa2e03acc8786936877eba..6b5b5dace334af12e9b77a8a2765c88443cee235 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -929,8 +929,9 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
+         vhost_net_save_acked_features(nc->peer);
+     }
+ 
+-    if (!virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN)) {
+-        memset(n->vlans, 0xff, MAX_VLAN >> 3);
++    if (virtio_has_feature(vdev->guest_features ^ features, VIRTIO_NET_F_CTRL_VLAN)) {
++        bool vlan = virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN);
++        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
+     }
+ 
+     if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
+@@ -3942,6 +3943,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
+ 
+     n->vlans = g_malloc0(MAX_VLAN >> 3);
++    memset(n->vlans, 0xff, MAX_VLAN >> 3);
+ 
+     nc = qemu_get_queue(n->nic);
+     nc->rxfilter_notify_enabled = 1;
+@@ -4041,7 +4043,6 @@ static void virtio_net_reset(VirtIODevice *vdev)
+     memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
+     memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
+     qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
+-    memset(n->vlans, 0, MAX_VLAN >> 3);
+ 
+     /* Flush any async TX */
+     for (i = 0;  i < n->max_queue_pairs; i++) {
 
-commit bb292f5a9b944e47fae88a20767967e7e20122b4
-Author: Eduardo Habkost <ehabkost@redhat.com>
-Date:   Fri Dec 11 16:42:28 2015 -0200
+---
+base-commit: 9e601684dc24a521bb1d23215a63e5c6e79ea0bb
+change-id: 20250713-vlan-8c107a65ad91
 
-    pc: Remove compat fields from PcGuestInfo
-
-    Remove the fields: legacy_acpi_table_size, has_acpi_build,
-    has_reserved_memory, and rsdp_in_ram from PcGuestInfo, and let
-    the existing code use the PCMachineClass fields directly.
-
-    Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-    Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-    Reviewed-by: Marcel Apfelbaum <marcel@redhat.com>
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1385,1 +1385,1 @@
--    if (guest_info->has_reserved_memory && pcms->hotplug_memory.base) {
-+    if (pcmc->has_reserved_memory && pcms->hotplug_memory.base) {
-
-commit a7d69ff10b085ba6f8236600829532984cdea714
-Author: Bharata B Rao <bharata@linux.vnet.ibm.com>
-Date:   Mon Jun 29 13:50:22 2015 +0530
-
-    pc,pc-dimm: Extract hotplug related fields in PCMachineState to a structure
-
-    Move hotplug_memory_base and hotplug_memory fields of PCMachineState
-    into a separate structure so that the same can be made use of from
-    other architectures supporing memory hotplug.
-
-    Signed-off-by: Bharata B Rao <bharata@linux.vnet.ibm.com>
-    Reviewed-by: David Gibson <david@gibson.dropbear.id.au>
-    Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-    Tested-by: Igor Mammedov <imammedo@redhat.com>
-    Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1336,1 +1336,1 @@
--    if (guest_info->has_reserved_memory && pcms->hotplug_memory_base) {
-+    if (guest_info->has_reserved_memory && pcms->hotplug_memory.base) {
-
-commit de268e134c03612970d6f2c214df6287c9621cc8
-Author: Igor Mammedov <imammedo@redhat.com>
-Date:   Mon Jun 2 15:25:10 2014 +0200
-
-    pc: add 'etc/reserved-memory-end' fw_cfg interface for SeaBIOS
-
-    'etc/reserved-memory-end' will allow QEMU to tell BIOS where PCI
-    BARs mapping could safely start in high memory.
-
-    Allowing BIOS to start mapping 64-bit PCI BARs at address where it
-    wouldn't conflict with other mappings QEMU might place before it.
-
-    That permits QEMU to reserve extra address space before
-    64-bit PCI hole for memory hotplug.
-
-    Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-    Acked-by: Peter Crosthwaite <peter.crosthwaite@xilinx.com>
-    Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1269,0 +1270,1 @@
-+    if (guest_info->has_reserved_memory && pcms->hotplug_memory_base) {
-
-
-Fan
-
-> 
-> > ---
-> >  hw/i386/pc.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index 2f58e73d3347..180bc615f3f0 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -975,7 +975,7 @@ void pc_memory_init(PCMachineState *pcms,
-> >  
-> >      rom_set_fw(fw_cfg);
-> >  
-> > -    if (machine->device_memory) {
-> > +    if (machine->device_memory || cxl_resv_end) {
-> >          uint64_t *val = g_malloc(sizeof(*val));
-> >          uint64_t res_mem_end;
-> >  
-> 
-
+Best regards,
 -- 
-Fan Ni
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
