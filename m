@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7CB2C87FC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 11:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5ADC87FC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 11:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugLrr-0001dD-G4; Mon, 28 Jul 2025 07:18:07 -0400
+	id 1ugLwN-00076x-6Q; Mon, 28 Jul 2025 07:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLLl-00030I-Tg
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:45:10 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLgJ-0005tO-Og
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:06:16 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLLj-0006gK-NN
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:44:57 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-45629703011so29650485e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 03:44:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLgE-0001re-ND
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:06:11 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4538bc52a8dso31465575e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 04:06:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753699493; x=1754304293; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753700763; x=1754305563; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=H3zSWYbfc5Ko6bZj8SsT4+B83dmSsrThM72rQyD9d/s=;
- b=Y8i/1BVLQ6NQRUdF3jZzWX8GXYoVuYFFvkoRbdtZIUEFzsYUXzOBBzWOcfKgVMHHhZ
- BGZgUziPV8y9jk/jVz/yRgGGL2G1AR6/gtPrO7A5S9DzMttlId4/uCrB9IvaW/B4CEcq
- Trnqtym1LuSgPeVhacJiQw9n/X+VDaC6OSxpFwP2d7f/EElLEttdddfrYnJmUZHnMYP4
- d8vLlJktLOgWGLuW4tR29j3YW2OYFxxU9UQ84wnMEUZ6/aZVF4cFQGW/4TC02IICp+lu
- wNmCKHVTHHfXWWirusrwDN+fBGwMFjFtC829eTzQWVgM0qCSL0fUc0IoVvwU//q72UJ2
- /dBg==
+ bh=5EzSKU+h4Ak/EbXS7kgUaozDaGnCRQc4spyQDkugc2c=;
+ b=rbIumGc2V5E4qs4TiegFgUPMOwFKO1zkY5VlrLIcKzV2yXgUvPwhWPWhFJXp0ARjdZ
+ QHDdEz0JQ6H7pJjVvK3yE+/8AjIDnFciY7QkzXRxuBjF/YMdYjm/hre2c9Eq/Z9l9kiD
+ PDOPWSwCfIT7GwZ50jV10YdOkB3IGF7VJS0jS4r3Kf5TKnRZPai/n87Ps5547tAQiaSS
+ xKbXHyMVozUUdbI5Tk6zCPNc7MMMf7KAHeafTOMptX1jk8x3+q5lzIRLwoAQj6Pq+iK7
+ HIYpj8f5qVQke8E7NZmZ5unxL4QiufnMEXyep7ZGR51Q6fP4oXjRfUkj5nM/foYKx+IE
+ fjCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753699493; x=1754304293;
+ d=1e100.net; s=20230601; t=1753700763; x=1754305563;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H3zSWYbfc5Ko6bZj8SsT4+B83dmSsrThM72rQyD9d/s=;
- b=gBjpqVxbOdUkY7Kx9KLwUgT4QDjPdv7jPlu7gSGx+xBqottQDk0K9WiIbPDkuaUPYp
- LsfLktAd3OC/GaCaB+Kdbei2iWO3ifv/T/Pj3gyrpggE3ovVlKPZPgJ5UDRMFjqBf0f2
- RCkwJNudgifPw12UqBwtp9oYXD9Q2ZwW+sM+So+Q6RllhBnWkCKb519o3Miv8qsRto9G
- INEInwRIhp5pMZWmhsq7yMXfabfGnIAU2pMba1je/XRaQwNY2zkLLo0MOu8M2MNWSSXP
- EfheAAk5yqIf6yisq3Ys505vgmstPhTAekXUjpngUdPRtGmIjt3lwct4PaXAOJYPf8Oo
- lCgg==
+ bh=5EzSKU+h4Ak/EbXS7kgUaozDaGnCRQc4spyQDkugc2c=;
+ b=CIkGtKZQlobUonYBmVEDBIS/3yvPWqCwO2CjlCxchKxYNB/Jhlb0q10bmd4NpLGCMJ
+ VIIQYXgfNdD1xAo61V2pOIaoz9x5mMuQ470bhWyMSJEajbQ5baqWwew1JjjBX+Thk6Bn
+ f0/KvwQ36cQW5pkqkkjDUBJ+lZXOSrYHzeyxaEfCc9EPvw2XHYlYVepVYxtXWZowWWfE
+ FOJWPmDS4kScdbaMiiMrxr9MuwxN5e/Y1zdLw1H+nRLJ1fkhJzMIJWuVNfXynlT44N86
+ z4RCn5JeQB1GxjLtUhJNbShIyYirDAckEGlhzwLwaipC2Ln2sPhcS7I5IFrQUQ9Np0K2
+ ZR+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7C9JN6MeiwQazYrObfBtHXssi+TCokMA+dH1mxteoMqCOcvLFYxD8wFfPk+UCUVzRDyUv4XWCLaTn@nongnu.org
-X-Gm-Message-State: AOJu0YxtyU9nlFJLvQTxqwCn0NFMRNYTpGeHgEcR8ferACM7i9Je6cQ7
- tmwoMulwNx1y27YhDbv2QjLSUGGLohS9KPJv/ev919FKp5jDvplr2D3o2CC/JJMptJI=
-X-Gm-Gg: ASbGncvjCtesYcuGFkSUJSZsgRAsNZSB0C1PbkrePEwekoaGkAjFPe1pCqfk4WD7TQ+
- pAjAArmP9dhzPr2PazaNRNN8eun7psKOxhhmKeaad8EEKnDboAIP2dE4RwsUlxZB/d3okEpkTIr
- g7a8RyrkWY4QNhe+EJJYLpJ0VhPfg4qFvf6q4ZWILWQooGzvIUwmzn8x581ghrvjfbKCdNyXd7D
- MRa9JYT6luvCBHc/MobE58zfuA3RIBb3qoxYtm28+futCtVqr8HHlLT+Wrdql3FxrMX3iJJHlwe
- s6BvrVMDBa2uTU/EJ8/mnRP2ReYy6lS44g2enfU2MBn/xhAuzISPlwx4Ph87gXoR8cI9jl+Ru4Q
- YbIl9ZOR42hoQuQ1pfaP5zbrTCAfCVpvZdTUVs+e+ZTvMV+Y7j7ygYm0geIcaeCtVqw==
-X-Google-Smtp-Source: AGHT+IFtmM7htQA5yERqYXVxbcEpTD67OGTPQcqNXs9RVUxb2VZGUbvWxePY/oFwZiTBXVpElhu3nA==
-X-Received: by 2002:a5d:4086:0:b0:3b7:8b5e:831d with SMTP id
- ffacd0b85a97d-3b78b5e85a5mr803923f8f.17.1753699493479; 
- Mon, 28 Jul 2025 03:44:53 -0700 (PDT)
+ AJvYcCUKSzEMMzxbh+DZ8NJs1DPyLf6JXq/D/ZMVXOkMyWhxiupnywcKo+AQgvVdGAMoSspzFw28QPOhZJRt@nongnu.org
+X-Gm-Message-State: AOJu0YxR8gbJojL1+cZJcrz6J5XnilTFyXqt2yl9i0ICeqmLjNZqWW5+
+ vesPs+sccnREvIzk15ARcr7xgya2gLgnEtMJp8EqpxevMZR2/xYUeblg8HZrlpKFU1s=
+X-Gm-Gg: ASbGncscrBPgpEcjzJLMlxq7+JXY0KOigBK+hNa97hA/aq1WNUg88PRRmfL6QvnUryS
+ 0DjfXXd2IkdVM8zIsEQuCUeWtZK7x6MthV2t6SGy7+A640OYLJz9d4HilILyty/6PCfLQbbSSs6
+ CEAKuYYbPfLr1cvzZlFBCqmUxqY9soVanZUaGQMloR6gLvX+VES1lt+Nh5yGkxdktDUsYVUC29l
+ 2hmxsHPrDoKCtQ6EcbaEC6ckYYLlLRgqrro26TNOhVjbRXnZ3V7CSITAFvvAI6kaebYtaFYHhs6
+ dULcZ5mJNSRYdL1YJL65c9qqEuiaBe42vkPLT2EQ0iocvmXWHZ57QD9iEk1YRVGU+Spap7l/Qy4
+ WZ0XuFZpkbbS9mkoKcHPcahrzfBUpQCRLyMS6kTOsKEggRFO3xSzsvAlgW5xTidXKlsyWHmV8/o
+ Pi
+X-Google-Smtp-Source: AGHT+IG/RghZo0+Wz585BSX5eWBXordnv7rcmdgWBmsSH7SmOBPkosEXQxzdGeWx8vjNxXSspw7B5g==
+X-Received: by 2002:a05:600c:861a:b0:456:1bae:5470 with SMTP id
+ 5b1f17b1804b1-45876b12ab6mr61946645e9.8.1753700763120; 
+ Mon, 28 Jul 2025 04:06:03 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4586ec79441sm112486465e9.2.2025.07.28.03.44.51
+ 5b1f17b1804b1-4586f88ce71sm121702835e9.0.2025.07.28.04.06.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 03:44:51 -0700 (PDT)
-Message-ID: <d01be1f3-bb30-4ed5-b935-e9fc74d1ec2e@linaro.org>
-Date: Mon, 28 Jul 2025 12:44:50 +0200
+ Mon, 28 Jul 2025 04:06:02 -0700 (PDT)
+Message-ID: <ea0e0abb-b9b4-4a81-bdba-ce9c6873bf13@linaro.org>
+Date: Mon, 28 Jul 2025 13:06:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: remove myself as ppc maintainer/reviewer
-To: Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com
-References: <20250724123416.3115941-1-danielhb413@gmail.com>
+Subject: Re: [PATCH] hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk
+ size calculation
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paul Durrant <paul@xen.org>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20250221134856.478806-1-mjt@tls.msk.ru>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250724123416.3115941-1-danielhb413@gmail.com>
+In-Reply-To: <20250221134856.478806-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,23 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/25 14:34, Daniel Henrique Barboza wrote:
-> It has been awhile since I actively did anything for qemu-ppc aside from
-> reading the qemu-ppc inbox a couple of times each month. It's not enough
-> to justify a reviewer role, let alone being a maintainer.
+On 21/2/25 14:48, Michael Tokarev wrote:
+> In case of multiple chunks, code in qxl_unpack_chunks() takes size of the
+> wrong (next in the chain) chunk, instead of using current chunk size.
+> This leads to wrong number of bytes being copied, and to crashes if next
+> chunk size is larger than the current one.
 > 
-> Given that we're doing qemu-ppc maintainership changes across the board
-> I'll take the opportunity and remove myself from the premises too. Feel
-> free to reach out with questions about code I did in the past, but at
-> this moment I'm no longer able to keep up with qemu-ppc activities.
+> Based on the code by Gao Yong.
 > 
-> Signed-off-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1628
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->   MAINTAINERS | 3 ---
->   1 file changed, 3 deletions(-)
+>   hw/display/qxl-render.c | 11 ++++++++++-
+>   1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+> index eda6d3de37..c6a9ac1da1 100644
+> --- a/hw/display/qxl-render.c
+> +++ b/hw/display/qxl-render.c
+> @@ -222,6 +222,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+>       uint32_t max_chunks = 32;
+>       size_t offset = 0;
+>       size_t bytes;
+> +    QXLPHYSICAL next_chunk_phys = 0;
 
-Thanks for your help with PPC Daniel!
+Thanks, queued (without zero-initialization).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   
+>       for (;;) {
+>           bytes = MIN(size - offset, chunk->data_size);
+> @@ -230,7 +231,15 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+>           if (offset == size) {
+>               return;
+>           }
+> -        chunk = qxl_phys2virt(qxl, chunk->next_chunk, group_id,
+> +        next_chunk_phys = chunk->next_chunk;
+> +        /* fist time, only get the next chunk's data size */
+> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
+> +                              sizeof(QXLDataChunk));
+> +        if (!chunk) {
+> +            return;
+> +        }
+> +        /* second time, check data size and get data */
+> +        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
+>                                 sizeof(QXLDataChunk) + chunk->data_size);
+>           if (!chunk) {
+>               return;
 
 
