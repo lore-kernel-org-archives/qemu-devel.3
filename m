@@ -4,150 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2DFC83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 08:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B669C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 08:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugJEa-0002vN-0b; Mon, 28 Jul 2025 04:29:24 -0400
+	id 1ugJM9-0008Gx-QP; Mon, 28 Jul 2025 04:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1ugJD3-00023H-Lm
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 04:27:56 -0400
-Received: from mail-bn7nam10on2060c.outbound.protection.outlook.com
- ([2a01:111:f403:2009::60c]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ugJHX-0004yh-97
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 04:32:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1ugJD1-0002GC-6X
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 04:27:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xBq68BnAe+rTT3PLuvQvEQAeRoIg25/5i9LfNUhczRgDvzPKfh0qwoMn0IhzdF8vY50gfdGfbJNEXFwEDhf7qchupl80wciSZwVwIggC2cvN1551HXFKhcQ7FaEvoxrrMyPOSCAmZDFThmSgxKaub45xdCj/MhHPml3PdkJg5bG9LagaFPutXebTOlB2mD5yj36ZmrIA60AYllsaMeBrKQpnlQYyb5ZsWCbTNx2Ht6tOMBjT76DgXTyGRjIQMPeUuPlt+rTg6vJeUPchDvG5Gxhq/nVu96uYtdUL56SioEHTn7I4ikBvis6J7ZR+/liQhywnq+hHKHfS2t49pWe+ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CmDQ47Gh5gEfTJ3txitReZoZrLIc0eJkweBtLwm4MmY=;
- b=RPHZuWyi1drHFE8EhvpbWA/R0CUO9qh5NqMeFQ1OcTVFV+DaubDmiGsLud8pi/jqNVAIVXbKsVYlOd2F49jBEXaliZzzYBwGV59DYOzCCkWd00ZeMtkOOLVAqZYhtSr494Go07wusp+XfgwiSV105ArInOA3J3LnxOOilyeNK7jkzXsT5/YWYjoRreo5mecMXxLkyew1ql3Yi2MUuoPzb4uSAo28UXCeBdeFWXmdVlBfmNGJCnnOnGlP7OJJ3LOASOaPvPbnmv+eCGh6CrGr9aVbjjxbZCXZykCanStR5RHTD/fDnxXuLWF7zp0SQRNyXvTDTgRCb/eG0LDzRcOl1A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CmDQ47Gh5gEfTJ3txitReZoZrLIc0eJkweBtLwm4MmY=;
- b=NCvJgkrEdI/gluh3f3dnRXF3N9s7l9Ror08iqiqEucdNEE0sHSW7Ja9ClyCaxLsxMiXhxmoW/opYQCFI7ENi6vzdJxjfXcgOeQkWFxKShxKwdYiM50yjiKqc3OgUsoMvvUzu+7oQXPklKGBsp6Z0bPAj2kTmAD4f2IYMUw9QidQ=
-Received: from DM6PR03CA0006.namprd03.prod.outlook.com (2603:10b6:5:40::19) by
- BN5PR12MB9488.namprd12.prod.outlook.com (2603:10b6:408:2a9::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.26; Mon, 28 Jul
- 2025 08:27:39 +0000
-Received: from DS1PEPF00017098.namprd05.prod.outlook.com
- (2603:10b6:5:40:cafe::79) by DM6PR03CA0006.outlook.office365.com
- (2603:10b6:5:40::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8964.26 via Frontend Transport; Mon,
- 28 Jul 2025 08:27:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS1PEPF00017098.mail.protection.outlook.com (10.167.18.102) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8989.10 via Frontend Transport; Mon, 28 Jul 2025 08:27:38 +0000
-Received: from [10.85.34.242] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Jul
- 2025 03:27:35 -0500
-Message-ID: <2e8f2b72-8fb5-474f-9844-61f306efeb2b@amd.com>
-Date: Mon, 28 Jul 2025 13:57:27 +0530
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ugJHV-0002v8-1y
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 04:32:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753691543;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=C1FFLoGnEa1lZfaD/SWjSxDj9dunKXd9o90QSYEySr0=;
+ b=SJBqPUdiEvcoD4ot6bYR2GV23DaK8OG4l67Hiacen3IaOiuGvV10VCWskrmNWGGTqsHqpQ
+ pGAm/b4N7EzgLjFNdSSMi6NfQbUMixvbJ12B1o9GgR+KHJNMsrkKrAGt+bQKH+ps9/1ocm
+ 2hUrMDAFTfvBFFBm84zjGhX22FR5CrM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-TZ04oX-ROP6XXOlTSiw_IQ-1; Mon,
+ 28 Jul 2025 04:32:19 -0400
+X-MC-Unique: TZ04oX-ROP6XXOlTSiw_IQ-1
+X-Mimecast-MFC-AGG-ID: TZ04oX-ROP6XXOlTSiw_IQ_1753691538
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29CE619560BA; Mon, 28 Jul 2025 08:32:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74D5C1800D86; Mon, 28 Jul 2025 08:32:15 +0000 (UTC)
+Date: Mon, 28 Jul 2025 09:32:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 4/4] tests/functional: add -k TEST_NAME_PATTERN CLI arg
+Message-ID: <aIc1jB_ziOPzpQie@redhat.com>
+References: <20250725-functional_tests_debug_arg-v3-0-b89921baf810@linaro.org>
+ <20250725-functional_tests_debug_arg-v3-4-b89921baf810@linaro.org>
+ <aIOF2gPa8nbec2qp@redhat.com> <aIOZQfMHt-jJUTSH@redhat.com>
+ <50ef6de5-bef5-4da8-a417-b666b7968f6c@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] hw/i386/amd_iommu: Support MMIO writes to the
- status register
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <richard.henderson@linaro.org>,
- <alejandro.j.jimenez@oracle.com>, <vasant.hegde@amd.com>
-References: <20250724064745.4091-1-sarunkod@amd.com>
- <20250724064745.4091-6-sarunkod@amd.com>
- <c6891bd3-eee9-425a-a785-f503284145af@linaro.org>
-Content-Language: en-US
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <c6891bd3-eee9-425a-a785-f503284145af@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF00017098:EE_|BN5PR12MB9488:EE_
-X-MS-Office365-Filtering-Correlation-Id: 719ac060-2106-4159-d2f4-08ddcdb09cab
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OW85YlkyWVQzdnNEc2RxUUlaejBucDBXMDlmQTJzdGs5TS9qYWtlYUtkSisx?=
- =?utf-8?B?NDZOOWM0VU0zV1l5SWFZaFZLQXNnckFzN3lTWDM2L0IwdHdVYmhUb2JnVUY2?=
- =?utf-8?B?eWFwYlpEVlFoM2dhS3lsYTdGVVF0WkVVZGhWMTg3YStSK2UwRTRHQmIzSUdp?=
- =?utf-8?B?Q2Zjeng5K1NQOTR2T3BLcm91Ky82NWhHOVV4RkdzRlZhOWh0RVRPdXJSWUhp?=
- =?utf-8?B?UHhheHpuZkNzVmEwaDJFcjgzSWdJdjV5dENSeFlHMXdnaHNqa3FPTVdDaTRI?=
- =?utf-8?B?VnkxRnY5eXRmS2MxVERxYUZmVFhNTFczY0JwUVBKbWlwUDVvMjR6RkdhaWpR?=
- =?utf-8?B?NG1meDZNU2MvMFZwZE5yd2VJM3hMVm83VzEzYjVIYXA0Y0JHd2VBSlJzd3dM?=
- =?utf-8?B?N2UrUUtHTzJ1dzl1K1ZYOE1hektuS0JnVWlCTTJURUJLVjFUaEg5OW42YUtx?=
- =?utf-8?B?bWsvaUxTYkR6R1lWQVV3SVpIcDBXZUNvMGxaRjQzdUs3L0pTeE9QRnRzYXZi?=
- =?utf-8?B?S1JwbVNuelJTSTBiMlVSc1JkSGZCZTl5QmFFWFAzNG1IdzIrVHZFV05IamNR?=
- =?utf-8?B?QzVSVlZPQVRnN0haMVE2WmJlaG5uUGFvS2xmRGVWU0FVN1RBaGowNGpNWWFo?=
- =?utf-8?B?N0p1T0piM2VNcmtlTVEycllpYVcvdXdSYjk2NVhSSDlIeko3TGttakQxV251?=
- =?utf-8?B?RUxONjRLaGU2bWt6aU1xeCtUMjhOWDc4UENIMGJJeG9PMVFnaTlBUU9yMDF5?=
- =?utf-8?B?QXNQTU9kT2JkaStoSmE2VU5Hdy9GQnhCcGY4K2RJdkdSa2pYYkNxOWcwWWFV?=
- =?utf-8?B?ais2cTFLM2lOQlk3anBsdmRaNnBYTzhQQ0htZFZCUkcwbW40Tm9IZHBWWnIr?=
- =?utf-8?B?emsyS0JwUzdORUxkRkpvZUl0M2dwYUFaTStEazllRG93MjM3N1Y5em5IUTQw?=
- =?utf-8?B?Q3NBclBFWFl0L2gxcnhOZm82UXNpQS8rQjRYbmRaRlhUSlp0QUhtZHBXUTFL?=
- =?utf-8?B?QXJmZHpacUNzcFVYUlJUdEpxZTN3VzZpaENNYUpDUEx5c2NFWURQNWlmT1VK?=
- =?utf-8?B?bkNGL2FSUVVodGk5UFNTR2dGZ1lkWklQdXliaVZuT0Y5bkZhRW5kWmxXMUll?=
- =?utf-8?B?R2lOeVRBdGJ2V3VCOWwxd2xqeUhiVktLK1NSYUdFQVh4YiszcTl1SWx6NGJY?=
- =?utf-8?B?VS9tYVF2ME1ObkZpN2laRktCS1RQeklKeXR4dDYyRE41WjNadkw1UTJRaTh0?=
- =?utf-8?B?SW9XRGZWeU5KOG1mT0FsVXRFSWMwZGJPbWQzS2tUclZPSnEyUFJDQTN5WVZm?=
- =?utf-8?B?NnNxWmJXenFQdVhWWjQrL2lzWnVBOUpWM3ZMTjZtVjB4bFJYZFo1QUQ0K3pt?=
- =?utf-8?B?czdKUHZUSHdLSU5kU0ZiWEszZTQ0REtITGhHaFI5dnpxN3Y4VmJDZmU0TkV1?=
- =?utf-8?B?cWZHU1RMVnE4VGova2hNNThkZHNQRzcrL20xMm94emo4QlNGUVZxOUJVQ2ZJ?=
- =?utf-8?B?N2p6dTl6UjQyenhoNzZyQVIrYkhWNm1qdkpqdEtOSGUza29QWW1OcG1uT09S?=
- =?utf-8?B?b2dUWFBnU1pJSitNNjBoSzl5M1BIaW5nWHVrblMrUkZnMHNYamtLbEtrMm9z?=
- =?utf-8?B?djA0WnFUL0RnNE1IQ2JYRTU3Y2VnVC9tU1dVMjhPa2FuYmNSVkRxYmxNbWto?=
- =?utf-8?B?Ny9yS1lteTF5S3haS3VUQUxTdW5mZjhiQTM4R3F2YlpTSVlFQzFTdVVzUU5t?=
- =?utf-8?B?MUphZ2xnMVVXZDBOM0srUzFaOXR1RWJtQSswM2lpRS9ma3ZHZXpEUzhoVUpU?=
- =?utf-8?B?dU5DUUVaTCtQV1NySGM5NnNPZEcyVHlmblQ4QXZHM0VDRWU3RUM5OEViTGF4?=
- =?utf-8?B?TWNlMzRQVTg3QkZkUU9jd3FIS3dDaTZvSVZCY1VpZFdKNnVNQlFSSmg2NlBQ?=
- =?utf-8?B?SDFOSVNJelZuSlFQL3ZDZElEZ1dGa01sWlVDbHVOVDZ2SEpuZ3ZvN1lPMmYx?=
- =?utf-8?B?VGJTc25iWk5YbFBaNVFSVTdWVVhkb1cvMnFmZVd2SXNRMUNJWEhxcmdvUXBI?=
- =?utf-8?Q?MM9MWh?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 08:27:38.2107 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 719ac060-2106-4159-d2f4-08ddcdb09cab
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS1PEPF00017098.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9488
-Received-SPF: permerror client-ip=2a01:111:f403:2009::60c;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <50ef6de5-bef5-4da8-a417-b666b7968f6c@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -161,57 +93,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/24/2025 2:22 PM, Philippe Mathieu-Daudé wrote:
-> On 24/7/25 08:47, Sairaj Kodilkar wrote:
->> Support the writes to the status register so that guest can reset the
->> EventOverflow, EventLogInt, ComWaitIntr, etc bits after servicing the
->> respective interrupt.
->>
->> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
->> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
->> ---
->>   hw/i386/amd_iommu.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
->> index bbffd07b4e48..7c2fa80d14ff 100644
->> --- a/hw/i386/amd_iommu.c
->> +++ b/hw/i386/amd_iommu.c
->> @@ -850,6 +850,9 @@ static void amdvi_mmio_write(void *opaque, hwaddr 
->> addr, uint64_t val,
->>           amdvi_mmio_reg_write(s, size, val, addr);
->>           amdvi_handle_pprtail_write(s);
->>           break;
->> +    case AMDVI_MMIO_STATUS:
->> +        amdvi_mmio_reg_write(s, size, val, addr);
->> +        break;
+On Sat, Jul 26, 2025 at 08:54:51AM +0200, Thomas Huth wrote:
+> On 25/07/2025 16.48, Daniel P. Berrangé wrote:
+> > On Fri, Jul 25, 2025 at 02:25:46PM +0100, Daniel P. Berrangé wrote:
+> > > On Fri, Jul 25, 2025 at 12:41:25PM +0300, Manos Pitsidianakis wrote:
+> > > > Add a CLI argument that takes fnmatch(3)-style patterns as value and can
+> > > > be specified many times. Only tests that match the pattern will be
+> > > > executed. This argument is passed to unittest.main which takes the same
+> > > > argument.
+> > > > 
+> > > > Acked-by: Thomas Huth <thuth@redhat.com>
+> > > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > > ---
+> > > >   tests/functional/qemu_test/testcase.py | 23 +++++++++++++++++++++--
+> > > >   1 file changed, 21 insertions(+), 2 deletions(-)
+> > 
+> > 
+> > 
+> > > One of the goals with the new functional test system was that we stop trying
+> > > to (re-)invent a custom test runner harness, as was the case with Avocado,
+> > > in favour of relying on the pre-existing python infrastructure to the
+> > > greatest extent possible.
+> > > 
+> > > Seeing this, and all the other CLI arg handling added in this series, makes
+> > > me fairly uncomfortable, as it is effectively inventing a custom test runner
+> > > once again which is exactly what we wanted to get away from.
+> > > 
+> > > At the same time, there are some pieces in this series that do things that
+> > > unittest.main() can't do on its own.
+> > 
+> > So considering the broader picture, we already have a load of tunables
+> > on the test execution that we control exclusively via envirnoment
+> > variables, as that gives us independance of the test runner, which
+> > owns sys.argv processing.
+> > 
+> > So in terms of this series, IMHO, we should just add support for
+> > QEMU_TEST_DEBUG=1 and QEMU_TEST_KEEP_SCRATCH=1 as two new tunables,
+> > and not touch sys.argv at all.
 > 
-> Should we add:
-> 
->          default:
->              g_assert_not_reached();
+> I basically agree, but I wonder if we could maybe also have both? First
+> parse the sys.argv for our parameters, then pass the unknown ones to
+> unittest.main() ?
 
-I am against adding a failure here. Because when xtsup=on, linux tries
-to write all the XT registers ( which we dont support yet, because of
-which event logging does not work in this mode). Although future cleanup
-patches will add this support, I dont want to break things now.
+Any argv that we process are subject to clashing with that defined by
+the test harness and it is desirable to avoid making assumptions about
+what test harness args exist.
 
-I think amdvi_mmio_trace_write() is sufficient for debugging purpose,
-which prints "UNHANDLED" for unsupported registers.
+To avoid that they would all have to be long options named with a
+fixed prefix --qemu-XXXX. Also that sould be something applied to
+all env vars, not just the couple of params in this series.
 
-Thanks
-Sairaj
+> > With that, the only thing we're missing is a way to enumerate the
+> > test cases, but IMHO that's the job of the test runner and thus
+> > out of scope for QEMU to solve.
+> 
+> With the patch applied that passes the argv to unittest.main(), there also
+> seems to be a "discover" mode:
+> 
+>  ~/devel/qemu/tests/functional/test_vnc.py -h | grep usage:
+> usage: test_vnc.py [-h] [-v] [-q] [--locals] [--durations N] [-f] [-c] [-b]
+> usage: test_vnc.py discover [-h] [-v] [-q] [--locals] [--durations N] [-f]
+> 
+> ... however, when I try to run it, it does not work as expected (I get a
+> "ModuleNotFoundError: No module named 'discover'" error).
 
-> 
-> to catch unimplemented cases?
-> 
->>       }
->>   }
-> 
+Hmm, not sure that the 'discover' option makes sense when we're asking to
+run a single test file.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
