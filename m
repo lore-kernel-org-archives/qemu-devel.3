@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E76C87FCE
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 09:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA01C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 09:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugJmx-0007iX-JY; Mon, 28 Jul 2025 05:04:55 -0400
+	id 1ugJmY-0006xK-1K; Mon, 28 Jul 2025 05:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ugJmv-0007f9-CE
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:04:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ugJkR-0004ZQ-Og
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:02:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ugJmt-0007YG-0J
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:04:53 -0400
+ id 1ugJkM-0007Gr-4H
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:02:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753693489;
+ s=mimecast20190719; t=1753693331;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V5vcxWTU4e+4T7st/JfhiKpTGDipixuS68Sm21F5p/c=;
- b=dh07J5mWlwTkS7B/xMH9cN2mAzEUlVnbgZy9TMAN7MI6lrnVDfaZf7evFM7s/QZFh1pYFB
- rX0PxnEZ4N7a/KjYjXhDGHUGXzmZfThwMVndcTChyD/B36Fkj+c9le2hyihN7pmRxCPmiC
- 4mOAIG2ubhwdvHiLRAk9n7eILvC33EE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=lNpRk9P3NXPzAiV2/QmCY8/O42SU3SmfS6vtwyLMsyA=;
+ b=EutIHVrDq+oix50YRFvCtSpRo15Q3Ss1Q/ZJlJyW/J10pitB+1c58KNWEaIitnAmL12X+R
+ 87yvshD8emwZ2eFo31vGH1+MgejgLlKbswJA2pddaM49l9s9ax+Bm+bMFsVEwVvKfhISMh
+ p/s/F7H+xlOhZeIa6tRh7c9cKKFUjCQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-BAS_26nMNNm0JEMKBCjGtA-1; Mon,
- 28 Jul 2025 05:04:45 -0400
-X-MC-Unique: BAS_26nMNNm0JEMKBCjGtA-1
-X-Mimecast-MFC-AGG-ID: BAS_26nMNNm0JEMKBCjGtA_1753693484
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-88--pIYNZAcNfaKMR0QWPVPGQ-1; Mon,
+ 28 Jul 2025 05:02:07 -0400
+X-MC-Unique: -pIYNZAcNfaKMR0QWPVPGQ-1
+X-Mimecast-MFC-AGG-ID: -pIYNZAcNfaKMR0QWPVPGQ_1753693324
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B1211956095; Mon, 28 Jul 2025 09:04:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8CCD180028F; Mon, 28 Jul 2025 09:02:03 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.32])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0FA51800242; Mon, 28 Jul 2025 09:04:39 +0000 (UTC)
-Date: Mon, 28 Jul 2025 10:04:36 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16F7A19560A2; Mon, 28 Jul 2025 09:01:53 +0000 (UTC)
+Date: Mon, 28 Jul 2025 10:01:50 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/4] migration: workaround GNUTLS live migration crashes
-Message-ID: <aIc9JFGwmv75qV36@redhat.com>
-References: <20250718150514.2635338-1-berrange@redhat.com>
- <9b37d573-1783-4b0e-9b16-e08a10824aa9@tls.msk.ru>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v7 01/24] migration: push Error **errp into
+ vmstate_subsection_load()
+Message-ID: <aIc8fjnoA_G8iCqZ@redhat.com>
+References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
+ <20250725-propagate_tpm_error-v7-1-d52704443975@redhat.com>
+ <CAMxuvaznYbcpxc7dtDP5yVBzVcDJpVWVXHeWxB1zo0bfdBuw2g@mail.gmail.com>
+ <CAMxuvawsX6ePZV=ek7d0rDwpJYQJmNwiFKhTetLW6u1PW6cTbA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9b37d573-1783-4b0e-9b16-e08a10824aa9@tls.msk.ru>
+In-Reply-To: <CAMxuvawsX6ePZV=ek7d0rDwpJYQJmNwiFKhTetLW6u1PW6cTbA@mail.gmail.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -76,7 +97,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,73 +114,99 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 26, 2025 at 09:24:10AM +0300, Michael Tokarev wrote:
-> On 18.07.2025 18:05, Daniel P. Berrangé wrote:
-> > TL:DR: GNUTLS is liable to crash QEMU when live migration is run
-> > with TLS enabled and a return path channel is present, if approx
-> > 64 GB of data is transferred. This is easily triggered in a 16 GB
-> > VM with 4 CPUs, by running 'stress-ng --vm 4 --vm-bytes 80%' to
-> > prevent convergance until 64 GB of RAM has been copied. Then
-> > triggering post-copy switchover, or removing the stress workload
-> > to allow completion, will crash it.
-> > 
-> > The only live migration scenario that should avoid this danger
-> > is multifd, since the high volume data transfers are handled in
-> > dedicated TCP connections which are unidirectional. The main
-> > bi-directionl TCP connection is only for co-ordination purposes
-> > 
-> > This patch implements a workaround that will prevent future QEMU
-> > versions from triggering the crash.
-> > 
-> > The only way to avoid the crash with *existing* running QEMU
-> > processes is to change the TLS cipher priority string to avoid
-> > use of AES with TLS 1.3. This can be done with the 'priority'
-> > field in the 'tls-creds-x509' object.eg
-> > 
-> >    -object tls-creds-x509,id=tls0,priority=NORMAL:-AES-256-GCM:-AES-128-GCM:-AES-128-CCM
-> > 
-> > which should force the use of CHACHA20-POLY1305 which does not
-> > require TLS re-keying after 16 million sent records (64 GB of
-> > migration data).
-> > 
-> >    https://gitlab.com/qemu-project/qemu/-/issues/1937
-> > 
-> > On RHEL/Fedora distros you can also use the system wide crypto
-> > priorities to override this from the migration *target* host
-> > by creating /etc/crypto-policies/local.d/gnutls-qemu.config
-> > containing
-> > 
-> >    QEMU=NONE:+ECDHE-RSA:+ECDHE-ECDSA:+RSA:+DHE-RSA:+GROUP-X25519:+GROUP-X448:+GROUP-SECP256R1:+GROUP-SECP384R1:+GROUP-SECP521R1:+GROUP-FF
-> > 
-> > and running 'update-crypto-policies'. I recommend the QEMU
-> > level 'tls-creds-x509' workaround though, which new libvirt
-> > patches can soon do:
-> > 
-> >    https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/LX5KMIUFZSP5DPUXKJDFYBZI5TIE3E5N/
-> > 
-> > Daniel P. Berrangé (4):
-> >    crypto: implement workaround for GNUTLS thread safety problems
-> >    io: add support for activating TLS thread safety workaround
-> >    migration: activate TLS thread safety workaround
-> >    crypto: add tracing & warning about GNUTLS countermeasures
-> > 
-> >   crypto/tlssession.c           | 99 +++++++++++++++++++++++++++++++++--
-> >   crypto/trace-events           |  2 +
-> >   include/crypto/tlssession.h   | 14 +++++
-> >   include/io/channel.h          |  1 +
-> >   io/channel-tls.c              |  5 ++
-> >   meson.build                   |  9 ++++
-> >   meson_options.txt             |  2 +
-> >   migration/tls.c               |  9 ++++
-> >   scripts/meson-buildoptions.sh |  5 ++
-> >   9 files changed, 143 insertions(+), 3 deletions(-)
+On Mon, Jul 28, 2025 at 12:44:53PM +0400, Marc-André Lureau wrote:
+> Hi
 > 
-> Being a large(ish) change, but it looks like this patch set is a good
-> candidate for qemu-stable series, at least for 10.0.x.  What do you
-> think?
+> On Fri, Jul 25, 2025 at 5:46 PM Marc-André Lureau <
+> marcandre.lureau@redhat.com> wrote:
+> 
+> >
+> >
+> > On Fri, Jul 25, 2025 at 4:19 PM Arun Menon <armenon@redhat.com> wrote:
+> >
+> >> This is an incremental step in converting vmstate loading
+> >> code to report error via Error objects instead of directly
+> >> printing it to console/monitor.
+> >> It is ensured that vmstate_subsection_load() must report an error
+> >> in errp, in case of failure.
+> >>
+> >> Signed-off-by: Arun Menon <armenon@redhat.com>
+> >> ---
+> >>  migration/vmstate.c | 11 ++++++++---
+> >>  1 file changed, 8 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> >> index
+> >> 5feaa3244d259874f03048326b2497e7db32e47c..aeffeafaa4fa7582076a4f2747906ddf9aca891b
+> >> 100644
+> >> --- a/migration/vmstate.c
+> >> +++ b/migration/vmstate.c
+> >> @@ -25,7 +25,7 @@ static int vmstate_subsection_save(QEMUFile *f, const
+> >> VMStateDescription *vmsd,
+> >>                                     void *opaque, JSONWriter *vmdesc,
+> >>                                     Error **errp);
+> >>  static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription
+> >> *vmsd,
+> >> -                                   void *opaque);
+> >> +                                   void *opaque, Error **errp);
+> >>
+> >>  /* Whether this field should exist for either save or load the VM? */
+> >>  static bool
+> >> @@ -225,7 +225,7 @@ int vmstate_load_state(QEMUFile *f, const
+> >> VMStateDescription *vmsd,
+> >>          field++;
+> >>      }
+> >>      assert(field->flags == VMS_END);
+> >> -    ret = vmstate_subsection_load(f, vmsd, opaque);
+> >> +    ret = vmstate_subsection_load(f, vmsd, opaque, NULL);
+> >>      if (ret != 0) {
+> >>          qemu_file_set_error(f, ret);
+> >>          return ret;
+> >> @@ -566,7 +566,7 @@ vmstate_get_subsection(const VMStateDescription *
+> >> const *sub,
+> >>  }
+> >>
+> >>  static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription
+> >> *vmsd,
+> >> -                                   void *opaque)
+> >> +                                   void *opaque, Error **errp)
+> >>  {
+> >>      trace_vmstate_subsection_load(vmsd->name);
+> >>
+> >> @@ -598,6 +598,8 @@ static int vmstate_subsection_load(QEMUFile *f, const
+> >> VMStateDescription *vmsd,
+> >>          sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
+> >>          if (sub_vmsd == NULL) {
+> >>              trace_vmstate_subsection_load_bad(vmsd->name, idstr,
+> >> "(lookup)");
+> >> +            error_setg(errp, "VM subsection '%s' in '%s' does not exist",
+> >> +                       idstr, vmsd->name);
+> >>              return -ENOENT;
+> >>          }
+> >>          qemu_file_skip(f, 1); /* subsection */
+> >> @@ -608,6 +610,9 @@ static int vmstate_subsection_load(QEMUFile *f, const
+> >> VMStateDescription *vmsd,
+> >>          ret = vmstate_load_state(f, sub_vmsd, opaque, version_id);
+> >>          if (ret) {
+> >>              trace_vmstate_subsection_load_bad(vmsd->name, idstr,
+> >> "(child)");
+> >> +            error_setg(errp,
+> >> +                       "Loading VM subsection '%s' in '%s' failed : %d",
+> >>
+> >
+> > extra space before ":"
+> >
+> > other than that
+> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> >
+> 
+> Actually, almost systematically when you introduce an extra **errp
+> argument, you should ERRP_GUARD() in the function (see include/qapi/error.h
+> doc). Was this discussed before? Can you update the following patches too?
 
-Yeah, given broken gnutls is everywhere, I'd take it to any stable tree
-where it is reasonably easy to do a clean backport.
+ERRP_GUARD is only needed in functions which derefence errp, which should
+very rarely be needed when all functions are non-void return value.
+
 
 With regards,
 Daniel
