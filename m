@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00164C87FCE
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 09:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA38AC87FCE
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 09:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugKKi-0007TE-6F; Mon, 28 Jul 2025 05:39:48 -0400
+	id 1ugKMM-0000l4-E4; Mon, 28 Jul 2025 05:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugKKf-0007P5-Tn
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:39:46 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugKLs-0000Qi-Ed
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:41:11 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugKKe-0004qH-18
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:39:45 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a588da60dfso2136378f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 02:39:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugKLn-00058j-GV
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:41:00 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3b782cca9a0so971361f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 02:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753695581; x=1754300381; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YOd4RDJ0CoJqioFxZZeW44OV/lyJoP9UfgmcjzOt9M0=;
- b=Dk/qSuoR6x7hhBjRj4k0EAivAgR4d65Ojz704EvzIC1Q0cky9TEutrJi0AAp1uoCWy
- VSWZzySwQ4Btd2Vm7spRiyEXHK7zHGPII4ZrGsW+4PooNi+FelMhBss7rnxBx1pkiL4h
- CUTOADJ+75C0E4oJ6CUXzey0lout+9a+FBHY2zN3/yvigK/cwxADfkmf3+XsJ6p5vmVu
- 5xI5cXbZAiapI4AghI8tOxuR4XdfTjwC9ifxnfRidJHx8LyM/6SB4YQfbpa6+D9iFdim
- 8SsggEFsy0f01s7OKu06FkOVnMf0MTPBy2WmnLp/mHTL7KID7J/I4HHLCIn7sYuhW7lv
- QGzQ==
+ d=linaro.org; s=google; t=1753695653; x=1754300453; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GTmVF8EzinVjukruiFg50rLNKD93OsLskbp//837ESg=;
+ b=PCQhPgtQhmDgYfCyR5HNniWRXKNwf0mx4IQXD/tYd/rbRt687moBYcSbZ8poEsCk5P
+ 3zw/zsm2uCeWhL7V5NxZoY7DbcDizEpKpqC6nEUkk0wkhkiX/QEU9Y8h2Stb/L3SW+R3
+ qDM6V3Fnd/cR7M3TZqo6RS014PuvvRr9AUPej+su4r0mGNY4aAVsNuf+9eDg8NzImRbP
+ HzSVPu1+9ilNR81mLDO4qIHW7hwb9T5hGYLQPd0uxLBOtyoFAi2dZL6uG/uCVj/M14Zi
+ MxNNgWlinT1HMO6ki66pqYSvyd2oEu6xYOgkqwL+7FzxDMs+Z9OuVdNdj8WFIDMyM7ek
+ 5Mjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753695581; x=1754300381;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753695653; x=1754300453;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YOd4RDJ0CoJqioFxZZeW44OV/lyJoP9UfgmcjzOt9M0=;
- b=KPbsqhvYaP8RPtLK0pqiqVwfmbeCBZjsyMSFR13pPtWR1o55pr2H4eVQqWxfqbkfky
- C8C/91VWWBo4qcRitscwcs2mf+9x0KDMnG/vlfOgn7qt9Q2Xq5gbavdRCqvR7V1P6Lv1
- xfmT2IF3cRA2niwL03l2uF2Xx0c9GRftbcW44JQ60eblRFrV4akj5U72/nOwXhb81NgO
- vsNXetoXwguxJh5+/4BAuiAL9+kurGErTyURmyeI3vZF2ZWunKJ6uLbbiKj8dWpHNct1
- PisKuVzx0WdI8KiJJs4dligqDyVr9Kx0GwD7BfVhSSWSV5JvDMWrGDSZLe+iDcTlkryK
- cIJA==
+ bh=GTmVF8EzinVjukruiFg50rLNKD93OsLskbp//837ESg=;
+ b=HgpiVuekjlLPaoX99z7s23q1co3Xlv5yiA7YlO7Xq0sL42b21Mq6wEU6ta86HCFUUK
+ qj1P+QGxgh9kwVtqu0bzejNdXFBezYtMxMcZsvMRuxNUbjXgGZpkvM2jbeS8KWeRsVJv
+ DvglAYBiSEL6a0s6AiZ7KgPv14RaFy9v57NJPju0JvYflj8gUdrqK2S1v63VQsgFInAp
+ TJTDZf34vD11bC95VN5Lhu3Wo3LIiG4bIlcyvLep2EvYNs6p/CyaBiM5D1hp2C6j4BLg
+ nwImD+gA7FQ+BdO3aQcxJDLoEeL3Rh3bjcPW5vy4UgVmwluDeyei1jDhy/+pFF2WCNTC
+ O/zA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW00b3TCmjb9u2ARO1K6U3PZHTpJ4AgsNFY5SmffWXkLngjE98UauFEt0uTViKfvCBbSSP1U++61DRm@nongnu.org
-X-Gm-Message-State: AOJu0Yxj/+5gMQOsIK05IJrcylWEFSzuFkbRwY9aumL79lyQVplb4L5I
- X6E/JF8/M6fg6sd/Ks81Heehl3vc+n8a3rsqRshj9NMXvkGsb2HsKDmBKhKKBIEgvns=
-X-Gm-Gg: ASbGnct87yGinPccKLE+M0EPBc+Pbw6YlizZaK6uw3Q4QOMXpS8PPOEtuds+/e4hMs7
- OpPv88SdHKZvx1NxSqhoQ5hxvJeBWTfiDCxyzUISEo9KHN4bz7J0QnZv0DwTEerJrSBCgTY3Cny
- nqFwN3eFvOkVxiDFFDJTr1ng00s7LazWt2g2EOog8YW+8d1bvig/b+Jx1oozEE5O+ejo0HtI3QZ
- j4RzOy4HMwbQoOdM5c6MM2LsX+xnswbe4lshrcU7icr/tAK2fXsP/2zaANT5yWRSshOFsfN5cdp
- zYd4V2BlAf/AVfh3mIlRySl1H8IAeWofWookSAKAe3yYUpffnzQl2nfQ2fjrD/tFesekbSqzsUd
- VmR/N7r8+76RXXH42BvpunnG2ZEqcM4mqflW3nVdo50rTG4IcslGHXF9CGyTq9crfcA==
-X-Google-Smtp-Source: AGHT+IGKhjPUsU8jnQgjjdTsQIS9q5jF3dy+Dy6KmswZAj45qr6AFATRbfEfMH3b+6q+FvSsqIO4Uw==
-X-Received: by 2002:a5d:64e4:0:b0:3a6:d967:380c with SMTP id
- ffacd0b85a97d-3b77663e90bmr8073246f8f.36.1753695580893; 
- Mon, 28 Jul 2025 02:39:40 -0700 (PDT)
+ AJvYcCUQ7Tz+1sl8r/bpLKT1T6JuhQ0wYy/Ufh4B8X9EwJhgVLBB7VA8CaQtLQ0q0tMxiSUqe+zLE4tYrWjs@nongnu.org
+X-Gm-Message-State: AOJu0YxmAAPMcduR8jwoawsyvOVjvE9xs3rVuc28O1Yp4Y+hDQJIrs8H
+ 3hO5HSFgpVxhUSveAA3f7TUl3v/rKOwLyp2hnQzgUT48sITU26TcwIVpdSksUB4x27M=
+X-Gm-Gg: ASbGncuOPFHQz3uOcQ038ktWx10axo1Z3iLjPkYJzZ9Tj4E3HYSIiQG9d4zPjAND1Qc
+ ed32YcuFVLxpkNOyG5b3TuuTygsZHJJu6glSOEbMGz21aYcELFqMy/iRCVhTY0R+yxCiLTewF2z
+ cKh0c4VS8yI6abL5+4dwlI8i+3t2hMquxjA12LK4BKfw0eHX44odHiJSQ1RMF7m+b5V2KNP6QHC
+ cRnQP3qv/p4tiH/FXlDlBAK240unw6a25l8zyXSs5UTncScaclzUmMkPOlrBkjpcH8Fdyu+Vlsz
+ Bey8l6mk7QTlL0B30n6q+lp9uoL/0LcFVOSeuRhciy54f5zpga9svL2T9hf/ICEX3Ifw7dM7wT+
+ wQPw4QmB5+DMESCz6RvtFvZnxZ5uhPWCiwOxiuVTAiur9zWjUwYM2MonXzQsi9QmNxA==
+X-Google-Smtp-Source: AGHT+IECZuniptSAva8Gw0G8kLXySsZ7F2baCC5KX59cRDNH+MyJUuXMhEtlbB9WthsvxVzkDPg8eQ==
+X-Received: by 2002:a05:6000:25c8:b0:3b7:75d9:5ee5 with SMTP id
+ ffacd0b85a97d-3b776645f69mr6857977f8f.29.1753695653399; 
+ Mon, 28 Jul 2025 02:40:53 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458705c4dbdsm153307095e9.25.2025.07.28.02.39.39
+ ffacd0b85a97d-3b78889682bsm2839587f8f.77.2025.07.28.02.40.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 02:39:40 -0700 (PDT)
-Message-ID: <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
-Date: Mon, 28 Jul 2025 11:39:38 +0200
+ Mon, 28 Jul 2025 02:40:52 -0700 (PDT)
+Message-ID: <ccd22cc7-4bfc-4bb4-9e8f-39b31a3e6014@linaro.org>
+Date: Mon, 28 Jul 2025 11:40:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
+Subject: Re: NVMe VMStateDescription
+To: chefkiss@icloud.com, qemu-devel@nongnu.org
+References: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
 Content-Language: en-US
+Cc: Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <56AD2339-3C68-4466-86EE-CAF931987CB3@icloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,37 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/7/25 22:19, Pierrick Bouvier wrote:
-> Move those files to hw/arm, as they depend on arm target code.
+On 9/7/25 20:26, chefkiss@icloud.com wrote:
+> Hello,
 > 
-> Pierrick Bouvier (3):
->    hw/arm/arm_gicv3_cpuif_common: move to hw/arm and compile only once
->    hw/arm/arm_gicv3_cpuif: move to hw/arm and compile only once
->    hw/arm/armv7m_nvic: move to hw/arm and compile only once
+> I am working with an SoC that only supports NVMe, and would like to be able to savevm/loadvm, and maybe also record/replay.
+> The NVMe has a VMStateDescription with just unmigratable = 1 ever since it was first added in 2013.
+> Is there a technical or other limitation/reason for why this is the case?
 > 
->   hw/{intc => arm}/arm_gicv3_cpuif.c        |  2 +-
->   hw/{intc => arm}/arm_gicv3_cpuif_common.c |  2 +-
->   hw/{intc => arm}/armv7m_nvic.c            |  0
-
-Alternatively add arm_common_ss in hw/intc/meson.build?
-
-   arm_common_ss = ss.source_set()
-   arm_common_ss.add(when: 'CONFIG_ARM_GIC',
-                     if_true: files('arm_gicv3_cpuif_common.c'))
-   arm_common_ss.add(when: 'CONFIG_ARM_GICV3',
-                     if_true: files('arm_gicv3_cpuif.c'))
-   arm_common_ss.add(when: 'CONFIG_ARM_V7M',
-                     if_true: files('armv7m_nvic.c'))
-   hw_common_arch += {'arm': arm_common_ss}
-
->   hw/arm/meson.build                        |  3 +
->   hw/arm/trace-events                       | 79 +++++++++++++++++++++++
->   hw/intc/meson.build                       |  3 -
->   hw/intc/trace-events                      | 79 -----------------------
->   7 files changed, 84 insertions(+), 84 deletions(-)
->   rename hw/{intc => arm}/arm_gicv3_cpuif.c (99%)
->   rename hw/{intc => arm}/arm_gicv3_cpuif_common.c (92%)
->   rename hw/{intc => arm}/armv7m_nvic.c (100%)
+> Regards,
+> Visual.
 > 
+> Cc: Klaus Jensen <its@irrelevant.dk>
 
+You forgot to Cc Klaus ;) Done now.
 
