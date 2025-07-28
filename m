@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48EFC83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E31C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugPyD-0007lw-AY; Mon, 28 Jul 2025 11:40:57 -0400
+	id 1ugPyz-00040x-NQ; Mon, 28 Jul 2025 11:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPyA-0007SS-2h
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:54 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPyo-0003Bd-8O
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:41:39 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPy6-0002SE-W7
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:53 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3b7823559a5so982027f8f.0
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:40:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPyl-0002Ux-GQ
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:41:34 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-451d7b50815so30591215e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753717249; x=1754322049; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=clWmwPIvlE/uJUsDm2T1onrs09ie61Lz/tDRVg0acxg=;
- b=YeG+ckthrlgntRVLf31/r4Cu1ZHIAFb5SeZ4xq0nqPenh8oL5u9IZn9b1zQQbN/1hC
- nGpv38os/KomAUBMY0bsX/WHzc67rr2Ku5Z+zTfkMl8LWE+u4e+s5ljV8iHEU5gHEPI/
- l2MmFfGFaS4T3BOEPzxr+blvHlqvo+KiJdsKrMU9ITRts4MfiZit8n6XHLLACXpCl11J
- ttClWP58SeQRG8dm2wIgkx/oE7BCxX/dzIkkRJsdL9nD79R3va3vwJ40WBjRa9f6KhSJ
- EJChuMAjI2fmZVBsO1LV7NP++YfMScIIKUX1Zs8xZmW1QawSzhPVwp/pujZSJFf0jcJd
- 5s6A==
+ d=linaro.org; s=google; t=1753717285; x=1754322085; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hKb5zJwUZPm9BG/fd5+frzKkLkqao3oyQQDHdcX9Juw=;
+ b=ih/ObfoyrkEcIJtV/IDcPlNrB8hlrTvUv9sPte5nCMh+673wfo67qipn5fkOitSYOM
+ lnLp6I5DqDEeaidyHC4BZajOP2kmibpiTqe2WFOrQeuqxguupQTPv6+muDj41wXCxxrx
+ CCrRZwGulkcod6VVzgBbLm3HwE5/vVlZUCeX62W+OeZgbKl5jZvnfGY6txSDwQ1u5ben
+ QXVvCKMnMMfbtNLHRetRqEziqa0rSqSODENYH2HIQKpftaQi7XWKziav/s46UAe7RJ7X
+ VxB1vb09Wy3AY6BqvidGFZLYqtgZsIvGlRTXgpPoNVyr8Vc2xoRSpWJd3ymJUIzSNYxI
+ J65Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753717249; x=1754322049;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753717285; x=1754322085;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=clWmwPIvlE/uJUsDm2T1onrs09ie61Lz/tDRVg0acxg=;
- b=S9mGTnWjvZNDBx4xij/fbMkdYqHQ8P60IXNFKVDfz4xjcQmcAmKvUK+VAL5q31EJIN
- flpJ8gBtvJH2fwL3Var28/BDNbQ1bkS5fWVSvq4wLGy481gYoeGUm8GQl2eEJLqiG+DC
- XPjR5WAZQKRJOAMaLFJCp+h9hCfj9jS4yjy91e0ken2QTY0W+i2lV593draQhUKobEIf
- QSgc71o9ka66yL3xxYE/V1PLn0mnY4VaUMCAncpTRze+DB+KyHVYF73H9qrHb6vyfTNP
- U33K+BLPBPXHyGxUUR+/XL5w5FJVKzkhfG72cej1N2YusOQHzVBtJNgTLzMahAN4A36W
- Oqow==
+ bh=hKb5zJwUZPm9BG/fd5+frzKkLkqao3oyQQDHdcX9Juw=;
+ b=ZgNGlQ2CuyVIQ4ouqwLPt4PHxfQMf70JbCbnPggS3onvQtSbRBZXcqxa8OgM68pRw4
+ 0a6Ovg2pzXleK+4b1Xb+BUq89W7ehJMRui5PWEsuzw9JpYUKB+PPmfDKeq7939Mm6d6r
+ eeiI3vJ6FwDRmOT+6pjU4Wygf7l3UhHVLn3E5A3asavQ9YO4/KFlAynZDCKHxxHPzOQl
+ 3CXu85TvE+lYECF1tm/TrwTTfdZ329xVESyLaZB8xBoI8yh5DXLUexIIygxZgxNPjBfm
+ fEs1K4udXs2/Ue3MG39HfXW11lHxUrJcCnidmfbfXNzS9yeHVWsWmgFCbODLaE8iZfuZ
+ w7fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2xe4tGfBu8UFSIlIrPL5NtD2hwz5snB9MczFeZ9stDxrenZykQRxVChDIrmdwktYOKylYqcndBhoN@nongnu.org
-X-Gm-Message-State: AOJu0Yz7ZXe8clkXPi7eHtMY8yzTnEB+x6SL/fTxIm/BnFR/vwdi1MQm
- yH/r+Jkw30IeV1Xb1LowMGyU0cgEASO6fSrI4O4lMiUlPQha1H9O3fDW+Rd55YHyxSA=
-X-Gm-Gg: ASbGncuLzfOgPFPUimK2BsyZiu9erI903TvxAsSv/V7TJ2bA/idqareI7wF1PbewT0n
- j2icM6a2s+rIPlJ+wXf0y05Ezaf60VGjMATyx1qCdQE5OEvRgcwp8dHfgbFLaPPsDR90l4fe3jF
- DckH0jdnlL1BaGvKQVExjCdSHnehUYROb6lkoIp/UWUM7YqrlvyElWjRv8cn+qPIMXwMGH5I9Xh
- iHAgcfQafhyugPNEi5Md17MFB5BP3M6vtIQjRztNb7gXgl/JLcD62V0ykq8LrD+It8q0r5LVUld
- c+IgUQLQBfpBTUE/uzZgk/KUwJwvWaW96mFJEH2NWopL897GclwvcZ2h6nE9vM2ldHpFsCV6AwB
- wI4kL9imhhv3kOsg8LkzRfV3dd0fkelycmDab/2yYUxbE4TNoQ593d+jjv5+6/d5fdQ==
-X-Google-Smtp-Source: AGHT+IHPcE+k/WmwZbRhgKMu43FdnjtR/zsViUUtbcX7mSUgjIwP2DkUsMia7dQ6Ay9g8fMZ9l7uWA==
-X-Received: by 2002:a05:6000:2382:b0:3b7:8d80:e382 with SMTP id
- ffacd0b85a97d-3b78d80ea5bmr318913f8f.4.1753717248896; 
- Mon, 28 Jul 2025 08:40:48 -0700 (PDT)
+ AJvYcCWYjyBkMqsGqEv1WTAJZYNLx/d4laQwDf1sK7BLfHBl2pzuvaM48rUgLLc5G89OLivA2i6j8ctSxMzf@nongnu.org
+X-Gm-Message-State: AOJu0YzLX8gdLorBlSMNY/7qoddeY3VPFRW1W9tEFARG5irAPYdJW7wE
+ pEG5XWJhDfAfR3j/+uJ0l/AOJ+hL+EPbZjb0K138kfKavEpdUiROFKsvfu8e7ZYM0hA=
+X-Gm-Gg: ASbGncvCMSaJz6Ms6DRD6bZVeMeWTLsdMQ+aILBdqUPk0DnZu3Y0d2use1RYGByLnz0
+ QxGtMogSHZjh8b4/RR9z/BZPhD17IvUGXdfa2V12RzyiXtxOS1WmscrqVxZ2h41deDfPsDKhpD/
+ R7Xb2YvQXIOeKrlgLKTTsL+HiZ3z2qF+4Yyog3PBPn1otXQHcZFOC9rS6OW1Xa+4V+zht7T2Wvw
+ OrHgGWNdoDWoQCUq8GiTm9WtEXI4El9nl0sEs07IlDPFyxAvbIAZZufjHrfFa8tl8v4swr4gzai
+ 0zn7nyFFPnr6uPgWyLYBB66qlYsaRsBAFr1qVdMOibQWM9MEO2Ij3z0S+SSLTVOG+mLLaTjOIyB
+ BhaE6RVhwf9WdGC7/qjG7epK83vyw0eoxFchwknPw4aDBy4dYGaavAktc8eiqW3IJsJN0YquM1+
+ hC
+X-Google-Smtp-Source: AGHT+IHJiNDw87Yh+k9eS6evbiKiXGTaGox3c9uONPx5mS2vLcyhlcAjAEh9jsaoEynwW7fS/2Qeug==
+X-Received: by 2002:a05:600c:1da8:b0:456:1006:5401 with SMTP id
+ 5b1f17b1804b1-4588b9ab31emr19944525e9.5.1753717284633; 
+ Mon, 28 Jul 2025 08:41:24 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b78cf1f571sm739366f8f.22.2025.07.28.08.40.48
+ 5b1f17b1804b1-4587ac661acsm106554185e9.23.2025.07.28.08.41.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 08:40:48 -0700 (PDT)
-Message-ID: <1adc2441-3522-43d4-ae04-973a1cf66010@linaro.org>
-Date: Mon, 28 Jul 2025 17:40:47 +0200
+ Mon, 28 Jul 2025 08:41:24 -0700 (PDT)
+Message-ID: <c82d6abc-f974-4174-9fed-60a0567d76b9@linaro.org>
+Date: Mon, 28 Jul 2025 17:41:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/mips/malta: Silence warning from ubsan
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
-References: <20250728115152.187728-1-thuth@redhat.com>
- <43b37539-e4eb-465c-85e8-b7c83324910f@linaro.org>
+Subject: Re: [PATCH] hw/display/sm501: fix missing error-report.h
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
+Cc: balaton@eik.bme.hu, qemu-ppc@nongnu.org, marcandre.lureau@redhat.com,
+ berrange@redhat.com
+References: <20250728090518.963573-1-chigot@adacore.com>
 Content-Language: en-US
-In-Reply-To: <43b37539-e4eb-465c-85e8-b7c83324910f@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250728090518.963573-1-chigot@adacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,63 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/7/25 15:25, Philippe Mathieu-Daudé wrote:
-> Hi Thomas,
+On 28/7/25 11:05, Clément Chigot wrote:
+> "qemu/error-report.h" was previously implicitly included. This is no
+> longer the case following 012842c075520dbe1bd96a2fdcf4e218874ba443.
 > 
-> On 28/7/25 13:51, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> When compiling QEMU with --enable-ubsan there is a undefined behavior
->> warning when using the malta machine:
->>
->>   hw/mips/malta.c:1200:32: runtime error: addition of unsigned offset
->>    to 0x7fb620600000 overflowed to 0x7fb6205fffff
->>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hw/mips/ 
->> malta.c:1200:32
->>
->> To fix the issue, check the bios_size whether we really loaded the
->> firmware before trying to byte-swap the instructions here.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   hw/mips/malta.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/mips/malta.c b/hw/mips/malta.c
->> index cbdbb210568..47dd4016cfd 100644
->> --- a/hw/mips/malta.c
->> +++ b/hw/mips/malta.c
->> @@ -1190,7 +1190,7 @@ void mips_malta_init(MachineState *machine)
->>            * In little endian mode the 32bit words in the bios are 
->> swapped,
->>            * a neat trick which allows bi-endian firmware.
->>            */
->> -        if (!TARGET_BIG_ENDIAN) {
->> +        if (!TARGET_BIG_ENDIAN && bios_size > 0) {
->>               uint32_t *end, *addr;
->>               const size_t swapsize = MIN(bios_size, 0x3e0000);
->>               addr = rom_ptr(FLASH_ADDRESS, swapsize);
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-and queued, thanks!
-
+> However, the issue predates this change as `error-report.h` should have
+> been included when the `warn_report` call was introduced.
 > 
-> What about:
-> 
-> -- >8 --
-> @@ -1180,7 +1180,7 @@ void mips_malta_init(MachineState *machine)
->               } else {
->                   bios_size = -1;
->               }
-> -            if ((bios_size < 0 || bios_size > BIOS_SIZE) &&
-> +            if ((bios_size <= 0 || bios_size > BIOS_SIZE) &&
->                   machine->firmware && !qtest_enabled()) {
->                   error_report("Could not load MIPS bios '%s'", machine- 
->  >firmware);
->                   exit(1);
+> Fixes: fa140b9562 ("hw/sm501: allow compiling without PIXMAN")
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
-> 
-> ?
+>   hw/display/sm501.c | 1 +
+>   1 file changed, 1 insertion(+)
 
+Patch queued, thanks!
 
