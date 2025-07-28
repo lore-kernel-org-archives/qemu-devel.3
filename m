@@ -4,222 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D31C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 13:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808D2C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 13:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugNvG-0004W3-1D; Mon, 28 Jul 2025 09:29:46 -0400
+	id 1ugNvC-0002bh-3A; Mon, 28 Jul 2025 09:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ugNBB-00013t-4G
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:42:10 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugN2A-0000Tw-5k
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:33:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ugNB4-0004Ob-Al
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:42:08 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SC8J2i030423;
- Mon, 28 Jul 2025 12:41:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=OHJweR0dpYM7NbvLLM+UyipX2riFHWoV6Le1Q5eBDZ0=; b=
- Gd0ED5/25DFrI7Bp6Ji8L1DImCZIguLysOaizX6ibXJwp2GoeQX7y8dnQ6YRkp05
- beitRISdNbFSnMDqYCzF5zogjun/qQhLHsawbbJFwFSAoZAaUXqS86y7jfsKH6kd
- mG1veeZ52OMYaYi/EoqLUL8XiqqUGW/NG5BppzFMjFMOWIvNp7O6mZllrNRCrAHj
- fb8YQ/SpoQYIKo/0ivB7UhQhDz9yFiXrUw+efjkk8qGD8XEpZOD92gR2kgbrSHEK
- LcbrPG5ZQkwq1HiLlV1K77dWc/FMXLx/L6yukg0gxPkNyIoxJSBQF1Kr1CPtmv3/
- r1NKNfHCredqiSNALnR0FQ==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 484q5wu6y0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Jul 2025 12:41:58 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56SCFDqM003171; Mon, 28 Jul 2025 12:41:58 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11on2065.outbound.protection.outlook.com [40.107.220.65])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 484nf8g4tt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Jul 2025 12:41:57 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bL0bSdhdMmW8jHnGecZrSxR1tC7Zd5SC85xKrAydBaY+gdGNfia9QLqGMHMnDyUSoGY4ZQVd7AoAEUrXHIhbWUiZxK194izCGbxR0BrICLOxU7TZKmAF/nHA8XLJfTC2ieP6edgwm80C13i+VS9gT7lcIF2hLh4InsufNFRbEdg+++yHKY3gMAK8mceZe19Auspo5RbYbXxVmxG9Wu5Edgv2uLiXChA3T6kZ2wDY4rfSY/fdJhx8E0ISy6jnG8cdV7rnkglERRXiYv9TUxIbrgQ1DzPp2yjzdqdCY6tCZ6jCtaMqYzAnBR8poS4WXFZK261rK/5wvwQx/Em96vvW1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OHJweR0dpYM7NbvLLM+UyipX2riFHWoV6Le1Q5eBDZ0=;
- b=oinG/rpP/zGShrPr/AHzkNB5rNf2C0m6eEGvPzoFXQoH7D3lTOkee40UsJzz4u+S5bFInuHpT1TOqLZU+BQfdfzlaPHvID4WtISgJpUbLcQexkjnLSWxjTOF36iCSUSAmPHiAXL28ngTyZXyA9AijD2P8maRUVCmza4mjCH7JVaA3Oo8V8Qqjhewsvj2D1SjdzqymwnN6C+sZ9GgmnNMRzRqlPg7BEiaf9lz8WYgUifal2G9B5zb51D41OTE5oXMkql6lIVbbFcn/piCzcY6bMJVvU/KHiRcvH3Dg0Y0QdSc9P3BMwtLgqFqWCQegWnGkxuxEu6gchz30+UhriCF8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OHJweR0dpYM7NbvLLM+UyipX2riFHWoV6Le1Q5eBDZ0=;
- b=A8JdLtZkHvAthk11Q7Jg4JWltzFh9tcNeCs5Jcet536OijaTNjPY1Q4qfZp6f4MOXdmSTHeL4Q9KVEB+LpRHyfXrCMAastreDOkOKjGbDX3ACgGKq9/AocS8OFyDMZrOjF4cBzDk5u4tfiE1VYXoc4ZmLdaRglGFaL07qmbuXLU=
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com (2603:10b6:5:21e::21)
- by SJ2PR10MB7600.namprd10.prod.outlook.com (2603:10b6:a03:543::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.26; Mon, 28 Jul
- 2025 12:41:55 +0000
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6]) by DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6%7]) with mapi id 15.20.8964.023; Mon, 28 Jul 2025
- 12:41:55 +0000
-Message-ID: <77967b1f-a4f6-44da-a981-2add2fb451f8@oracle.com>
-Date: Mon, 28 Jul 2025 08:41:51 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/6] virtio-net: initial iterative live migration support
-To: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- eblake@redhat.com, armbru@redhat.com, si-wei.liu@oracle.com,
- eperezma@redhat.com, boris.ostrovsky@oracle.com
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <CACGkMEvrgAqSr9sgvq6F4oKBitZncqhsB_MEsbaNB7p0ZN5fEA@mail.gmail.com>
- <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
- <20250725053122-mutt-send-email-mst@kernel.org>
- <CACGkMEvTgCAbBG20iLB1m_WfYzMZA7FYZ2FuL6To4EV86PXZbA@mail.gmail.com>
- <CACGkMEtCiqq0P_7aB-d5CrQraHL2xky5Qa+9LyZce4hk+wvvYQ@mail.gmail.com>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <CACGkMEtCiqq0P_7aB-d5CrQraHL2xky5Qa+9LyZce4hk+wvvYQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PH8P223CA0025.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:510:2db::13) To DM6PR10MB4363.namprd10.prod.outlook.com
- (2603:10b6:5:21e::21)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugN20-0002ya-Gm
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:32:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753705957;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zVCA/TK8BEsrl3jW99ININABFrAB//qoABK6ra3skjc=;
+ b=MUre+aX3VKU+TCtC/OGxWZ18ItDLM9wNazqgQ6IJe+EQ+NTbIoh5843vC8W78/ZHco2Glo
+ NvPJolUKeOHu3JOAkGwR5EwPbqPoE649XFzO+w/DupDwwquJn+rurdQBqSdFSdtmKGUSR9
+ 7QstE4n1TRvVyDT7ccF2ybsU4bY0ScE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-Dsxn9qEnOEuXGAIVflGtaA-1; Mon, 28 Jul 2025 08:32:34 -0400
+X-MC-Unique: Dsxn9qEnOEuXGAIVflGtaA-1
+X-Mimecast-MFC-AGG-ID: Dsxn9qEnOEuXGAIVflGtaA_1753705953
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451d30992bcso26677575e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 05:32:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753705953; x=1754310753;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zVCA/TK8BEsrl3jW99ININABFrAB//qoABK6ra3skjc=;
+ b=ojxQgltvdRUeqVRWkHG7HLv0J3iS7l0P9AWp7tfdY8a9N0ZC/Wljg1y7vbkEgl3AY5
+ h++Du8/nzHKPBZvMi64dRAtLcKrpwVQdfreLOFDQY1BIyf/cLanjRv5zPVCAuqD/u2fv
+ wPTE6ZKdFsOeoAyB4RVufGHmOjTxEkPtdPNDjmMhfHnxzBGxN/3LITuPJHz4TIL51ZAk
+ E58rrJowSLpFyBdmaw3XDHJdGiumkT50DpwkWZZipHfOb+/cE4sD8zfCqhIQ1ElyWIl0
+ txSf+IZI56OHQXWTWAHWOL0VATkqszUxq2rC7/4PSG1w3koLobADbR7V+MApl7qOBFYv
+ PmvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcuyDOiEXKf4QC5TwU/+kKnAHcMdC+KB+5XbGnbV94tjF4byMfy5xJ4DAYdxbvqqWFjssZ0KIM+g3S@nongnu.org
+X-Gm-Message-State: AOJu0YyQUXgNQofr1wxM62lONs+b1NmMsUWPNTyO1IyqRPfuw9Q8/6rp
+ WyupXhsvZc87XBuSVfUVGBP9ib9dxN74DD8eH090o1IOJdpU17IVyVer4vp9qxcDtbNZffIs5Ts
+ aFrUWSHBbbh0MSeng9+qeLQ9ko910PSpqDlYTDjpfrunyaahcookfG+Lj
+X-Gm-Gg: ASbGncs8Jho/k/mLp339HxZPAcjUOXtdLXrxFvRGq368ognMRyD1Abm60NgYTKfuH5h
+ tvoHQZDaCe1SJukPDaj/6owg2yTmJQcCBG/EiOE7zgEntmVKlhCS6YDSlWDeiKJsQczADQxQUAi
+ WCeMObi2rXrJy60ySUD5TEFlBIJpA9rYubCOvucIsKJ0nebwol8GJW190JJn/4q40kzmwPFkK/o
+ uNDeWS5KpBFuTxA11K1AmV7LdewjYqyqWbqg6ZHV5AnuIIlmQWddZSkxgVrM+YSWMDBF4blqEj6
+ Vb2HFQQrnOhOEz+VuBZqkntv7jHmPWN9DH0m1+MOtZSgxDBtXcJvyfGVHwagnATEUuRWzvgzyUx
+ snQ==
+X-Received: by 2002:a05:600c:8b66:b0:43c:fcbc:9680 with SMTP id
+ 5b1f17b1804b1-45876652621mr86742485e9.25.1753705952710; 
+ Mon, 28 Jul 2025 05:32:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHqE/NgkZci3LTyjZcey0XLhbpD6mIYHWBT45ztsGHdY3BwNkyyP9+6ovtUJaZ9UQhPuvnxA==
+X-Received: by 2002:a05:600c:8b66:b0:43c:fcbc:9680 with SMTP id
+ 5b1f17b1804b1-45876652621mr86742165e9.25.1753705952160; 
+ Mon, 28 Jul 2025 05:32:32 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4587ac5816dsm97239825e9.17.2025.07.28.05.32.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Jul 2025 05:32:31 -0700 (PDT)
+Message-ID: <424a42b6-5013-4b95-9d85-37d99ebdfe93@redhat.com>
+Date: Mon, 28 Jul 2025 14:32:30 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR10MB4363:EE_|SJ2PR10MB7600:EE_
-X-MS-Office365-Filtering-Correlation-Id: 641f3d60-fd8e-4e08-6903-08ddcdd42271
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WEhWa0JSbnM2dzVjanNXWDlIbHhBTWdnbnFWczhjVEh5WnZhZTdQR0NzQzNj?=
- =?utf-8?B?TmwzdnhpZll3eE83S2NPK0dVTEhzaEFzL21FUXZOVm42cFUyelRwYnJGZzEw?=
- =?utf-8?B?VHJKNUpIYkJqbEhPaTlyaHBqZS9ydG03Mk81WWF3Q2dvWkVHcFU3Ri9LWFNu?=
- =?utf-8?B?dEZjSE10ZzVsVkQ2UFBobmtneTRNUG5HeTVJUjFBUjN1NHpmR3RjL0FMNXNW?=
- =?utf-8?B?bHViRXdzZHhnY3gySVdrQlhtYlVRMlVvY3FKUGEvK21SUkU5dWpLZmkrMjJw?=
- =?utf-8?B?RWpJQTEwbEhibnlkSHRHOERPL1luWG1FUkFYMFBYZ0ZKTll6QnMzN3I1aWx3?=
- =?utf-8?B?RmVSamNLL0t4VUtaYmNSQjZvTmNicG1wOUJFQ2dHYi82d01JcU94UFllWUpQ?=
- =?utf-8?B?SGU0dXROR24zcVRDV2pWZkVkM1ExUCtXWnRUcTZZSFBiUVBnVW1zb3lCZ3dq?=
- =?utf-8?B?Z1hhZHY1bFQ0MUg1WFhhdVkxZkJmM2NIVXpoOUREbHc1YVkxRkE5dys4MEdD?=
- =?utf-8?B?b3ZTcEZpYjNtcVZKcTRublpnVFhIL1Fud3c4S3RFZnRBQVRndlBuRjJ6YzUz?=
- =?utf-8?B?TFVSLzJVdzRqZ0VYTTRLb1pkRFI2UlR1UnFJVWcvWVFmYjg3WldkaXdINzQ2?=
- =?utf-8?B?RFN5MFlGS1A0MVVjUlA1RTZwR3lGaWZlTWk2SUNCYVZBOXo2U3lmd0ZONXh5?=
- =?utf-8?B?MnhRSGdZcVNwdlJyY3JJNEpINElyY0wvbEJCR2ZZSjdRdS9SMjZaZThpT1NT?=
- =?utf-8?B?QUttcGFXUGpjVi9sYnJab21HNzMxSHJkVitWWlBZTituMmEzYlVFdnNQRmNq?=
- =?utf-8?B?MHU3b2Y1NjZuU3ZTRnF1OUlLQjdmVUE2VzlScUJwTVRXNVJyWXo5UlBiZ0RK?=
- =?utf-8?B?UXdtMzY4aHdmRDg4T0lhRUtzL2U3WEZDTWFaVU1yNDJrMlFpYmk0a09tdFZu?=
- =?utf-8?B?OUFZM1Y3WHNTNEZsWnZOc0FMOTJBaW9qNmgxTWhncFBJVXJxeCtkc2tsUThC?=
- =?utf-8?B?NHBGZTdVOS9TNXBDNWE5NzBnQUU3OXovTC82b0Y1R2pnUUxPS3pQNmc3M3lG?=
- =?utf-8?B?d3BtTWZ4c0t4QnAwTnh3andNc1lXQlgzRUx4UFRSRkJQdVo5YUdUczdscXFn?=
- =?utf-8?B?VEFyUFRGZ2ZBNlRVRkpTdXBQN3hyNzl4dDVha3NxcHE3VGdCVDBVZjdtT2Nx?=
- =?utf-8?B?QmF6Y0dSdSsyUWZuakxhMEtreW53VmFiaVZJd0NzbUlZN05wYW16cU1kaHQ0?=
- =?utf-8?B?c25IWTZsNzJwZTZvRnFsSFpMZjlsRWVUa3d1Y3E1UzNMQ1J4UitjVGp6VmNB?=
- =?utf-8?B?WmhjaG9PbnZLMXowa05abWQ0c2FoRkZvejcwTEQ1RkNkSERhbWNFSFhjMmVY?=
- =?utf-8?B?d0xkOXc1VUNLNWc5UUZlUmJEbVN3RGdGb1RhMGkrelI1aVF0algzVWpjMTNv?=
- =?utf-8?B?SFRCTkpPUm1lTW80TmFreUxMcDhKRGYwVlZYOXd3Mkd6VjBJcTRHbmt2dmt5?=
- =?utf-8?B?TWVocitHbkFLclB1WktxRFQvSXA4MnJTSy93NXk2Yng0eHkwWHcxQ1pLeUQv?=
- =?utf-8?B?eVNuQVZhTWNpalN5WE9aT2NYWjk0OEJnY3dIa01GbVQ1cTdxT1VQYkpTTXNi?=
- =?utf-8?B?aEVZc2VMN3VRSkUrVDMzTWdaN0dJZTQ0VndjblFBM1hvR1N0RTJBOGY0bk5S?=
- =?utf-8?B?bUJpdzhqTWJIajFaR0JkMkNlQ3dkbzU1NWxRcjQ2ZkUxblBGamFWZlhxZDV0?=
- =?utf-8?B?T0hhYkt2c0NBbXBkajhVQzBWNUh6YW94MDlQc2Y5M2FmajVGSXhNT3UvSHZu?=
- =?utf-8?B?Sm5PVnBrSEMzQ0ZyeTZDa0J1TGdxaFVmb0d0eDZJaHp3cGNKdmo5WkRVUlBV?=
- =?utf-8?B?dWMydUY2L0VQdHhxRElqWk16d3Zid0NDcUc5dXVEOXdtbDlMY2p6Y3M0M0cr?=
- =?utf-8?Q?xbDPSl2I0y0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR10MB4363.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aW94L3FzUEd6YzRKQmNqdHc0bGZLWXFHUTd2RS83WU05OTI5U2RGS3FqODFG?=
- =?utf-8?B?NFF6VGY1cnc2cUdHWmxDaWlSd0w5S1BOQVNGeGJmR3BTN0Y3TGNUTVV1dlRa?=
- =?utf-8?B?bnFkT2E5S0xNUVRoQ3AxbmxsS1EvNUw2RkY0YWp0blU4VkwrcW1IYks5ZXFz?=
- =?utf-8?B?Rit1dVMvaXF1SGRnR2tVM0NEMmcySFhCcldtK1NmNzUrSkRhMnBlcExmS1hS?=
- =?utf-8?B?dlUyNXFrVWl3VVg5NVJZUFB1a0wzelYxd0lMWHp5ZkhCckhYSmlndlVqR3l6?=
- =?utf-8?B?SUMyUWlxbTdHdGdWaGYrUU92Tk1VeGZueXVoYUdPcHBMbzFQZk0rc2dMRHVW?=
- =?utf-8?B?ZSt6V1F3THVsc3Z4Zk8wVHhOUGN1VE4zcFFYWXhyclNKZ3dScDB5d3ppaEtW?=
- =?utf-8?B?bmFJbkJ2SUhFTjd6Y3hFbXpXY3ZiRks4SCtoaWZWdkhxWG10YlJyQ3B5bk5W?=
- =?utf-8?B?NmV0UjRBeE1KZUpXR3NGSFB1OFkvRjdxTi91ejYzRERuT2kyaFZaYkVWOVNh?=
- =?utf-8?B?TlFWT1FlNWh2S1dJZGNMZmYzNFRoRmswa0N6dHJtVkZ0RUw0R3kyT1NaV3NB?=
- =?utf-8?B?YnFuOEFIYXI4SEUyM2l5NHJzTWFGR2JLWHlMTFBLbHBGb3pSRnpaeDdYUGo0?=
- =?utf-8?B?bEl6MTQxUU1ZWHVwZnFGODA1akpDQWdBRnJ5aERKSXg1bmNQRWZxU2ZyUmM2?=
- =?utf-8?B?THUrY3dsRzRsS3JreGpEUk54OHNkU05GVjh6N2o3czZ0SjJWWkRqUXFJcG5q?=
- =?utf-8?B?Vzc5Mnh0V21LREpGL3VzN1JGd0Fjakt2QWd2YXVWTGFkYVR6MW5lVG5oUWx5?=
- =?utf-8?B?dERPWStTdlZnSnZuOTBaTzJnYU9NNnAyWlFicUpkNjZTeWNMRG5pUVJKU0V4?=
- =?utf-8?B?TTVqV1VqVi9yVWF5Wm1GMzR1RmttbzJGQTJLeUhFVXpIWFVKQjZJY25vQjdq?=
- =?utf-8?B?SjlLSFZONWc4bXdQYkNpMjdsR29TWWZhN1AwYTl6dkZsendoZGxmemNYa2RS?=
- =?utf-8?B?R2gwendlWnJZdVJwWWplUDR5djA1VGtlS0tpVUdzWFUrbVJTbTgvZ3B3UFI3?=
- =?utf-8?B?bGdsTWpiblBLc3Rsd0Y2UXlvQWxLMFFlTm03VmkwUkVtbjRpaTROWk1OWVpG?=
- =?utf-8?B?WjlNbEVLazRPN2x5eS9YK2piemRNaFlyYlJyM2gwc0pTL0FLa3FMNHdMa0JI?=
- =?utf-8?B?d1gvb2p4ejNZZU83N1c5OVRGenMrbURBNzUzQ0RRNWpuNXUraWlhcjIweWJo?=
- =?utf-8?B?WEQrNHJTWUNXM1RuZnBVQ0hSOVdpOTVBdm5tTGhscWxtUVhMK2t1Q1dBZUw5?=
- =?utf-8?B?bXAyd1dsV1JyQlp0YWNKRzFhdWNiMXlJY1RRRXF1d21Oc1dyaHlYVG5razlq?=
- =?utf-8?B?OVVwK2dhYzdjU1lzMXpJOUdIMXNPRnpZNkpUUTVFbXlkRzVMWk5HUlRRMjhL?=
- =?utf-8?B?OTVtbDM0ajM4aE1XK1I2NnQwTmRzTHVBYXF4cEZkdmZLbytCWk14Nmc3ay9Z?=
- =?utf-8?B?QWQrK0liRzRuTnVrVmFhSXhuNWVrSk1MQjQ1UTB6YWM2emthY0ZZS3k5bXgv?=
- =?utf-8?B?RndpSXJGT3ZaMGFsUmFydmd6M3hDWmh1a3NYTHlvQnVsdWJadFh4V0RhWkFM?=
- =?utf-8?B?eUNUUTNCUlJydHIyYkdBSmNEUHlYUkd4NGtyTXR0cEJDZHFSeGpJdmcwaXM5?=
- =?utf-8?B?TVFxYTNremVmM1N6UHlld2hFMFBnUzFhRElqYStsTzNYczdBU1BQNWZhR0Ux?=
- =?utf-8?B?aDFUbUp3bTRHVDZOVldtd0l2OFBrT2Q0R0hqTERpNk51NzFZQTE0YmJSSUFN?=
- =?utf-8?B?ZzBtR2tMeHdCYlA1N012TnN3YVZLSGhtR2JoZzhJODhURC9YYi9lUzBhT25T?=
- =?utf-8?B?Vjd1bTBMNThNV0Zrcnh6VTBSZzRxZVNrR3ZseG9ualB3bVpiWW9wdzA1elhj?=
- =?utf-8?B?dXBwTzN5bDJ0cGE2aVo5aDEyTXJPOER2VEN0Tmg0dDRjRWQ4a1g1RU5iV29L?=
- =?utf-8?B?dTFZNkNSNS9pcHNWQUNzTVNiMzNFYUVRWWRBVjNOUW13OFNwYUR4QXpobHV2?=
- =?utf-8?B?UHBhOTJXQ29HSE9iMGNqVExaYTlLQ1B3Q3lqQzNIbVBhL3QyQmtuRlFNRGFr?=
- =?utf-8?Q?Shp10lQb2CoonwXy6nN0VXMBv?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: NbeBVSLgBYv7PLn8lEDoBvEx3iJXsziw/XTfKEQWNzBzHLViYn7iHNiHTbz7lg8DuhH5wCQbeYO3kt1Csh1i/A87wsW7aJ0VfmwRtPFs2FqLR5Nx7C9eMEZ5cW1zSDcc4YQWWNMGgLzkzyauw7hSjCqVeBnr1ObxfUrCM6Hghw4eBDpHus0CbYFjYUaXJdd6OE2F9/Qk9EVMb87p/+B0UUHdhyglAIvB/ZSiAlJX5ihvbkZisiKLXsCX6PVQvFiFGpnSzyoU3rLl62PQP9hLRtxqROQy4j+va7PSqPqDG2kZlVUAj7cWAXFQmp7cd3u6drKw/T58B2HlLPyUaCky7Y68Zpl9vwfGmIvlsSq3x1pw7NNdx1k1OVsHm18UIPxohEVrmmZhRCkfIxy6Fdlp+GBGiNwErUhbIuEOVn8R6GQ5YbUk0wDX5eUNyJOI7sRoBWwqqZDOSBR1WgCbIx3x/io9T4DSF97gpxPzTAaxYKxtZnKituHgFbWgEt4z2vZZcaIsITZDMKpGsIt+GXBdglGiCDYGcTGpcPQQf5C89w9B4Vr3l+1xYFdnxEvgw2Wt6CyesaN+QIYITnjSxHpTuZ9f1dLR8CpeeX5dIFMPQ6Y=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 641f3d60-fd8e-4e08-6903-08ddcdd42271
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR10MB4363.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 12:41:55.3078 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ELdoaY4CQdVJ8TJlZ30UKegllJwWcGSRDTahoruF/FmVhZa6Gblx+Jz/P03iVeSzWexYmttdhdvVJEPPWc3CzA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7600
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- bulkscore=0 spamscore=0
- mlxscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2507280093
-X-Authority-Analysis: v=2.4 cv=X+lSKHTe c=1 sm=1 tr=0 ts=68877016 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
- a=ySjbdQRUVj7h-4mhXxUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: oOBIF2cSzAfwMaqSHEnKXYUBk95CiPM9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDA5MyBTYWx0ZWRfX+biEuhKZLTTo
- V1H0TLYglB1NW8DMysuDb7+oU4lWSFUx11xiATKRpWzQnI+XgtCLTCpLk1F4K1kq/9cYZMiCrY4
- bWBLY181um/emiEI0itGXuJThu126z2NLWgcVOzmY96/24IJUQgmyJ6zA7dskDZhzKpcwUNwjPF
- FnruLkKlur5UsfxH+53SMQjdDh1mm44IfutHNfPLEcCDgfeoo33xjIC4WkJUPiFpuZxzuOfpPn4
- pIUA3KcbjFMspBHrLGeznindW8zC0ua9dUgjDBKQjFpKUx8ertURlfU2eJySYVS2PNbPp2Ow/gv
- FJdxh1IsQGFXedn6KS0y80PwX9egF5FAwj7gDAzcsyWrlN3CeTGbDuGwpXISoO46bu8G+anexR+
- wVheUMyBo5PziiNnOnlSm0fy6hbynHZzZcwaGOBtqfq2TQlrJplgrDVHuxMPrE4nNKvmHTsX
-X-Proofpoint-ORIG-GUID: oOBIF2cSzAfwMaqSHEnKXYUBk95CiPM9
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/pci: Fix regression due to unexisting property
+ use-legacy-x86-rom
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, slp@redhat.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, mst@redhat.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, shahuang@redhat.com, chao.p.peng@intel.com
+References: <20250728122906.39703-1-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250728122906.39703-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -235,291 +159,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Zhenzhong,
+
+On 7/28/25 14:29, Zhenzhong Duan wrote:
+> TYPE_VFIO_PCI doesn't have property use-legacy-x86-rom, but
+> TYPE_VFIO_PCI_NOHOTPLUG has. The compatibility config leads to
+> SIGABRT on new QEMU.
+> 
+> The default value of element use_legacy_x86_rom for TYPE_VFIO_PCI is
+> already false, so no need extra processing.
+> 
+> Fixes: d5fcf0d960d8 ("hw/i386: Add the ramfb romfile compatibility")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
 
-On 7/28/25 3:35 AM, Jason Wang wrote:
-> On Mon, Jul 28, 2025 at 3:09 PM Jason Wang <jasowang@redhat.com> wrote:
->>
->> On Fri, Jul 25, 2025 at 5:33 PM Michael S. Tsirkin <mst@redhat.com> wrote:
->>>
->>> On Thu, Jul 24, 2025 at 05:59:20PM -0400, Jonah Palmer wrote:
->>>>
->>>>
->>>> On 7/23/25 1:51 AM, Jason Wang wrote:
->>>>> On Tue, Jul 22, 2025 at 8:41 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
->>>>>>
->>>>>> This series is an RFC initial implementation of iterative live
->>>>>> migration for virtio-net devices.
->>>>>>
->>>>>> The main motivation behind implementing iterative migration for
->>>>>> virtio-net devices is to start on heavy, time-consuming operations
->>>>>> for the destination while the source is still active (i.e. before
->>>>>> the stop-and-copy phase).
->>>>>
->>>>> It would be better to explain which kind of operations were heavy and
->>>>> time-consuming and how iterative migration help.
->>>>>
->>>>
->>>> You're right. Apologies for being vague here.
->>>>
->>>> I did do some profiling of the virtio_load call for virtio-net to try and
->>>> narrow down where exactly most of the downtime is coming from during the
->>>> stop-and-copy phase.
->>>>
->>>> Pretty much the entirety of the downtime comes from the vmstate_load_state
->>>> call for the vmstate_virtio's subsections:
->>>>
->>>> /* Subsections */
->>>> ret = vmstate_load_state(f, &vmstate_virtio, vdev, 1);
->>>> if (ret) {
->>>>      return ret;
->>>> }
->>>>
->>>> More specifically, the vmstate_virtio_virtqueues and
->>>> vmstate_virtio_extra_state subsections.
->>>>
->>>> For example, currently (with no iterative migration), for a virtio-net
->>>> device, the virtio_load call took 13.29ms to finish. 13.20ms of that time
->>>> was spent in vmstate_load_state(f, &vmstate_virtio, vdev, 1).
->>>>
->>>> Of that 13.21ms, ~6.83ms was spent migrating vmstate_virtio_virtqueues and
->>>> ~6.33ms was spent migrating the vmstate_virtio_extra_state subsections. And
->>>> I believe this is from walking VIRTIO_QUEUE_MAX virtqueues, twice.
->>>
->>> Can we optimize it simply by sending a bitmap of used vqs?
->>
->> +1.
->>
->> For example devices like virtio-net may know exactly the number of
->> virtqueues that will be used.
-> 
-> Ok, I think it comes from the following subsections:
-> 
-> static const VMStateDescription vmstate_virtio_virtqueues = {
->      .name = "virtio/virtqueues",
->      .version_id = 1,
->      .minimum_version_id = 1,
->      .needed = &virtio_virtqueue_needed,
->      .fields = (const VMStateField[]) {
->          VMSTATE_STRUCT_VARRAY_POINTER_KNOWN(vq, struct VirtIODevice,
->                        VIRTIO_QUEUE_MAX, 0, vmstate_virtqueue, VirtQueue),
->          VMSTATE_END_OF_LIST()
->      }
-> };
-> 
-> static const VMStateDescription vmstate_virtio_packed_virtqueues = {
->      .name = "virtio/packed_virtqueues",
->      .version_id = 1,
->      .minimum_version_id = 1,
->      .needed = &virtio_packed_virtqueue_needed,
->      .fields = (const VMStateField[]) {
->          VMSTATE_STRUCT_VARRAY_POINTER_KNOWN(vq, struct VirtIODevice,
->                        VIRTIO_QUEUE_MAX, 0, vmstate_packed_virtqueue, VirtQueue),
->          VMSTATE_END_OF_LIST()
->      }
-> };
-> 
-> A rough idea is to disable those subsections and use new subsections
-> instead (and do the compatibility work) like virtio_save():
-> 
->      for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->          if (vdev->vq[i].vring.num == 0)
->              break;
->      }
-> 
->      qemu_put_be32(f, i);
->      ....
-> 
-> Thanks
-> 
+Fix is here :
 
-Right. There's this for split/packed VQs and then there's also the 
-vmstate_virtio_extra_state which ends up loading this 
-virtio-pci/modern-state:
+  https://lore.kernel.org/qemu-devel/20250723062714.1245826-1-clg@redhat.com/
 
-static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
-     .name = "virtio_pci/modern_state",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = &virtio_pci_modern_state_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
-         VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
-         VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
-         VMSTATE_STRUCT_ARRAY(vqs, VirtIOPCIProxy, VIRTIO_QUEUE_MAX, 0,
-                              vmstate_virtio_pci_modern_queue_state,
-                              VirtIOPCIQueue),
-         VMSTATE_END_OF_LIST()
-     }
-};
 
-...
-vmstate_load_state_end virtio/virtqueues end/0
-vmstate_load_state virtio/extra_state v1
-vmstate_load_state virtio_pci v1
-vmstate_load_state virtio_pci/modern_state v1
-vmstate_load_state virtio_pci/modern_queue_state v1
-...
+Thanks,
 
-I'll take a look at what could be done here and try and get it into the 
-next series.
+C.
 
->>
->>>
->>>> vmstate_load_state virtio-net v11
->>>> vmstate_load_state PCIDevice v2
->>>> vmstate_load_state_end PCIDevice end/0
->>>> vmstate_load_state virtio-net-device v11
->>>> vmstate_load_state virtio-net-queue-tx_waiting v0
->>>> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
->>>> vmstate_load_state virtio-net-vnet v0
->>>> vmstate_load_state_end virtio-net-vnet end/0
->>>> vmstate_load_state virtio-net-ufo v0
->>>> vmstate_load_state_end virtio-net-ufo end/0
->>>> vmstate_load_state virtio-net-tx_waiting v0
->>>> vmstate_load_state virtio-net-queue-tx_waiting v0
->>>> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
->>>> vmstate_load_state virtio-net-queue-tx_waiting v0
->>>> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
->>>> vmstate_load_state virtio-net-queue-tx_waiting v0
->>>> vmstate_load_state_end virtio-net-queue-tx_waiting end/0
->>>> vmstate_load_state_end virtio-net-tx_waiting end/0
->>>> vmstate_load_state_end virtio-net-device end/0
->>>> vmstate_load_state virtio v1
->>>> vmstate_load_state virtio/64bit_features v1
->>>> vmstate_load_state_end virtio/64bit_features end/0
->>>> vmstate_load_state virtio/virtqueues v1
->>>> vmstate_load_state virtqueue_state v1  <--- Queue idx 0
->>>> ...
->>>> vmstate_load_state_end virtqueue_state end/0
->>>> vmstate_load_state virtqueue_state v1  <--- Queue idx 1023
->>>> vmstate_load_state_end virtqueue_state end/0
->>>> vmstate_load_state_end virtio/virtqueues end/0
->>>> vmstate_load_state virtio/extra_state v1
->>>> vmstate_load_state virtio_pci v1
->>>> vmstate_load_state virtio_pci/modern_state v1
->>>> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 0
->>>> vmstate_load_state_end virtio_pci/modern_queue_state end/0
->>>> ...
->>>> vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 1023
->>>> vmstate_load_state_end virtio_pci/modern_queue_state end/0
->>>> vmstate_load_state_end virtio_pci/modern_state end/0
->>>> vmstate_load_state_end virtio_pci end/0
->>>> vmstate_load_state_end virtio/extra_state end/0
->>>> vmstate_load_state virtio/started v1
->>>> vmstate_load_state_end virtio/started end/0
->>>> vmstate_load_state_end virtio end/0
->>>> vmstate_load_state_end virtio-net end/0
->>>> vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
->>>> instance_id=0 downtime=13260
->>>>
->>>> With iterative migration for virtio-net (maybe all virtio devices?), we can
->>>> send this early while the source is still running and then only send the
->>>> deltas during the stop-and-copy phase. It's likely that the source wont be
->>>> using all VIRTIO_QUEUE_MAX virtqueues during the migration period, so this
->>>> could really minimize a large majority of the downtime contributed by
->>>> virtio-net.
->>>>
->>>> This could be one example.
->>
->> Or if the system call is expensive, could we try io_uring to mitigate it.
->>
->>>>
->>>>>>
->>>>>> The motivation behind this RFC series specifically is to provide an
->>>>>> initial framework for such an implementation and get feedback on the
->>>>>> design and direction.
->>>>>> -------
->>>>>>
->>>>>> This implementation of iterative live migration for a virtio-net device
->>>>>> is enabled via setting the migration capability 'virtio-iterative' to
->>>>>> on for both the source & destination, e.g. (HMP):
->>>>>>
->>>>>> (qemu) migrate_set_capability virtio-iterative on
->>>>>>
->>>>>> The virtio-net device's SaveVMHandlers hooks are registered/unregistered
->>>>>> during the device's realize/unrealize phase.
->>>>>
->>>>> I wonder about the plan for libvirt support.
->>>>>
->>>>
->>>> Could you elaborate on this a bit?
->>
->> I meant how this feature will be supported by the libvirt.
->>
->>>>
->>>>>>
->>>>>> Currently, this series only sends and loads the vmstate at the start of
->>>>>> migration. The vmstate is still sent (again) during the stop-and-copy
->>>>>> phase, as it is today, to handle any deltas in the state since it was
->>>>>> initially sent. A future patch in this series could avoid having to
->>>>>> re-send and re-load the entire state again and instead focus only on the
->>>>>> deltas.
->>>>>>
->>>>>> There is a slight, modest improvement in guest-visible downtime from
->>>>>> this series. More specifically, when using iterative live migration with
->>>>>> a virtio-net device, the downtime contributed by migrating a virtio-net
->>>>>> device decreased from ~3.2ms to ~1.4ms on average:
->>>>>
->>>>> Are you testing this via a software virtio device or hardware one?
->>>>>
->>>>
->>>> Just software (virtio-device, vhost-net) with these numbers. I can run some
->>>> tests with vDPA hardware though.
->>
->> I see. Considering you see great improvement with software devices. It
->> should be sufficient.
->>
->>>>
->>>> Those numbers were from a simple, 1 queue-pair virtio-net device.
->>
->> Thanks
->>
->>>>
->>>>>>
->>>>>> Before:
->>>>>> -------
->>>>>> vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
->>>>>>     instance_id=0 downtime=3594
->>>>>>
->>>>>> After:
->>>>>> ------
->>>>>> vmstate_downtime_load type=non-iterable idstr=0000:00:03.0/virtio-net
->>>>>>     instance_id=0 downtime=1607
->>>>>>
->>>>>> This slight improvement is likely due to the initial vmstate_load_state
->>>>>> call "warming up" pages in memory such that, when it's called a second
->>>>>> time during the stop-and-copy phase, allocation and page-fault latencies
->>>>>> are reduced.
->>>>>> -------
->>>>>>
->>>>>> Comments, suggestions, etc. are welcome here.
->>>>>>
->>>>>> Jonah Palmer (6):
->>>>>>     migration: Add virtio-iterative capability
->>>>>>     virtio-net: Reorder vmstate_virtio_net and helpers
->>>>>>     virtio-net: Add SaveVMHandlers for iterative migration
->>>>>>     virtio-net: iter live migration - migrate vmstate
->>>>>>     virtio,virtio-net: skip consistency check in virtio_load for iterative
->>>>>>       migration
->>>>>>     virtio-net: skip vhost_started assertion during iterative migration
->>>>>>
->>>>>>    hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++------
->>>>>>    hw/virtio/virtio.c             |  32 +++--
->>>>>>    include/hw/virtio/virtio-net.h |   8 ++
->>>>>>    include/hw/virtio/virtio.h     |   7 +
->>>>>>    migration/savevm.c             |   1 +
->>>>>>    qapi/migration.json            |   7 +-
->>>>>>    6 files changed, 247 insertions(+), 54 deletions(-)
->>>>>>
->>>>>> --
->>>>>> 2.47.1
->>>>>
->>>>> Thanks
->>>>>
->>>>>>
->>>>>
->>>
+> ---
+>   hw/vfio/types.h   | 2 ++
+>   hw/core/machine.c | 2 +-
+>   hw/i386/microvm.c | 2 +-
+>   hw/i386/pc_piix.c | 2 +-
+>   hw/i386/pc_q35.c  | 2 +-
+>   hw/vfio/pci.c     | 2 --
+>   6 files changed, 6 insertions(+), 6 deletions(-)
 > 
+> diff --git a/hw/vfio/types.h b/hw/vfio/types.h
+> index fa20c29b9f..c19334ff25 100644
+> --- a/hw/vfio/types.h
+> +++ b/hw/vfio/types.h
+> @@ -18,4 +18,6 @@
+>   #define TYPE_VFIO_PCI "vfio-pci"
+>   /* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
+>   
+> +#define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
+> +
+>   #endif /* HW_VFIO_VFIO_TYPES_H */
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index d6b2240fc2..bd47527479 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -41,7 +41,7 @@ GlobalProperty hw_compat_10_0[] = {
+>       { "scsi-hd", "dpofua", "off" },
+>       { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+>       { "ramfb", "use-legacy-x86-rom", "true"},
+> -    { "vfio-pci", "use-legacy-x86-rom", "true" },
+> +    { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
+>   };
+>   const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
+>   
+> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> index d90b69a162..94d22a232a 100644
+> --- a/hw/i386/microvm.c
+> +++ b/hw/i386/microvm.c
+> @@ -635,7 +635,7 @@ GlobalProperty microvm_properties[] = {
+>        */
+>       { "pcie-root-port", "io-reserve", "0" },
+>       { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
+> -    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
+> +    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
+>   };
+>   
+>   static void microvm_class_init(ObjectClass *oc, const void *data)
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index ad5caff3a5..c03324281b 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -80,7 +80,7 @@ static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
+>   
+>   static GlobalProperty pc_piix_compat_defaults[] = {
+>       { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
+> -    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
+> +    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
+>   };
+>   static const size_t pc_piix_compat_defaults_len =
+>       G_N_ELEMENTS(pc_piix_compat_defaults);
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 9b9519fa02..b309b2b378 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -69,7 +69,7 @@
+>   static GlobalProperty pc_q35_compat_defaults[] = {
+>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
+>       { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
+> -    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
+> +    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
+>   };
+>   static const size_t pc_q35_compat_defaults_len =
+>       G_N_ELEMENTS(pc_q35_compat_defaults);
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index e72d514a4c..0c4606d9cb 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -49,8 +49,6 @@
+>   #include "vfio-migration-internal.h"
+>   #include "vfio-helpers.h"
+>   
+> -#define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
+> -
+>   /* Protected by BQL */
+>   static KVMRouteChange vfio_route_change;
+>   
 
 
