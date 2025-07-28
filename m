@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DAFC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 19:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F4FC83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 19:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugTcH-0000fd-Rm; Mon, 28 Jul 2025 15:34:33 -0400
+	id 1ugTl9-0005IP-3m; Mon, 28 Jul 2025 15:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ugTc6-0000aS-Un
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:34:27 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ugTc1-0003qL-Av
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:34:21 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-24049d1643aso6616935ad.3
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 12:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753731255; x=1754336055; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RIwtv8grNVaNpxosptnFPK53lP31J2AZBYg2FCOKjqg=;
- b=xmSaG4sAqdo/0WM3LaxWJj6kSmnRPzCbQFQ14LhA5Ufd/G+tLdh8KlQ8zgBzD/LTJg
- Za9dzNakmqUD1KlbBSQpmcK5dWfMlKbEMEqbyzKARS7GvNduYoBSoJ7YjRr887lVHF7u
- xuKz2eQ09Jzq3BIHfXCOC46rAEY3tzClf0Z+4pkxL6/ISUO9B1fwrXpc9XVl14YKFudR
- YNAQD/X+di4k+W+1/GoXsvxkuSApPKXpXMFyBMqLNBY/rvEpyfUYreNdVyIZIn/NkGFy
- 8wOLr9KUsPcxJSPEmk3XcCZnG/5aHh0XT1cAS10iBwRj8uZMiB35yOQXGPvMyZ7iIwLf
- rwKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753731255; x=1754336055;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RIwtv8grNVaNpxosptnFPK53lP31J2AZBYg2FCOKjqg=;
- b=IhDLMnxTxFsMx32278Do5T1rLJGmwW6znc/nhh77DRRT90DkGT9je5L4E4scpqM8ES
- 9P0rFifuAnvaB9frbKGhInhQVO1THkE1mYY4DQsMFH5b6gfdLoyHEtXrwSZo543xjBr/
- 3xFz1Yqoa/7JYEU0+YAmByseCcGgsBsYStgypc25YaDYoa6pr+XC3jWONNX+vC/ssHGk
- RgxwGMUBPjdJmLD+4AvyV8kKvIjSJ/DilBkU0b58cvOBFgYpFKrgByNhKuxRVM1swxgK
- gizcloF9ExAV3CIRQ7NhWKnsAz7AMaTIKXBxMLFa7u2DfTpngF938A65oe5Osv1pNvFm
- PHUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/cNM/P0e7+e93TVJp1vLpkP+29U/DF3r/sizQys5YdmDoiInL/fuFe8nwS+s8VLr2pMYhtTstbr5l@nongnu.org
-X-Gm-Message-State: AOJu0YwCGvacf2nkvb2PvK7B3hbEPntw895qqkU3YBRG05mvrMEYpMNv
- GKir5F7Gqj8BoMdE3FhHuBN5RN1wh9XfMIiNJcUtJ5rjGV8ElO35zgWLbdz7s8adj5s=
-X-Gm-Gg: ASbGnctUKPblipAywgWqvLDhlvyHMbUjcGxdQGj1Cdv5R0gaWf162oWxGHo0jEVSEyQ
- ryKA82qXN0RBVhTZ2LJfPsdZvwTzkox+lksmYZnRSLpC6pHk/gl6+GB3D0wf3QuY9Owrh1PPcDo
- KJto/AYwoiiUxAwXHTJGk5O3X+iM2Hz6S4faWb/eM3AcskaNXQgPVeDI0P3zvoBA4ZfDysks2dc
- OzVx2iRcNmuIu+EhF8ho+mRkR5RlVlwwoWrSjudsktA/uwsO+EgywRKrx7LEXNCU7x0h2OHju+V
- j1Tsp33wbZxdotihv4j3cyLLdlB9j3HiE7svps1WCmAvgzdCP/AHcijpMtK5cyyGsTaApz1FCBj
- vABxtl0cCnEDkXGU6eHOvnyUrS58THlAru0s=
-X-Google-Smtp-Source: AGHT+IEgknH361BnArDw9Mq3Rj8/54M+lFWaB2vgGywPxHvTSZYQFo4dyqScpLtgcp4QakHEA6HDTw==
-X-Received: by 2002:a17:903:15cf:b0:234:c549:da0e with SMTP id
- d9443c01a7336-23fb3129f72mr179389935ad.47.1753731254613; 
- Mon, 28 Jul 2025 12:34:14 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23fbe4fd224sm59861305ad.82.2025.07.28.12.34.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 12:34:14 -0700 (PDT)
-Message-ID: <144f0930-af30-42b0-849c-99242d3f09ee@linaro.org>
-Date: Mon, 28 Jul 2025 12:34:13 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugTkk-0005BB-MA
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:43:26 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugTkh-00057V-1J
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:43:17 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D580B13B134;
+ Mon, 28 Jul 2025 22:43:00 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id AFBD52518DB;
+ Mon, 28 Jul 2025 22:43:08 +0300 (MSK)
+Message-ID: <8c4c3ba5-8fce-4d2e-b36a-5bd3d2ee2305@tls.msk.ru>
+Date: Mon, 28 Jul 2025 22:43:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
- <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
+Subject: Re: [PATCH 4/9] target/arm/sme: Reset SVE state in aarch64_set_svcr()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250728181650.165114-1-richard.henderson@linaro.org>
+ <20250728181650.165114-5-richard.henderson@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250728181650.165114-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,56 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/25 2:39 AM, Philippe Mathieu-Daudé wrote:
-> On 25/7/25 22:19, Pierrick Bouvier wrote:
->> Move those files to hw/arm, as they depend on arm target code.
->>
->> Pierrick Bouvier (3):
->>     hw/arm/arm_gicv3_cpuif_common: move to hw/arm and compile only once
->>     hw/arm/arm_gicv3_cpuif: move to hw/arm and compile only once
->>     hw/arm/armv7m_nvic: move to hw/arm and compile only once
->>
->>    hw/{intc => arm}/arm_gicv3_cpuif.c        |  2 +-
->>    hw/{intc => arm}/arm_gicv3_cpuif_common.c |  2 +-
->>    hw/{intc => arm}/armv7m_nvic.c            |  0
-> 
-> Alternatively add arm_common_ss in hw/intc/meson.build?
-> 
->     arm_common_ss = ss.source_set()
->     arm_common_ss.add(when: 'CONFIG_ARM_GIC',
->                       if_true: files('arm_gicv3_cpuif_common.c'))
->     arm_common_ss.add(when: 'CONFIG_ARM_GICV3',
->                       if_true: files('arm_gicv3_cpuif.c'))
->     arm_common_ss.add(when: 'CONFIG_ARM_V7M',
->                       if_true: files('armv7m_nvic.c'))
->     hw_common_arch += {'arm': arm_common_ss}
->
+On 28.07.2025 21:16, Richard Henderson wrote:
+> Move arm_reset_sve_state() calls to aarch64_set_svcr().
+> (cherry picked from commit 7f2a01e7368f960fadea38f437d0f6de7f249686)
 
-The problem with this approach is that we need to aggregate hw/arm and 
-hw/intc arm related source sets, and the last line in your proposed 
-change does not have this semantic.
-Regarding meson, hw/intc subfolder is parsed *before* hw/arm (see 
-hw/meson.build), so we can't reuse the same source set, defined in 
-hw/arm/meson.build.
+> +/* ResetSVEState */
+> +static void arm_reset_sve_state(CPUARMState *env)
+> +{
+> +    memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
+> +    /* Recall that FFR is stored as pregs[16]. */
+> +    memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
+> +    vfp_set_fpcr(env, 0x0800009f);
+> +}
 
-This old commit (7702e47c2) was the origin of having interrupt related 
-code in a generic folder, but I don't really understand the rationale 
-behind it to be honest. It seems to be an exception regarding all the 
-rest of the codebase, thus the idea to bring back things where they belong.
+> -/* ResetSVEState */
+> -void arm_reset_sve_state(CPUARMState *env)
+> -{
+> -    memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
+> -    /* Recall that FFR is stored as pregs[16]. */
+> -    memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
+> -    vfp_set_fpsr(env, 0x0800009f);
+> -}
 
-I'm open to any other idea someone would have. Peter, without 
-necessarily a working solution, do you have any preference on where 
-those things should be?
+It's a fun one.  Please note vfp_set_fpsr vs vfp_set_fpcr.
 
->>    hw/arm/meson.build                        |  3 +
->>    hw/arm/trace-events                       | 79 +++++++++++++++++++++++
->>    hw/intc/meson.build                       |  3 -
->>    hw/intc/trace-events                      | 79 -----------------------
->>    7 files changed, 84 insertions(+), 84 deletions(-)
->>    rename hw/{intc => arm}/arm_gicv3_cpuif.c (99%)
->>    rename hw/{intc => arm}/arm_gicv3_cpuif_common.c (92%)
->>    rename hw/{intc => arm}/armv7m_nvic.c (100%)
->>
-> 
+cf. 1edc3d43f20df0d04f8d00b906ba19fed37512a5 which has been
+back-ported to 7.2 already :)
 
+Unfortunately the order of these commits is different than
+the one on master.
+
+/mjt
 
