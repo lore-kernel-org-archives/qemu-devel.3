@@ -4,221 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEB1C83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 16:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4769C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 17:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugQe7-0007jA-4W; Mon, 28 Jul 2025 12:24:15 -0400
+	id 1ugRCz-0005an-R4; Mon, 28 Jul 2025 13:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ugQdz-0007h9-RQ
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 12:24:08 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1ugRCp-0005SU-Iw; Mon, 28 Jul 2025 13:00:07 -0400
+Received: from mail-bn7nam10on20622.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::622]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1ugQdu-0006op-AF
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 12:24:05 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56SFflJJ022783;
- Mon, 28 Jul 2025 16:24:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=qBk/6H6FY/ao450Yzc1q4we28LPISjp0SmLyq3u0ZSg=; b=
- JnNdj+0g0qfz/wB0rrmSc8ohFAnGiWfkuxFdeRBZYh/gFZMwd11Zaoo4xwBxFLEF
- +431mpdVQRQyjngIqDESmBAX36rCnR48ERsrvSlYM56sasQVrknvfr2fDg63kr3q
- UMP8WAYW4h+yWvtw9wz5iJJyceneeT09Wv+vb1cAevUyNoqpYWipR6IaxnjOwB5N
- liXjrrUaXgrn3d1kKzrWhYbfiEZCgLnRjpazmVRgPKHVlahxe8TGfh1xVZ0WtiZZ
- U6ZsUd5BKvDzEIImY9alhBQyY65xmh4verynVS5Vu+d7EoYExzy46Q8jKKWo4yV1
- aGtqJGKGZvG1BaW4kJqoNw==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 484q2dwu6p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Jul 2025 16:23:59 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 56SFdh81002467; Mon, 28 Jul 2025 16:23:58 GMT
-Received: from ph7pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11010052.outbound.protection.outlook.com [52.101.201.52])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 484nf8uhmu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Jul 2025 16:23:58 +0000
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1ugRCj-0002Ht-C6; Mon, 28 Jul 2025 13:00:05 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=R1sITot0+mIGL20uhrSNeCaIU3sXpOzOBbKWkvH3wg8yXbA555J4vjCCMkVGKHPzTiJJq5NuYdDTSOFPVIbhOvmETcH8yy/q/YOm6G0o/736SEQySeQ7qdygCmRb150CIwcvlc7sk/neZ5YbRnKYlyFPFUI+K/r3TK+hVWgza6e59z2CreRK3wHy2sfw/pyL9Qwck1K7hUtfRBW93jDX2FrekAh+tNN9Dr6g1GqFl4xCCn0tRkgLuBoB4R3uHTrXjlO+rdc2mQCQpNiFq0u7GS0hBkIVC7pXAVq0o6187WU4PR9Gi+Yjnfv17i90nuSYKpUyRe26UGDTiB7eBD4d9Q==
+ b=DsExT8o1N7U0yfQ907Y/odpnuBaBVewxWE6YtH8ULCuZbefFbInoF3XKgz8VyAMpCVKjxKJhtfeLkX3bwaYuxXpE65YGs3dDI4nEO6CdECWBPGv6Vn4rwfQuz9W9nOyFpA3SZnCj5Df3K1f9zgrMaZ1CUfSU83pFFNC1zqKBxOLJjzPPhDNBj0l0XMDR1j8UHRd00oVLmKoIoRCPA94dTmZq7WXS08KsvoAk9hjZ5Okz4lu4GeccduhWWx3L7OFNzeGLPTbt75wwS7EOttID8nN/Noe8nVL8NNLA9THDjY1kGw85cGQ7NoZ1r7qNuclUXvlCJmJ+IcsDg63H+f2C6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qBk/6H6FY/ao450Yzc1q4we28LPISjp0SmLyq3u0ZSg=;
- b=vdHUZ+5zdbKRn2vjuNEPlus++E51JnDmbk/y+udJp+TjSBsKQTWBqjDzB4stO0fgWnk5RsuDpTalt6h7755sD/HGoHv/+oT9yvaJf84U0RMzecpIA+qDikqegUa7YuhJ+81yVDDM5m6zHGlI2D2509YVapaqSA7CdUkNybCyGVi8E1CMhP5HvkI3uVZ4+yu1/CJsTRSS2b68y5RWbb3AByFq8691GOOp0zoDf7DMm6zPAiNRBv0zLfhy4Lj2AkVko7dnOkV9BZzyebHi3OXE2Expyvwymy3J1Z93sQxFzO75BFc8aslB7qGISY6feez5clm/O+mdYUkrNBUa2kKbIw==
+ bh=zOMjMicu5Solq7SMF182Viomg73zfpEXbGGRbf4pzyw=;
+ b=EI34bKf9E7X8A5RuLxgM6s1lhoyIBerLf/axxIGEX2DuZoR2MRifzP65awM+2SAh2UK1SrYzqJjWXO5Ic8zYZzZKBY4FkFwXwWEVmGrQsGBZ9E94lKWOvmlpOf0mEMl3jzIPUH3BKnNWymlZy4FZyIPSRYrt+js6e8DCDbLkF0lKubl1fM0uLi4ceuxcCMgt8IB39pnm/VlvpUQF63xZxIRn23Mv2RABd46UQqmAOYaDuPm8Fdo4C/V1H4swcw0uYNYNcd5wZD+1GGwgOnWsNnQk44Jf9jr1zZzuHHGgywTI+bKmivhYhqrHzVv99xBcpxvEMM2iLG6eG0VcHo3Pww==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qBk/6H6FY/ao450Yzc1q4we28LPISjp0SmLyq3u0ZSg=;
- b=tOr5DiAwUtV279t+Tm9SIO21pPyQ9KLxMq+N9NkZig0hlHk9oYHz/Fn9pN8uZC8sJfHIm3DEpPv6QPLuIGRWNPeYWX85bMv7ajlJUiQe86z1QmPugAbr/Mbix55OpGM45eWPG6pETuOMB16W2pfE+WL4fmAoMEh/uiDluLx+pO4=
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com (2603:10b6:5:21e::21)
- by DM3PPF545856187.namprd10.prod.outlook.com (2603:10b6:f:fc00::c27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.22; Mon, 28 Jul
- 2025 16:23:56 +0000
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6]) by DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6%7]) with mapi id 15.20.8964.023; Mon, 28 Jul 2025
- 16:23:56 +0000
-Message-ID: <9f6be5cb-60b8-4c13-a80f-800f409033f0@oracle.com>
-Date: Mon, 28 Jul 2025 12:23:52 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
- virtio_load for iterative migration
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- eblake@redhat.com, armbru@redhat.com, jasowang@redhat.com,
- mst@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-6-jonah.palmer@oracle.com>
- <CAJaqyWd7z-5cHojosMA5mrPQiD8Lz76zF=pmUrQ0cuuXvuSLzg@mail.gmail.com>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <CAJaqyWd7z-5cHojosMA5mrPQiD8Lz76zF=pmUrQ0cuuXvuSLzg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PH8PR21CA0021.namprd21.prod.outlook.com
- (2603:10b6:510:2ce::15) To DM6PR10MB4363.namprd10.prod.outlook.com
- (2603:10b6:5:21e::21)
+ bh=zOMjMicu5Solq7SMF182Viomg73zfpEXbGGRbf4pzyw=;
+ b=v9dIw0UemabEy06yxm3NyZag5ZhmD8gjP7isRhPypUyP9Akxcm8vm2Q3By+DhrOjU/BWoqgXdyy9pHQBr6+u4RhzSTiMN4zkIHLn46pHceTQbeNQ4Gs3/cCo+7U/vV0rm6xUSMYKWUtzUE6zM73mViz5Z8u0Bt2qivBCdQsZ+NY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by PH7PR12MB5952.namprd12.prod.outlook.com (2603:10b6:510:1db::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.26; Mon, 28 Jul
+ 2025 16:59:50 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8964.019; Mon, 28 Jul 2025
+ 16:59:49 +0000
+Date: Mon, 28 Jul 2025 18:59:42 +0200
+From: Francisco Iglesias <francisco.iglesias@amd.com>
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Subject: Re: [PATCH 02/48] hw/arm/xlnx-versal: split the xlnx-versal type
+Message-ID: <aIesfpiGNAgy6UGv@xse-figlesia-l2.amd.com>
+References: <20250716095432.81923-1-luc.michel@amd.com>
+ <20250716095432.81923-3-luc.michel@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250716095432.81923-3-luc.michel@amd.com>
+X-ClientProxiedBy: LO4P265CA0224.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:315::8) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR10MB4363:EE_|DM3PPF545856187:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b7eb80e-e5aa-4494-fe7f-08ddcdf32631
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|PH7PR12MB5952:EE_
+X-MS-Office365-Filtering-Correlation-Id: eb73eac8-4098-47e9-0819-08ddcdf829d6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?a0I0cmEwNmpLTE1CYWpBYkdKQU1qUkZTWlpjYTd1Ujl1Z25PM2YrZVhiU1Vt?=
- =?utf-8?B?NU45L0piNXAyWnQzTm1uRkhybU1XTmRZZWRvTGFPTnczck40MkhrWmhweEFG?=
- =?utf-8?B?aUc5dTAwM2swK0R1RzdJU1NEWmhCcHJwRUFrd3RQLysxQmJGbGszU1l6UXNj?=
- =?utf-8?B?OTloS1dTMXF5Mk9IMVhHSUpaZ2hTQTZhRDNLb0pISG1McTkyODBnNmttanNm?=
- =?utf-8?B?UDRwZmdUQVNEcDJoWFc4REFtWWVXb1EvVFFuQ1dIdEVrVitMMnFidEM0QjVQ?=
- =?utf-8?B?ZmNLQ1JlYWlCcXRvSU9XVWc3V3VMdTEwdCtmUHFUWnQ3TWRoakgveFV0eGIy?=
- =?utf-8?B?cktQRk9jMU1jYkdjd05sdk84dGVhMDY3MDU3TDZmYklJc2lmSkpZc0wxSFQr?=
- =?utf-8?B?cVAzY3Nrc3RyUWNzTStZVW9FcXM2em1ZQ09PUkhKMmIxb09tSDdhRHdQNzdU?=
- =?utf-8?B?SU1ManlLZkZYL2w2SzF5WE5KaC82YUwzVmM2R285d1FFOUxQdnY0TjhJUTVI?=
- =?utf-8?B?Vmx0Zy90c3BMS3NmYVVyY0k5MWh1N1hTRnJGWjgwUmZmQUJubS9YR0J3TGJS?=
- =?utf-8?B?emdmWC9QYVJ3bmtROTFXdDhQZjBmaHYyRmdFbzhOOTN6bXFqQVJoYkN0SG94?=
- =?utf-8?B?Q1dIUXZmYnlDMlhJQ1UzamRYNjNxajNBRDN5aEJpRE1SaGczNEptck5rdlhj?=
- =?utf-8?B?RzcvYmloSlIrQmEzMHVkMnpFK0pSSU55WUkySXJGNGh1UVBFYldWeXNsSnNR?=
- =?utf-8?B?bThvVU54UDA4eUZuS2hSN1Z3c01ZM3dtQ2FUREJYT3JnSzdwSkJ1QmRvMThv?=
- =?utf-8?B?Qzk5Wnh6bW42YTRNSGlOQnRTNDFUc3JDRnppYUplZFBObTg1M3dtWXUvQ1JQ?=
- =?utf-8?B?RCtwbDFNVW1rL01DZFpnUVlFeWxlQk1ZMUVHbUVHVmV0WjBIZzZRdGV6Ykxq?=
- =?utf-8?B?Y20xUXRDZjJmVGd6a1Z6SXdGNnUvdnZVY04wUnoyUzFOQ3JMd1VNMzg1Umxz?=
- =?utf-8?B?azI1bGVzS2dYWHc4NmpLU2M4V3hheWRqV0FDeWozNGNZMlNndnZsY3hyL2pD?=
- =?utf-8?B?d0hwcklseDlzc1BHYVVPU1QxWVFBaWtMOUc4c0RTdk5QTGZhNHZxdE1DN1hF?=
- =?utf-8?B?TDFMSUZnUWNSZUtKd2FBMW5hNDBJajBQdEt6MUJuWXA5L0htRW9GYjQwSjRP?=
- =?utf-8?B?TGhNRnpHWCtJWTVrUXFtNnJ0SWJnSEI5M2NRTnYvWjErYUxPdjE0MEpnQUFR?=
- =?utf-8?B?c25tSmtKNDZPVVpkME5XVy85SXRQZEUyMEZXaXpON3V4RmZMcnVGdHVQbXVz?=
- =?utf-8?B?TmNBdHRoZHNrbG5LWmF0alk1MHNEanU5V1V0ckNGU0w4eTY1YmpPejZyTXVu?=
- =?utf-8?B?MmhDUTRpQlZWTExzcDkxNGxJSmVBbkNDL2FiUGt1SnFla3JIL3huaHN2bFU5?=
- =?utf-8?B?Z25PSjA0OHJ6eC9wOHpTQXRCRVJPSDZXMFhtYmV1akgwcmxSdjViTUhKaWkw?=
- =?utf-8?B?cWgyTVpma2YwajFWZ3RpY2lGSThnS1pwZTV5U251UmhadmFSYXdIUWp0MkIr?=
- =?utf-8?B?ZjJSY0xGanFrVktDQnhVMFdrTFBPYkp1UlEwbDZnWFRtdTZ0T2R1ck52VEV1?=
- =?utf-8?B?Qk85SUdJdXp6M2o0TEJXRGh5OWlRKy9XTllpZUZFdVJNUEhGVDBTRVIwanhW?=
- =?utf-8?B?ZHp2ZTNoL2xpQndNOUtXLzAydkgyTHFkV3BtY3QvRkFNMldsQzZIZXFJcER5?=
- =?utf-8?B?WGErUXo5blZsOE9uc1lpaFZHQXNKR2pXTE9mTHBEc01CK2lRcWNEQWZrM0Ey?=
- =?utf-8?B?MG5mNUdnd0ZjWmdMM0Yrbm56c3ZxZE5BTzJ1NmVXZSt6bktPZ2ttd2g5blJa?=
- =?utf-8?B?NVJCc3VDL3Z2aFVyL0xpZHN0RUZodGdtUllqYUY0aUl3cXQ1YXJXUi95K0hl?=
- =?utf-8?Q?IJI4rOMkZ60=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VVhsZzNvbjJ1TEsvRU41N3VFamIyWE53ZDUyZFFuaHhQSkU2ejlNUHBjVjZP?=
+ =?utf-8?B?RHFwaThWelRCOElRQ1JIbHMxTHpqL25oSDEyTHZOM0R6Snp4N0hwbzE5NC9n?=
+ =?utf-8?B?U3ZHL0RiOVdoZ2hNc2I0WFNWeElPSXRydHRtbTliemhiVnFqUWp6MktEL0RY?=
+ =?utf-8?B?dDBKeUUrOVRVZWtFbXlFUnlJR2xCTHFWb1FTbEFSWW1zUWtjK0Ywd2w1aFZy?=
+ =?utf-8?B?M29vSEg0TUF4bzRSUHE1UzZ2NnMvRUN0UWNEejBhTFVIT2U3NzZiVVIybGxo?=
+ =?utf-8?B?aXlpaCsvOU45NVVoYy9LdHlGckozNkVmVmIvbGZKSWhvZDIzdENkb09PeDZM?=
+ =?utf-8?B?OFF2VWh1TDVZWlB6Vmp3THhrOTlrTXhlcUpXR213L1pjSnE0WEo2ZEhIWk5v?=
+ =?utf-8?B?OUdFd2hoNHNXOFkxZmo1eUs3YjhJY1lRL29ZaTl6Y0sxL1dBL3o1WFVnTFJT?=
+ =?utf-8?B?aWp6R1NBUEJqdjVGRVBKcVFLV2NnOEVvcE5pVE44eVpZR256NWEwaXBFdUda?=
+ =?utf-8?B?c2pmUjI2WkFQQVFBd0xiTlFkcWp0NklBUFd3aEJRZkV2V1FsS1NxK0JXZUR2?=
+ =?utf-8?B?OTVXcWV2VW9hT1o2TnhvamFZVEVtd0ZueVpLdC9HOS91MTBoQ05HNG9TSE5i?=
+ =?utf-8?B?Z3JWOXFSU1I5eWFieXVJZGxQS241Wm8wckRERkV6QXhnbzFKTnpCS1VNT0Zr?=
+ =?utf-8?B?L0lFOUJwRjh5K21jTUJsOGhCc3VBV01XMXkwc1REWFRyenFCY1EyS0grenJH?=
+ =?utf-8?B?eXRiL2xqeHBGYkhGME1oS2txSm14VlJRbGZTd1R1SkZyRFlaZFJEYWtuRnFv?=
+ =?utf-8?B?MHVHVmtrNm1GUkYxVG03SS9zWDhOYXZvdFR2VFBjWS9zVG5qTjF4bWxlUjVG?=
+ =?utf-8?B?NzRIeGE2bENwT3AxV1BtR3E3S2s4TWptWVRoNWZkQ3pOSXB3LzkxL2VIelpu?=
+ =?utf-8?B?MWhkNThoeXlJUHk1OFRSUHBHODlqU3VCQWR0cDBacmgxNWhndEw1QmJEZFln?=
+ =?utf-8?B?VVpTK2tUS0JqQi9kcXhldy9jRDJacXFjMU9wT2szQWJMbkk0bGJTQXZHVVFu?=
+ =?utf-8?B?cHJLcTM2bno4Zm5yQXNpOVdVeXRIV3BubE5iQWIzcDdrYk9ack84TWtvT1dm?=
+ =?utf-8?B?OFFTcmcwSWFDZWU1SWxUdDJnTHhEUlVVRjZLekJ0akJvMVMwcHlBT2Y2Zk1q?=
+ =?utf-8?B?RTBWbWdkR3RqWGFCNnBha2RiWHBlM2w1VlVFeWtJU1hEaTc3ZUYya0hEUHk0?=
+ =?utf-8?B?R0VodkJGeW14OUd3clZoMUg0NjQ2MS8xblo1RG4zMmMwWkZWSENWcFgxU3dR?=
+ =?utf-8?B?cHJLb2FReU43dUFxd1BLRnhmUjRKK1JCdnNhcXJwMTdOR3YydElORDRPZlB3?=
+ =?utf-8?B?M1dQZzVHcEFYS2dpYmo1SXFKUmIxa0p2ZHJGR1BBMGZZZVlPc2x0YTlIQVIz?=
+ =?utf-8?B?cHVUZ2dpOGNkSWZCSmhwalgySWcvRm1jcHZxeU1mWURCVGI0ZU0vTXZvK1Ny?=
+ =?utf-8?B?OWtWMTA2UDdPMkIvclBIS0trZDVWZlROdnN2RGZiQmxJVGY2VHExUnlhVDRX?=
+ =?utf-8?B?MjdhVFpPV2VmYnlRZDFLc0lWTDB4YVkxdVUwdVJ3YlFSN1FQTnNkZHZubmhV?=
+ =?utf-8?B?SUJUNTdoUWpTSS9Xem9BZGJsQ21vUE10K2Fwd203UUJTK1k2VXBKUUFjc3VY?=
+ =?utf-8?B?bDhoQ0FMNlpiTmtUandybC9OQlZUcU1YS0VvTXZZTUxQK2t6RmtiQmVPRVdR?=
+ =?utf-8?B?QTlJOVJMT2N1ZFV3aU5VVCtXU2puVS81dzRmcDNpb1JMclNsNWdOeWlEMVRV?=
+ =?utf-8?B?dXg5bExLekg2Zk9nZkdlNGtXR3krbyt4bkQ4dW0yamMzN1BKZU1MQXlCczl1?=
+ =?utf-8?B?bEZZb2ZzREpUTFpLRFJqOCtJUVVjZ0MwS1NpdGxwbmZYNmxxNSs1cFFENnR0?=
+ =?utf-8?Q?nk4xvKsWCBo=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR10MB4363.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWpPYytYQzJpWkljckhOeXlzVjQzZ1h6M1FETXVpd29LSENJM3RXUG1zck43?=
- =?utf-8?B?TXc4VlJhVFBQbk96ME1xODJ1eWZ6L3FFVDVzY25aS2dIanZ4bC9sajlTZjlK?=
- =?utf-8?B?UTZnSjJoNnBnaDNmajgybXhhbFZHRkVLZXFicFFHU05ZRGdqUHFudElSdnBa?=
- =?utf-8?B?ajFoZ2xFenZXNlpjbTQ4SnNuamd5dEhtdVIvQ0E2YXlYTDRHbXMvcVAvbS9I?=
- =?utf-8?B?Y2xodk1vUEZYZlNyUzJQc3dUSkdKTHpEVHh0cEhsYlBkVU5qWDUrejIxWUps?=
- =?utf-8?B?Nm1xWkphQ0lkQVhuOENMRzc4VEMyUnRzYThRRTFkd0s1YnlUVnhZc2VieSsz?=
- =?utf-8?B?UkRlYXRNZXdFaE5UMlNZSmh3OFl5UmRKT1NGWDdsK2M3OFROWkp0R2NRNSt4?=
- =?utf-8?B?VnFTNzBBbUZqZ09BYjNlVzhwNTN2Rmo2VUVhNjJKaFJUY1pUTmRTS0hQUTIz?=
- =?utf-8?B?aDRqSUY1VFNjbjdvS2JHWlRZR3JuemJrZVdMdE9jaFRQUkVOUDdraklQT2pU?=
- =?utf-8?B?c1FRWU53YXdzbkp5c3hweDVmTWZKYzR1N1FETnNhS2thRndUVCsxM05ZMnhV?=
- =?utf-8?B?cnpSQlF6Qkd1bkdEMFo1cGRaTlM1QUF1cm02ZVJTR2FvUG5qMkhRT2twL2Ns?=
- =?utf-8?B?WkhYLzRqanpDYklTTkpETWVGZjh0cytkUzF4ZGRENmh5eE5YVzEzWlRKSUZq?=
- =?utf-8?B?c2N4VHVCN1VCejdBUVNZVWpMQ0JuTkF3cFVRMUZETUVJUWpjU1JBdjdWK0JB?=
- =?utf-8?B?MXcxV2tIK1VhZUliSk1MVGFSTkFveWhuQmV2RzhZa051dFZrUGdIbkFiMzlL?=
- =?utf-8?B?dFUzL3FlbVZ3NzlidDNxTHJGYkFDajFpdXk3Y2ExN0QwcDkzZjZ2djlERGw5?=
- =?utf-8?B?SzZxSWRyMnpEL3h2bzk0ZC9KQXV1N0lkekFYeG54WDYzY0JKOExzK0N3Nitn?=
- =?utf-8?B?TnRsZnhqeiswODR3UXZ2dnFoaHlkeWNyWlZMTHBNbjRDTWZ6WHNiZStDdVlI?=
- =?utf-8?B?MEQ5QSs1N3VZSHNZZVhYTGxhRnRRNkpoZTU0NTI0a2Zld08wbFhWb3lYUEhT?=
- =?utf-8?B?ZnNWNGtDdXRJeEdoNHZWeHlhVk1WOTRZaEs0cFh4Z2hFYVh0cVU2bHVRNE5I?=
- =?utf-8?B?OXF1ditRZ2RlS1RMOTVOTEpDaXpqTDdFL09haFoyWEZPS2dyekdNRkY0MlJ6?=
- =?utf-8?B?NytKaW9rWFZ4OU84RFk1SEtkUVowaTM3aWtkV3MrMkpVNFdJZ1lydzB2Ympn?=
- =?utf-8?B?ZXdHRTNMMnladTBuUSsydnZwZ3pmejN0K05GWGZzY3dmbmYySmtVZ0xzeUk1?=
- =?utf-8?B?ZjczdnpTNWg2am0wbGs2c2xPNUJRYzlFSVorenNmMjZIdUZ6cnJTelNRWWNW?=
- =?utf-8?B?RFU4Rm5QZ2xoVVZkSzJ2TUhmVEg0WHZsRTFScTdxaXYvaGZIb1NMNDBtWjZE?=
- =?utf-8?B?d3AxVlVoL1c0STNyRjBCTUY4cmlHTmVZY2dDdzVhcTJHMmwxbE9ZdDZFTlZ4?=
- =?utf-8?B?ZVRCMXN6SitjU0RJYnVNWkF0Q01ZQTRFUUZ6M2I3cEVKaFhhSmNyK0xqRmZV?=
- =?utf-8?B?enBjd255SjJOYmVaUmtHT0FaWHg5RjE3bk80cjdIWkd3UEtzNi9QUzhSaWdq?=
- =?utf-8?B?d1JzU2EzcGFNNk1vUjVvYjFaYXlqbWlVMHg5dXZpVEJkV1ErTGtNc0RTT2NB?=
- =?utf-8?B?aWI0TlFCODJwY3VvbTVuVmlPNkpMRU9CbC9odXd2eUZwcDZreXdyZUxpbGVZ?=
- =?utf-8?B?V1gxWmtQVHdSYTFQUlVtVjV3bm1UU2VORllXanpqZ2lXZzVOQ1c0OFJkLzhY?=
- =?utf-8?B?SzNNN1E3Z1djRTF6ZFdLK3dPZjV6R2dkY1BIdlBidkRGQXdiZWtJUFRHZEIv?=
- =?utf-8?B?OHAwWWR1ZGlvME9SN214TDdwNnRLNy9OaWxoTWpWWFdZczF3WTBGR0VRamls?=
- =?utf-8?B?Tm0xTGlScWt4N3pEOHlHM0lEcjlrdE9GNzlFdS9nOHpCTjNhR2hFWTh3OEp5?=
- =?utf-8?B?SnZkNllCRGgwWGxMcksweGs2bnFvNG4yUjFlc2FGM3JnWTFJMThVcWY1NWtS?=
- =?utf-8?B?Z3JGK2UwSjFYSVlmajRuN0VCd0JqRU01ZVRpQkVacTIxdUJZTHVBcXdHZjBn?=
- =?utf-8?B?SVFEdENHM2FHdm9la0t0bjNLbnhSUzZmaWRiMUtVSlJ1TWFJVzJSRko2R2ph?=
- =?utf-8?B?cnc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Ztd6jumQjHuy6zGL8v83q4owtnazFD4BFmOtCPwHIPzPCRpxfV/NN/rizUJPQGQ5sbAcvLtaUtHbfCEBjAF6SDuXSOwcu635mkyF6VEVJKkLM+IZPdiMdTQsR9M42f55EPk57Z2hwE+C2sqoy42DfLsmlIyVnBCRQIEEt9FATFt2qlnc1M+rQNO+Q5lAGvf7frYobe1LISux767GJHNdl+c8WLFxOaUQpzWG3rXC9v/j/P87TxNCBHS+NHBLlxN7IlQPJp6n4kAcWRkE7At+lw0xbOdfp/XMLB8TRw74XFIrEGvIjVzThb+kQz5X9X1eT03sDjuMl8HAONyFAiN1ToifiNbTicilAE9jYlRP3DL3RCNT7dVgYV+gg2i4tn52ddaAOw8NYP0snksP8LYowFFmaMzTQiA/I9/ZKhqEON65FEmT5bptLZjZx1fxcBjml0rj/d8W2ynmKb+HqqwZ81wLuRZ3HO7DZZH5iVL1GHtwWqRutiY9IxR0dfg6t8Er61Y0lbTG+VCCW7281F6bAc+BXNwUpi9DFt0FBoLgQbAgdIJCsIdRX97K6a779ZCFyrKf73KuFVawkdrHZxuQWySCtwDoXpLuP82/G8qZDho=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b7eb80e-e5aa-4494-fe7f-08ddcdf32631
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR10MB4363.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QlZTOGl0SmI5M1BnSUZFcWg3OHQ5RGFBN1lMZ2E2MERVQ3B2R2wwVi94MEQy?=
+ =?utf-8?B?cG9kN3l4bUM0TmFhVHZWYjBFZk9ZcUZkajdBUm1FODdQVmZPcmRzZXlYWDlt?=
+ =?utf-8?B?bUNwNXhweE1WTW1ZdHVhVW50OTNrUUdrVm9qeDR1UnZsNm1RMmFjVVNVUWFM?=
+ =?utf-8?B?QXV2aGtIYVIxWGhWZktwcmRwc2NGNXFVZjgwOW0vN1dDUmVMbVhhVEk2ZmJl?=
+ =?utf-8?B?djNkYUhhUTRVZzJuMFJlSWprQ0JSYnBuVjNGdXpMTmlCTkszQTF5aVBRbWsz?=
+ =?utf-8?B?bmxkSnNmRmVDWEJudEt3YXQvYkJFVFpFVVZialJyamhtNXZIRmlKSURFWit2?=
+ =?utf-8?B?dFhiOGphSTVHQk10QWZZVjVDUTUyOFkzK0Q4WkM4dUU5Y0xGZ092Q2NUZWNi?=
+ =?utf-8?B?NUZBWGx5cE9xcThsUzR3TjY5MTA1WkhkR0pDSmwweFdhak1Wa1d4VUNLUzgy?=
+ =?utf-8?B?Sm5WNU80aFI4bU1vUmpBWnN6aWJ3dlBJUmhtYkFZMW8wWmE3eGdCV2ppZ0Nx?=
+ =?utf-8?B?a2ozMDQ2QVFKWlBGZ2I4REdrVGNSQ0xCMnRNS1JDeFlPYXBRSFpkUEI1YnZt?=
+ =?utf-8?B?blhYR1dQYzE3RGpOcmIwTDdRcVVEMFhlS3FxaGVjc2lUcXVXWkk5QnJFMXhT?=
+ =?utf-8?B?d20zZ2dEdXBlcnQ4YU9DajQvYVJQWWlQTWNpbnZrblVtU0lBeVBNdENUNkJD?=
+ =?utf-8?B?RUM2b0xqcnNEZjFEQTZ5Nkw2NHdEZWlLSGlRaVY2TndPZm92RS8zS3BpUk10?=
+ =?utf-8?B?TSs5Vkx0NE54b3NTMFZZQW1jUk9ueklDdE1qSFVxdVF4QU5MVkhCbEcxbEtu?=
+ =?utf-8?B?a0NIWE56QnZMWHRJcG5pb1BTbTlUcnNhZWFMRkRRWW9jRVNFNE1XVTJaOTg0?=
+ =?utf-8?B?WklCekNneWNCTit1a3FZRW5JamlwOWZmZUdITSttZDBoR1g0M0doelpHbWxD?=
+ =?utf-8?B?M3grOC9VUGtFNjcvajJFajZ3Y0thb1lqWlE5VFprV3U0clAzUS80TE9iRkp3?=
+ =?utf-8?B?ZU84UzgzZ0JBTWtwQ0ZRaXJseFU2Nk90YklrUVZwc1kwazZZdFdJZHIwSm56?=
+ =?utf-8?B?NUlwdUt5M1FkdjQyOFlRZTdqUm1MOHpDcEJ4ZmFHTG5hQ1JkZW02NllRc1d3?=
+ =?utf-8?B?cjRTL08yaDMyRDg1d24rTzgyb1k3QjVPaXM5bXpnclFSckg4Q2pCQmVYVXlq?=
+ =?utf-8?B?WG9mRWttNUxHOTZDNmZuVHEwUDhqT1dLS3p6VFJDT21LMjBEMnlsUDZPSnd5?=
+ =?utf-8?B?blIvMXZIQW5DaG5QMUJNUldaeWxId0F3TzVtV0hiaktsZENEYko1T1dqZHJP?=
+ =?utf-8?B?Qk1tYzhxT3ZnZU9wVUgwd2NsRWtpOVMveityRW9aeml3Mjk0VzlhWC9pdUhJ?=
+ =?utf-8?B?Q1NBU0htZmttbVNENEViMjB4Rjl5bkt5NTVTa3BoVmliRFBCMFpjMFNnOXhJ?=
+ =?utf-8?B?OG52NmRCQnF1RWZhMVp3ZlAyWWhVSWdFc2E3ZVNWZ0l5OTRKVlhBUkxUWUZE?=
+ =?utf-8?B?LzRxbEF5SXhFOE5xcHVwem9aQmd0Sll2SnFlSDYyblhsQTYyK0xZYkQxckVJ?=
+ =?utf-8?B?aVdha0xHREtTbHNucHJHdGl5MlNlVVpKcDYzUXFrTjMxLzFrSlY0cjFBUEhW?=
+ =?utf-8?B?WkxnR3hBL1JIVjZxbmYxRklxd01LL1hwMGlyUmtWeThWbTFPN0FNS1oraE8w?=
+ =?utf-8?B?d0kwUmRJYklTZmRKdWE3Y2ZZRElvRDFkaXVVSmswM1JwaHB6ME5aNmtlNjFU?=
+ =?utf-8?B?WGhrNzUzSmZuaXJ2R1J4MTFsWGQyQjJmRzFBSEFNOUlGRGNFRWdyVzhtVURG?=
+ =?utf-8?B?TlVzR1V4NStNOW45U3MzNHRxWldHdW1MT0tUaU9aUkdmZkgvVHZTaUVIeHdu?=
+ =?utf-8?B?eWc5WTRISER2TDZlbEZkZjNiQmdnQ2ZtMFd2K2FCZCtYVjEyQ2hoTXA5U2Va?=
+ =?utf-8?B?SDNySkYvWWE1YUloYjhpQ0hUeUNROUdCVm50UDZQa1A2c0pkQkxqaGJoRTJ5?=
+ =?utf-8?B?MHZBR3JpTEhEbDN3M1NKVmMyNlpTNjdwU0FRZkRlZ1g5N0E5MVEvMlB3ci93?=
+ =?utf-8?B?NkZQNnhwbzFGbWxBa2VPYlFjdEpiKy9YUzE1TncraGZrdGdNd2JGYk4wSDBH?=
+ =?utf-8?Q?Ihlzm35WqNj0al3Soa4gUACbG?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb73eac8-4098-47e9-0819-08ddcdf829d6
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 16:23:55.9844 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 16:59:49.8201 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DZzzAPHXu9b8jS68j1sv3vZds1JQ3UxEKccetfkekIHLUuJ/AXIhL/iTfNambToyEJcqMZSrLNSZyepqFGReng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF545856187
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- bulkscore=0 spamscore=0
- mlxscore=0 phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2507280120
-X-Proofpoint-GUID: i1A03nCNSHRBETLmUzqlakmQa4lAmUGz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDEyMCBTYWx0ZWRfX+baybzrHos90
- S9l3PRHOnzAZRcZvXt0ylA0j1oSA+3XrBaC3oIyliSiTREsUwIqV/fQ+Gm8jwXCQUSixTe1Pyvz
- Uk5t6xGplRe8w3Xkmho38VDKTTca43US3/3+JEl3qmBiLhdI4uFucHIp96JVUy5dZiKc9/66r8S
- 5W3+qXPKVmjja3qNlMh7OLfIJuuLO7eVN5SICguT9XVdP4ObNcNvvZvfZl9bJT3lCJrMbkfsAJH
- AiEn9Gw40yqgFC7JXEQtI+4S2nwjYy/m4il+XoohFf4BBMjPuxPBmmz8ZHnrxdHl/zmQ/N9kcDE
- nvF/O82tufYMru2L5wINwQTZyfen6pRo1daFjQO22WeyUwqcGbtlfhNzEwq9JPWBs6QBDDJQXx4
- 3lBtMpy1fdijdLsRJZ87eiMN///tXBYLwrsMXigRCdagbA8JW4mNl6+PX/wXSfGr18hYmbQ9
-X-Proofpoint-ORIG-GUID: i1A03nCNSHRBETLmUzqlakmQa4lAmUGz
-X-Authority-Analysis: v=2.4 cv=A+5sP7WG c=1 sm=1 tr=0 ts=6887a41f cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=iz2yyBAMNl1AwP7UiEgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Exchange-CrossTenant-UserPrincipalName: f+vHNE0HT0Zcub2YQJVaRBAOM7vXNU7N8ug6+QtbWU0zaXzru1sLqCycTcoiMHo5HI1S5MNfRZl5RQODlwyjIQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5952
+Received-SPF: permerror client-ip=2a01:111:f403:2009::622;
+ envelope-from=francisco.iglesias@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -234,203 +179,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Luc,
 
-
-On 7/28/25 11:30 AM, Eugenio Perez Martin wrote:
-> On Tue, Jul 22, 2025 at 2:41 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
->>
->> Iterative live migration for virtio-net sends an initial
->> VMStateDescription while the source is still active. Because data
->> continues to flow for virtio-net, the guest's avail index continues to
->> increment after last_avail_idx had already been sent. This causes the
->> destination to often see something like this from virtio_error():
->>
->> VQ 0 size 0x100 Guest index 0x0 inconsistent with Host index 0xc: delta 0xfff4
->>
->> This patch suppresses this consistency check if we're loading the
->> initial VMStateDescriptions via iterative migration and unsuppresses
->> it for the stop-and-copy phase when the final VMStateDescriptions
->> (carrying the correct indices) are loaded.
->>
->> A temporary VirtIODevMigration migration data structure is introduced here to
->> represent the iterative migration process for a VirtIODevice. For now it
->> just holds a flag to indicate whether or not the initial
->> VMStateDescription was sent during the iterative live migration process.
->>
->> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
->> ---
->>   hw/net/virtio-net.c        | 13 +++++++++++++
->>   hw/virtio/virtio.c         | 32 ++++++++++++++++++++++++--------
->>   include/hw/virtio/virtio.h |  6 ++++++
->>   3 files changed, 43 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->> index 86a6fe5b91..b7ac5e8278 100644
->> --- a/hw/net/virtio-net.c
->> +++ b/hw/net/virtio-net.c
->> @@ -3843,12 +3843,19 @@ static void virtio_net_save_cleanup(void *opaque)
->>
->>   static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->> +    VirtIONet *n = opaque;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    vdev->migration = g_new0(VirtIODevMigration, 1);
->> +    vdev->migration->iterative_vmstate_loaded = false;
->> +
->>       return 0;
->>   }
->>
->>   static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
->>   {
->>       VirtIONet *n = opaque;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    VirtIODevMigration *mig = vdev->migration;
->>       uint64_t flag;
->>
->>       flag = qemu_get_be64(f);
->> @@ -3861,6 +3868,7 @@ static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
->>           case VNET_MIG_F_INIT_STATE:
->>           {
->>               vmstate_load_state(f, &vmstate_virtio_net, n, VIRTIO_NET_VM_VERSION);
->> +            mig->iterative_vmstate_loaded = true;
+On Wed, Jul 16, 2025 at 11:53:44AM +0200, Luc Michel wrote:
+> Split the xlnx-versal device into two classes, a base, abstract class
+> and the existing concrete one. Introduce a VersalVersion type that will
+> be used across several device models when versal2 implementation is
+> added.
 > 
-> This code will need to change if we send the status iteratively more
-> than once. For example, if the guest changes the mac address, the
-> number of vqs, etc.
+> This is in preparation for versal2 implementation.
 > 
-
-Hopefully we can reach a solution where we'd only need to call the full 
-vmstate_load_state(f, &vmstate_virtio_net, ...) for a virtio-net device 
-once and then handle any changes afterwards individually.
-
-Perhaps, maybe for simplicity, we could just send the 
-sub-states/subsections (instead of the whole state again) iteratively if 
-there were any changes in the fields that those sub-states/subsections 
-govern.
-
-Definitely something I'll keep in mind as this series develops.
-
-> In my opinion, we should set a flag named "in_iterative_migration" (or
-> equivalent) in virtio_net_load_setup and clear it in
-> virtio_net_load_cleanup. That's enough to tell in virtio_load if we
-> should perform actions like checking for inconsistent indices.
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>  include/hw/arm/xlnx-versal-version.h | 15 ++++++++++++++
+>  include/hw/arm/xlnx-versal.h         | 12 ++++++++++-
+>  hw/arm/xlnx-versal.c                 | 31 +++++++++++++++++++++-------
+>  3 files changed, 50 insertions(+), 8 deletions(-)
+>  create mode 100644 include/hw/arm/xlnx-versal-version.h
 > 
+> diff --git a/include/hw/arm/xlnx-versal-version.h b/include/hw/arm/xlnx-versal-version.h
+> new file mode 100644
+> index 00000000000..46eb165a2bd
+> --- /dev/null
+> +++ b/include/hw/arm/xlnx-versal-version.h
+> @@ -0,0 +1,15 @@
+> +/*
+> + * AMD Versal versions
+> + *
+> + * Copyright (c) 2025, Advanced Micro Devices, Inc.
 
-I did actually try something like this but I realized that the 
-.load_cleanup and .save_cleanup hooks actually fire at the very end of 
-live migration (e.g. during the stop-and-copy phase). I thought they 
-fired at the end of the iterative portion of live migration, but this 
-didn't appear to be the case.
+nitpick:
+s/2025,/2025/
 
->>               break;
->>           }
->>           default:
->> @@ -3875,6 +3883,11 @@ static int virtio_net_load_state(QEMUFile *f, void *opaque, int version_id)
->>
->>   static int virtio_net_load_cleanup(void *opaque)
->>   {
->> +    VirtIONet *n = opaque;
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(n);
->> +    g_free(vdev->migration);
->> +    vdev->migration = NULL;
->> +
->>       return 0;
->>   }
->>
->> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
->> index 5534251e01..68957ee7d1 100644
->> --- a/hw/virtio/virtio.c
->> +++ b/hw/virtio/virtio.c
->> @@ -3222,6 +3222,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
->>       int32_t config_len;
->>       uint32_t num;
->>       uint32_t features;
->> +    bool inconsistent_indices;
->>       BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
->>       VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
->>       VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
->> @@ -3365,6 +3366,16 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
->>           if (vdev->vq[i].vring.desc) {
->>               uint16_t nheads;
->>
->> +           /*
->> +            * Ring indices will be inconsistent during iterative migration. The actual
->> +            * indices will be sent later during the stop-and-copy phase.
->> +            */
->> +            if (vdev->migration) {
->> +                inconsistent_indices = !vdev->migration->iterative_vmstate_loaded;
->> +            } else {
->> +                inconsistent_indices = false;
->> +            }
+Otherwise:
+
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_ARM_XLNX_VERSAL_VERSION_H
+> +#define HW_ARM_XLNX_VERSAL_VERSION_H
+> +
+> +typedef enum VersalVersion {
+> +    VERSAL_VER_VERSAL,
+> +} VersalVersion;
+> +
+> +#endif
+> diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
+> index 05ed641b6b6..1f92e314d6c 100644
+> --- a/include/hw/arm/xlnx-versal.h
+> +++ b/include/hw/arm/xlnx-versal.h
+> @@ -1,9 +1,10 @@
+>  /*
+>   * Model of the Xilinx Versal
+>   *
+>   * Copyright (c) 2018 Xilinx Inc.
+> + * Copyright (c) 2025 Advanced Micro Devices, Inc.
+>   * Written by Edgar E. Iglesias
+>   *
+>   * This program is free software; you can redistribute it and/or modify
+>   * it under the terms of the GNU General Public License version 2 or
+>   * (at your option) any later version.
+> @@ -33,13 +34,16 @@
+>  #include "hw/misc/xlnx-versal-trng.h"
+>  #include "hw/net/xlnx-versal-canfd.h"
+>  #include "hw/misc/xlnx-versal-cfu.h"
+>  #include "hw/misc/xlnx-versal-cframe-reg.h"
+>  #include "target/arm/cpu.h"
+> +#include "hw/arm/xlnx-versal-version.h"
+> +
+> +#define TYPE_XLNX_VERSAL_BASE "xlnx-versal-base"
+> +OBJECT_DECLARE_TYPE(Versal, VersalClass, XLNX_VERSAL_BASE)
+>  
+>  #define TYPE_XLNX_VERSAL "xlnx-versal"
+> -OBJECT_DECLARE_SIMPLE_TYPE(Versal, XLNX_VERSAL)
+>  
+>  #define XLNX_VERSAL_NR_ACPUS   2
+>  #define XLNX_VERSAL_NR_RCPUS   2
+>  #define XLNX_VERSAL_NR_UARTS   2
+>  #define XLNX_VERSAL_NR_GEMS    2
+> @@ -135,10 +139,16 @@ struct Versal {
+>      struct {
+>          MemoryRegion *mr_ddr;
+>      } cfg;
+>  };
+>  
+> +struct VersalClass {
+> +    SysBusDeviceClass parent;
+> +
+> +    VersalVersion version;
+> +};
+> +
+>  /* Memory-map and IRQ definitions. Copied a subset from
+>   * auto-generated files.  */
+>  
+>  #define VERSAL_GIC_MAINT_IRQ        9
+>  #define VERSAL_TIMER_VIRT_IRQ       11
+> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
+> index a42b9e7140b..4da656318f6 100644
+> --- a/hw/arm/xlnx-versal.c
+> +++ b/hw/arm/xlnx-versal.c
+> @@ -1,9 +1,10 @@
+>  /*
+>   * Xilinx Versal SoC model.
+>   *
+>   * Copyright (c) 2018 Xilinx Inc.
+> + * Copyright (c) 2025 Advanced Micro Devices, Inc.
+>   * Written by Edgar E. Iglesias
+>   *
+>   * This program is free software; you can redistribute it and/or modify
+>   * it under the terms of the GNU General Public License version 2 or
+>   * (at your option) any later version.
+> @@ -918,11 +919,11 @@ static void versal_unimp(Versal *s)
+>                                  gpio_in);
+>  }
+>  
+>  static void versal_realize(DeviceState *dev, Error **errp)
+>  {
+> -    Versal *s = XLNX_VERSAL(dev);
+> +    Versal *s = XLNX_VERSAL_BASE(dev);
+>      qemu_irq pic[XLNX_VERSAL_NR_IRQS];
+>  
+>      versal_create_apu_cpus(s);
+>      versal_create_apu_gic(s, pic);
+>      versal_create_rpu_cpus(s);
+> @@ -953,13 +954,13 @@ static void versal_realize(DeviceState *dev, Error **errp)
+>      memory_region_add_subregion_overlap(&s->fpd.apu.mr, 0, &s->mr_ps, 0);
+>      memory_region_add_subregion_overlap(&s->lpd.rpu.mr, 0,
+>                                          &s->lpd.rpu.mr_ps_alias, 0);
+>  }
+>  
+> -static void versal_init(Object *obj)
+> +static void versal_base_init(Object *obj)
+>  {
+> -    Versal *s = XLNX_VERSAL(obj);
+> +    Versal *s = XLNX_VERSAL_BASE(obj);
+>  
+>      memory_region_init(&s->fpd.apu.mr, obj, "mr-apu", UINT64_MAX);
+>      memory_region_init(&s->lpd.rpu.mr, obj, "mr-rpu", UINT64_MAX);
+>      memory_region_init(&s->mr_ps, obj, "mr-ps-switch", UINT64_MAX);
+>      memory_region_init_alias(&s->lpd.rpu.mr_ps_alias, OBJECT(s),
+> @@ -973,28 +974,44 @@ static const Property versal_properties[] = {
+>                        TYPE_CAN_BUS, CanBusState *),
+>      DEFINE_PROP_LINK("canbus1", Versal, lpd.iou.canbus[1],
+>                        TYPE_CAN_BUS, CanBusState *),
+>  };
+>  
+> -static void versal_class_init(ObjectClass *klass, const void *data)
+> +static void versal_base_class_init(ObjectClass *klass, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>  
+>      dc->realize = versal_realize;
+>      device_class_set_props(dc, versal_properties);
+>      /* No VMSD since we haven't got any top-level SoC state to save.  */
+>  }
+>  
+> -static const TypeInfo versal_info = {
+> -    .name = TYPE_XLNX_VERSAL,
+> +static void versal_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    VersalClass *vc = XLNX_VERSAL_BASE_CLASS(klass);
+> +
+> +    vc->version = VERSAL_VER_VERSAL;
+> +}
+> +
+> +static const TypeInfo versal_base_info = {
+> +    .name = TYPE_XLNX_VERSAL_BASE,
+>      .parent = TYPE_SYS_BUS_DEVICE,
+>      .instance_size = sizeof(Versal),
+> -    .instance_init = versal_init,
+> +    .instance_init = versal_base_init,
+> +    .class_init = versal_base_class_init,
+> +    .class_size = sizeof(VersalClass),
+> +    .abstract = true,
+> +};
+> +
+> +static const TypeInfo versal_info = {
+> +    .name = TYPE_XLNX_VERSAL,
+> +    .parent = TYPE_XLNX_VERSAL_BASE,
+>      .class_init = versal_class_init,
+>  };
+>  
+>  static void versal_register_types(void)
+>  {
+> +    type_register_static(&versal_base_info);
+>      type_register_static(&versal_info);
+>  }
+>  
+>  type_init(versal_register_types);
+> -- 
+> 2.50.0
 > 
-> Nit, "inconsistent_indices = vdev->migration &&
-> !vdev->migration->iterative_vmstate_loaded" ? I'm happy with the
-> current "if else" too, but I think the one line is clearer. Your call
-> :).
-> 
-
-Ah, nice catch! I like the one-liner more :) Will change this for next 
-series.
-
->> +
->>               /*
->>                * VIRTIO-1 devices migrate desc, used, and avail ring addresses so
->>                * only the region cache needs to be set up.  Legacy devices need
->> @@ -3384,14 +3395,19 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
->>                   continue;
->>               }
->>
->> -            nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
->> -            /* Check it isn't doing strange things with descriptor numbers. */
->> -            if (nheads > vdev->vq[i].vring.num) {
->> -                virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
->> -                             "inconsistent with Host index 0x%x: delta 0x%x",
->> -                             i, vdev->vq[i].vring.num,
->> -                             vring_avail_idx(&vdev->vq[i]),
->> -                             vdev->vq[i].last_avail_idx, nheads);
->> +            if (!inconsistent_indices) {
->> +                nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
->> +                /* Check it isn't doing strange things with descriptor numbers. */
->> +                if (nheads > vdev->vq[i].vring.num) {
->> +                    virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
->> +                                 "inconsistent with Host index 0x%x: delta 0x%x",
->> +                                 i, vdev->vq[i].vring.num,
->> +                                 vring_avail_idx(&vdev->vq[i]),
->> +                                 vdev->vq[i].last_avail_idx, nheads);
->> +                    inconsistent_indices = true;
->> +                }
->> +            }
->> +            if (inconsistent_indices) {
->>                   vdev->vq[i].used_idx = 0;
->>                   vdev->vq[i].shadow_avail_idx = 0;
->>                   vdev->vq[i].inuse = 0;
->> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->> index 214d4a77e9..06b6e6ba65 100644
->> --- a/include/hw/virtio/virtio.h
->> +++ b/include/hw/virtio/virtio.h
->> @@ -98,6 +98,11 @@ enum virtio_device_endian {
->>       VIRTIO_DEVICE_ENDIAN_BIG,
->>   };
->>
->> +/* VirtIODevice iterative live migration data structure */
->> +typedef struct VirtIODevMigration {
->> +    bool iterative_vmstate_loaded;
->> +} VirtIODevMigration;
->> +
->>   /**
->>    * struct VirtIODevice - common VirtIO structure
->>    * @name: name of the device
->> @@ -151,6 +156,7 @@ struct VirtIODevice
->>       bool disable_legacy_check;
->>       bool vhost_started;
->>       VMChangeStateEntry *vmstate;
->> +    VirtIODevMigration *migration;
->>       char *bus_name;
->>       uint8_t device_endian;
->>       /**
->> --
->> 2.47.1
->>
-> 
-
 
