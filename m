@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687B9C83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 22:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65855C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 22:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugVwp-0006Po-Q4; Mon, 28 Jul 2025 18:03:55 -0400
+	id 1ugVxD-0006w3-Q5; Mon, 28 Jul 2025 18:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugVwG-000696-CQ
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 18:03:24 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ugVwz-0006kb-DO
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 18:04:05 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugVwE-0001wR-Ix
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 18:03:19 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-451d54214adso31729125e9.3
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 15:03:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ugVwx-000209-7V
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 18:04:04 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-73c17c770a7so5370380b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 15:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753740197; x=1754344997; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1753740241; x=1754345041; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RNIcMWrT77lRSI5yJdux4FBr4DfzeqIMHH1qpDmp+PU=;
- b=j4vyzPatsh/MOuzs36afsYeEaeRxqdvxuLN9kKUO99iEcj2AwaHSeDDXuNReFFjfxY
- dI6B0S9yJw8LJl2CM5xVhMbtmxwP2moNyFKI4uEQ5BiLikOI5Trra+VaOIUcK/J9bZAg
- Sf5sLW9Mqf7RZEpDccb+HFTxB9uqUutYoeQZg0t4oZETJJXMek/fnV3OXkNiRC8qFVBf
- g42t4Va1xcm3nkrrDRQZjXtj8k1MyHrylYK4XoCet7BmjJ3QfA1pEZZ+mc8tg9NR1pdT
- AtTK4a78vwa1x/OV3FYpZcvrinH1WBSSYYPRYkVScvOAL7dH7wmnRfPX9j8YkPmBxJPM
- LzMQ==
+ bh=fI+Qhb5lyK6qCqmX8xSsOM+1RYsyQ1ZWf3PKH+ULSbE=;
+ b=yw008zwz2gpY7fNDaxnGAIt4l2pavniP4sZl/qluPPYJY2h1dc8nr6xRkapFgTm9ws
+ R0RTP2QsGRhgzDnl7wI0pPQJkKlqmow5rJYJ0IUrD4N/fMYJWs7AoxVMqR0qaxOsWS/p
+ Q7N0uedrGg3N63vpKJ3DpRcSbYUg0F8JG0GLbh3Lxs3Blgjzx+wYLyJ4Bu47Hgul8Uji
+ 9H3iSIFWtXGt3VltreMggR8hG3GnQLvNVtyd4j1T6A6o6URqJ1eSsO7hUCLzum85qiUf
+ WotdpDJWmgwFBkGfQ1I3QY1W4KCgCzK6bkPjUx2ui84aZcgm3ekSjnDgrZEOSlhMchtw
+ qnLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753740197; x=1754344997;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753740241; x=1754345041;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RNIcMWrT77lRSI5yJdux4FBr4DfzeqIMHH1qpDmp+PU=;
- b=WS08YDqyLb6peJqSFawI3Ait7PI8RzmlmGS1PkyPhcWqQhZQ0cyg8htVTMD2MY7nCQ
- J0xlAnf53zrPjSxPqgITVw7Qz4g4ceGceX3qa4qreBr3Pf+b5bwdZoswkLIU1ixc6rTy
- qHJOn9XQ7sbjelndp8WD2D6UGNkcNrLMExhH9LxOgq8qk3mDXem0Nnox1q3PF72Z7iSw
- 4cH0WzrsmqJl3KWagbA+vj5vT4/yDJ+uKs32H47imnffgoXfmLNF2HkfrkRgbAD7/0zm
- ZSqbbJbmhcYb/91YjTnqyAecAj1B/KYWQhLUVGAy1YUidkYgcTmVIoreKCHHqGLPq/hR
- OGAA==
+ bh=fI+Qhb5lyK6qCqmX8xSsOM+1RYsyQ1ZWf3PKH+ULSbE=;
+ b=ebJTCWJzSAYmi17NVqQW9DCmyPJ+pCb/nj5ZjejM3olEyVJZ/N7Z33SPv94rX38mnR
+ E/v+1XbaZXgMvZl9cIbKhDNo+XmEfUDyHyjD8L3+tSTDvyJMYtGqLSC6fbKaHh/Ribci
+ AV/rYvAKdRMIxwM/SAQbsQ5MjiNVhqQq49/PlOhafa6Mx4j7K9Es5aIlYVgrxoDQB2xL
+ bxeVPk2t0o2gH6eI8AD5P5I0nNarN/AavSPNLdxJom260yauv9MraTbyzQbTKdON3cgv
+ St7utxo4FcaB7OA08S+5jcG0SQB4k50CM5b7Uv5eAjcEb3w4ucK/ZFGWefzqNGyU98V0
+ XSIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWARRI0lRi0HsuQspjtGBJHlT/ibmic7PoC8279ub8IacrWMiTAW4MTOf59uTpFSQXVEm8HEZpUQDaq@nongnu.org
-X-Gm-Message-State: AOJu0YyUlZW9v0KwZYbIek6rQ2uG/ApwISB1sykuRo4CvUNXQPTshW59
- dvgocwtvXH04TWOzKAeOa48NJvSboGQez4Vc+tUPWldhoylh3GHS6wkWbvHF37h12qsplfETKJX
- nx+34
-X-Gm-Gg: ASbGncsB0gERfqYghO6EXTRhwuDXNPGNmvjxx60lBSuJQtPhIBnQrws9pa0M80K731o
- qIPnit5d2Y3aoJG3AE60VHmGOvJNV+XjYb1VDAlT2JY3Hfit8rqoCVIKFStiP6xv4YzbWGK5ba2
- 8o5dNpfOdthO6KztBIiB2IhLncJ1cdthQg7gMhn02JxM5N3VuJKPP5crTVTlfVP+h0ESYrK2nRo
- ocHs1b+EFrcO06yIhQl1AQON+3ONDf2RgDLW0s02tv83lRvSds66KLAgV8VaYm4xdyUY7PH7S+F
- 3GWXVIydUp5sSA6zpTHgMfK0CFeYrcCVuOmEc8BwOVz3SAgmKaxv66GSYE1jdogQFbadhUc1tqQ
- kJbo4pPTMJjywX4X1oUaIRofagV70JuLLnNO0sszGl9nBgMDF2M/y4XyJo6FafpPMEQ==
-X-Google-Smtp-Source: AGHT+IFXbprBq/nqvVOgW0TQZTcZxJT6uBqAu5FR/QXzaf3Ftm6UCd9ha+8+mUgcBdzxbAhoHz4Dow==
-X-Received: by 2002:a05:600c:1da8:b0:450:d386:1afb with SMTP id
- 5b1f17b1804b1-4587d83d6a0mr86970465e9.9.1753740196915; 
- Mon, 28 Jul 2025 15:03:16 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4587ac76b92sm109791715e9.32.2025.07.28.15.03.15
+ AJvYcCXXrC9dosms2esJ01Esm1BFHGFWf16M87VPr9Xjq1ZQ/UkeVQdeRSaCTtHpXVSGWcp08thlR4kC5Bao@nongnu.org
+X-Gm-Message-State: AOJu0YwPtFUciVvJy37J0lmN9b/w3rf/uJhAo35cHHEBHy5djCFbBzx5
+ X0DyVWCV3Xk7CJCFFzVOtoy8KptbZW7g6hBkDftVOUgw7OgfDNyVPek80en0bqPW0eU=
+X-Gm-Gg: ASbGncsAs5cohlcz0/KDTGNEzC/PC+IdNE3gwHnGJJHRC6tzKk0ZAFtsoI07xTxRirr
+ g1ck75hGTNx25AfTeTcx3RqiMdOMHlxNcyVoZNITT88jMFvNhznR36BKs59D2uS+0DWlE5N87Fg
+ kRjc4mG/xNYLDrLIMUvQpEQDYoQtKZvF6rz9Lq0cD/4wFhuyC6Y0rSl6qiJWHuQTvZitnmGH8O0
+ VEjXM/bHLvl46oMWIdE+EmcSgBhEm0Zl39vTtBWxIAX0oQ2MnQGrISYa18dX1tfStcmAOA1YAEz
+ qmU6L/2+L2BKS6oagDBiNTHGGHIElXZ307ExtDZn08aed5z6sV/O6H1rCP7W80oG6/4Sl/hDeK2
+ qOpa/geJb2yHMQYuVEWEHKzKvdvGIGjcF8vo=
+X-Google-Smtp-Source: AGHT+IFpKbVjXizWzBX2Q93FMwhmxCrxmRu7YIW7ziGOZwiEfIWUMC0KYYjdFHmlOMrDbD4jpha5ZA==
+X-Received: by 2002:a05:6a00:430f:b0:769:999c:eec0 with SMTP id
+ d2e1a72fcca58-769999cef2amr623588b3a.7.1753740241387; 
+ Mon, 28 Jul 2025 15:04:01 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7640adfc111sm6258148b3a.63.2025.07.28.15.04.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 15:03:16 -0700 (PDT)
-Message-ID: <09452c14-9ca6-4e7e-9a57-a71e6c24c84b@linaro.org>
-Date: Tue, 29 Jul 2025 00:03:15 +0200
+ Mon, 28 Jul 2025 15:04:00 -0700 (PDT)
+Message-ID: <09d56dc3-76f6-4186-822e-fcb338e2cddd@linaro.org>
+Date: Mon, 28 Jul 2025 15:04:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] xen/passthrough: add missing error-report include
-To: Adam Williamson <awilliam@redhat.com>, qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Anthony PERARD <anthony@xenproject.org>
-References: <20250717220207.171040-1-awilliam@redhat.com>
+Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717220207.171040-1-awilliam@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
+ <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
+ <144f0930-af30-42b0-849c-99242d3f09ee@linaro.org>
+ <62c947c3-0e16-4484-83cc-3aff3a694041@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <62c947c3-0e16-4484-83cc-3aff3a694041@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +108,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/7/25 00:02, Adam Williamson wrote:
-> In cfcacba an `error_report` was added to this file, but the
-> corresponding include of `qemu/error-report.h` was missed. This
-> only becomes apparent when building against Xen 4.20+.
+On 7/28/25 2:57 PM, Philippe Mathieu-Daudé wrote:
+> On 28/7/25 21:34, Pierrick Bouvier wrote:
+>> On 7/28/25 2:39 AM, Philippe Mathieu-Daudé wrote:
+>>> On 25/7/25 22:19, Pierrick Bouvier wrote:
+>>>> Move those files to hw/arm, as they depend on arm target code.
+>>>>
+>>>> Pierrick Bouvier (3):
+>>>>      hw/arm/arm_gicv3_cpuif_common: move to hw/arm and compile only once
+>>>>      hw/arm/arm_gicv3_cpuif: move to hw/arm and compile only once
+>>>>      hw/arm/armv7m_nvic: move to hw/arm and compile only once
+>>>>
+>>>>     hw/{intc => arm}/arm_gicv3_cpuif.c        |  2 +-
+>>>>     hw/{intc => arm}/arm_gicv3_cpuif_common.c |  2 +-
+>>>>     hw/{intc => arm}/armv7m_nvic.c            |  0
+>>>
+>>> Alternatively add arm_common_ss in hw/intc/meson.build?
+>>>
+>>>      arm_common_ss = ss.source_set()
+>>>      arm_common_ss.add(when: 'CONFIG_ARM_GIC',
+>>>                        if_true: files('arm_gicv3_cpuif_common.c'))
+>>>      arm_common_ss.add(when: 'CONFIG_ARM_GICV3',
+>>>                        if_true: files('arm_gicv3_cpuif.c'))
+>>>      arm_common_ss.add(when: 'CONFIG_ARM_V7M',
+>>>                        if_true: files('armv7m_nvic.c'))
+>>>      hw_common_arch += {'arm': arm_common_ss}
+>>>
+>>
+>> The problem with this approach is that we need to aggregate hw/arm and
+>> hw/intc arm related source sets, and the last line in your proposed
+>> change does not have this semantic.
+>> Regarding meson, hw/intc subfolder is parsed *before* hw/arm (see hw/
+>> meson.build), so we can't reuse the same source set, defined in hw/arm/
+>> meson.build.
+>>
+>> This old commit (7702e47c2) was the origin of having interrupt related
+>> code in a generic folder, but I don't really understand the rationale
+>> behind it to be honest. It seems to be an exception regarding all the
+>> rest of the codebase, thus the idea to bring back things where they belong.
 > 
-> Signed-off-by: Adam Williamson <awilliam@redhat.com>
-> ---
->   hw/xen/xen_pt.c | 1 +
->   1 file changed, 1 insertion(+)
+> Yeah, you are right. What was suggested once was to move them to
+> target/arm/hw/, being architecture dependent / specific.
+> 
+> $ ls -l hw/arm | wc -l
+>         97
+> 
+> hw/arm/ contains board / soc / arm-specific hw and helpers (such
+> code loaders). Nothing wrong, I'm just wondering there is room for
+> improvements.
+>
 
-Patch queued, thanks!
+Sure, that makes sense.
+GIC is a bit in the middle, as it's definitely an arm specific 
+controller, and not a classical device. SMMU is directly in hw/arm for 
+instance.
+
+I'm really open to any structure Arm related developers would think is 
+the best. It's just that moving a lot of files is always a pain for 
+everyone, as it creates a lot of conflicts for people working on them 
+currently, so I tried to minimize it here to target the strictly needed 
+set of files only.
+
+As well, I would prefer having a clean build system more than a clear 
+filesystem structure, considering it's quite easy to jump into any 
+definition automatically with your work editor nowadays, vs understand a 
+meson.build file full of tricks and implicit dependencies where no tool 
+can help you.
+
+> Personally I'd rather keep hw/arm/ for boards / soc, and move
+> ARM specific components (like GIC, NVIC, SMMU, timers to target/arm/hw/.
+> 
+> Anyhow, I don't object to your approach :) For this series:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>>
+>> I'm open to any other idea someone would have. Peter, without
+>> necessarily a working solution, do you have any preference on where
+>> those things should be?
+>>
+>>>>     hw/arm/meson.build                        |  3 +
+>>>>     hw/arm/trace-events                       | 79 +++++++++++++++++++
+>>>> ++++
+>>>>     hw/intc/meson.build                       |  3 -
+>>>>     hw/intc/trace-events                      | 79
+>>>> -----------------------
+>>>>     7 files changed, 84 insertions(+), 84 deletions(-)
+>>>>     rename hw/{intc => arm}/arm_gicv3_cpuif.c (99%)
+>>>>     rename hw/{intc => arm}/arm_gicv3_cpuif_common.c (92%)
+>>>>     rename hw/{intc => arm}/armv7m_nvic.c (100%)
+>>>>
+>>>
+>>
+> 
+
 
