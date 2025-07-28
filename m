@@ -4,109 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DCCC87FC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:30:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8D0C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugMyk-0001SH-8x; Mon, 28 Jul 2025 08:29:18 -0400
+	id 1ugMzB-0008TL-8G; Mon, 28 Jul 2025 08:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ugMLQ-0000oZ-0E
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:48:46 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ugMLM-0003TO-Fs
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:48:39 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45619d70c72so38823455e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 04:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753703309; x=1754308109; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XF5+LSZYZazbjmjjD/zVta9N0XJQHpjuSTLdKCII5AE=;
- b=y8RHEEohnuuf19xtFIPVLqnbTgy2H6y2uymkZiD8pA8JGR31oLLPJ5BelJps4mIiKS
- B8kO7/hMcMQ1YjlesgaiyOH7UYCWVfleUXwcRIBFztSZ56w6aOk4dft7jZPT/3RsDlOG
- yMYmvQHC1AWuboZecWpfz2cYQ4r5X7tIs/Og3b6vhM28u/dzAOe6ISbPo7nlnyqrX26d
- 3l4vO2NRB6JeMJcP37YpSNzK6MAYMnx8su4erXR8m0GIqcdh5X+84G8NX3Q+HaklCpIB
- qEGQ08Uj64ZtBkL2af4QnpX3gJCWWzBlZef5DyGqO5tez/lNXCKvzMFtLNapc7QMGoig
- EgEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753703309; x=1754308109;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XF5+LSZYZazbjmjjD/zVta9N0XJQHpjuSTLdKCII5AE=;
- b=BkRMDnqLDeHg+++Hg9YYmGZaZUnCau45iv70I1F9GOYhNpswEXW2Q7ytm5drZHy8u6
- 2QXP+WmO8VwJv+GFKeY+01Fag3tT/8Q6DnFSnXqsGhVK1XihOUTCA2oJUJh9lmUXiR5N
- XdNnVitGjNZPbvqEaIX0yevGFAAHknhJukD1waeoysScHmQwyy9lM65A4vyrvWXc6Dy1
- pm4x/jR8VBvy4rgImTQXUqfCG6gXRvcwaHvfznF3Fu4qzXkh6zvQr1sntnoEq9a9SzNU
- ERDp3QLYa8H9k96e3WGdNmGUAZoQsmORBT6k+0kCxukRs+fs9PqRzjYE5sG7KEGSxEqa
- lHCw==
-X-Gm-Message-State: AOJu0Yzm+X8qBPSZJlCWBCmQilI0glUgxNhzIxFWAZzSuty7Efl1HlFk
- /YgTKPV8wR51XIV20m1qWteFQa0XUEc+vqy8N0DRqD5UoNlw5FdYockuGbpB2SZyBeo=
-X-Gm-Gg: ASbGnctVYj8CoN9pT7T6Hawt9p54wlBY9on67svtU5+PRg0UTZJLlqMEmQ2OrQAup5i
- aIgPJA5Wrz1ga+815i9Ub9gRYLb/+Gz8/b3Jg8Xz5Oyz2L6WOK9fsCow1AyIiq044EtAlp9jVb6
- r5RjIko93a+4h90GR6e12ryaq7ClSHjPlp1nBhCu3x0LChKdkPsJc51E6EdYYV9vq5lgG584W+x
- 0r9GBH5EHH5vwzVsAe+yBvuig7x5CCVvzCJOOah0MsOZf6mtQ/2sYIUsVrdfC5J3mJQ1uQXMsf4
- 8Dxdgh+sYxjUHb60Vr1JItERU0JpbLd4Xv6VsdPJvOVrpJ15VbqZS4u4kZd/ziosAMPOIKP+7iW
- s98hs8OkncS+mLOf2JB/HPakVdwyWvIiJ5Q==
-X-Google-Smtp-Source: AGHT+IFpkJ1rPsEbVvsm7A3jC2M9rMhtCqhAeTciQOMqFVDLJRuNiiVd7bnlfdalIXmHBmr8gLk3vQ==
-X-Received: by 2002:a05:600c:4e4d:b0:453:7713:476c with SMTP id
- 5b1f17b1804b1-4587555067bmr90539045e9.2.1753703309243; 
- Mon, 28 Jul 2025 04:48:29 -0700 (PDT)
-Received: from [127.0.1.1] ([80.106.57.42]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4586ec77799sm123346535e9.2.2025.07.28.04.48.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Jul 2025 04:48:28 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 28 Jul 2025 14:48:23 +0300
-Subject: [PATCH] rust: declare self as qemu_api for proc-macros
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250728-self-as-qemu_api-v1-1-001c339cccc8@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIZjh2gC/x3MSQqAMAxA0atI1gZqVRyuIiLBRg04NiiCeHeLy
- 7f4/wFlL6xQRw94vkRlWwOSOIJ+onVkFBcM1tjcFLZE5XlAUjx4OTvaBR3n5EpbkUkzCNnueZD
- 7Xzbt+37rOg1TYgAAAA==
-X-Change-ID: 20250728-self-as-qemu_api-de5ad829a034
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO6-0003mU-RW
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO3-00043y-QD
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753703482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w9R+a0O5mCPGzjjXwtbS5AQmyASoE2dDyK70Ep3MVIo=;
+ b=eaSQqvCvTbojAc3Z5scJUvcozah2epW1I7HNtu9bD2AfJuBJlF8NJad9eTkhGkHoH+D4NQ
+ B2GKnXcJsViOpsN1ZWohwBNXmWLfVL+PPsHd9e5QAb8qzxTqGhYmfFsfKOfZ1XMMHZU92Y
+ corLq57kOO9rnlHVD3TTtEaRd6YhU00=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-32-h_iEqI94O2OYHZt9lnGrbw-1; Mon,
+ 28 Jul 2025 07:51:20 -0400
+X-MC-Unique: h_iEqI94O2OYHZt9lnGrbw-1
+X-Mimecast-MFC-AGG-ID: h_iEqI94O2OYHZt9lnGrbw_1753703480
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1070119560AA
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82E3F1800B6C
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9DBB421E6741; Mon, 28 Jul 2025 13:51:16 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3338;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=nO/5Rn87DP20nFAymwMnIX4VjoCVPzTL929nkSdMZCQ=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9oMk9NUTl4UDljdDZFRTFSVWdKWDQxZXFwUjY5CmxtQy84SmVUcGJuQXhMclIr
- UUdKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUlkampBQUt
- DUkIzS2Nkd2YzNEowSmhCRUFDRjJqUWNsdEZ3dzc1b3V5SDUxQjY0Y2JLWHYwVXdPQXNFZytUUA
- p6aHVhTG5ZMFVYUkpFekFpY0xqM01WWVJzeUwwNUtZWHhsSWtZY1pWYlFwZmF5U0o0c2g5czBsS
- 25ha3BhNHFvCktqTmZkTnNDQjJvUkRZUmc5SjIyUk9ZTVBBdE9YWUYzS1VrY25iMHhxZ1h2aExo
- V2xFQ3Y0MWlzQmhMOHZNR2kKS0htRUpJZlEya0NFQ0h5K05FV3lGRXdWSG15bEJ1TzBuYmFTd3p
- 0azhXZXVNTkdTV3M3SVA5MmJPUmU3S1phNwpxWWZOdlJ0MHN3MS84UnVSZ1E2YWZhYVFrQkdaQz
- hMLy9DREVHblMxemNYRG1uWWsxemdleEJ0WmlsQy8yYytECkJKZUlrb0RPMzBzNUtOSUR6R3ovN
- DEzUjBzVEhoNk91V001R2JyS1hyNTRGQmhWelF2b2NnMHZ0SjVRWnkybTEKRStLbUZFYTNqSTZn
- RWZ2U05aWWZoOHVjbXNGRnlBdUJJd1EyOTBQZTNBR3pTMTJHTmF5WDA0R2FWcnFkS0FvdApHWUE
- yZFpyazVGYS95Y3dSKytkY2pnN3o0ZUF5R2t0bDQ3M2xaL243UW9SMXlrRS9aVVhlVHpkZDBXUn
- ZtMldlCktWNllBY05hZmZscHh6VktROVYwMkI4RkRkS2gyQTFqa0lwZTdsYXA4amxXWkd3OHRRN
- nRtb1JzamNkS1YrSmoKSFUxSEtlN3dLVEFnZ0xWYVIrQ29pdUc1QkVlS3BFYnppRER1dkRHdk5o
- dmZZekNMRVdJR0hzS0RkaFJ3amVUSgpQOS9vT1pZQmdGMlpXRVNVVE9HRkd5Ylk4Z3pWOFRsajN
- OY2FNTEFlMjhScU5FemZQSG14S2h2WjNYQjlubXpSCmVLa1E4Zz09Cj0xTVk0Ci0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
+Cc: stefanha@redhat.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 4/4] qga: Add cross-references
+Date: Mon, 28 Jul 2025 13:51:16 +0200
+Message-ID: <20250728115116.2938867-5-armbru@redhat.com>
+In-Reply-To: <20250728115116.2938867-1-armbru@redhat.com>
+References: <20250728115116.2938867-1-armbru@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,82 +88,323 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix an outstanding TODO.
+Enclose command and type names in `backquotes`, so they become links
+in generated HTML.
 
-Declaring `extern crate self as qemu_api` allows use of `qemu_api`
-within the qemu_api crate; this allows the Wrapper derive macro and
-future proc macros to be used interchangeably in the qemu_api crate and
-other crates. This is not required currently and is only for
-future-proofing.
+We did this for qapi/ in merge commit 504632dcc631.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250717115246.3830007-5-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: John Snow <jsnow@redhat.com>
 ---
- rust/qemu-api-macros/src/lib.rs | 14 ++++++--------
- rust/qemu-api/src/lib.rs        |  3 +++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ qga/qapi-schema.json | 80 ++++++++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index b525d89c09e496a1f7f5582dc6d994e318f62bca..e01ac26cf3dd5a1b06ce095ef32b27a67e0def19 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -115,23 +115,21 @@ fn derive_opaque_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream
-     let field = &get_unnamed_field(&input, "#[derive(Wrapper)]")?;
-     let typ = &field.ty;
- 
--    // TODO: how to add "::qemu_api"?  For now, this is only used in the
--    // qemu_api crate so it's not a problem.
-     Ok(quote! {
--        unsafe impl crate::cell::Wrapper for #name {
--            type Wrapped = <#typ as crate::cell::Wrapper>::Wrapped;
-+        unsafe impl ::qemu_api::cell::Wrapper for #name {
-+            type Wrapped = <#typ as ::qemu_api::cell::Wrapper>::Wrapped;
-         }
-         impl #name {
--            pub unsafe fn from_raw<'a>(ptr: *mut <Self as crate::cell::Wrapper>::Wrapped) -> &'a Self {
-+            pub unsafe fn from_raw<'a>(ptr: *mut <Self as ::qemu_api::cell::Wrapper>::Wrapped) -> &'a Self {
-                 let ptr = ::std::ptr::NonNull::new(ptr).unwrap().cast::<Self>();
-                 unsafe { ptr.as_ref() }
-             }
- 
--            pub const fn as_mut_ptr(&self) -> *mut <Self as crate::cell::Wrapper>::Wrapped {
-+            pub const fn as_mut_ptr(&self) -> *mut <Self as ::qemu_api::cell::Wrapper>::Wrapped {
-                 self.0.as_mut_ptr()
-             }
- 
--            pub const fn as_ptr(&self) -> *const <Self as crate::cell::Wrapper>::Wrapped {
-+            pub const fn as_ptr(&self) -> *const <Self as ::qemu_api::cell::Wrapper>::Wrapped {
-                 self.0.as_ptr()
-             }
- 
-@@ -139,7 +137,7 @@ pub const fn as_void_ptr(&self) -> *mut ::core::ffi::c_void {
-                 self.0.as_void_ptr()
-             }
- 
--            pub const fn raw_get(slot: *mut Self) -> *mut <Self as crate::cell::Wrapper>::Wrapped {
-+            pub const fn raw_get(slot: *mut Self) -> *mut <Self as ::qemu_api::cell::Wrapper>::Wrapped {
-                 slot.cast()
-             }
-         }
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index 86dcd8ef17a9ecd040742a99e4b0421e19ec88f6..44d995cfdb990e0d17e7216cf4d1f04a5a980a1f 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -32,6 +32,9 @@
- pub mod vmstate;
- pub mod zeroable;
- 
-+// Allow proc-macros to refer to `::qemu_api` inside the `qemu_api` crate (this crate).
-+extern crate self as qemu_api;
-+
- use std::{
-     alloc::{GlobalAlloc, Layout},
-     ffi::c_void,
-
----
-base-commit: c017386f28c03a03b8f14444f8671d3d8f7180fe
-change-id: 20250728-self-as-qemu_api-de5ad829a034
-
---
-γαῖα πυρί μιχθήτω
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 6c26ace3c9..8162d888bb 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -96,11 +96,11 @@
+ # In cases where a partial stale response was previously received by
+ # the client, this cannot always be done reliably.  One particular
+ # scenario being if qemu-ga responses are fed character-by-character
+-# into a JSON parser.  In these situations, using guest-sync-delimited
++# into a JSON parser.  In these situations, using `guest-sync-delimited`
+ # may be optimal.
+ #
+ # For clients that fetch responses line by line and convert them to
+-# JSON objects, guest-sync should be sufficient, but note that in
++# JSON objects, `guest-sync` should be sufficient, but note that in
+ # cases where the channel is dirty some attempts at parsing the
+ # response may result in a parser error.
+ #
+@@ -217,7 +217,7 @@
+ #
+ # This command does NOT return a response on success.  Success
+ # condition is indicated by the VM exiting with a zero exit status or,
+-# when running with --no-shutdown, by issuing the query-status QMP
++# when running with --no-shutdown, by issuing the `query-status` QMP
+ # command to confirm the VM status is "shutdown".
+ #
+ # Since: 0.15.0
+@@ -247,7 +247,7 @@
+ #
+ # Close an open file in the guest
+ #
+-# @handle: filehandle returned by guest-file-open
++# @handle: filehandle returned by `guest-file-open`
+ #
+ # Since: 0.15.0
+ ##
+@@ -278,7 +278,7 @@
+ # As this command is just for limited, ad-hoc debugging, such as log
+ # file access, the number of bytes to read is limited to 48 MB.
+ #
+-# @handle: filehandle returned by guest-file-open
++# @handle: filehandle returned by `guest-file-open`
+ #
+ # @count: maximum number of bytes to read (default is 4KB, maximum is
+ #     48MB)
+@@ -309,7 +309,7 @@
+ #
+ # Write to an open file in the guest.
+ #
+-# @handle: filehandle returned by guest-file-open
++# @handle: filehandle returned by `guest-file-open`
+ #
+ # @buf-b64: base64-encoded string representing data to be written
+ #
+@@ -340,7 +340,7 @@
+ ##
+ # @QGASeek:
+ #
+-# Symbolic names for use in @guest-file-seek
++# Symbolic names for use in `guest-file-seek`
+ #
+ # @set: Set to the specified offset (same effect as 'whence':0)
+ #
+@@ -355,7 +355,7 @@
+ ##
+ # @GuestFileWhence:
+ #
+-# Controls the meaning of offset to @guest-file-seek.
++# Controls the meaning of offset to `guest-file-seek`.
+ #
+ # @value: Integral value (0 for set, 1 for cur, 2 for end), available
+ #     for historical reasons, and might differ from the host's or
+@@ -375,7 +375,7 @@
+ # current file position afterward.  Also encapsulates ftell()'s
+ # functionality, with offset=0 and whence=1.
+ #
+-# @handle: filehandle returned by guest-file-open
++# @handle: filehandle returned by `guest-file-open`
+ #
+ # @offset: bytes to skip over in the file stream
+ #
+@@ -393,7 +393,7 @@
+ #
+ # Write file changes buffered in userspace to disk/kernel buffers
+ #
+-# @handle: filehandle returned by guest-file-open
++# @handle: filehandle returned by `guest-file-open`
+ #
+ # Since: 0.15.0
+ ##
+@@ -434,12 +434,12 @@
+ # @guest-fsfreeze-freeze:
+ #
+ # Sync and freeze all freezable, local guest filesystems.  If this
+-# command succeeded, you may call @guest-fsfreeze-thaw later to
++# command succeeded, you may call `guest-fsfreeze-thaw` later to
+ # unfreeze.
+ #
+ # On error, all filesystems will be thawed.  If no filesystems are
+-# frozen as a result of this call, then @guest-fsfreeze-status will
+-# remain "thawed" and calling @guest-fsfreeze-thaw is not necessary.
++# frozen as a result of this call, then `guest-fsfreeze-status` will
++# remain "thawed" and calling `guest-fsfreeze-thaw` is not necessary.
+ #
+ # Returns: Number of file systems currently frozen.
+ #
+@@ -457,7 +457,7 @@
+ # @guest-fsfreeze-freeze-list:
+ #
+ # Sync and freeze specified guest filesystems.  See also
+-# @guest-fsfreeze-freeze.
++# `guest-fsfreeze-freeze`.
+ #
+ # On error, all filesystems will be thawed.
+ #
+@@ -482,7 +482,7 @@
+ # Returns: Number of file systems thawed by this call
+ #
+ # .. note:: If the return value does not match the previous call to
+-#    guest-fsfreeze-freeze, this likely means some freezable filesystems
++#    `guest-fsfreeze-freeze`, this likely means some freezable filesystems
+ #    were unfrozen before this call, and that the filesystem state may
+ #    have changed before issuing this command.
+ #
+@@ -513,7 +513,7 @@
+ ##
+ # @GuestFilesystemTrimResponse:
+ #
+-# @paths: list of @GuestFilesystemTrimResult per path that was trimmed
++# @paths: list of `GuestFilesystemTrimResult` per path that was trimmed
+ #
+ # Since: 2.4
+ ##
+@@ -557,7 +557,7 @@
+ #
+ # This command does NOT return a response on success.  There is a high
+ # chance the command succeeded if the VM exits with a zero exit status
+-# or, when running with --no-shutdown, by issuing the query-status QMP
++# or, when running with --no-shutdown, by issuing the `query-status` QMP
+ # command to to confirm the VM status is "shutdown". However, the VM
+ # could also exit (or set its status to "shutdown") due to other
+ # reasons.
+@@ -565,7 +565,7 @@
+ # Errors:
+ #     - If suspend to disk is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the guest-sync command
++# .. note:: It's strongly recommended to issue the `guest-sync` command
+ #    before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+@@ -585,8 +585,8 @@
+ # - pm-utils (via pm-hibernate)
+ # - manual write into sysfs
+ #
+-# IMPORTANT: guest-suspend-ram requires working wakeup support in
+-# QEMU. You should check QMP command query-current-machine returns
++# IMPORTANT: `guest-suspend-ram` requires working wakeup support in
++# QEMU. You should check QMP command `query-current-machine` returns
+ # wakeup-suspend-support: true before issuing this command.  Failure
+ # in doing so can result in a suspended guest that QEMU will not be
+ # able to awaken, forcing the user to power cycle the guest to bring
+@@ -595,14 +595,14 @@
+ # This command does NOT return a response on success.  There are two
+ # options to check for success:
+ #
+-# 1. Wait for the SUSPEND QMP event from QEMU
+-# 2. Issue the query-status QMP command to confirm the VM status is
++# 1. Wait for the `SUSPEND` QMP event from QEMU
++# 2. Issue the `query-status` QMP command to confirm the VM status is
+ #    "suspended"
+ #
+ # Errors:
+ #     - If suspend to ram is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the guest-sync command
++# .. note:: It's strongly recommended to issue the `guest-sync` command
+ #    before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+@@ -621,8 +621,8 @@
+ # - systemd hybrid-sleep
+ # - pm-utils (via pm-suspend-hybrid)
+ #
+-# IMPORTANT: guest-suspend-hybrid requires working wakeup support in
+-# QEMU. You should check QMP command query-current-machine returns
++# IMPORTANT: `guest-suspend-hybrid` requires working wakeup support in
++# QEMU. You should check QMP command `query-current-machine` returns
+ # wakeup-suspend-support: true before issuing this command.  Failure
+ # in doing so can result in a suspended guest that QEMU will not be
+ # able to awaken, forcing the user to power cycle the guest to bring
+@@ -631,14 +631,14 @@
+ # This command does NOT return a response on success.  There are two
+ # options to check for success:
+ #
+-# 1. Wait for the SUSPEND QMP event from QEMU
+-# 2. Issue the query-status QMP command to confirm the VM status is
++# 1. Wait for the `SUSPEND` QMP event from QEMU
++# 2. Issue the `query-status` QMP command to confirm the VM status is
+ #    "suspended"
+ #
+ # Errors:
+ #     - If hybrid suspend is not supported, Unsupported
+ #
+-# .. note:: It's strongly recommended to issue the guest-sync command
++# .. note:: It's strongly recommended to issue the `guest-sync` command
+ #    before sending commands when the guest resumes.
+ #
+ # Since: 1.1
+@@ -793,7 +793,7 @@
+ #     There's no restriction on list length or on repeating the same
+ #     @logical-id (with possibly different @online field).  Preferably
+ #     the input list should describe a modified subset of
+-#     @guest-get-vcpus' return value.
++#     `guest-get-vcpus`' return value.
+ #
+ # Returns: The length of the initial sublist that has been
+ #     successfully processed.  The guest agent maximizes this value.
+@@ -1069,7 +1069,7 @@
+ #
+ # Returns: The list of filesystems information mounted in the guest.
+ #     The returned mountpoints may be specified to
+-#     @guest-fsfreeze-freeze-list.  Network filesystems (such as CIFS
++#     `guest-fsfreeze-freeze-list`.  Network filesystems (such as CIFS
+ #     and NFS) are not listed.
+ #
+ # Since: 2.2
+@@ -1171,7 +1171,7 @@
+ ##
+ # @GuestMemoryBlockResponse:
+ #
+-# @phys-index: same with the 'phys-index' member of @GuestMemoryBlock.
++# @phys-index: same with the 'phys-index' member of `GuestMemoryBlock`.
+ #
+ # @response: the result of memory block operation.
+ #
+@@ -1201,11 +1201,11 @@
+ #     guest-supported identifiers.  There's no restriction on list
+ #     length or on repeating the same @phys-index (with possibly
+ #     different @online field).  Preferably the input list should
+-#     describe a modified subset of @guest-get-memory-blocks' return
++#     describe a modified subset of `guest-get-memory-blocks`' return
+ #     value.
+ #
+ # Returns: The operation results, it is a list of
+-#     @GuestMemoryBlockResponse, which is corresponding to the input
++#     `GuestMemoryBlockResponse`, which is corresponding to the input
+ #     list.
+ #
+ #     Note: it will return an empty list if the @mem-blks list was
+@@ -1258,7 +1258,7 @@
+ #
+ # @err-data: base64-encoded stderr of the process.  Note: @out-data
+ #     and @err-data are present only if 'capture-output' was specified
+-#     for 'guest-exec'.  This field will only be populated after the
++#     for `guest-exec`.  This field will only be populated after the
+ #     process exits.
+ #
+ # @out-truncated: true if stdout was not fully captured due to size
+@@ -1277,10 +1277,10 @@
+ # @guest-exec-status:
+ #
+ # Check status of process associated with PID retrieved via
+-# guest-exec.  Reap the process and associated metadata if it has
++# `guest-exec`.  Reap the process and associated metadata if it has
+ # exited.
+ #
+-# @pid: pid returned from guest-exec
++# @pid: pid returned from `guest-exec`
+ #
+ # Since: 2.5
+ ##
+@@ -1301,7 +1301,7 @@
+ ##
+ # @GuestExecCaptureOutputMode:
+ #
+-# An enumeration of guest-exec capture modes.
++# An enumeration of `guest-exec` capture modes.
+ #
+ # @none: do not capture any output
+ #
+@@ -1310,7 +1310,7 @@
+ # @stderr: only capture stderr
+ #
+ # @separated: capture both stdout and stderr, but separated into
+-#     GuestExecStatus out-data and err-data, respectively
++#     `GuestExecStatus` out-data and err-data, respectively
+ #
+ # @merged: capture both stdout and stderr, but merge together into
+ #     out-data.  Not effective on windows guests.
+@@ -1324,10 +1324,10 @@
+ ##
+ # @GuestExecCaptureOutput:
+ #
+-# Controls what guest-exec output gets captures.
++# Controls what `guest-exec` output gets captures.
+ #
+ # @flag: captures both stdout and stderr if true.  Equivalent to
+-#     GuestExecCaptureOutputMode::all.  (since 2.5)
++#     `GuestExecCaptureOutputMode`::all.  (since 2.5)
+ #
+ # @mode: capture mode; preferred interface
+ #
+-- 
+2.49.0
 
 
