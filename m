@@ -4,90 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97696C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 17:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70837C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 17:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugRRZ-0003mP-S4; Mon, 28 Jul 2025 13:15:22 -0400
+	id 1ugRay-0006bI-Pl; Mon, 28 Jul 2025 13:25:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugRRT-0003lQ-TE
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:15:15 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugRRR-0004Ie-SV
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:15:15 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-73c17c770a7so5084458b3a.2
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 10:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753722911; x=1754327711; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2uha6uA1VfFX0hsoKzeGpL8PlfaiJhcXbP8G9jjO8p8=;
- b=qVRbwOPoH64AKBUVJM8HoPbGnSMpaDbylYv8eb7NgcPEYrUV8AYmqjI9uiQa+qjmEw
- SH/JvDR3IJpXbQSXFxhZXM+/EIfYkUElHtK464di7VQDxCEqNq1X8StS4byN6sxslCVa
- zWwT0tje+GyrOcpdyk+lhNhZ1Ev7A8nSjg8GqMBmc+fa3IdQ88jzyyX3+Fxvq08ui9XQ
- 7vKH6cesdL6DOAxQOTDjnT6DjXI3tLzEoc9yZtn+e89eZPPqqNEiRFIzonkk7QYWTzF/
- j5Ni6OcK1dFXnx5XIvYqSwXegtTUCG4i37KDE4cwpaGp4e+IgUFwME2dtbx7vDL8UWvF
- oXAw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRaw-0006U0-Mj
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRau-0005Af-JF
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753723497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=az3ovlNWBrkf8NYq8FR7+1CbInHCd/lH6Z+vEzwNNP8=;
+ b=P3lU8s/P1Lph25FjtVnpth/p8E6b+OyctbSSVeNax2+sSqqHAJKwG/zD4WDcHyN0GQZAbt
+ S24Uhxg1LpiT5IyNG0TayaDR8KfW3i1jb6B9QJ+hRRnSBl1e3OA3PLA9T0y0cUcujuPB0U
+ ZS/Mt2/mbjr5ykAUJw6rKR9h1vpbgsE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-253-cG7k_wkrOiKnlBCU1Jt0kQ-1; Mon, 28 Jul 2025 13:24:56 -0400
+X-MC-Unique: cG7k_wkrOiKnlBCU1Jt0kQ-1
+X-Mimecast-MFC-AGG-ID: cG7k_wkrOiKnlBCU1Jt0kQ_1753723495
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-455e918d690so713315e9.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 10:24:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753722911; x=1754327711;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2uha6uA1VfFX0hsoKzeGpL8PlfaiJhcXbP8G9jjO8p8=;
- b=CsXf6kqs2cfFv+IxrI6bTgZtHCpJE5MM8BSJar2pJt6ywKu+Lqtaef7Qpz3E29toCo
- r1gKttEu9vjwFp36b1mT2PhTFZd3IE4N03J2YSGGoV+PPjBVXYQPHRjoxS2ox7WlG578
- wUycTWQSHXySg/PKPX6alu2VC3uIgLITrkcYvwZlqnveyGbM8OCxbBhjdNeJE0t+GjWT
- NqC4XQp3juPQmbpEVR69Nv52JPwa0kNSKwsyDwPMdl2OGDUlnxK2WjY5syFVFCdhlRYg
- XLSB9XH//Nq+zrGok3boha9sFlLy/QsJB8IyovwYFbh5uUccLbM1tI2/bVPuDr2yeYOW
- BZ4w==
-X-Gm-Message-State: AOJu0YwRLWLok37aYHiz+w2rETj3RfZEWk/ZajSnnKvX5dCq187BpWzx
- Z+Rx44QjfUelyvlVkaA292GJmepIyPPCj2tbgFOVVnReVCWxAWgs0MEkDC3Vedrjzvj6zgEB+Gz
- TpbT7
-X-Gm-Gg: ASbGncvfcl3BbLyNjNdvr9u/F0nVTMAHfLLlJK4RWIN2IntLduveL7VaORD7CcAFKyS
- NM1dcHc2g1/YQiz6xxRpSGW94cAk7R9zSwXlu3cNKJAZUebDjayWZgiKJ5YYv2NnZtRqmnoaVOX
- oqE+Ztiea2g1h5wHNMRwojxkUB+7iyUPpc+TVp9E65jgmaJ/QoTXUzvNAgmL6ebgL5582f4gXF6
- tIkSRoiBQv01spfVZvkxZZi6It48YmWTqU+ytWmNvDoNShvfygPHfJEYwLUrlLBTTeDeIhFLOcQ
- 7el9MzNyZK3ZPVik4kVlG/vW4g8r/9g4H6MTWwDTxq+5q89bL4a3Vglmh1DnTx54BaAMtlSsbMC
- PUzbgMe/uSOMTxD0QMMX7QY0V7Thwv8XRVbk6Kran0wnJzW9a0CwxY13AlSr6wVMMf1W87yRBIe
- LuTA==
-X-Google-Smtp-Source: AGHT+IEdwSJDGELCwmwheQZfVP0LEIAqagMPv9DOk8wOr0+mBA87UIVWSjwP7joLixUR+6QKNxxyZA==
-X-Received: by 2002:a05:6a00:3e01:b0:754:7376:548f with SMTP id
- d2e1a72fcca58-76337de94ebmr18800333b3a.23.1753722911354; 
- Mon, 28 Jul 2025 10:15:11 -0700 (PDT)
-Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
- [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640b2ddf63sm5486929b3a.102.2025.07.28.10.15.09
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1753723495; x=1754328295;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=az3ovlNWBrkf8NYq8FR7+1CbInHCd/lH6Z+vEzwNNP8=;
+ b=GabSHn9a0tAQs/nIEUPUlEYUA6G1rQg3sebR+/PyjfwZEqXt48TOqI2RWlgZD2K8dm
+ CVXIoZ6FvPQyrnCmdgMMIQFlapFASFwvMfHIuuWGXIP66/P/2e+NZWXRbOvuS6EQHbVB
+ tb8sG3qLt2hus5ZcZ5sVE1DyZcNb0Zj1QgEAGpSUINP8V/kC/hYX0B6MeWuMR0fxkxsF
+ 51u7p+2DN/IGN3A3/p6K/iOJjF1UHCZYm8/v85CjQTIEWk2kZqVlKyzqoix/EZcq7mov
+ kbUrG9MyVhIjrXN6uZEnx15uwSWuc/JY5DwiryakONZZ3oIMndov+TEqOsVNujDssN3X
+ S/xw==
+X-Gm-Message-State: AOJu0YzGHBDegCmudg1bFVdywhkGp5OlvlQYd8IeStMYC22QkXNxXMxj
+ echKzPZHwlmY15bSQ8qMLMNPwTblr1bKjXQ+F7I9t6mOMEyBock0+qN1j4M0FSpCgFMrrgT1PIc
+ dLsaeKyKA50/NoCrilbYRR9HCWr1Os50O9/YepXjc/MNK1RglZitM7KVU
+X-Gm-Gg: ASbGncvzqHBK/SNqT/T7IDRxIPcAqjC0E3BbPqy4okz1sxTOhXomRWOOGApMh1dP+wt
+ KlibV268quONiTULMB8Zdp81hLYKP5JdQNTkoMwsCNHmnFMpD0wm380VOLn20tbVQBzFtPvByGx
+ o7OCtg6uVMjLl65PZzZFXotjSFYh+FvbH1CORMlEbTcy+9oZegDxq/O3Welvn/WOvhtXVvxpf8y
+ chu76RJRAbEetiWPN3VB4cmsxdkplhFi+sZzY9GBsodVHb5mcmduTYTOZUEoe+pHPVssuqy8xtY
+ S1gfnTiH96q6sL/SLu76td9h9FtTUkM8n6PhnNqKg6/DnsFcKpqTY/no0i54YPPprS3MhL0bA5v
+ 7pA==
+X-Received: by 2002:a05:6000:2890:b0:3a4:cec5:b59c with SMTP id
+ ffacd0b85a97d-3b78e7258d4mr269830f8f.25.1753723494576; 
+ Mon, 28 Jul 2025 10:24:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGrm4A/71ajZYwmTK6NcLRbXl+SUEp9ps5tPUTBLfbZ8neq7pGynWk0uyXFUCsJyhSemFoHA==
+X-Received: by 2002:a05:6000:2890:b0:3a4:cec5:b59c with SMTP id
+ ffacd0b85a97d-3b78e7258d4mr269811f8f.25.1753723494087; 
+ Mon, 28 Jul 2025 10:24:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4587272b405sm140700385e9.19.2025.07.28.10.24.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 10:15:10 -0700 (PDT)
-Message-ID: <98f76923-af51-4fa3-b284-26cbce59a3b2@linaro.org>
-Date: Mon, 28 Jul 2025 07:15:06 -1000
+ Mon, 28 Jul 2025 10:24:53 -0700 (PDT)
+Message-ID: <b22dd3bd-b377-407b-b68f-4f3476cca737@redhat.com>
+Date: Mon, 28 Jul 2025 19:24:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/strace.list: add riscv_hwprobe entry
-To: qemu-devel@nongnu.org
-References: <20250728170633.113384-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250728170633.113384-1-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH 0/2] vfio/igd: Legacy mode fixes after introduction of
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250723160906.44941-1-tomitamoeko@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250723160906.44941-1-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +154,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/25 07:06, Daniel Henrique Barboza wrote:
-> We're missing a strace entry for riscv_hwprobe, and using -strace will
-> report it as "Unknown syscall 258".
+On 7/23/25 18:09, Tomita Moeko wrote:
+> This patchset aims to fix 2 bugs on legacy mode brought by commit
+> a59d06305fff ("vfio/pci: Introduce x-pci-class-code option").
 > 
-> After this patch we'll have:
+> 1. QEMU tries to enable VGA access on device emulated to VGA controller.
+> 2. pci_register_vga() is not called after calling vfio_populate_vga().
 > 
-> $ ./build/qemu-riscv64 -strace test_mutex_riscv
-> 110182 riscv_hwprobe(0x7f207efdc700,1,0,0,0,0) = 0
-> 110182 brk(NULL) = 0x0000000000082000
-> (...)
 > 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   linux-user/strace.list | 3 +++
->   1 file changed, 3 insertions(+)
+> Tomita Moeko (2):
+>    vfio/igd: Require host VGA decode for legacy mode
+>    vfio/igd: Fix VGA regions are not exposed in legacy mode
 > 
-> diff --git a/linux-user/strace.list b/linux-user/strace.list
-> index fdf94ef32a..ab818352a9 100644
-> --- a/linux-user/strace.list
-> +++ b/linux-user/strace.list
-> @@ -1716,3 +1716,6 @@
->   { TARGET_NR_clock_gettime64, "clock_gettime64" , NULL, print_clock_gettime64,
->                              print_syscall_ret_clock_gettime64 },
->   #endif
-> +#ifdef TARGET_NR_riscv_hwprobe
-> +{ TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
-> +#endif
+>   docs/igd-assign.txt |  1 +
+>   hw/vfio/igd.c       | 19 ++++++++++++-------
+>   hw/vfio/pci.c       | 13 ++++++++++---
+>   hw/vfio/pci.h       |  1 +
+>   4 files changed, 24 insertions(+), 10 deletions(-)
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
+
 
