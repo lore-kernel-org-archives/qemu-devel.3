@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745B7C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B480C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugQ2Z-0004VV-3P; Mon, 28 Jul 2025 11:45:27 -0400
+	id 1ugQ4P-0005rM-IB; Mon, 28 Jul 2025 11:47:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugQ2X-0004NT-Ds
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:45:25 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugQ2U-0002wL-BF
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:45:24 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4550709f2c1so36590685e9.3
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753717520; x=1754322320; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rY0v7k/dw6unnph0MReYmUnw9SMcCiOlNIJaa1RobAo=;
- b=HF26QGCCpXvTqV2EEC7KGzYsE7M7/ZnHZsP0qwRUgeb6tUBma7rqYyoPrxlR/HMTI/
- Zv/oesD3JrHQsKbg6pt4/29Z5QRp/8+LRBj6f1ohp72F8hmocD80z+EmJsVQ9/RmrJY2
- O750W7HrarnxAitV+O7CSj6bz2w7ZMf1tLpOdftqOd7DF/O+ZcrKBzvLmKHWpxZLkw1w
- yqymS9XmpZLfO92ip8LXdTNIGZIajhIY9+bOdHzwpvuYXHFLnVHYOnB5JmAihPsbuYBI
- tV9WuQpjD2A6q79yzig0yOnVOjo/PHcqYvVLF0jqvMIS/FG0BjWX7rQCoasx+/q+22DU
- T5yQ==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1ugQ4H-0004l6-TO
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:47:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1ugQ4F-00030j-Sh
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:47:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753717629;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aBLKkvwuJVVQcJaszxXSX2LMwunHw5V7xOZf8nca3Uo=;
+ b=IFX9BDt6nSSv1IU7pHqaSGIWU9dAA6jLUcrmFkE+gr491nzjz93bxQ4b4GrKaKsnCeoaeV
+ KR/5BgKeHiD2M7+ETFxGuRPYpxDZ975EYkVpWeVUooqyxAEfkjW0kbosPG6o3BZaM9jfjd
+ AdfiQfFd+7not8EieUJuA1d3/5zBwjo=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-132-OLWKqsh8OGuHymRZrRup2w-1; Mon, 28 Jul 2025 11:47:08 -0400
+X-MC-Unique: OLWKqsh8OGuHymRZrRup2w-1
+X-Mimecast-MFC-AGG-ID: OLWKqsh8OGuHymRZrRup2w_1753717627
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3dde762b351so8281615ab.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:47:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753717520; x=1754322320;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rY0v7k/dw6unnph0MReYmUnw9SMcCiOlNIJaa1RobAo=;
- b=Pc+TgCJe/k1vzPAMZP6Q51/sp6dqf1z76RA9vzUFjqSIns7zfQ+b9Y08FSJkQutYbr
- zEUJcgVbOWmUdTSbkhzD5CKgNLMB0P3BOFtdY5HFQaWZvtQpKvF/7RQoKymGCl12OJjd
- H6oreYOFmkh0OQbRWb7V5I0thPCRuebeePQskm3FvNFBq/rv51MJU1f2fSfGQSuoBfpB
- l+DppmB3MQdVhqfkyP9VE1OTyyoKuTwPhIzDbZDaWuOVPBRGRsiwTkhuQXqNtrZyvH/s
- 5D22E+67CjQy1xIzQNpuVzbbnTofpCyWx1YvjN6HHJ90zH4D2MgOP7peh+dVM6qKaTUe
- mR+w==
+ d=1e100.net; s=20230601; t=1753717627; x=1754322427;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aBLKkvwuJVVQcJaszxXSX2LMwunHw5V7xOZf8nca3Uo=;
+ b=EbTD5tG+ttR719Nbh8lb9j3wxNGV8YA4omxj/mPYplBPh8GH1wvyLLP0b3F6OwVAea
+ Keop/cmNMq/rifghAbyQqkr+Rd5ZI+PlSa+KHM1TN2Ob7qWSLryR6MeVcLyTLlV89+iw
+ sWqRjifOcAgI82OQRDWQb6KPA8La/tg3tKjCrFnDm2iMOVck3fJyP4eaC0mAo11lzL/O
+ pobfOhj82n7mPcTS0CT5uzMzqUxUFZ3LempXVcN7VnIFQQko9Gl8mexr/aZex76jh6kR
+ XcOTbZ8D7PBSG8XcV8NBJ828lI7C427yaUGok5j/gStP2RR5DAAydmfdSARxf+60hc7x
+ 4poA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUg3PQlUn8LN1aA3JGavK2A66frV9ATKxGkqX4MPnIgRAzC76zWvgNs9y/mA8UJeuCoFu9c8mBiJCtJ@nongnu.org
-X-Gm-Message-State: AOJu0YwFYmQ12nbZCo6v7UhUlat1WwHmmIObDSsRJn0uCZX+qBX0Un/Q
- 1z1BIceMSjNahESZqXteyAvo6sRjvilzIPyZiJ0zLbhVTh++lubtikWzbV7X2mcd1iA=
-X-Gm-Gg: ASbGnct2SkwTvVC+r4AGBFx191LA5SBKG4DAZlUeSYkkWpnqN7oUkJ0SyWsq3jy3a54
- nDCukrULYimyhz0I2Ubi9P75D+x3BtABwWMUM0sYku/pChwUIGMyxNgOcoMeYSXFlvkBB7Q8/hN
- eVhG10yfpUvLMr4VLzRPHxdAaLBPWtXaXrkZ0A5VgfDcBNMNVuI8f8B+DODNku9yQMsAIJGjApR
- pBvZUnBaI1U+C/wthdi9MkxG4mhxp22ibwc/g2vRbTtfYSZM4fjpcEwNmgViyeNxPW92vjmiwcm
- casSfq/h6kC+o0vRKdLo5V30VOQqU/huATVzpiKEUCcfcHzA44NG2ASgq7P6/kFGdmQl1tnOtvX
- UlXRiz4EPIAqtll15AscsCKkbxaWiz1cEyIf5wKW4BfyJ8vcd8GgiXOoptPTKdYYJxw==
-X-Google-Smtp-Source: AGHT+IEoRaiBuA3mYibzAxYAJXaAh1FnucvAEpsoiGWdoDZpRhoMR4bWi4aUuAs/bbF4Z5nb/HukMA==
-X-Received: by 2002:a05:600c:138c:b0:456:43c:dcdc with SMTP id
- 5b1f17b1804b1-458852502eamr39179655e9.33.1753717519872; 
- Mon, 28 Jul 2025 08:45:19 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4586f88ce71sm127331125e9.0.2025.07.28.08.45.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 08:45:19 -0700 (PDT)
-Message-ID: <fc1c2643-ad83-42aa-8b74-fa0a0ec9d46c@linaro.org>
-Date: Mon, 28 Jul 2025 17:45:18 +0200
+ AJvYcCVlZ8dzEv4UTK/EmvLT67P+70X/7NxSbUKMgAk9BxsujBxwlNiYpUIq2D91uqnd0bbaatWyMPtFrUyc@nongnu.org
+X-Gm-Message-State: AOJu0YwYyvAikelu2IJqckH9+hiF0oz8yHUxuq9OrEiwPTY67Kxolvs+
+ +N2mWIDV0FkkhyVjEwbsWcoxRK1ZU5s9uXLNWlgrzE/9X1iX141boNzradxSByNHZmSfM8qK8/J
+ 656dYOmorvjvIaBGFC42dKLBgIOpxNLbEZmVb1QcCFQQMyehCkp8yaZnDUchng3MA
+X-Gm-Gg: ASbGnctcnNOwJew8ST1lpGNiD1WQ+wPc/5ll4tsca7+X6ImAAaAVPAlaTnHWYZXZKlu
+ fWR+XEvEWw+L9Ms9TFuOfsASNqPZIX/3a3GoX6tBEE+o2nyVQq4JsWjS/gQk3YmIrMACJJEnGyY
+ DIC9pgP5qyqiKHv6P2SrC34fgFvZh8v00TlStvKmgfEI7lgIMBJtpDXDYmsNHgYxFxv6+eNn+EB
+ gEsA7UA35sgCbc+zSp5rTxMfKZoYYBUyCoIc0yUP352NsvTFOdbD6ps42E2BelqMdXVmKsrQudW
+ WwFcvtXJwjOv/PDA+uZwN2Cpdq619r1o8+yxkQjaB6c=
+X-Received: by 2002:a05:6602:342a:b0:87c:46f2:7075 with SMTP id
+ ca18e2360f4ac-880229e3cb3mr574141839f.5.1753717626777; 
+ Mon, 28 Jul 2025 08:47:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJfzqlPgFqv3PbbyFpE0KXrRg0XUFwo8wJqOXNIGl4wxSF1/6Dh1PAHnrPfYoFeTXjYST9JQ==
+X-Received: by 2002:a05:6602:342a:b0:87c:46f2:7075 with SMTP id
+ ca18e2360f4ac-880229e3cb3mr574120439f.5.1753717619433; 
+ Mon, 28 Jul 2025 08:46:59 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-880f7a6b62esm182742239f.35.2025.07.28.08.46.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Jul 2025 08:46:58 -0700 (PDT)
+Date: Mon, 28 Jul 2025 09:46:56 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] vfio/igd: Legacy mode fixes after introduction of
+Message-ID: <20250728094656.017faa03.alex.williamson@redhat.com>
+In-Reply-To: <20250723160906.44941-1-tomitamoeko@gmail.com>
+References: <20250723160906.44941-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: fix use-after-free with dispatch
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, Michael Tokarev
- <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250724161142.2803091-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,59 +110,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/25 18:11, Pierrick Bouvier wrote:
-> A use-after-free bug was reported when booting a Linux kernel during the
-> pci setup phase. It's quite hard to reproduce (needs smp, and favored by
-> having several pci devices with BAR and specific Linux config, which
-> is Debian default one in this case).
-> 
-> After investigation (see the associated bug ticket), it appears that,
-> under specific conditions, we might access a cached AddressSpaceDispatch
-> that was reclaimed by RCU thread meanwhile.
-> In the Linux boot scenario, during the pci phase, memory region are
-> destroyed/recreated, resulting in exposition of the bug.
-> 
-> The core of the issue is that we cache the dispatch associated to
-> current cpu in cpu->cpu_ases[asidx].memory_dispatch. It is updated with
-> tcg_commit, which runs asynchronously on a given cpu.
-> At some point, we leave the rcu critial section, and the RCU thread
-> starts reclaiming it, but tcg_commit is not yet invoked, resulting in
-> the use-after-free.
-> 
-> It's not the first problem around this area, and this patch [1] already
-> tried to address it. It did a good job, but it seems that we found a
-> specific situation where it's not enough.
-> 
-> This patch takes a simple approach: remove the cached value creating the
-> issue, and make sure we always get the current mapping for address
-> space, using address_space_to_dispatch(cpu->cpu_ases[asidx].as).
+On Thu, 24 Jul 2025 00:09:04 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-Very nice.
+> This patchset aims to fix 2 bugs on legacy mode brought by commit
+> a59d06305fff ("vfio/pci: Introduce x-pci-class-code option").
+> 
+> 1. QEMU tries to enable VGA access on device emulated to VGA controller.
+> 2. pci_register_vga() is not called after calling vfio_populate_vga().
+> 
+> 
+> Tomita Moeko (2):
+>   vfio/igd: Require host VGA decode for legacy mode
+>   vfio/igd: Fix VGA regions are not exposed in legacy mode
+> 
+>  docs/igd-assign.txt |  1 +
+>  hw/vfio/igd.c       | 19 ++++++++++++-------
+>  hw/vfio/pci.c       | 13 ++++++++++---
+>  hw/vfio/pci.h       |  1 +
+>  4 files changed, 24 insertions(+), 10 deletions(-)
+> 
 
-> It's equivalent to qatomic_rcu_read(&as->current_map)->dispatch;
-> This is not really costly, we just need two dereferences,
-> including one atomic (rcu) read, which is negligible considering we are
-> already on mmu slow path anyway.
-> 
-> Note that tcg_commit is still needed, as it's taking care of flushing
-> TLB, removing previously mapped entries.
-> 
-> Another solution would be to cache directly values under the dispatch
-> (dispatch themselves are not ref counted), keep an active reference on
-> associated memory section, and release it when appropriate (tricky).
-> Given the time already spent debugging this area now and previously, I
-> strongly prefer eliminating the root of the issue, instead of adding
-> more complexity for a hypothetical performance gain. RCU is precisely
-> used to ensure good performance when reading data, so caching is not as
-> beneficial as it might seem IMHO.
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/commit/0d58c660689f6da1e3feff8a997014003d928b3b
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3040
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   system/physmem.c | 15 +++------------
->   1 file changed, 3 insertions(+), 12 deletions(-)
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
-Patch queued, thanks!
 
