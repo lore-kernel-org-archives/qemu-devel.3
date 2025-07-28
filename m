@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3387C83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48EFC83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugPxY-0004xm-Aw; Mon, 28 Jul 2025 11:40:16 -0400
+	id 1ugPyD-0007lw-AY; Mon, 28 Jul 2025 11:40:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ugPxM-0004iM-OW
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ugPxK-0002Bk-Dp
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753717199;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aK8BuoLFAeS+eg6Hlk4zc+Pdw9VG+Sjj2feSeB0EzqA=;
- b=F8ae9pI6hmuyYR/2IfE092KU+zC+FE0EEh3j8PtRoIkr4SlGlxajfzmwM7sMe4wt7vxqI6
- 0B+0WsH9iUNZrMbHub5+fSF9wylwUPz+DbZMffctkOBFaJnSuAa3+wBiZH+xLVD/ExD5tL
- N65OAQ+FqVlQ+pQCqXR1ixtD7eClqic=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-WJOX8OwFNFC3ppz5yEXviw-1; Mon, 28 Jul 2025 11:39:58 -0400
-X-MC-Unique: WJOX8OwFNFC3ppz5yEXviw-1
-X-Mimecast-MFC-AGG-ID: WJOX8OwFNFC3ppz5yEXviw_1753717197
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b783265641so1615481f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:39:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPyA-0007SS-2h
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:54 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugPy6-0002SE-W7
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:53 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3b7823559a5so982027f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753717249; x=1754322049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=clWmwPIvlE/uJUsDm2T1onrs09ie61Lz/tDRVg0acxg=;
+ b=YeG+ckthrlgntRVLf31/r4Cu1ZHIAFb5SeZ4xq0nqPenh8oL5u9IZn9b1zQQbN/1hC
+ nGpv38os/KomAUBMY0bsX/WHzc67rr2Ku5Z+zTfkMl8LWE+u4e+s5ljV8iHEU5gHEPI/
+ l2MmFfGFaS4T3BOEPzxr+blvHlqvo+KiJdsKrMU9ITRts4MfiZit8n6XHLLACXpCl11J
+ ttClWP58SeQRG8dm2wIgkx/oE7BCxX/dzIkkRJsdL9nD79R3va3vwJ40WBjRa9f6KhSJ
+ EJChuMAjI2fmZVBsO1LV7NP++YfMScIIKUX1Zs8xZmW1QawSzhPVwp/pujZSJFf0jcJd
+ 5s6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753717197; x=1754321997;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aK8BuoLFAeS+eg6Hlk4zc+Pdw9VG+Sjj2feSeB0EzqA=;
- b=hJjlngziGcTGLAa3LwfFGiRolSnrgkp3tV++olgcnQ6pBMQn3bcJGIdZST60tOn3oL
- vsn1boewizI3lWmhJz/QIO7nhyf4jTbYcO7IwH7i9YIOvmMgjWSfiKSfG94z8tY0kidZ
- rDh4pYpwHxHxrA+yVEhNeY1+CUbj1Y299oBJwS2hRFROdxsTiKW3yaWzHKIRxz+bjC3t
- KVi1EyPdBdI+vczKrFuZZWaFTCIvWB4T0wsERimqQ57S10PAfqL9YtfIr8W9Q175VDQ+
- cM/gVkydzl/lX5htN2PGNQM4dmFm23edFyKM2nMbPIvALLpxxseNxJ/VFIlnSiLaekcb
- Bmsg==
+ d=1e100.net; s=20230601; t=1753717249; x=1754322049;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=clWmwPIvlE/uJUsDm2T1onrs09ie61Lz/tDRVg0acxg=;
+ b=S9mGTnWjvZNDBx4xij/fbMkdYqHQ8P60IXNFKVDfz4xjcQmcAmKvUK+VAL5q31EJIN
+ flpJ8gBtvJH2fwL3Var28/BDNbQ1bkS5fWVSvq4wLGy481gYoeGUm8GQl2eEJLqiG+DC
+ XPjR5WAZQKRJOAMaLFJCp+h9hCfj9jS4yjy91e0ken2QTY0W+i2lV593draQhUKobEIf
+ QSgc71o9ka66yL3xxYE/V1PLn0mnY4VaUMCAncpTRze+DB+KyHVYF73H9qrHb6vyfTNP
+ U33K+BLPBPXHyGxUUR+/XL5w5FJVKzkhfG72cej1N2YusOQHzVBtJNgTLzMahAN4A36W
+ Oqow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXyp3vUjNcE7XVDFxka0mbFIfgCNRZzvlKJoU6N3fMLKdhwM11P9q87n9ztO1tIFBbSGNeETDU3/Ba@nongnu.org
-X-Gm-Message-State: AOJu0Yxig25IPOp32WKwpTgUY6jDjw/+UjejK3hn0/Q6z2/DcnyjkNT0
- P2bHRsmJJMLPUdyY5G53E3T1IK2S/ydhFcJPBYNgRxzWsWHtbQbtC+p6qFd5rzV+3hcXylyBUnl
- XRGqKQuTbm7RQ17w81G6bFsUCMRYrBMLDzdmZjxhsG8bIKZJDW8kOncxS
-X-Gm-Gg: ASbGncsPxCxP+UqOy5kI5dx27x/tkSKm5XzOTxwkLKHeVfxFxixHsW8TFyxw38N1PD6
- sAxuApCh+pUEzvnKSWHoShSFusv95HELc2Q2L27GUKhzM4Z7QqvUIuHeXucnpH+GzdePP4h+vxn
- lIAx1Z4OctqdUuT3Ym2p0LKrsVEZKuUnUO2XILKM0C+jSd6CNuLfEm8sM9cmOrLpv1X060Qq5oe
- huHqih6MstzpdBZw4awCJoO0RX2gzW936Beh9T9HNNSbchwDa11zx8RXdFM51Cg0rHHh3sxzyPi
- 4M2QC/YXC6KTOude0VCGoRQXF+KEz+5bt4eNtkDWeX9P79AzsTtCOR5bHoi/jGUXVOaatJcOeg=
- =
-X-Received: by 2002:a05:6000:381:b0:3b5:def6:4e4 with SMTP id
- ffacd0b85a97d-3b776673e7emr9067916f8f.46.1753717196347; 
- Mon, 28 Jul 2025 08:39:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEF67qDpb22TeRbtQzTezeRa7KUwIP9cnsc8vZXe8wtCDOrvrJDxLMeKxUYJnjRNvC4/KPQ8Q==
-X-Received: by 2002:a05:6000:381:b0:3b5:def6:4e4 with SMTP id
- ffacd0b85a97d-3b776673e7emr9067891f8f.46.1753717195820; 
- Mon, 28 Jul 2025 08:39:55 -0700 (PDT)
-Received: from [192.168.3.191] (228.246.150.77.rev.sfr.net. [77.150.246.228])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4587054f686sm157746295e9.14.2025.07.28.08.39.54
+ AJvYcCX2xe4tGfBu8UFSIlIrPL5NtD2hwz5snB9MczFeZ9stDxrenZykQRxVChDIrmdwktYOKylYqcndBhoN@nongnu.org
+X-Gm-Message-State: AOJu0Yz7ZXe8clkXPi7eHtMY8yzTnEB+x6SL/fTxIm/BnFR/vwdi1MQm
+ yH/r+Jkw30IeV1Xb1LowMGyU0cgEASO6fSrI4O4lMiUlPQha1H9O3fDW+Rd55YHyxSA=
+X-Gm-Gg: ASbGncuLzfOgPFPUimK2BsyZiu9erI903TvxAsSv/V7TJ2bA/idqareI7wF1PbewT0n
+ j2icM6a2s+rIPlJ+wXf0y05Ezaf60VGjMATyx1qCdQE5OEvRgcwp8dHfgbFLaPPsDR90l4fe3jF
+ DckH0jdnlL1BaGvKQVExjCdSHnehUYROb6lkoIp/UWUM7YqrlvyElWjRv8cn+qPIMXwMGH5I9Xh
+ iHAgcfQafhyugPNEi5Md17MFB5BP3M6vtIQjRztNb7gXgl/JLcD62V0ykq8LrD+It8q0r5LVUld
+ c+IgUQLQBfpBTUE/uzZgk/KUwJwvWaW96mFJEH2NWopL897GclwvcZ2h6nE9vM2ldHpFsCV6AwB
+ wI4kL9imhhv3kOsg8LkzRfV3dd0fkelycmDab/2yYUxbE4TNoQ593d+jjv5+6/d5fdQ==
+X-Google-Smtp-Source: AGHT+IHPcE+k/WmwZbRhgKMu43FdnjtR/zsViUUtbcX7mSUgjIwP2DkUsMia7dQ6Ay9g8fMZ9l7uWA==
+X-Received: by 2002:a05:6000:2382:b0:3b7:8d80:e382 with SMTP id
+ ffacd0b85a97d-3b78d80ea5bmr318913f8f.4.1753717248896; 
+ Mon, 28 Jul 2025 08:40:48 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b78cf1f571sm739366f8f.22.2025.07.28.08.40.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 08:39:55 -0700 (PDT)
-Message-ID: <9ece87e2-215e-4604-ab9f-03e65fe07fae@redhat.com>
-Date: Mon, 28 Jul 2025 17:39:53 +0200
+ Mon, 28 Jul 2025 08:40:48 -0700 (PDT)
+Message-ID: <1adc2441-3522-43d4-ae04-973a1cf66010@linaro.org>
+Date: Mon, 28 Jul 2025 17:40:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 10.1] hw/pci-host/gpex-acpi:
- PCI_EXPRESS_GENERIC_BRIDGE: select ACPI_PCI instead of imply'ing it
+Subject: Re: [PATCH] hw/mips/malta: Silence warning from ubsan
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
+References: <20250728115152.187728-1-thuth@redhat.com>
+ <43b37539-e4eb-465c-85e8-b7c83324910f@linaro.org>
 Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20250728152445.23917-1-mjt@tls.msk.ru>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250728152445.23917-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <43b37539-e4eb-465c-85e8-b7c83324910f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,54 +100,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 28/7/25 15:25, Philippe Mathieu-Daudé wrote:
+> Hi Thomas,
+> 
+> On 28/7/25 13:51, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> When compiling QEMU with --enable-ubsan there is a undefined behavior
+>> warning when using the malta machine:
+>>
+>>   hw/mips/malta.c:1200:32: runtime error: addition of unsigned offset
+>>    to 0x7fb620600000 overflowed to 0x7fb6205fffff
+>>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hw/mips/ 
+>> malta.c:1200:32
+>>
+>> To fix the issue, check the bios_size whether we really loaded the
+>> firmware before trying to byte-swap the instructions here.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   hw/mips/malta.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+>> index cbdbb210568..47dd4016cfd 100644
+>> --- a/hw/mips/malta.c
+>> +++ b/hw/mips/malta.c
+>> @@ -1190,7 +1190,7 @@ void mips_malta_init(MachineState *machine)
+>>            * In little endian mode the 32bit words in the bios are 
+>> swapped,
+>>            * a neat trick which allows bi-endian firmware.
+>>            */
+>> -        if (!TARGET_BIG_ENDIAN) {
+>> +        if (!TARGET_BIG_ENDIAN && bios_size > 0) {
+>>               uint32_t *end, *addr;
+>>               const size_t swapsize = MIN(bios_size, 0x3e0000);
+>>               addr = rom_ptr(FLASH_ADDRESS, swapsize);
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On 7/28/25 5:24 PM, Michael Tokarev wrote:
-> Commit af151d50eac24 added dependency on hw/i386/acpi-build.c
-> (where this function is defined) to hw/pci-host/gpex-acpi.
-> But acpi-build.c is only built when ACPI_PCI is enabled,
-> and the build fails at link time if it is not.  So ACPI_PCI
-> becomes a hard dependency of PCI_EXPRESS_GENERIC_BRIDGE.
-> Fix it.
->
-> Fixes: af151d50eac24 "hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method"
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+and queued, thanks!
+
+> 
+> What about:
+> 
+> -- >8 --
+> @@ -1180,7 +1180,7 @@ void mips_malta_init(MachineState *machine)
+>               } else {
+>                   bios_size = -1;
+>               }
+> -            if ((bios_size < 0 || bios_size > BIOS_SIZE) &&
+> +            if ((bios_size <= 0 || bios_size > BIOS_SIZE) &&
+>                   machine->firmware && !qtest_enabled()) {
+>                   error_report("Could not load MIPS bios '%s'", machine- 
+>  >firmware);
+>                   exit(1);
 > ---
->  hw/pci-host/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
-> index 9824fa188d..19b6605c7f 100644
-> --- a/hw/pci-host/Kconfig
-> +++ b/hw/pci-host/Kconfig
-> @@ -54,7 +54,7 @@ config PCI_EXPRESS_Q35
->  config PCI_EXPRESS_GENERIC_BRIDGE
->      bool
->      select PCI_EXPRESS
-> -    imply ACPI_PCI
-> +    select ACPI_PCI
-
-As mentionned in the previous thread,
-
-build_pci_host_bridge_osc_method() is called from gpex-acpi.c whose compilation depend on
-
-pci_ss.add(when: ['CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', 'CONFIG_ACPI'],
-if_true: files('gpex-acpi.c'))
-
-so the hard dependency exists only if ACPI is selected.
-
-If one use "select", ACPI_PCI will be mandated even if ACPI is not set. I am not sure this is what we want.
-
-"Imply" was supposed to condition the selection depending on ACPI_PCI dependencies, ie. ACPI and PCI
-
-Eric
-
->  
->  config PCI_EXPRESS_XILINX
->      bool
+> 
+> ?
 
 
