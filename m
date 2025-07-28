@@ -4,66 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0566EC87FC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F50C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugN5C-0002qG-CR; Mon, 28 Jul 2025 08:36:02 -0400
+	id 1ugN7k-0000ad-7f; Mon, 28 Jul 2025 08:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO8-0003st-KC
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ugMOk-0007K6-14
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:52:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO3-00043s-W3
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ugMOi-0004Ao-5m
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:52:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753703482;
+ s=mimecast20190719; t=1753703523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o+2WkFWYL4czTT2YnwH0anl6ohMQd998DSdkXU2xHpo=;
- b=iiK30T6MeQBi/1j+59nPPcF5Exila/6WcAH6jVQIipxXHTEbL0vY2p8PgDszoaWn6UYwm7
- QuRakPqFxG1d4Sj920HLMSyNWUcZP1cP5yvzXQmPRsIpXzyUXHqz5Uu4p1l8i5qNpqLScl
- j1ZhTjU5D0VVkcWNRWdseRg+/Jr6WgI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=pVtIasSIO1whlGH6OE9X6z7Twiezig7uP2gbURPfn8Q=;
+ b=MZ1a5UYN2gLrpeK2w/1v26QpHpxgs6sioMgdMAohjvBTMz5u42A4QB5z2wNyiI8KgnyJOr
+ oywLJoqILEFkx7S0KlpjEvRPnlA3Kn9ZG5FnOGX14o41una8FdpFIbZqJE/8QKtTWPYiHD
+ SeagegBqN9jgyl8gRfRPaB7kXADK0bI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-CiLh9-ttNPu62ZAfFr7JfA-1; Mon,
- 28 Jul 2025 07:51:20 -0400
-X-MC-Unique: CiLh9-ttNPu62ZAfFr7JfA-1
-X-Mimecast-MFC-AGG-ID: CiLh9-ttNPu62ZAfFr7JfA_1753703479
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-WsTdgRSRMAmxFpUv9oLQIA-1; Mon,
+ 28 Jul 2025 07:51:58 -0400
+X-MC-Unique: WsTdgRSRMAmxFpUv9oLQIA-1
+X-Mimecast-MFC-AGG-ID: WsTdgRSRMAmxFpUv9oLQIA_1753703517
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1CC71956069
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:19 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59D9230001BE
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 99B3F21E6935; Mon, 28 Jul 2025 13:51:16 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PULL 3/4] qga: Rephrase return docs to avoid type name
-Date: Mon, 28 Jul 2025 13:51:15 +0200
-Message-ID: <20250728115116.2938867-4-armbru@redhat.com>
-In-Reply-To: <20250728115116.2938867-1-armbru@redhat.com>
-References: <20250728115116.2938867-1-armbru@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3E291800258; Mon, 28 Jul 2025 11:51:56 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.117])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 056D619560A2; Mon, 28 Jul 2025 11:51:53 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
+Subject: [PATCH] hw/mips/malta: Silence warning from ubsan
+Date: Mon, 28 Jul 2025 13:51:51 +0200
+Message-ID: <20250728115152.187728-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,40 +80,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Returns: <description>" is rendered like
+From: Thomas Huth <thuth@redhat.com>
 
-    Return: <Type> – <description>
+When compiling QEMU with --enable-ubsan there is a undefined behavior
+warning when using the malta machine:
 
-Mentioning the type in the description again is commonly redundant.
-There is just one such description.  Rephrase it not to mention the
-type.
+ hw/mips/malta.c:1200:32: runtime error: addition of unsigned offset
+  to 0x7fb620600000 overflowed to 0x7fb6205fffff
+ SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hw/mips/malta.c:1200:32
 
-We did this for qapi/ in commit f7296f8de5c (qapi: rephrase return
-docs to avoid type name).
+To fix the issue, check the bios_size whether we really loaded the
+firmware before trying to byte-swap the instructions here.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250717115246.3830007-4-armbru@redhat.com>
-Reviewed-by: John Snow <jsnow@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- qga/qapi-schema.json | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/mips/malta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index a9cc9150dc..6c26ace3c9 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -534,8 +534,7 @@
- #     discarded.  The default value is zero, meaning "discard every
- #     free block".
- #
--# Returns: A @GuestFilesystemTrimResponse which contains the status of
--#     all trimmed paths.  (since 2.4)
-+# Returns: status of all trimmed paths.  (since 2.4)
- #
- # Since: 1.2
- ##
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index cbdbb210568..47dd4016cfd 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -1190,7 +1190,7 @@ void mips_malta_init(MachineState *machine)
+          * In little endian mode the 32bit words in the bios are swapped,
+          * a neat trick which allows bi-endian firmware.
+          */
+-        if (!TARGET_BIG_ENDIAN) {
++        if (!TARGET_BIG_ENDIAN && bios_size > 0) {
+             uint32_t *end, *addr;
+             const size_t swapsize = MIN(bios_size, 0x3e0000);
+             addr = rom_ptr(FLASH_ADDRESS, swapsize);
 -- 
-2.49.0
+2.50.1
 
 
