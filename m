@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0735CC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9430EC87FC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugNLH-0008M4-5j; Mon, 28 Jul 2025 08:52:35 -0400
+	id 1ugNMX-00029j-7n; Mon, 28 Jul 2025 08:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMhA-0002qP-QW
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:11:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ugMlx-0005D5-OM
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:16:14 -0400
+Received: from p-east1-cluster3-host2-snip4-9.eps.apple.com ([57.103.91.150]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMh6-0007YN-Nv
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:11:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753704659;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kbYxL/ly2XklUhNArkxf6qi9ZkqCOj1gCPf/PVdaZ0w=;
- b=bneUAtjV8IlSH7gJfJ/0CST6XiOGumcHOaW0+wEhAQ1tzOrUDzTq6v96BJ4vJmkfucYpZ7
- s6nr/WClRriBnryaYnCNoEtig8gouuDb4IE7KkZ/cdOYPzv1tg7S4SvHMp9yksCxWyKaxq
- woJqCcuIxGk0p2wHjoEJb7H+0WsgUKY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-q2Mk4nq2PaiYht8ewpCc3w-1; Mon,
- 28 Jul 2025 08:10:58 -0400
-X-MC-Unique: q2Mk4nq2PaiYht8ewpCc3w-1
-X-Mimecast-MFC-AGG-ID: q2Mk4nq2PaiYht8ewpCc3w_1753704657
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5675D1800772
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 12:10:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6BB91800B6C
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 12:10:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0D3DF21E6A27; Mon, 28 Jul 2025 14:10:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  eblake@redhat.com
-Subject: Re: [PATCH] qapi: Add more cross-references
-In-Reply-To: <CAFn=p-ZB5K_++-6SwvoMN59dBdrdCvXaeBPmsUGYQxqToRRpBg@mail.gmail.com>
- (John Snow's message of "Mon, 21 Jul 2025 16:22:52 -0400")
-References: <20250717115751.3832597-1-armbru@redhat.com>
- <CAFn=p-ZB5K_++-6SwvoMN59dBdrdCvXaeBPmsUGYQxqToRRpBg@mail.gmail.com>
-Date: Mon, 28 Jul 2025 14:10:54 +0200
-Message-ID: <87v7nco6r5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ugMlq-0008BC-C6
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:16:01 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPS id
+ 87AE01805908; Mon, 28 Jul 2025 12:15:47 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=dx9iNuCXde9aI1tiGl0SdyHKxu//3jAepAe8xuGXnJU=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=yAHi2+WugsgkHUZHNi3aYi/OWR5zfqg1t92wrMteDBpO+RpaxGgS6X8OWnruRj5EXkI31DtzRxkPiVNWoZfU62OFuKNu6ODS6mxbMIRuBVz0T/anfXofNyb5jy79JRnMXUeqWoPxfDO/E16GEJwkOjApAnONYVbDYyJlVwypHvyQuD0Qrh2LZMoOQvZq4lYdUR8KRqDxpnaVK2o8d60Q/YGT5rTFfNGAGD6prqx2rNZek0xoUMrp9DNhfHBr4UtDQW76qAZoaF4glpqPykQr5Wqx0x6YtCqhnEl4EmTX9P0UrBP8XJYLmo4EHEQMHgdqhXql5LHOjxa9uRZEEWG0iA==
+X-Client-IP: 212.60.126.184
+Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
+ [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-11 (Postfix) with ESMTPSA id
+ 7CED4180591F; Mon, 28 Jul 2025 12:15:45 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v4 04/15] hw/intc: Add hvf vGIC interrupt controller
+ support
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250728055701.38975-5-mohamed@unpredictable.fr>
+Date: Mon, 28 Jul 2025 14:15:33 +0200
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Message-Id: <1F4C322B-8D95-43D0-96EF-66B0C4C5E55E@ynddal.dk>
+References: <20250728055701.38975-1-mohamed@unpredictable.fr>
+ <20250728055701.38975-5-mohamed@unpredictable.fr>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDA5MCBTYWx0ZWRfXxTc3XBufyFSn
+ jvbhnz8olQNMEfa9gE3okmIg24GwXmctbhworkzsxQgYQHRB+8oT2Lh1JNfQvC6ubdxHTJARcwf
+ Pnf8Z9H1vMjAK25l2rLZV1ekCLXzIrhL06VGf1/7g/KRnH2WOoqCB5Q5rQQVISDQWdRI0fBn0NT
+ uI9j0teb4pQP6MX/0dM8dE3LFHyZ7pQIyaAlWWKKgAk3+1ClhqIC4LjeQtFgCDhZwu8X5a1p7zB
+ 52KONrpipzNKdSGib+Zd3dx2+c7gZBjhwX43T6IRcXBwBU7o68vwpSpcJU/v/P09tZeLnEk+0=
+X-Proofpoint-GUID: tNSVMNe2o3ZpgqID28LlT5lGvDL_m3CL
+X-Proofpoint-ORIG-GUID: tNSVMNe2o3ZpgqID28LlT5lGvDL_m3CL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0 clxscore=1030 mlxlogscore=999 malwarescore=0 mlxscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507280090
+Received-SPF: pass client-ip=57.103.91.150; envelope-from=mads@ynddal.dk;
+ helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,149 +91,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
 
-> On Thu, Jul 17, 2025 at 7:57=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> We recently (merge commit 504632dcc631) enclosed command and type
->> names in `backquotes`, so they become links in generated HTML.  Take
->> care of a few we missed.
->>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>  qapi/dump.json      | 2 +-
->>  qapi/machine.json   | 2 +-
->>  qapi/migration.json | 4 ++--
->>  qapi/misc-i386.json | 2 +-
->>  qapi/run-state.json | 2 +-
->>  qapi/sockets.json   | 2 +-
->>  6 files changed, 7 insertions(+), 7 deletions(-)
->>
->> diff --git a/qapi/dump.json b/qapi/dump.json
->> index 32c8c1f06e..726b520870 100644
->> --- a/qapi/dump.json
->> +++ b/qapi/dump.json
->> @@ -79,7 +79,7 @@
->>  #
->>  # @detach: if true, QMP will return immediately rather than waiting
->>  #     for the dump to finish.  The user can track progress using
->> -#     "query-dump".  (since 2.6).
->> +#     `query-dump`.  (since 2.6).
->
-> Funny. Offset and in quotes, so it got missed.
+> +    /* Redistributor state (one per CPU) */
+> +
+> +    for (ncpu =3D 0; ncpu < s->num_cpu; ncpu++) {
+> +        GICv3CPUState *c =3D &s->cpu[ncpu];
+> +        hv_vcpu_t vcpu =3D c->cpu->accel->fd;
+> +
+> +        reg =3D c->gicr_waker;
+> +        hv_gic_set_redistributor_reg(vcpu, =
+HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
+> +
 
-I believe your script's heuristic for skipping example blocks skipped
-too many intented lines.  It dealt fine with quotes as far as I can
-tell.
+Sorry if I'm belaboring the obvious, but I think you need to call these
+from the owning thread of the CPU. This is also stated in Apple's docs
+(some are documented; some are not!).
 
->>  #
->>  # @begin: if specified, the starting physical address.
->>  #
->> diff --git a/qapi/machine.json b/qapi/machine.json
->> index 6f59f70ca6..038eab281c 100644
->> --- a/qapi/machine.json
->> +++ b/qapi/machine.json
->> @@ -2087,7 +2087,7 @@
->>  #
->>  # @deprecated-props: an optional list of properties that are flagged as
->>  #     deprecated by the CPU vendor.  The list depends on the
->> -#     CpuModelExpansionType: "static" properties are a subset of the
->> +#     `CpuModelExpansionType`: "static" properties are a subset of the
->
-> "What are the odds that a name we want to turn into a reference will
-> be immediately followed by a colon?" 100%, I guess.
->
->>  #     enabled-properties for the expanded model; "full" properties are
->>  #     a set of properties that are deprecated across all models for
->>  #     the architecture.  (since: 10.1 -- since 9.1 on s390x --).
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index e08a99bb82..2387c21e9c 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -641,7 +641,7 @@
->>  #
->>  #     This mode supports VFIO devices provided the user first puts the
->>  #     guest in the suspended runstate, such as by issuing
->> -#     guest-suspend-ram to the QEMU guest agent.
->> +#     `guest-suspend-ram` to the QEMU guest agent.
->
-> Missed because it's indented?
+I had to do that in the branch I was working on. You should check the
+return of the functions 'hv_gic_...'. They give an error when called
+from the wrong thread.
 
-Think so.
-
->>  #
->>  #     Best performance is achieved when the memory backend is shared
->>  #     and the @x-ignore-shared migration capability is set, but this
->> @@ -1704,7 +1704,7 @@
->>  #
->>  # .. admonition:: Notes
->>  #
->> -#     1. The 'query-migrate' command should be used to check
->> +#     1. The `query-migrate` command should be used to check
->>  #        migration's progress and final result (this information is
->>  #        provided by the 'status' member).
->
-> Indent miss.
->
->>  #
->> diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
->> index c8c91a241c..d1ce8caf25 100644
->> --- a/qapi/misc-i386.json
->> +++ b/qapi/misc-i386.json
->> @@ -8,7 +8,7 @@
->>  #
->>  # Reset the RTC interrupt reinjection backlog.  Can be used if another
->>  # mechanism to synchronize guest time is in effect, for example QEMU
->> -# guest agent's guest-set-time command.
->> +# guest agent's `guest-set-time` command.
->
-> Why'd I miss this one, I wonder?
-
-You searched for identifies defined in qapi/.  This one's from qga/.
-
->>  #
->>  # Use of this command is only applicable for x86 machines with an RTC,
->>  # and on other machines will silently return without performing any
->> diff --git a/qapi/run-state.json b/qapi/run-state.json
->> index 54ba5c9a3f..4757947ca6 100644
->> --- a/qapi/run-state.json
->> +++ b/qapi/run-state.json
->> @@ -20,7 +20,7 @@
->>  # @inmigrate: guest is paused waiting for an incoming migration.  Note
->>  #     that this state does not tell whether the machine will start at
->>  #     the end of the migration.  This depends on the command-line -S
->> -#     option and any invocation of 'stop' or 'cont' that has happened
->> +#     option and any invocation of `stop` or `cont` that has happened
->
-> Rare instance of actually *wanting* these to be cross-refs. :)
-
-Yes.
-
->>  #     since QEMU was started.
->>  #
->>  # @internal-error: An internal error that prevents further guest
->> diff --git a/qapi/sockets.json b/qapi/sockets.json
->> index 82046b0b3a..32fac51728 100644
->> --- a/qapi/sockets.json
->> +++ b/qapi/sockets.json
->> @@ -143,7 +143,7 @@
->>  #
->>  # @str: decimal is for file descriptor number, otherwise it's a file
->>  #     descriptor name.  Named file descriptors are permitted in
->> -#     monitor commands, in combination with the 'getfd' command.
->> +#     monitor commands, in combination with the `getfd` command.
->>  #     Decimal file descriptors are permitted at startup or other
->>  #     contexts where no monitor context is active.
->
-> Presumably another indent miss.
->
->>  #
->> --
->> 2.49.0
->
-> Reviewed-by: John Snow <jsnow@redhat.com>
-
-Thanks!
-
+Could this be related to commit "hw/intc: hvf: add migration blocker
+when using multiple vCPUs with the Apple GIC"?=
 
