@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212C7C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0566EC87FC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugN49-0006iu-Kb; Mon, 28 Jul 2025 08:34:54 -0400
+	id 1ugN5C-0002qG-CR; Mon, 28 Jul 2025 08:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO8-0003wm-QA
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO8-0003st-KC
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO3-00043p-Uu
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugMO3-00043s-W3
  for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:51:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753703481;
+ s=mimecast20190719; t=1753703482;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ukV50wtD36sWd0/Ag7d+G9VK5Wg3ubOVp77Kp1FKHTI=;
- b=h2F30zkLz/wKvc3ufeOZUTBdKJLvSQYMdv2LRl8uF+cOe1ZOJ2IXCOYznzaMUZJEK11Gqb
- 9e0A5Xs4HRptofxPvyWMPrLk/JX6vCqOlx79YJMKiF8MrY4eah+H3YYSJSPA3iu+BUDzc5
- K2ezUaBE4TSa4G0UFyz1dtMU9Hm4dXI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=o+2WkFWYL4czTT2YnwH0anl6ohMQd998DSdkXU2xHpo=;
+ b=iiK30T6MeQBi/1j+59nPPcF5Exila/6WcAH6jVQIipxXHTEbL0vY2p8PgDszoaWn6UYwm7
+ QuRakPqFxG1d4Sj920HLMSyNWUcZP1cP5yvzXQmPRsIpXzyUXHqz5Uu4p1l8i5qNpqLScl
+ j1ZhTjU5D0VVkcWNRWdseRg+/Jr6WgI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-4XV7EVmDP4CmVRiBUWZgEg-1; Mon,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-CiLh9-ttNPu62ZAfFr7JfA-1; Mon,
  28 Jul 2025 07:51:20 -0400
-X-MC-Unique: 4XV7EVmDP4CmVRiBUWZgEg-1
-X-Mimecast-MFC-AGG-ID: 4XV7EVmDP4CmVRiBUWZgEg_1753703479
+X-MC-Unique: CiLh9-ttNPu62ZAfFr7JfA-1
+X-Mimecast-MFC-AGG-ID: CiLh9-ttNPu62ZAfFr7JfA_1753703479
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAB1B1800373
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1CC71956069
  for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:19 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 696CE30055B5
+ id 59D9230001BE
  for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:51:19 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9567821E6925; Mon, 28 Jul 2025 13:51:16 +0200 (CEST)
+ id 99B3F21E6935; Mon, 28 Jul 2025 13:51:16 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PULL 2/4] qga: Remove trivial "Returns:" sections
-Date: Mon, 28 Jul 2025 13:51:14 +0200
-Message-ID: <20250728115116.2938867-3-armbru@redhat.com>
+Subject: [PULL 3/4] qga: Rephrase return docs to avoid type name
+Date: Mon, 28 Jul 2025 13:51:15 +0200
+Message-ID: <20250728115116.2938867-4-armbru@redhat.com>
 In-Reply-To: <20250728115116.2938867-1-armbru@redhat.com>
 References: <20250728115116.2938867-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -88,146 +88,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QAPI doc generator recently started to auto-generate return
-documentation when there is no "Returns:" section (commit 636c96cd77d
-"qapi: Fix undocumented return values by generating something").
-Remove "Returns:" sections where the auto-generated text is obviously
-no worse.  For instance, guest-info's documentation changes from
+"Returns: <description>" is rendered like
 
-    Return:
-       GuestAgentInfo -- GuestAgentInfo
+    Return: <Type> – <description>
 
-to
+Mentioning the type in the description again is commonly redundant.
+There is just one such description.  Rephrase it not to mention the
+type.
 
-    Return:
-       GuestAgentInfo
-
-The auto-generated returns all are in the exact same spot.
-
-We did this for qapi/ in commit 0462da9d6b1 (qapi: remove trivial
-"Returns:" sections).
+We did this for qapi/ in commit f7296f8de5c (qapi: rephrase return
+docs to avoid type name).
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250717115246.3830007-3-armbru@redhat.com>
+Message-ID: <20250717115246.3830007-4-armbru@redhat.com>
 Reviewed-by: John Snow <jsnow@redhat.com>
 ---
- qga/qapi-schema.json | 25 -------------------------
- 1 file changed, 25 deletions(-)
+ qga/qapi-schema.json | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index a569a14b55..a9cc9150dc 100644
+index a9cc9150dc..6c26ace3c9 100644
 --- a/qga/qapi-schema.json
 +++ b/qga/qapi-schema.json
-@@ -202,8 +202,6 @@
+@@ -534,8 +534,7 @@
+ #     discarded.  The default value is zero, meaning "discard every
+ #     free block".
  #
- # Get some information about the guest agent.
+-# Returns: A @GuestFilesystemTrimResponse which contains the status of
+-#     all trimmed paths.  (since 2.4)
++# Returns: status of all trimmed paths.  (since 2.4)
  #
--# Returns: @GuestAgentInfo
--#
- # Since: 0.15.0
+ # Since: 1.2
  ##
- { 'command': 'guest-info',
-@@ -285,8 +283,6 @@
- # @count: maximum number of bytes to read (default is 4KB, maximum is
- #     48MB)
- #
--# Returns: @GuestFileRead
--#
- # Since: 0.15.0
- ##
- { 'command': 'guest-file-read',
-@@ -320,8 +316,6 @@
- # @count: bytes to write (actual bytes, after base64-decode), default
- #     is all content in buf-b64 buffer after base64 decoding
- #
--# Returns: @GuestFileWrite
--#
- # Since: 0.15.0
- ##
- { 'command': 'guest-file-write',
-@@ -387,8 +381,6 @@
- #
- # @whence: Symbolic or numeric code for interpreting offset
- #
--# Returns: @GuestFileSeek
--#
- # Since: 0.15.0
- ##
- { 'command': 'guest-file-seek',
-@@ -428,9 +420,6 @@
- #
- # Get guest fsfreeze state.
- #
--# Returns: GuestFsfreezeStatus ("thawed", "frozen", etc., as defined
--#     below)
--#
- # .. note:: This may fail to properly report the current state as a
- #    result of some other guest processes having issued an fs
- #    freeze/thaw.
-@@ -749,8 +738,6 @@
- #
- # Get list of guest IP addresses, MAC addresses and netmasks.
- #
--# Returns: List of GuestNetworkInterface
--#
- # Since: 1.1
- ##
- { 'command': 'guest-network-get-interfaces',
-@@ -1251,8 +1238,6 @@
- #
- # Get information relating to guest memory blocks.
- #
--# Returns: @GuestMemoryBlockInfo
--#
- # Since: 2.3
- ##
- { 'command': 'guest-get-memory-block-info',
-@@ -1298,8 +1283,6 @@
- #
- # @pid: pid returned from guest-exec
- #
--# Returns: GuestExecStatus
--#
- # Since: 2.5
- ##
- { 'command': 'guest-exec-status',
-@@ -1458,8 +1441,6 @@
- #
- # Retrieves the timezone information from the guest.
- #
--# Returns: A GuestTimezone dictionary.
--#
- # Since: 2.10
- ##
- { 'command': 'guest-get-timezone',
-@@ -1533,8 +1514,6 @@
- #
- # Retrieve guest operating system information
- #
--# Returns: @GuestOSInfo
--#
- # Since: 2.10
- ##
- { 'command': 'guest-get-osinfo',
-@@ -1604,8 +1583,6 @@
- #
- # Retrieve information about device drivers in Windows guest
- #
--# Returns: @GuestDeviceInfo
--#
- # Since: 5.2
- ##
- { 'command': 'guest-get-devices',
-@@ -1633,8 +1610,6 @@
- #
- # @username: the user account to add the authorized keys
- #
--# Returns: @GuestAuthorizedKeys
--#
- # Since: 5.2
- ##
- { 'command': 'guest-ssh-get-authorized-keys',
 -- 
 2.49.0
 
