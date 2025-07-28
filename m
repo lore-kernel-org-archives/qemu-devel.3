@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5BBCC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 04:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B7DC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 05:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugF2M-0001pf-5x; Mon, 28 Jul 2025 00:00:32 -0400
+	id 1ugG8y-00027i-GD; Mon, 28 Jul 2025 01:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ugF2A-0001mj-NO
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 00:00:18 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ugF27-00061B-65
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 00:00:18 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxmnHG9YZofiszAQ--.37141S3;
- Mon, 28 Jul 2025 12:00:07 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxM+TD9YZoSGwpAA--.14244S3;
- Mon, 28 Jul 2025 12:00:06 +0800 (CST)
-Subject: Re: [PATCH] hw/intc/loongarch_ipi: Fix start fail with smp cpu < smp
- maxcpus on KVM
-To: Song Gao <gaosong@loongson.cn>, lixianglai@loongson.cn
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250725081213.3867592-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <04542368-762b-a86b-8d76-333fec0e0aa9@loongson.cn>
-Date: Mon, 28 Jul 2025 11:58:22 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ugG4t-0006FQ-Dz
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 01:07:11 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ugG4r-0006D8-P5
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 01:07:11 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b3182c6d03bso4498322a12.0
+ for <qemu-devel@nongnu.org>; Sun, 27 Jul 2025 22:07:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753679228; x=1754284028; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LeeomvkRliYrwrP4xDn787GNt7lak0BADmBXfK1zEeY=;
+ b=RixaL5gymK3pYaFkXfIJsFvlo/HZO7s2GcMhCeJf7IFMx4sP5zG+ZZNyzgco0TQ4YA
+ PSXsyy3eQqS4zdc2qB3WFWPSsdfcVmgNj1Ojtx4fxd8VagZuyOFS7g0cktUj2JUtHKbN
+ quaQgILq/KfprRDVVuplp0N8wgmrxtpDMKAwbO6RL9AL/aKNq7/I8HEQeYkwLOftcMdh
+ mhP3H1otNGt1IaT2q6iJ9tGJ2vup+3IXRgXAD03IWldz6zj58rvMo8sn8fIxPZE5D00/
+ yv6zdszg+uUy6Xsg9rh1IAeby4fg6gziKGGkTaFIs5Xt3EcPQqvcRVud/oAN+38z+QiX
+ XIzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753679228; x=1754284028;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LeeomvkRliYrwrP4xDn787GNt7lak0BADmBXfK1zEeY=;
+ b=J8T56VcrupdgI05oy5vk/Oh0nJw6c9kSAlSn3IpOsFQTRpPmShqPBRSJezj+MluBzY
+ bZ2H02mre4je+gaM0FYh/RzRTo1ycex/OyNkNCasfvIZFpKLe8H54/Oxlin5Gk6r0qAX
+ j/SPCXyjpBGc1Ate9YCDLxdX7v7IxrTL1S+TsqH9inttgRHIjSyT5e1OnjXVF/jUmXAA
+ uoCu8l7z3T30nh2GI35SuzHoEYH0eYINzp+jkblVRBrrOReXMTrciFdhxouiQQmoUx2i
+ n5eVQYdfVOyAa3kv4bnyF9mi1mS2ENJrR4+Yi1Bd7rf3cBjjtr615eVsirsP6ucgV3+l
+ Yyvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/crzCNquk65NqBupJaDwTgcCN34t4x8djbSQ9UenmBu99LqqcgOdiA/fqZwf779Ha2yOOR3hoKlg6@nongnu.org
+X-Gm-Message-State: AOJu0YzQzEDwJ4s31GBvHg/2xsBHloCKuZyFK1N1OqkFVpoFD0ilYbm+
+ +rSicl4Rn6dgjIwpkIK/dWVBJfO+sMVG9oFtdyIr8OKOWHmJJYEJ7I56viZIEkpO1G4yWBubT9b
+ wYQlZ
+X-Gm-Gg: ASbGncsooRBxFqEL6eD595w88QDX5+1nRoSVItCPN2A9oLsqDEIZXSEg8BCifgDU56V
+ dMbkeKjY6aIXJcOXVoUMaYwcEhOS8+FUSlnI7/r9IA/8m/69h7jyZ7GudXEvvVrc+G/yPoKVuj5
+ 1OpBlG+J5VAiJTlzY0dHbInaR0LJG3FDV/nMFJxoAsQLCYFseQJbyHZPrnm87rQOOyfI79h2CEK
+ TL8tje8J5vKPA1X6L5UvgoJxbr7IwDjn+KWNOamgup/isAsAODrNd+CmBorPAzcpgCyatHxdcr5
+ SJZp0bpyMnjMAZu2P7jJyOxennCXy8uovIOyXqg5TzfwCUir0MnhicfFkDjb3XYEq78NsIjr8BC
+ TUOyaiCxpZ79YcDjvRc69fOMUc+wqG1MlGm3l88wZe65AT/+yKfCVtivKGedJbdj1ei+R8MkwWH
+ 8MwrAO4b634zTe
+X-Google-Smtp-Source: AGHT+IEh/dYny0ngQYUC+N3ZvuCIu+ECWtOs3Jnaj9ozmHlhQNyJAYYM04XykxYYA6MahVb/xtT5YQ==
+X-Received: by 2002:a17:902:c40f:b0:234:d292:be7a with SMTP id
+ d9443c01a7336-23fb3065fc9mr144150925ad.1.1753679227472; 
+ Sun, 27 Jul 2025 22:07:07 -0700 (PDT)
+Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
+ [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24007d9a31bsm22508285ad.103.2025.07.27.22.07.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 27 Jul 2025 22:07:07 -0700 (PDT)
+Message-ID: <b032eaf4-29ad-4016-8301-460aabaebf42@linaro.org>
+Date: Sun, 27 Jul 2025 19:07:03 -1000
 MIME-Version: 1.0
-In-Reply-To: <20250725081213.3867592-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/17] target/loongarch: Add common function
+ loongarch_check_pte()
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+References: <20250725013739.994437-1-maobibo@loongson.cn>
+ <20250725013739.994437-6-maobibo@loongson.cn>
+ <98090f39-b71a-4770-b9f8-9b7545e2442a@linaro.org>
+ <6148a822-0ddb-8c66-9496-a158b814251d@loongson.cn>
 Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <6148a822-0ddb-8c66-9496-a158b814251d@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxM+TD9YZoSGwpAA--.14244S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFyUCF1xKr13Jw4fAry7Arc_yoW5JFyUpr
- y5uF1Uur48Ary09asIqayUGa4UWw1IqF13uay3KFWxAFsxZw4FgFWDXFZYkry3Jw17AFWr
- XF42qa4Iva42yrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j5
- WrAUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.134,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,81 +108,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/27/25 17:15, Bibo Mao wrote:
+>>> +    uint64_t      pte;
+>>> +    hwaddr        physical;
+>>> +    int           ps;  /* page size shift */
+>>> +    int           prot;
+>>> +} mmu_context;
+>>
+>> QEMU coding style prefers CamelCase.
+> Will do, how about the name MMUContext?
+
+That sounds good.
 
 
-On 2025/7/25 下午4:12, Song Gao wrote:
-> QEMU start failed when smp cpu < smp maxcpus , because qemu send a NULL
-> cpu to KVM, this patch adds a check for kvm_ipi_access_regs() to fix it.
-> 
-> run with '-smp 1,maxcpus=4,sockets=4,cores=1,threads=1'
-> 
-> we got:
-> Unexpected error in kvm_device_access() at ../accel/kvm/kvm-all.c:3477:
-> qemu-system-loongarch64: KVM_SET_DEVICE_ATTR failed: Group 1073741825 attr 0x0000000000010000: Invalid argument
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/intc/loongarch_ipi_kvm.c | 27 ++++++++++++++++-----------
->   1 file changed, 16 insertions(+), 11 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
-> index 4cb3acc921..dd4c367abf 100644
-> --- a/hw/intc/loongarch_ipi_kvm.c
-> +++ b/hw/intc/loongarch_ipi_kvm.c
-> @@ -23,36 +23,41 @@ static void kvm_ipi_access_regs(void *opaque, bool write)
->       LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
->       IPICore *core;
->       uint64_t attr;
-> -    int cpu, fd = lis->dev_fd;
-> +    int i, cpu_index, fd = lis->dev_fd;
->   
->       if (fd == 0) {
->           return;
->       }
->   
-> -    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
-> -        core = &ipi->cpu[cpu];
-> -        attr = (cpu << 16) | CORE_STATUS_OFF;
-> +    for (i = 0; i < ipi->num_cpu; i++) {
-> +        core = &ipi->cpu[i];
-> +        if (core->cpu == NULL) {
-> +            continue;
-> +        }
-> +        cpu_index = i;
-> +
-> +        attr = (cpu_index << 16) | CORE_STATUS_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->status, write);
->   
-> -        attr = (cpu << 16) | CORE_EN_OFF;
-> +        attr = (cpu_index << 16) | CORE_EN_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->en, write);
->   
-> -        attr = (cpu << 16) | CORE_SET_OFF;
-> +        attr = (cpu_index << 16) | CORE_SET_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->set, write);
->   
-> -        attr = (cpu << 16) | CORE_CLEAR_OFF;
-> +        attr = (cpu_index << 16) | CORE_CLEAR_OFF;
->           kvm_ipi_access_reg(fd, attr, &core->clear, write);
->   
-> -        attr = (cpu << 16) | CORE_BUF_20;
-> +        attr = (cpu_index << 16) | CORE_BUF_20;
->           kvm_ipi_access_reg(fd, attr, &core->buf[0], write);
->   
-> -        attr = (cpu << 16) | CORE_BUF_28;
-> +        attr = (cpu_index << 16) | CORE_BUF_28;
->           kvm_ipi_access_reg(fd, attr, &core->buf[2], write);
->   
-> -        attr = (cpu << 16) | CORE_BUF_30;
-> +        attr = (cpu_index << 16) | CORE_BUF_30;
->           kvm_ipi_access_reg(fd, attr, &core->buf[4], write);
->   
-> -        attr = (cpu << 16) | CORE_BUF_38;
-> +        attr = (cpu_index << 16) | CORE_BUF_38;
->           kvm_ipi_access_reg(fd, attr, &core->buf[6], write);
->       }
->   }
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-
+r~
 
