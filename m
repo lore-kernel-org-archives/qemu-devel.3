@@ -4,78 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6149FC83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738ADC87FCB
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 13:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugO7C-0006Hi-TP; Mon, 28 Jul 2025 09:42:10 -0400
+	id 1ugO7V-0000vT-Az; Mon, 28 Jul 2025 09:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ugO6j-0004ds-FE
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 09:41:41 -0400
-Received: from p-east3-cluster2-host2-snip4-10.eps.apple.com ([57.103.87.151]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ugO6c-0004HV-IW
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 09:41:35 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-3 (Postfix) with ESMTPS id
- DEC451800206; Mon, 28 Jul 2025 13:41:24 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=GnI7yihIhxO/MfyPp51MK/159FgRzNLLzyL6PiBkK5s=;
- h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
- b=QLsfeg6o+3BVBuQ2Iqw0X6360am8iDK01hdKtoaWdduAl7UauXv6W+NvMuN5wpyBZ69swk/LZMuMZZXmBWavHjJg/clhExMXfZI6ZVYN2H+/E0+Vw9r6Se36/on7L+l6S0hYpzK4Ggkm/2M1R89V+7LqGleZiqKEM3TVdE6+3V18nXCHtLDj6KhW2xj19WCXXxIlnYR1gQgQr3TfUs2QQYdOAA0CI0J5Kd2+5v8uQsggcWyLY0b3N/4Feo2oa6PQISnZKsiDcrVixt/21tJSk7HCLYHY2J2ADSVWeQzan2LlnZ9OG9Bah66QZF1HFWpyGpL/DXJyLxL+UnFxBSiGHw==
-X-Client-IP: 46.189.47.18
-Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-3 (Postfix) with ESMTPSA id
- 5ED2A18001F5; Mon, 28 Jul 2025 13:41:22 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v5 03/13] hw/intc: Add hvf vGIC interrupt controller support
-Date: Mon, 28 Jul 2025 15:41:04 +0200
-Message-Id: <20250728134114.77545-4-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250728134114.77545-1-mohamed@unpredictable.fr>
-References: <20250728134114.77545-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugO7O-0008Hp-66
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 09:42:18 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugO7J-0004RK-L2
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 09:42:17 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45618ddd62fso45212305e9.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 06:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753710131; x=1754314931; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qAr6A66B9NH/9pV4SaEsrVvi6dNZp+eTeUeWyJpPMtw=;
+ b=eC4TMvmqAug71kPJtxp8bvWi3Gc13oBglMovr+tyVKPVU7ENAraNDSN7oqYILGuFTw
+ MvTu9LXqPq2Exk3c9oKRg1wPeIxENGvththElv8z9URxsTCsya7daWmULcoKlXFWMXpC
+ SUCeO6ALHnQKGctlG7onuWbqXOsVHsvgIxzdgxS+O96V15SqF5aDlIQg3KINn3WW94h7
+ I0EK4FEGw7wY6fYMobqlX15SnlBs7YWXVShccrCs5u66mUUimQZqwLyNONOtid7lpt5L
+ NeYZ6GVMaqW6CDL1Rv1VsvuWaz1CIw+7TLTG8dW3O8lCcXALR1kXw8Dyzw2yQ9U9PY2/
+ YgqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753710131; x=1754314931;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qAr6A66B9NH/9pV4SaEsrVvi6dNZp+eTeUeWyJpPMtw=;
+ b=kuMwuaVfsg/lpGaS+aJx9Udd9HDLKJ+nM3kRv4ourwWk+LZAyqDRZd6s9ThbYx+5UG
+ Py3Kkjgke5mjAUuuuS2st8yDtqY68ljZMXEVmLmZrJ4BbFl5gucx/j2rdchh8BBLVwlj
+ ihjuqHqvKlZ0H+dx61Yi2+lSas5siro4VgZX5KxA/wyIZOJ0LmtXg3qmKN59vu5wr4R/
+ DlPCBW+qO0idufjcxpowirb2g/X4e1K5bvqPQomAs3JDO4/0wH2Z6sdiaWk0rBVkVpuk
+ q1PDZNfyALOR+wnrwc7D83fe4j+qpuZ8rFFRhpOGC+KMUpqaqgnteCwNjjjITW82EmjU
+ cZmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0/rsgQo9q9zIR7P04k8CAd4CimiC5mIr09WmdO30ktbwbeFNMYRhLwDfQoBpY36KuW1yqozSNpzI0@nongnu.org
+X-Gm-Message-State: AOJu0Yx2Sn+c1zD9bJlo0MTxv1UgkDKmjUL51Gg6HIGt2cuk9t0p5Yae
+ 7u5V+K4AhFpZq+4CiiYe562k8i0KCSef9dFdlpJWCSpyKTfjHvJpXamc07yJLNnQYNrf917ofmU
+ HIPei
+X-Gm-Gg: ASbGncukKfDGcgp15UNoVZwJAm6SEImlh/dA4vUIsLUVLeC60DPdortenvidCG0nJ4i
+ xJOXxNfh6V+UFQHAR0pJ4OwirvrbbMTlsYKJ1l0XIvb6Lm/hw/9FTopRsoprhQ8G5KO1F5bF+1n
+ dwBhCPJE4mjaUGDrjqUh+MBeh39ovmGOMu9TFjK1ho9R9OycG/4W47uXj2QZAQWc3f8NIPMBmre
+ f9RdcO+SFwTHfAS2eUqpIBdmq7LbbbRjJjPsciQJpqoYyLhTsUI4pGeufJ3yrt28wJ4Q2TOtirI
+ Z+P8zhkad7mXeENTXzDsm3r0zaLszROe8rt/mSDEnTW5TGyYW2ZR3CT2bso0VKnJT9E5k5UtWr6
+ W6c4cwnX2GmO/ogyd9UssDhEJX1pwous1h7uNNdG4Q4FpdmYY2vHYrRobKiDG+SGWUg==
+X-Google-Smtp-Source: AGHT+IHADTbJ26+/+qg7MQVR+QhWHt4IQmB96gPZcZTPDGVVx+0Bf5Q0QkM7Y6fnsPea4Ehh4hSW6w==
+X-Received: by 2002:a05:600c:3ace:b0:456:1611:ce85 with SMTP id
+ 5b1f17b1804b1-45876549d0dmr90787115e9.21.1753710131078; 
+ Mon, 28 Jul 2025 06:42:11 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4586e7cccdfsm127607365e9.0.2025.07.28.06.42.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Jul 2025 06:42:10 -0700 (PDT)
+Message-ID: <60ac6175-5bd8-4c41-8d78-2a54f838bd40@linaro.org>
+Date: Mon, 28 Jul 2025 15:42:09 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1? v2] pcie_sriov: Fix configuration and state
+ synchronization
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>, qemu-stable@nongnu.org,
+ Corentin BAYET <corentin.bayet@reversetactics.com>
+References: <20250727-wmask-v2-1-394910b1c0b6@rsg.ci.i.u-tokyo.ac.jp>
+ <0e122e2a-898f-46ca-b484-291b0091d928@linaro.org>
+ <20250728061838-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250728061838-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: KKWb1oxwh8ZlBQAc7Vy8i7Rfa-6S1wRJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDEwMSBTYWx0ZWRfX6vF5lkDhcE07
- j+kYFuovkM7YCTw+WG4daRr0d865GOtj9jVdQufIfxmbYSOuqu3mC03OLyM+v5nwJXtADR5bvo/
- c61udX0odl4nTeW7vViQAL3cqZS/K1re6meNxeFlOLy7MF9MoMSP9QUPmsTRLeehzYJVFUUvFJX
- 4aVtU6h3qAs4O/ehYJUidUe5bxoxHemnZuJjIl5oJFzCufOp8FcYZd06ZYghrpn/dmT7rJj9NWo
- ti2lSp3hBV10HL72JQxQ/5Ex1RWi3FBvfWD0L4fZqcpve2eU6AV3Ae/vkZF2gc9vt/TjL4UxY=
-X-Proofpoint-ORIG-GUID: KKWb1oxwh8ZlBQAc7Vy8i7Rfa-6S1wRJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 phishscore=0 mlxlogscore=999 mlxscore=0 spamscore=0
- suspectscore=0 clxscore=1030 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2507280101
-Received-SPF: pass client-ip=57.103.87.151;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,756 +108,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This opens up the door to nested virtualisation support.
+On 28/7/25 12:19, Michael S. Tsirkin wrote:
+> On Mon, Jul 28, 2025 at 12:09:34PM +0200, Philippe Mathieu-Daudé wrote:
+>> Hi Akihiko, Michael,
+>>
+>> On 27/7/25 08:50, Akihiko Odaki wrote:
+>>> Fix issues in PCIe SR-IOV configuration register handling that caused
+>>> inconsistent internal state due to improper write mask handling and
+>>> incorrect migration behavior.
+>>>
+>>> Two main problems were identified:
+>>>
+>>> 1. VF Enable bit write mask handling:
+>>>      pcie_sriov_config_write() incorrectly assumed that its val parameter
+>>>      was already masked, causing it to ignore the actual write mask.
+>>>      This led to the VF Enable bit being processed even when masked,
+>>>      resulting in incorrect VF registration/unregistration. It is
+>>>      identified as CVE-2025-54567.
+>>>
+>>> 2. Migration state inconsistency:
+>>>      pcie_sriov_pf_post_load() unconditionally called register_vfs()
+>>>      regardless of the VF Enable bit state, creating inconsistent
+>>>      internal state when VFs should not be enabled. Additionally,
+>>>      it failed to properly update the NumVFs write mask based on
+>>>      the current configuration. It is identified as CVE-2025-54566.
+>>>
+>>> Root cause analysis revealed that both functions relied on incorrect
+>>> special-case assumptions instead of properly reading and consuming
+>>> the actual configuration values. This change introduces a unified
+>>> consume_config() function that reads actual configuration values and
+>>> synchronize the internal state without special-case assumptions.
+>>>
+>>> The solution only adds register read overhead in non-hot-path code
+>>> while ensuring correct SR-IOV state management across configuration
+>>> writes and migration scenarios.
+>>>
+>>> Fixes: 5e7dd17e4348 ("pcie_sriov: Remove num_vfs from PCIESriovPF")
+>>> Fixes: f9efcd47110d ("pcie_sriov: Register VFs after migration")
+>>> Fixes: CVE-2025-54566
+>>> Fixes: CVE-2025-54567
+>>> Cc: qemu-stable@nongnu.org
+>>> Reported-by: Corentin BAYET <corentin.bayet@reversetactics.com>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>> Changes in v2:
+>>> - Changed to perform the VFEnable write mask update only when the bit is
+>>>     cleared. It clarifies the intention is to prevent setting the bit
+>>>     (i.e., the bit is currently cleared) when the NumVF holds an invalid
+>>>     value. The code execution when the bit is set will be also a bit
+>>>     shorter.
+>>> - Added references to the relevant CVEs.
+>>> - Link to v1: https://lore.kernel.org/qemu-devel/20250713-wmask-v1-1-4c744cdb32c0@rsg.ci.i.u-tokyo.ac.jp
+>>> ---
+>>>    hw/pci/pcie_sriov.c | 42 +++++++++++++++++++++++-------------------
+>>>    1 file changed, 23 insertions(+), 19 deletions(-)
+>>>
+>>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+>>> index 3ad18744f4a8ed2b35144fafcdc8e7e00fec3672..8a4bf0d6f7c0c6e9ec30df2e9bc55967e48cf6c3 100644
+>>> --- a/hw/pci/pcie_sriov.c
+>>> +++ b/hw/pci/pcie_sriov.c
+>>> @@ -64,6 +64,27 @@ static void unregister_vfs(PCIDevice *dev)
+>>>        pci_set_word(dev->wmask + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0xffff);
+>>>    }
+>>> +static void consume_config(PCIDevice *dev)
+>>> +{
+>>> +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+>>> +
+>>> +    if (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) {
+>>> +        register_vfs(dev);
+>>> +    } else {
+>>> +        uint8_t *wmask = dev->wmask + dev->exp.sriov_cap;
+>>> +        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
+>>> +        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
+>>> +
+>>> +        unregister_vfs(dev);
+>>> +
+>>> +        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
+>>> +            wmask_val |= PCI_SRIOV_CTRL_VFE;
+>>> +        }
+>>> +
+>>> +        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
+>>> +    }
+>>> +}
+>>> +
+>>>    static bool pcie_sriov_pf_init_common(PCIDevice *dev, uint16_t offset,
+>>>                                          uint16_t vf_dev_id, uint16_t init_vfs,
+>>>                                          uint16_t total_vfs, uint16_t vf_offset,
+>>> @@ -416,30 +437,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+>>>        trace_sriov_config_write(dev->name, PCI_SLOT(dev->devfn),
+>>>                                 PCI_FUNC(dev->devfn), off, val, len);
+>>> -    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+>>> -        if (val & PCI_SRIOV_CTRL_VFE) {
+>>> -            register_vfs(dev);
+>>> -        } else {
+>>> -            unregister_vfs(dev);
+>>> -        }
+>>> -    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
+>>> -        uint8_t *cfg = dev->config + sriov_cap;
+>>> -        uint8_t *wmask = dev->wmask + sriov_cap;
+>>> -        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
+>>> -        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
+>>> -
+>>> -        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
+>>> -            wmask_val |= PCI_SRIOV_CTRL_VFE;
+>>> -        }
+>>> -
+>>> -        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
+>>> -    }
+>>> +    consume_config(dev);
+>>
+>> As usual, this would be simpler to review extracting consume_config() in
+>> a preliminary patch, then the real fix.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/intc/arm_gicv3_hvf.c | 722 ++++++++++++++++++++++++++++++++++++++++
- hw/intc/meson.build     |   1 +
- 2 files changed, 723 insertions(+)
- create mode 100644 hw/intc/arm_gicv3_hvf.c
+Splitting in 2 would be smth like:
 
-diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
-new file mode 100644
-index 0000000000..1e9662230d
---- /dev/null
-+++ b/hw/intc/arm_gicv3_hvf.c
-@@ -0,0 +1,722 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * ARM Generic Interrupt Controller using HVF platform support
-+ *
-+ * Copyright (c) 2025 Mohamed Mediouni
-+ * Based on vGICv3 KVM code by Pavel Fedin
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "qemu/error-report.h"
-+#include "qemu/module.h"
-+#include "system/runstate.h"
-+#include "system/hvf.h"
-+#include "system/hvf_int.h"
-+#include "hvf_arm.h"
-+#include "gicv3_internal.h"
-+#include "vgic_common.h"
-+#include "qom/object.h"
-+#include "target/arm/cpregs.h"
-+#include <Hypervisor/Hypervisor.h>
-+
-+struct HVFARMGICv3Class {
-+    ARMGICv3CommonClass parent_class;
-+    DeviceRealize parent_realize;
-+    ResettablePhases parent_phases;
-+};
-+
-+#define TYPE_HVF_GICV3 "hvf-arm-gicv3"
-+typedef struct HVFARMGICv3Class HVFARMGICv3Class;
-+
-+/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
-+DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
-+                     HVF_GICV3, TYPE_HVF_GICV3);
-+
-+/*
-+ * Loop through each distributor IRQ related register; since bits
-+ * corresponding to SPIs and PPIs are RAZ/WI when affinity routing
-+ * is enabled, we skip those.
-+ */
-+#define for_each_dist_irq_reg(_irq, _max, _field_width) \
-+    for (_irq = GIC_INTERNAL; _irq < _max; _irq += (32 / _field_width))
-+
-+static void hvf_dist_get_priority(GICv3State *s, hv_gic_distributor_reg_t offset
-+    , uint8_t *bmp)
+-- >8 --
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 3ad18744f4a..f9a646bc08d 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -64,6 +64,30 @@ static void unregister_vfs(PCIDevice *dev)
+      pci_set_word(dev->wmask + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 
+0xffff);
+  }
+
++static void consume_config(PCIDevice *dev, uint32_t off,
++                           uint32_t val, int len)
 +{
-+    uint64_t reg;
-+    uint32_t *field;
-+    int irq;
-+    field = (uint32_t *)(bmp);
++    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
 +
-+    for_each_dist_irq_reg(irq, s->num_irq, 8) {
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        *field = reg;
-+        offset += 4;
-+        field++;
-+    }
-+}
-+
-+static void hvf_dist_put_priority(GICv3State *s, hv_gic_distributor_reg_t offset
-+    , uint8_t *bmp)
-+{
-+    uint32_t reg, *field;
-+    int irq;
-+    field = (uint32_t *)(bmp);
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 8) {
-+        reg = *field;
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
-+        field++;
-+    }
-+}
-+
-+static void hvf_dist_get_edge_trigger(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                                      uint32_t *bmp)
-+{
-+    uint64_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 2) {
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        reg = half_unshuffle32(reg >> 1);
-+        if (irq % 32 != 0) {
-+            reg = (reg << 16);
-+        }
-+        *gic_bmp_ptr32(bmp, irq) |= reg;
-+        offset += 4;
-+    }
-+}
-+
-+static void hvf_dist_put_edge_trigger(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                                      uint32_t *bmp)
-+{
-+    uint32_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 2) {
-+        reg = *gic_bmp_ptr32(bmp, irq);
-+        if (irq % 32 != 0) {
-+            reg = (reg & 0xffff0000) >> 16;
++    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
++        if (val & PCI_SRIOV_CTRL_VFE) {
++            register_vfs(dev);
 +        } else {
-+            reg = reg & 0xffff;
++            unregister_vfs(dev);
 +        }
-+        reg = half_shuffle32(reg) << 1;
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
-+    }
-+}
++    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
++        uint8_t *wmask = dev->wmask + dev->exp.sriov_cap;
++        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
++        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
 +
-+/* Read a bitmap register group from the kernel VGIC. */
-+static void hvf_dist_getbmp(GICv3State *s, hv_gic_distributor_reg_t offset, uint32_t *bmp)
-+{
-+    uint64_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 1) {
-+
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        *gic_bmp_ptr32(bmp, irq) = reg;
-+        offset += 4;
-+    }
-+}
-+
-+static void hvf_dist_putbmp(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                            hv_gic_distributor_reg_t clroffset, uint32_t *bmp)
-+{
-+    uint32_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 1) {
-+        /*
-+         * If this bitmap is a set/clear register pair, first write to the
-+         * clear-reg to clear all bits before using the set-reg to write
-+         * the 1 bits.
-+         */
-+        if (clroffset != 0) {
-+            reg = 0;
-+            hv_gic_set_distributor_reg(clroffset, reg);
-+            clroffset += 4;
++        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
++            wmask_val |= PCI_SRIOV_CTRL_VFE;
 +        }
-+        reg = *gic_bmp_ptr32(bmp, irq);
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
++
++        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
 +    }
 +}
 +
-+static void hvf_gicv3_check(GICv3State *s)
-+{
-+    uint64_t reg;
-+    uint32_t num_irq;
-+
-+    /* Sanity checking s->num_irq */
-+    hv_gic_get_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_TYPER, &reg);
-+    num_irq = ((reg & 0x1f) + 1) * 32;
-+
-+    if (num_irq < s->num_irq) {
-+        error_report("Model requests %u IRQs, but HVF supports max %u",
-+                     s->num_irq, num_irq);
-+        abort();
-+    }
-+}
-+
-+static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    uint32_t reg;
-+    uint64_t reg64;
-+    int i, num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    reg = c->gicr_waker;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-+
-+    reg = c->gicr_igroupr0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICENABLER0, reg);
-+    reg = c->gicr_ienabler0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0, reg);
-+
-+    /* Restore config before pending so we treat level/edge correctly */
-+    reg = half_shuffle32(c->edge_trigger >> 16) << 1;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICPENDR0, reg);
-+    reg = c->gicr_ipendr0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICACTIVER0, reg);
-+    reg = c->gicr_iactiver0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0, reg);
-+
-+    for (i = 0; i < GIC_INTERNAL; i += 4) {
-+        reg = c->gicr_ipriorityr[i] |
-+            (c->gicr_ipriorityr[i + 1] << 8) |
-+            (c->gicr_ipriorityr[i + 2] << 16) |
-+            (c->gicr_ipriorityr[i + 3] << 24);
-+        hv_gic_set_redistributor_reg(vcpu,
-+            HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, reg);
-+    }
-+
-+    /* CPU interface state */
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, c->icc_sre_el1);
-+
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_CTLR_EL1,
-+                    c->icc_ctlr_el1[GICV3_NS]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN0_EL1,
-+                    c->icc_igrpen[GICV3_G0]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN1_EL1,
-+                    c->icc_igrpen[GICV3_G1NS]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_PMR_EL1, c->icc_pmr_el1);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR0_EL1, c->icc_bpr[GICV3_G0]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR1_EL1, c->icc_bpr[GICV3_G1NS]);
-+
-+    num_pri_bits = ((c->icc_ctlr_el1[GICV3_NS] &
-+                    ICC_CTLR_EL1_PRIBITS_MASK) >>
-+                    ICC_CTLR_EL1_PRIBITS_SHIFT) + 1;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+           reg64 = c->icc_apr[GICV3_G0][3];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3, reg64);
-+        reg64 = c->icc_apr[GICV3_G0][2];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2, reg64);
-+        /* fall through */
-+    case 6:
-+        reg64 = c->icc_apr[GICV3_G0][1];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 1, reg64);
-+        /* fall through */
-+    default:
-+        reg64 = c->icc_apr[GICV3_G0][0];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1, reg64);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+        reg64 = c->icc_apr[GICV3_G1NS][3];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 3, reg64);
-+        reg64 = c->icc_apr[GICV3_G1NS][2];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 2, reg64);
-+        /* fall through */
-+    case 6:
-+        reg64 = c->icc_apr[GICV3_G1NS][1];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 1, reg64);
-+        /* fall through */
-+    default:
-+        reg64 = c->icc_apr[GICV3_G1NS][0];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1, reg64);
-+    }
-+
-+    if (!hvf_arm_el2_enabled()) {
-+        return;
-+    }
-+
-+    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_VMCR_EL2, c->ich_vmcr_el2);
-+    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_HCR_EL2, c->ich_hcr_el2);
-+
-+    for (int i = 0; i < GICV3_LR_MAX; i++) {
-+        hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_LR0_EL2, c->ich_lr_el2[i]);
-+    }
-+
-+    num_pri_bits = c->vpribits;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 3,
-+                         c->ich_apr[GICV3_G0][3]);
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 2,
-+                         c->ich_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 1,
-+                         c->ich_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2,
-+                         c->ich_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 3,
-+                         c->ich_apr[GICV3_G1NS][3]);
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 2,
-+                         c->ich_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 1,
-+                         c->ich_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2,
-+                         c->ich_apr[GICV3_G1NS][0]);
-+    }
-+}
-+
-+static void hvf_gicv3_put(GICv3State *s)
-+{
-+    uint32_t reg;
-+    uint64_t redist_typer;
-+    int ncpu, i;
-+
-+    hvf_gicv3_check(s);
-+
-+    hv_vcpu_t vcpu0 = s->cpu[0].cpu->accel->fd;
-+    hv_gic_get_redistributor_reg(vcpu0, HV_GIC_REDISTRIBUTOR_REG_GICR_TYPER
-+        , &redist_typer);
-+
-+    reg = s->gicd_ctlr;
-+    hv_gic_set_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_CTLR, reg);
-+
-+    if (redist_typer & GICR_TYPER_PLPIS) {
-+        error_report("ITS is not supported on HVF.");
-+        abort();
-+    }
-+
-+    /* per-CPU state */
-+
-+    for (ncpu = 0; ncpu < s->num_cpu; ncpu++) {
-+        run_on_cpu_data data;
-+        data.host_ptr = &s->cpu[ncpu];
-+        run_on_cpu(s->cpu[ncpu].cpu, hvf_gicv3_put_cpu, data);
-+    }
-+
-+    /* s->enable bitmap -> GICD_ISENABLERn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISENABLER0
-+        , HV_GIC_DISTRIBUTOR_REG_GICD_ICENABLER0, s->enabled);
-+
-+    /* s->group bitmap -> GICD_IGROUPRn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_IGROUPR0
-+        , 0, s->group);
-+
-+    /* Restore targets before pending to ensure the pending state is set on
-+     * the appropriate CPU interfaces in the kernel
-+     */
-+
-+    /* s->gicd_irouter[irq] -> GICD_IROUTERn */
-+    for (i = GIC_INTERNAL; i < s->num_irq; i++) {
-+        uint32_t offset = HV_GIC_DISTRIBUTOR_REG_GICD_IROUTER32 + (8 * i)
-+            - (8 * GIC_INTERNAL);
-+        hv_gic_set_distributor_reg(offset, s->gicd_irouter[i]);
-+    }
-+
-+    /*
-+     * s->trigger bitmap -> GICD_ICFGRn
-+     * (restore configuration registers before pending IRQs so we treat
-+     * level/edge correctly)
-+     */
-+    hvf_dist_put_edge_trigger(s, HV_GIC_DISTRIBUTOR_REG_GICD_ICFGR0, s->edge_trigger);
-+
-+    /* s->pending bitmap -> GICD_ISPENDRn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISPENDR0,
-+        HV_GIC_DISTRIBUTOR_REG_GICD_ICPENDR0, s->pending);
-+
-+    /* s->active bitmap -> GICD_ISACTIVERn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISACTIVER0,
-+        HV_GIC_DISTRIBUTOR_REG_GICD_ICACTIVER0, s->active);
-+
-+    /* s->gicd_ipriority[] -> GICD_IPRIORITYRn */
-+    hvf_dist_put_priority(s, HV_GIC_DISTRIBUTOR_REG_GICD_IPRIORITYR0, s->gicd_ipriority);
-+}
-+
-+static void hvf_gicv3_get_cpu(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    uint64_t reg;
-+    int i, num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0,
-+                                 &reg);
-+    c->gicr_igroupr0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0,
-+                                 &reg);
-+    c->gicr_ienabler0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1,
-+                                 &reg);
-+    c->edge_trigger = half_unshuffle32(reg >> 1) << 16;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0,
-+                                 &reg);
-+    c->gicr_ipendr0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0,
-+                                 &reg);
-+    c->gicr_iactiver0 = reg;
-+
-+    for (i = 0; i < GIC_INTERNAL; i += 4) {
-+        hv_gic_get_redistributor_reg(
-+          vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, &reg);
-+        c->gicr_ipriorityr[i] = extract32(reg, 0, 8);
-+        c->gicr_ipriorityr[i + 1] = extract32(reg, 8, 8);
-+        c->gicr_ipriorityr[i + 2] = extract32(reg, 16, 8);
-+        c->gicr_ipriorityr[i + 3] = extract32(reg, 24, 8);
-+    }
-+
-+    /* CPU interface */
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, &c->icc_sre_el1);
-+
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_CTLR_EL1,
-+                       &c->icc_ctlr_el1[GICV3_NS]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN0_EL1,
-+                       &c->icc_igrpen[GICV3_G0]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN1_EL1,
-+                       &c->icc_igrpen[GICV3_G1NS]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_PMR_EL1, &c->icc_pmr_el1);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_BPR0_EL1, &c->icc_bpr[GICV3_G0]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_BPR1_EL1, &c->icc_bpr[GICV3_G1NS]);
-+    num_pri_bits = ((c->icc_ctlr_el1[GICV3_NS] & ICC_CTLR_EL1_PRIBITS_MASK) >>
-+                    ICC_CTLR_EL1_PRIBITS_SHIFT) +
-+                   1;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3,
-+                         &c->icc_apr[GICV3_G0][3]);
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2,
-+                         &c->icc_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 1,
-+                         &c->icc_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1,
-+                         &c->icc_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 3,
-+                         &c->icc_apr[GICV3_G1NS][3]);
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 2,
-+                         &c->icc_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 1,
-+                         &c->icc_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1,
-+                         &c->icc_apr[GICV3_G1NS][0]);
-+    }
-+
-+    /* Registers beyond this are with nested virt only */
-+    if (!hvf_arm_el2_enabled()) {
-+        return;
-+    }
-+
-+    hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_VMCR_EL2, &c->ich_vmcr_el2);
-+    hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_HCR_EL2, &c->ich_hcr_el2);
-+
-+    for (int i = 0; i < GICV3_LR_MAX; i++) {
-+        hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_LR0_EL2, &c->ich_lr_el2[i]);
-+    }
-+
-+    num_pri_bits = c->vpribits;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 3,
-+                         &c->ich_apr[GICV3_G0][3]);
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 2,
-+                         &c->ich_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 1,
-+                         &c->ich_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2,
-+                         &c->ich_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 3,
-+                         &c->ich_apr[GICV3_G1NS][3]);
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 2,
-+                         &c->ich_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 1,
-+                         &c->ich_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2,
-+                         &c->ich_apr[GICV3_G1NS][0]);
-+    }
-+}
-+
-+static void hvf_gicv3_get(GICv3State *s)
-+{
-+    uint64_t reg, redist_typer;
-+    int ncpu, i;
-+
-+    hvf_gicv3_check(s);
-+
-+    hv_vcpu_t vcpu0 = s->cpu[0].cpu->accel->fd;
-+    hv_gic_get_redistributor_reg(vcpu0,
-+        HV_GIC_REDISTRIBUTOR_REG_GICR_TYPER, &redist_typer);
-+
-+    hv_gic_get_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_CTLR, &reg);
-+    s->gicd_ctlr = reg;
-+
-+    /* Redistributor state (one per CPU) */
-+
-+    for (ncpu = 0; ncpu < s->num_cpu; ncpu++) {
-+        run_on_cpu_data data;
-+        data.host_ptr = &s->cpu[ncpu];
-+        run_on_cpu(s->cpu[ncpu].cpu, hvf_gicv3_get_cpu, data);
-+    }
-+
-+    if (redist_typer & GICR_TYPER_PLPIS) {
-+        error_report("ITS is not supported on HVF.");
-+        abort();
-+    }
-+
-+    /* GICD_IGROUPRn -> s->group bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_IGROUPR0, s->group);
-+
-+    /* GICD_ISENABLERn -> s->enabled bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISENABLER0, s->enabled);
-+
-+    /* GICD_ISPENDRn -> s->pending bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISPENDR0, s->pending);
-+
-+    /* GICD_ISACTIVERn -> s->active bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISACTIVER0, s->active);
-+
-+    /* GICD_ICFGRn -> s->trigger bitmap */
-+    hvf_dist_get_edge_trigger(s, HV_GIC_DISTRIBUTOR_REG_GICD_ICFGR0
-+        , s->edge_trigger);
-+
-+    /* GICD_IPRIORITYRn -> s->gicd_ipriority[] */
-+    hvf_dist_get_priority(s, HV_GIC_DISTRIBUTOR_REG_GICD_IPRIORITYR0
-+        , s->gicd_ipriority);
-+
-+    /* GICD_IROUTERn -> s->gicd_irouter[irq] */
-+    for (i = GIC_INTERNAL; i < s->num_irq; i++) {
-+        uint32_t offset = HV_GIC_DISTRIBUTOR_REG_GICD_IROUTER32
-+            + (8 * i) - (8 * GIC_INTERNAL);
-+        hv_gic_get_distributor_reg(offset, &s->gicd_irouter[i]);
-+    }
-+}
-+
-+static void hvf_gicv3_set_irq(void *opaque, int irq, int level)
-+{
-+    GICv3State *s = (GICv3State *)opaque;
-+    if (irq > s->num_irq) {
-+        return;
-+    }
-+    hv_gic_set_spi(GIC_INTERNAL + irq, !!level);
-+}
-+
-+static void hvf_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv3State *s;
-+    GICv3CPUState *c;
-+
-+    c = (GICv3CPUState *)env->gicv3state;
-+    s = c->gic;
-+
-+    c->icc_pmr_el1 = 0;
-+    /*
-+     * Architecturally the reset value of the ICC_BPR registers
-+     * is UNKNOWN. We set them all to 0 here; when the kernel
-+     * uses these values to program the ICH_VMCR_EL2 fields that
-+     * determine the guest-visible ICC_BPR register values, the
-+     * hardware's "writing a value less than the minimum sets
-+     * the field to the minimum value" behaviour will result in
-+     * them effectively resetting to the correct minimum value
-+     * for the host GIC.
-+     */
-+    c->icc_bpr[GICV3_G0] = 0;
-+    c->icc_bpr[GICV3_G1] = 0;
-+    c->icc_bpr[GICV3_G1NS] = 0;
-+
-+    c->icc_sre_el1 = 0x7;
-+    memset(c->icc_apr, 0, sizeof(c->icc_apr));
-+    memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
-+
-+    if (s->migration_blocker) {
-+        return;
-+    }
-+
-+    /* Initialize to actual HW supported configuration */
-+    hv_gic_get_icc_reg(c->cpu->accel->fd,
-+        HV_GIC_ICC_REG_CTLR_EL1, &c->icc_ctlr_el1[GICV3_NS]);
-+
-+    c->icc_ctlr_el1[GICV3_S] = c->icc_ctlr_el1[GICV3_NS];
-+}
-+
-+static void hvf_gicv3_reset_hold(Object *obj, ResetType type)
-+{
-+    GICv3State *s = ARM_GICV3_COMMON(obj);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
-+
-+    if (kgc->parent_phases.hold) {
-+        kgc->parent_phases.hold(obj, type);
-+    }
-+
-+    hvf_gicv3_put(s);
-+}
-+
-+
-+/*
-+ * CPU interface registers of GIC needs to be reset on CPU reset.
-+ * For the calling arm_gicv3_icc_reset() on CPU reset, we register
-+ * below ARMCPRegInfo. As we reset the whole cpu interface under single
-+ * register reset, we define only one register of CPU interface instead
-+ * of defining all the registers.
-+ */
-+static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
-+    { .name = "ICC_CTLR_EL1", .state = ARM_CP_STATE_BOTH,
-+      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 12, .opc2 = 4,
-+      /*
-+       * If ARM_CP_NOP is used, resetfn is not called,
-+       * So ARM_CP_NO_RAW is appropriate type.
-+       */
-+      .type = ARM_CP_NO_RAW,
-+      .access = PL1_RW,
-+      .readfn = arm_cp_read_zero,
-+      .writefn = arm_cp_write_ignore,
-+      /*
-+       * We hang the whole cpu interface reset routine off here
-+       * rather than parcelling it out into one little function
-+       * per register
-+       */
-+      .resetfn = hvf_gicv3_icc_reset,
-+    },
-+};
-+
-+static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
-+{
-+    GICv3State *s = HVF_GICV3(dev);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
-+    Error *local_err = NULL;
-+    int i;
-+
-+    kgc->parent_realize(dev, &local_err);
-+    if (local_err) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-+    if (s->revision != 3) {
-+        error_setg(errp, "unsupported GIC revision %d for platform GIC",
-+                   s->revision);
-+    }
-+
-+    if (s->security_extn) {
-+        error_setg(errp, "the platform vGICv3 does not implement the "
-+                   "security extensions");
-+        return;
-+    }
-+
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the platform GIC");
-+        return;
-+    }
-+
-+    if (s->nb_redist_regions > 1) {
-+        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
-+                   "supported by HVF");
-+        error_append_hint(errp, "A maximum of %d VCPUs can be used",
-+                          s->redist_region_count[0]);
-+        return;
-+    }
-+
-+    gicv3_init_irqs_and_mmio(s, hvf_gicv3_set_irq, NULL);
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
-+
-+        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
-+    }
-+
-+    if (s->maint_irq && s->maint_irq != HV_GIC_INT_MAINTENANCE) {
-+        error_setg(errp, "vGIC maintenance IRQ mismatch with the hardcoded one in HVF.");
-+        return;
-+    }
-+}
-+
-+static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_CLASS(klass);
-+
-+    agcc->pre_save = hvf_gicv3_get;
-+    agcc->post_load = hvf_gicv3_put;
-+
-+    device_class_set_parent_realize(dc, hvf_gicv3_realize,
-+                                    &kgc->parent_realize);
-+    resettable_class_set_parent_phases(rc, NULL, hvf_gicv3_reset_hold, NULL,
-+                                       &kgc->parent_phases);
-+}
-+
-+static const TypeInfo hvf_arm_gicv3_info = {
-+    .name = TYPE_HVF_GICV3,
-+    .parent = TYPE_ARM_GICV3_COMMON,
-+    .instance_size = sizeof(GICv3State),
-+    .class_init = hvf_gicv3_class_init,
-+    .class_size = sizeof(HVFARMGICv3Class),
-+};
-+
-+static void hvf_gicv3_register_types(void)
-+{
-+    type_register_static(&hvf_arm_gicv3_info);
-+}
-+
-+type_init(hvf_gicv3_register_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 3137521a4a..f446e966e3 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -42,6 +42,7 @@ specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common.c
- specific_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
- specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
- specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
-+specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
- specific_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
- specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
- specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
--- 
-2.39.5 (Apple Git-154)
+  static bool pcie_sriov_pf_init_common(PCIDevice *dev, uint16_t offset,
+                                        uint16_t vf_dev_id, uint16_t 
+init_vfs,
+                                        uint16_t total_vfs, uint16_t 
+vf_offset,
+@@ -416,24 +440,7 @@ void pcie_sriov_config_write(PCIDevice *dev, 
+uint32_t address,
+      trace_sriov_config_write(dev->name, PCI_SLOT(dev->devfn),
+                               PCI_FUNC(dev->devfn), off, val, len);
+
+-    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+-        if (val & PCI_SRIOV_CTRL_VFE) {
+-            register_vfs(dev);
+-        } else {
+-            unregister_vfs(dev);
+-        }
+-    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
+-        uint8_t *cfg = dev->config + sriov_cap;
+-        uint8_t *wmask = dev->wmask + sriov_cap;
+-        uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
+-        uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
+-
+-        if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
+-            wmask_val |= PCI_SRIOV_CTRL_VFE;
+-        }
+-
+-        pci_set_word(wmask + PCI_SRIOV_CTRL, wmask_val);
+-    }
++    consume_config(dev, off, val, len);
+  }
+
+  void pcie_sriov_pf_post_load(PCIDevice *dev)
+---
+
+and:
+
+-- >8 --
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index f9a646bc08d..8a4bf0d6f7c 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -64,22 +64,19 @@ static void unregister_vfs(PCIDevice *dev)
+      pci_set_word(dev->wmask + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 
+0xffff);
+  }
+
+-static void consume_config(PCIDevice *dev, uint32_t off,
+-                           uint32_t val, int len)
++static void consume_config(PCIDevice *dev)
+  {
+      uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+
+-    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+-        if (val & PCI_SRIOV_CTRL_VFE) {
+-            register_vfs(dev);
+-        } else {
+-            unregister_vfs(dev);
+-        }
+-    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
++    if (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) {
++        register_vfs(dev);
++    } else {
+          uint8_t *wmask = dev->wmask + dev->exp.sriov_cap;
+          uint16_t num_vfs = pci_get_word(cfg + PCI_SRIOV_NUM_VF);
+          uint16_t wmask_val = PCI_SRIOV_CTRL_MSE | PCI_SRIOV_CTRL_ARI;
+
++        unregister_vfs(dev);
++
+          if (num_vfs <= pci_get_word(cfg + PCI_SRIOV_TOTAL_VF)) {
+              wmask_val |= PCI_SRIOV_CTRL_VFE;
+          }
+@@ -440,13 +437,13 @@ void pcie_sriov_config_write(PCIDevice *dev, 
+uint32_t address,
+      trace_sriov_config_write(dev->name, PCI_SLOT(dev->devfn),
+                               PCI_FUNC(dev->devfn), off, val, len);
+
+-    consume_config(dev, off, val, len);
++    consume_config(dev);
+  }
+
+  void pcie_sriov_pf_post_load(PCIDevice *dev)
+  {
+      if (dev->exp.sriov_cap) {
+-        register_vfs(dev);
++        consume_config(dev);
+      }
+  }
+
+---
+
+Altough the change in pcie_sriov_pf_post_load() could
+even be a third patch IMO.
+
+>>
+>>>    }
+>>>    void pcie_sriov_pf_post_load(PCIDevice *dev)
+>>>    {
+>>>        if (dev->exp.sriov_cap) {
+>>> -        register_vfs(dev);
+>>> +        consume_config(dev);
+>>>        }
+>>>    }
+>>
+>> Michael, do we want this for the 10.1 release?
+>>
+>> Regards,
+>>
+>> Phil.
+> 
+> Think so, I'm testing a pull with this included.
+> 
 
 
