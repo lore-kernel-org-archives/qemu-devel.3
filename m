@@ -4,59 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 170F6C87FC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 14:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6F4C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 14:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugPIs-0005SV-OE; Mon, 28 Jul 2025 10:58:19 -0400
+	id 1ugPJB-0005is-Qd; Mon, 28 Jul 2025 10:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugPIa-0005K4-Jd
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 10:57:58 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ugPIj-0005PN-1W
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 10:58:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugPIY-0005Zt-Oh
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 10:57:56 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ugPIg-0005ae-JY
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 10:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753714673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=zYYdtbQV9uBrsTn/ATDgotwICg5ssUFFvH/umjuUZSY=;
- b=Rk3eQQhCfl7IuwZlZd7jL73nJH0xgPpVaRHLjNuiZSoFOjX/b2D/ERghskewg+61ziKuws
- YnDvoLmks8+KJGsjv+RuktcsngpWWFgMP9aKSzH8Ym0tt9tMMUXJe9pEuvNwMl7Q1dF0rI
- RxSnOl1aACd+AXmBauHRVnZtrGFD0MA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1753714681;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=dDmZnwTEBBCEtoZOgRZpkYwjeA5lJi2WnG2sTRdknlM=;
+ b=LAsIoly3d95RJz+ynuBdlr01KVePDDqXIabArnD/TqQjMhdAmiFK0a360AD2KvT2E/uAaY
+ wzIMe83189LJ58l91VEJFmDlINvDP6HdF3wT1QHxGNNvKmkw9YQscM5Ljz6XcF5Ca7mqOW
+ JznHhISKHbsK8nwJ3c12NVgzNDiXwOQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-tszNiCgPPX6AXLYcPj7xhg-1; Mon,
- 28 Jul 2025 10:57:51 -0400
-X-MC-Unique: tszNiCgPPX6AXLYcPj7xhg-1
-X-Mimecast-MFC-AGG-ID: tszNiCgPPX6AXLYcPj7xhg_1753714670
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-546-GtIQ1MGiMICk1RNA-fE16Q-1; Mon,
+ 28 Jul 2025 10:57:57 -0400
+X-MC-Unique: GtIQ1MGiMICk1RNA-fE16Q-1
+X-Mimecast-MFC-AGG-ID: GtIQ1MGiMICk1RNA-fE16Q_1753714677
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FDC91956095; Mon, 28 Jul 2025 14:57:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBD7C1800286; Mon, 28 Jul 2025 14:57:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3D8B721E6A27; Mon, 28 Jul 2025 16:57:47 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org,
-	pbonzini@redhat.com
-Subject: [PATCH] Revert "tests/qtest: use qos_printf instead of g_test_message"
-Date: Mon, 28 Jul 2025 16:57:47 +0200
-Message-ID: <20250728145747.3165315-1-armbru@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DFA671800256; Mon, 28 Jul 2025 14:57:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 756051800B69; Mon, 28 Jul 2025 14:57:55 +0000 (UTC)
+Date: Mon, 28 Jul 2025 15:57:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: Re: qos-test is annoyingly noisy
+Message-ID: <aIeP8MvrITqNtnsF@redhat.com>
+References: <87o6tbnfqx.fsf@pond.sub.org>
+ <ed3009be-8707-4340-a8ee-2523f77fe861@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ed3009be-8707-4340-a8ee-2523f77fe861@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,170 +84,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 30ea13e9d97dcbd4ea541ddf9e8857fa1d5cb30f.
+On Wed, Jul 23, 2025 at 06:38:45PM +0200, Paolo Bonzini wrote:
+> On 7/23/25 16:28, Markus Armbruster wrote:
+> > Noise starting with "stdout: " has been polluting output of "make check"
+> > for a while.  I traced it to qos-test.  Output of "make
+> > check-qtest-aarch64" appended as an example.
+> > 
+> > Blessed silence if I revert commit 30ea13e9d97d (tests/qtest: use
+> > qos_printf instead of g_test_message).
+> > 
+> > Alex, what shall we do here?
+> 
+> What is printing "stdout:", is it glib?  I think glib should be using
+> g_test_message() to do those "stdout:" prints. But I agree a more practical
+> alternative is a revert.
 
-"make check" prints many lines like
+AFAICT, this is a bug in meson.
 
-    stdout: 138: UNKNOWN:     # # qos_test running single test in subprocess
-    stdout: 139: UNKNOWN:     # # set_protocol_features: 0x42
-    stdout: 140: UNKNOWN:     # # set_owner: start of session
-    stdout: 141: UNKNOWN:     # # vhost-user: un-handled message: 14
-    stdout: 142: UNKNOWN:     # # vhost-user: un-handled message: 14
-    stdout: 143: UNKNOWN:     # # set_vring(0)=enabled
-    stdout: 144: UNKNOWN:     # # set_vring(1)=enabled
-    stdout: 145: UNKNOWN:     # # set_vring(0)=enabled
-    stdout: 146: UNKNOWN:     # # set_vring(1)=enabled
-    stdout: 147: UNKNOWN:     # # set_vring(0)=enabled
-    stdout: 148: UNKNOWN:     # # set_vring(1)=enabled
-    stdout: 149: UNKNOWN:     # # set_vring(0)=enabled
-    stdout: 150: UNKNOWN:     # # set_vring(1)=enabled
-    stdout: 151: UNKNOWN:     # # set_vring(0)=enabled
-    stdout: 152: UNKNOWN:     # # set_vring(1)=enabled
-    stdout: 153: UNKNOWN:     # # set_vring_num: 0/256
-    stdout: 154: UNKNOWN:     # # set_vring_addr: 0x7f9060000000/0x7f905ffff000/0x7f9060001000
+The test in question is running in a subprocess, and glib uses
+nested TAP plans for the subprocess. These messages are all
+TAP diagnositic lines from the nested plan, and meson is
+incorrectly complaining about them.
 
-Turns out this is qos-test, and the culprit is a commit meant to ease
-debugging.  Revert it until a better solution is found.
+> > 
+> > stdout: 138: UNKNOWN:     # # qos_test running single test in subprocess
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- tests/qtest/qos-test.c        |  5 -----
- tests/qtest/vhost-user-test.c | 27 +++++++++++++--------------
- 2 files changed, 13 insertions(+), 19 deletions(-)
+IIUC, the original text from glib nested plan was
 
-diff --git a/tests/qtest/qos-test.c b/tests/qtest/qos-test.c
-index abfd4b9512..00f39f33f6 100644
---- a/tests/qtest/qos-test.c
-+++ b/tests/qtest/qos-test.c
-@@ -328,11 +328,6 @@ static void walk_path(QOSGraphNode *orig_path, int len)
- int main(int argc, char **argv, char** envp)
- {
-     g_test_init(&argc, &argv, NULL);
--
--    if (g_test_subprocess()) {
--        qos_printf("qos_test running single test in subprocess\n");
--    }
--
-     if (g_test_verbose()) {
-         qos_printf("ENVIRONMENT VARIABLES: {\n");
-         for (char **env = envp; *env != 0; env++) {
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 75cb3e44b2..56472ca709 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -26,7 +26,6 @@
- #include "libqos/virtio-pci.h"
- 
- #include "libqos/malloc-pc.h"
--#include "libqos/qgraph_internal.h"
- #include "hw/virtio/virtio-net.h"
- 
- #include "standard-headers/linux/vhost_types.h"
-@@ -345,7 +344,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-     }
- 
-     if (size != VHOST_USER_HDR_SIZE) {
--        qos_printf("%s: Wrong message size received %d\n", __func__, size);
-+        g_test_message("Wrong message size received %d", size);
-         return;
-     }
- 
-@@ -356,8 +355,8 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-         p += VHOST_USER_HDR_SIZE;
-         size = qemu_chr_fe_read_all(chr, p, msg.size);
-         if (size != msg.size) {
--            qos_printf("%s: Wrong message size received %d != %d\n",
--                       __func__, size, msg.size);
-+            g_test_message("Wrong message size received %d != %d",
-+                           size, msg.size);
-             goto out;
-         }
-     }
-@@ -393,7 +392,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-          * We don't need to do anything here, the remote is just
-          * letting us know it is in charge. Just log it.
-          */
--        qos_printf("set_owner: start of session\n");
-+        g_test_message("set_owner: start of session\n");
-         break;
- 
-     case VHOST_USER_GET_PROTOCOL_FEATURES:
-@@ -419,7 +418,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-          * the remote end to send this. There is no handshake reply so
-          * just log the details for debugging.
-          */
--        qos_printf("set_protocol_features: 0x%"PRIx64 "\n", msg.payload.u64);
-+        g_test_message("set_protocol_features: 0x%"PRIx64 "\n", msg.payload.u64);
-         break;
- 
-         /*
-@@ -427,11 +426,11 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-          * address of the vrings but we can simply report them.
-          */
-     case VHOST_USER_SET_VRING_NUM:
--        qos_printf("set_vring_num: %d/%d\n",
-+        g_test_message("set_vring_num: %d/%d\n",
-                    msg.payload.state.index, msg.payload.state.num);
-         break;
-     case VHOST_USER_SET_VRING_ADDR:
--        qos_printf("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64"\n",
-+        g_test_message("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64"\n",
-                    msg.payload.addr.avail_user_addr,
-                    msg.payload.addr.desc_user_addr,
-                    msg.payload.addr.used_user_addr);
-@@ -464,7 +463,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-     case VHOST_USER_SET_VRING_CALL:
-         /* consume the fd */
-         if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
--            qos_printf("call fd: %d, do not set non-blocking\n", fd);
-+            g_test_message("call fd: %d, do not set non-blocking\n", fd);
-             break;
-         }
-         /*
-@@ -510,12 +509,12 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-          * fully functioning vhost-user we would enable/disable the
-          * vring monitoring.
-          */
--        qos_printf("set_vring(%d)=%s\n", msg.payload.state.index,
-+        g_test_message("set_vring(%d)=%s\n", msg.payload.state.index,
-                    msg.payload.state.num ? "enabled" : "disabled");
-         break;
- 
-     default:
--        qos_printf("vhost-user: un-handled message: %d\n", msg.request);
-+        g_test_message("vhost-user: un-handled message: %d\n", msg.request);
-         break;
-     }
- 
-@@ -539,7 +538,7 @@ static const char *init_hugepagefs(void)
-     }
- 
-     if (access(path, R_OK | W_OK | X_OK)) {
--        qos_printf("access on path (%s): %s", path, strerror(errno));
-+        g_test_message("access on path (%s): %s", path, strerror(errno));
-         g_test_fail();
-         return NULL;
-     }
-@@ -549,13 +548,13 @@ static const char *init_hugepagefs(void)
-     } while (ret != 0 && errno == EINTR);
- 
-     if (ret != 0) {
--        qos_printf("statfs on path (%s): %s", path, strerror(errno));
-+        g_test_message("statfs on path (%s): %s", path, strerror(errno));
-         g_test_fail();
-         return NULL;
-     }
- 
-     if (fs.f_type != HUGETLBFS_MAGIC) {
--        qos_printf("Warning: path not on HugeTLBFS: %s", path);
-+        g_test_message("Warning: path not on HugeTLBFS: %s", path);
-         g_test_fail();
-         return NULL;
-     }
+  "     # # qos_test running single test in subprocess"
+
+and meson adds the 'stdout: 128: UNKNOWN: ' prefix
+
+
+> > Unknown TAP output lines have been ignored. Please open a feature request to
+> > implement them, or prefix them with a # if they are not TAP syntax.
+
+...they were already prefixed with '#', they just had some
+whitespace before the '#' due to the nested plans.
+
+
+With regards,
+Daniel
 -- 
-2.49.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
