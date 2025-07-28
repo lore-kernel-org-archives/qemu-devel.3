@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3980C87FCC
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 03:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA6B4C87FCE
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 03:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugEG2-0005ix-M8; Sun, 27 Jul 2025 23:10:34 -0400
+	id 1ugENt-0000ms-4f; Sun, 27 Jul 2025 23:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ugEFy-0005g3-5M
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:10:30 -0400
+ id 1ugEM7-0000Jo-50
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:16:53 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ugEFv-0008Tw-6p
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:10:29 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1ugEM5-0000rz-4C
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:16:50 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxaWoV6oZogiczAQ--.41095S3;
- Mon, 28 Jul 2025 11:10:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxnnOe64Zo8CczAQ--.1574S3;
+ Mon, 28 Jul 2025 11:16:46 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxpeQR6oZoR18pAA--.14437S3;
- Mon, 28 Jul 2025 11:10:12 +0800 (CST)
-Subject: Re: [PATCH v3 04/17] target/loongarch: Add header file cpu-mmu.h
+ by front1 (Coremail) with SMTP id qMiowJCxH8Kc64ZozmApAA--.26243S3;
+ Mon, 28 Jul 2025 11:16:46 +0800 (CST)
+Subject: Re: [PATCH v3 05/17] target/loongarch: Add common function
+ loongarch_check_pte()
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250725013739.994437-1-maobibo@loongson.cn>
- <20250725013739.994437-5-maobibo@loongson.cn>
- <97316cdc-03c6-4f7f-aab9-d1064dcb77a7@linaro.org>
+ <20250725013739.994437-6-maobibo@loongson.cn>
+ <98090f39-b71a-4770-b9f8-9b7545e2442a@linaro.org>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <15991dbb-1ef1-e73c-01fb-ff0819674756@loongson.cn>
-Date: Mon, 28 Jul 2025 11:08:28 +0800
+Message-ID: <6148a822-0ddb-8c66-9496-a158b814251d@loongson.cn>
+Date: Mon, 28 Jul 2025 11:15:03 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <97316cdc-03c6-4f7f-aab9-d1064dcb77a7@linaro.org>
+In-Reply-To: <98090f39-b71a-4770-b9f8-9b7545e2442a@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeQR6oZoR18pAA--.14437S3
+X-CM-TRANSID: qMiowJCxH8Kc64ZozmApAA--.26243S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
- BjDU0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
- xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
- j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxV
- AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x02
- 67AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6x
- ACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E
- 87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0V
- AS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s02
- 6c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jr
- v_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvE
- c7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14
- v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7I
- U8czVUUUUUU==
+X-Coremail-Antispam: 1Uk129KBj93XoW7Zw1fWr1fCrWrXFy8WFW7Awc_yoW8AFyDpr
+ 93ArZxtrWUGr93JrnIka4Yqas8Wr18Gw17W3WfWFy8Aw45Zr1qvr18Xw1vgFyDX3y8Gw12
+ qr18Jr1UuF47XFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
+ y3UUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -29
@@ -82,23 +85,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2025/7/26 上午9:16, Richard Henderson wrote:
+On 2025/7/26 上午9:19, Richard Henderson wrote:
 > On 7/24/25 15:37, Bibo Mao wrote:
->> +enum {
->> +    TLBRET_MATCH = 0,
->> +    TLBRET_BADADDR = 1,
->> +    TLBRET_NOMATCH = 2,
->> +    TLBRET_INVALID = 3,
->> +    TLBRET_DIRTY = 4,
->> +    TLBRET_RI = 5,
->> +    TLBRET_XI = 6,
->> +    TLBRET_PE = 7,
->> +};
+>> Common function loongarch_check_pte() is to check tlb entry, return
+>> the physical address and access priviledge. Also it can be used with
+>> page table entry, which is used in page table walker.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/cpu-mmu.h        | 10 +++++
+>>   target/loongarch/cpu_helper.c     | 62 ++++++++++++++++++++++++++++++
+>>   target/loongarch/tcg/tlb_helper.c | 63 ++++++-------------------------
+>>   3 files changed, 84 insertions(+), 51 deletions(-)
+>>
+>> diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+>> index 4c5cbd7425..62b3acfbc7 100644
+>> --- a/target/loongarch/cpu-mmu.h
+>> +++ b/target/loongarch/cpu-mmu.h
+>> @@ -19,7 +19,17 @@ enum {
+>>       TLBRET_PE = 7,
+>>   };
+>> +typedef struct mmu_context {
+>> +    target_ulong  vaddr;
 > 
-> For a follow-up patch, name this enumeration and use it instead of 'int'.
-> It would make it self-documenting what a function is computing.
-Sure, will remove these assigned sentence and use default enumeration 
-value in new patch.
+> Use the 'vaddr' type.
+will do in this way. It is simple and work on 32-bit guest vm on 64-bit 
+host also.
+> 
+>> +    uint64_t      pte;
+>> +    hwaddr        physical;
+>> +    int           ps;  /* page size shift */
+>> +    int           prot;
+>> +} mmu_context;
+> 
+> QEMU coding style prefers CamelCase.
+Will do, how about the name MMUContext?
+> 
+>> +int loongarch_check_pte(CPULoongArchState *env, mmu_context *context,
+>> +                        int access_type, int mmu_idx)
+> 
+> Use MMUAccessType access_type.
+> And fix loongarch_map_tlb_entry in a separate patch.
+Will do this in a new patch.
+> That's the type from loongarch_get_addr_from_tlb and above.
 
 Regards
 Bibo Mao
