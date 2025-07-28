@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD015C83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 18:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E22CEC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 18:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugSTr-00024A-P6; Mon, 28 Jul 2025 14:21:48 -0400
+	id 1ugSpp-0002gu-6P; Mon, 28 Jul 2025 14:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugSPT-0004tS-LO
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:17:28 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugSpG-0000xb-VW
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:44:01 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugSPP-0002pQ-TE
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:17:15 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-748e81d37a7so3162498b3a.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:17:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugSpD-0005h0-D8
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:43:53 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-455b00283a5so28641045e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:43:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753726627; x=1754331427; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kVSdrHVg+gZm9GUqSrLIm0OvO9Omr02nYyCD4B9AD/U=;
- b=cV3B1wTgbUERLhzxV2nC/bqVibrH93C0UUDqD+cis86vuKfxZyVmL0+0cvPgM+NAib
- +cTSDVyj3+b3rMGubsIlAYlKznJ3HUTu+oG0LUwWmKgEXlDoPYfbOdOvfjP6Vs6GdX2w
- IgJPUctjNvDpXRmjGLVpRytqGzavLxEEYv9noCogpwcJKdXPcV1KIlPRShO6d8GjzaRx
- EbG1ppwO0G8k7oTvS04CX866Sj/1rQylRwCcfmzqPMKYmQSlSm+J0knQdWH0B2HCmq+5
- FienY1y5pIcr7zNBpusMez7Bbey0fA9vDwiDkJLqlQmjpICb8ey49WTwcblgWsNpXWPD
- xsVw==
+ d=linaro.org; s=google; t=1753728229; x=1754333029; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=v30YyiAnK5f/H6E1hsH1UQDvvYzD4MmD9yMtY1RlojI=;
+ b=ceD1GoV7UZ+IUEMQnyHN6vRti9alQjL6jlydHWU4/2GLifGo+wjSdzTLz3G8JbfNGd
+ s0co9En0/LJ9gObGQFy3Lt//kXCeggw+DPW1neMUXGeAZpGSOpNPm3iJ4ZjeOSeERyHV
+ 2iAtlWK0S42PvQZ92LqVhwkDu528URNTdF/QDYPw+PzM47NKTkjT7+yABUt8/AAgof4g
+ 0/P/EhxW0d8u3kFPdn8oL/ESSU8PwAqdV7Z46jL18P21zuuHgtPHd5EBcqS39s7kzw9B
+ XlvB3vqeeKF1hJaQ8ykU6pUjdgRzDiEbYS3M8IzrbST3/jIAOPkRpk8/hiYUP8C044Fa
+ qPhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753726627; x=1754331427;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kVSdrHVg+gZm9GUqSrLIm0OvO9Omr02nYyCD4B9AD/U=;
- b=UNMko1BEJC07spbYH85RwddkY6TawOdYGIbE9nmEe5KEVeV9brDZqs4K7NMW6ZysKy
- CVXLB781QlhJSRj3lBySCA4S9mAxYDLVpdk/8ct2tnxWR2Tq+JwG0VXn1SYIA1hKxd6T
- tXNIcU50Byjvt2xDDrHLFSAR6U79WVaFUVtzmpgiAtX05QxkDfOPqPreoFhTRf432Kcf
- boBTXg8bBvy/GYL5IivNkYiaqBKr13dqkaKSGuiqinsWYDMLxthI6czRKQUOepcBvLc7
- kaunERfCJV0sxE2PzrTDdjgRsickxLRlunW0FgfqZuiL+lHFvs/Ij8KctWUVus4i/lOR
- Vl3g==
-X-Gm-Message-State: AOJu0YyYdzxLLyTcXS0wY9Ow0n3xFXMF6ZMdbGX7gAjN987YK5YYloIN
- opTywRuPOS+AdzfI5iGlg7qpTokho90d1X1tbVAX6q/SR06b+kbAm+pS5RakBrXEiN5Xv8cLnIm
- 2xgfq
-X-Gm-Gg: ASbGncuV8kJ1GxMS9fukQJ5Z/HkA9Sn9fnc+4hgBjAacAHxb/uhQdCzkCkQLX5rkSwD
- lnTt+koLEDtNA1+wcUnAP4bc3rPcg+b79xz1J31zrUX/MleyXW7LfNmEvFWY5w8qY+1f9RWgswj
- oMgTybw/sp3scsHQUdExkHlzCrE8Lqx1eQN90wqrSSqCIjV5AHSyGTEE2BS457GpeLbRmeTVFUr
- 99XXQ5YdUoJkAnvOajcDX3A8eZMOgp4wN4OKFR6MMcdi+0b2dJ18WZKgABdj6SAzHtGhk1VTKE9
- Ojfv/sgiaAErcz6BPAbyv+1BB4O7rjCo0qvu1JyjOV5a6raWOELd06sp+z5O0XKXf1vYylJA2RB
- 84XRleuOjXmJXLgjgWrIpbI7n4DM4yR7ZSpGlpMr9e09hsvrddmtQVbVSBlWU/jMrWU78oRfVRU
- Ff8859+BAj/g==
-X-Google-Smtp-Source: AGHT+IGCwBqKOYm16KITns4JMIF/GhzMF8ZAIPJUUGu+bAhbne3snjAJ0zgzkhQUvh9vZYCwT0Mfkw==
-X-Received: by 2002:a05:6a20:4327:b0:23d:35f2:4e69 with SMTP id
- adf61e73a8af0-23d70151064mr20143935637.23.1753726627185; 
- Mon, 28 Jul 2025 11:17:07 -0700 (PDT)
-Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
- [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640adfeb83sm5985103b3a.66.2025.07.28.11.17.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Jul 2025 11:17:06 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 9/9] linux-user/aarch64: Support TPIDR2_MAGIC signal frame
- record
-Date: Mon, 28 Jul 2025 08:16:50 -1000
-Message-ID: <20250728181650.165114-10-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250728181650.165114-1-richard.henderson@linaro.org>
-References: <20250728181650.165114-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1753728229; x=1754333029;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v30YyiAnK5f/H6E1hsH1UQDvvYzD4MmD9yMtY1RlojI=;
+ b=a2B1Hc6lWloMJLuKM/TfynNLpDvVsaRZs8vQfbDgJVS9A27HrvOB/YYBt+jDrTMB8T
+ u/0rrfgDseFFCdUP4zIPp9ZePVTH0lKhopiVAPYLGlfgELfRFLUCIGpc5f7pQzONYmVa
+ 8ngvx1sgIwgpuNWAB0vQXBsDFUHZTaHQKTteIlTKdY2iLhPVFNLneTPtfvDpGecdZ8/8
+ aRRq8rjHofJ8BICVG46Lt5QwunryQyYhpWMMTg6Y+DgtHYpAJT1iREImgdrUiwctWxEQ
+ 6CDNy+JN0z3Gi6zzvUecWZbE4gXb2+uPkRi8K4SxwGlE1iJ3gFKFv7G5B45OQ/fbkkHz
+ ow+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtm3qQFHM9rg66I7ayepdTGGIuIBRyRdyx50VdfvAilTewftiHZdnaOPwL3muXwGGymC8ZAcvWNQPs@nongnu.org
+X-Gm-Message-State: AOJu0YzgCXeuE5sshUjwBSRIy2g+RPyHd3A9dz2vp2SGZmZCFmnJqGPr
+ Ak7aPOifbqKwfGI+5EfywoF5RtsvPRuh/S+iZs63p89RsEglyiu9jKbh62aFZ/9zcY8=
+X-Gm-Gg: ASbGnctKZEyXnj2ZH4BHulYz7GIpHooqDpIocCeu+fxbj6LbsY4MPBc/e2bXY/bJDJQ
+ 8S5mo1y/aWnJAIw+FO1lGxRwfyhL8xfk6qu0Y1dhV1vgUUlLtyhqsjhVVj85DvNPIGz3ml+mGbw
+ iYvo1Z3QkanABwjIhDBa/fQPEJSIXk665yDTa/h8d1y6+i2gZyuda6NTUrU6qIgBnu2OX0pQMg8
+ D4vNtFdlsoB7jcWXCRoq03BSmwoO2TJbMX63yVWpPJvksf5/a1Er/gupk+wC0PVfMNYROAwPzJ+
+ 1ml1l3ClzwvW1SC93T7BF8uFFIElLXeLiwtEUY7HgYifTXNnCGFHaGpcIcKFvYr09cpf6oNRH+x
+ AdTV5KnKG4ysOJtWSDytYQc0Mc+y6nptMCEDTNQgFaTRTVFBsA2vxcwM2dXcigHWVwA==
+X-Google-Smtp-Source: AGHT+IG69dltNtZbswIHkg0T6vdDwHMecxtunAaB97jg9t/AJjui0Tx6gPBwQR94kbjdlGgOLEWv+g==
+X-Received: by 2002:a05:600c:1da8:b0:456:1006:5415 with SMTP id
+ 5b1f17b1804b1-4587d83d695mr68761745e9.6.1753728229050; 
+ Mon, 28 Jul 2025 11:43:49 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458705377e5sm165292025e9.7.2025.07.28.11.43.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Jul 2025 11:43:48 -0700 (PDT)
+Message-ID: <e19e5442-1479-43b3-a232-b8587c79caed@linaro.org>
+Date: Mon, 28 Jul 2025 20:43:47 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system/physmem: Silence warning from ubsan
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20250728172545.314178-1-thuth@redhat.com>
+Content-Language: en-US
+Cc: Patrick Venture <venture@google.com>, Peter Foley <pefoley@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250728172545.314178-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,143 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Cc'ing Patrick & Peter for similar patch:
+https://lore.kernel.org/qemu-devel/aCUDxEQVACn5CY8f@x1.local/
 
-FEAT_SME adds the TPIDR2 userspace-accessible system register, which
-is used as part of the procedure calling standard's lazy saving
-scheme for the ZA registers:
- https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving-scheme
-
-The Linux kernel has a signal frame record for saving
-and restoring this value when calling signal handlers, but
-we forgot to implement this. The result is that code which
-tries to unwind an exception out of a signal handler will
-not work correctly.
-
-Add support for the missing record.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250725175510.3864231-3-peter.maydell@linaro.org>
-(cherry picked from commit 99870aff907b1c863cd32558b543f0ab0d0e74ba)
----
- linux-user/aarch64/signal.c | 42 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
-
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index 85cb25ae91..34168c967a 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -120,6 +120,13 @@ struct target_za_context {
- #define TARGET_ZA_SIG_CONTEXT_SIZE(VQ) \
-     TARGET_ZA_SIG_ZAV_OFFSET(VQ, VQ * TARGET_SVE_VQ_BYTES)
- 
-+#define TARGET_TPIDR2_MAGIC 0x54504902
-+
-+struct target_tpidr2_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t tpidr2;
-+};
-+
- struct target_rt_sigframe {
-     struct target_siginfo info;
-     struct target_ucontext uc;
-@@ -252,6 +259,14 @@ static void target_setup_za_record(struct target_za_context *za,
-     }
- }
- 
-+static void target_setup_tpidr2_record(struct target_tpidr2_context *tpidr2,
-+                                       CPUARMState *env)
-+{
-+    __put_user(TARGET_TPIDR2_MAGIC, &tpidr2->head.magic);
-+    __put_user(sizeof(struct target_tpidr2_context), &tpidr2->head.size);
-+    __put_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static void target_restore_general_frame(CPUARMState *env,
-                                          struct target_rt_sigframe *sf)
- {
-@@ -402,6 +417,12 @@ static bool target_restore_za_record(CPUARMState *env,
-     return true;
- }
- 
-+static void target_restore_tpidr2_record(CPUARMState *env,
-+                                         struct target_tpidr2_context *tpidr2)
-+{
-+    __get_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static int target_restore_sigframe(CPUARMState *env,
-                                    struct target_rt_sigframe *sf)
- {
-@@ -409,6 +430,7 @@ static int target_restore_sigframe(CPUARMState *env,
-     struct target_fpsimd_context *fpsimd = NULL;
-     struct target_sve_context *sve = NULL;
-     struct target_za_context *za = NULL;
-+    struct target_tpidr2_context *tpidr2 = NULL;
-     uint64_t extra_datap = 0;
-     bool used_extra = false;
-     int sve_size = 0;
-@@ -459,6 +481,14 @@ static int target_restore_sigframe(CPUARMState *env,
-             za_size = size;
-             break;
- 
-+        case TARGET_TPIDR2_MAGIC:
-+            if (tpidr2 || size != sizeof(struct target_tpidr2_context) ||
-+                !cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+                goto err;
-+            }
-+            tpidr2 = (struct target_tpidr2_context *)ctx;
-+            break;
-+
-         case TARGET_EXTRA_MAGIC:
-             if (extra || size != sizeof(struct target_extra_context)) {
-                 goto err;
-@@ -496,6 +526,9 @@ static int target_restore_sigframe(CPUARMState *env,
-     if (za && !target_restore_za_record(env, za, za_size, &svcr)) {
-         goto err;
-     }
-+    if (tpidr2) {
-+        target_restore_tpidr2_record(env, tpidr2);
-+    }
-     if (env->svcr != svcr) {
-         env->svcr = svcr;
-         arm_rebuild_hflags(env);
-@@ -567,8 +600,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         .total_size = offsetof(struct target_rt_sigframe,
-                                uc.tuc_mcontext.__reserved),
-     };
--    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0;
--    int sve_size = 0, za_size = 0;
-+    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
-+    int sve_size = 0, za_size = 0, tpidr2_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-     abi_ulong frame_addr, return_addr;
-@@ -584,6 +617,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         sve_ofs = alloc_sigframe_space(sve_size, &layout);
-     }
-     if (cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+        tpidr2_size = sizeof(struct target_tpidr2_context);
-+        tpidr2_ofs = alloc_sigframe_space(tpidr2_size, &layout);
-         /* ZA state needs saving only if it is enabled.  */
-         if (FIELD_EX64(env->svcr, SVCR, ZA)) {
-             za_size = TARGET_ZA_SIG_CONTEXT_SIZE(sme_vq(env));
-@@ -643,6 +678,9 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-     if (za_ofs) {
-         target_setup_za_record((void *)frame + za_ofs, env, za_size);
-     }
-+    if (tpidr2_ofs) {
-+        target_setup_tpidr2_record((void *)frame + tpidr2_ofs, env);
-+    }
- 
-     /* Set up the stack frame for unwinding.  */
-     fr = (void *)frame + fr_ofs;
--- 
-2.43.0
+On 28/7/25 19:25, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> When compiling QEMU with --enable-ubsan there is a undefined behavior
+> warning when running the bios-tables-test for example:
+> 
+>   .../system/physmem.c:3243:13: runtime error: applying non-zero offset 262144 to null pointer
+>      #0 0x55ac1df5fbc4 in address_space_write_rom_internal .../system/physmem.c:3243:13
+> 
+> The problem is that buf is indeed NULL if the function is e.g. called
+> with type == FLUSH_CACHE. Add a check to fix the issue.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   system/physmem.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 130c148ffb5..00333ffa7f7 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3240,8 +3240,10 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
+>               }
+>           }
+>           len -= l;
+> -        buf += l;
+>           addr += l;
+> +        if (buf) {
+> +            buf += l;
+> +        }
+>       }
+>       return MEMTX_OK;
+>   }
 
 
