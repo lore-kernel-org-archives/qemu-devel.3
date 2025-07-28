@@ -4,98 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43BBEC87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 10:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7398C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 10:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugKhQ-0001QC-IA; Mon, 28 Jul 2025 06:03:16 -0400
+	id 1ugKhq-00020s-Am; Mon, 28 Jul 2025 06:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ugKdE-0005pY-2b
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:58:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ugKdB-00074r-NL
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 05:58:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753696730;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AIRdmDKuxmGspluCkk0Fm5IYvSd2GDK8ErT9r1IMzmo=;
- b=RLFCWqLr4HhvC7JHrmdrz4fltolzH3eQSQ+Bbw2840Bq8uZpsh6SZUI/rUsLnGyrd4d6Ll
- wn+XcnEKXRUofSN0rFGcvomR5IOyZ73eT6TtkGVPavg5Ya8jTB2xo63h1i54tad1XXuTsb
- 2Kh0jUlJYkN9Sb/Q3sacA2e+/KxrO28=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-jNjyC0s8N6SheiFXxcUWLQ-1; Mon, 28 Jul 2025 05:58:47 -0400
-X-MC-Unique: jNjyC0s8N6SheiFXxcUWLQ-1
-X-Mimecast-MFC-AGG-ID: jNjyC0s8N6SheiFXxcUWLQ_1753696727
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70732006280so30748986d6.3
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 02:58:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ugKeD-0007V1-65; Mon, 28 Jul 2025 05:59:59 -0400
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ugKeA-0007NH-Sc; Mon, 28 Jul 2025 05:59:56 -0400
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-4ab71ac933eso38459521cf.2; 
+ Mon, 28 Jul 2025 02:59:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753696792; x=1754301592; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Xk82SjWl+aL5BTTSW39BtMph2wo/nhX1oBoFTzdyBaM=;
+ b=ADt5UiwwHu+6AJkFthERLMX8fs/1lgyTi1q+QdO+xXnnPtrqp1qFVqEZn1pLBoOreQ
+ Z0Yyj3mNobgbNi/4Ir0TvAXe/d9KJ2FUUV6DiXRN1G8/tUiJNbdzEIUNPrl3nAkM/3Mr
+ QuJcmY7B3zvnRZCmPjqkbv7Vh4rUHJWiATTmKoAS9zUHwQiGSFHfEcwpSL2ZJmOpxOZ0
+ uECZg/8j6kWhJeWA9yn7Pe3yuM6d9MSkF4Yottsxn3bQGw1+VT09UvEfjQDUZnw7G0V4
+ zzycaw4ukdmoL6RbP+Uss4emXX4FNrASF2HDVgLOwN3rSu9pCM716EMJixtlmhWxFFoG
+ b4mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753696727; x=1754301527;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AIRdmDKuxmGspluCkk0Fm5IYvSd2GDK8ErT9r1IMzmo=;
- b=ECh21kdU7OzMOgqlBTvTtWTDmttQaL2u9nPbMYgARwSIU6o0CR4sjh4Ev5Y4YCS96H
- 7riBo0heIcObOvNq3qE/AApK7BH00XXNjKS7Rbk0Lg1nhzAuF4PU0hJG60IVgvd3ZclX
- UaKiZDv7qUt+syS9Gmd9UQyEhQ6727WO97m/2fNep63/EunpAzWeSNjt0dMvTtWF6SSi
- qzsZu7MWsvZFnyKeMw6M9M4EdVrgRL7BqI3kxpQIZw6fy22ISd9YCHjGGV0jjOjTXF6W
- lZZv+k6H0T5lmEIjao+7+REvJ8JTi8sROB3IeXRtgarNXv+UCArhht1ON+AeoueHOq7l
- btOQ==
+ d=1e100.net; s=20230601; t=1753696792; x=1754301592;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Xk82SjWl+aL5BTTSW39BtMph2wo/nhX1oBoFTzdyBaM=;
+ b=sOV/tZa2qZQTmefNs/MufgnWk5PHzFTP3JH5RA2S/UjW7Fr4MZ0HGSKuq88oP4pp3F
+ m74pOus8cV11adpaTpYJZdxvrQUiE1C4ZHPSGWIrb0V/Hh8X+ymmkmA3mHpzogiYEEfN
+ UEKZDqOQsoSZoNpIJQBV3HhUOrNEb2BxCfXFutg7PN5HQo/yBx6cs8Ava3rWz5faMH6k
+ +iiJgQQMeYzx9eJryN19bWE7i7SMoCiiBBbY6o9Hs34QYt0zuVXu+FnASGHcnQ6GCDQD
+ C6n3m/wre28gMrY7dXrDiA73rgc2XLWaxlarTyXcJt/af8GFeZ7Swk/C7pD69jedueaz
+ eEDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWEj4FHms+xGXAllglIicA1D+ml5UG/p/2zy53V6C94nes46y3rJwGtQ4nuT2834MJOMU8789qcJ3V@nongnu.org
-X-Gm-Message-State: AOJu0YydkmoLUeQWxAv2wUo6dg1FRDA26jKRG6Ez06Faylwiv5zL+z8h
- 52F+vXOqhZh4elAlc2Lo4fUHNOJpRal+LIcx9kzJURRB3z77YGrcjvjb9XDM0sr3Rlgp265W2yY
- LwJjdfaiFZJkf3NSGu1WZ9+bIJyuKy/1UaM4zMkh21kfplUtG8U2e9z36eV+XH52yT0WtmFnbzu
- zU4HAr7ONAB6rasEFlpN1MrKjB1ayCHOs=
-X-Gm-Gg: ASbGnctkdOPKoFZfWHPclKhlTF2MCALgceHcDx1+2VzB1VudFgOFgbmUEWa1tpFWJsz
- JnTHA9dR38j+dh46zL8B3N3TRb4BrhoHEUU0nEaoKEK3mPjT9UVdZ62InV2S563wDfmVmvKWSZf
- jsJ0dMZvhV5+hBmZ154hj0S14=
-X-Received: by 2002:a05:6214:2342:b0:704:7fda:d174 with SMTP id
- 6a1803df08f44-707204e8ce2mr147424976d6.2.1753696726768; 
- Mon, 28 Jul 2025 02:58:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJsrH+/Ls1UEOw947XqzzIbqejTwb4NeRa0VrnhyKrfzPAenK6sh/ge4PxbEssoD8UC6qH7QyKjA72whLszq4=
-X-Received: by 2002:a05:6214:2342:b0:704:7fda:d174 with SMTP id
- 6a1803df08f44-707204e8ce2mr147424786d6.2.1753696726392; Mon, 28 Jul 2025
- 02:58:46 -0700 (PDT)
+ AJvYcCUsTv0tC7tmaT9lhXEzFPUbZ5uWxv0g17xEBC47pNb8bwfKvayVw6J+q0tz7yb6kDaKe0kH4CeJZu4=@nongnu.org,
+ AJvYcCW9Fofot7tcIp7/X9/h8346jiG54tbm0LKpbsi1A3sQJNvlRGoszW+zdrg8KhHPbVkO7tR0Cva8+9VqwQ==@nongnu.org,
+ AJvYcCW9jEdidmrTnlywrHBnO6kLhxxFy47Vi8htbIj3AnHpx8I0EfODuOSg5NZ9zyP630QXoCQuZS4L1cmj@nongnu.org
+X-Gm-Message-State: AOJu0YypHx2otyYIlr77SztfvgtpGXH6RmKDfeEKChNnv4bl/t5Li/Dx
+ qMOVFeOjIBYiSn4V2d3wa9s5ER+iW/3wNGbJYhV+5JqyMxdQ7WMtOAq2NGgbykxHEQlS4k/+E3u
+ iT3o1u8C26at7Vtoq0iQzJzdIpu209Q26PY4U+sfaIQ==
+X-Gm-Gg: ASbGncsxe/YrM0yOUKBo94bzYo8qY2vdesOI7yRs/HY2QIDuv05n9WnMBhHewoon2da
+ 1zYDwH5P5oJL5OwuppXLDIqIrJHdIWZLaOI5D3e9vqyXlTCiQ0ue5+nKp2GTJCsFVtEp+toebPM
+ ls64bk5cwplAywR0SiVQq/nmelLE2v7wEa49Z5v0Tx7pNEir9whP8rOTSMEougziW1YpYqEMh7I
+ 65GULkGBTA+BnIQapnfNyaPnYWR/MxAPs6nt84f
+X-Google-Smtp-Source: AGHT+IFnWtJnKoxJBfD+WJjn4QJVC6rqrB9CmFs9uxp2HFk0z+5AuID3hseErhVwsl9tMHbyS2RF6AQPZzk0xogFQ5M=
+X-Received: by 2002:a05:622a:1301:b0:4a9:b186:9443 with SMTP id
+ d75a77b69052e-4ae8efb50b0mr168103071cf.21.1753696792062; Mon, 28 Jul 2025
+ 02:59:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250717145948.77870-1-kkostiuk@redhat.com>
- <87pldwbspt.fsf@pond.sub.org>
- <CAPMcbCp=PBMSxtTxCMkxigdovaY=MTNLRo6f3BBXNRT6vu4wmw@mail.gmail.com>
- <87seipkif5.fsf@pond.sub.org>
- <CAPMcbCrTTkr5sX11wn1WaXOLgqQTAD-1oxUuqOc+oEmUxcotkw@mail.gmail.com>
- <c3afe3f5-962d-40ba-a778-716ef9929053@linaro.org>
- <CAPMcbCp5BuLADQoDijw811G4-u-ssBJ+eFrzyiU8_G9Tr7uLHA@mail.gmail.com>
- <44ca54d5-1292-4388-9436-dca2b6e7e97f@linaro.org>
-In-Reply-To: <44ca54d5-1292-4388-9436-dca2b6e7e97f@linaro.org>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 28 Jul 2025 12:58:34 +0300
-X-Gm-Features: Ac12FXzct8tipo1CCpbJf6oshs6NNpsI_YLXdren3zIJaB11tM6TQsEzYbpR7Lg
-Message-ID: <CAPMcbCrhuuEbSUTk7a_h9bc-a70JekF682ozzYS=8MeUyf3uWA@mail.gmail.com>
-Subject: Re: [PATCH] util: win32: Write hex value when can't get error message
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- Yan Vugenfirer <yvugenfi@redhat.com>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006bb16c063afa56a1"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
+ <20250725-propagate_tpm_error-v7-1-d52704443975@redhat.com>
+ <CAMxuvaznYbcpxc7dtDP5yVBzVcDJpVWVXHeWxB1zo0bfdBuw2g@mail.gmail.com>
+ <CAMxuvawsX6ePZV=ek7d0rDwpJYQJmNwiFKhTetLW6u1PW6cTbA@mail.gmail.com>
+ <aIc8fjnoA_G8iCqZ@redhat.com>
+In-Reply-To: <aIc8fjnoA_G8iCqZ@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 28 Jul 2025 13:59:40 +0400
+X-Gm-Features: Ac12FXzAXJ5Mq17GQkD6PTgXRdqBrii1EEOr_cyKo-IwUyb2tWTImIKwzE-HBrk
+Message-ID: <CAJ+F1CK1_zVY-az5XF+ds+82Vq=3hi-_yLf4nw4obtPSySwqow@mail.gmail.com>
+Subject: Re: [PATCH v7 01/24] migration: push Error **errp into
+ vmstate_subsection_load()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,81 +124,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006bb16c063afa56a1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi
 
-Based on the following part from the new docs
-* If a human readable message cannot be found for the given @error, an empt=
-y
-* string is returned.
-Do you have any objections to this patch?
-
-Best Regards,
-Konstantin Kostiuk.
-
-
-On Mon, Jul 28, 2025 at 12:48=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philm=
-d@linaro.org>
-wrote:
-
-> On 25/7/25 11:59, Kostiantyn Kostiuk wrote:
-> > Issue reported to GLib https://gitlab.gnome.org/GNOME/glib/-/issues/374=
-0
-> > <https://gitlab.gnome.org/GNOME/glib/-/issues/3740>
-> > PR with fix https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4716
-> > <https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4716>
+On Mon, Jul 28, 2025 at 1:06=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> Even already merged, thank you!
+> On Mon, Jul 28, 2025 at 12:44:53PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Fri, Jul 25, 2025 at 5:46=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
+> > marcandre.lureau@redhat.com> wrote:
+> >
+> > >
+> > >
+> > > On Fri, Jul 25, 2025 at 4:19=E2=80=AFPM Arun Menon <armenon@redhat.co=
+m> wrote:
+> > >
+> > >> This is an incremental step in converting vmstate loading
+> > >> code to report error via Error objects instead of directly
+> > >> printing it to console/monitor.
+> > >> It is ensured that vmstate_subsection_load() must report an error
+> > >> in errp, in case of failure.
+> > >>
+> > >> Signed-off-by: Arun Menon <armenon@redhat.com>
+> > >> ---
+> > >>  migration/vmstate.c | 11 ++++++++---
+> > >>  1 file changed, 8 insertions(+), 3 deletions(-)
+> > >>
+> > >> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > >> index
+> > >> 5feaa3244d259874f03048326b2497e7db32e47c..aeffeafaa4fa7582076a4f2747=
+906ddf9aca891b
+> > >> 100644
+> > >> --- a/migration/vmstate.c
+> > >> +++ b/migration/vmstate.c
+> > >> @@ -25,7 +25,7 @@ static int vmstate_subsection_save(QEMUFile *f, co=
+nst
+> > >> VMStateDescription *vmsd,
+> > >>                                     void *opaque, JSONWriter *vmdesc=
+,
+> > >>                                     Error **errp);
+> > >>  static int vmstate_subsection_load(QEMUFile *f, const VMStateDescri=
+ption
+> > >> *vmsd,
+> > >> -                                   void *opaque);
+> > >> +                                   void *opaque, Error **errp);
+> > >>
+> > >>  /* Whether this field should exist for either save or load the VM? =
+*/
+> > >>  static bool
+> > >> @@ -225,7 +225,7 @@ int vmstate_load_state(QEMUFile *f, const
+> > >> VMStateDescription *vmsd,
+> > >>          field++;
+> > >>      }
+> > >>      assert(field->flags =3D=3D VMS_END);
+> > >> -    ret =3D vmstate_subsection_load(f, vmsd, opaque);
+> > >> +    ret =3D vmstate_subsection_load(f, vmsd, opaque, NULL);
+> > >>      if (ret !=3D 0) {
+> > >>          qemu_file_set_error(f, ret);
+> > >>          return ret;
+> > >> @@ -566,7 +566,7 @@ vmstate_get_subsection(const VMStateDescription =
+*
+> > >> const *sub,
+> > >>  }
+> > >>
+> > >>  static int vmstate_subsection_load(QEMUFile *f, const VMStateDescri=
+ption
+> > >> *vmsd,
+> > >> -                                   void *opaque)
+> > >> +                                   void *opaque, Error **errp)
+> > >>  {
+> > >>      trace_vmstate_subsection_load(vmsd->name);
+> > >>
+> > >> @@ -598,6 +598,8 @@ static int vmstate_subsection_load(QEMUFile *f, =
+const
+> > >> VMStateDescription *vmsd,
+> > >>          sub_vmsd =3D vmstate_get_subsection(vmsd->subsections, idst=
+r);
+> > >>          if (sub_vmsd =3D=3D NULL) {
+> > >>              trace_vmstate_subsection_load_bad(vmsd->name, idstr,
+> > >> "(lookup)");
+> > >> +            error_setg(errp, "VM subsection '%s' in '%s' does not e=
+xist",
+> > >> +                       idstr, vmsd->name);
+> > >>              return -ENOENT;
+> > >>          }
+> > >>          qemu_file_skip(f, 1); /* subsection */
+> > >> @@ -608,6 +610,9 @@ static int vmstate_subsection_load(QEMUFile *f, =
+const
+> > >> VMStateDescription *vmsd,
+> > >>          ret =3D vmstate_load_state(f, sub_vmsd, opaque, version_id)=
+;
+> > >>          if (ret) {
+> > >>              trace_vmstate_subsection_load_bad(vmsd->name, idstr,
+> > >> "(child)");
+> > >> +            error_setg(errp,
+> > >> +                       "Loading VM subsection '%s' in '%s' failed :=
+ %d",
+> > >>
+> > >
+> > > extra space before ":"
+> > >
+> > > other than that
+> > > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > >
+> >
+> > Actually, almost systematically when you introduce an extra **errp
+> > argument, you should ERRP_GUARD() in the function (see include/qapi/err=
+or.h
+> > doc). Was this discussed before? Can you update the following patches t=
+oo?
+>
+> ERRP_GUARD is only needed in functions which derefence errp, which should
+> very rarely be needed when all functions are non-void return value.
+
+But also, it avoids this pitfall with @errp argument:
+
+* - It should not be passed to error_prepend(), error_vprepend(), or
+ *   error_append_hint(), because that doesn't work with &error_fatal.
+
+either way, I don't care much, but for consistency it sounds
+reasonable to ask every new function with **errp to have it.
+
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
 >
 >
 
---0000000000006bb16c063afa56a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Based on the following part from the new docs</div><d=
-iv><div class=3D"gmail-diff-grid-row gmail-diff-tr gmail-line_holder"><div =
-id=3D"gmail-c7a468422ca8b8131ed7db3eb8052e74a0daacb0_207_210" class=3D"gmai=
-l-diff-grid-left gmail-left-side"><div class=3D"gmail-diff-td gmail-line_co=
-ntent gmail-with-coverage gmail-left-side gmail-new"><span class=3D"gmail-l=
-ine"><span class=3D"gmail-cm"> * If a human readable message cannot be foun=
-d for the given @error, an empty</span></span>
-</div></div> </div>   <div class=3D"gmail-diff-grid-row gmail-diff-tr gmail=
--line_holder"><div id=3D"gmail-c7a468422ca8b8131ed7db3eb8052e74a0daacb0_207=
-_211" class=3D"gmail-diff-grid-left gmail-left-side"></div></div><div class=
-=3D"gmail-diff-td gmail-line-coverage gmail-left-side gmail-has-tooltip gma=
-il-new"></div> <div class=3D"gmail-diff-td gmail-line-inline-findings gmail=
--left-side gmail-new"></div> <div class=3D"gmail-diff-td gmail-line_content=
- gmail-with-coverage gmail-left-side gmail-new"><span class=3D"gmail-line">=
-<span class=3D"gmail-cm"> * string is returned.</span></span> <br></div>Do =
-you have any objections to this patch?<div class=3D"gmail-diff-td gmail-lin=
-e_content gmail-with-coverage gmail-left-side gmail-new"><br></div></div><d=
-iv><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signa=
-ture"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</di=
-v></div></div></div><br></div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 28, 2025 at 12:48=
-=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro=
-.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">On 25/7/25 11:59, Kostiantyn Kostiuk wrote:<br>
-&gt; Issue reported to GLib <a href=3D"https://gitlab.gnome.org/GNOME/glib/=
--/issues/3740" rel=3D"noreferrer" target=3D"_blank">https://gitlab.gnome.or=
-g/GNOME/glib/-/issues/3740</a> <br>
-&gt; &lt;<a href=3D"https://gitlab.gnome.org/GNOME/glib/-/issues/3740" rel=
-=3D"noreferrer" target=3D"_blank">https://gitlab.gnome.org/GNOME/glib/-/iss=
-ues/3740</a>&gt;<br>
-&gt; PR with fix <a href=3D"https://gitlab.gnome.org/GNOME/glib/-/merge_req=
-uests/4716" rel=3D"noreferrer" target=3D"_blank">https://gitlab.gnome.org/G=
-NOME/glib/-/merge_requests/4716</a> <br>
-&gt; &lt;<a href=3D"https://gitlab.gnome.org/GNOME/glib/-/merge_requests/47=
-16" rel=3D"noreferrer" target=3D"_blank">https://gitlab.gnome.org/GNOME/gli=
-b/-/merge_requests/4716</a>&gt;<br>
-<br>
-Even already merged, thank you!<br>
-<br>
-</blockquote></div>
-
---0000000000006bb16c063afa56a1--
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
