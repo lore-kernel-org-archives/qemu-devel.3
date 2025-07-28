@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F4FC83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 19:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03010C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 20:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugTl9-0005IP-3m; Mon, 28 Jul 2025 15:43:44 -0400
+	id 1ugU6e-00085c-57; Mon, 28 Jul 2025 16:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugTkk-0005BB-MA
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:43:26 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ugU5f-0007oC-Kq
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 16:04:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugTkh-00057V-1J
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 15:43:17 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D580B13B134;
- Mon, 28 Jul 2025 22:43:00 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AFBD52518DB;
- Mon, 28 Jul 2025 22:43:08 +0300 (MSK)
-Message-ID: <8c4c3ba5-8fce-4d2e-b36a-5bd3d2ee2305@tls.msk.ru>
-Date: Mon, 28 Jul 2025 22:43:08 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ugU5d-0008KD-TT
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 16:04:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753733090;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nJYyOPwnBjHm4n98+VRKC6aejLGdxif0eJaSD/ahttY=;
+ b=BBljXUgWfRY7qjk9o0q1k3s8PqX0DdTyjnM8mL3noeDUxu6XGrT+etP3H2QfuX7WpcTvRQ
+ EYfYWAljaiCFdX7hB0ZSs+gfikEKZYKszvTto3T6T7roOCLRAxfuUE1yPZKI/L6HRjpO4p
+ XbfPAhuGqnzUa0pNc4qfO0lEkSHZfiU=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-QjrGyUEnOo2W7unCdOlUpg-1; Mon, 28 Jul 2025 16:04:49 -0400
+X-MC-Unique: QjrGyUEnOo2W7unCdOlUpg-1
+X-Mimecast-MFC-AGG-ID: QjrGyUEnOo2W7unCdOlUpg_1753733089
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7e1aeab456cso633757885a.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 13:04:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753733089; x=1754337889;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nJYyOPwnBjHm4n98+VRKC6aejLGdxif0eJaSD/ahttY=;
+ b=R3Q8N7JrK7R0/Lc9bdt1Swa1SPyDwBXiHuNYHq66n9LpTpNas3iyLtIAhu7UtB7Rys
+ /jIrCRjvEPfj+4BNCBi9qw8sCWWErOEAoniUcgfCqAnVzD8nAk2fsWRbZlLZApMaqyFW
+ GwrEIpeSsDcZuiIKoHxYLAsB5nhOP+KZDEGd0Fj1jCZY+y3ZBL0XVhGRV1NdAoWOPX3+
+ 8wk0VEHFcND+8S4Y7vo+n6X42gPF8uYlzywR7/6LBp2m0oRl/q2jCN4MWvvhxGgLeKth
+ SrkiGjZ6SJNrWrblvEXjcMubViRKASX9cbk3kCucc2SoV2uHfgGZ04ema3/qH3oH4X4N
+ MlOQ==
+X-Gm-Message-State: AOJu0YwlAN+OEfzwuP++py5gArZTd+2FIHZBJOdE4TZwVir0i57m8Var
+ GdZFiNYkNBgOklykQXf9Mo1zp+wORsa8BGzVngN0SOczWTIB9eSQ7oUwBXWo3ZuMI1U8Qrql9tX
+ I/Srx2s7MFcLcopMN32Wi8RBCjlPedA1qtopHd5f396LVuylaEK5XDoMN
+X-Gm-Gg: ASbGncsie0UvtDhO8LuTwmyBWVqKN0XmM7Jh+h+zhR1qJai5cmdJsdv1mgWWAVCkvzs
+ o4GMAN8KVmvJAZTbPGBgulFYUr+kTcMC4tPTkKpbP4Y0LyICN7VsY1D9jQDsbfbGCFUviLz882Z
+ LVFxZuXs8NMg8aB1o8A/lt7YNU4WDFA+0Z4xGScmSXXfjYSpzBVh1OK0/ah9qjRc6yS7v+fwvYi
+ jFTQOCm3Gsqy4WQ7WGXw1ySCU0X/ZkLByEQZeRs8RjWy0AJ0hKMidYMtt05HJ98DD37keSy48b8
+ J7JWz4skdGXuI1HiGQhm1XWiNhosNkQ=
+X-Received: by 2002:a05:620a:2984:b0:7e6:5d4e:7a23 with SMTP id
+ af79cd13be357-7e65d4e7b20mr335708985a.7.1753733088710; 
+ Mon, 28 Jul 2025 13:04:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNpJSlSn+FJRrQXt83PZPVWyLoxefjswiy2OI3LaQl+52zwwxe8/KFNBAnd3+B0zZbWOgVWA==
+X-Received: by 2002:a05:620a:2984:b0:7e6:5d4e:7a23 with SMTP id
+ af79cd13be357-7e65d4e7b20mr335705585a.7.1753733088370; 
+ Mon, 28 Jul 2025 13:04:48 -0700 (PDT)
+Received: from x1.local ([142.189.11.29]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e64327de82sm325010285a.2.2025.07.28.13.04.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Jul 2025 13:04:47 -0700 (PDT)
+Date: Mon, 28 Jul 2025 16:04:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 0/3] single-binary: compile once migration files
+Message-ID: <aIfX25N5_vTCaPyR@x1.local>
+References: <20250725201729.17100-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] target/arm/sme: Reset SVE state in aarch64_set_svcr()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250728181650.165114-1-richard.henderson@linaro.org>
- <20250728181650.165114-5-richard.henderson@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250728181650.165114-5-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250725201729.17100-1-pierrick.bouvier@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,35 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.07.2025 21:16, Richard Henderson wrote:
-> Move arm_reset_sve_state() calls to aarch64_set_svcr().
-> (cherry picked from commit 7f2a01e7368f960fadea38f437d0f6de7f249686)
+On Fri, Jul 25, 2025 at 01:17:26PM -0700, Pierrick Bouvier wrote:
+> This series removes target dependencies in migration code.
+> 
+> Pierrick Bouvier (3):
+>   migration: compile migration/ram.c once
+>   migration: rename target.c to vfio.c
+>   migration/vfio: compile only once
+> 
+>  migration/vfio-stub.c          | 16 ++++++++++++++++
+>  migration/{target.c => vfio.c} | 16 +---------------
+>  migration/meson.build          |  8 ++++----
+>  3 files changed, 21 insertions(+), 19 deletions(-)
+>  create mode 100644 migration/vfio-stub.c
+>  rename migration/{target.c => vfio.c} (67%)
 
-> +/* ResetSVEState */
-> +static void arm_reset_sve_state(CPUARMState *env)
-> +{
-> +    memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
-> +    /* Recall that FFR is stored as pregs[16]. */
-> +    memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
-> +    vfp_set_fpcr(env, 0x0800009f);
-> +}
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> -/* ResetSVEState */
-> -void arm_reset_sve_state(CPUARMState *env)
-> -{
-> -    memset(env->vfp.zregs, 0, sizeof(env->vfp.zregs));
-> -    /* Recall that FFR is stored as pregs[16]. */
-> -    memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
-> -    vfp_set_fpsr(env, 0x0800009f);
-> -}
+-- 
+Peter Xu
 
-It's a fun one.  Please note vfp_set_fpsr vs vfp_set_fpcr.
-
-cf. 1edc3d43f20df0d04f8d00b906ba19fed37512a5 which has been
-back-ported to 7.2 already :)
-
-Unfortunately the order of these commits is different than
-the one on master.
-
-/mjt
 
