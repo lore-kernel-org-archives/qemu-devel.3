@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29D2C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3387C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 15:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugPxW-0004sO-14; Mon, 28 Jul 2025 11:40:14 -0400
+	id 1ugPxY-0004xm-Aw; Mon, 28 Jul 2025 11:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1ugPwq-0003RG-LK
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:39:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ugPxM-0004iM-OW
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1ugPwo-00026o-LW
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:39:32 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ugPxK-0002Bk-Dp
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 11:40:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753717168;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1753717199;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=633gIv/hUWbflz7ELIrGUdAVKw56h9FnUiTLXuugcSo=;
- b=BEia1vpInkiXQTgp1vZ95F1J0f58tFbgAWFca800teedmT7j/owx1cyc/qrTXj7OJzHaxk
- D0Rp07Tlka5UP4+qK184puYyVmtT1gO9qCJIme9odLU9VpyfwK2r5ZZEC8yQO9LNgfChwh
- 9KgxqMGPAT4351puJlmy6wcb/gJD9Cg=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aK8BuoLFAeS+eg6Hlk4zc+Pdw9VG+Sjj2feSeB0EzqA=;
+ b=F8ae9pI6hmuyYR/2IfE092KU+zC+FE0EEh3j8PtRoIkr4SlGlxajfzmwM7sMe4wt7vxqI6
+ 0B+0WsH9iUNZrMbHub5+fSF9wylwUPz+DbZMffctkOBFaJnSuAa3+wBiZH+xLVD/ExD5tL
+ N65OAQ+FqVlQ+pQCqXR1ixtD7eClqic=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-h3Ndl_QmNQW1QGv3pjLd5w-1; Mon, 28 Jul 2025 11:39:26 -0400
-X-MC-Unique: h3Ndl_QmNQW1QGv3pjLd5w-1
-X-Mimecast-MFC-AGG-ID: h3Ndl_QmNQW1QGv3pjLd5w_1753717166
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-31ed4a4a05bso15962a91.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:39:26 -0700 (PDT)
+ us-mta-472-WJOX8OwFNFC3ppz5yEXviw-1; Mon, 28 Jul 2025 11:39:58 -0400
+X-MC-Unique: WJOX8OwFNFC3ppz5yEXviw-1
+X-Mimecast-MFC-AGG-ID: WJOX8OwFNFC3ppz5yEXviw_1753717197
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3b783265641so1615481f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 08:39:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753717166; x=1754321966;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=633gIv/hUWbflz7ELIrGUdAVKw56h9FnUiTLXuugcSo=;
- b=SgLE87xLb4mwN8A0dek5ixZ8y5SHn38AEmp3zUNBicccvaBF89mwkE7VyvwXId+KPP
- lCKCcw36IEPGgiI0nvxgYGSEkQd6r/QKkpufPHOvHd++B+ADxGIzznseYsQNn6MVaN9C
- 4fzPcRO8jjRkGc4JU2CeNr4x1hIwqpo6eD7Lw6RXwQ1kX8lq3Sj9XuOnV96aA69VmTSo
- VaFcMM5eTzf/3aE83QeKEPUWktiPSqSO4iDVkAOFmaCIUGNQ04eJNiGnlj1UAtVwxxgA
- J97GUC5L/O68zEinQc0N/c4SYhhm8zBKzbtCjFanDbKwZB7WUO7+s2/6EEhPRJw3Oi6d
- o5Xw==
+ d=1e100.net; s=20230601; t=1753717197; x=1754321997;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aK8BuoLFAeS+eg6Hlk4zc+Pdw9VG+Sjj2feSeB0EzqA=;
+ b=hJjlngziGcTGLAa3LwfFGiRolSnrgkp3tV++olgcnQ6pBMQn3bcJGIdZST60tOn3oL
+ vsn1boewizI3lWmhJz/QIO7nhyf4jTbYcO7IwH7i9YIOvmMgjWSfiKSfG94z8tY0kidZ
+ rDh4pYpwHxHxrA+yVEhNeY1+CUbj1Y299oBJwS2hRFROdxsTiKW3yaWzHKIRxz+bjC3t
+ KVi1EyPdBdI+vczKrFuZZWaFTCIvWB4T0wsERimqQ57S10PAfqL9YtfIr8W9Q175VDQ+
+ cM/gVkydzl/lX5htN2PGNQM4dmFm23edFyKM2nMbPIvALLpxxseNxJ/VFIlnSiLaekcb
+ Bmsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnjlveG1OG5wEjRoM4LH3GxdyAMsfIQdpZfO7rE4N0efzFeqQt1VC7/fBqA9pr7TYQOQ3fHvSd78Ni@nongnu.org
-X-Gm-Message-State: AOJu0Yw5xrY/r0tXhKkkWV5vkbnEew8oywIkcR9Rxew1hrIiAuJn3gJu
- d+QNEb+5F7G1n+FASq2NALgFLWCmNeJbYzWWiDrohkWwf1ZDlXtfpjH63YhyK6fW6gekk4BGyzo
- OVE3KuqbUVyghILWV5dTGPt1nX/F4n86wxuEZOhsY9jRy0NSqkJkH3maYPIYKkBauRsWT10kf13
- BVZBJ8NfxvbskcYEfYG6kakOh6GcfKW+s=
-X-Gm-Gg: ASbGncuDqc8CHZbg1j/7bqFFVvFMC97aPIbLtiBGCu5w/uGl594CHiTNvX12XDwZrL4
- qCKC9zvgfJZk58/AxV7cLmeqxhIQSvkdFTNoVhVjJ0zLjkJY2ezhYC/W8+z2aFHMUf9PIakG3rf
- KewWtIC0WI5GyKiZTyVWBh
-X-Received: by 2002:a17:90b:2d8e:b0:31e:934b:d00b with SMTP id
- 98e67ed59e1d1-31f28c920dfmr72636a91.7.1753717165499; 
- Mon, 28 Jul 2025 08:39:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1jMS1RwQa2HYUIKA6o3iRP6c7OGmeG2uLVXbhW4+z6X7tPAQUow5iw9oZsn5YSxiCJWFrs+eOevsVQWTHwiA=
-X-Received: by 2002:a17:90b:2d8e:b0:31e:934b:d00b with SMTP id
- 98e67ed59e1d1-31f28c920dfmr72592a91.7.1753717164999; Mon, 28 Jul 2025
- 08:39:24 -0700 (PDT)
+ AJvYcCUXyp3vUjNcE7XVDFxka0mbFIfgCNRZzvlKJoU6N3fMLKdhwM11P9q87n9ztO1tIFBbSGNeETDU3/Ba@nongnu.org
+X-Gm-Message-State: AOJu0Yxig25IPOp32WKwpTgUY6jDjw/+UjejK3hn0/Q6z2/DcnyjkNT0
+ P2bHRsmJJMLPUdyY5G53E3T1IK2S/ydhFcJPBYNgRxzWsWHtbQbtC+p6qFd5rzV+3hcXylyBUnl
+ XRGqKQuTbm7RQ17w81G6bFsUCMRYrBMLDzdmZjxhsG8bIKZJDW8kOncxS
+X-Gm-Gg: ASbGncsPxCxP+UqOy5kI5dx27x/tkSKm5XzOTxwkLKHeVfxFxixHsW8TFyxw38N1PD6
+ sAxuApCh+pUEzvnKSWHoShSFusv95HELc2Q2L27GUKhzM4Z7QqvUIuHeXucnpH+GzdePP4h+vxn
+ lIAx1Z4OctqdUuT3Ym2p0LKrsVEZKuUnUO2XILKM0C+jSd6CNuLfEm8sM9cmOrLpv1X060Qq5oe
+ huHqih6MstzpdBZw4awCJoO0RX2gzW936Beh9T9HNNSbchwDa11zx8RXdFM51Cg0rHHh3sxzyPi
+ 4M2QC/YXC6KTOude0VCGoRQXF+KEz+5bt4eNtkDWeX9P79AzsTtCOR5bHoi/jGUXVOaatJcOeg=
+ =
+X-Received: by 2002:a05:6000:381:b0:3b5:def6:4e4 with SMTP id
+ ffacd0b85a97d-3b776673e7emr9067916f8f.46.1753717196347; 
+ Mon, 28 Jul 2025 08:39:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEF67qDpb22TeRbtQzTezeRa7KUwIP9cnsc8vZXe8wtCDOrvrJDxLMeKxUYJnjRNvC4/KPQ8Q==
+X-Received: by 2002:a05:6000:381:b0:3b5:def6:4e4 with SMTP id
+ ffacd0b85a97d-3b776673e7emr9067891f8f.46.1753717195820; 
+ Mon, 28 Jul 2025 08:39:55 -0700 (PDT)
+Received: from [192.168.3.191] (228.246.150.77.rev.sfr.net. [77.150.246.228])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4587054f686sm157746295e9.14.2025.07.28.08.39.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Jul 2025 08:39:55 -0700 (PDT)
+Message-ID: <9ece87e2-215e-4604-ab9f-03e65fe07fae@redhat.com>
+Date: Mon, 28 Jul 2025 17:39:53 +0200
 MIME-Version: 1.0
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <CACGkMEvrgAqSr9sgvq6F4oKBitZncqhsB_MEsbaNB7p0ZN5fEA@mail.gmail.com>
- <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
- <20250725053122-mutt-send-email-mst@kernel.org>
- <CACGkMEvTgCAbBG20iLB1m_WfYzMZA7FYZ2FuL6To4EV86PXZbA@mail.gmail.com>
- <CACGkMEtCiqq0P_7aB-d5CrQraHL2xky5Qa+9LyZce4hk+wvvYQ@mail.gmail.com>
- <CAJaqyWeJVjG+FbXvYZOu7fXXg-U5vSmt8_+YDw_t7hKv5DH8ew@mail.gmail.com>
-In-Reply-To: <CAJaqyWeJVjG+FbXvYZOu7fXXg-U5vSmt8_+YDw_t7hKv5DH8ew@mail.gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 28 Jul 2025 17:38:48 +0200
-X-Gm-Features: Ac12FXyZA3ZKkwUUUganCo5Bh3VrH06ioE_o8vK_Zvfw8i6NJhD7PwuaLQ8rHl0
-Message-ID: <CAJaqyWc-WKhuuKYFV2axJLTVtWqP_ftqz1Sn7+ufNo-5SZ8pRQ@mail.gmail.com>
-Subject: Re: [RFC 0/6] virtio-net: initial iterative live migration support
-To: Jason Wang <jasowang@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 10.1] hw/pci-host/gpex-acpi:
+ PCI_EXPRESS_GENERIC_BRIDGE: select ACPI_PCI instead of imply'ing it
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20250728152445.23917-1-mjt@tls.msk.ru>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250728152445.23917-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,7 +99,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,149 +112,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 28, 2025 at 4:51=E2=80=AFPM Eugenio Perez Martin
-<eperezma@redhat.com> wrote:
+
+
+On 7/28/25 5:24 PM, Michael Tokarev wrote:
+> Commit af151d50eac24 added dependency on hw/i386/acpi-build.c
+> (where this function is defined) to hw/pci-host/gpex-acpi.
+> But acpi-build.c is only built when ACPI_PCI is enabled,
+> and the build fails at link time if it is not.  So ACPI_PCI
+> becomes a hard dependency of PCI_EXPRESS_GENERIC_BRIDGE.
+> Fix it.
 >
-> On Mon, Jul 28, 2025 at 9:36=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
-wrote:
-> >
-> > On Mon, Jul 28, 2025 at 3:09=E2=80=AFPM Jason Wang <jasowang@redhat.com=
-> wrote:
-> > >
-> > > On Fri, Jul 25, 2025 at 5:33=E2=80=AFPM Michael S. Tsirkin <mst@redha=
-t.com> wrote:
-> > > >
-> > > > On Thu, Jul 24, 2025 at 05:59:20PM -0400, Jonah Palmer wrote:
-> > > > >
-> > > > >
-> > > > > On 7/23/25 1:51 AM, Jason Wang wrote:
-> > > > > > On Tue, Jul 22, 2025 at 8:41=E2=80=AFPM Jonah Palmer <jonah.pal=
-mer@oracle.com> wrote:
-> > > > > > >
-> > > > > > > This series is an RFC initial implementation of iterative liv=
-e
-> > > > > > > migration for virtio-net devices.
-> > > > > > >
-> > > > > > > The main motivation behind implementing iterative migration f=
-or
-> > > > > > > virtio-net devices is to start on heavy, time-consuming opera=
-tions
-> > > > > > > for the destination while the source is still active (i.e. be=
-fore
-> > > > > > > the stop-and-copy phase).
-> > > > > >
-> > > > > > It would be better to explain which kind of operations were hea=
-vy and
-> > > > > > time-consuming and how iterative migration help.
-> > > > > >
-> > > > >
-> > > > > You're right. Apologies for being vague here.
-> > > > >
-> > > > > I did do some profiling of the virtio_load call for virtio-net to=
- try and
-> > > > > narrow down where exactly most of the downtime is coming from dur=
-ing the
-> > > > > stop-and-copy phase.
-> > > > >
-> > > > > Pretty much the entirety of the downtime comes from the vmstate_l=
-oad_state
-> > > > > call for the vmstate_virtio's subsections:
-> > > > >
-> > > > > /* Subsections */
-> > > > > ret =3D vmstate_load_state(f, &vmstate_virtio, vdev, 1);
-> > > > > if (ret) {
-> > > > >     return ret;
-> > > > > }
-> > > > >
-> > > > > More specifically, the vmstate_virtio_virtqueues and
-> > > > > vmstate_virtio_extra_state subsections.
-> > > > >
-> > > > > For example, currently (with no iterative migration), for a virti=
-o-net
-> > > > > device, the virtio_load call took 13.29ms to finish. 13.20ms of t=
-hat time
-> > > > > was spent in vmstate_load_state(f, &vmstate_virtio, vdev, 1).
-> > > > >
-> > > > > Of that 13.21ms, ~6.83ms was spent migrating vmstate_virtio_virtq=
-ueues and
-> > > > > ~6.33ms was spent migrating the vmstate_virtio_extra_state subsec=
-tions. And
-> > > > > I believe this is from walking VIRTIO_QUEUE_MAX virtqueues, twice=
-.
-> > > >
-> > > > Can we optimize it simply by sending a bitmap of used vqs?
-> > >
-> > > +1.
-> > >
-> > > For example devices like virtio-net may know exactly the number of
-> > > virtqueues that will be used.
-> >
-> > Ok, I think it comes from the following subsections:
-> >
-> > static const VMStateDescription vmstate_virtio_virtqueues =3D {
-> >     .name =3D "virtio/virtqueues",
-> >     .version_id =3D 1,
-> >     .minimum_version_id =3D 1,
-> >     .needed =3D &virtio_virtqueue_needed,
-> >     .fields =3D (const VMStateField[]) {
-> >         VMSTATE_STRUCT_VARRAY_POINTER_KNOWN(vq, struct VirtIODevice,
-> >                       VIRTIO_QUEUE_MAX, 0, vmstate_virtqueue, VirtQueue=
-),
-> >         VMSTATE_END_OF_LIST()
-> >     }
-> > };
-> >
-> > static const VMStateDescription vmstate_virtio_packed_virtqueues =3D {
-> >     .name =3D "virtio/packed_virtqueues",
-> >     .version_id =3D 1,
-> >     .minimum_version_id =3D 1,
-> >     .needed =3D &virtio_packed_virtqueue_needed,
-> >     .fields =3D (const VMStateField[]) {
-> >         VMSTATE_STRUCT_VARRAY_POINTER_KNOWN(vq, struct VirtIODevice,
-> >                       VIRTIO_QUEUE_MAX, 0, vmstate_packed_virtqueue, Vi=
-rtQueue),
-> >         VMSTATE_END_OF_LIST()
-> >     }
-> > };
-> >
-> > A rough idea is to disable those subsections and use new subsections
-> > instead (and do the compatibility work) like virtio_save():
-> >
-> >     for (i =3D 0; i < VIRTIO_QUEUE_MAX; i++) {
-> >         if (vdev->vq[i].vring.num =3D=3D 0)
-> >             break;
-> >     }
-> >
-> >     qemu_put_be32(f, i);
-> >     ....
-> >
+> Fixes: af151d50eac24 "hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method"
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  hw/pci-host/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> While I think this is a very good area to explore, I think we will get
-> more benefits by pre-warming vhost-vdpa devices, as they take one or
-> two orders of magnitude more than sending and processing the
-> virtio-net state (1s~10s vs 10~100ms).
+> diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
+> index 9824fa188d..19b6605c7f 100644
+> --- a/hw/pci-host/Kconfig
+> +++ b/hw/pci-host/Kconfig
+> @@ -54,7 +54,7 @@ config PCI_EXPRESS_Q35
+>  config PCI_EXPRESS_GENERIC_BRIDGE
+>      bool
+>      select PCI_EXPRESS
+> -    imply ACPI_PCI
+> +    select ACPI_PCI
 
-Expanding on this,
+As mentionned in the previous thread,
 
-This is a great base to start from! My proposal is to perform these as
-next steps:
-1) Track in the destination what members changes from the vmstate sent
-in the iterative phase and the downtime phase. I would start by
-creating a copy of the last VirtIODevice and VirtIONet, at least for a
-first RFC on top of this one.
-2) Start the vhost-vdpa net device by the time the first iterative
-state reaches us. Just creating the virtqueues should be noticeable,
-but sending the CVQ messages here gives us even more downtime
-reduction. Do not send these messages in the downtime if the
-properties have not changed!
+build_pci_host_bridge_osc_method() is called from gpex-acpi.c whose compilation depend on
 
-If we want to take a small detour to make a first revision simpler, we
-could do the same with vhost-net first: Pre-warm the device creation
-with the mq etc.
+pci_ss.add(when: ['CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', 'CONFIG_ACPI'],
+if_true: files('gpex-acpi.c'))
 
-Thanks!
+so the hard dependency exists only if ACPI is selected.
+
+If one use "select", ACPI_PCI will be mandated even if ACPI is not set. I am not sure this is what we want.
+
+"Imply" was supposed to condition the selection depending on ACPI_PCI dependencies, ie. ACPI and PCI
+
+Eric
+
+>  
+>  config PCI_EXPRESS_XILINX
+>      bool
 
 
