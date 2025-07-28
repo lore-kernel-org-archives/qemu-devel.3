@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70837C83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 17:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26246C83F26
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 17:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugRay-0006bI-Pl; Mon, 28 Jul 2025 13:25:06 -0400
+	id 1ugRbY-0007Te-E6; Mon, 28 Jul 2025 13:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRaw-0006U0-Mj
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRbO-0007Ll-T0
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRau-0005Af-JF
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugRbN-0005WE-Br
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 13:25:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753723497;
+ s=mimecast20190719; t=1753723528;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=az3ovlNWBrkf8NYq8FR7+1CbInHCd/lH6Z+vEzwNNP8=;
- b=P3lU8s/P1Lph25FjtVnpth/p8E6b+OyctbSSVeNax2+sSqqHAJKwG/zD4WDcHyN0GQZAbt
- S24Uhxg1LpiT5IyNG0TayaDR8KfW3i1jb6B9QJ+hRRnSBl1e3OA3PLA9T0y0cUcujuPB0U
- ZS/Mt2/mbjr5ykAUJw6rKR9h1vpbgsE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hCbxoJSEhO8ITjTOmByBxelsrE1Teyg2toB7loPgMxs=;
+ b=VPYrwVcs10p1rTnGcOSo1PyEfDHarbpT4K3iTjO3heAcTtSsMkElxMXge+1FYKn2Scg4Oc
+ 3AzIFGlJ+wn5OP3PuqBXWZ0J9d4cfhuoWx/TIC+2hIF80jydavvAbOKEzhdt0JdClU5FQI
+ 2zhDHtFCkW0uMP/mXckYnrT2MONJNqI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-253-cG7k_wkrOiKnlBCU1Jt0kQ-1; Mon, 28 Jul 2025 13:24:56 -0400
-X-MC-Unique: cG7k_wkrOiKnlBCU1Jt0kQ-1
-X-Mimecast-MFC-AGG-ID: cG7k_wkrOiKnlBCU1Jt0kQ_1753723495
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-455e918d690so713315e9.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 10:24:55 -0700 (PDT)
+ us-mta-647-LejqyWlUNXaFVXTqdKy1mw-1; Mon, 28 Jul 2025 13:25:27 -0400
+X-MC-Unique: LejqyWlUNXaFVXTqdKy1mw-1
+X-Mimecast-MFC-AGG-ID: LejqyWlUNXaFVXTqdKy1mw_1753723525
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-451d7de4ae3so22149965e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 10:25:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753723495; x=1754328295;
+ d=1e100.net; s=20230601; t=1753723524; x=1754328324;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=az3ovlNWBrkf8NYq8FR7+1CbInHCd/lH6Z+vEzwNNP8=;
- b=GabSHn9a0tAQs/nIEUPUlEYUA6G1rQg3sebR+/PyjfwZEqXt48TOqI2RWlgZD2K8dm
- CVXIoZ6FvPQyrnCmdgMMIQFlapFASFwvMfHIuuWGXIP66/P/2e+NZWXRbOvuS6EQHbVB
- tb8sG3qLt2hus5ZcZ5sVE1DyZcNb0Zj1QgEAGpSUINP8V/kC/hYX0B6MeWuMR0fxkxsF
- 51u7p+2DN/IGN3A3/p6K/iOJjF1UHCZYm8/v85CjQTIEWk2kZqVlKyzqoix/EZcq7mov
- kbUrG9MyVhIjrXN6uZEnx15uwSWuc/JY5DwiryakONZZ3oIMndov+TEqOsVNujDssN3X
- S/xw==
-X-Gm-Message-State: AOJu0YzGHBDegCmudg1bFVdywhkGp5OlvlQYd8IeStMYC22QkXNxXMxj
- echKzPZHwlmY15bSQ8qMLMNPwTblr1bKjXQ+F7I9t6mOMEyBock0+qN1j4M0FSpCgFMrrgT1PIc
- dLsaeKyKA50/NoCrilbYRR9HCWr1Os50O9/YepXjc/MNK1RglZitM7KVU
-X-Gm-Gg: ASbGncvzqHBK/SNqT/T7IDRxIPcAqjC0E3BbPqy4okz1sxTOhXomRWOOGApMh1dP+wt
- KlibV268quONiTULMB8Zdp81hLYKP5JdQNTkoMwsCNHmnFMpD0wm380VOLn20tbVQBzFtPvByGx
- o7OCtg6uVMjLl65PZzZFXotjSFYh+FvbH1CORMlEbTcy+9oZegDxq/O3Welvn/WOvhtXVvxpf8y
- chu76RJRAbEetiWPN3VB4cmsxdkplhFi+sZzY9GBsodVHb5mcmduTYTOZUEoe+pHPVssuqy8xtY
- S1gfnTiH96q6sL/SLu76td9h9FtTUkM8n6PhnNqKg6/DnsFcKpqTY/no0i54YPPprS3MhL0bA5v
- 7pA==
-X-Received: by 2002:a05:6000:2890:b0:3a4:cec5:b59c with SMTP id
- ffacd0b85a97d-3b78e7258d4mr269830f8f.25.1753723494576; 
- Mon, 28 Jul 2025 10:24:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGrm4A/71ajZYwmTK6NcLRbXl+SUEp9ps5tPUTBLfbZ8neq7pGynWk0uyXFUCsJyhSemFoHA==
-X-Received: by 2002:a05:6000:2890:b0:3a4:cec5:b59c with SMTP id
- ffacd0b85a97d-3b78e7258d4mr269811f8f.25.1753723494087; 
- Mon, 28 Jul 2025 10:24:54 -0700 (PDT)
+ bh=hCbxoJSEhO8ITjTOmByBxelsrE1Teyg2toB7loPgMxs=;
+ b=CRoYIrIX29XqQOUvuB22Yxqxmx5G0a9D63QX7TlaVuSE+l9S6zrgTHPnNXCTUijDw7
+ Vekh1sMweFWXHlYB94cp5b5ayTYTfYe0oQJLFLAAlY6ZwLTo3l4ThmSfwJZvT+0fED28
+ bkgvmoSdIq3cbwiN4Innxrh4AozrPCCc+TCWMt8TmFBUtARbx4AQ7+b+rqtMFFRzK/o2
+ YNswNMU+SwJymiGQcnQHK1RdTOudUn4u8ugc1CZLmfgX3nuEZ3z1H+ARx69bt8ZqYj4L
+ ioK4glzJ4FckBUJmf8wTUWJUpAUSmS2x1zkGYXtnAxLrbK7LfcrJdGF83a17F+clAi0/
+ /I+g==
+X-Gm-Message-State: AOJu0YwEYQ1rO0kHmM/88FEV2QseYwSIQaR2L+1hxHgEhpYuJcKrup9W
+ KOGMHrZvhKxhb/5NF2Q/BmfGo5uPNDCxsEChng8JYLPKXNqbLaYXtS8fIKfK/mU/wOsy1QKIixv
+ qqiixARGkNEsZ12qk7TqFMgAgcUyyu4FJ+wMnLU85H4Y/IkZ7y6Vbik1Laq7t75BVAvnLiqI/FA
+ PpjoaIKlhvIdXR/eC1Ygg4GU40Tv7wiH7mrA==
+X-Gm-Gg: ASbGncuCkddyGtdAMqS2bBqHu67ZNqevSLHK3kTp7NG8q42IFXU2xJGGy2cxjAkUL0a
+ q3lqXSyiLukvZgjaKW7qCpbSMq730OP5rSC5tBYPnLt05Rbm5NXGno4Q5C4G++DE5XgCUCkqnu+
+ +UvKuvqXyPGFwte23rtYO0PtZ+wPRk9fE8T5VTudA3z7yGGdq5lh/fu8cj8TBvfejIB00HRuQEX
+ U+DfFuPAAQQHMyVYEnFqaqiwsKarh43h3tbji2e+XFeC0Pzf3xwUUFrPkuTllGxBxmEtqwobeRw
+ LfDR1PGvlT2TMW566SG+tgVPXxFTS0teqKFyp7R6bDqL5QfEVvj8Iz8rruQiehD14pZyB5m3/ga
+ hIg==
+X-Received: by 2002:a05:600c:821a:b0:450:d37d:7c with SMTP id
+ 5b1f17b1804b1-45876447cfamr94791155e9.21.1753723524513; 
+ Mon, 28 Jul 2025 10:25:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHVx0vv15c/0va8IxI2MC5hOENTwvMO/mdfMpo12ephS8RO5ZNNNYbmOAGbEJYl0VyaqwZBw==
+X-Received: by 2002:a05:600c:821a:b0:450:d37d:7c with SMTP id
+ 5b1f17b1804b1-45876447cfamr94790905e9.21.1753723523882; 
+ Mon, 28 Jul 2025 10:25:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4587272b405sm140700385e9.19.2025.07.28.10.24.53
+ 5b1f17b1804b1-4587ac5816dsm105508185e9.17.2025.07.28.10.25.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 10:24:53 -0700 (PDT)
-Message-ID: <b22dd3bd-b377-407b-b68f-4f3476cca737@redhat.com>
-Date: Mon, 28 Jul 2025 19:24:52 +0200
+ Mon, 28 Jul 2025 10:25:23 -0700 (PDT)
+Message-ID: <490b441d-6d76-43e3-90cd-e894f4bf0d1f@redhat.com>
+Date: Mon, 28 Jul 2025 19:25:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] vfio/igd: Legacy mode fixes after introduction of
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250723160906.44941-1-tomitamoeko@gmail.com>
+Subject: Re: [PATCH] i386: Build SEV only for 64-bit target
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20250716071554.377356-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -126,9 +126,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250723160906.44941-1-tomitamoeko@gmail.com>
+In-Reply-To: <20250716071554.377356-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -154,24 +154,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/25 18:09, Tomita Moeko wrote:
-> This patchset aims to fix 2 bugs on legacy mode brought by commit
-> a59d06305fff ("vfio/pci: Introduce x-pci-class-code option").
+On 7/16/25 09:15, Cédric Le Goater wrote:
+> Recent changes broke build on 32-bit host. Since there is no 32-bit
+> support, restrict SEV to 64-bit.
 > 
-> 1. QEMU tries to enable VGA access on device emulated to VGA controller.
-> 2. pci_register_vga() is not called after calling vfio_populate_vga().
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/i386/Kconfig | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> Tomita Moeko (2):
->    vfio/igd: Require host VGA decode for legacy mode
->    vfio/igd: Fix VGA regions are not exposed in legacy mode
-> 
->   docs/igd-assign.txt |  1 +
->   hw/vfio/igd.c       | 19 ++++++++++++-------
->   hw/vfio/pci.c       | 13 ++++++++++---
->   hw/vfio/pci.h       |  1 +
->   4 files changed, 24 insertions(+), 10 deletions(-)
-> 
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index 14d23e27b580b2d5ea3aa4c07ba066f21a62e348..5139d2308777114e76a789c4f850fa20f3fa754f 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -4,7 +4,7 @@ config X86_FW_OVMF
+>   config SEV
+>       bool
+>       select X86_FW_OVMF
+> -    depends on KVM
+> +    depends on KVM && X86_64
+>   
+>   config SGX
+>       bool
 
 
 Applied to vfio-next.
