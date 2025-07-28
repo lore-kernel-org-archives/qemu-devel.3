@@ -4,44 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014EDC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Jul 2025 22:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3980C87FCC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 03:11:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ug9iQ-0000F6-3M; Sun, 27 Jul 2025 18:19:34 -0400
+	id 1ugEG2-0005ix-M8; Sun, 27 Jul 2025 23:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ug9iL-0000D7-JC
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 18:19:29 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ug9iJ-0001Ed-L6
- for qemu-devel@nongnu.org; Sun, 27 Jul 2025 18:19:29 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9FA3F13A986;
- Mon, 28 Jul 2025 01:19:16 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DF5962511A9;
- Mon, 28 Jul 2025 01:19:22 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Hao Wu <wuhaotsh@google.com>, Havard Skinnemoen <hskinnemoen@google.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH for 10.1 2/2] roms/Makefile: build ast27x0_bootrom
-Date: Mon, 28 Jul 2025 01:19:19 +0300
-Message-ID: <607a943a587248fbe0ff0897de80aee98a093caa.1753654515.git.mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <2a89ad4c8f5665d07952a4f1749caa6ec0cd3d9c.1753654515.git.mjt@tls.msk.ru>
-References: <2a89ad4c8f5665d07952a4f1749caa6ec0cd3d9c.1753654515.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1ugEFy-0005g3-5M
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:10:30 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1ugEFv-0008Tw-6p
+ for qemu-devel@nongnu.org; Sun, 27 Jul 2025 23:10:29 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxaWoV6oZogiczAQ--.41095S3;
+ Mon, 28 Jul 2025 11:10:13 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxpeQR6oZoR18pAA--.14437S3;
+ Mon, 28 Jul 2025 11:10:12 +0800 (CST)
+Subject: Re: [PATCH v3 04/17] target/loongarch: Add header file cpu-mmu.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250725013739.994437-1-maobibo@loongson.cn>
+ <20250725013739.994437-5-maobibo@loongson.cn>
+ <97316cdc-03c6-4f7f-aab9-d1064dcb77a7@linaro.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <15991dbb-1ef1-e73c-01fb-ff0819674756@loongson.cn>
+Date: Mon, 28 Jul 2025 11:08:28 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <97316cdc-03c6-4f7f-aab9-d1064dcb77a7@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-CM-TRANSID: qMiowJBxpeQR6oZoR18pAA--.14437S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+ BjDU0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+ xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+ j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxV
+ AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x02
+ 67AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6x
+ ACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E
+ 87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0V
+ AS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s02
+ 6c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jr
+ v_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvE
+ c7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14
+ v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7I
+ U8czVUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.134,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -59,36 +80,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3052
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- roms/Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 6af68a922f..2691b935c4 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -68,6 +68,7 @@ default help:
- 	@echo "  u-boot.sam460      -- update u-boot.sam460"
- 	@echo "  npcm7xx_bootrom    -- update vbootrom for npcm7xx"
- 	@echo "  npcm8xx_bootrom    -- update vbootrom for npcm8xx"
-+	@echo "  ast27x0_bootrom    -- update vbootrom for ast27x0"
- 	@echo "  efi                -- update UEFI (edk2) platform firmware"
- 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
- 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
-@@ -200,6 +201,10 @@ npcm8xx_bootrom:
- 	$(MAKE) -C vbootrom/npcm8xx CROSS_COMPILE=$(aarch64_cross_prefix)
- 	cp vbootrom/npcm8xx/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
- 
-+ast27x0_bootrom:
-+	$(MAKE) -C vbootrom/ast27x0 CROSS_COMPILE=$(aarch64_cross_prefix) CC='$$(CROSS_COMPILE)gcc'
-+	cp vbootrom/ast27x0/ast27x0_bootrom.bin ../pc-bios/ast27x0_bootrom.bin
-+
- hppa-firmware:
- 	$(MAKE) -C seabios-hppa parisc
- 	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
--- 
-2.47.2
+
+On 2025/7/26 上午9:16, Richard Henderson wrote:
+> On 7/24/25 15:37, Bibo Mao wrote:
+>> +enum {
+>> +    TLBRET_MATCH = 0,
+>> +    TLBRET_BADADDR = 1,
+>> +    TLBRET_NOMATCH = 2,
+>> +    TLBRET_INVALID = 3,
+>> +    TLBRET_DIRTY = 4,
+>> +    TLBRET_RI = 5,
+>> +    TLBRET_XI = 6,
+>> +    TLBRET_PE = 7,
+>> +};
+> 
+> For a follow-up patch, name this enumeration and use it instead of 'int'.
+> It would make it self-documenting what a function is computing.
+Sure, will remove these assigned sentence and use default enumeration 
+value in new patch.
+
+Regards
+Bibo Mao
+> 
+> 
+> r~
 
 
