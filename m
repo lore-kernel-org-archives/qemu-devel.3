@@ -4,152 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36BB7C87FC9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 11:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C3EC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 12:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugLvG-0000y6-KY; Mon, 28 Jul 2025 07:21:38 -0400
+	id 1ugM0O-00034b-48; Mon, 28 Jul 2025 07:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugLb6-00033T-Pf
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:00:48 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1ugLhp-0006gU-Ec
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:07:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugLb2-0000M7-Me
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:00:48 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1ugLhm-0002Wn-Lh
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 07:07:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753700442;
+ s=mimecast20190719; t=1753700861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3RO9ZuKlR9PSlnMCRal4aJr6ci+hSdLHP5xLcdcgCuY=;
- b=i+LR0nEZvelwpqNzJ68KKoXqNORyv+HrU8S1aSu6GAZvG2U+OQRa5lr4PPyDp2DwUGQbJ5
- 8YFgnXE/9X3ccVmTwXBImv1aYqx4VP7xiWQAqSAT6pcIAxSsrdLbMWRbjp5Ub0RSjopBHY
- T24hb1FpK5mrYC+G2P5She8M9qCx8Zg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=KXl4786StpsdcvaQo314lHszBqNONxWMmPZv7GOBbNE=;
+ b=ZMJzEkcGAQ/ZM8k87pTF4K8UVN1V5xyBrFtm77fTcFpxrEkW7IgIFYljpMIX7fpS414vrZ
+ Uj1e7N+YbgSsCzUoMw5Mfr3JJ1EusNbDLN6cuEuYWX+GTzdRtk0AgFpsmCP73ka/qtKzrM
+ AM1fTnLeUsJ4Rrn7un0yBgvrZYDqXJ8=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-lS_q5Zy3NGa_Sl8PeHGGlg-1; Mon, 28 Jul 2025 07:00:39 -0400
-X-MC-Unique: lS_q5Zy3NGa_Sl8PeHGGlg-1
-X-Mimecast-MFC-AGG-ID: lS_q5Zy3NGa_Sl8PeHGGlg_1753700439
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a6d1394b07so2519086f8f.3
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 04:00:39 -0700 (PDT)
+ us-mta-483-CHkb0BYKONG0tlJ3HLkBCQ-1; Mon, 28 Jul 2025 07:07:39 -0400
+X-MC-Unique: CHkb0BYKONG0tlJ3HLkBCQ-1
+X-Mimecast-MFC-AGG-ID: CHkb0BYKONG0tlJ3HLkBCQ_1753700858
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-31ecf1603a5so1072997a91.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 04:07:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753700439; x=1754305239;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3RO9ZuKlR9PSlnMCRal4aJr6ci+hSdLHP5xLcdcgCuY=;
- b=AnOA7kBz8xREWlh2SqsIEQ7gUJccZkg+rmLw84haBFomWzAzP1wxTU1JddSe/uF1mZ
- WmoVNgk1acmrILOZMC/jSG8clcybSBPIx7IFMvz5gGhXq0zwI78lddQvDM/jxfQAbIXy
- x/Z0rRGmv5hemR7Q9dGHb0e/6e7q/fVOnm8bgJT2QcSJ18sdkfTVEBeAUjU5Aj3gvG6R
- h7ZKlF3OS3RpKGfWYyCqaRcgesf31BxAjUsPB+99wQjWc+w7yMdJjL9h3frlYl+uaZ+E
- yEkILeVlRK9TBrp44hW+ZxMNqbQQ6snIv6D2sxAPVfK/lbGk18yINf4rOAI80x/2tdUa
- lfPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX70M4mInwWDJikqYaDNZozOnUqCA4LUnjlNsfT6e3qycFb4xPiWLZ8yBjobNsYPPK5fhgT10x2YLYw@nongnu.org
-X-Gm-Message-State: AOJu0Yw2amECjHMYq1Yq9PGa5AKrk2n7cADq5b/W4E8BqwrBygrI0CIa
- olkRskcmEINVEKyofu3bz66aAKNOFAtAktNV5gqSd/FEmWKu6/+gTXdzQ92+SkQCGLZ1RJMSB7n
- MyOHrWRw7ZRxj0UYM5ENY6HD6pPKLK8WhgL6INDBTr9zFVeUcttcsOpDZ
-X-Gm-Gg: ASbGncvW2tIoIB6dbNRh12AQYxSFn2zuhLPuM8ADHYL8mP91UYyEU9fpmXN87eNHjHC
- rJJXuOTxMw3vDAHpVjS137jENAWsZy1Ek6lJx999NROPkFdWxVf0F3f4GB4XyKMlSmTp3GImMUf
- DcM7Cki7jLSwX/68SyqikbCi7f/i+i8smM0bNmbhIQHxfDqBuYuaXukAeBrn6bIAU82teYb8XN3
- fSg9gBN5a+/ztlcdyKZnJymWapY+eWHe63E2zk0+bLl/gODGyibGdLY+UbLNvMTk5zJcrHH9Zdm
- T9QeYwynucUVkTJYNueP776uTPpoAGyTFA23fZTw6wRis1YrKwTSiTrry8AiqQ7mc134Byptv1L
- 5Tw==
-X-Received: by 2002:a05:6000:248a:b0:3b7:8737:7f1d with SMTP id
- ffacd0b85a97d-3b787378026mr2659205f8f.46.1753700438455; 
- Mon, 28 Jul 2025 04:00:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQrmMSiX/NrdXaB2+of9aA0SsTlsEPrQwgYK3iQPmrx/UsjAMuRSkMvDnimmbklSHIg3DEsw==
-X-Received: by 2002:a05:6000:248a:b0:3b7:8737:7f1d with SMTP id
- ffacd0b85a97d-3b787378026mr2659176f8f.46.1753700437915; 
- Mon, 28 Jul 2025 04:00:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b778f04009sm8613403f8f.38.2025.07.28.04.00.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Jul 2025 04:00:37 -0700 (PDT)
-Message-ID: <41ca6fb6-98ae-4d87-9964-f028b2b3f6b0@redhat.com>
-Date: Mon, 28 Jul 2025 13:00:36 +0200
+ d=1e100.net; s=20230601; t=1753700858; x=1754305658;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KXl4786StpsdcvaQo314lHszBqNONxWMmPZv7GOBbNE=;
+ b=Q6WNUfGYPQmLavF8Ww4UrtsQDT13pQP8r0GqnNBdb7jVZEJNOeTxhCwo/YQJzwCNWl
+ aFkDfubNT1leGZc0DVuJjE5YUT5T/GptYn3YhIQ6xUeve7d+toOOtm73hLIoqTj6IEwO
+ 9LHregO8/ICRGrFkgTpNuwwZrtImu34nM+Yvr5JwSbv6D/r6uxhVpkv/l4ylc5YWGvEK
+ rnDdcAvDp67y9HBKYmO2EFtaVqsG9v4DKGFys7r0wRVk5TvS03huIxPY71HKg7X+N42c
+ dZ5mfHL/VyLx9yNwrhStH3FHnHUTlWsmLGgSdryG8VsTUmyqHapCsBCpi6Ofe9C49JQ2
+ qWnw==
+X-Gm-Message-State: AOJu0Yyra1h1LwGe4B9zB531EqPugGrzVA85dFbNgHi9WBD4MU71UWLA
+ lFJeY5TJFCSasR+H5F1u1XCSpx7F17Z6wBHkBUuwOc0/g/RdzZcQWwrmDWF/vwvMgbGw/peYgIR
+ NAq7+x14gphP2g0/eMOd0zednDAiT7554SfVMtuiSIL8pl262wwpYTr/sIRr1LQ2bs8zt7/AK/F
+ Xf1zPS1RuSblfGp9QMEo4rFLXTZIV3ga8=
+X-Gm-Gg: ASbGncvzN5WNIYvm7HHoMmM4BHGR9GPN8WrR4ly7MlrOzhb/Y2GNYhyJcumpo9gT7rk
+ WzHgvnZejJYRgR6uuAOdCHM7z2+rOtfhpaRnv+hkgOmTbtrwN1OE+RdBS5/tSdHnasYhMPy3xGg
+ geh7Yc3nClHsgR82W6NDLb/v4aRqd3qriKRsO2OE2Lfz440oYAExLqYw==
+X-Received: by 2002:a17:90b:5848:b0:311:9c9a:58d7 with SMTP id
+ 98e67ed59e1d1-31e778f1a6fmr17461376a91.19.1753700857884; 
+ Mon, 28 Jul 2025 04:07:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8QqQBqxGCeeZXm2bzoOLxl3L8BJg9uhUNp7kAsLRXu60FA/u80S28jNDb7N59OYUQ55BbnP6tHfcux9Z0sjo=
+X-Received: by 2002:a17:90b:5848:b0:311:9c9a:58d7 with SMTP id
+ 98e67ed59e1d1-31e778f1a6fmr17461312a91.19.1753700857394; Mon, 28 Jul 2025
+ 04:07:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/3] hw/i386: Add the ramfb romfile compatibility
-To: Thomas Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org, Shaoqin Huang <shahuang@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Richard Henderson <richard.henderson@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Eric Auger <eric.auger@redhat.com>
-References: <20250718194349.65771-1-kraxel@redhat.com>
- <20250718194349.65771-4-kraxel@redhat.com>
- <b10a9b6b-927e-4c25-aebb-9317fe43b9ad@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b10a9b6b-927e-4c25-aebb-9317fe43b9ad@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
+ <20250725-propagate_tpm_error-v7-23-d52704443975@redhat.com>
+In-Reply-To: <20250725-propagate_tpm_error-v7-23-d52704443975@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 28 Jul 2025 15:07:25 +0400
+X-Gm-Features: Ac12FXwBlwYDr-RZ5lNldT0clw7ZHo-OH5q2gtDrlixThpa-Tq2n57Vt4DeLDWs
+Message-ID: <CAMxuvazqVEAM_7=P9fA=7mbeLp3gYbjqaDMVnMXBQKD8xuX4Yw@mail.gmail.com>
+Subject: Re: [PATCH v7 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000a5cf1b063afb4cae"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,189 +125,539 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/25 12:51, Thomas Huth wrote:
-> On 18/07/2025 21.43, Gerd Hoffmann wrote:
->> From: Shaoqin Huang <shahuang@redhat.com>
->>
->> ramfb is a sysbus device so it can only used for machine types where it
->> is explicitly enabled:
->>
->>    # git grep machine_class_allow_dynamic_sysbus_dev.*TYPE_RAMFB_DEVICE
->>    hw/arm/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
->>           TYPE_RAMFB_DEVICE);
->>    hw/i386/microvm.c:    machine_class_allow_dynamic_sysbus_dev(mc,
->>           TYPE_RAMFB_DEVICE);
->>    hw/i386/pc_piix.c:    machine_class_allow_dynamic_sysbus_dev(m,
->>           TYPE_RAMFB_DEVICE);
->>    hw/i386/pc_q35.c:    machine_class_allow_dynamic_sysbus_dev(m,
->>           TYPE_RAMFB_DEVICE);
->>    hw/loongarch/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
->>           TYPE_RAMFB_DEVICE);
->>    hw/riscv/virt.c:    machine_class_allow_dynamic_sysbus_dev(mc,
->>           TYPE_RAMFB_DEVICE);
->>
->> So these six are the only machine types we have to worry about.
->>
->> The three x86 machine types (pc, q35, microvm) will actually use the rom
->> (when booting with seabios).
->>
->> For arm/riscv/loongarch virt we want to disable the rom.
->>
->> This patch sets ramfb romfile option to false by default, except for x86
->> machines types (pc, q35, microvm) which need the rom file when booting
->> with seabios and machine types <= 10.0 (handling the case of arm virt,
->> for compat reasons).
->>
->> At the same time, set the "use-legacy-x86-rom" property to true on those
->> historical versioned machine types in order to avoid the memory layout
->> being changed.
->>
->> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
->> Message-ID: <20250717100941.2230408-4-shahuang@redhat.com>
->> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->> ---
->>   hw/core/machine.c             |  2 ++
->>   hw/display/ramfb-standalone.c |  2 +-
->>   hw/i386/microvm.c             |  3 +++
->>   hw/i386/pc_piix.c             | 10 ++++++++++
->>   hw/i386/pc_q35.c              |  3 +++
->>   hw/vfio/pci.c                 |  2 +-
->>   6 files changed, 20 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index e869821b2246..a7043e2a3425 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -39,6 +39,8 @@
->>   GlobalProperty hw_compat_10_0[] = {
->>       { "scsi-hd", "dpofua", "off" },
->> +    { "ramfb", "use-legacy-x86-rom", "true"},
->> +    { "vfio-pci", "use-legacy-x86-rom", "true" },
->>   };
->>   const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
->> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
->> index 82d8c69f8903..72b2071aed01 100644
->> --- a/hw/display/ramfb-standalone.c
->> +++ b/hw/display/ramfb-standalone.c
->> @@ -64,7 +64,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
->>   static const Property ramfb_properties[] = {
->>       DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
->>       DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState,
->> -                     use_legacy_x86_rom, true),
->> +                     use_legacy_x86_rom, false),
->>   };
->>   static void ramfb_class_initfn(ObjectClass *klass, const void *data)
->> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
->> index e0daf0d4fc30..d90b69a16200 100644
->> --- a/hw/i386/microvm.c
->> +++ b/hw/i386/microvm.c
->> @@ -49,6 +49,7 @@
->>   #include "hw/acpi/generic_event_device.h"
->>   #include "hw/pci-host/gpex.h"
->>   #include "hw/usb/xhci.h"
->> +#include "hw/vfio/types.h"
->>   #include "elf.h"
->>   #include "kvm/kvm_i386.h"
->> @@ -633,6 +634,8 @@ GlobalProperty microvm_properties[] = {
->>        * so reserving io space is not going to work.  Turn it off.
->>        */
->>       { "pcie-root-port", "io-reserve", "0" },
->> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->>   };
->>   static void microvm_class_init(ObjectClass *oc, const void *data)
->> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->> index a3285fbc6450..ad5caff3a5d2 100644
->> --- a/hw/i386/pc_piix.c
->> +++ b/hw/i386/pc_piix.c
->> @@ -49,6 +49,7 @@
->>   #include "hw/i2c/smbus_eeprom.h"
->>   #include "system/memory.h"
->>   #include "hw/acpi/acpi.h"
->> +#include "hw/vfio/types.h"
->>   #include "qapi/error.h"
->>   #include "qemu/error-report.h"
->>   #include "system/xen.h"
->> @@ -77,6 +78,13 @@ static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
->>   static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
->>   #endif
->> +static GlobalProperty pc_piix_compat_defaults[] = {
->> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->> +};
->> +static const size_t pc_piix_compat_defaults_len =
->> +    G_N_ELEMENTS(pc_piix_compat_defaults);
->> +
->>   /*
->>    * Return the global irq number corresponding to a given device irq
->>    * pin. We could also use the bus number to have a more precise mapping.
->> @@ -492,6 +500,8 @@ static void pc_i440fx_machine_options(MachineClass *m)
->>                                      pc_set_south_bridge);
->>       object_class_property_set_description(oc, "x-south-bridge",
->>                                        "Use a different south bridge than PIIX3");
->> +    compat_props_add(m->compat_props,
->> +                     pc_piix_compat_defaults, pc_piix_compat_defaults_len);
->>   }
->>   static void pc_i440fx_machine_10_1_options(MachineClass *m)
->> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->> index cf871cfdad86..9b9519fa02d5 100644
->> --- a/hw/i386/pc_q35.c
->> +++ b/hw/i386/pc_q35.c
->> @@ -45,6 +45,7 @@
->>   #include "hw/i386/pc.h"
->>   #include "hw/i386/amd_iommu.h"
->>   #include "hw/i386/intel_iommu.h"
->> +#include "hw/vfio/types.h"
->>   #include "hw/virtio/virtio-iommu.h"
->>   #include "hw/display/ramfb.h"
->>   #include "hw/ide/pci.h"
->> @@ -67,6 +68,8 @@
->>   static GlobalProperty pc_q35_compat_defaults[] = {
->>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
->> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
->> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
->>   };
->>   static const size_t pc_q35_compat_defaults_len =
->>       G_N_ELEMENTS(pc_q35_compat_defaults);
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 0b969b3359db..174499ecec65 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -3810,7 +3810,7 @@ static const TypeInfo vfio_pci_dev_info = {
->>   static const Property vfio_pci_dev_nohotplug_properties[] = {
->>       DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
->>       DEFINE_PROP_BOOL("use-legacy-x86-rom", VFIOPCIDevice,
->> -                     use_legacy_x86_rom, true),
->> +                     use_legacy_x86_rom, false),
->>       DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
->>                               ON_OFF_AUTO_AUTO),
->>   };
-> 
->   Hi guys,
-> 
-> there is something fishy going on now:
-> 
-> $ ./qemu-system-x86_64 -M q35 -device vfio-pci
-> Unexpected error in object_property_find_err() at ../../home/thuth/devel/qemu/qom/object.c:1345:
-> qemu-system-x86_64: -device vfio-pci: can't apply global vfio-pci.use-legacy-x86-rom=true: Property 'vfio-pci.use-legacy-x86-rom' not found
-> Aborted (core dumped)
-> 
-> Could you please have a look?
+--000000000000a5cf1b063afb4cae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fix here :
+Hi
 
-  https://lore.kernel.org/qemu-devel/20250723062714.1245826-1-clg@redhat.com/
+On Fri, Jul 25, 2025 at 4:22=E2=80=AFPM Arun Menon <armenon@redhat.com> wro=
+te:
 
-I am planning to send it with the next vfio PR. People are on vacations
-last week and I still need a few Acks.
+> - We need to have good error reporting in the callbacks in
+>   VMStateDescription struct. Specifically pre_save, post_save,
+>   pre_load and post_load callbacks.
+> - It is not possible to change these functions everywhere in one
+>   patch, therefore, we introduce a duplicate set of callbacks
+>   with Error object passed to them.
+> - So, in this commit, we implement 'errp' variants of these callbacks,
+>   introducing an explicit Error object parameter.
+> - This is a functional step towards transitioning the entire codebase
+>   to the new error-parameterized functions.
+> - Deliberately called in mutual exclusion from their counterparts,
+>   to prevent conflicts during the transition.
+> - New impls should preferentally use 'errp' variants of
+>   these methods, and existing impls incrementally converted.
+>   The variants without 'errp' are intended to be removed
+>   once all usage is converted.
+>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>  include/migration/vmstate.h | 11 ++++++++
+>  migration/vmstate.c         | 62
+> +++++++++++++++++++++++++++++++++++++++------
+>  2 files changed, 65 insertions(+), 8 deletions(-)
+>
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index
+> 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc8745fdb=
+b79bfd7c8
+> 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -200,15 +200,26 @@ struct VMStateDescription {
+>       * exclusive. For this reason, also early_setup VMSDs are migrated i=
+n
+> a
+>       * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated
+> in
+>       * a QEMU_VM_SECTION_START section.
+> +     *
+> +     * There are duplicate impls of the post/pre save/load hooks.
+> +     * New impls should preferentally use 'errp' variants of these
+> +     * methods and existing impls incrementally converted.
+> +     * The variants without 'errp' are intended to be removed
+> +     * once all usage is converted.
+>
 
-Thanks,
-
-C.
+It is not documented, but I think all the callbacks return value should be
+0 on success, <0 on error with -value an error number from errno.h. Could
+you document it?
 
 
+>       */
+> +
+>      bool early_setup;
+>      int version_id;
+>      int minimum_version_id;
+>      MigrationPriority priority;
+>      int (*pre_load)(void *opaque);
+> +    int (*pre_load_errp)(void *opaque, Error **errp);
+>      int (*post_load)(void *opaque, int version_id);
+> +    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>      int (*pre_save)(void *opaque);
+> +    int (*pre_save_errp)(void *opaque, Error **errp);
+>      int (*post_save)(void *opaque);
+> +    int (*post_save_errp)(void *opaque, Error **errp);
+>      bool (*needed)(void *opaque);
+>      bool (*dev_unplug_pending)(void *opaque);
+>
+
+You will also need to update docs/devel/migration/main.rst to reflect the
+new callbacks
+
+
+>
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index
+> bb5e9bf38d6ee7619ceb3e9da29209581c3c12eb..e427ef49b2b1991b0a3cdb14d641c19=
+7e00014b0
+> 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -152,7 +152,16 @@ int vmstate_load_state(QEMUFile *f, const
+> VMStateDescription *vmsd,
+>          trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+>          return -EINVAL;
+>      }
+> -    if (vmsd->pre_load) {
+> +    if (vmsd->pre_load_errp) {
+> +        ret =3D vmsd->pre_load_errp(opaque, errp);
+> +        if (ret) {
+> +            error_prepend(errp, "VM pre load failed for: '%s', "
+> +                          "version_id: '%d', minimum version_id: '%d', "
+> +                          "ret: %d: ", vmsd->name, vmsd->version_id,
+> +                          vmsd->minimum_version_id, ret);
+>
+
+(but we don't have error_prepend_errno, ok)
+
+
+> +            return ret;
+
++        }
+> +    } else if (vmsd->pre_load) {
+>          ret =3D vmsd->pre_load(opaque);
+>          if (ret) {
+>              error_setg(errp, "VM pre load failed for: '%s', "
+> @@ -236,7 +245,14 @@ int vmstate_load_state(QEMUFile *f, const
+> VMStateDescription *vmsd,
+>          qemu_file_set_error(f, ret);
+>          return ret;
+>      }
+> -    if (vmsd->post_load) {
+> +    if (vmsd->post_load_errp) {
+> +        ret =3D vmsd->post_load_errp(opaque, version_id, errp);
+> +        if (ret < 0) {
+> +            error_prepend(errp, "VM Post load failed for: %s, version_id=
+:
+> %d, "
+> +                          "minimum_version: %d, ret: %d: ", vmsd->name,
+> +                          vmsd->version_id, vmsd->minimum_version_id,
+> ret);
+> +        }
+> +    } else if (vmsd->post_load) {
+>          ret =3D vmsd->post_load(opaque, version_id);
+>          if (ret < 0) {
+>              error_setg(errp,
+> @@ -412,11 +428,19 @@ int vmstate_save_state_v(QEMUFile *f, const
+> VMStateDescription *vmsd,
+>                           void *opaque, JSONWriter *vmdesc, int
+> version_id, Error **errp)
+>  {
+>      int ret =3D 0;
+> +    Error *local_err =3D NULL;
+>      const VMStateField *field =3D vmsd->fields;
+>
+>      trace_vmstate_save_state_top(vmsd->name);
+>
+> -    if (vmsd->pre_save) {
+> +    if (vmsd->pre_save_errp) {
+> +        ret =3D vmsd->pre_save_errp(opaque, errp);
+> +        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+> +        if (ret) {
+> +            error_prepend(errp, "pre-save failed: %s: ", vmsd->name);
+>
+
+Here, it would be helpful to report "ret" too.
+
+
+> +            return ret;
+> +        }
+> +    } else if (vmsd->pre_save) {
+>
+
+Imho, you should try to introduce a new helper function to call the
+implemented callback appropriately and handle the non-errp case:
+
+int the_callback(vmsd,.. **errp)
+{
+  ERRP_GUARD(); // mostly for consistency
+
+  if (vmsd->the_callback_errp) {
+   return vmsd->the_callback_errp(args.., errp);
+  } else if (vmsd->the_callback) {
+    ret =3Dvmsd->the_callback(args...);
+    error_setg_errno(-ret, "the callback failed...")
+    return ret;
+  }
+
+  return 0;
+}
+
+This should make it a bit easier to deal with.
+
+         ret =3D vmsd->pre_save(opaque);
+>          trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+>          if (ret) {
+> @@ -524,10 +548,22 @@ int vmstate_save_state_v(QEMUFile *f, const
+> VMStateDescription *vmsd,
+>                  }
+>
+>                  if (ret) {
+> -                    error_setg(errp, "Save of field %s/%s failed",
+> -                                vmsd->name, field->name);
+> -                    if (vmsd->post_save) {
+> -                        vmsd->post_save(opaque);
+> +                    if (*errp =3D=3D NULL) {
+> +                        error_setg(errp, "Save of field %s/%s failed",
+> +                                   vmsd->name, field->name);
+> +                    }
+> +                    if (vmsd->post_save_errp) {
+> +                        int ps_ret =3D vmsd->post_save_errp(opaque,
+> &local_err);
+> +                        if (ps_ret < 0) {
+> +                            error_free_or_abort(errp);
+> +                            error_propagate(errp, local_err);
+> +                            ret =3D ps_ret;
+> +                        }
+> +                    } else if (vmsd->post_save) {
+> +                        int ps_ret =3D vmsd->post_save(opaque);
+>
+
+It's a bit odd how post_save() is being used here. It could be worth to
+document that it is called regardless of success of migration in callback
+doc.
+
+Imho, the function vmstate_save_state_v() should be refactored to call
+pre_save() and post_save() and call an internal function in between. It
+will also help to shrink the function a bit.
+
+
+> +                        if (ps_ret < 0) {
+> +                            ret =3D ps_ret;
+> +                        }
+>                      }
+>                      return ret;
+>                  }
+> @@ -554,7 +590,17 @@ int vmstate_save_state_v(QEMUFile *f, const
+> VMStateDescription *vmsd,
+>
+>      ret =3D vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+>
+> -    if (vmsd->post_save) {
+> +    if (vmsd->post_save_errp) {
+> +        int ps_ret =3D vmsd->post_save_errp(opaque, &local_err);
+> +        if (!ret && ps_ret) {
+> +            ret =3D ps_ret;
+> +            error_propagate(errp, local_err);
+> +        } else if (ret && ps_ret) {
+> +            error_free_or_abort(errp);
+> +            error_propagate(errp, local_err);
+> +            ret =3D ps_ret;
+> +        }
+> +    } else if (vmsd->post_save) {
+>          int ps_ret =3D vmsd->post_save(opaque);
+>          if (!ret && ps_ret) {
+>              ret =3D ps_ret;
+>
+> --
+> 2.50.0
+>
+>
+
+--000000000000a5cf1b063afb4cae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 25, 2=
+025 at 4:22=E2=80=AFPM Arun Menon &lt;<a href=3D"mailto:armenon@redhat.com"=
+>armenon@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">- We need to have good error reporting in the callbacks =
+in<br>
+=C2=A0 VMStateDescription struct. Specifically pre_save, post_save,<br>
+=C2=A0 pre_load and post_load callbacks.<br>
+- It is not possible to change these functions everywhere in one<br>
+=C2=A0 patch, therefore, we introduce a duplicate set of callbacks<br>
+=C2=A0 with Error object passed to them.<br>
+- So, in this commit, we implement &#39;errp&#39; variants of these callbac=
+ks,<br>
+=C2=A0 introducing an explicit Error object parameter.<br>
+- This is a functional step towards transitioning the entire codebase<br>
+=C2=A0 to the new error-parameterized functions.<br>
+- Deliberately called in mutual exclusion from their counterparts,<br>
+=C2=A0 to prevent conflicts during the transition.<br>
+- New impls should preferentally use &#39;errp&#39; variants of<br>
+=C2=A0 these methods, and existing impls incrementally converted.<br>
+=C2=A0 The variants without &#39;errp&#39; are intended to be removed<br>
+=C2=A0 once all usage is converted.<br>
+<br>
+Signed-off-by: Arun Menon &lt;<a href=3D"mailto:armenon@redhat.com" target=
+=3D"_blank">armenon@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0include/migration/vmstate.h | 11 ++++++++<br>
+=C2=A0migration/vmstate.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 62 +++++++++++=
+++++++++++++++++++++++++++++------<br>
+=C2=A02 files changed, 65 insertions(+), 8 deletions(-)<br>
+<br>
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h<br>
+index 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc874=
+5fdbb79bfd7c8 100644<br>
+--- a/include/migration/vmstate.h<br>
++++ b/include/migration/vmstate.h<br>
+@@ -200,15 +200,26 @@ struct VMStateDescription {<br>
+=C2=A0 =C2=A0 =C2=A0 * exclusive. For this reason, also early_setup VMSDs a=
+re migrated in a<br>
+=C2=A0 =C2=A0 =C2=A0 * QEMU_VM_SECTION_FULL section, while save_setup() dat=
+a is migrated in<br>
+=C2=A0 =C2=A0 =C2=A0 * a QEMU_VM_SECTION_START section.<br>
++=C2=A0 =C2=A0 =C2=A0*<br>
++=C2=A0 =C2=A0 =C2=A0* There are duplicate impls of the post/pre save/load =
+hooks.<br>
++=C2=A0 =C2=A0 =C2=A0* New impls should preferentally use &#39;errp&#39; va=
+riants of these<br>
++=C2=A0 =C2=A0 =C2=A0* methods and existing impls incrementally converted.<=
+br>
++=C2=A0 =C2=A0 =C2=A0* The variants without &#39;errp&#39; are intended to =
+be removed<br>
++=C2=A0 =C2=A0 =C2=A0* once all usage is converted.<br></blockquote><div><b=
+r></div><div>It is not documented, but I think all the callbacks return val=
+ue should be 0 on success, &lt;0 on error with -value an error number from =
+errno.h. Could you document it?</div><div>=C2=A0</div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0 */<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0bool early_setup;<br>
+=C2=A0 =C2=A0 =C2=A0int version_id;<br>
+=C2=A0 =C2=A0 =C2=A0int minimum_version_id;<br>
+=C2=A0 =C2=A0 =C2=A0MigrationPriority priority;<br>
+=C2=A0 =C2=A0 =C2=A0int (*pre_load)(void *opaque);<br>
++=C2=A0 =C2=A0 int (*pre_load_errp)(void *opaque, Error **errp);<br>
+=C2=A0 =C2=A0 =C2=A0int (*post_load)(void *opaque, int version_id);<br>
++=C2=A0 =C2=A0 int (*post_load_errp)(void *opaque, int version_id, Error **=
+errp);<br>
+=C2=A0 =C2=A0 =C2=A0int (*pre_save)(void *opaque);<br>
++=C2=A0 =C2=A0 int (*pre_save_errp)(void *opaque, Error **errp);<br>
+=C2=A0 =C2=A0 =C2=A0int (*post_save)(void *opaque);<br>
++=C2=A0 =C2=A0 int (*post_save_errp)(void *opaque, Error **errp);<br>
+=C2=A0 =C2=A0 =C2=A0bool (*needed)(void *opaque);<br>
+=C2=A0 =C2=A0 =C2=A0bool (*dev_unplug_pending)(void *opaque);<br></blockquo=
+te><div><br></div><div>You will also need to update=C2=A0docs/devel/migrati=
+on/main.rst to reflect the new callbacks</div><div>=C2=A0</div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">
+<br>
+diff --git a/migration/vmstate.c b/migration/vmstate.c<br>
+index bb5e9bf38d6ee7619ceb3e9da29209581c3c12eb..e427ef49b2b1991b0a3cdb14d64=
+1c197e00014b0 100644<br>
+--- a/migration/vmstate.c<br>
++++ b/migration/vmstate.c<br>
+@@ -152,7 +152,16 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescr=
+iption *vmsd,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_vmstate_load_state_end(vmsd-&gt;nam=
+e, &quot;too old&quot;, -EINVAL);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -EINVAL;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 if (vmsd-&gt;pre_load) {<br>
++=C2=A0 =C2=A0 if (vmsd-&gt;pre_load_errp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vmsd-&gt;pre_load_errp(opaque, errp);<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_prepend(errp, &quot;VM pre=
+ load failed for: &#39;%s&#39;, &quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;version_id: &#39;%d&#39;, minimum version_id: &#39;=
+%d&#39;, &quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;ret: %d: &quot;, vmsd-&gt;name, vmsd-&gt;version_id=
+,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 vmsd-&gt;minimum_version_id, ret);<br></blockquote><div><=
+br></div><div>(but we don&#39;t have error_prepend_errno, ok)</div><div>=C2=
+=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;=C2=A0</blockquote><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 } else if (vmsd-&gt;pre_load) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D vmsd-&gt;pre_load(opaque);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp, &quot;VM p=
+re load failed for: &#39;%s&#39;, &quot;<br>
+@@ -236,7 +245,14 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescr=
+iption *vmsd,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_file_set_error(f, ret);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 if (vmsd-&gt;post_load) {<br>
++=C2=A0 =C2=A0 if (vmsd-&gt;post_load_errp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vmsd-&gt;post_load_errp(opaque, versio=
+n_id, errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_prepend(errp, &quot;VM Pos=
+t load failed for: %s, version_id: %d, &quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;minimum_version: %d, ret: %d: &quot;, vmsd-&gt;name=
+,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 vmsd-&gt;version_id, vmsd-&gt;minimum_version_id, ret);<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 } else if (vmsd-&gt;post_load) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D vmsd-&gt;post_load(opaque, versio=
+n_id);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret &lt; 0) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp,<br>
+@@ -412,11 +428,19 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDe=
+scription *vmsd,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 void *opaque, JSONWriter *vmdesc, int version_id, Error *=
+*errp)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0int ret =3D 0;<br>
++=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
+=C2=A0 =C2=A0 =C2=A0const VMStateField *field =3D vmsd-&gt;fields;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0trace_vmstate_save_state_top(vmsd-&gt;name);<br>
+<br>
+-=C2=A0 =C2=A0 if (vmsd-&gt;pre_save) {<br>
++=C2=A0 =C2=A0 if (vmsd-&gt;pre_save_errp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vmsd-&gt;pre_save_errp(opaque, errp);<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 trace_vmstate_save_state_pre_save_res(vmsd-&gt=
+;name, ret);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_prepend(errp, &quot;pre-sa=
+ve failed: %s: &quot;, vmsd-&gt;name);<br></blockquote><div><br></div><div>=
+Here, it would be helpful to report &quot;ret&quot; too.</div><div>=C2=A0</=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 } else if (vmsd-&gt;pre_save) {<br></blockquote><div><br></d=
+iv><div>Imho, you should try to introduce a new helper function to call the=
+ implemented callback appropriately and handle the non-errp case:</div><div=
+><br></div><div>int the_callback(vmsd,.. **errp)</div><div>{</div><div>=C2=
+=A0 ERRP_GUARD(); // mostly for consistency</div><div><br></div><div>=C2=A0=
+ if (vmsd-&gt;the_callback_errp) {</div><div>=C2=A0 =C2=A0return vmsd-&gt;t=
+he_callback_errp(args.., errp);</div><div>=C2=A0 } else if (vmsd-&gt;the_ca=
+llback) {</div><div>=C2=A0 =C2=A0 ret =3Dvmsd-&gt;the_callback(args...);</d=
+iv><div>=C2=A0 =C2=A0 error_setg_errno(-ret, &quot;the callback failed...&q=
+uot;)</div><div>=C2=A0 =C2=A0 return ret;</div><div>=C2=A0 }</div><div>=C2=
+=A0=C2=A0</div><div>=C2=A0 return 0;</div><div>}</div><div>=C2=A0=C2=A0</di=
+v><div>This should make it a bit easier to deal with.</div><div><br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D vmsd-&gt;pre_save(opaque);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_vmstate_save_state_pre_save_res(vms=
+d-&gt;name, ret);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret) {<br>
+@@ -524,10 +548,22 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDe=
+scription *vmsd,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret) {<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 erro=
+r_setg(errp, &quot;Save of field %s/%s failed&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vmsd-&gt;name, field-&gt;name);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (=
+vmsd-&gt;post_save) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 vmsd-&gt;post_save(opaque);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (=
+*errp =3D=3D NULL) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 error_setg(errp, &quot;Save of field %s/%s failed&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vmsd-&gt;name, field-&g=
+t;name);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (=
+vmsd-&gt;post_save_errp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 int ps_ret =3D vmsd-&gt;post_save_errp(opaque, &amp;local_err);<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 if (ps_ret &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 error_free_or_abort(errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ps_ret;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } el=
+se if (vmsd-&gt;post_save) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 int ps_ret =3D vmsd-&gt;post_save(opaque);<br></blockquote><div>=
+<br></div><div>It&#39;s a bit odd how post_save() is being used here. It co=
+uld be worth to document that it is called regardless of success of migrati=
+on in callback doc.</div><div><br></div><div>Imho, the function=C2=A0vmstat=
+e_save_state_v() should be refactored to call pre_save() and post_save() an=
+d call an internal function in between. It will also help to shrink the fun=
+ction a bit.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 if (ps_ret &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ps_ret;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0return ret;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+@@ -554,7 +590,17 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDes=
+cription *vmsd,<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0ret =3D vmstate_subsection_save(f, vmsd, opaque, vmdesc=
+, errp);<br>
+<br>
+-=C2=A0 =C2=A0 if (vmsd-&gt;post_save) {<br>
++=C2=A0 =C2=A0 if (vmsd-&gt;post_save_errp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int ps_ret =3D vmsd-&gt;post_save_errp(opaque,=
+ &amp;local_err);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!ret &amp;&amp; ps_ret) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ps_ret;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err)=
+;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (ret &amp;&amp; ps_ret) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free_or_abort(errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err)=
+;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ps_ret;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 } else if (vmsd-&gt;post_save) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int ps_ret =3D vmsd-&gt;post_save(opaque)=
+;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!ret &amp;&amp; ps_ret) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D ps_ret;<br>
+<br>
+-- <br>
+2.50.0<br>
+<br>
+</blockquote></div></div>
+
+--000000000000a5cf1b063afb4cae--
 
 
