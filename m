@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1DEC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 13:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F31CC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 13:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugNsG-00063K-5A; Mon, 28 Jul 2025 09:26:52 -0400
+	id 1ugNtr-0006us-LP; Mon, 28 Jul 2025 09:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1ugMz4-00065Q-A8
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:29:38 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ugN1K-0005we-He
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:32:05 -0400
+Received: from p-east3-cluster6-host2-snip4-10.eps.apple.com ([57.103.85.151]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1ugMz1-0002XC-HN
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:29:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753705776; x=1785241776;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=Y045cRMYcy33/KIHJAMmZrd/TsvpU3q0DM/HumsQBo0=;
- b=iUy6as5K/3otVz6DrP2RjKrBbt4hJTMRJuZNu1Q40/dzThyuOepRhTrd
- EclTKy4c/Hf8ijaBxQXAzRgOi0OZEWDBGQoWA1pl4E7bq2LU+Ex9lbRjR
- wDzJTXrC3fm8qpFojKxUCcqamkLc6l38TjLkI7gmMkO4FCnfrDZ1Ntb9L
- CO6iOeWu+4Tmj8OJYiAKL+ZWvwimsQV8h0ItLf8x1RQqto0qggZB9itWP
- gEO4YPNSW+h4bGttvdZoz9VYpkMEsYViVPH2xfHozHvqiWGI9goJm8f5e
- B+08CZlPIwUZZ0UK7L/1pUg8BLVIu0zE2TRT62meCjgXPd38MKMn/CPip Q==;
-X-CSE-ConnectionGUID: 4kIa61i9Q0iDlkxZ22/xlg==
-X-CSE-MsgGUID: lwDwZk7yS6iO5v6bm7twjQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11504"; a="55030527"
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; d="scan'208";a="55030527"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jul 2025 05:29:29 -0700
-X-CSE-ConnectionGUID: cqGFErJYRrWygs5oNrh1uw==
-X-CSE-MsgGUID: VNmSyISVSiOZWb96ud2u4g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; d="scan'208";a="167733322"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jul 2025 05:29:25 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, slp@redhat.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, shahuang@redhat.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH] vfio/pci: Fix regression due to unexisting property
- use-legacy-x86-rom
-Date: Mon, 28 Jul 2025 08:29:06 -0400
-Message-ID: <20250728122906.39703-1-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.19;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1ugN1B-0002uQ-8i
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 08:31:58 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id
+ 7388E18005FC; Mon, 28 Jul 2025 12:31:41 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=nlrgZyq/9wcmBEA+bg7bfnPGEkKlQkD/kDzVGgAN8H4=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=FUHr4+qPPZRVvuWv2R9zPoDEB+JQxG/LD5ZHJqsDY+u7oUZtLkso6KAUuKyWKnJEh+rLSQXwiKaSdQ56Py2G883d4Kb7V+2W4jsrK7C6tXAWsC/pyPfgHvoyDLqXFVPeFAJA2/9mex7qaWTNvWkj0sGEBn1a3R0hsd7HUAWaRAufC6gpzS9ypT0CLn3RSg4DTDUf49STpNzYtuewreg5qoQ5wgRoDHxPtdfXah0VxQcFp/mHuSAt+foIfBK0wNJyQ1SxkhpfRBEYEdc5UlfUSv+IF/EVnSnTIDbucrnHyR3sEOVo1u08pbq+A3ZGiD4gSxAURPd8mA4yvwI+uuq6IQ==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id
+ 62B1F1800602; Mon, 28 Jul 2025 12:31:38 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
+Subject: Re: [PATCH v4 04/15] hw/intc: Add hvf vGIC interrupt controller
+ support
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <1F4C322B-8D95-43D0-96EF-66B0C4C5E55E@ynddal.dk>
+Date: Mon, 28 Jul 2025 14:31:26 +0200
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <932A2760-B5E5-418F-BB16-C23E4AE176AF@unpredictable.fr>
+References: <20250728055701.38975-1-mohamed@unpredictable.fr>
+ <20250728055701.38975-5-mohamed@unpredictable.fr>
+ <1F4C322B-8D95-43D0-96EF-66B0C4C5E55E@ynddal.dk>
+To: Mads Ynddal <mads@ynddal.dk>
+X-Mailer: Apple Mail (2.3860.100.5.1.1)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDA5MiBTYWx0ZWRfX8MI8nXL0oqsX
+ xTV7+NsFbUy+uEQRdluv8M3Tr+XO2TmFRgu6Kv7eduljZlrUzEMEifTA/lApD2vpNvgeVMycdM9
+ VwU3UABijN/JZkLBR+RLopOICOuNGsNQZxmRgMaxmd8I/HlOcEWmdMNKNWyOoOg3uWEm72A4sV5
+ Ml4eNo6pXyAtqTV41AbaJSm32G+TsKNMCEY8bW0kp5/Y/Hcj0U/9m3Oh3odgHQthSW1F8xguoa7
+ LeFsrWcLeswvbj0mbh6xwk1Fz9MmQfC/BF4+8lEU8PENMASN216H0AbvqQ3/5MevHeRSucip8=
+X-Proofpoint-ORIG-GUID: e6f5Pm4pEeM7MixEWG5BVz49uGLdQWux
+X-Proofpoint-GUID: e6f5Pm4pEeM7MixEWG5BVz49uGLdQWux
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-28_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 phishscore=0 mlxscore=0
+ spamscore=0 clxscore=1030
+ bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506270000 definitions=main-2507280092
+Received-SPF: pass client-ip=57.103.85.151;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,101 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TYPE_VFIO_PCI doesn't have property use-legacy-x86-rom, but
-TYPE_VFIO_PCI_NOHOTPLUG has. The compatibility config leads to
-SIGABRT on new QEMU.
 
-The default value of element use_legacy_x86_rom for TYPE_VFIO_PCI is
-already false, so no need extra processing.
 
-Fixes: d5fcf0d960d8 ("hw/i386: Add the ramfb romfile compatibility")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/vfio/types.h   | 2 ++
- hw/core/machine.c | 2 +-
- hw/i386/microvm.c | 2 +-
- hw/i386/pc_piix.c | 2 +-
- hw/i386/pc_q35.c  | 2 +-
- hw/vfio/pci.c     | 2 --
- 6 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/hw/vfio/types.h b/hw/vfio/types.h
-index fa20c29b9f..c19334ff25 100644
---- a/hw/vfio/types.h
-+++ b/hw/vfio/types.h
-@@ -18,4 +18,6 @@
- #define TYPE_VFIO_PCI "vfio-pci"
- /* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
- 
-+#define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
-+
- #endif /* HW_VFIO_VFIO_TYPES_H */
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index d6b2240fc2..bd47527479 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -41,7 +41,7 @@ GlobalProperty hw_compat_10_0[] = {
-     { "scsi-hd", "dpofua", "off" },
-     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
-     { "ramfb", "use-legacy-x86-rom", "true"},
--    { "vfio-pci", "use-legacy-x86-rom", "true" },
-+    { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
- };
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index d90b69a162..94d22a232a 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -635,7 +635,7 @@ GlobalProperty microvm_properties[] = {
-      */
-     { "pcie-root-port", "io-reserve", "0" },
-     { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
--    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
- };
- 
- static void microvm_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index ad5caff3a5..c03324281b 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -80,7 +80,7 @@ static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
- 
- static GlobalProperty pc_piix_compat_defaults[] = {
-     { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
--    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
- };
- static const size_t pc_piix_compat_defaults_len =
-     G_N_ELEMENTS(pc_piix_compat_defaults);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9b9519fa02..b309b2b378 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -69,7 +69,7 @@
- static GlobalProperty pc_q35_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "39" },
-     { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
--    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "true" },
-+    { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
- };
- static const size_t pc_q35_compat_defaults_len =
-     G_N_ELEMENTS(pc_q35_compat_defaults);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e72d514a4c..0c4606d9cb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -49,8 +49,6 @@
- #include "vfio-migration-internal.h"
- #include "vfio-helpers.h"
- 
--#define TYPE_VFIO_PCI_NOHOTPLUG "vfio-pci-nohotplug"
--
- /* Protected by BQL */
- static KVMRouteChange vfio_route_change;
- 
--- 
-2.47.1
-
+> On 28. Jul 2025, at 14:15, Mads Ynddal <mads@ynddal.dk> wrote:
+>=20
+>=20
+>> +    /* Redistributor state (one per CPU) */
+>> +
+>> +    for (ncpu =3D 0; ncpu < s->num_cpu; ncpu++) {
+>> +        GICv3CPUState *c =3D &s->cpu[ncpu];
+>> +        hv_vcpu_t vcpu =3D c->cpu->accel->fd;
+>> +
+>> +        reg =3D c->gicr_waker;
+>> +        hv_gic_set_redistributor_reg(vcpu, =
+HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
+>> +
+>=20
+> Sorry if I'm belaboring the obvious, but I think you need to call =
+these
+> from the owning thread of the CPU. This is also stated in Apple's docs
+> (some are documented; some are not!).
+>=20
+> I had to do that in the branch I was working on. You should check the
+> return of the functions 'hv_gic_...'. They give an error when called
+> from the wrong thread.
+>=20
+> Could this be related to commit "hw/intc: hvf: add migration blocker
+> when using multiple vCPUs with the Apple GIC=E2=80=9D?
+Yes that was it.=
 
