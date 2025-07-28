@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3389CC87FCE
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 07:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A0BC87FCE
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 07:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugHzD-0004of-DT; Mon, 28 Jul 2025 03:09:27 -0400
+	id 1ugI1I-0007H6-RD; Mon, 28 Jul 2025 03:11:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ugHzB-0004mc-Pe
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 03:09:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=AevQ=2J=kaod.org=clg@ozlabs.org>)
+ id 1ugI17-00071S-5L; Mon, 28 Jul 2025 03:11:25 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1ugHz8-0000Fl-Uw
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 03:09:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753686559;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=B5cq3ejceGnySzvjhPipmku1TFZuu0/CsirQBjjZ9ZY=;
- b=PBVSNP7jPRfDRE22ySC7gAm2eB+aPKzO4vzpHYPVjrOCl9vvhsmteGu1yn/OFomi3qr3dy
- oDJbKxoDMH3KRVciuRC805FEj2zSv5NkTF7UtrrtZ037qhZe79IIJPiwSSbpAzSUjyEgua
- PxfRgm2yOIN+2srw9mWQZqjOxMI4828=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-NTmQlBZYNWmsaC_JoYW8rA-1; Mon, 28 Jul 2025 03:09:17 -0400
-X-MC-Unique: NTmQlBZYNWmsaC_JoYW8rA-1
-X-Mimecast-MFC-AGG-ID: NTmQlBZYNWmsaC_JoYW8rA_1753686556
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-31327b2f8e4so3788243a91.1
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 00:09:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753686556; x=1754291356;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B5cq3ejceGnySzvjhPipmku1TFZuu0/CsirQBjjZ9ZY=;
- b=afYDE/f8aYVS0e7tJzgLqhn6uv/fLq3uhuT7jM4SujoBBfJxWYCX70P/LIZ8CzShBY
- ABHnrcnUjgMcunfnobuWYQiwtIMJZ8KJn07gBU+PM5SlDMBtcvxAqioW1dVct+CqyiYX
- 8zEFM9T4Uox19lhJ8rqLPOdNNNNV9ioyrjlkJAH9hBwp/2A9xDdhRUmGHSVGpvfCmJg6
- IOWR/n86PNjgBsTYsL0rGobdJC2AQP9o3gyH++AwaRi8fxkUH8sZ3Jl8db8seMxH6KPV
- gxRkTSohx3W86tIgT/qLBvM+PVTLK/MC84izR2J6UdBdVTm7+7v6G+tPzfqYeqpGqm4F
- AKsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYQ579ld+rpWw2ZLLKLEBf4tEcLlB4Wi/rJjrxsfOiSdYT3qzL9p1xCn/qfTZXX6cbSgHYb/fUu3uR@nongnu.org
-X-Gm-Message-State: AOJu0Yy2+AocNRnmRvbU8h62OV3GUz0/5PFNlqG6Byr8ApaFasIN+M2w
- h00KSCCl+j/ZNDQURK6+ArUsXlWxo9maKivfYhYq7qgMRulJE6gFEJtBghE79FeqR47wBFVFM7U
- KeNQKQA0tmNmnzf3qEiVs3Qf7boEmm4VxY3CMb9i51+of2p71DW9SgRMeO+NfQxqXC4dFpdyuqO
- F8SzgGeuxoLbxv24K8M+3jKettXPdkVMw=
-X-Gm-Gg: ASbGnct4CZeahaYCoWnR9XH1HxiGUXAlH8LJLzAbN/+6t3wNuytG4KNuNKY6lBGD6Tx
- 8429PdUdkquA4LK4i0ErY02mjeTg6Gbb6qXEcSEqcRBm6Mp6kpNy2+OWqh3nWlWkT8KeByg6LuA
- FC7sILx7ozMkrZ7GxQz439BQ==
-X-Received: by 2002:a17:90b:5608:b0:31e:8203:4b9d with SMTP id
- 98e67ed59e1d1-31e82034c24mr12977999a91.29.1753686556049; 
- Mon, 28 Jul 2025 00:09:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYleuO1p53L8N3FNG3cuq3Qof/ZoRSAKiBsDW4qRjfFQ3pJpeqMIj4RsP4HWwtRds9zMQtoUO2ize3+KkGniY=
-X-Received: by 2002:a17:90b:5608:b0:31e:8203:4b9d with SMTP id
- 98e67ed59e1d1-31e82034c24mr12977953a91.29.1753686555479; Mon, 28 Jul 2025
- 00:09:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=AevQ=2J=kaod.org=clg@ozlabs.org>)
+ id 1ugI11-0000WX-BB; Mon, 28 Jul 2025 03:11:23 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4br8gq6fzwz4wbY;
+ Mon, 28 Jul 2025 17:07:51 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4br8gl50Vfz4w2R;
+ Mon, 28 Jul 2025 17:07:47 +1000 (AEST)
+Message-ID: <7e69faae-3318-48c3-b723-282a25866ca9@kaod.org>
+Date: Mon, 28 Jul 2025 09:11:07 +0200
 MIME-Version: 1.0
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <CACGkMEvrgAqSr9sgvq6F4oKBitZncqhsB_MEsbaNB7p0ZN5fEA@mail.gmail.com>
- <0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com>
- <20250725053122-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20250725053122-mutt-send-email-mst@kernel.org>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 28 Jul 2025 15:09:03 +0800
-X-Gm-Features: Ac12FXytOUqhpTDoFHEFv_v7C1WzICLhkaa-IhTKZAId3ymTwxa_CL_tni4aSbY
-Message-ID: <CACGkMEvTgCAbBG20iLB1m_WfYzMZA7FYZ2FuL6To4EV86PXZbA@mail.gmail.com>
-Subject: Re: [RFC 0/6] virtio-net: initial iterative live migration support
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
- peterx@redhat.com, 
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com, si-wei.liu@oracle.com, 
- eperezma@redhat.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 19/21] pc-bios: Update AST27x0 vBootrom with SSP/TSP
+ SCU initialization support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Hao Wu <wuhaotsh@google.com>,
+ Havard Skinnemoen <hskinnemoen@google.com>
+References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
+ <20250717034054.1903991-20-jamin_lin@aspeedtech.com>
+ <7e5dc89a-7b74-4a5e-8f51-55f587a4896b@tls.msk.ru>
+ <364b86f6-6147-4e63-bcfa-932c39072130@kaod.org>
+ <SEYPR06MB50372F288CD26111DD6E0D81FC5AA@SEYPR06MB5037.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SEYPR06MB50372F288CD26111DD6E0D81FC5AA@SEYPR06MB5037.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=AevQ=2J=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,247 +117,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 25, 2025 at 5:33=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Thu, Jul 24, 2025 at 05:59:20PM -0400, Jonah Palmer wrote:
-> >
-> >
-> > On 7/23/25 1:51 AM, Jason Wang wrote:
-> > > On Tue, Jul 22, 2025 at 8:41=E2=80=AFPM Jonah Palmer <jonah.palmer@or=
-acle.com> wrote:
-> > > >
-> > > > This series is an RFC initial implementation of iterative live
-> > > > migration for virtio-net devices.
-> > > >
-> > > > The main motivation behind implementing iterative migration for
-> > > > virtio-net devices is to start on heavy, time-consuming operations
-> > > > for the destination while the source is still active (i.e. before
-> > > > the stop-and-copy phase).
-> > >
-> > > It would be better to explain which kind of operations were heavy and
-> > > time-consuming and how iterative migration help.
-> > >
-> >
-> > You're right. Apologies for being vague here.
-> >
-> > I did do some profiling of the virtio_load call for virtio-net to try a=
-nd
-> > narrow down where exactly most of the downtime is coming from during th=
-e
-> > stop-and-copy phase.
-> >
-> > Pretty much the entirety of the downtime comes from the vmstate_load_st=
-ate
-> > call for the vmstate_virtio's subsections:
-> >
-> > /* Subsections */
-> > ret =3D vmstate_load_state(f, &vmstate_virtio, vdev, 1);
-> > if (ret) {
-> >     return ret;
-> > }
-> >
-> > More specifically, the vmstate_virtio_virtqueues and
-> > vmstate_virtio_extra_state subsections.
-> >
-> > For example, currently (with no iterative migration), for a virtio-net
-> > device, the virtio_load call took 13.29ms to finish. 13.20ms of that ti=
-me
-> > was spent in vmstate_load_state(f, &vmstate_virtio, vdev, 1).
-> >
-> > Of that 13.21ms, ~6.83ms was spent migrating vmstate_virtio_virtqueues =
-and
-> > ~6.33ms was spent migrating the vmstate_virtio_extra_state subsections.=
- And
-> > I believe this is from walking VIRTIO_QUEUE_MAX virtqueues, twice.
->
-> Can we optimize it simply by sending a bitmap of used vqs?
+On 7/28/25 09:02, Jamin Lin wrote:
+> Hi Cédric,
+> 
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Monday, July 28, 2025 2:50 PM
+>> To: Michael Tokarev <mjt@tls.msk.ru>; Jamin Lin
+>> <jamin_lin@aspeedtech.com>; Peter Maydell <peter.maydell@linaro.org>;
+>> Steven Lee <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>;
+>> Andrew Jeffery <andrew@codeconstruct.com.au>; Joel Stanley
+>> <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>; open
+>> list:All patches CC here <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; Hao Wu <wuhaotsh@google.com>;
+>> Havard Skinnemoen <hskinnemoen@google.com>
+>> Subject: Re: [PATCH v1 19/21] pc-bios: Update AST27x0 vBootrom with SSP/TSP
+>> SCU initialization support
+>>
+>> On 7/27/25 21:51, Michael Tokarev wrote:
+>>> On 17.07.2025 06:40, Jamin Lin via wrote:
+>>>> The updated boot ROM includes logic to initialize and enable SSP/TSP
+>>>> using SCU registers, based on reserved-memory regions defined in the
+>> device tree.
+>>>>
+>>>> Its source code is available at:
+>>>>
+>> https://github.com/google/vbootrom/commit/f9eb0bb57decbab860a81712c56
+>>>> 132c2102fa98e
+>>>
+>>> How to (re)build this one?
+>>
+>> This should be the same as npcm*xx_bootrom.
+>>
+>>> Please add build instructions to roms/Makefile.  I dunno how this one
+>>> is related to roms/vbootrom which is already used for
+>>> npcmxxx_bootrom.bin files - maybe all the 3 bootroms should be kept in
+>> sync.
+>>
+>> I think they are relatively independent. Each has its own directory.
+>>
+>>> Right now, with no instructions in roms/Makefile, it's problematic.
+>>
+>> Oh I missed that. My bad.
+>>
+>> Jamin,
+>>
+>> Can you please send an update asap ?
+>>
+> 
+> It seems this patch fix this issue, https://patchwork.kernel.org/project/qemu-devel/patch/607a943a587248fbe0ff0897de80aee98a093caa.1753654515.git.mjt@tls.msk.ru/
+> Do I need to update vbootrom/ast27x0/Makefile?
+> I set "?=" to make user able to set variables in the command line.
+> 
+> 1.
+> export CC=aarch64-linux-gnu-gcc
+> make
+> 2. make CC=aarch64-linux-gnu-gcc
+> 
+> 3. Update Make file and user only need to issue "make"
+> diff --git a/ast27x0/Makefile b/ast27x0/Makefile
+> index 5d13ba1..45c069a 100644
+> --- a/ast27x0/Makefile
+> +++ b/ast27x0/Makefile
+> @@ -13,11 +13,11 @@
+>   # See the License for the specific language governing permissions and
+>   # limitations under the License.
+> 
+> -CROSS_COMPILE  ?= aarch64-linux-gnu-
+> +CROSS_COMPILE  = aarch64-linux-gnu-
+> 
+> -CC             ?= $(CROSS_COMPILE)gcc
+> -OBJCOPY                ?= $(CROSS_COMPILE)objcopy
+> -OBJDUMP                ?= $(CROSS_COMPILE)objdump
+> +CC             = $(CROSS_COMPILE)gcc
+> +OBJCOPY                = $(CROSS_COMPILE)objcopy
+> +OBJDUMP                = $(CROSS_COMPILE)objdump
+> 
+It would be nice to fix vbootrom and avoid the workaround in QEMU.
 
-+1.
 
-For example devices like virtio-net may know exactly the number of
-virtqueues that will be used.
+Thanks,
 
->
-> > vmstate_load_state virtio-net v11
-> > vmstate_load_state PCIDevice v2
-> > vmstate_load_state_end PCIDevice end/0
-> > vmstate_load_state virtio-net-device v11
-> > vmstate_load_state virtio-net-queue-tx_waiting v0
-> > vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> > vmstate_load_state virtio-net-vnet v0
-> > vmstate_load_state_end virtio-net-vnet end/0
-> > vmstate_load_state virtio-net-ufo v0
-> > vmstate_load_state_end virtio-net-ufo end/0
-> > vmstate_load_state virtio-net-tx_waiting v0
-> > vmstate_load_state virtio-net-queue-tx_waiting v0
-> > vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> > vmstate_load_state virtio-net-queue-tx_waiting v0
-> > vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> > vmstate_load_state virtio-net-queue-tx_waiting v0
-> > vmstate_load_state_end virtio-net-queue-tx_waiting end/0
-> > vmstate_load_state_end virtio-net-tx_waiting end/0
-> > vmstate_load_state_end virtio-net-device end/0
-> > vmstate_load_state virtio v1
-> > vmstate_load_state virtio/64bit_features v1
-> > vmstate_load_state_end virtio/64bit_features end/0
-> > vmstate_load_state virtio/virtqueues v1
-> > vmstate_load_state virtqueue_state v1  <--- Queue idx 0
-> > ...
-> > vmstate_load_state_end virtqueue_state end/0
-> > vmstate_load_state virtqueue_state v1  <--- Queue idx 1023
-> > vmstate_load_state_end virtqueue_state end/0
-> > vmstate_load_state_end virtio/virtqueues end/0
-> > vmstate_load_state virtio/extra_state v1
-> > vmstate_load_state virtio_pci v1
-> > vmstate_load_state virtio_pci/modern_state v1
-> > vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 0
-> > vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> > ...
-> > vmstate_load_state virtio_pci/modern_queue_state v1  <--- Queue idx 102=
-3
-> > vmstate_load_state_end virtio_pci/modern_queue_state end/0
-> > vmstate_load_state_end virtio_pci/modern_state end/0
-> > vmstate_load_state_end virtio_pci end/0
-> > vmstate_load_state_end virtio/extra_state end/0
-> > vmstate_load_state virtio/started v1
-> > vmstate_load_state_end virtio/started end/0
-> > vmstate_load_state_end virtio end/0
-> > vmstate_load_state_end virtio-net end/0
-> > vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virtio-n=
-et
-> > instance_id=3D0 downtime=3D13260
-> >
-> > With iterative migration for virtio-net (maybe all virtio devices?), we=
- can
-> > send this early while the source is still running and then only send th=
-e
-> > deltas during the stop-and-copy phase. It's likely that the source wont=
- be
-> > using all VIRTIO_QUEUE_MAX virtqueues during the migration period, so t=
-his
-> > could really minimize a large majority of the downtime contributed by
-> > virtio-net.
-> >
-> > This could be one example.
+C.
 
-Or if the system call is expensive, could we try io_uring to mitigate it.
-
-> >
-> > > >
-> > > > The motivation behind this RFC series specifically is to provide an
-> > > > initial framework for such an implementation and get feedback on th=
-e
-> > > > design and direction.
-> > > > -------
-> > > >
-> > > > This implementation of iterative live migration for a virtio-net de=
-vice
-> > > > is enabled via setting the migration capability 'virtio-iterative' =
-to
-> > > > on for both the source & destination, e.g. (HMP):
-> > > >
-> > > > (qemu) migrate_set_capability virtio-iterative on
-> > > >
-> > > > The virtio-net device's SaveVMHandlers hooks are registered/unregis=
-tered
-> > > > during the device's realize/unrealize phase.
-> > >
-> > > I wonder about the plan for libvirt support.
-> > >
-> >
-> > Could you elaborate on this a bit?
-
-I meant how this feature will be supported by the libvirt.
-
-> >
-> > > >
-> > > > Currently, this series only sends and loads the vmstate at the star=
-t of
-> > > > migration. The vmstate is still sent (again) during the stop-and-co=
-py
-> > > > phase, as it is today, to handle any deltas in the state since it w=
-as
-> > > > initially sent. A future patch in this series could avoid having to
-> > > > re-send and re-load the entire state again and instead focus only o=
-n the
-> > > > deltas.
-> > > >
-> > > > There is a slight, modest improvement in guest-visible downtime fro=
-m
-> > > > this series. More specifically, when using iterative live migration=
- with
-> > > > a virtio-net device, the downtime contributed by migrating a virtio=
--net
-> > > > device decreased from ~3.2ms to ~1.4ms on average:
-> > >
-> > > Are you testing this via a software virtio device or hardware one?
-> > >
-> >
-> > Just software (virtio-device, vhost-net) with these numbers. I can run =
-some
-> > tests with vDPA hardware though.
-
-I see. Considering you see great improvement with software devices. It
-should be sufficient.
-
-> >
-> > Those numbers were from a simple, 1 queue-pair virtio-net device.
-
-Thanks
-
-> >
-> > > >
-> > > > Before:
-> > > > -------
-> > > > vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virt=
-io-net
-> > > >    instance_id=3D0 downtime=3D3594
-> > > >
-> > > > After:
-> > > > ------
-> > > > vmstate_downtime_load type=3Dnon-iterable idstr=3D0000:00:03.0/virt=
-io-net
-> > > >    instance_id=3D0 downtime=3D1607
-> > > >
-> > > > This slight improvement is likely due to the initial vmstate_load_s=
-tate
-> > > > call "warming up" pages in memory such that, when it's called a sec=
-ond
-> > > > time during the stop-and-copy phase, allocation and page-fault late=
-ncies
-> > > > are reduced.
-> > > > -------
-> > > >
-> > > > Comments, suggestions, etc. are welcome here.
-> > > >
-> > > > Jonah Palmer (6):
-> > > >    migration: Add virtio-iterative capability
-> > > >    virtio-net: Reorder vmstate_virtio_net and helpers
-> > > >    virtio-net: Add SaveVMHandlers for iterative migration
-> > > >    virtio-net: iter live migration - migrate vmstate
-> > > >    virtio,virtio-net: skip consistency check in virtio_load for ite=
-rative
-> > > >      migration
-> > > >    virtio-net: skip vhost_started assertion during iterative migrat=
-ion
-> > > >
-> > > >   hw/net/virtio-net.c            | 246 +++++++++++++++++++++++++++-=
------
-> > > >   hw/virtio/virtio.c             |  32 +++--
-> > > >   include/hw/virtio/virtio-net.h |   8 ++
-> > > >   include/hw/virtio/virtio.h     |   7 +
-> > > >   migration/savevm.c             |   1 +
-> > > >   qapi/migration.json            |   7 +-
-> > > >   6 files changed, 247 insertions(+), 54 deletions(-)
-> > > >
-> > > > --
-> > > > 2.47.1
-> > >
-> > > Thanks
-> > >
-> > > >
-> > >
->
 
 
