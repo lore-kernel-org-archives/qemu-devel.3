@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69CEC83F26
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 18:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B17C83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 18:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugSQZ-0005YE-3R; Mon, 28 Jul 2025 14:18:25 -0400
+	id 1ugSRs-0006do-TQ; Mon, 28 Jul 2025 14:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugSPC-0004nK-Lw
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:17:06 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1ugSPE-0004oB-Po
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:17:10 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugSP9-0002nI-C5
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:16:57 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7600271f3e9so206075b3a.0
- for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:16:54 -0700 (PDT)
+ id 1ugSPC-0002nM-8S
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 14:16:59 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-74924255af4so4082559b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 11:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753726613; x=1754331413; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XxB0yP1OlO1HjQOnyDyn0Y4fdorVW+/9i3XgPVNzleI=;
- b=SVDVvAB+tr3yiwJXo1jTRKNnzT0syG7Jn7V6t6Ab0lwPLdX5vcFpgmpEpmlTgUhrKF
- /DDnpCkbIYCYfi8k/wOaxa8dvR810wRCDlFn49VS1sv+1XUonUeQnmkTL4X4CC2Vh+EE
- EW/V5TknRpEN18q+b4e0ezaTWMtO21QsqvoWZ1KtveYLeoM+elFQCNj+4l9+c+6sAJtT
- nMz5+H/6pgtWX/cegsJG4aPCHSuHm6ZsyIMe5FXPIdvMPXWNrBh7G84XBi8kC33eDMHC
- 6Z/cRc3uF4NFyLsf/O9q37n/+HaHZlzEnXE8U1w1yCtq+iTz76Apt7/mCYn7n8KjARSh
- GtQA==
+ d=linaro.org; s=google; t=1753726615; x=1754331415; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mgBv65Z2rjw8eC4JsFEOBVOQJ/V7KcAOuWdy7wLNyvM=;
+ b=nYT50mggk9qP71iO+Hj1tbbT0k17sTLsggKmWKIrf/BC0a4tIhDC0F+JcXpFCe8eca
+ 4UdolKhJy0SMchR2wieRIK0wJ6lMzprvAJrRA9O/6vmXlh+vWL7SYWBCuTn/VL1dOJMx
+ zX21xWY+bxxw9Jxy0fuQmLcV4RGs4a67ZoBnSb3eFMXot2D4n3lkUHBiEn3cV6IM7rq/
+ 1zoRlsZ3JjaQcxTX9asDkI/c2a4SoeK+NEECK7dxPetw6q/1f8WB7L47dixrKe/sthQ/
+ NLfUxjBlSymggKbn/8uVSpjh1OEeCFciltX+ObeFKfaOoco44MiugSN46wPbz0n5XpQW
+ f0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753726613; x=1754331413;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XxB0yP1OlO1HjQOnyDyn0Y4fdorVW+/9i3XgPVNzleI=;
- b=OXd20QihP7EUWwEip3CL4OQ3Or7Wmi57Jwyx4AmjqNtxJjx1HO1OEeWmXRAqOwSSpJ
- +kVRhGsEABdXy5XHJC3X30eJ4w93XCdXDnpIyyv1jXQqN1GDINj1DrXNQr1Jnqk1AZmM
- FJydGVH3E4m+yuFEZRVLuXGypuoFLHOCSBhgYse2IhpNXFEIkbmuII9AynE9LEbmZ14m
- JUCaJMtryGQEG52Wde20CetsXCSSia/UwFnjQfX2AzXeh7M2MLFjxkQZzYFHNDfPmOZT
- 349+UwaNfTVY0ZsAlFN6wXBOubbAQuGU/wOAMosJxoGfbrXPQucUOkXWr9tKz1QR5qhE
- NvlA==
-X-Gm-Message-State: AOJu0Yz7pdABBCeNUu2juUtGoJU/jDg0ifjCcTGUc4TMslFzLE3d6PCN
- 7eYTal+a8cJrigP+FajSfiu91TZHLQQvAroGpQ8rYNSRL/GeTt/kaQRhxycHQi5D6E3ymrq2+78
- h/Iia
-X-Gm-Gg: ASbGncsaR+Si/oGFX9Iczi2aZNiZXboFzqxLwJlSQVc2zR27WtKJR7ZLpi2PEOVZ7qA
- gxC95fcW2iuMPWFdpdTQKWUBal+PP/vvXpTVGR+J9DAflc5xgdz1daA1QWpr/6yfHero66c4gSi
- mZjtqkl4byNCMYFmbZuOXft26AA5iNSaafieE7nXl9se/dHRDXhfM5gU8VcIvHEMnFunjSoXj9K
- 57zCw6qJeYPyPKf+D1Qgv17dBzjDun3EpJYsRWkZ/xcV5yliSot7BjD1TYP4cI/r/QcXhztt+Vl
- 54/g0KgbatvCTxE6MJp9AggSNyz7ECmpWBwFk1He/SGNJbHu21Vi3ZCi6+rcgaAKx0dtuHhMpvA
- AeueVv6JVKbGv9Jd/yA+wV0b5RfgxeJKrLbRpd9POEbrFWtDPftccmV2VlnU7woQ+FX8BgpodQy
- sNt9u2CPCS1/69MRKNEA8P
-X-Google-Smtp-Source: AGHT+IHISbkSEJPq8gK/BBAq5l4GTjJQAww5wGlvNk8Jxzy5xtiuZ8M6RoRgroQPI+d91g+no8YVfw==
-X-Received: by 2002:aa7:9ec6:0:b0:74a:cd4d:c0a6 with SMTP id
- d2e1a72fcca58-76965af187emr649319b3a.5.1753726613427; 
- Mon, 28 Jul 2025 11:16:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753726615; x=1754331415;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mgBv65Z2rjw8eC4JsFEOBVOQJ/V7KcAOuWdy7wLNyvM=;
+ b=pFJyPceTQIzgESPMtsUpjPtLLSOoy3X3zgY0IkNpeuZlzlP2SrkCrPX+aiOHneZzzn
+ tQ4uY2IyQxIHnHnXExbghHI3aCr8+YWmdXZcOsmv/nzzRZksLLUp4ASx8m5rHI0ydDcA
+ ERs0gDMSSnaPzn9eEDZnbpQg07fo7TAr/c7Q8xz+ZdgZn9n2ZQkU5nJS1tAmx8QdkASR
+ 5HIBaxfRJB79eM+/f3dr5j6APRMZNaV80CZH7sW9gX+0PWNFefyJckfmStYyNE+RJtXo
+ urDiqStBnxcKh+GHwSRHKxBLMYC85zDxPhUCjARbO7J1UZKFxMG2TUFF9fx74pMUf0DN
+ CpWQ==
+X-Gm-Message-State: AOJu0YzS61YX3k/Fr31Ny9WA6N47/9aBS3RGzqUN84gQ1b1o8HXwv7KH
+ Ag8xita+FZkoUa5opRt9wXi68/FElZRrtAXtwqAsBW2uhF8bsFgsOGUStYm5eOHzQxQpYlIfEWH
+ wdU76
+X-Gm-Gg: ASbGncuB73ADPwteRA24RbPk9trkcb/tHSZ9q5KMZd0YIZ4tOGlsMcYaRl9xbIc5ab1
+ C1/v8iyV3Nx3on1uili0kctFHXnBNdsO6OWE52OGxRK0j0clkWZGACDP/ZHU8mMkdzbJvMVjW8k
+ jsQ2Oq7H8A1FsopQB+ti3pTtSNfcCDhdF6hoiEjF76pHnnzsR2M+buUubBkQvlJvNOppjW8kIx9
+ T67jFhm7LJ06lHwHlin7PAfTxgXljm8A0bC3QZyAbpyiGB02+RKU3pfHWyjyU3Ws8VBRAuXbSV2
+ BcepBIdsi86efveiaJemdDxZhySfidXguM+44dc+xx9Lb/+XPpCOt3Y3dkJlXslmjqaZ+BVTqDR
+ VAbVYcRJFZClcU0fHdINRC3hvp0Hmb5npbfZNufi0/Q5pXxS+cMtNrVbmtMbxDCP2D4wvZLQuZg
+ vxdwI4s5kPTA==
+X-Google-Smtp-Source: AGHT+IHwCOzZUHW/DBTEImUBd1KncTsOmaR5qXTSOXFqG3AixOhPyQhU207/anZeQERPXoKIdQBSKg==
+X-Received: by 2002:a05:6a20:7f8e:b0:23d:6a77:78c9 with SMTP id
+ adf61e73a8af0-23d70016273mr21093105637.7.1753726614885; 
+ Mon, 28 Jul 2025 11:16:54 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640adfeb83sm5985103b3a.66.2025.07.28.11.16.52
+ d2e1a72fcca58-7640adfeb83sm5985103b3a.66.2025.07.28.11.16.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Jul 2025 11:16:53 -0700 (PDT)
+ Mon, 28 Jul 2025 11:16:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru
-Subject: [PATCH stable-7.2 0/9] linux-user/aarch64: Backport TPIDR2_EL0 fixes
-Date: Mon, 28 Jul 2025 08:16:41 -1000
-Message-ID: <20250728181650.165114-1-richard.henderson@linaro.org>
+Cc: mjt@tls.msk.ru, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 1/9] target/arm/sme: Reorg SME access handling in
+ handle_msr_i()
+Date: Mon, 28 Jul 2025 08:16:42 -1000
+Message-ID: <20250728181650.165114-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250728181650.165114-1-richard.henderson@linaro.org>
+References: <20250728181650.165114-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20230112102436.1913-2-philmd@linaro.org
+Message-Id: <20230112004322.161330-1-richard.henderson@linaro.org>
+[PMD: Split patch in multiple tiny steps]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 535ca76425fc1ffa4311b3a47518b06c596a55c6)
+---
+ target/arm/translate-a64.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-Here's the aarch64-linux-user TPIDR2_EL0 fixes backported to the
-stable-7.2 branch.  Including all of the aarch64_set_svcr cleanups
-is probably overkill, but I think it was clearer that way.
-
-
-r~
-
-
-Peter Maydell (2):
-  linux-user/aarch64: Clear TPIDR2_EL0 when delivering signals
-  linux-user/aarch64: Support TPIDR2_MAGIC signal frame record
-
-Richard Henderson (7):
-  target/arm/sme: Reorg SME access handling in handle_msr_i()
-  target/arm/sme: Rebuild hflags in set_pstate() helpers
-  target/arm/sme: Introduce aarch64_set_svcr()
-  target/arm/sme: Reset SVE state in aarch64_set_svcr()
-  target/arm/sme: Reset ZA state in aarch64_set_svcr()
-  target/arm/sme: Rebuild hflags in aarch64_set_svcr()
-  target/arm/sme: Unify set_pstate() SM/ZA helpers as set_svcr()
-
- target/arm/cpu.h              |  2 +-
- target/arm/helper-sme.h       |  3 +-
- linux-user/aarch64/cpu_loop.c | 11 ++-----
- linux-user/aarch64/signal.c   | 55 ++++++++++++++++++++++++++++-------
- target/arm/helper.c           | 41 ++++++++++++++++++++++++--
- target/arm/sme_helper.c       | 37 ++---------------------
- target/arm/translate-a64.c    | 19 +++++-------
- 7 files changed, 95 insertions(+), 73 deletions(-)
-
+diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
+index 7210a9cc4d..b66561a5cf 100644
+--- a/target/arm/translate-a64.c
++++ b/target/arm/translate-a64.c
+@@ -1855,18 +1855,20 @@ static void handle_msr_i(DisasContext *s, uint32_t insn,
+             goto do_unallocated;
+         }
+         if (sme_access_check(s)) {
+-            bool i = crm & 1;
+-            bool changed = false;
++            int old = s->pstate_sm | (s->pstate_za << 1);
++            int new = (crm & 1) * 3;
++            int msk = (crm >> 1) & 3;
+ 
+-            if ((crm & 2) && i != s->pstate_sm) {
+-                gen_helper_set_pstate_sm(cpu_env, tcg_constant_i32(i));
+-                changed = true;
+-            }
+-            if ((crm & 4) && i != s->pstate_za) {
+-                gen_helper_set_pstate_za(cpu_env, tcg_constant_i32(i));
+-                changed = true;
+-            }
+-            if (changed) {
++            if ((old ^ new) & msk) {
++                /* At least one bit changes. */
++                bool i = crm & 1;
++
++                if ((crm & 2) && i != s->pstate_sm) {
++                    gen_helper_set_pstate_sm(cpu_env, tcg_constant_i32(i));
++                }
++                if ((crm & 4) && i != s->pstate_za) {
++                    gen_helper_set_pstate_za(cpu_env, tcg_constant_i32(i));
++                }
+                 gen_rebuild_hflags(s);
+             } else {
+                 s->base.is_jmp = DISAS_NEXT;
 -- 
 2.43.0
 
