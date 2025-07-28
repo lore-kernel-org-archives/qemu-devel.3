@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF489C83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 21:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A6FC83F17
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 21:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugUzi-0008UQ-Ao; Mon, 28 Jul 2025 17:02:50 -0400
+	id 1ugV2v-0002gR-8q; Mon, 28 Jul 2025 17:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1ugUzI-0008E7-7P; Mon, 28 Jul 2025 17:02:28 -0400
-Received: from mail-dm6nam12on2062a.outbound.protection.outlook.com
- ([2a01:111:f403:2417::62a]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ id 1ugV23-0002VB-Es; Mon, 28 Jul 2025 17:05:21 -0400
+Received: from mail-bn8nam12on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::604]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1ugUzE-00015W-UW; Mon, 28 Jul 2025 17:02:23 -0400
+ id 1ugV20-0001WR-SV; Mon, 28 Jul 2025 17:05:15 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n0Hi2zLL4ES120g1sdyKp8roM72pWS70h13/ASVw8gE/eSYF+LDk3e8+NFZ2hES5WvZmXnDRp7YNejV23UdkKunbqM/76735tbROH3up508W8e0yyPhIUzRTizPOZbDKfg+3AEkrueUL9bJxOglOdWATw9ynX4/FXBzzlp2gDyE2dBooU/J0ZFubJn4iEIzL81TKP1Bmf+kh2rd6xvgIvDS13tOoKuhaEunFfRQfvbYe0q3tGtWOzXxBYRMETtH5E2H9auwM9wjrn4q/mWZCzZquHnTKlDuMwEbxjYXjWNIR/9BebXgb9eXEXLB7vnBZvMtentqNggMRNWUgkG1axQ==
+ b=QYsZ6Gw2PHJz/nOV0HZvrJuYm6ZXTeSXvVq2X+sRUwPhQFpo0G7Umtn20b/FsXwsGDJh4I+5zXleNiore5UTm/zixlRJVWukO1qMUWmE/p5uhgRBMex8xjiVBDfYYr3RSxnBtenb+TqSPJG0QkFVzvAo+uAYn2FPWSaUduwcjZWu7h7RDMLxTo0znn6XHq+/jlQ/QoGh2LvbmQKuzT7QjVXtV0KDScsZgZ8l9DJ1GZei98Izya5X2gi55k9TM6tdq91Jl27B+mwHiHWCY7MXz4w1VufCeJh4LsSgeBGYkKQS0Tlo8/X9DJTCw6dnBJeJnrhwkORN73cc9lWzMBgJSw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+r1v09hkHPfuHmWuOa2sCxsecceTCl8IIa6p5XnHGuM=;
- b=X/7FgnSaakBiIE5bFj8PH6rHN895HrXwXWO013gCWO5o/ch3VOCrW6tYOoXZtJJka9WzohYJJjphJ16mHHRI8zJTpzdm95Pya+eLMNVXgkVpsYqIWVv0ibQnMAs7+FtZ9QwSYgn7+YPuqTsYhSrP+II13e1Z6bDfHBNQyFvqL4ogdRC0OgOGhQ8C/LzRDA3GkiP4hAfLIngWjHVo23BfVdsIamfA2TT3gM8occN7sisSfSH+k102E8ztHSvOcWaOYTGK3hj5KdMB7ubjg997CSMZKGdKcmcb5FOaLf8EIKDq6EdYR5jnNioQ3yE06uNdz+SmC0iaba6v8KvYlOBltg==
+ bh=+pGAWxXC3H3X6uXtG5SburuCRzdhxmkMW2l/Azrp1UA=;
+ b=LfnoyO07crmmumcLicO67qaKJ39D3xGNuW1UD4zh80NTg0tcWjUx3cnvgZGAAf3nH2563fidjcOen0DEInKvS+pn8YKJlmzujcPXY4mGyAhQOjqXnZMHheLbfXc86F0+U+t802Hcyg0OIP5Y/ZRQv+jaN8F6b1dxcSy/FQnDfa0IWj6Ay2wn3k3zCIsPfk74L8s/AbrZ+w0uo3dUCaH6S5tXq+vyYHWTNzOPPnnEsBTWYH6tJhXFw06fu3l6W4lz430d5r0IeVNaQwi4UxNB67xF56jsnDfMYW85XzijdOkAZciwCdnP9zapePnBSbOdVIdMhd9o0hTkb8tdRG6EQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+r1v09hkHPfuHmWuOa2sCxsecceTCl8IIa6p5XnHGuM=;
- b=n+Fd0qGCq/ehUSptbUZ1LLJ9HPHRBkWHRGjkYKWjtWm4A8DgOVUEv3DhxtevE0kdmicWi04Na2Z+62H3kZs5gXwudQg8muMrxfQCJ47OYkTsjyacXjCLo2Nl06ADvcco0/2qEI2A1gQW0Je+53dw1apUkhmXoEOiBaeSY61Xmh4=
+ bh=+pGAWxXC3H3X6uXtG5SburuCRzdhxmkMW2l/Azrp1UA=;
+ b=kA8XSsw4KQh5m6gLYZpBIXmPqeu2j622sz2bbb1lT9GYTxqdMVxhNg6J208vZnlwssoyQODFw+NkFPHyTWyUo5qePN0NNsvCrRnsGnCV6Ntv/dBzd1ZGSs7KG1uUPonbG/u59vFx0K3OTlIm1zizRlKePSHTXcoqi+7N+Lgh6Wg=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by MW4PR12MB6825.namprd12.prod.outlook.com (2603:10b6:303:20d::17)
+ by IA1PR12MB8262.namprd12.prod.outlook.com (2603:10b6:208:3f6::14)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.27; Mon, 28 Jul
- 2025 21:02:15 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.26; Mon, 28 Jul
+ 2025 21:05:07 +0000
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8964.019; Mon, 28 Jul 2025
- 21:02:15 +0000
-Date: Mon, 28 Jul 2025 23:02:08 +0200
+ 21:05:07 +0000
+Date: Mon, 28 Jul 2025 23:05:01 +0200
 From: Francisco Iglesias <francisco.iglesias@amd.com>
 To: Luc Michel <luc.michel@amd.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -55,109 +55,109 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  Frederic Konrad <frederic.konrad@amd.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 08/48] hw/arm/xlnx-versal: adma: refactor creation
-Message-ID: <aIflUPXm86mjJPHp@xse-figlesia-l2.amd.com>
+Subject: Re: [PATCH 09/48] hw/arm/xlnx-versal: xram: refactor creation
+Message-ID: <aIfl/QgF0xYunBp2@xse-figlesia-l2.amd.com>
 References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-9-luc.michel@amd.com>
+ <20250716095432.81923-10-luc.michel@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250716095432.81923-9-luc.michel@amd.com>
-X-ClientProxiedBy: LO4P123CA0535.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:2c5::20) To SJ2PR12MB8739.namprd12.prod.outlook.com
+In-Reply-To: <20250716095432.81923-10-luc.michel@amd.com>
+X-ClientProxiedBy: LO4P123CA0224.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a6::13) To SJ2PR12MB8739.namprd12.prod.outlook.com
  (2603:10b6:a03:549::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|MW4PR12MB6825:EE_
-X-MS-Office365-Filtering-Correlation-Id: 239a9343-e24b-4b7c-2b7d-08ddce1a07b4
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|IA1PR12MB8262:EE_
+X-MS-Office365-Filtering-Correlation-Id: 859810ed-beac-44a9-e58c-08ddce1a6e7a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?d2FwNUFIR3lqR1FzaS92SEZ3bGY2S1JuMkxpamliazB0RnU3dlp3dzBHdk1L?=
- =?utf-8?B?Rk55TWo2QllvY0kxSGRJaTN4ODBFbEc5Nlg4U3N4SXdMeU5rNnFJSTdITmdU?=
- =?utf-8?B?OGdBV3pmK2tjVXZVRng3VnoramNUSjY4elFPQi9hNHdaNGlmOGFVNENwNVZk?=
- =?utf-8?B?VTNkRWc0ckViZ05ZWXBzZXNmS0Z2ejNBNkw0ekRDdkN3cUVTdythZ3daYnd3?=
- =?utf-8?B?U29wUVNQN05HQjBpN3lIZXVjdjQzb2w4QU1YTlRhbnVyQitCTVpVa09QU1Ir?=
- =?utf-8?B?UHhRQ0QxUjU4R0hPV2FVVzRjN0dyalZNSEt0TmVTUnkvbE8xT3JmWk1aTTEw?=
- =?utf-8?B?QnVhbEZmMmVGQzkwSUxVT0N3THRMYkIra1llM050K2JZNit3QTl5aFNZa2pU?=
- =?utf-8?B?bTJvK1lGUWNPdFo5ZGc5SmJjejl2VFlac2tZb2hPVUdmOGhqWEh4UDRSMnBa?=
- =?utf-8?B?aU82UncwMTEwM0VlbjR5dGlaOWc0WjluM3V5UzJEbkVQT2hUck1LMWN4NzB3?=
- =?utf-8?B?NEVPZWhKdjlGenBKTDVhMlIrai9CRXVVWGJYZ1JxQ2k5bHovYmgvVFZyeWJq?=
- =?utf-8?B?OWIvNnJOandmaEhpdU1vODZmaDNCekIrWWFOaExzQkhkT2E4VmQyM0ZJcVRK?=
- =?utf-8?B?TXVDOURxNEJEbkozQnh0bmV4eEI2OVVrWXJFUjYwYmpZdkpFSStvbWpQa1I1?=
- =?utf-8?B?ZGhVbnBxbFE0YWhqWnB2VEtiaVRNV2J3MlpRekIrdzEyUVpXS1dKMmtIYytk?=
- =?utf-8?B?WHFCN0g1U2xldzBmTVB6aEt4R1lac3VCVU5sQ2wyMTJLOU1hT2NhVWNqRkd5?=
- =?utf-8?B?THFxVjNRdGphMzkwMHExandpcVRtMjBVYUFkUEhtVXFabDFSeW1BZ05vYXhB?=
- =?utf-8?B?TnBkZTQ5ejk4OHFLbjlsclRwYUJJY1NDOUNWTlNVOExjT2tWL0JVVmhmUjk1?=
- =?utf-8?B?UTVXYndtbGUyNWxZVW4vSUFUeE84Slphd0tvMzczcXBFUmovMlpTM1Rob29O?=
- =?utf-8?B?cDM0TDJHYTdzQm51OGVnQlNwY0FGWTZjSHR5ZjRiVEIzOVFxaE15Zkk5Zllx?=
- =?utf-8?B?anl1MWRGc283RXVoUGdVaEZEUzZGNTlqT3BHSDk0WHgwaEMvanVrbmRtb0FC?=
- =?utf-8?B?V0UvY0l3cE9IOUx2MVNtQjh6Ky9wZXZFQU9YVkl2b0EwNzZXM2tXWXBINlZr?=
- =?utf-8?B?R3pLUkVTREw2cG8zdTJoMFhZUTBjL205YVNZWDZMQVpULzZtYWdwNW5tNTAz?=
- =?utf-8?B?a3h6OWhLOVVkcnllV01lUEVBTGtENGx1RnROSkxpUk1kMXh2SGtyVWxwQU1v?=
- =?utf-8?B?L2pZcGRMT0ZHNU1BUDRtZEcwWDE3MzJLRGVLWk1KdUVMbmtCWXFUVTRRUWRM?=
- =?utf-8?B?SVpva2s0Y0s0S3NCY3VBUUM3bDdTeUo5eDlzT0VaakYwdUFkZ3hsQUZNeGwr?=
- =?utf-8?B?SkhCaVBiS2YyMEg1V3FvcURMSGZPZ3Fpc3ZNSklFUjN4SGJyZ1U5M2VrMWho?=
- =?utf-8?B?ZVlTYnE5dWsybitVSXdLTEZ4QzZ0RzF4eDZNOVVRbmpNTHAwRlJHU3pOaGxL?=
- =?utf-8?B?SHRkWnl1aGphTDNKcStyYmtoUVhKT2tnd0gvaW9DZTJuaWMrUXNqcmlVU09Y?=
- =?utf-8?B?a2ZHaDZmeXQwRlJzRjN0YVBvRXJNTVFrQ0lGeFJrL2pWSXJBRDNjcytNVVln?=
- =?utf-8?B?dHd5a0R5bWFBZVhqck9YdU44VE9GODBFZ3p2VzlCMkVBSElXdGtWbE1jajVt?=
- =?utf-8?B?RHZXcFNDL3ZvTVN2UVZNMU8xWjJyRnVGTEh3a1Uwa1g4cEdGd043TEQwNm1B?=
- =?utf-8?B?Y09GR1MyQU9YTjJzM0ZBTGFLR1RlRjVnNlhxSWFUVHR1SWtTc1RLTlZXai82?=
- =?utf-8?B?bXhTcExWOHJSbHptUUhLTy9lSys3cEtFdnB2YWh5ZnNrbStSeW9TUzd6WFp1?=
- =?utf-8?Q?6vMLe/RVemA=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MHlGa1NvMWtSTDQ2Y3BDcDhTOTJZVUYwM0o1SWs5OUtUMmZhQ2UydDBPbHUv?=
+ =?utf-8?B?ZVc5aElVZ25FRmp6UWY3cndVNHRHNmx5THBTZ0p0OW1kYnJMQmNkK2xLU3l3?=
+ =?utf-8?B?SDh1SjVnYmxqSWIyeTRLNnBwZE9uZGt6U3NMUHRibEFDdWRlWXdhOGViR1M2?=
+ =?utf-8?B?dlRtNWpyS3VKSTQ2a1JqRHdMaER2a3NnU2U1U2dxNVdTMCtreTZnNmFUY0Ra?=
+ =?utf-8?B?amgrNUlzVjgwcmZLWUdwRGJpdEZSZmV1Y3FlNDFOZmhnOHBNV3FxZTdxSkdE?=
+ =?utf-8?B?NGhuaStGZG5uN0J1SFpqbHZPYWhMUEM0YzdsVGJERnZWUXBjczdCM0QwdnlI?=
+ =?utf-8?B?Q1lzSzBuakRPZkVKS1lWTEdTb2RuZ1VjdGx6RytBNzJYZWx4S2FvRFdHWWxL?=
+ =?utf-8?B?MTFhVVM3eXJmQkxXK3hraHBxZWtEZGh5L1ZtWG1jd3NKRjhMOWF6c0VZYkJj?=
+ =?utf-8?B?dnZobmk2dXB1ZGdwcGU3c0ZQYlM1L0JjOFN2SkNDMXJjOEJzYkx6V1F0b3VW?=
+ =?utf-8?B?MGhBQ0diWWc2UWFtdUQ5SUh0WUk5aGRNajFFRGJrL0ljR2JESFBaWVQ5U3c0?=
+ =?utf-8?B?YnlVL1dvUVljVGNQTmlhc1c3SjNraDVkOHRMOUczNUp3bEFEV0VjZGNpTDBw?=
+ =?utf-8?B?Qlh0U3ZTaGk2WTAwMCt2ay9xN29BSDJQbmVaL25BZzdrdkJJbkRTZXQ0NUtK?=
+ =?utf-8?B?N21FTWI3Sm9TNHF3NCttUTRLaG10V1lVL21rM0RqaHRoVnhxVmlRL2ZQWTVW?=
+ =?utf-8?B?SDZyNXZTb0IyQkR0a3ZyNXRPMmRuZjdsTjJrMTdRbzh1NHN6dU40bkxDSUZI?=
+ =?utf-8?B?NElTajUzK3ExeGkweTU5MWVodGJJNU0rVzdEeHd4WVBkRmVyTmlzNWZNV0J4?=
+ =?utf-8?B?QWxKTTRFYzFGcW1GVFdUT0kxdmFWaDlCcG40blpJV0VzRTZLYkt1STNUU1RZ?=
+ =?utf-8?B?ODJKcThYQ3JvdW5PanFXYU1MRGxJU2VuVGZzL0VVOGV2MUx6TmNaa3VEV3hl?=
+ =?utf-8?B?ME56UDJ1R0JQMHUzSW10WENCMXo4b3l0dEpEK3lWQ3lRV3hHaDU5YnI5Q2E3?=
+ =?utf-8?B?MGVIUzl5SlB4bmZoVmwxZ0Z0eGcza0R1SGY5ekxCY0crTWF2SHg1Y1dndE1M?=
+ =?utf-8?B?cnlxVjdmNXRIZm02dDN5SUtzZlJYL2MxWDljbjVHZXA3b1ZDc1BBbHVVdDlr?=
+ =?utf-8?B?NWNzTmdlL1o0Nmt2SURIb3RIdmFEOStrbC8yYjRzdHllZFg0UG83OWwwa2hI?=
+ =?utf-8?B?VzJheFVoV1NEZWpmVitaSTlxZWpmMHVuZEJ6OGFmV3JiZDVZaEMwR0JOUjVS?=
+ =?utf-8?B?bnBMOGdERzhmUXRqb1NFbS9BRDBuNHFScjJIczVZN1YrUmlvMUFLanpTdm54?=
+ =?utf-8?B?YS9lZ0MrZ1dPZnVXUFpjNXc4MDZ0cTErOTVaVWQrbWhXK3MrNWNBcklGczh2?=
+ =?utf-8?B?eWsyMVJ2Z0FvWWN2eTBTa1JjMkFHMENKNGZtOTlSY3U4TzJ1N0hHZ253WWRK?=
+ =?utf-8?B?TDZLL0lDdUJOemd1Q0xiWTZLSWpDWm0zQjc2cHB4Y21rclhzaThVVDgvSzFX?=
+ =?utf-8?B?Y1BNQ3dXYktUdTB2TE5kUXdnc0ZzbXNqaDE4OFIvNVJzZVdhUnZtUnZQdXFD?=
+ =?utf-8?B?bVBSK3BFb282aEZsUTZHVWNVN2U1SHdIblBGcVc5QmtYOENWemppUytMWkZt?=
+ =?utf-8?B?b0VGRnVWdWc2c2hlNGxuWXFaZGtyQzFFbG1LbUlDMDV6dTdVakU0UUM0UDBR?=
+ =?utf-8?B?TDFCSk9xY2NCOXQ1VmFBaE4xUEExMjM4aHdmaHk2R3hqUCtTT0RDSm9wcHdN?=
+ =?utf-8?B?cC8wbzZJd0cvcExzb2tBRWtGVG9QTGg1b0NyM2NwL3QvaXZoaCtwRnMra3dN?=
+ =?utf-8?B?dlZuVldBQ0p6ZUJwdUpkY281ckdsRDhXTnB4TUE2eVlTZk1WenJmL3h0OHRH?=
+ =?utf-8?Q?eY0m7flmCjs=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?STAzOTB3K2lXQ2ZwTUVmbE9MekxRalVwYklPTzFldFVHbStNc0ZaT0pjb1Zi?=
- =?utf-8?B?MS9JMmJ0c2JQSzFxc0VoTFNyditYVlUrZm5JTmpzQXpDWUNTWDFaNHNSL0RR?=
- =?utf-8?B?V0ZVVkZNaStDYzZid3ZjQVJ0SGxmVGZOaGZpR2FmRkU3MVJMek9ZbnFGT29F?=
- =?utf-8?B?T2dIM3BzSmdJLzV0eVBkN0l3Y3A4dnRLbkcyeC9wVHlXcFp2NXFnWU9pVnUw?=
- =?utf-8?B?cTVJSW93STdVZDRncElzTExTeXU0QjU4VzlrQXZMeUJHS1FhYTVmZjlkWjBF?=
- =?utf-8?B?cDhWSlNtbXc4b00xN2RqWkhOVWFSZVVNUjBRVjI1MWh3THZCZnIxUHRENnZC?=
- =?utf-8?B?Y0twby9pd0c1UTNyZXJCM3gvNEQwRU1RN0xuUW1pYjRBMWJtdmtwZUF1TjE2?=
- =?utf-8?B?YUVyTGZTY2NVdk5yc1JlLzdRRG9xREZ5K1JOckQ4clJvcHY5ZDY1YjByWVdK?=
- =?utf-8?B?NWpMNjFLZkxKNis5TzhvY2J4VjY0VUlZZzA4QUdoVDRyRzZOajllUnlIdkU5?=
- =?utf-8?B?T1ZncVNHWTRIMkRzK25UaG1kVGJEOXFjTGZXNEJFMVFDaXlmWW05cGd5dkRL?=
- =?utf-8?B?bzZLMEQ0V2dYWnAvbmhqYml3M3BwTzU1UFZXUEIvYlBnRjZVbXF4UUI2SkVF?=
- =?utf-8?B?NExZK0MrblBBSzRlYXE4NXFKejdjSUxEc0FPVXVFU0FOb0ZRQXNTYjJMRWdW?=
- =?utf-8?B?VTUvU1d4ZjVKUWIwV2xmTFozcGVQRGx5cmY0ZmFsdGtTNnhvb2liUER0UnhX?=
- =?utf-8?B?WFpkckhWZmszUW5qTWRPVU1qRGVzYm9qYzd5clFCZEIvSk5kTjZUSFVKZGs3?=
- =?utf-8?B?RW5qejdkalVLVEpGQ1dkcFJPWGlhKzU1eUcwRWxvS1NrTFQzWWNnRklnU0dB?=
- =?utf-8?B?MFY3NjN1UjFKQ081a0JZRVFnd2ZLMWRiMVkxUkRZZS81d2o3c1NJd2tCZVpp?=
- =?utf-8?B?aHpOMmJDQ25kYVBwS1NaSk41aDJvL2E1Zzl0Q0IvWU5zMWZmQ2VRZFJxeC8w?=
- =?utf-8?B?c3JaZmZIcXJGNlRZdmNZcTg3NHUvazBVR0ZxdUZSZW1DaFo5eExwVkt0Tnc3?=
- =?utf-8?B?SVJoaDQzVlh2K0QrYzZYenlhWWVjbG4ycVI1aWFlSytPZWRZMVpjbVhIZmxT?=
- =?utf-8?B?eDU3aWNTUW15SW5iR3A3eVdydXBSQS92czRJUlFiODR6dGJhQU5XUmxEMEd5?=
- =?utf-8?B?eXlKa1VINmxxdzFNZ3M5UXVJZkFvcnM0MXgwdlRoNGl1QjZqMGNyUkI3VUFJ?=
- =?utf-8?B?ZlpYb0FsKzc2OVVqYnFwbnI5aEtMa2JpVk93amJJU2pobVN0NkF5ZkpVdG1C?=
- =?utf-8?B?WXdmekdnRTlET3JNMDIyQ1J2V0FqSittNk1lZDBhV21XMHNxK3k5S1RaMDVQ?=
- =?utf-8?B?WkJDSzVNcG5EZWZuYkwvMkRyWU9meEtRa2Fkc05XOUUrcXM3UXRoUU93STRT?=
- =?utf-8?B?aG53dHdGUmhzeHRXa1NaYllXRUpKN0hIYTdwUHBiZW4zdkRCbVlaVmgxd2FK?=
- =?utf-8?B?MmhxS1RaR3pYcGhWdk8rRTBsamhIdENvcUhiR3dub0QvQzM4L1c3L2V1Z3Mv?=
- =?utf-8?B?cW9mdFlNQ29PbGZlb280ajI4ckxuamxKMi9ERUU4L1VoampvZEtpY3ZxQ0p1?=
- =?utf-8?B?aFE2TktYRHEzYW9Kd1dLWWJvSDFJMkJZc2kzdU0xMlFreGRmbWpON2dZbGpk?=
- =?utf-8?B?TFN2M1Bsak9BUDZra0hjUmhMWkRkMHpwOW1RRzBmK3g0cEpMcFdod0pLbStI?=
- =?utf-8?B?bzhMbG9vbjJQdWJINXhMVk0reXFhd0NqR3VLZUhhaWxMYUJ3RzhIVU10S2lj?=
- =?utf-8?B?MnRNU2VGcFhDWE1nNWVGYXpjY1BqWUVPTVphdCtKcjByK2sxM0hYMXdxUHBS?=
- =?utf-8?B?b1FqZGVVZ0loRlZ6ams3S0hza0VISnZiQkNKeU1QYzJIN3pCUkNpWHA0R0VU?=
- =?utf-8?B?Zlpjb1ljOXMyVWxpSU1la05FQUY4dytLcXhEUEJGNmd0bXM4Qmg4Y1hDWWJJ?=
- =?utf-8?B?UmV0cDRLSmMxNW9Ic0ozaXpMT2pnQU9Mc05KWEpHNUJZUFZzeDVtb0xqbTFZ?=
- =?utf-8?B?cFF3S2pWUVpNQVBrU0ZBVTNpYVBOV3hTYmhFYWNUd0xTRzdVaDZHbDJTZlho?=
- =?utf-8?Q?AFyPBHiRNbr0xkx31k6gXfjp1?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eklFRmRpV0hmRjhXZHFnQTdmRWE4K1IrSzhFVUZUNmxoZ0VGUTZDcFJSVGV1?=
+ =?utf-8?B?dVlVTTVKeDRZVUVTME1rMTR0VWU3aDBIajFvaml6U1pWMktoWVY0VWd5ZFpL?=
+ =?utf-8?B?SHFLWExhRG00TWtnS0hiTHU0NFNORjNLODdVbWxUU3pueVBUYjNSZi9MeDNj?=
+ =?utf-8?B?ejhtMEd6RmpJTG5kRCswUmJHMWVrUkRPcTk1RHpWQVNXYTVGQWxYNERwVlcz?=
+ =?utf-8?B?RG1yL0ZTVFQrWWozS1NFT1NROTdlbk5wNnpQV0ZIU0pudmxlR05aRXVrdHc4?=
+ =?utf-8?B?TUhORFNKaGhSWUEzTVVWcE1uU1FlT1pFNjhtQzNRQThqelNENUxiWHNVd0Ux?=
+ =?utf-8?B?WHF0bFlBZkpqL2lKcU9uM1dkYlNSSlJ3bkxVamJhUzZ4ZFJxem9WVHp4dW40?=
+ =?utf-8?B?Q3VQRUpYcVE5WnQxdG1tbnBKcHFBa21qcHptcVFaSXNCbEUzc3VwTFFsUjVX?=
+ =?utf-8?B?NEtKU01JcUhwOVBuczZGR2VnZ0k2UHNiSFVvdGZBSFFUSXhzZkRVelNtcHlR?=
+ =?utf-8?B?SFUrYm1JdGt2dEo1UUo2S2ZXd1VWbGpQazI1Q2VBVjhuYUh4QTdJQ0pFRjRT?=
+ =?utf-8?B?T2dQc0Y1MFl4QzJyVHVjZCtvYWUydmxoYmtiRDhkWUY5LzdDcU1FR1VRbkJN?=
+ =?utf-8?B?RVNiWm9GVXMzTkREUFZVMHNxcVhvQTRFVmwyVUFBcmdPb3BNZGRaVllVVms1?=
+ =?utf-8?B?Z0tKT2lnN3NkUVhEY0NHbDREeThLdEQ0bHl6ZGZvVUpYTmtLMnhSdE1KZjhJ?=
+ =?utf-8?B?ZE90STlGYWhnRVNaMlRReWorL2lHL0lvbmVvSmNTYXJTMXBWNXBwbDg3eW1I?=
+ =?utf-8?B?OU8rNlBRS3dtRlJiOUlrcE1UV1NWRTN2MElmc2FKbUxzQ0hWOXplZk92anJM?=
+ =?utf-8?B?WndNNmRDeWtXMXVqY05rd0hnNWR0Z2V2NEdwQnVzS3dOT2RrejhBTGNwcFRN?=
+ =?utf-8?B?bWY4YlRmekdaNWlRalpwVXdpVUtQeHJOTmkyQmp4eG5qQWptU2lZcUl3RnRO?=
+ =?utf-8?B?cHFqdE5kWGNHODlDNEVvQ24wcjRKTFpSWlo5L1JXUXdjcnlBMTdXNHNEZHk1?=
+ =?utf-8?B?d0pjamtRdGJUY0RoNXVJaysrUWM4OG1vdHliSDNqc1E1Q3FxTW9oRldaZzVH?=
+ =?utf-8?B?dFhVb1h1YjRPYmZtWjYzZE1FU3dkNTM2ZGkwZDR1dWZPR1hGWUJIVHQzSVVR?=
+ =?utf-8?B?NkZsV0U5ektvWnJZZ2FMTCtxbk8xSnJZU3owa0szNnlNRHVQd2lnSGRicTB5?=
+ =?utf-8?B?aUk0SXRqSEt1RXh2V0l0TnMrZndLaXZPZmhVa28rN2M2VXZpZmVXSk5CZ0FL?=
+ =?utf-8?B?R0xoMjc1OURjTGdNSG0zak9LaERST0dNRERiK2lzY2tKNjRzV1pFQjZHbGo4?=
+ =?utf-8?B?L05xVGFhNjVPcmtyQ2JLNUUvN2hhWU9BNzBQZ2VLRlRINmh4UDFlbDFnUnBu?=
+ =?utf-8?B?aU4wZXFMaksraFJIand2QjZ3QjE5RUNPNjRHdDFMcDl5QUZPbHZDbWdmUmlq?=
+ =?utf-8?B?QTFZZHBMdHpwNDQyRGlDbGFGOFhWK1JCM3ZIRmcrWEtWRklaWXl0OWlDdFdG?=
+ =?utf-8?B?UUZac1pOaEZyazNtRnk0MlIrc0cvYjBJWW05d2x4MmdKa0c3VXR5c2cxb2pJ?=
+ =?utf-8?B?dmNHTm1pRTQxb1B1QVZCTFdjM2gwdUNscVZISHEwZWEvR2ZoMDVuZlBhcTF2?=
+ =?utf-8?B?OEFKWmhkeU1tWjBLOXlqdE9abWR2eDNNb3UzSkkyNFNBWGc0TjRzWmNwYThi?=
+ =?utf-8?B?TGhyS1cvTjJWZW9NQktMaEYwQkEwczJkT1FMdmxlRlUwRGV0Skc5Y1RwS3l4?=
+ =?utf-8?B?ZTZ2U01ONDBnMVJSUldUY0Q2UEc4ZHo5Qmx0UXdFbzJjOHI4OTg1V0VMRjdQ?=
+ =?utf-8?B?Vm5CMVJmc0tzVHJmeWpYajNFb0Mxd1pkcU1JOEVsR011eitlb2J5SVRpR1Q1?=
+ =?utf-8?B?cnhwbk1Va0VaT01DOWRzcm0zTWNlYnpGUGk4TFlQeFM2OG9ibXQweGd0SmVu?=
+ =?utf-8?B?SWc3aFo5NnhqWUt5SktONVJzS2JCSUd6SGNMcW1wbmZncFRxZFhiTkZSbktY?=
+ =?utf-8?B?NU9rR1ZWTUY0Vi91VTIrSThiaFJhNmdBLzNueXQxczBLNzIxQTlRMWJMNDRR?=
+ =?utf-8?Q?Hzb2zu6JwB1u2ri1E0fvvzwTM?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 239a9343-e24b-4b7c-2b7d-08ddce1a07b4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 859810ed-beac-44a9-e58c-08ddce1a6e7a
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 21:02:15.2692 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2025 21:05:07.7495 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mxFB/QFpxfYfWkitk+z3VJ4LDGUlnDul8KyPpjUYwwgmOlQ/UrIpgiVvlVEYG1R5ISOeNap2fVQBB7RZlsOAXw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6825
-Received-SPF: permerror client-ip=2a01:111:f403:2417::62a;
+X-MS-Exchange-CrossTenant-UserPrincipalName: bW+W8g07JQ2snCC9a5BRIyczm/hxVpuPfYNLh6eoC4nR02Z5RIu831bplo+yizDELpqvkiAxuAm3LXvLcnL4gA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8262
+Received-SPF: permerror client-ip=2a01:111:f403:2418::604;
  envelope-from=francisco.iglesias@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -179,256 +179,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 11:53:50AM +0200, Luc Michel wrote:
-> Refactor the ADMA creation using the VersalMap structure.
-> 
-> Note that the connection to the CRL is removed for now and will be
-> re-added by next commits.
+On Wed, Jul 16, 2025 at 11:53:51AM +0200, Luc Michel wrote:
+> Refactor the XRAM devices creation using the VersalMap structure.
 > 
 > Signed-off-by: Luc Michel <luc.michel@amd.com>
 
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
 > ---
->  include/hw/arm/xlnx-versal.h |  2 -
->  hw/arm/xlnx-versal-virt.c    | 28 --------------
->  hw/arm/xlnx-versal.c         | 72 ++++++++++++++++++++++++------------
->  3 files changed, 48 insertions(+), 54 deletions(-)
+>  include/hw/arm/xlnx-versal.h |  6 ----
+>  hw/arm/xlnx-versal.c         | 59 +++++++++++++++++++++---------------
+>  2 files changed, 35 insertions(+), 30 deletions(-)
 > 
 > diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-> index 1fcc2b623da..4eeea98ff34 100644
+> index 4eeea98ff34..71c3314b8b4 100644
 > --- a/include/hw/arm/xlnx-versal.h
 > +++ b/include/hw/arm/xlnx-versal.h
-> @@ -15,11 +15,10 @@
->  
->  #include "hw/sysbus.h"
->  #include "hw/cpu/cluster.h"
+> @@ -18,11 +18,10 @@
 >  #include "hw/or-irq.h"
 >  #include "hw/intc/arm_gicv3.h"
-> -#include "hw/dma/xlnx-zdma.h"
 >  #include "hw/rtc/xlnx-zynqmp-rtc.h"
 >  #include "qom/object.h"
 >  #include "hw/usb/xlnx-usb-subsystem.h"
->  #include "hw/misc/xlnx-versal-xramc.h"
+> -#include "hw/misc/xlnx-versal-xramc.h"
 >  #include "hw/nvram/xlnx-bbram.h"
-> @@ -75,11 +74,10 @@ struct Versal {
+>  #include "hw/nvram/xlnx-versal-efuse.h"
+>  #include "hw/ssi/xlnx-versal-ospi.h"
+>  #include "hw/dma/xlnx_csu_dma.h"
+>  #include "hw/misc/xlnx-versal-crl.h"
+> @@ -86,15 +85,10 @@ struct Versal {
 >  
+>              CPUClusterState cluster;
+>              ARMCPU cpu[XLNX_VERSAL_NR_RCPUS];
+>          } rpu;
+>  
+> -        struct {
+> -            OrIRQState irq_orgate;
+> -            XlnxXramCtrl ctrl[XLNX_VERSAL_NR_XRAM];
+> -        } xram;
+> -
+>          XlnxVersalCRL crl;
+>      } lpd;
+>  
+>      /* The Platform Management Controller subsystem.  */
 >      struct {
->          MemoryRegion mr_ocm;
->  
->          struct {
-> -            XlnxZDMA adma[XLNX_VERSAL_NR_ADMAS];
->              VersalUsb2 usb;
->          } iou;
->  
->          /* Real-time Processing Unit.  */
->          struct {
-> diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-> index 09f87dc76dd..1922a90019c 100644
-> --- a/hw/arm/xlnx-versal-virt.c
-> +++ b/hw/arm/xlnx-versal-virt.c
-> @@ -202,37 +202,10 @@ static void fdt_add_usb_xhci_nodes(VersalVirt *s)
->      qemu_fdt_setprop_cell(s->fdt, name, "phandle", s->phandle.dwc);
->      qemu_fdt_setprop_string(s->fdt, name, "maximum-speed", "high-speed");
->      g_free(name);
->  }
->  
-> -static void fdt_add_zdma_nodes(VersalVirt *s)
-> -{
-> -    const char clocknames[] = "clk_main\0clk_apb";
-> -    const char compat[] = "xlnx,zynqmp-dma-1.0";
-> -    int i;
-> -
-> -    for (i = XLNX_VERSAL_NR_ADMAS - 1; i >= 0; i--) {
-> -        uint64_t addr = MM_ADMA_CH0 + MM_ADMA_CH0_SIZE * i;
-> -        char *name = g_strdup_printf("/dma@%" PRIx64, addr);
-> -
-> -        qemu_fdt_add_subnode(s->fdt, name);
-> -
-> -        qemu_fdt_setprop_cell(s->fdt, name, "xlnx,bus-width", 64);
-> -        qemu_fdt_setprop_cells(s->fdt, name, "clocks",
-> -                               s->phandle.clk_25Mhz, s->phandle.clk_25Mhz);
-> -        qemu_fdt_setprop(s->fdt, name, "clock-names",
-> -                         clocknames, sizeof(clocknames));
-> -        qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
-> -                               GIC_FDT_IRQ_TYPE_SPI, VERSAL_ADMA_IRQ_0 + i,
-> -                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-> -        qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
-> -                                     2, addr, 2, 0x1000);
-> -        qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
-> -        g_free(name);
-> -    }
-> -}
-> -
->  static void fdt_add_rtc_node(VersalVirt *s)
->  {
->      const char compat[] = "xlnx,zynqmp-rtc";
->      const char interrupt_names[] = "alarm\0sec";
->      char *name = g_strdup_printf("/rtc@%x", MM_PMC_RTC);
-> @@ -556,11 +529,10 @@ static void versal_virt_init(MachineState *machine)
->  
->      fdt_create(s);
->      versal_set_fdt(&s->soc, s->fdt);
->      fdt_add_gic_nodes(s);
->      fdt_add_timer_nodes(s);
-> -    fdt_add_zdma_nodes(s);
->      fdt_add_usb_xhci_nodes(s);
->      fdt_add_rtc_node(s);
->      fdt_add_bbram_node(s);
->      fdt_add_efuse_ctrl_node(s);
->      fdt_add_efuse_cache_node(s);
 > diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index 062f9a91a6c..97cd991be10 100644
+> index 97cd991be10..6c5eb6d3fd5 100644
 > --- a/hw/arm/xlnx-versal.c
 > +++ b/hw/arm/xlnx-versal.c
-> @@ -28,10 +28,11 @@
->  #include "hw/arm/fdt.h"
+> @@ -29,10 +29,11 @@
 >  #include "hw/char/pl011.h"
 >  #include "hw/net/xlnx-versal-canfd.h"
 >  #include "hw/sd/sdhci.h"
 >  #include "hw/net/cadence_gem.h"
-> +#include "hw/dma/xlnx-zdma.h"
+>  #include "hw/dma/xlnx-zdma.h"
+> +#include "hw/misc/xlnx-versal-xramc.h"
 >  
 >  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
 >  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
 >  #define GEM_REVISION        0x40070106
 >  
-> @@ -58,10 +59,20 @@ typedef struct VersalMap {
->          size_t num_prio_queue;
->          const char *phy_mode;
->          const uint32_t speed;
->      } gem[3];
->      size_t num_gem;
-> +
-> +    struct VersalZDMAMap {
-> +        const char *name;
-> +        VersalSimplePeriphMap map;
-> +        size_t num_chan;
-> +        uint64_t chan_stride;
-> +        int irq_stride;
-> +    } zdma[2];
-> +    size_t num_zdma;
-> +
+> @@ -69,10 +70,18 @@ typedef struct VersalMap {
+>          uint64_t chan_stride;
+>          int irq_stride;
+>      } zdma[2];
+>      size_t num_zdma;
+>  
+> +    struct VersalXramMap {
+> +        uint64_t mem;
+> +        uint64_t mem_stride;
+> +        uint64_t ctrl;
+> +        uint64_t ctrl_stride;
+> +        int irq;
+> +        size_t num;
+> +    } xram;
 >  } VersalMap;
 >  
 >  static const VersalMap VERSAL_MAP = {
 >      .uart[0] = { 0xff000000, 18 },
 >      .uart[1] = { 0xff010000, 19 },
-> @@ -76,10 +87,13 @@ static const VersalMap VERSAL_MAP = {
->      .num_sdhci = 2,
->  
->      .gem[0] = { { 0xff0c0000, 56 }, 2, "rgmii-id", 1000 },
+> @@ -90,10 +99,17 @@ static const VersalMap VERSAL_MAP = {
 >      .gem[1] = { { 0xff0d0000, 58 }, 2, "rgmii-id", 1000 },
 >      .num_gem = 2,
+>  
+>      .zdma[0] = { "adma", { 0xffa80000, 60 }, 8, 0x10000, 1 },
+>      .num_zdma = 1,
 > +
-> +    .zdma[0] = { "adma", { 0xffa80000, 60 }, 8, 0x10000, 1 },
-> +    .num_zdma = 1,
+> +    .xram = {
+> +        .num = 4,
+> +        .mem = 0xfe800000, .mem_stride = 1 * MiB,
+> +        .ctrl = 0xff8e0000, .ctrl_stride = 0x10000,
+> +        .irq = 79,
+> +    },
 >  };
 >  
 >  static const VersalMap *VERSION_TO_MAP[] = {
 >      [VERSAL_VER_VERSAL] = &VERSAL_MAP,
 >  };
-> @@ -484,34 +498,49 @@ static void versal_create_gem(Versal *s,
->      }
->      qemu_fdt_setprop(s->cfg.fdt, node, "interrupts", irq_prop,
->                       sizeof(uint32_t) * map->num_prio_queue * 3);
+> @@ -633,41 +649,35 @@ static void versal_create_trng(Versal *s, qemu_irq *pic)
+>      mr = sysbus_mmio_get_region(sbd, 0);
+>      memory_region_add_subregion(&s->mr_ps, MM_PMC_TRNG, mr);
+>      sysbus_connect_irq(sbd, 0, pic[VERSAL_TRNG_IRQ]);
 >  }
 >  
-> -
-> -static void versal_create_admas(Versal *s, qemu_irq *pic)
-> +static void versal_create_zdma(Versal *s,
-> +                               const struct VersalZDMAMap *map)
+> -static void versal_create_xrams(Versal *s, qemu_irq *pic)
+> +static void versal_create_xrams(Versal *s, const struct VersalXramMap *map)
 >  {
+> -    int nr_xrams = ARRAY_SIZE(s->lpd.xram.ctrl);
+> -    DeviceState *orgate;
 > -    int i;
-> +    DeviceState *dev;
+> +    SysBusDevice *sbd;
 > +    MemoryRegion *mr;
-> +    g_autofree char *name;
-> +    const char compatible[] = "xlnx,zynqmp-dma-1.0";
-> +    const char clocknames[] = "clk_main\0clk_apb";
+> +    DeviceState *or;
 > +    size_t i;
 >  
-> -    for (i = 0; i < ARRAY_SIZE(s->lpd.iou.adma); i++) {
-> -        char *name = g_strdup_printf("adma%d", i);
-> -        DeviceState *dev;
+> -    /* XRAM IRQs get ORed into a single line.  */
+> -    object_initialize_child(OBJECT(s), "xram-irq-orgate",
+> -                            &s->lpd.xram.irq_orgate, TYPE_OR_IRQ);
+> -    orgate = DEVICE(&s->lpd.xram.irq_orgate);
+> -    object_property_set_int(OBJECT(orgate),
+> -                            "num-lines", nr_xrams, &error_fatal);
+> -    qdev_realize(orgate, NULL, &error_fatal);
+> -    qdev_connect_gpio_out(orgate, 0, pic[VERSAL_XRAM_IRQ_0]);
+> +    or = create_or_gate(s, OBJECT(s), "xram-orgate", map->num, map->irq);
+>  
+> -    for (i = 0; i < ARRAY_SIZE(s->lpd.xram.ctrl); i++) {
+> -        SysBusDevice *sbd;
 > -        MemoryRegion *mr;
-> +    name = g_strdup_printf("%s[*]", map->name);
+> +    for (i = 0; i < map->num; i++) {
+> +        hwaddr ctrl, mem;
 >  
-> -        object_initialize_child(OBJECT(s), name, &s->lpd.iou.adma[i],
-> -                                TYPE_XLNX_ZDMA);
-> -        dev = DEVICE(&s->lpd.iou.adma[i]);
-> +    for (i = 0; i < map->num_chan; i++) {
-> +        uint64_t addr = map->map.addr + map->chan_stride * i;
-> +        int irq = map->map.irq + map->irq_stride * i;
-> +        g_autofree char *node;
+> -        object_initialize_child(OBJECT(s), "xram[*]", &s->lpd.xram.ctrl[i],
+> -                                TYPE_XLNX_XRAM_CTRL);
+> -        sbd = SYS_BUS_DEVICE(&s->lpd.xram.ctrl[i]);
+> -        sysbus_realize(sbd, &error_fatal);
+> +        sbd = SYS_BUS_DEVICE(qdev_new(TYPE_XLNX_XRAM_CTRL));
+> +        object_property_add_child(OBJECT(s), "xram[*]", OBJECT(sbd));
+> +        sysbus_realize_and_unref(sbd, &error_fatal);
 > +
-> +        dev = qdev_new(TYPE_XLNX_ZDMA);
-> +        object_property_add_child(OBJECT(s), name, OBJECT(dev));
->          object_property_set_int(OBJECT(dev), "bus-width", 128, &error_abort);
->          object_property_set_link(OBJECT(dev), "dma",
->                                   OBJECT(get_system_memory()), &error_fatal);
-> -        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-> +        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +        ctrl = map->ctrl + map->ctrl_stride * i;
+> +        mem = map->mem + map->mem_stride * i;
 >  
->          mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+>          mr = sysbus_mmio_get_region(sbd, 0);
 > -        memory_region_add_subregion(&s->mr_ps,
-> -                                    MM_ADMA_CH0 + i * MM_ADMA_CH0_SIZE, mr);
-> +        memory_region_add_subregion(&s->mr_ps, addr, mr);
+> -                                    MM_XRAMC + i * MM_XRAMC_SIZE, mr);
+> +        memory_region_add_subregion(&s->mr_ps, ctrl, mr);
+>          mr = sysbus_mmio_get_region(sbd, 1);
+> -        memory_region_add_subregion(&s->mr_ps, MM_XRAM + i * MiB, mr);
+> +        memory_region_add_subregion(&s->mr_ps, mem, mr);
 >  
-> -        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[VERSAL_ADMA_IRQ_0 + i]);
-> -        g_free(name);
-> +        versal_sysbus_connect_irq(s, SYS_BUS_DEVICE(dev), 0, irq);
-> +
-> +        node = versal_fdt_add_simple_subnode(s, "/dma", addr, 0x1000,
-> +                                             compatible, sizeof(compatible));
-> +        qemu_fdt_setprop_cell(s->cfg.fdt, node, "xlnx,bus-width", 64);
-> +        qemu_fdt_setprop_cells(s->cfg.fdt, node, "clocks",
-> +                               s->phandle.clk_25mhz, s->phandle.clk_25mhz);
-> +        qemu_fdt_setprop(s->cfg.fdt, node, "clock-names",
-> +                         clocknames, sizeof(clocknames));
-> +        qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-> +                               GIC_FDT_IRQ_TYPE_SPI, irq,
-> +                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+> -        sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(orgate, i));
+> +        sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(or, i));
 >      }
 >  }
 >  
->  #define SDHCI_CAPABILITIES  0x280737ec6481 /* Same as on ZynqMP.  */
->  static void versal_create_sdhci(Versal *s,
-> @@ -970,18 +999,10 @@ static void versal_create_crl(Versal *s, qemu_irq *pic)
->          object_property_set_link(OBJECT(&s->lpd.crl),
->                                   name, OBJECT(&s->lpd.rpu.cpu[i]),
->                                   &error_abort);
+>  static void versal_create_bbram(Versal *s, qemu_irq *pic)
+>  {
+> @@ -1186,15 +1196,16 @@ static void versal_realize(DeviceState *dev, Error **errp)
+>  
+>      for (i = 0; i < map->num_zdma; i++) {
+>          versal_create_zdma(s, &map->zdma[i]);
 >      }
 >  
-> -    for (i = 0; i < ARRAY_SIZE(s->lpd.iou.adma); i++) {
-> -        g_autofree gchar *name = g_strdup_printf("adma[%d]", i);
-> -
-> -        object_property_set_link(OBJECT(&s->lpd.crl),
-> -                                 name, OBJECT(&s->lpd.iou.adma[i]),
-> -                                 &error_abort);
-> -    }
-> -
->      object_property_set_link(OBJECT(&s->lpd.crl),
->                               "usb", OBJECT(&s->lpd.iou.usb),
->                               &error_abort);
->  
->      sysbus_realize(sbd, &error_fatal);
-> @@ -1161,12 +1182,15 @@ static void versal_realize(DeviceState *dev, Error **errp)
->  
->      for (i = 0; i < map->num_gem; i++) {
->          versal_create_gem(s, &map->gem[i]);
->      }
->  
-> +    for (i = 0; i < map->num_zdma; i++) {
-> +        versal_create_zdma(s, &map->zdma[i]);
-> +    }
+> +    versal_create_xrams(s, &map->xram);
 > +
 >      versal_create_usbs(s, pic);
-> -    versal_create_admas(s, pic);
 >      versal_create_pmc_apb_irq_orgate(s, pic);
 >      versal_create_rtc(s, pic);
 >      versal_create_trng(s, pic);
->      versal_create_xrams(s, pic);
+> -    versal_create_xrams(s, pic);
 >      versal_create_bbram(s, pic);
+>      versal_create_efuse(s, pic);
+>      versal_create_pmc_iou_slcr(s, pic);
+>      versal_create_ospi(s, pic);
+>      versal_create_crl(s, pic);
 > -- 
 > 2.50.0
 > 
