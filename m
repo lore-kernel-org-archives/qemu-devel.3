@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6746DC83F17
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 11:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7CB2C87FC9
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Jul 2025 11:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugLs8-0002JO-Nn; Mon, 28 Jul 2025 07:18:27 -0400
+	id 1ugLrr-0001dD-G4; Mon, 28 Jul 2025 07:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ugLO0-0004CA-41
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:47:16 -0400
-Received: from p-east3-cluster2-host11-snip4-7.eps.apple.com ([57.103.87.238]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ugLNw-00071D-Od
- for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:47:15 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-1 (Postfix) with ESMTPS id
- AC7CF180011E; Mon, 28 Jul 2025 10:47:09 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=cLjPuPYOUhuKvBEn7VsnYOUTHfuyTb1QdxC9mu+H5xE=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=MGlnssf7xZvnO1dlJ6psg1njvC4WHSjsthp8F8w10hGLQ+emwdv6bI8EbGj3N8nZ98a1wWVofXtrK58K9V4hVXn1cR8dfNoqpJPUT4Jjpyg+kDz7OKMhVN+TAVt7KOFXh0klb2kV6Uf/6d1zVtLjX8Ki0bNQdMktdUx3wtyogfhdnzX2lN7dlzasF8MqTKsb5qccK9jfn5JIbQ5ENYIdcNBnChDxxyVeahqbtLxhJygBI59SSQVRgCfqePHTxsq8adkPmSyYabF56yS96NdfvT12D6OxlgzI9Y1hrxduFR8NqRxHD28OErrNTB/k8cS8RHaeoYhTtre3DgvYov5pPw==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-1 (Postfix) with ESMTPSA id
- B0EB71802086; Mon, 28 Jul 2025 10:47:07 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [PATCH v3 3/9] target/arm: add asserts for code paths not
- leveraged when using the vGIC
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <e9afdf9e-b357-43a5-acc6-f4839c539585@linaro.org>
-Date: Mon, 28 Jul 2025 12:46:56 +0200
-Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5F11EE68-0CC5-4A41-A89D-48CF789196A9@unpredictable.fr>
-References: <20250725223035.52284-1-mohamed@unpredictable.fr>
- <20250725223035.52284-4-mohamed@unpredictable.fr>
- <e9afdf9e-b357-43a5-acc6-f4839c539585@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-ORIG-GUID: dBwgEYyZD97qbZmm8MkYVF7EeQlH-Uy2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI4MDA3OSBTYWx0ZWRfX7aQpdsSyosPl
- jlxsXCQkhuFsipOpXbtq2a+g4aSTyyB3q00q+Ss9LdCOCi3CjU870TV8708mX9bNw8ZOhpOlfbN
- AlShZaWwnIZib1Wy4WB+A36Yh4DLXI4yEoiYCrs24/PKU0mnAb/f4OPqkubsjz+9s3TrYg2C99o
- 3Bdf3xkGlrSPpfkBfjLaMxchaKVTDwCwVbRq+vqIVlUFMYLN/++smERUG5jl2+lvubnfR8gDlmJ
- +OxdHxxlcjGrB0r73M63A8Nm1FN9OH/FhS6CR4sYsVM0I0FHH1+yyUnEuOb3y8S8IOy731WBI=
-X-Proofpoint-GUID: dBwgEYyZD97qbZmm8MkYVF7EeQlH-Uy2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-28_03,2025-07-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0
- mlxlogscore=865 clxscore=1030
- phishscore=0 spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2507280079
-Received-SPF: pass client-ip=57.103.87.238;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLLl-00030I-Tg
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:45:10 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugLLj-0006gK-NN
+ for qemu-devel@nongnu.org; Mon, 28 Jul 2025 06:44:57 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45629703011so29650485e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Jul 2025 03:44:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753699493; x=1754304293; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H3zSWYbfc5Ko6bZj8SsT4+B83dmSsrThM72rQyD9d/s=;
+ b=Y8i/1BVLQ6NQRUdF3jZzWX8GXYoVuYFFvkoRbdtZIUEFzsYUXzOBBzWOcfKgVMHHhZ
+ BGZgUziPV8y9jk/jVz/yRgGGL2G1AR6/gtPrO7A5S9DzMttlId4/uCrB9IvaW/B4CEcq
+ Trnqtym1LuSgPeVhacJiQw9n/X+VDaC6OSxpFwP2d7f/EElLEttdddfrYnJmUZHnMYP4
+ d8vLlJktLOgWGLuW4tR29j3YW2OYFxxU9UQ84wnMEUZ6/aZVF4cFQGW/4TC02IICp+lu
+ wNmCKHVTHHfXWWirusrwDN+fBGwMFjFtC829eTzQWVgM0qCSL0fUc0IoVvwU//q72UJ2
+ /dBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753699493; x=1754304293;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H3zSWYbfc5Ko6bZj8SsT4+B83dmSsrThM72rQyD9d/s=;
+ b=gBjpqVxbOdUkY7Kx9KLwUgT4QDjPdv7jPlu7gSGx+xBqottQDk0K9WiIbPDkuaUPYp
+ LsfLktAd3OC/GaCaB+Kdbei2iWO3ifv/T/Pj3gyrpggE3ovVlKPZPgJ5UDRMFjqBf0f2
+ RCkwJNudgifPw12UqBwtp9oYXD9Q2ZwW+sM+So+Q6RllhBnWkCKb519o3Miv8qsRto9G
+ INEInwRIhp5pMZWmhsq7yMXfabfGnIAU2pMba1je/XRaQwNY2zkLLo0MOu8M2MNWSSXP
+ EfheAAk5yqIf6yisq3Ys505vgmstPhTAekXUjpngUdPRtGmIjt3lwct4PaXAOJYPf8Oo
+ lCgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7C9JN6MeiwQazYrObfBtHXssi+TCokMA+dH1mxteoMqCOcvLFYxD8wFfPk+UCUVzRDyUv4XWCLaTn@nongnu.org
+X-Gm-Message-State: AOJu0YxtyU9nlFJLvQTxqwCn0NFMRNYTpGeHgEcR8ferACM7i9Je6cQ7
+ tmwoMulwNx1y27YhDbv2QjLSUGGLohS9KPJv/ev919FKp5jDvplr2D3o2CC/JJMptJI=
+X-Gm-Gg: ASbGncvjCtesYcuGFkSUJSZsgRAsNZSB0C1PbkrePEwekoaGkAjFPe1pCqfk4WD7TQ+
+ pAjAArmP9dhzPr2PazaNRNN8eun7psKOxhhmKeaad8EEKnDboAIP2dE4RwsUlxZB/d3okEpkTIr
+ g7a8RyrkWY4QNhe+EJJYLpJ0VhPfg4qFvf6q4ZWILWQooGzvIUwmzn8x581ghrvjfbKCdNyXd7D
+ MRa9JYT6luvCBHc/MobE58zfuA3RIBb3qoxYtm28+futCtVqr8HHlLT+Wrdql3FxrMX3iJJHlwe
+ s6BvrVMDBa2uTU/EJ8/mnRP2ReYy6lS44g2enfU2MBn/xhAuzISPlwx4Ph87gXoR8cI9jl+Ru4Q
+ YbIl9ZOR42hoQuQ1pfaP5zbrTCAfCVpvZdTUVs+e+ZTvMV+Y7j7ygYm0geIcaeCtVqw==
+X-Google-Smtp-Source: AGHT+IFtmM7htQA5yERqYXVxbcEpTD67OGTPQcqNXs9RVUxb2VZGUbvWxePY/oFwZiTBXVpElhu3nA==
+X-Received: by 2002:a5d:4086:0:b0:3b7:8b5e:831d with SMTP id
+ ffacd0b85a97d-3b78b5e85a5mr803923f8f.17.1753699493479; 
+ Mon, 28 Jul 2025 03:44:53 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4586ec79441sm112486465e9.2.2025.07.28.03.44.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Jul 2025 03:44:51 -0700 (PDT)
+Message-ID: <d01be1f3-bb30-4ed5-b935-e9fc74d1ec2e@linaro.org>
+Date: Mon, 28 Jul 2025 12:44:50 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: remove myself as ppc maintainer/reviewer
+To: Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@redhat.com
+References: <20250724123416.3115941-1-danielhb413@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250724123416.3115941-1-danielhb413@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,47 +101,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 24/7/25 14:34, Daniel Henrique Barboza wrote:
+> It has been awhile since I actively did anything for qemu-ppc aside from
+> reading the qemu-ppc inbox a couple of times each month. It's not enough
+> to justify a reviewer role, let alone being a maintainer.
+> 
+> Given that we're doing qemu-ppc maintainership changes across the board
+> I'll take the opportunity and remove myself from the premises too. Feel
+> free to reach out with questions about code I did in the past, but at
+> this moment I'm no longer able to keep up with qemu-ppc activities.
+> 
+> Signed-off-by: Daniel Henrique Barboza <danielhb413@gmail.com>
+> ---
+>   MAINTAINERS | 3 ---
+>   1 file changed, 3 deletions(-)
 
-> On 28. Jul 2025, at 12:18, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> Hi Mohamed,
->=20
-> On 26/7/25 00:30, Mohamed Mediouni wrote:
->> When using the vGIC, timers are directly handled by the platform, so =
-no vmexits ought to happen in that case.
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>  target/arm/hvf/hvf.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->=20
->=20
->> @@ -1965,6 +1971,10 @@ int hvf_vcpu_exec(CPUState *cpu)
->>          /* This is the main one, handle below. */
->>          break;
->>      case HV_EXIT_REASON_VTIMER_ACTIVATED:
->> +        /* This is only for when a user-mode irqchip is used. */
->> +        if (hvf_irqchip_in_kernel()) {
->> +            assert("vtimer activated vmexit when using platform =
-GIC");
->=20
-> This line does nothing (not firing), is that what you intended to?
-It=E2=80=99s specifically so that if this trips, I know that I really =
-screwed things up. Helped me a bit in developing this.
+Thanks for your help with PPC Daniel!
 
-However, this whole patch isn=E2=80=99t expected to ever trigger irl, so =
-would be fine to drop from that perspective.
-
-HV_EXIT_REASON_VTIMER_ACTIVATED will never be returned by =
-Hypervisor.framework when the vGIC is enabled.
-
-Thank you,
--Mohamed
->> +        }
->>          qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
->>          cpu->accel->vtimer_masked =3D true;
->>          return 0;
->=20
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
