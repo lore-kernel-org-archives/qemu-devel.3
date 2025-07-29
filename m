@@ -4,77 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C7EC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5BEC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugjFu-00058M-Fe; Tue, 29 Jul 2025 08:16:31 -0400
+	id 1ugjGe-0005cX-Do; Tue, 29 Jul 2025 08:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjFn-0004yp-3W
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:16:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
+ id 1ugjGM-0005OM-RP
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:17:03 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjFh-0000Z3-U3
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:16:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753791373;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qYQNJTCIjaqgIf0WG029oeIURdgJtQpqR14Z9B6FwXo=;
- b=hq8vh497qESMM3FIMMy8WAZj/Z10jZJ592iWfKSZNqgjr+6DgLCrk4V0pbrc+xEJ6KwSAl
- KhlXlq2BqFdrmjzjtek3m1ElMZ1l+kKvFfnd3+KIwLRgBLeaR7b346GdI7OiPatk/M9vQI
- 4WFIBPbkpr32tIbthVbO5xHLlT1uxtU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-Y5_RWBEgNdiWutH50DJmuw-1; Tue,
- 29 Jul 2025 08:16:07 -0400
-X-MC-Unique: Y5_RWBEgNdiWutH50DJmuw-1
-X-Mimecast-MFC-AGG-ID: Y5_RWBEgNdiWutH50DJmuw_1753791366
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F82918002B2; Tue, 29 Jul 2025 12:16:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2A3E18003FC; Tue, 29 Jul 2025 12:16:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1971221E6A27; Tue, 29 Jul 2025 14:16:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  sstabellini@kernel.org,  anthony@xenproject.org,
- paul@xen.org,  edgar.iglesias@gmail.com,  xen-devel@lists.xenproject.org,
- qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
-In-Reply-To: <14fff91b-7434-4d90-adb1-ebbe3f51d605@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 29 Jul 2025 13:26:02
- +0200")
-References: <20250729111226.3627499-1-armbru@redhat.com>
- <14fff91b-7434-4d90-adb1-ebbe3f51d605@linaro.org>
-Date: Tue, 29 Jul 2025 14:16:02 +0200
-Message-ID: <87v7nbdwfx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
+ id 1ugjGC-0000b6-PH
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:16:53 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1c:2f40:0:640:b89a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1128D883F2;
+ Tue, 29 Jul 2025 15:16:40 +0300 (MSK)
+Received: from smtpclient.apple (unknown [2a02:6bf:8080:47::1:21])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id cGYO7f0GqeA0-34nhxF02; Tue, 29 Jul 2025 15:16:39 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1753791399;
+ bh=wvdaCRAXi0GZyh1SIe2k7hsrrOxKPtUt6wv1GzfKFto=;
+ h=References:To:Cc:In-Reply-To:Date:From:Message-Id:Subject;
+ b=TnfXl83b+jJNumZYJ5axJiueUfbmmau9qMjqxU6LyHW92Hohkm/UaR834K5lx49W1
+ CmnSoCsvEkzrEik8xjJXwQ3Qp4jaPDduUAkW2dCxM4Q3ZKq5lmW/BbkNaeV+sKAm3g
+ 9BzYG3/hpfYiEvuzoTs4AIpcO4VB7v5WYjObbPx0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Kirill Martynov <stdcalllevi@yandex-team.ru>
+Message-Id: <D31749EF-5115-405F-AE24-B982F5070D77@yandex-team.ru>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH 2/2] target/i386: Define enum X86ASIdx for x86's address
+ spaces
+Date: Tue, 29 Jul 2025 15:16:28 +0300
+In-Reply-To: <18da82d6-39e1-4dc1-848e-b64cf40e0d49@linaro.org>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
+ <20250729054023.1668443-3-xiaoyao.li@intel.com>
+ <18da82d6-39e1-4dc1-848e-b64cf40e0d49@linaro.org>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=stdcalllevi@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,47 +79,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> On 29/7/25 13:12, Markus Armbruster wrote:
->> xenfb_mouse_event() has a switch statement whose controlling
->> expression move->axis is an enum InputAxis.  The enum values are
->> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1.  The switch has a
->> case for both axes.  In addition, it has an unreachable default label.
->> This convinces Coverity that move->axis can be greater than 1.  It
->> duly reports a buffer overrun when it is used to subscript an array
->> with two elements.
->> Replace the unreachable code by abort().
->> Resolves: Coverity CID 1613906
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+--Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Tested-By: Kirill Martynov <stdcalllevi@yandex-team.ru =
+<mailto:stdcalllevi@yandex-team.ru>>
+
+> On 29 Jul 2025, at 10:11, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> On 29/7/25 07:40, Xiaoyao Li wrote:
+>> Like ARM defines ARMASIdx, do the same to define X86ASIdx as enum. So
+>> that it's more clear what index 0 is for memory and index 1 is for =
+SMM.
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 >> ---
->>   hw/display/xenfb.c | 3 +--
->>   1 file changed, 1 insertion(+), 2 deletions(-)
->> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
->> index 22822fecea..5e6c691779 100644
->> --- a/hw/display/xenfb.c
->> +++ b/hw/display/xenfb.c
->> @@ -283,8 +283,7 @@ static void xenfb_mouse_event(DeviceState *dev, Qemu=
-Console *src,
->>                   scale =3D surface_height(surface) - 1;
->>                   break;
->>               default:
->> -                scale =3D 0x8000;
->> -                break;
->> +                abort();
->
-> We prefer GLib g_assert_not_reached() over abort() because it displays
-> the file, line number & function before aborting.
+>>  accel/kvm/kvm-all.c              | 2 +-
+>>  target/i386/cpu.h                | 5 +++++
+>>  target/i386/kvm/kvm-cpu.c        | 2 +-
+>>  target/i386/kvm/kvm.c            | 4 ++--
+>>  target/i386/tcg/system/tcg-cpu.c | 4 ++--
+>>  5 files changed, 11 insertions(+), 6 deletions(-)
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>=20
 
-The purpose of this line is to tell the compiler we can't get there,
-with the least amount of ceremony.
 
-We have ~600 calls of abort().
+--Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-Whoever merges this: feel free to replace by g_assert_not_reached().
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;">Tested-By: =
+Kirill Martynov &lt;<a =
+href=3D"mailto:stdcalllevi@yandex-team.ru">stdcalllevi@yandex-team.ru</a>&=
+gt;<br id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 29 Jul 2025, at 10:11, Philippe Mathieu-Daud=C3=A9 =
+&lt;philmd@linaro.org&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>On 29/7/25 07:40, Xiaoyao =
+Li wrote:<br><blockquote type=3D"cite">Like ARM defines ARMASIdx, do the =
+same to define X86ASIdx as enum. So<br>that it's more clear what index 0 =
+is for memory and index 1 is for SMM.<br>Signed-off-by: Xiaoyao Li =
+&lt;xiaoyao.li@intel.com&gt;<br>---<br> &nbsp;accel/kvm/kvm-all.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;| 2 +-<br> &nbsp;target/i386/cpu.h =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;| 5 +++++<br> &nbsp;target/i386/kvm/kvm-cpu.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 2 +-<br> =
+&nbsp;target/i386/kvm/kvm.c =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 4 =
+++--<br> &nbsp;target/i386/tcg/system/tcg-cpu.c | 4 ++--<br> &nbsp;5 =
+files changed, 11 insertions(+), 6 =
+deletions(-)<br></blockquote><br>Reviewed-by: Philippe Mathieu-Daud=C3=A9 =
+&lt;philmd@linaro.org&gt;<br><br></div></div></blockquote></div><br></body=
+></html>=
 
->>               }
->>               xenfb->axis[move->axis] =3D move->value * scale / 0x7fff;
->>           }
-
+--Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6--
 
