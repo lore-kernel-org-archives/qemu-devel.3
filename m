@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D841EC87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:31:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6542BC87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguUN-0007wv-FV; Tue, 29 Jul 2025 20:16:11 -0400
+	id 1ugubu-00067L-MU; Tue, 29 Jul 2025 20:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFM-0001qF-GK
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:42 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1uguIl-0004MA-1o
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:11 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFK-00043v-J3
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:40 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-748e81d37a7so4139004b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:38 -0700 (PDT)
+ id 1uguIh-0004a4-TF
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:09 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7682560a2f2so434987b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:04:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833637; x=1754438437; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833846; x=1754438646; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1/tPVEI49jG2JuqrRRDF07jSceaj3c6KI2BMJtYbzoc=;
- b=mHQ68F5zAFxxe4cLnwXrzNd+C2KJzzy9aWTdzu8Wz56e/xKPfKMTOvfbl1evZZ499Y
- PFxhofYD2C6vJyye/7InAnnOpA5L+feG52L7Yu8dz9pAxN9ajhWwXYGWvePbIabpncmi
- iO/6k0n2TeE9vDl8vcj/E/VwzI7N1ec9p1W6K4mWzRICO5UgTEyobvpcgdtcRSZ5FMJB
- LVhDxDh8HRHrPSbvorI+KgtlTpfbi/b1NrARfr3NbVrMnxL667RqMmx0N1od7iune7up
- EzpLvwFBm26mDjCwvc5jHvQ03i5I+MsVYA512FyBCjDCqCAS5QacDlLpQQvEvg8YnD2G
- myDw==
+ :reply-to; bh=MV6Ro9mWnxqsPjREdWaA08BESU+z4GHTfrZvTcc6ukI=;
+ b=UQSQBbXtgHbQXKsDrSizutMEXsaMTjARhHtrVU7gpNN4kr7mXcn7Dl7o2mshfNdgaq
+ CYsfrRstWtwYYrsu35gUBdtWPqwnpwddhSika5YMpRrsnAG7h3NfDIBWIFqVQfeF3HGO
+ U8K4RwVs9WITV1wUpcZHX/6HhKTQzLT4NhVgpFUhigAHcWS2FfsyW5w/SRk6knFac2ww
+ fd3f1lAGBx3BjzZDTFyAeK6h4oWIvWREGQhqs9x3MBzS55bHwPxUAIOlU+TjkCATFP4J
+ daa79fEe1XhDdQ137B4kycX0L+vW8IMcyfxugm8/01JaPGnjTemVk/h1TvcQ2v+/ompS
+ hWxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833637; x=1754438437;
+ d=1e100.net; s=20230601; t=1753833846; x=1754438646;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1/tPVEI49jG2JuqrRRDF07jSceaj3c6KI2BMJtYbzoc=;
- b=jjO2tnrW9zecPKTPR1OqVnw2SelHi4yP9A6wndaCAhhnO9LIWl1IDFOzkj9EnIpcRi
- +pGHxzgW/u7giuxtYECJ+NDQQuIGo3uG7k5VvayCMLTjqqdKoby7EprGuRGVgZmZxQRy
- TEV6C9G1+7pqmMPJA/c9b0/P0nkxagw/JsYZKcv8rgqSI+agY085gPmSfheh5NAQk/1p
- L8zztOxfg1LJ77zpEDwBTIG9jADRal/aGdLvH3dKvodFv2+J4boAtloe9D0CHOdthmsG
- vIA/jv8Y8k8oYoxOCdIE5SYL4ESGVAQdSYxDCvSeOdv4+OGSpDhn/l+5X768VTaV6mwc
- w0FA==
-X-Gm-Message-State: AOJu0Yw7INH9DLIauBDu2AWYiHcHNYlM6eooyLcx/X+DGA5useTp41NX
- PuBpUQueenuDBkQuzNt6emP/E3ezQ17vaH8DlgxaNVlC0MHObqFyjQqOYJJdhi59uJMkk4VBJJT
- sOL6P
-X-Gm-Gg: ASbGnctmgrztvJPvLxONvyydLtquM68s7b4h3IXZB8K00ViZbXCcZwhQ7ZMSOXS6Qjn
- e+/e6bgr904YxnRB64hr17JQt3AeluJkruv6YqxQuSe7Fk/mUcV3I2Bh+Jz60AN4f3jNYHT8Hqk
- LKvtGeHkowH3xecr38na1wNpXovOLpSW8OtSOvonchSCY3jlsD/bJIXmsqAnyefaOF8It2mjU7l
- cPI1V0Wory8c6yLIM7XFpxK396xG55ItKGC3ELcQh84qNu1tkuwsn1ow9bXOMlxBBrvgRUuis60
- sTaBsDTXMM7knj3tEIE5RU0QiPujjV3aPj0cvVgR66L/4pZ+BpunPcEC8cBmOOxkWfe8x8hGSCd
- NiOvr012X2ET93Vz3OJKyM/ZTutC7ip4ot2/wTHazqA4ODQccBii6ySuOsv8E8O9mu7tS4Y+HNW
- 9Hl5FXlN3lSA==
-X-Google-Smtp-Source: AGHT+IGjUuJLhZwjj1bRlyCX3I9YeFhmbK7OuwaAsuAjtDMOM+XWF2GV7dJxcUoAAhfWjAGKuTYMog==
-X-Received: by 2002:a05:6a00:2e0e:b0:749:4fd7:3513 with SMTP id
- d2e1a72fcca58-76ab3096e9dmr1656782b3a.16.1753833636715; 
- Tue, 29 Jul 2025 17:00:36 -0700 (PDT)
+ bh=MV6Ro9mWnxqsPjREdWaA08BESU+z4GHTfrZvTcc6ukI=;
+ b=A3tSNCNcRcfAJkBb08Ep7qPIBEdNR0RLWYzWpiPc+kV3FUmApOHoP3ZtMw9rTjjeQ1
+ HYBnryvTBGuaVL7mazCTarAAVeZvIB9R/fLPOhB+cGdPJQ/qnI2yzptUDXBRi0QVA15k
+ 9wTkKaV6Ff1zaULJmJENcIE6zhFyHIUwA1SO9u97I3mrLSItv6STyOcN9mgKj+mx1Yqr
+ 8t5ooUUqFdvum2bkbQNA5rXqNNV18Zpow4xlXt6kXgUevQSN+UgWNGoXrJnhis1B6X2L
+ TScrie15mmhj4WOkDRiTuL9J3DuzMxUSzCCS3125+USEyDAV5k2agF/8UXhZOcHpy0Hs
+ lDPw==
+X-Gm-Message-State: AOJu0YyCbXezYZrcCcMz0C0JKuyP2T6mXUIqadQkXAo2ZPEq/4bRSiVB
+ /QBTb0+t9q0YV2QAEyT9DbOfPeWUZkhzjlaMglLU+FYF5nnePnAbWopkg3okkXQRuCpR86x+lqS
+ IVIv7
+X-Gm-Gg: ASbGncubZVs2VPL9f+Md+PiaqBXI5wSv3aSIyDm0ASotLcOD7+RnADOQYhjopFve8Ux
+ DfB+5fA/0Axw/2yulXbg4Rp638lHuIKQblJLNG/sHxlyNMIJ02VUhgKIHn66/W50VFhp5hk/WmK
+ yVl3n0RC5++yO3hEVADj6STmI59CRbgUgAb/B/mYcuMy8mjjuabpBuQcXKwBlwz2TjgNQSmfClS
+ 9kJnA94laEKMvujEAkI6Mmu56pw3deSdNQSED6oABRdahv12GFTkWpAhiJRPqJpTQ6i4f3uVZy2
+ +xHon2PRPt16MAluHi19W93Y/JHv40KDKCfHm39e6+V91LCTYr1NPEInwaZe3pIlCYRQKsAPSOs
+ Z4f4HAgApmjarz/t+99TYX7ZWejRLdlyIUinQuNlNrRGhZkWuQcwnM26DbtQ8jy7d+qnSKmnnnk
+ rIZbm+IgeKaA==
+X-Google-Smtp-Source: AGHT+IEM5/IN+jBJAMZuZcticFfJG0J5bMtQ0ePurMPet/8gjbdmKjAqATohEnZQhOMotFyYCXOJOA==
+X-Received: by 2002:a05:6a00:3283:b0:76b:2834:8c5c with SMTP id
+ d2e1a72fcca58-76b28348e14mr97759b3a.6.1753833846139; 
+ Tue, 29 Jul 2025 17:04:06 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.35
+ d2e1a72fcca58-7640ad06762sm9101302b3a.80.2025.07.29.17.04.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:00:36 -0700 (PDT)
+ Tue, 29 Jul 2025 17:04:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 19/89] linux-user: Move get_elf_base_platform to mips/elfload.c
-Date: Tue, 29 Jul 2025 13:58:52 -1000
-Message-ID: <20250730000003.599084-20-richard.henderson@linaro.org>
+Subject: [PATCH 40/89] linux-user: Remove do_init_main_thread
+Date: Tue, 29 Jul 2025 13:59:13 -1000
+Message-ID: <20250730000003.599084-41-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,139 +100,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass in CPUState.  Since this was the only instance of ELF_BASE_PLATFORM,
-go ahead provide a weak fallback for all other targets.
+All targets have been converted, so we can call init_main_thread
+directly.  Remove do_init_main_thread and HAVE_INIT_MAIN_THREAD.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h       |  1 +
- linux-user/elfload.c      | 42 ++++++---------------------------------
- linux-user/mips/elfload.c | 30 ++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 36 deletions(-)
+ linux-user/loader.h  |  1 -
+ linux-user/qemu.h    |  2 --
+ linux-user/elfload.c | 46 --------------------------------------------
+ linux-user/main.c    |  2 +-
+ 4 files changed, 1 insertion(+), 50 deletions(-)
 
 diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 1cc505832b..a5eef18eff 100644
+index b7dceb4abe..700bbdb02e 100644
 --- a/linux-user/loader.h
 +++ b/linux-user/loader.h
-@@ -103,5 +103,6 @@ abi_ulong get_elf_hwcap2(CPUState *cs);
- const char *elf_hwcap_str(uint32_t bit);
- const char *elf_hwcap2_str(uint32_t bit);
- const char *get_elf_platform(CPUState *cs);
-+const char *get_elf_base_platform(CPUState *cs);
+@@ -82,7 +82,6 @@ struct linux_binprm {
+     int (*core_dump)(int, const CPUArchState *); /* coredump routine */
+ };
  
- #endif /* LINUX_USER_LOADER_H */
+-void do_init_main_thread(CPUState *cs, struct image_info *infop);
+ abi_ulong loader_build_argptr(int envc, int argc, abi_ulong sp,
+                               abi_ulong stringp, int push_ptr);
+ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 475b11e4c4..4c626f270c 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -365,8 +365,6 @@ void *lock_user_string(abi_ulong guest_addr);
+ /* Clone cpu state */
+ CPUArchState *cpu_copy(CPUArchState *env);
+ 
+-typedef struct target_pt_regs target_pt_regs;
+-void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
+ void init_main_thread(CPUState *cs, struct image_info *info);
+ 
+ #endif /* QEMU_H */
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 7e218e8cec..b26daf925d 100644
+index 1276b57f0d..27682f0c81 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -685,37 +685,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+@@ -155,8 +155,6 @@ typedef abi_int         target_pid_t;
+ 
+ #ifdef TARGET_I386
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #ifdef TARGET_X86_64
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_X86_64
+@@ -299,8 +297,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUX86State *en
+ #define ELF_CLASS       ELFCLASS32
+ #define EXSTACK_DEFAULT true
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define ELF_NREG    18
+ typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
+ 
+@@ -401,8 +397,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ #define ELF_ARCH        EM_AARCH64
+ #define ELF_CLASS       ELFCLASS64
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define ELF_NREG    34
+ typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
+ 
+@@ -444,8 +438,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ # define ELF_ARCH   EM_SPARCV9
+ #endif
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #endif /* TARGET_SPARC */
+ 
+ #ifdef TARGET_PPC
+@@ -491,8 +483,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+         NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
+     } while (0)
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/powerpc/include/asm/elf.h.  */
+ #define ELF_NREG 48
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -539,8 +529,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUPPCState *en
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/loongarch/include/asm/elf.h */
+ #define ELF_NREG 45
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -587,8 +575,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
  #define elf_check_abi(x) (!((x) & EF_MIPS_ABI2))
  #endif
  
--#define ELF_BASE_PLATFORM get_elf_base_platform()
+-#define HAVE_INIT_MAIN_THREAD
 -
--#define MATCH_PLATFORM_INSN(_flags, _base_platform)      \
--    do { if ((cpu->env.insn_flags & (_flags)) == _flags) \
--    { return _base_platform; } } while (0)
--
--static const char *get_elf_base_platform(void)
--{
--    MIPSCPU *cpu = MIPS_CPU(thread_cpu);
--
--    /* 64 bit ISAs goes first */
--    MATCH_PLATFORM_INSN(CPU_MIPS64R6, "mips64r6");
--    MATCH_PLATFORM_INSN(CPU_MIPS64R5, "mips64r5");
--    MATCH_PLATFORM_INSN(CPU_MIPS64R2, "mips64r2");
--    MATCH_PLATFORM_INSN(CPU_MIPS64R1, "mips64");
--    MATCH_PLATFORM_INSN(CPU_MIPS5, "mips5");
--    MATCH_PLATFORM_INSN(CPU_MIPS4, "mips4");
--    MATCH_PLATFORM_INSN(CPU_MIPS3, "mips3");
--
--    /* 32 bit ISAs */
--    MATCH_PLATFORM_INSN(CPU_MIPS32R6, "mips32r6");
--    MATCH_PLATFORM_INSN(CPU_MIPS32R5, "mips32r5");
--    MATCH_PLATFORM_INSN(CPU_MIPS32R2, "mips32r2");
--    MATCH_PLATFORM_INSN(CPU_MIPS32R1, "mips32");
--    MATCH_PLATFORM_INSN(CPU_MIPS2, "mips2");
--
--    /* Fallback */
--    return "mips";
--}
--#undef MATCH_PLATFORM_INSN
--
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
- {
-@@ -1175,10 +1144,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ /* See linux kernel: arch/mips/include/asm/elf.h.  */
+ #define ELF_NREG 45
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -646,8 +632,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMIPSState *e
+ #define ELF_CLASS   ELFCLASS32
+ #define ELF_ARCH    EM_MICROBLAZE
  
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+ #define USE_ELF_CORE_DUMP
+@@ -679,8 +663,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMBState *env
+ #define ELF_CLASS ELFCLASS32
+ #define ELF_DATA  ELFDATA2MSB
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE 8192
+ 
+@@ -707,8 +689,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define ELF_CLASS ELFCLASS32
+ #define ELF_ARCH  EM_SH
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/sh/include/asm/elf.h.  */
+ #define ELF_NREG 23
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -752,8 +732,6 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_68K
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/m68k/include/asm/elf.h.  */
+ #define ELF_NREG 20
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -792,8 +770,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_ALPHA
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define ELF_EXEC_PAGESIZE        8192
+ 
+ #endif /* TARGET_ALPHA */
+@@ -804,8 +780,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/s390/include/uapi/asm/ptrace.h (s390_regs).  */
+ #define ELF_NREG 27
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -855,8 +829,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define VDSO_HEADER "vdso-64.c.inc"
+ #endif
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define ELF_EXEC_PAGESIZE 4096
+ 
+ #endif /* TARGET_RISCV */
+@@ -870,8 +842,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ #define LO_COMMPAGE  0
+ 
+ static bool init_guest_commpage(void)
+@@ -911,8 +881,6 @@ static bool init_guest_commpage(void)
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_XTENSA
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
+ /* See linux kernel: arch/xtensa/include/asm/elf.h.  */
+ #define ELF_NREG 128
+ typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+@@ -960,8 +928,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_HEXAGON
+ 
+-#define HAVE_INIT_MAIN_THREAD
+-
  #endif /* TARGET_HEXAGON */
  
--#ifndef ELF_BASE_PLATFORM
--#define ELF_BASE_PLATFORM (NULL)
--#endif
--
  #ifndef ELF_MACHINE
- #define ELF_MACHINE ELF_ARCH
- #endif
-@@ -1234,6 +1199,11 @@ const char * __attribute__((weak)) get_elf_platform(CPUState *cs)
-     return NULL;
+@@ -3454,15 +3420,3 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     return ret;
  }
+ #endif /* USE_ELF_CORE_DUMP */
+-
+-void do_init_main_thread(CPUState *cs, struct image_info *infop)
+-{
+-#ifdef HAVE_INIT_MAIN_THREAD
+-    init_main_thread(cs, infop);
+-#else
+-    target_pt_regs regs = { };
+-
+-    init_thread(&regs, infop);
+-    target_cpu_copy_regs(cpu_env(cs), &regs);
+-#endif
+-}
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 121dc4a0e6..d962f344b8 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -1038,7 +1038,7 @@ int main(int argc, char **argv, char **envp)
+        the real value of GUEST_BASE into account.  */
+     tcg_prologue_init();
  
-+const char * __attribute__((weak)) get_elf_base_platform(CPUState *cs)
-+{
-+    return NULL;
-+}
-+
- #include "elf.h"
+-    do_init_main_thread(cpu, info);
++    init_main_thread(cpu, info);
  
- /* We must delay the following stanzas until after "elf.h". */
-@@ -1687,7 +1657,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     }
- 
-     u_base_platform = 0;
--    k_base_platform = ELF_BASE_PLATFORM;
-+    k_base_platform = get_elf_base_platform(thread_cpu);
-     if (k_base_platform) {
-         size_t len = strlen(k_base_platform) + 1;
-         if (STACK_GROWS_DOWN) {
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index 07c30b5f4c..f2b132697e 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -54,3 +54,33 @@ abi_ulong get_elf_hwcap(CPUState *cs)
- #undef GET_FEATURE_REG_EQU
- #undef GET_FEATURE_REG_SET
- #undef GET_FEATURE_INSN
-+
-+#define MATCH_PLATFORM_INSN(_flags, _base_platform)      \
-+    do { if ((cpu->env.insn_flags & (_flags)) == _flags) \
-+    { return _base_platform; } } while (0)
-+
-+const char *get_elf_base_platform(CPUState *cs)
-+{
-+    MIPSCPU *cpu = MIPS_CPU(cs);
-+
-+    /* 64 bit ISAs goes first */
-+    MATCH_PLATFORM_INSN(CPU_MIPS64R6, "mips64r6");
-+    MATCH_PLATFORM_INSN(CPU_MIPS64R5, "mips64r5");
-+    MATCH_PLATFORM_INSN(CPU_MIPS64R2, "mips64r2");
-+    MATCH_PLATFORM_INSN(CPU_MIPS64R1, "mips64");
-+    MATCH_PLATFORM_INSN(CPU_MIPS5, "mips5");
-+    MATCH_PLATFORM_INSN(CPU_MIPS4, "mips4");
-+    MATCH_PLATFORM_INSN(CPU_MIPS3, "mips3");
-+
-+    /* 32 bit ISAs */
-+    MATCH_PLATFORM_INSN(CPU_MIPS32R6, "mips32r6");
-+    MATCH_PLATFORM_INSN(CPU_MIPS32R5, "mips32r5");
-+    MATCH_PLATFORM_INSN(CPU_MIPS32R2, "mips32r2");
-+    MATCH_PLATFORM_INSN(CPU_MIPS32R1, "mips32");
-+    MATCH_PLATFORM_INSN(CPU_MIPS2, "mips2");
-+
-+    /* Fallback */
-+    return "mips";
-+}
-+
-+#undef MATCH_PLATFORM_INSN
+     if (gdbstub) {
+         gdbserver_start(gdbstub, &error_fatal);
 -- 
 2.43.0
 
