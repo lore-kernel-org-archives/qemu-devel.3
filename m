@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F6AC87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4523FC87FCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguVH-0001b2-OO; Tue, 29 Jul 2025 20:17:09 -0400
+	id 1uguVC-0001BS-00; Tue, 29 Jul 2025 20:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFk-00026r-Vo
+ id 1uguFk-00026m-OR
  for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:01:10 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFi-00048S-Lr
+ id 1uguFi-000483-Kq
  for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:01:04 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so6690990b3a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:01:01 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-76b0724d64bso90578b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833661; x=1754438461; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833659; x=1754438459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S5vNzUUh3jbJHFNtrK88iBk7CBPkMv1LN+8yxo1pnKg=;
- b=Dkkfbc4DdFfk5SN6/PnO+f1fO+VH4Rsm27CEGZBhPzZNC8D9IEFkXu6NA2SZW/+u3x
- 9vJ8poCGxjmFCV2pLT7J7YjrpqALV+NzFfBk8VOWYIBb1UQ+0hyVjeQJZCndVrUH6msn
- jL3sd9c6tpTD1FhIN2NlhU6TOr6L4in+bNgnr6KiJFn7pF8CWI7H9JB+4aypEw+Dt2Eg
- L/3ghC8Kmj1nHXNNklctnnzJTNmERqwC/EuqpSW+eNvQVlhKwzJPvwmnwL8kmJpar+NI
- pzvqCipq2GoRGG4B14CyAc41um1sG4tq219CULyw5P+4irajRMYwujBN7CHbUn62wXXO
- eaUA==
+ :reply-to; bh=EYspnp1ztLEUXf37HM6g1cB76LgbBlY755CmhOzz3PA=;
+ b=LyPbE6lIKgRpN0OtdYEc1BzjEyvCYPkG+3Y+37JV6df+bqPnM2b9cUbwTQXzALseNl
+ GI+KNCBH7+m8DFppHRl7Tpmc39Q1IiB+ZVKQifBdlphK1Us1WaqG2jyyg/Q8VopuuIsq
+ JvZGNVDQXugueM+1Auv6Cqb1B5HVXP6zf8jVyXs6mPJeP3/XV/G5+McqtKKYDOdHmwPW
+ kn95nPwkDD6lULUK12Op0oM4wvbCPOKjqVW2gRVF9ZcPK3GdnW/dtxqDVDYESQOdIfFS
+ 4EA9HEtlO8BCMs7lXpQmwvupEYvYu9fY4QCNs/MdUX/0IFv9jgMLfPuvsgQdwiOpBs9O
+ shMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833661; x=1754438461;
+ d=1e100.net; s=20230601; t=1753833659; x=1754438459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S5vNzUUh3jbJHFNtrK88iBk7CBPkMv1LN+8yxo1pnKg=;
- b=efHO48dvX3BJgCIZ0YUBt3SWPiIjnbNzG3mxbhW6FLTouW+DBPlF6xav7tuFu0Ly7n
- sWpx/4zvnwpN3Z7d/LJBAj1YyEEhpgy+aaG7LInWVW3TJ0bTKCsvAtPrnBwlTcCULZvS
- OR0R4zsH0hD6j5YzHujOCPGthovHysqS6a9pLjxcGesAqHHGsrNrHT0uysUbk8ujJYSf
- S4pDdeBdm811ea1yUGh3ShFT8P/lvoan6xPqG6lUh5QjM4UT9pnN54pwk+LlYMeTzfZE
- mWv8fOYrq3/B4nL4ROi6cdnMUEWyhLDBrzWFt9W74//uNGbbyTDy5nN8SFjvGTslof/I
- y8Yg==
-X-Gm-Message-State: AOJu0Yz21aBUPZ+FN6qplInZpRGlhrXA2HsYbrcrLKVBvSkGhreBaWwI
- sKHdNeqc0VX+c4Y8Juo2BENi2iam3mX3qn2mkZL2QjvY1QRA9Z1/HgLBO0ZqGmlKiUWQaPGJvqe
- INafq
-X-Gm-Gg: ASbGnctXGuqj32NbkCLLWcCjiQhZOyV+rS4X0vKs5g1QxSpWFPK3W8cbTR+j1gZmyA4
- FVZLOpmrc6g9sWGerPdwjPoRi9RNlpjlPXcZEE9hi7ppVaNaNQCOpX+YjP9mUW2rVG4rko7W5U7
- p4m4FJf64k6E5lKgIfVqiHGUW+xc7Jv8OXrt1KHgF4KPZa66Q/PeKQMDDji9MRFcb68BoRU4HtD
- uNsN3FY/+DHJ87rHzoGwvKuNnk9/UYIoVjHOhCv+xVSJP7HOk67bQLbhTRjavAFw2pkpGaqyx/n
- fyHDeFUOVUEvQY2F1/yBNaDoRKQmgFWId1fDSdTRDdSCgAQZhh84a2UAWYJVaDhFCAMG5ADo5A9
- CAD+v2EepSWlxfV9RebFb62mmcd8l/K5+7AOpYhRX4SjpATCemDMpFjWY2RwpQFTiBy+Iw6O6Bx
- 4bARipi9MOVw==
-X-Google-Smtp-Source: AGHT+IGgR1gkZ/nFiAi3Df0sb+QHLPuOY0Gn+a+wM1z9ID1LCIHEyVo+v9sOeSJgVJaREhCMghK76g==
-X-Received: by 2002:a05:6a00:cc4:b0:74c:f1d8:c42a with SMTP id
- d2e1a72fcca58-76ab294703bmr2022730b3a.13.1753833660660; 
- Tue, 29 Jul 2025 17:01:00 -0700 (PDT)
+ bh=EYspnp1ztLEUXf37HM6g1cB76LgbBlY755CmhOzz3PA=;
+ b=KwYLzq5w4JcWLuvrtty06piVEQZe1jbk+aiEqAEatu8ihSU2XV1osPcI1ZI5UH6pr5
+ CCmDS498dk053sLyIHPa1E1qpQEmTHCIrXzMBKjX+CX9bOw23oFiIX3zUB7CHd4D5kRT
+ tSbZ5cJ4kJbXem/4RHPHZWlDLeNCzEHeZI4wu5KJSYKgTP/P0EHj9Fq/rNclNYLaaQ8e
+ sGALTJRh2TI4oEls6IWJxa7KSP/dJLGi8UtM9GxUnwW9Wl6rsYuKgvwOO+p8yUDuyLLt
+ vy+VYDtlygOmhoWMGJhmIj5e/CDdrl+Ke+4VqowTc99nTRU9+QXqAptV/hThdvKqNVTR
+ badw==
+X-Gm-Message-State: AOJu0YxgIlzGXHl5891Wk/JH2MKqzTTfgDSH4Xhr34yXmMGOVUVo0TgS
+ I0xjeVQ0/edOXTbIqwqkMkGxu3jn7DWkA1IOIt6QWm9oE8G49y2ok74R0EVphIr9El61nIjvf5z
+ NvGfN
+X-Gm-Gg: ASbGncvbztNgH0KBvXDByUc83O4ztVFD/vQ8RUJNzuqoch2nxr4jvbZReCfegGi5t9N
+ 5617WrQrsvzN2QpNr6168EItR3FD85vWofZocDAKUSSkHSPaT/WlwPDOgEvoaaZv8uKOF2zcLWG
+ ybZC1fXeejNr9/oQhB/0dpbyY/Y50tKnxboCVDqmqIeZrP1Nq97V44npS74RAIh+ML8GvGgU3Jy
+ KFojWsFF+Gy6w8DOEfzafcEb6xgbDk6kezy1C21jdIxz4B4vGcO+F21s+1eHmx8BJYhB3FDXBPE
+ TC2GlBnNBbzlfRNOrt1nHPkC39hGnLWW121t2/lyMWh42SKu7OMSi0L+WIUgiEeiAhjfTJUQQhp
+ JrOlCCod88d/hpZHZc45q0HcLYaj8hB383TyuXbuMUf290W1Ni24jYT5trVXQvE1f9fg5pwAL2V
+ wqkMNL4nvS5g==
+X-Google-Smtp-Source: AGHT+IH3OvUwK97LlfqNg686WonSaj0DOR4lJ2c1enCDT0wS/bsKJr06RAaOVTdQ+k5CF0v+/61BPA==
+X-Received: by 2002:a05:6a00:1913:b0:748:ef04:99d with SMTP id
+ d2e1a72fcca58-76ab283f293mr1933263b3a.14.1753833659508; 
+ Tue, 29 Jul 2025 17:00:59 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.59
+ d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:01:00 -0700 (PDT)
+ Tue, 29 Jul 2025 17:00:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 37/89] linux-user/hppa: Create init_main_thread
-Date: Tue, 29 Jul 2025 13:59:10 -1000
-Message-ID: <20250730000003.599084-38-richard.henderson@linaro.org>
+Subject: [PATCH 36/89] linux-user/riscv: Create init_main_thread
+Date: Tue, 29 Jul 2025 13:59:09 -1000
+Message-ID: <20250730000003.599084-37-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,62 +105,51 @@ There's no point going through a target_pt_regs intermediate.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c       | 13 +------------
- linux-user/hppa/cpu_loop.c | 18 +++++++++++-------
- 2 files changed, 12 insertions(+), 19 deletions(-)
+ linux-user/elfload.c        |  7 +------
+ linux-user/riscv/cpu_loop.c | 10 ++++------
+ 2 files changed, 5 insertions(+), 12 deletions(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index b1f889193e..48c04f9f33 100644
+index 62452d7c45..b1f889193e 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -870,18 +870,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- 
- #define VDSO_HEADER "vdso.c.inc"
+@@ -855,12 +855,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define VDSO_HEADER "vdso-64.c.inc"
+ #endif
  
 -static inline void init_thread(struct target_pt_regs *regs,
 -                               struct image_info *infop)
 -{
--    regs->iaoq[0] = infop->entry | PRIV_USER;
--    regs->iaoq[1] = regs->iaoq[0] + 4;
--    regs->gr[23] = 0;
--    regs->gr[24] = infop->argv;
--    regs->gr[25] = infop->argc;
--    /* The top-of-stack contains a linkage buffer.  */
--    regs->gr[30] = infop->start_stack + 64;
--    regs->gr[31] = infop->entry;
+-    regs->sepc = infop->entry;
+-    regs->sp = infop->start_stack;
 -}
 +#define HAVE_INIT_MAIN_THREAD
  
- #define LO_COMMPAGE  0
+ #define ELF_EXEC_PAGESIZE 4096
  
-diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
-index 9abaad5ef8..3af50653bb 100644
---- a/linux-user/hppa/cpu_loop.c
-+++ b/linux-user/hppa/cpu_loop.c
-@@ -196,12 +196,16 @@ void cpu_loop(CPUHPPAState *env)
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index 2dd30c7b28..b316281532 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -94,14 +94,12 @@ void cpu_loop(CPURISCVState *env)
      }
  }
  
 -void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
 +void init_main_thread(CPUState *cs, struct image_info *info)
  {
--    int i;
--    for (i = 1; i < 32; i++) {
--        env->gr[i] = regs->gr[i];
--    }
--    env->iaoq_f = regs->iaoq[0];
--    env->iaoq_b = regs->iaoq[1];
+-    CPUState *cpu = env_cpu(env);
+-    TaskState *ts = get_task_state(cpu);
+-    struct image_info *info = ts->info;
 +    CPUArchState *env = cpu_env(cs);
-+
-+    env->iaoq_f = info->entry | PRIV_USER;
-+    env->iaoq_b = env->iaoq_f + 4;
-+    env->gr[23] = 0;
-+    env->gr[24] = info->argv;
-+    env->gr[25] = info->argc;
-+    /* The top-of-stack contains a linkage buffer.  */
-+    env->gr[30] = info->start_stack + 64;
-+    env->gr[31] = info->entry;
- }
+ 
+-    env->pc = regs->sepc;
+-    env->gpr[xSP] = regs->sp;
++    env->pc = info->entry;
++    env->gpr[xSP] = info->start_stack;
+     env->elf_flags = info->elf_flags;
+ 
+     if ((env->misa_ext & RVE) && !(env->elf_flags & EF_RISCV_RVE)) {
 -- 
 2.43.0
 
