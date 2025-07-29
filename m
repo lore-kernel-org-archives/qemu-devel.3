@@ -4,60 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6A1C83F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 15:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05746C87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 16:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uglum-0007oe-Q7; Tue, 29 Jul 2025 11:06:52 -0400
+	id 1ugmyj-0008T9-BT; Tue, 29 Jul 2025 12:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1ugluc-0007nC-Vq; Tue, 29 Jul 2025 11:06:43 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1uglua-0000k0-NT; Tue, 29 Jul 2025 11:06:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- Content-Type:Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:
- MIME-Version:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=iWs4yYSMMMSjOcqiAh/EJMF/ND0cKCbGGyrpjRIiv/I=; b=GvKkBnNzaD3HjVPfjhNfxogzxI
- TyQo29l9+0bWGbTaCgAH6AVHwTZSgDpxH+b+z6qZyNJr46r/eyzvW+wAq3++SX+YXhBRQSdfgxXuf
- LRBPaXOwwA4UGiW3LyaMyJBiT6TpRXsQkeF5mcrybV/20CAuxTJGGaVbGaOm6fUfOvHffsgR7yWup
- DWzQ7gJLqMuozr3qRw8iqE3eUflUfOoa8SVVsQ98sjJHaWSIPiVnkGfvZmSOr4ciRkRf61OomHo4u
- 8xvA89ugqvnCDtiw7N4u9azCizT/MvBDgm9mDo7xH0ch6JGRJXozNzkeGXfObRX5JG+Vj6ft0Y8Gq
- Haeq93cg==;
-Received: from ipa12.colo.codethink.co.uk ([78.40.148.178]
- helo=webmail.codethink.co.uk)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1ugluU-00Acdc-7D; Tue, 29 Jul 2025 16:06:34 +0100
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ugmlH-0000kG-AG
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 12:01:10 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ugmlE-0007gN-Ey
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 12:01:06 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-b420b87cb04so1525998a12.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 09:01:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753804861; x=1754409661; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LnQEZ1V+Aw/n6ZeZhS1eBlAAbEkwYS8JpHmsMfcI02Y=;
+ b=hYxyZ4/gVQUjZyO3ep/OM8oaSlQAbs5fba8HKzL5CVS+qjhM20laN/KYXI0ixul5DM
+ yDsVHjmn1BuIHECdf3Zp7xqynT2gRj8GEwfn6IcaXqxUImNz6dzYIcjs/31323HZvlbp
+ 6P3wqsNeSYjXyxIgd3Tefol0Y9IOLNohax4zZaRxJdmaBVQ14OcZ/rxxuiUF+wfHmYMI
+ o54C1L4kHdIZmIw/hWa+hG2hsgq2EcSJEaAqzbLrJZFd8zazyxiYjmgkzQhrY++/pQwH
+ lqrZ3gOXrtXsrOs7bFPLDPdlxvJ/JN25L4xoJhEHFYEnnbqaAbYswa3fsREaZRvhVP5c
+ vHjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753804861; x=1754409661;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LnQEZ1V+Aw/n6ZeZhS1eBlAAbEkwYS8JpHmsMfcI02Y=;
+ b=FlJieDy1r9fH2flauv8N9mJkjW0wc8jXHjITpmc1/KxeNccVnYXN+FCidg5/4+vdOh
+ OMnicJ7lGe3kHPKqFOXc+TYH9DUyc1ittqGyu5Mihhy/r9stBmBQHysdATTlGh3jtYIA
+ j8A76qJayBJI9LSdr3WutPbEPW3nrfCUCRQK+4WR0g6k420XM+Vy5ZRvFZzOYZDh8aER
+ y/sOtMBeswKiMGUJZ1kJqjaORDmKQIqwcn/MSDlHcFX2PM//w3PMr5OJ7S/9FXmz+EoY
+ IJ0eFPONnS4GKaMhNapXLvqLzM4Zuf35OfpsNKbX7SE2e9DDrcVOZkY8YvHjB7Qmk9zc
+ O/qQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4KTfT03sYZYQNAB2YHAFpQYa2RVmwFH5+skf9+pUdNiRqF92fVuqkILcOqs2OS6UF3m1bMjo3gW1m@nongnu.org
+X-Gm-Message-State: AOJu0Yw8WcUKCoT//iiE9P1ZpnrVY8ZeyuaaT6wsw1S17WWgtCm6N1rN
+ 5kvOMGsXIqtASSFbG/9o7Dy79pyxxvCeFLWUd8xYeJcJDyGsQVfuWmeSCMcoLzv+ilBnAJz7JpB
+ JKgkaBzk=
+X-Gm-Gg: ASbGnctr+w61rf+uDCyrecc3LIL7GFLZg8UddJJoqTffXgRa0m7pJRIH4GoZh6kheyM
+ q1em5xASNGj7okQfIeww2i8tGIY1cE1B8FzR1JLVwiEKOKF77p61A0cy2g05yeqCoM43ArU8nFK
+ eb8RvLBEQyXegLJiiagLU7Nh2k/LQUeM3V1BTQkX83Ra4dkrVqfqgNpWsY/BVeEUXjaj3/ulEsu
+ vSO+bA1UQ6jyWmgGx/8rmQv7ArBA6D+VtJSJupGb0LyITrqLidDWHBggSXdSWrXIFz1WfiuS6UV
+ fLY1bkEbvzqwAr+63kUseTqHypk2IKj5OW8Bma23/z0+D8T+LEJEyzxik3I8aJeAjJgqsd82ePo
+ 1E78uy7XtApDg7WGJpZ+pvtaBrPrHoUx2Hw==
+X-Google-Smtp-Source: AGHT+IGY0IFeC4gyDYXjaWkD5GnX6rsOdmZRc4w8QnY0ArJFJF/yZaZYHY8opopXPIWH4/rD5JrAcQ==
+X-Received: by 2002:a17:90b:2686:b0:31e:e4a5:437e with SMTP id
+ 98e67ed59e1d1-31f5ddb5352mr76128a91.12.1753804859014; 
+ Tue, 29 Jul 2025 09:00:59 -0700 (PDT)
+Received: from [192.168.0.102] ([187.75.37.236])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31e6625052asm12551264a91.6.2025.07.29.09.00.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Jul 2025 09:00:58 -0700 (PDT)
+Message-ID: <9209927c-6c5f-4499-a3ef-1f4c70951ad0@linaro.org>
+Date: Tue, 29 Jul 2025 13:01:50 -0300
 MIME-Version: 1.0
-Date: Tue, 29 Jul 2025 16:06:33 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-block@nongnu.org, bmeng.cn@gmail.com, qemu-devel@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH] hw/sd/sdcard: fix spi_cmd_SEND_CSD/CID state check
-In-Reply-To: <893a7943-e5ac-4c42-b30f-1dfa262b923e@linaro.org>
-References: <20250724105807.697915-1-ben.dooks@codethink.co.uk>
- <893a7943-e5ac-4c42-b30f-1dfa262b923e@linaro.org>
-Message-ID: <7731f31b606442cab7a3f7b1c2cf6d6e@codethink.co.uk>
-X-Sender: ben.dooks@codethink.co.uk
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=ben.dooks@codethink.co.uk; helo=imap5.colo.codethink.co.uk
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 46/82] target/arm: Implement FEAT_CHK
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-47-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250727080254.83840-47-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,95 +105,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Richard,
+
+On 7/27/25 05:02, Richard Henderson wrote:
+> This feature contains only the CHKFEAT instruction.  It has
+> no ID enable, being back-allocated into the hint nop space.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c | 14 ++++++++++++++
+>   docs/system/arm/emulation.rst  |  1 +
+>   target/arm/tcg/a64.decode      |  1 +
+>   3 files changed, 16 insertions(+)
+> 
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index 7831b3dab3..34d22cac8a 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -2124,6 +2124,20 @@ static bool trans_AUTIBSP(DisasContext *s, arg_AUTIBSP *a)
+>       return true;
+>   }
+>   
+> +static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
+> +{
+> +    uint64_t feat_en = 0;
+> +
+> +    if (s->gcs_en) {
+> +        feat_en |= 1 << 0;
+
+I understand that CHKFEAT is currently only tied to GCS but will cover more features
+in the future so we can keep feat_en |= 1 << 0 even if it could gate TCG andi directly
+on s->gcs_en and do andi with 0. ok.
+
+It's curious that this instruction is tied to x16, it seems easy to use any other
+general purpose register to query for the features.
 
 
-On 2025-07-29 14:51, Philippe Mathieu-Daudé wrote:
-> Hi Ben,
-> 
-> On 24/7/25 12:58, Ben Dooks wrote:
->> The addition of specific handlers for mmc-spi for SEND_CSD and
->> SEND_CID has broken at least Linux and possibly also u-boot's
->> mmc-spi code.
->> 
->> It looks like when adding the code, it is checking for these
->> commands to not be in sd_standby_state but the check looks to
->> have been accidentally reversed (see below)
->> 
->>       if (sd->state != sd_standby_state) {
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->> 
->> Linux shows the following:
->> 
->> [    0.293983] Waiting for root device /dev/mmcblk0...
->> [    1.363071] mmc0: error -38 whilst initialising SD card
->> [    2.418566] mmc0: error -38 whilst initialising SD card
->> 
->> Fixes: da954d0e32444f122a4 ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID 
->> handlers (CMD9 & CMD10)")
->> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
->> ---
->>   hw/sd/sd.c | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->> 
->> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->> index 49fc79cf8a..e6c1ba7c5d 100644
->> --- a/hw/sd/sd.c
->> +++ b/hw/sd/sd.c
->> @@ -1317,7 +1317,7 @@ static sd_rsp_type_t sd_cmd_SEND_IF_COND(SDState 
->> *sd, SDRequest req)
->>   /* CMD9 */
->>   static sd_rsp_type_t spi_cmd_SEND_CSD(SDState *sd, SDRequest req)
->>   {
->> -    if (sd->state != sd_standby_state) {
->> +    if (sd->state == sd_standby_state) {
-> 
-> This happens to work in your case by luck.
-> 
-> Since we switch to sd_sendingdata_state in sd_cmd_to_sendingdata(),
-> we need to check for sd_transfer_state -- the spec is wrong here! --.
-> 
-> Btw sd_cmd_to_sendingdata() already checks for that.
-> 
-> 
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, 
->> req),
->> @@ -1336,7 +1336,7 @@ static sd_rsp_type_t sd_cmd_SEND_CSD(SDState 
->> *sd, SDRequest req)
->>   /* CMD10 */
->>   static sd_rsp_type_t spi_cmd_SEND_CID(SDState *sd, SDRequest req)
->>   {
->> -    if (sd->state != sd_standby_state) {
->> +    if (sd->state == sd_standby_state) {
-> 
-> Ditto.
-> 
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->>       return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, 
->> req),
->> @@ -1345,7 +1345,7 @@ static sd_rsp_type_t spi_cmd_SEND_CID(SDState 
->> *sd, SDRequest req)
->>     static sd_rsp_type_t sd_cmd_SEND_CID(SDState *sd, SDRequest req)
->>   {
->> -    if (sd->state != sd_standby_state) {
->> +    if (sd->state == sd_standby_state) {
-> 
-> Nack, you just broke SD card implementation. Have a look at
-> the "4.8 Card State Transition Table" in the spec.
-> 
->>           return sd_invalid_state_for_cmd(sd, req);
->>       }
->> 
-> Regards,
-> Phil.
+> +    }
+> +    if (feat_en) {
+> +        TCGv_i64 x16 = cpu_reg(s, 16);
+> +        tcg_gen_andi_i64(x16, x16, ~feat_en);
+> +    }
+> +    return true;
+> +}
+> +
+>   static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
+>   {
+>       tcg_gen_movi_i64(cpu_exclusive_addr, -1);
+> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+> index 6ebf9c9ce9..b894aced89 100644
+> --- a/docs/system/arm/emulation.rst
+> +++ b/docs/system/arm/emulation.rst
+> @@ -28,6 +28,7 @@ the following architecture extensions:
+>   - FEAT_BF16 (AArch64 BFloat16 instructions)
+>   - FEAT_BTI (Branch Target Identification)
+>   - FEAT_CCIDX (Extended cache index)
+> +- FEAT_CHK (Check Feature Status)
+>   - FEAT_CMOW (Control for cache maintenance permission)
+>   - FEAT_CRC32 (CRC32 instructions)
+>   - FEAT_Crypto (Cryptographic Extension)
+> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+> index 8c798cde2b..4315ed8dab 100644
+> --- a/target/arm/tcg/a64.decode
+> +++ b/target/arm/tcg/a64.decode
+> @@ -246,6 +246,7 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
+>       AUTIASP     1101 0101 0000 0011 0010 0011 101 11111
+>       AUTIBZ      1101 0101 0000 0011 0010 0011 110 11111
+>       AUTIBSP     1101 0101 0000 0011 0010 0011 111 11111
+> +    CHKFEAT     1101 0101 0000 0011 0010 0101 000 11111
+>     ]
+>     # The canonical NOP has CRm == op2 == 0, but all of the space
+>     # that isn't specifically allocated to an instruction must NOP
 
-ok, so what is the correct fix? the sd-spi has been broken for some 
-time.
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-out of office at the moment so may not be able to test anything until 
-5th August
 
+Cheers,
+Gustavo
 
