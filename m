@@ -4,167 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C10C87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00058C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugkbY-0007l3-3v; Tue, 29 Jul 2025 09:42:56 -0400
+	id 1ugkcw-0007hV-KY; Tue, 29 Jul 2025 09:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1ugkbP-0006St-4C; Tue, 29 Jul 2025 09:42:52 -0400
-Received: from mail-bn7nam10on2060d.outbound.protection.outlook.com
- ([2a01:111:f403:2009::60d]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugkct-0007AG-O6
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:44:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1ugkbF-00069H-GL; Tue, 29 Jul 2025 09:42:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LMJ5xpALyEs6EblQd9DmXg5O9e+KHHHQDnnFPawXBfiE5eZ+DGf9pkXThBQhaVRx4vaodW3X+fCURLTUj/+v4SDdO75g2N2W9oqPtlUmTeFfFvZouRlYrKlA0JdFC0XMxZJFmV5OyiH48Lp+ukBhTjjLkIti4nKX15EXEn9WXLn4QdSYupXKdWM5x42iVY8ONHmXssAkipuah5MAU8fQGvl9idjIzyHir+kYHyo+IIdHjDuQqAtlYFVJg55e77vGkKSL4pUUqlMfA7jmXQwsI2Tgye1IY+21Q5Mp5FQLLoA3Un4qRaOTXDvmnONmlXcL+/2L/VkmA34wl2ksxT/JYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fbBO2qJ6uFBCbeqgKrk1unvxXJuiK4EAli+LQFgwRcA=;
- b=bMOVwpm4dTEIBfHZ9u04D9b5zMkRxpalfIqNxeg2k+RhBpuRw2vAt9JT3uXdJVMm4OqjrqHXlkyNBqdGYy5rPlZWkt3pXAyJFJYO3inYMeVZdnd26zE11X6ZjjCn19kBS9niwXGJ11+KQjj4Pc2g1n3sEtJpDbR7WgXqbn6F8grk5vpFaGPck4AQtyUj7mdlt5N+7532Zx2jZll0YTUGwhtBaVosij54XmklUVZ52z62qPrrVyjEIFO6C+JHVJ5jTl5IN4Y1guMxuw24DpkSwdzIIlZaUaXGaOx/bqA6Ecl+0TG0iMqLj04eERPDCltdD/YVz3rdtL6Eh2IDylPZCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fbBO2qJ6uFBCbeqgKrk1unvxXJuiK4EAli+LQFgwRcA=;
- b=ndzPNNWTD4M0yXhck2Ddxa98iAgDjRJn8h6z+bgjqgXWn4Clmj28ByBvK/S5n0rKZzs5lSrCX6bN/nn2kj8Z6gnDJchsEb2b53M/nR8G9J9wbn1pQdOvXzLpi7YsYArg9/K6Awz37Ixwq2mG7BXC8xmtSt5W6IJRjhjZilyAjrI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by SA5PPF8ECEC29A9.namprd12.prod.outlook.com
- (2603:10b6:80f:fc04::8d5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.21; Tue, 29 Jul
- 2025 13:42:29 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8989.010; Tue, 29 Jul 2025
- 13:42:29 +0000
-Date: Tue, 29 Jul 2025 15:42:15 +0200
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 13/48] hw/arm/xlnx-versal: VersalMap: add support for
- OR'ed IRQs
-Message-ID: <aIjPt5gyFly6dxix@xse-figlesia-l2.amd.com>
-References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-14-luc.michel@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250716095432.81923-14-luc.michel@amd.com>
-X-ClientProxiedBy: CP7P275CA0006.ZAFP275.PROD.OUTLOOK.COM
- (2603:1086:100:42::8) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugkcq-0006GW-DF
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:44:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753796651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JcCNJ2GkM+w2OKEXL+93GJyOk7rUrV/wnAuK9b1otCg=;
+ b=f/qtdo4n2xpiXBxM0WpjQrtiyAtY/LxsNTtYiOR/+jxLVZqUkgbmMEZKzquve8vWkV1wDZ
+ aRBn0ZUVWGop9PUNEDS5XmrQlonKGj6fPFE+3XVpGjcQrBZTqtTMHieL9+j/oojEDKNQl1
+ 8ubWvcFN5S1h9gX8D2IKta7sQtYFtV0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-261-rzj9bJFtON2GfcAghXea5g-1; Tue, 29 Jul 2025 09:44:09 -0400
+X-MC-Unique: rzj9bJFtON2GfcAghXea5g-1
+X-Mimecast-MFC-AGG-ID: rzj9bJFtON2GfcAghXea5g_1753796649
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a58939191eso2018997f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 06:44:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753796649; x=1754401449;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JcCNJ2GkM+w2OKEXL+93GJyOk7rUrV/wnAuK9b1otCg=;
+ b=LxU2ULddfJGKR4xyvpju+MG32CpG4q65uo6Z+h91ZPYiFcJdCoEd6+nEXBuXvub7qb
+ T84AEEOg8dJPRQ2ax2ae1UieGEaUYV3v+7cNqAU8xqYplf8jsEzkmwSuueP+cp4I0Cyi
+ NUnSWa+8qc4SxJ+TO/ecZqQ8nXwAxiyt+/+Sj0dAqP8wJy0unt657yl22tyfkvoK3wa4
+ hd3XiGr/3HRU/bqNSmnCvTXyIuOdUn5ES0NTBlAyLEx1j5AyGy+vhG8yRDTTlaXA+5XY
+ wydFv/BVJ8T5A80pZruLcEFcZ6SNsOVLlVNQxMnQIUbE3buNzuhswGKjmISLrc+EQEP5
+ cAQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWdSXR4LKpxugXyHy90qM1jCFJbsxhNLgE2CSpLw70TAxki/SV71d9B1RsX0Zhbu6793vcMkaUjhxDJ@nongnu.org
+X-Gm-Message-State: AOJu0Yz+Mibi0Y+9llmX/w0FUhh8aRV0D2kfenvHXk1b2BxcgkeOxYZW
+ Nw0y3y22ZRW8rPeby7DXQ6hASzbkM8UyQ1cMvprG/RPmMkyTlSgQc627aKawlFNRW6t9FBuuxZw
+ 4nGnszS3VVzToooe5f7AsVe+RC6nNJDP5MD4GYW4KvK8qtsVPFyFuZ5x2
+X-Gm-Gg: ASbGncvrGRlVgjgeUEg8XhefMQSHZ957LqELcq19fIGFTFrgwVviJsymEicEZYX8VMf
+ I1S1UXRDaGa+Fn527p+3RF/NLqVR4RBNtJo+IARCwptQh7ReAoTXnY4Lu/MookLVe+PouUuv+J1
+ VOli1dG1+9F3xx6DhMschGJg+jJSLCPENeABAe+N+ychwo4AlU/6DF5s1DC7VYOwxiQd2lP/Twh
+ 33eG5bJry05WTBxlfYS6Z5B3yOvBP+bko9ZW8FNlcmnJRw0G6E1F45G03A09JC3+FHhy2KyI5NM
+ 6B903FgEsDskUhIn3E8XJ+2wmhJJQiKseJz+2N8lhSizw1h4GtVT/S+eO+8K5e4Nrq0puBPDBRh
+ A2g==
+X-Received: by 2002:a05:6000:4410:b0:3b7:7870:125a with SMTP id
+ ffacd0b85a97d-3b778701569mr6967927f8f.43.1753796648644; 
+ Tue, 29 Jul 2025 06:44:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFeR+kdoFywAEKOnhJP7MUp0wgKZlWyH6UOZRO9t+Lt6m2MouNVNb/6lcCK7ytMZCeCYcJn7w==
+X-Received: by 2002:a05:6000:4410:b0:3b7:7870:125a with SMTP id
+ ffacd0b85a97d-3b778701569mr6967900f8f.43.1753796648191; 
+ Tue, 29 Jul 2025 06:44:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b78b26a4dcsm5051163f8f.32.2025.07.29.06.44.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Jul 2025 06:44:07 -0700 (PDT)
+Message-ID: <74895627-74a8-4cb4-a460-491ac5dd1c2b@redhat.com>
+Date: Tue, 29 Jul 2025 15:44:05 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|SA5PPF8ECEC29A9:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2eb2d3d-41d1-4443-9140-08ddcea5c2ba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Q1JqcVVxR0VNNHczSmFNRXdlMVB0MWR0aUtnclhkRnkvUFpKeC9XWWtqMWRJ?=
- =?utf-8?B?c0h1dGRYMTJ3TE03MU8yWFJCSXhaMjhVNk1RVEVOMytuRWxuZ0l0dDVHemtE?=
- =?utf-8?B?WXJpcnNSaEVncDdVMmlTelhBRE5TdmZGSlVTQ0I2cHZ4M2RZVjUzSmdQeXc1?=
- =?utf-8?B?VHdKNngvUUdrVURnUlAraEw0SUF3Z1dCdHowZHRjUW5BaER6Q1N6d3dyVnJp?=
- =?utf-8?B?V1VEREcyYzJxK282QUtiUXR4ekxaOVc2bmdpZ0RzWTZBSzI2cGpnZG9HMWpl?=
- =?utf-8?B?cm9lVTdsdDJkUDJXTzBONjNFbWthOFNnU1ZjTEpORXV6SWIxaWpzQmY5UFRL?=
- =?utf-8?B?a1lVQW4rci9Va1ZHbVRQTy95MlB2NlFoaWp4Tm5PYVFRc3MweExsZytJN0dv?=
- =?utf-8?B?TlZzTGQ1Kzl0dkM4dnhIV1VKbEVlbFFjcmxjNytUSXFxRUNQbUFmWlhWWDZm?=
- =?utf-8?B?d0hqQ1Y2Kyt6OGFDYkk1NnZoK09kcTUyajR2R0ZaZUlBa0FFS0RlRWFuRzg2?=
- =?utf-8?B?YzQza0c4S2xIdTRhaFZMNkoxNTNmYnd0bTM3MUNYVUsxQUMyQnV3WWhyRngz?=
- =?utf-8?B?YkN5NENCWTQ5NVRoY2JROXBid1g5RUl2ZVgwZ3B1dkNSS3RJVFpXck1iMVpw?=
- =?utf-8?B?eGtaVkpKdHptem13YkhzTWFnMkwrUU5aQk1TTU5Cc2Ftd3dWSUJSemlLTmQ2?=
- =?utf-8?B?dzNEbVh3WHV0MG95S1Uvek44d1Vod3U0SEtlekxudG81TmQzQzFPSVhucWlu?=
- =?utf-8?B?VG5jRUhSUVVQT256YjArOHRhYldXQXZHeEEvaDFsUnJFMmREOFVXdXhqK21I?=
- =?utf-8?B?dTVOOUE4bDRHd0Jhd2JZajJMYjdpVWpqNEY2bGRuREFPNlVhYmh0allsSm5J?=
- =?utf-8?B?STdrMHZQWlQ5RTc1WEJ2RkNkQ0g3aUp3dW1LZ0FLSE9IZ0RSSk1DaHppR2kw?=
- =?utf-8?B?bUVYai9UT0d6amI1bVdidGcxcDJWMkhucWgxYVBlcy83czdwR29pVTdSR0xh?=
- =?utf-8?B?MTJOM1lwM1VmNzIwcXF1Mjc1MVJpV0RjUjBEbitNN1EwdzB6ZzhLM0FETWQ5?=
- =?utf-8?B?YlRpZGtJLzZlWEE2UHoyQTJNbU1ERnRKeW55bWlLc0hVb0liRWYyYnlwK1Zr?=
- =?utf-8?B?a3J0Ylh2TlpZRmlCdkRDcGlWbWFJaHlJaFVoSFZ6S2Y2Vk9FVldHaTBPZU5s?=
- =?utf-8?B?SVo1N3hCZEQ3OEFPQm42ZU5wU2wvTGVCSnptVGZiVm1SU3JvSHFkMVpiVGR2?=
- =?utf-8?B?enRYVEt6Wkp3aDk3NnR3Rk5sd0dTL2dGbDBCeDdnVUhmUXN1NEZFVVJXOStL?=
- =?utf-8?B?ZFdkRTNPREgxNkRQTWZnN2t3RWdYc2lMOVNxYVVCT0F2Q1QxbmNpVFNqSDdD?=
- =?utf-8?B?eTFCaitiSjZyZ2lXNnVnMHJQR0FkRzg0ejFUWjhJWlZLNGEwQ2VMNHRyRHIw?=
- =?utf-8?B?UjViTm52WGg5SkREdUV6dUNpdkdHNndlb0hWSVo0allTRGFINk56OFI2MXpw?=
- =?utf-8?B?TVJQT2dQQjVDUWdUYXduQ2R3U3RJQ0JkRG5RZHNmaUNGSW91a0dFUUp0NmEv?=
- =?utf-8?B?cXRXcHBYZ2hxbjJReWVRcjk5TElPaWtoU3BaYVF5ZlFQdXRWeWZyNC9MTXU5?=
- =?utf-8?B?bFlkVmJYZ3JWV2lxZUROSjIvQTBIdWVLdUdacWlmd242NjhacDg0cFdEbm12?=
- =?utf-8?B?MmdOc1BJS3JQT0hPNGY2WWo3MElCdlNkR01JckttWHJtck0zdUVVR2FhL2Ny?=
- =?utf-8?B?aXRjUzcxbVAySW84amZNbE9NSEpQcXhvN2x1dEtFSFBZOE1CMDlkR0RPNWVI?=
- =?utf-8?B?d0tIK3B4eFhyKzJMUDIxRHJNTmgvSDNacFJvYlFmUUU4eGlqM3RvcjdpUThH?=
- =?utf-8?B?QlhxWndjMXJkMlVrZEpocjJBeVpCUVd5UDlKK2dRdkdxVEVSQzdMbGpVZkcv?=
- =?utf-8?Q?PKaJeS2GgDM=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d3Q1WG5rK3kvcWgzQ21xbExMZU9RZnFNQlNTL3ZmbEZxditCaWlQYk5nVEl1?=
- =?utf-8?B?cnM1YU1hNmJKS2piMEhyTytKUG1mZUFjR2Q0VkQxcXhkNkFPYnhmWXc5bWRO?=
- =?utf-8?B?dWZtanhhdWt1azduVU9PbzVkWkVqSlBBb2FySzlpU2pFb2ZmU2JvMFhhaTNY?=
- =?utf-8?B?Z1IrRzFDYzkrazZMRWVkR3lnaW5kZGRSN1RIbExrUitPUjg1dVMrT0Q2K2pq?=
- =?utf-8?B?ZG90RVNFTzBkWExBemJEcVBPNlRaR1RZTXBXQytlaE1vcEI3cjdzTHRmY3lr?=
- =?utf-8?B?R0V4VVdNcXZiT1FLYmtaamhmRUw1azhjbnVwVWdKcEJSU0R3dTJXZVc3MkI5?=
- =?utf-8?B?QW9Qd0ZNTTl5MmhSZ2FWcHZERENCelF2b1ZSVHUxMmt2Ujh6L1N1SzdhQU15?=
- =?utf-8?B?WEdMYm9kVGVuUWFRSGZRY0s3NGUxT2lIeDNBOXNiTnBLNStYVGpmR2ZYRUtX?=
- =?utf-8?B?VVMydE5zZmIvblFqNkpWNEtwQXRWa3lHYk9VU3pBbnoyZ2pQZS9EMFR3Umhj?=
- =?utf-8?B?VW8wNkFZL2ljOHcwVHg5L1h3NkJta2FRZHFsNXhUYjU2QW5QN1dmOEZTdkds?=
- =?utf-8?B?WnNKclFKbkViVkNOWUJJSGJBSHhhNytPcHJZY0VmM3h1b1ZZRTBiMmlLTHZE?=
- =?utf-8?B?OVQxMWhPZFppYUFZQzN4RzBmOXhMZmV0VmpDRUk4L0FWWTNiWG10ZXpGVDlI?=
- =?utf-8?B?MTg1M1ZRZ3prOXUwL3QxaEpaMzRXSmhmVWErMzU4QzhkeDJneFZQcWU1NnVN?=
- =?utf-8?B?cWFBRzc2ODlId0xYUVlaUDdsTDRQa0lZMHlrQjdWd1BiMHRzOVdpRTFLTnVT?=
- =?utf-8?B?YVFSNUpaQ29RdVFtZnhUVjNTeUJMK29CbUhDRmFoVFJUQVh6YU0rYzVEKzZa?=
- =?utf-8?B?b1lLYXJ3S0ZaOUpQYkZkaEFRYzV6MkkwSW9CclUwUGJROFd5VXUrckM3VU94?=
- =?utf-8?B?SjB4ejkwdG9pS2QyMGtHMXJDVVIrblpoYXlFdWxqc3cvaFIzRVV1SEFaeTBB?=
- =?utf-8?B?dVc3VWUwTmdWOVNwZFBleS9NZG1KTUNyVGlndkxrZlNGcFNXYXJkeGxlWEhl?=
- =?utf-8?B?NDhkVk82RUZpS3hMdTdhV2U2bTNvUXlLT0l6ajdKWmxkZ1JCNXVmdFlwQVZu?=
- =?utf-8?B?NkU3cXBXSkU2RnV1bFNtdTkvUG5tZ0pyNWRucnNDUm5HV2k0cE02cVNaZ2tt?=
- =?utf-8?B?UlVOVTVObk1ZRkp5bmNYSkFCRWdkdDFnUXZKN20rTnNWSDdVK0JUM2VFd0pS?=
- =?utf-8?B?bHhVem4xdXU5N3ZlWGJxcHk0QTJ5WmE3MHZHb2lMZHg2L2UyK3R4c0p0a0Zs?=
- =?utf-8?B?ZVJEdTB2SVFrK2RmS1JSUmFuc2FjREdHYStJZHhmM1hIWVR3dUZnRGtZR2pn?=
- =?utf-8?B?K1Z4SGZFMzI1ZTNhM2F0L0c1SjIrVGw1NW8rQXRDT0hjditkVklzaSs1OHF2?=
- =?utf-8?B?RjA3MmZFQjFCWnhlbjVNcGV1ODNLcHpVN1J5dWZXaGtpMWxuc3JyMmt1dU96?=
- =?utf-8?B?VWlSK1IvODBXTUg3SjY1SVZVb0QrZmE4M0ZVaUNlcER4UW5JYnFkMFF2Z0I4?=
- =?utf-8?B?SCtjcVhFOVpQZWF2cUNqUjBUNHhqQjR3cEFmbERNVGx1T0RDdlRVWXdqOTRW?=
- =?utf-8?B?Ry9qc1dLUkpMWTE2NVlSMnNuWTk0dkY4VmpEekF5KzRuc3FBNzhpZDdDLy9U?=
- =?utf-8?B?VFlZY1ViZmRjZWxmVjIvSW1SY1IvKy9CbEVaeFNpcDA5T0htMy9vVTBXclV0?=
- =?utf-8?B?eUYyd0tCd1NnZXMrNUIya2p1TUtBOGNZMFczZU1ZSFV4WUlXVHFZN1FjNEJU?=
- =?utf-8?B?YzZrYjN5T1VpTGVjeXlGZVE5ek51VE5NMnlFNm0rN3F5UDlqSjdlaTB4ejk0?=
- =?utf-8?B?bW5ueUt4U3lxWlRRZFlteGNBRDJ0eVBya3NzV3Q2VC92aDBTK1VlK2ppR240?=
- =?utf-8?B?cXJSQ3NGYlI2RVJ2NFJUMU9tQ1pBR3g5UERpMlJFR0ZQbTh4cWdweUI0Zm1v?=
- =?utf-8?B?SlpqLzZ6cGY0d0RrL0VSMWRvWHdPK1luaU4rOTVUd29ZTlFHaVloc1FhS1VG?=
- =?utf-8?B?OHNzSHVTZkFBS2haajI0eThHYUhpU2JnRjNMRUZDVlhBWHRXMDEzT2JsMUFG?=
- =?utf-8?Q?cCb64hZth8Ovb/Ah+vlLlBKRm?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2eb2d3d-41d1-4443-9140-08ddcea5c2ba
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2025 13:42:29.3050 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Bm7EnB4xducuKHZBdFDP4KqHoJGd9+raPUjRNPMPMqD5feD3SdiYXDjhMtGJTipOQ/tcUjAQwy+gCWVniz0d/Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF8ECEC29A9
-Received-SPF: permerror client-ip=2a01:111:f403:2009::60d;
- envelope-from=francisco.iglesias@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 04/20] vfio/iommufd: Force creating nested parent domain
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
+ <20250729092043.785836-5-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250729092043.785836-5-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,137 +160,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 11:53:55AM +0200, Luc Michel wrote:
-> Improve the IRQ index in the VersalMap structure to turn it into a
-> descriptor:
->    - the lower 16 bits still represent the IRQ index
->    - bit 18 is used to indicate a shared IRQ connected to a OR gate
->    - bits 19 to 22 indicate the index on the OR gate.
+On 7/29/25 11:20, Zhenzhong Duan wrote:
+> Call pci_device_get_viommu_cap() to get if vIOMMU supports VIOMMU_CAP_HW_NESTED,
+> if yes, create nested parent domain which could be reused by vIOMMU to create
+> nested domain.
 > 
-> This allows to share an IRQ among multiple devices. An OR gate is
-> created to connect the devices to the actual IRQ pin.
+> It is safe because hw_caps & VIOMMU_CAP_HW_NESTED cannot be set yet because
+> s->flts is forbidden until we support passthrough device with x-flts=on.
 > 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
 > ---
->  hw/arm/xlnx-versal.c | 62 +++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 61 insertions(+), 1 deletion(-)
+>   hw/vfio/iommufd.c | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
 > 
-> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index 58176fa11e5..89c93278336 100644
-> --- a/hw/arm/xlnx-versal.c
-> +++ b/hw/arm/xlnx-versal.c
-> @@ -41,10 +41,21 @@
->  #define GEM_REVISION        0x40070106
->  
->  #define VERSAL_NUM_PMC_APB_IRQS 18
->  #define NUM_OSPI_IRQ_LINES 3
->  
-> +/*
-> + * IRQ descriptor to catch the following cases:
-> + *   - Multiple devices can connect to the same IRQ. They are OR'ed together.
-> + */
-> +FIELD(VERSAL_IRQ, IRQ, 0, 16)
-> +FIELD(VERSAL_IRQ, ORED, 18, 1)
-> +FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 48c590b6a9..61a548f13f 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -20,6 +20,7 @@
+>   #include "trace.h"
+>   #include "qapi/error.h"
+>   #include "system/iommufd.h"
+> +#include "hw/iommu.h"
+>   #include "hw/qdev-core.h"
+>   #include "hw/vfio/vfio-cpr.h"
+>   #include "system/reset.h"
+> @@ -379,6 +380,19 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>           flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>       }
+>   
+> +    /*
+> +     * If vIOMMU supports stage-1 translation, force to create nested parent
+> +     * domain which could be reused by vIOMMU to create nested domain.
+> +     */
+> +    if (vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
+> +        VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
 > +
-> +#define OR_IRQ(irq, or_idx) \
-> +    (R_VERSAL_IRQ_ORED_MASK | ((or_idx) << R_VERSAL_IRQ_OR_IDX_SHIFT) | (irq))
-> +
->  typedef struct VersalSimplePeriphMap {
->      uint64_t addr;
->      int irq;
->  } VersalSimplePeriphMap;
->  
-> @@ -172,13 +183,56 @@ static inline Object *versal_get_child_idx(Versal *s, const char *child,
->      g_autofree char *n = g_strdup_printf("%s[%zu]", child, idx);
->  
->      return versal_get_child(s, n);
->  }
->  
-> +/*
-> + * When the R_VERSAL_IRQ_ORED flag is set on an IRQ descriptor, this function is
-> + * used to return the corresponding or gate input IRQ. The or gate is created if
-> + * not already existant.
-> + *
-> + * Or gates are placed under the /soc/irq-or-gates QOM container.
-> + */
-> +static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
-> +                                          qemu_irq target_irq)
-> +{
-> +    Object *container = versal_get_child(s, "irq-or-gates");
-> +    DeviceState *dev;
-> +    g_autofree char *name;
-> +    int idx, or_idx;
-> +
-> +    idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
-> +    or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
-> +
-> +    name = g_strdup_printf("irq[%d]", idx);
-> +    dev = DEVICE(object_resolve_path_at(container, name));
-> +
-> +    if (dev == NULL) {
-> +        dev = qdev_new(TYPE_OR_IRQ);
-> +        object_property_add_child(container, name, OBJECT(dev));
-> +        qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
-> +        qdev_realize_and_unref(dev, NULL, &error_abort);
-> +        qdev_connect_gpio_out(dev, 0, target_irq);
+> +        hw_caps = pci_device_get_viommu_cap(&vdev->pdev);
+> +        if (hw_caps & VIOMMU_CAP_HW_NESTED) {
+> +            flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
+> +        }
 > +    }
-> +
-> +    return qdev_get_gpio_in(dev, or_idx);
-> +}
-> +
->  static qemu_irq versal_get_irq(Versal *s, int irq_idx)
->  {
-> -    return qdev_get_gpio_in(DEVICE(&s->fpd.apu.gic), irq_idx);
-> +    qemu_irq irq;
-> +    bool ored;
-> +
-> +    ored = FIELD_EX32(irq_idx, VERSAL_IRQ, ORED);
-> +
-> +    irq = qdev_get_gpio_in(DEVICE(&s->fpd.apu.gic), irq_idx);
-> +
-> +    if (ored) {
-> +        irq = versal_get_irq_or_gate_in(s, irq_idx, irq);
-> +    }
-> +
-> +    return irq;
->  }
->  
->  static void versal_sysbus_connect_irq(Versal *s, SysBusDevice *sbd,
->                                        int sbd_idx, int irq_idx)
->  {
-> @@ -1209,10 +1263,11 @@ static uint32_t fdt_add_clk_node(Versal *s, const char *name,
->  
->  static void versal_realize(DeviceState *dev, Error **errp)
->  {
->      Versal *s = XLNX_VERSAL_BASE(dev);
->      qemu_irq pic[XLNX_VERSAL_NR_IRQS];
-> +    Object *container;
->      const VersalMap *map = versal_get_map(s);
->      size_t i;
->  
->      if (s->cfg.fdt == NULL) {
->          int fdt_size;
-> @@ -1223,10 +1278,15 @@ static void versal_realize(DeviceState *dev, Error **errp)
->      s->phandle.clk_25mhz = fdt_add_clk_node(s, "/clk25", 25 * 1000 * 1000);
->      s->phandle.clk_125mhz = fdt_add_clk_node(s, "/clk125", 125 * 1000 * 1000);
->  
->      versal_create_apu_cpus(s);
->      versal_create_apu_gic(s, pic);
-> +
-> +    container = object_new(TYPE_CONTAINER);
-> +    object_property_add_child(OBJECT(s), "irq-or-gates", container);
-> +    object_unref(container);
-> +
->      versal_create_rpu_cpus(s);
->  
->      for (i = 0; i < map->num_uart; i++) {
->          versal_create_uart(s, &map->uart[i], i);
->      }
-> -- 
-> 2.50.0
-> 
+>
+
+Could you please add a wrapper for the above ? Something like :
+
+static bool vfio_device_viommu_get_nested(VFIODevice *vbasedev)
+{
+     if (vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
+         VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
+
+	return !!(pci_device_get_viommu_cap(&vdev->pdev) & VIOMMU_CAP_HW_NESTED);
+     }
+     return false;
+}
+	
+May be this routine belongs to hw/vfio/device.c.
+
+
+Thanks,
+
+C.
+
+
+
+
+>       if (cpr_is_incoming()) {
+>           hwpt_id = vbasedev->cpr.hwpt_id;
+>           goto skip_alloc;
+
 
