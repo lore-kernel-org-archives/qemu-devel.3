@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E9CC87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 862BDC87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguV3-0000TJ-FH; Tue, 29 Jul 2025 20:16:53 -0400
+	id 1uguZQ-0007dT-Sa; Tue, 29 Jul 2025 20:21:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFO-0001rO-I2
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:42 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1uguIw-0004Za-7x
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:22 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFM-00044G-Nx
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:42 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-748f5a4a423so4315005b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:40 -0700 (PDT)
+ id 1uguIu-0004cG-Ek
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:21 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-748d982e97cso5675116b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833639; x=1754438439; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833859; x=1754438659; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aE8T8VB3X2aZ5pXjUX7SLaXyPUjl2/XnllRFHeUFwMo=;
- b=FgJ1iIWZdkuvlKJkLV5ocObrxHCRWKCOB3uIc/JdSlwhw+fT44vwj9Z0Ttymtxkkze
- Qw/neCo9JZGJc6Tgki3NpBfaZQCKNLnpbUhvB/mE3FoimcdI7gQ8D+shO3CwXDzB9RbY
- 3kLGTur/W/03dEFSX7jctBkU44fmduf92X5cED0eBqMHtcj1rUiXMPZn9mf2C2zzwiN/
- UMGtkSOVHex1bcbZ3SLJt7LklqF8J7pqC8LCimgu4aCLb4iBEUkUIdKb7eYK0Z/lyrXF
- LvLbsx6KK2PIC8C/lsM3IPCul1E28ILs8IPQNpDkUiBD8bVUe8KTb1BoEoD5nY24YUZY
- 5mGw==
+ :reply-to; bh=T2BtxqsWGW2NTc98A4IhQh0OFPgPTkWNRqLN4IH0P9I=;
+ b=Z9KouzLb2uOOv48h6uCvZoOcluS3Z49fLQoTnICYaZJ3EaS2dhbULi3ai8BYCBCVvW
+ isPFyhBkB2z9ORm8DE7gZWyqTCOxazrfg3UC1s/eqvwAuBOLdBKjcBTZ/IeyKel4sfjI
+ nZMdiVmCU/yeMpSshR412Qsyf0nyo5PI0/QREH4feQCUtCHzE/cJxn37/2oROnzPZ+i/
+ bmBLYLdkUcOQt8XP35f9BrAx3SS684CafoUrwbLbvs9BZ3Olk0bSEO98Q8h92qC01MFm
+ NbjV+s+Km8H+Ytq4QPJY3DAFY5wsWejLazk80M+M82ZJzkuG1c7Dwl9REFRJivr68/9s
+ oDEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833639; x=1754438439;
+ d=1e100.net; s=20230601; t=1753833859; x=1754438659;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aE8T8VB3X2aZ5pXjUX7SLaXyPUjl2/XnllRFHeUFwMo=;
- b=qnVtPDzzkQuOeq6jinT6slabefEPDXGzM0SZ7xkf1nALYyZKQGFCd3zUHz7HyB38ZK
- 8KOZuYsuurnitJaG+Imu/Srv28wD/ygAHIkU16hME5p/Gp61uTkXECFXcQO9v1KHC/am
- k2QHaunZ8MQEhm8Xo2u+vMzKM21d+DBqZve/eDvpXGdvrPsTcgrHco+Ul+Vw/IN47YQy
- TYruBMQUvoB7qivEqX2v+C7ryzs3/IlqR3xCnDGyWXmlyIxqjpfOT73NlP1KIPpmY2qu
- GGYK6zELC43M6mm0t99Ursc1aTNZJud4JHM+n1rXEjtC6Rggfb1H0pt0RUaOCXc2XTzC
- BkxQ==
-X-Gm-Message-State: AOJu0Yy+NDuwrn43KpOrT4oSxwTI+u6JcYS0RYdq1eieQnXjd84a1GWb
- 4KTNaCYB8OzcYAH8nirO35mKFUE2B+T8yKDYrk4XXjEU5QH+f1fEyUHX2X/hyHmzf1MBSDwPccw
- Avofs
-X-Gm-Gg: ASbGncuM4U7aIWkOyqAnP9Z3W7SsjrN2pKea+ILIKvnh6r6h59ixJkCxPjrAu25mr3D
- oJegRXKZQtShuHS/8g7ZO69FIsqvpRGliyww4SCYVv3WNsxCaQUS6MrzM7m+SuBZpChNnozdkZ2
- ybrOu++W4VT+fXDqYd7BQMTOJ/COEDSVWbloX1XEKi30pJzX3hPItNCt4WQhdwdRMLbkdFYY2vg
- Lp7oD1NL37UgOwMw5AqB11v0R2P371WMnO38SkVAQen3AzL9gityccf5ry3aGE7gBzHRn8nC5fU
- izvNfgxji6sBD0NdkHWlYvGsDGId0kF+yIm5CtjA2uMGdO0cAjdrhjtA1AYnjhTnuEaqgUhXbsw
- gRoI9G0fa2jPq4fmUzrg9flBpi0FnfQSzqv4qqrdP1vTOERYHl8voFHF0bih0w4xqsWkBfSqSPK
- PGJLl30fk7Jg==
-X-Google-Smtp-Source: AGHT+IGMPPIgkq5oyJwu/Z2KdhyCG+Uzs0nb/jDvTDx7w0vj9oyqHfuJ/RR+VhNSUxBnkyNzGCWy6A==
-X-Received: by 2002:a05:6a00:cd5:b0:742:a0cf:7753 with SMTP id
- d2e1a72fcca58-76ab082cba0mr2007481b3a.3.1753833638090; 
- Tue, 29 Jul 2025 17:00:38 -0700 (PDT)
+ bh=T2BtxqsWGW2NTc98A4IhQh0OFPgPTkWNRqLN4IH0P9I=;
+ b=uNWXIo6LXH6NMkIfVOqps4ai6g6e8/R6mQ8ObzIBGm7F94fkmY6h2PaQpUDQeLU8Mx
+ gLE961hOTtNkoTQqYo16YgmExNmeH9xStU8mM6kxZupnwSIRNNOeEhLdsp8s/XFUclfr
+ 7b2iX+UP8h2kGwO+0TeHR3XtaJNy3QJiBc0ZCQQ2FPe0/4t1o20/pG1fzJVSL3SuM97o
+ zoN+CIVxvF7X7cp6UgyapImPLrkZZBM8X/k3lGa2eHxMeV/LG5uXJSq95WaXCzMNnsSs
+ COXL/Llp0LNyPM5soUndnyXmhOreyUpMu5Jdeq3QjfqtfcbeqPXBgv+E7Hn40FxahY8R
+ vqFQ==
+X-Gm-Message-State: AOJu0YzvdiEajlEanxSVPXsZYYD7IZKP9zodVRgucLUULrFv5wiCLBZY
+ rMNkp2z5KJqpZRf7B1U0FDZCBFjdCJdgitdvv1CJuOMNVmaOtTYFLu/vw1ZMKIS9Sccl5wEz808
+ nirQi
+X-Gm-Gg: ASbGncuI+x1Ckcgk/aQeZyKlniOzAtmlgQsSaQBtaKQChru2B6KD04Pb6Z0jK4VAAI6
+ tn5NsOxC+qOtcXkP9DceKVpT+RGjd+nAoheiuD3eeVwJW7Hz4uSbHEbGNh/0zjffqKXTh69BJHz
+ uhTaJKm4zS0xRxBkndwsGCte0WgFZwrwe45K40SmSj1qCz0KbDM+2XAKmaOdk7mdkM81Lfx5M/w
+ Y+JW9vagQQ/iu79HGyIGCnisTO/qrRjDd0AhCqDQFD0wV+JkAU2kWEyqHuz/+pUTO/0LeqcWqUn
+ 5Hg3NZe68I5g4g/Px3pnFSZlDa1f4McVbxLo5hif2h1+A42oj19IuJqdL28Tdyk+AlAV3r3YPXS
+ R3kOlHjw+gpDcfs2d9FuH04Z8c2UUp8GSOr/TaBWyd6zWi8B6CuILNT5KN0z/6SM0jThZt9SYB9
+ 75kutiUtTRUQ==
+X-Google-Smtp-Source: AGHT+IGVanw3TBoIOa4oNzzToESWIYfZfbQPKzVnoypFoxCLd7FdrJOo+CBFsGR+nWxaDM9CCeMGRw==
+X-Received: by 2002:a05:6a20:938c:b0:231:acae:1983 with SMTP id
+ adf61e73a8af0-23dc0d59618mr2086521637.3.1753833858763; 
+ Tue, 29 Jul 2025 17:04:18 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.37
+ d2e1a72fcca58-7640ad06762sm9101302b3a.80.2025.07.29.17.04.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:00:37 -0700 (PDT)
+ Tue, 29 Jul 2025 17:04:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 20/89] linux-user: Move target_cpu_copy_regs decl to qemu.h
-Date: Tue, 29 Jul 2025 13:58:53 -1000
-Message-ID: <20250730000003.599084-21-richard.henderson@linaro.org>
+Subject: [PATCH 49/89] target/openrisc: Split out target_coredump.c.inc
+Date: Tue, 29 Jul 2025 13:59:22 -1000
+Message-ID: <20250730000003.599084-50-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function is not used by bsd-user, so placement
-within include/user/cpu_loop.h is not ideal.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/user/cpu_loop.h | 4 ----
- linux-user/qemu.h       | 3 +++
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ linux-user/elfload.c                      | 17 +----------------
+ linux-user/openrisc/target_coredump.c.inc | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 16 deletions(-)
+ create mode 100644 linux-user/openrisc/target_coredump.c.inc
 
-diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
-index ad8a1d711f..346e37ede8 100644
---- a/include/user/cpu_loop.h
-+++ b/include/user/cpu_loop.h
-@@ -81,8 +81,4 @@ void target_exception_dump(CPUArchState *env, const char *fmt, int code);
- #define EXCP_DUMP(env, fmt, code) \
-     target_exception_dump(env, fmt, code)
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 59d179092b..051e9b72cf 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -447,25 +447,10 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ #define ELF_CLASS ELFCLASS32
+ #define ELF_DATA  ELFDATA2MSB
  
--typedef struct target_pt_regs target_pt_regs;
--
--void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
--
- #endif
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 0b19fa43e6..6c97ab221f 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -365,4 +365,7 @@ void *lock_user_string(abi_ulong guest_addr);
- /* Clone cpu state */
- CPUArchState *cpu_copy(CPUArchState *env);
++#include "target_coredump.c.inc"
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE 8192
  
-+typedef struct target_pt_regs target_pt_regs;
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
+-/* See linux kernel arch/openrisc/include/asm/elf.h.  */
+-#define ELF_NREG 34 /* gprs and pc, sr */
+-typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
+-
+-static void elf_core_copy_regs(target_elf_gregset_t *regs,
+-                               const CPUOpenRISCState *env)
+-{
+-    int i;
+-
+-    for (i = 0; i < 32; i++) {
+-        (*regs)[i] = tswapreg(cpu_get_gpr(env, i));
+-    }
+-    (*regs)[32] = tswapreg(env->pc);
+-    (*regs)[33] = tswapreg(cpu_get_sr(env));
+-}
+-
+ #endif /* TARGET_OPENRISC */
+ 
+ #ifdef TARGET_SH4
+diff --git a/linux-user/openrisc/target_coredump.c.inc b/linux-user/openrisc/target_coredump.c.inc
+new file mode 100644
+index 0000000000..fe6c17f199
+--- /dev/null
++++ b/linux-user/openrisc/target_coredump.c.inc
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
- #endif /* QEMU_H */
++/* See linux kernel arch/openrisc/include/asm/elf.h.  */
++#define ELF_NREG 34 /* gprs and pc, sr */
++typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
++
++static void elf_core_copy_regs(target_elf_gregset_t *regs,
++                               const CPUOpenRISCState *env)
++{
++    for (int i = 0; i < 32; i++) {
++        (*regs)[i] = tswapreg(cpu_get_gpr(env, i));
++    }
++    (*regs)[32] = tswapreg(env->pc);
++    (*regs)[33] = tswapreg(cpu_get_sr(env));
++}
 -- 
 2.43.0
 
