@@ -4,63 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3171DC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 05:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E7BC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 06:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugdDa-0001Ef-EM; Tue, 29 Jul 2025 01:49:42 -0400
+	id 1ugdPg-0005kJ-M2; Tue, 29 Jul 2025 02:02:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ugdDH-0001A0-SF
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 01:49:27 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ id 1ugdPX-0005h9-NF
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:02:04 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ugdDF-0003O2-Mt
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 01:49:23 -0400
+ id 1ugdPT-0004b6-7F
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:02:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753768162; x=1785304162;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=jmBWm4UYQ2MUZHTUtB5Bnn1r1nrxFRr3zI05N00L7cw=;
- b=hc/jXRSjxyhyGzDz+q9tz6gTlgBji4f390U2TvHR3+DSlXmS2p4YWfrP
- lZDZPfeJPKsdQYakjcX7Lbhunns+l7CrwufYMMj7B+zVFabTOloZSHlVZ
- l74dFpgf3sXt5V8Hvn/kt49c6JRZseNDX7Nn6mlIgoE8RzYsJjZijhh6F
- 8DXgNWrWJUvYcwvp8bKmY2DDSlwd7nzWK34ZlIxKWhiKqvHIm+Obq5SxJ
- H/1HkIMLtIIrknEq534S9egcL2rbUwy1tnczA+F1nil2NYT7RlQWIrxfw
- QHEQScJPfwVcNANynDynTJFeykLD8ALPBRss1JT8dv9zG9pHA6Oc/Xg0S g==;
-X-CSE-ConnectionGUID: bKDFMo4LRZO5Dt8Aos6eSg==
-X-CSE-MsgGUID: a/et28icTMaTObv1OjHEBA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55907960"
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="55907960"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jul 2025 22:49:21 -0700
-X-CSE-ConnectionGUID: sTnBFxWwSMyqZVlt9vbTuw==
-X-CSE-MsgGUID: iOyoLozTQDCR9mjdXjNLzw==
+ t=1753768919; x=1785304919;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=t0pUYIob5f7VMPDuNAJgp+dbhC1o7MpeWlAMU+/hhmI=;
+ b=n+bEJlnjoB097PnWPenU7MdC1Gz+ATcTTNKsR+qJoSDjVMWTuC5QQL86
+ WBtk/xw1ckwlJw7M/7VkfiEGkzT4xafAfXIOIEqb8E/5L5Rk8q7jT4lNe
+ GkkOClXQ2FN44Jmvfw83RF/7ceejg+LW5KytWoPg4YpOqxneTQM3NHTbE
+ mWTJ1EtXanXLHx1CBbTG2sHMtb9JtKabwS97PVSperhmurdtykeQYZwhy
+ U5gN5QO8sUgPitPw4K7Dtlsxb3NWoA4YKEoTU7rlJ8DaFf4jyOEJ+iv0k
+ Ug+bVhFFK+c1GnTJ/BsJ5waMHDQB2fZEKuzLix8asiqLqXd5Kbqr1ERQd g==;
+X-CSE-ConnectionGUID: oKqQBTT/QKm6JBX7pfsr6A==
+X-CSE-MsgGUID: 6Dt9wJ7OSn2p8ny182WwoA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="67383360"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="67383360"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jul 2025 23:01:56 -0700
+X-CSE-ConnectionGUID: IvaqX746RNOzvT4Pi/+tuQ==
+X-CSE-MsgGUID: V2eBLvQoT6aqOmda9Kmeig==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="199750970"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa001.jf.intel.com with ESMTP; 28 Jul 2025 22:49:18 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH 2/2] target/i386: Define enum X86ASIdx for x86's address spaces
-Date: Tue, 29 Jul 2025 13:40:23 +0800
-Message-ID: <20250729054023.1668443-3-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250729054023.1668443-1-xiaoyao.li@intel.com>
-References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="161874027"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jul 2025 23:01:54 -0700
+Message-ID: <256c721c-8846-4c5a-9535-0047d83264de@intel.com>
+Date: Tue, 29 Jul 2025 14:01:51 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
+To: Zhao Liu <zhao1.liu@intel.com>,
+ Kirill Martynov <stdcalllevi@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
+ <3096f21e-d8dd-4434-afbd-ee2b56adb20f@intel.com>
+ <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
+ <1d12e519-9f3c-41a0-90ff-8e4655000d21@intel.com>
+ <09AD44D6-E381-46B0-9B86-B248EB9582D7@yandex-team.ru>
+ <4985e648-6505-4321-8e3a-f987b9d03bde@intel.com> <aGeO2zCKep7StDA8@intel.com>
+ <cf64058e-e5a2-4cf2-9851-92925553e72c@intel.com>
+ <6C44AD09-0675-4277-93C2-DB3647EC54C2@yandex-team.ru>
+ <aIei/i7+MHM2s3EZ@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aIei/i7+MHM2s3EZ@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -40
 X-Spam_score: -4.1
@@ -85,93 +94,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like ARM defines ARMASIdx, do the same to define X86ASIdx as enum. So
-that it's more clear what index 0 is for memory and index 1 is for SMM.
+On 7/29/2025 12:19 AM, Zhao Liu wrote:
+> Hi Kirill,
+> 
+> On Mon, Jul 28, 2025 at 05:44:25PM +0300, Kirill Martynov wrote:
+>> Date: Mon, 28 Jul 2025 17:44:25 +0300
+>> From: Kirill Martynov <stdcalllevi@yandex-team.ru>
+>> Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for
+>>   softmmu
+>> X-Mailer: Apple Mail (2.3826.600.51.1.1)
+>>
+>> Hi Xiaoyao!
+>> Hi Zhao!
+>>
+>> Xiaoyao,
+>> I tested the patch you provided, it works smoothly, easy to apply. Nothing to complain about.
+>>
+>> Zhao,
+>> I also tried your approach (extend cpu_address_space_init with AddressSpace parameter)
+>> First, it crashed in malloc with error:
+>> malloc(): unaligned tcache chunk detected
+>> After a little investigation I resized cpu->cpu_ases array, so it can fit second element and
+>> it started working. However, it looks like that function cpu_address_space_destroy needs
+>> some adjustment, because now it treats cpu->cpu_ases elements as dynamically allocated and
+>> destroys them with g_free() and passing &smram_address_space to cpu_address_space_init()
+>> in register_smram_listener() could lead to a problem since it is statically allocated in binary.
+> 
+> Thanks for testing. Yes, resize related details are needed, which were
+> I missed. These 2 patches essentially are all about adding SMM CPU
+> address space for KVM, like TCG did.
+> 
+>> So, my question now, what should I do?
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- accel/kvm/kvm-all.c              | 2 +-
- target/i386/cpu.h                | 5 +++++
- target/i386/kvm/kvm-cpu.c        | 2 +-
- target/i386/kvm/kvm.c            | 4 ++--
- target/i386/tcg/system/tcg-cpu.c | 4 ++--
- 5 files changed, 11 insertions(+), 6 deletions(-)
+I just sent the formal version [*], could you please help verify if it 
+resolve your problem?
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 890d5ea9f865..e56c217a5a0d 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2797,7 +2797,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
-     s->memory_listener.listener.coalesced_io_del = kvm_uncoalesce_mmio_region;
- 
-     kvm_memory_listener_register(s, &s->memory_listener,
--                                 &address_space_memory, 0, "kvm-memory");
-+                                 &address_space_memory, X86ASIdx_MEM, "kvm-memory");
-     memory_listener_register(&kvm_io_listener,
-                              &address_space_io);
- 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index f977fc49a774..e0be7a740685 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2574,6 +2574,11 @@ static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
- void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
- void cpu_sync_avx_hflag(CPUX86State *env);
- 
-+typedef enum X86ASIdx {
-+    X86ASIdx_MEM = 0,
-+    X86ASIdx_SMM = 1,
-+} X86ASIdx;
-+
- #ifndef CONFIG_USER_ONLY
- static inline int x86_asidx_from_attrs(CPUState *cs, MemTxAttrs attrs)
- {
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index aa657c2a4627..36f5892d330e 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -99,7 +99,7 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-      * register_smram_listener() after machine init done.
-      */
-     cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
--    cpu_address_space_init(cs, 0, "cpu-mmeory", cs->memory);
-+    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-mmeory", cs->memory);
- 
-     return true;
- }
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 47fb5c673c8e..5621200be0f0 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2728,10 +2728,10 @@ static void register_smram_listener(Notifier *n, void *unused)
- 
-     address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
-     kvm_memory_listener_register(kvm_state, &smram_listener,
--                                 &smram_address_space, 1, "kvm-smram");
-+                                 &smram_address_space, X86ASIdx_SMM, "kvm-smram");
- 
-     CPU_FOREACH(cpu) {
--        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-+        cpu_address_space_init(cpu, X86ASIdx_SMM, "cpu-smm", &smram_as_root);
-     }
- }
- 
-diff --git a/target/i386/tcg/system/tcg-cpu.c b/target/i386/tcg/system/tcg-cpu.c
-index 0538a4fd51a3..7255862c2449 100644
---- a/target/i386/tcg/system/tcg-cpu.c
-+++ b/target/i386/tcg/system/tcg-cpu.c
-@@ -74,8 +74,8 @@ bool tcg_cpu_realizefn(CPUState *cs, Error **errp)
-     memory_region_set_enabled(cpu->cpu_as_mem, true);
- 
-     cs->num_ases = 2;
--    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
--    cpu_address_space_init(cs, 1, "cpu-smm", cpu->cpu_as_root);
-+    cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
-+    cpu_address_space_init(cs, X86ASIdx_SMM, "cpu-smm", cpu->cpu_as_root);
- 
-     /* ... SMRAM with higher priority, linked from /machine/smram.  */
-     cpu->machine_done.notify = tcg_cpu_machine_done;
--- 
-2.43.0
+(If you can share the step how to reproduce the original problem, I can 
+test myself)
+
+[*] 
+https://lore.kernel.org/all/20250729054023.1668443-2-xiaoyao.li@intel.com/
+
+> I still believe we should update cpu_address_space_init() and remove its
+> outdated assumptions about KVM first.
+> 
+> Moreover, users should have control over the added address spaces (I
+> think this is why num_ases should be set before
+> cpu_address_space_init()), and quietly updating num_ases is not a good
+> idea.
+> 
+> The question of whether to reuse smram_address_space for the CPU is
+> flexible. At least TCG doesn't reuse the same SMM space, and there's
+> already cpu_as_root (and cpu_as_mem!) in X86CPU. 
+
+For i386 tcg, it allocates each CPU 3 MemoryRegions: cpu_as_root, 
+cpu_as_mem and smram for SMM. While for i386 kvm, it allocates global 
+MemoryRegions: smram_as_root and smram_as_mem and get smram from 
+resolving "/machine/smram".
+
+yeah, this seems something we can cleanup if there were not specific 
+reason for TCG to have different MemoryRegion each CPU. I don't have 
+bandwidth to investigate it further.
+
+> There are also some
+> cleanup things worth considering, such as how to better handle the TCG
+> memory listener in cpu_address_space_init() - KVM also has the similar
+> logic. If possible, I can help you further refine this fix and clean up
+> other related stuff in one goes as well.
+> 
+> Thanks,
+> Zhao
+> 
 
 
