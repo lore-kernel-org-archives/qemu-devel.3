@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374ECC87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A26C87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugufE-0004cE-31; Tue, 29 Jul 2025 20:27:25 -0400
+	id 1uguch-00083v-CM; Tue, 29 Jul 2025 20:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguMY-0006ps-Cm
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:08:06 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1uguJ2-0004fY-Ch
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:28 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguMW-00058B-7h
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:08:06 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b34a71d9208so4702955a12.3
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:08:03 -0700 (PDT)
+ id 1uguIz-0004dH-EH
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:28 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-b3bcb168fd5so5294463a12.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753834083; x=1754438883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833863; x=1754438663; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qSjnwPeDWDBrNlNB24iCT3wnvDV5JdCbq4vVQKGP1nQ=;
- b=WPRE2JwNUSYKkOUnquoGjlsncD7f4SDcyJJojEE7EKTbgqwNlfB5e1GJoBac9AuGB0
- 06lYuKAGEE1CHI9fB2zyeuniD51Xn+NRQewH9WmrUpI3H1KIaVPUTKEiqeFNXbM0I2bI
- nja9yWYThMBEHEzcbxSgoy4nLAXMGNuFdxWbItpmPP2Kw+r5qjOEHtNMXwS9FEAmpXmg
- VXZR+pnQT5KgWpq7/F0imgOC+5d2cprfC/jW134SDIYgobm48O/FWQNPKK25HGloxp4E
- 9psCoB46pjFjNtjoYBwSuOBLsOMdwj0YunDf2XtCMuqeMkfcwve7uFcb4k0gdB7jnY5h
- E1cQ==
+ :reply-to; bh=uMIXwlpnlSfFBAzj9mkY1Aw7ECb3bAcUI/afFDOaBLM=;
+ b=zzeFuldRMwlScBjT6sJUFKiBB2if5JWheg9hZPPbpaBlhSPhDZ8FbmhGGIdBhxP5Tc
+ maPwu3/4HvMWZ8zx3h+xnfLtBMcNyOqCSv/FZcYgJChRr1dVvWMRcnLQurBzxBg58db3
+ 8PGoXKrPKyY14sODnLbxdVnnyIe6+vkkop+CaOCagsdwGU5p3/P3x1Df/KV9gbSkiG10
+ qJgsPOalP0iGLk5tUWy1Ffj9Y5olbBq3IHI5NZTaLhX4gY6D+DKugW/obuzhSK6Ra0ic
+ jxdEU8Q3ph9uz278SXe7D2zI8TuDb+XC1HZdWTXfhAy2JTlARIPmPfmP3b5YeABiio7U
+ vNaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753834083; x=1754438883;
+ d=1e100.net; s=20230601; t=1753833863; x=1754438663;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qSjnwPeDWDBrNlNB24iCT3wnvDV5JdCbq4vVQKGP1nQ=;
- b=RPPVCkID62K4E4JuVkMkVVjpOpIHuTzSTp/YxoM3ZSmG1ix2uWWfkWdxQYH+PMSskE
- 61pr+wxYSG8Ugq+T3z01jwFaOgInF38TNRXQnA554nIAxdLNBQR6tqmGPeqSxo22FaQY
- 0DHbarTzyKHNbMc49pvoxWFm5C4SNZi3Nlc8y5oN9EQSB+jJtLNa97xSresjY+viLukH
- GpAd87Xu3xHIUSH5Or8MEXDVN5EY7LV0YvLCgnA5J2mR2Q0b+jo2fEX7ipgtKsiczRgQ
- DNbhswOWcyZ8zLSndBGYpI53IWX0HJiMg/O3faNlhY+Oq9afrH5KocTTbhViA345kdJu
- XrIA==
-X-Gm-Message-State: AOJu0Yz6s8XKNJvkwBNJCOTqMhhkdfJbItdv7CM+68XcF+AJJVxMBl8N
- ZfsK5Lxf2WGSMcRDMgmewGesyKa6KUK9LpxNRC/uZyhBXsvBe6jLSQhmO8p+FOTXyAFYHvmcRqZ
- uzMbm
-X-Gm-Gg: ASbGncvu3FMgPK9o1DU82xB6FVk1yMZpx7t5CQTuvWYMPsRZUxY0mkXjDqBVMpvwCge
- oUNYz1mAJhl+sgx/esGe98FweNi+Tf9TdYG7rI1UKjI8oYen88agnLBhfdAu5BHEBtNGihRxVK7
- J7I4P46Ic584glmtpPWo9afhy4pG9rbAvUjkb/rtbvlvFgxpztA/WSG+Akz9AR/I1Q3k/x5bgD1
- +Tg7S30MtNoqILxZC9aAzmIgHdE517CKzu+W7yCZZeXo8knylPicu/uzbHP21BOynZdAvAIobS8
- ZAsxRLUcyeU4phIUDHK6LfOmEXzgtAEjoNTFL7NoDUqX9FYPWmzWsyAfUik990EunI7/2q4V5JG
- +ZRMtT339z2cOaviTA9JFw3wD9DGngnl8U1jqWrMBnjZxT0zZYLACckgbiUvjZVDjsc1xme+91Y
- /CcVSU8NrtCg==
-X-Google-Smtp-Source: AGHT+IFc3p1IG1BerogQy/5kybjqgSGeyUfWId8O0KmNGxi3y6/fcvreXHJXQvuNUPx4MDHLRkpR4A==
-X-Received: by 2002:a17:90b:5103:b0:312:f0d0:bb0 with SMTP id
- 98e67ed59e1d1-31f5dd9bc9amr1749078a91.12.1753834082651; 
- Tue, 29 Jul 2025 17:08:02 -0700 (PDT)
+ bh=uMIXwlpnlSfFBAzj9mkY1Aw7ECb3bAcUI/afFDOaBLM=;
+ b=WCk/VqOBjENE5oePT99Djeso4Gx0OJ570JGUGlbBEbjKW0hrf086yZwCqdgGA9MeBl
+ KHEJgVSvwHEbQr70Mtc7R+8alp4v2MpFfGpp4Zgd+J7pyKb+sXJfH5GgQThHms7dFBFf
+ 2c7ITd5yXP1laQ2fsOqixZ4n/SNGeXHPpDUfQMrwccaUMZiQmkeCes6Lh3JLA1DHFvSt
+ GqCZuCI6moSLAaXVYlgowG1wLBDdvtFvVIOKhgH7Hrb/i811qCayh24WC8VE4tv4dDEJ
+ ye54MJ1UuxkuvFQx2gVSjC9ygRCzNbulYz4jEm4Dh/qO8AFrIFoqsulw4nstHxHDadxI
+ 4t0A==
+X-Gm-Message-State: AOJu0Yy13SrDJXGcGbM+LmC+/tYVOxyL1LvWVJRVp0EbycN5S/e3KkKo
+ L/+btwhpm6b0BDZ9QMtvFABDbHYtjEkHlDhv1Rao233bqQUsPB/83l2XDcjMMFdzyqSEF4wE3zj
+ OsoYu
+X-Gm-Gg: ASbGnct5xRM75MqeYWofQKAKlRFz9qxYvO7My+ttYJQMN1B2f8zkOPrSNmWk1xkDvOS
+ vO2aW/AymMcZ63Vq4Y0Kj45+5ysIEz1ru3kX0Wk8IQK3c/wrOuGIwynO2oNchxcokJFADNJFZH1
+ J0Sil26JiiRmyeB9dvG7wmb0YEOuZzmdqmVbWVApQL3kxTkCMQW3XzcPrzGxg+N4LQ6+sEnv6qK
+ eyjaGntKw1Uy0NDy4lIEu9QYGIH9hIriDbbEr3izhH9pO65AgUcpiP8ghF3WIRd+PwxG4hjOdN5
+ bRUMiKNUtZC+6ZXhx/8N2ODbo5SqnndYHJcHBgoXPXlgdU4/hnx4Pm0xm7QvWK5zxw6IOlGm45h
+ ohcGZo9clWfF4tkNmusWFysl5zJsYUNYqCRgPOQS9p0yzFLH0DqfZvpFlA9fs7ToQhwGQB40f/p
+ bM4IOxuhVIkQ==
+X-Google-Smtp-Source: AGHT+IFLZ7NeRrZErlC6Qq5pjtvwgDvrbuJlJJYicwanUBiueqOMFFlxgpSf5L4RFrqpltv+pOl8wA==
+X-Received: by 2002:a05:6a20:2450:b0:220:78b9:f849 with SMTP id
+ adf61e73a8af0-23dc0e445a2mr2099906637.24.1753833863440; 
+ Tue, 29 Jul 2025 17:04:23 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f63ddfb2asm281868a91.22.2025.07.29.17.08.01
+ d2e1a72fcca58-7640ad06762sm9101302b3a.80.2025.07.29.17.04.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:08:02 -0700 (PDT)
+ Tue, 29 Jul 2025 17:04:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 83/89] linux-user: Move arch_parse_elf_property to
- aarch64/elfload.c
-Date: Tue, 29 Jul 2025 13:59:56 -1000
-Message-ID: <20250730000003.599084-84-richard.henderson@linaro.org>
+Subject: [PATCH 53/89] linux-user/xtensa: Split out target_coredump.c.inc
+Date: Tue, 29 Jul 2025 13:59:26 -1000
+Message-ID: <20250730000003.599084-54-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,126 +102,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/target_elf.h |  1 +
- linux-user/loader.h             |  5 +++++
- linux-user/aarch64/elfload.c    | 18 +++++++++++++++++
- linux-user/elfload.c            | 35 ++++++---------------------------
- 4 files changed, 30 insertions(+), 29 deletions(-)
+ linux-user/elfload.c                    | 38 +------------------------
+ linux-user/xtensa/target_coredump.c.inc | 38 +++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 37 deletions(-)
+ create mode 100644 linux-user/xtensa/target_coredump.c.inc
 
-diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
-index 16acf6d47f..2d396ad11a 100644
---- a/linux-user/aarch64/target_elf.h
-+++ b/linux-user/aarch64/target_elf.h
-@@ -11,6 +11,7 @@
- #define ELF_MACHINE             EM_AARCH64
- #define ELF_CLASS               ELFCLASS64
- #define USE_ELF_CORE_DUMP
-+#define ARCH_USE_GNU_PROPERTY   1
- 
- #if TARGET_BIG_ENDIAN
- # define VDSO_HEADER            "vdso-be.c.inc"
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index a4178ce2c1..95cbeed5d4 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -117,4 +117,9 @@ typedef struct {
- /* Note that both Elf32_Word and Elf64_Word are uint32_t. */
- const VdsoImageInfo *get_vdso_image_info(uint32_t elf_flags);
- 
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp);
-+
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 1030cb8094..d186b4685c 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -1,9 +1,11 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qemu.h"
- #include "loader.h"
- #include "target/arm/cpu-features.h"
-+#include "elf.h"
- 
- 
- const char *get_elf_cpu_model(uint32_t eflags)
-@@ -347,3 +349,19 @@ const char *get_elf_platform(CPUState *cs)
- {
-     return TARGET_BIG_ENDIAN ? "aarch64_be" : "aarch64";
- }
-+
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp)
-+{
-+    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
-+        if (pr_datasz != sizeof(uint32_t)) {
-+            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
-+            return false;
-+        }
-+        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
-+        info->note_flags = *data;
-+    }
-+    return true;
-+}
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 14d4502b3c..54ea9221d9 100644
+index 7cd0d5e7db..347af3202c 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -184,41 +184,18 @@ const char * __attribute__((weak)) get_elf_base_platform(CPUState *cs)
-     return NULL;
- }
+@@ -562,43 +562,7 @@ static bool init_guest_commpage(void)
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_XTENSA
  
--#include "elf.h"
+-/* See linux kernel: arch/xtensa/include/asm/elf.h.  */
+-#define ELF_NREG 128
+-typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
 -
--/* We must delay the following stanzas until after "elf.h". */
--#if defined(TARGET_AARCH64)
+-enum {
+-    TARGET_REG_PC,
+-    TARGET_REG_PS,
+-    TARGET_REG_LBEG,
+-    TARGET_REG_LEND,
+-    TARGET_REG_LCOUNT,
+-    TARGET_REG_SAR,
+-    TARGET_REG_WINDOWSTART,
+-    TARGET_REG_WINDOWBASE,
+-    TARGET_REG_THREADPTR,
+-    TARGET_REG_AR0 = 64,
+-};
 -
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
+-static void elf_core_copy_regs(target_elf_gregset_t *regs,
+-                               const CPUXtensaState *env)
 -{
--    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
--        if (pr_datasz != sizeof(uint32_t)) {
--            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
--            return false;
--        }
--        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
--        info->note_flags = *data;
+-    unsigned i;
+-
+-    (*regs)[TARGET_REG_PC] = tswapreg(env->pc);
+-    (*regs)[TARGET_REG_PS] = tswapreg(env->sregs[PS] & ~PS_EXCM);
+-    (*regs)[TARGET_REG_LBEG] = tswapreg(env->sregs[LBEG]);
+-    (*regs)[TARGET_REG_LEND] = tswapreg(env->sregs[LEND]);
+-    (*regs)[TARGET_REG_LCOUNT] = tswapreg(env->sregs[LCOUNT]);
+-    (*regs)[TARGET_REG_SAR] = tswapreg(env->sregs[SAR]);
+-    (*regs)[TARGET_REG_WINDOWSTART] = tswapreg(env->sregs[WINDOW_START]);
+-    (*regs)[TARGET_REG_WINDOWBASE] = tswapreg(env->sregs[WINDOW_BASE]);
+-    (*regs)[TARGET_REG_THREADPTR] = tswapreg(env->uregs[THREADPTR]);
+-    xtensa_sync_phys_from_window((CPUXtensaState *)env);
+-    for (i = 0; i < env->config->nareg; ++i) {
+-        (*regs)[TARGET_REG_AR0 + i] = tswapreg(env->phys_regs[i]);
 -    }
--    return true;
 -}
--#define ARCH_USE_GNU_PROPERTY 1
 -
--#else
--
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
-+#ifndef ARCH_USE_GNU_PROPERTY
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data, struct image_info *info,
-+                             Error **errp)
- {
-     g_assert_not_reached();
- }
- #define ARCH_USE_GNU_PROPERTY 0
--
- #endif
++#include "target_coredump.c.inc"
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE       4096
  
-+#include "elf.h"
+diff --git a/linux-user/xtensa/target_coredump.c.inc b/linux-user/xtensa/target_coredump.c.inc
+new file mode 100644
+index 0000000000..192589d1e3
+--- /dev/null
++++ b/linux-user/xtensa/target_coredump.c.inc
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
- struct exec
- {
-     unsigned int a_info;   /* Use macros N_MAGIC, etc for access */
++/* See linux kernel: arch/xtensa/include/asm/elf.h.  */
++#define ELF_NREG 128
++typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
++
++enum {
++    TARGET_REG_PC,
++    TARGET_REG_PS,
++    TARGET_REG_LBEG,
++    TARGET_REG_LEND,
++    TARGET_REG_LCOUNT,
++    TARGET_REG_SAR,
++    TARGET_REG_WINDOWSTART,
++    TARGET_REG_WINDOWBASE,
++    TARGET_REG_THREADPTR,
++    TARGET_REG_AR0 = 64,
++};
++
++static void elf_core_copy_regs(target_elf_gregset_t *regs,
++                               const CPUXtensaState *env)
++{
++    unsigned i;
++
++    (*regs)[TARGET_REG_PC] = tswapreg(env->pc);
++    (*regs)[TARGET_REG_PS] = tswapreg(env->sregs[PS] & ~PS_EXCM);
++    (*regs)[TARGET_REG_LBEG] = tswapreg(env->sregs[LBEG]);
++    (*regs)[TARGET_REG_LEND] = tswapreg(env->sregs[LEND]);
++    (*regs)[TARGET_REG_LCOUNT] = tswapreg(env->sregs[LCOUNT]);
++    (*regs)[TARGET_REG_SAR] = tswapreg(env->sregs[SAR]);
++    (*regs)[TARGET_REG_WINDOWSTART] = tswapreg(env->sregs[WINDOW_START]);
++    (*regs)[TARGET_REG_WINDOWBASE] = tswapreg(env->sregs[WINDOW_BASE]);
++    (*regs)[TARGET_REG_THREADPTR] = tswapreg(env->uregs[THREADPTR]);
++    xtensa_sync_phys_from_window((CPUXtensaState *)env);
++    for (i = 0; i < env->config->nareg; ++i) {
++        (*regs)[TARGET_REG_AR0 + i] = tswapreg(env->phys_regs[i]);
++    }
++}
 -- 
 2.43.0
 
