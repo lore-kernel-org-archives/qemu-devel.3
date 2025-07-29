@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 664F1C87FCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 19:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFCDC87FCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 20:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugqCG-0005WO-4L; Tue, 29 Jul 2025 15:41:12 -0400
+	id 1ugqej-0001cc-LO; Tue, 29 Jul 2025 16:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugo19-0002sT-W8
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 13:21:36 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugo18-0001jt-0Z
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 13:21:35 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so6390270b3a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 10:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753809691; x=1754414491; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o36SU+/RYcs46FtNHqIxijN8wE9mQm+I9M4/VJFNRoI=;
- b=V/onMolW9bMvtW+jzMOHNwqc4p+bejHq2blFSbyOcm//9/t7tthGUKa+3R66ilx+73
- d0kSomFCEvS7ejidaAhx+9+6J9eED49NQ+IWpO1Vqan1WuW0hEjlRbT3fuCIjFIPuwnj
- Zxxm+V/DkLYAETo05B90FItvcVSW/sxjRg9ugjYzQeVRaQuq34vuhb6I5aELebcUJJiB
- p1DmFaqjk52IdBdkdKOP0bKm75xy6SSzUjvx5WrbQuYd0B8tUKyPxhSHId8lDtlq33Uf
- v5feSv9EzCTTiQ/gWCErfXVJ/36MHz44Qz2XkQP69y151RsSFQvZxOH2jAlrgyw2UJzA
- gmzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753809691; x=1754414491;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o36SU+/RYcs46FtNHqIxijN8wE9mQm+I9M4/VJFNRoI=;
- b=crqxXt9tLiMgwQw2TbVYbpTr2x7gU6DM4HhIy5mM/A9Yl4shx2b1VnkbtLwqtgucxE
- EJReGpsDHMc3xFapB4zwmXsMFRrGkr7sVzTQ05s1lyTB693BKG1EylznBaKjZwz1VPA5
- Dg7a7GXwbTv6BupvhV0zlvj+54rPu1lTdQfyjvySW3UKkUt1tVP1pPjk3YDj+nrc3247
- 7fadXZQx5pFZ0OLA0Hf6bF1peWlACqn17RACn+LDiWLzOJiLELEKvUwQJbOCOPcWn5YR
- 36queRF+RKoTtPAayBhU4/txzJrLMP5Cq+RxbMTlpsPPiFsw6QsaQBw/cGWyJZkCtWeh
- GZgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAcWaU7QIWOyFMN6wzM6+Br3AZdZ+Lf8XoEKg2ZefmMg44iyarxXyfKIzTGDvyzuEGgl2OvB6QVDjC@nongnu.org
-X-Gm-Message-State: AOJu0YyZWlSn3dNUUGT2jC4EWFMe211IlWQIY2TgzmnNK7fhm0jlz/g/
- UZVyCfwj1ZWTm6otGzR97NOgEmv1bSTsTxfHHBuqc4VZKabOxBaDMlOgmYOwHA8cExE=
-X-Gm-Gg: ASbGncs+vDdc/QSo/BC7Z5uYQgfci3f7Y+UvIj4KTUWnK5Djrsa7tKgIFXwyXyybMWt
- MeqHtQfQyQn62n9YkquEhzNdXpSY3S+jwptaBada3Uv38JoYYWLeycYaN+NGBXUSi4FV8RI9AvH
- IGGhDtrNDi8dCGlLEKPmDhhRJsat3ybndKACOcHxCHE4ZUlQq9K1YcyEQNhL9DAZPuKGJhTgqbI
- 6h075rklmclRAIABSorBNPbR+8fVK+6ml/p6z18/ehADVgkF1EQhCtK91nzOIySlbwVakm1QJnK
- Za0cswre5MyVGh999ulB0Is9Pkhvrd5Ju6n6TUZ08s2FFvCzJ5BnkHl9PX/XwLNq6mD0v4KARDK
- XTVQ0/UciKlulCC+gjjL4NZdIka+1OgcX2JlnlXSFuzkz2Ush3XM0jwS5mq7vIeyz81ZZMiHIJv
- D5lQ==
-X-Google-Smtp-Source: AGHT+IFdcb0h4DkzNFFUajGH2uguiqxR1rddOR7PsqYQhVTcV6zxSK2V+xKJ4by02fSwsCepIPrz/A==
-X-Received: by 2002:a05:6a20:6a10:b0:218:59b:b2f4 with SMTP id
- adf61e73a8af0-23dc0eb2b8bmr312783637.42.1753809691418; 
- Tue, 29 Jul 2025 10:21:31 -0700 (PDT)
-Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
- [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7642db46f00sm8306446b3a.109.2025.07.29.10.21.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Jul 2025 10:21:31 -0700 (PDT)
-Message-ID: <c6265c03-1eda-4a5b-92b7-c70e2514b5c9@linaro.org>
-Date: Tue, 29 Jul 2025 07:21:27 -1000
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugoMC-0007Fk-Uy
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 13:43:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugoMA-0004TX-QH
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 13:43:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753810997;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LVsTL8c/Zy1jiu7dZzMiPv8OokP+7Lkgukc+5rOJh+Q=;
+ b=Ux7iHQ3xOx5Bf0mMo2iJGnicq/oS80jPEbuU65d4YWbzzdZ0DsuyxuM4Z/2r2QdyxlFnWr
+ KZh/CcmQUOYQ332K76wmFYUQ874xySWk5uT4hyGvJXkQteLqOs7brbKExiwSLbayd5Bpfc
+ FGeIeBhbj0d0pN92V8lgk3EwDrHmeT4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-l0V0GKGXPGGa1YvMswhWsw-1; Tue,
+ 29 Jul 2025 13:43:13 -0400
+X-MC-Unique: l0V0GKGXPGGa1YvMswhWsw-1
+X-Mimecast-MFC-AGG-ID: l0V0GKGXPGGa1YvMswhWsw_1753810992
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4A781955F2C; Tue, 29 Jul 2025 17:43:11 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.29])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9C84F1800285; Tue, 29 Jul 2025 17:43:09 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
+ Hao Wu <wuhaotsh@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 2/3] roms/Makefile: build ast27x0_bootrom
+Date: Tue, 29 Jul 2025 19:42:58 +0200
+Message-ID: <20250729174259.697405-3-clg@redhat.com>
+In-Reply-To: <20250729174259.697405-1-clg@redhat.com>
+References: <20250729174259.697405-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 46/82] target/arm: Implement FEAT_CHK
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-47-richard.henderson@linaro.org>
- <9209927c-6c5f-4499-a3ef-1f4c70951ad0@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <9209927c-6c5f-4499-a3ef-1f4c70951ad0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,28 +86,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/25 06:01, Gustavo Romero wrote:
->> +static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
->> +{
->> +    uint64_t feat_en = 0;
->> +
->> +    if (s->gcs_en) {
->> +        feat_en |= 1 << 0;
-> 
-> I understand that CHKFEAT is currently only tied to GCS but will cover more features
-> in the future so we can keep feat_en |= 1 << 0 even if it could gate TCG andi directly
-> on s->gcs_en and do andi with 0. ok.
+From: Michael Tokarev <mjt@tls.msk.ru>
 
-Yep.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3052
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/607a943a587248fbe0ff0897de80aee98a093caa.1753654515.git.mjt@tls.msk.ru
+[ clg: Removed make CC= workaround ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ roms/Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> 
-> It's curious that this instruction is tied to x16, it seems easy to use any other
-> general purpose register to query for the features.
+diff --git a/roms/Makefile b/roms/Makefile
+index 6af68a922f30..4c8793c5bd45 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -68,6 +68,7 @@ default help:
+ 	@echo "  u-boot.sam460      -- update u-boot.sam460"
+ 	@echo "  npcm7xx_bootrom    -- update vbootrom for npcm7xx"
+ 	@echo "  npcm8xx_bootrom    -- update vbootrom for npcm8xx"
++	@echo "  ast27x0_bootrom    -- update vbootrom for ast27x0"
+ 	@echo "  efi                -- update UEFI (edk2) platform firmware"
+ 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
+ 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
+@@ -200,6 +201,10 @@ npcm8xx_bootrom:
+ 	$(MAKE) -C vbootrom/npcm8xx CROSS_COMPILE=$(aarch64_cross_prefix)
+ 	cp vbootrom/npcm8xx/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
+ 
++ast27x0_bootrom:
++	$(MAKE) -C vbootrom/ast27x0 CROSS_COMPILE=$(aarch64_cross_prefix)
++	cp vbootrom/ast27x0/ast27x0_bootrom.bin ../pc-bios/ast27x0_bootrom.bin
++
+ hppa-firmware:
+ 	$(MAKE) -C seabios-hppa parisc
+ 	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
+-- 
+2.50.1
 
-That's because the instruction is allocated from HINT space, which means that it executes 
-as a NOP on cpus that don't support FEAT_CHK.  The HINT space is limited, and it would be 
-wastefull to allocate 32 such insns, one for each register.
-
-
-r~
 
