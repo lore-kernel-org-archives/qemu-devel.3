@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C07CC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 09:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42FCC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 09:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uggXd-0006CW-I8; Tue, 29 Jul 2025 05:22:38 -0400
+	id 1uggXM-0005Z0-LO; Tue, 29 Jul 2025 05:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uggWj-0004tg-56
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:44 -0400
+ id 1uggWg-0004rO-B1
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:42 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uggWg-0002cx-AK
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:40 -0400
+ id 1uggWe-0002cE-9i
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753780898; x=1785316898;
+ t=1753780896; x=1785316896;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GUC4RzUWGM5tKjt/0JFvAk6Xt3JqGlvpzu1w06idpMk=;
- b=U2arzrCgN5JJfScWW/jJf/iGvcs2Qvl0S+klT10YZ00ODvgmp0zd9yaJ
- JkMl/5lo0RfinGuyp3ePuC1G0GtaA5kn+nLcmjqjgZh+HclPZtkny2g4E
- bEghp1KRetnm0Mml+pE1KfC/7V+RMdvluvUzEqMgzua+qQV04WiqUOH+2
- eKPVTtKPy/etMticSf+8TKlF4ZppvBFdL6NQZvv0fGjyqII5gadWD3YGN
- MEU4VQzXHP0loVTUXxyT/Z2t9i2pxJaLE2tuSJZGPNkqzZX22g+i4gy0o
- nhQgJgWvRmXXm1fIwKUU4otaWv9G0g0xAdtddcuK0EUYAcgGEwyy92AoA w==;
-X-CSE-ConnectionGUID: 7wlvZJvpRqKW74CmBFDPVw==
-X-CSE-MsgGUID: C7gbUcSETyKlV7nHIJQG7Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55981927"
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="55981927"
+ bh=nzqQ5VR40rluhIOv+CGq1GjKJXz0vEMcuNbkwrxfyd4=;
+ b=GBtd4aYHKn65fx56mpwZGig0Qp70gX818oYocq72F4rsslRQUhaHM46O
+ 1Vs/6wIoM0F+x2nEEhhba4ojzkhcMOyDKEDMyx5gQRvfNbCN5c1+j+OaT
+ 2CcsqTXNAXMLCb14DLKFMaAavFJkZmSunBhvTJLjZaZ5tRbpjBwRUNj8u
+ mkRaz34/Q2gM58M7wrty+s0T4Py+GJ1NUiAfVQqUpRAcWJ0qUx0fgcBX9
+ GcU89EVk0Ry1xId5pUk4+9iOzBd0V6ni04DyFwPRqOEV55OsGYekOvEIT
+ TvDTGmybvnSykqxA5XpCAAGZG837YZE5/2KG/RF0u6sByFxOtFKubRcOR Q==;
+X-CSE-ConnectionGUID: iCQepgC9Rlyxf5k4pLKk5w==
+X-CSE-MsgGUID: qEiUtLnFTXuXe9lT3OtCHg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55981921"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="55981921"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2025 02:21:37 -0700
-X-CSE-ConnectionGUID: IBAv/ouMQtuOz3ZZGKBKfQ==
-X-CSE-MsgGUID: DkbTSSJKRGqv1LiyHYSYFg==
+ 29 Jul 2025 02:21:33 -0700
+X-CSE-ConnectionGUID: s+XqSS4QQxm/O7XBRwTivg==
+X-CSE-MsgGUID: fhvhjo6WQ7uH42gu+2hV7Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="162691278"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="162691256"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2025 02:21:33 -0700
+ 29 Jul 2025 02:21:29 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,10 +54,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 09/20] intel_iommu: Introduce two helpers
- vtd_as_from/to_iommu_pasid_locked
-Date: Tue, 29 Jul 2025 05:20:31 -0400
-Message-ID: <20250729092043.785836-10-zhenzhong.duan@intel.com>
+Subject: [PATCH v4 08/20] intel_iommu: Fail passthrough device under PCI
+ bridge if x-flts=on
+Date: Tue, 29 Jul 2025 05:20:30 -0400
+Message-ID: <20250729092043.785836-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250729092043.785836-1-zhenzhong.duan@intel.com>
 References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
@@ -88,95 +88,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCI device supports two request types, Requests-without-PASID and
-Requests-with-PASID. Requests-without-PASID doesn't include a PASID TLP
-prefix, IOMMU fetches rid_pasid from context entry and use it as IOMMU's
-pasid to index pasid table.
+Currently we don't support nested translation for passthrough device with
+emulated device under same PCI bridge, because they require different address
+space when x-flts=on.
 
-So we need to translate between PCI's pasid and IOMMU's pasid specially
-for Requests-without-PASID, e.g., PCI_NO_PASID(-1) <-> rid_pasid.
-For Requests-with-PASID, PCI's pasid and IOMMU's pasid are same value.
+In theory, we do support if devices under same PCI bridge are all passthrough
+devices. But emulated device can be hotplugged under same bridge. To simplify,
+just forbid passthrough device under PCI bridge no matter if there is, or will
+be emulated devices under same bridge. This is acceptable because PCIE bridge
+is more popular than PCI bridge now.
 
-vtd_as_from_iommu_pasid_locked() translates from BDF+iommu_pasid to vtd_as
-which contains PCI's pasid vtd_as->pasid.
-
-vtd_as_to_iommu_pasid_locked() translates from BDF+vtd_as->pasid to iommu_pasid.
-
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/i386/intel_iommu.c | 58 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ hw/i386/intel_iommu.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1410ddd65e..eb0e799e4a 100644
+index 33e498b3bd..1410ddd65e 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -1602,6 +1602,64 @@ static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
-     return 0;
+@@ -4338,9 +4338,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
  }
  
-+static int vtd_as_to_iommu_pasid_locked(VTDAddressSpace *vtd_as,
-+                                        uint32_t *pasid)
-+{
-+    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
-+    IntelIOMMUState *s = vtd_as->iommu_state;
-+    uint8_t bus_num = pci_bus_num(vtd_as->bus);
-+    uint8_t devfn = vtd_as->devfn;
-+    VTDContextEntry ce;
-+    int ret;
+-static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                            Error **errp)
+ {
++    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+     int ret;
+ 
+@@ -4367,6 +4368,8 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+ #ifdef CONFIG_IOMMUFD
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    PCIBus *bus = vtd_hiod->bus;
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), vtd_hiod->devfn);
+ 
+     /* Remaining checks are all stage-1 translation specific */
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+@@ -4389,6 +4392,12 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+         return false;
+     }
 +
-+    /* For Requests-with-PASID, its pasid value is used by vIOMMU directly */
-+    if (vtd_as->pasid != PCI_NO_PASID) {
-+        *pasid = vtd_as->pasid;
-+        return 0;
-+    }
-+
-+    if (cc_entry->context_cache_gen == s->context_cache_gen) {
-+        ce = cc_entry->context_entry;
-+    } else {
-+        ret = vtd_dev_to_context_entry(s, bus_num, devfn, &ce);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-+    *pasid = VTD_CE_GET_RID2PASID(&ce);
-+    return 0;
-+}
-+
-+static gboolean vtd_find_as_by_sid_and_iommu_pasid(gpointer key, gpointer value,
-+                                                   gpointer user_data)
-+{
-+    VTDAddressSpace *vtd_as = (VTDAddressSpace *)value;
-+    struct vtd_as_raw_key *target = (struct vtd_as_raw_key *)user_data;
-+    uint16_t sid = PCI_BUILD_BDF(pci_bus_num(vtd_as->bus), vtd_as->devfn);
-+    uint32_t pasid;
-+
-+    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
++    if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
++        error_setg(errp, "Host device under PCI bridge is unsupported "
++                   "when x-flts=on");
 +        return false;
 +    }
-+
-+    return (pasid == target->pasid) && (sid == target->sid);
-+}
-+
-+/* Translate iommu pasid to vtd_as */
-+static inline
-+VTDAddressSpace *vtd_as_from_iommu_pasid_locked(IntelIOMMUState *s,
-+                                                uint16_t sid, uint32_t pasid)
-+{
-+    struct vtd_as_raw_key key = {
-+        .sid = sid,
-+        .pasid = pasid
-+    };
-+
-+    return g_hash_table_find(s->vtd_address_spaces,
-+                             vtd_find_as_by_sid_and_iommu_pasid, &key);
-+}
-+
- static int vtd_sync_shadow_page_hook(const IOMMUTLBEvent *event,
-                                      void *private)
- {
+ #endif
+ 
+     error_setg(errp, "host IOMMU is incompatible with stage-1 translation");
+@@ -4422,7 +4431,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     vtd_hiod->iommu_state = s;
+     vtd_hiod->hiod = hiod;
+ 
+-    if (!vtd_check_hiod(s, hiod, errp)) {
++    if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+         g_free(vtd_hiod);
+         vtd_iommu_unlock(s);
+         return false;
 -- 
 2.47.1
 
