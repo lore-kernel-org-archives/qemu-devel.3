@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A978C87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61EC9C87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguSv-00042L-F5; Tue, 29 Jul 2025 20:14:41 -0400
+	id 1uguSv-0003z3-2H; Tue, 29 Jul 2025 20:14:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFP-0001tb-Kj
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:44 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1uguFA-0001au-SA
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:29 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguFN-00044K-H3
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:43 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-74b56b1d301so4182363b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:40 -0700 (PDT)
+ id 1uguF8-00042Q-Ol
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:28 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-74b50c71b0aso3629058b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833640; x=1754438440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833625; x=1754438425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3Wa2B38FBrRML3JhfFoL7KoTHohz6g2FLAwLDDbLgVA=;
- b=nBYPhezUHsnVLMn5JqFvUxYg+fNcmamrI1U2VwodtxXd+tAAKVGhcMFFxE/EDC2raE
- vDXGIg0iFDoJKHxIzWWZSnihhHWskXLv/LiiX80lQYrts/iPtLN8tCtzChKcilC2/18o
- fRjiYugYeEe+cDJ9HmlWjnIFjFc5wUwIc+21/T6EuCegyE6Ot+5YnD5nUV3KyZjA7euH
- RyeA1wL3NMUbCbTc50VAHErt5xh5if1tVdhDypBmHWjL23pVs6LQMHanT21g0ujGCgl8
- N1vhH0dXClp/LJzek+B//9tM55J8MnVqal7YLORUEF32evsKUdIS/d8w5KCuY6mni/Z9
- fHPw==
+ :reply-to; bh=U2nXMnHMpWoFyt5+dkR10XXNFdZXSTwsI6X/q1e4fEc=;
+ b=EwkZAiOY2zBPMJndRjfPTvVr/RrmuCrwcjIf8VmioK1TvYzKSFcA+cf22WQWC4S0i1
+ jnA98B8AbtNVzctmYAQXBz6J3SWsbx29AHzbzhxPvmk3n08T/zDGd21gfHFioJOBCOfP
+ cC9OpRcKeNsTjAAHcQ5mXf063Pakt693i4K7LR+UlMax0tEBDGKX1kO6mtdFgPDcbyTH
+ x8zbui/f5mS15B9/G7G4KGfT2g/PAYwPwrTfJhxyNUJjTq3FA6TKoMfRXnnffnKsQFDT
+ 1H6byLC3gZdBibuu5DKqzaFUKE7LTqrmVwjVhXr0Ps4K8a+/fBwhskCpVdq8hzSVeopJ
+ tq0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833640; x=1754438440;
+ d=1e100.net; s=20230601; t=1753833625; x=1754438425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3Wa2B38FBrRML3JhfFoL7KoTHohz6g2FLAwLDDbLgVA=;
- b=j0l1LU8JzlcXvUTElC1j64Qa+VYuW+91JK397/2u4H51HxBhREc1eI2iE4iqb3mdmG
- 5KDmObe3LhUUFOwAygDrmInbvGgzu4TbML7mvtK/5cTplWXklqthR6Khd/wsqGiQ+Qfx
- dgQHcbNDYt13/dYGFkJxOgQ+PVg3Pt6Z71JfoIjrPwiqZ+KH5fMWy/xe8jU0pCHmNtFY
- NJILJdxyD6FxNgei4W3WZMznRMOmkKL3x19jSffWN/uS3pnHxUPgu04alpF2NEiCrQLd
- NRCiyVOPd/vnFWkIEKVN4lDiUZa2rn7FFQeKR4V2X2bIbk/YkNJtqeWWpCvneCgBhrWL
- ApPw==
-X-Gm-Message-State: AOJu0YyGb/tQwVRhnKqpYZdc/Vr0hqfuhT8L0rKi/pBd0M3i/lY+5lfy
- wgJt53HmZAfyDXEE0WrLucpVdg25lZRdXzyJhPqKy/Ut8J3oaCvzwu8+4nvLiCmAqE3saD6fFm1
- yrKPd
-X-Gm-Gg: ASbGncu+mw386cKF0Wk8Xe4hzwfjKKOp4uxOVJDtdE6znxhE1I3LMWE2B08Q/azqAhW
- y6A0BpmZPSYMu3pnmCEQLqNbU0VDA1aLVrOmtUP0ibd3b7IgnsNIXB80u/BEAaA3MAGEYfR4utQ
- pehC3F6UNMelxz2UNVJET0xrBueVY7u/sbmdLIgA9/3qUEZyT98hgR4UkWuWYd9ucc6V1fkfrfg
- cStIPCSCOleYhcO+O5j7kol3TUw3EkrXVR0a4tYdZe3pkiW71I/uw2Ma4JkAvwrIHeOwEFkrBq6
- wjBdoYPGSem/mfcqlfVvPCBzAmrh/Jnp9QLWu2KPERji9cmKz1XwrONlW9ZANwOpVLsE+j+luFA
- AXqkyB5AF/mCLqVhBuzkQTDmjSuuw1t/rjjhox98afDORWGY17Qc3Ixv4EgMkC/X/1+Xs4p8Btm
- r6bDhcUmmR64HNaX427yY1
-X-Google-Smtp-Source: AGHT+IHDsn/+AfLXeV7Jf2NjqNgEBCcZ1VmhdXJTDc7EtpF0LQIJqYqLKpkRLW5YTDQzlvf8Tr/HaA==
-X-Received: by 2002:a05:6a00:21c5:b0:736:3979:369e with SMTP id
- d2e1a72fcca58-76ab1611ca0mr1897574b3a.9.1753833639422; 
- Tue, 29 Jul 2025 17:00:39 -0700 (PDT)
+ bh=U2nXMnHMpWoFyt5+dkR10XXNFdZXSTwsI6X/q1e4fEc=;
+ b=gaXHtZ/9HAQ+b1LVug7wYHwqfzR/SiwroTfr1BcDEgw2MnVhwOIJKSoD+ZAKnizyZj
+ wqsMZpYu47VnOMPu6B0GxXpDcemWGNbNjku2xAnFyB+e4whHKhSjaSs5Oe+mAsFORQc9
+ HqNSFGarIaFgbEmDK8mHMIysLF6sUu72RJw5otrwRf/vR0/nF3O0I3GNoT4y0CZryyNU
+ r26j9AQ3VT0ZVvBBKZHlRXX9q6VjMQNtzm9GtQhluGLXL7JfMd6S++yGON1QKuFxJBd+
+ zDewfxan6qJ1MIFb0VE98/eSaW58icMjM+zLWfwlrqa7k0uodl5gAwuRXkWAaBjHnoeo
+ MkeA==
+X-Gm-Message-State: AOJu0YyL0TiLh0MYVCzerh9zvaXfdLZHQHatGwNA0OH5CkqcM5HoJQ40
+ bJmNoeyb9FE+LyGq4XoGKrWFQY+E0FxhgNs0m3Hla7xvJVUaiI7mfKGT1auOzFTj1vdv6XgCzJt
+ IaWmn
+X-Gm-Gg: ASbGncsc0dfnvaGL8UMf9uY620KO1l+95QzDlXEFYtv0r50Fj89ZDzngN+YLlvi69H7
+ syna7nu/Qwh8z2YegnjtIchLorDcc33MAz/Oiu/A87iZzzcQC709KiOJn7bxjrYXfDQ1MLmbjMC
+ kkYGM9o05zSpMzt9G1LVx8PChbH8qisTlBk7Z3TqHA4c8eIH+H9P6vx9L3Gm7o5zADwfE2hk9lU
+ 4CNjfn9Ogi/UmqeR2CyX9sonqFATntBJfNGCPCo+ASU5dJXkoN9/q8UwXjjdeGqnq9D8QqP83T5
+ mQi77K1MBa80RHypDFEz4H2gjZUBvlgKXwedGBvlAYiD2jByiBZWELusR5vL7SLS7lSRQLz1RZn
+ g3nJmhCW/5Lqb6uhOPC1JwRNuaWm04VvlELZUvN2bTfJn2ZCfgbUdegDUAHxVI+E2W7R0uvOLs9
+ aFzmSHgxb2fLlaNadp6f+X
+X-Google-Smtp-Source: AGHT+IFOjY2MF9ppq5NYrqMobv/wK6MPVP2MAdqkxON736aP3+44tKgKhimIMO9nR9eb+ZxrSv/lTA==
+X-Received: by 2002:a05:6a20:918e:b0:1ee:8435:6b69 with SMTP id
+ adf61e73a8af0-23dc0d31952mr1653041637.1.1753833624736; 
+ Tue, 29 Jul 2025 17:00:24 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.38
+ d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:00:38 -0700 (PDT)
+ Tue, 29 Jul 2025 17:00:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 21/89] linux-user: Unify init of semihosting fields in
- TaskState
-Date: Tue, 29 Jul 2025 13:58:54 -1000
-Message-ID: <20250730000003.599084-22-richard.henderson@linaro.org>
+Subject: [PATCH 11/89] linux-user: Remove ELF_HWCAP
+Date: Tue, 29 Jul 2025 13:58:44 -1000
+Message-ID: <20250730000003.599084-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,169 +100,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize all 3 fields in main(), rather than in 4 different
-target-specific functions.  Adjust the ifdef to be function
-rather than target specific.  Include stack_base in the ifdef.
+All real definitions of ELF_HWCAP are now identical, and the stub
+definitions are 0.  Provide a weak stub as a fallback definition.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/qemu.h             |  4 ++--
- linux-user/aarch64/cpu_loop.c |  8 --------
- linux-user/arm/cpu_loop.c     | 37 +++++++++++++++--------------------
- linux-user/m68k/cpu_loop.c    |  9 ---------
- linux-user/main.c             |  5 +++++
- linux-user/riscv/cpu_loop.c   |  5 -----
- 6 files changed, 23 insertions(+), 45 deletions(-)
+ linux-user/elfload.c | 34 ++++++++++------------------------
+ 1 file changed, 10 insertions(+), 24 deletions(-)
 
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 6c97ab221f..dff7767bc8 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -122,12 +122,12 @@ struct TaskState {
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index cd83307750..8036f902cc 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -38,7 +38,6 @@
+ #ifdef _ARCH_PPC64
+ #undef ARCH_DLINFO
+ #undef ELF_PLATFORM
+-#undef ELF_HWCAP
+ #undef ELF_HWCAP2
+ #undef ELF_CLASS
+ #undef ELF_DATA
+@@ -158,8 +157,6 @@ typedef abi_int         target_pid_t;
+ 
+ #ifdef TARGET_I386
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ #ifdef TARGET_X86_64
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_X86_64
+@@ -459,7 +456,6 @@ static bool init_guest_commpage(void)
+     return true;
+ }
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+ #define ELF_HWCAP2 get_elf_hwcap2(thread_cpu)
+ 
+ #define ELF_PLATFORM get_elf_platform()
+@@ -549,7 +545,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE       4096
+ 
+-#define ELF_HWCAP   get_elf_hwcap(thread_cpu)
+ #define ELF_HWCAP2  get_elf_hwcap2(thread_cpu)
+ 
+ #if TARGET_BIG_ENDIAN
+@@ -575,8 +570,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ # define ELF_ARCH   EM_SPARCV9
+ #endif
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+ {
+@@ -608,7 +601,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ 
+ #define ELF_ARCH        EM_PPC
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+ #define ELF_HWCAP2 get_elf_hwcap2(thread_cpu)
+ 
+ /*
+@@ -735,8 +727,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ #define ELF_PLATFORM "loongarch"
+ 
+ #endif /* TARGET_LOONGARCH64 */
+@@ -844,8 +834,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMIPSState *e
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ #endif /* TARGET_MIPS */
+ 
+ #ifdef TARGET_MICROBLAZE
+@@ -919,7 +907,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+     (*regs)[32] = tswapreg(env->pc);
+     (*regs)[33] = tswapreg(cpu_get_sr(env));
+ }
+-#define ELF_HWCAP 0
++
+ #define ELF_PLATFORM NULL
+ 
+ #endif /* TARGET_OPENRISC */
+@@ -973,8 +961,6 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ #endif
+ 
  #ifdef TARGET_M68K
-     abi_ulong tp_value;
- #endif
--#if defined(TARGET_ARM) || defined(TARGET_M68K) || defined(TARGET_RISCV)
-+#ifdef CONFIG_SEMIHOSTING
-     /* Extra fields for semihosted binaries.  */
-     abi_ulong heap_base;
-     abi_ulong heap_limit;
--#endif
-     abi_ulong stack_base;
-+#endif
-     int used; /* non zero if used */
-     struct image_info *info;
-     struct linux_binprm *bprm;
-diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index fea43cefa6..030a630c93 100644
---- a/linux-user/aarch64/cpu_loop.c
-+++ b/linux-user/aarch64/cpu_loop.c
-@@ -140,9 +140,6 @@ void cpu_loop(CPUARMState *env)
- void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+@@ -1049,8 +1035,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
+ 
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-
+ static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
  {
-     ARMCPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
--    TaskState *ts = get_task_state(cs);
--    struct image_info *info = ts->info;
-     int i;
- 
-     if (!(arm_feature(env, ARM_FEATURE_AARCH64))) {
-@@ -167,9 +164,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-     if (cpu_isar_feature(aa64_pauth, cpu)) {
-         qemu_guest_getrandom_nofail(&env->keys, sizeof(env->keys));
-     }
--
--    ts->stack_base = info->start_stack;
--    ts->heap_base = info->brk;
--    /* This will be filled in on the first SYS_HEAPINFO call.  */
--    ts->heap_limit = 0;
- }
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 33f63951a9..1f3bb96484 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -482,30 +482,25 @@ void cpu_loop(CPUARMState *env)
- 
- void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
--    CPUState *cpu = env_cpu(env);
--    TaskState *ts = get_task_state(cpu);
--    struct image_info *info = ts->info;
--    int i;
--
-     cpsr_write(env, regs->uregs[16], CPSR_USER | CPSR_EXEC,
-                CPSRWriteByInstr);
--    for(i = 0; i < 16; i++) {
-+    for (int i = 0; i < 16; i++) {
-         env->regs[i] = regs->uregs[i];
-     }
--#if TARGET_BIG_ENDIAN
--    /* Enable BE8.  */
--    if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
--        && (info->elf_flags & EF_ARM_BE8)) {
--        env->uncached_cpsr |= CPSR_E;
--        env->cp15.sctlr_el[1] |= SCTLR_E0E;
--    } else {
--        env->cp15.sctlr_el[1] |= SCTLR_B;
--    }
--    arm_rebuild_hflags(env);
--#endif
- 
--    ts->stack_base = info->start_stack;
--    ts->heap_base = info->brk;
--    /* This will be filled in on the first SYS_HEAPINFO call.  */
--    ts->heap_limit = 0;
-+    if (TARGET_BIG_ENDIAN) {
-+        CPUState *cpu = env_cpu(env);
-+        TaskState *ts = get_task_state(cpu);
-+        struct image_info *info = ts->info;
-+
-+        /* Enable BE8.  */
-+        if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
-+            && (info->elf_flags & EF_ARM_BE8)) {
-+            env->uncached_cpsr |= CPSR_E;
-+            env->cp15.sctlr_el[1] |= SCTLR_E0E;
-+        } else {
-+            env->cp15.sctlr_el[1] |= SCTLR_B;
-+        }
-+        arm_rebuild_hflags(env);
-+    }
- }
-diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
-index 5da91b997a..23693f3358 100644
---- a/linux-user/m68k/cpu_loop.c
-+++ b/linux-user/m68k/cpu_loop.c
-@@ -94,10 +94,6 @@ void cpu_loop(CPUM68KState *env)
- 
- void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
--    CPUState *cpu = env_cpu(env);
--    TaskState *ts = get_task_state(cpu);
--    struct image_info *info = ts->info;
--
-     env->pc = regs->pc;
-     env->dregs[0] = regs->d0;
-     env->dregs[1] = regs->d1;
-@@ -116,9 +112,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-     env->aregs[6] = regs->a6;
-     env->aregs[7] = regs->usp;
-     env->sr = regs->sr;
--
--    ts->stack_base = info->start_stack;
--    ts->heap_base = info->brk;
--    /* This will be filled in on the first SYS_HEAPINFO call.  */
--    ts->heap_limit = 0;
- }
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 68972f00a1..4def4be1c1 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -1050,6 +1050,11 @@ int main(int argc, char **argv, char **envp)
- 
- #ifdef CONFIG_SEMIHOSTING
-     qemu_semihosting_guestfd_init();
-+
-+    ts->stack_base = info->start_stack;
-+    ts->heap_base = info->brk;
-+    /* This will be filled in on the first SYS_HEAPINFO call.  */
-+    ts->heap_limit = 0;
+     regs->psw.addr = infop->entry;
+@@ -1109,8 +1093,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define VDSO_HEADER "vdso-64.c.inc"
  #endif
  
-     cpu_loop(env);
-diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
-index 3ac8bbfec1..2dd30c7b28 100644
---- a/linux-user/riscv/cpu_loop.c
-+++ b/linux-user/riscv/cpu_loop.c
-@@ -108,9 +108,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-         error_report("Incompatible ELF: RVE cpu requires RVE ABI binary");
-         exit(EXIT_FAILURE);
-     }
+-#define ELF_HWCAP get_elf_hwcap(thread_cpu)
 -
--    ts->stack_base = info->start_stack;
--    ts->heap_base = info->brk;
--    /* This will be filled in on the first SYS_HEAPINFO call.  */
--    ts->heap_limit = 0;
- }
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+ {
+@@ -1278,10 +1260,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define elf_check_abi(x) (1)
+ #endif
+ 
+-#ifndef ELF_HWCAP
+-#define ELF_HWCAP 0
+-#endif
+-
+ #ifndef STACK_GROWS_DOWN
+ #define STACK_GROWS_DOWN 1
+ #endif
+@@ -1301,6 +1279,14 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define EXSTACK_DEFAULT false
+ #endif
+ 
++/*
++ * Provide fallback definitions that the target may omit.
++ */
++abi_ulong __attribute__((weak)) get_elf_hwcap(CPUState *cs)
++{
++    return 0;
++}
++
+ #include "elf.h"
+ 
+ /* We must delay the following stanzas until after "elf.h". */
+@@ -1878,7 +1864,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
+     NEW_AUX_ENT(AT_EUID, (abi_ulong) geteuid());
+     NEW_AUX_ENT(AT_GID, (abi_ulong) getgid());
+     NEW_AUX_ENT(AT_EGID, (abi_ulong) getegid());
+-    NEW_AUX_ENT(AT_HWCAP, (abi_ulong) ELF_HWCAP);
++    NEW_AUX_ENT(AT_HWCAP, get_elf_hwcap(thread_cpu));
+     NEW_AUX_ENT(AT_CLKTCK, (abi_ulong) sysconf(_SC_CLK_TCK));
+     NEW_AUX_ENT(AT_RANDOM, (abi_ulong) u_rand_bytes);
+     NEW_AUX_ENT(AT_SECURE, (abi_ulong) qemu_getauxval(AT_SECURE));
 -- 
 2.43.0
 
