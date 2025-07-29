@@ -4,66 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5BEC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305F5C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugjGe-0005cX-Do; Tue, 29 Jul 2025 08:17:18 -0400
+	id 1ugjWo-00064K-BK; Tue, 29 Jul 2025 08:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
- id 1ugjGM-0005OM-RP
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:17:03 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjW9-0005fw-Hb
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:33:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
- id 1ugjGC-0000b6-PH
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:16:53 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c1c:2f40:0:640:b89a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1128D883F2;
- Tue, 29 Jul 2025 15:16:40 +0300 (MSK)
-Received: from smtpclient.apple (unknown [2a02:6bf:8080:47::1:21])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id cGYO7f0GqeA0-34nhxF02; Tue, 29 Jul 2025 15:16:39 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1753791399;
- bh=wvdaCRAXi0GZyh1SIe2k7hsrrOxKPtUt6wv1GzfKFto=;
- h=References:To:Cc:In-Reply-To:Date:From:Message-Id:Subject;
- b=TnfXl83b+jJNumZYJ5axJiueUfbmmau9qMjqxU6LyHW92Hohkm/UaR834K5lx49W1
- CmnSoCsvEkzrEik8xjJXwQ3Qp4jaPDduUAkW2dCxM4Q3ZKq5lmW/BbkNaeV+sKAm3g
- 9BzYG3/hpfYiEvuzoTs4AIpcO4VB7v5WYjObbPx0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Kirill Martynov <stdcalllevi@yandex-team.ru>
-Message-Id: <D31749EF-5115-405F-AE24-B982F5070D77@yandex-team.ru>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH 2/2] target/i386: Define enum X86ASIdx for x86's address
- spaces
-Date: Tue, 29 Jul 2025 15:16:28 +0300
-In-Reply-To: <18da82d6-39e1-4dc1-848e-b64cf40e0d49@linaro.org>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
- <20250729054023.1668443-3-xiaoyao.li@intel.com>
- <18da82d6-39e1-4dc1-848e-b64cf40e0d49@linaro.org>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=stdcalllevi@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjW5-0002Zv-Tw
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:33:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753792387;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5sdpfEg6OJqURgQSP3gjg12Tt+0VbTd/rZEp2KzJbTM=;
+ b=Y3e0F6NLanT2vfzpnR0M7NsDLPT2ZFnCftzfYYLtRQyim6deVNQ03wwTG0Z7/VMdK/LBdZ
+ f7VFdT5r1KvqMou6JqL9W9jeFVfPRlThqcd+2f3DBUkRgifFCLV9iO0dpK35cabuE2loUQ
+ vKoIBoCIRuy45imtwhKgBOr8haAm2z0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-XL1PnVSkOsePrZN5P_z6yw-1; Tue,
+ 29 Jul 2025 08:33:02 -0400
+X-MC-Unique: XL1PnVSkOsePrZN5P_z6yw-1
+X-Mimecast-MFC-AGG-ID: XL1PnVSkOsePrZN5P_z6yw_1753792381
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 409241956095; Tue, 29 Jul 2025 12:33:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E498518001DD; Tue, 29 Jul 2025 12:33:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3D8AF21E6A27; Tue, 29 Jul 2025 14:32:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  jsnow@redhat.com,
+ peter.maydell@linaro.org
+Subject: Re: [PATCH 2/2] MAINTAINERS: Cover docs/devel/qapi-domain.rst properly
+In-Reply-To: <CAAjaMXYyJHaCwd_3Dxd=wDVj+kPcK-FJZQ=8e7RGD7m22NV7ig@mail.gmail.com>
+ (Manos Pitsidianakis's message of "Tue, 29 Jul 2025 15:09:23 +0300")
+References: <20250729091642.3513895-1-armbru@redhat.com>
+ <20250729091642.3513895-3-armbru@redhat.com>
+ <CAAjaMXYyJHaCwd_3Dxd=wDVj+kPcK-FJZQ=8e7RGD7m22NV7ig@mail.gmail.com>
+Date: Tue, 29 Jul 2025 14:32:58 +0200
+Message-ID: <87a54ndvnp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,65 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
---Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Tested-By: Kirill Martynov <stdcalllevi@yandex-team.ru =
-<mailto:stdcalllevi@yandex-team.ru>>
-
-> On 29 Jul 2025, at 10:11, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> On 29/7/25 07:40, Xiaoyao Li wrote:
->> Like ARM defines ARMASIdx, do the same to define X86ASIdx as enum. So
->> that it's more clear what index 0 is for memory and index 1 is for =
-SMM.
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> On Tue, Jul 29, 2025 at 12:18=E2=80=AFPM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 >> ---
->>  accel/kvm/kvm-all.c              | 2 +-
->>  target/i386/cpu.h                | 5 +++++
->>  target/i386/kvm/kvm-cpu.c        | 2 +-
->>  target/i386/kvm/kvm.c            | 4 ++--
->>  target/i386/tcg/system/tcg-cpu.c | 4 ++--
->>  5 files changed, 11 insertions(+), 6 deletions(-)
->=20
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->=20
+>>  MAINTAINERS | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index f1bd69c3db..9c22e921e8 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -4432,6 +4432,7 @@ F: docs/requirements.txt
+>>  F: docs/sphinx/
+>>  F: docs/_templates/
+>>  F: docs/devel/docs.rst
+>> +F: docs/devel/qapi-domain.rst
+>
+> Question: Does it matter if this is already covered by QAPI section
+> which has: "F: docs/devel/qapi*"?
 
+I'm adding it to the "Sphinx documentation configuration and build
+machinery" section as well.
 
---Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+Before the patch:
 
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;">Tested-By: =
-Kirill Martynov &lt;<a =
-href=3D"mailto:stdcalllevi@yandex-team.ru">stdcalllevi@yandex-team.ru</a>&=
-gt;<br id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 29 Jul 2025, at 10:11, Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On 29/7/25 07:40, Xiaoyao =
-Li wrote:<br><blockquote type=3D"cite">Like ARM defines ARMASIdx, do the =
-same to define X86ASIdx as enum. So<br>that it's more clear what index 0 =
-is for memory and index 1 is for SMM.<br>Signed-off-by: Xiaoyao Li =
-&lt;xiaoyao.li@intel.com&gt;<br>---<br> &nbsp;accel/kvm/kvm-all.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;| 2 +-<br> &nbsp;target/i386/cpu.h =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;| 5 +++++<br> &nbsp;target/i386/kvm/kvm-cpu.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 2 +-<br> =
-&nbsp;target/i386/kvm/kvm.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 4 =
-++--<br> &nbsp;target/i386/tcg/system/tcg-cpu.c | 4 ++--<br> &nbsp;5 =
-files changed, 11 insertions(+), 6 =
-deletions(-)<br></blockquote><br>Reviewed-by: Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@linaro.org&gt;<br><br></div></div></blockquote></div><br></body=
-></html>=
+    $ scripts/get_maintainer.pl -f docs/devel/qapi-domain.rst=20
+    Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
+    Michael Roth <michael.roth@amd.com> (supporter:QAPI)
+    qemu-devel@nongnu.org (open list:All patches CC here)
 
---Apple-Mail=_54FD05A5-3D6E-4880-BC16-7E238FE24DC6--
+Afterwards:
+
+    $ scripts/get_maintainer.pl -f docs/devel/qapi-domain.rst=20
+--> John Snow <jsnow@redhat.com> (maintainer:Sphinx documentat...)
+--> Peter Maydell <peter.maydell@linaro.org> (maintainer:Sphinx documentat.=
+..)
+    Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
+    Michael Roth <michael.roth@amd.com> (supporter:QAPI)
+    qemu-devel@nongnu.org (open list:All patches CC here)
+
+Good, because it's John's baby, and he's maintaining it.
+
+> If not,
+>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+Thank you!
+
+[...]
+
 
