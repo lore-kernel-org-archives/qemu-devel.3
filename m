@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6B2C87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BB6C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 12:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugj9m-0002P8-Ml; Tue, 29 Jul 2025 08:10:11 -0400
+	id 1ugjBK-0005J0-Mz; Tue, 29 Jul 2025 08:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ugj9Z-00027I-Pj
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:10:03 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ugjAy-00055j-Vi
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:11:25 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ugj9X-000814-E4
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:09:57 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-61530559887so3369334a12.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 05:09:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ugjAu-0008Re-J6
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:11:24 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4ae73b0a891so91627991cf.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 05:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753790990; x=1754395790; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1753791077; x=1754395877; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r91sX1eIpEaT8QzOwHfBD9CArL1+llwbwzFUj8IwSt0=;
- b=DiDA8gHJkAyCVYU7ev48yTa1mQddUvCeY7N9RWebCiSB1D8AOI5QhzRDC/ou+fNUIZ
- Q2p0LVUTYKPwo1U7XXOeWpEnTCz9qjVwcLLU2hkn6Ee2cq1bwUNBvqu90riJD2zU0Uk0
- 2PVcJUyFyH8gg0JWLFhEA6ZY7ynn2MjSEgAB3X6rP+mb40uySE7z3lNCq+RG1rF58GAU
- ESM+1VT7/DrNJbv3sT+/xL3zWzbgIQvonGeP81rsVdJ/rrTQRPZz4rprPc8FFebuw5iS
- xCLOSKMNPWmNQrXnwIlrhaV/laoig1L0mFpJG4b9b2AleuBQS+AdOaUwbEfMk+9nMODy
- OWmA==
+ bh=BWOZzmnu0iqUhaftqBCMffMM/NPDnQkoTh0QCTvkde8=;
+ b=Uj8ASlXoDepoXURkKhPVYvaNHlbe/zSUliBj2JbIHQxHKC1HNrHrG41hz46UV8/tPT
+ p2zkg4wnQc2CoM7DWrPRSi5JWlZPAR9Cklkd0qDJXEIlHcC47bth/827HiABlKX4F1hq
+ L9VLYX2wptgDRpXUmv3OHw0y8U8wpNU6Rp1IRcqkHKIz4zVaRCo7WKaejnn6lNM0BOk0
+ nFWDaTwv3wHNkoHB4Imro9qrzKIhR7hbt89a2ZXOHDWFoCvKUWbcomHqkf/lhjjk+Q5t
+ eeCKgE3BtdMmVD/VBHjdEJon5Ck3cogh2cOj8ijsTTNIEc0m5G+IroYeE9OjyTqZWDNH
+ HMzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753790990; x=1754395790;
+ d=1e100.net; s=20230601; t=1753791077; x=1754395877;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r91sX1eIpEaT8QzOwHfBD9CArL1+llwbwzFUj8IwSt0=;
- b=VCE/GmXSdWzWhmvcJjneDuJzfnftvQBO5WtbmM71CgbDw3TkgG6xunYaqRIB1ha/Op
- oUInC8EczIPHGmgi4cyJKl9qZElMgPzX4Uormvezyr0fkMdtPmwP2id8UDm+GC6nMAY6
- VcxJAzL4fIJQw81Zg6Qy1ZXOhWKIdZ9bHen3AOGw/stuAjW/26Wc0Xteb+/qarWagYox
- 7G/u9RanIDgv5thMnKAFjD9hf6CrLyT8KpXkfhKrluvdJByqozfpJV29M7+oKMpYgUFl
- ZUKpwVQCL7pOpUAmuDCrwVWM3C/5mf1XLhcl08cDH7hS6ukvXWtHy8QhuKKGx027WAwa
- flng==
-X-Gm-Message-State: AOJu0YxcbtPCiE4Vdx/XFfOUdMki5h14/ipxkza/ZEi4ugsZ92xroM06
- xpetV/sfQaK3JD6FaxZsGjUzgzfBNVAKm1Ij7DvDiHqf+few3ZV3jCEfb8gGgrbbt3bMwkkE4R1
- C7f05f4WyiSGKraduvFX/hok+v+/y8upzYlNPwUVaoA==
-X-Gm-Gg: ASbGncss5NNn97FJA241Vcg1siFRbsUIgMtwtcvtUcandYwshvvFLslruyxsc7Hkg6+
- HUlG59+eAlY1sTk9AHa9zSE0XYRrRUmefA/w3x6LbpxKLwRF/Zpp1ZmhcIpOhKHvC1OxUeqHmcy
- T4Eeptzwmpx8/QAGwTOa6jHEfpeOFDntbiDZKMhDbvJnzyh3XkXvWnDjsrf9wvzi6M1hPTy5KOL
- gYBkg==
-X-Google-Smtp-Source: AGHT+IFsCvR3ifYEzjfBNA/9SkMH09x1R02k9KF98WM2tcdaP7RQ7+b3vo7u+QRR/6Bzj3i6bYA6e3aB3PiP/xa6vCY=
-X-Received: by 2002:a05:6402:518c:b0:615:5563:548e with SMTP id
- 4fb4d7f45d1cf-61555635851mr5657979a12.7.1753790990490; Tue, 29 Jul 2025
- 05:09:50 -0700 (PDT)
+ bh=BWOZzmnu0iqUhaftqBCMffMM/NPDnQkoTh0QCTvkde8=;
+ b=hdC5b+XwHiyVapRwTAgwMCXmpwcrPNvZN80LmyN0jOO1fGNcutcYxtxK2fUxTDJwX5
+ 0feTa14AvbIV3zbw3306QlNlqHTfcDSIr25B4uqugZUm+CG9GfTqdECJn6BqEFikK4Rp
+ hPyVb1m1QQCkg071k5o8QxSNODh7CPYHkViZ9v5Mxl+xa3iSyBs2Jl5NA/HAHEFduOam
+ nElw3ZKJbcQTbqvkwAbvd1oMpc1nB4y9iIbZ3aSCwYEb0VRt1MYQeeqB5QnyRpQXqpQs
+ PATQXWfBDBAbRpLoTYCLPRyUQepIa+Em1EElwPY0WCXLcLGZH9TCVOrHC8/VkzWruFQS
+ 7I/g==
+X-Gm-Message-State: AOJu0YywwfA/L87JO4QhEsRTSWUQ9i21l081R9AH4dl/0OGdEHwtUAYT
+ foc6FY25FPxjJbP6jX9H8h4OVMerIUegBVOsL/aoOMiUi1aQNTfyXmOjnVmsOxClGBh4oQWHYUa
+ EieGMHApcEc3r9i+U6+76duGHdC1glyFlsnx7yjQeaQ==
+X-Gm-Gg: ASbGnctJlHOfzbmFctPCHCHVmLODVRLqvMlGaSmn1Tw5nlEjT4KIBk/xfcl1F+n6G0j
+ BVIzR+yIMhu4oNmjtHriWyzRFHi9ocwKgr88AJK1d4XInyWeN0cOJykBYnVOsbswGHkU0aleLuF
+ 9gHDC5nWSiGMFXqGyZOciP4UFRHzyK0YTw7Dv5X7lt6vKn13elZQuOwzq6++r1BCiMBrJ3ph+T9
+ a1a4T0uxLgOquSwFPD2xcD2h3nEq621PL2KP8u6
+X-Google-Smtp-Source: AGHT+IHhJelFukkXVmPDUaLLt/maMysI9T0H0BgqTCyJrQb8+MxVEoCxCvp8sLO0b7k9kX6u/FuUOzruFLS7+9nFluQ=
+X-Received: by 2002:a05:622a:1886:b0:4ab:6fdc:70cf with SMTP id
+ d75a77b69052e-4ae8efc8a24mr192211321cf.23.1753791076368; Tue, 29 Jul 2025
+ 05:11:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250729091642.3513895-1-armbru@redhat.com>
- <20250729091642.3513895-3-armbru@redhat.com>
-In-Reply-To: <20250729091642.3513895-3-armbru@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 29 Jul 2025 15:09:23 +0300
-X-Gm-Features: Ac12FXwE0y9z328R-u0nAyoTqwbzSvhobN7lFugOiBSk2C5zIbeXPJgFT-k9uQA
-Message-ID: <CAAjaMXYyJHaCwd_3Dxd=wDVj+kPcK-FJZQ=8e7RGD7m22NV7ig@mail.gmail.com>
-Subject: Re: [PATCH 2/2] MAINTAINERS: Cover docs/devel/qapi-domain.rst properly
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com, 
- peter.maydell@linaro.org
+References: <2cKNS7U_kE-Y4pOsCItcM1RhyWnkbpj0zicXQjMfV2AvXvx-Q5hg9lhWL9kZl3hAPpdbbuOilUAG1ahp7_YL2Gscf4iacyenhegHAvYlO_M=@protonmail.com>
+In-Reply-To: <2cKNS7U_kE-Y4pOsCItcM1RhyWnkbpj0zicXQjMfV2AvXvx-Q5hg9lhWL9kZl3hAPpdbbuOilUAG1ahp7_YL2Gscf4iacyenhegHAvYlO_M=@protonmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 29 Jul 2025 16:11:03 +0400
+X-Gm-Features: Ac12FXzXW3CVKUhVQVEp-7urCu4M6CbaLEuQ_YFObxkrq7TqE2tTnBLvoYNPYwk
+Message-ID: <CAJ+F1CL29s4Czp-dv2cMt=aEqngCEDNKNyBVsRcFfqfnXxo57Q@mail.gmail.com>
+Subject: Re: [PATCH RFC v1 1/1] ui/sdl2: clipboard sharing implementation for
+ SDL
+To: startergo <startergo@protonmail.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,36 +95,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 29, 2025 at 12:18=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
+Hi
+
+On Mon, Jul 28, 2025 at 5:06=E2=80=AFPM startergo <startergo@protonmail.com=
+> wrote:
 >
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH RFC v1 1/1] ui/sdl2: clipboard sharing implementation=
+ for SDL
+> In-Reply-To: <CAKmqyKM+4KBqYnhKqwXqPHyP1zN5CrTXC4R7yJ8wBX5M+tCyoA@mail.gm=
+ail.com>
+> References: <20231108105411.1759509-1-admin@xutaxkamay.com> <CAKmqyKM+4KB=
+qYnhKqwXqPHyP1zN5CrTXC4R7yJ8wBX5M+tCyoA@mail.gmail.com>
+>
+> Hi Marc-Andr=C3=A9,
+>
+> Following up on your thoughtful review of the SDL clipboard RFC from Nove=
+mber 2023,
+> I've developed a comprehensive implementation that directly addresses the=
+ concerns
+> you raised about main loop reentrancy and clipboard management issues.
+>
+> ## Key Improvements Addressing Your Feedback:
+>
+> **1. Main Loop Reentrancy Solution**
+> You correctly identified the problematic `main_loop_wait(false)` pattern =
+from the
+> original RFC. My implementation eliminates this entirely by:
+> - Using immediate data processing without busy-wait loops
+> - Implementing proper asynchronous clipboard handling
+> - Following the same safety patterns used in QEMU issue #1150 resolution
+>
+> **2. Clipboard Manager Conflict Prevention**
+> Your concern about fighting with clipboard managers is addressed through:
+> - Self-update loop prevention in `sdl2_clipboard_update()`
+> - Clean ownership tracking via `info->owner =3D=3D &scon->cbpeer` checks
+> - No automatic clipboard stealing or aggressive management behavior
+>
+> **3. Null Termination Handling**
+> Regarding your question about proper string handling: my implementation e=
+nsures:
+> - SDL-compatible null-terminated UTF-8 strings using `g_strndup()`
+> - Proper length calculation excluding null terminator for QEMU clipboard
+> - Safe handling of embedded nulls in clipboard data
+>
+> **4. Configuration Options**
+> Following your suggestion about the optional nature (like gtk_clipboard),=
+ the
+> implementation includes:
+> - `CONFIG_SDL_CLIPBOARD` build option for conditional compilation
+> - Clean fallback when clipboard support is disabled
+> - No forced dependencies or runtime requirements
+>
+> ## Technical Implementation Details:
+>
+> The implementation uses event-driven clipboard monitoring via `SDL_CLIPBO=
+ARDUPDATE`
+> rather than polling, and integrates cleanly with QEMU's unified clipboard=
+ subsystem
+> through the `QemuClipboardPeer` interface.
+>
+> Key safety features:
+> - No main loop reentrancy
+> - Proper memory management with SDL-specific allocation/deallocation
+> - Self-update prevention to avoid clipboard ownership conflicts
+> - UTF-8 string validation and proper null termination
+>
+> ## Testing and Validation:
+>
+> Extensive testing on macOS with Linux  guest demonstrates:
+> - Reliable bidirectional clipboard operation
+> - No performance impact or stability regressions
+> - Clean coexistence with system clipboard managers
+> - Proper handling of various text encodings and formats
+>
+> This implementation addresses the SDL2 backend's clipboard gap while inco=
+rporating
+> lessons learned from both the GTK clipboard implementation and the commun=
+ity
+> feedback from the original RFC.
+>
+> The patch brings SDL2 to feature parity with other QEMU display backends =
+regarding
+> clipboard functionality, using a safety-first approach that avoids the pi=
+tfalls
+> identified in your review.
+>
+> Would appreciate your thoughts on this refined approach. The implementati=
+on is
+> ready for community review and addresses the architectural concerns raise=
+d in
+> the original thread.
+>
+> Best regards,
+> startergo
+>
 > ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f1bd69c3db..9c22e921e8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4432,6 +4432,7 @@ F: docs/requirements.txt
->  F: docs/sphinx/
->  F: docs/_templates/
->  F: docs/devel/docs.rst
-> +F: docs/devel/qapi-domain.rst
+> [Complete patch follows below]
+>
 
-Question: Does it matter if this is already covered by QAPI section
-which has: "F: docs/devel/qapi*"?
+Please send a properly formatted git patch:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#do-not-send-=
+as-an-attachment
 
-If not,
+> From: startergo <startergo@protonmail.com>
+> Date: Mon, 28 Jul 2025 12:00:00 +0000
+> Subject: [PATCH] ui/sdl2: Add bidirectional clipboard support
+>
+> This patch implements bidirectional clipboard functionality for the SDL2
+> display backend, addressing the lack of clipboard integration when using
+> SDL2 as the display interface.
+>
+> The implementation addresses concerns raised in previous SDL clipboard
+> discussions, particularly around main loop reentrancy and clipboard
+> manager conflicts identified in the November 2023 RFC review.Key features=
+:
+> - Bidirectional text clipboard synchronization between host and guest
+> - Safe implementation avoiding main loop reentrancy issues
+> - Proper memory management with SDL-specific allocation/deallocation
+> - Integration with QEMU's unified clipboard subsystem
+> - Configurable via CONFIG_SDL_CLIPBOARD build option
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+The patch is missing meson updates for a new "sdl_clipboard" option.
+
+It would not be required if you can avoid the main loop reentrancy.
+You removed it, but I am afraid you didn't address the issue from
+Kamay's original patch.
 
 >
->  Rust build system integration
->  M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> --
-> 2.49.0
+> The implementation follows established QEMU patterns and addresses
+> reentrancy concerns similar to those resolved in QEMU issue #1150.
 >
+> Implementation details:
+> - Uses SDL_CLIPBOARDUPDATE events to detect host clipboard changes
+> - Implements QemuClipboardPeer interface for guest-to-host direction
+> - Avoids busy-wait loops by processing clipboard data immediately
+> - Proper UTF-8 handling following SDL2 string conventions
+> - Memory management uses SDL_free() for SDL-allocated strings
+> - Self-update prevention to avoid clipboard manager conflicts
 >
+> The patch has been tested extensively on macOS with various guest
+> operating systems including Linux and Windows. Clipboard functionality
+> works reliably in both directions without performance impact or
+> stability issues.
+>
+> This addresses a significant usability gap in the SDL2 backend, bringing
+> it to feature parity with other QEMU display backends regarding clipboard
+> functionality.
+>
+> Signed-off-by: startergo <startergo@protonmail.com>
+> ---
+>  ui/meson.build        |   1 +
+>  include/ui/sdl2.h     |  11 +++
+>  ui/clipboard.c        | 104 ++++++++++++++++++++++++++++++++++++++++++
+
+name it sdl2-clipboard.c
+
+>  ui/sdl2.c            |   8 ++++
+>  4 files changed, 124 insertions(+)
+>  create mode 100644 ui/clipboard.c
+>
+> diff --git a/ui/meson.build b/ui/meson.build
+> index 92e7e61219..c5e7880ca5 100644
+> --- a/ui/meson.build
+> +++ b/ui/meson.build
+> @@ -59,6 +59,7 @@ if sdl.found()
+>    softmmu_ss.add(when: 'CONFIG_SDL', if_true: files(
+>      'sdl2-2d.c',
+>      'sdl2-gl.c',
+> +    'clipboard.c',
+
+make it conditional on have_sdl_clipboard option
+
+
+>      'sdl2-input.c',
+>      'sdl2.c'
+>    ))
+> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+> index 1624ad6938..28a17e7b53 100644
+> --- a/include/ui/sdl2.h
+> +++ b/include/ui/sdl2.h
+> @@ -7,6 +7,10 @@
+>  # include <SDL.h>
+>  # include <SDL_syswm.h>
+>
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +#include "ui/clipboard.h"
+> +#endif
+> +
+>  struct sdl2_console {
+>      DisplayChangeListener dcl;
+>      DisplaySurface *surface;
+> @@ -22,6 +26,10 @@ struct sdl2_console {
+>      int idle_counter;
+>      int ignore_hotkeys;
+>      SDL_GLContext winctx;
+> +
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +    QemuClipboardPeer cbpeer;
+> +#endif
+>  };
+>
+>  void sdl2_window_create(struct sdl2_console *scon);
+> @@ -39,4 +47,7 @@ void sdl2_reset_keys(struct sdl2_console *scon);
+>  void sdl2_process_key(struct sdl2_console *scon,
+>                        SDL_KeyboardEvent *ev);
+>
+> +void sdl2_clipboard_init(struct sdl2_console *scon);
+> +void sdl2_clipboard_handle_request(struct sdl2_console *scon);
+> +
+>  #endif /* SDL2_H */
+> diff --git a/ui/clipboard.c b/ui/clipboard.c
+> new file mode 100644
+> index 0000000000..98fa9f1c2a
+> --- /dev/null
+> +++ b/ui/clipboard.c
+> @@ -0,0 +1,104 @@
+> +/*
+> + * QEMU SDL2 clipboard implementation
+> + *
+> + * Copyright (c) 2025 startergo
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining=
+ a copy
+> + * of this software and associated documentation files (the "Software"),=
+ to deal
+> + * in the Software without restriction, including without limitation the=
+ rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or =
+sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be includ=
+ed in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRE=
+SS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILI=
+TY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHA=
+LL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR =
+OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISI=
+NG FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALING=
+S IN
+> + * THE SOFTWARE.
+> + */
+
+QEMU code has SPDX identifiers and is GPL2+:
+
+/*
+ * Copyright ...
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+
+> +
+> +#include "qemu/osdep.h"
+> +#include "ui/sdl2.h"
+> +
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +
+> +static void sdl2_clipboard_update(struct sdl2_console *scon,
+> +                                  QemuClipboardInfo *info)
+> +{
+> +    QemuClipboardType type =3D QEMU_CLIPBOARD_TYPE_TEXT;
+> +    g_autoptr(QemuClipboardData) data =3D NULL;
+> +
+> +    /* Prevent self-update loops */
+> +    if (info->owner =3D=3D &scon->cbpeer) {
+> +        return;
+> +    }
+> +
+> +    /* Only handle text clipboard for now */
+> +    if (!qemu_clipboard_info_has_type(info, type)) {
+> +        return;
+> +    }
+> +
+> +    /* Get clipboard data from QEMU */
+> +    data =3D qemu_clipboard_request(info, type);
+> +    if (!data || !data->data || data->size =3D=3D 0) {
+> +        return;
+> +    }
+
+Here, Kamay's patch was waiting for the clipboard to be filled. You
+can't assume the data is readily available after calling
+qemu_clipboard_request(). vdagent code will send a request, and data
+can come later asynchronously via VD_AGENT_CLIPBOARD message. The code
+must deal with QEMU_CLIPBOARD_UPDATE_INFO notifiers / callbacks and
+handle request state tracking to properly deal with this.
+
+
+> +
+> +    /*
+> +     * Ensure null termination for SDL clipboard.
+> +     * QEMU clipboard data may not be null-terminated.
+> +     */
+> +    g_autofree char *text =3D g_strndup((const char *)data->data, data->=
+size);
+
+casting required here?
+
+> +    if (text) {
+
+text can't be NULL if data->data is non-NULL. If we want to handle the
+case anyway, we could have a trace or a warning
+
+> +        SDL_SetClipboardText(text);
+> +    }
+> +}
+> +
+> +static void sdl2_clipboard_notify(Notifier *notifier,
+> +                                  void *data)
+> +{
+> +    QemuClipboardNotify *notify =3D data;
+> +    struct sdl2_console *scon =3D
+> +        container_of(notifier, struct sdl2_console, cbpeer.notifier);
+> +
+> +    switch (notify->type) {
+> +    case QEMU_CLIPBOARD_UPDATE_INFO:
+> +        sdl2_clipboard_update(scon, notify->info);
+> +        break;
+> +    case QEMU_CLIPBOARD_RESET_SERIAL:
+> +        /* Nothing to do for reset */
+> +        break;
+> +    }
+> +}
+> +
+> +static void sdl2_clipboard_request(QemuClipboardInfo *info,
+> +                                   QemuClipboardType type)
+> +{
+> +    struct sdl2_console *scon =3D
+> +        container_of(info->owner, struct sdl2_console, cbpeer);
+> +    char *sdl_text =3D NULL;
+> +
+> +    switch (type) {
+> +    case QEMU_CLIPBOARD_TYPE_TEXT:
+> +        if (!SDL_HasClipboardText()) {
+> +            return;
+> +        }
+> +
+> +        sdl_text =3D SDL_GetClipboardText();
+> +        if (sdl_text && strlen(sdl_text) > 0) {
+
+Interesting that SDL decided that empty string is for error reporting.
+
+Could you simplify the check with sdl_text[0] !=3D '\0' instead? Also
+add a warning with SDL_GetError() if it's empty.
+
+
+> +            /*
+> +             * SDL guarantees null-terminated UTF-8 strings.
+> +             * Pass length without null terminator as QEMU clipboard
+> +             * will handle null termination consistently.
+> +             */
+> +            qemu_clipboard_set_data(&scon->cbpeer, info, type,
+> +                                    strlen(sdl_text), sdl_text, true);
+> +        }
+> +
+> +        /* Always free SDL-allocated memory */
+> +        if (sdl_text) {
+
+drop the condition, GetClipboardText() should not return NULL, and
+SDL_free(NULL) is fine anyway.
+
+> +            SDL_free(sdl_text);
+> +        }
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +}
+> +
+> +void sdl2_clipboard_handle_request(struct sdl2_console *scon)
+> +{
+> +    g_autoptr(QemuClipboardInfo) info =3D
+> +        qemu_clipboard_info_new(&scon->cbpeer,
+> +                                QEMU_CLIPBOARD_SELECTION_CLIPBOARD);
+> +
+> +    if (info) {
+
+qemu_clipboard_info_new never returns NULL
+
+> +        sdl2_clipboard_request(info, QEMU_CLIPBOARD_TYPE_TEXT);
+> +    }
+> +}
+> +
+> +void sdl2_clipboard_init(struct sdl2_console *scon)
+> +{
+> +    scon->cbpeer.name =3D "sdl2";
+> +    scon->cbpeer.notifier.notify =3D sdl2_clipboard_notify;
+> +    scon->cbpeer.request =3D sdl2_clipboard_request;
+> +
+> +    /* Register the clipboard peer with QEMU */
+> +    qemu_clipboard_peer_register(&scon->cbpeer);
+> +}
+> +
+> +#endif /* CONFIG_SDL_CLIPBOARD */
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index 1a83c3b1bf..5678930d3c 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -691,6 +691,11 @@ void sdl2_poll_events(struct sdl2_console *scon)
+>          case SDL_WINDOWEVENT:
+>              handle_windowevent(ev);
+>              break;
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +        case SDL_CLIPBOARDUPDATE:
+> +            sdl2_clipboard_handle_request(scon);
+> +            break;
+> +#endif
+>          default:
+>              break;
+>          }
+> @@ -914,6 +919,9 @@ static void sdl2_display_init(DisplayState *ds, Displ=
+ayOptions *o)
+>              qemu_console_set_window_id(con, info.info.x11.window);
+>  #endif
+>          }
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +        sdl2_clipboard_init(&sdl2_console[i]);
+> +#endif
+>      }
+>
+>  #ifdef CONFIG_SDL_IMAGE
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
