@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CDEC83F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 03:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128ECC87FCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 03:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugayc-0000Ki-6U; Mon, 28 Jul 2025 23:26:06 -0400
+	id 1ugb1c-0003JI-Ra; Mon, 28 Jul 2025 23:29:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugayZ-0000Gz-40; Mon, 28 Jul 2025 23:26:03 -0400
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1ugb1a-0003ID-7V; Mon, 28 Jul 2025 23:29:10 -0400
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugayX-0005yJ-Ha; Mon, 28 Jul 2025 23:26:02 -0400
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-4e9a7bfb3c8so3077238137.1; 
- Mon, 28 Jul 2025 20:26:00 -0700 (PDT)
+ id 1ugb1Y-00068A-KL; Mon, 28 Jul 2025 23:29:09 -0400
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4e9a284c225so1802679137.2; 
+ Mon, 28 Jul 2025 20:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753759560; x=1754364360; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1753759747; x=1754364547; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YXHklO74E3GYeHmYp02MNyfCkH8H2b70dBuW8DOkbk0=;
- b=ls2HebYvqDKg6w7ZFNPMC9+sA+LaOOndhcHlUAESJZkqyLye7FBoiV3J/4fy0rUjjl
- 5j3uTH+KkePDCVVY23b5xMbrMWlodEfW/NPN7lQyKG79R9hWWr/3qU7rSg+G1yQUhCyR
- xZGLSX5qP2AUaKi2irvZCm2xOvTEV21c9Hzs1AQvuPUUf9XN7Cei28VDxutvsd0WMamd
- kYxWG/xPzVs/WGTedHO7ULT5vVdp8mx0QSmC8vHzQnXtfvVBPrfTPQdaVLzUhFDkN/jB
- uHFOdCzcjM1M5sCuSIJopL9qOIBUEAAWWpIhFtSuGBnY8UL60uePy7fVGd+sNArmYW8k
- CaSg==
+ bh=izOVY+MbUchb+peejDaIk5KoH+WOFoXrfYq7OKf0wK8=;
+ b=jCDWCKuTSUEA8F9U8lExlCXBJVdl9G1j1yhBFnTZe1oC6hwb7ltpHAVlvaxm7Tdjy7
+ famfAbs3FQSN/koqkKuoOJ4pZOSi9nY1HnPetv52v4H11YkSLx8b2WQ6+/WIRmnRfo9W
+ jHRK9Bp5RxZ8+EaGIvrHw3Mm5f+CT5+0r9afeJTckwAhIHc/i3ArQ/OqY4cAhkhYhmBd
+ nD/oh514JbuWmEyaphByn2cPq+Gxo8dqMeqH06cnVkPvnDJH79AUhW0u/6IKuf4Yf7KN
+ zP855XpJZxD8G0wTAqjM7NCTf8AMBRJqOeEy85MVIEWBxw3SdORFsJ6pBRy12ZKv1mNR
+ QwoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753759560; x=1754364360;
+ d=1e100.net; s=20230601; t=1753759747; x=1754364547;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YXHklO74E3GYeHmYp02MNyfCkH8H2b70dBuW8DOkbk0=;
- b=tRmOE6ropaIW/UDrJqZfVYArbZcZSfjxiE2TWJZ7W+i3zZjZJeT6KqAuyE+r7wRwn8
- 9WIZ9uicTu82y4Rhs1cDEmlqGQSPghJrHEMZjnaAAzMCAQ/wzkv+tRhdI2AHkl+d5Q5i
- kIPVTEEQ3a0qEazNQKJ3pARDAujMWjk84UQ7RolVQhEJow/PHX/rViaMVlOWKPIIiTNf
- LR+L2UXG/edeDQi7w+9MllYyBqCF7lp65Ldobz6NEzTjF9mMECK9gi0m6utRkrlXy6py
- MpqlY4l5YW+QrshKt1a/3OB2P5AVozZS0uec1u5R5WyWrf4T3T05bTtjEk4QzRfnQqbH
- h0qA==
+ bh=izOVY+MbUchb+peejDaIk5KoH+WOFoXrfYq7OKf0wK8=;
+ b=LacwbNmsREK+S7BWASKPozSXL5H7B51AW50skZkZqZZ1qU+lHlubu/kiiy3xq/GNng
+ 3zA7+0IzMfieEfI31rfmq1kCS1AWjzB67518m3c2oydkXESvDFZ7YMW3kPIq4m0E/Yxj
+ UP6NLL+D9bNhoLin0kBseWh4BSbM3AZD38CIkjDQ8ZBnC+7k6jDoLmeVQA/dcBngigiD
+ PssOfsl548yH3G8Y/vj47FvjimcZ08IuC93XRH+nqqyx1kw5yeIg7y8wPH1UGe0PfZDl
+ KhYB9Zjmk/aGFGDo5O+klW1YkQu50VDmIubDzf+5Dqk+m45rDmwBYLw5LS14g/QPNi/n
+ Vsuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV43tD29378nTO1sWSJ/yf9nrq8lQf3y5eDkUTvQqZdaJl1+c5slJfB2JGW/2E/4ZjHatYDYAd15Xf1@nongnu.org,
- AJvYcCW5jnc+SKS5NbrgW+Vk8M0J77WUV3Vw/TiYU0vGywLMysZoKHTyndgMa7sxowtGmvdsGuDtdqeN1SlQeg==@nongnu.org
-X-Gm-Message-State: AOJu0YwL762fn1UFvpv8tK+r50bfck4tPoeH4xevdevISMgL49Fa6eh7
- JmoY1A8FuA0ijnEo4Y5TFoUQsGW7wQbzNolqj4jUEcPihbJGcP7qR58VcqlamP9pGt1TrNP+H4D
- zNgqaCFa1b/2TeIokK0O0o1GkNUxxtGY=
-X-Gm-Gg: ASbGncuD0ozNQanF1CdVb8Pdyh4bHC/TC7+UDH8Cf2L17HrCd4LLBbH7nftwjPC2gbh
- oldttTxJfrKebKzbeV9KImhS4Yscb6x0QsESNPTPcu0AO7Vyt0xQ7jiUtvQXwSkFOvaXW83mJAV
- tVCLVk8KdjDeY3tlwQqYkssCFqOU5dE1pt09MwwC0DOvfQyrm4GU8i/afNX2ZcAuSh2bx9ryih2
- HKWc6D+fFiflvqjiqTWmVgynMr3LX8nCDaYOQX34YBB1Rq+
-X-Google-Smtp-Source: AGHT+IEyK+bZCftELpULjPAUez2tfKtIp2QDHTJh08TljdVGhTcLeWWFekWhc0OJdh0ChvgxwRCpnAcC14vJh5B7qws=
-X-Received: by 2002:a05:6102:358d:b0:4df:4a04:8d5e with SMTP id
- ada2fe7eead31-4fa3fa86718mr5460834137.8.1753759559786; Mon, 28 Jul 2025
- 20:25:59 -0700 (PDT)
+ AJvYcCW9jetbg06fk8Obrj+a4cc3xwtAIvzxTGUQ24lZeK6k3QZURVmKhnXvaNGC/s3/9x89zYOhhjSo6zex@nongnu.org
+X-Gm-Message-State: AOJu0YyTvYl2MU93y7gMM524NvdoiMLOq/P8dZ77G6RqAuU98FiHCAK0
+ aS7do2NSL+oabehcPdcdwrhpH4QihLv3vCNqRm9OF7FW1BEPLWx94szq1GDdCOxZv3ak0kxobbg
+ /Ds62m2W4k+rUoXs812rAv/jFGHjC2cvy1Q==
+X-Gm-Gg: ASbGncsgoQF2hcL7spCG+i88HooCjIzXw7pg4FB2Fu92YMA+xahoizUCXflnuxVHTqm
+ W3ZdfPg63MLZ2I6pEpk8DzG/jETlRLZPLfXjLAYgFpG6Ca2Oj4MutTLtkyODKy0Yg0EO9W4ikPn
+ jwQY6gR3TSsBPG/HvdeHJHPIIaLHwfwLiSpxWHkvj0C7vhbQuxc5/dXfI/b7/G+vs5a8MayVDMa
+ EPg8UDO34BJgRRxcZ4Xydo7ISGh1XTltbT6KA==
+X-Google-Smtp-Source: AGHT+IHMJBZA3O2fcbEZ0HFWz1tDRfaTBka2LtQCnvZ9fQhIuQlLq21Sc0loFFSiM/sd+GblpfbCiVWSUZ/cMIO+ng8=
+X-Received: by 2002:a05:6102:4a8f:b0:4e9:a2bd:b456 with SMTP id
+ ada2fe7eead31-4fa3feb1976mr6399984137.12.1753759746926; Mon, 28 Jul 2025
+ 20:29:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250708060720.7030-1-luxu.kernel@bytedance.com>
-In-Reply-To: <20250708060720.7030-1-luxu.kernel@bytedance.com>
+References: <20250701030021.99218-1-jay.chang@sifive.com>
+In-Reply-To: <20250701030021.99218-1-jay.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 29 Jul 2025 13:25:33 +1000
-X-Gm-Features: Ac12FXzr22v-mT7fBmeXEssKB88mmObp9v4yS8ruavyyUWMIaV2n0VRcMEcplC0
-Message-ID: <CAKmqyKPoBL+6MtiEMOH7CPt5hpLXiwUFqd1ZtgmboGGSHYMUww@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix exception type when VU accesses
- supervisor CSRs
-To: Xu Lu <luxu.kernel@bytedance.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, apatel@ventanamicro.com, qemu-riscv@nongnu.org, 
- qemu-devel@nongnu.org
+Date: Tue, 29 Jul 2025 13:28:40 +1000
+X-Gm-Features: Ac12FXwnIlrxwMxubi3e85i1o10YB2_L2scWUd8JFXT2cHeohmSxHOe79439utM
+Message-ID: <CAKmqyKOo2AyzUdhCgnVGiFFuqk++sdFGf61c4MLM4sn31Kw7ZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Add S-mode checks for delegation-related CSRs
+To: Jay Chang <jay.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,14 +100,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 9, 2025 at 6:48=E2=80=AFAM Xu Lu <luxu.kernel@bytedance.com> wr=
-ote:
+On Tue, Jul 1, 2025 at 1:02=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wro=
+te:
 >
-> When supervisor CSRs are accessed from VU-mode, a virtual instruction
-> exception should be raised instead of an illegal instruction.
+> Patch 1 adds a predicate to restrict access to "medeleg, mideleg, and
+> medelegh" to harts that support S-mode.
 >
-> Fixes: c1fbcecb3a (target/riscv: Fix csr number based privilege checking)
-> Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>
+> Patch 2 adds a privilege check for the "midelegh" CSR, which is defined b=
+y
+> the AIA extension and only valid when Smaia is supported. This is enforce=
+d
+> via an updated predicate in aia_smode32.
+>
+> Change log:
+>   V3:
+>     * Add cover letter
+>
+> Jay Chang (2):
+>   target/riscv: Restrict mideleg/medeleg/medelegh access to S-mode harts
+>   target/riscv: Restrict midelegh access to S-mode harts
 
 Thanks!
 
@@ -114,26 +126,12 @@ Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/csr.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 8631be97c5..9bebfae3f0 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -5577,7 +5577,7 @@ static inline RISCVException riscv_csrrw_check(CPUR=
-ISCVState *env,
+>  target/riscv/csr.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 >
->      csr_priv =3D get_field(csrno, 0x300);
->      if (!env->debugger && (effective_priv < csr_priv)) {
-> -        if (csr_priv =3D=3D (PRV_S + 1) && env->virt_enabled) {
-> +        if (csr_priv <=3D (PRV_S + 1) && env->virt_enabled) {
->              return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
->          }
->          return RISCV_EXCP_ILLEGAL_INST;
 > --
-> 2.20.1
+> 2.48.1
 >
 >
 
