@@ -4,91 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8EAC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 20:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D249C87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 21:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugrGK-0000F4-EB; Tue, 29 Jul 2025 16:49:29 -0400
+	id 1ugrcH-0001r2-3t; Tue, 29 Jul 2025 17:12:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugogo-0002VF-97
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 14:04:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1ugoua-0003v6-60; Tue, 29 Jul 2025 14:19:00 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ugogi-0007Ar-Vg
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 14:04:34 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 56BAD13B874;
- Tue, 29 Jul 2025 21:04:20 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93BB725231A;
- Tue, 29 Jul 2025 21:04:29 +0300 (MSK)
-Message-ID: <45b7f093-4f84-4c42-93f7-22f539d7f0d2@tls.msk.ru>
-Date: Tue, 29 Jul 2025 21:04:29 +0300
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1ugouW-0000cB-Hl; Tue, 29 Jul 2025 14:18:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56TEHuiv023244;
+ Tue, 29 Jul 2025 18:18:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0GwaD5
+ jo1Y51AAv6/6CgBIUxf7RSPLce4bQCsA+/HMc=; b=QXkFmAebRSRu706Rz1BX1s
+ QuhRjCamd2U4BcdYvCR3QZMA7cm+hl/IESUEYCREcXsYt0Mvpq9fWdd2T4qRPlW4
+ TlZ6qEBuQR6N1GIpS9cPofTlxFq2KxxuZcVn+Nw7woLckxySbyhMPH/ivJzDZMqN
+ epvy5kseZfuYC2uUPIVRCbtCJDNRUpfxgt8V4RUeU1weqqvD88p9WGnG8CpBw5yx
+ Uy2gidG/YO2ZP9yyVPD9erVVUs7mL/Kbv076ZevcM3AvqqKsptki1/CP2IUZoEOM
+ zwdVlU2cm5qWgpvG9+EUrZah2Sgr+M3N0mkZf4vj4BeBFEHXWUig8pn9wM9I7rjw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 484qd5gdfc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Jul 2025 18:18:44 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56TIB6r6006192;
+ Tue, 29 Jul 2025 18:18:43 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 485bjm3fj1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Jul 2025 18:18:43 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 56TIIgq519005958
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 29 Jul 2025 18:18:42 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5EB005805D;
+ Tue, 29 Jul 2025 18:18:42 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 72BA958057;
+ Tue, 29 Jul 2025 18:18:41 +0000 (GMT)
+Received: from [9.61.1.221] (unknown [9.61.1.221])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 29 Jul 2025 18:18:41 +0000 (GMT)
+Message-ID: <ce1bc819-59c3-4707-ab18-4853eee990d6@linux.ibm.com>
+Date: Tue, 29 Jul 2025 14:18:40 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] pc-bios: Update vbootrom image to commit
- 183c9ff8056b
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>
-References: <20250729174259.697405-1-clg@redhat.com>
- <20250729174259.697405-4-clg@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250729174259.697405-4-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 09/28] s390x/diag: Implement DIAG 320 subcode 2
+To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
+ berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com
+References: <20250711211105.439554-1-zycai@linux.ibm.com>
+ <20250711211105.439554-10-zycai@linux.ibm.com>
+ <ca7e2dc7-d70e-41ab-9f62-a411dce7360e@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <ca7e2dc7-d70e-41ab-9f62-a411dce7360e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI5MDE0MCBTYWx0ZWRfX/0C47onGwVg4
+ T/iQjXGxQeb8Wcz1YmzwOujuBpCyyXBIF8mQ2gdTKdfX9H9SOF45jLvPpXisC2sGoGuKoaN4LAW
+ BSfaCYIDWsbfmFYrEJHW7l/EsuSc9Emnt9LfGq4GUZQ0v9cpALqV5Lo2+/qClN27Kmr9bM7cNxG
+ AmpvVDXsnSSvYlK8v54pqOuxoHDwq5ozLxyJWRcW1A+2PbIMiQm5kRsBZhULtM8PneP0a/UEjSh
+ I0qPPAd79nyWjLJuCTqsM+nvpzaZbSpQAOC7M9109GJRG8jdjAjy9MPje3OE/ISpu669lWAgYJL
+ vsNN2lhbpV5BN/ekQ+nxa8owWlXlKGBLg6qBqY8b2rNSFs6GD/gRE3TBNnV5wIwWJ2hu8OF68t2
+ NjJ0R9mycnRPCe6dRkM5FL/fu/9n/lSa6cMltp8dD+2F1P4AorgApF47xA0b+impfT0Sk1PZ
+X-Proofpoint-ORIG-GUID: L1-IC2eIaH8qTglFJfg7E4v3qwJIoaNS
+X-Authority-Analysis: v=2.4 cv=B9q50PtM c=1 sm=1 tr=0 ts=68891084 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=0YD7pcYbvtPctfnijQMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: L1-IC2eIaH8qTglFJfg7E4v3qwJIoaNS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-29_03,2025-07-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 mlxscore=0 spamscore=0 mlxlogscore=537
+ suspectscore=0 clxscore=1015 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507290140
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,25 +125,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.07.2025 20:42, Cédric Le Goater wrote:
-> Full changelog since last update (d6e3386709b3) :
+Thank you for the feedback!
+
+On 7/28/25 4:59 PM, Collin Walling wrote:
+> On 7/11/25 17:10, Zhuoying Cai wrote:
+
+...
+
+>> +static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
+>> +                                   S390IPLCertificateStore *qcs)
+>> +{
+>> +    g_autofree VCBlock *vcb = NULL;
+>> +    size_t vce_offset;
+>> +    size_t remaining_space;
+>> +    size_t keyid_buf_size;
+>> +    size_t hash_buf_size;
+>> +    size_t cert_buf_size;
 > 
-> Jamin Lin (3):
->        ast27x0: Initialize and enable SSP/TSP using SCU with reserved-memory from DTB
->        ast27x0: Fix missing SCU module reset for SSP and TSP initialization
->        ast27x0: Fix Makefile to unconditionally set CC to support correct cross-compilation
-
-Please include the complete changelog here, with npcm changes too :)
-
-> Compiled with gcc version 13.3.0
+> The above three fields can go into the respective helper functions that
+> I mentioned earlier and reduce some of the bloat here.
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   pc-bios/ast27x0_bootrom.bin | Bin 15552 -> 16408 bytes
->   pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 672 bytes
->   pc-bios/npcm8xx_bootrom.bin | Bin 608 -> 672 bytes
+>> +    uint32_t vce_len;
+>> +    uint16_t first_vc_index;
+>> +    uint16_t last_vc_index;
+>> +    uint32_t in_len;
+>> +
+>> +    vcb = g_new0(VCBlock, 1);
+>> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+>> +
+>> +    in_len = be32_to_cpu(vcb->in_len);
+>> +    first_vc_index = be16_to_cpu(vcb->first_vc_index);
+>> +    last_vc_index = be16_to_cpu(vcb->last_vc_index);
+>> +
+> 
+> You need a check somewhere for no certs found in either the specified
+> range or no certs exist in the store at all:
+>  - VCB output len = 64
+>  - stored and remaining count = 0
+>  - response code 0x0001
+>
+>> +    if (in_len % TARGET_PAGE_SIZE != 0) {
+>> +        return DIAG_320_RC_INVAL_VCB_LEN;
+>> +    }
+>> +
+>> +    if (first_vc_index > last_vc_index) {
+>> +        return DIAG_320_RC_BAD_RANGE;
+>> +    }
+>> +
+>> +    if (first_vc_index == 0) {
+>> +        /*
+>> +         * Zero is a valid index for the first and last VC index.
+>> +         * Zero index results in the VCB header and zero certificates returned.
+>> +         */
+>> +        if (last_vc_index == 0) {
+>> +            goto out;
+>> +        }
+>> +
+>> +        /* DIAG320 certificate store remains a one origin for cert entries */
+>> +        vcb->first_vc_index = 1;
+>> +        first_vc_index = 1;
+>> +    }
+>> +
+>> +    vce_offset = VCB_HEADER_LEN;
+>> +    vcb->out_len = VCB_HEADER_LEN;
+>> +    remaining_space = in_len - VCB_HEADER_LEN;
+>> +
 
-I wonder why the two are of the same size..
+Re: check for no certs found in either the specified range or no certs
+exist.
 
-/mjt
+This case is already handled.
+
+vcb->out_len = VCB_HEADER_LEN is set outside the for loop. If the index
+is invalid, the loop won’t execute, and both the stored and remaining VC
+counts remain unchanged at 0.
+
+>> +    for (int i = first_vc_index - 1; i < last_vc_index && i < qcs->count; i++) {
+>> +        VCEntry *vce;
+>> +        S390IPLCertificate qcert = qcs->certs[i];
+>> +        /*
+>> +         * Each VCE is word aligned.
+>> +         * Each variable length field within the VCE is also word aligned.
+>> +         */
+>> +        keyid_buf_size = ROUND_UP(qcert.key_id_size, 4);
+>> +        hash_buf_size = ROUND_UP(qcert.hash_size, 4);
+>> +        cert_buf_size = ROUND_UP(qcert.der_size, 4);
+>> +        vce_len = VCE_HEADER_LEN + cert_buf_size + keyid_buf_size + hash_buf_size;
+> 
+> You could define & set the above four lines inside build_vce (or as
+> respective fields in the helper functions mentioned above).
+> 
+> The remaining space check could be done after the vce has been built.
+> 
+>> +
+>> +        /*
+>> +         * If there is no more space to store the cert,
+>> +         * set the remaining verification cert count and
+>> +         * break early.
+>> +         */
+>> +        if (remaining_space < vce_len) {
+>> +            vcb->remain_ct = cpu_to_be16(last_vc_index - i);
+>> +            break;
+>> +        }
+> 
+> You also need to check somewhere if there is enough space to store *at
+> least* the first cert in the range:
+>  - VCB output len = 64
+>  - stored count = 0
+>  - remaining count = // however are remaining
+>  - response code 0x0001
+> 
+
+This case is also covered by the if statement above:
+
+	if (remaining_space < vce_len) {
+            vcb->remain_ct = cpu_to_be16(last_vc_index - i);
+            break;
+        }
+
+Response code 0x0001 is returned at the end of the function for both cases.
+
+>> +
+>> +        vce = build_vce(qcert, vce_len, i, keyid_buf_size, hash_buf_size);
+>> +        if (vce == NULL) {
+>> +            continue;
+>> +        }
+> 
+> See above, there shouldn't be a NULL case.
+> 
+>> +
+>> +        /* Write VCE */
+>> +        if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, r1, vce, vce_len)) {
+>> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +            return -1;
+>> +        }> +
+>> +        vce_offset += vce_len;
+>> +        vcb->out_len += vce_len;
+>> +        remaining_space -= vce_len;
+>> +        vcb->stored_ct++;
+>> +
+>> +        g_free(vce);
+>> +    }
+>> +
+>> +    vcb->out_len = cpu_to_be32(vcb->out_len);
+>> +    vcb->stored_ct = cpu_to_be16(vcb->stored_ct);
+>> +
+>> +out:
+>> +    /*
+>> +     * Write VCB header
+>> +     * All VCEs have been populated with the latest information
+>> +     * and write VCB header last.
+>> +     */
+>> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, VCB_HEADER_LEN)) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+>> +
+>> +    return DIAG_320_RC_OK;
+>> +}
+
+...
+
+
 
