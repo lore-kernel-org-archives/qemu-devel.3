@@ -4,148 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C037C83F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E17C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 14:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugknz-0007xg-7a; Tue, 29 Jul 2025 09:55:47 -0400
+	id 1ugkyM-0002tT-DV; Tue, 29 Jul 2025 10:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugknw-0007aH-4r
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:55:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugknt-0007gB-Di
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:55:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753797339;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5WBJ/Ioh5X2zyTj659ZHmGSiFKX149vWXCWRmw1xaEk=;
- b=D89nHwTEG9yeLUtrgBmXdiV+Fm6/x+ejVz9S5RiJnQHZ23m16jwa/a0no00c9nS/+EQPPh
- GPXtWLAFveOktxA3K4AwKJvYX+q72tbUjzC2B+NpEx0mguUHajRURRtP/3FN3bmwemNdPi
- yBQNOemf6OlgnlH4zgm7gu68yrKLiMY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-0OD68UCgMk6hi13ZLyMsrg-1; Tue, 29 Jul 2025 09:55:37 -0400
-X-MC-Unique: 0OD68UCgMk6hi13ZLyMsrg-1
-X-Mimecast-MFC-AGG-ID: 0OD68UCgMk6hi13ZLyMsrg_1753797337
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45867ac308dso27063525e9.2
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 06:55:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1ugkyB-0002Dd-C2; Tue, 29 Jul 2025 10:06:23 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1ugky8-0000iz-Mi; Tue, 29 Jul 2025 10:06:18 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-748f5a4a423so3904615b3a.1; 
+ Tue, 29 Jul 2025 07:06:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753797972; x=1754402772; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9+s9a0j2kEOWZs6Rv8r9dOEb1iz46PG4C67n40F6x+g=;
+ b=JpxcgdeP8Xd3M4N2U0rXi1Dg+ofehb555fv8ZPWLY0yItlsInjhf13KpSxoCbE/MdM
+ qlruLrQg43jcZ55ninZ+3aTT/LKbq1tznUyLsLQ6TAMUiCYeqLjVLxPXRZY/o5lpZGa7
+ 6Med5LKQITKbIcZWmTE0mN1OWcrWbeTi8WljpPodbIlNpxdpFehn2TYxkqp93+qaDreq
+ AjZzjoMK9m4F2tMN8AEi6VywxDr1AqjtEGxZDRWigbrfgcwYHe1TFri566BgvevUTDW5
+ KllxDkMa6lhDwDZuusKV8G+QafK18lg0ZDsoXvFGdOdf5MW5S9VM+EBsq8pRNBAC3c2h
+ 8szQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753797336; x=1754402136;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5WBJ/Ioh5X2zyTj659ZHmGSiFKX149vWXCWRmw1xaEk=;
- b=wmuvYwJ/TjdU6kMCQ9z8DzMr4T+25bOrgC7HS7d/upHTVPc6BJWgoW+ZcCkSIHE+1V
- o1HkZ25mmb05kmEERR5kVF1uOA5tI54ZIHhLzPWRAyDaOmTTHu55X3p5i9W6db8UeeW5
- mKCBMIaOhCwhOfC+P1T1Qr5S3qJgvcgZofPSIotKtmE4wGJ4/Tm236eu1p97+3k1ZJNk
- dUiNIKNFhsD0rv49qHCAQN0az/jEgjl2Ko0QEbGmaNeoATdybUdaz+NLe/IRCj5rtIYN
- 0vbiYBDtFUvNdOaZCiG7+4rzGg3zq+CWFI8remXPNuCBGX6x0Jv1BJ7OlgfqB/qttRQv
- RJFw==
+ d=1e100.net; s=20230601; t=1753797972; x=1754402772;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9+s9a0j2kEOWZs6Rv8r9dOEb1iz46PG4C67n40F6x+g=;
+ b=RdTwyNdY7lDwC5xpIaXPmlC49JPW9ZfUtYtjO+mm39KsAAx5guhNlf6xgtzA+Qdg5Q
+ mzaI/CLcKmcb2sp8yijtvESjb5wp9ef1uY4cbDlX8SuNXZPsIx6ZqGlHcMiJsuP+/XNH
+ o7XxXBBOrfY9aOl9KBe7VPwuATNNSzz79JpfVNYmpHs9oerSQJ85dhaZmqcKWm5tLLt/
+ mMLLQRvYKzm04MCjZn+0cCgDn4aJObxs6X9Y2GkG7/VoQSg+Q6LrKy4458aePwlmWKc7
+ oxu299gzt8xxCD198OHbVqVD3TLYWOwvqU7s+7/RoLdSnhCEb7gKtq08vjvbHhP83yXc
+ ptuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6FLv2jRBhOYI3RiCvYldJdW/IMmF0hVt8i5KUMpl36W3HII/7OjDmdrMuMA3gwk79AoGqQqJQEz9f@nongnu.org
-X-Gm-Message-State: AOJu0Yy/ZlI27zqrCFa+QGmlpcPzcJXm26WTzeT7E+IXbY+TtKm0ErTe
- gZDMYhtRIuUbW54DJbM2g1WgwbJVqb5tBici9K3iPnSvaiP8Sfmrfxr7LDvqt6N4DehRC7QKgxs
- AziUXeYRytyucoh+fnftyNXLQyktgit/cEPuLKhKK6JjikmaV1bym31rx
-X-Gm-Gg: ASbGncuIVGYpRsTxmr3MkVnZPTMg6Ou2g4xv0siV1W/L5ukrhTH0SUhtXBcbTwKiVxs
- ggLF9NLxFmd2Hu9LKW63uFU+pC2JfnYZPHpuMrxv/huLPE7XeHZ+EJhJGTdTDjp62hliJzSuuQh
- RUVxbnlajJXUZDd86D4EDiud+btaI0CQ1FdjlS4jVzAdKBdiI1u+Z7QBJWsxbYlS6xqkUJOa/ZJ
- b83Oita2VAu8Qljwqisd5MOC6qqAagjtS8YsBdYl/IaaSSy185Iiz07WNegXCBVT6Jfq8ueXsie
- Nivn05aznaaJmhTyJwVfZA//HBes1LsIAdQDWUlfyH6VpPdpCuRd0W8KJXmn+2bVRsaJa9O4V15
- 3/g==
-X-Received: by 2002:a05:600c:1e28:b0:43d:abd:ad1c with SMTP id
- 5b1f17b1804b1-458763036bbmr120107605e9.6.1753797336578; 
- Tue, 29 Jul 2025 06:55:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLsbbTaMZ40U+DWsC+yN8P8BIuaWn3Sp9YKCJJTomZ7rPwDFsfSkhhpgZVk6s8EUG+kzt68A==
-X-Received: by 2002:a05:600c:1e28:b0:43d:abd:ad1c with SMTP id
- 5b1f17b1804b1-458763036bbmr120107325e9.6.1753797336087; 
- Tue, 29 Jul 2025 06:55:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ AJvYcCVUko9RAQo3iV/QY7Arkv/W7c6mW32wDTCDW+mPaEaDWm8Q6Y9LtiIwqpb9P2JdbrSsSc5mI/r7lONsgg==@nongnu.org,
+ AJvYcCVbqfedHzbACXsOnCwj5NnwSaefH5NY28C0fmVTs3ZTlatPOJF1bMwW9UlrH/j/PfWLtnAseaT7Lxfz@nongnu.org
+X-Gm-Message-State: AOJu0YyZVqtOP5jgaYAFCJx29S8gi6FitewTpP9cDUdWsDPhxRGYA1co
+ okEaqrMcQ4N9tGYtKaGusiO/6dv+HU/86Lj90/OGynr2CPuqVMwS4ddU
+X-Gm-Gg: ASbGncukHGKx2gNxKRsbMHu0lvlV9QKM9FiLjsZbEXd0RyPq8liTZW2f4MFEe/A0+4+
+ aoS6roblrLjDsCvJbV89Do7zfAK3gXMVQ2KUGW6vA297cDzgc8LnkJ4CnwNZghDqTrWoqUcXlGc
+ V7t4VT4gPklAH8pDOrT1ZQLdn38byxyITVvDCglQiKoLz+yOwJXml7zpOPSfHMl0B25F7NFLl/i
+ nvJJWFBdr4X5FGIrwnlRlab9RQfCvD5DtqariOqB0TOTLAoe2ZWKMbOCaLh0A1rLPfDzpXSdXSE
+ Fat8gbwv/3YdISS+TerrUyyTBfnlDK15Zgx+ZIODWFK4ixC+Rxk76d5TQPdo3oyYisiWWwhRLtx
+ xAsMX09/DQPFvTnODXWpawbRUzWItsihbLBDIhCEcdUj9pQ==
+X-Google-Smtp-Source: AGHT+IFbCMvW+NtIodS5Ur2FyH8dcMo3suXeKp9sy/XkFTzkfd3iQDMUuSLzf7mtnJB3E/c3lLnlMw==
+X-Received: by 2002:a05:6a00:1988:b0:74e:aa6f:eae1 with SMTP id
+ d2e1a72fcca58-7633583025cmr21261728b3a.14.1753797972080; 
+ Tue, 29 Jul 2025 07:06:12 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458705c4d91sm205961275e9.23.2025.07.29.06.55.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Jul 2025 06:55:35 -0700 (PDT)
-Message-ID: <1ec1ad68-d6fc-41b1-8f62-5d1f9bdf3655@redhat.com>
-Date: Tue, 29 Jul 2025 15:55:33 +0200
+ d2e1a72fcca58-76a00902a50sm1583791b3a.79.2025.07.29.07.06.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Jul 2025 07:06:11 -0700 (PDT)
+Date: Tue, 29 Jul 2025 07:06:10 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Ben Dooks <ben.dooks@codethink.co.uk>, qemu-block@nongnu.org,
+ bmeng.cn@gmail.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/sd/sdcard: fix spi_cmd_SEND_CSD/CID state check
+Message-ID: <e8d7ef85-7c6c-4769-a6ae-9e1cb5ffe260@roeck-us.net>
+References: <20250724105807.697915-1-ben.dooks@codethink.co.uk>
+ <893a7943-e5ac-4c42-b30f-1dfa262b923e@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/20] vfio: Add a new element bypass_ro in
- VFIOContainerBase
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
- <20250729092043.785836-19-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250729092043.785836-19-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <893a7943-e5ac-4c42-b30f-1dfa262b923e@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,90 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/25 11:20, Zhenzhong Duan wrote:
-> When bypass_ro is true, read only memory section is bypassed from
-> mapping in the container.
+On Tue, Jul 29, 2025 at 03:51:33PM +0200, Philippe Mathieu-Daudé wrote:
+> Hi Ben,
 > 
-> This is a preparing patch to workaround Intel ERRATA_772415.
+> On 24/7/25 12:58, Ben Dooks wrote:
+> > The addition of specific handlers for mmc-spi for SEND_CSD and
+> > SEND_CID has broken at least Linux and possibly also u-boot's
+> > mmc-spi code.
+> > 
+> > It looks like when adding the code, it is checking for these
+> > commands to not be in sd_standby_state but the check looks to
+> > have been accidentally reversed (see below)
+> > 
+> >       if (sd->state != sd_standby_state) {
+> >           return sd_invalid_state_for_cmd(sd, req);
+> >       }
+> > 
+> > Linux shows the following:
+> > 
+> > [    0.293983] Waiting for root device /dev/mmcblk0...
+> > [    1.363071] mmc0: error -38 whilst initialising SD card
+> > [    2.418566] mmc0: error -38 whilst initialising SD card
+> > 
+> > Fixes: da954d0e32444f122a4 ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)")
+> > Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+> > ---
+> >   hw/sd/sd.c | 6 +++---
+> >   1 file changed, 3 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> > index 49fc79cf8a..e6c1ba7c5d 100644
+> > --- a/hw/sd/sd.c
+> > +++ b/hw/sd/sd.c
+> > @@ -1317,7 +1317,7 @@ static sd_rsp_type_t sd_cmd_SEND_IF_COND(SDState *sd, SDRequest req)
+> >   /* CMD9 */
+> >   static sd_rsp_type_t spi_cmd_SEND_CSD(SDState *sd, SDRequest req)
+> >   {
+> > -    if (sd->state != sd_standby_state) {
+> > +    if (sd->state == sd_standby_state) {
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/hw/vfio/vfio-container-base.h |  1 +
->   hw/vfio/listener.c                    | 13 +++++++++----
->   2 files changed, 10 insertions(+), 4 deletions(-)
+> This happens to work in your case by luck.
 > 
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index bded6e993f..31fd784d76 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -51,6 +51,7 @@ typedef struct VFIOContainerBase {
->       QLIST_HEAD(, VFIODevice) device_list;
->       GList *iova_ranges;
->       NotifierWithReturn cpr_reboot_notifier;
-> +    bool bypass_ro;
->   } VFIOContainerBase;
->   
->   typedef struct VFIOGuestIOMMU {
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index f498e23a93..c64aa4539e 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -364,7 +364,8 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
->       return true;
->   }
->   
-> -static bool vfio_listener_valid_section(MemoryRegionSection *section,
-> +static bool vfio_listener_valid_section(VFIOContainerBase *bcontainer,
-> +                                        MemoryRegionSection *section,
->                                           const char *name)
+> Since we switch to sd_sendingdata_state in sd_cmd_to_sendingdata(),
+> we need to check for sd_transfer_state -- the spec is wrong here! --.
+> 
+> Btw sd_cmd_to_sendingdata() already checks for that.
+> 
 
-Instead of adding a 'VFIOContainerBase *' argument, I would add an
-extra 'bool bypass_ro' argument.
+In my fix (the one I am carrying downstream) I have
 
-Thanks,
+-    if (sd->state != sd_standby_state) {
++    if (sd->state != sd_transfer_state) {
 
-C.
+in spi_cmd_SEND_CSD() and spi_cmd_SEND_CID(), together with
 
+-        return sd_r2_s;
++        return sd_r1;
 
->   {
->       if (vfio_listener_skipped_section(section)) {
-> @@ -375,6 +376,10 @@ static bool vfio_listener_valid_section(MemoryRegionSection *section,
->           return false;
->       }
->   
-> +    if (bcontainer && bcontainer->bypass_ro && section->readonly) {
-> +        return false;
-> +    }
-> +
->       if (unlikely((section->offset_within_address_space &
->                     ~qemu_real_host_page_mask()) !=
->                    (section->offset_within_region & ~qemu_real_host_page_mask()))) {
-> @@ -494,7 +499,7 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
->       int ret;
->       Error *err = NULL;
->   
-> -    if (!vfio_listener_valid_section(section, "region_add")) {
-> +    if (!vfio_listener_valid_section(bcontainer, section, "region_add")) {
->           return;
->       }
->   
-> @@ -655,7 +660,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
->       int ret;
->       bool try_unmap = true;
->   
-> -    if (!vfio_listener_valid_section(section, "region_del")) {
-> +    if (!vfio_listener_valid_section(bcontainer, section, "region_del")) {
->           return;
->       }
->   
-> @@ -812,7 +817,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
->           container_of(listener, VFIODirtyRangesListener, listener);
->       hwaddr iova, end;
->   
-> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
-> +    if (!vfio_listener_valid_section(NULL, section, "tracking_update") ||
->           !vfio_get_section_iova_range(dirty->bcontainer, section,
->                                        &iova, &end, NULL)) {
->           return;
+in sd_cmd_SEND_STATUS().
 
+Guenter
 
