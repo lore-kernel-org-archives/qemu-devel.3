@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E8CC87FC9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E323EC87FCC
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguRI-0001j7-H5; Tue, 29 Jul 2025 20:13:00 -0400
+	id 1uguVA-00012b-E5; Tue, 29 Jul 2025 20:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguF6-0001TF-Hm
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:24 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uguFT-0001yY-8y
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:47 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguF3-000416-TC
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:24 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-748fe69a7baso5543640b3a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:21 -0700 (PDT)
+ id 1uguFR-000451-1j
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:46 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso5931189b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833620; x=1754438420; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833643; x=1754438443; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tAy4LWos7CMMDi7rFBFr+ma/sLuxtrhncFZL3m8MVY8=;
- b=ohv0DgFYYjSA8p7qHvZL0PmS2pcfseuV7EC3j1b+csKd6KI5ZxQ4ieKzqm/DVrlu2w
- 5HOJxEL0fQCuGE9YecQ4VDiGAsymYOufJDtX0vXuZw3fyEJAra+rQJO4DufHykN48BRy
- a8u2vrBbOHCiLG0w/kQ99/wtHtSYvrSBMisq8srexOl1jCBf2Gy4df3dQTn8wEyNS4fk
- YS3bryqFnKfNeZ5NSkFRczNQyt4jyW3k20Y3TE0QS1BP2aQ4iHZ5d6qO+G+VXzeyAyUh
- aYjhoj6qkvQU9co7eXq1b+mRjb1RFXFMVrprWkSr6P0k3W7Gt6v86+03YjWIRH4NsiZm
- Amjg==
+ :reply-to; bh=on+u6bbfdDUn5A5FUn0dghBlt7iCztcjK2d6O8nRN8Y=;
+ b=n20YEh4V8otwgNYIuv1T65D91MAP0YJ5pEoz1cx25lYGvynCRLIUVbtPvjyC5eEgh6
+ jgUPCV8Fqi1yNPTolkglmrpldRgQtEMCMxK8zoutgN89wobO2JCKt5iFsJP2K/HEv283
+ l6JzoEf8GLZ4D+dLrdWz2aGqG2wipLydNtSM9XWHzUDXrXOQIObxxkWLq7RURm9/YG2I
+ WXX2inDbuvZQcj8oQZgCEo/R9STZaxlREbPye8vISDdzm+MUtPFofKoC1tWeUPZAafNZ
+ mtsCaTUcmNxFJCm7td0hYHvp/VJPBuh2reCJsemaC5Ol2a+TK3cFIgpaHXViAwWyHoe6
+ cP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833620; x=1754438420;
+ d=1e100.net; s=20230601; t=1753833643; x=1754438443;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tAy4LWos7CMMDi7rFBFr+ma/sLuxtrhncFZL3m8MVY8=;
- b=BM0JzR2StSkL73Z0V/U0/R9vLIfNPTUxSCfKxAIzD4vNPlY5er1e5feVeOYyO0MPn7
- IT2HpAApSK1+WfRzcIu8oS6npBRv96YIcx3YlkFf/D66c43oixQ8KfBzHtWOKOmAtFns
- yKEiMJnNe8Qgk36LN4HLbm2tnoRu+FmZjtg9bN79HzNVJuX6OblZL+A1IFPXrYJxg0Mf
- cJ+uPc41OzzsYGGo4xb3XbdktVZkpEhBc9qNl/L5MKUyPeu/eTUS8NzV6EKeamSW4a1Y
- 7LIc/Ws3EMEBB0IpMaoM6tvHpGVt1+2nq3KUsJ+izV96zLIldiEW4ZkfXRtupH2ybrn8
- BvwA==
-X-Gm-Message-State: AOJu0YzPL8iwnJUQ+xinKobMNqEGMCqdlE+6HM2xDman7mRDJDDk6Jgr
- eOlsvCMh+RgxDv69AOmHYKBfu0Rs6EXLW+PMRjow0zVZv4imj5kL0EdHkSDKR9D1ZpzK0ShamBJ
- Jyick
-X-Gm-Gg: ASbGncvkT/fH2+/L8C5WC9rRWEv7sFFq7EWmSfM3snUD4rj+sObW6MeTGz4pxMZUK1B
- FTQQvs1h22zUB9CE26DET95xvGwWR6btpl0gnrgM/JKHpLFHUkfZrMcUlnJ7PX0Ucpz6oyba0Iy
- SIZe8fqfvyMcxeAXp9Hx8sWmOHiVeZFh8kQtleFsM2NEwqVdmz9YfQX2eircsR5W74kWwULPLTa
- HGEC7jWBPIWbGLVyniEwT0ip5cYRmvdgaiZQOvbZWAFT/RBBK2h70/EakLSkpBczztpdQ48ly+J
- jDy+iNjvVgFQRY30k7Mwwxt5N/222xjQciLo6XUkfu0r3CagaO6uDF6Du4xnXH83enB1ClHoiEQ
- jJEeCli4fLRq3O0/h6RZz8ARL9xHQMPORAQozIQxX310AgLL9Phpzg/87wVoZWJGr3pgTSllIdC
- BiPUoIhj3RJ4g/l7wUwwzP
-X-Google-Smtp-Source: AGHT+IEwu0eWkNkO7jEaS6wWkYdQ1f+vvYX3s8nCb4UCDKd5ziJl3UjQN8SNCttIBVYwmjBbOdokQQ==
-X-Received: by 2002:a05:6a00:288a:b0:736:4644:86ee with SMTP id
- d2e1a72fcca58-76ab2b576aemr1636367b3a.14.1753833619542; 
- Tue, 29 Jul 2025 17:00:19 -0700 (PDT)
+ bh=on+u6bbfdDUn5A5FUn0dghBlt7iCztcjK2d6O8nRN8Y=;
+ b=cikaahxR6HELzoojgB3LmjW30ngyWN5Y9ZS5OhBh6PbF2kjII2sveyE/Zzmw4VmW2v
+ hmQD8BkQQdtz0dvjAjFelfeetFbDypTABo1Ye+RDV2Re6as62MG9SIT5mv5+kpU8mQxN
+ j2gCnW8EgvBKEBNWw6WSlKSMiTRQ0hIzzujpzGXRY1HVsQZLP91GtUizT/qDw+7RCdc5
+ W6ZwWobd9sb1FLo2wpJvNViRGS4nth10qPYxPIOuysDNhUQU4t1kQNrjkhkyiKf0RDau
+ oI9nxtyLDQ600Jap8v7j7mMOlD4z0z+GEcpbrGzxOqkHTdUfmGOkFNO/PqdJGolMhGqd
+ 1UcA==
+X-Gm-Message-State: AOJu0YzlPh03wVSKJe3o+vWMFFxOCEWRtuGMS+0LYPYvZE+OIdXA5jiS
+ x/4v+cwnfaU+KcISqTk8ykNm5DqDiDgv7w+s+3r6RaW74/CxeMQaSbmNF6GgaacnBO2EBfMVmAd
+ lDKda
+X-Gm-Gg: ASbGncsFlIUyk/90R3puY80OOU0GztdXvcfTSJ+W+C45gyeH36hD0c+S6Gv/wcazfug
+ ATecGz0464vwt8vPnJUqtsoH7AOpiC1zCDS2vL64XQRbcDH+Rd8LdEmFYVuPdjWNNCUHHLCcuMR
+ ic2lACS2TgnL/kP6uimJiJeOwv4i+EiGiP6NAJ+GXnZwlWjZjj3H4MH+xt8j9PLYCJD5jg3Rqcc
+ AyxZ06juqBZBUXHfKltU0J/jLIJXUCDj2QsKxKpOTD/K+KW+Dm/IvCAsenjPmat6TFxnia1MLRO
+ rg2L77b/ibcjPkM+h0ckFtLLmmhd634P8dOaJKR3Q90zn942yF5fmTUBEQhH52TYyeUZevsEvJb
+ pLDlVTIlNo6xJAeW4jHA06Go3UFJsSiP39q2+wNyCFt6DBekHoofRgUsE+C8KCTRmqivSI4tc2Y
+ H+ozM0ryiwpQ==
+X-Google-Smtp-Source: AGHT+IE26bR/Ngf47YizVbSoWj3SndTUfvGNOqDe4x52VcVaFshf2f/uCQ/CKQyEgaOjQKLR+eTRhw==
+X-Received: by 2002:a05:6a00:b88:b0:74e:a9c0:9b5c with SMTP id
+ d2e1a72fcca58-76ab293839fmr2123216b3a.13.1753833643276; 
+ Tue, 29 Jul 2025 17:00:43 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.17
+ d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:00:18 -0700 (PDT)
+ Tue, 29 Jul 2025 17:00:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/89] linux-user: Move get_elf_hwcap to sh4/elfload.c
-Date: Tue, 29 Jul 2025 13:58:41 -1000
-Message-ID: <20250730000003.599084-9-richard.henderson@linaro.org>
+Subject: [PATCH 24/89] linux-user/arm: Create init_main_thread
+Date: Tue, 29 Jul 2025 13:58:57 -1000
+Message-ID: <20250730000003.599084-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,107 +100,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the return type to abi_ulong, and pass in the cpu.
+Merge init_thread and target_cpu_copy_regs.
+There's no point going through a target_pt_regs intermediate.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h      |  3 ++-
- linux-user/elfload.c     | 29 +----------------------------
- linux-user/sh4/elfload.c | 32 ++++++++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 29 deletions(-)
+ linux-user/arm/cpu_loop.c | 53 ++++++++++++++++++++++++++++++++-------
+ linux-user/elfload.c      | 41 +-----------------------------
+ 2 files changed, 45 insertions(+), 49 deletions(-)
 
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 0544ab3398..cfb474e257 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -100,7 +100,8 @@ extern unsigned long guest_stack_size;
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index 1f3bb96484..8974b35e8d 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -480,19 +480,54 @@ void cpu_loop(CPUARMState *env)
+     }
+ }
  
- #if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
-     || defined(TARGET_SPARC) || defined(TARGET_PPC) \
--    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS)
-+    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS) \
-+    || defined(TARGET_SH4)
- abi_ulong get_elf_hwcap(CPUState *cs);
- abi_ulong get_elf_hwcap2(CPUState *cs);
- #endif
+-void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
++void init_main_thread(CPUState *cs, struct image_info *info)
+ {
+-    cpsr_write(env, regs->uregs[16], CPSR_USER | CPSR_EXEC,
+-               CPSRWriteByInstr);
+-    for (int i = 0; i < 16; i++) {
+-        env->regs[i] = regs->uregs[i];
++    CPUARMState *env = cpu_env(cs);
++    abi_ptr stack = info->start_stack;
++    abi_ptr entry = info->entry;
++
++    cpsr_write(env, ARM_CPU_MODE_USR | (entry & 1 ? CPSR_T : 0),
++               CPSR_USER | CPSR_EXEC, CPSRWriteByInstr);
++
++    env->regs[15] = entry & 0xfffffffe;
++    env->regs[13] = stack;
++
++    /* FIXME - what to for failure of get_user()? */
++    /* FIXME - a modern kernel does not do this? */
++    get_user_ual(env->regs[2], stack + 8); /* envp */
++    get_user_ual(env->regs[1], stack + 4); /* envp */
++
++    /*
++     * Per the SVR4 ABI, r0 contains a pointer to a function to be
++     * registered with atexit.  A value of 0 means we have no such handler.
++     */
++    env->regs[0] = 0;
++
++    /* For uClinux PIC binaries.  */
++    /* XXX: Linux does this only on ARM with no MMU (do we care ?) */
++    env->regs[10] = info->start_data;
++
++    /* Support ARM FDPIC.  */
++    if (info_is_fdpic(info)) {
++        /*
++         * As described in the ABI document, r7 points to the loadmap info
++         * prepared by the kernel. If an interpreter is needed, r8 points
++         * to the interpreter loadmap and r9 points to the interpreter
++         * PT_DYNAMIC info. If no interpreter is needed, r8 is zero, and
++         * r9 points to the main program PT_DYNAMIC info.
++         */
++        env->regs[7] = info->loadmap_addr;
++        if (info->interpreter_loadmap_addr) {
++            /* Executable is dynamically loaded.  */
++            env->regs[8] = info->interpreter_loadmap_addr;
++            env->regs[9] = info->interpreter_pt_dynamic_addr;
++        } else {
++            env->regs[8] = 0;
++            env->regs[9] = info->pt_dynamic_addr;
++        }
+     }
+ 
+     if (TARGET_BIG_ENDIAN) {
+-        CPUState *cpu = env_cpu(env);
+-        TaskState *ts = get_task_state(cpu);
+-        struct image_info *info = ts->info;
+-
+         /* Enable BE8.  */
+         if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
+             && (info->elf_flags & EF_ARM_BE8)) {
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index c6d42afde7..1e855713b6 100644
+index 553d632d46..a9a1d7222a 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -973,34 +973,7 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
- #define USE_ELF_CORE_DUMP
- #define ELF_EXEC_PAGESIZE        4096
+@@ -299,46 +299,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUX86State *en
+ #define ELF_CLASS       ELFCLASS32
+ #define EXSTACK_DEFAULT true
  
--enum {
--    SH_CPU_HAS_FPU            = 0x0001, /* Hardware FPU support */
--    SH_CPU_HAS_P2_FLUSH_BUG   = 0x0002, /* Need to flush the cache in P2 area */
--    SH_CPU_HAS_MMU_PAGE_ASSOC = 0x0004, /* SH3: TLB way selection bit support */
--    SH_CPU_HAS_DSP            = 0x0008, /* SH-DSP: DSP support */
--    SH_CPU_HAS_PERF_COUNTER   = 0x0010, /* Hardware performance counters */
--    SH_CPU_HAS_PTEA           = 0x0020, /* PTEA register */
--    SH_CPU_HAS_LLSC           = 0x0040, /* movli.l/movco.l */
--    SH_CPU_HAS_L2_CACHE       = 0x0080, /* Secondary cache / URAM */
--    SH_CPU_HAS_OP32           = 0x0100, /* 32-bit instruction support */
--    SH_CPU_HAS_PTEAEX         = 0x0200, /* PTE ASID Extension support */
--};
--
--#define ELF_HWCAP get_elf_hwcap()
--
--static uint32_t get_elf_hwcap(void)
+-static inline void init_thread(struct target_pt_regs *regs,
+-                               struct image_info *infop)
 -{
--    SuperHCPU *cpu = SUPERH_CPU(thread_cpu);
--    uint32_t hwcap = 0;
+-    abi_long stack = infop->start_stack;
+-    memset(regs, 0, sizeof(*regs));
 -
--    hwcap |= SH_CPU_HAS_FPU;
--
--    if (cpu->env.features & SH_FEATURE_SH4A) {
--        hwcap |= SH_CPU_HAS_LLSC;
+-    regs->uregs[16] = ARM_CPU_MODE_USR;
+-    if (infop->entry & 1) {
+-        regs->uregs[16] |= CPSR_T;
 -    }
+-    regs->uregs[15] = infop->entry & 0xfffffffe;
+-    regs->uregs[13] = infop->start_stack;
+-    /* FIXME - what to for failure of get_user()? */
+-    get_user_ual(regs->uregs[2], stack + 8); /* envp */
+-    get_user_ual(regs->uregs[1], stack + 4); /* envp */
+-    /* XXX: it seems that r0 is zeroed after ! */
+-    regs->uregs[0] = 0;
+-    /* For uClinux PIC binaries.  */
+-    /* XXX: Linux does this only on ARM with no MMU (do we care ?) */
+-    regs->uregs[10] = infop->start_data;
 -
--    return hwcap;
+-    /* Support ARM FDPIC.  */
+-    if (info_is_fdpic(infop)) {
+-        /* As described in the ABI document, r7 points to the loadmap info
+-         * prepared by the kernel. If an interpreter is needed, r8 points
+-         * to the interpreter loadmap and r9 points to the interpreter
+-         * PT_DYNAMIC info. If no interpreter is needed, r8 is zero, and
+-         * r9 points to the main program PT_DYNAMIC info.
+-         */
+-        regs->uregs[7] = infop->loadmap_addr;
+-        if (infop->interpreter_loadmap_addr) {
+-            /* Executable is dynamically loaded.  */
+-            regs->uregs[8] = infop->interpreter_loadmap_addr;
+-            regs->uregs[9] = infop->interpreter_pt_dynamic_addr;
+-        } else {
+-            regs->uregs[8] = 0;
+-            regs->uregs[9] = infop->pt_dynamic_addr;
+-        }
+-    }
 -}
-+#define ELF_HWCAP get_elf_hwcap(thread_cpu)
++#define HAVE_INIT_MAIN_THREAD
  
- #endif
- 
-diff --git a/linux-user/sh4/elfload.c b/linux-user/sh4/elfload.c
-index 73fa78ef14..098ca44f80 100644
---- a/linux-user/sh4/elfload.c
-+++ b/linux-user/sh4/elfload.c
-@@ -1 +1,33 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu.h"
-+#include "loader.h"
-+
-+
-+enum {
-+    SH_CPU_HAS_FPU            = 0x0001, /* Hardware FPU support */
-+    SH_CPU_HAS_P2_FLUSH_BUG   = 0x0002, /* Need to flush the cache in P2 area */
-+    SH_CPU_HAS_MMU_PAGE_ASSOC = 0x0004, /* SH3: TLB way selection bit support */
-+    SH_CPU_HAS_DSP            = 0x0008, /* SH-DSP: DSP support */
-+    SH_CPU_HAS_PERF_COUNTER   = 0x0010, /* Hardware performance counters */
-+    SH_CPU_HAS_PTEA           = 0x0020, /* PTEA register */
-+    SH_CPU_HAS_LLSC           = 0x0040, /* movli.l/movco.l */
-+    SH_CPU_HAS_L2_CACHE       = 0x0080, /* Secondary cache / URAM */
-+    SH_CPU_HAS_OP32           = 0x0100, /* 32-bit instruction support */
-+    SH_CPU_HAS_PTEAEX         = 0x0200, /* PTE ASID Extension support */
-+};
-+
-+abi_ulong get_elf_hwcap(CPUState *cs)
-+{
-+    SuperHCPU *cpu = SUPERH_CPU(cs);
-+    abi_ulong hwcap = 0;
-+
-+    hwcap |= SH_CPU_HAS_FPU;
-+
-+    if (cpu->env.features & SH_FEATURE_SH4A) {
-+        hwcap |= SH_CPU_HAS_LLSC;
-+    }
-+
-+    return hwcap;
-+}
+ #define ELF_NREG    18
+ typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
 -- 
 2.43.0
 
