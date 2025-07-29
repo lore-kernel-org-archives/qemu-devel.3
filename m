@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEC2C83F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 17:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB0AC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 17:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugnpN-0008Gl-OK; Tue, 29 Jul 2025 13:09:27 -0400
+	id 1ugoZh-0002EJ-Dl; Tue, 29 Jul 2025 13:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1ugnIy-0002y5-RF; Tue, 29 Jul 2025 12:36:14 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1ugnIw-0003rq-3r; Tue, 29 Jul 2025 12:35:56 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b42099901baso1670251a12.2; 
- Tue, 29 Jul 2025 09:35:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753806945; x=1754411745; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mMV0JA7tv2P0CyRV1JOr65kw6sQuWnvjYmaJLX0wPac=;
- b=jho0tKUQ+tT7xNuK21kJh0tQZd0VWRfOwIxxkWYOg5ZMj9cpp8Bvx/F60h8QoWQJ3b
- xoDVcjJt1YtZnDp3GXWEfXvkpMaPbfiNuY7EVifOmhOTtBW/v2DrtyS3eQHYi41X6s+V
- dpOCtUqtG3l13Zyftl0sLRmoU3qQjbWlMgj6aRAVxqomj3pYtln0GYY9GVdpDnMt3mdG
- 6SVr5jiSX/ZUTc4p56IDfI6MVZd7Ps/Snk6GynhCLqCLFdnmrBLeNEoyU2K+VKAHPrGv
- ChoePKuTw7990mMrqoPmJtSLPB712hyG9UV1L9oIzp5D9Y5JzjtK4qxH3uv/52LrOQvL
- XShQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753806945; x=1754411745;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mMV0JA7tv2P0CyRV1JOr65kw6sQuWnvjYmaJLX0wPac=;
- b=CQanY48g4t2lFJ4LfyF9ag5xm6cWLY4ev0ytF/BeDIIhmhjkdrp4fRJa1QKQqZbTTW
- +qkWKAd0eSSNSPRMU3FMjoSfX7MzOhRlUjxiR9+5Cga96PUTJIOPQgoxDi/yb1gZ/MG2
- 2dkjKVA3nP7Lv4k2FP05J8eSk7GKZQYiYQ1qRZ0sT13h+Ew0dbrzDHN5cb+FpP93mKqw
- qSusPh1a8yBXOyvhHcRZ4kFU8zaits2htgKgw1rc3/voJ30S1SZUGDA1fStdfPq67nQ4
- KWyr3A1GydsfQ0jDzSRVTXyCCrhONDPme+yOEdfgIUP8T2aXgQsdHBv8Gp04VhDyMDuh
- MIZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVaGS7LjsvxZwR34/wohqC/J3nUwrIDWjhX82D/T2HtLBw4UO3+oORvZAXhpjA/WPTxdK9oaVPl+jk3@nongnu.org,
- AJvYcCX16bil2u8TqHeIk+I3H72ftHFTTpvwm3UeF+Fs1qdXwv0V1cXtTADHgWHBa0KYcCuYT9TE8AMX2vQUtQ==@nongnu.org
-X-Gm-Message-State: AOJu0YwgzEbyTejwiEgZfAZExdfGxH9xCky+qeuR9qLA+o8vnahh9yen
- mC5OaQ2jJAN4YrH25o57gjBtdgh/4Ij6eM8j3qhYmTM9r93XGuNHzr2UNFZXgQ==
-X-Gm-Gg: ASbGncthG835OnrDNIbhwYTvlJU83IVAh6ZnaDxmdjiWx5A1iqydae335kmG0+RqJBa
- jMW8DiuKTkdo1LRnLxP7ivd2HjRkM0/hD35AfC4jYVim9lvTJpRmDREkfK8F9H4ISKaZNfATbh8
- y/4iF5tIEBREdaKvG9+6alGrVJd/7v1AQmvGTISRQZ6IY8z1D+AHl1Bd6/MEpIOYmKIkSSddRFy
- +uSqE9SkkeoaWewNcb9Nb2eDd/iH4A0DQ6syhCAaBq7zo9B7vzNAXeOAuFf8t/9aBY25up4puXJ
- uOjpOzZCcTehqOWlqD8nbKaD+CVsUlZaxeO7biFxJcpZEc+F3ZMNAhK6LxKR4Bn+SrsL9+w5z1x
- KallSq3jP7To9f+ogg4UoacaiOTljTidIXT5wLEQkk7pAvw==
-X-Google-Smtp-Source: AGHT+IFtTOrk7OrmP3zKrQeRKUAspSn8u7GuU+Z3sUF85zl5GStBce+7vsg1QTBm8t5zP1UHsu91iw==
-X-Received: by 2002:a17:90a:e703:b0:313:f83a:e473 with SMTP id
- 98e67ed59e1d1-31f5de16a31mr234631a91.15.1753806944440; 
- Tue, 29 Jul 2025 09:35:44 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f2efd94absm1152002a91.1.2025.07.29.09.35.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 09:35:43 -0700 (PDT)
-Date: Tue, 29 Jul 2025 09:35:42 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Ben Dooks <ben.dooks@codethink.co.uk>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, bmeng.cn@gmail.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/sd/sdcard: fix spi_cmd_SEND_CSD/CID state check
-Message-ID: <b89e76f3-9a9b-4d7f-aafd-2c00959c8321@roeck-us.net>
-References: <20250724105807.697915-1-ben.dooks@codethink.co.uk>
- <893a7943-e5ac-4c42-b30f-1dfa262b923e@linaro.org>
- <7731f31b606442cab7a3f7b1c2cf6d6e@codethink.co.uk>
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ugnbY-00039B-7C
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 12:55:08 -0400
+Received: from barb.cherry.relay.mailchannels.net ([23.83.223.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ugnbU-0006BI-5s
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 12:55:07 -0400
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 926728466EA;
+ Tue, 29 Jul 2025 16:54:58 +0000 (UTC)
+Received: from pdx1-sub0-mail-a208.dreamhost.com
+ (trex-blue-3.trex.outbound.svc.cluster.local [100.96.207.233])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 2F3478465D5;
+ Tue, 29 Jul 2025 16:54:58 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1753808098; a=rsa-sha256;
+ cv=none;
+ b=pyN5J/yIl8jmhEEwpQWeprYxzVoq8DILRg8KSV37wctlhWtEOS4DueL8yQv3YAUsHZWM5l
+ awqfoVKGsWp2n+VbkOz5U6lPge1luQQrjycWPD+rpPGLZdehq2SdPvohDBN2vDhm0SYKmD
+ JujC+CxJcXGDeVBd19TjBE6bPBcwWAitdYxnAWl/W+zNj8RYS8LA1AcvJoYMv6Fz0WDAEM
+ 00UVS1HqDA0LVox9s70dffMbz8XAHOVzQLDQM0bEcux/U2VPi6gGFtWSt1b9pnp6QSa4/y
+ jCbVxSQhsteXBb0RNRivgQeSy3DfXQfa9+TcDxXWOJRsgjJtaDLhvYwVKmB6Ug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1753808098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:dkim-signature;
+ bh=1+NW2dZNPLP28QYPnv1p42CLMJoehjs1NoMynLHcXRY=;
+ b=+Gf0hmvzFUXmys9bxyJifBxJ67P9EXteTj9YvB7BZgDNCR9d3y5g7oeUao7PxnZEV+MDBC
+ rGST27P0vLGt0ExGsb+v3qmWaVma8OqmXfP74Z7H9P+9ZXDNBX0taThsQSszwOub1D58JB
+ az/oQl5gSkjSw5WDtlIrqd//wB3fHkctUC7b+KyAWosA88hVPny9cLZXPtPEgNLt7ep4Eh
+ 0DupgL9ql2ezCa3TwBUK1q87DuDupeNtRJvo9Wek3k8KEcc1Z1V7gXYCNYEhxhIQXZ/nL1
+ J8ziBrlS5T0YfkAT5SDwy/QKsh9g4eouvKMcc9X2REwVTGNDsxXfA8s4aqH7TQ==
+ARC-Authentication-Results: i=1; rspamd-696f8998d-588f2;
+ auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Bad
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Keen-Share: 30b1cf845b711aa7_1753808098450_1242008667
+X-MC-Loop-Signature: 1753808098450:2403573240
+X-MC-Ingress-Time: 1753808098450
+Received: from pdx1-sub0-mail-a208.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.96.207.233 (trex/7.1.3); Tue, 29 Jul 2025 16:54:58 +0000
+Received: from offworld.lan (syn-076-167-199-067.res.spectrum.com
+ [76.167.199.67])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a208.dreamhost.com (Postfix) with ESMTPSA id 4bs1fn3sjKzKB; 
+ Tue, 29 Jul 2025 09:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1753808098;
+ bh=1+NW2dZNPLP28QYPnv1p42CLMJoehjs1NoMynLHcXRY=;
+ h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+ b=eylE3zsX0fP1e5yl4+AfxeMyPRAGwCGnZwbXhRK4pL21gY275qfiJw0BUjnDTZm5L
+ RxjsQamjl/tRAA5JmMBY1HXgmdTdWos8xjdB0qMk45WRD5pfgg6EW1575PQc1+asH7
+ NVvmVlZjq91fsM+hVMnODoEC7ngsRqp8gj+hUj/LceTpmIt86Lc2fWRFkmLz3wfJID
+ OMi/KRyPHnDAjAq95gIq1vLM+vVRBe2BcT2Jj2iCrfUQQhDAhoftZ9iqBBRmQFNAHI
+ igO3vHpoVRCxFqACrRaGfUMeJ3VubulkINCABYGk24h8qA7pvKCZtAlkvVRFoMwFmj
+ g4hBR06gdpYKw==
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: jonathan.cameron@huawei.com
+Cc: ira.weiny@intel.com, alucerop@amd.com, a.manzanares@samsung.com,
+ linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH RFC -qemu 0/2] hw/cxl: Support Back Invalidation
+Date: Tue, 29 Jul 2025 09:54:39 -0700
+Message-Id: <20250729165441.1898150-1-dave@stgolabs.net>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7731f31b606442cab7a3f7b1c2cf6d6e@codethink.co.uk>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=groeck7@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=23.83.223.10; envelope-from=dave@stgolabs.net;
+ helo=barb.cherry.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,93 +111,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 29, 2025 at 04:06:33PM +0100, Ben Dooks wrote:
-> 
-> 
-> On 2025-07-29 14:51, Philippe Mathieu-Daudé wrote:
-> > Hi Ben,
-> > 
-> > On 24/7/25 12:58, Ben Dooks wrote:
-> > > The addition of specific handlers for mmc-spi for SEND_CSD and
-> > > SEND_CID has broken at least Linux and possibly also u-boot's
-> > > mmc-spi code.
-> > > 
-> > > It looks like when adding the code, it is checking for these
-> > > commands to not be in sd_standby_state but the check looks to
-> > > have been accidentally reversed (see below)
-> > > 
-> > >       if (sd->state != sd_standby_state) {
-> > >           return sd_invalid_state_for_cmd(sd, req);
-> > >       }
-> > > 
-> > > Linux shows the following:
-> > > 
-> > > [    0.293983] Waiting for root device /dev/mmcblk0...
-> > > [    1.363071] mmc0: error -38 whilst initialising SD card
-> > > [    2.418566] mmc0: error -38 whilst initialising SD card
-> > > 
-> > > Fixes: da954d0e32444f122a4 ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID
-> > > handlers (CMD9 & CMD10)")
-> > > Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-> > > ---
-> > >   hw/sd/sd.c | 6 +++---
-> > >   1 file changed, 3 insertions(+), 3 deletions(-)
-> > > 
-...
-> 
-> ok, so what is the correct fix? the sd-spi has been broken for some time.
-> 
+Hello,
 
-FWIW, I use the patch below on top of upstream qemu. I have no idea if it
-is correct, but it fixes the problem for me.
+The following allows support for component basic back invalidation discovery
+and config, by exposing the BI routing table and decoder registers. Instead
+of going the type2[1] route, this series proposes adding support for type3
+hdm-db, which allows a more direct way of supporting BI in qemu.
 
-Guenter
+Caveats/RFC: Just as in Ira's series, there is the question about the whole topology
+allowing BI, not just the endpoint device. That series left the rest of topology
+(dsp, rp) non-BI capable, for which any kernel counterpart testing would fail
+when using type2, but at the same time is also consistent with flit 68B when not
+using a type2 device.
 
----
-From 87a2004005eb47758c524b54dd3fbc68a00e317f Mon Sep 17 00:00:00 2001
-From: Guenter Roeck <linux@roeck-us.net>
-Date: Thu, 24 Oct 2024 12:16:44 -0700
-Subject: [PATCH] sd: Fix boot failures seen on sifive_u
+This series blindly enables BI capabilities for ports even when no type3 hdm-db
+is being used. While it is handy, it is inconsistent with the driver seeing 68B
+and the BI registers in such cases. I've been going back and forth with possible
+workarounds, but don't really have a good answer, and this will ultimately
+affect not only BI but all goodies that come with 256B flit. Any suggestions welcome.
 
-sifive_u fails to boot from SD. This patch fixes the problem.
+Patch 1: is lifted from Ira's series with some small (but non-trivial) changes.
+Patch 2: adds BI decoder/rt register support.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
- hw/sd/sd.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Testing wise, this has passed relevant kernel side BI register IO flows and
+setup.
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index c275fdda2d..f5c44a4a86 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1520,7 +1520,7 @@ static sd_rsp_type_t emmc_cmd_SEND_EXT_CSD(SDState *sd, SDRequest req)
- /* CMD9 */
- static sd_rsp_type_t spi_cmd_SEND_CSD(SDState *sd, SDRequest req)
- {
--    if (sd->state != sd_standby_state) {
-+    if (sd->state != sd_transfer_state) {
-         return sd_invalid_state_for_cmd(sd, req);
-     }
-     return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
-@@ -1539,7 +1539,7 @@ static sd_rsp_type_t sd_cmd_SEND_CSD(SDState *sd, SDRequest req)
- /* CMD10 */
- static sd_rsp_type_t spi_cmd_SEND_CID(SDState *sd, SDRequest req)
- {
--    if (sd->state != sd_standby_state) {
-+    if (sd->state != sd_transfer_state) {
-         return sd_invalid_state_for_cmd(sd, req);
-     }
-     return sd_cmd_to_sendingdata(sd, req, sd_req_get_address(sd, req),
-@@ -1592,7 +1592,7 @@ static sd_rsp_type_t sd_cmd_SEND_STATUS(SDState *sd, SDRequest req)
-     }
- 
-     if (sd_is_spi(sd)) {
--        return sd_r2_s;
-+        return sd_r1;
-     }
- 
-     return sd_req_rca_same(sd, req) ? sd_r1 : sd_r0;
--- 
-2.45.2
+Applies against branch 'origin/cxl-2025-07-03' from the jic23 repository.
+
+Thanks!
+
+[1] https://lore.kernel.org/linux-cxl/20230517-rfc-type2-dev-v1-0-6eb2e470981b@intel.com/
+
+Davidlohr Bueso (1):
+  hw/cxl: Support Type3 HDM-DB
+
+Ira Weiny (1):
+  hw/cxl: Refactor component register initialization
+
+ hw/cxl/cxl-component-utils.c   | 206 ++++++++++++++++++++++++---------
+ hw/mem/cxl_type3.c             |   5 +-
+ include/hw/cxl/cxl_component.h |  87 +++++++++++---
+ include/hw/cxl/cxl_device.h    |   3 +
+ 4 files changed, 232 insertions(+), 69 deletions(-)
+
+--
+2.39.5
 
 
