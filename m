@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F43C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E35C87FCC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguRZ-000219-QC; Tue, 29 Jul 2025 20:13:17 -0400
+	id 1uguRO-0001oy-8F; Tue, 29 Jul 2025 20:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguF9-0001YS-1V
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:27 -0400
+ id 1uguF8-0001Xj-EH
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:26 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguF6-000420-QB
+ id 1uguF5-00041f-Tr
  for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:00:26 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-75001b1bd76so3987310b3a.2
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:24 -0700 (PDT)
+ d2e1a72fcca58-7425bd5a83aso5930868b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833623; x=1754438423; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833622; x=1754438422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=b7s39CkWlMMx+G9GkxkJyc453mYEb7PcnvWNR7lcKKk=;
- b=e3azRwWZe47qsk1TEg2Hx9AC1Nc/QOysMxSdLr5PG3bv1AXsmjK2xAJBkKYZSvJNAa
- Lf0S06jhi5ppZAZkWr7MLu0u7bvvi3GLXUMql35vvKN45+JGFMaJcgIeFGiEOkGI71bV
- WTtELP9Q5dIpEF4QDGwmxP/uWbfffdsW2r5ZZxbGYvdRLfxK9bgteHNlqTxGO7lC4crL
- cTOT8Q5PyWSjNU3rv18bgujg4Mb7svnkFqUTiAwn98DPrF4jKmwbNaEMLZBmweJawuyi
- rhvMjnUmj0aCrS4Y9z7wwhWRltVIMA2JylswEmSsk9NwjlVAawlOb7W0BrpVs8tOWlNI
- G+fg==
+ :reply-to; bh=niYjP4HNi20ORlTyteNDCGDWejJsTAgXuRZuniRDlAY=;
+ b=wi5V9EroshTzfXiIgKHBOs3QsJxzxsutGrAZS1ZC7FvUV3EwqUHKby/WO+49Qx5znX
+ mFuW5cnfqaxVp19cnX3wXUrqw3drItA66pxk9F9qpCQqWUfBDvigjhS/dzvKyRon3B4t
+ 379Klx1BGg0rtrqUZFhrS4nKpJ4U+NxDOvzoMmHgUHxpDtqoiPdBL/7r6UWK6CduXszD
+ v0TuaT/7FTcvLZ2+DKu6SwGswtRkirKpmSSC8Ck12Y1MzfFhPuE9gBoLFdffhZTjNoN5
+ r0SyewR2oGecBum1Ucw3E19wQ+pz0Me6d2vIM0gDrqNUeEEu1GJcdsxJbzimQJ3HauuQ
+ TEoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833623; x=1754438423;
+ d=1e100.net; s=20230601; t=1753833622; x=1754438422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b7s39CkWlMMx+G9GkxkJyc453mYEb7PcnvWNR7lcKKk=;
- b=p37LrYWuNCsR/LiiM/wZ9xegUeHpxBJwKdQVma86ZSwMxZWMGy/JoyZy4CdSQV9r7+
- I/b7U9LKygKyaM+Ir2BSJdwYQuBQNGqYLIOP6oZLVSkyVtvmLzigJQHgN0C4N26/drMb
- 6x6r6vQCJrzk7UrVtBFyiWt/fmfD/XXZmK/W1aVhMCPNq/+kBzSFJ5lsNKdjQNA2G15f
- AO7p3CZQNZ+bQ5+WruPltoM2pr+0PEQK0nc0q6L1nHlNRotYpgKEPRwI3a8S0GDTJHQm
- X/KUsLTkH6CG1v3WWJWDnHPFKnLzIKgqQN/IuDbJ6hDROjc9uvJpGvCXZ8UNtYvAZ3BT
- rVDA==
-X-Gm-Message-State: AOJu0YwKzK+mrcf2bGSCdEvKQJBRLwEnjJD+4KO0Sc0DjPJWnZGj6gRX
- v7UPDA5pmUdHYs0Vve3ss7e5v3Wmj1xGG1ljpADkPTE7oC55PTtg4oMXRTf/G2D2ZWgjeFOx3EL
- E0FaF
-X-Gm-Gg: ASbGncsI8x8HhDPJSs7+LJff6lxoxHIRwMZ1CM0CdyBuTuGiH3nxXNLFBMndb3LhFOp
- hMtLLs8s8z94H+oJK6kAQlhP65CHhRRUPuEAgcRF4JcADpMF9AkIedylgjOdRsKGKV69MAW29SS
- IfEzebbYAJA2g4o8FWDa3XbdSQXYyOzU0ugyAsZrHY6fXNwzGTv2ijBBsUSc2HacSn1vi1wDbdf
- fP6PyhuM1flV59clIn5HVmhgRF+yOgTjmPNBlLI2ylHnwzPEL3f4+YXs5G58jPOyBNwxYSEZVfA
- R/pjDR4ThJDvXOLVXPE5RKJbyuzJ6n1SqZPNM/WoSp6rKBe2jqJE2JP6r1N3yPrwRsdRD7erXV9
- KNA0zSjxoI0IJ/tURJfNMxC4d88ns1qpIPMnGc2MRkxK32Xtv1BJjSPhRk/khK2kGTzbXiepwfF
- PlqE7/O5Iegg==
-X-Google-Smtp-Source: AGHT+IEAfU07LECVh+lQoE9kql+jYqqM8/EiYKOgunEq4ar7ybJRpD5Tvh2Fwry28TlUcl7Sqe36sQ==
-X-Received: by 2002:a05:6a00:21c5:b0:736:3979:369e with SMTP id
- d2e1a72fcca58-76ab1611ca0mr1896383b3a.9.1753833623081; 
- Tue, 29 Jul 2025 17:00:23 -0700 (PDT)
+ bh=niYjP4HNi20ORlTyteNDCGDWejJsTAgXuRZuniRDlAY=;
+ b=JmvKm1gfBVbpbilcLb4K9TCJxXManePO7y6uEr49UVXEFmS4a95JKYepoO71FpQr6i
+ 1tk2T259B1Cp/86up+he704M77yRaq6SMT5eo2V9+n7YO/fIfUq2e/984o0ZA84hnLIO
+ 5Kf3do/Fs5DPugEErGvSc/WfJK01DkKBDvfVgc/8WuQt1o0UNbn1zOVeh/8to7zzLkEM
+ yJts5R1M/UtQqi3W8LVm3wzsq9Sy3g+aOct6YYS871e6d5Bclku60ueRdKNBJtD0HIOg
+ TtL5I19H/QTxwC/0NZCCY3oD1TgTQccPHjzmymz4kxgf90fYe1TrF3HE4qXrRhazIMSu
+ hxeg==
+X-Gm-Message-State: AOJu0YyMgV/TTzVCqDhYyqm3p2O+7iA5c/0Xn2FX/A3RxgpvXA4YY46Q
+ EfhFGmYMhJ+J4POJVlWt0r1twDb77awGiN7l+1QId0pkvePX+WlsUj/L1LVeybvEL98nRiBMZVD
+ 8Ulso
+X-Gm-Gg: ASbGncsvY4yliZ07h6c7jB2YaHcic14CZ5ymw2qGuq1SLMtYaU+erzJn3oM0NL5is4D
+ QK1JXl+o1M6qOx6dlPBMj7BDsoGcRciXfWGAD00juFPd4QCVEGukIinfRXP3YLgIlglCTr/J4EW
+ mYdnWNxiERXwDJyHuU7IGtnF9nIaP/fhIJxKaMHBYKUv2L+2W6B2UFX7CDkSbd/hPq0t0s2yI+x
+ zZJ5X2d4irKlnxZnQoeSODPkwH/gpiiXH4/i2W3cQ2RbysfKbqlmS1Qs4EMKWW7m5DdF5QmIcsm
+ 9nhf7+CVmyAJ0qlOMbgbCk2Oy2uU7IzlWxof52j3lXdZ+itj2mTgINeepqSJQp7e2iq6atdMBja
+ VbIwJWJuyP9Pw2aXezA7oX66rSQjIkHKzAPK1X0LkTT90yzAR61vH0WfqXiVdESxBhyemyLrw2v
+ CDLW+o4JBkZQ==
+X-Google-Smtp-Source: AGHT+IGGciwtfEAJPAaabB1WdNQ2DPrgCMY0U6HqNz6xSpFq1l27crZPOKJy6EbMp2dzbIJqPiOwGA==
+X-Received: by 2002:a05:6a20:3949:b0:222:d817:2f4a with SMTP id
+ adf61e73a8af0-23dc0d59042mr1791411637.17.1753833621540; 
+ Tue, 29 Jul 2025 17:00:21 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.21
+ d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:00:22 -0700 (PDT)
+ Tue, 29 Jul 2025 17:00:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 10/89] linux-user: Move get_elf_hwcap to riscv/elfload.c
-Date: Tue, 29 Jul 2025 13:58:43 -1000
-Message-ID: <20250730000003.599084-11-richard.henderson@linaro.org>
+Subject: [PATCH 09/89] linux-user: Move hwcap functions to s390x/elfload.c
+Date: Tue, 29 Jul 2025 13:58:42 -1000
+Message-ID: <20250730000003.599084-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
@@ -100,82 +100,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the return type to abi_ulong, and pass in the cpu.
-As this is the last instance of get_elf_hwcap to be converted,
-remove the ifdef around the declaration in loader.h.
+For get_elf_hwcap, change the return type to abi_ulong
+and pass in the cpu.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h        |  5 -----
- linux-user/elfload.c       | 14 +-------------
- linux-user/riscv/elfload.c | 17 +++++++++++++++++
- 3 files changed, 18 insertions(+), 18 deletions(-)
+ linux-user/loader.h            |  5 +--
+ linux-user/s390x/target_proc.h |  2 +-
+ linux-user/elfload.c           | 60 +-------------------------------
+ linux-user/s390x/elfload.c     | 62 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 65 insertions(+), 64 deletions(-)
 
 diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 72eb3e68cb..484d20aecd 100644
+index cfb474e257..72eb3e68cb 100644
 --- a/linux-user/loader.h
 +++ b/linux-user/loader.h
-@@ -98,13 +98,8 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src,
- 
- extern unsigned long guest_stack_size;
- 
--#if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
--    || defined(TARGET_SPARC) || defined(TARGET_PPC) \
--    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS) \
--    || defined(TARGET_SH4) || defined(TARGET_S390X)
+@@ -101,13 +101,10 @@ extern unsigned long guest_stack_size;
+ #if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
+     || defined(TARGET_SPARC) || defined(TARGET_PPC) \
+     || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS) \
+-    || defined(TARGET_SH4)
++    || defined(TARGET_SH4) || defined(TARGET_S390X)
  abi_ulong get_elf_hwcap(CPUState *cs);
  abi_ulong get_elf_hwcap2(CPUState *cs);
+ #endif
+-#if defined(TARGET_S390X)
+-uint32_t get_elf_hwcap(void);
 -#endif
  const char *elf_hwcap_str(uint32_t bit);
  const char *elf_hwcap2_str(uint32_t bit);
  
+diff --git a/linux-user/s390x/target_proc.h b/linux-user/s390x/target_proc.h
+index a4a4821ea5..60cc22d3b4 100644
+--- a/linux-user/s390x/target_proc.h
++++ b/linux-user/s390x/target_proc.h
+@@ -48,7 +48,7 @@ static void show_cpu_summary(CPUArchState *cpu_env, int fd)
+ {
+     S390CPUModel *model = env_archcpu(cpu_env)->model;
+     int num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
+-    uint32_t elf_hwcap = get_elf_hwcap();
++    uint32_t elf_hwcap = get_elf_hwcap(env_cpu(cpu_env));
+     const char *hwcap_str;
+     int i;
+ 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 8d4429242f..cd83307750 100644
+index 1e855713b6..8d4429242f 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -1109,19 +1109,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- #define VDSO_HEADER "vdso-64.c.inc"
- #endif
+@@ -1049,65 +1049,7 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
  
+-#include "elf.h"
+-
 -#define ELF_HWCAP get_elf_hwcap()
 -
--static uint32_t get_elf_hwcap(void)
--{
--#define MISA_BIT(EXT) (1 << (EXT - 'A'))
--    RISCVCPU *cpu = RISCV_CPU(thread_cpu);
--    uint32_t mask = MISA_BIT('I') | MISA_BIT('M') | MISA_BIT('A')
--                    | MISA_BIT('F') | MISA_BIT('D') | MISA_BIT('C')
--                    | MISA_BIT('V');
+-#define GET_FEATURE(_feat, _hwcap) \
+-    do { if (s390_has_feat(_feat)) { hwcap |= _hwcap; } } while (0)
 -
--    return cpu->env.misa_ext & mask;
--#undef MISA_BIT
+-uint32_t get_elf_hwcap(void)
+-{
+-    /*
+-     * Let's assume we always have esan3 and zarch.
+-     * 31-bit processes can use 64-bit registers (high gprs).
+-     */
+-    uint32_t hwcap = HWCAP_S390_ESAN3 | HWCAP_S390_ZARCH | HWCAP_S390_HIGH_GPRS;
+-
+-    GET_FEATURE(S390_FEAT_STFLE, HWCAP_S390_STFLE);
+-    GET_FEATURE(S390_FEAT_MSA, HWCAP_S390_MSA);
+-    GET_FEATURE(S390_FEAT_LONG_DISPLACEMENT, HWCAP_S390_LDISP);
+-    GET_FEATURE(S390_FEAT_EXTENDED_IMMEDIATE, HWCAP_S390_EIMM);
+-    if (s390_has_feat(S390_FEAT_EXTENDED_TRANSLATION_3) &&
+-        s390_has_feat(S390_FEAT_ETF3_ENH)) {
+-        hwcap |= HWCAP_S390_ETF3EH;
+-    }
+-    GET_FEATURE(S390_FEAT_VECTOR, HWCAP_S390_VXRS);
+-    GET_FEATURE(S390_FEAT_VECTOR_ENH, HWCAP_S390_VXRS_EXT);
+-    GET_FEATURE(S390_FEAT_VECTOR_ENH2, HWCAP_S390_VXRS_EXT2);
+-
+-    return hwcap;
+-}
+-
+-const char *elf_hwcap_str(uint32_t bit)
+-{
+-    static const char *hwcap_str[] = {
+-        [HWCAP_S390_NR_ESAN3]     = "esan3",
+-        [HWCAP_S390_NR_ZARCH]     = "zarch",
+-        [HWCAP_S390_NR_STFLE]     = "stfle",
+-        [HWCAP_S390_NR_MSA]       = "msa",
+-        [HWCAP_S390_NR_LDISP]     = "ldisp",
+-        [HWCAP_S390_NR_EIMM]      = "eimm",
+-        [HWCAP_S390_NR_DFP]       = "dfp",
+-        [HWCAP_S390_NR_HPAGE]     = "edat",
+-        [HWCAP_S390_NR_ETF3EH]    = "etf3eh",
+-        [HWCAP_S390_NR_HIGH_GPRS] = "highgprs",
+-        [HWCAP_S390_NR_TE]        = "te",
+-        [HWCAP_S390_NR_VXRS]      = "vx",
+-        [HWCAP_S390_NR_VXRS_BCD]  = "vxd",
+-        [HWCAP_S390_NR_VXRS_EXT]  = "vxe",
+-        [HWCAP_S390_NR_GS]        = "gs",
+-        [HWCAP_S390_NR_VXRS_EXT2] = "vxe2",
+-        [HWCAP_S390_NR_VXRS_PDE]  = "vxp",
+-        [HWCAP_S390_NR_SORT]      = "sort",
+-        [HWCAP_S390_NR_DFLT]      = "dflt",
+-        [HWCAP_S390_NR_NNPA]      = "nnpa",
+-        [HWCAP_S390_NR_PCI_MIO]   = "pcimio",
+-        [HWCAP_S390_NR_SIE]       = "sie",
+-    };
+-
+-    return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
 -}
 +#define ELF_HWCAP get_elf_hwcap(thread_cpu)
  
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
-diff --git a/linux-user/riscv/elfload.c b/linux-user/riscv/elfload.c
-index 73fa78ef14..4e2ec3df5b 100644
---- a/linux-user/riscv/elfload.c
-+++ b/linux-user/riscv/elfload.c
-@@ -1 +1,18 @@
+ static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
+ {
+diff --git a/linux-user/s390x/elfload.c b/linux-user/s390x/elfload.c
+index 73fa78ef14..29dab42933 100644
+--- a/linux-user/s390x/elfload.c
++++ b/linux-user/s390x/elfload.c
+@@ -1 +1,63 @@
  /* SPDX-License-Identifier: GPL-2.0-or-later */
 +
 +#include "qemu/osdep.h"
 +#include "qemu.h"
 +#include "loader.h"
++#include "elf.h"
 +
++
++#define GET_FEATURE(_feat, _hwcap) \
++    do { if (s390_has_feat(_feat)) { hwcap |= _hwcap; } } while (0)
 +
 +abi_ulong get_elf_hwcap(CPUState *cs)
 +{
-+#define MISA_BIT(EXT) (1 << (EXT - 'A'))
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    uint32_t mask = MISA_BIT('I') | MISA_BIT('M') | MISA_BIT('A')
-+                    | MISA_BIT('F') | MISA_BIT('D') | MISA_BIT('C')
-+                    | MISA_BIT('V');
++    /*
++     * Let's assume we always have esan3 and zarch.
++     * 31-bit processes can use 64-bit registers (high gprs).
++     */
++    uint32_t hwcap = HWCAP_S390_ESAN3 | HWCAP_S390_ZARCH | HWCAP_S390_HIGH_GPRS;
 +
-+    return cpu->env.misa_ext & mask;
-+#undef MISA_BIT
++    GET_FEATURE(S390_FEAT_STFLE, HWCAP_S390_STFLE);
++    GET_FEATURE(S390_FEAT_MSA, HWCAP_S390_MSA);
++    GET_FEATURE(S390_FEAT_LONG_DISPLACEMENT, HWCAP_S390_LDISP);
++    GET_FEATURE(S390_FEAT_EXTENDED_IMMEDIATE, HWCAP_S390_EIMM);
++    if (s390_has_feat(S390_FEAT_EXTENDED_TRANSLATION_3) &&
++        s390_has_feat(S390_FEAT_ETF3_ENH)) {
++        hwcap |= HWCAP_S390_ETF3EH;
++    }
++    GET_FEATURE(S390_FEAT_VECTOR, HWCAP_S390_VXRS);
++    GET_FEATURE(S390_FEAT_VECTOR_ENH, HWCAP_S390_VXRS_EXT);
++    GET_FEATURE(S390_FEAT_VECTOR_ENH2, HWCAP_S390_VXRS_EXT2);
++
++    return hwcap;
++}
++
++const char *elf_hwcap_str(uint32_t bit)
++{
++    static const char *hwcap_str[] = {
++        [HWCAP_S390_NR_ESAN3]     = "esan3",
++        [HWCAP_S390_NR_ZARCH]     = "zarch",
++        [HWCAP_S390_NR_STFLE]     = "stfle",
++        [HWCAP_S390_NR_MSA]       = "msa",
++        [HWCAP_S390_NR_LDISP]     = "ldisp",
++        [HWCAP_S390_NR_EIMM]      = "eimm",
++        [HWCAP_S390_NR_DFP]       = "dfp",
++        [HWCAP_S390_NR_HPAGE]     = "edat",
++        [HWCAP_S390_NR_ETF3EH]    = "etf3eh",
++        [HWCAP_S390_NR_HIGH_GPRS] = "highgprs",
++        [HWCAP_S390_NR_TE]        = "te",
++        [HWCAP_S390_NR_VXRS]      = "vx",
++        [HWCAP_S390_NR_VXRS_BCD]  = "vxd",
++        [HWCAP_S390_NR_VXRS_EXT]  = "vxe",
++        [HWCAP_S390_NR_GS]        = "gs",
++        [HWCAP_S390_NR_VXRS_EXT2] = "vxe2",
++        [HWCAP_S390_NR_VXRS_PDE]  = "vxp",
++        [HWCAP_S390_NR_SORT]      = "sort",
++        [HWCAP_S390_NR_DFLT]      = "dflt",
++        [HWCAP_S390_NR_NNPA]      = "nnpa",
++        [HWCAP_S390_NR_PCI_MIO]   = "pcimio",
++        [HWCAP_S390_NR_SIE]       = "sie",
++    };
++
++    return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
 +}
 -- 
 2.43.0
