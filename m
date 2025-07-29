@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CDCC87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 09:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A22C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 09:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uggWX-0004lg-A9; Tue, 29 Jul 2025 05:21:30 -0400
+	id 1uggWw-00051f-HB; Tue, 29 Jul 2025 05:21:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uggWC-0004ZD-HT
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:08 -0400
+ id 1uggWK-0004dX-Vt
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:20 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uggWA-0002Zb-IT
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:08 -0400
+ id 1uggWI-0002av-TI
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 05:21:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753780867; x=1785316867;
+ t=1753780875; x=1785316875;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ShMgs7YpJK2HUoz+hOs83jv7NwRNB0fgZnw1jIM1sMQ=;
- b=Sl1xRFUI+gaFtAG33y4VsVirwNDO6f8lt+LmaRlQdCC+YAQGFXwSw+Aw
- Y8HjGdkCaJNJg6ztJ7tZd45JWvI4nxiHFzeUVaz0CSdfpVkjL657rVXBj
- P7A/QWlBmcSuT9RpxQCdoYaBjwBmzsBICtJe9lfw0t9EagAelItwBL2XG
- x+iX+XYORsrTfAX3CTboZGJiz4Pf8y9jfeUPrrnXbDPXOr4zKGVTSgOlD
- Wsns8JAnat6fv9tnc5QUZc69MuyQ58HWAMc8u+GksHdeCNGgWU1fOOkg8
- TrZeV47vBK+jV+JpD8PcY98PB40a7D5V3cipLxyGUZoaWqwG49ERn8Q1N A==;
-X-CSE-ConnectionGUID: tspk9c1ZRuemakyMMx+8yA==
-X-CSE-MsgGUID: DlEsi3W6SneJhRJP+Y0SEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55981837"
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="55981837"
+ bh=H90IjbHFk/C0B72MY53kb+vMeadxug3mnzm1G5/mZdM=;
+ b=W0+C6UOzsxQeQjpJiKjGIIPg0wiJfNOyJli8bAq7fvKB0xIyfLcl/RKH
+ Qz90siFB7vhqu+ZKgG2r6bn7gKVVvKgmGKNXNYvvGAmzniVBdP3dncH8b
+ 4Ll44hv11xRTgoJtopwGkdYv2x0zIy+J+7uloKdG8Anjql0vVXVa1IXjH
+ BV323mEa55U59G7LkBZNPHGiCRhatg/ZLMn+ddmO/O7Cy4Cs5aCSVWzZB
+ ftRCo0uWxDYyxHCZEdCg8hUePlVBHPnWOBoJWse0XW0sFPWSv4yFzofwZ
+ pFzUnMFGN5jODoS4eMEUxULAOaKqys28nBTPDp9R1S2O8MLHYUXadjTtl Q==;
+X-CSE-ConnectionGUID: DGxCXqoGRxC7/mb62Owi/Q==
+X-CSE-MsgGUID: hAbUzuIiQTygs/rN1Ab/rQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="55981863"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="55981863"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2025 02:21:03 -0700
-X-CSE-ConnectionGUID: dq5mRZoURmW5rd0LMMoaAQ==
-X-CSE-MsgGUID: DCKfplikSsyP26aVwRVG1g==
+ 29 Jul 2025 02:21:12 -0700
+X-CSE-ConnectionGUID: mFMAsr4KSTqxGDXwzpKcpg==
+X-CSE-MsgGUID: qBRVDKr+RRCvZoULea4QLg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="162691073"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="162691120"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2025 02:20:59 -0700
+ 29 Jul 2025 02:21:09 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,15 +54,13 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 01/20] intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
- vtd_ce_get_pasid_entry
-Date: Tue, 29 Jul 2025 05:20:23 -0400
-Message-ID: <20250729092043.785836-2-zhenzhong.duan@intel.com>
+Subject: [PATCH v4 03/20] intel_iommu: Implement get_viommu_cap() callback
+Date: Tue, 29 Jul 2025 05:20:25 -0400
+Message-ID: <20250729092043.785836-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250729092043.785836-1-zhenzhong.duan@intel.com>
 References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.17;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -89,87 +87,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In early days vtd_ce_get_rid2pasid_entry() was used to get pasid entry
-of rid2pasid, then it was extended to get any pasid entry. So a new name
-vtd_ce_get_pasid_entry is better to match what it actually does.
+Implement get_viommu_cap() callback and expose stage-1 capability for now.
 
-No functional change intended.
+VFIO uses it to create nested parent domain which is further used to create
+nested domain in vIOMMU. All these will be implemented in following patches.
 
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/i386/intel_iommu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ hw/i386/intel_iommu.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index fe9a5f2872..c97953d7a1 100644
+index c97953d7a1..178c15e31c 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -944,7 +944,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
-     return 0;
+@@ -24,6 +24,7 @@
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "hw/sysbus.h"
++#include "hw/iommu.h"
+ #include "intel_iommu_internal.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bus.h"
+@@ -4420,6 +4421,16 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+     vtd_iommu_unlock(s);
  }
  
--static int vtd_ce_get_rid2pasid_entry(IntelIOMMUState *s,
-+static int vtd_ce_get_pasid_entry(IntelIOMMUState *s,
-                                       VTDContextEntry *ce,
-                                       VTDPASIDEntry *pe,
-                                       uint32_t pasid)
-@@ -1025,7 +1025,7 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
++static uint64_t vtd_get_viommu_cap(void *opaque)
++{
++    IntelIOMMUState *s = opaque;
++    uint64_t caps;
++
++    caps = s->flts ? VIOMMU_CAP_HW_NESTED : 0;
++
++    return caps;
++}
++
+ /* Unmap the whole range in the notifier's scope. */
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ {
+@@ -4850,6 +4861,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
+     .register_iotlb_notifier = vtd_register_iotlb_notifier,
+     .unregister_iotlb_notifier = vtd_unregister_iotlb_notifier,
+     .ats_request_translation = vtd_ats_request_translation,
++    .get_viommu_cap = vtd_get_viommu_cap,
+ };
  
-     if (s->root_scalable) {
--        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-+        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-         if (s->flts) {
-             return VTD_PE_GET_FL_LEVEL(&pe);
-         } else {
-@@ -1048,7 +1048,7 @@ static uint32_t vtd_get_iova_agaw(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
- 
-     if (s->root_scalable) {
--        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-+        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-         return 30 + ((pe.val[0] >> 2) & VTD_SM_PASID_ENTRY_AW) * 9;
-     }
- 
-@@ -1116,7 +1116,7 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
- 
-     if (s->root_scalable) {
--        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-+        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-         if (s->flts) {
-             return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
-         } else {
-@@ -1522,7 +1522,7 @@ static int vtd_ce_rid2pasid_check(IntelIOMMUState *s,
-      * has valid rid2pasid setting, which includes valid
-      * rid2pasid field and corresponding pasid entry setting
-      */
--    return vtd_ce_get_rid2pasid_entry(s, ce, &pe, PCI_NO_PASID);
-+    return vtd_ce_get_pasid_entry(s, ce, &pe, PCI_NO_PASID);
- }
- 
- /* Map a device to its corresponding domain (context-entry) */
-@@ -1611,7 +1611,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
- 
-     if (s->root_scalable) {
--        vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-+        vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-         return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-     }
- 
-@@ -1687,7 +1687,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
-     int ret;
- 
-     if (s->root_scalable) {
--        ret = vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
-+        ret = vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
-         if (ret) {
-             /*
-              * This error is guest triggerable. We should assumt PT
+ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 2.47.1
 
