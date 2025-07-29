@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12A7C83F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 08:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694ABC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 08:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugfeP-0007i2-FS; Tue, 29 Jul 2025 04:25:33 -0400
+	id 1ugfpX-0000n1-CU; Tue, 29 Jul 2025 04:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ugfe7-0007UU-9s; Tue, 29 Jul 2025 04:25:15 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
+ id 1ugfpM-0000gn-U5
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 04:36:54 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ugfe3-0004FG-Pe; Tue, 29 Jul 2025 04:25:14 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 56T8OdTg090393
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 29 Jul 2025 17:24:39 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=CTZXgwwA5ksGGuV2OCgzO7qcQuGI2jm78q+NM7dxC8U=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1753777479; v=1;
- b=eugZcaHw/xL+aFOsAkfCbx2+CX8MyQUaR/kytHJTZuMfAcK5r48VyavHlGdE1MDl
- mJAmkOnHhVYSsVYHGZhw1/MKmRXjnMYSQbNmUcuxFxbIHdTyJaxXAH+8K0DPYMc6
- 6o7XxxWONnk4bcyEPHZxXBHdD1w1rf2nldgDuyhAbsjaURFpdjB2nDWDWlvK2pcW
- 1MR3nfFOs8gpSRB/660m3b9PzieP5bgsSti0lWcnTrxzdaaiSVeUdo0RA6uJjbhU
- b35S2vKBFkmiprryvd70RZN7nafiGW4ysP8IJpRHh0diOqKI+ZX+1LT/EPUVoWZS
- Cdn6cfv1ZRflxpE/e5aI8w==
-Message-ID: <1ff92294-5c8c-4b33-89c1-91d37d6accb0@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 29 Jul 2025 17:24:38 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 23/24] migration: Add error-parameterized function
- variants in VMSD struct
-To: armenon@redhat.com
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com>
- <20250725-propagate_tpm_error-v7-23-d52704443975@redhat.com>
- <848e0e7e-2ad5-4d94-99eb-8314540ea0de@rsg.ci.i.u-tokyo.ac.jp>
- <aIdW8xBboyQZZYnf@armenon-kvm.bengluru.csb>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aIdW8xBboyQZZYnf@armenon-kvm.bengluru.csb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
+ id 1ugfpJ-0005cx-Jw
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 04:36:52 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:110d:0:640:50bc:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B6797806FC;
+ Tue, 29 Jul 2025 11:36:43 +0300 (MSK)
+Received: from smtpclient.apple (unknown [2a02:6bf:8080:3d::1:22])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id gaU4VU7Gx0U0-pmdkV3ns; Tue, 29 Jul 2025 11:36:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1753778203;
+ bh=RzL2yFcv5BCGc5jGGuH+zzevErupHr20NF8MkLKQmX4=;
+ h=References:To:Cc:In-Reply-To:Date:From:Message-Id:Subject;
+ b=fkaeBbA++DggBXdjg9vVFp3YC+hqSCPvwc3+0EzHf7+NPN76saqm76XbQA135LLjr
+ 0boSts7g1BD5GW9f2JWphLiQs7M5Rj/aHc8T2D+S9IgK3OphHwJYYSAH2nsm1xRqR9
+ bxWeVSn5rn5x2APTGWvMTlT6QRq1SV3pBUeDNdvM=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Kirill Martynov <stdcalllevi@yandex-team.ru>
+Message-Id: <106C9543-B7DB-4C2F-9096-A6FDB054F566@yandex-team.ru>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_C9F7D6B5-F254-45DB-8FCB-29F183B134CE"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state for softmmu
+Date: Tue, 29 Jul 2025 11:36:32 +0300
+In-Reply-To: <256c721c-8846-4c5a-9535-0047d83264de@intel.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+References: <20250523154431.506993-1-stdcalllevi@yandex-team.ru>
+ <3096f21e-d8dd-4434-afbd-ee2b56adb20f@intel.com>
+ <6a18dfcc-1686-4e3e-8e0a-b96d7034f4ab@intel.com>
+ <1d12e519-9f3c-41a0-90ff-8e4655000d21@intel.com>
+ <09AD44D6-E381-46B0-9B86-B248EB9582D7@yandex-team.ru>
+ <4985e648-6505-4321-8e3a-f987b9d03bde@intel.com> <aGeO2zCKep7StDA8@intel.com>
+ <cf64058e-e5a2-4cf2-9851-92925553e72c@intel.com>
+ <6C44AD09-0675-4277-93C2-DB3647EC54C2@yandex-team.ru>
+ <aIei/i7+MHM2s3EZ@intel.com> <256c721c-8846-4c5a-9535-0047d83264de@intel.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=stdcalllevi@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,105 +83,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/28 19:54, Arun Menon wrote:
->>
->>> +                            error_free_or_abort(errp);
->>> +                            error_propagate(errp, local_err);
->>> +                            ret = ps_ret;
->>> +                        }
->>> +                    } else if (vmsd->post_save) {
->>> +                        int ps_ret = vmsd->post_save(opaque);
->>> +                        if (ps_ret < 0) {
->>> +                            ret = ps_ret;
->>> +                        }
->>>                        }
->>>                        return ret;
->>>                    }
->>> @@ -554,7 +590,17 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->>>        ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
->>> -    if (vmsd->post_save) {
->>> +    if (vmsd->post_save_errp) {
->>> +        int ps_ret = vmsd->post_save_errp(opaque, &local_err);
->>> +        if (!ret && ps_ret) {
->>> +            ret = ps_ret;
->>> +            error_propagate(errp, local_err);
->>> +        } else if (ret && ps_ret) {
->>> +            error_free_or_abort(errp);
->>> +            error_propagate(errp, local_err);
->>> +            ret = ps_ret;
->>> +        }
->>
->> Simpler:
->>
->> if (ps_ret) {
->>      if (ret) {
->>        error_free_or_abort(errp);
->>      }
->>      ret = ps_ret;
->>      error_propagate(errp, local_err);
->> }
->>
-> Will do.
->>> +    } else if (vmsd->post_save) {
->>>            int ps_ret = vmsd->post_save(opaque);
->>>            if (!ret && ps_ret) {
->>>                ret = ps_ret;
->>
->> When there is a preceding error, this code still returns it and dismisses
->> the post_save() error although the other part of this function is changed to
->> propagate the error of post-save unconditionally. Please keep them
->> consistent.
-> 
-> I do feel that in the new implementation (post_save_errp), we should be dismissing
-> the preceeding error and propagating the new error from post_save().
-> Because, that way, it makes sense to run the post_save_errp() part even after encountering
-> an error in the preceeding section (vmstate_subsection_save).
 
-What to propagate to the caller shouldn't matter when running the 
-post_save_errp() because the behavior is for the caller and not for the 
-internal implementation of this function.
+--Apple-Mail=_C9F7D6B5-F254-45DB-8FCB-29F183B134CE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-There are two requirements for this function:
-1. The proceeding error should be passed to the caller
-2. The proceeding error should not prevent calling post_save_errp()
+Hi Xiaoyao,
+Sure, I can share how I reproduce this issue.=20
+1. First I have modified hmp_info_registers
+diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+index 8eaf70d9c9..a4bb3d715b 100644
+--- a/monitor/hmp-cmds-target.c
++++ b/monitor/hmp-cmds-target.c
+@@ -102,7 +102,7 @@ void hmp_info_registers(Monitor *mon, const QDict =
+*qdict)
+     if (all_cpus) {
+         CPU_FOREACH(cs) {
+             monitor_printf(mon, "\nCPU#%d\n", cs->cpu_index);
+-            cpu_dump_state(cs, NULL, CPU_DUMP_FPU);
++            cpu_dump_state(cs, NULL, CPU_DUMP_CODE);
+         }
+     } else {
+         cs =3D vcpu >=3D 0 ? qemu_get_cpu(vcpu) : mon_get_cpu(mon);
+@@ -117,7 +117,7 @@ void hmp_info_registers(Monitor *mon, const QDict =
+*qdict)
+         }
+=20
+         monitor_printf(mon, "\nCPU#%d\n", cs->cpu_index);
+-        cpu_dump_state(cs, NULL, CPU_DUMP_FPU);
++        cpu_dump_state(cs, NULL, CPU_DUMP_CODE);
+     }
+ }
 
-Let's assume whether the proceeding error is dismissed or not affects 
-both post_save_errp() and the caller. Under this assumption,
-- if the proceeding error is dismissed, it will violate condition 1.
-- if the proceeding error is not dismissed, it will violate condition 2.
+2. Run this in cmd line:
+# yes "info registers" | sudo ./qemu-system-x86_64 -accel kvm -monitor =
+stdio -global driver=3Dcfi.pflash01,property=3Dsecure,value=3Don =
+-blockdev "{'driver': 'file', 'filename': =
+'/usr/share/OVMF/OVMF_CODE_4M.secboot.fd', 'node-name': 'ovmf-code', =
+'read-only': true}" -blockdev "{'driver': 'file', 'filename': =
+'/usr/share/OVMF/OVMF_VARS_4M.fd', 'node-name': 'ovmf-vars', =
+'read-only': true}" -machine =
+q35,smm=3Don,pflash0=3Dovmf-code,pflash1=3Dovmf-vars -m 2G -nodefaults
 
-So it is more reasonable to think that we are defining different 
-handling methods for the caller and post_save_errp().
 
-If error propagation for the caller still has an implication on the 
-condition to run post_save_errp(), it means the meanings of the 
-proceeding error for post_save_errp() and the caller are "different but 
-somehow correlated". It sounds convoluted and I don't have an idea of 
-such correlation.
+Assert should be reproduced within 10-15 seconds.
+Not sure if it is important detail or not, however I run this qemu cmd =
+inside qemu-based virual machine with enabled nested virtualization.
 
-I don't think there is a common answer for what error to propagate when 
-there are several errors, so I see three options:
-- propagate whatever error easier to do so
-- somehow combine errors
-   (languages that support exceptions often do this)
-- make sure that no error will happen when there is a proceeding error
-   by having two callbacks:
-   - One callback that is called only when there is no proceeding error
-     and can raise an error
-   - Another that is always called but cannot raise an error
 
-> 
-> Not sure if I should change the old impl post_save to match post_save_errp,
-> Or should I match the new impl with the old one.
+> On 29 Jul 2025, at 09:01, Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+>=20
+> On 7/29/2025 12:19 AM, Zhao Liu wrote:
+>> Hi Kirill,
+>> On Mon, Jul 28, 2025 at 05:44:25PM +0300, Kirill Martynov wrote:
+>>> Date: Mon, 28 Jul 2025 17:44:25 +0300
+>>> From: Kirill Martynov <stdcalllevi@yandex-team.ru>
+>>> Subject: Re: [PATCH] x86/cpu: Handle SMM mode in x86_cpu_dump_state =
+for
+>>>  softmmu
+>>> X-Mailer: Apple Mail (2.3826.600.51.1.1)
+>>>=20
+>>> Hi Xiaoyao!
+>>> Hi Zhao!
+>>>=20
+>>> Xiaoyao,
+>>> I tested the patch you provided, it works smoothly, easy to apply. =
+Nothing to complain about.
+>>>=20
+>>> Zhao,
+>>> I also tried your approach (extend cpu_address_space_init with =
+AddressSpace parameter)
+>>> First, it crashed in malloc with error:
+>>> malloc(): unaligned tcache chunk detected
+>>> After a little investigation I resized cpu->cpu_ases array, so it =
+can fit second element and
+>>> it started working. However, it looks like that function =
+cpu_address_space_destroy needs
+>>> some adjustment, because now it treats cpu->cpu_ases elements as =
+dynamically allocated and
+>>> destroys them with g_free() and passing &smram_address_space to =
+cpu_address_space_init()
+>>> in register_smram_listener() could lead to a problem since it is =
+statically allocated in binary.
+>> Thanks for testing. Yes, resize related details are needed, which =
+were
+>> I missed. These 2 patches essentially are all about adding SMM CPU
+>> address space for KVM, like TCG did.
+>>> So, my question now, what should I do?
+>=20
+> I just sent the formal version [*], could you please help verify if it =
+resolve your problem?
+>=20
+> (If you can share the step how to reproduce the original problem, I =
+can test myself)
+>=20
+> [*] =
+https://lore.kernel.org/all/20250729054023.1668443-2-xiaoyao.li@intel.com/=
 
-The reasoning you provided applies for post_save() too, so I think they 
-should have a consistent behavior if you stick to it.
+>=20
+>> I still believe we should update cpu_address_space_init() and remove =
+its
+>> outdated assumptions about KVM first.
+>> Moreover, users should have control over the added address spaces (I
+>> think this is why num_ases should be set before
+>> cpu_address_space_init()), and quietly updating num_ases is not a =
+good
+>> idea.
+>> The question of whether to reuse smram_address_space for the CPU is
+>> flexible. At least TCG doesn't reuse the same SMM space, and there's
+>> already cpu_as_root (and cpu_as_mem!) in X86CPU.=20
+>=20
+> For i386 tcg, it allocates each CPU 3 MemoryRegions: cpu_as_root, =
+cpu_as_mem and smram for SMM. While for i386 kvm, it allocates global =
+MemoryRegions: smram_as_root and smram_as_mem and get smram from =
+resolving "/machine/smram".
+>=20
+> yeah, this seems something we can cleanup if there were not specific =
+reason for TCG to have different MemoryRegion each CPU. I don't have =
+bandwidth to investigate it further.
+>=20
+>> There are also some
+>> cleanup things worth considering, such as how to better handle the =
+TCG
+>> memory listener in cpu_address_space_init() - KVM also has the =
+similar
+>> logic. If possible, I can help you further refine this fix and clean =
+up
+>> other related stuff in one goes as well.
+>> Thanks,
+>> Zhao
 
-That change is also better to be split into its own patch; by splitting 
-it, you can ensure that, if this series causes a regression for TPM, 
-bisect will tell what led to the regression: the return value 
-propagation change or the addition of errp.
 
-Regards,
-Akihiko Odaki
+--Apple-Mail=_C9F7D6B5-F254-45DB-8FCB-29F183B134CE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dus-ascii"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;">Hi =
+Xiaoyao,<div>Sure, I can share how I reproduce this =
+issue.&nbsp;</div><div>1. First I have =
+modified&nbsp;hmp_info_registers</div><div><div>diff --git =
+a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c</div><div>index =
+8eaf70d9c9..a4bb3d715b 100644</div><div>--- =
+a/monitor/hmp-cmds-target.c</div><div>+++ =
+b/monitor/hmp-cmds-target.c</div><div>@@ -102,7 +102,7 @@ void =
+hmp_info_registers(Monitor *mon, const QDict *qdict)</div><div>&nbsp; =
+&nbsp; &nbsp;if (all_cpus) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp;CPU_FOREACH(cs) {</div><div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp;monitor_printf(mon, "\nCPU#%d\n", =
+cs-&gt;cpu_index);</div><div>- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp;cpu_dump_state(cs, NULL, CPU_DUMP_FPU);</div><div>+ &nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp;cpu_dump_state(cs, NULL, =
+CPU_DUMP_CODE);</div><div>&nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp;}</div><div>&nbsp; &nbsp; &nbsp;} else {</div><div>&nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp;cs =3D vcpu &gt;=3D 0 ? qemu_get_cpu(vcpu) : =
+mon_get_cpu(mon);</div><div>@@ -117,7 +117,7 @@ void =
+hmp_info_registers(Monitor *mon, const QDict *qdict)</div><div>&nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp;}</div><div>&nbsp;</div><div>&nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp;monitor_printf(mon, "\nCPU#%d\n", =
+cs-&gt;cpu_index);</div><div>- &nbsp; &nbsp; &nbsp; =
+&nbsp;cpu_dump_state(cs, NULL, CPU_DUMP_FPU);</div><div>+ &nbsp; &nbsp; =
+&nbsp; &nbsp;cpu_dump_state(cs, NULL, CPU_DUMP_CODE);</div><div>&nbsp; =
+&nbsp; &nbsp;}</div><div>&nbsp;}</div></div><div><br></div><div>2. Run =
+this in cmd line:</div><div>#&nbsp;yes "info registers" | sudo =
+./qemu-system-x86_64 -accel kvm -monitor stdio -global =
+driver=3Dcfi.pflash01,property=3Dsecure,value=3Don -blockdev "{'driver': =
+'file', 'filename': '/usr/share/OVMF/OVMF_CODE_4M.secboot.fd', =
+'node-name': 'ovmf-code', 'read-only': true}" -blockdev "{'driver': =
+'file', 'filename': '/usr/share/OVMF/OVMF_VARS_4M.fd', 'node-name': =
+'ovmf-vars', 'read-only': true}" -machine =
+q35,smm=3Don,pflash0=3Dovmf-code,pflash1=3Dovmf-vars -m 2G =
+-nodefaults</div><div><br></div><div><br></div><div>Assert should be =
+reproduced within 10-15 seconds.</div><div>Not sure if it is important =
+detail or not, however I run this qemu cmd inside qemu-based virual =
+machine with enabled nested =
+virtualization.</div><div><br></div><div><div><br><blockquote =
+type=3D"cite"><div>On 29 Jul 2025, at 09:01, Xiaoyao Li =
+&lt;xiaoyao.li@intel.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">On 7/29/2025 12:19 AM, Zhao Liu =
+wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 16px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;">Hi Kirill,<br>On Mon, Jul 28, 2025 at 05:44:25PM =
++0300, Kirill Martynov wrote:<br><blockquote type=3D"cite">Date: Mon, 28 =
+Jul 2025 17:44:25 +0300<br>From: Kirill Martynov =
+&lt;stdcalllevi@yandex-team.ru&gt;<br>Subject: Re: [PATCH] x86/cpu: =
+Handle SMM mode in x86_cpu_dump_state for<br>&nbsp;softmmu<br>X-Mailer: =
+Apple Mail (2.3826.600.51.1.1)<br><br>Hi Xiaoyao!<br>Hi =
+Zhao!<br><br>Xiaoyao,<br>I tested the patch you provided, it works =
+smoothly, easy to apply. Nothing to complain about.<br><br>Zhao,<br>I =
+also tried your approach (extend cpu_address_space_init with =
+AddressSpace parameter)<br>First, it crashed in malloc with =
+error:<br>malloc(): unaligned tcache chunk detected<br>After a little =
+investigation I resized cpu-&gt;cpu_ases array, so it can fit second =
+element and<br>it started working. However, it looks like that function =
+cpu_address_space_destroy needs<br>some adjustment, because now it =
+treats cpu-&gt;cpu_ases elements as dynamically allocated =
+and<br>destroys them with g_free() and passing &amp;smram_address_space =
+to cpu_address_space_init()<br>in register_smram_listener() could lead =
+to a problem since it is statically allocated in =
+binary.<br></blockquote>Thanks for testing. Yes, resize related details =
+are needed, which were<br>I missed. These 2 patches essentially are all =
+about adding SMM CPU<br>address space for KVM, like TCG =
+did.<br><blockquote type=3D"cite">So, my question now, what should I =
+do?<br></blockquote></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 16px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 16px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">I just =
+sent the formal version [*], could you please help verify if it resolve =
+your problem?</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 16px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 16px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;">(If you can share the =
+step how to reproduce the original problem, I can test myself)</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">[*]<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><a =
+href=3D"https://lore.kernel.org/all/20250729054023.1668443-2-xiaoyao.li@in=
+tel.com/" style=3D"font-family: Helvetica; font-size: 16px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: auto; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: auto; word-spacing: =
+0px; -webkit-text-stroke-width: =
+0px;">https://lore.kernel.org/all/20250729054023.1668443-2-xiaoyao.li@inte=
+l.com/</a><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 16px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 16px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;">I still believe we should update =
+cpu_address_space_init() and remove its<br>outdated assumptions about =
+KVM first.<br>Moreover, users should have control over the added address =
+spaces (I<br>think this is why num_ases should be set =
+before<br>cpu_address_space_init()), and quietly updating num_ases is =
+not a good<br>idea.<br>The question of whether to reuse =
+smram_address_space for the CPU is<br>flexible. At least TCG doesn't =
+reuse the same SMM space, and there's<br>already cpu_as_root (and =
+cpu_as_mem!) in X86CPU.<span =
+class=3D"Apple-converted-space">&nbsp;</span><br></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">For i386 tcg, it allocates each CPU 3 =
+MemoryRegions: cpu_as_root, cpu_as_mem and smram for SMM. While for i386 =
+kvm, it allocates global MemoryRegions: smram_as_root and smram_as_mem =
+and get smram from resolving "/machine/smram".</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">yeah, this seems something we can cleanup =
+if there were not specific reason for TCG to have different MemoryRegion =
+each CPU. I don't have bandwidth to investigate it further.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><blockquote =
+type=3D"cite" style=3D"font-family: Helvetica; font-size: 16px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;">There are also some<br>cleanup things worth considering, such as =
+how to better handle the TCG<br>memory listener in =
+cpu_address_space_init() - KVM also has the similar<br>logic. If =
+possible, I can help you further refine this fix and clean up<br>other =
+related stuff in one goes as =
+well.<br>Thanks,<br>Zhao</blockquote></div></blockquote></div><br></div></=
+body></html>=
+
+--Apple-Mail=_C9F7D6B5-F254-45DB-8FCB-29F183B134CE--
 
