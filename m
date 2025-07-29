@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF217C83F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 03:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A17DC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 03:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugaqm-00018A-Mw; Mon, 28 Jul 2025 23:18:01 -0400
+	id 1ugau0-0003n7-MO; Mon, 28 Jul 2025 23:21:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugaqN-00011d-S8; Mon, 28 Jul 2025 23:17:35 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1ugatw-0003kR-BU; Mon, 28 Jul 2025 23:21:16 -0400
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugaqL-00053D-Jy; Mon, 28 Jul 2025 23:17:35 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-532f9127978so1575283e0c.3; 
- Mon, 28 Jul 2025 20:17:32 -0700 (PDT)
+ id 1ugatu-0005RY-Dc; Mon, 28 Jul 2025 23:21:16 -0400
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-88bc56adfb8so2691241.2; 
+ Mon, 28 Jul 2025 20:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753759052; x=1754363852; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1753759272; x=1754364072; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FB3Fu8YTGL7d/7trDaNQWekiRfap6myklg8wriaSDSU=;
- b=jKhq14WVLMIaOutGlMzLEG/xJ4OO0V8949kIvZVyzGauxiZdva576CTAxhZAHTe8Qf
- D2b0ks/qiXhdXfICEeQCSHFBB/DKaxjdc3S7/KLb2RS534mzbfJHl1LbJuaZZZvFQQ6n
- JH6jTT4CYGjBAkn5Vl3FROJ/dFwy2raEeekKywAmK9JK/YdkPMFNPfTkUf918hs3CmuS
- PFd7uynFWabY//Lmk2PQXc0IwcsgUO/2Oc6OVE6ZgUjBOlSdTUB/BY0csgwzJD56fwUe
- fDjkeVDZz8p95xYHbMY0fniaOKiopzh2YeYXyPZ90N2qjRGHmNmM83s4uplpbSHIRfNk
- XjXg==
+ bh=+/1Y2Mm++NdkMd3OOAkyd0ynJ62OT3Rt/rSHsWFkF2U=;
+ b=YIgF4hgBwUOAzEckwBcJ2vMgKWcOKJK4tenbIR1cAMrO+mYiBuh/id7gHF5wP+M+a7
+ 300EHS/NX1xqIPqyIdq9Gykok3cVRl+AC1XoWY1IjYO4NSqJO2DlHMOeb25g1V+chY6+
+ +jpncQjF3PJ3be4YpRFHcCAXKIST6JvBxCapvTrReYjwpLleJSZodS4zKYEf7B0/6CI7
+ zEycrwP36l9a2JSiyTStTygX+14gLkk2k2mJqEhuiMeJP6Ze3R1M6Si+D3upsNJwNDW3
+ YR3KJpXssTtHrS/a6Va9MvinLOY0ax5vVLWolIiXWVXrCQ8U9h34kMB8aoRk6JDjI4Wi
+ 9eJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753759052; x=1754363852;
+ d=1e100.net; s=20230601; t=1753759272; x=1754364072;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FB3Fu8YTGL7d/7trDaNQWekiRfap6myklg8wriaSDSU=;
- b=u/f9eHvH4wB95caMEKH6ZVP+dJbm5yeNMqq33L+afmQz+g9gp2fRbFjKqwiSQsGyxq
- XNue/GY2CSL2yOoSZb14XEHrkVd0BX0JBRwUo8OlBKlOZc45FZQsKB8sSkhodXJ5sYJI
- mpRAK8m3OHXmdszhp0IOvc60nrWZtaOrbF0adgQ7E30A1lWZUXwhrga/jYTUjkXWNpAT
- WYZmvGhKEFfeQKkOnYppExCHIMf/emXWRu7qF4IxwCW7wH6Ri6AaBbSb59q8Cqdu4JgP
- 6VlPJcUwZWLwFd5RTXqSbCSVIOVCiOtvu6WHpTJ3Hgxofx4VGe+lYjyfFdWjsCaBJTHu
- zDKA==
+ bh=+/1Y2Mm++NdkMd3OOAkyd0ynJ62OT3Rt/rSHsWFkF2U=;
+ b=IlzkzXxZ5v6QUvgq5bKglwmpq2WTUxgBM2jNpCadOPJ4Pt4HFm86EkEVc0+RzjYHvI
+ bxcn8HIXWdoZMMQOGaJocv1/oHzqZrs6EGsC04vHzSqaoSSj4vNymxL+ekalxfj3tkRX
+ WHpl86G3htkzu6c++zh4bF01V61BKk6Jf3gKSU1BkyoQzyPvwuljHtNPA8EJMKfNJbUH
+ yQZRDLjBHWIBoDyKZslmjwUfKpLoWznPwyqS+nIM/w4KBPyqPwC4i7MHsMt98sRmu0Oh
+ vRBt9xzRG8rukYp4D9P9MIrSQ1eCjwoo/g0C5+BThHCUeSec24335IylsfcdlMADxua3
+ /o3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdmlbg4nkhCEtHduj8fDbu0WHvwWeQcXZVIaPkv0wjRY260RU9CmZnMuvGlT/9MfwLg4XnZo3cKnYg@nongnu.org
-X-Gm-Message-State: AOJu0YwbYSm0iEYbFhPPF4JTdqZfnqWWZoppyKSQRPfHLqtbnvs3pETB
- 36gFHekgRN0L+2BactRUNapvAJEBZve5etBF4yaF6R0OYi7/zXFgnDoguyAj8U8+mrbla7NEuka
- ZkoCtie3oCNI/TZVKUo7IlEA1RWu5paI=
-X-Gm-Gg: ASbGncs2MqxNUdvybKdoFP+okfU24Rws1YMltnK4bu/vhtv8nk3RN1zR8WBH9kv+tp9
- LoC/KjeIOEezDJP0jKnHvgD+omzGKD5kpjqphtbgbgq6E0L4diaOVkrahzoQ3b1h32lVmwpcpVv
- UBKIAVy1a8RQb7RwmBEWD5dlaAGflSvMHHvaB56uqTepYSlcVOXFTJ8U54BU1slg3SlceEwaexv
- wIizLsRuknfwMvRDCbjY5O57x+7hdA49fEz7g==
-X-Google-Smtp-Source: AGHT+IERMIuprD2r5adNt6wKouBUnyDyisrztAzBz/egZuPLxP9W3RHQcXeomfnHKtnrKhx1LweigfB6F1OHkv3Wp3c=
-X-Received: by 2002:a05:6102:c12:b0:4df:8259:eab with SMTP id
- ada2fe7eead31-4fa3fd76246mr5454218137.19.1753759051632; Mon, 28 Jul 2025
- 20:17:31 -0700 (PDT)
+ AJvYcCX+yaHbCipSUVNdq6ZQgcMY6d9WKZ52ZXZDz0FU2EZbEX4LJbupaKK/WTPeC2KOWONLy64wBCATnQxp@nongnu.org
+X-Gm-Message-State: AOJu0YxXTb/qmozt2InoP+1pNHxhaBpvippxwdyZGTV9kRZ7BWbvlBf0
+ vQC809k+K8QjeVB8t8n4xk3QCENET+isT6AZhLiH8S7E3SbF/1xmLCMh94cH5ZVqF8jFcUMmMAN
+ 7Hfz0uQgT272EQYljf34+JfBwPTydyzQOfA==
+X-Gm-Gg: ASbGncuuj6BT7wcu82HEYsMBY75ULNPD8TkQr0F9ozeMc+ZbZoDLDoljIgau/rcCwGv
+ LOeqBmCNKJiY5ossGoDVyZbYSCt6NgG6rG2+ukjPUSlmZ5Gic783VCOiubCPNZtkUpStft+ht30
+ 7Jg19c/JRz+z5O9KJlCMoJQDFB9da3d0+Nqg97ZWyIWf2vl837ujdaUYQrNCX1w5Y1xeP3akHGp
+ buiITJ2r75VCNSGfXQ+K9+RohLEVHcd3wETgYhIydFl4cX5
+X-Google-Smtp-Source: AGHT+IHVQXsB1QcaWrESFXyojhfPVQbwqVwIdVEJwuS5Ina680C8/fgyo8H+hDBI2UggYJMgwLWIW/eeOH8H9+zajr8=
+X-Received: by 2002:a05:6102:3e94:b0:4f9:d957:a417 with SMTP id
+ ada2fe7eead31-4fa3fc4cd5fmr5793466137.17.1753759272483; Mon, 28 Jul 2025
+ 20:21:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250728170633.113384-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250728170633.113384-1-dbarboza@ventanamicro.com>
+References: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 29 Jul 2025 13:17:04 +1000
-X-Gm-Features: Ac12FXyMAKegd65vwHv87qoOQLi3ZZhK5M_Bw4h5wVX2aug-pzZ4XU2HqJCnGog
-Message-ID: <CAKmqyKMxHiL8RjkZ_yF6s9A+7x6ZCBJ8xrYAbrKd1xA3m6gzrA@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/strace.list: add riscv_hwprobe entry
+Date: Tue, 29 Jul 2025 13:20:46 +1000
+X-Gm-Features: Ac12FXw4Px5nABxL-bLggmg7Y8e7tHnI3Y1YKV-blf12eFWKidN6vVzaaOGRA1s
+Message-ID: <CAKmqyKNN+FBuRgJpXHe=3idV+_6_FYFL6=c+p=h_QF90V_axxQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: do not call GETPC() in
+ check_ret_from_m_mode()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,19 +98,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 29, 2025 at 3:07=E2=80=AFAM Daniel Henrique Barboza
+On Tue, Jul 15, 2025 at 1:05=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> We're missing a strace entry for riscv_hwprobe, and using -strace will
-> report it as "Unknown syscall 258".
+> GETPC() should always be called from the top level helper, e.g. the
+> first helper that is called by the translation code. We stopped doing
+> that in commit 3157a553ec, and then we introduced problems when
+> unwinding the exceptions being thrown by helper_mret(), as reported by
+> [1].
 >
-> After this patch we'll have:
+> Call GETPC() at the top level helper and pass the value along.
 >
-> $ ./build/qemu-riscv64 -strace test_mutex_riscv
-> 110182 riscv_hwprobe(0x7f207efdc700,1,0,0,0,0) =3D 0
-> 110182 brk(NULL) =3D 0x0000000000082000
-> (...)
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/3020
 >
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Fixes: 3157a553ec ("target/riscv: Add Smrnmi mnret instruction")
+> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Thanks!
@@ -118,22 +123,65 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  linux-user/strace.list | 3 +++
->  1 file changed, 3 insertions(+)
+>  target/riscv/op_helper.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
 >
-> diff --git a/linux-user/strace.list b/linux-user/strace.list
-> index fdf94ef32a..ab818352a9 100644
-> --- a/linux-user/strace.list
-> +++ b/linux-user/strace.list
-> @@ -1716,3 +1716,6 @@
->  { TARGET_NR_clock_gettime64, "clock_gettime64" , NULL, print_clock_getti=
-me64,
->                             print_syscall_ret_clock_gettime64 },
->  #endif
-> +#ifdef TARGET_NR_riscv_hwprobe
-> +{ TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NU=
-LL, NULL },
-> +#endif
+> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+> index 15460bf84b..110292e84d 100644
+> --- a/target/riscv/op_helper.c
+> +++ b/target/riscv/op_helper.c
+> @@ -355,21 +355,22 @@ target_ulong helper_sret(CPURISCVState *env)
+>  }
+>
+>  static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc=
+,
+> -                                  target_ulong prev_priv)
+> +                                  target_ulong prev_priv,
+> +                                  uintptr_t ra)
+>  {
+>      if (!(env->priv >=3D PRV_M)) {
+> -        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+>      }
+>
+>      if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+>                                      env->priv_ver,
+>                                      env->misa_ext) && (retpc & 0x3)) {
+> -        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
+> +        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, ra);
+>      }
+>
+>      if (riscv_cpu_cfg(env)->pmp &&
+>          !pmp_get_num_rules(env) && (prev_priv !=3D PRV_M)) {
+> -        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC()=
+);
+> +        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, ra);
+>      }
+>  }
+>  static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong msta=
+tus,
+> @@ -394,8 +395,9 @@ target_ulong helper_mret(CPURISCVState *env)
+>      target_ulong retpc =3D env->mepc & get_xepc_mask(env);
+>      uint64_t mstatus =3D env->mstatus;
+>      target_ulong prev_priv =3D get_field(mstatus, MSTATUS_MPP);
+> +    uintptr_t ra =3D GETPC();
+>
+> -    check_ret_from_m_mode(env, retpc, prev_priv);
+> +    check_ret_from_m_mode(env, retpc, prev_priv, ra);
+>
+>      target_ulong prev_virt =3D get_field(env->mstatus, MSTATUS_MPV) &&
+>                               (prev_priv !=3D PRV_M);
+> @@ -443,8 +445,9 @@ target_ulong helper_mnret(CPURISCVState *env)
+>      target_ulong retpc =3D env->mnepc;
+>      target_ulong prev_priv =3D get_field(env->mnstatus, MNSTATUS_MNPP);
+>      target_ulong prev_virt;
+> +    uintptr_t ra =3D GETPC();
+>
+> -    check_ret_from_m_mode(env, retpc, prev_priv);
+> +    check_ret_from_m_mode(env, retpc, prev_priv, ra);
+>
+>      prev_virt =3D get_field(env->mnstatus, MNSTATUS_MNPV) &&
+>                  (prev_priv !=3D PRV_M);
 > --
 > 2.50.1
 >
