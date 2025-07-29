@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 244B3C87FCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D51BC87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugk7u-0000pa-IN; Tue, 29 Jul 2025 09:12:18 -0400
+	id 1ugk7v-0000sY-E2; Tue, 29 Jul 2025 09:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugk7j-00009L-5G
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:12:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugk7l-0000Gw-1W
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:12:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugk7b-0001P3-C1
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:12:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugk7b-0001Pc-F6
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:12:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753794714;
+ s=mimecast20190719; t=1753794715;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+JtyoWfbSYh25mq/jSEHbmsVQmMB4IuV9nUNzgqOoaE=;
- b=fmriGcGjACvU4SBmpLyyuQZtZ7hMhok+Uf2XXRJ1yUyj/4F0KR49rjTTrfAc/kKXJdpLf3
- jnSSsyKxNL/Qm5i0J2ytDDBFrWRIZF5H8ZWy+6QsDT0SWlly3MpreYEw9RBycuVfok5oeM
- pk6wP7z9BR+beKy9DMRjnV0OqMv51yw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2OBT6BpD6efTf4+xkY/OKKH5ypgA5IIwwnTUobH+SWI=;
+ b=Q2nGarFk+j5ddKzig+u8nGontFhf2JqwXVAl+YOwZtX7w5TWHb+Ofrmd6Seh4LDw1q/Pnw
+ Q3ii3q5yLyZHxhXPPTDGlOCRhwWt5lUnpDXnMFwOOxS0nYmPG4vcEuM2QhSwJ/mypG9919
+ GLzWFSwGrBrmLVgsCF+dxdl9zq6ZQfc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-VFy69DSQPo6liiPcRthkAA-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-vgDA7N1rNf2nmD4LEj5WNQ-1; Tue,
  29 Jul 2025 09:11:52 -0400
-X-MC-Unique: VFy69DSQPo6liiPcRthkAA-1
-X-Mimecast-MFC-AGG-ID: VFy69DSQPo6liiPcRthkAA_1753794711
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+X-MC-Unique: vgDA7N1rNf2nmD4LEj5WNQ-1
+X-Mimecast-MFC-AGG-ID: vgDA7N1rNf2nmD4LEj5WNQ_1753794711
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87DA4180010A
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 13:11:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAD4F19560AD; Tue, 29 Jul 2025 13:11:51 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3656D1800B6C
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 13:11:51 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4134230078C2; Tue, 29 Jul 2025 13:11:51 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 601AD21E6A27; Tue, 29 Jul 2025 15:11:48 +0200 (CEST)
+ id 6EAED21E6774; Tue, 29 Jul 2025 15:11:48 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-Subject: [PULL 0/5] QAPI patches for 2025-07-29
-Date: Tue, 29 Jul 2025 15:11:43 +0200
-Message-ID: <20250729131148.3777401-1-armbru@redhat.com>
+Cc: stefanha@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 4/5] docs/qapi-domain: Fix typos
+Date: Tue, 29 Jul 2025 15:11:47 +0200
+Message-ID: <20250729131148.3777401-5-armbru@redhat.com>
+In-Reply-To: <20250729131148.3777401-1-armbru@redhat.com>
+References: <20250729131148.3777401-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,46 +83,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 92c05be4dfb59a71033d4c57dac944b29f7dabf0:
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20250729091642.3513895-2-armbru@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ docs/devel/qapi-domain.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  Merge tag 'pull-qga-2025-07-28' of https://repo.or.cz/qemu/armbru into staging (2025-07-28 09:31:19 -0400)
-
-are available in the Git repository at:
-
-  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2025-07-29
-
-for you to fetch changes up to a95b3c0ad857055198cdb272bca2af975092d060:
-
-  MAINTAINERS: Cover docs/devel/qapi-domain.rst properly (2025-07-29 14:51:39 +0200)
-
-----------------------------------------------------------------
-QAPI patches for 2025-07-29
-
-----------------------------------------------------------------
-Markus Armbruster (5):
-      qapi: Add more cross-references
-      qapi/accelerator: Fix markup of heading
-      tests/qapi-schema: Bury dead test case doc-non-first-section
-      docs/qapi-domain: Fix typos
-      MAINTAINERS: Cover docs/devel/qapi-domain.rst properly
-
- MAINTAINERS                                  | 1 +
- docs/devel/qapi-domain.rst                   | 4 ++--
- qapi/accelerator.json                        | 4 +++-
- qapi/dump.json                               | 2 +-
- qapi/machine.json                            | 2 +-
- qapi/migration.json                          | 4 ++--
- qapi/misc-i386.json                          | 2 +-
- qapi/run-state.json                          | 2 +-
- qapi/sockets.json                            | 2 +-
- tests/qapi-schema/doc-non-first-section.err  | 1 -
- tests/qapi-schema/doc-non-first-section.json | 6 ------
- tests/qapi-schema/doc-non-first-section.out  | 0
- 12 files changed, 13 insertions(+), 17 deletions(-)
- delete mode 100644 tests/qapi-schema/doc-non-first-section.err
- delete mode 100644 tests/qapi-schema/doc-non-first-section.json
- delete mode 100644 tests/qapi-schema/doc-non-first-section.out
-
+diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
+index b71890f660..fe540d1e40 100644
+--- a/docs/devel/qapi-domain.rst
++++ b/docs/devel/qapi-domain.rst
+@@ -9,7 +9,7 @@ in Sphinx is provided by the QAPI Domain, located in
+ `Python Domain
+ <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_
+ included with Sphinx, but provides special directives and roles
+-speciically for annotating and documenting QAPI definitions
++for annotating and documenting QAPI definitions
+ specifically.
+ 
+ A `Domain
+@@ -101,7 +101,7 @@ without types. The QAPI domain uses this class for features, returns,
+ and enum values.
+ 
+ TypedField:
+-  * Creates a grouped, typed field. Multiple adjacent entres will be
++  * Creates a grouped, typed field. Multiple adjacent entries will be
+     merged into one section, and the content will form a bulleted list.
+   * *Must* take at least one argument, but supports up to two -
+     nominally, a name and a type.
 -- 
 2.49.0
 
