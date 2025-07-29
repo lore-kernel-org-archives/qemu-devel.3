@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC8AC87FCA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B66C87FC9
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uguaC-0001Yh-QF; Tue, 29 Jul 2025 20:22:13 -0400
+	id 1uguWY-0003nV-Tl; Tue, 29 Jul 2025 20:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguJU-00053e-IS
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:57 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1uguFj-00026S-P0
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:01:10 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguJS-0004im-Tq
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:56 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7682560a2f2so435379b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:04:54 -0700 (PDT)
+ id 1uguFg-00047y-Hd
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:01:03 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-76aea119891so169677b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833893; x=1754438693; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753833659; x=1754438459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uwpHuSE/h5PFhnCkORbwzYhE3VlT2Ub2wvIj4OwEWco=;
- b=a7TVC4HcyJ2eOvSxva2pna0N2v9JZfwC1Gchuf6dTxmDFO+Z4HcylHMnsZiAu61HJq
- Jwn1x5UUCSqGTg9cSZSsx8gZtUToRnCYM4IYcjenlN8oz5eayonzmcO/D+p6r6dohQ4n
- MlycZNmBe0IkRydq+ZPiH2DnVtypp1ZDiR4YgR45C4TqTdTVQxoYlEwjQNqzha0icv0/
- ixRW67TPuJb81XXLFcXs/51wCX2HRFqBSLD52XOHgpey/qX3yIHKTtQsrt+XdeMmPOpH
- XgODM03I+9u5usOR8gCpjiVWoAW9F9lMNeREvsP26cpa90zp42oRbKx6i0a4PLxpQOVZ
- roxw==
+ :reply-to; bh=HbNh72NRBcxI6GfG8dOhhgQoRzJWWLer1NVuaQWZvIA=;
+ b=M8iO8o1YURggQxOChc7p3DLhZX5aP/xMHFEAc53WxYEvoxhocIZZ/NFSUkWtLPSVc9
+ IjrUONdtTdYKWGvuaid2xt6xJgo7Un3FqQjzsB9eBAn6XDTJrIGfVVP9ZAZ8HG4IFOPr
+ clR4CtNKo7D+WHEYRGPhQWJ/CubD50T6B9oAbl9wuKSjuDzkW48Ntk0tJ2iCNs8ihYkm
+ 1go82QnLLsKhPcZMMFnVv/RKvTTbUUcdjLoR/vtXuIbHc4suOaR0Hvx76VoMjsubdSL+
+ oKuVNYnNY/WAlwv+ZNFT6/ssZYLng6ms7Fh4DsSeZkrDlgYAY3cO87GXRTmuNQEpRW8r
+ KvVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833893; x=1754438693;
+ d=1e100.net; s=20230601; t=1753833659; x=1754438459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uwpHuSE/h5PFhnCkORbwzYhE3VlT2Ub2wvIj4OwEWco=;
- b=lSA8HoPjvi0YwGt897E5/YEf8UUGTeTwUO9GPY59uzGd+1SrY//t4uK8L01CqmUu0V
- 0wNrEbaLgRyCZAgEQXavOeHhghKAGm/riktZRGJ9Lu5zvRknoXpU/p640AdHlRg0/s4a
- G8TYn4MWWJ0vp3uJ7EXZfQcLzHJo1oOgHxqriIRcCH0NCLMWkarY6a+2Jb0LyrLe0mm+
- fC4+jbGQv2LiCjTui99vWpzHWUB6S36GKZbRyrmfaifmjQriQLYv9RIoyEQDkquwU/Yl
- 61UmapPvL6digQEDYxBb05NiftK8uwURrYOGHsL5yQCOaY9Kq6DOVoqWeCXaRZ3n5oF4
- Tw8g==
-X-Gm-Message-State: AOJu0YxRWheVg/4SuDSgL0t1Wpz93QHZ5uRA6DjqbLqGdv9AxccpCU23
- MT2ydNd3iSiF3dJ6V1hXZAsgvoyW3+bQwDWwI8Fs6oK6hNIO/lumtkgNUdnQT+r7D/F7a3xYjv6
- abZJK
-X-Gm-Gg: ASbGncs3kOTYvaojALvYZjjTrS1XuU5wnoeCRBLlW7H3s0DZ8xy5k332FCsAHVIyOAY
- wzcBL+IlVN0LcTh9hciYg555YBemOybqsQ1fmrgpuXn4HnnJXSMtL3OCUg49qTBFL1BNsgucb4T
- y6ovvirgTMSMjbQdCMjBUhDt5uqaOJkhv4TnxrvXk66n1/VBJGUciXsuWbg4whZaFUBYMTfu8VD
- x9tniAddchnMqY3iJY8DsWEfiLk7LKVWYnA9JEVYNWsDS/FbMgwpoXP9ElW68NjRx49KZEIDGHB
- hg4+TzP/lFj94E5Hc8b0EoYgzx8+H21kR3Co5OFbEZNnVchhF5t5pJifSPWdNEkilO4n9laHc91
- OvFascyX+VMKczzcb9SK6ATkqO26jbQga9i+BEfIThYMunNF3LUQZj8iXTTaTBAF6znRmS3Vt95
- d7eb+8NGXqPpq3NRjOjO2i
-X-Google-Smtp-Source: AGHT+IFKFHn8HfPvMTMrh/LcSpB2BWKTXuG4+N6SmwsL0nbh+Q2wWYWjCmzylxl0NFL2uUo35N3qJw==
-X-Received: by 2002:a05:6a20:3d20:b0:23d:45b2:8e3c with SMTP id
- adf61e73a8af0-23dc0522316mr1972173637.6.1753833893234; 
- Tue, 29 Jul 2025 17:04:53 -0700 (PDT)
+ bh=HbNh72NRBcxI6GfG8dOhhgQoRzJWWLer1NVuaQWZvIA=;
+ b=QoStqv5Rc7Fx3mJJHzJAURQcYyJjij6z2/kohRNT6JQHrw5zsqu5cdX8vhfSh3b/BJ
+ LKMDRxQ0FANKDXJoQek01ivYCgCank6gdJtqRNHjrwqoXmnNyGqOeLAzZM4xJsnJM44j
+ glZsK9pxfxRnBRidAj+sdysS9FibEgfZfjRbW96FtAOIfg4jkhdPObn2kuTJjnJ+UXGt
+ y7DTMrQOjgELNUNDq7OAv4niAQfmjua6we0uNvIEK5hnY1bs6juJObCDHPAPirz3GYd5
+ 77bQEiEOCfVtF9xHoMn1IemAHPbqtHQYqC/QZgMy12MZrfAb8cE7FVSb0UYHrqjg3LVK
+ ajPQ==
+X-Gm-Message-State: AOJu0Yw1i9E4yHe6G9N9e/WJqA/r1IhzR5Q7yqEQXDbxi7B95tKhHafA
+ xGT/fnXN6xGdGboHV1KiajYg9QM/Z7jzdghezlGy6pC55f7rNAJPaoHSKx2Dn8GLjsNf90d0W5o
+ SUtOC
+X-Gm-Gg: ASbGncsmjExGjLXwpKUgS90k5aKXIDDmyyqSoa7FrEWGcScn+XAXtaE5emU0k6ZK6A3
+ hfcoo7bdgZY2ggn9tha1Qyep8RHCUCctKztYoytI/UJFCWEiFbzghnaJSOB1V7NOBWTrMOdrhJS
+ cNnzyVzO3J0dujMExvibZ0aaq9l/DzemPZ5SlRPwUe8mSr+Tj1ztXk4jqB/ZsHzFrCJ5Ke06x7O
+ bolXQFHkUp6RcVlUzlb9OFVuBvBoq1xOcY7lnn6+HNqkBFkc5ywsKH6JeteNmjsn9yE+7+zfqcF
+ ii6Tco70nIpe9atvb8vkOqJQ+K76X2QfDafVmU4YvFPCh7AFRXQ1tWml0gFWZ4GLuKtA8HYl0s+
+ 3qC+108tSFkliwlXXhT5QTK/w1o1uG/flUbgFTTd+JChQaoCsFyTIxjPZbNqFzKcDTiZjspk6Gj
+ x2DdSYSDtpbA==
+X-Google-Smtp-Source: AGHT+IH4eZfTBiSZjV2FuJjgLEY2DG3AYMTK1z3tGO0YELYS3ZUEVGwQDSo1UlIiNn8oaLNBIZu7xw==
+X-Received: by 2002:a05:6300:210c:b0:23d:7a30:a82d with SMTP id
+ adf61e73a8af0-23dc04be53dmr2101557637.5.1753833658189; 
+ Tue, 29 Jul 2025 17:00:58 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640ad06762sm9101302b3a.80.2025.07.29.17.04.52
+ d2e1a72fcca58-764090e178bsm9026087b3a.62.2025.07.29.17.00.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:04:52 -0700 (PDT)
+ Tue, 29 Jul 2025 17:00:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 76/89] linux-user: Move elf parameters to hppa/target_elf.h
-Date: Tue, 29 Jul 2025 13:59:49 -1000
-Message-ID: <20250730000003.599084-77-richard.henderson@linaro.org>
+Subject: [PATCH 35/89] linux-user/s390x: Create init_main_thread
+Date: Tue, 29 Jul 2025 13:59:08 -1000
+Message-ID: <20250730000003.599084-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Merge init_thread and target_cpu_copy_regs.
+There's no point going through a target_pt_regs intermediate.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/hppa/target_elf.h |  6 ++++++
- linux-user/elfload.c         | 11 -----------
- 2 files changed, 6 insertions(+), 11 deletions(-)
+ linux-user/elfload.c        |  9 +--------
+ linux-user/s390x/cpu_loop.c | 15 ++++++++-------
+ 2 files changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
-index a736bb9bb3..ed2ce895f5 100644
---- a/linux-user/hppa/target_elf.h
-+++ b/linux-user/hppa/target_elf.h
-@@ -8,6 +8,12 @@
- #ifndef HPPA_TARGET_ELF_H
- #define HPPA_TARGET_ELF_H
- 
-+#define ELF_CLASS               ELFCLASS32
-+#define ELF_ARCH                EM_PARISC
-+#define STACK_GROWS_DOWN        0
-+#define STACK_ALIGNMENT         64
-+#define VDSO_HEADER             "vdso.c.inc"
-+
- #define LO_COMMPAGE  0
- 
- #endif
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 5b3bdf58cb..e6d49d982f 100644
+index 67c00f75fd..62452d7c45 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -138,17 +138,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
+@@ -804,14 +804,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
  
--#ifdef TARGET_HPPA
--
--#define ELF_CLASS       ELFCLASS32
--#define ELF_ARCH        EM_PARISC
--#define STACK_GROWS_DOWN 0
--#define STACK_ALIGNMENT  64
--
--#define VDSO_HEADER "vdso.c.inc"
--
--#endif /* TARGET_HPPA */
--
- #ifdef TARGET_XTENSA
+-static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
+-{
+-    regs->psw.addr = infop->entry;
+-    regs->psw.mask = PSW_MASK_DAT | PSW_MASK_IO | PSW_MASK_EXT | \
+-                     PSW_MASK_MCHECK | PSW_MASK_PSTATE | PSW_MASK_64 | \
+-                     PSW_MASK_32;
+-    regs->gprs[15] = infop->start_stack;
+-}
++#define HAVE_INIT_MAIN_THREAD
  
- #define ELF_CLASS       ELFCLASS32
+ /* See linux kernel: arch/s390/include/uapi/asm/ptrace.h (s390_regs).  */
+ #define ELF_NREG 27
+diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
+index c9124444ed..49e44548f8 100644
+--- a/linux-user/s390x/cpu_loop.c
++++ b/linux-user/s390x/cpu_loop.c
+@@ -180,12 +180,13 @@ void cpu_loop(CPUS390XState *env)
+     }
+ }
+ 
+-void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
++void init_main_thread(CPUState *cs, struct image_info *info)
+ {
+-    int i;
+-    for (i = 0; i < 16; i++) {
+-        env->regs[i] = regs->gprs[i];
+-    }
+-    env->psw.mask = regs->psw.mask;
+-    env->psw.addr = regs->psw.addr;
++    CPUArchState *env = cpu_env(cs);
++
++    env->psw.addr = info->entry;
++    env->psw.mask = PSW_MASK_DAT | PSW_MASK_IO | PSW_MASK_EXT |
++                    PSW_MASK_MCHECK | PSW_MASK_PSTATE | PSW_MASK_64 |
++                    PSW_MASK_32;
++    env->regs[15] = info->start_stack;
+ }
 -- 
 2.43.0
 
