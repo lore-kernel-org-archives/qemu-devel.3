@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C47C87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1A4C83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugjxY-0004HF-G2; Tue, 29 Jul 2025 09:01:36 -0400
+	id 1ugjzy-0008EL-BV; Tue, 29 Jul 2025 09:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugjwd-0003Hc-CW
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:00:47 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugjwb-00077D-Do
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:00:39 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45600581226so55128915e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 06:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753794035; x=1754398835; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0DgxFuQsj4FAMv6M/wKtNAAWKdx/5SLMiigyz36/T8A=;
- b=UElswvR40+4DfLeGpvK9eFqRNbUgppOfda2pL7CTCqtMlMidfA2ECqIGNi+8C+DLHM
- PdUv7Xh0qHaK4WyxiGyrnryHi+GWJJ4oSyemW0uqX+1DInWLqA57/LDHC8mJW+H14og8
- DF1au1v+zmxPueHXivksEMatqFBVfYmdiwwC54OwZvCU/ahLBtK1Y7cdLPXld2glIq2t
- WMy0Xqfq0MA3XKCgbxaHEHxb0+D9LkhrsEHzBlWO4Pt7afITgL0YcTgJKWlGLQdbtStT
- ds2P7jgVmVMkA3AgzgGhP5wU2weFeFajx1E4XaEB+6g/6QezsSYAsQn+Ua5ynWItg6Ds
- zrLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753794035; x=1754398835;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0DgxFuQsj4FAMv6M/wKtNAAWKdx/5SLMiigyz36/T8A=;
- b=PUDTvF066ryXT8GOtNTRyYVlAl1eBIr0NxXFt7q39JsMRF5gJs2GP0YDhFNbcsoU3i
- 8tPUdS3t7iiaoIiNH5Aya88VsYn3hh7eld/8LEQobC+uzeWoVjgs5garCzOUeEsD27eb
- Ew054LkXNnp0zYjQ17GezkQm8ZwGpHjzQ7QHzwGiFEhP2UZy6vn1OUEy4whLETzdm1DO
- 1r2zol/C4mHbx2d191jfLZlJ7szBk+pWjSXXFxbeNsy0wGUg0tWbgesB9igAOX3bH2/o
- 4lqqkPwafwt8tLm9EEb0a6/8RwXewsH1ZXtVT5zgde5nXzECE6WapWA9zxbikOFyMbHR
- j48Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdD+Fy6KIx03/OQVDCYMdAnDjV0rYhomMIPh6THi8GnuybjOfvuyuOnxUAkLpSC9Gm6NVaFvxh8E60@nongnu.org
-X-Gm-Message-State: AOJu0YxJuQdPX51jNLg8iniGhN5rfcCLkR0o1w11OscevBTiE4omavCh
- wp2PWWkWLHog9zJR+rgcEx1/bdQw3fsMKbhBUsIMPYBPTr9Nx9BuQlZYb/lME2a9ObY=
-X-Gm-Gg: ASbGnctdrcvtuFyOA6WIRMeZ26CDDyWUI/yr9zh4aN5bbtbmTa4Qj08hzj9YIhzkz0N
- at3jCyXFq5yvCtQvGwxdvEGl7tbaCo3QSt3e7wv3IEi0oKVp9pmSWz9poq+UTpkCjl0OolQPoik
- U+GxE42xVqhxrnv2nUHSJadLvp4VVQjFwFpdvHvfjZ7QmHIy64tq1ueMh86wE3mMywmo90ZUK3W
- 3L+bLmOGaadpJQyUZDT8D+HZyws9gjhKpuvaRVvqhsaMdyKAGhPchcoeFe/yhgswmV/LH7jl5qW
- 6+qo0tsL8/YkuxQD74FqAY1388QBSHIhrA/0JVLdU7Cg7dow5+Ql/v7doqfiMH8dNDQWvp6z49T
- tNNGIPeXFCzDzYQBrRDHGvKeRXek4PzbeCD6ezSBF8l/Sd9oPD4e5HkJ2b8zMApI2EQ==
-X-Google-Smtp-Source: AGHT+IG/m3eTjwY5iz022xdtWbM2Bg5CYXA4Ld1/bEAHjTVCv6Nx0dzEV3lNMrdyNSeJCJPT8dooPQ==
-X-Received: by 2002:a05:600c:b99:b0:453:8bc7:5cbb with SMTP id
- 5b1f17b1804b1-4587c43112dmr100355265e9.25.1753794034088; 
- Tue, 29 Jul 2025 06:00:34 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4588dd375e0sm20689735e9.2.2025.07.29.06.00.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Jul 2025 06:00:33 -0700 (PDT)
-Message-ID: <a9fcdfb9-12ed-48ab-b2e5-3ca95c3a202b@linaro.org>
-Date: Tue, 29 Jul 2025 15:00:32 +0200
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1ugjzo-00080t-OA
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:03:57 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1ugjzk-0007fR-AP
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:03:56 -0400
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20250729130343epoutp04ef43ce185f362f4b6cf261db07283315~Wuo3UlIpd0332203322epoutp04h
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 13:03:43 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20250729130343epoutp04ef43ce185f362f4b6cf261db07283315~Wuo3UlIpd0332203322epoutp04h
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1753794223;
+ bh=wa4nqyovvZrDI5pzUwEzrh738KHCMO4FMKpKL8lciDA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=d8Mvu6+hKJI0b6jfS03Qdjw4nizxVGloRS/2ZSrnpNFHW1Rss/Mb2nkpEBPjfXfUE
+ c766lhKYShoShMfGzPXtN0zcxcxv4icTZDQ2cdNCmkkyUk8yM5U9hacNmH/c0u7fcl
+ sudsRBWPWU4PVsssI3agRQJK7YaUNrd9X7R4vg+o=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
+ 20250729130342epcas5p37de5e60f11438bfdb557702abf3b270c~Wuo2-AlHf0946709467epcas5p3_;
+ Tue, 29 Jul 2025 13:03:42 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.94]) by
+ epsnrtp01.localdomain (Postfix) with ESMTP id 4brwWx6G9Wz6B9m5; Tue, 29 Jul
+ 2025 13:03:41 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250729130331epcas5p23a9dba2fd1dbb49c4f9d2397ea6894b5~WuossSDRp1954419544epcas5p2g;
+ Tue, 29 Jul 2025 13:03:31 +0000 (GMT)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250729130330epsmtip1d7879d41a454ecb7fd48003a826338f2~WuorSQ-xm0239402394epsmtip1T;
+ Tue, 29 Jul 2025 13:03:30 +0000 (GMT)
+Date: Tue, 29 Jul 2025 18:33:25 +0530
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com,
+ cpgs@samsung.com
+Subject: Re: [PATCH v2 2/2] hw/cxl: Add Physical Port Control (Opcode 5102h)
+Message-ID: <20250729130325.pjv5cr6p4wggedgt@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] MAINTAINERS: Cover docs/devel/qapi-domain.rst properly
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: michael.roth@amd.com, jsnow@redhat.com, peter.maydell@linaro.org
-References: <20250729091642.3513895-1-armbru@redhat.com>
- <20250729091642.3513895-3-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250729091642.3513895-3-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250725155912.0000551d@huawei.com>
+X-CMS-MailID: 20250729130331epcas5p23a9dba2fd1dbb49c4f9d2397ea6894b5
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----CDBSwZz52MZUMeM1Rx6lI.cEW_5b_YZAAzr3v09AM7rvldzc=_50133_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113
+References: <20250710144338.2839512-1-arpit1.kumar@samsung.com>
+ <CGME20250710144358epcas5p1bf06af9ee56880a24421a2f7a7d6c113@epcas5p1.samsung.com>
+ <20250710144338.2839512-3-arpit1.kumar@samsung.com>
+ <20250725155912.0000551d@huawei.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,12 +98,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/7/25 11:16, Markus Armbruster wrote:
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+------CDBSwZz52MZUMeM1Rx6lI.cEW_5b_YZAAzr3v09AM7rvldzc=_50133_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 25/07/25 03:59PM, Jonathan Cameron wrote:
+>On Thu, 10 Jul 2025 20:13:38 +0530
+>Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+>
+>> -added assert-deassert PERST implementation
+>>  for physical ports (both USP and DSP's).
+>> -assert PERST involves bg operation for holding 100ms.
+>> -reset PPB implementation for physical ports.
+>>
+>> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+>Hi Arpit,
+>
+>Minor comments inline.
+>
+>We have plenty of time given where the qemu cycle is, so no huge rush
+>for a v3.
+>
+>Jonathan
+>
+>> +static struct PCIDevice *cxl_find_port_dev(uint8_t pn, CXLCCI *cci)
+>> +{
+>> +    CXLUpstreamPort *pp = CXL_USP(cci->d);
+>> +    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
+>> +
+>> +    if (pp->pports.pport_info[pn].current_port_config_state ==
+>> +        CXL_PORT_CONFIG_STATE_USP) {
+>> +        PCIDevice *usp_dev = pci_bridge_get_device(bus);
+>> +        return usp_dev;
+>
+>As below.
+>
+>> +    }
+>> +
+>> +    if (pp->pports.pport_info[pn].current_port_config_state ==
+>> +        CXL_PORT_CONFIG_STATE_DSP) {
+>> +        PCIDevice *dsp_dev = pcie_find_port_by_pn(bus, pn);
+>> +        return dsp_dev;
+>
+>What benefit do we get from a local variable?
+>
+thanks for pointing out.
+>> +    }
+>> +    return NULL;
+>> +}
+>> +
+>> +/* CXL r3.2 Section 7.6.7.1.3: Get Physical Port Control (Opcode 5102h) */
+>> +static CXLRetCode cmd_physical_port_control(const struct cxl_cmd *cmd,
+>> +                                            uint8_t *payload_in,
+>> +                                            size_t len_in,
+>> +                                            uint8_t *payload_out,
+>> +                                            size_t *len_out,
+>> +                                            CXLCCI *cci)
+>> +{
+>> +   CXLUpstreamPort *pp = CXL_USP(cci->d);
+>> +   PCIDevice *dev;
+>> +   uint8_t ret = CXL_MBOX_SUCCESS;
+>> +
+>> +   struct cxl_fmapi_get_physical_port_control_req_pl {
+>> +        uint8_t ppb_id;
+>> +        uint8_t ports_op;
+>> +    } QEMU_PACKED *in = (void *)payload_in;
+>> +
+>> +    if (len_in < sizeof(*in)) {
+>> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+>> +    }
+>> +
+>> +    uint8_t pn = in->ppb_id;
+>
+>Avoid inline declarations of local variables.
+>
+got it.
+>> +    if (pp->pports.pport_info[pn].port_id != pn) {
+>> +        return CXL_MBOX_INTERNAL_ERROR;
+>> +    }
+>> +
+>> +    dev = cxl_find_port_dev(pn, cci);
+>> +    if (!dev) {
+>> +        return CXL_MBOX_INTERNAL_ERROR;
+>> +    }
+>> +
+>> +    switch (in->ports_op) {
+>> +    case 0:
+>> +        ret = assert_perst(OBJECT(&dev->qdev), pn, pp);
+>> +        break;
+>> +    case 1:
+>> +        ret = deassert_perst(OBJECT(&dev->qdev), pn, pp);
+>> +        break;
+>> +    case 2:
+>> +        if (pp->pports.perst[pn].issued_assert_perst ||
+>> +            pp->pports.perst[pn].asrt_time < ASSERT_WAIT_TIME_MS) {
+>> +            return CXL_MBOX_INTERNAL_ERROR;
+>> +        }
+>> +        device_cold_reset(&dev->qdev);
+>> +        break;
+>> +    default:
+>> +        return CXL_MBOX_INVALID_INPUT;
+>> +    }
+>> +    return ret;
+>> +}
+>
+>> @@ -3810,4 +3932,17 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+>>      cci->intf = intf;
+>>      cxl_init_cci(cci, payload_max);
+>>      cxl_set_phy_port_info(cci);
+>> +    /* physical port control */
+>> +    CXLUpstreamPort *pp = CXL_USP(cci->d);
+>
+>Still sticking to the old style c option of declarations at the top of the scope.
+>
+okay
+>> +    for (int i = 0; i < CXL_MAX_PHY_PORTS; i++) {
+>> +        qemu_mutex_init(&pp->pports.perst[i].lock);
+>> +        pp->pports.perst[i].issued_assert_perst = false;
+>> +        /*
+>> +         * Assert PERST involves physical port to be in
+>> +         * hold reset phase for minimum 100ms. No other
+>> +         * physcial port control requests are entertained
+>> +         * until Deassert PERST command.
+>> +         */
+>> +         pp->pports.perst[i].asrt_time = ASSERT_WAIT_TIME_MS;
+>> +    }
+>>  }
+>> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> index 1fa6cf7536..bb47e671eb 100644
+>> --- a/include/hw/cxl/cxl_device.h
+>> +++ b/include/hw/cxl/cxl_device.h
+>> @@ -128,6 +128,7 @@
+>>                    (1 << 16))
+>>
+>>  #define CXL_MAX_PHY_PORTS 256
+>> +#define ASSERT_WAIT_TIME_MS 100 /* Assert - Deassert PERST */
+>>
+>>  #define LINK_STATE_FLAG_LANE_REVERSED    BIT(0)
+>>  #define LINK_STATE_FLAG_PERST_ASSERTED   BIT(1)
+>> @@ -203,10 +204,19 @@ struct cxl_phy_port_info {
+>>      uint8_t supported_ld_count;
+>>  } QEMU_PACKED;
+>>
+>> +/* Assert - Deassert PERST */
+>> +struct pperst {
+>
+>Prefix this name. pperst is a PCIE thing so it may otherwise end up confusing.
+>
+okay
+>> +    bool issued_assert_perst;
+>> +    QemuMutex lock;
+>
+>Good practice to add a comment to say exactly what data this lock is protecting.
+>
+got it.
+>> +    uint64_t asrt_time;
+>> +    QemuThread asrt_thread; /* thread for 100ms delay */
+>> +};
+>> +
+>>  struct phy_port {
+>>      uint8_t num_ports;
+>>      uint8_t active_port_bitmask[0x20];
+>>      struct cxl_phy_port_info pport_info[CXL_MAX_PHY_PORTS];
+>> +    struct pperst perst[CXL_MAX_PHY_PORTS];
+>>  };
+>>
+>>  /* CXL r3.1 Table 8-34: Command Return Codes */
+>
 
+------CDBSwZz52MZUMeM1Rx6lI.cEW_5b_YZAAzr3v09AM7rvldzc=_50133_
+Content-Type: text/plain; charset="utf-8"
+
+
+------CDBSwZz52MZUMeM1Rx6lI.cEW_5b_YZAAzr3v09AM7rvldzc=_50133_--
 
