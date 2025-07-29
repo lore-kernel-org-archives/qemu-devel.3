@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9B9C87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8497C87FC9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 13:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugjwM-0002vp-Pz; Tue, 29 Jul 2025 09:00:26 -0400
+	id 1ugjwu-000351-Ci; Tue, 29 Jul 2025 09:00:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjw0-0002hj-6Q
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:00:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ugjvw-0006oT-WA
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 08:59:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753793984;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jezvoRV0KLE3Q/xuKO/EmLz2yPqBCFLc69F6EJbkj04=;
- b=B76j0N7JcYzV6EXp/ROCVXWlAticJTML8LmbhDuZI8TKlSrzjZcgvswmekPkbDOtAY+/8d
- zZQSZzRze/RDfsj+8/ANy39d88prufCwLdJIKZVJapsHK24LDVUX0qFDsciOPeMcxOBTlz
- PHm9vWxiaCyrpAdWnmHtTuWXRxvS+hk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-wgXb-eI0ONSpdtwYn-j83A-1; Tue,
- 29 Jul 2025 08:59:40 -0400
-X-MC-Unique: wgXb-eI0ONSpdtwYn-j83A-1
-X-Mimecast-MFC-AGG-ID: wgXb-eI0ONSpdtwYn-j83A_1753793979
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F5CA1800446; Tue, 29 Jul 2025 12:59:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.14])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30DB61955F16; Tue, 29 Jul 2025 12:59:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7C48121E6A27; Tue, 29 Jul 2025 14:59:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,  michael.roth@amd.com,  jsnow@redhat.com,
- peter.maydell@linaro.org
-Subject: Re: [PATCH 2/2] MAINTAINERS: Cover docs/devel/qapi-domain.rst properly
-In-Reply-To: <87a54ndvnp.fsf@pond.sub.org> (Markus Armbruster's message of
- "Tue, 29 Jul 2025 14:32:58 +0200")
-References: <20250729091642.3513895-1-armbru@redhat.com>
- <20250729091642.3513895-3-armbru@redhat.com>
- <CAAjaMXYyJHaCwd_3Dxd=wDVj+kPcK-FJZQ=8e7RGD7m22NV7ig@mail.gmail.com>
- <87a54ndvnp.fsf@pond.sub.org>
-Date: Tue, 29 Jul 2025 14:59:36 +0200
-Message-ID: <87wm7rcfuv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugjw6-0002m4-OA
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:00:08 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ugjvx-0006ov-Ga
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 09:00:06 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-451d41e1ad1so33792315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 05:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753793988; x=1754398788; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8cArS9/nRylKOD3Huk40tSuXpNtAKJs4oRFsn3gdCtU=;
+ b=R48IJ++fgu4ICHaoO7LwbX1eU5ABlQ+krLkYvYM4XCQEgOR6FLcZon3Hn3J9QmL18c
+ r/2HN3t+AE/rPlHR5N1TPv4yJJ6jtDVx54BGhhuBiUl4jfWBLJ5ImA0NtLbHZO/v653v
+ VkL5iuMyO/pTmJtv0KyORkKcXGZd6xlgpp1pNn4+xF5zZ/lj750zZCEmkrJr0lw6Ma8i
+ lGa4YhZJJc4v7z3/MNtVNAyz7AJjZOoTnb/DIs8qj0telPqpxj9FNlPbnCYL1ao/fHEM
+ SfpxrQ6qA275vBjiaiTvXtbT72PmZ/z3nFuChPUwt7EOqSqK+SRYdV/Eq6qd6CNOCQd8
+ onJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753793988; x=1754398788;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8cArS9/nRylKOD3Huk40tSuXpNtAKJs4oRFsn3gdCtU=;
+ b=T42s1CTGIEsiDjj7rPDSziufXElSEhY4Zn3+AvUlf8N56SW+YD/17XxymIPr7ZYLib
+ jkXKQ43AgahssClPXGRGoPNkoQmQxBaBollV2DBqTw06peUuiRW34btsXO+nOOZaNzlZ
+ LJVveA8gbBZ8iFZrcLPmSNLFTHpcDVLwpJ1IVE3PdTjnuJeGs2DFtkYeVf5UcRpWVoly
+ /v2CCq9DEHKx9Wm39Wm+01rb0b93PGF5OcJZzhHWdcNIDWXtD06eRDIZekyLVd3U65fk
+ k/O93h1AW2xmw96tSAHd1Z0ySNSGRpQmXsI4vNugLKLm9xFg8djiGeRCU+WkY3kZ8rH8
+ a2DQ==
+X-Gm-Message-State: AOJu0Yw/C9RTdCcwNeRtRPqQAMWTKpp9/HOuzz7Js96QCWjAXvTkr0QJ
+ cX+GTq8+s7YzPwUlkQ+fJoGbRfhsuPYzp/mGMjyqE/NQFKn7W5kLOjKFK/qa5RZnGAk=
+X-Gm-Gg: ASbGncsBGmrs7GGByJ6YJsUux3kpl5202h1d0J7PX+3BHge+BK51ZeRMwFBTIJHdolu
+ /KiPhkiDxTdb2oof3Kp+IPkc1bYwXm8mo0hucUO1Ca3q/Lfb8Fbxewr2gVO0rT3tq4PQMsrkbuK
+ VJ2gTal9Z6KbWIJFLfAmU7va215P9PBMse+Dt1YbWEUmtZ6vGcwOSG1KCQ/2kniD6I+aFYqZBeB
+ k/jvG+YE35ggNLIGR4OQdGTpPhrIOcGLbfR0HmDsS6OXm31Rsm4HgsP9E2ZCkkCA/T/yyGlaBzN
+ S96HoAOpyvO+NJrr3yGNCYNN6iWDu8cZsiy8TDkikqTHS5Iiil89T8SF2VRvRUFwLrlOLW8PmI8
+ dDdwEWnN4j1kkQER1xrqJFOF56CyIfXkHZyy7YDAmY4GNFYflJ5nnzfFIRKZJbSPPA9LTJLxXb+
+ nv
+X-Google-Smtp-Source: AGHT+IEB10v4PlEVCKKxdtNYOiBMcTLcOBbKf1RgZTNhwbScPufdOsX77u3Fjs46TLXC/DBoqvBPLA==
+X-Received: by 2002:a5d:64e8:0:b0:3b7:899c:e88b with SMTP id
+ ffacd0b85a97d-3b7899cea54mr5166832f8f.11.1753793988424; 
+ Tue, 29 Jul 2025 05:59:48 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b78d45d152sm3585536f8f.3.2025.07.29.05.59.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Jul 2025 05:59:47 -0700 (PDT)
+Message-ID: <15536eea-5a66-4dff-b4bd-8a43fbfa9365@linaro.org>
+Date: Tue, 29 Jul 2025 14:59:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/xenfb: Replace unreachable code by abort()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org,
+ paul@xen.org, edgar.iglesias@gmail.com, xen-devel@lists.xenproject.org,
+ qemu-trivial@nongnu.org
+References: <20250729111226.3627499-1-armbru@redhat.com>
+ <14fff91b-7434-4d90-adb1-ebbe3f51d605@linaro.org>
+ <87v7nbdwfx.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87v7nbdwfx.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,65 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
-
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->
->> On Tue, Jul 29, 2025 at 12:18=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
->>>
+On 29/7/25 14:16, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> On 29/7/25 13:12, Markus Armbruster wrote:
+>>> xenfb_mouse_event() has a switch statement whose controlling
+>>> expression move->axis is an enum InputAxis.  The enum values are
+>>> INPUT_AXIS_X and INPUT_AXIS_Y, encoded as 0 and 1.  The switch has a
+>>> case for both axes.  In addition, it has an unreachable default label.
+>>> This convinces Coverity that move->axis can be greater than 1.  It
+>>> duly reports a buffer overrun when it is used to subscript an array
+>>> with two elements.
+>>> Replace the unreachable code by abort().
+>>> Resolves: Coverity CID 1613906
 >>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 >>> ---
->>>  MAINTAINERS | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index f1bd69c3db..9c22e921e8 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -4432,6 +4432,7 @@ F: docs/requirements.txt
->>>  F: docs/sphinx/
->>>  F: docs/_templates/
->>>  F: docs/devel/docs.rst
->>> +F: docs/devel/qapi-domain.rst
+>>>    hw/display/xenfb.c | 3 +--
+>>>    1 file changed, 1 insertion(+), 2 deletions(-)
+>>> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+>>> index 22822fecea..5e6c691779 100644
+>>> --- a/hw/display/xenfb.c
+>>> +++ b/hw/display/xenfb.c
+>>> @@ -283,8 +283,7 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+>>>                    scale = surface_height(surface) - 1;
+>>>                    break;
+>>>                default:
+>>> -                scale = 0x8000;
+>>> -                break;
+>>> +                abort();
 >>
->> Question: Does it matter if this is already covered by QAPI section
->> which has: "F: docs/devel/qapi*"?
->
-> I'm adding it to the "Sphinx documentation configuration and build
-> machinery" section as well.
->
-> Before the patch:
->
->     $ scripts/get_maintainer.pl -f docs/devel/qapi-domain.rst=20
->     Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
->     Michael Roth <michael.roth@amd.com> (supporter:QAPI)
->     qemu-devel@nongnu.org (open list:All patches CC here)
->
-> Afterwards:
->
->     $ scripts/get_maintainer.pl -f docs/devel/qapi-domain.rst=20
-> --> John Snow <jsnow@redhat.com> (maintainer:Sphinx documentat...)
-> --> Peter Maydell <peter.maydell@linaro.org> (maintainer:Sphinx documenta=
-t...)
->     Markus Armbruster <armbru@redhat.com> (supporter:QAPI)
->     Michael Roth <michael.roth@amd.com> (supporter:QAPI)
->     qemu-devel@nongnu.org (open list:All patches CC here)
->
-> Good, because it's John's baby, and he's maintaining it.
->
->> If not,
->>
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->
-> Thank you!
->
-> [...]
+>> We prefer GLib g_assert_not_reached() over abort() because it displays
+>> the file, line number & function before aborting.
+> 
+> The purpose of this line is to tell the compiler we can't get there,
+> with the least amount of ceremony.
+> 
+> We have ~600 calls of abort().
 
-Amending the commit message:
+And ~1600 of g_assert_not_reached() =)
 
-    Section QAPI already covers it, and that's fine.  It's missing from
-    "Sphinx documentation configuration and build machinery".  Add it
-    there.
+$ git grep -w 'abort();' | wc -l
+      556
+$ git grep -w 'g_assert_not_reached();' | wc -l
+     1551
+
+> Whoever merges this: feel free to replace by g_assert_not_reached().
+> 
+>>>                }
+>>>                xenfb->axis[move->axis] = move->value * scale / 0x7fff;
+>>>            }
+> 
 
 
