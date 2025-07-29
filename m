@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E70C87FC9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 06:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C7CC83F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Jul 2025 06:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugdnu-0007vH-C1; Tue, 29 Jul 2025 02:27:14 -0400
+	id 1ugdpt-0002R4-8l; Tue, 29 Jul 2025 02:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugdnb-0007ep-2G
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:26:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ugdpn-0002DK-Om
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:29:13 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ugdnZ-0007Rf-A4
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:26:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753770412;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hAbBBN/R2inhDlDcVigZNzm4Qys7gKOjLZ+4c2cCvVo=;
- b=V/6cEVSGZThHD2CCnSsJLSsK7wXFaSinY9NvZCeD4J4/wojgadiw/kcCVMhQWgimvwTYDE
- n9SRuQcSMOfZbtGuKHfENVVz7s8ghKaFPXwtk3fDNO2eGX7qW4+B2tZwhzMP08UvQABurH
- DoyYeXVIheZprUPeE0Y+5NJ1Z4Ev5gE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-hs0ySZJjMuOwJ9QrfImf8g-1; Tue,
- 29 Jul 2025 02:26:47 -0400
-X-MC-Unique: hs0ySZJjMuOwJ9QrfImf8g-1
-X-Mimecast-MFC-AGG-ID: hs0ySZJjMuOwJ9QrfImf8g_1753770406
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F7B0180048E; Tue, 29 Jul 2025 06:26:46 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.29])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63DB81955F16; Tue, 29 Jul 2025 06:26:44 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 2/5] i386: Build SEV only for 64-bit target
-Date: Tue, 29 Jul 2025 08:26:30 +0200
-Message-ID: <20250729062633.452522-3-clg@redhat.com>
-In-Reply-To: <20250729062633.452522-1-clg@redhat.com>
-References: <20250729062633.452522-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1ugdpk-0007gR-OU
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 02:29:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1753770548; x=1785306548;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=rIZ6R+np2Bx5RWEDWTEJekiSgfWu6A1OMoG6qCpCXzc=;
+ b=kKCSlQsf5WqSrz3brEKj7asOW/OwXssDVTK4Zvf47Od2cY0BaRgykX9r
+ RRymZWaszpT+Ss5CLOVL+bZwNyP+y8jJehhT6JzL1YlGIB+8vkkfIcjdr
+ IMfyEc7aUW8qVilqwKJMSUjsmTwnmaFV/EWXVa42KEzfH/PosRaek79U7
+ O0mjoVX/Iy5FmbnbDC8gEE+EdxoWVbhlrol9RPmO/92jLWZlFZE0BkwdS
+ eq7huvJep0nbd2GhyU5cPnntcF3YfyoalJy31Hd2K5iF1XCOuio1ghsql
+ 4bEKLx68t/yV9KbGP7n89ht/JgcLs3f1FQIKlu22M8alBcmEDMHFPmU8q w==;
+X-CSE-ConnectionGUID: 3u4Jz5QlSKmFYF6MAKvLzg==
+X-CSE-MsgGUID: euEw78I5QmicjhqJBBJMCA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="59854970"
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="59854970"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jul 2025 23:29:06 -0700
+X-CSE-ConnectionGUID: 3NIuE4MZQKiB0HPOaspChA==
+X-CSE-MsgGUID: n8RP+FGKQISxJUeJg2S4yw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; d="scan'208";a="162492667"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa006.fm.intel.com with ESMTP; 28 Jul 2025 23:29:05 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH 0/2] i386/kvm: Cleanups in kvm_arch_init()
+Date: Tue, 29 Jul 2025 14:20:12 +0800
+Message-ID: <20250729062014.1669578-1-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.299, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,31 +82,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent changes broke build on 32-bit host. Since there is no 32-bit
-support, restrict SEV to 64-bit.
+Patch 1 removes the object_dynamic_cast() check in kvm_arch_init();
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250716071554.377356-1-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/i386/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Patch 2 removes the unncessary kvm_check_extension(s, KVM_CAP_X86_SMM);
 
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 14d23e27b580b2d5ea3aa4c07ba066f21a62e348..5139d2308777114e76a789c4f850fa20f3fa754f 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -4,7 +4,7 @@ config X86_FW_OVMF
- config SEV
-     bool
-     select X86_FW_OVMF
--    depends on KVM
-+    depends on KVM && X86_64
- 
- config SGX
-     bool
+Xiaoyao Li (2):
+  i386/kvm: Get X86MachineState in kvm_arch_init() without the cast
+    check
+  i386/kvm: Drop KVM_CAP_X86_SMM check in kvm_arch_init()
+
+ target/i386/kvm/kvm.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
+
 -- 
-2.50.1
+2.43.0
 
 
