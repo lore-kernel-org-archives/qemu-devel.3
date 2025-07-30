@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B22C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 01:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F723C87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 01:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugvGP-0001H0-AT; Tue, 29 Jul 2025 21:05:50 -0400
+	id 1ugvFY-0000VN-9C; Tue, 29 Jul 2025 21:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvCf-0003Tx-89
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:57 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1ugvCY-0003Fq-Jj
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:50 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvCd-0004mE-8x
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:56 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b26f7d2c1f1so7627863a12.0
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 18:01:54 -0700 (PDT)
+ id 1ugvCW-0004jm-IX
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:50 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b3bdab4bf19so323122a12.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 18:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753837313; x=1754442113; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1753837307; x=1754442107; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vi2QCM5GKA+/mOomKJeUwGQ7BzgZo65UL+LjzBMT1yc=;
- b=ac1X/LhVyVDRz1fIdIvTBvvXKzDWWDU/Vv3BJhP/GOCLUWPN86F2LFgfUciURZFn5i
- sEK29CmXjSruiEsBJDxGBrxFVOYCLnzRIiS5KSvq/iUbiBCY5MkSop14I5gwis/aaSqX
- 5QzS+yv2W7n7pncPJ0mNd+XleImBNeoGjXXBp/P1jMEf4jiWQ652Al56lFEsfWW1a0xN
- BodGUVzVHqhrEbWjVwGnHVsItoG4eGhEUZCLduWbX/FknK5Apa5+gn3ycC58ek3Ro9FP
- jy550D8nL/v7aTZjhJwhq2CyvrYSAGvc+K/wy6ScKhDHrsIyR0hnNvL7KzW04Xx8ZNLI
- 4KnQ==
+ bh=43YL6LeHtMqajzX1/nmmW+RggwtVTRuMuUjwY036hyw=;
+ b=L5aD0G/9r9PBakSsOxWpBdHL8AxuGsJ9zEFW8HMZedSdUzrb0dVf9aIJWC7HeKnohA
+ MDc3J1ylRueTBWYZAlt8LGQ02h0nEfDc5vDKk5n6Kx8wDMazSCErq6SzkVazlo8HDSIW
+ FNHZIcE+TZba1XRJq4uNjmNEqaW5NDz5411S0o7ICdaNVNb6SQ3DZskt8huNq+bN+4jC
+ O+zqB3/eBIgeGjfW4rbV+EXzTKDTKMLPexUDks4W4sidP/+4lqrAQ0HqBRHlfccXvsl0
+ HgKKVgH0994KofWaQL/wLTpYNRw4XxADQGronSJTCFGj0aFAOuh7420GMSFsfkCNU1AO
+ ihtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753837313; x=1754442113;
+ d=1e100.net; s=20230601; t=1753837307; x=1754442107;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vi2QCM5GKA+/mOomKJeUwGQ7BzgZo65UL+LjzBMT1yc=;
- b=Cd7kQzyjHy6WvqNVAD4pP752JIycNr8S2j+rramzewc4MvxZsWTP9go6bTscUJH4p7
- ZEa+raRyKVsAZFXDM9zRQH9D6T0QE7FSPHfMGuQp7oUdWDrK8vHlXTq+SHcDiMMerFvK
- dZune8JQ49Pzj6pTbF6mylgrwwDQm/9s/e12qEZUIjDdDjsgwtmU4P9Oy/McPK0E3loQ
- sjKlIVST6CFUiV/pawZHiFNAxI47qYuAPhORQ6swV96mBBs8v5zotfLSuIqTtvI0JZ1B
- o2yne3ZQCpPjSSYvMrp43jjah6qH9SG7n2iLS7g7lQHKrRBIl1xV6WNHsKz4LZqHYBdg
- HQLA==
-X-Gm-Message-State: AOJu0YzUXffemh3kcytiBntT+Cr9iE0ONc7xeaLwt8DA9d84GxzzpC+k
- gKPaNlNuvHhCww2h4UPhWzxxQ7p2FLc4PjzhNkNGj0GLsBSMOn1ZoaY96WVB6A==
-X-Gm-Gg: ASbGncs6DM3/EqYoV2FTnX3EzXzlBIDy6WcMwbtyjaYtwf0mHxDwmz/Vb8A8XLKPufZ
- ktP+pLtm94Ubt9OGz73W6W7dKeBQgyltzT8b8RjPabeYFTN+oXDxMgSr4diGRzhdG7YJoLSCJdu
- DtBW17M+qUqg7dvXvj1bmODdWmANM94+LGZ7GRnntMYQjmNQIdEszGr9tyT26on4jdqpNto8GVZ
- yXUNzGKx5FOqZmjXcOPav/vAfKLIXRwkN4XsCAKE1EAU9Ct2HqvKHnfRhp7M6UsJ9uvIpCrYC28
- m3u+CVBy3xqlQ9Sb1AR1eHXE3W07VICUg4NbBuSE8ev6t2Fn+wWiz6dSnBiTJGMDBIHuCsqBteC
- MMFKlpncQ8KU7AiGa2aVRlAyK5rS+flxjcbo4wArGzFmobKkcHVQBIyIo0YDinFNJDOFfU53Aqy
- rOWrQpmh+BmGDklTyR582ZzApePvY=
-X-Google-Smtp-Source: AGHT+IFaJB2Reh45WXnVC4qFHvkTOaqMJdh/8AuXSOnCdkvn9JYcxosZzgmjxHkQEVsB33jNkjx4VA==
-X-Received: by 2002:a17:90b:4b09:b0:31f:32cd:97f0 with SMTP id
- 98e67ed59e1d1-31f5ddb750dmr1886106a91.1.1753837313378; 
- Tue, 29 Jul 2025 18:01:53 -0700 (PDT)
+ bh=43YL6LeHtMqajzX1/nmmW+RggwtVTRuMuUjwY036hyw=;
+ b=lnN7eK+8ikWQoaU311xJhIHS4uqovdRUAMvEMFPuBd1E/QV5qlHzJKKVkHVZZdO4Po
+ EQgkjoPgsQ/5tFRok04OZILmL0YvugggAhAGiFTJiKfSkRNXq8LvlqccLK+gxUD7QDrL
+ 3wmm5+cYKETiuAMzrtEJ3LlnuQ43/YUDdJzqnk6fHb0FdJj8fsDHERz5EICulg6MLptb
+ gLRE907EXy5GIGzWtFUw/CULEc521GrrikCs1dBNqbKQz84aUrSVM5M4uik/OCRROAyK
+ /FPnzIPlzkzGKcTqI42kzesdtOps4eFHtqr0EfeM00bWVi4SGqTtE8YTh5zlwtxX3iLc
+ bqsQ==
+X-Gm-Message-State: AOJu0Ywn1ghPlEkxt0YbxasJQDVGA/GIpXtn0CSl1n9NXqCpFYCKeOEV
+ CBrZq5crJfxo3E6de7I6v69UOeSForpHWFhvT1+HzTDFS/F41NbU+O7l+anShw==
+X-Gm-Gg: ASbGnctI8ngPRrI4qmtZHQqYo3h2PdRIeCtvWEipuFiHCr+FcheU4r1t3oV2ZfhjSZt
+ DIbIeldB0+mRrG3eNqFapWwGNdcNMK36xANa8fMWKE985QCox52JNNy5h+/6DtM2V2OJzdw/qUW
+ Q6deagQk3UsEujYr2zF6J0K8SlRFTaJXHdpgu06SWm3vEPMgJHEb6hENmz4HCbwSHSk96dAwcSD
+ jMNBCL7C7h86HOIZ+rnyUa2OrFpzF5pY00XWPakUn8WUXsYvr89UdO14FFXmBz8YSRxxQEi60VL
+ CZu6ljPRi/T6ACjWzpkqx3OgvwZDKHAgP9m1oxuO3uEnBxZyp7+nE8QlB4cie40OJHKQMJEo4ba
+ Voq+XBxLdykqNI8dNRWFmTsEN+9Z71Y5rRzGeD2x9S6+Styh2PauiopNpc+f50ZfUlYSrx/FKKw
+ k/DjFUpBuTp6638bQkX7CRTEgy5Zg=
+X-Google-Smtp-Source: AGHT+IEI3I4Il2xuj62KHbRQG9fdomHh71xX5e4C21oq9svbfkQV2Ms7qbhtAy/GUyTL/cW9dgih1A==
+X-Received: by 2002:a17:90b:57c5:b0:31f:12d:ee4f with SMTP id
+ 98e67ed59e1d1-31f5de6b9b2mr2015554a91.23.1753837306655; 
+ Tue, 29 Jul 2025 18:01:46 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f63df5adfsm343253a91.25.2025.07.29.18.01.50
+ 98e67ed59e1d1-31f63df5adfsm343253a91.25.2025.07.29.18.01.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 18:01:52 -0700 (PDT)
+ Tue, 29 Jul 2025 18:01:46 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nutty Liu <liujingqi@lanxincomputing.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: alistair23@gmail.com, Yang Jialong <z_bajeer@yeah.net>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/11] target/riscv: do not call GETPC() in
- check_ret_from_m_mode()
-Date: Wed, 30 Jul 2025 11:01:18 +1000
-Message-ID: <20250730010122.4193496-8-alistair.francis@wdc.com>
+Subject: [PULL 05/11] intc/riscv_aplic: Fix target register read when source
+ is inactive
+Date: Wed, 30 Jul 2025 11:01:16 +1000
+Message-ID: <20250730010122.4193496-6-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250730010122.4193496-1-alistair.francis@wdc.com>
 References: <20250730010122.4193496-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,84 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Yang Jialong <z_bajeer@yeah.net>
 
-GETPC() should always be called from the top level helper, e.g. the
-first helper that is called by the translation code. We stopped doing
-that in commit 3157a553ec, and then we introduced problems when
-unwinding the exceptions being thrown by helper_mret(), as reported by
-[1].
+The RISC-V Advanced interrupt Architecture:
+4.5.16. Interrupt targets:
+If interrupt source i is inactive in this domain, register target[i] is
+read-only zero.
 
-Call GETPC() at the top level helper and pass the value along.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/3020
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 3157a553ec ("target/riscv: Add Smrnmi mnret instruction")
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
+Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20250728055114.252024-1-z_bajeer@yeah.net>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/op_helper.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ hw/intc/riscv_aplic.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 15460bf84b..110292e84d 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -355,21 +355,22 @@ target_ulong helper_sret(CPURISCVState *env)
- }
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 4fa5f7597b..a1d9fa5085 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -628,7 +628,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
  
- static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
--                                  target_ulong prev_priv)
-+                                  target_ulong prev_priv,
-+                                  uintptr_t ra)
+ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
  {
-     if (!(env->priv >= PRV_M)) {
--        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-     }
+-    uint32_t irq, word, idc;
++    uint32_t irq, word, idc, sm;
+     RISCVAPLICState *aplic = opaque;
  
-     if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
-                                     env->priv_ver,
-                                     env->misa_ext) && (retpc & 0x3)) {
--        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, ra);
-     }
- 
-     if (riscv_cpu_cfg(env)->pmp &&
-         !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
--        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, ra);
-     }
- }
- static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
-@@ -394,8 +395,9 @@ target_ulong helper_mret(CPURISCVState *env)
-     target_ulong retpc = env->mepc & get_xepc_mask(env);
-     uint64_t mstatus = env->mstatus;
-     target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
-+    uintptr_t ra = GETPC();
- 
--    check_ret_from_m_mode(env, retpc, prev_priv);
-+    check_ret_from_m_mode(env, retpc, prev_priv, ra);
- 
-     target_ulong prev_virt = get_field(env->mstatus, MSTATUS_MPV) &&
-                              (prev_priv != PRV_M);
-@@ -443,8 +445,9 @@ target_ulong helper_mnret(CPURISCVState *env)
-     target_ulong retpc = env->mnepc;
-     target_ulong prev_priv = get_field(env->mnstatus, MNSTATUS_MNPP);
-     target_ulong prev_virt;
-+    uintptr_t ra = GETPC();
- 
--    check_ret_from_m_mode(env, retpc, prev_priv);
-+    check_ret_from_m_mode(env, retpc, prev_priv, ra);
- 
-     prev_virt = get_field(env->mnstatus, MNSTATUS_MNPV) &&
-                 (prev_priv != PRV_M);
+     /* Reads must be 4 byte words */
+@@ -696,6 +696,10 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+     } else if ((APLIC_TARGET_BASE <= addr) &&
+             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
++        sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
++        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
++            return 0;
++        }
+         return aplic->target[irq];
+     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
+             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
 -- 
 2.50.0
 
