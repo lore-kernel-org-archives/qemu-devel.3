@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30072C83F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 21:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F68C83F26
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 21:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhDv6-0002xb-3u; Wed, 30 Jul 2025 17:01:04 -0400
+	id 1uhDv7-00033f-C8; Wed, 30 Jul 2025 17:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDd2-0007rY-RY
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:42:25 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uhDZd-0005WX-GA
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:38:53 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDcz-00008M-VW
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:42:24 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-240418cbb8bso1715765ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:42:21 -0700 (PDT)
+ id 1uhDZO-0007NA-Sg
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:38:53 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-75001b1bd76so148049b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753908140; x=1754512940; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753907916; x=1754512716; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=go0CL4xkPoqpYmv+5T48I91u032jyfdQ/CW7yY5b8TY=;
- b=oOS5tCN32eLXQYeX+/5DpwBd0atSMvCOro/tVczxNVxZyRguoJjbNg81lUMCgLSDu3
- kq/WESfr7ykLUgBilKRGoaFbxGl19dBNTK80weCKeU+j+TspzHXFuP2CZdnoiL+O20Y+
- shg6gkHagJo5Oanfmfv+b6sC4awtb4k4mLpaX0SxakAdHdafBWl07nWQmak6lCDR3erh
- 7Fv1+PzCNb93bl/GsYZDs04+vE+VLpk3fA92kfv+I4A54g7eDdthZQzAFfOCJlIpsJwz
- ue2zLOh2B+cxmL12KNfciQkzL+XDKvciSuCyHfZFob2v48yuchqjlAqK+ouXCkoAeFx+
- CY9g==
+ bh=7gwIN55fs+OQWf7RqDB+KYKzCJLXeuv1KGiZze9XsPA=;
+ b=nzj6Au69EkL0XykN656FlAxR7jxNXK0/piGTUx3sRSnvrA1qy77yLxskgDHR7yKq+B
+ Y7uenjnPRp7lP49jJPvxxb9Vz6S79ehhl49o1HXrF9H3GPo2INZYax5jQBzKpoisqAGe
+ z2+GyR6j1AOki6PwC6VPROVeY0iULIGz7tCaP2w1PA3N4F0DEXkeQdez5iY9/qRlPRnJ
+ oV9Klj0/VNlolMI2OHvpqCNxrk/cqMRc3Vd1JOktqDkQaJmXo56BqJDC5a7nz7BV9Z1w
+ Cxlu0yLccFW3dy3FncVkYUsgpitTqvNDMK5nbMi9qNKh/Unq9kM4zWqCBHNOVhF6vV9D
+ /XDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753908140; x=1754512940;
+ d=1e100.net; s=20230601; t=1753907916; x=1754512716;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=go0CL4xkPoqpYmv+5T48I91u032jyfdQ/CW7yY5b8TY=;
- b=cV5IOhnrN49aAwn+9bDWwAWXB/EEsl774FKic+nnepMAK2Y9nZYPmhnmbaqoFPIw7B
- Mia0+jAU2O5B6EM+IeUX1qY9XQzBx2Xr8Va4GS3mcNMXqj+7iomCZXd4Pk2kj6C9BvkS
- na2m1NmBVE8OYEd4tmSDZo3i7u6Gas7bpgBo9pxeha/g3HQZVl3g8SidapCug9NvH8br
- Vei/WmOO3kAaqJg+mW5TPX2jtwNQph+iU0zZ2Tg6BfX40rzX0aJ14YJ/KcZwf3Dgs+2e
- R5If9TZCJeHwUAhfl4+YUjOTAvAwKwdpAqSULlwc4Lz81d9AewI7pm2LLTrQg3SRho82
- UB6A==
+ bh=7gwIN55fs+OQWf7RqDB+KYKzCJLXeuv1KGiZze9XsPA=;
+ b=igl0y8WvArB2DHsXJhTtMd0WwOx/bSt2Q1FRVm4Vw7hptW1ryTXICyRyEJyndHjy0T
+ 3EKL8zbb7brpApZAT59MNzEX5PKYO3Qu2unOTdQr2CdcRR0rwdtoD1m+AbWQHgV08XfM
+ GMrJwqV5wwusHDZeNcNhXKdJaxgGfbjD7rxfBrSCqNrSHtC42GePQAJFbkMIg8+rrbsR
+ FDqP/lTtnWvJbyJIkpA1yN6MyIpKWQoG3fPQ9FF7eU7OO9O+Vn1A+HA4FUtGNjDV3fsm
+ jKgWzny/rGWjmhrZIZ5iuwwSzET+jlc50F9Ye3y2Hy8/nVJGe+YYjki/WYtIoccT5nr3
+ g5MA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbwUR/h1i0NdYDvN5QiCh5jTVVxriNHmlbRozGsxlcgyI088PrkL/y8HO224/btCaILdW0JQwqM1sU@nongnu.org
-X-Gm-Message-State: AOJu0YxuCBLkHdOw42o7A2wqcCwDARLK/gQ0XfX6AOoz9h9QrUXG/jlW
- mW63+MXCTHAKSwat2Lu5lYklIBxkzwYo0++uR/0v1IrFiK/rFTn83UVqs7AcA4RcAf8=
-X-Gm-Gg: ASbGncvV8wJIQq0LJbBPL4Dcw9h8/h6lowX/93ayWEi+OhGoHkXScb4o3VkSOc1tJ4f
- ckJLwnwqM1TUetWsvGlPdu6D82sWB1xECtDx8qbnZW44+B0YCC/AltbSr+eyN5Ca4Iw5VmhaPI3
- HRgdnGhalXaiZa+qroZ67giw/PIoInQnhw9yiYmI9IYlDLs88SPGx+m8obyNxqLEmbGNavO5ofI
- 5q7Qu11NN0LAvsvlS+Lka4uCPk2KSfKLOL/rL6biK3rGhRi3//uNwopyUIKFJfyspH0/6+2bc4H
- /1xchXiPCdQks/29aQYTXoHkqAdsvGQqi12ZxXi/VL14fZ7uV+2qmb5IUNyU7qQQKOJ52ahtILG
- qsg+A1QiRr5no0Nf0JdGhb5wL/oYpt9OJEAY=
-X-Google-Smtp-Source: AGHT+IELl42hccrVCOeNwHTS5+IF9FmbDVP+Tb4hdkBipLa6LcdtL4Y1TSIb8pllvk8gTAY4GxZGbw==
-X-Received: by 2002:a17:902:ce01:b0:240:a05:5b79 with SMTP id
- d9443c01a7336-24096b41452mr77644515ad.44.1753908140640; 
- Wed, 30 Jul 2025 13:42:20 -0700 (PDT)
+ AJvYcCXmMX8je+OpomWo/AjW/cx1MG0ZQN8mcGnf/lDg+CC8A2LMPxOmdvtWWWyqFv2rEbcCLX5iw5RjU2Xu@nongnu.org
+X-Gm-Message-State: AOJu0YyTn4et/jepvbXn662j6K+QGgZd9qVJB2otp3DA/agaqQzzRgWA
+ cTHzCNR8DYL91gBT3w/M6cG5unNptrf7FXwwth4D70+y00ZQ978ErVXokBnnkMyTLGc=
+X-Gm-Gg: ASbGncsWCJFVGw4a6b4ksnS2E6DPA+p9u/jbOIGMRqer2aJlcqLOy0aTLBqXG5xk9SU
+ T0qw7V4+zyLhJGN0uIly+ofCzrKo624IpwxvklDnUBNJnUG8hfE0oBamtDlzhfMpxfTYQoIYdfU
+ 6Hp4k6qr5UW7pfNoDtnGmhI/+5zxJyGGcKkpj13VNc3HSOpud0aPKBtUMhPP3g8zU0/wsKDdi/t
+ 5xkr32oQVtArKsitrGUCKZY//2SAX/KNo8Rd97pYFT8rfNrl76onIwDTQjFSjIJoo/NzxLpRdte
+ VkGUig2KoEFZVcOeCXq/UndMKaOhPypi6MuovvaDysnOrGEqjba15uB6P5Z/nBYIr0eMhgUX6ye
+ cs5MPBQF1F2GrX2Mjy/MlvSwiAJviUP0ONOQ=
+X-Google-Smtp-Source: AGHT+IEMIRxEq5fsMGWCUQ+bkm57ETVj4vddJ+zXtrDI689VoYoarH1ujGf3Kggnd8POvyEJ/dEsBw==
+X-Received: by 2002:a05:6a21:339b:b0:23d:6889:f1f0 with SMTP id
+ adf61e73a8af0-23dc0eae27amr7977418637.37.1753907916318; 
+ Wed, 30 Jul 2025 13:38:36 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1ef595esm188265ad.13.2025.07.30.13.42.19
+ d2e1a72fcca58-7640872a4easm11418928b3a.24.2025.07.30.13.38.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 13:42:20 -0700 (PDT)
-Message-ID: <6b9f8d50-2adf-4a4b-879b-79929c4ab8bd@linaro.org>
-Date: Wed, 30 Jul 2025 13:42:19 -0700
+ Wed, 30 Jul 2025 13:38:35 -0700 (PDT)
+Message-ID: <a2fdb3bd-1a67-4238-bb62-3fb71f4b3f2c@linaro.org>
+Date: Wed, 30 Jul 2025 13:38:35 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/82] target/arm: Force HPD for stage2 translations
+Subject: Re: [PATCH 09/82] target/arm: Implement FEAT_ATS1A
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-14-richard.henderson@linaro.org>
+ <20250727080254.83840-10-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-14-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +105,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/27/25 1:01 AM, Richard Henderson wrote:
-> Stage2 translations do not have hierarchial permissions.
-> Setting HPD means we can eliminate an extra check against
-> regime_is_stage2.
+> Implement FEAT_ATS1A and enable for -cpu max.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/helper.c |  7 +++++--
->   target/arm/ptw.c    | 24 +++++++++++++-----------
->   2 files changed, 18 insertions(+), 13 deletions(-)
+>   target/arm/cpregs.h           |  1 +
+>   target/arm/cpu-features.h     |  5 ++++
+>   target/arm/tcg/cpregs-at.c    | 44 +++++++++++++++++++++++++++++++++++
+>   target/arm/tcg/cpu64.c        |  1 +
+>   docs/system/arm/emulation.rst |  1 +
+>   5 files changed, 52 insertions(+)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
