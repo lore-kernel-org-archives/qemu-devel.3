@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667A2C83F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 20:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A91C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 20:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhDsj-0006h2-0e; Wed, 30 Jul 2025 16:58:37 -0400
+	id 1uhDsx-0007Sh-KQ; Wed, 30 Jul 2025 16:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDmU-0001WT-7s
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:52:12 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uhDVz-0001PZ-C3
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:35:08 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDmS-00029R-Ee
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:52:09 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-313eeb77b1fso261209a91.1
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:52:07 -0700 (PDT)
+ id 1uhDVx-0005eq-BS
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:35:06 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-23c8f179e1bso3661285ad.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753908726; x=1754513526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753907703; x=1754512503; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=B79+X/k4ZYCKdRh7PXNpVVuSv9aZ8izmf7Xm6SGNCFU=;
- b=KKhBbpCqHThfXNtHdUNbmB8tRIvYBirskrcgvGB4Bgy0s/3lmhDquh5ja654zd0ppx
- 99kTrP2xgULQHbCXduzaMUrqwOBQi5tgj6ukkxWwgxN+Zo8I7KVkg0ZiZdYHCeAsCsHJ
- 0sZmmO6H5zAGzkf3BgBLo4H/rK24dEq0ZJi4nfH9n7B4SRdSMSQBHZDwePHnt6ddT84G
- hPppYWMtO/5o/ATRWzFHn0qYKrPypJGKaQeItUVDxRsMnSjcLMGyd0cRsUUxZWV6uHov
- hp/3rXByVibc1WGF+GmdcxDLrDrpVOSU4pMYNVFrMT9UKXXCHUgssUoCm8QIV5V+AVkl
- dXWA==
+ bh=83iMmGOym2u/y7T61DrKEIvLaUsK7Fe13OpXjZFMAXw=;
+ b=jWIchY7HwpMOZzWeovKIJSKVUevoJZlFEVdnDUHCBkTL2rPsmU5Y++ybx1F6E5kIKG
+ PiWbKV9VkWZhxFOh8PrtUANOaX7yhbAQ8TtN6RMqmRe3elq3KNKncm2O/N9IWKyfS2Je
+ hruY082h+bFwJInvQZqe4dw7berr3vRE2AuqLfkJ77rySIQMLaTouW5AYR5767/VOSOq
+ 4m7M3e43C+eLQe0km6c+UImbRpo7a2QM8pRlndFzEDFygVaH4I/k4/UlNlX/QFlHTCPZ
+ JulMFq2LsDenSDjZiF9ShYfeGAO/BbKj2RSccHkeUTPhbS4iJ/ZUBgs+m2ABvZNoZGNz
+ Uz+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753908726; x=1754513526;
+ d=1e100.net; s=20230601; t=1753907703; x=1754512503;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B79+X/k4ZYCKdRh7PXNpVVuSv9aZ8izmf7Xm6SGNCFU=;
- b=LXBrPCovl09rZIzW42eY8zDVe25ABVDeTm+wokMaxpsyhCbeVz7/fIEgDmm3mbo6i9
- N9xxRBuLbvlUS21ncYpjkSAa6G2OmvJO12q0p+WJjh34SY/j2L88U/SeK4EowFx4gF8h
- BcAy1ZrUgjoW/gY3WmTL4JZSic+7Usv3fic1vklgSNz1mK8y0nCvXIhJSIPZahfBETf0
- R8POiCQNe/CqfBt7sKn+uXNpDlZH3GSp2/N1Y0vfvSX43d7F3nfETRUSRX8vriAd/xx5
- PElqTYHZFU/OHjeSj5aL0WvHX25WeafzRZ7ZqnSSjDYM0heR1ny9fRLsaywYraXYuUu1
- CVFQ==
+ bh=83iMmGOym2u/y7T61DrKEIvLaUsK7Fe13OpXjZFMAXw=;
+ b=Of+WFJQ42/gVmffaadC/Tm/7XMRrhg0cinbuddrgD1DchXMiOizHv518l4aCvbQQzN
+ 0Spvy0tuQ6mhUjPwTW8nCaiEesvr6QC6dlt7sgp2XVKZCukDryZaa9pfgdLe0PVgsi+9
+ JMSUOQDCpA+MK3flexriLqmH/L6vgFzboIySQcDBX3jgvFzveceMn65YHJBi/9WZB/oG
+ Z872rKRWI8SocQROUjHpgwLDJJlC8rKnVjrrP5M5JVmlGg4j6l46OQiAgoOgD4Oinsk0
+ niBH1G0PDCgtxkLHafj6yiv14qEvVXyE/P8fSBUNIjGQPjKQ/6/NsgDmo0UiueuSBOIB
+ D3Yg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+48l/IDV4HCavGPnK1LqL3Kk79R5A6JdEGzzESYWJDjgFt0ja5h7QIVs1jzbOmcHwEkaKVUmTBpgh@nongnu.org
-X-Gm-Message-State: AOJu0YwEkYUPjtegVR/VfTjIJVnDdCZmO9K+YKXTTBCBccOXnXAUiKes
- i4cANo5uWbVZFfWUj7/VBj2KIQKXwnIEUUoWxLxKrIJ3MU0h7+VGmaey09xW3e1f5+s=
-X-Gm-Gg: ASbGnctWfx9XM0to4YxGmd1rrD4cW3bZgjRet/0/sljh6jfBsRwnG0Cs2P9s//e82Xc
- oM/0vMhRN/8nUSwqDVI0V1tSyRUzC4qMDMWMVCZQ232+8/uqPHkmzNQ3RMi5SkQ0Gl+YC+L4Zgu
- T2UxzE6DG9PEvdAvX/QVEqbdAV8oVI7BVAuLpEdvQgUwGC6J9ltqw+rlmVbV/3kLGhWJEBMllNB
- CVLnmjmy1b2A95Z/l14bSTT8cYeqQeqFLX3x4L5LNzWo13nkz+oEUuiy/aSCw9Vf3JLNQY8LyrG
- IlThOHn/b2zvQyJjWvcaITfvx7JF0ywacoeZFhUbzQa3VXM2ekDogx3ghv3KEPM/oOps427HcTJ
- Kvz/LTT5Thc6e4aI0ZkzAVD4jWjdBOHMcAaY=
-X-Google-Smtp-Source: AGHT+IGIbG0lD8QwLXlOrNmtpWHh34OF+Rut5gIjwVpqjyuJOdheA17EbH9w+gv4nF5jyRCf67cnjw==
-X-Received: by 2002:a17:90b:47:b0:312:959:dc42 with SMTP id
- 98e67ed59e1d1-31f5dd9bb9emr7709692a91.11.1753908726045; 
- Wed, 30 Jul 2025 13:52:06 -0700 (PDT)
+ AJvYcCWFf/IgveeW5u4gjX0Dw0QCTtwdSvvBsc8dmCLv2UAZ6vEN+HU5VIhW7gBWIFTSdb+qWw9dQ9BfUssG@nongnu.org
+X-Gm-Message-State: AOJu0Yy6G2vIIYD5caJYG18XnNdjjraViUTBpYuXmQY6+McE82wC134m
+ VXS09pN189ZZXcJbIXzXPzd9SSQfOE2lh2eecIyx19IvUxfp6Z+3vRMJ4OzEcGGQZ3I=
+X-Gm-Gg: ASbGncsdMGZRP10mHjrudpkhoTqt6YOxsu/YyFnPMo97q/AV8cY5MI/P4urKdA2M30B
+ Ez5SCgiX3rtQZiOxN612f5AHGxfYXTvFbj18RQYWkVQEQy6D/fKhshh+uM8jp9ieUMttp6dHsm8
+ Rm6Iz8N3Tio8flcPRvvYvPfbJz4emtWe0SvDUY/V4thB0P7gsUgB+6KmhZxL0GZdIneqSaM6uvU
+ JvH7cosY+VtP6qJm7eXjmzYWuP3Aar4mQ7LxAZ/+ToJ1Wjazk+R+swaItkMGGq6WCZQ9zxx4KfY
+ H18cTOWIlFP336TdYTU8HridRc0IHtf57V3lyFlZhNhndjcnEefIB65tmJ1Pcdkw+RyGmsh+/DZ
+ uiagMoiZO0dyfT5Zpjv0uIp57MsR8JlLVCc0=
+X-Google-Smtp-Source: AGHT+IFNFLCjDJHBHAQKFXqxsQMSLziaAJZBe4+kwHkbcFJx1IVsm8+2rrJRr52PTpZ+PKQR/xzLqA==
+X-Received: by 2002:a17:902:f686:b0:234:b123:b4ff with SMTP id
+ d9443c01a7336-24096ad15edmr76658715ad.21.1753907703430; 
+ Wed, 30 Jul 2025 13:35:03 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3207eba6bcfsm73515a91.6.2025.07.30.13.52.05
+ d9443c01a7336-241d1f1efe8sm78305ad.69.2025.07.30.13.35.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 13:52:05 -0700 (PDT)
-Message-ID: <fcbcaa16-570e-40a0-8b55-6d7dc01fbe16@linaro.org>
-Date: Wed, 30 Jul 2025 13:52:04 -0700
+ Wed, 30 Jul 2025 13:35:03 -0700 (PDT)
+Message-ID: <ba3dc166-07bc-4909-82cd-1c52fe513e99@linaro.org>
+Date: Wed, 30 Jul 2025 13:35:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/82] include/hw/core/cpu: Introduce MMUIdxMap
+Subject: Re: [PATCH 06/82] target/arm: Add prot_check parameter to do_ats_write
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-24-richard.henderson@linaro.org>
+ <20250727080254.83840-7-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-24-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,17 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/27/25 1:01 AM, Richard Henderson wrote:
-> Use a typedef instead of uint16_t directly when
-> describing sets of mmu indexes.
+> Separate protection check from access type, in preparation
+> for skipping the protection check altogether.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/exec/cputlb.h | 32 ++++++++++++++++----------------
->   include/hw/core/cpu.h |  6 +++---
->   accel/tcg/cputlb.c    | 30 +++++++++++++++---------------
->   3 files changed, 34 insertions(+), 34 deletions(-)
+>   target/arm/tcg/cpregs-at.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 
-That's cleaner, and definitely help to see we're going to increase the 
-number of mmu indexes.
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
