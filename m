@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311A6C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 05:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FBF8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 05:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugznA-00004v-UZ; Wed, 30 Jul 2025 01:55:57 -0400
+	id 1ugzp0-00034e-Me; Wed, 30 Jul 2025 01:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugzn0-0007rB-4s
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 01:55:46 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1ugzot-00031q-92
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 01:57:43 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ugzmx-00067N-Bb
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 01:55:45 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-74924255af4so5393499b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 22:55:42 -0700 (PDT)
+ id 1ugzor-0006Gw-LS
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 01:57:43 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-76a3818eb9bso1019647b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 22:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753854941; x=1754459741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753855060; x=1754459860; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=F/4WlfthxePCCbVWUgcxuSHl2txbqOw6IWz4XgIo3AY=;
- b=uDimxyf1JicSa5O8wxntPmJzu9xWqpJeIqEHbpjf3Y3NO0hEmihDsGtjpkAlML0wHH
- yzrIe7c+78KMYeLEu4A3YUX8MkrXSLslGadG7k0yetzbadiACVBuYdQLnhMWhqril1f7
- 210KPd4hAGLIk0Bi5C4yp7TOq/5SfM4hCtIYWXmDfsYuB9rnFW46ZFGRAtJ/j1mdoFGw
- aOjpZ9XQTQuGnL3ygRdkVx7jnW1HEM42ebBz23xPVpVdIgqn76EI/O+EkJKva5ws/+mn
- uFjO4TpbajQojHjdeSBaPg0ZHNVei++IEuj1u+ygrB+gtMZRKTouJL/hgX7bgPdoMYHZ
- SCBA==
+ bh=LZeFEm0XwcwW+c9k2+IvB3dCXHECRg4yxK1ujeMJ8Qo=;
+ b=g1XkowKoDIZaKVK0weditKdo6tUev395bNfLwT8klzw5LGiTYEp0a6yg2MV5vm4tRE
+ fAn92mBcdm0TLXMtIIxkwNs1fU6SQYCWMdRrFG8HnnQf7NARwKgj7No7zfdywRrJM5Lf
+ TvA/2Z4YamHJc5rDBbuBRuxa9N14OFDqtlyDLl5Cp7jFgZQB0t9baRiU4OgoXjTox/7K
+ VHkEvnWHu3wh8qr+ckL6NzOtbo58PqbcyDOG3Ry6VB2dNEti8ekVzwG+/de0/fg5BJr+
+ CPy+BVqQwBvcV1cL1X1gnKjCCHBjDKKSylmVKnlvKIDbwLjkpb+TfaBtX6Tb5i/t1Ubx
+ Cegg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753854941; x=1754459741;
+ d=1e100.net; s=20230601; t=1753855060; x=1754459860;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F/4WlfthxePCCbVWUgcxuSHl2txbqOw6IWz4XgIo3AY=;
- b=J6xvjuaidG4eP/L4kxJcrwIq6CQUOK3ZoDlJog5jlJ3hjPoLoPef7APbkfdkcETstc
- WxGdwyCuvQxYWhPf2L/ldXLycDsanvPBo9qkZGJk0fF7oPYFErNb8XIxPWgKE0pjswk9
- mJWIrVpAvxaYsgp9kPALIByupOcnhUJJYIM2PEtkuTobmmSWHBRxp9/LT6jM8YAi+KEo
- rqEJzygBn9iAc1G9VFGC7oxBh/81iwh6n0PNYxzHiAHhwbTKBlqj36vd8+qI73cLvRyP
- gm96A6PZOVrD89MDAzKAH59Pe090d84nlNRdiC88QkxD9SMkykFqMBbCUPfuQFYVvOpY
- UeXA==
+ bh=LZeFEm0XwcwW+c9k2+IvB3dCXHECRg4yxK1ujeMJ8Qo=;
+ b=bzVdkCl8uFG+4NeEFgLUav0TNDTkfssRvTAWIXo41UANjO4KOnPHX3FebzPrIt3NsU
+ yHkoL/07o5UZcv+Ka7G/qtwQi8KtcdSYyDH444haTsGhavpOMyoFSNW36uNAMSGtidy7
+ xyUfXQJl46jzu90jHkT3oHOWEA2Z1wfWXduDLlRqyzJ2AXLvPhFiVVuKXT/K3ZB4Kse0
+ 38I7P+92F1lpYDmZ1cGuyjlrrF1N4q6uRbiwwTCfoxqYgOZ2RTG6iuiYSBm4exK8s3Pm
+ P7vL2Df1QmVViJJZFRtsyILhYvCu/rnd63JGk+YBw/IiY1ab0Jz0F46i/sWhlo74DBh6
+ P6uQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuwmBjWHoCgXAEGb2F20RBOlkzJTbMgqzdjnLmFSvhBjaiMgShKhpXhYdyLl5+bzOUcuy3M6ffJB/8@nongnu.org
-X-Gm-Message-State: AOJu0Yw84b5i3Ntea66vbcaMEJ7Q/L8Pp55RoSDvzLEk8YDyaW1YbESy
- bqiTPCSrGpBzXrISMvWNB3rc40H73/hZYVhIJZ7jlT4qi3Qlhlhw6x1u4oMKHCxjVbc=
-X-Gm-Gg: ASbGncu3tVNJRzTqqNrNFbqlQN6v5YeRbVvnyUA//+2CDccih04pG+4qBzfNRdhiWKW
- TFCX52aR6TgKmKwTLwMhwUopQM7oemcjSCe9CsGurjNbbQe9YTMH7+T/vOi4P95Gpqvlmw0iFdH
- kVfcC8oSxDEssC4ZvVZZpjvgcyd6wuHEh1YCgVFoeu8U6oFX6q2huhp8LtnSU16FpC+QzxYzYyn
- 6jNT/lRkNiMMBwxXx6Tj95i0tpmA55c7VzCM12+MmquxiE9J2d5pOC0da4L2zPBjfLWm6gi5P8u
- JArBFk3bY8I1yjiBRoyIYumv/MBucbylotwJkRwBt2+GrHp+2LNuGeYWp5KmMr7WTh3APVAJxgH
- Jvq9O0CRSRxKa0oyOt39vsMoDFlbmCntIhmE9Vfaaaoc6wcUccquO+uLvoyd4+MAXZsx2tjwmjP
- IbIA==
-X-Google-Smtp-Source: AGHT+IEVrB8Q58DZ2z55SfAZCCJG8ZqVrAPGK+s7cnBhT8i15YEawpcXlcyvc6qh+Hbr+6/AVGz3WA==
-X-Received: by 2002:a05:6a21:998b:b0:21a:da01:e0cf with SMTP id
- adf61e73a8af0-23dc0e32c0dmr3894879637.22.1753854941657; 
- Tue, 29 Jul 2025 22:55:41 -0700 (PDT)
+ AJvYcCViE+s8J5/0jgWo4ghYOsu2ZRSpgH7UxoFMtw943v7ktHKPyDaeWKnVbaNL8RzNCpiz/YIuFrNzV9tt@nongnu.org
+X-Gm-Message-State: AOJu0Yz8Go3GHUKka9hIJ8+0N56uZf0WdUSyxn3PSIgeRjWNvi0ohzmw
+ Rpp0ResSmt05+8v9gmwPd6/SrhzMqlvjB/LhgizkpzPUEKZ2YGu4UBgh6kiIGVAhQwk=
+X-Gm-Gg: ASbGncsP0EoN+gp7N5kfwZbcBWmLB9odwScwqJKC45zO8Om+OizeoxQiogmlBthMbyO
+ 0fQy99oP56y7YjTDpOz4CbumccEGJLxMRPKHTKTxLtSDVRoXg5RlR5RbmoQCQyJWCoprNJp94B+
+ c7rEx6+lBY0ytEXRcBcK5pNMd39BmlkksUONJzNO/lR1Mn/eCgwNryjjjFD3Bi+rCuNs9KSC3N1
+ et2daNhh3Y0gFEMF1jFYKhXcqnuNDXny7a14vQcyFuMhY+FsDXOJYBq2d80Jci9wTUe5O58gQFG
+ FK2ni6g1kgozkMFU4/V5P1y/bstp5Z7caEsK5L17jeED96iCPTRgfhKisUhE4Ajholeojt3eee6
+ PzQ7AR1WBY4AFLPvy8sW2b8tZMHE/nVo71nW7UeixwA/7c02qtglY6k5/U9g7UgSYCTIYXmyNeg
+ 0OVg==
+X-Google-Smtp-Source: AGHT+IERasfK0WPA6PXEHbbiYexLDHzWRlSGLYg5BJGXJa6OapDSlKyiiI0fDBFFuQypznjmw2lvwA==
+X-Received: by 2002:a05:6a20:7d9a:b0:23d:7c59:c7c1 with SMTP id
+ adf61e73a8af0-23dc0ed7aeamr3103242637.44.1753855060172; 
+ Tue, 29 Jul 2025 22:57:40 -0700 (PDT)
 Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b3f7f6c8940sm8278671a12.59.2025.07.29.22.55.40
+ d2e1a72fcca58-7640b8b2868sm8995135b3a.128.2025.07.29.22.57.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Jul 2025 22:55:41 -0700 (PDT)
-Message-ID: <183474fe-9a52-42c9-8e3f-e28da316b96c@linaro.org>
-Date: Tue, 29 Jul 2025 19:55:38 -1000
+ Tue, 29 Jul 2025 22:57:39 -0700 (PDT)
+Message-ID: <d79defa5-ca03-47f3-9402-f885ae6bc973@linaro.org>
+Date: Tue, 29 Jul 2025 19:57:36 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/19] target/loongarch: Add common function
- loongarch_check_pte()
+Subject: Re: [PATCH v4 10/19] target/loongarch: Use MMUConext in
+ loongarch_map_tlb_entry()
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 References: <20250730030202.3425934-1-maobibo@loongson.cn>
- <20250730030202.3425934-9-maobibo@loongson.cn>
+ <20250730030202.3425934-11-maobibo@loongson.cn>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250730030202.3425934-9-maobibo@loongson.cn>
+In-Reply-To: <20250730030202.3425934-11-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,16 +107,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/29/25 17:01, Bibo Mao wrote:
-> Common function loongarch_check_pte() is to check tlb entry, return
-> the physical address and access priviledge if found. Also it can be
-> used with page table entry, which is used in page table walker.
+> With function loongarch_map_tlb_entry(), parameter MMUConext is added
+> and remove parameter physical, prot and address.
 > 
 > Signed-off-by: Bibo Mao<maobibo@loongson.cn>
 > ---
->   target/loongarch/cpu-mmu.h        | 10 +++++
->   target/loongarch/cpu_helper.c     | 61 ++++++++++++++++++++++++++++
->   target/loongarch/tcg/tlb_helper.c | 66 ++++++-------------------------
->   3 files changed, 83 insertions(+), 54 deletions(-)
+>   target/loongarch/tcg/tlb_helper.c | 33 +++++++++++++++----------------
+>   1 file changed, 16 insertions(+), 17 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
