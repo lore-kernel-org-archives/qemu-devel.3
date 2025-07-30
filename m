@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD557C83F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 15:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987DAC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 15:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh8bM-0005JY-FG; Wed, 30 Jul 2025 11:20:20 -0400
+	id 1uh8bI-0004ih-9S; Wed, 30 Jul 2025 11:20:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uh7Py-0002HD-Ui
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:04:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uh7Pv-0005aY-83
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:04:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753884264;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=du3b3qc19im+V79WB77um6jE7StkWVlBq6WQBDzVBJI=;
- b=XDWzGEIH5cvotzcR1Q2BdUA1jDE/UmovKaJ3wweaEsDac35k9/fhY+OGlHbfmsE76xFSMk
- YYRXu/ZdfCYKl7YDE60d8Dznq6ZV/ekMZFgAZNz2mo+zQMggPcyZJB936Plp+sMgVuJ55Z
- uqIjKElpBOizf5ycHh9ktFAl5MsReio=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-uxqey9HhPI-O_6ZbTpJjlQ-1; Wed,
- 30 Jul 2025 10:04:21 -0400
-X-MC-Unique: uxqey9HhPI-O_6ZbTpJjlQ-1
-X-Mimecast-MFC-AGG-ID: uxqey9HhPI-O_6ZbTpJjlQ_1753884260
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F274C180045B; Wed, 30 Jul 2025 14:04:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.92])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8242E1955F21; Wed, 30 Jul 2025 14:04:18 +0000 (UTC)
-Date: Wed, 30 Jul 2025 15:04:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: startergo <startergo@protonmail.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH RFC v1 1/1] ui/sdl2: clipboard sharing implementation for
- SDL
-Message-ID: <aIomXtsLkLhvi-B1@redhat.com>
-References: <2cKNS7U_kE-Y4pOsCItcM1RhyWnkbpj0zicXQjMfV2AvXvx-Q5hg9lhWL9kZl3hAPpdbbuOilUAG1ahp7_YL2Gscf4iacyenhegHAvYlO_M=@protonmail.com>
- <CAJ+F1CL29s4Czp-dv2cMt=aEqngCEDNKNyBVsRcFfqfnXxo57Q@mail.gmail.com>
- <7evd1nX-kHgOCNpPH3vAJnNYZmzXG1b7wzs_aBHDQBVl1KOBk4SGM055Rcq7XN8TAaqGauW5hv0EFQrwQTISgLLl8Q1U6sfccK_lS7f4ftk=@protonmail.com>
- <CAJ+F1CLA3A7=Xag6764+0XhLSmgz=c4rztSM=k1PryK=QGVcbw@mail.gmail.com>
- <xd4WipyMvVQZAziPe9l9-q6i-sF0qVfag4JY5LGlkHZVTq7jT5BCDLIyT02psvU8fgya1Mj72k1za_MiJFjBTS335JiVREvS9ysZllzbPu0=@protonmail.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uh7Pa-0001Rk-Lz
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:04:08 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uh7PY-0005Z1-MW
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:04:06 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ae708b0e83eso1259320866b.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 07:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753884243; x=1754489043; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7ZTs40LFOpbnC+/hk30fN1exanZBIE05cCHHZRfMb1E=;
+ b=VLgysrJDV2U1CtLPZThyCyoHYVtTNmPLNHaCI9CGdrnLxzbVc/tBAzbMZT2OlImQ4P
+ O4M05kJV/149X3jLyAhffBKu7WZm4FaFEJZBI+N9jlImMb/kJKhK4BtfXUszf5koWRSZ
+ qiDSb3fp6Gx+JurISsMNigOvkqozqd3IVbIpWilhEfSTr41jLzWVFtfDSlnAPHQqEx5F
+ rnujCIs3lB5U/qIWXfYn3Kd9ba8TJmWb9n2JvuWMCAZNQhAYA37Jp2pzE6hmSpz1crb1
+ 7t5LJeARSxMCW/z0JTAsMirYXWh19PB9RrIhKVYIZnQQ9hc5FpnVwyLCPewpeJuWwkOC
+ UNqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753884243; x=1754489043;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7ZTs40LFOpbnC+/hk30fN1exanZBIE05cCHHZRfMb1E=;
+ b=ARQVT8E4HCxdZSLJ3MJ/L25C3O+TsRUjrLUiCQFQHH5IocM9+lUskFducxIKWFBZTm
+ iKXexhnDfSi1EmXf4jwYu8mV7uVO1kXiEC89aXvsZ6CGkhUrgcBudU0p26WzClEwhk9q
+ FhzdQzR2YRCy/cUznWNC8U6XZRtKAA5pgHYor68j1t64orJGmhB/W84b0D16btBrXsUf
+ gqUicpdMtO0ZtFBApIm723vJWlbSllL09lXwxmnTNtEff0WCzA0B4O2YcrwVwrf9CRDc
+ f1PdZqziR8X7Xbrtp+mKd5QKOsOae7ryU2Gp/eGB9k+foY53R385FmLq22nyzo8TuMPo
+ vz4A==
+X-Gm-Message-State: AOJu0YzJ/47qtmApka/4jXghkeCZXUxsyb3W0YEtt6+QxbHhEcIVFKbv
+ cvqDyI8KK1IQGzmeCTsODUk0RvQ6Qa4yYYtKhWUlXnz/WTrUmeGOI2e2xpUhUlJT8qpPQyTXJyC
+ C/HibuIljqKFYSaomVPa8b7a6Lbn6D+mCyNw3vjVDxg==
+X-Gm-Gg: ASbGncsBD2RTcpPExS19ScFTlf2+BVpKEzr8qbBv9EOx/eV9o24AQne1y2Ys2VchhdC
+ nFuHsVDS3L4a9qFYLR1Rsx9OlcYCEjmWHOMyUUUIp1wJNho9rQx9SfY631np2j7/rlLjTx9aDjU
+ RMPJETlhAEIQuittCo8mBIPeES60vB6f5v86JqmkKgK3Ydmu7BWOXFX8BuxMn3y6P/qAjaPfH+r
+ 8ZftHM=
+X-Google-Smtp-Source: AGHT+IEUuD+ftHHkz9M3cDsOPmgUqjgLUGTUUm1LTczjEynT3G90OBA9Y9SoXzKCE6xScnRf8ARMvipSLN7znVkYRv4=
+X-Received: by 2002:a17:907:7290:b0:af2:bb2d:9b1e with SMTP id
+ a640c23a62f3a-af8fd69be39mr407388666b.5.1753884242392; Wed, 30 Jul 2025
+ 07:04:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xd4WipyMvVQZAziPe9l9-q6i-sF0qVfag4JY5LGlkHZVTq7jT5BCDLIyT02psvU8fgya1Mj72k1za_MiJFjBTS335JiVREvS9ysZllzbPu0=@protonmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <cover.1753857212.git.asb@igalia.com>
+ <cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com>
+In-Reply-To: <cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 30 Jul 2025 17:03:35 +0300
+X-Gm-Features: Ac12FXySYvvNakrAIkQmW2KLXZNiHOsjnw4V4B9zrasiCS6lGQ7YKlrBIA8_2Co
+Message-ID: <CAAjaMXZ=pONyiMVYa+=4WD++C=-MwQpTR7SbF1HvE0kuA4rHWA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] contrib/plugins/hotblocks: Correctly free sorted
+ counts list
+To: Alex Bradbury <asb@igalia.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org, 
+ ma.mandourr@gmail.com, pierrick.bouvier@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,77 +94,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 30, 2025 at 12:23:32PM +0000, startergo wrote:
-> From: startergo <startergo@protonmail.com>
-> Date: Wed, 30 Jul 2025 12:13:25 +0000
-> Subject: [PATCH] ui/sdl2: Add clipboard support with async handling
-> 
-> This patch adds clipboard support to the SDL2 UI backend with proper
-> asynchronous clipboard request handling and QEMU clipboard subsystem
-> integration.
-> 
-> Key features:
-> - Runtime stability: QEMU starts and runs without crashes
-> - Async handling: Proper async clipboard request tracking
-> - Error handling: Comprehensive SDL error reporting
-> - Memory management: Correct use of g_autofree and proper cleanup
-> - QEMU integration: Full integration with QEMU's clipboard subsystem
-> 
-> The implementation includes:
-> - New meson build option 'sdl_clipboard' (enabled by default)
-> - Proper clipboard peer registration and notification handling
-> - Async request handling to prevent blocking operations
-> - Memory-safe string handling with proper null termination
-> 
-> Signed-off-by: startergo <startergo@protonmail.com>
-> Co-authored-by: Kamay Xutax <admin@xutaxkamay.com>
+On Wed, Jul 30, 2025 at 4:50=E2=80=AFPM Alex Bradbury <asb@igalia.com> wrot=
+e:
+>
+> g_list_free should be passed the head of the list.
+>
+> Signed-off-by: Alex Bradbury <asb@igalia.com>
 > ---
-> include/ui/sdl2.h | 8 ++
-> meson.build | 3 +
-> meson_options.txt | 2 +
-> ui/meson.build | 3 +
-> ui/sdl2-clipboard.c | 154 ++++++++++++++++++++++++++++++++++++++++++
-> ui/sdl2.c | 9 +++
-> 6 files changed, 179 insertions(+)
-> create mode 100644 ui/sdl2-clipboard.c
+>  contrib/plugins/hotblocks.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+> index 98404b6885..d3dd23ed9f 100644
+> --- a/contrib/plugins/hotblocks.c
+> +++ b/contrib/plugins/hotblocks.c
+> @@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer va=
+lue, gpointer user_data)
+>  static void plugin_exit(qemu_plugin_id_t id, void *p)
+>  {
+>      g_autoptr(GString) report =3D g_string_new("collected ");
+> -    GList *counts, *it;
+> +    GList *counts, *sorted_counts, *it;
+>      int i;
+>
+>      g_string_append_printf(report, "%d entries in the hash table\n",
+>                             g_hash_table_size(hotblocks));
+>      counts =3D g_hash_table_get_values(hotblocks);
+> -    it =3D g_list_sort_with_data(counts, cmp_exec_count, NULL);
+> +    sorted_counts =3D g_list_sort_with_data(counts, cmp_exec_count, NULL=
+);
+>
+> -    if (it) {
+> +    if (sorted_counts) {
+> +        it =3D sorted_counts;
+>          g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+>
+>          for (i =3D 0; i < limit && it->next; i++, it =3D it->next) {
+> @@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>                      qemu_plugin_scoreboard_u64(rec->exec_count)));
+>          }
+>
+> -        g_list_free(it);
+> +        g_list_free(sorted_counts);
+>      }
+>
+>      qemu_plugin_outs(report->str);
+> --
+> 2.50.1
+>
+>
 
-> +static void sdl2_clipboard_clear_pending(void)
-> +{
-> + if (pending_request) {
-> + if (pending_request->info) {
-> + qemu_clipboard_info_unref(pending_request->info);
-> + }
-> + g_free(pending_request);
-> + pending_request = NULL;
-> + }
-> +}
+This looks correct to me. `g_hash_table_get_values` documentation says
+the returned value must be freed with `g_list_free`, but
+`g_list_sort_with_data` might change the list head, so neither
+`counts` nor `it` should be freed, but `sorted_counts` which is the
+new list head like the commit message says.
 
-This mail came through as mixed text + html, and the text part has
-completely mangled indentation....
-
-There is no way we can accept the patch in this form, and there
-isn't much point in reviewing it either as is.
-
-If you can't get your mail client to send plain text mails without
-mangling the patches, then the other option is to use 'git-publish'
-as described here:
-
-  https://www.qemu.org/docs/master/devel/submitting-a-patch.html#submitting-your-patches
-
-
-Also, when posting new versions of a patch, please always send them
-as a standalone new emails. Don't send them as a reply to old messages,
-as that is liable to result in them going unseen by reviewers.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
