@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66C22C83F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 19:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7DBC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 19:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhCmH-00067l-TP; Wed, 30 Jul 2025 15:47:53 -0400
+	id 1uhCqA-0004nb-JA; Wed, 30 Jul 2025 15:51:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhAtA-0004yW-Ne
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:47:12 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uhAx9-00034S-Bh
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:51:02 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhAt9-0008Sq-5J
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:46:52 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-76bc55f6612so24378b3a.0
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 10:46:50 -0700 (PDT)
+ id 1uhAx7-0000hC-Dr
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:50:59 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-749248d06faso71556b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 10:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753897609; x=1754502409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753897856; x=1754502656; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=f6WZAn6VaKN07tv/UW7+TzF+vCV8/Zhf6mhs9CL9uFs=;
- b=wv+ZLcdUaLUpFGbHr+mgAAI5plD8ds1+D4iLDqYKp8SUh0ga2EUGD9bOF7ZwN1YI3D
- kY9VSBNoeMjTO68297N7k4hGtqz6SWu2BmGjn/GxZF8ga1wQMgd6dfPIanaVw18o0ZhL
- 0A1j6OpH2h1Ro4ZoouUdj6s2U3FhfU3l+TirzfANA5lcwxEmputlzHhctsXAuIMFjC+/
- 7rPu2PVm9ggkaEA4OCm0WYNWPvCxanVi7ptzCqFuHCGpDdVWIFA5FBRxA7n8xMhHXJr2
- /nmtjj2laVh8FwBcAi0iCk1AmX5LzzUiIs1lfrUOznXwLT8iISY336Y+4pFd4bh02rk3
- IvIw==
+ bh=VNrO12I8KamjpTEvKeyYR8bolSvXBUZT91FWh7UG0aU=;
+ b=kFWxV1F/CwYHcHFj/auCUWqCKBg+zI2O/oixo5I5jOj/MIcCW0t+qxI8mhEl9ciK6v
+ wXRWhKGYroWk0GlvB8K3ilYz0PwkOE3nDXaYqRpgI2VAPTVk59BCTqYmHSShsRMyf5yi
+ 7HjFdl9acyaoggPN0Q9KaDj4EGewuA4M+8ul2pTA3J/vhW+mUP9HqD2PjoBq8YwHs+CO
+ gF28OhXzHIYWJY5K1zV26j0rjLs5fs/iLXXoVCc8jy65byCEqNL71SQgn5KWuwIdwm0j
+ IQ++V94MCp9r4LBNwEVlnriIWiDZULuj3cJ0d6Vdzy9C0k7A8ebgvEkOKAP7opZ3nVz1
+ cZwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753897609; x=1754502409;
+ d=1e100.net; s=20230601; t=1753897856; x=1754502656;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f6WZAn6VaKN07tv/UW7+TzF+vCV8/Zhf6mhs9CL9uFs=;
- b=hao+IMyTQwnKBY7cLOREfEwUCew1e7PI5mc7niEYWCHfYQhMvtPLgOpqhpHM+UMpv1
- qOqTlu5ITZPydNcJvqDGSYrhTa227H8wkQa6YP3iR3ltNig/7TH1fk5yQafrZgb/0nEG
- 0pX2RnRu522KzoUq3Tk5+EddI+nK+GFKi+AmfEdgZSHL3/DGYg00rT0fMPQBDprOl6Nx
- 6QVdpeNtsX0a8p4MNXNSnnTh9wmS+MF8YBxO1c1zVkqvdLYmO4GFRlrVuxp2iTNe4bAg
- Q7X5m+m5O4GN3ojpi944ofV+Jmnu2FGiDUwftTOeANAHNDFd4hQLg9438wF8d97l4I7X
- AKiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWb/ozSfnHDVpiobkKvT30kXjA7OOXbianDQfQ8o0Gke6sPQAOjHTaDbjEDQ4bWoODyTh29c6dUJP6A@nongnu.org
-X-Gm-Message-State: AOJu0Yy4JARFMA6oeHlAO/WRO7Dz9GoCC3RKCUlDtgEQKwRGxBJSgZ0s
- JinuL80yc8aQb7VfU/MmdpEdjJyrZW3EM74uQPaNBxvfQd/dKF0BCxJt8YkHyel/v3M=
-X-Gm-Gg: ASbGncuBOf04IgW1PqdYRnXeqMPgnNHslcOSbp/CGTXsyEB/NTyZqoGypyRCi9YcoL6
- XKdCwxW122EAvMSsnxGwZwQ6CrmGPnEcbYV3Ka4nwtpn5Ss6+gi8Hb9Rqtu/a4VcFPdb40i+jLS
- AgF2aBVaxZuXs6xcq/irkVAocUX5sBmEdP9mHoQc/3e25vh+hOc/CVn9ewW+43rSQIbSyhcFYVX
- M/0gTPj71YAki4Zl6sNgSqbK+BnC82SvmX/jZytyxpNsWZx0jokJnFqdFSy+I18KVrP4BqIjbXs
- QEharMY0inIS26jbGSeGiC2c6/i1Bp/JR4w0Uup6IhfQAitidzcq353MigtzZpXwGULuD4TODuV
- K9gTLAyFayFNBKa2hCizaJvUHuRgKnJQN7S8=
-X-Google-Smtp-Source: AGHT+IHQwNPjmuL6lAseQr1e687/5JXOgBFzYa/AGFOQO92YZ/JO/bR0SFcp7CdxsF0fCKHKZB7ASw==
-X-Received: by 2002:a05:6a00:4a81:b0:746:1d29:5892 with SMTP id
- d2e1a72fcca58-769656fc218mr8605420b3a.4.1753897609146; 
- Wed, 30 Jul 2025 10:46:49 -0700 (PDT)
+ bh=VNrO12I8KamjpTEvKeyYR8bolSvXBUZT91FWh7UG0aU=;
+ b=BAvLLkaD5I4Ao5cyBsfBUKQnjhs+sOZfc7anqqefzVHsEv4hPr/ClbsauX1DdnjYer
+ E/I11CM4LGzs8MN+8hIQ7Rlm8UkLLmJpuUYRPwIuSXSBGSj5+cBVWUrOYj9P6cUpIuSt
+ LBeDMGFBf9Ard0zk3PTEtF6S6h29nzXs+dkD0v04S453BtaUPWf/mnsguGle/3w5SeTy
+ bI/fsMrjVDJUpoBjjLQlq8CKkms+HT9Uq8w5fPmtJ/vtcNWmU7+3ZPvq0N8VcU1FCocl
+ fS7RjQdJzDKUCv8Oqs9HjmFe4bUc5gyfPHzF/NUDPI5kbBjS6EC6GUwe5KMSjFkMFbeq
+ Wg1w==
+X-Gm-Message-State: AOJu0YyqLXQgF/Vkkg+WgCu6B0HcwozWY7ukNWH0SOfl6L8RHPSPPPx1
+ pEORww2mIzmgS+0m0mBBPQon9RrGDEWV4ePn5MBz+WBv1OJPv0iicv2NgjaHrbxYz6sIY8OR/Wv
+ 3OR5E
+X-Gm-Gg: ASbGnctUiJVExLkqGGWVRahEJjA3ATI8KrSiJBaVi7Y1Vo+8gKwEsaUeLnr3Z4itBeu
+ pOQLPY65XXPmKX/Yr3rQZrGt3vcTK+pKOsiN7warQ7TxVipy/fhbWByKGJ1VZeGO0d5nNMXarex
+ JX0ZveXCa1WD4TKkij5Kdl/c5h7UT5nksgkMeMqjJAkzOaDK02ck8XfYmUO+nLGNiA9ewNLOu66
+ wEOrVSfgOA3xEJws+kwzIF8WNM5xW7pZtKwKPBCzvtbt/0eeAsL2M5xqeI+P+3T5FqgYNw8SZhd
+ 54MGOhQJfgxUgtmUl+0xPwQA1pY+fKZvC8yrY/xuj/hgfgdxbC6Ll477WJq2iOX9p7GeIz30KbU
+ 9hffjZ/nyYfpIgSHDXD1r+xg/MFCi9iOziMA=
+X-Google-Smtp-Source: AGHT+IGN6NiIQq3/FAwo7T4dRVjoCkQtKrdNf5dFArLNpKiSll5HbPzsTytCg9mmCr6h3LMt+rVF1w==
+X-Received: by 2002:a05:6a21:328a:b0:21f:5598:4c2c with SMTP id
+ adf61e73a8af0-23dc0d91091mr6887279637.13.1753897855864; 
+ Wed, 30 Jul 2025 10:50:55 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-764087294fasm10535473b3a.9.2025.07.30.10.46.48
+ 41be03b00d2f7-b42130b3592sm3574349a12.10.2025.07.30.10.50.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 10:46:48 -0700 (PDT)
-Message-ID: <ea55952c-ce00-4d3a-bde0-257b5c6967df@linaro.org>
-Date: Wed, 30 Jul 2025 10:46:47 -0700
+ Wed, 30 Jul 2025 10:50:55 -0700 (PDT)
+Message-ID: <e6ac95ae-38c8-49b4-9883-9aef8a12899d@linaro.org>
+Date: Wed, 30 Jul 2025 10:50:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] docs/about/emulation: Add documentation for hotblocks
- plugin arguments
+Subject: Re: [PATCH 0/5] contrib/plugins/hotblocks: Minor bug fixes and add
+ limit argument
 Content-Language: en-US
-To: Alex Bradbury <asb@igalia.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex Bradbury <asb@igalia.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org,
+ ma.mandourr@gmail.com
 References: <cover.1753857212.git.asb@igalia.com>
- <35128cc5a86a0c18418f9d3150fb8771c54ef7d8.1753857212.git.asb@igalia.com>
+ <CAAjaMXbxpauL8V2FVbQ6-8TNVbG7ATRjm0Gn+J_cb=aiK_cG4A@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <35128cc5a86a0c18418f9d3150fb8771c54ef7d8.1753857212.git.asb@igalia.com>
+In-Reply-To: <CAAjaMXbxpauL8V2FVbQ6-8TNVbG7ATRjm0Gn+J_cb=aiK_cG4A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +106,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/25 11:41 PM, Alex Bradbury wrote:
-> Currently just 'inline'.
+On 7/30/25 6:48 AM, Manos Pitsidianakis wrote:
+> Hi Alex,
 > 
-> Signed-off-by: Alex Bradbury <asb@igalia.com>
-> ---
->   docs/about/emulation.rst | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+> On Wed, Jul 30, 2025 at 4:19 PM Alex Bradbury <asb@igalia.com> wrote:
+>>
+>> This series contains one minor feature addition and a series of small
+>> bugfixes/improvements. The addition that motivates the submission is to add a
+>> limit argument for the hotblocks plugin, allowing you to control how many
+>> blocks are printed rather than being hardcoded to the 20 most executed.
+>> Setting limit=0 and dumping information about all executed blocks is
+>> incredibly helpful for an analysis script I have downstream.
+>>
+>> This is my first contribution to QEMU. I've attempted to follow all of the
+>> guidance in the "Submitting a Patch" guide, but apologies if I missed
+>> anything.
+>>
+>> Alex Bradbury (5):
+>>    contrib/plugins/hotblocks: Correctly free sorted counts list
+>>    contrib/plugins/hotblocks: Fix off by one error in iteration of sorted
+>>      blocks
+>>    contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than
+>>      PRId64
+>>    docs/about/emulation: Add documentation for hotblocks plugin arguments
+>>    contrib/plugins/hotblocks: Allow limit to be set as a command line
+>>      argument
+>>
+>>   contrib/plugins/hotblocks.c | 20 ++++++++++++++------
+>>   docs/about/emulation.rst    | 12 ++++++++++++
+>>   2 files changed, 26 insertions(+), 6 deletions(-)
+>>
+>> --
+>> 2.50.1
+>>
+>>
+> 
+> I think the mailing list ate up your first patch. Not your fault
+> though. I did not receive it in my inbox and it's not on
+> lore.kernel.org either:
+> 
+>> $ b4 shazam cover.1753857212.git.asb@igalia.com
+>> Grabbing thread from lore.kernel.org/all/cover.1753857212.git.asb@igalia.com/t.mbox.gz
+>> Checking for newer revisions
+>> Grabbing search results from lore.kernel.org
+>> Analyzing 5 messages in the thread
+>> Looking for additional code-review trailers on lore.kernel.org
+>> Analyzing 0 code-review messages
+>> Checking attestation on all messages, may take a moment...
+>> ---
+>>    ERROR: missing [1/5]!
+>>    ✗ [PATCH 2/5] contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+>>      ✗ BADSIG: DKIM/igalia.com
+>>    ✗ [PATCH 3/5] contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
+>>      ✗ BADSIG: DKIM/igalia.com
+>>    ✗ [PATCH 4/5] docs/about/emulation: Add documentation for hotblocks plugin arguments
+>>      ✗ BADSIG: DKIM/igalia.com
+>>    ✗ [PATCH 5/5] contrib/plugins/hotblocks: Allow limit to be set as a command line argument
+>>      ✗ BADSIG: DKIM/igalia.com
+>> ---
+>> Total patches: 4
+>> ---
+>> WARNING: Thread incomplete!
+>> Applying: contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+>> Patch failed at 0001 contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+>> error: sha1 information is lacking or useless (contrib/plugins/hotblocks.c).
+>> error: could not build fake ancestor
+> 
+> Could you resend it?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I've been lucky to receive it, probably because I'm in direct copy as a 
+plugins reviewer.
+However, it would be better for the mailing list if you could resend it 
+indeed Alex (you can apply the reviewed-by at the same time, so this v2 
+"adds" something).
 
+Regards,
+Pierrick
 
