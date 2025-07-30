@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE15DC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 08:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385DEC87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 09:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh2Qq-0003hd-U4; Wed, 30 Jul 2025 04:45:06 -0400
+	id 1uh2g4-00018X-UZ; Wed, 30 Jul 2025 05:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uh2BZ-0000Nq-2m
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:29:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uh2QW-0003NV-LV
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:44:45 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uh2BV-0003Tg-GL
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:29:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753864150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qIAubJ+4pPZeiAxAjWYWB86w9h0bBF5mRzq+ysHiklU=;
- b=S8Bc9tsTaJ50q5ANY8CGScB7GKPQKqedV/S0WT0zr5NYdOwKxbbMrTu/rUdhg6VeEaSbNx
- wBK39xYhAZjSSmNtY5J/7i3OXbQUseQ/ntSJFOATSkY/r0NwtKEWBxAQXDaQsyrQ84Lss3
- 3+JV0rBTkDbvCSEIgCgK8jMWv17fi30=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-sKZ6RXfnPqG-HIs56ITCjQ-1; Wed, 30 Jul 2025 04:29:08 -0400
-X-MC-Unique: sKZ6RXfnPqG-HIs56ITCjQ-1
-X-Mimecast-MFC-AGG-ID: sKZ6RXfnPqG-HIs56ITCjQ_1753864148
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e33af599bcso1093139485a.1
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 01:29:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753864148; x=1754468948;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qIAubJ+4pPZeiAxAjWYWB86w9h0bBF5mRzq+ysHiklU=;
- b=vGSTzKW4iNsCZB80HSK7XCEd3DrYrmt/SrPTG5Il8zEIBy/JxzLApxUT9JlWNeal6n
- Gq4CoGe4dupcXjdwfsJD1SLCzETbnkjWl5/XtOeT0+UzVZG7+mqPNzG930yZTlx9Yc44
- glZHBlAJa9J8K2OfqxqdDA/Lx6uEPdIXPtCa4hoSsCKeCOyKycO6tgg2gie8oiz+VvZi
- yHpynph0iOieJaMoPthcRevaYtskofINteZnSGBTCsvCbWi0wc51OqPEeOJqfKiq97Pu
- A2s3rQQU4cRwv/iZ5KyTMkWmy+GgQvsm46rbi6KJUl6jMLwGcPl4Gjc8ZDLSHeHX10Gt
- q4qw==
-X-Gm-Message-State: AOJu0YyRthQnH7OCgTj6DWA55SX4RMAZKruA2PNs2OUtIF1ysqPzGxu6
- 8WFjb+Le0zLzxTDd5loYIymE/O9SoDG1ulA8XE21cg0U17dqZiR/b/rOvAfBUprOD7hbnYmRufW
- F5M5aoo27FY1M0rjrQnDKRo5uXgWro5G/riDeQnZZ4XOrXhCj4QD4hv1OW0+D9VvwPl+ZnMSKQU
- rVXjpp8v8iIjCvHLqbYMe+VmGZDLWvYsk=
-X-Gm-Gg: ASbGncui82CqqhkoSjQmJKaOrgaQvJdGv6SHwD+vugdZTSKjqFAF7PZaMA6Aqo9Gols
- nNXPhS1MAiTlSYmSkU1wAcUMmX0RnDTfjPQ+G+ljQOUtgC883Sqg/NcUz3fszkRfksMK3fuqyiS
- ZslFqlI0okIRPsBuijhl0UBJs=
-X-Received: by 2002:a05:6214:20e7:b0:6f8:f1a5:e6a4 with SMTP id
- 6a1803df08f44-70767064db1mr34810026d6.22.1753864147682; 
- Wed, 30 Jul 2025 01:29:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdJjUSog9tvk/u1A25W9ION3C12Ab3GNRfcPjfEgU6u3wMpqmDf8ao1RMsB1p35ynVMLXHHH2bxu+gdCnjiS0=
-X-Received: by 2002:a05:6214:20e7:b0:6f8:f1a5:e6a4 with SMTP id
- 6a1803df08f44-70767064db1mr34809796d6.22.1753864147157; Wed, 30 Jul 2025
- 01:29:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uh2QU-0005Rz-1L
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:44:44 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C813113BD23;
+ Wed, 30 Jul 2025 11:44:24 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7A47252CB9;
+ Wed, 30 Jul 2025 11:44:34 +0300 (MSK)
+Message-ID: <2314f24f-f90e-4de7-8887-bb04f8c2b099@tls.msk.ru>
+Date: Wed, 30 Jul 2025 11:44:34 +0300
 MIME-Version: 1.0
-References: <20250730072709.27077-1-thuth@redhat.com>
-In-Reply-To: <20250730072709.27077-1-thuth@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 30 Jul 2025 11:28:55 +0300
-X-Gm-Features: Ac12FXwfkBYmPuO3D7qRrKPxMyT-IRyIgCNKMyAva0RdMk_tYAeYXzNiRSxbZ3g
-Message-ID: <CAPMcbCp6cDWnV4PLnyYO5+rGoSeFEPSvGAOyJjK4N8r5Zkdv_w@mail.gmail.com>
-Subject: Re: [PATCH v2] qga: Fix ubsan warning
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- qemu-trivial@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000079dcc1063b21510e"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] pc-bios: Update vbootrom image to commit
+ 183c9ff8056b
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+References: <20250730045813.822132-1-clg@redhat.com>
+ <20250730045813.822132-4-clg@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250730045813.822132-4-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,166 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000079dcc1063b21510e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-
-@Thomas Huth <thuth@redhat.com> Is this fix critical to merge during code
-freeze?
-
-On Wed, Jul 30, 2025 at 10:27=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
-te:
-
-> From: Thomas Huth <thuth@redhat.com>
->
-> When compiling QEMU with --enable-ubsan there is a undefined behavior
-> warning when running "make check":
->
->  .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset
-> 5 to null pointer
->  #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev
-> ..../qga/commands-linux.c:452:15
->
-> Fix it by avoiding the additional pointer variable here and use an
-> "offset" integer variable instead.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 30.07.2025 07:58, Cédric Le Goater wrote:
+> Full changelog since last update (1287b6e42e83) :
+> 
+> Hao Wu (2):
+>        Automatically search for UBOOT location for NPCM8xx images.
+>        Dynamically detects NPCM8XX UBOOT destination and size.
+> 
+> Jamin Lin (5):
+>        Add initial support for AST27x0
+>        ast27x0: Show build date and git version
+>        ast27x0: Initialize and enable SSP/TSP using SCU with reserved-memory from DTB
+>        ast27x0: Fix missing SCU module reset for SSP and TSP initialization
+>        ast27x0: Fix Makefile to unconditionally set CC to support correct cross-compilation
+> 
+> Compiled with gcc version 13.3.0
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  v2: Use an integer offset variable instead for checking for a NULL point=
-er
->
->  qga/commands-linux.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> index 9e8a934b9a6..0c41eb97190 100644
-> --- a/qga/commands-linux.c
-> +++ b/qga/commands-linux.c
-> @@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char
-> const *syspath,
->                                             Error **errp)
->  {
->      unsigned int pci[4], host, hosts[8], tgt[3];
-> -    int i, nhosts =3D 0, pcilen;
-> +    int i, offset, nhosts =3D 0, pcilen;
->      GuestPCIAddress *pciaddr =3D disk->pci_controller;
->      bool has_ata =3D false, has_host =3D false, has_tgt =3D false;
-> -    char *p, *q, *driver =3D NULL;
-> +    char *p, *driver =3D NULL;
->      bool ret =3D false;
->
->      p =3D strstr(syspath, "/devices/pci");
-> @@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char
-> const *syspath,
->
->      p =3D strstr(syspath, "/ata");
->      if (p) {
-> -        q =3D p + 4;
-> +        offset =3D 4;
->          has_ata =3D true;
->      } else {
->          p =3D strstr(syspath, "/host");
-> -        q =3D p + 5;
-> +        offset =3D 5;
->      }
-> -    if (p && sscanf(q, "%u", &host) =3D=3D 1) {
-> +    if (p && sscanf(p + offset, "%u", &host) =3D=3D 1) {
->          has_host =3D true;
->          nhosts =3D build_hosts(syspath, p, has_ata, hosts,
->                               ARRAY_SIZE(hosts), errp);
-> --
-> 2.50.1
->
->
+>   pc-bios/ast27x0_bootrom.bin | Bin 15552 -> 16408 bytes
+>   pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 672 bytes
+>   pc-bios/npcm8xx_bootrom.bin | Bin 608 -> 672 bytes
+>   3 files changed, 0 insertions(+), 0 deletions(-)
 
---00000000000079dcc1063b21510e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-<div dir=3D"ltr"><div>Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto=
-:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><d=
-iv><br></div><div><a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" href=
-=3D"mailto:thuth@redhat.com" tabindex=3D"-1">@Thomas Huth</a> Is this fix c=
-ritical to merge during code freeze? <br></div></div><br><div class=3D"gmai=
-l_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed=
-, Jul 30, 2025 at 10:27=E2=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@=
-redhat.com">thuth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">From: Thomas Huth &lt;<a href=3D"mailto:thuth@r=
-edhat.com" target=3D"_blank">thuth@redhat.com</a>&gt;<br>
-<br>
-When compiling QEMU with --enable-ubsan there is a undefined behavior<br>
-warning when running &quot;make check&quot;:<br>
-<br>
-=C2=A0.../qga/commands-linux.c:452:15: runtime error: applying non-zero off=
-set 5 to null pointer<br>
-=C2=A0#0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands=
--linux.c:452:15<br>
-<br>
-Fix it by avoiding the additional pointer variable here and use an<br>
-&quot;offset&quot; integer variable instead.<br>
-<br>
-Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=
-=3D"_blank">thuth@redhat.com</a>&gt;<br>
----<br>
-=C2=A0v2: Use an integer offset variable instead for checking for a NULL po=
-inter<br>
-<br>
-=C2=A0qga/commands-linux.c | 10 +++++-----<br>
-=C2=A01 file changed, 5 insertions(+), 5 deletions(-)<br>
-<br>
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-index 9e8a934b9a6..0c41eb97190 100644<br>
---- a/qga/commands-linux.c<br>
-+++ b/qga/commands-linux.c<br>
-@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const=
- *syspath,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 Error **errp)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0unsigned int pci[4], host, hosts[8], tgt[3];<br>
--=C2=A0 =C2=A0 int i, nhosts =3D 0, pcilen;<br>
-+=C2=A0 =C2=A0 int i, offset, nhosts =3D 0, pcilen;<br>
-=C2=A0 =C2=A0 =C2=A0GuestPCIAddress *pciaddr =3D disk-&gt;pci_controller;<b=
-r>
-=C2=A0 =C2=A0 =C2=A0bool has_ata =3D false, has_host =3D false, has_tgt =3D=
- false;<br>
--=C2=A0 =C2=A0 char *p, *q, *driver =3D NULL;<br>
-+=C2=A0 =C2=A0 char *p, *driver =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0bool ret =3D false;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0p =3D strstr(syspath, &quot;/devices/pci&quot;);<br>
-@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const=
- *syspath,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0p =3D strstr(syspath, &quot;/ata&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0if (p) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 q =3D p + 4;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 offset =3D 4;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0has_ata =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0p =3D strstr(syspath, &quot;/host&quot;);=
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 q =3D p + 5;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 offset =3D 5;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--=C2=A0 =C2=A0 if (p &amp;&amp; sscanf(q, &quot;%u&quot;, &amp;host) =3D=3D=
- 1) {<br>
-+=C2=A0 =C2=A0 if (p &amp;&amp; sscanf(p + offset, &quot;%u&quot;, &amp;hos=
-t) =3D=3D 1) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0has_host =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0nhosts =3D build_hosts(syspath, p, has_at=
-a, hosts,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ARRAY_SIZE(hosts), errp);<br>
--- <br>
-2.50.1<br>
-<br>
-</blockquote></div>
+Thank you!
 
---00000000000079dcc1063b21510e--
+It'd be very nice to get an ACK from Hao Wu too.
 
+/mjt
 
