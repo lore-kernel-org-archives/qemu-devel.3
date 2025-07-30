@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAE5C87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 14:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6513AC83F26
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 14:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh8B9-0002Hm-3H; Wed, 30 Jul 2025 10:53:18 -0400
+	id 1uh8E4-0006AK-GT; Wed, 30 Jul 2025 10:56:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uh6kv-0003SC-50
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 09:22:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uh6jV-0001vt-QT
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 09:20:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uh6ks-0006ew-Pr
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 09:22:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uh6jS-0006Ms-RA
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 09:20:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753881720;
+ s=mimecast20190719; t=1753881629;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RAJ7D49lZZveSrV9yXIwtRIwJhIV3w+/LAAStps5N70=;
- b=Ai5ASKm5r3JcfmvCLQL15l8yG1FdK56tm9DjYulRy3blGDhTgurh2x1ci6w25kc4I6ijj7
- JKWvewzgoIwlxAe9FA/DtxULwfD2iYLpuqI7y3wJ/QUrtLmlNCBm40x/QYt98MaGS+Anz+
- nP2DACLDF08Si2K2++kwgE4R3XfSXpQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uHKMwuQV5MYQZWgV1ayegrd48NJvoGjRhPfm50kCjGM=;
+ b=EcUlehKvTXZMMEHjvqCBWKjm/+SOFd1ek3XTI+ixRcUGl29kHh2ouuw8T8hSvI0+dwBgoP
+ Sc/e6lmvzV0V6XeY5LctCAxxgZBYYkZt4uKLx+f/SfK05P+kBqYJvpT2hvXi7JM1D9caD5
+ oNOyjAmnJiEGhDh/Hud0H7/lgu6Ps4U=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-STd2HGKzNyOezLH5Kskc2Q-1; Wed, 30 Jul 2025 09:21:58 -0400
-X-MC-Unique: STd2HGKzNyOezLH5Kskc2Q-1
-X-Mimecast-MFC-AGG-ID: STd2HGKzNyOezLH5Kskc2Q_1753881717
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3b78aa2a113so1536024f8f.2
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 06:21:58 -0700 (PDT)
+ us-mta-375-534quzivOrWEOEaMw4PCDQ-1; Wed, 30 Jul 2025 09:20:27 -0400
+X-MC-Unique: 534quzivOrWEOEaMw4PCDQ-1
+X-Mimecast-MFC-AGG-ID: 534quzivOrWEOEaMw4PCDQ_1753881626
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45891629648so5836125e9.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 06:20:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753881717; x=1754486517;
+ d=1e100.net; s=20230601; t=1753881626; x=1754486426;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RAJ7D49lZZveSrV9yXIwtRIwJhIV3w+/LAAStps5N70=;
- b=iPI0erl+nu17fSWo7u6ncWz1Jt4ZcK2rHHXDVLrqw0dTwSPzkEXcW6/nkvStg8g7QX
- oHY58H2Kml/Qf9mGFk71VxK2zo+cxlFUf9Ht4DTN8VGLbPqREZVjLHBLNTWzQUk8+zXE
- qWjjMH7DWrc0AULagev00md1/cQjt7+3hhEvmb001Yd/FwekVti6ikjpKfBynLfBcoCg
- 8jDKbC+YDpnPvyDiFpz7+0w4HMF2/60PpaI4vfV+3sM6ogrj5YU5QJ/AG0LeRTIBWSsA
- UWJJsKOd00pwXZ+X0NB4OsquIrC8LyaTGN5fnEhDZqKa4uDcLbxOIJq3Ljv5/ceR+eJq
- s4kA==
+ bh=uHKMwuQV5MYQZWgV1ayegrd48NJvoGjRhPfm50kCjGM=;
+ b=Eg3LkN5a3ze+Phnz83EAjTRjUvbHzJw5xqznfaLtZw91GHhq0FFdkeZJfbYuQoZM4F
+ /t9gk75Vt9SS2buQrexUebMdQxjogcu8FEbMvVQ7oKME446oKmqsLEFa4rhMzYVYzc1h
+ FobLUzxJiQak5ZPazFP/6XWn5XzkVxkvT06UUFg7VgVNLxZvy+qCPxlb47cNyZ57mKuu
+ hHFYGs6mlEOwHfPnbFdKL9tE34o6YXHDJK08+naV++VA2Lo5lpMrSvXcBxiTAWtAlpLh
+ +XWsDMgnDq0ZGV7JNdpiaZdRAUqRvf5zoYQEie8n/Y8TXCzbcUd39iyJsBd3frmpP+Zr
+ ugmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrnVrQRi4yeC9haEYOQkYjUoJPMdboY1bHmVgLcZ5dvfG7JXWMnC49n3rzEHcXwSydvli8zLgjRXA3@nongnu.org
-X-Gm-Message-State: AOJu0YxXwl0/R+7iF8cK/mrAehxVaptAUlwoiXBn6WZh2QLCfKEWIOoN
- f6XN3YmCRtGiglLCbXgFJq40kbeD9KCm9Ryjdhlx1vW+ODejwGSw4nTLfbievzRd/tN0DWbWDqA
- R05LzizY81isejeVOhHK4tCncMjHm8tK/iFeI/6xXMCf9ba+4dJJ/Alt+
-X-Gm-Gg: ASbGncviMWNGU64hzCDDKNkSfMU8o53TxNa1V8ZCYskE9cgqBMvrVdD2VSMRnucHcJZ
- /C/HUhOTS+Dg6mAkzHEvIbTRlLjBzprGboZMbPf+RHf06NkmN1sHzhqMMgEjzhhm9kdLqXLudLx
- CsGIlLWYKm3lrNqpvrSJwjPuizhGenqANRsmV9lZOi4I46tkZhIdngzJII9RxfB+ZPkX82AiOvH
- 1sSyVEmn9j2qo8U4pebslD3TF4e9Xq1vS5HUjlmhr1ifgkMTkP3Qh5+68huoXVQU58lF/rXs+P2
- /6aURwDlAQYJIEPlAljnAi5WwS593eHd6nrHjDtJpl/bMJj+nUsFUOS219xtOLsDwVUXemJ0Czs
- 1ls+Mg34=
-X-Received: by 2002:a5d:5f44:0:b0:3b7:58be:8fc with SMTP id
- ffacd0b85a97d-3b794ff8883mr2479894f8f.43.1753881717357; 
- Wed, 30 Jul 2025 06:21:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdNT6NYHZ2qz+EjIkBKrd65jn2DmRN9fIAdHzNn9SS60NOF2fNYQ22sq1MuvTH0WyW6LaCVg==
-X-Received: by 2002:a5d:5f44:0:b0:3b7:58be:8fc with SMTP id
- ffacd0b85a97d-3b794ff8883mr2479869f8f.43.1753881716868; 
- Wed, 30 Jul 2025 06:21:56 -0700 (PDT)
+ AJvYcCXynbJM9z2McI4Rxi5SBdrexP6qKgKrwU1XwtuzuU+eJkxgfae1V7jbeTq2775vyjiP1FHy5VmggAP7@nongnu.org
+X-Gm-Message-State: AOJu0Yy4pBzFDQoAoMMOV1xBHMoeTnPiH/8DQmBtPz44r7wL/De86b+k
+ ZW9quCXc7sNbf/DL6VdyfoCoA7F/Pa+ZHy4E9nnBUMzgsw7g6C+a/GZwCSmRS/WTWdb11ba8K6d
+ LYtxmSFhCFaUW2e+ci5LpiKdCn9YXvbkfaIkoRSdyrCZFQHyHXGi0EzQ6
+X-Gm-Gg: ASbGncuTtXsaY9NR7SlFUCp5HS4hho5E/k+oz5tr3XOr12Nr1xc1Pi5UR+MQdFAUJ8U
+ rXQ5j36UCpGq9ZkaLPLinmANyFASxYXRbjUbtN7GwpZSdENMy3jWnM/VUt4oghogHFHNJc13hvr
+ Mmgp8DydQXBd+WnUu28yuqRuPS95O65i7dZEr5FZKf2Mcr9Gbyq/B8OZvrdJZYAmStULjamsRW7
+ kqzLu+M8B1axgYtQOxfxdUJb8fYY+vRCGIH9sOh9BeGtdJufRwATE15FyjKWsTt+TMNk2sYGlkg
+ QXmhWcsPlNPXUBBCwE9aUNUgZHN/DHS59DPnNeoocZEV+lvLFuX+Wn7KdvU+F0saJ+iM4hTzalm
+ tuxfPwcQ=
+X-Received: by 2002:a05:600c:3ba3:b0:456:ed3:a488 with SMTP id
+ 5b1f17b1804b1-45893939d5bmr24967345e9.1.1753881626340; 
+ Wed, 30 Jul 2025 06:20:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFnG+yiMyIHtRoN9j7M4gjg1/BY38b90KSGJUNOY/QaYMvnfoPPnaAnm9fEwjVQFJ7kl14tw==
+X-Received: by 2002:a05:600c:3ba3:b0:456:ed3:a488 with SMTP id
+ 5b1f17b1804b1-45893939d5bmr24967025e9.1.1753881625863; 
+ Wed, 30 Jul 2025 06:20:25 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
  ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b78b0941a9sm8659111f8f.31.2025.07.30.06.21.56
+ 5b1f17b1804b1-4589536bc42sm26955205e9.7.2025.07.30.06.20.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 06:21:56 -0700 (PDT)
-Message-ID: <bfcf9674-238d-4716-8fad-aef9b20c9d0d@redhat.com>
-Date: Wed, 30 Jul 2025 15:21:55 +0200
+ Wed, 30 Jul 2025 06:20:25 -0700 (PDT)
+Message-ID: <a0357562-363b-4b32-bfb0-42da41557dcc@redhat.com>
+Date: Wed, 30 Jul 2025 15:20:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] pc-bios: Update vbootrom image to commit
- 183c9ff8056b
+Subject: Re: [PATCH v3 0/3] pc-bios: Update vbootrom images
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+ qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell
- <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>
+ <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
 References: <20250730045813.822132-1-clg@redhat.com>
- <20250730045813.822132-4-clg@redhat.com>
- <SI2PR06MB504176530DEA90C6B261758AFC24A@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <3db87420-ef95-4548-a74b-be38f0794a90@linaro.org>
+ <676fc03e-df95-4287-b954-af1cc1f5737d@redhat.com>
+ <5fb23498-7ecc-4f8a-856b-33a39709de35@linaro.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3db87420-ef95-4548-a74b-be38f0794a90@linaro.org>
+In-Reply-To: <5fb23498-7ecc-4f8a-856b-33a39709de35@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -162,69 +160,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/25 13:47, Philippe Mathieu-Daudé wrote:
-> On 30/7/25 07:08, Jamin Lin wrote:
->>> From: Cédric Le Goater <clg@redhat.com>
->>> Sent: Wednesday, July 30, 2025 12:58 PM
->>> To: qemu-devel@nongnu.org
->>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>; Michael Tokarev
->>> <mjt@tls.msk.ru>; Peter Maydell <peter.maydell@linaro.org>; Hao Wu
->>> <wuhaotsh@google.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Cédric Le
->>> Goater <clg@redhat.com>
->>> Subject: [PATCH v3 3/3] pc-bios: Update vbootrom image to commit
->>> 183c9ff8056b
->>>
->>> Full changelog since last update (1287b6e42e83) :
->>>
->>> Hao Wu (2):
->>>        Automatically search for UBOOT location for NPCM8xx images.
->>>        Dynamically detects NPCM8XX UBOOT destination and size.
->>>
->>> Jamin Lin (5):
->>>        Add initial support for AST27x0
->>>        ast27x0: Show build date and git version
->>>        ast27x0: Initialize and enable SSP/TSP using SCU with reserved-memory
->>> from DTB
->>>        ast27x0: Fix missing SCU module reset for SSP and TSP initialization
->>>        ast27x0: Fix Makefile to unconditionally set CC to support correct
->>> cross-compilation
->>>
->>> Compiled with gcc version 13.3.0
->>>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   pc-bios/ast27x0_bootrom.bin | Bin 15552 -> 16408 bytes
->>> pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 672 bytes
->>> pc-bios/npcm8xx_bootrom.bin | Bin 608 -> 672 bytes
->>>   3 files changed, 0 insertions(+), 0 deletions(-)
->>>
->>> diff --git a/pc-bios/ast27x0_bootrom.bin b/pc-bios/ast27x0_bootrom.bin index
->>> 0b9b3a2360e375bb6007ecdf13b39d931870f6fa..a4c94d64da55ade9b4beb2a4
->>> 09132f315fb51347 100644 GIT binary patch literal 16408
->>> zcmdUWd3YSvmGAG?Ew$Q`aJ00R*#4rDmwcu%c#|v{oT#)wAWjC;^aI9_QMaTv
->>> G7^%t
->>> z7#v%{W#gGF;=SjJ+O%;1$%f3JddwRh$cdXFgK$V5!Q?$7%xVlR*=DnoQM{@_(tY
->>> 2#
->>> zRV}s5GMPVL^P#S;I``aj&+<Fxo?EU2JgI=k4R~e%o;1J%0Q8*>cr+M;rGQ6=F<1h4
->>> z0x$-b10Dm$;8MUd0Ap}5;EBN)ywVx_|I=ry#$Ojg<O9awUX;CFr0PGfVCYv;a9b7
->>> h
->>> zcpb36M&qxK36bAZ&R>7OoWCAG;Tva!$S=B`-ByX-!Ac#kmIvl`J;rg{iyXI|<hZQ|
->>> zDW@#Jzph$8@DD(AM<&eAgvhVvxGj|Q+y%pz{QP<#JeT1%9f<dQo4?+p@z)dc
->>> 0)=lJ
+On 7/30/25 13:52, Philippe Mathieu-Daudé wrote:
+> Hi Cédric,
 > 
+> On 30/7/25 08:39, Cédric Le Goater wrote:
+>> Philippe,
+>>
+>> On 7/30/25 06:58, Cédric Le Goater wrote:
+>>> Hello !
+>>>
+>>> Michael provided changes to fix the build of the vbootrom image of the
+>>> AST2700 SoC machine in [1]. However, a workaound in roms/Makefile was
+>>> still necessary to build ast27x0_bootrom.bin correctly. This was later
+>>> fixed in [2].
+>>>
+>>> This series is an update of [1] including a vbootrom image matching
+>>> the new commits.
+>>>
+>>> Thanks,
+>>> C.
+>>>
+>>> [1] https://lore.kernel.org/qemu- devel/2a89ad4c8f5665d07952a4f1749caa6ec0cd3d9c.1753654515.git.mjt@tls.msk.ru/
+>>> [2] https://github.com/google/vbootrom/ commit/7b1eb5f7fe6a85a03a1e40aa703a6ebbdb644e31
+>>>
+>>>
+>>> Changes in v3:
+>>>
+>>>   - Updated commit log in patch 3/3
+>>>
+>>> Changes in v2:
+>>>
+>>>   - Updated all vbootrom images
+>>>
+>>> Cédric Le Goater (1):
+>>>    pc-bios: Update vbootrom image to commit 183c9ff8056b
+>>>
+>>> Michael Tokarev (2):
+>>>    roms/vbootrom: update to 7b1eb5f7fe6a
+>>>    roms/Makefile: build ast27x0_bootrom
+>>>
+>>>   pc-bios/ast27x0_bootrom.bin | Bin 15552 -> 16408 bytes
+>>>   pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 672 bytes
+>>>   pc-bios/npcm8xx_bootrom.bin | Bin 608 -> 672 bytes
+>>>   roms/Makefile               |   5 +++++
+>>>   roms/vbootrom               |   2 +-
+>>>   5 files changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>
+>> is pc-bios your juridiction ?
+> 
+> AFAICT pc-bios/ is nobody's juridiction =) I'm OK to merge generic
+> buildsys patches to help, but in that case I think that belongs to
+> Peter (ARM) or you (Aspeed), because I don't have an as
+> thoughtful test suite as you both do.
+
+
+I ran the functional tests and make check but I am not sure they
+cover correctly the ncpm* machines.
+
+> That said, if you don't have other PR pending and provide your
+> Ack-by tag, I can include them in my next PR (I likely will to
+> post one to fix a pair of SD card issues) -- but I expect Peter
+> to also have one...
+
+OK. Let's see what happens in the next week before -rc2.
+
+
 > 
 >>
->> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> I think we should pull these changes in for QEMU 10.1.
 > 
-> Did you meant 'Tested-by'? =)
-> 
-
-
-Indeed, that would be nice to have for all machines.
+> No objection!
+Great. We should wait for Hao to provide some feedback.
 
 Thanks,
 
 C.
-
 
 
