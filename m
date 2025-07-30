@@ -4,93 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C7FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 06:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA70C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 06:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh03C-0007Vp-41; Wed, 30 Jul 2025 02:12:32 -0400
+	id 1uh0Ed-0004zY-Hu; Wed, 30 Jul 2025 02:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uh036-0007Rl-LL
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 02:12:25 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uh034-0008IX-ST
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 02:12:24 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-24003ed822cso21010695ad.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 23:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753855941; x=1754460741; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VQ95C4XksQNZUdVbfOHZj7CvZf5NjWIFC48ihaIn55k=;
- b=Ld0xbstpWxiUbgWxqvvRfo3Rm8qjsEgac3bsNagLWdkn0lkYS4Z27jW5HN1DyDoOYW
- AlFn2cmxuHuhZhUz59MofpWFiWTgpXXaN1sjlUTIL1yKXn7XIV6Qho1u7AcIaN14OeCz
- kOjDisMdFwI+WNH4auqoLudnDR2PqHzM0c0FMvfb15cUd7nETDpF+55S/Hdf+gJSVNhC
- pQKQ3KXkypuMIPv8EL6Yuyyjr/OyvhTHovWC/8R8srjJBDoNXTmW8EsWzD662IGAemgI
- ax9HVumkEWmPFraauIuK5qYn8ve5oPTzLhKMeNLGKJ7ieA7v8ZqPqhJQIu/24DxYCw2y
- a7ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753855941; x=1754460741;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VQ95C4XksQNZUdVbfOHZj7CvZf5NjWIFC48ihaIn55k=;
- b=r0KCWrmc4HHIIHwpcqDY47Uu8X7Cu6Mmv5r5lMDyI+T8ztSXNcjN9Ng5enr2z7KsKU
- qA2bMANoeObkQ/abwlOvru8cJq3YCX7CgZNCJI7VtJ92CO4bgAEmIABiwHmLegLEh/gA
- Xdmar9LXLjnD0Y1SHbiSYkT16I2pmDVRfhZFkxeT24wT/meObQ+pfTTJ7oTM551Ia+9L
- zK5eIsoqsT98jGbvldTUn1+t0SDnY6mg91Zj8bVWGkdfUSm9H41oGPgLp0qh57R6F4dV
- TC4TUJNfUN5a68jrS5xWJwdhuwEvcL9gvoJYRfBHVWP6DE1rC/Coucr4lg8HDCAIa3WQ
- a0GQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuaNnj3To2riTBWuEkzTz9LNuiCqfeD704yS9KKwcxtXdR4dxMvJK9AzVBTWyfcNlrnT/tbmpOAjMF@nongnu.org
-X-Gm-Message-State: AOJu0YxBl+th5nMqi1UgctFbxQiZJkGvYRDublSstssYGTOYQzIBA2GV
- PNyuEpb34EmDHKkkEj1BDXhZa0ZtRN3ftIvgyaUWY7Uncfsu7abwILOla4RW9jwYK8I=
-X-Gm-Gg: ASbGncv3Nnl479prDKI1ZKAS1502ew8XwMvAvuTNGFUKEY+7+/XviAcf1+KSBEh9KJm
- omSDnB18CTvPXv0DydjCkEVMoXBdbM5c31PX+aoGljGxcujgs1wpJ8d2oFAU4LsNjryhyYMkIWW
- OSAC+/2E03TAyXJ56FiAKJL9vq9Ebg3n4xanYOLz+D09uSCwBqOKosKxrY1b3DluKQRESAODEL6
- IOBJm2fsBThQ+kQ4nVpjxSEX4b7a2yOyY4rqSnrDtA5zksY2qMGU4SIQhy+J06nbPP8nT3ESHXE
- MnNeDErhEfmTaJ/MDzaRHdKNUWlSjVIlqhox4SCeW7DnumjEv1s16+ktUYrx0p1S4fbyReJE8Fm
- auxHmpVC17y61m4gO5XpTgkgkV0yBu7WN5Na3dJa17JmeXCuO2X1fdwOaVUe2nOC3iRyNWfcEP1
- cMFg==
-X-Google-Smtp-Source: AGHT+IG2hWFHhpNpr4WX2ePxqbpALoF007RCywp03/dMX/3nRtnkD7xjc3vDLUvWMU0KEsMDtPs5ug==
-X-Received: by 2002:a17:902:ef11:b0:240:725d:c396 with SMTP id
- d9443c01a7336-24096b17fb3mr31635145ad.34.1753855941151; 
- Tue, 29 Jul 2025 23:12:21 -0700 (PDT)
-Received: from [192.168.4.112] (syn-098-150-199-049.res.spectrum.com.
- [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2403e6085e6sm52646785ad.129.2025.07.29.23.12.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Jul 2025 23:12:20 -0700 (PDT)
-Message-ID: <89b92bf4-a597-40c5-a118-481d0d9310c6@linaro.org>
-Date: Tue, 29 Jul 2025 20:12:18 -1000
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1uh0Cx-0003mr-CT
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 02:22:36 -0400
+Received: from mx.swemel.ru ([95.143.211.150])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1uh0Cu-0001VL-OG
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 02:22:34 -0400
+From: Dmitry Frolov <frolov@swemel.ru>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
+ t=1753856548;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gkKS9kEhx+BPNlZYrIgZFq4YlUevKofbCnljE8OrG/s=;
+ b=VYmL2/Fy3b4xjlhmjwripvsKNgY5zf9innZxJKPn4ZzFc/SqYPo8KSOZJQ8OjXqflUNyKY
+ jgPFV0pN0/MnReThToVbPu+g0WQujVv5iztvqYkE30PhbjDMn2xmLCt2KwdEvwElI6oMdX
+ oE7kjQg62JUz2jfzl+1gWRW+rba6P+c=
+To: jcmvbkbc@gmail.com
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org,
+ Dmitry Frolov <frolov@swemel.ru>
+Subject: [PATCH v2] target/xtensa: Replace malloc() with g_strdup_printf()
+Date: Wed, 30 Jul 2025 09:21:43 +0300
+Message-Id: <20250730062142.1665980-1-frolov@swemel.ru>
+In-Reply-To: <CAMo8BfJw_EUUuGT0qVwhfgEi_tLzSmrOdwAip1E08XNZ4XF=6Q@mail.gmail.com>
+References: <CAMo8BfJw_EUUuGT0qVwhfgEi_tLzSmrOdwAip1E08XNZ4XF=6Q@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/19] target/loongarch: Use correct address when flush
- tlb
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250730030202.3425934-1-maobibo@loongson.cn>
- <20250730031055.3426197-1-maobibo@loongson.cn>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250730031055.3426197-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
+ helo=mx.swemel.ru
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +63,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/25 17:10, Bibo Mao wrote:
-> With tlb_flush_range_by_mmuidx(), the virtual address is 64 bit.
-> However on LoongArch TLB emulation system, virtual address is
-> 48 bit. It is necessary to signed-extend 48 bit address to 64 bit when
-> flush tlb, also fix address calculation issue with odd page.
-> 
-> Signed-off-by: Bibo Mao<maobibo@loongson.cn>
-> ---
->   target/loongarch/tcg/tlb_helper.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+malloc() return value is used without a check.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-r~
+v2: Also replaced strdup() with g_strdup()
+
+Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+---
+ target/xtensa/translate.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index 34ae2f4e16..4faa5ae213 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -112,17 +112,12 @@ void xtensa_collect_sr_names(const XtensaConfig *config)
+ 
+             if (*pname) {
+                 if (strstr(*pname, name) == NULL) {
+-                    char *new_name =
+-                        malloc(strlen(*pname) + strlen(name) + 2);
+-
+-                    strcpy(new_name, *pname);
+-                    strcat(new_name, "/");
+-                    strcat(new_name, name);
+-                    free(*pname);
++                    char *new_name = g_strdup_printf("%s/%s", *pname, name);
++                    g_free(*pname);
+                     *pname = new_name;
+                 }
+             } else {
+-                *pname = strdup(name);
++                *pname = g_strdup(name);
+             }
+         }
+     }
+-- 
+2.34.1
+
 
