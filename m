@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B4CC87FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7F1C87FCA
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 01:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugvDv-0005Gd-Vc; Tue, 29 Jul 2025 21:03:16 -0400
+	id 1ugvDz-0005OR-AY; Tue, 29 Jul 2025 21:03:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvCI-0002rl-IS
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:38 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1ugvCV-0003AO-Vz
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:48 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvCG-0004eF-Nt
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:34 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7682560a2f2so469130b3a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 18:01:32 -0700 (PDT)
+ id 1ugvCT-0004is-VR
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:01:47 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7494999de5cso4359933b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 18:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753837290; x=1754442090; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WNm5Zweq7hS6FeLo8CjSOxwcXou65pxZxkillcjgC54=;
- b=nYaX3Xkm+i36ylTrSV2k4HPnEEbzqWdFpkmY2urV/SCYwIKvgg1wMrUrC8PQA3aYvq
- 5Xgh2nFXxKYCHbyZHZuzotWYwJ4B7WcPxgt5DnCLgy7o0p1/AnYzuVcQSMVVdC/kMGnh
- 9ljlbQ5PN8EhNtlh4tQBMZh54FEIfpcqh+Hnyd7XfHI6q9F2bEKBDffdQzqBWAxbJKRy
- SN8z3WyDtq91RfQvjXPTNSp7Gp+dfQdMNDpns437OmC+oVrDokoR8yT6MDsTM/ilX7Id
- 7T63adoIVXci7LrzkrecqFWFxjO2nyC/yJ/+3wPN49EdKcCu5HaWAIID4e4rkREESkna
- uncA==
+ d=gmail.com; s=20230601; t=1753837304; x=1754442104; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ifEoAXRng5a+xRiHUCEEy4t4IHwKmHWTZK+mMwPSJPw=;
+ b=YfGPu5OAh8edeohXSCV2jIBNuIoYg6ztP6E/7GLPqmPpNeZgePaMUBhPzzNoMHRut8
+ OtbrLA7v5lljTByelYU/mn4LcNp1dfrdZeZueb7lc4CuLEgbFa7CYLi7FwQ/JGTKY0Q8
+ piGZwFR6JkVqDqwUNeGoKGqEe4AY0R/1+MGnj/26OoPgeF8Jm+JePffhL9WR9+PZNt2p
+ rn0Wq9Pc8S3JtKEAfFN4Nr/QBWFYtPPr0eWx7O5PyoJfE55EOgMWqrUyL6cZW/jyjSYE
+ 45T3x1sOr+PG8AYirUAd5k9RlTtI4V/EqaZnNvI6uFqZeeB+g152v4b6wZY4DWYeYxgf
+ nVcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753837290; x=1754442090;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WNm5Zweq7hS6FeLo8CjSOxwcXou65pxZxkillcjgC54=;
- b=ivG3Yc2UubyJFvwA6f0GHC3WVbbcdRjl4MUwsGna0yHJJIKDmlQACIDfVkpQoq2S2c
- yTlrEGkdN+JX1WtXeDadxS1MVuuqW+YwuHjtId0cC1KJQZZtBXfwiygKCmf0dbysOlAP
- KTOr3kUtwX497/lI2yNe6for2hqqH7TL1CTj7BJQGrL5OSwUuieoCTUoDysInP2oo5Tx
- FkFoK2Xnb7FdHzGiK825pBBDSXIn8vUSijzoJXQyzHgSEnMG1QwuvK1uM8TPTLTBwEBU
- omKqP9dTF6+7Vx69OIPuZWngZ51mCi/hQ35GEbxP/7dGOF80qE+QVBHiO1jugK5G2mAu
- MaeQ==
-X-Gm-Message-State: AOJu0YzIqdNhwjc4W6n4bJcVEBccx1hAyIKunHLb/c9peMiqvYaWmmT2
- ShbiqmM0GVP0Kkq88pAHIKrgVn8fzUF6KCbCtwFknS4nl6HhkEUyStBlS5zo6Q==
-X-Gm-Gg: ASbGnctZBYitWIo6tWXzWkrK7yK5tQz8hKtKbhZP/wJ/7SDriqKUjL5PXtK87LYcTUx
- kLoK7+qqHoJuEvBB/exxctsaIUVON+MLsuK/N6iTvkeTTp1Zn+CsXduLcPuTiPn9PNlY/8YDDK+
- b/8ETtfhQzc6kNfHNAaIIKW0RjGXbSwujDGZjf+obe/itesx0GgfGJ+xTA9+2+/lpvw8DjVATmk
- b8a6BglN6f3F7DFUk5QXkoaQefv5F6jJwq7xu3Cf49tQ1h7yvlaya/b9Vm6zDrdT0qlm+DFO8iC
- ZQLutnAZMrIywRSVaCsk/TCGQERXiEHnigRMG8g7S+T4mjrO1XHZPIkKZ6t7rDw4P5ahcP9NgZ2
- DPlwLOKrWeiL/Wy2ABwZ3lCv5OLw1qBIgUUoX/1o/Meq2m9eTtu90C4gfpPUhnFJxcUeOWGBzkk
- ZLyGG4Q3fQpdsBK/kHW2nWXmowA3M=
-X-Google-Smtp-Source: AGHT+IEWcvi55ymxoF5c+hxd+17NJuGX64X8Mw4SptWlpAPpYkSSMRG/lR3jED7+7VPDepK4/otUvg==
-X-Received: by 2002:a05:6a21:6da8:b0:233:ab19:794e with SMTP id
- adf61e73a8af0-23dc05227edmr2308832637.8.1753837289937; 
- Tue, 29 Jul 2025 18:01:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753837304; x=1754442104;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ifEoAXRng5a+xRiHUCEEy4t4IHwKmHWTZK+mMwPSJPw=;
+ b=BpqkgrGEKxJxcz5rvuuIpt2bOH8K9Sggs3ck1O6cStzYKruur6KCPmXwrsIkxiKpRp
+ iIegXUEXZ1sb/GL644ID9nSm4DZMjhLzA4l3oM1jQKS9YYP/tKoW5P7bS6YnqtRVAfU3
+ f3L9mWrqMTZmx6gD6IlRyKNhUdawZfQK2GxnD6Qta5bFoqoVCcO3tFpdXLIG6ThYVfTA
+ aMCQZXQJ0ynhsYY+bQ8bQHlcVBJvXdIl0X/Hn5aPLzO4jzbdRdnFKIUxveMzI7DLTZa4
+ XyKd7WXb9aOEtJly+tdU7jVAZa3hg+qtytVFyNYjqJ8NkjeigDpI3/oqutC1nzv4rHrA
+ ZdZw==
+X-Gm-Message-State: AOJu0YyKz1QKq0ZSUQUUWs/6pqOYiRg4KfmuXpovfSYi9sNRX6UiLqi4
+ OnKvTJCTz6ievK+SvOAR9lGnMUe+ynO2zPPv2AVCjEqbzF8wTuXhCntd5Xzq3A==
+X-Gm-Gg: ASbGncujJwTLMsC+MqxJKldhzuovUidQ8bIbtmDHShatzSapF9f7tnCp1ms1bDkTaAY
+ YRnIQ70yggBYngq5EIHXbQAMEFX6qoupjWJIYQbQXEnmgw42SVteHUxrCy9TOa6D2ehy8+vN1OR
+ dCaYFS2nxSokyVLEzDkrrXWv9YFwACvHegy/YgF1QEaZIE0LeW9B1AyBlo/hbL9wB0P35beD0E6
+ PypdOXkDTWA/W2/VioQnGx0Mqh4GUW7aSxMLzGEkjB7r1h6mhQHBkyeIXH43vq/8ktKQMADhC40
+ xzVuMpjth9+NVKxiq0YUcyXCOfuZYm11mF139juOfQlNRkKmlvGg0E+X7P4XMjdJt62McIExza/
+ iE3y+Oy1ihgGC5rn6OR70/pYnpeLAaTWSA7FftCquLiU8wfIOa+vxBZIAalNfbcSCzXTV97nj8y
+ U66Ves+TC7TMvnSg/DkmhFcRhcD34=
+X-Google-Smtp-Source: AGHT+IFqpEwXvArcCmWQqfDv3uLCvp39+9Zo1F+yEWcjKR8TAMVeXRXjSOEYA2qU6kF8IGiZHmLw6Q==
+X-Received: by 2002:a05:6a21:339d:b0:218:96ad:720d with SMTP id
+ adf61e73a8af0-23dc0cf784dmr1748861637.1.1753837303601; 
+ Tue, 29 Jul 2025 18:01:43 -0700 (PDT)
 Received: from toolbx.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f63df5adfsm343253a91.25.2025.07.29.18.01.27
+ 98e67ed59e1d1-31f63df5adfsm343253a91.25.2025.07.29.18.01.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 18:01:29 -0700 (PDT)
+ Tue, 29 Jul 2025 18:01:43 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/11] riscv-to-apply queue
-Date: Wed, 30 Jul 2025 11:01:11 +1000
-Message-ID: <20250730010122.4193496-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Sunil V L <sunilvl@ventanamicro.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Nutty Liu <liujingqi@lanxincomputing.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 04/11] tests/data/acpi/riscv64: Update expected FADT and MADT
+Date: Wed, 30 Jul 2025 11:01:15 +1000
+Message-ID: <20250730010122.4193496-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250730010122.4193496-1-alistair.francis@wdc.com>
+References: <20250730010122.4193496-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,65 +108,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-The following changes since commit 9b80226ece693197af8a981b424391b68b5bc38e:
+Update the expected tables for the version change.
+ /*
+  *
+  * ACPI Data Table [FACP]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
 
-  Update version for the v10.1.0-rc1 release (2025-07-29 13:00:41 -0400)
+ [000h 0000 004h]                   Signature : "FACP"    [Fixed ACPI Description Table (FADT)]
+ [004h 0004 004h]                Table Length : 00000114
+ [008h 0008 001h]                    Revision : 06
+-[009h 0009 001h]                    Checksum : 13
++[009h 0009 001h]                    Checksum : 12
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-are available in the Git repository at:
+ [024h 0036 004h]                FACS Address : 00000000
+ [028h 0040 004h]                DSDT Address : 00000000
+ [02Ch 0044 001h]                       Model : 00
+ [02Dh 0045 001h]                  PM Profile : 00 [Unspecified]
+ [02Eh 0046 002h]               SCI Interrupt : 0000
+ [030h 0048 004h]            SMI Command Port : 00000000
+ [034h 0052 001h]           ACPI Enable Value : 00
+ [035h 0053 001h]          ACPI Disable Value : 00
+ [036h 0054 001h]              S4BIOS Command : 00
+ [037h 0055 001h]             P-State Control : 00
+@@ -86,33 +86,33 @@
+      Use APIC Physical Destination Mode (V4) : 0
+                        Hardware Reduced (V5) : 1
+                       Low Power S0 Idle (V5) : 0
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20250730-2
+ [074h 0116 00Ch]              Reset Register : [Generic Address Structure]
+ [074h 0116 001h]                    Space ID : 00 [SystemMemory]
+ [075h 0117 001h]                   Bit Width : 00
+ [076h 0118 001h]                  Bit Offset : 00
+ [077h 0119 001h]        Encoded Access Width : 00 [Undefined/Legacy]
+ [078h 0120 008h]                     Address : 0000000000000000
 
-for you to fetch changes up to 86bc3a0abf10072081cddd8dff25aa72c60e67b8:
+ [080h 0128 001h]        Value to cause reset : 00
+ [081h 0129 002h]   ARM Flags (decoded below) : 0000
+                               PSCI Compliant : 0
+                        Must use HVC for PSCI : 0
 
-  target/riscv: Restrict midelegh access to S-mode harts (2025-07-30 10:59:26 +1000)
+-[083h 0131 001h]         FADT Minor Revision : 05
++[083h 0131 001h]         FADT Minor Revision : 06
+ [084h 0132 008h]                FACS Address : 0000000000000000
+[...]
 
-----------------------------------------------------------------
-Third RISC-V PR for 10.1
+ /*
+  *
+  * ACPI Data Table [APIC]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
 
-* Fix pmp range wraparound on zero
-* Update FADT and MADT versions in ACPI tables
-* Fix target register read when source is inactive
-* Add riscv_hwprobe entry to linux-user strace list
-* Do not call GETPC() in check_ret_from_m_mode()
-* Revert "Generate strided vector loads/stores with tcg nodes."
-* Fix exception type when VU accesses supervisor CSRs
-* Restrict mideleg/medeleg/medelegh access to S-mode harts
-* Restrict midelegh access to S-mode harts
+ [000h 0000 004h]                   Signature : "APIC"    [Multiple APIC Description Table (MADT)]
+ [004h 0004 004h]                Table Length : 00000074
+-[008h 0008 001h]                    Revision : 06
+-[009h 0009 001h]                    Checksum : B4
++[008h 0008 001h]                    Revision : 07
++[009h 0009 001h]                    Checksum : B3
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+[...]
 
-----------------------------------------------------------------
-Daniel Henrique Barboza (3):
-      linux-user/strace.list: add riscv_hwprobe entry
-      target/riscv: do not call GETPC() in check_ret_from_m_mode()
-      riscv: Revert "Generate strided vector loads/stores with tcg nodes."
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Message-ID: <20250724110350.452828-4-sunilvl@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h |   2 --
+ tests/data/acpi/riscv64/virt/APIC           | Bin 116 -> 116 bytes
+ tests/data/acpi/riscv64/virt/FACP           | Bin 276 -> 276 bytes
+ 3 files changed, 2 deletions(-)
 
-Jay Chang (2):
-      target/riscv: Restrict mideleg/medeleg/medelegh access to S-mode harts
-      target/riscv: Restrict midelegh access to S-mode harts
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 0c3f7a6cac..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,3 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/APIC",
+-"tests/data/acpi/riscv64/virt/FACP",
+diff --git a/tests/data/acpi/riscv64/virt/APIC b/tests/data/acpi/riscv64/virt/APIC
+index 66a25dfd2d..3fb5b75359 100644
+Binary files a/tests/data/acpi/riscv64/virt/APIC and b/tests/data/acpi/riscv64/virt/APIC differ
+diff --git a/tests/data/acpi/riscv64/virt/FACP b/tests/data/acpi/riscv64/virt/FACP
+index a5276b65ea..78e1b14b1d 100644
+Binary files a/tests/data/acpi/riscv64/virt/FACP and b/tests/data/acpi/riscv64/virt/FACP differ
+-- 
+2.50.0
 
-Sunil V L (3):
-      bios-tables-test-allowed-diff.h: Allow RISC-V FADT and MADT changes
-      hw/riscv/virt-acpi-build.c: Update FADT and MADT versions
-      tests/data/acpi/riscv64: Update expected FADT and MADT
-
-Vac Chen (1):
-      target/riscv: Fix pmp range wraparound on zero
-
-Xu Lu (1):
-      target/riscv: Fix exception type when VU accesses supervisor CSRs
-
-Yang Jialong (1):
-      intc/riscv_aplic: Fix target register read when source is inactive
-
- hw/intc/riscv_aplic.c                   |   6 +-
- hw/riscv/virt-acpi-build.c              |  25 +--
- target/riscv/csr.c                      |  15 +-
- target/riscv/op_helper.c                |  15 +-
- target/riscv/pmp.c                      |   7 +-
- target/riscv/insn_trans/trans_rvv.c.inc | 323 +++++---------------------------
- linux-user/strace.list                  |   3 +
- tests/data/acpi/riscv64/virt/APIC       | Bin 116 -> 116 bytes
- tests/data/acpi/riscv64/virt/FACP       | Bin 276 -> 276 bytes
- 9 files changed, 90 insertions(+), 304 deletions(-)
 
