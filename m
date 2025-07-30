@@ -4,82 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B763BC87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 01:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB32C87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 01:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugvJY-0008Fo-RP; Tue, 29 Jul 2025 21:09:04 -0400
+	id 1ugvoK-0004WD-8X; Tue, 29 Jul 2025 21:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvFP-00006S-QT
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:04:47 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ugvFN-0005NF-Ro
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:04:47 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-88bb3eebeacso134657241.0
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 18:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753837484; x=1754442284; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ao6PmA4EQzR3LhIP12OV6ExGOV3d7KaSEKdW0e0eKL4=;
- b=d1DydbzAeX8AtMbq8AALHXcOEQo+RPOIC47VawpAbWhcWbL9nKaZvcNmNWFy12pISO
- aEvm3wARiZi0Xny76BJi6+glURjLPHCbZ7Zlv6rXJTvbmyN80SoGIowpk0yBZP1prtuG
- mUowq9Delb5nFC/R6gjdDuPHqI4GSFmkvaze8bAoHQuZeoHyWceBVNUS++NhHytYpBaE
- z8HCrcYPjFUNYm+50xo93uRHwFcsolS6qUcznrk8GOKKpa2gnZWMHgWLarrYP1kzrqXl
- 104HA7fJpdTnDvoCJxRK51zSWgMaLhC617u08i1G0TpQlJx09z4jyr+T4uNwPrrnkdgt
- ZySw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753837484; x=1754442284;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ao6PmA4EQzR3LhIP12OV6ExGOV3d7KaSEKdW0e0eKL4=;
- b=UybrWlPRGZ65dbMu+rLp80YifvSlpMPu7VmEu8fkKnjq3j8nw+PALZ2bKeljwMLSiQ
- 0plfrILkIa+eLqA21ldmN5vlR/xD1EICHTe7vpRpauKDvJKaR9epiiChR8YKtWc29uMt
- +iMSYHyrRh5UVue88MzoS/Px6PZjNfoFAZeygGSbyk2JdFGooSoGyBSNvxginCDN7yy8
- MCNnlhnmE3O3PsJwg0BCmrrnZ2UbCRA5PCZsSbzYBqw/sYG1ToUToGJaJgdCMoH5TyhS
- Nyh6bhgd6GS8jTcZilBuDo9EsXFYOSxvD8EUbGG1yDHQV5LJY09mG7liioeqJ71fFakI
- I19Q==
-X-Gm-Message-State: AOJu0YxDH9TJnDhO7HqFha5WxA6JWTkVkZiC+MAL1+akfP1C7LBfeukZ
- m92aXPxCZt8bKJvUpkaXyLrnlyHFYgirZAvhPCOThnkC/73Z4BVpxwlvhOVbCjG/z0WI0MZj2cc
- zGqXPk1N6JP1OM6zQTjv64R/SkUFZm1RM0g==
-X-Gm-Gg: ASbGncubsgCFN7NG4kzyh+AsGYqBqZdYaIXEvG/KDRCqX3Udrb8VdmQQQgmkNyLSIt2
- OkRLTDtQ4Qww+Z1sNj4srgrlcjsdVwLNFJ+86tlWiKtyHEcHQHTYY384mhah5iUhhn2udX6RbzL
- Rih+B40B9gtZhb47ChaIvMuliaTZBU+pW9QqExFE+13Pw9WC3I4o/L81s5YQQxMqqWWYL1Yt0PW
- bwhyJ8+5Oq/C3dCqAXtFhsSxSvon+4ZE4ztLg==
-X-Google-Smtp-Source: AGHT+IHc8ATjxTNubHWjDwLT2bozWlwqbJB8s+S8b7IBcnqa5bWrkA2UCkHxOKnMLtblJmKqi9DCCfL5AvElfAkF2Zs=
-X-Received: by 2002:a05:6102:32c8:b0:4e7:dbd2:4604 with SMTP id
- ada2fe7eead31-4fbe8772709mr1196381137.17.1753837484371; Tue, 29 Jul 2025
- 18:04:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1ugvnq-0004G6-6F
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:40:23 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1ugvno-0003HF-7e
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 21:40:21 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 30 Jul
+ 2025 09:34:06 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Wed, 30 Jul 2025 09:34:06 +0800
+To: Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <hskinnemoen@google.com>, <mjt@tls.msk.ru>, <clg@kaod.org>
+Subject: [PATCH v1] roms/vbootrom: update to 7b1eb5f
+Date: Wed, 30 Jul 2025 09:34:05 +0800
+Message-ID: <20250730013406.3847667-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20250730010122.4193496-1-alistair.francis@wdc.com>
-In-Reply-To: <20250730010122.4193496-1-alistair.francis@wdc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 30 Jul 2025 11:04:18 +1000
-X-Gm-Features: Ac12FXw3GeJ6zgjuW_EJBORodS397exrjmkAU7AFO_b0kzeMjSUXX-N0kn1FrvE
-Message-ID: <CAKmqyKP+tHtyx2ZDyRE70kgyWTZDFGaq=ZhKgAo5H_O8H0MZvg@mail.gmail.com>
-Subject: Re: [PULL 00/11] riscv-to-apply queue
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,43 +58,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 30, 2025 at 11:01=E2=80=AFAM <alistair23@gmail.com> wrote:
->
-> From: Alistair Francis <alistair.francis@wdc.com>
->
-> The following changes since commit 9b80226ece693197af8a981b424391b68b5bc3=
-8e:
->
->   Update version for the v10.1.0-rc1 release (2025-07-29 13:00:41 -0400)
->
-> are available in the Git repository at:
->
->   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-2025073=
-0-2
->
-> for you to fetch changes up to 86bc3a0abf10072081cddd8dff25aa72c60e67b8:
->
->   target/riscv: Restrict midelegh access to S-mode harts (2025-07-30 10:5=
-9:26 +1000)
->
-> ----------------------------------------------------------------
-> Third RISC-V PR for 10.1
->
-> * Fix pmp range wraparound on zero
-> * Update FADT and MADT versions in ACPI tables
-> * Fix target register read when source is inactive
-> * Add riscv_hwprobe entry to linux-user strace list
-> * Do not call GETPC() in check_ret_from_m_mode()
-> * Revert "Generate strided vector loads/stores with tcg nodes."
-> * Fix exception type when VU accesses supervisor CSRs
-> * Restrict mideleg/medeleg/medelegh access to S-mode harts
-> * Restrict midelegh access to S-mode harts
+Changes:
+7b1eb5f ast27x0: Fix Makefile to unconditionally set CC to support correct cross-compilation
+601d410 ast27x0: Fix missing SCU module reset for SSP and TSP initialization
+80768e4 ast27x0: Initialize and enable SSP/TSP using SCU with reserved-memory from DTB
+f8ab635 ast27x0: Show build date and git version
+53294f5 Add initial support for AST27x0
+b1c2803 Dynamically detects NPCM8XX UBOOT destination and size.
+4f54dfc Automatically search for UBOOT location for NPCM8xx images.
 
-Sorry about this being so large and late in the cycle. I just got back
-from parental leave and wanted to get these fixes in for 10.1
+The actual bootroms are not updated yet.
 
-Alistair
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ roms/vbootrom | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/roms/vbootrom b/roms/vbootrom
+index 1287b6e42e..183c9ff805 160000
+--- a/roms/vbootrom
++++ b/roms/vbootrom
+@@ -1 +1 @@
+-Subproject commit 1287b6e42e839ba2ab0f06268c5b53ae60df3537
++Subproject commit 183c9ff8056b7946db1ae49cc23e8980ac413174
+-- 
+2.43.0
+
 
