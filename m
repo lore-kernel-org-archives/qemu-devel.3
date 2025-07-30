@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEC3C87FCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 19:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D9EC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 19:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhCXR-0005i3-9a; Wed, 30 Jul 2025 15:32:33 -0400
+	id 1uhCYa-0000m2-J9; Wed, 30 Jul 2025 15:33:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uhARx-0006ap-QC
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:18:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uhASq-0000p0-RR
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:19:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uhARt-0003eK-LN
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:18:43 -0400
+ id 1uhASo-0003o6-Ma
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 13:19:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753895918;
+ s=mimecast20190719; t=1753895977;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3bvsKOQjLpNZy9etQQm5bqPUCoafGdmSHLrHv9Tuy+g=;
- b=hE2Bbe5Q1IZDDxPR5ovHXONrnj7ZSGR29AKZw8oSSDqOjvf94NTfzUggwrURzjBeZPjzX+
- amZh6cNdERvBMRh5DfLZ3So+HTAMpOCiAGOIzUfN657PfgY7DHcSFK/21qwGBZa3CvskfR
- OKCoK/j2uN3CYUZykJXv+LxRum3a2QE=
+ bh=xXWvDRpUq2SU3YiauxSzzr7PQmKce+bLyrCHVoWk/HU=;
+ b=Qp1Clj8Bg77s9ZnaCXcFM/RhcB/kIQEsB1UJacmtCNQsgA1LAxNvU4K/5ihLetAK37CFJQ
+ ha/jlhAo6zSdBygpC+WzeK3k4SwmpLUel0vBmbO410K2IJrgXdCjmVDBYcvIK949MNCUif
+ ScXetJLyF4aXMCFOf4Une7blP9HW8EA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-gSDtoIlvNoiXYfOaZaWwGA-1; Wed,
- 30 Jul 2025 13:18:36 -0400
-X-MC-Unique: gSDtoIlvNoiXYfOaZaWwGA-1
-X-Mimecast-MFC-AGG-ID: gSDtoIlvNoiXYfOaZaWwGA_1753895915
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-JDJ9buQ1O-uTsvCzcq_hSg-1; Wed,
+ 30 Jul 2025 13:19:33 -0400
+X-MC-Unique: JDJ9buQ1O-uTsvCzcq_hSg-1
+X-Mimecast-MFC-AGG-ID: JDJ9buQ1O-uTsvCzcq_hSg_1753895972
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6579D1800875; Wed, 30 Jul 2025 17:18:35 +0000 (UTC)
+ id 854141800447; Wed, 30 Jul 2025 17:19:32 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.197])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A28D71800B6A; Wed, 30 Jul 2025 17:18:34 +0000 (UTC)
-Date: Wed, 30 Jul 2025 13:18:33 -0400
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D2EE3300018D; Wed, 30 Jul 2025 17:19:31 +0000 (UTC)
+Date: Wed, 30 Jul 2025 13:19:30 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Hanna Czenczek <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Brian Song <hibriansong@gmail.com>
-Subject: Re: [PATCH v3 18/21] fuse: Implement multi-threading
-Message-ID: <20250730171833.GC74304@fedora>
+Subject: Re: [PATCH v3 00/21] export/fuse: Use coroutines and multi-threading
+Message-ID: <20250730171930.GE74304@fedora>
 References: <20250701114437.207419-1-hreitz@redhat.com>
- <20250701114437.207419-19-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="01sGRntuniWvWvW3"
+ protocol="application/pgp-signature"; boundary="3dl+UcANUx8vxxhw"
 Content-Disposition: inline
-In-Reply-To: <20250701114437.207419-19-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20250701114437.207419-1-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,136 +87,132 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---01sGRntuniWvWvW3
-Content-Type: text/plain; charset=iso-8859-1
+--3dl+UcANUx8vxxhw
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 01, 2025 at 01:44:34PM +0200, Hanna Czenczek wrote:
-> FUSE allows creating multiple request queues by "cloning" /dev/fuse FDs
-> (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
+On Tue, Jul 01, 2025 at 01:44:16PM +0200, Hanna Czenczek wrote:
+> Hi,
 >=20
-> We can use this to implement multi-threading.
+> This series:
+> - Fixes some bugs/minor inconveniences,
+> - Removes libfuse from the request processing path,
+> - Make the FUSE export use coroutines for request handling,
+> - Introduces multi-threading into the FUSE export.
 >=20
-> For configuration, we don't need any more information beyond the simple
-> array provided by the core block export interface: The FUSE kernel
-> driver feeds these FDs in a round-robin fashion, so all of them are
-> equivalent and we want to have exactly one per thread.
+> More detail on the v1 cover letter:
+> https://lists.nongnu.org/archive/html/qemu-block/2025-03/msg00359.html
 >=20
-> These are the benchmark results when using four threads (compared to a
-> single thread); note that fio still only uses a single job, but
-> performance can still be improved because of said round-robin usage for
-> the queues.  (Not in the sync case, though, in which case I guess it
-> just adds overhead.)
+> v2 cover letter:
+> https://lists.nongnu.org/archive/html/qemu-block/2025-06/msg00040.html
 >=20
-> file:
->   read:
->     seq aio:   264.8k =B10.8k (+120 %)
->     rand aio:  143.8k =B10.4k (+ 27 %)
->     seq sync:   49.9k =B10.5k (-  5 %)
->     rand sync:  10.3k =B10.1k (-  1 %)
->   write:
->     seq aio:   226.6k =B12.1k (+184 %)
->     rand aio:  225.9k =B11.8k (+186 %)
->     seq sync:   36.9k =B10.6k (- 11 %)
->     rand sync:  36.9k =B10.2k (- 11 %)
-> null:
->   read:
->     seq aio:   315.2k =B111.0k (+18 %)
->     rand aio:  300.5k =B110.8k (+14 %)
->     seq sync:  114.2k =B1 3.6k (-16 %)
->     rand sync: 112.5k =B1 2.8k (-16 %)
->   write:
->     seq aio:   222.6k =B16.8k (-21 %)
->     rand aio:  220.5k =B16.8k (-23 %)
->     seq sync:  117.2k =B13.7k (-18 %)
->     rand sync: 116.3k =B14.4k (-18 %)
 >=20
-> (I don't know what's going on in the null-write AIO case, sorry.)
+> Changes from v2:
+> - Patch 12: Moved qemu_fcntl_addfl() into the #ifndef _WIN32 section
+>   where other fcntl() wrappers reside
+> - Patch 13: Fixed comment to say `export` instead of `exp`; kept
+>   Stefan=E2=80=99s R-b
+> - Patch 15: Same as patch 13
+> - Patch 18: In macro, use correct parameter `queue` instead of the
+>   non-existing `q`
 >=20
-> Here's results for numjobs=3D4:
 >=20
-> "Before", i.e. without multithreading in QSD/FUSE (results compared to
-> numjobs=3D1):
+> git-backport-diff from v2:
 >=20
-> file:
->   read:
->     seq aio:   104.7k =B1 0.4k (- 13 %)
->     rand aio:  111.5k =B1 0.4k (-  2 %)
->     seq sync:   71.0k =B113.8k (+ 36 %)
->     rand sync:  41.4k =B1 0.1k (+297 %)
->   write:
->     seq aio:    79.4k =B10.1k (-  1 %)
->     rand aio:   78.6k =B10.1k (=B1  0 %)
->     seq sync:   83.3k =B10.1k (+101 %)
->     rand sync:  82.0k =B10.2k (+ 98 %)
-> null:
->   read:
->     seq aio:   260.5k =B11.5k (-  2 %)
->     rand aio:  260.1k =B11.4k (-  2 %)
->     seq sync:  291.8k =B11.3k (+115 %)
->     rand sync: 280.1k =B11.7k (+115 %)
->   write:
->     seq aio:   280.1k =B11.7k (=B1  0 %)
->     rand aio:  279.5k =B11.4k (-  3 %)
->     seq sync:  306.7k =B12.2k (+116 %)
->     rand sync: 305.9k =B11.8k (+117 %)
+> Key:
+> [----] : patches are identical
+> [####] : number of functional differences between upstream/downstream pat=
+ch
+> [down] : patch is downstream-only
+> The flags [FC] indicate (F)unctional and (C)ontextual differences, respec=
+tively
 >=20
-> (As probably expected, little difference in the AIO case, but great
-> improvements in the sync case because it kind of gives it an artificial
-> iodepth of 4.)
+> 001/21:[----] [--] 'fuse: Copy write buffer content before polling'
+> 002/21:[----] [--] 'fuse: Ensure init clean-up even with error_fatal'
+> 003/21:[----] [--] 'fuse: Remove superfluous empty line'
+> 004/21:[----] [--] 'fuse: Explicitly set inode ID to 1'
+> 005/21:[----] [--] 'fuse: Change setup_... to mount_fuse_export()'
+> 006/21:[----] [--] 'fuse: Fix mount options'
+> 007/21:[----] [--] 'fuse: Set direct_io and parallel_direct_writes'
+> 008/21:[----] [--] 'fuse: Introduce fuse_{at,de}tach_handlers()'
+> 009/21:[----] [--] 'fuse: Introduce fuse_{inc,dec}_in_flight()'
+> 010/21:[----] [--] 'fuse: Add halted flag'
+> 011/21:[----] [--] 'fuse: Rename length to blk_len in fuse_write()'
+> 012/21:[----] [-C] 'block: Move qemu_fcntl_addfl() into osdep.c'
+> 013/21:[0008] [FC] 'fuse: Manually process requests (without libfuse)'
+> 014/21:[----] [--] 'fuse: Reduce max read size'
+> 015/21:[0008] [FC] 'fuse: Process requests in coroutines'
+> 016/21:[----] [--] 'block/export: Add multi-threading interface'
+> 017/21:[----] [--] 'iotests/307: Test multi-thread export interface'
+> 018/21:[0016] [FC] 'fuse: Implement multi-threading'
+> 019/21:[----] [--] 'qapi/block-export: Document FUSE's multi-threading'
+> 020/21:[----] [--] 'iotests/308: Add multi-threading sanity test'
+> 021/21:[----] [--] 'fuse: Increase MAX_WRITE_SIZE with a second buffer'
 >=20
-> "After", i.e. with four threads in QSD/FUSE (now results compared to the
-> above):
 >=20
-> file:
->   read:
->     seq aio:   193.3k =B1 1.8k (+ 85 %)
->     rand aio:  329.3k =B1 0.3k (+195 %)
->     seq sync:   66.2k =B113.0k (-  7 %)
->     rand sync:  40.1k =B1 0.0k (-  3 %)
->   write:
->     seq aio:   219.7k =B10.8k (+177 %)
->     rand aio:  217.2k =B11.5k (+176 %)
->     seq sync:   92.5k =B10.2k (+ 11 %)
->     rand sync:  91.9k =B10.2k (+ 12 %)
-> null:
->   read:
->     seq aio:   706.7k =B12.1k (+171 %)
->     rand aio:  714.7k =B13.2k (+175 %)
->     seq sync:  431.7k =B13.0k (+ 48 %)
->     rand sync: 435.4k =B12.8k (+ 50 %)
->   write:
->     seq aio:   746.9k =B12.8k (+167 %)
->     rand aio:  749.0k =B14.9k (+168 %)
->     seq sync:  420.7k =B13.1k (+ 37 %)
->     rand sync: 419.1k =B12.5k (+ 37 %)
+> Hanna Czenczek (21):
+>   fuse: Copy write buffer content before polling
+>   fuse: Ensure init clean-up even with error_fatal
+>   fuse: Remove superfluous empty line
+>   fuse: Explicitly set inode ID to 1
+>   fuse: Change setup_... to mount_fuse_export()
+>   fuse: Fix mount options
+>   fuse: Set direct_io and parallel_direct_writes
+>   fuse: Introduce fuse_{at,de}tach_handlers()
+>   fuse: Introduce fuse_{inc,dec}_in_flight()
+>   fuse: Add halted flag
+>   fuse: Rename length to blk_len in fuse_write()
+>   block: Move qemu_fcntl_addfl() into osdep.c
+>   fuse: Manually process requests (without libfuse)
+>   fuse: Reduce max read size
+>   fuse: Process requests in coroutines
+>   block/export: Add multi-threading interface
+>   iotests/307: Test multi-thread export interface
+>   fuse: Implement multi-threading
+>   qapi/block-export: Document FUSE's multi-threading
+>   iotests/308: Add multi-threading sanity test
+>   fuse: Increase MAX_WRITE_SIZE with a second buffer
 >=20
-> So this helps mainly for the AIO cases, but also in the null sync cases,
-> because null is always CPU-bound, so more threads help.
+>  qapi/block-export.json               |   39 +-
+>  include/block/export.h               |   12 +-
+>  include/qemu/osdep.h                 |    1 +
+>  block/export/export.c                |   48 +-
+>  block/export/fuse.c                  | 1181 ++++++++++++++++++++------
+>  block/export/vduse-blk.c             |    7 +
+>  block/export/vhost-user-blk-server.c |    8 +
+>  block/file-posix.c                   |   17 +-
+>  nbd/server.c                         |    6 +
+>  util/osdep.c                         |   18 +
+>  tests/qemu-iotests/307               |   47 +
+>  tests/qemu-iotests/307.out           |   18 +
+>  tests/qemu-iotests/308               |   55 +-
+>  tests/qemu-iotests/308.out           |   61 +-
+>  14 files changed, 1213 insertions(+), 305 deletions(-)
 >=20
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  block/export/fuse.c | 205 ++++++++++++++++++++++++++++++++++----------
->  1 file changed, 159 insertions(+), 46 deletions(-)
+> --=20
+> 2.49.0
+>=20
+
+Nice!
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---01sGRntuniWvWvW3
+--3dl+UcANUx8vxxhw
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiKU+kACgkQnKSrs4Gr
-c8jC5wgAhL6ZKeCVt1qDpdu66OnuaXK1DgMOa3seXDBdt75w4ClLZN0SbMRKWjvG
-vGGUvyOiGWNZ82pQdWIGhD0EsqL4jaS/GwEJwNeqpuNuCIQqB63Ew64UIpjRgA/5
-ZLQWjliKuxGG/KGCsW11fzjbE8ExAsxkRh7j3pQa4vgYeabUOv4yUayygdFQdP2k
-OWtjQm4LCMhf2uZSX9VGAbFH6GAw+vQVf4Kyo7CrEZeXnT07baIZIj2I5Ddp8at3
-2vEO8xhdW+5nVFKgyKtwKT/gsXe/cZtRep8KBtx+FAuzM5eWuRTkCbiPSocfzG60
-fkGX9j314KGAYOXbcNH4AY0cAoKC9w==
-=UfNV
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiKVCIACgkQnKSrs4Gr
+c8gTeAf9FzRMBwvJvBousqwV0wFe+TZO+TMtEXxGJ46VzP+APZaAUaT1Zw/pR+Lk
+U7+Utrx3L31HI76azXvEfFQUyjP5uPKeIrT4xQc830Ya0yvt1BbC3qK4jPr/fWBx
+PlfhwS5v+PzeyJn3O4EyRJA+cy2yp1nGZzGdpESzKE6k6Y5/HTTqXPsaJ7+mp83x
+FVS0IhKSjUb6BIEPQmglp/OgbaU1GHHwTHVJvsgt6Ow0L6NsY5Gvm9ihb8uQMFXF
+9xpyFICVboIVhIyoc/pgwBnatlcoGhQVyvL8OGy0cHxSqhXG5qm1ZocITj76t1gX
+X9Qr4FqAySCShHripsnxdNFq/p0X5g==
+=Z1bU
 -----END PGP SIGNATURE-----
 
---01sGRntuniWvWvW3--
+--3dl+UcANUx8vxxhw--
 
 
