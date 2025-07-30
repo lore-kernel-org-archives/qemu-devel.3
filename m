@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB80C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B390CC87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 00:38:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugucp-0000Hd-Lz; Tue, 29 Jul 2025 20:24:56 -0400
+	id 1ugufR-00051r-4G; Tue, 29 Jul 2025 20:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguJ3-0004gm-Iv
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:31 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1uguMd-0006sQ-CP
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:08:13 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uguJ1-0004dk-HY
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:04:29 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b42099901baso1991842a12.2
- for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:04:27 -0700 (PDT)
+ id 1uguMb-00059M-Go
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 20:08:10 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-313910f392dso4832530a91.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Jul 2025 17:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753833866; x=1754438666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753834088; x=1754438888; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ut68EBxP3nF3sszksqZbsbARC+pNHvmjmSrg0qwpPOA=;
- b=xu7WMZTrHQn2T+5A+BvpjgMSUAljAQAqIVX6IUfV2Eyx5d1mInaIkkAaLoRAzXvfgQ
- 6K9WXA6GviejGOY7mMczaWg0PhywE6Ec/sNqa87+utEmcpzhXj9Q1Kh8dftpPprStGr1
- bY4ipre+1pc6On/k2I9n0hde04+8Z6ZRjj0TPZbWgsRtiV+j9QpvnQXXzweNuiqSnWRy
- vvQaBkNyL4JNb4xMaH2YhP/+x+DbFVFVYYnTYocLa32dVLkgqt6uWB4sNLxmHY00OkDb
- 3LoG+fmNkIiej28EpKRd1kJdf4ZCvbdo62ZWvvxYOBrzHUZXfFqHrcbRjO2/IAPYMCrN
- ZzRg==
+ :reply-to; bh=WC9oUvRCMrCYnYBvur63Dpq5l4F1AQCsSeMzT7kqFfI=;
+ b=pfaAybSwLIuJUDrreVNNfwHjsFZbuFYkOV3XyrsxnTKUZZ5Aq+nrCG12xAoaEzUkDv
+ voAcdS28L0iigpBna+t27UeJXsx7FP5rGR0u7SN1EEHXz8nnFcrEMHTcOTjoQYIZm+TE
+ z57+gFi9VSyw0dg7HJyMYpMbn/isZ1JgqtO3R8o2gFV5g9DFY5s0s5T4TI1whfH6ibbk
+ soAzDHKzixkAeYJVR4nHv/CM4c7CDnyhgt0/meFORukJfOUrxaKg3rSSXaXYqQ1CbpdP
+ F9MNwm8uDkqp7kZwE3ieKsH5gUYDF3LOPSpNNL3n6SWMVlvoaJ1741v+R+8osjEKwULE
+ VN7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753833866; x=1754438666;
+ d=1e100.net; s=20230601; t=1753834088; x=1754438888;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ut68EBxP3nF3sszksqZbsbARC+pNHvmjmSrg0qwpPOA=;
- b=OZz9DVfehaJYr8ua9VTg/wDieiNf2ejWSOjdMxwkEBt5fQD4spytRy6bXDBz+ZnE37
- TEy7Cz0QHmdHprM5LiBJYZHcj2z9IoKWG0xYEifz0DNapWfMrhajjpSX4ZJZb+oMe4Mg
- lEP1Z2WwLrBBfZlSoWh40Ef2N2LcOt7PbPbzt62qLVzLWnCktodX71DFdPpjNb1gFIBR
- 1V3T11yiR57Zw6F/hHYjyn927fPX7NMO2u8kyAfv9nqa93KwCQzYX1yK2b1yhbk/aH/s
- NVsIq7qWWAJKmYi0CZq4ROLSlFWVH8mpIKYmO2e1lk+CMem7PNUMm1g/0LDR4b6SWech
- qv8w==
-X-Gm-Message-State: AOJu0YzeiqH0qws553z8TyK0LEXRXtaKZF9usbvBWrvpZ9/uXoWjXkOm
- HSxPbDpjLSjDu4t6q4sFHBHlmtUraBykdzw8RHwuBvUyFDSis4CvravHoMlI6Y0gj2SPNAtjSNn
- 7VnGA
-X-Gm-Gg: ASbGnctWxBATmjUraPA11SguY6HOi9RhND9CIv7GvHsuyhX3NbENBLNAtgYWaTwn5uf
- 29POOdm8dyLzBD/GCdLrleG3GqYb5o7sdZ5BD+qjdV+6PZqqn9Q/UQnaORmh1Zt9eEv2ruEdXFg
- Og7WIuuOAu8vwtdmhK1w4VYDVRUPao7iFf5o1q5Hs8PGHGw/qiC5TdQ1b9+kcu/Bv1SqKQ+eeCM
- 30KUb6KGDZXI8TE+b+4PSgkxIgRwSuYR+5HDEKzp7r6A0Q7jqQeYcKjjQ/ugz9bHoauGyi8AzQ+
- 0u3j12wqe73DBhLy39Gm/wJWPdhOAo/IMTQCrYOD0YhHT64knjKKfab8sXkukpc/6yh/j1UzhAX
- 8pN5c9RuoM8mr++ZgzcPlTC3MHztxaYbHIBoXAwFajsrE1ci/ioHOjHkP+BpR0GioMjqKDev2vL
- gD+Qa83yRD+g==
-X-Google-Smtp-Source: AGHT+IGHNHfmFIbtOMFk0yBCCD/FKmfPdXQMKb7RcNECeN43g7Kyiw6rXBTl/2219L5JuWfL6gWYSw==
-X-Received: by 2002:a05:6a20:5491:b0:1ee:d418:f764 with SMTP id
- adf61e73a8af0-23dc0ec3828mr1845923637.38.1753833865767; 
- Tue, 29 Jul 2025 17:04:25 -0700 (PDT)
+ bh=WC9oUvRCMrCYnYBvur63Dpq5l4F1AQCsSeMzT7kqFfI=;
+ b=XP0Etz0nDDIkQOWKdURvhraCBGXfaa9PuXg698dQU++GFmHn60jhvxrKFOOs4FpC/z
+ uJuExxnCKFFuSbfosfTOcqwu7DVq5IcPIHcFQlou/wIQYoyE+NqFsHTKAFH34Sr3bG0o
+ T0nNRZzK4gX1nVcrx44olNZjoB+h1mQuxFSh/QJTqbA/RSPSlBgs6YSHemDwQCK3oQAD
+ CvYYhIpGbbDdZSYeSnVYLE6atIYQqGYMj7XzmlXFwpmq80uKvsTp5XBhiVM/JDh0DFQU
+ 9nX/mPwbk3yQJhMeb3AKUO5MU1jj8ppZYb5ESzbRRJxrZhH28CuLyO0fVcvZPuwTP3XQ
+ MEXg==
+X-Gm-Message-State: AOJu0YyEQQSYhNO/zv3Ok2dnhcsBg60Iu3PFq9DNKe2gvPffVHpV/ZI+
+ hdAo5nlp0roFH6QCqsdehoXUICsw9El0OyT4OPOiNOMEKsLmFq8fv05FM5Y9KpI0i1h4DsmfS+h
+ xKrF5
+X-Gm-Gg: ASbGncvCr1tglwtTq5kbS6qnu9DQRX/LS8kX5f4leLuIoTPSNdy7C9BA9ZTvEcELixZ
+ 0A6gs0fEim3oYxvfe8L1hsDPBeXk6StUPAime/G6GpvRvbNpCc40hX+vUBKKTJqzL/d672I6ZzM
+ c4MpGgYerF/Yuc7uTUbxTnXJiJh/HX/3gVEeLRDn4EfZPcVkTIew89RusKN4TXBh6Nork8ZyHJw
+ sqL6rq534q33SKZT3YW+8mbl+Qc3PdJg3jqROLVuyp5ViG/vxD5/vwXQjUSivCZ/+dW4F9hM6aq
+ t34uxDVlljrq7e8ImhqNAuSglIQdke8EAo3ZS2EJ7FZb2o3qtFZWoWSWQ4m7A4PTsBQtu2KprPM
+ 7fx/8Ip9sqwfUvwwAu89J6jjUbyTrIDQWATAWxYi0e5uGNYTHTAJ8QG/NOwv7U0rv63F+J1U7Mc
+ DVk+hVIhPn3A==
+X-Google-Smtp-Source: AGHT+IGuETlA2k53lsfGSFZ6Li8Q4289Af3Tv1b/ddRDXruXJ91Sy1a6EknS+WomYwfe7Gf7npiKJA==
+X-Received: by 2002:a17:90b:250a:b0:313:dcf4:37bc with SMTP id
+ 98e67ed59e1d1-31f5de59cf0mr1117712a91.34.1753834087825; 
+ Tue, 29 Jul 2025 17:08:07 -0700 (PDT)
 Received: from localhost.localdomain (syn-098-150-199-049.res.spectrum.com.
  [98.150.199.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640ad06762sm9101302b3a.80.2025.07.29.17.04.25
+ 98e67ed59e1d1-31f63ddfb2asm281868a91.22.2025.07.29.17.08.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Jul 2025 17:04:25 -0700 (PDT)
+ Tue, 29 Jul 2025 17:08:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 55/89] linux-user: Move init_guest_commpage to x86_64/elfload.c
-Date: Tue, 29 Jul 2025 13:59:28 -1000
-Message-ID: <20250730000003.599084-56-richard.henderson@linaro.org>
+Subject: [PATCH 88/89] linux-user/s390x: Move target_psw_t to signal.c
+Date: Tue, 29 Jul 2025 14:00:01 -1000
+Message-ID: <20250730000003.599084-89-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,93 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Remove struct target_pt_regs as unused.
+Move target_psw_t to signal.c, as it is used there.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h         |  3 +++
- linux-user/elfload.c        | 20 --------------------
- linux-user/x86_64/elfload.c | 20 ++++++++++++++++++++
- 3 files changed, 23 insertions(+), 20 deletions(-)
+ linux-user/s390x/target_syscall.h | 22 ----------------------
+ linux-user/s390x/signal.c         |  5 +++++
+ 2 files changed, 5 insertions(+), 22 deletions(-)
 
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 700bbdb02e..e5e317ab76 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -102,5 +102,8 @@ const char *elf_hwcap_str(uint32_t bit);
- const char *elf_hwcap2_str(uint32_t bit);
- const char *get_elf_platform(CPUState *cs);
- const char *get_elf_base_platform(CPUState *cs);
-+#if defined(TARGET_X86_64)
-+bool init_guest_commpage(void);
-+#endif
+diff --git a/linux-user/s390x/target_syscall.h b/linux-user/s390x/target_syscall.h
+index 4018988a25..f01f9a0baa 100644
+--- a/linux-user/s390x/target_syscall.h
++++ b/linux-user/s390x/target_syscall.h
+@@ -1,28 +1,6 @@
+ #ifndef S390X_TARGET_SYSCALL_H
+ #define S390X_TARGET_SYSCALL_H
  
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 6feab68a52..297151e4fa 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -159,27 +159,7 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS      ELFCLASS64
- #define ELF_ARCH       EM_X86_64
+-/* this typedef defines how a Program Status Word looks like */
+-typedef struct {
+-    abi_ulong mask;
+-    abi_ulong addr;
+-} __attribute__ ((aligned(8))) target_psw_t;
+-
+-/*
+- * The pt_regs struct defines the way the registers are stored on
+- * the stack during a system call.
+- */
+-
+-#define TARGET_NUM_GPRS        16
+-
+-struct target_pt_regs {
+-    abi_ulong args[1];
+-    target_psw_t psw;
+-    abi_ulong gprs[TARGET_NUM_GPRS];
+-    abi_ulong orig_gpr2;
+-    unsigned short ilen;
+-    unsigned short trap;
+-};
+-
+ #define UNAME_MACHINE "s390x"
+ #define UNAME_MINIMUM_RELEASE "2.6.32"
  
--#if ULONG_MAX > UINT32_MAX
- #define INIT_GUEST_COMMPAGE
--static bool init_guest_commpage(void)
--{
--    /*
--     * The vsyscall page is at a high negative address aka kernel space,
--     * which means that we cannot actually allocate it with target_mmap.
--     * We still should be able to use page_set_flags, unless the user
--     * has specified -R reserved_va, which would trigger an assert().
--     */
--    if (reserved_va != 0 &&
--        TARGET_VSYSCALL_PAGE + TARGET_PAGE_SIZE - 1 > reserved_va) {
--        error_report("Cannot allocate vsyscall page");
--        exit(EXIT_FAILURE);
--    }
--    page_set_flags(TARGET_VSYSCALL_PAGE,
--                   TARGET_VSYSCALL_PAGE | ~TARGET_PAGE_MASK,
--                   PAGE_EXEC | PAGE_VALID);
--    return true;
--}
--#endif
- #else
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index df49c24708..e964876123 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -33,6 +33,11 @@
+ #define _SIGMASK_COPY_SIZE    (sizeof(unsigned long)*_SIGCONTEXT_NSIG_WORDS)
+ #define S390_SYSCALL_OPCODE ((uint16_t)0x0a00)
  
- /*
-diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
-index bc40ed8c5b..98acca94ef 100644
---- a/linux-user/x86_64/elfload.c
-+++ b/linux-user/x86_64/elfload.c
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "qemu.h"
- #include "loader.h"
- 
-@@ -14,3 +15,22 @@ const char *get_elf_platform(CPUState *cs)
- {
-     return "x86_64";
- }
++typedef struct {
++    abi_ulong mask;
++    abi_ulong addr;
++} __attribute__ ((aligned(8))) target_psw_t;
 +
-+bool init_guest_commpage(void)
-+{
-+    /*
-+     * The vsyscall page is at a high negative address aka kernel space,
-+     * which means that we cannot actually allocate it with target_mmap.
-+     * We still should be able to use page_set_flags, unless the user
-+     * has specified -R reserved_va, which would trigger an assert().
-+     */
-+    if (reserved_va != 0 &&
-+        TARGET_VSYSCALL_PAGE + TARGET_PAGE_SIZE - 1 > reserved_va) {
-+        error_report("Cannot allocate vsyscall page");
-+        exit(EXIT_FAILURE);
-+    }
-+    page_set_flags(TARGET_VSYSCALL_PAGE,
-+                   TARGET_VSYSCALL_PAGE | ~TARGET_PAGE_MASK,
-+                   PAGE_EXEC | PAGE_VALID);
-+    return true;
-+}
+ typedef struct {
+     target_psw_t psw;
+     abi_ulong gprs[__NUM_GPRS];
 -- 
 2.43.0
 
