@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 194B0C87FCC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 03:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BACC87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 03:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ugx5E-00047L-2O; Tue, 29 Jul 2025 23:02:24 -0400
+	id 1ugx5J-0004KT-F7; Tue, 29 Jul 2025 23:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1ugx58-0003r0-Qw
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 23:02:18 -0400
+ id 1ugx5A-0003tf-9s
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 23:02:20 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1ugx56-0007He-7V
- for qemu-devel@nongnu.org; Tue, 29 Jul 2025 23:02:18 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1ugx58-0007IG-8y
+ for qemu-devel@nongnu.org; Tue, 29 Jul 2025 23:02:20 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxPOI2i4lo7bo0AQ--.64538S3;
- Wed, 30 Jul 2025 11:02:14 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxHHI3i4lo9ro0AQ--.39572S3;
+ Wed, 30 Jul 2025 11:02:15 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAxE+Qri4loJ_AsAA--.30108S8;
- Wed, 30 Jul 2025 11:02:13 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxE+Qri4loJ_AsAA--.30108S11;
+ Wed, 30 Jul 2025 11:02:15 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 06/19] target/loongarch: Use vaddr in get_physical_address()
-Date: Wed, 30 Jul 2025 11:01:49 +0800
-Message-Id: <20250730030202.3425934-7-maobibo@loongson.cn>
+Subject: [PATCH v4 09/19] target/loongarch: Use loongarch_check_pte in
+ loongarch_page_table_walker
+Date: Wed, 30 Jul 2025 11:01:52 +0800
+Message-Id: <20250730030202.3425934-10-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250730030202.3425934-1-maobibo@loongson.cn>
 References: <20250730030202.3425934-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxE+Qri4loJ_AsAA--.30108S8
+X-CM-TRANSID: qMiowJAxE+Qri4loJ_AsAA--.30108S11
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,113 +67,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace target_ulong type with vaddr in function get_physical_address()
-and the same with its calling functions.
+Function loongarch_check_pte() can get physical address and access
+priviledge, it works on both TLB entry and pte entry. It can be used
+in function loongarch_page_table_walker() also.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/loongarch/cpu-mmu.h        |  2 +-
- target/loongarch/cpu_helper.c     |  9 ++++-----
- target/loongarch/tcg/tlb_helper.c | 11 ++++++-----
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ target/loongarch/cpu_helper.c | 42 +++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 26 deletions(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index cbe6f37773..dffc12820f 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -21,7 +21,7 @@ typedef enum TLBRet {
- 
- bool check_ps(CPULoongArchState *ent, uint8_t ps);
- TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
--                            int *prot, target_ulong address,
-+                            int *prot, vaddr address,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug);
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
 diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index cc7cff674e..547b9a0877 100644
+index 5b140316bc..2cd43cd51d 100644
 --- a/target/loongarch/cpu_helper.c
 +++ b/target/loongarch/cpu_helper.c
-@@ -46,7 +46,7 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+@@ -106,15 +106,17 @@ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+ }
  
  static TLBRet loongarch_page_table_walker(CPULoongArchState *env,
-                                           hwaddr *physical,
--                                          int *prot, target_ulong address)
-+                                          int *prot, vaddr address)
+-                                          hwaddr *physical,
+-                                          int *prot, vaddr address)
++                                          MMUContext *context,
++                                          int access_type, int mmu_idx)
  {
      CPUState *cs = env_cpu(env);
      target_ulong index, phys;
-@@ -121,7 +121,7 @@ static TLBRet loongarch_page_table_walker(CPULoongArchState *env,
+     uint64_t dir_base, dir_width;
+     uint64_t base;
+     int level;
++    vaddr address;
+ 
++    address = context->addr;
+     if ((address >> 63) & 0x1) {
+         base = env->CSR_PGDH;
+     } else {
+@@ -156,29 +158,9 @@ static TLBRet loongarch_page_table_walker(CPULoongArchState *env,
+         base = ldq_phys(cs->as, phys);
+     }
+ 
+-    /* TODO: check plv and other bits? */
+-
+-    /* base is pte, in normal pte format */
+-    if (!FIELD_EX64(base, TLBENTRY, V)) {
+-        return TLBRET_NOMATCH;
+-    }
+-
+-    if (!FIELD_EX64(base, TLBENTRY, D)) {
+-        *prot = PAGE_READ;
+-    } else {
+-        *prot = PAGE_READ | PAGE_WRITE;
+-    }
+-
+-    /* get TARGET_PAGE_SIZE aligned physical address */
+-    base += (address & TARGET_PHYS_MASK) & ((1 << dir_base) - 1);
+-    /* mask RPLV, NX, NR bits */
+-    base = FIELD_DP64(base, TLBENTRY_64, RPLV, 0);
+-    base = FIELD_DP64(base, TLBENTRY_64, NX, 0);
+-    base = FIELD_DP64(base, TLBENTRY_64, NR, 0);
+-    /* mask other attribute bits */
+-    *physical = base & TARGET_PAGE_MASK;
+-
+-    return TLBRET_MATCH;
++    context->ps = dir_base;
++    context->pte = base;
++    return loongarch_check_pte(env, context, access_type, mmu_idx);
  }
  
  static TLBRet loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
--                                    int *prot, target_ulong address,
-+                                    int *prot, vaddr address,
-                                     MMUAccessType access_type, int mmu_idx,
+@@ -187,7 +169,9 @@ static TLBRet loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
                                      int is_debug)
  {
-@@ -147,8 +147,7 @@ static TLBRet loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+     TLBRet ret;
++    MMUContext context;
+ 
++    context.addr = address;
+     if (tcg_enabled()) {
+         ret = loongarch_get_addr_from_tlb(env, physical, prot, address,
+                                           access_type, mmu_idx);
+@@ -202,7 +186,13 @@ static TLBRet loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+          * legal mapping, even if the mapping is not yet in TLB. return 0 if
+          * there is a valid map, else none zero.
+          */
+-        return loongarch_page_table_walker(env, physical, prot, address);
++        ret = loongarch_page_table_walker(env, &context, access_type, mmu_idx);
++        if (ret == TLBRET_MATCH) {
++            *physical = context.physical;
++            *prot = context.prot;
++        }
++
++        return ret;
+     }
+ 
      return TLBRET_NOMATCH;
- }
- 
--static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
--                        target_ulong dmw)
-+static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, target_ulong dmw)
- {
-     if (is_la64(env)) {
-         return va & TARGET_VIRT_MASK;
-@@ -160,7 +159,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
- }
- 
- TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
--                            int *prot, target_ulong address,
-+                            int *prot, vaddr address,
-                             MMUAccessType access_type, int mmu_idx,
-                             int is_debug)
- {
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 4a2a565985..3d09f18020 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -29,7 +29,7 @@ bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
-     return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
- }
- 
--static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
-+static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
-                                 MMUAccessType access_type, TLBRet tlb_error)
- {
-     CPUState *cs = env_cpu(env);
-@@ -198,7 +198,7 @@ static uint32_t get_random_tlb(uint32_t low, uint32_t high)
-  * field in tlb entry contains bit[47:13], so need adjust.
-  * virt_vpn = vaddr[47:13]
-  */
--static bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
-+static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-                                  int *index)
- {
-     LoongArchTLB *tlb;
-@@ -649,8 +649,9 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
- }
- 
- static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
--                                      int *prot, target_ulong address,
--                                      int access_type, int index, int mmu_idx)
-+                                      int *prot, vaddr address,
-+                                      int access_type, int index,
-+                                      int mmu_idx)
- {
-     LoongArchTLB *tlb = &env->tlb[index];
-     uint64_t plv = mmu_idx;
-@@ -714,7 +715,7 @@ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
- }
- 
- TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
--                                   int *prot, target_ulong address,
-+                                   int *prot, vaddr address,
-                                    MMUAccessType access_type, int mmu_idx)
- {
-     int index, match;
 -- 
 2.39.3
 
