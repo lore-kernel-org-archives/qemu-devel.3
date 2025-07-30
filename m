@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30785C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 08:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C297C87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 08:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh29a-000753-93; Wed, 30 Jul 2025 04:27:14 -0400
+	id 1uh2DU-0001I3-Py; Wed, 30 Jul 2025 04:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uh1lD-0007TE-By
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:02:07 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uh1lA-0007iK-ER
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:02:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753862521; x=1785398521;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=JhkWE40o8mOT9s2n7Qia38qVjpnJXcDvaHGS4W9+3qw=;
- b=f2LtKU071AgZEqYO1SkJjdlqxaXrr7j5+T7Dle4fJ6OYxvuKEJsMr+j2
- WaLX4dIYami61PI4E6iD2ZosIOowHcpxQO3z+XoIJkT5kQ5VqEVVFel2T
- 8en9kubVrlK29qIWKA/GpetOW1H6ZUh/bxzmGdy1xMxtjYU5kouL1rOTd
- chqHsRFWqYlmx+7vBfW+ja4dF+hCHq+bORnSx4gZgIZKdXIweyWkXfVxl
- 1v638Y3eViwx6vSzGu1WNH9jISMGdliLvQ6q7HDepiTzU7ca4AFnQ/9s4
- 539XIJSfyjlIMnjcO10FW29AY/gkExs4nZZtyBCBg+GtnSkA/Z8bkA8oc w==;
-X-CSE-ConnectionGUID: fIUnW6dzSuyv/vmatOb3rQ==
-X-CSE-MsgGUID: GBblvXRdSZyT7fU67nn1Yw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11506"; a="66853563"
-X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="66853563"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jul 2025 01:01:57 -0700
-X-CSE-ConnectionGUID: Hrk1GSQGRbCEn30WaSVKTw==
-X-CSE-MsgGUID: nGE5DVCeTCOc5KYlFW/1KA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="193767668"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 30 Jul 2025 01:01:55 -0700
-Date: Wed, 30 Jul 2025 16:23:31 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] target/i386: Define enum X86ASIdx for x86's address
- spaces
-Message-ID: <aInWgzo0yJH1QRbS@intel.com>
-References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
- <20250729054023.1668443-3-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1uh1pY-000276-9s
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:06:36 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1uh1pP-0008Jk-Nc
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:06:28 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-31ef50d8d57so2170005a91.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 01:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753862780; x=1754467580; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ge6L4oGfLaHpfj3uC/1S5EHUWvHgeakjeQxfeFcNz5U=;
+ b=RiXe00mmlkxIULCRh1Qb4e0/8gNo/vaboNXiPcn0oY5Y5LEVSrDhwCK0lhuM0oyahA
+ jdG1x7hOCsYJjV3gCaL/l6jMTEeqJxZNgNaZZwSIPTKyJ8WgXyAdBgfJtFIAs6iXEyT5
+ u5ExFIrY4qSYzYOlEGRRTiAPu7xt5PLWkOTL8prTif9JERs6jMzRqu9xqSy68lWWklmh
+ Wp4P6oxmNd1IUeviE3s0sZA/A1lMdjt3+/3eerxwDGcPgZQTk34R0o9YRsPom8GZJ1+w
+ XJRJDRxoICoMlY3DW/BPjseIbSaiEi+cfokbiKYp7M8qZsstqyT8anXmpTZAaAJtkOB2
+ d9Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753862780; x=1754467580;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ge6L4oGfLaHpfj3uC/1S5EHUWvHgeakjeQxfeFcNz5U=;
+ b=nXEetFyt+ly1PErFnV258d/I1LZlo2L1jKy+twT4UpeviVtZvxQMHQgMZxK+SyU1un
+ G91tWqaNMfpdzFXwjS4imQkn7+fDA7ZlanofidPFkGtW6FhT628hQpIdBdnjyInEwUqB
+ liFOGqqgO49BNCQmdHf/1wAvlOiQtzRGzHsYeYnRrsucCsHp3Xoh9Z2iUEma4v2xkxli
+ yFGg0KknUr42ToS7AuQwQALNWBwmqljXBTClyhmCllVSZ8BUbY8nPZnbeUzy1F69rulE
+ B7meeVbK0kIrSKy2I/2KjBUfdS9o/MyGIEDd6Ehtyu6KFubpi5uCytCULgIQD90Gs4WZ
+ /20g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnqmbT2XFTVK6MrGQ35BHmk92QlhpZZj+wihA6DL/0zTu87jMs/yULyizXTPz+HA0HYZHJ/t81Ctvm@nongnu.org
+X-Gm-Message-State: AOJu0Yw8Ux1aTMIHFFe9+81W2vvHVDpMvfA/Rl9bMBubB6HEPmQ91LqQ
+ 1lXywLZdc03/25XG6UbjiGyDKj8eF36tG9HHZUTX9SM/uakHXX0PZO+5sByIUKs2NeYin4QbpvC
+ YKWUt/EEpjdU2VaybopjRtSGV1Wcwf1A=
+X-Gm-Gg: ASbGncuRzr4CSRSwyZSr18tzpSLiEaGM9WXqNPsQy2ngLkHuXbQzakFDTBDAIiXuSEY
+ VUUSeXcP7FjoV1kfK0brQzzXdTu92UShcBOlztejhpvGR4XzJiOR7+Lj8TqkFd3odklnu1gGhbP
+ 8wN6tApsaXFvE+UxFH+0Slp29uce3e6lR/orczEHz+dwrVV9gmg720HFdumVSsKU7DB7GuX42ej
+ SefwziQcg==
+X-Google-Smtp-Source: AGHT+IH+bQ/wIaV6yMmRXYLmT3u+7TyZ7z/lC/GoLCPYCgxpS+Gwdx7PjEUQK8w2OLbNLEaKMfF8bwSOB573JDIZbqk=
+X-Received: by 2002:a17:90b:1dc1:b0:31e:e3e1:3686 with SMTP id
+ 98e67ed59e1d1-31f5de31435mr3399477a91.19.1753862780478; Wed, 30 Jul 2025
+ 01:06:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250729054023.1668443-3-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAMo8BfJw_EUUuGT0qVwhfgEi_tLzSmrOdwAip1E08XNZ4XF=6Q@mail.gmail.com>
+ <20250730062142.1665980-1-frolov@swemel.ru>
+In-Reply-To: <20250730062142.1665980-1-frolov@swemel.ru>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Wed, 30 Jul 2025 01:06:09 -0700
+X-Gm-Features: Ac12FXxoVh5UEKZxDQvSqJLK2wivtcvq3KUxF8Hm1wf_2Clnv_AROJjVkRXYzsk
+Message-ID: <CAMo8BfKtZPqP0VjNQJmKD7e9J-ZvscFM0ws_GMX3vEbt_B7=gQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/xtensa: Replace malloc() with g_strdup_printf()
+To: Dmitry Frolov <frolov@swemel.ru>
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.244,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,30 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 29, 2025 at 01:40:23PM +0800, Xiaoyao Li wrote:
-> Date: Tue, 29 Jul 2025 13:40:23 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH 2/2] target/i386: Define enum X86ASIdx for x86's address
->  spaces
-> X-Mailer: git-send-email 2.43.0
-> 
-> Like ARM defines ARMASIdx, do the same to define X86ASIdx as enum. So
-> that it's more clear what index 0 is for memory and index 1 is for SMM.
-
-Maybe:
-
-Define X86ASIdx as the enum, like ARM's ARMASIdx, so that index 0 is
-clearly for memory and index 1 for SMM.
-
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+On Tue, Jul 29, 2025 at 11:22=E2=80=AFPM Dmitry Frolov <frolov@swemel.ru> w=
+rote:
+>
+> malloc() return value is used without a check.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> v2: Also replaced strdup() with g_strdup()
+>
+> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
 > ---
->  accel/kvm/kvm-all.c              | 2 +-
->  target/i386/cpu.h                | 5 +++++
->  target/i386/kvm/kvm-cpu.c        | 2 +-
->  target/i386/kvm/kvm.c            | 4 ++--
->  target/i386/tcg/system/tcg-cpu.c | 4 ++--
->  5 files changed, 11 insertions(+), 6 deletions(-)
+>  target/xtensa/translate.c | 11 +++--------
+>  1 file changed, 3 insertions(+), 8 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
 
+--=20
+Thanks.
+-- Max
 
