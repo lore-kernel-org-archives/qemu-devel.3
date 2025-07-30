@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB8FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 21:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1562C83F26
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 21:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhDur-0002DQ-MV; Wed, 30 Jul 2025 17:00:49 -0400
+	id 1uhDvB-0003Ls-Ds; Wed, 30 Jul 2025 17:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDaZ-0008Vo-2b
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:39:51 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uhDed-00047A-Q1
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:44:04 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhDaU-0007uO-N9
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:39:50 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-24049d1643aso2171215ad.3
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:39:46 -0700 (PDT)
+ id 1uhDec-0000Ns-3V
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 16:44:03 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-31eb40b050bso277505a91.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 13:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753907985; x=1754512785; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753908241; x=1754513041; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MveHeWPbl1cK/yYhThcUWupCyeGutMqwJDp8kMUgRWU=;
- b=ASpEZzuXRkaY328ZNi4xXLSECLhHAAnm9Qf/zjOzznXJlIvr7zH0pJed3WLSvouHLA
- PkIAG3sH43SADIMCEzw+fmTwMYtXLQ3M722Q+recUBUrFHPtP8NiCTU+MRQjVObvsCyp
- lIhRnm3fRhXbjBRRBQNzlnQboHHyKf4zwnPnhqP1Xi56emd6BX5O+xYPZ6clDY7hE4p3
- buVS3rFInY9tbkQQ8qSxq4wyFvWlMzh7eV3lHcuAxOehW4swvA4XHceTy5MWqghepY5x
- Pkr5QFpptXn9l2mFnY+u4zz+mCBfHQxSYrtx8XDPmjR+hVZPC8hQKN5WflU7f1Y5cwRJ
- fU1w==
+ bh=t6DcCQMFfcE2XiBGouBemSe1qWTN8iZLRtU+CEFVJRA=;
+ b=ulRvrbxIQ1g8K/CsaLxR1UZheH+RDEQL7glFDpI3Rtn+4nKn9Zj6wbZOqE1RkRphcg
+ uv7MIU34E4e4H0Vw1KjNXs4SeOUhOhq8LAMU2LlxdCNtgPLpBzAKVKcWo1gMMOZt2ZTn
+ EGfnomX+0aiggGjYyeyJmdGmI3boB95KryGu9/GrJjLp9k8nF2ndBvIaIM94o4fmqUlG
+ 58GRK4vGXTWBHvVSmqtgqO4DMmMtJ/hy7cfBU2oniAKiW/kVaiAtDnDk6rCPZoJNcf98
+ pKDo9zoZHddWhRhAKHGF95SnbJSHCCdJazHyPR2bn6S3PIdUyLtkCVA46CIOIO4iHZVo
+ +VBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753907985; x=1754512785;
+ d=1e100.net; s=20230601; t=1753908241; x=1754513041;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MveHeWPbl1cK/yYhThcUWupCyeGutMqwJDp8kMUgRWU=;
- b=X/UMYFlzEJHp/8LlsidTifntNO8vxcKRnI8+3ZheKBAnU746CVagdJ+vqs1ldJPD6N
- SkH/Idwb+Nk/SXyTV4prQkwYPq5ALEPZ3+n84w2OuHUvVFiALYpJeCGKu45QVO39i9bK
- ZZF2vvQUjOKkBA4baJ1YdkkAOpZHD9kMapDxV/70csr2AWcj9sR0s/mMU0X/O0ZsW1pG
- AxIBFX2RfVdQkfTVy3BX2d7KAENhL31NGWjnEA78/yk5FKJNyHLZNVeauf9AyggDf0mj
- apqjgPCk3YTYl1L1izjFhJIPqfBV77tYHFIWx7/Ixmq3WydIP7n1hAJb+4fcm6vD4x9h
- Ky4g==
+ bh=t6DcCQMFfcE2XiBGouBemSe1qWTN8iZLRtU+CEFVJRA=;
+ b=McesuBUzb8UKsVSXZK4loWr3fduqhKBjKSDmfwRaIHWTCBQzKiMhed/c/UETZhHFEo
+ KPfpCiO1mcdYenvCCmnafsjGw4cPPKtYV9Ev+uIdND1EEAXWGdf/DC7iW+v+DmMAtCWA
+ AeRvysTrMhNKSh+C3nV9rrDOqz46dMJH+FVi901ldW2fw4m8gqz/jjcVFrmtz+J0/br9
+ 9sECUnkddmerKbLH4jfkSvp82qF4DPn1GpSH6rvjj5oX8tb1gea67bgpjtzxmd+fxsEz
+ IAu366LC6DtQ4BMm4l4Ioe9UHm9Lj38WTeGkgTv3oqOscSx/Dhh4d8tjkTa/kCw+bfsZ
+ jx7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUKozr/eHL3suQS2XoZUaFFqdKotVtbw5F955/Rlwh2JTNZeeGKMLVeI7ZJPhUGZMggT2ga6+/7GcX@nongnu.org
-X-Gm-Message-State: AOJu0YzfjZGdgajgQSDUtGQzU04zBdpZ6p55zwZ1q8AbEkLwQvJdOway
- nXnd8fCQNPsKYWm3pu4oUjilYYcQ73ePIbaYbsZJZ0oLEPRhocdsFS74lstdmAOc//s=
-X-Gm-Gg: ASbGncsqf2q9KRTvRc6XXkV3x4HZcdH0+MvIGMy/aoaDTN19ikZAnDSh65Ho55tkuvL
- 5KJrc2Kxd5w1k1pXDeibyeIqo+ot03t8cgnMQXGrFiz1/iswliNv7o+7bibJ/EGjgF+zU6AasL0
- kvdkjKJXhG0H1061AQINuuanHGdYaKTpZQHMlilKXJ1VAznoGimTILsC4pIs0lNHtdloC/QT2Vo
- Rt7DVOn2GFwAsuAHfy4sej7wLIht149tURulPBdMz4phIh7B3/0mHt/Um87rVi7h+9Efc3PdcE2
- dBwWFDm9kywQ682+WTzLrHhsVJ+QS7LOmxvk7ytst4xaAoNCsn0lkpvdUUT8UTq8tOFltyXw5lA
- sGRyT9S4jr6B6dhVEzzP5Ya6sfEoBL9jBF3VqRZcSNY7Zpg==
-X-Google-Smtp-Source: AGHT+IFzr8KA7LGQn8XZxmJf0e2X7hSzRp8SNFYGTzyA2vSlV2TdZVOChemx/WMBH8rW9kci3glaxQ==
-X-Received: by 2002:a17:903:1c2:b0:235:ed02:288b with SMTP id
- d9443c01a7336-24096b1c3d7mr69851405ad.30.1753907985270; 
- Wed, 30 Jul 2025 13:39:45 -0700 (PDT)
+ AJvYcCUuJHkZuYeE8ZZuehMI4cV7SqWApuM5roFI/NueaTjhI2Q7Gf3ENBJXmooVNqwO2H4KKLv57Ay+z8l8@nongnu.org
+X-Gm-Message-State: AOJu0YzZlAt3mAtUhPAzhQCsLuu7+DnINDYJ8WhZekj1v1XLIF3S+0qj
+ uyyo9wbES4AI3ZhvomtdF6Xu3jcr1wNzkPnM8n6e4C+VnIFTEREdol5ho1dUwnxGRKM=
+X-Gm-Gg: ASbGncvI0R+PN1ITZF4kbXCKmKvoODJ+a3CNjOQshpdJ+z8HfLYlQIHW46OJCs4wY/N
+ 5Z+BfkkW873t8jLn4iNnS43Oh0SbdoEKmgwMfSN9skHwFC/93egsr5a+A6YagEuPgsrQSFhtIp4
+ 3eS7XXWI88AQNkg37gZqHM3RWfnMt9PP0LYXd/esvxNV5m7guJnUbeOZzDz+/2YTm22ih8xo+QN
+ 6GO+/HrYBEs4N9A+3U5MXsnHu7qSNJfqI8DqsDkB3J421JgQmE6RBgofucdqTACSiYTlCheIkLh
+ ABRAMDh/QdkUPlWtyOxMJVZwkWS5nCjMtSR1LhAeTwk8H1jUkzrSe+2p+5xj8uCIhQMAmkJPMmB
+ cE4Q8RnWQi2PaDALu1l7nB7Yef4ySYHkPQJE=
+X-Google-Smtp-Source: AGHT+IGHLE6B6BZ6ZsfXKBfrs3zvkxdfZAZOA3U75CBiP/rrF5BL5bD742KqjcV4oY5Sw6W7qXU1pQ==
+X-Received: by 2002:a17:90b:3a08:b0:31e:8203:4b9d with SMTP id
+ 98e67ed59e1d1-31f5ea4cc0cmr6322365a91.29.1753908240604; 
+ Wed, 30 Jul 2025 13:44:00 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1ef65d2sm158325ad.31.2025.07.30.13.39.44
+ 98e67ed59e1d1-32084298fc3sm46474a91.31.2025.07.30.13.43.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 13:39:44 -0700 (PDT)
-Message-ID: <64038dbc-fb0d-4cf7-9242-4073149a5b19@linaro.org>
-Date: Wed, 30 Jul 2025 13:39:44 -0700
+ Wed, 30 Jul 2025 13:44:00 -0700 (PDT)
+Message-ID: <8b66b866-eadc-4fef-bb2f-0af4e2300b5c@linaro.org>
+Date: Wed, 30 Jul 2025 13:43:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/82] target/arm: Enable TCR2_ELx.PIE
+Subject: Re: [PATCH 14/82] target/arm: Cache NV1 early in get_phys_addr_lpae
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-12-richard.henderson@linaro.org>
+ <20250727080254.83840-15-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-12-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-15-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,10 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/27/25 1:01 AM, Richard Henderson wrote:
+> We were not using the correct security space in the existing call
+> to nv_nv1_enabled, because it may have been modified for NSTable.
+> 
+> Cache it early, as we will shortly need it elsewhere as well.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/helper.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
+>   target/arm/ptw.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
