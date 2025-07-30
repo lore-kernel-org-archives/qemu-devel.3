@@ -4,165 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE34FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 20:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3E6C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 20:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhDQE-000823-0S; Wed, 30 Jul 2025 16:29:12 -0400
+	id 1uhDQZ-00017S-T0; Wed, 30 Jul 2025 16:29:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uhC6H-0002C6-Vw; Wed, 30 Jul 2025 15:04:44 -0400
-Received: from mail-dm6nam12on20610.outbound.protection.outlook.com
- ([2a01:111:f403:2417::610]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1uhC7A-0006eS-Pb
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 15:05:28 -0400
+Received: from mail-dm6nam12on2055.outbound.protection.outlook.com
+ ([40.107.243.55] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uhC6E-0005qK-9l; Wed, 30 Jul 2025 15:04:28 -0400
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1uhC77-00069H-08
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 15:05:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BOvrZB77yIK2b4r3O3+Z1oM2wFxuunwOsDCd9414XnrW88Gb2i9atYmZxXtzcEROqZ8VC8kgfKviiyLDsnA+LCTwJKLnk9TEcbHeLm3UTWdo1FTFAS4eN3euN9a9xT7LEG0Gl9JQaamC8QZceBbUmoELAeYcl3r4w6rqoND/z5Iu0lCa6cmI4D9vtv/EX+QFAsGLLepuP8YlWfYDckaoTYzj3zUyvj6yjLFBeBqfivwx+7I946p7cSskhfd7+fNeG3u/azXZClrz2CJUw9P1yUzyYi+AVNCayFoS/NH8xz6z8vSp+40vIXyvMbn3fI6gMyTd+IK/izBIrVgHBhlNrg==
+ b=gi6T0uDrqOK9v4Hz3CtpkWhk7F8o1alKMwy27aZUtJUZ3PJaJ9cEmdqRTboWXX7QE807VNVKxBBW98iVaV3PbpsSR8ioSU3ct5G9XQLg59DgV/fuXDslwfKXmFduo95LjxdupX/ZL0E6qp66mcRaPSSU3eQpf3M7NSmAAV8VtocbxeusctVGF38GwoW52JnWmdfb9b+yWe/uwH+cVa+nBQo3te8LbEAn5v6uyTiNSKiRVxBzsLj6wtJnOo3pZYR3z7OuDVkkKOU9oXxHRD9LplHItpCEvEOfQJYbtr1ELQEOvO9oYhwNmk3VtgmodkX6cPJ5EqLUpklInHwipBWMwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=07kzzpFdGouZzAjekYFf8F54M5WQ8sLgVPlNAjmulIg=;
- b=y/IMH1zlSNoVpTHhGJkspvwT6fCMNn3xMpybIh2h/WSJKfQfaYdG6xwnkjYaG0YNJu4XQQaxOVB+7msbYE/u5X9yBrmfVNQp0BCKL4cOnd+ZYxqZ01/YUsE5YRotFxTcny1FqKHu7k007UNdF++SIm1kSclE2nf3wMqjZxqywswHUHMuAZn4ZUDeH+gOnY2dzddieYIn2iMEidKtXhEMD6VkTTk7jxUR1Fkqnh8yavPeN8ins0H+rXSb6+T3hzWKMcUabk3mUUOU+YXN0TGFUW4sX1/U2Qs9Vr95iVCo922CroK96TgeTDXSRKn5SZAy8Bhu5zZkFFKUwb6fb1AMtg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
+ bh=bT5JNxUHFvhL56K9XGQ1AhQ8F5bMa6PFC7rDgOcLm68=;
+ b=ZDNXLIO388Z+Z++1R795Q+fGEeeRWa4C3ThLPyGhLZ/Aox2xNV0QFhLCcVUH6QsMaSkGEooj+BFnDus6X+5wa+91/48nWg20ay+4cCjSIb2H4s9Q0VotApHSjNmKI1ArpFbpLlPKFb4HacjZCW1BN8iiFWI1QvbwbZerWybYez9hlf/mDAuP+h2REPCm/htvVNfyaJ/mZI+OC628GGPdPYDCey3VGpHpAzIlwH6wtu4RXnuOEjS+V64tbJ1JluE+r0jN8uYYRUXJbkqLg+7OGjOjywNBqwHriGk3WMOtqyC3skw/Pz+4m0WEp9bKUNDBYshwewF9+cT8DqGU4LQCtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=07kzzpFdGouZzAjekYFf8F54M5WQ8sLgVPlNAjmulIg=;
- b=iCc0MZiT+H+NvqbL5dhlQI4kir4L7CNXbEb4UjQLSNHR9733wKHI4KhKZ3bHU8T/u+g5wrrORW4YBZEqrjz5OsMiHYTXPvfJ8a6TJQVOGplo3oZp5l1aV4HuryJOZF7RIzB74XZh2SlaHcoMZnk9qEs9D2ryKXd8uff7g7fTsCE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by DS0PR12MB7583.namprd12.prod.outlook.com (2603:10b6:8:13f::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Wed, 30 Jul
- 2025 19:04:18 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8989.010; Wed, 30 Jul 2025
- 19:04:18 +0000
-Date: Wed, 30 Jul 2025 21:04:12 +0200
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 28/48] hw/arm/xlnx-versal: ocm: refactor creation
-Message-ID: <aIpsrIRn42fNF0sW@xse-figlesia-l2.amd.com>
-References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-29-luc.michel@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250716095432.81923-29-luc.michel@amd.com>
-X-ClientProxiedBy: LO4P265CA0308.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:391::7) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ bh=bT5JNxUHFvhL56K9XGQ1AhQ8F5bMa6PFC7rDgOcLm68=;
+ b=dawb59xpE4EVC8W5Ti+hKEdKykmWf76p8G6Coh4oB6yUk5DRw9CD2Ja9Dlblk+tas6jFHf23pPElovz08vASgzDZl2ynmcXr1/n/zbnroYiRc6SGYs0UoQ9SpsPt+1PFCrIWsq5i0ysefE/YYYlBMIe+Laa78rHochW6ck5Z6NI=
+Received: from BL1PR13CA0407.namprd13.prod.outlook.com (2603:10b6:208:2c2::22)
+ by PH8PR12MB6915.namprd12.prod.outlook.com (2603:10b6:510:1bc::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.11; Wed, 30 Jul
+ 2025 19:00:09 +0000
+Received: from MN1PEPF0000F0E5.namprd04.prod.outlook.com
+ (2603:10b6:208:2c2:cafe::b0) by BL1PR13CA0407.outlook.office365.com
+ (2603:10b6:208:2c2::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8989.11 via Frontend Transport; Wed,
+ 30 Jul 2025 19:00:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ MN1PEPF0000F0E5.mail.protection.outlook.com (10.167.242.43) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8989.10 via Frontend Transport; Wed, 30 Jul 2025 19:00:08 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 30 Jul
+ 2025 14:00:03 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.1.0-rc1 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+Date: Wed, 30 Jul 2025 13:57:56 -0500
+Message-ID: <175390187633.2965447.16551760674905835506@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|DS0PR12MB7583:EE_
-X-MS-Office365-Filtering-Correlation-Id: f5b51cf7-89aa-4b76-658b-08ddcf9be24a
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E5:EE_|PH8PR12MB6915:EE_
+X-MS-Office365-Filtering-Correlation-Id: 700392a8-d594-494c-25aa-08ddcf9b4dd1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Qk4xcjgvT1JQQlpIcXB1cDJ6YXcvWUFZUU94MlRBTnJYdmpUWitQTko2ZXgw?=
- =?utf-8?B?TDhhTWdsU2R1S0JJZlRhZ21oMmg5cmhZc0dESDNUNFNFOWt6OFB2QWdTWkVD?=
- =?utf-8?B?bUkyQnlQODIveUQ3YmV0WXFXOFJJTkJKaE43QUxZQytEOWRRR0RSNkxWUnlw?=
- =?utf-8?B?UlgvVHlJTFlVSXJSQnExL1Mxb1JEVGJvd0I1WjgxcXJwZlN0TUFYQ29Kckx3?=
- =?utf-8?B?K3hKMGlSQzlGTi9vVC9GRlZzdjk0QUZ1N2xWVUJ1R3NiZEZYSXY0U3pjK3pO?=
- =?utf-8?B?SXJkS3A0ZWtvM2dudjNhQ2YvRXAvbFVEcGpON0wzQVpyREFyMUpGakd2QU8x?=
- =?utf-8?B?TTFrY0ZyNFZYUk5YaWtUaCswVFg4RGozWFdyVkVDZGZkK1hPc0sySjhLTXIw?=
- =?utf-8?B?ZFlIck9zelhza0orbGk5MXJLUWhxZTQySTFXckI3OHJiM0cwekpWcndXaUJV?=
- =?utf-8?B?TUgxWUlka3FHbVpzOURMQVFJaHVWNi9PUXhzcFpRREFBTXFoeTFxeXZ5ZDhs?=
- =?utf-8?B?Z0VReXRZYVZtbEQxamYwM3RSenM0S1R5M0ZjNzNtZmZDWTlRajR3V1RFdHBB?=
- =?utf-8?B?STh0ZHlkTjlOUmk0OVBXOE9UYmpLcHE3TW5UNy9RY0VYenFlY0ZFK000aG8x?=
- =?utf-8?B?L1ppNjlpK3ROQUtLMnNxTVdRSXNJZkRjK3p2ZG9WRGhPalZHSk04dWozeWtO?=
- =?utf-8?B?dzNwNXp0cDJDNXNsNUZUNzRXK1ZYSlNLWXdXb24yM1lsdEo5djBiMmdHTS96?=
- =?utf-8?B?KzlIS1dwd0JXSlEvU1M2M1JvTHdLR05qeGI1RkRLa2lvU2g5N3JYUVBMekNY?=
- =?utf-8?B?WEg1VW5VcXdrV3VUSjRURkJOcXlteDJmKzlZOGU2MHYybmRHV2tNNVhFenBK?=
- =?utf-8?B?Rkk4MFpVOEl3U2Q4TEhwSEdxaFdBZXRROUZuS2g2V2w4RTlNZmhmSnd0dEdu?=
- =?utf-8?B?WnhkYmd6Rk0zbXVReDVGZER6WmlKVWlJbm4yWHVDb0wxa2F6T0tFWTRwOUpy?=
- =?utf-8?B?RVF1dzFsVnd6bGRHSXNzQ0lXbS9CWjVQUG1pcmNqS1J2NTAxekkzbU1WWkxk?=
- =?utf-8?B?ZUozcVFTNmtwczZva09hV0w3RGljWXBKK2pkbzZ4NGRyUTVBamJqVXlyckVI?=
- =?utf-8?B?MzBPUDI3dkdwaFNHc2Z6M3RSaVRsRktMUzkwSy82M0FnSklaWjlZeGtqdVZn?=
- =?utf-8?B?NndsNXR4c09sUWdrWWZCREl0bmQwV1lxRjlXMXlCY0llT0grRVBUQnYzbzdJ?=
- =?utf-8?B?WWU5VWQ4eHgxc0RMRm1GTjJPaVJJTmE2Tnd2UnFISnFjOFBwQ3oyQjVsdGJ0?=
- =?utf-8?B?N21TS1E0Wkt4U1F1bm5US1dXZlJuZFdNYlZzTkNENXAxblJtNzFLRENKZ2RN?=
- =?utf-8?B?dFIwQXcwL3BDTTc3VG14Y2NWLzUrS3dLS3hVUi9zMWo2ZnRiVGplRnB5VE5k?=
- =?utf-8?B?ZWJRK2ZLaFl0WitIWlBJdGRkcTBudlhrL25XTUtxRXpnS24ySDJQQzE1dXdm?=
- =?utf-8?B?Q0p6VHVCclBZa2taTllLTjRMVkZOMlQzay9iTjhtRi96ZWtTQ2hOcndBM09j?=
- =?utf-8?B?bjZrR3dDWEFFZ09MOGpLS0lHd2dQN3hmRm00c1lOOGE2aGgzeXlnUkQxcko2?=
- =?utf-8?B?c1ZoeXlWWDV3WmpXd2huZ3FIVFVrMVNrT3Nwd0Z4NVk1OEhaWkt1c3Jobm9L?=
- =?utf-8?B?M0tvemtMQ1laVDRVbGZMVFBIVTBYYm9HRFp1YzVRdUU4VHlTYWNJSXlVUVNJ?=
- =?utf-8?B?aEZmWFc3bTlQYmVaQTlmaDZkdEl2YWJqL1lYNXh1RDZDSFJSRWsrVGU3eHJ5?=
- =?utf-8?B?ZS9GYThxNlkxZ3l2bDJ3MDRUK1VsUFNVcmtQbGc2UldjYlVwV3ZtYW5WVngv?=
- =?utf-8?B?Z1JVV0V3Sk5IQ2Y5MERla2h0NnZwRUc4Ylk1NGpWL0FuL0JYMFdZcC8vUjM3?=
- =?utf-8?Q?Ec64dBxlq8k=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aDBGK2F6T0tSU1BNT2VMUkhTb20yeHB4RDdFNE1EMjdBSXg4L0o5TE13K0Mr?=
- =?utf-8?B?bzNHTkJ1OG1pNW1mR1RGTmQrRjlHMHhHVktQbTNwOW9EeHk5akY1WTA1T1JK?=
- =?utf-8?B?VjA4SmJTc2FFOFp2NGxEaElQMnZ1SWhEQ1JmaktiM2h1ejVKMWlpYjZKZkhE?=
- =?utf-8?B?b2lDQzFCY0NmaG5UZWw3OXRScVFJSndJRHZXSHRUM2hwRCt2S3lMcC9McFFh?=
- =?utf-8?B?OEZCT1ZSSkczbkRadTcyRERQTU1OaUZ5TGZvcGhYS1NHS3lsaGdCYWxWTncw?=
- =?utf-8?B?WFU0WGdxQ3oxOURoN3BKR1VlUUJ5ZmdnbWtocXJodTBmZ0grbTA4aXRoWG5j?=
- =?utf-8?B?ZWVMeWFZa1F1T0kvM21OSHFFN2piL1Q4QnQ2TzhvOGdOd2Y1OXc1YjRpY29C?=
- =?utf-8?B?b1hKYU1yQXkybWNHTUw3RmZoZG5MUk0xME5IbDhFYUZVUXdNcTRvSjc1S1ZB?=
- =?utf-8?B?bWpqMnhSMjA0dTEraVI2NXArZW5XcXlzQnMwbWtMSDFHRWwxdURJOUg3NVor?=
- =?utf-8?B?a0xYdy9ZWU9MRi9JbHJmYytzUTNVK0pvMUJ2K1ArbDk1WjJVSVZnUXRpWDFM?=
- =?utf-8?B?blRTUHk2cDZVNURlU1RmMFJzTU16TVhDWjJOdzRLRSs2TlBlZG52WWllbUk0?=
- =?utf-8?B?R1dtdXUyMlNoeGZYOUFBMEw3S09za1phdzlpcGdXTUpaMitkOVlMSTBLbjFT?=
- =?utf-8?B?b2o4UW5VV003dENhVGNPSHV0bExjcklwNjlDVjdMRnZVbm15OXhjUGRTZ3ZN?=
- =?utf-8?B?YkZ3NEZZb3ZWRGRYcU9EMHJZc1M5ekc3V0pMcy8waFZ4Z3ZySTlXS1hFQWg0?=
- =?utf-8?B?TE5JcGo2OGx2VUpWdXliaFYvY1hUdFV5ejhOWEV4SElBWE1NY0RnK2w1T3Qx?=
- =?utf-8?B?eE50bVFzRDF5VEtxaThSdDZERnZhNzVrWHdnQTBHTm5jRXFsYldyQS9IT1FO?=
- =?utf-8?B?Uy81bUZnUWZFL20yaENEbm1DS1RmMnBnaG9Yc2wvQytBaCs1UHZPL2J3ZzVs?=
- =?utf-8?B?N1UzQmwrZk1mN250aXJicnQva0NtT1BDTHRLdzgvTzZSUFpQUW5tbkkwVDdR?=
- =?utf-8?B?cytJWnEyQ09acE5ldVpIU1RFS3U1L3FlKy82YzI1UldzMFFwOWJjRGFPTy9p?=
- =?utf-8?B?eEhCV1AxNWFLcElPQ2s1RkoxTnE1TS9OcGRTcmdGQzZOV3MyUUNyb2RneWNZ?=
- =?utf-8?B?ZDQ3NDhKVElDckliM2VWK08zOHNGdWZEUXRjWjZJSDVYYkJPT3YwandscGdm?=
- =?utf-8?B?K29wckxwOGduak1ieDhzVTFGd1hhZkx0b2cwRXB6WnZrV3lORmVaNmtkQXdx?=
- =?utf-8?B?WWE3VUp6c2k4aUJMaW9mMjlQVDlWUW1WT2lwVm1ybXdLblBKeGlZMnArOEdG?=
- =?utf-8?B?dURuWHY3SGZ2WHVaVlFrRDZzbFZ0SEpnVDc2Mm1taHNLMWR3TXh5VklvL2kr?=
- =?utf-8?B?NUN6d2xKRVJQNGlUTmZBemRQQm9qRlJCLzNhQzFBZnQ0MnJzcWRmemRCWWdM?=
- =?utf-8?B?OEpITzVHZkZNVVBYZHZNb1N1NHBFL052Y2Vwb1VCN3lUSE1PdEtTL3ZiYlVO?=
- =?utf-8?B?bDBGaFRBSlJXKzI5T3YxZGxWWC9Cb0lJRklCWW9YSlpQVnlFNENZSW5XaFdq?=
- =?utf-8?B?REplVzc0T1pVRWNOWW9Oc3ZOMlozQmN6VC9zUk9EMDE5NHh0emVZYjMwT3pT?=
- =?utf-8?B?ZXVLekVmUXhEZnNRZ0pJeUFSRWFrQXBVRVNKWGxldnYzR3VoYTgvWFh6Rnh2?=
- =?utf-8?B?eXMxR1ZSWko2QldGOGZyblArZlNpR3VKZlFuMmFTZTV0OGZLSDFyb05WZVZn?=
- =?utf-8?B?N3FUaVFtSnp1N1pJQXp6WER5SGx3T3FyS0FnajVabW5kRTIwZys3dVh6Y2tv?=
- =?utf-8?B?OFVOVmtiUGtrd1ZDODRxckxoMTNWZXI2R1lMQUNFWUNzYVo3SldxdXdhQzcx?=
- =?utf-8?B?S21SM0FxMHRSc0YwVXZ6bFpNdmdwemJrNzNsdlZZd1cybzdPNTFSU3Y0dURI?=
- =?utf-8?B?aEtkdmJzZFYxT1dUa1BwejFNRzNVR3VPVFQ1OHdVMTRwU1NyV3hPQkJabHpV?=
- =?utf-8?B?NWFSRHlXRE16YlhUTmxIWkFiYUNuZWVKbUpiNGhndWsxNWN4UTZiMXdFS2dK?=
- =?utf-8?Q?XDtlD/O929V3IDumHVsk+PgVZ?=
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|1800799024|376014|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?d21NUjZqK3IrMmhyVWNweDdRYVNHMExCZDM5Rk1nVWJuL0FTNlRlN1lRRjBY?=
+ =?utf-8?B?ckphbUZ0emhYZ0MzdTBPeUpJRHplZUIxeU04eEtuTVJRdXJaT0JjMDhMcWcy?=
+ =?utf-8?B?UEJGSEdIQndBUWhzYzdJQWJrR28vNnIrUTlZdEx6NlA5TXUzVXhpM0k5cTg2?=
+ =?utf-8?B?TzhaVDZxbzUvbjlKUHgwRzNlalVpUTJiejM5MnNuNkQ5c0dvMVJBU0RoMHFv?=
+ =?utf-8?B?UnNPeURoTFVRMXJOR1IvSmVTd00zQlJlTWt6ZENYd0poaGxmOVZobjNnQWxu?=
+ =?utf-8?B?QXRpYytncUE5NWdqbTlVMUxPZk1nckpBbFA4MHdUL3lESENKaGRUOUlOLzZ6?=
+ =?utf-8?B?bFdZY21CZGxYTVBCR3hhK2JSdll5dGtTTHNhQURDZFEwZ3hveUFFWlBja0VS?=
+ =?utf-8?B?NUtvUW9reXVHeE84MlRja1YvOHhrMlMxdEpsR1FhMVJQdWNoTWdWWjJzeUdw?=
+ =?utf-8?B?VDJ6SVVkeGE3b3JpMUlEWkxWeUFRTkF6OFVVbnZpVktKdnk0QnFDU0lUSUc2?=
+ =?utf-8?B?Q1VxWXQ1RytXQVNrcVYvTDU2VFdBSzdZV2ZEVHU1QXBmQTVGcmdKL0R2Wm5l?=
+ =?utf-8?B?dmYvOFV2Y0tDdEhSZXl2UG5WVWdDTVVvUG8wQjU3NGk5NW1NWE9RQll0ZTMx?=
+ =?utf-8?B?V0xKSkhtSkY3Wk4zeDFaeXh1OE1Ea3BoK0lEaTY2dWhRMzd0VnZaMEdkZDJY?=
+ =?utf-8?B?OTBUYnQ3anBlcVVraE5QSi9PQ2JjR2EyUmo1YWIxaVZBVStvaVlHZXlnVHhl?=
+ =?utf-8?B?T2hVSVRhRGt3MXdmT1VTTVV3VWl1UWd4TG02UnBIMVlKWFRncTB2VTIzNElI?=
+ =?utf-8?B?U0NRdis1SUhMRWpBMG9URTM3MjFsd1Ezb1VibGlrT1AzVG5UOTVUZXlLeHA0?=
+ =?utf-8?B?cnBRemZJMDQ2Y3Z0MVJ6K2VLL3lDZzQ1Q0JHb2ZuVkg5bVE1OEcvaFdIakgx?=
+ =?utf-8?B?WEhIdU1wUlkrMkRzWWxONC9nMVgwdXdWbWI2M3hYdmZwZHNhL3B2ak1Eanpw?=
+ =?utf-8?B?QnR2S0RHVVpOWmY3YmdoUXJ3UnZ2NUpqWitTLzJBbWtSZUNLOUJsclRpQkRQ?=
+ =?utf-8?B?a0NtWlV4TENUc2RMdlM1TjE5WUpmNWdVYTFoYVp2RDFRaEtaRTRVWXRBOVRZ?=
+ =?utf-8?B?cGlENTZaeUdlLy9XTkJ4VGk4eWRhUTB0dzIwVlp0V3JTL3lDL2lMUVBnY0dz?=
+ =?utf-8?B?VWhFUktEV2xnUTN4WFd6RGZSZ3VkY1lPbzNIOWhTRTRickMyVDdqZ2J1MEFu?=
+ =?utf-8?B?VHBYbEdtVkluc0RzS0tycUVCYjFadE4rQjlMZXRaUHBTRVRjR3BSMEhDdUZ4?=
+ =?utf-8?B?Z0VhK096YnFVdEdVaDNuSStqR1d0dTNWbmZLb0pWL2lObXEvUDRoT3dGamJu?=
+ =?utf-8?B?WUNIb1hjaU5lVENTOUM0cWVPczBmY2tUREsxdzhJakUveEpuYmtDQlB0TjZt?=
+ =?utf-8?B?V0Z2eVUrSTZLWTh5MlVycWVMWjV4cnVxRDc4MUl5SFZtd0VYOFMyampMTlNO?=
+ =?utf-8?B?cVpQazAwZVV2eWNOVFFoTU03dmZKR2RXd2hSdDRGWWE0eDFZbU92STVjWkVR?=
+ =?utf-8?B?UGxGZ015UXBCZ2JrQjFCWEFlVWFtUmZTaStQNkxjUXFCVHltcHI3UmthOHEx?=
+ =?utf-8?B?YzMwMndHYWo4eDluVTY4RGMzd3l4VzJleUF0NGVFWUQva21QbjlaQmgvQllF?=
+ =?utf-8?B?dEEzbk1JZG9vNURGM1VvZ1lsUHpWdEd6cHJDaWRHeEV5bjVuTWxrN1ZjdDVB?=
+ =?utf-8?B?bFoyY2wxR2lkbWY1YmN1L2xSa21RaGJmdEZvOXZOeGpIRHlRN2l1UzhHdExZ?=
+ =?utf-8?B?UGJhdGRhWjZvNjJrOXYyNm51cVhhWE85dU9BcFhtTXZDS3NkWFlIYVlocllT?=
+ =?utf-8?B?OXNZdTVWT1hjMERJeWZvNU9EUnlIWHZBdEkzMzBSMVVoalQ4ZWZpR05XRGRx?=
+ =?utf-8?B?U0xBeTgyS2dqQyt6TTVTbEMwQU5sMzNQRFkyMDY2MkZ1ejZGL2pIREFJQUVv?=
+ =?utf-8?B?a1lNRXVieE1nPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014)(13003099007);
+ DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f5b51cf7-89aa-4b76-658b-08ddcf9be24a
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2025 19:04:18.2679 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2025 19:00:08.8469 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 700392a8-d594-494c-25aa-08ddcf9b4dd1
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dfgf9fBHALZHvcIQ18E7NL8tP/UsR1ws1PJTgdsRKUkuCt1Fvw/AFVyCIXOj7mgUNoRcq68/0dZtFxNHyU6qaA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7583
-Received-SPF: permerror client-ip=2a01:111:f403:2417::610;
- envelope-from=francisco.iglesias@amd.com;
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E5.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6915
+Received-SPF: permerror client-ip=40.107.243.55;
+ envelope-from=Michael.Roth@amd.com;
  helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -179,117 +155,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 11:54:10AM +0200, Luc Michel wrote:
-> Refactor the OCM creation using the VersalMap structure.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+Hello,
 
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+On behalf of the QEMU Team, I'd like to announce the availability of the
+second release candidate for the QEMU 10.1 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-> ---
->  include/hw/arm/xlnx-versal.h |  4 ----
->  hw/arm/xlnx-versal.c         | 20 ++++++++++++++++----
->  2 files changed, 16 insertions(+), 8 deletions(-)
-> 
-> diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-> index 62b8d234ecb..7be5a6ccf4d 100644
-> --- a/include/hw/arm/xlnx-versal.h
-> +++ b/include/hw/arm/xlnx-versal.h
-> @@ -46,14 +46,10 @@ struct Versal {
->      struct {
->          /* 4 ranges to access DDR.  */
->          MemoryRegion mr_ddr_ranges[4];
->      } noc;
->  
-> -    struct {
-> -        MemoryRegion mr_ocm;
-> -    } lpd;
-> -
->      struct {
->          uint32_t clk_25mhz;
->          uint32_t clk_125mhz;
->          uint32_t gic;
->      } phandle;
-> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index 3905549b32e..f46c73ac8e7 100644
-> --- a/hw/arm/xlnx-versal.c
-> +++ b/hw/arm/xlnx-versal.c
-> @@ -71,10 +71,15 @@ FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
->  typedef struct VersalSimplePeriphMap {
->      uint64_t addr;
->      int irq;
->  } VersalSimplePeriphMap;
->  
-> +typedef struct VersalMemMap {
-> +    uint64_t addr;
-> +    uint64_t size;
-> +} VersalMemMap;
-> +
->  typedef struct VersalGicMap {
->      int version;
->      uint64_t dist;
->      uint64_t redist;
->      uint64_t cpu_iface;
-> @@ -108,10 +113,12 @@ typedef struct VersalCpuClusterMap {
->  
->      enum StartPoweredOffMode start_powered_off;
->  } VersalCpuClusterMap;
->  
->  typedef struct VersalMap {
-> +    VersalMemMap ocm;
-> +
->      VersalCpuClusterMap apu;
->      VersalCpuClusterMap rpu;
->  
->      VersalSimplePeriphMap uart[2];
->      size_t num_uart;
-> @@ -207,10 +214,15 @@ typedef struct VersalMap {
->          int irq_num;
->      } reserved;
->  } VersalMap;
->  
->  static const VersalMap VERSAL_MAP = {
-> +    .ocm = {
-> +        .addr = 0xfffc0000,
-> +        .size = 0x40000,
-> +    },
-> +
->      .apu = {
->          .name = "apu",
->          .cpu_model = ARM_CPU_TYPE_NAME("cortex-a72"),
->          .num_cluster = 1,
->          .num_core = 2,
-> @@ -1605,10 +1617,11 @@ static uint32_t fdt_add_clk_node(Versal *s, const char *name,
->  
->  static void versal_realize(DeviceState *dev, Error **errp)
->  {
->      Versal *s = XLNX_VERSAL_BASE(dev);
->      DeviceState *slcr, *ospi;
-> +    MemoryRegion *ocm;
->      Object *container;
->      const VersalMap *map = versal_get_map(s);
->      size_t i;
->  
->      if (s->cfg.fdt == NULL) {
-> @@ -1678,14 +1691,13 @@ static void versal_realize(DeviceState *dev, Error **errp)
->  
->      versal_map_ddr(s);
->      versal_unimp(s);
->  
->      /* Create the On Chip Memory (OCM).  */
-> -    memory_region_init_ram(&s->lpd.mr_ocm, OBJECT(s), "ocm",
-> -                           MM_OCM_SIZE, &error_fatal);
-> -
-> -    memory_region_add_subregion_overlap(&s->mr_ps, MM_OCM, &s->lpd.mr_ocm, 0);
-> +    ocm = g_new(MemoryRegion, 1);
-> +    memory_region_init_ram(ocm, OBJECT(s), "ocm", map->ocm.size, &error_fatal);
-> +    memory_region_add_subregion_overlap(&s->mr_ps, map->ocm.addr, ocm, 0);
->  }
->  
->  void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk)
->  {
->      DeviceState *sdhci, *card;
-> -- 
-> 2.50.0
-> 
+  http://download.qemu.org/qemu-10.1.0-rc1.tar.xz
+  http://download.qemu.org/qemu-10.1.0-rc1.tar.xz.sig
+
+You can help improve the quality of the QEMU 10.1 release by testing this
+release and reporting bugs using our GitLab issue tracker:
+
+  https://gitlab.com/qemu-project/qemu/-/milestones/16
+
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/10.1
+
+Please add entries to the ChangeLog for the 10.1 release below:
+
+  http://wiki.qemu.org/ChangeLog/10.1
+
+Thank you to everyone involved!
+
+Changes since rc0:
+
+9b80226ece: Update version for the v10.1.0-rc1 release (Stefan Hajnoczi)
+a95b3c0ad8: MAINTAINERS: Cover docs/devel/qapi-domain.rst properly (Markus =
+Armbruster)
+a14f6d3288: docs/qapi-domain: Fix typos (Markus Armbruster)
+1047cc2816: tests/qapi-schema: Bury dead test case doc-non-first-section (M=
+arkus Armbruster)
+a3004697f7: qapi/accelerator: Fix markup of heading (Markus Armbruster)
+d4d91ed42e: qapi: Add more cross-references (Markus Armbruster)
+67e4808403: hw/display/sm501: fix missing error-report.h (Cl=C3=A9ment Chig=
+ot)
+653a75a9d7: roms/Makefile: fix npcmNxx_bootrom build rules (Michael Tokarev)
+2865bf1c57: system/physmem: fix use-after-free with dispatch (Pierrick Bouv=
+ier)
+014bb30d21: hw/xen/passthrough: add missing error-report include (Adam Will=
+iamson)
+2bfcd27e00: hw/net/cadence_gem: fix register mask initialization (Luc Miche=
+l)
+b496a392fe: migration: rename target.c to vfio.c (Pierrick Bouvier)
+962316a6a3: hw/vfio/vfio-migration: Remove unnecessary 'qemu/typedefs.h' in=
+clude (Philippe Mathieu-Daud=C3=A9)
+8e8cb3b572: hw/display/qxl-render: fix qxl_unpack_chunks() chunk size calcu=
+lation (Michael Tokarev)
+e895095c78: target/mips: Only update MVPControl.EVP bit if executed by mast=
+er VPE (Philippe Mathieu-Daud=C3=A9)
+0db7e4cb62: vfio/igd: Fix VGA regions are not exposed in legacy mode (Tomit=
+a Moeko)
+e0b33efe2a: vfio/igd: Require host VGA decode for legacy mode (Tomita Moeko)
+9751377c3a: vfio: fix sub-page bar after cpr (Steve Sistare)
+1dc1220fbd: i386: Build SEV only for 64-bit target (C=C3=A9dric Le Goater)
+1ebdd2d926: hw/i386: Fix 'use-legacy-x86-rom' property compatibility (C=C3=
+=A9dric Le Goater)
+62e1fa22f5: qga: Add cross-references (Markus Armbruster)
+ef7e21964d: qga: Rephrase return docs to avoid type name (Markus Armbruster)
+d27340ff8a: qga: Remove trivial "Returns:" sections (Markus Armbruster)
+bb743978f0: qga: Fix guest-network-get-route return value documentation (Ma=
+rkus Armbruster)
+cac08383f0: tests/functional: expose sys.argv to unittest.main (Alex Benn=
+=C3=A9e)
+6da616bb17: tests/docker: handle host-arch selection for all-test-cross (Al=
+ex Benn=C3=A9e)
+408c862910: tests/docker: add --arch-only to qemu deps for all-test-cross (=
+Alex Benn=C3=A9e)
+25aaf0cb7f: tests/tcg: reduce the number of plugin tests combinations (Alex=
+ Benn=C3=A9e)
+d0aa5df775: configure: expose PYTHON to test/tcg/config-host.mak (Alex Benn=
+=C3=A9e)
+ab8bf8f6e4: tests/tcg: don't include multiarch tests if not supported (Alex=
+ Benn=C3=A9e)
+a80e2c26f1: tests/tcg: remove ADDITIONAL_PLUGINS_TESTS (Alex Benn=C3=A9e)
+78029e9283: tests/tcg: skip libsyscall.so on softmmu tests (Alex Benn=C3=A9=
+e)
+ebbc04adbb: tests/functional: add hypervisor test for aarch64 (Alex Benn=C3=
+=A9e)
+f1f25eed03: docs/user: expand section on threading (Alex Benn=C3=A9e)
+bd0eb9b0cd: docs/user: slightly reword section on system calls (Alex Benn=
+=C3=A9e)
+1ab41da6bb: docs/user: clean up headings (Alex Benn=C3=A9e)
+9b6656668f: docs/system: reword the TAP notes to remove tarball ref (Alex B=
+enn=C3=A9e)
+8d6c7de1cc: docs/user: clarify user-mode expects the same OS (Alex Benn=C3=
+=A9e)
+e35215db40: linux-user/aarch64: Support ZT_MAGIC signal frame record (Peter=
+ Maydell)
+99870aff90: linux-user/aarch64: Support TPIDR2_MAGIC signal frame record (P=
+eter Maydell)
+3cdd990aa9: linux-user/aarch64: Clear TPIDR2_EL0 when delivering signals (P=
+eter Maydell)
+feea87cd6b: target/i386: fix width of third operand of VINSERTx128 (Paolo B=
+onzini)
+fbc8fb36e3: scripts: add script to help distros use global Rust packages (P=
+aolo Bonzini)
+a7aa2af13e: target/arm: hvf: stubbing reads to LORC_EL1 (Mohamed Mediouni)
+bd52d8bc9e: hw/arm/smmu-common: Avoid using inlined functions with external=
+ linkage (JianChunfu)
+7428c46c06: target/arm: Fix LD1W, LD1D to 128-bit elements (Peter Maydell)
+4726be1c69: target/arm: Pass correct esize to sve_st1_z() for LD1Q, ST1Q (P=
+eter Maydell)
+1c6aae5efb: target/arm: LD1Q, ST1Q are vector + scalar, not scalar + vector=
+ (Peter Maydell)
+b79f944e09: decodetree: Infer argument set before inferring format (Richard=
+ Henderson)
+aba39946ba: target/arm: Pack mtedesc into upper 32 bits of descriptor (Rich=
+ard Henderson)
+0e171b427b: target/arm: Expand the descriptor for SME/SVE memory ops to i64=
+ (Richard Henderson)
+b8882becd5: hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk size cal=
+culation (Michael Tokarev)
+012842c075: log: make '-msg timestamp=3Don' apply to all qemu_log usage (Da=
+niel P. Berrang=C3=A9)
+0fb961e392: MAINTAINERS: remove myself as ppc maintainer/reviewer (Daniel H=
+enrique Barboza)
+cf8f0f006d: MAINTAINERS: Remove Fr=C3=A9d=C3=A9ric as reviewer (C=C3=A9dric=
+ Le Goater)
+076b4306f9: MAINTAINERS: Add myself as a reviewer for XIVE (Gautam Menghani)
+01286ee41e: MAINTAINERS: Add myself as a reviewer of PowerNV emulation (Adi=
+tya Gupta)
+884216cf41: MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs (Chinm=
+ay Rath)
+1da3e7f863: MAINTAINERS: Adding myself as reviewer for PPC KVM cpus. (Harsh=
+ Prateek Bora)
+c4103b2797: MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr (Ha=
+rsh Prateek Bora)
+0db6f79802: crypto: add tracing & warning about GNUTLS countermeasures (Dan=
+iel P. Berrang=C3=A9)
+eb3618e9e2: migration: activate TLS thread safety workaround (Daniel P. Ber=
+rang=C3=A9)
+edea818371: io: add support for activating TLS thread safety workaround (Da=
+niel P. Berrang=C3=A9)
+24ad5e1995: crypto: implement workaround for GNUTLS thread safety problems =
+(Daniel P. Berrang=C3=A9)
+eaec556bc8: migration: show error message when postcopy fails (Daniel P. Be=
+rrang=C3=A9)
+fd1514cbd9: migration: HMP: Fix postcopy latency distribution label (Fabian=
+o Rosas)
+2251f9ac92: migration: HMP: Fix possible out-of-bounds access (Fabiano Rosa=
+s)
+f63000d943: rust/pl011: merge device_class.rs into device.rs (Manos Pitsidi=
+anakis)
+0d70c5aa1b: rust: devices are not staticlibs (Paolo Bonzini)
 
