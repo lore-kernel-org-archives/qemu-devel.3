@@ -4,86 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574A7C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 09:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC11C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 09:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh2sx-0006cQ-MH; Wed, 30 Jul 2025 05:14:07 -0400
+	id 1uh2tm-0007XZ-GW; Wed, 30 Jul 2025 05:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uh2fI-0000lq-C5
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 05:00:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uh2dd-0007Lc-Hh
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:58:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uh2fG-0007pR-3r
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 05:00:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uh2da-0007c6-Gb
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:58:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753865996;
+ s=mimecast20190719; t=1753865891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GAmyZEchioPyFr1TyHxk8HLjaiNeIk+6KbF9ZSXgp50=;
- b=bb/cRR33BcJFbWaZEEmIDZfIdKXQ/urqa3OPSgVOE7njTF94mZhe2a3O2b1KGxobjm/VeF
- pDatUY1Ad1UMZbmqzSauZKmPjMPqNAw4QAua1wSMv4o80N8Cn/SbWgAo2mBsZru0RzrMR8
- 3Nzpni5PLVMBgQEV8yT9l7CssoqcSuQ=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Y6B7r/L+AgEdRwJmEfe8LfiGeIspLhpnXLX0QLwDVHo=;
+ b=RiTQt6BIZgg4OmjBiZXCpHXk0mo6n+P0vIvhDLUn9avh67H7mMsUC1NxpJ7PO3liLSBmvn
+ z1LCOhwtkmLOKl/CHiqylaolLPZVHlUF+uPxk4Q5slM+CQ/jVJgwIfP0zCDOjMN52GhfDd
+ TYjF/1o8ZaLNfP4jBLWJTnlpkCNwgOU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-nVGDisKpOzKYZ_3GwP7MRg-1; Wed, 30 Jul 2025 04:59:51 -0400
-X-MC-Unique: nVGDisKpOzKYZ_3GwP7MRg-1
-X-Mimecast-MFC-AGG-ID: nVGDisKpOzKYZ_3GwP7MRg_1753865990
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3141f9ce4e2so10610578a91.1
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 01:59:51 -0700 (PDT)
+ us-mta-554-2SSn5OY5NdGwaIPjxovHgA-1; Wed, 30 Jul 2025 04:58:09 -0400
+X-MC-Unique: 2SSn5OY5NdGwaIPjxovHgA-1
+X-Mimecast-MFC-AGG-ID: 2SSn5OY5NdGwaIPjxovHgA_1753865889
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45600d19a2aso50290425e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 01:58:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753865990; x=1754470790;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GAmyZEchioPyFr1TyHxk8HLjaiNeIk+6KbF9ZSXgp50=;
- b=DLjXkIDR2dkk9O/dVHfwQpD3USXMuZrps195D8f+NHhChelP3468WOFeNbvme1FqF1
- 67IIBuKrRuoQINM9oKYOtjpgCJpDx/xixz9Sr54FYm68KYAQ1F3QIgZ4KuIO12KagOrp
- wrtSzEUEu/pPrOG/caGVJ6QxtR2gUgTiAqAKiZPGCWP9SI0yDN1ADot434oGLbEea3FH
- J0TIbhCTP3qCekh4+wj1DG5457pknettFWxQLxwRTp/YWM96oZYMPhO7cjI9N71rf1zA
- Lj20zdaKE49aAiV2c1unYvMzm7CmkG9E8cLWOCggvLBQyKci+5rvq7MMgw2YSANAu7xx
- AtKw==
-X-Gm-Message-State: AOJu0YzVHhM1s10O7mSFGkbfV5w4A/NJ+u25DmNPOsHMAs6V5KxsRkf4
- lLCIDbVaPV9zi0K0r80sErK5naBmLCgc0HY8MMzDE2A7ICiuCKLUzwfnPWjzN8A1jumY+Sm9RIg
- P6r+v/xTcVKpcriTs76R+QDxrTcPfY8irqo9/j24RL3H27PaY5fHo9Mnlq+kOc7ir/Cg9rKM1/j
- RYpCcg/8ziEkW5mtaYHr3E3G/7kQdmKoE=
-X-Gm-Gg: ASbGnctG84AKDq3mIYmAAVt64j7H6uByiWfHmFOPsmmkT6ifa4Ikn8Mig1uFAh29Dw8
- yDYyj6ubq5T39pYtDMaJUBBmLa5iGJMIjlogS2Bp/lOS6rmvuOJ4F+Vt1U1tksvYKreuguZJpIA
- u2Y8+8jv1Rro77oN9AOOkQ
-X-Received: by 2002:a17:90a:c107:b0:31f:11d6:cea0 with SMTP id
- 98e67ed59e1d1-31f5dfad9f1mr3854777a91.27.1753865990331; 
- Wed, 30 Jul 2025 01:59:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkoQ1s84dUm9fAmbteP37+wM7TzkxO+BwC2/U6bCFzTw3ODxQu4wJGSAzY/PjrbqspT4x4rBxnz3JTLyQ+V7A=
-X-Received: by 2002:a17:90a:c107:b0:31f:11d6:cea0 with SMTP id
- 98e67ed59e1d1-31f5dfad9f1mr3854740a91.27.1753865989845; Wed, 30 Jul 2025
- 01:59:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753865888; x=1754470688;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y6B7r/L+AgEdRwJmEfe8LfiGeIspLhpnXLX0QLwDVHo=;
+ b=eXF58014eNlL8wMrBwE+elPxeyz/xInd78+f8Kopa7YDL87/7Y1aAbT0MtcTOFFtWT
+ 834roe4lrz2bsEm/QUhsPC4a274x+W+LCNFWGFKf0FX+2ohNjhqriw0TLJ4P1Bl1hwZf
+ jX7/r8lSx6IRokWu7eWSSVtb8dVL87ymbtM8inS296mPTA7UQA7BKswCO9Z5UH4NkESG
+ 8j8Vj0czX+8D87t+AMFqGhon//Yxc6jfJGU/Dvkr38tE+LFRGuBe9CBEC2sotSUJYaYR
+ mlVBVhfPzjrsovUoRMtHhuTd9Sbx6rQYDFfvNdLbT2VJi3ui/ZeansJlm9wKRBkABI1d
+ GKbw==
+X-Gm-Message-State: AOJu0YyfCk3fQMqG5HA1uEswq0OEFwYkeSD7oIaWvhiWuRz0wTo13iUq
+ WqWfUDZbK1PEjf1Tu5X/r0a6V45Z/grZ6LcxmJRkdL/5LIFncz0BHYwzOCkkT/FbI7cBRQu6DHO
+ ppIZyZ0w21ZtdLzofoU2ObZVKXDYAKGM//AmyaEgmPYG/iNQEeaiTKYew
+X-Gm-Gg: ASbGncvcLFnnloTS4IqSCgRhr2fGvRAY8UG6k5NvN+yBticrCmtJrIS9jd4KdqieRQ+
+ w0Q4EH6VpMxeL7YIlQe+wlk3hpuHNL8gBnRGaGIlgGyDaN3JSJGuf+8fgrr4Xxd+BkIUg61QFAa
+ /kfs65fjPa6vFPaODstlyYrVz3fFqYHl7GkWSwDJZ4WTVwRjm2dqK9H8FIAMOZje4R9+oAs++s7
+ YJahLaU2wbb0fbOCAFGmwBupsOG6bCl250bgjBpCvCu7VTpD8HQaCJ6kZi/o96Nb7WynBiKDFwN
+ HLgDiAaebYqgU0VnoHcsfzBgs9iNV6NASHhStX/2hBrWIm61FamDrkw/5HGll/h0pJzUFSIAs8r
+ w76A=
+X-Received: by 2002:a05:600c:8b2a:b0:456:f1e:205c with SMTP id
+ 5b1f17b1804b1-45892b947e6mr23724835e9.4.1753865888441; 
+ Wed, 30 Jul 2025 01:58:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAOuM1PkgsFCskTPBdPFJ5pJh+Xe7lBFBZA/QZYKw8vB6LL3+K0Bycg+K0A+WBA4uIUiwtmw==
+X-Received: by 2002:a05:600c:8b2a:b0:456:f1e:205c with SMTP id
+ 5b1f17b1804b1-45892b947e6mr23724585e9.4.1753865888022; 
+ Wed, 30 Jul 2025 01:58:08 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-115-093.pools.arcor-ip.net.
+ [47.64.115.93]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4589539de63sm18271415e9.23.2025.07.30.01.58.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Jul 2025 01:58:07 -0700 (PDT)
+Message-ID: <8f0c1352-6dba-4b44-bbb2-f2ab83458058@redhat.com>
+Date: Wed, 30 Jul 2025 10:58:06 +0200
 MIME-Version: 1.0
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-6-jonah.palmer@oracle.com>
- <CAJaqyWd7z-5cHojosMA5mrPQiD8Lz76zF=pmUrQ0cuuXvuSLzg@mail.gmail.com>
- <9f6be5cb-60b8-4c13-a80f-800f409033f0@oracle.com>
-In-Reply-To: <9f6be5cb-60b8-4c13-a80f-800f409033f0@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 30 Jul 2025 10:59:12 +0200
-X-Gm-Features: Ac12FXx1ld8Hu1F5v7fo07MfDtJzsBk3Hy4_XYE1gVQP5tA2Tbe3nrL3ZPVQb58
-Message-ID: <CAJaqyWfqc=DhCRcHrK-XtT4NvJQ+jm5s5XRDN-qT-TopSkDZaw@mail.gmail.com>
-Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
- virtio_load for iterative migration
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- eblake@redhat.com, armbru@redhat.com, jasowang@redhat.com, mst@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] qga: Fix ubsan warning
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ qemu-trivial@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250730072709.27077-1-thuth@redhat.com>
+ <CAPMcbCp6cDWnV4PLnyYO5+rGoSeFEPSvGAOyJjK4N8r5Zkdv_w@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAPMcbCp6cDWnV4PLnyYO5+rGoSeFEPSvGAOyJjK4N8r5Zkdv_w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,241 +154,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 28, 2025 at 6:24=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
->
->
-> On 7/28/25 11:30 AM, Eugenio Perez Martin wrote:
-> > On Tue, Jul 22, 2025 at 2:41=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> Iterative live migration for virtio-net sends an initial
-> >> VMStateDescription while the source is still active. Because data
-> >> continues to flow for virtio-net, the guest's avail index continues to
-> >> increment after last_avail_idx had already been sent. This causes the
-> >> destination to often see something like this from virtio_error():
-> >>
-> >> VQ 0 size 0x100 Guest index 0x0 inconsistent with Host index 0xc: delt=
-a 0xfff4
-> >>
-> >> This patch suppresses this consistency check if we're loading the
-> >> initial VMStateDescriptions via iterative migration and unsuppresses
-> >> it for the stop-and-copy phase when the final VMStateDescriptions
-> >> (carrying the correct indices) are loaded.
-> >>
-> >> A temporary VirtIODevMigration migration data structure is introduced =
-here to
-> >> represent the iterative migration process for a VirtIODevice. For now =
-it
-> >> just holds a flag to indicate whether or not the initial
-> >> VMStateDescription was sent during the iterative live migration proces=
-s.
-> >>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/net/virtio-net.c        | 13 +++++++++++++
-> >>   hw/virtio/virtio.c         | 32 ++++++++++++++++++++++++--------
-> >>   include/hw/virtio/virtio.h |  6 ++++++
-> >>   3 files changed, 43 insertions(+), 8 deletions(-)
-> >>
-> >> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> >> index 86a6fe5b91..b7ac5e8278 100644
-> >> --- a/hw/net/virtio-net.c
-> >> +++ b/hw/net/virtio-net.c
-> >> @@ -3843,12 +3843,19 @@ static void virtio_net_save_cleanup(void *opaq=
-ue)
-> >>
-> >>   static int virtio_net_load_setup(QEMUFile *f, void *opaque, Error **=
-errp)
-> >>   {
-> >> +    VirtIONet *n =3D opaque;
-> >> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> >> +    vdev->migration =3D g_new0(VirtIODevMigration, 1);
-> >> +    vdev->migration->iterative_vmstate_loaded =3D false;
-> >> +
-> >>       return 0;
-> >>   }
-> >>
-> >>   static int virtio_net_load_state(QEMUFile *f, void *opaque, int vers=
-ion_id)
-> >>   {
-> >>       VirtIONet *n =3D opaque;
-> >> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> >> +    VirtIODevMigration *mig =3D vdev->migration;
-> >>       uint64_t flag;
-> >>
-> >>       flag =3D qemu_get_be64(f);
-> >> @@ -3861,6 +3868,7 @@ static int virtio_net_load_state(QEMUFile *f, vo=
-id *opaque, int version_id)
-> >>           case VNET_MIG_F_INIT_STATE:
-> >>           {
-> >>               vmstate_load_state(f, &vmstate_virtio_net, n, VIRTIO_NET=
-_VM_VERSION);
-> >> +            mig->iterative_vmstate_loaded =3D true;
-> >
-> > This code will need to change if we send the status iteratively more
-> > than once. For example, if the guest changes the mac address, the
-> > number of vqs, etc.
-> >
->
-> Hopefully we can reach a solution where we'd only need to call the full
-> vmstate_load_state(f, &vmstate_virtio_net, ...) for a virtio-net device
-> once and then handle any changes afterwards individually.
->
-> Perhaps, maybe for simplicity, we could just send the
-> sub-states/subsections (instead of the whole state again) iteratively if
-> there were any changes in the fields that those sub-states/subsections
-> govern.
->
-> Definitely something I'll keep in mind as this series develops.
->
-> > In my opinion, we should set a flag named "in_iterative_migration" (or
-> > equivalent) in virtio_net_load_setup and clear it in
-> > virtio_net_load_cleanup. That's enough to tell in virtio_load if we
-> > should perform actions like checking for inconsistent indices.
-> >
->
-> I did actually try something like this but I realized that the
-> .load_cleanup and .save_cleanup hooks actually fire at the very end of
-> live migration (e.g. during the stop-and-copy phase). I thought they
-> fired at the end of the iterative portion of live migration, but this
-> didn't appear to be the case.
->
+On 30/07/2025 10.28, Kostiantyn Kostiuk wrote:
+> Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com 
+> <mailto:kkostiuk@redhat.com>>
+> 
+> @Thomas Huth Is this fix critical to merge during 
+> code freeze?
 
-Ok that makes a lot of sense. What about .switchover_start ? We need
-the switchover capability though, not sure if it is a good idea to
-mandate it as a requirement. So yes, maybe this patch is the most
-reliable way to do so.
+I don't think so, the problem only occurs when compiling with 
+--enable-ubsan, so normal users should not be affected by this.
+
+  Thomas
 
 
-> >>               break;
-> >>           }
-> >>           default:
-> >> @@ -3875,6 +3883,11 @@ static int virtio_net_load_state(QEMUFile *f, v=
-oid *opaque, int version_id)
-> >>
-> >>   static int virtio_net_load_cleanup(void *opaque)
-> >>   {
-> >> +    VirtIONet *n =3D opaque;
-> >> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> >> +    g_free(vdev->migration);
-> >> +    vdev->migration =3D NULL;
-> >> +
-> >>       return 0;
-> >>   }
-> >>
-> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >> index 5534251e01..68957ee7d1 100644
-> >> --- a/hw/virtio/virtio.c
-> >> +++ b/hw/virtio/virtio.c
-> >> @@ -3222,6 +3222,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int=
- version_id)
-> >>       int32_t config_len;
-> >>       uint32_t num;
-> >>       uint32_t features;
-> >> +    bool inconsistent_indices;
-> >>       BusState *qbus =3D qdev_get_parent_bus(DEVICE(vdev));
-> >>       VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
-> >>       VirtioDeviceClass *vdc =3D VIRTIO_DEVICE_GET_CLASS(vdev);
-> >> @@ -3365,6 +3366,16 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, in=
-t version_id)
-> >>           if (vdev->vq[i].vring.desc) {
-> >>               uint16_t nheads;
-> >>
-> >> +           /*
-> >> +            * Ring indices will be inconsistent during iterative migr=
-ation. The actual
-> >> +            * indices will be sent later during the stop-and-copy pha=
-se.
-> >> +            */
-> >> +            if (vdev->migration) {
-> >> +                inconsistent_indices =3D !vdev->migration->iterative_=
-vmstate_loaded;
-> >> +            } else {
-> >> +                inconsistent_indices =3D false;
-> >> +            }
-> >
-> > Nit, "inconsistent_indices =3D vdev->migration &&
-> > !vdev->migration->iterative_vmstate_loaded" ? I'm happy with the
-> > current "if else" too, but I think the one line is clearer. Your call
-> > :).
-> >
->
-> Ah, nice catch! I like the one-liner more :) Will change this for next
-> series.
->
-> >> +
-> >>               /*
-> >>                * VIRTIO-1 devices migrate desc, used, and avail ring a=
-ddresses so
-> >>                * only the region cache needs to be set up.  Legacy dev=
-ices need
-> >> @@ -3384,14 +3395,19 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, i=
-nt version_id)
-> >>                   continue;
-> >>               }
-> >>
-> >> -            nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].la=
-st_avail_idx;
-> >> -            /* Check it isn't doing strange things with descriptor nu=
-mbers. */
-> >> -            if (nheads > vdev->vq[i].vring.num) {
-> >> -                virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x =
-"
-> >> -                             "inconsistent with Host index 0x%x: delt=
-a 0x%x",
-> >> -                             i, vdev->vq[i].vring.num,
-> >> -                             vring_avail_idx(&vdev->vq[i]),
-> >> -                             vdev->vq[i].last_avail_idx, nheads);
-> >> +            if (!inconsistent_indices) {
-> >> +                nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i=
-].last_avail_idx;
-> >> +                /* Check it isn't doing strange things with descripto=
-r numbers. */
-> >> +                if (nheads > vdev->vq[i].vring.num) {
-> >> +                    virtio_error(vdev, "VQ %d size 0x%x Guest index 0=
-x%x "
-> >> +                                 "inconsistent with Host index 0x%x: =
-delta 0x%x",
-> >> +                                 i, vdev->vq[i].vring.num,
-> >> +                                 vring_avail_idx(&vdev->vq[i]),
-> >> +                                 vdev->vq[i].last_avail_idx, nheads);
-> >> +                    inconsistent_indices =3D true;
-> >> +                }
-> >> +            }
-> >> +            if (inconsistent_indices) {
-> >>                   vdev->vq[i].used_idx =3D 0;
-> >>                   vdev->vq[i].shadow_avail_idx =3D 0;
-> >>                   vdev->vq[i].inuse =3D 0;
-> >> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >> index 214d4a77e9..06b6e6ba65 100644
-> >> --- a/include/hw/virtio/virtio.h
-> >> +++ b/include/hw/virtio/virtio.h
-> >> @@ -98,6 +98,11 @@ enum virtio_device_endian {
-> >>       VIRTIO_DEVICE_ENDIAN_BIG,
-> >>   };
-> >>
-> >> +/* VirtIODevice iterative live migration data structure */
-> >> +typedef struct VirtIODevMigration {
-> >> +    bool iterative_vmstate_loaded;
-> >> +} VirtIODevMigration;
-> >> +
-> >>   /**
-> >>    * struct VirtIODevice - common VirtIO structure
-> >>    * @name: name of the device
-> >> @@ -151,6 +156,7 @@ struct VirtIODevice
-> >>       bool disable_legacy_check;
-> >>       bool vhost_started;
-> >>       VMChangeStateEntry *vmstate;
-> >> +    VirtIODevMigration *migration;
-> >>       char *bus_name;
-> >>       uint8_t device_endian;
-> >>       /**
-> >> --
-> >> 2.47.1
-> >>
-> >
->
+> On Wed, Jul 30, 2025 at 10:27 AM Thomas Huth <thuth@redhat.com 
+> <mailto:thuth@redhat.com>> wrote:
+> 
+>     From: Thomas Huth <thuth@redhat.com <mailto:thuth@redhat.com>>
+> 
+>     When compiling QEMU with --enable-ubsan there is a undefined behavior
+>     warning when running "make check":
+> 
+>       .../qga/commands-linux.c:452:15: runtime error: applying non-zero
+>     offset 5 to null pointer
+>       #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-
+>     linux.c:452:15
+> 
+>     Fix it by avoiding the additional pointer variable here and use an
+>     "offset" integer variable instead.
+> 
+>     Signed-off-by: Thomas Huth <thuth@redhat.com <mailto:thuth@redhat.com>>
+>     ---
+>       v2: Use an integer offset variable instead for checking for a NULL pointer
+> 
+>       qga/commands-linux.c | 10 +++++-----
+>       1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+>     diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+>     index 9e8a934b9a6..0c41eb97190 100644
+>     --- a/qga/commands-linux.c
+>     +++ b/qga/commands-linux.c
+>     @@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char
+>     const *syspath,
+>                                                  Error **errp)
+>       {
+>           unsigned int pci[4], host, hosts[8], tgt[3];
+>     -    int i, nhosts = 0, pcilen;
+>     +    int i, offset, nhosts = 0, pcilen;
+>           GuestPCIAddress *pciaddr = disk->pci_controller;
+>           bool has_ata = false, has_host = false, has_tgt = false;
+>     -    char *p, *q, *driver = NULL;
+>     +    char *p, *driver = NULL;
+>           bool ret = false;
+> 
+>           p = strstr(syspath, "/devices/pci");
+>     @@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char
+>     const *syspath,
+> 
+>           p = strstr(syspath, "/ata");
+>           if (p) {
+>     -        q = p + 4;
+>     +        offset = 4;
+>               has_ata = true;
+>           } else {
+>               p = strstr(syspath, "/host");
+>     -        q = p + 5;
+>     +        offset = 5;
+>           }
+>     -    if (p && sscanf(q, "%u", &host) == 1) {
+>     +    if (p && sscanf(p + offset, "%u", &host) == 1) {
+>               has_host = true;
+>               nhosts = build_hosts(syspath, p, has_ata, hosts,
+>                                    ARRAY_SIZE(hosts), errp);
+>     -- 
+>     2.50.1
+> 
 
 
