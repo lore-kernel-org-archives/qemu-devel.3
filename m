@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D91C87FCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A1DC87FCC
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 22:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhEv2-0007NT-Gx; Wed, 30 Jul 2025 18:05:15 -0400
+	id 1uhEvP-0007tw-PC; Wed, 30 Jul 2025 18:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhEup-0007IK-2i
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 18:04:51 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uhEuq-0007Kb-LR
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 18:04:52 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhEun-00020O-B8
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 18:04:50 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7426c44e014so303858b3a.3
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 15:04:48 -0700 (PDT)
+ id 1uhEun-00020m-Pm
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 18:04:52 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-23fd3fe0d81so3324515ad.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 15:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753913086; x=1754517886; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pg5UGZMexlPnob+VnCajULOONFAP8RYXT5SgpFgIkU8=;
- b=cPvByzEWL5059aMdYos9b5WJnTFO7qgLTQgGFMXcp9o9qCVCuC8iL8R0tA1gicBiUm
- fRcyZyVl2BRwOrFrwb/ybbM6BoWZ935ZJzLEuJOr/sZCYmaIOWXOYvR4/zKozuqHJlGd
- 9rYIXWVMP3w7NHQqh+Q2DfZRhoSfkGdiVEL1+WLlazK6Hy46PzAl60K02RW7wR+10vCK
- wWWZHCPpA1kH77ZGx/+JlOfXSjGC2UUyiqvvITVKy/KVl2GDK3/RZdv/gK2zUwDUEfhg
- peVfCSPR01MkXxpo3WeQcJwFhYPDaOU9Po4GhIsF5XVG5YSjfJwgYEAhoOUikaCfPb6w
- 4bkw==
+ d=linaro.org; s=google; t=1753913088; x=1754517888; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V6X1CoA2MgT2UDXjHtgYe1Dd844yiDM2yHYqoaWtzog=;
+ b=Vxoev6Yuvj8l13PYBU9bpD3sgueG/jJNCVT9LaE+UMwQ2dBrMhJg+sXBfh/K0J1jJC
+ 04ar8Z8K1EoYtIJ5TG3hH3okvllJ7umLGl8WTIRm8vbu9rTdsEwUdNEq7XNaSxiVS+FP
+ P0Dl0ea6Mh9JpzYgf0FJUeJuDm1UgelM2O1X71Pxa2e7vViEl+KsIUs5WE43PWUGE9VT
+ ShNuH6jb+5xg2YRys55a8AqWFuUZ/vV1PB75EO6PvcaH/Psi6NDOBwCqmrmLgL8B43b5
+ Z8LcXEjYUZhVNz4cnmlHt8xFrdZilF8LKnKn2v6DeCgJFO3fxpCdCdITG3p7nahJ67sM
+ lz2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753913086; x=1754517886;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pg5UGZMexlPnob+VnCajULOONFAP8RYXT5SgpFgIkU8=;
- b=GrB1vI8j/cK8/rBSvPsP60orC0p0rSHa5L8b2ookCsvD+X0Q0PqzLLeYtaNxTKU499
- 1pwgm5LHFbk6sk3SydrxChvEBUvV8M1x0gJdYl9657ldveRBNue6BrKVVZGQyOfnMbqe
- 1KYCn8AvBAKD/oKaKENUHdDUwKPOS5ptUHekpJ7wVLBcnUh2d2MqKc2dAappdnv3/EQH
- V6YccZgAjBOgMPyEyhMw7kznV8XWjwU4e+umikakSpYeg8Cv8jBgd2Ig8by2euFU7Bmn
- POKcA6xz3G/DGQ47gMS4HTAs4yAYqqTI+xPle6konvEdSUjpSZRXNJB+VGs/cqlQ8jid
- 4pSg==
-X-Gm-Message-State: AOJu0Yx1aDIQlDQLplNOQzX+reH3AljgCRGdy4nic1Dt7KFLgnD8H79O
- AQpd3OoA6h7UbC2Caje8C0dVmMm8gE5MXVZY2Zwv8uNe6ue081ZHaSOpVPw/tlxxNShza7Yf806
- vuY14
-X-Gm-Gg: ASbGncvIn5l7VKp2flGgN8XrFyWozP3RWHby3sDC7liHaWpnztA5Q0e24iEJ+uDgAdy
- 59hbXsU47ZHJXozuWw9Z8KNhZA0Tr6OsLN5k4x/cyfp3O9WVOZT/jK6vlZJcwx3ZL/DCnGaJnmF
- 9DE/KMNOMXwJOh+YpyDAOM2j7wNC6wN4cGpYb/uFTZIvnPZkm+lM/QsVuR/1r7ejhww36Ti5ZvI
- r+mAXUnDECQDEb/iXemYBN/obg8MpuVZpmU8sRqa53m9zw0CWTynaqQ1To4x4kySros423VvG6d
- IIbq/F+YDFymRiiXmiofoaDqB+JxY1kzdYJA7QIANusjBKgLfFMsSs89oi9RRHhLQnOO0oQGtHm
- WdY9j/ZoRYLOxGXqXVSfYxg==
-X-Google-Smtp-Source: AGHT+IFigaQibQTnemsDJ//A9QLKyD7OqluljmrroNY3hHLseJ5gN4metgRgfFOtYwd3sIzRmqZaQg==
-X-Received: by 2002:a17:903:291:b0:23f:f68b:fa0b with SMTP id
- d9443c01a7336-24096b05b02mr52752245ad.37.1753913086520; 
- Wed, 30 Jul 2025 15:04:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753913088; x=1754517888;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V6X1CoA2MgT2UDXjHtgYe1Dd844yiDM2yHYqoaWtzog=;
+ b=h68tyvOyMa2SkmP7dDiBMaLpKBKA7SuSa1YbGnpLX5qdVObcPUbb9F3JuQLGLAxL91
+ okVlQRolRg9BijXaPm0MjE9Wc6p5mYCJcn9BUy6RUkdwbxhRTv5Qvdcce6ok09mmJrsA
+ RkSwFDSArBgE2OYd5DYPjQv8f+CUl8eQcMmPHv0Rhmfng3NLzqE7uFmJa+h3bUYCr2jU
+ qDBw+ZusrU2KTuyDkVfU5Vns1WnMV2xJyQjR7//oO8JhT3YCTAMEF94eEpdcMH87lOG8
+ yqsWaHnJlqV82Vej43YsPUaYsWqjp7IgdeBbRlFPqADG+6eocmIggy7GE2RGTEOLcfzq
+ 6HrQ==
+X-Gm-Message-State: AOJu0Yx/KlsDPOJXf6wujKjqNSf99sQBjZmAAZj5UxXDaNDKBrSmOqJj
+ JNHNXiUzaMKVg1cJs/ONm0FFIdAXjgtiq24ZpbulaZ5dorfjc+QcUqJtzN33+gfijXISBg2BWyl
+ f1RQG
+X-Gm-Gg: ASbGncvUin2GvOOIJLz4HhdUIV74avYmNtk+hfB7hkavVzfpq26uBb5FHvk46WbOTUZ
+ kpeiWJoOLaCQO7KaR9IP8COQDUobI+jzpN7lQ6+h4ndVYCBBOQMza2TJrK0mQomyq7GuFLJ/1tk
+ q/nUPfqJ/3beYOeKNlep3sDIhkqogdxVaSxnghuunUsMIbet/rIQga9Nw9hlJRnIV2BZYvkK5L+
+ Avj4XQWXQqq/eqOn09yLf2IJbh8Sr8td6nE6A/F+J+uCyDUnxq0IQXaSVS/8Gse18Qy5HJZl2z6
+ //d+HUJM6n4B3ocoPjN69MhGD3y3/OPMnSak9MAbEZjSH2q7brPcWxgIR6TDw5Z9NmZE9+6O0af
+ AXToaAcjSlql2BZdDXNJlWDb18WfNpj3b
+X-Google-Smtp-Source: AGHT+IGqCd1xW1yq8SvtX26K5x9DAetlgToaZJXlxbmoNQXf9DBgGPSaEqTOuI6NbYAGmBENgb4q/w==
+X-Received: by 2002:a17:903:3c70:b0:240:2145:e53b with SMTP id
+ d9443c01a7336-24096a72c1cmr72214325ad.9.1753913088177; 
+ Wed, 30 Jul 2025 15:04:48 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1f0e757sm1095645ad.55.2025.07.30.15.04.45
+ d9443c01a7336-241d1f0e757sm1095645ad.55.2025.07.30.15.04.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Jul 2025 15:04:45 -0700 (PDT)
+ Wed, 30 Jul 2025 15:04:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, philmd@linaro.org,
  Fabiano Rosas <farosas@suse.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 0/2] single-binary: compile once migration files
-Date: Wed, 30 Jul 2025 15:04:33 -0700
-Message-ID: <20250730220435.1139101-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 2/2] migration/vfio: compile only once
+Date: Wed, 30 Jul 2025 15:04:35 -0700
+Message-ID: <20250730220435.1139101-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250730220435.1139101-1-pierrick.bouvier@linaro.org>
+References: <20250730220435.1139101-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,23 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series removes target dependencies in migration code.
-
-v2
---
-
-- rebase on top of master (one patch was already merged)
-
-Pierrick Bouvier (2):
-  migration: compile migration/ram.c once
-  migration/vfio: compile only once
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
  migration/vfio-stub.c | 16 ++++++++++++++++
  migration/vfio.c      | 14 --------------
- migration/meson.build |  8 ++++----
- 3 files changed, 20 insertions(+), 18 deletions(-)
+ migration/meson.build |  6 +++---
+ 3 files changed, 19 insertions(+), 17 deletions(-)
  create mode 100644 migration/vfio-stub.c
 
+diff --git a/migration/vfio-stub.c b/migration/vfio-stub.c
+new file mode 100644
+index 00000000000..f59ebe075dc
+--- /dev/null
++++ b/migration/vfio-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * QEMU live migration - stubs for VFIO
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "migration.h"
++
++void migration_populate_vfio_info(MigrationInfo *info)
++{
++}
++
++void migration_reset_vfio_bytes_transferred(void)
++{
++}
+diff --git a/migration/vfio.c b/migration/vfio.c
+index 0b64e49ef06..af6ae2c1e19 100644
+--- a/migration/vfio.c
++++ b/migration/vfio.c
+@@ -8,13 +8,8 @@
+ #include "qemu/osdep.h"
+ #include "qapi/qapi-types-migration.h"
+ #include "migration.h"
+-#include CONFIG_DEVICES
+-
+-#ifdef CONFIG_VFIO
+ #include "hw/vfio/vfio-migration.h"
+-#endif
+ 
+-#ifdef CONFIG_VFIO
+ void migration_populate_vfio_info(MigrationInfo *info)
+ {
+     if (vfio_migration_active()) {
+@@ -27,12 +22,3 @@ void migration_reset_vfio_bytes_transferred(void)
+ {
+     vfio_migration_reset_bytes_transferred();
+ }
+-#else
+-void migration_populate_vfio_info(MigrationInfo *info)
+-{
+-}
+-
+-void migration_reset_vfio_bytes_transferred(void)
+-{
+-}
+-#endif
+diff --git a/migration/meson.build b/migration/meson.build
+index 45e9445f97d..0f71544a825 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -49,6 +49,6 @@ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
+ system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
+-
+-specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+-                if_true: files('vfio.c'))
++system_ss.add(when: 'CONFIG_VFIO',
++              if_true: files('vfio.c'),
++              if_false: files('vfio-stub.c'))
 -- 
 2.47.2
 
