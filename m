@@ -4,167 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0DAC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 15:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6B1C83F26
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 15:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh8tk-0004VX-LH; Wed, 30 Jul 2025 11:39:21 -0400
+	id 1uh8vM-0005r2-6G; Wed, 30 Jul 2025 11:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uh7qk-0007kZ-IT; Wed, 30 Jul 2025 10:32:12 -0400
-Received: from mail-bn8nam11on2065.outbound.protection.outlook.com
- ([40.107.236.65] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uh7qg-0002Bg-Sg; Wed, 30 Jul 2025 10:32:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rfP5qu5dJvbfALIGbqnF2x0z4MPzMa8CIIu7vc/qruiUnnwGZKWbWD9wk/zZkNqzWIJweO8oLWifD/VdCtDZ8hxT8HcwXrXcMbTOBIZ+IVXT9CpWrvSaFhp8SYNYAkzcmUH2pexj/q1CBVPkZnngWey8k6N9OEI6Ltk7JgYCA6leS+bskAk9KEOeuz0abpeb4VTE5pokmt/e1tufJX+QUR/JXf/R8oO6sr+SkD5voSRibJx8vFg+ojNWrJ8UWL/3nIT6wLsIJmXjsawPDdPMxh3iU/odZmr1CbJ7+IeacOa8YSbhIYfK4hogRfp6UYLh8iyZ05Js9vtGxkpTRZK3ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PVUSQXOc3gcM4ToooCisdnX+hDCXQmrOF5sw62bvMhU=;
- b=iJJdVZe9U7+wn39hN7upLlGB3p1wLweIrTJGHQtd/gIO5M5gM3l9PYNAU991iRL/OG3rpVbAqNQ6lq9nRA1IhzuWyjIbZTM036CbE9fjiMei4ScT3t8W1YSr1KZthpWWPJvPzVXI+3vQwLoGoQfDyopJKSmJCezPY8YIXwAB00YKaZkifiI8Y2FLHhO6yz2N00axY8tvF9RAZCDOEjiKQfeuKiVr9qfGsdv6U/Fbu+ugOIqApJ1zp0r6/olk6VJzHZO7dB7fkvNyE/5rhxAMHmV3WjkOmiC2kZGpIo9BGxqDcdm7ltJUQ7NZMT5+C15TA+6XG5uUkhtkQtTLksIoIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PVUSQXOc3gcM4ToooCisdnX+hDCXQmrOF5sw62bvMhU=;
- b=ILHPghHlDcGKc7kj+nLfwvlyJrCjal6A/ULYpoqRiGBpALYRNlhg/8mxC0koZPdyUkCUE5moixgc2VUiFImY9PWWm8uZ1D4WHKlP451yW7oCdayxC52m7x7yGa2Xsydb2o/pDj91KuCXDXqs5ca77wjdr/fJrHgS1r0JcSlt6dg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by PH7PR12MB6955.namprd12.prod.outlook.com (2603:10b6:510:1b8::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.11; Wed, 30 Jul
- 2025 14:26:59 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8989.010; Wed, 30 Jul 2025
- 14:26:59 +0000
-Date: Wed, 30 Jul 2025 16:26:53 +0200
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 25/48] hw/arm/xlnx-versal: add support for multiple GICs
-Message-ID: <aIorrXAfFFPj9nto@xse-figlesia-l2.amd.com>
-References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-26-luc.michel@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250716095432.81923-26-luc.michel@amd.com>
-X-ClientProxiedBy: PA7P264CA0217.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:374::18) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uh7rS-0008FU-5y
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:33:08 -0400
+Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uh7r7-0002Dh-Ko
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 10:32:37 -0400
+Received: by mail-qk1-x731.google.com with SMTP id
+ af79cd13be357-7e34399cdb2so102876085a.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 07:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753885950; x=1754490750; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=rYaxV6sR4AnfpiTciIK6IJ2f9DYk2cU2wj1ihtWsWaQ=;
+ b=MSwEhEISiVYs3FVdPnH3DvSkWYsau653e2iYfuD8Ov8U0x1kwliKvyc8aee5h7gisU
+ saQ+EZLBwHtuY68nRs6ZPKStgpU9j5/WFyLoMWCxgbTg/dmgPZFqJYZiIXUl0a9Bse/Y
+ vpFoiv9IoVxXVPTcRzcgJ02YIlPNHQEn8EjTeiTHdcr3wtpX6qN60L3F7S3uIrEate+/
+ S/FB5rqjjCPADkfACGxW7DHOk2UuobS9xapZyWC6g/1azZVkq08hfBvJWY/67Qmn4Vbl
+ 57DQAYhk47Oeq/JLKkTlLvHbmbkoptgljm0IhIOrLDw0HedmHGS6LGiEpMl34y3xAXHH
+ Acyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753885950; x=1754490750;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rYaxV6sR4AnfpiTciIK6IJ2f9DYk2cU2wj1ihtWsWaQ=;
+ b=ldVNDNNXu5pgNcJZhAvisgR3FxpYtssGd1eSn6HVAKVge9U6HLg3neEYeXlPb4HaHo
+ e4zgSvJzOWoDWNTjFPdCwpgBwV0sShGqt8flDfOwvnIVRK2K5jr2oyBcMXnWY6fQkkDY
+ jTRlnTbJ/FJvXXhPxrmYx4lVTjMnT7LA7kaHGk8jA6AqVIIJDJeUGLKSQVqbVKksJj+o
+ H+wV651te9KhvOKLuhkXr3y88o3FnWGpnNEJS3p8Ei3vVwFuH0hB+SrJPRb5B9M8xp5b
+ Ixby8HxRwDe2e5HBGmTOkV95BD5j5UQ/VZfF1c0sl9vwvJaQQRWeaEhdWn09rf0arlKv
+ fSWA==
+X-Gm-Message-State: AOJu0YyLxfAWzcvYJUC16hl0sYC896ir/1eig3QkIsCVFF5+XggIrvzC
+ +ceZQgze3QQhyZSAMwb9OyAEsuv9tjT4m7DUtixwOqZmArxNHW3/zw0E
+X-Gm-Gg: ASbGnctD8J1Uoh+0az7qqwy2LLPL4kALVRNvHLzjALOnY93Be9bzM8EhillneyZyUaw
+ aFbCrV2Kwr2Q0vA3K9b7cALXkFaf54n292OKM0UvUwMihJhRi3Ddmb+N4GFo1SmA6+o8xkE0AzL
+ 4/OPcYSxsInBjfp2iOvS01uowTEHeP/iq/rJhVdytddEvy8b94+XCAteXUfq+ZoEfSbHY/Z0YhQ
+ fLC9zFC9bSYCAajIBBk2NwLVzKcYiaxwuQBUv3K78g+3NjQlKtwl1jTjdGANd+gCixEtzVO9i1t
+ UVjgvH904ewdlwMeLmGGjJHJKOQzN1byDvfPh4ydvbHY+VeKQ7SHeRdX4eH6FW+YhbZNppejBXi
+ xUNforf13BAgBs6avU75tHVpH6q8ArFst5+xq
+X-Google-Smtp-Source: AGHT+IFaY+q+ikejM2dIPN9+AydZv1jwtLRgw8yDb7vJdtn8idheBGa/pLZgq8RFMabVw72FAVO/BQ==
+X-Received: by 2002:a05:620a:a802:b0:7e6:3023:6ea1 with SMTP id
+ af79cd13be357-7e66ef948bdmr483893185a.8.1753885949317; 
+ Wed, 30 Jul 2025 07:32:29 -0700 (PDT)
+Received: from nuc (192-0-220-237.cpe.teksavvy.com. [192.0.220.237])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e64387c0ecsm588211185a.50.2025.07.30.07.32.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Jul 2025 07:32:25 -0700 (PDT)
+Date: Wed, 30 Jul 2025 10:32:22 -0400
+From: Mark Johnston <markj@freebsd.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH] 9pfs: Add FreeBSD support
+Message-ID: <aIos9lb1dBuDBq2E@nuc>
+References: <aIEGDjMex-DG-pmr@nuc>
+ <1989897.fkXqvmx5VE@silver>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|PH7PR12MB6955:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7441891c-8911-44b1-c1ab-08ddcf7524d2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SDBQcE9IYjc1RTJtN043cnNkSVV4NUtRdWM1QVBwYVJjMDdzdS9ObWtuSlY4?=
- =?utf-8?B?a2x2QWpGQ1N4OHVRVWMyUkM4ZHF4bG9QUkNLbVJQMnR1Qkw4eXFUR3lmYTBo?=
- =?utf-8?B?WTZ2OFdRZUlIWE4wU1pEQXhDbjdoaGVaWHVqY1A3SjJhOEtucjFWQzhIZVU5?=
- =?utf-8?B?L3hQbG1EanNYWmF0dUVmRG9LMWFwR3ZTUkJoNGZlWDUra1F4VWMvQ0hBMjBG?=
- =?utf-8?B?WUUzaGd4WWJqcm1iTmNETjdndlcvaUwyQ285T2NoZUJPOTBrU0NYVmNRc0d6?=
- =?utf-8?B?dmxvK1hXQUZiQlBtSnk3cS95YTM1dlBlSWZhTzI1ZjNKMnhYcndFNU9DSE84?=
- =?utf-8?B?VWhCNWhlaDNhcThpZHp4bHBRR3pnNmNpZDBIZWc0dXUrZC9nUG9oNTdSSzJ4?=
- =?utf-8?B?dHVRRnVsMzZxN3RQbW84bng4dENPc1FiL3VUcE5GanBMRFd3T2l2SVFRQUIz?=
- =?utf-8?B?RW5ONi9QYlVXKzd5UU0xaEhDL29zKzJ1TEZYOUIzS3pHZ1REaVNQais3a0dS?=
- =?utf-8?B?ck9OMFN4Nk9idEMxbzljSERMSWwxUGdhRVpCNzdzM0x6NmxLcmFnb3dUaWRD?=
- =?utf-8?B?d0lTUnB3a2dHZnNadmEvWHRaUkUzRFlWR0MrNjh4akxIVDFyQUM0L3VPaENq?=
- =?utf-8?B?Mkx2OTkvSFd6M1BpWE1tSVpXUitCNUVFSDRyTjNwaVVjQVZLeit0aEJYR0tN?=
- =?utf-8?B?R1l1OGc4K3NKVW1FZkx2VXN0aEdvb3o3NDRvZEpmSXVHWWNSb1VWQUtGcm1P?=
- =?utf-8?B?TUtGQjk4cTB4MytwVktobjRJclpmOVI4aW8ydEZRWVhBNEo1ZGpCMGJOMFU0?=
- =?utf-8?B?ZGJHeXg1aTNEaGdBQjMyREFWaHorRE9sVWNxUVdma2JWYjd5VXZ2U2ZBdnJ1?=
- =?utf-8?B?QjBHRTFqTkU0czIzckd4UWxjUWI3VWREQ3pXb3lBOW9wcS95VlN6L3BFeHU2?=
- =?utf-8?B?a3BVbTNGb0ROTzdKMG8xZ0NTL1Rlcm13dlBHY3ZYOGxnRnlvc0gzOHhOcWh5?=
- =?utf-8?B?MGRZYzBKN1NTVEpOVUo0TktBRU1IeGJDZS9vTlNrUkhLdFlhaWdBYVhXYjZC?=
- =?utf-8?B?S2t5RjlDMkUxb21MODczenptN1IxNzJTdzZNcE5ib0tqQXFVSU0zMDJ2a3dL?=
- =?utf-8?B?UU04NDVIamJTMzVYY01LVFdxbGZjOUxVZ3F4Y2plODg5L2dpVFFWL01mME4z?=
- =?utf-8?B?UkNHWXdEMlRnVGtTdUIxUnhjK3VIeEhPRy9xcW1jK28rVGJQWlh6d2RqOVNP?=
- =?utf-8?B?ZDJxUVNFOWZXb1JMS01NMllwUTE5R3ZxR3o2NjlqNGNuWDdrRW5WUG1BL2J2?=
- =?utf-8?B?Skx2QkQwRWZTb3RTNEt0WFRrQmRMNTRsdDlMbHlwTXRMeUVhSmxmMVcxY2Rp?=
- =?utf-8?B?cm9WQXcyUGxiaVVOSnlsZXN3SUgvWjEreWpVSUpKRUc1NG44NnJzejRUTVRF?=
- =?utf-8?B?VUFhUk9CVmk1MC9UTGgxa0JWMVZUQ1FEck5nQ09lZ0o5UEo2V1YzYXNaYTZH?=
- =?utf-8?B?MERmMVlEbGlRdUwrV0lWUWV0WFVxWGFnUlZvTGNYcUVKUTFGMHlKS3JBdzhs?=
- =?utf-8?B?NWJpdWZKYjhqL3R1SjlNMWh5UjhzUlhjRXNCVFF2ZUtGcUNJTFFWNkJvRXRR?=
- =?utf-8?B?VWMzaGJ1YnlSZ3dTVDc4VkdmcUc2TXk5YStFdEtjNDJldWkyU3hRMGl6czhp?=
- =?utf-8?B?c1BoSjRqTU93bWxmNDNqWlcrTXhnVlNra29MUkVXa1BNSFJuMWdhS3JaRGJP?=
- =?utf-8?B?aW92ak5LZEFvRFQ4OFo5SlBHb2FrVEw5TUFNZjZBREVMcUNCUEtsYzdEZG9M?=
- =?utf-8?B?ZWEvUVpGVHBGbWxtckZmNW9MUU5RS09ETEdzUkRSWFJ1TjI3VSs2M0RDNUdL?=
- =?utf-8?B?RzZibVRlU3lHQzBGUnJSR0d4R2FpUWJONHlCQVlOdkxnZkJ1VjB3YjQ3eFo5?=
- =?utf-8?Q?25o/5kku3NQ=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RmhsOHE3OWxGVW1pSS9SWURaSDNlRXBQbnlUdUxZaG9lNjhMNkRIMW1wRkZ3?=
- =?utf-8?B?T0xtQU00TlJxc0MrVXFhMHhTak12RjlXaDN0amdaMUVNWDdLS0JQM0JzRTh3?=
- =?utf-8?B?TnJXZUJSSTE5UVJaa2NRNlFiS1JIa0laVjc1cFRkSXlqTDhlL0NDTVBvYkhj?=
- =?utf-8?B?TTFaaUVCdlVKZGxoN2JzMjNENkhjVFZWWGtwLy9ZUE5jbjAxenpLbisrN0E3?=
- =?utf-8?B?V2NmcGxXUVIvRnRYc1psbGZjaEl1SGVDTkFtblFtc1MrMG5hM1RKdzZqMGJu?=
- =?utf-8?B?SVlOL3R6VVJQK1lFRWxXN0hMRTkwZjJnZFJVbTMvK0dkVDgwa0dibWZXT0lV?=
- =?utf-8?B?UUp1SmdNeGZtMENZRVFnSlExblg1M0J4dk1zSzAwTEFDZmJBeXNUd2djdWNK?=
- =?utf-8?B?azJiazh5cFh6Q0ExT3pJeENSeFhJWkhZTHNKZzJSam5ZYjFVdS9ObGZaQzNW?=
- =?utf-8?B?cXJtck9XY0NucDhzR3o4Z0F2cU9QdjZnaGpBUkE3dlRnMUJvSDEreml2RUp3?=
- =?utf-8?B?TWREUlVuaVBkeGJTYjV6ZmJzQno0RDcyUFBYdzJnUUdNNGdOeUJHNkFxdDBG?=
- =?utf-8?B?RjRYU3Rtc2ZNcnc0djFzRTVld2xhTHErQldvaENON3h0U25QYVphdHI5VVM1?=
- =?utf-8?B?byticTFoVTF2QUdWSVM4cVZ2bnJyNHp2Y29zRWZTODV2VU5QQzRhWUJLcllR?=
- =?utf-8?B?TnFLU1RiR0lITUticFd3YUNaMUNkRm5nK09Kc1BLVmNqd3JaVUFCVnBwR0tw?=
- =?utf-8?B?ZStDczVNM2lSd0pZVDFSZmFycGlSR0ViQnRJdXYxYVRoRk5rUC9BRk0xOXVj?=
- =?utf-8?B?UXBPVE5oWUJxTmVETmhOZUNwTTNJTHVPNmtIb3B2b0pNcEhvT0Q2OGJQSG13?=
- =?utf-8?B?L3NublNSVkFObDNQeURJbllzQkg5cSsvRlUwWnppTnltTEJEbTR1VlpGNXlv?=
- =?utf-8?B?M2ExQ2VlRUJqaThYRWpVcmhWcXdNOGZmM21pV0QvK1RzeVdRai8wdUJDWGFK?=
- =?utf-8?B?a0dIMEoza1pFTlhEdENEeDRWQXJXZXUwV2NoZ2ovNlJGbU5mY0Y3cmV6QlVI?=
- =?utf-8?B?YkJ4TWlqU0trTk5laTRLTk9jVTlJaitrWnR1RDRNemNsRVY4a2l1YWFCQW1I?=
- =?utf-8?B?dC9nb1FxclRUalpmS1RhVkJWYU9RZHFXMTEvdGtaSHJUOU1ML0JSNHF1Z1Ew?=
- =?utf-8?B?SWxDVk9EREZobGd4VnE1WEREU3V6a2hzdUdPN1Z4aUZVMWJhQUpVdytEbGpF?=
- =?utf-8?B?L3d6TlRIbmpMSkI5YUtFdk4rQVBPTjQwTXZDVjJHd1RpYmFKNm5DaFkxSWwz?=
- =?utf-8?B?SEJyRUw5NnVxV2JWVmsybFRvVEphbFhUYjRXYjJjVkQwekFoVWpONjJhODMz?=
- =?utf-8?B?V3RUV05kTXhXYnorWDEwV1FsN1k4V2ZzNEZUVC9ucUpPYWg4UzgyWnQzdUMz?=
- =?utf-8?B?dGJjK2tpeGg3bDFKNGxsb0JBNFllakkwTjJ0WEEra0VTSGFTNlF1ZXBQMDdE?=
- =?utf-8?B?WWF1cVBhcXh0RnUrUEtudFNJbVZKZklMMHRydW4vNDE1ZjNtY2ZqSmtMRWt5?=
- =?utf-8?B?OEh4SWNCR3QzVDNoMUg0bHlGMlFXL2w0UE00RWhWT0VyMzhaUDExcm1sQ2NY?=
- =?utf-8?B?UWVtRThGLytGcnhyZjd6N3d4UVAweWlpK1VYQkNwbTRkaEJaV0VtZEJaY3lh?=
- =?utf-8?B?NUwycWMyMXkvc2hVK3VobW1VOUx0eS83WVl5cERJdHh6bjQrMyswRCthZzY4?=
- =?utf-8?B?MVdzandmTWFGa0ZsZXdUV1BiMnE5MTZUWlRXQXoxQmhPSVphSWU4MDRsTkFY?=
- =?utf-8?B?RFNZdGFReHk0U1ZjMWdheFdSVldZVTliV1hPb0Z1NDJ3dzdPaElDTmdHOWJL?=
- =?utf-8?B?Y29VV0pnT1JoQmlYaWtKTmluV3lEY25vQzNMZmhHdnlnSEEvWDNNVzZSbjhs?=
- =?utf-8?B?MVh0a2tXbjZaNDRKQjk4aHBSVjRxbzVaOTg3d0N0MDFIanQxejFMMjZtbTVo?=
- =?utf-8?B?eG94eldHc2VZekpzQ0lEM0lCMGhqR0ZSWXlwemdzUnBXZWJNcnowSnIyNTE1?=
- =?utf-8?B?anN4YVZuenlUUHF2R3ZER2d0Mk9xNFY4dWUzenVOUnlueSt0UjhtMDFrV3l0?=
- =?utf-8?Q?HLm7oWh6RA7v+6GN2IOCnJ8mE?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7441891c-8911-44b1-c1ab-08ddcf7524d2
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2025 14:26:59.6011 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Afff9nXv0sH1FmhwvIpXZ06P82vgHgvft8QUj0RxFGThX7RLvVS68D91+YdQ7zrSX76gUQAEOBuguI0m3w5a+w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6955
-Received-SPF: permerror client-ip=40.107.236.65;
- envelope-from=francisco.iglesias@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1989897.fkXqvmx5VE@silver>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
+ envelope-from=markjdb@gmail.com; helo=mail-qk1-x731.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ HK_RANDOM_ENVFROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,206 +102,472 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 11:54:07AM +0200, Luc Michel wrote:
-> The Versal SoC contains two GICs: one GICv3 in the APU and one GICv2 in
-> the RPU (currently not instantiated). To prepare for the GICv2
-> instantiation, add support for multiple GICs when connecting interrupts.
+On Tue, Jul 29, 2025 at 06:09:35PM +0200, Christian Schoenebeck wrote:
+> On Wednesday, July 23, 2025 5:55:58 PM CEST Mark Johnston wrote:
+> > This is largely derived from existing Darwin support.  FreeBSD
+> > apparently has better support for *at() system calls so doesn't require
+> > workarounds for a missing mknodat().  The implementation has a couple of
+> > warts however:
+> > - The extattr(2) system calls don't support anything akin to
+> >   XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
+> > - Attribute names cannot begin with "user." on ZFS, so the prefix is
+> >   trimmed off.  FreeBSD's extattr system calls sport an extra
+> >   "namespace" identifier, and attributes created by the 9pfs backend
+> >   live in the universal user namespace, so this seems innocent enough.
+> > 
+> > The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
+> > filesystems.
+> > 
+> > Signed-off-by: Mark Johnston <markj@FreeBSD.org>
 > 
-> When a GIC is created, the first-cpu-index property is set on it, and a
-> pointer to the GIC is stored in the intc array. When connecting an IRQ,
-> a TYPE_SPLIT_IRQ device is created with its num-lines property set to
-> the number of GICs in the SoC. The split device is used to fan out the
-> IRQ to all the GICs.
+> Hi Mark,
 > 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> first off, the problem is I currently don't have a FreeBSD host to test and
+> won't have the time in near future neither.
+> 
+> So what was your general intention regarding this patch, fire and forget, or
+> would you be around for issues/patches regarding 9pfs FreeBSD support?
 
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Thank you for taking a look.
 
-> ---
->  include/hw/arm/xlnx-versal.h |  1 +
->  hw/arm/xlnx-versal.c         | 55 +++++++++++++++++++++++++++++++++---
->  2 files changed, 52 insertions(+), 4 deletions(-)
+I'll certainly be around to help deal with issues and patches relating
+to 9pfs+FreeBSD hosts.  It's hard to prove that, but for what it's worth
+I use QEMU fairly extensively for FreeBSD development when I can't use
+the native hypervisor, and that's not likely to change anytime soon.
+
+Would adding myself to MAINTAINERS for virtio-9pfs (or a new
+virtio-9pfs-freebsd category) be appropriate in that case?
+
+> > ---
+> >  fsdev/file-op-9p.h        |   6 +-
+> >  fsdev/meson.build         |   2 +-
+> >  hw/9pfs/9p-synth.c        |   2 +-
+> >  hw/9pfs/9p-util-freebsd.c | 124 ++++++++++++++++++++++++++++++++++++++
+> >  hw/9pfs/9p-util.h         |  19 ++++--
+> >  hw/9pfs/9p.c              |  16 ++++-
+> >  hw/9pfs/meson.build       |   2 +
+> >  include/qemu/xattr.h      |   6 +-
+> >  meson.build               |   8 +--
+> >  9 files changed, 170 insertions(+), 15 deletions(-)
+> >  create mode 100644 hw/9pfs/9p-util-freebsd.c
+> > 
+> > diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> > index b9dae8c84c..b85c9934de 100644
+> > --- a/fsdev/file-op-9p.h
+> > +++ b/fsdev/file-op-9p.h
+> > @@ -21,9 +21,11 @@
+> >  
+> >  #ifdef CONFIG_LINUX
+> >  # include <sys/vfs.h>
+> > -#endif
+> > -#ifdef CONFIG_DARWIN
+> > +#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+> >  # include <sys/param.h>
+> > +# ifdef CONFIG_FREEBSD
+> > +#  undef MACHINE /* work around some unfortunate namespace pollution */
+> > +# endif
 > 
-> diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-> index ba5719d80f5..9b11ffb845d 100644
-> --- a/include/hw/arm/xlnx-versal.h
-> +++ b/include/hw/arm/xlnx-versal.h
-> @@ -40,10 +40,11 @@ OBJECT_DECLARE_TYPE(Versal, VersalClass, XLNX_VERSAL_BASE)
->  struct Versal {
->      /*< private >*/
->      SysBusDevice parent_obj;
->  
->      /*< public >*/
-> +    GArray *intc;
->      MemoryRegion mr_ps;
->  
->      struct {
->          /* 4 ranges to access DDR.  */
->          MemoryRegion mr_ddr_ranges[4];
-> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index ba8c69bd435..58cd874f81f 100644
-> --- a/hw/arm/xlnx-versal.c
-> +++ b/hw/arm/xlnx-versal.c
-> @@ -43,10 +43,11 @@
->  #include "hw/misc/xlnx-versal-cframe-reg.h"
->  #include "hw/or-irq.h"
->  #include "hw/misc/xlnx-versal-crl.h"
->  #include "hw/intc/arm_gicv3_common.h"
->  #include "hw/intc/arm_gicv3_its_common.h"
-> +#include "hw/core/split-irq.h"
->  
->  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
->  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
->  #define GEM_REVISION        0x40070106
->  
-> @@ -318,10 +319,47 @@ static inline Object *versal_get_child_idx(Versal *s, const char *child,
->      g_autofree char *n = g_strdup_printf("%s[%zu]", child, idx);
->  
->      return versal_get_child(s, n);
->  }
->  
-> +/*
-> + * The SoC embeds multiple GICs. They all receives the same IRQ lines at the
-> + * same index. This function creates a TYPE_SPLIT_IRQ device to fan out the
-> + * given IRQ input to all the GICs.
-> + *
-> + * The TYPE_SPLIT_IRQ devices lie in the /soc/irq-splits QOM container
-> + */
-> +static qemu_irq versal_get_gic_irq(Versal *s, int irq_idx)
-> +{
-> +    DeviceState *split;
-> +    Object *container = versal_get_child(s, "irq-splits");
-> +    int idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
-> +    g_autofree char *name = g_strdup_printf("irq[%d]", idx);
-> +
-> +    split = DEVICE(object_resolve_path_at(container, name));
-> +
-> +    if (split == NULL) {
-> +        size_t i;
-> +
-> +        split = qdev_new(TYPE_SPLIT_IRQ);
-> +        qdev_prop_set_uint16(split, "num-lines", s->intc->len);
-> +        object_property_add_child(container, name, OBJECT(split));
-> +        qdev_realize_and_unref(split, NULL, &error_abort);
-> +
-> +        for (i = 0; i < s->intc->len; i++) {
-> +            DeviceState *gic;
-> +
-> +            gic = g_array_index(s->intc, DeviceState *, i);
-> +            qdev_connect_gpio_out(split, i, qdev_get_gpio_in(gic, idx));
-> +        }
-> +    } else {
-> +        g_assert(FIELD_EX32(irq_idx, VERSAL_IRQ, ORED));
-> +    }
-> +
-> +    return qdev_get_gpio_in(split, 0);
-> +}
-> +
->  /*
->   * When the R_VERSAL_IRQ_ORED flag is set on an IRQ descriptor, this function is
->   * used to return the corresponding or gate input IRQ. The or gate is created if
->   * not already existant.
->   *
-> @@ -354,16 +392,14 @@ static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
->  
->  static qemu_irq versal_get_irq(Versal *s, int irq_idx)
->  {
->      qemu_irq irq;
->      bool ored;
-> -    DeviceState *gic;
->  
->      ored = FIELD_EX32(irq_idx, VERSAL_IRQ, ORED);
->  
-> -    gic = DEVICE(versal_get_child_idx(s, "apu-gic", 0));
-> -    irq = qdev_get_gpio_in(gic, irq_idx);
-> +    irq = versal_get_gic_irq(s, irq_idx);
->  
->      if (ored) {
->          irq = versal_get_irq_or_gate_in(s, irq_idx, irq);
->      }
->  
-> @@ -502,10 +538,11 @@ static void versal_create_gic_its(Versal *s,
->  }
->  
->  static DeviceState *versal_create_gic(Versal *s,
->                                        const VersalCpuClusterMap *map,
->                                        MemoryRegion *mr,
-> +                                      int first_cpu_idx,
->                                        size_t num_cpu)
->  {
->      DeviceState *dev;
->      SysBusDevice *sbd;
->      QList *redist_region_count;
-> @@ -526,10 +563,11 @@ static DeviceState *versal_create_gic(Versal *s,
->      qdev_prop_set_array(dev, "redist-region-count", redist_region_count);
->  
->      qdev_prop_set_bit(dev, "has-security-extensions", true);
->      qdev_prop_set_bit(dev, "has-lpi", map->gic.has_its);
->      object_property_set_link(OBJECT(dev), "sysmem", OBJECT(mr), &error_abort);
-> +    qdev_prop_set_uint32(dev, "first-cpu-index", first_cpu_idx);
->  
->      sysbus_realize_and_unref(sbd, &error_fatal);
->  
->      memory_region_add_subregion(mr, map->gic.dist,
->                                  sysbus_mmio_get_region(sbd, 0));
-> @@ -552,10 +590,12 @@ static DeviceState *versal_create_gic(Versal *s,
->          qemu_fdt_setprop(s->cfg.fdt, node, "interrupt-controller", NULL, 0);
->      }
->  
->      versal_create_gic_its(s, map, dev, mr, node);
->  
-> +    g_array_append_val(s->intc, dev);
-> +
->      return dev;
->  }
->  
->  static void connect_gic_to_cpu(const VersalCpuClusterMap *map,
->                                 DeviceState *gic, DeviceState *cpu, size_t idx,
-> @@ -609,13 +649,15 @@ static inline void versal_create_and_connect_gic(Versal *s,
->                                                   MemoryRegion *mr,
->                                                   DeviceState **cpus,
->                                                   size_t num_cpu)
->  {
->      DeviceState *gic;
-> +    int first_cpu_idx;
->      size_t i;
->  
-> -    gic = versal_create_gic(s, map, mr, num_cpu);
-> +    first_cpu_idx = CPU(cpus[0])->cpu_index;
-> +    gic = versal_create_gic(s, map, mr, first_cpu_idx, num_cpu);
->  
->      for (i = 0; i < num_cpu; i++) {
->          connect_gic_to_cpu(map, gic, cpus[i], i, num_cpu);
->      }
->  }
-> @@ -1540,10 +1582,14 @@ static void versal_realize(DeviceState *dev, Error **errp)
->  
->      s->phandle.clk_25mhz = fdt_add_clk_node(s, "/clk25", 25 * 1000 * 1000);
->      s->phandle.clk_125mhz = fdt_add_clk_node(s, "/clk125", 125 * 1000 * 1000);
->      s->phandle.gic = qemu_fdt_alloc_phandle(s->cfg.fdt);
->  
-> +    container = object_new(TYPE_CONTAINER);
-> +    object_property_add_child(OBJECT(s), "irq-splits", container);
-> +    object_unref(container);
-> +
->      container = object_new(TYPE_CONTAINER);
->      object_property_add_child(OBJECT(s), "irq-or-gates", container);
->      object_unref(container);
->  
->      qemu_fdt_setprop_cell(s->cfg.fdt, "/", "interrupt-parent", s->phandle.gic);
-> @@ -1710,10 +1756,11 @@ static void versal_base_init(Object *obj)
->  
->      memory_region_init(&s->lpd.rpu.mr, obj, "mr-rpu", UINT64_MAX);
->      memory_region_init(&s->mr_ps, obj, "mr-ps-switch", UINT64_MAX);
->      memory_region_init_alias(&s->lpd.rpu.mr_ps_alias, OBJECT(s),
->                               "mr-rpu-ps-alias", &s->mr_ps, 0, UINT64_MAX);
-> +    s->intc = g_array_new(false, false, sizeof(DeviceState *));
->  
->      num_can = versal_get_map(s)->num_canfd;
->      s->cfg.canbus = g_new0(CanBusState *, num_can);
->  
->      for (i = 0; i < num_can; i++) {
-> -- 
-> 2.50.0
+> Details? :)
+
+We need sys/mount.h for struct statfs.  sys/mount.h implicitly includes
+sys/param.h, which is really sloppy about polluting the namespace with
+identifiers that only the kernel cares about 99% of the time.  In
+particular, it includes a platform-specific param.h which defines
+
+#define MACHINE "amd64"
+#define MACHINE_ARCH "amd64"
+
+among other things.  This conflicts with QEMU's MACHINE macro.
+
+It's a mess.  I have some local FreeBSD patches to avoid including
+param.h from sys/mount.h, but of course a number of applications have
+come to rely on the pollution, so they all need to be fixed first.
+
+At some point, I think the block above can become something like
+
+  #elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+  # ifndef CONFIG_FREEBSD
+  #  include <sys/param.h>
+  # endif
+  # include <sys/mount.h>
+
+but for now I need this workaround.
+
+> >  # include <sys/mount.h>
+> >  #endif
+> >  
+> > diff --git a/fsdev/meson.build b/fsdev/meson.build
+> > index c751d8cb62..95fe816604 100644
+> > --- a/fsdev/meson.build
+> > +++ b/fsdev/meson.build
+> > @@ -5,6 +5,6 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
+> >    '9p-marshal.c',
+> >    'qemu-fsdev.c',
+> >  ), if_false: files('qemu-fsdev-dummy.c'))
+> > -if host_os in ['linux', 'darwin']
+> > +if host_os in ['linux', 'darwin', 'freebsd']
+> >    system_ss.add_all(fsdev_ss)
+> >  endif
+> > diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+> > index 9cd1884224..b3743f6169 100644
+> > --- a/hw/9pfs/9p-synth.c
+> > +++ b/hw/9pfs/9p-synth.c
+> > @@ -451,7 +451,7 @@ static int synth_statfs(FsContext *s, V9fsPath *fs_path,
+> >      stbuf->f_bsize = 512;
+> >      stbuf->f_blocks = 0;
+> >      stbuf->f_files = synth_node_count;
+> > -#ifndef CONFIG_DARWIN
+> > +#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
+> >      stbuf->f_namelen = NAME_MAX;
+> >  #endif
+> >      return 0;
+> > diff --git a/hw/9pfs/9p-util-freebsd.c b/hw/9pfs/9p-util-freebsd.c
+> > new file mode 100644
+> > index 0000000000..e649f79d4b
+> > --- /dev/null
+> > +++ b/hw/9pfs/9p-util-freebsd.c
+> > @@ -0,0 +1,124 @@
+> > +/*
+> > + * 9p utilities (FreeBSD Implementation)
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> > + * See the COPYING file in the top-level directory.
+> > + */
+> 
+> I think for new source files in QEMU the policy is to use
+> SPDX-License-Identifier: ... now?
+
+checkpatch.pl does complain about that, yes, but it also qualifies the
+warning with, "unless this file was copied from existing code already
+having such text."  I used 9p-util-darwin.c as a starting point for this
+file, so kept the existing license text.  I can certainly change it
+though.
+
+> Is this source file really specific to exactly FreeBSD? From the name it
+> suggests that potential future support for other BSD flavours would need their
+> own source file.
+
+Hmm, not really.  Other BSDs seem to implement a compatible syscall
+interface when they implement it at all.  (NetBSD's interface seems to
+be compatible; OpenBSD doesn't appear to implement extattrs at all, and
+DragonflyBSD is missing the extattr_*_fd() variants.)
+
+FreeBSD appears to be the only one that implements O_PATH, but that
+seems to be optional if I'm reading correctly.
+
+So, I could preemptively change it to 9p-util-bsd.c, or wait for someone
+to come along and add support for another BSD.
+
+> > +
+> > +/*
+> > + * Not so fast! You might want to read the 9p developer docs first:
+> > + * https://wiki.qemu.org/Documentation/9p
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/xattr.h"
+> > +#include "9p-util.h"
+> > +
+> > +static const char *mangle_xattr_name(const char *name)
+> > +{
+> > +    /*
+> > +     * ZFS forbits attributes in the user namespace starting with "user.".
+> > +     */
+> > +    if (strncmp(name, "user.", 5) == 0) {
+> > +        return name + 5;
+> > +    }
+> > +    return name;
+> > +}
+> 
+> "ZFS forbids ..."
+
+Fixed, thanks.
+
+> 
+> > +
+> > +ssize_t fgetxattr(int fd, const char *name, void *value, size_t size)
+> > +{
+> > +    name = mangle_xattr_name(name);
+> > +    return extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
+> > +}
+> 
+> I assume if "user." prefix isn't accepted, then "system." is neither, right?
+
+That's right.
+
+> Because "system." prefix is used by 9pfs server as well.
+>
+> Probably the right extattr namespace should be diverted here according to the
+> prefix being passed.
+> 
+> I see there is a conversion function in FreeBSD for this called
+> extattr_string_to_namespace(). But given that the only ones supported are
+> either EXTATTR_NAMESPACE_USER or EXTATTR_NAMESPACE_SYSTEM and since the prefix
+> has to be extracted from the string by own code anway, I guess a simple
+> inliner would do as well.
+
+Yes, I think that's not too fragile.  I implemented that in my local
+version.
+
+> > +
+> > +ssize_t fgetxattrat_nofollow(int dirfd, const char *filename, const char *name,
+> > +                             void *value, size_t size)
+> > +{
+> > +    ssize_t ret;
+> > +    int fd;
+> > +
+> > +    fd = openat_file(dirfd, filename,
+> > +                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
+> > +    if (fd == -1) {
+> > +        return -1;
+> > +    }
+> > +    name = mangle_xattr_name(name);
+> > +    ret = extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
+> > +    close_preserve_errno(fd);
+> > +    return ret;
+> > +}
+> > +
+> > +ssize_t flistxattrat_nofollow(int dirfd, const char *filename,
+> > +                              char *list, size_t size)
+> > +{
+> > +    ssize_t ret;
+> > +    int fd;
+> > +
+> > +    fd = openat_file(dirfd, filename,
+> > +                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
+> > +    if (fd == -1) {
+> > +        return -1;
+> > +    }
+> > +    ret = extattr_list_fd(fd, EXTATTR_NAMESPACE_USER, list, size);
+> > +    close_preserve_errno(fd);
+> > +    return ret;
+> > +}
+> > +
+> > +ssize_t fremovexattrat_nofollow(int dirfd, const char *filename,
+> > +                                const char *name)
+> > +{
+> > +    int fd, ret;
+> > +
+> > +    fd = openat_file(dirfd, filename,
+> > +                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
+> > +    if (fd == -1) {
+> > +        return -1;
+> > +    }
+> > +    name = mangle_xattr_name(name);
+> > +    ret = extattr_delete_fd(fd, EXTATTR_NAMESPACE_USER, name);
+> > +    close_preserve_errno(fd);
+> > +    return ret;
+> > +}
+> > +
+> > +int fsetxattrat_nofollow(int dirfd, const char *filename, const char *name,
+> > +                         void *value, size_t size, int flags)
+> > +{
+> > +    ssize_t ret;
+> > +    int fd;
+> > +
+> > +    name = mangle_xattr_name(name);
+> > +    if (flags == (XATTR_CREATE | XATTR_REPLACE)) {
+> > +        errno = EINVAL;
+> > +        return -1;
+> > +    }
+> > +    fd = openat_file(dirfd, filename,
+> > +                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
+> > +    if (fd == -1) {
+> > +        return -1;
+> > +    }
+> > +    if (flags & (XATTR_CREATE | XATTR_REPLACE)) {
+> > +        ret = extattr_get_fd(fd, EXTATTR_NAMESPACE_USER, name, NULL, 0);
+> > +        if (ret == -1 && errno != ENOATTR) {
+> > +            close_preserve_errno(fd);
+> > +            return -1;
+> > +        }
+> > +        if (ret >= 0 && (flags & XATTR_CREATE)) {
+> > +            errno = EEXIST;
+> > +            close_preserve_errno(fd);
+> > +            return -1;
+> > +        }
+> > +        if (ret == -1 && (flags & XATTR_REPLACE)) {
+> > +            errno = ENOATTR;
+> > +            close_preserve_errno(fd);
+> > +            return -1;
+> > +        }
+> > +    }
+> > +    ret = extattr_set_fd(fd, EXTATTR_NAMESPACE_USER, name, value, size);
+> > +    close_preserve_errno(fd);
+> > +    return ret;
+> > +}
+> > +
+> > +int qemu_mknodat(int dirfd, const char *filename, mode_t mode, dev_t dev)
+> > +{
+> > +    return mknodat(dirfd, filename, mode, dev);
+> > +}
+> > diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+> > index a1924fe3f0..7315b32591 100644
+> > --- a/hw/9pfs/9p-util.h
+> > +++ b/hw/9pfs/9p-util.h
+> > @@ -21,6 +21,14 @@
+> >  #define O_PATH_9P_UTIL 0
+> >  #endif
+> >  
+> > +#ifdef CONFIG_FREEBSD
+> > +/*
+> > + * FreeBSD does not have these flags, so we can only emulate them (racily).
+> > + */
+> > +#define XATTR_CREATE    0x1
+> > +#define XATTR_REPLACE   0x2
+> > +#endif
+> > +
+> 
+> What do you mean with "racily" here?
+
+FreeBSD cannot atomically check for the existence of and set an extattr,
+the system call interface simply doesn't support it today.  This means
+that fsetxattrat_nofollow() needs back-to-back system calls to check for
+the existence of an attribute and then potentially set it.
+
+> >  #if !defined(CONFIG_LINUX)
+> >  
+> >  /*
+> > @@ -64,9 +72,9 @@ static inline uint64_t host_dev_to_dotl_dev(dev_t dev)
+> >  static inline int errno_to_dotl(int err) {
+> >  #if defined(CONFIG_LINUX)
+> >      /* nothing to translate (Linux -> Linux) */
+> > -#elif defined(CONFIG_DARWIN)
+> > +#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+> >      /*
+> > -     * translation mandatory for macOS hosts
+> > +     * translation mandatory for non-Linux hosts
+> >       *
+> >       * FIXME: Only most important errnos translated here yet, this should be
+> >       * extended to as many errnos being translated as possible in future.
+> > @@ -155,13 +163,13 @@ static inline int openat_file(int dirfd, const char *name, int flags,
+> >  {
+> >      int fd, serrno, ret;
+> >  
+> > -#ifndef CONFIG_DARWIN
+> > +#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
+> >  again:
+> >  #endif
+> >      fd = qemu_openat(dirfd, name, flags | O_NOFOLLOW | O_NOCTTY | O_NONBLOCK,
+> >                       mode);
+> >      if (fd == -1) {
+> > -#ifndef CONFIG_DARWIN
+> > +#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
+> >          if (errno == EPERM && (flags & O_NOATIME)) {
+> >              /*
+> >               * The client passed O_NOATIME but we lack permissions to honor it.
+> > @@ -202,6 +210,9 @@ again:
+> >      return fd;
+> >  }
+> >  
+> > +#ifdef CONFIG_FREEBSD
+> > +ssize_t fgetxattr(int dirfd, const char *name, void *value, size_t size);
+> > +#endif
+> >  ssize_t fgetxattrat_nofollow(int dirfd, const char *path, const char *name,
+> >                               void *value, size_t size);
+> >  int fsetxattrat_nofollow(int dirfd, const char *path, const char *name,
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+> > index acfa7db4e1..bc4a016ee3 100644
+> > --- a/hw/9pfs/9p.c
+> > +++ b/hw/9pfs/9p.c
+> > @@ -136,8 +136,10 @@ static int dotl_to_open_flags(int flags)
+> >          { P9_DOTL_NONBLOCK, O_NONBLOCK } ,
+> >          { P9_DOTL_DSYNC, O_DSYNC },
+> >          { P9_DOTL_FASYNC, FASYNC },
+> > -#ifndef CONFIG_DARWIN
+> > +#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
+> >          { P9_DOTL_NOATIME, O_NOATIME },
+> > +#endif
+> > +#ifndef CONFIG_DARWIN
+> >          /*
+> >           *  On Darwin, we could map to F_NOCACHE, which is
+> >           *  similar, but doesn't quite have the same
+> > @@ -3658,7 +3660,7 @@ static int v9fs_fill_statfs(V9fsState *s, V9fsPDU *pdu, struct statfs *stbuf)
+> >      f_bavail = stbuf->f_bavail / bsize_factor;
+> >      f_files  = stbuf->f_files;
+> >      f_ffree  = stbuf->f_ffree;
+> > -#ifdef CONFIG_DARWIN
+> > +#if defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+> >      fsid_val = (unsigned int)stbuf->f_fsid.val[0] |
+> >                 (unsigned long long)stbuf->f_fsid.val[1] << 32;
+> >      f_namelen = NAME_MAX;
+> > @@ -4050,6 +4052,16 @@ out_nofid:
+> >   * Linux guests.
+> >   */
+> >  #define P9_XATTR_SIZE_MAX 65536
+> > +#elif defined(CONFIG_FREEBSD)
+> > +/*
+> > + * FreeBSD similarly doesn't define a maximum xattr size, the limit is
+> > + * filesystem dependent.  On UFS filesystems it's 2 times the filesystem block
+> > + * size, typically 32KB.  On ZFS it depends on the value of the xattr property;
+> > + * with the default value there is no limit, and with xattr=sa it is 64KB.
+> > + *
+> > + * So, a limit of 64k seems reasonable here too.
+> > + */
+> > +#define P9_XATTR_SIZE_MAX 65536
+> 
+> Yeah, even though the limit with UFS being lower, 64k should be fine. This
+> macro is just to prevent a guest to shoot down the QEMU process by requesting
+> a ridiculous large xattr (RAM) buffer that would exceed host's RAM quota for
+> the process. If the underlying fs supports less, its syscall would still
+> return an appropriate error which is eventually returned to 9p client.
+> 
+> /Christian
+> 
+> >  #else
+> >  #error Missing definition for P9_XATTR_SIZE_MAX for this host system
+> >  #endif
+> > diff --git a/hw/9pfs/meson.build b/hw/9pfs/meson.build
+> > index d35d4f44ff..7f4d6e3a45 100644
+> > --- a/hw/9pfs/meson.build
+> > +++ b/hw/9pfs/meson.build
+> > @@ -15,6 +15,8 @@ fs_ss.add(files(
+> >  ))
+> >  if host_os == 'darwin'
+> >    fs_ss.add(files('9p-util-darwin.c'))
+> > +elif host_os == 'freebsd'
+> > +  fs_ss.add(files('9p-util-freebsd.c'))
+> >  elif host_os == 'linux'
+> >    fs_ss.add(files('9p-util-linux.c'))
+> >  endif
+> > diff --git a/include/qemu/xattr.h b/include/qemu/xattr.h
+> > index b08a934acc..224ba1276e 100644
+> > --- a/include/qemu/xattr.h
+> > +++ b/include/qemu/xattr.h
+> > @@ -26,7 +26,11 @@
+> >  #    define ENOATTR ENODATA
+> >  #  endif
+> >  #  ifndef CONFIG_WIN32
+> > -#    include <sys/xattr.h>
+> > +#    ifdef CONFIG_FREEBSD
+> > +#      include <sys/extattr.h>
+> > +#    else
+> > +#      include <sys/xattr.h>
+> > +#    endif
+> >  #  endif
+> >  #endif
+> >  
+> > diff --git a/meson.build b/meson.build
+> > index c2bc3eeedc..4c681bd2e8 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -2382,11 +2382,11 @@ dbus_display = get_option('dbus_display') \
+> >    .allowed()
+> >  
+> >  have_virtfs = get_option('virtfs') \
+> > -    .require(host_os == 'linux' or host_os == 'darwin',
+> > -             error_message: 'virtio-9p (virtfs) requires Linux or macOS') \
+> > -    .require(host_os == 'linux' or cc.has_function('pthread_fchdir_np'),
+> > +    .require(host_os == 'linux' or host_os == 'darwin' or host_os == 'freebsd',
+> > +             error_message: 'virtio-9p (virtfs) requires Linux or macOS or FreeBSD') \
+> > +    .require(host_os != 'darwin' or cc.has_function('pthread_fchdir_np'),
+> >               error_message: 'virtio-9p (virtfs) on macOS requires the presence of pthread_fchdir_np') \
+> > -    .require(host_os == 'darwin' or libattr.found(),
+> > +    .require(host_os != 'linux' or libattr.found(),
+> >               error_message: 'virtio-9p (virtfs) on Linux requires libattr-devel') \
+> >      .disable_auto_if(not have_tools and not have_system) \
+> >      .allowed()
+> > 
+> 
 > 
 
