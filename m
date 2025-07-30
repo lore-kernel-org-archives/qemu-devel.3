@@ -4,84 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C297C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 08:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E22DC87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 08:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh2DU-0001I3-Py; Wed, 30 Jul 2025 04:31:18 -0400
+	id 1uh2Dn-0001ng-So; Wed, 30 Jul 2025 04:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1uh1pY-000276-9s
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:06:36 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1uh1pP-0008Jk-Nc
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 04:06:28 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-31ef50d8d57so2170005a91.0
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 01:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753862780; x=1754467580; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ge6L4oGfLaHpfj3uC/1S5EHUWvHgeakjeQxfeFcNz5U=;
- b=RiXe00mmlkxIULCRh1Qb4e0/8gNo/vaboNXiPcn0oY5Y5LEVSrDhwCK0lhuM0oyahA
- jdG1x7hOCsYJjV3gCaL/l6jMTEeqJxZNgNaZZwSIPTKyJ8WgXyAdBgfJtFIAs6iXEyT5
- u5ExFIrY4qSYzYOlEGRRTiAPu7xt5PLWkOTL8prTif9JERs6jMzRqu9xqSy68lWWklmh
- Wp4P6oxmNd1IUeviE3s0sZA/A1lMdjt3+/3eerxwDGcPgZQTk34R0o9YRsPom8GZJ1+w
- XJRJDRxoICoMlY3DW/BPjseIbSaiEi+cfokbiKYp7M8qZsstqyT8anXmpTZAaAJtkOB2
- d9Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753862780; x=1754467580;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ge6L4oGfLaHpfj3uC/1S5EHUWvHgeakjeQxfeFcNz5U=;
- b=nXEetFyt+ly1PErFnV258d/I1LZlo2L1jKy+twT4UpeviVtZvxQMHQgMZxK+SyU1un
- G91tWqaNMfpdzFXwjS4imQkn7+fDA7ZlanofidPFkGtW6FhT628hQpIdBdnjyInEwUqB
- liFOGqqgO49BNCQmdHf/1wAvlOiQtzRGzHsYeYnRrsucCsHp3Xoh9Z2iUEma4v2xkxli
- yFGg0KknUr42ToS7AuQwQALNWBwmqljXBTClyhmCllVSZ8BUbY8nPZnbeUzy1F69rulE
- B7meeVbK0kIrSKy2I/2KjBUfdS9o/MyGIEDd6Ehtyu6KFubpi5uCytCULgIQD90Gs4WZ
- /20g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnqmbT2XFTVK6MrGQ35BHmk92QlhpZZj+wihA6DL/0zTu87jMs/yULyizXTPz+HA0HYZHJ/t81Ctvm@nongnu.org
-X-Gm-Message-State: AOJu0Yw8Ux1aTMIHFFe9+81W2vvHVDpMvfA/Rl9bMBubB6HEPmQ91LqQ
- 1lXywLZdc03/25XG6UbjiGyDKj8eF36tG9HHZUTX9SM/uakHXX0PZO+5sByIUKs2NeYin4QbpvC
- YKWUt/EEpjdU2VaybopjRtSGV1Wcwf1A=
-X-Gm-Gg: ASbGncuRzr4CSRSwyZSr18tzpSLiEaGM9WXqNPsQy2ngLkHuXbQzakFDTBDAIiXuSEY
- VUUSeXcP7FjoV1kfK0brQzzXdTu92UShcBOlztejhpvGR4XzJiOR7+Lj8TqkFd3odklnu1gGhbP
- 8wN6tApsaXFvE+UxFH+0Slp29uce3e6lR/orczEHz+dwrVV9gmg720HFdumVSsKU7DB7GuX42ej
- SefwziQcg==
-X-Google-Smtp-Source: AGHT+IH+bQ/wIaV6yMmRXYLmT3u+7TyZ7z/lC/GoLCPYCgxpS+Gwdx7PjEUQK8w2OLbNLEaKMfF8bwSOB573JDIZbqk=
-X-Received: by 2002:a17:90b:1dc1:b0:31e:e3e1:3686 with SMTP id
- 98e67ed59e1d1-31f5de31435mr3399477a91.19.1753862780478; Wed, 30 Jul 2025
- 01:06:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uh1qW-0003Aq-Dv; Wed, 30 Jul 2025 04:07:32 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uh1qU-0008Qm-Ed; Wed, 30 Jul 2025 04:07:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1753862851; x=1785398851;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=/B21S4ncBoB5+WmK3DLxCfYKt3FEo1x8DXT3apgobf0=;
+ b=ItQtz0jq+sI0grXiWYkJDInrG/IIDL9TDRxx3dsvEh6rUYsZagFATDI4
+ 9NmGPHUBqhzYUoziBH4EcSR8lAKOsGAID5YeJHGViiADeAryoLGSXE1cA
+ M+P/VNnT1obn1YA/4f0w0DD6KipV18Ka6/czTrGTaCGMCizwd8R3dHAn9
+ sDcuiASVdNc+1rK9q7g2JOqJsb7XfjrVJH/UFo7F6ahq4Hd/hQ3zqXPM6
+ 0tF2Knpx/V7QBwdKHqflvDKY4SqQSPNG9N9RI+EmUGL42Yf7w9PD4B6F3
+ oSI1/vogqKwvvG8oAnnQ43ixK2qA9RBbGoZ3oVe5OLK7HoomxMECf4ld8 w==;
+X-CSE-ConnectionGUID: ZTI/1zGhTVac2XsfSa8R0w==
+X-CSE-MsgGUID: 3OtUcW9GQ8uVy2hIQgA+qg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11506"; a="66721522"
+X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="66721522"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jul 2025 01:07:27 -0700
+X-CSE-ConnectionGUID: hDcRCRqSS+u3LzNLKJjF4A==
+X-CSE-MsgGUID: vtCC4fUcQzKZicpdNM8ZRg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="186600364"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 30 Jul 2025 01:07:25 -0700
+Date: Wed, 30 Jul 2025 16:29:01 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH] rust: declare self as qemu_api for proc-macros
+Message-ID: <aInXzUamULqelELf@intel.com>
+References: <20250728-self-as-qemu_api-v1-1-001c339cccc8@linaro.org>
 MIME-Version: 1.0
-References: <CAMo8BfJw_EUUuGT0qVwhfgEi_tLzSmrOdwAip1E08XNZ4XF=6Q@mail.gmail.com>
- <20250730062142.1665980-1-frolov@swemel.ru>
-In-Reply-To: <20250730062142.1665980-1-frolov@swemel.ru>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Wed, 30 Jul 2025 01:06:09 -0700
-X-Gm-Features: Ac12FXxoVh5UEKZxDQvSqJLK2wivtcvq3KUxF8Hm1wf_2Clnv_AROJjVkRXYzsk
-Message-ID: <CAMo8BfKtZPqP0VjNQJmKD7e9J-ZvscFM0ws_GMX3vEbt_B7=gQ@mail.gmail.com>
-Subject: Re: [PATCH v2] target/xtensa: Replace malloc() with g_strdup_printf()
-To: Dmitry Frolov <frolov@swemel.ru>
-Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.244,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250728-self-as-qemu_api-v1-1-001c339cccc8@linaro.org>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,23 +80,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 29, 2025 at 11:22=E2=80=AFPM Dmitry Frolov <frolov@swemel.ru> w=
-rote:
->
-> malloc() return value is used without a check.
->
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->
-> v2: Also replaced strdup() with g_strdup()
->
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-> ---
->  target/xtensa/translate.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
+> diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+> index 86dcd8ef17a9ecd040742a99e4b0421e19ec88f6..44d995cfdb990e0d17e7216cf4d1f04a5a980a1f 100644
+> --- a/rust/qemu-api/src/lib.rs
+> +++ b/rust/qemu-api/src/lib.rs
+> @@ -32,6 +32,9 @@
+>  pub mod vmstate;
+>  pub mod zeroable;
+>  
+> +// Allow proc-macros to refer to `::qemu_api` inside the `qemu_api` crate (this crate).
+> +extern crate self as qemu_api;
+> +
+>  use std::{
+>      alloc::{GlobalAlloc, Layout},
+>      ffi::c_void,
 
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+I've learned something new as well. Though late,
 
---=20
-Thanks.
--- Max
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
