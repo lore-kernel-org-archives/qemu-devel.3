@@ -4,95 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4360C87FC9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 07:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D06AC87FC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 07:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh1Bm-0002QK-EV; Wed, 30 Jul 2025 03:25:27 -0400
+	id 1uh1Dr-0003hF-3z; Wed, 30 Jul 2025 03:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uh1BU-0002Ea-3d
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 03:25:09 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uh1BR-0002Fj-EU
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 03:25:07 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-76b6422756fso202429b3a.2
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 00:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753860302; x=1754465102; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=OU0KPj52IbZRi7ayQO65ZGfCSPjVv14ZEBpEoP4GkeM=;
- b=xJPn8/nRqJBOuvImbCqz0hl57syncghFQHiByGOGgFKNp/lcjfO8ZdopL7he9E75v3
- mzP4GZXMPJcelvE9T63yHIaOKyXA3pGFPUWCmZP0Q6AnSA8m03Mz6qPNBcFpAlsp7Die
- bOo8GUolm69WxZxZbFGVk+lgmSLRdaAAW6XI9qKibSfJwkwDc06dJ/Zb7GniT/fyH1Dm
- iBrQH+HtgNBQZmQ7mKuFdbA9HuPkBcJCrPD247zfIi/+IDJmLJHFb7/svM21YmpfGyT5
- F+Nu+dnqkOWgPgAnq4tUWdSnTSBYhTxDqBDaTZnKFIzD5GOluVfzIdHOmMgOxz3yhzuD
- l+ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753860302; x=1754465102;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OU0KPj52IbZRi7ayQO65ZGfCSPjVv14ZEBpEoP4GkeM=;
- b=Xi1BMLJv8oc2XQbC9Qcmd84I7l3fOxk7SUrFcBhn/nIug2xC9b7tbS56SyhrneXm3j
- sXoYRaPVDBwQK9nhA2i/AbWBHez2lh7DkAJEKHo73K4EoahPNfD/w2T3a9D6RLBBfPvc
- bMLHsjhQi0FV4RoJ/AvoWlRzgVUGMF8pym2aAInGJ7rcsxRqdYDJnWhC6KJGKf980SqW
- RtLtFYVvM9u4+FnMHHXf5j7TE5uRxnmHdS8jhaW4Mlaw7tH4X1WVLSFjABRPhSVV8u35
- kafndM6uh+X/eLioVWlzS91CB5G260aQLPyzls96cGvR7oabplebw9x26VCbEURKpUAE
- CU6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLSazVa5CwWDUDH4cSgxem74lThYvoX9F7vjdpBcUA6UlcpIgQnVwXWJCGAc1AMnnql0zubFQhRhwz@nongnu.org
-X-Gm-Message-State: AOJu0YzknA9bXtnHMMNFpe37B0r2YqdeXF9n3peDd5faJRKGbpYvVnio
- mwF0UlpcXJ4xFp3RzbWZj5bq5glCKrGeCr0SD8jtluMukZwZo6ppOZv3HaEe8XQVgGM=
-X-Gm-Gg: ASbGncuSvAkCWVHFtWGOoD0Tr6WMQdXBB35bHmC19ew/6VtDY0g4PqGZZjFuu+dwHZQ
- h5yQBhsisjyNY2LNuk/0WGHMYoqvvyYDhZzmlNq4wYup4+qWdY3EeEYT9uk8BGOccdCfFZbAYv/
- cT9aMfZ3ntlBpCm7UJV3/hY/xbIok3l7RMy2VPPblSgJ56Rw03aQ17kOn8bxIfBcm+zIC4PRYou
- zoVREfDsbMHgp4dYk1PNLtT3fzBuvUFvgUej9IzjhFykgxvuKUW5yzsPaRQqriP+RCSkZlh5pyr
- kB0uDOg7GRett4lcuKoQESInX5uCft2dJEpmRqHO5RPI5ZSH4VQUIb7M6UT47ZGEJgPs7Cyk/cX
- hiCOojCI57jcB0NyNYzPJOa8c+vWF2JW4EpU=
-X-Google-Smtp-Source: AGHT+IFzFVsjbQ/RZeePeggmEXhWoJTd53D5RMJ1mZTOBi+ZnHkCHkln3Gbm8CqChznJcVfStvD4IA==
-X-Received: by 2002:a05:6a20:938c:b0:231:acae:1983 with SMTP id
- adf61e73a8af0-23dc0d59618mr4260908637.3.1753860302092; 
- Wed, 30 Jul 2025 00:25:02 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7640b1e5c94sm9864393b3a.94.2025.07.30.00.25.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Jul 2025 00:25:01 -0700 (PDT)
-Message-ID: <d1fc8730-19c5-4ee3-a37d-2ce9c6fe4b9b@linaro.org>
-Date: Wed, 30 Jul 2025 00:25:00 -0700
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uh1Dm-0003d2-Cw
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 03:27:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uh1Dg-0002tR-1C
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 03:27:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753860442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nPI7pdlOcMz7QrP0SBU39anyG80W4Kt/XP9FRi6Jd1I=;
+ b=ZzO1wK4n83GK3DgKWAKJqvhiARLFnUK4gikwjiu998/8UZtdK220LbXRaPPYJLpeZ1X/QY
+ 9FSWQB+RpWEkQC5kE07Tg4q+qLu5TF2m1QYFMvRInHERz6mpJls//P9obeap4edMdoJFS0
+ j5R0SKubTDoM+y5prhAIh1DCYRjKzrQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-BR3DqirsPLGnywzHHvm0vg-1; Wed,
+ 30 Jul 2025 03:27:15 -0400
+X-MC-Unique: BR3DqirsPLGnywzHHvm0vg-1
+X-Mimecast-MFC-AGG-ID: BR3DqirsPLGnywzHHvm0vg_1753860435
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A19F819560B2; Wed, 30 Jul 2025 07:27:14 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.104])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8235F18003FC; Wed, 30 Jul 2025 07:27:11 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-trivial@nongnu.org,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2] qga: Fix ubsan warning
+Date: Wed, 30 Jul 2025 09:27:09 +0200
+Message-ID: <20250730072709.27077-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 11/14] tests/tcg: reduce the number of plugin tests
- combinations
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250727083254.3826585-1-alex.bennee@linaro.org>
- <20250727083254.3826585-12-alex.bennee@linaro.org>
- <eee5b640-6c65-4796-9b36-ca324f08c07c@linaro.org>
-Content-Language: en-US
-In-Reply-To: <eee5b640-6c65-4796-9b36-ca324f08c07c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,124 +81,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/25 12:03 PM, Pierrick Bouvier wrote:
-> Hi Alex,
-> 
-> On 7/27/25 1:32 AM, Alex Bennée wrote:
->> As our set of multiarch tests has grown the practice of running every
->> plugin with every test is becoming unsustainable. If we switch to
->> ensuring every test gets run with at least one plugin we can speed
->> things up.
->>
->> Some plugins do need to be run with specific tests (for example the
->> memory instrumentation test). We can handle this by manually adding
->> them to EXTRA_RUNS. We also need to wrap rules in a CONFIG_PLUGIN test
->> so we don't enable the runs when plugins are not enabled.
->>
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->> Message-ID: <20250725154517.3523095-12-alex.bennee@linaro.org>
->>
->> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
->> index a12b15637ea..18afd5be194 100644
->> --- a/tests/tcg/Makefile.target
->> +++ b/tests/tcg/Makefile.target
->> @@ -173,14 +173,25 @@ PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
->>    # We need to ensure expand the run-plugin-TEST-with-PLUGIN
->>    # pre-requistes manually here as we can't use stems to handle it. We
->>    # only expand MULTIARCH_TESTS which are common on most of our targets
->> -# to avoid an exponential explosion as new tests are added. We also
->> -# add some special helpers the run-plugin- rules can use below.
->> +# and rotate the plugins so we don't grow too out of control as new
->> +# tests are added. Plugins that need to run with a specific test
->> +# should ensure they add their combination to EXTRA_RUNS.
->>    
->>    ifneq ($(MULTIARCH_TESTS),)
->> -$(foreach p,$(PLUGINS), \
->> -	$(foreach t,$(MULTIARCH_TESTS),\
->> -		$(eval run-plugin-$(t)-with-$(p): $t $p) \
->> -		$(eval RUN_TESTS+=run-plugin-$(t)-with-$(p))))
->> +
->> +NUM_PLUGINS := $(words $(PLUGINS))
->> +NUM_TESTS := $(words $(MULTIARCH_TESTS))
->> +
->> +define mod_plus_one
->> +  $(shell $(PYTHON) -c "print( ($(1) % $(2)) + 1 )")
->> +endef
->> +
->> +$(foreach _idx, $(shell seq 1 $(NUM_TESTS)), \
->> +	$(eval _test := $(word $(_idx), $(MULTIARCH_TESTS))) \
->> +	$(eval _plugin := $(word $(call mod_plus_one, $(_idx), $(NUM_PLUGINS)), $(PLUGINS))) \
->> +	$(eval run-plugin-$(_test)-with-$(_plugin): $(_test) $(_plugin)) \
->> +	$(eval RUN_TESTS+=run-plugin-$(_test)-with-$(_plugin)))
->> +
->>    endif # MULTIARCH_TESTS
->>    endif # CONFIG_PLUGIN
->>    
->> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
->> index bfdf7197a7b..38345ff8805 100644
->> --- a/tests/tcg/multiarch/Makefile.target
->> +++ b/tests/tcg/multiarch/Makefile.target
->> @@ -189,6 +189,10 @@ run-plugin-semiconsole-with-%:
->>    TESTS += semihosting semiconsole
->>    endif
->>    
->> +test-plugin-mem-access: CFLAGS+=-pthread -O0
->> +test-plugin-mem-access: LDFLAGS+=-pthread -O0
->> +
->> +ifeq ($(CONFIG_PLUGIN),y)
->>    # Test plugin memory access instrumentation
->>    run-plugin-test-plugin-mem-access-with-libmem.so: \
->>    	PLUGIN_ARGS=$(COMMA)print-accesses=true
->> @@ -197,8 +201,8 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
->>    	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
->>    	$(QEMU) $<
->>    
->> -test-plugin-mem-access: CFLAGS+=-pthread -O0
->> -test-plugin-mem-access: LDFLAGS+=-pthread -O0
->> +EXTRA_RUNS += run-plugin-test-plugin-mem-access-with-libmem.so
->> +endif
->>    
->>    # Update TESTS
->>    TESTS += $(MULTIARCH_TESTS)
->> diff --git a/tests/tcg/multiarch/system/Makefile.softmmu-target b/tests/tcg/multiarch/system/Makefile.softmmu-target
->> index 5acf2700812..4171b4e6aa0 100644
->> --- a/tests/tcg/multiarch/system/Makefile.softmmu-target
->> +++ b/tests/tcg/multiarch/system/Makefile.softmmu-target
->> @@ -71,8 +71,11 @@ endif
->>    MULTIARCH_RUNS += run-gdbstub-memory run-gdbstub-interrupt \
->>    	run-gdbstub-untimely-packet run-gdbstub-registers
->>    
->> +ifeq ($(CONFIG_PLUGIN),y)
->>    # Test plugin memory access instrumentation
->> -run-plugin-memory-with-libmem.so: 		\
->> -	PLUGIN_ARGS=$(COMMA)region-summary=true
->> -run-plugin-memory-with-libmem.so: 		\
->> -	CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
->> +run-plugin-memory-with-libmem.so: memory libmem.so
->> +run-plugin-memory-with-libmem.so: PLUGIN_ARGS=$(COMMA)region-summary=true
->> +run-plugin-memory-with-libmem.so: CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
->> +
->> +EXTRA_RUNS += run-plugin-memory-with-libmem.so
->> +endif
-> 
-> I'm not sure how it's related, but check-tcg on aarch64 host now fails
-> [1] since this series was merged, and I suspect it may be related to
-> this patch. I didn't spend time to reproduce and investigate it.
->
+From: Thomas Huth <thuth@redhat.com>
 
-Reverting this patch solved the problem on my side. As well, I'm not 
-sure if it's a real problem to run all plugins for all tests. At the 
-moment, it takes 5 min on a slow machine with 4 cpus and a sanitized 
-build, something we can probably live with for now.
+When compiling QEMU with --enable-ubsan there is a undefined behavior
+warning when running "make check":
 
-Unfortunately Alex is out this week, but it would be nice if another 
-maintainer could make a PR reverting this patch.
+ .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
+ #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
 
-Regards,
-Pierrick
+Fix it by avoiding the additional pointer variable here and use an
+"offset" integer variable instead.
 
-> [1]
-> https://github.com/pbo-linaro/qemu-ci/actions/runs/16575679153/job/46879690693
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Use an integer offset variable instead for checking for a NULL pointer
+
+ qga/commands-linux.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 9e8a934b9a6..0c41eb97190 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int pci[4], host, hosts[8], tgt[3];
+-    int i, nhosts = 0, pcilen;
++    int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *q, *driver = NULL;
++    char *p, *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+ 
+     p = strstr(syspath, "/ata");
+     if (p) {
+-        q = p + 4;
++        offset = 4;
+         has_ata = true;
+     } else {
+         p = strstr(syspath, "/host");
+-        q = p + 5;
++        offset = 5;
+     }
+-    if (p && sscanf(q, "%u", &host) == 1) {
++    if (p && sscanf(p + offset, "%u", &host) == 1) {
+         has_host = true;
+         nhosts = build_hosts(syspath, p, has_ata, hosts,
+                              ARRAY_SIZE(hosts), errp);
+-- 
+2.50.1
 
 
