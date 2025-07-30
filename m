@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C2D6C83F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 16:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE22C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Jul 2025 18:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uh9v0-0006eE-Uw; Wed, 30 Jul 2025 12:44:45 -0400
+	id 1uhBbf-0007bi-4Q; Wed, 30 Jul 2025 14:32:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uh8XL-00020Y-5E
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 11:16:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uh9PE-0007yA-8R
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 12:12:01 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uh8XH-0000Pt-Nn
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 11:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753888565;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RQ1PCQHky+cgRPyEbWCtK1rNhsKsR139jw9J7V36mUE=;
- b=fJt/BqPqs9uu7JhQE3WY9pdAOZxqwPFeRgoimBcaAgml4zOZjNgg9r/wyUYSAJ+2uM9Can
- ULvqUl040YvusM+9PQh9Cv4ONobACdtU/r1XQz/C5rDI9cfn+lvc1r1f+3w5nHKYBPtrH5
- 0LUINsQ/pzQ76OssnwMg7Hp5pgmLSxo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-k5O-FQ40MOaZlk7qfjSh2w-1; Wed,
- 30 Jul 2025 11:16:02 -0400
-X-MC-Unique: k5O-FQ40MOaZlk7qfjSh2w-1
-X-Mimecast-MFC-AGG-ID: k5O-FQ40MOaZlk7qfjSh2w_1753888562
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC0B61800370; Wed, 30 Jul 2025 15:16:01 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.136])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0FECD1800285; Wed, 30 Jul 2025 15:16:00 +0000 (UTC)
-Date: Wed, 30 Jul 2025 11:15:59 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: alistair23@gmail.com
-Cc: qemu-devel@nongnu.org, alistair23@gmail.com,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PULL 00/11] riscv-to-apply queue
-Message-ID: <20250730151559.GA67721@fedora>
-References: <20250730010122.4193496-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uh9PB-0001GO-Av
+ for qemu-devel@nongnu.org; Wed, 30 Jul 2025 12:11:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1753891909; x=1785427909;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Ls2Pw+FhsvgTdynanivPEcpa+MN4Udxf0Zt0SNSP0k0=;
+ b=H/sAJdzxFf4ccYVC3TQQOZlrqYz+41bx1qWkbYDGqxiXECRIkqzxz3tA
+ 8bTUgE6YKCAjV/3tmyv5qsylpQXMIPgvnY2zIH0211zGhVlmmvMkMktc/
+ 8CZtkVhrUoYXENUWu4Kk92DecF91eu9YAU+8wZE8eXm5siwZoqLVJTR25
+ W7Ih151/dfiqdik+TDqhKmwd40YNMFt7fHN2pCUEgSNGTH8p3M4Ih9mb8
+ Q9R8x1mFA+/Yf7C4jtIt6qUUU8wIumT6CSUcBei6BGpVF/e3Zuw9dfU6b
+ T7Ke0Y4gJ18YsVnaNrRTDAhvGgvwlFy4hSoFkVi9y/pRXLOUg/925rkIy A==;
+X-CSE-ConnectionGUID: 4UPAKWXfSWyM3NgW+Yj01w==
+X-CSE-MsgGUID: OTnObn1tQ6eZp0tVExL3BA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11507"; a="55268909"
+X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="55268909"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jul 2025 09:11:46 -0700
+X-CSE-ConnectionGUID: clwCpGQATTODnZf79mKz2Q==
+X-CSE-MsgGUID: AS4L2/TySYuz1MARVeV9fA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; d="scan'208";a="162616459"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jul 2025 09:11:44 -0700
+Message-ID: <e5bde045-01b6-4f81-bc25-fd4312de7fe8@intel.com>
+Date: Thu, 31 Jul 2025 00:11:41 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="pWAdSRMNMNiMm6X1"
-Content-Disposition: inline
-In-Reply-To: <20250730010122.4193496-1-alistair.francis@wdc.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] i386/cpu: Enable SMM cpu addressspace
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kirill Martynov <stdcalllevi@yandex-team.ru>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
+ <20250729054023.1668443-2-xiaoyao.li@intel.com> <aInTujVM5hr6/cJw@intel.com>
+ <75a28dcb-88b2-4a7e-a782-a06d915e1654@intel.com> <aIo4MxukAiY0OSGE@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aIo4MxukAiY0OSGE@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.3, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +91,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/30/2025 11:20 PM, Zhao Liu wrote:
+>>>> +        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
+>>>
+>>> It is worth mentioning in the commit message that directly sharing
+>>> MemoryRegion in CPUAddressSpace is safe.
+>>
+>> It's unnecessary to me. It's common that different Address space share the
+>> same (root) memory region. e.g., for address space 0 for the cpu, though
+>> what passed in is cpu->memory, they all point to system_memory.
+> 
+> For cpu->memory, there's the "object_ref(OBJECT(cpu->memory))" in
+> cpu_exec_initfn().
+> 
+> But this case doesn't need to increase ref count like cpu->memory, since
+> memory_region_ref() provides protection and it's enough.
+> 
+> This is the difference.
+> 
+> So it sounds like now it's more necessary to clarify this, no?
+> 
 
---pWAdSRMNMNiMm6X1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+clarify why smram_as_root doesn't need to be object_ref()'ed explicitly 
+like what cpu_exec_initfn() does for cpu->memory?
 
-Applied, thanks.
+As you saide,
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+cpu_address_space_init()
+   -> address_space_init()
+      -> memory_region_ref()
 
---pWAdSRMNMNiMm6X1
-Content-Type: application/pgp-signature; name=signature.asc
+it already ensures the ref count is increased.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiKNy8ACgkQnKSrs4Gr
-c8gk8wgAlng3wkbzZWHZW1FFkXwwyNFR8A9fBPt0Pp3yJL3SjrFomGnVvcTKkqRz
-G5NdpmR8F8UFlEY+yR4kWvCMkc0hVh10PlVNcUquw73ETrndPrYWi6/3Wg9eBQAD
-B2H7NNdhnXhQG3gOznTsVVhSW/nBL5qOPPL0RXwafu8t2LyScx3edtL9eTQ1ocEz
-a0VAi6UVbpON8rkHH92Hsdb8y0OalPDomJuy2O323HKl32r/ce5e3BZ0iVL2GZ6r
-6J7Fs59GqoSzLAlUAADK6Rxl6+rXX9ooi0Ih2lfv6y9ybj8TE8ppEudZ5Bt0AIsq
-xQYSPXXIKpr4whsBFeE1vYApGhG9Jg==
-=+q2I
------END PGP SIGNATURE-----
-
---pWAdSRMNMNiMm6X1--
-
+Why cpu_exec_initfn() increases the refcount of cpu->memory, is totally 
+unrelated to cpu_address_space_init().
 
