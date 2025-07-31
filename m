@@ -4,88 +4,201 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00ACC87FCC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7D5C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhOnl-0000Fj-FF; Thu, 31 Jul 2025 04:38:13 -0400
+	id 1uhOyu-0001WT-B1; Thu, 31 Jul 2025 04:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOnh-00008w-B2
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:38:11 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOnf-0001GG-8K
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:38:09 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3b78315ff04so128462f8f.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753951085; x=1754555885; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QZouWCq7sM5ReNYJGnXKYGBgi6nDBmqzwiiUsottSk4=;
- b=aEeudZlP3m5TXbXV+5DfvFbE5f+4sa2RgyKB9SF/NFDevb0JNtju1FFl5Jz/o/ighG
- CE/9UZAXfpx2ejSJ8017YxMCDWEVw0pyBd+GVEOQzLtlUHxbTdqoRwDI9rWXDrMmU3e1
- XtN3vPKtcpt1e6FrEZKJZBm/SS/N+ca5zVgrx0e3GOndrkAoIi7lHOcDq2DcaOGUXMxs
- 7uB6StYPCLvpAvy2bsyxVQPfUN1Xqsnemz93TMQRhEXmC0q/R8xFHM7kRr6+nAe3TWAq
- 8yM+AMLeDiyhOK6rBNqZD6wUZkQeGGDHoOz5TIEcStcC8uLY22sgTDpv1s+LEKEa1S1p
- +85A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753951085; x=1754555885;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QZouWCq7sM5ReNYJGnXKYGBgi6nDBmqzwiiUsottSk4=;
- b=kqPVapd6+mANO5W6lbJL5TFJVtQh5fgQCuNfIyCg5hlEf6tAiwjsiPXayz6TAICspN
- UAbWbKViiAYklV20kmHyQyb0c0SWUCtQUeUwNg79613GDeQklUcAW0d0rJYt6M9ro2Ju
- dhbKSr5q3/GoI7QQB5DFZpaRouiOLCfhDT2WgSvX5kBvZJvbc7lNGNQ4l8x73vI4BKbC
- KXbpeQxeFc2uz8QnrX+a5lUQ4KTto01mS7K9FTf5ucSc5kFIxdZI7ayN+YK3iM0dfRVw
- JWjpIuQyzOxevJ4je6n9y3HrQOSrBRMehLzkg3fNqL1CfnTwOhEUe21JeJ0M6Jzn2tvY
- ciuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGrqG3vWU7/7eKXi+Fr3YvmlxHiW7hlYUuynd6yORQ+beDZEWTujJ5fjuFSnthUuiloTq2MsWxjrHH@nongnu.org
-X-Gm-Message-State: AOJu0YyR/peHvEXmwMjs6jHITnRB0VYQroVR9JJiFpWfc5iseeph9amt
- jaq8v/NvRKZhikYs5a3H+5s6pNaicxlQZgDXGvOFwsgY7uJ0NiPxvo3E8EJxkMRH+zE=
-X-Gm-Gg: ASbGnct6q132XMt8zub/YNMYBLJrTtXn5XPrupCGgItcr2ZsLMP1zX0yulgRWKJisoB
- EHlO0iZLRTWbScUesliCAJ4HOg09c1j7dnIYYm9RaeKSbxpAyuqdyYSeYJiaBnkZ186Y6IuIboN
- 5hX5zOAMnKLnXCPe/1nc84BxyY5Sa60XeEny4byY7ELkwAtSC3lViyo+kWTBwWEOjfptnwtlrBt
- WzubiQjU9K3mfC/o8DTa+dCOiXT8lbeO8C1Q/7ARMu8pAqoHLQuzNqO/a40eNWgpcfoHkPfF35B
- mB6kWsv+hBBedcuAWSGYylamjKRIj+/m/kYpXa4Bm2cJeTkyb8eWuRrdiBPfcbe1M1ll3+pD31P
- IPAv0Y/qp3D0sjepGOp0xnOh36+T87B0nGdiCJ4uAAOUKWxnRJsAnD76KJ+68FyYgLw==
-X-Google-Smtp-Source: AGHT+IGEc8ookV2byj6Cx4+GSYkckIs95s9xXwz4b+Bt7VjKqbGPooeG/lq7i8brfycBeFXPCn1c4g==
-X-Received: by 2002:a05:6000:4203:b0:3b7:9dde:2a4 with SMTP id
- ffacd0b85a97d-3b79dde06a8mr997853f8f.55.1753951085128; 
- Thu, 31 Jul 2025 01:38:05 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458981d0b06sm57535905e9.5.2025.07.31.01.38.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 01:38:04 -0700 (PDT)
-Message-ID: <6dcd45eb-8189-4492-ba05-d36c743ee7b2@linaro.org>
-Date: Thu, 31 Jul 2025 10:38:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: add static NVDIMMs in device tree
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Gustavo Romero <gustavo.romero@linaro.org>, Thomas Huth <thuth@redhat.com>
-References: <20250730-nvdimm_arm64_virt-v1-1-f843596ab995@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uhOyq-0001RA-6E
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:49:40 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uhOyn-0003ZX-9Y
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:49:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1753951777; x=1785487777;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=9K9F/C7uW0XW93LfQUu879Sh8afLyilLpNuvbIFGA28=;
+ b=V5xCN0ZidWhomX7DsspePZvMj0SN+HgMnepSL8JSNpGANRoEvXqnKSNU
+ j8tplUHjj2gxtg286JQXG8cWxN9n162ap5wJM5xp3Q23lYFjyMOvIO9bN
+ kXqT5TyWNW1nVfG0Ctti8cmpNT3NpUzUhLbgKHsZdJ/XUqgZHCKtA3uar
+ KejoSOHzxDABo8MoUIlatJDA8ljOy/N0Sr/MwqpK3yYz/l4AW6sz+Oeoq
+ AgZs7uqXWOqgLjvecKR3AxGNUxXRI9AZU93EwcGx851Ja+NiyBd5zzqPc
+ X2T9EwGuCISQJkMlkoS/N7WE2E8xONOKNG9WdvbByZ+l9mDRuipJgubsj A==;
+X-CSE-ConnectionGUID: nxwEvKRdRg+AkzsvvEAe6w==
+X-CSE-MsgGUID: eiXos9uzTVGBV1UVoTS2rg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11507"; a="66832378"
+X-IronPort-AV: E=Sophos;i="6.16,353,1744095600"; d="scan'208";a="66832378"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2025 01:49:33 -0700
+X-CSE-ConnectionGUID: TOV25cpCTAWnn0oKjlwsqQ==
+X-CSE-MsgGUID: OQI435iwQVCZuvwtPceLng==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,353,1744095600"; d="scan'208";a="164005049"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2025 01:49:32 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26; Thu, 31 Jul 2025 01:49:32 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26 via Frontend Transport; Thu, 31 Jul 2025 01:49:32 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.81) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26; Thu, 31 Jul 2025 01:49:31 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YIYcQ9ou8Fs3jW07a3bu8WBDWXRmN27XlhaC+JWgjeN/z5loqRs9d7YKCe2JPCi9I9LUoVslEXuTdTVYWcC2V4KB4X6gnNxzTTkh+bQObIgzEtjP5/n/mBYkc0pwY/p87pKcYd7iskzEFzCfO2Qlr9o9K8PqrixoMJzEh7EkGtcvJujdL4vYcFl261FV4mMHm3PJx4HVLiP0CQad3Z7qtEjkmFlqhZK+ue0qdKFvgdtDwVggFbRW7qRjWoKffVbNXCxOSNdSdoGXVQP1LIdVcbsRBaJOhFR1TxBZnSjVnaKCpsZBuO0ZhXlizKII3uH7V4NUM6QI8cGWHCGyeBIFlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9K9F/C7uW0XW93LfQUu879Sh8afLyilLpNuvbIFGA28=;
+ b=ctcaUZxsPTD332ZExsgOcWlK+61/T3E/RT4CdTfQ4wazjAy5dYJ30Xsjz+oVdqjxd69jHZRFLM3YshTDFJr0kb3IySrUgLE1DtpqEUK6aaR8oBwt/O7nlRJcr2YK4OhhLFXE9y+6eAXHHeRvkT/OeV5FEDaU+tkJ2QLLg8vVe2zvcEpIjYQaR/N5/8g9C/S1hnWEvC5iA94l/5aYS3JeSQVovvq4gBu6mgKpg4INJ8S3Wgk5xvhkyr47WJAGhGHPienLuNoOjPaUML5o/+T901cY2n81neRX+cSmM0HV1o0PDrC64bEQME8keNEdfOF6UsLdw6ipnE9+M5KokYpZzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DS0PR11MB6349.namprd11.prod.outlook.com (2603:10b6:8:ce::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.13; Thu, 31 Jul
+ 2025 08:49:29 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8989.010; Thu, 31 Jul 2025
+ 08:49:29 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
+Thread-Topic: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
+Thread-Index: AQHcAcuhNMNJB0xuP0yfjOwZpiFjP7RL5e6AgAAFFsA=
+Date: Thu, 31 Jul 2025 08:49:29 +0000
+Message-ID: <IA3PR11MB91364FF957288A4DBC5A3F709227A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+ <1e5263cc-23fb-44cf-a8c1-f01b6fbb6ef3@linaro.org>
+In-Reply-To: <1e5263cc-23fb-44cf-a8c1-f01b6fbb6ef3@linaro.org>
+Accept-Language: en-US
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250730-nvdimm_arm64_virt-v1-1-f843596ab995@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS0PR11MB6349:EE_
+x-ms-office365-filtering-correlation-id: e47c35b5-276a-4baf-bef6-08ddd00f298d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?OTJyM3lrc2RPUFp5NXVWZm1TYmVndHNMRlhEL2ZkaFM3VkhsS05nZW40VDRp?=
+ =?utf-8?B?K09EUVBXUEVQaXVXbnc4eElSSWJSZXdNbkhrQ3JtOXk2V2Y3Qi9qdHVSUzRV?=
+ =?utf-8?B?Yms4TGJiR3F2NVJTYjJEVndtaEM4aFJiYm52QTBCcmRhaEVTUnd4VG8yQ0hB?=
+ =?utf-8?B?OHNnL0RyaGtrUXl3d1UvSU1Fc2dWTGVNK29JZ3VaSm1VeHh1MGxlWnhQcDZ1?=
+ =?utf-8?B?WXU5STVBcy9kYmtsdTljUEo4VnN3UXNDc0F3U0NId2R4bmZ6QUdzVVZaTDA4?=
+ =?utf-8?B?cXVzWmdnR01LRENWSTFQdGJkbE40eEdhWjRUVjAxc3Brd3FyeTIyWnBndkRx?=
+ =?utf-8?B?TFJyUWdPSmJTcmRqTmYrSzVaSnAva1o3MlUzclQ5L25TU2MwSS85ZUhMNjQ3?=
+ =?utf-8?B?Tk81YUJ4SUJSUG1YOFRSRzhjYUNVSWR1Z3pXUW1VU1EvbDRhZ2VhTW51dlJO?=
+ =?utf-8?B?bmpSUDF0ZGZhSVJFbXY0S3Z6Zm9NcmM0eHByR0xEQVUxSThMQ1JIMGRFTUZz?=
+ =?utf-8?B?NkxINTI4TzVsQmovdzJydytaM1FSNEkvSmxWT1plNnNwLytJeG5hcnRQQnVO?=
+ =?utf-8?B?MlRENmRlTjQ0Rm5zZlBHU25HQmMzalV5YUFPVUxiRWJWZGRVWXlxL0JvbTA4?=
+ =?utf-8?B?Qk5CSThjSTRTaEx6WEUrWlhPbmJ2d1VXTURyd2RnZVEvb3Y5bGM5WEdYQmZH?=
+ =?utf-8?B?N3dsbGpOZ21zcXF2TGlVZW9seVhMMXp6b2oyeENUOFB5L1pEL3Z3NnRWTFRV?=
+ =?utf-8?B?akkreWFDN09STXk4K2ZSdndkWXlBdjI0MCtnMzBZQys4eGZQUm5IWFpTa25D?=
+ =?utf-8?B?b3RPWU5ZSkY3OFZlUm5WbFZwOWV1MGtCL3dTRFJXb0VnbzBoODZCRG5tKzB6?=
+ =?utf-8?B?QVZZWUdmK1AyR0NmaFI3ZU01cmMxaDJacytaeThGZHJLbmVwRWQ1Zko1LzIw?=
+ =?utf-8?B?WjlKaTNIbVpxQ3FNYlJZV0d0RVlLZE5EbVJ4MDlPZVQ5MXQyQzVadW1mVi95?=
+ =?utf-8?B?WEhtRklJMFR2NjAwNnM0Y0xkdHR5VHNkVy8zbzdaOTREeStvVWJuQmFVN1VB?=
+ =?utf-8?B?QXkzaFFSbHdrRVl2N1FCOUxzRGZ4TEd3VjJvdW1YWHE1TGtOSTA2dG11dXhi?=
+ =?utf-8?B?SGFOV3g2ZXJkeHdiclRsSDRhVzVrMmtEaDdjMUFxTUI2ZTVpWm9ISlZTOGh5?=
+ =?utf-8?B?cFRuVVZOZ1NLYWRURGFPT2N0Q2h4c0szQmY2UkhoWXF4SjdoWEQ5S1kxSE5Q?=
+ =?utf-8?B?RlFaMEJUMHgzcm9KOFhDOE53Q0k1T3J1Z3hHME53blVhL0VsbHJkVkN3RnR3?=
+ =?utf-8?B?VWp5Q0RvWW93ekZmS3orNDVFOFByMWttSUxVbUg2RGgxbi9CMFRaaWhPNWEy?=
+ =?utf-8?B?SnhCb0I3N1djK05ZZG9HTUgwS0VYWXhMUXlodFQ1cnFUeVVwaW5EckhrTitO?=
+ =?utf-8?B?R3Vzc2dEQTB5VFF4eEhCM1pDcUZYWlhLQ01XMUF1YnQ4VGpXSkhJcmdJc3dG?=
+ =?utf-8?B?dUtMdVBCZ0VhWXIxZ1NuUmhlUVZyNjZUeGJkSDJDU3BFNk42L0hxZkE1NWZu?=
+ =?utf-8?B?aFEvQVZ3REE4Nit4QWsrL0tBMTVDdmd3bnNhMUVGWGtNL3diZDZLZEYrNlds?=
+ =?utf-8?B?UC9UVzRqQlZ3dlZMcDJaRVpZSFYzSFRqTi8vdzluR0ljcUo5MFNVeHpEZVZo?=
+ =?utf-8?B?V09VUS9Vc24rWTZoejZsYjdkQ3I5RDkySmZsWFJLMnNzKzFpRW9SbjlkSG81?=
+ =?utf-8?B?azBrRFFkL01rQnc2VlIyTDVTVnQ3YXczQ1B3NHh5ZWV2bzdDTTQzVWVrTGRk?=
+ =?utf-8?B?dEcyT05GUXlWMk1FbVRQZVJZMGw1WDM2TVA0citkT0J2WXR1eTlLZHdyVkx5?=
+ =?utf-8?B?bEdTZFNCcDZaY0VIOTc1Y1hTSlhFcC9LdlBiU3pwY3IvVUxBK3FYZU5jK1pJ?=
+ =?utf-8?B?U0VjdUFSTlZXN0RNVzBXVWlqL1NIRkZqR1RsTFJkZ2d6K1U2QlNENmxSVUl0?=
+ =?utf-8?Q?Y4+agIa1X6AjLhDFBOfVdquVwRkpug=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WThnbkl5UjhUNDFSQnI3aDNYZDltYzlYRHpzTzBqUkRQdmx5ZWhUam1GcnNy?=
+ =?utf-8?B?VGdWT3VWSkNLTDJLVjZOMHFMNkUzT2NpVkUyeUQ4TmRsaGdCcUY0dEpqUmZz?=
+ =?utf-8?B?UC9YN1dTUnpoR2VnMGQzemVwdi9hbWk4d3VTWG5CQnFUeTJPTHIrczJPRmd0?=
+ =?utf-8?B?Ulorb2ZSdzFJMGJBUDF3MCtiNHd0UjZub1VQVzNaZ0lOTlhhUUFwRUw5QXAx?=
+ =?utf-8?B?RjA0Ukp4Z2tTY0hIWFNZTlFnMlpuY3ZqbXJGMUFOM05KVHhrRC91UVMyKys1?=
+ =?utf-8?B?WnBEWFlMVitocFlXUEFvZWJzMVhqUmJ3RlNUZFlTVGdUTnlqaXY2OWhOdUhR?=
+ =?utf-8?B?S05OdXppd2FBM0k2SXlOT1gyT1laNlJsUG8vRW9jSmhkeFMyS081NjZkazZW?=
+ =?utf-8?B?ODhmWVVDWUtZWmtBaVZ6NlAzK1NmQVp2WE4rOFlxUzB6eWhrR1lRcHZ1V0ZB?=
+ =?utf-8?B?a2dkUiswV2ZXcjVwRkcxU045dTFMczk1RElJNkM1blR6Vk9ydStSUkhQNitH?=
+ =?utf-8?B?dlk1T1NEbHpnVlN3M2poREY2UEFGVU1tZ0xFMlRIR0dlTW1neFNta0UzYnhz?=
+ =?utf-8?B?eEZEZzFIcVQ0Z0YrQ3ptSUhhTlg5Nko1ZjZ1SWVRR251L1ZHREYrMGtodG05?=
+ =?utf-8?B?TUVod2NrdVRNeW0zSFdFTnJuemFYall5WUZ1T2pWQURtTzBsOFRVMVhjLzlO?=
+ =?utf-8?B?dHZacTBnSG9XWUVrZzk5bUZxWXF0aFdUR0xPSExQMjB2bVlKUGF1SDJvTEFm?=
+ =?utf-8?B?VTVEMFM2cXByb1RJc1ZrMXFDTWNEMzIycjdtYkM5a3MzbEUyL1YzaVhPMDkw?=
+ =?utf-8?B?RGc5ZEd6dExEZzdtMTRYekExeHZhYjRTeGRlZDFTWUlDbTRvRnlWTUh2Mmp5?=
+ =?utf-8?B?c3UxY0ZsQk1XUDBrK3kwUWIrWlpXbFFqdldhcTlSM1pITHdSV0cra0p2eTh3?=
+ =?utf-8?B?NXR6SmZlWmsvOTV5Zm81SGtvYWZIeU5hR2U3YlpvQ1lCZzlKVVRJVm9PY1FS?=
+ =?utf-8?B?b3NCcWRjTVRCZVVYTVEwamJvNzhBbEZiVjNCQ3lNM1RCVlpBZk9JWktMRXlV?=
+ =?utf-8?B?eEl5WWYvYUNvbVJ4Rm1rY0FaQlc4ZEFBd1h4QTFkaWVPT3RoOUtXdzdRYjZM?=
+ =?utf-8?B?Z0JBeDFJUnB2VDR2cW53WitxRHBZTFV0b0xBeDR2eUxxOXdPMmIzRm1nNlJQ?=
+ =?utf-8?B?Tk1VMmEwVk5oY3dCQ25YQUlYdW45MFNzZWpjYmpVVENrZ3NYLzNiMnp4amYy?=
+ =?utf-8?B?cnd4bktocmhVUWhjblkzWUJQWi9QeXJSaktSRUZyZUdPSUdGR3RWRjNJLzdx?=
+ =?utf-8?B?VTVSb09hT1ZHMVdVcDg5VXdKdTVxb3FnT3JwNnRRcGlrblViZTB3NkwxNjBa?=
+ =?utf-8?B?NWY0UHdGK1puUHU3R05iVS85eUpkTG00cDc1bHZGS1ZqWmJ6MG9HMDIxaVd6?=
+ =?utf-8?B?RmtwcXg3ZmlUZWJuV2FNV2JrbGRyWmZXZzNTWkx0eGw3THAvd05LeFk1RnB1?=
+ =?utf-8?B?eFVvMnlkdldYSkN1OVhDRm1JU1ZOd2FUa2dnN1JFcVM3cWFUSWhIOFBSTVdM?=
+ =?utf-8?B?RmdpOGJoRmpnaDJVT3R0NWVXS3pxRThRQlJPUzE0TU9kR0JDcU9JalJnT3RI?=
+ =?utf-8?B?clRBcDZRbnU5ME10bnJXSDd0S2tDUFgwTzNOZkJqVmdPaDVkaW1wWU9hRllD?=
+ =?utf-8?B?S29CZjZkakFsd2hnaGEzUSsrbXNQSkVWYWVBWk1ZdUVha0dKYk00K1JyY3c4?=
+ =?utf-8?B?NnZORnRra2Q1dlIxVmNacnI4ZkJJUXZGNVBIMTQ0SHN6clJpMVRUK29lZWJE?=
+ =?utf-8?B?cTAzakxnUTkrQWsvaWlxSFd2bXVFdmloWVV4TEgvTHJjVmd4VGQ1MjdobDJ3?=
+ =?utf-8?B?YkJ3Si85WVlHclQ2SnZEWVlUb3hwbEFWNThnSlcrR3Y4N1RVaHhyYkNSMjhv?=
+ =?utf-8?B?djQ0bTcvRnZCMGhXMUpuZXBXblpRK2xLU0FmOWNCamVLTkpPSjBIZlZ6ZUdy?=
+ =?utf-8?B?WnRFMzdLS1o0RStoaWllTmNkZUZOUXJLNjVJa25rTUdnaENCWk5uaTF6dFpR?=
+ =?utf-8?B?SE1tVXJYWmZjMGpJTGZiMGkzbDhYRDZTVDROV0ZJUnNQN2kxZjlTNWdtc3Bi?=
+ =?utf-8?Q?JxgDJ3cVAnFEZVkYO2umTXx8E?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e47c35b5-276a-4baf-bef6-08ddd00f298d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jul 2025 08:49:29.6459 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4Hwwq4fRBg6+JP+liHAliiVasOQwOzo/LhlOWY6SU+hVbyqz+R5QKJNVBMvDIic8zGZppEFJsIw3UZIPpfyCgWi55qBFOpW+AGQPljy92JY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6349
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,145 +215,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manos,
-
-On 30/7/25 14:21, Manos Pitsidianakis wrote:
-> NVDIMM is used for fast rootfs with EROFS, for example by kata
-> containers. To allow booting with static NVDIMM memory, add them to the
-> device tree in arm virt machine.
-> 
-> This allows users to boot directly with nvdimm memory devices without
-> having to rely on ACPI and hotplug.
-> 
-> Verified to work with command invocation:
-> 
-> ./qemu-system-aarch64 \
->    -M virt,nvdimm=on \
->    -cpu cortex-a57 \
->    -m 4G,slots=2,maxmem=8G \
->    -object memory-backend-file,id=mem1,share=on,mem-path=/tmp/nvdimm,size=4G,readonly=off \
->    -device nvdimm,id=nvdimm1,memdev=mem1,unarmed=off \
->    -drive file=./debian-12-nocloud-arm64-commited.qcow2,format=qcow2 \
->    -kernel ./vmlinuz-6.1.0-13-arm64 \
->    -append "root=/dev/vda1 console=ttyAMA0,115200 acpi=off"
->    -initrd ./initrd.img-6.1.0-13-arm64 \
->    -nographic \
->    -serial mon:stdio
-
-Should we add a functional test covering this non-ACPI case?
-
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   hw/arm/boot.c | 39 +++++++++++++++++++++++++++++++++++++++
->   hw/arm/virt.c |  8 +++++---
->   2 files changed, 44 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-> index d391cd01bb1b92ff213e69b84e5a69413b36c4f8..a0c1bcdf946ca98bb5da63f1a518018eb578dd81 100644
-> --- a/hw/arm/boot.c
-> +++ b/hw/arm/boot.c
-> @@ -25,6 +25,7 @@
->   #include "hw/boards.h"
->   #include "system/reset.h"
->   #include "hw/loader.h"
-> +#include "hw/mem/memory-device.h"
->   #include "elf.h"
->   #include "system/device_tree.h"
->   #include "qemu/config-file.h"
-> @@ -515,6 +516,26 @@ static void fdt_add_psci_node(void *fdt, ARMCPU *armcpu)
->       qemu_fdt_setprop_cell(fdt, "/psci", "migrate", migrate_fn);
->   }
->   
-> +static int fdt_add_pmem_node(void *fdt, uint32_t acells, uint32_t scells,
-> +                             int64_t mem_base, int64_t size, int64_t node)
-> +{
-> +    int ret;
-> +
-> +    g_autofree char *nodename = g_strdup_printf("/pmem@%" PRIx64, mem_base);
-> +
-> +    qemu_fdt_add_subnode(fdt, nodename);
-> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "pmem-region");
-> +    ret = qemu_fdt_setprop_sized_cells(fdt, nodename, "reg", acells,
-> +                                       mem_base, scells, size);
-> +    /* only set the NUMA ID if it is specified */
-> +    if (!ret && node >= 0) {
-> +        ret = qemu_fdt_setprop_cell(fdt, nodename, "numa-node-id",
-> +                                    node);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
->   int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
->                    hwaddr addr_limit, AddressSpace *as, MachineState *ms,
->                    ARMCPU *cpu)
-> @@ -525,6 +546,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
->       unsigned int i;
->       hwaddr mem_base, mem_len;
->       char **node_path;
-> +    g_autofree MemoryDeviceInfoList *md_list = NULL;
->       Error *err = NULL;
->   
->       if (binfo->dtb_filename) {
-> @@ -628,6 +650,23 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
->           }
->       }
->   
-> +    md_list = qmp_memory_device_list();
-> +    for (MemoryDeviceInfoList *m = md_list; m != NULL; m = m->next) {
-> +        MemoryDeviceInfo *mi = m->value;
-> +
-> +        if (mi->type == MEMORY_DEVICE_INFO_KIND_NVDIMM) {
-> +            PCDIMMDeviceInfo *di = mi->u.nvdimm.data;
-> +
-> +            rc = fdt_add_pmem_node(fdt, acells, scells,
-> +                                   di->addr, di->size, di->node);
-> +            if (rc < 0) {
-> +                fprintf(stderr, "couldn't add NVDIMM /pmem@%"PRIx64" node\n",
-> +                        di->addr);
-> +                goto fail;
-> +            }
-> +        }
-> +    }
-> +
->       rc = fdt_path_offset(fdt, "/chosen");
->       if (rc < 0) {
->           qemu_fdt_add_subnode(fdt, "/chosen");
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index ef6be3660f5fb38da84235c32dc2d13a5c61889c..910f5bb5f66ee217a9140f9128804a5b9f69b5b6 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2917,7 +2917,7 @@ static void virt_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
->       const MachineState *ms = MACHINE(hotplug_dev);
->       const bool is_nvdimm = object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM);
->   
-> -    if (!vms->acpi_dev) {
-> +    if (!vms->acpi_dev && !(is_nvdimm && !dev->hotplugged)) {
->           error_setg(errp,
->                      "memory hotplug is not enabled: missing acpi-ged device");
->           return;
-> @@ -2949,8 +2949,10 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
->           nvdimm_plug(ms->nvdimms_state);
->       }
->   
-> -    hotplug_handler_plug(HOTPLUG_HANDLER(vms->acpi_dev),
-> -                         dev, &error_abort);
-> +    if (vms->acpi_dev) {
-> +        hotplug_handler_plug(HOTPLUG_HANDLER(vms->acpi_dev),
-> +                             dev, &error_abort);
-> +    }
->   }
->   
->   static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-> 
-> ---
-> base-commit: 9b80226ece693197af8a981b424391b68b5bc38e
-> change-id: 20250730-nvdimm_arm64_virt-931a764bbe0c
-> 
-> --
-> γαῖα πυρί μιχθήτω
-> 
-> 
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFBoaWxpcHBlIE1hdGhpZXUt
+RGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj5TdWJqZWN0OiBSZTogW1BBVENIXSB2ZmlvOiBJ
+bnRyb2R1Y2UgaGVscGVyIHZmaW9fZGV2aWNlX3RvX3ZmaW9fcGNpKCkNCj4NCj5IaSwNCj4NCj5P
+biAzMS83LzI1IDA1OjMxLCBaaGVuemhvbmcgRHVhbiB3cm90ZToNCj4+IEludHJvZHVjZSBoZWxw
+ZXIgdmZpb19kZXZpY2VfdG9fdmZpb19wY2koKSB0byB0cmFuc2Zvcm0gZnJvbSBWRklPRGV2aWNl
+IHRvDQo+PiBWRklPUENJRGV2aWNlLCBhbHNvIHRvIGhpZGUgbG93IGxldmVsIFZGSU9fREVWSUNF
+X1RZUEVfUENJIHR5cGUgY2hlY2suDQo+Pg0KPj4gU3VnZ2VzdGVkLWJ5OiBDw6lkcmljIExlIEdv
+YXRlciA8Y2xnQHJlZGhhdC5jb20+DQo+PiBTaWduZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVhbiA8
+emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPj4gLS0tDQo+PiAgIGluY2x1ZGUvaHcvdmZpby92
+ZmlvLWRldmljZS5oIHwgIDEgKw0KPj4gICBody92ZmlvL2NvbnRhaW5lci5jICAgICAgICAgICB8
+ICA0ICsrLS0NCj4+ICAgaHcvdmZpby9kZXZpY2UuYyAgICAgICAgICAgICAgfCAxMCArKysrKysr
+KystDQo+PiAgIGh3L3ZmaW8vaW9tbXVmZC5jICAgICAgICAgICAgIHwgIDQgKystLQ0KPj4gICBo
+dy92ZmlvL2xpc3RlbmVyLmMgICAgICAgICAgICB8ICA0ICsrLS0NCj4+ICAgNSBmaWxlcyBjaGFu
+Z2VkLCAxNiBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQg
+YS9pbmNsdWRlL2h3L3ZmaW8vdmZpby1kZXZpY2UuaCBiL2luY2x1ZGUvaHcvdmZpby92ZmlvLWRl
+dmljZS5oDQo+PiBpbmRleCA2ZTRkNWNjZGFjLi4wMGRmNDBkOTk3IDEwMDY0NA0KPj4gLS0tIGEv
+aW5jbHVkZS9ody92ZmlvL3ZmaW8tZGV2aWNlLmgNCj4+ICsrKyBiL2luY2x1ZGUvaHcvdmZpby92
+ZmlvLWRldmljZS5oDQo+PiBAQCAtMTU3LDYgKzE1Nyw3IEBAIGJvb2wgdmZpb19kZXZpY2VfYXR0
+YWNoX2J5X2lvbW11X3R5cGUoY29uc3QNCj5jaGFyICppb21tdV90eXBlLCBjaGFyICpuYW1lLA0K
+Pj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEVycm9yICoqZXJycCk7
+DQo+PiAgIHZvaWQgdmZpb19kZXZpY2VfZGV0YWNoKFZGSU9EZXZpY2UgKnZiYXNlZGV2KTsNCj4+
+ICAgVkZJT0RldmljZSAqdmZpb19nZXRfdmZpb19kZXZpY2UoT2JqZWN0ICpvYmopOw0KPj4gK3N0
+cnVjdCBWRklPUENJRGV2aWNlICp2ZmlvX2RldmljZV90b192ZmlvX3BjaShWRklPRGV2aWNlICp2
+YmFzZWRldik7DQo+DQo+UGxlYXNlIHJldHVybiB0aGUgdHlwZWRlZiAobGlrZSBpbiB0aGUgaW1w
+bGVtZW50YXRpb24pLCBub3QgdGhlIHN0cnVjdC4NCg0KVGhhdCB3aWxsIGJyZWFrIGJ1aWxkLiBW
+RklPUENJRGV2aWNlIGlzIGRlZmluZWQgaW4gaW50ZXJuYWwgaGVhZGVyIGh3L3ZmaW8vcGNpLmgs
+DQp3aGlsZSBpbmNsdWRlL2h3L3ZmaW8vdmZpby1kZXZpY2UuaCBpcyBwdWJsaWMgaGVhZGVyLCBJ
+J20gbm90IHN1cmUgaWYgaXQncyByaWdodCB3YXkgdG8gaW5jbHVkZSBpbnRlcm5hbCBoZWFkZXIg
+aW4gcHVibGljIGhlYWRlci4NCg0KPg0KPkEgb25lIGxpbmUgY29tbWVudCBkZXNjcmliaW5nIHdo
+YXQgdGhpcyBoZWxwZXIgZG9lcyB3b3VsZCBoZSBoZWxwZnVsLg0KDQpXaWxsIGRvLg0KDQpUaGFu
+a3MNClpoZW56aG9uZw0KDQo+DQo+UmVnYXJkcywNCj4NCj5QaGlsLg0KPg0KPj4gZGlmZiAtLWdp
+dCBhL2h3L3ZmaW8vZGV2aWNlLmMgYi9ody92ZmlvL2RldmljZS5jDQo+PiBpbmRleCA1MmExOTk2
+ZGM0Li5hNGY5YzkyMTZjIDEwMDY0NA0KPj4gLS0tIGEvaHcvdmZpby9kZXZpY2UuYw0KPj4gKysr
+IGIvaHcvdmZpby9kZXZpY2UuYw0KPg0KPg0KPj4gQEAgLTQyOSw2ICs0MjksMTQgQEAgVkZJT0Rl
+dmljZSAqdmZpb19nZXRfdmZpb19kZXZpY2UoT2JqZWN0ICpvYmopDQo+PiAgICAgICB9DQo+PiAg
+IH0NCj4+DQo+PiArVkZJT1BDSURldmljZSAqdmZpb19kZXZpY2VfdG9fdmZpb19wY2koVkZJT0Rl
+dmljZSAqdmJhc2VkZXYpDQo+PiArew0KPj4gKyAgICBpZiAodmJhc2VkZXYgJiYgdmJhc2VkZXYt
+PnR5cGUgPT0gVkZJT19ERVZJQ0VfVFlQRV9QQ0kpIHsNCj4+ICsgICAgICAgIHJldHVybiBjb250
+YWluZXJfb2YodmJhc2VkZXYsIFZGSU9QQ0lEZXZpY2UsIHZiYXNlZGV2KTsNCj4+ICsgICAgfQ0K
+Pj4gKyAgICByZXR1cm4gTlVMTDsNCj4+ICt9DQoNCg==
 
