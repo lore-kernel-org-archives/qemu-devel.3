@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F089C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCCEC87FD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhbDy-0001Qn-I1; Thu, 31 Jul 2025 17:54:06 -0400
+	id 1uhbET-0002ic-CX; Thu, 31 Jul 2025 17:54:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhav6-0002te-Q6
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:34:39 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhb4B-0004GZ-P6
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:44:01 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhav4-0000DV-9P
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:34:36 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45610582d07so9933415e9.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:34:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhb4A-0001pq-99
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:43:59 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-76bc61152d8so1482712b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753997672; x=1754602472; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1753998236; x=1754603036; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bjSJeYANY2ZbkmzGr2mc8SbZEDqqyUD89yHv/hj73V4=;
- b=r+3YjNv0yF4g2LGRNEcYAS4cae5lOJGR/104dzu7Qa4LQybVKC+aHNfJmp7MSBsQdA
- EVAVUAPvbKIsNVxQCkXIA9nXz78/veEh3w5sUIkioPDn5XI1AEsDE0yrkAwY7Ra6+sdv
- sZDQgGZhMYC0LOzS/dXxFu4pdg7waPuAPeDIcyQbeWFKQdevuwdqlF4rlIUiAzcOtEEw
- rQ39KoF0sPbfPBdhk4PX/xDlj1tOJcdJ7KZJWJs7mxKwy9csaWbvX6CtEccMJFNqhFDd
- IwfRPgKnrSTZmGjiyIns+AJdMCwMsW4KcMbWxx9yk0ubaGHPobYP8o4DB9gb9Y9Yci1G
- UwRA==
+ bh=TANO5MpnRas1ZWufjV9TyCHPKGCPVe2NJazKetVKn5g=;
+ b=S3xmmvq2gQumuz1wj+Qex8vQbghfFBWU8uU51obZpTO6xnc4RaTfR1hgRjlENcYfn/
+ 4AvuAPUAqz7KUZKVccnE3dAyOiWMoFSmNQ43XPFM/fg0VPDE6r1Dqb6Lp2ZU1T2l0x8C
+ osGu3182n7Bx3ryEwMG7ZdYTU01XXCLdOMpoRVnBq5vznxWL8xqAwuBCvIS5U4Bq05Mz
+ lMo+PgJQPMlRmrqTtveEBa0d+O/2YZsleSXgr2TkrEwaI1wQsMj40nkeoQJ/x9zYXUB0
+ JEr6Rl1sMn7nCb9d0JkHtIr653XoR2SuZsA5P6XL/K8A4jqAKYY7hOMHT+FYf1EcnMQl
+ oqFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753997672; x=1754602472;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753998236; x=1754603036;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bjSJeYANY2ZbkmzGr2mc8SbZEDqqyUD89yHv/hj73V4=;
- b=Fwqitk2OA3z/L6LsJ/4SinT0VC3fghdIG1r+vm+4MpyOxD9ohwr+PiFenyjxMsz58O
- dQRbUuf//ppR4IuyFbGSc0PiFXqrGDBFnCwLRX4yOWNdFzd237vYYIl/7lGb31V0VjYV
- pmEyYviWvlJgyVa0mFdbTPilLV+73g3pnBX7EzldGx6MOtlXFKsFG7G746wvM4Xjhbdg
- 2+DNFa/+WaNhHrQkS28Vp8d11SAg9SvoRTX3t8jgU0EqKxRdtNfROFaAsmIh20Usl0OM
- aE0XmHGYPGWUiQSs9y4KQS1bszO9aQFt9MkUM2xV7JxkdJtlUn1sczXqZpmiOSekdbXB
- WLGA==
-X-Gm-Message-State: AOJu0Yw+PMymflvpOo+NCW4dYnIHGr3/2MqZsplSr2uB8P3tTROYNhxr
- 2iggrBVS8AeqlPj4K0zrHEB2xnJdD7xjKj5vCZufY7UjrmSViyByMV6xi1C/XG/bAk0i5khate7
- AlEnd
-X-Gm-Gg: ASbGncsWI/YeA9hSvoT2Jru0SqPtmxGTyFR6ENMVIKfhX/ENTGFYNPUZrX74YmpUIRI
- MovLWEIYsS8YyJjIMmzEk1PsB16n0WEVlaosVGramOaZ5lqjM3I/jPEDy9XEz5GYuyQ/dRGPjV/
- Tyzoatx1YhALKmvEakhMKDtOSvDg3bsJkBC5rAUQaSgDh17TxovOnJ/ZSPfJKNp1y8YvIVtZKyn
- aRb+nHF9uSkj7zzSbfx2AgRGHzn/3KZlX2ZafiI9jw4mhibmD6QcX74AhstUqVLfvUNWC6WRqi5
- FtqNeogTaAsVlrLxf86KR68tfl6o5khv86WVWpHPH3+NwiTbdcn8KvBB68/DGl9Gj+fqz+24X63
- DFg379/U5tLLvNEwVbHw+ANe3RsUmEMmBdiNTxcobKl2oAwEZGrtQMxLFH7lo5mlcAPTTlzwXYX
- it
-X-Google-Smtp-Source: AGHT+IEfnpW7zebG93f80H9euFZA1sOew1SvR0bPmhph/xnoa5mSY1Lx3e94xTviawluzWDrFuqVHw==
-X-Received: by 2002:a05:600c:6295:b0:442:c993:6f94 with SMTP id
- 5b1f17b1804b1-45898c02c1cmr79980775e9.12.1753997672343; 
- Thu, 31 Jul 2025 14:34:32 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4589edf55e4sm40916655e9.2.2025.07.31.14.34.30
+ bh=TANO5MpnRas1ZWufjV9TyCHPKGCPVe2NJazKetVKn5g=;
+ b=fNWDTCf+BDifLpCVtMf4hOWYiTDehNcUv/56fXArYdk9OxE/bz8ozAxafAhfQ/KExE
+ MIuK9MsNh7HVGp16D1isZ5pMY2oifS1sjG30R6uyMT153Cb22LrJM0oytDJvJBnKCysm
+ DvqcNB8/Opi2EPYkex8XXemHu2xuicVrm60zuvdXXw53Pje3pqtVUYff0as1rpswP8uq
+ fBEL4dPXaIAHSmlJfJKsTDmx+/mDILqsfWimpK8XomlOGKkiTx9PSzi54PFTLmxRJMLY
+ k1RQJk8+Vb6mf/7xDzQRMop2PmvCmd3UprLsNA5EveFshQZuYBuDHMhlb4nBucK792jU
+ B9NQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwKsZOaitto3M7zqhayfJJGsjA59RZQVRlJU0C/kqPm5ywsxSzRG7c+9JGCAJtaKHkdwO/mkQ40LKe@nongnu.org
+X-Gm-Message-State: AOJu0YzMc1/VkHLndKTDuOi4CGK0JGpb+oUjgxiK20i6spkYmM2ZVqQy
+ iwn9ZbEuc636sgcHrbuoaoHUxFBaq7oFMHyhAMXQsoLsW1maR7vuckyi6tDJerw9/jU=
+X-Gm-Gg: ASbGnctsWiax4nH9XaGppYh4AQOVNt4AkzM77Q2opFZlMBEF9on61xg9ODxKGEPNNiL
+ G71W3OB1izGX5o6snxx43skGcPjSQB92wNS/3y5uFcFGneFFX+SK07rjNX6bCiEyB8AgfF12uDR
+ 3sDai2pW1cNHpeDwJhDzy9NcfjNr5/8MIwiWiAqvG/KuG5YxIKRKw4b5TqvkSr3+Ad+KWwFzL/c
+ pbZLkggJxHWKG6ElNMTC2g4aaI5pW3HCT6j8kI+jdcPV8r/x9mV3z8FSBvkrs0BBhlkLydfD4dt
+ TkL1Vtq/PTqDD0Ced3GpRXjwcME+eZnZd0euTx1Bgd9qG5f1xiqKZ37iHo9rtlQLmHsfM8zY1xQ
+ zoAVV+TMh7RdSS589Q+bxdDMNFxbWEeUZRAxEiRzpFEYHTg==
+X-Google-Smtp-Source: AGHT+IHho04uN8v5dEP5CJO5VJx6+0STH/qNuTd4MmFS3k0Zd+Wmfm1is8iMcCfyDSjipNmbLY65Sg==
+X-Received: by 2002:a17:902:eb8a:b0:23f:c945:6081 with SMTP id
+ d9443c01a7336-24096b03a25mr121718665ad.31.1753998236627; 
+ Thu, 31 Jul 2025 14:43:56 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e89768a7sm26571375ad.83.2025.07.31.14.43.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:34:31 -0700 (PDT)
-Message-ID: <9652db52-68d2-41f6-8db4-94c31eecf35c@linaro.org>
-Date: Thu, 31 Jul 2025 23:34:30 +0200
+ Thu, 31 Jul 2025 14:43:56 -0700 (PDT)
+Message-ID: <83d398c9-d129-49df-a254-826f113ebce0@linaro.org>
+Date: Thu, 31 Jul 2025 14:43:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 00/11] hw/sd: Fix SD cards in SPI mode
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Luc Michel <luc.michel@amd.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
-Cc: Guenter Roeck <linux@roeck-us.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Ben Dooks <ben.dooks@codethink.co.uk>, Weiwei Li <liwei1518@gmail.com>,
- qemu-block@nongnu.org
-References: <20250731212807.2706-1-philmd@linaro.org>
+Subject: Re: [PATCH 61/82] target/arm: Implement GCSSS1
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250731212807.2706-1-philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-62-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250727080254.83840-62-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,54 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Cc'ing few more ppl who worked on hw/sd/)
+On 7/27/25 1:02 AM, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/cpregs.h            |  1 +
+>   target/arm/cpregs-gcs.c        |  3 +++
+>   target/arm/tcg/translate-a64.c | 32 ++++++++++++++++++++++++++++++++
+>   3 files changed, 36 insertions(+)
 
-On 31/7/25 23:27, Philippe Mathieu-Daudé wrote:
-> This series fix a pair of issues with SD cards used wired
-> via a SPI link / controller.
-> 
-> Such mode implementation was minimal. I was testing it with
-> the ARM Gumstix machines, but we remove them in the v9.2.0
-> release (commit a2ccff4d2bc ), so they bit-rotted.
-> 
-> Although the series looks big, I shrinked it a lot to have
-> the minimum amount of meaningful changes. Other changes
-> added during debugging will be shared later, as I believe
-> they will still be useful to debug other future issues.
-> 
-> The last patch add testing coverage, to avoid further bitrot.
-> 
-> Regards,
-> 
-> Phil.
-> 
-> Philippe Mathieu-Daudé (11):
->    hw/sd/sdcard: Do not ignore errors in sd_cmd_to_sendingdata()
->    hw/sd/sdbus: Provide buffer size to sdbus_do_command()
->    hw/sd/sdcard: Propagate response size to sd_response_r*_make()
->    hw/sd/sdcard: Fill SPI response bits in card code
->    hw/sd/sdcard: Implement SPI R2 return value
->    hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode
->    hw/sd/sdcard: Allow using SWITCH_FUNCTION in more SPI states
->    hw/sd/sdcard: Factor spi_cmd_SEND_CxD() out
->    hw/sd/sdcard: Disable checking STBY mode in SPI SEND_CSD/CID
->    hw/sd/sdcard: Remove SDState::mode field
->    tests/functional: Test SD cards in SPI mode (using sifive_u machine)
-> 
->   MAINTAINERS                               |   1 +
->   include/hw/sd/sd.h                        |  23 ++-
->   hw/sd/allwinner-sdhost.c                  |   5 +-
->   hw/sd/bcm2835_sdhost.c                    |   5 +-
->   hw/sd/core.c                              |   5 +-
->   hw/sd/omap_mmc.c                          |   2 +-
->   hw/sd/pl181.c                             |   4 +-
->   hw/sd/sd.c                                | 202 +++++++++++++++-------
->   hw/sd/sdhci.c                             |   4 +-
->   hw/sd/ssi-sd.c                            |  96 ++--------
->   hw/sd/trace-events                        |   4 +-
->   tests/functional/meson.build              |   1 +
->   tests/functional/test_riscv64_sifive_u.py |  51 ++++++
->   13 files changed, 238 insertions(+), 165 deletions(-)\
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Without the 51 lines added by the test, only 22 lines of C are added =)
 
