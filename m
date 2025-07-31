@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFFAC87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 19:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB32C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 20:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhZ6V-0003IK-Ck; Thu, 31 Jul 2025 15:38:15 -0400
+	id 1uhZkM-0005dn-2k; Thu, 31 Jul 2025 16:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhXHC-0001yp-Fv
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 13:41:13 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhY2s-00080p-M9
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 14:30:26 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhXH8-0002ty-4i
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 13:41:09 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e8e2a260926so1191275276.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 10:41:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhY2q-0004KU-24
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 14:30:26 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-76bc55f6612so1241650b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 11:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753983663; x=1754588463; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jLDTzs9wkSgE2Lf+TGCjTVwXOMrEGIgO9B22NpyXmhQ=;
- b=ue641nJHtt8RAM6VQD+VzohE/FBg1aJ6MJR0D1K5ShpmWXsV8JwjMmZ4Ob4Z9Ls1mC
- 7mT6TAFk4y3WltKQcMoXMXZ2q0RKcp6t2gZKJDuK6Fh0ZjYYYS9oSbUue5grv3VdfcHO
- IbBqpp3uw01iSFMVWPdkRPbndhENuRikQc26Yg0hMC9LEZss/t9zb10Lkp+BLYKADweY
- Av+LHVX2gq/5yjYbhnVkIM+5Y/r6QSHBmVSzZ698k8etCKvY1zz1gL9TUO6c9uvKAP8I
- ntb5tPPhuOBbJnvi840KdOPnfQR0Zmx8tdrUu1QojCrCAhGkz9UFtupSWTaY1l7Kb0Bh
- 2VTQ==
+ d=linaro.org; s=google; t=1753986621; x=1754591421; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B+t1EESDFAbGOqAdEQWLaXG6wL7K4P09+fmZeZbGBSg=;
+ b=rldRbzaDQHeX+3JsJjilsIvaE80iw9aDHyK9lsh04RIBwGVz8jbH9DlkhRDFMiqvUq
+ gyF9Ae4E1jqt4xNF/A0/mjDrSq+A2XEUF5SbOnfEZU8qbgG1+UEAl5iEDR3Fr/HscNDd
+ MgOzqtVnPSa3eRQjK2SwucEroL+a3ZE5YA2d1+9TbWHrvHTZhEE9+TnukUrZtjlQIo0N
+ 7JE69GcpkGaCnmntOzViVmA+KpgvIGBoczSTLL1a+dK7u6BP51OvAEtsgSTE46Uh+HKK
+ stUqFdPL7wytPa8x2q8veHckpiDx7sZKdAYKR5D6e94kbvu+5XEmEk7b44y8bEXnA8EB
+ owhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753983663; x=1754588463;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jLDTzs9wkSgE2Lf+TGCjTVwXOMrEGIgO9B22NpyXmhQ=;
- b=KsFXMHje41xZxbYfxT6+rBrQrqYXzxesjyp50U5vJX1HQaa5L+VUAhrffXD+BfvCST
- 9yO90gqZvBH7Toc8jHfE04zmQv1nRwsG27wyBD5QnszhzsJS5xVUCcQF6/OXZTzdTQ9o
- Fp1wSaatYsNsC1p8buOFBW2Sbz2Cykq6GHAahRa9BqNkFc9VGI7+BcjEDhHDl7xdUX1U
- MjEL05/DhIbDSvIHzbjyv5hpe6XoA2kqcUT/ORVcKkdMCDqbqCBWBIWYEZuZwsfpKC4c
- ha+FBY0uKdPMsFEE/3HfIYzH0LRF0pB6FkhN7QUnMt6SJLAPmj3WOB/3J+26BycIlySQ
- dbXQ==
-X-Gm-Message-State: AOJu0Ywo5EMdMFBtTzgQ/zSn6s3xonKub2Gab/do1zQz9KKh7YPJGV/F
- xhSh1S6fBN/riLdcvBgSrKbvRfI40kSSW1vR1TNzcrkJm20b5PAhFuXThRlxksxwl1OmlbmR11d
- 2U/IjHZaUX/IPOLAfDN9R1UoUwLQE11x/GOgUYBrJz33DoH4JC2PN
-X-Gm-Gg: ASbGncsQK0oEbDhCA8F5WaTonXF38T9jkabVcsRP4YptQuBdw5S59COJnBk21f6R8+G
- Z30Cg/8iD8cLCu4PauM2IcKmz9sY6kGw2KdWW8thyUTV6SYKlpFFifSVyS7SYyuXNMim8txchmC
- KsOTzekhjLj6orgZldFQ4rHPOHFYDPY339f1Kduz/8D56QLiHVOhNGUU04Hdxa1+IeLP4KLCxi+
- NkJLA4u
-X-Google-Smtp-Source: AGHT+IGRyCNPW/oRDoMyT39srEbrRPilnP0iniU20zpog7wbgezEd7O016gA9ebOy4w+yv2b0AuClfA4lrt1+F5Z+Pc=
-X-Received: by 2002:a05:690c:6c85:b0:71a:413d:5668 with SMTP id
- 00721157ae682-71a4656c4e6mr101717487b3.11.1753983662944; Thu, 31 Jul 2025
- 10:41:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1753986621; x=1754591421;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B+t1EESDFAbGOqAdEQWLaXG6wL7K4P09+fmZeZbGBSg=;
+ b=prUYAQnOy4bAh7D+0C+PZhqejZUydph5+7V1swjuLPNrujQzgnl82to9nwhuZpyHwz
+ ciP24epyXFlrgrm6i2wIjcnCilVfXc7PEJXj8devjCV+Ept3TaSmRhfR0FpjbZFZf0cG
+ uaoeaMRLsuD5o+t80Q+bLPZMIj9zQMBI6b3xy8SK3HrTXILZM3OXgnoVnJNMFfNh/QVX
+ zJiahZFpun/oYdEIVORGtO8tBZCo1mUO+mU07LVlaeVS5zX3G1zcitl7uO1KxZ9PgEkA
+ sfSX1Rc/Vjx9y+4NH+ZakE0OGExeHD0IEwukk5+5FqsT2Q/1U2NW86C0Aq5ylMEqEgio
+ yBHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAQ0N82HbRJhtp7zVE98oGWV9eEZGjYk/iKZRxQvs3Gg32URPh30iGqH8dTkRx1w7LXHLyqwgXx7YR@nongnu.org
+X-Gm-Message-State: AOJu0YzD0nWZqBFDQzD8LTfjEy9HmBtE4zfjHXYBafPbDpCyyYjlk/Ng
+ 72tvmGsXrsVnEiIk3KYtT5U9JeIzDSc7/wc4q7XvdzopXOWFFunWnxrGqG+Gc/8u11o=
+X-Gm-Gg: ASbGncvcXFlOUjU6iqNIUu1d5loWdCRR5IcmY9VBwJS7xRcp7Mub+FShzwgIO+pa8H5
+ mMrRckqPPDx2s2pcnRZEZWeqlB5WhSlZ4SxsI3Stl9GzM8X1NhnK5JLUW42g+q4/QP4r4yu2UyT
+ fhsuO7zhCkzGfv4HRE3IDk1QY69nfqXO0qItHtdbCUy9SNLaF3V6GKmKAkt1Bv7n3s5S8xiNtgy
+ 0wicYr20qZg2Qpk7ed7eqrx1apI0tpYlrAhd22cWLIdKBvvoaPeunV/ZndZ7ej4Sj9G/FI2r80z
+ CYBmPWRXQEEZkAG3UzxCt2CDz0+junBYPKM8nK0wzqwZxRz5PCFkF6JZ9x6V2vpypJhg1uEl+C0
+ 2BjPlUDa4FOfc67XSPXDyLo5htnbSgmi+VEw=
+X-Google-Smtp-Source: AGHT+IFRNdkBVeQRtr/IbDbG8Y6h9rmkiWtkGEkY3lZz9y2BXurDo+SC2a9hE+V2Ahu9VWIAVap5OQ==
+X-Received: by 2002:a05:6a00:2382:b0:736:4e14:8ec5 with SMTP id
+ d2e1a72fcca58-76bcd398e77mr3946064b3a.11.1753986620990; 
+ Thu, 31 Jul 2025 11:30:20 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bccfea38csm2203147b3a.128.2025.07.31.11.30.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Jul 2025 11:30:20 -0700 (PDT)
+Message-ID: <25fe9c70-be00-4884-8d91-53dfff745cb6@linaro.org>
+Date: Thu, 31 Jul 2025 11:30:19 -0700
 MIME-Version: 1.0
-References: <20250721153341.2910800-1-peter.maydell@linaro.org>
-In-Reply-To: <20250721153341.2910800-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 31 Jul 2025 18:40:51 +0100
-X-Gm-Features: Ac12FXyf84gdX23YmUohEl5gRUIAwLeAzJEGc9UebybUEF2Ijwj5Jrz7W4_VZ2o
-Message-ID: <CAFEAcA884WUW7u6Ng65hj_cSe++9S+_nok6w2NphzhUuZH3DaQ@mail.gmail.com>
-Subject: Re: [PATCH] scripts/make-release: Go back to cloning all the EDK2
- submodules
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Michael Tokarev <mjt@tls.msk.ru>, Michael Roth <michael.roth@amd.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
+ <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
+ <144f0930-af30-42b0-849c-99242d3f09ee@linaro.org>
+ <CAFEAcA-ycO=AO8UO+X3f6pw34J=iFwW3dpPyMXKm5BzJ11dt5Q@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA-ycO=AO8UO+X3f6pw34J=iFwW3dpPyMXKm5BzJ11dt5Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,99 +107,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping for code review on this one? Mike Roth: especially input from
-from you on this would be good since you're the one who runs
-the make-release script...
+On 7/31/25 9:23 AM, Peter Maydell wrote:
+> On Mon, 28 Jul 2025 at 20:34, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>> This old commit (7702e47c2) was the origin of having interrupt related
+>> code in a generic folder, but I don't really understand the rationale
+>> behind it to be honest. It seems to be an exception regarding all the
+>> rest of the codebase, thus the idea to bring back things where they belong.
+> 
+> Most devices are both (a) architecture specific and (b) a particular
+> kind of device (UART, ethernet controller, interrupt controller, etc).
+> The nature of a filesystem hierarchy is that we can't file them
+> in both ways at once. We picked "sort them by kind", which is why
+> all the interrupt controllers live in hw/intc, all the UARTS in
+> hw/char, ethernet controllers in hw/net, and so on. In this
+> breakdown of the world, hw/$ARCH is supposed to be for board models
+> and SoC models only.
+> 
+> The GICv3 and the NVIC are odd, because they are very closely
+> coupled to the CPU. (A few other interrupt controllers are also
+> like this, but many are not: for instance the GICv2 is a distinct
+> bit of hardware that communicates with the CPU over the IRQ and
+> FIQ lines only.)
+> 
+> One of my post-implementation regrets about GICv3 is that we
+> didn't really get the split between the GICv3 proper and its
+> CPU interface right. In hardware the GICv3 is an external device
+> and the CPU interface is part of the CPU, with a defined
+> protocol for talking between them. In QEMU we put all the
+> implementation of this in hw/intc/, and the code in arm_gicv3_cpuif.c
+> does some ad-hoc installing of hooks into the CPU.
+> 
+> For the GICv5 I'm trying to structure this in a cleaner way that
+> is closer to the hardware structure, so the CPU interface
+> will be code in target/arm/, with a clearly defined set of
+> functions that it calls to talk to the rest of the GIC that
+> lives in hw/intc/. (This would be too much upheaval to
+> retrofit to GICv3 though, I think.)
+> 
+> In a green-field design of M-profile we might have made
+> the NVIC be code in target/arm, and instead of a separate
+> device have the CPU object itself do this code. But at the
+> time it was written we didn't have the same QOM device
+> class setup we did at the time, and IIRC CPU objects
+> weren't a subclass of device.
+> 
 
-thanks
--- PMM
+Thanks for your answer Peter, it makes more clear for me what is the 
+rationale between sorting the devices this way. It seems the root issue 
+is the lack of proper interfacing between target cpu, and devices 
+relying on it.
 
-On Mon, 21 Jul 2025 at 16:33, Peter Maydell <peter.maydell@linaro.org> wrote:
+I don't expect any silver bullet to solve this, but we still need to 
+move forward, so I'll share some options below.
+
+>> As well, I would prefer having a clean build system more than a clear
+>> filesystem structure, considering it's quite easy to jump into any
+>> definition automatically with your work editor nowadays, vs understand a
+>> meson.build file full of tricks and implicit dependencies where no tool
+>> can help you.
+> 
+> On the other hand, I prefer to have the source files in
+> a clear structure, because then you know where to find
+> things, and command line tools like grep etc are easier
+> to use. (I don't use editor jump-to-definition: I've never
+> felt the need to try to set it up.) Build system files on the
+> other hand are things that most people don't need to look at
+> or do more than very simple "add another file in the same pattern
+> as the existing ones", so it's not too bad if they accumulate
+> a little complexity.
 >
-> In commit bd0da3a3d4f we changed make-release so that instead of
-> cloning every git submodule of EDK2 we only cloned a fixed list.
-> The original motivation for this was that one of the submodules:
->  * was from a non-github repo
->  * that repo had a "SSL certificate expired" failure
->  * wasn't actually needed for the set of EDK2 binaries we build
-> and at the time we were trying to build the EDK2 binaries in one of
-> our CI jobs.
->
-> Unfortunately this change meant that we were exposed to bugs where
-> EDK2 adds a new submodule and the sources we ship in the release
-> tarball won't build any more.  In particular, in EDK2 commit
-> c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
-> the ROM build in our tarball starting from QEMU release 8.2.0:
->
-> /tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
->         Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
->         /tmp/qemu-10.0.0/roms/.
->         /tmp/qemu-10.0.0/roms/edk2
->
-> (Building from a QEMU git checkout works fine.)
->
-> In the intervening time EDK2 moved the submodule that had a problem
-> to be one they mirrored themselves (and at time of writing all their
-> submodules are hosted on github), and we stopped trying to build
-> EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
->
-> Go back to cloning every EDK2 submodule, so we don't have an
-> untested explicit list of submodules which will break without
-> our noticing it.
->
-> This increases the size of the QEMU tarball .tar.xz file from
-> 133M to 139M in my testing.
->
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I think ideally we would not ship these rom blobs in our source
-> tarball but instead provide them separately. Then we would definitely
-> have no reason to ship a huge amount of EDK2 sourcecode that
-> 99.9% of the users of the tarball don't want. But that's an
-> idea that was floated at least three or four years ago now
-> and we don't in practice have time or effort to try to do that.
-> So the simple thing is to at least ship the right source...
->
-> NB: for me this can build the x86 blobs now, but it then tries
-> to build the Arm blobs with the x86 GCC, which obviously doesn't
-> work. Perhaps something needs to be set in the environment ?
->
-> ---
->  scripts/make-release | 20 +++++++++-----------
->  1 file changed, 9 insertions(+), 11 deletions(-)
->
-> diff --git a/scripts/make-release b/scripts/make-release
-> index 4509a9fabf5..87f563ef5f7 100755
-> --- a/scripts/make-release
-> +++ b/scripts/make-release
-> @@ -62,17 +62,15 @@ meson subprojects download $SUBPROJECTS
->  (cd roms/skiboot && ./make_version.sh > .version)
->  # Fetch edk2 submodule's submodules, since it won't have access to them via
->  # the tarball later.
-> -#
-> -# A more uniform way to handle this sort of situation would be nice, but we
-> -# don't necessarily have much control over how a submodule handles its
-> -# submodule dependencies, so we continue to handle these on a case-by-case
-> -# basis for now.
-> -(cd roms/edk2 && \
-> -    git submodule update --init --depth 1 -- \
-> -        ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3 \
-> -        BaseTools/Source/C/BrotliCompress/brotli \
-> -        CryptoPkg/Library/OpensslLib/openssl \
-> -        MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
-> +
-> +# As recommended by the EDK2 readme, we don't use --recursive here.
-> +# EDK2 won't use any code or feature from a submodule of a submodule,
-> +# so we don't need to add them to the tarball.
-> +# Although we don't necessarily need all of the submodules that EDK2
-> +# has, we clone them all, to avoid running into problems where EDK2
-> +# adds a new submodule or changes its use of an existing one and
-> +# the sources we ship in the tarball then fail to build.
-> +(cd roms/edk2 && git submodule update --init --depth 1)
->  popd
->
->  exclude=(--exclude=.git)
-> --
+
+This maybe explains why QEMU is a bit messy regarding its build system 
+architecture, because people are not interested into it. IMHO it's a 
+mistake, because a clean build system architecture will usually force a 
+clean software architecture, at least in terms of components and 
+interfacing. This is what we see right now, with some of the fixes from 
+the single binary being to extract proper API with fixed types, that 
+allow components to communicate in a proper way.
+Complexity does not help neither, because it makes meson build files 
+hard to understand, and probably push back a lot of people from looking 
+at this. It's sad considering meson first objective is precisely to 
+limit the complexity of build systems.
+
+Regarding the "modern" completion support, I recommend you take a look 
+at it. Even though you wrote or reviewed most of the code you navigate 
+in everyday, and thus don't need it, it has become a standard tool for 
+any developer, like sanitizers or omniscient debugging. It's especially 
+interesting since those tools are based on compilers (clangd is the 
+standard for C/C++ nowadays) and not a bunch of clunky regexps.
+It's even more interesting when you learn a new language, like Rust.
+
+> Looking at hw/intc, there is a lot of use of specific_ss
+> here, so I suspect that these Arm interrupt controllers are
+> not going to be the only ones that are using target-dependent
+> code (there are 25 files which use CPUState, for instance).
+> So I think it's worth figuring out how to build these in
+> the right way where they are rather than saying that
+> various interrupt controller models should move to
+> a place where they don't logically belong because that happens
+> to be a folder where we have the build machinery for it.
+> 
+
+Coming back to our issue, I can see two ways to solve it in a short term:
+- On build system: define target hw before generic ones, so we can reuse 
+all the source sets defined there. This has the advantage to be usable 
+by all others architectures.
+- Move gic related fields to a substructure in arm cpu, and provide a 
+simple accessor to it, like "cpu_gicv3(cpu)", breaking the dependency to 
+cpu.h. Concerned fields would be: gic_num_lrs, gic_vpribits, 
+gic_vprebits, gic_pribits.
+
+As you'll be the one having the final word and merging this, which 
+option would you prefer to see?
+
+> thanks
+> -- PMM
+
 
