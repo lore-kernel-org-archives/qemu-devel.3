@@ -4,164 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A21C87FCC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 12:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3F2C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 12:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhSIA-00035L-9Z; Thu, 31 Jul 2025 08:21:50 -0400
+	id 1uhSJk-0006ud-2m; Thu, 31 Jul 2025 08:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1uhS1E-0001N1-3o; Thu, 31 Jul 2025 08:04:32 -0400
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uhS0Z-0000kY-Hn
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 08:03:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1uhS1A-0005Jt-BU; Thu, 31 Jul 2025 08:04:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SkPK48IyIBkSo6P/JTFI0iIcbWnF4ijFghLH1vCDfBPOR/z1P28w0de2Yn0fSm94BmxlqqovQzBXC+2QofmGrAQl+Vla97M8hdmbmXC8qOCYBVWaMcOiSiB0Mh7nBioqBqt7lZpkdKPvo3hjrEkOh/m7WTqTHnvcqa4z6i48r8EWEyFboD18PhBRv6zBTjuodC1MRE6jTZbdUEI0wmwLJO1a2R1DeSY+tdT1zCLYYzDY/yZ1sd4PK3QvO747nNWgSNjNDrlJdh0pFfFQVj+fs+VwTZuKnNT4n5MLxIww2xp6MMkC5VD3MsRyOkVXWtLftLSSyU/5xl7bP65AZnmFOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=57uAk8bmsH9POd8mxrCN5TFmdt5Mm7NKUs6SnoS3RkM=;
- b=uIEYX0FVNXUHVWzv7pINC251gsHt/kux8TyfrxbcRL5PGptaraT6wZ2vamXgVCMMiHt3GUWlbghm71IpclphqfR+WG7lxhvJTRJsTYsAk+A+6jp8LcuuVKs1wCXoqd7DukKQaZ5p051b09n3pUYwR/VAuyJRCqF8gFeyFoZIrN++9Qd6+lZYBHeqlU4hEHv23l7Jj4RI1SfMQd5hJ10F1oRZTzBxCJdOoMKCgFzk+UD/g8KNhGadd/IF/riANZlr2kCCszYLnsgUt7y7REG5KF+hA+faWH8FwJAOBWPmex8y/jhJLMIakthx2sqUUckh88FBiSrZPEeSHdz8do1kaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=57uAk8bmsH9POd8mxrCN5TFmdt5Mm7NKUs6SnoS3RkM=;
- b=yYVS/jzuAi7ySVQgyA5zA/P3bTCF4ioiYZIEsez0oYu+KyXAEwqmenj0Rv+/xK3OJ+3VHAYngz0XLi0HvEI+y1WgGZA6BFNcyeTBakp6+BXRZK3GtP79eS7KeqfO6dQreg2dGOJq/BF1XIJty9awW4eSQ2ylPB4yFjOCv00Cqt5qqPgx/g48OiBWYGJmYm0Iiv5k3xMc3oFIyncJ0S2mJ4j9Lbc6lAnrCgvVSGkPnoE/fY4vOBmuVE9UAFW6AauPxxy4yx5v/YiCnYnI24AtToXlCy7Pmqc++j2tQ1EynUmjBZABY5XoZfu1/7mxjmX63GRshZjnZwWO+/xjeZE3HA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com (2603:10a6:102:1db::9)
- by AS8PR08MB5942.eurprd08.prod.outlook.com (2603:10a6:20b:29f::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Thu, 31 Jul
- 2025 12:04:08 +0000
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1]) by PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1%3]) with mapi id 15.20.8989.011; Thu, 31 Jul 2025
- 12:04:08 +0000
-Message-ID: <b39df1c3-cf68-475b-b8df-4723fc196d3c@virtuozzo.com>
-Date: Thu, 31 Jul 2025 14:04:07 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] qemu-img: add sub-command --remove-all to
- 'qemu-img bitmap'
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-References: <20250723192916.1065781-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20250723192916.1065781-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR04CA0112.eurprd04.prod.outlook.com
- (2603:10a6:803:64::47) To PAXPR08MB6956.eurprd08.prod.outlook.com
- (2603:10a6:102:1db::9)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uhS0V-0005I1-T8
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 08:03:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753963411;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=IschEN4hjITKhDc+MuvNtR4g6lV5Ht+cmwI9zm1RT2c=;
+ b=UpG6+B0liREk6TDPwpYcuN5UjLK9HXZRspDLTaCMD3w61EPtGY1qdrOX34fMavdUqg3zSs
+ GyBfMEE837fL6Z/M3aZoHBYtznkvqVyBygN3P9/qsAFpvyJP1aTzaULBc8pRRBnA1rrF02
+ us/IPGNyjbffGLYKyyK64uIhmYG5faA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-99-eRjKM278MlO1vXHxU3IXSA-1; Thu, 31 Jul 2025 08:03:30 -0400
+X-MC-Unique: eRjKM278MlO1vXHxU3IXSA-1
+X-Mimecast-MFC-AGG-ID: eRjKM278MlO1vXHxU3IXSA_1753963409
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f3796779so517278f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 05:03:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753963408; x=1754568208;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IschEN4hjITKhDc+MuvNtR4g6lV5Ht+cmwI9zm1RT2c=;
+ b=usZbtrQTHSVUX1cipEd3ymPQYxti9sgkNwrG12B+pJZ7qqGR2ugr5BK3sj8R62SSc0
+ 09ND5rnM9DTmhu53gS2ArPdrG3tJagrzyVYjvpMyXog1oBU6tlg/tc6tsT6/zgEXHyEE
+ jCJz6emaIHTVC6AdhIU0344sWcw1gtgjN1PwggAxPEHgtMscl8H3IEW5irTcOb7GUNou
+ tvqMhFs+xY+uaQhtazNyTjS3rxTQpVrsFRKtWqDXKiZzCyEvocL4su9Jx4WyfSe1FoKa
+ NqITBIlRLSj8MgWgi3qSPtfbIcaRj613nIfCWlt5uHTwIMDFAwVUVDQALh2fBNC92OeS
+ dnuw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCFYAl3GI4XqZj+Urm+iHJDhj+wvn+d2YhgFyNKWyjVwoccBY6F5A4Yz9rMZKBTs9LNdBWlIZ7DkJX@nongnu.org
+X-Gm-Message-State: AOJu0Yx250unx9kW4YKt64Ndrwdqk4xCgVu8gCfLxSHE6be0NvUFlZe5
+ Vk0uRS6iZxPRfLH1W7Y9hbqNpJGNzBNGTvI5NgP2JNHir8FFMTqXZROWwASe+EMabTCJivFL/bo
+ Y3thABGsLveko5G27SRKr/4MQm3ML1VO/bGcGqEUTeD9hOSi66c1bVrQv
+X-Gm-Gg: ASbGncvi+Y29OpYXk/EL67KTBIdp0imNqrCZZ7MSxb59OrhIhQoQuDrG7Tq1BgyfUWy
+ 3n77BSEwi9QtvyFhE1alG/WbQds95XFOhkq5GjiXqOX2KNllINi6J0Fhe1nrmAETi8FA5ZdUWC9
+ VKjk4+KepFB6RnjLn/2RhYevU1Dovbs8GGs8Nfp3JJYsG27fbmDYTvwKB1yYsALLpl+JJ4v99JK
+ ZJ4eYF3CO3s2SwDBBcA9Au1Cdtd8wyYuc9yY/5j4z3f4fDDl3Lxu3gUG4DAR1gkBNifGVowlxx+
+ Ezmng5GvnDw5LK6KnDxo3w1j1BKOTc7x2+jkBuaCMXt83auIhjpQxmqHZ5aoZHhakUkSRURqj8d
+ +JhccUWA=
+X-Received: by 2002:a05:6000:2484:b0:3b7:908e:e46e with SMTP id
+ ffacd0b85a97d-3b794ff77eamr5816349f8f.25.1753963407882; 
+ Thu, 31 Jul 2025 05:03:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWrXFRpUA/1Glafi1YykH0bnbacNXdddsUhkKaPYI9ACVeFEhKmNrZU8hZs5C6zWq+PQz6aQ==
+X-Received: by 2002:a05:6000:2484:b0:3b7:908e:e46e with SMTP id
+ ffacd0b85a97d-3b794ff77eamr5816322f8f.25.1753963407433; 
+ Thu, 31 Jul 2025 05:03:27 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
+ ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4589ee628fcsm24659375e9.31.2025.07.31.05.03.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Jul 2025 05:03:26 -0700 (PDT)
+Message-ID: <b0af165f-b464-4479-b2fb-bb9e7ebdb5be@redhat.com>
+Date: Thu, 31 Jul 2025 14:03:26 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR08MB6956:EE_|AS8PR08MB5942:EE_
-X-MS-Office365-Filtering-Correlation-Id: eb569336-2822-4e75-4231-08ddd02a5a9c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bEEvd08zcjdGV2hGMjhIeWJuWGZuKzZvMnBhUUVDNHMzUzVETDdGRyswWDlr?=
- =?utf-8?B?MTIyK2VGem5CaVBnZjVZVE5pc0wzNmdUWXBWUnBlM3dxVFlhSFB6VmNPS0h2?=
- =?utf-8?B?Vnp0S0JmUTczalo3Y1MwMXpmYmhBSkJqbXBSb0c2ZVBqaXZJMXk3NENwcW9k?=
- =?utf-8?B?U01BTTZ4T0JxdDNvNTl5NDRYZWZkWEVYWFRRbTk3b1g4QnBxc1p6dk92ODZv?=
- =?utf-8?B?b2t1UHZtazhVVk4vc0VKV21vdDRtL09rVUtUMlRtQ1BiT1Byd1hmNE9hUWFC?=
- =?utf-8?B?dC9UNS9LTzR3UDZEOTJuSkV3c1ZEKzBpaUNLN0R5eVVkNlIxZTBZVEk0RTl2?=
- =?utf-8?B?eEt0cVpGcm4zRW55aWh2MFNVc3puYzR2VERKLzVaUk1uWW52VitYSjZyY3Az?=
- =?utf-8?B?RDBzQW81MGJlSTN6VExEcmVpTXJycjRBd0N6N2t2VGRCT0JmL1lRVGJzTFpI?=
- =?utf-8?B?V2wzdFRLbkhNbmRGR3Q0WHYzWDJPTkpycmJhWEc4K1A0MFZXVWEwMUlCK0hF?=
- =?utf-8?B?VFpOdm1xclh4VkdETEJPUTB2SWFXMEl1aDVaWFdQcWh3Yk9aNkhJSW43aFZr?=
- =?utf-8?B?QkJiNFptaUZJbW91M3ZiWnV5dEpzR1dmV1ZtU0lqcy8wOXd4T1NvUDRLSXlw?=
- =?utf-8?B?dmZSVUJUMGROQ01zS2NKMGxzS3RVaXdHTy9kdjhuUnFOalE2L3p3VXQ5TXFH?=
- =?utf-8?B?cXUrcDYyOUxPOUVMZm5nZnphZFFDNWVqUTdRc3ZlQVBYZTVZeFJLOVRnZnFQ?=
- =?utf-8?B?TTVlQWJuRk9TZWJKQSs4QVljckpNdVNtM3BFWGNzS2IwNTl2cW1YOEN5aTNa?=
- =?utf-8?B?cHdTbml3eVBUZnVJUkd0MUptOVdXMzhGUHVES2RTci8xTGpXdnBmUHdsT3Zu?=
- =?utf-8?B?RUtkN2hVNFBsSUs1MDlYN3c4SDZFUkliQUhjMW11dnRmSXgxTHNPYnlXNm9C?=
- =?utf-8?B?RUgwek1aRm1lcEpIYTlCalFYdzMrdEhJWnRaN05OZ3hDNW5LdHBOQzBEVkxY?=
- =?utf-8?B?VVRUQnU4cit5OGF1bGxSamdYaWJqU0Q2L3ZZSlhBelc4U2dnTVpYVUNoc1c3?=
- =?utf-8?B?SmdNazJTSDVUOVNxamdDSENYeitjR2VJa0JTNCt6dEpkRnBnMmUzcVdrZ3hH?=
- =?utf-8?B?SG9EalZrN2V3akhtVHhvMFBFb1IwL3Qwdzh1Y1J6WndvRlNsbWJ6VEV5MG1E?=
- =?utf-8?B?cWVQZGhBVEZydkxrYXZRVVNwWTFFcTBKSDU0SVdpdzgwSUV5ZWhMakRZMHky?=
- =?utf-8?B?K3hNUVdjVTFBNUZxbzBJZmVVT1pBOE53bFJwYWVhSlFYSklsYzZ5OTdxZS9p?=
- =?utf-8?B?RjY4cTU5U3o1V1h4MU1uSEo1TExoRWlNcTZ1bEsyZHRyRGx2UC92LzZrQ2hQ?=
- =?utf-8?B?aE1Icm1NSVVxb0FKZXBJRXhWYURXeHFVbkZNN281czRraWZ4ZlIrUytUKzJ3?=
- =?utf-8?B?YzI3WEpLM05SUTJINEZRQ09zSTNITUxtNU5CZGV3eFBJUCt5Z1pYQytscG9t?=
- =?utf-8?B?aC9EMG1KQTQ3ampnMFh3aW1laXN2V3JGTk00Tjk4aDF1dUdycnhXbCtERE1J?=
- =?utf-8?B?OTEzUDkwZjN6a3dIbVRFRDJKMGdYUi9FM1pPa0dTZ05XTFg1dUVRYktNM0Nk?=
- =?utf-8?B?VWVZNng2dzhLd1pGeDRaU0pvK3FudE90NmNwL2JVQWg3OHluaGVUVHNpOVAx?=
- =?utf-8?B?c2JHMlR6RzNCQ2dFL2RKR1BpU0hIc1ZUb05EMHFxNFZKV2lINSswMElyL0FN?=
- =?utf-8?B?eTY0YU5wWXl1dnJCSy9EaXhTYXgxdHFWbjk2UnUzT3EvRWJuYmdDT0o5aGV3?=
- =?utf-8?B?SHU2c3N2NVVOUklCeGtpN1FjVUdDMzM3bTJoTXA1OUVkbTNNa1dCVStYaS9x?=
- =?utf-8?B?alI5NTFBRlUyM24ybElJdTlLRkNhQ0x6OElvY3RHVE5FcHdVdktVVS8walAx?=
- =?utf-8?Q?IyDE9aWKp6c=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PAXPR08MB6956.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dnZIRlUxcjRMQ2w0eWc0ZjZna25HTUUwS1UvQTY0N2svS1dtVkR6ZlpLTXRy?=
- =?utf-8?B?bmtTRDR0d1ZnYk1mcENVZWoxV0ZIZW5TV0NLOXpjQXJzWEVKMFlQblFZNUxL?=
- =?utf-8?B?N1hwS3RSamVLejNDMjVLV256L05PaGlFOGYrVU9RQzdyMzNZekEwTTZ4MkM3?=
- =?utf-8?B?SzBSM25ZSUR2UXFRdXRtZnR6aHZrbHhXTXQydGNBQ05UZHNtRHV6SHNjcXUz?=
- =?utf-8?B?ekZGMk5BbWNUZFdab3ZlelhDSHFVcTRsMlo4VjBHS1dUcHl3SG9keitSY3ZL?=
- =?utf-8?B?L3N1ck9OWkJJanlPNjdFRW9sdGJ3MzRVYkJEcFBlWXpPcGdoS0h2eFVwdmw2?=
- =?utf-8?B?S0tReFlrZkVqemVlQzVBWTRPRGN1MExQem1ERjA4STAzdnBvT0tDdTJ1cWV6?=
- =?utf-8?B?QzFVd2RZWlZpVk9ocVpMSTBrejQ0V0ZsSmJQOG5QYWhFcFhzU2xnS1p3RFg3?=
- =?utf-8?B?eWd5OFo4RzN2NHZjcVJ4QThDb29Dc0FZWTk5azNLaS9PQUgyNHgyS004OUdI?=
- =?utf-8?B?c2lxeGJVd2Jaa21PNlExRmloS1BMbTAyLzNtMXBhRHFrQUQ4Q044K0lRaU5B?=
- =?utf-8?B?QWpWZkRaWUpiVDVrQjRrdkJPbnZxZHgwU2FXbXY1am1SVkhCdmFONDNvSUJq?=
- =?utf-8?B?Vm5jTmY0d0U3MkNUT3BHeXZDRzJmQi9KNmVJZWNJdlN3TWRLNmpmMjZBaERN?=
- =?utf-8?B?eCthcU1BQkdXRjFwUk1FZE5Vcjgya1FQZEZ4U3k5REtwN21Sci9DemFUdUJC?=
- =?utf-8?B?QUx5dU5mVUlQcUhRVHBoWlIrazl4U0lGSWVaQzJIYTB5bUNSTkFqTzNlbkk5?=
- =?utf-8?B?NDZSZ0FTbzJMRGRSbW1pRkRwWTEzZjBadklYTU0xd3dpaTBXV0Z4Q0xhZFNw?=
- =?utf-8?B?eUQzLy9TbGF3MUpsYVBZZ2xoOVJtK0M4OGIvQWIwMndwUk1zd21mbXlpRWhz?=
- =?utf-8?B?UUUvcXVzTExuaVJNTzh6QzR5ZW5HMjZsUUx1NmsvZ2Q3bkpIVDk5QnZkbXFs?=
- =?utf-8?B?S0RiNUFFY1pqdGJSN2RSci9NbENyM3NkQk95RGs5bjk0bkZXMGVBL1hTVmVN?=
- =?utf-8?B?VzZMSTJObVNwb3NzL2h5cHQwb1greXE1TFZsdWFkQ1FaYWZyV2JpbmF6WnJW?=
- =?utf-8?B?VkgyZ09JRmtYVXZhODR1NUtZZFpMMzBzSnNoU0w2YnozNHpZUG9ROTN3Y0xN?=
- =?utf-8?B?WVJMenEzVDlXNGR1d0s1UmF2TkNZb2N6RHNORUVWTGJlQzRERS9td1J6TU91?=
- =?utf-8?B?QWFNTjRYMlpxUWNtMUFDRGs3STRwN0tPL1NkY2ZrZkRTekR1QVRuZU9nOWV6?=
- =?utf-8?B?bDNETk15bnlMRDZFcjYyMld2ZlVwaWxoRG9lKzBjVmUrN3k4RW9WUEZNQVQw?=
- =?utf-8?B?WjIwcDVnSW40bkk5V3ZiUzhGTHd3QTBLVUNsY3V5SUZsSEYxZjlGaWhpVks1?=
- =?utf-8?B?RFM4U0VjSUd3U2VPaUhjM0pNOGpEanU2Z05sYjl6UW4rU1Q5aTBpQkRxdEt0?=
- =?utf-8?B?aC91bzRpcW40dlNEcGZ5VmpMeEdvblRlQ2ZNVjNTeG82UDliVnZWRGZreEtZ?=
- =?utf-8?B?c2NDVVJIMDc3c1F4Mk5kaXVTWDFURXBJTW1rekt0M25hUC9PMHZpdzNPR3pl?=
- =?utf-8?B?R0JGT2QrdE9SOHFUT1RQN1NDNkJxOXY1bjdGWjNvODI5NXova01wM1pONFNa?=
- =?utf-8?B?NTR4UmYzanZrMjNFRjRna0ZmWE42SE80WVh4N3VJalFaQmNhVkhHNmJuRGdr?=
- =?utf-8?B?QXRPay9GZ1MxaUxudDFBb1oyenRVY3BnQmR2TTkraExDaEdMQ2prUFRlRTdV?=
- =?utf-8?B?WGhRSEFsd3ZaNDhnVXdDUUhvcG1OaHorVmdkaFdEdm1tazJ3emxpUmlRVGxO?=
- =?utf-8?B?RTY1VUFZMlJmRmdQUlFvWERQUGsyb3Zncjg3bmlaZHNwdjFvWEhqK1FhV1o3?=
- =?utf-8?B?R2hBc2hYWG92QzJ3MlBEVGsyeDI2MEcwdFh6azlnYWxFTm9saXFQZFJOQUp4?=
- =?utf-8?B?NjA2K2dSNTNLRC9ONHIrV1l0cThBVllJbGs2cmh6WkY3eDZwSnRXUkpUVFBS?=
- =?utf-8?B?d3dBcWszZW5ad2FVRmZhRWpnTDJWcmVaZ08vTUtwemJRdWJtdWpsWjhYN3ZT?=
- =?utf-8?Q?zMNMYY/kCKw+4BTUPE6I6etAD?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb569336-2822-4e75-4231-08ddd02a5a9c
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR08MB6956.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2025 12:04:08.5173 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BToc7XAzaOX6qAcxDJm4vIcjtLcPms/Y0bQ+jOa94tqN7127xCssdKcguU5VqJJfuVOKgg5cobM5WMgmTLrxfg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB5942
-Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
- envelope-from=den@virtuozzo.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+ <1e5263cc-23fb-44cf-a8c1-f01b6fbb6ef3@linaro.org>
+ <IA3PR11MB91364FF957288A4DBC5A3F709227A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <a5b7729f-ca9b-44c8-9ec9-89fdf2636340@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <a5b7729f-ca9b-44c8-9ec9-89fdf2636340@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,204 +162,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/23/25 21:29, Denis V. Lunev wrote:
->  From time to time it is needed to remove all bitmaps from the image.
-> Before this patch the process is not very convinient. One should
-> perform
->      qemu-img info
-> and parse the output to obtain all names. After that one should
-> sequentially call
->      qemu-img bitmap --remove
-> for each present bitmap.
->
-> The patch adds --remove-all sub-command to 'qemu-img bitmap'.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Michael Tokarev <mjt@tls.msk.ru>
-> ---
-> Changes from v1:
-> * rebased to latest head
-> * adopted bitmap help to the new layout
->
->   docs/tools/qemu-img.rst |  4 +++-
->   qemu-img.c              | 47 ++++++++++++++++++++++++++++++++++-------
->   2 files changed, 42 insertions(+), 9 deletions(-)
->
-> diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-> index 5e7b85079d..db739ab5c8 100644
-> --- a/docs/tools/qemu-img.rst
-> +++ b/docs/tools/qemu-img.rst
-> @@ -301,7 +301,7 @@ Command description:
->     For write tests, by default a buffer filled with zeros is written. This can be
->     overridden with a pattern byte specified by *PATTERN*.
->   
-> -.. option:: bitmap (--merge SOURCE | --add | --remove | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
-> +.. option:: bitmap (--merge SOURCE | --add | --remove | --remove-all | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
->   
->     Perform one or more modifications of the persistent bitmap *BITMAP*
->     in the disk image *FILENAME*.  The various modifications are:
-> @@ -310,6 +310,8 @@ Command description:
->   
->     ``--remove`` to remove *BITMAP*.
->   
-> +  ``--remove-all`` to remove all bitmaps.
-> +
->     ``--clear`` to clear *BITMAP*.
->   
->     ``--enable`` to change *BITMAP* to start recording future edits.
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 7a162fdc08..ddd449c1ed 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -86,6 +86,7 @@ enum {
->       OPTION_BITMAPS = 275,
->       OPTION_FORCE = 276,
->       OPTION_SKIP_BROKEN = 277,
-> +    OPTION_REMOVE_ALL = 278,
->   };
->   
->   typedef enum OutputFormat {
-> @@ -4992,6 +4993,7 @@ enum ImgBitmapAct {
->       BITMAP_ENABLE,
->       BITMAP_DISABLE,
->       BITMAP_MERGE,
-> +    BITMAP_REMOVE_ALL,
->   };
->   typedef struct ImgBitmapAction {
->       enum ImgBitmapAct act;
-> @@ -5010,7 +5012,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->       BlockDriverState *bs = NULL, *src_bs = NULL;
->       bool image_opts = false;
->       int64_t granularity = 0;
-> -    bool add = false, merge = false;
-> +    bool add = false, merge = false, remove_all = false, any = false;
->       QSIMPLEQ_HEAD(, ImgBitmapAction) actions;
->       ImgBitmapAction *act, *act_next;
->       const char *op;
-> @@ -5026,6 +5028,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->               {"add", no_argument, 0, OPTION_ADD},
->               {"granularity", required_argument, 0, 'g'},
->               {"remove", no_argument, 0, OPTION_REMOVE},
-> +            {"remove-all", no_argument, 0, OPTION_REMOVE_ALL},
->               {"clear", no_argument, 0, OPTION_CLEAR},
->               {"enable", no_argument, 0, OPTION_ENABLE},
->               {"disable", no_argument, 0, OPTION_DISABLE},
-> @@ -5044,8 +5047,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->           switch (c) {
->           case 'h':
->               cmd_help(ccmd, "[-f FMT | --image-opts]\n"
-> -"        ( --add [-g SIZE] | --remove | --clear | --enable | --disable |\n"
-> -"          --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
-> +"        ( --add [-g SIZE] | --remove | --remove-all | --clear | --enable |\n"
-> +"          --disable | --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
->   "        [--object OBJDEF] FILE BITMAP\n"
->   ,
->   "  -f, --format FMT\n"
-> @@ -5060,6 +5063,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->   "     with optional multiplier suffix (in powers of 1024)\n"
->   "  --remove\n"
->   "     removes BITMAP from FILE\n"
-> +"  --remove-all\n"
-> +"     removes all bitmaps from FILE\n"
->   "  --clear\n"
->   "     clears BITMAP in FILE\n"
->   "  --enable, --disable\n"
-> @@ -5089,7 +5094,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_ADD;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> -            add = true;
-> +            add = any = true;
->               break;
->           case 'g':
->               granularity = cvtnum("granularity", optarg, true);
-> @@ -5101,28 +5106,38 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_REMOVE;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> +            any = true;
-> +            break;
-> +        case OPTION_REMOVE_ALL:
-> +            act = g_new0(ImgBitmapAction, 1);
-> +            act->act = BITMAP_REMOVE_ALL;
-> +            QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> +            remove_all = true;
->               break;
->           case OPTION_CLEAR:
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_CLEAR;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> +            any = true;
->               break;
->           case OPTION_ENABLE:
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_ENABLE;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> +            any = true;
->               break;
->           case OPTION_DISABLE:
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_DISABLE;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> +            any = true;
->               break;
->           case OPTION_MERGE:
->               act = g_new0(ImgBitmapAction, 1);
->               act->act = BITMAP_MERGE;
->               act->src = optarg;
->               QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-> -            merge = true;
-> +            any = merge = true;
->               break;
->           case 'b':
->               src_filename = optarg;
-> @@ -5139,8 +5154,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->       }
->   
->       if (QSIMPLEQ_EMPTY(&actions)) {
-> -        error_report("Need at least one of --add, --remove, --clear, "
-> -                     "--enable, --disable, or --merge");
-> +        error_report("Need at least one of --add, --remove, --remove-all, "
-> +                     "--clear, --enable, --disable, or --merge");
->           goto out;
->       }
->   
-> @@ -5158,10 +5173,14 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->           goto out;
->       }
->   
-> -    if (optind != argc - 2) {
-> +    if (any && optind != argc - 2) {
->           error_report("Expecting filename and bitmap name");
->           goto out;
->       }
-> +    if (!any && remove_all && optind != argc - 1) {
-> +        error_report("Expecting filename");
-> +        goto out;
-> +    }
->   
->       filename = argv[optind];
->       bitmap = argv[optind + 1];
-> @@ -5199,6 +5218,18 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
->               qmp_block_dirty_bitmap_remove(bs->node_name, bitmap, &err);
->               op = "remove";
->               break;
-> +        case BITMAP_REMOVE_ALL: {
-> +            while (1) {
-> +                BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs);
-> +                if (bm == NULL) {
-> +                    break;
-> +                }
-> +                qmp_block_dirty_bitmap_remove(bs->node_name,
-> +                                              bdrv_dirty_bitmap_name(bm), &err);
-> +            }
-> +            op = "remove-all";
-> +            break;
-> +        }
->           case BITMAP_CLEAR:
->               qmp_block_dirty_bitmap_clear(bs->node_name, bitmap, &err);
->               op = "clear";
-ping
+On 7/31/25 13:24, Philippe Mathieu-Daudé wrote:
+> On 31/7/25 10:49, Duan, Zhenzhong wrote:
+>>
+>>
+>>> -----Original Message-----
+>>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Subject: Re: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
+>>>
+>>> Hi,
+>>>
+>>> On 31/7/25 05:31, Zhenzhong Duan wrote:
+>>>> Introduce helper vfio_device_to_vfio_pci() to transform from VFIODevice to
+>>>> VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
+>>>>
+>>>> Suggested-by: Cédric Le Goater <clg@redhat.com>
+>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>> ---
+>>>>    include/hw/vfio/vfio-device.h |  1 +
+>>>>    hw/vfio/container.c           |  4 ++--
+>>>>    hw/vfio/device.c              | 10 +++++++++-
+>>>>    hw/vfio/iommufd.c             |  4 ++--
+>>>>    hw/vfio/listener.c            |  4 ++--
+>>>>    5 files changed, 16 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+>>>> index 6e4d5ccdac..00df40d997 100644
+>>>> --- a/include/hw/vfio/vfio-device.h
+>>>> +++ b/include/hw/vfio/vfio-device.h
+>>>> @@ -157,6 +157,7 @@ bool vfio_device_attach_by_iommu_type(const
+>>> char *iommu_type, char *name,
+>>>>                                          Error **errp);
+>>>>    void vfio_device_detach(VFIODevice *vbasedev);
+>>>>    VFIODevice *vfio_get_vfio_device(Object *obj);
+>>>> +struct VFIOPCIDevice *vfio_device_to_vfio_pci(VFIODevice *vbasedev);
+>>>
+>>> Please return the typedef (like in the implementation), not the struct.
+>>
+>> That will break build. VFIOPCIDevice is defined in internal header hw/vfio/pci.h,
+>> while include/hw/vfio/vfio-device.h is public header, I'm not sure if it's right way to include internal header in public header.
+> 
+> Moving the following line:
+> 
+>    OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
+> 
+> from hw/vfio/pci.h to include/hw/vfio/vfio-device.h should be enough.
+
+I rather not. These are 2 differents subcomponents.
+
+vfio_device_to_vfio_pci() could be moved.
+
+Thanks,
+
+C.
+
 
