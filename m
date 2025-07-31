@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06132C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 03:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814ECC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 04:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhK20-0007B7-VF; Wed, 30 Jul 2025 23:32:36 -0400
+	id 1uhL2Z-0004l3-W0; Thu, 31 Jul 2025 00:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uhK1n-0006w1-Ex
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 23:32:23 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uhK1l-00068d-M8
- for qemu-devel@nongnu.org; Wed, 30 Jul 2025 23:32:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1753932742; x=1785468742;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=wyy8M9uIb41oscpjrXe5IcTgIHR4M7jQvPOqDV45LUo=;
- b=ZAgk0glGH8U1vianAp1yi1khs1lquNYqJQbXuSHNC5HKb/4qeHUUfggE
- QScx7AhQHC8q6cUS6IazR8iII0WYkt2Mz4OvMBQyaLoLz2IGsXybFQRLw
- Qvb5SZidgoc50VcbSMJm1L6Qnow+96jAgPKTuF8GqWsFO6pqBGOdCEZKm
- ZJR3rOCYB89yhkvPdqYinG7pOPX0c4WvosCG8L0+RMQn+HOaUymTVD/Ws
- fnqwfjBZ81A+Q+NGzXPOkKJc5nOtp6LQytGSf+Ks1REFyCdjGDnakFRMb
- BkuJg1QJPBiT0rHG2YJj7Amc/7DzeQ6OpkLaVoErZKr393QqSM8eVWlb4 A==;
-X-CSE-ConnectionGUID: KDwH83BJSfidI4p9ZwzOvQ==
-X-CSE-MsgGUID: SP6yYpajSR+SHcTOsC2oeA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11507"; a="56334930"
-X-IronPort-AV: E=Sophos;i="6.16,353,1744095600"; d="scan'208";a="56334930"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jul 2025 20:32:20 -0700
-X-CSE-ConnectionGUID: v0cErpfXQEOy5I2CIscNhQ==
-X-CSE-MsgGUID: od41BN2gSFmIEZYaXfl+Sw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,353,1744095600"; d="scan'208";a="167372162"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 30 Jul 2025 20:32:18 -0700
-Date: Thu, 31 Jul 2025 11:53:54 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] i386/cpu: Enable SMM cpu addressspace
-Message-ID: <aIro0jw/CjMssy/v@intel.com>
-References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
- <20250729054023.1668443-2-xiaoyao.li@intel.com>
- <aInTujVM5hr6/cJw@intel.com>
- <75a28dcb-88b2-4a7e-a782-a06d915e1654@intel.com>
- <aIo4MxukAiY0OSGE@intel.com>
- <e5bde045-01b6-4f81-bc25-fd4312de7fe8@intel.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uhL2X-0004ha-5Q
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 00:37:13 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uhL2V-0002Wt-Cc
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 00:37:12 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-531b4407cfbso190559e0c.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 21:37:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1753936630; x=1754541430; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z69gNnA6zZAM3vx/VPpSPaZAUF0qCKK4Z6h469vVM/U=;
+ b=hC556qZNzkojM3i/1wkuclXZetDpi/WJnfUnPl+MXIUfnHg0FjLSsbHoBpFK6q/v7p
+ NKB9mIHHrsTvDEZSS6YPssu0jqA2T+E/f2HfFf+yVusv9VLmThA2Scz6QbKVHuh8t5uh
+ VnCDQLqCf3Y7ZlJAnWwt4ZV/IKLRoj11QB+NQGS0TlmwyrvqhKYWaedUiDt+AWBy0R0G
+ tZ+5hAa/AZxq923tP0Z6FMCVS7JCi0sdEZ6a3UtmDLGwYdIntB51X3TVb3lAGYn/zO8R
+ s5IMKS7CZMMIpilIIhH+GoqRUnHZBiwP4mDuW7vKILKDV1nle7eZxjkkyicQxq0SrMF5
+ +O3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753936630; x=1754541430;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z69gNnA6zZAM3vx/VPpSPaZAUF0qCKK4Z6h469vVM/U=;
+ b=uGMrT34p4DQjMjb4L+k6jCNB/BIVywrNaT8Lr9lhCRpQwvQWtJi8rwO28kA/F4Ao1X
+ z5VkWtKuMyOROSTzBmLh6L4VANfESWzuxrOjynMtuzOGqi2tw2pGjqnt1TEHSyr/z+Pl
+ SgpJm8ZWovZzYoLgB3Wx3NMj6Oibcj4SxXg0vmX9iQTN1TnnxuMiXu51a4K4q0ufmDOK
+ mr8s8J648h9Or8y2UlsCqS6Zf3rW2e52kSi+DTIusO61pKNnCemvAGsSx03eC7tAZ8t1
+ CQNm0Cf84hj6CISU9eN1kNYPzTKpC5K89J6uKaPavJF7Tls8L42d4m6q/jjfuXuSy1We
+ wVFA==
+X-Gm-Message-State: AOJu0Ywaqp3yHpx8HqvFjdLr9/gXJ5NPrJD02Wo+xZD485HdFxDzPuJH
+ glROWhlsdI9T0GlZciaWjGv9ViaAownW5yOvA17TNen4izqxzazHS+A6Oh/59fi8PLkdCGVfpYJ
+ MQz2dH8X0kbaEthoNfdeyfFWvQRgR9n2Zfsmd
+X-Gm-Gg: ASbGncub/Tgtb0u5hHoaDLgE/yPmrw2jsyFJSMcEW65/3IQvqMWQbvsnVNDxpG62Y4q
+ IXFQnJyxWvUnRqbnHvAh/35f1zCvtgiwEKGFQk8wf8zEcg4UGqWhCk1Yvm3OKjhzJmihpIYh5N9
+ NGdEFPWUQnDrS/enNz+qNwq38kcviVTx/KgMGOtJGehqtjQGMhy1FIe9WmCcd0VbEMBsUgxiP6I
+ uo9kpe15oFqPutQUFPp0HTzOAu2bdXItNNOUA==
+X-Google-Smtp-Source: AGHT+IErFGjAUo+ARavlw1Qc7TpHf9RTkACP0PAIbNVk/1nNPXFQ5fL0iqGd9mj8GQAeTc7c+l1/coxpoRO1h1NnQQ0=
+X-Received: by 2002:a05:6102:570a:b0:4e7:3d55:5212 with SMTP id
+ ada2fe7eead31-4fbe7f6d47dmr3584987137.11.1753936629544; Wed, 30 Jul 2025
+ 21:37:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e5bde045-01b6-4f81-bc25-fd4312de7fe8@intel.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250730010122.4193496-1-alistair.francis@wdc.com>
+ <e4578b16-a23e-4e56-ac72-3e65b8fbae53@tls.msk.ru>
+In-Reply-To: <e4578b16-a23e-4e56-ac72-3e65b8fbae53@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 31 Jul 2025 14:36:43 +1000
+X-Gm-Features: Ac12FXwlmJhFkYCYUbKiswsoM6mxS70S3XagKYH4e03beRx_LG5WTqeu1dWvp0A
+Message-ID: <CAKmqyKN9mnd16FCJhEUoVAbHz1++-C2MmFG_ocT+aidj=9SuiQ@mail.gmail.com>
+Subject: Re: [PULL 00/11] riscv-to-apply queue
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,63 +96,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 31, 2025 at 12:11:41AM +0800, Xiaoyao Li wrote:
-> Date: Thu, 31 Jul 2025 00:11:41 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH 1/2] i386/cpu: Enable SMM cpu addressspace
-> 
-> On 7/30/2025 11:20 PM, Zhao Liu wrote:
-> > > > > +        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-> > > > 
-> > > > It is worth mentioning in the commit message that directly sharing
-> > > > MemoryRegion in CPUAddressSpace is safe.
-> > > 
-> > > It's unnecessary to me. It's common that different Address space share the
-> > > same (root) memory region. e.g., for address space 0 for the cpu, though
-> > > what passed in is cpu->memory, they all point to system_memory.
-> > 
-> > For cpu->memory, there's the "object_ref(OBJECT(cpu->memory))" in
-> > cpu_exec_initfn().
-> > 
-> > But this case doesn't need to increase ref count like cpu->memory, since
-> > memory_region_ref() provides protection and it's enough.
-> > 
-> > This is the difference.
-> > 
-> > So it sounds like now it's more necessary to clarify this, no?
-> > 
-> 
-> clarify why smram_as_root doesn't need to be object_ref()'ed explicitly like
-> what cpu_exec_initfn() does for cpu->memory?
+On Thu, Jul 31, 2025 at 4:20=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> On 30.07.2025 04:01, alistair23@gmail.com wrote:
+> > From: Alistair Francis <alistair.francis@wdc.com>
+> >
+> > The following changes since commit 9b80226ece693197af8a981b424391b68b5b=
+c38e:
+> >
+> >    Update version for the v10.1.0-rc1 release (2025-07-29 13:00:41 -040=
+0)
+> >
+> > are available in the Git repository at:
+> >
+> >    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-2025=
+0730-2
+> >
+> > for you to fetch changes up to 86bc3a0abf10072081cddd8dff25aa72c60e67b8=
+:
+> >
+> >    target/riscv: Restrict midelegh access to S-mode harts (2025-07-30 1=
+0:59:26 +1000)
+> >
+> > ----------------------------------------------------------------
+> > Third RISC-V PR for 10.1
+> >
+> > * Fix pmp range wraparound on zero
+> > * Update FADT and MADT versions in ACPI tables
+> > * Fix target register read when source is inactive
+> > * Add riscv_hwprobe entry to linux-user strace list
+> > * Do not call GETPC() in check_ret_from_m_mode()
+> > * Revert "Generate strided vector loads/stores with tcg nodes."
+> > * Fix exception type when VU accesses supervisor CSRs
+> > * Restrict mideleg/medeleg/medelegh access to S-mode harts
+> > * Restrict midelegh access to S-mode harts
+> >
+> > ----------------------------------------------------------------
+> > Daniel Henrique Barboza (3):
+> >        linux-user/strace.list: add riscv_hwprobe entry
+> >        target/riscv: do not call GETPC() in check_ret_from_m_mode()
+> >        riscv: Revert "Generate strided vector loads/stores with tcg nod=
+es."
+> >
+> > Jay Chang (2):
+> >        target/riscv: Restrict mideleg/medeleg/medelegh access to S-mode=
+ harts
+> >        target/riscv: Restrict midelegh access to S-mode harts
+> >
+> > Sunil V L (3):
+> >        bios-tables-test-allowed-diff.h: Allow RISC-V FADT and MADT chan=
+ges
+> >        hw/riscv/virt-acpi-build.c: Update FADT and MADT versions
+> >        tests/data/acpi/riscv64: Update expected FADT and MADT
+> >
+> > Vac Chen (1):
+> >        target/riscv: Fix pmp range wraparound on zero
+> >
+> > Xu Lu (1):
+> >        target/riscv: Fix exception type when VU accesses supervisor CSR=
+s
+> >
+> > Yang Jialong (1):
+> >        intc/riscv_aplic: Fix target register read when source is inacti=
+ve
+>
+> Is there anything there for qemu-stable?
 
-When you're referring cpu->memory, you should aware where's the
-difference and why you don't need do the same thing.
+Urgh, sorry I forgot to CC qemu-stable.
 
-This is necessary for a clear commit message, and it also allows more
-eyes to check whether it is correct and whether there are any potential
-problems. Providing details is always beneficial.
+>
+> It looks like "Fix exception type when VU accesses supervisor CSRs" is a
+> good candidate, maybe "Fix pmp range wraparound on zero" too.  Something
+> else? "Fix target register read when source is inactive"?  The "S-mode
+> harts" ones?
+>
+> I already picked up "do not call GETPC()" as it's been Cc'd qemu-stable
+> before, and I'm picking up riscv_hwprobe too, as it's trivial and fixes
+> a trivial omission which might be useful.  Should I pick up others I
+> mentioned?
 
-> As you saide,
-> 
-> cpu_address_space_init()
->   -> address_space_init()
->      -> memory_region_ref()
-> 
-> it already ensures the ref count is increased.
+Thanks for getting those two
 
-Yes, this is what I mean.
+77707bfdf8 target/riscv: Fix pmp range wraparound on zero
+b6f1244678 intc/riscv_aplic: Fix target register read when source is inacti=
+ve
+30ef718423 target/riscv: Fix exception type when VU accesses supervisor CSR=
+s
+e443ba0336 target/riscv: Restrict mideleg/medeleg/medelegh access to
+S-mode harts
+86bc3a0abf target/riscv: Restrict midelegh access to S-mode harts
 
-> Why cpu_exec_initfn() increases the refcount of cpu->memory, is
-> totally unrelated to cpu_address_space_init().
-  ^^^^^^^^^^^^^^^^^
+Are all good candidates for back porting as well
 
-The validity of cpu->memory must be guaranteed, as this is a prerequisite
-for everything else. And isn't it mainly related with the CPU address
-space??
+Alistair
 
-It can be said that because the pointer to system_memory needs to be
-cached in CPUState, such a ref is useful, thereby ensuring the safety
-of the next address space stuff.
-
-
+>
+> Thanks,
+>
+> /mjt
 
