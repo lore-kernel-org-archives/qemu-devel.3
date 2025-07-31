@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C81B6C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 16:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0359C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 16:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhVjt-0003kK-7S; Thu, 31 Jul 2025 12:02:41 -0400
+	id 1uhVzb-00053z-EX; Thu, 31 Jul 2025 12:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhUZp-0005av-QL
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:48:14 -0400
-Received: from p-east3-cluster6-host6-snip4-3.eps.apple.com ([57.103.85.184]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhUZn-0003qm-To
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:48:13 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPS id
- 1F995180012D; Thu, 31 Jul 2025 14:48:06 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=AfGgLIIFWDJ0UirZxanoClukRITpwri5c7ZKkpMCgXQ=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=V7q9lIFJAigvAj8Ifj1H3NxeMmP9KapIBSblAsnYI9Rp2MakZD6RG9lPdjgTSVDmicfcTj33M5UYIa9L8aoAdS7AzsQoBs5tFy1NHFAV/1hwzGH+L/SdfYq6qeCb1WoDCtAgewH2gkJSQ2hMJzqwZ6+ari1nfnpWl4PVsyUowZe2c9UQeYSyj3EQc9MQ9VKYMo/wa6yxeLLuCFlBZrfodIqE6JCJY0F38SefkESkOO6A9+fH8hWuLC7bLJwEEcFE7HIRrSkSZ/ob+lh4QB4zSRpxFVOzAF+uvLTs1PihT6j3RFdWuOb5SAQ0F8L+B2az1E48oTka/CqvCJhFFFLp/A==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPSA id
- D57521800126; Thu, 31 Jul 2025 14:48:04 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <A16A7232-61D2-4A19-B76A-28D660EF0C2F@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_71DCC0DF-7ADC-4590-B251-4121D246DFA1"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [RFC 5/9] hw/virt: make Qemu aware that WHPX has a vGICv3
-Date: Thu, 31 Jul 2025 16:47:53 +0200
-In-Reply-To: <2945e4b1-09c6-43ab-8640-6b7b9cab4a17@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250731052753.93255-1-mohamed@unpredictable.fr>
- <20250731052753.93255-6-mohamed@unpredictable.fr>
- <2945e4b1-09c6-43ab-8640-6b7b9cab4a17@linaro.org>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-GUID: UCKlvAIwKG3WCTzXJBKX8MD5MhvXptes
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDEwMSBTYWx0ZWRfX0O65MJ45HrVx
- VmplZUzXG1+S3tKp1a+63JgVz20eAEFN8zxgrXphvLGG9O7XSOTh7zm9PE2WsTLxZETg/5nB64c
- z9IDMk1Ub1INFwBSU2iaWJyhvvyYRM7zoPUNb6/RxQP2Tao010npB4OeBDS4IN7qQKDyVANmXq/
- wYbu4V+itLoCHqehBTZWi/FIHRKHsykkMS3ERkla9WSPzZEV7qiAmXmUeeKtWgUuGIjt2uD1WOB
- Wi8QxFZZUV64Ol+xE4E+Bwa+72vKTHlDrcTNKnIfm+uPY29iWhQ1aqgi5QxkYwb21z471EhJ4=
-X-Proofpoint-ORIG-GUID: UCKlvAIwKG3WCTzXJBKX8MD5MhvXptes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-31_02,2025-07-31_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxscore=0 mlxlogscore=999 clxscore=1030
- spamscore=0 bulkscore=0 adultscore=0
- suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2507310101
-Received-SPF: pass client-ip=57.103.85.184;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhUgk-0005Dr-Ry
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:55:24 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhUgj-0005S5-2q
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:55:22 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e8e2a260926so991013276.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 07:55:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753973719; x=1754578519; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bxItBQpn09h908+2a6FGV3m8QXYlJKJZ2Ok7R+lMOuM=;
+ b=Z+ofYxEGQrCM46cyE6yL9q5Du90f/oExANLUV/9/1uTw7F1PS949Q/fnKmoJ0pj96H
+ a4LBnCCQvF8fsyOTQLRaRcxal7nfdYXga49qH3kvLQHd1xkfxi3YGTxwEkV7RLLyiv98
+ NHViKwDfk6vYxNFQCRFoD9Qi59bZSdF245ObnfGHe/8U1Od5tiJXeqWgGix1DmacXVEE
+ WTiN0s19/4VqWFoQXTHKdzZTR8uDV7UvH0MRo/h0v+AnffPTkmwONz/aFJsG7WFCLvsn
+ G8FmaXwgRQV5AtrobxHsEyX2RgKuyFrUJRPXMqqrMYVXzUCmmeNhpXq5XfAnq39fTImh
+ /AoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753973719; x=1754578519;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bxItBQpn09h908+2a6FGV3m8QXYlJKJZ2Ok7R+lMOuM=;
+ b=IqPLe7jqqJIhUFCEDW/8eenay6canENfMTBAQY/oHv/Xt1yTDam8R1yDxLZkdZ/Yb5
+ p2gEHOAaUm4TliAqod1gu/vVNzXN2HdJkLyXG88djuiZ9gYK5rrqNO2pYStwcSpk7ELo
+ yuv+rIxg74rq7oOffNOVvcZ6mMtnib1G+4eQiraxlsRR7UkgmVH254BEcpfJ0Requnr+
+ +x42KWV+n0Ex2EJivwhLdm++QyFg538uow/nmFk4rGLK1Uhg260soEA4AtNpH82d3Qaj
+ tO5R63fjRdSr1XhzRQQ0oZmpOWf+gKik4arW6C72L2wyhkOwuBkSsrn7RfN84T3ex6W4
+ 8sbQ==
+X-Gm-Message-State: AOJu0YwgyYfTuBh08gL5QWTrpTSP2BMKreiGp2w59df/di/9GE/swgci
+ GViKsQWVEIosQw/t//JGMNyZYv5YzjaaY9gaFioGCNLiShdOfxLROPaPZWqwbIeMBethAGTZE2Z
+ e6AL8ZcQaKVSmQv0bBJ4rnetGmqFNW1UKpP7JfFBi9A==
+X-Gm-Gg: ASbGncsnZXZmJcjsJrSR3BryxDBk86NKNTJsssF1sMRDCU/q5UPMDi2+gTxBX51Oki7
+ AmD1CDG7JC420XVbxRW7N68nApTV/+Yx1irsDrBxkcuOFpQx2Br2Y4nFMSxcbrE3DcIt0vzU8wD
+ Q/7J6AiSodCtyEhbzSLEUEon/H45ILa7UZY3aiDUdF7D9HRJO/DMyvWE0F7JXQRBoSr9Gf7y/XW
+ 6nSM5xbhL7Sb7Vxzp4=
+X-Google-Smtp-Source: AGHT+IGDVq9cQb3gd+8vnD9TEFiCkB9s55WG6nNIAcMvJruDNKqpz6nrLYdzRU3Q0xo1KKi5xrQ4Wj1yy/vajb0T1t4=
+X-Received: by 2002:a05:6902:6b16:b0:e8e:29bf:df08 with SMTP id
+ 3f1490d57ef6-e8e315c9869mr9306737276.44.1753973719467; Thu, 31 Jul 2025
+ 07:55:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250731144019.1403591-1-clg@redhat.com>
+In-Reply-To: <20250731144019.1403591-1-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 31 Jul 2025 15:55:06 +0100
+X-Gm-Features: Ac12FXyvCstHCOGFnTX2PbmT7NFr1P4qSpqUNY2t43DfN2SPkGoTu78XcQZbMhg
+Message-ID: <CAFEAcA-FZq4RJrDfDiSqC5-L3720cYALamJGU5fQXQnV9J_-Rw@mail.gmail.com>
+Subject: Re: [PATCH for-10.2] hw/arm/virt: Include 'system/system.h'
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,134 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 31 Jul 2025 at 15:40, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+>
+> hw/arm/virt.c should include 'system/system.h' for :
+>
+>   serial_hd()
+>   qemu_add_machine_init_done_notifier()
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>  hw/arm/virt.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index ef6be3660f5fb38da84235c32dc2d13a5c61889c..e1b6241f7bee4c2fddde31c51=
+2561e87229cebc2 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -50,6 +50,7 @@
+>  #include "system/kvm.h"
+>  #include "system/hvf.h"
+>  #include "system/qtest.h"
+> +#include "system/system.h"
+>  #include "hw/loader.h"
+>  #include "qapi/error.h"
+>  #include "qemu/bitops.h"
 
---Apple-Mail=_71DCC0DF-7ADC-4590-B251-4121D246DFA1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Presumably we're currently pulling in this header
+indirectly via some other header (the vfio ones)?
+Might be helpful to say which.
 
+If this is a dependency for your vfio-platform removal
+patches, feel free to include it in there.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-> On 31. Jul 2025, at 10:35, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> On 31/7/25 07:27, Mohamed Mediouni wrote:
->> WHPX is a vGICv3-only target without vGICv2 or user-mode irqchip
->> support.
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>  hw/arm/virt.c | 3 +++
->>  1 file changed, 3 insertions(+)
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index ef6be3660f..4996c2075e 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -49,6 +49,7 @@
->>  #include "system/tcg.h"
->>  #include "system/kvm.h"
->>  #include "system/hvf.h"
->> +#include "system/whpx.h"
->>  #include "system/qtest.h"
->>  #include "hw/loader.h"
->>  #include "qapi/error.h"
->> @@ -2058,6 +2059,8 @@ static void =
-finalize_gic_version(VirtMachineState *vms)
->>          /* KVM w/o kernel irqchip can only deal with GICv2 */
->>          gics_supported |=3D VIRT_GIC_VERSION_2_MASK;
->>          accel_name =3D "KVM with kernel-irqchip=3Doff";
->> +    } else if (whpx_enabled()) {
->> +        gics_supported |=3D VIRT_GIC_VERSION_3_MASK;
->>      } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
->>          gics_supported |=3D VIRT_GIC_VERSION_2_MASK;
->>          if (module_object_class_by_name("arm-gicv3")) {
->=20
-> Should this patch be the last of the series to avoid breaking
-> git bisectability?
-
-Not needed for buildability I think, as system/whpx.h was already =
-present before because of x86 whpx
-
-
-
---Apple-Mail=_71DCC0DF-7ADC-4590-B251-4121D246DFA1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 31. Jul 2025, at 10:35, Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On 31/7/25 07:27, Mohamed Mediouni =
-wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
-start; text-indent: 0px; text-transform: none; white-space: normal; =
-widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;">WHPX is a vGICv3-only target without vGICv2 or =
-user-mode irqchip<br>support.<br>Signed-off-by: Mohamed Mediouni =
-&lt;mohamed@unpredictable.fr&gt;<br>---<br>&nbsp;hw/arm/virt.c | 3 =
-+++<br>&nbsp;1 file changed, 3 insertions(+)<br>diff --git =
-a/hw/arm/virt.c b/hw/arm/virt.c<br>index ef6be3660f..4996c2075e =
-100644<br>--- a/hw/arm/virt.c<br>+++ b/hw/arm/virt.c<br>@@ -49,6 +49,7 =
-@@<br>&nbsp;#include "system/tcg.h"<br>&nbsp;#include =
-"system/kvm.h"<br>&nbsp;#include "system/hvf.h"<br>+#include =
-"system/whpx.h"<br>&nbsp;#include "system/qtest.h"<br>&nbsp;#include =
-"hw/loader.h"<br>&nbsp;#include "qapi/error.h"<br>@@ -2058,6 +2059,8 @@ =
-static void finalize_gic_version(VirtMachineState =
-*vms)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* KVM =
-w/o kernel irqchip can only deal with GICv2 =
-*/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supported=
- |=3D =
-VIRT_GIC_VERSION_2_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;accel_name =3D "KVM with kernel-irqchip=3Doff";<br>+ =
-&nbsp;&nbsp;&nbsp;} else if (whpx_enabled()) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supported |=3D =
-VIRT_GIC_VERSION_3_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if =
-(tcg_enabled() || hvf_enabled() || qtest_enabled()) =
-&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supp=
-orted |=3D =
-VIRT_GIC_VERSION_2_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;if (module_object_class_by_name("arm-gicv3")) =
-{<br></blockquote><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">Should this patch be the =
-last of the series to avoid breaking</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">git =
-bisectability?</span></div></blockquote></div><br><div>Not needed for =
-buildability I think, as system/whpx.h was already present before =
-because of x86 whpx</div><div><br></div><div><br></div></body></html>=
-
---Apple-Mail=_71DCC0DF-7ADC-4590-B251-4121D246DFA1--
+-- PMM
 
