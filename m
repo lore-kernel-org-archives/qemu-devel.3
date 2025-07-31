@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D19C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0597C87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhb0O-0002Lu-Dq; Thu, 31 Jul 2025 17:40:04 -0400
+	id 1uhb0i-0003Ch-N8; Thu, 31 Jul 2025 17:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhaiu-0006OA-Lk
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:22:00 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhaox-0008Ex-J2
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:28:15 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhair-0006eV-UN
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:21:59 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-748feca4a61so146594b3a.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:21:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhaot-0007pP-Fn
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:28:15 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45618ddd62fso2619115e9.3
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753996916; x=1754601716; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RFA6186/i4KLp1+T6vxVdoG2ALb/XuPkvZRmSKuCI0o=;
- b=hIm668WA4UoaBPLh0wnonb0K8jNcyww+vaFaf/P3BtRJK8gvLdn6I8Gb05llbTUeW0
- PsPISVDB67MrbOiwVMTp3fk2ueQo/OR4iHlo6n8RFyeuLJw2/qyJA/UHYyrKKNF+Nlef
- 4WK0lW9Q8mgjPOvY2SZNtFHpAsjp6scw184nKm3ycN0TxsnRdd8lhcP4Yf7YQgeOPyEZ
- bM6Pt30pymTH0YPIYPBIaRV1Dm4ZxmgqxTAAMkm5Og5GW1q/TTqQHhkvX7crL2cUNWgY
- 7TIIJXmIeMNcrqGG5lkBXI815bUelVizZ6oBybjPGREQ5sWxiRl1TXYDK37S/pi/uH9q
- HQMw==
+ d=linaro.org; s=google; t=1753997289; x=1754602089; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4rW26l1ud9Wfnd9RpVRyL7qycFijHbATbRRp9qeZyns=;
+ b=kLQfttBjRdsL2wU8rTxER1bOyIQ5uOUVBWZBGTy2IdCZuy0cQFnWFwjKxZEzxN2ZDY
+ X9HFTIqxuCN2tofeF8FqFEZhtvoEwG4aVRrs6WpuWNntvzDzbmZx+UzilCHmtppAZjow
+ EFGUmqbzm/cE1D7El1KKjBvvmsIJ4jw8RMC4rTw+4RLtM9gAsZHxVqK16rBaf3pfTkka
+ 9EMnFmZS744zExcp0KZb9tI3XU4bRgfYFSSsc7gGh2xdMtHMmvpYLFugO53L8i1DzibM
+ p1OrCDkwxVWxdnGFs0aZ8rxhYqzpR6TmMQSIkd+2dJjzpEHVpM+z2DbiSTHCzkYbBXEW
+ KlCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753996916; x=1754601716;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RFA6186/i4KLp1+T6vxVdoG2ALb/XuPkvZRmSKuCI0o=;
- b=D5KdxPpscfLJEbpI4C0Pcwq8fdern1wZoIE5UTGL4/JPDTu/j9LAkinXfEqF8kvbC7
- DGkcO8+plqH+k4CQXzSJ/mr0SHwD5Vp14VMi95mQQAazaxdjmUGdZPmScSe9MdNUvw5V
- rwPk1frADx3+6MquMkc7zVMAmSKRK1exwTb8dcmKaeCyIYMWOvlK75rAXckJxDRkgVtd
- I0yHROpNhi1ClPHx4qvgSftRbC+Nkk2t1F/YoZC6X9oknZoBTCd8OgKwiReiNlGlN19s
- ANj4Xte/b2D1N10PhJ2k1Q66uL9FbP6NrXWNRMnEYF/sgxlc1od96Gd2MwI/YnApsw/s
- DyEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgKkjYwsSXbAvdqTopxDSYyb5k6BqxpKfTbVwUjtsb6/G7SS904+UqkZDEud0q2VWIMlDRCTkaGGZZ@nongnu.org
-X-Gm-Message-State: AOJu0YyrffAs6j8hA7po6jBa3iyv2lW8W2fecbGi23K73kvB/K50QOio
- FyX1kIzeyGYhmbBnVWS3dTT1XpYI8AqUitwjS0GKmDgzDxE/MOZJan4E+tzJkzWFuDQ=
-X-Gm-Gg: ASbGncsJkke9AyMaUOdQegTIagq0fS3lfjtcqTF3XwipM5y3Z6BkHz+6UFunhV8lNRz
- KgF9H1bYH33Di1lqT4+oXwbj/6NrDO5UDG3rPXpTWQ1G7xtOMDMdCJMSefMEsxt9ym/Xds23STs
- XF8qV8JfKwGDipcvY/Y2DzqHel0DGfHZUqsSCBA3/MvpmtGCfp+Qz3YUHMl+SSjOFvvGLe18zPk
- YcRMwmiUXY9jV8m/MszcoxKegFvqfk37KT3J4yPWWMDYfunpnieC4V0JNfIYlQd6/F4yafwF3hv
- Kn/nipDLJ5t2Jy39ltsCbP0P1PFVcSi/3SYQEjSoFAAnafqYPbPOASrlyPEQtMiAnkr19atPIPk
- Fmy67H92bwRFL2J9AiS2LQ7GIs9cR2kW4EKQ=
-X-Google-Smtp-Source: AGHT+IFbqQtjcRDPShJi+eUr3eRfdEYo/RZeMmll0w5f/mQToK34K/bd6E8E/Orns/unyli65sRXtA==
-X-Received: by 2002:a05:6a21:338a:b0:239:2bcd:a08c with SMTP id
- adf61e73a8af0-23dc0e1efafmr14811880637.28.1753996916210; 
- Thu, 31 Jul 2025 14:21:56 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6d8sm2468307b3a.2.2025.07.31.14.21.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:21:55 -0700 (PDT)
-Message-ID: <006a95c0-7a44-43db-96f8-271e5dcd7523@linaro.org>
-Date: Thu, 31 Jul 2025 14:21:55 -0700
+ d=1e100.net; s=20230601; t=1753997289; x=1754602089;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4rW26l1ud9Wfnd9RpVRyL7qycFijHbATbRRp9qeZyns=;
+ b=ICq6RG58B3bgbxokIcrlBpgX4NgbGTa7WPSDhBYtUu7pqpeGx2CDhX7Y1Oi88aqiK7
+ m8XDKPuCjHEG8qqhG2LeBk9l39eF4nhtgLZKFTPJcGvtXLMdENr+oXbbCYwqNDLfVMEZ
+ E6r3VYQDO+wklBLlUtcusgnNyHP3qbvhnomLxt8VMuceun2J1EClBhCPA07N4LRrZVlO
+ M1U69HIKVnLnAW0kEPjuyapE3xri7h3/II/g3Vf+RaB1USs/04GOXnFr58xK5TwVsSbQ
+ uf4PhRelKbxhgoqNDS3skKmRLRW/YzF9XyxyHpt3MOQ+p1WYrdWOjmwPoMpBb+dX+LVA
+ xaJA==
+X-Gm-Message-State: AOJu0YxCG7MvQo21oKSZjHLAZ/DVhgZeQygizumgKErrpm9BFiPptFCY
+ qz6xYRaRYhAJpzMY/VTwChuhpm1ckYMY2FNQ/pRMB9psFxS2A0qSjjmLV0bCco7bYhn2YO4d8Tj
+ CN1mr
+X-Gm-Gg: ASbGncvDosEpAFdeA/73NuSrkiHzB19lNe0YeFtUehS88nDlI0s279Vq3xrVqz6i0ev
+ 7ao43yi9gUUoclCQIF+nrO8FpCC5Bj94Rv298aQVel9ZYrsiBKvu9rHIOY9ezrWpYWEAcJGofiS
+ 72B+iXeJtFuh5lRSEzn+pDmy9ZKXTaBa1B9ajbcN9CedCYNE5bmUteIdBliZDi4aK4IUreDOYxt
+ 0kM8s5cJdF3xyP/J67+5khHXeRObwCVdIXqv7vipTKvXjKAosUG3Mh6TLfFL+4ILuz6BdZCQLJh
+ 45hff75HcDrXI1cdXCV+oFSTx7seb618Ps/T3e6KRnWLuSJzdR7iim9ppsucI+jbTG/UqI1vG/j
+ DN1VqzkpluWDPaaBwomi6q28ksEldO7Smls7DL/JMCOTcN0CtAQOGn2s0Es4hCrntlBdHlI96
+X-Google-Smtp-Source: AGHT+IGNzl4rHqWQuUXdfDwKPQIL/yr4xm1fSXN8V5qZ8dXCcqXi6wDeJw20xy8sUvmXMHmDChzwng==
+X-Received: by 2002:a05:600c:8b63:b0:43c:fdbe:4398 with SMTP id
+ 5b1f17b1804b1-45892b93413mr80723945e9.6.1753997289525; 
+ Thu, 31 Jul 2025 14:28:09 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4588dd375e0sm81527455e9.2.2025.07.31.14.28.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 31 Jul 2025 14:28:09 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Guenter Roeck <linux@roeck-us.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Ben Dooks <ben.dooks@codethink.co.uk>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 00/11] hw/sd: Fix SD cards in SPI mode
+Date: Thu, 31 Jul 2025 23:27:55 +0200
+Message-ID: <20250731212807.2706-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1] target/arm: Reinstate bogus AArch32 DBGDTRTX
- register for migration compat
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>
-References: <20250731134338.250203-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250731134338.250203-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +106,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/25 6:43 AM, Peter Maydell wrote:
-> In commit 655659a74a we fixed some bugs in the encoding of the
-> Debug Communications Channel registers, including that we were
-> incorrectly exposing an AArch32 register at p14, 3, c0, c5, 0.
-> 
-> Unfortunately removing a register is a break of forwards migration
-> compatibility for TCG, because we will fail the migration if the
-> source QEMU passes us a cpreg which the destination QEMU does not
-> have.  We don't have a mechanism for saying "it's OK to ignore this
-> sysreg in the inbound data", so for the 10.1 release reinstate the
-> incorrect AArch32 register.
-> 
-> (We probably have had other cases in the past of breaking migration
-> compatibility like this, but we didn't notice because we didn't test
-> and in any case not that many people care about TCG migration
-> compatibility.  KVM migration compat is not affected because for KVM
-> we treat the kernel as the source of truth for what system registers
-> are present.)
-> 
-> Fixes: 655659a74a36b ("target/arm: Correct encoding of Debug Communications Channel registers")
-> Reported-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Fabiano's suggestion for a migration compat mechanism is
-> https://patchew.org/QEMU/20250730205245.2118-1-farosas@suse.de/20250730205245.2118-2-farosas@suse.de/
-> ---
->   target/arm/debug_helper.c | 29 +++++++++++++++++++++++++++++
->   1 file changed, 29 insertions(+)
+This series fix a pair of issues with SD cards used wired
+via a SPI link / controller.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Such mode implementation was minimal. I was testing it with
+the ARM Gumstix machines, but we remove them in the v9.2.0
+release (commit a2ccff4d2bc ), so they bit-rotted.
+
+Although the series looks big, I shrinked it a lot to have
+the minimum amount of meaningful changes. Other changes
+added during debugging will be shared later, as I believe
+they will still be useful to debug other future issues.
+
+The last patch add testing coverage, to avoid further bitrot.
+
+Regards,
+
+Phil.
+
+Philippe Mathieu-Daudé (11):
+  hw/sd/sdcard: Do not ignore errors in sd_cmd_to_sendingdata()
+  hw/sd/sdbus: Provide buffer size to sdbus_do_command()
+  hw/sd/sdcard: Propagate response size to sd_response_r*_make()
+  hw/sd/sdcard: Fill SPI response bits in card code
+  hw/sd/sdcard: Implement SPI R2 return value
+  hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode
+  hw/sd/sdcard: Allow using SWITCH_FUNCTION in more SPI states
+  hw/sd/sdcard: Factor spi_cmd_SEND_CxD() out
+  hw/sd/sdcard: Disable checking STBY mode in SPI SEND_CSD/CID
+  hw/sd/sdcard: Remove SDState::mode field
+  tests/functional: Test SD cards in SPI mode (using sifive_u machine)
+
+ MAINTAINERS                               |   1 +
+ include/hw/sd/sd.h                        |  23 ++-
+ hw/sd/allwinner-sdhost.c                  |   5 +-
+ hw/sd/bcm2835_sdhost.c                    |   5 +-
+ hw/sd/core.c                              |   5 +-
+ hw/sd/omap_mmc.c                          |   2 +-
+ hw/sd/pl181.c                             |   4 +-
+ hw/sd/sd.c                                | 202 +++++++++++++++-------
+ hw/sd/sdhci.c                             |   4 +-
+ hw/sd/ssi-sd.c                            |  96 ++--------
+ hw/sd/trace-events                        |   4 +-
+ tests/functional/meson.build              |   1 +
+ tests/functional/test_riscv64_sifive_u.py |  51 ++++++
+ 13 files changed, 238 insertions(+), 165 deletions(-)
+ create mode 100755 tests/functional/test_riscv64_sifive_u.py
+
+-- 
+2.49.0
 
 
