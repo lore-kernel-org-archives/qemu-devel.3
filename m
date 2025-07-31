@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5F3C87FDA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 22:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE3AC87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 22:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhbMg-0001KC-Bq; Thu, 31 Jul 2025 18:03:06 -0400
+	id 1uhbNF-00025w-1R; Thu, 31 Jul 2025 18:03:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhbEP-0002Yv-Q4
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:54:33 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uhbHA-0000j5-PO
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:57:29 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhbEO-0003TS-0L
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:54:33 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-24031a3e05cso11639345ad.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:54:31 -0700 (PDT)
+ id 1uhbH9-0003w5-AU
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:57:24 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-76bd050184bso1272801b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753998870; x=1754603670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753999042; x=1754603842; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hRKZoqz8YUdjNU1GmsXYmXPiJbwUm3MiMGA9p34WREs=;
- b=boc3vwnVRcvHUD/bPJ9aSt1Wo1zzy3e9V1tDVQQAT+ypaE82xp3wbtSB1MylAkD9ZN
- Xz/tG0LOGK6QrxDu2IP5ajCLYUXAhaxTG+wFjm60Ah6ZK3VBsRHY1pNY6mxP3DyXda3v
- brLM2PcxUYnL+1sivhogT9JQfOzjPgo97J4EUB71CUG4ve6RxB5QQLUiogrp0FSSZdC+
- GRDYMW0o+R5bTXQ3TdQymnnIrQCmAdTqy40nQSJEV520J1bJeWq3p0fqc87qjOaQhg2d
- 9eGPZZ6CAwbBtSsOWgG4bd11kpAyAAmXJojQx0YInE0sUsMrfzMxv5aRfcNBAOVadh24
- 5Nsg==
+ bh=c8K2ENVkHObB6eaxJt/lxbHu3SyT9KYMZ5ymlsNoBKw=;
+ b=hYdMciXR5bobPwTaa939tor9RiJWotsqwsDIebnJ4OTHDV4tFolBFazeVCYtUZi1Uo
+ 83rmLFKZ9npEbeMN0xoecy+lTm+ehmVngj0sRx0atulaFQQjm0GDnJ8uiYJ2+6X7TDPz
+ tOQfU46AUDnOPbNarniG/2TTJ3dQz/LtnnCcGWPT0CpWg7KtMOsKwvvFS0skL70YCmym
+ vOy1/A/rV95bz+ivgHAmeVCnvjnT8bMqA+hJU4dcDwrVbM0V6US1FU3KuK7Xr76ui3Lq
+ H6+NDQRM5Uv7v96baCetFa6sb4y3ceOVl1Eoni26V01Md3uqg8/myPd7Xw0RKqzGMguC
+ GPVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753998870; x=1754603670;
+ d=1e100.net; s=20230601; t=1753999042; x=1754603842;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hRKZoqz8YUdjNU1GmsXYmXPiJbwUm3MiMGA9p34WREs=;
- b=IBl8T7s0LFwttFzqd0phT7mLfyk84e7C/BFQx96JQLCqDFWEHMLdC7ws0QT/Iw+BEA
- EIDBzj5mYGB71GlFV/Fl/ocin4VVG2kvedsl+u4ER+cGhCWbXGdUVt9T0djDsiB40uaR
- cEfcXGhFmskzQ8XDmE9VjVFlpllBrxRTBUAOrTDLM5QoJ/ioOkcgfrbPrapLz5paahxB
- Nhu9zenPB2IHBpuq9hasGSSuBbN5C59t5PeATeJzhH+V0YUYPPElpNmPt+4Pa2TTasDW
- VjDS5eUFaQHQlZjBJwEPdAWo7muNktN8TfzoBhPoM8qjpu7p30LCk05Bc25ElY/Ie4xe
- fqUg==
+ bh=c8K2ENVkHObB6eaxJt/lxbHu3SyT9KYMZ5ymlsNoBKw=;
+ b=pHajacoJUvh9pDBZ+Dx9UHb4EMf8MuQeQZDSIEeux7egrlzyWloLazi6s0msOp58ag
+ X9U3A8FNAn5t1wu9pWT3gZPiZkKcBKc09/OEXL4BXyH5AITL7ztLHQ7CjEpQUT5ojeBu
+ krwCVhd53SCv1P8JsuyeEXTuR62CtlZIGJAgUemX6+Jp9UmocIieBSZKM25PF2Iyeow3
+ 7H3SNvD2j7prBPKOwuQ+H/SlJ8FbjidNEDKlLfCIes5qcWkMl2i+Y0H3O92iHHaqDuKv
+ +KVR7GntQdK+KGeT9M6uWNCn+OfXhNdQMKKb4LAHSo7v5PydRqyIUDCMMoIIM2bpzWth
+ SVVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl6vVYmlL+tdB52Dkyd9sjChg9dGaqdOCz/NBYuxhJLFH7Mft1vtXfvNVlV/KXPldkoVTD2ZAXz0Lg@nongnu.org
-X-Gm-Message-State: AOJu0YyXVRou581EXmxbntvFRlvk5wb6Y6ZrU5uWuMBGyLcWi5W+k81y
- 8tKvHpJk2kUOS8ePuZIlc9b1QTh1E4k7xQ3A0l0ecpFnkyLgdWUtYko30ErsIsJ9aT0=
-X-Gm-Gg: ASbGncszhm7U1tL/4IXH6YyosbsbrIsbTdsprpVg1K0W0SlBOmKjOsblv4d/hU88uoi
- PRtMuh40rjFhJ42skLs3IzYSDQpxH7Q8sDSpipjhDHkLDUfrvNNPocpLB9NRjXWvFPsC0NM0eBH
- QtVSC2kqJcS+40gEjdBEu3S5n4H/R4Z56Ewf2duIfnKzkfVBpgYnp/m1eOIaAKbo2kk9rYAVPcr
- Pbk7n0fOzTj6bVZhLKOk4k3AjJ307+UhoEiHTReRafliocMeTXuysJSbOqlONltP8H7hS6utLnL
- IUGD4r3dCdwbzs/41NnIyaAo4vj//fliGkGXOHoLjJzAMkTClldYLwcG3gSqKjE6t+Rxtxau8OH
- a2KaNRz/1P+I7XH1CTvRFNwtah167a4dtcVY=
-X-Google-Smtp-Source: AGHT+IFJe7dsBOyPmrCuFVuMtqHrGDWLj6r8RrIe82ayEhIRx2n9VAEen7o+xqk3BQbSkkx1/EqsrA==
-X-Received: by 2002:a17:902:d484:b0:234:1e11:95a3 with SMTP id
- d9443c01a7336-24200b07794mr70348815ad.13.1753998870368; 
- Thu, 31 Jul 2025 14:54:30 -0700 (PDT)
+ AJvYcCWL8nkEGMXOyYMX31i+KeoWDNi52X6Yte4c4N8Xc5ez7dnWlCNGj/eSAcI0vuRmqZjMghiCniAnNfI1@nongnu.org
+X-Gm-Message-State: AOJu0Yx7eUWiNANJn64hH2gfNylNPdc/a1HX20BnDVDdk+EwyDX9daup
+ DW8oh1uIcZOXEewHQdFegy9tk+G0g71iw8720vrirmAlvjEDpHB1QVhr3Ftt7a7rgiI=
+X-Gm-Gg: ASbGncthR3N4+TuKo8XOzXHxJkLlQk2FYLjI+zAsAy5kuWVJzeD2Lfrta/7qEx3JRFq
+ tP3UmkkcMCQyk7qlSmlaz5iiaftMSngldqeDqLGqYZ9oXRBoeFgePZ9pdxx4O5e7Gm8invCNqyT
+ w5Wl8CGkBjl+b2C19/GWZtar6Pmp+J91ptqNPRGOz0/q97SIktcr6ShLRG2CifJOg47dibgn4IA
+ 8MblP/KyHEL67WgQCTX+BM8NFCZxVQUKe2cTfMxyiyhTCLFHJ4M/7qD+z2cZ7JWDV2rzxQesk0O
+ NXqhXZVw8F1qTdXTHHceYbDdah8i+L21jsci+vtIBGBLln8SVMwC28v2We6LKwXuQa8+9Z2YtGu
+ LpFxxxN2N9QsH5/yRJf/UOaFis/BgLvQ/nHw=
+X-Google-Smtp-Source: AGHT+IGixCdcT/eUzNoL305PtAIKLv3Gl8m5VzGLCVrOyXRHKflufVcwXOmeD6l+JlROSSbPp6CT0g==
+X-Received: by 2002:a05:6a00:22d3:b0:76b:c7d3:f54d with SMTP id
+ d2e1a72fcca58-76bc7d3f702mr7496369b3a.10.1753999042071; 
+ Thu, 31 Jul 2025 14:57:22 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f63dc1880sm5578712a91.13.2025.07.31.14.54.29
+ d2e1a72fcca58-76bccfdc25dsm2491518b3a.110.2025.07.31.14.57.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:54:29 -0700 (PDT)
-Message-ID: <df8e1f72-a8fc-47ac-aa48-5cc78de041e1@linaro.org>
-Date: Thu, 31 Jul 2025 14:54:29 -0700
+ Thu, 31 Jul 2025 14:57:21 -0700 (PDT)
+Message-ID: <d229892f-37db-4878-aec6-dbad64619cc6@linaro.org>
+Date: Thu, 31 Jul 2025 14:57:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 72/82] linux-user/aarch64: Allocate new gcs stack on clone
+Subject: Re: [PATCH 77/82] linux-user/aarch64: Generate GCS signal records
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-73-richard.henderson@linaro.org>
+ <20250727080254.83840-78-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-73-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-78-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +105,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/27/25 1:02 AM, Richard Henderson wrote:
-> Allocate the new stack early, so that error reporting need
-> not clean up other objects.
+> Here we must push and pop a cap on the GCS stack as
+> well as the gcs record on the normal stack.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/syscall.c | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
+>   linux-user/aarch64/signal.c | 129 ++++++++++++++++++++++++++++++++++--
+>   1 file changed, 123 insertions(+), 6 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
