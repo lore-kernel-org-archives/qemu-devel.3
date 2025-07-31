@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC1FC87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 05:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F26C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 05:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhLrT-0001pJ-Nv; Thu, 31 Jul 2025 01:29:51 -0400
+	id 1uhLrC-0001AY-Mz; Thu, 31 Jul 2025 01:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhLpv-0007gG-Ea
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:15 -0400
-Received: from p-east3-cluster2-host5-snip4-10.eps.apple.com ([57.103.87.181]
+ id 1uhLpr-0007Xw-QN
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:12 -0400
+Received: from p-east3-cluster2-host1-snip4-4.eps.apple.com ([57.103.87.135]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhLpt-0005oU-Ma
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:15 -0400
+ id 1uhLpo-0005mT-Pd
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:11 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPS id
- DB026180018E; Thu, 31 Jul 2025 05:28:09 +0000 (UTC)
+ 8F80D1800185; Thu, 31 Jul 2025 05:28:05 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=GKg3FYipdydvcj3OMrgW1X0DtxoFeKJoZZ4r3zuTG3k=;
+ s=sig1; bh=2obuM0xhK8jlFobIsYOi4z9xd0ivaQTiI7sZyyK+v7E=;
  h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
- b=WhDrf6xkfZPa3pqcXumg/0qSucXfQUXO9f+FyML61SA/2mARDTFNcbpI6ubd/yzIi9SNaOURdw1DyySRbm9UNXxb04MAtPxy8kXHQxh17kFJeLmMqJt+kGeGNNmAIu4c2g0C14d/aeu95sT+9sLUhKc33AdxKv6EgsfPU6dtApp4JXdhOKCCm+b5sTh6cqRrihoK3wo6idibeoM5yKBI+URks8UCzfVWboxcP8EJ6s3EjAkTThlPB+Vz/gGRECsHelUl788ltLYDu18DwSQpsCz0V3XrXzv2mDD7px+RdLdOD4Zm4vHJ0z7t+jOxJ2X02O8V+cGganiFzUNhJW1QQA==
+ b=WNp/NYnlSVKfMH3FsTk7bNfviwbiW8O2wM3Hfe7olfw5F8cdmjUBtV6OZYxxZwMr4jKcfwb4vLCRkjWSgwmrQsqxzV/UgNP0Q9EbtA1E/B7ljt8RtAGrkh3fyg14qUCXbiwDQjb/t6Qi78u5wfQD5x1C6JTRck+bSAvAdfSn/q7N5VJ9QIihR8AOFXNjNckD8VXNOa760R9bln94h076p2NqrGaYFHJzGtZkIFLgAJ1LulB2Mx5H1HVq/+ucdcR08m8TjNi3nLhpXFhfQRhe7LXMzdlwZjHF/pbzPSS5yooRGjCJruRxtsEkuv4KeNoFT87OdnAP3a9NrKw1henRcQ==
 X-Client-IP: 46.189.47.18
 Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
  [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPSA id
- C6E42180011E; Thu, 31 Jul 2025 05:28:07 +0000 (UTC)
+ C1D59180011E; Thu, 31 Jul 2025 05:28:03 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -42,36 +42,36 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [RFC 9/9] target/arm: cpu: mark WHPX as supporting PSCI 1.1
-Date: Thu, 31 Jul 2025 07:27:53 +0200
-Message-Id: <20250731052753.93255-10-mohamed@unpredictable.fr>
+Subject: [RFC 6/9] hw: intc: arm_gicv3_common: add whpx
+Date: Thu, 31 Jul 2025 07:27:50 +0200
+Message-Id: <20250731052753.93255-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250731052753.93255-1-mohamed@unpredictable.fr>
 References: <20250731052753.93255-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDAzNSBTYWx0ZWRfX4+CHG4CxqPxb
- +sCAJm6CxUuBQEkX74izGCtWliEporQCHDpBhRyLyeIfoZOIHgR/tBy6ROTZ5Wylc++G/2RRfeG
- ERg6GSibYOCQtMiMTKX61DF+4v1CAV08TNr1QfeyEWY1yiCdVw69mzD3wziIxA6L7oW6Lp2+Ori
- bXSBiNut2Cuu0juTMA+PDMU7n+cmKshhMIcBlzlUJhLFnwujKSHg6Czhgz6qCJaMHNNbmRSrPkj
- w+0bmE84hsmkrHiYLkoGc/RB6j3U95uVkGk2MAlsA2k4xIke1yCvyoT11LxGz0Fs8LcSKkf60=
-X-Proofpoint-ORIG-GUID: HZRh3hX0AmoQwMTIm_XEuhix1h5bjqhY
-X-Proofpoint-GUID: HZRh3hX0AmoQwMTIm_XEuhix1h5bjqhY
+X-Proofpoint-GUID: TQTveC6NcbGrMy_-_K7KDhpXCnQMCmMX
+X-Proofpoint-ORIG-GUID: TQTveC6NcbGrMy_-_K7KDhpXCnQMCmMX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDAzNSBTYWx0ZWRfX2hjvrK0YWted
+ W2ngVtSsxSdP/sJ3WyCYvc8rEZvLoptV3cPk+YTJFb2GUTIOV+yQQ1XqVe5PEMDPCn30LsdUptG
+ 6CQJSWXjZS3nRrHLupvYygFirgKJWzU4smT65lDGByfYcabRebIwbTE96fY/LTKPYa0zPaDCXGt
+ 9V4bv1A1Ay+jR0dMjaV0NbZTWZbA0SjJbuRM4LsrQgvCCwQlFu05nxXh5yIwhJr4sOnN5EOpvV3
+ Nbft3YESBRMNWL+Qt5djlRL2fB5jOibNs/+ZT3AsFTXC1b7iNFstA2RQvfdHHCV9SoUQVK3tc=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-07-31_01,2025-07-31_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- phishscore=0 mlxscore=0 mlxlogscore=752 clxscore=1030 bulkscore=0
- adultscore=0 malwarescore=0 suspectscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2507310035
-Received-SPF: pass client-ip=57.103.87.181;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=762
+ clxscore=1030 phishscore=0 suspectscore=0
+ mlxscore=0 adultscore=0 bulkscore=0
+ spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506270000 definitions=main-2507310035
+Received-SPF: pass client-ip=57.103.87.135;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -89,32 +89,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Redirect to the platform-specific vGICv3.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/arm/cpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/intc/arm_gicv3_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index e2b2337399..3b69c9786a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "exec/page-vary.h"
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index e438d8c042..a83b075517 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -32,6 +32,7 @@
+ #include "gicv3_internal.h"
+ #include "hw/arm/linux-boot-if.h"
+ #include "system/kvm.h"
 +#include "system/whpx.h"
- #include "target/arm/idau.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-@@ -1496,7 +1497,7 @@ static void arm_cpu_initfn(Object *obj)
-     cpu->psci_version = QEMU_PSCI_VERSION_0_1; /* By default assume PSCI v0.1 */
-     cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
  
--    if (tcg_enabled() || hvf_enabled()) {
-+    if (tcg_enabled() || hvf_enabled() || whpx_enabled()) {
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
-     }
+ 
+ static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
+@@ -662,6 +663,8 @@ const char *gicv3_class_name(void)
+ {
+     if (kvm_irqchip_in_kernel()) {
+         return "kvm-arm-gicv3";
++    } else if (whpx_enabled()) {
++        return "whpx-arm-gicv3";
+     } else {
+         if (kvm_enabled()) {
+             error_report("Userspace GICv3 is not supported with KVM");
 -- 
 2.39.5 (Apple Git-154)
 
