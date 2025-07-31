@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80007C87FCC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 14:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE64C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 14:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhURV-0005py-23; Thu, 31 Jul 2025 10:39:37 -0400
+	id 1uhURV-00065m-MX; Thu, 31 Jul 2025 10:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhTTP-0003GH-5K
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:37:31 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uhTOX-0001Cx-IL
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:32:29 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhTTN-0003RY-4Y
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:37:30 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-71a44abb9f2so10274487b3.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 06:37:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753969046; x=1754573846; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2Oi7PkPZ+tDYah0ej3ajtphfDogqIjO/uBiU3ZIiFvw=;
- b=L2+dVNUGKlllp7j3VJAynG+LyPFFRRfNg1CLdc6q4tM4p62SpZWscjYdGCQgg/ulFB
- tv/XDM8lp9AmXk0fNb3vfSIfGpChrGa/VuTX11ssT5bes3DxVYZTSH59Xyi0G94e1qRA
- QKwzvBfXlexifklXzkflGBOi1LgDQ0GwLMwfdALPzEyxrl4F6SzO5lIzt7krI5RjX3cl
- 1aIWgmAzmhnFh9zpH6s5H28GQTMZYdgXoW620BdKL/L+6zWTqhhhZTpQtgKJvGUthA5K
- xlhim6au0dyADbXvfm9iqCtH2p+utv5yAVHT/CI7o5O37BytFRcStGsXLvVVW94s0WRg
- sJwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753969046; x=1754573846;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2Oi7PkPZ+tDYah0ej3ajtphfDogqIjO/uBiU3ZIiFvw=;
- b=DMheASMSPsr1VWe/jPMJ6mJ5Fwi5Ka6lj1OTvFi2AvQYohhNDEabIWVDmNvBXkG2aK
- +NVDxvh4mmbIZ5QLsuiGxJl6qAcZy+r6J8YpopNbZEcSz8OeeTcJOEKZKXYaiork/uUu
- HIMIs9bhBlCXuKq19xvXkqztcAjov34Y7HC5z/n+FoS33KCL0Vp+H6hy93SDxA2bY8EU
- U8bLKoW/1y00A/CK6e3P8/aznpuKYzF5He66PuFp3AP6LaIKimWx7poIkJXRn6iGzBhk
- of1+lsskQDqc9fxLBMZfxahJHi+xDw9Pzxo/HYK4NgT0VZUFv8Ib8pNRajIS5YCl7uMC
- 9yVA==
-X-Gm-Message-State: AOJu0Yx+sZDkk5dyiPUNK+iq7CjlxfL4ucVs5RZXccvMwXRMOsc09QDk
- YkRDdQXLFt5XDwgbCmxU670EUYXTsOyrNdz6XVBsB9WHkH2/hz3MDHOhJbkZBv+C0mzqNzey5v9
- mzuMGQ2zZmr2g/shVgw6pWzRF4S+UUgLDqJkFNrSzPg==
-X-Gm-Gg: ASbGnctB0Couv5SbxU2Ruz2S+TGAtCpHOwT0Ne52j9wDmR4vAHE0cXff/aq0/S2gMv5
- CCBZZtvtuQv2ig8/YHHvP+raAd+PsGahLQHvz9f7COsX0hugcSu1Ae1ZGmYHExwzfzpAcfFNv0o
- 8X9E9/46r7mKH/XKF+AgtiGagQHHb7qvUm/2G4l3oXbD3nlCXH38zftKFzEXVPzrb1T5gKg17q8
- 9jLAXgi
-X-Google-Smtp-Source: AGHT+IHQd1t5rAkF95s6dSCpjc4y4Y76sx97lO/v3/4hy49nnVAX/GduTaixKfxmV4WWELGl5dCUxujXgMx3HrMxGJI=
-X-Received: by 2002:a05:690c:650f:b0:6fb:1c5a:80ea with SMTP id
- 00721157ae682-71a466bf02cmr100615197b3.32.1753969046179; Thu, 31 Jul 2025
- 06:37:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uhTOV-00025Q-CY
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:32:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A3EA01F807;
+ Thu, 31 Jul 2025 13:32:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1753968743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w70Vtc0//9HesWKyntajr98jJM0n4/t1fd3ucq14yrA=;
+ b=lBR1vycUMfLOlrG4N2VfssDU0NP5wM3I3woEOzjDpEb29bJU0uO1ZkiqBb9OKlyoQ1KU7V
+ yt1ZpMEirPon08WxZFy35rjpb4qDTd5Qd4yVlEh6JuIpu+fQxhYF/oVUo6kuwiwfEBSGvR
+ YByGVmeyzEJ2uTfn7BtuuqXWHoiHB5U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1753968743;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w70Vtc0//9HesWKyntajr98jJM0n4/t1fd3ucq14yrA=;
+ b=Ogx9lmDeR96zpdOyoGy8n2xejAg7Wd55OCDPWW2Jvb+qoXRdqFu5kFRq6Ltt2fMNLRVRwa
+ vbPdxtJ5rGTxTwAw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1753968743; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w70Vtc0//9HesWKyntajr98jJM0n4/t1fd3ucq14yrA=;
+ b=lBR1vycUMfLOlrG4N2VfssDU0NP5wM3I3woEOzjDpEb29bJU0uO1ZkiqBb9OKlyoQ1KU7V
+ yt1ZpMEirPon08WxZFy35rjpb4qDTd5Qd4yVlEh6JuIpu+fQxhYF/oVUo6kuwiwfEBSGvR
+ YByGVmeyzEJ2uTfn7BtuuqXWHoiHB5U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1753968743;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=w70Vtc0//9HesWKyntajr98jJM0n4/t1fd3ucq14yrA=;
+ b=Ogx9lmDeR96zpdOyoGy8n2xejAg7Wd55OCDPWW2Jvb+qoXRdqFu5kFRq6Ltt2fMNLRVRwa
+ vbPdxtJ5rGTxTwAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 269CE13A43;
+ Thu, 31 Jul 2025 13:32:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id hlKWNmZwi2hkbgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 31 Jul 2025 13:32:22 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Peter Xu
+ <peterx@redhat.com>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [PULL 02/20] target/arm: Correct encoding of Debug
+ Communications Channel registers
+In-Reply-To: <CAFEAcA9gK8EFBb2UyCv1B2d7TiK+V07Y9Bw0e_UoiUHP4MCDcw@mail.gmail.com>
+References: <20250721132718.2835729-1-peter.maydell@linaro.org>
+ <20250721132718.2835729-3-peter.maydell@linaro.org>
+ <87ms8uh7ln.fsf@suse.de>
+ <CAFEAcA9kxDdkEyLguTsEV_nDX9L5mAT+Rw_4Rmk68YQq50ee-A@mail.gmail.com>
+ <87pldo3x3y.fsf@suse.de> <87ms8s3rpx.fsf@suse.de> <87bjp24iyk.fsf@suse.de>
+ <CAFEAcA9gK8EFBb2UyCv1B2d7TiK+V07Y9Bw0e_UoiUHP4MCDcw@mail.gmail.com>
+Date: Thu, 31 Jul 2025 10:32:20 -0300
+Message-ID: <878qk44haz.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250730205245.2118-1-farosas@suse.de>
- <20250730205245.2118-3-farosas@suse.de>
-In-Reply-To: <20250730205245.2118-3-farosas@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 31 Jul 2025 14:37:14 +0100
-X-Gm-Features: Ac12FXzuWSWn5QKMrxs3p954Cy2DMS86j5WcywvTE4U31v-dpsb9KVW6evi-KHA
-Message-ID: <CAFEAcA-acYCCXNy-udHTeL3zUFxonh4k6JwTJyxzHTMWTDN2NQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/3] tests/qtest/migration: Only test aarch64 on TCG
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,46 +122,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 21:52, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Currently our aarch64 tests are only being run using identical QEMU
-> versions. When running the tests with different QEMU versions, which
-> is a common use-case for migration, the tests are broken due to the
-> current choice of the 'max' cpu, which is not stable and is prone to
-> breaking migration.
->
-> This means aarch64 tests are currently only testing about the same
-> situations as any other arch, i.e. no arm-specific testing is being
-> done.
->
-> To make the aarch64 tests more useful, -cpu max will be changed to
-> -cpu neoverse-n1 in the next patch. Before doing that, make sure
-> aarch64 tests only run with TCG, since KVM testing depends on usage of
-> the -cpu host and we currently don't have code to switch between cpus
-> according to test runtime environment.
->
-> Also, TCG alone should allow us to catch most issues with migration,
-> since there is no guarantee of a uniform environment as there is with
-> KVM.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-The difficulty with only testing TCG migration is that now
-we're testing the setup that most cross-versions migration users
-don't care about. At least my assumption is that it's KVM
-cross-version migration that is the real use case here.
+> On Wed, 30 Jul 2025 at 01:32, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>> > Fabiano Rosas <farosas@suse.de> writes:
+>> >
+>> >> Peter Maydell <peter.maydell@linaro.org> writes:
+>> >>> I'm not sure how to handle this, as we have no mechanism for
+>> >>> "ignore this incoming register value, it is bogus". I'm surprised
+>> >>> we've never run into this before...
+>> >>>
+>> >>
+>> >> I was thinking the same.
+>> >>
+>> >> I actually don't understand what the encoding in cpu->cpreg_indexes is
+>> >> supposed to represent. How does comparing the indexes implies "in our
+>> >> list"/"in their list"? Is there some sort of ISA level assumption?
+>> >>
+>> >>        if (cpu->cpreg_vmstate_indexes[v] > cpu->cpreg_indexes[i]) {
+>> >>             /* register in our list but not incoming : skip it */
+>> >>             continue;
+>> >>         }
+>> >>         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
+>> >>             /* register in their list but not ours: fail migration */
+>> >>             return -1;
+>> >>         }
+>> >>
+>> >
+>> > Ok, I spotted the sorting now.
+>>
+>> Turns out the backward migration is also broken because this patch adds
+>> an extra register:
+>>
+>>   qemu-system-aarch64: Invalid value 292 expecting positive value <= 291
+>>   qemu-system-aarch64: Failed to load cpu:cpreg_vmstate_array_len
+>
+> Backward migration is not a design goal for the TCG cpreg machinery:
+> you will find that we add extra registers from time to time in
+> over various releases.
+>
 
-For instance, this migration bug with the DBGDTR register
-isn't a problem for KVM, because with KVM we use the kernel
-to tell us what system registers are present, and whether
-a register is defined with a cpreg in QEMU or not doesn't
-affect what we put on the wire for migration. Conversely
-there might be migration compat issues that show up only
-with KVM and not TCG (though the most obvious source of those
-would be host kernel changes, which is kind of out of scope
-for us).
+Ok, I'll document this once we fix the compatibility tests for
+aarch64. Only test in one direction.
 
-Though of course with our CI jobs we're probably not
-doing AArch64 KVM cross-version testing anyway...
+>> We'll need to develop some proper compat machinery that takes the
+>> machine version in consideration. For the 10.0 -> 10.1 migration,
+>> something like (messy code, just a PoC):
+>
+> For 10.1 I was thinking about just putting back this specific
+> incorrect register. We can do something a bit cleaner once the
+> release is out.
+>
 
-thanks
--- PMM
+Your call. I've put an RFC out, but it also requires re-work after
+release.
+
+> thanks
+> -- PMM
 
