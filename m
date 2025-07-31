@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8421C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2272C87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhaqk-0004U5-NJ; Thu, 31 Jul 2025 17:30:06 -0400
+	id 1uharT-00068A-BE; Thu, 31 Jul 2025 17:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhaag-0005xc-Oh
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:13:31 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uhaU1-0004xo-J7
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:06:37 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhaae-0005CU-PJ
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:13:30 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2402774851fso7701185ad.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:13:28 -0700 (PDT)
+ id 1uhaU0-0004Ib-13
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:06:37 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b3be5c0eb99so819864a12.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753996407; x=1754601207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753995994; x=1754600794; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uJXW1Eq8Tj+zNzSdOZYt2lyqQhSub7BZreGuAHChbqA=;
- b=H1k7mpuEHR7yZY2k+s9T+0kSVdQ3nSvkzn+ORZnEIQssZBkY5S7tsVeSoQExDe12xq
- 6k0NearMYRTcR2qMg1QrAzsbsf3diUEUPuvKqrd+reYuRvfAi/V/KKSPwcpBP8TGY+gC
- 9JCttqCM6z9ZTkiNzQ1l8kSpjIOlXAU/u2QcM346JK81jm6hfBTpfQbeNwtfdu5d0s5k
- bQX+mNLlcbsIQZ1jr3enRU22kur6JxqJ9SdnKVRHPDeoaq3iZherUqws1KU/oqBi2VUw
- gKM7BAvxS7R5sZdAfsC+7Zibnf5yWoG8NxfV6K4pmW7QOgxWkQ6oZ0rOE5gAv3d9wwH7
- V8YQ==
+ bh=XuAq1KTK/G4AkOm78fXnI9JtAWLzT47y9hX7qWh0Lb0=;
+ b=qAWO/0JSn4btH6xOFPEiiKH8j8sW57jilJKAmoJoFDHoeG2LV8dsur7ra8fVvAgYOR
+ XbTD0LwBDQQN/ezNzHkR5M7PPMX7m93e5PqjD2IPa9I1CdY2be4P5pPSBVaU9vYIrmdn
+ HVais9RcoROTftuUfInZFZiQnWoj9am6UV90FRg+YqW29VczriR3B1/Ey/4ZQvllfyHe
+ gzgyh6a0RHXW7NYB5NeZ/1XYMtDiQWpT2jpVA5ryvSgFaqemXSzkm5oS5qRNL2Zz3VEU
+ 9gVwq2RCSKNqvjTLzsiRdW51WkRscukGxlhQ0gB80CqoCB/QI4fmzLuoPGABL+QNDr63
+ XneA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753996407; x=1754601207;
+ d=1e100.net; s=20230601; t=1753995994; x=1754600794;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uJXW1Eq8Tj+zNzSdOZYt2lyqQhSub7BZreGuAHChbqA=;
- b=f1Ttg1JyZBcO/zdpSbuS1MweP5Xv9wG0Xr66/okCRzubjPN83t3+l8/vGJ8kAj+Gyk
- fwzfPG4QgfLeH+FrWbqxWIlaRgY54WnUM4xvdabJ8lZx7xNSaNK3pnGBdokP/qLWNtCq
- 2YZFnb8L0LSQMM7YHO7YHCxRqNiDyiQYKfLrOxATqppyMQz8scI7ZWGeZLMOiUpBY4y7
- Kz+5knajOaeX5wrncICYY2zV61L8V+q0gOdIDrcEkS9JOeOGRf8k7rfdhXm+zADbIZyt
- wgq2DRDHKBC9CMgsDW3BPsOAKVBLO1Rk693P+uoxzWnH3jC3C1ZFLhqFE91NqYOYxBlK
- dgWQ==
+ bh=XuAq1KTK/G4AkOm78fXnI9JtAWLzT47y9hX7qWh0Lb0=;
+ b=Sg1b1+1h2rpK9lKYVTci5VHX2yQCX6ncfYcfRMVwUMOFEXrMx/gr9l1AdX4ZZCjNH6
+ i40YupNPxs/0TNeNyESkuueJVeJMbAS4lQGsQ8zBQPmodxBrFDyWkaLbhCUmaTOwGyM7
+ bT8/gVZKNmJEbvgJJV6re8hRCFuVzhrDDez4A1LVv1aA+oD9pXTjptOhnoxgrfPHJ5pQ
+ p+V2utkDONhEStAgE2ARn+QdUQfd7W+NKN2oJdE8AHYxxPU++2HDGnu0vWGLvmNcsWDA
+ dyuhgwks053fSb9gioYFZZ/cYcb8JWXpESTy7prRxqtypbXuEseWXc+YKlOZAl2vVeqi
+ F0Xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVd7/t6j5/ua1ywfWPomoGJg9knz+2EA2IuWULcnfgnl12h8WyQdsGD4sQwHCjvoodKGhw0enE8+EiJ@nongnu.org
-X-Gm-Message-State: AOJu0Yy76RBYv/KbSGb5Ik6vtiejP3sMM27yFr2hkpUcJNYDbfmvcTWH
- YiOpgt7gxlpyejq3MCVUb0UKwnexZ+hCbJ+pjK6D3rT1NptX1KBVmls+zWOTKIuP+Cq8u6L8/eu
- eRfdg
-X-Gm-Gg: ASbGncve36pxvBzX4w5TBNoadSF9qn/jC+XWpS2WwQEQft1FNg6iXc4FJuCr7dKGtl8
- 1k5YOR1Luv1giiRWSGweXpBHe306VWim9gWK8yrSQhafr7bHhHl1Vcz8bjpMWB02XlO+vCuK/zv
- bZ2vzT1wfGgPr24o6nvMl0OJjX6hNqo6oB7drmneFlrjwUxLqKdGX2xuVHgaAmkPnzbvTkOeniu
- lvX2xZQXve6FG5W125Ex1U5C7EtXxjHYzIqKBsQqiA1hueoaa/QYs1WCjNugsc3Ue3rorv2thQM
- P3OfQoiaPugBziJXPAF5QPgKeBRzh4e0J4R4IPGWJ/rsNzk+I5nTfsMqVs2M5x8PllyfHt7QCeY
- vgSPEejZthYym0AcirMKRhWa+e+wpxtCKA+Q=
-X-Google-Smtp-Source: AGHT+IFDOlYCvxsS5P1o13PSFcDw+Yd6tToodxD+QGIEsTzGYuV5/WcWEz3N5XbdnUtsQwXKsIAP3A==
-X-Received: by 2002:a17:902:cec7:b0:240:9006:1523 with SMTP id
- d9443c01a7336-2422a4313c7mr2391905ad.10.1753996406818; 
- Thu, 31 Jul 2025 14:13:26 -0700 (PDT)
+ AJvYcCUS4NOPP/ZEVxErI11X2fxkCZXHd0W8gQNXDzHm5Qt6sSWvfAVGqBfWHZUMxp4dl+XpXlg1H3yMzK/M@nongnu.org
+X-Gm-Message-State: AOJu0Yzb9ZGR8ESvjR2XaYh49hdhcy0f+BTUk5Dnte7OwzzGXfjiIybq
+ X0wdDpRwI49gNs78nDdDUuSE/KN0vWW+lkrXuu5Jto1PjV8gG0HRklia3ECBYiQl/RlFcxFC4CO
+ ZWbk8
+X-Gm-Gg: ASbGncvjZFSUrlsED6EjZZ3c7qNeCMrOFyh4A/lEztrDuRcmzToE6/xyXOS+/5SYntG
+ 28woHx7DH//5Z0Pzoq3ZXFppi5Y0sAXTfFVsGxA4SO84D1podm9dfti7u3IT8Kng7FU2J/rZzfC
+ stF8y0r6fIylAz0CAj+K1yZsDSPE0+CYnflqSUwt4ABv0cpFBzkOiyBNLtDInve1aTXwG0ahx7X
+ rCXSCzGjS0ttRSun7dfAW0QEU8c/F2Xiyt9Cl8wtIgzvQ1vXdzQVK0Kfa5l+9K0VWcXl1ynoiXf
+ Kgc4IAwCoVS1jNui6n33RPy8dxOVr7GsllgmUM/BCd52+XLHl5UeKfWbDXtSvF508iMUTYJJu5J
+ ZxlPqH/cRAQjZqjAVVwX+PfABbv4OpUTYEmA=
+X-Google-Smtp-Source: AGHT+IH8UEtYFa2PQBqHiG17v5BAz5LPh0mAqz63ndCBKoqIlBzrLcUFETWuEhP/ByE6Y77daHlgbw==
+X-Received: by 2002:a17:902:fc50:b0:240:2efe:c384 with SMTP id
+ d9443c01a7336-24096aa7f5emr109094365ad.19.1753995994426; 
+ Thu, 31 Jul 2025 14:06:34 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1ef67aesm26267915ad.6.2025.07.31.14.13.26
+ d9443c01a7336-241d1ef66fdsm25920015ad.38.2025.07.31.14.06.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:13:26 -0700 (PDT)
-Message-ID: <a41aabcc-039b-4ab9-bfd8-f5571db3fafc@linaro.org>
-Date: Thu, 31 Jul 2025 14:13:25 -0700
+ Thu, 31 Jul 2025 14:06:33 -0700 (PDT)
+Message-ID: <7ffd2eeb-ae68-43a7-a45a-ec05ece0b71b@linaro.org>
+Date: Thu, 31 Jul 2025 14:06:32 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/82] target/arm: Implement get_S2prot_indirect
+Subject: Re: [PATCH 50/82] target/arm: Split {arm,core}_user_mem_index
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-18-richard.henderson@linaro.org>
+ <20250727080254.83840-51-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-18-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-51-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/25 1:01 AM, Richard Henderson wrote:
-> Move the stage2 permissions for normal accesses to
-> GetPhysAddrResult.s2prot.  Put the stage2 permissions
-> for page table walking in CPUTLBEntryFull.prot.
-> This allows the permission checks in S1_ptw_translate
-> and arm_casq_ptw to see the right permission.
+On 7/27/25 1:02 AM, Richard Henderson wrote:
+> Separate current to unpriv and arm to core mmu conversions
+> into two separate functions.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/internals.h |  7 ++++
->   target/arm/ptw.c       | 81 +++++++++++++++++++++++++++++++-----------
->   2 files changed, 68 insertions(+), 20 deletions(-)
+>   target/arm/tcg/translate-a64.c | 24 +++++++++++++++---------
+>   1 file changed, 15 insertions(+), 9 deletions(-)
+
+If I followed correctly, we replaced all calls to get_a64_user_mem_index 
+by core_user_mem_index. Thus, why not rename directly the function 
+get_a64_user_mem_index in core_user_mem_index?
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
