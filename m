@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814ECC87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 04:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB74C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 05:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhL2Z-0004l3-W0; Thu, 31 Jul 2025 00:37:16 -0400
+	id 1uhLr0-0000mB-5f; Thu, 31 Jul 2025 01:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uhL2X-0004ha-5Q
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 00:37:13 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uhL2V-0002Wt-Cc
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 00:37:12 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-531b4407cfbso190559e0c.1
- for <qemu-devel@nongnu.org>; Wed, 30 Jul 2025 21:37:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1753936630; x=1754541430; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z69gNnA6zZAM3vx/VPpSPaZAUF0qCKK4Z6h469vVM/U=;
- b=hC556qZNzkojM3i/1wkuclXZetDpi/WJnfUnPl+MXIUfnHg0FjLSsbHoBpFK6q/v7p
- NKB9mIHHrsTvDEZSS6YPssu0jqA2T+E/f2HfFf+yVusv9VLmThA2Scz6QbKVHuh8t5uh
- VnCDQLqCf3Y7ZlJAnWwt4ZV/IKLRoj11QB+NQGS0TlmwyrvqhKYWaedUiDt+AWBy0R0G
- tZ+5hAa/AZxq923tP0Z6FMCVS7JCi0sdEZ6a3UtmDLGwYdIntB51X3TVb3lAGYn/zO8R
- s5IMKS7CZMMIpilIIhH+GoqRUnHZBiwP4mDuW7vKILKDV1nle7eZxjkkyicQxq0SrMF5
- +O3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753936630; x=1754541430;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Z69gNnA6zZAM3vx/VPpSPaZAUF0qCKK4Z6h469vVM/U=;
- b=uGMrT34p4DQjMjb4L+k6jCNB/BIVywrNaT8Lr9lhCRpQwvQWtJi8rwO28kA/F4Ao1X
- z5VkWtKuMyOROSTzBmLh6L4VANfESWzuxrOjynMtuzOGqi2tw2pGjqnt1TEHSyr/z+Pl
- SgpJm8ZWovZzYoLgB3Wx3NMj6Oibcj4SxXg0vmX9iQTN1TnnxuMiXu51a4K4q0ufmDOK
- mr8s8J648h9Or8y2UlsCqS6Zf3rW2e52kSi+DTIusO61pKNnCemvAGsSx03eC7tAZ8t1
- CQNm0Cf84hj6CISU9eN1kNYPzTKpC5K89J6uKaPavJF7Tls8L42d4m6q/jjfuXuSy1We
- wVFA==
-X-Gm-Message-State: AOJu0Ywaqp3yHpx8HqvFjdLr9/gXJ5NPrJD02Wo+xZD485HdFxDzPuJH
- glROWhlsdI9T0GlZciaWjGv9ViaAownW5yOvA17TNen4izqxzazHS+A6Oh/59fi8PLkdCGVfpYJ
- MQz2dH8X0kbaEthoNfdeyfFWvQRgR9n2Zfsmd
-X-Gm-Gg: ASbGncub/Tgtb0u5hHoaDLgE/yPmrw2jsyFJSMcEW65/3IQvqMWQbvsnVNDxpG62Y4q
- IXFQnJyxWvUnRqbnHvAh/35f1zCvtgiwEKGFQk8wf8zEcg4UGqWhCk1Yvm3OKjhzJmihpIYh5N9
- NGdEFPWUQnDrS/enNz+qNwq38kcviVTx/KgMGOtJGehqtjQGMhy1FIe9WmCcd0VbEMBsUgxiP6I
- uo9kpe15oFqPutQUFPp0HTzOAu2bdXItNNOUA==
-X-Google-Smtp-Source: AGHT+IErFGjAUo+ARavlw1Qc7TpHf9RTkACP0PAIbNVk/1nNPXFQ5fL0iqGd9mj8GQAeTc7c+l1/coxpoRO1h1NnQQ0=
-X-Received: by 2002:a05:6102:570a:b0:4e7:3d55:5212 with SMTP id
- ada2fe7eead31-4fbe7f6d47dmr3584987137.11.1753936629544; Wed, 30 Jul 2025
- 21:37:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhLpq-0007Uc-8Z
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:10 -0400
+Received: from p-east3-cluster2-host1-snip4-7.eps.apple.com ([57.103.87.138]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhLpn-0005m5-Ji
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 01:28:09 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPS id
+ 43D9D1800120; Thu, 31 Jul 2025 05:28:04 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=NW1fD2Mb3upL6hkpDTSF+2K6D3SQ4d3+mABFysdCU6E=;
+ h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
+ b=BOW8IOKNlwDWpXUkv+iEkHTRMM1GCvPFlwnF2RkIfFS1qskpRzQ3urNiLSQOhGjBQFeCUgKyOPQOtRcrft3BtyKBoNkmrYmIvQxFKoBwacvo8mbkGWmgMWDa8cQj95OGB2UwGcY11IWMu4qy5G7jnSkE8gqaIiLptwxp0s1fIW+9uBD3Ti+cvh1+T+DhOyT4nATScgw+TaoKiTK+qjOTEF4US+W+jQ2FnKMJ49kHJr2qM2uD/Zr87Hm151ecFbWkk4dgFOABGgU0LZP6arBVQhF7Ak6cFBcjjvIM9Iwm1qTZBM1qNY+Leq1UAx6dDxZY4fgm0TKh0G2LMrGGlbjR3g==
+X-Client-IP: 46.189.47.18
+Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPSA id
+ 6DC6E180009C; Thu, 31 Jul 2025 05:28:02 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [RFC 5/9] hw/virt: make Qemu aware that WHPX has a vGICv3
+Date: Thu, 31 Jul 2025 07:27:49 +0200
+Message-Id: <20250731052753.93255-6-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250731052753.93255-1-mohamed@unpredictable.fr>
+References: <20250731052753.93255-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-References: <20250730010122.4193496-1-alistair.francis@wdc.com>
- <e4578b16-a23e-4e56-ac72-3e65b8fbae53@tls.msk.ru>
-In-Reply-To: <e4578b16-a23e-4e56-ac72-3e65b8fbae53@tls.msk.ru>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 31 Jul 2025 14:36:43 +1000
-X-Gm-Features: Ac12FXwlmJhFkYCYUbKiswsoM6mxS70S3XagKYH4e03beRx_LG5WTqeu1dWvp0A
-Message-ID: <CAKmqyKN9mnd16FCJhEUoVAbHz1++-C2MmFG_ocT+aidj=9SuiQ@mail.gmail.com>
-Subject: Re: [PULL 00/11] riscv-to-apply queue
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: P--x1FFXyLYH7V36YJfpURK2uykTJ6JF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDAzNSBTYWx0ZWRfX4zA61keFxr+q
+ Tg/Lovod/aLtkPphSRhhJxCyvO7T/fix8mKikq8wWLGL3Ws68qKGzYN0q/sn9/hXqa2KlRpw/NH
+ Yibw1t3JgsS2r9ghfIrmhZGW+25agylY1OmM37xi/WE1MVU+qVZhoGBLoZ2KcVWnB7MMVogQM1D
+ uqiU2W9+rxOhoMXatQCbwzktA8tLCwrLJxTpxKA/2CxmhjgzVwuXixWp0GcsJWU1qoPUHrmBXEt
+ 3ONKnplKejX8wZKzaI280UTmJZWqBzaJA8uwWxkw5IG5HPWNsr3yo8pp6UV7p6rWE3riLcpW0=
+X-Proofpoint-ORIG-GUID: P--x1FFXyLYH7V36YJfpURK2uykTJ6JF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-31_01,2025-07-31_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ phishscore=0 spamscore=0 mlxlogscore=854 adultscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506270000 definitions=main-2507310035
+Received-SPF: pass client-ip=57.103.87.138;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,103 +88,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 31, 2025 at 4:20=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> On 30.07.2025 04:01, alistair23@gmail.com wrote:
-> > From: Alistair Francis <alistair.francis@wdc.com>
-> >
-> > The following changes since commit 9b80226ece693197af8a981b424391b68b5b=
-c38e:
-> >
-> >    Update version for the v10.1.0-rc1 release (2025-07-29 13:00:41 -040=
-0)
-> >
-> > are available in the Git repository at:
-> >
-> >    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-2025=
-0730-2
-> >
-> > for you to fetch changes up to 86bc3a0abf10072081cddd8dff25aa72c60e67b8=
-:
-> >
-> >    target/riscv: Restrict midelegh access to S-mode harts (2025-07-30 1=
-0:59:26 +1000)
-> >
-> > ----------------------------------------------------------------
-> > Third RISC-V PR for 10.1
-> >
-> > * Fix pmp range wraparound on zero
-> > * Update FADT and MADT versions in ACPI tables
-> > * Fix target register read when source is inactive
-> > * Add riscv_hwprobe entry to linux-user strace list
-> > * Do not call GETPC() in check_ret_from_m_mode()
-> > * Revert "Generate strided vector loads/stores with tcg nodes."
-> > * Fix exception type when VU accesses supervisor CSRs
-> > * Restrict mideleg/medeleg/medelegh access to S-mode harts
-> > * Restrict midelegh access to S-mode harts
-> >
-> > ----------------------------------------------------------------
-> > Daniel Henrique Barboza (3):
-> >        linux-user/strace.list: add riscv_hwprobe entry
-> >        target/riscv: do not call GETPC() in check_ret_from_m_mode()
-> >        riscv: Revert "Generate strided vector loads/stores with tcg nod=
-es."
-> >
-> > Jay Chang (2):
-> >        target/riscv: Restrict mideleg/medeleg/medelegh access to S-mode=
- harts
-> >        target/riscv: Restrict midelegh access to S-mode harts
-> >
-> > Sunil V L (3):
-> >        bios-tables-test-allowed-diff.h: Allow RISC-V FADT and MADT chan=
-ges
-> >        hw/riscv/virt-acpi-build.c: Update FADT and MADT versions
-> >        tests/data/acpi/riscv64: Update expected FADT and MADT
-> >
-> > Vac Chen (1):
-> >        target/riscv: Fix pmp range wraparound on zero
-> >
-> > Xu Lu (1):
-> >        target/riscv: Fix exception type when VU accesses supervisor CSR=
-s
-> >
-> > Yang Jialong (1):
-> >        intc/riscv_aplic: Fix target register read when source is inacti=
-ve
->
-> Is there anything there for qemu-stable?
+WHPX is a vGICv3-only target without vGICv2 or user-mode irqchip
+support.
 
-Urgh, sorry I forgot to CC qemu-stable.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ hw/arm/virt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
->
-> It looks like "Fix exception type when VU accesses supervisor CSRs" is a
-> good candidate, maybe "Fix pmp range wraparound on zero" too.  Something
-> else? "Fix target register read when source is inactive"?  The "S-mode
-> harts" ones?
->
-> I already picked up "do not call GETPC()" as it's been Cc'd qemu-stable
-> before, and I'm picking up riscv_hwprobe too, as it's trivial and fixes
-> a trivial omission which might be useful.  Should I pick up others I
-> mentioned?
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ef6be3660f..4996c2075e 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -49,6 +49,7 @@
+ #include "system/tcg.h"
+ #include "system/kvm.h"
+ #include "system/hvf.h"
++#include "system/whpx.h"
+ #include "system/qtest.h"
+ #include "hw/loader.h"
+ #include "qapi/error.h"
+@@ -2058,6 +2059,8 @@ static void finalize_gic_version(VirtMachineState *vms)
+         /* KVM w/o kernel irqchip can only deal with GICv2 */
+         gics_supported |= VIRT_GIC_VERSION_2_MASK;
+         accel_name = "KVM with kernel-irqchip=off";
++    } else if (whpx_enabled()) {
++        gics_supported |= VIRT_GIC_VERSION_3_MASK;
+     } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
+         gics_supported |= VIRT_GIC_VERSION_2_MASK;
+         if (module_object_class_by_name("arm-gicv3")) {
+-- 
+2.39.5 (Apple Git-154)
 
-Thanks for getting those two
-
-77707bfdf8 target/riscv: Fix pmp range wraparound on zero
-b6f1244678 intc/riscv_aplic: Fix target register read when source is inacti=
-ve
-30ef718423 target/riscv: Fix exception type when VU accesses supervisor CSR=
-s
-e443ba0336 target/riscv: Restrict mideleg/medeleg/medelegh access to
-S-mode harts
-86bc3a0abf target/riscv: Restrict midelegh access to S-mode harts
-
-Are all good candidates for back porting as well
-
-Alistair
-
->
-> Thanks,
->
-> /mjt
 
