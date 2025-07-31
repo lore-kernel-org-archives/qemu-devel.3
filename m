@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F549C83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABBEC87FCC
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhOcK-0005Pr-0E; Thu, 31 Jul 2025 04:26:24 -0400
+	id 1uhOeN-0000bE-Ty; Thu, 31 Jul 2025 04:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOcF-0005Gz-AC
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:26:19 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOdu-0000QQ-HF
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:28:04 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOc8-0006uG-9N
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:26:16 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45618ddd62fso5822255e9.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:26:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOds-0007ME-HX
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:28:02 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3b79bddd604so105263f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753950369; x=1754555169; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753950478; x=1754555278; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Rj9DQXa2tBkRnNQLTKkGjnzAc3iD26wKzXwbJ9nHvX4=;
- b=h/vJ/AtIAB6gspc1Hs+wtNag/QE1kYJ3uTjKMry7TEjr/QPYI5zQL0r9oapOabxjiN
- FJlbFvfZuqRoAuASfwd5RTUW0ckY46hU/Da2H1pdAOCUp8V0HNS6a6lUL3Pylgp1USEP
- oSbvw4ire/7p8k/5yxauBgBpqg9vI1NLkm+1KmZd1I/bsMwMtdqjP4eJFQFVNZTLiSaB
- NOgzGkshfrFSQ5shzHlqdyNvsUHP1YIVHu3+JyrQk8aczAIXt95weV9efIC2E0MhhF6Z
- YXnG8dh2AIzpttv3m4Bt/++jAg1G5g4430WTX8ubGLBP/PF2AbIp8VkVXG0hbeZHPmus
- ESCg==
+ bh=Jy9WYGBvFSPv+sDseReUU7D6ca1DQMeGAdfEVkMutUU=;
+ b=CjofkNCFo8PmvIDGBHKQ5X+ybuKSMqo9koa6SYPQP66LBggRNmfEmc5LOBGQTXBpjx
+ P9A3vima6k8CaMUDES8CcwW522pjpwxdvBGK2IwPYsW92g7gGzvuYnbJsodRgDm8eBBH
+ XZoIm9kcxw4mytcpb5UukKsrcT6rfp4ZxCO75JLQplf3iqB+XEdvJmIEXoU7vSghtAp3
+ CMPMTB2FCVRrGXXnykBfi1pAV/mZN9pahp5vLGw+p6FoTJ4gN2uuHvGO6cVvLi4G1ZoI
+ UcwWy8oydE1Y7YEF/2EPUFJ6wRXNZ/PBoz4awmnPp9GLdSIOtK5I69s2Q6M1hPnibptq
+ +SFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753950369; x=1754555169;
+ d=1e100.net; s=20230601; t=1753950478; x=1754555278;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rj9DQXa2tBkRnNQLTKkGjnzAc3iD26wKzXwbJ9nHvX4=;
- b=CNQuyXhXOtKa9ESypK4yUDPXwian1vprleb1mLAqemgPS+rv9BbQ17ZWFp6kSQKHi5
- 8zBpr+1NFeMSPz/r8dGdo/UYgAcjFXl6s7HyZ/PptjPxJXgGmV30C7bELex3CCDIWbbm
- fMZ1GWDqprkHrrPY9ePunL3+LHlSUcel/jjgzvzoPwhQnzPemuolcwzLfwRJSR/AcRFs
- 6Ug/YRy+vQuG/mYcByHwke06Nu1bxFvNEKNsa20lbBXvU18st3jw5VXIztISIpFY3nC5
- yvEO4X2lXq2U7o5Wo6ix7G+B0A57KX5HqHjuBcmKxUkUHtj1YCy0mgMEzBoXZY/E9Co+
- R7dg==
+ bh=Jy9WYGBvFSPv+sDseReUU7D6ca1DQMeGAdfEVkMutUU=;
+ b=gmQwfcSDdlDq/wNNigf8kO06sWeX90WJhMul/dm0ZcmVhtYSr+sbIH4Z6zTe5gYWvQ
+ rgIGeCZp71sLEP9TGq2dUWmNj+5n8asSC5tHr2BN7/R8XmuEd1aWdgb83Ha1dNh0lhpA
+ AdhuXXmjwoyrEJxAs7oR0JQIsWkevC12HUaGCFOwiREj7B2B6YewS+IBy35tWeL1Wt1n
+ 5jBOyLnIoVHXuO+uhTK9yn9twdSAvujwrFr45efrQuFM0kS2IhW9Y9oSbx75n4hUXTEr
+ L07kT97OAqsHeCiNmPemZQ2SWa081YqEsiNrNc1ad5PULJCUIy9ObcL56VWNk5Ys8fwV
+ foMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsqoygtiv42qvomrU7O9CJ/NNGE8j0S5Zf8LoIx/imvuH0UaN/uiJdo3AFuQk9wMU+6vArCT4z+sSr@nongnu.org
-X-Gm-Message-State: AOJu0YwNRonDUi4Iq3oIeQmUX5bww4SMVbJgqVpOBAaul/pDl+Q2GQFj
- cvqtrrwZ1Mc3sTeaToRSNmLygzkRhPCCt21O3MsJ+ySu2CzvYkdTXXEZXaIXPZDzo79xBxTF+1A
- t+nVJ
-X-Gm-Gg: ASbGncs9PXE2pMIGNmwJvLA9nKKkBAfuIoyCAFtJULdwJzJYfd3/w8o1sp/JTXPpO+6
- PA+IBJxq8mG2qG+01h6TyBofSYJto/Own5PWjR4slgCr+wmG8z2f7XNn4UPCJjqN22cwr5jXk/y
- HANlqPsX1yD7tlmzffy+/Eqctr5rOEhuhvXOnG3mKOOFWEMHaC1FazoqXxmx/psWNWK3YdrKr1K
- bSNVE7TUNNTOP+Nj47lm2fProL40qTTCNArXFXHJP3Tj2AIPikc6dTlj6FpEVXDQnB1Tls+rc8p
- RYzAFxPS2Hc5ouZ+jDRTELYw+T2h2FlzrXPR0ZLczLKMThtfLdy4/ubIl8daHxbGphBBVozjQVs
- 1y3uDKl1wDsoJIMF1C1MqVrVOsnWhhF1KxmFXZZ+ZxbfwKm0BAoKEs+befLwiNuThnFUqcIl461
- h4
-X-Google-Smtp-Source: AGHT+IFw9iE9pC5QgyOrEy0RnpnIWrAnRgsO7tiAJ4S5yE+YPmrOjuRXMe1G2TyPXcFF8hesOOgFrw==
-X-Received: by 2002:a05:600c:1f0d:b0:456:25aa:e9b0 with SMTP id
- 5b1f17b1804b1-45892bc48f7mr67970015e9.16.1753950368772; 
- Thu, 31 Jul 2025 01:26:08 -0700 (PDT)
+ AJvYcCVtxkLGVdRsF/pK2PoWCZ5Zljf3KTDQlbzn5JWLPrlW0skaiHwewQDieJ9hxy55uL+zHoHen9iBz7dG@nongnu.org
+X-Gm-Message-State: AOJu0YwSJvR/muftDuJ9KHyepe0+yDdsB6EfGUmyYaT+r1+tEmP/eNft
+ qxwzU8AyyGPJ1NffRU5SSykMbeTp+0yN1F/W6R1+zEWzbkomX709Q30z7D18CPnNIVVUOKztLG3
+ Tx4PV
+X-Gm-Gg: ASbGncsKOYscnhW/UDi6gFP7LCHCAC+cVv1NPiivkxXvNF73lwGzfthL3h1fiUWl4mp
+ bWEYHLJzG2J1BZNhVNSWMY7RfKxFwSWH8vOnzDGpTrwM6zMVEsUgxH+LE8mSxvOabACzsETicWF
+ GUcPWlvURM0Fe1FZYuFKgPROsj+T7K6sg1RD8OmuQ5c8W1P90GV/MeO8h8B3OiQyfjuBbh6NxeS
+ QXYKdctB3OJMIhVw5MJdB/ZIR2FZrayOzcNdJEgqOc+EG1cLHIGEmFl2eH4XzRoql2GTGoIkoLF
+ nzT/adFBd6db4+TC5wTtmBX0rQVh9OzvxWc3sudK0bLz11s9XRFEHnReoU1csMDSt/cxbO/l1bM
+ H3ny4YQTmzMIsmLwnOE60xOwLnyABdH3lEkamgNdldFqtOww0rXB0GvID/VQF6hxQTS3aUHLx59
+ ty
+X-Google-Smtp-Source: AGHT+IHe9a+pmtHRdzTLx7Jmt1lH5uW7ij9XHJf5JMSqUtpWWGhcuVkMrZ5DghPFcvdEhHe9jWUHCA==
+X-Received: by 2002:a5d:5f48:0:b0:3a4:dde7:ee12 with SMTP id
+ ffacd0b85a97d-3b795009476mr5548384f8f.53.1753950478137; 
+ Thu, 31 Jul 2025 01:27:58 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4589ee4f0d2sm16876545e9.18.2025.07.31.01.26.07
+ ffacd0b85a97d-3b79c489e81sm1596671f8f.68.2025.07.31.01.27.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 01:26:08 -0700 (PDT)
-Message-ID: <1e5263cc-23fb-44cf-a8c1-f01b6fbb6ef3@linaro.org>
-Date: Thu, 31 Jul 2025 10:26:07 +0200
+ Thu, 31 Jul 2025 01:27:57 -0700 (PDT)
+Message-ID: <52c8d9aa-ebb9-4cd3-aa61-5ab54600f193@linaro.org>
+Date: Thu, 31 Jul 2025 10:27:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com
-References: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+Subject: Re: [RFC 1/9] whpx: Move around files before introducing AArch64
+ support
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250731052753.93255-1-mohamed@unpredictable.fr>
+ <20250731052753.93255-2-mohamed@unpredictable.fr>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20250731052753.93255-2-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +109,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Mohamed,
 
-On 31/7/25 05:31, Zhenzhong Duan wrote:
-> Introduce helper vfio_device_to_vfio_pci() to transform from VFIODevice to
-> VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
+On 31/7/25 07:27, Mohamed Mediouni wrote:
+> Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   include/hw/vfio/vfio-device.h |  1 +
->   hw/vfio/container.c           |  4 ++--
->   hw/vfio/device.c              | 10 +++++++++-
->   hw/vfio/iommufd.c             |  4 ++--
->   hw/vfio/listener.c            |  4 ++--
->   5 files changed, 16 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 6e4d5ccdac..00df40d997 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -157,6 +157,7 @@ bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
->                                         Error **errp);
->   void vfio_device_detach(VFIODevice *vbasedev);
->   VFIODevice *vfio_get_vfio_device(Object *obj);
-> +struct VFIOPCIDevice *vfio_device_to_vfio_pci(VFIODevice *vbasedev);
+>   accel/meson.build                                     | 1 +
+>   accel/whpx/meson.build                                | 6 ++++++
+>   {target/i386 => accel}/whpx/whpx-accel-ops.c          | 8 ++++++--
+>   {target/i386/whpx => include/system}/whpx-accel-ops.h | 0
+>   {target/i386/whpx => include/system}/whpx-internal.h  | 7 ++++++-
+>   target/i386/whpx/meson.build                          | 1 -
+>   target/i386/whpx/whpx-all.c                           | 4 ++--
+>   7 files changed, 21 insertions(+), 6 deletions(-)
+>   create mode 100644 accel/whpx/meson.build
+>   rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
+>   rename {target/i386/whpx => include/system}/whpx-accel-ops.h (100%)
+>   rename {target/i386/whpx => include/system}/whpx-internal.h (98%)
 
-Please return the typedef (like in the implementation), not the struct.
+Missing updates in MAINTAINERS, otherwise:
 
-A one line comment describing what this helper does would he helpful.
-
-Regards,
-
-Phil.
-
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 52a1996dc4..a4f9c9216c 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-
-
-> @@ -429,6 +429,14 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
->       }
->   }
->   
-> +VFIOPCIDevice *vfio_device_to_vfio_pci(VFIODevice *vbasedev)
-> +{
-> +    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
-> +        return container_of(vbasedev, VFIOPCIDevice, vbasedev);
-> +    }
-> +    return NULL;
-> +}
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
