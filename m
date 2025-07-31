@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABBEC87FCC
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBFC83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhOeN-0000bE-Ty; Thu, 31 Jul 2025 04:28:32 -0400
+	id 1uhOgR-0003yN-Sj; Thu, 31 Jul 2025 04:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOdu-0000QQ-HF
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:28:04 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOgG-0003vI-W6
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:30:30 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOds-0007ME-HX
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:28:02 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3b79bddd604so105263f8f.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:27:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOgE-0008Gi-N3
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:30:28 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4563a57f947so7001925e9.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:30:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753950478; x=1754555278; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753950624; x=1754555424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Jy9WYGBvFSPv+sDseReUU7D6ca1DQMeGAdfEVkMutUU=;
- b=CjofkNCFo8PmvIDGBHKQ5X+ybuKSMqo9koa6SYPQP66LBggRNmfEmc5LOBGQTXBpjx
- P9A3vima6k8CaMUDES8CcwW522pjpwxdvBGK2IwPYsW92g7gGzvuYnbJsodRgDm8eBBH
- XZoIm9kcxw4mytcpb5UukKsrcT6rfp4ZxCO75JLQplf3iqB+XEdvJmIEXoU7vSghtAp3
- CMPMTB2FCVRrGXXnykBfi1pAV/mZN9pahp5vLGw+p6FoTJ4gN2uuHvGO6cVvLi4G1ZoI
- UcwWy8oydE1Y7YEF/2EPUFJ6wRXNZ/PBoz4awmnPp9GLdSIOtK5I69s2Q6M1hPnibptq
- +SFA==
+ bh=Pd7UgNESfPtmW7raPCFpcrGuphL9U0VjTNjtnnNmoJE=;
+ b=EaK54W9qgg0esVxyMaGAiVhC9X9W0d5RnkxvPuSRP2Xfh5RaPTg4ZSjhXbRk1Oisir
+ bEKqWbNhaPnJP5E8K+AUK2DCGexfe9HcffK+Pmnq061Smkxnqic5wAUELUY2FgnueP4o
+ 5RCWUb6r8/poklWfo/ptM2PMrH5Mr6IeJEUvu2flSUN01ehjEFqR4gWQq6hpxKt9xCrm
+ lrzCOA9wnufrARfd5uvSJsp7JUi8ezR2SmA90cZQC7mNVwUzUda5z2v60i8yvs3phuoN
+ kndpEdSPOauoNkVIOcqYQDzoEbKJnMLvC3fD3LrTdG/oQ75RmNITn1ROGxq92XhPXuoP
+ 06Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753950478; x=1754555278;
+ d=1e100.net; s=20230601; t=1753950624; x=1754555424;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jy9WYGBvFSPv+sDseReUU7D6ca1DQMeGAdfEVkMutUU=;
- b=gmQwfcSDdlDq/wNNigf8kO06sWeX90WJhMul/dm0ZcmVhtYSr+sbIH4Z6zTe5gYWvQ
- rgIGeCZp71sLEP9TGq2dUWmNj+5n8asSC5tHr2BN7/R8XmuEd1aWdgb83Ha1dNh0lhpA
- AdhuXXmjwoyrEJxAs7oR0JQIsWkevC12HUaGCFOwiREj7B2B6YewS+IBy35tWeL1Wt1n
- 5jBOyLnIoVHXuO+uhTK9yn9twdSAvujwrFr45efrQuFM0kS2IhW9Y9oSbx75n4hUXTEr
- L07kT97OAqsHeCiNmPemZQ2SWa081YqEsiNrNc1ad5PULJCUIy9ObcL56VWNk5Ys8fwV
- foMg==
+ bh=Pd7UgNESfPtmW7raPCFpcrGuphL9U0VjTNjtnnNmoJE=;
+ b=DEJUiBpYIogep/YjBwuTm1QcUubxz8t0Y6zTAyqnyV5HQA4hwxdIl5ZZwhTwiLG6Bi
+ 1WbYtcLiDsWgYSKrzZygQNKdLJULN9XxDIyToqxlh0LF/Vf/GIC00+xPwd/rn6MPogAQ
+ 9auZ1sGH0x34tsklU3JOCE9GZcJfKdxtckBFOgYkUrLqsepvk04l+SOBiQhvnw+nZ+u8
+ l9bhy+/UWUsPXLjPVPZ0wZB5Z/Xaibh38+wYbpxQe8i38nA5YkaxuNwqAp32HON6h9hP
+ IvFab0/Yp/leQ3qNshQJ6RRBNAbTY2hwtgVV6AF/aGzlBzjnQRV154j2iXdrGJ9Z/vy8
+ Nw+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtxkLGVdRsF/pK2PoWCZ5Zljf3KTDQlbzn5JWLPrlW0skaiHwewQDieJ9hxy55uL+zHoHen9iBz7dG@nongnu.org
-X-Gm-Message-State: AOJu0YwSJvR/muftDuJ9KHyepe0+yDdsB6EfGUmyYaT+r1+tEmP/eNft
- qxwzU8AyyGPJ1NffRU5SSykMbeTp+0yN1F/W6R1+zEWzbkomX709Q30z7D18CPnNIVVUOKztLG3
- Tx4PV
-X-Gm-Gg: ASbGncsKOYscnhW/UDi6gFP7LCHCAC+cVv1NPiivkxXvNF73lwGzfthL3h1fiUWl4mp
- bWEYHLJzG2J1BZNhVNSWMY7RfKxFwSWH8vOnzDGpTrwM6zMVEsUgxH+LE8mSxvOabACzsETicWF
- GUcPWlvURM0Fe1FZYuFKgPROsj+T7K6sg1RD8OmuQ5c8W1P90GV/MeO8h8B3OiQyfjuBbh6NxeS
- QXYKdctB3OJMIhVw5MJdB/ZIR2FZrayOzcNdJEgqOc+EG1cLHIGEmFl2eH4XzRoql2GTGoIkoLF
- nzT/adFBd6db4+TC5wTtmBX0rQVh9OzvxWc3sudK0bLz11s9XRFEHnReoU1csMDSt/cxbO/l1bM
- H3ny4YQTmzMIsmLwnOE60xOwLnyABdH3lEkamgNdldFqtOww0rXB0GvID/VQF6hxQTS3aUHLx59
- ty
-X-Google-Smtp-Source: AGHT+IHe9a+pmtHRdzTLx7Jmt1lH5uW7ij9XHJf5JMSqUtpWWGhcuVkMrZ5DghPFcvdEhHe9jWUHCA==
-X-Received: by 2002:a5d:5f48:0:b0:3a4:dde7:ee12 with SMTP id
- ffacd0b85a97d-3b795009476mr5548384f8f.53.1753950478137; 
- Thu, 31 Jul 2025 01:27:58 -0700 (PDT)
+ AJvYcCVDJJoD/RFgq4yOnGB/2qHw/YcJBnOsiV6ahc1fyhEq7yfWafM3YibrXFDTpNioHZon1G+r+6UdDMD0@nongnu.org
+X-Gm-Message-State: AOJu0Yy1syrk0zwuo/8Hvwc8UnCcQEaK29DKBaYN5G1WwWuJ2E1iK2H5
+ yfSYPILpZ14bx8NwB0H5uOrS4Mxo44h6nEzTg98iueyK3CDH6ENhYGSTTgbGs3ehEJ4=
+X-Gm-Gg: ASbGncuFuD7hXCWVKmHIJOyHwbOQjFYtImphlo0aeA/v4BNrEO7vJJAUHfKJY93LCUf
+ 9VuvEKaVqN342d+B00XLL+tVxK5W5HBZpK00Q1saZOgSoL7/bWevFbY4nzP5NW4PgSZ5uk3l7+1
+ Ha8exsMMPVuL6vgUeiDfE+xkYOmUIRV+SEvuNPf+TTD6ImeY+q47+vhmCi/pYZZbGw6/An5u4aD
+ Jc+Hp3SGn+I6U0VmCVNYuufbaTC0lSA8/eLuaqSMB800WiDAqR5+b+g/UIw+iqp9NbarFBmP27x
+ pMPjYmQFaV9f2bEMsPH/y2LfxNcYVdJUI4i5qnbR6jsA+yy+Ikv3d/UweQ8p5keajGkN1S6VVoF
+ G6etnHCEwBTmqiT8zZMM+WHqHovEGt63wompNwmkGNIFHvC9mkvQQ9O1f1mzpjBaXrOuVCGotCI
+ Vi
+X-Google-Smtp-Source: AGHT+IHlM9yk90IuF5pxI3aaSJsksDr9W0Xpobn3XaVeFo4Z/0bWrAb6uuJPbzsl8MB6ZTHLWROdoQ==
+X-Received: by 2002:a05:600c:674a:b0:456:15a1:9ae0 with SMTP id
+ 5b1f17b1804b1-458a223b223mr11642805e9.13.1753950624454; 
+ Thu, 31 Jul 2025 01:30:24 -0700 (PDT)
 Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c489e81sm1596671f8f.68.2025.07.31.01.27.57
+ ffacd0b85a97d-3b79c48105csm1574069f8f.64.2025.07.31.01.30.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 01:27:57 -0700 (PDT)
-Message-ID: <52c8d9aa-ebb9-4cd3-aa61-5ab54600f193@linaro.org>
-Date: Thu, 31 Jul 2025 10:27:56 +0200
+ Thu, 31 Jul 2025 01:30:23 -0700 (PDT)
+Message-ID: <ccee61c9-ee41-4183-a87b-2a9641d92dc0@linaro.org>
+Date: Thu, 31 Jul 2025 10:30:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/9] whpx: Move around files before introducing AArch64
- support
+Subject: Re: [RFC 3/9] whpx: common: use whpx_cpu_instance_init on x86 only
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -79,14 +77,14 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 References: <20250731052753.93255-1-mohamed@unpredictable.fr>
- <20250731052753.93255-2-mohamed@unpredictable.fr>
+ <20250731052753.93255-4-mohamed@unpredictable.fr>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250731052753.93255-2-mohamed@unpredictable.fr>
+In-Reply-To: <20250731052753.93255-4-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,25 +110,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hi Mohamed,
 
 On 31/7/25 07:27, Mohamed Mediouni wrote:
-> Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
+> We aren't using it on arm64.
 > 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   accel/meson.build                                     | 1 +
->   accel/whpx/meson.build                                | 6 ++++++
->   {target/i386 => accel}/whpx/whpx-accel-ops.c          | 8 ++++++--
->   {target/i386/whpx => include/system}/whpx-accel-ops.h | 0
->   {target/i386/whpx => include/system}/whpx-internal.h  | 7 ++++++-
->   target/i386/whpx/meson.build                          | 1 -
->   target/i386/whpx/whpx-all.c                           | 4 ++--
->   7 files changed, 21 insertions(+), 6 deletions(-)
->   create mode 100644 accel/whpx/meson.build
->   rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
->   rename {target/i386/whpx => include/system}/whpx-accel-ops.h (100%)
->   rename {target/i386/whpx => include/system}/whpx-internal.h (98%)
+>   accel/whpx/whpx-common.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+> index 0b23deb7c4..43d0200afd 100644
+> --- a/accel/whpx/whpx-common.c
+> +++ b/accel/whpx/whpx-common.c
+> @@ -486,9 +486,10 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
+>   
+>   static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
+>   {
+> +#ifdef __x86_64__
+>       AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
+> -
+>       acc->cpu_instance_init = whpx_cpu_instance_init;
+> +#endif
+>   }
 
-Missing updates in MAINTAINERS, otherwise:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+I'd rather keep whpx-*common* without any #ifdef'ry: add hooks
+when architecture-specific code need to be handled, and add empty
+arch stub when nothing to be done there (preferably with a comment
+in the stub).
 
