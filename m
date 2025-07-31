@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2272C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E13C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uharT-00068A-BE; Thu, 31 Jul 2025 17:30:51 -0400
+	id 1uhatP-0000Rw-0E; Thu, 31 Jul 2025 17:32:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhaU1-0004xo-J7
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:06:37 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhacd-0007zh-Tb
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:15:31 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhaU0-0004Ib-13
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:06:37 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b3be5c0eb99so819864a12.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:06:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhacb-0005cj-Kq
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:15:31 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4561a4a8bf2so2150295e9.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753995994; x=1754600794; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1753996527; x=1754601327; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XuAq1KTK/G4AkOm78fXnI9JtAWLzT47y9hX7qWh0Lb0=;
- b=qAWO/0JSn4btH6xOFPEiiKH8j8sW57jilJKAmoJoFDHoeG2LV8dsur7ra8fVvAgYOR
- XbTD0LwBDQQN/ezNzHkR5M7PPMX7m93e5PqjD2IPa9I1CdY2be4P5pPSBVaU9vYIrmdn
- HVais9RcoROTftuUfInZFZiQnWoj9am6UV90FRg+YqW29VczriR3B1/Ey/4ZQvllfyHe
- gzgyh6a0RHXW7NYB5NeZ/1XYMtDiQWpT2jpVA5ryvSgFaqemXSzkm5oS5qRNL2Zz3VEU
- 9gVwq2RCSKNqvjTLzsiRdW51WkRscukGxlhQ0gB80CqoCB/QI4fmzLuoPGABL+QNDr63
- XneA==
+ bh=lxyC96YJ32T5kM/PzD3nvJ4jJyZEPc/2DQdxz6XDevY=;
+ b=ZehZYIowVF/d0OsK+KP4JfkgdqbeX6r25dUzKWHZgcQ0Cy0dLaBN7c5UzLJn3hKFsQ
+ 6QJEGDNlH9MssBdxc755PS55/hcsRdEyM7cqSjewpzKv1grfscw67JN2sKxvox/GTIaQ
+ dYasX1/NDK0nf/s6r1JQSs3MUVPpQwSdkyaE0N0ENt1gNYsV1fqzcZSOB+t2jBW5wL0V
+ xu/BANK9XwrMxyIZbHO+CZ3kIqxTbGNUH9Npp+CrSqdjlXmRPEj0f9ECcr4G1hhBAOZL
+ 5VNsX8PLIkF4qlnRxehvhV3HRGzQ0VLypO2MupHAWBqE64a03BJeCIoANg0/STnJOqrd
+ lG9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753995994; x=1754600794;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1753996527; x=1754601327;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XuAq1KTK/G4AkOm78fXnI9JtAWLzT47y9hX7qWh0Lb0=;
- b=Sg1b1+1h2rpK9lKYVTci5VHX2yQCX6ncfYcfRMVwUMOFEXrMx/gr9l1AdX4ZZCjNH6
- i40YupNPxs/0TNeNyESkuueJVeJMbAS4lQGsQ8zBQPmodxBrFDyWkaLbhCUmaTOwGyM7
- bT8/gVZKNmJEbvgJJV6re8hRCFuVzhrDDez4A1LVv1aA+oD9pXTjptOhnoxgrfPHJ5pQ
- p+V2utkDONhEStAgE2ARn+QdUQfd7W+NKN2oJdE8AHYxxPU++2HDGnu0vWGLvmNcsWDA
- dyuhgwks053fSb9gioYFZZ/cYcb8JWXpESTy7prRxqtypbXuEseWXc+YKlOZAl2vVeqi
- F0Xw==
+ bh=lxyC96YJ32T5kM/PzD3nvJ4jJyZEPc/2DQdxz6XDevY=;
+ b=hkcm7gsljsaI5s1KO6uqWqKRKf7i/Hd+Juc6xSwN6ycsW+KZH5XsKmrnTxXhH/dcn9
+ p9zeIg3ecMwJPbjiegqxQ9gU7SI9x2dvJpC2L4YTLE9tPzAJpNpfytpyFA0QfAb9dowL
+ LO3Kd/O+0ZIi6+NoLely2MKXbw3Uus3pS5/He8LwyLbuA7020ONnUsQCmFguQcVZRfZd
+ julGP2JtJLa2m/4OnyLG14InQ+Vh5EpoE3Owe0nhR3tAX0JVYw02z7R2mHB9HousijkG
+ gYRA6o4x+5RI7rQ2vMD//YUdv/Dy6m3Y57HnlT3x7iNlBjR/4+Sw9CfoNWnD6pOC4VlS
+ Z8uA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUS4NOPP/ZEVxErI11X2fxkCZXHd0W8gQNXDzHm5Qt6sSWvfAVGqBfWHZUMxp4dl+XpXlg1H3yMzK/M@nongnu.org
-X-Gm-Message-State: AOJu0Yzb9ZGR8ESvjR2XaYh49hdhcy0f+BTUk5Dnte7OwzzGXfjiIybq
- X0wdDpRwI49gNs78nDdDUuSE/KN0vWW+lkrXuu5Jto1PjV8gG0HRklia3ECBYiQl/RlFcxFC4CO
- ZWbk8
-X-Gm-Gg: ASbGncvjZFSUrlsED6EjZZ3c7qNeCMrOFyh4A/lEztrDuRcmzToE6/xyXOS+/5SYntG
- 28woHx7DH//5Z0Pzoq3ZXFppi5Y0sAXTfFVsGxA4SO84D1podm9dfti7u3IT8Kng7FU2J/rZzfC
- stF8y0r6fIylAz0CAj+K1yZsDSPE0+CYnflqSUwt4ABv0cpFBzkOiyBNLtDInve1aTXwG0ahx7X
- rCXSCzGjS0ttRSun7dfAW0QEU8c/F2Xiyt9Cl8wtIgzvQ1vXdzQVK0Kfa5l+9K0VWcXl1ynoiXf
- Kgc4IAwCoVS1jNui6n33RPy8dxOVr7GsllgmUM/BCd52+XLHl5UeKfWbDXtSvF508iMUTYJJu5J
- ZxlPqH/cRAQjZqjAVVwX+PfABbv4OpUTYEmA=
-X-Google-Smtp-Source: AGHT+IH8UEtYFa2PQBqHiG17v5BAz5LPh0mAqz63ndCBKoqIlBzrLcUFETWuEhP/ByE6Y77daHlgbw==
-X-Received: by 2002:a17:902:fc50:b0:240:2efe:c384 with SMTP id
- d9443c01a7336-24096aa7f5emr109094365ad.19.1753995994426; 
- Thu, 31 Jul 2025 14:06:34 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1ef66fdsm25920015ad.38.2025.07.31.14.06.33
+ AJvYcCUsh52GvYIHsnc4C2Xg+u+RbNZM8S3mJQ/hBxt8a3S/MLa1ae0ZmNj22VGSb9DE8eHM/6AiZI75d23F@nongnu.org
+X-Gm-Message-State: AOJu0YwAAHZmDPV9r1SADxz4FCPhc8cJUrp2KVo0EqdNdydNtbcUacso
+ lRJ87jMw5OZ4KB2Z9PotSI7QxJYxnOVbz4V7TIqTPztxK6lT+7aCm2lNWbwIbJcQ7rBcpSWFb0P
+ n5Mei
+X-Gm-Gg: ASbGncv4SOIstYqKpUt2MPt+9tvwlV9teFsIz2/W3lwh8mj1LxpmrKO5lJU4o1jserm
+ OwvZWHg5RuKdJ5Vc7CBGX39iZ+zLaS5ypZXaZOAj9fg7l4DqTANlTIM+ZPifg1DlJijQCdmuxSR
+ 9ca8OpVrqX7RF+TXpEXqcAZ7RHDl1KIRiljiB7Q8oxwg/kPWTZ4RS02WcVhu7nUOUjV3sm8u0Uy
+ IclACsgUkuvWgtRh0vYqmE8L5mP/ULrAlQXTYcqAQs8gjN1tF2rFyC9l29lRLbp4KFhuGlVOP6s
+ 1tNWmnYFVhU6zDqW5jm4oqgmrZHZAmMzNQ8OUQEneVbzkBtTL0HRC5jGdZv0xM9CzacGmHYcxLG
+ hi3PWkVTAqTaXyzrqpxsY+liJGNc5VSSHKzEY0AKATBe+91+9+MVmuL1mDxa1M8Mcqy4cCsEX77
+ Lu
+X-Google-Smtp-Source: AGHT+IGHkZn0JfcxoCAUrmcP8wrkmAfLOnAVRJCVARYZT6f5Dws6/qXV8m9tLSLCRssg1BZdlDi3Yw==
+X-Received: by 2002:a05:600c:1c2a:b0:455:f59e:fd79 with SMTP id
+ 5b1f17b1804b1-45892b9d991mr74285595e9.11.1753996526943; 
+ Thu, 31 Jul 2025 14:15:26 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458a22365c0sm37513215e9.3.2025.07.31.14.15.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:06:33 -0700 (PDT)
-Message-ID: <7ffd2eeb-ae68-43a7-a45a-ec05ece0b71b@linaro.org>
-Date: Thu, 31 Jul 2025 14:06:32 -0700
+ Thu, 31 Jul 2025 14:15:26 -0700 (PDT)
+Message-ID: <0bc97509-430d-470a-99f4-54c7b4ae8bc8@linaro.org>
+Date: Thu, 31 Jul 2025 23:15:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 50/82] target/arm: Split {arm,core}_user_mem_index
+Subject: Re: [PATCH v2 0/6] Reinvent BQL-free PIO/MMIO
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org,
+ Alexander Bulekov <alxndr@bu.edu>, Bandan Das <bsd@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-51-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-51-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250730123934.1787379-1-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/25 1:02 AM, Richard Henderson wrote:
-> Separate current to unpriv and arm to core mmu conversions
-> into two separate functions.
+Cc'ing Alex, Darren and Bandan.
+
+On 30/7/25 14:39, Igor Mammedov wrote:
+> v2:
+>    * Make both read and write pathes BQL-less (Gerd)
+>    * Refactor HPET to handle lock-less access correctly
+>      when stopping/starting counter in parallel. (Peter Maydell)
+>    * Publish kvm-unit-tests HPET bench/torture test [1] to verify
+>      HPET lock-less handling
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/translate-a64.c | 24 +++++++++++++++---------
->   1 file changed, 15 insertions(+), 9 deletions(-)
-
-If I followed correctly, we replaced all calls to get_a64_user_mem_index 
-by core_user_mem_index. Thus, why not rename directly the function 
-get_a64_user_mem_index in core_user_mem_index?
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> When booting WS2025 with following CLI
+>   1)   -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4
+> the guest boots very slow and is sluggish after boot
+> or it's stuck on boot at spinning circle (most of the time).
+> 
+> pref shows that VM is experiencing heavy BQL contention on IO path
+> which happens to be ACPI PM timer read access. A variation with
+> HPET enabled moves contention to HPET timer read access.
+> And it only gets worse with increasing number of VCPUs.
+> 
+> Series prevents large VM vCPUs contending on BQL due to PM|HPET timer
+> access and lets Windows to move on with boot process.
+> 
+> Testing lock-less IO with HPET micro benchmark [1] shows approx 80%
+> better performance than the current BLQ locked path.
+> [chart https://ibb.co/MJY9999 shows much better scaling of lock-less
+> IO compared to BQL one.]
+> 
+> In my tests, with CLI WS2025 guest wasn't able to boot within 30min
+> on both hosts
+>    * 32 core 2NUMA nodes
+>    * 448 cores 8NUMA nodes
+> With ACPI PM timer in BQL-free read mode, guest boots within approx:
+>   * 2min
+>   * 1min
+> respectively.
+> 
+> With HPET enabled boot time shrinks ~2x
+>   * 4m13 -> 2m21
+>   * 2m19 -> 1m15
+> respectively.
+> 
+> 1) "[kvm-unit-tests PATCH v4 0/5] x86: add HPET counter tests"
+>      https://lore.kernel.org/kvm/20250725095429.1691734-1-imammedo@redhat.com/T/#t
+> PS:
+> Using hv-time=on cpu option helps a lot (when it works) and
+> lets [1] guest boot fine in ~1-2min. Series doesn't make
+> a significant impact in this case.
+> 
+> PS2:
+> Tested series with a bunch of different guests:
+>   RHEL-[6..10]x64, WS2012R2, WS2016, WS2022, WS2025
+> 
+> PS3:
+>   dropped mention of https://bugzilla.redhat.com/show_bug.cgi?id=1322713
+>   as it's not reproducible with current software stack or even with
+>   the same qemu/seabios as reported (kernel versions mentioned in
+>   the report were interim ones and no longer available,
+>   so I've used nearest released at the time for testing)
+> 
+> Igor Mammedov (6):
+>    memory: reintroduce BQL-free fine-grained PIO/MMIO
+>    acpi: mark PMTIMER as unlocked
+>    hpet: switch to fain-grained device locking
+>    hpet: move out main counter read into a separate block
+>    hpet: make main counter read lock-less
+>    kvm: i386: irqchip: take BQL only if there is an interrupt
+> 
+>   include/system/memory.h | 10 +++++++
+>   hw/acpi/core.c          |  1 +
+>   hw/timer/hpet.c         | 64 +++++++++++++++++++++++++++++++++++------
+>   system/memory.c         |  6 ++++
+>   system/physmem.c        |  2 +-
+>   target/i386/kvm/kvm.c   | 58 +++++++++++++++++++++++--------------
+>   6 files changed, 111 insertions(+), 30 deletions(-)
+> 
 
 
