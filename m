@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB5D9C87FD3
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F824C87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhaWP-00005d-RO; Thu, 31 Jul 2025 17:09:05 -0400
+	id 1uhaY1-0002SV-Nl; Thu, 31 Jul 2025 17:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uhZw2-0004fi-81; Thu, 31 Jul 2025 16:31:30 -0400
-Received: from mail-bn8nam11on20606.outbound.protection.outlook.com
- ([2a01:111:f403:2414::606]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ id 1uhZsN-0007kn-D3; Thu, 31 Jul 2025 16:27:43 -0400
+Received: from mail-dm6nam12on2060e.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::60e]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uhZw0-0006zU-45; Thu, 31 Jul 2025 16:31:29 -0400
+ id 1uhZsK-0006Ft-JC; Thu, 31 Jul 2025 16:27:43 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lWyR3VGVoL/FRCjw6p70DY43fxvUuLdwmrzL2Z5mmqu4ozm6a7VHN1k9QPbx9PXFn39DDU4Irp4PzWUIrTDTc/ItScrcEcJjWS6eSfTICql49DKTQ5pJKBzter9KjGUODAf1wlFaLi29mzN18APmB8QXrhzN5kCZy1x1OTgG7xJZUwMEhNzE8guNWO3UHzK2aeOKTWvIO0ekkYrwT70lQX+BWFeAX7w1PcN7XlX1/t53bKj8gDdspR5BtYdKAR58RCxXcU9eRdQ4ADIb2RF20InwxWgJIwvHseaCixHAeIZj21/mLd0QjBMsS7zkJ98Sp0ilNJYs929vf3Hxdv182g==
+ b=DKry5bXiGw4/wWeUDDVPiAQt8qeOD080eQCIZAprqaMFZOvvrx8rZ1ypxiGbyplC2o088dQRrT3cypEipptDxi4nCeAwXP/4VVbkY39XdMwVbi+dAvSXZxQwBrLjpd2OmbsbBMHTcOLpkq9qZNrK4kFHS5SWP+PbPa6SkhRokJUC6kGK72KR/ZAzxLSTQFOUSVDF2I3zGeBNf25hx1acxxp+VBdrS4CTNoWr6YNZnlnbW9VScAI+HbKJDohGXk6e5KQQXtBZOwJnW+O35foYITPQJnXg36A6o+5bHS/Hlndld9cAno6NCb5ugPalERDLUf10k3rSQ0cthlX5KqpafA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PwcOBPfzcnCRcDASJG6yCtntD0smVahNIcIQi2+Qf0s=;
- b=aniSDhahIlUUgaHL9ERwIoICVjYQdLGHKlhTyyn+7ueahdi3uCtez4venXEOMS0Dt5R63NUG3jDz2VzqK5sZrZw5GhIgB3TWU/PVmukeGVVHkKqUPgId9BTi+BlifqKrhAWS+q4mQ3l8oQi1noUDJXEG1iZ2/789O2jyOhGvcleMzTpUTBCKpl0rlK964mU/oPY37UsEKk5lIp7dl/ObZS5btCXUEj4xEbbvKmBg2x7214tRPJE2ERyeJ6OFQED7Gv7/FZVX3K7e+e70Qtu1QgFdeowFNJ6JN/VjLbJBNkFHbxX2Tfg9f5bg26We0fyfEz/LpkoJF8mfOc7AmWXwKQ==
+ bh=F/yeGYZKvHGBdY/dNteK6LesywXCQWAYGl5Q2EUQXD8=;
+ b=EGlqajKQ32qcWbyy1wofAmfct5LHJF17X6Z+LSANHSDJA5E5HawnY9zhvZAHYKJ08PRKuAL4vNy6XruTFJ3+w9nSpNyTk5gz56ZiwIW3Xjzv6eCHifImtDWmECSw5vedGKysP5PF5GyerU9Fzx9C2TVntbmF8QBUswNZdc6gsPMMcnkUtGfqe9Ly8f/LNHv8iKwHVp3LVgm3VDYK8C+HC2clTc8PYqRgxc+WALlLeHz/lD6y3k5V+ISwDWstAGfGJh1hp/cOEB9+bZoIxLL6C+aDMbsrveAaT/kpXkpJM0wzAtFczTSNVDXbMhMkmk/ZF91ZlO8wMhINdCEejNRtCg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PwcOBPfzcnCRcDASJG6yCtntD0smVahNIcIQi2+Qf0s=;
- b=llUtdy15vAFgMiC8Qmom/eJMFzfXvOD1ESfJoFyR4QpmeNJIxFFY3WHlm+qQqEnVY7Oxm83AdYzAp623InOVCoGiXex5XDo9LIQm68GippUUEeyK10GAmOrXU4P62wKKpe6NnZY3+WMGR/h8Qu+o4bfGhcSpa7SHNzqlOt0ombA=
+ bh=F/yeGYZKvHGBdY/dNteK6LesywXCQWAYGl5Q2EUQXD8=;
+ b=13jzpi0prJUCvTdYzGy8myvGfW+XFUSpNzDHQAPxQl+LAZhtEVp1VVwxKpBTeHP2MLceE6cnr66jUkOYpLNpscQweFHMnHhIHm6GgFDEcJmMSXMylUSIZ5z0AKC+1gNENn7LtsbLRj2Z1EJod3UkTlGga2tDEii+F8D242DtxQY=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by LV9PR12MB9829.namprd12.prod.outlook.com (2603:10b6:408:2eb::9)
+ by SJ0PR12MB8165.namprd12.prod.outlook.com (2603:10b6:a03:4e4::6)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Thu, 31 Jul
- 2025 20:31:23 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.11; Thu, 31 Jul
+ 2025 20:27:35 +0000
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8989.010; Thu, 31 Jul 2025
- 20:31:23 +0000
-Date: Thu, 31 Jul 2025 22:31:15 +0200
+ 20:27:35 +0000
+Date: Thu, 31 Jul 2025 22:27:28 +0200
 From: Francisco Iglesias <francisco.iglesias@amd.com>
 To: Luc Michel <luc.michel@amd.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -55,110 +55,110 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  Frederic Konrad <frederic.konrad@amd.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 39/48] hw/arm/xlnx-versal: add the target field in IRQ
- descriptor
-Message-ID: <aIvSkxUT2Q/gkZiP@xse-figlesia-l2.amd.com>
+Subject: Re: [PATCH 38/48] hw/arm/xlnx-versal: add a per_cluster_gic switch
+ to VersalCpuClusterMap
+Message-ID: <aIvRsONDvSdJdL7j@xse-figlesia-l2.amd.com>
 References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-40-luc.michel@amd.com>
+ <20250716095432.81923-39-luc.michel@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250716095432.81923-40-luc.michel@amd.com>
-X-ClientProxiedBy: LO4P123CA0435.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:1a9::8) To SJ2PR12MB8739.namprd12.prod.outlook.com
+In-Reply-To: <20250716095432.81923-39-luc.michel@amd.com>
+X-ClientProxiedBy: LO4P123CA0687.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:37b::13) To SJ2PR12MB8739.namprd12.prod.outlook.com
  (2603:10b6:a03:549::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|LV9PR12MB9829:EE_
-X-MS-Office365-Filtering-Correlation-Id: a1fdf83f-21ae-4628-33a9-08ddd0713703
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|SJ0PR12MB8165:EE_
+X-MS-Office365-Filtering-Correlation-Id: e65e4800-356c-49e6-0856-08ddd070af4e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MTJjc0xxenJvdGFZOUcvNFNHZkJrck90R0xrZVlRaEtWaFRpd2FGTk55ODND?=
- =?utf-8?B?RWZsYkZVVmFVUHRoa3dDY2dkb2NTSlJPMlFISTF3MG5tY0tKQ01HRDRkVGxZ?=
- =?utf-8?B?NTFJb1dHWDEvVnNjekl6aFdYOCtvOSttc3QwMmprUFZaLzZRTEowY2VMNjZx?=
- =?utf-8?B?TU9uaEc1MUl0VW9ncW52Uk5xT1NWbWdNRWdCWnZkaHlwYnUrbFBxOVl3UEpK?=
- =?utf-8?B?WnhYUVI4MmlCYkdoTVRxUE90cjNtbTVWNmV2WHluQnJwTUJ6dzVEcWlweUNi?=
- =?utf-8?B?SjVZMFJWTTdJVEJMY2lyNWNvUjdaTkc5Z0N6NUtqNHRqT0pqMU9zS245ZHNp?=
- =?utf-8?B?ZjJSYlNDWnNTeFNXTzNOQmJOaytxWXZkZXpyRG9VQXM1dSt3eG5xdzNKZU1Q?=
- =?utf-8?B?alZudHdXNmxsN1pCY1VvMTYxVHM0aytVTlFLN1Z0cWQwYStsZjV6Qmg5UXM2?=
- =?utf-8?B?dHlvdGk5YTVsYXd0QTVnSHRMdjE3UnVadlJocHF4by9jUytmSTB3WU5NelNL?=
- =?utf-8?B?aXprU2FyNFNENi9uWlg1dkUwZWI5TGJ1NW9vV01xL1ZNZWZYN3dVTDRnakpt?=
- =?utf-8?B?Y0xIaGx6Qi9VMUNkT0ZJOXJhRE02OTFRayttdmFjTzlnQVA4cUhWQlN2SlZF?=
- =?utf-8?B?YVFpV0hvaWdTV3lhWVVYeXNMdGJNZXRkNjVScnMxR2ZldDhkSDBjL1VFU1NF?=
- =?utf-8?B?aklLQjE3UmRNWStlL2pESHZCYjdFaGQvT0hCWk1RV3R6a0JpTXVkcnZCWnZl?=
- =?utf-8?B?cjJ5em1jMnRLM3JBdTk0WXRCK2tZQjJmcmJGSnlzaUZKVUw3Qm1XQWJERE8r?=
- =?utf-8?B?bncyYThmdzdHeGl0cGpvU29VMVNlVXh2ZlZVaVlLQStTbDdpaDRISUdISGFI?=
- =?utf-8?B?MUIvMGRlc0JWMmdDS1JOUlBoS1FicmU4SS8zejZQbmtYTWg4VmlMaE1LRi93?=
- =?utf-8?B?SDlteDNEL2gzeGhXREFxTjNsbEc2SXNaNVBYOEc1ZEt6UUtIUUdUdVB2cjlG?=
- =?utf-8?B?VmN6cUtnZTJpdWlxY1NlWTBUWTB1RGU3TlNPaGNsMnJUbVAxeGszc2gwODgx?=
- =?utf-8?B?UjR4WFlVZjNXN3BETzQrYTVMc1hZQys5NUU4czVoMjRXekwra2tHMVI5bGhO?=
- =?utf-8?B?aDhScDI1bG80c1ZNczFiWHQ0dTgrZHdpa3VDUkJ3ZnB6TEVub0k5bmtyb29p?=
- =?utf-8?B?WnB0d0VxazduTytDeS9jcjMreDRoVjVoWGgrQ0dPVnpPS2FkQnp5bTNUZy8w?=
- =?utf-8?B?MTV3bEdTR0lvdEt1ajNtK0F3WDlFVXhnQ2xCY3hYZjdtWG9SY1dIcUZVcGdu?=
- =?utf-8?B?WVJRVGxQMlBCVGNVNDFmcy96TFJCL1JsL2Z2UlluZkFUWE9aaGIxRXpuS1ZM?=
- =?utf-8?B?VG1TMjhWTjVwRitmcTFabVdSM2xJdnNUSUpzUDJuakdvR3BOTEpvYXhQQWtQ?=
- =?utf-8?B?cjdEb2NEY1JwSUFVdnE1cDRqbmZydm1JaDU5VWd4YnlCUC91am5EOEkyUUEz?=
- =?utf-8?B?ZkM4b1RJQkI4cXI3Si92YU82Sk94ejRDSXlYdmNHcW5VeUxyQlIvekZ1bnZN?=
- =?utf-8?B?SStjYldJQkJKYVJnMHJtb3V6L3gxOW00R1RMYjJScXVvbU9jemZSMFVJdlZQ?=
- =?utf-8?B?UWVicUlGeExqU0J1MEFlRHoxNnZLQWZ3UzVqcUlXSWZlQ3JLT3Z3OWZpZ0xV?=
- =?utf-8?B?VWhCbkVZZW9QY2dMUkhYbmdxeGE5dzVwalB2eWVvZjluWXlGYWI5Q0dmeVQ5?=
- =?utf-8?B?eEh4Y2VucjRVbStmYnprNVI1L1pHRzREVnI2TkllZmZXM1l3Y0pUdEVxOGlD?=
- =?utf-8?B?UE1la3VkVWJqZUY5SW1Pc1M1bjZEdXppdFU0aDlqM0NoQzlhT2M2ZnJUMmVM?=
- =?utf-8?B?andPSmtNSGFMREhnbFY3UEoxRXRJQyt0WGJaUzN5NFJCcXdRaWtoWmYxa054?=
- =?utf-8?Q?rrCaDkCD/zE=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?V0NkV2RKdnRVQ2xTY0FyT1FMWkRCOWRya1BCTFl2U0VHeXp4SGRROGM2ak12?=
+ =?utf-8?B?ZXJGWmFTSXVyYXByQXRoTU9jdXRhMklhOTBIWVYzMlVwSDU0VlcvVzVOSmRR?=
+ =?utf-8?B?Z2pIZ3B1M2I5TzNGSEs5WjJSY1FaOFpTaWR4UE5JcTdYSzhvMFNPS1ZBOWhN?=
+ =?utf-8?B?eWtuVndTMkltbVl6Tm1sN3UremZuRVRLWGVma2dMZjV0cy9iTnJobmVpZm90?=
+ =?utf-8?B?VFJROU42VGozUkVkZFVaekxuRmFVK3hpQnhwa2d5L3B1Qk1nM2kwd284WFYw?=
+ =?utf-8?B?ODlOUWtaSCttWEtZRlBGekMrbHNIMG5xU1ZIc3ZUbUcwSnMvd2JGTUVkVWhx?=
+ =?utf-8?B?dmVzNmlEWU1kdHU2MmhGdEwxVjJ0YXRQTjZHMUo4QlVRb0haWUtPSG1MZFhD?=
+ =?utf-8?B?TytuWjZwNnNSRG5rOHBXcG82T2VhL1JYeTR4eGFvVXVmejBIUHBnbkZlaWVD?=
+ =?utf-8?B?R3hVR2kvT2orRXJDTHFFem51MnlKVk5mVjZKNHQySjhNM00ydjhsNFNsbXF4?=
+ =?utf-8?B?ZzFxdFA1K1NsNFQvaHpqSWFWWGdiYXdKN0RiQnIwSGxtWGd4OGluKyttbEV2?=
+ =?utf-8?B?SmdzRTA5UFZraHZHMlc5S0VTTytHWUEzZmxWZnNxZ1NPRFZscmpTOC9pQVZ6?=
+ =?utf-8?B?cG40WG95ZnJqQWtrbzBObjk3R05vNTBSQWRYNk9Bdzd5enZuQWtEQk1vQTRV?=
+ =?utf-8?B?QnMrajZsS1pwNUNHK0lGWmZ1MVNvTzRPTmNwQVBBTjNVZXZ4UEwyS0VRWVMw?=
+ =?utf-8?B?bEtNMmZjVksweGo0cU9qUjhCeWVKcU9reGlJQUNDTlNiK1pZREpTcXhyN2pw?=
+ =?utf-8?B?U2ozaVRzWld1QkFjdHgxNjFPMENwTzFrWDd3R3JGckdBSG1qaG40L1VtaFlO?=
+ =?utf-8?B?d0R6MytEL3VxVCtJMVFVN2o2UmlGMUlDYTZNUHYvUTJCTUhEbFBWMWdmMm5i?=
+ =?utf-8?B?T1dZSzlVNitpZUxXMEMyTHJ3ZW9xK2MyVGxIOXZZRE03MkdIN0FKNWpCeEFu?=
+ =?utf-8?B?ZlVvVDRCMG04YkphemFWM244d0lSeTUvTEpZZHY3Q2wzdEdJb2UrcndnYlNF?=
+ =?utf-8?B?bitvUkU2NmJPQ2tLc3NVVkJLWDNXQUtxSk43TjdMZHlTLytHamMxSnJNVk96?=
+ =?utf-8?B?SU1TVUFnNWhEODZoMjU1NTkzNmxmVHUza0JicVlMZkwyRXo3dkVDMDJDQTl2?=
+ =?utf-8?B?MkUyWGxITktNTEFtMEg5SFZBdmoyaXc0WjBVVG9sVWdIN29kSzZucWdEVGZr?=
+ =?utf-8?B?dlVkRm94V1RXaTErREN2Z0FtcVQxb2dYREltWExna2w4WmxMNEhHcGRaQ2FS?=
+ =?utf-8?B?Zk9BbUNDSmd3V2tpZEZXU0hBSTlXbTJZVVZFQnYzZ1FNY0Z1bnhLa1Rjb2t1?=
+ =?utf-8?B?czA2R3NBeHhuR1l5aUdVem1zK2RGVVo2NUFCaENadzQ3Z3B3MkNTbGR6c3Ru?=
+ =?utf-8?B?djBxMGtTU2t2WFljeDJuT3NXUTJqRGFQKzNydWtYZUgyK0I3RWw4RDVXMHJV?=
+ =?utf-8?B?Qm5sUDlGNDJUS3NCWVhUK0FaRmRZekozVlE1aHZuUWs1dXdmSUd3UzRkZjRC?=
+ =?utf-8?B?ZmR3WFJVTlQxcTVHNmpCRW8ybmgvQXFsSVNDYkVaRkVMTkt4RjZoQjBETmwz?=
+ =?utf-8?B?ajFiYmVuOWRFeFF6dFk1WisrNjgwK3QxYVRnN0JXcThLZ2VRdk04RGVxM1E5?=
+ =?utf-8?B?Yk5WK1pQVFlJMmZxaFI5V09vMldka0NBNkI4VStZWWJPdTJWQ0J4aFhEb2N0?=
+ =?utf-8?B?YStUUW1uZTVvT2pZWWRpWXZZY1VyM0xOMXl1dThYYlJKZjFONU9ya2pjVmlW?=
+ =?utf-8?B?OWNseXU2TnowMDhqZnpIWkVxQ2ZtemVnOGNEMnZIMnBKdFh6TmxTR0JobGpH?=
+ =?utf-8?B?NlNWUHVBUHE1ZENCTko0RnZJZnpFSUlPeG1lTGUwZXFoOUVNUUdzTEFEYWY1?=
+ =?utf-8?Q?XaGRbe4udc8=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VGpQdmpxY2xmM0R5S1h1ajVyWnYwTmdDTjlQa0s3MzNCb1lYNjRFWFNvbHBF?=
- =?utf-8?B?QWFaOWlrb0l1Wk1YZ0k1YjJFbGN3eVhibVpJSHVYZGs5UXFkN2xrdDh1UC9y?=
- =?utf-8?B?UEpoRm9kcFFLM094UmpPTnBnSVdoV1VQZ3hJKzVxdjZxTkhVcVpVMnZaMFlY?=
- =?utf-8?B?by9qUXFxVmVvakkzNlBsOU84Q3lPL2dlMWk1Lzk3SXRXQW5mZVJBRXo2eXow?=
- =?utf-8?B?bUZsUEZhZjZ4YTV0anUzMDVkTlNMaXRrNjlTSFVXRU1DcllXYzQzb3RnUjNP?=
- =?utf-8?B?ZVAwQWhxT1FCQjBZQzk5ZDJ2aUo5M3UwcmxKZmJjUTZ2NmFtRU1YUWw1VjhT?=
- =?utf-8?B?ZFBLZFZtTk1hMnlEUmcrRmNvWEsxVSs3aG5xUGJ3Y2piQ1pYeU1qWUlhMEZx?=
- =?utf-8?B?NnI5OHlRYlowM21iekxhcVdZWHFFSy9wR0gyY0ZEc1FuRVlnZW5uRkVZUEsr?=
- =?utf-8?B?dnljNzFvUk9pWFFSQmZzSVQ3N01yQzJ2Nm9nMmIyRWtDbTE1QzZ4T0ZoZjR2?=
- =?utf-8?B?TjFmbklDMFZkekJMTkNiMUlTaitKRDFJRnIvbGQxRUpPa01aNEJRU3RZL3Rz?=
- =?utf-8?B?aWw1UGhjWnZiTlk1L0FvSkJtZzA0djlaMzR3NXM1LzVHSldKNXYzbDNtZFMr?=
- =?utf-8?B?RURLQTMyVWIxTDFvcDRGbGhjZ1RTc3MrS0xPUExsVnRjOFp2L1NiNmNLc1kr?=
- =?utf-8?B?MHpXR254LzlRTTlBeERvTTlqb2VFVlY3NldLNndYcTVsSUtPM0ZvODh6MTRy?=
- =?utf-8?B?UzFPVElIVXEvWmcxOXNnMkpYOWFVaGhGMDdGd1dLcnlrZmJONkZCUTdlUFRk?=
- =?utf-8?B?T3JsSE1GQ2JleE5hZXk1NTY5T1E1OGt6ZHV4N1Y2UTMxRXlEbldSWTFCOGpN?=
- =?utf-8?B?dlpSSTgrUzVLbjlVZ2xKaWNrZnJPMDZBMzFCME5xdHFsT3JXR3JrN2ZCbkJp?=
- =?utf-8?B?Mmg4a2hwK2hmYU1Md2RDdDNZbUV5bkdvcWNBcktHL2k5VTNpZ2pEdGdjV01W?=
- =?utf-8?B?b0JFT3VxTFNOYm1IR1c4d1owR015NUwwdURoWHVOSHVIM2FGam8yL0gzYWFr?=
- =?utf-8?B?SzdKZHRKNTQ4eWZJQ3dIRjFMcTdrYTdjM1BROVBMTzJmYURac2s0RGZVTTdn?=
- =?utf-8?B?SFJ1eTlTNjBwd2I2a1J0STBVdE54WkJ1TkdiVSs2NHRYdlhKWFU4NjF6cE16?=
- =?utf-8?B?ZnFyTmtJZ2plSEF3T1V1WlhRKzQ5dGpGWXd1N29zTVpUVW82eEkxWTNiK1Fp?=
- =?utf-8?B?ZXhnUHk4UVZjV0JwWnlONE1YbVJXd2ZueDlKNWM2eURNU3lxaTJIT1M0QlFl?=
- =?utf-8?B?NlRwZnMyUEhRM0JaT1JYa2x4cGM0ZkJaWDQ4UXZ4YzhlVWhwWksrT25tRUFm?=
- =?utf-8?B?T1dOdFp1MmtOZXlqZ2ZKRng2NVovb0xlVHBFbU1UUVMwOG1FZ0R6YVhDa05P?=
- =?utf-8?B?cmNJd0l4SXVWRmp2cUhDaVVwVk1CdGswMlFwUXhzRmFMcTRDOWZvTXBQcWhS?=
- =?utf-8?B?aWc5WHhaZ0ZMa2JhRTBFYkFHZVNPSHBabFU0d0hqdlRPR3dFVkNiK0x4aGt4?=
- =?utf-8?B?RVZoOTQyeXpON21wWnFxVjZVZHRIamQ1WlVuaDZ0cGRwRFhNdFVvU0s3UG9r?=
- =?utf-8?B?TVlocmE0TG83QWFnSXZTallqekN4V3ZlTUpNdFdBNXpjSzY2MSsvS1VxVzBM?=
- =?utf-8?B?dFVlalNrL25KRDZ2dXFlV0FZc3FkQ1REcGROcjAyempkMEZnMXE1c0F3cnpG?=
- =?utf-8?B?N0ZadHgxVXlQRS9ZczhZNzB1V1pSVkRTeHdhNkswYjZWU3hlOHJ1TDZyd2Qz?=
- =?utf-8?B?Smd3SmVoU1pwM3VXUDZ5NE5NNzk0dEYydEtvajFEVDNXMVlUM1ZpcFFXRTRz?=
- =?utf-8?B?YUg3cTNIa3dCaEpLSXBFQlFHclZkRjVKTHd3MGdXRDEwTExlbHlXRElxOUpx?=
- =?utf-8?B?N0tBTHB1aitZTWlPMHBOb3JORWc3azVvQ3JNRGNzdnRQN2lUai9rcXBMSzJM?=
- =?utf-8?B?Qm50LzFRTjRqamtIbmd5NmY5TE4yOVhUOGthM241Mlp0L1FaSTA4NXVjUzFR?=
- =?utf-8?B?UkEyTlczeUI2VCtTczdDcVlINWx3bWNudW9HK1c0dk91cGU4SWNvaG0xMk9W?=
- =?utf-8?Q?t9koTJzvVoq5qM+UIvB/Whomk?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SEkyWDh4bDBodGxNa2ViUTc3MFlMU0NjZXVPbjVZNmluaFQyd2NMZjFKY2Zl?=
+ =?utf-8?B?Ry9UL2xnNUVGNE9KQk12VWdTTi8vQzJVdExEcGlUcGxjaXdTelNEM1JIZmxm?=
+ =?utf-8?B?WE1mcnhMZVFrVkJhUjJMSk9xT1NOVEFqSXdYM3NzUnhvSDF3ZFRFRWxaVkMv?=
+ =?utf-8?B?OFQzZkY3S0c1dGxXbGxoQ1lnRTFSRmxiZ3BDcE1MRzBMWXdKZkFxODlNdlJ0?=
+ =?utf-8?B?UVQwY0ZrUHFJcVExNTNKMUZIUElZL1JvT283VDc4RE9VZVp6RDBQS211dU94?=
+ =?utf-8?B?QTNYeVdPRVNObUFBUTFKclBtYnFPQUtYMkRMbVZWY0ZHVExMbURmeGVJL2Jy?=
+ =?utf-8?B?V3hsOVNwZHNkUkxGaE1QM3l4dy9SSmNjdVVSeW5HMHNyRmdPVFROS2ZCbzZO?=
+ =?utf-8?B?d09TSklSell3N3o5emZFdVFLTlBaY05wb0YwZU5udG5vam1QUjNheGRWY0VN?=
+ =?utf-8?B?ajVlTERPYU1DUCtWRzhOcHlLVnVCY2MwL21ReWZmV2JXMnNWbFlQS3lldUds?=
+ =?utf-8?B?YkVWUjkyZlFsQmwvaGl6dDNiMTZJZUJBZWVOOEZ6RmZZbUtoUFJMSitzbUJn?=
+ =?utf-8?B?RmpqdkVwTGVNcVA5UVZ3S1pMV2FHVy96V3JYMW1pQWtUQytHdXcrK29YOWlJ?=
+ =?utf-8?B?QndnTUs5KzFqRlM0T1hmcnFscDlIU283Y2l0RG9KcFdQN1VPNk00QlFyazNO?=
+ =?utf-8?B?Ri9PbUxKSTdkYkJYTFBjS2VkUDZPL1U0SnZNa05ieXpSMmRGV0NKSXF0TStj?=
+ =?utf-8?B?WDBqWXV1eXJnV2VXZzJkS1JXNXdiWCtiakUvR1hSeXJ4bVhac3NQbVNCc0Fv?=
+ =?utf-8?B?REJwc3hIZ0c4Q1g1NnA3NmZCZlMzUUpKeWFxcnhudUN4ektib3kwWnNZdkNn?=
+ =?utf-8?B?SDlYcXZWUUhlQjJMcE5rRlRQaUxtb29DWHBIbUVKTGwrbWhNeGRhMkFoVFBU?=
+ =?utf-8?B?T1J5dVJ5QkZaaVoveXZaN1VYalZKZUp6Sk5MeWp4SmMxMjR4cVA3R3FpekR0?=
+ =?utf-8?B?UXRDWmtHd1orNjJXQ1RoSTk3eUxLRk14SVF0dy9pWGYrK0N2RWpOOXVyb1hC?=
+ =?utf-8?B?NG8yaU5pazJFYlNUSDQ5bzhoZ1UrRnJmaHdURnZrazc1VFBxZjFFWmFBaWly?=
+ =?utf-8?B?M0htbGVZQXZoRUxQTUdUWi90cEVrVkZUUC9Ob2gydjhUaldwVXhoeFBSTCsw?=
+ =?utf-8?B?RGMvOS9oVGZuemNHZlVHU1dKMWFZd2x3RzErZlYxcmxjN1czaXNRelFhOUJF?=
+ =?utf-8?B?Nk9rR1MzRWI1YmJnRGxoS3A5cEh4Q0dkTTFqTHl5S1ZvaTdPSkxsUCtsam00?=
+ =?utf-8?B?MUpURlRWQVJobGZwYkdoSFdLV1VsbUp6TW1TeElsdHMrRHRsNFZBUnUzYkdG?=
+ =?utf-8?B?OER4VGh6SzNUWm9YL0dmeVh6d2hSWmZxQlc5cjVKd3VoWE85YkxOVHFTNDh5?=
+ =?utf-8?B?YXlVbW1HOUJEak9qNXJOVWtBK0lDN0ROcDBQOXpQbFpmRHoxcUtLckxuYkJn?=
+ =?utf-8?B?MXlNeG4yVXdwZ09xbkh0MUtCaVBHd0I5VmxleDlkQ0Nkc25WSXJSenFjSlUv?=
+ =?utf-8?B?MGZZaW11T0dXU1lpRHBwN2JvQUh2QkM0ZDFPUVZKbVBlckl4OWFKQnFJVkcz?=
+ =?utf-8?B?RHFVL2VhTllrbHl3clN2UUMyc08zOURkQ3FXUEFtb2RxZnVhcEZxc3VHNUYr?=
+ =?utf-8?B?ellHSVFVcDgvaURGYWxlTFNERWFrbzVva2hFWTRMTGMyTHFuVDNSWGZUVUh3?=
+ =?utf-8?B?b0dtcndLUkRNZUVIanU1Z1A4cW1XdEJvUW9YUVBrWkUra0wyRGNRK2xpY2gr?=
+ =?utf-8?B?NW1USXpEeVgxQlN6RWRBNnd5SUZ5bXlkRDROeWgrMzVPbEZTemxIMEtRakJM?=
+ =?utf-8?B?a1J2Z1F1RlAzcHlRa2JYSTFTazNOU2ZWaGFsamRWRlA2Mzd5RkFtOFBOYXJE?=
+ =?utf-8?B?aVd0R2p0ODRVMjZxUGcyelFUT3RNZ2hoNyt2Vkp6Y1BMN2Mvcko4UFJFMGdz?=
+ =?utf-8?B?bUwzZ1ZkRTJPOElMU1FEWk5tZ05CS2x1cGVsUUFENEliam5lYmxCYkR0YTV6?=
+ =?utf-8?B?WE84WVZzQkgwQVE3TlVrQmdKVEcrV1FLYko1dXlDKzJ1MDc3cldSQUM2Nk0y?=
+ =?utf-8?Q?L8h6qBTK20IXXCSsRq7mgoPAI?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a1fdf83f-21ae-4628-33a9-08ddd0713703
+X-MS-Exchange-CrossTenant-Network-Message-Id: e65e4800-356c-49e6-0856-08ddd070af4e
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2025 20:31:23.3740 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2025 20:27:35.5399 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rmCLhyckMHcr1tG64hU90GZTUwrTXk9WI05vzfpqCN21BPYDF29QSKttgn/U/98lXAulYSKe9DV3HwizLsOI6w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9829
-Received-SPF: permerror client-ip=2a01:111:f403:2414::606;
+X-MS-Exchange-CrossTenant-UserPrincipalName: rrp5xbRv12TXVckDAYdn9REzHhQTcnd5oDnJUClRcCttm7E5vSw+fU2pBBSUb9Ju0G3VeyJIY9Ubhhbpd+05YQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB8165
+Received-SPF: permerror client-ip=2a01:111:f403:2417::60e;
  envelope-from=francisco.iglesias@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -180,121 +180,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 11:54:21AM +0200, Luc Michel wrote:
-> Add the target field in the IRQ descriptor. This allows to target an IRQ
-> to another IRQ controller than the GIC(s). Other supported targets are
-> the PMC PPU1 CPU interrupt controller and the EAM (Error management)
-> device. Those two devices are currently not implemented so IRQs
-> targeting those will be left unconnected. This is in preparation for
-> versal2.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+Hi Luc,
+
+On Wed, Jul 16, 2025 at 11:54:20AM +0200, Luc Michel wrote:
+> Add the per_cluster_gic switch to the VersalCpuClusterMap structure.
+> When set, this indicates that a GIC instance should by created
+> per-cluster instead of globaly for the whole RPU or APU. This is in
+
+s/globaly/globally/
+
+Otherwise:
 
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
+
+> preparation for versal2.
+> 
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
 > ---
->  hw/arm/xlnx-versal.c | 41 +++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 39 insertions(+), 2 deletions(-)
+>  hw/arm/xlnx-versal.c | 15 +++++++++++++--
+>  1 file changed, 13 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index 9d900fe3127..551671af425 100644
+> index aef53876f26..9d900fe3127 100644
 > --- a/hw/arm/xlnx-versal.c
 > +++ b/hw/arm/xlnx-versal.c
-> @@ -50,18 +50,30 @@
->  #include "hw/cpu/cluster.h"
->  #include "hw/arm/bsa.h"
+> @@ -86,10 +86,15 @@ enum StartPoweredOffMode {
+>      SPO_ALL,
+>  };
 >  
->  /*
->   * IRQ descriptor to catch the following cases:
-> + *   - An IRQ can either connect to the GICs, to the PPU1 intc, or the the EAM
->   *   - Multiple devices can connect to the same IRQ. They are OR'ed together.
->   */
->  FIELD(VERSAL_IRQ, IRQ, 0, 16)
-> +FIELD(VERSAL_IRQ, TARGET, 16, 2)
->  FIELD(VERSAL_IRQ, ORED, 18, 1)
->  FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
+>  typedef struct VersalCpuClusterMap {
+>      VersalGicMap gic;
+> +    /*
+> +     * true: one GIC per cluster.
+> +     * false: one GIC for all CPUs
+> +     */
+> +    bool per_cluster_gic;
 >  
-> +typedef enum VersalIrqTarget {
-> +    IRQ_TARGET_GIC,
-> +    IRQ_TARGET_PPU1,
-> +    IRQ_TARGET_EAM,
-> +} VersalIrqTarget;
-> +
-> +#define PPU1_IRQ(irq) ((IRQ_TARGET_PPU1 << R_VERSAL_IRQ_TARGET_SHIFT) | (irq))
-> +#define EAM_IRQ(irq) ((IRQ_TARGET_EAM << R_VERSAL_IRQ_TARGET_SHIFT) | (irq))
->  #define OR_IRQ(irq, or_idx) \
->      (R_VERSAL_IRQ_ORED_MASK | ((or_idx) << R_VERSAL_IRQ_OR_IDX_SHIFT) | (irq))
-> +#define PPU1_OR_IRQ(irq, or_idx) \
-> +    ((IRQ_TARGET_PPU1 << R_VERSAL_IRQ_TARGET_SHIFT) | OR_IRQ(irq, or_idx))
+>      const char *name;
+>      const char *cpu_model;
+>      size_t num_core;
+>      size_t num_cluster;
+> @@ -828,16 +833,22 @@ static void versal_create_cpu_cluster(Versal *s, const VersalCpuClusterMap *map)
+>              DeviceState *cpu = versal_create_cpu(s, map, cluster, mr, i, j);
 >  
->  typedef struct VersalSimplePeriphMap {
->      uint64_t addr;
->      int irq;
->  } VersalSimplePeriphMap;
-> @@ -415,19 +427,27 @@ static qemu_irq versal_get_gic_irq(Versal *s, int irq_idx)
->   * Or gates are placed under the /soc/irq-or-gates QOM container.
->   */
->  static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
->                                            qemu_irq target_irq)
->  {
-> +    static const char *TARGET_STR[] = {
-> +        [IRQ_TARGET_GIC] = "gic",
-> +        [IRQ_TARGET_PPU1] = "ppu1",
-> +        [IRQ_TARGET_EAM] = "eam",
-> +    };
-> +
-> +    VersalIrqTarget target;
->      Object *container = versal_get_child(s, "irq-or-gates");
->      DeviceState *dev;
->      g_autofree char *name;
->      int idx, or_idx;
+>              cpus[i * map->num_core + j] = cpu;
+>          }
 >  
->      idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
->      or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
-> +    target = FIELD_EX32(irq_idx, VERSAL_IRQ, TARGET);
->  
-> -    name = g_strdup_printf("irq[%d]", idx);
-> +    name = g_strdup_printf("%s-irq[%d]", TARGET_STR[target], idx);
->      dev = DEVICE(object_resolve_path_at(container, name));
->  
->      if (dev == NULL) {
->          dev = qdev_new(TYPE_OR_IRQ);
->          object_property_add_child(container, name, OBJECT(dev));
-> @@ -439,16 +459,33 @@ static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
->      return qdev_get_gpio_in(dev, or_idx);
->  }
->  
->  static qemu_irq versal_get_irq(Versal *s, int irq_idx)
->  {
-> +    VersalIrqTarget target;
->      qemu_irq irq;
->      bool ored;
->  
-> +    target = FIELD_EX32(irq_idx, VERSAL_IRQ, TARGET);
->      ored = FIELD_EX32(irq_idx, VERSAL_IRQ, ORED);
->  
-> -    irq = versal_get_gic_irq(s, irq_idx);
-> +    switch (target) {
-> +    case IRQ_TARGET_EAM:
-> +        /* EAM not implemented */
-> +        return NULL;
-> +
-> +    case IRQ_TARGET_PPU1:
-> +        /* PPU1 CPU not implemented */
-> +        return NULL;
-> +
-> +    case IRQ_TARGET_GIC:
-> +        irq = versal_get_gic_irq(s, irq_idx);
-> +        break;
-> +
-> +    default:
-> +        g_assert_not_reached();
-> +    }
->  
->      if (ored) {
->          irq = versal_get_irq_or_gate_in(s, irq_idx, irq);
+> +        if (map->per_cluster_gic) {
+> +            versal_create_and_connect_gic(s, map, mr, &cpus[i * map->num_core],
+> +                                          map->num_core);
+> +        }
 >      }
 >  
+>      qdev_realize_and_unref(cluster, NULL, &error_fatal);
+>  
+> -    versal_create_and_connect_gic(s, map, mr, cpus,
+> -                                  map->num_cluster * map->num_core);
+> +    if (!map->per_cluster_gic) {
+> +        versal_create_and_connect_gic(s, map, mr, cpus,
+> +                                      map->num_cluster * map->num_core);
+> +    }
+>  
+>      has_gtimer = arm_feature(&ARM_CPU(cpus[0])->env, ARM_FEATURE_GENERIC_TIMER);
+>      if (map->dtb_expose && has_gtimer) {
+>          qemu_fdt_add_subnode(s->cfg.fdt, "/timer");
+>          qemu_fdt_setprop_cells(s->cfg.fdt, "/timer", "interrupts",
 > -- 
 > 2.50.0
 > 
