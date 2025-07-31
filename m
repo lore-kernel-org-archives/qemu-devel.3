@@ -4,131 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24967C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 14:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FDCC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 14:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhU1t-0004kC-EQ; Thu, 31 Jul 2025 10:13:09 -0400
+	id 1uhU26-00073X-Qb; Thu, 31 Jul 2025 10:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1uhTES-0003QS-7v
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:22:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1uhTGL-0002jT-TG; Thu, 31 Jul 2025 09:24:02 -0400
+Received: from mail-dm6nam11on20629.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::629]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1uhTEP-0007z5-65
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 09:22:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753968118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0pWCcll+MdaIyLr5cMqoeUdhytucWgHHnra+ZOfSJcg=;
- b=RxH3VYDIwoCchHAUdYydkGJOUSkCXsDL9i31aQTiEPTfPrf6Vom5OBwNjio3pbsbpvz2xh
- G29/7bK8sGShGZyI/vWh7TCiLtkHyXxF9XJ0tEn3GU2uASeMUl4FPElvn6bk0vl+CVECAQ
- xHDdW+l50KGJeRkjnLMSsyDagJEmw8M=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-DLe_C9C_Mn6D2lFlLxl5AA-1; Thu, 31 Jul 2025 09:21:57 -0400
-X-MC-Unique: DLe_C9C_Mn6D2lFlLxl5AA-1
-X-Mimecast-MFC-AGG-ID: DLe_C9C_Mn6D2lFlLxl5AA_1753968116
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2400499ab2fso7903605ad.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 06:21:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753968116; x=1754572916;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0pWCcll+MdaIyLr5cMqoeUdhytucWgHHnra+ZOfSJcg=;
- b=U4x2hYci3UqK5UfL+HiCSatf67QnyytMKpkgN7eTd5uMKCVdae48t8kW+PmOepdhJJ
- yETC9ID++r5ms28R9eaWcLBmE5yt5okv3krGxaV7iJLRch0t6x/5PM/+DG14LWuvVuIG
- KtPT4oqylrMf6Tnp3H6QCAxbpBkdfvMRfMeegQLwg3Nlo9/yG7zrLbGbZFW6ipM4rzsA
- AJWt9fo0WpUUvjTlyhvPmT54lMgUxiYvhCtYp/b7fqmXQLy3XCzKxylboLQThXZT8H6r
- wPlVS52s8f9MOquVlIiCOwoaquMO26AJQsDjh3Xx5paGgFJu/tNEcU+8Vj+59igy/yoI
- xkdg==
-X-Gm-Message-State: AOJu0Yz4lCyNoYu9r9qjo5awC5K/67J715lpuDKCNGofRFkcm/wi1h2G
- m3Jvg6Y++Y3RpWKjuV4VLD680JxpPjB/wwo11Y9KXYBSrFgR0mM0LHDq3xX8ylAyr7a3QXifuab
- /uqGImGhcS+P48SM+sc9Bv9OUBgbw0qdutXSilA+wdnta3BdLPqk0PQi9I2iKY6+PvjGQdv7K8+
- uBS0zvGjFYAytwmASXDKSCHxOdbjWC34DJ8Hhl2r63Ug==
-X-Gm-Gg: ASbGncvgx2DmfuRCAEI2f0DJtwif4Mo0VULxCHjbVB2N+UF16QCouXAxvO2aV6pAdm5
- IzCjoTAQ+QYsYBfnvIK+ikiGHMee+c2/ge0gh/Cz4weYFxGHCsWdGsx/pH5n3CCve1tPTVFUcFV
- rhMXZKX96ORPnGllLiB+rldpmnovPW609enEwfu9VzVlwPcjO4RzMNV/T5QrxBEyyi9Cfbo+D3k
- hpMROjrq+Cgf8NTX0h6z5xHfD+ZMsBMmGtCbzXNpyk1qvRLvbO3/E5KpK0iCsN+odQIYOnMGO/b
- FQ5ENVPDPsV5XWbqnoeAK+RkhqWbqGDAMzPFiIxsTjqYUQWBMsLc
-X-Received: by 2002:a17:903:986:b0:240:3584:6174 with SMTP id
- d9443c01a7336-24096a9da9bmr122574945ad.21.1753968115282; 
- Thu, 31 Jul 2025 06:21:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwXZf8+1hggytZeZo0PLo2A3fLiTJHhcxu38zbs73PKG1FMzHZ4WE4aKOA9wnNI2rAZbTlwg==
-X-Received: by 2002:a17:903:986:b0:240:3584:6174 with SMTP id
- d9443c01a7336-24096a9da9bmr122573665ad.21.1753968114233; 
- Thu, 31 Jul 2025 06:21:54 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.99.139])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3209a84d115sm2007034a91.36.2025.07.31.06.21.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Jul 2025 06:21:53 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Subject: [PATCH v8 00/27] migration: propagate vTPM errors using Error objects
-Date: Thu, 31 Jul 2025 18:50:40 +0530
-Message-Id: <20250731-propagate_tpm_error-v8-0-28fd82fdfdb2@redhat.com>
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1uhTGI-0008Lq-EZ; Thu, 31 Jul 2025 09:24:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=l4l5Mi6C4tF/7s4kfEpkATxLHP4RsQW7g7q2E6pTRanFcj7qexXePGOAVjfx5AM7pLzIJCCj3jx0agLLK0Imgx3Ity+IzUJ5ae97mI3lzxkY6z0ee3MS6twbt9GYxou9Sxw8GGvWTaxmgyHchGTeiVQBS/8MGAyNISCMAG7zgyvlgjoGAylmM5yHmm9q1R6rLqyaIeDKCnOhZduB9H8FlnEjs2Lk0hg8kAVvGkyIRvxa41gwVEdtZGVD8HWX7mjeo2Vublp5LZHXN28kigkfaGFot2td2b4ZmDGK6yBZVn6KuuSDaBZ12Y1SwjF9P/qr0zNkWJ5nBwRN0Zy7w2imnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gRxrBTgVmQUbSDoEMvQMbDrfTq/v7Vgv0M/tcKms8o8=;
+ b=a/IrAjg5OPsUVyaVpeETku42wjSs/JWqi3hRuMZSp9JT5d8yd8JhTI1n7tmBHX03fqp2wxdSBu7AlxouqgeYMcF2fGprsOXTzbPhpVZmzYLkljmaWRmaH0ZMvnV/vyh9OKqUhb66/kqujuWZvl3vhq0cT0RcwFtz81fFcq9LaIF9CyTGw3pBzMfYLWVMR0BhFY7X1RtE2+j5qFpd4qs6qT6O5w/OVSSbyD04hrOVdReltWXeqBsm2osjqrZ+hiLnGN7y6RmFv7NsCEHXWyjcCw4c86HXWaaFBM0u5Ohx0Pc2VI/iQ9+dhurOVj1ptKLmhGFg42BmzFuN87skUb0YyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gRxrBTgVmQUbSDoEMvQMbDrfTq/v7Vgv0M/tcKms8o8=;
+ b=MmfADJHryuxeKQcWFuNjR82B/5TuKE9ls9uJoUm+P4v+nclS9+bQr+Txq+NPB1MPvC4d2rqQedYocTtaY5TDwL9UYmoZ652DSgLtnBjj6uwx5M62qYv3ck9bciQ6VBaPIhI4IpA+AebOw8ZgHqhGr13G/2x4FdsiSHb9FUvJT2o=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by PH7PR12MB6905.namprd12.prod.outlook.com (2603:10b6:510:1b7::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.11; Thu, 31 Jul
+ 2025 13:23:47 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%7]) with mapi id 15.20.8989.010; Thu, 31 Jul 2025
+ 13:23:47 +0000
+Date: Thu, 31 Jul 2025 15:23:36 +0200
+From: Francisco Iglesias <francisco.iglesias@amd.com>
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Subject: Re: [PATCH 33/48] hw/misc/xlnx-versal-crl: refactor device reset logic
+Message-ID: <aItuWBWhBXePjLQv@xse-figlesia-l2.amd.com>
+References: <20250716095432.81923-1-luc.michel@amd.com>
+ <20250716095432.81923-34-luc.michel@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250716095432.81923-34-luc.michel@amd.com>
+X-ClientProxiedBy: DUZPR01CA0001.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:3c3::10) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKlti2gC/33PwU7DMAwG4FeZcqbIcZw44cR7IDSFxtl62FqlV
- QWa+u5ku1DUwvG35M/+b2qU0smoXg43VWTuxq6/1uCfDqo9x+tJmi7VrBDQgkNqhtIP8RQnOU7
- D5Sil9KX5yBTFtWiSAVU3hyK5+3yob+81n7tx6svX48is79P/vVk30KBmTZ6jDSa9FknnOD23/
- UXdwRnXCO8jWBFvQ4DWhxQxbBDzgzDgPmIqErxLgSyBRb9BaIVot49QRWoZHQCBuYUNYtfIH3V
- sRXQmcNl7EWc3iFshqPcRV5EsmQlEW9G8QXiN2H2EK5IsMhCRCfz7k2VZvgFbEHs2VQIAAA==
-X-Change-ID: 20250624-propagate_tpm_error-bf4ae6c23d30
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org, 
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Arun Menon <armenon@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9659; i=armenon@redhat.com;
- h=from:subject:message-id; bh=xJaaRASMzPMfHx5T6q7qKXHCk9dn89YXLF/reyGR7Uo=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ0Z37pNT/eExd7z2Xv9k28Pie1ZBTonnK4+Q7o0pq7x3C
- 024OOVjRykLgxgXg6yYIkvD1wDZpoDCiEjbl9dh5rAygQxh4OIUgIlkWTH8lSnq0zePq08K7JBc
- xnxep+jay42XL79R3vPEfdGBxIoX3Qz/Y3bL/SnhrXyYbs/099GxoPrzdqJrmmxZpRfpaXJNLjz
- ICwA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|PH7PR12MB6905:EE_
+X-MS-Office365-Filtering-Correlation-Id: 14305a0a-15a4-43fc-daf1-08ddd0357af3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dGdyWDdhQnQ2STBpYWRTbFdGeFdxZ2JPVm5PWFF4ME1nNjc2b1VxSTNhYUJS?=
+ =?utf-8?B?bnQydno5N0VkQ3dMZ2JwNU1nVGVWeHUvcmZ5b1RtL29Pb2c0SUR1aG5udTdY?=
+ =?utf-8?B?WnF2VGwxZzBsQlpITTZNUHA1VldIVUt3cHU5ejJ2Z0ZzQWFzVFR4QXlEQ28v?=
+ =?utf-8?B?SWJiRmlmeklJR0c5OW5FWHBnWmRWVVdJVExjN0trbUZrV294WDZlVjBDNkwz?=
+ =?utf-8?B?R0ZNRDdpNG1XV1FkTmJVNVNhOWoxT3V4NlVzcXg4bWZ4YkFMUXkzd2E4V3Vp?=
+ =?utf-8?B?Y0ZZNGJuNlZRT3dOb3h2WVcvejZWK2lJMW51MC9waWVMblAwbllmQ05GTU1k?=
+ =?utf-8?B?b1N6OWJ4U25uTmpnc0pDMHNtazN2d1FrNTI2TVlkS0JxVHZoSFZYVm9uUGpp?=
+ =?utf-8?B?aGh2L2xTaDJIS0hpTkdJbFR6SUwxR3hnZ2NUQXRzc2RTN1MzNmQ5bHc4N0FD?=
+ =?utf-8?B?V0FTSU8wL0Rqbnp3QXZ2UStoRE5Fc3czN2dmMG5ibUtVUU40ZVJSUW9nZjA3?=
+ =?utf-8?B?SC95UWVKaForOGF2MGpnT3diYzVJL0QrTjI2K3N2bDB4dCtIY2lnRG1rVmNC?=
+ =?utf-8?B?M09tUzRrUEdXR1ZZK0VaUjZCMFkxK1V4Zy9ZaG14Ykp0V2FWYy9tVGxFZEdw?=
+ =?utf-8?B?MWoxeEhLbUhOQUJBeWh5NkozT0Ezcm95YU9GbERBMk15SVhGUUVxdjlMMFBI?=
+ =?utf-8?B?eDhsMm9pZFNTUE1sNjQ5NHZvWVBUWWxUVWNSb1BiQ29hRjRKR2JkZ1B5NjR3?=
+ =?utf-8?B?ZEYxa2hjNVhiMnJrcUZZMHA2Q2JlVHdFcmVjUVVBRW1ra1NsSW9DaU9WcXNT?=
+ =?utf-8?B?OThVc0RPQWp1SnQ0LzNqLzJuRFdVU080aU8za0IvNjBNdUl3dEhCRFV2bzEx?=
+ =?utf-8?B?ZGlGVlcxZmpZQUZQRWFaNDNmN2dvY3pCSGFmbWk0NVcyMldlM1B5TEc1Tmlo?=
+ =?utf-8?B?c2VWOHBqaXFVU0VKMWRvdzNvVC9OSkRjQ21NbU9QdUx1WUdFYnFMN0lucFVq?=
+ =?utf-8?B?cHFyMTdxcW51M2RHL1lQbVRpeW82U1Jack1JMjNyTmNhRVFId1l6UHlMYkFH?=
+ =?utf-8?B?Z2NEZzdTRWNrc2hOV1FhSmUwU0pSdEFSZjBhTHF6SWxEbVVxZmxlMU1nOVB2?=
+ =?utf-8?B?YStuRm16M0RjYndzMUZmTUtDWTBFc1B6UlkrYzZ2TFNLU3dpK0dKWTJXRGdQ?=
+ =?utf-8?B?alN3Z3lMdVRVN0xUWHBKUkl1NFBKYkFRRmIvZm95N1hGbzRVeXpCMVg0YjFT?=
+ =?utf-8?B?ZVhzZUFjbi9hOHBRakQvSzJjRmhITjVFWDJxNkJlV1ZjNE8vVzVZSTJpNmwy?=
+ =?utf-8?B?WTRiaHIrenFwTmRDY0p3RkNrZWNhRCtpZHN3SGd3M1BabnAwSUFyVGRiaHNs?=
+ =?utf-8?B?Qk43UnlUTmgrWVVaS0VYOVUwd0F4MjlQUDhrb2hqOC9vSEdyVGdmR0l3RW1S?=
+ =?utf-8?B?UytuMlNxOUV2YXlXU3lhRmRtV1ZhdzVxZ1gweUhVN016enpicXhGaXZxQXRa?=
+ =?utf-8?B?ZUtRZi9Ua1pvTHBqWDJHd3YyM1cwaHcxRUY5YUV1blVKeEVGT1dSR0oxUDd3?=
+ =?utf-8?B?QWpqQ3R0eVdyQUNrQUhZM2FNNnFJdHVBSkNlTmRXdlBpYmxuTTh1TXdseEwv?=
+ =?utf-8?B?V1dhZ0VrNW01Tm5rb2hwdGVCd1Z2cjJncE9tdlJVa3lIUTN5Rm9uQjVHYnJy?=
+ =?utf-8?B?cnlzc3hmL29yR3ZKUlVrVFo1bzRudXNFeERwSk1Wb1RpaWhvdnUzZmNqa0ZM?=
+ =?utf-8?B?QXNqb2ZHSE1XTXRFQmI1UE56UUNiWDhvbytiMlVsUytjM0J2bmFyTDBqekNy?=
+ =?utf-8?B?UE1aOHVOOG1Cb0t2cGxnSFVOQTZwWEI0SHBab0c1cCs0VHBIQ1hmdmtzNCtz?=
+ =?utf-8?B?ZHZuaWtqR2N0bUcwS0JvS1ljWnJWK3ZHQ0oyczQ1bk1SRnQwNVRBV1pDVWE5?=
+ =?utf-8?Q?2GtNs/32VTI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WUtuUjU4SjRXUnRxc00vRFFWTVEvbU1kUi9Kb3JiQnpJNDNUSlJGb1FmQksz?=
+ =?utf-8?B?cUVXY0FKeC9tMlZqZjJUQ1BNeUdnMXgvellVcHRpdEV5UGN2QzBPaGhIMmZo?=
+ =?utf-8?B?Q2gybUtJc0Rma21FT3dmdWhMcWRONk54Y3liVG1GaFBDVXEwWjJmZzBlWnF2?=
+ =?utf-8?B?aTAzY3FUMXdoVWoxVWhNWFE4MkJnR3dva0F6VlVSQ2paUjJIZzVtSTlpeThN?=
+ =?utf-8?B?c09pYkxGUnNIaWNXYzROL1IzMnluMkFOTUYvTmthQjhLaGRpWWl6YkNPaFp6?=
+ =?utf-8?B?TDlYaklhMis2NklsajJzdnJnS0ZRMlVRSU1UelkwQ0lxTU1IK0x2Qy9Hd09y?=
+ =?utf-8?B?Sk1PcEM4ekZJY2JzWkNGZWdyTDJvWmR6b1VWTS81dnE3RnVJK0tBclZCWmtW?=
+ =?utf-8?B?YStDRHlZcEhuOUdkUElkUHgvTzl5ajJBdFFGRVRmdHpwRzhIUFBFUjU5ODBK?=
+ =?utf-8?B?YUdkeEhoT3V6QmpFREhycnZrakZWVUV4b1MwbzNseTAzY1V6UkJMTWplQ3lQ?=
+ =?utf-8?B?VzU1SnVhUVd4WnhLak80b29mMGhvTVpBRmtqT1JIYzI0UVZZMnV3czVhTWFw?=
+ =?utf-8?B?d0VadkcvbUtvSzkyRWo4eG5sRkk1Y2h2bVkwajNLZGVVRTNiZlBNZjBGdjNR?=
+ =?utf-8?B?SDFQZjBkbzFQZWxsa0ZGaVZOa25OU0dNd3BYWCtZY3o5RGRTWC9vRngwNWp5?=
+ =?utf-8?B?SUFJdExkalJwaGtjVWprZVRJbUZaOXE4cXpCZ3RZSHZBRTY1VXZ4UzJIVVll?=
+ =?utf-8?B?YUZ2OEcwejJoRzlaQ0tkVHBQWmkwN3V0bnBESlRGRHBlUjJmYXp1SitPZmFp?=
+ =?utf-8?B?cUVSbkZiRmN0dzkzaXRKK1BEMG5UcitMazNBMmVDd3dQeDdDeDZFemg4alFz?=
+ =?utf-8?B?WGY1MTZYbklkWDNsMWpNc2VwbEdscFo4bmEzQnliemREZDc2LzZleldwZWQ3?=
+ =?utf-8?B?citSQkwycmt2b0hrQUxaZlN3VXJQZ3dYcldIRWJJaExCODlTVFJKRHBiNG5R?=
+ =?utf-8?B?MUxXT2VYNW5WeFZIeHNxOEdWTDlyN1R5d2l5R0o4Z1ZrY2N4T3FrT0tsVlda?=
+ =?utf-8?B?K0VQNmZrNmpad1FHRnduODQ5OTN2dkhVNlNndStmbEpEc2loYk9yTkVRSEpm?=
+ =?utf-8?B?U0VKdCthM29MakFMMWQveHRZNStQZEgvKzJFdTR1QWdhUXFTUitITkpqNUsw?=
+ =?utf-8?B?c25ISXRxWEM5U1JzOWhjSUs0QlFiYkN2b2pyRmFITUoydFQwZ2VPRFp3YzBy?=
+ =?utf-8?B?a0xFMWVyYkJlKzZqam5vam0xQW8xUVFDS0UyNUNxZ0pvYitHK01mZEswZkZ6?=
+ =?utf-8?B?K1lvNkxVU0xxbEVvQzJqYlkxTHVpbzRibkVRd0swZk1Sd1VkT01UeFdwb08y?=
+ =?utf-8?B?dVU5REs1OE9JTXY1OCsvdGppQ0pMZnZnRFpuTlViYXEvQmhLaWpjSG9ld3JU?=
+ =?utf-8?B?OGNRSUNuektlMW12bkNoenZQSHRWVVNaUWpQVXViTGxRVmZUVFVDNUFJWEN1?=
+ =?utf-8?B?ZnlPb3REa1pLOXpBRGhveGJ5OGZPSXVuWDFQd1V6dVk4Y1A5aGprTVJyQWw0?=
+ =?utf-8?B?YVNYY1M3UXdNUDVRcUh3Vnp5cWYwdUYvMXZzSER0WWhpWkxqQ1ZrekhvY3BM?=
+ =?utf-8?B?ZzFWRjVnZnk0a3lyeXM0aTh3bXNBOWJwMUlzWkVCSWo3UmVYamNER29Odk9t?=
+ =?utf-8?B?R1lOSHMrQzhnQloxcDc1aFhCRXB1bU5LV2tGRGkxUlczUDFRWWRvdjEvTkNp?=
+ =?utf-8?B?dkhobU1ILzI3MXRhcjgxR0tTNXF4aDA5a1B3Q2VTSkd0NXlXd3lhcno4MXRY?=
+ =?utf-8?B?aDRDR3FkMzB3d0QzMVBPaUhOOEFIdk53QU1HSDhjc1REbGFtYWtyOTJHeTAw?=
+ =?utf-8?B?aWVOWnBYMFVKVG12UVVQY0o2cXNoNHdWWmpKd0Eybm1Qa3N6N2lRR1VZUEF4?=
+ =?utf-8?B?Q2xxUWZpTDZ4WDY3MTZQVkkxeGV0ZmhIRHo4bzNYcjZLWml3bmo5NjlVaFdY?=
+ =?utf-8?B?Wlc5bmh4QjcwbHlUUEdoeVlmaWNKdStxL2RpSERBVEp6cng1eWhHZzVtM2xn?=
+ =?utf-8?B?NHg4a2NRR3JianJ5dkVMTFBBcS9venpWTU8rcVlWdzNUVitmWitiY05rZFpS?=
+ =?utf-8?Q?CWsgFgP4bFntCVgng4Jy9yYZA?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 14305a0a-15a4-43fc-daf1-08ddd0357af3
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2025 13:23:47.4161 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: flP8X3yMBAQO0Hmb6CCksI382l6CdXqF089+K5FMFBR/TMxDEEsgQwQ8L0KSuWIN0lNnX1+N6Fzs0CMBV+Qxnw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6905
+Received-SPF: permerror client-ip=2a01:111:f403:2415::629;
+ envelope-from=francisco.iglesias@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,193 +179,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Hi Luc,
 
-Currently, when a migration of a VM with an encrypted vTPM
-fails on the destination host (e.g., due to a mismatch in secret values),
-the error message displayed on the source host is generic and unhelpful.
+On Wed, Jul 16, 2025 at 11:54:15AM +0200, Luc Michel wrote:
+> Refactor the device reset logic to have a common register write callback
+> for all the devices. This uses a decode function to map the register
+> address to the actual peripheral to reset. This refactoring changes the
+> CPU property name from cpu_r5[*] to rpu[*] to ease with the connections
+> in the Versal SoC. It also fixes a bug where the gem device pointer
+> was mapped to the usb link property.
+> 
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>  include/hw/misc/xlnx-versal-crl.h |   8 +-
+>  hw/misc/xlnx-versal-crl.c         | 163 ++++++++++++++++--------------
+>  2 files changed, 92 insertions(+), 79 deletions(-)
+> 
+> diff --git a/include/hw/misc/xlnx-versal-crl.h b/include/hw/misc/xlnx-versal-crl.h
+> index 2b39d203a67..7e50a95ad3c 100644
+> --- a/include/hw/misc/xlnx-versal-crl.h
+> +++ b/include/hw/misc/xlnx-versal-crl.h
+> @@ -218,33 +218,33 @@ REG32(PSM_RST_MODE, 0x370)
+>      FIELD(PSM_RST_MODE, WAKEUP, 2, 1)
+>      FIELD(PSM_RST_MODE, RST_MODE, 0, 2)
+>  
+>  #define CRL_R_MAX (R_PSM_RST_MODE + 1)
+>  
+> -#define RPU_MAX_CPU 2
+> -
+>  struct XlnxVersalCRLBase {
+>      SysBusDevice parent_obj;
+>  
+>      RegisterInfoArray *reg_array;
+>      uint32_t *regs;
+>  };
+>  
+>  struct XlnxVersalCRLBaseClass {
+>      SysBusDeviceClass parent_class;
+> +
+> +    DeviceState ** (*decode_periph_rst)(XlnxVersalCRLBase *s, hwaddr, size_t *);
+>  };
+>  
+>  struct XlnxVersalCRL {
+>      XlnxVersalCRLBase parent_obj;
+>      qemu_irq irq;
+>  
+>      struct {
+> -        ARMCPU *cpu_r5[RPU_MAX_CPU];
+> +        DeviceState *rpu[2];
+>          DeviceState *adma[8];
+>          DeviceState *uart[2];
+>          DeviceState *gem[2];
+> -        DeviceState *usb;
+> +        DeviceState *usb[1];
+>      } cfg;
+>  
+>      uint32_t regs[CRL_R_MAX];
+>      RegisterInfo regs_info[CRL_R_MAX];
+>  };
+> diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
+> index be89e0da40d..115327cfcf4 100644
+> --- a/hw/misc/xlnx-versal-crl.c
+> +++ b/hw/misc/xlnx-versal-crl.c
+> @@ -53,94 +53,103 @@ static uint64_t crl_disable_prew(RegisterInfo *reg, uint64_t val64)
+>      s->regs[R_IR_MASK] |= val;
+>      crl_update_irq(s);
+>      return 0;
+>  }
+>  
+> -static void crl_reset_dev(XlnxVersalCRL *s, DeviceState *dev,
+> -                          bool rst_old, bool rst_new)
+> +static DeviceState **versal_decode_periph_rst(XlnxVersalCRLBase *s,
+> +                                             hwaddr addr, size_t *count)
 
-For example, a typical error looks like this:
-"operation failed: job 'migration out' failed: Sibling indicated error 1.
-operation failed: job 'migration in' failed: load of migration failed:
-Input/output error"
+One space is missing above but otherwise:
 
-This message does not provide any specific indication of a vTPM failure.
-Such generic errors are logged using error_report(), which prints to
-the console/monitor but does not make the detailed error accessible via
-the QMP query-migrate command.
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-This series addresses the issue, by ensuring that specific TPM error
-messages are propagated via the QEMU Error object.
-To make this possible,
-- A set of functions in the call stack is changed
-  to incorporate an Error object as an additional parameter.
-- Also, the TPM backend makes use of a new hook called post_load_errp()
-  that explicitly passes an Error object.
-
-It is organized as follows,
- - Patches 1-21 focuses on pushing Error object into the functions
-   that are important in the call stack where TPM errors are observed.
-   We still need to make changes in rest of the functions in savevm.c
-   such that they also incorporate the errp object for propagating errors.
- - Patch 22 introduces the new variants of the hooks in VMStateDescription
-   structure. These hooks should be used in future implementations.
- - Patch 23 focuses on changing the TPM backend such that the errors are
-   set in the Error object.
-
-While this series focuses specifically on TPM error reporting during
-live migration, it lays the groundwork for broader improvements.
-A lot of methods in savevm.c that previously returned an integer now capture
-errors in the Error object, enabling other modules to adopt the
-post_load_errp hook in the future.
-
-One such change previously attempted:
-https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg01727.html
-
-Resolves: https://issues.redhat.com/browse/RHEL-82826
-
-Signed-off-by: Arun Menon <armenon@redhat.com>
----
-Changes in v8:
-- 3 new patches added:
-  - patch 23:
-	- Changes the error propagation by returning the most recent error
-	  to the caller when both save device state and post_save fails.
-  - patch 24:
-	- Refactors the vmstate_save_state_v() function by adding wrapper
-	  functions to separate concerns.
-  - patch 25:
-	- Removes the error variant of the vmstate_save_state()
-	  function introduced in commit 969298f9d7.
-- Use ERRP_GUARD() where there is an errp dereference or an error_prepend call.
-- Pass &error_warn in place of NULL, in vmstate_load_state() calls so
-  that the caller knows about the error.
-- Remove unnecessary null check before setting errp. Dereferencing it is not required.
-- Documentation for the new variants of post/pre save/load hooks added.
-- Some patches, although they received a 'Reviewed-by' tag, have undergone few minor changes,
-	Patch 1 : removed extra space
-	Patch 2 : Commit message changed, refactoring the function to 
-		always set errp and return.
-	Patch 8 : Commit message changed.
-	Patch 9 : use error_setg_errno instead of error_setg.
-	Patch 27 : use error_setg_errno instead of error_setg.
-- Link to v7: https://lore.kernel.org/qemu-devel/20250725-propagate_tpm_error-v7-0-d52704443975@redhat.com
-
-Changes in v7:
-- Fix propagating errors in post_save_errp. The latest error encountered is
-  propagated.
-- user-strings in error_prepend() calls now end with a ': ' so that the print is pretty.
-- Change the order of one of the patches.
-- Link to v6: https://lore.kernel.org/qemu-devel/20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com
-
-Changes in v6:
-- Incorporated review comments from Daniel and Akihiko, related to few
-  semantic errors and improve error logging.
-- Add one more patch that removes NULL checks after calling 
-  qemu_file_get_return_path() because it does not fail.
-- Link to v5: https://lore.kernel.org/qemu-devel/20250717-propagate_tpm_error-v5-0-1f406f88ee65@redhat.com
-
-Changes in v5:
-- Solve a bug that set errp even though it was not NULL, pointed out by Fabiano in v4.
-- Link to v4: https://lore.kernel.org/qemu-devel/20250716-propagate_tpm_error-v4-0-7141902077c0@redhat.com
-
-Changes in v4:
-- Split the patches into smaller ones based on functions. Pass NULL in the
-  caller until errp is made available. Every function that has an
-  Error **errp object passed to it, ensures that it sets the errp object
-  in case of failure.
-- A few more functions within loadvm_process_command() now handle errors using
-  the errp object. I've converted these for consistency, taking Daniel's
-  patches (link above) as a reference.
-- Along with the post_load_errp() hook, other duplicate hooks are also introduced.
-  This will enable us to migrate to the newer versions eventually.
-- Fix some semantic errors, like using error_propagate_prepend() in places where
-  we need to preserve existing behaviour of accumulating the error in local_err
-  and then propagating it to errp. This can be refactored in a later commit.
-- Add more information in commit messages explaining the changes.
-- Link to v3: https://lore.kernel.org/qemu-devel/20250702-propagate_tpm_error-v3-0-986d94540528@redhat.com
-
-Changes in v3:
-- Split the 2nd patch into 2. Introducing post_load_with_error() hook
-  has been separated from using it in the backends TPM module. This is
-  so that it can be acknowledged.
-- Link to v2: https://lore.kernel.org/qemu-devel/20250627-propagate_tpm_error-v2-0-85990c89da29@redhat.com
-
-Changes in v2:
-- Combine the first two changes into one, focusing on passing the
-  Error object (errp) consistently through functions involved in
-  loading the VM's state. Other functions are not yet changed.
-- As suggested in the review comment, add null checks for errp
-  before adding error messages, preventing crashes.
-  We also now correctly set errors when post-copy migration fails.
-- In process_incoming_migration_co(), switch to error_prepend
-  instead of error_setg. This means we now null-check local_err in
-  the "fail" section before using it, preventing dereferencing issues.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250624-propagate_tpm_error-v1-0-2171487a593d@redhat.com
-
----
-Arun Menon (27):
-      migration: push Error **errp into vmstate_subsection_load()
-      migration: push Error **errp into vmstate_load_state()
-      migration: push Error **errp into qemu_loadvm_state_header()
-      migration: push Error **errp into vmstate_load()
-      migration: push Error **errp into qemu_loadvm_section_start_full()
-      migration: push Error **errp into qemu_loadvm_section_part_end()
-      migration: Update qemu_file_get_return_path() docs and remove dead checks
-      migration: make loadvm_postcopy_handle_resume() void
-      migration: push Error **errp into loadvm_process_command()
-      migration: push Error **errp into loadvm_handle_cmd_packaged()
-      migration: push Error **errp into ram_postcopy_incoming_init()
-      migration: push Error **errp into loadvm_postcopy_handle_advise()
-      migration: push Error **errp into loadvm_postcopy_handle_listen()
-      migration: push Error **errp into loadvm_postcopy_handle_run()
-      migration: push Error **errp into loadvm_postcopy_ram_handle_discard()
-      migration: push Error **errp into loadvm_handle_recv_bitmap()
-      migration: push Error **errp into loadvm_process_enable_colo()
-      migration: push Error **errp into loadvm_postcopy_handle_switchover_start()
-      migration: push Error **errp into qemu_loadvm_state_main()
-      migration: push Error **errp into qemu_loadvm_state()
-      migration: push Error **errp into qemu_load_device_state()
-      migration: Capture error in postcopy_ram_listen_thread()
-      migration: Propagate last encountered error in vmstate_save_state_v() function
-      migration: Refactor vmstate_save_state_v() function
-      migration: Remove error variant of vmstate_save_state() function
-      migration: Add error-parameterized function variants in VMSD struct
-      backends/tpm: Propagate vTPM error on migration failure
-
- backends/tpm/tpm_emulator.c   |  40 ++---
- docs/devel/migration/main.rst |  24 +++
- hw/display/virtio-gpu.c       |   5 +-
- hw/pci/pci.c                  |   5 +-
- hw/s390x/virtio-ccw.c         |   4 +-
- hw/scsi/spapr_vscsi.c         |   4 +-
- hw/vfio/pci.c                 |   6 +-
- hw/virtio/virtio-mmio.c       |   5 +-
- hw/virtio/virtio-pci.c        |   4 +-
- hw/virtio/virtio.c            |   8 +-
- include/migration/colo.h      |   2 +-
- include/migration/vmstate.h   |  19 ++-
- migration/colo.c              |  13 +-
- migration/cpr.c               |  10 +-
- migration/migration.c         |  31 ++--
- migration/postcopy-ram.c      |   9 +-
- migration/postcopy-ram.h      |   2 +-
- migration/qemu-file.c         |   1 -
- migration/ram.c               |  12 +-
- migration/ram.h               |   4 +-
- migration/savevm.c            | 330 ++++++++++++++++++++++++------------------
- migration/savevm.h            |   7 +-
- migration/vmstate-types.c     |  23 +--
- migration/vmstate.c           | 190 ++++++++++++++++++------
- tests/unit/test-vmstate.c     |  26 ++--
- ui/vdagent.c                  |   5 +-
- 26 files changed, 493 insertions(+), 296 deletions(-)
----
-base-commit: 4e06566dbd1b1251c2788af26a30bd148d4eb6c1
-change-id: 20250624-propagate_tpm_error-bf4ae6c23d30
-
-Best regards,
--- 
-Arun Menon <armenon@redhat.com>
-
+>  {
+> -    device_cold_reset(dev);
+> -}
+> +    size_t idx;
+> +    XlnxVersalCRL *xvc = XLNX_VERSAL_CRL(s);
+>  
+> -static void crl_reset_cpu(XlnxVersalCRL *s, ARMCPU *armcpu,
+> -                          bool rst_old, bool rst_new)
+> -{
+> -    if (rst_new) {
+> -        arm_set_cpu_off(arm_cpu_mp_affinity(armcpu));
+> -    } else {
+> -        arm_set_cpu_on_and_reset(arm_cpu_mp_affinity(armcpu));
+> -    }
+> -}
+> +    *count = 1;
+>  
+> -#define REGFIELD_RESET(type, s, reg, f, new_val, dev) {     \
+> -    bool old_f = ARRAY_FIELD_EX32((s)->regs, reg, f);       \
+> -    bool new_f = FIELD_EX32(new_val, reg, f);               \
+> -                                                            \
+> -    /* Detect edges.  */                                    \
+> -    if (dev && old_f != new_f) {                            \
+> -        crl_reset_ ## type(s, dev, old_f, new_f);           \
+> -    }                                                       \
+> -}
+> +    switch (addr) {
+> +    case A_RST_CPU_R5:
+> +        return xvc->cfg.rpu;
+>  
+> -static uint64_t crl_rst_r5_prew(RegisterInfo *reg, uint64_t val64)
+> -{
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +    case A_RST_ADMA:
+> +        /* A single register fans out to all DMA reset inputs */
+> +        *count = ARRAY_SIZE(xvc->cfg.adma);
+> +        return xvc->cfg.adma;
+>  
+> -    REGFIELD_RESET(cpu, s, RST_CPU_R5, RESET_CPU0, val64, s->cfg.cpu_r5[0]);
+> -    REGFIELD_RESET(cpu, s, RST_CPU_R5, RESET_CPU1, val64, s->cfg.cpu_r5[1]);
+> -    return val64;
+> -}
+> +    case A_RST_UART0 ... A_RST_UART1:
+> +        idx = (addr - A_RST_UART0) / sizeof(uint32_t);
+> +        return xvc->cfg.uart + idx;
+>  
+> -static uint64_t crl_rst_adma_prew(RegisterInfo *reg, uint64_t val64)
+> -{
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> -    int i;
+> +    case A_RST_GEM0 ... A_RST_GEM1:
+> +        idx = (addr - A_RST_GEM0) / sizeof(uint32_t);
+> +        return xvc->cfg.gem + idx;
+> +
+> +    case A_RST_USB0:
+> +        return xvc->cfg.usb;
+>  
+> -    /* A single register fans out to all ADMA reset inputs.  */
+> -    for (i = 0; i < ARRAY_SIZE(s->cfg.adma); i++) {
+> -        REGFIELD_RESET(dev, s, RST_ADMA, RESET, val64, s->cfg.adma[i]);
+> +    default:
+> +        /* invalid or unimplemented */
+> +        return NULL;
+>      }
+> -    return val64;
+>  }
+>  
+> -static uint64_t crl_rst_uart0_prew(RegisterInfo *reg, uint64_t val64)
+> +static uint64_t crl_rst_cpu_prew(RegisterInfo *reg, uint64_t val64)
+>  {
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +    XlnxVersalCRLBase *s = XLNX_VERSAL_CRL_BASE(reg->opaque);
+> +    XlnxVersalCRLBaseClass *xvcbc = XLNX_VERSAL_CRL_BASE_GET_CLASS(s);
+> +    DeviceState **dev;
+> +    size_t i, count;
+>  
+> -    REGFIELD_RESET(dev, s, RST_UART0, RESET, val64, s->cfg.uart[0]);
+> -    return val64;
+> -}
+> +    dev = xvcbc->decode_periph_rst(s, reg->access->addr, &count);
+>  
+> -static uint64_t crl_rst_uart1_prew(RegisterInfo *reg, uint64_t val64)
+> -{
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +    for (i = 0; i < 2; i++) {
+> +        bool prev, new;
+> +        uint64_t aff;
+>  
+> -    REGFIELD_RESET(dev, s, RST_UART1, RESET, val64, s->cfg.uart[1]);
+> -    return val64;
+> -}
+> +        prev = extract32(s->regs[reg->access->addr / 4], i, 1);
+> +        new = extract32(val64, i, 1);
+>  
+> -static uint64_t crl_rst_gem0_prew(RegisterInfo *reg, uint64_t val64)
+> -{
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +        if (prev == new) {
+> +            continue;
+> +        }
+>  
+> -    REGFIELD_RESET(dev, s, RST_GEM0, RESET, val64, s->cfg.gem[0]);
+> -    return val64;
+> -}
+> +        aff = arm_cpu_mp_affinity(ARM_CPU(dev[i]));
+>  
+> -static uint64_t crl_rst_gem1_prew(RegisterInfo *reg, uint64_t val64)
+> -{
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +        if (new) {
+> +            arm_set_cpu_off(aff);
+> +        } else {
+> +            arm_set_cpu_on_and_reset(aff);
+> +        }
+> +    }
+>  
+> -    REGFIELD_RESET(dev, s, RST_GEM1, RESET, val64, s->cfg.gem[1]);
+>      return val64;
+>  }
+>  
+> -static uint64_t crl_rst_usb_prew(RegisterInfo *reg, uint64_t val64)
+> +static uint64_t crl_rst_dev_prew(RegisterInfo *reg, uint64_t val64)
+>  {
+> -    XlnxVersalCRL *s = XLNX_VERSAL_CRL(reg->opaque);
+> +    XlnxVersalCRLBase *s = XLNX_VERSAL_CRL_BASE(reg->opaque);
+> +    XlnxVersalCRLBaseClass *xvcbc = XLNX_VERSAL_CRL_BASE_GET_CLASS(s);
+> +    DeviceState **dev;
+> +    bool prev, new;
+> +    size_t i, count;
+> +
+> +    dev = xvcbc->decode_periph_rst(s, reg->access->addr, &count);
+> +
+> +    if (dev == NULL) {
+> +        return val64;
+> +    }
+> +
+> +    prev = s->regs[reg->access->addr / 4] & 0x1;
+> +    new = val64 & 0x1;
+> +
+> +    if (prev == new) {
+> +        return val64;
+> +    }
+> +
+> +    for (i = 0; i < count; i++) {
+> +        if (dev[i]) {
+> +            device_cold_reset(dev[i]);
+> +        }
+> +    }
+>  
+> -    REGFIELD_RESET(dev, s, RST_USB0, RESET, val64, s->cfg.usb);
+>      return val64;
+>  }
+>  
+>  static const RegisterAccessInfo crl_regs_info[] = {
+>      {   .name = "ERR_CTRL",  .addr = A_ERR_CTRL,
+> @@ -242,31 +251,31 @@ static const RegisterAccessInfo crl_regs_info[] = {
+>          .reset = 0x3c00,
+>          .rsvd = 0xfdfc00f8,
+>      },{ .name = "RST_CPU_R5",  .addr = A_RST_CPU_R5,
+>          .reset = 0x17,
+>          .rsvd = 0x8,
+> -        .pre_write = crl_rst_r5_prew,
+> +        .pre_write = crl_rst_cpu_prew,
+>      },{ .name = "RST_ADMA",  .addr = A_RST_ADMA,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_adma_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_GEM0",  .addr = A_RST_GEM0,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_gem0_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_GEM1",  .addr = A_RST_GEM1,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_gem1_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_SPARE",  .addr = A_RST_SPARE,
+>          .reset = 0x1,
+>      },{ .name = "RST_USB0",  .addr = A_RST_USB0,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_usb_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_UART0",  .addr = A_RST_UART0,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_uart0_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_UART1",  .addr = A_RST_UART1,
+>          .reset = 0x1,
+> -        .pre_write = crl_rst_uart1_prew,
+> +        .pre_write = crl_rst_dev_prew,
+>      },{ .name = "RST_SPI0",  .addr = A_RST_SPI0,
+>          .reset = 0x1,
+>      },{ .name = "RST_SPI1",  .addr = A_RST_SPI1,
+>          .reset = 0x1,
+>      },{ .name = "RST_CAN0",  .addr = A_RST_CAN0,
+> @@ -341,13 +350,13 @@ static void versal_crl_init(Object *obj)
+>                                CRL_R_MAX * 4);
+>      xvcb->regs = s->regs;
+>      sysbus_init_mmio(sbd, &xvcb->reg_array->mem);
+>      sysbus_init_irq(sbd, &s->irq);
+>  
+> -    for (i = 0; i < ARRAY_SIZE(s->cfg.cpu_r5); ++i) {
+> -        object_property_add_link(obj, "cpu_r5[*]", TYPE_ARM_CPU,
+> -                                 (Object **)&s->cfg.cpu_r5[i],
+> +    for (i = 0; i < ARRAY_SIZE(s->cfg.rpu); ++i) {
+> +        object_property_add_link(obj, "rpu[*]", TYPE_ARM_CPU,
+> +                                 (Object **)&s->cfg.rpu[i],
+>                                   qdev_prop_allow_set_link_before_realize,
+>                                   OBJ_PROP_LINK_STRONG);
+>      }
+>  
+>      for (i = 0; i < ARRAY_SIZE(s->cfg.adma); ++i) {
+> @@ -369,14 +378,16 @@ static void versal_crl_init(Object *obj)
+>                                   (Object **)&s->cfg.gem[i],
+>                                   qdev_prop_allow_set_link_before_realize,
+>                                   OBJ_PROP_LINK_STRONG);
+>      }
+>  
+> -    object_property_add_link(obj, "usb", TYPE_DEVICE,
+> -                             (Object **)&s->cfg.gem[i],
+> -                             qdev_prop_allow_set_link_before_realize,
+> -                             OBJ_PROP_LINK_STRONG);
+> +    for (i = 0; i < ARRAY_SIZE(s->cfg.usb); ++i) {
+> +        object_property_add_link(obj, "usb[*]", TYPE_DEVICE,
+> +                                 (Object **)&s->cfg.usb[i],
+> +                                 qdev_prop_allow_set_link_before_realize,
+> +                                 OBJ_PROP_LINK_STRONG);
+> +    }
+>  }
+>  
+>  static void crl_finalize(Object *obj)
+>  {
+>      XlnxVersalCRLBase *s = XLNX_VERSAL_CRL_BASE(obj);
+> @@ -394,15 +405,17 @@ static const VMStateDescription vmstate_versal_crl = {
+>  };
+>  
+>  static void versal_crl_class_init(ObjectClass *klass, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+> +    XlnxVersalCRLBaseClass *xvcc = XLNX_VERSAL_CRL_BASE_CLASS(klass);
+>      ResettableClass *rc = RESETTABLE_CLASS(klass);
+>  
+>      dc->vmsd = &vmstate_versal_crl;
+>      rc->phases.enter = versal_crl_reset_enter;
+>      rc->phases.hold = versal_crl_reset_hold;
+> +    xvcc->decode_periph_rst = versal_decode_periph_rst;
+>  }
+>  
+>  static const TypeInfo crl_base_info = {
+>      .name          = TYPE_XLNX_VERSAL_CRL_BASE,
+>      .parent        = TYPE_SYS_BUS_DEVICE,
+> -- 
+> 2.50.0
+> 
 
