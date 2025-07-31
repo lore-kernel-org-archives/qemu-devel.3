@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9331BC87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D19C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhazf-0000rF-Jc; Thu, 31 Jul 2025 17:39:19 -0400
+	id 1uhb0O-0002Lu-Dq; Thu, 31 Jul 2025 17:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhama-0003dd-7H
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:25:52 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1uhaiu-0006OA-Lk
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:22:00 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhamY-0007OA-Ah
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:25:47 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7426c44e014so1476894b3a.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:25:45 -0700 (PDT)
+ id 1uhair-0006eV-UN
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:21:59 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-748feca4a61so146594b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753997144; x=1754601944; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753996916; x=1754601716; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=B6UH//wo/VmgG639UCu7tCAm+lKhvQMnF3AqSS0GqJw=;
- b=FUcyLUz9OLb+W9IaVa6BiEsF4tj29K4WlhRZ0yvrd8JYSlNqkqAcamj72l3tlyAmoy
- S6+ivB8HMPMQNqf43ifkXTSV/I+QUPGvCcsrgsfXk82YiL4InGkugAE8YR+M6UXzVecs
- fycyYYTKOP8JUIVESOvbwJ/TcLov4CjoNHe1p0UDuXmvy66vjlun7H+BRJTOWOIZszmW
- IrgxDRSrTDaTa0aB1ZWlcMDE+jCtfHMNy//p8aqZ2AnfMrrelp0hbuMfQ8Ov6ZYw+Pb6
- 12edby1JZal1dE0JrWY7s8zhSR+lcmsZASTnYhNR306rpVoD7rBT+6bErB/kJAloew8e
- g5UQ==
+ bh=RFA6186/i4KLp1+T6vxVdoG2ALb/XuPkvZRmSKuCI0o=;
+ b=hIm668WA4UoaBPLh0wnonb0K8jNcyww+vaFaf/P3BtRJK8gvLdn6I8Gb05llbTUeW0
+ PsPISVDB67MrbOiwVMTp3fk2ueQo/OR4iHlo6n8RFyeuLJw2/qyJA/UHYyrKKNF+Nlef
+ 4WK0lW9Q8mgjPOvY2SZNtFHpAsjp6scw184nKm3ycN0TxsnRdd8lhcP4Yf7YQgeOPyEZ
+ bM6Pt30pymTH0YPIYPBIaRV1Dm4ZxmgqxTAAMkm5Og5GW1q/TTqQHhkvX7crL2cUNWgY
+ 7TIIJXmIeMNcrqGG5lkBXI815bUelVizZ6oBybjPGREQ5sWxiRl1TXYDK37S/pi/uH9q
+ HQMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753997144; x=1754601944;
+ d=1e100.net; s=20230601; t=1753996916; x=1754601716;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B6UH//wo/VmgG639UCu7tCAm+lKhvQMnF3AqSS0GqJw=;
- b=AwbVPa8HuQCwqE4fiQ7p9nE8LbtkXcjDHmICbfChbjqoaqgjl2puXIGRQ9NAHwAa3s
- m7Uczps81McDuUwEwO6zB794V0Qct3TgnHbNb6OBmcuILxl1O81MMtpBPAI91JADAo9j
- QfwONe/rGAk1J20z7kTAI9Rip0hzOKHTpchYbJ3ABd79tBdASJhswQYNgoFgqCEz+aqW
- 28ahy7EsitMgyF5Z7BSmpH5hFuNsWTwiefdQyKPYqqk4D3ASKeKAb1kgZEt581fgTzcD
- faCD1P476PAhtKFiNbq+t/VYM+rMTQIpQ9UCvx0kas4Ao01o9LRMDI9TSREsycpYrY+D
- +m6w==
+ bh=RFA6186/i4KLp1+T6vxVdoG2ALb/XuPkvZRmSKuCI0o=;
+ b=D5KdxPpscfLJEbpI4C0Pcwq8fdern1wZoIE5UTGL4/JPDTu/j9LAkinXfEqF8kvbC7
+ DGkcO8+plqH+k4CQXzSJ/mr0SHwD5Vp14VMi95mQQAazaxdjmUGdZPmScSe9MdNUvw5V
+ rwPk1frADx3+6MquMkc7zVMAmSKRK1exwTb8dcmKaeCyIYMWOvlK75rAXckJxDRkgVtd
+ I0yHROpNhi1ClPHx4qvgSftRbC+Nkk2t1F/YoZC6X9oknZoBTCd8OgKwiReiNlGlN19s
+ ANj4Xte/b2D1N10PhJ2k1Q66uL9FbP6NrXWNRMnEYF/sgxlc1od96Gd2MwI/YnApsw/s
+ DyEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3BkAQMGptvQpO564enSS8d2XvSl9Xwux2YdVQJOst+Y6PW92i9Ps6ItjYkPRbucWuVECyeFMM/9je@nongnu.org
-X-Gm-Message-State: AOJu0YxqzIPjJwc/ZP90OE//I/14CMn/YgKVCPAxkOlql6HqITH/OPN4
- qfyl2i0f5bFfhGjkhUntoT6MCrOeVqFZnUB927e0CCylveE7cblqTXXyhcBxIN/wL1c=
-X-Gm-Gg: ASbGncs0yYOJA+OZnuU106fTtLmy90kPCIGxrA/+6gqqPN8NuCjAEgnolxFVrwePtiB
- v6rrSItx2YT1abIjmlYKbn+VW6H9P4PSjrLtYxo+Dyfi0p8u2+utNZjH5l2nSY3Cbu3CA5aJmB0
- ctYyZ3Zgv0kUB56R/9PgHJVHTDFCejnh07bAFYXrMpz2iN4fRsu9WhujFXYqdmfafLLgeXdJ8Yt
- 5KWDpU5uM587hBwd44Q+XHrbBJnfCyQ/Ho7uQ/hwGj5YHyNl/fUyxph7VJSmN4PBOjKYhkEl925
- 1l3Wga7KVU+UbJg2i1t7wX2sXvJPicYn6lerrduPDe4m4SrPW72L11syoS/twy+/2a1QX2T+tVe
- zOi0NLrlB50uLKq8VhDgwbnNJ+U4PgAiGtJw=
-X-Google-Smtp-Source: AGHT+IEV1PuA2YfOZeuOb/o100H+mE5COIC/w3S1vmViMkW29LubFHU48+11ZX8Dc8H/ejGqeZFIFQ==
-X-Received: by 2002:a05:6a20:3ca8:b0:234:80f6:2b3a with SMTP id
- adf61e73a8af0-23dc0cf78ecmr14192540637.4.1753997144582; 
- Thu, 31 Jul 2025 14:25:44 -0700 (PDT)
+ AJvYcCUgKkjYwsSXbAvdqTopxDSYyb5k6BqxpKfTbVwUjtsb6/G7SS904+UqkZDEud0q2VWIMlDRCTkaGGZZ@nongnu.org
+X-Gm-Message-State: AOJu0YyrffAs6j8hA7po6jBa3iyv2lW8W2fecbGi23K73kvB/K50QOio
+ FyX1kIzeyGYhmbBnVWS3dTT1XpYI8AqUitwjS0GKmDgzDxE/MOZJan4E+tzJkzWFuDQ=
+X-Gm-Gg: ASbGncsJkke9AyMaUOdQegTIagq0fS3lfjtcqTF3XwipM5y3Z6BkHz+6UFunhV8lNRz
+ KgF9H1bYH33Di1lqT4+oXwbj/6NrDO5UDG3rPXpTWQ1G7xtOMDMdCJMSefMEsxt9ym/Xds23STs
+ XF8qV8JfKwGDipcvY/Y2DzqHel0DGfHZUqsSCBA3/MvpmtGCfp+Qz3YUHMl+SSjOFvvGLe18zPk
+ YcRMwmiUXY9jV8m/MszcoxKegFvqfk37KT3J4yPWWMDYfunpnieC4V0JNfIYlQd6/F4yafwF3hv
+ Kn/nipDLJ5t2Jy39ltsCbP0P1PFVcSi/3SYQEjSoFAAnafqYPbPOASrlyPEQtMiAnkr19atPIPk
+ Fmy67H92bwRFL2J9AiS2LQ7GIs9cR2kW4EKQ=
+X-Google-Smtp-Source: AGHT+IFbqQtjcRDPShJi+eUr3eRfdEYo/RZeMmll0w5f/mQToK34K/bd6E8E/Orns/unyli65sRXtA==
+X-Received: by 2002:a05:6a21:338a:b0:239:2bcd:a08c with SMTP id
+ adf61e73a8af0-23dc0e1efafmr14811880637.28.1753996916210; 
+ Thu, 31 Jul 2025 14:21:56 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bd7887522sm1214637b3a.20.2025.07.31.14.25.43
+ d2e1a72fcca58-76bcce6f6d8sm2468307b3a.2.2025.07.31.14.21.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:25:44 -0700 (PDT)
-Message-ID: <17282aef-11f1-4815-8465-314f99c1d380@linaro.org>
-Date: Thu, 31 Jul 2025 14:25:43 -0700
+ Thu, 31 Jul 2025 14:21:55 -0700 (PDT)
+Message-ID: <006a95c0-7a44-43db-96f8-271e5dcd7523@linaro.org>
+Date: Thu, 31 Jul 2025 14:21:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 54/82] target/arm: Implement GCSSTR, GCSSTTR
+Subject: Re: [PATCH for-10.1] target/arm: Reinstate bogus AArch32 DBGDTRTX
+ register for migration compat
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-55-richard.henderson@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>
+References: <20250731134338.250203-1-peter.maydell@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-55-richard.henderson@linaro.org>
+In-Reply-To: <20250731134338.250203-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,15 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/25 1:02 AM, Richard Henderson wrote:
-> Note that CreateAccDescGCS() does not enable tagchecked,
-> and Data Aborts from GCS instructions do not set iss.isv.
+On 7/31/25 6:43 AM, Peter Maydell wrote:
+> In commit 655659a74a we fixed some bugs in the encoding of the
+> Debug Communications Channel registers, including that we were
+> incorrectly exposing an AArch32 register at p14, 3, c0, c5, 0.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Unfortunately removing a register is a break of forwards migration
+> compatibility for TCG, because we will fail the migration if the
+> source QEMU passes us a cpreg which the destination QEMU does not
+> have.  We don't have a mechanism for saying "it's OK to ignore this
+> sysreg in the inbound data", so for the 10.1 release reinstate the
+> incorrect AArch32 register.
+> 
+> (We probably have had other cases in the past of breaking migration
+> compatibility like this, but we didn't notice because we didn't test
+> and in any case not that many people care about TCG migration
+> compatibility.  KVM migration compat is not affected because for KVM
+> we treat the kernel as the source of truth for what system registers
+> are present.)
+> 
+> Fixes: 655659a74a36b ("target/arm: Correct encoding of Debug Communications Channel registers")
+> Reported-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/translate-a64.c | 42 ++++++++++++++++++++++++++++++++++
->   target/arm/tcg/a64.decode      |  3 +++
->   2 files changed, 45 insertions(+)
+> Fabiano's suggestion for a migration compat mechanism is
+> https://patchew.org/QEMU/20250730205245.2118-1-farosas@suse.de/20250730205245.2118-2-farosas@suse.de/
+> ---
+>   target/arm/debug_helper.c | 29 +++++++++++++++++++++++++++++
+>   1 file changed, 29 insertions(+)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
