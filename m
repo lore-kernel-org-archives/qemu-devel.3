@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5D6C83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B025CC87FD2
 	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 09:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhPPP-0001iI-C1; Thu, 31 Jul 2025 05:17:08 -0400
+	id 1uhPPG-0001TM-FE; Thu, 31 Jul 2025 05:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uhPPB-0001PC-FI; Thu, 31 Jul 2025 05:16:53 -0400
+ id 1uhPPB-0001P9-FA; Thu, 31 Jul 2025 05:16:53 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <gaosong@loongson.cn>)
- id 1uhPP4-0000V8-JS; Thu, 31 Jul 2025 05:16:52 -0400
+ id 1uhPP4-0000VL-Jk; Thu, 31 Jul 2025 05:16:52 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bxnmt0NItoNdo1AQ--.1089S3;
- Thu, 31 Jul 2025 17:16:36 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxnOJ3NItoN9o1AQ--.6230S3;
+ Thu, 31 Jul 2025 17:16:39 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxE+RxNItopTwvAA--.39675S2;
- Thu, 31 Jul 2025 17:16:34 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxE+RxNItopTwvAA--.39675S3;
+ Thu, 31 Jul 2025 17:16:38 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
-	qemu-stable@nongnu.org
-Subject: [PULL 0/2] loongarch-to-apply queue
-Date: Thu, 31 Jul 2025 16:53:30 +0800
-Message-Id: <20250731085332.247531-1-gaosong@loongson.cn>
+Cc: stefanha@gmail.com, qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 1/2] target/loongarch: Fix valid virtual address checking
+Date: Thu, 31 Jul 2025 16:53:31 +0800
+Message-Id: <20250731085332.247531-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250731085332.247531-1-gaosong@loongson.cn>
+References: <20250731085332.247531-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxE+RxNItopTwvAA--.39675S2
+X-CM-TRANSID: qMiowJAxE+RxNItopTwvAA--.39675S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -62,30 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4e06566dbd1b1251c2788af26a30bd148d4eb6c1:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'pull-riscv-to-apply-20250730-2' of https://github.com/alistair23/qemu into staging (2025-07-30 09:59:30 -0400)
+On LoongArch64 system, the high 32 bit of 64 bit virtual address should be
+0x00000[0-7]yyy or 0xffff8yyy. The bit from 47 to 63 should be all 0 or
+all 1.
 
-are available in the Git repository at:
+Function get_physical_address() only checks bit 48 to 63, there will be
+problem with the following test case. On physical machine, there is bus
+error report and program exits abnormally. However on qemu TCG system
+emulation mode, the program runs normally. The virtual address
+0xffff000000000000ULL + addr and addr are treated the same on TLB entry
+checking. This patch fixes this issue.
 
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250731
+void main()
+{
+        void *addr, *addr1;
+        int val;
 
-for you to fetch changes up to 31995cc4087123a13e9345153e0c39ffb44b9277:
+        addr = malloc(100);
+        *(int *)addr = 1;
+        addr1 = 0xffff000000000000ULL + addr;
+        val = *(int *)addr1;
+        printf("val %d \n", val);
+}
 
-  hw/intc/loongarch_ipi: Fix start fail with smp cpu < smp maxcpus on KVM (2025-07-31 16:57:01 +0800)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20250714015446.746163-1-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-----------------------------------------------------------------
-pull-loongarch-2025-0731-for-10.1
-
-----------------------------------------------------------------
-Bibo Mao (1):
-      target/loongarch: Fix valid virtual address checking
-
-Song Gao (1):
-      hw/intc/loongarch_ipi: Fix start fail with smp cpu < smp maxcpus on KVM
-
- hw/intc/loongarch_ipi_kvm.c   | 27 ++++++++++++++++-----------
- target/loongarch/cpu_helper.c |  4 ++--
- 2 files changed, 18 insertions(+), 13 deletions(-)
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index e172b11ce1..b5f732f15b 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -196,8 +196,8 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+     }
+ 
+     /* Check valid extension */
+-    addr_high = sextract64(address, TARGET_VIRT_ADDR_SPACE_BITS, 16);
+-    if (!(addr_high == 0 || addr_high == -1)) {
++    addr_high = (int64_t)address >> (TARGET_VIRT_ADDR_SPACE_BITS - 1);
++    if (!(addr_high == 0 || addr_high == -1ULL)) {
+         return TLBRET_BADADDR;
+     }
+ 
+-- 
+2.47.0
 
 
