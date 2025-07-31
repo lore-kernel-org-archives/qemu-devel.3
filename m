@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27BCC87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 23:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E173CC87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 23:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhcTM-0001IS-Hn; Thu, 31 Jul 2025 19:14:04 -0400
+	id 1uhcUq-0003ex-5d; Thu, 31 Jul 2025 19:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhcTK-0001FH-Bf
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 19:14:02 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uhcUn-0003cI-Gn
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 19:15:33 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhcTI-0006rr-Jl
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 19:14:02 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-76bc5e68d96so1086575b3a.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 16:13:59 -0700 (PDT)
+ id 1uhcUl-0007Di-QE
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 19:15:33 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-23fc5aedaf0so8051855ad.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 16:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754003639; x=1754608439; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754003730; x=1754608530; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cYPTbDjzEaWCey+wtOHfHEESLmZnJDv+3cu464DH5HI=;
- b=rsxNZNb7TSWHIyfPauqQhyLejWWLoS1IVtKl5MxEJl001AiFvRcxPzbzBtzCdGvAYw
- auvekX1SozHzLAKDEqneF5eKTBkXSHtmUonO4ByjmCHCa1PNhQ/aGntswCM2hCzrQRT6
- 6aQqLmeEmdMlgjboUCeO4X1+7Xl8VBfLDGGDM9xOXwQcfn+4y8/fPEHTZB7tECQwLAlr
- wwn2qCA0GtLECfvC261KIdCUvmD/otKBL/YeE08HWgQEhE3m0jueMYydN+fxGKfDe7HA
- HCSIHTZE/VHHPK50yvOADo6FCBnXPNqnqn2rNrN/QtSh2pcaitTdObHsJ/7gGk/tXoRC
- 55DA==
+ bh=lUgFfO4Unu7GcIzAf3QffqhUckDU7c1AbhrqiFNiVWk=;
+ b=IxW49CW7mZJeIlaiWLNmSJc+jyLZlnL+omVzvPXFcomFix816esb6usQ/8Ltzk6pjV
+ wJhzZThmPmGm7toYYtnQnUC8lLG1+nzWIPYF6BWqx4Px3wqlIwt67gTWwjCeD+QMt3M6
+ VGY52brwZccQKanb9yegEoU+ZnisVSDBPjyZ3Ubb7T1Cx39I/hlaJcAwJqI4HTNoyiJW
+ AcGgRx0Xc3emuGMk+1CHwsKpCKy6VzJDbR80b4aUM77LTWhJoebcjWKouLSw/491+Gze
+ CeXt6bJ/70AFgffOMoywUnJAxe8eUi2zYwvzLTG+cUg7wREV4UCrk+gSTwYMfdEYq6vO
+ 3EtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754003639; x=1754608439;
+ d=1e100.net; s=20230601; t=1754003730; x=1754608530;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cYPTbDjzEaWCey+wtOHfHEESLmZnJDv+3cu464DH5HI=;
- b=nK1uTjYFZlm1cnOPXSh9DxvDYLqiOsVyTGFP5aU4u46WhGhny3Wrsq0WEvqbHdbbRW
- 8FOico8rmI6ZSkRgY5cX1UYzIPXaPvicSzHJXEWK4TyLUsxU6xs5sgGyIsUBWflyoRyn
- +Qx+3CYcTbJU5aZqDRessqpLed+F2IGFhdy1siv+zGz37539V784B6cd3lBrgIXlF1eQ
- m/xOC1Zg8tVzLEfrX/dOwUz8jls+GUrRBeKiPBdGRbUVMfCrDzhg1GbedJDbEerZwh+X
- JX2Qp+l3YKwQEGqxbOWpO0ijv6qViK+CJ3nPvLmrjro21uSqk+2NFbbDb8kMMlpikwXc
- p3Ug==
+ bh=lUgFfO4Unu7GcIzAf3QffqhUckDU7c1AbhrqiFNiVWk=;
+ b=hLhxbGjVLS6mEhAKqTbp09AkL2ySN6UPgjZ/id4TWFBSbbnr5zLZNePGOuuCTUmHel
+ ioisZMWd4RiXf5whEDNGSJdPNmenyYFYSmMRImE1Er24iTlS5O0BrhRgvma0ynfCwaxM
+ qEIsAONxrglsqZKZsoC9uHankCcbTv3+LsfrGMqYchlHlBvPDXP6l0rI1SpJrufiNfv8
+ xNhivxxI3VZbdlbav5VLOKBnKGtfDrRRHzIYVtyEzxfB8qYUqkhWK5+IhbfTMLeVR/fJ
+ IIXsRp35UwpBr9JrlHqmBWKrgE1uCquB40kCvaKo3KvgLKftRzt7yiP6qhTSs7N2lmE8
+ 8ENA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTZPukwIuEJ9K+2JlKJO7YYSnVGnYR195RToHO1bCsdnsLAvgoAtjBxdx/9ScxlHD1QqSmLGXwG8xR@nongnu.org
-X-Gm-Message-State: AOJu0YwdMa/tVeKA7nSXlT+SGchJ/j7Ulr/9RsSxJ7VJmdlx1Y/jqrWS
- g5H9C+FcW5IJjUXLEgL/VO6CEZd1y84OMxxzQ9jY8V2zsUyzMCmnG2KyNo+V/w1Lh7o=
-X-Gm-Gg: ASbGncujkMUdF35qjvmGYUrI73+ymLWs9B6hMzXzqu51aZU7zDrOCGB+Y6WNFe3C9wd
- lXNsd6hE3iXKo8V9A2eFFKoIkOh+I0aYw7qhbHCIVBDR7SHRgB0iLna7cXERwHbq5uv+kPuyp+L
- KUsW4EhbtaxqcEjrwrnk8V1y7aDOIf5yWqoMyCnJjCQ4X3AdEvBykSU+EePRBi58PNkFTR8uYGO
- DOpPoI/8PlO16DZaef97ijrmSVFyNVdwOfhkGRjo/7jnRgj/dDnwS4Xg2KIUV5vufhj6+y5ry5D
- sXs/ftBOP5axWtgMrF0sVGGAJr0KK1jwoAB9oYO3BwOEZIbAPVhRLCpXHmRzeYkbhZ5ShxsJYQQ
- lnhTk+yYg1oICnuM+kVjrx3VMGHWLw+c36ZTgNYQm
-X-Google-Smtp-Source: AGHT+IGsRN98CLR/SnSeHPdzeX2G5JVsxXGdzEJ1R4aa9XDZtz9oWR739MAwjppOBRU5wik98J5g1Q==
-X-Received: by 2002:a17:903:291:b0:23f:f68b:fa1d with SMTP id
- d9443c01a7336-24096b41b12mr122088465ad.39.1754003638658; 
- Thu, 31 Jul 2025 16:13:58 -0700 (PDT)
+ AJvYcCUC5f0jCC4c72fj9DVIA6zcGwXRn/knDcYCFbzovVfwOpRp2s5Uj3pbujE0wjUvfeuSUwfz165v4Rm0@nongnu.org
+X-Gm-Message-State: AOJu0YwptvgdflnZjSZ0lHgv0BdbV034GSfVPwBqhlswnGHnKkS+fDlq
+ ip8ffP5+A4xAs1sxFQUBp9uZ5fFGVOk5mzVu1DPweaqqRLjVQ7iB/870kNE2VwEA9oU=
+X-Gm-Gg: ASbGncsQnb+F741ZkLkJD4Mi15C8RuOx8i/eQhmL6L/JmdcMjGNsIR8HhRTUK6cza7l
+ z5akT7rtUGqmjh/iYn6wEL1lg9ZWtX3IFH1Y/Cf4yXVlghbwL9JefDJS01B6KJpO8eLA5fivxcu
+ lMayGNQbAi66xctxDQ96i9JpO+zDTL/8w20bUpzFZ2akwH0hUT1OeWjlorLjG1OQq28+WjuToUu
+ tKH74xGLde+ghntjW8XwOURJ5KQ/1PNKOTlKy6tCK7j5+D0n12Ppd+kCir/DjduRASrVMVGYBCh
+ xaWdKgU2K8hVbaF3pCrQ/ZACGD3CJZX3QCEcqXcjJPgqg4jPzaZKomo7xFB4nDtQS2nhsG+gmRP
+ JdNaIyz1uhQVaElafMLJYyCnoll4HrEpsWlneE0Ij
+X-Google-Smtp-Source: AGHT+IGnqBoKe5ihThLFBAPFEaNU/O3HricZekqTvfln/4HW43bwcVnTZNhKAqYOY8FdFJaf6gm8cg==
+X-Received: by 2002:a17:903:234f:b0:23f:f96d:7581 with SMTP id
+ d9443c01a7336-2422a44b2fdmr5328745ad.20.1754003729936; 
+ Thu, 31 Jul 2025 16:15:29 -0700 (PDT)
 Received: from [192.168.4.112] ([180.233.125.160])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8976c40sm27705755ad.84.2025.07.31.16.13.52
+ d9443c01a7336-241d1f2193bsm27688625ad.70.2025.07.31.16.15.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 16:13:58 -0700 (PDT)
-Message-ID: <eac843f3-e920-4c6d-9c45-45087b41fb78@linaro.org>
-Date: Fri, 1 Aug 2025 09:13:48 +1000
+ Thu, 31 Jul 2025 16:15:29 -0700 (PDT)
+Message-ID: <d2084fe2-fec6-4fba-858b-2c5df5c36e39@linaro.org>
+Date: Fri, 1 Aug 2025 09:15:21 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] semihosting/syscalls: compile once in system and
- per target for user mode
+Subject: Re: [PATCH 02/10] semihosting/guestfd: compile once for system/user
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
@@ -81,14 +80,14 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20250730220621.1142496-1-pierrick.bouvier@linaro.org>
- <20250730220621.1142496-2-pierrick.bouvier@linaro.org>
+ <20250730220621.1142496-3-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250730220621.1142496-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250730220621.1142496-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,22 +111,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/25 08:06, Pierrick Bouvier wrote:
-> We replace target_ulong mechanically by uint64_t.
-> We can't compile (easily) this code once for user, as it relies on
-> various target/function types, so leave it in specific_ss for user mode.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/semihosting/syscalls.h | 29 ++++++-----
->   semihosting/arm-compat-semi.c  |  1 +
->   semihosting/syscalls.c         | 89 +++++++++++++++++-----------------
->   semihosting/meson.build        |  4 +-
->   4 files changed, 62 insertions(+), 61 deletions(-)
+> diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
+> index 40dc778529d..33614108094 100644
+> --- a/semihosting/arm-compat-semi.c
+> +++ b/semihosting/arm-compat-semi.c
+> @@ -101,6 +101,13 @@ static int gdb_open_modeflags[12] = {
+>       GDB_O_RDWR | GDB_O_CREAT | GDB_O_APPEND,
+>   };
+>   
+> +/*
+> + * For ARM semihosting, we have a separate structure for routing
+> + * data for the console which is outside the guest fd address space.
+> + */
+> +GuestFD console_in_gf;
+> +GuestFD console_out_gf;
 
-We can at least use vaddr for the pointers, like fname.
+These can now be static.
 
-I see syscalls.c already uses uint64_t in many of those places, but that can be a separate 
-cleanup -- we don't need to add more.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
