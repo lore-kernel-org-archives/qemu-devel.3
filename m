@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24727C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 22:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7831C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 22:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhbM8-00007i-QP; Thu, 31 Jul 2025 18:02:32 -0400
+	id 1uhbMQ-0000kC-P0; Thu, 31 Jul 2025 18:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhb5a-0005Vq-31
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:45:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uhbDV-0000Ve-Sh
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:53:38 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhb5Y-00029q-Eu
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:45:25 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7426c44e014so1488404b3a.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:45:23 -0700 (PDT)
+ id 1uhbDU-0003Ny-6L
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:53:37 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-31f28d0495fso1533030a91.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753998323; x=1754603123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1753998810; x=1754603610; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4lyau6g7ZS2X5dhFoC647e0I5kJk8G+2Y7odzEKMVBY=;
- b=L/T2io/Lo85k/JJjzKAOiHWhsHNHwDv9jaKRpwJVV3kg+8HTuEOEoH29kEKV7lm8M4
- Z1sFcY/Uf9P0tqVDwun1Qa+HPpwOu/8WrTcpGFzcIiHtTglf+3pEs4lSSacIhcQPMd9n
- 32ysRrEHn9tjkDLDfmp6w0x5YMFWpGu9SQzy0RreYxz3/dWMRWO5oWXjQ6eRm0UOhTB4
- lUmo60jEuZhIZmbuf1+GTX7iPUMFEVLqmhpXoeppt+5G5K4SooSFWeYsigm0KzU8VtXj
- +nEPCTzADgyNl8M2c+YidsdSIGpIoB2ezvcaA52C/VmcISWhcBiVb6YI0u7BTslNoMs0
- vGQw==
+ bh=DHXRyKMnzxg/6ggWhbwy4YLfYFbHnA7EuTegUc83CZA=;
+ b=V2J3qZdLZVwLgTScZN/lR8Qxmq1Ueo5ZZnVliydSqjLLX/Zn4WP5Tki3XDR5p14/M3
+ ko/NgjV689npEd48qWs6dEnm5CJ1Cmfrb0hAbtPR3GAE3fLOf66by+jxN7hNEGqm3s4f
+ 10/FbNWb160xk/5tZhO5HlWg4DxJ36i3Pss3X5iUZw1KQQxnESXfAYjnBrLVKHTCIrEk
+ H9ON12KaJACTEXSRElJUaiYqPm16e2bbsa8fVzKHrNZX3xE/yEJLRlF1IZph3rRYf/Nz
+ R5gjXo6MKkORARyYe15Tc0lO6ARvGI/7MqI8B2oSgQnqy9qJzAP66kSePfVbXYLCastx
+ sqiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753998323; x=1754603123;
+ d=1e100.net; s=20230601; t=1753998810; x=1754603610;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4lyau6g7ZS2X5dhFoC647e0I5kJk8G+2Y7odzEKMVBY=;
- b=Op9a1XCzP3+3eSiA1WdRsVi34RJ7FnBxc4F8f33FRAfspGBYFl1jCq/2JB1s7oKDHl
- 4c2Hv12yGK4AjG+KNA+pbjsbNDhdVKZQ3lDE7xm88knUMuxj3bk7QgWyHkRCTcYWO7w8
- CZDCsLFo7+KGGVE/F31Lbii2m68vUvlzDIiq9DDf8KK7fSF2oUEUK6XCmLi/VWkxWY7b
- 5oVb2xa9pRkhsyaJ1h+eg98Q26lVrKcnEosksAJsM15O3wHFQNNXFo8fzCoey3bxQZzX
- 8BMGANpZnCFhyDb4h94qmOPm/+cCak0n3LfeCYpBUufBsPo8DVUXZxZBD5KEbHsR+d/v
- pR1g==
+ bh=DHXRyKMnzxg/6ggWhbwy4YLfYFbHnA7EuTegUc83CZA=;
+ b=E7OqKQNlVd5SnB+ZgjgbdLfPdxwV9uKKsAHcryNJU8CRxFef3ILuQFPRvBVndkAp0r
+ zWNTIU8XIMNNHz0boiQA/ITgr21rGIGVKCKg1xPHrPveuS55aiLrBYjBvjxlB8rPUBtk
+ /zJGkMBBq/7B375bkl/vJ2kSzibvBS9SUvnNf+AKyxf+6p0wQU6/VL0F2mf/2OuqmeCj
+ GQQb1uphxhZ4TGmW42nTCr9l4XVBX8KsQ8Z4V04XQwFMQXfNDWbdNwM42b76U0vT3npA
+ kTfMdNP1ANAOKXCVBlvytgd3nuOltWVRkOcN+/LeDJPyNUP7QNBLw2IrlUh+g+uwfqpS
+ NnWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZ1y/xDQPD6IiAF3CD1OX4f4ieb4WXWn/y75Mhjsdyi9phyj1zJRVeMCWm1UEJBdmu+Kje4ljL2dNs@nongnu.org
-X-Gm-Message-State: AOJu0YxflsfJEpmk6wXf50tS8bXXcVLtT57pEIa5RkQRc5nHsCQa+TgF
- olgBeOf++4EtvynqAPBbkh5cygqcOQWlmIWQ+2ivUT4vkrGXbt3EceS6mKaxQeuzx7E=
-X-Gm-Gg: ASbGncuVYOP/vGxHC0X7YDlpDBwcc5jqt6QiyKeQR6MGCjO85QYKiffb52+jGYlxIXd
- C6v6nNNMc0G/1GTHVgHKchU8SZOzK01TfmBUIb7sq4aPP93OJiVcGLb3wO9IPVAVs7zPVGwzaOf
- WUKrBKiXG0hOIojBhrZPACeRfrE74yMa01TggzM2Jdyy0CJEtr6T4QaCpXAv+QxyuILDjkkLMlI
- Tk8vDoJSFEy+0CeBcZnepB5kV8w4wDoGMUQm4haFvLFgHhrcV1t1vboq6tdHkB9eox/kGCAwHz8
- ER/yPHq6jGuOaXRNtTKgylU1++wlILcPTvR6aL0ZRMdGvX3lvG5oNHrVNaDiyLcIpjrTaZfLueB
- GI5P+h3+CoYcLVz9sO3/veveoPAmD6nadsAo=
-X-Google-Smtp-Source: AGHT+IHS12Je/GUDRVIQfNE4+eeY3TxvlmzjSw9hn9gQihRIiIa7n3f0L2+sJPwStzkGYulVnsAFAw==
-X-Received: by 2002:a05:6a20:748b:b0:229:1130:7411 with SMTP id
- adf61e73a8af0-23dc0e6183bmr17642183637.31.1753998322880; 
- Thu, 31 Jul 2025 14:45:22 -0700 (PDT)
+ AJvYcCUkuPeP2e9uAMnDArZg+Awzkd3kRSmWMNKD+V6gqENrur2AClw0ECVkNCW3AeuWKp/TW7FQr7MNRHle@nongnu.org
+X-Gm-Message-State: AOJu0YwPSGaKTQlOI5XmlefvM/4JVbu8Po+BsgA6PNkVxAlhKbTkOPhP
+ ZmDKtqOmSAUdOA+z/pXDJW73MZShYD8jXnE75y/tLGtz0r3cLugaCfq9FVSCKzua7g7q3OCyJXq
+ zcERa
+X-Gm-Gg: ASbGncuU7STYMcTAkripbNaxrYEoQLAPnm+o/C5awRWdJwts1gelYovw8qwh/FBBtkq
+ YlGhANI0WifMKH2CknS/otyI20AhO0qI9eDZum0iF3QYofsz5S2gvPRpxdn3YHbGcRGFxrswJgq
+ h4B9H54YVZRgYpGU4Bi9zrBtmSRKJAgdcL23zw0iyww8cbiNkpzhR+WXQStpqyj5YDnx1G1b691
+ EwWC/ZqAzH5ai5IyKr6sUq0SbgplurSeWupUJzmD757mZd4HYUuL4AfccR6ihoBoF2gN6YYJ1r8
+ aRyeNS3BCnP6L8TI59F5PQjc+7fcZaOXO7iFWR85tgWo06QvMMTEix7OwoqGZiqXTEXO+tbfygv
+ MSwNKmxlSww6V1dQ0mNOOEoRCPCQ899UPbbg=
+X-Google-Smtp-Source: AGHT+IHSf110swpQwpS5WzSpWbG7QFH3WHiWTmnyuSNRf8/OnqRfzvo5+FUIFrfdnVcH3dp1VUCQtA==
+X-Received: by 2002:a17:90a:d604:b0:31f:3029:8854 with SMTP id
+ 98e67ed59e1d1-31f5de5561dmr13010042a91.27.1753998810353; 
+ Thu, 31 Jul 2025 14:53:30 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b422b7ceb3fsm2260945a12.22.2025.07.31.14.45.22
+ 98e67ed59e1d1-320806818b0sm2848350a91.25.2025.07.31.14.53.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 14:45:22 -0700 (PDT)
-Message-ID: <932f835d-d095-4941-a2aa-921b4dd25f8c@linaro.org>
-Date: Thu, 31 Jul 2025 14:45:21 -0700
+ Thu, 31 Jul 2025 14:53:29 -0700 (PDT)
+Message-ID: <da506bc4-d07b-455b-8acf-d96b4fdca6e6@linaro.org>
+Date: Thu, 31 Jul 2025 14:53:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 62/82] target/arm: Implement GCSSS2
+Subject: Re: [PATCH 71/82] linux-user/aarch64: Implement prctls for GCS
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
 References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-63-richard.henderson@linaro.org>
+ <20250727080254.83840-72-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250727080254.83840-63-richard.henderson@linaro.org>
+In-Reply-To: <20250727080254.83840-72-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,12 +106,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/27/25 1:02 AM, Richard Henderson wrote:
+> This is PR_GET_SHADOW_STACK_STATUS, PR_SET_SHADOW_STACK_STATUS,
+> and PR_LOCK_SHADOW_STACK_STATUS.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/cpregs.h            |  1 +
->   target/arm/cpregs-gcs.c        |  3 +++
->   target/arm/tcg/translate-a64.c | 37 ++++++++++++++++++++++++++++++++++
->   3 files changed, 41 insertions(+)
+>   linux-user/aarch64/gcs-internal.h | 38 ++++++++++++
+>   linux-user/aarch64/target_prctl.h | 96 +++++++++++++++++++++++++++++++
+>   linux-user/qemu.h                 |  5 ++
+>   linux-user/syscall.c              | 29 ++++++++++
+>   4 files changed, 168 insertions(+)
+>   create mode 100644 linux-user/aarch64/gcs-internal.h
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
