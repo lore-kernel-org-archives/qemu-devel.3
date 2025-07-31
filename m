@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBB5C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8117C87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 21:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhb8S-0007pT-2X; Thu, 31 Jul 2025 17:48:24 -0400
+	id 1uhb8C-0007Sa-96; Thu, 31 Jul 2025 17:48:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhapD-0000Yu-HW
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:28:31 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhath-00011f-PE
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:33:11 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhapA-0007tm-MG
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:28:31 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3b79bdc9a7dso106191f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:28:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhatg-00006d-2p
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 17:33:09 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b3aa2a0022cso1031687a12.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 14:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753997306; x=1754602106; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3YPXddK5v6Xqtrub7LpqRKl+Wnp2Pnfr2Y1mDvAIzEY=;
- b=guikIQ796S6Q8ndeZxADvDj0htenmATMken99Mucg0v+Stbqxk/3znVEpqW5ODP42n
- xm7c6TZ1lEeWArjI46/U1/vHrYVEOe/U+Wg6+wF+E9nu1RzYXMbMkO5khQ+RAM1AWukb
- JCPRVD+oBxXuSXXk1TRJ4GKY2pHLm0NRp7RFrfTOd0QcOUOaQvkg+FnsSIKL5VBYM0fu
- 5xo8qQuWItrmCW4R7fZruMDcBzJyy1lUX0tV/7Kl5ztulWx8OxuGMj57fX0pjiTfF1P2
- 7+AfyHCwX8FdeRUgL1nIGTfTd/NRI6gW3fpGjjxpJlOARz4FvPN659TaqP3EzVovcJO1
- mzAw==
+ d=linaro.org; s=google; t=1753997586; x=1754602386; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZiM+h5oL7l+9D1nra9y6zoDW16NW/TLYVAAuAgpvcOI=;
+ b=fLqFgBV5eyryieGliP38Ccs+uLtXPjwSgUTfCOltkmDVL+zayyoirKCIsqn4c5wj3B
+ UrpWLpSM28LKOEhKNGXmKclnqTUUMJztbqL007zewxjCUL0asM99yk5XNp8xes95QTJW
+ rIIyseUM44qfhV6MN5nbBK4pXDILwfzcMStHO/uxrhkIJJi46KGSD3hMyz6KjXhB/ROu
+ zIErav0sYTQJgP2tnNQ5Q7PBG5rG9njl6rB9feYTZTjxjq3SEF4PIho7PpfK3+GzmicE
+ HReXOGI5IAbG4amgvUutbzWvNvLf/aMUx1a8Tj5mCrPqX0ptgtmrRy8d15skjNk9AtRv
+ EdcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753997306; x=1754602106;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3YPXddK5v6Xqtrub7LpqRKl+Wnp2Pnfr2Y1mDvAIzEY=;
- b=OR1rEZ+x4gt32p4foRgCx7nCHXthD6uCAh27NLPB41IJ8w4NlemYLCHj/G1FpcvKSd
- j+PJDEe6COPMIV29fuUvCbbj+fAp1JQgTXTwy/kHLQuiKALvmXeAfB3cXL3degQMo1EP
- BCumGK6y3BQoVRilE00HY00vS9iOBo+bZOP6v/noInaln9mJWJL9164BrXxLDq80LzO8
- 83XMV0mTt8BHsa0RhHBDOvPZ0aMtEL/XaEny3OVxv0pgcVu4WtdLwXfEZ6c1T5ewq/w+
- IX8VOmANu66lglrXBLHEBvPoJTg7WTZ62C+JDITFytsrvMsjrZ6SXXyad6kakzGghJOY
- Rkdw==
-X-Gm-Message-State: AOJu0Yw4KotnSpFuUx5ZUonCByekTjCAa4asAXMSpWp2WpVSq6dmc2rp
- W8SoesuKKuuCbABCaVNntDdKJRX08KraxWEMJhgM59k1vi2WnL+uI9NR972qEmQ64dIvPA1RwY1
- 3BT0G
-X-Gm-Gg: ASbGncuWHpHwfcLwf0yM4ON+DrcOHZCq08mLyJss1XfCmZVf8AROqcKHa/u6FN+M52D
- gj70ykM+t+tK8xBS3gzlQ94XtAslNZcdc3wkfmNVzRYaLuVKp69ook4Q1XTM5bGOl6z7McEYi2E
- qUOmGSLVSr3a1Ks3Gz/CWgAgYt2Cl+sFQ9XiC6ecVOy9/nTlw7phEWgDGmAXbt4oMtEz4SX2vga
- U6W3PiVVZ+5h36kDRWTKdg+KloeUpbyHZ9NljbSymkA6DPM/Gsml26tolWVxnd1jKLyoUxUpvaK
- 5mmeT+S0G6vQWuDjMApckBuF+2EtL+WBW9Koxvkczdv2TsNovO3kqiIr1CVDXpshRMxATkSC8MA
- IWtoM6o9AVnVVPFWEzWfkeF7k6AWqlpiLzuSi2Kd6vQSk6YTWVl7SbPsJ+E4XPKQR9PFHVViHHt
- vqaCBc1Z4=
-X-Google-Smtp-Source: AGHT+IGI/zApcUREjex3r/KFRt72ym9B43x474plpmVmVHVsNwAXFaOO3Mt4foWnSu7ahDM6LVfaiw==
-X-Received: by 2002:adf:e9ca:0:b0:3a4:ef70:e0e1 with SMTP id
- ffacd0b85a97d-3b795022391mr6020703f8f.55.1753997306488; 
- Thu, 31 Jul 2025 14:28:26 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3abec8sm3742066f8f.8.2025.07.31.14.28.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 31 Jul 2025 14:28:26 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Ben Dooks <ben.dooks@codethink.co.uk>, Weiwei Li <liwei1518@gmail.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 03/11] hw/sd/sdcard: Propagate response size to
- sd_response_r*_make()
-Date: Thu, 31 Jul 2025 23:27:58 +0200
-Message-ID: <20250731212807.2706-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250731212807.2706-1-philmd@linaro.org>
-References: <20250731212807.2706-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1753997586; x=1754602386;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZiM+h5oL7l+9D1nra9y6zoDW16NW/TLYVAAuAgpvcOI=;
+ b=mkFHxG9ZbQ5jmoXoV/hFLqODuKrr/4rSkL1/ePxGc58Ne4D7JNKpuNJNqa2cT9WC0k
+ 2VTVIV1u6iH2EgWO7x7ZwRTVp7FCpkcveY/eEphv0il2uctUZgKeiMIQAa0EbD5zA+wK
+ 71MdwCwCP8wxOkO9Wf6rQuLwnsExQsUzQfoEoy3wuNnJm3RHSMMCvSWcvvXbD9K/4FLp
+ 7Bn98h6kI/0hH0x9ecnsMt3OzC0E3eQt+8BZjl/GFv2ijCppz0IF6TDRstg8uYe2oPO6
+ JLobbFzDz9cKnGNxe352EdkqH1irgjTiZ44U0bp4cjQUhbWwBdoiOL+aAhl7a3lRTKGb
+ SkFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWehvu5ewxIWhABgk/6eZqvVDM7FJ4/F9C7q0Mw/W8iAdwf+msKzayefSBV00NXZFgHbgjNVSMyrq/Q@nongnu.org
+X-Gm-Message-State: AOJu0YzUzXFdXuLJssKpzZjyC2L4VBeThwCuxB0YGqSAdD0p6V/b4J+D
+ xW4+2Oae1RoXjEhwkRllT+GdWnOefhCrvKipMGb6RwBTrGQJftQ8Ado68KjQMZpO3K4=
+X-Gm-Gg: ASbGncuNGWdf9f7B5zxxKmjEzW9NuJ/FEuVVtdBw15W+mntGe9NsgTGD/UhCEy71pmA
+ Fe7iskOCvDd3wisbaacvBas9cKCs9xjhAB6YxjFVvv21kK+QdCR/5h1Rmgso6q8OqvT24f93Cis
+ 0lx1eE7HKqATLwkV7ox7+MqPXOup2bOq+55GBY9QbPAP1K0QGrOTLpMwb7EAwg4kaiHDJsqJWN8
+ pq7eesIKnoNaywu2890/e0jqiOiHRHp4E/KlbkNRidGaeDPJV2aP+CMmh8fHfeGY7MUPy3GGkcj
+ RYdFHsE2mw0GmiBe2O8FBqoRlKfbCX146ckMKvPFdUb5fBUnhxIGSbiT1rnwLeBlaoZADscrpq1
+ 8C3CrmSEaEmeVC4zC7DxDT3cdDHp4BQ7J/lA=
+X-Google-Smtp-Source: AGHT+IHzF+A6uPTuT7iBpyzUOuP7NbYkQoWItMJE5I0rKr77GTvp9SKD+VmiJWsMZFWyH46c1F2mfQ==
+X-Received: by 2002:a17:903:124a:b0:23f:df36:5f17 with SMTP id
+ d9443c01a7336-2422a54c86cmr3357205ad.22.1753997585738; 
+ Thu, 31 Jul 2025 14:33:05 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e899b5bbsm25919835ad.128.2025.07.31.14.33.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Jul 2025 14:33:04 -0700 (PDT)
+Message-ID: <24b7af7b-aa8c-4298-8176-aee7341adbbd@linaro.org>
+Date: Thu, 31 Jul 2025 14:33:04 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 56/82] target/arm: Implement GCSPUSHM
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-57-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250727080254.83840-57-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,117 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All sd_response_r*_make() fill the @response buffer. Now that
-sd_do_command() knows the buffer size, propagate it to the
-response fillers and assert for any overflow.
+On 7/27/25 1:02 AM, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/cpregs.h            |  3 +++
+>   target/arm/cpregs-gcs.c        | 16 ++++++++++++++++
+>   target/arm/tcg/translate-a64.c | 18 ++++++++++++++++++
+>   3 files changed, 37 insertions(+)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c | 40 ++++++++++++++++++++++++++++------------
- 1 file changed, 28 insertions(+), 12 deletions(-)
-
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 1d88aee38d5..22bdb4ca3ab 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -729,34 +729,52 @@ static int sd_req_crc_validate(SDRequest *req)
-     return sd_crc7(buffer, 5) != req->crc;  /* TODO */
- }
- 
--static void sd_response_r1_make(SDState *sd, uint8_t *response)
-+static size_t sd_response_r1_make(SDState *sd, uint8_t *response, size_t respsz)
- {
-+    size_t rsplen = 4;
-+
-+    assert(respsz >= 4);
-     stl_be_p(response, sd->card_status);
- 
-     /* Clear the "clear on read" status bits */
-     sd->card_status &= ~CARD_STATUS_C;
-+
-+    return rsplen;
- }
- 
--static void sd_response_r3_make(SDState *sd, uint8_t *response)
-+static size_t sd_response_r3_make(SDState *sd, uint8_t *response, size_t respsz)
- {
-+    size_t rsplen = 4;
-+
-+    assert(respsz >= rsplen);
-     stl_be_p(response, sd->ocr & ACMD41_R3_MASK);
-+
-+    return rsplen;
- }
- 
--static void sd_response_r6_make(SDState *sd, uint8_t *response)
-+static size_t sd_response_r6_make(SDState *sd, uint8_t *response, size_t respsz)
- {
-     uint16_t status;
- 
-+    assert(respsz >= 4);
-     status = ((sd->card_status >> 8) & 0xc000) |
-              ((sd->card_status >> 6) & 0x2000) |
-               (sd->card_status & 0x1fff);
-     sd->card_status &= ~(CARD_STATUS_C & 0xc81fff);
-     stw_be_p(response + 0, sd->rca);
-     stw_be_p(response + 2, status);
-+
-+    return 4;
- }
- 
--static void sd_response_r7_make(SDState *sd, uint8_t *response)
-+static size_t sd_response_r7_make(SDState *sd, uint8_t *response, size_t respsz)
- {
-+    size_t rsplen = 4;
-+
-+    assert(respsz >= rsplen);
-     stl_be_p(response, sd->vhs);
-+
-+    return rsplen;
- }
- 
- static uint32_t sd_blk_len(SDState *sd)
-@@ -2207,33 +2225,31 @@ send_response:
-     switch (rtype) {
-     case sd_r1:
-     case sd_r1b:
--        sd_response_r1_make(sd, response);
--        rsplen = 4;
-+        rsplen = sd_response_r1_make(sd, response, respsz);
-         break;
- 
-     case sd_r2_i:
-+        assert(respsz >= 16);
-         memcpy(response, sd->cid, sizeof(sd->cid));
-         rsplen = 16;
-         break;
- 
-     case sd_r2_s:
-+        assert(respsz >= 16);
-         memcpy(response, sd->csd, sizeof(sd->csd));
-         rsplen = 16;
-         break;
- 
-     case sd_r3:
--        sd_response_r3_make(sd, response);
--        rsplen = 4;
-+        rsplen = sd_response_r3_make(sd, response, respsz);
-         break;
- 
-     case sd_r6:
--        sd_response_r6_make(sd, response);
--        rsplen = 4;
-+        rsplen = sd_response_r6_make(sd, response, respsz);
-         break;
- 
-     case sd_r7:
--        sd_response_r7_make(sd, response);
--        rsplen = 4;
-+        rsplen = sd_response_r7_make(sd, response, respsz);
-         break;
- 
-     case sd_r0:
--- 
-2.49.0
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
