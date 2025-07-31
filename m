@@ -4,58 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152F9C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 15:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD6AC87FCC
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 15:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhVPC-0002iZ-V3; Thu, 31 Jul 2025 11:41:19 -0400
+	id 1uhVY2-00035R-7p; Thu, 31 Jul 2025 11:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uhU9S-00088W-BI
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:21:05 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uhUL2-0000nB-Uo
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:32:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uhU9M-0006wg-Dy
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:20:58 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4btB603yxfz6D9j0;
- Thu, 31 Jul 2025 22:19:04 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 2534A1402F2;
- Thu, 31 Jul 2025 22:20:42 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 31 Jul
- 2025 16:20:41 +0200
-Date: Thu, 31 Jul 2025 15:20:39 +0100
-To: Davidlohr Bueso <dave@stgolabs.net>
-CC: <ira.weiny@intel.com>, <alucerop@amd.com>, <a.manzanares@samsung.com>,
- <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH RFC -qemu 0/2] hw/cxl: Support Back Invalidation
-Message-ID: <20250731152039.00005fa2@huawei.com>
-In-Reply-To: <20250729165441.1898150-1-dave@stgolabs.net>
-References: <20250729165441.1898150-1-dave@stgolabs.net>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uhUL1-0001Qa-4h
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:32:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753972372;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GS58p15v4LEFq1xCqc+ivjhqpqgBtFNMAu+jgQ/nfmw=;
+ b=JZkJZaxGn/gugnpHYpf09SSvu56tto+l7hVh+AvEph49PgJcZ5lqjTNjb51Th6M7/E84uj
+ Jdu86wEEFirP2gcRt3aM5MnYC5WV4CItMTXMPTAuqBiXWjKGxjZcAUV5SJ912bUYtH/O5J
+ kGduv7FnWUhC5E8tqB1AamWQb7799hA=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-ziA_dGbqNduFFN7ydRo_Gw-1; Thu, 31 Jul 2025 10:32:51 -0400
+X-MC-Unique: ziA_dGbqNduFFN7ydRo_Gw-1
+X-Mimecast-MFC-AGG-ID: ziA_dGbqNduFFN7ydRo_Gw_1753972370
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-3e3fa3de6bdso1492485ab.3
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 07:32:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1753972370; x=1754577170;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GS58p15v4LEFq1xCqc+ivjhqpqgBtFNMAu+jgQ/nfmw=;
+ b=webygLXCL7noc74/T2qUlyNwI/O1+rddH5JTS99xJtDe77PuNLxp3ZHWD3ncBn1Iuy
+ kNyAOcU0L12UamkPjTQzSXHDX91smH70iO+hneuXRNWc8PUIJI/yR/mqlztPIHdcouTD
+ 9M+VW7H4nsUz2Ch4kv/MzKa1WFEOvjs3zFkoNt3Tg4TxtwYmGpb6CjCao12nDqFR7167
+ HJHqQ0qXrIbuyRsdQRo064CZ8G/I03oaHVLR39zrFj9ac7OfoWqFoNntlNdrhnDwEjxM
+ XGUWWoGWzylpQLRkZY5pSVXPziDol4iQ8X4qBkDyPl+hBPBZg6tg1ZZTcjTmjlVkgekB
+ xIxQ==
+X-Gm-Message-State: AOJu0YxYYMGJjciBAuIYAwcB1IGHf4sAUuHW6f9FiI/WEoVlYQZxX5I0
+ B/f59sjGwDjz8HYkbCOWvNq6ygCztnvcX88HUhj0MpfuIbbRsk9P20PTHNuulg7v369EbUzxMlu
+ QgFBnTU020AOavXFo2N3seMrGD6YY9LkPUErVpkmPca6f5mBHVOJxwplvVzpwsniI
+X-Gm-Gg: ASbGncv4toO8KkEYXRx6JlFPrrlKx+xfN1J0JUjCAXLfAbxG9/bMJkht6O1NlBfQ/GK
+ WtrSjQnUM1FoWrcFCenratVdI1rJqmvd6zC8LjO03WG7nQs1OXY8HpCneyibs4Xa2ubCOlRptDl
+ y+oCdOCexOZacRu2h6ZA2XmVF6zUl9q+J+CF0SMeqQEAJ9R4jGb8Ccmrfi6MhEgRMAkdllh2mdq
+ URC5XIdAA40nkP05nGO9YXEsj4Er3dAdYeQXXgzLPb0UDxeiglUtPCtwAyxfE/YJkMCA17LRXjj
+ bTcQEKH3+1rN+XmYmIIbYTxIgCTb8Q5Ofyebrb/A+gs=
+X-Received: by 2002:a05:6e02:4407:10b0:3e3:d517:d29d with SMTP id
+ e9e14a558f8ab-3e3f629ccf7mr24134435ab.5.1753972369681; 
+ Thu, 31 Jul 2025 07:32:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzgCXpVq9Gtf3sxxi1PC+Tl5R64QIGk0mtbDiiNBrerbYdB+2oT3xeFIWqEK3AM1vj9gvzxw==
+X-Received: by 2002:a05:6e02:4407:10b0:3e3:d517:d29d with SMTP id
+ e9e14a558f8ab-3e3f629ccf7mr24134315ab.5.1753972369321; 
+ Thu, 31 Jul 2025 07:32:49 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-50a55dbb039sm520356173.94.2025.07.31.07.32.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 31 Jul 2025 07:32:48 -0700 (PDT)
+Date: Thu, 31 Jul 2025 08:32:45 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Eric Auger
+ <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH for-10.2 0/4] vfio: Remove 'vfio-platform'
+Message-ID: <20250731083245.0aa1c6e4.alex.williamson@redhat.com>
+In-Reply-To: <20250731121947.1346927-1-clg@redhat.com>
+References: <20250731121947.1346927-1-clg@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,85 +106,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Jul 2025 09:54:39 -0700
-Davidlohr Bueso <dave@stgolabs.net> wrote:
+On Thu, 31 Jul 2025 14:19:43 +0200
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-> Hello,
-> 
-> The following allows support for component basic back invalidation discovery
-> and config, by exposing the BI routing table and decoder registers. Instead
-> of going the type2[1] route, this series proposes adding support for type3
-> hdm-db, which allows a more direct way of supporting BI in qemu.
-> 
-> Caveats/RFC: Just as in Ira's series, there is the question about the whole topology
-> allowing BI, not just the endpoint device. That series left the rest of topology
-> (dsp, rp) non-BI capable, for which any kernel counterpart testing would fail
-> when using type2, but at the same time is also consistent with flit 68B when not
-> using a type2 device.
-> 
-> This series blindly enables BI capabilities for ports even when no type3 hdm-db
-> is being used. While it is handy, it is inconsistent with the driver seeing 68B
-> and the BI registers in such cases. I've been going back and forth with possible
-> workarounds, but don't really have a good answer, and this will ultimately
-> affect not only BI but all goodies that come with 256B flit. Any suggestions welcome.
+> Hello,=20
+>=20
+> The VFIO_PLATFORM device type has been deprecated in the QEMU 10.0
+> timeframe. QEMU 10.2 is the time for removal.
+>=20
+> The last patch moves vfio-region.h under hw/vfio since it no longer
+> needs to be a public VFIO interface.
+>=20
+> Thanks,
+>=20
+> C.
+>=20
+>=20
+> C=C3=A9dric Le Goater (4):
+>   vfio: Remove 'vfio-amd-xgbe' device
+>   vfio: Remove 'vfio-calxeda-xgmac' device
+>   vfio: Remove 'vfio-platform'
+>   vfio: Move vfio-region.h under hw/vfio/
+>=20
+>  docs/about/deprecated.rst             |  25 -
+>  docs/about/removed-features.rst       |  25 +
+>  docs/devel/kconfig.rst                |   2 -
+>  {include/hw =3D> hw}/vfio/vfio-region.h |   0
+>  include/hw/vfio/vfio-amd-xgbe.h       |  46 --
+>  include/hw/vfio/vfio-calxeda-xgmac.h  |  43 --
+>  include/hw/vfio/vfio-device.h         |   2 +-
+>  include/hw/vfio/vfio-platform.h       |  78 ---
+>  hw/arm/virt.c                         |   5 -
+>  hw/core/sysbus-fdt.c                  | 383 --------------
+>  hw/vfio/amd-xgbe.c                    |  61 ---
+>  hw/vfio/calxeda-xgmac.c               |  61 ---
+>  hw/vfio/platform.c                    | 716 --------------------------
+>  hw/arm/Kconfig                        |   3 -
+>  hw/vfio/Kconfig                       |  16 -
+>  hw/vfio/meson.build                   |   3 -
+>  hw/vfio/trace-events                  |  11 -
+>  17 files changed, 26 insertions(+), 1454 deletions(-)
+>  rename {include/hw =3D> hw}/vfio/vfio-region.h (100%)
+>  delete mode 100644 include/hw/vfio/vfio-amd-xgbe.h
+>  delete mode 100644 include/hw/vfio/vfio-calxeda-xgmac.h
+>  delete mode 100644 include/hw/vfio/vfio-platform.h
+>  delete mode 100644 hw/vfio/amd-xgbe.c
+>  delete mode 100644 hw/vfio/calxeda-xgmac.c
+>  delete mode 100644 hw/vfio/platform.c
+>=20
 
-Hi Davidlohr,
-
-We probably need to make this work like link width. That would push the control
-to the downstream port side and effectively 'trains' the link (really simple negotiation
-of capabilities). I don't think we care about more capable device plugged into
-a less capable upstream port, so a simple property for the type 3 device (and switch USP)
-should do the job.  If we want to do the optimized flits we'll need a little more.
-
-So in short, make RP and downstream port always BI and 256bit flit capable, but
-'fake' the training so if they are plugged into a EP or switch USP they report
-whatever that was configured for. 
-
-So alongside your hdm-db property in patch 2, have a 256bit-flit property.
-Both of those have to apply for type 3 and the switch USP.
-Then we sanity check the combination works (i.e. hdm-db only if 256 bit flit)
-
-I think we need this fine grained control because we want to poke the corners
-where only parts of the tree are BI capable.
-
-So, precursor patch to enable 256bit flit mode then this stuff on top.
-
-Jonathan
-
-
-
-> 
-> Patch 1: is lifted from Ira's series with some small (but non-trivial) changes.
-> Patch 2: adds BI decoder/rt register support.
-> 
-> Testing wise, this has passed relevant kernel side BI register IO flows and
-> setup.
-> 
-> Applies against branch 'origin/cxl-2025-07-03' from the jic23 repository.
-> 
-> Thanks!
-> 
-> [1] https://lore.kernel.org/linux-cxl/20230517-rfc-type2-dev-v1-0-6eb2e470981b@intel.com/
-> 
-> Davidlohr Bueso (1):
->   hw/cxl: Support Type3 HDM-DB
-> 
-> Ira Weiny (1):
->   hw/cxl: Refactor component register initialization
-> 
->  hw/cxl/cxl-component-utils.c   | 206 ++++++++++++++++++++++++---------
->  hw/mem/cxl_type3.c             |   5 +-
->  include/hw/cxl/cxl_component.h |  87 +++++++++++---
->  include/hw/cxl/cxl_device.h    |   3 +
->  4 files changed, 232 insertions(+), 69 deletions(-)
-> 
-> --
-> 2.39.5
-> 
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
 
