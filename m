@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0359C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 16:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7599C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 16:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhVzb-00053z-EX; Thu, 31 Jul 2025 12:18:55 -0400
+	id 1uhW3d-00068Z-Oi; Thu, 31 Jul 2025 12:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhUgk-0005Dr-Ry
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:55:24 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhUgj-0005S5-2q
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:55:22 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e8e2a260926so991013276.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 07:55:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753973719; x=1754578519; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bxItBQpn09h908+2a6FGV3m8QXYlJKJZ2Ok7R+lMOuM=;
- b=Z+ofYxEGQrCM46cyE6yL9q5Du90f/oExANLUV/9/1uTw7F1PS949Q/fnKmoJ0pj96H
- a4LBnCCQvF8fsyOTQLRaRcxal7nfdYXga49qH3kvLQHd1xkfxi3YGTxwEkV7RLLyiv98
- NHViKwDfk6vYxNFQCRFoD9Qi59bZSdF245ObnfGHe/8U1Od5tiJXeqWgGix1DmacXVEE
- WTiN0s19/4VqWFoQXTHKdzZTR8uDV7UvH0MRo/h0v+AnffPTkmwONz/aFJsG7WFCLvsn
- G8FmaXwgRQV5AtrobxHsEyX2RgKuyFrUJRPXMqqrMYVXzUCmmeNhpXq5XfAnq39fTImh
- /AoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753973719; x=1754578519;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bxItBQpn09h908+2a6FGV3m8QXYlJKJZ2Ok7R+lMOuM=;
- b=IqPLe7jqqJIhUFCEDW/8eenay6canENfMTBAQY/oHv/Xt1yTDam8R1yDxLZkdZ/Yb5
- p2gEHOAaUm4TliAqod1gu/vVNzXN2HdJkLyXG88djuiZ9gYK5rrqNO2pYStwcSpk7ELo
- yuv+rIxg74rq7oOffNOVvcZ6mMtnib1G+4eQiraxlsRR7UkgmVH254BEcpfJ0Requnr+
- +x42KWV+n0Ex2EJivwhLdm++QyFg538uow/nmFk4rGLK1Uhg260soEA4AtNpH82d3Qaj
- tO5R63fjRdSr1XhzRQQ0oZmpOWf+gKik4arW6C72L2wyhkOwuBkSsrn7RfN84T3ex6W4
- 8sbQ==
-X-Gm-Message-State: AOJu0YwgyYfTuBh08gL5QWTrpTSP2BMKreiGp2w59df/di/9GE/swgci
- GViKsQWVEIosQw/t//JGMNyZYv5YzjaaY9gaFioGCNLiShdOfxLROPaPZWqwbIeMBethAGTZE2Z
- e6AL8ZcQaKVSmQv0bBJ4rnetGmqFNW1UKpP7JfFBi9A==
-X-Gm-Gg: ASbGncsnZXZmJcjsJrSR3BryxDBk86NKNTJsssF1sMRDCU/q5UPMDi2+gTxBX51Oki7
- AmD1CDG7JC420XVbxRW7N68nApTV/+Yx1irsDrBxkcuOFpQx2Br2Y4nFMSxcbrE3DcIt0vzU8wD
- Q/7J6AiSodCtyEhbzSLEUEon/H45ILa7UZY3aiDUdF7D9HRJO/DMyvWE0F7JXQRBoSr9Gf7y/XW
- 6nSM5xbhL7Sb7Vxzp4=
-X-Google-Smtp-Source: AGHT+IGDVq9cQb3gd+8vnD9TEFiCkB9s55WG6nNIAcMvJruDNKqpz6nrLYdzRU3Q0xo1KKi5xrQ4Wj1yy/vajb0T1t4=
-X-Received: by 2002:a05:6902:6b16:b0:e8e:29bf:df08 with SMTP id
- 3f1490d57ef6-e8e315c9869mr9306737276.44.1753973719467; Thu, 31 Jul 2025
- 07:55:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250731144019.1403591-1-clg@redhat.com>
-In-Reply-To: <20250731144019.1403591-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 31 Jul 2025 15:55:06 +0100
-X-Gm-Features: Ac12FXyvCstHCOGFnTX2PbmT7NFr1P4qSpqUNY2t43DfN2SPkGoTu78XcQZbMhg
-Message-ID: <CAFEAcA-FZq4RJrDfDiSqC5-L3720cYALamJGU5fQXQnV9J_-Rw@mail.gmail.com>
-Subject: Re: [PATCH for-10.2] hw/arm/virt: Include 'system/system.h'
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhUjk-0003fq-7x
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:58:29 -0400
+Received: from p-east3-cluster3-host2-snip4-7.eps.apple.com ([57.103.86.20]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhUjh-0005l4-Ti
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 10:58:27 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPS id
+ E91D218001A4; Thu, 31 Jul 2025 14:58:22 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=Kx3OFevsggf5QevjKHY8QlQ/4BM1Y+lp+65Acjm4sfI=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=XUEv8yn0GW6GNbm8/KcEqvZqcAtitsLShmGrlwdl/ZPaA0kkE+jJ414r65nnVta/APgyl/7tdvdfsZJcpUz2Lb2/euK25BW/opgCF8XRRjkLmq1+NEDr61jvnkcEO53fI9/+6UgSvx19EKymLgwM0OpJgBhwwDPN5n9OOmOVlfYS6CkasZsIeYg63KWcrwkl+8qL0aP6F0HmsyDf0KXsnf8gCE4knLiYGq3nSM480d7FXp7Lb13mM5xq7Htj2XQ0s2aVGIPs5HJwHM+nRKw35w/kJ+9EArL3RsCknhyQBe7PvVVpirP2sFLiDgn6//yMJMmIBXuazor9YlrH9+en9Q==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPSA id
+ DA7D91800180; Thu, 31 Jul 2025 14:58:21 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
+Subject: Re: [RFC PATCH 2/3] tests/qtest/migration: Only test aarch64 on TCG
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA-acYCCXNy-udHTeL3zUFxonh4k6JwTJyxzHTMWTDN2NQ@mail.gmail.com>
+Date: Thu, 31 Jul 2025 16:58:10 +0200
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Message-Id: <80BD56B4-BCD1-4C80-A7EE-91A9F1029557@unpredictable.fr>
+References: <20250730205245.2118-1-farosas@suse.de>
+ <20250730205245.2118-3-farosas@suse.de>
+ <CAFEAcA-acYCCXNy-udHTeL3zUFxonh4k6JwTJyxzHTMWTDN2NQ@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3860.100.5.1.1)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzMxMDEwMiBTYWx0ZWRfX1lT17gZTuCjg
+ GLLCepIBgJutAFf9z3kysyp/VO9GjkmWEhlnXrvTQfEul3KCgk+Xr8FQZ/y/pkkLBnMQZrWtY8+
+ ImwKKl7BkG2gb8TY4IIfeXeJIQ3Jnzj8jZPYTqhQJXa89SfkecskyvULSjhQACgX7lk4ozimZl7
+ BU+Uv6MfKqKghmHV6KJPNqD5Js2GXy4RxqqMPPz/FwFMNfyihpznQebrbAzgfsQVveyJxsgaLV0
+ g0cs2eeuoihFmZTngQXUguZaSmGqTtoFQAnqAB7cwuircMc0jOkQo2lqheHrqjJdJTJK7xesc=
+X-Proofpoint-GUID: FMl2sz_7wRt-YChbVXGlhyyj5ZsrFk-x
+X-Proofpoint-ORIG-GUID: FMl2sz_7wRt-YChbVXGlhyyj5ZsrFk-x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-31_02,2025-07-31_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999 malwarescore=0 clxscore=1030 phishscore=0 suspectscore=0
+ adultscore=0 mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2507310102
+Received-SPF: pass client-ip=57.103.86.20;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,40 +88,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 31 Jul 2025 at 15:40, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> hw/arm/virt.c should include 'system/system.h' for :
->
->   serial_hd()
->   qemu_add_machine_init_done_notifier()
->
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> ---
->  hw/arm/virt.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index ef6be3660f5fb38da84235c32dc2d13a5c61889c..e1b6241f7bee4c2fddde31c51=
-2561e87229cebc2 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -50,6 +50,7 @@
->  #include "system/kvm.h"
->  #include "system/hvf.h"
->  #include "system/qtest.h"
-> +#include "system/system.h"
->  #include "hw/loader.h"
->  #include "qapi/error.h"
->  #include "qemu/bitops.h"
 
-Presumably we're currently pulling in this header
-indirectly via some other header (the vfio ones)?
-Might be helpful to say which.
 
-If this is a dependency for your vfio-platform removal
-patches, feel free to include it in there.
+> On 31. Jul 2025, at 15:37, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Wed, 30 Jul 2025 at 21:52, Fabiano Rosas <farosas@suse.de> wrote:
+>>=20
+>> Currently our aarch64 tests are only being run using identical QEMU
+>> versions. When running the tests with different QEMU versions, which
+>> is a common use-case for migration, the tests are broken due to the
+>> current choice of the 'max' cpu, which is not stable and is prone to
+>> breaking migration.
+>>=20
+>> This means aarch64 tests are currently only testing about the same
+>> situations as any other arch, i.e. no arm-specific testing is being
+>> done.
+>>=20
+>> To make the aarch64 tests more useful, -cpu max will be changed to
+>> -cpu neoverse-n1 in the next patch. Before doing that, make sure
+>> aarch64 tests only run with TCG, since KVM testing depends on usage =
+of
+>> the -cpu host and we currently don't have code to switch between cpus
+>> according to test runtime environment.
+>>=20
+>> Also, TCG alone should allow us to catch most issues with migration,
+>> since there is no guarantee of a uniform environment as there is with
+>> KVM.
+>=20
+> The difficulty with only testing TCG migration is that now
+> we're testing the setup that most cross-versions migration users
+> don't care about. At least my assumption is that it's KVM
+> cross-version migration that is the real use case here.
+>=20
+> For instance, this migration bug with the DBGDTR register
+> isn't a problem for KVM, because with KVM we use the kernel
+> to tell us what system registers are present, and whether
+> a register is defined with a cpreg in QEMU or not doesn't
+> affect what we put on the wire for migration. Conversely
+> there might be migration compat issues that show up only
+> with KVM and not TCG (though the most obvious source of those
+> would be host kernel changes, which is kind of out of scope
+> for us).
+>=20
+> Though of course with our CI jobs we're probably not
+> doing AArch64 KVM cross-version testing anyway...
+>=20
+On the cloud provider side*, we do rely on having rollbacks work.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+We rely on staged deployments with rolling back if things go wrong
+as we observe progress.
 
--- PMM
+Note that the set of MSRs KVM gives (at least on AArch64) does sometimes
+vary between releases so for rolling back you=E2=80=99ll need to ignore =
+some (new)=20
+sysregs in the vmm. With careful planning so that you deploy a VMM
+release with a point-fix to ignore the new registers and then the kernel =
+update.
+
+So not dealing with that would make the cloud use case not usable =
+without=20
+downstream patches.
+
+*although we don=E2=80=99t rely on Qemu for Nitro System VMs
+
+Thank you,
+> thanks
+> -- PMM
+>=20
+
 
