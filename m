@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A7EC87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F549C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhOSR-0002vj-IH; Thu, 31 Jul 2025 04:16:11 -0400
+	id 1uhOcK-0005Pr-0E; Thu, 31 Jul 2025 04:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uhOSD-0002oK-Tu
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:15:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uhOSB-0004iU-AC
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:15:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1753949752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Gx7B1p3Aou5VOYXUQHBOLvehoQePrRkboYdN16EZLOs=;
- b=giaaL8FRNsZCJ/AYxmL6Mf2ssAaHxthQRl7LnOsPyT28T5OGUTHAB2NudqFSB9DXz+8t0x
- IOuVMZ29vTyhiVggKcUVs1o0nadQ2bdau5Yy6qgQbPC1XadfTe7QVhwH+6HB4+Wv2e5llJ
- Z0o0YDxWygV2wVYMY+SuDjKr2tRi1go=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-MiqGL2P_NISvcVov5GYigA-1; Thu, 31 Jul 2025 04:15:49 -0400
-X-MC-Unique: MiqGL2P_NISvcVov5GYigA-1
-X-Mimecast-MFC-AGG-ID: MiqGL2P_NISvcVov5GYigA_1753949749
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b7931d3d76so478583f8f.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:15:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOcF-0005Gz-AC
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:26:19 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOc8-0006uG-9N
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:26:16 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45618ddd62fso5822255e9.3
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:26:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1753950369; x=1754555169; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Rj9DQXa2tBkRnNQLTKkGjnzAc3iD26wKzXwbJ9nHvX4=;
+ b=h/vJ/AtIAB6gspc1Hs+wtNag/QE1kYJ3uTjKMry7TEjr/QPYI5zQL0r9oapOabxjiN
+ FJlbFvfZuqRoAuASfwd5RTUW0ckY46hU/Da2H1pdAOCUp8V0HNS6a6lUL3Pylgp1USEP
+ oSbvw4ire/7p8k/5yxauBgBpqg9vI1NLkm+1KmZd1I/bsMwMtdqjP4eJFQFVNZTLiSaB
+ NOgzGkshfrFSQ5shzHlqdyNvsUHP1YIVHu3+JyrQk8aczAIXt95weV9efIC2E0MhhF6Z
+ YXnG8dh2AIzpttv3m4Bt/++jAg1G5g4430WTX8ubGLBP/PF2AbIp8VkVXG0hbeZHPmus
+ ESCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753949748; x=1754554548;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Gx7B1p3Aou5VOYXUQHBOLvehoQePrRkboYdN16EZLOs=;
- b=R9fxStLJBxll/WUMm/Nz32ltra99xbRg55ooAEbUSkBM63fxLeSNOVF15UCtLTRMFJ
- 3404TwAv8xhSZyOUY5EaBMBmjsIAvBR4NDNvM6QENWlbK9o3a3yaU5UnxdGbbSEWSVyE
- Znk9v7637NVwj9tIoyOedl2n5XmTGo5NehYAeBEiZw3xcFFP9aENSYA+wJfroJQ6Gyjk
- TrC50umO2ceRqodGaSKYu0dGzBrS58Acdbb7GxkbUzMmMJKtmI6Pd2tAlkTLfU7owtgp
- GGn936OXFTKRJEyQDz6SdxhMhR8bWseEk0m9M4ae2o0533qmJ+gbWFlA5hk2bedzcQrf
- e6dg==
-X-Gm-Message-State: AOJu0YxNItVjqLKgeerGSJ8prKEqlkyI2Jogwtx/bLO6d5acX0oef3h3
- L6Ylad4bpSqEKOyeb0v7xUKWECQSwBJcEX7rfwhN9cXNCiGuT0t+t4rEltVIiGU+JAPOB6vST39
- EyuYDNp49cnSSg4+H6R6/fh3np0VYCrusTtsjV4mdRKj0C4X/aFJgqRa8
-X-Gm-Gg: ASbGnctoSv/sVp4jQpMs5qKnF56OY+oGq2pFCd5SnpjdDQDeAS6UAbkTjyPhqu9aMC2
- HAP66eADoP6eq4ngKs8Gbt4vqtmIrTVxuIXfZESA/vT5TaW39XwqRxND62yptYz4ip+sYqQddWL
- uK3gAH80j7oc5slsmZKVHyxmso9sfIJdyxYICTLIBIfGpz+MsQJEtmpeQmLIk4SdUL02ZgFC43y
- qL/Lz6gBMSQphmfm9CbqsM/BJhzoNy55VDOWFr0ibBduHusQJzoBxDCHLXA7n8xWJX510rGDGOX
- Jb/zhNCjDPAXKQIDYp6VdUUu/kQdpQ==
-X-Received: by 2002:a05:6000:4304:b0:3b7:9d87:97ad with SMTP id
- ffacd0b85a97d-3b79d879f3cmr898119f8f.37.1753949748027; 
- Thu, 31 Jul 2025 01:15:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkn3J078b4bU0DjYqQv33UUlNv/Q4pL9pg7gPcFgCRvVtwTXq3KCjFCNySIBxD/kit0nJp5A==
-X-Received: by 2002:a05:6000:4304:b0:3b7:9d87:97ad with SMTP id
- ffacd0b85a97d-3b79d879f3cmr898071f8f.37.1753949747210; 
- Thu, 31 Jul 2025 01:15:47 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953eb7acsm53821015e9.28.2025.07.31.01.15.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Jul 2025 01:15:46 -0700 (PDT)
-Date: Thu, 31 Jul 2025 10:15:45 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH v2 1/6] memory: reintroduce BQL-free fine-grained PIO/MMIO
-Message-ID: <20250731101545.5b5ff8c2@fedora>
-In-Reply-To: <aIqTCITI84BNtWnp@x1.local>
-References: <20250730123934.1787379-1-imammedo@redhat.com>
- <20250730123934.1787379-2-imammedo@redhat.com>
- <aIqTCITI84BNtWnp@x1.local>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1753950369; x=1754555169;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rj9DQXa2tBkRnNQLTKkGjnzAc3iD26wKzXwbJ9nHvX4=;
+ b=CNQuyXhXOtKa9ESypK4yUDPXwian1vprleb1mLAqemgPS+rv9BbQ17ZWFp6kSQKHi5
+ 8zBpr+1NFeMSPz/r8dGdo/UYgAcjFXl6s7HyZ/PptjPxJXgGmV30C7bELex3CCDIWbbm
+ fMZ1GWDqprkHrrPY9ePunL3+LHlSUcel/jjgzvzoPwhQnzPemuolcwzLfwRJSR/AcRFs
+ 6Ug/YRy+vQuG/mYcByHwke06Nu1bxFvNEKNsa20lbBXvU18st3jw5VXIztISIpFY3nC5
+ yvEO4X2lXq2U7o5Wo6ix7G+B0A57KX5HqHjuBcmKxUkUHtj1YCy0mgMEzBoXZY/E9Co+
+ R7dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXsqoygtiv42qvomrU7O9CJ/NNGE8j0S5Zf8LoIx/imvuH0UaN/uiJdo3AFuQk9wMU+6vArCT4z+sSr@nongnu.org
+X-Gm-Message-State: AOJu0YwNRonDUi4Iq3oIeQmUX5bww4SMVbJgqVpOBAaul/pDl+Q2GQFj
+ cvqtrrwZ1Mc3sTeaToRSNmLygzkRhPCCt21O3MsJ+ySu2CzvYkdTXXEZXaIXPZDzo79xBxTF+1A
+ t+nVJ
+X-Gm-Gg: ASbGncs9PXE2pMIGNmwJvLA9nKKkBAfuIoyCAFtJULdwJzJYfd3/w8o1sp/JTXPpO+6
+ PA+IBJxq8mG2qG+01h6TyBofSYJto/Own5PWjR4slgCr+wmG8z2f7XNn4UPCJjqN22cwr5jXk/y
+ HANlqPsX1yD7tlmzffy+/Eqctr5rOEhuhvXOnG3mKOOFWEMHaC1FazoqXxmx/psWNWK3YdrKr1K
+ bSNVE7TUNNTOP+Nj47lm2fProL40qTTCNArXFXHJP3Tj2AIPikc6dTlj6FpEVXDQnB1Tls+rc8p
+ RYzAFxPS2Hc5ouZ+jDRTELYw+T2h2FlzrXPR0ZLczLKMThtfLdy4/ubIl8daHxbGphBBVozjQVs
+ 1y3uDKl1wDsoJIMF1C1MqVrVOsnWhhF1KxmFXZZ+ZxbfwKm0BAoKEs+befLwiNuThnFUqcIl461
+ h4
+X-Google-Smtp-Source: AGHT+IFw9iE9pC5QgyOrEy0RnpnIWrAnRgsO7tiAJ4S5yE+YPmrOjuRXMe1G2TyPXcFF8hesOOgFrw==
+X-Received: by 2002:a05:600c:1f0d:b0:456:25aa:e9b0 with SMTP id
+ 5b1f17b1804b1-45892bc48f7mr67970015e9.16.1753950368772; 
+ Thu, 31 Jul 2025 01:26:08 -0700 (PDT)
+Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4589ee4f0d2sm16876545e9.18.2025.07.31.01.26.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Jul 2025 01:26:08 -0700 (PDT)
+Message-ID: <1e5263cc-23fb-44cf-a8c1-f01b6fbb6ef3@linaro.org>
+Date: Thu, 31 Jul 2025 10:26:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: Introduce helper vfio_device_to_vfio_pci()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ chao.p.peng@intel.com
+References: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250731033123.1093663-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,36 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 17:47:52 -0400
-Peter Xu <peterx@redhat.com> wrote:
+Hi,
 
-> On Wed, Jul 30, 2025 at 02:39:29PM +0200, Igor Mammedov wrote:
-> > diff --git a/system/memory.c b/system/memory.c
-> > index 5646547940..9a5a262112 100644
-> > --- a/system/memory.c
-> > +++ b/system/memory.c
-> > @@ -2546,6 +2546,12 @@ void memory_region_clear_flush_coalesced(MemoryRegion *mr)
-> >      }
-> >  }
-> >  
-> > +void memory_region_enable_lockless_io(MemoryRegion *mr)
-> > +{
-> > +    mr->lockless_io = true;
-> > +    mr->disable_reentrancy_guard = true;  
+On 31/7/25 05:31, Zhenzhong Duan wrote:
+> Introduce helper vfio_device_to_vfio_pci() to transform from VFIODevice to
+> VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
 > 
-> IIUC this is needed only because the re-entrancy guard is not
-> per-transaction but per-device, am I right?
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/hw/vfio/vfio-device.h |  1 +
+>   hw/vfio/container.c           |  4 ++--
+>   hw/vfio/device.c              | 10 +++++++++-
+>   hw/vfio/iommufd.c             |  4 ++--
+>   hw/vfio/listener.c            |  4 ++--
+>   5 files changed, 16 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 6e4d5ccdac..00df40d997 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -157,6 +157,7 @@ bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
+>                                         Error **errp);
+>   void vfio_device_detach(VFIODevice *vbasedev);
+>   VFIODevice *vfio_get_vfio_device(Object *obj);
+> +struct VFIOPCIDevice *vfio_device_to_vfio_pci(VFIODevice *vbasedev);
 
-As far as I understood, it was per memory region (device in this case).
- 
-> Maybe some comment would be nice here to explain how mmio concurrency could
-> affect this.  If my above comment is correct, it could also be a TODO so we
-> could re-enable this when it is per-transaction (even though I don't know
-> whether it's easy / useful to do..).
+Please return the typedef (like in the implementation), not the struct.
 
-I can add a comment on repin.
-> 
-> Thanks,
-> 
+A one line comment describing what this helper does would he helpful.
+
+Regards,
+
+Phil.
+
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 52a1996dc4..a4f9c9216c 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+
+
+> @@ -429,6 +429,14 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
+>       }
+>   }
+>   
+> +VFIOPCIDevice *vfio_device_to_vfio_pci(VFIODevice *vbasedev)
+> +{
+> +    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
+> +        return container_of(vbasedev, VFIOPCIDevice, vbasedev);
+> +    }
+> +    return NULL;
+> +}
 
 
