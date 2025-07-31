@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBFC83F17
-	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A53C83F17
+	for <qemu-devel@archiver.kernel.org>; Thu, 31 Jul 2025 08:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhOgR-0003yN-Sj; Thu, 31 Jul 2025 04:30:39 -0400
+	id 1uhOiE-0006vM-BZ; Thu, 31 Jul 2025 04:32:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOgG-0003vI-W6
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:30:30 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhOgE-0008Gi-N3
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:30:28 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4563a57f947so7001925e9.1
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1753950624; x=1754555424; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pd7UgNESfPtmW7raPCFpcrGuphL9U0VjTNjtnnNmoJE=;
- b=EaK54W9qgg0esVxyMaGAiVhC9X9W0d5RnkxvPuSRP2Xfh5RaPTg4ZSjhXbRk1Oisir
- bEKqWbNhaPnJP5E8K+AUK2DCGexfe9HcffK+Pmnq061Smkxnqic5wAUELUY2FgnueP4o
- 5RCWUb6r8/poklWfo/ptM2PMrH5Mr6IeJEUvu2flSUN01ehjEFqR4gWQq6hpxKt9xCrm
- lrzCOA9wnufrARfd5uvSJsp7JUi8ezR2SmA90cZQC7mNVwUzUda5z2v60i8yvs3phuoN
- kndpEdSPOauoNkVIOcqYQDzoEbKJnMLvC3fD3LrTdG/oQ75RmNITn1ROGxq92XhPXuoP
- 06Zg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhOi8-0006sd-Ka
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:32:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhOi3-000083-6N
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 04:32:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1753950735;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tfe4c0W0kn5d7yjhyE0kabLsPO9r4eHXt3bBOJb9Rv8=;
+ b=VLI4+yKEqImeDZJrxNHOeqXQS38jOXU2OnTYEs5ljbxwzvl12axc7scoAvLUWYyhQISbFA
+ FYevUXsmkIO+y00O85HHk3cZkWU2d45oO0apUvfNsTU7FHBNNn+K7cuzPINk60561eItK2
+ PYRPO7zPEDXpPc6fxztGSAsuPiEGFJc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-204-S_GK6BtLNo20YScglaPkoA-1; Thu, 31 Jul 2025 04:32:13 -0400
+X-MC-Unique: S_GK6BtLNo20YScglaPkoA-1
+X-Mimecast-MFC-AGG-ID: S_GK6BtLNo20YScglaPkoA_1753950732
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3b7931d3d76so491481f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 01:32:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1753950624; x=1754555424;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pd7UgNESfPtmW7raPCFpcrGuphL9U0VjTNjtnnNmoJE=;
- b=DEJUiBpYIogep/YjBwuTm1QcUubxz8t0Y6zTAyqnyV5HQA4hwxdIl5ZZwhTwiLG6Bi
- 1WbYtcLiDsWgYSKrzZygQNKdLJULN9XxDIyToqxlh0LF/Vf/GIC00+xPwd/rn6MPogAQ
- 9auZ1sGH0x34tsklU3JOCE9GZcJfKdxtckBFOgYkUrLqsepvk04l+SOBiQhvnw+nZ+u8
- l9bhy+/UWUsPXLjPVPZ0wZB5Z/Xaibh38+wYbpxQe8i38nA5YkaxuNwqAp32HON6h9hP
- IvFab0/Yp/leQ3qNshQJ6RRBNAbTY2hwtgVV6AF/aGzlBzjnQRV154j2iXdrGJ9Z/vy8
- Nw+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDJJoD/RFgq4yOnGB/2qHw/YcJBnOsiV6ahc1fyhEq7yfWafM3YibrXFDTpNioHZon1G+r+6UdDMD0@nongnu.org
-X-Gm-Message-State: AOJu0Yy1syrk0zwuo/8Hvwc8UnCcQEaK29DKBaYN5G1WwWuJ2E1iK2H5
- yfSYPILpZ14bx8NwB0H5uOrS4Mxo44h6nEzTg98iueyK3CDH6ENhYGSTTgbGs3ehEJ4=
-X-Gm-Gg: ASbGncuFuD7hXCWVKmHIJOyHwbOQjFYtImphlo0aeA/v4BNrEO7vJJAUHfKJY93LCUf
- 9VuvEKaVqN342d+B00XLL+tVxK5W5HBZpK00Q1saZOgSoL7/bWevFbY4nzP5NW4PgSZ5uk3l7+1
- Ha8exsMMPVuL6vgUeiDfE+xkYOmUIRV+SEvuNPf+TTD6ImeY+q47+vhmCi/pYZZbGw6/An5u4aD
- Jc+Hp3SGn+I6U0VmCVNYuufbaTC0lSA8/eLuaqSMB800WiDAqR5+b+g/UIw+iqp9NbarFBmP27x
- pMPjYmQFaV9f2bEMsPH/y2LfxNcYVdJUI4i5qnbR6jsA+yy+Ikv3d/UweQ8p5keajGkN1S6VVoF
- G6etnHCEwBTmqiT8zZMM+WHqHovEGt63wompNwmkGNIFHvC9mkvQQ9O1f1mzpjBaXrOuVCGotCI
- Vi
-X-Google-Smtp-Source: AGHT+IHlM9yk90IuF5pxI3aaSJsksDr9W0Xpobn3XaVeFo4Z/0bWrAb6uuJPbzsl8MB6ZTHLWROdoQ==
-X-Received: by 2002:a05:600c:674a:b0:456:15a1:9ae0 with SMTP id
- 5b1f17b1804b1-458a223b223mr11642805e9.13.1753950624454; 
- Thu, 31 Jul 2025 01:30:24 -0700 (PDT)
-Received: from [192.168.69.209] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c48105csm1574069f8f.64.2025.07.31.01.30.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 01:30:23 -0700 (PDT)
-Message-ID: <ccee61c9-ee41-4183-a87b-2a9641d92dc0@linaro.org>
-Date: Thu, 31 Jul 2025 10:30:22 +0200
+ d=1e100.net; s=20230601; t=1753950732; x=1754555532;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tfe4c0W0kn5d7yjhyE0kabLsPO9r4eHXt3bBOJb9Rv8=;
+ b=Aw8IySZi5Zb8qmXDdnZaz42nwKgsra1j1lFyHYzDG18gvxFhOeZglyvLwJQGf8taZY
+ ZMz2NITddIQqlwjn9xv1e7DmMHAAVqHwrIAMqxz//hZFjVpJB2rMOGsdSwRYqCOwaTHu
+ aE3qLlaEgTeIN7OGyVvDOX47s1FilAsJX47wOgrANHv4XjECyrDDz9P+fevNN3PIbNFd
+ aG9NPUZsZzixllbvucKJxUdPQOb9s/PWAkLPamGSpKiBpgDc0evVQL2vOVPbzaOBm674
+ FwhwxKiPkoXGoIote2BXRqnhNJBwVv+58ZMUc5WH1P14+AZmKLfGkM7oVXgraRqhPiGw
+ jPQw==
+X-Gm-Message-State: AOJu0YwZ+CBWo4JJ9ZBgKeojBt0vQdVN7yh7sHKzxcWa5osoM0XQ4P0z
+ 8MnvyQI4COCXoZHtV+x3jOihxL0VJ2tFYdQ52Px6i8mfiQbFd76ClOvNGFqBk/zJHRZt0Azs65I
+ GqTq45RIZCWeMnlbrWhqr9hIwGh1TdPvmUsdGBhh5L1M1qfldQKfunoW2
+X-Gm-Gg: ASbGncvE2Q5ZHn+LWXTU1Ttp+LSPjl3Pgy4UWlihSgqU8EbjEX2CMgj7TWKXIfdHQZR
+ wwMFbuiyj6bigaAYoOXbrjnV2xSp4IbgolmbcsezZGTjV6nV7FUAxU/3wvw+JLb3MMJuFFalfHI
+ p1Eammae4pAsWCOwUu1B20yJJnYrk8kg6Vu/t6exiFdT5TZgCWWc//sqYTjvA5LmSNjX+rwq/pu
+ ipTWaAB+CIuxvicRXERyvUNpAjW41YjFvzxYqbhRf68Kfp/g8v2k0KOFzZruwWTqUjGSlV9FXod
+ 6AgJAqPZAEuUeFU5XdCpXsw+s6GJXA==
+X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
+ ffacd0b85a97d-3b794fd5940mr4897154f8f.16.1753950732075; 
+ Thu, 31 Jul 2025 01:32:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1B+VTY6EyLsm+xvbaZvTsIVAPExGTo1vB8Qqjb9Pvz0inqouzYRSkOTnGhwkJNQHki5yEyw==
+X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
+ ffacd0b85a97d-3b794fd5940mr4897127f8f.16.1753950731615; 
+ Thu, 31 Jul 2025 01:32:11 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c4a2f03sm1558580f8f.72.2025.07.31.01.32.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 31 Jul 2025 01:32:11 -0700 (PDT)
+Date: Thu, 31 Jul 2025 10:32:10 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2 5/6] hpet: make main counter read lock-less
+Message-ID: <20250731103210.292dfecb@fedora>
+In-Reply-To: <aIqZZ5bePh7Jmq3c@x1.local>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
+ <20250730123934.1787379-6-imammedo@redhat.com>
+ <aIqZZ5bePh7Jmq3c@x1.local>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 3/9] whpx: common: use whpx_cpu_instance_init on x86 only
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250731052753.93255-1-mohamed@unpredictable.fr>
- <20250731052753.93255-4-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250731052753.93255-4-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,33 +110,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mohamed,
+On Wed, 30 Jul 2025 18:15:03 -0400
+Peter Xu <peterx@redhat.com> wrote:
 
-On 31/7/25 07:27, Mohamed Mediouni wrote:
-> We aren't using it on arm64.
+> On Wed, Jul 30, 2025 at 02:39:33PM +0200, Igor Mammedov wrote:
+> > Make access to main HPET counter lock-less when enable/disable
+> > state isn't changing (which is the most of the time).
+> > 
+> > A read will fallback to locked access if the state change happens
+> > in the middle of read or read happens in the middle of the state
+> > change.
+> > 
+> > This basically uses the same approach as cpu_get_clock(),
+> > modulo instead of busy wait it piggibacks to taking device lock
+> > to wait until HPET reaches consistent state.  
 > 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/whpx/whpx-common.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 0b23deb7c4..43d0200afd 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -486,9 +486,10 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
->   
->   static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
->   {
-> +#ifdef __x86_64__
->       AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
-> -
->       acc->cpu_instance_init = whpx_cpu_instance_init;
-> +#endif
->   }
+> The open-coded seqlock will slightly add complexity of the hpet code.  Is
+> it required? IOW, is it common to have concurrent writters while reading?
 
-I'd rather keep whpx-*common* without any #ifdef'ry: add hooks
-when architecture-specific code need to be handled, and add empty
-arch stub when nothing to be done there (preferably with a comment
-in the stub).
+Write path has to be lock protected for correctness sake even though
+concurrent writers are not likely.
+
+I've tried seqlock as well, the difference wrt seqlock is few LOC only
+it didn't make HPET code any simpler.
+
+> How bad it is to spin on read waiting for the writer to finish?
+that will waste CPU cycles, and on large NUMA system it will generate
+more cross node traffic. (i.e. it would scale badly, though TBH
+I don't have numbers. I think measuring it would be hard as it
+would drown in the noise.)
+
+hence I've opted for a more effective option, to halt readers
+until update is done. (at the cost of latency spike when that
+unlikely event happens)
+
+> Thanks,
+> 
+> > 
+> > As result micro benchmark of concurrent reading of HPET counter
+> > with large number of vCPU shows over 80% better (less) latency.
+> > 
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > ---
+> >  hw/timer/hpet.c | 48 ++++++++++++++++++++++++++++++++++++++++++++----
+> >  1 file changed, 44 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> > index 97687697c9..d822ca1cd0 100644
+> > --- a/hw/timer/hpet.c
+> > +++ b/hw/timer/hpet.c
+> > @@ -74,6 +74,7 @@ struct HPETState {
+> >      MemoryRegion iomem;
+> >      uint64_t hpet_offset;
+> >      bool hpet_offset_saved;
+> > +    unsigned state_version;
+> >      qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
+> >      uint32_t flags;
+> >      uint8_t rtc_irq_level;
+> > @@ -430,17 +431,44 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+> >      trace_hpet_ram_read(addr);
+> >      addr &= ~4;
+> >  
+> > -    QEMU_LOCK_GUARD(&s->lock);
+> >      if ((addr <= 0xff) && (addr == HPET_COUNTER)) {
+> > -        if (hpet_enabled(s)) {
+> > -            cur_tick = hpet_get_ticks(s);
+> > -        } else {
+> > +        unsigned version;
+> > +        bool release_lock = false;
+> > +redo:
+> > +        version = qatomic_load_acquire(&s->state_version);
+> > +        if (unlikely(version & 1)) {
+> > +                /*
+> > +                 * Updater is running, state can be inconsistent
+> > +                 * wait till it's done before reading counter
+> > +                 */
+> > +                release_lock = true;
+> > +                qemu_mutex_lock(&s->lock);
+> > +        }
+> > +
+> > +        if (unlikely(!hpet_enabled(s))) {
+> >              cur_tick = s->hpet_counter;
+> > +        } else {
+> > +            cur_tick = hpet_get_ticks(s);
+> > +        }
+> > +
+> > +        /*
+> > +         * ensure counter math happens before we check version again
+> > +         */
+> > +        smp_rmb();
+> > +        if (unlikely(version != qatomic_load_acquire(&s->state_version))) {
+> > +            /*
+> > +             * counter state has changed, re-read counter again
+> > +             */
+> > +            goto redo;
+> > +        }
+> > +        if (unlikely(release_lock)) {
+> > +            qemu_mutex_unlock(&s->lock);
+> >          }
+> >          trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
+> >          return cur_tick >> shift;
+> >      }
+> >  
+> > +    QEMU_LOCK_GUARD(&s->lock);
+> >      /*address range of all global regs*/
+> >      if (addr <= 0xff) {
+> >          switch (addr) {
+> > @@ -500,6 +528,11 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+> >              old_val = s->config;
+> >              new_val = deposit64(old_val, shift, len, value);
+> >              new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
+> > +            /*
+> > +             * Odd versions mark the critical section, any readers will be
+> > +             * forced into lock protected read if they come in the middle of it
+> > +             */
+> > +            qatomic_inc(&s->state_version);
+> >              s->config = new_val;
+> >              if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
+> >                  /* Enable main counter and interrupt generation. */
+> > @@ -518,6 +551,13 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+> >                      hpet_del_timer(&s->timer[i]);
+> >                  }
+> >              }
+> > +            /*
+> > +             * even versions mark the end of critical section,
+> > +             * any readers started before config change, but were still executed
+> > +             * during the change, will be forced to re-read counter state
+> > +             */
+> > +            qatomic_inc(&s->state_version);
+> > +
+> >              /* i8254 and RTC output pins are disabled
+> >               * when HPET is in legacy mode */
+> >              if (activating_bit(old_val, new_val, HPET_CFG_LEGACY)) {
+> > -- 
+> > 2.47.1
+> >   
+> 
+
 
