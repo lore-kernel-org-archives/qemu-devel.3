@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1678AC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 20:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B8FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 21:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhwmM-0001xp-4j; Fri, 01 Aug 2025 16:55:02 -0400
+	id 1uhwvo-00019d-5M; Fri, 01 Aug 2025 17:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhvt4-0007IG-1F
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 15:57:57 -0400
-Received: from p-east3-cluster7-host3-snip4-6.eps.apple.com ([57.103.84.157]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhvsy-0006bL-4y
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 15:57:51 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPS id
- A330D1800178; Fri,  1 Aug 2025 19:57:42 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=uhjuJh0geqkd1wPTBbXxDgtEX4zXBmg8NbgbVxyc5v4=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=f3qh8Q+BB39JQ8d/3GYWSRnTdIynRpSpoNlWPljwd4oy6dt7q3PUiiDnTDT8YJlVU2l/mDBftoR0MGVEY2539q5g/PWccthludoEZ5epalF4+cY1fRhlH4BG4nznO+OnvMvdJCa1xpY8JTsEt6L4OEuLyXkl3PW6OemB7XZPcGzUzUbPHpa3K3D2/5sB3lqAKRSMu7L1gbefu4spNIpWv8YBe8Lov8mqTpCV+yvfS9e9y/0RmX/Ivkrfxr5LA/do52C4j+To+tFuFLRXZqoNFfrizu6u/4ubzrwGeMg58XX9bDIC9dVkXMPe2LXY7U4SdSJw4MKNzbS7EZivUNGlIg==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPSA id
- 863941800224; Fri,  1 Aug 2025 19:57:40 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [RFC 0/9] WHPX support for Arm
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <b613245f-dfba-4f9b-8914-7c1e73c9dba5@linaro.org>
-Date: Fri, 1 Aug 2025 21:57:28 +0200
-Cc: qemu-devel@nongnu.org,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5133CBA1-A4FA-4789-AA7D-2FDBBFDF2470@unpredictable.fr>
-References: <20250731052753.93255-1-mohamed@unpredictable.fr>
- <8af5e691-da19-4141-8874-51ca685288ac@linaro.org>
- <864AC97D-2C45-402A-92AF-D0FDDB72C40E@unpredictable.fr>
- <21266cf2-887d-4bf3-8c9a-7633bffd8cd2@linaro.org>
- <17413DE3-C53B-4DA6-9777-3E772D2C2C2D@unpredictable.fr>
- <d495bae3-d252-4b79-883a-3f5f815c5feb@linaro.org>
- <5A71E199-4C6E-467D-9E9B-04DE9EF1A9CC@unpredictable.fr>
- <b613245f-dfba-4f9b-8914-7c1e73c9dba5@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDE1OCBTYWx0ZWRfX/xQC3TMGV5Kk
- 0KI/tuxpOO5q7AkRyBMSDWC7rX7/fCSMIkBLSOu+uY+fTHbCZBVwTjKoNXhGpp7BlEHQasugxVu
- tlf6HuF263dHuAs3GkLCvu5NVK1nEA2CPn6gq/TechnRss4vX3M26yRUCm6zXvl83WHGXNo/5Qx
- IOI8LDJ7xu81j+tAdlm9WK6jdpzka2XlAjt2WbiVIfDTnF7OcmEDmaeUj+m676bNNDh4PL5af50
- +oLTC2UeLIMktPsK7+3VVgWUaqdhOCR0mvl8HxYehs/DJ9Ip5b9KB+2p9PmDj197Ce/eRDNpM=
-X-Proofpoint-GUID: HNQf5xq8yGwcu9E8I_S6oiGkpE2A4UIn
-X-Proofpoint-ORIG-GUID: HNQf5xq8yGwcu9E8I_S6oiGkpE2A4UIn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-01_06,2025-08-01_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 mlxscore=0 clxscore=1030 adultscore=0 spamscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508010158
-Received-SPF: pass client-ip=57.103.84.157;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uhwDu-0003uN-Hq
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 16:19:26 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uhwDs-000256-SH
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 16:19:26 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-76bc55f6612so2388209b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 13:19:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754079562; x=1754684362; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CptNeUlPmzJxhRSJy4CfQx61s83a/WcunKZ6vxtsxjk=;
+ b=T4HAbsNG172Ddtkq3uGh1InlirySy8FMpP8zdCF9UnJZ6q/3+zaEfoSwnBag7qfirI
+ zyo1/auHFGxM3ahlg0iQskTPWlkWwAiClTkGHioBc0zgKnNBu4chuPW1aG7/lhV6R5JF
+ B9iKNDVHUdvw+ZHs/bXq5DexiI+/XHnp4HEiZUe4wwySZRjZ20UDaRw8CcaS3sYcOhne
+ m6JMIoGM5Cp88d3LNGIW3+1lGllD/TcFlAYrWbnJ/v+PGQQs8feoedHZ7NPKimSVjG52
+ Dgkw9t3K802Q9YwQWKNwE/DPg7NAdZUNIAloOznle52J67YU+a8CKKiNm+FNEMfdr0Py
+ M2lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754079562; x=1754684362;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CptNeUlPmzJxhRSJy4CfQx61s83a/WcunKZ6vxtsxjk=;
+ b=Nm8OeUHzogf6U0+KdDNBQpIYNO2zXueHXWz2cqo1VL5kdaGs/p4sWpxVEepbWv363W
+ e1Clpybzjf4r6CHPME93X+m/bLHp0IsetHsOPrPwcHTmymrETmqu0LUr7ky2uUyo/FdU
+ 44GtlLiso9P+5wSYh0OWwGIs2MM5LbjuA0X8Fj/7BjAeAaupJI4Zj1O/l7YSQnFe7WM7
+ KJ30zWWXsr3Vuv3EEoQBQdW010iYtMVFIcz3jgT2YRQMBG532/OXKvHBOEVQUy0oSjFr
+ YRzXnJOfOq2v9SZwi+hQGY6aaOI7LMoT4qS2k04n5SprotwXX/EcQtN2mU73B1L1oxdA
+ AB1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbbNBkyo0Jizpl49VHwrk5HBabjeAWWQDOdPU0zyG+sBoocLiwF0wlgGBzZezp3761VyiEQfD7m/RI@nongnu.org
+X-Gm-Message-State: AOJu0YzcS45lGoS2dr9XVEjJA5TFraenZDVlBSjT/la8n0QpauTtkwPv
+ ELTPanv/8CkSp8l4HgNcoeWP2TOv5BAyVi6LBFwp1OA1mVXvQkH0ZenqoU00EvxauqM=
+X-Gm-Gg: ASbGnctWTdK46+85izvqvMUcI+CWGkMt3vAW2JzbhUf9kNKoQcsSfrPdDB3pIz0BSAi
+ /FSSOhrMEIxhXXZju60VTmgBXgutTfm9+GO6RUeeHiYP+UwWdxd/Su4tyBTL41smhlgODZFF8Dh
+ 9tJj0CDjM6w1+q/HRDnZNk0gCgUHvTDNW8/hzXEPsTLTl5RNlg0OniWJ4EEbTZ5BlT3iEvBf3xX
+ V1TALF3n/RVQzYqmd1nFhFW0MZ6wEHaqKd4iGh2cQF/0mLXwgymjdji7Uzz9UFJj1LODllrUvEI
+ w3QNBqLJFjPsbxzhwXE7MYy/mkVDHalyfKwVcZE/aKtgGLPB+v+sZce1eEckAwGXVDpGbH48K56
+ XSvMjoMVD8qkl+x+x9L17Ydi4yFojBAHBT9jMNM4CJRiXkyg2Ji0=
+X-Google-Smtp-Source: AGHT+IENmDtsjaMEUtyKwuN4Oqxn8s67iHVaD29mCGEEetaPoizsmt5U4P6yio5n7Wl6C8zBEtonIA==
+X-Received: by 2002:a05:6a00:240d:b0:73b:ac3d:9d6b with SMTP id
+ d2e1a72fcca58-76bea8c3e72mr1089194b3a.4.1754079562546; 
+ Fri, 01 Aug 2025 13:19:22 -0700 (PDT)
+Received: from [192.168.4.112] ([180.233.125.160])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bccfbd05dsm4697688b3a.81.2025.08.01.13.19.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Aug 2025 13:19:22 -0700 (PDT)
+Message-ID: <383bbb24-3b38-412a-8036-b29f88374cf4@linaro.org>
+Date: Sat, 2 Aug 2025 06:19:16 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 47/82] target/arm: Expand pstate to 64 bits
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-48-richard.henderson@linaro.org>
+ <b2e40787-6043-4d4c-9cbb-731d0e92e25c@linaro.org>
+ <f398a65b-7b1f-492d-a612-eb3d6322ae4a@linaro.org>
+ <afb60f16-5ed1-4612-ba78-d849d9fa3998@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <afb60f16-5ed1-4612-ba78-d849d9fa3998@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +107,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/2/25 02:12, Pierrick Bouvier wrote:
+> My comment was related to vmstate_pstate64. Sorry it was confusing as I left the last 
+> change concerning helper-a64.c, which was not related at all.
+> 
+> So the comment was that vmstate_cpsr already contains the lower 32 bits of pstate, and 
+> thus we could save only the upper part in the new field.
+
+That was part laziness.  By saving the lower half twice, I can simply do
+
+   pstate_write(env, val)
+
+to load the data, rather than
+
+   pstate_write(env, (val << 32) | pstate_read(env));
+
+or something, to merge the halves.
 
 
-> On 1. Aug 2025, at 21:42, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->=20
-> On 8/1/25 12:31 PM, Mohamed Mediouni wrote:
->>>> I didn=E2=80=99t test anything on the stable branch for now but =
-only on Canary so far.
->>>> Just cursorily tested (EDK2 only) an X Elite device on prod =
-(26100.4652) and this issue doesn=E2=80=99t appear.
->>>> I have 8cx Gen 3 and 8cx Gen 1 (SQ1) devices around, will test on =
-those older SoCs later and see.
->>>> Random idea for testing: what if you put -M highmem=3Doff, does =
-that change anything?
->>>>=20
->>>=20
->>> Good guess, it solves the problem with edk2, and direct boots linux =
-kernel successfully now.
->>>=20
->> If you don=E2=80=99t mind, could you please test the latest commit I =
-just put on the Git repo (whpx branch)? It should address this properly.
->=20
-> Sure.
-> Without highmem=3Doff, I get a new error:
-> Physical address width: 36
-> C:\msys64\home\tcwg\qemu\build\qemu-system-aarch64.exe: VCPU supports =
-less PA bits (36) than requested by the memory map (40)
->=20
-Oh this confirms what I thought, just pushed a new commit which should =
-be a complete fix. :)
-
-And accessorily is also a good thing for Snapdragon X too, as 40 VA bits =
-were used there despite the hardware having 39.
-
-Thank you,
--Mohamed=
+r~
 
