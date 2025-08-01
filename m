@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D41C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 18:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C119DC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 18:25:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhuP6-0008Uf-EX; Fri, 01 Aug 2025 14:22:52 -0400
+	id 1uhuRE-0001B9-Ef; Fri, 01 Aug 2025 14:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhsml-0006lQ-Oy
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:39:32 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhsmk-0002kz-11
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:39:11 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e8d96ff2dfaso2214824276.2
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 09:39:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754066348; x=1754671148; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3jwB5SndLxSLn3CLa2Zip2Nya51ZQdcQ0VG/1UijsEc=;
- b=tbcGf8x3cpei563iriQbOQng+9XGViv5qTf0zvoeKle3+hDkGVvcWqUnDszqJcBchx
- NXrG+qAshjXV2VEfyFTIzONbtv+TPHQHcuLcjECUHUCb4H8wz2hVXktWRwS+4BUjpQ3W
- urd0mtPs6kpXwQEFOjbQ5IkZGxXicjGTfsurpFYJBlVoByt6BK68QmXoL1ApHesLn84j
- CCO6kzLrNOfJcM4RibhCwpO39YCq8ev2bkNh5PfqxCPwWvBAge0iHiPjmVSTzkCVvfrS
- sOlY4HS2zDb46PPo22XL0DETFrrXsvd+gOIlqV3Dnvoxt3yP4wutJN+2CzDoC6W1w+S5
- P/TA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhszd-0003rG-Mw
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:52:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhszb-0005Zy-Lw
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:52:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754067145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8GOnZrqmzASn1HaZWtED4UPrdR2/GxK8gC+5SJEPHqc=;
+ b=FoXY3RogdohJ1WjJW81dfOQuCzsAdSS046UygDmBB6ahid9zS7Q6EHpMGlAH/dPw29PJOo
+ JM9CUTvcokE6rfcnRrDlQfQ3bmsRRbJYjMycwnKr+EGoLqadTkAzbgA1HFxZ6szGYIgH4K
+ ks3z2HkxFpHzYe8T7KzmblumHh86EH0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-7o-ywcZQPo23dUA2427iUw-1; Fri, 01 Aug 2025 12:52:23 -0400
+X-MC-Unique: 7o-ywcZQPo23dUA2427iUw-1
+X-Mimecast-MFC-AGG-ID: 7o-ywcZQPo23dUA2427iUw_1754067143
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-455f7b86aeeso4447195e9.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 09:52:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754066348; x=1754671148;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3jwB5SndLxSLn3CLa2Zip2Nya51ZQdcQ0VG/1UijsEc=;
- b=DuomwOMjIoCm0xt9+AG9c0Yl3n5oTfw/kLcY7lNd3TZCYXbitL97ZXwTw4oSTGQPSD
- XCvfd1sgNGeSZcVwf8QnXfZgmvsbIkAGA555NaqF2MT0ruvXWNNFaBN5HRD33IZKiPI7
- cOLva1vlQV/XzPO4jxZnqW32qL9zWsMnUF0Ml+RN5CURWguY0M4zDfOnJa+MuX87/QNM
- 3m6+P84e0y556gY57xlgpNN4Wrx6RJEnmEDTit3dxtOJGCsxLDutYeIrOTHUCo3zBnHi
- cdU9BB2kE69jFwyfqCZcB1wmv1Iy8kqN8N/zXksQhQe4ZehRqP9zXfjSmVI4oxi0XWpL
- szrw==
+ d=1e100.net; s=20230601; t=1754067142; x=1754671942;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8GOnZrqmzASn1HaZWtED4UPrdR2/GxK8gC+5SJEPHqc=;
+ b=laaxpkO+CZ0/DX8CKkQibhAakfwihT1AGeuJtq8huHBBPGP7JgkId8LlMYTuBGF9uG
+ 2iySODI0/b3C6jZj0ORmTLOOs9I7diTK8c0MNLe6IBLZwHTzLlIPAdhHI697DWiQjVAK
+ YyIEwMbQzYx1o33RqfUtXXb3W/we+SGZRO16PjXeq3Nit5bQWmPNlXSVY4XfmvYnZliz
+ E0+z+Ik6IecvF+VLj1S887eh9BpWqMjE3FIUQzNnwTNXObgvzr3tSeg8VW51xIVmPPc0
+ yYXoSnBt+fZ8N5yHzo5cYSmYHne18HWz/72FxOqMmiK33lDJoNi1WAIdfaVJ8CofXi+C
+ l2ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9N0iA7Emt2W7w5UdZ7H5dy+e56MI+7IXimpf5F98v9IE4QURjA+LFo9IET5fj85sSqLk7kttcHzWl@nongnu.org
-X-Gm-Message-State: AOJu0YyAAgi8y4SlkPXgF45Kqsu/BZc49aR0u/9JdV2PmuBLVCLt2vkM
- D+0LtRGewCXguZpR6/2yaxSLP4rekf8oPu1Jpkln44OdorwA+BKDJjsRVRKJIzzHzYo43TyDNCo
- FUieziKjOr8MoaBnZaKxyTaz134aZg/dsrIdTboYa4w==
-X-Gm-Gg: ASbGncv0mcpcAGbvAA+ObmM+jl1FTlpyDU8qQ0DLPbkxLrTEJw8SJanAfkycSkylx/p
- qlkiv67+Gc4qj/+B3dlEnHpmTku7ERAinDcPmXwgj84jtGeR9Dg1lDp+FeKN05MS2bVO5lp8C+H
- xs4XvQgxpWi1jD3t2zxNTlvg4xBZM1jVbVHT57IdZGiv3xRtAu7w65Di15tFnvs9lSmOnCNONv0
- FgYzM2H71oQf9z3Hks=
-X-Google-Smtp-Source: AGHT+IHPmiIPWJavlcndnHVMaLRgwax8Bwr0A9pnQsMWSTfQB8X+Jlek3dkVq9+4ljBrBDOrq7o6kdd7Wr94S2KErJc=
-X-Received: by 2002:a05:690c:2783:b0:71a:3c89:d132 with SMTP id
- 00721157ae682-71b7f5f35c8mr4036697b3.37.1754066348358; Fri, 01 Aug 2025
- 09:39:08 -0700 (PDT)
+ AJvYcCUGeRVGvruOpIL2kMZWVZrzQNIpCgy50Rj7KY0vo7KFqojsUTo6uvRROZm3a58XNgztZOpsC2J7Yfsp@nongnu.org
+X-Gm-Message-State: AOJu0Yx1dxFPtq8dqhrWA/NrCMe3Cd26Gcwa9WfbHbhcDjhYeQB6FhDT
+ OsDxaEfEAFmE/BttQ+QKvjLz5JxTq2Q/j2bkYn694bCY2NWzlGy692PYOPXftzHlXcZs547F3HK
+ SgNxCynmtw7CO2AQbecY5ui9pDWRYEHGMoifPLXElvNLG/9UJUdJGqsMS
+X-Gm-Gg: ASbGnctMeFujdBbD2/TLOjhqbOeOP6J2mWeekMDzeusmS4C50yOamx7kJof3kLm35aS
+ SFTyxrl3bqlpN/LoRtlp99G8dxYg9gC8zd+vSkPH5OJRHbA4VciaCFzKIKz+9v+Lx7/bpgTSBCn
+ eH97WEdJkEAN5JArpvJqbYbzzrvXvfPTwfbOnLyV6fpKLncO382DVPk1KZHKc/fNFWc6IPVWtd/
+ 57fR4ktH+ub9nkjuR2tWlKsw5kdbs2xBp9Kt8KzyVHRjUXL5PDLotERvNYt6K0pelTGfPp5bQTw
+ VzpyAxaqKDitoQoAcJph7bGTfRTf2i+6
+X-Received: by 2002:a05:600c:3103:b0:458:a965:d5f6 with SMTP id
+ 5b1f17b1804b1-458b6a0333emr13035e9.9.1754067142551; 
+ Fri, 01 Aug 2025 09:52:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHptCKwiAclfAlBsbemO8zCcuFx4d9/HCMp2HwvJ8yQqDGU4WbVltKM3q2oVW6z4b4hfNDgQ==
+X-Received: by 2002:a05:600c:3103:b0:458:a965:d5f6 with SMTP id
+ 5b1f17b1804b1-458b6a0333emr12845e9.9.1754067142104; 
+ Fri, 01 Aug 2025 09:52:22 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458af8949e1sm15081725e9.2.2025.08.01.09.52.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 09:52:21 -0700 (PDT)
+Date: Fri, 1 Aug 2025 12:52:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ eperezma@redhat.com, jasowang@redhat.com, si-wei.liu@oracle.com,
+ boris.ostrovsky@oracle.com, terrynini38514@gmail.com,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PATCH] virtio: fix off-by-one and invalid access in
+ virtqueue_ordered_fill
+Message-ID: <20250801125210-mutt-send-email-mst@kernel.org>
+References: <20250721150208.2409779-1-jonah.palmer@oracle.com>
+ <0f0e8785-cee4-4cab-b91a-fdcca51b73de@tls.msk.ru>
 MIME-Version: 1.0
-References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
- <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
- <144f0930-af30-42b0-849c-99242d3f09ee@linaro.org>
- <CAFEAcA-ycO=AO8UO+X3f6pw34J=iFwW3dpPyMXKm5BzJ11dt5Q@mail.gmail.com>
- <25fe9c70-be00-4884-8d91-53dfff745cb6@linaro.org>
- <CAFEAcA8qHUT-0k6chAFZ61J=YZ7xLvhYgqsgtQiCgkfaxfFRxg@mail.gmail.com>
- <034c953f-dce6-4068-8f93-05e758e67703@linaro.org>
-In-Reply-To: <034c953f-dce6-4068-8f93-05e758e67703@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 17:38:56 +0100
-X-Gm-Features: Ac12FXwzMw2UMBpy09nEG-t1hw2KeO_0GDieial8QRGc_voE-8FInLNSetqqNpw
-Message-ID: <CAFEAcA9H4WtVUuEX8kf8LiHQ3Z421Fq3ukbLnCRRfUKLyRF6QA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0f0e8785-cee4-4cab-b91a-fdcca51b73de@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +111,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Aug 2025 at 17:31, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 8/1/25 1:34 AM, Peter Maydell wrote:
-> > On Thu, 31 Jul 2025 at 19:30, Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >> Regarding the "modern" completion support, I recommend you take a look
-> >> at it. Even though you wrote or reviewed most of the code you navigate
-> >> in everyday, and thus don't need it, it has become a standard tool for
-> >> any developer, like sanitizers or omniscient debugging. It's especially
-> >> interesting since those tools are based on compilers (clangd is the
-> >> standard for C/C++ nowadays) and not a bunch of clunky regexps.
-> >> It's even more interesting when you learn a new language, like Rust.
-> >
-> > I do actually have clangd enabled at the moment in emacs:
-> > but my experience is not good, because typically what happens
-> > is that clangd runs itself out of memory and falls over
-> > fairly frequently, or it produces obscure error messages like
-> > "LSP :: Error from the Language Server: trying to get AST for
-> > non-added document (Invalid Parameter)"...
-> >
-> > So I mostly continue to investigate code the way I always have
-> > done, with grep.
-> >
->
-> By any chance, are you using an old version of clangd (or an old
-> distro)? It has been a few years since I didn't run into any issue with
-> it, and it's quite easy to update it using llvm apt repositories without
-> updating your whole system [1].
+On Fri, Aug 01, 2025 at 06:46:09PM +0300, Michael Tokarev wrote:
+> On 21.07.2025 18:02, Jonah Palmer wrote:
+> > Commit b44135daa372 introduced virtqueue_ordered_fill for
+> > VIRTIO_F_IN_ORDER support but had a few issues:
+> > 
+> > * Conditional while loop used 'steps <= max_steps' but should've been
+> >    'steps < max_steps' since reaching steps == max_steps would indicate
+> >    that we didn't find an element, which is an error. Without this
+> >    change, the code would attempt to read invalid data at an index
+> >    outside of our search range.
+> > 
+> > * Incremented 'steps' using the next chain's ndescs instead of the
+> >    current one.
+> > 
+> > This patch corrects the loop bounds and synchronizes 'steps' and index
+> > increments.
+> > 
+> > We also add a defensive sanity check against malicious or invalid
+> > descriptor counts to avoid a potential infinite loop and DoS.
+> > 
+> > Fixes: b44135daa372 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
+> 
+> This looks like a good candidate for qemu-stable, isn't it?
+> 
+> Thanks,
+> 
+> /mjt
 
-I use the Ubuntu 24.04 version. In general I try to avoid
-using tooling that isn't packaged by the distro: it
-tends to result in headaches later on.
+indeed.
 
--- PMM
 
