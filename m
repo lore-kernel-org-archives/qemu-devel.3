@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB41DC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBD2C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhkJq-0001q8-Ov; Fri, 01 Aug 2025 03:36:48 -0400
+	id 1uhkKT-0002BG-CT; Fri, 01 Aug 2025 03:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uhkJ1-0001FB-Jn; Fri, 01 Aug 2025 03:35:58 -0400
+ id 1uhkJ3-0001GB-60; Fri, 01 Aug 2025 03:35:58 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uhkIy-0005p0-An; Fri, 01 Aug 2025 03:35:55 -0400
+ id 1uhkJ1-0005q4-2i; Fri, 01 Aug 2025 03:35:56 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5717ZOZP049860
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5717ZYBv049885
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 1 Aug 2025 16:35:24 +0900 (JST)
+ Fri, 1 Aug 2025 16:35:34 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ahAGXuEl8UqAOIIfQCSb+Q9A+ydZ3ewLQFr7jnluZFA=; 
+DKIM-Signature: a=rsa-sha256; bh=2y6O6eJmlW8br8Xbx14qVgC3H1CnATGP9+F9kgI2orQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1754033725; v=1;
- b=mdjy66ciBKYHIkcU4daoKAuRVrVfG7R/5/UOlN0lI7kTigWCseo2/KZUOC2MBktT
- l6NemdVsAwvNE1SifWMMMmr+VJ0STcs1dH7mKYbfx2Xs7qsUJXghrxIFB8x7IO/a
- gnnO/0D12Ol+XkmEtnuyr7uXemjG0oP9uxKQIw5RaixIr5ojImZlmXgD2VC4Di+A
- mSO6MzDKmfgMYKxMOsojAjZRzr/lUaDE04iA01BqCL/S+OrV5qgHKZAQSwd9XZmc
- jRPuOTJ044w9n8s8ZipgI6P+lCW3MX+IK89THHrQ8aFxv7pXCxZc9olG/N2PFVcJ
- U/FLKC9CF1sSXF1vUwEGjA==
-Message-ID: <13363ce0-93d7-434d-a1ae-aeb14a75dbee@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 1 Aug 2025 16:35:24 +0900
+ s=rs20250326; t=1754033735; v=1;
+ b=vDbnNQ3aTz2ZOIWqOtr8CBK7mo47PkqTwL4hu5aQc0ql1YxYFPA1YDNjMGY1Jvr3
+ uwUtnGBxwfBPigjU/u+xe0NnyiZjZA5trkGLRlqFw7jHBTsEXUZltWmm3DcvZFss
+ 2k7ltv+iJLTeQiY4kKTu+0OeyxKgrsMH9ahTXuAqHpg6R71SOpARyVbknk3i3LBm
+ Yk4asQyoH6UOG3rdWq+ttYwpQJfsAl8dzoZIn8zjXisY5/sxZGdArHWUMLBCTeWW
+ DoNW4TrsknHvEa2J8if6TriiYkMU0i6gnGJdY1/wAtLxQDigY4vLZ0Bodlqvn8Os
+ 0v5pRHs419x3br/OCAz3Gw==
+Message-ID: <f1a331ae-f520-44d7-82a7-c5dbef3440a2@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 1 Aug 2025 16:35:34 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/27] migration: push Error **errp into vmstate_load()
+Subject: Re: [PATCH v8 23/27] migration: Propagate last encountered error in
+ vmstate_save_state_v() function
 To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -63,12 +64,12 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 References: <20250731-propagate_tpm_error-v8-0-28fd82fdfdb2@redhat.com>
- <20250731-propagate_tpm_error-v8-4-28fd82fdfdb2@redhat.com>
+ <20250731-propagate_tpm_error-v8-23-28fd82fdfdb2@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250731-propagate_tpm_error-v8-4-28fd82fdfdb2@redhat.com>
+In-Reply-To: <20250731-propagate_tpm_error-v8-23-28fd82fdfdb2@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -93,70 +94,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/31 22:20, Arun Menon wrote:
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that vmstate_load() must report an error
-> in errp, in case of failure.
+On 2025/07/31 22:21, Arun Menon wrote:
+> Currently post_save hook is called without checking its return. If post_save
+> fails, we need to set an error and propagate it to the caller.
 > 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Since post_save hook is called regardless of whether there is a preceeding error,
+> it is possible that we have 2 distict errors, one from the preceeding function
+> call, and the other from the post_save call.
+> 
+> Return the latest error to the caller.
+
+This needs to be explained better. This patch makes two changes on the 
+behavior when there are two errors:
+
+1) Proceeding errors were propagated before, but they are now
+    dismissed.
+2) post_error() errors were dismissed before, but they are now
+    propagated.
+
+This message doesn't mention 1) at all. It does say 2) is necessary, but 
+does not explain why.
+
+> 
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
->   migration/savevm.c | 16 +++++++++++-----
->   1 file changed, 11 insertions(+), 5 deletions(-)
+>   migration/vmstate.c | 18 ++++++++++++++----
+>   1 file changed, 14 insertions(+), 4 deletions(-)
 > 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 842ff3dc6d5ccb05f7d33cef9f7319b141419501..736410be867a29efa24d749528c9bc203a3e8131 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -963,14 +963,20 @@ void vmstate_unregister(VMStateIf *obj, const VMStateDescription *vmsd,
->       }
->   }
->   
-> -static int vmstate_load(QEMUFile *f, SaveStateEntry *se)
-> +static int vmstate_load(QEMUFile *f, SaveStateEntry *se, Error **errp)
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index b725202bfcf69c3c81338f1f5479aa2ddc5db86f..25a819da069b982d4043f287b4562ea402d9eb0e 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -418,6 +418,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                            void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
 >   {
-> +    int ret;
->       trace_vmstate_load(se->idstr, se->vmsd ? se->vmsd->name : "(old)");
->       if (!se->vmsd) {         /* Old style */
-> -        return se->ops->load_state(f, se->opaque, se->load_version_id);
-> +        ret = se->ops->load_state(f, se->opaque, se->load_version_id);
-> +        if (ret < 0) {
-> +            error_setg(errp, "Failed to load VM version_id: '%d', ret: '%d'",
-
-This whole series have quoted and numeric messages mixed; I suggest 
-removing quotes as they don't contribute better readability for numbers 
-and make messages verbose.
-
-> +                       se->load_version_id, ret);
-> +        }
-> +        return ret;
->       }
->       return vmstate_load_state(f, se->vmsd, se->opaque, se->load_version_id,
-> -                              NULL);
-> +                              errp);
->   }
+>       int ret = 0;
+> +    int ps_ret = 0;
+>       const VMStateField *field = vmsd->fields;
 >   
->   static void vmstate_save_old_style(QEMUFile *f, SaveStateEntry *se,
-> @@ -2741,7 +2747,7 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
->           start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
->       }
+>       trace_vmstate_save_state_top(vmsd->name);
+> @@ -533,7 +534,14 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                       error_setg(errp, "Save of field %s/%s failed",
+>                                   vmsd->name, field->name);
+>                       if (vmsd->post_save) {
+> -                        vmsd->post_save(opaque);
+> +                        ps_ret = vmsd->post_save(opaque);
+> +                        if (ps_ret) {
+> +                            ret = ps_ret;
+> +                            error_free_or_abort(errp);
+> +                            error_setg(errp,
+> +                                       "post-save for %s failed, ret: '%d'",
+> +                                       vmsd->name, ret);
+> +                        }
+>                       }
+>                       return ret;
+>                   }
+> @@ -561,10 +569,12 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>       ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
 >   
-> -    ret = vmstate_load(f, se);
-> +    ret = vmstate_load(f, se, NULL);
->       if (ret < 0) {
->           error_report("error while loading state for instance 0x%"PRIx32" of"
->                        " device '%s'", instance_id, idstr);
-> @@ -2794,7 +2800,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
->           start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+>       if (vmsd->post_save) {
+> -        int ps_ret = vmsd->post_save(opaque);
+> -        if (!ret && ps_ret) {
+> +        ps_ret = vmsd->post_save(opaque);
+> +        if (ps_ret) {
+>               ret = ps_ret;
+> -            error_setg(errp, "post-save failed: %s", vmsd->name);
+> +            error_free_or_abort(errp);
+> +            error_setg(errp, "post-save for %s failed, ret: '%d'",
+> +                       vmsd->name, ret);
+>           }
 >       }
->   
-> -    ret = vmstate_load(f, se);
-> +    ret = vmstate_load(f, se, NULL);
->       if (ret < 0) {
->           error_report("error while loading state section id %d(%s)",
->                        section_id, se->idstr);
+>       return ret;
 > 
 
 
