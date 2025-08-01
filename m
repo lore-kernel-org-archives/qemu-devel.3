@@ -4,91 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E8FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D588C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqgv-0004le-88; Fri, 01 Aug 2025 10:25:01 -0400
+	id 1uhqnQ-0006Zp-8Z; Fri, 01 Aug 2025 10:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqWR-0002LJ-D4
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:14:11 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqWO-0000T5-R8
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:14:11 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45892deb1dcso4292365e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754057646; x=1754662446; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D8dpATFFfosJyK/OsBtmby1KIdAynCWW1Pbc+yBUzoU=;
- b=MEevFzrEnlfKCaszxMWVPIzqGS6F9CrVJBLLxEUKEPjp9oe1yOvFcqvEJhHOIr0xAA
- 9dUdUrP5aUnBAA9Tp0GzU3h2nlRlTVpsMn9JQh/vcMJJQRNke4LuDnJ+oJjUcW7APmOB
- nzrrMR5zIscJCPBwjIj9dV9XUIwzztAzaxoBi6VFlgmNlhF1SPNLO0q5JHuUTHkcdj7Z
- 0aojxM1hvGUtl1egvXhSQVzOGVEHU7Unh4C+cd5nI1egzz+n4SunR9FFfDka2OTShe+k
- EKqUVRKZZ+guJ6vJX7lxHp5VoI2bFqEk0pDb8andaXSVBZJGqREOnVPqhrvL2eJo9o93
- BB8w==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhP-0005Rc-Pn
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhM-0002hg-Ph
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754058322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Le6Lc/zgcKxFCuW53MWLO1Ha7klLf+FruZHCeB1RbYs=;
+ b=WIDTRQAAXP+08gWdapMmO9XbLwv47jb/0kZj7qS8JDPoRJm2YKSbu5RaIQNW8EuYywqY13
+ VtmcPBhUk/fhZ/IF2qCFLjHfvTRsPRX1sfmEFsr5H9T8p7u7qOwk/Mnk91KLn4TDUtkljp
+ 3cNAca675QVG4fKeF6wZkUFxQQQYN+w=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-221-Zt9SDS73OcKVXl5egUa3ZA-1; Fri, 01 Aug 2025 10:25:21 -0400
+X-MC-Unique: Zt9SDS73OcKVXl5egUa3ZA-1
+X-Mimecast-MFC-AGG-ID: Zt9SDS73OcKVXl5egUa3ZA_1754058320
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45896cf24fbso8840905e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754057646; x=1754662446;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754058320; x=1754663120;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D8dpATFFfosJyK/OsBtmby1KIdAynCWW1Pbc+yBUzoU=;
- b=uL5Emux+mMeiLZbhCdnjsYyRVJuE00CrSuEu1p3M+SEfKSaFyZAJ7rGtKB0zlXiaxs
- jDr3XvBdl9iPbFoYKU2XQcDHTJ7yOD0gC5iNs5a02nB6caSlrTwUgYNr/g6UzzdI79/g
- GGQ4invu0/b+FZ22Jd4hUmVAlcRsDatAHbFFnLhi4MMLjsTYprXgqRafqmGcrKFAV1s6
- pv6kkfYVmbO/MbSO42VspHGlsE4gYgT1Kh84TKHueTo/n93Wa1MX5p1eP8L61bbzZJ1/
- xOGQs27zErvHBdFWYCqGG8ucTO+Yf7U4me7Fpz5Dvo5GUevgKcCMLdJp/3By6/ZjEP7X
- oowQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrcO70pWRUVFqF96OzwsL8oEzDdbjo0GUNp0DZq8DoF3oODhJhNLuP9iyY8Pj9s1R9/4Yd5oJxZcsQ@nongnu.org
-X-Gm-Message-State: AOJu0Yw7HzFo0ku5wGAUgpz6QX/7OeEnWxZMlz39C/e6m25CUIbuKeqP
- z+F13hki9eGoeUksp662p8ryeAhca6WMHMGRcRREiuR6HopU21E9aeSSzt5mB9nyWwFJEYo4OQ+
- dgTJf
-X-Gm-Gg: ASbGnctvz6kAEnVSJjbkS3oLPk1UCKmkrL/XkX9COvxO1vQ+eA76EVnco1r5K8ViaZx
- bLsey/jjha2lK3SjuYh5qI4k2lSDM+mHy+YWriLTaxedIWe+T+x8wQHt8zxriOEpjQjJ8LpnhN0
- qhyDSwzkugGZwX6N/++LscxR1giYXffi55Rt8wlznI50RPud9n+B1YIDcdZL1Ty8Yn4fxzho8y5
- 2d82yEFr+SGQtEODFO9UxGtdwvkiJoU/GnxFhWaaBlGb9c0AoXtz7c7uekvvODvbzJM+yEm9FED
- /bmTM+aMdBb+JIrd6sVYR4k6S/WFFV8dKaB2TU9NM1+AihbEE/ttQEo6LETZFeJt7QFSfhCOA72
- F29SCsgi4e/dfLlMeE/mzfnsCWbjh21XcHmqvNrLv0Vc1ZHxtlQ0ZWSOUUHGWbb23lLY93aNJyl
- z2
-X-Google-Smtp-Source: AGHT+IGQbwOC3AThYPPVNiqRLPvhdXrcTk1iKLCT4A2YUTA2P9MX2o7zJmgtf4hib+Jni6Bi+V4Dcw==
-X-Received: by 2002:a05:600c:1d1e:b0:456:19be:5e8 with SMTP id
- 5b1f17b1804b1-45892bc7b07mr95424735e9.20.1754057646414; 
- Fri, 01 Aug 2025 07:14:06 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4589edfd983sm66782595e9.13.2025.08.01.07.14.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Aug 2025 07:14:05 -0700 (PDT)
-Message-ID: <83d920b8-1838-43c7-a86f-5f4e5e5980b3@linaro.org>
-Date: Fri, 1 Aug 2025 16:14:05 +0200
+ bh=Le6Lc/zgcKxFCuW53MWLO1Ha7klLf+FruZHCeB1RbYs=;
+ b=NA8E3yurOKjyokiBDyl5tkFpk+oik/8HuxK3aKT4FUCAf5Rkbix3Tb3yovgKxdFdYC
+ VuZ119G8vV058UvHacOXl/ooIqaR/YlY1cxRYIXo9j1ILTwmnLQFOYIYa//hUsetIaA/
+ lu2DTodJOEuteB9nwqlpNaS13OqcGe7gVvYElnBpB002GLQHAl3IhskNvxs3F5Z03QIl
+ EVuKYkD4QXGLbpV/hMQ6wVzxJD9iniIQHYfIX4oI1/cWenzVFSG1JQubG8RDFH/WS6l7
+ n8k++CcG/cnCQPlu5OGKQeUCOIhhL4m3EVjLgfIzlKiv2WdtcbydVIeSJ2gHuoxbLy01
+ XLNQ==
+X-Gm-Message-State: AOJu0YzHuqRyJKyAN3DuIIhC3FHHF/rl9kuecHVoIYBi6ru+UV/NAXP9
+ SMUoNxOL72WkfUelIKKetvu59BU5a1hAxMdzuOPJlKKuWcCQU2f0rh9ZJiHZXWCNkO4FDmZcNtW
+ s+IuKDQT6WzugUtyIb9l1BCk7vb5Oin+USTgrfqhz8+Opgq2T/qeuY+fvNuJjyV5J2nNtvX2Swy
+ KjY7BUIxovuN1Twa6SXB3F84O/mGKmyx8HQg==
+X-Gm-Gg: ASbGncuiTPGmpWkiMv9vhfgm/DuCF3mzQ3PGM+tFXONHOLs4X7ez0+LPV4QqNTeNSjl
+ ChDFNG4xwMDIUX4DJHwK2QsU9AaFtd5QtLHiRnhr5kJ44EBR5hXZgztr2nXyTg+AC61DWAiofpc
+ 6LE6NrCOYT9XIxEyaKYESbG49Jy1UEw2ZXJux9dgf1/an59atZOCdR027z/imv7OtEAwtu/JTgk
+ swVAuZi2fiMCT3ikSNnoWKCilXYMLk+MB07Cj58OLJLaUgJSbEwXb1LiLqCMN8bsGWx5jUhMtL4
+ RENeaXVGO7KKhV1MOeDV708Dw5RRm+ok
+X-Received: by 2002:a05:600c:83cc:b0:450:d37d:7c with SMTP id
+ 5b1f17b1804b1-45894ca4e1cmr93284345e9.21.1754058319707; 
+ Fri, 01 Aug 2025 07:25:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnAa0qxkeCi/LltrEUId9RU19B+2oEdn/a0TcTBb1Jck+i8wy+8TWvlTodEgjov54muF7PBw==
+X-Received: by 2002:a05:600c:83cc:b0:450:d37d:7c with SMTP id
+ 5b1f17b1804b1-45894ca4e1cmr93283995e9.21.1754058319196; 
+ Fri, 01 Aug 2025 07:25:19 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c4a6ff7sm6154540f8f.75.2025.08.01.07.25.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 07:25:18 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:25:16 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 07/17] hw/i386/amd_iommu: Remove unused and wrongly set
+ ats_enabled field
+Message-ID: <47d50cc421b832650822d73431d920bb8a80bc38.1754058276.git.mst@redhat.com>
+References: <cover.1754058276.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio: Introduce helper vfio_pci_from_vfio_device()
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- chao.p.peng@intel.com
-References: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+In-Reply-To: <cover.1754058276.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,67 +116,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 04:35, Zhenzhong Duan wrote:
-> Introduce helper vfio_pci_from_vfio_device() to transform from VFIODevice
-> to VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
-> 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
-> v3: add one line comment to the helper
-> v2: move helper to hw/vfio/pci.[hc]
->      rename with vfio_pci_ prefix
-> 
->   hw/vfio/pci.h       | 1 +
->   hw/vfio/container.c | 4 ++--
->   hw/vfio/device.c    | 2 +-
->   hw/vfio/iommufd.c   | 4 ++--
->   hw/vfio/listener.c  | 4 ++--
->   hw/vfio/pci.c       | 9 +++++++++
->   6 files changed, 17 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 81465a8214..53842cb149 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -219,6 +219,7 @@ void vfio_pci_write_config(PCIDevice *pdev,
->   uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
->   void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
->   
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-[*]
+The ats_enabled field is set using HTTUNEN, which is wrong.
+Fix this by removing the field as it is never used.
 
-> +VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev);
->   void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev);
->   bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
->   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
+MST: includes a tweak suggested by Philippe
 
-Quoting https://lore.kernel.org/qemu-devel/87bjpl25e6.fsf@draig.linaro.org/:
-
-   Generally APIs to the rest of QEMU should be documented in the
-   headers. Comments on individual functions or internal details are
-   fine to live in the C files.
-
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 4fa692c1a3..85761544ba 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2824,6 +2824,15 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
->       return ret;
->   }
->   
-> +/* Transform from VFIODevice to VFIOPCIDevice. Return NULL if fails. */
-
-So this comment preferably goes in [*]. Otherwise,
-
+Fixes: d29a09ca68428 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250801060507.3382-3-sarunkod@amd.com>
+Message-ID: <948a6ac3-ded9-475b-8c45-9d36220b442b@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/i386/amd_iommu.h | 1 -
+ hw/i386/amd_iommu.c | 5 ++---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-> +VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev)
-> +{
-> +    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
-> +        return container_of(vbasedev, VFIOPCIDevice, vbasedev);
-> +    }
-> +    return NULL;
-> +}
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 8b42913ed8..67078c6f1e 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -322,7 +322,6 @@ struct AMDVIState {
+     uint64_t mmio_addr;
+ 
+     bool enabled;                /* IOMMU enabled                */
+-    bool ats_enabled;            /* address translation enabled  */
+     bool cmdbuf_enabled;         /* command buffer enabled       */
+     bool evtlog_enabled;         /* event log enabled            */
+     bool excl_enabled;
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 7fb0bb68f0..037e78056d 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -646,7 +646,6 @@ static void amdvi_handle_control_write(AMDVIState *s)
+     unsigned long control = amdvi_readq(s, AMDVI_MMIO_CONTROL);
+     s->enabled = !!(control & AMDVI_MMIO_CONTROL_AMDVIEN);
+ 
+-    s->ats_enabled = !!(control & AMDVI_MMIO_CONTROL_HTTUNEN);
+     s->evtlog_enabled = s->enabled && !!(control &
+                         AMDVI_MMIO_CONTROL_EVENTLOGEN);
+ 
+@@ -1555,7 +1554,6 @@ static void amdvi_init(AMDVIState *s)
+     s->excl_allow = false;
+     s->mmio_enabled = false;
+     s->enabled = false;
+-    s->ats_enabled = false;
+     s->cmdbuf_enabled = false;
+ 
+     /* reset MMIO */
+@@ -1626,7 +1624,8 @@ static const VMStateDescription vmstate_amdvi_sysbus_migratable = {
+       /* Updated in  amdvi_handle_control_write() */
+       VMSTATE_BOOL(enabled, AMDVIState),
+       VMSTATE_BOOL(ga_enabled, AMDVIState),
+-      VMSTATE_BOOL(ats_enabled, AMDVIState),
++      /* bool ats_enabled is obsolete */
++      VMSTATE_UNUSED(1), /* was ats_enabled */
+       VMSTATE_BOOL(cmdbuf_enabled, AMDVIState),
+       VMSTATE_BOOL(completion_wait_intr, AMDVIState),
+       VMSTATE_BOOL(evtlog_enabled, AMDVIState),
+-- 
+MST
 
 
