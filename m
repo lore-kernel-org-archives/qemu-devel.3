@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A809DC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38814C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhsU6-0002HY-R0; Fri, 01 Aug 2025 12:19:55 -0400
+	id 1uhsVw-0007z2-DZ; Fri, 01 Aug 2025 12:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrS2-00031F-DG
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrS9-0003u4-48
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRz-0002hZ-LJ
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrS7-0002jS-Aq
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754061218;
+ s=mimecast20190719; t=1754061226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AhT7unPjbjnIzc2sXXtJ7KERKqgqdGAIFe8XjfzKCdA=;
- b=ZMHpAJfo6Xxanp3/HprD9+jX7F1ccHvZndUGic/c33ZrKLTrPyFPp7y9A8/JLOjKAYGRn1
- gS20vvU4qAHo/o+0ahke14xnAROvmyeOYqBp4zEtP7pD7fc1WW4x/4kq2gXm8OYbK8P3Om
- 6m35TqND+NNjI3oT22LmayjzMqKozog=
+ bh=R38dtNkMVxOq3rT4DTYArFyUO98peDtS5mO1SVK657M=;
+ b=d7duJq+Xw4LDMQ/QT8wCx/XTR7iG7o8RfeE6kgApDq5/iT+9tvy5dyUIHUaLCJHccxxkoN
+ Ouly8259Y3rYANA/dMhwfRnbFRMCuInMF4SG9zNybGvF6o7+NZHbwu30zj/JJyUlAmnhbu
+ UMFF+KWksbMrYUjcIauYBuioI8yRj4I=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-A0oWIX6YOUCgxDMTOikuZQ-1; Fri,
- 01 Aug 2025 11:13:37 -0400
-X-MC-Unique: A0oWIX6YOUCgxDMTOikuZQ-1
-X-Mimecast-MFC-AGG-ID: A0oWIX6YOUCgxDMTOikuZQ_1754061214
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-CyFar11eMoKNubUGH4EooQ-1; Fri,
+ 01 Aug 2025 11:13:43 -0400
+X-MC-Unique: CyFar11eMoKNubUGH4EooQ-1
+X-Mimecast-MFC-AGG-ID: CyFar11eMoKNubUGH4EooQ_1754061221
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93DF618009A8; Fri,  1 Aug 2025 15:13:20 +0000 (UTC)
+ id 597BE180A247; Fri,  1 Aug 2025 15:13:36 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.225.137])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E6E631800D8E; Fri,  1 Aug 2025 15:13:17 +0000 (UTC)
+ id 815D51800B4F; Fri,  1 Aug 2025 15:13:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 07/24] tests/functional: Move arm tests into architecture
+Subject: [PATCH 12/24] tests/functional: Move m68k tests into architecture
  specific folder
-Date: Fri,  1 Aug 2025 17:12:32 +0200
-Message-ID: <20250801151251.751368-8-thuth@redhat.com>
+Date: Fri,  1 Aug 2025 17:12:37 +0200
+Message-ID: <20250801151251.751368-13-thuth@redhat.com>
 In-Reply-To: <20250801151251.751368-1-thuth@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -89,518 +88,128 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Thomas Huth <thuth@redhat.com>
 
 The tests/functional folder has become quite crowded, thus move the
-arm tests into a target-specific subfolder.
+m68k tests into a target-specific subfolder.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   | 36 +++++------
- tests/functional/arm/meson.build              | 62 +++++++++++++++++++
- .../test_aspeed_ast1030.py}                   |  0
- .../test_aspeed_ast2500.py}                   |  0
- .../test_aspeed_ast2600.py}                   |  0
- .../test_aspeed_bletchley.py}                 |  0
- .../test_aspeed_catalina.py}                  |  0
- .../test_aspeed_gb200nvl_bmc.py}              |  0
- .../test_aspeed_palmetto.py}                  |  0
- .../test_aspeed_rainier.py}                   |  0
- .../test_aspeed_romulus.py}                   |  0
- .../test_aspeed_witherspoon.py}               |  0
- .../{test_arm_bflt.py => arm/test_bflt.py}    |  0
- .../test_bpim2u.py}                           |  0
- .../test_canona1100.py}                       |  0
- .../test_collie.py}                           |  0
- .../test_cubieboard.py}                       |  0
- .../test_emcraft_sf2.py}                      |  0
- .../test_integratorcp.py}                     |  0
- .../test_max78000fthr.py}                     |  0
- .../test_microbit.py}                         |  0
- .../test_migration.py}                        |  0
- .../test_orangepi.py}                         |  0
- .../test_quanta_gsj.py}                       |  0
- .../test_raspi2.py}                           |  0
- .../test_realview.py}                         |  0
- .../test_replay.py}                           |  0
- .../test_smdkc210.py}                         |  0
- .../test_stellaris.py}                        |  0
- .../{test_arm_sx1.py => arm/test_sx1.py}      |  0
- .../test_tuxrun.py}                           |  0
- .../test_vexpress.py}                         |  0
- .../{test_arm_virt.py => arm/test_virt.py}    |  0
- tests/functional/meson.build                  | 62 +------------------
- 34 files changed, 81 insertions(+), 79 deletions(-)
- create mode 100644 tests/functional/arm/meson.build
- rename tests/functional/{test_arm_aspeed_ast1030.py => arm/test_aspeed_ast1030.py} (100%)
- rename tests/functional/{test_arm_aspeed_ast2500.py => arm/test_aspeed_ast2500.py} (100%)
- rename tests/functional/{test_arm_aspeed_ast2600.py => arm/test_aspeed_ast2600.py} (100%)
- rename tests/functional/{test_arm_aspeed_bletchley.py => arm/test_aspeed_bletchley.py} (100%)
- mode change 100644 => 100755
- rename tests/functional/{test_arm_aspeed_catalina.py => arm/test_aspeed_catalina.py} (100%)
- rename tests/functional/{test_arm_aspeed_gb200nvl_bmc.py => arm/test_aspeed_gb200nvl_bmc.py} (100%)
- mode change 100644 => 100755
- rename tests/functional/{test_arm_aspeed_palmetto.py => arm/test_aspeed_palmetto.py} (100%)
- rename tests/functional/{test_arm_aspeed_rainier.py => arm/test_aspeed_rainier.py} (100%)
- rename tests/functional/{test_arm_aspeed_romulus.py => arm/test_aspeed_romulus.py} (100%)
- rename tests/functional/{test_arm_aspeed_witherspoon.py => arm/test_aspeed_witherspoon.py} (100%)
- mode change 100644 => 100755
- rename tests/functional/{test_arm_bflt.py => arm/test_bflt.py} (100%)
- rename tests/functional/{test_arm_bpim2u.py => arm/test_bpim2u.py} (100%)
- rename tests/functional/{test_arm_canona1100.py => arm/test_canona1100.py} (100%)
- rename tests/functional/{test_arm_collie.py => arm/test_collie.py} (100%)
- rename tests/functional/{test_arm_cubieboard.py => arm/test_cubieboard.py} (100%)
- rename tests/functional/{test_arm_emcraft_sf2.py => arm/test_emcraft_sf2.py} (100%)
- rename tests/functional/{test_arm_integratorcp.py => arm/test_integratorcp.py} (100%)
- rename tests/functional/{test_arm_max78000fthr.py => arm/test_max78000fthr.py} (100%)
- rename tests/functional/{test_arm_microbit.py => arm/test_microbit.py} (100%)
- rename tests/functional/{test_arm_migration.py => arm/test_migration.py} (100%)
- rename tests/functional/{test_arm_orangepi.py => arm/test_orangepi.py} (100%)
- rename tests/functional/{test_arm_quanta_gsj.py => arm/test_quanta_gsj.py} (100%)
- rename tests/functional/{test_arm_raspi2.py => arm/test_raspi2.py} (100%)
- rename tests/functional/{test_arm_realview.py => arm/test_realview.py} (100%)
- rename tests/functional/{test_arm_replay.py => arm/test_replay.py} (100%)
- rename tests/functional/{test_arm_smdkc210.py => arm/test_smdkc210.py} (100%)
- rename tests/functional/{test_arm_stellaris.py => arm/test_stellaris.py} (100%)
- rename tests/functional/{test_arm_sx1.py => arm/test_sx1.py} (100%)
- rename tests/functional/{test_arm_tuxrun.py => arm/test_tuxrun.py} (100%)
- rename tests/functional/{test_arm_vexpress.py => arm/test_vexpress.py} (100%)
- rename tests/functional/{test_arm_virt.py => arm/test_virt.py} (100%)
+ MAINTAINERS                                              | 8 ++++----
+ tests/functional/m68k/meson.build                        | 9 +++++++++
+ .../{test_m68k_mcf5208evb.py => m68k/test_mcf5208evb.py} | 0
+ .../{test_m68k_nextcube.py => m68k/test_nextcube.py}     | 0
+ .../functional/{test_m68k_q800.py => m68k/test_q800.py}  | 0
+ .../{test_m68k_replay.py => m68k/test_replay.py}         | 0
+ .../{test_m68k_tuxrun.py => m68k/test_tuxrun.py}         | 0
+ tests/functional/meson.build                             | 9 +--------
+ 8 files changed, 14 insertions(+), 12 deletions(-)
+ create mode 100644 tests/functional/m68k/meson.build
+ rename tests/functional/{test_m68k_mcf5208evb.py => m68k/test_mcf5208evb.py} (100%)
+ rename tests/functional/{test_m68k_nextcube.py => m68k/test_nextcube.py} (100%)
+ rename tests/functional/{test_m68k_q800.py => m68k/test_q800.py} (100%)
+ rename tests/functional/{test_m68k_replay.py => m68k/test_replay.py} (100%)
+ rename tests/functional/{test_m68k_tuxrun.py => m68k/test_tuxrun.py} (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 96b5dd4b2eb..fa7a0ee7e6e 100644
+index 2065e73e155..5860922277e 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -673,7 +673,7 @@ F: include/hw/*/allwinner*
- F: hw/arm/cubieboard.c
- F: docs/system/arm/cubieboard.rst
- F: hw/misc/axp209.c
--F: tests/functional/test_arm_cubieboard.py
-+F: tests/functional/arm/test_cubieboard.py
+@@ -1309,7 +1309,7 @@ F: hw/m68k/mcf_intc.c
+ F: hw/char/mcf_uart.c
+ F: hw/net/mcf_fec.c
+ F: include/hw/m68k/mcf*.h
+-F: tests/functional/test_m68k_mcf5208evb.py
++F: tests/functional/m68k/test_mcf5208evb.py
  
- Allwinner-h3
- M: Niek Linnenbank <nieklinnenbank@gmail.com>
-@@ -683,7 +683,7 @@ F: hw/*/allwinner-h3*
- F: include/hw/*/allwinner-h3*
- F: hw/arm/orangepi.c
- F: docs/system/arm/orangepi.rst
--F: tests/functional/test_arm_orangepi.py
-+F: tests/functional/arm/test_orangepi.py
+ NeXTcube
+ M: Thomas Huth <huth@tuxfamily.org>
+@@ -1317,7 +1317,7 @@ S: Odd Fixes
+ F: hw/m68k/next-*.c
+ F: hw/display/next-fb.c
+ F: include/hw/m68k/next-cube.h
+-F: tests/functional/test_m68k_nextcube.py
++F: tests/functional/m68k/test_nextcube.py
  
- ARM PrimeCell and CMSDK devices
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -753,7 +753,7 @@ F: docs/system/arm/bananapi_m2u.rst
- F: hw/*/allwinner-r40*.c
- F: hw/arm/bananapi_m2u.c
- F: include/hw/*/allwinner-r40*.h
--F: tests/functional/test_arm_bpim2u.py
-+F: tests/functional/arm/test_bpim2u.py
+ q800
+ M: Laurent Vivier <laurent@vivier.eu>
+@@ -1343,7 +1343,7 @@ F: include/hw/m68k/q800-glue.h
+ F: include/hw/misc/djmemc.h
+ F: include/hw/misc/iosb.h
+ F: include/hw/audio/asc.h
+-F: tests/functional/test_m68k_q800.py
++F: tests/functional/m68k/test_q800.py
  
- B-L475E-IOT01A IoT Node
- M: Samuel Tardieu <sam@rfc1149.net>
-@@ -771,7 +771,7 @@ S: Odd Fixes
- F: hw/*/exynos*
- F: include/hw/*/exynos*
- F: docs/system/arm/exynos.rst
--F: tests/functional/test_arm_smdkc210.py
-+F: tests/functional/arm/test_smdkc210.py
+ virt
+ M: Laurent Vivier <laurent@vivier.eu>
+@@ -1358,7 +1358,7 @@ F: include/hw/intc/goldfish_pic.h
+ F: include/hw/intc/m68k_irqc.h
+ F: include/hw/misc/virt_ctrl.h
+ F: docs/specs/virt-ctlr.rst
+-F: tests/functional/test_m68k_tuxrun.py
++F: tests/functional/m68k/test_tuxrun.py
  
- Calxeda Highbank
- M: Rob Herring <robh@kernel.org>
-@@ -790,7 +790,7 @@ S: Odd Fixes
- F: include/hw/arm/digic.h
- F: hw/*/digic*
- F: include/hw/*/digic*
--F: tests/functional/test_arm_canona1100.py
-+F: tests/functional/arm/test_canona1100.py
- F: docs/system/arm/digic.rst
- 
- Goldfish RTC
-@@ -833,7 +833,7 @@ S: Odd Fixes
- F: hw/arm/integratorcp.c
- F: hw/misc/arm_integrator_debug.c
- F: include/hw/misc/arm_integrator_debug.h
--F: tests/functional/test_arm_integratorcp.py
-+F: tests/functional/arm/test_integratorcp.py
- F: docs/system/arm/integratorcp.rst
- 
- MCIMX6UL EVK / i.MX6ul
-@@ -939,7 +939,7 @@ F: pc-bios/npcm7xx_bootrom.bin
- F: pc-bios/npcm8xx_bootrom.bin
- F: roms/vbootrom
- F: docs/system/arm/nuvoton.rst
--F: tests/functional/test_arm_quanta_gsj.py
-+F: tests/functional/arm/test_quanta_gsj.py
- 
- Raspberry Pi
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -952,7 +952,7 @@ F: hw/*/bcm283*
- F: include/hw/arm/rasp*
- F: include/hw/*/bcm283*
- F: docs/system/arm/raspi.rst
--F: tests/functional/test_arm_raspi2.py
-+F: tests/functional/arm/test_raspi2.py
- F: tests/functional/aarch64/test_raspi*.py
- 
- Real View
-@@ -964,7 +964,7 @@ F: hw/cpu/realview_mpcore.c
- F: hw/intc/realview_gic.c
- F: include/hw/intc/realview_gic.h
- F: docs/system/arm/realview.rst
--F: tests/functional/test_arm_realview.py
-+F: tests/functional/arm/test_realview.py
- 
- SABRELITE / i.MX6
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -1004,7 +1004,7 @@ F: hw/arm/strongarm*
- F: hw/gpio/zaurus.c
- F: include/hw/arm/sharpsl.h
- F: docs/system/arm/collie.rst
--F: tests/functional/test_arm_collie.py
-+F: tests/functional/arm/test_collie.py
- 
- Stellaris
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -1015,7 +1015,7 @@ F: hw/display/ssd03*
- F: include/hw/input/stellaris_gamepad.h
- F: include/hw/timer/stellaris-gptm.h
- F: docs/system/arm/stellaris.rst
--F: tests/functional/test_arm_stellaris.py
-+F: tests/functional/arm/test_stellaris.py
- 
- STM32L4x5 SoC Family
- M: Samuel Tardieu <sam@rfc1149.net>
-@@ -1044,7 +1044,7 @@ S: Odd Fixes
- F: hw/arm/vexpress.c
- F: hw/display/sii9022.c
- F: docs/system/arm/vexpress.rst
--F: tests/functional/test_arm_vexpress.py
-+F: tests/functional/arm/test_vexpress.py
- 
- Versatile PB
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -1065,8 +1065,8 @@ F: include/hw/arm/virt.h
- F: docs/system/arm/virt.rst
- F: tests/functional/aarch64/test_*virt*.py
- F: tests/functional/aarch64/test_tuxrun.py
--F: tests/functional/test_arm_tuxrun.py
--F: tests/functional/test_arm_virt.py
-+F: tests/functional/arm/test_tuxrun.py
-+F: tests/functional/arm/test_virt.py
- 
- Xilinx Zynq
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-@@ -1187,7 +1187,7 @@ L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/msf2-som.c
- F: docs/system/arm/emcraft-sf2.rst
--F: tests/functional/test_arm_emcraft_sf2.py
-+F: tests/functional/arm/test_emcraft_sf2.py
- 
- ASPEED BMCs
- M: Cédric Le Goater <clg@kaod.org>
-@@ -1220,7 +1220,7 @@ F: hw/*/microbit*.c
- F: include/hw/*/nrf51*.h
- F: include/hw/*/microbit*.h
- F: tests/qtest/microbit-test.c
--F: tests/functional/test_arm_microbit.py
-+F: tests/functional/arm/test_microbit.py
- F: docs/system/arm/nrf.rst
- 
- ARM PL011 Rust device
-@@ -2076,7 +2076,7 @@ S: Odd Fixes
- F: hw/*/omap*
- F: include/hw/arm/omap.h
- F: docs/system/arm/sx1.rst
--F: tests/functional/test_arm_sx1.py
-+F: tests/functional/arm/test_sx1.py
- 
- IPack
- M: Alberto Garcia <berto@igalia.com>
-@@ -3911,7 +3911,7 @@ F: configs/targets/*linux-user.mak
- F: scripts/qemu-binfmt-conf.sh
- F: scripts/update-syscalltbl.sh
- F: scripts/update-mips-syscall-args.sh
--F: tests/functional/test_arm_bflt.py
-+F: tests/functional/arm/test_bflt.py
- 
- Tiny Code Generator (TCG)
- -------------------------
-diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+ MicroBlaze Machines
+ -------------------
+diff --git a/tests/functional/m68k/meson.build b/tests/functional/m68k/meson.build
 new file mode 100644
-index 00000000000..e4e7dba8d08
+index 00000000000..e29044a6d73
 --- /dev/null
-+++ b/tests/functional/arm/meson.build
-@@ -0,0 +1,62 @@
++++ b/tests/functional/m68k/meson.build
+@@ -0,0 +1,9 @@
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+test_arm_timeouts = {
-+  'aspeed_palmetto' : 120,
-+  'aspeed_romulus' : 120,
-+  'aspeed_witherspoon' : 120,
-+  'aspeed_ast2500' : 720,
-+  'aspeed_ast2600' : 1200,
-+  'aspeed_bletchley' : 480,
-+  'aspeed_catalina' : 480,
-+  'aspeed_gb200nvl_bmc' : 480,
-+  'aspeed_rainier' : 480,
-+  'bpim2u' : 500,
-+  'collie' : 180,
-+  'cubieboard' : 360,
-+  'orangepi' : 540,
-+  'quanta_gsj' : 240,
-+  'raspi2' : 120,
-+  'replay' : 240,
-+  'tuxrun' : 240,
-+  'sx1' : 360,
-+}
-+
-+tests_arm_system_quick = [
-+  'migration',
-+]
-+
-+tests_arm_system_thorough = [
-+  'aspeed_ast1030',
-+  'aspeed_palmetto',
-+  'aspeed_romulus',
-+  'aspeed_witherspoon',
-+  'aspeed_ast2500',
-+  'aspeed_ast2600',
-+  'aspeed_bletchley',
-+  'aspeed_catalina',
-+  'aspeed_gb200nvl_bmc',
-+  'aspeed_rainier',
-+  'bpim2u',
-+  'canona1100',
-+  'collie',
-+  'cubieboard',
-+  'emcraft_sf2',
-+  'integratorcp',
-+  'max78000fthr',
-+  'microbit',
-+  'orangepi',
-+  'quanta_gsj',
-+  'raspi2',
-+  'realview',
++tests_m68k_system_thorough = [
++  'mcf5208evb',
++  'nextcube',
 +  'replay',
-+  'smdkc210',
-+  'stellaris',
-+  'sx1',
-+  'vexpress',
-+  'virt',
++  'q800',
 +  'tuxrun',
 +]
-+
-+tests_arm_linuxuser_thorough = [
-+  'bflt',
-+]
-diff --git a/tests/functional/test_arm_aspeed_ast1030.py b/tests/functional/arm/test_aspeed_ast1030.py
+diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/m68k/test_mcf5208evb.py
 similarity index 100%
-rename from tests/functional/test_arm_aspeed_ast1030.py
-rename to tests/functional/arm/test_aspeed_ast1030.py
-diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/arm/test_aspeed_ast2500.py
+rename from tests/functional/test_m68k_mcf5208evb.py
+rename to tests/functional/m68k/test_mcf5208evb.py
+diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/m68k/test_nextcube.py
 similarity index 100%
-rename from tests/functional/test_arm_aspeed_ast2500.py
-rename to tests/functional/arm/test_aspeed_ast2500.py
-diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
+rename from tests/functional/test_m68k_nextcube.py
+rename to tests/functional/m68k/test_nextcube.py
+diff --git a/tests/functional/test_m68k_q800.py b/tests/functional/m68k/test_q800.py
 similarity index 100%
-rename from tests/functional/test_arm_aspeed_ast2600.py
-rename to tests/functional/arm/test_aspeed_ast2600.py
-diff --git a/tests/functional/test_arm_aspeed_bletchley.py b/tests/functional/arm/test_aspeed_bletchley.py
-old mode 100644
-new mode 100755
+rename from tests/functional/test_m68k_q800.py
+rename to tests/functional/m68k/test_q800.py
+diff --git a/tests/functional/test_m68k_replay.py b/tests/functional/m68k/test_replay.py
 similarity index 100%
-rename from tests/functional/test_arm_aspeed_bletchley.py
-rename to tests/functional/arm/test_aspeed_bletchley.py
-diff --git a/tests/functional/test_arm_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
+rename from tests/functional/test_m68k_replay.py
+rename to tests/functional/m68k/test_replay.py
+diff --git a/tests/functional/test_m68k_tuxrun.py b/tests/functional/m68k/test_tuxrun.py
 similarity index 100%
-rename from tests/functional/test_arm_aspeed_catalina.py
-rename to tests/functional/arm/test_aspeed_catalina.py
-diff --git a/tests/functional/test_arm_aspeed_gb200nvl_bmc.py b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
-old mode 100644
-new mode 100755
-similarity index 100%
-rename from tests/functional/test_arm_aspeed_gb200nvl_bmc.py
-rename to tests/functional/arm/test_aspeed_gb200nvl_bmc.py
-diff --git a/tests/functional/test_arm_aspeed_palmetto.py b/tests/functional/arm/test_aspeed_palmetto.py
-similarity index 100%
-rename from tests/functional/test_arm_aspeed_palmetto.py
-rename to tests/functional/arm/test_aspeed_palmetto.py
-diff --git a/tests/functional/test_arm_aspeed_rainier.py b/tests/functional/arm/test_aspeed_rainier.py
-similarity index 100%
-rename from tests/functional/test_arm_aspeed_rainier.py
-rename to tests/functional/arm/test_aspeed_rainier.py
-diff --git a/tests/functional/test_arm_aspeed_romulus.py b/tests/functional/arm/test_aspeed_romulus.py
-similarity index 100%
-rename from tests/functional/test_arm_aspeed_romulus.py
-rename to tests/functional/arm/test_aspeed_romulus.py
-diff --git a/tests/functional/test_arm_aspeed_witherspoon.py b/tests/functional/arm/test_aspeed_witherspoon.py
-old mode 100644
-new mode 100755
-similarity index 100%
-rename from tests/functional/test_arm_aspeed_witherspoon.py
-rename to tests/functional/arm/test_aspeed_witherspoon.py
-diff --git a/tests/functional/test_arm_bflt.py b/tests/functional/arm/test_bflt.py
-similarity index 100%
-rename from tests/functional/test_arm_bflt.py
-rename to tests/functional/arm/test_bflt.py
-diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/arm/test_bpim2u.py
-similarity index 100%
-rename from tests/functional/test_arm_bpim2u.py
-rename to tests/functional/arm/test_bpim2u.py
-diff --git a/tests/functional/test_arm_canona1100.py b/tests/functional/arm/test_canona1100.py
-similarity index 100%
-rename from tests/functional/test_arm_canona1100.py
-rename to tests/functional/arm/test_canona1100.py
-diff --git a/tests/functional/test_arm_collie.py b/tests/functional/arm/test_collie.py
-similarity index 100%
-rename from tests/functional/test_arm_collie.py
-rename to tests/functional/arm/test_collie.py
-diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/arm/test_cubieboard.py
-similarity index 100%
-rename from tests/functional/test_arm_cubieboard.py
-rename to tests/functional/arm/test_cubieboard.py
-diff --git a/tests/functional/test_arm_emcraft_sf2.py b/tests/functional/arm/test_emcraft_sf2.py
-similarity index 100%
-rename from tests/functional/test_arm_emcraft_sf2.py
-rename to tests/functional/arm/test_emcraft_sf2.py
-diff --git a/tests/functional/test_arm_integratorcp.py b/tests/functional/arm/test_integratorcp.py
-similarity index 100%
-rename from tests/functional/test_arm_integratorcp.py
-rename to tests/functional/arm/test_integratorcp.py
-diff --git a/tests/functional/test_arm_max78000fthr.py b/tests/functional/arm/test_max78000fthr.py
-similarity index 100%
-rename from tests/functional/test_arm_max78000fthr.py
-rename to tests/functional/arm/test_max78000fthr.py
-diff --git a/tests/functional/test_arm_microbit.py b/tests/functional/arm/test_microbit.py
-similarity index 100%
-rename from tests/functional/test_arm_microbit.py
-rename to tests/functional/arm/test_microbit.py
-diff --git a/tests/functional/test_arm_migration.py b/tests/functional/arm/test_migration.py
-similarity index 100%
-rename from tests/functional/test_arm_migration.py
-rename to tests/functional/arm/test_migration.py
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/arm/test_orangepi.py
-similarity index 100%
-rename from tests/functional/test_arm_orangepi.py
-rename to tests/functional/arm/test_orangepi.py
-diff --git a/tests/functional/test_arm_quanta_gsj.py b/tests/functional/arm/test_quanta_gsj.py
-similarity index 100%
-rename from tests/functional/test_arm_quanta_gsj.py
-rename to tests/functional/arm/test_quanta_gsj.py
-diff --git a/tests/functional/test_arm_raspi2.py b/tests/functional/arm/test_raspi2.py
-similarity index 100%
-rename from tests/functional/test_arm_raspi2.py
-rename to tests/functional/arm/test_raspi2.py
-diff --git a/tests/functional/test_arm_realview.py b/tests/functional/arm/test_realview.py
-similarity index 100%
-rename from tests/functional/test_arm_realview.py
-rename to tests/functional/arm/test_realview.py
-diff --git a/tests/functional/test_arm_replay.py b/tests/functional/arm/test_replay.py
-similarity index 100%
-rename from tests/functional/test_arm_replay.py
-rename to tests/functional/arm/test_replay.py
-diff --git a/tests/functional/test_arm_smdkc210.py b/tests/functional/arm/test_smdkc210.py
-similarity index 100%
-rename from tests/functional/test_arm_smdkc210.py
-rename to tests/functional/arm/test_smdkc210.py
-diff --git a/tests/functional/test_arm_stellaris.py b/tests/functional/arm/test_stellaris.py
-similarity index 100%
-rename from tests/functional/test_arm_stellaris.py
-rename to tests/functional/arm/test_stellaris.py
-diff --git a/tests/functional/test_arm_sx1.py b/tests/functional/arm/test_sx1.py
-similarity index 100%
-rename from tests/functional/test_arm_sx1.py
-rename to tests/functional/arm/test_sx1.py
-diff --git a/tests/functional/test_arm_tuxrun.py b/tests/functional/arm/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_arm_tuxrun.py
-rename to tests/functional/arm/test_tuxrun.py
-diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/arm/test_vexpress.py
-similarity index 100%
-rename from tests/functional/test_arm_vexpress.py
-rename to tests/functional/arm/test_vexpress.py
-diff --git a/tests/functional/test_arm_virt.py b/tests/functional/arm/test_virt.py
-similarity index 100%
-rename from tests/functional/test_arm_virt.py
-rename to tests/functional/arm/test_virt.py
+rename from tests/functional/test_m68k_tuxrun.py
+rename to tests/functional/m68k/test_tuxrun.py
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 77d8f4db808..708246b0d08 100644
+index 22b46ab34a2..cc81d40a314 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -11,27 +11,7 @@ endif
- 
- subdir('aarch64')
- subdir('alpha')
--
--test_arm_timeouts = {
--  'arm_aspeed_palmetto' : 120,
--  'arm_aspeed_romulus' : 120,
--  'arm_aspeed_witherspoon' : 120,
--  'arm_aspeed_ast2500' : 720,
--  'arm_aspeed_ast2600' : 1200,
--  'arm_aspeed_bletchley' : 480,
--  'arm_aspeed_catalina' : 480,
--  'arm_aspeed_gb200nvl_bmc' : 480,
--  'arm_aspeed_rainier' : 480,
--  'arm_bpim2u' : 500,
--  'arm_collie' : 180,
--  'arm_cubieboard' : 360,
--  'arm_orangepi' : 540,
--  'arm_quanta_gsj' : 240,
--  'arm_raspi2' : 120,
--  'arm_replay' : 240,
--  'arm_tuxrun' : 240,
--  'arm_sx1' : 360,
--}
-+subdir('arm')
+@@ -16,6 +16,7 @@ subdir('avr')
+ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch64')
++subdir('m68k')
  
  test_mips_timeouts = {
    'mips_malta' : 480,
-@@ -97,46 +77,6 @@ tests_generic_linuxuser = [
+@@ -81,14 +82,6 @@ tests_generic_linuxuser = [
  tests_generic_bsduser = [
  ]
  
--tests_arm_system_quick = [
--  'arm_migration',
+-tests_m68k_system_thorough = [
+-  'm68k_mcf5208evb',
+-  'm68k_nextcube',
+-  'm68k_replay',
+-  'm68k_q800',
+-  'm68k_tuxrun',
 -]
 -
--tests_arm_system_thorough = [
--  'arm_aspeed_ast1030',
--  'arm_aspeed_palmetto',
--  'arm_aspeed_romulus',
--  'arm_aspeed_witherspoon',
--  'arm_aspeed_ast2500',
--  'arm_aspeed_ast2600',
--  'arm_aspeed_bletchley',
--  'arm_aspeed_catalina',
--  'arm_aspeed_gb200nvl_bmc',
--  'arm_aspeed_rainier',
--  'arm_bpim2u',
--  'arm_canona1100',
--  'arm_collie',
--  'arm_cubieboard',
--  'arm_emcraft_sf2',
--  'arm_integratorcp',
--  'arm_max78000fthr',
--  'arm_microbit',
--  'arm_orangepi',
--  'arm_quanta_gsj',
--  'arm_raspi2',
--  'arm_realview',
--  'arm_replay',
--  'arm_smdkc210',
--  'arm_stellaris',
--  'arm_sx1',
--  'arm_vexpress',
--  'arm_virt',
--  'arm_tuxrun',
--]
--
--tests_arm_linuxuser_thorough = [
--  'arm_bflt',
--]
--
- tests_avr_system_thorough = [
-   'avr_mega2560',
-   'avr_uno',
+ tests_microblaze_system_thorough = [
+   'microblaze_replay',
+   'microblaze_s3adsp1800'
 -- 
 2.50.1
 
