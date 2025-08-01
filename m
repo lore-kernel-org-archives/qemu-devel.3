@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B80EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 20:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B086C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 20:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhw6s-0006Yo-0s; Fri, 01 Aug 2025 16:12:10 -0400
+	id 1uhwEQ-0004iL-0M; Fri, 01 Aug 2025 16:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uhuly-0002z3-VX
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:46:33 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uhult-0002Lf-Bx
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:46:27 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-6154655c8aeso2841885a12.3
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 11:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754073982; x=1754678782; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V1WsdtdAOKkSd75rKFLd6uwTJ+nElV6N3IiDENxWdoo=;
- b=dEb51J1v3XKmGsSoPZhHjbLsnDUOayF564KZoMXaImItJMrfraU+w47lIOdf/ICYk1
- xhnrrkI93Mqbuqaj2XXBKdsqCX8f5P0GxfpzQ7Zb2f/GxsF1VAngDle7Uyu0vMVaSP7r
- cgAm0VrjFkQEiGn9+7xn4zPAaVgdmr7n4OdcKD/xBLGZuCOqLrPkfmRmsLTKBfBLySC6
- bil0V9mH7Em7nI9bpQ+jV3h5MBnDiCkJ2N/U8MaFjhH099/gCTbcDBvf8w364J91FpAp
- 33HgYxvsTphvINWx1slUuchQzZR2dDUC2ik4VXLp1UualRbRJNSAKGSswzOtljscU2AM
- yAGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754073982; x=1754678782;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=V1WsdtdAOKkSd75rKFLd6uwTJ+nElV6N3IiDENxWdoo=;
- b=Ji09eYb2RM8cEOhCR5YPLbWbFbnaKIc7XviQphYfglUiAvh2ZGjdw0G93AZLIHGKjI
- D5ihdz2HcAnKBeZE4o/sCQu9lPy5V+2z9XRkBf7bWNBNj9oNG3/7A4P0v3830d5/h4YZ
- 8VFP7rOVVtdo57MN85b0DwHWNE+mbJchC5dJMb9Khn88IF72KnC8+IHRut+7PWqRYBnh
- aD7Ohh/nuTbMpa+6GF9NFW4GjPMOgFYafqB5UIfn41ddAMpJvk6qp3bKIEbzCVWvyRDN
- 7QxsXdWitKT6qVDot/dnuil4ZnuHHry3OxwTMBG2Zn436xtSvrc7QW2VlKsxXWDBG1cJ
- Cexg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHMyEe67x7H9A5Vlxf5zW7/81gf7X9jxE6DkqPBrRMEv6KA1o6fBotV97gGrfAkhkHpNBSZMmS+zho@nongnu.org
-X-Gm-Message-State: AOJu0YzHFRxFtcPpjIjYZFMljKdXsj1swEpZMvLkddlo/9r3Jk14bFF4
- jQhkWiBoW7fQ5DXy4v/V4mt9Lil9Q4qxWUhtLKNm3XafW37ukABf66+0kAwoP+oxVODshb9Ftof
- 4P92WIn43gny/CbBkUDGp0/Iz24QGzOKZrn9IlSTqmA==
-X-Gm-Gg: ASbGncue8OU0rgjc+sFwL7hXb4/tPrARlVGkyQGCG6NHEmLC/11Izg0kt7zU9sG9n03
- AAomv4Wq2Z63BarwNw2MZkb+8unRRdHONFwpdKGgwFtWv4svSMxDSEFfW3XLeDyZwouUeDmOy7N
- MlYjzes12cCptEfWfGYOUSu+5dq49STiLUoQzY0S+4Gt7jkXS+fZKjN0hLgtSeg1TXPu6XIBI/d
- XANmTQ=
-X-Google-Smtp-Source: AGHT+IHM5n6x6I1qZkUCLHItuPOtr7ToWuVT13E7uQ2dj3iPI+69vc3dU9LG4zZ5otfj0lrLcJD76p+9tDSDxJKpalc=
-X-Received: by 2002:a05:6402:4402:b0:615:b0e2:124b with SMTP id
- 4fb4d7f45d1cf-615e715bd27mr367515a12.24.1754073981611; Fri, 01 Aug 2025
- 11:46:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-48-richard.henderson@linaro.org>
- <b2e40787-6043-4d4c-9cbb-731d0e92e25c@linaro.org>
- <CAFEAcA_9tkv1EoM33=G=zW6Pw0gBirvjs-SsDaC8ar8feyH_8g@mail.gmail.com>
-In-Reply-To: <CAFEAcA_9tkv1EoM33=G=zW6Pw0gBirvjs-SsDaC8ar8feyH_8g@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 1 Aug 2025 21:45:55 +0300
-X-Gm-Features: Ac12FXxTpzSK83haBZOj4Z68AVYNkdwa_OckKDcvce4rjrcnQ9aB8t7ZtztA9HE
-Message-ID: <CAAjaMXbd6TF1x13h-N=F+kBL8=+0K+gyVzh6zk-65LjeqqDVSA@mail.gmail.com>
-Subject: Re: [PATCH 47/82] target/arm: Expand pstate to 64 bits
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhurz-0007Cr-6q
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:52:43 -0400
+Received: from p-east3-cluster1-host10-snip4-1.eps.apple.com ([57.103.87.94]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uhurv-0003nw-SR
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:52:42 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-1 (Postfix) with ESMTPS id
+ 4EBB01800D4A; Fri,  1 Aug 2025 18:52:35 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=L7zymZaujYm5Cc3+BLA5HCzI/zQE4jwRBEdF7UpQonc=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Vkz9W/wMfCwxmdDZTIXii4/B2D+fpqsE0sk7HhqZZKXu7tEheIgXIeopHRlex6edtP7CYdMamo8QZ8x25IBTQaeVVFTOPy01F0At1Unr5BlGhVo7YH5pSp72m5AT5gceOtfyVhs1dYeH+/JYWjihDBdsQieVQTMpXlsfgeVL0ScLgqk2L1UWRc0CpXQsa2ZaMjQOufUd7jgqSIbicZ4eFPxf99SDCRVibTBYy4moEBaqqt77BL135MEN4PqS65Pamr1rbFS/zIH6T67WpTvTbgAvh6iE9JJka0R4YEWvhPGXIa0yoe0xpNmYS6yAYZyltWsuKKLk85gUJiauhknUyQ==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-1 (Postfix) with ESMTPSA id
+ 577291800A1E; Fri,  1 Aug 2025 18:52:33 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
+Subject: Re: [RFC 0/9] WHPX support for Arm
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <21266cf2-887d-4bf3-8c9a-7633bffd8cd2@linaro.org>
+Date: Fri, 1 Aug 2025 20:52:21 +0200
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
+Message-Id: <17413DE3-C53B-4DA6-9777-3E772D2C2C2D@unpredictable.fr>
+References: <20250731052753.93255-1-mohamed@unpredictable.fr>
+ <8af5e691-da19-4141-8874-51ca685288ac@linaro.org>
+ <864AC97D-2C45-402A-92AF-D0FDDB72C40E@unpredictable.fr>
+ <21266cf2-887d-4bf3-8c9a-7633bffd8cd2@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+X-Mailer: Apple Mail (2.3860.100.5.1.1)
+X-Proofpoint-GUID: PyuxMmzp5rPMpchUSAqovk0xO7bWzJsg
+X-Proofpoint-ORIG-GUID: PyuxMmzp5rPMpchUSAqovk0xO7bWzJsg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDE0OCBTYWx0ZWRfX0hUX/x1BAG8y
+ bjJYHCoXABADzOTucRqtw3X0uVgpXUsoScXc3cC2ZbUFucerTPUuiHzidN8Y7oLPnlcF5fIJAvK
+ Tkb5bVmccrejoRuNTgmfZCX6MHz1GfRHgAFsynmOFmDceCgy/emkoTiDi3RcxwnZ1lRAgUxK4tg
+ k3f+qynPeZZYxqdsrIRdNm4MA1QwkVx+ZiC0+Avcb0IRXUIHHupHeiG/pChjfB8xK2o3aSsrxzz
+ CTjXuSEWoNe/nNHgYTN1niOq5XFvDnFD8MN/lERLZi7gW5Ygzb3MENttxPwrvEstIZ1krnkBk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-01_06,2025-08-01_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 suspectscore=0 clxscore=1030 phishscore=0 mlxscore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508010148
+Received-SPF: pass client-ip=57.103.87.94;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,68 +93,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 1, 2025 at 4:33=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> On Thu, 31 Jul 2025 at 21:34, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
-> >
-> > On 7/27/25 1:02 AM, Richard Henderson wrote:
-> > > diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-> > > index 64ee9b3b56..3cef47281a 100644
-> > > --- a/target/arm/gdbstub64.c
-> > > +++ b/target/arm/gdbstub64.c
-> > > @@ -47,6 +47,7 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GBy=
-teArray *mem_buf, int n)
-> > >       case 32:
-> > >           return gdb_get_reg64(mem_buf, env->pc);
-> > >       case 33:
-> > > +        /* pstate is now a 64-bit value; can we simply adjust the xm=
-l? */
-> > >           return gdb_get_reg32(mem_buf, pstate_read(env));
-> > >       }
-> >
-> > If I'm correct, we currently don't expose PSTATE through gdbstub, but
-> > only CPSR. This was a bit confusing for me, considering that CPSR is no=
-t
-> > even supposed to exist in Aarch64.
-> > Maybe it's a good opportunity to expose PSTATE instead, which could hav=
-e
-> > a 64 bits size. This way, we don't break any workflow.
->
-> Architecturally, PSTATE is simply an abstract bundling together of
-> different information: it is not a particular format of a value,
-> whether 32 or 64 bit or otherwise. (This makes it different to
-> AArch32 CPSR, which really is a guest-visible register.)
->
-> The thing that *is* defined architecturally is the SPSR_ELx format, which
-> is where various bits of PSTATE get saved when reporting an exception up
-> to a higher exception level (and which is pretty much the AArch32 CPSR
-> format when the lower EL is AArch32). (Note that not *all* of PSTATE
-> appears in the SPSR_ELx: for example the SME SM and ZA bits are
-> considered part of PSTATE but they aren't saved into SPSR_ELx.)
->
-> For convenience, various pieces of software pass around information
-> in that SPSR_ELx format. Calling this either "CPSR" or "PSTATE"
-> is not really correct, but either is perhaps less confusing than
-> calling it SPSR when the context is that of the code running at the
-> lower EL rather than the higher.
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/a=
-rch/arm64/include/asm/kgdb.h#n41
-> suggests that expanding the existing pstate to 64 bits is probably
-> likely to produce problems. Perhaps we should define a pstate_high
-> or something for the top 32 bits?
->
 
-IIUC, this is only a problem if you use the default gdb architecture
-register map, but QEMU ships its own as part of gdbstub, so it's free
-to change register definition of cspr. Or add a new PSTATE register.
 
-> (I'll see if I can find out if anybody's already looked at this
-> for the native debug case.)
->
-> thanks
-> -- PMM
->
+> On 1. Aug 2025, at 19:22, Pierrick Bouvier =
+<pierrick.bouvier@linaro.org> wrote:
+>=20
+> On 8/1/25 5:43 AM, Mohamed Mediouni wrote:
+>>> On 1. Aug 2025, at 03:15, Pierrick Bouvier =
+<pierrick.bouvier@linaro.org> wrote:
+>>>=20
+>>> Hi Mohamed,
+>>>=20
+>>> On 7/30/25 10:27 PM, Mohamed Mediouni wrote:
+>>>> This one took way longer for me to publish than I should have.
+>>>> There are a number of lingering bugs in this one including u-boot =
+not working.
+>>>> Interrupt controller save/restore is entirely missing in this RFC, =
+and some other state
+>>>> bits are likely still missing too.
+>>>> ITS not blocked by default yet, remember to use its=3Doff when =
+testing this series.
+>>>> You might also want the GICv3 + GICv2m support patch as part of the =
+HVF vGIC patch series, which
+>>>> is not duplicated here.
+>>>> PS: on both this and HVF, interrupt controller initialisation needs =
+to be done early so I ended
+>>>> up with hardcoded addresses. Wonder if the right way to go might be =
+to defer virt and vCPU initialisation
+>>>> until late in the process post-gic_realize...
+>>>> Other than that, this boots both EDK2 and Linux in SMP, when using =
+devicetree or ACPI.
+>>>=20
+>>> thanks for posting this, that's an exciting series!
+>>>=20
+>>> I applied it on top of your other series =
+(20250728134114.77545-1-mohamed@unpredictable.fr) and solved the =
+conflicts.
+>>> However, it would really help if you could push that exact branch =
+somewhere, so people can easily pull it and try.
+>>> I'm fine if you want to duplicate gic patches in this series as =
+well.
+>> Hello,
+>> My branches are at https://github.com/mediouni-m/qemu
+>>=20
+>=20
+> Thanks, it's worth adding it in cover letter for next versions.
+>=20
+>> whpx-v1 corresponding to this RFC, but latest rev of the whpx branch =
+has some fixes
+>> Have some additional notes and binaries here too: =
+https://github.com/mediouni-m/qemu/releases/tag/whpx-v1.1
+>> Thank you,
+>> -Mohamed
+>>> I tried to direct boot a kernel (6.15 defconfig) and ran into this =
+error [1]:
+>>> $ ./build/qemu-system-aarch64.exe -M virt,its=3Doff -cpu cortex-a76 =
+-m 2G -nographic -accel whpx -kernel out/Image.gz out/host.ext4
+>> Syntax that I use is -M virt,accel=3Dwhpx,its=3Doff -m 2048-cpu =
+cortex-a72 -bios share/edk2-aarch64-code.fd.
+>> And on some kernel versions, you=E2=80=99ll also need =
+irqchip.gicv3_nolpi=3D1.
+>>> Could you please share your exact command line?
+>>> Does it work with direct kernel boot also?
+>>>=20
+>>> Kind Regards,
+>>> Pierrick
+>>>=20
+>>> [1] Error when booting:
+>>> [    1.381525] Internal error: Oops: 0000000096000002 [#1]  SMP
+>>> [    1.458060] Modules linked in:
+>>> [    1.461172] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted =
+6.15.0-00001-g7797e43a2520 #1 PREEMPT
+>>> [    1.470502] Hardware name: linux,dummy-virt (DT)
+>>> [    1.475102] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS =
+BTYPE=3D--)
+>>> [    1.482023] pc : pci_generic_config_read+0x38/0xb8
+>>> [    1.486970] lr : pci_generic_config_read+0x24/0xb8
+>> I don=E2=80=99t think I saw this particular one before=E2=80=A6 which =
+Windows version and hardware are you testing this on?
+>>=20
+>=20
+> I see the same error as before.
+>=20
+> I tried also binaries from =
+https://github.com/mediouni-m/qemu/releases/tag/whpx-v1.1, when directly =
+booting kernel, I still see the same pci issue with both binaries and my =
+compiled whpx-v1.3.
+> When booting edk2 provided, I ran into this other error instead with =
+both binaries [1].
+>=20
+> I'm running latest Windows 11 (stable channel, fully updated), on a =
+microsoft volterra (devkit). It might be an issue specific to this =
+platform.
+>=20
+I didn=E2=80=99t test anything on the stable branch for now but only on =
+Canary so far.=20
+Just cursorily tested (EDK2 only) an X Elite device on prod (26100.4652) =
+and this issue doesn=E2=80=99t appear.
+
+I have 8cx Gen 3 and 8cx Gen 1 (SQ1) devices around, will test on those =
+older SoCs later and see.
+
+Random idea for testing: what if you put -M highmem=3Doff, does that =
+change anything?
+
+Thanks,
+-Mohamed
+
+> In case you're interested, we can arrange an access to the machine, =
+but I understand if it's not your priority now.
+>=20
+> [1]
+> Windows Hypervisor Platform accelerator is operational
+> UEFI firmware (version edk2-stable202408-prebuilt.qemu.org built at =
+16:28:50 on Sep 12 2024)
+> ArmTrngLib could not be correctly initialized.
+> Error: Image at 000BFDB6000 start failed: 00000001
+> Error: Image at 000BFD6D000 start failed: Not Found
+> MapGcdMmioSpace: failed to add GCD memory space for region =
+[0x4010000000+0x10000000)
+> ASSERT_EFI_ERROR (Status =3D Unsupported)
+> ASSERT [PciHostBridgeDxe] =
+/home/kraxel/projects/qemu/roms/edk2/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPc=
+iHostBridgeLib.c(326): !(((INTN)(RETURN_STATUS)(Status)) < 0)
+>=20
+>> (Message was sent from the wrong email alias on mobile, resending)
+>> Thank you,
+>> -Mohamed
+>=20
+> Thanks,
+> Pierrick
+
 
