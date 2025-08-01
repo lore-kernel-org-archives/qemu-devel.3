@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928D0C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 21:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C9CC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 21:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhxJQ-0000rz-2m; Fri, 01 Aug 2025 17:29:12 -0400
+	id 1uhxJU-0000z7-Fq; Fri, 01 Aug 2025 17:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhwvm-000173-3r
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 17:04:46 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1uhx5i-0002Hp-OS
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 17:15:03 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhwvh-00035t-7Y
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 17:04:45 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-23fe9a5e5e8so10164685ad.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 14:04:40 -0700 (PDT)
+ id 1uhx5b-0004dK-Et
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 17:14:56 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-240b3335c20so14972115ad.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 14:14:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754082279; x=1754687079; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754082893; x=1754687693; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vLLVa28ZSNDA75YaBt2dq51k4h/LacoFqf499FBFDsM=;
- b=kRKJqWgh3KdHX1jQq7dX2ndUdzke0Zzu+BWs+YW6jBmOV5G4VsmHzseAkm3c+zgX/J
- eNKh3ImLr0Yt0+mUyrApaSiPH+6q6Mtl2MGUnr1i9TFop4u+RZ0rO31eG1MHRdMDnpIm
- h6ccsUF+TwaaMKl1TmKWKIU//gdjMfIiPQogp1NbeRcJHi9gbTq77CsSxe9AK13ko7WE
- 2bJ9vXZnz7aVfJVKRLROMR2eSvIqQTTGZPXlBr+Z/02iT6+LzkkisoQE4ikQqiUwoCE4
- Ij/nJlbH3b5TN0otgMh2LlIXW6GO9HeWFBOg8jJ9ETZeQH8xFS9FQO2LDrTemxP4q9Ji
- rTHw==
+ bh=WjPpNgwTrvPmeak9CL/Zk2hsWJxggUt/1fB5HDCVvVI=;
+ b=suTSS4DJIYBUeLyzWflyeKnKcTq70M8kQ0MeMRIw3eJFiRlRKMkf6/wGbfYNMfuA2i
+ C/EoS7HojvUuSby6M9ARqX99hKvBJ5L0+n1h9xp1Nyd8J/sB5yLcpo5HIPDGt7Lcj90H
+ XYFno0QyyGzytpP/isxDJUGdzknsh0JxsOVhcwFDhZuhxMPE61rNQMyeFrUJOPsDKozS
+ JgWdg2pl69oLx8JRGi1OTxLUVIkfWsFWFAh5+ZOTvqp4GmANDNjuBKqJZDqTuBu0VGuh
+ 9Ko5HomzLYbyqu3VcCFXZwFSI987D6AMLU0u7sr72nm77pgGnBqTMS5u6zUY4grrQAfD
+ tdrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754082279; x=1754687079;
+ d=1e100.net; s=20230601; t=1754082893; x=1754687693;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vLLVa28ZSNDA75YaBt2dq51k4h/LacoFqf499FBFDsM=;
- b=s58vLS6/Eiqr9smVvGOHy6Z4TY4oFpaLwQ/MY7U1S9M9GURaOpRRDakf9bSst98+fQ
- 5GuGXoH4xEVAENUI9QGlr9AQPcJ/1jebPfdBPc1ydw1Px3ekWyhDb1P65NtL3Q1EbwOV
- b+h1paHOuNOSu87LgGLmVwi25cXTdOAf6x7831w9h17/nbp16/jJCqfjF9DdAHbJuNBo
- WyD19mAevUaPbEksCp9j4cGutwE3dK82jK0MtsEZadWxk9p91E940Rh+u25L+isMOLEG
- gIiahbPJL0RY0ui19irehOForoWCosYJbWwswylLb+qlPj4RuRaXkkTf7DbQzFYFxfIb
- w+Tw==
-X-Gm-Message-State: AOJu0Yw2IrAoWICsyRnDB9I/JphPM0Rni1l6NycMTqQp0A4RIju7jLLr
- Sb78xuCIs5qnWs/3ftom1FkrzoLDytkoGXJ8xGrsncMdw2FHAmB5tmtJYBwy+ybFtdE=
-X-Gm-Gg: ASbGncs7EYDAPED/UQHMTquPeOEMUcxQuc8eJPRD/CXsDyNeRbtZU9patmU2fNIxdB1
- 2qRFBuNQrgJjwlyq1dHqb2RqZ35p5/QA1rLytN+dXVDDMk5BXdnCINmDqYggjlh/4HsB+2ROiNG
- kZ3HOkmJ1Keh93qSDOv34K7/A3Sn/+k39wQaExITH8ABeqH1tn8TzDg2LoeIS7UiSzvVLZFMpDP
- WtJOz8TxI4gmzArEtd5AFfa5Gd42egUx1XpBpAPreFIG7gdehyoZ1wwzk759DO5W/9wnfizqZoU
- HAB4qXiYFmCE4by4EOrTeWIVN2GuDAcMXOCPomjLk0uUWXcz9bS1gb8SM//KwaRHnVmLAzI30/E
- Dz/5Kbe3ZpZkoGERdV2Urm8SyR4bxD16QR3vvG88e
-X-Google-Smtp-Source: AGHT+IHFwvsZ2YiTOql8VTpdmb9d1DpNll5q5cdLnU1TGZ/6rd64OnvfqDiSELUpOSQ85wJtS5vFeg==
-X-Received: by 2002:a17:903:2284:b0:23f:ecf6:463b with SMTP id
- d9443c01a7336-24247060100mr13189725ad.45.1754082279248; 
- Fri, 01 Aug 2025 14:04:39 -0700 (PDT)
+ bh=WjPpNgwTrvPmeak9CL/Zk2hsWJxggUt/1fB5HDCVvVI=;
+ b=Ztjr3q47PH/J2n0ZLEF5tojSdCTroTYqy05Ks5luDAw+XZya8RwKtihD2syMPJlIQh
+ oGNs7wYi7TEPo1Z+DLOD6zFui9i10/eKWAZrB+vgKSu+KKm4DAFQt9x2TpTq+nR33+Ds
+ YYfCJCNXrsTYtBAzVfKxn93AFlTB+mkRNxkDvKvPFiQGq+9e+81TmvUzQf31aWcmmZqX
+ SUUhjRDX9FngjzMQCUD+xANohsCO85gprgDiMoFn463PvBRf2DzmHiEWOHJQf+WF0RIY
+ Olz4EIkvjtzAaszy+sv9wKSWCNCK1DnXynK/Y87WzNcXxNnVAoUnHD2H9m3jjdPU37sD
+ PsVA==
+X-Gm-Message-State: AOJu0YxMJ2gZeVgf4/4i+NXXsif8GwsYk8p/QxFov5NfmmvHjoCijg9f
+ 7nyCfjaNVmxdKF9IlMtBlaT+oUDHifQsVyifCGGlLkUM9GSW39Z6d88F1wred2dMQjA=
+X-Gm-Gg: ASbGncvGNKtTQUSI8Sg3784NrkH/pAW3Yi95EfnYXQvgZG/tIw1OlvFfGBxc1ROzssq
+ m+ql2J86HSAFX1/RuO4Cjzol+1Jjpm1N2t4CwvU1JO4UOcezcdYg5yU0vwtKwFlycqP38Dbu4Ls
+ tw53oPc2VF1ciSdvN/UQAOLP4tEToY0aRR6NGQkV3LYn9LCTxuhwgQCSGSN/j75fdLBDSanNYnv
+ jsHcCyEuDwEGLJKx0Zwh80nkLh33gB/arK7QM+jde93KxYJRmyNzSvnut1e28twbC4LRap6o6nE
+ w9T/RYvCmBCCaD25kbMoIUVdEa36AmhGtqgfiybOTqKBzpXvqbKSQCvSzXb77cXKqvpN8vsvT3z
+ zHI9eRwbsYZDl1cRegrVtMu1mCMdgI+FPE0OUAMue
+X-Google-Smtp-Source: AGHT+IEqIoTtjuvvJCyfAqY3ugKn1tIyLPt4rujhtHluRsNc3jfpYCTDDy6RF7irw9obr0QfqMiiLA==
+X-Received: by 2002:a17:903:2310:b0:224:1eab:97b2 with SMTP id
+ d9443c01a7336-24247042aafmr14560875ad.53.1754082893545; 
+ Fri, 01 Aug 2025 14:14:53 -0700 (PDT)
 Received: from [192.168.4.112] ([180.233.125.160])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e899b43dsm50920725ad.136.2025.08.01.14.04.36
+ d9443c01a7336-241d1f21c65sm51941765ad.73.2025.08.01.14.14.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Aug 2025 14:04:37 -0700 (PDT)
-Message-ID: <a9103100-e494-4654-8c42-97ebd210660b@linaro.org>
-Date: Sat, 2 Aug 2025 07:04:33 +1000
+ Fri, 01 Aug 2025 14:14:53 -0700 (PDT)
+Message-ID: <ac883fa3-df62-47a9-97b8-8206dfdef47b@linaro.org>
+Date: Sat, 2 Aug 2025 07:14:49 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/89] linux-user: Unify init of semihosting fields in
- TaskState
+Subject: Re: [PATCH 23/89] linux-user/i386: Create init_main_thread
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-22-richard.henderson@linaro.org>
- <CAFEAcA-GObaf6Sf2preS42Cd1HueRkjuKgE1_=ofe-ZrcJ3=Dg@mail.gmail.com>
+ <20250730000003.599084-24-richard.henderson@linaro.org>
+ <CAFEAcA_bRSRDxxj-OpDRYSh+P_BwO2iMLqqHPUerma69Lhxw7w@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA-GObaf6Sf2preS42Cd1HueRkjuKgE1_=ofe-ZrcJ3=Dg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_bRSRDxxj-OpDRYSh+P_BwO2iMLqqHPUerma69Lhxw7w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,74 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/25 02:05, Peter Maydell wrote:
-> On Wed, 30 Jul 2025 at 01:48, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Initialize all 3 fields in main(), rather than in 4 different
->> target-specific functions.  Adjust the ifdef to be function
->> rather than target specific.  Include stack_base in the ifdef.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   linux-user/qemu.h             |  4 ++--
->>   linux-user/aarch64/cpu_loop.c |  8 --------
->>   linux-user/arm/cpu_loop.c     | 37 +++++++++++++++--------------------
->>   linux-user/m68k/cpu_loop.c    |  9 ---------
->>   linux-user/main.c             |  5 +++++
->>   linux-user/riscv/cpu_loop.c   |  5 -----
->>   6 files changed, 23 insertions(+), 45 deletions(-)
->>
->> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
->> index 6c97ab221f..dff7767bc8 100644
->> --- a/linux-user/qemu.h
->> +++ b/linux-user/qemu.h
->> @@ -122,12 +122,12 @@ struct TaskState {
->>   #ifdef TARGET_M68K
->>       abi_ulong tp_value;
->>   #endif
->> -#if defined(TARGET_ARM) || defined(TARGET_M68K) || defined(TARGET_RISCV)
->> +#ifdef CONFIG_SEMIHOSTING
->>       /* Extra fields for semihosted binaries.  */
->>       abi_ulong heap_base;
->>       abi_ulong heap_limit;
->> -#endif
->>       abi_ulong stack_base;
->> +#endif
->>       int used; /* non zero if used */
->>       struct image_info *info;
->>       struct linux_binprm *bprm;
+On 8/2/25 02:17, Peter Maydell wrote:
+>> -static inline void init_thread(struct target_pt_regs *regs,
+>> -                               struct image_info *infop)
+>> -{
+>> -    regs->esp = infop->start_stack;
+>> -    regs->eip = infop->entry;
+>> -
+>> -    /* SVR4/i386 ABI (pages 3-31, 3-32) says that when the program
+>> -       starts %edx contains a pointer to a function which might be
+>> -       registered using `atexit'.  This provides a mean for the
+>> -       dynamic linker to call DT_FINI functions for shared libraries
+>> -       that have been loaded before the code runs.
+>> -
+>> -       A value of 0 tells we have no such handler.  */
 > 
->> diff --git a/linux-user/main.c b/linux-user/main.c
->> index 68972f00a1..4def4be1c1 100644
->> --- a/linux-user/main.c
->> +++ b/linux-user/main.c
->> @@ -1050,6 +1050,11 @@ int main(int argc, char **argv, char **envp)
->>
->>   #ifdef CONFIG_SEMIHOSTING
->>       qemu_semihosting_guestfd_init();
->> +
->> +    ts->stack_base = info->start_stack;
->> +    ts->heap_base = info->brk;
->> +    /* This will be filled in on the first SYS_HEAPINFO call.  */
->> +    ts->heap_limit = 0;
->>   #endif
+> This seems like a useful comment to retain -- it's nice
+> to know whether we're zeroing a register as an ABI requirement
+> versus just being tidy.
+
+Fair.
+
+>> +    memset(env->regs, 0, sizeof(env->regs));
 > 
-> Do we need to hide the struct fields and their initialization
-> behind an ifdef at all? We allocate our TaskState structs on
-> the heap so we don't care too much about their size, and
-> the init code here is trivial.
+> Are we not allowed to assume the regs are zero out of reset ?
 
-I guess not.  A comment about "this is to support semihosting" would do as well.
+For whatever reason, x86 doesn't do that.
+Eliding this line causes failures.
 
-Looking again, these ts->heap_* fields look actively wrong, because the real values are in
+I think the SVR4 comment applies to x86_64 as well.  Yep, glibc/sysdeps/x86_64/start.S 
+contains the same comment, although the linux kernel source does not.  The kernel simply 
+zeros all registers regardless of normal (x64) vs compat (x32).
 
-   static abi_ulong target_brk, initial_target_brk;
-
-in syscall.c.
-
-The original thread's stack_base can always be had via ts->info->start_stack.  I guess the 
-semihosting api has no concept of threads and per-thread stacks.
+I'll move the one comment and expand it.
 
 
 r~
