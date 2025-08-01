@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8C0C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F0EC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhsUr-0006KJ-5h; Fri, 01 Aug 2025 12:20:41 -0400
+	id 1uht0i-0007WP-To; Fri, 01 Aug 2025 12:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrS6-0003ZW-37
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrS4-0002if-9v
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754061223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rpnhCcwDIEBXn79ys7hzaKqw8+rprwSuWv6GxyAzUVU=;
- b=ErW9TIuQS+trFDdS5MdxiuL+ccP6gSJ98PkIsz8/YK/548xMyBuanIbiV3L83eqK7amKwf
- cxaG3hzIVaj4/25FXAPzgQNc1T81xh+O1ppXG5vIfCwSOLC2IfyMWxQGrHzUKeJJE8q8HQ
- aOCnaeKTVrMLNOiz27YjSJYxBrkow4Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-hdGXGKj6O1qTRM7EuJOUYQ-1; Fri,
- 01 Aug 2025 11:13:36 -0400
-X-MC-Unique: hdGXGKj6O1qTRM7EuJOUYQ-1
-X-Mimecast-MFC-AGG-ID: hdGXGKj6O1qTRM7EuJOUYQ_1754061215
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0ED7A1801A02; Fri,  1 Aug 2025 15:13:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.225.137])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50CCB180035E; Fri,  1 Aug 2025 15:13:20 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 08/24] tests/functional: Move avr tests into architecture
- specific folder
-Date: Fri,  1 Aug 2025 17:12:33 +0200
-Message-ID: <20250801151251.751368-9-thuth@redhat.com>
-In-Reply-To: <20250801151251.751368-1-thuth@redhat.com>
-References: <20250801151251.751368-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhrf1-00082h-LK
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:27:08 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhrez-0005Nc-Rc
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:27:07 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7086dcab64bso10573687b3.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754062022; x=1754666822; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9e5wZD1bvA5UAE6+guKG9hcWvO0/CkiIe14zzJcdVoM=;
+ b=y++AFMl6s2fOAI3SIhMQPmUEpHBjfst1ORowMuWFy3lihGUGGFufmPaHmyR2AwHF4f
+ zOxipRfWoo46ASdMy60K8X7DsriPeObvGhcGswVyWVAMsO+EFEXtTmPrBPnYfhvrLkAu
+ sP4QCXq+php0coQi24Kkzfd995zKqt9baq7r81gcRSDCcqQ9bFu8LKF8lNNcB0rDIUQ8
+ eLc6w81dZVfVV0L1/cuXJZcr0y1KyhBmflsGPqBJH+VSiBnjeqCj7+VxoUAEd7LlUkqB
+ wES6lE7Wm2AnGHNoh4Js9ONKixAeOLd2TQrHiY2woYNZg9+yyqeA6yetCdD933VQmIyK
+ 34NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754062022; x=1754666822;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9e5wZD1bvA5UAE6+guKG9hcWvO0/CkiIe14zzJcdVoM=;
+ b=bBgLO9SyIxPnVDL24Y9exoqVQqKWDuneelZDdh4yIUL4/HtDjkk16HpgwWIbPAanOJ
+ 1ponAS5qRh18xaLXzGM7JguWAxNMQfAeeJTMH1eKDKPoQfqJLjrYRysoTKlp6cAZbUqc
+ wIaZhRvJaO56fjxdw+pKvQ/5UGSYCDD4Rc9ndo2+0NFkg9qfYvDHASVOiB3NxHep8wZH
+ 8TxVLzX6TKuNbvUZDLuK6Zw4QGMsyRxOcxE793Enfe5f2J5h3MbA1FUnshIQwIyukHrE
+ 0TXDMMjS2Zu3EMScWoDcvacoZtN4sGZndNlbSz65/6tVYclxv6ewJDdzxSsdAz8nB/xF
+ fblw==
+X-Gm-Message-State: AOJu0YwOTAGu3FN163Qc2JvfiNN2VjZCoQcT0Nb0hXIwwNQgWtpRr+qW
+ ExRWLhzXamRKypoA3SLuLuoU1XeLOHStZT74P8LnhKA7W78sQcfRRs8dc773kE4Fg0ro66TuSO/
+ /Mczm4TdkaGmY/N81hz4v/wzclZ6wGoTu2/OD+B5E7w==
+X-Gm-Gg: ASbGncvxdIKx3JI6JYeJ9Vb1YUwzMqa677qLp9Q+vNrHpKlmvtOmBNMFBu3XejiFRVx
+ ojNt9II6Z7I1GyPhjACWJS2I3AbU5YEnaBrlqFqU7dp3ChonDdrsg27l+DCXK36U8fIeB44u2X9
+ Gp/XOXdLOPWNgrlMBismza70+JPOgfkQNe9X7LX/VmIMj+J8bq58FTfgINn0eD3oH2rYR4YQ1LN
+ jJ/7FjPx5pYoN4yBck=
+X-Google-Smtp-Source: AGHT+IEhelGTkxQ+IWn0zVFOI33jdlQim+UQeM7jr3kXRpjIkqq3v15bjF5NG4IT8bnqx4gG+ex6/DNJJ98LZw4njww=
+X-Received: by 2002:a05:690c:d93:b0:71a:8c1:fc8 with SMTP id
+ 00721157ae682-71b7ecdab07mr1499537b3.2.1754062022112; Fri, 01 Aug 2025
+ 08:27:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250730000003.599084-1-richard.henderson@linaro.org>
+ <20250730000003.599084-14-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-14-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 Aug 2025 16:26:48 +0100
+X-Gm-Features: Ac12FXwLfNxDA7ph7ey5umttP8VriV1qAUItt-YlZOcWFAXi5xZcxI3WhMR6r_w
+Message-ID: <CAFEAcA_8TimxsXg5wQonOjpp1Q2ROE7ngXNYAgt-L30rTkhQ1w@mail.gmail.com>
+Subject: Re: [PATCH 13/89] linux-user: Move get_elf_platform to {i386,
+ x86_64}/elfload.c
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,90 +94,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Wed, 30 Jul 2025 at 01:15, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Move get_elf_platform to i386/elfload.c; pass in CPUState.
+> Create a simple get_elf_platform for x86_64.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/loader.h         |  3 +++
+>  linux-user/elfload.c        | 18 ++----------------
+>  linux-user/i386/elfload.c   | 13 +++++++++++++
+>  linux-user/x86_64/elfload.c |  5 +++++
+>  4 files changed, 23 insertions(+), 16 deletions(-)
+>
 
-The tests/functional folder has become quite crowded, thus move the
-avr tests into a target-specific subfolder.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                                                 | 4 ++--
- tests/functional/avr/meson.build                            | 6 ++++++
- .../{test_avr_mega2560.py => avr/test_mega2560.py}          | 0
- tests/functional/{test_avr_uno.py => avr/test_uno.py}       | 0
- tests/functional/meson.build                                | 6 +-----
- 5 files changed, 9 insertions(+), 7 deletions(-)
- create mode 100644 tests/functional/avr/meson.build
- rename tests/functional/{test_avr_mega2560.py => avr/test_mega2560.py} (100%)
- rename tests/functional/{test_avr_uno.py => avr/test_uno.py} (100%)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fa7a0ee7e6e..0cfd12ec77e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -221,7 +221,7 @@ S: Maintained
- F: docs/system/target-avr.rst
- F: gdb-xml/avr-cpu.xml
- F: target/avr/
--F: tests/functional/test_avr_*.py
-+F: tests/functional/avr/
- 
- Hexagon TCG CPUs
- M: Brian Cain <brian.cain@oss.qualcomm.com>
-@@ -1247,7 +1247,7 @@ Arduino
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
- F: hw/avr/arduino.c
--F: tests/functional/test_avr_uno.py
-+F: tests/functional/avr/test_uno.py
- 
- HP-PARISC Machines
- ------------------
-diff --git a/tests/functional/avr/meson.build b/tests/functional/avr/meson.build
-new file mode 100644
-index 00000000000..7a2cb7099e7
---- /dev/null
-+++ b/tests/functional/avr/meson.build
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+tests_avr_system_thorough = [
-+  'mega2560',
-+  'uno',
-+]
-diff --git a/tests/functional/test_avr_mega2560.py b/tests/functional/avr/test_mega2560.py
-similarity index 100%
-rename from tests/functional/test_avr_mega2560.py
-rename to tests/functional/avr/test_mega2560.py
-diff --git a/tests/functional/test_avr_uno.py b/tests/functional/avr/test_uno.py
-similarity index 100%
-rename from tests/functional/test_avr_uno.py
-rename to tests/functional/avr/test_uno.py
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 708246b0d08..8b7b962d4d6 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -12,6 +12,7 @@ endif
- subdir('aarch64')
- subdir('alpha')
- subdir('arm')
-+subdir('avr')
- 
- test_mips_timeouts = {
-   'mips_malta' : 480,
-@@ -77,11 +78,6 @@ tests_generic_linuxuser = [
- tests_generic_bsduser = [
- ]
- 
--tests_avr_system_thorough = [
--  'avr_mega2560',
--  'avr_uno',
--]
--
- tests_hppa_system_quick = [
-   'hppa_seabios',
- ]
--- 
-2.50.1
-
+thanks
+-- PMM
 
