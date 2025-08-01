@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00DDFC87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D71BC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhtEs-0003hR-80; Fri, 01 Aug 2025 13:08:14 -0400
+	id 1uhtN1-00074h-Gu; Fri, 01 Aug 2025 13:16:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhroF-0005gH-MP
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:36:42 -0400
-Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhroD-0006fm-39
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:36:39 -0400
-Received: by mail-yb1-xb33.google.com with SMTP id
- 3f1490d57ef6-e8bbb605530so2847513276.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754062596; x=1754667396; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yMvKXmjoJ303EF8Y4YrknUJIsr3edeY5ngcYh+NBvls=;
- b=V1Vh+RBkAUfroXjowQmru8SWr0wIEtjdKOfzheYg0zMuLDwsASelmVQIXbuodhv8hQ
- ffcXHiHTJ+iAPevWYUxC/PV2mwRitJypFF9tdOfL4RzXOHQ7cKf55cNMIml2tRTKePAa
- RUKcpf6Mm8ilqKI8l3lMXWewowcYUJVokfw+Xzn/cM8KkvWTV3kgMup44EYvdOgP4lPm
- grFvPBUzA6lBkur1YcmyMVzEJdGXBcwPkPkqtC/xG5s2cG1uBH9/e8L7mFCRW9XFWRsX
- i2eIhAwocHVNwtbepWOm95zy6GZXjLVAIEPvn5zKvVbGb6kCLbor8Rv4HqGxjBz//1gA
- 36YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754062596; x=1754667396;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yMvKXmjoJ303EF8Y4YrknUJIsr3edeY5ngcYh+NBvls=;
- b=DF2Y9U/nSZTQfvjEBVSanfC5Iz6DfUaI3FQBfvkxCCQdTvJ+4i+vVo6HG++3BhgX+R
- FloZoG9Qr+A9vZcUlFaaGz32Y83nR139JerzVFA/KuG4FWKGMyy4u+hDG3IjjyEYKz7x
- zzrTEMyzbs+ORD3vzF/FWTn7gEhOfu66Gg/mta+pIEmpZF7WPM8IjSAW0acFYAy2x6w1
- esrz+Ygsbmcj2MeINtvLQkXT8kqUoutA1FHPfJX2yyOSXTjdl5L0vptjel030plFujrb
- NrmQ+lxlfsPcfZNUvDg7ZCLrLZCRdqJ38XymeG0oMYxYg6gG/zGY2gGn1YK+RtQQbith
- q9DQ==
-X-Gm-Message-State: AOJu0YyyWik8+N8h4eqxiMpoKM+Zq/EcuCGWLooaYBtr8cVMt0Y0J2fg
- wrQ2UJIqlZOKDz0Okxn6KCNRqUCzATUooCwL2OZ4qXieu0mbPv7pQvG3b4aw4go6Mk9Tw1uRIgL
- MyqCaGkDOhZznzTFOm0A9IARWf5hoXPWrupY4s532wTv5QHwGsItp
-X-Gm-Gg: ASbGncvTTNYmWI6/eg8nk56LJT/2a/u4hcp+Hs/PFsffHCwChII2g4RnZ6pu0yuyDMV
- av3eCgjYblm+BEmlIWnMA0IIPUcG7WTgayHLqW6yURTzOdugfJdJc/c61p4pjSiWpYq6xcPzE3S
- 2vqCE22oh3EMyBy42ISeZ/ZK1fMcBCNh+UPmM/j+v/53kAIM7AbWGN1uLsi/lMhgc7vsop1Ey4w
- 8ZsbaaI
-X-Google-Smtp-Source: AGHT+IGbcqD1GAFvr2gP0SXIzeJZCQrU+hMnACHNq8mLrsgFvo2DzlE4dsPX9CWcyAkr6QQCq89c1L6mUtk/pcVX+O8=
-X-Received: by 2002:a05:690c:10d:b0:70e:7158:6fda with SMTP id
- 00721157ae682-71b5a74aa83mr81846137b3.9.1754062595563; Fri, 01 Aug 2025
- 08:36:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uhrxe-00023e-01; Fri, 01 Aug 2025 11:46:33 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uhrxa-0008Qy-Da; Fri, 01 Aug 2025 11:46:21 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C1E113CC6B;
+ Fri, 01 Aug 2025 18:45:55 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C517F254BB4;
+ Fri,  1 Aug 2025 18:46:09 +0300 (MSK)
+Message-ID: <0f0e8785-cee4-4cab-b91a-fdcca51b73de@tls.msk.ru>
+Date: Fri, 1 Aug 2025 18:46:09 +0300
 MIME-Version: 1.0
-References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-21-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-21-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 16:36:23 +0100
-X-Gm-Features: Ac12FXw5JbF9gNgTBB34I_yvme559wvDDQLyKA0xO2HBPYrBZG7qlKNk3hD9gns
-Message-ID: <CAFEAcA-0+UgxAUPaOyoPquWc4f4u==Y_enPEpi8WUq7rz3Vsag@mail.gmail.com>
-Subject: Re: [PATCH 20/89] linux-user: Move target_cpu_copy_regs decl to qemu.h
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio: fix off-by-one and invalid access in
+ virtqueue_ordered_fill
+To: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org
+Cc: eperezma@redhat.com, mst@redhat.com, jasowang@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, terrynini38514@gmail.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250721150208.2409779-1-jonah.palmer@oracle.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250721150208.2409779-1-jonah.palmer@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,15 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:38, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The function is not used by bsd-user, so placement
-> within include/user/cpu_loop.h is not ideal.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+On 21.07.2025 18:02, Jonah Palmer wrote:
+> Commit b44135daa372 introduced virtqueue_ordered_fill for
+> VIRTIO_F_IN_ORDER support but had a few issues:
+> 
+> * Conditional while loop used 'steps <= max_steps' but should've been
+>    'steps < max_steps' since reaching steps == max_steps would indicate
+>    that we didn't find an element, which is an error. Without this
+>    change, the code would attempt to read invalid data at an index
+>    outside of our search range.
+> 
+> * Incremented 'steps' using the next chain's ndescs instead of the
+>    current one.
+> 
+> This patch corrects the loop bounds and synchronizes 'steps' and index
+> increments.
+> 
+> We also add a defensive sanity check against malicious or invalid
+> descriptor counts to avoid a potential infinite loop and DoS.
+> 
+> Fixes: b44135daa372 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
 
-thanks
--- PMM
+This looks like a good candidate for qemu-stable, isn't it?
+
+Thanks,
+
+/mjt
 
