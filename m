@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85067C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D448C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqnt-0008Ma-Lr; Fri, 01 Aug 2025 10:32:13 -0400
+	id 1uhqns-0008ID-He; Fri, 01 Aug 2025 10:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh7-0005It-4T
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh5-0005Fv-LT
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh5-0002ce-Bz
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh2-0002ai-JZ
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058310;
+ s=mimecast20190719; t=1754058305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n9aTAKqxtf2LCN/h984DXmZDHWbf6WVTqmImDbPWZ5I=;
- b=dAQ9fqDWbMkmqvTGak6bzQeeIJIE0WeAge24AuCIvdOQfTu1qnRTTA3kJ0Tj/egBaISn4G
- PrHw1OzM74rpr2EU4zWzC5MlaFPXFJVTM2wBtK3mZTrr6jBwLZ/wi3fi3aA0Uz/OkG1GMl
- oMr/5UFVOgBPLQ5xgOVdm6kiS3hjgSo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=QuL0JTKEBhSFp/6lwOdYxS7QOmZe0a+bp9gretjYRbo=;
+ b=WPH+Tk4fSCjJC8cssXO0ubVUL1MCC+yK3dHx0RZ3jRWwru/i2Pg9diF3KVlPkYdN9vudis
+ GJn0wTdAes5+UN1yfoyU/1J3FYgHo6EjZ3kwPN0qdoONbo2WJDS19rirp9aoronJavmJcG
+ LteHZOtM73OPY8CXi6RIWRy4ajOqt3Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-WD3fqu2fNfOJTjXT9zD0Hw-1; Fri, 01 Aug 2025 10:25:09 -0400
-X-MC-Unique: WD3fqu2fNfOJTjXT9zD0Hw-1
-X-Mimecast-MFC-AGG-ID: WD3fqu2fNfOJTjXT9zD0Hw_1754058308
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b836f17b50so818582f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:09 -0700 (PDT)
+ us-mta-180-DBBx0w5yNG2_n-ZSwKzU4g-1; Fri, 01 Aug 2025 10:25:04 -0400
+X-MC-Unique: DBBx0w5yNG2_n-ZSwKzU4g-1
+X-Mimecast-MFC-AGG-ID: DBBx0w5yNG2_n-ZSwKzU4g_1754058303
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b7931d3d76so208487f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058308; x=1754663108;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n9aTAKqxtf2LCN/h984DXmZDHWbf6WVTqmImDbPWZ5I=;
- b=eAV8/s+Srf5pep80spqLVI6xvVKaoq6NDu7f8qK43U7tynbvEgamXA2C+BEgkpA4rT
- MMzV7Jf/KYxdWGLWd6fZxDq7Z5nevgi0M7gPx7LwRE+L22rAB72orZR9zCGr5OXPZ0TL
- RHii/k0WXbtaziBFGdyMkcWq8QybKIpQp/cpTG7uZkLXfYLnbdHB16VHrMUFCD+nH0rM
- IjVkDIxb/UvmMPuupgHDB9iWntUll2w2We5eeZm3/fcySV+RPVGiIZe8PrbFwgsXZUfB
- nSIp/XsEBdmKNKgtvpI8zq3lksv2el4Q9WBeKexAWgEO4V2cde0QcoF+kmL8ycpo17gP
- qkAQ==
-X-Gm-Message-State: AOJu0YxhOkM3hG0WcZ0m8U6E1SobM2OrttgvWu1QnLY0r1uTWF8uyhfD
- S4dqncmUhXlf+jhhNbRtJW84DcCB6ypBm8J1K2DU9t4772ColipnJ1RGt3wYUmygUz+5FI9gpqF
- 5nTITrX9ZQU1v0aDeHDHwAzmx/c06afDdcvuj8vNHjjNEU6Y/ffPDUJ3JpZqT69eNDd56xH/mhv
- O1Owe9rFLYAyFPMwIwZW3gpSQwriFwzSN4Bw==
-X-Gm-Gg: ASbGnctEQAZXd82EfhtB6eyP0us8fkTmQd15fepwNw1aq4mhoWrTc1CtVao8M5InXWQ
- GGgTm3ktS1iC+feZIqcg6zX7Bz5pIHv/gKv5la0L9Br9k8ebjf1+eUSQAXxyPgF1g6o2+4oqzP1
- bVy89wlyeowacbBdCX2Wv8WLFQhGiitYU8jJXLG6w0k0zA0zMaS7FVshgfH3LkJu5FswWZbVoJ/
- ZlsllV38JVZrX5yaHiLYPq0D2oRCXEZ/fGKaJY6rndzRqoAyQ/Ik83lwAd/GdhmKldc9w7W2AGF
- B7h1Wkg3GkgNS8NnoXX0xjbeBK/Ut7/z
-X-Received: by 2002:a05:6000:410a:b0:3b7:999b:1194 with SMTP id
- ffacd0b85a97d-3b7999b1552mr6748727f8f.50.1754058308017; 
- Fri, 01 Aug 2025 07:25:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkhnUrfb69HxGRtmi1oofHD0UWmChSkXqelfoMQEUfW3VJt1/0c5e5pFWlEuOEuktauPE/OQ==
-X-Received: by 2002:a05:6000:410a:b0:3b7:999b:1194 with SMTP id
- ffacd0b85a97d-3b7999b1552mr6748701f8f.50.1754058307482; 
- Fri, 01 Aug 2025 07:25:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754058303; x=1754663103;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QuL0JTKEBhSFp/6lwOdYxS7QOmZe0a+bp9gretjYRbo=;
+ b=QA504zMkbl79rKThD+TMPDWfDyv+D2QfxZc9V6kncSbhfIkhlkma4rNLVnK4xLs7Bd
+ Jf9s5EbVHQ3elk8xgFpsvHuFI7MkjVAULi+xsCjfYCAA6kpYWWRdI0AYSc1Ux9knPHnH
+ J9zAccvcve8EdKwdSnJj8xa8TLG8eM9ogDfKwREEhHqWjOHMT5T8VnTA5UuYo+Sri9Li
+ UQkGRHBrKHv7Ql0D7w1klWG06f5SaouKWb6xr30X8MFfOZquJyAZtF96vLEcFDL+3Yxi
+ mfldoBIAGYFW7mlXTG9lZPX4O20RQ6OHqCURBafdMwGjGK4ScE7/yOaN6g0ezd7YKGp1
+ Un2A==
+X-Gm-Message-State: AOJu0YyfgoxIV+cRfeZFF73fphycLEZCF0AcE8z9DwDSneVkOGnJuEAg
+ zTkeKn7HDrFFQLTJf9IzWGGKLtcb6K/R8JA73bNxC2UCOqZpWImE57fqxdpTt1tfqKQ7csnhwm4
+ 4e4dIkdTrY7gljELl+ZgpoaEX7UrwDcicqaLq8AH9dRQUUBzqhIWHdIL2Rfxh9ixUiGCXV59p6X
+ O3F6iHmNDEa8pcCL1N5PBRPP0osqvbypPVtQ==
+X-Gm-Gg: ASbGncsHkLLSOPjWzyE7qUE8fYjMSRVPxYbNf5MYXu/pdmpahKIR5XV0BKXO4uX3PzB
+ LSyBoA0IE/IMxmHWc822JfXOqetOvdjinOQ7MPE/V2yvhsHIYzAgL4gEUS+1l8BSw5aFnEMSqpq
+ 7Bk3Z6NH70CtCtT6ggoqW4e8GtA1nzIE5JvWlrHXv4Z0yyFun2XgYnJxP5LUpra2iz5swIZz7V+
+ We+4IvYZ8jXi0jp3/4gH6LHgWc/3jneOOZ4NJbAf7dg8rcTZCsEVqg1TI/5z9o3MMm09Z3ASLKY
+ +M95I7XLdCIaBmgqw1Ad+BEVmwsb0hCj
+X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
+ ffacd0b85a97d-3b794fd5940mr9230774f8f.16.1754058302647; 
+ Fri, 01 Aug 2025 07:25:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrsRekZ680qyPDfDU4NlWzGbIhrSAgAnvhJbQla/nOhinkJ97o1DzUxTddadGhc0qw/N3Svg==
+X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
+ ffacd0b85a97d-3b794fd5940mr9230741f8f.16.1754058301894; 
+ Fri, 01 Aug 2025 07:25:01 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453c75sm6126809f8f.41.2025.08.01.07.25.06
+ ffacd0b85a97d-3b79c453d6esm6114814f8f.37.2025.08.01.07.25.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:06 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:25:05 -0400
+ Fri, 01 Aug 2025 07:25:01 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:24:59 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Hanna Czenczek <hreitz@redhat.com>, Tingting Mao <timao@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, Lei Yang <leiyang@redhat.com>
-Subject: [PULL 02/17] vhost: Do not abort on log-start error
-Message-ID: <c1997099dc26d95eb9f2249f2894aabf4cf0bf8b.1754058276.git.mst@redhat.com>
-References: <cover.1754058276.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/17] virtio,pci,pc: bugfixes
+Message-ID: <cover.1754058276.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1754058276.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
@@ -110,45 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+The following changes since commit 4e06566dbd1b1251c2788af26a30bd148d4eb6c1:
 
-Commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
-handler") enabled vhost_log_global_start() to return a proper error, but
-did not change it to do so; instead, it still aborts the whole process
-on error.
+  Merge tag 'pull-riscv-to-apply-20250730-2' of https://github.com/alistair23/qemu into staging (2025-07-30 09:59:30 -0400)
 
-This crash can be reproduced by e.g. killing a virtiofsd daemon before
-initiating migration.  In such a case, qemu should not crash, but just
-make the attempted migration fail.
+are available in the Git repository at:
 
-Buglink: https://issues.redhat.com/browse/RHEL-94534
-Reported-by: Tingting Mao <timao@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-Id: <20250724125928.61045-2-hreitz@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 4caf74916d09019e61c91f8cb1166510836d35e8:
+
+  net/vdpa: fix potential fd leak in net_init_vhost_vdpa() (2025-08-01 10:23:50 -0400)
+
+----------------------------------------------------------------
+virtio,pci,pc: bugfixes
+
+small fixes all over the place.
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/virtio/vhost.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index c30ea1156e..05ad5de629 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1110,7 +1110,8 @@ static bool vhost_log_global_start(MemoryListener *listener, Error **errp)
- 
-     r = vhost_migration_log(listener, true);
-     if (r < 0) {
--        abort();
-+        error_setg_errno(errp, -r, "vhost: Failed to start logging");
-+        return false;
-     }
-     return true;
- }
--- 
-MST
+----------------------------------------------------------------
+Akihiko Odaki (2):
+      virtio-net: Fix VLAN filter table reset timing
+      pcie_sriov: Fix configuration and state synchronization
+
+David Woodhouse (1):
+      intel_iommu: Allow both Status Write and Interrupt Flag in QI wait
+
+Hanna Czenczek (2):
+      vhost: Do not abort on log-start error
+      vhost: Do not abort on log-stop error
+
+Jonah Palmer (1):
+      virtio: fix off-by-one and invalid access in virtqueue_ordered_fill
+
+Mauro Carvalho Chehab (3):
+      tests/acpi: virt: add an empty HEST file
+      tests/qtest/bios-tables-test: extend to also check HEST table
+      tests/acpi: virt: update HEST file with its current data
+
+Sairaj Kodilkar (6):
+      hw/i386/amd_iommu: Fix MMIO register write tracing
+      hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+      hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
+      hw/i386/amd_iommu: Fix amdvi_write*()
+      hw/i386/amd_iommu: Support MMIO writes to the status register
+      hw/i386/amd_iommu: Fix event log generation
+
+Stefano Garzarella (2):
+      MAINTAINERS: add net/vhost* files under `vhost`
+      net/vdpa: fix potential fd leak in net_init_vhost_vdpa()
+
+ hw/i386/amd_iommu.h               |   2 +-
+ hw/i386/amd_iommu.c               | 102 +++++++++++++++++++++++++++++---------
+ hw/i386/intel_iommu.c             |  15 +++---
+ hw/net/virtio-net.c               |   7 +--
+ hw/pci/pcie_sriov.c               |  42 +++++++++-------
+ hw/virtio/vhost.c                 |   6 ++-
+ hw/virtio/virtio.c                |  22 +++++---
+ net/vhost-vdpa.c                  |   5 +-
+ tests/qtest/bios-tables-test.c    |   2 +-
+ MAINTAINERS                       |   1 +
+ tests/data/acpi/aarch64/virt/HEST | Bin 0 -> 132 bytes
+ 11 files changed, 140 insertions(+), 64 deletions(-)
+ create mode 100644 tests/data/acpi/aarch64/virt/HEST
 
 
