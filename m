@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B69C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19279C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhtSS-0003RI-HO; Fri, 01 Aug 2025 13:22:16 -0400
+	id 1uhtSV-0003jD-Np; Fri, 01 Aug 2025 13:22:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs3G-0002fg-H1
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:11 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1uhs3K-0002ve-Ef
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:14 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs3E-0000yM-Bn
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:09 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3b7834f2e72so1518156f8f.2
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:52:07 -0700 (PDT)
+ id 1uhs3I-0000z6-Ix
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:14 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3b7892609a5so1668709f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754063526; x=1754668326; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754063531; x=1754668331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qJIK23UyAslwl363cABUZ9a0g5viH1x6Yzu8I+xd/oI=;
- b=RmTozoFBthS1UQZY6b1mi1hv8hxswGUxWr64cfG0ef7IrPXlBiNZBcG+SDl+54F0cM
- Svfl5GlAMmDdD4AUpsZMxPUMNZ3JxEFPfXfRKevKPg7wp0Yr48mkaWOFdBPWEJfOkGfa
- 0auivpZnmLbhkbPancUjwZJaWU/dszr7V+PQ+uQSU4BFxfggBJ1xmtNMBpL/CQdSXsAL
- dJBbY2OigFfeC3ipTVGqhvt4GU1QR8jYgcF6NrgD4xBRuqt5ehfAlbxvDPe9I3Vk8gmi
- hlCZsr8cATuOxINZHLiPn1fk0rxfRkHHEzwzy2anJjFOkvwxyF1YFwtJtXlPZJoza3Lh
- 0qvg==
+ :reply-to; bh=LcTTleyGohrqHXwUOe5A/ufrJLHVqKxLROdZ++CPg0A=;
+ b=iXaCI2Tu6xOww/HzOsInGS7/nvIKX8l/lKkFYXNgQZnPJiFZvduMR+M5eMPjukzrsa
+ U/iC7zPgco1u8wMe7c3ikfqlRZOajkcKkXWqwYBtLwarYj/kZM5mu+w7mzgQbAPLhK6T
+ i/RbNxSkkRBo+j0pi8bA0+gYZ+5ORb34aDPx2dvm5Nm///nClM9zyJ/FgRiu46CFMJ5D
+ ynSoYm/LZVpKYWim/u0HR/y+ATz947ycY9tWsFAg8e85bucCIZVW7CpJAfazl8gNqIDl
+ LuIg+Gzmmeg26kKx9sj7waKJa/mrJhWzjwxZIal0FuRvgMpVFxqGD6709GRkZfZVj9Pd
+ RMuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754063526; x=1754668326;
+ d=1e100.net; s=20230601; t=1754063531; x=1754668331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qJIK23UyAslwl363cABUZ9a0g5viH1x6Yzu8I+xd/oI=;
- b=YMhbcFNCfq5n1wSgBzy/j7uGyS2pEtrlYc/HKOT0Q43jPLKBc4f4tpJ2B3zLWxsw4M
- zoT4an563qFSuxux2hOrISK2UdIGDQxKxdMd+MJizYszE/dYE9o11vF+zBQyGDCo6S4P
- HcMMhbebhTDTjnhFX8dqJzRoZog4sitDgHt3CZpiO1UmLe3AoJzUW4JgXdCKewT/8Ymc
- eSCYH6rS5JGbsxJxTc6XjGSnbDZo6vnncbn2LoPMSE/GU0zd6kfe8lJfglSx94PQS8RO
- iqbiUKhSzFlD3wEGLU1ibuZgAP2Va5TS2Ar7ElcMuq5tgVvyAttmQZTPioRu1UuZvNJq
- YRDQ==
-X-Gm-Message-State: AOJu0Yy/K6NZDsjBrfh+4Mnw7VVU17zqzvOEfUnN01bmVZUU9mPau3pq
- 9dW80WymPpiS5AyyZptM7NhFnKGyIA4rGHBLP427AFQWTkjnGKHRi7stBtMHkV//1tOupxFbWi1
- yXR+5
-X-Gm-Gg: ASbGnct960/Fr/xdasaXW7Roe21m3n4zqJ2tbC9htT25Oa9wxm/CmFt8bpml/vQJyKr
- Jroa+FwW8GZsaK+jKyTksv/eymls3Y9SHglrB/2A13qSeviT6581zdXCApWNwiIBZHAKEKkxDoS
- VtmjHK7RtiLYhMR6Nflm5jN893hIj5t8uy8NQ9GqtHd8B+5CDLlfq0z4bFFRHwJsKM7mgxx2GNv
- /VU/p1ygrec/QaIZr/JS1XDUXWGlv7XwGGF+wglrVuLONU930j69vAq0wOCVtwXwAY7McJ5zQ5O
- Jsag1XRwrSiV3TyB4DUZGDMNX9MkEW/05OcC7geyu3B6Z4sQzlbVmG+9YQQYOWG07YV1JejE+mb
- kfE2/gd6OIw6pGh13E5Pwfu0/NTd4
-X-Google-Smtp-Source: AGHT+IE9WJkfGLuKzSwUs7GEoGGcxBSukD8rND1tTuXsnr3iMXPOWiVEoqqzft1J1OCf1Gn/64Iazg==
-X-Received: by 2002:a5d:64cb:0:b0:3b7:761a:95d9 with SMTP id
- ffacd0b85a97d-3b8d94ce478mr211244f8f.59.1754063526483; 
- Fri, 01 Aug 2025 08:52:06 -0700 (PDT)
+ bh=LcTTleyGohrqHXwUOe5A/ufrJLHVqKxLROdZ++CPg0A=;
+ b=K5pCuPCthRoQNao/7JQd50EIlYpXo5FcIPApZbvUDwFOOGVQzCu7bDq5g8/KGKiudp
+ bs160+BKXpnhrBqjR0Yh1dZTyYYksQfUriub5Vk7WAKCxa2Q7sgiUudB8FVgec0CS51s
+ 2lmD/MCxOpuT6js0xx5F9DCNzn3WR064kRLQbE7qQfPdX6cdVLshulvfzy/CWTAZDGO4
+ g22yrN+h2EyzYdbXcITJ649hJajUGlkoqvJbRi0NrJ6uquWeHv6Li+xbT8XTWyjBdOKI
+ qjC6r1EgTpNug6D/09kSaU5r8IGOCsifedrdR3hRp1H+jVyr4PmjyBVIeQoU4Ye+O0vT
+ ux3A==
+X-Gm-Message-State: AOJu0Yyt3X2zsXBYewjAnSjS7V6IANdl9S/Pj+Kj9mjHyHpQ1XWxpcEq
+ 0hIcv4d9Sx3Ma9uKFn/LzXv9lARP/CS0GsfbKW+9bROjCSoehN2/XEB0jeGFXiHl8v0RDkW7wn5
+ tuBZV
+X-Gm-Gg: ASbGncsDjKuucop04s//1jXecUZ+3AE0pbEct4Mao2PsuDYFyV2T6URp0AOBGv5hUDQ
+ fyfNenS3lSLraYI4Fks5bNBf1Bv4QHDbXlBii1QuIJJ1UvDzTZjSadd/9yLL60t1z88FEeOMEcb
+ h11kz5rpKE7nd8iZcl0gnGslhkcoOoRNxheW7IKpoy2Oczc28IT+vmMkgs9W3hdMGG6RqCHkBoR
+ 6o+G01kDHb09Wm+fzG7M84PZAoY8m5/+iUIOsIlYHUo2ucGg6mgaVJQL34OXhW2EIspJAQ40O7/
+ deqC3QR0yJpm269A8ElumbiZhawus04fqdm1o47GXXQngD5BLOgpbCOHUNl9N6h0IgNUC/ksxKR
+ g7G3WsS3IKnfs3l7eJc9cQEit3FbL
+X-Google-Smtp-Source: AGHT+IHOAbGxTjN3WxTi9B9e2fJovcAvSEF9ZMhVjP8rURqD/X7Q6F1p1qLJpz9t0HIiDscT3t3TUA==
+X-Received: by 2002:a5d:584e:0:b0:3b7:8410:22b6 with SMTP id
+ ffacd0b85a97d-3b8d9468fb3mr236063f8f.6.1754063530692; 
+ Fri, 01 Aug 2025 08:52:10 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4a2f03sm6176670f8f.72.2025.08.01.08.52.05
+ ffacd0b85a97d-3b79c4a2f03sm6176670f8f.72.2025.08.01.08.52.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 08:52:05 -0700 (PDT)
+ Fri, 01 Aug 2025 08:52:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/8] hw/intc/arm_gicv3_kvm: Remove writes to ICPENDR registers
-Date: Fri,  1 Aug 2025 16:51:53 +0100
-Message-ID: <20250801155159.400947-3-peter.maydell@linaro.org>
+Subject: [PULL 6/8] target/arm: Fix big-endian handling of NEON gdb remote
+ debugging
+Date: Fri,  1 Aug 2025 16:51:57 +0100
+Message-ID: <20250801155159.400947-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250801155159.400947-1-peter.maydell@linaro.org>
 References: <20250801155159.400947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,52 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zenghui Yu <zenghui.yu@linux.dev>
+From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 
-As per the arm-vgic-v3 kernel doc [1]:
+In the code for allowing the gdbstub to set the value of an AArch64
+FP/SIMD register, we weren't accounting for target_big_endian()
+being true. This meant that for aarch64_be-linux-user we would
+set the two halves of the FP register the wrong way around.
+The much more common case of a little-endian guest is not affected;
+nor are big-endian hosts.
 
-    Accesses to GICD_ICPENDR register region and GICR_ICPENDR0 registers
-    have RAZ/WI semantics, meaning that reads always return 0 and writes
-    are always ignored.
+Correct the handling of this case.
 
-The state behind these registers (both 0 and 1 bits) is written by
-writing to the GICD_ISPENDR and GICR_ISPENDR0 registers, unlike
-some of the other set/clear register pairs.
-
-Remove the useless writes to ICPENDR registers in kvm_arm_gicv3_put().
-
-[1] https://docs.kernel.org/virt/kvm/devices/arm-vgic-v3.html
-
-Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-Message-id: 20250729161650.43758-2-zenghui.yu@linux.dev
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Message-id: 20250722173736.2332529-2-vacha.bhavsar@oss.qualcomm.com
+[PMM: added comment, expanded commit message, fixed missing space]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv3_kvm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/arm/gdbstub64.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 8ed88e74299..f798a6e28ca 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -387,8 +387,6 @@ static void kvm_arm_gicv3_put(GICv3State *s)
-         reg = c->level;
-         kvm_gic_line_level_access(s, 0, ncpu, &reg, true);
- 
--        reg = ~0;
--        kvm_gicr_access(s, GICR_ICPENDR0, ncpu, &reg, true);
-         reg = c->gicr_ipendr0;
-         kvm_gicr_access(s, GICR_ISPENDR0, ncpu, &reg, true);
- 
-@@ -445,7 +443,7 @@ static void kvm_arm_gicv3_put(GICv3State *s)
-     kvm_gic_put_line_level_bmp(s, s->level);
- 
-     /* s->pending bitmap -> GICD_ISPENDRn */
--    kvm_dist_putbmp(s, GICD_ISPENDR, GICD_ICPENDR, s->pending);
-+    kvm_dist_putbmp(s, GICD_ISPENDR, 0, s->pending);
- 
-     /* s->active bitmap -> GICD_ISACTIVERn */
-     kvm_dist_putbmp(s, GICD_ISACTIVER, GICD_ICACTIVER, s->active);
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 64ee9b3b567..4fce58d895e 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -115,8 +115,22 @@ int aarch64_gdb_set_fpu_reg(CPUState *cs, uint8_t *buf, int reg)
+         /* 128 bit FP register */
+         {
+             uint64_t *q = aa64_vfp_qreg(env, reg);
+-            q[0] = ldq_le_p(buf);
+-            q[1] = ldq_le_p(buf + 8);
++
++            /*
++             * On the wire these are target-endian 128 bit values.
++             * In the CPU state these are host-order uint64_t values
++             * with the least-significant one first. This means they're
++             * the other way around for target_big_endian() (which is
++             * only true for us for aarch64_be-linux-user).
++             */
++            if (target_big_endian()) {
++                q[1] = ldq_p(buf);
++                q[0] = ldq_p(buf + 8);
++            } else{
++                q[0] = ldq_p(buf);
++                q[1] = ldq_p(buf + 8);
++            }
++
+             return 16;
+         }
+     case 32:
 -- 
 2.43.0
 
