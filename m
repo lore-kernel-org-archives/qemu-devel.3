@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBDA8C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A18C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhkPw-00088a-U8; Fri, 01 Aug 2025 03:43:05 -0400
+	id 1uhkbh-0002SQ-US; Fri, 01 Aug 2025 03:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uhkPH-0007g7-H6; Fri, 01 Aug 2025 03:42:25 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uhkbc-0002Nv-36; Fri, 01 Aug 2025 03:55:08 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uhkPE-000725-VU; Fri, 01 Aug 2025 03:42:23 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5717fxm5051855
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 1 Aug 2025 16:41:59 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=7SPKL5BkhzKgejz7RpKPIEs2jgqhWHBCK/ROTIhEEno=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1754034119; v=1;
- b=Zrcea/10T073jjIsiSvcqWkEDKtfec4gfstWuo8UhVSYkem5zjzAd8hurQYnr0Zs
- 0Z9oijl7/cZjEwsRrp/jRfrHGZqKtAzWwFW0Blmzw1xUfF3hCeh8xe0NL1fOj+wV
- 8uRC807J3tSyIZl/g+DA40LiHmpx+vVGZmNwnYlLs0Z4stnMW2uiftb9trYFcrFD
- U2827qcpFyMHJDRcVxuKE1711nyEId6+Z9K7njfoUpzDALYQ0PGYe8OZjVzwF9Ed
- ckUHcPWXcmJzdbS1c+lRiIV1fOjsPKvkwqpReo1D9MEjtOgtbxU58TJOrnYRYwBA
- xzwbSnFDuT1MOI3FHl9EYQ==
-Message-ID: <ddedd582-0a2e-4870-a2e4-b939e61febad@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 1 Aug 2025 16:41:59 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uhkbZ-0000TN-PA; Fri, 01 Aug 2025 03:55:07 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0D05613C97B;
+ Fri, 01 Aug 2025 10:54:28 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 40D022546C6;
+ Fri,  1 Aug 2025 10:54:41 +0300 (MSK)
+Message-ID: <0b9cecd3-9493-492f-8130-30e0809010f7@tls.msk.ru>
+Date: Fri, 1 Aug 2025 10:54:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 24/27] migration: Refactor vmstate_save_state_v()
- function
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20250731-propagate_tpm_error-v8-0-28fd82fdfdb2@redhat.com>
- <20250731-propagate_tpm_error-v8-24-28fd82fdfdb2@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250731-propagate_tpm_error-v8-24-28fd82fdfdb2@redhat.com>
+Subject: Re: [PATCH v3 10/11] tests: Add iotest mirror-sparse for recent
+ patches
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, stefanha@redhat.com,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250425005439.2252467-13-eblake@redhat.com>
+ <20250425005439.2252467-23-eblake@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20250425005439.2252467-23-eblake@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,150 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/07/31 22:21, Arun Menon wrote:
-> The original vmstate_save_state_v() function combined multiple
-> responsibilities like calling pre-save hooks, saving the state of
-> the device, handling subsection saves and invoking post-save hooks.
-> This led to a lengthy and less readable function.
+On 25.04.2025 03:52, Eric Blake wrote:
+> Prove that blockdev-mirror can now result in sparse raw destination
+> files, regardless of whether the source is raw or qcow2.  By making
+> this a separate test, it was possible to test effects of individual
+> patches for the various pieces that all have to work together for a
+> sparse mirror to be successful.
 > 
-> To address this, introduce wrapper functions for pre-save,
-> post-save and the device-state save functionalities.
+> Note that ./check -file produces different job lengths than ./check
+> -qcow2 (the test uses a filter to normalize); that's because when
+> deciding how much of the image to be mirrored, the code looks at how
+> much of the source image was allocated (for qcow2, this is only the
+> written clusters; for raw, it is the entire file).  But the important
+> part is that the destination file ends up smaller than 3M, rather than
+> the 20M it used to be before this patch series.
 > 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->   migration/vmstate.c | 89 ++++++++++++++++++++++++++++++++++++++---------------
->   1 file changed, 64 insertions(+), 25 deletions(-)
-> 
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 25a819da069b982d4043f287b4562ea402d9eb0e..cec1ee2f30d6f0270ee1fd30d29f6f0f5d20bdb0 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -414,23 +414,43 @@ int vmstate_save_state_with_err(QEMUFile *f, const VMStateDescription *vmsd,
->       return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->version_id, errp);
->   }
->   
-> -int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-> -                         void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
-> +static int pre_save_dispatch(const VMStateDescription *vmsd, void *opaque,
-> +                             Error **errp)
->   {
->       int ret = 0;
-> -    int ps_ret = 0;
-> -    const VMStateField *field = vmsd->fields;
-> -
-> -    trace_vmstate_save_state_top(vmsd->name);
-> -
->       if (vmsd->pre_save) {
->           ret = vmsd->pre_save(opaque);
->           trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
->           if (ret) {
-> -            error_setg(errp, "pre-save failed: %s", vmsd->name);
-> -            return ret;
-> +            error_setg(errp, "pre-save for %s failed, ret: '%d'",
-> +                       vmsd->name, ret);
->           }
->       }
-> +    return ret;
-> +}
-> +
-> +static int post_save_dispatch(const VMStateDescription *vmsd, void *opaque,
-> +                              Error **errp)
-> +{
-> +    int ret = 0;
-> +    if (vmsd->post_save) {
-> +        ret = vmsd->post_save(opaque);
-> +        error_setg(errp, "post-save for %s failed, ret: '%d'",
-> +                   vmsd->name, ret);
-> +    }
-> +    return ret;
-> +}
-> +
-> +static int vmstate_save_dispatch(QEMUFile *f,
-> +                                 const VMStateDescription *vmsd,
-> +                                 void *opaque, JSONWriter *vmdesc,
-> +                                 int version_id, Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +    int ret = 0;
-> +    int ps_ret = 0;
-> +    Error *local_err = NULL;
-> +    const VMStateField *field = vmsd->fields;
->   
->       if (vmdesc) {
->           json_writer_str(vmdesc, "vmsd_name", vmsd->name);
-> @@ -533,15 +553,11 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->                   if (ret) {
->                       error_setg(errp, "Save of field %s/%s failed",
->                                   vmsd->name, field->name);
-> -                    if (vmsd->post_save) {
-> -                        ps_ret = vmsd->post_save(opaque);
-> -                        if (ps_ret) {
-> -                            ret = ps_ret;
-> -                            error_free_or_abort(errp);
-> -                            error_setg(errp,
-> -                                       "post-save for %s failed, ret: '%d'",
-> -                                       vmsd->name, ret);
+> Signed-off-by: Eric Blake <eblake@redhat.com>
 
-Putting this patch before the last one will make the addition and 
-removal of this error_setg() unnecessary and make the patches smaller.
+Hi!
 
-> -                        }
-> +                    ps_ret = post_save_dispatch(vmsd, opaque, &local_err);
-> +                    if (ps_ret) {
-> +                        ret = ps_ret;
-> +                        error_free_or_abort(errp);
-> +                        error_propagate(errp, local_err);
->                       }
->                       return ret;
->                   }
-> @@ -565,17 +581,40 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->       if (vmdesc) {
->           json_writer_end_array(vmdesc);
->       }
-> +    return ret;
-> +}
->   
-> -    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
->   
-> -    if (vmsd->post_save) {
-> -        ps_ret = vmsd->post_save(opaque);
-> -        if (ps_ret) {
-> -            ret = ps_ret;
-> +int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-> +                         void *opaque, JSONWriter *vmdesc, int version_id,
-> +                         Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +    int ret = 0;
-> +    Error *local_err = NULL;
-> +    int ps_ret = 0;
-> +
-> +    trace_vmstate_save_state_top(vmsd->name);
-> +
-> +    ret = pre_save_dispatch(vmsd, opaque, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ret = vmstate_save_dispatch(f, vmsd, opaque, vmdesc,
-> +                                version_id, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
-> +    ps_ret = post_save_dispatch(vmsd, opaque, &local_err);
-> +    if (ps_ret) {
-> +        if (ret) {
->               error_free_or_abort(errp);
-> -            error_setg(errp, "post-save for %s failed, ret: '%d'",
-> -                       vmsd->name, ret);
->           }
-> +        ret = ps_ret;
-> +        error_propagate(errp, local_err);
->       }
->       return ret;
->   }
-> 
+This test requires O_DIRECT to be available on the underlying filesystem
 
+Without O_DIRECT support, the test fails with:
+
+Listing only the last 100 lines from a long log.
+-{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, 
+"event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
+...
+-*** done
++Timeout waiting for capabilities on handle 0
+
+which is not helping at all.
+
+This hit me on debian, where automatic buildds run everything on
+a tmpfs which does not support O_DIRECT, and the test failed this
+way, without a way to tell what's wrong.
+
+After adding save_stderr=y to the test, I finally were able to see
+what's going on:
+
++qemu-system-x86_64: -blockdev {"driver":"file", "cache":{"direct":true, 
+"no-flush":false},
++ 
+"filename":"/build/reproducible-path/qemu-10.1.0~rc1+ds/scratch/qcow2-file-mirror-sparse/t.qcow2.base", 
+"node-name":"src-file"}: Could not open 
+'/build/reproducible-path/qemu-10.1.0~rc1+ds/scratch/qcow2-file-mirror-sparse/t.qcow2.base': 
+filesystem does not support O_DIRECT
++Timeout waiting for capabilities on handle 0
+make: *** [debian/rules:188: b/qemu/tested] Error 1
+
+
+but it took me multiple rather painful iterations because each time
+I had to upload new version of the source package to debian for the
+builddds to pick it up (similar to what we have in the CI but without
+saving the build artifacts).
+
+This test should somehow depend on O_DIRECT availability - we already
+had something similar with 9pfs which also required O_DIRECT and
+failed when /tmp was on a tmpfs.
+
+And I think generally stderr should always be visible, at least when
+the test failed, - where it is especially needed to diagnose the issue.
+
+In debian I disabled mirror-sparse test entirely (also had to do a few
+iterations, because it turned out removing the test files has to be
+done before ./configure run).
+
+Thanks,
+
+/mjt
 
