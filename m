@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52FA8C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 18:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9C0C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 18:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhuGx-0006t9-IO; Fri, 01 Aug 2025 14:14:31 -0400
+	id 1uhuPV-0000qG-Gj; Fri, 01 Aug 2025 14:23:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhsh2-0003GY-Qs
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:33:19 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
+ id 1uhssd-0007Pb-W4
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:45:20 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhsh1-0001oz-60
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:33:16 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e8e1ae319c6so961095276.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 09:33:14 -0700 (PDT)
+ id 1uhssb-0003zl-JQ
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:45:15 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-71b6d27113fso10865957b3.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 09:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754065993; x=1754670793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754066712; x=1754671512; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XmL7nih4YCXnsagdk5u4ElZjXKzj4y+qqLmDY2TtXTk=;
- b=y1suVV/teBWolwcxhQZqruBmDEBrvLIn4yFP7ReOZZoinK91Y31DJGow/vC5+ONGWN
- +pQvcShT+BqPQVcbaXaPEitNvIXt8Inm2B/BRHFZ0iAW1jTs/YPjIX1zweVRtU7FNpzd
- X1TlIwRPhQ0XFxe93YuLEBCPiN3fJ/4AxoQk8yn50pyby1hDA1NjA1QoObQASazlkNT5
- H2AhC2g5nx2d5JjKf0wum2Yr6eJ/hxANXpFAJ978Ko/0O6i5WWJACmHStfpAAI8eZS7J
- s/GWyaoIGx9Trp6am+j9TgdsEbPZCgpTAAE+KFeNcNpfpxJisHW7QURqRDaMUquB9MSV
- 06mg==
+ bh=aSu0Lh6UVCZWXGQ6NawRS/oExQyBCp5VkeGOgwYHlic=;
+ b=RRQhIOGXIf2xHJ+hj8q+eZ9wfTo8ASmfQRZgtm8O8HBdyVaTbKDD8V1+lW/DpBU3Jd
+ Ag6EVXgJ8XGVanhyHKg5z4KajwlDaYZRoBGmb/oc1UadctSleVkXLR8Z3pOLkeTDtAYI
+ vYj/+Pl45Vu8sKO+AjRmaF7H3LQjjn9HrB3+wrJzBcHf5BwbtFDAQtfS7LSRCWBl52uc
+ UAt+m6fJ4O1tndsd1ppRbJF5Xya2lMd1+ETR6cCPSH+/If+KuGYBQDqv0D0MZVDD9Ryq
+ jPnTh1BMN2hRMzxqtR/8m/i/rbgRAMfNydBckaFXDkqjm82IjEQXnjcR2F2USAx4jug6
+ z9Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754065993; x=1754670793;
+ d=1e100.net; s=20230601; t=1754066712; x=1754671512;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XmL7nih4YCXnsagdk5u4ElZjXKzj4y+qqLmDY2TtXTk=;
- b=XQgq9hV39XN7qydJkNaPWGVjRwSU2KlrYxtSl27S3sojAxyBLHn+qA5zqP2r9o5D+r
- R/wenFekUs5MffWHgmXo7ug/TcIw3aB1r0yg0mm8nm/SpP1MKEx4fn3jlf5PX150ZfJ2
- 2n9qzysmCikaCZNYXk9YX8fmxjjFd15ctzIySI6+PYW/9/vO51SRqhplcRtDdD9FO7Ct
- 1Ef5K37O4HhMXxGFWyt+wi4rm5KWQkb2Z1KklLkFv5El6NmcQfkz8BT0HHhKzpq841AQ
- TAcjPahYnmF435mpFhdd58bMHak8NWgSobEXQAhX5/W+LlS1FgbR6ViDehsaBi7yalkh
- 0R3w==
-X-Gm-Message-State: AOJu0YwxCG0dT8rmi3nCy5yTlly7WA3EoO8l92UBp5p2QtBPD1AuVLnQ
- Ebmk189TYsTGFFxzLrHMU5mKP+ZwpMFbIGIQdSlauFb1tsOrtqmlLAML20lI+uVyLA8xlbQtPOG
- gwETKxkV+ecNSyyQZ05AMeoBi67NmNGX/aymguhN2Rw==
-X-Gm-Gg: ASbGncuDBkl4YA5UOelNazyGl4IAmidO4yN+7N3+raaUuiZDKaIS/rRUas9LcuMzk4K
- c+jpUeE8JW/1Vbllx0Xna5VSPaOKp2+zjJPblP5VSlt0W1LZKzrr2NcWfIGFWDOaI/W2WRdJgql
- fecGOMbTjIaSkQmqfRJ0MezAkkaYsEn5md0JCT2etEEYk3ZFdWohv3zhN8pWctY0LO0OhnyNe8l
- hbrjZmonqaLDLM/aKo=
-X-Google-Smtp-Source: AGHT+IEPU4i/S6Ivrg1uupx9Z4uWuWhF++k3Yy0VUyfigBGXT+ora13zP0qefSfM2crD6dT64QeOCAgGKlaOwL7aD3Y=
-X-Received: by 2002:a05:690c:6d0e:b0:71a:183e:bfe6 with SMTP id
- 00721157ae682-71b7ef6f308mr4557227b3.31.1754065993525; Fri, 01 Aug 2025
- 09:33:13 -0700 (PDT)
+ bh=aSu0Lh6UVCZWXGQ6NawRS/oExQyBCp5VkeGOgwYHlic=;
+ b=G0Pvzm6mRJGDeuyrCH3H1kuZZnhWBC+50lzQvjWVVpVHIgOOEogmPrPOSunBho5NaL
+ 65QwsYX7ehWsKaZax9E3Od85nRkTCUa1k3Y++FDHTSNnqMpBfv8nPUSXfhUW5g9UBbUK
+ bijUtf0hPnrnYMsQbMBvyR+UuTJOoHFKDXPV00KUxTfdKoyNWqf2d5TT+/QqOh0hniBQ
+ DZzU+m8DuYudEHiSogIsvydLZ7fsZtOc5WYwO0peOhuP2tx6j04dp9InZ/mde1lbY4LB
+ euyxalN/hgrwnnScD84ztukAmyf9rO5zwGEqy7+exS4q8aQxrX8HXFCkJEIfnNIQkgCO
+ xwfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUozv4fPd8b6ooUBAODDHXPQ13KZ5x2zKG8igh0ncnDIW+lrSa88zGArLk+KHrhQeN0ke7CLXg1Cl2t@nongnu.org
+X-Gm-Message-State: AOJu0YwU5BKA+28QvdSdZHhG2sRMIHEXZ80hPehh6HRa+cPCDkGOVgUj
+ PHQcpyGnjytwysTf6hOD5TxYBV04EQiE8+++V1AW0tgclgvAohqt4mIMiPlTxDbaivqP4OJfBL9
+ RyFnU03Z1L+kfjeK2xJfFnJsTtZXKRZxu+Rl4GYILQQ==
+X-Gm-Gg: ASbGncvEQq5zMcvE4IemhMdBUsiJInsV0i/3aHhNNBVssXaf/KSv8wfSfsnCQnGpqFv
+ BjmRXgZjI6C+lSHrmCDFf7kfsUfhQPyNsaHNM4o+CscTBV2u9e5Ey07x5umCF+rX/OvzLy8x+BA
+ on+fDvFAjBWFNd13UIxRzO/ya3wALdqEUPnl0oNgNlZjzPqeBr+Fb1WCTAz/xsnIEs412oNipdB
+ 4n1qz/t
+X-Google-Smtp-Source: AGHT+IFXEy0sTpmOlg0a7QU4ytKQxQ7N2P9DPIsneGqDHmDICrMICCGmT2x9s3wckFjICHzXkQ1SKnITj7HKJ1prrqM=
+X-Received: by 2002:a05:690c:6891:b0:71b:4739:9d67 with SMTP id
+ 00721157ae682-71b7ed016afmr4343777b3.4.1754066712067; Fri, 01 Aug 2025
+ 09:45:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-25-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-25-richard.henderson@linaro.org>
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-48-richard.henderson@linaro.org>
+ <b2e40787-6043-4d4c-9cbb-731d0e92e25c@linaro.org>
+ <CAFEAcA_9tkv1EoM33=G=zW6Pw0gBirvjs-SsDaC8ar8feyH_8g@mail.gmail.com>
+ <2c337408-5caa-4e24-a8dd-d947203a1dc3@linaro.org>
+ <CAFEAcA-LmS0dus5ZW6P+-VXkw=m4K3MaE6O+Qtj5i3H7ULJFFQ@mail.gmail.com>
+ <cedc5b94-78e3-4d9a-bdd8-60c82673c136@linaro.org>
+In-Reply-To: <cedc5b94-78e3-4d9a-bdd8-60c82673c136@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 17:33:02 +0100
-X-Gm-Features: Ac12FXwMIX50dwoN_Lpf-r7Xtwh9JGG-EivSWG3NPhequCiVsoPZkbCBOZfszYc
-Message-ID: <CAFEAcA9mJ4EanfdW3PuV2ntN7_PgX7HqP-RbZUwpbDMJ7bomdA@mail.gmail.com>
-Subject: Re: [PATCH 24/89] linux-user/arm: Create init_main_thread
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Fri, 1 Aug 2025 17:44:59 +0100
+X-Gm-Features: Ac12FXxTNpE5QMWuNIBTE0ckr-9NIXZc-hsQCOc3g7x47w5B7TKnGlJ6qi-g5so
+Message-ID: <CAFEAcA8j7S6qVxmd8dairF=4kpn2=uBeFFxY22M5FgyTnjcJ+Q@mail.gmail.com>
+Subject: Re: [PATCH 47/82] target/arm: Expand pstate to 64 bits
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,62 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:21, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, 1 Aug 2025 at 17:41, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
 >
-> Merge init_thread and target_cpu_copy_regs.
-> There's no point going through a target_pt_regs intermediate.
+> On 8/1/25 9:37 AM, Peter Maydell wrote:
+> > We do at least define the fields so you get a nice view of it:
+> >
+> > (gdb) print $cpsr
+> > $4 = [ EL=0 BTYPE=0 Z ]
+> >
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/arm/cpu_loop.c | 53 ++++++++++++++++++++++++++++++++-------
->  linux-user/elfload.c      | 41 +-----------------------------
->  2 files changed, 45 insertions(+), 49 deletions(-)
->
-> diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-> index 1f3bb96484..8974b35e8d 100644
-> --- a/linux-user/arm/cpu_loop.c
-> +++ b/linux-user/arm/cpu_loop.c
-> @@ -480,19 +480,54 @@ void cpu_loop(CPUARMState *env)
->      }
->  }
->
-> -void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-> +void init_main_thread(CPUState *cs, struct image_info *info)
->  {
-> -    cpsr_write(env, regs->uregs[16], CPSR_USER | CPSR_EXEC,
-> -               CPSRWriteByInstr);
-> -    for (int i = 0; i < 16; i++) {
-> -        env->regs[i] = regs->uregs[i];
-> +    CPUARMState *env = cpu_env(cs);
-> +    abi_ptr stack = info->start_stack;
-> +    abi_ptr entry = info->entry;
-> +
-> +    cpsr_write(env, ARM_CPU_MODE_USR | (entry & 1 ? CPSR_T : 0),
-> +               CPSR_USER | CPSR_EXEC, CPSRWriteByInstr);
-> +
-> +    env->regs[15] = entry & 0xfffffffe;
-> +    env->regs[13] = stack;
-> +
-> +    /* FIXME - what to for failure of get_user()? */
-> +    /* FIXME - a modern kernel does not do this? */
-> +    get_user_ual(env->regs[2], stack + 8); /* envp */
-> +    get_user_ual(env->regs[1], stack + 4); /* envp */
+> Do you have specific pretty printers installed? On my debian trixie (gdb
+> 16.3), there is no pretty printer for cpsr by default.
 
-This seems to have originally been in the kernel as
-a half-hearted attempt to support a.out format:
-kernel commit acfdd4b1f7590d0 from 2013 removed the
-setting up of r1 and r2 along with the rest of that
-partial a.out handling. (The commit message explains the
-confused kernel handling of r0 which is the origin of our
-"/* XXX: it seems that r0 is zeroed after ! */" comment.)
+I'm not aware of having installed any. This is
+GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
 
-QEMU has never supported a.out binaries, so we should
-clean this up too...
+I was assuming that this was just plain gdb doing something
+useful because the xml defines the field names and bitpositions
+(at least if your QEMU has commit 63070ce368e1a where Manos
+synced our xml to upstream gdb's to add these).
 
-Anyway, this patch is just moving code around, so
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
 -- PMM
 
