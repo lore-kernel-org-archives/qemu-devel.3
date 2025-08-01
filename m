@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C6BFC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94741C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhpwW-0007pe-9A; Fri, 01 Aug 2025 09:37:05 -0400
+	id 1uhpzc-00083f-00; Fri, 01 Aug 2025 09:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerkolothum@gmail.com>)
- id 1uhkUW-0004zU-WF; Fri, 01 Aug 2025 03:47:49 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shameerkolothum@gmail.com>)
- id 1uhkUU-0007mb-SI; Fri, 01 Aug 2025 03:47:48 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3b783d851e6so649086f8f.0; 
- Fri, 01 Aug 2025 00:47:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754034464; x=1754639264; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gOwwy3GLPQ6ST7xJTOCyOyJnsV2gNoteuopM4onEoIE=;
- b=DF7erN5HQ1s6TYlMk6uSUrN6GYri7XrgiLPQbJLaIT+roRPvgjiiCv6EsdOc9tLkSn
- gUYnLD02lG6fQoYXx2SGyq8bZH4I//4BdaahbedrXsOPdTpfTawtW9FDPLdSgyL6E/9y
- R6KIGEvCtcgaANtoEfQuzmg6twwc3THpi73bCkiMT92WimvLdyqI548/5MYpTHDNK22F
- KlKwtPHeiMR5SYiIC7BOz+kOsWxLmDOTfHM29/mfJsTHXYR8J3WunyGERYW0S0c58/qa
- HtXzjm+c5i8VRuxt+p6sH2XEFZVuTMF1HK3BfUT6njX6Ta+TVSDyzaY+sBjEMq2on0in
- nEjA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uhpsA-0004wr-3b
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:32:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uhps8-00005A-4x
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:32:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754055149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OUAXl7ufhpeuMMCkiIvzQ2+72FjO8lIXmLzyBYZ6bvI=;
+ b=Mu1O2rm4B114fOksEsedA1WebojGsDBCUpmoitg1hsEUj722nTC9LwiOLs0k9dz4aOe5PF
+ H8fQIdq/bC9aZx+r+PC0lUIkvRwN4bmjhDhZUdcD6ckf685G9smb9igxNCrV81gV6lUzIU
+ uMWZzG8Gc9dqQVXrIyV7Db6tf033Kk8=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-378-xstpXsRePjOCvXQ5i98-vA-1; Fri, 01 Aug 2025 09:32:28 -0400
+X-MC-Unique: xstpXsRePjOCvXQ5i98-vA-1
+X-Mimecast-MFC-AGG-ID: xstpXsRePjOCvXQ5i98-vA_1754055148
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7e32df3ace0so92855285a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 06:32:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754034464; x=1754639264;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gOwwy3GLPQ6ST7xJTOCyOyJnsV2gNoteuopM4onEoIE=;
- b=biUYbbM7LSP+4qJo/BwG6PDe4me855fXQjg0MGoqm0srL5ciYJ0Izp69tBbaoXAOqp
- uNzE8W3cnKc7lbSzFpc8wirNzfzkyw3HCOSgdNajCgSxYyaP1D6ylnAqFREe3gynd6O/
- MpFfLczDb4GPVh8/JMSdYaAQngFM/bqmF7Elw5nGk8cM1VfA6l0IqUoNA2IRaA/z7mO3
- qwFO23fAosX6sFn2yignLj+YtfFqCs1rE7xgA5rxUiL9hJfztlPpKBxbqxzCO4xCDIOY
- h6gkt0KgKe8peIiEcS2YHujbUD5TfQls0kGV98bIbBrEPfnR2PIBfG6ZSPaEE/fKvELe
- HBDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGdbnRhrLzqL/1IAcvuxKjqmyeSECE5NMdId14TATPzevSJF+p84pSIAx2pJQWEOYoHxfqhZy6ELVq@nongnu.org
-X-Gm-Message-State: AOJu0Ywv4SgGLwVKlqYY/kAzosd6KkPsdDGwnasVyQuPAvNtDppIuUbz
- Jnzp91JkRfgk308L/k7pKh3NjE77CHUtlNWo9fDICWMMsKKIGDIb85+VLWnWLg==
-X-Gm-Gg: ASbGncvz3djQped6tOzXBtJGajs//K0TVCKrr7DdJxnTyU2yI3fjuuX7zhw2sjRgG6/
- GcFwG/H56W93odOREHwzPjsNPZVba9Rcg8/JgwV0Y09ZmLm/5aR4mnchvS/96Y533I2OnV6dIRJ
- QcGpO4wONQmzVrPKG6mal/ytH7XCkA7mGtpyeAFhzQWANTlIGEb9VxhF9VAKF4Q48ikhksUj9AN
- eTPpAzwAhAP/p1xB6ajsjazhMihpYT+Hx8/+E7brij9JgBYKief9Me5Fl6JDs3sVc2Y8GB0s/LM
- 9IJrYsWlLo0S/WDj/wp+nKDUeaiD1PLSl0BR/zwfMg+902Vl6pMPbrrzAreDINUJQolK1QtGJvF
- Dxkzb7FFMU7A+UGhxcW8y4aGatDonC2C5gw==
-X-Google-Smtp-Source: AGHT+IE543fvfeJI9GhypQTiBCwSXnt7jJx8MHoitAqUiMxp4JU0t74VjvCQZ6I7aX3quxRWjJBDGg==
-X-Received: by 2002:a05:6000:144b:b0:3b8:d32e:9231 with SMTP id
- ffacd0b85a97d-3b8d32e9730mr1358500f8f.29.1754034464033; 
- Fri, 01 Aug 2025 00:47:44 -0700 (PDT)
-Received: from shameer-ubuntu ([195.11.233.227])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453ab0sm5049185f8f.44.2025.08.01.00.47.43
+ d=1e100.net; s=20230601; t=1754055148; x=1754659948;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OUAXl7ufhpeuMMCkiIvzQ2+72FjO8lIXmLzyBYZ6bvI=;
+ b=ClUzUj/Lf8YGAZ52DNGpWAyWiPBtZ3v6xiYneBJ801obLnSitAqb94F4ZQR/j3didi
+ ZVZn39IxAtq+F6SxF81OrCgt1V39BfTTxO/zCHIveya2zFlokxzi6hahZMnskaxMelht
+ m2U1II94MgUWrzsbF5xQ93hNB/OZSj5gMRCYpPflcvZq16VLBE2tfE/FOeMy5ceGp+lS
+ D6v2L9Aj7/zjwP80jyGOPr9Zp2iv6Jwk6XRqwO9QbGydwm419u739LfupaUwQeyd8Yrr
+ BBOLyqy/BYfLPO053x0lg8M9Y36ttaFuBRinIVlqF5wMtyxVD8XUmRQzybsOalWleEyB
+ p8yA==
+X-Gm-Message-State: AOJu0Yyg6fqec6HwhN1qImU6Q2COjYzZ45O2rlTEI0Gw64BDkFQWOI8x
+ xJGrCDlJSfnnkXNCzWgsuxKPEm/LZOs3cozixP9kYHmu3NBspHlWmy45t4V3/hxLlG20shnMkbl
+ EZD7LKfEABPJLQrlumJjif5V1iynU4f6mJu8/CRdvHky7XZd2kS1irRA4
+X-Gm-Gg: ASbGnctC+aAu9klRnGySJrCpecuso5lRSiiNAQW+ss0rF7luSTsguNkpeg0L+CBU7tL
+ zPpZ9BCj99xnh/gHfJ9FeVev+XX17MwZJS3X1GS2SvqDY+DQG8aqofziN5y5B5CddcBGffJZwBs
+ OuG0dIQF0w5SVwoi4dODkV8n3qVtkFItW1Ac6gegU3aftMVBFh5qW7ApUtfXWzr3vYteUyp033G
+ kcNvuEPiJEbqQNmM3XSpdl2+E33H9p7l7YsiV9w9jxVf8qrSVJIQCPh4STzDDmSYTm5QkNmopJP
+ 6S0ebs6Vv21JWnvWJzx+1JuNFhGNNZ+i
+X-Received: by 2002:a05:620a:43a8:b0:7e0:9977:a803 with SMTP id
+ af79cd13be357-7e66f3c648amr1494109885a.54.1754055147743; 
+ Fri, 01 Aug 2025 06:32:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlFdIcrQHLNp5GUtcEZ2zOm/H/6tPyT0COfkYxajIWlxcb5Asp8oBwwNWMXKp2wDmCysJYaA==
+X-Received: by 2002:a05:620a:43a8:b0:7e0:9977:a803 with SMTP id
+ af79cd13be357-7e66f3c648amr1494105585a.54.1754055147236; 
+ Fri, 01 Aug 2025 06:32:27 -0700 (PDT)
+Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e67f7083dcsm218984585a.41.2025.08.01.06.32.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 00:47:43 -0700 (PDT)
-From: Shameer Kolothum <shameerkolothum@gmail.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, berrange@redhat.com, maz@kernel.org,
- oliver.upton@linux.dev, armbru@redhat.com, linuxarm@huawei.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, salil.mehta@huawei.com,
- yangjinqian1@huawei.com, shameerkolothum@gmail.com,
- shameerali.kolothum.thodi@huawei.com
-Subject: [RFC PATCH RESEND 2/4] target/arm/kvm: Add QAPI struct
- ArmTargetImplCPU
-Date: Fri,  1 Aug 2025 08:47:28 +0100
-Message-ID: <20250801074730.28329-3-shameerkolothum@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250801074730.28329-1-shameerkolothum@gmail.com>
-References: <20250801074730.28329-1-shameerkolothum@gmail.com>
+ Fri, 01 Aug 2025 06:32:26 -0700 (PDT)
+Date: Fri, 1 Aug 2025 09:32:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2 5/6] hpet: make main counter read lock-less
+Message-ID: <aIzB32EbLiASm9Dj@x1.local>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
+ <20250730123934.1787379-6-imammedo@redhat.com>
+ <aIqZZ5bePh7Jmq3c@x1.local> <20250731103210.292dfecb@fedora>
+ <aIt3Xo8dSKusoxA8@x1.local> <20250801100645.133727f0@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=shameerkolothum@gmail.com; helo=mail-wr1-x42c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250801100645.133727f0@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 01 Aug 2025 09:35:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,129 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+On Fri, Aug 01, 2025 at 10:06:45AM +0200, Igor Mammedov wrote:
+> docs put qatomic_inc() in 'Sequentially consistent' category,
+> hence no manual barrier.
 
-Introduce a QAPI‐defined struct (and its array) for target implementation
-CPUs. This enables specifying target implementation CPU parameters
-via -machine, for example:
+True.. I somehow read it as a _set().  Maybe it's another way to prove
+memory barriers are error prone, by making a mistake myself. :)
 
--M virt, \
-  impl-cpu.0.midr=1,impl-cpu.0.revidr=1,impl-cpu.0.aidr=1, \
-  impl-cpu.1.midr=2,impl-cpu.1.revidr=2,impl-cpu.1.aidr=0
+Thanks,
 
-Subsequent patch will make use of this by using object_property_add(),
-allowing users to configure each target CPU’s midr, revidr, and aidr
-fields directly from the command line.
-
-While at it, also provide a helper function to set the target CPUs.
-
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
----
- qapi/machine.json    | 34 ++++++++++++++++++++++++++++++++++
- target/arm/kvm.c     | 16 ++++++++++++++++
- target/arm/kvm_arm.h |  8 ++++++++
- 3 files changed, 58 insertions(+)
-
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a6b8795b09..d6e0e3b2e3 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1898,3 +1898,37 @@
- { 'command': 'x-query-interrupt-controllers',
-   'returns': 'HumanReadableText',
-   'features': [ 'unstable' ]}
-+
-+##
-+# @ArmTargetImplCPU:
-+#
-+# Info for a single target implementation CPU.
-+#
-+# @midr: MIDR value
-+# @revidr: REVIDR value
-+# @aidr: AIDR value
-+#
-+# Since: 10.2
-+##
-+{ 'struct': 'ArmTargetImplCPU',
-+  'data': {
-+    'midr': 'uint64',
-+    'revidr': 'uint64',
-+    'aidr': 'uint64'
-+  }
-+}
-+
-+##
-+# @ArmTargetImplCPUs:
-+#
-+# List of target implementation CPUs.
-+#
-+# @target-cpus: List of ArmTargetImplCPU entries.
-+#
-+# Since: 10.2
-+##
-+{ 'struct': 'ArmTargetImplCPUs',
-+  'data': {
-+    'target-cpus': ['ArmTargetImplCPU']
-+  }
-+}
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index eb04640b50..8f325c4ca4 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -66,6 +66,9 @@ typedef struct ARMHostCPUFeatures {
- 
- static ARMHostCPUFeatures arm_host_cpu_features;
- 
-+static uint64_t target_impl_cpus_num;
-+static ArmTargetImplCPU *target_impl_cpus;
-+
- /**
-  * kvm_arm_vcpu_init:
-  * @cpu: ARMCPU
-@@ -2816,3 +2819,16 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
-         cpu->kvm_mte = true;
-     }
- }
-+
-+bool kvm_arm_set_target_impl_cpus(uint64_t num, ArmTargetImplCPU *cpus)
-+{
-+
-+    if (target_impl_cpus_num) {
-+        return false;
-+    }
-+
-+    target_impl_cpus_num = num;
-+    target_impl_cpus = cpus;
-+
-+    return true;
-+}
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 3cd6447901..8754302333 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -244,6 +244,8 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
- 
- int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap);
- 
-+bool kvm_arm_set_target_impl_cpus(uint64_t num, ArmTargetImplCPU *cpus);
-+
- #else
- 
- /*
-@@ -280,6 +282,12 @@ static inline int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
-     return -ENOSYS;
- }
- 
-+static inline
-+bool kvm_arm_set_target_impl_cpus(uint64_t num, ArmTargetImplCPU *cpus)
-+{
-+    return false;
-+}
-+
- /*
-  * These functions should never actually be called without KVM support.
-  */
 -- 
-2.34.1
+Peter Xu
 
 
