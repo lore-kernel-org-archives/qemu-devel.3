@@ -4,102 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD77C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351B9C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqng-0007hX-0e; Fri, 01 Aug 2025 10:32:00 -0400
+	id 1uhqnb-0007Qh-Lu; Fri, 01 Aug 2025 10:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhf-0005lv-2b
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <prvs=4308a69be5=kbusch@meta.com>)
+ id 1uhqhO-0005RO-HN
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:32 -0400
+Received: from mx0a-00082601.pphosted.com ([67.231.145.42])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhZ-0002rj-Ne
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058340;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vgmFtDgTAmGls1KrsF1UJKp0mhRKj20ErXb4GvRJyH4=;
- b=NXIY2Bt8cPCMwie1SBAaV+W342vam5lek6DyDLhfJqYeujcqQraEqRjja/v1ZP5QIDn8+m
- sno5LNWC4i/0chwecAoWSUAXb3aK5xzaUIgjfeGmx0a7t1pHiBJ5kdq+GvDDb2GxzOlBtq
- 7GgIA+5BAdQ5dCDXoAKGn4T8aNkI/CA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-l1aZ-_vcM1mlv7HeJcMdhg-1; Fri, 01 Aug 2025 10:25:39 -0400
-X-MC-Unique: l1aZ-_vcM1mlv7HeJcMdhg-1
-X-Mimecast-MFC-AGG-ID: l1aZ-_vcM1mlv7HeJcMdhg_1754058338
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4588fb6854cso9271815e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058338; x=1754663138;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vgmFtDgTAmGls1KrsF1UJKp0mhRKj20ErXb4GvRJyH4=;
- b=HsfJiLZpEuNuPf5FW4CaXAx4cnodMzFoPT6KbKLIxq9vgl879GCVUG3me6/BXy1V1g
- 5wM3D2q/kql4mPyfLrckYLBmI77zRgPWpF6HxAWZ5e20r4qRyKByv/CCycRD1VnBNr0X
- decEQFh/7qXFanTB9/QFLBd2K4Jl5unXbaLP7+orZnbYuKMEpAo4HpanpYFCHtqOquaR
- IHcvsF7aay93SYcmAHG2q6QUKXlbFsqVRlF3aViCDhPi4TLdrqCdvoujSfNMRHApTQt2
- visG3ebUtbRSAmTdMecC47XjiGFGt1YZWLM3BWC8AOz/7RoI28kcHP28zDNslwJf+4ZC
- 8g8A==
-X-Gm-Message-State: AOJu0YxEHUrndJNAewkPtEEyJ+5yPmleodORVh+2vGptLy38IOwcMZxW
- JP3pwsSiBXxBHJZPKr+MlPngbmicI3YQmFfdZJMLyR4u8WZJXcgtVcOLeyBx9S5pAD290zmoFP6
- lP3TIA1mDl0mKJH4+/kQCbh9iqDn+PTp/3glYTdWWHzR81IHTnPkIR/qIlbsN+Mel9LgUh7Id1V
- 56r6FarhdcTTtCc61qNvHEgirLGBFfDE1c9w==
-X-Gm-Gg: ASbGncs0qVh7ZOTwQbr+LtwsnKyBxo63gt7prh8NXg2vt7GH9oPuq/8WiAluE0OOQl+
- 4+xP/LSDLbB8VYlhV12iwqMNo14MUO3Vet2NTA4x5uuNnNfEk2C0S3coINT4jnLhwm10YvMTJLJ
- etDtY711WQ9/kEsmSuaLasVJYNVieFLTQRRKrHCITuVvARcL6t4romGXXO6/XJSwjbY7EoDCujm
- AsBo6q+pSlImyW+dGkMtkMWy89+YOb/nVnIoxz1yQEK6YTKXgp7XuqlI497oRdWWXB+xO1nXuIQ
- Ekh7HbPFwSYuwjdeUnL4JHMEujzcZysn
-X-Received: by 2002:a05:600c:1da8:b0:456:1006:5415 with SMTP id
- 5b1f17b1804b1-45892b92eb2mr101941035e9.6.1754058337608; 
- Fri, 01 Aug 2025 07:25:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEl0NeQa4oobAXZ1gqHmJj27ixyO2S+aobjlaO9fdfdKRxhWHZg95Kc9OXyJpN1+EvwMq47qQ==
-X-Received: by 2002:a05:600c:1da8:b0:456:1006:5415 with SMTP id
- 5b1f17b1804b1-45892b92eb2mr101940645e9.6.1754058337116; 
- Fri, 01 Aug 2025 07:25:37 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458af77e7d5sm12689775e9.0.2025.08.01.07.25.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:36 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:25:34 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 15/17] intel_iommu: Allow both Status Write and Interrupt Flag
- in QI wait
-Message-ID: <e8145dcd311b58921f3a45121792cbfab38fd2f6.1754058276.git.mst@redhat.com>
-References: <cover.1754058276.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <prvs=4308a69be5=kbusch@meta.com>)
+ id 1uhqhK-0002es-0l
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:29 -0400
+Received: from pps.filterd (m0044010.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 571E5Fjf015646
+ for <qemu-devel@nongnu.org>; Fri, 1 Aug 2025 07:25:15 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=s2048-2025-q2; bh=3K1rEKbK4jOcJhrePD
+ PVRMUiu8CTHWSOt03oR9yd6jQ=; b=azeUtV0souXp0U/YoPdoGvaMiUDHDgTFfH
+ 8G7QbvPb0tKeDh1hX/ASC3fajOAd9vMDqJjWcYTEMNjyqLByFxnWiFresquMucV0
+ qcexATT7QcLJ4SmV9zVsLYKpZYqkTTBPDKuIldkhAvnYT9lv69d0Cobd/pL7LPwq
+ bvB8byfLe9oP73SpoRzyM4bzroBooNkWc+tf3BAYVjCBYkedEX3Q4t9RrM9AO6gB
+ d+Tsp1SgcL8nCnYvb9taME+NmT1GsyhW9uUM34URS7TFyi7VKj8bwVv26FaGkkdB
+ pmsfc09gAeByBqnjXcqPVq566NSWp9nffgtDjYAoZCHU2dkc1usQ==
+Received: from mail.thefacebook.com ([163.114.134.16])
+ by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 488rk2j4u5-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:15 -0700 (PDT)
+Received: from twshared52133.15.frc2.facebook.com (2620:10d:c085:208::7cb7) by
+ mail.thefacebook.com (2620:10d:c08b:78::c78f) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.2562.17; Fri, 1 Aug 2025 14:25:14 +0000
+Received: by devbig197.nha3.facebook.com (Postfix, from userid 544533)
+ id EDF3C2D1491; Fri,  1 Aug 2025 07:24:59 -0700 (PDT)
+From: Keith Busch <kbusch@meta.com>
+To: <qemu-devel@nongnu.org>, <its@irrelevant.dk>, <qemu-block@nongnu.org>
+CC: Keith Busch <kbusch@kernel.org>
+Subject: [PATCH] hw/nvme: cap MDTS value for internal limitation
+Date: Fri, 1 Aug 2025 07:24:57 -0700
+Message-ID: <20250801142457.3012213-1-kbusch@meta.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1754058276.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+X-FB-Internal: Safe
+Content-Type: text/plain
+X-Authority-Analysis: v=2.4 cv=cfLSrmDM c=1 sm=1 tr=0 ts=688cce4b cx=c_pps
+ a=CB4LiSf2rd0gKozIdrpkBw==:117 a=CB4LiSf2rd0gKozIdrpkBw==:17
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=byK5x53OG_9qB8zXzpQA:9
+X-Proofpoint-ORIG-GUID: ZnkIsau4PpdldGX9lOTYZJNBEBp9D1eQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDEwOSBTYWx0ZWRfX4vm3ECwM92oe
+ fYteg48qcrqcHoyX/215TqClJ3VlUcmrmYBbv+FQtqPpjqBhU65uwa9N42YrRyxqZaDh+GQBmf0
+ xR1/Qj9y2jiZOpCosCgXNHUCu7FgVkvx+UK/otZKLF0q5o8ylcU5paxInhnvZz9DrvBFEs6o0SA
+ 1uV23f9MAg4exURxmPpaj3CzPVdaOL1w/manCdUiRSW8eTyOJFeIQcsZ6gjwb6dFSMk5wD4SJWo
+ WKgUh063P0R4DbdXHZiw+VtIU8XX5a8BE7U4lcE5W60Iv6fU2dLfQu+iL+BGr170MqrGeSBWAWT
+ uQWXLNUhjjMZcIVywMj1G2CWPmPwk3NlMTc8T0MUy3cvse38W1cMAkDHsHgFBJdmBlKmy9c1mdc
+ DbGhaYp8oP4/TbaIgQzzgMU25ZmnWonZrEftzRgJx7BkOoqw5nrq6KJr75ZXZcrDQoYYJmzm
+X-Proofpoint-GUID: ZnkIsau4PpdldGX9lOTYZJNBEBp9D1eQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-01_04,2025-08-01_01,2025-03-28_01
+Received-SPF: pass client-ip=67.231.145.42;
+ envelope-from=prvs=4308a69be5=kbusch@meta.com; helo=mx0a-00082601.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,74 +94,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Keith Busch <kbusch@kernel.org>
 
-FreeBSD does both, and this appears to be perfectly valid. The VT-d
-spec even talks about the ordering (the status write should be done
-first, unsurprisingly).
+The emulated device had let the user set whatever max transfers size
+they wanted, including no limit. However the device does have an
+internal limit of 1024 segments. NVMe doesn't report max segments,
+though. This is implicitly inferred based on the MDTS and MPSMIN values.
 
-We certainly shouldn't assert() and abort QEMU if the guest asks for
-both.
+IOV_MAX is currently 1024 which 4k PRPs can exceed with 2MB transfers.
+Don't allow MDTS values that can exceed this, otherwise users risk
+seeing "internal error" status to their otherwise protocol compliant
+commands.
 
-Fixes: ed7b8fbcfb88 ("intel-iommu: add supports for queued invalidation interface")
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3028
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Message-Id: <0122cbabc0adcc3cf878f5fd7834d8f258c7a2f2.camel@infradead.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 ---
- hw/i386/intel_iommu.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ hw/nvme/ctrl.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index fe9a5f2872..83c5e44413 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2828,6 +2828,7 @@ static bool vtd_process_wait_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
- {
-     uint64_t mask[4] = {VTD_INV_DESC_WAIT_RSVD_LO, VTD_INV_DESC_WAIT_RSVD_HI,
-                         VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
-+    bool ret = true;
- 
-     if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, false,
-                                      __func__, "wait")) {
-@@ -2839,8 +2840,6 @@ static bool vtd_process_wait_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
-         uint32_t status_data = (uint32_t)(inv_desc->lo >>
-                                VTD_INV_DESC_WAIT_DATA_SHIFT);
- 
--        assert(!(inv_desc->lo & VTD_INV_DESC_WAIT_IF));
--
-         /* FIXME: need to be masked with HAW? */
-         dma_addr_t status_addr = inv_desc->hi;
-         trace_vtd_inv_desc_wait_sw(status_addr, status_data);
-@@ -2849,18 +2848,22 @@ static bool vtd_process_wait_desc(IntelIOMMUState *s, VTDInvDesc *inv_desc)
-                              &status_data, sizeof(status_data),
-                              MEMTXATTRS_UNSPECIFIED)) {
-             trace_vtd_inv_desc_wait_write_fail(inv_desc->hi, inv_desc->lo);
--            return false;
-+            ret = false;
-         }
--    } else if (inv_desc->lo & VTD_INV_DESC_WAIT_IF) {
-+    }
-+
-+    if (inv_desc->lo & VTD_INV_DESC_WAIT_IF) {
-         /* Interrupt flag */
-         vtd_generate_completion_event(s);
--    } else {
-+    }
-+
-+    if (!(inv_desc->lo & (VTD_INV_DESC_WAIT_IF | VTD_INV_DESC_WAIT_SW))) {
-         error_report_once("%s: invalid wait desc: hi=%"PRIx64", lo=%"PRIx64
-                           " (unknown type)", __func__, inv_desc->hi,
-                           inv_desc->lo);
-         return false;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index e764ec7683..5bfb773b5a 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8335,6 +8335,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error *=
+*errp)
+         host_memory_backend_set_mapped(n->pmr.dev, true);
      }
--    return true;
-+    return ret;
- }
- 
- static bool vtd_process_context_cache_desc(IntelIOMMUState *s,
--- 
-MST
+=20
++    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
++        error_setg(errp, "mdts exceeds IOV_MAX");
++        return false;
++    }
++
+     if (n->params.zasl > n->params.mdts) {
+         error_setg(errp, "zoned.zasl (Zone Append Size Limit) must be le=
+ss "
+                    "than or equal to mdts (Maximum Data Transfer Size)")=
+;
+--=20
+2.47.3
 
 
