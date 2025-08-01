@@ -4,128 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C9DC87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 10:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F84C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 11:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhmzf-0007qJ-PM; Fri, 01 Aug 2025 06:28:07 -0400
+	id 1uhnZV-00061f-9O; Fri, 01 Aug 2025 07:05:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uhmyJ-0006eC-77
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 06:26:43 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhnXv-0004dH-Le
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 07:03:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uhmyB-0006TO-F9
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 06:26:38 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhnXr-00058D-6B
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 07:03:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754043990;
+ s=mimecast20190719; t=1754046205;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=l1q1MYNf0iMgjLs4qO41wUCJBSHp5ysXOdsQ2yDLqko=;
- b=P72Upi48ImB04p5+KZYKyu+93PsnAAPEvqwWz6DWZSaNDOszG2fJ28+yCeTUqPPuhJCvOg
- EgSDVpTpnoNwRHnQJJq2muEg/Po4GQGtQh4KVpSpQYyCV8vCXmVCYtfr+icsvmkFKjddF0
- IhC5n6zYz18LAWnp1yhUNKiaDP7BiFE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=M1+Sk9pNo7cv/JnDp1UV7Ke86CJVvuwuc8dPgzS3R6g=;
+ b=OmGQhp4eZNsv2EDyElEbyJIVXR50hPowld0OsN3e+ttlmdghMTnC6DBRqqxHCS68kDkUCj
+ PY1WX6WB3R4ToXYN9KaZ1FS9m9JXrwBvF5rDJw2a0mXG+MOIu85ZHpY8Nh/wBssDTVFPhV
+ EEW1Lay+ES9tdP/wO2xDGg6EGfJx5Jk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-qoEMWOjzPa-ule8i3ZMxIA-1; Fri, 01 Aug 2025 06:26:29 -0400
-X-MC-Unique: qoEMWOjzPa-ule8i3ZMxIA-1
-X-Mimecast-MFC-AGG-ID: qoEMWOjzPa-ule8i3ZMxIA_1754043989
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a54a8a0122so716948f8f.2
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 03:26:29 -0700 (PDT)
+ us-mta-41-t-CQr1D2PMWpmV6cvtMDPQ-1; Fri, 01 Aug 2025 07:03:23 -0400
+X-MC-Unique: t-CQr1D2PMWpmV6cvtMDPQ-1
+X-Mimecast-MFC-AGG-ID: t-CQr1D2PMWpmV6cvtMDPQ_1754046202
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-458b301d9ccso124855e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 04:03:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754043988; x=1754648788;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l1q1MYNf0iMgjLs4qO41wUCJBSHp5ysXOdsQ2yDLqko=;
- b=cqtmNfnCaO1SB+Fkar7tZ3pP2aOawDHpflPG0mCrpujLZ9qYoF4X6U//1xUBhTuVCJ
- HtdxbeEnnyWH8IO0mHxv0Oo/V6HQenCH53/wwNWRy6hkOw5oGUnftQ0lyTyaKQKLwMjn
- 5/3eg4+NtNB4RDxAH8b8/JgsHZ+a5kePbhVhiZ0gTAKn5WgB8sJTy+DnJZb6/uFvcee2
- rdV+AHKBsVQAzsH7ZW21xP6jQJzTtv9wsZRAmdrrSK98z2/vAOtjKb/2LW4xV4oIvZpq
- NenvUUOvOL6mH0+NfQNN7gBVySsK6Bm1c2YXfdGKrmRZyfP2ZG4P43IrLhaM4xl8x4Fw
- KXtw==
+ d=1e100.net; s=20230601; t=1754046202; x=1754651002;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M1+Sk9pNo7cv/JnDp1UV7Ke86CJVvuwuc8dPgzS3R6g=;
+ b=YAgB+M4Plzp9LuuhJ+fBtS4TdClRRAm55Lpp7eeppXv2agMi4qg1FeXLVhR3iJDs5O
+ R5Fm+1ZEw9/kfezuRMzqD6KfPYXUSmochLZB25FYzqaRcU0Syk8j2irP0HtxVuyH891n
+ Rg/gu1hB/QyNBprM3/c8AI2THKvEGC9VUNAAFK8XkAhJMLVXJ1vlkLP37AgqLaMFjkUC
+ hR8heW4bIALAE+duhgc6M4rlwxKlQ2762fC4Y/7+VGxMGTZs5W0FPgBNGHlXJYMCj2PA
+ UF9tqKmwrfCBLSQEK46CaFtX8uUM0W3uf/HGaxKVrSWgyRMpmaHsernPakPgjXURgZL5
+ F0WA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUowiiHCJd0SSSL3TsmocUx5bbLvf96VT65RlO9etO2SoOnrOEDfrE5lWmzQurgGRYEidcYP+NRGARa@nongnu.org
-X-Gm-Message-State: AOJu0YzAWBYVuUqGdFBfaQ4VU7lmW+OjqVRuxT0HGxISlKaundztHWAD
- FD63X8t3cnzE7YmE2azN0t8lOap8hZCqAoP2dUygfQEUKKr+JTYDFBiIBBlhpZYg5J8StIVuoxO
- pXwVKQQG+pSTjV6kiVrvulw8feUmbreW535siOPJPbZ6WFaS6BUpT0MJK
-X-Gm-Gg: ASbGncvUbjj536PFGfIi+OqMup16VwuwSgnV+6FCAZt6qpLWFSP5uJzl0zDwm4lsEns
- /+jqFP9mBnY8i5otxA48ToL7doVd6DoLoCC+DvcUVJy9Uiv5nMdSVUUUl8bcux/GXrYSZgD4mBU
- 5Q1EhiRrk8Vs/hnVO7J+TdpQyqpqVcJqpbZtwHOecQrsa2Xs0UChXNZr/rkt6CRyPywioMqmgxh
- 2LKq9+GeZavJz0NbHXIOh4lJ94fJTEN2ZM2VBNyVv4X1jEhkHJNWXHnFia+PXXvGyGwQ8qCXPBk
- CeBdcRaZAkOwwz76r19JpFHrKZC7bYh3fl+c/IeXoYVcnA==
-X-Received: by 2002:a05:6000:1a8d:b0:3b7:644f:9ca7 with SMTP id
- ffacd0b85a97d-3b794fd7c3cmr8202971f8f.25.1754043988525; 
- Fri, 01 Aug 2025 03:26:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvd6lCXn+4qds0Gw+4p/7QI/y/eNFrTD6/N6M/IMbJOMnJ0ZFaIJ25+udp+WuofX3EJpuZqw==
-X-Received: by 2002:a05:6000:1a8d:b0:3b7:644f:9ca7 with SMTP id
- ffacd0b85a97d-3b794fd7c3cmr8202948f8f.25.1754043988075; 
- Fri, 01 Aug 2025 03:26:28 -0700 (PDT)
-Received: from [192.168.10.81] ([176.206.122.191])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3b9160sm5455002f8f.21.2025.08.01.03.26.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Aug 2025 03:26:27 -0700 (PDT)
-Message-ID: <8edc80d5-49a0-4e4d-82c4-e4a18eb78304@redhat.com>
-Date: Fri, 1 Aug 2025 12:26:26 +0200
+ AJvYcCWsH1zSZre/QGNYGbJvbJQj+BVbTi3wt5Ry4K9KYdp0M3JFd6gGktl2BAB/JNPGnOSel3+BWTaLfZT/@nongnu.org
+X-Gm-Message-State: AOJu0Yz1tV3TKJ4h62LFP7w6CpdKuLIXG1T7Hf1/B8pqhrfW5jYYud8f
+ Mmh4nfo6c+SGgtUK3H5eWC6rtelvDcC18qCzWj1ClRgne8jgzGagz15FV46vWaekz38HFxWg0R2
+ Kis7XyaNAZ3dj3fzUVTUt101yTdO9EnW/rrPOOv0DzF2WwgjKtBGjTM5s
+X-Gm-Gg: ASbGnctwxNtzxJMJAoeo8R2a9vlN7ssfR3+fZr3YCwBUr5+youFHm3Tmv/Zhch/M1cj
+ GlaD/8y4QKUOkChhsb2kmFlVpB9jtPOieKiZuqgRM4O34n/54YckNkb6ANfThqLjMZiKXWmTDj0
+ 9eDK5U6M/nea9EyNEtLud57r9hkpDCX3otMUkxMuoEjigwo823eukzsDIbyxwJsJlXaNUH5fQYh
+ e3l0Dij0+YU5cNZ9x1bGSjoga73kS43UW6QH2Rau5qM5ButfjSgK3m82BIn6rAZrdMWwZuhtMNd
+ j13NN4BawY6h0VsN/IMgDcPzxBZ9tg==
+X-Received: by 2002:a05:600c:1987:b0:442:dc6f:2f11 with SMTP id
+ 5b1f17b1804b1-458aa4569b5mr14729845e9.25.1754046202208; 
+ Fri, 01 Aug 2025 04:03:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECO2UEXmaPYCZ7FtqItqqEGDoILlBCS1P9n3CDp+5lmKM0+U/9tTq+nz+jOD12wKgEqBuY2w==
+X-Received: by 2002:a05:600c:1987:b0:442:dc6f:2f11 with SMTP id
+ 5b1f17b1804b1-458aa4569b5mr14729495e9.25.1754046201696; 
+ Fri, 01 Aug 2025 04:03:21 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458af8949e1sm9186715e9.2.2025.08.01.04.03.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 04:03:21 -0700 (PDT)
+Date: Fri, 1 Aug 2025 13:03:19 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, Gustavo Romero
+ <gustavo.romero@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>
+Subject: Re: [PATCH] hw/arm: add static NVDIMMs in device tree
+Message-ID: <20250801130319.00736944@fedora>
+In-Reply-To: <CAAjaMXZdHEQGi=w==iVCurTs1MrL=_2CfE+i8nTte7vjWL+T7Q@mail.gmail.com>
+References: <20250730-nvdimm_arm64_virt-v1-1-f843596ab995@linaro.org>
+ <20250731110036.00003a0a@huawei.com>
+ <e8203af151ea4f9696b809dd5de6b155@huawei.com>
+ <CAAjaMXZdHEQGi=w==iVCurTs1MrL=_2CfE+i8nTte7vjWL+T7Q@mail.gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] kvm: i386: irqchip: take BQL only if there is an
- interrupt
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, mst@redhat.com, mtosatti@redhat.com,
- kraxel@redhat.com, peter.maydell@linaro.org
-References: <20250730123934.1787379-1-imammedo@redhat.com>
- <20250730123934.1787379-7-imammedo@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250730123934.1787379-7-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -150,94 +117,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The patch is not wrong but complicates things more than it should.
+On Thu, 31 Jul 2025 15:20:29 +0300
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> wrote:
 
-Also, as we do more of these tricks it may be worth adding wrapper APIs 
-for interrupt_request access, but that needs to be done tree-wide so you 
-can do it separately.
+> On Thu, Jul 31, 2025 at 2:14=E2=80=AFPM Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com> wrote:
+> >
+> >
+> > =20
+> > > -----Original Message-----
+> > > From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > > Sent: Thursday, July 31, 2025 11:01 AM
+> > > To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > Cc: qemu-devel@nongnu.org; Peter Maydell <peter.maydell@linaro.org>;
+> > > qemu-arm@nongnu.org; Gustavo Romero <gustavo.romero@linaro.org>;
+> > > Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> > > Subject: Re: [PATCH] hw/arm: add static NVDIMMs in device tree
+> > >
+> > > On Wed, 30 Jul 2025 15:21:41 +0300
+> > > Manos Pitsidianakis <manos.pitsidianakis@linaro.org> wrote:
+> > > =20
+> > > > NVDIMM is used for fast rootfs with EROFS, for example by kata
+> > > > containers. To allow booting with static NVDIMM memory, add them to
+> > > > the device tree in arm virt machine.
+> > > >
+> > > > This allows users to boot directly with nvdimm memory devices witho=
+ut
+> > > > having to rely on ACPI and hotplug.
+> > > >
+> > > > Verified to work with command invocation:
+> > > >
+> > > > ./qemu-system-aarch64 \
+> > > >   -M virt,nvdimm=3Don \
+> > > >   -cpu cortex-a57 \
+> > > >   -m 4G,slots=3D2,maxmem=3D8G \
+> > > >   -object memory-backend-file,id=3Dmem1,share=3Don,mem- =20
+> > > path=3D/tmp/nvdimm,size=3D4G,readonly=3Doff \ =20
+> > > >   -device nvdimm,id=3Dnvdimm1,memdev=3Dmem1,unarmed=3Doff \
+> > > >   -drive file=3D./debian-12-nocloud-arm64-commited.qcow2,format=3Dq=
+cow2 \
+> > > >   -kernel ./vmlinuz-6.1.0-13-arm64 \
+> > > >   -append "root=3D/dev/vda1 console=3DttyAMA0,115200 acpi=3Doff"
+> > > >   -initrd ./initrd.img-6.1.0-13-arm64 \
+> > > >   -nographic \
+> > > >   -serial mon:stdio
+> > > >
+> > > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>=
+ =20
+> > >
+> > > +CC shameer who might be able to remember how the nvdimm stuff works
+> > > in
+> > > +ACPI better
+> > > than I can.  I think this is fine but more eyes would be good. =20
+> > =20
+>=20
+> Hello Shameer,
+>=20
+> > The cold plug DT support was part of the initial NVDIMM series,
+> > https://lore.kernel.org/qemu-devel/20191004155302.4632-5-shameerali.kol=
+othum.thodi@huawei.com/
+> >
+> > But I can't remember the reason for dropping it, other than the comment=
+ from
+> > Igor, that why we should do it for NVDIMM but not PC-DIMM.
+> > https://lore.kernel.org/qemu-devel/20191111154627.63fc061b@redhat.com/
+> >
+> > So, I guess there was not a strong use case for that at that time. =20
+>=20
+> Yes. Our motivation for this patch is just feature parity with x86.
+> It's a nice-to-have, if it's possible.
 
-On 7/30/25 14:39, Igor Mammedov wrote:
->      if (cpu->interrupt_request & (CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR)) {
-> +        if (!kvm_pic_in_kernel()) {
-> +            bql_lock();
-> +            release_bql = true;
-> +        }
+if it's parity with x86, then why not use acpi like x86 does?
 
-This bql_lock() is not needed, all the writes in the "if" are local to 
-the current CPU.
+If I'm not mistaken, DT in arm/virt was mostly intended to bootstrap
+1st steps of firmware, and the preferred way do get other info from QEMU
+was via fw_cfg or standard enumeration methods (PCI/ACPI/...).
 
-When the outer bql_lock() was added, cpu_interrupt() was not thread-safe 
-at all, and taking the lock was needed in order to read 
-cpu->interrupt_request.  But now it is ok to read outside the lock, 
-which you can use to simplify this patch a lot.
-
->          if ((cpu->interrupt_request & CPU_INTERRUPT_INIT) &&
->              !(env->hflags & HF_SMM_MASK)) {
->              cpu->exit_request = 1;
-
-A patch that changes all these accesses to 
-qatomic_set(&cpu->exit_request, 1), tree-wide, would be nice.
-
-> +        if (cpu->interrupt_request & CPU_INTERRUPT_HARD) {
-
-This should be qatomic_read(&cpu->interrupt_request).  Not a blocker for 
-now, but this is where I would suggest adding a wrapper like 
-cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD).
-
-> +            if (!release_bql) {
-> +                bql_lock();
-> +                release_bql = true;
-> +            }
-
-With the above simplification, this can be done unconditionally.
-
-> +            /* Try to inject an interrupt if the guest can accept it */
-> +            if (run->ready_for_interrupt_injection &&
-> +                (cpu->interrupt_request & CPU_INTERRUPT_HARD) &&
-> +                (env->eflags & IF_MASK)) {
-> +                int irq;
-> +
-> +                cpu->interrupt_request &= ~CPU_INTERRUPT_HARD;
-
-Reads and writes to cpu->interrupt_request still take the BQL, which is 
-consistent with include/hw/core/cpu.h, so yeah here the bql_lock() is 
-needed.
-
-Like above, writing it's a data race with readers outside the BQL, so 
-qatomic_read()/qatomic_set() would be needed to respect the C standard. 
-Even better could be to add a function cpu_reset_interrupt_locked() that 
-does
-
-    assert(bql_locked());
-    qatomic_set(&cpu->interrupt_request, cpu->interrupt_request & ~mask);
-
-But neither of these wrappers (which should be applied tree-wide) are an 
-absolute necessity for this series.
-
-> @@ -5531,7 +5540,14 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
->   
->           DPRINTF("setting tpr\n");
->           run->cr8 = cpu_get_apic_tpr(x86_cpu->apic_state);
-> +        /*
-> +         * make sure that request_interrupt_window/cr8 are set
-> +         * before KVM_RUN might read them
-> +         */
-> +        smp_mb();
-
-This is not needed, ->cr8 is only read for the same CPU (in 
-kvm_arch_vcpu_ioctl_run).
-
-> +    }
->   
-> +    if (release_bql) {
->           bql_unlock();
->       }
-
-And since release_bql is not needed anymore, the bql_unlock() can be 
-left where it was.
-
-Paolo
-
->   }
+(point is: do not duplicate acpi features in DT for arm/virt machine type,
+perhaps arm/sbsa-ref is a better target for DT).
+=20
+> >
+> > The PC-DIMM DT cold plug was dropped due to the issues/obstacles mentio=
+ned here,
+> > https://lore.kernel.org/qemu-devel/5FC3163CFD30C246ABAA99954A238FA83F1B=
+6A66@lhreml524-mbs.china.huawei.com/ =20
+>=20
+> Thank you very much for this link. On a first glance, if this problem
+> is still happening with edk2, perhaps a temporary fix would be to only
+> put coldplugged DIMMs in the device tree when the machine has acpi=3Doff
+> explicitly to prevent the potential for firmware confusion?
+>=20
+> >
+> > +CC: Igor and Eric.
+> >
+> > Thanks,
+> > Shameer
+> > =20
+> > > > ---
+> > > >  hw/arm/boot.c | 39 +++++++++++++++++++++++++++++++++++++++
+> > > >  hw/arm/virt.c |  8 +++++---
+> > > >  2 files changed, 44 insertions(+), 3 deletions(-)
+> > > >
+> > > > diff --git a/hw/arm/boot.c b/hw/arm/boot.c index
+> > > > =20
+> > > d391cd01bb1b92ff213e69b84e5a69413b36c4f8..a0c1bcdf946ca98bb5da63f1
+> > > a518 =20
+> > > > 018eb578dd81 100644
+> > > > --- a/hw/arm/boot.c
+> > > > +++ b/hw/arm/boot.c
+> > > > @@ -25,6 +25,7 @@
+> > > >  #include "hw/boards.h"
+> > > >  #include "system/reset.h"
+> > > >  #include "hw/loader.h"
+> > > > +#include "hw/mem/memory-device.h"
+> > > >  #include "elf.h"
+> > > >  #include "system/device_tree.h"
+> > > >  #include "qemu/config-file.h"
+> > > > @@ -515,6 +516,26 @@ static void fdt_add_psci_node(void *fdt, =20
+> > > ARMCPU *armcpu) =20
+> > > >      qemu_fdt_setprop_cell(fdt, "/psci", "migrate", migrate_fn);  }
+> > > >
+> > > > +static int fdt_add_pmem_node(void *fdt, uint32_t acells, uint32_t =
+scells,
+> > > > +                             int64_t mem_base, int64_t size, int64=
+_t
+> > > > +node) {
+> > > > +    int ret;
+> > > > +
+> > > > +    g_autofree char *nodename =3D g_strdup_printf("/pmem@%" PRIx64,
+> > > > + mem_base);
+> > > > +
+> > > > +    qemu_fdt_add_subnode(fdt, nodename);
+> > > > +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "pmem- =20
+> > > region"); =20
+> > > > +    ret =3D qemu_fdt_setprop_sized_cells(fdt, nodename, "reg", ace=
+lls,
+> > > > +                                       mem_base, scells, size); =20
+> > >
+> > > I'd burn some lines to avoid a comment covering unrelated ret handling
+> > >
+> > >       if (ret)
+> > >               return ret;
+> > >
+> > >       if (node >=3D 0) {
+> > >               return qem_fdt_setprop_cell()
+> > >       }
+> > >
+> > >       return 0;
+> > > =20
+> > > > +    /* only set the NUMA ID if it is specified */
+> > > > +    if (!ret && node >=3D 0) {
+> > > > +        ret =3D qemu_fdt_setprop_cell(fdt, nodename, "numa-node-id=
+",
+> > > > +                                    node);
+> > > > +    }
+> > > > +
+> > > > +    return ret;
+> > > > +}
+> > > > +
+> > > >  int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+> > > >                   hwaddr addr_limit, AddressSpace *as, MachineState=
+ *ms,
+> > > >                   ARMCPU *cpu)
+> > > > @@ -525,6 +546,7 @@ int arm_load_dtb(hwaddr addr, const struct =20
+> > > arm_boot_info *binfo, =20
+> > > >      unsigned int i;
+> > > >      hwaddr mem_base, mem_len;
+> > > >      char **node_path;
+> > > > +    g_autofree MemoryDeviceInfoList *md_list =3D NULL;
+> > > >      Error *err =3D NULL;
+> > > >
+> > > >      if (binfo->dtb_filename) {
+> > > > @@ -628,6 +650,23 @@ int arm_load_dtb(hwaddr addr, const struct =20
+> > > arm_boot_info *binfo, =20
+> > > >          }
+> > > >      }
+> > > >
+> > > > +    md_list =3D qmp_memory_device_list();
+> > > > +    for (MemoryDeviceInfoList *m =3D md_list; m !=3D NULL; m =3D m=
+->next) {
+> > > > +        MemoryDeviceInfo *mi =3D m->value;
+> > > > +
+> > > > +        if (mi->type =3D=3D MEMORY_DEVICE_INFO_KIND_NVDIMM) {
+> > > > +            PCDIMMDeviceInfo *di =3D mi->u.nvdimm.data;
+> > > > +
+> > > > +            rc =3D fdt_add_pmem_node(fdt, acells, scells,
+> > > > +                                   di->addr, di->size, di->node);
+> > > > +            if (rc < 0) {
+> > > > +                fprintf(stderr, "couldn't add NVDIMM /pmem@%"PRIx6=
+4" =20
+> > > node\n", =20
+> > > > +                        di->addr);
+> > > > +                goto fail;
+> > > > +            }
+> > > > +        }
+> > > > +    }
+> > > > +
+> > > >      rc =3D fdt_path_offset(fdt, "/chosen");
+> > > >      if (rc < 0) {
+> > > >          qemu_fdt_add_subnode(fdt, "/chosen"); diff --git
+> > > > a/hw/arm/virt.c b/hw/arm/virt.c index
+> > > > =20
+> > > ef6be3660f5fb38da84235c32dc2d13a5c61889c..910f5bb5f66ee217a9140f912
+> > > 880 =20
+> > > > 4a5b9f69b5b6 100644
+> > > > --- a/hw/arm/virt.c
+> > > > +++ b/hw/arm/virt.c
+> > > > @@ -2917,7 +2917,7 @@ static void =20
+> > > virt_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev, =
+=20
+> > > >      const MachineState *ms =3D MACHINE(hotplug_dev);
+> > > >      const bool is_nvdimm =3D object_dynamic_cast(OBJECT(dev),
+> > > > TYPE_NVDIMM);
+> > > >
+> > > > -    if (!vms->acpi_dev) {
+> > > > +    if (!vms->acpi_dev && !(is_nvdimm && !dev->hotplugged)) {
+> > > >          error_setg(errp,
+> > > >                     "memory hotplug is not enabled: missing acpi-ge=
+d device");
+> > > >          return;
+> > > > @@ -2949,8 +2949,10 @@ static void virt_memory_plug(HotplugHandler =
+=20
+> > > *hotplug_dev, =20
+> > > >          nvdimm_plug(ms->nvdimms_state);
+> > > >      }
+> > > >
+> > > > -    hotplug_handler_plug(HOTPLUG_HANDLER(vms->acpi_dev),
+> > > > -                         dev, &error_abort);
+> > > > +    if (vms->acpi_dev) {
+> > > > +        hotplug_handler_plug(HOTPLUG_HANDLER(vms->acpi_dev),
+> > > > +                             dev, &error_abort);
+> > > > +    }
+> > > >  }
+> > > >
+> > > >  static void virt_machine_device_pre_plug_cb(HotplugHandler
+> > > > *hotplug_dev,
+> > > >
+> > > > ---
+> > > > base-commit: 9b80226ece693197af8a981b424391b68b5bc38e
+> > > > change-id: 20250730-nvdimm_arm64_virt-931a764bbe0c
+> > > >
+> > > > --
+> > > > =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=
+=CF=87=CE=B8=CE=AE=CF=84=CF=89
+> > > >
+> > > > =20
+> > =20
+>=20
 
 
