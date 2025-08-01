@@ -4,79 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBA5C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0BAC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhpbq-0007Z2-3a; Fri, 01 Aug 2025 09:15:42 -0400
+	id 1uhpf2-0007ce-S1; Fri, 01 Aug 2025 09:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhp7P-0007Ki-0D
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 08:44:23 -0400
-Received: from p-east3-cluster7-host1-snip4-10.eps.apple.com ([57.103.84.141]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhpAu-0000RZ-Co
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 08:47:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uhp7K-0007Y2-Cv
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 08:44:12 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-20-percent-0 (Postfix) with ESMTPS id
- D38351800388; Fri,  1 Aug 2025 12:44:01 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=Ig5FUx53rIxaYHvKqq5JbmxF3Pt6fGzEa61QzozIUkc=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Od1mnefQdnMZiAD+fgYvzOJletwcgphgQQuGdEnBf2MdfBQxfYsGal3k6ouBALLicWPYRgrgF+G2wrDxy/GqUYnbsgPgG2DAUdZFXzMfEWt335zckBSwZIiW+5+WkGeV70dfGfXf+ab3hVidZGRq5dHtpRngLAM4cYvJrTuW/o7TLh6o+m1+P/IxkHn87PVHq6DqjyY3uX1Vfw1qT3olYVArep9A/pcHYPGvRL5gs/xBmSoQLvt+KfpvEwBR0OmmHQdyfmX4k9Bqrgn7RyVEtFib7HRIb7oNvpYCuK2JlmeRMJkBptIJRJHrXn7OltJxjPRrNZOjz/jM098Ev6j7WA==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-20-percent-0 (Postfix) with ESMTPSA id
- D71271800153; Fri,  1 Aug 2025 12:43:59 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [RFC 0/9] WHPX support for Arm
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <8af5e691-da19-4141-8874-51ca685288ac@linaro.org>
-Date: Fri, 1 Aug 2025 14:43:48 +0200
-Cc: qemu-devel@nongnu.org,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <864AC97D-2C45-402A-92AF-D0FDDB72C40E@unpredictable.fr>
-References: <20250731052753.93255-1-mohamed@unpredictable.fr>
- <8af5e691-da19-4141-8874-51ca685288ac@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-GUID: caS-lB2uvxxiT7S2FFAVsbzO-WATyl3O
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAxMDA5NiBTYWx0ZWRfXzlEHa88k5Ql5
- ocAilHEKQTr5Mu+zHswJy+2ajmEvo22M90+kJrcCk+lCM7pfSAflHzHXRfDLK/LeZOYQv68ny59
- M3vdwm/D5vCvZSyhczp3yFX3cCmhQMldQ103BIPOaqRlMUCN56mRNjUjVFB+9mWNQKyOWWphpjR
- 6crscNN96Zi3quvYuVIiWRxC/vbFyTLLCcWSltoie89/J2+bSMQ2A8EeuLDXHsuGS25Cgl77BlE
- 5b8yd1MZbBC5D1x4bwnD64MPmvN9PfpssOE027ztPT+so2cdj73ftP8j5bG2ZhTYMjpo+16Vo=
-X-Proofpoint-ORIG-GUID: caS-lB2uvxxiT7S2FFAVsbzO-WATyl3O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-01_04,2025-07-31_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxscore=0 suspectscore=0 bulkscore=0 spamscore=0 malwarescore=0
- mlxlogscore=999 clxscore=1030 adultscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2508010096
-Received-SPF: pass client-ip=57.103.84.141;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhpAs-0008Dh-FC
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 08:47:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754052466;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vK74VgwjVRYVxScqgxFCsc4WuhtXiMx5GVE9Xafoi1g=;
+ b=hOrLxRKO53kobQm3dEs29oaNoti2oHohzoj64YLcwQzCjm0ImsybWquGrCyocMZ+3Xs0ZC
+ HDfU1p0F/8Ykc50NSXZeL6pC9NteLefTkiKVB4+1V7HeDiCKEE0oXiF/m72ZiPSoNgneBW
+ CJ+7yOO1UWG6BnMvYNetLMBzR+OBArE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-505-aNCQbElQO4-ehXuma-CVDw-1; Fri, 01 Aug 2025 08:47:45 -0400
+X-MC-Unique: aNCQbElQO4-ehXuma-CVDw-1
+X-Mimecast-MFC-AGG-ID: aNCQbElQO4-ehXuma-CVDw_1754052464
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451d3f03b74so10709025e9.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 05:47:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754052464; x=1754657264;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vK74VgwjVRYVxScqgxFCsc4WuhtXiMx5GVE9Xafoi1g=;
+ b=LjQPvyp0uWUtGOMTUnNgYnaAJ7FY7yjTRe2koO3THPlV0s8pxDEWWogzCLk5VnjsqY
+ 6AcjiXW+XQaqUrAzGuRPBda9xmU6SQIFbfG8tg0j6afqAKXmjjk3d7tPeI+Ov5l8gX/O
+ NAPT4pC8kXd0hPx7yC682Ji+UxwhcyRlgg3NiCLIA/MADvjlGDEPlI7xddKimWQJvKLs
+ sbz0rfdqjb+U1recIVKipFgjFNkFMAhkSBP7g9INfLsBMC5xhVmhFDf5r5kGqhlvumK4
+ NPtuB99az0BfVa5H1U6aud+RQtUZFHtqBx/gtIwd8GH7v4xcDTZPVc3eYRUzuRlB/N1v
+ zNoQ==
+X-Gm-Message-State: AOJu0Yw0fz8B5k2hg6R1kUMKE7VOJE3BEH0Vkng4sRNDJeRttimkvkRz
+ Gnz9Av++ktUmaQvrE5+oOVvb4EEv3GQIdDK8bvDS/7Hlg7Gxwm3wzhGWCoWlhldDv3sM2AKg1xL
+ szkpEyKSENoPcnxIp90w0hKrll46GOLp+v4nsblPMFK6bQRg5VBceNNVkOBZKh7I5
+X-Gm-Gg: ASbGncuvSE5yBH3CiwsSnw8DCyG+XDkghp3ZuUod2sKy1+ZUWcaFuELhogIBYB/Kq7z
+ dayBx4CvWjkmGug7WsHJvLwCF1ARpAUj9x4WLscyaCdMV+Rt1JzN44vQCgpzQXSAUGQEOa+o/j5
+ XQHXW5dAR98q/hWlPkJrzHwYsjrCUEP3MJfrnUTxDW0iHWw3FhZu+gu7aYxXYDFvvebkkYRT21l
+ DHoE9wUNkHPa1p5VnHzAxOgLULOyxaDB3Hsavc1cLQrLe9YMp2Mbl8ZkmV2CaiHa+nmaAqD2CPv
+ E7Zeaxkn5+vumu3v50JwuVZgw1zibw==
+X-Received: by 2002:a05:600c:1d98:b0:441:d4e8:76c6 with SMTP id
+ 5b1f17b1804b1-45892be170dmr120438805e9.30.1754052463818; 
+ Fri, 01 Aug 2025 05:47:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHh5zczqRcH57ZtIL1tobg80Nw9jq2P7YgVV0jredjQp1RYYZuuwAP5QRAbkDxT6dnP0peLOw==
+X-Received: by 2002:a05:600c:1d98:b0:441:d4e8:76c6 with SMTP id
+ 5b1f17b1804b1-45892be170dmr120438495e9.30.1754052463360; 
+ Fri, 01 Aug 2025 05:47:43 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458953cff16sm103229375e9.19.2025.08.01.05.47.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 05:47:42 -0700 (PDT)
+Date: Fri, 1 Aug 2025 14:47:41 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2 6/6] kvm: i386: irqchip: take BQL only if there is an
+ interrupt
+Message-ID: <20250801144741.1f9dc351@fedora>
+In-Reply-To: <8edc80d5-49a0-4e4d-82c4-e4a18eb78304@redhat.com>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
+ <20250730123934.1787379-7-imammedo@redhat.com>
+ <8edc80d5-49a0-4e4d-82c4-e4a18eb78304@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,86 +111,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 1 Aug 2025 12:26:26 +0200
+Paolo Bonzini <pbonzini@redhat.com> wrote:
 
+> The patch is not wrong but complicates things more than it should.
+> 
+> Also, as we do more of these tricks it may be worth adding wrapper APIs 
+> for interrupt_request access, but that needs to be done tree-wide so you 
+> can do it separately.
 
-> On 1. Aug 2025, at 03:15, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->=20
-> Hi Mohamed,
->=20
-> On 7/30/25 10:27 PM, Mohamed Mediouni wrote:
->> This one took way longer for me to publish than I should have.
->> There are a number of lingering bugs in this one including u-boot not =
-working.
->> Interrupt controller save/restore is entirely missing in this RFC, =
-and some other state
->> bits are likely still missing too.
->> ITS not blocked by default yet, remember to use its=3Doff when =
-testing this series.
->> You might also want the GICv3 + GICv2m support patch as part of the =
-HVF vGIC patch series, which
->> is not duplicated here.
->> PS: on both this and HVF, interrupt controller initialisation needs =
-to be done early so I ended
->> up with hardcoded addresses. Wonder if the right way to go might be =
-to defer virt and vCPU initialisation
->> until late in the process post-gic_realize...
->> Other than that, this boots both EDK2 and Linux in SMP, when using =
-devicetree or ACPI.
->=20
-> thanks for posting this, that's an exciting series!
->=20
-> I applied it on top of your other series =
-(20250728134114.77545-1-mohamed@unpredictable.fr) and solved the =
-conflicts.
-> However, it would really help if you could push that exact branch =
-somewhere, so people can easily pull it and try.
-> I'm fine if you want to duplicate gic patches in this series as well.
-Hello,
+Thanks,
+I'll respin this with minimal changes for this series
+and post another one on top with tree wide refactoring as suggested
 
-My branches are at https://github.com/mediouni-m/qemu
-
-whpx-v1 corresponding to this RFC, but latest rev of the whpx branch has =
-some fixes
-
-Have some additional notes and binaries here too: =
-https://github.com/mediouni-m/qemu/releases/tag/whpx-v1.1
-
-Thank you,
--Mohamed
-
-> I tried to direct boot a kernel (6.15 defconfig) and ran into this =
-error [1]:
-> $ ./build/qemu-system-aarch64.exe -M virt,its=3Doff -cpu cortex-a76 -m =
-2G -nographic -accel whpx -kernel out/Image.gz out/host.ext4
-
-Syntax that I use is -M virt,accel=3Dwhpx,its=3Doff -m 2048-cpu =
-cortex-a72 -bios share/edk2-aarch64-code.fd.
-
-And on some kernel versions, you=E2=80=99ll also need =
-irqchip.gicv3_nolpi=3D1.
-
-> Could you please share your exact command line?
-> Does it work with direct kernel boot also?
->=20
-> Kind Regards,
-> Pierrick
->=20
-> [1] Error when booting:
-> [    1.381525] Internal error: Oops: 0000000096000002 [#1]  SMP
-> [    1.458060] Modules linked in:
-> [    1.461172] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted =
-6.15.0-00001-g7797e43a2520 #1 PREEMPT
-> [    1.470502] Hardware name: linux,dummy-virt (DT)
-> [    1.475102] pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS =
-BTYPE=3D--)
-> [    1.482023] pc : pci_generic_config_read+0x38/0xb8
-> [    1.486970] lr : pci_generic_config_read+0x24/0xb8
-I don=E2=80=99t think I saw this particular one before=E2=80=A6 which =
-Windows version and hardware are you testing this on?
-
-(Message was sent from the wrong email alias on mobile, resending)
-Thank you,
--Mohamed
+> 
+> On 7/30/25 14:39, Igor Mammedov wrote:
+> >      if (cpu->interrupt_request & (CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR)) {
+> > +        if (!kvm_pic_in_kernel()) {
+> > +            bql_lock();
+> > +            release_bql = true;
+> > +        }  
+> 
+> This bql_lock() is not needed, all the writes in the "if" are local to 
+> the current CPU.
+> 
+> When the outer bql_lock() was added, cpu_interrupt() was not thread-safe 
+> at all, and taking the lock was needed in order to read 
+> cpu->interrupt_request.  But now it is ok to read outside the lock, 
+> which you can use to simplify this patch a lot.
+> 
+> >          if ((cpu->interrupt_request & CPU_INTERRUPT_INIT) &&
+> >              !(env->hflags & HF_SMM_MASK)) {
+> >              cpu->exit_request = 1;  
+> 
+> A patch that changes all these accesses to 
+> qatomic_set(&cpu->exit_request, 1), tree-wide, would be nice.
+> 
+> > +        if (cpu->interrupt_request & CPU_INTERRUPT_HARD) {  
+> 
+> This should be qatomic_read(&cpu->interrupt_request).  Not a blocker for 
+> now, but this is where I would suggest adding a wrapper like 
+> cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD).
+> 
+> > +            if (!release_bql) {
+> > +                bql_lock();
+> > +                release_bql = true;
+> > +            }  
+> 
+> With the above simplification, this can be done unconditionally.
+> 
+> > +            /* Try to inject an interrupt if the guest can accept it */
+> > +            if (run->ready_for_interrupt_injection &&
+> > +                (cpu->interrupt_request & CPU_INTERRUPT_HARD) &&
+> > +                (env->eflags & IF_MASK)) {
+> > +                int irq;
+> > +
+> > +                cpu->interrupt_request &= ~CPU_INTERRUPT_HARD;  
+> 
+> Reads and writes to cpu->interrupt_request still take the BQL, which is 
+> consistent with include/hw/core/cpu.h, so yeah here the bql_lock() is 
+> needed.
+> 
+> Like above, writing it's a data race with readers outside the BQL, so 
+> qatomic_read()/qatomic_set() would be needed to respect the C standard. 
+> Even better could be to add a function cpu_reset_interrupt_locked() that 
+> does
+> 
+>     assert(bql_locked());
+>     qatomic_set(&cpu->interrupt_request, cpu->interrupt_request & ~mask);
+> 
+> But neither of these wrappers (which should be applied tree-wide) are an 
+> absolute necessity for this series.
+> 
+> > @@ -5531,7 +5540,14 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+> >   
+> >           DPRINTF("setting tpr\n");
+> >           run->cr8 = cpu_get_apic_tpr(x86_cpu->apic_state);
+> > +        /*
+> > +         * make sure that request_interrupt_window/cr8 are set
+> > +         * before KVM_RUN might read them
+> > +         */
+> > +        smp_mb();  
+> 
+> This is not needed, ->cr8 is only read for the same CPU (in 
+> kvm_arch_vcpu_ioctl_run).
+> 
+> > +    }
+> >   
+> > +    if (release_bql) {
+> >           bql_unlock();
+> >       }  
+> 
+> And since release_bql is not needed anymore, the bql_unlock() can be 
+> left where it was.
+> 
+> Paolo
+> 
+> >   }  
+> 
 
 
