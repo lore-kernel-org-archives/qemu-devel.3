@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3266C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 876F1C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhtSR-0003GO-5C; Fri, 01 Aug 2025 13:22:15 -0400
+	id 1uhtWd-0005ft-G3; Fri, 01 Aug 2025 13:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs3D-0002cc-Bd
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:08 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1uhs3H-0002ha-W3
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:12 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs3B-0000xy-G8
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:07 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3b78b2c6ecfso1515308f8f.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:52:04 -0700 (PDT)
+ id 1uhs3G-0000yf-9W
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:52:11 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45629702e52so4359035e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754063523; x=1754668323; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=j8xIikgm9Tf5bJV+xJmg+Nhbl8A3VdoUNRUi6ceNZdY=;
- b=ecDL25jLnHfPDlV8eDu5izR8unv1qHK7WpJy7bzASAex0yUyqQIYe5Q2Kq95ECBHHv
- xNimeF+0ow6ytBu2PcjIQRCsGwCdxSy9r0zrqfDkT7utQBS+Ix9Z9U3NjG/X0NjpB7XG
- MTDO+JD/nF6FW2Q1QswTcD7Z5mEybfZkf9of1Z+/uLYBaLb34vgtqY2cEznOoZUUEBNa
- NPNT+dEb3YnltqSkBUK8dGKowAIcnqwYIF8QN0gof0qkqvCH7CtID1df9ftRkYtGwQXh
- 5RR1KMCv8XuL/DKkMhMnbLf4vd5nKFQcwJ7HvJ7/PoJTdGSrCzgnRNSwuy9ECL1eJ32V
- AIQQ==
+ d=linaro.org; s=google; t=1754063528; x=1754668328; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=VA9zLG3hIwrKZfYHg8vSBI/hR1razhF0Nu/W6W/sq9U=;
+ b=OKpm7Dezbi8Ey8zWiGRnfASzz+lap2Az7cgkDfvtCZc1Cr9w7x8kvoMnddxIUCpwHP
+ tiGcSQrLNGKpBm1TXNEfEiBMPETvsj3yja+GXoNp5mNnOPkZMgRIMGNUlIr8fgWwXTiL
+ GCFgAYEdr8kUKbvR17j4KopQNAsEck7K1YXL4GhhHDVoY3L0nNO2jvKdtYIqEMm2Cxie
+ 9gBry/hrJEWeVDrRjSbDr2ZEfNxJOUBzH+V1uR5x2aZbzRvAXYE+LPyO1iKlh995O664
+ H+l787JjKqUcJgqsWLyl+S1uEF8u+c6ZrP07YhvI9Tx/uJrZDglwutg0wIcTXGK0UnYv
+ 35pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754063523; x=1754668323;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j8xIikgm9Tf5bJV+xJmg+Nhbl8A3VdoUNRUi6ceNZdY=;
- b=E2AL2S+t/aZvelWFXt5+p2mNCx7M0hmchd5soFg0nXKmd7fAY+Bb9rwlYjNGYB8D4S
- hrS2BZEx9TSSlZoHsDsChrEPzKsUg/SaB4/lXAQufQTrnWJnExI8KYmnX2+Atji+HUI5
- jJWhNlWacAuQqGiTNMOKkKDCRKcLx2Ou7TxfiZuZ9au+472uwmoMTpxj22T/5qlKNRG5
- +8tRX/D6J+FYHLWA43Z0JXJN0by7gsgB7YUlq9mC1fYrYgukHERvEuSlCVy+MXGb2w1F
- BeUoarUhPdidR/ZYkLPxL1oKzJzsRJR07PskqKiJuQ9RTOT3Bb+14oj7pVjb3d5ahHWS
- n+aw==
-X-Gm-Message-State: AOJu0Yzps2Cvgao5lc2zAc5jYhZDWBQjRYe2HFPSJyovi3f1jQQBBGWJ
- 6/oeR7MHy5qxXb7+iKpcOhUhHXb5um5u/Hf6AcDG9Gk6MCIeOED8JT0hlIqzIn6wwcYOI/fu+oM
- g9u/M
-X-Gm-Gg: ASbGnctySN1D8dyjlh/L8QUN/rRBNo3W9yKvylo0ageNb6OuQT+2ZsqAl3s1I36EIlc
- DgVx3b4SA5zcGbneZyaVGXx5SdnuuNv2he1/6Kj6sNjBXiaP4TOALO0KqSJEKit8yzMmLTSu+bu
- 8aYx7RZ1dieslKC5jLFVbXKd1USc7IGD2XjxfJcE4sbjLh32JlPL+0zREfECwtHWEErkvnvgogd
- INnvNd4gZjtoIw+rkCTttheDbmP20YIFO6BJx04NPbokXBlUHS+KVb7cPUDDBxyoToAqTTXWMBM
- f2ZyJUK4BMKLYgCdYh7BUqeryKgb4Kwjm0+5lsFB7Maq6u5TdtCl7n329t73L+Uw/xpv8zKi5ZI
- izJEwutLAgz7QvLz6Lt0YWv6hwt4N
-X-Google-Smtp-Source: AGHT+IEY2AOpk93UbwC6/cKfOSPfIb+RQ25/vh6yu4ttvZMYE5kzclmQaUDRgwgy4C0m9tRVaACreA==
-X-Received: by 2002:a05:6000:1a88:b0:3a4:d6ed:8df8 with SMTP id
- ffacd0b85a97d-3b8d94c3709mr250242f8f.39.1754063522948; 
- Fri, 01 Aug 2025 08:52:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754063528; x=1754668328;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VA9zLG3hIwrKZfYHg8vSBI/hR1razhF0Nu/W6W/sq9U=;
+ b=mwH4gW9KP+Q2sKriENVhhW/uri/t64iTJ5a+2JbYUJABrzDGnyEuuRwPS8BUqOd/f9
+ Q0mWEB2iF0WD4jITPVIMg7OiF3KV+o4Xu9B4qUw0tOPWshk+DwQ3zKrAyQ8jMLhi3U83
+ HpDnbD76U1xEbcrjpAAJkXNKM84AQWciTU7K6AdTOOrIp0A9wsEidXrFPtTvcW5EFQzM
+ g5qMgDe8wfVXdeyP67x5QA0+cVeJCWn/crNfm7XZzfGH1+mBBMD80PZSd9F8FQo2WbTL
+ pQf5fwoah68wI4u4AD1yaHGaj3iHzvNt43z/7Vw7+GgPUPN/NMrgWkeShuiomR18ysGL
+ 8znA==
+X-Gm-Message-State: AOJu0Yxhd9+tl8qJZl5I8EhaDq7N8VepvUqaZH9p2FQRSIbrjo+Ql5FY
+ +XVh92WSVgRvuvanELrY+ED7VOSPvkRubVPDN8lSMV66C6j5fIusIIf7Y2Su37sHOyH36XTzje4
+ BqNwp
+X-Gm-Gg: ASbGncvouQXcWfGK/MNPTNdaJc9pFnvj0qxLq9Wki5itpcz8+uVIKt6QSUdE4YZjD4J
+ b0kmBwOnzhyjm//WtRFnQl9/56VTPmIhbRq2pKrVdW/tHqZeRUHGSzc3j3+px+T1vFsWANWBooW
+ 4zo5nCfLRFfCE9bS6VWk+sYVSIvgDnY1aekWEgii3ib5kmfAVHaK16VZpO321PDRYISbELae9Vy
+ A5ySLSFYsaecW5TOKGA/yMM2NAj+juKSvGJxbGD0w3cPDGNjHiulWSWTLjENS02Xd1AKN5U+jFN
+ vryfg/S5whsvO6+PvWXp4iRsO0LF6Jgt51QzAZIKKkTuqx2+xW2ZMkufvrUS1Yx9GLVsTX3Qj76
+ b8ev6RjuTLjgKfcBhkI/rxnRNNthUXJr4WbBKvHw=
+X-Google-Smtp-Source: AGHT+IE2aMGX0ZZVL2udJYMuwCPwJC29lrNO+BJWY0e33zLCxbyA95h5aNcLqaZ28oLmfNkTthzE8w==
+X-Received: by 2002:a05:6000:40c9:b0:3b8:d138:41d3 with SMTP id
+ ffacd0b85a97d-3b8d94d01c0mr241931f8f.56.1754063528459; 
+ Fri, 01 Aug 2025 08:52:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4a2f03sm6176670f8f.72.2025.08.01.08.52.00
+ ffacd0b85a97d-3b79c4a2f03sm6176670f8f.72.2025.08.01.08.52.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 08:52:01 -0700 (PDT)
+ Fri, 01 Aug 2025 08:52:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/8] target-arm queue
-Date: Fri,  1 Aug 2025 16:51:51 +0100
-Message-ID: <20250801155159.400947-1-peter.maydell@linaro.org>
+Subject: [PULL 4/8] hw/display/framebuffer: Add cast to force 64x64 multiply
+Date: Fri,  1 Aug 2025 16:51:55 +0100
+Message-ID: <20250801155159.400947-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250801155159.400947-1-peter.maydell@linaro.org>
+References: <20250801155159.400947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,61 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's the target-arm pullreq for rc2; contents are
-just some small bug fixes.
+In framebuffer_update_display(), Coverity complains because we
+multiply two values of type 'int' (which will be done as a 32x32
+multiply and so in theory might overflow) and then add the result to
+a ram_addr_t, which can be 64 bits.
 
-thanks
--- PMM
+4GB framebuffers are not plausible anyway, but keep Coverity happy
+by adding casts which force these multiplies to be done as 64x64.
 
-The following changes since commit 4e06566dbd1b1251c2788af26a30bd148d4eb6c1:
+Coverity: CID 1487248
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20250710174312.1313177-1-peter.maydell@linaro.org
+---
+ hw/display/framebuffer.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-  Merge tag 'pull-riscv-to-apply-20250730-2' of https://github.com/alistair23/qemu into staging (2025-07-30 09:59:30 -0400)
+diff --git a/hw/display/framebuffer.c b/hw/display/framebuffer.c
+index 4485aa335bb..b4296e8a33e 100644
+--- a/hw/display/framebuffer.c
++++ b/hw/display/framebuffer.c
+@@ -95,9 +95,9 @@ void framebuffer_update_display(
+     }
+     first = -1;
+ 
+-    addr += i * src_width;
+-    src += i * src_width;
+-    dest += i * dest_row_pitch;
++    addr += (uint64_t)i * src_width;
++    src += (uint64_t)i * src_width;
++    dest += (uint64_t)i * dest_row_pitch;
+ 
+     snap = memory_region_snapshot_and_clear_dirty(mem, addr, src_width * rows,
+                                                   DIRTY_MEMORY_VGA);
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250801
-
-for you to fetch changes up to 676ab6a21117858393a4440e4cdc3d314277cf20:
-
-  tests/tcg: Fix run for tests with specific plugin (2025-08-01 16:48:50 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * Add missing 64-bit PMCCNTR in AArch32 mode
- * Reinstate bogus AArch32 DBGDTRTX register for migration compat
- * fix big-endian handling of AArch64 FPU registers in gdbstub
- * fix handling of setting SVE registers from gdbstub
- * hw/intc/arm_gicv3_kvm: fix writing of enable/active/pending state to KVM
- * hw/display/framebuffer: Add cast to force 64x64 multiply
- * tests/tcg: Fix run for tests with specific plugin
-
-----------------------------------------------------------------
-Alex Richardson (1):
-      target/arm: add support for 64-bit PMCCNTR in AArch32 mode
-
-Gustavo Romero (1):
-      tests/tcg: Fix run for tests with specific plugin
-
-Peter Maydell (2):
-      hw/display/framebuffer: Add cast to force 64x64 multiply
-      target/arm: Reinstate bogus AArch32 DBGDTRTX register for migration compat
-
-Vacha Bhavsar (2):
-      target/arm: Fix big-endian handling of NEON gdb remote debugging
-      target/arm: Fix handling of setting SVE registers from gdb
-
-Zenghui Yu (2):
-      hw/intc/arm_gicv3_kvm: Remove writes to ICPENDR registers
-      hw/intc/arm_gicv3_kvm: Write all 1's to clear enable/active
-
- hw/display/framebuffer.c                           |  6 ++--
- hw/intc/arm_gicv3_kvm.c                            |  6 ++--
- target/arm/cpregs-pmu.c                            | 29 ++++++++++++++----
- target/arm/debug_helper.c                          | 29 ++++++++++++++++++
- target/arm/gdbstub64.c                             | 35 +++++++++++++++++-----
- tests/tcg/Makefile.target                          | 20 +++++++++++--
- tests/tcg/multiarch/Makefile.target                |  2 +-
- tests/tcg/multiarch/system/Makefile.softmmu-target |  2 +-
- tests/tcg/x86_64/Makefile.softmmu-target           |  2 +-
- 9 files changed, 106 insertions(+), 25 deletions(-)
 
