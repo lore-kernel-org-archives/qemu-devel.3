@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56F0C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 00:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D141DC87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 00:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhdTJ-000334-MK; Thu, 31 Jul 2025 20:18:06 -0400
+	id 1uhe3I-0003ld-2F; Thu, 31 Jul 2025 20:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uhdOu-0007xw-HV
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 20:13:32 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uhddh-0002bR-GX
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 20:28:49 -0400
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uhdOq-0001kD-PS
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 20:13:32 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-240763b322fso10438335ad.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 17:13:20 -0700 (PDT)
+ id 1uhddf-0004rg-4T
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 20:28:49 -0400
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-23dc5bcf49eso22135415ad.2
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 17:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754007199; x=1754611999; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=puyOmxGd5nbAUKxa4bS/YO3K65xgCmHZUgpZjwuLvOY=;
- b=YhGxl2qN3KE4VJ02gClvVaKXei4CnfGlaVNm1hQo7yVkAUVdaGqel0PtqlpsZQLqwY
- bSABEYcIqYfQPDlsMqmY/dnE2HYA5XJ5B3PRA5/MVbaoVwkMmHiEsuq+HuqVokwUT7jp
- zFfHQAtWqR3P0Pxmz/LsgO66k/sNQF1SeB17FjFSfkx0eftRYiRgX0PN9a2ZvTpzXTW+
- NbRxDsGKsEb8qT+ZH+4I0OO6YPa/lIhR1w2ttvfvw8UpNGmOlwBf7nfE8/qNk1XSgmcs
- u+M2txjs24fpgYn8sypG07VXG9bQahpNX24qih/YlCm/gawZpQbkU5/47nozHeE99eQj
- 3V3g==
+ d=linaro.org; s=google; t=1754008125; x=1754612925; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wsgDM/de5QE6L+C0NLWRJwbH7DV2RxVu5nBJZ5lwvAs=;
+ b=OmTw4xjV5SqAL96TL3JDa4QbNRJfoSZKxI5hL6D+vXvCgVHZaHkE/c0DpkavKfqIun
+ DZWcv87xqY8TvbUtj5H/DubzrndlgnPfDVqM7BKei2wQTLjTKPDflY7v+6ViPTFFKhzP
+ M789bl/zgfEStw3tUDLYI1CQeoOekhPphzH/bzSnvv1/IZ070k80/GkwKBjnlKvEANMC
+ XyAiyI8TGH3gy9l7ZN7iE1BnlZuiC/S2S/dm5eeXd7GN0zoi/BXpwFnfSF6xUcc29US6
+ 2fOT6aD9KKXqifdqnLJva6BeqqlaiSz4mj+FM/sWd3TdScu4Rk39uGcQN/uO4creya+w
+ VyGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754007199; x=1754611999;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=puyOmxGd5nbAUKxa4bS/YO3K65xgCmHZUgpZjwuLvOY=;
- b=xDfbEGewJyrZ8HMtrGdOCMIvafxf7CSas0/KXCvDw1AGXnhJyUHLYGxY05aWePARqY
- CvzT6o87OhZQeauqH9Koi9+tDLsjKpxUD5oza0OWcuYHaMl2khP6C+yLAWG7u+5zSYSK
- 0lAaKC9JFN63akKF0Cb08zfxossoq+x/PVaiAHt25VVBStmKGFQlilVLW3gc+D4AU5Da
- IisM1nNwjpbwdE5W+QWBSVjs2pkHZW90fXb+NzN3P4ojXZTMi+xds59rTyW4D05HzkQw
- 5sTEiVOLCe7ZpuV4CkVglnu8HF3JKbaMqFyai4xR+C7CnRhxIYHo15k0hczxGSVu2bDe
- uA8A==
-X-Gm-Message-State: AOJu0YyQJBkkEN9EUEf9fuSAVSO3CxHYJoWm5rp/CRXdkCX7iD36k+ZW
- 7BZeya+Q4DcYufu2AbVKaWe4xOJlV4eZZwsvEBrfOjc4HpaSmx25nZKjCewIr3MADGlOMRPPc4V
- MUdfCRG4=
-X-Gm-Gg: ASbGncuCRld/1NnozSfQwVPCVzKc49aj6xwiQcG08julvwpV5LZYnsb94+vWMwQtpbA
- dHI+pEUcrdODPt46o/qpwyE57+ZhOleyyZip0tOl2D53qeJvn20UXT/akXBTOJp0lLrEZ0iTTFY
- mnn/3n0n49L413/3ApqM9uslCZ9ICN/lb9Y14Vy3yTi/3DMkIft5Vx2A/IG0KtPOsKg/zSFhvKf
- IWaVvaRklrr+x97u543LbgqaW9LdEGWVz9u2dLUZrWJZVMEEYwY7KYklVmr+2lQCjyiaBgF4t8t
- 4x6qqeC47zg77xg1sAf0QjQ1UDk2YrKUE9aLr752uEm0lrTVFOtfOeqpMPqiOu3UT7zP0BViTdh
- yYrl378mhIxXWZzKTS+TT7oIzDhY=
-X-Google-Smtp-Source: AGHT+IGHF62TxgPqvJmlTwcX9rGAZqDUXXtOfDQVWBm5/qeGiVStZKpeuhzZVncIUgF6kXTqVk7hqQ==
-X-Received: by 2002:a17:903:1b6d:b0:240:8fee:e500 with SMTP id
- d9443c01a7336-24096b76dffmr122340575ad.50.1754007199035; 
- Thu, 31 Jul 2025 17:13:19 -0700 (PDT)
-Received: from gromero0.. ([152.243.37.35]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1f1ebc1sm27993855ad.67.2025.07.31.17.13.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 31 Jul 2025 17:13:18 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
- manos.pitsidianakis@linaro.org
-Cc: qemu-arm@nongnu.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v2] tests/tcg: Fix run for tests with specific plugin
-Date: Fri,  1 Aug 2025 00:13:05 +0000
-Message-Id: <20250801001305.2352554-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1754008125; x=1754612925;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wsgDM/de5QE6L+C0NLWRJwbH7DV2RxVu5nBJZ5lwvAs=;
+ b=kstsUEJOobaFA14HYhJKg01AjUW1LwgIqWyXNqMF0iDRg+oL94eqjknyttVHOWRi9q
+ zjccAcI0s91DKkw3Ij6smxhzsTAV7CprinTlH/HH0g2LmJUfQjLVJm+4f0MyrkXK9IRs
+ aotwlf+OfmLV8GH62v04nDkP1lmQR8LjUUzrecYmhoP/0wgx3OnP2TvnS9UzpU1eqe77
+ cnlshqa8aMFR6Lujb5nwu7ljLWTXv1UlDarlrAHaPRnqEWSSKO3fe+Tdjavtex7Yu/tB
+ 8D3jPndMkC3U+YQsxqgymWd5B/2DabNhyZW+1uUTK4t2sKF9D3IUJzBycfhAa7ZzbDA+
+ 97eQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyIuExa9eu3ydGTZQ8HsieDUIr3qf7ZHqkmmLveRUnLCMr0+wZuOGlmCjr2NTv2IzCPCLZXkIYgMf6@nongnu.org
+X-Gm-Message-State: AOJu0Yw8cye/K3YYWc+bWtrCHl83VJ9K49YXUM+7P0zMJ5C+0N/2moN5
+ Hv7fQzCxme13gndXtvM6IlT4b2EUxCrMhvacwnK6uwUHHx7L3xoAoICvCtra6S4h9rI=
+X-Gm-Gg: ASbGnctxjbfHQJGxDSzOn5PWpIZEnT6Ij7cm2vFJa8ISp8qUS/Vocp//2tql/JPZZSZ
+ pxwXVMnHwLYVpHcS5E06G0vIvjWBu9QpqNDP9hLyVkiBduz4kftM/E5dMqb4dnBrUbFgcqmPlrs
+ aSAjyu2Culx2G8X8YCW/R5AuH4SWUmaEakgpusYzqOWcvatzNY+NCOQCNKa9A3sGJcTnqvNAvYu
+ JQ0/hZftvbLwuTJpsDfjrbF2IG1n2AbrryLIUl/PPtoDZcYpm1UjG/4Ai6ANu33egbf6NoHtcQ9
+ LK0zqJcaNY1KxuK1rm2JBuDdPJiFM2xFxnGt13frsPsaKV8ztJliwQJVKI2KEOsqEpxoK9+jRjo
+ jTCWwDwwN/kfALFHLpj/r4icZl0C1TcfpjD5NcTUvqKz3
+X-Google-Smtp-Source: AGHT+IH+4g/ex+Z7AmPKdNXOP2Htrn9tBYThId1VLohgJtOpm+ZC3Lrr8zU8dKLNIhOWzPJgk8/OAw==
+X-Received: by 2002:a17:903:2f4e:b0:240:5c38:7544 with SMTP id
+ d9443c01a7336-24096b44421mr117381785ad.50.1754008125022; 
+ Thu, 31 Jul 2025 17:28:45 -0700 (PDT)
+Received: from [192.168.0.102] ([152.243.37.35])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e8ac8ed4sm27876165ad.189.2025.07.31.17.28.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 31 Jul 2025 17:28:44 -0700 (PDT)
+Message-ID: <61eec45c-5e7a-4ecb-a6e1-c410b557aa7a@linaro.org>
+Date: Thu, 31 Jul 2025 21:29:34 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/14] tests/tcg: reduce the number of plugin tests
+ combinations
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, stefanha@redhat.com
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250727083254.3826585-1-alex.bennee@linaro.org>
+ <20250727083254.3826585-12-alex.bennee@linaro.org>
+ <eee5b640-6c65-4796-9b36-ca324f08c07c@linaro.org>
+ <2635ef88-b662-41b9-b206-ca1923e87e91@linaro.org>
+ <a21427c9-9b10-45fe-804f-9851f31fc69b@linaro.org>
+ <62c027d0-4331-4554-a4ea-0e9a5044ea89@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <62c027d0-4331-4554-a4ea-0e9a5044ea89@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,122 +112,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 25aaf0cb7f (“tests/tcg: reduce the number of plugin test
-combinations”) added support for running tests with specific plugins
-passed via the EXTRA_RUNS variable.
+Hi Stefan and Pierrick,
 
-However, due to the optimization, the rules generated as a shuffled
-combination of tests and plugins might not cover the rules required to
-run the tests with a specific plugin passed via EXTRA_RUNS.
+On 7/31/25 16:23, Pierrick Bouvier wrote:
+> On 7/31/25 11:58 AM, Gustavo Romero wrote:
+>> Hi,
+>>
+>> On 7/28/25 17:14, Gustavo Romero wrote:
+>>> Hi,
+>>>
+>>> On 7/28/25 16:03, Pierrick Bouvier wrote:
+>>>> Hi Alex,
+>>>>
+>>>> On 7/27/25 1:32 AM, Alex Bennée wrote:
+>>>>> As our set of multiarch tests has grown the practice of running every
+>>>>> plugin with every test is becoming unsustainable. If we switch to
+>>>>> ensuring every test gets run with at least one plugin we can speed
+>>>>> things up.
+>>>>>
+>>>>> Some plugins do need to be run with specific tests (for example the
+>>>>> memory instrumentation test). We can handle this by manually adding
+>>>>> them to EXTRA_RUNS. We also need to wrap rules in a CONFIG_PLUGIN test
+>>>>> so we don't enable the runs when plugins are not enabled.
+>>>>>
+>>>>> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Message-ID: <20250725154517.3523095-12-alex.bennee@linaro.org>
+>>>>>
+>>>>> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+>>>>> index a12b15637ea..18afd5be194 100644
+>>>>> --- a/tests/tcg/Makefile.target
+>>>>> +++ b/tests/tcg/Makefile.target
+>>>>> @@ -173,14 +173,25 @@ PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
+>>>>>    # We need to ensure expand the run-plugin-TEST-with-PLUGIN
+>>>>>    # pre-requistes manually here as we can't use stems to handle it. We
+>>>>>    # only expand MULTIARCH_TESTS which are common on most of our targets
+>>>>> -# to avoid an exponential explosion as new tests are added. We also
+>>>>> -# add some special helpers the run-plugin- rules can use below.
+>>>>> +# and rotate the plugins so we don't grow too out of control as new
+>>>>> +# tests are added. Plugins that need to run with a specific test
+>>>>> +# should ensure they add their combination to EXTRA_RUNS.
+>>>>>    ifneq ($(MULTIARCH_TESTS),)
+>>>>> -$(foreach p,$(PLUGINS), \
+>>>>> -    $(foreach t,$(MULTIARCH_TESTS),\
+>>>>> -        $(eval run-plugin-$(t)-with-$(p): $t $p) \
+>>>>> -        $(eval RUN_TESTS+=run-plugin-$(t)-with-$(p))))
+>>>>> +
+>>>>> +NUM_PLUGINS := $(words $(PLUGINS))
+>>>>> +NUM_TESTS := $(words $(MULTIARCH_TESTS))
+>>>>> +
+>>>>> +define mod_plus_one
+>>>>> +  $(shell $(PYTHON) -c "print( ($(1) % $(2)) + 1 )")
+>>>>> +endef
+>>>>> +
+>>>>> +$(foreach _idx, $(shell seq 1 $(NUM_TESTS)), \
+>>>>> +    $(eval _test := $(word $(_idx), $(MULTIARCH_TESTS))) \
+>>>>> +    $(eval _plugin := $(word $(call mod_plus_one, $(_idx), $(NUM_PLUGINS)), $(PLUGINS))) \
+>>>>> +    $(eval run-plugin-$(_test)-with-$(_plugin): $(_test) $(_plugin)) \
+>>>>> +    $(eval RUN_TESTS+=run-plugin-$(_test)-with-$(_plugin)))
+>>>>> +
+>>>>>    endif # MULTIARCH_TESTS
+>>>>>    endif # CONFIG_PLUGIN
+>>>>> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+>>>>> index bfdf7197a7b..38345ff8805 100644
+>>>>> --- a/tests/tcg/multiarch/Makefile.target
+>>>>> +++ b/tests/tcg/multiarch/Makefile.target
+>>>>> @@ -189,6 +189,10 @@ run-plugin-semiconsole-with-%:
+>>>>>    TESTS += semihosting semiconsole
+>>>>>    endif
+>>>>> +test-plugin-mem-access: CFLAGS+=-pthread -O0
+>>>>> +test-plugin-mem-access: LDFLAGS+=-pthread -O0
+>>>>> +
+>>>>> +ifeq ($(CONFIG_PLUGIN),y)
+>>>>>    # Test plugin memory access instrumentation
+>>>>>    run-plugin-test-plugin-mem-access-with-libmem.so: \
+>>>>>        PLUGIN_ARGS=$(COMMA)print-accesses=true
+>>>>> @@ -197,8 +201,8 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
+>>>>>        $(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
+>>>>>        $(QEMU) $<
+>>>>> -test-plugin-mem-access: CFLAGS+=-pthread -O0
+>>>>> -test-plugin-mem-access: LDFLAGS+=-pthread -O0
+>>>>> +EXTRA_RUNS += run-plugin-test-plugin-mem-access-with-libmem.so
+>>>>> +endif
+>>>>>    # Update TESTS
+>>>>>    TESTS += $(MULTIARCH_TESTS)
+>>>>> diff --git a/tests/tcg/multiarch/system/Makefile.softmmu-target b/tests/tcg/multiarch/system/Makefile.softmmu-target
+>>>>> index 5acf2700812..4171b4e6aa0 100644
+>>>>> --- a/tests/tcg/multiarch/system/Makefile.softmmu-target
+>>>>> +++ b/tests/tcg/multiarch/system/Makefile.softmmu-target
+>>>>> @@ -71,8 +71,11 @@ endif
+>>>>>    MULTIARCH_RUNS += run-gdbstub-memory run-gdbstub-interrupt \
+>>>>>        run-gdbstub-untimely-packet run-gdbstub-registers
+>>>>> +ifeq ($(CONFIG_PLUGIN),y)
+>>>>>    # Test plugin memory access instrumentation
+>>>>> -run-plugin-memory-with-libmem.so:         \
+>>>>> -    PLUGIN_ARGS=$(COMMA)region-summary=true
+>>>>> -run-plugin-memory-with-libmem.so:         \
+>>>>> -    CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
+>>>>> +run-plugin-memory-with-libmem.so: memory libmem.so
+>>>>> +run-plugin-memory-with-libmem.so: PLUGIN_ARGS=$(COMMA)region-summary=true
+>>>>> +run-plugin-memory-with-libmem.so: CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
+>>>>> +
+>>>>> +EXTRA_RUNS += run-plugin-memory-with-libmem.so
+>>>>> +endif
+>>>>
+>>>> I'm not sure how it's related, but check-tcg on aarch64 host now fails [1] since this series was merged, and I suspect it may be related to this patch. I didn't spend time to reproduce and investigate it.
+>>>>
+>>>> [1] https://github.com/pbo-linaro/qemu-ci/actions/runs/16575679153/job/46879690693
+>>>
+>>> I was not able to reproduce it locally on 22.04, but in the CI indeed the test command is missing the "test-plugin-mem-access" binary at the end, just before redirection to .so.out, it should be:
+>>>
+>>> [...] -D test-plugin-mem-access-with-libmem.so.pout test-plugin-mem-access >  run-plugin-test-plugin-mem-access-with-libmem.so.out
+>>>
+>>> not:
+>>>
+>>> [...] -D test-plugin-mem-access-with-libmem.so.pout  >  run-plugin-test-plugin-mem-access-with-libmem.so.out
+>>
+>> The problem is that the new rules generated by a shuffled combination of tests and plugin
+>> (the one using eval) sometimes does not include the rule for the test+plugin combination
+>> passed via EXTRA_RUNs.
+>>
+>> So EXTRA_RUNS tests like run-plugin-test-plugin-mem-access-with-libmem.so might end up
+>> with a proper rule if the test test-plugin-mem-access is combined with other plugin
+>> randomly, since now a plugin is picked up based on a tests index _idx modulo with the
+>> number of plugins.
+>>
+>> A possible fix is to generate correctly the rules for the tests with plugins passed
+>> via EXTRA_RUNS and ideally, following the patch's mood, remove the test from running
+>> if any other plugin (no shuffle with any other plugin).
+>>
+>> Of course, as Pierrick said, this patch could be a premature optimization. So maybe
+>> it doesn´t justify adding more complexity to our Makefile (Makefiles are hard to debug,
+>> with 'eval' tricks, it's _reallly_ hard, so the more we avoid it the better).
+>>
+>> That said, if we want to keep this commit, I've kicked off a test to fix it here:
+>>
+>> https://gitlab.com/gusbromero/qemu/-/pipelines/1959953122
+>>
+>> and sent the fix to the ML too. HTH.
+>>
+> 
+> Thanks for taking a look at this Gustavo.
+> 
+> In the pipeline you shared, the build-some-softmmu fails with:
+> Makefile:210: *** multiple target patterns.  Stop.
+> make: *** [/builds/gusbromero/qemu/tests/Makefile.include:50: build-tcg-tests-x86_64-softmmu] Error 2
+> make: *** Waiting for unfinished jobs....
+> 
+> Is that a new bug related to current patch?
 
-This commit fixes it by correctly generating the rules for the tests
-that require a specific plugin to run, which are now passed via the
-EXTRA_RUNS_WITH_PLUGIN instead of via the EXTRA_RUNS variable.
+v2 was busted. Please consider this fix, which passed the test pipeline:
 
-The fix essentially excludes the tests passed via EXTRA_RUNS_WITH_PLUGIN
-from the rules created by the shuffled combination of tests and plugins,
-to avoid running the tests twice, and generates the rules for the
-test/plugin combinations listed in the EXTRA_RUNS_WITH_PLUGIN variable.
+https://gitlab.com/gusbromero/qemu/-/pipelines/1960296034
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- tests/tcg/Makefile.target                     | 20 ++++++++++++++++---
- tests/tcg/multiarch/Makefile.target           |  2 +-
- .../multiarch/system/Makefile.softmmu-target  |  2 +-
- tests/tcg/x86_64/Makefile.softmmu-target      |  2 +-
- 4 files changed, 20 insertions(+), 6 deletions(-)
+https://mail.gnu.org/archive/html/qemu-devel/2025-07/msg06926.html
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 18afd5be19..af72903f89 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -170,6 +170,10 @@ endif
- PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
- 	$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c))))
- 
-+strip-plugin = $(wordlist 1, 1, $(subst -with-, ,$1))
-+extract-plugin = $(wordlist 2, 2, $(subst -with-, ,$1))
-+extract-test = $(subst run-plugin-,,$(wordlist 1, 1, $(subst -with-, ,$1)))
-+
- # We need to ensure expand the run-plugin-TEST-with-PLUGIN
- # pre-requistes manually here as we can't use stems to handle it. We
- # only expand MULTIARCH_TESTS which are common on most of our targets
-@@ -179,6 +183,13 @@ PLUGINS=$(filter-out $(DISABLE_PLUGINS), \
- 
- ifneq ($(MULTIARCH_TESTS),)
- 
-+# Extract extra tests from the extra test+plugin combination.
-+EXTRA_TESTS_WITH_PLUGIN=$(foreach test, \
-+                        $(EXTRA_RUNS_WITH_PLUGIN),$(call extract-test,$(test)))
-+# Exclude tests that were specified to run with specific plugins from the tests
-+# which can run with any plugin combination, so we don't run it twice.
-+MULTIARCH_TESTS:=$(filter-out $(EXTRA_TESTS_WITH_PLUGIN), $(MULTIARCH_TESTS))
-+
- NUM_PLUGINS := $(words $(PLUGINS))
- NUM_TESTS := $(words $(MULTIARCH_TESTS))
- 
-@@ -186,19 +197,22 @@ define mod_plus_one
-   $(shell $(PYTHON) -c "print( ($(1) % $(2)) + 1 )")
- endef
- 
-+# Rules for running tests with any plugin combination, i.e., no specific plugin.
- $(foreach _idx, $(shell seq 1 $(NUM_TESTS)), \
- 	$(eval _test := $(word $(_idx), $(MULTIARCH_TESTS))) \
- 	$(eval _plugin := $(word $(call mod_plus_one, $(_idx), $(NUM_PLUGINS)), $(PLUGINS))) \
- 	$(eval run-plugin-$(_test)-with-$(_plugin): $(_test) $(_plugin)) \
- 	$(eval RUN_TESTS+=run-plugin-$(_test)-with-$(_plugin)))
- 
-+# Rules for running extra tests with specific plugins.
-+$(foreach f,$(EXTRA_RUNS_WITH_PLUGIN), \
-+    $(eval $(f): $(call extract-test,$(f)) $(call extract-plugin,$(f))))
-+
- endif # MULTIARCH_TESTS
- endif # CONFIG_PLUGIN
- 
--strip-plugin = $(wordlist 1, 1, $(subst -with-, ,$1))
--extract-plugin = $(wordlist 2, 2, $(subst -with-, ,$1))
--
- RUN_TESTS+=$(EXTRA_RUNS)
-+RUN_TESTS+=$(EXTRA_RUNS_WITH_PLUGIN)
- 
- # Some plugins need additional arguments above the default to fully
- # exercise things. We can define them on a per-test basis here.
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index 38345ff880..8dc65d7a06 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -201,7 +201,7 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
- 	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
- 	$(QEMU) $<
- 
--EXTRA_RUNS += run-plugin-test-plugin-mem-access-with-libmem.so
-+EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
- endif
- 
- # Update TESTS
-diff --git a/tests/tcg/multiarch/system/Makefile.softmmu-target b/tests/tcg/multiarch/system/Makefile.softmmu-target
-index 4171b4e6aa..98c4eda5e0 100644
---- a/tests/tcg/multiarch/system/Makefile.softmmu-target
-+++ b/tests/tcg/multiarch/system/Makefile.softmmu-target
-@@ -77,5 +77,5 @@ run-plugin-memory-with-libmem.so: memory libmem.so
- run-plugin-memory-with-libmem.so: PLUGIN_ARGS=$(COMMA)region-summary=true
- run-plugin-memory-with-libmem.so: CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py $@.out
- 
--EXTRA_RUNS += run-plugin-memory-with-libmem.so
-+EXTRA_RUNS_WITH_PLUGIN += run-plugin-memory-with-libmem.so
- endif
-diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
-index 3e30ca9307..4e65f58b57 100644
---- a/tests/tcg/x86_64/Makefile.softmmu-target
-+++ b/tests/tcg/x86_64/Makefile.softmmu-target
-@@ -40,5 +40,5 @@ run-plugin-patch-target-with-libpatch.so:		\
- run-plugin-patch-target-with-libpatch.so:		\
- 	CHECK_PLUGIN_OUTPUT_COMMAND=$(X64_SYSTEM_SRC)/validate-patch.py $@.out
- run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
--EXTRA_RUNS+=run-plugin-patch-target-with-libpatch.so
-+EXTRA_RUNS_WITH_PLUGIN+=run-plugin-patch-target-with-libpatch.so
- endif
--- 
-2.34.1
 
+Cheers,
+Gustavo
 
