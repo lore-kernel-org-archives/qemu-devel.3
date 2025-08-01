@@ -4,86 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13425C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 08:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F5BC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 08:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhlEO-0002Gl-D5; Fri, 01 Aug 2025 04:35:13 -0400
+	id 1uhlLT-0008F8-QX; Fri, 01 Aug 2025 04:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhlDu-0002AS-Sf
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:34:44 -0400
-Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhlDs-0000yl-E6
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:34:42 -0400
-Received: by mail-yb1-xb2d.google.com with SMTP id
- 3f1490d57ef6-e740a09eae0so1821310276.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 01:34:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754037278; x=1754642078; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7YsHZyiE2Lx2Jze+gaY6HgB0NnAHU4eokx9mTEwqGBQ=;
- b=uYbWfbZ+4EYuVgytIxFmm67ukkSm1IF1N2tQyMhj/e2pCBvqoYI8ynfRGMLpcYDzcS
- dCcICVZFwHSweSqEG4wUUVEBvEvdpe9T+TgLDRTMA0sPfJJYQrq0nSCwoUA3KCPoswFl
- rTGWHRZmNJzBnH27r0TIDaqWosgmicvrGxAtk/B7tHY+Eahr8JtGIhwhm4hW8dltVzBO
- SvkubDU8vqQw0FTn9oqOBMHux+8Rom7Vac7DCx/++t/qR9D462zxO1NJpcyotD1/3Jqk
- c8skr5hzQb60LYl6c24J4dhlHNKdy3uuUKgejgyKllibFRGW7PAEw8jSi1RaU01XQZca
- /4Nw==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhlLQ-0008EH-7b
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:42:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhlLL-0002RU-OV
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:42:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754037740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wbZ0JhJh3iRLGnjV+ffoprl1C84JKgWN9089VM9FjUU=;
+ b=XXkWph0NW2uZZujzsXW23i6SBp0GIRyTtMXZE/BO0o0bIWNPig88W37sre9K2waLcQ0YkX
+ 94adNr4kxf5ZIT1d3MwbeNhFtKhYSn0+RlxyDGqA8m5HyuSTAjQYv2wLr22ec5vY3gKx/j
+ 3S9jbWki26LlTQZQqAkXV94XCje3yWw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-569-3Dka0fY9Olu93TRydjuz1g-1; Fri, 01 Aug 2025 04:42:19 -0400
+X-MC-Unique: 3Dka0fY9Olu93TRydjuz1g-1
+X-Mimecast-MFC-AGG-ID: 3Dka0fY9Olu93TRydjuz1g_1754037737
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-456175dba68so4197615e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 01:42:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754037278; x=1754642078;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7YsHZyiE2Lx2Jze+gaY6HgB0NnAHU4eokx9mTEwqGBQ=;
- b=WSit1nZ8JI3/qjAwW1ITU2PRomETv7e+pjYcs9Vw/kBYj3Qs6a3+2wD3cPZ0cIqmXZ
- 50qKhSUydzOAgYtom7n5X0RgL3Dw3yyfuUjP29jMzfOy4/yrsMLxgfE7shZdPYYug63/
- NDpy5zifEgTcfIyN48gJMAEeFsq19UdeQBpU2iQb/QAgOiQlSPDJY84vDsvNYM+W4/q4
- wUWWqEIYMRs1BZ7PNq8U26XzPTDcL4D6yyeTzbDqfdHgxS9p4/Kc0WO869AxiCjYAkWj
- CiOsVHEEOXaCKqwb+3rDamyxk5eyMoUSVR28pMkA52VIJ3ufrYypjMdfAyYoPvZSz6N4
- oxUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTlZeqm10AjwK2eri8zgAiaC2GXwHSwegzA7NMQaXBEZzr7pGHVk7vVR45MjoqgxDuriyTHI0LZ7E1@nongnu.org
-X-Gm-Message-State: AOJu0YwplMQ/ez9x/BYAfZ6IoeByO0MqpPDRo2YlYajp+nQo6JSgHINh
- Ryb8d8rbAyAfG8FA/drbKuRdNgsloBxqbda2dSX/mhEw7/syUKr+iRkksX1FKjlPbfO0vSxgb/q
- Wvnr8mzkwxR8oDVXTAuJ59GoabjDUxwVlDDcV0+fRqg==
-X-Gm-Gg: ASbGncu/PcftU3ZO0cgO1pHWaq1jgIN526wQZyK5D8FbOOJ9bwR3PXGjmc+RqsNaQEq
- KTrOeUXqUyhLioRzwY32GbrmhbuNVkw8tVWShG5YEEm2qaZyxekhwLHkc36UvMaA0O23dvNcZ3p
- zY3bvb/wRHlZHjazeaduIMCfGqFmfvHezvoROMp6WIGDsktWM3xEE1N0Sff6y0KBb/rkpp6LJ3E
- uU1Pi/t
-X-Google-Smtp-Source: AGHT+IE/sNYNYLWEP3QI5jW2RfXUXK2vyKQO49O10NElRWtJzF3L+C9AeKY/zgqcWpP3aZFRK/GzYzYFueLC72dKCA4=
-X-Received: by 2002:a05:690c:d96:b0:70d:f420:7ab4 with SMTP id
- 00721157ae682-71a466bf17dmr152978847b3.29.1754037278446; Fri, 01 Aug 2025
- 01:34:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754037737; x=1754642537;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wbZ0JhJh3iRLGnjV+ffoprl1C84JKgWN9089VM9FjUU=;
+ b=t1jeqiKT8fU6zgEuc/Gk4TrGqazudDmMb2oMDAgYlcDDXBExIFZ94TDJAVUHPLMuDb
+ PGg775mn6Gv5mn2KDxlqT0Na19YeTTYnq+6QQzqvgKOBP4yV1fvseV2dopC3fY9VJaLJ
+ 2YlBhAA1RqpC5oETdDwiESx+SkF6IaMR2XyvjYHfv15kdHR/1+oUKpaXeM2MRSi9ypTp
+ 54VmQJoKQZ/GPCi+UfRTMScimPZytsEs/qdjT4n7+CQiBwCwgOy1wkRGU8zUgjOAO509
+ WdU5BEPbeM4gwR++U6XGUJ60a+0coIJbKz8dT/rDVXTt4x3laTmQb1ta6GCJgFj7hQaq
+ gByA==
+X-Gm-Message-State: AOJu0YwStIv5rZ8IApVe9S9Xbg0suvlGFZYEPrOIa0S9kNjJO28YaiYk
+ fvGDa0X9fOfk32qgvaQMDlOEiB+8OhG7zBwt4lQQvALJTw3IJCGQtSVRigXW731jOYLQltjBZvX
+ nZk55/rt9CE6QRgq38dP0XO/aAPMa5xB70Uf2qr3MY8ez182qE/l9rKvq
+X-Gm-Gg: ASbGnct7NsJvFneCFW9Cq0gVSBr8lrF2Pe8mMZIgrfnHSn+lqoV6HieL1AxDOdyiu6q
+ RxNLvYCtM/S8vTBtGaHttg6g13bMK94FyffbtGGqF8jlz7+EFt6f4s4GYPVF9aoWAeQSeWhUVFq
+ s+SuY6vOdnusgk4KY5IFd7+zt2owCWO1AkpZObJ26Mg/LyA0mVG3tkol16EbJXU6bSna9wH+ZgM
+ v8EYYrolVHtLHp2kd7nFatoyFbdpIhUQuzVlnndkYsy1+gwAkYZmsKeFwWKIvut+ffZLriNsY5m
+ 5CZTY4EiKj1ESwzLANtMAIdJqBkdMA==
+X-Received: by 2002:a05:600c:5195:b0:456:1c4a:82b2 with SMTP id
+ 5b1f17b1804b1-45892b9da2dmr109288865e9.10.1754037737107; 
+ Fri, 01 Aug 2025 01:42:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7foJ1t+8cYjTJzjBntXBWmzq5bQEJEgy5VC1uroiwew+0NNFdr7wU/x5679eA79nDi+KhjQ==
+X-Received: by 2002:a05:600c:5195:b0:456:1c4a:82b2 with SMTP id
+ 5b1f17b1804b1-45892b9da2dmr109288545e9.10.1754037736679; 
+ Fri, 01 Aug 2025 01:42:16 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458953cfeaesm102737575e9.16.2025.08.01.01.42.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 01:42:16 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:42:15 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2 6/6] kvm: i386: irqchip: take BQL only if there is an
+ interrupt
+Message-ID: <20250801104215.2ceaa19a@fedora>
+In-Reply-To: <aIvDC4nv1mUNLeMI@x1.local>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
+ <20250730123934.1787379-7-imammedo@redhat.com>
+ <aIvDC4nv1mUNLeMI@x1.local>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250725201906.19533-1-pierrick.bouvier@linaro.org>
- <bfdd8821-a7f7-4648-a389-124426da6d15@linaro.org>
- <144f0930-af30-42b0-849c-99242d3f09ee@linaro.org>
- <CAFEAcA-ycO=AO8UO+X3f6pw34J=iFwW3dpPyMXKm5BzJ11dt5Q@mail.gmail.com>
- <25fe9c70-be00-4884-8d91-53dfff745cb6@linaro.org>
-In-Reply-To: <25fe9c70-be00-4884-8d91-53dfff745cb6@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 09:34:26 +0100
-X-Gm-Features: Ac12FXwkhCRV7862qOZMU63eG5MFFnYfvpUQjYI8FvlW2QYCmy56ba-hN4GYsWA
-Message-ID: <CAFEAcA8qHUT-0k6chAFZ61J=YZ7xLvhYgqsgtQiCgkfaxfFRxg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] single-binary: compile hw/intc/arm* files once
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,25 +111,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 31 Jul 2025 at 19:30, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
-> Regarding the "modern" completion support, I recommend you take a look
-> at it. Even though you wrote or reviewed most of the code you navigate
-> in everyday, and thus don't need it, it has become a standard tool for
-> any developer, like sanitizers or omniscient debugging. It's especially
-> interesting since those tools are based on compilers (clangd is the
-> standard for C/C++ nowadays) and not a bunch of clunky regexps.
-> It's even more interesting when you learn a new language, like Rust.
+On Thu, 31 Jul 2025 15:24:59 -0400
+Peter Xu <peterx@redhat.com> wrote:
 
-I do actually have clangd enabled at the moment in emacs:
-but my experience is not good, because typically what happens
-is that clangd runs itself out of memory and falls over
-fairly frequently, or it produces obscure error messages like
-"LSP :: Error from the Language Server: trying to get AST for
-non-added document (Invalid Parameter)"...
+> On Wed, Jul 30, 2025 at 02:39:34PM +0200, Igor Mammedov wrote:
+> > when kernel-irqchip=split is used, QEMU still hits BQL
+> > contention issue when reading ACPI PM/HPET timers
+> > (despite of timer[s] access being lock-less).
+> > 
+> > So Windows with more than 255 cpus is still not able to
+> > boot (since it requires iommu -> split irqchip).
+> > 
+> > Problematic path is in kvm_arch_pre_run() where BQL is taken
+> > unconditionally when split irqchip is in use.
+> > 
+> > There are a few parts tha BQL protects there:
+> >   1. interrupt check and injecting
+> > 
+> >     however we do not take BQL when checking for pending
+> >     interrupt (even within the same function), so the patch
+> >     takes the same approach for cpu->interrupt_request checks
+> >     and takes BQL only if there is a job to do.
+> > 
+> >   2. request_interrupt_window access
+> >       CPUState::kvm_run::request_interrupt_window doesn't need BQL
+> >       as it's accessed on side QEMU only by its own vCPU thread.
+> >       The only thing that BQL provides there is implict barrier.
+> >       Which can be done by using cheaper explicit barrier there.
+> > 
+> >   3. cr8/cpu_get_apic_tpr access
+> >       the same (as #2) applies to CPUState::kvm_run::cr8 write,
+> >       and APIC registers are also cached/synced (get/put) within
+> >       the vCPU thread it belongs to.
+> > 
+> > Taking BQL only when is necessary, eleminates BQL bottleneck on
+> > IO/MMIO only exit path, improoving latency by 80% on HPET micro
+> > benchmark.
+> > 
+> > This lets Windows to boot succesfully (in case hv-time isn't used)
+> > when more than 255 vCPUs are in use.  
+> 
+> Not familiar with this path, but the change looks reasonable, a few pure
+> questions inline.
 
-So I mostly continue to investigate code the way I always have
-done, with grep.
+perhaps Paolo can give an expert opinion.
 
--- PMM
+> 
+> > 
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > ---
+> >  target/i386/kvm/kvm.c | 58 +++++++++++++++++++++++++++----------------
+> >  1 file changed, 37 insertions(+), 21 deletions(-)
+> > 
+> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> > index 369626f8c8..32024d50f5 100644
+> > --- a/target/i386/kvm/kvm.c
+> > +++ b/target/i386/kvm/kvm.c
+> > @@ -5450,6 +5450,7 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+> >  {
+> >      X86CPU *x86_cpu = X86_CPU(cpu);
+> >      CPUX86State *env = &x86_cpu->env;
+> > +    bool release_bql = 0;
+> >      int ret;
+> >  
+> >      /* Inject NMI */
+> > @@ -5478,15 +5479,16 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+> >          }
+> >      }
+> >  
+> > -    if (!kvm_pic_in_kernel()) {
+> > -        bql_lock();
+> > -    }
+> >  
+> >      /* Force the VCPU out of its inner loop to process any INIT requests
+> >       * or (for userspace APIC, but it is cheap to combine the checks here)
+> >       * pending TPR access reports.
+> >       */
+> >      if (cpu->interrupt_request & (CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR)) {
+> > +        if (!kvm_pic_in_kernel()) {
+> > +            bql_lock();
+> > +            release_bql = true;
+> > +        }  
+> 
+> Does updating exit_request need bql at all?  I saw the pattern is this:
+> 
+>         kvm_arch_pre_run(cpu, run);
+>         if (qatomic_read(&cpu->exit_request)) {
+>             trace_kvm_interrupt_exit_request();
+>             /*
+>              * KVM requires us to reenter the kernel after IO exits to complete
+>              * instruction emulation. This self-signal will ensure that we
+>              * leave ASAP again.
+>              */
+>             kvm_cpu_kick_self();
+>         }
+> 
+> So setting exit_request=1 here will likely be read very soon later, in this
+> case it seems the lock isn't needed.
+
+Given I'm not familiar with the code, I'm changing locking logic only in
+places I have to and preserving current current behavior elsewhere.
+
+looking at the code, it seems we are always hold BQL when setting
+exit_request.
+
+> 
+> >          if ((cpu->interrupt_request & CPU_INTERRUPT_INIT) &&
+> >              !(env->hflags & HF_SMM_MASK)) {
+> >              cpu->exit_request = 1;
+> > @@ -5497,24 +5499,31 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+> >      }
+> >  
+> >      if (!kvm_pic_in_kernel()) {
+> > -        /* Try to inject an interrupt if the guest can accept it */
+> > -        if (run->ready_for_interrupt_injection &&
+> > -            (cpu->interrupt_request & CPU_INTERRUPT_HARD) &&
+> > -            (env->eflags & IF_MASK)) {
+> > -            int irq;
+> > -
+> > -            cpu->interrupt_request &= ~CPU_INTERRUPT_HARD;
+> > -            irq = cpu_get_pic_interrupt(env);
+> > -            if (irq >= 0) {
+> > -                struct kvm_interrupt intr;
+> > -
+> > -                intr.irq = irq;
+> > -                DPRINTF("injected interrupt %d\n", irq);
+> > -                ret = kvm_vcpu_ioctl(cpu, KVM_INTERRUPT, &intr);
+> > -                if (ret < 0) {
+> > -                    fprintf(stderr,
+> > -                            "KVM: injection failed, interrupt lost (%s)\n",
+> > -                            strerror(-ret));
+> > +        if (cpu->interrupt_request & CPU_INTERRUPT_HARD) {
+> > +            if (!release_bql) {
+> > +                bql_lock();
+> > +                release_bql = true;
+> > +            }
+> > +
+> > +            /* Try to inject an interrupt if the guest can accept it */
+> > +            if (run->ready_for_interrupt_injection &&
+> > +                (cpu->interrupt_request & CPU_INTERRUPT_HARD) &&
+> > +                (env->eflags & IF_MASK)) {
+> > +                int irq;
+> > +
+> > +                cpu->interrupt_request &= ~CPU_INTERRUPT_HARD;
+> > +                irq = cpu_get_pic_interrupt(env);
+> > +                if (irq >= 0) {
+> > +                    struct kvm_interrupt intr;
+> > +
+> > +                    intr.irq = irq;
+> > +                    DPRINTF("injected interrupt %d\n", irq);
+> > +                    ret = kvm_vcpu_ioctl(cpu, KVM_INTERRUPT, &intr);
+> > +                    if (ret < 0) {
+> > +                        fprintf(stderr,
+> > +                                "KVM: injection failed, interrupt lost (%s)\n",
+> > +                                strerror(-ret));
+> > +                    }
+> >                  }
+> >              }
+> >          }
+> > @@ -5531,7 +5540,14 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+> >  
+> >          DPRINTF("setting tpr\n");
+> >          run->cr8 = cpu_get_apic_tpr(x86_cpu->apic_state);
+> > +        /*
+> > +         * make sure that request_interrupt_window/cr8 are set
+> > +         * before KVM_RUN might read them
+> > +         */
+> > +        smp_mb();  
+> 
+> Is this mb() needed if KVM_RUN will always happen in the same thread anyway?
+
+
+it matches with similar pattern:
+
+        /* Read cpu->exit_request before KVM_RUN reads run->immediate_exit.      
+         * Matching barrier in kvm_eat_signals.                                  
+         */                                                                                                     
+        smp_rmb();                                                               
+                                                                                 
+        run_ret = kvm_vcpu_ioctl(cpu, KVM_RUN, 0); 
+
+to be on the safe side, this is preserving barrier that BQL has provided before
+I can drop it if it's not really needed.
+
+> 
+> Thanks,
+> 
+> > +    }
+> >  
+> > +    if (release_bql) {
+> >          bql_unlock();
+> >      }
+> >  }
+> > -- 
+> > 2.47.1
+> >   
+> 
+
 
