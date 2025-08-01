@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6270C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 01:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEECCC87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 01:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhemO-0004WS-Lk; Thu, 31 Jul 2025 21:41:52 -0400
+	id 1uhemv-0005S7-5R; Thu, 31 Jul 2025 21:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhekp-0001lX-TD
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:40:16 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1uheka-0001QX-EI
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:40:05 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uhekn-00018c-Lf
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:40:15 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b26f7d2c1f1so1152784a12.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 18:40:13 -0700 (PDT)
+ id 1uhekS-0000s9-VQ
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:39:59 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-31f3b54da19so1138397a91.1
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 18:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754012412; x=1754617212; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754012391; x=1754617191; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ye5hpRNxeghqWQrxXm1r6vsgWr11gO5dChXwYTAC8gw=;
- b=gjdtrYtEs3AASDMnNZKkrIkRSpHhfY9eKmphHykENUsLW6f1InMQ1O226mgId7+/r7
- 78a4vglJMnbKgoZk/3c2khi5xN2KjEb1JTeLzVIACmq2TXBrON1iWmxLsAsTXJiyJL4N
- Lbvr8t15wu2qY2996bqtQAtPuPmGGMkdYe1PvrAKnNO3/Qb1RWm3+MKkFk957LZKxfEY
- QxqhxybR7dzDcYANVhom+Tp5Nje072xXsLYZx6a5aLBpmEaShE6htngEORC86pLVHUK9
- 1ioPbZwZWKXizluJWqpHCvg5nuTKN4ds8sKcZQqQFbBMUQaJ+DlVAYGsWrtM3sjRTvVZ
- mxRA==
+ bh=d5s94bG7WyiNqIEKHah44b8TSZ60Zcg4W/p9g00ipTU=;
+ b=i2wZCHySeHch2A623hXAsT7KcV1RBibBqSX5s2erMlUk3wNvGS5wNCxGpWyUs5aCTL
+ qPWKCq+t/m/9/EfBhYMvsy2rSg0QlR1hOnjZdcmsnG8l1p8JN23TCmJ+P6GG0bXeU9/P
+ ugcbFr0SWKto767x+Mq4CiQmH8T1FBW+LQex+sMnbietVkbjug79lUZ0OcJDWxDuBl/2
+ K/+Es1jq6jDry7svLUuHM8yfEbOdxtYnwbeU3y4TjUtypvPHRkk0wV2vtp0IdONM3pFc
+ FhbKPXDeR3oHkEF79BfMCcUK348cu5EZ6kneoZCRh8Sqa23COwsva4AXiM+A+oBrGfyQ
+ Swdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754012412; x=1754617212;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754012391; x=1754617191;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ye5hpRNxeghqWQrxXm1r6vsgWr11gO5dChXwYTAC8gw=;
- b=Sd3+mNWbITdm4qIGKqYD+i2EwfxFO9lZHjGwf7bZ2+ruBWaLtEQtN3op59AhBxtQlk
- ObGOwMpSNaZeg/k0gRlB+lhygQIbumZ7rt+6bnlsEjM35XVlg+2hTihiLvsJIAAiISxO
- U/8GIUjItc82EAReITqICjq8AnM8FhWCC/RnTiSX0S5T8kSi4PFTDNsWFq2Jr4u2EGyn
- gUQon74XbTVMU3jOA/Q4FVgbfXi/Wx99bSvGURh2r6eZBg8aZqOAjbQwIjk9meKAbIDU
- dlPIv73NO2BesiTtRvDkYZ4h5RTAW4bvjNcW3tmoOC+DTr6a7ipLkryjIkCmmqoy7TLR
- a+4w==
+ bh=d5s94bG7WyiNqIEKHah44b8TSZ60Zcg4W/p9g00ipTU=;
+ b=iqqOyyE25i9Cu4Pit8cHcUwmgr5dhM4eWFUiVuRF1+nB5/hxLMUMme4i4kfXiCLBQK
+ DB0wf+lypqd9lMBOerbnqX9Sv+Bm/fSNOUmvrdb18CAvhTXOSFIyOhQpNQrJ7DoQ7SYK
+ sVJXf4DAVj563EkNTZk4EwFnLzNLbT9fJbUnueCMfecRwn1WYsX58S4N3hx0kb5SMk8e
+ WK6vonmwbq1eeYSUS7I8lclQlbe1ixyNZRqfoO60vNyzQANjJ/U1YtQdJ1hHifivlh8x
+ wZW50aYMHQhUjUPUjMzCEt/tcIrXwMkp7AvLk1ScSSYbYI4XOsg/aUsW5E6fuQtJSScs
+ 1nVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+ebuJSSPYiPbqIl0FhSes/ZzfTjm/CvJr1sC1AqwB8/7wHeOj8FW9oyl+F0b+PQasDyC1kTn6SqUa@nongnu.org
-X-Gm-Message-State: AOJu0YxjJl0mgMD7YsG96q5+cMT1XJsxdN3gkD4C37O0rzcyICmgMflg
- eQ5IUf3DIHuFNGDxFqk3GxmxfUgyObfvs+VlQf2iF3nZcKkB/p+sq1Zl3/TNrsH3nyI=
-X-Gm-Gg: ASbGncv1+aUEi+itx1y2UZakptaX/TkaMtzYwPWL1KH18OoXn6sMkFT54C4fvj4V9YO
- Ye3TLxnHMkYYJUxiITd2sGMm/zpyeOe1EFZODQhKlZ/tU1xxn7/RkGQ4zvFM6eWT7TltjJn208c
- 67nESJVRj67T31L0KyWrf20cWvHCwrN3haNz39Pdh7ap2pqOYOiRF0d+2K6K3yHfksz/XKQ7waE
- Too7EH5bzL0Dm2tsVnOINS6yUk5O+2+ui6fmz6CyIZ4LWahoQMsHNa4sMugR5F5fB0rTJwi4BE3
- NOHN4btsxwQCq1QpTOzyJTJQE7+qjoa5R4OeqSArv3IRPakpF5wye+eD2ClFb/cNax64Ac393Ws
- jjToRfg+Fa2Wng/6vI88VyDG/AVWw/CB52LjDiSOEJhQCIA==
-X-Google-Smtp-Source: AGHT+IHdelnKGLrIEmWoUUNaZIsBmvi4pgxb8er7ETiIwl0K4lk+RLx0UzL9m/pNrm9mDn3Nrq5+IA==
-X-Received: by 2002:a05:6a20:7346:b0:23d:ac50:333e with SMTP id
- adf61e73a8af0-23de8226dfdmr1273624637.43.1754012412007; 
- Thu, 31 Jul 2025 18:40:12 -0700 (PDT)
+ AJvYcCVYRb0+RKH/GERZujVQrfdcQ6xiKl3wNIm5cfNZ/nia/OlGCvTsrk/fVb+qQVFnWveZiLV6UnuPqBG+@nongnu.org
+X-Gm-Message-State: AOJu0YzlfXUh/9YGLvzWh6WoBrNTM85E32/4dfAjifKriBBXd6pC5GIQ
+ FRYllBK/YeRzY002gshfg/Li3MieqRKOqLe1qAIHETq2yMStU2JCT1v4PjjV5zScX/8=
+X-Gm-Gg: ASbGncuVTUOrJdWQzviaN8XZpdvzsGylBXbMS/tlHp6sPzpBQn1Uc8/CjnRwjNV+2Kf
+ RTGwIYM7CduN5HCBjEkcudPPzFrWN8VR+PLAlobKtwOKpvwnOxJdjzkbISKeZdg4kVU1N+pCLEu
+ 34JoxPydnZmxJO1F3y20VGkgAuii4hXrorT+HYUsFzUdITld4m0TScyy91VgvMxiDwayjgQIFDT
+ NDLbB/q0Y/qY35W5+hkuOhyfO3vsbTldnQ+aWSjG3kYINgfFXDuQ6AB+qNi1KddpkmdSmeYz0Hc
+ IGXC0JjDMTKDC5mHHFWsJI7apTHKskIZO8YFXqQGjUDkEBQ3ZJcwwpGgBLUApQRyPxUlJUQf2uU
+ +sqZ/qedALnNKxckILdwKDYDcX7jehBZCFkg=
+X-Google-Smtp-Source: AGHT+IESnb49fqYI/m5f/oDCSY8nLrWl78F5neFQ6hQ4qpikry5Gt6sxgXvDcRvbSpMBhdoB7+xATA==
+X-Received: by 2002:a17:90b:4cc1:b0:311:c93b:3ca2 with SMTP id
+ 98e67ed59e1d1-31f5dd88646mr12036854a91.6.1754012391088; 
+ Thu, 31 Jul 2025 18:39:51 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce8f9b3sm2663859b3a.38.2025.07.31.18.40.11
+ 98e67ed59e1d1-31f63da602asm5904934a91.2.2025.07.31.18.39.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 18:40:11 -0700 (PDT)
-Message-ID: <02748c9e-38f0-4b2e-a7d0-c697cf860e67@linaro.org>
-Date: Thu, 31 Jul 2025 18:40:10 -0700
+ Thu, 31 Jul 2025 18:39:50 -0700 (PDT)
+Message-ID: <ba7bbf85-139a-4268-b358-6bfa1a034328@linaro.org>
+Date: Thu, 31 Jul 2025 18:39:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] semihosting/arm-compat-semi: replace target_ulong
- with uint64_t
-Content-Language: en-US
+Subject: Re: [PATCH 08/10] semihosting/arm-compat-semi: replace target_long
+ with int64_t
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
@@ -82,14 +81,15 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20250730220621.1142496-1-pierrick.bouvier@linaro.org>
- <20250730220621.1142496-8-pierrick.bouvier@linaro.org>
- <311fb2d2-b8b2-4b1d-aea6-429fe55f8217@linaro.org>
+ <20250730220621.1142496-9-pierrick.bouvier@linaro.org>
+ <8658920e-34ff-4aba-b412-92d06b29fe5b@linaro.org>
+Content-Language: en-US
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <311fb2d2-b8b2-4b1d-aea6-429fe55f8217@linaro.org>
+In-Reply-To: <8658920e-34ff-4aba-b412-92d06b29fe5b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,47 +112,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/25 4:33 PM, Richard Henderson wrote:
+On 7/31/25 6:25 PM, Richard Henderson wrote:
 > On 7/31/25 08:06, Pierrick Bouvier wrote:
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    semihosting/arm-compat-semi.c | 24 ++++++++++++------------
->>    1 file changed, 12 insertions(+), 12 deletions(-)
+>>    semihosting/arm-compat-semi.c | 2 +-
+>>    1 file changed, 1 insertion(+), 1 deletion(-)
 >>
 >> diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
->> index e5a665d604b..e3b520631b3 100644
+>> index e3b520631b3..715a22528ab 100644
 >> --- a/semihosting/arm-compat-semi.c
 >> +++ b/semihosting/arm-compat-semi.c
->> @@ -123,7 +123,7 @@ GuestFD console_out_gf;
->>     */
+>> @@ -502,7 +502,7 @@ void do_common_semihosting(CPUState *cs)
 >>    
->>    typedef struct LayoutInfo {
->> -    target_ulong rambase;
->> +    uint64_t rambase;
-> 
-> vaddr.
-> 
-> 
->> @@ -300,9 +300,9 @@ static void common_semi_seek_cb(CPUState *cs, uint64_t ret, int err)
->>     * is defined by GDB's remote protocol and is not target-specific.)
->>     * We put this on the guest's stack just below SP.
->>     */
->> -static target_ulong common_semi_flen_buf(CPUState *cs)
->> +static uint64_t common_semi_flen_buf(CPUState *cs)
->>    {
->> -    target_ulong sp = common_semi_stack_bottom(cs);
->> +    uint64_t sp = common_semi_stack_bottom(cs);
->>        return sp - 64;
->>    }
+>>        case TARGET_SYS_ISERROR:
+>>            GET_ARG(0);
+>> -        common_semi_set_ret(cs, (target_long)arg0 < 0);
+>> +        common_semi_set_ret(cs, (int64_t)arg0 < 0);
+>>            break;
 >>    
+>>        case TARGET_SYS_ISTTY:
 > 
-> vaddr.
+> Here we have a semantic change.  For 32-bit, we used get_user_u32, so this will always
+> return false.
 > 
 
-Will change to it, thanks.
+Right... I'll add the intermediate missing cast based on 
+is_64bit_semihosting(env).
 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks,
+Pierrick
+
 > 
 > r~
 
