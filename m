@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC067C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFE4C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqnZ-0007JH-JD; Fri, 01 Aug 2025 10:31:53 -0400
+	id 1uhqpw-0003b4-Or; Fri, 01 Aug 2025 10:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhO-0005RQ-I4
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhX-0005ah-3J
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhK-0002iA-V1
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhV-0002pB-DJ
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058325;
+ s=mimecast20190719; t=1754058336;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=skaRuHczCVKfOwEwu0xPYWoe46Si7UXt2McCcCPTErQ=;
- b=bQFgdzAaQgxTa27eY1c3p5ekSoZiQNRLD5niHzYrsfpbkzVUkGQMMSFqD1zIqLRNlToJZs
- CxCSHjk1X6vpJecq7Gm80WXy+pOmiQyRyqP+7/rzDwRBW+1SattjBcWU2CObDcXipVFJ/2
- OJgcuZbKbf0XjrT8m7UFQF9VUL6pyy4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IL9+A2pIj1svEtoSCipjyGY+zemWuaFe+SiKFMe1fHI=;
+ b=QZ1MrVDcELObq4s+/kTgZoQBtTy1P6mVMcBjuLyz9xuhN4GryatX8z3nAukDtKcFCtymwE
+ nmeTF3yHGzQqB7QCpa6BhOpoUXd0AwkgLzSCBqb7nhJgyjQ9mqwNN2zrxK4CfK+YqNoRe/
+ Nc0NOcmp6DsgOh1c+mE+Bie1smAOBUc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-tu4jVcxYPf6HC6GjGpujYw-1; Fri, 01 Aug 2025 10:25:24 -0400
-X-MC-Unique: tu4jVcxYPf6HC6GjGpujYw-1
-X-Mimecast-MFC-AGG-ID: tu4jVcxYPf6HC6GjGpujYw_1754058323
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4560a30a793so3202195e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:23 -0700 (PDT)
+ us-mta-44-mO4hzbMLPdKttM8DZIMqog-1; Fri, 01 Aug 2025 10:25:34 -0400
+X-MC-Unique: mO4hzbMLPdKttM8DZIMqog-1
+X-Mimecast-MFC-AGG-ID: mO4hzbMLPdKttM8DZIMqog_1754058333
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-458a533c069so6680795e9.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058322; x=1754663122;
+ d=1e100.net; s=20230601; t=1754058333; x=1754663133;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=skaRuHczCVKfOwEwu0xPYWoe46Si7UXt2McCcCPTErQ=;
- b=hZzci7Vm2d8r/Z+Xz1X4PFp2ekCHJIbaMQ9RcjFqQTdKsGzVuzIA5+2hxL53V6w8om
- phreh3Vrk1eqpass6u7maGiCeP3uX1goZAq+I/7hDFrjohgsd1dijLzXPbgFs94a9q5U
- 3oudDzIBgv1D02SxmlHT2DowResP3ShgZjagaDVnTnDPWYshyCGE4m4yYZkyaqXY5HDX
- O5l9tUP3gc09I/7zBmXhhUdYKvIfsE7ocEM2kM/HaMOd/F2O4yizGRJ/inxBPuQXdHHF
- pcp+zPBkzcDJcpRApAeGFrptUKpCRCpbW6f1OkAI0iefJ5nHQkwXl2UWETixPp5LBQQf
- GBXQ==
-X-Gm-Message-State: AOJu0YzPm9FU40WhlEVAOK0TWNlK9+l4qRZgftn9OaPxXGlZAhWKFrtv
- Zryy9+cnzeVU93ZcE7/ewstIhjYU9uPksM2PcCgNPWbO9p8zWAg2rrQUpZfmxxByEmfoaQcOEKv
- NLBMxtFkfh9Uxwh3gQr+/4LxkCBUOHPflgMr50x2DHFHbMsMOdTzLobfMtBRpeZEAgvdeGwVGax
- NX16VguZ7FVsyrSZYyKN23Pp4K010jEOD0vw==
-X-Gm-Gg: ASbGnct5LWJm1FFJmwXFiYFy1ZgSGlYJ990vEfD/cgthYCSo6B/FEMihgnVxTJqycEF
- 7cDq3A1LThmVdFUkiB/qlCKKTjzUH4KRvweK37KjavjcK03+NGDrWLyRrX5Irr2ffUKpNkW1M0/
- +/5W+Ah/wG+LDt/f5UL0qBj3hubX5MYZ4FD6LUR3TdPyoKXXkm2ey1JZ7QXbUwJ4t22GDeUAI0k
- 9ZGJcPMob6dVS+9GUrMulPMH6kU0m5BB132kXNs2oHQhAXMsJ5OajaxAJlRlfAEF9DfdVLJp4A8
- U46Qn6TO714QCoZ50rwT8hrAUhpABDHn
-X-Received: by 2002:a05:600c:1994:b0:445:1984:247d with SMTP id
- 5b1f17b1804b1-45892b9530amr98227555e9.7.1754058322244; 
- Fri, 01 Aug 2025 07:25:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFIGEyaBIvTZG0korKrC2t8k4QdI9uBOjsgVFbrFH20LswoJgbVsAqIWBcfeMfqwjaEa7o5cg==
-X-Received: by 2002:a05:600c:1994:b0:445:1984:247d with SMTP id
- 5b1f17b1804b1-45892b9530amr98227225e9.7.1754058321647; 
- Fri, 01 Aug 2025 07:25:21 -0700 (PDT)
+ bh=IL9+A2pIj1svEtoSCipjyGY+zemWuaFe+SiKFMe1fHI=;
+ b=wjL5aI2go3BxMo7AgPlS2Nlp0k98OYqXoomUuRKRSRSZshrFvRLhwgtptF1llJ1L26
+ 2c7zzG1BP+XoxkZhmCIf6yqfWSpERXBvkcPQFR4XeHovWqMvG1dPQ9KrPgWdv0bYZzik
+ 2XizUsHjhlcHB6GzFT5kXcnwenf0rXLsGU7thl37NHjHKc6F7cUuISBSr2ebs62KinCj
+ w/0IadhBMUpKDoFuTIXMCb8Jk8NKQcZ/P/TuAiOQsXGciCs6zpOknTxXjz/Rqe3leG8X
+ iIDqe+E2/qTIwVlSfnQw48gMwKQZ/wGHT77it6nTGVC9JAuEbetHk+7ZaJ9XQ9BoFSEz
+ A4Pw==
+X-Gm-Message-State: AOJu0YzsSt5AR8LjlQaDT7jntL7S4QTSUDQCqKtoG2/Hxh2RoURse8nX
+ LOWWRpfmHEbea9IjIwg/bsGQ8hq0M6VGRn4AKXAplZJnt8pcK+8sGIpuZMWT5GTtNO3mTmSSaXq
+ cfId2t2QaMR/2A63zDMvvpt9tbbNX7+bP33lJjMswJC8it7j3wFrqEvzIedfoZuXXHKGcCQnP9H
+ 8gYxqsgxUWhgAWsh3qKuJ2kqqVTojr+DhGPg==
+X-Gm-Gg: ASbGncsqmZ0BkI6fcxUC3y+Mvq4QnX9wcRM8kveO8Mfeqnoy6qITmxSQ1fYpR9DWW3t
+ ufVU4xSlVK+unxTKUNdzysmJQivDOQ7L/0nJzv3WbkHXAuEhJjZTmQbAZxkBHFZpqQB+KtAL+rn
+ N7YwAJPV8T+dmoVpMBMMeRHupMMbOnMTS84vWQgUkC3XZNr44RtZYfvzVdiRmAbyPQVgYurmXX/
+ up01p6as615mzynM6wPFjGSinRuXGT45B8GHVXVvOAxa3SlmhFUYkTgbXi7T7+IMq0xiwEB+Tpl
+ BqQ/fer4szyHM6pfyG07aDYBtOZxCUjo
+X-Received: by 2002:a05:600c:4ecc:b0:456:e39:ec1a with SMTP id
+ 5b1f17b1804b1-45892ba272cmr117865945e9.14.1754058332910; 
+ Fri, 01 Aug 2025 07:25:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF65kXBkLk75B+1vmQcp7lIPRgHiznzOTqOqwyfRCF5KbOK+NMbKxZ5d+iDfWzJ1uk0ojI4pg==
+X-Received: by 2002:a05:600c:4ecc:b0:456:e39:ec1a with SMTP id
+ 5b1f17b1804b1-45892ba272cmr117865495e9.14.1754058332450; 
+ Fri, 01 Aug 2025 07:25:32 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953e9b1csm102063335e9.22.2025.08.01.07.25.20
+ ffacd0b85a97d-3b79c453aeasm6285769f8f.40.2025.08.01.07.25.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:21 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:25:19 -0400
+ Fri, 01 Aug 2025 07:25:32 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:25:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 08/17] hw/i386/amd_iommu: Move IOAPIC memory region
- initialization to the end
-Message-ID: <a7842d94067cddc80b47ac42fb6e49e2fc02a3c5.1754058276.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 13/17] tests/qtest/bios-tables-test: extend to also check HEST
+ table
+Message-ID: <5088651138b94542807414eb841363b16d6aa535.1754058276.git.mst@redhat.com>
 References: <cover.1754058276.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,7 +87,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1754058276.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,50 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Setting up IOAPIC memory region requires mr_sys and mr_ir. Currently
-these two memory regions are setup after the initializing the IOAPIC
-memory region, which cause `amdvi_host_dma_iommu()` to use unitialized
-mr_sys and mr_ir.
+Currently, aarch64 can generate a HEST table when loaded with
+-machine ras=on. Add support for it.
 
-Move the IOAPIC memory region initialization to the end in order to use
-the mr_sys and mr_ir regions after they are fully initialized.
-
-Fixes: 577c470f4326 ("x86_iommu/amd: Prepare for interrupt remap support")
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Message-Id: <20250801060507.3382-4-sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <9ce77140500ef68cc939d63952c25579f711ea52.1749741085.git.mchehab+huawei@kernel.org>
 ---
- hw/i386/amd_iommu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/qtest/bios-tables-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 037e78056d..7308611bf1 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1698,9 +1698,6 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
-                                      amdvi_uint64_equal, g_free, g_free);
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 6aec68decc..e7e6926c81 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2208,7 +2208,7 @@ static void test_acpi_aarch64_virt_tcg(void)
  
--    /* Pseudo address space under root PCI bus. */
--    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
--
-     /* set up MMIO */
-     memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
-                           "amdvi-mmio", AMDVI_MMIO_SIZE);
-@@ -1723,6 +1720,9 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
-                                         &s->mr_ir, 1);
- 
-+    /* Pseudo address space under root PCI bus. */
-+    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
-+
-     if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
-         error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
-         exit(EXIT_FAILURE);
+     data.smbios_cpu_max_speed = 2900;
+     data.smbios_cpu_curr_speed = 2700;
+-    test_acpi_one("-cpu cortex-a57 "
++    test_acpi_one("-cpu cortex-a57 -machine ras=on "
+                   "-smbios type=4,max-speed=2900,current-speed=2700", &data);
+     free_test_data(&data);
+ }
 -- 
 MST
 
