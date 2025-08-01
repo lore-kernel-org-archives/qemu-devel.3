@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83530C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E676DC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 17:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhtd5-00034t-Iq; Fri, 01 Aug 2025 13:33:15 -0400
+	id 1uhtk2-0007F7-4w; Fri, 01 Aug 2025 13:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs8D-00020T-V9
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:57:22 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1uhsGV-0001XE-25
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:05:51 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhs8A-0001p8-7o
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:57:15 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-71b49a8adb2so18130907b3.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 08:57:10 -0700 (PDT)
+ id 1uhsGT-0003r4-0H
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 12:05:50 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-74190a2fc10so485226a34.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 09:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754063830; x=1754668630; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rqymJ02ej6aN3XKn5FTJkKpoJK+ExHZjjOV3QB93BVA=;
- b=wCnmjg2PCG7AUbiulLvmLTp8uiHF4WCEtALpePbllWfSjPGPpzL/7BobC+KZ0g31Eg
- wS/8kg7F/8tb1G8Cn2ofT8beFwNSfcvYsz50IloZQ3T6VTFAd9xzdLjLmtDBYuAaae4m
- Od7sXypUcbVnIvKKAnOcxCCYJ3AGLCnAnHkofbkddCT+rZ9BVrampYQ0v5VolgrwXVln
- HzRYO+NqGN4kznJ3M3twQ3M7+BN3/gLfjD4eoith540LaTOpYlavHhAM+HATydUEXXVD
- B/z2wqpkA6acJyypQacTJ2iJkPdfgC4xyhHvYZTCu6xsOIPYT8GztEuz174YgmxJUfX8
- 1KSw==
+ d=linaro.org; s=google; t=1754064347; x=1754669147; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/wgsRW2CkspSNXlSsGnf4Owk+LP5ewR2OD8tIsP+fMU=;
+ b=R0SJOzaU7GZzW4gsJetg19SR2ou8RgQVqY77yH5kHNHpcI++TyEW712OISLMmZ3P35
+ 7tCz2u9kUKhfSOttoRr+zVY0wdzhC8o+Y9zC2VbdSGleqx559OrBnOjkzP7FPKQ977EE
+ yojOnHif9JWBauwdq8YXOpxaK20Z4ftRdBmSD0wb+wqtOLVbSD8++WEWxpQLYWBy3jnT
+ 0AOZLev48zm26QB+6R18x4G649IdnD2WIHIW/B8RqkyyKHnjp2NTnxJlzy1VF0V1eIqB
+ baNuS4t34lLEInjJwjSrTSKNy52lY+9W9bFHoA0k3TKUlMlUwp1RJpSz7iBrUbQS8q3j
+ WAng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754063830; x=1754668630;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rqymJ02ej6aN3XKn5FTJkKpoJK+ExHZjjOV3QB93BVA=;
- b=sV09x3Hogl+HlEqdaEEvJt7tTU/TjJp1lVSJDOrt7cJF3ctRZ7kbXXdcVHiGd8Di5B
- 8ZXPBlr1sAoIycJIMxkCxFYMl+sDaz+s5G796YDbhA0TBtVRdXqFtLp5nMO6QK/S4Vju
- 7FGhyXNpFFvGuBDXWnNakiSHNbWNATt88G9JoLsQC0vPyD5veoyMiN0/TxMWbXP8rY4o
- y+F8A9aUuia8BH93QfnnsxcozCWc7UD7WkNYkd4M0kt+EhanV6SW2AHNG+yk2psfBMgw
- y/Kq3fshKf1anUBWzBEsiBmyoR7tvGWPex8nNX3l4b0jyfSi9/foEUJrvy2W6RfDK7/o
- X8YA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXL3FihTZTgI6Caelg8abIJp8Ok52WyGsT7oxwFbqy7ZwZOOZAhtl5gpuMX4deuq680VV/p47+dLdyV@nongnu.org
-X-Gm-Message-State: AOJu0Yxxxel/frfHikqeU80gugqIYhLWH8M0xSNYMopslF0lgwGKs/zC
- H5NC0A6NeqEmwYNkqLSeU9Uwvz9qivwfUqrPZaw3NBeZ96hSe1l3htor2T2Jd0IiLmdIpx6oRNs
- oEUPUevKMldO+FBAgsebgZhlurU122qB2xfaO0WoMBw==
-X-Gm-Gg: ASbGncvS+UI7xhsEMfosZcQYmJ0CrMWAvID4pTvwHMwIyOYOcOyOJelbMcX3GdAP2Z0
- oTGiGx2lDBk16tnUDsAWDELZTyQMeo8DFn0iJMFPZZ0096XjNDIpjP/T/m0EvPWi25EbS+X89EE
- wJq3JagazanA2k1oy2EkZcgn36tYyzUj2K8ddQVGedSRShSnaHgCJiCcsUbmxVFHzQ+qQyX52AA
- 3bWUO/P
-X-Google-Smtp-Source: AGHT+IHwJaOTxbdDwazDzbzQPq4gqfbbSXcsu0rW+WDErkYV26F2FPqjNnAl3+iIlGl7WRGjmBV1O5b1Ra6T2zBBdhM=
-X-Received: by 2002:a05:690c:102:b0:719:4c68:a70f with SMTP id
- 00721157ae682-71b7f7f5e71mr1085617b3.20.1754063829857; Fri, 01 Aug 2025
- 08:57:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754064347; x=1754669147;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/wgsRW2CkspSNXlSsGnf4Owk+LP5ewR2OD8tIsP+fMU=;
+ b=TzpvB/PRkI400zPWhHbYsFHxpzSVfGSL8nOe6JYfolYflN7xkuL4/eajF8hxy+Tq3H
+ FehacWwRoNRobK8dEkKDaPHb7l7LWhM9MStslOccJcYVEiqoZP5RuCy9DOv9Ti4Rw21X
+ Q99B+mDMJc9kd8CSghBLLhsoRl6rgb8BIxFhmK73kZkv/jsZyBdFDt4yzkLyF0nDdU79
+ zHI6bLXhyOvVublweB3zhp62Ru9On9Nrr1cBRrL/sM/6Lop1k+AcwnV++jcr3VaGY4TI
+ K2vFXlyfEvo4E12zi2Q7vV9eAKBVOVU8VLGHrpsqE3miL8QHkIj4kwIW1/WDLGRL/kG3
+ nGrQ==
+X-Gm-Message-State: AOJu0YyfLaSPa4OJv1bL/CQG6LwsuqsEb2sejPoaFgsyg5w/6rmHTIOj
+ BjfM7m3hKjBSNSeXLyIaaN+V5gbQ6+7Jzr3hpligBgfmEz2ND0CZHocnlM27ZNAEBEmTs1HBs+O
+ mh2CPoAStsy2Byq9ON5t5MxV4eK4J/UsIP8f1MCdMMA==
+X-Gm-Gg: ASbGncurx8896tKY7n2SP+bk5lpnWDHXwQUkyHaV4iA3WAiVCjGuIjblOdQQ1IRt9bf
+ 1Xq8kFI+nas8UojE4QzDwrHliQZWxcgBymASt/1ZqkVRWPUKSbzWobtrZW95JzhDAjQJ0ognZnI
+ PNEDe6taHXxM36u6BAkrPmYcSe8kfe00lGq7YR4lK1tWrrK5FiaIdj7iAussFdnoiMDIc9ycKic
+ LJk+SrA
+X-Google-Smtp-Source: AGHT+IE/5Z55mfOGdPpFGWhGB69xv5w401Raw7HRFuFL42Bzn+ycM/k0JYgT4qawSVz+L/jfKsa4RvObUrVvoIecUtI=
+X-Received: by 2002:a05:6830:4109:b0:741:84f0:5461 with SMTP id
+ 46e09a7af769-7419d06ae79mr23190a34.6.1754064346618; Fri, 01 Aug 2025 09:05:46
+ -0700 (PDT)
 MIME-Version: 1.0
-References: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
- <8b599c19-1901-4707-a8ca-943f61c0e2f9@redhat.com>
- <ed8451bd-853a-429e-987c-4ec86e01efe9@redhat.com>
-In-Reply-To: <ed8451bd-853a-429e-987c-4ec86e01efe9@redhat.com>
+References: <20250730000003.599084-1-richard.henderson@linaro.org>
+ <20250730000003.599084-22-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-22-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 16:56:58 +0100
-X-Gm-Features: Ac12FXyWwDl71PARsmBbEqpCnGg8lJC1yPW1Yq9e6DTbXv4P7mBf_21TFYJN1T4
-Message-ID: <CAFEAcA9uc7PFvD8e=+WS-1WSAsqoZR5BRSPDjNeYsHU=TUcrhQ@mail.gmail.com>
-Subject: Re: [PATCH v3] vfio: Introduce helper vfio_pci_from_vfio_device()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org, 
- alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Fri, 1 Aug 2025 17:05:34 +0100
+X-Gm-Features: Ac12FXwT_67GHf_ifN5PFOw_s-zoCkcjsEUDVu7l-JVS-Hl7cHbtmGsB40Hj7h8
+Message-ID: <CAFEAcA-GObaf6Sf2preS42Cd1HueRkjuKgE1_=ofe-ZrcJ3=Dg@mail.gmail.com>
+Subject: Re: [PATCH 21/89] linux-user: Unify init of semihosting fields in
+ TaskState
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +94,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Aug 2025 at 16:47, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
-> I have modified your patch with :
+On Wed, 30 Jul 2025 at 01:48, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> +/**
-> +  * vfio_pci_from_vfio_device: Transform from VFIODevice to
-> +  * VFIOPCIDevice
-> +  *
-> +  * This function checks if the given @vbasedev is a VFIO PCI device.
-> +  * If it is, it returns the containing VFIOPCIDevice.
-> +  *
-> +  * @vbasedev: The VFIODevice to transform
-> +  *
-> +  * Return: The VFIOPCIDevice on success, NULL on failure.
-> +  */
+> Initialize all 3 fields in main(), rather than in 4 different
+> target-specific functions.  Adjust the ifdef to be function
+> rather than target specific.  Include stack_base in the ifdef.
 >
-> See https://github.com/legoater/qemu/tree/vfio-10.2.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/qemu.h             |  4 ++--
+>  linux-user/aarch64/cpu_loop.c |  8 --------
+>  linux-user/arm/cpu_loop.c     | 37 +++++++++++++++--------------------
+>  linux-user/m68k/cpu_loop.c    |  9 ---------
+>  linux-user/main.c             |  5 +++++
+>  linux-user/riscv/cpu_loop.c   |  5 -----
+>  6 files changed, 23 insertions(+), 45 deletions(-)
 >
-> I don't think it's really necessary, as these are internal APIs and
-> none are documented, but Philippe seems keen on it. I guess he plans
-> to volunteer to document the rest ;)
+> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+> index 6c97ab221f..dff7767bc8 100644
+> --- a/linux-user/qemu.h
+> +++ b/linux-user/qemu.h
+> @@ -122,12 +122,12 @@ struct TaskState {
+>  #ifdef TARGET_M68K
+>      abi_ulong tp_value;
+>  #endif
+> -#if defined(TARGET_ARM) || defined(TARGET_M68K) || defined(TARGET_RISCV)
+> +#ifdef CONFIG_SEMIHOSTING
+>      /* Extra fields for semihosted binaries.  */
+>      abi_ulong heap_base;
+>      abi_ulong heap_limit;
+> -#endif
+>      abi_ulong stack_base;
+> +#endif
+>      int used; /* non zero if used */
+>      struct image_info *info;
+>      struct linux_binprm *bprm;
 
-This is one of those cases where we have a rule in place
-that we apply on code review for newly added prototypes
-in header files, as an exercise in trying to at least not
-make an existing problem worse :-)
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index 68972f00a1..4def4be1c1 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -1050,6 +1050,11 @@ int main(int argc, char **argv, char **envp)
+>
+>  #ifdef CONFIG_SEMIHOSTING
+>      qemu_semihosting_guestfd_init();
+> +
+> +    ts->stack_base = info->start_stack;
+> +    ts->heap_base = info->brk;
+> +    /* This will be filled in on the first SYS_HEAPINFO call.  */
+> +    ts->heap_limit = 0;
+>  #endif
 
-I think Philippe's intent was just to say "put that one
-line comment by the prototype in the .h file rather than
-by the implementation in the .c file", rather than to
-require a full-on doc-comment format comment, though
-I do appreciate having one.
+Do we need to hide the struct fields and their initialization
+behind an ifdef at all? We allocate our TaskState structs on
+the heap so we don't care too much about their size, and
+the init code here is trivial.
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
