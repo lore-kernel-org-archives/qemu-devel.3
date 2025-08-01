@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB2EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:07:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4585C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhv6Q-0002YG-Q1; Fri, 01 Aug 2025 15:07:38 -0400
+	id 1uhv6S-0002mR-1x; Fri, 01 Aug 2025 15:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhtYA-0002q7-EC
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:28:10 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1uhtYn-0005S4-D7
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:28:49 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhtY8-0003aj-IC
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:28:10 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-718409593b9so21056607b3.3
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 10:28:08 -0700 (PDT)
+ id 1uhtYl-0003l0-QX
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:28:49 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-718389fb988so24567747b3.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 10:28:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754069287; x=1754674087; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754069326; x=1754674126; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H7hNLlgIhDrhrJcXaPghAf5FzBkxSrQqW5Zn7/7J8S0=;
- b=jnZIlTKnLEOfVpB3au/xvZj7wZaW12Mo/+YFDfZG0Z1lRC/D0LrJ9gVrzKN7I/ggKx
- YhEyblO4M/fOTAk5lSoQojZY7VsuZTiMoo3zPJ7BmO5qEVblMlbOgHgRxRh9tzSYtFH5
- 0CxUHiMbflfBWSkizsqXqTA9hZE/2VhK3LJURw7wxdwx0p1svOXswU1SRoiDO/5d3fbb
- rKoLsWkr/wyNn0YHoBp9dH+XlFjhMpNEcjtz72IfoJg+HAZXT7RPXNCZ0logKXAIiXuu
- emON5y9Dk6GpIHmqBYsLELn0FDHB8i1ak6NqTROGpPKAKG+gqn3RiZSqkWyIlvoF4mX3
- JhcA==
+ bh=jYL50F8Qj6gCv5iTDe+gUEKu9G/Yn+Gq/6KTF0VE1zQ=;
+ b=B905NoGSPoO3hSpu2e3gHhBo4h9m17uGOAoJE/wl3ZwJLPxrL69beLTKv+Vob1RuQA
+ GStv52fq8/lfCcNWiHolrrP8Sin3E2BuzM4/7x/+qeUbFFZgQemajv+yJ7o3B+CZBCNS
+ O/NXp7XMx1QCVZKRT7EXTevoxA51I/hDy81Ls+I0R2kn/jPhWXDzqibPK2GCu4dNeP+z
+ nswgwmBh+nGSEyTHMobsm5k8VSLdMxquHlKXalAVVo/lhxf14GEK04h08L/gXLDHsaaR
+ chAe8y2elJh7IGLahSl8RiYaPGNz1qXXuyJpQaKGsnmsO5wBBPG8JmwSV7ATQNZl+e21
+ v2HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754069287; x=1754674087;
+ d=1e100.net; s=20230601; t=1754069327; x=1754674127;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H7hNLlgIhDrhrJcXaPghAf5FzBkxSrQqW5Zn7/7J8S0=;
- b=L2ehtDKKMbNBP87V777WKamVL8BAxrmCkXsl37+iaDmo1/16Zxx9NuulfnQ8xtrDv2
- ONVaEvgNzI6fi/XY8y1yLr6DbhMw8VpUPBLQtqrBfjY+iIisFlpgC7P0LRfTj9pNEygI
- 05PNL4dyLxLHuPoRgPqN+A0f6u3O86PI0CQi4BV01G4ZH+t+z9kpNiAom+k3Of12Vm2s
- 1dOubVFzg7flF4e85uKU0vIBgmDtKPmfR0CYPjp2nfmESlleU2lHRIV2/PqbR12tt60j
- EcY80Y4PKOWnxcemIru+82TikNYrOKWggm96A6ZbZOyU2GfJVKWVVMFGAb31hiSP0gui
- cwbQ==
-X-Gm-Message-State: AOJu0YzH4o7g/3WlAME1BAa6pF0u2fl2EmWty1veOj6kmQMwZnZ9HT7G
- 1Stp4UTt3OAuMD6heNPUAM0YNUbT9iHWspBqGRde2JJIcYH0r8W2WA79AFZeVYSctajeEy8bbBC
- uUBa8DOpUdMTMgiD/vHvktraQQ7VFcKySZLi4GC2adcg67UbNtq8p
-X-Gm-Gg: ASbGncuNpKt7klG4xsZt5c1i7s6K4TxLM1jEZH/nyFIXzCKg5pEusYIJXnDYyN1bxP0
- KzRggkHI2OEsrrY3B9q9sCS+5c8W0k4XpbA3z7W2HjTFx7tqnE49vhh+yTSU9vjmT/4v3H59s9s
- shA455ojr68wMvyCtPMt0HZ8GhEID+tISa6JIxXK/btVv6jjpDdcy8ftC8babF2MDwdvdbpDzQx
- t44f9XD
-X-Google-Smtp-Source: AGHT+IGf4Cox71kBXS3W909cRbVVtiyqfHSmVUoSCKWlqByWLCLMNi/ZlgASW7M0SsDKn2ZSC1RcxK90aAZEVRLlels=
-X-Received: by 2002:a05:690c:1a:b0:71a:22e1:b32c with SMTP id
- 00721157ae682-71b7f5bc0d9mr5875267b3.4.1754069287247; Fri, 01 Aug 2025
- 10:28:07 -0700 (PDT)
+ bh=jYL50F8Qj6gCv5iTDe+gUEKu9G/Yn+Gq/6KTF0VE1zQ=;
+ b=Duj9EZKmDHO/6Z6kbNeK+TluMf1ksaf1AYRF98N7rvqBmjUeCu/7Ea0pAVy7CNKlvU
+ 35h5kxermEwNAGV+P3iTHokQLEo8Xi+NaXY3XdWr9jhBdGQPm9xusHcecBOjEOgHzpMq
+ vY5CJdCn+f8sdc8zO9lI6TyFjcEMYzpPEyOuJJIO/R4tu9a3ft0/r9WgqQbx5ryrdi1r
+ J+zOuz/5zTcwpH3Rla0jlj+pIF6bS2PWbS/ozLSBQ0EPUBy8Z5J0Iynv0e93KsMgC2rg
+ 4EtHzSlZaOwetRREkBLogkYULh5rNpgqKtDU4ZVcKLWLxSLS+Cg0OE0wovz+8gWs/rYu
+ rbAA==
+X-Gm-Message-State: AOJu0YwNEckBU8HV+tH3xnNKHYQOFX4X5oErZSMTeO9IcvcJh76vlDis
+ ZHeHRqE5jfclFjO+vnaC16VZ18JtI8vr6Ahh46Om6izbz5OXbW73C+sLAa1qFjChoqJzYynUOhK
+ guDL+nWVOHnYSW0pTvwqG4LtSnaKm21y4tJ7arUianA==
+X-Gm-Gg: ASbGncusu0lmGjPDX0Ev/sBxkUDAdtGFg6EGl/zt/4ASIBE6hgZ/xNc85wv55qxCC5w
+ syJw7AYn/VPGWH4UXMEUYQaz0TfYF2wRDbUr0xVfxkTVh5BQgsFNblAd5IZmUZ6NvijFljkqsH3
+ rHMSRl4vu9SOqincqTV21Xt3m8LH5sWb8Q/JU09vWMBh5Or1GGgLOaKpu5biJ5yQARE15/mpWeh
+ gc7l5cM
+X-Google-Smtp-Source: AGHT+IF+LYFVnrvUVAeW8DfiktD2Iyo4VnzzcQCJlOC2Z9nCTkznL8IQgM17h10cgUG8ovrxwB4HhtUvB7j1QXdI87o=
+X-Received: by 2002:a05:690c:91:b0:719:fa9e:b4e9 with SMTP id
+ 00721157ae682-71b7ed16cb4mr6744857b3.4.1754069326641; Fri, 01 Aug 2025
+ 10:28:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-30-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-30-richard.henderson@linaro.org>
+ <20250730000003.599084-31-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-31-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 18:27:55 +0100
-X-Gm-Features: Ac12FXxivS7wNe8f2TyMyGoLIykp05Z54sUux6DI7CnvfOag7HEoUSE4wAnYYNw
-Message-ID: <CAFEAcA9i2dGMPGPEQSJdYOhLzzh4q2M3Z1Xo596NjMBGJH8sdw@mail.gmail.com>
-Subject: Re: [PATCH 29/89] linux-user/mips: Create init_main_thread
+Date: Fri, 1 Aug 2025 18:28:35 +0100
+X-Gm-Features: Ac12FXyVZD_o7T2i9wjYhG-QSLZ385nYjmfIVPKz0virSlvz3PHlJNk1s8zmtSw
+Message-ID: <CAFEAcA_BeutgFgOWTbRviUmj5fNAOK1Cau47RjPcrbxi98hOYg@mail.gmail.com>
+Subject: Re: [PATCH 30/89] linux-user/microblaze: Create init_main_thread
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,12 +99,12 @@ On Wed, 30 Jul 2025 at 01:38, Richard Henderson
 > Merge init_thread and target_cpu_copy_regs.
 > There's no point going through a target_pt_regs intermediate.
 >
-> Note that init_thread had set cp0_status in target_pt_regs, but
-> target_cpu_copy_regs did not copy to env.  This turns out to be
-> ok because mips_cpu_reset_hold initializes CP0_Status properly.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
+>  linux-user/elfload.c             |  8 +------
+>  linux-user/microblaze/cpu_loop.c | 39 ++++----------------------------
+>  2 files changed, 6 insertions(+), 41 deletions(-)
+>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
