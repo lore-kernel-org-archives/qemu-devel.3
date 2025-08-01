@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE24C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 01:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C4BC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 01:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhei9-0006dp-Ux; Thu, 31 Jul 2025 21:37:29 -0400
+	id 1uheiO-0006yk-M0; Thu, 31 Jul 2025 21:37:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uheWk-00073d-MM
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:25:43 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1uheXq-00082G-Vi
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:26:50 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uheWj-0006LN-6K
- for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:25:42 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-31f3fe66ebaso2239390a91.0
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 18:25:40 -0700 (PDT)
+ id 1uheXn-0006dO-Vn
+ for qemu-devel@nongnu.org; Thu, 31 Jul 2025 21:26:50 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2403df11a2aso8032745ad.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 18:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754011539; x=1754616339; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754011606; x=1754616406; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4PkS6NJWZlEvIkgId2xY2csCYbG80mFPQANLk+r2zgI=;
- b=ziJpfYl9b6qIfVGgal4+6m+YfJU1nZAz/7F3qvWPQC1qgC0pOK/qLxKt8tck6dBnv9
- ZKl6LY+db5im8IZcpkgXxtG5Lr2wBkSIXkOrOG5t7lqEKhp01get8kppNqheLiqBqROL
- EQmUZw7swh0E/WBFBIyFlxD79Yg8SoXEiiZni1yuiKm6T1hxllSeIAu/NaD6kzO0TQuh
- A+06vOtRo9fiQpqzQOGgXsGYogN1LNako0CGImegG2oQ9wA1PMzG+NanIHaG/Y/wLc1+
- 7DeUYueoXtOIyhRLyhokGmfJE6KEJ/sbkZ5XwAEFmz938xcsTLr3B7WkMcgVn9Dlcl2C
- wtlA==
+ bh=vAFLFveFnl9hEIcUUREBOvWx+i0TTO48OUICvMS7lZg=;
+ b=RvZGkrZfJh6srUjqkdwMZ2UDFWmt6GcH/9H61EHwqqXMOZRdYmU3d88VvnYrzzyTdp
+ fQlDiuSzmRvruMeDuQ5gvPEdzTwQzevXROL1M6gj87qOQn2KXx0TtEwesRWl1o4LZ4UB
+ 26xDho+sYrYJ3f926zAf67J4nSK1h4nrBLi+xcTVtC46GLOBQ6XgFaVyo1Icp4Daa/eF
+ Z4SgtzF8gdwKbg3/gsH4Kjvgs7Seqon1dF8kG9Ri9ktBMVhY/C1X/+gDUzWW/ISRILfF
+ 0qLA0MzyJFyjo2xCy/grnSEHbIy/JSD8pdRezkHENpDhYyQSE9vnIZXp++tt7SpRXBdw
+ UrkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754011539; x=1754616339;
+ d=1e100.net; s=20230601; t=1754011606; x=1754616406;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4PkS6NJWZlEvIkgId2xY2csCYbG80mFPQANLk+r2zgI=;
- b=ZkrZuofMgQePjqs0VH3oKkpzeA9Av7B/gY4l3QAv+w3in/TTTM7f/SFBaByLHOyUC3
- rtEcYXl8lDUtF+mWV/ZjFzQF+AFUAgDEbrJ2GtFMLxAR6zvXzmAwul2o9x0tqoPalXUX
- tm1efPOFw1eqoLYS5C0c+LCRTKFMSH1j4Sg7GX1bT70nAh1cZk6CmLJAD0WvgpvhXD45
- azRlZWH/MXH64Mxe0qATrQAvy3D7JRA9oZOeJMW69MDg41gh0UWNCPI4BuCNEtsMzDr/
- tCaw10gompWvBSlm+KPJGsT96T8n0dQS+Y9TQKGM2cvNFUEfLspdwVXvCBMFqu8BXq5r
- jn2A==
+ bh=vAFLFveFnl9hEIcUUREBOvWx+i0TTO48OUICvMS7lZg=;
+ b=kowfbZwF3AuflKH4NUhAxeZP1TkbZutbrA/NhKcBVAzz8W9Ox1CXYpxn9//00FLTUy
+ Yw1LJcU+kvqwhr6EKYHtFXbujxNt5pn5tSsudMEfEKoxpPKhItQqCcjg545VeDUUyrf5
+ xjEGpx4vMeA47ZP3BdkMINNt1EdnxBwkSij8NrTrOJWorwOG5Pg/TCI1OxS8lOMJyRx+
+ hM6o2vbmby8wMVykO9IpRsTOkT9BUOOLdxyAaKKPQG0tsfpj0v0+YP66Vn4ua4iPsiN+
+ t0Xwql6AhyRKPfVfU3MWhYr4uk8z2LDbZBgqbKD1aaDS8Q9ByiWMrj973GiYifckEvmW
+ JJtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUT1LE+P+STveM4LDhMsZorP9kCjTg7iGCPmvGiZAspM8gPc5EQj1QbaFbwGJlp0UMWvqx1IiKC4PUV@nongnu.org
-X-Gm-Message-State: AOJu0Yy8ZnZXN7pEa+j7kUNK8I1I2Z0vzH1ZkE9nowV1LHcEYVk7zDld
- X8sAzSQkaHOZFDK38lZQtbEx1OwcAviN4nyOWs9MFYjknXgpSrSs2qtReW9+HcogrYk=
-X-Gm-Gg: ASbGncvj8G+3+axCTg2ap+OgKBRr/31sC0wiV9zamCDJ/2laABSN/2NmvruWPMFPPLn
- b/xHq4nj5iHPs1GoabnDJc8wPIajLfUrMZm87QlPnoNuJQPxlTHh91EJi28UJ6IsckYj0xgX6s3
- wpRIHpCSVSHldcu8tW6O6+zIaKlOKvUhw5wVcskOmbftK+6GsmYntIKz+j7e6/Ik/o8Da8z4W1y
- 1b5c3NhlTJEv+TGygBrQ/tDapXLq3P7XJ1SYAQIESxc2aMeII1wl0zTe4hB5JweOFLu9AKVBQ0A
- UgnwP4QkKPk5sDDMWm74Jk0cZwGr/hQrrvZpkcTGkVR4ArU9+3yaI0qo29jGDKECJgz/x0fnvRl
- dzmBT/r7x/vO5YMOqViJ0dx1fsa2iFjSwgwi5peaO
-X-Google-Smtp-Source: AGHT+IEqzMwfSW69NBLAK9pMQKegBcPHAYyFTfJHUaz1tnLGrxUK1T8HSKLoxzoj/zLV9lfDq+eWJQ==
-X-Received: by 2002:a17:90b:4c0e:b0:31e:b772:dfcb with SMTP id
- 98e67ed59e1d1-320da604471mr6543903a91.10.1754011539505; 
- Thu, 31 Jul 2025 18:25:39 -0700 (PDT)
+ AJvYcCWyIKJNMw1ZBudUcIIuHHjbUTffWNQlacjBAR9epFvv2tc36/D/pc8ua161gqNByd9Qs9bpX8WOH03v@nongnu.org
+X-Gm-Message-State: AOJu0Yzgs6kQowGbWSWa8NjbPuP7hqGCXSZqvFb9kpNu6eFTNhr0Ifpc
+ vmDDN2Y4Wx6ASctFjqrgSYZ3gOY/9kgC6ig8RF0Ee8IhTPgOH+L9Re7zNWPt4fbdR6I=
+X-Gm-Gg: ASbGncvUqCd6cDCJBuhwWg1C5FqJ0XzoB7uKe76BpI7cpzGYT0BJ/mUrhy7tU8FQAQ1
+ 5adiZk8NW3jM5l49zrtat+BINGwbRUBmDRgh8yAzeXqTz4/HnLuOa2PKfW9OlFQ/uGLcaTe/DKL
+ +JRrM0A16rrJE8qEkiD5debyRdHO3DNVrBY6eEx0+1mV5PhcDSDbnT8Aj3ipkIRTVOrL3H0wy/Z
+ YbvDQZ5kxglt/4cRQ9BaJCx9z6Rymq3VgS/oAkWIj8UjvmLSXrYLtVdK+5esvD+HTC8cr2I8hCP
+ Y+ZTK0CJ/Ad8FA9RsTiUqZA3iyEGMu90SYlyfGNjaACQ3SzBy6NyJohUWHetN/Zk8TI9NLN1F0p
+ trmhG6pqR4dpaiIMPpmo/njy3SsprVMQO+auxqFqm
+X-Google-Smtp-Source: AGHT+IHk2SQ7+cvK7TCjbeCIpuNRqy0GS5UVCRvnaMUapBpXAhgmMJNtIoVoKFv9lmYP/H4sqBZkKw==
+X-Received: by 2002:a17:903:1c5:b0:240:14c:c648 with SMTP id
+ d9443c01a7336-2422a699bd0mr11855235ad.25.1754011606047; 
+ Thu, 31 Jul 2025 18:26:46 -0700 (PDT)
 Received: from [192.168.4.112] ([180.233.125.160])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3207eba6f4csm3128282a91.5.2025.07.31.18.25.33
+ d9443c01a7336-241e899d21dsm28688075ad.139.2025.07.31.18.26.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 18:25:38 -0700 (PDT)
-Message-ID: <8658920e-34ff-4aba-b412-92d06b29fe5b@linaro.org>
-Date: Fri, 1 Aug 2025 11:25:31 +1000
+ Thu, 31 Jul 2025 18:26:45 -0700 (PDT)
+Message-ID: <855c4ee4-e997-42d7-bb2b-95929fd6184e@linaro.org>
+Date: Fri, 1 Aug 2025 11:26:37 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] semihosting/arm-compat-semi: replace target_long
- with int64_t
+Subject: Re: [PATCH 10/10] semihosting/arm-compat-semi: compile once in system
+ and per target for user mode
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
@@ -81,14 +81,14 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20250730220621.1142496-1-pierrick.bouvier@linaro.org>
- <20250730220621.1142496-9-pierrick.bouvier@linaro.org>
+ <20250730220621.1142496-11-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250730220621.1142496-9-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250730220621.1142496-11-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,28 +112,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/25 08:06, Pierrick Bouvier wrote:
+> We don't have any target dependency left in system mode, so we can
+> compile once.
+> 
+> User mode depends on qemu.h, which is duplicated between linux and bsd,
+> so we can't easily compile it once.
+> 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   semihosting/arm-compat-semi.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   semihosting/meson.build | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-> index e3b520631b3..715a22528ab 100644
-> --- a/semihosting/arm-compat-semi.c
-> +++ b/semihosting/arm-compat-semi.c
-> @@ -502,7 +502,7 @@ void do_common_semihosting(CPUState *cs)
+> diff --git a/semihosting/meson.build b/semihosting/meson.build
+> index bb0db323937..99f10e2e2bb 100644
+> --- a/semihosting/meson.build
+> +++ b/semihosting/meson.build
+> @@ -12,9 +12,10 @@ system_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
+>     'stubs-system.c',
+>   ))
+>   system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
+> +  if_true: files('arm-compat-semi.c'),
+>     if_false: files('arm-compat-semi-stub.c'))
 >   
->       case TARGET_SYS_ISERROR:
->           GET_ARG(0);
-> -        common_semi_set_ret(cs, (target_long)arg0 < 0);
-> +        common_semi_set_ret(cs, (int64_t)arg0 < 0);
->           break;
->   
->       case TARGET_SYS_ISTTY:
+>   specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_USER_ONLY'],
+>                   if_true: files('syscalls.c'))
+> -specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING'],
+> +specific_ss.add(when: ['CONFIG_ARM_COMPATIBLE_SEMIHOSTING', 'CONFIG_USER_ONLY'],
+>   		if_true: files('arm-compat-semi.c'))
 
-Here we have a semantic change.  For 32-bit, we used get_user_u32, so this will always 
-return false.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
