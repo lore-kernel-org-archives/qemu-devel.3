@@ -4,92 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6C8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 04:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C70C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 05:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhhOr-0008Ca-9O; Fri, 01 Aug 2025 00:29:45 -0400
+	id 1uhiXV-0007IX-DB; Fri, 01 Aug 2025 01:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhhOP-0007wT-79
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 00:29:19 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uhhON-00055s-EH
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 00:29:16 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-240b3335c20so8268865ad.3
- for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 21:29:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754022554; x=1754627354; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4w656GvqylV+9bxKFYy2Q5NDSd7DHanbKvKxgqxW1Mo=;
- b=p/3K/eEKnXEkMC+93HjX3nbIIf+GilooKwMYGUovNvzsbKGCtX8De8RWg1sOnZoek8
- hvtJIj3MQLNUhTl0mboQBfMFgCYAbf2rKr3N00DKr5NEujC3hoTQY/Pcgac3PrwvS9jQ
- st7d2gI8eDBYOq+7l+67zLhZfz5tvZZb2q3JD3zz9Hc3fe/UPM7O7WO1sYo2/7IRLx3j
- OSm7Qb8cc2tb6jysX54oMI60GqmHv69HuYjQtT0AK/h0YGPIrgmnNCiNa8Yp72iMYoph
- /4cf8TrFeMAQk6/dNrjg7KxASWUgTqzm8QkMq8R2Glfiw+0DR6BqPG2FskAtt/OSYVi/
- 4TUg==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uhiXS-0007Ep-8C
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 01:42:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uhiXO-0000lN-Rn
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 01:42:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754026956;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=pXHAEqIJWKSVTo9LOlc/Y6cVjw4FKfVXBFLOyAvFc98=;
+ b=BllbhpETeit8zQYQnGdSpo1Wcq6jyakiu+dKbcnrZxPT+7so+k8oKxCGuGGBShLZWR4gVO
+ YNmytWkpox0FqyllYee/G/GJG6gDY8a8QqZx4n4rY8W2Vp7984z66kYT1xZm38eT6sN4bJ
+ 8wKF5LebCOBAHuF47PiUTAPPZch/mIg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-qwD1xyRJPLa6YXrZF5ZHyA-1; Fri, 01 Aug 2025 01:42:35 -0400
+X-MC-Unique: qwD1xyRJPLa6YXrZF5ZHyA-1
+X-Mimecast-MFC-AGG-ID: qwD1xyRJPLa6YXrZF5ZHyA_1754026954
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4588cfda8b6so7766505e9.0
+ for <qemu-devel@nongnu.org>; Thu, 31 Jul 2025 22:42:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754022554; x=1754627354;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4w656GvqylV+9bxKFYy2Q5NDSd7DHanbKvKxgqxW1Mo=;
- b=Qt/RxwIfCsXk9aZ1oGRHUAYSuIgqgDYXNLmWa4o7LJMDl3KHEbTipeg4XSScykhbod
- nziUsxWQTtc1q3X97cyO/Pvi4teOgPZWzyiFrlNwOZbVYlPeGU6Gefk3ZadNR3dG2xl/
- LV9zT/KRr/HpdEhXaxG7HxsqyVMNXf0HHBMal7eDgGD3vkbDBjzlsNpKCmH4VXzAllwq
- RXs91M4WFxNIzI6sO8Iuz9TwO/k8YzpbWpfQ8KXrDAFggyH3b+jIv2F3H9qHUUqfvOAZ
- VBY5jkvIaECdq2cf06SVnvisANAp1xbgqWA8JoAJQASGxR0JKbPb9lEbdDmf9JebXtpM
- cVSA==
+ d=1e100.net; s=20230601; t=1754026954; x=1754631754;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pXHAEqIJWKSVTo9LOlc/Y6cVjw4FKfVXBFLOyAvFc98=;
+ b=j7zoKhcQhcHCdXVXTpF84k8RsWpydnWSlcaJTEdkIRPaUFzUwxd1O4EUsytLQqwocn
+ N9iRtB0Mch3lVvgR1XcYT+tmhuqf9bhs4a4T8Fmw2QWyCm+dI1lsV6TaBA7UIKUnbvrf
+ VPPRcOOQnutnVhMpNj3WB7gvVJUkPx0jDfu3O12itK1stHdBo2/cojA4DQ16PzLO6sIw
+ PZ37rV2iflHyhaRdAIVSkQifFGSI2wZ//v/Yj4zhLo5NF8ZF0MoeagWIC06CI/ondp6R
+ L4FIjBuVPqHWcEdzOoGFDTgTghNgCSR4ZEoIIdyNLOFoMt5+rm/LqUZvWj8+7/akZVqX
+ kgUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpbaqyUAj349XYJHjszufddPArXfbRF7G4C529j/NZJzt51jrzvigsXoKWVmXvCx+s1L9Bv6wlFy9M@nongnu.org
-X-Gm-Message-State: AOJu0Ywgx4XAVZX18eokP9vb9vC1maW39gdD9Stea2toFmOsYrgf/zQs
- 8EhXdBeN4agSzocfd5Xu4ukB8IoEROolrwVBSsF1rftlF5YHecXBlqjzxsi7cjYEDE8=
-X-Gm-Gg: ASbGnctc480ITEoOzMh8fjeHWwiyIpHxUjLwWKXl6daQMH+3wQRglJJ0UUAagBiwR/H
- 5WVzoybN+qY8YsMdgrBbJ5alCrWxdkYJQOXuNdZtXlN/4w4kiXXpYsXJ4AnQs3bv5VEt1bc2Qne
- TDMTwyJQVvOjtHKQ/llelReiUD2NdZDCWypLpu+lJMFemHwsqW7SWzZaO+RLWNj/KshsHG7dnhQ
- YRziMGWkFwoEcyRbrlKIMR+wORUe/dFDayWuOl50Yyu1rdeE2btvRx3eLll8xA1LFL1x9zL+n2A
- Gsh24RihTlweNpaT3gUFO8iXNQV+mBAvhJgVLry/SdWB+dRYho/VW8DLzscfqpBnJxmQNa4H57J
- UviscpHFK9WuuX2F5tl/nq2Bc5xoOJKWmx1ElnMqTFZ5j7yBFe8g=
-X-Google-Smtp-Source: AGHT+IEXtbYpVpMS/nVuY6AEFIoFYrPk2yO0MzdxBCEVv9D10EWeM51VOmVfSRVtXtHDhqp01sNpYw==
-X-Received: by 2002:a17:902:d50e:b0:240:1831:eede with SMTP id
- d9443c01a7336-24096b1784amr155507975ad.32.1754022553741; 
- Thu, 31 Jul 2025 21:29:13 -0700 (PDT)
-Received: from [192.168.4.112] ([180.233.125.160])
+ AJvYcCWpa65gw5x77wmvfnIFnm7Y/HQpxiJohA3yaxQyYiKSuQaxdkpxW/qg8gm2k5/WA9Rr6BbZqMbgpJkd@nongnu.org
+X-Gm-Message-State: AOJu0YxeTDWVGFoCfpPUKF/CK+yLY/woDthxnmOGPhSlJ4oKbHhmVFmK
+ Y+F04Vtjvs3j5jSE1v2HUPyJ09POXKeDPFe/gr2CiCzB5qmRwtxyV1xN6OQAohM4VNrD1DBY1QC
+ QrShOwM2GQVdRdsdYAInAz1aijg8ozCKaW2zPxg0EQOFVaCwOl7OJzjG4
+X-Gm-Gg: ASbGncsUEU32vSboGRjfR+b2CZe+G8XqWHVWaJRuU15qxk5g68e6tOt2EeirUGT3TTn
+ t4C3RBoOrtYILAdosy6jOM744XUJxZg7HtoydJoJcquJJ/GN53ellWlOupUjPRo50M5lp8rIZr9
+ gBCvHD7oE9ajImdqWER3qMPe3AH3X7McKUoeYqJcYqLJg8+N+1aluP7OaOFBZCC2JnRpnRMctYh
+ Twk1QYl5mxTbYcd2cIea2r6mm5sehpU0q3urN6wXjDOkdos3QPI57dZXV6EIfxIQCZqXwBjOwSP
+ KUGvVvjeC6GnkjOkGJDnT+Ux1ao+E4qCOW3Wv6hrsPkqvNyVaCU/BAKhSCZ2y2CCE80qHto7OKs
+ criJMAYM=
+X-Received: by 2002:a05:600c:4f4e:b0:456:13d8:d141 with SMTP id
+ 5b1f17b1804b1-458aa45b11bmr7196415e9.27.1754026954241; 
+ Thu, 31 Jul 2025 22:42:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQDbJCx6ndABuvhly1ihx7RkoEG3splvvpF3hURqrV4jyBb0ORJTKM/mRs8vALr1gh4scFAA==
+X-Received: by 2002:a05:600c:4f4e:b0:456:13d8:d141 with SMTP id
+ 5b1f17b1804b1-458aa45b11bmr7196245e9.27.1754026953828; 
+ Thu, 31 Jul 2025 22:42:33 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:9004:d500:837f:93fd:c85e:5b97?
+ ([2a01:cb19:9004:d500:837f:93fd:c85e:5b97])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8aaadadsm31781955ad.156.2025.07.31.21.29.11
+ 5b1f17b1804b1-45895377956sm89011865e9.10.2025.07.31.22.42.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 31 Jul 2025 21:29:13 -0700 (PDT)
-Message-ID: <f398a65b-7b1f-492d-a612-eb3d6322ae4a@linaro.org>
-Date: Fri, 1 Aug 2025 14:29:08 +1000
+ Thu, 31 Jul 2025 22:42:33 -0700 (PDT)
+Message-ID: <8b599c19-1901-4707-a8ca-943f61c0e2f9@redhat.com>
+Date: Fri, 1 Aug 2025 07:42:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 47/82] target/arm: Expand pstate to 64 bits
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-48-richard.henderson@linaro.org>
- <b2e40787-6043-4d4c-9cbb-731d0e92e25c@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <b2e40787-6043-4d4c-9cbb-731d0e92e25c@linaro.org>
+Subject: Re: [PATCH v3] vfio: Introduce helper vfio_pci_from_vfio_device()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, chao.p.peng@intel.com
+References: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +155,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/25 05:13, Pierrick Bouvier wrote:
->> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
->> index 71c6c44ee8..f61adf1f80 100644
->> --- a/target/arm/tcg/helper-a64.c
->> +++ b/target/arm/tcg/helper-a64.c
->> @@ -639,7 +639,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
->>       ARMCPU *cpu = env_archcpu(env);
->>       int cur_el = arm_current_el(env);
->>       unsigned int spsr_idx = aarch64_banked_spsr_index(cur_el);
->> -    uint32_t spsr = env->banked_spsr[spsr_idx];
->> +    uint64_t spsr = env->banked_spsr[spsr_idx];
->>       int new_el;
->>       bool return_to_aa64 = (spsr & PSTATE_nRW) == 0;
+On 8/1/25 04:35, Zhenzhong Duan wrote:
+> Introduce helper vfio_pci_from_vfio_device() to transform from VFIODevice
+> to VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
 > 
-> Would that be better or worse to simply save the upper 32 bits, considering that cpsr 
-> already holds the lower ones in Aarch64 mode?
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+> v3: add one line comment to the helper
+> v2: move helper to hw/vfio/pci.[hc]
+>      rename with vfio_pci_ prefix
+> 
+>   hw/vfio/pci.h       | 1 +
+>   hw/vfio/container.c | 4 ++--
+>   hw/vfio/device.c    | 2 +-
+>   hw/vfio/iommufd.c   | 4 ++--
+>   hw/vfio/listener.c  | 4 ++--
+>   hw/vfio/pci.c       | 9 +++++++++
+>   6 files changed, 17 insertions(+), 7 deletions(-)
 
-I don't understand this comment.
 
-(1) banked_spsr[] is already uint64_t
-(2) SPSR_ELx is supposed to be uint64_t
-(3) We were accidentally dropping the high bits of spsr here
-     because the local variable had the wrong type, before it
-     gets sent to pstate_write().
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
 
 
-r~
+
 
