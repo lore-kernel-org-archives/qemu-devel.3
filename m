@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF14C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 15:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15E7C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 15:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhrM9-000717-4H; Fri, 01 Aug 2025 11:07:37 -0400
+	id 1uhrPo-0003R6-Nz; Fri, 01 Aug 2025 11:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhr3E-0001HH-4H
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:48:06 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1uhr6g-00012u-GN
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:51:42 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhr3C-0006Tk-7j
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:48:03 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-71a3935fa8dso12822617b3.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:48:01 -0700 (PDT)
+ id 1uhr6f-0007Hm-2C
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:51:38 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-71b6ad2d6fcso11317267b3.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754059680; x=1754664480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754059896; x=1754664696; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j/uQhooOXD4Y6Tb5exvB8s3XRU/baBFBYONUyWD8jUU=;
- b=f63AE5rBNfPl5nSQ5EuB0T405vafAU0Gr0awHf9H/s/PB/clBqfEJgHxFVybe9YKNL
- qRRJcoTrb7FVZorw/ztB6wsKDO4zD5jjrd/VS5IHY8WGvaKdP9EbFTaWRoR8E+NZiuOZ
- K/ampIxPZY5qjCQNilVqkiHkskYaaMjcC7/kEg/phgtCrhCW2L9fvmRYSlacpGauBdoq
- GkGgPYVBUS/YR7QPmldDMiSlvOZ6QfGbKBaedVfmLM3ljmnsh4bigu/ED5T/tLubsTC1
- ruAw7Q3VAydphQtUhuwfwCMAVol0QPDfNfs+swAaqfC7Rs3M6CMyzddkayDOs9giMq34
- filg==
+ bh=+uWVbMs6KsB9KhadGpEUUwoeD2/hQ1p2s193qYPj2aE=;
+ b=UFD/A/tXZ2JNmwOaLxIiQZk4Yea3VGrNBXSsda+oWOvXxmgqLCWNuuCd4DvxWaAWlo
+ bwfBp2lQmqhlWC4EC7RpZVAGNgtlR45RGnEiXml8OF9CXma47G78lsN4lYmq/JsenxPJ
+ cUt1fOQt5uvPt3oZZqZ+2eFc6UkB8xjPNHNUwpQkOSMzXBonfwNXqWyOQBTAO4/3AEtd
+ d1/AX3LeTX1F3pkry/tl6svImUrT10e3hyIsYKT+S/VTs62kZgj4Pt1ewX3J9pqIt0sY
+ WGFBsv7qdjxTVqB96pZsYAgfHfbWiWOelgZl0bXWLFLRw972Te7rsMbcg0UM24UJgjK0
+ mRSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754059680; x=1754664480;
+ d=1e100.net; s=20230601; t=1754059896; x=1754664696;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j/uQhooOXD4Y6Tb5exvB8s3XRU/baBFBYONUyWD8jUU=;
- b=BOcZOhyyocUe/cLSo7FOfxN+0SMKGWTlZ54YHZH/zccS2AavdzwGgE9ybikfrHsCNJ
- 04uWQTpuLxea5V9J7wcMaOkH8zgbf7M/bo38Ra8+1g50xO8PnJ5BAVB2Sk0DFWxtbp1b
- b2YydPkPwmTsiqkiYSgrIsIRN/zOlHBrVXQ3kZ+f8xNyLcn/vVeECzt18GysyYO6BSc6
- RkmiNI8S5sBXe92Wm282PxUuVnDsCiB0fncF2M4t+xC7ie9iRNPhhI1nnjFs4zSt3ZvE
- BPRySbt/ML+A/Pz9Way1lnHa00uKEGLsMlerLDWHPDBpYFZA73vvEGXIyoA3BbWHYvRO
- y71w==
-X-Gm-Message-State: AOJu0YzRfpJvje310Un+pcZnck3NSIJQDZmm2DVUp1jUhAoXXHCiGMfX
- EG+JgsUGiXjWLkwDUKE6UYpBa7uhiZG3hXCHY/7UR9o2rORSV5Had57w2fyQ+p9vo3hsK4BWhZ0
- jxR93IbUNtETSz8/zLFGeuSQAWIic0qp2iAHLdbUFl8hHliGyh+SP
-X-Gm-Gg: ASbGncv/gsBW5TUfYBu7WVxNOlzdTcqqTvWzRNx9HP0iNPsaX6mSsGFfgnFq6rDaBWe
- W7ZzslBEQVI666rjlMPFbeesmWR5cHns8RlHrros3M2iUixGBvGqyQNqaDJ4zIuUwr866C3Clre
- yJ4Dte8lF2R59o9dBj5XNSn9I68IwylXKxXKMbjj2wX3+3LGE/nezf5AKRBPn0SW7i1ZK8wg0gy
- kCDmatV
-X-Google-Smtp-Source: AGHT+IHeLv0+pKMc+9Su0VI6d3SEWHfaBKMODCICas8/99OJ/Kx5t0nz9xcEcj3JeqkaiptQPp4YNjbuwN3TwHyTUSY=
-X-Received: by 2002:a05:690c:6282:b0:71a:1e8e:62e9 with SMTP id
- 00721157ae682-71a466ddeb0mr159063817b3.37.1754059680540; Fri, 01 Aug 2025
- 07:48:00 -0700 (PDT)
+ bh=+uWVbMs6KsB9KhadGpEUUwoeD2/hQ1p2s193qYPj2aE=;
+ b=EABJKD6g7IlA3hu8C+0oIqhBxaUIPTmnbubjXeGfivuUyv9tTIeO9cRAn8/y5Ep3UV
+ gqY1NsNEmu8rhIWgZ0BZdSd4FTD7TWd9TJIFavhJ2qohQvXcD/nypENPogymiIByPfws
+ p4SCk1eKt1yaxAw5ZjTq2jU8HJG2IG2ZaJkEPU6HkkpCVVAPjWUJ9yVkFGR71X1I+612
+ 10qR2MhqmTErdg0QHhCHNCLYx3Kwx7Pmvnr9y7yvVt9sbf/mnlY0VZ/E9VRzmUwhBms+
+ 3IVcgg6Vv9ZihJ11FYr1P+ZQHLZ7M/HJlbkxUa5ItCHTvijVegxI198FkNkG+Q9CKpcd
+ UkZQ==
+X-Gm-Message-State: AOJu0YzLnesmDAMOls7yKBYfCuf8UtPc4+7107msqvVwAprPxNRfUcSd
+ NZCqrGI5giAqkWdRc0nbbyyTPOySHOwBshQNcAYVWHh9zaBu8q5CvgTnXHVjh4LBpZ+q4Laen5g
+ YJi6MSaLj6/Ontz1ZzRdqTIvXFF6Zr1R1rreZUWK7Fg==
+X-Gm-Gg: ASbGncudhZTAn70ivFcTMoHN+s3Edyg4qiWciO2Bbji4/+NO3iwRgOjEurLBnsI87NY
+ 21LyKfufvJ+yamkHzjyJKunjKTGvTbQM1OJubIvGDhbC5/BOmAbIbSf/RoWhs5qbkfyeosZVze1
+ brdSpMd3nwVzBWX8c26S1CcO7T35RmYzP69mevQn7BRXgxFD0FfzFDfSB/F8oVA3wSf0ELn0Zar
+ XR3j39/
+X-Google-Smtp-Source: AGHT+IESxDCC4ymsS93QvJTmXcAkaRsGwK6ss5b0Eh64jk5ANuLJK4Ei3v/KWC9MS+pdwLI1sbTkIMwrVB8G1BS7cKY=
+X-Received: by 2002:a05:690c:6903:b0:71b:6bec:7f23 with SMTP id
+ 00721157ae682-71b6d802729mr38643727b3.32.1754059895408; Fri, 01 Aug 2025
+ 07:51:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-2-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-2-richard.henderson@linaro.org>
+ <20250730000003.599084-3-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-3-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 15:47:49 +0100
-X-Gm-Features: Ac12FXwgouAJUIn3NWJarNs4Czi9fOfOQVQ5vqNkBQgDmXzvpPUmaActIngCSYQ
-Message-ID: <CAFEAcA-y+mFr-FwWrxWT7SBGAY3r8NjiZd3UQTPcefMHwCECYw@mail.gmail.com>
-Subject: Re: [PATCH 01/89] linux-user: Create target/elfload.c files
+Date: Fri, 1 Aug 2025 15:51:24 +0100
+X-Gm-Features: Ac12FXw1n_Ko0tyk4ZOTZGSInGwpSaMCy0zQsxzEwapVS1S6NtgH0KoP71Bqpao
+Message-ID: <CAFEAcA8Ei=JNuK7+gBnSt=Qrspi4JNKjzxB2_r9egn3HMKNqQA@mail.gmail.com>
+Subject: Re: [PATCH 02/89] linux-user: Move get_elf_hwcap to {i386,
+ x86_64}/elfload.c
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,26 +94,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:13, Richard Henderson
+On Wed, 30 Jul 2025 at 01:18, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Prepare to split the main linux-user/elfload.c.
-> Create empty files for each target, and add the
-> common build rule.
+> Change the return type to abi_ulong, and pass in the cpu.
+> Duplicate the one line function between i386 and x86_64,
+> as most other additions to elfload.c won't be common.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-> diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-> new file mode 100644
-> index 0000000000..73fa78ef14
-> --- /dev/null
-> +++ b/linux-user/aarch64/elfload.c
-> @@ -0,0 +1 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-
-No license info in the existing elfload.c so I guess
-we can take LICENSE at its word that source files with
-no licensing info are GPL2-or-later...
+AIUI the FEAT_1_EDX field only uses the bottom 32 bits
+so the type change should be fine.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
