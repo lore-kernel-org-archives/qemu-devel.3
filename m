@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD79C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B57C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:20:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhsT0-0007Wj-4V; Fri, 01 Aug 2025 12:18:46 -0400
+	id 1uhsTg-0000Mu-6l; Fri, 01 Aug 2025 12:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRS-0000gP-Tw
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRv-0002BT-7Z
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRP-0002bo-ES
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRs-0002gi-MT
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754061182;
+ s=mimecast20190719; t=1754061211;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M2PPIqaARayPULG75VltuiTlFhnXiX7YEcOqTi5HXsE=;
- b=i57n5yrboeo5qutMZzkp35sNptKhKu//6X/oXXMAkouagewiPAdY79eQQpPyNkH+b6POvl
- yBh1Cf23WNkInKb7w6jbl8rqRcwDABIrhWBZnkXxS0HRBPTTTVQ4kUUTmDqZjCEMXeHRG7
- 20200Pyf02mLf3YidI5XieO9IxOfNKw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qaZQsilhG3XuvxPt+VN6HorCm+/w49q+06L3a0lFyc8=;
+ b=Dhlz2bh8Xr8MXPb1urRl3+nVuvHYZJHrCN8QrUP2oQ/8gJV5sKWVsZubd0WppRO0sb9+La
+ 92E9ViJKuU/dn3ua7WBvS8cf/KxC0ujBHHeZWWBsJgTkP9as6xCSu231bESdWRRraeZPp8
+ SgL4tn/JiUxbYbt8MR/n9yJPoO14G3M=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-gv5Ni3mUM52Kp2ff4ph5zg-1; Fri,
- 01 Aug 2025 11:13:01 -0400
-X-MC-Unique: gv5Ni3mUM52Kp2ff4ph5zg-1
-X-Mimecast-MFC-AGG-ID: gv5Ni3mUM52Kp2ff4ph5zg_1754061180
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-OYMJd7ftMZ-ACIXRjd4pZw-1; Fri,
+ 01 Aug 2025 11:13:27 -0400
+X-MC-Unique: OYMJd7ftMZ-ACIXRjd4pZw-1
+X-Mimecast-MFC-AGG-ID: OYMJd7ftMZ-ACIXRjd4pZw_1754061197
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3991E19773EB; Fri,  1 Aug 2025 15:13:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 787E3180A267; Fri,  1 Aug 2025 15:13:14 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.225.137])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BBC81800B4F; Fri,  1 Aug 2025 15:12:57 +0000 (UTC)
+ id D2CBF1800EF2; Fri,  1 Aug 2025 15:13:11 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 01/24] tests/functional: Rework the migration test to have
- target-specific files
-Date: Fri,  1 Aug 2025 17:12:26 +0200
-Message-ID: <20250801151251.751368-2-thuth@redhat.com>
+Subject: [PATCH 05/24] tests/functional: Move aarch64 tests into architecture
+ specific folder
+Date: Fri,  1 Aug 2025 17:12:30 +0200
+Message-ID: <20250801151251.751368-6-thuth@redhat.com>
 In-Reply-To: <20250801151251.751368-1-thuth@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,592 +88,415 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We are going to move the tests for each target into separate subdirectories.
-The migration test does not fit quite into this scheme, since it works
-for multiple targets, but not all. Rework the test to have a common
-test class, and target specific files with a target specific class, so
-that this will fit better into the new scheme.
+The tests/functional folder has become quite crowded already, some
+restructuring would be helpful here. Thus move the aarch64 tests into
+a target-specific subfolder.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  | 22 ++++++------
- .../{test_migration.py => migration.py}       | 35 +++++--------------
- tests/functional/test_aarch64_migration.py    | 26 ++++++++++++++
- tests/functional/test_alpha_migration.py      | 26 ++++++++++++++
- tests/functional/test_arm_migration.py        | 26 ++++++++++++++
- tests/functional/test_i386_migration.py       | 26 ++++++++++++++
- tests/functional/test_ppc64_migration.py      | 26 ++++++++++++++
- tests/functional/test_ppc_migration.py        | 26 ++++++++++++++
- tests/functional/test_riscv32_migration.py    | 26 ++++++++++++++
- tests/functional/test_riscv64_migration.py    | 26 ++++++++++++++
- tests/functional/test_sparc64_migration.py    | 26 ++++++++++++++
- tests/functional/test_sparc_migration.py      | 26 ++++++++++++++
- tests/functional/test_x86_64_migration.py     | 26 ++++++++++++++
- 14 files changed, 306 insertions(+), 39 deletions(-)
- rename tests/functional/{test_migration.py => migration.py} (74%)
- mode change 100755 => 100644
- create mode 100755 tests/functional/test_aarch64_migration.py
- create mode 100755 tests/functional/test_alpha_migration.py
- create mode 100755 tests/functional/test_arm_migration.py
- create mode 100755 tests/functional/test_i386_migration.py
- create mode 100755 tests/functional/test_ppc64_migration.py
- create mode 100755 tests/functional/test_ppc_migration.py
- create mode 100755 tests/functional/test_riscv32_migration.py
- create mode 100755 tests/functional/test_riscv64_migration.py
- create mode 100755 tests/functional/test_sparc64_migration.py
- create mode 100755 tests/functional/test_sparc_migration.py
- create mode 100755 tests/functional/test_x86_64_migration.py
+ MAINTAINERS                                   | 23 +++++----
+ tests/functional/aarch64/meson.build          | 48 +++++++++++++++++++
+ .../test_aspeed_ast2700.py}                   |  0
+ .../test_aspeed_ast2700fc.py}                 |  0
+ .../test_device_passthrough.py}               |  0
+ .../test_hotplug_pci.py}                      |  0
+ .../test_imx8mp_evk.py}                       |  0
+ .../test_kvm.py}                              |  0
+ .../test_migration.py}                        |  0
+ .../test_multiprocess.py}                     |  0
+ .../test_raspi3.py}                           |  0
+ .../test_raspi4.py}                           |  0
+ .../test_replay.py}                           |  0
+ .../test_reverse_debug.py}                    |  0
+ .../test_rme_sbsaref.py}                      |  2 +-
+ .../test_rme_virt.py}                         |  0
+ .../test_sbsaref.py}                          |  0
+ .../test_sbsaref_alpine.py}                   |  2 +-
+ .../test_sbsaref_freebsd.py}                  |  2 +-
+ .../test_smmu.py}                             |  0
+ .../test_tcg_plugins.py}                      |  0
+ .../test_tuxrun.py}                           |  0
+ .../test_virt.py}                             |  0
+ .../test_virt_gpu.py}                         |  0
+ .../test_xen.py}                              |  0
+ .../test_xlnx_versal.py}                      |  0
+ tests/functional/meson.build                  | 48 +------------------
+ 27 files changed, 63 insertions(+), 62 deletions(-)
+ create mode 100644 tests/functional/aarch64/meson.build
+ rename tests/functional/{test_aarch64_aspeed_ast2700.py => aarch64/test_aspeed_ast2700.py} (100%)
+ rename tests/functional/{test_aarch64_aspeed_ast2700fc.py => aarch64/test_aspeed_ast2700fc.py} (100%)
+ rename tests/functional/{test_aarch64_device_passthrough.py => aarch64/test_device_passthrough.py} (100%)
+ rename tests/functional/{test_aarch64_hotplug_pci.py => aarch64/test_hotplug_pci.py} (100%)
+ rename tests/functional/{test_aarch64_imx8mp_evk.py => aarch64/test_imx8mp_evk.py} (100%)
+ rename tests/functional/{test_aarch64_kvm.py => aarch64/test_kvm.py} (100%)
+ rename tests/functional/{test_aarch64_migration.py => aarch64/test_migration.py} (100%)
+ rename tests/functional/{test_aarch64_multiprocess.py => aarch64/test_multiprocess.py} (100%)
+ rename tests/functional/{test_aarch64_raspi3.py => aarch64/test_raspi3.py} (100%)
+ rename tests/functional/{test_aarch64_raspi4.py => aarch64/test_raspi4.py} (100%)
+ rename tests/functional/{test_aarch64_replay.py => aarch64/test_replay.py} (100%)
+ rename tests/functional/{test_aarch64_reverse_debug.py => aarch64/test_reverse_debug.py} (100%)
+ rename tests/functional/{test_aarch64_rme_sbsaref.py => aarch64/test_rme_sbsaref.py} (98%)
+ rename tests/functional/{test_aarch64_rme_virt.py => aarch64/test_rme_virt.py} (100%)
+ rename tests/functional/{test_aarch64_sbsaref.py => aarch64/test_sbsaref.py} (100%)
+ rename tests/functional/{test_aarch64_sbsaref_alpine.py => aarch64/test_sbsaref_alpine.py} (97%)
+ rename tests/functional/{test_aarch64_sbsaref_freebsd.py => aarch64/test_sbsaref_freebsd.py} (97%)
+ rename tests/functional/{test_aarch64_smmu.py => aarch64/test_smmu.py} (100%)
+ rename tests/functional/{test_aarch64_tcg_plugins.py => aarch64/test_tcg_plugins.py} (100%)
+ rename tests/functional/{test_aarch64_tuxrun.py => aarch64/test_tuxrun.py} (100%)
+ rename tests/functional/{test_aarch64_virt.py => aarch64/test_virt.py} (100%)
+ rename tests/functional/{test_aarch64_virt_gpu.py => aarch64/test_virt_gpu.py} (100%)
+ rename tests/functional/{test_aarch64_xen.py => aarch64/test_xen.py} (100%)
+ rename tests/functional/{test_aarch64_xlnx_versal.py => aarch64/test_xlnx_versal.py} (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 069d77f2f80..97f491b083c 100644
+index f2164c2b155..a4d99c38869 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3595,7 +3595,7 @@ F: include/migration/
- F: include/qemu/userfaultfd.h
- F: migration/
- F: scripts/vmstate-static-checker.py
--F: tests/functional/test_migration.py
-+F: tests/functional/*migration.py
- F: tests/vmstate-static-checker-data/
- F: tests/qtest/migration/
- F: tests/qtest/migration-*
+@@ -212,7 +212,7 @@ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/arm/smmu*
+ F: include/hw/arm/smmu*
+-F: tests/functional/test_aarch64_smmu.py
++F: tests/functional/aarch64/test_smmu.py
+ 
+ AVR TCG CPUs
+ M: Michael Rolnik <mrolnik@gmail.com>
+@@ -874,7 +874,7 @@ F: include/hw/arm/fsl-imx8mp.h
+ F: include/hw/misc/imx8mp_*.h
+ F: include/hw/pci-host/fsl_imx8m_phy.h
+ F: docs/system/arm/imx8mp-evk.rst
+-F: tests/functional/test_aarch64_imx8mp_evk.py
++F: tests/functional/aarch64/test_imx8mp_evk.py
+ F: tests/qtest/rs5c372-test.c
+ 
+ MPS2 / MPS3
+@@ -952,8 +952,7 @@ F: include/hw/arm/rasp*
+ F: include/hw/*/bcm283*
+ F: docs/system/arm/raspi.rst
+ F: tests/functional/test_arm_raspi2.py
+-F: tests/functional/test_aarch64_raspi3.py
+-F: tests/functional/test_aarch64_raspi4.py
++F: tests/functional/aarch64/test_raspi*.py
+ 
+ Real View
+ M: Peter Maydell <peter.maydell@linaro.org>
+@@ -993,7 +992,7 @@ F: hw/misc/sbsa_ec.c
+ F: hw/watchdog/sbsa_gwdt.c
+ F: include/hw/watchdog/sbsa_gwdt.h
+ F: docs/system/arm/sbsa.rst
+-F: tests/functional/test_aarch64_*sbsaref*.py
++F: tests/functional/aarch64/test_*sbsaref*.py
+ 
+ Sharp SL-5500 (Collie) PDA
+ M: Peter Maydell <peter.maydell@linaro.org>
+@@ -1063,8 +1062,8 @@ S: Maintained
+ F: hw/arm/virt*
+ F: include/hw/arm/virt.h
+ F: docs/system/arm/virt.rst
+-F: tests/functional/test_aarch64_*virt*.py
+-F: tests/functional/test_aarch64_tuxrun.py
++F: tests/functional/aarch64/test_*virt*.py
++F: tests/functional/aarch64/test_tuxrun.py
+ F: tests/functional/test_arm_tuxrun.py
+ F: tests/functional/test_arm_virt.py
+ 
+@@ -1096,7 +1095,7 @@ F: hw/display/dpcd.c
+ F: include/hw/display/dpcd.h
+ F: docs/system/arm/xlnx-versal-virt.rst
+ F: docs/system/arm/xlnx-zcu102.rst
+-F: tests/functional/test_aarch64_xlnx_versal.py
++F: tests/functional/aarch64/test_xlnx_versal.py
+ 
+ Xilinx Versal OSPI
+ M: Francisco Iglesias <francisco.iglesias@amd.com>
+@@ -2108,7 +2107,7 @@ ARM PCI Hotplug
+ M: Gustavo Romero <gustavo.romero@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Supported
+-F: tests/functional/test_aarch64_hotplug_pci.py
++F: tests/functional/aarch64/test_hotplug_pci.py
+ 
+ ACPI/SMBIOS
+ M: Michael S. Tsirkin <mst@redhat.com>
+@@ -2636,7 +2635,7 @@ M: Alex Bennée <alex.bennee@linaro.org>
+ S: Maintained
+ F: hw/core/guest-loader.c
+ F: docs/system/guest-loader.rst
+-F: tests/functional/test_aarch64_xen.py
++F: tests/functional/aarch64/test_xen.py
+ 
+ Intel Hexadecimal Object File Loader
+ M: Su Hang <suhang16@mails.ucas.ac.cn>
+@@ -2705,7 +2704,7 @@ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
+ F: docs/system/devices/virtio-gpu.rst
+-F: tests/functional/test_aarch64_virt_gpu.py
++F: tests/functional/aarch64/test_virt_gpu.py
+ 
+ vhost-user-blk
+ M: Raphael Norwitz <raphael@enfabrica.net>
+@@ -3931,7 +3930,7 @@ S: Maintained
+ F: docs/devel/tcg-plugins.rst
+ F: plugins/
+ F: tests/tcg/plugins/
+-F: tests/functional/test_aarch64_tcg_plugins.py
++F: tests/functional/aarch64/test_tcg_plugins.py
+ F: contrib/plugins/
+ F: scripts/qemu-plugin-symbols.py
+ 
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+new file mode 100644
+index 00000000000..04846c6eb18
+--- /dev/null
++++ b/tests/functional/aarch64/meson.build
+@@ -0,0 +1,48 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++test_aarch64_timeouts = {
++  'aspeed_ast2700' : 600,
++  'aspeed_ast2700fc' : 600,
++  'device_passthrough' : 720,
++  'imx8mp_evk' : 240,
++  'raspi4' : 480,
++  'reverse_debug' : 180,
++  'rme_virt' : 1200,
++  'rme_sbsaref' : 1200,
++  'sbsaref_alpine' : 1200,
++  'sbsaref_freebsd' : 720,
++  'smmu' : 720,
++  'tuxrun' : 240,
++  'virt' : 360,
++  'virt_gpu' : 480,
++}
++
++tests_aarch64_system_quick = [
++  'migration',
++]
++
++tests_aarch64_system_thorough = [
++  'aspeed_ast2700',
++  'aspeed_ast2700fc',
++  'device_passthrough',
++  'hotplug_pci',
++  'imx8mp_evk',
++  'kvm',
++  'multiprocess',
++  'raspi3',
++  'raspi4',
++  'replay',
++  'reverse_debug',
++  'rme_virt',
++  'rme_sbsaref',
++  'sbsaref',
++  'sbsaref_alpine',
++  'sbsaref_freebsd',
++  'smmu',
++  'tcg_plugins',
++  'tuxrun',
++  'virt',
++  'virt_gpu',
++  'xen',
++  'xlnx_versal',
++]
+diff --git a/tests/functional/test_aarch64_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
+similarity index 100%
+rename from tests/functional/test_aarch64_aspeed_ast2700.py
+rename to tests/functional/aarch64/test_aspeed_ast2700.py
+diff --git a/tests/functional/test_aarch64_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+similarity index 100%
+rename from tests/functional/test_aarch64_aspeed_ast2700fc.py
+rename to tests/functional/aarch64/test_aspeed_ast2700fc.py
+diff --git a/tests/functional/test_aarch64_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
+similarity index 100%
+rename from tests/functional/test_aarch64_device_passthrough.py
+rename to tests/functional/aarch64/test_device_passthrough.py
+diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/aarch64/test_hotplug_pci.py
+similarity index 100%
+rename from tests/functional/test_aarch64_hotplug_pci.py
+rename to tests/functional/aarch64/test_hotplug_pci.py
+diff --git a/tests/functional/test_aarch64_imx8mp_evk.py b/tests/functional/aarch64/test_imx8mp_evk.py
+similarity index 100%
+rename from tests/functional/test_aarch64_imx8mp_evk.py
+rename to tests/functional/aarch64/test_imx8mp_evk.py
+diff --git a/tests/functional/test_aarch64_kvm.py b/tests/functional/aarch64/test_kvm.py
+similarity index 100%
+rename from tests/functional/test_aarch64_kvm.py
+rename to tests/functional/aarch64/test_kvm.py
+diff --git a/tests/functional/test_aarch64_migration.py b/tests/functional/aarch64/test_migration.py
+similarity index 100%
+rename from tests/functional/test_aarch64_migration.py
+rename to tests/functional/aarch64/test_migration.py
+diff --git a/tests/functional/test_aarch64_multiprocess.py b/tests/functional/aarch64/test_multiprocess.py
+similarity index 100%
+rename from tests/functional/test_aarch64_multiprocess.py
+rename to tests/functional/aarch64/test_multiprocess.py
+diff --git a/tests/functional/test_aarch64_raspi3.py b/tests/functional/aarch64/test_raspi3.py
+similarity index 100%
+rename from tests/functional/test_aarch64_raspi3.py
+rename to tests/functional/aarch64/test_raspi3.py
+diff --git a/tests/functional/test_aarch64_raspi4.py b/tests/functional/aarch64/test_raspi4.py
+similarity index 100%
+rename from tests/functional/test_aarch64_raspi4.py
+rename to tests/functional/aarch64/test_raspi4.py
+diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/aarch64/test_replay.py
+similarity index 100%
+rename from tests/functional/test_aarch64_replay.py
+rename to tests/functional/aarch64/test_replay.py
+diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/aarch64/test_reverse_debug.py
+similarity index 100%
+rename from tests/functional/test_aarch64_reverse_debug.py
+rename to tests/functional/aarch64/test_reverse_debug.py
+diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/aarch64/test_rme_sbsaref.py
+similarity index 98%
+rename from tests/functional/test_aarch64_rme_sbsaref.py
+rename to tests/functional/aarch64/test_rme_sbsaref.py
+index 746770e776d..100f1c7738b 100755
+--- a/tests/functional/test_aarch64_rme_sbsaref.py
++++ b/tests/functional/aarch64/test_rme_sbsaref.py
+@@ -13,7 +13,7 @@
+ 
+ from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+-from test_aarch64_rme_virt import test_realms_guest
++from test_rme_virt import test_realms_guest
+ 
+ 
+ class Aarch64RMESbsaRefMachine(QemuSystemTest):
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/aarch64/test_rme_virt.py
+similarity index 100%
+rename from tests/functional/test_aarch64_rme_virt.py
+rename to tests/functional/aarch64/test_rme_virt.py
+diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/aarch64/test_sbsaref.py
+similarity index 100%
+rename from tests/functional/test_aarch64_sbsaref.py
+rename to tests/functional/aarch64/test_sbsaref.py
+diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/aarch64/test_sbsaref_alpine.py
+similarity index 97%
+rename from tests/functional/test_aarch64_sbsaref_alpine.py
+rename to tests/functional/aarch64/test_sbsaref_alpine.py
+index 87769993831..abb8f5114bd 100755
+--- a/tests/functional/test_aarch64_sbsaref_alpine.py
++++ b/tests/functional/aarch64/test_sbsaref_alpine.py
+@@ -12,7 +12,7 @@
+ 
+ from qemu_test import QemuSystemTest, Asset, skipSlowTest
+ from qemu_test import wait_for_console_pattern
+-from test_aarch64_sbsaref import fetch_firmware
++from test_sbsaref import fetch_firmware
+ 
+ 
+ class Aarch64SbsarefAlpine(QemuSystemTest):
+diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/aarch64/test_sbsaref_freebsd.py
+similarity index 97%
+rename from tests/functional/test_aarch64_sbsaref_freebsd.py
+rename to tests/functional/aarch64/test_sbsaref_freebsd.py
+index 7ef016fba62..3b942f7795c 100755
+--- a/tests/functional/test_aarch64_sbsaref_freebsd.py
++++ b/tests/functional/aarch64/test_sbsaref_freebsd.py
+@@ -12,7 +12,7 @@
+ 
+ from qemu_test import QemuSystemTest, Asset, skipSlowTest
+ from qemu_test import wait_for_console_pattern
+-from test_aarch64_sbsaref import fetch_firmware
++from test_sbsaref import fetch_firmware
+ 
+ 
+ class Aarch64SbsarefFreeBSD(QemuSystemTest):
+diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/aarch64/test_smmu.py
+similarity index 100%
+rename from tests/functional/test_aarch64_smmu.py
+rename to tests/functional/aarch64/test_smmu.py
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/aarch64/test_tcg_plugins.py
+similarity index 100%
+rename from tests/functional/test_aarch64_tcg_plugins.py
+rename to tests/functional/aarch64/test_tcg_plugins.py
+diff --git a/tests/functional/test_aarch64_tuxrun.py b/tests/functional/aarch64/test_tuxrun.py
+similarity index 100%
+rename from tests/functional/test_aarch64_tuxrun.py
+rename to tests/functional/aarch64/test_tuxrun.py
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/aarch64/test_virt.py
+similarity index 100%
+rename from tests/functional/test_aarch64_virt.py
+rename to tests/functional/aarch64/test_virt.py
+diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/aarch64/test_virt_gpu.py
+similarity index 100%
+rename from tests/functional/test_aarch64_virt_gpu.py
+rename to tests/functional/aarch64/test_virt_gpu.py
+diff --git a/tests/functional/test_aarch64_xen.py b/tests/functional/aarch64/test_xen.py
+similarity index 100%
+rename from tests/functional/test_aarch64_xen.py
+rename to tests/functional/aarch64/test_xen.py
+diff --git a/tests/functional/test_aarch64_xlnx_versal.py b/tests/functional/aarch64/test_xlnx_versal.py
+similarity index 100%
+rename from tests/functional/test_aarch64_xlnx_versal.py
+rename to tests/functional/aarch64/test_xlnx_versal.py
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index ecf965adc6c..5fb13928b9e 100644
+index 449a1d5c402..3229128cd7e 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -80,7 +80,7 @@ tests_generic_bsduser = [
+@@ -9,23 +9,7 @@ if get_option('tcg_interpreter')
+   subdir_done()
+ endif
+ 
+-# Timeouts for individual tests that can be slow e.g. with debugging enabled
+-test_aarch64_timeouts = {
+-  'aarch64_aspeed_ast2700' : 600,
+-  'aarch64_aspeed_ast2700fc' : 600,
+-  'aarch64_device_passthrough' : 720,
+-  'aarch64_imx8mp_evk' : 240,
+-  'aarch64_raspi4' : 480,
+-  'aarch64_reverse_debug' : 180,
+-  'aarch64_rme_virt' : 1200,
+-  'aarch64_rme_sbsaref' : 1200,
+-  'aarch64_sbsaref_alpine' : 1200,
+-  'aarch64_sbsaref_freebsd' : 720,
+-  'aarch64_smmu' : 720,
+-  'aarch64_tuxrun' : 240,
+-  'aarch64_virt' : 360,
+-  'aarch64_virt_gpu' : 480,
+-}
++subdir('aarch64')
+ 
+ test_arm_timeouts = {
+   'arm_aspeed_palmetto' : 120,
+@@ -112,36 +96,6 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
  ]
  
- tests_aarch64_system_quick = [
--  'migration',
-+  'aarch64_migration',
- ]
- 
- tests_aarch64_system_thorough = [
-@@ -110,7 +110,7 @@ tests_aarch64_system_thorough = [
- ]
- 
+-tests_aarch64_system_quick = [
+-  'aarch64_migration',
+-]
+-
+-tests_aarch64_system_thorough = [
+-  'aarch64_aspeed_ast2700',
+-  'aarch64_aspeed_ast2700fc',
+-  'aarch64_device_passthrough',
+-  'aarch64_hotplug_pci',
+-  'aarch64_imx8mp_evk',
+-  'aarch64_kvm',
+-  'aarch64_multiprocess',
+-  'aarch64_raspi3',
+-  'aarch64_raspi4',
+-  'aarch64_replay',
+-  'aarch64_reverse_debug',
+-  'aarch64_rme_virt',
+-  'aarch64_rme_sbsaref',
+-  'aarch64_sbsaref',
+-  'aarch64_sbsaref_alpine',
+-  'aarch64_sbsaref_freebsd',
+-  'aarch64_smmu',
+-  'aarch64_tcg_plugins',
+-  'aarch64_tuxrun',
+-  'aarch64_virt',
+-  'aarch64_virt_gpu',
+-  'aarch64_xen',
+-  'aarch64_xlnx_versal',
+-]
+-
  tests_alpha_system_quick = [
--  'migration',
-+  'alpha_migration',
+   'alpha_migration',
  ]
- 
- tests_alpha_system_thorough = [
-@@ -119,7 +119,7 @@ tests_alpha_system_thorough = [
- ]
- 
- tests_arm_system_quick = [
--  'migration',
-+  'arm_migration',
- ]
- 
- tests_arm_system_thorough = [
-@@ -168,7 +168,7 @@ tests_hppa_system_quick = [
- ]
- 
- tests_i386_system_quick = [
--  'migration',
-+  'i386_migration',
- ]
- 
- tests_i386_system_thorough = [
-@@ -228,7 +228,7 @@ tests_or1k_system_thorough = [
- ]
- 
- tests_ppc_system_quick = [
--  'migration',
-+  'ppc_migration',
-   'ppc_74xx',
- ]
- 
-@@ -245,7 +245,7 @@ tests_ppc_system_thorough = [
- ]
- 
- tests_ppc64_system_quick = [
--  'migration',
-+  'ppc64_migration',
- ]
- 
- tests_ppc64_system_thorough = [
-@@ -260,7 +260,7 @@ tests_ppc64_system_thorough = [
- ]
- 
- tests_riscv32_system_quick = [
--  'migration',
-+  'riscv32_migration',
-   'riscv_opensbi',
- ]
- 
-@@ -269,7 +269,7 @@ tests_riscv32_system_thorough = [
- ]
- 
- tests_riscv64_system_quick = [
--  'migration',
-+  'riscv64_migration',
-   'riscv_opensbi',
- ]
- 
-@@ -299,7 +299,7 @@ tests_sh4eb_system_thorough = [
- ]
- 
- tests_sparc_system_quick = [
--  'migration',
-+  'sparc_migration',
- ]
- 
- tests_sparc_system_thorough = [
-@@ -308,7 +308,7 @@ tests_sparc_system_thorough = [
- ]
- 
- tests_sparc64_system_quick = [
--  'migration',
-+  'sparc64_migration',
- ]
- 
- tests_sparc64_system_thorough = [
-@@ -319,7 +319,7 @@ tests_sparc64_system_thorough = [
- tests_x86_64_system_quick = [
-   'cpu_queries',
-   'mem_addr_space',
--  'migration',
-+  'x86_64_migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
-   'x86_cpu_model_versions',
-diff --git a/tests/functional/test_migration.py b/tests/functional/migration.py
-old mode 100755
-new mode 100644
-similarity index 74%
-rename from tests/functional/test_migration.py
-rename to tests/functional/migration.py
-index c4393c35434..07395544832
---- a/tests/functional/test_migration.py
-+++ b/tests/functional/migration.py
-@@ -1,6 +1,6 @@
--#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Migration test
-+# Migration test base class
- #
- # Copyright (c) 2019 Red Hat, Inc.
- #
-@@ -14,7 +14,7 @@
- import tempfile
- import time
- 
--from qemu_test import QemuSystemTest, skipIfMissingCommands
-+from qemu_test import QemuSystemTest, which
- from qemu_test.ports import Ports
- 
- 
-@@ -41,24 +41,7 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
- 
--    def select_machine(self):
--        target_machine = {
--            'aarch64': 'quanta-gsj',
--            'alpha': 'clipper',
--            'arm': 'npcm750-evb',
--            'i386': 'isapc',
--            'ppc': 'sam460ex',
--            'ppc64': 'mac99',
--            'riscv32': 'spike',
--            'riscv64': 'virt',
--            'sparc': 'SS-4',
--            'sparc64': 'sun4u',
--            'x86_64': 'microvm',
--        }
--        self.set_machine(target_machine[self.arch])
--
-     def do_migrate(self, dest_uri, src_uri=None):
--        self.select_machine()
-         dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
-         dest_vm.add_args('-nodefaults')
-         dest_vm.launch()
-@@ -76,23 +59,21 @@ def _get_free_port(self, ports):
-             self.skipTest('Failed to find a free port')
-         return port
- 
--    def test_migration_with_tcp_localhost(self):
-+    def migration_with_tcp_localhost(self):
-         with Ports() as ports:
-             dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-             self.do_migrate(dest_uri)
- 
--    def test_migration_with_unix(self):
-+    def migration_with_unix(self):
-         with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
-             dest_uri = 'unix:%s/qemu-test.sock' % socket_path
-             self.do_migrate(dest_uri)
- 
--    @skipIfMissingCommands('ncat')
--    def test_migration_with_exec(self):
-+    def migration_with_exec(self):
-+        if not which('ncat'):
-+            self.skipTest('ncat is not available')
-         with Ports() as ports:
-             free_port = self._get_free_port(ports)
-             dest_uri = 'exec:ncat -l localhost %u' % free_port
-             src_uri = 'exec:ncat localhost %u' % free_port
-             self.do_migrate(dest_uri, src_uri)
--
--if __name__ == '__main__':
--    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_migration.py b/tests/functional/test_aarch64_migration.py
-new file mode 100755
-index 00000000000..70267e756d9
---- /dev/null
-+++ b/tests/functional/test_aarch64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# aarch64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Aarch64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_alpha_migration.py b/tests/functional/test_alpha_migration.py
-new file mode 100755
-index 00000000000..f11b523ec9e
---- /dev/null
-+++ b/tests/functional/test_alpha_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Alpha migration test
-+
-+from migration import MigrationTest
-+
-+
-+class AlphaMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('clipper')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('clipper')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('clipper')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_arm_migration.py b/tests/functional/test_arm_migration.py
-new file mode 100755
-index 00000000000..0aa89f4f61a
---- /dev/null
-+++ b/tests/functional/test_arm_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# arm migration test
-+
-+from migration import MigrationTest
-+
-+
-+class ArmMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_i386_migration.py b/tests/functional/test_i386_migration.py
-new file mode 100755
-index 00000000000..a57f3164044
---- /dev/null
-+++ b/tests/functional/test_i386_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# i386 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class I386MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('isapc')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('isapc')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('isapc')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_ppc64_migration.py b/tests/functional/test_ppc64_migration.py
-new file mode 100755
-index 00000000000..5dfdaaf709a
---- /dev/null
-+++ b/tests/functional/test_ppc64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# ppc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class PpcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('mac99')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('mac99')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('mac99')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_ppc_migration.py b/tests/functional/test_ppc_migration.py
-new file mode 100755
-index 00000000000..a8692826d35
---- /dev/null
-+++ b/tests/functional/test_ppc_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# ppc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class PpcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_riscv32_migration.py b/tests/functional/test_riscv32_migration.py
-new file mode 100755
-index 00000000000..30acbbe69f9
---- /dev/null
-+++ b/tests/functional/test_riscv32_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# riscv32 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Rv32MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('spike')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('virt')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('spike')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_riscv64_migration.py b/tests/functional/test_riscv64_migration.py
-new file mode 100755
-index 00000000000..2d613a29ec4
---- /dev/null
-+++ b/tests/functional/test_riscv64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# riscv64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Rv64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('virt')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('spike')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('virt')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_sparc64_migration.py b/tests/functional/test_sparc64_migration.py
-new file mode 100755
-index 00000000000..a8a6c73c354
---- /dev/null
-+++ b/tests/functional/test_sparc64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Sparc64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Sparc64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_sparc_migration.py b/tests/functional/test_sparc_migration.py
-new file mode 100755
-index 00000000000..dd6d5783b11
---- /dev/null
-+++ b/tests/functional/test_sparc_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Sparc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class SparcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('SS-4')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('SS-5')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('SS-4')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_x86_64_migration.py b/tests/functional/test_x86_64_migration.py
-new file mode 100755
-index 00000000000..f3a517ae1f6
---- /dev/null
-+++ b/tests/functional/test_x86_64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# x86_64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class X8664MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('microvm')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('microvm')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('microvm')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
 -- 
 2.50.1
 
