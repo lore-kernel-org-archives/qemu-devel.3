@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D47C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D006C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqpP-0001zS-GE; Fri, 01 Aug 2025 10:33:47 -0400
+	id 1uhqnd-0007d3-V3; Fri, 01 Aug 2025 10:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhP-0005RZ-Fx
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhV-0005aU-S3
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhM-0002j3-HR
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhU-0002oD-4w
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058326;
+ s=mimecast20190719; t=1754058335;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AigbT03t6Dx2Zi4WTEKRTIlUrva/CR4VU0he0l7c2Hw=;
- b=ANpNuXGEraHzHJsL/mzk0EYT/7QA0Kvm5OcAY63QmXAnSaKo9T8kkmtoby7ShjLYSoHitg
- TLqz6MKIp22BAIucFsBmOMmBC3qKv1JeyEJgMc7HLRX0FKxhwBNqIrIsFD1+v+83zFaIwA
- 8GmbbIkPPUTwejfd6xN33N5h1BgfRi8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gUOuxsFcKExXqP/V7LZEk0bWxeYWJUworvF5GqipL/Q=;
+ b=HfMBku3n/f9bP1zUpeVeiUxuOD0+x35nQuOR14EMvoQqheSQNg9foVtYjQONrUKO4oHySx
+ hWKKnoPUXmyr6IgcKtqjNUrV+6Z+IZHhmHlyro2Xy/68OhtXNIuItu0Ple/FN8sN6zZk4h
+ 3gcwavYVMEmxs+LjGOzbxJDSi/eKwgM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-pMLr5UUhNdK5jMRewsX2rQ-1; Fri, 01 Aug 2025 10:25:25 -0400
-X-MC-Unique: pMLr5UUhNdK5jMRewsX2rQ-1
-X-Mimecast-MFC-AGG-ID: pMLr5UUhNdK5jMRewsX2rQ_1754058325
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3b78c983014so127258f8f.0
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:25 -0700 (PDT)
+ us-mta-652-BAeRgtRnPy-0MSNiHL0knQ-1; Fri, 01 Aug 2025 10:25:32 -0400
+X-MC-Unique: BAeRgtRnPy-0MSNiHL0knQ-1
+X-Mimecast-MFC-AGG-ID: BAeRgtRnPy-0MSNiHL0knQ_1754058332
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-455e918d690so15301905e9.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058324; x=1754663124;
+ d=1e100.net; s=20230601; t=1754058331; x=1754663131;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AigbT03t6Dx2Zi4WTEKRTIlUrva/CR4VU0he0l7c2Hw=;
- b=aTuCx2em8+a7OBeCqpatDA+ADbo2xlipwyWCjpD30D/3DSmm0rpADixhFILA9LgfjF
- JAYFrfa1VGC9Y38iACpszNAH6o/Rqy8Jr6+sDwCBtS2/wmNdCnRtAAzrZLCTJL9wwlQu
- xya2W7fV945iOZzmH4O2h+ECSDFebmtwjz721j166KdH4XUyTX5/VYxMHh29bWlxeXuK
- NksgB6mUMzVH8ITbzcwhKOk9pp5hjQuGgv1e1+qppdb72C0KUwK1jUPgrj+h9iYxC6qT
- NqB6hEqVPKLkHEghzwPDNqlJH6F+FL3hnl75bldkLSmr8dVKnHk2H6ZoRk87bCVCSwGM
- 9fJw==
-X-Gm-Message-State: AOJu0YyBSrISqAM2onqXugcjXgtq3dLFz6en9RSHDifcdWFOitbzrjy4
- /vW1gCQcityezujLOfPnSMF0nlqFbTuK4JPZoYQGCkt1pJEFrjDWHy3XBiNv9zHkvzkMHbKi2sv
- RCppH/9JYivg926Dv9aKYsd0FfeRb92lHIvNTHL0ulQYXh3xtdUKuVROTQ0CMuOOlhnuvcXbt+O
- CvMTeWOYe1mMvp2KVPeYMvUAAtwN3Gm6Nbig==
-X-Gm-Gg: ASbGncv8s9H9sC8dGm/xTLy0w/961NAb+mduPljAAjy/2FEu+qRxc3OzFOGeBLI7NZf
- skAv2+FJh/D3GUWGFQpThAeZNcYc5W3l8LhRK2012SBo3gVSR6wRuhWDmrbiOvnzJRXya9Ku3Ap
- M23VYg2tgC5/DLO9tH7uoIn7+lVhL4J+F7NfVa5+5XnU5y0Tp4u7NrP8FbpU8IEl249C5COy2Bn
- pc2HsckVuEJ5v3p6uB7rQPlNNMCGfE6mfqaOBQDntUfy+zRmefJKoH5HK522LamYCRKYo1nCZYW
- E9RghA46bLs7l0wQzbqOQdz8Y7+nX4ZU
-X-Received: by 2002:a05:6000:26ca:b0:3b7:7c18:c72d with SMTP id
- ffacd0b85a97d-3b794fc1a99mr9201036f8f.4.1754058324296; 
- Fri, 01 Aug 2025 07:25:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHffW4HPsaBKkwpjr+ZDkjzYe2KdD7t2nb4I6qbz0fn1/eJQ3uKpuOIvJ0eTdJ9Nczgdw799A==
-X-Received: by 2002:a05:6000:26ca:b0:3b7:7c18:c72d with SMTP id
- ffacd0b85a97d-3b794fc1a99mr9201007f8f.4.1754058323862; 
- Fri, 01 Aug 2025 07:25:23 -0700 (PDT)
+ bh=gUOuxsFcKExXqP/V7LZEk0bWxeYWJUworvF5GqipL/Q=;
+ b=fMven84KneBcXsW/PqLaNeEp1mJGsLm4m6rNS0gLv4QWVdWs/LPp9WZpyIgqyDhLiM
+ dPgMQPmss63hvXsKhSxPIZambk0agiHuLEElZC97Mjm1dhmBQLFlKsS5L2Bx6HwrBalL
+ cqmH21G7Xr3l9AI7zRKPAtICuEOIczI9+G8nR4hS6w4cNWY5AM6+bVuOyvTKeXYJGjqs
+ Ys1vtpXd7B/eBK3kPfJ6rXjVyfBMEcSR8cbNi+/c/9nVd65P0Z6iAkbIL9yq7Q0lX7Xn
+ o0o0Kzy4EnGVoVH0CSz1YymTjB4F+zuoLRJ+kM7JAG7wCHQFiZl5+olZcLp66kigM+Ut
+ xANA==
+X-Gm-Message-State: AOJu0YwogsU6+3fy0y3GEytrSJ/vslr0v/zKQPBMM60Wny4irk1vHXB5
+ FqMSG8tN+wBT57iv3WEC8oN+vlbVxldlmvuhegrXxu3L3JzOZzbAc9CTRE9Lmj+5EDLUQFMnZb0
+ LYD8GG3qpq6OJgpdlmydmOyYFx0QoQfy1U3ma08MPypuPpLZnrGVYc/vMFsCqaYz/r5gKiVnTji
+ EeKBGJbogCqtXK+Kkm+VLVx8ZpryWd/3Aimw==
+X-Gm-Gg: ASbGnctx6qOHN76XatC24qGhRN3cPOxffyPfAUb1WfUemiquXyv5+4Wj6HqMZEQaovC
+ 1FKLl0zOCdRzGt9jEEKcZn7ILIVoXMYDStkPvVtfBH3nhYHiU8zvWdPsW5TmHrLm9/c4o2fW+Ul
+ Af0QZxKlS49dby7t1FspbLzSipm3f8XcXgggaIQp+280D60PPwwPILgupVqEngCOXFLLIw5IKKN
+ gkVEV5VoxwP3K5i+VgSx8MW6boCm8mX8eJRSHgJ84JiOkwVJt86YhaEyQN57YE3zmU4CsvHqegy
+ RBWQVgF29t8zgesqIoO4epyroqDuY5Y8
+X-Received: by 2002:a05:600c:3d8d:b0:456:f22:ca49 with SMTP id
+ 5b1f17b1804b1-458a17e6e41mr60183125e9.0.1754058330914; 
+ Fri, 01 Aug 2025 07:25:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrBGKjIoyHawiA1OZmeeyJE46mA4tkAg1c216rHjJOdUx5wWs8ZJXB8JcgPwvMPPtp9CesYQ==
+X-Received: by 2002:a05:600c:3d8d:b0:456:f22:ca49 with SMTP id
+ 5b1f17b1804b1-458a17e6e41mr60182845e9.0.1754058330488; 
+ Fri, 01 Aug 2025 07:25:30 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3ad803sm6017813f8f.6.2025.08.01.07.25.22
+ ffacd0b85a97d-3b79c4a6f6fsm6306298f8f.74.2025.08.01.07.25.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:23 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:25:21 -0400
+ Fri, 01 Aug 2025 07:25:30 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:25:28 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Ethan MILON <ethan.milon@eviden.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 09/17] hw/i386/amd_iommu: Fix amdvi_write*()
-Message-ID: <47d3b32d6fb1c6ec8afb78d12d2420dbbb4c3499.1754058276.git.mst@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 12/17] tests/acpi: virt: add an empty HEST file
+Message-ID: <8d5613d2eefa6ca94b3c642583488e20915c48f7.1754058276.git.mst@redhat.com>
 References: <cover.1754058276.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -112,72 +111,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-amdvi_write*() function do not preserve the older values of W1C bits in
-the MMIO register. This results in all W1C bits set to 0, when guest
-tries to reset a single bit by writing 1 to it. Fix this by preserving
-W1C bits in the old value of the MMIO register.
+Such file will be used to track HEST table changes.
 
-Fixes: d29a09ca68428 ("hw/i386: Introduce AMD IOMMU")
-Suggested-by: Ethan MILON <ethan.milon@eviden.com>
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Message-Id: <20250801060507.3382-5-sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+For now, disallow HEST table check until we update it to the
+current data.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <e25ea751a23c7d8da812233c83ce943efbeaaf91.1749741085.git.mchehab+huawei@kernel.org>
 ---
- hw/i386/amd_iommu.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ tests/data/acpi/aarch64/virt/HEST           | 0
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/HEST
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 7308611bf1..c9c32cf7b0 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -123,8 +123,13 @@ static void amdvi_writew(AMDVIState *s, hwaddr addr, uint16_t val)
-     uint16_t romask = lduw_le_p(&s->romask[addr]);
-     uint16_t w1cmask = lduw_le_p(&s->w1cmask[addr]);
-     uint16_t oldval = lduw_le_p(&s->mmior[addr]);
-+
-+    uint16_t oldval_preserved = oldval & (romask | w1cmask);
-+    uint16_t newval_write = val & ~romask;
-+    uint16_t newval_w1c_set = val & w1cmask;
-+
-     stw_le_p(&s->mmior[addr],
--            ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
-+             (oldval_preserved | newval_write) & ~newval_w1c_set);
- }
- 
- static void amdvi_writel(AMDVIState *s, hwaddr addr, uint32_t val)
-@@ -132,8 +137,13 @@ static void amdvi_writel(AMDVIState *s, hwaddr addr, uint32_t val)
-     uint32_t romask = ldl_le_p(&s->romask[addr]);
-     uint32_t w1cmask = ldl_le_p(&s->w1cmask[addr]);
-     uint32_t oldval = ldl_le_p(&s->mmior[addr]);
-+
-+    uint32_t oldval_preserved = oldval & (romask | w1cmask);
-+    uint32_t newval_write = val & ~romask;
-+    uint32_t newval_w1c_set = val & w1cmask;
-+
-     stl_le_p(&s->mmior[addr],
--            ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
-+             (oldval_preserved | newval_write) & ~newval_w1c_set);
- }
- 
- static void amdvi_writeq(AMDVIState *s, hwaddr addr, uint64_t val)
-@@ -141,8 +151,13 @@ static void amdvi_writeq(AMDVIState *s, hwaddr addr, uint64_t val)
-     uint64_t romask = ldq_le_p(&s->romask[addr]);
-     uint64_t w1cmask = ldq_le_p(&s->w1cmask[addr]);
-     uint64_t oldval = ldq_le_p(&s->mmior[addr]);
-+
-+    uint64_t oldval_preserved = oldval & (romask | w1cmask);
-+    uint64_t newval_write = val & ~romask;
-+    uint64_t newval_w1c_set = val & w1cmask;
-+
-     stq_le_p(&s->mmior[addr],
--            ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
-+             (oldval_preserved | newval_write) & ~newval_w1c_set);
- }
- 
- /* OR a 64-bit register with a 64-bit value */
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..39901c58d6 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/HEST",
+diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 MST
 
