@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACC6C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD79C87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 16:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhsT2-0007x0-DG; Fri, 01 Aug 2025 12:18:48 -0400
+	id 1uhsT0-0007Wj-4V; Fri, 01 Aug 2025 12:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRa-0000k4-Eu
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRS-0000gP-Tw
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRY-0002dl-5X
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uhrRP-0002bo-ES
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 11:13:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754061189;
+ s=mimecast20190719; t=1754061182;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ibm3kgce5FekFo1WNXT0w96YzFVkoA7AKH6q7v2gODw=;
- b=RkSt+gzG5Qaz6FfSkzKxm5BHNsoyk1XeUcvvdrN7yn+ZhHN+SNzIgqWwP1jSiJFzM7xlrp
- 0IVCZNahfFbZoIBmVt20xcGdABE/naBr7s7qFV9eWJ80SSJpoUhKLPKiwnZeV3iTATU+P3
- tynk1jNP3rQJXV5aSELfOb5NKUACE0Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=M2PPIqaARayPULG75VltuiTlFhnXiX7YEcOqTi5HXsE=;
+ b=i57n5yrboeo5qutMZzkp35sNptKhKu//6X/oXXMAkouagewiPAdY79eQQpPyNkH+b6POvl
+ yBh1Cf23WNkInKb7w6jbl8rqRcwDABIrhWBZnkXxS0HRBPTTTVQ4kUUTmDqZjCEMXeHRG7
+ 20200Pyf02mLf3YidI5XieO9IxOfNKw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-ZqZZOCIlNQevAPSmKt52Jw-1; Fri,
- 01 Aug 2025 11:13:06 -0400
-X-MC-Unique: ZqZZOCIlNQevAPSmKt52Jw-1
-X-Mimecast-MFC-AGG-ID: ZqZZOCIlNQevAPSmKt52Jw_1754061185
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-gv5Ni3mUM52Kp2ff4ph5zg-1; Fri,
+ 01 Aug 2025 11:13:01 -0400
+X-MC-Unique: gv5Ni3mUM52Kp2ff4ph5zg-1
+X-Mimecast-MFC-AGG-ID: gv5Ni3mUM52Kp2ff4ph5zg_1754061180
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30286195608F; Fri,  1 Aug 2025 15:13:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3991E19773EB; Fri,  1 Aug 2025 15:13:00 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.225.137])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E54171800B4F; Fri,  1 Aug 2025 15:13:00 +0000 (UTC)
+ id 8BBC81800B4F; Fri,  1 Aug 2025 15:12:57 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 02/24] tests/functional: Rework the multiprocess test to have
+Subject: [PATCH 01/24] tests/functional: Rework the migration test to have
  target-specific files
-Date: Fri,  1 Aug 2025 17:12:27 +0200
-Message-ID: <20250801151251.751368-3-thuth@redhat.com>
+Date: Fri,  1 Aug 2025 17:12:26 +0200
+Message-ID: <20250801151251.751368-2-thuth@redhat.com>
 In-Reply-To: <20250801151251.751368-1-thuth@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -89,210 +89,591 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Thomas Huth <thuth@redhat.com>
 
 We are going to move the tests for each target into separate subdirectories.
-The multiprocess test currently contains code for both, x86 and aarch64,
-so it does not quite fit into this scheme. Rework the test to have a common
+The migration test does not fit quite into this scheme, since it works
+for multiple targets, but not all. Rework the test to have a common
 test class, and target specific files with a target specific class, so
 that this will fit better into the new scheme.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
  MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  |  4 +-
- .../{test_multiprocess.py => multiprocess.py} | 40 +------------------
- tests/functional/test_aarch64_multiprocess.py | 31 ++++++++++++++
- tests/functional/test_x86_64_multiprocess.py  | 31 ++++++++++++++
- 5 files changed, 67 insertions(+), 41 deletions(-)
- rename tests/functional/{test_multiprocess.py => multiprocess.py} (58%)
+ tests/functional/meson.build                  | 22 ++++++------
+ .../{test_migration.py => migration.py}       | 35 +++++--------------
+ tests/functional/test_aarch64_migration.py    | 26 ++++++++++++++
+ tests/functional/test_alpha_migration.py      | 26 ++++++++++++++
+ tests/functional/test_arm_migration.py        | 26 ++++++++++++++
+ tests/functional/test_i386_migration.py       | 26 ++++++++++++++
+ tests/functional/test_ppc64_migration.py      | 26 ++++++++++++++
+ tests/functional/test_ppc_migration.py        | 26 ++++++++++++++
+ tests/functional/test_riscv32_migration.py    | 26 ++++++++++++++
+ tests/functional/test_riscv64_migration.py    | 26 ++++++++++++++
+ tests/functional/test_sparc64_migration.py    | 26 ++++++++++++++
+ tests/functional/test_sparc_migration.py      | 26 ++++++++++++++
+ tests/functional/test_x86_64_migration.py     | 26 ++++++++++++++
+ 14 files changed, 306 insertions(+), 39 deletions(-)
+ rename tests/functional/{test_migration.py => migration.py} (74%)
  mode change 100755 => 100644
- create mode 100755 tests/functional/test_aarch64_multiprocess.py
- create mode 100755 tests/functional/test_x86_64_multiprocess.py
+ create mode 100755 tests/functional/test_aarch64_migration.py
+ create mode 100755 tests/functional/test_alpha_migration.py
+ create mode 100755 tests/functional/test_arm_migration.py
+ create mode 100755 tests/functional/test_i386_migration.py
+ create mode 100755 tests/functional/test_ppc64_migration.py
+ create mode 100755 tests/functional/test_ppc_migration.py
+ create mode 100755 tests/functional/test_riscv32_migration.py
+ create mode 100755 tests/functional/test_riscv64_migration.py
+ create mode 100755 tests/functional/test_sparc64_migration.py
+ create mode 100755 tests/functional/test_sparc_migration.py
+ create mode 100755 tests/functional/test_x86_64_migration.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 97f491b083c..f2164c2b155 100644
+index 069d77f2f80..97f491b083c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4284,7 +4284,7 @@ F: hw/remote/vfio-user-obj.c
- F: include/hw/remote/vfio-user-obj.h
- F: hw/remote/iommu.c
- F: include/hw/remote/iommu.h
--F: tests/functional/test_multiprocess.py
-+F: tests/functional/*multiprocess.py
- 
- VFIO-USER:
- M: John Levon <john.levon@nutanix.com>
+@@ -3595,7 +3595,7 @@ F: include/migration/
+ F: include/qemu/userfaultfd.h
+ F: migration/
+ F: scripts/vmstate-static-checker.py
+-F: tests/functional/test_migration.py
++F: tests/functional/*migration.py
+ F: tests/vmstate-static-checker-data/
+ F: tests/qtest/migration/
+ F: tests/qtest/migration-*
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 5fb13928b9e..19ea85a6361 100644
+index ecf965adc6c..5fb13928b9e 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -90,6 +90,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_hotplug_pci',
-   'aarch64_imx8mp_evk',
-   'aarch64_kvm',
-+  'aarch64_multiprocess',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-   'aarch64_replay',
-@@ -106,7 +107,6 @@ tests_aarch64_system_thorough = [
-   'aarch64_virt_gpu',
-   'aarch64_xen',
-   'aarch64_xlnx_versal',
--  'multiprocess',
+@@ -80,7 +80,7 @@ tests_generic_bsduser = [
+ ]
+ 
+ tests_aarch64_system_quick = [
+-  'migration',
++  'aarch64_migration',
+ ]
+ 
+ tests_aarch64_system_thorough = [
+@@ -110,7 +110,7 @@ tests_aarch64_system_thorough = [
  ]
  
  tests_alpha_system_quick = [
-@@ -331,7 +331,7 @@ tests_x86_64_system_thorough = [
-   'acpi_bits',
-   'intel_iommu',
-   'linux_initrd',
--  'multiprocess',
-+  'x86_64_multiprocess',
-   'netdev_ethtool',
-   'virtio_balloon',
-   'virtio_gpu',
-diff --git a/tests/functional/test_multiprocess.py b/tests/functional/multiprocess.py
+-  'migration',
++  'alpha_migration',
+ ]
+ 
+ tests_alpha_system_thorough = [
+@@ -119,7 +119,7 @@ tests_alpha_system_thorough = [
+ ]
+ 
+ tests_arm_system_quick = [
+-  'migration',
++  'arm_migration',
+ ]
+ 
+ tests_arm_system_thorough = [
+@@ -168,7 +168,7 @@ tests_hppa_system_quick = [
+ ]
+ 
+ tests_i386_system_quick = [
+-  'migration',
++  'i386_migration',
+ ]
+ 
+ tests_i386_system_thorough = [
+@@ -228,7 +228,7 @@ tests_or1k_system_thorough = [
+ ]
+ 
+ tests_ppc_system_quick = [
+-  'migration',
++  'ppc_migration',
+   'ppc_74xx',
+ ]
+ 
+@@ -245,7 +245,7 @@ tests_ppc_system_thorough = [
+ ]
+ 
+ tests_ppc64_system_quick = [
+-  'migration',
++  'ppc64_migration',
+ ]
+ 
+ tests_ppc64_system_thorough = [
+@@ -260,7 +260,7 @@ tests_ppc64_system_thorough = [
+ ]
+ 
+ tests_riscv32_system_quick = [
+-  'migration',
++  'riscv32_migration',
+   'riscv_opensbi',
+ ]
+ 
+@@ -269,7 +269,7 @@ tests_riscv32_system_thorough = [
+ ]
+ 
+ tests_riscv64_system_quick = [
+-  'migration',
++  'riscv64_migration',
+   'riscv_opensbi',
+ ]
+ 
+@@ -299,7 +299,7 @@ tests_sh4eb_system_thorough = [
+ ]
+ 
+ tests_sparc_system_quick = [
+-  'migration',
++  'sparc_migration',
+ ]
+ 
+ tests_sparc_system_thorough = [
+@@ -308,7 +308,7 @@ tests_sparc_system_thorough = [
+ ]
+ 
+ tests_sparc64_system_quick = [
+-  'migration',
++  'sparc64_migration',
+ ]
+ 
+ tests_sparc64_system_thorough = [
+@@ -319,7 +319,7 @@ tests_sparc64_system_thorough = [
+ tests_x86_64_system_quick = [
+   'cpu_queries',
+   'mem_addr_space',
+-  'migration',
++  'x86_64_migration',
+   'pc_cpu_hotplug_props',
+   'virtio_version',
+   'x86_cpu_model_versions',
+diff --git a/tests/functional/test_migration.py b/tests/functional/migration.py
 old mode 100755
 new mode 100644
-similarity index 58%
-rename from tests/functional/test_multiprocess.py
-rename to tests/functional/multiprocess.py
-index 92d5207b0eb..6a06c1eda19
---- a/tests/functional/test_multiprocess.py
-+++ b/tests/functional/multiprocess.py
-@@ -1,4 +1,4 @@
+similarity index 74%
+rename from tests/functional/test_migration.py
+rename to tests/functional/migration.py
+index c4393c35434..07395544832
+--- a/tests/functional/test_migration.py
++++ b/tests/functional/migration.py
+@@ -1,6 +1,6 @@
 -#!/usr/bin/env python3
 +# SPDX-License-Identifier: GPL-2.0-or-later
  #
- # Test for multiprocess qemu
+-# Migration test
++# Migration test base class
  #
-@@ -9,33 +9,13 @@
- import os
- import socket
+ # Copyright (c) 2019 Red Hat, Inc.
+ #
+@@ -14,7 +14,7 @@
+ import tempfile
+ import time
  
--from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
-+from qemu_test import QemuSystemTest, wait_for_console_pattern
- from qemu_test import exec_command, exec_command_and_wait_for_pattern
+-from qemu_test import QemuSystemTest, skipIfMissingCommands
++from qemu_test import QemuSystemTest, which
+ from qemu_test.ports import Ports
  
- class Multiprocess(QemuSystemTest):
  
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+@@ -41,24 +41,7 @@ def assert_migration(self, src_vm, dst_vm):
+         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
+         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
  
--    ASSET_KERNEL_X86 = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
--         '/releases/31/Everything/x86_64/os/images/pxeboot/vmlinuz'),
--        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
+-    def select_machine(self):
+-        target_machine = {
+-            'aarch64': 'quanta-gsj',
+-            'alpha': 'clipper',
+-            'arm': 'npcm750-evb',
+-            'i386': 'isapc',
+-            'ppc': 'sam460ex',
+-            'ppc64': 'mac99',
+-            'riscv32': 'spike',
+-            'riscv64': 'virt',
+-            'sparc': 'SS-4',
+-            'sparc64': 'sun4u',
+-            'x86_64': 'microvm',
+-        }
+-        self.set_machine(target_machine[self.arch])
 -
--    ASSET_INITRD_X86 = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
--         '/releases/31/Everything/x86_64/os/images/pxeboot/initrd.img'),
--        '3b6cb5c91a14c42e2f61520f1689264d865e772a1f0069e660a800d31dd61fb9')
--
--    ASSET_KERNEL_AARCH64 = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
--         '/releases/31/Everything/aarch64/os/images/pxeboot/vmlinuz'),
--        '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
--
--    ASSET_INITRD_AARCH64 = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
--         '/releases/31/Everything/aarch64/os/images/pxeboot/initrd.img'),
--        '9fd230cab10b1dafea41cf00150e6669d37051fad133bd618d2130284e16d526')
--
-     def do_test(self, kernel_asset, initrd_asset,
-                 kernel_command_line, machine_type):
-         """Main test method"""
-@@ -85,19 +65,3 @@ def do_test(self, kernel_asset, initrd_asset,
+     def do_migrate(self, dest_uri, src_uri=None):
+-        self.select_machine()
+         dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
+         dest_vm.add_args('-nodefaults')
+         dest_vm.launch()
+@@ -76,23 +59,21 @@ def _get_free_port(self, ports):
+             self.skipTest('Failed to find a free port')
+         return port
  
-         proxy_sock.close()
-         remote_sock.close()
--
--    def test_multiprocess(self):
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
--        if self.arch == 'x86_64':
--            kernel_command_line += 'console=ttyS0 rdinit=/bin/bash'
--            self.do_test(self.ASSET_KERNEL_X86, self.ASSET_INITRD_X86,
--                         kernel_command_line, 'pc')
--        elif self.arch == 'aarch64':
--            kernel_command_line += 'rdinit=/bin/bash console=ttyAMA0'
--            self.do_test(self.ASSET_KERNEL_AARCH64, self.ASSET_INITRD_AARCH64,
--                         kernel_command_line, 'virt,gic-version=3')
--        else:
--            assert False
+-    def test_migration_with_tcp_localhost(self):
++    def migration_with_tcp_localhost(self):
+         with Ports() as ports:
+             dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
+             self.do_migrate(dest_uri)
+ 
+-    def test_migration_with_unix(self):
++    def migration_with_unix(self):
+         with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
+             dest_uri = 'unix:%s/qemu-test.sock' % socket_path
+             self.do_migrate(dest_uri)
+ 
+-    @skipIfMissingCommands('ncat')
+-    def test_migration_with_exec(self):
++    def migration_with_exec(self):
++        if not which('ncat'):
++            self.skipTest('ncat is not available')
+         with Ports() as ports:
+             free_port = self._get_free_port(ports)
+             dest_uri = 'exec:ncat -l localhost %u' % free_port
+             src_uri = 'exec:ncat localhost %u' % free_port
+             self.do_migrate(dest_uri, src_uri)
 -
 -if __name__ == '__main__':
 -    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_multiprocess.py b/tests/functional/test_aarch64_multiprocess.py
+diff --git a/tests/functional/test_aarch64_migration.py b/tests/functional/test_aarch64_migration.py
 new file mode 100755
-index 00000000000..1c6e45ecb67
+index 00000000000..70267e756d9
 --- /dev/null
-+++ b/tests/functional/test_aarch64_multiprocess.py
-@@ -0,0 +1,31 @@
++++ b/tests/functional/test_aarch64_migration.py
+@@ -0,0 +1,26 @@
 +#!/usr/bin/env python3
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +#
-+# Test for multiprocess qemu on aarch64
++# aarch64 migration test
 +
-+from multiprocess import Multiprocess
-+from qemu_test import Asset
++from migration import MigrationTest
 +
 +
-+class Aarch64Multiprocess(Multiprocess):
++class Aarch64MigrationTest(MigrationTest):
 +
-+    ASSET_KERNEL_AARCH64 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-+        '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('quanta-gsj')
++        self.migration_with_tcp_localhost()
 +
-+    ASSET_INITRD_AARCH64 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/aarch64/os/images/pxeboot/initrd.img'),
-+        '9fd230cab10b1dafea41cf00150e6669d37051fad133bd618d2130284e16d526')
++    def test_migration_with_unix(self):
++        self.set_machine('quanta-gsj')
++        self.migration_with_unix()
 +
-+    def test_multiprocess(self):
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'rdinit=/bin/bash console=ttyAMA0')
-+        self.do_test(self.ASSET_KERNEL_AARCH64, self.ASSET_INITRD_AARCH64,
-+                     kernel_command_line, 'virt,gic-version=3')
++    def test_migration_with_exec(self):
++        self.set_machine('quanta-gsj')
++        self.migration_with_exec()
 +
 +
 +if __name__ == '__main__':
-+    Multiprocess.main()
-diff --git a/tests/functional/test_x86_64_multiprocess.py b/tests/functional/test_x86_64_multiprocess.py
++    MigrationTest.main()
+diff --git a/tests/functional/test_alpha_migration.py b/tests/functional/test_alpha_migration.py
 new file mode 100755
-index 00000000000..756629dd446
+index 00000000000..f11b523ec9e
 --- /dev/null
-+++ b/tests/functional/test_x86_64_multiprocess.py
-@@ -0,0 +1,31 @@
++++ b/tests/functional/test_alpha_migration.py
+@@ -0,0 +1,26 @@
 +#!/usr/bin/env python3
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +#
-+# Test for multiprocess qemu on x86
++# Alpha migration test
 +
-+from multiprocess import Multiprocess
-+from qemu_test import Asset
++from migration import MigrationTest
 +
 +
-+class X86Multiprocess(Multiprocess):
++class AlphaMigrationTest(MigrationTest):
 +
-+    ASSET_KERNEL_X86 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('clipper')
++        self.migration_with_tcp_localhost()
 +
-+    ASSET_INITRD_X86 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
-+         '/releases/31/Everything/x86_64/os/images/pxeboot/initrd.img'),
-+        '3b6cb5c91a14c42e2f61520f1689264d865e772a1f0069e660a800d31dd61fb9')
++    def test_migration_with_unix(self):
++        self.set_machine('clipper')
++        self.migration_with_unix()
 +
-+    def test_multiprocess(self):
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'console=ttyS0 rdinit=/bin/bash')
-+        self.do_test(self.ASSET_KERNEL_X86, self.ASSET_INITRD_X86,
-+                     kernel_command_line, 'pc')
++    def test_migration_with_exec(self):
++        self.set_machine('clipper')
++        self.migration_with_exec()
 +
 +
 +if __name__ == '__main__':
-+    Multiprocess.main()
++    MigrationTest.main()
+diff --git a/tests/functional/test_arm_migration.py b/tests/functional/test_arm_migration.py
+new file mode 100755
+index 00000000000..0aa89f4f61a
+--- /dev/null
++++ b/tests/functional/test_arm_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# arm migration test
++
++from migration import MigrationTest
++
++
++class ArmMigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('npcm750-evb')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('npcm750-evb')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('npcm750-evb')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_i386_migration.py b/tests/functional/test_i386_migration.py
+new file mode 100755
+index 00000000000..a57f3164044
+--- /dev/null
++++ b/tests/functional/test_i386_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# i386 migration test
++
++from migration import MigrationTest
++
++
++class I386MigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('isapc')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('isapc')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('isapc')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_ppc64_migration.py b/tests/functional/test_ppc64_migration.py
+new file mode 100755
+index 00000000000..5dfdaaf709a
+--- /dev/null
++++ b/tests/functional/test_ppc64_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# ppc migration test
++
++from migration import MigrationTest
++
++
++class PpcMigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('mac99')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('mac99')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('mac99')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_ppc_migration.py b/tests/functional/test_ppc_migration.py
+new file mode 100755
+index 00000000000..a8692826d35
+--- /dev/null
++++ b/tests/functional/test_ppc_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# ppc migration test
++
++from migration import MigrationTest
++
++
++class PpcMigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('sam460ex')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('sam460ex')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('sam460ex')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_riscv32_migration.py b/tests/functional/test_riscv32_migration.py
+new file mode 100755
+index 00000000000..30acbbe69f9
+--- /dev/null
++++ b/tests/functional/test_riscv32_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# riscv32 migration test
++
++from migration import MigrationTest
++
++
++class Rv32MigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('spike')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('virt')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('spike')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_riscv64_migration.py b/tests/functional/test_riscv64_migration.py
+new file mode 100755
+index 00000000000..2d613a29ec4
+--- /dev/null
++++ b/tests/functional/test_riscv64_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# riscv64 migration test
++
++from migration import MigrationTest
++
++
++class Rv64MigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('virt')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('spike')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('virt')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_sparc64_migration.py b/tests/functional/test_sparc64_migration.py
+new file mode 100755
+index 00000000000..a8a6c73c354
+--- /dev/null
++++ b/tests/functional/test_sparc64_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Sparc64 migration test
++
++from migration import MigrationTest
++
++
++class Sparc64MigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('sun4u')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('sun4u')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('sun4u')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_sparc_migration.py b/tests/functional/test_sparc_migration.py
+new file mode 100755
+index 00000000000..dd6d5783b11
+--- /dev/null
++++ b/tests/functional/test_sparc_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Sparc migration test
++
++from migration import MigrationTest
++
++
++class SparcMigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('SS-4')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('SS-5')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('SS-4')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
+diff --git a/tests/functional/test_x86_64_migration.py b/tests/functional/test_x86_64_migration.py
+new file mode 100755
+index 00000000000..f3a517ae1f6
+--- /dev/null
++++ b/tests/functional/test_x86_64_migration.py
+@@ -0,0 +1,26 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# x86_64 migration test
++
++from migration import MigrationTest
++
++
++class X8664MigrationTest(MigrationTest):
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('microvm')
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('microvm')
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('microvm')
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
 -- 
 2.50.1
 
