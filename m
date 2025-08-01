@@ -4,69 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C60C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E8AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhjox-0001R5-98; Fri, 01 Aug 2025 03:05:06 -0400
+	id 1uhjpt-0002jk-By; Fri, 01 Aug 2025 03:06:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uhjUf-000848-0V; Fri, 01 Aug 2025 02:43:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1uhjUb-00044D-Nq; Fri, 01 Aug 2025 02:43:52 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axx2kaYoxoipI2AQ--.8245S3;
- Fri, 01 Aug 2025 14:43:38 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxdOQWYoxo77AwAA--.46386S3;
- Fri, 01 Aug 2025 14:43:36 +0800 (CST)
-Subject: Re: [PATCH] hw/intc/loongarch_pch_pic: Fix ubsan warning and
- endianness issue
-To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
-References: <20250801060152.22224-1-thuth@redhat.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <553df0b0-5997-d1a9-c981-02117c378fb2@loongson.cn>
-Date: Fri, 1 Aug 2025 14:41:52 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uhjYi-00036S-Di; Fri, 01 Aug 2025 02:48:04 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uhjYe-0004XQ-Qg; Fri, 01 Aug 2025 02:48:04 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5716kPJa031405
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 1 Aug 2025 15:46:25 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=hZDgdrHajaEfybOJBy89rhjgeSDYeEP0LA1w65q8SQk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1754030786; v=1;
+ b=aieCmlQlTHQRgR9sc1uA9YZp74UNCeOpkU6D18JKg2uEjrgDXQ2IPqZfXnmSMmGg
+ 4kpx8w+HSSHQcsMIb+eC9wKGbnYkzhSjj1oSE2zMCq1Aez+8ZRNrjeFPh6EMXsta
+ 0BxP2piCpLbmCllaNZBEMzzPVONR9W9yGPrDcTdT5F+WaaKtCax0vLxuUg2RI4S6
+ DocffVrhcT+zOzj9NHWH5PAbdRMg2nv2WAPU9yZzpGpkMMtfdcHbLc/7ebqbWS38
+ BBiyu/QjJHWiohaoxs4oatTE2PT/b6Wuh6g8i/SCD7i+sRd0FPLyv1L2HpHleA6a
+ SeyASf3tF8xkradnUWrH/w==
+Message-ID: <f35f70b9-5f15-42db-bb73-db09ef0d6ad1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 1 Aug 2025 15:46:25 +0900
 MIME-Version: 1.0
-In-Reply-To: <20250801060152.22224-1-thuth@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 03/27] migration: push Error **errp into
+ qemu_loadvm_state_header()
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250731-propagate_tpm_error-v8-0-28fd82fdfdb2@redhat.com>
+ <20250731-propagate_tpm_error-v8-3-28fd82fdfdb2@redhat.com>
 Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250731-propagate_tpm_error-v8-3-28fd82fdfdb2@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxdOQWYoxo77AwAA--.46386S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCF47Xr1rZr1rCrW7tryrAFc_yoW5uF4fpF
- W3CryYyr4kJFZFgas7Aw1UZrW7Wrn7W34Ygan0k340k39xZrykZFyUJa97ZFyYk348Jr1U
- XF45Ww1Y9a47WabCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.789,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,83 +94,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/8/1 下午2:01, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 2025/07/31 22:20, Arun Menon wrote:
+> This is an incremental step in converting vmstate loading
+> code to report error via Error objects instead of directly
+> printing it to console/monitor.
+> It is ensured that qemu_loadvm_state_header() must report an error
+> in errp, in case of failure.
 > 
-> When booting the Linux kernel from tests/functional/test_loongarch64_virt.py
-> with a QEMU that has been compiled with --enable-ubsan, there is
-> a warning like this:
-> 
->   .../hw/intc/loongarch_pch_pic.c:171:46: runtime error: index 512 out of
->    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
->   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
->    .../hw/intc/loongarch_pch_pic.c:171:46
->   .../hw/intc/loongarch_pch_pic.c:175:45: runtime error: index 256 out of
->    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
->   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
->    .../hw/intc/loongarch_pch_pic.c:175:45
-> 
-> It happens because "addr" is added first before substracting the base
-> (PCH_PIC_HTMSI_VEC or PCH_PIC_ROUTE_ENTRY).
-> Additionally, this code looks like it is not endianness safe, since
-> it uses a 64-bit pointer to write values into an array of 8-bit values.
-> 
-> Thus rework the code to use the stq_le_p / ldq_le_p helpers here
-> and make sure that we do not create pointers with undefined behavior
-> by accident.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
 > ---
->   hw/intc/loongarch_pch_pic.c | 15 ++++++++-------
->   1 file changed, 8 insertions(+), 7 deletions(-)
+>   migration/savevm.c | 27 ++++++++++++++++++---------
+>   1 file changed, 18 insertions(+), 9 deletions(-)
 > 
-> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-> index c4b242dbf41..32f01aabf0e 100644
-> --- a/hw/intc/loongarch_pch_pic.c
-> +++ b/hw/intc/loongarch_pch_pic.c
-> @@ -110,10 +110,10 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
->           val = s->int_polarity;
->           break;
->       case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-> -        val = *(uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
-> +        val = ldq_le_p(&s->htmsi_vector[addr - PCH_PIC_HTMSI_VEC]);
->           break;
->       case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-> -        val = *(uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
-> +        val = ldq_le_p(&s->route_entry[addr - PCH_PIC_ROUTE_ENTRY]);
->           break;
->       default:
->           qemu_log_mask(LOG_GUEST_ERROR,
-> @@ -129,7 +129,8 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
->   {
->       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
->       uint32_t offset;
-> -    uint64_t old, mask, data, *ptemp;
-> +    uint64_t old, mask, data;
-> +    void *ptemp;
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index ab947620f724874f325fb9fb59bef50b7c16fb51..842ff3dc6d5ccb05f7d33cef9f7319b141419501 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2814,35 +2814,44 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
+>       return 0;
+>   }
 >   
->       offset = addr & 7;
->       addr -= offset;
-> @@ -168,12 +169,12 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
->           s->int_polarity = (s->int_polarity & ~mask) | data;
->           break;
->       case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-> -        ptemp = (uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
-> -        *ptemp = (*ptemp & ~mask) | data;
-> +        ptemp = &s->htmsi_vector[addr - PCH_PIC_HTMSI_VEC];
-> +        stq_le_p(ptemp, (ldq_le_p(ptemp) & ~mask) | data);
->           break;
->       case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-> -        ptemp = (uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
-> -        *ptemp = (*ptemp & ~mask) | data;
-> +        ptemp = (uint64_t *)&s->route_entry[addr - PCH_PIC_ROUTE_ENTRY];
-> +        stq_le_p(ptemp, (ldq_le_p(ptemp) & ~mask) | data);
->           break;
->       default:
->           qemu_log_mask(LOG_GUEST_ERROR,
+> -static int qemu_loadvm_state_header(QEMUFile *f)
+> +static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)
+>   {
+>       unsigned int v;
+>       int ret;
+>   
+>       v = qemu_get_be32(f);
+>       if (v != QEMU_VM_FILE_MAGIC) {
+> -        error_report("Not a migration stream");
+> +        error_setg(errp, "Not a migration stream, magic: %x != %x",
+> +                   v, QEMU_VM_FILE_MAGIC);
+>           return -EINVAL;
+>       }
+>   
+>       v = qemu_get_be32(f);
+>       if (v == QEMU_VM_FILE_VERSION_COMPAT) {
+> -        error_report("SaveVM v2 format is obsolete and don't work anymore");
+> +        error_setg(errp,
+> +                   "SaveVM v2 format is obsolete and no longer supported, "
+> +                   "file version %x != %x",
+> +                   v, QEMU_VM_FILE_VERSION_COMPAT);
+> +
+>           return -ENOTSUP;
+>       }
+>       if (v != QEMU_VM_FILE_VERSION) {
+> -        error_report("Unsupported migration stream version");
+> +        error_setg(errp, "Unsupported migration stream version, "
+> +                   "file version %x != %x",
+> +                   v, QEMU_VM_FILE_VERSION);
+>           return -ENOTSUP;
+>       }
+>   
+>       if (migrate_get_current()->send_configuration) {
+> -        if (qemu_get_byte(f) != QEMU_VM_CONFIGURATION) {
+> -            error_report("Configuration section missing");
+> +        v = qemu_get_byte(f);
+> +        if (v != QEMU_VM_CONFIGURATION) {
+> +            error_setg(errp, "Configuration section missing, %x != %x",
+> +                       v, QEMU_VM_CONFIGURATION);
+>               return -EINVAL;
+>           }
+> -        ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
+> -                                 NULL);
+>   
+> +        ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
+> +                                 errp);
+>           if (ret) {
+>               return ret;
+>           }
+> @@ -3119,7 +3128,7 @@ int qemu_loadvm_state(QEMUFile *f)
+>   
+>       qemu_loadvm_thread_pool_create(mis);
+>   
+> -    ret = qemu_loadvm_state_header(f);
+> +    ret = qemu_loadvm_state_header(f, NULL);
+>       if (ret) {
+
+I have another comment: the error should be reported with 
+error_report_err() or the messages converted from error_report() to 
+error_setg() will be temporarily gone.
+
+I'm sorry that I missed this in the last email (this and the problem I 
+mentioned in the last email was there since v4 [the first version I got 
+CCed] and I failed to notice them until now...)
+
+>           return ret;
+>       }
 > 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
