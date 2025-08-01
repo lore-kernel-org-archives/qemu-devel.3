@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A020C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED95FC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhvg7-0000l1-Cc; Fri, 01 Aug 2025 15:44:31 -0400
+	id 1uhvhr-0002JB-Jr; Fri, 01 Aug 2025 15:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhu9S-0000ik-4T
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:06:42 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1uhuBE-0002x7-HT
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:08:32 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhu9Q-0002Ly-E1
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:06:41 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-71b49bbb95cso12003067b3.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 11:06:39 -0700 (PDT)
+ id 1uhuBC-0002Yt-OP
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:08:32 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e8da9b7386dso2761016276.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 11:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754071599; x=1754676399; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754071709; x=1754676509; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CvmaC4XQKpqGDFUWg+/EJ0SFGXbPB6hYDMLmdbA+MGw=;
- b=Fh7j3ljg44BivufscuWpIAps88o6rYUNzP7Iv7GZKTtsvBZ719Q+b7s4cEdJbPLcVC
- JUt9K1i3K65mPEvwsJkaHhjrMvfjvS2jtSoei8mydk6WiyiyYnsfUNkmHjKrIl8mDQ6Y
- yhJm9esQbVBkB2w6QgaWbhaKmE79WJogzuJK0iibT+0Pzwl4W5ahluowBQBcQAHMweFW
- 7eT2qP/lJmRVNty6qwOLoNoe6pgqCB1uGPR2DF4UHNbRIRWRlTWbKkXjxgDEoTmt9/i7
- v1GdrK9LG0BYy7ym9ypu7Qc2URD9rkQPlRl9OR2L/f6tzWcUXhMxyS54dv6rLuYAJ+y8
- 0efg==
+ bh=/TZmJ2dEVYaCrGLM2XLZlWhXy5Azq86QQdBKE+rkFfI=;
+ b=iYJBb3EOoeAl4eZ2TVqGi6DwnXaqdQXhcxzItO+kKaKgf3hDn2SqARdHX7Oeo4JAJe
+ N3bTL9tZ2dsQ5M2KxePivXhUf1ACbEAdS/Pgghg0BH5p/z38ca7NrwMis4upxETuyl+p
+ kcQc8s/2X3332rU1wltD7+bx0a5XSdjgGZ++HeWJzWZM1rAcHB3Zt82TEU4PQP8lcWI8
+ oWpIf/AEFndJqBkuuIqXiuimC6Tm/2lda5ID2ddAKvYvaFcykIGb9700YvqwkWWiW6F7
+ K2CrLR5TBvLhauu74J/OW2O3fRtaZP/fsov0HzYSkmbMrdT5OUTnL3quvX8QuwblFb/m
+ Z/wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754071599; x=1754676399;
+ d=1e100.net; s=20230601; t=1754071709; x=1754676509;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CvmaC4XQKpqGDFUWg+/EJ0SFGXbPB6hYDMLmdbA+MGw=;
- b=CnXZsZZB/CelZ1GBUMg16/MYHyh/G5Sr9rhzt6Ul7avu8OQskfzzJQzhl1R8VdjRpY
- jucIiI97Fb6GcPYMo/cEZFo/345dfwVqCCrcgi6tEFgmku5QGEyNs+gGXhcwpIoxBp3Z
- jn2T+E9a1+8HgsIELCJjrLcn+0HzVNuZC0CZQ3fOB66RnVAylhQ93PlnQOMUJugWlHS7
- MBQprZ23Ch5OBK1vi3nt1KI1dPQtnPhjwBfgTTVSg4ynk/Bb9atTI/Is7RJ3TcZcE19+
- Zl9nJoUwdFqBqlpS7z5Yhwd0O9UnbH0+Xq8OmrnMrRYKdOPwzBCnQ3TtsT/SHj8Op0CG
- HwDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXk5gE7CLcYO09MiJ9/GAeCUVwR98gvUAvlEApFFlGE6XOY18bmhMZLcydCiLF4s6MIOnKeL79Lgp44@nongnu.org
-X-Gm-Message-State: AOJu0YyVT2NFzfwGwOPy8hxgtWWh/5VNdY7bHS2q7DWtFA5eUfTCKTZ8
- iq8U8ldsdRVW3NEuSX8excmdgRqj0fkUM3nv+qpBJd1/MHeBzy2+8cFXBGBQdu7DqkFiYLiw8xn
- 4xY6X1TEpu23tosqMrG3R21DTTCvWrcN9fNUc5O+aMg==
-X-Gm-Gg: ASbGncsigu0G+m+/9oX5rpiP+rrH6NapByteEa296uzJK4GcyRb5uiJ36DZemebundv
- 4xXKF9ng4ekqO5Eo38Gq8h+P2eRBdGilFeiaSC0PM3Gk5L92BOkEDCMAorWRUEejqCus9wnKbtY
- tXBmK/T599f0vvHDypfCuzgZB4gGErT2Rdbv8tfPMMXgp/jYbB7dijacTA0vkEum9nxvRmo9qCH
- PQNsshDm89/tMzyuBk=
-X-Google-Smtp-Source: AGHT+IHO2d5uuv6wbLsNM5EVO8eSLzn4fKdRPJSCp7C8E1uwXW72C71a6X18kpe8arBI6AlQXi/JU+Ay9lrjaK+sGA8=
-X-Received: by 2002:a05:690c:6802:b0:71a:23b3:13af with SMTP id
- 00721157ae682-71b7ef57a09mr9667387b3.13.1754071599004; Fri, 01 Aug 2025
- 11:06:39 -0700 (PDT)
+ bh=/TZmJ2dEVYaCrGLM2XLZlWhXy5Azq86QQdBKE+rkFfI=;
+ b=ukPz5s8VMH++ZNoAE9AXppSPZTkkmj5pdjBg1F5iCv6bDIA7ZH8ajCHuLCkQkqKah6
+ BJ1q2mSKr2T30+n2CcOdhdi5z+b63JyIuA7BBwNBNqbBaOnMrgpG8TyJY4w+ET+E0qmL
+ /8G2j6p9GMUvHcNUnjxfM+8XGFTh4EkfMXESZ4F6JlvLyqvaJNnFrP4WiX5ymXyYbwX2
+ 9d2RY6vwMkqUniD2Kt3aBD92sxrbpFOtPMP4ZlZvsF23S5SDl3FYZzThOAyOdUDkJhI+
+ qrTFnNPSGqA72F0pfjVbc/JAlUZ2lazQLRGdpLpnYIBTO8Yq6AdN1n/2xJtF6RgdiA6a
+ fDDQ==
+X-Gm-Message-State: AOJu0YyUXm88fqALvvuAU0Qv2k3lLs+5eSdM1v2AOEOXHS2atHqe8w6I
+ e6I0FqawOZP8Prw8Xfg5qgD5ACwvIl/wo0krP/OrSyfo9uN9ozB/OF8mq6LnwIfENKlszGaSL33
+ katiXPgIVGMYG0qnlSV/UNKFTHIDv7ZtoGqZd8p0FYbk8I4J8AI46
+X-Gm-Gg: ASbGncv/oVCQyUW6dHKcjT+ziyWfWgA5vAzhcbwRdtyMsb0kAyt9/IznKTVFLFlT3Tl
+ H6aRy7DzHBAyKP3TuTzruYM72TZ+MlcOf/NwGzeaW2oAEhSdBG89ImS/tqHCr+jD6Ls2l5vP8cQ
+ d1jgVe2cIt32bIP72uCZzZ9hYQVoOOTOry7LV3/AHasYoj/5OpsCwKPcI7EwQF8x0/dpc8MDdKL
+ UgU/uED
+X-Google-Smtp-Source: AGHT+IH549WRKtr9z7rL7+mwMtH2oXB8QV5IDAUkn8qXdKH0vnmDzpQgQxg0outDNGuC2h0/tFWwxF742dcbNoNCtvw=
+X-Received: by 2002:a05:690c:eca:b0:70c:ceba:16 with SMTP id
+ 00721157ae682-71b5a899bcamr94167807b3.17.1754071709275; Fri, 01 Aug 2025
+ 11:08:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250727080254.83840-1-richard.henderson@linaro.org>
- <20250727080254.83840-38-richard.henderson@linaro.org>
- <0128c452-8bde-4bdd-b73c-330a7bd619a1@linaro.org>
- <e275dc71-2d48-4b48-9b7f-dae2c8934d64@linaro.org>
-In-Reply-To: <e275dc71-2d48-4b48-9b7f-dae2c8934d64@linaro.org>
+References: <20250730000003.599084-1-richard.henderson@linaro.org>
+ <20250730000003.599084-57-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-57-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 19:06:24 +0100
-X-Gm-Features: Ac12FXxdGMGjJsFFiZ2jTuvGmdPN0N7YJcXl_iIZArAv4vvdEi5xc566xiYQ8Ww
-Message-ID: <CAFEAcA_b0dwepMFpSaY31fCUd749mpU5M2ZVymonPPBAEsTLpA@mail.gmail.com>
-Subject: Re: [PATCH 37/82] target/arm: Convert regime_is_user from switch to
- table
+Date: Fri, 1 Aug 2025 19:08:17 +0100
+X-Gm-Features: Ac12FXx8Ky1GWe_aIcIUupHKa_87nFTrH4begwtrgDIWliJGOMc2FrsI83eJd6w
+Message-ID: <CAFEAcA-9pBp3qo1iWq0X_rN7P7OuKJwf6e3TUOtXFS5EMDbU9Q@mail.gmail.com>
+Subject: Re: [PATCH 56/89] linux-user: Move init_guest_commpage to
+ arm/elfload.c
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Aug 2025 at 04:54, Richard Henderson
+On Wed, 30 Jul 2025 at 01:32, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> On 7/31/25 07:21, Pierrick Bouvier wrote:
-> >>   #include "mmuidx-internal.h"
-> >> -#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK)
-> >> +#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK | \
-> >> +                ((X == 0) << R_MMUIDXINFO_USER_SHIFT))
-> >>   #define REL(X) ((X << R_MMUIDXINFO_REL_SHIFT) | R_MMUIDXINFO_RELVALID_MASK)
-> >>   #define R2     R_MMUIDXINFO_2RANGES_MASK
-> >>   #define PAN    R_MMUIDXINFO_PAN_MASK
-> >> +#define USER   R_MMUIDXINFO_USER_MASK
-> >>   const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-> >>       /*
-> >> @@ -33,7 +35,7 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-> >>       [ARMMMUIdx_Stage2_S]        = REL(2),
-> >>       [ARMMMUIdx_Stage2]          = REL(2),
-> >> -    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2,
-> >> +    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
-> >>       [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
-> >>       [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
-> >
-> > Maybe I missed something, but what about other entries that were initially treated in the
-> > switch?
-> > - ARMMMUIdx_E.0_0
-> > - ARMMMUIdx_M*User
->
-> See the change to EL().
->
-> I'm not sure why ARMMMUIdx_Stage1_* is excluded from arm_mmu_idx_to_el(), but I don't
-> change that in this patch series.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/arm/target_elf.h |  4 ++++
+>  linux-user/loader.h         |  2 +-
+>  linux-user/arm/elfload.c    | 46 +++++++++++++++++++++++++++++++++++
+>  linux-user/elfload.c        | 48 -------------------------------------
+>  4 files changed, 51 insertions(+), 49 deletions(-)
 
-It's always been that way through various refactorings
-of the mmu index, back to commit c1e3781090b9d36 when
-the function was added.
-
-In practice we only use arm_mmu_idx_to_el() to get back to
-the EL from the MMU index that we put into the TB flags.
-So we know it's always one of the "complete translation"
-index values, not a Stage1-only, Stage2-only or Phys index.
-
-My guess is I originally put in the assert that enforced
-that you don't call it with either a Stage2-only or a
-Stage1-only mmuidx because I knew that couldn't happen and
-it meant I could implement the idx-to-EL code for the
-valid cases as "mmu_idx & 3" and didn't need to add
-extra code to handle a Stage1-only index the function
-would never see.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
