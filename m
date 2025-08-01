@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A18C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 07:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B0CC87FCA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 08:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhkbh-0002SQ-US; Fri, 01 Aug 2025 03:55:14 -0400
+	id 1uhkn7-00037y-7y; Fri, 01 Aug 2025 04:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uhkbc-0002Nv-36; Fri, 01 Aug 2025 03:55:08 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhkn5-00036V-8t
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:06:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uhkbZ-0000TN-PA; Fri, 01 Aug 2025 03:55:07 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0D05613C97B;
- Fri, 01 Aug 2025 10:54:28 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 40D022546C6;
- Fri,  1 Aug 2025 10:54:41 +0300 (MSK)
-Message-ID: <0b9cecd3-9493-492f-8130-30e0809010f7@tls.msk.ru>
-Date: Fri, 1 Aug 2025 10:54:40 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uhkn2-0003JO-Tq
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 04:06:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754035613;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yxgN6hgKO9B4HinZwY03ozVRE0pdEXV96cVLmapR90k=;
+ b=c77NeotZf7yK9lauaPAE7aqXBUznlTftPo+3yK3enGVLH/UvAcXgOQ5vTpCWlTk6hcbR+K
+ lAIJayY4WwLIWjtlCaLwEvKpXBSNTGQ1Mg08Kkl9rZE7KPm7r9zsCWk0Hr/fFzzI6c/ZNO
+ qsyfvFDEsxdiujuLdJTIFPQA2SlcNhs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-ZsXU0NHCPWKC-a_p6EuvSw-1; Fri, 01 Aug 2025 04:06:51 -0400
+X-MC-Unique: ZsXU0NHCPWKC-a_p6EuvSw-1
+X-Mimecast-MFC-AGG-ID: ZsXU0NHCPWKC-a_p6EuvSw_1754035609
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b78329f180so1226724f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 01:06:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754035609; x=1754640409;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yxgN6hgKO9B4HinZwY03ozVRE0pdEXV96cVLmapR90k=;
+ b=dTckk2v/tYgtv+DR8EnMx0Qymt0WrW59Ci/F7nOHFD/ytppf7F8lzLznhjfHKGt50x
+ whbs4aClMVsOjjy/B1PnSalLuWzZGytb4vHAiMlIF8kysU2yIDwa8dUU9slXRWs8hVup
+ 5Vajjp/qPm19Nsi7Q4uVT25qLFDTeV+7K6Ia6PCS2IhVQb3a06qMAUWARGuBNCnVEqVh
+ og4Wis1hfvrJh9c87HLdfrHkVACXFF7/PiB2EhYx5fgttuYIdOnaYVRKDRR4NhR7UOHm
+ yjMSp7wsbOYMqntH190gTwoWUf/qUNFvmKKiBeJMwLmHvoyPC75N1bDoZbSh1o+A+18z
+ CYyQ==
+X-Gm-Message-State: AOJu0Yz66cTZRB3q7e72mE+5UkPZjnjvrYAE1h3Swewo1QyhugalIPm2
+ kalZfLI70Uu1gZSGkVn2qtBtE+AmUtc6p5nWty1RJqY0SHWPM0VPXxZ3BxzOjRPl3Fo6ZiyrXS+
+ MtdwicPKpq+mrei/o1V3jTZCKhpRhHSHu+/uNWGnx78qqGBJ8AJioREwouRfR9WXv
+X-Gm-Gg: ASbGncvz4l4le0MmF3e3tn3NXryAD8ch7wVWESy1Ndasx9L2MOmjmPQp0T+rPWWhVOf
+ z9Y89SfgiE97w+aMoXtpDhx0K44pHd8TD0A/4KSBVEjhRMNkwHm4Vz4kvA36+NYkLWXbgHVRSeJ
+ rcXGweyHPTEtLJJHpZVdLbeU0fdS9a8NOpVOtQj0t2lTS04cZHxaIXNhusfPU92ROiCdEIvus39
+ G0K2LzNoTujb09aZnBFmP/Hzm88ActG5Y26k02L+GZ98tTnMbzgfcb/wnX5IMMvp5sS4vlA7ETE
+ nJAm+MSnPXpisFOIlE/KPiYAf5eeWw==
+X-Received: by 2002:a5d:64e5:0:b0:3b7:761a:95d9 with SMTP id
+ ffacd0b85a97d-3b795009640mr8355908f8f.59.1754035609069; 
+ Fri, 01 Aug 2025 01:06:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9d6h4c0/5/Eh0vSZDoeMGmRjHKaHe7zSZ2g8wHpPuVrSQr2hIbZTtaZ+FlM9gswGNrD4Qcg==
+X-Received: by 2002:a5d:64e5:0:b0:3b7:761a:95d9 with SMTP id
+ ffacd0b85a97d-3b795009640mr8355886f8f.59.1754035608603; 
+ Fri, 01 Aug 2025 01:06:48 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c467994sm4970029f8f.50.2025.08.01.01.06.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 01:06:48 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:06:45 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
+ mtosatti@redhat.com, kraxel@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2 5/6] hpet: make main counter read lock-less
+Message-ID: <20250801100645.133727f0@fedora>
+In-Reply-To: <aIt3Xo8dSKusoxA8@x1.local>
+References: <20250730123934.1787379-1-imammedo@redhat.com>
+ <20250730123934.1787379-6-imammedo@redhat.com>
+ <aIqZZ5bePh7Jmq3c@x1.local> <20250731103210.292dfecb@fedora>
+ <aIt3Xo8dSKusoxA8@x1.local>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/11] tests: Add iotest mirror-sparse for recent
- patches
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, stefanha@redhat.com,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250425005439.2252467-13-eblake@redhat.com>
- <20250425005439.2252467-23-eblake@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250425005439.2252467-23-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,73 +111,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.04.2025 03:52, Eric Blake wrote:
-> Prove that blockdev-mirror can now result in sparse raw destination
-> files, regardless of whether the source is raw or qcow2.  By making
-> this a separate test, it was possible to test effects of individual
-> patches for the various pieces that all have to work together for a
-> sparse mirror to be successful.
+On Thu, 31 Jul 2025 10:02:06 -0400
+Peter Xu <peterx@redhat.com> wrote:
+
+> On Thu, Jul 31, 2025 at 10:32:10AM +0200, Igor Mammedov wrote:
+> > On Wed, 30 Jul 2025 18:15:03 -0400
+> > Peter Xu <peterx@redhat.com> wrote:
+> >   
+> > > On Wed, Jul 30, 2025 at 02:39:33PM +0200, Igor Mammedov wrote:  
+> > > > Make access to main HPET counter lock-less when enable/disable
+> > > > state isn't changing (which is the most of the time).
+> > > > 
+> > > > A read will fallback to locked access if the state change happens
+> > > > in the middle of read or read happens in the middle of the state
+> > > > change.
+> > > > 
+> > > > This basically uses the same approach as cpu_get_clock(),
+> > > > modulo instead of busy wait it piggibacks to taking device lock
+> > > > to wait until HPET reaches consistent state.    
+> > > 
+> > > The open-coded seqlock will slightly add complexity of the hpet code.  Is
+> > > it required? IOW, is it common to have concurrent writters while reading?  
+> > 
+> > Write path has to be lock protected for correctness sake even though
+> > concurrent writers are not likely.  
 > 
-> Note that ./check -file produces different job lengths than ./check
-> -qcow2 (the test uses a filter to normalize); that's because when
-> deciding how much of the image to be mirrored, the code looks at how
-> much of the source image was allocated (for qcow2, this is only the
-> written clusters; for raw, it is the entire file).  But the important
-> part is that the destination file ends up smaller than 3M, rather than
-> the 20M it used to be before this patch series.
+> Right.  Though we have seqlock_write_lock() for that, IIUC (even though
+> maybe in hpet's use case we don't need it..).
 > 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> > 
+> > I've tried seqlock as well, the difference wrt seqlock is few LOC only
+> > it didn't make HPET code any simpler.  
+> 
+> I tried to do this and it looks still worthwhile to do, but maybe I missed
+> something alone the lines. Please have a look if so.  That is still a lot
+> of LOC saved, meanwhile IMHO the important part is mem barriers are just
+> tricky to always hard-code in users, so I thought it would always be nice
+> to reuse the lock APIs whenever possible.
 
-Hi!
+I'll try it for the next respin
 
-This test requires O_DIRECT to be available on the underlying filesystem
+> One example is, IIUC this current patch may have missed the mem barriers
+> when boosting state_version in hpet_ram_write().
 
-Without O_DIRECT support, the test fails with:
+docs put qatomic_inc() in 'Sequentially consistent' category,
+hence no manual barrier.
+before that I've used weak qatomic_store_release(), but
+qatomic_inc() should do increment and store that in one go.
 
-Listing only the last 100 lines from a long log.
--{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, 
-"event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
-...
--*** done
-+Timeout waiting for capabilities on handle 0
+> > > How bad it is to spin on read waiting for the writer to finish?  
+> > that will waste CPU cycles, and on large NUMA system it will generate
+> > more cross node traffic. (i.e. it would scale badly, though TBH
+> > I don't have numbers. I think measuring it would be hard as it
+> > would drown in the noise.)
+> > 
+> > hence I've opted for a more effective option, to halt readers
+> > until update is done. (at the cost of latency spike when that
+> > unlikely event happens)  
+> 
+> If it is extremely unlikely (IIUC, disabling HPET while someone is using /
+> reading the counter.. should never happen in normal production?), would
+> spinning read also be fine?  Maybe that's also why I can save more LOCs in
+> the diff below.
 
-which is not helping at all.
+it's mostly need for comments that goes away.
+but you are right,
+it's very not likely to happen. so busywait vs lock probably won't matter. 
 
-This hit me on debian, where automatic buildds run everything on
-a tmpfs which does not support O_DIRECT, and the test failed this
-way, without a way to tell what's wrong.
+> 
+> In the diff I also removed a "addr <= 0xff" check, that might belong to a
+> prior patch that I thought is not needed.
 
-After adding save_stderr=y to the test, I finally were able to see
-what's going on:
+indeed check is not really needed.
 
-+qemu-system-x86_64: -blockdev {"driver":"file", "cache":{"direct":true, 
-"no-flush":false},
-+ 
-"filename":"/build/reproducible-path/qemu-10.1.0~rc1+ds/scratch/qcow2-file-mirror-sparse/t.qcow2.base", 
-"node-name":"src-file"}: Could not open 
-'/build/reproducible-path/qemu-10.1.0~rc1+ds/scratch/qcow2-file-mirror-sparse/t.qcow2.base': 
-filesystem does not support O_DIRECT
-+Timeout waiting for capabilities on handle 0
-make: *** [debian/rules:188: b/qemu/tested] Error 1
+> 
+> Thanks,
+> 
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index d822ca1cd0..09a84d19f3 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -39,6 +39,7 @@
+>  #include "system/address-spaces.h"
+>  #include "qom/object.h"
+>  #include "qemu/lockable.h"
+> +#include "qemu/seqlock.h"
+>  #include "trace.h"
+>  
+>  struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
+> @@ -74,7 +75,7 @@ struct HPETState {
+>      MemoryRegion iomem;
+>      uint64_t hpet_offset;
+>      bool hpet_offset_saved;
+> -    unsigned state_version;
+> +    QemuSeqLock state_version;
+>      qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
+>      uint32_t flags;
+>      uint8_t rtc_irq_level;
+> @@ -431,39 +432,17 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+>      trace_hpet_ram_read(addr);
+>      addr &= ~4;
+>  
+> -    if ((addr <= 0xff) && (addr == HPET_COUNTER)) {
+> +    if (addr == HPET_COUNTER) {
+>          unsigned version;
+> -        bool release_lock = false;
+> -redo:
+> -        version = qatomic_load_acquire(&s->state_version);
+> -        if (unlikely(version & 1)) {
+> -                /*
+> -                 * Updater is running, state can be inconsistent
+> -                 * wait till it's done before reading counter
+> -                 */
+> -                release_lock = true;
+> -                qemu_mutex_lock(&s->lock);
+> -        }
+> -
+> -        if (unlikely(!hpet_enabled(s))) {
+> -            cur_tick = s->hpet_counter;
+> -        } else {
+> -            cur_tick = hpet_get_ticks(s);
+> -        }
+> -
+> -        /*
+> -         * ensure counter math happens before we check version again
+> -         */
+> -        smp_rmb();
+> -        if (unlikely(version != qatomic_load_acquire(&s->state_version))) {
+> -            /*
+> -             * counter state has changed, re-read counter again
+> -             */
+> -            goto redo;
+> -        }
+> -        if (unlikely(release_lock)) {
+> -            qemu_mutex_unlock(&s->lock);
+> -        }
+> +        /* Write update is extremely rare, so spinning is fine */
+> +        do {
+> +            version = seqlock_read_begin(&s->state_version);
+> +            if (unlikely(!hpet_enabled(s))) {
+> +                cur_tick = s->hpet_counter;
+> +            } else {
+> +                cur_tick = hpet_get_ticks(s);
+> +            }
+> +        } while (seqlock_read_retry(&s->state_version, version));
+>          trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
+>          return cur_tick >> shift;
+>      }
+> @@ -528,11 +507,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+>              old_val = s->config;
+>              new_val = deposit64(old_val, shift, len, value);
+>              new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
+> -            /*
+> -             * Odd versions mark the critical section, any readers will be
+> -             * forced into lock protected read if they come in the middle of it
+> -             */
+> -            qatomic_inc(&s->state_version);
+> +            seqlock_write_begin(&s->state_version);
+>              s->config = new_val;
+>              if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
+>                  /* Enable main counter and interrupt generation. */
+> @@ -551,12 +526,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+>                      hpet_del_timer(&s->timer[i]);
+>                  }
+>              }
+> -            /*
+> -             * even versions mark the end of critical section,
+> -             * any readers started before config change, but were still executed
+> -             * during the change, will be forced to re-read counter state
+> -             */
+> -            qatomic_inc(&s->state_version);
+> +            seqlock_write_end(&s->state_version);
+>  
+>              /* i8254 and RTC output pins are disabled
+>               * when HPET is in legacy mode */
+> 
+> 
 
-
-but it took me multiple rather painful iterations because each time
-I had to upload new version of the source package to debian for the
-builddds to pick it up (similar to what we have in the CI but without
-saving the build artifacts).
-
-This test should somehow depend on O_DIRECT availability - we already
-had something similar with 9pfs which also required O_DIRECT and
-failed when /tmp was on a tmpfs.
-
-And I think generally stderr should always be visible, at least when
-the test failed, - where it is especially needed to diagnose the issue.
-
-In debian I disabled mirror-sparse test entirely (also had to do a few
-iterations, because it turned out removing the test files has to be
-done before ./configure run).
-
-Thanks,
-
-/mjt
 
