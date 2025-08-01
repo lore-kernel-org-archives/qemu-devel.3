@@ -4,98 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884F8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF14C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 15:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqq1-0004Mw-Qs; Fri, 01 Aug 2025 10:34:26 -0400
+	id 1uhrM9-000717-4H; Fri, 01 Aug 2025 11:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhY-0005ds-Sr
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhX-0002q4-DJ
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rt7GnWAbSGWYSqFzaw9x7Xx2rUyY6tFH8mQrAe3XeS0=;
- b=gRYhPi8/BguUXFV6KuGEZEO3A8r6RmyN7DBQ+3adyHvhNDXVblsegjRIvLNA3CZRQEZpCg
- WgalzjddXbkezYuF4GISqwbb5btmGm1ExlkKTUqemD5XSJmk0AiMIf930GtU4r4XQvJDJ5
- LVYbSn5B3MY+2YFWJkurwn6yC2HnWCU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-icYRlWGiMTGYOjKPTGDYZw-1; Fri, 01 Aug 2025 10:25:36 -0400
-X-MC-Unique: icYRlWGiMTGYOjKPTGDYZw-1
-X-Mimecast-MFC-AGG-ID: icYRlWGiMTGYOjKPTGDYZw_1754058336
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45626532e27so11965445e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhr3E-0001HH-4H
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:48:06 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhr3C-0006Tk-7j
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:48:03 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-71a3935fa8dso12822617b3.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:48:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754059680; x=1754664480; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=j/uQhooOXD4Y6Tb5exvB8s3XRU/baBFBYONUyWD8jUU=;
+ b=f63AE5rBNfPl5nSQ5EuB0T405vafAU0Gr0awHf9H/s/PB/clBqfEJgHxFVybe9YKNL
+ qRRJcoTrb7FVZorw/ztB6wsKDO4zD5jjrd/VS5IHY8WGvaKdP9EbFTaWRoR8E+NZiuOZ
+ K/ampIxPZY5qjCQNilVqkiHkskYaaMjcC7/kEg/phgtCrhCW2L9fvmRYSlacpGauBdoq
+ GkGgPYVBUS/YR7QPmldDMiSlvOZ6QfGbKBaedVfmLM3ljmnsh4bigu/ED5T/tLubsTC1
+ ruAw7Q3VAydphQtUhuwfwCMAVol0QPDfNfs+swAaqfC7Rs3M6CMyzddkayDOs9giMq34
+ filg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058335; x=1754663135;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rt7GnWAbSGWYSqFzaw9x7Xx2rUyY6tFH8mQrAe3XeS0=;
- b=LcYg9iszza8/XAuuL2wXLyTIyNC7Kti06fkS3FQ/ogcv44r8Vnn70a/INcNzhEGKZD
- OGTBrzgv9EgNNEGgdRfavXhGpSvUUWGvfWCmoUtK0W9mZFZVxuEuxXGtsp7ujq5snyeT
- zzpnaucrvTYLtmIcee80/bMd+a1c+FscKrCd5h3zkZSCmrtCin9NA7W06SYcZcl/fntP
- QJxHgZxUlFIxZg2XJL1Jt0k1X7Fmd1ZyZTcMIA0uWJKUgdyjt+klkowPHjjm/G3uvLkl
- 9xhT6FUxYUto/5ZKxd3F+7trlCYobQgLIiNT1HV+ecUKABlb3XONsPUpf8mRVu5u0swu
- hEYw==
-X-Gm-Message-State: AOJu0YxINd1HeWIvcnJ0wqpLFfy5vKSZPc4gM04RGquI8AY+cqQy4Rz/
- F1D6HsqwE027BFtZcx45Z0xUO4wY6cFC8n5djzB/r1sQQN1HwDDw9VODGtFEuLXP92exRU9OAAV
- uPlbW9YrWsZnQz57VkB/Eko9HxcIkAlPnpdSbbUCVi9nfgDrHi7fAkUNlzhibFcyJCI1d/SvTG3
- WNopgZoYqp6XOmV5gP+BAACspKN2uvCYTEJw==
-X-Gm-Gg: ASbGnctxPK83ipldKMrKrLQridJJoiz7oTh02Vn8Vi//ce2FG+UfxEhtDMoTKwuRcGm
- 7/H+fJz5pS6zLnEILpds0TnyYQGdlW/n9F6lweyUJGdX5PaDd/FMvt8B5zdLWVrG01LsQJKfurt
- unXep4tRAuEJoMTBpVP9WCUzjfUldUreYNt2TackBGTHQlswf9U1I+Zrx6lXOqZisHD30qUHi5W
- lJPRjxbTR2R5e3b6CsJq5Fb5bi5A0My40bofn+J4Z5JN+63DnHepCZRktKKZ2mP6N9eH4dxhoJp
- X9cTgkNy4DED8gI8RGx7qzVFMT/NVyHz
-X-Received: by 2002:a05:600c:3d8a:b0:458:6733:fb59 with SMTP id
- 5b1f17b1804b1-45892bc5895mr101354295e9.19.1754058335326; 
- Fri, 01 Aug 2025 07:25:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSi8ANASNa7VNsN4h6CNiy6Tfq9yTG3B7TxBZIkH0u1iAiQ/9J3DXhfiwcBg0L9INCwvboaQ==
-X-Received: by 2002:a05:600c:3d8a:b0:458:6733:fb59 with SMTP id
- 5b1f17b1804b1-45892bc5895mr101353785e9.19.1754058334505; 
- Fri, 01 Aug 2025 07:25:34 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953cfcadsm112316235e9.18.2025.08.01.07.25.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:34 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:25:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 14/17] tests/acpi: virt: update HEST file with its current data
-Message-ID: <cd16f08ad4bda8191e4de986d17184c9da5466cd.1754058276.git.mst@redhat.com>
-References: <cover.1754058276.git.mst@redhat.com>
+ d=1e100.net; s=20230601; t=1754059680; x=1754664480;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j/uQhooOXD4Y6Tb5exvB8s3XRU/baBFBYONUyWD8jUU=;
+ b=BOcZOhyyocUe/cLSo7FOfxN+0SMKGWTlZ54YHZH/zccS2AavdzwGgE9ybikfrHsCNJ
+ 04uWQTpuLxea5V9J7wcMaOkH8zgbf7M/bo38Ra8+1g50xO8PnJ5BAVB2Sk0DFWxtbp1b
+ b2YydPkPwmTsiqkiYSgrIsIRN/zOlHBrVXQ3kZ+f8xNyLcn/vVeECzt18GysyYO6BSc6
+ RkmiNI8S5sBXe92Wm282PxUuVnDsCiB0fncF2M4t+xC7ie9iRNPhhI1nnjFs4zSt3ZvE
+ BPRySbt/ML+A/Pz9Way1lnHa00uKEGLsMlerLDWHPDBpYFZA73vvEGXIyoA3BbWHYvRO
+ y71w==
+X-Gm-Message-State: AOJu0YzRfpJvje310Un+pcZnck3NSIJQDZmm2DVUp1jUhAoXXHCiGMfX
+ EG+JgsUGiXjWLkwDUKE6UYpBa7uhiZG3hXCHY/7UR9o2rORSV5Had57w2fyQ+p9vo3hsK4BWhZ0
+ jxR93IbUNtETSz8/zLFGeuSQAWIic0qp2iAHLdbUFl8hHliGyh+SP
+X-Gm-Gg: ASbGncv/gsBW5TUfYBu7WVxNOlzdTcqqTvWzRNx9HP0iNPsaX6mSsGFfgnFq6rDaBWe
+ W7ZzslBEQVI666rjlMPFbeesmWR5cHns8RlHrros3M2iUixGBvGqyQNqaDJ4zIuUwr866C3Clre
+ yJ4Dte8lF2R59o9dBj5XNSn9I68IwylXKxXKMbjj2wX3+3LGE/nezf5AKRBPn0SW7i1ZK8wg0gy
+ kCDmatV
+X-Google-Smtp-Source: AGHT+IHeLv0+pKMc+9Su0VI6d3SEWHfaBKMODCICas8/99OJ/Kx5t0nz9xcEcj3JeqkaiptQPp4YNjbuwN3TwHyTUSY=
+X-Received: by 2002:a05:690c:6282:b0:71a:1e8e:62e9 with SMTP id
+ 00721157ae682-71a466ddeb0mr159063817b3.37.1754059680540; Fri, 01 Aug 2025
+ 07:48:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1754058276.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250730000003.599084-1-richard.henderson@linaro.org>
+ <20250730000003.599084-2-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 Aug 2025 15:47:49 +0100
+X-Gm-Features: Ac12FXwgouAJUIn3NWJarNs4Czi9fOfOQVQ5vqNkBQgDmXzvpPUmaActIngCSYQ
+Message-ID: <CAFEAcA-y+mFr-FwWrxWT7SBGAY3r8NjiZd3UQTPcefMHwCECYw@mail.gmail.com>
+Subject: Re: [PATCH 01/89] linux-user: Create target/elfload.c files
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,38 +93,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+On Wed, 30 Jul 2025 at 01:13, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Prepare to split the main linux-user/elfload.c.
+> Create empty files for each target, and add the
+> common build rule.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Now that HEST table is checked for aarch64, add the current
-firmware file.
+> diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+> new file mode 100644
+> index 0000000000..73fa78ef14
+> --- /dev/null
+> +++ b/linux-user/aarch64/elfload.c
+> @@ -0,0 +1 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <e3527be1610b2ef6b20ca2efa025de91a1f1e0a6.1749741085.git.mchehab+huawei@kernel.org>
----
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/aarch64/virt/HEST           | Bin 0 -> 132 bytes
- 2 files changed, 1 deletion(-)
+No license info in the existing elfload.c so I guess
+we can take LICENSE at its word that source files with
+no licensing info are GPL2-or-later...
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 39901c58d6..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/HEST",
-diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4c5d8c5b5da5b3241f93cd0839e94272bf6b1486 100644
-GIT binary patch
-literal 132
-zcmeZp4Gw8xU|?W;<mB({5v<@85#X$#prF9Wz`y`vgJ=-uVqjqS|DS;o#%Ew*U|?_n
-dk++-~7#J8hWI!Yi09DHYRr~Kh1c1x}0RY>66afGL
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-literal 0
-HcmV?d00001
-
--- 
-MST
-
+thanks
+-- PMM
 
