@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3BECC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF74BC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhvKM-0002cA-VV; Fri, 01 Aug 2025 15:22:03 -0400
+	id 1uhvMl-00065W-P9; Fri, 01 Aug 2025 15:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhtev-0004EP-Id
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:35:09 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhtju-0006rr-4j
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:40:18 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhtet-0004kB-Es
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:35:09 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e8bbb02b887so1815316276.3
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 10:35:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uhtjs-0005lZ-7S
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:40:17 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-b26f7d2c1f1so2034425a12.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 10:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754069705; x=1754674505; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xN6SY+xvpXsoQ6MdX1hY+CBhfL4GAxO8nRn0cEVUtqo=;
- b=rre6+zQse/uO74A12LiNKVVzl0CHWBFuXM2XbAtm2sdMHNXYIQ12/6PM+ZfifTGodZ
- 7xHH9ePvTFHvumwaS22gJI1VmZhd/GA4pTNkiD+4r5oGzENkjzZ9lsLnWnq8GTOXHkbU
- MPwu5EQsVS1+AlP3PMLDo+c39jilpCdOvwweyoLSIyMWlmZOjWuAgum8aP9Wi2h5/AhW
- kQ6XFQ5FkzSfO8yjNhqyYQPVQ8yLEft7t5gUJK/h+fTSdfV4QoOXep3lbMzFIV0210zu
- 3DOvRAjCaS72yN0V/c7A+cNNW6y8N+/BdIDo8QrBUUFl86shb2Embbgh4m6qwrSVaPgo
- GPJA==
+ d=linaro.org; s=google; t=1754070014; x=1754674814; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y7ndOCk5hpDppQ64y8s+jnXZvyQJzUmSdKKeyb2BrMQ=;
+ b=c8QeLmHiBF8jU6G+xNxH8cXs3h4ttT0ZkTK9eJrx7CjfEnhZF/lBbwMUrLExkSHyFd
+ R7KaPKP4k6SwWlqjRZwrQVBLTB8SsW4UTkQQ73D1zy+PDe/HTr9Zo7/gpwGBApuQQVp3
+ cQXuT1W5ctDV5BZDf+rxyPevIx2F5nBWa+rb4JxR7TFoQ16dsZXPUd+CtY+Lm5n93uNA
+ sFMZMzNGUM0UDvs6fxxnAn18ueDjicfg4Wkn+fRedIPH8Op1KmVaC/+AAZR/wI40HGGe
+ LvzY5m0IIjiphC+oSJV03BrcAOm2lMGiGEv17G4X0k7H0OHj3ZdgViuKdZRNS86GFFGh
+ FNSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754069705; x=1754674505;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754070014; x=1754674814;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xN6SY+xvpXsoQ6MdX1hY+CBhfL4GAxO8nRn0cEVUtqo=;
- b=iPvr9HVx8lzKiFrI8rBPZ3kU7GLHTv4PRSfFYgCBW/HFXoLhlrt7DEMNOW3lbAgD2I
- VWWqixeSYncQC3foculpyWZE4B5RCsidWUjbRWQ5LOfTgMRP8iK5gpVCDHJhbcO1TJx+
- csvborq8602i7iOraNEA52pwRcNwS9E5oKp1rxMfcLZYI1JAiSAXXNdE0/v1VCr08ufA
- ghvdPnD5NVZzhz1J42GaDiaf+eTPz9vpRPeMa2CQHfzNoaYRuCTjUaAmkInT4HxOaoAm
- vNfdIHIeYfZYxMx9YS2Ufo8VwI1o5Jge25SaRNV+ftRmGvxNof5ylXtTHDN2805MydJe
- Fp7w==
-X-Gm-Message-State: AOJu0YzzMbalPd4pt+r9NiHuRKDSLorY9BdGC6ia0EW39nkzKb3J4dfq
- V0HZhvWCNQfSOgOSmd0tfeag9oRc3mNAuVRsJMEmBCNX+FC93bdJO5ktc4J0a8YQWDvT/vfjlZw
- ocVSU8fBw7iSATBA8PpLTnUjsw9pD6rEboYAu9wq5aKB0VbGicIYG
-X-Gm-Gg: ASbGncs7PSzDuBY7vy8cguRiYR0ypAIl6udWiu0bXtvkbHtXdInfD6QT0ScklBv7oY/
- ALRzjV9cPkTWmyjiI8bhbzMGc7wYCbNaUNzWXE0s5tIpIbnBEeBKdQVwcm7n05wdZsDlCWHraOm
- LEPJ/Ced35BRo9cWmfWEBwElu+LtXunwjGP5ErN7tqYnEDZf5z3XYXqiBHXXNKasXJ5JGPG+npO
- kbp7bQ0
-X-Google-Smtp-Source: AGHT+IFLOijDbCdPt53mGYGfVAkIfmkSLc/3LB0O0290UpXQYeg7o/4up2LsDQpfXB/UNzcu7nq6CtcA+4mbXHQGD7g=
-X-Received: by 2002:a05:690c:7108:b0:719:fcb7:1a79 with SMTP id
- 00721157ae682-71b7f852037mr5938837b3.36.1754069705553; Fri, 01 Aug 2025
- 10:35:05 -0700 (PDT)
+ bh=Y7ndOCk5hpDppQ64y8s+jnXZvyQJzUmSdKKeyb2BrMQ=;
+ b=GnL6W+XSEveT5X9y0JC5JNkzs6DZrcJUTQJ2prA1nf9MVOPQMP6kjNwlp97bHBmSku
+ I1qYyHlKuS9OyQDPom78ekyhq2y32kSP3igF7LUQm0356BwJUbY0Mciw0Er8qzJGhwv5
+ XVeKxY64Ep/A6rzE0vvXaQU9COWYvHGFu1osurTCp4e8DNqdfT8QIrgGzjijlpAnf4gt
+ v/FnGujwkJ70m6zo1u+IT0LDsEU3mPOzdjHSYctl3vzhu5n6Pn/zAXeAR1Gpw/bY5f6O
+ UkfcWjCoCry47VZjtDapAjeVJBV9g47smPitBNB88gk4//+fPOXbrT0twgxDWqWqZ5tx
+ 5nNA==
+X-Gm-Message-State: AOJu0YzqgHnlcioyZ8W8L9bK7xzO35+CP6nPxeo42hyZBjwr1l/Y+53L
+ vLyFatQILakZKOPAsAyx66qmmWr/qCCuqfal6r14ZIz795KAP/2FOpQ79dzWYl4UsufZTVn5Vgq
+ xqdsILqA=
+X-Gm-Gg: ASbGncv0wul1wC8XcPZCvXUrkdJJJY3BweKNkHUJbflda/b9LSWxRBOLxDrx8Q0+L48
+ PeoCRBBYaTTuxWoS/JTCWwe7qobXEzNhwic0qSJqDwtjBqG4ihfkez4eUatJWeFYpwOvic4LdRy
+ EZmMOlB61CpUkhJJh7ZxypB82ajLgWwZT3vPAOfJc7h9dP3k+Q3IiCMsUq9UA6gtImgUYxfCZs7
+ yuPYQlH1FKHS9ZvkPwbt/3e51eDikeOpT8Mz57swzfjKZOfl4RuuBpTulwvQfPW0WSWT8tNTiNx
+ 8BvvRDWHIhTolbNFlNG/Lz9mFEKGV+e8FeidlzuZ2eegj5Z5GbUh0ZCuW9CCKCORPrleyCjBHL/
+ x8yddgFg18/hTytly9vbkA45Th2Xhi0tQ
+X-Google-Smtp-Source: AGHT+IHTb8UgbLZ/Xnk1urV6PNhew3ZNopBBNBKjnVo1MWgwaJgCs0LoIcaYsGPJ+xLfbLjzpsi68Q==
+X-Received: by 2002:a17:90b:3c07:b0:31f:7c9:2e66 with SMTP id
+ 98e67ed59e1d1-321162b517bmr698977a91.28.1754070014032; 
+ Fri, 01 Aug 2025 10:40:14 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31f63da6141sm7972925a91.1.2025.08.01.10.40.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Aug 2025 10:40:13 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 0/2] single-binary: compile hw/intc/arm* files once
+Date: Fri,  1 Aug 2025 10:40:04 -0700
+Message-ID: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-39-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-39-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 18:34:54 +0100
-X-Gm-Features: Ac12FXymGVB6xB0fKCs41ifgGco6oEAHzgZMBFNwZA3U8Vj_CK4O8hYxwRd4eHI
-Message-ID: <CAFEAcA-h6SGsaEwEdH9KOkSJ2UtjDSmbweVfjPWAEV17dmJwxA@mail.gmail.com>
-Subject: Re: [PATCH 38/89] linux-user/xtensa: Create init_main_thread
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,16 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:18, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Merge init_thread and target_cpu_copy_regs.
-> There's no point going through a target_pt_regs intermediate.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+We simply compile them as target common code, without moving them to hw/arm.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Pierrick Bouvier (2):
+  hw/meson: enter target hw first
+  hw/intc: compile some arm related source once
 
-thanks
--- PMM
+ hw/intc/meson.build |  6 +++---
+ hw/meson.build      | 45 +++++++++++++++++++++++----------------------
+ 2 files changed, 26 insertions(+), 25 deletions(-)
+
+-- 
+2.47.2
+
 
