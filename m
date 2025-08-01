@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23C8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A020C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 19:46:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhvYV-0008E4-Bt; Fri, 01 Aug 2025 15:36:39 -0400
+	id 1uhvg7-0000l1-Cc; Fri, 01 Aug 2025 15:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhttf-00025Q-Pt
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:50:24 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1uhu9S-0000ik-4T
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:06:42 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uhttc-0007eE-NZ
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 13:50:23 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-71b49bbb95cso11832647b3.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 10:50:20 -0700 (PDT)
+ id 1uhu9Q-0002Ly-E1
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 14:06:41 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-71b49bbb95cso12003067b3.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 11:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754070619; x=1754675419; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754071599; x=1754676399; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BmUGzLsZ6tbNmFepMV83GbD2oZNnh2iaQmNk9k2r7us=;
- b=CofTT2i7QCpUh3F9dl0f2ZJAx1TMHyYlHJwwXabZxNzPNrv9mhuVqWhAz0Qe2M42gA
- P+A6aOdieofzr61h36OFC5L10h2CB5nY8cSuBNEE4sRkVw9gFRmN3Yijzg+tMfA4+32n
- SApYHZrJ41SJ8CE4ljQ7zDUpkhwqQHl+26Uglo1vpCgkLLXt2ez53KeMW+3BPhVA+S9s
- Vy04go78+My7jlpAmEHEzB9RtkQzleopSRlhISK8qLvIHZ5Ngk8GUeo578X8GsErMpWG
- jIr7OlvSf9KzSUfYBFv7Frqjq3TdTfXtK8in1CLJP6X0fZieSoN3lDQZKEWO/+Pw1CIm
- OSyA==
+ bh=CvmaC4XQKpqGDFUWg+/EJ0SFGXbPB6hYDMLmdbA+MGw=;
+ b=Fh7j3ljg44BivufscuWpIAps88o6rYUNzP7Iv7GZKTtsvBZ719Q+b7s4cEdJbPLcVC
+ JUt9K1i3K65mPEvwsJkaHhjrMvfjvS2jtSoei8mydk6WiyiyYnsfUNkmHjKrIl8mDQ6Y
+ yhJm9esQbVBkB2w6QgaWbhaKmE79WJogzuJK0iibT+0Pzwl4W5ahluowBQBcQAHMweFW
+ 7eT2qP/lJmRVNty6qwOLoNoe6pgqCB1uGPR2DF4UHNbRIRWRlTWbKkXjxgDEoTmt9/i7
+ v1GdrK9LG0BYy7ym9ypu7Qc2URD9rkQPlRl9OR2L/f6tzWcUXhMxyS54dv6rLuYAJ+y8
+ 0efg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754070619; x=1754675419;
+ d=1e100.net; s=20230601; t=1754071599; x=1754676399;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BmUGzLsZ6tbNmFepMV83GbD2oZNnh2iaQmNk9k2r7us=;
- b=cE1hYHeFVOTIIWsOKEJFbKOfTo/YLn+8zYQiQraiLFJEzaHKiHy7LHSKDpRb7Vc8We
- ohni29uBTKq2qpm/ibl8cjUcNaUthXZfIbDHFd7XmcmrANfQ7Nc7gEhkyJxVWIwEnfjE
- gpmgn10AssFy7NfesyHZT4wMOTjU7u/fX4jdRSX9OYrLy0gDJtTz9oJfYNEMpPidhwe5
- vzCrMvkwt1q/phLmc9KyED9XNBgAe4/G5KLpcvl6y/MMok7BO0UqHT1iZr7wykENpNUh
- lKy/ktevu1TmJ8VQ+9CuZHNe38jYBKCbAH6YApKMtkmVvc36RmWHWe/3icHqLl3GJF3Q
- 4CPA==
-X-Gm-Message-State: AOJu0YxkzOmcAYbgO6eT6E5DyM+FfLWgDVHkqxgiPVmF8npn5MUjNk66
- sp9zBazRqITp/PZQd9pQ7Tujbesl6lDeLYpqNzG7b51HQHAxXkKYRGAqWxbN4gflZtB4k/9ZWIO
- /CobcuSAeAplyNCl2IWDjRJRe++P8Of8mGjsAWxTNWg==
-X-Gm-Gg: ASbGncu7NsbD3+s/mgfjkgTRZ/2jUI6jcaEcm9HWtsC7kRt0tZmzB0ldJV9lcEKBmeQ
- FzpUTWJWWMmxuY2GD/OhfXmdk/bVNbv4KwS5EXKdk79iq1zLuZc8UzLPPQg6ZcARpvPaJPz8pzW
- 3wjoO5GkjC4wTz+DHHcDEm1b3yYc33V3j4zFT1+Kc00urVFLiA8usI4wmC4p3pd1oIIJqRksSMj
- CSu/k8f
-X-Google-Smtp-Source: AGHT+IGwsfu6dJRgf7w1a96wWHcjYRMSpPAQFFc0QjSOFNzwolpR+pnKxvQh9DWNoc2gy5lR+JVu+KwnMATvBjJcvmc=
-X-Received: by 2002:a05:690c:c93:b0:71a:3ab7:bc8a with SMTP id
- 00721157ae682-71b7f4391admr8404097b3.32.1754070619327; Fri, 01 Aug 2025
- 10:50:19 -0700 (PDT)
+ bh=CvmaC4XQKpqGDFUWg+/EJ0SFGXbPB6hYDMLmdbA+MGw=;
+ b=CnXZsZZB/CelZ1GBUMg16/MYHyh/G5Sr9rhzt6Ul7avu8OQskfzzJQzhl1R8VdjRpY
+ jucIiI97Fb6GcPYMo/cEZFo/345dfwVqCCrcgi6tEFgmku5QGEyNs+gGXhcwpIoxBp3Z
+ jn2T+E9a1+8HgsIELCJjrLcn+0HzVNuZC0CZQ3fOB66RnVAylhQ93PlnQOMUJugWlHS7
+ MBQprZ23Ch5OBK1vi3nt1KI1dPQtnPhjwBfgTTVSg4ynk/Bb9atTI/Is7RJ3TcZcE19+
+ Zl9nJoUwdFqBqlpS7z5Yhwd0O9UnbH0+Xq8OmrnMrRYKdOPwzBCnQ3TtsT/SHj8Op0CG
+ HwDQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXk5gE7CLcYO09MiJ9/GAeCUVwR98gvUAvlEApFFlGE6XOY18bmhMZLcydCiLF4s6MIOnKeL79Lgp44@nongnu.org
+X-Gm-Message-State: AOJu0YyVT2NFzfwGwOPy8hxgtWWh/5VNdY7bHS2q7DWtFA5eUfTCKTZ8
+ iq8U8ldsdRVW3NEuSX8excmdgRqj0fkUM3nv+qpBJd1/MHeBzy2+8cFXBGBQdu7DqkFiYLiw8xn
+ 4xY6X1TEpu23tosqMrG3R21DTTCvWrcN9fNUc5O+aMg==
+X-Gm-Gg: ASbGncsigu0G+m+/9oX5rpiP+rrH6NapByteEa296uzJK4GcyRb5uiJ36DZemebundv
+ 4xXKF9ng4ekqO5Eo38Gq8h+P2eRBdGilFeiaSC0PM3Gk5L92BOkEDCMAorWRUEejqCus9wnKbtY
+ tXBmK/T599f0vvHDypfCuzgZB4gGErT2Rdbv8tfPMMXgp/jYbB7dijacTA0vkEum9nxvRmo9qCH
+ PQNsshDm89/tMzyuBk=
+X-Google-Smtp-Source: AGHT+IHO2d5uuv6wbLsNM5EVO8eSLzn4fKdRPJSCp7C8E1uwXW72C71a6X18kpe8arBI6AlQXi/JU+Ay9lrjaK+sGA8=
+X-Received: by 2002:a05:690c:6802:b0:71a:23b3:13af with SMTP id
+ 00721157ae682-71b7ef57a09mr9667387b3.13.1754071599004; Fri, 01 Aug 2025
+ 11:06:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-54-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-54-richard.henderson@linaro.org>
+References: <20250727080254.83840-1-richard.henderson@linaro.org>
+ <20250727080254.83840-38-richard.henderson@linaro.org>
+ <0128c452-8bde-4bdd-b73c-330a7bd619a1@linaro.org>
+ <e275dc71-2d48-4b48-9b7f-dae2c8934d64@linaro.org>
+In-Reply-To: <e275dc71-2d48-4b48-9b7f-dae2c8934d64@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Aug 2025 18:50:07 +0100
-X-Gm-Features: Ac12FXw2HZbQNu99ZCQzw25dvjCaKUmS7i1HzAiWlfbSmr7wE1unSC9SVFheFn4
-Message-ID: <CAFEAcA8i8_OE4TVCuGyXDvdGiJ3Hbp_OjD2RvhUd5sbA9F1F8Q@mail.gmail.com>
-Subject: Re: [PATCH 53/89] linux-user/xtensa: Split out target_coredump.c.inc
+Date: Fri, 1 Aug 2025 19:06:24 +0100
+X-Gm-Features: Ac12FXxdGMGjJsFFiZ2jTuvGmdPN0N7YJcXl_iIZArAv4vvdEi5xc566xiYQ8Ww
+Message-ID: <CAFEAcA_b0dwepMFpSaY31fCUd749mpU5M2ZVymonPPBAEsTLpA@mail.gmail.com>
+Subject: Re: [PATCH 37/82] target/arm: Convert regime_is_user from switch to
+ table
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,17 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:29, Richard Henderson
+On Fri, 1 Aug 2025 at 04:54, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/elfload.c                    | 38 +------------------------
->  linux-user/xtensa/target_coredump.c.inc | 38 +++++++++++++++++++++++++
->  2 files changed, 39 insertions(+), 37 deletions(-)
->  create mode 100644 linux-user/xtensa/target_coredump.c.inc
+> On 7/31/25 07:21, Pierrick Bouvier wrote:
+> >>   #include "mmuidx-internal.h"
+> >> -#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK)
+> >> +#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK | \
+> >> +                ((X == 0) << R_MMUIDXINFO_USER_SHIFT))
+> >>   #define REL(X) ((X << R_MMUIDXINFO_REL_SHIFT) | R_MMUIDXINFO_RELVALID_MASK)
+> >>   #define R2     R_MMUIDXINFO_2RANGES_MASK
+> >>   #define PAN    R_MMUIDXINFO_PAN_MASK
+> >> +#define USER   R_MMUIDXINFO_USER_MASK
+> >>   const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+> >>       /*
+> >> @@ -33,7 +35,7 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+> >>       [ARMMMUIdx_Stage2_S]        = REL(2),
+> >>       [ARMMMUIdx_Stage2]          = REL(2),
+> >> -    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2,
+> >> +    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
+> >>       [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
+> >>       [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
+> >
+> > Maybe I missed something, but what about other entries that were initially treated in the
+> > switch?
+> > - ARMMMUIdx_E.0_0
+> > - ARMMMUIdx_M*User
+>
+> See the change to EL().
+>
+> I'm not sure why ARMMMUIdx_Stage1_* is excluded from arm_mmu_idx_to_el(), but I don't
+> change that in this patch series.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+It's always been that way through various refactorings
+of the mmu index, back to commit c1e3781090b9d36 when
+the function was added.
+
+In practice we only use arm_mmu_idx_to_el() to get back to
+the EL from the MMU index that we put into the TB flags.
+So we know it's always one of the "complete translation"
+index values, not a Stage1-only, Stage2-only or Phys index.
+
+My guess is I originally put in the assert that enforced
+that you don't call it with either a Stage2-only or a
+Stage1-only mmuidx because I knew that couldn't happen and
+it meant I could implement the idx-to-EL code for the
+valid cases as "mmu_idx & 3" and didn't need to add
+extra code to handle a Stage1-only index the function
+would never see.
 
 thanks
 -- PMM
