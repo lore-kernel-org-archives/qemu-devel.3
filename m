@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D448C87FCA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC067C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqns-0008ID-He; Fri, 01 Aug 2025 10:32:12 -0400
+	id 1uhqnZ-0007JH-JD; Fri, 01 Aug 2025 10:31:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh5-0005Fv-LT
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhO-0005RQ-I4
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqh2-0002ai-JZ
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uhqhK-0002iA-V1
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:25:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754058305;
+ s=mimecast20190719; t=1754058325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=QuL0JTKEBhSFp/6lwOdYxS7QOmZe0a+bp9gretjYRbo=;
- b=WPH+Tk4fSCjJC8cssXO0ubVUL1MCC+yK3dHx0RZ3jRWwru/i2Pg9diF3KVlPkYdN9vudis
- GJn0wTdAes5+UN1yfoyU/1J3FYgHo6EjZ3kwPN0qdoONbo2WJDS19rirp9aoronJavmJcG
- LteHZOtM73OPY8CXi6RIWRy4ajOqt3Q=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=skaRuHczCVKfOwEwu0xPYWoe46Si7UXt2McCcCPTErQ=;
+ b=bQFgdzAaQgxTa27eY1c3p5ekSoZiQNRLD5niHzYrsfpbkzVUkGQMMSFqD1zIqLRNlToJZs
+ CxCSHjk1X6vpJecq7Gm80WXy+pOmiQyRyqP+7/rzDwRBW+1SattjBcWU2CObDcXipVFJ/2
+ OJgcuZbKbf0XjrT8m7UFQF9VUL6pyy4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-DBBx0w5yNG2_n-ZSwKzU4g-1; Fri, 01 Aug 2025 10:25:04 -0400
-X-MC-Unique: DBBx0w5yNG2_n-ZSwKzU4g-1
-X-Mimecast-MFC-AGG-ID: DBBx0w5yNG2_n-ZSwKzU4g_1754058303
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b7931d3d76so208487f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:04 -0700 (PDT)
+ us-mta-367-tu4jVcxYPf6HC6GjGpujYw-1; Fri, 01 Aug 2025 10:25:24 -0400
+X-MC-Unique: tu4jVcxYPf6HC6GjGpujYw-1
+X-Mimecast-MFC-AGG-ID: tu4jVcxYPf6HC6GjGpujYw_1754058323
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4560a30a793so3202195e9.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:25:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754058303; x=1754663103;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QuL0JTKEBhSFp/6lwOdYxS7QOmZe0a+bp9gretjYRbo=;
- b=QA504zMkbl79rKThD+TMPDWfDyv+D2QfxZc9V6kncSbhfIkhlkma4rNLVnK4xLs7Bd
- Jf9s5EbVHQ3elk8xgFpsvHuFI7MkjVAULi+xsCjfYCAA6kpYWWRdI0AYSc1Ux9knPHnH
- J9zAccvcve8EdKwdSnJj8xa8TLG8eM9ogDfKwREEhHqWjOHMT5T8VnTA5UuYo+Sri9Li
- UQkGRHBrKHv7Ql0D7w1klWG06f5SaouKWb6xr30X8MFfOZquJyAZtF96vLEcFDL+3Yxi
- mfldoBIAGYFW7mlXTG9lZPX4O20RQ6OHqCURBafdMwGjGK4ScE7/yOaN6g0ezd7YKGp1
- Un2A==
-X-Gm-Message-State: AOJu0YyfgoxIV+cRfeZFF73fphycLEZCF0AcE8z9DwDSneVkOGnJuEAg
- zTkeKn7HDrFFQLTJf9IzWGGKLtcb6K/R8JA73bNxC2UCOqZpWImE57fqxdpTt1tfqKQ7csnhwm4
- 4e4dIkdTrY7gljELl+ZgpoaEX7UrwDcicqaLq8AH9dRQUUBzqhIWHdIL2Rfxh9ixUiGCXV59p6X
- O3F6iHmNDEa8pcCL1N5PBRPP0osqvbypPVtQ==
-X-Gm-Gg: ASbGncsHkLLSOPjWzyE7qUE8fYjMSRVPxYbNf5MYXu/pdmpahKIR5XV0BKXO4uX3PzB
- LSyBoA0IE/IMxmHWc822JfXOqetOvdjinOQ7MPE/V2yvhsHIYzAgL4gEUS+1l8BSw5aFnEMSqpq
- 7Bk3Z6NH70CtCtT6ggoqW4e8GtA1nzIE5JvWlrHXv4Z0yyFun2XgYnJxP5LUpra2iz5swIZz7V+
- We+4IvYZ8jXi0jp3/4gH6LHgWc/3jneOOZ4NJbAf7dg8rcTZCsEVqg1TI/5z9o3MMm09Z3ASLKY
- +M95I7XLdCIaBmgqw1Ad+BEVmwsb0hCj
-X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
- ffacd0b85a97d-3b794fd5940mr9230774f8f.16.1754058302647; 
- Fri, 01 Aug 2025 07:25:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrsRekZ680qyPDfDU4NlWzGbIhrSAgAnvhJbQla/nOhinkJ97o1DzUxTddadGhc0qw/N3Svg==
-X-Received: by 2002:a5d:5f51:0:b0:3b7:8da6:1baf with SMTP id
- ffacd0b85a97d-3b794fd5940mr9230741f8f.16.1754058301894; 
- Fri, 01 Aug 2025 07:25:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754058322; x=1754663122;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=skaRuHczCVKfOwEwu0xPYWoe46Si7UXt2McCcCPTErQ=;
+ b=hZzci7Vm2d8r/Z+Xz1X4PFp2ekCHJIbaMQ9RcjFqQTdKsGzVuzIA5+2hxL53V6w8om
+ phreh3Vrk1eqpass6u7maGiCeP3uX1goZAq+I/7hDFrjohgsd1dijLzXPbgFs94a9q5U
+ 3oudDzIBgv1D02SxmlHT2DowResP3ShgZjagaDVnTnDPWYshyCGE4m4yYZkyaqXY5HDX
+ O5l9tUP3gc09I/7zBmXhhUdYKvIfsE7ocEM2kM/HaMOd/F2O4yizGRJ/inxBPuQXdHHF
+ pcp+zPBkzcDJcpRApAeGFrptUKpCRCpbW6f1OkAI0iefJ5nHQkwXl2UWETixPp5LBQQf
+ GBXQ==
+X-Gm-Message-State: AOJu0YzPm9FU40WhlEVAOK0TWNlK9+l4qRZgftn9OaPxXGlZAhWKFrtv
+ Zryy9+cnzeVU93ZcE7/ewstIhjYU9uPksM2PcCgNPWbO9p8zWAg2rrQUpZfmxxByEmfoaQcOEKv
+ NLBMxtFkfh9Uxwh3gQr+/4LxkCBUOHPflgMr50x2DHFHbMsMOdTzLobfMtBRpeZEAgvdeGwVGax
+ NX16VguZ7FVsyrSZYyKN23Pp4K010jEOD0vw==
+X-Gm-Gg: ASbGnct5LWJm1FFJmwXFiYFy1ZgSGlYJ990vEfD/cgthYCSo6B/FEMihgnVxTJqycEF
+ 7cDq3A1LThmVdFUkiB/qlCKKTjzUH4KRvweK37KjavjcK03+NGDrWLyRrX5Irr2ffUKpNkW1M0/
+ +/5W+Ah/wG+LDt/f5UL0qBj3hubX5MYZ4FD6LUR3TdPyoKXXkm2ey1JZ7QXbUwJ4t22GDeUAI0k
+ 9ZGJcPMob6dVS+9GUrMulPMH6kU0m5BB132kXNs2oHQhAXMsJ5OajaxAJlRlfAEF9DfdVLJp4A8
+ U46Qn6TO714QCoZ50rwT8hrAUhpABDHn
+X-Received: by 2002:a05:600c:1994:b0:445:1984:247d with SMTP id
+ 5b1f17b1804b1-45892b9530amr98227555e9.7.1754058322244; 
+ Fri, 01 Aug 2025 07:25:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFIGEyaBIvTZG0korKrC2t8k4QdI9uBOjsgVFbrFH20LswoJgbVsAqIWBcfeMfqwjaEa7o5cg==
+X-Received: by 2002:a05:600c:1994:b0:445:1984:247d with SMTP id
+ 5b1f17b1804b1-45892b9530amr98227225e9.7.1754058321647; 
+ Fri, 01 Aug 2025 07:25:21 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1515:7300:62e6:253a:2a96:5e3])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453d6esm6114814f8f.37.2025.08.01.07.25.00
+ 5b1f17b1804b1-458953e9b1csm102063335e9.22.2025.08.01.07.25.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 07:25:01 -0700 (PDT)
-Date: Fri, 1 Aug 2025 10:24:59 -0400
+ Fri, 01 Aug 2025 07:25:21 -0700 (PDT)
+Date: Fri, 1 Aug 2025 10:25:19 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/17] virtio,pci,pc: bugfixes
-Message-ID: <cover.1754058276.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 08/17] hw/i386/amd_iommu: Move IOAPIC memory region
+ initialization to the end
+Message-ID: <a7842d94067cddc80b47ac42fb6e49e2fc02a3c5.1754058276.git.mst@redhat.com>
+References: <cover.1754058276.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1754058276.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,69 +113,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4e06566dbd1b1251c2788af26a30bd148d4eb6c1:
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-  Merge tag 'pull-riscv-to-apply-20250730-2' of https://github.com/alistair23/qemu into staging (2025-07-30 09:59:30 -0400)
+Setting up IOAPIC memory region requires mr_sys and mr_ir. Currently
+these two memory regions are setup after the initializing the IOAPIC
+memory region, which cause `amdvi_host_dma_iommu()` to use unitialized
+mr_sys and mr_ir.
 
-are available in the Git repository at:
+Move the IOAPIC memory region initialization to the end in order to use
+the mr_sys and mr_ir regions after they are fully initialized.
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-
-for you to fetch changes up to 4caf74916d09019e61c91f8cb1166510836d35e8:
-
-  net/vdpa: fix potential fd leak in net_init_vhost_vdpa() (2025-08-01 10:23:50 -0400)
-
-----------------------------------------------------------------
-virtio,pci,pc: bugfixes
-
-small fixes all over the place.
-
+Fixes: 577c470f4326 ("x86_iommu/amd: Prepare for interrupt remap support")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250801060507.3382-4-sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/i386/amd_iommu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-----------------------------------------------------------------
-Akihiko Odaki (2):
-      virtio-net: Fix VLAN filter table reset timing
-      pcie_sriov: Fix configuration and state synchronization
-
-David Woodhouse (1):
-      intel_iommu: Allow both Status Write and Interrupt Flag in QI wait
-
-Hanna Czenczek (2):
-      vhost: Do not abort on log-start error
-      vhost: Do not abort on log-stop error
-
-Jonah Palmer (1):
-      virtio: fix off-by-one and invalid access in virtqueue_ordered_fill
-
-Mauro Carvalho Chehab (3):
-      tests/acpi: virt: add an empty HEST file
-      tests/qtest/bios-tables-test: extend to also check HEST table
-      tests/acpi: virt: update HEST file with its current data
-
-Sairaj Kodilkar (6):
-      hw/i386/amd_iommu: Fix MMIO register write tracing
-      hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
-      hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
-      hw/i386/amd_iommu: Fix amdvi_write*()
-      hw/i386/amd_iommu: Support MMIO writes to the status register
-      hw/i386/amd_iommu: Fix event log generation
-
-Stefano Garzarella (2):
-      MAINTAINERS: add net/vhost* files under `vhost`
-      net/vdpa: fix potential fd leak in net_init_vhost_vdpa()
-
- hw/i386/amd_iommu.h               |   2 +-
- hw/i386/amd_iommu.c               | 102 +++++++++++++++++++++++++++++---------
- hw/i386/intel_iommu.c             |  15 +++---
- hw/net/virtio-net.c               |   7 +--
- hw/pci/pcie_sriov.c               |  42 +++++++++-------
- hw/virtio/vhost.c                 |   6 ++-
- hw/virtio/virtio.c                |  22 +++++---
- net/vhost-vdpa.c                  |   5 +-
- tests/qtest/bios-tables-test.c    |   2 +-
- MAINTAINERS                       |   1 +
- tests/data/acpi/aarch64/virt/HEST | Bin 0 -> 132 bytes
- 11 files changed, 140 insertions(+), 64 deletions(-)
- create mode 100644 tests/data/acpi/aarch64/virt/HEST
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 037e78056d..7308611bf1 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1698,9 +1698,6 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+     s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+                                      amdvi_uint64_equal, g_free, g_free);
+ 
+-    /* Pseudo address space under root PCI bus. */
+-    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
+-
+     /* set up MMIO */
+     memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
+                           "amdvi-mmio", AMDVI_MMIO_SIZE);
+@@ -1723,6 +1720,9 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
+                                         &s->mr_ir, 1);
+ 
++    /* Pseudo address space under root PCI bus. */
++    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
++
+     if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
+         error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
+         exit(EXIT_FAILURE);
+-- 
+MST
 
 
