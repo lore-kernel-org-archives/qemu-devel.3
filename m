@@ -4,101 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA2B8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD54C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 13:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhpwf-0000Ur-S2; Fri, 01 Aug 2025 09:37:13 -0400
+	id 1uhpwl-0000tZ-Fh; Fri, 01 Aug 2025 09:37:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uhppM-0007t0-OP
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:29:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uhppL-0007qV-2n
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:29:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754054977;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lmewEZCrbPA81DnV8etOkywIAyotgY3NAQv/G1bg1fA=;
- b=gpDF23ElyGfYsfww66/5eVTZ4ayFkipe7Y4DeXD0HpqDWpc7oD9S1ZjxSXJUiJAE3cAJqM
- f4OCk/bb8zE17ptnZKEj9pIlbIJvKC+vuEtJKpIME9WZyVlNViZb6gjtTxYz1s1JwLaNm7
- 5q5PE8gmNazAwMdNPy5ZM0AyTqdakuM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-16xpGBfCP4SoFoSt5hRL5Q-1; Fri, 01 Aug 2025 09:29:36 -0400
-X-MC-Unique: 16xpGBfCP4SoFoSt5hRL5Q-1
-X-Mimecast-MFC-AGG-ID: 16xpGBfCP4SoFoSt5hRL5Q_1754054976
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6fb5f71b363so19011916d6.2
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 06:29:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754054976; x=1754659776;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhppV-000184-Hh
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:29:49 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uhppT-0007rP-L6
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 09:29:49 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e8e0aa2e3f9so1605076276.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 06:29:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754054986; x=1754659786; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lmewEZCrbPA81DnV8etOkywIAyotgY3NAQv/G1bg1fA=;
- b=Trx626UFtPJRnbwvZiHkqNABuydOZ0qSyUP5CMdncF3GZTdV9kdSE0fbsbWb07/+xv
- /3bElSeQ7juVxAO0U0Q84as6djexHSUrjfOaS1ou58+iZ59VyVmW30p+sqbKYafAQXc0
- w39Ypxh7+GtUymOsLQuAUO9ZxCuQ+P2uFEt1laEYE85+VH5S27vivq2Vvt1MPHr7pYvE
- Glyg2o76rOycB5tMigExdGNYjh/RdWhCXksAm3g+MkMd+caEErgQH7bQRqNut6dS8lB+
- sP6eD+dcE9OLyWCIduF8fkJuq87EXVBlzpwaOKA48yKz8xbIVzK9tfgVm8xjz7rqLeBg
- 7yYQ==
-X-Gm-Message-State: AOJu0YzbSxD91EYOdomScHywFw/jftRiFa8RW0yckQo46j2+mGtMy4lz
- KEuJtuR2sSFPpuVb3i30RatRFsI4kE2AsWLQmaxnPdnSOREVqTiJ0Tvrs2y5bo35qE125vaAAdd
- 1NnXbbwIZt9qDlQS0GNXk5IkGQXBhew4kxZvuj7ctUwB+PC/m0mUTB5oW
-X-Gm-Gg: ASbGncvvR5Ls/j5PSX6IV1kpMDFxRHn/4ujB34j8erv6pSzXvn6exRO8sXpvLqKfQid
- IfRw45LzOmIY7Nync8Q2Bly8ZtuVebZPOUKvKvxNdxbdRerqS3+KDZVIW60VqD4c7lynAAkhsgN
- 6z17Na/hhPZyGeXP6kX8PUlUCdQOwSUQrKbE4z+51yZzHzTlEnv1olW3xgelxAquZIcZh+f/FRQ
- 1Zd9AmIx1EzF/+a8+LfPBLuelyOOubXgqjNx7L3u94i+NHlIBoqC4dkJIZTAla0QP1pjfURqFer
- qxLzHOkR8PPnzaFIzdo/P6Vwh7QzeL8U8OfT9pAsT7rptpuGr3P9V5047h1U+rFykxea2Zy3Lo1
- h4IKcpObFGJFt/8E=
-X-Received: by 2002:a05:6214:5010:b0:707:5319:d3cd with SMTP id
- 6a1803df08f44-70767456d88mr153309956d6.26.1754054975686; 
- Fri, 01 Aug 2025 06:29:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJ8ToAMsglbHYpRcZgLaYN5tzVzmJDmaTYIhAxv45L0nYyuNc11U/0/zPOwZ+P9Zqoznt2yA==
-X-Received: by 2002:a05:6214:5010:b0:707:5319:d3cd with SMTP id
- 6a1803df08f44-70767456d88mr153309456d6.26.1754054975051; 
- Fri, 01 Aug 2025 06:29:35 -0700 (PDT)
-Received: from sgarzare-redhat (host-79-45-205-118.retail.telecomitalia.it.
- [79.45.205.118]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077cde6f49sm21418436d6.72.2025.08.01.06.29.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Aug 2025 06:29:34 -0700 (PDT)
-Date: Fri, 1 Aug 2025 15:29:28 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Oliver Steffen <osteffen@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Joerg Roedel <joerg.roedel@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC 1/2] hw/uefi: Add hardware-info ID for virtio mmio devices
- for SVSM
-Message-ID: <ho3splx5lkooqwkthu7w32kxuwl3qnu7umjwl45ybdejy4rctm@odhcm5zxyskv>
-References: <20250701121815.523896-1-osteffen@redhat.com>
- <20250701121815.523896-2-osteffen@redhat.com>
+ bh=zM+4rocb0JLv14hOXdt5Pjwn/4EGFS6aEvPspBwLM8Q=;
+ b=TSJU3nwQL0sQTGHwilWO8vwwkfEQJCzUzx5mB+OmAaKIIs68+3PtlStYPF1b3vmXB9
+ tfumg10wt/F/fhKe3IbU4vzPYKyn/dyHujKD0TkLZ4KqCyX0QnNJLM9Z2ZeC8l/ei7Bu
+ QGNJ2al7bLL68amRpB8ebrYsI9gJty9dOAt0km9pR/AphNAVvkmofQkDK5B4ozRLX+yE
+ mEvIWxD2aEOSXl07410CwoBwPMK9ZhZTq3wXZOI5Fyf6pPvIOtVf+rinWbbviMtNMCAD
+ emfXAA3hITLpNumNjp0xk29TTnFD05KaXcLcrik+SEDs6qSx5YjsTJH1XguT7kkC1O2e
+ aLfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754054986; x=1754659786;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zM+4rocb0JLv14hOXdt5Pjwn/4EGFS6aEvPspBwLM8Q=;
+ b=IyQvT0DNuhs/yt7KeKR+64PsgEEJ/v7rVdCQgHm2rdRtKVNWOkf+PGdOb0WBsKC+0t
+ lAt4RfCk3p15KLQ5LGxXI7lcn0ZGHEg6Koqc0YBLGL/KytwK/c5r2kH/ekHgdHQWmoip
+ WgMFTRh4aehMpTkP40vo/fWNZdk9fW6GDycsCueHb9ePec9HlT8ODB6crUnN2o0T9AEK
+ 0NlMGDGRLfer3j58lHzu2C6gEr8hnQoChk8naCtVEo96bx2iNvuzu9KTC7fdKfjIAgMt
+ uiVWNeST+BXcUyvRZ19X0mHi+JowrwTc8BcyRjhD3CbzFJi/SFm1v1BlOTrjD6jPGoFf
+ 5ZaA==
+X-Gm-Message-State: AOJu0YwbnZwJOG3lDSCE8YfNnM110zpB5G4gEsHdAc2hdoQV8uwwykIs
+ ht/ulvSrIlb+iYMf+6dxyT5dIwmK6IndQB11RK+t1l3SrO2Hu70XfaQjej8AfG5lYHfYpm2uo8G
+ OV8d1eina+E7WbQmoNfk7HhpP4zGXGzRltRtWlTyCAw==
+X-Gm-Gg: ASbGncunMMIpHwQy/NQTd9O5y/hbpUQSRL/dQ8Y35qrdnuYTfmEIMNU/9+cybddTm8G
+ XKph8rXpiMdIcJ4PrylS+yCuIuWP2OE07c5rTJnUw0mrcpoHkjSQ5rystJtv/CXIRcHCsx4LsGo
+ 4hKhEXfMPZfqOt6FdA/1J6wOjiEDo9Zn/fBymT9J2UqEJtF4HNc19Sh7n05JUu22xlrgl64/lfR
+ 3iPX8dk
+X-Google-Smtp-Source: AGHT+IHh0KFDihUeja+forBXW0gWsijwli54BLB+KUP58fCQImehs57Qquv30nTlsY7prWP3k8S3urlOVL/ZLbAUgqw=
+X-Received: by 2002:a05:690c:d8c:b0:718:17b1:40d with SMTP id
+ 00721157ae682-71b6d49b617mr36811917b3.7.1754054986114; Fri, 01 Aug 2025
+ 06:29:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250701121815.523896-2-osteffen@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250801001305.2352554-1-gustavo.romero@linaro.org>
+In-Reply-To: <20250801001305.2352554-1-gustavo.romero@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 Aug 2025 14:29:33 +0100
+X-Gm-Features: Ac12FXya5BjbgjqdDxkPbF0aOAsI_7Gl0aCf3t3NFKbAZKF2e-WjJ6uHqjwjfBg
+Message-ID: <CAFEAcA-6wr+frdc4idVs45POcPVG54FFTbtqPu3x9Jzfa-gwow@mail.gmail.com>
+Subject: Re: [PATCH v2] tests/tcg: Fix run for tests with specific plugin
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
+ manos.pitsidianakis@linaro.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,40 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 01, 2025 at 02:18:14PM +0200, Oliver Steffen wrote:
->Add a hardware-info device ID for virtio mmio devices intended for use by an SVSM.
->The ID has already been reserved in edk2, see edk2 commit f25e3d0d2c55.
+On Fri, 1 Aug 2025 at 01:18, Gustavo Romero <gustavo.romero@linaro.org> wro=
+te:
 >
->Signed-off-by: Oliver Steffen <osteffen@redhat.com>
->---
-> include/hw/uefi/hardware-info.h | 1 +
-> 1 file changed, 1 insertion(+)
+> Commit 25aaf0cb7f (=E2=80=9Ctests/tcg: reduce the number of plugin test
+> combinations=E2=80=9D) added support for running tests with specific plug=
+ins
+> passed via the EXTRA_RUNS variable.
 >
->diff --git a/include/hw/uefi/hardware-info.h b/include/hw/uefi/hardware-info.h
->index 94c38cff20..d688af0e8a 100644
->--- a/include/hw/uefi/hardware-info.h
->+++ b/include/hw/uefi/hardware-info.h
->@@ -14,6 +14,7 @@ typedef enum {
->     HardwareInfoTypeUndefined  = 0,
->     HardwareInfoTypeHostBridge = 1,
->     HardwareInfoQemuUefiVars   = 2,
->+    HardwareInfoVirtioMmioSvsm = 0x1000,
-
-Can we use hexadecimal everywhere?
-
-Which is basically the same for now, but I mean using the same format 
-(0x0001, etc.). That said, I would probably do it in another cleanup 
-patch.
-
-LGTM!
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
-> } HARDWARE_INFO_TYPE;
+> However, due to the optimization, the rules generated as a shuffled
+> combination of tests and plugins might not cover the rules required to
+> run the tests with a specific plugin passed via EXTRA_RUNS.
 >
-> typedef struct {
->-- 
->2.50.0
+> This commit fixes it by correctly generating the rules for the tests
+> that require a specific plugin to run, which are now passed via the
+> EXTRA_RUNS_WITH_PLUGIN instead of via the EXTRA_RUNS variable.
+>
+> The fix essentially excludes the tests passed via EXTRA_RUNS_WITH_PLUGIN
+> from the rules created by the shuffled combination of tests and plugins,
+> to avoid running the tests twice, and generates the rules for the
+> test/plugin combinations listed in the EXTRA_RUNS_WITH_PLUGIN variable.
 >
 
+Since Alex is away and I'm doing a target-arm pullreq for rc2
+anyway, I'll take this via target-arm.next.
+
+thanks
+-- PMM
 
