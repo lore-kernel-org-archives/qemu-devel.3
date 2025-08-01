@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45EAC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E8FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Aug 2025 14:26:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uhqSd-0000ph-SO; Fri, 01 Aug 2025 10:10:18 -0400
+	id 1uhqgv-0004le-88; Fri, 01 Aug 2025 10:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqRD-0006lk-1e
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:08:48 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqWR-0002LJ-D4
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:14:11 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqR9-0007kJ-Pa
- for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:08:46 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45618ddd62fso11090345e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:08:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uhqWO-0000T5-R8
+ for qemu-devel@nongnu.org; Fri, 01 Aug 2025 10:14:11 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45892deb1dcso4292365e9.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Aug 2025 07:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754057322; x=1754662122; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754057646; x=1754662446; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jxoScrTah+Lj1IfF6qFxbKzl33SslUfaS4aRw5LGTWs=;
- b=pVqcvourAHDPiYDCjZqM/jf1VxEK56pp132hWwsCSdywVxvI7frpByQvhtLTIOGN4F
- RWsViiOqPDlDfSjM17Rnb0sMCOIxArES6cHUKVaQil7k4DwX3Q0HejRPPQyB4yExl/0q
- XAzKwkN/Z9UTUgirD4PIargKzNkE6yTNKFSIUFl7WRB/yHCmMQ2njhrSw7DwnSo+OJd+
- P1j2+kjTAOPd5TvyJ89r+rxifCbqHc0RXERELVNYAVVExryLthufYECjvOhIf6JI34xZ
- ungycycaPFYIlfVLRdE/QzlCm15EGfHigeB3VeUuE0ri2kGiuaf8ZIXxaS61KzfcYvWG
- pauw==
+ bh=D8dpATFFfosJyK/OsBtmby1KIdAynCWW1Pbc+yBUzoU=;
+ b=MEevFzrEnlfKCaszxMWVPIzqGS6F9CrVJBLLxEUKEPjp9oe1yOvFcqvEJhHOIr0xAA
+ 9dUdUrP5aUnBAA9Tp0GzU3h2nlRlTVpsMn9JQh/vcMJJQRNke4LuDnJ+oJjUcW7APmOB
+ nzrrMR5zIscJCPBwjIj9dV9XUIwzztAzaxoBi6VFlgmNlhF1SPNLO0q5JHuUTHkcdj7Z
+ 0aojxM1hvGUtl1egvXhSQVzOGVEHU7Unh4C+cd5nI1egzz+n4SunR9FFfDka2OTShe+k
+ EKqUVRKZZ+guJ6vJX7lxHp5VoI2bFqEk0pDb8andaXSVBZJGqREOnVPqhrvL2eJo9o93
+ BB8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754057322; x=1754662122;
+ d=1e100.net; s=20230601; t=1754057646; x=1754662446;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jxoScrTah+Lj1IfF6qFxbKzl33SslUfaS4aRw5LGTWs=;
- b=ICQ80tthtMuZcaOcUx/NiePcZ2wD/UKttlMnLeu9zSS+LPM7F//f3svfa2yVaKbD1h
- lUhQrQA2N8fzIVXgxesxpZIQoHw8w0pfEd16yMinlTSzWJDoz71wH6e1pAMtc7d8mmQe
- 6jq0fZNRpcLtxKV8dCc9PJiVh13wlzqrHWxKqVISjXEcbGmgAueynijM6E7umvIZ5Hmu
- HVh82KKSlcUhhi95iK0Hy8uUuNBvB3cRkWX2ebBj9Q003EUmONdqdYqx/lgoDRsPo3l8
- BmNab0v6dQAcZyTdb28aQSIF6VVpWFyELeBLPx7eEbu8Fqd2d12wEKncWrffldfpqUMP
- Azyw==
+ bh=D8dpATFFfosJyK/OsBtmby1KIdAynCWW1Pbc+yBUzoU=;
+ b=uL5Emux+mMeiLZbhCdnjsYyRVJuE00CrSuEu1p3M+SEfKSaFyZAJ7rGtKB0zlXiaxs
+ jDr3XvBdl9iPbFoYKU2XQcDHTJ7yOD0gC5iNs5a02nB6caSlrTwUgYNr/g6UzzdI79/g
+ GGQ4invu0/b+FZ22Jd4hUmVAlcRsDatAHbFFnLhi4MMLjsTYprXgqRafqmGcrKFAV1s6
+ pv6kkfYVmbO/MbSO42VspHGlsE4gYgT1Kh84TKHueTo/n93Wa1MX5p1eP8L61bbzZJ1/
+ xOGQs27zErvHBdFWYCqGG8ucTO+Yf7U4me7Fpz5Dvo5GUevgKcCMLdJp/3By6/ZjEP7X
+ oowQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNbLcBL+4wfm1X0QV6YVKw+aIVNdgcun7/SKots46yEGsaXeulc9VAsi8V7iXYhdP97xsXypyPE8FD@nongnu.org
-X-Gm-Message-State: AOJu0YyNtJZA1emfkierDCQRqoRBrg1njrdv2lm3K0tZS2IbD++w4zgJ
- t0uiEzozEB1hJcpg3eYMyU3qFciokbo3LdvTYdKzbfXVn7RMgvTaqQA6LqgWImS2ucY=
-X-Gm-Gg: ASbGncsbnmPEzHP5WKHr3yTzizG4dLTcLq25GI9cwf8d4uRw3+cwEL5OjosbuFyuVLJ
- PxxBywJDneidh7oUTHoOCObElQ1sICQwD71VPhaE56IPotDKfcwMyhamkSEmqh9r4HqBzjiO4db
- mO6BGxOpd/eF03UBkoSCX+w5aHh3qtth/P20Gwb3JDKjH/zKB/AISUeFstiQ6qJ03VTOWCX4fRa
- qGP+ldJWiJYKnKd0LAyCUsUtyP1iC7SFQxS/w9gUq8YOtFasc+eBI5uKBn3XdqecpwiayMmhRAQ
- e8W1ttmV2GiFneEqZ7fr+D5d2qls3GsuSWN7tHULUdig77wSFnXDetP0UdSAdQEK7C1hBfbqFtG
- vkGx8ZpYGo+LvfQjXdfYT3PiSxHTqBTNyEy9Tg4gn+OtnBTjiERNdDPzBWthYNw2SJQ==
-X-Google-Smtp-Source: AGHT+IFPM8XXaZcwI6KHj2CYVlsXOxCG0J9XdceKrwBqmRP+K4bjMcPKR20kmeFbpm2ecUdYXqctbg==
-X-Received: by 2002:a05:600d:108:20b0:456:1560:7c63 with SMTP id
- 5b1f17b1804b1-458939439ecmr76865765e9.3.1754057321802; 
- Fri, 01 Aug 2025 07:08:41 -0700 (PDT)
+ AJvYcCVrcO70pWRUVFqF96OzwsL8oEzDdbjo0GUNp0DZq8DoF3oODhJhNLuP9iyY8Pj9s1R9/4Yd5oJxZcsQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw7HzFo0ku5wGAUgpz6QX/7OeEnWxZMlz39C/e6m25CUIbuKeqP
+ z+F13hki9eGoeUksp662p8ryeAhca6WMHMGRcRREiuR6HopU21E9aeSSzt5mB9nyWwFJEYo4OQ+
+ dgTJf
+X-Gm-Gg: ASbGnctvz6kAEnVSJjbkS3oLPk1UCKmkrL/XkX9COvxO1vQ+eA76EVnco1r5K8ViaZx
+ bLsey/jjha2lK3SjuYh5qI4k2lSDM+mHy+YWriLTaxedIWe+T+x8wQHt8zxriOEpjQjJ8LpnhN0
+ qhyDSwzkugGZwX6N/++LscxR1giYXffi55Rt8wlznI50RPud9n+B1YIDcdZL1Ty8Yn4fxzho8y5
+ 2d82yEFr+SGQtEODFO9UxGtdwvkiJoU/GnxFhWaaBlGb9c0AoXtz7c7uekvvODvbzJM+yEm9FED
+ /bmTM+aMdBb+JIrd6sVYR4k6S/WFFV8dKaB2TU9NM1+AihbEE/ttQEo6LETZFeJt7QFSfhCOA72
+ F29SCsgi4e/dfLlMeE/mzfnsCWbjh21XcHmqvNrLv0Vc1ZHxtlQ0ZWSOUUHGWbb23lLY93aNJyl
+ z2
+X-Google-Smtp-Source: AGHT+IGQbwOC3AThYPPVNiqRLPvhdXrcTk1iKLCT4A2YUTA2P9MX2o7zJmgtf4hib+Jni6Bi+V4Dcw==
+X-Received: by 2002:a05:600c:1d1e:b0:456:19be:5e8 with SMTP id
+ 5b1f17b1804b1-45892bc7b07mr95424735e9.20.1754057646414; 
+ Fri, 01 Aug 2025 07:14:06 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953cfe56sm111554145e9.20.2025.08.01.07.08.40
+ 5b1f17b1804b1-4589edfd983sm66782595e9.13.2025.08.01.07.14.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Aug 2025 07:08:41 -0700 (PDT)
-Message-ID: <948a6ac3-ded9-475b-8c45-9d36220b442b@linaro.org>
-Date: Fri, 1 Aug 2025 16:08:40 +0200
+ Fri, 01 Aug 2025 07:14:05 -0700 (PDT)
+Message-ID: <83d920b8-1838-43c7-a86f-5f4e5e5980b3@linaro.org>
+Date: Fri, 1 Aug 2025 16:14:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] hw/i386/amd_iommu: Remove unused and wrongly set
- ats_enabled field
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- eduardo@habkost.net, richard.henderson@linaro.org,
- alejandro.j.jimenez@oracle.com, vasant.hegde@amd.com,
- Suravee.Suthikulpanit@amd.com
-References: <20250801060507.3382-1-sarunkod@amd.com>
- <20250801060507.3382-3-sarunkod@amd.com>
+Subject: Re: [PATCH v3] vfio: Introduce helper vfio_pci_from_vfio_device()
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ chao.p.peng@intel.com
+References: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801060507.3382-3-sarunkod@amd.com>
+In-Reply-To: <20250801023533.1458644-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 08:05, Sairaj Kodilkar wrote:
-> The ats_enabled field is set using HTTUNEN, which is wrong.
-> Fix this by removing the field as it is never used.
+On 1/8/25 04:35, Zhenzhong Duan wrote:
+> Introduce helper vfio_pci_from_vfio_device() to transform from VFIODevice
+> to VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
 > 
-> Fixes: d29a09ca68428 ("hw/i386: Introduce AMD IOMMU")
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   hw/i386/amd_iommu.c | 5 ++---
->   hw/i386/amd_iommu.h | 1 -
->   2 files changed, 2 insertions(+), 4 deletions(-)
+> v3: add one line comment to the helper
+> v2: move helper to hw/vfio/pci.[hc]
+>      rename with vfio_pci_ prefix
+> 
+>   hw/vfio/pci.h       | 1 +
+>   hw/vfio/container.c | 4 ++--
+>   hw/vfio/device.c    | 2 +-
+>   hw/vfio/iommufd.c   | 4 ++--
+>   hw/vfio/listener.c  | 4 ++--
+>   hw/vfio/pci.c       | 9 +++++++++
+>   6 files changed, 17 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index 81465a8214..53842cb149 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -219,6 +219,7 @@ void vfio_pci_write_config(PCIDevice *pdev,
+>   uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
+>   void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
+>   
 
+[*]
 
-> @@ -1626,7 +1624,8 @@ static const VMStateDescription vmstate_amdvi_sysbus_migratable = {
->         /* Updated in  amdvi_handle_control_write() */
->         VMSTATE_BOOL(enabled, AMDVIState),
->         VMSTATE_BOOL(ga_enabled, AMDVIState),
-> -      VMSTATE_BOOL(ats_enabled, AMDVIState),
-> +      /* bool ats_enabled is obsolete */
-> +      VMSTATE_UNUSED(1),
+> +VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev);
+>   void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev);
+>   bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
+>   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
 
-          VMSTATE_UNUSED(1), /* was ats_enabled */
+Quoting https://lore.kernel.org/qemu-devel/87bjpl25e6.fsf@draig.linaro.org/:
 
-Otherwise,
+   Generally APIs to the rest of QEMU should be documented in the
+   headers. Comments on individual functions or internal details are
+   fine to live in the C files.
+
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 4fa692c1a3..85761544ba 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2824,6 +2824,15 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
+>       return ret;
+>   }
+>   
+> +/* Transform from VFIODevice to VFIOPCIDevice. Return NULL if fails. */
+
+So this comment preferably goes in [*]. Otherwise,
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev)
+> +{
+> +    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
+> +        return container_of(vbasedev, VFIOPCIDevice, vbasedev);
+> +    }
+> +    return NULL;
+> +}
 
 
