@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58353C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 06:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C4AC87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 07:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ui5ml-0005p1-My; Sat, 02 Aug 2025 02:32:04 -0400
+	id 1ui6HQ-0008SX-N7; Sat, 02 Aug 2025 03:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ui5mb-0005jp-Gp; Sat, 02 Aug 2025 02:31:55 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ui6Gi-0007kx-BZ
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 03:03:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ui5mZ-0006Jp-2M; Sat, 02 Aug 2025 02:31:53 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ui6Ge-0003LS-9z
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 03:02:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4192613CEF4;
- Sat, 02 Aug 2025 09:31:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E59E013CEFC;
+ Sat, 02 Aug 2025 10:02:30 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 04457254FEC;
- Sat,  2 Aug 2025 09:31:46 +0300 (MSK)
-Message-ID: <1901cec7-89ee-42a0-aeb2-31e0a1a9d684@tls.msk.ru>
-Date: Sat, 2 Aug 2025 09:31:45 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B041D255007;
+ Sat,  2 Aug 2025 10:02:46 +0300 (MSK)
+Message-ID: <8f362984-ed19-4baf-9476-c8536bf3ff1a@tls.msk.ru>
+Date: Sat, 2 Aug 2025 10:02:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Do not abort on log-start/stop errors
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250724125928.61045-1-hreitz@redhat.com>
+Subject: Re: [PATCH] scripts/make-release: Go back to cloning all the EDK2
+ submodules
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250721153341.2910800-1-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250724125928.61045-1-hreitz@redhat.com>
+In-Reply-To: <20250721153341.2910800-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -104,31 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.07.2025 15:59, Hanna Czenczek wrote:
-> Hi,
+On 21.07.2025 18:33, Peter Maydell wrote:
+> In commit bd0da3a3d4f we changed make-release so that instead of
+> cloning every git submodule of EDK2 we only cloned a fixed list.
+> The original motivation for this was that one of the submodules:
+>   * was from a non-github repo
+>   * that repo had a "SSL certificate expired" failure
+>   * wasn't actually needed for the set of EDK2 binaries we build
+> and at the time we were trying to build the EDK2 binaries in one of
+> our CI jobs.
 > 
-> vhost_log_global_start() and vhost_log_global_stop() abort the whole
-> qemu process on error.  Not least because vhost devices are generally
-> outside of qemu (i.e. use a foreign code base), that is not great, as we
-> can basically be forced to abort because of bugs (or maybe even properly
-> behaving, just unexpectedly so) in other code bases.
+> Unfortunately this change meant that we were exposed to bugs where
+> EDK2 adds a new submodule and the sources we ship in the release
+> tarball won't build any more.  In particular, in EDK2 commit
+> c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
+> the ROM build in our tarball starting from QEMU release 8.2.0:
 > 
-> In case of vhost_log_global_start(), the solution is simple: Ever since
-> commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
-> handler"), it can just return proper errors, so do that instead of
-> aborting.
+> /tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
+>          Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
+>          /tmp/qemu-10.0.0/roms/.
+>          /tmp/qemu-10.0.0/roms/edk2
 > 
-> In case of vhost_log_global_stop(), we cannot return errors; but we can
-> just ignore them.  In the worst case, some other process will keep
-> logging into shared memory we have already unmapped.  That's fine.
+> (Building from a QEMU git checkout works fine.)
 > 
+> In the intervening time EDK2 moved the submodule that had a problem
+> to be one they mirrored themselves (and at time of writing all their
+> submodules are hosted on github), and we stopped trying to build
+> EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
 > 
-> Hanna Czenczek (2):
->    vhost: Do not abort on log-start error
->    vhost: Do not abort on log-stop error
+> Go back to cloning every EDK2 submodule, so we don't have an
+> untested explicit list of submodules which will break without
+> our noticing it.
+> 
+> This increases the size of the QEMU tarball .tar.xz file from
+> 133M to 139M in my testing.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-I'm picking this up for qemu 10.0.x stable series, as simple
-bugfixes.  Please let me know if I should not.
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+
+Let's fix this for 10.1, and think about splitting roms/ into
+its own tarball in 10.2.
 
 Thanks,
 
