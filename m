@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A256C87FD3
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 00:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FF8C87FD3
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 00:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLvx-0001tA-Gl; Sat, 02 Aug 2025 19:46:37 -0400
+	id 1uiLjx-0005x3-KB; Sat, 02 Aug 2025 19:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLot-0006vn-PR
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:39:19 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ id 1uiLiJ-0001Mh-Hi
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:32:33 -0400
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLor-0006Wi-9R
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:39:18 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e8fe929b147so1303879276.2
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:39:16 -0700 (PDT)
+ id 1uiLiH-0005Cj-SP
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:32:31 -0400
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-2ea34731c5dso2673779fac.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754177956; x=1754782756; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w3HQj0uQugwNY/q3lKzRpUuD+MAh2mwqDvVFwmHi++A=;
- b=oKllchGLEwXGUenIOXkom60ZAmE4JMmIPjQjQz8Aa06Q2j5mshDNdlyQk+B5XP8289
- nIoRrOn6sPLWUQVMKCp7Gu69imOrquctJ5nZdX/qscsfPtqB9aCYvwQMpIjWOXm4mVFE
- QPRQKfNNi2M9mExo880y7RETEisxv2eb8k3V0u/K/1nTzgGKl/10cApobubRdpBv4276
- Cdn4SizMjk3bZKfrRYvboG7H1JHVrBcaj9v8MavGhsXvGXl6BiGMlXGS0MaeKTIUA8+q
- lOYNeM3B1ALLI9BB935bNwPo/UMAzPBWPHllAJQRVSUKQjlXV5vuHJTYqtfiTJI11p0e
- CyhQ==
+ d=linaro.org; s=google; t=1754177549; x=1754782349; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7+ER0bRwaWJSVZXuKMTaNBSXf4hbZ3aeU4lFfN33xP8=;
+ b=rGt8mPSzDtoe4puD1gMxHJD6hoSkYNEFLkJPmJN3T8INXF8dQMzFSRnfBRmTIKZSp0
+ JHWhzIScRi0adwVin72uTRrYAEEaKJan+6+VDmE2Cv6VqkCcmtwZJVbuQIvALM+KdOYh
+ 1cRQB7SWPRuO38I7AomaJlDWZyFZ4ErvUcWC5xk8HZVqmrg7FQ6CbreHhpnjtMTUum4Y
+ 3Jvn3TYKXhzfaBoxxycrNnhjEHo2xMoZ2qN+thOHBBz9xWR/TQRkIVhhb0DXkl2V4q8g
+ MYRK0MK4ji/5WnZOADoq25Zcjjvj6KueVZtlr7+33uGf9UmZRmOw93HbIJbawhRTGaZm
+ BaHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754177956; x=1754782756;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w3HQj0uQugwNY/q3lKzRpUuD+MAh2mwqDvVFwmHi++A=;
- b=g3Re/aOUzIhPWoSbHyBU7/iMVdWj96xMlgCEbbqnDnbCk/DmjZ+TeQLHrMlYMeyDQE
- 5Hs6TnZqY23tovqVIp8b0ssN0gJ7tz5I73rRWEDNvqV8ZaQFs/4/PnJev+iRJw4s4bsL
- oxPBX7CXVE06hx1WpPNlBd8pekkj+zOm0/FaTLZTayOxQhaDp6Daa29rJFZE1PviC9rn
- 7U6Wd94XFTH81jj8kROmxmagDEuYz8feScXxNNiKwicm9x5Mh3ocs3Y8WzCxOy0sVJeU
- nT3GU+A6CrpYq3qmSIRyQh2zJUOIjqezMNwEf/h9HIsTbYbdiGsuNV9lBb1os3eprmTh
- I6WA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1T5CQJ1crqtXqK0MpdTYHXKLXmgPoFFyO89HUy2UMRBI5CtC9FXMvCsYUqEskl2WwWnlpFojrCJYz@nongnu.org
-X-Gm-Message-State: AOJu0YyD2ucCzaaohW88f2P37nyFDGWEiwACy9AYMZuLeBYtOjr4FaBo
- 8kMsqrBAJIpRa6HU6HZQQktQkVVFF9NfCdhsYuUPSSPxBewDGmDWvUma21SEBXz4RKA=
-X-Gm-Gg: ASbGncstmTKeHWzeAdh014ORW7fkNi1v9JD4xlYfJaVL0ovos8h10ttZqCPdG8cbp3h
- 050bfYPQ8aFLfgsrPUjufb43jm1jHp9pzA+PQEm2AvjQIrOuyZDoHWhwzTpjtKqaYRVU5yaJ8pE
- Uuo67jat/bgKxcI4J/4CwiwIZM7I/f48iFJFycj5XvWlfCUWdupZP5nNRmn/gS2v0vRY23ZFuc+
- RH8jw6ncKoRA2mz0QVHMeEbCZCpza0bSmMS2+Ix80vmpmHLEfeks3iobBba9+9FRYsuhJbwfmAz
- Qv7BoGIU1lupR6ss1CnaH6t9BD2tGnL1tZ+1FPvAYPfKKNZS4aP4/oJ4w2N4mMCzP1Dfpj4LTBY
- YNV5mf0STZhz6/fcMTXNQGoyz1Nqhsut1ZccNFI7JtnEZ9NUxP1GbEl227FAMQ8m4+HkuyC3dw4
- M=
-X-Google-Smtp-Source: AGHT+IFGznS+Hw8McaLjAA3gQO64P49RYXazhR+8mKLSQxLYWFjg8xh8UdDAfaWzpQalAw0we1iUKw==
-X-Received: by 2002:a05:690c:660c:b0:710:e81b:f7cf with SMTP id
- 00721157ae682-71b7ed716bbmr61813197b3.13.1754177955755; 
- Sat, 02 Aug 2025 16:39:15 -0700 (PDT)
-Received: from [10.153.194.227] ([172.58.111.133])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71b5a3a9b89sm18231637b3.15.2025.08.02.16.39.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Aug 2025 16:39:15 -0700 (PDT)
-Message-ID: <2ab7fe7d-e2e1-41f1-b4c9-13de6306d75e@linaro.org>
-Date: Sun, 3 Aug 2025 09:39:03 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] semihosting/arm-compat-semi: replace target_long
- with int64_t
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20250801232609.2744557-1-pierrick.bouvier@linaro.org>
- <20250801232609.2744557-10-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1754177549; x=1754782349;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7+ER0bRwaWJSVZXuKMTaNBSXf4hbZ3aeU4lFfN33xP8=;
+ b=T3IwMNyVWGy5dpd9PuK0FRtsw6N/HeFYUE0Sd87RWvJ9pg7zavtKYGdbnlqwBZbqUy
+ JRfmBejF59tl5PXlVle0DuMWLvc6rqsiYQCgH1vBoRkY+dPSc+SMh96+OJ8WBF/lFItL
+ etLzU/m72/Ple0zl+areSmHgzUfQagQ3b+Gg41Dn+SqJDfbeCVV55vb8qsdOew0P+DHT
+ O82AhNP0iReTwZsxjYSS2cZCMAY7zUc9DRihAbgicnsLs49ekUDce3cSby/lJwYfXiad
+ Vldj1P8grUjS1FNazPdotU/wHZirPPQ4DC4a9g2P6DCHvMO/MEd5isSRzBFTtW7dtQYN
+ mvGw==
+X-Gm-Message-State: AOJu0YzpJKPph7B8hHYMTDPPMxnwyhUFvMkPVFaW+mQH36C2SE5aqsLI
+ UK7q3JZA0u8svVChRR3LajW1b7SsN9rOJHWTa79No0tdvvbHbJUBE07pxTNwyO+yBtrH/AcAA5/
+ arAaHlPo=
+X-Gm-Gg: ASbGncsoGrgP3RzGaVP7ED2Q0d7+8E97MRYCYOiiMleAJdBoms0cfU+2WOrvJoeA44s
+ wfxUO6Os/GoJFe4n0syCCBDQMAoBEVuLkmaPSoPap7MYDKXB2NVaVXr2uir2242YC0vfvgKi8cd
+ 7ugpJWXVsHzbQ7QirmfyaMSdktoWmeET+t7TyxwYiHEO3ud1gOogpZatw69CJDCNQSNcsQuI+yt
+ kmrr9dpTn+qJTwuoNmm46pMvnL6IKdWcG3P24xnJrtmypF51DEfn2oX8nW7fYM4HLvGkcdE8Fy+
+ U+4GGcIBuNIQxv6kFggTZIxGIkmUEeztz/SMYcNR0EFMXPm4IuSciBD4/4pUY2T+/m1TKT6o24/
+ F0yNrc8W4A5mYSRqexi/t218qIqSKgGCLl3SkIyW461XE27EWBKoA
+X-Google-Smtp-Source: AGHT+IFJhpavev8tmCsno0hhsspVnsNFKxZqLAejzQxySeJtzBiiomFYZ2XygFfoD4LgIJjxIqNOGQ==
+X-Received: by 2002:a05:6870:7041:10b0:30b:6a26:5193 with SMTP id
+ 586e51a60fabf-30b6a2652bfmr1588619fac.37.1754177548694; 
+ Sat, 02 Aug 2025 16:32:28 -0700 (PDT)
+Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-30b8e3c9b32sm71031fac.24.2025.08.02.16.32.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 02 Aug 2025 16:32:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250801232609.2744557-10-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-yb1-xb2b.google.com
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 31/85] include/hw/core/cpu: Widen MMUIdxMap
+Date: Sun,  3 Aug 2025 09:28:59 +1000
+Message-ID: <20250802232953.413294-32-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250802232953.413294-1-richard.henderson@linaro.org>
+References: <20250802232953.413294-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,13 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/25 09:26, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   semihosting/arm-compat-semi.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+Widen MMUIdxMap to 32 bits.  Do not yet expand NB_MMU_MODES,
+but widen the map type in preparation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/hw/core/cpu.h | 2 +-
+ accel/tcg/cputlb.c    | 3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-r~
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 23eb849a9b..fc9a2291d5 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -201,7 +201,7 @@ struct CPUClass {
+  * Fix the number of mmu modes to 16.
+  */
+ #define NB_MMU_MODES 16
+-typedef uint16_t MMUIdxMap;
++typedef uint32_t MMUIdxMap;
+ 
+ /* Use a fully associative victim tlb of 8 entries. */
+ #define CPU_VTLB_SIZE 8
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 2a6aa01c57..416aaa1040 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -89,9 +89,6 @@
+  */
+ QEMU_BUILD_BUG_ON(sizeof(vaddr) > sizeof(run_on_cpu_data));
+ 
+-/* We currently can't handle more than 16 bits in the MMUIDX bitmask.
+- */
+-QEMU_BUILD_BUG_ON(NB_MMU_MODES > 16);
+ #define ALL_MMUIDX_BITS ((1 << NB_MMU_MODES) - 1)
+ 
+ static inline size_t tlb_n_entries(CPUTLBDescFast *fast)
+-- 
+2.43.0
+
 
