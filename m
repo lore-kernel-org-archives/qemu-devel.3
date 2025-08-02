@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B66C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 08:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E214C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 08:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ui7Tt-0001RP-Se; Sat, 02 Aug 2025 04:20:43 -0400
+	id 1ui7UF-0002kA-AW; Sat, 02 Aug 2025 04:21:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ui7Rb-0006zu-Od
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 04:18:21 -0400
-Received: from p-east3-cluster5-host9-snip4-7.eps.apple.com ([57.103.86.218]
+ id 1ui7Ru-0007j1-12
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 04:18:38 -0400
+Received: from p-east3-cluster5-host5-snip4-4.eps.apple.com ([57.103.86.175]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ui7RT-00052W-St
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 04:18:15 -0400
+ id 1ui7Rs-00057D-FC
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 04:18:37 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPS id
- 0F9A1180009D; Sat,  2 Aug 2025 08:18:08 +0000 (UTC)
+ 97B971800161; Sat,  2 Aug 2025 08:18:31 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=d/z0LdtJsZ0X4SZniRSWzKSzcqx6k2mthXNU/xLsNUA=;
+ s=sig1; bh=dSbSkPQq8ziwuUrDfcT+wVetv0JbuPGQpZU1ZgNV4oY=;
  h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
- b=ZfNDUPM4hE9jq6Elojpl+cJMCy1xTA76bNq6WqBPNWVpzoY3zExq5u2jUnC1+6dEA40QpCojHEj0yA6AgTxwWqRAYPWOdR9CfRc4tMmroSWND0qvsNqp+f2bx0k4iTa0aGOTjQQsI3Yr2cINerYg8ugOmgeG4BWou9AMyDQvLEJH8nfIzZJVAUoa+yuN3deXYx/u0gqKhr89YfIH7ji9x4Bh3/tZvTUsScuZpdMb2neQWEV65HXNg4GQmuOL3oFDPR2nwuNafXcsZcJZm0pkBeSo6v/+xXktyKhsJ4Lw1n6qn1GukOVEDhxLdLd+zZ78GDxc9mC9K/ZFFkzeIk970Q==
+ b=Xa1DpHntTkbMnmHrLWeCboXngT5/iJITi1jJK4TBa/ne7yw9rmoxdnvfmeGUb7S914t036zI5NakITL+d2Asbjp7/jLSjV+7LJIgrI1c6W7MSmZXQbIc9IrAp+I5hxAuWqWyDDFgqedgx5ztHKFllAAIGiQh571iY01jVbdo+FKvbFbYh8AUq0cndoFo4UKsxQAdLa9uDwD09ZCAIsJoa/2Wl30OVaUYijfxRk0MdSXTDjxWITzbHueMYxLxd6ZPVk4xD3Y/pMosRtVVfvUwY8HjFc/LovzK+sn0lmrYwmjFk7rE8j9rr9dTy3BAljQXUui01SOBCpvuig2n18tyGw==
 X-Client-IP: 46.189.47.18
 Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
  [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPSA id
- A69401800148; Sat,  2 Aug 2025 08:18:04 +0000 (UTC)
+ A8ED5180009D; Sat,  2 Aug 2025 08:18:24 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -50,31 +50,30 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v3 01/14] hw/arm: virt: add GICv2m for the case when ITS is
- not available
-Date: Sat,  2 Aug 2025 10:17:47 +0200
-Message-Id: <20250802081800.76030-2-mohamed@unpredictable.fr>
+Subject: [PATCH v3 10/14] hw/arm: virt: cleanly fail on attempt to use the
+ platform vGIC together with ITS
+Date: Sat,  2 Aug 2025 10:17:56 +0200
+Message-Id: <20250802081800.76030-11-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250802081800.76030-1-mohamed@unpredictable.fr>
 References: <20250802081800.76030-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: GNXtpN8KAkmSn3--0kgJB-2iKOiIxIXS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAyMDA3MCBTYWx0ZWRfX0jePk5N18zxH
- qUdxaoEfjzUB31SIUpeg3E7OypkDURsqcs7v9irrkWVkCNH1u/53Wf6ynhHIMpLXDlf2YghXUcs
- zxG292tghpj45x0BbzPtfiTKxRMdXfcMElmSK8/CWrrF6gT+vIhIkFF17bgFp0OPkgdtH9CE9Mm
- xpfi9H2h5RsBD5kl5mIzUIMwF0RZJxU79f3e3shf8Q4yJC9wYZYR0kAgMKTqLWqtwkFaziHy9Ei
- xp2+ECVuJjmRJ3v2Ecm3lr+ZsGN68weO/aTV2JD4NHLgYvff7QtHLVQgUiuOhNvQSNz9seTjY=
-X-Proofpoint-ORIG-GUID: GNXtpN8KAkmSn3--0kgJB-2iKOiIxIXS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODAyMDA3MSBTYWx0ZWRfX90zUBLTzVBOy
+ JYUquMfh0UsA9oAlXLE+cjk504zeXdJ5IBElVwRRjBheUJGbdzY8Snv/uEO3+j64Gw8LCjakW0c
+ ji9Hfnz0iMX8fEyY0hZ0UdogDOxuzDcdlp5Lmgb8yDwN/1c+oWKz7sQxKETMFatOoMa8j8LxFkv
+ DKp2ty7g64n4mqrwnwenURqVFBV1y5D8zBZbQn3CvmpAk7lEsdZLT1/q+NZYzdWwMPZ4/zh27IM
+ KHJfGwc5X4nWAPt7DSiI+jkX6CdOrl7YmblbYe+FbLDk1bK0a1n3BBMdjdfkWYWbhJFqUuwzE=
+X-Proofpoint-GUID: aioGnZUk33QBwqcDg2zaDNwqrw1RPhBi
+X-Proofpoint-ORIG-GUID: aioGnZUk33QBwqcDg2zaDNwqrw1RPhBi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-01_08,2025-08-01_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- phishscore=0 clxscore=1030 mlxscore=0
- malwarescore=0 suspectscore=0
- spamscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508020070
-Received-SPF: pass client-ip=57.103.86.218;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=880 malwarescore=0 adultscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2508020071
+Received-SPF: pass client-ip=57.103.86.175;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -98,94 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
-
-As such, support a GICv3 w/ GICv2m for that scenario.
+Windows Hypervisor Platform's vGIC doesn't support ITS.
+Deal with this by reporting to the user and not creating the ITS device.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- hw/arm/virt-acpi-build.c | 4 +++-
- hw/arm/virt.c            | 8 ++++++++
- include/hw/arm/virt.h    | 2 ++
- 3 files changed, 13 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b01fc4f8ef..969fa3f686 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -848,7 +848,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-             build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
-         }
--    } else {
-+    }
-+
-+    if (!vms->its && !vms->no_gicv3_with_gicv2m) {
-         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
- 
-         /* 5.2.12.16 GIC MSI Frame Structure */
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ef6be3660f..5951b331f3 100644
+index 98a1c74c42..1c695c0642 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -953,6 +953,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
- 
-     if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-         create_its(vms);
-+    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
-+        create_v2m(vms);
-     } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
-         create_v2m(vms);
+@@ -741,6 +741,16 @@ static void create_its(VirtMachineState *vms)
+         return;
      }
-@@ -2402,6 +2404,8 @@ static void machvirt_init(MachineState *machine)
-     vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
-         !vmc->no_ns_el2_virt_timer_irq;
  
-+    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
++    if (whpx_enabled() && vms->tcg_its) {
++        /*
++         * In the HVF case, inform the user that they can use the
++         * user-mode GIC if they want to have an ITS.
++         */
++        info_report("ITS not supported without kernel-irqchip=off on WHPX");
++        info_report("Disabling ITS");
++        return;
++    }
 +
-     fdt_add_timer_nodes(vms);
-     fdt_add_cpu_nodes(vms);
+     dev = qdev_new(its_class_name());
  
-@@ -3410,6 +3414,7 @@ static void virt_instance_init(Object *obj)
-     vms->its = true;
-     /* Allow ITS emulation if the machine version supports it */
-     vms->tcg_its = !vmc->no_tcg_its;
-+    vms->no_gicv3_with_gicv2m = false;
- 
-     /* Default disallows iommu instantiation */
-     vms->iommu = VIRT_IOMMU_NONE;
-@@ -3462,8 +3467,11 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
- 
- static void virt_machine_10_0_options(MachineClass *mc)
- {
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-+
-     virt_machine_10_1_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-+    vmc->no_gicv3_with_gicv2m = true;
- }
- DEFINE_VIRT_MACHINE(10, 0)
- 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 365a28b082..725ec18fd2 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -131,6 +131,7 @@ struct VirtMachineClass {
-     bool no_cpu_topology;
-     bool no_tcg_lpa2;
-     bool no_ns_el2_virt_timer_irq;
-+    bool no_gicv3_with_gicv2m;
-     bool no_nested_smmu;
- };
- 
-@@ -178,6 +179,7 @@ struct VirtMachineState {
-     char *oem_id;
-     char *oem_table_id;
-     bool ns_el2_virt_timer_irq;
-+    bool no_gicv3_with_gicv2m;
-     CXLState cxl_devices_state;
- };
- 
+     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
 -- 
 2.39.5 (Apple Git-154)
 
