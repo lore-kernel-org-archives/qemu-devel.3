@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0DF3C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 11:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFF6C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 11:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiABA-0005uZ-4o; Sat, 02 Aug 2025 07:13:32 -0400
+	id 1uiAF0-0007kv-F1; Sat, 02 Aug 2025 07:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiAB7-0005TD-1Z
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 07:13:30 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1uiAEw-00072H-72
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 07:17:27 -0400
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiAB5-0006Jo-6a
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 07:13:28 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-71840959355so30268387b3.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 04:13:26 -0700 (PDT)
+ id 1uiAEu-0007e9-IG
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 07:17:25 -0400
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e8e1ae319c6so1500226276.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 04:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754133206; x=1754738006; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=a3VXNhNHWC6vZXISOU/6Jypw6J+NQs/f2KNOaSUTbDk=;
- b=iNFAnR0nqpPrDW+jZ7L+21FCwHbY08LR82G2FeI4xuKTmW9mce3i+URblwVbLhop+m
- T//7GH1RZy7EmLVr0ic9KEbNStG95ZxYRR62GXd4dhaf7gPjpIui7UWt4uySvFjNp6K0
- LlNhgGgGzGDI84yxf6IzfxOIzypkO8WckeZfbmNdBVhSIxrap59SS3cXvEbjIHwqEQNJ
- 3ZdDigJmhE/xpFkxPB8AgdaLjGkKrWD842S35BeM1/cag+hiXk3HFAc/9H0+fMiOcgGd
- aNo7dEsFsGHp0Berur2CrgRole3v3un3rulKkEh5hFoNSlqsPfNd4YfuF+YcOeKsoXEc
- RCyA==
+ d=linaro.org; s=google; t=1754133442; x=1754738242; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LMt6bnbzE7Nn4zp+PsW/0crFSvwAQSFszeigm8kir+A=;
+ b=wdUMMxujeuIZUxTWatk57UrMT6OUiV3vxLgywJDMdwoWWu2rJcvABo/mTYQXhj2p1L
+ jxafwFV6iL0XENRd55AMIgvrmXVHNYZ16FNBjV2abn08ztBZRRbUWOJfotI/AVmzzPyB
+ huggul3FfhuuH2fQn8RAALwRFsnbX19rIU4J08F2p5eoy0NG3+VaGfPjdo7j70YJmHOO
+ Tjixbh5sxx+CCy5pZYrUWdA1sCG7P6Amk7CycHJdMXA/Gb/fC7wgIx2KqdnRxfxWARIG
+ e/n9f2+xDBHLO+FV+3ylH9pTfV2ZnoUBHb951l7RvEpc7E3qHfCiGv4jpXtRabVKgK3E
+ mCMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754133206; x=1754738006;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a3VXNhNHWC6vZXISOU/6Jypw6J+NQs/f2KNOaSUTbDk=;
- b=fjQ7VfQUqKDbSKqeJyuRuq89fkGPSkPb0JGaoCSWBKLnX4EHBInMBYp8K3dDqf9vmA
- dpW3YW94viuzUD9FZU3LxV5VZQaVXKp3GO/Q/8yI2Xy84ilRTf/XGXiFS7yMk4jjnNWE
- b5AMExsPJSnUVbTMlw++e5p3kd0Sh9bNYS5+CtZG+8ltg5oFbI9dsUmz75Mxkq2Zt8e4
- 5JUKRzrAmAeysRZFkA+TORJtfXE24i0u2V6Bzpl6aYWIOhZQTemmxpcbbuILBEg1ZQb+
- Mq8Gj6eTPw1UnaKYaRdczE4J0vwzhbnT6+/H3In5FFJqeg16vZPhzpRLxMHXF+0soG9o
- j82g==
-X-Gm-Message-State: AOJu0YycaS0EDtN1OzyD/Qp0P4OreYJ+V7Z4RG+bd8i0tUXZ5CUNlEst
- cLY8A64zLhuS6Mt4TwfCv+dpb6eq7EIJl9yFxOS0c/fBRIZP9oR2OGO+IsetkTJqX58SST8AmUM
- vvIwq3qFCbjo+6kFyLjXFM9/OB7DE1ehIdi5DlLArpA==
-X-Gm-Gg: ASbGnct8ifDdBACatrbnk8v/KgNzP1Pu7mwWZ8psBmbF8P173TDcYDnfqiuFTo0qimj
- kNxipNtij7f/WCUGfyh/+GLBmEMENH81dThk6d/KUyOoWatvTPpP0G/E6OzS3TH7hBSCSOwqbnW
- VwsgHbBc8o4BvDrqqxB3mbJwOBlZ19Sp8tLPpTYjMmLKDguor7hBSze/vGRYrs3Ns3UhghenZae
- 69N6ka07L4+115QTlY=
-X-Google-Smtp-Source: AGHT+IHlt+n4R2+z+Fm2PpJCTY4WGQxvULFyWIo01C7xhmSmD3BqJumhsozZ1tLfmknowF8ZDjiy8aUQ/t0V1o6iv7g=
-X-Received: by 2002:a05:690c:1b:b0:71a:2299:f0e2 with SMTP id
- 00721157ae682-71b7ed70f84mr37075867b3.5.1754133205663; Sat, 02 Aug 2025
- 04:13:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754133442; x=1754738242;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LMt6bnbzE7Nn4zp+PsW/0crFSvwAQSFszeigm8kir+A=;
+ b=FXqRtjq7M6Cg5vaKGObQ2Tfhlmumk4ycQ8yavzilM95RE1aMLDht4jnlOw3nVn+myo
+ ViR74BG9fUfQWvY9ZXc1FZlvz0KFfjMZ8ZjSptQhciHau+FFmFsF2toUEweYEN2svamz
+ qPZjGyvt3femAFTmGuX1ZotHejpT/vVnwUdUC9bps5yE/YUx2lkMYB3zMaMu6BHdPyfj
+ dT4Ye1/wVSQ9goUOJ4hUtO4/3AhAs8kZhp3DPKvT/EkhTQsNaS5UT9LR0Lqq2Vo1ib3C
+ I3EJBdFbzR70rucTpoK6UYMEjtDcga5gkLvpYeMg97KkqRc88+Fwk7kD4oE+qZWDpT5g
+ 5xKw==
+X-Gm-Message-State: AOJu0Yyh8NnVwVbMGAP0/wySzp74o45bUa45MqQr0QLlV8b8tRF53TbQ
+ Bwlc5FTSXGUo1uOvXRtAmNdPAhevNLml2G6xSa/EC//bc/TCjG8wI7Yupf8Pc7pQ5FzzdFnVZOv
+ o+ZiT5xxsKGsH9s6l2ogm4oC5s83BxhPbZLRvGpJv8HnA2M20xVgu
+X-Gm-Gg: ASbGncs8m1ba7oYRc8HqwIVdci+zlIDKP5VA57KbTfqMijs9LmNoSSnmRmxzf6BYU89
+ U8Mtu5fFnKUNgCu3KFwyLcGso9ez6GMy6uonHIQYCJdA+zoau47rTXxgemaEaISPgX/8FmQypnh
+ UmiOfyfZsRnLCFvypk0TNO8j+IIL7DbE9xK2VI3rBdK5Vf+DRmI37wi2aR+jWsg7QSs4rFTkzBc
+ s0MzDDs
+X-Google-Smtp-Source: AGHT+IEAYUU8hvQsNPnziu17knJvU4ZKg6vePV3NfcQZddnHl0xXFndOZVbeh2dTkuWOCCwReElf+XCnWE8eN2gkLcE=
+X-Received: by 2002:a05:690c:6083:b0:71b:72b2:b8bb with SMTP id
+ 00721157ae682-71b7f084cb4mr39177507b3.36.1754133442687; Sat, 02 Aug 2025
+ 04:17:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-42-richard.henderson@linaro.org>
- <CAFEAcA_FtS6_vXXWNb2DrwmHuTODMpK_awnYGCaTdn+wbFuoyQ@mail.gmail.com>
- <7e3616d3-2811-4be6-b4f6-de22840d1cc0@linaro.org>
-In-Reply-To: <7e3616d3-2811-4be6-b4f6-de22840d1cc0@linaro.org>
+References: <20250721201134.13270-1-fanyihao@rt-thread.org>
+ <AJgA9AAZJYcrbcAf1ETElKot.2.1754115134548.Hmail.fanyihao@rt-thread.org>
+In-Reply-To: <AJgA9AAZJYcrbcAf1ETElKot.2.1754115134548.Hmail.fanyihao@rt-thread.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 2 Aug 2025 12:13:14 +0100
-X-Gm-Features: Ac12FXwle8_jrb4iJqZ8iYv-DRQu4yvLuwRQRfnw8RrbP4CvplkzIzkY0SpIaEk
-Message-ID: <CAFEAcA-qkWSELRxWUM-2b44QKfC+6wajPx3A1nT3V7DQphiR9Q@mail.gmail.com>
-Subject: Re: [PATCH 41/89] linux-user/x86_64: Split out target_coredump.c.inc
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Sat, 2 Aug 2025 12:17:11 +0100
+X-Gm-Features: Ac12FXwVUZk7W2drCWHcFqOGmgzOxDBElnr1qyXBo93yJUr9qV6sK7wz_wGCWCw
+Message-ID: <CAFEAcA-dXnERwbgfMpXc40rDSqFJLN-iNWWH8ZXrv-Ap1M+2Eg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] Add STM32F4 support and USART device model
+To: =?UTF-8?B?6IyD6Im66LGq?= <fanyihao@rt-thread.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Aug 2025 at 22:44, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Sat, 2 Aug 2025 at 07:12, =E8=8C=83=E8=89=BA=E8=B1=AA <fanyihao@rt-threa=
+d.org> wrote:
 >
-> On 8/2/25 03:45, Peter Maydell wrote:
-> > On Wed, 30 Jul 2025 at 01:24, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> >> ---
-> >>   linux-user/elfload.c                    | 41 +-----------------------
-> >>   linux-user/x86_64/target_coredump.c.inc | 42 +++++++++++++++++++++++++
-> >>   2 files changed, 43 insertions(+), 40 deletions(-)
-> >>   create mode 100644 linux-user/x86_64/target_coredump.c.inc
-> >>
-> >
-> > Maybe we can come back to this at some point to convert the
-> > .c.inc into a proper .c / .h file.
+> Hi,
+> Just a gentle ping on this patch series:
+>   [PATCH v2 0/3] Add STM32F4 support and USART device model
+> https://patchew.org/QEMU/20250721201134.13270-1-fanyihao@rt-thread.org/
 >
-> Are you thinking of something like ELF_NREG + target_elf_gregset_t in the header and
-> elf_core_copy_regs in the c file?
->
-> I suppose there's no reason not to do that now, putting the function in the new
-> target/elfload.c, and the one or two declarations in target_elf.h.
+> This patch adds support for the STM32F407 SoC, a new STM32F4spark board,
+> and a USART device model. Feedback would be greatly appreciated
 
-I hadn't looked closely enough at the details to have a concrete
-idea; this was just my preference for avoiding .c.inc files
-unless we really need them (e.g. we're including the same file
-multiple times or it's just too painful to split a huge file
-any other way).
+Hi; thanks for the ping. This series is on my list to review,
+but right now we are in the freeze period for the 10.1
+release, so I've been concentrating on bug fix patches which are
+going into the release. It may be a little while before I
+can get to it. (Other people are of course welcome to review
+it instead!)
 
-If it's easy to put the function in the .c file and the declarations
-in the .h file then I think that's better than the .c.inc approach.
-
+thanks
 -- PMM
 
