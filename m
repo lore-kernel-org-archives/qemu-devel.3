@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551E5C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B9AC87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLTa-0005e3-Cj; Sat, 02 Aug 2025 19:17:20 -0400
+	id 1uiLO5-0002h2-C4; Sat, 02 Aug 2025 19:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLSs-0003kj-N3
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:35 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ id 1uiLNu-0001fH-7r
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:26 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLSn-0002aJ-Vp
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:31 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-741a8bb8aa4so158601a34.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:29 -0700 (PDT)
+ id 1uiLNs-0001jK-F4
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:25 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-6195f7f9ad6so1222470eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176589; x=1754781389; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176283; x=1754781083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6v7h38Ym+Ui66y9qX3SHeDcnGzU28Qfcg8CwHunalrk=;
- b=bI/dmQ6mRCCD7GizaXlY0NUkPSzV0o1Xo3T1+i4u6YzXkpzlGkyqc/DL3nvgXFQbMc
- X3XZG09tvp1Qj/UNUxFLC4vguCYtr+V4bpnzqJ2iU6l5dGQBOeEKPQp6yrwzWPiZRuGF
- IGm3NsZFqnbXLDqyoOU8pSdcJGpDOZQ3yJnP6BDbdLcI9XTgpmtNHxBcC65MFAM6JuXt
- WRPUkCn7eb4r2uxMfeKtYRg3KokeT/X1khcSgBtdgiALbt1odpFDuiIbtBhYrMxO30EK
- ZkWGQ2p8HNK6cLmlpzW74AwZQIfkxKnP2wXYeTghPuQyJsX2qFID8edPfdka4G/ojt43
- LQ1A==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=B0GtAHohLLp/KE68af6q8L0Ys4ZhoS/zBNogc+p6taI=;
+ b=X7EEI19H9qF6PhFeiZnOX+0fl5Jaq0KemecTu1CuzbdNplwA4xFlxLuHc1SzC5j/G6
+ 2LM+5YSHO7MSC2aMHnM9oIGuovDEelFWon5ZXypYj/zoS2yWiNDUsfsgtiuhmRNZwMq0
+ BfPUf+PxeXSyE+7HX+0SCXewMsSJ4BhfmMP+Bco39PS9gvbOrS4YytThnF7HHmydb7LG
+ 2qeeoXJnqUwOQtm43J36ubWq4VqdvRcswXjxtiH12Qf5hDJHQhiRpnJi5mBaprA+TUC1
+ dFGidLGnTyYDCVPkQxtfZycW19zgbcDfpQOENtar3wlrq7ooX4GX7ye3w4ZMODWbawYC
+ f0wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176589; x=1754781389;
+ d=1e100.net; s=20230601; t=1754176283; x=1754781083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6v7h38Ym+Ui66y9qX3SHeDcnGzU28Qfcg8CwHunalrk=;
- b=dwHIuejH3O80cse/fMgENUW2iFkO6MEoVhSr5hiVpXz+S9we1rn3I4ilplbFVeGB6v
- 8aS1V6I70yvqjr7f8eHAhJAreDsT9Do4as+Thkvo5kYuRXwuzBubGUF6VK9pR/rLnSoy
- LGO9Cxs56AdCQlgCdGE8U17Q+i0K+45lbBSQpeu9TYCPxx+YYsdCVh0LrMvhulVO/f8o
- ERGOfV4bygKAXYopw/KdU2EF48gyPfF0HCaL8N/hCAQ2YVwSY8otODpVnznpKggpOkVl
- 4GTnOiIGX8nkAp93Nbr2xdoJAQWU0cWVHaGIMv6l0tDnUjHbKJiDcy1CsomyTYnKRlJF
- 2A4g==
-X-Gm-Message-State: AOJu0YxdoGzmdeS9nNqHzxowKDPlLtpY8JMSHgtW8tF4ZUHZn1Kr7ktL
- u4X4x/XVU2qAy41rHCGk9hezxxZKMFJbs9RFBpvps9HTgpJh3Nkt8dK4qLFQ5UwKlWolUQDz0Mx
- aWPHy3KE=
-X-Gm-Gg: ASbGnctyaSQJVMMeleO1MZbj8GtXcKwaOSFN1IA31wdvxBdInAlDAmE6W6e+EX9MVhz
- rB6i+L2oWfnrsj/N63fotYhUOS/nOKETxdET5gQ75MGUyZFrdTU4D1SGd00i8JJOlKFzfINQu+c
- 3q0RVlIHuII/oWW7RW5voHFmv4xsJHxwpTNf7/D9V+uG4M0YSm2rbLu63ZUA3zAPwG0jQfFlyqZ
- mjqTMxyF/+ZF6UiNgBiYhgZYtfiGnK+KAjaTARDnhS8X2Z6dQBLkEZbieHobECg0MQH4clB3l5F
- 4XBDb7v0rCqw8uOCxYtsAOgUB2RObqjijGtnq3maLi++apqawGmsABjMNR2/S8SDYBrhx+iHBoq
- awV1Mi7XptRgFAm+u4nyP0EJe2lo+QQ1V4N9pdVig297FCj59b+3mMe2Mlt5+3CA=
-X-Google-Smtp-Source: AGHT+IH8bueZZ2XmgU66EKyprSlXwSSONhv1eaknaIMjMCH+oSwIsBKYkpxYT3PtulXspXPdHCOCkw==
-X-Received: by 2002:a05:6808:2508:b0:408:f80a:bab9 with SMTP id
- 5614622812f47-433f0239a78mr3396293b6e.11.1754176588602; 
- Sat, 02 Aug 2025 16:16:28 -0700 (PDT)
+ bh=B0GtAHohLLp/KE68af6q8L0Ys4ZhoS/zBNogc+p6taI=;
+ b=nubCTrrZqEpLjjnlpdhR+FFWIJI8FkKmc6kew/DWbEtC8v8pAMrVqWlmAykS6VHZ6d
+ pKPdSNfVZx6bKX6hZ8KP1TMwiKNWq+e+OVd5dbcgRVNhk8m2p1bxuOjTCu7c5nihW25v
+ ZXN0iFe7cYIMag7NJqZ8fobtrkURSdHEEDLn4tETLFTKHn2N4fGxPo0JsNTtIl9fJ7zj
+ Y+rOEEtFLKPjBMnv0+hm3OLlNxux7ND5BvWwA9KEn7sM0KgvozA5KhMhfJ6fcbgDqb1N
+ m60nS2VDeD0s016j+tK2UTxc59fHyiewXpNMSBPNSKGxSfmxxQW1K/q1i9DOnMgS6YSC
+ MmLg==
+X-Gm-Message-State: AOJu0Yz9EeG6trBUH32PkH88AdZgJcw4u7PDq0WQkaAAPNA/UzicE9/Z
+ voZ+pPKGBRaQGR2yDU4jnEjy2perZGPdlpcz9m34EUkpJqPW8ww8nKDGoISAfPB8hteY/yMWj4h
+ aWPAe478=
+X-Gm-Gg: ASbGncuPZVJ8S7qxGJKMogpiF0dBLwqyD5RYHgkX9nn8MjDJGyFkbbj1f4c/25CpQPy
+ S74LQ/2D2948f2nhx3vu4O5N4XgS7jj0ITdTaTXZzSyVG96+l1yOY++LgZRbLCXvexS70Ng/4mB
+ X11aIIpJOocqFina+UVIUELhvI7eZoPUc7KKFW8hukH3R34TTTxOmGt+riOdypsjCqAdLR2dRkM
+ gbCAYchlX26e2DH1Jis70sZPBNy0yq6/gcQRIuLCVGQ4zoQtfJVT/NVqZSfsGmEtQQhbR36tD1x
+ X7yPM7TPJmtTvYgKM2maTULoVk4fn6Mw8CoKFprz08pH2jIuncAe3EsATDjWG1EgSu5Tw+2eDRy
+ 4o6bf3waPCQ97saBY3nrD1h+k7yGnUSkSvKTTKXnb1c1GFiRbO951f26/46IotC0=
+X-Google-Smtp-Source: AGHT+IF42IHGZw/RzRJsM0bjGUJ+Pc+p2KALIQuSpsNGm9UtSCHOtB94Akf6AOGIWh9SV1Pmw4D8lQ==
+X-Received: by 2002:a05:6820:2013:b0:619:222e:b697 with SMTP id
+ 006d021491bc7-6198f27bca6mr2081417eaf.5.1754176283023; 
+ Sat, 02 Aug 2025 16:11:23 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.25
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.20
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:16:28 -0700 (PDT)
+ Sat, 02 Aug 2025 16:11:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 87/95] linux-user: Remove ELIBBAD from elfload.c
-Date: Sun,  3 Aug 2025 09:04:51 +1000
-Message-ID: <20250802230459.412251-88-richard.henderson@linaro.org>
+Subject: [PATCH v2 53/95] linux-user: Move elf_core_copy_regs to ppc/elfload.c
+Date: Sun,  3 Aug 2025 09:04:17 +1000
+Message-ID: <20250802230459.412251-54-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +98,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The last use of this fallback was removed in 8e62a71738bc.
+Move elf_core_copy_regs to elfload.c.
+Move ELF_NREG to target_elf.h.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 5 -----
- 1 file changed, 5 deletions(-)
+ linux-user/ppc/target_elf.h |  3 +++
+ linux-user/elfload.c        | 22 ----------------------
+ linux-user/ppc/elfload.c    | 19 +++++++++++++++++++
+ 3 files changed, 22 insertions(+), 22 deletions(-)
 
+diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
+index 4203a89d66..dd8a65b1fa 100644
+--- a/linux-user/ppc/target_elf.h
++++ b/linux-user/ppc/target_elf.h
+@@ -11,4 +11,7 @@
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ 
++/* See linux kernel: arch/powerpc/include/asm/elf.h.  */
++#define ELF_NREG                48
++
+ #endif
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 135c4f319d..c45724b33e 100644
+index 9ac530800e..0bfcbcf78d 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -110,11 +110,6 @@ int info_is_fdpic(struct image_info *info)
- #define MAP_DENYWRITE 0
- #endif
+@@ -353,28 +353,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+         NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
+     } while (0)
  
--/* should probably go in elf.h */
--#ifndef ELIBBAD
--#define ELIBBAD 80
--#endif
+-/* See linux kernel: arch/powerpc/include/asm/elf.h.  */
+-#define ELF_NREG 48
 -
- #if TARGET_BIG_ENDIAN
- #define ELF_DATA        ELFDATA2MSB
- #else
+-void elf_core_copy_regs(target_ulong *regs, const CPUPPCState *env)
+-{
+-    int i;
+-    target_ulong ccr = 0;
+-
+-    for (i = 0; i < ARRAY_SIZE(env->gpr); i++) {
+-        regs[i] = tswapl(env->gpr[i]);
+-    }
+-
+-    regs[32] = tswapl(env->nip);
+-    regs[33] = tswapl(env->msr);
+-    regs[35] = tswapl(env->ctr);
+-    regs[36] = tswapl(env->lr);
+-    regs[37] = tswapl(cpu_read_xer(env));
+-
+-    ccr = ppc_get_cr(env);
+-    regs[38] = tswapl(ccr);
+-}
+-
+ #define ELF_EXEC_PAGESIZE       4096
+ 
+ #ifndef TARGET_PPC64
+diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
+index a214675650..9ebe252b3e 100644
+--- a/linux-user/ppc/elfload.c
++++ b/linux-user/ppc/elfload.c
+@@ -129,3 +129,22 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
+ 
+     return features;
+ }
++
++void elf_core_copy_regs(target_ulong *regs, const CPUPPCState *env)
++{
++    int i;
++    target_ulong ccr = 0;
++
++    for (i = 0; i < ARRAY_SIZE(env->gpr); i++) {
++        regs[i] = tswapl(env->gpr[i]);
++    }
++
++    regs[32] = tswapl(env->nip);
++    regs[33] = tswapl(env->msr);
++    regs[35] = tswapl(env->ctr);
++    regs[36] = tswapl(env->lr);
++    regs[37] = tswapl(cpu_read_xer(env));
++
++    ccr = ppc_get_cr(env);
++    regs[38] = tswapl(ccr);
++}
 -- 
 2.43.0
 
