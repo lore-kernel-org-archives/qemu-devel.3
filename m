@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A24C87FD3
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6738C87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLTc-0005e7-A0; Sat, 02 Aug 2025 19:17:22 -0400
+	id 1uiLMG-0005Zu-DW; Sat, 02 Aug 2025 19:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLTC-0004MW-6z
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:17:01 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1uiLM5-0005Ml-Ao
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:09:35 -0400
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLT9-0002gG-0u
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:52 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-741a905439eso349445a34.0
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:49 -0700 (PDT)
+ id 1uiLM3-0001L8-0F
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:09:32 -0400
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-2ea34731c5dso2664735fac.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176609; x=1754781409; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E+uIoBLSh9jKC7ksgBHFT2TiR1g9EIjfFhvri+e9kKk=;
- b=vm8AletqdHNqqWpdUKmgsk4YOoYjdvIgxYRYih5DI3xOVVH/sHEa2qgSXxlMivsPo1
- 2KODXUgcVl3nYiiCQ6EAoaH08kJ6AZUx0bN+T8qE3Wrs+gKOz44oxKVjjwxI4RLKWn4Y
- 2S3vVLJPEIKDzNAZvuPd/xE4u3MAULt/BGJw5K8FjncSsMY5HFBDAacZzhTKh3EJuTUH
- 4znBwtYbCgSvFsw8udWbjirm2kfRSILSfJr4TE3m76D+rmpYFNiPSHPeSFke2ghx5n3u
- 9cL6HHGAMEJ+NGVkzf40XH5gX4KJnH+5fGEHrYHApLMaNMX1OiWjtEGJftwVumN3suWQ
- 4j5A==
+ d=linaro.org; s=google; t=1754176169; x=1754780969; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=h6SN5pmWsVNZE/VQK7ve4QJ0+lY2blGsnjsURanMPUU=;
+ b=aaOURQ5YXFEP6rgRCZomz7UvhqWhQ+Lzk5Hc6Bi2VZgorTIOXS7htRF/9ydc5XUfsB
+ MfL22qHJk6kIuO4J955RSJsHKXSSEU3VC2FWRJjr/Hyj/5GcVBK+EllWnZ8mOfZ03tm0
+ Qy101EUl3QuTZ1Vfp7XHTtAcGQhgLSS6eBtd3ytONFxalywcU7OuXg0seTN+EaKWnfF/
+ ahT6rsLHglC1MPo0BaPOGgS/vOvqazPwTdFAQVGpH+sU6mPGnXZ2x+O4FZAbBysOXSsv
+ j/kVkRHtoWSJD+ygwPCQkUZr6f43e7S9RrpDE8ZZLHTsc0BESh+i2dlnhhTMyWLXwlZD
+ xjzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176609; x=1754781409;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E+uIoBLSh9jKC7ksgBHFT2TiR1g9EIjfFhvri+e9kKk=;
- b=QxREednyNh9EA082FA1lJB+ZOF6cgvW7D2JOlTL6soayrPbelBTWyN5+cGDylAMYYm
- pvHTGm8fk2azJZLV1kU3+TJIF+7dVSpQcjvQb2bZRY4eHZCaRvuN8INEa4Ipc7s0iUmb
- lKI6luwMcIh7TGDhASVYcy1yy5dKuZHha6gSGUvTffI694csdvVMxVpDpkJxTEFkCqzm
- j63ik0pnc4PhDvYceISdE1PR2ddFlM1H7SrFV6xQXVNwOga69bvsuMCmS+f1vF7Bwl5+
- KExXt6f+9eUe1cZd6seAJ3t0e8NNgFUXxiguMPTCFfBf5YdrC2MQN3UIEnCaZMoCTdnI
- 0SiA==
-X-Gm-Message-State: AOJu0YwrwbUny6C5y37sOv+H0tmrDJuH54mZvVi8qfbvh63BB2rvyEwK
- fQTyrqzweBd1Wwik/mdfEVjnljnSzeWp8LqinpJoDA9nsv0aX1MOJv6lI8SCf7WrednTYJv07KA
- XzXIab/k=
-X-Gm-Gg: ASbGncvN1bKCYIMWWWgYu50lh/6y57WtfXocOWjfnqSv8eBrWf1IhdnhwH/S20Ea3rD
- rjUBfnZOIYftejzktVMEejFJItlQd78p5b4ME/kEL7NROcp3W51snMkUA5DKwlGLz81pta0dwyM
- p9rkpF/miUMJizInAaTMJxqOGiMJ+AieLrlQZJQ93vGws0QqdyRAxiPCrPbuZ6nOmwBaLGjuwnj
- 2ygb31uvi6ZKPbjMVVSnt2aMriaAnKkDlsQfLRtvaD3xUY1P7vkIEUhMMEhBLq/VZ/r1Wez/Mp8
- vKFW8rdwGJEs6qw63tmRIYqjH+LUnlyVlqYKlCDfLzoh5q7z61nXUf1/yPfMU2kDwSd8GmiTRvk
- fJrbE7jEAzkvElCiDd95c05w/T02Q+AXhejKx0jsJqizOcoHe71cB
-X-Google-Smtp-Source: AGHT+IFYgfT4pm04bB+60xh2IruKdEWuQeyH6HIm8YKJB0FwLUWHJ+kT6zdrv25XElpAY+6S2S08gw==
-X-Received: by 2002:a05:6830:4112:b0:73e:a0fd:ac73 with SMTP id
- 46e09a7af769-7419d27d151mr2304586a34.14.1754176609206; 
- Sat, 02 Aug 2025 16:16:49 -0700 (PDT)
-Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:16:48 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 92/95] linux-user/microblaze: Move target_pt_regs to
- signal.c
-Date: Sun,  3 Aug 2025 09:04:56 +1000
-Message-ID: <20250802230459.412251-93-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
-References: <20250802230459.412251-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1754176169; x=1754780969;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h6SN5pmWsVNZE/VQK7ve4QJ0+lY2blGsnjsURanMPUU=;
+ b=GAmMBCG1gezziNncK9xkK3/O6QYQ5g3aSwiZe6/bDxfhHp+HsTo52CBny5vyRf3efJ
+ MP5cDiwXsjyaNx/WD5DO1idoR38QGArupjVcTMNHIOQxq5AnoXjSsBNVy4yldwMQVbwc
+ mlDVHorwOTIgfwceLvLDa278x5Ql6dQI1Au8MumBEOUPnD0dyhEIDyWvJx2li5DtBh3X
+ 8UDKNzxw63lS+bAEhbmg39BI9//YtkNqAglNJ3O+I3GmS3w67YAQY2pUolv+ubHKqs4K
+ 0oBdlqYisT1S1mHT2T7ax7e5OpEd1lNqEGewK6lOsDcZUcqWRRnJlEscta2M5P17SpMH
+ hi9Q==
+X-Gm-Message-State: AOJu0YwaIquSBjOUprOEyJ5H4WFRibdvhxMBRxLj//C8wEsNFNho0rqt
+ lpo8HMvNF5SymXJxicGW+WDWxSBGWjhJRFnyAG402gKz+P3/T+1oGGLkW5/tt0BYUnYjsNdDNBB
+ Rp9ElmNs=
+X-Gm-Gg: ASbGncsDDP7At/Fih5JHZ6JeWX148L+z2ZEd+p+ryIPe7RZwBkRR1bM8SEBWRnnP0jj
+ q6+HVCvo6bByme+dpd1KZGhq+HXoWyGH+BO2k9qkRC97kZq5xrCfWgvd2GhZerQyv+JftVXlJ+J
+ +Pu5CZv0lSU6U8LFXsM4JpNYtQfTkkkO75vtqRuZxgQDzjuhH6HDW+m1Pyj8S3LAueQjvLj6M1q
+ ahLsJNV2L190Rx/hvv63sj4NbOAiDxNXINAq4l3sR2jIqJKI4P/57P5kzcVhIsET5T2Ct9jI+rr
+ 7uSaU4DlqGW5BGWf5MbGwYWxFXTupmGaVbe2VGr7+LgBNzIQU4TVCJMeivTGWfqF6arEPGkWVOH
+ gL+//GDNL2rN68nf3EIwMBYhcscN4O8BjeK9srIM1BJcHAhXRmn0b6BeZRF0W6igR8c5StLor3a
+ o=
+X-Google-Smtp-Source: AGHT+IHC3vCkd9OR9WVRLNz+2zG/CLZEUynanrjXQYRrgFvHcSW8FiJVE8mBrrnLnTRim0M2YnNfXA==
+X-Received: by 2002:a05:6870:9f0e:b0:2b8:78c0:2592 with SMTP id
+ 586e51a60fabf-30b679939c5mr2487529fac.23.1754176168971; 
+ Sat, 02 Aug 2025 16:09:28 -0700 (PDT)
+Received: from [10.153.194.227] ([172.58.111.133])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-741a548adb1sm429882a34.43.2025.08.02.16.09.26
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 02 Aug 2025 16:09:28 -0700 (PDT)
+Message-ID: <2b270008-bdae-4f1b-bd04-e3b5cc3640e0@linaro.org>
+Date: Sun, 3 Aug 2025 09:09:19 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Add a feature for mapping a host unix socket to a guest
+ tcp socket
+To: qemu-devel@nongnu.org
+References: <20250802034154.7834-1-murlockkinght@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250802034154.7834-1-murlockkinght@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,126 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This structure is part of the microblaze signal frame.
+On 8/2/25 13:41, Viktor Kurilko wrote:
+> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+> +    if (buf[0] == '/') {
+> +        if (is_udp) {
+> +            fail_reason = "Mapping unix to udp is not supported";
+> +            goto fail_syntax;
+> +        }
+> +        if (strlen(buf) > sizeof(host_addr.un.sun_path)) {
+> +            fail_reason = "Unix socket path is too long";
+> +            goto fail_syntax;
+> +        }
+> +        if (access(buf, F_OK) == 0) {
+> +            struct stat st;
+> +            if (stat(buf, &st) < 0) {
+> +                error_setg_errno(errp, errno, "Failed to stat '%s'", buf);
+> +                goto fail_syntax;
+> +            }
+> +
+> +            if (!S_ISSOCK(st.st_mode)) {
+> +                fail_reason = "file exists and it's not unix socket";
+> +                goto fail_syntax;
+> +            }
+> +
+> +            if (unlink(buf) < 0) {
+> +                error_setg_errno(errp, errno, "Failed to unlink '%s'", buf);
+> +                goto fail_syntax;
+> +            }
+> +        }
+> +
+> +        host_addr.un.sun_family = AF_UNIX;
+> +        memcpy(host_addr.un.sun_path, buf, sizeof(host_addr.un.sun_path));
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/microblaze/target_syscall.h | 44 --------------------------
- linux-user/microblaze/signal.c         | 44 ++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 44 deletions(-)
+The memcpy length is incorrect -- buf may have strlen 2.
 
-diff --git a/linux-user/microblaze/target_syscall.h b/linux-user/microblaze/target_syscall.h
-index 43362a1664..66f5a9ebe2 100644
---- a/linux-user/microblaze/target_syscall.h
-+++ b/linux-user/microblaze/target_syscall.h
-@@ -4,50 +4,6 @@
- #define UNAME_MACHINE "microblaze"
- #define UNAME_MINIMUM_RELEASE "2.6.32"
- 
--/* We use microblaze_reg_t to keep things similar to the kernel sources.  */
--typedef uint32_t microblaze_reg_t;
--
--struct target_pt_regs {
--        microblaze_reg_t r0;
--        microblaze_reg_t r1;
--        microblaze_reg_t r2;
--        microblaze_reg_t r3;
--        microblaze_reg_t r4;
--        microblaze_reg_t r5;
--        microblaze_reg_t r6;
--        microblaze_reg_t r7;
--        microblaze_reg_t r8;
--        microblaze_reg_t r9;
--        microblaze_reg_t r10;
--        microblaze_reg_t r11;
--        microblaze_reg_t r12;
--        microblaze_reg_t r13;
--        microblaze_reg_t r14;
--        microblaze_reg_t r15;
--        microblaze_reg_t r16;
--        microblaze_reg_t r17;
--        microblaze_reg_t r18;
--        microblaze_reg_t r19;
--        microblaze_reg_t r20;
--        microblaze_reg_t r21;
--        microblaze_reg_t r22;
--        microblaze_reg_t r23;
--        microblaze_reg_t r24;
--        microblaze_reg_t r25;
--        microblaze_reg_t r26;
--        microblaze_reg_t r27;
--        microblaze_reg_t r28;
--        microblaze_reg_t r29;
--        microblaze_reg_t r30;
--        microblaze_reg_t r31;
--        microblaze_reg_t pc;
--        microblaze_reg_t msr;
--        microblaze_reg_t ear;
--        microblaze_reg_t esr;
--        microblaze_reg_t fsr;
--        uint32_t kernel_mode;
--};
--
- #define TARGET_CLONE_BACKWARDS
- #define TARGET_MCL_CURRENT 1
- #define TARGET_MCL_FUTURE  2
-diff --git a/linux-user/microblaze/signal.c b/linux-user/microblaze/signal.c
-index f6d47d76ff..add814acd6 100644
---- a/linux-user/microblaze/signal.c
-+++ b/linux-user/microblaze/signal.c
-@@ -22,6 +22,50 @@
- #include "signal-common.h"
- #include "linux-user/trace.h"
- 
-+/* We use microblaze_reg_t to keep things similar to the kernel sources.  */
-+typedef uint32_t microblaze_reg_t;
-+
-+struct target_pt_regs {
-+    microblaze_reg_t r0;
-+    microblaze_reg_t r1;
-+    microblaze_reg_t r2;
-+    microblaze_reg_t r3;
-+    microblaze_reg_t r4;
-+    microblaze_reg_t r5;
-+    microblaze_reg_t r6;
-+    microblaze_reg_t r7;
-+    microblaze_reg_t r8;
-+    microblaze_reg_t r9;
-+    microblaze_reg_t r10;
-+    microblaze_reg_t r11;
-+    microblaze_reg_t r12;
-+    microblaze_reg_t r13;
-+    microblaze_reg_t r14;
-+    microblaze_reg_t r15;
-+    microblaze_reg_t r16;
-+    microblaze_reg_t r17;
-+    microblaze_reg_t r18;
-+    microblaze_reg_t r19;
-+    microblaze_reg_t r20;
-+    microblaze_reg_t r21;
-+    microblaze_reg_t r22;
-+    microblaze_reg_t r23;
-+    microblaze_reg_t r24;
-+    microblaze_reg_t r25;
-+    microblaze_reg_t r26;
-+    microblaze_reg_t r27;
-+    microblaze_reg_t r28;
-+    microblaze_reg_t r29;
-+    microblaze_reg_t r30;
-+    microblaze_reg_t r31;
-+    microblaze_reg_t pc;
-+    microblaze_reg_t msr;
-+    microblaze_reg_t ear;
-+    microblaze_reg_t esr;
-+    microblaze_reg_t fsr;
-+    uint32_t kernel_mode;
-+};
-+
- struct target_sigcontext {
-     struct target_pt_regs regs;  /* needs to be first */
-     uint32_t oldmask;
--- 
-2.43.0
+No need for both access and stat.  If the file does not exist, stat will fail just as well 
+as access.
 
+Why are you unlinking the socket?
+
+
+r~
 
