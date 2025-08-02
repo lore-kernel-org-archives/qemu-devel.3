@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96995C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 20:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC5A9C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 20:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiIzW-0001lq-8b; Sat, 02 Aug 2025 16:38:06 -0400
+	id 1uiJ0G-0003dV-Qp; Sat, 02 Aug 2025 16:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiIzR-0001X5-VE
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:38:01 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1uiJ0E-0003Vb-L2
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:38:50 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiIzQ-0005Sp-GS
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:38:01 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-71b4fc462ddso22459597b3.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 13:38:00 -0700 (PDT)
+ id 1uiJ0D-0005Xr-5R
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:38:50 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-71b49a8adb2so27474777b3.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 13:38:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754167079; x=1754771879; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754167127; x=1754771927; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5nbYF1Y02iFkMweu30eVq0yND2zwAgkIOQKky8IXwTY=;
- b=XMald+5TRbKQBBZCD41HFk3sryjF8dv6WIszBzG04DoEO2t236D8Y+8J8hd7O2W90A
- QD6vxKBOC8CvraxHehyxPPcvi9Y5YJSR7iPEzVBTLgO9U6wZ9aAMeuDJd4RhqCA362pM
- 7oYfSW6G74qdoUt/KZKtdRMIbCwxVcy1xNEfbDBr1DBdvx0g0yKBtYGl58WjO/2ClV2D
- /7wpulPRYiHAiP7uoPFN4tgPrBQr+qU1kW0vj+UdrN0dTnQ2y2RK4d3YQv/Ek2Q5FSvz
- 2icRi+YB30YULbHon4qFx9fuIasC1wMInuVgDyTO6jRh8/Y1pptMedfG7ddecu/BxQrj
- kuFQ==
+ bh=9DgCkyJdUocBDv5VuprGQYdy+MVXJQugkzXPchaw5jk=;
+ b=cciZeCarKakWf3Ucz58nM3Nl4YwHqVit68xddUPzuXx8pLnkSD/9EBAeSd5zPhucI5
+ KjOeOBAiPVzD3e7z11t0OShAuoXc+Rdz4TIWOjc5GaHbLaVOrU6VezvQf1mhVT1wBZOY
+ Ycm4BtfBwdgp4hk7wDYhvMGvn2wzjzCuD5GNXLsa/p3UWVXTwrA5Ft6A9XsyV7cne4lV
+ 7TE0KBvcMPWoz0EWgTkc/HL3y18zyPmBCmvJAaJ4k4igBA4QpcNlX7SpbC5VOUk9ok5K
+ Y26R1ekbooaFguM8XCwMBcCfbCgdP0eEr3SJTJKsEcKGFsmSAWB+V92IBkVXrd3a+V1l
+ ezDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754167079; x=1754771879;
+ d=1e100.net; s=20230601; t=1754167127; x=1754771927;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5nbYF1Y02iFkMweu30eVq0yND2zwAgkIOQKky8IXwTY=;
- b=OxesrPtkCnbs1md79ja5EHQ9lQTnXkb5HI4SNJar6dp/Iqge+KMJiI7S5e6IC+iYGN
- sOo63ZVumClgwOUiNWcadmvVyeL5B8U/98frhJs8IAJewPP+2/QxOQ6IEgK0/XrUCpy6
- KqB/hmSdFS4JFHM3taWElFja+N2j4FGApW5wokActw/otq7HwChelAOHNK/ylDrsYFwn
- Tz4kLU/qJpbxfJEijPNVseXI2M8DqQGLvyP0jUGP9/9UOZW7EqlENuXTBxihJSr/yaik
- UG5h0+wOVimJ6G9f0BVzg3MSYagE17nV1x8sziMzwZq3z96kK3GCRiwgBzL29JvTZSo/
- uvug==
-X-Gm-Message-State: AOJu0YyzEGWd9P7q/Voa+jX2ppZezv+AyIbumAjhOmRVgJpGxVPty50l
- 5TulIYfEvz3C4h9AXmEikSFvBdHrbrY+jHSghON0cE31/mda7yderK6iUmv2ffIi3luoqwcUtKf
- Dl0qx7qyI63hgCZwhldzPRg4V0ccZFD4IlKg8ESpTuA==
-X-Gm-Gg: ASbGncuS+N2eaVl90UEKjS8i77DY8vUi+V8NqN06XHhpId0B+r4bWcfzs4j3dGwlLq4
- eiruQPG6fBebAS4AR8ov5SDk7fDHaLIXZYIzyxsYwJnUsC6NSpmU2ffUs/xejhlp6XBGEP7m1FJ
- wpJsO0uma7XkHfVBN6tz2MoJxDO00vwuv+i0qsIH57eddmcKl+C1f4OGfA62wzsBvDR6Xmp85Oi
- LfNSIF3ULZNEbZ9FRM=
-X-Google-Smtp-Source: AGHT+IEP4ytCjajP1MA+YzKZZBtLITjMQ8a8tEkK03n+3x2A5cPgVJwqzgDI+5CyMablPRUmz/dHxoAe+/B0uC1bFQ8=
-X-Received: by 2002:a05:690c:6704:b0:70e:1771:c165 with SMTP id
- 00721157ae682-71b7ef73f44mr57599157b3.29.1754167079348; Sat, 02 Aug 2025
- 13:37:59 -0700 (PDT)
+ bh=9DgCkyJdUocBDv5VuprGQYdy+MVXJQugkzXPchaw5jk=;
+ b=cpcf0c16Jvw5CczhFl9RmlWg7D7+xHwlrFNlraxS6y7c8KxIdu7wW+q/OmDdYLugYT
+ DsFX5yoWPnQ7uy9c70bdAr7yeaFR0MZx0kGPfiwlbNmg53zmASgnZPE3XJIMnlEiRLpq
+ mR4YGTQsU9pi82CPd/WAlVY5T4RaBunn+0Cfj32gWkpSUBOm6fUjCThm8aC0a9z0+TF+
+ CTunxEEZj46CUa52/arHhLPOC63Ma/6za2ijsdQZbWxuqlEw6iPUtjw9KiSXA2OGd6c9
+ hEMXh6Fq1sHsKHofN6DPepXj2Vp74XonF5ohmt73rqTfRsKr5eG41J04XeVuZuYdki97
+ C7xw==
+X-Gm-Message-State: AOJu0YwVcGqbH0bNGBl/blyNjDwc+DGUcdJ/YgHupjcjjxVE3Y83DATA
+ TBepZqQm4A6tivJGcZcfe/PxBt2CcNToYQL+c4lo8/we0VTaGVdLaB+ovHhvYKd+vOGyUTkPfai
+ AYPpgwAPAEYT9vhrAyPUdA0MZ6RsjKv33RurtfEdF457xqCLXlobq
+X-Gm-Gg: ASbGncu6Y3xmbh5TMKChPZ9RwDRDSJQUKPPVn97EarWFwCVKmyrFWIZPtiHA2x2n6mH
+ VgVQCrOSo4n72pDiTjDbMbcV2V13AfvQ08+VU7byrpnSNZfVvGsu9EaD1Y+qWS/xn0pnPEqCBpH
+ /Ff5juMTQD/B15Sq1w6v43JzfS3UkWn5vUbWDMKpIHkuwIBAeToQt61Yj5uAuBc7tRPeA68H08l
+ PLP95Oq
+X-Google-Smtp-Source: AGHT+IHsXeWIbO0dSD8Rq+Zpj1JHC/YzvHPuy6dmKqVbJSNMibc6KHHhyw2FxxUziOlm5BxCMBMchHK+RSl8y9i0pXw=
+X-Received: by 2002:a05:690c:d94:b0:718:3b9f:f1f0 with SMTP id
+ 00721157ae682-71b7f7f5d12mr59213197b3.26.1754167127616; Sat, 02 Aug 2025
+ 13:38:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-82-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-82-richard.henderson@linaro.org>
+ <20250730000003.599084-83-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-83-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 2 Aug 2025 21:37:48 +0100
-X-Gm-Features: Ac12FXxiEHS7CnkxsypNTZWc0cjlGpMRtdK-2tqkTUc7U7ndswFTLIq2zyjHC7g
-Message-ID: <CAFEAcA8wa4DNXwv4cRm5FNHzYcBPnxCnUuo+jZFZuEXdq8Bgsg@mail.gmail.com>
-Subject: Re: [PATCH 81/89] linux-user: Remove ELIBBAD from elfload.c
+Date: Sat, 2 Aug 2025 21:38:36 +0100
+X-Gm-Features: Ac12FXznHX58CtyCuq_c_MqYkxC1uGURtnfpFvcn7-aUEShmMG32ym3K9lpVetg
+Message-ID: <CAFEAcA_8C2Hv3pJ0LreRM0swLE4nDDpMZziT6M+_486pfHHinw@mail.gmail.com>
+Subject: Re: [PATCH 82/89] linux-user: Remove MAP_DENYWRITE from elfload.c
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,34 +93,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:39, Richard Henderson
+On Wed, 30 Jul 2025 at 01:42, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> The last use of this fallback was removed in 8e62a71738bc.
+> The last use of this fallback was removed in bf858897b769.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 >  linux-user/elfload.c | 5 -----
 >  1 file changed, 5 deletions(-)
 >
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index 5185c84e58..6eb4e31bdb 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -110,11 +110,6 @@ int info_is_fdpic(struct image_info *info)
->  #define MAP_DENYWRITE 0
->  #endif
->
-> -/* should probably go in elf.h */
-> -#ifndef ELIBBAD
-> -#define ELIBBAD 80
-> -#endif
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-(The existence of an unguarded "E(ELIBBAD)" in errnos.c.inc suggests
-that all our supported hosts define ELIBBAD in the system headers
-anyway.)
 
 thanks
 -- PMM
