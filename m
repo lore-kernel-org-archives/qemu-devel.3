@@ -4,98 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22337C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 16:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4E4C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 17:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiF9d-0000ap-2l; Sat, 02 Aug 2025 12:32:17 -0400
+	id 1uiFaO-0003qe-40; Sat, 02 Aug 2025 12:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uiF9a-0000WX-Rz
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 12:32:14 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <ballofenergy11@gmail.com>)
+ id 1uiFMN-0006d2-VS
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 12:45:40 -0400
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uiF9Z-0000le-Ae
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 12:32:14 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2400f746440so23197805ad.2
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 09:32:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ballofenergy11@gmail.com>)
+ id 1uiFML-0002Fa-91
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 12:45:27 -0400
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-88bc56adaa4so614184241.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 09:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1754152331; x=1754757131; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+26q3cKQV45xGY7nbkJnx3iETBJdsmToUPle7KKflwc=;
- b=ITGr0BqHPA301jM9mkyllkIhD/+jPXC/ObNCDMrnePRmK8/4XU9V+fprNqMh+X0c7U
- OJvEoqN9weS2PSgPh4wzZzNxpRijMlnKpACmCxqzvjsNn3r3r0JsZjqfko3jwYOF4jar
- WJI/nG5AJw+cAKyB8MJKoSwOyJFlMVsGZcZjPVa6LrK38d3OmVRvPRfTAlMf3Sj6m5UG
- IompUDmZOqJAX96YNjLHJX1pPHm+KaL/C3KJ2fr2q32rhYlhnWmLXEDfRBlAt7r7VtvF
- +QCTAn9/uZmIr19i0ozdrBoYEyz0wmES0ZEx1v1k9j7hqDZhE68ZU8IP6/U7Z/PrT2g/
- F+CA==
+ d=gmail.com; s=20230601; t=1754153123; x=1754757923; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=LdIBK9+P8TTtd9hm4IMkGKGpI5WScfW3/ijntL5sdcc=;
+ b=Lf8O4c2nrF4oOpjAlR5n+4wyqhUc80p0lsLsj59p3pnObR/RSBV4+otxU8EUledTxM
+ T5YkeKAv0UJBl1ejUHBnZwN+r2ngJ2y6+2+tZwO0MY21dLKSsc2eO7qGYSIR421fujqP
+ X3l9uUZ3AhRVkbNQloc0Miwx3qNDlOiI/BLtJ49nWpOy/8Brjfg+g8UjcTFqu8Leqib2
+ VhrRJOqiajAz61PizgQdNCmoXcw0HWZeRl6WyA80FJpn9LbpTaa9gaRM0khcK2lcp19y
+ gjY7LyLvsGZBoUv01GlNpM581KPwfBYPDRAM0sWv8KWV4pNd3viccpmAiFq5jLCwoV9L
+ Ftig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754152331; x=1754757131;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+26q3cKQV45xGY7nbkJnx3iETBJdsmToUPle7KKflwc=;
- b=vROtmnGvEYfKs2W+KWXfXTdpd42erWBA4TMWYH3nSq7vyLj+1eswzd0DjUlUP72cdP
- 76KjuXq8n90IK6fmXo2Q2ckWDx0mBRk+J5+X0DWjxFabFphzyIinaXhsT4rNtjNtNX5j
- b5y8Ig6B3SNwJUQPY5YNt/DdJQDFOl2cG+H0dDqQ+HBJiTEda5D8Xq++CW/kP9IkfV1e
- bc1hZhPrBdSXOcmnqKFRHshHJxziHsqueIzGcBRa3iuLHn/ImVGZD1beAli22pWB6Gps
- DpkJPlhrv/CWHKSK4CHt3JNY3VPsM1V/KN1WTeVdoVTmzDCUn28sqeaSY1gu3uuz+vUt
- gOVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhGB+R2TFUj+5V9+L/pC4NdEfCm9MKw2/XypEjmiE7KfbOIYafSJDAVHT6fiFe0A6R+EeGYymEHe3J@nongnu.org
-X-Gm-Message-State: AOJu0YxJb/Ppn1IopjIx1c+C7Ue6AL2gPKc5Zzlqb99exozoNYLQwx52
- tg+I7jmMH9f+2+u2VFi5a/3bq5oClNissAXYWWC9Z1L2Gugg7a8h4mxl/IZh0dlITKk=
-X-Gm-Gg: ASbGncvBrKbSi1jHWu16Be2Ij6hiSdFp9K/eh5bOnyo0hcLLk8/CvWjh2bddjFQ7Lap
- xA4pdzb69ObM2BU+6LTS7Q/8rg1TlqKHTHTZmiQCWEHaJxK9XAfYzdN+mpTo1SbpAXZIjdHH2Cy
- FoX2y35ESVESKQm/c6oevP9f9CxQwNPGo/bI2qP/GyF681VbVL5YnTHxR+eIzERuHguD6MAQF5d
- kFhB13VApvdZF7XTyOekQ2Mhnz5N9AEphoV7cAMcbwxW3gsTCJbzNCL4qO4UXzP7RVFwSsOVjUZ
- TY5PGVL9Xzi+GzjDHscmS8oiUNle/4Hu4poyUrUI8piFYSmEos6lg5GzBuegj+9lxphE9Me/SR0
- QHfhGrtGGDzymLQju61je16+MZhPVV5V6GNg=
-X-Google-Smtp-Source: AGHT+IG4Z2Lh2GRXPcu6a0ZzF5sf6PEvF3sYk57VsDuVde8n6BgImwD55vgDcpOfPEOutQqQMCLpwg==
-X-Received: by 2002:a17:902:e54c:b0:240:8704:fb9 with SMTP id
- d9443c01a7336-242470647bemr57290845ad.53.1754152331443; 
- Sat, 02 Aug 2025 09:32:11 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.244.6])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-31f63dc4ea9sm10217940a91.15.2025.08.02.09.32.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Aug 2025 09:32:10 -0700 (PDT)
-Message-ID: <7b5c615d-0a74-4310-9eaa-db9c9bddc984@ventanamicro.com>
-Date: Sat, 2 Aug 2025 13:32:05 -0300
+ d=1e100.net; s=20230601; t=1754153123; x=1754757923;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LdIBK9+P8TTtd9hm4IMkGKGpI5WScfW3/ijntL5sdcc=;
+ b=UOv9WjRKBUIDitiizDQtCAQRcnJh/hqXmFuyVzX28rVYo8uX5Q8b/Vw1qvzxC1p9ez
+ ahPuBmwL5WobmT7FyqgAFMGiDZuWvRqi36VET0YZxlEdPkjMECErWpfpkt1J72Yqs19y
+ 9nSquJlmvHq46H32yd3ITe+u6vX0srN1im8mP93fhB7qvZddLH5QxXEWE33FwdlN+Tnv
+ bciuEIf8hs2U6Ti7kLDFHVeBOzh53ne3KlVxLZF4OQKIBwYfOghLCCbVrsklbGvp3wIw
+ lWwV+X+CiQzzCrNmvvUe7pwHQutjpuSbhEcTSuizlzP2rhuPIaZKf/xNjJp2AJtwxXnl
+ mYnw==
+X-Gm-Message-State: AOJu0Yww0kjs9VL/7Ba6xLKYQUjcQGl+o8pfYoGBn0EUWjRewUCvE/F2
+ QcQNscMUSeDMBv6D4apuElYmUIDGpphAmCnn4WJ5D7q4VBEHXSF/eNhX/xRcK4sU34yIwNwk7Gb
+ oRoMJNvw8EkDb5eKREOgXrRiRvE5s+PGi/lga
+X-Gm-Gg: ASbGncuThd+MZBVy1wtWySaPRwx+OiKFYUDiyY2XJWg7G3Ryl//182/W2BogTqAF8yK
+ QWrhJTlXIk/a/j2gOJvr8lkUqUC39tigi2cDwYmnQIM1XaTJi214rWN+t+WnnsXHfTwiMElcYDh
+ idiKX9H1ZBEOxmQUzZIZ+fTLzNDLaPeiBlwRbviKkxRgPpVCRqa1FmQz+dbyjOpyN90jweqZ96e
+ prd6AU6EgXVnwC06zaMLYS/eg==
+X-Google-Smtp-Source: AGHT+IESdeRYPH7N9BFfpOuyh4sUe8PsaVCOVO/CDZ9llag9ybRAA2dG+b1zeGilPKP9D4jvosyigxCnudIe9mu4K0k=
+X-Received: by 2002:a05:6122:2a51:b0:530:7747:80a7 with SMTP id
+ 71dfb90a1353d-5395f31dfd5mr1714533e0c.9.1754153122533; Sat, 02 Aug 2025
+ 09:45:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] semihosting/arm-compat-semi: remove
- common_semi_sys_exit_extended
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, richard.henderson@linaro.org,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, philmd@linaro.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20250801232609.2744557-1-pierrick.bouvier@linaro.org>
- <20250801232609.2744557-5-pierrick.bouvier@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250801232609.2744557-5-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+From: BallOfEnergy_ <ballofenergy11@gmail.com>
+Date: Sat, 2 Aug 2025 11:45:11 -0500
+X-Gm-Features: Ac12FXyWnp3twsgNsvai8WxMKE_a4QAC3mFiqwaYmVPBn2AkjW5V_OxwgcNSBDU
+Message-ID: <CAN=g_Ls_H-YfomjYOyEpCTGG998=25FQCA8DEEStPQY-oWUjMw@mail.gmail.com>
+Subject: Potential license violation on fork of QEMU.
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000c01542063b6499c2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=ballofenergy11@gmail.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 02 Aug 2025 12:59:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,69 +90,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000c01542063b6499c2
+Content-Type: text/plain; charset="UTF-8"
 
+Hello!
 
-On 8/1/25 8:26 PM, Pierrick Bouvier wrote:
-> This allows to get rid of sizeof(target_ulong) for riscv, without
-> changing the semantic.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
+I am emailing about a fork of QEMU called AQEMU (Android QEMU; not to be
+confused with the more common AQEMU fork
+<https://github.com/tobimensch/aqemu> made by tobimensch
+<https://github.com/tobimensch>). The public GitHub repository can be found
+here <https://github.com/AQEMU-dev/AQEMU>, and violates several GPLv2
+license terms.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+This project copies files from the original QEMU project without the proper
+licensing or crediting. The project as a whole may violate sections 1, 2.a,
+and 2.b of the GPLv2 license (as seen in the COPYING file inside the QEMU
+repository).
 
->   target/arm/common-semi-target.h   | 5 -----
->   target/riscv/common-semi-target.h | 5 -----
->   semihosting/arm-compat-semi.c     | 4 +++-
->   3 files changed, 3 insertions(+), 11 deletions(-)
-> 
-> diff --git a/target/arm/common-semi-target.h b/target/arm/common-semi-target.h
-> index da51f2d7f54..7ebd2136d93 100644
-> --- a/target/arm/common-semi-target.h
-> +++ b/target/arm/common-semi-target.h
-> @@ -34,11 +34,6 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
->       }
->   }
->   
-> -static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-> -{
-> -    return nr == TARGET_SYS_EXIT_EXTENDED || is_a64(cpu_env(cs));
-> -}
-> -
->   static inline bool is_64bit_semihosting(CPUArchState *env)
->   {
->       return is_a64(env);
-> diff --git a/target/riscv/common-semi-target.h b/target/riscv/common-semi-target.h
-> index 7c8a59e0cc3..63bbcd2d5fa 100644
-> --- a/target/riscv/common-semi-target.h
-> +++ b/target/riscv/common-semi-target.h
-> @@ -25,11 +25,6 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
->       env->gpr[xA0] = ret;
->   }
->   
-> -static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-> -{
-> -    return (nr == TARGET_SYS_EXIT_EXTENDED || sizeof(target_ulong) == 8);
-> -}
-> -
->   static inline bool is_64bit_semihosting(CPUArchState *env)
->   {
->       return riscv_cpu_mxl(env) != MXL_RV32;
-> diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-> index 3f653c6e7a9..ef57d7205c8 100644
-> --- a/semihosting/arm-compat-semi.c
-> +++ b/semihosting/arm-compat-semi.c
-> @@ -755,7 +755,9 @@ void do_common_semihosting(CPUState *cs)
->       {
->           uint32_t ret;
->   
-> -        if (common_semi_sys_exit_extended(cs, nr)) {
-> +        bool extended = (nr == TARGET_SYS_EXIT_EXTENDED ||
-> +                         is_64bit_semihosting(cpu_env(cs)));
-> +        if (extended) {
->               /*
->                * The A64 version of SYS_EXIT takes a parameter block,
->                * so the application-exit type can return a subcode which
+I'm not sure of the actions that would need to be taken here, however the
+goal is to bring this to your attention in case something needs to be done.
 
+Thanks,
+Microwave.
+
+*Microwave* *(BallOfEnergy)*
+ballofenergy11@gmail.com
+
+--000000000000c01542063b6499c2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hello!</div><div><br></div><div>I am emailing about a=
+ fork of QEMU called=C2=A0AQEMU (Android QEMU; not to be confused with the =
+more common=C2=A0<a href=3D"https://github.com/tobimensch/aqemu">AQEMU fork=
+</a>=C2=A0made by=C2=A0<a href=3D"https://github.com/tobimensch" id=3D"gmai=
+l-contextregion-usercrumb-tobimensch-link" class=3D"gmail-AppHeader-context=
+-item"><span class=3D"gmail-AppHeader-context-item-label">tobimensch</span>=
+</a>). The public GitHub repository can be found=C2=A0<a href=3D"https://gi=
+thub.com/AQEMU-dev/AQEMU">here</a>, and violates several GPLv2 license term=
+s.</div><div><br></div><div>This project copies files from the original QEM=
+U project without the proper licensing or crediting. The project as a whole=
+ may violate sections 1, 2.a, and 2.b of the GPLv2 license (as seen in the =
+COPYING file inside the QEMU repository).</div><div><br></div><div>I&#39;m =
+not sure of the actions that would need to be taken here, however the goal =
+is to bring this to your attention in case something needs to be done.</div=
+><div><br></div><div>Thanks,</div><div>Microwave.</div><div><b><br></b></di=
+v><div>
+<div>
+<b>Microwave</b>
+
+<b>(BallOfEnergy)</b></div><div><a href=3D"mailto:ballofenergy11@gmail.com"=
+>ballofenergy11@gmail.com</a></div></div></div>
+
+--000000000000c01542063b6499c2--
 
