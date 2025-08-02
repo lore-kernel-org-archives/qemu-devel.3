@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C4AC87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 07:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B407BC87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 07:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ui6HQ-0008SX-N7; Sat, 02 Aug 2025 03:03:45 -0400
+	id 1ui6e8-0003Dg-Kv; Sat, 02 Aug 2025 03:27:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ui6Gi-0007kx-BZ
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 03:03:01 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ui6dh-0002i7-LU; Sat, 02 Aug 2025 03:26:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ui6Ge-0003LS-9z
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 03:02:59 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ui6df-0006k3-E8; Sat, 02 Aug 2025 03:26:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E59E013CEFC;
- Sat, 02 Aug 2025 10:02:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 53C1913CF05;
+ Sat, 02 Aug 2025 10:26:18 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B041D255007;
- Sat,  2 Aug 2025 10:02:46 +0300 (MSK)
-Message-ID: <8f362984-ed19-4baf-9476-c8536bf3ff1a@tls.msk.ru>
-Date: Sat, 2 Aug 2025 10:02:46 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E68D255024;
+ Sat,  2 Aug 2025 10:26:34 +0300 (MSK)
+Content-Type: multipart/mixed; boundary="------------ialuacMZDRp7TnXh9wmWFbxQ"
+Message-ID: <7b657acb-7186-42bf-9be5-8c1253c6316c@tls.msk.ru>
+Date: Sat, 2 Aug 2025 10:26:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/make-release: Go back to cloning all the EDK2
- submodules
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250721153341.2910800-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v3] virtio-net: Fix VLAN filter table reset timing
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, virtualization@lists.linux.dev, qemu-stable@nongnu.org,
+ Lei Yang <leiyang@redhat.com>
+References: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,9 +81,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250721153341.2910800-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -106,51 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.07.2025 18:33, Peter Maydell wrote:
-> In commit bd0da3a3d4f we changed make-release so that instead of
-> cloning every git submodule of EDK2 we only cloned a fixed list.
-> The original motivation for this was that one of the submodules:
->   * was from a non-github repo
->   * that repo had a "SSL certificate expired" failure
->   * wasn't actually needed for the set of EDK2 binaries we build
-> and at the time we were trying to build the EDK2 binaries in one of
-> our CI jobs.
-> 
-> Unfortunately this change meant that we were exposed to bugs where
-> EDK2 adds a new submodule and the sources we ship in the release
-> tarball won't build any more.  In particular, in EDK2 commit
-> c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
-> the ROM build in our tarball starting from QEMU release 8.2.0:
-> 
-> /tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
->          Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
->          /tmp/qemu-10.0.0/roms/.
->          /tmp/qemu-10.0.0/roms/edk2
-> 
-> (Building from a QEMU git checkout works fine.)
-> 
-> In the intervening time EDK2 moved the submodule that had a problem
-> to be one they mirrored themselves (and at time of writing all their
-> submodules are hosted on github), and we stopped trying to build
-> EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
-> 
-> Go back to cloning every EDK2 submodule, so we don't have an
-> untested explicit list of submodules which will break without
-> our noticing it.
-> 
-> This increases the size of the QEMU tarball .tar.xz file from
-> 133M to 139M in my testing.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+This is a multi-part message in MIME format.
+--------------ialuacMZDRp7TnXh9wmWFbxQ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+On 27.07.2025 09:22, Akihiko Odaki wrote:
+...
+> @@ -3942,6 +3943,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>       n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
+>   
+>       n->vlans = g_malloc0(MAX_VLAN >> 3);
+> +    memset(n->vlans, 0xff, MAX_VLAN >> 3);
 
-Let's fix this for 10.1, and think about splitting roms/ into
-its own tarball in 10.2.
+A nitpick: we don't need to init this memory with 0 before
+initing it with 0xff.
+
+But looking at this, why can't we embed n->vlans directly into
+this structure, something like the attached patch?
+
+This, and maybe a few other fields like it?
 
 Thanks,
 
 /mjt
+--------------ialuacMZDRp7TnXh9wmWFbxQ
+Content-Type: text/x-patch; charset=UTF-8;
+ name="virtio-net-vlans-inside-struct.patch"
+Content-Disposition: attachment;
+ filename="virtio-net-vlans-inside-struct.patch"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL2h3L25ldC92aXJ0aW8tbmV0LmMgYi9ody9uZXQvdmlydGlvLW5ldC5j
+CmluZGV4IDZiNWI1ZGFjZTMuLjFhNzliMDZjZmYgMTAwNjQ0Ci0tLSBhL2h3L25ldC92aXJ0
+aW8tbmV0LmMKKysrIGIvaHcvbmV0L3ZpcnRpby1uZXQuYwpAQCAtOTMxLDcgKzkzMSw3IEBA
+IHN0YXRpYyB2b2lkIHZpcnRpb19uZXRfc2V0X2ZlYXR1cmVzKFZpcnRJT0RldmljZSAqdmRl
+diwgdWludDY0X3QgZmVhdHVyZXMpCiAKICAgICBpZiAodmlydGlvX2hhc19mZWF0dXJlKHZk
+ZXYtPmd1ZXN0X2ZlYXR1cmVzIF4gZmVhdHVyZXMsIFZJUlRJT19ORVRfRl9DVFJMX1ZMQU4p
+KSB7CiAgICAgICAgIGJvb2wgdmxhbiA9IHZpcnRpb19oYXNfZmVhdHVyZShmZWF0dXJlcywg
+VklSVElPX05FVF9GX0NUUkxfVkxBTik7Ci0gICAgICAgIG1lbXNldChuLT52bGFucywgdmxh
+biA/IDAgOiAweGZmLCBNQVhfVkxBTiA+PiAzKTsKKyAgICAgICAgbWVtc2V0KG4tPnZsYW5z
+LCB2bGFuID8gMCA6IDB4ZmYsIHNpemVvZihuLT52bGFucykpOwogICAgIH0KIAogICAgIGlm
+ICh2aXJ0aW9faGFzX2ZlYXR1cmUoZmVhdHVyZXMsIFZJUlRJT19ORVRfRl9TVEFOREJZKSkg
+ewpAQCAtMzk0Miw4ICszOTQyLDcgQEAgc3RhdGljIHZvaWQgdmlydGlvX25ldF9kZXZpY2Vf
+cmVhbGl6ZShEZXZpY2VTdGF0ZSAqZGV2LCBFcnJvciAqKmVycnApCiAKICAgICBuLT5tYWNf
+dGFibGUubWFjcyA9IGdfbWFsbG9jMChNQUNfVEFCTEVfRU5UUklFUyAqIEVUSF9BTEVOKTsK
+IAotICAgIG4tPnZsYW5zID0gZ19tYWxsb2MwKE1BWF9WTEFOID4+IDMpOwotICAgIG1lbXNl
+dChuLT52bGFucywgMHhmZiwgTUFYX1ZMQU4gPj4gMyk7CisgICAgbWVtc2V0KG4tPnZsYW5z
+LCAweGZmLCBzaXplb2Yobi0+dmxhbnMpKTsKIAogICAgIG5jID0gcWVtdV9nZXRfcXVldWUo
+bi0+bmljKTsKICAgICBuYy0+cnhmaWx0ZXJfbm90aWZ5X2VuYWJsZWQgPSAxOwpAQCAtMzk5
+Miw3ICszOTkxLDYgQEAgc3RhdGljIHZvaWQgdmlydGlvX25ldF9kZXZpY2VfdW5yZWFsaXpl
+KERldmljZVN0YXRlICpkZXYpCiAgICAgbi0+bmV0Y2xpZW50X3R5cGUgPSBOVUxMOwogCiAg
+ICAgZ19mcmVlKG4tPm1hY190YWJsZS5tYWNzKTsKLSAgICBnX2ZyZWUobi0+dmxhbnMpOwog
+CiAgICAgaWYgKG4tPmZhaWxvdmVyKSB7CiAgICAgICAgIHFvYmplY3RfdW5yZWYobi0+cHJp
+bWFyeV9vcHRzKTsKZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvdmlydGlvL3ZpcnRpby1uZXQu
+aCBiL2luY2x1ZGUvaHcvdmlydGlvL3ZpcnRpby1uZXQuaAppbmRleCA3M2ZkZWZjMGRjLi40
+YTBjYzM0YWU2IDEwMDY0NAotLS0gYS9pbmNsdWRlL2h3L3ZpcnRpby92aXJ0aW8tbmV0LmgK
+KysrIGIvaW5jbHVkZS9ody92aXJ0aW8vdmlydGlvLW5ldC5oCkBAIC0yMDIsNyArMjAyLDcg
+QEAgc3RydWN0IFZpcnRJT05ldCB7CiAgICAgICAgIHVpbnQ4X3QgdW5pX292ZXJmbG93Owog
+ICAgICAgICB1aW50OF90ICptYWNzOwogICAgIH0gbWFjX3RhYmxlOwotICAgIHVpbnQzMl90
+ICp2bGFuczsKKyAgICB1aW50MzJfdCB2bGFuc1tNQVhfVkxBTl07CiAgICAgdmlydGlvX25l
+dF9jb25mIG5ldF9jb25mOwogICAgIE5JQ0NvbmYgbmljX2NvbmY7CiAgICAgRGV2aWNlU3Rh
+dGUgKnFkZXY7Cg==
+
+--------------ialuacMZDRp7TnXh9wmWFbxQ--
 
