@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E0CC88CB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102EBC87FDA
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLP6-0005Ha-1W; Sat, 02 Aug 2025 19:12:40 -0400
+	id 1uiLOq-0004Es-U1; Sat, 02 Aug 2025 19:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLOk-00043M-5f
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:22 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1uiLOH-0003fm-Sz
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:52 -0400
+Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLOi-0001rg-Ad
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:17 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-6196ca9a2edso834259eaf.2
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:12:15 -0700 (PDT)
+ id 1uiLOG-0001n6-9t
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:49 -0400
+Received: by mail-oo1-xc29.google.com with SMTP id
+ 006d021491bc7-619a0f2a8c9so158861eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176335; x=1754781135; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176307; x=1754781107; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EsTLnH31scjYz+bxEZM+kYi0Y3PVFWRhTQ+Zd0S7h5Q=;
- b=HiTRavQLgnhZdIOaRLMUa4spvxvgXCEegiiixFUgWiqrDwLxkkWirX8l8UPgtgXXNW
- 1kB9XrZE0MnuNqSo3SInquGpO93kg1TmQNq2yhOaut9Q47jS1JWcqePfrAb9zXI7hkZk
- WHVIr93pr9BQerOVqgJ1Gby3S1O+/BVwM7Zr8nbaLY/29utNgZj4fGTCnYWiHgAeA5C+
- YdTZfIR5FHjp41DXOaH2w0OzOZ3Y7TZNfmc1ivmuNuUKYH6ebumDNuuAn94LihDTLcls
- WwOx8/2FTv8cE6rF8s+rFWcuxPZClWDNweLR72xahVDZA9lv42vMUqwNlZU2jwWcjNtR
- W6gQ==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=V570hcmnLPaHK1q/9+XOiTmxop0MReW3DKJENlfmRzM=;
+ b=FwxThJfGJzXwB5O8Tu1+Ku6PzVrBarp0+bcFhSTu+k6rXp9s8WKWHfxRLzROEPd8z+
+ VN4eMVDUn8x6lgSW8HIslvx4rIJn4jjEyqp3mUrs0tXd2WRwguFKVdNG7XwKWPr+g6Uf
+ XCEH2N10nFEmNDte9huV3kRIX+EBCebRtGEyamTP2nnIMBj4h8qf97Y8c4aFMTXwKEVb
+ VZ2/7KguONKyMKTLpQhcXlC3IkmkhbYwdiCnRGWxzjQQp9s5sLJXtkZsO5upt4bTBxh+
+ Ygm17IUe+GAfxZ6KW/Fnd6Ce2i4o94o1QSWbS3K2vWcsBqPRP36hqdHsTyLKlKyM1j0f
+ LmWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176335; x=1754781135;
+ d=1e100.net; s=20230601; t=1754176307; x=1754781107;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EsTLnH31scjYz+bxEZM+kYi0Y3PVFWRhTQ+Zd0S7h5Q=;
- b=gAmDNgxDE2RjsXnwsUhQ9y22543GlMml09ZUk9OYhxN7isaNBq56ImGLwaHGQ+l2OF
- cJtXy59PnGZp5Fu1H3aXSEal8LJlP+QdWYhRVrXIo6nsXgM7GJFrfYNHzUBnQA59zFQX
- UDbSIZXyZBhuDF7ob01o3ww96qz8HfuiBNXqMEc0YwIg/NQfZ1iOXapqLVdornkvgZjd
- +SPHcEnn3qyzShb+TcgDSpIOPzqLXjjNoiyETS3LVJeQHSmN95T1ik8qfNgf8DGsCmy1
- 41+aKeT/AkaOGDECinAdU47aYjK8MnaViQ/FknZbzbzaE1sULEc50vim3DhSIeavv9Bs
- 9o5w==
-X-Gm-Message-State: AOJu0YyWbvmLVyA2PE6MF53zIF5CZdVPx1AurVnJFIFCtapnc2NQEtXM
- Js7U16hK5k1+ZZfj3Iath5Pax/NXs96TKUi1I4ttLnr6Ve1oXZNQXWy1TlA2ky/f7lPcFZr/Wsl
- y5chPbGw=
-X-Gm-Gg: ASbGncvYB01szqzfDfVc3QHbAVcgMC0bHi5U+uhZEXmrY/uWV6TlGMx+BLjNUpfMzgZ
- TzzZnTHmrc5V0WNkyZf1DqqZ5wRJ1TmO6XEXPOnC3SlX2VX8HPAE5S9PBTXw0UB4WywF+DNanoq
- sZinIA1vDqAgBjzT0/6csra5McKKvRH08tmEc+4V62n3KmvS0L9upZ5zvEArQYHUBRdAoisnTuo
- kiJG2bQCZaI0t5/6QMcSU+DfRVZl9BbPCBwgi9d/ALgx0RJi3iwQQNA/4Hpylcp3LqIkcSjlBwJ
- No/C3mMhvvU4qGQ7KoI7HvdfOZWc/uLaL3i+T7DaDY6Figi/kq++7hkk55a5BO0Tl/AZPhyZSB7
- BV0z/2BywBeJwIWvWTrKjHloZz4PeUhY6Inim4qICai6ISQ9qx6EP
-X-Google-Smtp-Source: AGHT+IEuke0XOlkLVcItYsWdckDMLKW1sJTJmSVPOwBXmcz9CiZYZuS5f0S8FXE1psx6HaGU6kUKng==
-X-Received: by 2002:a4a:edc5:0:b0:618:d339:1fe with SMTP id
- 006d021491bc7-6198f23451emr2592426eaf.3.1754176335185; 
- Sat, 02 Aug 2025 16:12:15 -0700 (PDT)
+ bh=V570hcmnLPaHK1q/9+XOiTmxop0MReW3DKJENlfmRzM=;
+ b=AdGton30j6t36WiHRThkajfvCQhOjF2RKArn+R3ySbwoCVpnN3qjGqcyZ3ePOiIRgx
+ hYBZPp6FVF4wHWHfTS/e1XM0XrlhXGUl5PqM+itVPf6g/hxM6hJgdgWlvXY/eeuQTbAs
+ mvGyQmWYliloxYhsVE3cHStJ/lNTUXT+wtg28WXpS1lvj2H7EczXRD/TyxXZh+kXEbpb
+ Bz5wPqh3YuQzRkW/s55bHCRD12alGarG4YxYWxJHEYgAuhKO6WXGXS3NB7E394lRmaqQ
+ dIlAAgs9HHL4rnNePq8p83R9TJ2Z+jF6pN5ug52KgBQzuAm8Rk7OgQt5fTN0Zwpf0CSt
+ wx1Q==
+X-Gm-Message-State: AOJu0YzLRFKth2jSRq9qaemH97PTyTIIZh1s+bYm0NOb5q+eFuBE+raC
+ BgKqbvQ6HhX8nMIEadzwgCBYzC36MXPwvR5G2Bv8An1GGPG7cyeo9BqEMxL5ul/fxHTKXpphe+E
+ 0sdlLnnw=
+X-Gm-Gg: ASbGncsNlPdA0W+gHU80lploklN0wYIk1hP9o64zzYWFyFK1razaet3zotlAQrpxqL6
+ KajC5NsRLR7cfVy64rvUd4Y0cK9J+jFUpf2zRHzOm7JO5h9vOSDr49yL8vQG+goD3QB549cEjKh
+ 24tN4mJjFScZYjDBy8fcLq5Vs5T1mTUybVmGNlFhkq8Vg/frXlfB5rymvBC324XFHqtt577qxtL
+ tKy9X9zqoOXmDRVTtw8G5LmGVTYCGAy/20KmuD4sGYVo8HfkzmMni1Ol5NUjAAqNPxWiPiWnbOJ
+ xV3UQrvkfWIZ/E+xEZ40t+1ZeBE8Ol3KtQ5uBvVo/XU7VEOixIw6+M/q/K7VZHhkWL/0jPCAQgV
+ uTijTSLrdMu2JQ5Bb7PGN4UQ7BAn3HH3QzA3NEBIikNcpCM98Loq6
+X-Google-Smtp-Source: AGHT+IEDtyMHqgwKYSsElocLQlbUCff/tkDydM18iYqMX35zQenXz/z16jagpZbKUiYVQu+FzbbqTQ==
+X-Received: by 2002:a05:6820:290a:b0:615:e61d:2de3 with SMTP id
+ 006d021491bc7-6198f2358c1mr3035975eaf.3.1754176307178; 
+ Sat, 02 Aug 2025 16:11:47 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.12.12
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.44
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:12:14 -0700 (PDT)
+ Sat, 02 Aug 2025 16:11:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 69/95] linux-user: Move elf parameters to {i386,
- x86_64}/target_elf.h
-Date: Sun,  3 Aug 2025 09:04:33 +1000
-Message-ID: <20250802230459.412251-70-richard.henderson@linaro.org>
+Subject: [PATCH v2 61/95] linux-user: Move elf_core_copy_regs to
+ xtensa/elfload.c
+Date: Sun,  3 Aug 2025 09:04:25 +1000
+Message-ID: <20250802230459.412251-62-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,117 +99,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Move elf_core_copy_regs to elfload.c.
+Move ELF_NREG to target_elf.h.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/i386/target_elf.h   | 22 +++++++++++++++++++
- linux-user/x86_64/target_elf.h |  4 ++++
- linux-user/elfload.c           | 39 ----------------------------------
- 3 files changed, 26 insertions(+), 39 deletions(-)
+ linux-user/xtensa/target_elf.h |  3 +++
+ linux-user/elfload.c           | 35 ----------------------------------
+ linux-user/xtensa/elfload.c    | 32 +++++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/linux-user/i386/target_elf.h b/linux-user/i386/target_elf.h
-index aaf7b229c0..9acac275b8 100644
---- a/linux-user/i386/target_elf.h
-+++ b/linux-user/i386/target_elf.h
-@@ -8,6 +8,11 @@
- #ifndef I386_TARGET_ELF_H
- #define I386_TARGET_ELF_H
+diff --git a/linux-user/xtensa/target_elf.h b/linux-user/xtensa/target_elf.h
+index 2c55c22e14..f84fc9e6d1 100644
+--- a/linux-user/xtensa/target_elf.h
++++ b/linux-user/xtensa/target_elf.h
+@@ -8,4 +8,7 @@
+ #ifndef XTENSA_TARGET_ELF_H
+ #define XTENSA_TARGET_ELF_H
  
-+#define ELF_CLASS               ELFCLASS32
-+#define ELF_ARCH                EM_386
-+#define EXSTACK_DEFAULT         true
-+#define VDSO_HEADER             "vdso.c.inc"
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_PLATFORM       1
- 
-@@ -19,4 +24,21 @@
-  */
- #define ELF_NREG                17
- 
-+/*
-+ * This is used to ensure we don't load something for the wrong architecture.
-+ */
-+#define elf_check_arch(x)       ((x) == EM_386 || (x) == EM_486)
-+
-+/*
-+ * i386 is the only target which supplies AT_SYSINFO for the vdso.
-+ * All others only supply AT_SYSINFO_EHDR.
-+ */
-+#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
-+#define ARCH_DLINFO                                     \
-+    do {                                                \
-+        if (vdso_info) {                                \
-+            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
-+        }                                               \
-+    } while (0)
++/* See linux kernel: arch/xtensa/include/asm/elf.h.  */
++#define ELF_NREG                128
 +
  #endif
-diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
-index 8c4bd9a3d8..d924314679 100644
---- a/linux-user/x86_64/target_elf.h
-+++ b/linux-user/x86_64/target_elf.h
-@@ -8,6 +8,10 @@
- #ifndef X86_64_TARGET_ELF_H
- #define X86_64_TARGET_ELF_H
- 
-+#define ELF_CLASS               ELFCLASS64
-+#define ELF_ARCH                EM_X86_64
-+#define VDSO_HEADER             "vdso.c.inc"
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_GUEST_COMMPAGE     1
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 44fe1322dd..a017c2162c 100644
+index 80f5c967da..3ac0f89931 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -130,45 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
+@@ -523,41 +523,6 @@ static bool init_guest_commpage(void)
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_XTENSA
  
--#ifdef TARGET_I386
+-/* See linux kernel: arch/xtensa/include/asm/elf.h.  */
+-#define ELF_NREG 128
 -
--#ifdef TARGET_X86_64
--#define ELF_CLASS      ELFCLASS64
--#define ELF_ARCH       EM_X86_64
+-enum {
+-    TARGET_REG_PC,
+-    TARGET_REG_PS,
+-    TARGET_REG_LBEG,
+-    TARGET_REG_LEND,
+-    TARGET_REG_LCOUNT,
+-    TARGET_REG_SAR,
+-    TARGET_REG_WINDOWSTART,
+-    TARGET_REG_WINDOWBASE,
+-    TARGET_REG_THREADPTR,
+-    TARGET_REG_AR0 = 64,
+-};
 -
--#else
+-void elf_core_copy_regs(target_ulong *regs, const CPUXtensaState *env)
+-{
+-    unsigned i;
 -
--/*
-- * This is used to ensure we don't load something for the wrong architecture.
-- */
--#define elf_check_arch(x) ( ((x) == EM_386) || ((x) == EM_486) )
+-    regs[TARGET_REG_PC] = tswapl(env->pc);
+-    regs[TARGET_REG_PS] = tswapl(env->sregs[PS] & ~PS_EXCM);
+-    regs[TARGET_REG_LBEG] = tswapl(env->sregs[LBEG]);
+-    regs[TARGET_REG_LEND] = tswapl(env->sregs[LEND]);
+-    regs[TARGET_REG_LCOUNT] = tswapl(env->sregs[LCOUNT]);
+-    regs[TARGET_REG_SAR] = tswapl(env->sregs[SAR]);
+-    regs[TARGET_REG_WINDOWSTART] = tswapl(env->sregs[WINDOW_START]);
+-    regs[TARGET_REG_WINDOWBASE] = tswapl(env->sregs[WINDOW_BASE]);
+-    regs[TARGET_REG_THREADPTR] = tswapl(env->uregs[THREADPTR]);
+-    xtensa_sync_phys_from_window((CPUXtensaState *)env);
+-    for (i = 0; i < env->config->nareg; ++i) {
+-        regs[TARGET_REG_AR0 + i] = tswapl(env->phys_regs[i]);
+-    }
+-}
 -
--/*
-- * These are used to set parameters in the core dumps.
-- */
--#define ELF_CLASS       ELFCLASS32
--#define ELF_ARCH        EM_386
--
--#define EXSTACK_DEFAULT true
--
--/*
-- * i386 is the only target which supplies AT_SYSINFO for the vdso.
-- * All others only supply AT_SYSINFO_EHDR.
-- */
--#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
--#define ARCH_DLINFO                                     \
--    do {                                                \
--        if (vdso_info) {                                \
--            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
--        }                                               \
--    } while (0)
--
--#endif /* TARGET_X86_64 */
--
--#define VDSO_HEADER "vdso.c.inc"
--
--#endif /* TARGET_I386 */
--
- #ifdef TARGET_ARM
+ #define ELF_EXEC_PAGESIZE       4096
  
- #ifndef TARGET_AARCH64
+ #endif /* TARGET_XTENSA */
+diff --git a/linux-user/xtensa/elfload.c b/linux-user/xtensa/elfload.c
+index e35ba69a10..e35de398da 100644
+--- a/linux-user/xtensa/elfload.c
++++ b/linux-user/xtensa/elfload.c
+@@ -9,3 +9,35 @@ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return XTENSA_DEFAULT_CPU_MODEL;
+ }
++
++enum {
++    TARGET_REG_PC,
++    TARGET_REG_PS,
++    TARGET_REG_LBEG,
++    TARGET_REG_LEND,
++    TARGET_REG_LCOUNT,
++    TARGET_REG_SAR,
++    TARGET_REG_WINDOWSTART,
++    TARGET_REG_WINDOWBASE,
++    TARGET_REG_THREADPTR,
++    TARGET_REG_AR0 = 64,
++};
++
++void elf_core_copy_regs(target_ulong *regs, const CPUXtensaState *env)
++{
++    unsigned i;
++
++    regs[TARGET_REG_PC] = tswapl(env->pc);
++    regs[TARGET_REG_PS] = tswapl(env->sregs[PS] & ~PS_EXCM);
++    regs[TARGET_REG_LBEG] = tswapl(env->sregs[LBEG]);
++    regs[TARGET_REG_LEND] = tswapl(env->sregs[LEND]);
++    regs[TARGET_REG_LCOUNT] = tswapl(env->sregs[LCOUNT]);
++    regs[TARGET_REG_SAR] = tswapl(env->sregs[SAR]);
++    regs[TARGET_REG_WINDOWSTART] = tswapl(env->sregs[WINDOW_START]);
++    regs[TARGET_REG_WINDOWBASE] = tswapl(env->sregs[WINDOW_BASE]);
++    regs[TARGET_REG_THREADPTR] = tswapl(env->uregs[THREADPTR]);
++    xtensa_sync_phys_from_window((CPUXtensaState *)env);
++    for (i = 0; i < env->config->nareg; ++i) {
++        regs[TARGET_REG_AR0 + i] = tswapl(env->phys_regs[i]);
++    }
++}
 -- 
 2.43.0
 
