@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7C0C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1434AC87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLJ4-0001TH-7m; Sat, 02 Aug 2025 19:06:26 -0400
+	id 1uiLJE-0002BF-Pi; Sat, 02 Aug 2025 19:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLIm-00016Q-RM
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:17 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1uiLJB-00020l-LV
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:34 -0400
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLIk-00017c-Vx
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:08 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-42ce1441042so1167819b6e.3
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:06:05 -0700 (PDT)
+ id 1uiLJ9-0001A7-Rm
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:33 -0400
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-433fa926cb9so459933b6e.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:06:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754175965; x=1754780765; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754175990; x=1754780790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h7yOBImSiodxYnzN8XvMdq74qSZ6gWrRgjjgFNxAniQ=;
- b=LOb163qDxxWjSiYBOnyT6w74wiyB1uRipNxhcbHxsfq1gKMDsroSxPQn93QUahz8Nr
- 6Aq5SQ3uA2ssDtIUTmmwjPff7/rn3lKEKmj7F+ZwuBcyZwQmuIlW4q6S52qEdu7eARRv
- KFi2Qkz6RlPhF6Y7/m2NcyjkHUqE5M0ZFRUP47aA94Cg4FWnm7Lc3KtYgYDeF1qNoIKX
- Z0EzxvfBHR01Fiv6+yiSbTYYe1ZARb8surRwTN5cLJSETaaEeZitqfNojj4XfchMrIiR
- U36g8S1mvQUYRKUjAiQqkOecwux/aEqFxL2+Iuj0FyY3sTR0dX5QbaJ8KQO1wZVk8FYW
- lcbw==
+ bh=4cj6OR7jxnjd+ksnwoLgD5O63MHYjLxFz3WB/EhhsQU=;
+ b=PutmeoIbT76ffclzFlo2QoSnFuIgOpU1HJStmJuWQdjNHFc28apyiTM445Sqzuq0jJ
+ 2pLnyCQalF1XHfu1QSXqRiF5TiPYWA2sBnr7J4GG57sa/qjqyoid7ywetyqVzutP/utu
+ D9hgpqC+BuP5uxjsTH7aQeZYb5y9D1t751jcUuoBD57WJHTNepX2RXKEc1EnzeGmMSo+
+ Ye3Y0+fyVN5xvqetZJ9plQQWgGC3ns3su+8oKR1Ag9lxk189L9Hp7IrPov06g/ecQga/
+ HpVA0IfJ9h/fUF7QYgRSXmnn22Z+jhVp/xCsRrWHDD9iwCPu7DOKKPh4i/MbJcC/uv9J
+ OfRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754175965; x=1754780765;
+ d=1e100.net; s=20230601; t=1754175990; x=1754780790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h7yOBImSiodxYnzN8XvMdq74qSZ6gWrRgjjgFNxAniQ=;
- b=foaMKin9Tb5EBEDhz0xBBpETc3YUJwKIlQ6SrGcoxNyL7zTldW/vlqsyF7xIXUKCQU
- 22AWPQ+j0zYhSxHrL6dSuNGfFQ4kwKaXW63iNy0x/0O/a1yGfmjrAxxH9WTuIXcan0Q2
- 8OSGBZdOcq7Ngvfp3vkjCllcFtSuCg16pPKScXXbqvjMq7/STcgGSWrTgbu9i4qG7uj6
- 5ys6tJTpAUFCzRc0wnCKHVH1QfqGAb3N5R2ZHJ4pjV9Gkc+/joIKf5yuKJfmUI2CqSgf
- hPr6kQJ8PZ4F6Xyubz8y60l7r2d02PuKoqzjzsewRB0z4Yb4tsMpdNXnHQyZSumqNnHy
- ywVw==
-X-Gm-Message-State: AOJu0Ywwztcgc8DgoX4wsCElK8bHzhPAe4kXaD5YuyTRTDEJaqDCZwom
- zTSz2iNkhMtj1Ev+AsCW20p5hQ/MiIHzqpzpNPxRI4UwEPDmmgIPSNy7s9cKnaZz/QhhogKSTof
- bCtaVtfA=
-X-Gm-Gg: ASbGncsCFRvPVmRAYFcc7zr/PPsA9TeRaS6xllsZ14STUHO+IrVr7RpDvE9k7eWwytS
- WZLxnCjBzYuLip4wLNWHVQL/7kWP4q9LRdJ/r/gzkf0FO83MsrhIv4wz/cdZThUE0hhv8zekr30
- WfShJG8EWkBuAvI878A5KK18vzs4xbsc6tBblSZJScefswoIsYQ/fJ6o7EC5nTksLcm2wlWTMJa
- X2zmSjeobGsFgYK7KSWsnvzu1IvrHQAMAUDX4xagVRTBIUZ01oXX7JZlp8JAMidFFq72XgwjwYf
- tnbtNzgVizKnHo7BGR2j+LFTKV4F0unOWiztT3x5yHE9DTFWg7Wzm0tYsnZonmEu56x4J6j4QKq
- Io6bTVfEC/O8lrI2sPHyeWIbyMSPBwX/YUBlw29MbVvPGc/ZmuS53
-X-Google-Smtp-Source: AGHT+IEx8f+BaY6NenopBc7XNNwNVflurhm2B60HUQvPHSzqi67zZnqGk3ZDJAV2MAmOybxSNGpTdA==
-X-Received: by 2002:a05:6808:181a:b0:40a:5839:71c5 with SMTP id
- 5614622812f47-433f0224714mr3108790b6e.8.1754175965109; 
- Sat, 02 Aug 2025 16:06:05 -0700 (PDT)
+ bh=4cj6OR7jxnjd+ksnwoLgD5O63MHYjLxFz3WB/EhhsQU=;
+ b=UCVRzaNZdWUrDf3I8/mmhm+SP2DmdK47zPgWaB+QEa3nH3R8Bx2x8q4vm9EUuDnBP0
+ oVb28lJZ7uFN/mmBkKDhuIgS0v5/i2pkRon0wLgONJU1jWAe14s7njDNIbtFkg+Fu1RS
+ 21sZvtNUwNCCUSLyHJOCBTXcN5V4T77Fzv3v0olKCEZObue0ckruhmBiuPCGYlct+iWj
+ FINRqQ3+Ya362V0QnUHzqcTYEP1YirJHQXFBYZhA0Rr+tRu1zsD7clxdkNMQINFGENpB
+ K/ANFTGDcieRc9MtwRcrWcFrHxKTeAQhdAgMkElbqackVBDrEkj4FNeBwsR2gHlrpnBT
+ MSdg==
+X-Gm-Message-State: AOJu0Yx+IBiouvpxKhYVCIKsTovWStmtsKIFmZx7ifdMKqchJoG+FiAu
+ Q1VW66uB4Yb/DXMnqUwKC6FbsVS4EVnV6X/oL797GKfTbSWyLzgiHdseUFGYVlBjI/K7oAYzmPc
+ 3/nxxzxI=
+X-Gm-Gg: ASbGncu30O4X/S/7zFjTmgfXCWcKQZ7KSNdrsGKBwQHDNYXrDb9juYIUNu0MFABLLUR
+ uFCnRaqV2Pwa6GRL+Cmr9qlbMBo1VJ7RM5ntWbKixiB0anKfpddTRpR6az3dpMSYBosAWP777aY
+ Ngf0y8deMX/F1mf+N098AAWcvU1V253subL0CPqLpD2ZdM/1Wkm2FJCiX48rRWZFJszNWZQoXbw
+ NGAgCSScINeL+IOkGlZ9VrYP7+b/+5/8Q8MdPqevcRp3p/gXXAx+pczRu5L05IwWeCxAvxd0n9y
+ iPQ1O+ce1xU5thIxBSyqeXkVYzjOKAw+DLIsIB3DZ5xgnKKUI/1XCfxgr3lR/KnmPfwz2LYU3Do
+ jw9oeqIbNAShD/72myLx6KKlGF6sGsYry+7FQJMDA74KulBbNNl0MyELHod1ScBU=
+X-Google-Smtp-Source: AGHT+IEBiAe1HaqFUuWBjoUI7kWFK33FPyJvCl4v1q1uuXnqrwGUUVvg6qXZrsfqaRgVeLNQP1CM3g==
+X-Received: by 2002:a05:6808:3509:b0:406:7af5:30f2 with SMTP id
+ 5614622812f47-433f0363587mr3550042b6e.34.1754175990613; 
+ Sat, 02 Aug 2025 16:06:30 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.06.02
+ 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.06.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:06:04 -0700 (PDT)
+ Sat, 02 Aug 2025 16:06:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 15/95] linux-user: Remove ELF_HWCAP
-Date: Sun,  3 Aug 2025 09:03:39 +1000
-Message-ID: <20250802230459.412251-16-richard.henderson@linaro.org>
+Subject: [PATCH v2 22/95] linux-user: Remove ELF_PLATFORM
+Date: Sun,  3 Aug 2025 09:03:46 +1000
+Message-ID: <20250802230459.412251-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,159 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All real definitions of ELF_HWCAP are now identical, and the stub
-definitions are 0.  Provide zero stub as a fallback definition.
+All real definitions of ELF_PLATFORM are now identical, and the stub
+definitions are NULL.  Use HAVE_ELF_PLATFORM and provide a stub as a
+fallback definition of get_elf_platform.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 35 ++++++++++++-----------------------
- 1 file changed, 12 insertions(+), 23 deletions(-)
+ linux-user/elfload.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index ce4055b0e9..88d439f348 100644
+index 83cb6731ec..d2d73b06fc 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -28,6 +28,7 @@
- #include "qemu/lockable.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "target_elf.h"
- #include "target_signal.h"
- #include "tcg/debuginfo.h"
- 
-@@ -148,8 +149,6 @@ typedef abi_int         target_pid_t;
+@@ -149,8 +149,6 @@ typedef abi_int         target_pid_t;
  
  #ifdef TARGET_I386
  
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-#define ELF_PLATFORM get_elf_platform(thread_cpu)
 -
  #ifdef TARGET_X86_64
  #define ELF_CLASS      ELFCLASS64
  #define ELF_ARCH       EM_X86_64
-@@ -449,7 +448,6 @@ static bool init_guest_commpage(void)
-     return true;
- }
+@@ -309,8 +307,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUX86State *en
  
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
- #define ELF_HWCAP2 get_elf_hwcap2(thread_cpu)
+ #ifdef TARGET_ARM
  
- #define ELF_PLATFORM get_elf_platform()
-@@ -539,7 +537,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- #define USE_ELF_CORE_DUMP
- #define ELF_EXEC_PAGESIZE       4096
- 
--#define ELF_HWCAP   get_elf_hwcap(thread_cpu)
- #define ELF_HWCAP2  get_elf_hwcap2(thread_cpu)
- 
- #if TARGET_BIG_ENDIAN
-@@ -565,8 +562,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- # define ELF_ARCH   EM_SPARCV9
- #endif
- 
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-#define ELF_PLATFORM get_elf_platform(thread_cpu)
 -
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
- {
-@@ -598,7 +593,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #ifndef TARGET_AARCH64
+ /* 32 bit ARM definitions */
  
- #define ELF_ARCH        EM_PPC
- 
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
- #define ELF_HWCAP2 get_elf_hwcap2(thread_cpu)
- 
- /*
-@@ -725,8 +719,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+@@ -665,8 +661,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
  #define USE_ELF_CORE_DUMP
  #define ELF_EXEC_PAGESIZE        4096
  
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+-#define ELF_PLATFORM get_elf_platform(thread_cpu)
 -
- #define ELF_PLATFORM "loongarch"
- 
  #endif /* TARGET_LOONGARCH64 */
-@@ -834,8 +826,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMIPSState *e
- #define USE_ELF_CORE_DUMP
- #define ELF_EXEC_PAGESIZE        4096
  
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
--
- #endif /* TARGET_MIPS */
- 
- #ifdef TARGET_MICROBLAZE
-@@ -909,7 +899,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
-     (*regs)[32] = tswapreg(env->pc);
+ #ifdef TARGET_MIPS
+@@ -846,8 +840,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
      (*regs)[33] = tswapreg(cpu_get_sr(env));
  }
--#define ELF_HWCAP 0
-+
- #define ELF_PLATFORM NULL
  
+-#define ELF_PLATFORM NULL
+-
  #endif /* TARGET_OPENRISC */
-@@ -963,8 +953,6 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
- #define USE_ELF_CORE_DUMP
- #define ELF_EXEC_PAGESIZE        4096
  
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
--
+ #ifdef TARGET_SH4
+@@ -1046,7 +1038,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ 
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_PARISC
+-#define ELF_PLATFORM    get_elf_platform(thread_cpu)
+ #define STACK_GROWS_DOWN 0
+ #define STACK_ALIGNMENT  64
+ 
+@@ -1182,10 +1173,6 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define ELF_BASE_PLATFORM (NULL)
  #endif
  
- #ifdef TARGET_M68K
-@@ -1039,8 +1027,6 @@ static inline void init_thread(struct target_pt_regs *regs,
- #define ELF_DATA	ELFDATA2MSB
- #define ELF_ARCH	EM_S390
- 
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
--
- static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
- {
-     regs->psw.addr = infop->entry;
-@@ -1099,8 +1085,6 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- #define VDSO_HEADER "vdso-64.c.inc"
- #endif
- 
--#define ELF_HWCAP get_elf_hwcap(thread_cpu)
--
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
- {
-@@ -1268,10 +1252,6 @@ static inline void init_thread(struct target_pt_regs *regs,
- #define elf_check_abi(x) (1)
- #endif
- 
--#ifndef ELF_HWCAP
--#define ELF_HWCAP 0
+-#ifndef ELF_PLATFORM
+-#define ELF_PLATFORM (NULL)
 -#endif
 -
- #ifndef STACK_GROWS_DOWN
- #define STACK_GROWS_DOWN 1
+ #ifndef ELF_MACHINE
+ #define ELF_MACHINE ELF_ARCH
  #endif
-@@ -1291,6 +1271,15 @@ static inline void init_thread(struct target_pt_regs *regs,
- #define EXSTACK_DEFAULT false
+@@ -1229,6 +1216,9 @@ abi_ulong get_elf_hwcap(CPUState *cs) { return 0; }
+ abi_ulong get_elf_hwcap2(CPUState *cs) { g_assert_not_reached(); }
+ #define HAVE_ELF_HWCAP2 0
  #endif
- 
-+/*
-+ * Provide fallback definitions that the target may omit.
-+ * One way or another, we'll get a link error if the setting of
-+ * HAVE_* doesn't match the implementation.
-+ */
-+#ifndef HAVE_ELF_HWCAP
-+abi_ulong get_elf_hwcap(CPUState *cs) { return 0; }
++#ifndef HAVE_ELF_PLATFORM
++const char *get_elf_platform(CPUState *cs) { return NULL; }
 +#endif
-+
+ 
  #include "elf.h"
  
- /* We must delay the following stanzas until after "elf.h". */
-@@ -1868,7 +1857,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     NEW_AUX_ENT(AT_EUID, (abi_ulong) geteuid());
-     NEW_AUX_ENT(AT_GID, (abi_ulong) getgid());
-     NEW_AUX_ENT(AT_EGID, (abi_ulong) getegid());
--    NEW_AUX_ENT(AT_HWCAP, (abi_ulong) ELF_HWCAP);
-+    NEW_AUX_ENT(AT_HWCAP, get_elf_hwcap(thread_cpu));
-     NEW_AUX_ENT(AT_CLKTCK, (abi_ulong) sysconf(_SC_CLK_TCK));
-     NEW_AUX_ENT(AT_RANDOM, (abi_ulong) u_rand_bytes);
-     NEW_AUX_ENT(AT_SECURE, (abi_ulong) qemu_getauxval(AT_SECURE));
+@@ -1699,7 +1689,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
+     }
+ 
+     u_platform = 0;
+-    k_platform = ELF_PLATFORM;
++    k_platform = get_elf_platform(thread_cpu);
+     if (k_platform) {
+         size_t len = strlen(k_platform) + 1;
+         if (STACK_GROWS_DOWN) {
 -- 
 2.43.0
 
