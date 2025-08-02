@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF10C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEBAC87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLNl-0000sY-VZ; Sat, 02 Aug 2025 19:11:18 -0400
+	id 1uiLP6-0005Gw-3m; Sat, 02 Aug 2025 19:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLNf-0000Q4-0X
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:11 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ id 1uiLOQ-0003mo-9U
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:06 -0400
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLNc-0001gV-S6
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:10 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-741b1fe0d48so53977a34.3
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:08 -0700 (PDT)
+ id 1uiLON-0001oC-F2
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:56 -0400
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-617744621acso485753eaf.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176267; x=1754781067; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176314; x=1754781114; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tl4Y/fGNJblvvmq3B2ou0KAzvAx2tU4UlLl5v489TQo=;
- b=k48GQTBwdzJ1SUD0lkhfqE4DKhZYpD7usPd47VOpQUWRbWdInbpDStyJRvcOIOQrRW
- 3okoemzviifJ5ke+TEIReEnmlqeFe8Thw6wTMDBiH+XwOi+HNDOmJKdvwyNhPtPR6xmO
- Zz1qJu13qS3QSOFllqT9fSdEeW+OT1e2C4JISNns0I5330bhhO1/QNfSr0W+6sLbIc/p
- 5DC4r+EFTtxZA0SdZ+vmwcGFtqkx7OgoBzbbiy2REeewl52OKbu8iKzql5T2QLPK7Z7r
- pBfHHU8JFtduLrP8yc+dJ02d0CrlRV0SZPSXA8IfdqDgZ0/zT9Suwl2X3IP39QgJ9T6h
- WT2w==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gziFnQYyx9mUDdCD6TJ2eXiHZRA/1XfntIJ0wwd6/FA=;
+ b=bzOyLLDNZdncHH8mS/Mnm2w8OzEuYhr5/22UIoPKA5tLq2nWtT2UESPVG25MuA9Fc8
+ 0Wu42sqgMsgaWeYDLQ+pK6UX4nqpGqG6QIbzsQLLetijVmR4tSKL5cmvOtPdMpspb5oq
+ 50b6roMH0LeasG70sqtmYYHcUKUmqNxizRKe6nUf60P4A75FccbHYiQIut8xnu5WTB/t
+ SOAkMGBvzZ0AXkE4uTUoaDwAJ3WM7cFpFo8wF4ddPUc5X9pMak1PDCyLUx/Bybc4DGuw
+ q/SjgN/5FKpIxOquTG1Kpo6GRqB3VhgU25axAWb97p2oglPspSx3DLtH+gz+CqlrdOO8
+ RaNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176267; x=1754781067;
+ d=1e100.net; s=20230601; t=1754176314; x=1754781114;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tl4Y/fGNJblvvmq3B2ou0KAzvAx2tU4UlLl5v489TQo=;
- b=g6fNz4aMqgbHNiX79t2thYFyh/9WA+39QDdtdVeuD8kmIQcxUodR1do4+HrAE679/i
- 4I8dIXxA2v4TruQIqsMUSFemn6P2+ng+GGHdInlVjPBE7XhwScRYtDA1kzR/kFq3cQtc
- T7mzIG6J9uJJxTZUwjobPK8BmOU5f1VSe52wlIoveeFmQqLC4xcmsaxgpqDNIb89oOZy
- tff+pD+pu/8gyemMkBUzctAyNMeXuZdhwGYitzlVQLSbK+vqhwwet6QY/aXqOO/APmEt
- HUARGODwHLjp5/4WiCXQMCnI6hKIq3t20H0B0OEFJooF2x5rClBL8KMm2KWXUttGQDMf
- kUrQ==
-X-Gm-Message-State: AOJu0Yx55ChyYABvjCRDZiq16xgSDE80vqj51olrtJs+y6NQZpYb9dVD
- kijAOils3/84/GGUCSDXBLAFyfpo8vOKMTrIhCRuqMbGsz1n0wNfCMu4msuIt6zJNe60XzaG/aN
- clc0JfbQ=
-X-Gm-Gg: ASbGnctpYlOBhrWWFEd7AZD/Jqm19GfA35lnFc2+LB5Bam0u4f9Bz2Z/erGxYBTjf3Q
- NlyCcPEO/Q2kryM3VtJkRjaJB4p0rF8cZmG8qf0DCkzKkFcIdPXUQ59XipuSTahCtoBrJsbgTR+
- HWMNLA4M3NOvQMyvL1UkdtruXyTcsfGIRA0kIx2LOXsWpCiarxs5iBjHscVGtLVysr+UiyvNxpx
- YqI5zhDwrTcDAMMVZ17vvFGgj4Pvzh/AAB88feA4z2JuaB3rQge03OvFRaLhSrX019tYcYW6buQ
- AQvl1EqnCmD5fINvuKa9hrr3FWrf2zxeGxUff98Of0FY69ne26GAjCgKl4y8vhxMfe8kPllnf1c
- dFTNsvfiR2fydEV2eWaeO6wt+EwF6kwUo2itJOhe5mXiGtce8WtygcBh5jikFMTA=
-X-Google-Smtp-Source: AGHT+IFRDjzx8CQAETR9FABPCHS2UZlSWhPawBupfdlaAHj8dujDIkyGrzmZxisfexQfxLZHSywNuA==
-X-Received: by 2002:a05:6808:2001:b0:40b:4208:7fc0 with SMTP id
- 5614622812f47-433f034a598mr2747465b6e.30.1754176267591; 
- Sat, 02 Aug 2025 16:11:07 -0700 (PDT)
+ bh=gziFnQYyx9mUDdCD6TJ2eXiHZRA/1XfntIJ0wwd6/FA=;
+ b=R7z8+iQsJ5hguaul1GWxk30M5BNpXCRV/mULoXtQO+7JxHzxQrRellF2wqDs8rZgot
+ 0J+ZuDtxU+poa4nBpnZ1rxF47jTKhRaJoff3H8OvnZMFT8bnonRzG5oaRYO2bf50AsGt
+ 4bTp3fCTYK3vvaUEzMb/wYulARG+HDuTkgNJBO2oVSpjkdElG+zl3dnOBljGTWAmdjrl
+ Kfnhm/JSF7QtOHd28Q7g9r20H3yEf7XYSEZGpZPH1Yhmq9hXaUi1nSTuxaRaTidWs/R6
+ jWUpg2HWa6v3fKL9wUt9sKaLO+CNQ2nblGllaGwE33dcBrDVnwioysEexowVkdit89O9
+ LrBQ==
+X-Gm-Message-State: AOJu0Yxd+XOodMB/k+awXUpjdEQPRRtWUXzSlJ+npbaB1l9hmTwi7wLr
+ xs5bGoaoit/t6+8EI26vz/K2q3pYWsKhO0dMZeiL/hKteJi2CBJnN0UwZfN2/CeSOvJFLo/qG/5
+ +nqsHaWA=
+X-Gm-Gg: ASbGncvluNa6lQIRcH3E2DIHwWVmrE6RHdHknUBpvgvVOn6dzAcj7z9kVoygGfAJwFN
+ iZSYfXxPIdv3EaCMpsFn5wfUQqyQGv8Fa+azH++E7SmhRRxlp5aUhSq0PObrYqaMsklrislttYi
+ gk2jAXd6HeOskS46sBpp7cTv+ukj21RZTT7WHVw6n8TqGCjx07IN+07XOesSfJ7OE6j7LV+gcRs
+ Fu8VxWOGtUIJEax1pommzXe9DnMFZQh8XGMYFemjKgDx7GBW/2rnHC3zF4PhRJzuNPrXfcyqfFS
+ a41nbm+ZUG5OXEsecj22TW8T8hf0HQy3cGa0a2YwbOOpxyrOwBzyx8WZohuHMe4JF+ByeqtnLji
+ lm0sAZu5e8BJsqhbX0bYM1+sfI07XLoBIRr4uE71AScTACsxgdBwnKTg6FmQAwPo=
+X-Google-Smtp-Source: AGHT+IFMjXmjiW2jUQDmHMyo/aapxNzJiDlMUwM8EagOH+d7TieHYqGSUE/eghmYlUQ+/TTAv/DPIw==
+X-Received: by 2002:a05:6820:2187:b0:619:9530:87e3 with SMTP id
+ 006d021491bc7-619953089e1mr2297948eaf.1.1754176314241; 
+ Sat, 02 Aug 2025 16:11:54 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.05
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:11:07 -0700 (PDT)
+ Sat, 02 Aug 2025 16:11:53 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 48/95] linux-user: Declare elf_core_copy_regs in loader.h
-Date: Sun,  3 Aug 2025 09:04:12 +1000
-Message-ID: <20250802230459.412251-49-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 63/95] linux-user: Move init_guest_commpage to arm/elfload.c
+Date: Sun,  3 Aug 2025 09:04:27 +1000
+Message-ID: <20250802230459.412251-64-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,155 +99,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the static from all implementations.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h  |  1 +
- linux-user/elfload.c | 28 ++++++++++++++--------------
- 2 files changed, 15 insertions(+), 14 deletions(-)
+ linux-user/arm/target_elf.h |  1 +
+ linux-user/loader.h         |  2 +-
+ linux-user/arm/elfload.c    | 46 +++++++++++++++++++++++++++++++++++
+ linux-user/elfload.c        | 48 -------------------------------------
+ 4 files changed, 48 insertions(+), 49 deletions(-)
 
+diff --git a/linux-user/arm/target_elf.h b/linux-user/arm/target_elf.h
+index 84c7950ace..c98d48745c 100644
+--- a/linux-user/arm/target_elf.h
++++ b/linux-user/arm/target_elf.h
+@@ -13,5 +13,6 @@
+ #define HAVE_ELF_PLATFORM       1
+ 
+ #define ELF_NREG                18
++#define HI_COMMPAGE             ((intptr_t)0xffff0f00u)
+ 
+ #endif
 diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 6482c7c90c..84bb04f9fd 100644
+index efa7f9b64a..a12a07039a 100644
 --- a/linux-user/loader.h
 +++ b/linux-user/loader.h
-@@ -105,5 +105,6 @@ const char *elf_hwcap_str(uint32_t bit);
+@@ -105,7 +105,7 @@ const char *elf_hwcap_str(uint32_t bit);
  const char *elf_hwcap2_str(uint32_t bit);
  const char *get_elf_platform(CPUState *cs);
  const char *get_elf_base_platform(CPUState *cs);
-+void elf_core_copy_regs(target_ulong *regs, const CPUArchState *env);
+-#if defined(TARGET_X86_64)
++#if defined(TARGET_X86_64) || defined(TARGET_ARM)
+ bool init_guest_commpage(void);
+ #endif
+ void elf_core_copy_regs(target_ulong *regs, const CPUArchState *env);
+diff --git a/linux-user/arm/elfload.c b/linux-user/arm/elfload.c
+index b0d4dea591..0c18cde12e 100644
+--- a/linux-user/arm/elfload.c
++++ b/linux-user/arm/elfload.c
+@@ -3,6 +3,8 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "user-internals.h"
++#include "target_elf.h"
+ #include "target/arm/cpu-features.h"
  
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 147c309057..0e02e8541b 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -154,7 +154,7 @@ typedef abi_int         target_pid_t;
-  *
-  * See linux kernel: arch/x86/include/asm/elf.h
-  */
--static void elf_core_copy_regs(target_ulong *regs, const CPUX86State *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUX86State *env)
- {
-     regs[0] = tswapl(env->regs[15]);
-     regs[1] = tswapl(env->regs[14]);
-@@ -230,7 +230,7 @@ static bool init_guest_commpage(void)
-  *
-  * See linux kernel: arch/x86/include/asm/elf.h
-  */
--static void elf_core_copy_regs(target_ulong *regs, const CPUX86State *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUX86State *env)
- {
-     regs[0] = tswapl(env->regs[R_EBX]);
-     regs[1] = tswapl(env->regs[R_ECX]);
-@@ -283,7 +283,7 @@ static void elf_core_copy_regs(target_ulong *regs, const CPUX86State *env)
  
- #define ELF_NREG    18
+@@ -200,6 +202,50 @@ const char *get_elf_platform(CPUState *cs)
+ #undef END
+ }
  
--static void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
++bool init_guest_commpage(void)
++{
++    ARMCPU *cpu = ARM_CPU(thread_cpu);
++    int host_page_size = qemu_real_host_page_size();
++    abi_ptr commpage;
++    void *want;
++    void *addr;
++
++    /*
++     * M-profile allocates maximum of 2GB address space, so can never
++     * allocate the commpage.  Skip it.
++     */
++    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
++        return true;
++    }
++
++    commpage = HI_COMMPAGE & -host_page_size;
++    want = g2h_untagged(commpage);
++    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
++                MAP_ANONYMOUS | MAP_PRIVATE |
++                (commpage < reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
++                -1, 0);
++
++    if (addr == MAP_FAILED) {
++        perror("Allocating guest commpage");
++        exit(EXIT_FAILURE);
++    }
++    if (addr != want) {
++        return false;
++    }
++
++    /* Set kernel helper versions; rest of page is 0.  */
++    __put_user(5, (uint32_t *)g2h_untagged(0xffff0ffcu));
++
++    if (mprotect(addr, host_page_size, PROT_READ)) {
++        perror("Protecting guest commpage");
++        exit(EXIT_FAILURE);
++    }
++
++    page_set_flags(commpage, commpage | (host_page_size - 1),
++                   PAGE_READ | PAGE_EXEC | PAGE_VALID);
++    return true;
++}
++
+ void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
  {
      for (int i = 0; i < 16; i++) {
-         regs[i] = tswapl(env->regs[i]);
-@@ -368,7 +368,7 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 4ff360b43c..6cc2c498c8 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -191,54 +191,6 @@ typedef abi_int         target_pid_t;
  
- #define ELF_NREG    34
+ #define ELF_EXEC_PAGESIZE       4096
  
--static void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
- {
-     int i;
- 
-@@ -453,7 +453,7 @@ static void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
- /* See linux kernel: arch/powerpc/include/asm/elf.h.  */
- #define ELF_NREG 48
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUPPCState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUPPCState *env)
- {
-     int i;
-     target_ulong ccr = 0;
-@@ -504,7 +504,7 @@ enum {
-     TARGET_EF_CSR_BADV = TARGET_EF_R0 + 34,
- };
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPULoongArchState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPULoongArchState *env)
- {
-     int i;
- 
-@@ -560,7 +560,7 @@ enum {
- };
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
--static void elf_core_copy_regs(target_ulong *regs, const CPUMIPSState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUMIPSState *env)
- {
-     int i;
- 
-@@ -601,7 +601,7 @@ static void elf_core_copy_regs(target_ulong *regs, const CPUMIPSState *env)
- #define ELF_NREG 38
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
--static void elf_core_copy_regs(target_ulong *regs, const CPUMBState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUMBState *env)
- {
-     int i, pos = 0;
- 
-@@ -631,7 +631,7 @@ static void elf_core_copy_regs(target_ulong *regs, const CPUMBState *env)
- /* See linux kernel arch/openrisc/include/asm/elf.h.  */
- #define ELF_NREG 34 /* gprs and pc, sr */
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUOpenRISCState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUOpenRISCState *env)
- {
-     int i;
- 
-@@ -663,7 +663,7 @@ enum {
-     TARGET_REG_SYSCALL = 22
- };
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUSH4State *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUSH4State *env)
- {
-     int i;
- 
-@@ -693,7 +693,7 @@ static void elf_core_copy_regs(target_ulong *regs, const CPUSH4State *env)
- /* See linux kernel: arch/m68k/include/asm/elf.h.  */
- #define ELF_NREG 20
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUM68KState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUM68KState *env)
- {
-     regs[0] = tswapl(env->dregs[1]);
-     regs[1] = tswapl(env->dregs[2]);
-@@ -748,7 +748,7 @@ enum {
-     TARGET_REG_ORIG_R2 = 26,
- };
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUS390XState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUS390XState *env)
- {
-     int i;
-     uint32_t *aregs;
-@@ -852,7 +852,7 @@ enum {
-     TARGET_REG_AR0 = 64,
- };
- 
--static void elf_core_copy_regs(target_ulong *regs, const CPUXtensaState *env)
-+void elf_core_copy_regs(target_ulong *regs, const CPUXtensaState *env)
- {
-     unsigned i;
- 
-@@ -2828,7 +2828,7 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
-  * Last step is to implement target specific function that copies registers
-  * from given cpu into just specified register set.  Prototype is:
-  *
-- * static void elf_core_copy_regs(target_ulong *regs, const CPUArchState *env);
-+ * void elf_core_copy_regs(target_ulong *regs, const CPUArchState *env);
-  *
-  * Parameters:
-  *     regs - copy register values into here (allocated and zeroed by caller)
+-/* The commpage only exists for 32 bit kernels */
+-
+-#define HI_COMMPAGE (intptr_t)0xffff0f00u
+-
+-static bool init_guest_commpage(void)
+-{
+-    ARMCPU *cpu = ARM_CPU(thread_cpu);
+-    int host_page_size = qemu_real_host_page_size();
+-    abi_ptr commpage;
+-    void *want;
+-    void *addr;
+-
+-    /*
+-     * M-profile allocates maximum of 2GB address space, so can never
+-     * allocate the commpage.  Skip it.
+-     */
+-    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
+-        return true;
+-    }
+-
+-    commpage = HI_COMMPAGE & -host_page_size;
+-    want = g2h_untagged(commpage);
+-    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
+-                MAP_ANONYMOUS | MAP_PRIVATE |
+-                (commpage < reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
+-                -1, 0);
+-
+-    if (addr == MAP_FAILED) {
+-        perror("Allocating guest commpage");
+-        exit(EXIT_FAILURE);
+-    }
+-    if (addr != want) {
+-        return false;
+-    }
+-
+-    /* Set kernel helper versions; rest of page is 0.  */
+-    __put_user(5, (uint32_t *)g2h_untagged(0xffff0ffcu));
+-
+-    if (mprotect(addr, host_page_size, PROT_READ)) {
+-        perror("Protecting guest commpage");
+-        exit(EXIT_FAILURE);
+-    }
+-
+-    page_set_flags(commpage, commpage | (host_page_size - 1),
+-                   PAGE_READ | PAGE_EXEC | PAGE_VALID);
+-    return true;
+-}
+-
+ #if TARGET_BIG_ENDIAN
+ #include "elf.h"
+ #include "vdso-be8.c.inc"
 -- 
 2.43.0
 
