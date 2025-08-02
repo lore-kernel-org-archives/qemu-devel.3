@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288D9C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAABBC87FD3
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLoj-0006GR-DF; Sat, 02 Aug 2025 19:39:09 -0400
+	id 1uiLtF-0006X8-WC; Sat, 02 Aug 2025 19:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLmG-0002uq-Dy
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:36:38 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1uiLoS-0005yg-Mo
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:39:03 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLmD-0005jB-1a
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:36:35 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-741a254d4a0so894985a34.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:36:32 -0700 (PDT)
+ id 1uiLoQ-0006Qy-ND
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:38:52 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-73e58d51060so736667a34.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754177792; x=1754782592; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754177929; x=1754782729; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dr8oS8tkl1LvOnsjGxd0cm7bLVu4DfNtjNz/a086H1k=;
- b=RIMy/id+VQVodSFgsqc5l+8IDjT8Xhhggg5IwH8dAqxQZOl4UnZEMpTp9NztYTyXZ8
- omc+1VD+AF9aH1k1vP6AVzXlXLRB0M2sS0co0xOk1W5zWk//74WEbe137Oge98U8ObKB
- 2q7srl6kkyzNVExX1UdF/ApfhrpXiX1NpKlf0MOOCvzgPuubB1bM67bp8VZ5OKWU/S6L
- jY4iPlOHq2E2AYApPbm/7zLAGv9UZAOU3sClWGEpdzpokx9E+XSeX1L1/ZpkhdghDhBP
- pUTctoQepBMHXBqaOezWq00YxHqaShsWYtEHwifx5b7yGODuYtSgz4/Ndc7iikmD3Dnb
- Kx0Q==
+ bh=lflJ+SmP9/WjBOPLau+3bavo7afA8IIGWLBMr9HKB4c=;
+ b=tHevbo9/aQzb/+shwL+6MtCZE24uMlWonxndulCq0V4/h/cWYvTmuT5oPVw21FJNYm
+ XNRMaOo6SBVKWkuUc/2BVel1eydGKvSnt//o1luqxNtUL4vF2SFIOG1u2yoTBdbYzz4b
+ MfQnI6WWKc50EganVM0jUQ2tbJTfa6G3A6ljoxCTXrcyA005g3+5duZgQJxmB+yJRb1r
+ mHB8rEBHyBrNn2MZLfoseCkXUi3Izg8mZPBPk3qR5I4Dp3iVP658NtQpIQ90SUosjuGF
+ +/CdSdqQlLb+lZAIWRMpcrw4Neg6Rmp8cfLRXUijGVuV2THnf3IBcWO/oXq99cwEOeKA
+ 6KEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754177792; x=1754782592;
+ d=1e100.net; s=20230601; t=1754177929; x=1754782729;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dr8oS8tkl1LvOnsjGxd0cm7bLVu4DfNtjNz/a086H1k=;
- b=YazlNfa2nCuSBz0OQdQCOYzM+Q0iGpk52ECeTOLvBxbjd/bSsoCK6kyOIkeWq43ins
- X16iaoy9wgWfgOzlQOII0GWtron0/hBETAMH4KshCaAVPN3ksMOCARVtNavfozspxM98
- EcciJMA8B+b72GiaWujsREf5iN2qb7wEXAvf9s2UMFf46ZLMYP0gb/SlPGB3S4eJqzFF
- nSsQPi8k0rMelPN3qII/tmHPYMEipnw3Yvbfo9MWwRr1F/hEk3jaZc9TdWYC6MBwNzCE
- WFd0w9iw4h3oCbfl+gpMQ1lcainsos4B/VN/Am5vGUMYyLjlDD2lTRoEirE53+PYOrKW
- qEPA==
-X-Gm-Message-State: AOJu0YzzyfGTocp6Ho5rHpqtSguMTcqAzjRp7X6WxeAr1yd4RB7c3UAy
- itJH0fieBwAwhnEPIO7mOAHYMU9MNVNBENUj/G992Fn2/5EfmOZcedeZKDF7YGFk2bX/tNTdEWm
- qKU9hCaw=
-X-Gm-Gg: ASbGnctvD6dUl7RBcv12+d293wxLGcJNqSaKpk8WzjIAkgzRLiWjJjV756+gxK8fTgf
- iiOKg6PkeBZhXan/fast+eLP8MZWeGfdF9D9CxxJmAuts4K3nKLc+Zg7X6G19aLj2yKlVne6KRq
- 6741ZIJc7p4Xn1F470AUSzA3D9/ciS3lTfBgBa73NQkkTcq5ZmiH929ibr3pWmyn7E51Yg6V/41
- Me1LEeaxDrc1AEf6kkOa4lsXgvQKo1mEIs6foYendHh7FFAHTpILyMd/skOIvtYh/GZS8OmqxMX
- 4d4gzY2oyQ5oOR8VndVRGUyX2uUtFUD+hHYCnslYoArYQvU8qocM2WL0e5PdC60q+izmyhrSWKE
- RZEq2hdurtteGFRBcnxE5p+Rwib8fMVRy8aPh6HlhhkGqzEKulJPo
-X-Google-Smtp-Source: AGHT+IHHWKq+Xy/mLASoiLng6kSghl5Ot8X5vo+6Lewk/zJBM2NUZfQ8VDDsCUoIor2Sl9hjMSgZTw==
-X-Received: by 2002:a05:6830:d1a:b0:73c:e9dd:cc1e with SMTP id
- 46e09a7af769-7419c5cb98fmr3039084a34.1.1754177791708; 
- Sat, 02 Aug 2025 16:36:31 -0700 (PDT)
+ bh=lflJ+SmP9/WjBOPLau+3bavo7afA8IIGWLBMr9HKB4c=;
+ b=mUA1PKyiamYG+Bx+6Rj2aHhOJzfp0yM1hrn4Hi1GsFzUmcyWcg6dZghbFGRsJyLACv
+ J2s19yc1+OQjiYMS9Ot/0McTlaAaiuoUgELNdmQ/mk5znTYfE9AUvWb4rkkqSSjhB8ft
+ fjN0+wm9ol7Er5reTOqsAszqBcfV+/aooVvU0s0nPVKSgPGoQb5RP06dTKFFMS5tUlJS
+ p+Ru+Br30OWHln6zWFXxIauFwJ+l++1z6vALNis5wvuXP9RsSYyaNGlwKNEh6/R9bo4z
+ W/D+wB7DqIUGFmr1/nz6mh/tKD4I76d617Y8sLmo38CzSAj8rBhcZ/bR0ehNKHgJodpo
+ zNlg==
+X-Gm-Message-State: AOJu0YzTviPT5xldJVP11bfaNera2Xo837YezMzYnk/no63pd64T4nEc
+ rTKAcUgBbVxODysBulG1e8bA7edSylofE3JKRTxza7NPXkwaFTOVkRcCcSA6WemT1G506UK2ZAs
+ r/FWS2LE=
+X-Gm-Gg: ASbGnct5llsWPhb4plji6MIDMz1fRxwL6P2bLcOzVHED0UAABiUFZRRItkSEC788K+h
+ zW3kJG/c/S4U7sug38KIqkQKu9ilcmsjh90UIsxaRoIU62cVv5boWbnKpGXwoFOde6/hy8MDQQC
+ frjyqvgcCN+bIdbxNUS8bnPogsGtnicdVdfweCn6HqwxvM0CViy+SF9L006A9eJFF2MbFRQqIHc
+ Tjdf4F3gFCnE5yY3wiitNOyA0GRa2XjXdBcQxX7nn0IEGZfcja7p9dWiiFayHwddPul0S64iOoL
+ T7NsaCdIumgcVmCJ+JKj9d9VhrkkPZDs9QBaHT2I7ZyMIUUhL4ZBPVEqnKml7Zbkfk3RjNJ73RU
+ k+cyuPQwkAFl6jYV5rzJU+f2HUP2PVGAdckW076c3SXM6CotQE4D04FP2HQu9Cy0=
+X-Google-Smtp-Source: AGHT+IHUnvNoLk3MlLa8ec3EshU7F7ZOyeck/zWtKVfShr+3m2JlXLKZvKrO+UmRReCToudBPx5sCA==
+X-Received: by 2002:a05:6830:6308:b0:73e:9cdc:a6d3 with SMTP id
+ 46e09a7af769-7419d24f11emr2553239a34.25.1754177929534; 
+ Sat, 02 Aug 2025 16:38:49 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.36.27
+ 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.38.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:36:31 -0700 (PDT)
+ Sat, 02 Aug 2025 16:38:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 43/85] target/arm: Introduce mmu indexes for GCS
-Date: Sun,  3 Aug 2025 09:29:11 +1000
-Message-ID: <20250802232953.413294-44-richard.henderson@linaro.org>
+Subject: [PATCH v2 74/85] linux-user/aarch64: Implement prctls for GCS
+Date: Sun,  3 Aug 2025 09:29:42 +1000
+Message-ID: <20250802232953.413294-75-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802232953.413294-1-richard.henderson@linaro.org>
 References: <20250802232953.413294-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,531 +100,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is PR_GET_SHADOW_STACK_STATUS, PR_SET_SHADOW_STACK_STATUS,
+and PR_LOCK_SHADOW_STACK_STATUS.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h        |  5 ++-
- target/arm/mmuidx-internal.h |  8 ++++
- target/arm/mmuidx.h          | 71 ++++++++++++++++++++++++------------
- target/arm/helper.c          | 15 ++++++--
- target/arm/mmuidx.c          |  9 +++++
- target/arm/ptw.c             | 20 ++++++++++
- target/arm/tcg/tlb-insns.c   | 47 ++++++++++++++++--------
- 7 files changed, 132 insertions(+), 43 deletions(-)
+ linux-user/aarch64/gcs-internal.h | 38 ++++++++++++
+ linux-user/aarch64/target_prctl.h | 96 +++++++++++++++++++++++++++++++
+ linux-user/qemu.h                 |  5 ++
+ linux-user/syscall.c              | 29 ++++++++++
+ 4 files changed, 168 insertions(+)
+ create mode 100644 linux-user/aarch64/gcs-internal.h
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index fc9a2291d5..671c4bc6bb 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -198,9 +198,10 @@ struct CPUClass {
- };
- 
- /*
-- * Fix the number of mmu modes to 16.
-+ * Fix the number of mmu modes across all targets.
-+ * Current maximum is target/arm/.
-  */
--#define NB_MMU_MODES 16
-+#define NB_MMU_MODES 22
- typedef uint32_t MMUIdxMap;
- 
- /* Use a fully associative victim tlb of 8 entries. */
-diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
-index 1d948aa6f4..f494ec348d 100644
---- a/target/arm/mmuidx-internal.h
-+++ b/target/arm/mmuidx-internal.h
-@@ -20,6 +20,7 @@ FIELD(MMUIDXINFO, PAN, 7, 1)
- FIELD(MMUIDXINFO, USER, 8, 1)
- FIELD(MMUIDXINFO, STAGE1, 9, 1)
- FIELD(MMUIDXINFO, STAGE2, 10, 1)
-+FIELD(MMUIDXINFO, GCS, 11, 1)
- 
- extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
- 
-@@ -92,4 +93,11 @@ static inline bool regime_is_stage2(ARMMMUIdx idx)
-     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, STAGE2);
- }
- 
-+/* Return true if this mmu index implies AccessType_GCS. */
-+static inline bool regime_is_gcs(ARMMMUIdx idx)
+diff --git a/linux-user/aarch64/gcs-internal.h b/linux-user/aarch64/gcs-internal.h
+new file mode 100644
+index 0000000000..e586c7e80e
+--- /dev/null
++++ b/linux-user/aarch64/gcs-internal.h
+@@ -0,0 +1,38 @@
++/*
++ * AArch64 gcs functions for linux-user
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef AARCH64_GCS_INTERNAL_H
++#define AARCH64_GCS_INTERNAL_H
++
++#ifndef PR_SHADOW_STACK_ENABLE
++# define PR_SHADOW_STACK_ENABLE  (1U << 0)
++# define PR_SHADOW_STACK_WRITE   (1U << 1)
++# define PR_SHADOW_STACK_PUSH    (1U << 2)
++#endif
++
++static inline uint64_t gcs_get_el0_mode(CPUArchState *env)
 +{
-+    tcg_debug_assert(arm_mmuidx_is_valid(idx));
-+    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, GCS);
++    uint64_t cr = env->cp15.gcscr_el[0];
++    abi_ulong flags = 0;
++
++    flags |= cr & GCSCR_PCRSEL ? PR_SHADOW_STACK_ENABLE : 0;
++    flags |= cr & GCSCR_STREN ? PR_SHADOW_STACK_WRITE : 0;
++    flags |= cr & GCSCR_PUSHMEN ? PR_SHADOW_STACK_PUSH : 0;
++
++    return flags;
 +}
 +
- #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
-diff --git a/target/arm/mmuidx.h b/target/arm/mmuidx.h
-index 5b9b4bc84f..8d8d27337e 100644
---- a/target/arm/mmuidx.h
-+++ b/target/arm/mmuidx.h
-@@ -58,24 +58,31 @@
-  *     already heavyweight.
-  *  8. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
-  *     because both are in use simultaneously for Secure EL2.
-+ *  9. we need separate indexes for handling AccessType_GCS.
-  *
-  * This gives us the following list of cases:
-  *
-  * EL0 EL1&0 stage 1+2 (aka NS PL0 PL1&0 stage 1+2)
-+ * EL0 EL1&0 stage 1+2 +GCS
-  * EL1 EL1&0 stage 1+2 (aka NS PL1 PL1&0 stage 1+2)
-  * EL1 EL1&0 stage 1+2 +PAN (aka NS PL1 P1&0 stage 1+2 +PAN)
-+ * EL1 EL1&0 stage 1+2 +GCS
-  * EL0 EL2&0
-+ * EL0 EL2&0 +GCS
-  * EL2 EL2&0
-  * EL2 EL2&0 +PAN
-+ * EL2 EL2&0 +GCS
-  * EL2 (aka NS PL2)
-+ * EL2 +GCS
-  * EL3 (aka AArch32 S PL1 PL1&0)
-+ * EL3 +GCS
-  * AArch32 S PL0 PL1&0 (we call this EL30_0)
-  * AArch32 S PL1 PL1&0 +PAN (we call this EL30_3_PAN)
-  * Stage2 Secure
-  * Stage2 NonSecure
-  * plus one TLB per Physical address space: S, NS, Realm, Root
-  *
-- * for a total of 16 different mmu_idx.
-+ * for a total of 22 different mmu_idx.
-  *
-  * R profile CPUs have an MPU, but can use the same set of MMU indexes
-  * as A profile. They only need to distinguish EL0 and EL1 (and
-@@ -114,9 +121,9 @@
-  * For M profile we arrange them to have a bit for priv, a bit for negpri
-  * and a bit for secure.
-  */
--#define ARM_MMU_IDX_A     0x10  /* A profile */
--#define ARM_MMU_IDX_NOTLB 0x20  /* does not have a TLB */
--#define ARM_MMU_IDX_M     0x40  /* M profile */
-+#define ARM_MMU_IDX_A     0x20  /* A profile */
-+#define ARM_MMU_IDX_NOTLB 0x40  /* does not have a TLB */
-+#define ARM_MMU_IDX_M     0x80  /* M profile */
- 
- /* Meanings of the bits for M profile mmu idx values */
- #define ARM_MMU_IDX_M_PRIV   0x1
-@@ -125,22 +132,32 @@
- 
- #define ARM_MMU_IDX_TYPE_MASK \
-     (ARM_MMU_IDX_A | ARM_MMU_IDX_M | ARM_MMU_IDX_NOTLB)
--#define ARM_MMU_IDX_COREIDX_MASK 0xf
-+#define ARM_MMU_IDX_COREIDX_MASK 0x1f
- 
- typedef enum ARMMMUIdx {
-     /*
-      * A-profile.
-      */
--    ARMMMUIdx_E10_0     = 0 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E20_0     = 1 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E10_1     = 2 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E20_2     = 3 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E10_1_PAN = 4 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E20_2_PAN = 5 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E2        = 6 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E3        = 7 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E30_0     = 8 | ARM_MMU_IDX_A,
--    ARMMMUIdx_E30_3_PAN = 9 | ARM_MMU_IDX_A,
-+
-+    ARMMMUIdx_E10_0      = 0 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E10_0_GCS  = 1 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E10_1      = 2 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E10_1_PAN  = 3 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E10_1_GCS  = 4 | ARM_MMU_IDX_A,
-+
-+    ARMMMUIdx_E20_0      = 5 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E20_0_GCS  = 6 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E20_2      = 7 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E20_2_PAN  = 8 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E20_2_GCS  = 9 | ARM_MMU_IDX_A,
-+
-+    ARMMMUIdx_E2         = 10 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E2_GCS     = 11 | ARM_MMU_IDX_A,
-+
-+    ARMMMUIdx_E3         = 12 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E3_GCS     = 13 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E30_0      = 14 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_E30_3_PAN  = 15 | ARM_MMU_IDX_A,
- 
-     /*
-      * Used for second stage of an S12 page table walk, or for descriptor
-@@ -148,14 +165,14 @@ typedef enum ARMMMUIdx {
-      * are in use simultaneously for SecureEL2: the security state for
-      * the S2 ptw is selected by the NS bit from the S1 ptw.
-      */
--    ARMMMUIdx_Stage2_S  = 10 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Stage2    = 11 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Stage2_S   = 16 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Stage2     = 17 | ARM_MMU_IDX_A,
- 
-     /* TLBs with 1-1 mapping to the physical address spaces. */
--    ARMMMUIdx_Phys_S     = 12 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_NS    = 13 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_Root  = 14 | ARM_MMU_IDX_A,
--    ARMMMUIdx_Phys_Realm = 15 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_S     = 18 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_NS    = 19 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_Root  = 20 | ARM_MMU_IDX_A,
-+    ARMMMUIdx_Phys_Realm = 21 | ARM_MMU_IDX_A,
- 
-     /*
-      * These are not allocated TLBs and are used only for AT system
-@@ -164,6 +181,8 @@ typedef enum ARMMMUIdx {
-     ARMMMUIdx_Stage1_E0 = 0 | ARM_MMU_IDX_NOTLB,
-     ARMMMUIdx_Stage1_E1 = 1 | ARM_MMU_IDX_NOTLB,
-     ARMMMUIdx_Stage1_E1_PAN = 2 | ARM_MMU_IDX_NOTLB,
-+    ARMMMUIdx_Stage1_E0_GCS = 3 | ARM_MMU_IDX_NOTLB,
-+    ARMMMUIdx_Stage1_E1_GCS = 4 | ARM_MMU_IDX_NOTLB,
- 
-     /*
-      * M-profile.
-@@ -187,13 +206,19 @@ typedef enum ARMMMUIdx {
- 
- typedef enum ARMMMUIdxBit {
-     TO_CORE_BIT(E10_0),
--    TO_CORE_BIT(E20_0),
-+    TO_CORE_BIT(E10_0_GCS),
-     TO_CORE_BIT(E10_1),
-     TO_CORE_BIT(E10_1_PAN),
--    TO_CORE_BIT(E2),
-+    TO_CORE_BIT(E10_1_GCS),
-+    TO_CORE_BIT(E20_0),
-+    TO_CORE_BIT(E20_0_GCS),
-     TO_CORE_BIT(E20_2),
-     TO_CORE_BIT(E20_2_PAN),
-+    TO_CORE_BIT(E20_2_GCS),
-+    TO_CORE_BIT(E2),
-+    TO_CORE_BIT(E2_GCS),
-     TO_CORE_BIT(E3),
-+    TO_CORE_BIT(E3_GCS),
-     TO_CORE_BIT(E30_0),
-     TO_CORE_BIT(E30_3_PAN),
-     TO_CORE_BIT(Stage2),
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 090076af24..1b21ae5d8e 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -401,7 +401,9 @@ int alle1_tlbmask(CPUARMState *env)
-      */
-     return (ARMMMUIdxBit_E10_1 |
-             ARMMMUIdxBit_E10_1_PAN |
-+            ARMMMUIdxBit_E10_1_GCS |
-             ARMMMUIdxBit_E10_0 |
-+            ARMMMUIdxBit_E10_0_GCS |
-             ARMMMUIdxBit_Stage2 |
-             ARMMMUIdxBit_Stage2_S);
- }
-@@ -788,12 +790,17 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-      */
-     if (changed & (SCR_NS | SCR_NSE)) {
-         tlb_flush_by_mmuidx(env_cpu(env), (ARMMMUIdxBit_E10_0 |
-+                                           ARMMMUIdxBit_E10_0_GCS |
-                                            ARMMMUIdxBit_E20_0 |
-+                                           ARMMMUIdxBit_E20_0_GCS |
-                                            ARMMMUIdxBit_E10_1 |
--                                           ARMMMUIdxBit_E20_2 |
-                                            ARMMMUIdxBit_E10_1_PAN |
-+                                           ARMMMUIdxBit_E10_1_GCS |
-+                                           ARMMMUIdxBit_E20_2 |
-                                            ARMMMUIdxBit_E20_2_PAN |
--                                           ARMMMUIdxBit_E2));
-+                                           ARMMMUIdxBit_E20_2_GCS |
-+                                           ARMMMUIdxBit_E2 |
-+                                           ARMMMUIdxBit_E2_GCS));
-     }
- }
- 
-@@ -2759,7 +2766,9 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         (arm_hcr_el2_eff(env) & HCR_E2H)) {
-         uint16_t mask = ARMMMUIdxBit_E20_2 |
-                         ARMMMUIdxBit_E20_2_PAN |
--                        ARMMMUIdxBit_E20_0;
-+                        ARMMMUIdxBit_E20_2_GCS |
-+                        ARMMMUIdxBit_E20_0 |
-+                        ARMMMUIdxBit_E20_0_GCS;
-         tlb_flush_by_mmuidx(env_cpu(env), mask);
-     }
-     raw_write(env, ri, value);
-diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
-index 61a682e655..42b003db9c 100644
---- a/target/arm/mmuidx.c
-+++ b/target/arm/mmuidx.c
-@@ -15,22 +15,29 @@
- #define USER   R_MMUIDXINFO_USER_MASK
- #define S1     R_MMUIDXINFO_STAGE1_MASK
- #define S2     R_MMUIDXINFO_STAGE2_MASK
-+#define GCS    R_MMUIDXINFO_GCS_MASK
- 
- const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-     /*
-      * A-profile.
-      */
-     [ARMMMUIdx_E10_0]           = EL(0) | REL(1) | R2,
-+    [ARMMMUIdx_E10_0_GCS]       = EL(0) | REL(1) | R2 | GCS,
-     [ARMMMUIdx_E10_1]           = EL(1) | REL(1) | R2,
-     [ARMMMUIdx_E10_1_PAN]       = EL(1) | REL(1) | R2 | PAN,
-+    [ARMMMUIdx_E10_1_GCS]       = EL(1) | REL(1) | R2 | GCS,
- 
-     [ARMMMUIdx_E20_0]           = EL(0) | REL(2) | R2,
-+    [ARMMMUIdx_E20_0_GCS]       = EL(0) | REL(2) | R2 | GCS,
-     [ARMMMUIdx_E20_2]           = EL(2) | REL(2) | R2,
-     [ARMMMUIdx_E20_2_PAN]       = EL(2) | REL(2) | R2 | PAN,
-+    [ARMMMUIdx_E20_2_GCS]       = EL(2) | REL(2) | R2 | GCS,
- 
-     [ARMMMUIdx_E2]              = EL(2) | REL(2),
-+    [ARMMMUIdx_E2_GCS]          = EL(2) | REL(2) | GCS,
- 
-     [ARMMMUIdx_E3]              = EL(3) | REL(3),
-+    [ARMMMUIdx_E3_GCS]          = EL(3) | REL(3) | GCS,
-     [ARMMMUIdx_E30_0]           = EL(0) | REL(3),
-     [ARMMMUIdx_E30_3_PAN]       = EL(3) | REL(3) | PAN,
- 
-@@ -38,8 +45,10 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-     [ARMMMUIdx_Stage2]          = REL(2) | S2,
- 
-     [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER,
-+    [ARMMMUIdx_Stage1_E0_GCS]   = REL(1) | R2 | S1 | USER | GCS,
-     [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1,
-     [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | S1 | PAN,
-+    [ARMMMUIdx_Stage1_E1_GCS]   = REL(1) | R2 | S1 | GCS,
- 
-     /*
-      * M-profile.
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 493ec78c1a..ee887d9a02 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -166,6 +166,10 @@ ARMMMUIdx stage_1_mmu_idx(ARMMMUIdx mmu_idx)
-         return ARMMMUIdx_Stage1_E1;
-     case ARMMMUIdx_E10_1_PAN:
-         return ARMMMUIdx_Stage1_E1_PAN;
-+    case ARMMMUIdx_E10_0_GCS:
-+        return ARMMMUIdx_Stage1_E0_GCS;
-+    case ARMMMUIdx_E10_1_GCS:
-+        return ARMMMUIdx_Stage1_E1_GCS;
-     default:
-         return mmu_idx;
-     }
-@@ -273,8 +277,10 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
-         return (hcr_el2 & (HCR_DC | HCR_VM)) == 0;
- 
-     case ARMMMUIdx_E10_0:
-+    case ARMMMUIdx_E10_0_GCS:
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
-+    case ARMMMUIdx_E10_1_GCS:
-         /* TGE means that EL0/1 act as if SCTLR_EL1.M is zero */
-         hcr_el2 = arm_hcr_el2_eff_secstate(env, space);
-         if (hcr_el2 & HCR_TGE) {
-@@ -283,8 +289,10 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
-         break;
- 
-     case ARMMMUIdx_Stage1_E0:
-+    case ARMMMUIdx_Stage1_E0_GCS:
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
-+    case ARMMMUIdx_Stage1_E1_GCS:
-         /* HCR.DC means SCTLR_EL1.M behaves as 0 */
-         hcr_el2 = arm_hcr_el2_eff_secstate(env, space);
-         if (hcr_el2 & HCR_DC) {
-@@ -293,10 +301,14 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
-         break;
- 
-     case ARMMMUIdx_E20_0:
-+    case ARMMMUIdx_E20_0_GCS:
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
-+    case ARMMMUIdx_E20_2_GCS:
-     case ARMMMUIdx_E2:
-+    case ARMMMUIdx_E2_GCS:
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E3_GCS:
-     case ARMMMUIdx_E30_0:
-     case ARMMMUIdx_E30_3_PAN:
-         break;
-@@ -3761,15 +3773,22 @@ arm_mmu_idx_to_security_space(CPUARMState *env, ARMMMUIdx mmu_idx)
- 
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_0:
-+    case ARMMMUIdx_E10_0_GCS:
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
-+    case ARMMMUIdx_E10_1_GCS:
-     case ARMMMUIdx_E20_0:
-+    case ARMMMUIdx_E20_0_GCS:
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
-+    case ARMMMUIdx_E20_2_GCS:
-     case ARMMMUIdx_Stage1_E0:
-+    case ARMMMUIdx_Stage1_E0_GCS:
-     case ARMMMUIdx_Stage1_E1:
-     case ARMMMUIdx_Stage1_E1_PAN:
-+    case ARMMMUIdx_Stage1_E1_GCS:
-     case ARMMMUIdx_E2:
-+    case ARMMMUIdx_E2_GCS:
-         ss = arm_security_space_below_el3(env);
-         break;
-     case ARMMMUIdx_Stage2:
-@@ -3798,6 +3817,7 @@ arm_mmu_idx_to_security_space(CPUARMState *env, ARMMMUIdx mmu_idx)
-         ss = ARMSS_Secure;
-         break;
-     case ARMMMUIdx_E3:
-+    case ARMMMUIdx_E3_GCS:
-     case ARMMMUIdx_E30_0:
-     case ARMMMUIdx_E30_3_PAN:
-         if (arm_feature(env, ARM_FEATURE_AARCH64) &&
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 95c26c6d46..1a0a332583 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -149,7 +149,8 @@ static void tlbimva_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     CPUState *cs = env_cpu(env);
-     uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
- 
--    tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E2);
-+    tlb_flush_page_by_mmuidx(cs, pageaddr,
-+                             ARMMMUIdxBit_E2 | ARMMMUIdxBit_E2_GCS);
- }
- 
- static void tlbimva_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -159,7 +160,8 @@ static void tlbimva_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
- 
-     tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr,
--                                             ARMMMUIdxBit_E2);
-+                                             ARMMMUIdxBit_E2 |
-+                                             ARMMMUIdxBit_E2_GCS);
- }
- 
- static void tlbiipas2_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -202,7 +204,7 @@ static void tlbiall_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     CPUState *cs = env_cpu(env);
- 
--    tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E2);
-+    tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E2 | ARMMMUIdxBit_E2_GCS);
- }
- 
- static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -210,7 +212,8 @@ static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     CPUState *cs = env_cpu(env);
- 
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2);
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2 |
-+                                            ARMMMUIdxBit_E2_GCS);
- }
- 
- /*
-@@ -228,12 +231,16 @@ static int vae1_tlbmask(CPUARMState *env)
-     if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-         mask = ARMMMUIdxBit_E20_2 |
-                ARMMMUIdxBit_E20_2_PAN |
--               ARMMMUIdxBit_E20_0;
-+               ARMMMUIdxBit_E20_2_GCS |
-+               ARMMMUIdxBit_E20_0 |
-+               ARMMMUIdxBit_E20_0_GCS;
-     } else {
-         /* This is AArch64 only, so we don't need to touch the EL30_x TLBs */
-         mask = ARMMMUIdxBit_E10_1 |
-                ARMMMUIdxBit_E10_1_PAN |
--               ARMMMUIdxBit_E10_0;
-+               ARMMMUIdxBit_E10_1_GCS |
-+               ARMMMUIdxBit_E10_0 |
-+               ARMMMUIdxBit_E10_0_GCS;
-     }
-     return mask;
- }
-@@ -246,13 +253,20 @@ static int vae2_tlbmask(CPUARMState *env)
-     if (hcr & HCR_E2H) {
-         mask = ARMMMUIdxBit_E20_2 |
-                ARMMMUIdxBit_E20_2_PAN |
--               ARMMMUIdxBit_E20_0;
-+               ARMMMUIdxBit_E20_2_GCS |
-+               ARMMMUIdxBit_E20_0 |
-+               ARMMMUIdxBit_E20_0_GCS;
-     } else {
--        mask = ARMMMUIdxBit_E2;
-+        mask = ARMMMUIdxBit_E2 | ARMMMUIdxBit_E2_GCS;
-     }
-     return mask;
- }
- 
-+static int vae3_tlbmask(void)
++static inline void gcs_set_el0_mode(CPUArchState *env, uint64_t flags)
 +{
-+    return ARMMMUIdxBit_E3 | ARMMMUIdxBit_E3_GCS;
++    uint64_t cr = GCSCRE0_NTR;
++
++    cr |= flags & PR_SHADOW_STACK_ENABLE ? GCSCR_RVCHKEN | GCSCR_PCRSEL : 0;
++    cr |= flags & PR_SHADOW_STACK_WRITE ? GCSCR_STREN : 0;
++    cr |= flags & PR_SHADOW_STACK_PUSH ? GCSCR_PUSHMEN : 0;
++
++    env->cp15.gcscr_el[0] = cr;
 +}
 +
- /* Return 56 if TBI is enabled, 64 otherwise. */
- static int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-                        uint64_t addr)
-@@ -325,9 +339,12 @@ static void tlbi_aa64_vmalle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
- static int e2_tlbmask(CPUARMState *env)
++#endif
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index ed75b9e4b5..621be5727f 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -6,8 +6,10 @@
+ #ifndef AARCH64_TARGET_PRCTL_H
+ #define AARCH64_TARGET_PRCTL_H
+ 
++#include "qemu/units.h"
+ #include "target/arm/cpu-features.h"
+ #include "mte_user_helper.h"
++#include "gcs-internal.h"
+ 
+ static abi_long do_prctl_sve_get_vl(CPUArchState *env)
  {
-     return (ARMMMUIdxBit_E20_0 |
-+            ARMMMUIdxBit_E20_0_GCS |
-             ARMMMUIdxBit_E20_2 |
-             ARMMMUIdxBit_E20_2_PAN |
--            ARMMMUIdxBit_E2);
-+            ARMMMUIdxBit_E20_2_GCS |
-+            ARMMMUIdxBit_E2 |
-+            ARMMMUIdxBit_E2_GCS);
+@@ -206,4 +208,98 @@ static abi_long do_prctl_get_tagged_addr_ctrl(CPUArchState *env)
  }
+ #define do_prctl_get_tagged_addr_ctrl do_prctl_get_tagged_addr_ctrl
  
- static void tlbi_aa64_alle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -354,7 +371,7 @@ static void tlbi_aa64_alle3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     ARMCPU *cpu = env_archcpu(env);
-     CPUState *cs = CPU(cpu);
++static abi_long do_prctl_get_shadow_stack_status(CPUArchState *env,
++                                                 abi_long arg2)
++{
++    ARMCPU *cpu = env_archcpu(env);
++
++    if (!cpu_isar_feature(aa64_gcs, cpu)) {
++        return -TARGET_EINVAL;
++    }
++    return put_user_ual(gcs_get_el0_mode(env), arg2);
++}
++#define do_prctl_get_shadow_stack_status do_prctl_get_shadow_stack_status
++
++static abi_long gcs_alloc(abi_ulong hint, abi_ulong size)
++{
++    /*
++     * Without softmmu, we cannot protect GCS memory properly.
++     * Make do with normal read/write permissions.  This at least allows
++     * emulation of correct programs which don't access the gcs stack
++     * with normal instructions.
++     */
++    return target_mmap(hint, size, PROT_READ | PROT_WRITE,
++                       MAP_PRIVATE | MAP_ANONYMOUS |
++                       (hint ? MAP_FIXED_NOREPLACE : 0), -1, 0);
++}
++
++static abi_ulong gcs_new_stack(TaskState *ts)
++{
++    /* Use guest_stack_size as a proxy for RLIMIT_STACK. */
++    abi_ulong size = MIN(MAX(guest_stack_size / 2, TARGET_PAGE_SIZE), 2 * GiB);
++    abi_ulong base = gcs_alloc(0, size);
++
++    if (base == -1) {
++        return -1;
++    }
++
++    ts->gcs_base = base;
++    ts->gcs_size = size;
++    return base + size - 8;
++}
++
++static abi_long do_prctl_set_shadow_stack_status(CPUArchState *env,
++                                                 abi_long new_mode)
++{
++    ARMCPU *cpu = env_archcpu(env);
++    TaskState *ts = get_task_state(env_cpu(env));
++    abi_long cur_mode;
++
++    if (!cpu_isar_feature(aa64_gcs, cpu)) {
++        return -TARGET_EINVAL;
++    }
++    if (new_mode & ~(PR_SHADOW_STACK_ENABLE |
++                     PR_SHADOW_STACK_WRITE |
++                     PR_SHADOW_STACK_PUSH)) {
++        return -TARGET_EINVAL;
++    }
++
++    cur_mode = gcs_get_el0_mode(env);
++    if ((new_mode ^ cur_mode) & ts->gcs_el0_locked) {
++        return -TARGET_EBUSY;
++    }
++
++    if (new_mode & ~cur_mode & PR_SHADOW_STACK_ENABLE) {
++        abi_long gcspr;
++
++        if (ts->gcs_base || env->cp15.gcspr_el[0]) {
++            return -EINVAL;
++        }
++        gcspr = gcs_new_stack(ts);
++        if (gcspr == -1) {
++            return -TARGET_ENOMEM;
++        }
++        env->cp15.gcspr_el[0] = gcspr;
++    }
++
++    gcs_set_el0_mode(env, new_mode);
++    arm_rebuild_hflags(env);
++    return 0;
++}
++#define do_prctl_set_shadow_stack_status do_prctl_set_shadow_stack_status
++
++static abi_long do_prctl_lock_shadow_stack_status(CPUArchState *env,
++                                                  abi_long arg2)
++{
++    ARMCPU *cpu = env_archcpu(env);
++    TaskState *ts = get_task_state(env_cpu(env));
++
++    if (!cpu_isar_feature(aa64_gcs, cpu)) {
++        return -EINVAL;
++    }
++    ts->gcs_el0_locked |= arg2;
++    return 0;
++}
++#define do_prctl_lock_shadow_stack_status do_prctl_lock_shadow_stack_status
++
+ #endif /* AARCH64_TARGET_PRCTL_H */
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 0b19fa43e6..6f0bfa83db 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -126,6 +126,11 @@ struct TaskState {
+     /* Extra fields for semihosted binaries.  */
+     abi_ulong heap_base;
+     abi_ulong heap_limit;
++#endif
++#if defined(TARGET_AARCH64)
++    vaddr gcs_base;
++    abi_ulong gcs_size;
++    abi_ulong gcs_el0_locked;
+ #endif
+     abi_ulong stack_base;
+     int used; /* non zero if used */
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 91360a072c..2f1e881046 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6351,6 +6351,11 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+ # define PR_SME_VL_LEN_MASK  0xffff
+ # define PR_SME_VL_INHERIT   (1 << 17)
+ #endif
++#ifndef PR_GET_SHADOW_STACK_STATUS
++# define PR_GET_SHADOW_STACK_STATUS  74
++# define PR_SET_SHADOW_STACK_STATUS  75
++# define PR_LOCK_SHADOW_STACK_STATUS 76
++#endif
  
--    tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E3);
-+    tlb_flush_by_mmuidx(cs, vae3_tlbmask());
- }
+ #include "target_prctl.h"
  
- static void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -380,7 +397,7 @@ static void tlbi_aa64_alle3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     CPUState *cs = env_cpu(env);
+@@ -6397,6 +6402,15 @@ static abi_long do_prctl_inval1(CPUArchState *env, abi_long arg2)
+ #ifndef do_prctl_sme_set_vl
+ #define do_prctl_sme_set_vl do_prctl_inval1
+ #endif
++#ifndef do_prctl_get_shadow_stack_status
++#define do_prctl_get_shadow_stack_status do_prctl_inval1
++#endif
++#ifndef do_prctl_set_shadow_stack_status
++#define do_prctl_set_shadow_stack_status do_prctl_inval1
++#endif
++#ifndef do_prctl_lock_shadow_stack_status
++#define do_prctl_lock_shadow_stack_status do_prctl_inval1
++#endif
  
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E3);
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, vae3_tlbmask());
- }
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+@@ -6467,6 +6481,21 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+             return -TARGET_EINVAL;
+         }
+         return do_prctl_get_tagged_addr_ctrl(env);
++    case PR_GET_SHADOW_STACK_STATUS:
++        if (arg3 || arg4 || arg5) {
++            return -TARGET_EINVAL;
++        }
++        return do_prctl_get_shadow_stack_status(env, arg2);
++    case PR_SET_SHADOW_STACK_STATUS:
++        if (arg3 || arg4 || arg5) {
++            return -TARGET_EINVAL;
++        }
++        return do_prctl_set_shadow_stack_status(env, arg2);
++    case PR_LOCK_SHADOW_STACK_STATUS:
++        if (arg3 || arg4 || arg5) {
++            return -TARGET_EINVAL;
++        }
++        return do_prctl_lock_shadow_stack_status(env, arg2);
  
- static void tlbi_aa64_vae2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -411,7 +428,7 @@ static void tlbi_aa64_vae3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     CPUState *cs = CPU(cpu);
-     uint64_t pageaddr = sextract64(value << 12, 0, 56);
- 
--    tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E3);
-+    tlb_flush_page_by_mmuidx(cs, pageaddr, vae3_tlbmask());
- }
- 
- static void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-@@ -465,7 +482,7 @@ static void tlbi_aa64_vae3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     int bits = tlbbits_for_regime(env, ARMMMUIdx_E3, pageaddr);
- 
-     tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr,
--                                                  ARMMMUIdxBit_E3, bits);
-+                                                  vae3_tlbmask(), bits);
- }
- 
- static int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
-@@ -963,7 +980,7 @@ static void tlbi_aa64_rvae3_write(CPUARMState *env,
-      * flush-last-level-only.
-      */
- 
--    do_rvae_write(env, value, ARMMMUIdxBit_E3, tlb_force_broadcast(env));
-+    do_rvae_write(env, value, vae3_tlbmask(), tlb_force_broadcast(env));
- }
- 
- static void tlbi_aa64_rvae3is_write(CPUARMState *env,
-@@ -977,7 +994,7 @@ static void tlbi_aa64_rvae3is_write(CPUARMState *env,
-      * flush-last-level-only or inner/outer specific flushes.
-      */
- 
--    do_rvae_write(env, value, ARMMMUIdxBit_E3, true);
-+    do_rvae_write(env, value, vae3_tlbmask(), true);
- }
- 
- static void tlbi_aa64_ripas2e1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     case PR_GET_UNALIGN:
+         return do_prctl_get_unalign(env, arg2);
 -- 
 2.43.0
 
