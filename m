@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A5BC87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BAFC87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLJU-0003QP-9t; Sat, 02 Aug 2025 19:06:52 -0400
+	id 1uiLJC-00020e-7Q; Sat, 02 Aug 2025 19:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLJP-00037J-BE
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:47 -0400
+ id 1uiLIg-00014E-LE
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:15 -0400
 Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLJN-0001BR-9P
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:46 -0400
+ id 1uiLId-00016n-9j
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:00 -0400
 Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-433f43f0012so260181b6e.2
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:06:44 -0700 (PDT)
+ 5614622812f47-433fcc4f28cso13318b6e.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176004; x=1754780804; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754175958; x=1754780758; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wzCvIZrc8oCNQOp0LEKf8glJh+GHBNdljJm8N5U6qvw=;
- b=I4PVeEHoDGySDb/093LxvnsxJLHjqYhYvihk9kko+iFfbbIa3JnRIKg3VmKOFsJr95
- m7MYa0HvmrcXfPtjQplN43MQ65xUFtLDamPPrFE8fH/4pZAqKbr0envjtnCbK/Rw8FE/
- 5AgG2mkSQ1r4+3/i/sOmswY6YSWgc/NDnac0MnB8rrXgoYWiT0GpthLrHWau8347RKVM
- sumG1p6jq8nmXIU97CELgKUh690nLvkg8zyZohyb70Cc4yCQzpP2/f6CZP6WuqPRzcWM
- WMNzjtVLwSptEeiHWa8o+LafzkZHgkyB2kNyZg5b7jiqfMUVHrsf+Z40gpJr+NQvts2z
- HR2w==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZUiZ/Sv7EV/5D3y8AipMsR5HBvNmhQjnrAQjoZSkkls=;
+ b=iUr0Gq5n1npwtaeelkyRFAL9cNOyQ6EjjAax/YzfKYyod+SH9IBEw7voU8rLkspkYf
+ u8NCbZhDplctVDnx/VW4uS/9TYyQPeKidDCu5gfXMDtzXj9azDDyZLZL+2ZLyPxjXCcA
+ tvhgB4+ICHkSC6jPTg0Y6HG1TSbLyeTxmajdw3mvVcQEMDnYhJVS12dpGmI/OKuXG5nS
+ S90yGiUmC3xAL70GRxXBDt19DG6YI0F5lTifVFCyJCVF+WyvoEUnqTz4vN4Lx/BGZZU7
+ K27VD+6bpCI5ohA8K99rDHlOYSWiobh6rfwRL8QWtp4BvwAj65zpIF+b+u3KZCj/lUXR
+ yQbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176004; x=1754780804;
+ d=1e100.net; s=20230601; t=1754175958; x=1754780758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wzCvIZrc8oCNQOp0LEKf8glJh+GHBNdljJm8N5U6qvw=;
- b=CCB2KxH5qIuxzP5il81aAP76yJ+SyVyrn3TInb8CUgfcuijXetDxvn2XnENgH3DSOU
- tyEgKl8WLPQzXrDzgESzC8tc48+KcpzG3TdL711lZjqVnhRo/RLefEdPTN412IJmnNUa
- nHPitjL/fMkrMd7o1NnjE6S/uPQT/S2Ea8dq1bsDSvOpdOAdFesnx82O870GvO6c3MtP
- b+q1dpHIKlpQlhZLDEE89L3KCGQtNuXMUkzcgUyWMWBwKdPHn09UoqwQUlINgcLfFQVI
- otIGpe27yDcvKk5c/NcaYkZ8X5wciGVfpjYBHXPDxTmTZSWrr1WonmUwz3blIgfXnoym
- 3Tlg==
-X-Gm-Message-State: AOJu0YzYD9zENhqGpuNG/htunY8ZlbHQDoLvNAmZYA4n4tjXOEft37hf
- UuUf1TJIuF7dISA6GwvsDVl5olqjZheBbp76OprMPnSERVUqxFhCq7dI6FfqXJbEAb0O7nVM114
- wgZqkO0A=
-X-Gm-Gg: ASbGncsJEQcZO6c0Z8NzclRwLxlMQlRabHBdqCxnjr9tZwN1CXJchtlSAuhf69fvZrz
- 3Ec5OsObZGDAMUTVY7xCoT1mwQIqD93w7sSUwxyMUwn+SNvuJhplS8m9sSKPFM4gwYRuBoSvNwf
- pNWIMycuiDj52OxsVX9SUhuYzxEfZ1DEkYQ/LO7GCaTBYme25OiUCBcCqhQR8OYdra3eH78yDTG
- lTA4ZVCnGC9jb8CDJZO3g1BZYjaTYPNM+PbF5NvBcOZYQqbg9s+p7qz6paICYP99qNnC4He5oMc
- 1mddSPp1pj4fx7hVi6iCdcGe4LKnqvH7QdZ/S0VUL23cPkfiBFg+7aAiVHL7TlutugHxEp3r60k
- dBQoMZbNxkf5dLfX3Yoo6jmd7I1VWFrUjgtRaVz7V1u2fyH8lNw8xj9X0F46QDuQ=
-X-Google-Smtp-Source: AGHT+IE6bmudApkMwXRm9ryQIDblB1/xahcPM/XUEMeHRZMIOF5SSnXP8+KpEMM9etSB5c6OK9vH2w==
-X-Received: by 2002:a05:6808:1782:b0:41c:9345:3ab9 with SMTP id
- 5614622812f47-433f0238b05mr3180518b6e.15.1754176004086; 
- Sat, 02 Aug 2025 16:06:44 -0700 (PDT)
+ bh=ZUiZ/Sv7EV/5D3y8AipMsR5HBvNmhQjnrAQjoZSkkls=;
+ b=Gf6VXdYQojG//9qaNAzBoZUMwgUwywbX5lxYQaDwTKJwtw31m4/gZvoLqxaiSRpbKo
+ ZP9a76yi+mYKkrXqgkZUXuT9F0WS3/1a2o1ILJ3Yu7/kNUUeQlb2t4eC8WxcSHv2kH0P
+ AP3tt+aEpUDBmoiry8OhaSlaeUvIXgrXF0aS2Xbm7QSdSSrGkNNsMe+9L0BD2OppzIYT
+ OM3KH3o964E5vZrrDwDjxOJexJ00epjJGvW+Rmyenixi4jMAevPaPFgcBr2k9KbFM0tL
+ dvaIo/LaKtOm7LjkRJDuXBY+yv7WX3pd05DjyFzT0SRRC5gEo4NOrqba8q5bkJywvfEw
+ LwhA==
+X-Gm-Message-State: AOJu0Yzgg7mNhvtMhEcn1BK+XKDddR+ni0+ngpf41+Qi7M+KzhbElNam
+ EQIOyYomlD9DdfQ04Ex+Ej0tQUQaYwPkN0w9upHJDjyTopBBb/DByuIIF55lc15mb1A8KDeXU40
+ MrR8Vk+A=
+X-Gm-Gg: ASbGnctJSA/FLpuN1Uv24fkqP3kGvaeu3qRzc9803iXewzN8oJFGPdg+w/IJ5tvd9Bm
+ m8HYhxjxrCn7zkn+1QosBHGhVts/l5J1RHsInKLgcjaMAbxIOvaDDXBrT/JQe7jgC0TLqfhNEt6
+ JKexoFCCjm9S6XDtDIIEqOJ3vi53BbnYtB+uzuPsV6NiLm8lJDWZsqWSEF7XZ50g0AfyeIkI1WX
+ GB2A3LB4WElXAn/TgJlf1+Ex1wh+flQk6vgBGmk1QoQWz4+mkZ2lY5S1UCDtn8dNDGpD0+ASr9m
+ It7B2F+w2EAAJGzZ7Zvk/Gn8corV5CliAcG6Cj67A85MlPjVp+2I20VgcyvQvHdtsh0fcGee04m
+ HxMCJ2/FNSxDQANrRKUwavKIA1rcLsrFbeDbOZnGSpaw5ikOu0tam
+X-Google-Smtp-Source: AGHT+IH0IxhNpm0oeTbD4uvmoqSM637YpMFZfRkM8ewrx2JPUOFLPt764OpkHzduti0V0qtmt5iR4g==
+X-Received: by 2002:a05:6808:1818:b0:40a:a8ad:bc11 with SMTP id
+ 5614622812f47-433f0259d35mr2598012b6e.17.1754175957809; 
+ Sat, 02 Aug 2025 16:05:57 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.06.41
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.05.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:06:43 -0700 (PDT)
+ Sat, 02 Aug 2025 16:05:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 26/95] linux-user/i386: Create init_main_thread
-Date: Sun,  3 Aug 2025 09:03:50 +1000
-Message-ID: <20250802230459.412251-27-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 13/95] linux-user: Move hwcap functions to s390x/elfload.c
+Date: Sun,  3 Aug 2025 09:03:37 +1000
+Message-ID: <20250802230459.412251-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
@@ -98,163 +99,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge init_thread and target_cpu_copy_regs.
-There's no point going through a target_pt_regs intermediate.
-Temporarily introduce HAVE_INIT_MAIN_THREAD during conversion.
+For get_elf_hwcap, change the return type to abi_ulong
+and pass in the cpu.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/qemu.h          |  1 +
- linux-user/elfload.c       | 29 +++++------------------
- linux-user/i386/cpu_loop.c | 48 +++++++++++++++++---------------------
- 3 files changed, 29 insertions(+), 49 deletions(-)
+ linux-user/loader.h            |  5 +--
+ linux-user/s390x/target_elf.h  |  2 ++
+ linux-user/s390x/target_proc.h |  2 +-
+ linux-user/elfload.c           | 60 +---------------------------------
+ linux-user/s390x/elfload.c     | 57 ++++++++++++++++++++++++++++++++
+ 5 files changed, 62 insertions(+), 64 deletions(-)
 
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 0c3cfe93a1..8a9500d4f4 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -361,5 +361,6 @@ CPUArchState *cpu_copy(CPUArchState *env);
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index d8a9399807..c14e69f551 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -104,13 +104,10 @@ const char *get_elf_cpu_model(uint32_t eflags);
+ #if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
+     || defined(TARGET_SPARC) || defined(TARGET_PPC) \
+     || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS) \
+-    || defined(TARGET_SH4)
++    || defined(TARGET_SH4) || defined(TARGET_S390X)
+ abi_ulong get_elf_hwcap(CPUState *cs);
+ abi_ulong get_elf_hwcap2(CPUState *cs);
+ #endif
+-#if defined(TARGET_S390X)
+-uint32_t get_elf_hwcap(void);
+-#endif
+ const char *elf_hwcap_str(uint32_t bit);
+ const char *elf_hwcap2_str(uint32_t bit);
  
- typedef struct target_pt_regs target_pt_regs;
- void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
-+void init_main_thread(CPUState *cs, struct image_info *info);
+diff --git a/linux-user/s390x/target_elf.h b/linux-user/s390x/target_elf.h
+index e51b053339..cebace949a 100644
+--- a/linux-user/s390x/target_elf.h
++++ b/linux-user/s390x/target_elf.h
+@@ -8,4 +8,6 @@
+ #ifndef S390X_TARGET_ELF_H
+ #define S390X_TARGET_ELF_H
  
- #endif /* QEMU_H */
++#define HAVE_ELF_HWCAP          1
++
+ #endif
+diff --git a/linux-user/s390x/target_proc.h b/linux-user/s390x/target_proc.h
+index a4a4821ea5..60cc22d3b4 100644
+--- a/linux-user/s390x/target_proc.h
++++ b/linux-user/s390x/target_proc.h
+@@ -48,7 +48,7 @@ static void show_cpu_summary(CPUArchState *cpu_env, int fd)
+ {
+     S390CPUModel *model = env_archcpu(cpu_env)->model;
+     int num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
+-    uint32_t elf_hwcap = get_elf_hwcap();
++    uint32_t elf_hwcap = get_elf_hwcap(env_cpu(cpu_env));
+     const char *hwcap_str;
+     int i;
+ 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 6fce74f45a..89f3972253 100644
+index 7e1c11c39f..ba8593368d 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -149,17 +149,12 @@ typedef abi_int         target_pid_t;
+@@ -1039,65 +1039,7 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
  
- #ifdef TARGET_I386
+-#include "elf.h"
+-
+-#define ELF_HWCAP get_elf_hwcap()
+-
+-#define GET_FEATURE(_feat, _hwcap) \
+-    do { if (s390_has_feat(_feat)) { hwcap |= _hwcap; } } while (0)
+-
+-uint32_t get_elf_hwcap(void)
+-{
+-    /*
+-     * Let's assume we always have esan3 and zarch.
+-     * 31-bit processes can use 64-bit registers (high gprs).
+-     */
+-    uint32_t hwcap = HWCAP_S390_ESAN3 | HWCAP_S390_ZARCH | HWCAP_S390_HIGH_GPRS;
+-
+-    GET_FEATURE(S390_FEAT_STFLE, HWCAP_S390_STFLE);
+-    GET_FEATURE(S390_FEAT_MSA, HWCAP_S390_MSA);
+-    GET_FEATURE(S390_FEAT_LONG_DISPLACEMENT, HWCAP_S390_LDISP);
+-    GET_FEATURE(S390_FEAT_EXTENDED_IMMEDIATE, HWCAP_S390_EIMM);
+-    if (s390_has_feat(S390_FEAT_EXTENDED_TRANSLATION_3) &&
+-        s390_has_feat(S390_FEAT_ETF3_ENH)) {
+-        hwcap |= HWCAP_S390_ETF3EH;
+-    }
+-    GET_FEATURE(S390_FEAT_VECTOR, HWCAP_S390_VXRS);
+-    GET_FEATURE(S390_FEAT_VECTOR_ENH, HWCAP_S390_VXRS_EXT);
+-    GET_FEATURE(S390_FEAT_VECTOR_ENH2, HWCAP_S390_VXRS_EXT2);
+-
+-    return hwcap;
+-}
+-
+-const char *elf_hwcap_str(uint32_t bit)
+-{
+-    static const char *hwcap_str[] = {
+-        [HWCAP_S390_NR_ESAN3]     = "esan3",
+-        [HWCAP_S390_NR_ZARCH]     = "zarch",
+-        [HWCAP_S390_NR_STFLE]     = "stfle",
+-        [HWCAP_S390_NR_MSA]       = "msa",
+-        [HWCAP_S390_NR_LDISP]     = "ldisp",
+-        [HWCAP_S390_NR_EIMM]      = "eimm",
+-        [HWCAP_S390_NR_DFP]       = "dfp",
+-        [HWCAP_S390_NR_HPAGE]     = "edat",
+-        [HWCAP_S390_NR_ETF3EH]    = "etf3eh",
+-        [HWCAP_S390_NR_HIGH_GPRS] = "highgprs",
+-        [HWCAP_S390_NR_TE]        = "te",
+-        [HWCAP_S390_NR_VXRS]      = "vx",
+-        [HWCAP_S390_NR_VXRS_BCD]  = "vxd",
+-        [HWCAP_S390_NR_VXRS_EXT]  = "vxe",
+-        [HWCAP_S390_NR_GS]        = "gs",
+-        [HWCAP_S390_NR_VXRS_EXT2] = "vxe2",
+-        [HWCAP_S390_NR_VXRS_PDE]  = "vxp",
+-        [HWCAP_S390_NR_SORT]      = "sort",
+-        [HWCAP_S390_NR_DFLT]      = "dflt",
+-        [HWCAP_S390_NR_NNPA]      = "nnpa",
+-        [HWCAP_S390_NR_PCI_MIO]   = "pcimio",
+-        [HWCAP_S390_NR_SIE]       = "sie",
+-    };
+-
+-    return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
+-}
++#define ELF_HWCAP get_elf_hwcap(thread_cpu)
  
-+#define HAVE_INIT_MAIN_THREAD
+ static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
+ {
+diff --git a/linux-user/s390x/elfload.c b/linux-user/s390x/elfload.c
+index 989953a247..79ceaba51d 100644
+--- a/linux-user/s390x/elfload.c
++++ b/linux-user/s390x/elfload.c
+@@ -3,9 +3,66 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "qemu";
+ }
 +
- #ifdef TARGET_X86_64
- #define ELF_CLASS      ELFCLASS64
- #define ELF_ARCH       EM_X86_64
- 
--static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
--{
--    regs->rax = 0;
--    regs->rsp = infop->start_stack;
--    regs->rip = infop->entry;
--}
--
- #define ELF_NREG    27
- typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
- 
-@@ -237,22 +232,6 @@ static bool init_guest_commpage(void)
- 
- #define EXSTACK_DEFAULT true
- 
--static inline void init_thread(struct target_pt_regs *regs,
--                               struct image_info *infop)
--{
--    regs->esp = infop->start_stack;
--    regs->eip = infop->entry;
--
--    /* SVR4/i386 ABI (pages 3-31, 3-32) says that when the program
--       starts %edx contains a pointer to a function which might be
--       registered using `atexit'.  This provides a mean for the
--       dynamic linker to call DT_FINI functions for shared libraries
--       that have been loaded before the code runs.
--
--       A value of 0 tells we have no such handler.  */
--    regs->edx = 0;
--}
--
- #define ELF_NREG    17
- typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
- 
-@@ -3621,8 +3600,12 @@ static int elf_core_dump(int signr, const CPUArchState *env)
- 
- void do_init_main_thread(CPUState *cs, struct image_info *infop)
- {
-+#ifdef HAVE_INIT_MAIN_THREAD
-+    init_main_thread(cs, infop);
-+#else
-     target_pt_regs regs = { };
- 
-     init_thread(&regs, infop);
-     target_cpu_copy_regs(cpu_env(cs), &regs);
-+#endif
- }
-diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-index d96d5553fa..7b2d8b03d8 100644
---- a/linux-user/i386/cpu_loop.c
-+++ b/linux-user/i386/cpu_loop.c
-@@ -331,11 +331,10 @@ static void target_cpu_free(void *obj)
-     g_free(obj);
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-+void init_main_thread(CPUState *cpu, struct image_info *info)
- {
--    CPUState *cpu = env_cpu(env);
-+    CPUArchState *env = cpu_env(cpu);
-     bool is64 = (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) != 0;
--    int i;
- 
-     OBJECT(cpu)->free = target_cpu_free;
-     env->cr[0] = CR0_PG_MASK | CR0_WP_MASK | CR0_PE_MASK;
-@@ -361,28 +360,25 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-     /* flags setup : we activate the IRQs by default as in user mode */
-     env->eflags |= IF_MASK;
- 
--    /* linux register setup */
--#ifndef TARGET_ABI32
--    env->regs[R_EAX] = regs->rax;
--    env->regs[R_EBX] = regs->rbx;
--    env->regs[R_ECX] = regs->rcx;
--    env->regs[R_EDX] = regs->rdx;
--    env->regs[R_ESI] = regs->rsi;
--    env->regs[R_EDI] = regs->rdi;
--    env->regs[R_EBP] = regs->rbp;
--    env->regs[R_ESP] = regs->rsp;
--    env->eip = regs->rip;
--#else
--    env->regs[R_EAX] = regs->eax;
--    env->regs[R_EBX] = regs->ebx;
--    env->regs[R_ECX] = regs->ecx;
--    env->regs[R_EDX] = regs->edx;
--    env->regs[R_ESI] = regs->esi;
--    env->regs[R_EDI] = regs->edi;
--    env->regs[R_EBP] = regs->ebp;
--    env->regs[R_ESP] = regs->esp;
--    env->eip = regs->eip;
--#endif
++#define GET_FEATURE(_feat, _hwcap) \
++    do { if (s390_has_feat(_feat)) { hwcap |= _hwcap; } } while (0)
++
++abi_ulong get_elf_hwcap(CPUState *cs)
++{
 +    /*
-+     * Linux register setup.
-+     *
-+     * SVR4/i386 ABI (pages 3-31, 3-32) says that when the program
-+     * starts %edx contains a pointer to a function which might be
-+     * registered using `atexit'.  This provides a mean for the
-+     * dynamic linker to call DT_FINI functions for shared libraries
-+     * that have been loaded before the code runs.
-+     * A value of 0 tells we have no such handler.
-+     *
-+     * This applies to x86_64 as well as i386.
-+     *
-+     * That said, the kernel's ELF_PLAT_INIT simply zeros all of the general
-+     * registers.  Note that x86_cpu_reset_hold will set %edx to cpuid_version;
-+     * clear all general registers defensively.
++     * Let's assume we always have esan3 and zarch.
++     * 31-bit processes can use 64-bit registers (high gprs).
 +     */
-+    memset(env->regs, 0, sizeof(env->regs));
-+    env->regs[R_ESP] = info->start_stack;
-+    env->eip = info->entry;
- 
-     /* linux interrupt setup */
- #ifndef TARGET_ABI32
-@@ -394,7 +390,7 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-                                 PROT_READ|PROT_WRITE,
-                                 MAP_ANONYMOUS|MAP_PRIVATE, -1, 0);
-     idt_table = g2h_untagged(env->idt.base);
--    for (i = 0; i < 20; i++) {
-+    for (int i = 0; i < 20; i++) {
-         set_idt(i, 0, is64);
-     }
-     set_idt(3, 3, is64);
++    uint32_t hwcap = HWCAP_S390_ESAN3 | HWCAP_S390_ZARCH | HWCAP_S390_HIGH_GPRS;
++
++    GET_FEATURE(S390_FEAT_STFLE, HWCAP_S390_STFLE);
++    GET_FEATURE(S390_FEAT_MSA, HWCAP_S390_MSA);
++    GET_FEATURE(S390_FEAT_LONG_DISPLACEMENT, HWCAP_S390_LDISP);
++    GET_FEATURE(S390_FEAT_EXTENDED_IMMEDIATE, HWCAP_S390_EIMM);
++    if (s390_has_feat(S390_FEAT_EXTENDED_TRANSLATION_3) &&
++        s390_has_feat(S390_FEAT_ETF3_ENH)) {
++        hwcap |= HWCAP_S390_ETF3EH;
++    }
++    GET_FEATURE(S390_FEAT_VECTOR, HWCAP_S390_VXRS);
++    GET_FEATURE(S390_FEAT_VECTOR_ENH, HWCAP_S390_VXRS_EXT);
++    GET_FEATURE(S390_FEAT_VECTOR_ENH2, HWCAP_S390_VXRS_EXT2);
++
++    return hwcap;
++}
++
++const char *elf_hwcap_str(uint32_t bit)
++{
++    static const char *hwcap_str[] = {
++        [HWCAP_S390_NR_ESAN3]     = "esan3",
++        [HWCAP_S390_NR_ZARCH]     = "zarch",
++        [HWCAP_S390_NR_STFLE]     = "stfle",
++        [HWCAP_S390_NR_MSA]       = "msa",
++        [HWCAP_S390_NR_LDISP]     = "ldisp",
++        [HWCAP_S390_NR_EIMM]      = "eimm",
++        [HWCAP_S390_NR_DFP]       = "dfp",
++        [HWCAP_S390_NR_HPAGE]     = "edat",
++        [HWCAP_S390_NR_ETF3EH]    = "etf3eh",
++        [HWCAP_S390_NR_HIGH_GPRS] = "highgprs",
++        [HWCAP_S390_NR_TE]        = "te",
++        [HWCAP_S390_NR_VXRS]      = "vx",
++        [HWCAP_S390_NR_VXRS_BCD]  = "vxd",
++        [HWCAP_S390_NR_VXRS_EXT]  = "vxe",
++        [HWCAP_S390_NR_GS]        = "gs",
++        [HWCAP_S390_NR_VXRS_EXT2] = "vxe2",
++        [HWCAP_S390_NR_VXRS_PDE]  = "vxp",
++        [HWCAP_S390_NR_SORT]      = "sort",
++        [HWCAP_S390_NR_DFLT]      = "dflt",
++        [HWCAP_S390_NR_NNPA]      = "nnpa",
++        [HWCAP_S390_NR_PCI_MIO]   = "pcimio",
++        [HWCAP_S390_NR_SIE]       = "sie",
++    };
++
++    return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
++}
 -- 
 2.43.0
 
