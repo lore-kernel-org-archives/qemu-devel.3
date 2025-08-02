@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293A6C87FD2
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B437EC87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLTv-0005wO-SI; Sat, 02 Aug 2025 19:17:43 -0400
+	id 1uiLP2-0004tf-0D; Sat, 02 Aug 2025 19:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLTD-0004PK-Qq
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:17:01 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1uiLOU-0003nn-Bl
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:06 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLTB-0002gc-OP
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:55 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-74190a2fc10so750865a34.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:53 -0700 (PDT)
+ id 1uiLOS-0001oo-2y
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:01 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-2ea34731c5dso2665742fac.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176612; x=1754781412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176318; x=1754781118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PcJpR39SssShXVbHba+WgDV342jrg7zDHAhF6M4KN6o=;
- b=HJJTQqVPGW1B8iTG+NaRk5PwsCvkh4AhX+eNw81iZdskhPNmET4uZPQSk33V4E5PfI
- EhUj8UKQbqV91LE8s9OrZ3cS3VOYF4duGkc9aQWKNuPQwonaZvPvzkqs6VyiupZirehH
- 7p59uBc3Au14TOOu2FLSfa29wVvcHqSHzrsJfblkj+vwT5AXAH9pwQc3RtxgPxnlvcwE
- iCe9+JYS1Osd7aQ16ZttYK6pfxW4GdEhGqDF4ECVptfCXhxcguDGOytUXYAUiGXg6+3H
- y9uByXz29nDmWMnns+cRk6jZEn7fNnw6xVHmk4tUW99vFl/PM4eCXB76jaeM/3D5fxFK
- yq5g==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f9Fyxy0iYqxs0t+2QnM3wgexXwkcWrG91zIlwNYAYRg=;
+ b=Ui2HMNDj4wZXSbSVtKYougYUF08klW+Df1YRePCIPxgAiX3qvJSRX6KILZKHJw81ws
+ UurPIcgebVLrYC3CTKtSDwVvLjeD1WGqtMV+YCP2gBfThleL50hYjgP4zSnqfyMkB325
+ d+di2iPXNzXqWuJAKYXMPEzIPkBWDK2VVAJRgpvxFfWR4xRFQNL7c1xrD8jgrCXoryg+
+ vhNIU75Lbpcg1xxJHqLTNcx7RaSq+z6KCrZYA0ZdN5VuAIF9J2jCjk+2YZZCsRrmTccM
+ 1HYdnHm7JAop9BavMJ/v3NqB/wwSYL8UGFrH1j9mrlS6UBe/AL8SSb7cklAWZ89rgMqG
+ WZkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176612; x=1754781412;
+ d=1e100.net; s=20230601; t=1754176318; x=1754781118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PcJpR39SssShXVbHba+WgDV342jrg7zDHAhF6M4KN6o=;
- b=qRpMnuRlY4DqFLtwSK73rPGNU7lucVLPSrP0VNu21/v4h3TH0/rr6IlYw5W+FzmCkK
- a/aXowhpC1GpZX0b8hygcP4ZenOYCtjTERV28x3N9LJZuQuiESSIPPgWGYtKL553O1+3
- veDffaegPenR9J8hgiNwQ+xdUUbuQMziePa9eGoTdHGVF6yY8cBuN3rTF82xHi5xtf1k
- 5MAPk3vs/VvMCQ4XMh5smw8s+XbbbweubbHctbLWXbBr5DAIE2k1f6dIcFhtN7ROvK49
- f6bDcdJT797XB+Osccx6nhr+yCmfkIypncJXw8g9XLpryBJ5Zp/qPc2lL4YvJBbRIwKB
- ElKA==
-X-Gm-Message-State: AOJu0YweN6SIO9xv/13TZdaA18s50V/B0Kq4tIgl3PxViNTpRH2ycOWj
- Kkne3Nm5/NGKgEWWzhkRxOOrRuJzSgHgCz8gqq8HtHQr+TBewjIFp9GM9Q5Gg5b/pK3AkO0vmFY
- 5ROvVD14=
-X-Gm-Gg: ASbGnctuX9D2SFJLP9WfmOe3Lxz8fxXUzMntpCizoQRb9VOCxeHQhmaHqOvJdoPF4Qv
- 525EdEz9SM8bBwcHlaNqyMSt/6Lq4QFtgJt3wUNQg5pI935SD6TpqiegY+E2tTPz3+ikXGqG/AF
- 6lK0HZ2Chd3vW7v/nZ5qdWhw7q69pzse2ahqcCB1ePMHbxVIYM82veGxRlMsaGFhLmgx6s8yp/C
- VVQy9+c3FIp3vPMQXI4NqksNrWJSRnoYFDUZkZhGHQTT7Gtekm30lLvRqoR9Ngl9zD2fuE4Z2q2
- 6KDOtdzr3d9CtjaZSNv+XfpIwqlQV8UpVpwwpEbTXOChXBKaCUbw73MBq37GYPYrKq8TGYnXvoL
- b8YzVT2tdIAgKobWiF5Z2KOP/CEgNLCmC2H4BiIrqcnkAwMO9pwNr
-X-Google-Smtp-Source: AGHT+IFUdQTx6TXXU0JbJZk4BuuA43j+n9vWMdtQueYX4+keAJfqTwIvbjkwPVzxbX6FbcLa8CyO8g==
-X-Received: by 2002:a05:6830:43aa:b0:741:b263:4ded with SMTP id
- 46e09a7af769-741b2635852mr89492a34.15.1754176612498; 
- Sat, 02 Aug 2025 16:16:52 -0700 (PDT)
+ bh=f9Fyxy0iYqxs0t+2QnM3wgexXwkcWrG91zIlwNYAYRg=;
+ b=MUmvbtu3IkikYmhbSamM2H96rDOLHi7G6C2qjDmeXV9RGDbXu1A8zlxoT23TBDV/c0
+ 88n1v+lwBmwjrxQZFMovK60mlNDQ8WIdZYyJ0soRJQyRl0Vsk0N4HLIhS9bCtDj60Os/
+ hpC0ZmlOci+rsnG5lCsMZCJNBPoDWZGTEwKb18r+NroSMQUB2TaQDQhi12lwUDzaPust
+ jKFKVjRGVYKbe7Ox8yyjZorjBbcCBSCOK1QHUiQ3sZC7vVawZZJWjv+NnFsH8pOmVrgS
+ 40zl2vgKx/h//5r00NquvCB7CES4YFVPeQEv0BTTi58ESn32Vh5QV7pmHBi/LJazZFDb
+ 6iuQ==
+X-Gm-Message-State: AOJu0YzS0UJY0EGT9lNkzP3IC5JrCMJgE2Q3X2s++wSYUWtPx/pSD5bh
+ UOd0/pb6/5fiaBgnyUbMmREr9UsZe/5XtYeLd0qB0RbDBvIi1g9/aLnsVV29EPZOppKuxxZZ7jT
+ CTn94l+E=
+X-Gm-Gg: ASbGncs4rBHJl1nvtEztlq36IqikwgHcAId7k6AEEhUq1/cjksxPD6fsTVbcDvZVZ/W
+ 7xnU2ahrrRvgpGZ8S2ELOXvg+ofY+BlznDhRJq2vv5XfhigZnbUyAndYqrlP0BWx0iHngJKqQhL
+ 9MdQgQyTQHtzonTEy4pkkj3HzqoQ7vVwpBJwZaLeXgGO9HqfSMPzb48x1Mxwa0JYfKVyGqJgN+2
+ Xh8rzZm5Wvlz3rcKTp2Twm8An4VFrxXuGbxdMi/hT0EZF5ICNA23bVy1yt6ZJPjGoK77KR0VmUA
+ AkZybFJThjt29b/KkqfrLH5rW1gBvGLyjfP4AG2Fjoi5DEVw+4tIh8AQGBrO+gGXZmRencVBpT4
+ eTbzvK0nG0QNP9sRfGb05i2kgbKpA2zu69XAbqfS/Asirvk4e77Yy
+X-Google-Smtp-Source: AGHT+IGPA61HYU47hLvilGjNtnKliUrZkP9SAfx6j5g6VeGUvL+p4ZVYzXL5gFwkLWGtvzOQ5zE2gg==
+X-Received: by 2002:a4a:edc5:0:b0:611:a921:bfef with SMTP id
+ 006d021491bc7-6198f314133mr2438394eaf.8.1754176317981; 
+ Sat, 02 Aug 2025 16:11:57 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.49
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:16:51 -0700 (PDT)
+ Sat, 02 Aug 2025 16:11:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 93/95] linux-user/openrisc: Move target_pt_regs to signal.c
-Date: Sun,  3 Aug 2025 09:04:57 +1000
-Message-ID: <20250802230459.412251-94-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 64/95] linux-user: Move init_guest_commpage to
+ hppa/elfload.c
+Date: Sun,  3 Aug 2025 09:04:28 +1000
+Message-ID: <20250802230459.412251-65-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,60 +100,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This structure is part of the openrisc signal frame.
-
-Rename to user_regs_struct, per the kernel's ptrace.h, which allows
-removal of the explination of the name change from the kernel source.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/openrisc/target_syscall.h | 11 -----------
- linux-user/openrisc/signal.c         |  9 ++++++++-
- 2 files changed, 8 insertions(+), 12 deletions(-)
+ linux-user/hppa/target_elf.h |  2 ++
+ linux-user/loader.h          |  2 --
+ linux-user/elfload.c         | 32 --------------------------------
+ linux-user/hppa/elfload.c    | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 33 insertions(+), 34 deletions(-)
 
-diff --git a/linux-user/openrisc/target_syscall.h b/linux-user/openrisc/target_syscall.h
-index 7fe5b73d3b..c8394e9dcd 100644
---- a/linux-user/openrisc/target_syscall.h
-+++ b/linux-user/openrisc/target_syscall.h
-@@ -1,17 +1,6 @@
- #ifndef OPENRISC_TARGET_SYSCALL_H
- #define OPENRISC_TARGET_SYSCALL_H
+diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
+index 85be00584d..b654758afa 100644
+--- a/linux-user/hppa/target_elf.h
++++ b/linux-user/hppa/target_elf.h
+@@ -10,4 +10,6 @@
  
--/* Note that in linux/arch/openrisc/include/uapi/asm/ptrace.h,
-- * this is called user_regs_struct.  Given that this is what
-- * is used within struct sigcontext we need this definition.
-- * However, elfload.c wants this name.
-- */
--struct target_pt_regs {
--    abi_ulong gpr[32];
--    abi_ulong pc;
--    abi_ulong sr;
--};
--
- #define UNAME_MACHINE "openrisc"
- #define UNAME_MINIMUM_RELEASE "2.6.32"
+ #define HAVE_ELF_PLATFORM       1
  
-diff --git a/linux-user/openrisc/signal.c b/linux-user/openrisc/signal.c
-index cb74a9fe5e..5b97d016af 100644
---- a/linux-user/openrisc/signal.c
-+++ b/linux-user/openrisc/signal.c
-@@ -22,8 +22,15 @@
- #include "signal-common.h"
- #include "linux-user/trace.h"
- 
-+/* See linux/arch/openrisc/include/uapi/asm/ptrace.h. */
-+struct user_regs_struct {
-+    abi_ulong gpr[32];
-+    abi_ulong pc;
-+    abi_ulong sr;
-+};
++#define LO_COMMPAGE             0
 +
- typedef struct target_sigcontext {
--    struct target_pt_regs regs;
-+    struct user_regs_struct regs;
-     abi_ulong oldmask;
- } target_sigcontext;
+ #endif
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index a12a07039a..4ef46fba5c 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -105,9 +105,7 @@ const char *elf_hwcap_str(uint32_t bit);
+ const char *elf_hwcap2_str(uint32_t bit);
+ const char *get_elf_platform(CPUState *cs);
+ const char *get_elf_base_platform(CPUState *cs);
+-#if defined(TARGET_X86_64) || defined(TARGET_ARM)
+ bool init_guest_commpage(void);
+-#endif
+ void elf_core_copy_regs(target_ulong *regs, const CPUArchState *env);
  
+ #endif /* LINUX_USER_LOADER_H */
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 6cc2c498c8..ec5b1b586f 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -415,38 +415,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define LO_COMMPAGE  0
+-
+-static bool init_guest_commpage(void)
+-{
+-    /* If reserved_va, then we have already mapped 0 page on the host. */
+-    if (!reserved_va) {
+-        void *want, *addr;
+-
+-        want = g2h_untagged(LO_COMMPAGE);
+-        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
+-                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
+-        if (addr == MAP_FAILED) {
+-            perror("Allocating guest commpage");
+-            exit(EXIT_FAILURE);
+-        }
+-        if (addr != want) {
+-            return false;
+-        }
+-    }
+-
+-    /*
+-     * On Linux, page zero is normally marked execute only + gateway.
+-     * Normal read or write is supposed to fail (thus PROT_NONE above),
+-     * but specific offsets have kernel code mapped to raise permissions
+-     * and implement syscalls.  Here, simply mark the page executable.
+-     * Special case the entry points during translation (see do_page_zero).
+-     */
+-    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
+-                   PAGE_EXEC | PAGE_VALID);
+-    return true;
+-}
+-
+ #endif /* TARGET_HPPA */
+ 
+ #ifdef TARGET_XTENSA
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 9dd3fe092a..018034f244 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -3,6 +3,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -14,3 +15,33 @@ const char *get_elf_platform(CPUState *cs)
+ {
+     return "PARISC";
+ }
++
++bool init_guest_commpage(void)
++{
++    /* If reserved_va, then we have already mapped 0 page on the host. */
++    if (!reserved_va) {
++        void *want, *addr;
++
++        want = g2h_untagged(LO_COMMPAGE);
++        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
++                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
++        if (addr == MAP_FAILED) {
++            perror("Allocating guest commpage");
++            exit(EXIT_FAILURE);
++        }
++        if (addr != want) {
++            return false;
++        }
++    }
++
++    /*
++     * On Linux, page zero is normally marked execute only + gateway.
++     * Normal read or write is supposed to fail (thus PROT_NONE above),
++     * but specific offsets have kernel code mapped to raise permissions
++     * and implement syscalls.  Here, simply mark the page executable.
++     * Special case the entry points during translation (see do_page_zero).
++     */
++    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
++                   PAGE_EXEC | PAGE_VALID);
++    return true;
++}
 -- 
 2.43.0
 
