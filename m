@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E868C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D297CC87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLU2-0006Cd-Qo; Sat, 02 Aug 2025 19:17:47 -0400
+	id 1uiLPH-0006J5-PF; Sat, 02 Aug 2025 19:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLT6-0004Cp-6E
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:51 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1uiLPF-0006BM-GN
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:50 -0400
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLT4-0002fl-HI
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:47 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-741a59f64c8so415598a34.3
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:46 -0700 (PDT)
+ id 1uiLPE-0001w8-3P
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:49 -0400
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-433f78705feso215198b6e.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176605; x=1754781405; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176367; x=1754781167; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6QdfB+NytoX9k9jsv7VVcmrRDVzL0Ovmr6JLafNnASA=;
- b=w+8rwuRVD4x8MxWXP8sh+pJljMqDi13AJEwumCpi0w3xOzd2b9FVNZkdoitCuQolRX
- L7HAaUFdGcZid0HO8u9LC6Qnmryb6tetO81QK6u6ApV/IRBytdcnJg4rtIHIv+A3+dLZ
- MoWwfVY08MrKZ/43iIRaHxFFINqUc191pPz8H+arXqOHbdhYLa0AGW85CIVH0ZjDJzc5
- +aPrUDF8LFWKcBchswbngjGIzTCqqxgDn5t2KL7MbAN7OpFaa8MGHoUWeJN8axqYGbB+
- amnkRCVsMA7ljIXaou9/2SkIWJxiVEJYI0WkCp4fe48qcto/Y+Tne/RTMVjSkWiS/Dpy
- LwNw==
+ bh=1v+oHh5NI/CAD3fUn3WO/NvcFU8grJSwgg1nXQ9k+uE=;
+ b=XeimjJJ4ewTiMRDKLOpbW2otdUdISfqogiaQoJtySTh75vzSoYHWSeDDNHGBBJOWkG
+ X7FAIluastjpRmqM/MFksj8OMpIfqwE12jLobB7maAYWQtlwFREBtdt5tAiBDLGEfT9+
+ xMPOIesnTDq9berRRtZKulctWEYsIcoAeU1UlPp2yDNq92Nqneg/oxMYMnek/0wJBUJV
+ uH61e9aJryrJ52n0X/ZYy4gfU71MI1vo4hGy3mpC1u+oqSyEQFqA9au6GXv+fQH6i/Em
+ DUofI2frQ/N2Yo2VGOJCvzN45wqzBII0otu1PuAWwYAIjhEdZYoKNciPWegoeP9UM4fI
+ b2Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176605; x=1754781405;
+ d=1e100.net; s=20230601; t=1754176367; x=1754781167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6QdfB+NytoX9k9jsv7VVcmrRDVzL0Ovmr6JLafNnASA=;
- b=oIiZtu6cquXq1KMpozSgUxBkVGLQ7BerhUQLHjN6iMnPd5b0GPNcDvwcInH8vgpFjN
- ZgrQi8LCAKVU6ByzDH8iagKZ25GYomvLzA9GW3KkXTtgAc9dskur74pgXbdQJex1DO1a
- eoia9gvQVIqGfzMHSx4kfskCrClQU684y+YXoLWf6LxPwr2++35aJruhqhil0GR8A+2H
- JvFZz1j5XMHJ3kE3AWPOXgsNHGwvQbqnF1y1LILC0pSnJsCesVwvyQV+aCfByQ8TFg8B
- DSgOFJWZIyidNUmG7ZTGozu33S/ZdlJ8Z5u76L5ACtvRopP1Q2ZsDyoggwUTSsZrvQhS
- XeJw==
-X-Gm-Message-State: AOJu0YyWYHbCfq0iMw+Xi1PbOgzcbq16VRS6yjoJJiIIotRa+MGlW9hy
- 6Cz1DJ5OyIW7PmUmEPjQJHrFpFtvsjsXYrgfAdmGgYnsvVR4Hmwi10JeuN9PTt/644m4NCMcZ0l
- VmG8nTkI=
-X-Gm-Gg: ASbGncvddRW4/ciTW/4UbLUckhn4g83lDmu2Cy0FD7hyNWX5bAD8w+KONlX8IawPc/t
- uCia5qTmb4Onzu18IqifG2JN0EoypLiKqKjtdiZ/5kZftx39eIezKEwlIJbvzJHbuJs1WHECJX9
- D9aZH2qogJDUl4FbHlKvDkdUJUGC1qC4xczePoSQ43TnriSgRIcVQLZUnZHkl30jRqU67G/Haho
- yuA+Md47zYrupEP6ZVusUMPQJ/HZOETy7kK3ugH1rOiPKNhLvE5jSr7D8OSB6wHulIMkniabilO
- DpBeQz4I93mdGWAmghDDbB9wDQoKOy4N3Nr1/bdssWbitB/efo+PbQt2rfyoeIM0amf5iuUaJ7T
- WUBI8wxf6B5XaXyxkdm287P/WFlXnxqTUvXryvtSCszXc6IPVUy/H
-X-Google-Smtp-Source: AGHT+IG5s5giM5kUEGN3uI8nGsmDXnWYxjkGMlPoXr9P+j0bQHNVJNoTUFyNFeqkBvyBxG9Ct/fJKA==
-X-Received: by 2002:a05:6830:92a:b0:741:adad:2331 with SMTP id
- 46e09a7af769-741adad2557mr693061a34.11.1754176605366; 
- Sat, 02 Aug 2025 16:16:45 -0700 (PDT)
+ bh=1v+oHh5NI/CAD3fUn3WO/NvcFU8grJSwgg1nXQ9k+uE=;
+ b=BHuEM4nGMhFqzsVtVvguHyLVY6cXTLFxQnijE+dtluPs/2cVERmH4PyPGcwCYtaiWI
+ eP+QoQayIWFvyBQxF8kImEFYkh/8baWi4C66kQ0QOfQ/AwTXdE/YDyF4LQycf95x27jS
+ Fak3LktFqAI45PfMGWBqyriFwf0pTuAgIe0Q+8g26DUT0CAIBN0x0Ot30Q96EQJ/3mtS
+ MxN5C3mAfSBfapefujGKLxIoIWDtr7u0ADuv+PngraZrBvEhWClbnW1Xiv6xGUU38i0O
+ nswwXfXLq+ANSXP1YYdykOGMKjgC2/qDh1YfMzTgC5ZRa/V+6LGb8IQQcqz2/RgJl9Ki
+ U5pA==
+X-Gm-Message-State: AOJu0YyOOfORaDaWpXYtfexVGI0A6D7hrqYPvpigHmhNTnDAIRaVIz9c
+ s7alSwZwzPvUX7wpdVHPSVpfTbCSUYLJlupGQxCG3AmAZIF9Da+wymh5H7rJOSsZcYiOrSWs8BF
+ bR+fw4NI=
+X-Gm-Gg: ASbGncvtd4PK6vpWPMA42c6DjoNScozDXpTXhuzVauYEvf1d3S5bhI17rr3zaQvEh0c
+ zwytZ9ilEP57DxN9GBmd3QOBUoifmpH1Jm/BHshxC6V/IvoaWfsxEz3kW12KSbh5uqRorHkkL49
+ 8mkrDSOZItArOIKb7Z7hpGD5GC6l2S9DKxA7pS5YOup4olUXLu69SgsuDcU+lNR+GnIrvnGgTDS
+ vvuFTOxeUsxVSO5sSMWr2b8PL/6HuRjHusFKE6rwO/+xk9uO13PdORusarxjAxsixJ2Rh2AsmjH
+ p69hGKNo7sWCa6CstOM1vMe6JuXzC0FYT4oipJoaTrzg6b9gMf1cPwcAazYoR961fYcELYD37M5
+ cHE3TeRseLQa7yGSX4WFJODrG7pPZXSPYL4FuQh4gbwWc8WDd9o13
+X-Google-Smtp-Source: AGHT+IGlflxpTRet0YHulrLculCceiY8HjOQv3U6hbDQa2KpJSZ13EzjAvtEeUlIrcfKXq78C6j73w==
+X-Received: by 2002:a05:6808:4f62:b0:408:e6e0:910a with SMTP id
+ 5614622812f47-433f0343a37mr3218925b6e.22.1754176366914; 
+ Sat, 02 Aug 2025 16:12:46 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.41
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.12.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:16:44 -0700 (PDT)
+ Sat, 02 Aug 2025 16:12:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 91/95] linux-user/sparc: Move target_pt_regs to signal.c
-Date: Sun,  3 Aug 2025 09:04:55 +1000
-Message-ID: <20250802230459.412251-92-richard.henderson@linaro.org>
+Subject: [PATCH v2 78/95] linux-user: Move elf parameters to m68k/target_elf.h
+Date: Sun,  3 Aug 2025 09:04:42 +1000
+Message-ID: <20250802230459.412251-79-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,76 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This structure is part of the sparc signal frame.
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/sparc/target_syscall.h | 19 -------------------
- linux-user/sparc/signal.c         | 20 ++++++++++++++++++++
- 2 files changed, 20 insertions(+), 19 deletions(-)
+ linux-user/m68k/target_elf.h | 3 +++
+ linux-user/elfload.c         | 7 -------
+ 2 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/linux-user/sparc/target_syscall.h b/linux-user/sparc/target_syscall.h
-index e421165357..a90ed2983a 100644
---- a/linux-user/sparc/target_syscall.h
-+++ b/linux-user/sparc/target_syscall.h
-@@ -1,25 +1,6 @@
- #ifndef SPARC_TARGET_SYSCALL_H
- #define SPARC_TARGET_SYSCALL_H
+diff --git a/linux-user/m68k/target_elf.h b/linux-user/m68k/target_elf.h
+index b721687d3e..568b7be389 100644
+--- a/linux-user/m68k/target_elf.h
++++ b/linux-user/m68k/target_elf.h
+@@ -8,6 +8,9 @@
+ #ifndef M68K_TARGET_ELF_H
+ #define M68K_TARGET_ELF_H
  
--#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
--struct target_pt_regs {
--    abi_ulong u_regs[16];
--    abi_ulong tstate;
--    abi_ulong pc;
--    abi_ulong npc;
--    uint32_t y;
--    uint32_t magic;
--};
--#else
--struct target_pt_regs {
--    abi_ulong psr;
--    abi_ulong pc;
--    abi_ulong npc;
--    abi_ulong y;
--    abi_ulong u_regs[16];
--};
++#define ELF_CLASS               ELFCLASS32
++#define ELF_ARCH                EM_68K
++
+ /* See linux kernel: arch/m68k/include/asm/elf.h.  */
+ #define ELF_NREG                20
+ 
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index fd3bdfe9c6..8c908db2df 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,13 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
+ 
+-#ifdef TARGET_M68K
+-
+-#define ELF_CLASS       ELFCLASS32
+-#define ELF_ARCH        EM_68K
+-
 -#endif
 -
- #ifdef TARGET_SPARC64
- # define UNAME_MACHINE "sparc64"
- #else
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index 8181b8b92c..944769a8de 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -22,6 +22,26 @@
- #include "signal-common.h"
- #include "linux-user/trace.h"
+ #ifdef TARGET_ALPHA
  
-+
-+#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+struct target_pt_regs {
-+    abi_ulong u_regs[16];
-+    abi_ulong tstate;
-+    abi_ulong pc;
-+    abi_ulong npc;
-+    uint32_t y;
-+    uint32_t magic;
-+};
-+#else
-+struct target_pt_regs {
-+    abi_ulong psr;
-+    abi_ulong pc;
-+    abi_ulong npc;
-+    abi_ulong y;
-+    abi_ulong u_regs[16];
-+};
-+#endif
-+
- /* A Sparc register window */
- struct target_reg_window {
-     abi_ulong locals[8];
+ #define ELF_CLASS      ELFCLASS64
 -- 
 2.43.0
 
