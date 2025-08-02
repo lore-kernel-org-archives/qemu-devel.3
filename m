@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D624EC87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410E5C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLjm-0005L6-F1; Sat, 02 Aug 2025 19:34:02 -0400
+	id 1uiLlX-0001Oc-Ml; Sat, 02 Aug 2025 19:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLi1-0000XE-JR
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:32:13 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1uiLit-0002NY-5b
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:33:07 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLhz-00059I-KF
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:32:13 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-741a0ec1a05so314974a34.2
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:32:11 -0700 (PDT)
+ id 1uiLiq-0005Il-7m
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:33:06 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2ffaa884a44so2081180fac.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754177530; x=1754782330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754177582; x=1754782382; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1d9dQVqrNWqrEXWej/JwzyJrCDkscWOsMBodTniFYpE=;
- b=oIyUWgZzkuy2d9Vt4lH7cY47dld5bwbnWIzvC1V4GFFFy9si6dXqSXmop8j/Anzp9T
- 25akouLFLthqxIKUUb8GjM1EsnT+c+FcEr9bNML4MQcvdWq64lQwwV3593H/+B2oIRU2
- 7f84bjUU/1QAkZ7pv1wLA/sxv/F2zsXHsuMwnLwNZJVRzPc57oJgyQwDSt63LpGK5oWD
- MPiborCptozRYMwVm/xCG0iapHHOlVgkabAX+BO7Xmx20MhtpWh25FWnvzpu9YqB518q
- AckrN/YDntEs1so9WkGVhVTt+OYhzgv38NnbfiPU9fAitY0fAdsyYkOH6wcFuIcxntvI
- T9pQ==
+ bh=1FtjhMLhMPqBf/akhP4/Q7b8Tx2CMEduly/logXB3Ks=;
+ b=MA7Tg9bbF2uiyofQ7352+TFWnYkyRsPCVm8xbF6e0ptnDeyPr+Gy1kzboJTYOHIKQk
+ halax0aIdf5PNLCvXbo/b/viHGrsXWOeJDTgm4dKM3fH0DEQ0JVR7s0/mZn+avYPfTJm
+ CkkpuN4H1pb2tlLglwk4DtPplNzLu0s2iX6ruvmY2gMeldEs/rMg+EZT1vd5Qohb31f6
+ nTCumVTrpVwtb/PBUpb4oVhYVqcfmDgxPu9Kt6yrLcdMRYnVBCaajcXQ+3JVHjCsD7Yf
+ Nn/96wOtGrwUV+FT518NQgZYhcxFHpTS1JCprtOYG+uSJUqCZ/j+9kKM8xy5icAXjx4D
+ 1BLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754177530; x=1754782330;
+ d=1e100.net; s=20230601; t=1754177582; x=1754782382;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1d9dQVqrNWqrEXWej/JwzyJrCDkscWOsMBodTniFYpE=;
- b=WbaAhrMa8Rmyo/eO3/h+AFtaTx4zLhr8ch8BtIX6qSXBeMuWwTrqHNpBGv4iA7/cyE
- aen8UFBn4j9rvXshSt2hugtPZCz7qqzK4yJX/4Y6LRVleA47RvGuLNYM7yQ77hWg4mZt
- SFYlpTgI1hV881ehCUVzOIeNYOQsLE5EU+Ksup8IcZgcjUZ0vnMDvKiiJnzMWyrsWtrD
- GurJ1jCifWeIkRQXK0SoyIyt2zNWwI976TeXC40Z8uc/zbN04kn90YYBNOLSukyzgZ4o
- TETe5nSwPP6J9LD51jsMka5QKzzSk8IX6CdODVoWBWg0cuTUzzLCeJ9OsZLwsLgrrule
- qgyA==
-X-Gm-Message-State: AOJu0YzMSN3bsWUAnRi5sE5YUz9MO2My0lXdDP//sLiI5kCBrS8o+V2G
- TknJTzTNROdMAaVkTpkShVrhLRhyWyRPOckVBE1sknQWhFk2ShpvVpNTbzxrTBWh+jF9tw1vors
- 5u/ZiZNc=
-X-Gm-Gg: ASbGncu/A56jcmYNb5Fig+UpnAP66phW4tMEVqE6v9VAU+/sEM7BXqyb2Bso3jiIq2s
- g5uOY6Dxt2mJu6OB7WnJhCxGc/TyY/Akg+hmBurPG+tAZbhEMdtffIPmzeeiuoIBxanLQ0a8q5O
- J5ddq4QqHSvu4o7Qc9zRtgC+72yBuSH2FRRR0aJREtb1rCsXEqq3P7gRYcNPCORPGPOb9vO3GPF
- FgRmCVaBymnhgDtScxRl5MNsG889tAalKyjZFmlxHztWnS22vAb2fuS2Kj05ge5jrmoMdjpmlr3
- fOTf+w4VBBe8EnKhYpe27Gk+v4SG81+ICeNxC7HXh8iqWRZppBi+W3c+FPclFg+b8cvmv8hrRlp
- 9j/0qD5ln/Rv3PWyYKLFXIEVAiTNI5WSo03mrA0Bwy0TTeN11q86Z
-X-Google-Smtp-Source: AGHT+IHgcPZ5Lzyeh1ys/R0BlrxMmuQonLdotkK3Mu5rKHzjSEd9UKKV2Vae2U+3ukwyRWoOd1spHA==
-X-Received: by 2002:a05:6871:4519:b0:308:51fe:ea07 with SMTP id
- 586e51a60fabf-30b67558bf1mr2385170fac.1.1754177530420; 
- Sat, 02 Aug 2025 16:32:10 -0700 (PDT)
+ bh=1FtjhMLhMPqBf/akhP4/Q7b8Tx2CMEduly/logXB3Ks=;
+ b=LoOGjBUuumoh6tXZPzms4FoVrJmiyssJdzQiiCIQ+pDi7weGneIMstZ3j3mkzCukAy
+ uxRfIUH+8sfjKUfFUBqv0BzwBmH1lB6xK9Y+OeJ1NXu8GezNGoy/xTgIuleVcdvIxfOE
+ V9zIznMwqmNeoF8lFvyzRGingQB6R1RlZP7jxEDv+otIyyF3rWwN22iCxeno3JzUINeB
+ 7xtusxxUd/F2J68/QAhdZEJ9C1NB/WcMtqM6lSf2HjKlOtwYBlzikKL//aAem8yz1hfH
+ Skmz0p50sONrN94BvyLsRgtgJ0xjEEwh7D693na7pk/adbfsfickphIc/PlW0YsLQqDL
+ Phgg==
+X-Gm-Message-State: AOJu0YxB6LA7fSnuzdR0gE1Ly0pLwSRHSfI5ymZDAckjzDA8rjTT1Py8
+ 7NLKZHaes/7JUDtyTnoM8/KzJoIFYyDCy+Ib71PpX/sf5F3oAVz2O6qmW78hzTUjhRcC1SFxD+m
+ U+8+AoNQ=
+X-Gm-Gg: ASbGnct5S219jzylOrrPbIxsNX5rhQ9QahxC0n255bv0NWdat1ZUVzS9D2gySlF3p48
+ yPBTAMdsuykDaewoKIrCGJ1dbxBNA0daNle0FP0UWjpbXOlpGFHZQjowu+mGeg9i/v6oVdC1SYe
+ j0LM1uVJIAfmGgSru3jhhK9oFqFSaEOxP2n+iPv5RE7hW+ujMCyqcTLEz6rdhppVbz2Z25LHkZr
+ C/gor8k2Hpc4viTxM6KSWTrNsxSmG9FSooFbaqO01Ma8qJs3TqaQZcQPC+Z4F7kh7TKFf6LfMOI
+ U0GeGrmOJH/wvKrruYkfG7+x3S3Dorut/5f39bPAEsjW50ppotkEWIgsnEdmJf6LGYoDTAVlBHq
+ k4u4l96P6FELEizoUI3SIo+rU7qq3XWtrkGIlHdmqlU8GrV8KA2IT
+X-Google-Smtp-Source: AGHT+IFHWK1G/DsWOIrrEvnMh4//0acEeGJFeyNLA7J8ewcVJqBhyyExlozGJzjucIUydrU1ZK7sag==
+X-Received: by 2002:a05:6870:d8f:b0:306:e708:c958 with SMTP id
+ 586e51a60fabf-30b6685aa08mr2847951fac.4.1754177582557; 
+ Sat, 02 Aug 2025 16:33:02 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-30b8e3c9b32sm71031fac.24.2025.08.02.16.32.06
+ 586e51a60fabf-30b8e3c9b32sm71031fac.24.2025.08.02.16.32.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:32:10 -0700 (PDT)
+ Sat, 02 Aug 2025 16:33:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 27/85] include/hw/core/cpu: Introduce cpu_tlb_fast
-Date: Sun,  3 Aug 2025 09:28:55 +1000
-Message-ID: <20250802232953.413294-28-richard.henderson@linaro.org>
+Subject: [PATCH v2 38/85] target/arm: Convert regime_is_pan from switch to
+ table
+Date: Sun,  3 Aug 2025 09:29:06 +1000
+Message-ID: <20250802232953.413294-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802232953.413294-1-richard.henderson@linaro.org>
 References: <20250802232953.413294-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,137 +101,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Encapsulate access to cpu->neg.tlb.f[] in a function.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h        |  7 +++++++
- accel/tcg/cputlb.c           | 16 ++++++++--------
- tcg/aarch64/tcg-target.c.inc |  2 +-
- tcg/arm/tcg-target.c.inc     |  2 +-
- 4 files changed, 17 insertions(+), 10 deletions(-)
+ target/arm/internals.h       | 13 -------------
+ target/arm/mmuidx-internal.h |  8 ++++++++
+ target/arm/mmuidx.c          |  9 +++++----
+ 3 files changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1153cadb70..bd835b07d5 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -593,6 +593,13 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
-     return (CPUArchState *)(cpu + 1);
- }
- 
-+#ifdef CONFIG_TCG
-+static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
-+{
-+    return &cpu->neg.tlb.f[mmu_idx];
-+}
-+#endif
-+
- typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
- extern CPUTailQ cpus_queue;
- 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index d324f33339..2a6aa01c57 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -129,7 +129,7 @@ static inline uint64_t tlb_addr_write(const CPUTLBEntry *entry)
- static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
-                                   vaddr addr)
- {
--    uintptr_t size_mask = cpu->neg.tlb.f[mmu_idx].mask >> CPU_TLB_ENTRY_BITS;
-+    uintptr_t size_mask = cpu_tlb_fast(cpu, mmu_idx)->mask >> CPU_TLB_ENTRY_BITS;
- 
-     return (addr >> TARGET_PAGE_BITS) & size_mask;
- }
-@@ -138,7 +138,7 @@ static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
- static inline CPUTLBEntry *tlb_entry(CPUState *cpu, uintptr_t mmu_idx,
-                                      vaddr addr)
- {
--    return &cpu->neg.tlb.f[mmu_idx].table[tlb_index(cpu, mmu_idx, addr)];
-+    return &cpu_tlb_fast(cpu, mmu_idx)->table[tlb_index(cpu, mmu_idx, addr)];
- }
- 
- static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
-@@ -292,7 +292,7 @@ static void tlb_flush_one_mmuidx_locked(CPUState *cpu, int mmu_idx,
-                                         int64_t now)
- {
-     CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
--    CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
-+    CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
- 
-     tlb_mmu_resize_locked(desc, fast, now);
-     tlb_mmu_flush_locked(desc, fast);
-@@ -331,7 +331,7 @@ void tlb_init(CPUState *cpu)
-     cpu->neg.tlb.c.dirty = 0;
- 
-     for (i = 0; i < NB_MMU_MODES; i++) {
--        tlb_mmu_init(&cpu->neg.tlb.d[i], &cpu->neg.tlb.f[i], now);
-+        tlb_mmu_init(&cpu->neg.tlb.d[i], cpu_tlb_fast(cpu, i), now);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 962fc423a6..f665971b97 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1029,19 +1029,6 @@ static inline void arm_call_el_change_hook(ARMCPU *cpu)
      }
  }
  
-@@ -342,7 +342,7 @@ void tlb_destroy(CPUState *cpu)
-     qemu_spin_destroy(&cpu->neg.tlb.c.lock);
-     for (i = 0; i < NB_MMU_MODES; i++) {
-         CPUTLBDesc *desc = &cpu->neg.tlb.d[i];
--        CPUTLBDescFast *fast = &cpu->neg.tlb.f[i];
-+        CPUTLBDescFast *fast = cpu_tlb_fast(cpu, i);
- 
-         g_free(fast->table);
-         g_free(desc->fulltlb);
-@@ -667,7 +667,7 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-                                    unsigned bits)
+-static inline bool regime_is_pan(ARMMMUIdx mmu_idx)
+-{
+-    switch (mmu_idx) {
+-    case ARMMMUIdx_Stage1_E1_PAN:
+-    case ARMMMUIdx_E10_1_PAN:
+-    case ARMMMUIdx_E20_2_PAN:
+-    case ARMMMUIdx_E30_3_PAN:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
  {
-     CPUTLBDesc *d = &cpu->neg.tlb.d[midx];
--    CPUTLBDescFast *f = &cpu->neg.tlb.f[midx];
-+    CPUTLBDescFast *f = cpu_tlb_fast(cpu, midx);
-     vaddr mask = MAKE_64BIT_MASK(0, bits);
+     return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
+diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
+index f03a2ab94c..41baf1a003 100644
+--- a/target/arm/mmuidx-internal.h
++++ b/target/arm/mmuidx-internal.h
+@@ -16,6 +16,7 @@ FIELD(MMUIDXINFO, ELVALID, 2, 1)
+ FIELD(MMUIDXINFO, REL, 3, 2)
+ FIELD(MMUIDXINFO, RELVALID, 5, 1)
+ FIELD(MMUIDXINFO, 2RANGES, 6, 1)
++FIELD(MMUIDXINFO, PAN, 7, 1)
+ 
+ extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ 
+@@ -56,4 +57,11 @@ static inline bool regime_has_2_ranges(ARMMMUIdx idx)
+     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, 2RANGES);
+ }
+ 
++/* Return true if Privileged Access Never is enabled for this mmu index. */
++static inline bool regime_is_pan(ARMMMUIdx idx)
++{
++    tcg_debug_assert(arm_mmuidx_is_valid(idx));
++    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, PAN);
++}
++
+ #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
+diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
+index f880d21606..98db02b8e5 100644
+--- a/target/arm/mmuidx.c
++++ b/target/arm/mmuidx.c
+@@ -10,6 +10,7 @@
+ #define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK)
+ #define REL(X) ((X << R_MMUIDXINFO_REL_SHIFT) | R_MMUIDXINFO_RELVALID_MASK)
+ #define R2     R_MMUIDXINFO_2RANGES_MASK
++#define PAN    R_MMUIDXINFO_PAN_MASK
+ 
+ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     /*
+@@ -17,24 +18,24 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+      */
+     [ARMMMUIdx_E10_0]           = EL(0) | REL(1) | R2,
+     [ARMMMUIdx_E10_1]           = EL(1) | REL(1) | R2,
+-    [ARMMMUIdx_E10_1_PAN]       = EL(1) | REL(1) | R2,
++    [ARMMMUIdx_E10_1_PAN]       = EL(1) | REL(1) | R2 | PAN,
+ 
+     [ARMMMUIdx_E20_0]           = EL(0) | REL(2) | R2,
+     [ARMMMUIdx_E20_2]           = EL(2) | REL(2) | R2,
+-    [ARMMMUIdx_E20_2_PAN]       = EL(2) | REL(2) | R2,
++    [ARMMMUIdx_E20_2_PAN]       = EL(2) | REL(2) | R2 | PAN,
+ 
+     [ARMMMUIdx_E2]              = EL(2) | REL(2),
+ 
+     [ARMMMUIdx_E3]              = EL(3) | REL(3),
+     [ARMMMUIdx_E30_0]           = EL(0) | REL(3),
+-    [ARMMMUIdx_E30_3_PAN]       = EL(3) | REL(3),
++    [ARMMMUIdx_E30_3_PAN]       = EL(3) | REL(3) | PAN,
+ 
+     [ARMMMUIdx_Stage2_S]        = REL(2),
+     [ARMMMUIdx_Stage2]          = REL(2),
+ 
+     [ARMMMUIdx_Stage1_E0]       = REL(1) | R2,
+     [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
+-    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2,
++    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
  
      /*
-@@ -923,7 +923,7 @@ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
-     qemu_spin_lock(&cpu->neg.tlb.c.lock);
-     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
-         CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
--        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
-+        CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
-         unsigned int n = tlb_n_entries(fast);
-         unsigned int i;
- 
-@@ -1316,7 +1316,7 @@ static bool victim_tlb_hit(CPUState *cpu, size_t mmu_idx, size_t index,
- 
-         if (cmp == page) {
-             /* Found entry in victim tlb, swap tlb and iotlb.  */
--            CPUTLBEntry tmptlb, *tlb = &cpu->neg.tlb.f[mmu_idx].table[index];
-+            CPUTLBEntry tmptlb, *tlb = &cpu_tlb_fast(cpu, mmu_idx)->table[index];
- 
-             qemu_spin_lock(&cpu->neg.tlb.c.lock);
-             copy_tlb_helper_locked(&tmptlb, tlb);
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 3b088b7bd9..caf79c742d 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -1668,7 +1668,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst->oi = oi;
-         ldst->addr_reg = addr_reg;
- 
--        /* Load cpu->neg.tlb.f[mmu_idx].{mask,table} into {tmp0,tmp1}. */
-+        /* Load CPUTLBDescFast.{mask,table} into {tmp0,tmp1}. */
-         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, mask) != 0);
-         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, table) != 8);
-         tcg_out_insn(s, 3314, LDP, TCG_REG_TMP0, TCG_REG_TMP1, TCG_AREG0,
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 836894b16a..4069508272 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1420,7 +1420,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
-         ldst->oi = oi;
-         ldst->addr_reg = addr;
- 
--        /* Load cpu->neg.tlb.f[mmu_idx].{mask,table} into {r0,r1}.  */
-+        /* Load CPUTLBDescFast.{mask,table} into {r0,r1}.  */
-         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, mask) != 0);
-         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, table) != 4);
-         tcg_out_ldrd_8(s, COND_AL, TCG_REG_R0, TCG_AREG0, fast_off);
+      * M-profile.
 -- 
 2.43.0
 
