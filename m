@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5D2C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 20:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF174C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 20:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiJ8t-0005ST-Ui; Sat, 02 Aug 2025 16:47:47 -0400
+	id 1uiJCk-000135-Hl; Sat, 02 Aug 2025 16:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiJ6m-0003LO-OE
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:45:49 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ id 1uiJCi-000117-L3
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:51:44 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiJ6l-0006nL-4i
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:45:36 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e8e14cf9e2aso2764292276.0
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 13:45:34 -0700 (PDT)
+ id 1uiJCh-0007u9-6A
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 16:51:44 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e8fdbd45e10so2062801276.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 13:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754167533; x=1754772333; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754167902; x=1754772702; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Paal+RWsK68F19aefmtytC3YJ6l++abOPX1eoQrwhFk=;
- b=sh/eRQyR9XhdZV55XSlp8WFF7JwbyO3H9JQC7yFvYgA3kcqY0MA+iDEl+M9NaIsekq
- z+UhcLQlQlbNLy5XDI+zs341I2mUJOxUqGmbr8MMEXfNk0zvpffWizO/yayMNC2vkJH2
- Sv2KHKC2a6xiOODwDqvxyCd5CZh+PgAPHuo0ER5ywgCw/BMYjX5VtZylITX3umkQwgzc
- 7R2gc8zKms+mMobfHRXl7ENp+3UwFC9kxRwGxM2guRHTXqmTwkQmwZrFHJMSTQtFHYQ9
- JLnohqr9dgV0YkTdw5Wq704SrW5hU5ePBZMemPS7COP6AoO1AU59zFzIu2bzT/6cLrs9
- S2Sg==
+ bh=eWEPn9MvEFyW5GejOjujmyz6er7L0QAJwNpmlGpI+9E=;
+ b=Pl7Qrh721rv61fjJ7Ubzmkrdwx7Yr6N77aG++iVJtvhnejCCb0EalsU06TI6wf6Pmx
+ mOJu5GfJwmo5PCAAK2KnfWvtW/yXNs6DR5NzZPPuq3iQL8GER/XebEFy5+LYtbQTg7r8
+ lHuZVsaxY42ag1f0zG+Il0eNydVWt6f1C/KANvItcloMb1OgJXIIqckUPhwdgL2TNMP6
+ Fcug+5/qin3eY+KRIwfEVrrdTzVq/43RO9peRAbj62xe3yWDBl8sjPYtRGfsx9M9rabv
+ v5yNmJDTzHizhZa6DWxmOb8qmiq/3FYZz8wBHjtT/kfdTH5smt3Pe1jtLhP7+iESwIAH
+ WVHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754167533; x=1754772333;
+ d=1e100.net; s=20230601; t=1754167902; x=1754772702;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Paal+RWsK68F19aefmtytC3YJ6l++abOPX1eoQrwhFk=;
- b=I+k+rumzVt6Y8GIsbpteBlsnIsRVRqETPOUrS6QNraDdD7+nzn+OxL+5Z+WkSsch7l
- +z6pp11CRBCII4rNsQaSGPw0RueA9LOVxxptKc81YTxmKVzwi5dTiqIHDI5k5Sw1214X
- DhqPxKv0+N9oD+V7pixil0SNw9UWOdORFBYl4g5E1zrygBbN8+x7kv2bP/GV5ZEkuSJU
- Si6jaN+we1sBDLMRgRHTAD+xZ9Bv/HjgelKgXArscr8C4BwUtDP4PAKeCUqPIAiuOzU/
- 9VTbUDjxe0YNs8aReslsArqC3P9TjC9FRgY9GZ6DtWHI4mf5q/BTmNN0x/N8oIUWtrQs
- 3plA==
-X-Gm-Message-State: AOJu0Yzzo0T20qzXoc9luQTWPWCYl2RrZ40iC69rJnMKAJMpHAHHBBSG
- Xkv77mvsQJpH3Pj7vj39Ik7MIuD05wOgWTmFRyYv5AgPeyaXcRk9iCR51vV+x6Bp1N6eIuYBD2F
- wNdvxC7ZeKtVJ4bsvAZsrR1ACPcnT/pqejzZsQFlOqQ==
-X-Gm-Gg: ASbGncsI442tsSlk0k2X9PKkfgf7kN2T9h2t7RpsP4XjRm1d87AMydePvJJ7gyatA/z
- 3DwJ3uEZHPzv8t28EoDBbLZTQj1OL64V0xVfQ7FXDyq+2Q0IjLWjNjHrh0bFoUpy9nEw5gpgjBs
- qm5g1CfQ/Q9N4OMO/GihJmulg2cI3BiVEG3zrnB/XDMkGYSq9mwTqG+kMwnIAYvFzhGHcvVB8zb
- m7Z1XF8
-X-Google-Smtp-Source: AGHT+IFB6DCMBAvlBumRqrODz19FjVC/fsJODT7X3KPrXppx2V38Fou4tA5qTi857TyirQbnGyt4P7l6TbTOfutAP3I=
-X-Received: by 2002:a05:690c:3109:b0:719:f41b:81f8 with SMTP id
- 00721157ae682-71b7f84891dmr33434247b3.19.1754167533588; Sat, 02 Aug 2025
- 13:45:33 -0700 (PDT)
+ bh=eWEPn9MvEFyW5GejOjujmyz6er7L0QAJwNpmlGpI+9E=;
+ b=SyUdBu4iA+FTo5JNghfzYpXWl9j+wP5+SFh0WFzKfIJrCer3hCqTNlSU5wbCq01WhR
+ czRWgoWqRzQD99t2yeuFDqfxY6/Fjcm/0T9x6tGwSWNbMTBRSOUSXpVO7bgihoQnFIP2
+ PoV0YCr+/altkPWX7yEFSaH2sH2q6yBI6DuAyc1D1IbeoaDl+ok6+dcDf3Uhsfgudnqk
+ PbOQujqgC8A6N/+xENG8CpKZU7l6TvHaXaI4Ficrwhim7LKlW7tJdSi/nTNk2Ikc8LNQ
+ ehBVOnYNtfafZOnA1pL9f629anGICmGYg0y2qFKnlL5FS7tiYKSozEiiEJNNOjolHFrT
+ 6Vng==
+X-Gm-Message-State: AOJu0Yz7nWJjJFupOuHi1plE9BYH3a0MP0A/CGcS/dhjHtryt9fPOAXp
+ ai9IqSW5pc5bjsqpF95qk6uxTIYgoJebdDBxRGSvYQHy6onJFA5me69gxfs+F80a+T7iaoko2m/
+ ccCoAEjSoYSHqG8GTEO1X0S91UhdQruxdEUnrPoVexg==
+X-Gm-Gg: ASbGnct6QVV6KJvvn0Be0PrQVZOa2yGRWt2yyqyNlNsjiLd1p50yKJ5F2ZmhNkGUQSX
+ 73BizEk/q3v2+79+wH2l2SDyROgxdtEXBb1JY85sbpILCUJjuho3liOCwJUJWwgiaH4i0PUVEl4
+ HZd94KFuseHxbOXsn77dtKUXFGUf1Xqs3SnSPjFZzrAmw1JzxO5fCPj69am57aTM9lHsrNbpM0z
+ kuC3/fl
+X-Google-Smtp-Source: AGHT+IHvbYFk2EGn3jk9s0gN1cVvd00uzhCX3M4TuFWgKS72r1OcsaPVvsa44oLI8lWcRGaHd+by/wo0tK0vDoWAieU=
+X-Received: by 2002:a05:690c:6d02:b0:71a:3276:d6e1 with SMTP id
+ 00721157ae682-71b7ef654admr57793807b3.26.1754167901686; Sat, 02 Aug 2025
+ 13:51:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250730000003.599084-1-richard.henderson@linaro.org>
- <20250730000003.599084-90-richard.henderson@linaro.org>
-In-Reply-To: <20250730000003.599084-90-richard.henderson@linaro.org>
+In-Reply-To: <20250730000003.599084-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 2 Aug 2025 21:45:22 +0100
-X-Gm-Features: Ac12FXwDs1f56Jy1mMX3lqG9XbtD3zd2O9Z6ba_grmY2H7HsmRGWjfHOzpFx2VI
-Message-ID: <CAFEAcA-pwk1n0pw=bj8CsqRb_8qv4E5poA=TwpE6SRCYgRe2VA@mail.gmail.com>
-Subject: Re: [PATCH 89/89] linux-user: Remove struct target_pt_regs from
- target_syscall.h
+Date: Sat, 2 Aug 2025 21:51:30 +0100
+X-Gm-Features: Ac12FXwcMr6ZKjRyj9qXAgh7obG6DesQAKNOpsKaU_qbt5N2P2RUlQRSTAsVJfs
+Message-ID: <CAFEAcA_WAAENjvMDPujw1Z5RvuY3F89i_-m++5YyWOvcBQnG4g@mail.gmail.com>
+Subject: Re: [PATCH for-10.2 00/89] linux-user: Split up elfload.c
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,19 +92,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Jul 2025 at 01:39, Richard Henderson
+On Wed, 30 Jul 2025 at 01:15, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> This structure is unused, and would only ever be used for the
-> ptrace syscall, which we will never implement for linux-user.
+> The goal is to kill the massive target ifdef ladder in elfload.c.
+>
+> The functions get moved to linux-user/target/elfload.c.
+> Define weak functions to provide a default value, or a
+> weak reference to determine if the function is provided.
+>
+> The core dump types and functions are moved to
+> linux-user/target/target_coredump.h.
+>
+> The macros get moved to linux-user/target/target_elf.h.
+> These are mostly use to parameterize include/elf.h, but
+> there are some other outliers.
+>
+> The init_thread functions, storing into target_pt_regs, have been
+> merged with target_cpu_copy_regs, copying out of target_pt_regs
+> into CPUArchState.  Merging these found a few bits of silliness
+> where pt_regs fields were initialized but not used.  To encourage
+> this never to return, remove most target_pt_regs and hide the rest
+> within the relevant signal.c.
 
-It's not 100% impossible -- IIRC valgrind does it -- but yeah,
-if we haven't implemented ptrace in all these years we're likely
-never going to do so.
+Thanks for doing this -- it's one of those cleanups that's
+been lingering around not done for years. I think I've
+reviewed (or commented on) all the patches in the series now.
 
+A quick grep suggests that about the only remaining target ifdef
+ladder we have in the codebase is in linux-user/syscall_defs.h
+(where we have things like "struct target_stat for each architecture,
+and some of them get to share the asm-generic version".)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
 -- PMM
 
