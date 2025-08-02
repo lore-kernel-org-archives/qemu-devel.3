@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BE9C87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43277C87FC9
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLO9-00034B-9X; Sat, 02 Aug 2025 19:11:41 -0400
+	id 1uiLPE-0005wj-DC; Sat, 02 Aug 2025 19:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLO3-0002fE-MD
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:36 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1uiLP4-00059i-K3
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:38 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLO2-0001ky-10
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:11:35 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-61997c8e2a1so388290eaf.1
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:11:33 -0700 (PDT)
+ id 1uiLP2-0001uc-Vc
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:12:38 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-433f1f97199so593173b6e.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176293; x=1754781093; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176356; x=1754781156; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VKntQcixz63yFkwnTw1RDc2VhvvMyz/VZ3kBWpA/ESY=;
- b=tiaGU2w43UyDJjXUrtSPzAu6+bG7q6UnBUSRepf9LWX1gCY4G1v1DoKlHlqcyIKYbi
- v6CEFvblhZi6K69S11zAtQ5bSwpLMb7w50gt2+mhq5NKjkwwsl2Y4kOMaCiBvnbq2jIh
- 1bbKVIJxw9nfy9xidRdDZx2OPj/pQqALUVCxOjUL2Pt0JBxtnMDwA7/8mTVnwnFOu3l/
- 8gLzGP+hD83ZlK/oqxjOLvRtcV5XnaeugDXnHsbUMimQAnKMBHTW8ACM34Dh+O7ciexR
- BseNlnA1ZpyreRpvVGMtFXClq4gGMIDGRHngGR2hlcIYQvpgmNygpIhMx5KBheUy8ZPq
- PYUw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QP61lQW9RuzWvrPNmZmEKa6PBqjBLfDxLSYJ7A/0qbE=;
+ b=K7wRL8VJpvnDm3W7LxVeVZXHfBVMS3nAnZM8RDq8KaN19fOYsj1nNBG+LoF+WKt3cH
+ 5YBu84NGg5vas3scHZruttba8mOdsusGrCnqJxb83RyYeRve0KEjrEtiCedtxtO/jUuY
+ mGAMZoM3f4Fy63rSbGm5OefwgzWzLJIpa77moLE1tffWh8LY26XfTmYnDyci9sRUiqv3
+ B6aVZVhIVc+wc0My5A2cAYDTj3YyslUu3lf1MZFgzibABeaf67saANMM/cn4O0Rnwk9y
+ CEJLPkVfVfO35UA5kX93EvOAJAVird2QOqamDdFErAeC2vT63zSKhsWzEnICC0i9Rxci
+ anxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176293; x=1754781093;
+ d=1e100.net; s=20230601; t=1754176356; x=1754781156;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VKntQcixz63yFkwnTw1RDc2VhvvMyz/VZ3kBWpA/ESY=;
- b=GBt72Dc+w6XlRdN45TU14xLFkYxQm5Rfj1+IrF/jK27UaJuHzdeRysynRKKHkjVdMb
- hdxt+g4mBhXs3aWtINGhFYW0OVD2LnmLR5DYV0a8KkioztePWcHF5N3yfq6cOXpbh/eT
- 7AXfqO3CUSy4M0lJO2p5ifmp76DUTyMIRxEQdVeEzL4kPZxOUoYC7qvI5uCWl7r0jxxT
- 5fkQFtck9nRMihuWixfehroawiTK7h7pqY8RaXCNe89DLyhtXQOfpjOUJfF01WN6+tLw
- 9teT+lodaD3/FtqM7yzWFqi3c20Ztd4zOgeQglSYA6C8aMI+vLi51w/ILAbKSkfWLDvh
- hTZA==
-X-Gm-Message-State: AOJu0YyWSMdFsqmHvmlqV3WKsbcBPyneQHVhN+yNhPEDBxhrf7UmVI23
- Iki3HFhah199goNDA1oxdyu+zAadsPiOtlf7XPbMlBQuiokTv8oYfWpM+02fXCuQ4g9+c/67HnG
- u7J4Z9QY=
-X-Gm-Gg: ASbGncunsAOMqy/YxFHakQ3qEOUgocyxH5Mo77tHyKYSAXKVPsXspmxOdKVy7Ji4cst
- IAZcqNecYPTXno69LuE7+QlTTrNHIhZYWSdegDRsP9mhfkjurRvqFj0SotstF9rvDM007FBNGw+
- giT1YbrToA9ublPxnoAKVglx0u6JsbAgeApwvg6Vm0Y+XOoQGcv6dLPAciGpkS2SeQeS432xAWf
- eMfGc5MFZjHmHPMsRVP7tDBC109hNT9KYWAmauxmm6grdG8CSlQk61QG1gVc84Ok2V0WxD+rfUT
- mRuCP4iWBNjxCb8lNbewZoxTImG1I7oBhcAA1oBtB6glRr9YP3t4nNwJEQmZSlLlUwUInRN7jua
- oI4BM8BpnE45gtk5h48kzDTLjTSr5QB8YJxa/9ujfFgGD02NtkkBP
-X-Google-Smtp-Source: AGHT+IEbgYaaPzjVCyofJvavnWW+5OfnPOzoEwTxTc8zXqkBmI0xiGsLMBB49248n5b2KLC/HVVcQg==
-X-Received: by 2002:a05:6820:4810:b0:619:932b:3dab with SMTP id
- 006d021491bc7-619932b3f75mr1684237eaf.2.1754176292503; 
- Sat, 02 Aug 2025 16:11:32 -0700 (PDT)
+ bh=QP61lQW9RuzWvrPNmZmEKa6PBqjBLfDxLSYJ7A/0qbE=;
+ b=lRp5ZxF/fVMt2bfP9Buflk+HadAaC4ZunhrAwKln+3QQi4VwtbtgAmYv5YLL9CAuvZ
+ cr+oQQp7Le8IsXroWi5ejUttofugbdFOs7wu5ORwX5Jl2WARjzQPzfLTrMiP7FQYicqB
+ MWI0LxTBCq0RN/lPbcTJiqveu5nSoG0mexIuVopJTckRbSNaAEAD80psPSTBjQeiirxq
+ AMlrBBf7ohMXCpzfKK2kdcgsYBbXpID6lRftvwaqE7sfdMNNGcVPGJoSxgsp06haQ0Ks
+ 70Ul0hLfUrrMfihl8cfexKCbdJ9KEI/JbXZofqOtLpMyvxQ7BB+MGeDfp0W5mFQq9wQd
+ fL+Q==
+X-Gm-Message-State: AOJu0YwZVY1U9kd4LhT1rp4IQZ0JlJaAn86uOGqmdRxIPistJCRb3C4p
+ BkQeBg6Z5bmOU+xMNjSz+tBdCmG8tsEFumKo5bpJA0iEQa5h5xdQjgCiMkZqAU5BXRli3OrWCV/
+ Hze3+cWM=
+X-Gm-Gg: ASbGncuRwZYnuNIJySOvC8CzhHZxysKx7yIN7cyeP5826nJq6Mwc2ITOBXfjaHkhMmQ
+ 5akDhelvdpZwmsn2F5LBWwA4Dd4OndBiUWLkBU3H3UDCT13h+thH5JNINZaOyqZ859VE6/Jr6eX
+ dM5GwTAQTfpkHbzqwgxrLTtkDUHNPNDaHx3fJ6g4FoSvCHaOCg9czpNH5jBESksp3z7PNqsfY89
+ HGECXAdb1dsJqBkdd1hIHnsPigEJu98dhRIHX0PgPYemr3Fa9t09MFeireD9PD2KanewG8oIhRL
+ Yt3mREEDmzdJXFVnuHrx6fw2NivolTbhZK4m6oZBZIt8T1Koi9Rt++J77Te6+JqJs6vMVkDlS7b
+ R5ptLPA1yJj+qEQrBHGq37G7MDJPo6qzVQNUc9Ie/8huLG5nxO/AA
+X-Google-Smtp-Source: AGHT+IFpFymIFV5w67zLoYYOGw+GKjECn0rEbtW5dR1HN7on0vhIX3Wb+0CKGBl1pUD+QDRG/FinAQ==
+X-Received: by 2002:a05:6808:199b:b0:434:487:320e with SMTP id
+ 5614622812f47-43404873ad1mr26721b6e.29.1754176355728; 
+ Sat, 02 Aug 2025 16:12:35 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.11.30
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-61970693ed9sm1084454eaf.20.2025.08.02.16.12.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:11:32 -0700 (PDT)
+ Sat, 02 Aug 2025 16:12:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 56/95] linux-user: Move elf_core_copy_regs to
- microblaze/elfload.c
-Date: Sun,  3 Aug 2025 09:04:20 +1000
-Message-ID: <20250802230459.412251-57-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 75/95] linux-user: Move elf parameters to
+ microblaze/target_elf.h
+Date: Sun,  3 Aug 2025 09:04:39 +1000
+Message-ID: <20250802230459.412251-76-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,82 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move elf_core_copy_regs to elfload.c.
-Move ELF_NREG to target_elf.h.
-
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/microblaze/target_elf.h |  2 ++
- linux-user/elfload.c               | 19 -------------------
- linux-user/microblaze/elfload.c    | 17 +++++++++++++++++
- 3 files changed, 19 insertions(+), 19 deletions(-)
+ linux-user/microblaze/target_elf.h | 5 +++++
+ linux-user/elfload.c               | 9 ---------
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
 diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
-index bfe2997fd2..2d83fdaf6d 100644
+index 2d83fdaf6d..7ce4c10d00 100644
 --- a/linux-user/microblaze/target_elf.h
 +++ b/linux-user/microblaze/target_elf.h
-@@ -8,4 +8,6 @@
+@@ -8,6 +8,11 @@
  #ifndef MICROBLAZE_TARGET_ELF_H
  #define MICROBLAZE_TARGET_ELF_H
  
-+#define ELF_NREG                38
++#define ELF_CLASS               ELFCLASS32
++#define ELF_ARCH                EM_MICROBLAZE
++
+ #define ELF_NREG                38
+ 
++#define elf_check_arch(x)   ((x) == EM_MICROBLAZE || (x) == EM_MICROBLAZE_OLD)
 +
  #endif
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index e5833ec3b4..161118d855 100644
+index 4173a8d619..34a2639d85 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -408,25 +408,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+@@ -130,15 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
  
- #define ELF_EXEC_PAGESIZE        4096
- 
--#define ELF_NREG 38
+-#ifdef TARGET_MICROBLAZE
 -
--/* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
--void elf_core_copy_regs(target_ulong *regs, const CPUMBState *env)
--{
--    int i, pos = 0;
+-#define elf_check_arch(x) ( (x) == EM_MICROBLAZE || (x) == EM_MICROBLAZE_OLD)
 -
--    for (i = 0; i < 32; i++) {
--        regs[pos++] = tswapl(env->regs[i]);
--    }
+-#define ELF_CLASS   ELFCLASS32
+-#define ELF_ARCH    EM_MICROBLAZE
 -
--    regs[pos++] = tswapl(env->pc);
--    regs[pos++] = tswapl(mb_cpu_read_msr(env));
--    regs[pos++] = 0;
--    regs[pos++] = tswapl(env->ear);
--    regs[pos++] = 0;
--    regs[pos++] = tswapl(env->esr);
--}
+-#endif /* TARGET_MICROBLAZE */
 -
- #endif /* TARGET_MICROBLAZE */
- 
  #ifdef TARGET_OPENRISC
-diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
-index b92442dfeb..8a17ffa561 100644
---- a/linux-user/microblaze/elfload.c
-+++ b/linux-user/microblaze/elfload.c
-@@ -9,3 +9,20 @@ const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "any";
- }
-+
-+/* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
-+void elf_core_copy_regs(target_ulong *regs, const CPUMBState *env)
-+{
-+    int i, pos = 0;
-+
-+    for (i = 0; i < 32; i++) {
-+        regs[pos++] = tswapl(env->regs[i]);
-+    }
-+
-+    regs[pos++] = tswapl(env->pc);
-+    regs[pos++] = tswapl(mb_cpu_read_msr(env));
-+    regs[pos++] = 0;
-+    regs[pos++] = tswapl(env->ear);
-+    regs[pos++] = 0;
-+    regs[pos++] = tswapl(env->esr);
-+}
+ 
+ #define ELF_ARCH EM_OPENRISC
 -- 
 2.43.0
 
