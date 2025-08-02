@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC21C87FC9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499D0C87FD3
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLU0-000645-BL; Sat, 02 Aug 2025 19:17:44 -0400
+	id 1uiLTg-0005gC-4G; Sat, 02 Aug 2025 19:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLSb-0003f0-Lm
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:18 -0400
+ id 1uiLSz-0003oR-Gj
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:41 -0400
 Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLSZ-0002Y8-5I
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:16 -0400
+ id 1uiLSw-0002eo-TC
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:16:40 -0400
 Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-741a905439eso349253a34.0
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:14 -0700 (PDT)
+ 46e09a7af769-741ad8d0c15so184264a34.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176574; x=1754781374; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754176598; x=1754781398; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZIxZZk/BNm2YTjKM78Vbu4/Y5hyqvqvxEmS8hrDowg4=;
- b=CIS7fs95ucTFse2UDlQFg9TdFPIgUfVEkTrDUxCWboalPiuddY8AxopC+073pdrje+
- m59nxWH6obkCeZwikqiXGCZmpX8MTxtJxNF+drQgQXNvX75eNfzx7wRQxGdfuoXfwizd
- qkKlBFgOfTI7ADgI4d/eHtCG9T+VqH42UBY+AfcFIdfNIAJnl3J6wzWhzPTFVvhdtYkP
- jQLGY2i4bF/gag58mb3r7/iwh0CSKXqI3PC4zDPWQ7pYLuxrglchZsSplmX+AjqAZyz4
- vHGi6EBs7SQiYBiGRMUGAtPZgyRNGLtrt4I9/WbEgIFRnmxIbD8fmfZpQV4ahMcEfrbi
- zM/Q==
+ bh=LaXNjGDttmGP7fojpg5HBIO968y4mIzO2OTSI4a8EsE=;
+ b=tdjDL6PkCN2XILyyslFz1XMYNus4SvaW0WLZYealEHnzF8eBVwd3ObvSzc/4L9kd9L
+ pq/Lj7YdOzlX0KFOzgv6b6jkQ6gVMfh+ajyfYVeGum3Wg4ZLggScGjHFOQzSicP+pCwu
+ 55MViTPuYy/WAelUXZj2qAF5BzyTgw4iOiJjXNk5kYE0ZUFvUPJwnlBu2e/E32UKCJYo
+ L4xY3+tI8bZ/mq/7GVup/689BeTLoQUhMzhV0rDu6iSUZQ4KWqDPcVPrIRG/y/CZo/OH
+ mA/yOD3ywzLyQ0wHLR2865DUlUuzeLbE3WdU0aOavJi+jvgd9Tr7X+4N4gklLxB4xl46
+ t/XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176574; x=1754781374;
+ d=1e100.net; s=20230601; t=1754176598; x=1754781398;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZIxZZk/BNm2YTjKM78Vbu4/Y5hyqvqvxEmS8hrDowg4=;
- b=EcjAmojG886SCw3XNwU62ZGH4lD0UlWk+Ez1lUfZIT9G8QLAzZfsqMpf/zOXiKbWwE
- lt+TgHgP7C63ibSzvbjDbR0oZu/3lLjr3CP0JGTpHkHWkn2KJoN0W811ne5nRRVPoLUY
- Dfh+tt6kXsb61IqSuC+D519s/TPwhzwn5dBIDODRW2svBDe4LX6GJwZLyLcsADOoGUBJ
- Jy4NV0uU4J8CWCJni/3Ws+9ZuB3yyZ0R5ebLP38a30cI1z3Iowqm+GU4n3deogrn4Y9k
- 2YXSW8h5LpwNm5Owr68xvclXxQQY16MooxVEYzY4SLgnB+nYmp3JoB2EskQzL+H7cJyl
- bQSQ==
-X-Gm-Message-State: AOJu0YzlNaqb2h2IrfhPWWQNBp7apQagWcPWBF8gF4fZ11W7GsBbJQAK
- FccwhXBNmM6XhvCCGPT64JmkzoQFdOxhp9HdyyZtbU9fs4dKUR7rgplWrAb3zyYsCzYpajJjTLP
- I3BInrjc=
-X-Gm-Gg: ASbGncuJzfCQ5ohk6CRjcYsjoztxRH4IUfC0DDwHMuHWTthM+odhbjmNRQPNjO2nMlt
- 4NjbU4Vk5hPKdznR+YqJL4QheoMhDcLcvHqzm9jieVmynUNZvKMroe94Cm/1apSJAQrU5HQICGb
- mWefjaMm1PJlkUldz0g50/ydQGa41idCFG66AjEvwO504PRPR4LzwVM/G7JaXCQGE0RtklWwanb
- veGmIr8RJwvB75gqG61GwWBQxKYCgPmA9FiBqp2MQcF+gtBav3a7Q9kooTn7E8mjvhti6QWjDEa
- z7HoFTS7ZnLMbRH1IrP3IW8piFsBNriDZlym4pd/1DHL+BXEa4QBJxhv1N3hMVeoVdRXdJTYukl
- elO26KOdrK2xF+qHjljzcAg9VKfd2EG0Nm1irBzrShOFpbIWJ2SLX
-X-Google-Smtp-Source: AGHT+IHUhxS8prYp0kK8CQ9ELrfc75TQyEeyCUnnPbXKPzcxqXYC5TxOkCr0Ygto7IF2QX3xlbMf7w==
-X-Received: by 2002:a05:6830:660d:b0:73b:2751:eee2 with SMTP id
- 46e09a7af769-7419d2d3e9emr2477035a34.23.1754176573977; 
- Sat, 02 Aug 2025 16:16:13 -0700 (PDT)
+ bh=LaXNjGDttmGP7fojpg5HBIO968y4mIzO2OTSI4a8EsE=;
+ b=CrSMVOeNL747gNL/VCGEudlPdjGf7Heexn/NucOsVCtLZMQhugfs2OIbuokNTt4JLG
+ u0sqvQqLxsaGg2gemNvcDWDGUfuV7/3k4WPTdMnjddG+1BabMrIFrxtAWmggnfbSawoU
+ GPHll8rvKp/L95Dyov+W01qEygoJKAX/XKXgsP/S77BPRLkAQfkMxOU3bZgjDQk9g6cU
+ 0cPvn84LgG8l7rU3yBApF6SmmbvD1VNBK3gksW/53MzaeRh+dx0Wv56akznla+SCA3M6
+ DnSZPNYEei7jCugLetmmXtc1YOQNXlixiBqb4oWuzVrMjnXIOhsvei+Eh2607P2wfY7n
+ dQrg==
+X-Gm-Message-State: AOJu0YzJ8YLunNXpODGCcfUtJFnt3izZveMPXQAwi1Ui0uKS/CCMhVZY
+ g1cAQvXSDD+Z40Xa/ET3arExvhR2TV6Ql3QqfQ7ziPxnxM4pIOOgddSJ3O/x5FFuPaBaBjpF4+0
+ alxiYwdI=
+X-Gm-Gg: ASbGncu++YIB1JuxJBY+r3G8xkj4HUHzrUH2eemnlh+d3OA71Jn+Pjmb5R5BVhk4ey8
+ 7iWF5YxRopW+Wso8guJkajFxzUecWdeonQTnAg2+hmEUokXPdloFFoCYcBc+7SImxHUQdcEXbct
+ 4wyG9Kfsr6fd8hFwksng7Z4su3wN4XD1DSh/0904l5D8g3wsk/emdRy+iYspqAkmqW+9My9khK8
+ vGolc81lOWbhINeBdw1ZrQrotgJ3IUXPPd8CrM9KYgyQ8abUU8QvickIDG6k96Dha/MgoUA9R84
+ hAS44bGB0kEfI/VSuu6fnC5S6Ij1xpCMFsYg0/4BCOCsHX8wgfJot6oTTm1DgJTm4e8wURMMACK
+ omUviQW7ajgsDG53ubJm9zM2a9VBH1mjSPGHHkycrNuOiFNSBqzZo
+X-Google-Smtp-Source: AGHT+IG7WkORUhv0vKi/o3LTWA/GYXdgc/GSLKxx6Oj0N3OW77a/+6VGgsjjgpTIV275q6BabSowPQ==
+X-Received: by 2002:a05:6830:7195:b0:73e:8b47:a3ad with SMTP id
+ 46e09a7af769-7419d1483ddmr2726349a34.11.1754176597806; 
+ Sat, 02 Aug 2025 16:16:37 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.11
+ 46e09a7af769-741930994e2sm1081608a34.1.2025.08.02.16.16.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:16:13 -0700 (PDT)
+ Sat, 02 Aug 2025 16:16:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 83/95] linux-user: Move elf parameters to
- xtensa/target_elf.h
-Date: Sun,  3 Aug 2025 09:04:47 +1000
-Message-ID: <20250802230459.412251-84-richard.henderson@linaro.org>
+Subject: [PATCH v2 89/95] linux-user: Move arch_parse_elf_property to
+ aarch64/elfload.c
+Date: Sun,  3 Aug 2025 09:04:53 +1000
+Message-ID: <20250802230459.412251-90-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
@@ -100,45 +100,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Rename the controlling macro to HAVE_ELF_GNU_PROPERTY to
+match the other HAVE_* macros.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/xtensa/target_elf.h | 3 +++
- linux-user/elfload.c           | 7 -------
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ linux-user/aarch64/target_elf.h |  1 +
+ linux-user/loader.h             |  5 +++++
+ linux-user/aarch64/elfload.c    | 18 +++++++++++++++
+ linux-user/elfload.c            | 39 +++++++--------------------------
+ 4 files changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/linux-user/xtensa/target_elf.h b/linux-user/xtensa/target_elf.h
-index f84fc9e6d1..011a77a1d7 100644
---- a/linux-user/xtensa/target_elf.h
-+++ b/linux-user/xtensa/target_elf.h
-@@ -8,6 +8,9 @@
- #ifndef XTENSA_TARGET_ELF_H
- #define XTENSA_TARGET_ELF_H
+diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
+index 5d41bf4ec6..79f8c6957c 100644
+--- a/linux-user/aarch64/target_elf.h
++++ b/linux-user/aarch64/target_elf.h
+@@ -14,6 +14,7 @@
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
++#define HAVE_ELF_GNU_PROPERTY   1
  
-+#define ELF_CLASS               ELFCLASS32
-+#define ELF_ARCH                EM_XTENSA
+ #define ELF_NREG                34
+ 
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 7fad9e7b4a..e17d2ed622 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -120,4 +120,9 @@ typedef struct {
+ /* Note that both Elf32_Word and Elf64_Word are uint32_t. */
+ const VdsoImageInfo *get_vdso_image_info(uint32_t elf_flags);
+ 
++bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
++                             const uint32_t *data,
++                             struct image_info *info,
++                             Error **errp);
 +
- /* See linux kernel: arch/xtensa/include/asm/elf.h.  */
- #define ELF_NREG                128
+ #endif /* LINUX_USER_LOADER_H */
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index 3581b45d50..fdb40722b1 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -1,9 +1,11 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
  
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "qemu.h"
+ #include "loader.h"
+ #include "target/arm/cpu-features.h"
++#include "elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -348,6 +350,22 @@ const char *get_elf_platform(CPUState *cs)
+     return TARGET_BIG_ENDIAN ? "aarch64_be" : "aarch64";
+ }
+ 
++bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
++                             const uint32_t *data,
++                             struct image_info *info,
++                             Error **errp)
++{
++    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
++        if (pr_datasz != sizeof(uint32_t)) {
++            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
++            return false;
++        }
++        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
++        info->note_flags = *data;
++    }
++    return true;
++}
++
+ void elf_core_copy_regs(target_ulong *regs, const CPUARMState *env)
+ {
+     int i;
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 82137e7f59..f6fb9926a7 100644
+index ade72c7624..422414ad1d 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -130,13 +130,6 @@ typedef abi_uint        target_gid_t;
+@@ -166,41 +166,18 @@ const char *get_elf_platform(CPUState *cs) { return NULL; }
+ const char *get_elf_base_platform(CPUState *cs) { return NULL; }
  #endif
- typedef abi_int         target_pid_t;
  
--#ifdef TARGET_XTENSA
+-#include "elf.h"
 -
--#define ELF_CLASS       ELFCLASS32
--#define ELF_ARCH        EM_XTENSA
+-/* We must delay the following stanzas until after "elf.h". */
+-#if defined(TARGET_AARCH64)
 -
--#endif /* TARGET_XTENSA */
+-static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
+-                                    const uint32_t *data,
+-                                    struct image_info *info,
+-                                    Error **errp)
+-{
+-    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
+-        if (pr_datasz != sizeof(uint32_t)) {
+-            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
+-            return false;
+-        }
+-        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
+-        info->note_flags = *data;
+-    }
+-    return true;
+-}
+-#define ARCH_USE_GNU_PROPERTY 1
 -
- #ifdef TARGET_HEXAGON
+-#else
+-
+-static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
+-                                    const uint32_t *data,
+-                                    struct image_info *info,
+-                                    Error **errp)
++#ifndef HAVE_ELF_GNU_PROPERTY
++bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
++                             const uint32_t *data, struct image_info *info,
++                             Error **errp)
+ {
+     g_assert_not_reached();
+ }
+-#define ARCH_USE_GNU_PROPERTY 0
+-
++#define HAVE_ELF_GNU_PROPERTY 0
+ #endif
  
- #define ELF_CLASS       ELFCLASS32
++#include "elf.h"
++
+ struct exec
+ {
+     unsigned int a_info;   /* Use macros N_MAGIC, etc for access */
+@@ -1233,7 +1210,7 @@ static bool parse_elf_properties(const ImageSource *src,
+     uint32_t prev_type;
+ 
+     /* Unless the arch requires properties, ignore them. */
+-    if (!ARCH_USE_GNU_PROPERTY) {
++    if (!HAVE_ELF_GNU_PROPERTY) {
+         return true;
+     }
+ 
 -- 
 2.43.0
 
