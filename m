@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF3CC87FD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC864C87FC9
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLKA-00070k-7E; Sat, 02 Aug 2025 19:07:34 -0400
+	id 1uiLJ6-0001dq-5S; Sat, 02 Aug 2025 19:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLK6-0006kC-FH
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:07:30 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ id 1uiLIt-0001B4-4X
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:20 -0400
+Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLK5-0001FL-0Y
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:07:30 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-6197886a6eeso1441626eaf.0
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:07:28 -0700 (PDT)
+ id 1uiLIr-00018Q-HH
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:06:14 -0400
+Received: by mail-oo1-xc29.google.com with SMTP id
+ 006d021491bc7-6199e7dea32so180531eaf.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:06:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754176048; x=1754780848; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754175972; x=1754780772; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pUBD8oIvbmmAV90/hCSe5xxGHDkQPpbW/W14D5nKNic=;
- b=n/WA8PUvkn/LiYoeezG0SyUohc4FOOzAMC7wUDvv6FEgf9qoLbcSiQkEWqXWar27qq
- VHsh4vtza6Yg0+T80jWeuVfAgp34cms+3ob4BUF2FZfSCWmviEQ+4Vro66usFq37QmkV
- Ud0s3waSchIa+cMulSXP/SMc7h9MGmiaFkNC8XMu6BSXWKfNHqzQVLtXfE30hkyycjk9
- n0DtoP84XUZ6VxhI8iILCUONMfbJ3OiLTmDZda/ZNKolzxLSc1bHKCZaioQRck13NjYj
- r4fEMUbgcxmwu/zBM44xGP9MblU3C99nZw9d+wUxOcXL40H285D9TRWTHCW0dbmO629y
- 0ocA==
+ bh=+yEeq0RZk/l844ggMKjsps45XK8zy1/6p2Ssn5uBtVg=;
+ b=AoYRrYPRZNspzlYDI0tbFfbuIC9Ws1Lcrv3zaeEpL4hZfngFdqIqjnB9WDf/hCxZGe
+ 5CLLWG1ZAb1kTx4jiddsfkzed3aO8Qzf5DpVxAzJV7JJ+/M7k1vhR7VEeyVrsryety92
+ P7RljgOr21AbacTaVp/V33LmWfmU5ClS6mcc7fy814qE+EUE6UCtriDWgBPyIdXKNQXc
+ g3UJWKfg9RvUTiW/47AQmEi3D705pIkny03LMHKWDhKe5UdI2vzro1FRNDqlQJEQteIg
+ A2+I3zcEzDn7BMOm+cn9pz0zTnmYcfAvNNbcQk1I6s6jBnrKpz7d0f+xl/d03qkzYaBm
+ Amag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754176048; x=1754780848;
+ d=1e100.net; s=20230601; t=1754175972; x=1754780772;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pUBD8oIvbmmAV90/hCSe5xxGHDkQPpbW/W14D5nKNic=;
- b=Mfq4ollo0szS6tnqSMw1IOna/pocTHqtDHJBnLFnQP/MwlQtl8cECeD67d66brnnkb
- pXAZZkYsQYGjR6/wBX3F6xo1k3/oEHu2Ko4kapz82xaeQusVONhiSEVCIDvyA0dIZNbk
- FF7x6+9wVRl47Io99lTyRY0Yqc5qhI/fZ1xBLRDDWjX8undW7v2mL5ETt3ZdP/iMlMoG
- Uw7fBNBIytqylnxPHaPvtTGEb+2VGpZkpHWNA4WskzTWabsE2dLXiRkc/KW7qafyfunw
- TNU75y6H2ueiLbrHASdanQjh4svHaGKKTyYfe/E9GikR3kP3ZTXZhai+M4sv4H+PfI1q
- p91g==
-X-Gm-Message-State: AOJu0YxmMu6L4Jsz7weC36FSDo0vvcNmyuTqA90mA4bOt/MYW8ABgZ45
- 7wGwzqQJwO5WJv6d16q7+Bgq4a32GI9ZW9LyR1hJZrT3RBDoxFCAbnraqPfK75PKju4IBiVGKqa
- Kr79qlro=
-X-Gm-Gg: ASbGncvFBWvY3PVcwuDDvkrwf18PM8QSRoryw8ivpFSmXY64Wg8s6JRIAYBWWICe93N
- JHDa92N9UWy81I+ONIaCedF+w1d77tWoNy0amx9oCW8YE7PQ6eqkMLRXxbwBP34YyNBUvDpSF7h
- w8VB6kCkjBgxPKQIgrOONeZi3w8Fc9zC30iWvhFldimIw7ZTNXZziDnI7hlHBDNs58K4q6YLbpc
- bxcsvlWC5AUDtryw3blfgCL4F6OTFPwhIt1zHK2zVFoKkiuNHLyi38VhuA7fjmMVObVJTqlP4iD
- ZEKhauDPUd4k0ZDBdMNH59Qt4JPUVCsZcGuCMrpNPmL898RYJ16uX6XEibb932vYwTe/z3dwoEn
- N2I+SeVqfgmBNhtszW2ja+jg9Qb8tdiFm2J1L8DJiVRmbNmUuanqu
-X-Google-Smtp-Source: AGHT+IFjs8FRDPv4z5x0C5Qnuo+ij+6Ka7SvL5rCdB5IWNHQAPd89rgQKbUMNVPtrXDICkxBVU0BoQ==
-X-Received: by 2002:a05:6820:3088:b0:619:a34b:3e29 with SMTP id
- 006d021491bc7-619a34b438fmr724192eaf.1.1754176047850; 
- Sat, 02 Aug 2025 16:07:27 -0700 (PDT)
+ bh=+yEeq0RZk/l844ggMKjsps45XK8zy1/6p2Ssn5uBtVg=;
+ b=SOqyCBiN8BPdDie49vED5+DSBIIaVsM8OsoCWUfKKmpx2WCWRrByIbDc06UxfGNJ1r
+ nKuUMxeut6lfJ5EpBhBLtXS/V4my+oQ8RQRhGYRxYGCj6zGdb0u+HaojOIdwanqZkV6N
+ tB5xHzzX69PdYwyym5se+jXMu1FuiJLvkqPFXhu+9tkIrBIyvuUvQMuBtIsIux441Jzt
+ tkrGM0DDnG+Au2qnM/o7XavUv+uZmSX3Hg61uXTinqU2w4rhiSoFwEuLnS9kp821insP
+ b6DPSG2fyKhKeLmf2YlvwGGuJGK0JJkjBHwb5E9fcQiw0J/kxrCUfHEki3kzFW9ulNJ4
+ 4EQA==
+X-Gm-Message-State: AOJu0Yz4dOsTWFnF3WJmYZGJBMAZnzO8UmJrTsEXdWckUcGIYC0Tammn
+ sAxgigvxGcGL8Dv0cS07ZLIis7pYu22fsS1JKL9/7FgGRSNLXZZX9iMj+eSV3aN3JGz0vTAhr26
+ yeU4T72U=
+X-Gm-Gg: ASbGnctc48AVc1JM1QAEvavtWuadu36dUooMUp8YmA1ZnSCV7Re26oi8nDk/s/KGNtT
+ mHgXv02fOGs1UfqnzW725CsuBUW54pfxkSRinyhW4/z0AA9K3oqfVKKmRYLjQB49/kAqyp+FNqM
+ h6tuu2PHH3FfAq23aDNcIvlpTw2lVDLRxjq93RO25spDEZMPCyNvodWfrP3DpTc4uJhjW90qlxk
+ z92Pd1nlmdqqcR7Q0bJzzrm+jpA38oJdyWODV5qBzYKE+b177bZrSucWEBigeQNaz4fm01LWgCO
+ zWXJ+T/aKRRMoEc4ZwPAJtOTId+kYRfiHGKmQqnUhGWgoT32rK/wRZByixP2DjbUdtmu8+hLgRh
+ 92jdpaNAjGIOy4kjxfgHlQhd1CMWTzca/DNiQwzigCiwNf7u/am6V
+X-Google-Smtp-Source: AGHT+IF3yLGtmHyFMHDgtNzv86s+58ilmyXpPpHZsnGtG0KwDBu/SyJ3BS2qtJJkyO3Aqb5o3SWONA==
+X-Received: by 2002:a05:6820:992:b0:619:950f:2413 with SMTP id
+ 006d021491bc7-619950f26a5mr1587641eaf.2.1754175971869; 
+ Sat, 02 Aug 2025 16:06:11 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.07.24
+ 006d021491bc7-61970693b48sm1093401eaf.19.2025.08.02.16.06.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:07:27 -0700 (PDT)
+ Sat, 02 Aug 2025 16:06:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 39/95] linux-user/s390x: Create init_main_thread
-Date: Sun,  3 Aug 2025 09:04:03 +1000
-Message-ID: <20250802230459.412251-40-richard.henderson@linaro.org>
+Subject: [PATCH v2 17/95] linux-user: Move get_elf_platform to {i386,
+ x86_64}/elfload.c
+Date: Sun,  3 Aug 2025 09:03:41 +1000
+Message-ID: <20250802230459.412251-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802230459.412251-1-richard.henderson@linaro.org>
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,61 +100,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge init_thread and target_cpu_copy_regs.
-There's no point going through a target_pt_regs intermediate.
+Move get_elf_platform to i386/elfload.c; pass in CPUState.
+Create a simple get_elf_platform for x86_64.
+Introduce HAVE_ELF_PLATFORM.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c        |  9 +--------
- linux-user/s390x/cpu_loop.c | 15 ++++++++-------
- 2 files changed, 9 insertions(+), 15 deletions(-)
+ linux-user/i386/target_elf.h   |  1 +
+ linux-user/loader.h            |  3 +++
+ linux-user/x86_64/target_elf.h |  1 +
+ linux-user/elfload.c           | 18 ++----------------
+ linux-user/i386/elfload.c      | 13 +++++++++++++
+ linux-user/x86_64/elfload.c    |  5 +++++
+ 6 files changed, 25 insertions(+), 16 deletions(-)
 
+diff --git a/linux-user/i386/target_elf.h b/linux-user/i386/target_elf.h
+index 802395af3a..44dde1ac4a 100644
+--- a/linux-user/i386/target_elf.h
++++ b/linux-user/i386/target_elf.h
+@@ -9,5 +9,6 @@
+ #define I386_TARGET_ELF_H
+ 
+ #define HAVE_ELF_HWCAP          1
++#define HAVE_ELF_PLATFORM       1
+ 
+ #endif
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 729723cc06..44bb4cbfd3 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -105,5 +105,8 @@ abi_ulong get_elf_hwcap(CPUState *cs);
+ abi_ulong get_elf_hwcap2(CPUState *cs);
+ const char *elf_hwcap_str(uint32_t bit);
+ const char *elf_hwcap2_str(uint32_t bit);
++#if defined(TARGET_I386)
++const char *get_elf_platform(CPUState *cs);
++#endif
+ 
+ #endif /* LINUX_USER_LOADER_H */
+diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
+index 03483bad57..498c3f7e4e 100644
+--- a/linux-user/x86_64/target_elf.h
++++ b/linux-user/x86_64/target_elf.h
+@@ -9,5 +9,6 @@
+ #define X86_64_TARGET_ELF_H
+ 
+ #define HAVE_ELF_HWCAP          1
++#define HAVE_ELF_PLATFORM       1
+ 
+ #endif
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index a7de852d4d..16aa09214e 100644
+index 7a41917b49..e6e509c0a6 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -798,14 +798,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUM68KState *e
- #define ELF_DATA	ELFDATA2MSB
- #define ELF_ARCH	EM_S390
+@@ -149,12 +149,12 @@ typedef abi_int         target_pid_t;
  
--static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
--{
--    regs->psw.addr = infop->entry;
--    regs->psw.mask = PSW_MASK_DAT | PSW_MASK_IO | PSW_MASK_EXT | \
--                     PSW_MASK_MCHECK | PSW_MASK_PSTATE | PSW_MASK_64 | \
--                     PSW_MASK_32;
--    regs->gprs[15] = infop->start_stack;
--}
-+#define HAVE_INIT_MAIN_THREAD
+ #ifdef TARGET_I386
  
- /* See linux kernel: arch/s390/include/uapi/asm/ptrace.h (s390_regs).  */
- #define ELF_NREG 27
-diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
-index c9124444ed..49e44548f8 100644
---- a/linux-user/s390x/cpu_loop.c
-+++ b/linux-user/s390x/cpu_loop.c
-@@ -180,12 +180,13 @@ void cpu_loop(CPUS390XState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
-+void init_main_thread(CPUState *cs, struct image_info *info)
- {
--    int i;
--    for (i = 0; i < 16; i++) {
--        env->regs[i] = regs->gprs[i];
--    }
--    env->psw.mask = regs->psw.mask;
--    env->psw.addr = regs->psw.addr;
-+    CPUArchState *env = cpu_env(cs);
++#define ELF_PLATFORM get_elf_platform(thread_cpu)
 +
-+    env->psw.addr = info->entry;
-+    env->psw.mask = PSW_MASK_DAT | PSW_MASK_IO | PSW_MASK_EXT |
-+                    PSW_MASK_MCHECK | PSW_MASK_PSTATE | PSW_MASK_64 |
-+                    PSW_MASK_32;
-+    env->regs[15] = info->start_stack;
+ #ifdef TARGET_X86_64
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_X86_64
+ 
+-#define ELF_PLATFORM   "x86_64"
+-
+ static inline void init_thread(struct target_pt_regs *regs, struct image_info *infop)
+ {
+     regs->rax = 0;
+@@ -237,22 +237,8 @@ static bool init_guest_commpage(void)
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_386
+ 
+-#define ELF_PLATFORM get_elf_platform()
+ #define EXSTACK_DEFAULT true
+ 
+-static const char *get_elf_platform(void)
+-{
+-    static char elf_platform[] = "i386";
+-    int family = object_property_get_int(OBJECT(thread_cpu), "family", NULL);
+-    if (family > 6) {
+-        family = 6;
+-    }
+-    if (family >= 3) {
+-        elf_platform[1] = '0' + family;
+-    }
+-    return elf_platform;
+-}
+-
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+ {
+diff --git a/linux-user/i386/elfload.c b/linux-user/i386/elfload.c
+index f99336e73c..1b759098ca 100644
+--- a/linux-user/i386/elfload.c
++++ b/linux-user/i386/elfload.c
+@@ -14,3 +14,16 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+ {
+     return cpu_env(cs)->features[FEAT_1_EDX];
  }
++
++const char *get_elf_platform(CPUState *cs)
++{
++    static char elf_platform[] = "i386";
++    int family = object_property_get_int(OBJECT(cs), "family", NULL);
++    if (family > 6) {
++        family = 6;
++    }
++    if (family >= 3) {
++        elf_platform[1] = '0' + family;
++    }
++    return elf_platform;
++}
+diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
+index f99336e73c..88541ea45e 100644
+--- a/linux-user/x86_64/elfload.c
++++ b/linux-user/x86_64/elfload.c
+@@ -14,3 +14,8 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+ {
+     return cpu_env(cs)->features[FEAT_1_EDX];
+ }
++
++const char *get_elf_platform(CPUState *cs)
++{
++    return "x86_64";
++}
 -- 
 2.43.0
 
