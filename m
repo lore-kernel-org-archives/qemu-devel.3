@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674BFC87FC9
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8D4C87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLpS-0008Je-Md; Sat, 02 Aug 2025 19:39:55 -0400
+	id 1uiLnY-0004gs-3d; Sat, 02 Aug 2025 19:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLn0-0003xm-P6
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:37:23 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ id 1uiLm5-0002YY-4k
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:36:25 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLmy-0005s8-W3
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:37:22 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-741a6272c8fso141528a34.3
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:37:20 -0700 (PDT)
+ id 1uiLm3-0005hq-FP
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:36:24 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-741b1fe0d43so15243a34.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754177840; x=1754782640; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754177782; x=1754782582; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AlJgHJEmHUYZe6YiGfVDRPRDT1LVN/rOSO+BbVvbmBY=;
- b=mMvL+atL40EcvhCjB9g6Ckn5/EgwJ6r+dvrSv5cS7t8zMtE6F78SK+x36hHJvpjMTt
- l5/zmDpTUd1b3LrVeX0TGRW8wyX3Ij2E2249dN+2ZgNmcHdO0xO6aD+y3QweAfHpLpu5
- HlQ3w9UvNflfx0lS6mDQD2uGFI9Hr0j5QYSwu4wvVpFAlPvozPFl2BLOiFBDpXLLvZoN
- BAdJ19z2y3Id8EEWrPvR0k3hL4mTkxKcFulB8+bE9miOAKOMyl9/2dlSjkSxUixfxb0u
- LKATGmzpkE0pkU6VdNOmEjR8qOhYIOo4Dvhr5kgcN5dWGLSFgRW7k9djgijeN8DDxhJL
- MPdw==
+ bh=8YP9JcYf4nGEn4oQobQeHHEIsb6i/+ENAm1xO75l8c8=;
+ b=hhk0urn+lP0ynU2cFxgA17aRCgAP/TtpUYWaeneu9HL4bz7AgTiVWZ2Pbs0ZaZznL/
+ l6xRKr7xK/rSWRNTrNvcxVYKlOTJf4cUq363WQeLXza4x/ZlMpx1lOyfpHfW1G/0YKZD
+ 4XZVKAQrK1/q2pgupyGIzXQRQ3i8UeidMi6w7IaiaIj1VYXlDfZdyd9Cg6Pevnj1SyQM
+ bflpx6B5OapqRrkqlKEA1kCxDIKDkkPgaaAvq/8m87fzgwdjnRZ/em53idmz0RBCWjCQ
+ h2zNSguTTIshBZHuOr9u/bUJ3ZYJZzOibv1/DNAIY7l1DbhcODny4eg4RooDetTuS6cX
+ iTUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754177840; x=1754782640;
+ d=1e100.net; s=20230601; t=1754177782; x=1754782582;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AlJgHJEmHUYZe6YiGfVDRPRDT1LVN/rOSO+BbVvbmBY=;
- b=UFrePSIlQTnO3aj/TXINNlUNFXkWZDLhqX0tbLBlUZvku0dWAFT6HbbUtzUlX1plUB
- U72BpZn60cuBRfwzPhMVLwbxTtcaZ5L3xuEPmPqFCgPXs5jqDnhf/mOEC26qmYkT3z7D
- +yJVn+d4pOVaQCUHujFPjZX010MNXxg/dbZxBKoFEJc5D599m5B+ImzBIkBPT2+VwAY+
- VQu1mf4ldkJUH2idOxCyqFhUwRqFwQfEVQROZC7pdZvfIih77gixh5DH5maQt2oXlz2V
- +JPqHGZzW9j0lYcdxYG5BQPEw9CjdMKWQ/5tovzFuVJ+7CL/GVSRPpREx51eigQGBudi
- g7uw==
-X-Gm-Message-State: AOJu0YxbqMZEn4/fgO8xnIOSyIN3p4fS6CpdUdpRK3b/sUpQy/WqUD+l
- qV/lcWQMJErLhKQ7UU/gDuuqP4VHsN1uSmlTqhMZ/nuL0Kv0CWgG9kUF8P6fZK31o67O4G3HOQd
- hGUNjpWk=
-X-Gm-Gg: ASbGncsv7xflI1vnTwaGGFhsN9RGyFtqvV4bwxkJWvx29+DAuUGd7DAfR8X0qf3oLNT
- EP7AjkybcC3et0QwNeTt27mej5dgvgtTPNIL7IpyITld3blbkyfQKWLP92ZlU8ZZqxc7pGXJjzc
- F6H3hjg4B3KgfQT4KH6bkt5t+M8W64F2PgPbZRZorPZo4SKF69+XmUNn4/GkWUgVMlg2gi6j4d7
- /z61ZnOx5/QAhDL2rCNbxN8JEIc2XLiEVr4SN3v7zAxzXGs5/kAHoc20BNoS4Y93FlTF4aztKNA
- 5nqRjr7een+rEjhbZcgFgOsHQItFxf4uTF49vj7xkIbygcAUgVaaB0Zefl4sTnOkeVvD849Fj+H
- 8qOD6md2K+xH9sa8wbl4Qr1TlAkfpVDfe6+XBoHv3U/j4TH1OtrBX
-X-Google-Smtp-Source: AGHT+IEiADQITXKqrTtvLpkKeLd5ZP/13dXIR55ECySImnxNRI6Oo9cZt9NLGVlU4Oy/Vl5eB89F0g==
-X-Received: by 2002:a05:6830:448f:b0:73e:6313:3fdf with SMTP id
- 46e09a7af769-7419d284629mr2472616a34.16.1754177839784; 
- Sat, 02 Aug 2025 16:37:19 -0700 (PDT)
+ bh=8YP9JcYf4nGEn4oQobQeHHEIsb6i/+ENAm1xO75l8c8=;
+ b=c6XNuollH/wGign0uuxPZjk3XwU8ikDIvdkRfYMGQ8GwyHd1fVaINmV1uMLsb+B5oj
+ eqD735pGDPUJ5y/wIwB2SvPeHimhWpxXSOAKSOGTdRdFrDSPvwM7OBydjsITQej43hah
+ myMN7A1asm3zwaCitT9tpk349x7Rbe2ztcWWNVD0op5XMEoNjzt6b/FetR+iikT5iFx4
+ UBAQxovDyRSAbqbgK1OHLKvHGaV3+b2EOnwPc1zLFjxXSt7ZY4hd9XyfQmCami3B5oI3
+ 9KcMqeCgQ5iSp770XGe7XWSLnd8mPps2dI0V49Zd9qnjnw2+Ou0wq8MtBpMKhfVaRaFD
+ Ey9A==
+X-Gm-Message-State: AOJu0YyQjtYnD1pnO52dxbVc67jvMutgcX624sKUmq1/OewvCeX3AfvH
+ z8C8Jc+lcky1oKzAbBuih2QOHG0gLl3SIeHop86Qy4FXOx9+6RR5yVr+uuKjxx6dervHPlWZ4bO
+ dAPwcdlA=
+X-Gm-Gg: ASbGncvuoeRiC5ABEtYwW0JATorGDMcTZz0mTVdnlx1rVYTB4ObaNyUaUmOPlGw6njh
+ v1fissrRXtJ5bvehpCo0CfmGXbcvS+pg8FtmQNK2uRb3PcBmeKXq6JU8yuxjWKOmc9sMZJiypFs
+ XYbg8R8NqbZa1LqYUWosjutrt07GcBnBjJA/OhpEa8FLxrVyyC6Txd9tdsg2WEbymYv/drl2/v7
+ W/1X7eSHPqAdutKTvENxPsF54mcpN9moOzdNBa5Md/XSQdWB2+d0qqAcO5fwfAHGNmZtnggeSuq
+ 4WkikGh6XnOLOQkFclXVucMtIGclpRFn8M9cyvS+KZTXOXDwE8AGi+HEjUadqkvIAlWA5U6+3CF
+ 3xfdDjcIk8MdxuzzkwYEPQJqCmaDMUmMNv+qkjGuwFe0zMJ07GS/a
+X-Google-Smtp-Source: AGHT+IEOx2n/IRBEkjcjuum2Xwgas/fTk5h345aZBSxQxrYHWzY3VSZ2PKgawbSawrCbV39En+T9pA==
+X-Received: by 2002:a05:6808:5092:b0:40b:3390:397a with SMTP id
+ 5614622812f47-433f0216500mr2999396b6e.7.1754177782224; 
+ Sat, 02 Aug 2025 16:36:22 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.37.15
+ 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.36.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:37:19 -0700 (PDT)
+ Sat, 02 Aug 2025 16:36:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 54/85] target/arm: Introduce delay_exception{_el}
-Date: Sun,  3 Aug 2025 09:29:22 +1000
-Message-ID: <20250802232953.413294-55-richard.henderson@linaro.org>
+Subject: [PATCH v2 41/85] target/arm: Convert arm_mmu_idx_is_stage1_of_2 from
+ switch to table
+Date: Sun,  3 Aug 2025 09:29:09 +1000
+Message-ID: <20250802232953.413294-42-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802232953.413294-1-richard.henderson@linaro.org>
 References: <20250802232953.413294-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,141 +101,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add infrastructure to raise an exception out of line.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate.h     | 20 +++++++++++++
- target/arm/tcg/translate-a64.c |  2 ++
- target/arm/tcg/translate.c     | 53 ++++++++++++++++++++++++++++++++++
- 3 files changed, 75 insertions(+)
+ target/arm/internals.h       | 19 -------------------
+ target/arm/mmuidx-internal.h |  8 ++++++++
+ target/arm/mmuidx.c          |  7 ++++---
+ 3 files changed, 12 insertions(+), 22 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 1479f5bf74..a40cbd4479 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -21,9 +21,25 @@ typedef struct DisasLabel {
-     target_ulong pc_save;
- } DisasLabel;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index c6f3ae470b..4f99ec69f8 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1282,25 +1282,6 @@ ARMMMUIdx stage_1_mmu_idx(ARMMMUIdx mmu_idx);
+ ARMMMUIdx arm_stage1_mmu_idx(CPUARMState *env);
+ #endif
  
-+/*
-+ * Emit an exception call out of line.
-+ */
-+typedef struct DisasDelayException {
-+    struct DisasDelayException *next;
-+    TCGLabel *lab;
-+    target_long pc_curr;
-+    target_long pc_save;
-+    int condexec_mask;
-+    int condexec_cond;
-+    uint32_t excp;
-+    uint32_t syn;
-+    uint32_t target_el;
-+} DisasDelayException;
-+
- typedef struct DisasContext {
-     DisasContextBase base;
-     const ARMISARegisters *isar;
-+    DisasDelayException *delay_excp_list;
- 
-     /* The address of the current instruction being translated. */
-     target_ulong pc_curr;
-@@ -365,6 +381,10 @@ void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
-                            uint32_t syn, uint32_t target_el);
- void gen_exception_insn(DisasContext *s, target_long pc_diff,
-                         int excp, uint32_t syn);
-+TCGLabel *delay_exception_el(DisasContext *s, int excp,
-+                             uint32_t syn, uint32_t target_el);
-+TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn);
-+void emit_delayed_exceptions(DisasContext *s);
- 
- /* Return state of Alternate Half-precision flag, caller frees result */
- static inline TCGv_i32 get_ahp_flag(void)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index eaeafdf138..d803c10ac7 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10411,6 +10411,8 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             break;
-         }
-     }
-+
-+    emit_delayed_exceptions(dc);
- }
- 
- const TranslatorOps aarch64_translator_ops = {
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f7d6d8ce19..c4dd3a747c 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -1090,6 +1090,57 @@ void gen_exception_insn(DisasContext *s, target_long pc_diff,
-     s->base.is_jmp = DISAS_NORETURN;
- }
- 
-+TCGLabel *delay_exception_el(DisasContext *s, int excp,
-+                             uint32_t syn, uint32_t target_el)
-+{
-+    /* Use tcg_malloc for automatic release on longjmp out of translation. */
-+    DisasDelayException *e = tcg_malloc(sizeof(DisasDelayException));
-+
-+    memset(e, 0, sizeof(*e));
-+
-+    /* Save enough of the current state to satisfy gen_exception_insn. */
-+    e->pc_curr = s->pc_curr;
-+    e->pc_save = s->pc_save;
-+    if (!s->aarch64) {
-+        e->condexec_cond = s->condexec_cond;
-+        e->condexec_mask = s->condexec_mask;
-+    }
-+
-+    e->excp = excp;
-+    e->syn = syn;
-+    e->target_el = target_el;
-+
-+    e->next = s->delay_excp_list;
-+    s->delay_excp_list = e;
-+
-+    e->lab = gen_new_label();
-+    return e->lab;
-+}
-+
-+TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn)
-+{
-+    return delay_exception_el(s, excp, syn, 0);
-+}
-+
-+void emit_delayed_exceptions(DisasContext *s)
-+{
-+    for (DisasDelayException *e = s->delay_excp_list; e ; e = e->next) {
-+        gen_set_label(e->lab);
-+
-+        /* Restore the insn state to satisfy gen_exception_insn. */
-+        s->pc_curr = e->pc_curr;
-+        s->pc_save = e->pc_save;
-+        s->condexec_cond = e->condexec_cond;
-+        s->condexec_mask = e->condexec_mask;
-+
-+        if (e->target_el) {
-+            gen_exception_insn_el(s, 0, e->excp, e->syn, e->target_el);
-+        } else {
-+            gen_exception_insn(s, 0, e->excp, e->syn);
-+        }
-+    }
-+}
-+
- static void gen_exception_bkpt_insn(DisasContext *s, uint32_t syn)
+-/**
+- * arm_mmu_idx_is_stage1_of_2:
+- * @mmu_idx: The ARMMMUIdx to test
+- *
+- * Return true if @mmu_idx is a NOTLB mmu_idx that is the
+- * first stage of a two stage regime.
+- */
+-static inline bool arm_mmu_idx_is_stage1_of_2(ARMMMUIdx mmu_idx)
+-{
+-    switch (mmu_idx) {
+-    case ARMMMUIdx_Stage1_E0:
+-    case ARMMMUIdx_Stage1_E1:
+-    case ARMMMUIdx_Stage1_E1_PAN:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+ static inline uint32_t aarch32_cpsr_valid_mask(uint64_t features,
+                                                const ARMISARegisters *id)
  {
-     gen_set_condexec(s);
-@@ -8107,6 +8158,8 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             gen_goto_tb(dc, 1, curr_insn_len(dc));
-         }
-     }
-+
-+    emit_delayed_exceptions(dc);
+diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
+index 3e51c0f579..55fba4aae2 100644
+--- a/target/arm/mmuidx-internal.h
++++ b/target/arm/mmuidx-internal.h
+@@ -18,6 +18,7 @@ FIELD(MMUIDXINFO, RELVALID, 5, 1)
+ FIELD(MMUIDXINFO, 2RANGES, 6, 1)
+ FIELD(MMUIDXINFO, PAN, 7, 1)
+ FIELD(MMUIDXINFO, USER, 8, 1)
++FIELD(MMUIDXINFO, STAGE1, 9, 1)
+ 
+ extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ 
+@@ -76,4 +77,11 @@ static inline bool regime_is_user(ARMMMUIdx idx)
+     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, USER);
  }
  
- static const TranslatorOps arm_translator_ops = {
++/* Return true if this mmu index is stage 1 of a 2-stage translation. */
++static inline bool arm_mmu_idx_is_stage1_of_2(ARMMMUIdx idx)
++{
++    tcg_debug_assert(arm_mmuidx_is_valid(idx));
++    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, STAGE1);
++}
++
+ #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
+diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
+index 1c1e062bfe..c5b43a5932 100644
+--- a/target/arm/mmuidx.c
++++ b/target/arm/mmuidx.c
+@@ -13,6 +13,7 @@
+ #define R2     R_MMUIDXINFO_2RANGES_MASK
+ #define PAN    R_MMUIDXINFO_PAN_MASK
+ #define USER   R_MMUIDXINFO_USER_MASK
++#define S1     R_MMUIDXINFO_STAGE1_MASK
+ 
+ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     /*
+@@ -35,9 +36,9 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     [ARMMMUIdx_Stage2_S]        = REL(2),
+     [ARMMMUIdx_Stage2]          = REL(2),
+ 
+-    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
+-    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
+-    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
++    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER,
++    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1,
++    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | S1 | PAN,
+ 
+     /*
+      * M-profile.
 -- 
 2.43.0
 
