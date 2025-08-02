@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE36AC87FD3
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5202DC87FD3
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Aug 2025 23:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiLpQ-0008Az-8N; Sat, 02 Aug 2025 19:39:52 -0400
+	id 1uiLwj-00031t-I6; Sat, 02 Aug 2025 19:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLnC-0004Nm-GK
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:37:36 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1uiLoX-0005ze-KH
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:39:03 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiLn3-0005tt-VQ
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:37:33 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-73e88bc38bbso1153130a34.3
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:37:25 -0700 (PDT)
+ id 1uiLoW-0006Rr-5E
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 19:38:57 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-741a254d4a0so895680a34.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 16:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754177845; x=1754782645; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754177934; x=1754782734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5UYaNg4HgCgaMfA5VDdSs+JLi614JTEFfBBOaKuI9nc=;
- b=Zsag0+7plfiu6d33/UfqWFJcGnjXQoG2ZoXDSax4OyJCszjI+m9HXoGPCmzcx8n+Zc
- wriBvLowjoJIC//fhcvBE+t546wzkm1+hRs8BFgHxCp8RGnTnaXOrl1M3fwlGWb/meHQ
- 63uH/rm+VXq7mw5mNIXZEWkiZueaTyqKdvesuqOKtyGrMK8xtTHsBNf4xoRJJGFVvlFO
- KnMUo18Rb/TFcKz8satbgzGugShfyp1ZJiRc64pKblErR+vMzReKLOu2xuOYMTLp2eCA
- VM1bSbkhMfkPV+ahsbZ2wzUiciadPGhrZYjSQMeHEqqr8H9wjG8YTMS82C7ihNPIMgT/
- Ycwg==
+ bh=RrRDTwGDphkvvBtsV/mK2pHDoMT9L4tWZDtSjWVgm+E=;
+ b=Wfk0ZuNYhfQNg9bgl1kFYjOelfS6gyUWT0rtWjc8aWSEpgzVYvTJ6d1L+VzVbw3HXK
+ Utl3/vBScFk2EJM4yxz4uwJY2VA1Jo3b7wMguhFTxVEz02D/7HYRJD4tLh3SfR2hNSu+
+ bl5dpINX5RQwKYbbT13Kuwta3vzLOFxCSA/Rc+KMf7GzdTdwcl4EDYfTxXtYcifGARdu
+ cinekQzsvVz8qUnGgJaKB1NeHS3U1S3xqLM7B1ZB11wi34a/OctaK+CSXztZrzfRZ6Wf
+ GuEY8FW/gsII7+++vJYHqD9zUVuPiPoHU6VER9In8IkScNjiaRMUq/VIY8YRBKYZvOF7
+ pQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754177845; x=1754782645;
+ d=1e100.net; s=20230601; t=1754177934; x=1754782734;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5UYaNg4HgCgaMfA5VDdSs+JLi614JTEFfBBOaKuI9nc=;
- b=AItb7dBk7MfF+UxofrLAI4wLFOU7ChARUx5eabW93P2LOd79BbqPieTQ4aJ3Z1JKkX
- a5ZncRaRz4trI1ZeXARTcCPTppLf3Rp9dpoBiT/Y/yn+PVvmXbSX5ltFtilYUINcHFJw
- P9cHk4j33iRC7fZ82u2DBNCw+J95z/ww89tPlthFdIwtcyCOMHiomkCZjprE2zPedn9R
- wQBxDYppqgzRoWexSRkJkxDTh3pvsZRw4oMx7K30g77ZgMQ4sEppkkfLGATbQpeOJRGh
- d/A+8fuMBL+bblWuOZtmO+mWT6Yq5fXjq/lSNd9mKfO8QFfj8Cas1aUsCBlJPlA3gmE2
- 2Wrw==
-X-Gm-Message-State: AOJu0YyZpY5dui08H9yF59RS2KvUw+ldUOKWs6C2BoEAB9hqPCz4cb9w
- J8Pj8hr3Ea79O54VPA1o9cDsGVhCm7xEXaW1dlLJjHl7pquljuqITVBp+l0wkZllUMm+f79dkSy
- xE2Tv8Ak=
-X-Gm-Gg: ASbGnctV/ceLiclqUr5Ro9uvjoTljUucGqGOXgQabT44m9+J2HQglFjLpdotPzTlI18
- kK5bh9HPfin9lNkxqrnDCCDgdY54y4OSd4hidR+t0KOL06bPMOd1sYfTzHMjTiwyohiPfv7t+Z6
- 1gDP7BWsgZakIqzD0yBarkQ8D/rTxmU7Zg9zOh6hZ7bpo2NOj1QK7BbuUfChyBXORUP3Ktla26d
- ofuvLCQm5XLpHhIDNkEpLnCdx6VujiC354oBuG3z3jY58Ln1FdttjspyQifI4odXUS7U4UyO1lv
- 5EzdSrkGSsrU7lrMJ19UPdaZpIXa0aUu6KCGLjscAvMrr0eTBKZGZ25yhbToZHYasb9JnOgjWUA
- fnpFwDcG/VRcgnpvtuwE0P1ExHxVViDwHDiXfYLAvkU+6V2qhadgi
-X-Google-Smtp-Source: AGHT+IHKIfci5+yeHTN2LwNVSz9wmI34VB4fSl/XWAJJxBkB6a8QEUPA3VHuZE7MyK4FgIUxsqGbqw==
-X-Received: by 2002:a05:6830:6686:b0:73d:6f86:f256 with SMTP id
- 46e09a7af769-7419d1f66f6mr2975789a34.17.1754177844928; 
- Sat, 02 Aug 2025 16:37:24 -0700 (PDT)
+ bh=RrRDTwGDphkvvBtsV/mK2pHDoMT9L4tWZDtSjWVgm+E=;
+ b=BpeOzMA11+HI+kAyXXknkIdTNkr0GIZHlny++wqVb2Z0ZV76dOtNxII/r2tFEi4Vgw
+ sHsCazSUhKsXYq14TtFa0YyxQreuu8USJ/fispbu8rS7ggAVGBlWPfty7q61ulnhLxYj
+ fLY/jc0kfFD08HgUG4E8icEA3esUEKjFNna5y8wQ4lP6QixWF1QhD2hQxC9ue92PpAT6
+ XPLhKH3xm/hogU2DOu5LfXWufXNz5Wjv/6fkUdCJGEDz7la9i4bsZufRN4inSI+WB1R7
+ pRFRuT/SXf83cHJMZDdGGfmEPnXQzJ/W+kvYKUw/KQOLuu9YU/l5tIzbMjaUXAhdB1gJ
+ NiMw==
+X-Gm-Message-State: AOJu0YyesgZ5bHOY3waAOA9FGVEqtZOCIkxHYEAZvCoyFyixm0fsKIrC
+ 5GXpsD0wu82Sf18hn+nYrn9qALxKOkOKbUscsTjOaq4OZjymnT3xraTMJ7tYCSH/yqUbErbkpZR
+ d1bHjetk=
+X-Gm-Gg: ASbGncu+yJoinjG2JjFZpGI7MfSpSpBtV45IN7iy/zQYjaK3yAMubAsoBTyyFXpXrOp
+ mI+3HQHHlKIYooO74HsYdh6cF72Af61ROr2EfPSr1lpxM7ScgFlw4Hs7WPNrG9/tExlkofe/L1y
+ 16VvxcBdAYgGGyLwsqG+UVGyrL7G5Wn5cggWpp2lK3NoWb9C62SwutINjTYvO8F7FksFNHSLM6C
+ SZOkfL9XUSFgiV4igUvUvq6LDGUeKuTwFLEzS+lkwtzD4WfxlvVG/co1O/LoWRX/0xyqSCAjZUl
+ e4P5GeJHeMVsQbW2vjQm/nSNsr47GUO2m6RxWiIdjOyHnTopVzp50un1a1GADKTnEGgo2qQxp2K
+ 6KkqbBfqUxoShR0EioMrX+4hpRAY/m49c6ZyaCsL6dsCzh04a58Cn
+X-Google-Smtp-Source: AGHT+IGw1bzQ4Rg/QOqe126gdbj/vnQBc0bhhNVwYVofR6EJ80zR6O5rhc3XIZCixKktVa9F3169iA==
+X-Received: by 2002:a05:6830:651a:b0:741:4a0f:b869 with SMTP id
+ 46e09a7af769-74187ab6780mr7075066a34.13.1754177933982; 
+ Sat, 02 Aug 2025 16:38:53 -0700 (PDT)
 Received: from stoup.. ([172.58.111.133]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.37.20
+ 46e09a7af769-741a71dc78asm380409a34.30.2025.08.02.16.38.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 Aug 2025 16:37:24 -0700 (PDT)
+ Sat, 02 Aug 2025 16:38:53 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 55/85] target/arm: Emit HSTR trap exception out of line
-Date: Sun,  3 Aug 2025 09:29:23 +1000
-Message-ID: <20250802232953.413294-56-richard.henderson@linaro.org>
+Subject: [PATCH v2 75/85] linux-user/aarch64: Allocate new gcs stack on clone
+Date: Sun,  3 Aug 2025 09:29:43 +1000
+Message-ID: <20250802232953.413294-76-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250802232953.413294-1-richard.henderson@linaro.org>
 References: <20250802232953.413294-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use delay_exception_el to move the exception out of line.
-Use TCG_COND_TSTNE instead of separate AND+NE.
+Allocate the new stack early, so that error reporting need
+not clean up other objects.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ linux-user/syscall.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index c4dd3a747c..f6fdfaa551 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3033,21 +3033,11 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2f1e881046..91210775ed 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6652,6 +6652,21 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         ts = g_new0(TaskState, 1);
+         init_task_state(ts);
  
-         if (maskbit != 4 && maskbit != 14) {
-             /* T4 and T14 are RES0 so never cause traps */
--            TCGv_i32 t;
--            DisasLabel over = gen_disas_label(s);
-+            TCGLabel *fail = delay_exception_el(s, EXCP_UDEF, syndrome, 2);
-+            TCGv_i32 t =
-+                load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
++#ifdef TARGET_AARCH64
++        /*
++         * If GCS is enabled in the parent thread, it is also enabled
++         * in the child thread, but with a newly allocated stack.
++         */
++        abi_long new_gcspr = 0;
++        if (env->cp15.gcscr_el[0] & GCSCR_PCRSEL) {
++            new_gcspr = gcs_new_stack(ts);
++            if (new_gcspr == -1) {
++                g_free(ts);
++                return -TARGET_ENOMEM;
++            }
++        }
++#endif
++
+         /* Grab a mutex so that thread setup appears atomic.  */
+         pthread_mutex_lock(&clone_lock);
  
--            t = load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
--            tcg_gen_andi_i32(t, t, 1u << maskbit);
--            tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
--
--            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
--            /*
--             * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
--             * but since we're conditionally branching over it, we want
--             * to assume continue-to-next-instruction.
--             */
--            s->base.is_jmp = DISAS_NEXT;
--            set_disas_label(s, over);
-+            tcg_gen_brcondi_i32(TCG_COND_TSTNE, t, 1u << maskbit, fail);
+@@ -6676,6 +6691,11 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         ts->info = parent_ts->info;
+         ts->signal_mask = parent_ts->signal_mask;
+ 
++#ifdef TARGET_AARCH64
++        ts->gcs_el0_locked = parent_ts->gcs_el0_locked;
++        new_env->cp15.gcspr_el[0] = new_gcspr;
++#endif
++
+         if (flags & CLONE_CHILD_CLEARTID) {
+             ts->child_tidptr = child_tidptr;
          }
-     }
- 
 -- 
 2.43.0
 
