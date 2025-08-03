@@ -4,47 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29724C87FCB
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 09:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A63CC87FCB
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 09:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiUrG-00088U-8Y; Sun, 03 Aug 2025 05:18:23 -0400
+	id 1uiVMR-0004bt-SH; Sun, 03 Aug 2025 05:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uiUUf-0005g4-4U
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 04:55:06 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uiVMH-0004Ra-D3
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:26 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uiUUd-0002sh-4F
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 04:55:00 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C2F8E13D4F8;
- Sun, 03 Aug 2025 11:54:29 +0300 (MSK)
-Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 827D6255D0E;
- Sun,  3 Aug 2025 11:54:47 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v2 1/2] virtio-net: make VirtIONet.vlans an array instead of a
- pointer
-Date: Sun,  3 Aug 2025 11:54:42 +0300
-Message-ID: <20250803085443.318611-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250802142115.41638-1-mjt@tls.msk.ru>
-References: <20250802142115.41638-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uiVME-0003sn-9r
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:24 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5739oBrH015056
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 3 Aug 2025 18:50:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=lmJYQTvjFhc2YN6bWJoFpcmGKTs1EVYe8WHABMCHLKc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1754214611; v=1;
+ b=eLwFI2b3pG8xMrUX6MJb0T+9Ofmwfs/UYad9dN/Jqjl0fj2yx63Obg/DghPiYHb2
+ QwT0Cz6x9coiyjql/FRhcgXXIlepbrf1sKyXrmf6XD2frqCmLTK0NdNdAQ450QsD
+ kM+qOqB0P7yuVeZjccZBtyqcW92kltik/tmdNyR/PQL6WwZy+ey/XU6E3JLeQOZF
+ xiNIvhARj0byHDBBeOAWDQ9p1tOABxcrIg6KyBmwKbDCQ8wsO9oTWLEPMS1cres+
+ jD/AeSylqPYSgx4GACY2gZIEd5ivU7BqJRi8sXXEKMBbi+AWxlOfsHda0/akNXTO
+ /L6pHylPaOtYFvYWyA8XRQ==
+Message-ID: <7c282155-340e-44a6-9790-0a37f330eb30@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 3 Aug 2025 18:50:10 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] virtio-net: make VirtIONet.vlans an array instead
+ of a pointer
+To: Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+References: <20250802142115.41638-1-mjt@tls.msk.ru>
+ <20250803085443.318611-1-mjt@tls.msk.ru>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250803085443.318611-1-mjt@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,77 +75,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This field is a fixed-size buffer (number of elements is MAX_VLAN,
-known at build time).  There's no need to allocate it dynamically,
-it can be made an integral part of VirtIONet structure.
+On 2025/08/03 17:54, Michael Tokarev wrote:
+> This field is a fixed-size buffer (number of elements is MAX_VLAN,
+> known at build time).  There's no need to allocate it dynamically,
+> it can be made an integral part of VirtIONet structure.
+> 
+> This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
+> 
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
-v2: use VMSTATE_BUFFER_UNSAFE instead of VMSTATE_BUFFER
-    as suggested by Akihiko Odaki.
-    Only the first patch is resent, patch 2/2 is the same.
-
- hw/net/virtio-net.c            | 9 ++++-----
- include/hw/virtio/virtio-net.h | 2 +-
- 2 files changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 6b5b5dace3..1ee3bd131c 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -931,7 +931,7 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
- 
-     if (virtio_has_feature(vdev->guest_features ^ features, VIRTIO_NET_F_CTRL_VLAN)) {
-         bool vlan = virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN);
--        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
-+        memset(n->vlans, vlan ? 0 : 0xff, sizeof(n->vlans));
-     }
- 
-     if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
-@@ -3524,7 +3524,8 @@ static const VMStateDescription vmstate_virtio_net_device = {
-          * buffer; hold onto your endiannesses; it's actually used as a bitmap
-          * but based on the uint.
-          */
--        VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
-+        VMSTATE_BUFFER_UNSAFE(vlans, VirtIONet, 0,
-+                              sizeof(typeof_field(VirtIONet, vlans))),
-         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
-                          vmstate_virtio_net_has_vnet),
-         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
-@@ -3942,8 +3943,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
- 
--    n->vlans = g_malloc0(MAX_VLAN >> 3);
--    memset(n->vlans, 0xff, MAX_VLAN >> 3);
-+    memset(n->vlans, 0xff, sizeof(n->vlans));
- 
-     nc = qemu_get_queue(n->nic);
-     nc->rxfilter_notify_enabled = 1;
-@@ -3992,7 +3992,6 @@ static void virtio_net_device_unrealize(DeviceState *dev)
-     n->netclient_type = NULL;
- 
-     g_free(n->mac_table.macs);
--    g_free(n->vlans);
- 
-     if (n->failover) {
-         qobject_unref(n->primary_opts);
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 73fdefc0dc..4a0cc34ae6 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -202,7 +202,7 @@ struct VirtIONet {
-         uint8_t uni_overflow;
-         uint8_t *macs;
-     } mac_table;
--    uint32_t *vlans;
-+    uint32_t vlans[MAX_VLAN];
-     virtio_net_conf net_conf;
-     NICConf nic_conf;
-     DeviceState *qdev;
--- 
-2.47.2
-
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
