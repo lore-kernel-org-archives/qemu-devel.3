@@ -4,93 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0A0C87FCB
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 20:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B22EC87FCB
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 20:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uifKa-0003Nf-OZ; Sun, 03 Aug 2025 16:29:21 -0400
+	id 1uifag-0007l9-0D; Sun, 03 Aug 2025 16:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uifK6-0003BV-3x
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 16:28:55 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uifK4-00005R-JF
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 16:28:49 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-76bd7676e60so1775687b3a.0
- for <qemu-devel@nongnu.org>; Sun, 03 Aug 2025 13:28:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754252927; x=1754857727; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FUCui5stuYhzGDKnvafV04f2kDXoqo1oZdCyKJNvZOU=;
- b=FJFv0o07YTiQuIvArHM8odAmE4bSe8r+3Jx9NvluNedfByamHg5j6tWNhNiIIB/Iij
- 0L9q/WIcW10TvLvTCZBtGcqYjRiFb5YrRax7FISU4JUMHgWCRnydU9dzpLVzYNOHD/Cd
- i3rYK9cTvj9RRCxFeFwfH8fXn7YZ3Vy7add4erS/yzpL0DH5tur/JFkDNFpMo1Lepop5
- BtWjJw5XCp/ddvCl94atDKO9AVhX/s2+ZQaP8nBBKuJCLNovINWZguFIYR7Cd99pfPjr
- qZbsCFrYMsI2ddFxQ1ulVE7dkYUsU2h/GVEQel+t1VVZjNJ/bneoekbvMjOoXZyBvEeh
- 6QCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754252927; x=1754857727;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FUCui5stuYhzGDKnvafV04f2kDXoqo1oZdCyKJNvZOU=;
- b=FuhhSdnAYtqwl6WQyGEeU0UKrGEis3NTabkC4XRl9NQuozJRfXHlZZ+gFD/ecprt28
- BJSN1Gv0CMeG35cHVyvNROH1TLxTOFo169kwbm9eA0RJkWvdsLeudFbVzXJphHKuUBgi
- hRfvITYRYlKY3Te2aSM8I2xTCvpGj15oKbPgwgKSyEMePJLUXsi6HesiFYblvsNtwUV2
- vOjPGBmpm9kMjQF6HWJuN0u7WRBH9wxs4RdryFL1J4jslMbtqlV5Lv0Pq8skcUWbbtld
- mi+xNC1N9bOu8tbnWXGkLPV2o5LBh03B80VC+vMK/qLBVaqxCZZY14PN3wjCknu6CB3H
- MDWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVVjJ42tyXFtnJJTlqC/Qj1tB5k0qyflls+0L/0R3Q9/1TZT25PEhZDmv09yVdi96OYK1G+GTBmB9l@nongnu.org
-X-Gm-Message-State: AOJu0YzlrvgmjDMz5G+oDUcva833t/qTdI+XPozbYmCJadvMcInfwh5/
- AURPNWekNbHpBy+w2cgo/adfg8nOZCc+VxBWQBURZA/+IH0ewI2NhnReetdE24HazL4=
-X-Gm-Gg: ASbGncsiKOYaawBFMwHqy2/VM+aJ9iz+GV70QVqbL4SutJIkmWa83bPNGZKAFlK/bmI
- yUD9PCNrtWbUtDzUX5uB+FjjfHKeVnbNsbZoip8xGZYq7rzl106argjkt1lFaVs5yusUoIEb+3U
- cCsLrzQF+7mLk8l/pbxTlMfDozrdsGsjrf/elupPeusEUwUD6nUPxOXjtTTUYlSPJwa+u1SPWMi
- CNqcQ8woUPUT6GVC9ZeD/Y4gCLNH0Szm1GDVxPnZ8+UzvVSfcRajA2VjvqQvnmhc+HdTQgnDOJV
- akL9K/YFUA3np/wFZrrQrrHZ6Luy3P6Fs4wOA23DKb1FZ8OapEnIV11QC438AcQ+Ub0hyMWigKI
- /SWfRvGW+u0OQyvptlfXgm49SDs/JosiLGgbq+UbIDvLymfg1nDA=
-X-Google-Smtp-Source: AGHT+IG7rTMq8lUncssGn/rlsAtbF2eEeDcdxlEVQZtIC/aUq0cJ5MNNq5gFI00QaegRw52ALFL0UA==
-X-Received: by 2002:a05:6a20:7d86:b0:233:c703:d4bf with SMTP id
- adf61e73a8af0-23df8fd290cmr9535122637.19.1754252926709; 
- Sun, 03 Aug 2025 13:28:46 -0700 (PDT)
-Received: from [192.168.4.112] ([180.233.125.160])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b422b77f33asm7585125a12.5.2025.08.03.13.28.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Aug 2025 13:28:46 -0700 (PDT)
-Message-ID: <2a2e6a67-07d5-4bf5-87c6-282867076201@linaro.org>
-Date: Mon, 4 Aug 2025 06:28:41 +1000
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1uifab-0007ge-7i
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 16:45:53 -0400
+Received: from fencepost.gnu.org ([2001:470:142:3::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1uifaa-00038a-UN; Sun, 03 Aug 2025 16:45:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
+ s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
+ Date; bh=pycdUvLaGhGviUyuNg5dHDkUVXBpgAL7u4h8yJZOLMo=; b=f1qaMWboHEZgcm8x1PnI
+ Dhka2yHMTcKRTTmifVpX1G864Q4h0xBxqb+2n0Xj01BITog6yxJb3m9iYVTOMBrR+L0FwmRrmWLzG
+ bNt9N835TsjCaUNgNfVS6sNYLZPkFP+gYLve8Q91ZiQ/w5/aduLoFNS2+Hg5GAfM2aIT+GTdtVdnc
+ dXl/CK19vikiN8K7/Ssx9iF5pl9eyyGYdAXypxdyK04xlHBUKfxblwCBTikIMFb8wu4yKzBLJ6zOj
+ STlsTzwTVN4hUxBjnhqKtUyXp02bdq/9Jafhwt4/+aTdfwGpgk/j+n6rES/TsYY1yQy9vfv34DbWX
+ WVow5HdEUwEVhQ==;
+Date: Sun, 3 Aug 2025 22:45:48 +0200
+From: Samuel Thibault <samuel.thibault@gnu.org>
+To: Viktor Kurilko <murlockkinght@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] Add a feature for mapping a host unix socket to a
+ guest tcp socket
+Message-ID: <aI_KfBAUO75Bmn_e@begin>
+References: <20250803050124.32007-1-murlockkinght@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] target/arm: Implement CB, CBB, CBH
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20250803014019.416797-1-richard.henderson@linaro.org>
- <20250803014019.416797-9-richard.henderson@linaro.org>
- <c101dbc2-9431-4633-8a91-d5d85ce02082@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <c101dbc2-9431-4633-8a91-d5d85ce02082@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
-X-Spam_action: no action
+In-Reply-To: <20250803050124.32007-1-murlockkinght@gmail.com>
+Organization: I am not organized
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,37 +55,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/25 22:31, Paolo Bonzini wrote:
-> On 8/3/25 03:40, Richard Henderson wrote:
->> +static bool do_cb_cond(DisasContext *s, int cc, int imm,
->> +                       int rt, int rm, MemOp mop)
-> 
-> This is a memop...
-> 
->> +static bool trans_CB_cond(DisasContext *s, arg_CB_cond *a)
->> +{
->> +    return do_cb_cond(s, a->cc, a->imm, a->rt, a->rm, a->sf ? 64 : 32);
->> +}
->> +
->> +static bool trans_CBB_cond(DisasContext *s, arg_CBB_cond *a)
->> +{
->> +    return do_cb_cond(s, a->cc, a->imm, a->rt, a->rm, 8);
->> +}
-> 
-> ... but these use bits
-> 
->> +static bool trans_CBH_cond(DisasContext *s, arg_CBH_cond *a)
->> +{
->> +    return do_cb_cond(s, a->cc, a->imm, 16, a->rt, a->rm);
->> +}
->> +
-> 
-> ... and this one also has arguments in the wrong order.
+Hello,
 
-Gah.  Thanks.  I've reorganized the code to avoid this entirely.
+Thanks for working on this!
 
-Now to fix a gcc crash when emitting code for cmpbr...  :-)
+Viktor Kurilko, le dim. 03 août 2025 12:01:04 +0700, a ecrit:
+> diff --git a/net/slirp.c b/net/slirp.c
+> index 9657e86a84..d096ee7ce6 100644
+> --- a/net/slirp.c
+> +++ b/net/slirp.c
+> @@ -795,12 +795,16 @@ void hmp_hostfwd_remove(Monitor *mon, const QDict *qdict)
+>  
+>  static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+>  {
+> -    struct sockaddr_in host_addr = {
+> -        .sin_family = AF_INET,
+> -        .sin_addr = {
+> -            .s_addr = INADDR_ANY,
+> -        },
+> -    };
+> +    union {
+> +        struct sockaddr_in in;
+> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+> +        struct sockaddr_un un;
+> +#endif
+> +    } host_addr = {0};
+> +    host_addr.in.sin_family = AF_INET;
+> +    host_addr.in.sin_addr.s_addr = INADDR_ANY;
+> +    socklen_t host_addr_size = sizeof(host_addr.in);
+> +
+>      struct sockaddr_in guest_addr = {
+>          .sin_family = AF_INET,
+>          .sin_addr = {
+> @@ -833,7 +837,7 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+>          fail_reason = "Missing : separator";
+>          goto fail_syntax;
+>      }
+> -    if (buf[0] != '\0' && !inet_aton(buf, &host_addr.sin_addr)) {
+> +    if (buf[0] != '\0' && !inet_aton(buf, &host_addr.in.sin_addr)) {
 
+Does that not behave oddly when given a path?
 
-r~
+Also, it's a bit odd to set host_addr for AF_INET and overwrite for the
+UNIX case. Perhaps better use:
+
+#if ..
+  if (buf[0] == '/') {
+    ...
+    handle UNIX case
+    ...
+    host_addr.in.sin_family = AF_UNIX;
+    host_addr_size = sizeof(host_addr.un);
+  } else
+#endif
+  {
+    ...
+    handle INET case
+    ...
+    host_addr.in.sin_family = AF_INET;
+    host_addr_size = sizeof(host_addr.in);
+  }
+
+>          fail_reason = "Bad host address";
+>          goto fail_syntax;
+>      }
+> @@ -842,12 +846,43 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+>          fail_reason = "Bad host port separator";
+>          goto fail_syntax;
+>      }
+> -    err = qemu_strtoi(buf, &end, 0, &host_port);
+> -    if (err || host_port < 0 || host_port > 65535) {
+> -        fail_reason = "Bad host port";
+> -        goto fail_syntax;
+> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+> +    if (buf[0] == '/') {
+> +        if (is_udp) {
+> +            fail_reason = "Mapping unix to udp is not supported";
+> +            goto fail_syntax;
+> +        }
+> +        size_t path_len = strlen(buf);
+> +        if (path_len > sizeof(host_addr.un.sun_path) - 1) {
+> +            fail_reason = "Unix socket path is too long";
+> +            goto fail_syntax;
+> +        }
+> +
+> +        struct stat st;
+> +        if (stat(buf, &st) == 0) {
+> +            if (!S_ISSOCK(st.st_mode)) {
+> +                fail_reason = "file exists and it's not unix socket";
+> +                goto fail_syntax;
+> +            }
+> +
+> +            if (unlink(buf) < 0) {
+> +                error_setg_errno(errp, errno, "Failed to unlink '%s'", buf);
+> +                goto fail_syntax;
+> +            }
+> +        }
+> +        host_addr.un.sun_family = AF_UNIX;
+> +        memcpy(host_addr.un.sun_path, buf, path_len);
+> +        host_addr_size = sizeof(host_addr.un);
+> +    } else
+> +#endif
+> +    {
+> +        err = qemu_strtoi(buf, &end, 0, &host_port);
+> +        if (err || host_port < 0 || host_port > 65535) {
+> +            fail_reason = "Bad host port";
+> +            goto fail_syntax;
+> +        }
+> +        host_addr.in.sin_port = htons(host_port);
+>      }
+> -    host_addr.sin_port = htons(host_port);
+>  
+>      if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
+>          fail_reason = "Missing guest address";
+> @@ -867,7 +902,7 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+>  
+>  #if SLIRP_CHECK_VERSION(4, 5, 0)
+>      err = slirp_add_hostxfwd(s->slirp,
+> -            (struct sockaddr *) &host_addr, sizeof(host_addr),
+> +            (struct sockaddr *) &host_addr, host_addr_size,
+>              (struct sockaddr *) &guest_addr, sizeof(guest_addr),
+>              is_udp ? SLIRP_HOSTFWD_UDP : 0);
+>  #else
+> -- 
+> 2.50.1
 
