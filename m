@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551FDC87FD2
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 00:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D4FC87FD3
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 00:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiMwu-0005WL-Gz; Sat, 02 Aug 2025 20:51:40 -0400
+	id 1uiN2x-0002pV-3A; Sat, 02 Aug 2025 20:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiMwi-0005QG-JV
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 20:51:32 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1uiN1U-0001IY-BE
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 20:56:24 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uiMwh-0006zi-4I
- for qemu-devel@nongnu.org; Sat, 02 Aug 2025 20:51:28 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-73e810dc4cdso1206850a34.0
- for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 17:51:26 -0700 (PDT)
+ id 1uiN1S-0007bt-O1
+ for qemu-devel@nongnu.org; Sat, 02 Aug 2025 20:56:24 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-741a0ec1a05so332938a34.2
+ for <qemu-devel@nongnu.org>; Sat, 02 Aug 2025 17:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754182285; x=1754787085; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754182577; x=1754787377; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=x1cE9hK/cnHcQguVA151BlS5RQvAp80s9GOZblSGtrs=;
- b=IuvJlBtkHwd15oGdOpurGoF1+OAcTMaXtyDDxXYQ/cz/qZC2fSRACnps2b/RVr0Vqt
- AxHcLwrrxFWKA68nTPp1AtYTXg57LbIAz5iJFRjosLTGqZ0Kv8Ijyq+8/SvdluUqs+pn
- k1sOU51jDFmLozyII7aC3nYs+dhhx2zh4+qXc6DFUsR0cOtFzGOLbJjGHfA3MJlidpeu
- icQ94SIRWe9craTOqtyxLE1YxX2ylDFfS45LbNyDBJjjjIYMBe2i7H9ge+LvNtpFS1yz
- d42IlBZwf2kp//y+fTYEdHhZQtdpkX71ZlrglfN8iFO70pisyjCBB2pamsAa0Es7dr29
- JJuQ==
+ bh=+rftqA7ajs+3ugf3FnPyUpQuYjsHuBmsgaCTrDuvIPM=;
+ b=clXecrzqxmrivV99XaP25Ovs9Tw4m5qXBDUyXCdPt2Em8qxy20KgFpDVMK7kh4lBrn
+ 8jnxwSZDiy+iUxmPKuDU4JdDdRUvBRn9+XrdA4+Af6cZOx2FUXrVIos8lhxuLh0dVKwH
+ q1ptLQK7vfpG1Oawzdcg689wtYulH2kJO4NyI9ZZmUBN49KnGyjdjFlTCKgouWGlOlAG
+ wYCDOohcHLn7sH/IwsmWSt2EPis8TQ103uqWqAVVlZbaK197HKV+JsnBvpUfWKLeaXO8
+ S478omLOsIdxaGNjRa5p1DvxSZiFGVhyrYp43TbnKa3h/ou2L5v10E44ZWFRv0eWFPkk
+ tmzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754182285; x=1754787085;
+ d=1e100.net; s=20230601; t=1754182577; x=1754787377;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x1cE9hK/cnHcQguVA151BlS5RQvAp80s9GOZblSGtrs=;
- b=peuQ6xeh6leRxbtVptNlGz5P2G2fH3tMlob/v9O/TCLs2NXOutHkSPooe3QXD3vVkS
- XmvULlumsCJfPMGSCMkJzbglEnGYuIlDklrvE9afxSQsTbQvj5JmOE9jCpzT6aRcZ+1C
- +sotY4wWhE3xWC9Qr5ho/KZSqQAd6QiOU8WR/s7FP4FviXsqhFevWPvlBP5nJh5fD7Ar
- bzLe3vkHG9yfg2WKdu/LhlfH5HhiBiAhmnRBf5Y4WDlgn87bbzQjxBbOPwXJ2++qnTXD
- JNx+l9EhS2ydJsy4BoGMJl0yeo0DBPnY1WtdOftnREFyMRp9BZaihgeCIqKXTIVG80ok
- KnXA==
+ bh=+rftqA7ajs+3ugf3FnPyUpQuYjsHuBmsgaCTrDuvIPM=;
+ b=l9Xn6NJ7TVAdLo5a8KogE09ew1jHHZ1UrKSSIrGcfYNXrcJm/zm8Xck9gRTmVSO8yU
+ cBlP36+8cYg6eqYVVYSYnKKEIZ865TLdjX898JajEJsxaqaMtBp7LFvrBuTNGTex5rPG
+ psvLiVf658DzojeriIVjUen7Ws/wyzduRQO+DYUP/iACpfyiNvDqw3OdnCz/uvXr9C5y
+ MT0DxuZ77I8hq+8mEEwMXN2BOyhEsnqBKsSDOLO2cVD1af/MVa0PIzWbVJEHTRHgsOyV
+ iz6I0qU3ApG5tqI/WhMxKfFFv0mbmLClvm7Z3Ynmx6Op1ioy7mgl+XjeGxqkiEwX2PP8
+ Sm3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfN+BL2Y+B8y6GtkY5FrQ66vRGbWpnPuXaq8ijX//J1CUnHbNiNpK+vOtojVW8abB+tL2xYzcnWeo/@nongnu.org
-X-Gm-Message-State: AOJu0Yzorwr2SmDTEtJnfcipzDujScCwXXAi8PDQZEs7BvLaFx3YabsH
- hBbyRy+TBVxPMAQTbcBKRFoxFTFxDSn++UlsCaBRsswS10nyne3aEBzJngNxZETvUys=
-X-Gm-Gg: ASbGncv6kyETY8JHGOMYeBIEE9VXyrUwd9KMIvuspMD5R29t3O1J+RWqht6le57/GBs
- 1rYFfRjnABoHowFaFVvO4YX9KdxhNvVTE0tDOawpk2/CDDH82RsWdCroGhBIG2fgycTIJlUHZf6
- opPE970r4nAG+fUW9rcbpMtxi2GnlXyy78U/zSMQyVqFCBxnyM9sGrXDtUf0qwd5CNcE+jHawfV
- FOwD0izmtIa9mGngooH8Ci6/SgwjTYyq+JVxluReDGRo2TtbB6OzXaJSZJB+xBA5RqvJ9cSn+YC
- sY2SDRLw9eVfAlP+CxaUPpHMt81CSCRqE6fzarBu5AJR03Nld69uX1hst2lIHa19ZKh2falHEhn
- r51uJ36SvuAiGz/iIiyEVdx8usFz/A+JklI/cDInFVnmykcbNSFCddKbM5ff/J21D
-X-Google-Smtp-Source: AGHT+IFy2a5DqUNifrV0ebch4efAStPUmQEb7fdYdaauuvxKWua5I1LRk6gFRGZa2GqlkA/AP7FQfA==
-X-Received: by 2002:a05:6871:58a6:b0:307:c097:a179 with SMTP id
- 586e51a60fabf-30b679116c7mr2426460fac.28.1754182285155; 
- Sat, 02 Aug 2025 17:51:25 -0700 (PDT)
+ AJvYcCUuU90IxZ2qzEp/uY1EqokqB8rPB0YB68gwtzCp+VZPmJiWlifVXrux3I7zSy1YxeUMt6qk9EnJ3WW0@nongnu.org
+X-Gm-Message-State: AOJu0Yzn7ZwoWSH3Lvpt83LCEMJph7uNGjmLtIKj9nsC5kK48ZhNuVde
+ nWZMNnKoviDk5O3WsuFkBqBaFhWH9BJS35U+T3RZI2GmDv6eG2jExfIEBglyywpsNE/WKeWO+Vu
+ ULaFB/RA=
+X-Gm-Gg: ASbGncu9VqGLoEur2i44FNB/RSksUOVLlWcL9ksdoprIsRXPxbIHmEPC5rjciMFDB6j
+ vvU93UxPG2ZBNHNmhytl33oriU+xkUR25Hn6pOGgqrB5BukJLVJM25Om4LXhUaVITiSmK4DgqUi
+ suG9eW+fUxYoB3qMaLNp4PRpoNcRSTadKyYAF94+8wdVJbQs18erISg2IIlnGT7bOyV86PIJaLH
+ Kg/nDrf6d2cvYSJSImhbMu7ga5qDqzZhcSQCO4dWv7O1Vj9LOzwAvQfE9SXdxaJeNUrsu1LBvgP
+ o0VZRtA0JCxFCOTKk+/abGY+uwlsVWd8ZQKvySU8/7QzW2Xhs5pGZxS87NwSLDU8lIsS/pmnTF1
+ oDp+++6tTeYkgb+J1slOJaHid7cY/r7XpCyeYoeTFgoiuEF4RCaQavrAGLRd7Xb5i
+X-Google-Smtp-Source: AGHT+IE8fq4kVP2Z39puGtMFndXDXEkytUwBFIbMKs4GGe48Dgej8KUuIbgSne3SUD90hEmDRMJ5Yw==
+X-Received: by 2002:a05:6870:1b0f:b0:2ff:b00f:a544 with SMTP id
+ 586e51a60fabf-30b67562674mr2716317fac.3.1754182576908; 
+ Sat, 02 Aug 2025 17:56:16 -0700 (PDT)
 Received: from [10.153.194.227] ([172.58.111.133])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-307a7390b47sm1807053fac.21.2025.08.02.17.51.21
+ 586e51a60fabf-307a7411a42sm1806009fac.28.2025.08.02.17.56.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Aug 2025 17:51:24 -0700 (PDT)
-Message-ID: <ae4bb892-6cca-4a63-91a6-530149e7755f@linaro.org>
-Date: Sun, 3 Aug 2025 10:51:16 +1000
+ Sat, 02 Aug 2025 17:56:16 -0700 (PDT)
+Message-ID: <b5e787c2-347d-4009-80c4-8ec29c497ddb@linaro.org>
+Date: Sun, 3 Aug 2025 10:56:09 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/14] whpx: ifdef out some x86-only code paths
+Subject: Re: [PATCH v3 07/14] whpx: add arm64 support
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 References: <20250802081800.76030-1-mohamed@unpredictable.fr>
- <20250802081800.76030-5-mohamed@unpredictable.fr>
+ <20250802081800.76030-8-mohamed@unpredictable.fr>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250802081800.76030-5-mohamed@unpredictable.fr>
+In-Reply-To: <20250802081800.76030-8-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,24 +105,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/2/25 18:17, Mohamed Mediouni wrote:
-> @@ -414,8 +424,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
->           LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
->           break;
->       case WINHV_EMULATION_FNS_DEFAULT:
-> +#ifdef __x86_64__
->           WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
->           LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
-> +#else
-> +        abort();
+> +struct whpx_sreg_match {
+> +    WHV_REGISTER_NAME reg;
+> +    uint32_t key;
+> +    bool global;
+> +    uint32_t cp_idx;
+> +};
+> +
+> +static struct whpx_sreg_match whpx_sreg_match[] = {
+
+const.
+
+> +#ifdef SYNC_NO_RAW_REGS
+> +    /*
+> +     * The registers below are manually synced on init because they are
+> +     * marked as NO_RAW. We still list them to make number space sync easier.
+> +     */
+> +    { WHvArm64RegisterMidrEl1, WHPX_SYSREG(0, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterMpidrEl1, WHPX_SYSREG(0, 0, 3, 0, 5) },
+> +    { WHvArm64RegisterIdPfr0El1, WHPX_SYSREG(0, 4, 3, 0, 0) },
 > +#endif
->           break;
+> +    { WHvArm64RegisterIdAa64Pfr1El1, WHPX_SYSREG(0, 4, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Dfr0El1, WHPX_SYSREG(0, 5, 3, 0, 0), true },
+> +    { WHvArm64RegisterIdAa64Dfr1El1, WHPX_SYSREG(0, 5, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Isar0El1, WHPX_SYSREG(0, 6, 3, 0, 0), true },
+> +    { WHvArm64RegisterIdAa64Isar1El1, WHPX_SYSREG(0, 6, 3, 0, 1), true },
+> +#ifdef SYNC_NO_MMFR0
+> +    /* We keep the hardware MMFR0 around. HW limits are there anyway */
+> +    { WHvArm64RegisterIdAa64Mmfr0El1, WHPX_SYSREG(0, 7, 3, 0, 0) },
+> +#endif
+> +    { WHvArm64RegisterIdAa64Mmfr1El1, WHPX_SYSREG(0, 7, 3, 0, 1), true },
+> +    { WHvArm64RegisterIdAa64Mmfr2El1, WHPX_SYSREG(0, 7, 3, 0, 2), true },
+> +    { WHvArm64RegisterIdAa64Mmfr3El1, WHPX_SYSREG(0, 7, 3, 0, 3), true },
 
-BTW, are there import libraries for these?
-If not, could we use dlltool or something to create one at build time?
+All of these are id registers.  I can understand reading them once at startup, to populate 
+-cpu host, but they need not be synced otherwise.
 
-Since they are required for whpx to function, I just thought it might be easier to have 
-them auto-loaded with the executable, and functions dispatched by the linker, rather than 
-go through whp_dispatch.
+> +static uint64_t whpx_get_gp_reg(CPUState *cpu, int rt)
+> +{
+> +    if (rt >= 31) {
+> +        return 0;
+> +    }
+
+assert?  Or return 0 for 31 and assert <= 32?
+
+> +    WHV_REGISTER_NAME reg = WHvArm64RegisterX0 + rt;
+> +    WHV_REGISTER_VALUE val;
+> +    whpx_get_reg(cpu, reg, &val);
+> +
+> +    return val.Reg64;
+> +}
+> +
+> +static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
+> +{
+> +    if (rt >= 31) {
+> +        abort();
+> +    }
+
+assert.  Or ignore write to 31 and assert <= 32?
+
+> +    if (cm) {
+> +        /* We don't cache MMIO regions */
+> +        abort();
+> +        return 0;
+> +    }
+
+assert.
 
 
 r~
