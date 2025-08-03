@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A63CC87FCB
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 09:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912AEC87FCB
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 09:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiVMR-0004bt-SH; Sun, 03 Aug 2025 05:50:37 -0400
+	id 1uiVMv-0005Lh-Gk; Sun, 03 Aug 2025 05:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uiVMH-0004Ra-D3
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:26 -0400
+ id 1uiVMn-0005Eu-IH
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:57 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uiVME-0003sn-9r
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:24 -0400
+ id 1uiVMl-0003xT-QE
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 05:50:57 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5739oBrH015056
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5739oqAu015266
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 3 Aug 2025 18:50:11 +0900 (JST)
+ Sun, 3 Aug 2025 18:50:52 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=lmJYQTvjFhc2YN6bWJoFpcmGKTs1EVYe8WHABMCHLKc=; 
+DKIM-Signature: a=rsa-sha256; bh=1bKiHzSNH5cCYV1Lwn6EFtslcHo3dA6Yrtf8R+punlg=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1754214611; v=1;
- b=eLwFI2b3pG8xMrUX6MJb0T+9Ofmwfs/UYad9dN/Jqjl0fj2yx63Obg/DghPiYHb2
- QwT0Cz6x9coiyjql/FRhcgXXIlepbrf1sKyXrmf6XD2frqCmLTK0NdNdAQ450QsD
- kM+qOqB0P7yuVeZjccZBtyqcW92kltik/tmdNyR/PQL6WwZy+ey/XU6E3JLeQOZF
- xiNIvhARj0byHDBBeOAWDQ9p1tOABxcrIg6KyBmwKbDCQ8wsO9oTWLEPMS1cres+
- jD/AeSylqPYSgx4GACY2gZIEd5ivU7BqJRi8sXXEKMBbi+AWxlOfsHda0/akNXTO
- /L6pHylPaOtYFvYWyA8XRQ==
-Message-ID: <7c282155-340e-44a6-9790-0a37f330eb30@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 3 Aug 2025 18:50:10 +0900
+ s=rs20250326; t=1754214652; v=1;
+ b=f/xIYQyqDQgL4obG5WCVqg2HJjQccQHNFM6vouVwjTKzXLnjMSgm0e8UtFU/z2Kl
+ 1M6ltobz8EkuyDVlcHWPwgzK8d2xi68tRyKKe3+WUbXrh4HCqd1wXtSXAVuVGhUG
+ xRK0q3Bya8zTKGbihRxwXxaWekJJ/V99Hi+K1M5VfC4HN5WuUKvVQDFmK06rPxzj
+ h17Kz+mj5E/pnHOuRCqJ8Or0Iy2Wdcj37zlrInl2EU8R7wva5qan4uDH6STNTHRy
+ Dk3ICT0T0SnEBLjZeIYCiIWd2sEFZzuEc030UdTpkkajprBRkooBL1Exci2AYtqG
+ JYtks/WPWTMwpY9ORrZiFQ==
+Message-ID: <de6b82d7-803c-479b-9d44-162d7103c12c@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 3 Aug 2025 18:50:52 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] virtio-net: make VirtIONet.vlans an array instead
- of a pointer
-To: Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] migration/vmstate: remove
+ VMSTATE_BUFFER_POINTER_UNSAFE macro
+To: Michael Tokarev <mjt@tls.msk.ru>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 References: <20250802142115.41638-1-mjt@tls.msk.ru>
- <20250803085443.318611-1-mjt@tls.msk.ru>
+ <20250802142115.41638-2-mjt@tls.msk.ru>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250803085443.318611-1-mjt@tls.msk.ru>
+In-Reply-To: <20250802142115.41638-2-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -75,14 +75,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/08/03 17:54, Michael Tokarev wrote:
-> This field is a fixed-size buffer (number of elements is MAX_VLAN,
-> known at build time).  There's no need to allocate it dynamically,
-> it can be made an integral part of VirtIONet structure.
-> 
-> This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
+On 2025/08/02 23:21, Michael Tokarev wrote:
+> The only user of this macro was VirtIONet.vlans, which has been
+> converted to regular VMSTATE_BUFFER.
 > 
 > Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+Nice cleanup.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
