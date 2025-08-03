@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BC7C87FCB
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 10:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A77B6C87FCA
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Aug 2025 10:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiW19-00043o-FE; Sun, 03 Aug 2025 06:32:39 -0400
+	id 1uiWA6-0007ac-FY; Sun, 03 Aug 2025 06:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiW14-0003yx-Fo
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 06:32:35 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1uiWA4-0007Wq-NY
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 06:41:52 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiW13-0002vV-33
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 06:32:34 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-7170344c100so20129537b3.0
- for <qemu-devel@nongnu.org>; Sun, 03 Aug 2025 03:32:31 -0700 (PDT)
+ id 1uiWA3-0004ia-6W
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 06:41:52 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-718409593b9so32037127b3.3
+ for <qemu-devel@nongnu.org>; Sun, 03 Aug 2025 03:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754217151; x=1754821951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754217709; x=1754822509; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NcSR47MHzBHuv2UsC43vzshzwxJRPYuEbs48JV+Zc60=;
- b=Xhk06tBCnVFYI32GOASE1sEdiO2BiIiztTMFMF4kydtwVDSlQZq55fb6/gzfFihL4j
- 7GZ2st7ZtLpS5ZmOECVnhvGYlqkhKgbAZ1D6A7Grpm+cMdYyQf5vPr6Hm8H56RXeexS2
- CpwcNk7C7QPPao20nr+V57jedOQkdeZUz3OeozU+hJKAQK+ig0lvZUR2mihxgAb8o2w2
- Tg1O30iCFEmV484u6ECQawHdu82VIdTlnkF+0sCCsxWs4ljrH3NoZIOBIv+ptYvup5pA
- T8Dr6fvY2zMaT0KfhnhQjoHGI1iNNaN8BX0kaf0lf4j+3kLAIJUDrwOiH8gQe26aCo+Z
- 33Mg==
+ bh=5sZTrJdR5X/kRnACcS2MauxICV41ub3V/SC+1hpnEJ4=;
+ b=TrNLkcigkdp1HshNjBuEhgPzcOHs6VRPAHfW0YX89T0ErYqrkjO+0+iS6kKxncyTmF
+ fdPjQsvdSNEW5vbO9jhkiiabggh42pHwj+5EOs8oJ19QuOc6HDW9+BPGdlpf0V91ji7c
+ zkBUOnNvjbg6euukhg2e6USPU2il/2Fsevh/mjMv/hIF9qPAcqy/9BU5xBORyW+41s1L
+ 3n1RcGIrxS9if4fD3SV7qNvvvGPGzlpY0AwwmNsqXk0bt+fwAQ3Q2WKZq8WNY6hMlDlp
+ bmjDAPVpNlRb7aFRKUX6ZggJgfIRTGGMJSW427m8O9zMmdFE6FBqbvmFmummo41tQegA
+ jYiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754217151; x=1754821951;
+ d=1e100.net; s=20230601; t=1754217709; x=1754822509;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NcSR47MHzBHuv2UsC43vzshzwxJRPYuEbs48JV+Zc60=;
- b=ExXC5hVpDw3WUYVlcqw6pteekX7rwRovf4+ZOav7sCSkZv59Y8Ok5eRZTseGICTbtL
- 9kZNF5TYoz1q5WS8IbpOL2kacydkTRTc48XmsMOzV4Gj/zwDowdaaaOHtl6DpTT4TqUi
- DClrAuQjlkBP3Ye6oXrOkzgDLTy8zEhQxqnuLfqkh6syDPLgFsQL9cR2Jk5aukjLf+Mo
- fntdtqYhkL+izOglWPTkE81Y8Su8uExgX/w7yq/ORDjD4Gys7GylMuaPmCQV20GXZ+hi
- eK9CKOm7LExSVvB4tVLFiQ+EPe7bHwHf3hWV/SWjIXSYKgnQhQ2JK1m1dOSlRfKAt/Nr
- Av1Q==
-X-Gm-Message-State: AOJu0YxiCt7htYEH8kuq6ZONHmexVdwjDFxBEReXrOLz8C4pRoQHlZw5
- gkpJyTpmUXD4bp5Yr+6lIsYrS5hoC/rJvBO65Q48yYTIf7M5dHbVYk2aokj8kTt1wqAXNzAGB8z
- +lLINrdYRJvwL4Qs5KPWEgbJHRWwFs3ACeZXJ/BilSg==
-X-Gm-Gg: ASbGncvv08g/i2HvGdwQzjEgpeJiYXZCKK2XJc18oRFfgR1BltjgFGUK19rxUo85TEx
- kyf8p2eknfVh2tYIJkIHw86nsnoCUv8C6QE61aOMJIXfif4pQ+2I2xyuTuioKHel+zAWkIDsjHO
- /ijzkyMKDH9Isn3ocxL3p4NUZFzGVHDj9QVTGzfYMOW1Zwz65Ult2u0qZStG+SJfZlu8VdC1b97
- x0ni8ae
-X-Google-Smtp-Source: AGHT+IGy4rlghSnoaD10NRnfrQy0dCzA4aWlaxVlcVKgdAtDTo2Ineco74KsPuu9fxhEPNUWAJxznb7zZ5FPTZ+u1e4=
-X-Received: by 2002:a05:690c:6993:b0:713:ff70:8588 with SMTP id
- 00721157ae682-71b7f0afcc2mr73813217b3.36.1754217151074; Sun, 03 Aug 2025
- 03:32:31 -0700 (PDT)
+ bh=5sZTrJdR5X/kRnACcS2MauxICV41ub3V/SC+1hpnEJ4=;
+ b=LIOxXXqiK5pD28PJj7ugraJiY/6p+wFF5NO5WlB8cg4eE08coiLtITUTM6DwnS5tjN
+ PyFfMftoN+z/WWfBVV4+LzyieahueA8wthiiZT1ZLJ3X0K+2tmJaeSyHarwMDbo6QdyR
+ Qn/1zN1gKaakbr+W8z1M6BDBZYoew9qVDg1bp/g8sL47pIf10r1UXLfCK21XMGvfvlbs
+ adqeojuzWICMB6FS6QdkVBxsw2gY2JJ0M/etoYCReGv1kn+XfRxYhvOvqTTnArNk8JdE
+ sRJBNAMG9hXBVfsBkLuhTkIbBs2VEcrjvZFGRu3Vu3oFwI/H/awfsnSMvQtVmE7t5hbY
+ NgUw==
+X-Gm-Message-State: AOJu0YxtrR9GL/O7htw6ZQNgZtLNGEMuS/swd5BZJWcQPkTBJW6Yzr5J
+ AUNAnuo5XWedRi2GXefNIEOwenMqmhn4KK3B7LN/q5OK2fFcaoZ0rAOCqblNOGDnQg2eZ4vVTag
+ /4POIfEAbTBdiUyrbOxL68jJdZNLtprqZKC/e6rvuvg==
+X-Gm-Gg: ASbGncvYNp5e2nla4zcXNOLS62+dvabcVlX5jb+NPUI+LQ9/Ag9er4ZAuLLzXJSD4sy
+ MLN4rWeW5VbhXlM1cVvV6OV+h789ECBwCXWiACwYCrqu1XOPI4TfHstDQOCNgFc9A18oWIsEFTq
+ 3es1ElUazyOq1DxHg6+z3o1Xh525oaCXuiErzTWtRpbBMmnzNa/yb5FaYKzpfXbtqoCAIcihe2p
+ oocIOFD
+X-Google-Smtp-Source: AGHT+IGf3+JglBadjJyZfZzuk1tJkn6LAcV0RRsw0EouFv0FpP0Py5rCfDCnMUUur6zAT6hVs9khyUg0e7rgsnZ6tDQ=
+X-Received: by 2002:a05:690c:6d82:b0:70f:83af:7db1 with SMTP id
+ 00721157ae682-71b7f7f5e59mr61802167b3.19.1754217709262; Sun, 03 Aug 2025
+ 03:41:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250802230459.412251-1-richard.henderson@linaro.org>
- <20250802230459.412251-5-richard.henderson@linaro.org>
-In-Reply-To: <20250802230459.412251-5-richard.henderson@linaro.org>
+ <20250802230459.412251-3-richard.henderson@linaro.org>
+In-Reply-To: <20250802230459.412251-3-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 3 Aug 2025 11:32:19 +0100
-X-Gm-Features: Ac12FXx-sLlryjOugb2J8xlfIxxWiFzKNmyMhJ-1-xzKWMQGc2YIOzPNa6HCSHA
-Message-ID: <CAFEAcA_E0agr8iq_90C3aicJmOh9JQ5y2FXuvZ1BM_KRWX==qg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/95] linux-user: Move ppc uabi/asm/elf.h workaround
- to osdep.h
+Date: Sun, 3 Aug 2025 11:41:37 +0100
+X-Gm-Features: Ac12FXyTgiwJZey11c1PB6feh_rNUm4awqqtI2JMr4JvDdSfzHoMlA1oVCQgujk
+Message-ID: <CAFEAcA8miFBnjrV30Sy4iStDRS0+PkLjOwc9FyY6v_MbtdqiqQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/95] semihosting: Initialize heap once per process
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,22 +93,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Aug 2025 at 00:18, Richard Henderson
+On Sun, 3 Aug 2025 at 00:06, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Move the workaround out of linux-user/elfload.c, so that
-> we don't have to replicate it in many places.  Place it
-> immediately after the include of <signal.h>, which draws
-> in the relevant symbols.
+> While semihosting isn't really thread aware, the current
+> implementation allocates space for the heap per-thread.
 >
-> Note that ARCH_DLINFO is not defined by the kernel header,
-> and so there's no need to undef it either.
+> Remove the heap_base and heap_limit fields from TaskState.
+> Replace with static variables within do_common_semihosting.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
 
+> @@ -492,19 +489,20 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+>      for(i = 0; i < 16; i++) {
+>          env->regs[i] = regs->uregs[i];
+>      }
+> -#if TARGET_BIG_ENDIAN
+> -    /* Enable BE8.  */
+> -    if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
+> -        && (info->elf_flags & EF_ARM_BE8)) {
+> -        env->uncached_cpsr |= CPSR_E;
+> -        env->cp15.sctlr_el[1] |= SCTLR_E0E;
+> -    } else {
+> -        env->cp15.sctlr_el[1] |= SCTLR_B;
+> -    }
+> -    arm_rebuild_hflags(env);
+> -#endif
+>
+> -    ts->heap_base = info->brk;
+> -    /* This will be filled in on the first SYS_HEAPINFO call.  */
+> -    ts->heap_limit = 0;
+> +    if (TARGET_BIG_ENDIAN) {
+> +        CPUState *cpu = env_cpu(env);
+> +        TaskState *ts = get_task_state(cpu);
+> +        struct image_info *info = ts->info;
+> +
+> +        /* Enable BE8.  */
+> +        if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
+> +            && (info->elf_flags & EF_ARM_BE8)) {
+> +            env->uncached_cpsr |= CPSR_E;
+> +            env->cp15.sctlr_el[1] |= SCTLR_E0E;
+> +        } else {
+> +            env->cp15.sctlr_el[1] |= SCTLR_B;
+> +        }
+> +        arm_rebuild_hflags(env);
+> +    }
+
+This change to the big-endian handling code seems unrelated.
+
+Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-thanks
+> @@ -678,24 +678,20 @@ void do_common_semihosting(CPUState *cs)
+>               * Some C libraries assume the heap immediately follows .bss, so
+>               * allocate it using sbrk.
+>               */
+> -            if (!ts->heap_limit) {
+> -                abi_ulong ret;
+> -
+> -                ts->heap_base = do_brk(0);
+> -                limit = ts->heap_base + COMMON_SEMI_HEAP_SIZE;
+> +            if (!heaplimit) {
+> +                heapbase = do_brk(0);
+>                  /* Try a big heap, and reduce the size if that fails.  */
+> -                for (;;) {
+> -                    ret = do_brk(limit);
+> +                for (abi_ulong size = COMMON_SEMI_HEAP_SIZE; ; size >>= 1) {
+> +                    abi_ulong limit = heapbase + size;
+> +                    abi_ulong ret = do_brk(limit);
+>                      if (ret >= limit) {
+> +                        heaplimit = limit;
+>                          break;
+>                      }
+> -                    limit = (ts->heap_base >> 1) + (limit >> 1);
+
+The old code was doing this in a very weird way; what you
+have here is much clearer...
+
+>                  }
+> -                ts->heap_limit = limit;
+>              }
+
 -- PMM
 
