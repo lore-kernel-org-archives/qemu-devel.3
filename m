@@ -4,86 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185ACC87FD3
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 07:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F4AC87FD3
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 07:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uipAv-0004fw-IS; Mon, 04 Aug 2025 03:00:01 -0400
+	id 1uipTg-00019C-Un; Mon, 04 Aug 2025 03:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uipAq-0004cW-IS
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 02:59:56 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uipAn-0003YM-Ih
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 02:59:55 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-604bff84741so6857223a12.2
- for <qemu-devel@nongnu.org>; Sun, 03 Aug 2025 23:59:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754290790; x=1754895590; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9IuR43o60xKHz3OX0HREvy6TGc1CWZ/1El9hffC1AW8=;
- b=ib2YJfSg6nRfohgy1+n0q/vN9Q8vcvgShzxmvuU1Wfmp+lsFFAScyMyHntZ9ldZ7Tr
- jBGE8i5cekbvHfV0SK+ME8obE+1O76jI8kYARMLtr9d2JD064NjbkWo6qRvS4bqTNXcS
- RVUkjNrAvlDGl335ZKPtj/zdLZigrgdyjAy5d39UB+cHGr+c8bxdBtNnhB/FQJpTku/T
- dL/td91OWZknEundKih0J6GqmdSKdE4Xddw7Ky+VtK5X//olzR5jvA1cgMBPmRQxP22y
- IWeQfX6IxjmIc+Y+e5R8TmUfuxhjsBbwVL9Eo3+4VnGYeKH0bMFDRLkqwm3Jj9mhi6SA
- zoXA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uipRJ-0006RG-Sd
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 03:16:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uipRH-0007s3-7J
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 03:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754291810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=6jOUWrpfXeWNYVKKcGi02byeCRyks5DhA/S7zsa4y18=;
+ b=Ks/46PQ9z+bcIjKnXBDaGgWciWMaMlfR8ntwvZ6XLtHkgkFoucGHOvz5qwV5QJGrnxBKaC
+ 7w84DmA7k/534dQ5ldj9IE1iQDKorj4G73p+NLMBRXYwwSlHYcPk63B4FBRCIjSoGL2oER
+ MdEwKaxTQXpZcsOAtwafRSc+Eu6kIXY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-510-i02EqloUMk6qFg3M_afW7Q-1; Mon, 04 Aug 2025 03:16:49 -0400
+X-MC-Unique: i02EqloUMk6qFg3M_afW7Q-1
+X-Mimecast-MFC-AGG-ID: i02EqloUMk6qFg3M_afW7Q_1754291809
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7e667b614ecso751251985a.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 00:16:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754290790; x=1754895590;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9IuR43o60xKHz3OX0HREvy6TGc1CWZ/1El9hffC1AW8=;
- b=vWl2t79uz+nICmZGzz9Jb/BHnWA7KiKAYqKSGJ/gXB61QO3WoSqmN34lk6wdt6Df5v
- LWatORsP3kcJlED8PcBxCG1UXOCR7gBcqBqLMLOGYpHRG4TumGriODexbMASjQVjtdg3
- SYv46yANIp35D97HWtKuHSypDQ6wBxH1fw31/Nxdh1m/VxCc9tchftTa8HNd+uveipt3
- rhKlxHRUcc1AXzeP6GioGB0ZfcbqC3GaMl8xT4+p3saPxxctUfCKwGCW2mvvEc6jgIdM
- 7tdI+xGOBCH2emcrGNSduTolcKVezL5HoIB97IJzHZwa0fnJ/ZoPhr6J0Q/I9mOyB4gD
- tLmg==
-X-Gm-Message-State: AOJu0Yw72dLBFvkAh7M8vuQHMMd1A/AwYmEllKANMQZckQ0tlnoJNr4f
- uYGLAUxoVNK0Rg5yiTrtirUs7lUPlMJ/u+90VFVwewxSplatuF3jAPxptO7mFY3++CJlfZWirsm
- YiZPYbRvttJ6WsjafR92SH+BBHFMVMTOfNxx8L1gF/gnf6BGzyWMveJ4=
-X-Gm-Gg: ASbGncurUED1/uAXS1jd6HGvjQonCtg5E0sbthPGG1KD+AlWV+o/DLQi7qC4xkeniOm
- kimwTjQ2c0EDiALmNMwWQd734AbX7WFzV7uYNbjLDKTG/SOR+EwK2bBgSbuDf8dxFIE6Hlg+u9f
- PZlGIpovg9CnsNryw3hn5ewNXmUPRpHCmTEUmXIhb9UJlZWmrCq3185q+XOCzUpLsrXvQqScRFD
- I86x9rhJrNBlR78dA==
-X-Google-Smtp-Source: AGHT+IFTLOwZf2UVK4KCI80LYkVua1yQKweJYmQXHmnrpw7v0oV2k9w1pDVfTkDJhIPP1VzUpJ35aN3WRR1r/rpjDQ8=
-X-Received: by 2002:a05:6402:13c7:b0:615:9940:8541 with SMTP id
- 4fb4d7f45d1cf-615e716dd9fmr7090805a12.29.1754290789978; Sun, 03 Aug 2025
- 23:59:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754291808; x=1754896608;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6jOUWrpfXeWNYVKKcGi02byeCRyks5DhA/S7zsa4y18=;
+ b=IXfEcsqzsflEXY8V6ihWWNpV5rqBjWQm9ow+QLJg8nBuYeoAGKg/SmCWrbxR2bhkUW
+ DXeyvNNO0jiUccs5u+x56HV/a1LY8RiEA7QL0b3LwiXPZbOxq+vmb7xC9BW4fmVwmpH5
+ BCZ2z5NU5RWEfwM5LAhXklcMHiYuP5cEBUiB72Dzm0bvLQ6IR1lf8OjNYusi1tpUa+1N
+ LQZ4It8zjCUtUJpoTTVlPFYbwclsaXhyMbzwur0MvW55bD7FQ+K8TpCwh8SXszusy0kZ
+ 5kDldLeKgncz8Lktvh/9eM/EsdCHrFnQ3bg1+eu3tr4kNs5HTWqHbnBuSrjuxXr5C7zL
+ /MnQ==
+X-Gm-Message-State: AOJu0YwEvUhoo2czXaS64uGorzZtQQLsmPhFkAvdpnAV0Q+8FGymGV2/
+ e1tmkcfwAJZp2K6FLdKbYGFYkNrkgZut0bEpiWVNQaSCh1HXWDruz8F7tzQX8KnJIgLo2tCdGEv
+ pREiYpEkEBGSGmWMX7DWH4ZsfGNdST5y5CtwjSd+xWRKcxmX4VDT+0iUEenSoHt926qQdEWuIVi
+ cXGJ/XGWxO9Cp7R7KTG80QqgGqyNj4Pwy0Rw==
+X-Gm-Gg: ASbGncusWpx5nu99qcWIMD0bFXPAfN4a7bFvwygkdl2+d8vgh49/ltVyvEjbNPmlLbZ
+ bRPzSqUtuE31/KPdPQPCRRO50CBM5UICl3gdY75Rdye6BfxsQMy/13tb5e64DdWX82hyvNrnyox
+ QYK3Kb9e6A/tHLaDcmfyt8ec+a4L0a0K/KIYOg9sg6ly4z0QuYdOCgVy26SP5Je0rYJ3edethfU
+ 2/u3ZwOWARj1uA+Dh8Df31eYF+wb0GeH7nKy+84Zf/F09DvOcHhxAfv6HzyCzTGUeuPcPbs2PIJ
+ cwzNF2NVhSDA0Rka3PpNGtuepXgAgCOORn5yrYxwWmG71SItd5WFyqPh+3mXwPD6FxX9/TD4kmj
+ vVg==
+X-Received: by 2002:ac8:7d88:0:b0:4b0:7a70:d742 with SMTP id
+ d75a77b69052e-4b07a70dc33mr766091cf.36.1754291808206; 
+ Mon, 04 Aug 2025 00:16:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtKPjSiWwCjWN7upJCiYe9B458L3atxkJswuX4SkD20ZoX9mDibIUIX7zdYWOHh6+reYRFgw==
+X-Received: by 2002:ac8:7d88:0:b0:4b0:7a70:d742 with SMTP id
+ d75a77b69052e-4b07a70dc33mr765791cf.36.1754291807582; 
+ Mon, 04 Aug 2025 00:16:47 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b0696a3744sm10203581cf.37.2025.08.04.00.16.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 00:16:47 -0700 (PDT)
+Message-ID: <e45e9a42-54c7-4e53-ae61-69af6ac09c37@redhat.com>
+Date: Mon, 4 Aug 2025 09:16:45 +0200
 MIME-Version: 1.0
-References: <20250717-docs_add_b4_section-v2-1-69212ed39299@linaro.org>
- <CAAjaMXaCNM95LFZ8aeDHHQEHAtQM7iu1du5poSwF7cEqWK6fwQ@mail.gmail.com>
-In-Reply-To: <CAAjaMXaCNM95LFZ8aeDHHQEHAtQM7iu1du5poSwF7cEqWK6fwQ@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 4 Aug 2025 09:59:23 +0300
-X-Gm-Features: Ac12FXz5sezblf72APYn-hPh0MALKNCTf2-WxNoy1kzexASGHK3NSMVnAfHvhX8
-Message-ID: <CAAjaMXZC6rgFBcmy9tSHojEm7J+t1fXfX7ay1bFSP7oW8P9N4A@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/devel/submitting-a-patch.rst: add b4 section
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] pc-bios: Update vbootrom images
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>,
+ Hao Wu <wuhaotsh@google.com>, Jamin Lin <jamin_lin@aspeedtech.com>
+References: <20250730045813.822132-1-clg@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250730045813.822132-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,121 +156,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 10:56=E2=80=AFAM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> On Thu, Jul 17, 2025 at 9:59=E2=80=AFPM Manos Pitsidianakis
-> <manos.pitsidianakis@linaro.org> wrote:
-> >
-> > Add a section about b4, an actively maintained and widely packaged CLI
-> > tool for contributing to patch-based development projects.
-> >
-> > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> > Changes in v2:
-> > - s/later/letter and add review trailers (thanks Gustavo)
-> > - Link to v1: https://lore.kernel.org/qemu-devel/20250717-docs_add_b4_s=
-ection-v1-1-2dfb4ad2fe07@linaro.org
-> > ---
->
-> (Ping)
->
-> Alex, does this look OK to you? If yes could you pick it up?
->
-> >  docs/devel/submitting-a-patch.rst | 40 +++++++++++++++++++++++++++++++=
-++++++--
-> >  1 file changed, 38 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-=
-a-patch.rst
-> > index f7917b899f6892ef74908fe8f1399b6ae5a30324..dd1cf32ad35a98528f43918=
-eceb2cc8a4847c5b6 100644
-> > --- a/docs/devel/submitting-a-patch.rst
-> > +++ b/docs/devel/submitting-a-patch.rst
-> > @@ -235,6 +235,38 @@ to another list.) ``git send-email`` (`step-by-ste=
-p setup guide
-> >  works best for delivering the patch without mangling it, but
-> >  attachments can be used as a last resort on a first-time submission.
-> >
-> > +.. _use_b4:
-> > +
-> > +Use B4
-> > +~~~~~~
-> > +
-> > +The `b4`_ tool, used for Linux kernel development, can also be used fo=
-r QEMU
-> > +development. It is packaged in most distros and PyPi. The QEMU source =
-tree
-> > +includes a ``b4`` project configuration file at the root: ``.b4-config=
-``.
-> > +
-> > +Example workflow to prepare a patch series:
-> > +
-> > +1. Start with a clean checkout of the ``master`` branch.
-> > +2. Create a new series with a topical branch name using ``b4 prep -n d=
-escriptive-name``.
-> > +   ``b4`` will create a ``b4/descriptive-name`` branch and switch to i=
-t.
-> > +3. Commit your changes, following this page's guidelines about proper =
-commit messages etc.
-> > +4. Write a descriptive cover letter with ``b4 prep --edit-cover``.
-> > +5. Add maintainer and reviewer CCs with ``b4 prep --auto-to-cc``. You =
-can make
-> > +   changes to Cc: and To: recipients by editing the cover letter.
-> > +6. Run patch checks with ``b4 prep --check``.
-> > +7. Optionally review the patches with ``b4 send --dry-run`` which will=
- print the
-> > +   raw patches in standard output.
-> > +
-> > +To send the patches, you can:
-> > +
-> > +- Setup ``git-send-email`` and use ``b4 send``, or
-> > +- Export the patches to files using ``b4 send -o OUTPUT_DIR`` and send=
- them manually.
-> > +
-> > +For more details, consult the `b4 documentation`_.
-> > +
-> > +.. _b4 documentation: https://b4.docs.kernel.org/
-> > +.. _b4: https://github.com/mricon/b4/
-> > +
-> >  .. _use_git_publish:
-> >
-> >  Use git-publish
-> > @@ -418,7 +450,7 @@ Retrieve an existing series
-> >  ---------------------------
-> >
-> >  If you want to apply an existing series on top of your tree, you can s=
-imply use
-> > -`b4 <https://github.com/mricon/b4>`__.
-> > +`b4`_.
-> >
-> >  ::
-> >
-> > @@ -533,7 +565,11 @@ summary belongs. The `git-publish
-> >  <https://github.com/stefanha/git-publish>`__ script can help with
-> >  tracking a good summary across versions. Also, the `git-backport-diff
-> >  <https://github.com/codyprime/git-scripts>`__ script can help focus
-> > -reviewers on what changed between revisions.
-> > +reviewers on what changed between revisions. The ``b4`` tool automatic=
-ally
-> > +generates a version history section in the cover letter, including lin=
-ks to the
-> > +previous versions on `Lore`_.
-> > +
-> > +.. _Lore: https://lore.kernel.org/
-> >
-> >  .. _tips_and_tricks:
-> >
-> >
-> > ---
-> > base-commit: f96b157ebb93f94cd56ebbc99bc20982b8fd86ef
-> > change-id: 20250717-docs_add_b4_section-fc37e538b20b
-> >
-> > --
-> > =CE=B3=CE=B1=E1=BF=96=CE=B1 =CF=80=CF=85=CF=81=CE=AF =CE=BC=CE=B9=CF=87=
-=CE=B8=CE=AE=CF=84=CF=89
-> >
+On 7/30/25 06:58, Cédric Le Goater wrote:
+> Hello !
+> 
+> Michael provided changes to fix the build of the vbootrom image of the
+> AST2700 SoC machine in [1]. However, a workaound in roms/Makefile was
+> still necessary to build ast27x0_bootrom.bin correctly. This was later
+> fixed in [2].
+> 
+> This series is an update of [1] including a vbootrom image matching
+> the new commits.
+> 
+> Thanks,
+> C.
+> 
+> [1] https://lore.kernel.org/qemu-devel/2a89ad4c8f5665d07952a4f1749caa6ec0cd3d9c.1753654515.git.mjt@tls.msk.ru/
+> [2] https://github.com/google/vbootrom/commit/7b1eb5f7fe6a85a03a1e40aa703a6ebbdb644e31
+> 
+> 
+> Changes in v3:
+> 
+>   - Updated commit log in patch 3/3
+> 
+> Changes in v2:
+> 
+>   - Updated all vbootrom images
+> 
+> Cédric Le Goater (1):
+>    pc-bios: Update vbootrom image to commit 183c9ff8056b
+> 
+> Michael Tokarev (2):
+>    roms/vbootrom: update to 7b1eb5f7fe6a
+>    roms/Makefile: build ast27x0_bootrom
+> 
+>   pc-bios/ast27x0_bootrom.bin | Bin 15552 -> 16408 bytes
+>   pc-bios/npcm7xx_bootrom.bin | Bin 768 -> 672 bytes
+>   pc-bios/npcm8xx_bootrom.bin | Bin 608 -> 672 bytes
+>   roms/Makefile               |   5 +++++
+>   roms/vbootrom               |   2 +-
+>   5 files changed, 6 insertions(+), 1 deletion(-)
+> 
 
-Ping
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
+
 
