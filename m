@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58570C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 514EFC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uizwK-0006F0-OJ; Mon, 04 Aug 2025 14:29:40 -0400
+	id 1uj07I-0002w3-Iz; Mon, 04 Aug 2025 14:41:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uiyBc-0003SX-4H
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:37:20 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uiyYm-0003wt-Ei
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 13:01:22 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uiyBa-0004mI-Bw
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:37:19 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-76bd7676e60so2484181b3a.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 09:37:17 -0700 (PDT)
+ id 1uiyYj-0008SW-ND
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 13:01:16 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-23636167afeso30340535ad.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 10:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754325437; x=1754930237; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1754326871; x=1754931671; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7mXhA60e2cN9jRzAk2ZGqZKGqdjjwRs6sAuI6h0mwTg=;
- b=XKFafKUjqWq5I1tmaHuR90YLaXFT/MCROa4KG6sBHfmRGrts/Tj2b3cO1taJslLZXk
- c3F59EeT+zJ0pJJJi53ZkML5aKUtxQ1M+r3E9u8NOFVppTqkSYPounp3Ddm06sQw0NV9
- GqdbtY+rHbt3ETKL7oe6D7mQOmIrWAnJhjzzculVC8IQqHUTmRA3xBEu0oXCBAhC/Wui
- tQdReVsvT7jfGZ2Pg276hmKE9OeFNlvsymaX99wUDhuaYEUYYcewbC72PzJsA2JACoG8
- 4ZA0NoSmXFVtW9JItO4e4SUepUPGOlJqXPxBy3QHihY24T54ZiBkpGfAbE6xUR4hjQf/
- B+fg==
+ bh=2GuumWBMsYZXS9/3GFrOhzvSx5QB81wAgEaNbjkkZ/E=;
+ b=gZb4WVIIooqZvLRQNFkc2pjDGwZ8wva1pzFn984KWhw2pElwNakM01BkW6FfoYKZw0
+ 4xhGRwF/823lA3tNu/JjvYOfjfM9ZkVKyECj7BZxTBl8PeauyRIh/P2idAwAFaB25PuP
+ 4xpj2VfoOZC9wtsY2bRIDDcWyPy6q97dhZEXBfh0kct2PU6ZCkBjjEHWkSkld6kdILUx
+ TpXWn/xVvBN+MwwGQnM3Itzj4mATvbhYZWu5vSWFWDBA7w0XqONbgr4+GB6FWJwEnvWM
+ 2M/gsIMC7Yu0kNzn7nvG55UFcWMJ6+y9toyR/8KjksGAz7EHxIGoW9wViZ85wBMrZZlG
+ 0MCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754325437; x=1754930237;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1754326871; x=1754931671;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7mXhA60e2cN9jRzAk2ZGqZKGqdjjwRs6sAuI6h0mwTg=;
- b=XsZsOvOu8x47JVnRtfosFcUDL70xZq4JpptC1tszGQFFBE5EnRPT9/EiwX7KpXiTZ5
- 8LtjD/GHOghUSGyJS+vGxfG/kzdGFNtW347v9JGByxWsOevmO6tPVDy12GDohFRf/CYu
- bAWnfLtPF7MCXmM73KFLEX2inJsHrm9X6mvlFN+WFoaAxqiP0Zn4BJebTdneF0y93KRU
- WO6L7V7VJ4baWatZ3dYTjFqwYHvDVX/nFX2u9xu9WJkl31PUxyA6ERp/JdAg+ZZKYN2u
- Idcb6eF4SqnFchUVbt5mPmELjabohHhQgoKTI0z1DeJrJH4SoRzrtX07bil5PUQE+qGM
- w5Zg==
+ bh=2GuumWBMsYZXS9/3GFrOhzvSx5QB81wAgEaNbjkkZ/E=;
+ b=hPNPpgQr4nwpbH2Bzbh3FyKlCbtr7aiO1muzKGDYy+amciptPtzCu5JlzShbUfLpgl
+ 1qnQBXpIksd1hfrizC5sezeyzjHi6rHdGCrYVGx9X4DMXKEFfm4EO81VJM/lxlj5ENW4
+ v/Wqgl/wQDLRkbCiqVZJf0dwl4TnitarqMzcsspF9c2y/rqDFV33c7C5Rb5pSpAZgNiv
+ mBFYsZu9PUIsP76ne8C1qRyi10n74N+s04ZDpVM3879g5mrmt8Rgn9pxENAT1glTaIWX
+ RbvYgqphKNZNH4eRTFI5giiPd32QIav7pgtaRJw1c40jqJiLfmeV3P1VcTAJTvgMG77d
+ yMhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0e/aOovC9hXSSL35OeqEQ/pz0kydK/RmgTFOiWEz/mN+y4X1pACeksg5HomtsciVYrKBwf6Utxhic@nongnu.org
-X-Gm-Message-State: AOJu0Yz3oae6KZEt+S+n8i4MSRpcCrsTYckyCTCLQZo1+3y2FCNo+jaq
- BqErCVYIuQHrfcy7ljPAoXtZu5iKRyJHT2rjxGjQUouRM1BjPg1Tiwk0kTo5tkQDZo8=
-X-Gm-Gg: ASbGncublbVQpmJ4y/TVNPLih0+1wfvkXVi5o4/mw5xdemw9ZUhX3J+BvG6SvnZfTfN
- TZAflFkFPJYwXJPQl5FtJrf3EmlVBngr+WYNTjRWQL498re1DKxIXKDip+LqPgrfkkdS7ZO61p0
- p41neFEn6QI7eW+UXx/xjT6ALKm5md+6Ux5hRU4YHWToaFdslqr+pHpnLIDX/WZL1MZYdt9n5Rl
- 2OnceF50nU/wG98WlaihAEy1Qe8LaGLBdkyrEMPcpnHiL1V6mwtpKA73YZu+hb3UmuI2afwqhfk
- qFnpwfKtMEvgXC4u9LRY+WrRnXl9IS3Y+am+AXOAfdeLe3Nkw6l3QesyFAJuYB+vEb/dNpm1P/f
- Jt+D+641QXDFcawK4w3ObQKVqyfrkY6FCvkU=
-X-Google-Smtp-Source: AGHT+IEbN303v1qTZb4v81O8W+8ShCzf4yl9fOxuQdYSBgoncbOhM3OjJvF2LDLmMs6LUjl/I3LMEg==
-X-Received: by 2002:a05:6a20:3d83:b0:240:17d2:c004 with SMTP id
- adf61e73a8af0-24017d2c357mr3272955637.43.1754325436477; 
- Mon, 04 Aug 2025 09:37:16 -0700 (PDT)
+ AJvYcCU17xHzq4OETOwsy7CqiPGcSPlgihptebU8fL0wIMJR6vo+QbcjECILz+4s+bSkoPFhxhQJ1WArV4Vn@nongnu.org
+X-Gm-Message-State: AOJu0YwpDm5b+nyZvyZrJFkQEihC+P+ZZXAYuJP1S5g90Zploy8W/zar
+ DLW2uA+ZBfCe9AAMKqEkqOhnomAJXlZA2nAEIUhIs5YvIO2/m7Bzrj7TiVG/YsPKmry5rdsnxLp
+ l4hbu
+X-Gm-Gg: ASbGnct4CGwMJqiEbMfkYP06kCUab8dvGTMEGnqyQ45JZaKngY2WWB0G3EF24czQYT8
+ cOFFLgqH/s6gvu1GKri+h2I9K9EtpfxJpdzfes4bfEdWpl9mEyuAcEgkh3V6coRjwzOf2Hfo4YW
+ 6kyS75OhkpHdYn6FaoGqY6e9jcmWkxPHsiNJu5S4mNyXjzZcvMPCO94WbE+4lA7w0EZ9nblyY9s
+ 2/YiXdMncEi28WIVb+oHsT2YnNAK+DLUAvrPkzjvz11rZhRv+xNraax6gH7PigVC7DNflQAkVQv
+ hmLLjl6lHXN9OmK1NKFZTrpSGmCb6+qYjyPBAWZPZ0oqkQWk1PuIl6+XkyujBHOJ7aPQfAw0uCE
+ LGQM+Zmn8yK124dei6BbkTv7eXYHOcDQE3MQ=
+X-Google-Smtp-Source: AGHT+IHJH+/i5sytnIG3xtCpKh1AiA3gGfckZw3bPJMREgPXvUOk80J1rBJ/xhvTrVmQ/hTMQAOiVg==
+X-Received: by 2002:a17:902:ea10:b0:240:3c62:6194 with SMTP id
+ d9443c01a7336-24246f6a8famr127352035ad.20.1754326870863; 
+ Mon, 04 Aug 2025 10:01:10 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76be718b2d6sm7151170b3a.56.2025.08.04.09.37.15
+ d9443c01a7336-241e8ab3da8sm113603395ad.175.2025.08.04.10.01.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 09:37:16 -0700 (PDT)
-Message-ID: <e433820a-25f8-498d-801a-b451a22f682a@linaro.org>
-Date: Mon, 4 Aug 2025 09:37:15 -0700
+ Mon, 04 Aug 2025 10:01:10 -0700 (PDT)
+Message-ID: <4807d308-ec22-4e00-a91a-9c59f39e9830@linaro.org>
+Date: Mon, 4 Aug 2025 10:01:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
+Subject: Re: New capabilities for plugins
 Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <cover.1754310749.git.ktokunaga.mail@gmail.com>
- <cc6f1489159379da7f259f3cfd77e6ded89aeba1.1754310749.git.ktokunaga.mail@gmail.com>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+References: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <cc6f1489159379da7f259f3cfd77e6ded89aeba1.1754310749.git.ktokunaga.mail@gmail.com>
+In-Reply-To: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,21 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 5:57 AM, Kohei Tokunaga wrote:
-> This commit fixes Dockerfile of the wasm build to support both of wasm32 and
-> wasm64 build. Dockerfile takes the following build arguments and use these
-> values for building dependencies.
-> 
-> - TARGET_CPU: target wasm arch (wasm32 or wasm64)
-> - WASM64_MEMORY64: target -sMEMORY64 mode (1 or 2)
-> 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   MAINTAINERS                                   |  2 +-
->   ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
->   2 files changed, 23 insertions(+), 8 deletions(-)
->   rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+Hello Florian,
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+thanks for your interest about QEMU plugins.
+As you noticed, we recently expanded API to be able to modify state of 
+executed program/machine. Before that, plugins were limited to observe 
+what is happening, without allowing any modification. One of the reasons 
+if that it might break QEMU in subtle ways, but we came to realize that 
+benefits are worth the risk.
 
+On 8/4/25 3:14 AM, Florian Hofhammer wrote:
+> Hello,
+> 
+> I'm currently working a lot with QEMU plugins for dynamic analysis of
+> userspace binaries (i.e., running under qemu-user). While working on
+> that, I found that the QEMU plugin API luckily has been getting more and
+> more capabilities with recent versions but that I'm still lacking some
+> functionality for my use cases.
+> More specifically, the "vcpu_syscall_cb" and "vcpu_syscall_ret"
+> callbacks already allow me to instrument syscall translation entry and
+> exit points. While the register read/write APIs also allow me to modify
+> register contents in my syscall callback implementations, there is
+> currently no good way to emulate a syscall myself in the plugin or
+> explicitly set the syscall return value (as it will be overwritten with
+> the original syscall's return value again, even if I set the
+> corresponding guest register).
+>
+
+The vcpu_syscall_ret callback is called just at the end of do_syscall 
+(before returning value), so this is why the value does not get overwritten.
+
+If you replace the returned value at the right point, which should be 
+the next instruction after svc (instruction callbacks are called 
+*before* instruction is executed), this should overwrite the return as 
+expected.
+
+> I was wondering whether the QEMU community would be open to extending
+> the plugin API so that a plugin can fully emulate a syscall without the
+> original syscall being executed by QEMU. I had multiple approaches for
+> that in mind, with some working patches locally that I'd be happy to
+> share and build such a feature on:
+> 
+> 1. Change the API of the existing callbacks so that the syscall entry
+> point callback returns "bool" instead of "void" and if any of the
+> registered callbacks returns true, execution of the actual syscall is
+> skipped.
+> 2. Introduce a new API function that sets a flag for a specific syscall
+> to be skipped:
+> 2a. A function that's called once in the manner of "always skip the
+> syscall with this specific syscall number" or
+> 2b. a function that's called every time in the syscall entry point
+> callback in the manner of "skip this specific instance of the syscall".
+> 
+> I'd be happy to get your opinion on those proposals and to
+> develop/submit the corresponding patches!
+>
+
+Before talking about the how and what, it could be useful to explain why 
+it's needed to replace syscalls.
+
+It's not clear for me how a program can do anything useful if we replace 
+real syscalls with fake stubs or skip them. Could you give us a bit more 
+details about your work and goals? This will help going in the right 
+direction for what you need.
+
+> Thanks in advance and best regards,
+> Florian
+> 
+> 
+
+Thanks,
+Pierrick
 
