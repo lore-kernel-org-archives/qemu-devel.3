@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C68C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 09:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C0EC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 09:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uirJX-000124-Uy; Mon, 04 Aug 2025 05:17:04 -0400
+	id 1uirn9-0008Bb-IN; Mon, 04 Aug 2025 05:47:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1uirJ2-0000tZ-1N
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:16:38 -0400
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
+ id 1uirbw-00034r-1Z
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:36:07 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathias.krause@opensrcsec.com>)
- id 1uirIy-0001Kn-9s
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:16:30 -0400
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-7e6696eb4bfso309651485a.2
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 02:16:27 -0700 (PDT)
+ id 1uirbs-0005cd-Ge
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:36:02 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7e346ab53d8so350732885a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 02:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec; t=1754298986; x=1754903786; darn=nongnu.org;
+ d=grsecurity.net; s=grsec; t=1754300158; x=1754904958; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=NSPtN0kwWtvNDBd+lpKApr9yaknC2JKVLS9pzdP+iSI=;
- b=K9BoWykn12WgcC/50uoXKKmVW4jKDtJA/MuzQepxpLPgeYBAr4jkLrA4xbx9v/d9AH
- dlgA+y8LNuaIp/FozAFMLC7XbjKrYN+B9DgZm/eJVpZB2rnJjxG+9kgq+DVusAU3THy8
- ZDR43YrkfhDQJPViKAkR4OPvNU/FowyUP5Adgrt8Ibx7bNBrXzBOSawIok9fsp8Llg0p
- KJMEiDLdNgkfOrWl0sO6Rl7MasUWrjr1/Aawv4NXIWwLUDvypAiR2O/rHrAo/71H/x2I
- W3e+CANOb1LXSOo0NHUJzA1PpWxz5LMOdxzuwHcwPYXMHiCl8WXetYQAU40oJcNSqV5h
- DHPA==
+ bh=sSGViVqk8tYm1Hl4rf3sipWjZp79oeSys3OXdOq7qQ0=;
+ b=D5o2Q/xEj4lV654nohcA8BNEwOIwQO8ZHMJdmNPYhQi74sRTsm7SdLrAuqsiJMMI/3
+ JXeOPpNrJcg7KIFYQmeG0X/yIHGQi0z7zQe23SKZEuixq6+4XxODWcKml3BYMKhUd4zR
+ GoS/JRzkondC6AGATqztvlU85oZzQ9RtEf9mO/iKXKwJMwWWsM2Lv3EA+ZA502KNGAfS
+ Me187JaHvSHOTLtj43ovCOjE7E54DVhOB+6C/E+2rdiaGpUhocVVfdYh8ZPW3W2PUM9/
+ rD7sjYeIBhVRWE4qI0iEpTmxJsu4iLNj9n7fEN6IAfof+d+F6zVYa3jQGdvV/i7kC3+a
+ +ecw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754298986; x=1754903786;
+ d=1e100.net; s=20230601; t=1754300158; x=1754904958;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NSPtN0kwWtvNDBd+lpKApr9yaknC2JKVLS9pzdP+iSI=;
- b=QbsMWFeEO6uJB8UQV4XcMy5g/7pqm8X/di6FRcjxAxCHNTue6AdVevFPQV26oUm51p
- btcWWUpt0NGli1886oMSQeMm/e2NenFw1pFPhJQ2qd+OMroL5pRCO7m6c7IM2NfkNP0T
- oMBjUmn6HHtLX7ECP6uVZ9i2rH1jjlvYZfcxfLydXcXcHpZAukFX5DESe8o07/8dN31F
- mE79bhdCCTORtI3L+Gf7aQ3tM9I1Dg54QLMT/LO7KG5rC8cW0hklS/n+x3YTfBMyy/7N
- nlVWT10vBGA6mdVjpURMbBekKNmQvSJzc6B29cBxIhyY5p2WkvkAX6D31xLUEK8G412D
- qWrA==
+ bh=sSGViVqk8tYm1Hl4rf3sipWjZp79oeSys3OXdOq7qQ0=;
+ b=nK6IFY1xTsT3qatl6vaVhQ+MC5ZIlteK+5TdhTmAjNSmEB6JGr5VagXCHBkUnfffvt
+ Y3ZcH5ARyFEW8LiM3wRzCxnWegqjOhrSBBsFj7+eEMUCyV7yLanKeSdlY+E1Rfibilmg
+ 2T9OmYbFK/3/4OTsf4J6u6fP3vVOdE4jnOs9DC3HIVGM5VoDwJPkDbJRtrENktDPQBTo
+ uufRbD6TfvAS9aG2q63vVVpaq5zdF5/GjJG4a78z66JdKFD1MgSOue/aKxcRSAe0YLYJ
+ A7lVm0dRbms9Tx9Mr+C2MT+uu0CT69Pse3cOeGb56SpPqETos99O01YHMLP4tps+KFYg
+ hQ5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7rQRK+q38TpQr/Cj/pmoOY7E+LUq2KGLa8DrCpFEDaZmLkGfI7XZ8OfGWUyB9A1VmeJadX3RebcBF@nongnu.org
-X-Gm-Message-State: AOJu0YxccnnHAEHifgThBSN2aAY9gBn6fgEdc7anmt92IxwEh9RTN1Lr
- io3wVxv9WQEuWmsOvS6qp6DCctrBOFLM9MoWLGMmrpv6daT6qh0mu79FZAmQqVWUD2k=
-X-Gm-Gg: ASbGncsXcas8rz7e+JBH3O3ytjMOQv/bylq2NuxDZUI5195i5OiFlt7qnf2DMFM9l5W
- QOOkeBhNRa31lL51Q/qItig+hVHDrr6KWwO2PHOJQS1XM6ncUfwI7RJ6HPUkf96H+J4UegelCj9
- TklBscy4uvw4lFR4irt6XvWr5ElnCe8QvQUSKqB4LMkuLDc/2kLdZC2jxZgpsH63UH1tn7JgCOC
- TUIebXkYwM7VY4GuPUL99FKAuLqoF1r+BwLI+CTiRDGBGv88QrOH6ZldJzkCFw45xdsjBz5RtCG
- 5Qg7/XD0T6SmxXuEvegk+bWiRuEVRGQ4iwnHrCJBqLCaspFVXEbwPdu/cMwaT1dSBHyqQkziCmB
- cNOHTRc0ubg0r47w5elHPYmAugEBYNltryCWaGzzNGbMwtozP9QBwwQ7l5vWiZovEPgUOGHDl+L
- SqKB/iDeMKQ+TW2XX1ArlaOYq1JNWEkUToOxclO544Jj5Nb+jLJG2uCLU=
-X-Google-Smtp-Source: AGHT+IGTopjFjRqcg4szc6xtYjmVRr/+qF9GoJYZct1NGmlBsIGmn39Z+j/4xEoL90Wd9djgyiYXsQ==
-X-Received: by 2002:a05:620a:471f:b0:7e8:48d:85f0 with SMTP id
- af79cd13be357-7e8048d8bf7mr172974485a.4.1754298986305; 
- Mon, 04 Aug 2025 02:16:26 -0700 (PDT)
+ AJvYcCWjbOtqNKpF8kcdYZfDJqyu1JG9/PCT6Hz8gQwDVKyV/vs7lgXG0TsDeJzT8BCw13woPjeaRTOWE0F8@nongnu.org
+X-Gm-Message-State: AOJu0YzN9oY/J2I2o4uoUok4HNrOnmztI0ko+jpXtwIwD2G+UYmT7gyf
+ 0BgWe5pNMVncKHOLByay18Lmj4R7/MJowYQozJzfKTMd1F1ODUHBamyiJYPR9kYTqkE=
+X-Gm-Gg: ASbGncuG+b/WY/tOtTKQMi3buTwTh0lzAuu3yp7rhx6gmTXptOMdpjHJv8sWJ2fwOSS
+ 9nPF+vuXmtWeRlbg7qoEc4I/XwzjKPa6nI1BkPmLVr8pgncKgnwGWrYWm4qTmrvfz62AWaqchST
+ Z3Lrdc0t6eQve7E1MOv8kgVtlmyrdzeIXuxTL8N6Z/NJhTbqvldgf26VJmjLGiGhSTiq+oMTbzt
+ /c4elNyz1JNGMewswfLCow/j7MVYl6ukzmXkJY5tbCRaE7uqGEvFq2Vj5poefG4saoazX6An8nN
+ gbb9UmckT3O7DRaT8W35WUaIcpPKiKcV0j+ZDTvrpd74D0ZWuaMY9Y75woqr+aqQJ0/AvhAxU8A
+ qYI9GvrDnF7dfIG7mhMaWKbtA6HFZzf0bItQzSKLejHxQOuoixVSv94FYVDDZ4YAw0xWjd8ivEk
+ phJn4L81cYuk8Oo0SsoweLTz5Rs4OIiA3k2hjHnvKp8SGFT2/JVF8mpDybZ6ooWXZj0g==
+X-Google-Smtp-Source: AGHT+IGbM9Mk6uhLMIfQkTcN7oqrD3mx+58S38TYJ9YZp0XYWcvPrm86ys90AFtGU4ZHqA92/ooSxw==
+X-Received: by 2002:a05:620a:21c6:b0:7e3:4678:aae with SMTP id
+ af79cd13be357-7e6963543e9mr973213885a.41.1754300157937; 
+ Mon, 04 Aug 2025 02:35:57 -0700 (PDT)
 Received: from ?IPV6:2003:fa:af22:cf00:2208:a86d:dff:5ae9?
  (p200300faaf22cf002208a86d0dff5ae9.dip0.t-ipconnect.de.
  [2003:fa:af22:cf00:2208:a86d:dff:5ae9])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e7f9d4ea94sm142643385a.89.2025.08.04.02.16.24
+ af79cd13be357-7e67f594206sm521802385a.4.2025.08.04.02.35.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 02:16:26 -0700 (PDT)
-Message-ID: <1bc67fb2-088d-4d6d-838c-d826aa8eb03c@grsecurity.net>
-Date: Mon, 4 Aug 2025 11:16:22 +0200
+ Mon, 04 Aug 2025 02:35:57 -0700 (PDT)
+Message-ID: <b0179d3d-d36a-4ae8-b32c-5659794995db@grsecurity.net>
+Date: Mon, 4 Aug 2025 11:35:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] i386/kvm: Provide knob to disable hypercall patching
- quirk
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+Subject: Re: [PATCH] i386/kvm: Disable hypercall patching quirk by default
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, kvm@vger.kernel.org,
  Oliver Upton <oliver.upton@linux.dev>,
  Sean Christopherson <seanjc@google.com>
-References: <20250801131226.2729893-1-minipli@grsecurity.net>
- <6bcf6108-2d0c-44ae-a9f7-2f53ca23af7a@intel.com>
+References: <20250619194204.1089048-1-minipli@grsecurity.net>
+ <271351582cbe88731098bd4fbdd8f7ef522f20f6.camel@infradead.org>
 Content-Language: en-US, de-DE
 From: Mathias Krause <minipli@grsecurity.net>
 Autocrypt: addr=minipli@grsecurity.net; keydata=
@@ -119,11 +118,11 @@ Autocrypt: addr=minipli@grsecurity.net; keydata=
  zz3lozuC5nsm1nIbY62mR25Kikx7N6uL7TAZQWazURzVRe1xq2MqcF+18JTDdjzn53PEbg7L
  VeNDGqQ5lJk+rATW2VAy8zasP2/aqCPmSjlCogC6vgCot9mj+lmMkRUxspxCHDEms13K41tH
  RzDVkdgPJkL/NFTKZHo5foFXNi89kA==
-In-Reply-To: <6bcf6108-2d0c-44ae-a9f7-2f53ca23af7a@intel.com>
+In-Reply-To: <271351582cbe88731098bd4fbdd8f7ef522f20f6.camel@infradead.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=mathias.krause@opensrcsec.com; helo=mail-qk1-x72d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=mathias.krause@opensrcsec.com; helo=mail-qk1-x736.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -146,80 +145,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.08.25 05:32, Xiaoyao Li wrote:
-> On 8/1/2025 9:12 PM, Mathias Krause wrote:
->> [...]
+On 23.07.25 11:26, David Woodhouse wrote:
+> On Thu, 2025-06-19 at 21:42 +0200, Mathias Krause wrote:
+>> KVM has a weird behaviour when a guest executes VMCALL on an AMD system
+>> or VMMCALL on an Intel CPU. Both naturally generate an invalid opcode
+>> exception (#UD) as they are just the wrong instruction for the CPU
+>> given. But instead of forwarding the exception to the guest, KVM tries
+>> to patch the guest instruction to match the host's actual hypercall
+>> instruction. That is doomed to fail as read-only code is rather the
+>> standard these days. But, instead of letting go the patching attempt and
+>> falling back to #UD injection, KVM injects the page fault instead.
 >>
->> For regular operating systems, however, the patching wouldn't be needed,
->> nor work at all. If it would, these systrems would be vulnerable to
->> memory corruption attacks, freely overwriting kernel code as they
->> please.
+>> That's wrong on multiple levels. Not only isn't that a valid exception
+>> to be generated by these instructions, confusing attempts to handle
+>> them. It also destroys guest state by doing so, namely the value of CR2.
+>>
+>> Sean attempted to fix that in KVM[1] but the patch was never applied.
+>>
+>> Later, Oliver added a quirk bit in [2] so the behaviour can, at least,
+>> conceptually be disabled. Paolo even called out to add this very
+>> functionality to disable the quirk in QEMU[3]. So lets just do it.
+>>
+>> A new property 'hypercall-patching=on|off' is added, for the very
+>> unlikely case that there are setups that really need the patching.
+>> However, these would be vulnerable to memory corruption attacks freely
+>> overwriting code as they please. So, my guess is, there are exactly 0
+>> systems out there requiring this quirk.
 > 
-> For non-coco VMs, the systems are surely vulnerable to memory corruption
-> attacks that the host VMM is free to modify the guest memory. It's
-> irrelevant to whether hypercall patching is needed or works.
-
-Sure, a VMM could mess with the guest's memory as it pleases. However, I
-meant possible attacks from *within* the guest, as in allowing code
-modifications to happen by having W+X mappings, allowing possibly
-malicious modifications of such.
-
->> [...]
->> ---
->> Xiaoyao, I left out your Tested-by and Reviewed-by as I changed the code
->> (slightly) and it didn't felt right to pick these up. However, as only
->> the default value changed, the functionality would be the same if you
->> tested both cases explicitly (-accel kvm,hypercall-patching={on,off}).
+> I am always wary of making assumptions about how guests behave in the
+> general case. Every time we do so, we seem to find that *some* ancient
+> version of some random network applicance — or FreeBSD — does exactly
+> the thing we considered unlikely. And customers get sad.
 > 
-> No problem, I just re-tested it.
+> As a general rule, before disabling a thing that even *might* have
+> worked for a guest, I'd like to run in a 'warning' mode first. Only
+> after running the whole fleet with such a warning and observing that it
+> *doesn't* trigger, can we actually switch the thing *off*.
+
+Looks like I was overly optimistic. There are, of course, use cases that
+rely on the hypercall patching, even if it's just for testing purposes.
+One of these are the KUT tests. I tried to fix these[1], however, there
+are probably more such mini-kernels, so I reverted back to not changing
+the default behaviour and only provided a knob to disabled the quirk,
+making users to manually opt-in to it[2].
+
 > 
-> Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Can we have 'hypercall-patching=on|off|log' ? 
 
-Thanks!
+I'd like to have the 'log' option as well. But as KVM does the patching
+on its own, this would require QEMU to analyze and react to related #UD
+exceptions (and possibly #PF to handle currently failing uses cases with
+read-only code too) further, I'd rather not want to do.
 
->> [...]
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index ab23f14d2178..98af1a91e6e6 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -236,6 +236,7 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
->>       "                dirty-ring-size=n (KVM dirty ring GFN count,
->> default 0)\n"
->>       "                eager-split-size=n (KVM Eager Page Split chunk
->> size, default 0, disabled. ARM only)\n"
->>       "                notify-vmexit=run|internal-error|
->> disable,notify-window=n (enable notify VM exit and set notify window,
->> x86 only)\n"
->> +    "                hypercall-patching=on|off (disable KVM's VMCALL/
->> VMMCALL hypercall patching quirk, x86 only)\n"
-> 
-> I would like to say "(configure KVM's VMCALL/VMCALL hypercall patching
-> quirk, x86 only)" instead of "disable"
+Another option would be to do a WARN_ON[_ONCE]() in KVM if it does the
+patching. But, then, existing use cases would suddenly trigger a kernel
+warning, which used to work before. Again, something users probably
+don't want to see. :/
 
-That would be technically correct. However, as this quirk is enabled by
-default in KVM and QEMU, the only sensible configuration toggle is to
-disable it. That's why I stated it this way. But I can rephrase it, if
-you prefer it this way.
-
->> [...]
->> @@ -6611,6 +6650,12 @@ static void
->> kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
->>     void kvm_arch_accel_class_init(ObjectClass *oc)
->>   {
->> +    object_class_property_add_bool(oc, "hypercall-patching",
->> +                                   kvm_arch_get_hypercall_patching,
->> +                                   kvm_arch_set_hypercall_patching);
->> +    object_class_property_set_description(oc, "hypercall-patching",
->> +                                          "Disable hypercall patching
->> quirk");
-> 
-> Ditto, Could we use "Configure hypercall patching quirk"? It's not only
-> to disable it.
-
-Or just "Hypercall patching quirk", as the bool value already reflects
-its state.
+I guess, we have to stick around with the default but make users aware
+of the option to disable the patching themselves.
 
 Thanks,
 Mathias
+
+[1]
+https://lore.kernel.org/kvm/20250724191050.1988675-1-minipli@grsecurity.net/
+[2]
+https://lore.kernel.org/kvm/20250801131226.2729893-1-minipli@grsecurity.net/
 
