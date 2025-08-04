@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7239FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C73CC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj46O-0003Sl-OU; Mon, 04 Aug 2025 18:56:20 -0400
+	id 1uj471-0004BM-QV; Mon, 04 Aug 2025 18:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj46L-0003Mp-Jk
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:18 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj46o-00045V-SL
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:47 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj46H-0000AO-JP
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:16 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-459d4d7c745so18176815e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:56:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj46n-0000Fj-Az
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:46 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-76bc5e68d96so3972293b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:56:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754348168; x=1754952968; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=linaro.org; s=google; t=1754348204; x=1754953004; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=AnhC+5NQgPXUfTdBtxtORy1XGkja1Cfkwjx/YqHHv3w=;
- b=jrzz2pIf4NLBZiaWlHSu8OYcvuRhavQrxbL4s+IeHCVg/C7YptGRLNE/3lQcmXxYQe
- CKZlaKDPGSm9hmo7iNhTE8SfZfV6QBB1Rjy+epEJda5oZuUw2NB9GMTy4gYMRcsocpMz
- RX7WXnDUTuvCKzw/hqBDxDZuimTfbkeG576DZmBka6mNGu7Rvwp4M544n0bTYOsa2pyz
- PEe3mfP8cnhSC8cl72H8bcm8GInVO6p/OLs1Hyu2IgLavvfBO2HoJpPODGdFjQju7TsO
- YF0x7+0Z1Rs6u7Ek+Jk4AI+12pxZ6X64cqHalLn2xsDC+iRpZ6cQ7Y32G8YwR1R2tXxk
- j9Pg==
+ bh=KXmJcDFY/K6kmvJKvRb9yzIOFxWc0d1jqukisbQaPXI=;
+ b=Vz/GVFc1HG0nsvV/2H6jyUL2khw3RRSftt6MPuGObWLYO9dwY2S6JCoqhBEIUaOZN0
+ oo2LZxHalOjk2G7hq4D7lNMOss94rjztfA1Z1TJuaUrgtNgc6+yH2N6FX7USC0rq9iaY
+ B4FOhibQ/XBxnYNy/eKYZE+IqsMwMCPPCqDNdKnTqCZo1cged1YXjPAMSXdwhZQe9v60
+ VbpjyDAiIZQyjgqPDzrmbYfWfVxmUtbly8Qlaw4e3D2rhzgoOrr5ADpEdmfCfGr++4XV
+ 18QqcBhUG/8quVcZTsdC9G493vSnobwPF1NjxUsf82vgmG7EIV5Pybo+GvbOxRCri/O/
+ GHlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754348168; x=1754952968;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=1e100.net; s=20230601; t=1754348204; x=1754953004;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AnhC+5NQgPXUfTdBtxtORy1XGkja1Cfkwjx/YqHHv3w=;
- b=PtNGoc1MJps6XJyBPG0i9QrOVDCjf3EHEq9GZS5uqp70FQXyqskbFH7hN/0+03q0Uz
- lY/nl+HT9cNGb3YV9WrgQRaE+U8C7yuO6ug/Y/l6csmuwc2ZyHAutkts0ac6Lc9Gx57W
- qYMcNqDYnJCU36LKOn0cVvhHGtyIWI9ANsO7LpLxw6R7ycDQCf+ET45/gkYffzho/mkO
- Tj1tChqrwofiQatczFv74ytH0ikQ61nACvHgSNRKjzg6lGFUz4Zd8n4O8C7ztSMJ+fWn
- yoOqqBuwpu83JiCyI84fE45KBQ9zEZD0qZWHS9fl5m1h77qcyTWwGIr5KTNcnS7zLmW2
- QF1w==
+ bh=KXmJcDFY/K6kmvJKvRb9yzIOFxWc0d1jqukisbQaPXI=;
+ b=KoH2Z+FyRQ9oAtC4eljXZrHOSZJzttolcKJWWZ+lj+x7pe1Bixd88YrJ5IplUDbc3u
+ 6bOH/rsrRRrbYNZcutH/o089olP0xwv2a+R72tT/efY+p7SrnSuMkoWvCjBRkQpnGoSL
+ /1iRRzKTi78Hvsk1GSqDEzgEEeoxPIuo+P3TQnblK7SoyX0nHRJd5epvyBIMfJNRDfHq
+ GgAqnbVfaTLZarqZGRzWkASfQztWhsda8UsfTOumHeqNQ3CJS+LSPIEz+SwCsfnWUdMR
+ oSynGmb6lR3Tf8EYvEKAJ+v9yQfz+kmioCskNqvAGIQDQrNzvDz5X+Mh+jhVmecnytXI
+ re8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIJwpfdbUELpSWC3yyXWnNTcp0oJ7/FJnaINaB56X/LU5nqb6dOe2dXcHIE4S5/xoYzNlu8OOJbWQG@nongnu.org
-X-Gm-Message-State: AOJu0Yxpq3oxEzQErO7qANmSt3uEJUhNoaJNdFTP2UrN3xqAZXIRp6t9
- bZxnRDcnQs7tT8Hd6yze9Fn78/vRrRsO9we/F5g2BGOlnj9fs0GVeoX4K6x4rN2f1JA=
-X-Gm-Gg: ASbGnct8qBKCnWPsaaweokU1kfs/LgjkzWLWsirT/KdwU3I/E58G652WJFoIlfBrbRA
- ijD9SERxrJx+PnOh7FWWUubNPM+TzxBBYOGgUKOS/Qn5WLGTIURIUql8QwbykaAGJInip1Ruo9j
- nV16UDrxkMsd/iL/pPbKvYQzm/8gbbdJn7YRLwU4KBETYUEJEZQcn3JxEdvG03GZ1Wv08RFDsfX
- vso3dygETPmpYq2nl59J2Hzg4jUlYDKVUpmFwEwW/I6vL4X5Z0RXLri/LdQw2VYuFMZ3vl/eHxp
- dfa9Duqo7p+bAH8tWeS3Za51a4h85OJDZ55LnfB3B8oTnna+scuntiaf+ly8HTekC5pGLm3xTB2
- ly+0QWhon718G/xz6C4iCSDQsIxiDuR8Z0u0S572uqxErwVUtKTgIIIzmMsLEjejDkA==
-X-Google-Smtp-Source: AGHT+IEuv+erl0EU2HVvC0kfVWNbC8gMnW6DHnMH00132oN2EmQyvYVLVx/OlXqkCVe0HzhNfssjZQ==
-X-Received: by 2002:a05:600c:354e:b0:453:6ca:16b1 with SMTP id
- 5b1f17b1804b1-458b6b47baemr84506915e9.26.1754348167925; 
- Mon, 04 Aug 2025 15:56:07 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e0cd2c90sm12240625e9.17.2025.08.04.15.56.05
+ AJvYcCUBG2VxU4SnGx1ThacS+nUI+9CYX3cBD6RuNHSiXBJKt7cn8CYuwpZAdIfenyGP3KvmYSbLVwCXOffP@nongnu.org
+X-Gm-Message-State: AOJu0YzVPnTAtstZ4xBaG8xNs5xHL+gDkdNcMKeLG6D++gVPZWVSAf8L
+ 0z5jO7tfcxpTMuR9rWCOvVMdO9TfD5ZUug1XHjFbpOu/yT2EH5mBCyX7AijMAP7ZnI4=
+X-Gm-Gg: ASbGncsYKbFLcKqTsTYxHecWY6AAUPvipUSFOJdSKwVDu7uz8baxCegIVh1xc8FSFRC
+ RQC3wJWRXmKW1QQLHA/zqD1WRSqg14/ZxBL9Pza/MP/pBHLMkaWmYneIS14Cg8uMcREvPy0r+uI
+ 5W7r5vrp5XgWxFTY1CJcAsRkG+VepZ2D9GJKjL8ChKf3piGFfmMJH5VE82jOr4erPAUt9l3Yt9f
+ 9QwDvWeX9421klAnv6pjlnz63SaupjzYaUcNrBtXH8/as3QY9iIuk8rORlIktHZgQvxW0c4w2iV
+ YynaJoz59AnaWtWC4657zYQH41bfWR/as0H2XGBTc8502B9MrBa8BaSRH2GEqIVh6kjSgA1zZdw
+ 9zv5Rd4vJkfcckIsjhvHS8DuDrxnI7PW12hIdIsEI
+X-Google-Smtp-Source: AGHT+IEYwQLXqyJ2ojex8oje4ka/V25DO3QQcq0DaGDHRYahPslLoNdskn7nBHOzVauqw6sC9swNYQ==
+X-Received: by 2002:a05:6a20:3d11:b0:23d:58e9:347a with SMTP id
+ adf61e73a8af0-23df906a3c7mr13762018637.26.1754348203792; 
+ Mon, 04 Aug 2025 15:56:43 -0700 (PDT)
+Received: from [192.168.4.112] ([180.233.125.160])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bd6aacad9sm10411500b3a.124.2025.08.04.15.56.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 15:56:07 -0700 (PDT)
-Message-ID: <47ba48ae-e3d6-47a0-9aa4-35c0a14d7c9f@linaro.org>
-Date: Tue, 5 Aug 2025 00:56:05 +0200
+ Mon, 04 Aug 2025 15:56:43 -0700 (PDT)
+Message-ID: <b7c6b929-ec99-4eb2-9f9b-c91632dd8ac3@linaro.org>
+Date: Tue, 5 Aug 2025 08:56:36 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/17] whpx: add arm64 support
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-10-mohamed@unpredictable.fr>
+Subject: Re: [PATCH-for-10.1 v2 03/11] hw/sd/sdbus: Provide buffer size to
+ sdbus_do_command()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org,
+ Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+References: <20250804133406.17456-1-philmd@linaro.org>
+ <20250804133406.17456-4-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250804142326.72947-10-mohamed@unpredictable.fr>
+In-Reply-To: <20250804133406.17456-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,113 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/25 16:23, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 8/4/25 23:33, Philippe Mathieu-Daudé wrote:
+> We provide to sdbus_do_command() a pointer to a buffer to be
+> filled with a varying number of bytes. By not providing the
+> buffer size, the callee can not check the buffer is big enough.
+> Pass the buffer size as argument to follow good practices.
+> 
+> sdbus_do_command() doesn't return any error, only the size filled
+> in the buffer. Convert the returned type to unsigned and remove
+> the few unreachable lines in callers.
+> 
+> This allow to check for possible overflow in sd_do_command().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/whpx/whpx-common.c    |   1 +
->   meson.build                 |  21 +-
->   target/arm/meson.build      |   1 +
->   target/arm/whpx/meson.build |   3 +
->   target/arm/whpx/whpx-all.c  | 845 ++++++++++++++++++++++++++++++++++++
->   5 files changed, 864 insertions(+), 7 deletions(-)
->   create mode 100644 target/arm/whpx/meson.build
->   create mode 100644 target/arm/whpx/whpx-all.c
+>   include/hw/sd/sd.h       | 23 +++++++++++++++++++++--
+>   hw/sd/allwinner-sdhost.c |  7 ++-----
+>   hw/sd/bcm2835_sdhost.c   |  7 ++-----
+>   hw/sd/core.c             |  5 +++--
+>   hw/sd/omap_mmc.c         |  5 +++--
+>   hw/sd/pl181.c            |  6 ++----
+>   hw/sd/sd.c               |  6 ++++--
+>   hw/sd/sdhci.c            |  6 +++---
+>   hw/sd/ssi-sd.c           | 12 +++++++-----
+>   9 files changed, 47 insertions(+), 30 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +int whpx_init_vcpu(CPUState *cpu)
-> +{
-> +    HRESULT hr;
-> +    struct whpx_state *whpx = &whpx_global;
-> +    AccelCPUState *vcpu = NULL;
-> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> +    CPUARMState *env = &arm_cpu->env;
-> +    int ret;
-> +
-> +    uint32_t sregs_match_len = ARRAY_SIZE(whpx_sreg_match);
-> +    uint32_t sregs_cnt = 0;
-> +    WHV_REGISTER_VALUE val;
-> +    int i;
-> +
-> +    vcpu = g_new0(AccelCPUState, 1);
-> +
-> +    hr = whp_dispatch.WHvCreateVirtualProcessor(
-> +        whpx->partition, cpu->cpu_index, 0);
-> +    if (FAILED(hr)) {
-> +        error_report("WHPX: Failed to create a virtual processor,"
-> +                     " hr=%08lx", hr);
-> +        ret = -EINVAL;
-> +        goto error;
-> +    }
-> +
-> +    /* Assumption that CNTFRQ_EL0 is the same between the VMM and the partition. */
-> +    asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
-> +
-> +    cpu->vcpu_dirty = true;
-> +    cpu->accel = vcpu;
-> +    max_vcpu_index = max(max_vcpu_index, cpu->cpu_index);
-> +    qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
-> +
-> +    env->aarch64 = true;
-> +
-> +    /* Allocate enough space for our sysreg sync */
-> +    arm_cpu->cpreg_indexes = g_renew(uint64_t, arm_cpu->cpreg_indexes,
-> +                                     sregs_match_len);
-> +    arm_cpu->cpreg_values = g_renew(uint64_t, arm_cpu->cpreg_values,
-> +                                    sregs_match_len);
-> +    arm_cpu->cpreg_vmstate_indexes = g_renew(uint64_t,
-> +                                             arm_cpu->cpreg_vmstate_indexes,
-> +                                             sregs_match_len);
-> +    arm_cpu->cpreg_vmstate_values = g_renew(uint64_t,
-> +                                            arm_cpu->cpreg_vmstate_values,
-> +                                            sregs_match_len);
-> +
-> +    memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
-> +
-> +    /* Populate cp list for all known sysregs */
-> +    for (i = 0; i < sregs_match_len; i++) {
-> +        const ARMCPRegInfo *ri;
-> +        uint32_t key = whpx_sreg_match[i].key;
-> +
-> +        ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
-> +        if (ri) {
-> +            assert(!(ri->type & ARM_CP_NO_RAW));
-> +            whpx_sreg_match[i].cp_idx = sregs_cnt;
-> +            arm_cpu->cpreg_indexes[sregs_cnt++] = cpreg_to_kvm_id(key);
-> +        } else {
-> +            whpx_sreg_match[i].cp_idx = -1;
-> +        }
-> +    }
-> +    arm_cpu->cpreg_array_len = sregs_cnt;
-> +    arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
-> +
-> +    assert(write_cpustate_to_list(arm_cpu, false));
-> +
-> +    /* Set CP_NO_RAW system registers on init */
-> +    val.Reg64 = arm_cpu->midr;
-> +    whpx_set_reg(cpu, WHvArm64RegisterMidrEl1,
-> +                              val);
-> +
-> +    clean_whv_register_value(&val);
-> +
-> +    /* bit 31 of MPIDR_EL1 is RES1, and this is enforced by WHPX */
-> +    val.Reg64 = 0x80000000 + arm_cpu->mp_affinity;
-
-Preferably:
-
-        val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
-
-> +    whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1,
-> +                              val);
-
-(note, your indentation is often off)
-
-> +
-> +    return 0;
-> +
-> +error:
-> +    g_free(vcpu);
-> +
-> +    return ret;
-> +
-> +}
+r~
 
