@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9102BC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA556C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:43:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj13V-0005dV-LF; Mon, 04 Aug 2025 15:41:09 -0400
+	id 1uj13c-0005rV-6c; Mon, 04 Aug 2025 15:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj0Nz-0008LF-4I
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:58:15 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uj13Y-0005n9-U1
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:41:13 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj0Nx-0004Fo-6e
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:58:14 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-458aee6e86aso21488505e9.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 11:58:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uj13X-00062k-4M
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:41:12 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-76bd2b11f80so3902258b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 12:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754333890; x=1754938690; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754336469; x=1754941269; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aINB0QOVgM33xiDkDtdEK7Zj4ssFbn5yVZBBPivr7uQ=;
- b=fiOAB+d9Dwys+FDe3v+4uE+kjgMDV6uVIWBtmlkJZCocL7rTs6f8NT4ksBuvBXO5oI
- ZrupmlsvdM8sJzq99JIXpVuIGs8aphLgP4CcgzK/Wh1b4fOD0UNoawW2CkcPINCcZ9vU
- WisAKM7KMZCtRteqcV+kJlI64VDUHVcz/whuxE84GxQrHVdDO6onSgDNcoJ3ilXwbvCR
- TveysHERoaeLjuLlKNH3gp0P+3eWGR8cOiumFpebNvZGfqRb9SnGBES0gMQRQatcfTxf
- qNJVaYqIrsUaReWOOqrnrgxoEY470ggnx+7UTRDfCE7fJfaC2AhDQ+7UanKin8bJDRT2
- Y5FQ==
+ bh=+oCF8kZBYTaXsxLfd1s5B1BGHhSaSw2fYmcHMILt2c8=;
+ b=Vr1p6QYG+bSftZsHAT6v201Vjt6HObfxNTEd9fOl5+e0jIE/vo6f+af1ejp2Hha+l0
+ BdFCnV1JQ6WcZoK4rdPem56YJu/xjSJPZFbUVF5Rwgqa26Vsh6MlwPwmMg87auyH1LbA
+ evm0Vzla0pdmxHr1wIChNSdmKeMMYTQUqztygiIY+Iqnkq50Hr2g8DMcP5aWSfeTstAs
+ NLSBh5j+eruHj1U8W37joxAb2AaTp+JSWDTBfrQtf9iVe1w1XvdbYWaU+7aLOXsdfaFv
+ f5IMS9HqmEovK7w6ijXUPEYc7CkBnr6xbiVvYNKJGvR24rOZnTLkm5a8IpDF/cz1kjSu
+ cv4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754333890; x=1754938690;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754336469; x=1754941269;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aINB0QOVgM33xiDkDtdEK7Zj4ssFbn5yVZBBPivr7uQ=;
- b=UdXbnuNlD3KEipp3IPCqaTD0EIpt5hYJxDzSzEshDENbLKvciWqzKjme8za8qx9phN
- OG5bt1q6UhTR3d7/OesZ/suFT4LRwE2oH50FrwMFZIOCjAoig3653QOL25WvzAZ3vfYH
- kCzBlTsEfjXOQdPxg/g4fMMOWyaA0mPd1vmBJq1XuVw4P6SGLpmb4ZrMnjD12krAIh5e
- GlrUjNprYtUtF0T/18qYr1ZUmsJAGktRclCvurqBV3CEg35i5uLbW7brzH9E/ZnlPlvi
- C4jCcoY+0gVAQizsfLE/KU2cja1tDHg0WwVSNjFeZqJ9dKDyIcvjRSuLkdLxJ+Zdq01p
- Usiw==
-X-Gm-Message-State: AOJu0YyoDAedyognh4QUzdITXuOiiAmdq2HO3lZz5LoO9fxGOAwSMPKa
- 3H1PwfAIPkXmDHblgAdu/PIyaVi1+5c2bWoGOilMD5gntgCXYBT9qFijKZKcyitY6VQ=
-X-Gm-Gg: ASbGncs648OAgce5bMdllNXwtGZAfkl5EqAJwMVKtYcIkDEGGOAqq86vhKbbq+Crvrv
- yyFIJoM5VryHomoBrkg6uNDXpULhvagJ4B9QO/I4+2tvcXXRxrHcxLmi5aaJYcv10EUaDOwppxh
- s3rb3+3gCoqriEE3wuUx+geSpsa2AKLKx+JvQzIy4IxPA7OxikXlDXUHkv0JsKGSnBrCqcc9vk3
- eS93NQd2JhcCl9xcGRf3bf28pLiGrL1m6sC9/Uo0xJFk9k6D8PbujtczFA+P03wOJ4xST7zmd3B
- kBGWtqfIdWW6lDml7SQmgxjcwYDFVj/geYAYm6AbWi1pvz99UuPFGIIpW67c5lMjaDwLA2+ZdS5
- quDdGukabRdU6mt/143qVURSndnNONs7aKnvL7NSorybiWYoZq99pKVavu3RqErbNMA==
-X-Google-Smtp-Source: AGHT+IFE9L8xp684iBaG0lgYWTBK2Pkue3NA3EWZX+vLXyy39soDe6/jHeaWoiSPwZ9ZS8YqBL/EOg==
-X-Received: by 2002:adf:a30e:0:b0:3b8:dabe:bd78 with SMTP id
- ffacd0b85a97d-3b8dabebeb6mr4694686f8f.54.1754333890092; 
- Mon, 04 Aug 2025 11:58:10 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953eaeeesm233071245e9.25.2025.08.04.11.58.07
+ bh=+oCF8kZBYTaXsxLfd1s5B1BGHhSaSw2fYmcHMILt2c8=;
+ b=eVsTBufIK76nAWwX5N6/EU/9xFc3AvcR5vF07SyvoYyil6XXexNkbSrm+/bHK7bYLB
+ UpNv8BVzUc1HwMip/ietDtX5GzA5VRjNB4Ro6dk0HkAqoqJYubSYjizdzKbXisSqPKun
+ HpdbUcR8km99DzS1sBGTk5di/JiJdmxbg8qADxKg4CU3xXcgaovVmEXNbcd7+lvGgLIr
+ PSjLfFNue/msvsk/e7meW8M+M6SmcCFrpSjyT05Hb6oG+pTgwdxOz7LYn5ADJCwTOIf/
+ pFObIUVbnMLo+5mKpOvx3MRW3vr8COglY1UH88/okDpE7NyR7j3Fdc8ix46v3L1B4yy+
+ oncg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4ekVPE030ntIk0L+FmcY32ryKWf3BvH53z87LHnGOhriLcEj/KRQm2ODApSorBWHdjLTFwPWyzlPK@nongnu.org
+X-Gm-Message-State: AOJu0Yw2Xh9wnZbLV6MuW0GeCVyK0Vm8wnFt+tQ/KdbxM54Us3E5ljfm
+ wWfj4FMQNSI9cH77Gx4hAMZliAgVIz66PHOuZG55SkqzY5hlgwxNVhLehK7QOkqOKCE=
+X-Gm-Gg: ASbGnctZ8js8vCwrrn4AkS3AFwc3PEMOvMa45g25S0L+qJWQmziAW1RtxXoDY7gsJN2
+ 0+QCaaLttThnUNNRrykKZyAItoUNEvXD9u46kY9GL8XOiDpe0ZBOFhJYkiRi3Uhhx47ptsoUFin
+ xXikoiBuoYjfQRDvxdajrbNCweGOMbqjy9Ex0f7plPibDMiDV6KSnwJwjIGVMDe/5MKGpcUHRf2
+ tGutavK4ZRGh+MA8E2wM86T6pB1eG6dnWFzqQvcNiOoVtE4IYn2+Dnh80OIpfA/pa3qZabFM+ZL
+ N/AD9NgByYRAJVbF3KSMDrkRiXEapZtGSXxNgYgrwFhn1tzI3E7sNcjEQrZ8aciI8W/+KwnYvft
+ KOCSICWDQay1X2aDtmy9w9pYx5P81YghP088=
+X-Google-Smtp-Source: AGHT+IEhu1561rOBCPzB4HU5kuAsOdtileHG2pUBWcXeTMXNFJ7AfZ/kTb3Yhud8ZN9GCDb7l48EOg==
+X-Received: by 2002:a05:6a21:3284:b0:234:c6a0:8a0f with SMTP id
+ adf61e73a8af0-23df917e7c7mr15012015637.41.1754336469315; 
+ Mon, 04 Aug 2025 12:41:09 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b42306f1de3sm9282299a12.62.2025.08.04.12.41.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 11:58:09 -0700 (PDT)
-Message-ID: <18978892-cff3-48ab-9322-0227c8719517@linaro.org>
-Date: Mon, 4 Aug 2025 20:58:06 +0200
+ Mon, 04 Aug 2025 12:41:08 -0700 (PDT)
+Message-ID: <eab1a2fd-3e76-4552-95c6-eb75141a15c1@linaro.org>
+Date: Mon, 4 Aug 2025 12:41:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/17] accel/system: Introduce hwaccel_enabled() helper
-To: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Claudio Fontana <cfontana@suse.de>
-Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
+Subject: Re: [PATCH v4 04/17] whpx: reshuffle common code
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
+ <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -83,16 +88,13 @@ Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-2-mohamed@unpredictable.fr>
- <d18fc5c3-b68a-4afe-86b7-e1687780b67c@suse.de>
- <59A4FF62-384F-4D43-BD56-60AA93733580@unpredictable.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <59A4FF62-384F-4D43-BD56-60AA93733580@unpredictable.fr>
+ <20250804142326.72947-5-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250804142326.72947-5-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,34 +117,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/25 18:12, Mohamed Mediouni wrote:
+On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
+> Some code can be shared between x86_64 and arm64 WHPX. Do so as much as reasonable.
 > 
->> On 4. Aug 2025, at 18:00, Claudio Fontana <cfontana@suse.de> wrote:
->>
->> On 8/4/25 16:23, Mohamed Mediouni wrote:
->>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>
->>> hwaccel_enabled() return whether any hardware accelerator
->>> is available.
->>
->> Available or enabled?
-> enabled
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   MAINTAINERS                  |   2 +
+>   accel/whpx/meson.build       |   1 +
+>   accel/whpx/whpx-common.c     | 564 +++++++++++++++++++++++++++++++++++
+>   include/system/whpx-all.h    |  20 ++
+>   include/system/whpx-common.h |  21 ++
+>   target/i386/whpx/whpx-all.c  | 551 +---------------------------------
+>   6 files changed, 618 insertions(+), 541 deletions(-)
+>   create mode 100644 accel/whpx/whpx-common.c
+>   create mode 100644 include/system/whpx-all.h
+>   create mode 100644 include/system/whpx-common.h
 
-Oops indeed.
+It's just moving code around and declare common interface in 
+include/system/whpx-common.h.
 
-Orthogonal, but still not trivial to follow available (built in?) /
-loaded (as module) / enabled (selected?) / usable (permissions OK)
-logic (there is also another state, but I don't remember right now).
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-> 
-> Took the patch from https://lore.kernel.org/qemu- 
-> devel/20250703105540.67664-47-philmd@linaro.org/ <https:// 
-> lore.kernel.org/qemu-devel/20250703105540.67664-47-philmd@linaro.org/>
-> 
-> Should I edit the commit message locally or will be taken care of when 
-> it gets merged on that series?
-
-I'll do it.
-
-Thanks!
 
