@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947E6C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE935C87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj3Td-0004aO-P9; Mon, 04 Aug 2025 18:16:17 -0400
+	id 1uj3be-0002Xs-U6; Mon, 04 Aug 2025 18:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj3TP-0004HH-EE
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:16:04 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj3bR-0002Tc-BM
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:24:22 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj3TN-0005EX-BO
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:16:03 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-76bdc73f363so3024895b3a.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:16:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj3bP-0007Q8-Vm
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:24:21 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-23aeac7d77aso43268115ad.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754345759; x=1754950559; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754346258; x=1754951058; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FZdfH+6Sxbu1bsMX4Kvr/l+nPMXRzMZXajPSIE2P9lQ=;
- b=Kg2tazCZcoBaweDSQ8DATkWQJZ39AL/GSUYXZ7zBYv/qRpUfUj58/bh4Din+DbRi7j
- 6BBLNTTX8oRWgP3xF3sKvrHdu19BPt/hMujkny419HKrh5q9vTB9RWHACUK+yPm5cvor
- FtilPu0LaQKqnoB2/JqrUpP7x+1xS3iZQO4WwCpv1eyahsGpZ015mxrt3ecvhwKVpzku
- yS8jLRoMCHlHlhIBzxxIyXSAhTofGiwG9yhIwQTYH7Ucv29hsK9+4C541xM8rtnMusTn
- 6VpmcqjDdLz6mvB7s7EpmvRvyJpt2qICjtBULXVVHq6og/Vovpy1ieHHTNoiVMtllAcs
- iMEA==
+ bh=2/GT1eil0PYGsfNkOP9X0CTcVsrSycNOuC/hkSQ7Tf0=;
+ b=ytIbOfCshwMbvtQ5HAunvmsMTLBz6npBaxsNjq7ascuUqXx8XgsArVf4Ei/9f+xQs2
+ o+jv5mSiA3/0wtZF56qh1axMdpVWBqCb7MhUq42G3isU5q/6DUGD/dGBC8yiGVK4Rkah
+ MYPDi/49ay8yDE7MLBmXrwEgsbJ7pJmfy+/7d4v3x1MT7jrvA+3DXIhGOspW2PV32sL5
+ fiKVWgkunhbxCBV1cabggzDK0biP1YZ2XNS9ctm0JEmJCoFAxh7tI92PI/pF2FJZhGon
+ l/cxSEh/SY6R4F8KjAfgh4QAABFgWn5qWVX3kHe5cjJVtgfvCfeNLzSF31eM+guhKhmV
+ Wi1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754345760; x=1754950560;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754346258; x=1754951058;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FZdfH+6Sxbu1bsMX4Kvr/l+nPMXRzMZXajPSIE2P9lQ=;
- b=cftTBcvYj6p7oMOWGRS8hVWCO+rZgiJ857WYT5+a/xHGlO9wq49a/3NTpwHMVIq1vd
- 84Ceyn1gesQ/6eUH5Xy3sjupa/SBoK0hf/Ku02gEzzvib6IIEjxoF1ejOR7wo2blZtgz
- C8QkWeOVUcktZh6v0oLkTO4XZav05CxNt9bSSDnr5qWHXNvIyifAm74Bt3gn8RZvvQj+
- oQeyYPCKyBJdjqroN7EnwZKMQDPK+5Hc5+nNjx936rpEdo7IULyBsTXBH7Jz0MRzPS6/
- byAsMGwjaw3XN6EQAbK/mZU5H+QZOpl9SSLuFMSJNhqsGVXFqo6FSzGJMKqM3hIwAOcY
- dCLw==
+ bh=2/GT1eil0PYGsfNkOP9X0CTcVsrSycNOuC/hkSQ7Tf0=;
+ b=aq5JoTx8AlElCe24kJDrvyShWs8zVuZY1m6av/G3xDpzH2M/tlpa06W8RlxT+NnAJW
+ B/LIHwc8K5kQdEt8Olk0wn49Qf8qartSdeJ7zqrGIsqnbIglsSdU00vx0b0avkUdKWqN
+ gzkKcpA/Z1rLsc4ehcOyonL66Z8xQqnTb/ExyatiZQGVBXaZkEovMtc1TY15vNrxzZz+
+ XQ5AjnmzltMfJ14DXuJRU133jnCKXWIu7tfo+b3xX5dfIPaCHYurZDJt8X0/Jan1/1JZ
+ yDimnhXmn/F762o/xJ2ydEk7L4PR0HsIuRQYv6mfnE9sqNqk57712e3cueXn6Bkx0RDk
+ S+2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLly7aZ0P4fxm0cMr5rLm1kpJn1CSvf212EDLEQNzrOZajJTXjLg/XEPD4xl225+e7oZqJGyg4oKta@nongnu.org
-X-Gm-Message-State: AOJu0Yy2WDVAZpQx4crw6oCQn5MoPLPH8dhrvsVbaObr5ecsGpvGpPJp
- rKGj7nRySCUxjC/6CpBsvYKQywjxg5Ksps8/Nim2xrw4RXK6WhRdukXWClZQ/3HoLWA=
-X-Gm-Gg: ASbGncsXCtFxPnL/TW2SwNiB6ViIJKebiXjO3lvCyPXUb6ItcR3LsTXksFuZbzFxMNK
- TYsHl+9Kak8ieKAEW23Um97uiQ2i/nLTR2eohIMmyCZb2e2OqXG+RrE7X93T5mO0zlljFpt9cDr
- W7QqQX8q8W9fcV+6RY/LteBvcqebMfZNRCcjI5fqIkOZOJOA4NTJyDmx8S+3I/vDpYjT+umLnLJ
- j8r4kR9WQs+M0P0efcvB9jRBMaQmZwnm8dybihT0cSCIbB2M7GPkEVsOvhORA0xR6K8LnIb0FAF
- Fws1QSYAn1lnX5icghGpnRWPHUOH1FnVs9sPpf7iH7Mhc8HXU3rOY65kg+5ovJV6KzTMnIdEdPM
- HhBnCiGL2LVhTcrOafY9tVpXM94E3T3giiWg=
-X-Google-Smtp-Source: AGHT+IFaeXXs0iqjcnaWnO4u4TXN+BXliP4Ucck6C04BwFxe5lAqbB5KkIvvc18PtYNUgm6I9+KWuQ==
-X-Received: by 2002:a05:6a20:9389:b0:240:1a3a:d7ec with SMTP id
- adf61e73a8af0-2401a3ada6emr3676216637.4.1754345759646; 
- Mon, 04 Aug 2025 15:15:59 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXMFy3ISsk0wdV1DSVRIIKWDvzNqpxniMfp+ULPZwW5p8iKpy9N3HlvCX+Y4sd4qcRObatUbgNHa28c@nongnu.org
+X-Gm-Message-State: AOJu0YwdkKDJv0FgHNNS0x5ZZvFIIa2v/9XJt/OSbiUAkpyIweJcpDmM
+ arBAfKthjQ+CGR9VPrkWMykDNOJV8xHsnWnLK2wlljvJhb32BNsLHXL0oGXJsQbbBJI=
+X-Gm-Gg: ASbGncshejV7GaT8QXrQeX+H3vTgn2o+mjlHPyviUTKd2HD6KT/wIBnJ8Dmec9+veka
+ J4EWNYCOW0TUs4vzEW8cyKXs3Wif3NLhYM+lw+99G92032/rAUSlOHD0vgk/88Uwdq8OszVduQw
+ UvH3KVGLMla0azl4UcxG9U6vD8JJ1bgPrX1miOd0M+FbzqjGvm28syas3KJHmr6Nn8FyuF4Lh3k
+ oIUwh6xha9zzE9Had29URfubBP5EUcAu2Bk3tV/dzhhtnGou2vTdJSktQDAd+isdwhuByoNL9jl
+ 0gOArslLw9d/XK0AnPYllxl26PmpIAXMT9OQRTG4CS5BpTxFhSsawBnl1ZY9RVbD57nbSdbyS5L
+ cQVPFCIsmu1k8oeWsuqRSmLG+aM/IRQgmvidYdN/e
+X-Google-Smtp-Source: AGHT+IHZNtV4kjH9UEZk4umFwpRlV88ZUVBkqvM7UeZk3oBeu7bqoHphOMwG1QBfv8vp6SR+sRs63A==
+X-Received: by 2002:a17:902:d487:b0:240:4d19:8797 with SMTP id
+ d9443c01a7336-24246f8c70amr179479245ad.22.1754346258502; 
+ Mon, 04 Aug 2025 15:24:18 -0700 (PDT)
+Received: from [192.168.4.112] ([180.233.125.160])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f474sm11261399b3a.4.2025.08.04.15.15.58
+ d9443c01a7336-241d1ef7562sm117168125ad.24.2025.08.04.15.24.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 15:15:59 -0700 (PDT)
-Message-ID: <8fc78a75-dbde-47c5-b382-34d90b034052@linaro.org>
-Date: Mon, 4 Aug 2025 15:15:58 -0700
+ Mon, 04 Aug 2025 15:24:18 -0700 (PDT)
+Message-ID: <21f751ba-27f6-47ca-a3e5-2683d0f76e03@linaro.org>
+Date: Tue, 5 Aug 2025 08:24:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/17] whpx: add arm64 support
+Subject: Re: [PATCH v3 05/12] target/riscv/common-semi-target: remove
+ sizeof(target_ulong)
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, philmd@linaro.org, Weiwei Li
+ <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
+ <20250804183950.3147154-6-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-10-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250804142326.72947-10-mohamed@unpredictable.fr>
+In-Reply-To: <20250804183950.3147154-6-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,46 +111,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/whpx/whpx-common.c    |   1 +
->   meson.build                 |  21 +-
->   target/arm/meson.build      |   1 +
->   target/arm/whpx/meson.build |   3 +
->   target/arm/whpx/whpx-all.c  | 845 ++++++++++++++++++++++++++++++++++++
->   5 files changed, 864 insertions(+), 7 deletions(-)
->   create mode 100644 target/arm/whpx/meson.build
->   create mode 100644 target/arm/whpx/whpx-all.c
+On 8/5/25 04:39, Pierrick Bouvier wrote:
+> Only riscv64 extends SYS_EXIT, similar to aarch64.
 > 
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> ---
+>   target/riscv/common-semi-target.h | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 
-...
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +        case WHvRunVpExitReasonCanceled:
-> +            cpu->exception_index = EXCP_INTERRUPT;
-> +            ret = 1;
-> +            break;
-> +        case WHvRunVpExitReasonArm64Reset:
-> +            if (vcpu->exit_ctx.Arm64Reset.ResetType == WHvArm64ResetTypePowerOff) {
-> +                qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-> +            } else if (vcpu->exit_ctx.Arm64Reset.ResetType == WHvArm64ResetTypeReboot) {
-> +                qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +            } else {
-> +                abort();
-
-Just a nit about style: would be better to use a switch (as this is a 
-propert enum), and g_assert_not_reached() for default case..
-
----------------
-
-The rest of the code is pretty clear and straightforward, congrats.
-
-For other reviewers, most of the constants and functions used can be 
-found here:
-https://github.com/MicrosoftDocs/Virtualization-Documentation/blob/main/virtualization/api/hypervisor-platform/headers/WinHvPlatformDefs.h
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Thanks,
-Pierrick
+r~
 
