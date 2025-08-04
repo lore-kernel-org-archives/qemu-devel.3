@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D96DC87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DA6C87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiqhd-0002Sw-LY; Mon, 04 Aug 2025 04:37:53 -0400
+	id 1uiqiM-0003Ry-W8; Mon, 04 Aug 2025 04:38:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqhQ-0002Lt-Ar
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:37:41 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqiH-0003On-89
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:38:33 -0400
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqhO-00018T-Fu
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:37:39 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqiD-0001Px-Ab
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:38:32 -0400
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45896cf24ebso30316815e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:37:38 -0700 (PDT)
+ 5b1f17b1804b1-458bc3ce3beso9751295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754296657; x=1754901457; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754296707; x=1754901507; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=p7KuKOTxeMkRtqtEJ90DbuUgdfDAM7VBU8xvXwSJI2E=;
- b=X2oaBdY5q7ngoPgxZhTW+Oy9kBp92RF+NdGvRzSpxk14nKZQ6X5gSFkGEBiByPlKoi
- c9m6w+MiYC3QIaLCYbvr6PTxv8+DBMYx21Imamnm3pCX6J3vcs+4vjOqrxaYYLtJk8jm
- wfBJMc9mh9+DYiZPNGufoWHh0FDpGQZ/ldnwO6pv6pWkNaYaQpax/vpqORAIy7omXQBW
- MkTzPBsDEXyONycIVWx492329v8qBVsHrHjR7ajFg3Tu6Yw6MXOFLhYUMDBcYLqObrAW
- IZyxbI6H6CnxKQn2v8sH6gssYo+UkGKfsGZdVXCrC37AD3v2HWTBYoXukI3dcqBA7RoE
- Ee3g==
+ bh=UTPdy7RE9p1dL3WSLFGiCNi/FE+9/65cL2ijfj0r+TE=;
+ b=OP+eksjDPie+oQ/geFiG8qPHzCiCy5aZztoNxN5EbIh8q+7lr75gs7ejIEMRseTJ4I
+ iMt78L8Rc8YzntfYga3AuRsLFvKgKB4ct0nTBSegDisJEQMrY5SkLePiKfsXeF1hdZgo
+ p4m/EpuSDWusiOVP7tUqn/FMi142kgdwliM1d1yULTyBBvdanrUiqeyFWldmoMoTWtyb
+ Qo+pPpPE93p+AR5XTq9DL85WIe+9NGtp3znJNDKqvWREWEkdWJeHdVFc9TBDPNQZyrYS
+ SQbFcW2ZChS5Lo5JGNPtN65v6cg1dAuQniUc/S2k8Y8M7iiemi84IkcmdQJcoNzaNZFQ
+ c51Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754296657; x=1754901457;
+ d=1e100.net; s=20230601; t=1754296707; x=1754901507;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p7KuKOTxeMkRtqtEJ90DbuUgdfDAM7VBU8xvXwSJI2E=;
- b=HPwpfFqNj9/SLrXEavE5n6r5AGCuSDxY6QM1kuuTxr2qnBFzuo8vEGBlzC2GEVCgEs
- IIaWyqVawZLLO9jGy7DJsWd+j1HGi+DPR2wuV7tSS5JDcKfQCUEnWIVR008xGgyXwDS2
- dK8GTlzS8zptgIW23WLtkeqx88uKT4QCPQEfsSO7ZZXCz5w1OKmnDCixLvwlTBTY5g8C
- jlgbSkwj2E7uBGfpqsS3a5zOHayecH+7CiJJy6stNZjUWNQ6QAByoN8EO1sKkk0Cfpwe
- ksy5ofaN+VYaxt0vplCCXPmjy3Xag36noMb7X6GME0ZQQlNyeXOeNRiWVSZEnIVQZLpj
- 4myA==
+ bh=UTPdy7RE9p1dL3WSLFGiCNi/FE+9/65cL2ijfj0r+TE=;
+ b=FCLxZyoSOups9zxI0Zk+xtczTaXZrLLxl1Sk6v9iCNlAb8Apm4b5eJdc5YtDLabN2M
+ 3CdhMAmam60spdInZPn50AA+1G52BU3PhUxFfkPQo8NcjRTei5fSza48mBm1zreEp+jv
+ pGbBrq0rxqUYmb7R1TH6YUTZ9yTgflXslDYjFFc2yJNYs0qcru/44BizsXUWIS9AqGMq
+ tFh/D4sfWgnVDbtZzcWWwUi6FCh+iplIoqNZNtimpWMT6ikac6D3jxTfGYYMLK14cOMA
+ FHkUC6K76Fpx4VF6AUCmewhh70pDEbTm8O6zbfx9tqAOEO9Y4WkVxtqXKpY2IDQwsrXC
+ V44A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcDGuG1reXQEJCzkMP+XuhLdTtWFK74qAp6dmmd+jO2NAr7nHFWMRPgQeTkmQcjmMzXKpYmdSHJd9g@nongnu.org
-X-Gm-Message-State: AOJu0Yw3MloQ1uCcDu+IH4RyH6clLeddeLDSFdhhA3wUQ5fD3cZudtl2
- y8ZVjtONtlWksEnkJn2XRWxsjRps3QA/1NF30AtQhO7X7um73MzX8fh8BngOIe0CpoQ=
-X-Gm-Gg: ASbGncuj9pG0Og++O/BzUvyKwZaGLloOnozOX7kl7n/zIAhA/WWuTwU404Rz1gxnMxJ
- PtYNbUCjT3sJju+n1qgH7KixsABGvivPMlFux+fIG58kpMLSww9RajLNzILl7lO6ZU4UO97GCC1
- nFnL3wHaK/dJ3QDVpwPsDQQOnJ+Yygm4UfqgjnFmVxhTvl4PhxU6T71SaM8d29Ek0ur1iuh7nVx
- wDxIfM2rm2iSrwp1QLZ8LaAb9/n63+TxT0gLKanJ40WiZQxepyvO0Vy2xLau1yZ9r3Hsv/J51gE
- ZGsC0QMRwok1HCqjEE0ld4S2n+bmfWUU25Z81dhP3X/CDeDeR5Vx8LPBTL7h5t1Hd4yTiWtaYRZ
- WavWMc+5kiHwo2GD6zXzr9FyWsh3ZLGJPxtOJcndObOrhAPAf+L0y736NmKAVtqnfTRUPQTE=
-X-Google-Smtp-Source: AGHT+IEpOc4GbgerwOJ7/YLCFmInpKzGoy7c8E13oepRc8CwUXJK47+grO/CuzhXJAkVX+JtcYZzgA==
-X-Received: by 2002:a05:600c:3113:b0:456:1560:7c63 with SMTP id
- 5b1f17b1804b1-458b69f2387mr65300665e9.3.1754296656862; 
- Mon, 04 Aug 2025 01:37:36 -0700 (PDT)
+ AJvYcCW2FjLBu/MjHjwZA8PAKrOgNFiBQn5XzBwdQU9QmSc+Zh8s9eAUcttbq2GTVhGUcqOK+QT6ZCJM01cc@nongnu.org
+X-Gm-Message-State: AOJu0Yx+RkUzPxpjWyCkNeeO3XKLZkS866tx0/hWdacmhvBKIVsicB7G
+ HK4biOirZSzqBaB/1uIp8zYjkdWBAiQAJbqS7TLY1oUf7HFlx2oP6wS86/DQ/a5GoNnW2C3DBQW
+ tXumK
+X-Gm-Gg: ASbGncuxES96vbVwK2YUhgK+UxtDvLejiKq2xPqy+o5CNtMwx8aLWyYTvo04QMoaEz6
+ vIaNp7QV3XRlUxZ+v5wunmpKdNnmUoh9Btnfu2HrRQ1WxuzIErqUIJ2lVTKTtL/IU+XQkCDcw1S
+ A6cBChHARNtCedL601z/DD/Jw0WFmIaF1CPUZsd4pBd50m96ZwhQkb093sj0+ND03eDpM2DmuQa
+ LKjiMOCVbXwkWuwPfoLiMZwGNef0Dc+kkySIUIN5DZrp9+sV0kfa+6GqqZ4tduS/sV1WmWEN0dp
+ yAOes01CQPAvveXW1jP3y3Wr8tUbiadJeAJhagdKsfX3fGv9mvJXH2MDHQbusZKbESfh0rB8wYg
+ gJYU/LETZyDlB1bDqjpG8mIhmPDcjaN7oEc9zoqogCKGFKgV+gAu3Rt57P/ax576t0hNavng=
+X-Google-Smtp-Source: AGHT+IHbBRPE3PFgV46zmk4kdJfJao3kRa9XMVnnjPufADL0B2PNo7+lETYsb1Lk2xcY1sUDCq3b6A==
+X-Received: by 2002:a05:600c:8b41:b0:458:affe:a5c1 with SMTP id
+ 5b1f17b1804b1-458b69cbe0cmr66853175e9.5.1754296707512; 
+ Mon, 04 Aug 2025 01:38:27 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4589ee57c18sm158408315e9.28.2025.08.04.01.37.35
+ 5b1f17b1804b1-4589ee621adsm161264135e9.30.2025.08.04.01.38.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 01:37:36 -0700 (PDT)
-Message-ID: <f801e57b-e042-4572-bf4b-ba4788a674d0@linaro.org>
-Date: Mon, 4 Aug 2025 10:37:34 +0200
+ Mon, 04 Aug 2025 01:38:27 -0700 (PDT)
+Message-ID: <ab76629d-9095-4ec2-9649-09b67529e583@linaro.org>
+Date: Mon, 4 Aug 2025 10:38:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/24] tests/functional: Move riscv32/riscv64 tests into
+Subject: Re: [PATCH 21/24] tests/functional: Move sparc/sparc64 tests into
  target-specific folders
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
- <20250801151251.751368-18-thuth@redhat.com>
+ <20250801151251.751368-22-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801151251.751368-18-thuth@redhat.com>
+In-Reply-To: <20250801151251.751368-22-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::336;
@@ -108,49 +109,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/8/25 17:12, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The opensbi test is used for both, riscv32 and riscv64. Copy the main
-> test to the riscv64 folder and add a simple wrapper to the riscv32
-> folder to be able to run it for that target, too.
+> The tests/functional folder has become quite crowded, thus move the
+> sparc tests into a target-specific subfolder.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS                                   |  3 ++-
->   tests/functional/meson.build                  | 24 ++-----------------
->   tests/functional/riscv32/meson.build          | 10 ++++++++
+>   MAINTAINERS                                   |  6 +++---
+>   tests/functional/meson.build                  | 20 ++-----------------
+>   tests/functional/sparc/meson.build            | 10 ++++++++++
 >   .../test_migration.py}                        |  0
->   tests/functional/riscv32/test_opensbi.py      | 10 ++++++++
->   .../test_tuxrun.py}                           |  0
->   tests/functional/riscv64/meson.build          | 14 +++++++++++
+>   .../test_replay.py}                           |  0
+>   .../test_sun4m.py}                            |  0
+>   tests/functional/sparc64/meson.build          | 10 ++++++++++
 >   .../test_migration.py}                        |  0
->   .../test_opensbi.py}                          |  0
+>   .../test_sun4u.py}                            |  0
 >   .../test_tuxrun.py}                           |  0
->   10 files changed, 38 insertions(+), 23 deletions(-)
->   create mode 100644 tests/functional/riscv32/meson.build
->   rename tests/functional/{test_riscv32_migration.py => riscv32/test_migration.py} (100%)
->   create mode 100755 tests/functional/riscv32/test_opensbi.py
->   rename tests/functional/{test_riscv32_tuxrun.py => riscv32/test_tuxrun.py} (100%)
->   create mode 100644 tests/functional/riscv64/meson.build
->   rename tests/functional/{test_riscv64_migration.py => riscv64/test_migration.py} (100%)
->   rename tests/functional/{test_riscv_opensbi.py => riscv64/test_opensbi.py} (100%)
->   rename tests/functional/{test_riscv64_tuxrun.py => riscv64/test_tuxrun.py} (100%)
-
-
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index cc0e0bc6e0c..2d8f67fd94f 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -26,10 +26,8 @@ subdir('mips64el')
->   subdir('or1k')
->   subdir('ppc')
->   subdir('ppc64')
-> -
-> -test_riscv64_timeouts = {
-> -  'riscv64_tuxrun' : 120,
-> -}
-> +subdir('riscv32')
-> +subdir('riscv64')
-
-Here again I'd merge in a single 'riscv/' directory. Anyhow,
+>   10 files changed, 25 insertions(+), 21 deletions(-)
+>   create mode 100644 tests/functional/sparc/meson.build
+>   rename tests/functional/{test_sparc_migration.py => sparc/test_migration.py} (100%)
+>   rename tests/functional/{test_sparc_replay.py => sparc/test_replay.py} (100%)
+>   rename tests/functional/{test_sparc_sun4m.py => sparc/test_sun4m.py} (100%)
+>   create mode 100644 tests/functional/sparc64/meson.build
+>   rename tests/functional/{test_sparc64_migration.py => sparc64/test_migration.py} (100%)
+>   rename tests/functional/{test_sparc64_sun4u.py => sparc64/test_sun4u.py} (100%)
+>   rename tests/functional/{test_sparc64_tuxrun.py => sparc64/test_tuxrun.py} (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
