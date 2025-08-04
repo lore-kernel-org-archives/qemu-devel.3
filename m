@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F95C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D52FDC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj0jx-0002O1-9y; Mon, 04 Aug 2025 15:20:57 -0400
+	id 1uj0nk-0008Lm-Ss; Mon, 04 Aug 2025 15:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj06T-00019m-Tr
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:40:13 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uizgs-0008D7-JR
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:13:46 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj06O-0000wY-HF
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:40:09 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-76b77a97a04so2734416b3a.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 11:40:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754332801; x=1754937601; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r2HhmWn+3Uhat9xr0ViadQ+YUOagyNbQxWkSxpV2E5c=;
- b=nSH1IIwIX2gR+Xz0UamSK8KEDGym03VtIcFSQnrUcUJdL7N7xpv3KjJVuK8vvpj11I
- NU+p8vn4D7n4R9SlUAmdorFPqfc76wUenFbgUyOzNW1JTObWbpXy8vlyckAq2Qua04sZ
- GYk3AKl6Vh1+HIqpyyNDFSGC3dxGpVPyWL4+N3aGWBcbRDY4H/8pwCZPWMjtaMxuDmL7
- 5N5ASO12BjdkEq9V1CXVwN1CXinHTs+qB10lFvM+5ggn3iNoaBfk/Ra4odoXJZ0FW7JN
- dc84iXoBumOvFUhoGJc3NaGA+UZDWhrcxyFXhgWZ83dtm8X5P5qWpi2mRB/bCCbInouB
- qIFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754332801; x=1754937601;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=r2HhmWn+3Uhat9xr0ViadQ+YUOagyNbQxWkSxpV2E5c=;
- b=lW0P5yVZiwG6sYo5+4m2bQnqKwxe2BCMXVcapG63vnmoShhAXG94PghmCc+mdpUAcf
- weTkev1M1RtBWYeu7UTYjlxBo8K9w6OboaCKyulMums/piV+YGLL2iVBaKadi/XM2Fvq
- KH0IphtiH9mhENCRN7d9FERCpBqSWmXWe3fkoNbD78uk0CEQ+59/32CHke6qIYUm8uHe
- zm+07HN3wJNm66dBd+YYDwa/C4Fg0o2mLBvnAT8RPsS442iJOGX8lxWO6yEad0s/u84I
- jE28LBwRubPxI/I8fsGVnYOhMoz33ofvlBSB9NJCuJrD6tSPGhTGoq40sOlGINea+Nhp
- Z+yA==
-X-Gm-Message-State: AOJu0YyTAm68Oe2mGdt3HHnW5gI+JkNlqDU/OK/1g1TNMiRZYq9btpu4
- X1ilKw/P/6MGk2bi3np6ECo8ruwIn7+u8ZLc+7SAL8E50/pbVkzFZwreko23GKObQO0zh2NFFLp
- H8p8n
-X-Gm-Gg: ASbGncuXvlQEzNZ78s7gvMiPhE2hKSMYnR9/M6awYdWufp+CeD1SepY68ECXnM2kR5B
- eYAmMLgRiy/wzhLb7Z2fH4+rGz2hJ+vA5J2cSPdcSEACTXk/8IrWcGrS4z1WjobO9S/Tynqqzpd
- LfzzDH1JNiQr6Bgsekf5Coi1umRNth/ZzGhCbFv7nwnvqyoAYu/lxy11DcSOk6QPpHHvRjXrQap
- xHTgudk/GqU9tHRUsI/NBa9Mw8jjGhav3gHr3kZHpy38dsYGwkH8TIKsv6cHffz2GaAioXJruIH
- Y4MbFKy695XZ6C/dl8qqWjWcSoGvqaGIIE/lfdiBau6X1Udc76cwYyMDBFrFdMiumwRmF6m/qAw
- hboAGvjquxF4B9Z/ZhYldKQ==
-X-Google-Smtp-Source: AGHT+IFc3oT+XcNNEGUU9pmAKKrlbKZ2uaO8uJ6AS0ce2FHjFrSGPfAg4Wy97lxXrO3V1aJqQDDRyQ==
-X-Received: by 2002:a05:6a00:3910:b0:736:5f75:4a3b with SMTP id
- d2e1a72fcca58-76bec30c7ccmr13794563b3a.7.1754332801410; 
- Mon, 04 Aug 2025 11:40:01 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bd78875cesm9940171b3a.15.2025.08.04.11.40.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 11:40:01 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, philmd@linaro.org, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, richard.henderson@linaro.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 05/12] target/riscv/common-semi-target: remove
- sizeof(target_ulong)
-Date: Mon,  4 Aug 2025 11:39:43 -0700
-Message-ID: <20250804183950.3147154-6-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
-References: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uizgq-0003XI-Eg
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:13:41 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A113E1F453;
+ Mon,  4 Aug 2025 18:13:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754331217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/EqJVgEGFDiLUPbSN+tynGh/c+ux8oy/JnUixkoJJu4=;
+ b=ODhK3HDTgR6EoSHEc9TfFR3uhWtVVfj65TpIlWoi6AVrLJv56Giu6hPCLHWkvAk1n32R2T
+ O3lRTrgqn6nr8zL1eK1ACvhr2W1uBbW3JIKgbW5gOjGhE+nwEtGkx2788fIyWKFLqrCD+j
+ J/zhRg0sUhT4JgiXTZk3wKB0K2kvT+k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754331217;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/EqJVgEGFDiLUPbSN+tynGh/c+ux8oy/JnUixkoJJu4=;
+ b=knax8t3VLzg6eKdw8aAGIQHHGRS3ZqUwahBPsXEnMhTheb/lFPS3LFHPKyvTwGjqi3yY9M
+ Szubkap8h55jOdDA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754331217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/EqJVgEGFDiLUPbSN+tynGh/c+ux8oy/JnUixkoJJu4=;
+ b=ODhK3HDTgR6EoSHEc9TfFR3uhWtVVfj65TpIlWoi6AVrLJv56Giu6hPCLHWkvAk1n32R2T
+ O3lRTrgqn6nr8zL1eK1ACvhr2W1uBbW3JIKgbW5gOjGhE+nwEtGkx2788fIyWKFLqrCD+j
+ J/zhRg0sUhT4JgiXTZk3wKB0K2kvT+k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754331217;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/EqJVgEGFDiLUPbSN+tynGh/c+ux8oy/JnUixkoJJu4=;
+ b=knax8t3VLzg6eKdw8aAGIQHHGRS3ZqUwahBPsXEnMhTheb/lFPS3LFHPKyvTwGjqi3yY9M
+ Szubkap8h55jOdDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1EE32133D1;
+ Mon,  4 Aug 2025 18:13:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 5ZtvNFD4kGgfKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 04 Aug 2025 18:13:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 2/2] migration: fix workaround for gnutls thread safety
+In-Reply-To: <20250801170212.54409-3-berrange@redhat.com>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <20250801170212.54409-3-berrange@redhat.com>
+Date: Mon, 04 Aug 2025 15:13:34 -0300
+Message-ID: <87pldb2bw1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +123,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only riscv64 extends SYS_EXIT, similar to aarch64.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/riscv/common-semi-target.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+> In previous commits
+>
+>   eb3618e9 migration: activate TLS thread safety workaround
+>   edea8183 io: add support for activating TLS thread safety workaround
+>   24ad5e19 crypto: implement workaround for GNUTLS thread safety problems
+>
+> an attempt was made to workaround broken gnutls thread safety when
+> TLS 1.3 rekeying is performed.
+>
+> Those patches acquired locks before calling gnutls_record_{send|recv}
+> but temporarily dropped the locks in the push/pull functions, in the
+> mistaken belief that there was a race inside gnutls that did not cross
+> execution of the push/pull functions.
+>
+> A non-deterministic reproducer mislead into thinking the workaround
+> was operating as expected, but this was wrong. Juraj demonstrated
+> that QEMU would still see errors from GNUTLS as well as crashes.
+>
+> The issue is that a pointer to internal state is saved before the
+> the push/pull functions are called, and after they return this
+> saved pointer is potentially invalid. IOW, it is never safe to
+> temporarily drop the mutexes inside the push/pull functions. The
+> lock must be held throughout execution of gnutls_record_{send|recv}.
+>
+> This would be possible with QEMU migration, except that the return
+> path thread sits in a blocking read waiting for data that very
+> rarely arrives from the destination QEMU. This blocks ability to
+> send any migration data in the other thread.
+>
+> It is possible to workaround this issue, however, by proactively
+> calling poll() to check for available incoming data before trying
+> the qio_channel_read() call.
+>
+> Reported-by: Juraj Marcin <jmarcin@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-diff --git a/target/riscv/common-semi-target.h b/target/riscv/common-semi-target.h
-index ba40e794dcc..7e6ea8da02c 100644
---- a/target/riscv/common-semi-target.h
-+++ b/target/riscv/common-semi-target.h
-@@ -25,16 +25,16 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
-     env->gpr[xA0] = ret;
- }
- 
--static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
--{
--    return sizeof(target_ulong) == 8;
--}
--
- static inline bool is_64bit_semihosting(CPUArchState *env)
- {
-     return riscv_cpu_mxl(env) != MXL_RV32;
- }
- 
-+static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
-+{
-+    return is_64bit_semihosting(cpu_env(cs));
-+}
-+
- static inline target_ulong common_semi_stack_bottom(CPUState *cs)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
--- 
-2.47.2
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
