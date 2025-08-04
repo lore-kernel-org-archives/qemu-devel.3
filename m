@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6576DC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5927AC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uizc2-0003av-MI; Mon, 04 Aug 2025 14:08:42 -0400
+	id 1uizcH-0005BG-Al; Mon, 04 Aug 2025 14:08:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uixo3-0005Cu-E9
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:13:00 -0400
-Received: from p-east3-cluster5-host2-snip4-10.eps.apple.com ([57.103.86.151]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uixo0-0000lc-GQ
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:12:58 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPS id
- E8726180086B; Mon,  4 Aug 2025 16:12:52 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=IkSU93jV9FS1GDWYWwJgNYuHfU7uKpyXDP0V+TcXxKk=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=RTea5JqrDYwVRal6uMogOWig8EfcRGkyzXVtfhVyk9P6DLxbJTf/1US0XfuL6d6C5EeDdG8BOV43Hv1rYPrNmjgafGvxW4oWAVykIAu7se7cctCkP5f+HZ5u5EWycU7xQiKk+W6djv54LFR/XJIbEOJpYDebav3LBz3UUNxM04OiR9Fhu9N04MJJD85IHG2zXWmiiTY0uJejqYQvwotK6JcjH1HijIiohkoFgLBIt92RwYgOPEjSwE0XLRfn9nq6IzsTkheKN2fS7qCS1qXv1Kt+1otfrB7j2/eKZVx7Wfa/b17Pg+VRs1BpPh5frOqxqi3s10+qF4xfEqxenl3Heg==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPSA id
- 8A2A9180012A; Mon,  4 Aug 2025 16:12:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <59A4FF62-384F-4D43-BD56-60AA93733580@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_0D194A2C-DD9F-4A27-BC0C-8FEF1BE86DD4"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [PATCH v4 01/17] accel/system: Introduce hwaccel_enabled() helper
-Date: Mon, 4 Aug 2025 18:12:37 +0200
-In-Reply-To: <d18fc5c3-b68a-4afe-86b7-e1687780b67c@suse.de>
-Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Ani Sinha <anisinha@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-To: Claudio Fontana <cfontana@suse.de>
-References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-2-mohamed@unpredictable.fr>
- <d18fc5c3-b68a-4afe-86b7-e1687780b67c@suse.de>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-GUID: t0F52muVijaGYVC1nueDfv8r7Lg4KMQl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA4OSBTYWx0ZWRfX5YWKfNFnRDfN
- hY8ZftRdpqyzoB8bjLyrk8j+EGAvdelvj27qqbUr0sHvM+VwDRm6dbryCz2EijVHIZR3qXwthT6
- MZxDkX/o/7g9b5Iki2XVZ0oCCqKh3yPEqMpPwMwvSw5GRJe7i20vlPSkcr9y2fBz9E+1Sal5wvq
- GrXfFkBwSGez/6j+TFhLO7sYI4NRd4pF/ziit2QzK2hziJ2bmJPloxZMXgVKc+Eqqx1BMMdhDes
- tGqS3X6zuNPz5Z/f2RQbq7Dls0Knx2C0wwmxXwLj5kcZ6342LP37XFL9LhEE8EIFstQfOfFiU=
-X-Proofpoint-ORIG-GUID: t0F52muVijaGYVC1nueDfv8r7Lg4KMQl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-04_06,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- mlxscore=0 spamscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508040089
-Received-SPF: pass client-ip=57.103.86.151;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uixuN-0003mV-6q
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:19:32 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uixuL-00022A-AM
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:19:30 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-76bd041c431so3761191b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 09:19:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754324367; x=1754929167; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CpUCthRS9rIwst4F78DkhORvM6W+9I21R+2QLEH3fxc=;
+ b=YIyE0u7fBflXD/iNo0fxtAM3IKhhR6JnGGm7sHV5T8RQccbOUQvkGe0n1u1PDptWPC
+ WmQe0eKeUdmtXyizF+ZBAbIflo7eAxg01b+JjoiaZUGG0sp5MSc4opzzdZNeEJqP2UqX
+ mTCgOGyrOhkcGIw0AKlNUhcySDs97psWkVaEOD0xnWpm8xXjTHLvEm2I2TsGRrUyZoHX
+ IKBXkDcopXiBelYVri9wdyKnupGXjM6gU6WKmpDGZY1EaR8pk6Lk09lD9dKxtoj1EpQF
+ P1HPIUfPw3/6A1v08dWRWTvmYfJDDYG74Jd/8d8rr7BNGfkAzFDFXns0KFZblDtMDhLi
+ ssig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754324367; x=1754929167;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CpUCthRS9rIwst4F78DkhORvM6W+9I21R+2QLEH3fxc=;
+ b=TEYEukfdvj5Sl6xfXJjxzPQCXmy3at63eos8IJDb3V1RdJGy12gSMrCKzkcTLY6aUl
+ HGqvMvUX2ri6oQ7yzZ8xS5rdfuw4+VeRW6Xut5yvGcCG4cIOutI6DUCyLbw6zx45p2jG
+ HUZNyXx4ezl+/gU/r0XDe0bC5zn67RWBuThpDx2Ma/I7vmsLTi5NDZe2CwldB2p/DI6u
+ 81nOy7D2nvUch0NpPMOoFRWiWZAnuuaS8AIqe2Mo67aDJIMMXPr3qCsnfE/gQydTuhPi
+ +5Uy9OKyP8+xpU+b+Vgb1WMq0pYaZEfvUGM9RLjZnsKe+Qk82LyUXImcUGzAUz/yBT1Q
+ Pr6Q==
+X-Gm-Message-State: AOJu0YxF6jG75Zvf1jz0mPjAPAe5i+yguOraAsYXixnYJdQcHFDxq1cp
+ 8uPxFi/b39P0ToZeMRNCRmOMrZ+7eIQqarxE3OSYKpD+E9YudlKc9Xky8oJYwaE1eJ1JvwPqXuh
+ FVdMG
+X-Gm-Gg: ASbGncuChNHALH8CQhzRgkGD0jyADbFlkgiHk2yd8gb1F5vKDZZSoQPb+pkvC0rsUSu
+ iLJiZ2ltB8SKI9VH6U/mzs1rT/Ag7nL731qaGRf3j783raPBgK2am48sAJ0SVb5YtZ+jZOdgcWk
+ Iktuluwwtu1EMdaX4hi9dyADmHzr4CCSgu3IORoPET0eXXa6k9LRzOrLzNtXnIUgPhTtttcVUK9
+ CkUP0NtqWpKRb327s4r//UltnAs1HNfPb5YAn4lMjpx8g8UYMPJWhMFOpshgdYG0yqU6ONNbbfA
+ hdbLXuO2+AgZL7LJpqFAhsWDpiNrfK7i65nHR4wbVgucsOc2ehu4ljvqIgNZKl4aeKX2UFZORib
+ +wVZVbRcWPVUXh1XE3DAGn6tlSG/0pCS0YEo=
+X-Google-Smtp-Source: AGHT+IHRxZpBpyDns7hvAI1UNoXTAmdYMflO+QdzuKnFR/VA+xiHQbRlLfIkcLbwQuIxSLzmTNyurw==
+X-Received: by 2002:a05:6a21:99a5:b0:234:6989:b690 with SMTP id
+ adf61e73a8af0-23df917f0abmr14953011637.41.1754324367246; 
+ Mon, 04 Aug 2025 09:19:27 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bd1d4e312sm10371252b3a.17.2025.08.04.09.19.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 09:19:26 -0700 (PDT)
+Message-ID: <01d39deb-5431-4631-a2ee-09deb69b4603@linaro.org>
+Date: Mon, 4 Aug 2025 09:19:30 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/7] contrib/plugins: uftrace
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, rowan Hart <rowanbhart@gmail.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250724204527.3175839-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,58 +109,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/24/25 1:45 PM, Pierrick Bouvier wrote:
+> This plugin generates a binary trace compatible with the excellent uftrace:
+> https://github.com/namhyung/uftrace
+> 
+> In short, it tracks all function calls performed during execution, based on
+> frame pointer analysis. A big advantage over "uftrace record" is that it works
+> in system mode, allowing to trace a full system execution, which was the
+> original goal. It works as well in user mode, but uftrace itself already does
+> this. It's implemented for aarch64 only (with the intent to add x86_64 later).
+> 
+> Let's start with concrete examples of the result.
+> 
+> First, in system mode, booting a stack using TF-A + U-boot + Linux:
+> - Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+> https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
+> - Stat and open syscalls in kernel
+> https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
+> - Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+> https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
+> 
+> Full trace is available here:
+> https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz
+> You can download and open it on https://ui.perfetto.dev/ to explore it.
+> 
+> Second, in user mode, tracing qemu-aarch64 (itself) running git --help:
+> - Loading program and its interpreter
+> https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
+> - TB creation
+> https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
+> 
+> Full trace is available here:
+> https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz
+> 
+> If you had curiosity and now you're ready to give some attention, most of the
+> details you want to read are included in the documentation patch (final one).
+> 
+> Overhead is around x2 (sampling only) to x10-x15 (precise), and long traces can
+> be directly filtered with uftrace if needed.
+> 
+> The series is splitted in:
+> - implementing the plugin
+> - adding useful options (especially sampling and privilege level tracing)
+> - add a companion script to symbolize traces generated
+> - add documentation with examples
+> 
+> I hope this plugin can help people trying to understand what happens out of the
+> user space, and get a better grasp of how firmwares, bootloader, and kernel
+> interact behind the curtain.
+> 
+> v2
+> --
+> 
+> - trace active stacks on exit
+> - do not erase map generated in system_emulation
+> - add documentation to generate restricted visual traces around specific events
+>    of execution
+> 
+> v3
+> --
+> 
+> - fix missing include unistd.h (build failed on MacOS only)
+> 
+> v4
+> --
+> 
+> - add support for x64
+> 
+> Pierrick Bouvier (7):
+>    contrib/plugins/uftrace: new uftrace plugin
+>    contrib/plugins/uftrace: add trace-sample option
+>    contrib/plugins/uftrace: add trace-privilege-level option
+>    contrib/plugins/uftrace: add timestamp-based-on-real-time option
+>    contrib/plugins/uftrace_symbols.py
+>    contrib/plugins/uftrace: add documentation
+>    contrib/plugins/uftrace: add support for x64
+> 
+>   docs/about/emulation.rst           |  213 ++++++
+>   contrib/plugins/uftrace.c          | 1014 ++++++++++++++++++++++++++++
+>   contrib/plugins/meson.build        |    3 +-
+>   contrib/plugins/uftrace_symbols.py |  152 +++++
+>   4 files changed, 1381 insertions(+), 1 deletion(-)
+>   create mode 100644 contrib/plugins/uftrace.c
+>   create mode 100755 contrib/plugins/uftrace_symbols.py
+> 
 
---Apple-Mail=_0D194A2C-DD9F-4A27-BC0C-8FEF1BE86DD4
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Ping on this series.
 
-
-> On 4. Aug 2025, at 18:00, Claudio Fontana <cfontana@suse.de> wrote:
->=20
-> On 8/4/25 16:23, Mohamed Mediouni wrote:
->> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>=20
->> hwaccel_enabled() return whether any hardware accelerator
->> is available.
->=20
-> Available or enabled?
-enabled
-
-Took the patch from =
-https://lore.kernel.org/qemu-devel/20250703105540.67664-47-philmd@linaro.o=
-rg/
-
-Should I edit the commit message locally or will be taken care of when =
-it gets merged on that series?
-
-Thank you,
-
-
---Apple-Mail=_0D194A2C-DD9F-4A27-BC0C-8FEF1BE86DD4
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><div><br><blockquote type=3D"cite"><div>On=
- 4. Aug 2025, at 18:00, Claudio Fontana &lt;cfontana@suse.de&gt; =
-wrote:</div><br class=3D"Apple-interchange-newline"><div><div>On 8/4/25 =
-16:23, Mohamed Mediouni wrote:<br><blockquote type=3D"cite">From: =
-Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@linaro.org&gt;<br><br>hwaccel_enabled() return whether any =
-hardware accelerator<br>is available.<br></blockquote><br>Available or =
-enabled?<br></div></div></blockquote>enabled<div><br></div><div>Took the =
-patch from&nbsp;<a =
-href=3D"https://lore.kernel.org/qemu-devel/20250703105540.67664-47-philmd@=
-linaro.org/">https://lore.kernel.org/qemu-devel/20250703105540.67664-47-ph=
-ilmd@linaro.org/</a><br =
-id=3D"lineBreakAtBeginningOfMessage"></div><div><br></div><div>Should I =
-edit the commit message locally or will be taken care of when it gets =
-merged on that series?</div><div><br></div><div>Thank =
-you,</div><div><br></div></div></body></html>=
-
---Apple-Mail=_0D194A2C-DD9F-4A27-BC0C-8FEF1BE86DD4--
+Regards,
+Pierrick
 
