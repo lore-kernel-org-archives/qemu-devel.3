@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B0C7C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 23:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4123DC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 23:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj4Co-0002Ur-DH; Mon, 04 Aug 2025 19:02:58 -0400
+	id 1uj4Dn-0003kV-MK; Mon, 04 Aug 2025 19:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj4Cf-0002RX-IZ
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 19:02:51 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj4Dg-0003eN-LM
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 19:03:55 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj4Cd-0002Ld-KV
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 19:02:49 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-747e41d5469so4057583b3a.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 16:02:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj4De-0002Rm-P0
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 19:03:52 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-458baf449cbso24019045e9.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 16:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754348566; x=1754953366; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754348629; x=1754953429; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VfgY3sBiYAQQZg3ggiJYjZ1XvZYDGJgLBI56ZzRqnXc=;
- b=v9Ye6Xl4OdpNNPdXXCL2JdLQblm95OQT/OhfNS+mNf5VgCS08OI1f7uSPdm/OZfe9l
- yi5avUGvzylHQcNy8BHxWVMqYqm84G3dp5/wGJBVgpM78j4zk9mF/Rc9Jc/jYTQd9cZd
- RIP4OVO4JSiecOjWeUUFxc2w89lT8x3SxRZPNWsgsRsNrHMnt3Rp+YtHIjydsshS9zI/
- /yi0iBssAWZNPgDXZrbFfM8coW90SbmYQSvP9RANYuF36/DGuTjAH2eHdROsA7j0Q8QK
- reySadhdbUEHaahh1tVlYgSrra7PNDdMkOlD3FukfQ0VhNUowcA8KjJe3tCiG2f6u093
- XnNA==
+ bh=NVGrd9yjfT3pHxjGFXLaE0sIhVqs1g8qtZf2BA1Hpg8=;
+ b=u1b9nfY6QWBbBTvg7jw1/OoaBIMi6tVzGh7AQ9cISleT717WbadAqOP/7VJvzfO8XA
+ XaXJUnLEgr0WUhwEjCQTUO/ve+618ahYw75LlNKGC8F0DZw49DfIuS3NEnzur5mtzYLt
+ QDGWZmmjfafmSW6BNuCUXJHzA/iHwAOuJ79nZniSkh1qtuXyCXglKb3iu9vrKLE8zRTj
+ Ww73w22HXvSec1qHhXMYRobWlS8XA/tJVONM4gjKYyO4F/8PQGdggWOlfRiLmxue3+NI
+ zBXoh0lbxuHk4vWKWrijN4aPPMAeTOlPfRmQZWYSbyNH3KG7HD4BZ4jENLtzyszg5KL/
+ ZMqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754348566; x=1754953366;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754348629; x=1754953429;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VfgY3sBiYAQQZg3ggiJYjZ1XvZYDGJgLBI56ZzRqnXc=;
- b=iVSUIsnZz43LgqgC24i/FAkx4Uub9DHRMG7NMJIA1Nyhif5RBdUBOXUqi/ex5amyBO
- YxLBl+vfgRFOk+2fwcEAWh9PwwDVID/rB8FTghaMXLE4oGaYa/pqW/MSpRv3zZ2Fy2ih
- wpIl0IyBCmP/ttikL8Y51hhayFiC78QycmPS6UyWKLTq05VBmqRTkG05OWwFAOxRkPEh
- monWiX7Tirg5hj4nSv/kBR342qod49ZW24Q1bWVo24EOBdHnBuENuPhrP1l+Xal8jfzT
- O/T8HG6cwRfDgE5esp+T1mzdLMI/rVvJ4H7EPN8rmE25DG1DaRSnfgT+B/w7q4Vh9/pW
- qnLA==
+ bh=NVGrd9yjfT3pHxjGFXLaE0sIhVqs1g8qtZf2BA1Hpg8=;
+ b=Gtf8DSQ1H/MFJXBD2uBkxxdFt/XM+ShFe0IGSilgRmz/dHQirPlV4qq2NaCV3IWm1J
+ QQoHANW8kxDJHrqfTJV8nrBQag5qudJrt8e7wTerB2pqa2aGGQ6fzHsSD/Ho0V4Lx8mV
+ 8XAUQKneNKVCQmTQqY2JEZIQl5JfHQcmLSckAlXcaHGxHgfhX9qDrG7QNA0t34zWh5BQ
+ 5VHuVa3cnn1TUU5blGW0UkZrD0LkUY47f6Tac/5hjXYLoZ+SRPQgtqFcXIXFR44w6o0y
+ GjnYOyFPHDZ/5d1EXsOkv6O04K+yE9evC7HMbwI33JtwM6pcsQ4owaVkx6Ox30cMCYdk
+ akhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmgNdUUcL+nQHLw/oM+94JZ15Gvrmnwk0AhqEAy3ZuaRoU5kuRxjLCveAVE2ZZr+erSYdAg31s7Meo@nongnu.org
-X-Gm-Message-State: AOJu0YxKFAzyiQ1CezgRCyWUKygHmeivZa//6erqjlm5uq5ju/5ScjLA
- KZERh/LQkgnHUwm5DCYljCy+Gk0xXpauBEC7/7C+nWsX+JL7RVhsPOQymk9q3r+4knw=
-X-Gm-Gg: ASbGnctfCyIqNjdh682AZPh2y+ZxYUVp+d71PlIsBL7cDPTxdCb1EEXYz0R7Apeurbg
- 7oW/haCPwvnpwsQXJ4ks+6EzdGfekSwcKOtoRztHcFoJAAvgPAmFuFNNz10IB6J24gc9dSB/C85
- gGBp0akeqqP5Z8UjAAsDUsVBhW3wUNivvekpI6KjoF0bwOECfLTe0Mljve98WGCgwa+mgzOnHr9
- kvLvFxYtFywRKjqmdCzPCCozVCy2sWKfkX0t9owq2qHgUDy8FVwdPdjsHqZMn88ht3VUQYYH0vN
- aHiDIPw848fPyv/sUkQXtmEoYEC402NTGLogG6G5I5tbTXQvqmVYAxmvQv+u5Ed8nM3RsCP/iW7
- G0QsdYsQ6/wRiqwIOM53IH/ReMnaJBNULD9w=
-X-Google-Smtp-Source: AGHT+IFg1JC7KqD9ocypFi6ap8Msyv2B2YCFd8j/Qf1Y46B2WQj6nsm4Gyk/srROqHgbh84ioPm+pw==
-X-Received: by 2002:a05:6a00:92a9:b0:748:2ac2:f8c3 with SMTP id
- d2e1a72fcca58-76bec4dbd7fmr15477190b3a.24.1754348565974; 
- Mon, 04 Aug 2025 16:02:45 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bccfbcea9sm11468728b3a.61.2025.08.04.16.02.44
+ AJvYcCWyjJMRJ5cGbGPt9c70ljRVLqxR0/AFVqyUEugPNbYm2tTjHeSIAZMRIWXIN3/JXZHsblRD3Oe5hxlS@nongnu.org
+X-Gm-Message-State: AOJu0YyPhTrYVDpiSEegZtETbROya3eFclqJgIAlDReueyk9bic+WIEn
+ G+TERXFf+fxpmMgJisaKsvjRcuZJMXcp3ZjgFdG/CtKd60kaOo6xkGl7vdS2HAKVzpw=
+X-Gm-Gg: ASbGncvQOPzNPZm8yd/Ju4SjubbE+yxWE7oXvDk6T3Zzq+rDiRO1PFGBjVjEgDS7yB9
+ ntUraS4ZN6PkcHsPPYsGLELX0rnZ+hW3JUKv/SvqKJ8fPs21f58PD1ELgTGF6Ce0l+ub39cP5Jq
+ jvi6hMTs04hXVX8QPeCsfwoVVZUKW/x53K2Ff9aGNnuK/k1BsEZU5AlGMKC7CrlCiqYY2s1MYlp
+ aDO30qA3f7gvKQnUwFfd5+eT6jeqyikMbLEm0VN3AjRMxC7TCC8XouuwNYi3hucbIGf8+xJMwDe
+ y66SiTI/FeqLxepDuJCB2/OHBkq2/aQqlEIEYukCgNVwKKDEXqJ0NiVtEebbJ1ZWmyLFL4XaDuo
+ mImUPUAB+r+cgDWb6Oo81TlV+X00wI1w8wOGg+FZ4UP2EOKwme4NZFJiRDeSR+6ZFE4lhM3jMBQ
+ Rl
+X-Google-Smtp-Source: AGHT+IGezxXjuqT3MPgMkGaqM/Psf+/Fauc38KwQVfXTldx4R2KDMKRmURv6PP0Pcd+zlykfOIiCKg==
+X-Received: by 2002:a5d:584b:0:b0:3b7:908e:e46e with SMTP id
+ ffacd0b85a97d-3b8d9481a22mr7989789f8f.25.1754348629124; 
+ Mon, 04 Aug 2025 16:03:49 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459de85efb0sm36591855e9.7.2025.08.04.16.03.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 16:02:45 -0700 (PDT)
-Message-ID: <fcd9e270-4e1b-4420-a44d-735d4ab0c23d@linaro.org>
-Date: Mon, 4 Aug 2025 16:02:44 -0700
+ Mon, 04 Aug 2025 16:03:48 -0700 (PDT)
+Message-ID: <e5bfbc26-de3d-4f4c-b15d-6c7ea1b29e49@linaro.org>
+Date: Tue, 5 Aug 2025 01:03:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/17] whpx: copy over memory management logic from hvf
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 14/17] hw/arm, accel/hvf, whpx: unify
+ get_physical_address_range between WHPX and HVF
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
  Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
  <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -88,14 +86,14 @@ Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-11-mohamed@unpredictable.fr>
- <16f2c007-8b84-4b44-b0a2-25b61c7cb3c3@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <16f2c007-8b84-4b44-b0a2-25b61c7cb3c3@linaro.org>
+ <20250804142326.72947-15-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250804142326.72947-15-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,62 +116,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 3:56 PM, Philippe Mathieu-Daudé wrote:
-> On 4/8/25 16:23, Mohamed Mediouni wrote:
->> This allows edk2 to work, although u-boot is still not functional.
->>
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>    accel/whpx/whpx-common.c | 201 ++++++++++++++++++++++++++++-----------
->>    1 file changed, 147 insertions(+), 54 deletions(-)
->>
->> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
->> index 86750c304d..752a57170e 100644
->> --- a/accel/whpx/whpx-common.c
->> +++ b/accel/whpx/whpx-common.c
->> @@ -258,89 +258,174 @@ void whpx_vcpu_kick(CPUState *cpu)
->>     * Memory support.
->>     */
->>    
->> -static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
->> -                                void *host_va, int add, int rom,
->> -                                const char *name)
->> + /* whpx_slot flags */
->> +#define WHPX_SLOT_LOG (1 << 0)
->> +typedef struct whpx_slot {
->> +    uint64_t start;
->> +    uint64_t size;
->> +    uint8_t *mem;
->> +    int slot_id;
->> +    uint32_t flags;
->> +    MemoryRegion *region;
->> +} whpx_slot;
->> +
->> +typedef struct WHPXState {
->> +    whpx_slot slots[32];
-> 
-> Please add a #define for this magic 32 value.
-> 
+On 4/8/25 16:23, Mohamed Mediouni wrote:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   accel/hvf/hvf-all.c        |  7 +++++--
+>   hw/arm/virt.c              | 41 ++++----------------------------------
+>   include/hw/boards.h        |  4 ++--
+>   include/system/hvf_int.h   |  2 ++
+>   target/arm/hvf-stub.c      | 20 -------------------
+>   target/arm/hvf/hvf.c       |  6 +++---
+>   target/arm/hvf_arm.h       |  3 ---
+>   target/arm/meson.build     |  1 -
+>   target/arm/whpx/whpx-all.c |  5 +++--
+>   target/i386/hvf/hvf.c      | 10 ++++++++++
+>   10 files changed, 29 insertions(+), 70 deletions(-)
+>   delete mode 100644 target/arm/hvf-stub.c
 
-hvf code does not.
-And the size is never used out of
-whpx_state->num_slots = ARRAY_SIZE(whpx_state->slots), so there is no 
-risk to have anything out of sync, thus no benefit to define this.
 
->> +    int num_slots;
->> +} WHPXState;
->> +
->> + WHPXState *whpx_state;
->> +
->> + struct mac_slot {
->> +    int present;
->> +    uint64_t size;
->> +    uint64_t gpa_start;
->> +    uint64_t gva;
->> +};
->> +
->> +struct mac_slot mac_slots[32];
-> Ditto.
-> 
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index 818b50419f..fa06e3b815 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -225,6 +225,16 @@ int hvf_arch_init(void)
+>       return 0;
+>   }
+>   
+> +uint32_t hvf_arch_get_default_ipa_bit_size(void)
+> +{
+> +    return 48;
+> +}
+> +
+> +uint32_t hvf_arch_get_max_ipa_bit_size(void)
+> +{
+> +    return 48;
+
+These don't make much sense on x86...
+
+> +}
 
 
