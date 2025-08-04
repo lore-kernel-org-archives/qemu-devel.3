@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C73CC87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51498C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 23:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj471-0004BM-QV; Mon, 04 Aug 2025 18:56:59 -0400
+	id 1uj49r-000072-CI; Mon, 04 Aug 2025 18:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uj46o-00045V-SL
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:47 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj49b-0008Qs-7v
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:59:40 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uj46n-0000Fj-Az
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:56:46 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-76bc5e68d96so3972293b3a.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:56:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uj49Z-0000Zb-Nk
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:59:39 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3b790dbb112so2700795f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754348204; x=1754953004; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1754348376; x=1754953176; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KXmJcDFY/K6kmvJKvRb9yzIOFxWc0d1jqukisbQaPXI=;
- b=Vz/GVFc1HG0nsvV/2H6jyUL2khw3RRSftt6MPuGObWLYO9dwY2S6JCoqhBEIUaOZN0
- oo2LZxHalOjk2G7hq4D7lNMOss94rjztfA1Z1TJuaUrgtNgc6+yH2N6FX7USC0rq9iaY
- B4FOhibQ/XBxnYNy/eKYZE+IqsMwMCPPCqDNdKnTqCZo1cged1YXjPAMSXdwhZQe9v60
- VbpjyDAiIZQyjgqPDzrmbYfWfVxmUtbly8Qlaw4e3D2rhzgoOrr5ADpEdmfCfGr++4XV
- 18QqcBhUG/8quVcZTsdC9G493vSnobwPF1NjxUsf82vgmG7EIV5Pybo+GvbOxRCri/O/
- GHlg==
+ bh=tyhefBWUd8MUDd7wb4t7wsH4XGm7zfJCS/W1py7B6U4=;
+ b=C6IygZ2MuvUMJFRv4kM1WLcZtsxmFUZuCDzB1R0Q2ZdR60cKfsc5N7mKbcq5TALFRs
+ 01iZCnH5MQSL0dcSogJ4qfAKj/5iKFBZ5r0F3QsTpbLBSTNhNGWiEVe0l2mdAAVlmb73
+ W+Uinn+lOFfSW5Kb6S+OI2tHdqsaP5SZVat3+3eVkWcULUE1OuB5H7WgCM1YrmbDEeug
+ vnys6O88H+cKdY67DcLEH9qCeTtIHIiBSHJuhrbRVUuYd1yAUEyslEgv6o7FeXkZ+NQ6
+ fGshytd85wYwMHsGbSVoH6+0u0ezRaSQYjD55WqQk4dzVZnGK9cd9FsYBbpms85Hi+kV
+ Dr+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754348204; x=1754953004;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1754348376; x=1754953176;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KXmJcDFY/K6kmvJKvRb9yzIOFxWc0d1jqukisbQaPXI=;
- b=KoH2Z+FyRQ9oAtC4eljXZrHOSZJzttolcKJWWZ+lj+x7pe1Bixd88YrJ5IplUDbc3u
- 6bOH/rsrRRrbYNZcutH/o089olP0xwv2a+R72tT/efY+p7SrnSuMkoWvCjBRkQpnGoSL
- /1iRRzKTi78Hvsk1GSqDEzgEEeoxPIuo+P3TQnblK7SoyX0nHRJd5epvyBIMfJNRDfHq
- GgAqnbVfaTLZarqZGRzWkASfQztWhsda8UsfTOumHeqNQ3CJS+LSPIEz+SwCsfnWUdMR
- oSynGmb6lR3Tf8EYvEKAJ+v9yQfz+kmioCskNqvAGIQDQrNzvDz5X+Mh+jhVmecnytXI
- re8Q==
+ bh=tyhefBWUd8MUDd7wb4t7wsH4XGm7zfJCS/W1py7B6U4=;
+ b=bzoGy/eCS4xqAOBZ68WqfFvzCJZneb3kCLpce3cOjaxoEepYtYFoD84Mqa2viwtOVw
+ jkLJpLBBYgMfd3i8IF2eT6/bBSfLsCIuk/pbwnlClHFiB1W6uLe93hdkQ+bJQyzgjJ4K
+ Ib/8D/raZcAT5mwm/52Z70LaaeSICRzr8JwkvFjg5tDgsIYQ7IV7uYL5Pa574yFQBRws
+ qkzB/l9Un92Go1RQdfOyO7EI2Fmrouefv18A7MLztzeEgZlDmJNH2upzhKJJsZ/xCPON
+ ka3+q9hbPAnazq5WwQ0Vc+16SNPLTXJKJUjclJeS6GQSiE0//jn45E8YrwEHFJQDq44r
+ Valg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBG2VxU4SnGx1ThacS+nUI+9CYX3cBD6RuNHSiXBJKt7cn8CYuwpZAdIfenyGP3KvmYSbLVwCXOffP@nongnu.org
-X-Gm-Message-State: AOJu0YzVPnTAtstZ4xBaG8xNs5xHL+gDkdNcMKeLG6D++gVPZWVSAf8L
- 0z5jO7tfcxpTMuR9rWCOvVMdO9TfD5ZUug1XHjFbpOu/yT2EH5mBCyX7AijMAP7ZnI4=
-X-Gm-Gg: ASbGncsYKbFLcKqTsTYxHecWY6AAUPvipUSFOJdSKwVDu7uz8baxCegIVh1xc8FSFRC
- RQC3wJWRXmKW1QQLHA/zqD1WRSqg14/ZxBL9Pza/MP/pBHLMkaWmYneIS14Cg8uMcREvPy0r+uI
- 5W7r5vrp5XgWxFTY1CJcAsRkG+VepZ2D9GJKjL8ChKf3piGFfmMJH5VE82jOr4erPAUt9l3Yt9f
- 9QwDvWeX9421klAnv6pjlnz63SaupjzYaUcNrBtXH8/as3QY9iIuk8rORlIktHZgQvxW0c4w2iV
- YynaJoz59AnaWtWC4657zYQH41bfWR/as0H2XGBTc8502B9MrBa8BaSRH2GEqIVh6kjSgA1zZdw
- 9zv5Rd4vJkfcckIsjhvHS8DuDrxnI7PW12hIdIsEI
-X-Google-Smtp-Source: AGHT+IEYwQLXqyJ2ojex8oje4ka/V25DO3QQcq0DaGDHRYahPslLoNdskn7nBHOzVauqw6sC9swNYQ==
-X-Received: by 2002:a05:6a20:3d11:b0:23d:58e9:347a with SMTP id
- adf61e73a8af0-23df906a3c7mr13762018637.26.1754348203792; 
- Mon, 04 Aug 2025 15:56:43 -0700 (PDT)
-Received: from [192.168.4.112] ([180.233.125.160])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bd6aacad9sm10411500b3a.124.2025.08.04.15.56.39
+ AJvYcCWywoLel1KMIg5H5pQs1ulpFGHeYKimjtxc7Jh3smTmtjJkbCHnOVcVC8rsYItv/pV8wjPMhtezyz6A@nongnu.org
+X-Gm-Message-State: AOJu0YzX4NqYY+X/7ZDxAybliP36pZ5zXsERcruz4V5qH2U2zfyv6JwC
+ YlIVOhntH4+ZMBnNGKwlHCcb3TQwgjPtO8yA7U0s6zylC4Cz0DT3UWh6WLwE/77iWwQ=
+X-Gm-Gg: ASbGncvtv3hNMjoThgLW6bFv0Uwboxc2hYSN5CPPzaQK5cHheBdEueDm0DWJjeHdzuc
+ K+UXtAOtfmQz5DNUQRRELmA6gJlpXKTctGBOZNuutBalEBHFDw720EzfOcNbhGrxg8bmCthVMl3
+ 4Ed5CKUmsI5S6/sVh+4cAX9MAzMvfOHYc4je/pmfXViC6B/sU+jjWrqU9+bu4GdaKngg0ztaul3
+ pjuuAhxRkntRGXVeLcjrM4ikeglNft5KNqJo/tYdqxuZSe/7hz526j0CaT1BLQ0ks8zaefnLFQH
+ iwnv50mg/ZhT9c1lodyQD7pnFfKJ+rYdl5vOl5uaWvFmL1L8TgPPtVQUtOLWMSltqwjdzScSbWx
+ Kd/lL8+NzhTQhwN3ugfvOQDnLKCPUvezj/cjOX9Pgl0U1G5HAgBoGoZ19sRrf1ThLcQ==
+X-Google-Smtp-Source: AGHT+IEs0aER/wtZlHxm1ky5349so7aMNZGFWcDO+xUPJgNsnI2FxtS/F15tsoCf2CrhuW4pM375bw==
+X-Received: by 2002:a05:6000:188c:b0:3b7:9bd2:7ae7 with SMTP id
+ ffacd0b85a97d-3b8d94ca755mr8158091f8f.57.1754348375654; 
+ Mon, 04 Aug 2025 15:59:35 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c3ac115sm16947963f8f.12.2025.08.04.15.59.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 15:56:43 -0700 (PDT)
-Message-ID: <b7c6b929-ec99-4eb2-9f9b-c91632dd8ac3@linaro.org>
-Date: Tue, 5 Aug 2025 08:56:36 +1000
+ Mon, 04 Aug 2025 15:59:33 -0700 (PDT)
+Message-ID: <395a77c2-53c3-436b-b46f-b301dc8e619b@linaro.org>
+Date: Tue, 5 Aug 2025 00:59:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v2 03/11] hw/sd/sdbus: Provide buffer size to
- sdbus_do_command()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
- qemu-block@nongnu.org, qemu-arm@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-References: <20250804133406.17456-1-philmd@linaro.org>
- <20250804133406.17456-4-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v4 12/17] hw/arm: virt: cleanly fail on attempt to use the
+ platform vGIC together with ITS
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
+ <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20250804142326.72947-1-mohamed@unpredictable.fr>
+ <20250804142326.72947-13-mohamed@unpredictable.fr>
 Content-Language: en-US
-In-Reply-To: <20250804133406.17456-4-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250804142326.72947-13-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,32 +115,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 23:33, Philippe Mathieu-Daudé wrote:
-> We provide to sdbus_do_command() a pointer to a buffer to be
-> filled with a varying number of bytes. By not providing the
-> buffer size, the callee can not check the buffer is big enough.
-> Pass the buffer size as argument to follow good practices.
+On 4/8/25 16:23, Mohamed Mediouni wrote:
+> Windows Hypervisor Platform's vGIC doesn't support ITS.
+> Deal with this by reporting to the user and not creating the ITS device.
 > 
-> sdbus_do_command() doesn't return any error, only the size filled
-> in the buffer. Convert the returned type to unsigned and remove
-> the few unreachable lines in callers.
-> 
-> This allow to check for possible overflow in sd_do_command().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   include/hw/sd/sd.h       | 23 +++++++++++++++++++++--
->   hw/sd/allwinner-sdhost.c |  7 ++-----
->   hw/sd/bcm2835_sdhost.c   |  7 ++-----
->   hw/sd/core.c             |  5 +++--
->   hw/sd/omap_mmc.c         |  5 +++--
->   hw/sd/pl181.c            |  6 ++----
->   hw/sd/sd.c               |  6 ++++--
->   hw/sd/sdhci.c            |  6 +++---
->   hw/sd/ssi-sd.c           | 12 +++++++-----
->   9 files changed, 47 insertions(+), 30 deletions(-)
+>   hw/arm/virt.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 98a1c74c42..0039f6a12b 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -741,6 +741,16 @@ static void create_its(VirtMachineState *vms)
+>           return;
+>       }
+>   
+> +    if (whpx_enabled() && vms->tcg_its) {
+> +        /*
+> +         * Signal to the user when ITS is neither supported by the host
+> +         * nor emulated by the machine.
+> +         */
+> +        info_report("ITS not supported on WHPX.");
+> +        info_report("To support MSIs, use its=off to enable GICv3 + GICv2m.");
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+So if the users deliberately asks for its=on, we ignore the request and
+keep going. Shouldn't we just exit so the user adapts its command line?
 
-r~
+> +        return;
+> +    }
+> +
+>       dev = qdev_new(its_class_name());
+>   
+>       object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
+
 
