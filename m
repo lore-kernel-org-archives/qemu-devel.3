@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B65C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA032C87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiqxw-0006NV-T5; Mon, 04 Aug 2025 04:54:46 -0400
+	id 1uir0d-0007qC-8B; Mon, 04 Aug 2025 04:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiqxU-0006KD-LN
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:54:18 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uiqxS-0004Tq-E5
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:54:16 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-7180bb37846so27400347b3.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754297651; x=1754902451; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aYiSARvwbxeI8mzKFcdUB6EoAHA384KmQyrfnAWRD08=;
- b=eVl5GbED2k+4NgNtbjZ2V5Anqx6GpLFjRsz9b3u2QEFOBn1SeX5JZ0cRJLaRnkHD/f
- uN6OwXtm6nVL/s1H9AR3fwTZjOOWPEzuNVJTp0BXw2hke+NyFyDjVQR0Uxhji+aHUTzW
- P4wRUeJ1hDaXaq+UPEPl8OjTDZkV7/Nm2TYLqaOSs1jTKcoJUO/xGvTNwzCHzQd5RuPX
- zU0FDnPmqmiPMGc9iBsrWz8cOnn/S1Txahmmju59F8aZO6RXFdWDXs3Cow5j946gDg5h
- vEvAlfyjv/HsulbfN76tTTRy2Bu4eiM1RwwWncW0bc2mRZPKejJp14QJt4znp5Qytjj1
- iOLg==
+ (Exim 4.90_1) (envelope-from <mkletzan@redhat.com>)
+ id 1uiqzN-0007Sz-PU
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:56:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mkletzan@redhat.com>)
+ id 1uiqzI-0004wz-Nh
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:56:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754297766;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yWeZanyrESfweMl3ZkWoRXa0v/KkZUDvpnyVSqvFAwQ=;
+ b=gvLYJxTAx+D+PHRo9NqiLGfuIQoiQk9n6LFafQ2dXDcZAnC+MhmyJzVE79kCTV5KAgNkBw
+ iyaYxSUBdv45DDja8jJ48hX39LnREhcvsBhu/9MCwEv6yymiPLlXsVeurHjiWDoaY4EJpO
+ EioAdQHCnkbM54SU6tZlxCBaHTz0wBE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-1-iWui3Ju6N6aMhtXiI4VBrQ-1; Mon, 04 Aug 2025 04:56:04 -0400
+X-MC-Unique: iWui3Ju6N6aMhtXiI4VBrQ-1
+X-Mimecast-MFC-AGG-ID: iWui3Ju6N6aMhtXiI4VBrQ_1754297763
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45867ac308dso13622855e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:56:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754297651; x=1754902451;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aYiSARvwbxeI8mzKFcdUB6EoAHA384KmQyrfnAWRD08=;
- b=Wpd8hI9MHE+NWYpAdatG0mmVwaMrf/6L9RkDfJ3plQ8JwzFNOmydKruRqzyLmOcfV0
- sLNTyfXGnB02gc4wkLtR56d2FCnfAjjQgc+3OFftIySa4d4qil1d7PKTpocv88PScybq
- YWsxRkPShjx1C9oSVLwJzzXK1TycrlfPNwdXvSqLeNEbL1iw8Mygq1/xwOahzJ0TQpiW
- ptdxVpQV+g8SC31T/7i2WqzbOShQ4Zw19MwZMyNJhw13za3PLNVXsqjx6eXSCzb6s8GF
- hqbanYAamBP7qOmRO4s2mbprGQ+s7hDWD8P3CIzUvfIHidLmYOlKToJhmfb4OM8/RYoE
- vGoA==
-X-Gm-Message-State: AOJu0Yzfjzd/nXZVETYTVibkoVnIFA+D3dODnnPoZbB0JiKkbz/xMhNS
- MPXBfdnScrongcet8Z8xqIw2XZyPjJMmWyC4RnleytawzWfRhvDji/X+KrcTqfjrGMNnrYLn8fc
- zEPzkyMuJHPLqIemEDkdwFX9ZxxCzqwj+hbXCehS7WA==
-X-Gm-Gg: ASbGncuXQ57kTaeVays6pxHNAsc7PaRViU2/6GWIvPM77Z+N9Ciqf0Ape11fJY8sHI2
- mLx6gPPTfComCwI8Z1y/vmCEzrMNGfB83ErudwyfVssx3njPC0le+SqM0AqNWhN6ocADf2K1+Un
- 7ZFNgm0pD0JOy0+N4P+TJewYRkQiwYGnlbg5Z/O3RSYrG2zqs83KD5oS47jSgkhOGi/jjywPDsa
- ZrXNJeA
-X-Google-Smtp-Source: AGHT+IF1/y3dxFdvVSktidJL5l00MSBS9Z4ltknnhOYeIKZfUa8tvrDxKtmSEqvQO042bWyzj6KpDA4xlupGeHhCOrA=
-X-Received: by 2002:a05:690c:660c:b0:71b:657c:5878 with SMTP id
- 00721157ae682-71b7ecdaafcmr97544857b3.4.1754297651408; Mon, 04 Aug 2025
- 01:54:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754297763; x=1754902563;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yWeZanyrESfweMl3ZkWoRXa0v/KkZUDvpnyVSqvFAwQ=;
+ b=BsHhotKgDZZt5d/PGhNxQVIshf6I7k7P0w3hXTXMFu5lRZSzkbGM/OfbNRUmWSjuak
+ wqv8V6bs5qFdYGxpybQkEVErpHl94I/5bW/YPowG+ihov3Yg7FfeAQ9QgTd+DU1JS3n7
+ 8Kx6bPsS27r7NXEo6JDPL8rt0YbF0VGRtDVR7WTuAX7pyWJ+HguX3nEG21ChOjJf12au
+ Bmvmj7b/mB9mW4oRruEcyB7bMuPOnpAQT7opc9R58TwTHNJ/2sL3rHOgQOG8/ZEOf2cF
+ 4LDTFiN83FhrfqeFMa8petO3fMxIJ/GS7x88nYaer7BJS9y3/Rn4GzpeDa9rFrUcf3b7
+ ZCmg==
+X-Gm-Message-State: AOJu0YyLJQYQ0uAGrVu60Uodz+HAke1xQTT+BWBHbcUF9+17+bHg/PDl
+ m5J2Lr9oEYWDyfyBkyODvIlpWPSemBO3pGKGhg7vgCWKxIg4zhErQfZc/qxUbb26IQXCLA9kO4r
+ nihvwbdPvKFD1+wgSMzTSvF5T89vQky74owuGKLLg8QpzKwYWSufQ7tcANlbW8tau
+X-Gm-Gg: ASbGnctwW32l/h0xIf/DGP4Ht4MET5XjLd1pX+Ejb6U4/y3y/Ixu+YaUpOeePPOvN6n
+ umbNsSDFGI9MxZuqmF3pzYEUK/+Q266HyA6Gc5CqgK8EAxWDKUlbOHKazGUKLVtAtQzw/UYSypk
+ rbay8UfO1cdBV6enxzx2VuQFB2plnKwwBKnnhny8nwusbJL84Qnm/PQYoVrmrZuhaGquPpMyfTF
+ Qia84QbwNaIeMqd3NfZioqje9Og3J14OW5agYGwKSx212JRxog69frh5LfBWHzWkyLMNpD+DNWG
+ tAf62FajjC1j/Ml4KJttmyzugdMK05szHMvF2hsu4y5Td4BA
+X-Received: by 2002:a05:600c:1f16:b0:456:1e5a:885e with SMTP id
+ 5b1f17b1804b1-458b69cbde5mr64754035e9.3.1754297763175; 
+ Mon, 04 Aug 2025 01:56:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEM4IViHEIhOC4YVJ64HIK12ijAlVcGn50bSMPCUJUQU62B3A1vUtes6wCE9pRa7fMG908D6A==
+X-Received: by 2002:a05:600c:1f16:b0:456:1e5a:885e with SMTP id
+ 5b1f17b1804b1-458b69cbde5mr64753765e9.3.1754297762685; 
+ Mon, 04 Aug 2025 01:56:02 -0700 (PDT)
+Received: from wheatley.localdomain ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458bc1f62e7sm80696055e9.2.2025.08.04.01.56.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 01:56:02 -0700 (PDT)
+Received: by wheatley.localdomain (Postfix, from userid 1000)
+ id 93AE2C6024F2; Mon, 04 Aug 2025 10:56:01 +0200 (CEST)
+Date: Mon, 4 Aug 2025 10:56:01 +0200
+From: Martin Kletzander <mkletzan@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-rust@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 1/2] rust: Add antoher variant for impl_vmstate_struct!
+ macro
+Message-ID: <aJB1oeH2eTIeeJne@wheatley.k8r.cz>
+References: <cover.1754060086.git.mkletzan@redhat.com>
+ <ad68bd5bdf4148770e3750fca4f14d0ae794538d.1754060086.git.mkletzan@redhat.com>
+ <CABgObfYBVF3aCOBtX-eQcm4M-WNAHxbMcjsUKiY3rLkinGe1qA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250802230459.412251-1-richard.henderson@linaro.org>
- <20250802230459.412251-46-richard.henderson@linaro.org>
- <CAFEAcA8RJ2NKRBL6USCL12kPY_D5C1os0-t57t6aGZHSxkOE2A@mail.gmail.com>
- <9ff0f7da-f3e2-4bb6-8b76-aba7a38dcab3@linaro.org>
-In-Reply-To: <9ff0f7da-f3e2-4bb6-8b76-aba7a38dcab3@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Aug 2025 09:54:00 +0100
-X-Gm-Features: Ac12FXzLHnd4jvl9MCCvEi2EmxSbBU76zJ5_Monob4hzGQ78kMtTgjFDTYz7vlo
-Message-ID: <CAFEAcA9rzxSzVNJ00y7JJgwoy-74yCyCo2iQBc2dAy5uQiTmbw@mail.gmail.com>
-Subject: Re: [PATCH v2 45/95] linux-user: Remove target_elf_greg_t
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="AkKN3g6DQ6S5+maK"
+Content-Disposition: inline
+In-Reply-To: <CABgObfYBVF3aCOBtX-eQcm4M-WNAHxbMcjsUKiY3rLkinGe1qA@mail.gmail.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mkletzan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,77 +117,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Aug 2025 at 21:11, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 8/3/25 20:59, Peter Maydell wrote:
-> > On Sun, 3 Aug 2025 at 00:20, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> This typedef is synonymous with target_ulong.
-> >>
-> >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> >> ---
-> >>   linux-user/elfload.c | 29 +++++++++++++----------------
-> >>   1 file changed, 13 insertions(+), 16 deletions(-)
-> >>
-> >> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> >> index fce4c05674..70a1e402d3 100644
-> >> --- a/linux-user/elfload.c
-> >> +++ b/linux-user/elfload.c
-> >> @@ -131,10 +131,8 @@ int info_is_fdpic(struct image_info *info)
-> >>   #endif
-> >>
-> >>   #ifdef TARGET_ABI_MIPSN32
-> >> -typedef abi_ullong      target_elf_greg_t;
-> >>   #define tswapreg(ptr)   tswap64(ptr)
-> >>   #else
-> >> -typedef abi_ulong       target_elf_greg_t;
-> >>   #define tswapreg(ptr)   tswapal(ptr)
-> >>   #endif
-> >
-> > Previously we had target_elf_greg_t:
-> >   * for MIPSN32: abi_ullong, which is 64 bits
->
-> MIPSN32 is a mips64 target.
->
-> >   * for other TARGET_ABI32: abi_ulong, which is 32 bits
-> >   * for 64-bit archs: abi_ulong, which is 64 bits
-> >   * for 32-bit archs: abi_ulong, which is 32 bits
-> >
-> > Now we have target_ulong, which is:
-> >   * for 64-bit archs: 64 bits
-> >   * for 32-bit archs: 32 bits
-> >
-> > So the two TARGET_ABI32 which weren't special cased
-> > (hppa and sparc32plus) will go from a 32-bit type to a 64-bit
-> > type, won't they ?
-> >
-> > It wouldn't surprise me if this is a bug in the hppa and
-> > sparc32plus cases, but if so we should say in the commit
-> > message that we're fixing it.
->
-> Neither sparc nor hppa implement core dumps so far,
-> so we can put off considering them.
 
-I guess so, but if we have to undo the refactoring because
-it doesn't fit those architectures that would be annoying.
+--AkKN3g6DQ6S5+maK
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-I had a look at the kernel sources and I think that here
-mips N32 really is an outlier --
-arch/mips/include/asm/elfcore-compat.h defines the
-compat_elf_gregset_t to be the same as the (64-bit)
-elf_gregset_t, and has some macro magic to handle the
-O32 case which does have 32-bit registers.
-On the other hand arch/parisc/include/asm/compat.h and
-arch/sparc/include/asm/elf_64.h both define the
-compat_elf_gregset_t type as 32-bit.
+On Fri, Aug 01, 2025 at 11:44:03PM +0200, Paolo Bonzini wrote:
+>Il ven 1 ago 2025, 17:00 Martin Kletzander <mkletzan@redhat.com> ha scritto:
+>
+>> From: Martin Kletzander <mkletzan@redhat.com>
+>>
+>> In some cases (e.g. in vmstate_tests.rs) the second argument to
+>> impl_vmstate_struct! is actually an existing struct which is then
+>> copied (since VMStateDescription implements Copy) when saved into the
+>> static VMSD using .get().  That is not a problem because it is part of
+>> the data segment and the pointers are not being free'd since they point
+>> to static data.  But it is a problem when tests rely on comparing the
+>> VMState descriptions as pointers rather than contents.  And it also
+>> wastes space, more or less.
+>>
+>> Introduce second variant of the macro which can, instead of the
+>> expression, take an identifier or what looks like a reference.  This
+>> second variant is added before the current variant so that it has
+>> preference, and only references the existing static data from it.
+>>
+>> This way tests are fixed and space is saved.
+>>
+>> And now that the VMStateDescription checking is fixed we can also check
+>> for the right value in test_vmstate_struct_varray_uint8_wrapper().
+>>
+>> Signed-off-by: Martin Kletzander <mkletzan@redhat.com>
+>> ---
+>> I'm not sure whether this is caused by different utility on my system or
+>> bash
+>> version or whatever, but without this patch these three tests fail for me
+>> and
+>> this patch fixes it.
+>>
+>
+>I found something similar, though I wasn't sure if it was broken in master
+>as well or only in the rust-next branch.
+>
 
-So I think it would be good to have at least a sketch of
-how hppa and sparc32plus would work in the new setup and
-why we wouldn't need to reintroduce the target_elf_greg_t
-type, before we rip it out.
+It is not broken on master, but it *was* broken on rust-next.
 
-thanks
--- PMM
+>If that works in master as well, I would remove completely the possibility
+>of using &FOO, and always use .as_ref(). It's more efficient as you said,
+>and there's no reason that I know to use the less efficient one.
+>
+
+That would mean that you cannot do what's done in e.g. pl011
+
+impl_vmstate_struct!(
+     PL011Registers,
+     VMStateDescriptionBuilder::<PL011Registers>::new()
+     ...
+     .build()
+);
+
+requiring you to always do:
+
+static/const VMSTATE_PL011_REGISTERS: VMStateDescription<PL011Registers> =
+     VMStateDescriptionBuilder::<PL011Registers>::new()
+     ...
+     .build();
+
+impl_vmstate_struct!(PL011Registers, VMSTATE_PL011_REGISTERS);
+
+*BUT* of course I had to rebase the patches on top of current rust-next
+on Friday and there were some of your commits from Thursday which I now
+see actually fix all what I tried fixing before as well.  I tried
+finding the previous commit on which I saw all the issues and after some
+rebuilding I could not.  So it is now not even broken on rust-next.
+
+This way I completely wasted your time, but at least learned something
+that's happening in the code.  Sorry for that.
+
+Martin
+
+>Paolo
+>
+> rust/qemu-api/src/vmstate.rs         | 11 +++++++++++
+>>  rust/qemu-api/tests/vmstate_tests.rs |  1 +
+>>  2 files changed, 12 insertions(+)
+>>
+>> diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+>> index b5c6b764fbba..716e52afe740 100644
+>> --- a/rust/qemu-api/src/vmstate.rs
+>> +++ b/rust/qemu-api/src/vmstate.rs
+>> @@ -449,6 +449,17 @@ macro_rules! vmstate_validate {
+>>  /// description of the struct.
+>>  #[macro_export]
+>>  macro_rules! impl_vmstate_struct {
+>> +    ($type:ty, $(&)?$vmsd:ident) => {
+>> +        unsafe impl $crate::vmstate::VMState for $type {
+>> +            const BASE: $crate::bindings::VMStateField =
+>> +                $crate::bindings::VMStateField {
+>> +                    vmsd: $vmsd.as_ref(),
+>> +                    size: ::core::mem::size_of::<$type>(),
+>> +                    flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
+>> +                    ..$crate::zeroable::Zeroable::ZERO
+>> +                };
+>> +        }
+>> +    };
+>>      ($type:ty, $vmsd:expr) => {
+>>          unsafe impl $crate::vmstate::VMState for $type {
+>>              const BASE: $crate::bindings::VMStateField = {
+>> diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/
+>> vmstate_tests.rs
+>> index 2c0670ba0eed..7d3180e6c2ea 100644
+>> --- a/rust/qemu-api/tests/vmstate_tests.rs
+>> +++ b/rust/qemu-api/tests/vmstate_tests.rs
+>> @@ -320,6 +320,7 @@ fn test_vmstate_struct_varray_uint8_wrapper() {
+>>          b"arr_a_wrap\0"
+>>      );
+>>      assert_eq!(foo_fields[5].num_offset, 228);
+>> +    assert_eq!(foo_fields[5].vmsd, VMSTATE_FOOA.as_ref());
+>>      assert!(unsafe { foo_fields[5].field_exists.unwrap()(foo_b_p, 0) });
+>>
+>>      // The last VMStateField in VMSTATE_FOOB.
+>> --
+>> 2.50.1
+>>
+>>
+
+--AkKN3g6DQ6S5+maK
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiXAnXDYdKAaCyvS1CB/CnyQXht0FAmiQdaEACgkQCB/CnyQX
+ht17xQ//Ts51iZQVfVakbDHI1J40NhdgEnDQbQVUxve2Q5WC5z/dubiwUHhnzqrK
+H1GXpO8AgIwZuCuzOitPYvA4fHy5LuUCmMbfx2mR6AKnHWIQ8kyCRDwmRZYsDoPn
+oLi2U/nZsRJj2GqWXxyxGYE0CFz4Lg+eMfy0yeN8fZCpV3VJF8SMO05t8N5dt70s
+Go10QdF3yALzAII5yngJ9HblLVERZlLD10nf+CmdvlBFN5MUkRBiGOuEEkyse1/h
+1DJCEIrT/Nwt+y6J120DDO1b+uBpWCgz5IihYutAUW2bv08aKtSx4ii+sdt7zn+Q
+gMNWiEs84/uBA+ffy7aoghcAGebV2NyOBQ8Rb5q+Cgj4pfJuJI44S5M+nwozoZdn
+y1mhnk/v6zHle2j4NV+qm0a+y3BTgcKCp5LJvARJmglei03vk+gFS0BhiwwAeypu
+27PtYpPGyukRw23ZFIJ+L0f0Sn6cqOc0jqanZi4xAzu6YWAdqCFL0GAZE0moq7/C
+TCM2d+D+Yc7xXz1nks5AxkD92HCTYAAzfrUtsTGiu0p7QW2hFdxiP1tIL6d9yzgc
+iOT/46Tfca0Tk5JC0yAI0fi86hrbnhgTZGUh2ZwqqCYNzC8nyHJeqq8HZAatQArx
+gdQk2ptR5VH4a7hw9TGp2YTdGXW8nZnHfv0fTRp14W3FxkGuoWk=
+=1sZg
+-----END PGP SIGNATURE-----
+
+--AkKN3g6DQ6S5+maK--
+
 
