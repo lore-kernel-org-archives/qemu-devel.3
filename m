@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DF0C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14DCC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj1Az-0006dW-E3; Mon, 04 Aug 2025 15:48:53 -0400
+	id 1uj1B6-0006r8-T2; Mon, 04 Aug 2025 15:49:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj17f-0002kJ-2l
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:45:27 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uj1AF-0005Po-0P
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:48:07 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj17d-0007oc-Cx
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:45:26 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-23dc5bcf49eso71879575ad.2
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 12:45:25 -0700 (PDT)
+ id 1uj1AD-0008H2-7t
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 15:48:06 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-76bd041c431so3913915b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 12:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754336724; x=1754941524; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754336883; x=1754941683; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Gs+LUTSVN78Ft5+XhpP/Yie4msj5QpR3JFRIjB7Wq3Y=;
- b=hecpoOPZw+RdJS3JJlrjQYxY0REsrQgXCkKcK+o3N8prILr1Hv9FacM5U0Dp55WSLb
- pLLUu7S3LhJ9enFj9IaMyudYiWxLtxRSx7heOIPGp5LQWT2d78CD2LCcaEEPRFvovUMg
- OL7gbf9Kn6FDb6HO7sO2mIc/V6eQny8K1bb4sJmUbO9mazGFeICZw5QY/5CCRu61nzob
- MrTi3+Aol/lwT4Du9HbwIY4alz9kuXTjSaWWjOX/3iWgDMLxYFuGnLVopJy3rMPklPQd
- 8kuOHck/thXTj4O7Cw/PNpvqmiQYnvxBr6d2IoleYmSQ39U0nF4YlsHVr7J/QoPg839v
- Gq9Q==
+ bh=AGIUz6Tii6hnJeIHzpD2Q3N4Unalnab5R3xHGIIwKkk=;
+ b=tSk+u7att7F+NSPjxxNsq2R4UP6CwR1epzgYH4JQkt7o249VZ1gkl/KBejz6PgDM27
+ yEk3SaG9lGfssuFB6EiZqoQpzwWgdfL2LuaTvTZNWfaSkwM/Zkh2Ax73ZaPAPrrc2FQ7
+ ADECquhgEw4u41ipruJdAcOVFfSr0rYy+D7A3I0HUUNVHWOFmxQN0p+XH6HIExU5sC/H
+ 7PMX8fCwiK3JxkfKQspweXaZuVGx25gvIkSR8Si41H1Rm5VSvF+9kQDHXgb8JqK4TXCq
+ fKhk/JcQcFgK/cGNEwLvXvLAlO7r5flFaZs6LuBsg6fb7eW5qZCePoenekCFe+r1ujel
+ ciuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754336724; x=1754941524;
+ d=1e100.net; s=20230601; t=1754336883; x=1754941683;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Gs+LUTSVN78Ft5+XhpP/Yie4msj5QpR3JFRIjB7Wq3Y=;
- b=lZoy4iswdLeKo6Q+qlduQwTZPEip+VJR2esq012eaeC1zzuuDlZRCKMQreBzkzPE1M
- aNcIDBdJXX0xJ5NclNRJgw6WeJYH0drRVy0kkC9Gc/ZuGEyIDoXsIPgN78Zs7PyeIg07
- Pibn8CQfXXOnjwSaVOclB/cJRJtyUs+0RQbYLq+KMCewS/+IEH67iRlPhLAOk3cBa4Ti
- YqJedJnbpzX4LeYBsTU8zbCOy3/FCoxQ10mg1DI2l0cyi6xUcThwNz+kq/t78f7hU/BD
- fbXIwccvR+pupOKmv7Boor9DFrnMm/iOEMNs7U77w3+2QOujYvzM2Hjdw51qrAvWwMV6
- Q+xQ==
+ bh=AGIUz6Tii6hnJeIHzpD2Q3N4Unalnab5R3xHGIIwKkk=;
+ b=FQtH6j1N/fhFYnxD5E8hScufABoIi5R6RPeaXnDFxiU+kF44m6b3F7Nytuav9O6gOH
+ N/ODnKCBI048ahXS+YT2up9V86LDDQ3ZvV6vwRIP50nBRAwOl9eIhxuKNQeKcbsJLkqy
+ H8OMCgJEPm74G+EHCY8jahMOwukIyIe+VUZUgsIbfGDBgDWIyWwFTKpcFbZAw4Y9HFfn
+ ++jDprfil1kJpm+CPxAS6oAhgc/WXIo84EoVOkl1Pub4CppJclk3lUiOC5QXmVZLR/s7
+ q28cW51QS9l5/Nx7Yd88rem48jD3FYlRZSdp6uZu/0+nUrvdcPMi41IJAh40j9Lljzza
+ cb7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWY+Lr2xiTTopmTsFHmw2TRKzgz9zwEJhFMSYHwcyahmH0p8XCn6cxpi4dwtPUGyfx5oddpJ2nVA7po@nongnu.org
-X-Gm-Message-State: AOJu0YxwoOEMyxpVS+9JNA5rdRtzBeuljypCUOoRiwI/s8dp/9JTLaxt
- AObGur7UhPdtQb6opot2p4xdbWOAyHadTZjF7qHPTlb1ViTU588H9v1QCgWhT+1A+IE=
-X-Gm-Gg: ASbGncsd2wZ1Zln8V0yfjFWSYypl9YvKMIJbKjJbMAzAz2t7wWMT28pBTD1CMOFSDCm
- rN+4zPuWRsMCN2KykNRyWAcr8qHFrEsGHdJf4pc10m+z5PgsixfAdHnSbkdhSXAiZ5p/fmT2OZp
- IBKirVHpSsgFYZsQDYVwgeQz1OpRIdHdkts7NBeHjYYpQ2yplqCgtfp5if+JKsvglIvH+fNWw7U
- ASjhMnW3KKab9/PwoI9MAa4fqU0Jo9gDnsaWDbyT15YC8wfw1f5EYwbVXrCq2FwWvZxtn/Nr+Hx
- qQOhV0OiZMAkDbIxvri0pQQWGv8QJAICuzNfba79UQop3slfocydY1YedrMFlg5AmHpG8HhZnhU
- z5M46Hok2paSfimgHF0GWbGCsXNdRNHlUUm2IsgqSzlkhSrmMdhK/TRY4
-X-Google-Smtp-Source: AGHT+IEZrdm8Hr8aXhZrYL4DncI5IsOAFvZ3wFngh28Yx3qBePtghl2fS/vNxQjBqR3D+X6oUUWTgg==
-X-Received: by 2002:a17:902:f70b:b0:23c:7c59:c74e with SMTP id
- d9443c01a7336-24246d56f13mr143069685ad.0.1754336723945; 
- Mon, 04 Aug 2025 12:45:23 -0700 (PDT)
+ AJvYcCUYJnhp8e9Vd/nTmu4tR/grRl9t3Ilro3e0KghlX4VxD/ddz56ZPgncozOAWoJKsCZdxbEazOKMiGfL@nongnu.org
+X-Gm-Message-State: AOJu0YzAFWgeDB5KjP6A+/Hi4xz3FT+r8w/XkAbgcQhzlJbs2GSJfiGw
+ V1LyDbR/SzJh/mZkTVFUUK3Tt+ztsucNFlzSXVfwfOcAh9o4/aYfip+tu84aCGc5t0w=
+X-Gm-Gg: ASbGncu3Iu4xFQBxs+8pRcxAjpMAV5IGdZbPcKQ3l9q0oFk5nJ7vSe0Xzmdp5/S/Pk1
+ vqZ5EaNN188fK+1y9B+ITpdzsP+7o9GvYtnWCy8QCWFLH4MSiDFkADwiXcDaanMURwhwSks+bed
+ fJu9lMqVKn0I7f1QTf6/Qnhlt9xDHxlDLaXdPSwaa+2IYuqX599+Ktv0o9kjpMH6A9SQ6k+YfA/
+ nRnLxdEAOtr78VkQVM80/Kt5tEektKpI1iCiEHCmepAXt7JrlfbzPZ6tp3vamv2Ub41RPRkF5Zi
+ VD8PAwvKgIi3A8ZWm2Hu6k07jYRwhn60yhLfyqT+NSEqt8nhyYVM/wP0dxQ41hA1e49Nc7poFK6
+ cqHqpMhE87R8GcUO8btt6cx80VjA4A1R4gWJgrdN+Z3iLsQ==
+X-Google-Smtp-Source: AGHT+IFyuUa1LmariXnn8L0egHLM02/sN1daOvKOjJCkId8o4El17GqyPitTZypUWqaSRS+b7r2lBQ==
+X-Received: by 2002:a05:6a20:6a14:b0:233:d85e:a698 with SMTP id
+ adf61e73a8af0-23df90fabe0mr15725788637.32.1754336883617; 
+ Mon, 04 Aug 2025 12:48:03 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8976a1csm117814465ad.78.2025.08.04.12.45.22
+ d2e1a72fcca58-76bfaf78c94sm4566355b3a.19.2025.08.04.12.48.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 12:45:23 -0700 (PDT)
-Message-ID: <a825a455-5606-42fa-b3de-766896991663@linaro.org>
-Date: Mon, 4 Aug 2025 12:45:22 -0700
+ Mon, 04 Aug 2025 12:48:03 -0700 (PDT)
+Message-ID: <bf0b1b6b-99c7-4072-a7e0-023fca2c87b2@linaro.org>
+Date: Mon, 4 Aug 2025 12:48:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/17] whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS
- define
+Subject: Re: [PATCH v4 07/17] hw, target, accel: whpx: change apic_in_platform
+ to kernel_irqchip
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
@@ -89,13 +89,13 @@ Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-7-mohamed@unpredictable.fr>
+ <20250804142326.72947-8-mohamed@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250804142326.72947-7-mohamed@unpredictable.fr>
+In-Reply-To: <20250804142326.72947-8-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,16 +119,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
-> As of why 0: WHPX on arm64 doesn't have debug trap support as of today.
-> 
-> Keep the exception bitmap interface for now - despite that being entirely unavailable on arm64 too.
+> Change terminology to match the KVM one, as APIC is x86-specific.
 > 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/whpx/whpx-common.c     | 2 +-
->   include/system/whpx-common.h | 3 +++
->   2 files changed, 4 insertions(+), 1 deletion(-)
+>   accel/whpx/whpx-accel-ops.c    |  2 +-
+>   accel/whpx/whpx-common.c       |  4 ++--
+>   hw/i386/x86-cpu.c              |  4 ++--
+>   include/system/whpx-internal.h |  2 +-
+>   include/system/whpx.h          |  4 ++--
+>   target/i386/cpu-apic.c         |  2 +-
+>   target/i386/whpx/whpx-all.c    | 14 +++++++-------
+>   7 files changed, 16 insertions(+), 16 deletions(-)
 
+Looks good to unify terminologies.
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
