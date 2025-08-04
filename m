@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E65AC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58570C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 18:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uizwA-0005Dk-G5; Mon, 04 Aug 2025 14:29:30 -0400
+	id 1uizwK-0006F0-OJ; Mon, 04 Aug 2025 14:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiy4g-0002Xu-06
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:30:10 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uiyBc-0003SX-4H
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:37:20 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiy4e-0003ro-7K
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:30:09 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4561ed868b5so30682675e9.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 09:30:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uiyBa-0004mI-Bw
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 12:37:19 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-76bd7676e60so2484181b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 09:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754325006; x=1754929806; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fyg4V/BJb4Yh/ywk/gyoQ4LrFvtg7mzAwCBuzyAs9Es=;
- b=kbHLRPNh7lFerpF6WIuM1btsWPctdmd87Uf4k9d3t4FVXtwWrE4FIMYxq0g7B4NlRH
- D2egsBgSnhE/WxMhuwgQlqZZixYDBapLQ1P2/Uo0S8vsTwJtSrjMC57tt+N9NvQ3U9/N
- 4tYnfZvGQDmpxHxmoHK9sH8TnUaPTcQKnNbtuMnAXKKmCHCR1kziKsxUtJgkbEIkp2Qw
- KytVCLad4Gf/4SQyPlNswyp7TGO/vfC9S/N0qtODXcDeFqcUrihWAxhH4Ug2y7P+6kSa
- QgTHGdQZU9HTdZrRRQY3kEqDKW3OK/e4IDUlkcu1Ia06Wc3uGQrQ6OY9ze/NEPWVuWI8
- hGoQ==
+ d=linaro.org; s=google; t=1754325437; x=1754930237; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7mXhA60e2cN9jRzAk2ZGqZKGqdjjwRs6sAuI6h0mwTg=;
+ b=XKFafKUjqWq5I1tmaHuR90YLaXFT/MCROa4KG6sBHfmRGrts/Tj2b3cO1taJslLZXk
+ c3F59EeT+zJ0pJJJi53ZkML5aKUtxQ1M+r3E9u8NOFVppTqkSYPounp3Ddm06sQw0NV9
+ GqdbtY+rHbt3ETKL7oe6D7mQOmIrWAnJhjzzculVC8IQqHUTmRA3xBEu0oXCBAhC/Wui
+ tQdReVsvT7jfGZ2Pg276hmKE9OeFNlvsymaX99wUDhuaYEUYYcewbC72PzJsA2JACoG8
+ 4ZA0NoSmXFVtW9JItO4e4SUepUPGOlJqXPxBy3QHihY24T54ZiBkpGfAbE6xUR4hjQf/
+ B+fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754325006; x=1754929806;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fyg4V/BJb4Yh/ywk/gyoQ4LrFvtg7mzAwCBuzyAs9Es=;
- b=oFB5btvuGAl5M2x1TGx48Q5cUGDSgerx5stajrsR07hNr0dW5hhBL7Y2SQXCj3fqjZ
- Iej54qQbfAf5L5g3xdwvUwVtIcg+TdPwFvl06RZz3GVIT2BaLWzIGdY2LOEtpaySmd8/
- F6+yCgR4D3xqwIghMz0Eh3LJ8Ruf7LT8HpUtHY2MgDfY8SYoV4DJNUICyFbEmcIAPgA+
- qard2GKcBTO/v6TINGvtwIwLilOaVe19+FEHCv/yRP+VPCl0oxJMsR+NbtoEDcwaKiTH
- 3oCZ9/6OLT9DR9/Hm0m22+VEqLxtuFI/FFG3bD8ISCFRp6R93B85PMKe0g9gaS/6LuWb
- sOBA==
-X-Gm-Message-State: AOJu0Yz1s0EfosXAYFCnYrshnZcQ7GljhNeW+ko6rjdLn6GiKSOK9k5w
- BA7fSYpp+a0rikOPJrnahphZu7bvwpHEsB/yI/dV8bQn5Z2mTNL7XSEjedfiYfcVSP8=
-X-Gm-Gg: ASbGnctTH3HBeLclSCVqtt2+FRhprvRVyee8Z+j8QApjcgAn/dEahHiALLGctqtc1qS
- He+zaMMRCPG5sGeMPs40k41BMdPSZENjL2mFqIulZ2YERSkH0K5Xs4D9ey3UAqXbeMNFlwR7vZy
- p1p4XNdRdZ8V2VgezzxEls9iS6uYJsjxmDEIm0DlvOa2Lo030fG/5yelBgny0h5CurzqFIjZsLT
- 4bi7344om+2hoPjpczgnRfxNmAazDo+In/zWqFsuqlAz/rNcKzohUBIXjs3QUh7EFPy1Y3d7CJ8
- 6sgjTMB4nLXYOFEB2Ixxm2WRmXNPlhVKPhp+jxTlbOuBX6ACFCsy4F68FGJdqYke8uSDVs3nX1H
- Tj12lg69nxz2QgeUsU379XbE=
-X-Google-Smtp-Source: AGHT+IFl35QlWoTZEF5QnpmNbQhT3S66Ro/0jHeqz8w+EbKbgiYPd+A+TjsWzNtPjgFLob/EW009rA==
-X-Received: by 2002:a05:600c:4445:b0:456:29ae:3dbe with SMTP id
- 5b1f17b1804b1-458b6b421efmr67474115e9.24.1754325006192; 
- Mon, 04 Aug 2025 09:30:06 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453328sm16807907f8f.46.2025.08.04.09.30.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 09:30:05 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 64E525F76F;
- Mon, 04 Aug 2025 17:30:04 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH] readthedocs: don't build extra formats
-Date: Mon,  4 Aug 2025 17:29:59 +0100
-Message-ID: <20250804162959.330060-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
+ d=1e100.net; s=20230601; t=1754325437; x=1754930237;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7mXhA60e2cN9jRzAk2ZGqZKGqdjjwRs6sAuI6h0mwTg=;
+ b=XsZsOvOu8x47JVnRtfosFcUDL70xZq4JpptC1tszGQFFBE5EnRPT9/EiwX7KpXiTZ5
+ 8LtjD/GHOghUSGyJS+vGxfG/kzdGFNtW347v9JGByxWsOevmO6tPVDy12GDohFRf/CYu
+ bAWnfLtPF7MCXmM73KFLEX2inJsHrm9X6mvlFN+WFoaAxqiP0Zn4BJebTdneF0y93KRU
+ WO6L7V7VJ4baWatZ3dYTjFqwYHvDVX/nFX2u9xu9WJkl31PUxyA6ERp/JdAg+ZZKYN2u
+ Idcb6eF4SqnFchUVbt5mPmELjabohHhQgoKTI0z1DeJrJH4SoRzrtX07bil5PUQE+qGM
+ w5Zg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0e/aOovC9hXSSL35OeqEQ/pz0kydK/RmgTFOiWEz/mN+y4X1pACeksg5HomtsciVYrKBwf6Utxhic@nongnu.org
+X-Gm-Message-State: AOJu0Yz3oae6KZEt+S+n8i4MSRpcCrsTYckyCTCLQZo1+3y2FCNo+jaq
+ BqErCVYIuQHrfcy7ljPAoXtZu5iKRyJHT2rjxGjQUouRM1BjPg1Tiwk0kTo5tkQDZo8=
+X-Gm-Gg: ASbGncublbVQpmJ4y/TVNPLih0+1wfvkXVi5o4/mw5xdemw9ZUhX3J+BvG6SvnZfTfN
+ TZAflFkFPJYwXJPQl5FtJrf3EmlVBngr+WYNTjRWQL498re1DKxIXKDip+LqPgrfkkdS7ZO61p0
+ p41neFEn6QI7eW+UXx/xjT6ALKm5md+6Ux5hRU4YHWToaFdslqr+pHpnLIDX/WZL1MZYdt9n5Rl
+ 2OnceF50nU/wG98WlaihAEy1Qe8LaGLBdkyrEMPcpnHiL1V6mwtpKA73YZu+hb3UmuI2afwqhfk
+ qFnpwfKtMEvgXC4u9LRY+WrRnXl9IS3Y+am+AXOAfdeLe3Nkw6l3QesyFAJuYB+vEb/dNpm1P/f
+ Jt+D+641QXDFcawK4w3ObQKVqyfrkY6FCvkU=
+X-Google-Smtp-Source: AGHT+IEbN303v1qTZb4v81O8W+8ShCzf4yl9fOxuQdYSBgoncbOhM3OjJvF2LDLmMs6LUjl/I3LMEg==
+X-Received: by 2002:a05:6a20:3d83:b0:240:17d2:c004 with SMTP id
+ adf61e73a8af0-24017d2c357mr3272955637.43.1754325436477; 
+ Mon, 04 Aug 2025 09:37:16 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76be718b2d6sm7151170b3a.56.2025.08.04.09.37.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 09:37:16 -0700 (PDT)
+Message-ID: <e433820a-25f8-498d-801a-b451a22f682a@linaro.org>
+Date: Mon, 4 Aug 2025 09:37:15 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] dockerfiles: Add support for wasm64 to the wasm
+ Dockerfile
+Content-Language: en-US
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <cover.1754310749.git.ktokunaga.mail@gmail.com>
+ <cc6f1489159379da7f259f3cfd77e6ded89aeba1.1754310749.git.ktokunaga.mail@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <cc6f1489159379da7f259f3cfd77e6ded89aeba1.1754310749.git.ktokunaga.mail@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,27 +110,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't build the PDFs ourselves for the hosted docs and it looks
-like rtd can't manage building PDFs now they have gone over a certain
-size. Disable the extra formats so we can at least have the online
-stuff again.
+On 8/4/25 5:57 AM, Kohei Tokunaga wrote:
+> This commit fixes Dockerfile of the wasm build to support both of wasm32 and
+> wasm64 build. Dockerfile takes the following build arguments and use these
+> values for building dependencies.
+> 
+> - TARGET_CPU: target wasm arch (wasm32 or wasm64)
+> - WASM64_MEMORY64: target -sMEMORY64 mode (1 or 2)
+> 
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> ---
+>   MAINTAINERS                                   |  2 +-
+>   ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
+>   2 files changed, 23 insertions(+), 8 deletions(-)
+>   rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .readthedocs.yml | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/.readthedocs.yml b/.readthedocs.yml
-index 0b262469ce6..639f628612c 100644
---- a/.readthedocs.yml
-+++ b/.readthedocs.yml
-@@ -21,5 +21,3 @@ python:
-   install:
-     - requirements: docs/requirements.txt
- 
--# We want all the document formats
--formats: all
--- 
-2.47.2
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
