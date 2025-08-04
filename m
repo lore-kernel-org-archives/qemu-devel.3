@@ -4,69 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC047C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 17:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F77C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 17:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiz2y-0000vO-L7; Mon, 04 Aug 2025 13:32:28 -0400
+	id 1uiz4P-0003Nm-Du; Mon, 04 Aug 2025 13:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uiwzC-0005jC-QI
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:20:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uiwz9-0001SD-Vi
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:20:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754320821;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qy/fVFp4dzr8c5G2doGStbvCjggcqM6sA9gPxQgirtQ=;
- b=W8PI+pLYTu7cIuMyhettURrr3FV4PfTsjqXCN299gzT6yGQ9Mcnr708wParSjhdivA8AtN
- Jubtrr+fyAkq5hkFdwlXAgYut3ACPXIKUOmS1DZ6KIKsrYKmaGWwev6mlQKtTI2J0bOZ/+
- CKBZrxUkNZy1MPeQY3Ie0nDHxaqPTaY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-PrAh634IPYW76UCcm1UURg-1; Mon,
- 04 Aug 2025 11:20:18 -0400
-X-MC-Unique: PrAh634IPYW76UCcm1UURg-1
-X-Mimecast-MFC-AGG-ID: PrAh634IPYW76UCcm1UURg_1754320817
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 578261955BF7; Mon,  4 Aug 2025 15:20:17 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.224.26])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5E8E51956094; Mon,  4 Aug 2025 15:20:12 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- kraxel@redhat.com, mjt@tls.msk.ru
-Subject: [PATCH for 10.1] microvm: Explicitly select ACPI_PCI
-Date: Mon,  4 Aug 2025 17:20:07 +0200
-Message-ID: <20250804152008.247673-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uixCq-0001c3-NG
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:34:46 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uixCo-0003X7-Uk
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:34:32 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-451d3f72391so39782415e9.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 08:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754321669; x=1754926469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gVYPZNnvNJ/HBv7j/eFsJIgttF7Sj6s2V2xediSLMxU=;
+ b=Jvc0uRN4pXHz40BjhXo+YVbA44uR+UKZKlzvGzc0WImWd12JLVYRIfsIxDAp7ppBtF
+ mWi4y/C0uyCg4bPlocQh8O0CnQFbPbW9mz5Gq2FJ69IO6x/Xf5SBTIn31Ey1Wwz3lLRb
+ w9cM5Y283ABVcB+GmG1slFaztObY4KwZuiFHZppbfneVLWTRc0OdGi5tszAVOyYS8/Q9
+ UaHIFijtr6rV1s2Crbiu35qP006qI3Cipi9kL2nvAD92zNSc2EqNWgWT59Z1fxBmk0Dh
+ c92DxeQpHFCb/wIp+SYc1y/V+8em+V1qMqVaywrnCrYgmpkJZGfeltE7tI6iHranLYmF
+ V5gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754321669; x=1754926469;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gVYPZNnvNJ/HBv7j/eFsJIgttF7Sj6s2V2xediSLMxU=;
+ b=JVZpSqaklPwjZiG8W8SCVn6gPkm/Bz/eSwF5yXefT2L7Z55rSW0WWOXoK6WTu1JyMW
+ Ly879RsLOS20cK0W8k2K8LU96P1qgZvZNF2yDZ77+tRVRQQTW51ayQWRk27DrykbcDAV
+ SmYNKpmau+q7MRTljR/072n0HknZ6SL9eJbnIROYLLhA7nfHk6C8YQztL6QadaNCvz9s
+ Phs+eiikXoutwkV5aFSXL0wiSZu2aOIdMBMCARslTqtqM1B2czfE3OkMMF2nz2NEbtzi
+ WxSgQGKl2TzG8pW5d8NxT+zSf1LTxdQKvMy3CtyqMEZZNeAaiU9pmAHjtPFR7TefHB3S
+ QeTQ==
+X-Gm-Message-State: AOJu0YxOY25DJdhybrDTR/JXyasdZyxLmf5Fxa0eFgOCl/r5pM3FnBFD
+ mrKD5pqueOJYzKqn9Gxx7zzteQLMRcmHqHIxEM5k3kkb05XyrBfd1tbHHd4d4pXFzn0=
+X-Gm-Gg: ASbGnctlp89kdLad/unqKBz0SE65qertJLPnRRhAwBQs46wIblx7OX8tEQ8ADroJZND
+ wXpiKQC837mSO0GDKkM6Y2I07dHB9Dj9OTjgQS4HwwpPVFPunvRlTLS+JV6TIIfNI2bk6sumFLg
+ kCv9khcqEWSBNxoOcPk2VsitRFNWk1YloEti3kqDZ2wzKWMsmf++LlxeyYRtgYsWVObYBhQWfbn
+ KYFQ3eakmuos8lnvYvPYzu4/p7Xq8T2uX6kURlXe4o4fCIIyz3BFjA0RNC1dTKkv0wPtQz2bUFa
+ il45+cdGgBM9wbvBSzc0Yl0XbG9zQ29eji2J+BsFojGuXOLbMYqPitqFqhVdIRgYVXOa2DDo3i8
+ bXWmizv2XzKijVFZMDAWoviI=
+X-Google-Smtp-Source: AGHT+IF1YAKOkGXcH8kN8YTqAANw6T4uBTFyvrm2RpQmkwO4+C3R5b4UMfS2ekEv2pAl53EKRBns4g==
+X-Received: by 2002:a05:600c:1686:b0:458:bb0e:8cda with SMTP id
+ 5b1f17b1804b1-458bb0e8dc1mr53677375e9.17.1754321668781; 
+ Mon, 04 Aug 2025 08:34:28 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458bc39e694sm91742925e9.19.2025.08.04.08.34.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 08:34:28 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2518B5F88A;
+ Mon, 04 Aug 2025 16:34:27 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v4 1/2] target/arm: Increase MAX_PACKET_LENGTH for SME
+ ZA remote gdb debugging
+In-Reply-To: <20250722201404.2368507-2-vacha.bhavsar@oss.qualcomm.com> (Vacha
+ Bhavsar's message of "Tue, 22 Jul 2025 20:14:03 +0000")
+References: <20250722201404.2368507-1-vacha.bhavsar@oss.qualcomm.com>
+ <20250722201404.2368507-2-vacha.bhavsar@oss.qualcomm.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 04 Aug 2025 16:34:27 +0100
+Message-ID: <875xf36qyk.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,73 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With a microvm-only build based on a custom device config,
-we get a link failure due to undefined reference to
-build_pci_host_bridge_osc_method() which is defined in hw/acpi/pci.c and
-whose compilation depends on CONFIG_ACPI_PCI. Although CONFIG_ACPI
-and CONFIG_PCI are set with such configuration, implied CONFIG_ACPI_PCI
-in config PCI_EXPRESS_GENERIC_BRIDGE is not selected as expected.
+Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com> writes:
 
-It Looks like CONFIG_ACPI_PCI must be enforced and this patch selects
-CONFIG_ACPI_PCI in MICROVM config directly as done for PC config.
+> This patch increases the value of the MAX_PACKET_LEGNTH to
+> 131100 from 4096 to allow the GDBState.line_buf to be large enough
+> to accommodate the full contents of the SME ZA storage when the
+> vector length is maximal. This is in preparation for a related
+> patch that allows SME register visibility through remote GDB
+> debugging.
+>
+> Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+> ---
+> Changes since v3:
+> - this patch was not present in version 3
+>
+>  gdbstub/internals.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+> index bf5a5c6302..b58a66c201 100644
+> --- a/gdbstub/internals.h
+> +++ b/gdbstub/internals.h
+> @@ -11,7 +11,7 @@
+>=20=20
+>  #include "exec/cpu-common.h"
+>=20=20
+> -#define MAX_PACKET_LENGTH 4096
+> +#define MAX_PACKET_LENGTH 131100
 
-Reproducer:
+This is a rather large expansion for something that ends up in a static at:
 
-../configure \
- --without-default-features \
- --target-list=x86_64-softmmu \
- --enable-kvm --disable-tcg \
- --enable-pixman \
- --enable-vnc \
- --audio-drv-list="" \
- --without-default-devices \
- --with-devices-x86_64=microvm \
- --enable-vhost-user
+    char line_buf[MAX_PACKET_LENGTH];
 
-with configs/devices/x86_64-softmmu/microvm.mak:
-CONFIG_PCI_DEVICES=n
+I think maybe its time to get rid of this hardcoded define and make line_bu=
+f a
+dynamically re-sizeable buffer along the lines of str_buf and mem_buf.
+In fact make it a GString and we can get rid of line_buf_index as well.
 
-CONFIG_MICROVM=y
+>=20=20
+>  /*
+>   * Shared structures and definitions
 
-CONFIG_VIRTIO_BLK=y
-CONFIG_VIRTIO_SERIAL=y
-CONFIG_VIRTIO_INPUT=y
-CONFIG_VIRTIO_INPUT_HOST=y
-CONFIG_VHOST_USER_INPUT=y
-CONFIG_VIRTIO_NET=y
-CONFIG_VIRTIO_SCSI=y
-CONFIG_VIRTIO_RNG=y
-CONFIG_VIRTIO_CRYPTO=y
-CONFIG_VIRTIO_BALLOON=y
-CONFIG_VIRTIO_GPU=y
-CONFIG_VHOST_USER_GPU=y
-
-FAILED: qemu-system-x86_64
-cc -m64 @qemu-system-x86_64.rsp
-/usr/bin/ld: libsystem.a.p/hw_pci-host_gpex-acpi.c.o: in function `acpi_dsdt_add_host_bridge_methods':
-hw/pci-host/gpex-acpi.c:83:(.text+0x274): undefined reference to `build_pci_host_bridge_osc_method'
-collect2: error: ld returned 1 exit status
-
-Fixes: af151d50eac24 "hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method"
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
----
- hw/i386/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 5139d23087..3a0e2b8ebb 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -131,6 +131,7 @@ config MICROVM
-     select I8259
-     select MC146818RTC
-     select VIRTIO_MMIO
-+    select ACPI_PCI
-     select ACPI_HW_REDUCED
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     select USB_XHCI_SYSBUS
--- 
-2.49.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
