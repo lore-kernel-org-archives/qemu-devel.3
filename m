@@ -4,93 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B43EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 17:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6890AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 17:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiyqP-0004c7-J2; Mon, 04 Aug 2025 13:19:29 -0400
+	id 1uiyvv-00068l-FE; Mon, 04 Aug 2025 13:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiwum-0000fm-Gh
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:15:55 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiwuj-0000Xo-Jf
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:15:51 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3b79bd3b1f7so2447037f8f.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 08:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754320548; x=1754925348; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5I0P9zrEGMWC2opqsSuDg7PldX8TWbC7NgkKHaAdNlE=;
- b=rDwruqS5sQjngdFaB62Sceq/O1ANDq+fE2gbsgKSRMqbXT50gPIdri/b1PJKUmVZj/
- LD8a5R8Gkb8EsyY41OFLhbl1m73nCMhBciNZLGRcCKMCkYVrnO2laJPzUMDffq+aFy0h
- poln4jhkmM1NRke5l1ygA7E/20rIKso0aNTPmeMss1lsrymrsLBh8JsXHvBz1TFxe5Mt
- uKFqC31FI2dQAYq4txXtOGvdZr9ho6xsPM2lM00sN31PudZsga2Ud7O+tgJjSgsFWd12
- 48Rxlk07rhKtT79f36L7nYy+VLS3WomsGV70GC6N4ypeG3cNF+DGdqV/V8IVvqbFFfvj
- u1gw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uix60-00070T-NB
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:27:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uix5y-0002lk-0N
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 11:27:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754321243;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4cT5MP3PpaYHPm12btbACag4CqxeS0AqpNslJk0TUT8=;
+ b=MzEA6VKP7aCLE5LsUSk24XOgvEOzCUyLiEocOuPPdnRZRVZ98QX0R22jMZZMfwwW8MqL9k
+ XOCkPUzc5c9m+nDpko4tycqPBr/dfmFVwrZJbFC+0QJJ4F+OvPs7X8jiIfcB5lAvrJ+zMw
+ X3scxPkBM8yHfNV0/3jNNORNUdMOSPk=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-3iNXRWFCNd6qbRU4ezlEKA-1; Mon, 04 Aug 2025 11:27:23 -0400
+X-MC-Unique: 3iNXRWFCNd6qbRU4ezlEKA-1
+X-Mimecast-MFC-AGG-ID: 3iNXRWFCNd6qbRU4ezlEKA_1754321242
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-70741fda996so55707806d6.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 08:27:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754320548; x=1754925348;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5I0P9zrEGMWC2opqsSuDg7PldX8TWbC7NgkKHaAdNlE=;
- b=sg8RF8/JglOLxsqnM5F8msz32s8b/sXUHrvnspI50lhSxyG/tJQHzZA3oJLxV5tbyi
- yywXf32l9PthKoV/jpTPEdTPBJvhzUSzrk2mv7/TeUkaf6B8gOtRInXhgHN0Gpy1lbKp
- e/eEjxqIaCHAreKzXcmR/k/fmNPJmbqyXlslt3vH89RqZfQpEAfnfJz3oodNG+ZHK2lf
- 67JvYsWlKXJK2Ho40Mz0+364e4PKqNBg+BfkjBffMuRIhqdNHnzG4S8eX6gJz23h17ro
- ajv3UIMWKLMy3HZ1+LmWsSE06nRmNWWigkWD+iodnfeHLZ/mqfK4tHUVpBluAMqkM4S2
- HZiw==
-X-Gm-Message-State: AOJu0Yz9w41epcJ/s0fYDVnxsalEbCuRq24cyuHf8FbkpXEcd5qgj0Ix
- vXLL7ouTZMKeuUSHm+kXhcdcvHi+HZ5aJVcAAB2lmKgP/X1b4kEpSiWjNiDX205Am8zC9kkwm6O
- bZ7ND
-X-Gm-Gg: ASbGncsTxPANM/+tW2StKoU6J3Z5Jjr+lUbzh3zL5JCteMfybqTCqxU5lpXNKmGxpUZ
- hTrQMM9j008z/bVkD4+cnqLnJ4bp70Be9bBVcZwxXkD3l1MJ/tNQ0rV/+gbaFls1pdNQ4fccR3o
- baoJetYL6Md+4IhLK9K6Li471vroZpN+pEMGK9cJ/NGILsHRXNGMqvq0zPC8/iGdRuqMJkyvYxD
- oo3AANBBHo4G+y+Hpl4Sg2U5GwERE6PnR8vCFZsx9gcL98qp0h7bKDwPAE1Xi7ldNGZOKHMFIY2
- B16YrTdjbVcWAvjsrzF0epPrEwhI5F2DU51EfehMI7wnW/OWXr7jCw4hvMOCmLPyjChd+sPzKtb
- ctn+OJOa8jhYCHbgzub5WXJE=
-X-Google-Smtp-Source: AGHT+IHCXhQoCfQ3l5aqmuaZZiAY+csWNpKBrRrCAlzwD0yPhjxrj1x/bwmITBJKAVWRwW117NR8cA==
-X-Received: by 2002:a05:6000:2408:b0:3a4:f663:acb9 with SMTP id
- ffacd0b85a97d-3b8d9468531mr7126767f8f.9.1754320547800; 
- Mon, 04 Aug 2025 08:15:47 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c46ee84sm15563644f8f.57.2025.08.04.08.15.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 08:15:46 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3C3BF5F88E;
- Mon, 04 Aug 2025 16:15:46 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 2/3] scripts/make-release: Go back to cloning all the EDK2
- submodules
-Date: Mon,  4 Aug 2025 16:15:44 +0100
-Message-ID: <20250804151545.311042-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250804151545.311042-1-alex.bennee@linaro.org>
-References: <20250804151545.311042-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1754321242; x=1754926042;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4cT5MP3PpaYHPm12btbACag4CqxeS0AqpNslJk0TUT8=;
+ b=v1fRPzztYhwMPihEuBHSfxiXq/YTYSCrpx6LLGTrx643olIWkk4X5KcygXZXUCTDB/
+ 9J8sH/tr+fg/liBAVtysSXFX3pLEe/zU3gD1rK+ehcsyl+jRDfXLmjxdMB3/3jlTBSYq
+ RTWVXbdwTSbgtusVrjfhA/qgzgzJ8jhx2Nm4BjT6LHXRgdckxUFupTi6uOsjcl7FhvEK
+ slmTQCHMDXTRwZDf0t1Nl4vTI4QOF56leTHHH6HL3N1EtLXj/nYbNkrKiaIrKlPBP9M4
+ VOGydI37QcdioR+v5XPnYi4y+BLhZYS/biXo20eTe9AOmlCVAgCF9ZVFG4ef6gCBvY/Y
+ pDVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQ4XGMTxBHr2GinNllV2kwD02D9oGq+NoR1s7zs08i2lXUL64gI/nNLReE67I7YR111Wu5sxnSL4GP@nongnu.org
+X-Gm-Message-State: AOJu0YxDKTMCOSkGmfoBxtyMYyahHR6FhE2lfBAy5f0G9m8Jy5OMcsVq
+ HsdAyiawCng0zx3+PrAlICBvJb3/4FM0av/i/1V7+iaLbRNrHnOSuegyawt1Oziw5MRgx3OLV0K
+ v9EEea7v9sAGnsMdMChTjiE27fZWeKidmKt1znz+CzldA8Eb9ZBRGEqqq
+X-Gm-Gg: ASbGncsl4pfHAbLVLt6bAjhnxgcvU/5Ub7D+VrxrScukF7fMJ1mHK8zS1+J9c5BQOrF
+ ERwOt9Y8mtLUIonymrIrDDQeGUkFCVM849UFZQVphKS8HVhIgcb68ThgcsPUr+Igm1PxVxijxSm
+ mYYV7gqcn70QJsE3Ds4kwU/V2mwKPrSec1SvgfKKZIJhVOPVod9jRTWOL5Ha9iqqRTGp71jvE14
+ gkzVoMCMzoVIFD8h/XhAjugokYRy+eoSkncqh44YDVqkcFJftnLuYFJka8MINElQUsXFbs1xUsx
+ LEyNd50nQfOYOgtTfEUu5l6gPFgHvNnT8n+PDV04p/t8pndp0fg9hL5xoqLZasYXzz2wm9aDwlN
+ sar4htE+/lrA=
+X-Received: by 2002:a05:6214:e81:b0:709:2ab3:17ba with SMTP id
+ 6a1803df08f44-70936361fb6mr119543746d6.47.1754321241766; 
+ Mon, 04 Aug 2025 08:27:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEn3bLwhCCDI04vfqt6mQmMB+ZPYWCYIrPGOIx4djUKNlZ8XuJJ617C2pah3ThLJrfY2GGQg==
+X-Received: by 2002:a05:6214:e81:b0:709:2ab3:17ba with SMTP id
+ 6a1803df08f44-70936361fb6mr119542026d6.47.1754321239761; 
+ Mon, 04 Aug 2025 08:27:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077cdf4831sm58916876d6.75.2025.08.04.08.27.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 08:27:18 -0700 (PDT)
+Message-ID: <fcef24c1-ed42-4cd0-89fd-0e0e63b0090b@redhat.com>
+Date: Mon, 4 Aug 2025 17:27:15 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 09/36] hw/pci-host/gpex-acpi: Use
+ build_pci_host_bridge_osc_method
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, Jonathan.Cameron@huawei.com,
+ gustavo.romero@linaro.org, anisinha@redhat.com, shannon.zhaosl@gmail.com,
+ Gerd Hoffmann <kraxel@redhat.com>, pbonzini@redhat.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+References: <20250714080639.2525563-1-eric.auger@redhat.com>
+ <20250714080639.2525563-10-eric.auger@redhat.com>
+ <ddf6f9e3-daaa-4ea1-a5e6-d402a75524c8@tls.msk.ru>
+ <914677f4-07ba-45fe-9dc2-dea40940e789@tls.msk.ru>
+ <53971ad6-9f50-45b0-80c4-eeedb24e53db@redhat.com>
+ <20250801082904-mutt-send-email-mst@kernel.org>
+ <2f2bc1e5-22fd-4cea-82fa-6be6bc82ad2c@redhat.com>
+ <32544769-d484-41a5-962b-9cef8445b557@tls.msk.ru>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <32544769-d484-41a5-962b-9cef8445b557@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,84 +124,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Hi Michael,
 
-In commit bd0da3a3d4f we changed make-release so that instead of
-cloning every git submodule of EDK2 we only cloned a fixed list.
-The original motivation for this was that one of the submodules:
- * was from a non-github repo
- * that repo had a "SSL certificate expired" failure
- * wasn't actually needed for the set of EDK2 binaries we build
-and at the time we were trying to build the EDK2 binaries in one of
-our CI jobs.
+On 8/4/25 8:29 AM, Michael Tokarev wrote:
+> On 03.08.2025 19:49, Eric Auger wrote:
+> ...
+>> I have not proposed anything ;-) - sorry I am on vacation - I was trying
+>> to enumerate the various config settings and to me dependencies should
+>> be resolved so I fail to understand. Unfortunately I cannot test because
+>> the problem happens with a custom microvm.mak. I would need this latter
+>> to reproduce and try to fix.
+>>
+>> if the microvm.mak selects PCI_EXPRESS_GENERIC_BRIDGE (which selects
+>> PCI_EXPRESS which itself selects PCI) and ACPI_HW_REDUCED (which selects
+>> ACPI), the imply ACPI_PCI should end up as a selection because PCI and
+>> ACPI are resolved. At least that's my understanding. Reading it again,
+>> please can you check whether ACPI_HW_REDUCED is selected *before*
+>> PCI_EXPRESS_GENERIC_BRIDGE in the custom microvm.mak. Depending on the
+>> order of dependency resolution it might make a difference. Otherwise
+>> please can you send the full microvm.mak and configure command so that I
+>> can try reproducing. Thanks Eric
+>
+> All the details were in my very first reply to the original patch:
+> https://lore.kernel.org/qemu-devel/ddf6f9e3-daaa-4ea1-a5e6-d402a75524c8@tls.msk.ru/
+>
 
-Unfortunately this change meant that we were exposed to bugs where
-EDK2 adds a new submodule and the sources we ship in the release
-tarball won't build any more.  In particular, in EDK2 commit
-c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
-the ROM build in our tarball starting from QEMU release 8.2.0:
+Sorry I was confused by the fact the microvm.mak was not upstream and
+its content was cut in your original report.
 
-/tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
-        Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
-        /tmp/qemu-10.0.0/roms/.
-        /tmp/qemu-10.0.0/roms/edk2
+I was able to reproduce and could check that both ACPI and PCI are set
+since objects that depend on them are compiled. However
+ACPI_PCI which depend on both and which is implied by
+PCI_EXPRESS_GENERIC_BRIDGE is not set as opposed to what I would have
+expected. 
+So I sent "[PATCH for 10.1] microvm: Explicitly select ACPI_PCI" as a
+tentative fix of your issue. It looks similar to PC setup. An
+alternative could be to set it in your .mak file.
 
-(Building from a QEMU git checkout works fine.)
+Nevetheless I still fail to understand what prevents the imply from
+beeing active as a select here. Maybe that's due to the "eveythning
+unset by default".
 
-In the intervening time EDK2 moved the submodule that had a problem
-to be one they mirrored themselves (and at time of writing all their
-submodules are hosted on github), and we stopped trying to build
-EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
+Thanks
 
-Go back to cloning every EDK2 submodule, so we don't have an
-untested explicit list of submodules which will break without
-our noticing it.
+Eric
 
-This increases the size of the QEMU tarball .tar.xz file from
-133M to 139M in my testing.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250721153341.2910800-1-peter.maydell@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/scripts/make-release b/scripts/make-release
-index 4509a9fabf5..87f563ef5f7 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -62,17 +62,15 @@ meson subprojects download $SUBPROJECTS
- (cd roms/skiboot && ./make_version.sh > .version)
- # Fetch edk2 submodule's submodules, since it won't have access to them via
- # the tarball later.
--#
--# A more uniform way to handle this sort of situation would be nice, but we
--# don't necessarily have much control over how a submodule handles its
--# submodule dependencies, so we continue to handle these on a case-by-case
--# basis for now.
--(cd roms/edk2 && \
--    git submodule update --init --depth 1 -- \
--        ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3 \
--        BaseTools/Source/C/BrotliCompress/brotli \
--        CryptoPkg/Library/OpensslLib/openssl \
--        MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
-+
-+# As recommended by the EDK2 readme, we don't use --recursive here.
-+# EDK2 won't use any code or feature from a submodule of a submodule,
-+# so we don't need to add them to the tarball.
-+# Although we don't necessarily need all of the submodules that EDK2
-+# has, we clone them all, to avoid running into problems where EDK2
-+# adds a new submodule or changes its use of an existing one and
-+# the sources we ship in the tarball then fail to build.
-+(cd roms/edk2 && git submodule update --init --depth 1)
- popd
- 
- exclude=(--exclude=.git)
--- 
-2.47.2
+
+
+>
+> Thanks,
+>
+> /mjt
+>
 
 
