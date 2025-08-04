@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CDAC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF4D3C87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 22:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj3M9-0005gA-6a; Mon, 04 Aug 2025 18:08:33 -0400
+	id 1uj3Ol-0008RM-5F; Mon, 04 Aug 2025 18:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uj3M7-0005df-9s
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:08:31 -0400
-Received: from p-east3-cluster3-host9-snip4-5.eps.apple.com ([57.103.86.88]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uj3M3-00036c-S8
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:08:30 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPS id
- A0E1B1800124; Mon,  4 Aug 2025 22:08:22 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=n4hRRamurj7kPsOOlJEJ1SVIB5MDEDrqG7nh3u2wjcM=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=V0ji6iS/POWfrlxzT5NJv5VBsDjcABSYD5jQbILKX69xsGH+p4anpjTgJPbqAER739X60Ez+1dWOZcLtQXIH1A9U8J5WFWOl1LYbRmONQSBl2BpPthpY+6FADXqa410QP4QzWEHnb3vTT2ogyA2ZJACkmbPFAU9KDK3gol581y3hjD4bfExuuQjhTxw4Jg3xkb2bz2JuJEai5xwHiBsoNFnhPuFPVTeSqr6OSntSFyQszlgXJyxq7pIH7UNv//Cs0+AUj8PLeqPG7xz0qG0L+gOYRWyE1XrjNjZvzfXmQpCTMAxiALIdzHkxD49P2sbGo9/O1TCd/BtWEPbpoyT9Dg==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-2 (Postfix) with ESMTPSA id
- 9ED071800139; Mon,  4 Aug 2025 22:08:19 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Re: [PATCH v4 09/17] whpx: add arm64 support
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <de952126-10d3-4562-b3c5-779483eeaed1@linaro.org>
-Date: Tue, 5 Aug 2025 00:08:07 +0200
-Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Ani Sinha <anisinha@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F3EA0A07-D4DA-4618-BA34-A999066E5496@unpredictable.fr>
-References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-10-mohamed@unpredictable.fr>
- <de952126-10d3-4562-b3c5-779483eeaed1@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDEzNSBTYWx0ZWRfX4ssx6eileP1b
- DMoDBktlKLdZCEH5yiLx+a+CaRLz/m9IEz0cMZFQGlZXMuh/qNkatnBkZGoVbuAZljnhkEyza4w
- pOYCpeDxPepziyyUx8oZED+rQz5DuVS46ygdYs/AhHTv8xcJcigL4JahlBdbxbIqWHEv9KwNbbf
- TrJeutunfq/O9c1v79x0l9UJ9mN3dniMA50/BWtiKNa30Q9chmpiqkjVJX2T4UP/wSn45BW6GSM
- PHZrFODfrqVx41GN1JYPOQ0rKbEKpINkgIrNzh8N0nuNDtXxXnwuewUk5WWsZaEfvizFiTMoA=
-X-Proofpoint-ORIG-GUID: nJpEcX1XaKI4GbSWqKW1HRliFIWN-e35
-X-Proofpoint-GUID: nJpEcX1XaKI4GbSWqKW1HRliFIWN-e35
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-04_09,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- suspectscore=0 adultscore=0 mlxscore=0 phishscore=0
- spamscore=0
- mlxlogscore=999 bulkscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508040135
-Received-SPF: pass client-ip=57.103.86.88;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj3Oi-0008OW-H6
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:11:12 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uj3Og-0003Zn-Iy
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 18:11:12 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b3aa2a0022cso4750954a12.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 15:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754345469; x=1754950269; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2ExL1PbGsktdikVmDDukpgptDOebP7w7lhxIOKCwfZs=;
+ b=TFZfPCd/VMqwkSPZeGuStUFr8qhcKjeIFhwOyPoHyisFhk975uRsPXzmzVifQw6bed
+ QOknHhCb/YBoTuoighnCTYuiWeUgQtTinNpGc/zlVMRbmbJbrQyxgxUZv6IIUaJkAB6c
+ jP/W99He4mHAAaIEnJ+WarYjT2nEfxdO39jAkOCgrq5/w12ykmw9/9SOIH4Ep7UEboZa
+ kgdJez9htWaMOHsynhUmf1bDtF/iJGvhKxZk7Bcsk5pVMiK+CBjXRL0V851Mpy1hgKEk
+ HLMUNsLqLWh7SvgQKr+reVOgWfBN3DVlyq1rdR5el6CNWqkx9Ezzn8Gmg6QIg7bxWVZl
+ nalA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754345469; x=1754950269;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2ExL1PbGsktdikVmDDukpgptDOebP7w7lhxIOKCwfZs=;
+ b=jwQUIgElLvbyWTFLDaSbSp3yqrs7K8Rh4oYc4GL9QlhintMJLz9YX2+gMQh6jg51k0
+ wT0xxDiCOSalXe+41/fU3R3KvD5XuyFXtMPcDGoAiVm2WUHU7LuxpgQrHMFmgQnF2ckA
+ x2IMSWw97OqALPU2iprK+4TftF/mtZ6wl5GM47T7T0HnMb4jGapscdwZ+5oMm0HJ/+OW
+ ZjPEXbSSTo6+/kKzoAYnkBkC6jJ3EDteiSaL1hJ2P1/Pa/h/B7eNhSi6CC72FlRQMLJr
+ 37QiV6bnKjIwX7JE9Mln+UwHq8LuRCqz3fRvGqYL6IMarY9OooxbWS66bbXN852uOgDO
+ mk9Q==
+X-Gm-Message-State: AOJu0YxnBGpqJWcBNUf1oRUs+wO9BZ7L6dvwB9E1u8Lyo0FaKItsoqtu
+ 7a9CN6EcI1dAN3Zo6+tgGw4vWg0HpAlneLyWkrw5Vgt27OknLdTnPI/V7xYw9FDWXmRCc9I8lhB
+ QJB7c
+X-Gm-Gg: ASbGncsQgyYAWMXoicA4pUdV91NsQpr5gooerDWDo3mgOlhGE0zs6JbHLfipUqEy3OG
+ cqoTxL/QfvvjUblavQ9Y2jDpN8BrVqul8b6Lizx6OPPHxgulzgC1vyl+3khlUHK2K79L+x42a5k
+ i630CH6oNTjGzddGaWDcMiZlontbM0pnI5PJ+I54uGokPGZ72LEm4pgtAKrXrUAQkRgUWzZ15Ru
+ A5v9yTCtTDSl9eby8UQe2dvQjL3y5yxsCuy87UPvjyzzT9fo03P73qM0PbYkcxPi7WcZYeyGLvO
+ 6o4r54dJF730SWnJ7Ej8z/IX8Qh2/OgseHJCKLXN6TcsKf4ahOK008Sp+qjFFRsyNhn4cSLBMcf
+ adrnBE4aQs565KlCGGC5s+d5G93OgXDtQrmRDAner
+X-Google-Smtp-Source: AGHT+IESiGmG2bg+IN9p0bES235l1f+yWdjw/hLNc9qQrL0srP5VJ6/WtJucLXmAfsMsUSi4ym1n3A==
+X-Received: by 2002:a17:902:db10:b0:234:df51:d16c with SMTP id
+ d9443c01a7336-24247047121mr178638115ad.45.1754345468717; 
+ Mon, 04 Aug 2025 15:11:08 -0700 (PDT)
+Received: from [192.168.4.112] ([180.233.125.160])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e8aac2a3sm118048685ad.165.2025.08.04.15.11.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 15:11:08 -0700 (PDT)
+Message-ID: <203c77ad-f427-4493-8c6b-0fc07912d5f2@linaro.org>
+Date: Tue, 5 Aug 2025 08:11:03 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] linux-user/aarch64: Check syndrome for EXCP_UDEF
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20250725230849.13026-1-richard.henderson@linaro.org>
+ <20250725230849.13026-3-richard.henderson@linaro.org>
+ <CAFEAcA-6vUEiV0_dQftMKieOSMdo=KgzXJGgttJik9tjVCekhg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-6vUEiV0_dQftMKieOSMdo=KgzXJGgttJik9tjVCekhg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,70 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/4/25 20:25, Peter Maydell wrote:
+> I'm OK with leaving this as a FIXME with a comment like
+> 
+>           /*
+>            * FIXME: The kernel fixes up wrong-option exceptions.
+>            * For QEMU linux-user mode, you can only get these if
+>            * the process is doing something silly (not executing
+>            * the MOPS instructions in the required P/M/E sequence),
+>            * so it is not a problem in practice that we do not.
+>            *
+>            * We ought ideally to implement the same "rewind to the
+>            * start of the sequence" logic that the kernel does in
+>            * arm64_mops_reset_regs(). In the meantime, deliver
+>            * the guest a SIGILL, with the same ILLOPN si_code
+>            * we've always used for this.
+>            */
+
+Thanks.  I've used this verbatim.
 
 
-> On 4. Aug 2025, at 23:59, Pierrick Bouvier =
-<pierrick.bouvier@linaro.org> wrote:
->=20
-> On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>  accel/whpx/whpx-common.c    |   1 +
->>  meson.build                 |  21 +-
->>  target/arm/meson.build      |   1 +
->>  target/arm/whpx/meson.build |   3 +
->>  target/arm/whpx/whpx-all.c  | 845 =
-++++++++++++++++++++++++++++++++++++
->>  5 files changed, 864 insertions(+), 7 deletions(-)
->>  create mode 100644 target/arm/whpx/meson.build
->>  create mode 100644 target/arm/whpx/whpx-all.c
->>=20
->> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
->> new file mode 100644
->> index 0000000000..2e32debf6f
->> --- /dev/null
->> +++ b/target/arm/whpx/whpx-all.c
->=20
-> ...
->=20
->> +    { WHvArm64RegisterDbgbvr15El1, WHPX_SYSREG(0, 15, 2, 0, 4) },
->> +    { WHvArm64RegisterDbgbcr15El1, WHPX_SYSREG(0, 15, 2, 0, 5) },
->> +    { WHvArm64RegisterDbgwvr15El1, WHPX_SYSREG(0, 15, 2, 0, 6) },
->> +    { WHvArm64RegisterDbgwcr15El1, WHPX_SYSREG(0, 15, 2, 0, 7) },
->> +#ifdef SYNC_NO_RAW_REGS
->> +    /*
->> +     * The registers below are manually synced on init because they =
-are
->> +     * marked as NO_RAW. We still list them to make number space =
-sync easier.
->> +     */
->> +    { WHvArm64RegisterMidrEl1, WHPX_SYSREG(0, 0, 3, 0, 0) },
->> +    { WHvArm64RegisterMpidrEl1, WHPX_SYSREG(0, 0, 3, 0, 5) },
->> +    { WHvArm64RegisterIdPfr0El1, WHPX_SYSREG(0, 4, 3, 0, 0) },
->> +#endif
->> +    { WHvArm64RegisterIdAa64Pfr1El1, WHPX_SYSREG(0, 4, 3, 0, 1), =
-true },
->> +    { WHvArm64RegisterIdAa64Dfr0El1, WHPX_SYSREG(0, 5, 3, 0, 0), =
-true },
->> +    { WHvArm64RegisterIdAa64Dfr1El1, WHPX_SYSREG(0, 5, 3, 0, 1), =
-true },
->> +    { WHvArm64RegisterIdAa64Isar0El1, WHPX_SYSREG(0, 6, 3, 0, 0), =
-true },
->> +    { WHvArm64RegisterIdAa64Isar1El1, WHPX_SYSREG(0, 6, 3, 0, 1), =
-true },
->> +#ifdef SYNC_NO_MMFR0
->> +    /* We keep the hardware MMFR0 around. HW limits are there anyway =
-*/
->> +    { WHvArm64RegisterIdAa64Mmfr0El1, WHPX_SYSREG(0, 7, 3, 0, 0) },
->> +#endif
->=20
-> ...
->=20
-> I understand this comes from existing hvf implementation, but I can't =
-find where SYNC_NO_.* defines are supposed to come from (including on =
-hvf side). Any idea?
-
-They=E2=80=99re just annotations for developer use so that readers of =
-the code know why they aren=E2=80=99t in the list.
-
+r~
 
