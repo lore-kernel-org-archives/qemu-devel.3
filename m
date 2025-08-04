@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9555AC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 15:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D244EC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 15:50:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uixQy-0000ML-3x; Mon, 04 Aug 2025 11:49:08 -0400
+	id 1uixS0-00045t-Iy; Mon, 04 Aug 2025 11:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uiw6e-0005UT-Ve
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:24:17 -0400
-Received: from p-east3-cluster7-host12-snip4-7.eps.apple.com ([57.103.84.248]
+ id 1uiw76-0005t8-U5
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:24:33 -0400
+Received: from p-east3-cluster7-host3-snip4-3.eps.apple.com ([57.103.84.154]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uiw6S-0000Jq-Rg
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:24:00 -0400
+ id 1uiw6x-0000Vv-Ns
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:24:31 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPS id
- 1324C180136B; Mon,  4 Aug 2025 14:23:49 +0000 (UTC)
+ 51F9A1800097; Mon,  4 Aug 2025 14:24:17 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=daTFhdSRvEgLbmXz+wZhHydiVJbikuPFzeQQVh01pwE=;
+ s=sig1; bh=ORjIq98RNqAt2myE+K1Z1bn0jWLRyUgvyM5hgDBgD7E=;
  h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
- b=ClIhyCCZspbZSpO7ywKN58cW7zDzNU16+4kqjGr6f2UfGYz8Hv2AG9jr60Vha27Wixoo8SRIock9i8VGdyibQyvrcV1osA7rDYZrZDeU9sq0HvDCA4lmPKPXqB0mP1p7ddN579psUzG3b6YaCT+GYxSHeoUqczV8m4wgXJDJq6SWP3ZHVNHl6SF9nn8gjqv2Yx3tCejU7IamANjU2LFsMqTr1jnA6fR4SyV262urwnd3GYtWYnfRbY1EZFnrnCS1PFiMkngjA8MQPQQeDapBaHg4zvOFXkHS0tyut1XQJm/YNom089Pk7mvbRAyQv02plzps8+uCNnumYt0W6KuFFw==
+ b=DbrakEGgh1Pa59joMuqFblQwbfPBCn/8Bkh5Tj+HSRkDgbLMAs12jLxrP1Vzkb4AyCrKp4qzGWQJCrtY2EHBIdAWyVMuCH0pXZkinDE6HMsrMUTKD+/20FdI/aaApeJlOX8Tz5ezDiQnO5YKU7QlqNoljy0MBdUDsk1zvCatkbarBguSG1lQIkZIGSn89tfqCKclpcKghkHqqr4ahCvh5TH0QJl2xGs4jHWzOaly51k7+yoO065rB/m928o87Ccc9HDELu0l4j7hdfoSbOVnnc0iYFYStslKa8Fkks4YbExL+hsK5Ax8LGVDrr+5VEMjCpex/x5aTbCTR3XVubyokA==
 X-Client-IP: 46.189.47.18
 Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
  [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-10-percent-0 (Postfix) with ESMTPSA id
- 5D5351801374; Mon,  4 Aug 2025 14:23:45 +0000 (UTC)
+ 51BEF180033E; Mon,  4 Aug 2025 14:24:14 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
@@ -50,30 +50,29 @@ Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v4 06/17] whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
-Date: Mon,  4 Aug 2025 16:23:15 +0200
-Message-Id: <20250804142326.72947-7-mohamed@unpredictable.fr>
+Subject: [PATCH v4 17/17] MAINTAINERS: Add myself as a maintainer for WHPX
+Date: Mon,  4 Aug 2025 16:23:26 +0200
+Message-Id: <20250804142326.72947-18-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250804142326.72947-1-mohamed@unpredictable.fr>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: PUAlrJXc-gRK3ECZgJUhRiI-K__SLoHu
-X-Proofpoint-ORIG-GUID: PUAlrJXc-gRK3ECZgJUhRiI-K__SLoHu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA4MCBTYWx0ZWRfX/s/nLnFGH1GO
- CGxvtab+0mnK+bl5tmA+VlQgQLS8vbqBHzon3rIcU58uUjgUQnxTgP3qtZ4vxKs1tXxHDC9FzgB
- oCIbqvEjur/eSODl6L6Vinxr28sp/vB3gE9r9zaESJG9AS9UxqjbfyofcxLsif7ptVwAEBgCRHW
- Z9s4Qa5vY9h35IY6KQwZ/fs/fiAn7UVn/UZg9MaDym6Tg9uzQ35od5SIgASojpGppSiOg6BRrCZ
- +rA+Gwk+gVuHWUdgS2IdC1l/jMpdHQHeCSnnvoIa+PIYKqq/VPPNn3OCkSn7QKr+LB94nloE4=
+X-Proofpoint-GUID: J7xs2gv3Sd4dP18bhbGm9zO3xDvxMYpO
+X-Proofpoint-ORIG-GUID: J7xs2gv3Sd4dP18bhbGm9zO3xDvxMYpO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDA3OSBTYWx0ZWRfX5PeP4T0aNLWH
+ N35wu2U72BoJOnd3RX/ellWEgX/+xWAqiPzR62AuVoovFYwQuxlNR/47GYGLDvdMR59b+hRqyP/
+ RtTHIWSRxjDTm1t08GMgAqkY8qv0f0O1KXcG5+YXK8QFU+5e1L4tMIzaSUQjTf6/g+GuhVkXLFF
+ wFDHTd1Mtv64gXSk1od8yp6qdwvbT7+oJvJlBS3jTnUgF8ru4mBx8jrguMj7QeI/R9Pu5eJ952y
+ IKS6pJsPm1Alt+8PJ4ShapglSgMRJVttpl6lJyx+hjWT8Dcv+3AYG2s7cZs1YeX8QNV7XqlVE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-04_06,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- clxscore=1030 malwarescore=0 spamscore=0
- bulkscore=0 mlxlogscore=999
- adultscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508040080
-Received-SPF: pass client-ip=57.103.84.248;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ clxscore=1030 phishscore=0 mlxlogscore=920 bulkscore=0 adultscore=0
+ spamscore=0 suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508040079
+Received-SPF: pass client-ip=57.103.84.154;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -97,41 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As of why 0: WHPX on arm64 doesn't have debug trap support as of today.
-
-Keep the exception bitmap interface for now - despite that being entirely unavailable on arm64 too.
+And add arm64 files.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/whpx/whpx-common.c     | 2 +-
- include/system/whpx-common.h | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ MAINTAINERS | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index e2d692126a..5c2da9de4d 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -123,7 +123,7 @@ int whpx_first_vcpu_starting(CPUState *cpu)
-          * have one or more breakpoints enabled. Both require intercepting
-          * the WHvX64ExceptionTypeBreakpointTrap exception.
-          */
--        exception_mask = 1UL << WHvX64ExceptionTypeDebugTrapOrFault;
-+        exception_mask = 1UL << WHPX_INTERCEPT_DEBUG_TRAPS;
-     } else {
-         /* Let the guest handle all exceptions. */
-         exception_mask = 0;
-diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
-index 7a7c607e0a..73b9f7c119 100644
---- a/include/system/whpx-common.h
-+++ b/include/system/whpx-common.h
-@@ -20,4 +20,7 @@ int whpx_first_vcpu_starting(CPUState *cpu);
- int whpx_last_vcpu_stopping(CPUState *cpu);
- void whpx_memory_init(void);
- struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address);
-+
-+/* On x64: same as WHvX64ExceptionTypeDebugTrapOrFault */
-+#define WHPX_INTERCEPT_DEBUG_TRAPS 1
- #endif
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 259b010f55..9397e55c4a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -539,11 +539,14 @@ F: accel/stubs/hvf-stub.c
+ F: include/system/hvf.h
+ F: include/system/hvf_int.h
+ 
+-WHPX CPUs
++WHPX
+ M: Sunil Muthuswamy <sunilmut@microsoft.com>
++M: Mohamed Mediouni <mohamed@unpredictable.fr>
+ S: Supported
+ F: accel/whpx/
+ F: target/i386/whpx/
++F: target/arm/whpx_arm.h
++F: target/arm/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
+ F: include/system/whpx-accel-ops.h
 -- 
 2.39.5 (Apple Git-154)
 
