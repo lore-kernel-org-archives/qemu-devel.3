@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79D3C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 21:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B264C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 21:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj2W6-0001sR-5q; Mon, 04 Aug 2025 17:14:46 -0400
+	id 1uj2dz-0000D8-KH; Mon, 04 Aug 2025 17:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj2W3-0001pt-OQ
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:14:44 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uj2dt-0008Vz-TJ
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:22:50 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj2Vz-0006Hr-Mw
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:14:42 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-76be8e4b59aso2273392b3a.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 14:14:39 -0700 (PDT)
+ id 1uj2ds-00085H-58
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:22:49 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-31f28d0495fso5218054a91.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 14:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754342077; x=1754946877; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=em/f9GiRz6FXMCYyInMKAWnOPFcHcBZWG6JdyD/V21o=;
- b=auCbQG7h0tmYq4815fAYoc5u8Qt2bpTEYE/0kK4Ivo/U7mtpJDwCuR9PU8tlC82lsT
- wzjTW1pgZ+hwSkctgGunJN/uxmJCdULQblBxXjNRQjbTWgOeEvP1tOK4dPsfs9jGvFCt
- KJaZ4SF7zRO/b19dblis/nU8sGSD99mmypGlP18NnbbpBZ1XHRfHGe1cqcCNBRZfClgV
- Uxd6gFJlyNA6HWjPLoNglhD3jY63qORVn0FKtHYMzkRj8ez4rDQv7tuvb5IqucbS8STi
- uHP6GRw1IPkouzQZ6TDvZBhj3e5xrg2J9MwE0Rq0AzkGWbnZYY4Ghtk2+ZOlgH39SeDO
- R58w==
+ d=linaro.org; s=google; t=1754342566; x=1754947366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=8SRHEIcqfurbwfU0xYLmg2MGMq+fWhVhfZ23PthYEz8=;
+ b=wl7d4KI4P+n4MEHQ1oUwtQtRT9EGQJ/ZwCrBnRXKdWUVw56+r0J+qPkJ+9W/jNPiY2
+ WetHrL3wleVDB1ueL1DLQmNRWe16QDtJn3WizRflvDfB90odnTJqCjbgJqTTaHgDFtvr
+ PXCsTc7tD0vksSGVq0r9c8j3KAAglI/Rhr9ts87cgzn761dFKKKsQk0Zegb9uVIeLmGc
+ pybd+mD6pu1erG7nryeoTokZO8B8WivdBh6V0Yv5h3M1HYHfof3GmHIcl7DxkZBzvmEw
+ 5gHBZUH6cqrCFuirxO7B4yoGM95d3sLZYoFTamqnWUfT00mpan7u4vLwzmbf1M+n6Pyi
+ k0Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754342077; x=1754946877;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754342566; x=1754947366;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=em/f9GiRz6FXMCYyInMKAWnOPFcHcBZWG6JdyD/V21o=;
- b=nl5c+Bt4VU+iUseIEE8dJCLdH/sq6aGHms0eqNbRqJTUO4I6QSd3SShZzntZk3DBJ7
- UPB7E0B4f3C38H6xLtX5WYvzCDzycF1m/mB6ZDmp85BPIGxacmQxcxUXVbk9iMY1Rfk8
- IfftpUE776Jy4jmimZ4H4cdbStQicdYfKBi7e1o7iaxkaPxXMRrHWN32nnUfNqiVHhNL
- Bdh5IjM0nEu39ObpEXhNNjQKRjz24Wq9CYrRMc+/glJfxDf7OsMLOgS9M31JCE81XLDe
- EXyiF3DOvdUF4/sJi37qIGOtjP+S+6nMZKgrHfleHmn4v93qsVll/JFcGamB6ktsL9vB
- cNnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVIA+HL64BVnooLEdiB2sdmT+9pHS1CV3kyJ7LnUQBIJkNl0DS9IrcXRJaU6pZEGqSlXkE7T/IPAOL@nongnu.org
-X-Gm-Message-State: AOJu0YxGwoFpfvXUdcMdPgFvUAqAwYgTk1CFCvw3Lru9qI7AdBDgn/o5
- DIKSOpVNMUUKnpRWB2ptf3mTaEIp7qf7hUY9t8QxlfBbe9LS0CwqQGcbaIqn6i4KTLY=
-X-Gm-Gg: ASbGncs3eKKF+tuzGpC926NFSgAfR8DERvTJ2Lun/n27ox6ozfzWIZjYDbnFfo007qz
- NvHkjYr+6FaekxnVX0MaIbcu/1z5JwnTvT37m/lioaH/RlwDUp9o6C7pskiZqK04rBvSPv0t5pj
- yOL9ueRpCaqIb7/6yJPnb4lIHBRq0WzaLF3MIMcWZFWE22QjDUw9yoGq5fs0SG6pwNVxNpSMwBy
- Hb3urqdI9r9V9si131rYc2wy5+rkibUe0woLWm/QSYf89pygSBE8Hjl7nycVLsYloai0f7b04Ir
- /k0zpSmLNYaYBP1gsXSTddpL1lyKxmcc79sdg/EGQHVackHk60GQlQijsJfszGvQr4M8cqpMv6v
- hLiBNTIBMM4wveQYDmeySyMcSewpJGtIn6XQ=
-X-Google-Smtp-Source: AGHT+IGHp14xND9jYcBXwV21Zq85UUpy9GqUSFD56QzHi+TEaidqdDR1fCmFKwgz7mXouYIWmYVM1g==
-X-Received: by 2002:a05:6a21:339a:b0:240:eb5:77c5 with SMTP id
- adf61e73a8af0-2400eb57d43mr6310996637.23.1754342077381; 
- Mon, 04 Aug 2025 14:14:37 -0700 (PDT)
+ bh=8SRHEIcqfurbwfU0xYLmg2MGMq+fWhVhfZ23PthYEz8=;
+ b=iXkDbShwxqYVWGden/aiNgDUk4hXSfwPquoqQtiIcUeWhFkUvGkVzGP6r6RL4/HJIk
+ ZFZcaFiTBgoc0AhnzbZT5LF6W2I5F3ksvPpbTZwacvMJnQc/bKAiO6FV1VktVdccB56/
+ 9fDVzoUivnN44UqOXUAoerZPGO8EGu3gmpYFaavOTfur29oK6yfM3ygFNooDPGJxCV3z
+ B9YfwPSClbkZiDOp19Wf/vsjgfDycKld87KIsuDoy2a2pmBrxtLgvkae4dAaVbQ+vWOs
+ fCG1FIWgVQdH6M6dgr3Wsx2xBduvelL76d+/XVawFLBs60/6iUn/EpHrF24Kmtn0MUyf
+ 4JXQ==
+X-Gm-Message-State: AOJu0YzG60f2k8gpjiEsXrhSNbzrUHapFgySQcAtCuMGzlkDgnyQ702V
+ V0Ck4hThZzEW8HHDIR+yeMx6dKTm96Qzi3TObxaX1ABDrRsvjmo8yEuVUHab3KxuCBE=
+X-Gm-Gg: ASbGncuELAPyWGaKnryqxDx0Yx6+unDdJ9S8sKpKoz6ay8XxbiOvRQb0Qu+XVZAO1bu
+ QLIZMN5vevw9JPy7tdBXloKMG0ueGvobBHN1bbPSUjcNofLGIq+YhzqPvBVUI5/Rt52zXNviwen
+ VB42m0fTf7V5rIbLYKGYQ4dK0jM14Rw5PpV3Bgo83RCfKCFNzBno42oWwEMOclzPZQWeo1SEpHz
+ q/ZN72H3mSt4ZrHUIP75DRWuxPrYwDvqCPZTPX9QC9O1nWlMrx2FzgXhJi9xxIC4nd302XxCSJL
+ QqQ8UhDxmeRXMITY6VPCSMtyRo2H0Rj61KpsrzNLOOQhL/S+jyTWw7Fo0CCXbNPOI78Wi2N53Lv
+ XkuYne2SNvR1MBZkoHor4f3BPOz8uHlPjsVyPAjRTc+2+3w==
+X-Google-Smtp-Source: AGHT+IF+E2k3dBAkj0K19KJ1oDET/fvDmyauBJReUhlRW5ogOfDfQMErUmgmlRyJDtz8+SM8rCK7lQ==
+X-Received: by 2002:a17:90b:3b42:b0:321:38e0:d58e with SMTP id
+ 98e67ed59e1d1-32138e0da42mr6148100a91.3.1754342566600; 
+ Mon, 04 Aug 2025 14:22:46 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b422baedf5csm9732577a12.47.2025.08.04.14.14.36
+ 41be03b00d2f7-b422bb19069sm9380714a12.65.2025.08.04.14.22.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 14:14:36 -0700 (PDT)
-Message-ID: <75b87357-75f3-4237-b38b-6fcb51013570@linaro.org>
-Date: Mon, 4 Aug 2025 14:14:35 -0700
+ Mon, 04 Aug 2025 14:22:45 -0700 (PDT)
+Message-ID: <fe5b0075-e242-432c-b093-adffe2e15792@linaro.org>
+Date: Mon, 4 Aug 2025 14:22:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/17] whpx: copy over memory management logic from hvf
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 12/17] hw/arm: virt: cleanly fail on attempt to use the
+ platform vGIC together with ITS
+To: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -88,20 +88,24 @@ Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-11-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250804142326.72947-11-mohamed@unpredictable.fr>
+ <20250804142326.72947-13-mohamed@unpredictable.fr>
+ <a8239e8e-37ad-415c-b13a-4b4ce8fa2a36@linaro.org>
+ <2BF73501-00C6-4194-B75C-CD50A8807314@unpredictable.fr>
+ <2bb26ff6-8ee5-4255-b8df-27aec29b56a9@linaro.org>
+ <9A4DE34A-784C-4501-B8AD-A93CBFB795B1@unpredictable.fr>
+Content-Language: en-US
+In-Reply-To: <9A4DE34A-784C-4501-B8AD-A93CBFB795B1@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,19 +121,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
-> This allows edk2 to work, although u-boot is still not functional.
+On 8/4/25 1:59 PM, Mohamed Mediouni wrote:
 > 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/whpx/whpx-common.c | 201 ++++++++++++++++++++++++++++-----------
->   1 file changed, 147 insertions(+), 54 deletions(-)
+> 
+>> On 4. Aug 2025, at 22:40, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>>
+>> On 8/4/25 12:56 PM, Mohamed Mediouni wrote:
+>>>> On 4. Aug 2025, at 21:50, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>>>>
+>>>> Is it equivalent to simply using its=off, or is there a difference?
+>>>> The info_report seems to imply it's not the same.
+>>> Not equivalent.
+>>> Regular system: GICv3 + ITS
+>>> This configuration (for the newest machine version): GICv3 with no MSIs
+>>> And its=off explicitly: GICv3 + GICv2m
+>>> It became not equivalent since the intro of GICv3 + GICv2m in patch 2 of this series.
+>>>
+>>> Thank you,
+>>
+>> I see. It could be worth adding this information to commit message.
+>> With that,
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Slightly off topic for this commit, is there any downside to always have GICv3 + GICv2m setup enabled? Do some systems don't support GICv2m?
+>>
+> GICv2m is modelled as a device external from the GIC, and so it can be emulated everywhere.
+> 
+> It can be done but then it supposes that the same Qemu command line will expose a different device model (instead of just MSI support missing) when ran on a different system. Not sure that’s the right thing to do…
+> 
 
-It's indeed duplicated from hvf.
-I would be worth to factorize this, once we identify what is missing to 
-boot u-boot. In the, it would be nice to have same implementations for 
-hvf and whpx, with accelerator specific bits extracted. For now, we can 
-live with the duplication I think.
+Indeed, it might be surprising, but on the other side, we already do 
+something specific to whpx, so it might be better to choose the default 
+offering the maximum support.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ From user point of view, the question is how hard it would be for them 
+to guess what is missing in case they need MSI support, and didn't see 
+the warning message about using its=off in this case.
+
+Peter, any opinion on this?
 
