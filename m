@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B29C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFC8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiqdd-0004kA-5U; Mon, 04 Aug 2025 04:33:45 -0400
+	id 1uiqea-0005PR-0Q; Mon, 04 Aug 2025 04:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqdN-0004by-Kw
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:33:30 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqe2-0005E3-Pd
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:34:20 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqdK-0000Do-Is
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:33:28 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-459d7726ee6so5348315e9.2
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:33:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqe0-0000Ji-CB
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:34:10 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4538bc52a8dso24542355e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754296404; x=1754901204; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754296447; x=1754901247; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=n08+OAsSCraFxY9l4+3LjEILGlsjZjmJCIJtwLxrpKU=;
- b=mbaXOQmfSwJ2P87ls53tuxMsG0tO8SApagIah1G4JyWslBnIW4bLvKktgwrUVp1iCY
- EjY8YBpISsFw5ezgRG77XZ3AAPkcooKyv4ax7DzL+38mV71q8CqZ/ZT2Ws6ZU2DWp/36
- gFyEMLjCzMwP2uS3dEyvXtaaxUWS4/4ZaKJ5juy5b2VywIcBzCyDcaPC2l9bK0Up6ovW
- yyQhCDiiwkjUkydqwyxETe1mRiLXGauHxEivRRHi8GVJsK6oiBGH7E8IfQk5adLEHnYw
- 1S8WRmQUdZxBPwlICQYhFUgmKBB3o21CFiYTkipxkik3Xv1bv1EaVfE0I5GhlmJdPBqi
- qEyQ==
+ bh=x/WfSKRonRXsvo37zCvQV7CedRXawAyyZawGAhUjX5s=;
+ b=UFsgKc1/B+HJgBlW6p6nVC86qabxTsTEB77WNERBaxlQmK7DM6OWYxgEgd0gwUvAWG
+ as5fv0Prpfn2fPYeXZxy+Vi2LaZTQn1d5R+qfRcM+iPJQLXt6L8dZ+lfMCz5GJFNPFsu
+ b3uW6UsyihfGsDOeQECR6qH647632A/at5elD3FX7F+lB8CG7xGF1ItmAM35u0gjkSgG
+ dSDvf3Wp47V9MAQxHbZGftgWlnMmqxZKZsjrJt3B41O9/yMLc4SXbQwshrFRMBQ191Kj
+ PcZqEfid5olG6EcHBTjM0I+h9dajlw8tIwGebC9uSmq3r8O4/cptMZDP5aeiELBhhSq9
+ /3rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754296404; x=1754901204;
+ d=1e100.net; s=20230601; t=1754296447; x=1754901247;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n08+OAsSCraFxY9l4+3LjEILGlsjZjmJCIJtwLxrpKU=;
- b=I1ES5PqXDzj6DMab9vSm0uh4Rs8N1LdqukfGl2zNuqmSRxmqWZ+xty7lMspmcmkthP
- 9VPLs/PzidU8QzeuhC4yrghCNmXOwxW0XooO7/jPnxQh4t30hOeiUkL4ZaZxw/ohoDSK
- NRd5tKI4y7UuAfoxnl85TRg/7VthuatUddZvFazOaK/XgqzmyyG0r1tDDDlmIGO/1uwG
- DEObMo3PezR6fVc1gxuWFaxu5Bdd0LhoJax9mvOKjwdxlsYjUAiDIfrotDLfZnCMR2yO
- JBrPrSvoNzsc4lmJQVFs1sawQPWkI5Bpu4ZkMmrxAhb0XMLb+Zh2Sp3z51q2tB97MXky
- OzGA==
+ bh=x/WfSKRonRXsvo37zCvQV7CedRXawAyyZawGAhUjX5s=;
+ b=jFTZNJUjhaMf3sL/nPtD2i/f/91JIv0x+NYbrtAsOMjo5O/7zXacRjfKklV8xG2LgV
+ Tp9v+NUpy0lkYFeFCLJ5hXCbkOsMjPNvdAVLJp849B88m19WaGdGDvrNjrXAEut76KIE
+ u/dcFVVENLNtLUuEjTEBT5VxmGpfoCs1h6Gs8WCTVjCjPk4dvsPui3KJmOUX6Y/NQCw6
+ WKvAUeGAa5MOnWP0fJCuxqWm7jFzDCJstMR73zrk7z4Wip06FA8kbvPKYHL9d7Sqh1Yv
+ 40N5AmajtCPHTTtd1ydlJPDnN1+SKzbDpB0ykqkl97FSLh/65xpIXpLSpNsiQf877QzG
+ iCnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaH/tRlDEEvf56LT7E+Ec9O2xRIbw8tCCze8KL6SDBZufTSGfZHm4YujDdfrKzF63PPnqD13lINfWD@nongnu.org
-X-Gm-Message-State: AOJu0Yz8pmDZLUeYnQqdRzJP6k6KiqMZyp3Mgbe7S88J2GGpcqw2z81X
- +QTt5EDhn9c5NVx5X5OvYXUzoODXmPuC3dbve4b8tuTrukejAyZqPfJ5FhKaLnMvf8M=
-X-Gm-Gg: ASbGncvgqs8M8dFmOnFuDNtEHUn8b0tDYfNRAnec1uRRNleBIbMtE/0NzGtJYiTnISs
- CoXzdA8hb9iLG9VY+eFaXNiBxRnYSBSV/moyNZ+RAsQJlL+4MXNPaf0ix3wUy/oRwwUtIpVhysU
- LHorlZhDmvEx9gbI2yFwniN7t6LU+BcDBc3igc5JyonzLMIMPUmqPTJdEcubsI/XgVz9TY/jtTf
- EXXU6Wr2ZfDJYOaeQXMY/0zKJT6PG9xEbKafKAXwJnI85qau4tYMmY+/9ch+XK2N31WObFr28ov
- FIN5hOtvY5KF/CDCMor60ZOHSe67exNVj6obKb0yPTFMQWZIuVaemWba3wqO6149UNeCIq9OYmc
- aP4iM1/LR1PsYtDhX3JVnnVQFSGSn/W/kzEkSXXmErpmXE1tpMkrV0ysJSV29mzSotdB+gts=
-X-Google-Smtp-Source: AGHT+IEjRUmnidbRN+eNHuVNR2KrFxkSFqigfKWRJnBPEqNsOohbwUWWLYXgxJitvGYhznatAOSGKg==
-X-Received: by 2002:a05:600c:4692:b0:456:133f:a02d with SMTP id
- 5b1f17b1804b1-458b6b312d9mr68678215e9.17.1754296404351; 
- Mon, 04 Aug 2025 01:33:24 -0700 (PDT)
+ AJvYcCU+SFFMB8ou8EXQXSC/MaPZ2a7+TB6PzE5HmVswmX1vyP+ykdzLekjSH/u40NAW+kHKBLo+FErk+fJT@nongnu.org
+X-Gm-Message-State: AOJu0YwJ7Co4bTMdEpeARbVtkBIEHtS1nEoha/v/r0RQU14IjXtM4CdN
+ NYScQDB6zh9blobtcN8B3uTKO0BwBCL4A0WBCYWGmNSI9fyUH2qZ5KF4NBIOgMtOLuo=
+X-Gm-Gg: ASbGncupxH6kKX0pHJ7N2yhW4QfoRrTUnhSRfRTh/Ml3ayux2bLHqkR8OU/0ZZc3wwL
+ gUgiwNTLOqsdUXtr1NcPhE0xP59pYY+M3vJ8ua8YKT3nMhgrobScdiUXMtaUW/9ZDdLjqKgXLFM
+ z2dgDK4243QPDeNDBTR7tP4VvXzkhRYXz2ATM3yqwlhHocouU2GL725rRcN6FqQAYglWCNTeGYT
+ p6A4kIsiyT3dBOnPo/83gALjHZvf8QOTJxo1bLCrOh4DRW70trfvooGXbocEK3anGipGshmpfso
+ Y8zNBpdysflbfV5BXC+qR3RLpSdLpVUmAny+3xgNk8mlu/0ChP4D6AUWK1nErbRj3N4WbZwh/Ij
+ ZHONWRzxRbgVS4VBl2FRcme47iA2q5ViasDBR5Pz8Nz0vM4GkHNYNM0eveZcR9KXoWVtqBuc=
+X-Google-Smtp-Source: AGHT+IHnhqQXX50natA9ygtRXB4+D8IXBvp7YLffUIcmwXltoYmaU/7p8EaxO0Io7VMEDPm9veuqdA==
+X-Received: by 2002:a05:600c:4f56:b0:455:ed0f:e8ec with SMTP id
+ 5b1f17b1804b1-458b69ddf95mr61171245e9.9.1754296446717; 
+ Mon, 04 Aug 2025 01:34:06 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458a7c91c0esm137550935e9.11.2025.08.04.01.33.22
+ 5b1f17b1804b1-459db13fc9fsm26660145e9.7.2025.08.04.01.34.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 01:33:23 -0700 (PDT)
-Message-ID: <a0e892dd-b432-4665-908b-ab338d9d497f@linaro.org>
-Date: Mon, 4 Aug 2025 10:33:22 +0200
+ Mon, 04 Aug 2025 01:34:06 -0700 (PDT)
+Message-ID: <39cbef79-1412-4076-a43f-6392a76e29ea@linaro.org>
+Date: Mon, 4 Aug 2025 10:34:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/24] tests/functional: Move xtensa tests into
- target-specific folder
+Subject: Re: [PATCH 19/24] tests/functional: Move s390x tests into
+ target-specific folders
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
- <20250801151251.751368-24-thuth@redhat.com>
+ <20250801151251.751368-20-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801151251.751368-24-thuth@redhat.com>
+In-Reply-To: <20250801151251.751368-20-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,19 +109,25 @@ On 1/8/25 17:12, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
 > The tests/functional folder has become quite crowded, thus move the
-> xtensa tests into a target-specific subfolder.
+> s390x tests into a target-specific subfolder.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS                                                 | 2 +-
->   tests/functional/meson.build                                | 6 +-----
->   tests/functional/xtensa/meson.build                         | 6 ++++++
->   .../functional/{test_xtensa_lx60.py => xtensa/test_lx60.py} | 0
->   .../{test_xtensa_replay.py => xtensa/test_replay.py}        | 0
->   5 files changed, 8 insertions(+), 6 deletions(-)
->   create mode 100644 tests/functional/xtensa/meson.build
->   rename tests/functional/{test_xtensa_lx60.py => xtensa/test_lx60.py} (100%)
->   rename tests/functional/{test_xtensa_replay.py => xtensa/test_replay.py} (100%)
+>   MAINTAINERS                                         |  6 +++---
+>   tests/functional/meson.build                        | 13 +------------
+>   tests/functional/s390x/meson.build                  | 13 +++++++++++++
+>   .../test_ccw_virtio.py}                             |  0
+>   .../test_pxelinux.py}                               |  0
+>   .../{test_s390x_replay.py => s390x/test_replay.py}  |  0
+>   .../test_topology.py}                               |  0
+>   .../{test_s390x_tuxrun.py => s390x/test_tuxrun.py}  |  0
+>   8 files changed, 17 insertions(+), 15 deletions(-)
+>   create mode 100644 tests/functional/s390x/meson.build
+>   rename tests/functional/{test_s390x_ccw_virtio.py => s390x/test_ccw_virtio.py} (100%)
+>   rename tests/functional/{test_s390x_pxelinux.py => s390x/test_pxelinux.py} (100%)
+>   rename tests/functional/{test_s390x_replay.py => s390x/test_replay.py} (100%)
+>   rename tests/functional/{test_s390x_topology.py => s390x/test_topology.py} (100%)
+>   rename tests/functional/{test_s390x_tuxrun.py => s390x/test_tuxrun.py} (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
