@@ -4,74 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3020C87FCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE220C87FD1
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiv1o-0006nf-MF; Mon, 04 Aug 2025 09:15:00 -0400
+	id 1uiv1k-0006ev-Gc; Mon, 04 Aug 2025 09:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uiuJa-0002G5-9z
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:29:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=RlTb=2Q=kaod.org=clg@ozlabs.org>)
+ id 1uiuJ4-0001yy-44
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:28:47 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uiuJX-0003Dr-Ks
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:29:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754310553;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=i1F6cEO+DfL8jUvpY209iGdXHLMkehDCGpTSemolG+Y=;
- b=Ea4b3V/UyH/YylRJ0yhrncehAOQTO1UD26Ef74wosN2w39OXQHBjo+TnXS+Y+F4ComV5++
- JPgno7xt4JeF+b9kVix/u1DfsEgdYtFMiM5yWJPDLVcnxWU9+WwDiCBw1MDieOX+b1K2u3
- 2WKl2Rw9D2wLOHiGuZqybd4kfWLtuC8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-MAowxxKQMrG4HJ8998eSdA-1; Mon,
- 04 Aug 2025 08:29:08 -0400
-X-MC-Unique: MAowxxKQMrG4HJ8998eSdA-1
-X-Mimecast-MFC-AGG-ID: MAowxxKQMrG4HJ8998eSdA_1754310547
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from <SRS0=RlTb=2Q=kaod.org=clg@ozlabs.org>)
+ id 1uiuJ1-00038u-Nr
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:28:45 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bwbSj316fz4wbb;
+ Mon,  4 Aug 2025 22:28:37 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63FFF19560B4; Mon,  4 Aug 2025 12:29:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.203])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B6351800B65; Mon,  4 Aug 2025 12:29:04 +0000 (UTC)
-Date: Mon, 4 Aug 2025 14:29:02 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Bernd Schubert <bschubert@ddn.com>
-Cc: Brian Song <hibriansong@gmail.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [QEMU/FUSE] Discussion on Proper Termination and Async
- Cancellation in fuse-over-io_uring
-Message-ID: <aJCnjubEbU529XiY@redhat.com>
-References: <3867ced7-efb7-4a0f-ac0f-465631950bdb@gmail.com>
- <dc326a4b-f6fa-435a-b614-208e03f61556@gmail.com>
- <577bf373-92cb-4160-a49e-e29d3615a308@ddn.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bwbSf6CsTz4x3d;
+ Mon,  4 Aug 2025 22:28:34 +1000 (AEST)
+Message-ID: <2065ee05-8313-469e-bc66-075038ea2904@kaod.org>
+Date: Mon, 4 Aug 2025 14:28:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <577bf373-92cb-4160-a49e-e29d3615a308@ddn.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/24] tests/functional: Move arm tests into architecture
+ specific folder
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250801151251.751368-1-thuth@redhat.com>
+ <20250801151251.751368-8-thuth@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250801151251.751368-8-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=RlTb=2Q=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,64 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bernd,
+Hello Thomas,
 
-Am 04.08.2025 um 13:33 hat Bernd Schubert geschrieben:
-> Hi Brian,
-> 
-> sorry for my late reply, just back from vacation and fighting through
-> my mails.
-> 
-> On 8/4/25 01:33, Brian Song wrote:
-> > 
-> > 
-> > On 2025-08-01 12:09 p.m., Brian Song wrote:
-> >> Hi Bernd,
-> >>
-> >> We are currently working on implementing termination support for fuse- 
-> >> over-io_uring in QEMU, and right now we are focusing on how to clean up 
-> >> in-flight SQEs properly. Our main question is about how well the kernel 
-> >> supports robust cancellation for these fuse-over-io_uring SQEs. Does it 
-> >> actually implement cancellation beyond destroying the io_uring queue?
-> >>
-> >> In QEMU FUSE export, we need a way to quickly and cleanly detach from 
-> >> the event loop and cancel any pending SQEs when an export is no longer 
-> >> in use. Ideally, we want to avoid the more drastic measure of having to 
-> >> close the entire /dev/fuse fd just to gracefully terminate outstanding 
-> >> operations.
-> >> [...]
+> @@ -1187,7 +1187,7 @@ L: qemu-arm@nongnu.org
+>   S: Maintained
+>   F: hw/arm/msf2-som.c
+>   F: docs/system/arm/emcraft-sf2.rst
+> -F: tests/functional/test_arm_emcraft_sf2.py
+> +F: tests/functional/arm/test_emcraft_sf2.py
+>   
+>   ASPEED BMCs
+>   M: Cédric Le Goater <clg@kaod.org>
 
-> I have to admit that I'm confused why you can't use umount, isn't that
-> the most graceful way to shutdown a connection?
-> 
-> If you need another custom way for some reasons, we probably need
-> to add it.
+Currently the functional tests are matched with :
 
-Brian focussed on shutdown in his message because that is the scenario
-he's seeing right now, but you're right that shutdown probably isn't
-that bad and once we unmount the exported image, we can properly shut
-down things on the QEMU side, too.
+   F: tests/*/*aspeed*
 
-The more challenging part is that sometimes QEMU needs to quiesce an
-export so that no new requests can be processed for a short time. Maybe
-we're switching processing to a different iothread or something like
-this. In this scenario, we don't actually want to unmount the image, but
-just cancel any outstanding COMMIT_AND_FETCH request, and soon after
-submit a new one to continue processing requests.
+This needs a fix and I think we should be a little more explicit.
+How about :
 
-If it's impossible to cancel the request in the kernel and queue new
-request for a little bit (I suppose it would look a bit like userspace
-being completely busy processing hypothetical NOP requests), we would
-have to introduce some indirections in userspace to handle the case that
-CQEs may be posted at times when we don't want to process them, or even
-in the ring of the wrong thread (each iothread in QEMU has it's own
-io_uring instance).
+   F: tests/functional/*/*aspeed*
+   F: tests/qtest/*ast2700*
+   F: tests/qtest/*aspeed*
 
-Come to think of it, the next thing the user may want to do might even
-be deleting the old thread, which would have to fail while it's still
-busy. So I think we do need a way to get rid of requests that it started
-and can't just wait until they are used up.
+?
 
-Kevin
+Thanks,
+
+C.
+
 
 
