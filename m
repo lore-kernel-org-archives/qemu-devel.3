@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048CAC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 15:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA94FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 15:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiww6-0004Re-Vp; Mon, 04 Aug 2025 11:17:15 -0400
+	id 1uiww2-0003vB-IX; Mon, 04 Aug 2025 11:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uivXR-0005nb-He
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:47:41 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1uivXO-0005fE-MS
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:47:39 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uivXO-0002ZO-IF
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:47:41 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-615756b1e99so4976347a12.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 06:47:38 -0700 (PDT)
+ id 1uivXM-0002YW-BN
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:47:38 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-61571192c3aso4213420a12.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 06:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754315257; x=1754920057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754315254; x=1754920054; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NnAVSdr5SadLRV4G+KyJ3baz4qmfkMEOYJh7lQrhK5M=;
- b=noWRV0CiNNYuSlX4O31qhxM/4U6hPcK6Z0QoBqFpkBgsxh8VdoQmUjFq9VZXwPYdwP
- DhF1Ir3bwsVY50lMbhuNuFh1rRzoNW9axLfyBL4NhpSys5AzyPaWwF0O2Wf7tLr5zPQk
- QlxGyTspBPM6QnbiIvDEgrQsVm/mROh/o663Npwl4wRjA8DyVxTOiQPZOj7yAPzqr6/t
- PW7j2mj9Bk4wIh7qdqxOXqlQU/4Aw1ZVFFSuIy4trdlxGZzTCAgiXuwbrwXq6J5hjmqK
- mNRJ+VPGKMd9WSAkkYK5JrRvcW/Jb2gFvbYAs+uiqoTsLH5uB9Asqcp5jBjbB93a5xlO
- MViw==
+ :reply-to; bh=hEvV4qFqWB9cTuaBcclspfI/a8mVi5g2F2fZs6PHmRM=;
+ b=hrlDy2b3moG2wV+Bo/09h9QcfwprdxaBwxW8qcICA09S8X4xO9X+AalFFATV+cBtOB
+ 8JfzhwJAUMtTfNHexDkj5jwB88RXcU5XfRuI8OQ7AyNdSIJL9UUDGMtYZpZFGBCLFHpf
+ e6CaWvyjiXe+AB+4alZxzdINwfSVNXqLIQK/Eax+DWEed3KAezYWIYy4LrZ7mta8xskF
+ QboPB+esvmPZElLce6hnDQv6uXW55DQhLS3cJuCJOzrErtfKsNGM6UYX5iXMIJGIWBOS
+ SXg58aWy4K6a32l5/FrA6WnM6yl4ndW4XU/VXLPcoefCutIEGO51nJQ1ZMmb1v3nu+9n
+ uqSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754315257; x=1754920057;
+ d=1e100.net; s=20230601; t=1754315254; x=1754920054;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NnAVSdr5SadLRV4G+KyJ3baz4qmfkMEOYJh7lQrhK5M=;
- b=D9I6+5ZBgClE7c+2uQsy3Goap4FM3ZZgsVe1U5rT1hpsxrOkTNdJ0MUd/z4Z+Lkpbh
- iLCg+Eqv1ptril0RrJJfOonwvsA+yZj2QdGuArAU5RBdWDqlWqOnJw10BVAEiD1lPe3C
- K5+J2z2VLTZ39Ecx8rGaZAoQA85hfPYOBFm+N+XDxM9386COqXBIrXCpFrNK3xSldtwk
- 6MCEhw1sd2cvhB76o6YxrCqg8I7RCtfzKdtxGGy+ooOOYlWOy2HxOL8EB922O7P5HSzC
- u+TyzSoAL+kZ7yqbsf6qnmpf837OhuPYjsVtcm2IPc/2qPt2tH2kSu2aDGY1hEBDjCwy
- MzwA==
-X-Gm-Message-State: AOJu0Yz39eHMvisq0F4QEPNokrkm4Ocqydqub3pVB4QiypZNJ6HcgY56
- mKQ6Wq+n+9Tu3ydh4axJHW/s6Sr9cHsp/AOKnZn6Y42owslfvA+09DxH/bTjpYBSnM4=
-X-Gm-Gg: ASbGncvN5JvnZ5UNfSCB35kXdOG5hLx3l4sqO40Wj550+wm4f6XHws8Ri0+KUHMohWZ
- 0iUCLhRCzpOybaoEjGZKjlYbhcNVk+DzvuxTLeoedQi5RbwciWZy682LjsCV2T+N/c3O2lpMKoR
- 2leehjUNO/dXmOZZu8VrU9z0KBWJFmpfyh6oy4tStHrLcd9qv9Jyu0dNkD2ZjxNwoidnBHA5p1O
- /0ubYA6JThN03Red1glw0/OBNvDB1T7YFg51SOyTLG/Cc2BESsxVBOVmW2/YPGg9HYsLwUnUJUj
- LjHXU/QGqTvKoCPt1a62dAMBYixeWVlMQ1d+cGGXOb7uQFXJJinqiS/YgsdaB+kuYF80aiWSn+W
- XzLCjHaEXER/mIPPjS4P++ko+JNiPpnTVgL8WdN1TIrCWx4y5m+UU8Ruy7QEWmwuUZX8=
-X-Google-Smtp-Source: AGHT+IGKo06pwhWODnr5gkKxMD1RT/ZXgok8or+fPM5MM8mauBOygXPm6upve6vIUfWe9JiSyfWWPA==
-X-Received: by 2002:a05:6402:2747:b0:612:b24f:4b2f with SMTP id
- 4fb4d7f45d1cf-615e738820fmr8636539a12.27.1754315256733; 
- Mon, 04 Aug 2025 06:47:36 -0700 (PDT)
+ bh=hEvV4qFqWB9cTuaBcclspfI/a8mVi5g2F2fZs6PHmRM=;
+ b=Z9onuYwsEbwEEs9YmNhAnKJ5ew3c28Kw0MonatuxOee6el/Kmo93te9FXOPL2curg8
+ ULbagNfCOoi1/WVwMgdG1D227PEpq64GY99fAES0waC9iS8Wyh9Jv3n+4+VmsS530pXG
+ IWekqkcCVJ6ywSLfEAnk051/eNyENZ1CNEimxr4eRUz2WE00mlDk40TCCny26NxZC076
+ BIO84uHFBGPdcybfGnK22H196KjTPPkLy0ACRwUL/JVG1u8QmK7dZ3WilDMj66Y4Zi+1
+ RbIDBOumQrtzP9tqg1QImjAbt1arQYsxVQkpLMyIgC/R9RMfItpfZGO4tmEQmuznl84Z
+ Jl+A==
+X-Gm-Message-State: AOJu0Yyg44bk/8tlqWwFGax4sibukEUd+x2X3BLsCEIaWC18BSm9U7gs
+ 32cXxcL0EyRePqgFh2GxRlX3hPRpq4Mj5UrAI9ohfeJwsyGF85hgtCx/w7M3Ae4kFuc=
+X-Gm-Gg: ASbGncvZjaDMeYRbFbgq1/ODtLHQhvGI1pdg+fk382womWBlc4q/3C/jH31euUmEOjX
+ n9Ql5bVPGUCkFzkmITk4z4siy8H5JexLhTf/GSoC1qBw6j7aB1UNg+HlgSToL9KYy7T1DkZEB63
+ EHySX9+EfkwOYjY6CSJmDsdglzMy7s5GRrdzlFiOiTb2SX5q0uUafdcgUQgYlZAzz8y/ICMFZ4s
+ H+LS5n1DNdVnwRyPi0IIx40i772P1UYh5yqr2jD+3U9SpIKDreSMv8y4bgTa05FnEtCZ0vZlBai
+ L/VkMuCcJb+ELLn9NVSqhp67iAsV5OiTmzk2cBv/CPhyw86n1CO5i4FBPWomiwxr1A7ibXkCpDB
+ K/eaAQpg7k5HngMeQcp6oyxnYTcbcQUl95mHI6mzvk6BYVNns3KGrryN9Tzf5KVwOvpM=
+X-Google-Smtp-Source: AGHT+IFAlqNGj+0nkPhQ+9IT3H+LbzRMYlhKz0ws80qY5loS3glrxXNT+jp2M/5wAQAouxqQmz9vaQ==
+X-Received: by 2002:a05:6402:354f:b0:607:28c9:c3c9 with SMTP id
+ 4fb4d7f45d1cf-615e6ebc8bemr9194835a12.6.1754315254472; 
+ Mon, 04 Aug 2025 06:47:34 -0700 (PDT)
 Received: from [127.0.1.1] (athedsl-4441708.home.otenet.gr. [79.129.182.92])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-615a8f15d9fsm6850590a12.17.2025.08.04.06.47.35
+ 4fb4d7f45d1cf-615a8f15d9fsm6850590a12.17.2025.08.04.06.47.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 06:47:36 -0700 (PDT)
+ Mon, 04 Aug 2025 06:47:34 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 04 Aug 2025 16:47:16 +0300
-Subject: [PATCH RFC 3/5] rust/qemu-api-macros: Add #[trace_events] macro
+Date: Mon, 04 Aug 2025 16:47:14 +0300
+Subject: [PATCH RFC 1/5] rust/bindings: add trace headers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250804-rust_trace-v1-3-b20cc16b0c51@linaro.org>
+Message-Id: <20250804-rust_trace-v1-1-b20cc16b0c51@linaro.org>
 References: <20250804-rust_trace-v1-0-b20cc16b0c51@linaro.org>
 In-Reply-To: <20250804-rust_trace-v1-0-b20cc16b0c51@linaro.org>
 To: qemu-devel@nongnu.org
@@ -78,30 +78,30 @@ Cc: qemu-rust@nongnu.org,
  alex.bennee@linaro.org, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6514;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1100;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=k9Sqif8zYxdtUR9QlMnRMv0bMeNFqRXvKJG0mBE63lg=;
+ bh=oF/2Jbbj/kJRLShPsty+hf1YAhHddpc/rIM+iPuPKJc=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9rTG56SnJwOEdCaTljWjZQeWtnbGR3b3FWaVUzCmJkaExKREtjNU5jKzY2M2Ju
- L3FKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUpDNTh3QUt
- DUkIzS2Nkd2YzNEowQjVhRC9vQzJwUG5LVnhKcEZsT1dMWGkwRUE1R3J2eFdYbDJrcUc3V1MxbQ
- pITVZPRmk4TWw5S2hpWndsWDA4YndWNlplM3FKd204b1IxRnZERm1TajJHdDhFMGFkNE5xNEIyU
- FRUbVZKL1FpCnJ0ZjRET2tUSUdsZ0FyYVp3bXNmZ0UzSCt1L2VSb3Q4Y01YUGhveFhLc2E1ejM2
- ZlFqVU1wK3ZESklNK1RibnUKY1dnc01LZ24vL1ZUdlVxcnRsZFF2YlcyVjBkTEwzMkQ1cW5VM3h
- IREhsZGticDRWL1p2VHJ5RENteTVaTU9RQwpvbHQ4eTE0S25RdGNTK0luY0ZOVlo2azNUNEk4Ri
- tibFREdEZhb2JrTVV0NVJkQk1CUWZSM29qTVAxOHdSdDlDCmZJSzVjWjNNWStkbGJmV0pTYUo4U
- FhSVGVZOW44dUtNakE2bFRDZHFadFRLeWtKY3JxeGtycG9qK2xpbkJ3elEKNEhGeVBSUGJqcUhI
- ZTdsMUNFOEFPdmN6YjJCazN1UU0rWXFKbDV4MWhLV2xmQyttYlJYQkdDbmg3MDRxNXlxWQpONjJ
- sQUFYZmVTT1hOMmJRUk5VbkRDMmdnbURzc0cxYlJXbFdLNXVFYjFicjRzNnBSU09EKzBZNVFOMH
- dldEl2CisxcWtmeFB6R0kzSFRudlBDWTFlQktnSVJ3U2dHWWJGUVdVSmlLR0hxSzQ0TmpBVVJ5Z
- TI4cHdsdEZlcEJHVDkKNm9WL1pGZGlneUs5YW1XaW5ac2RTVkFGTnZ0OFNjcVNzaytmYUxEWHNs
- djBPdkd5d1BCcXl6V1hIdll3NkdiYQpFVUNCQldaN0p6cVZpRWovTXBLZlJqU3NtODlvYWs5UkZ
- hd0QySXVzaHg2QVg3MlVlQnorNzZJNzluWDd6TFNZCllEQ1kzQT09Cj1KQlNLCi0tLS0tRU5EIF
+ 25RQWNzbVlnQm9rTG56dU1TRFV6Y3RSOHpLK2RqcVF5YnhGRFpXCjZ5MkZ4eHRpNXhBd1JlWTNk
+ Wm1KQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUpDNTh3QUt
+ DUkIzS2Nkd2YzNEowSkswRC80OFJCNUhRQ1Y0WEp5MFVmSEJZV3NjTFRqeWZZS0xtZFJ0WGxOSg
+ p2OGdRay91c3VWendFVzBGNnVWUGRzY3MrOHdDYnRKRi9nMWt5SW9vbWlaRG9LWDdqNkFVMmZxK
+ 25yRGJiUGt5Cm41S045RlVoVnN4V05Sd09BZTY2cEJiRTFRMzRWQUFNNWtpQUMva09kaFFyNFBu
+ UVpyMEtFbWNuUVVybENxUEMKTnRhbU1zQTEzUFJmR2QwYURVNHFEaC9nQWlKL0M4NTV0TmU0WXU
+ 5SittWWZmNS9TdVdDRWNGNi81SW9CV0g4WQpIN1ZsY3hVR3FPbzB2RXc2VmZ0bWxDVkx6RzFwZn
+ hyWFQxMGRSQ3hsS2lxeCtqYlpqWFhiWFEvTkZvVWVXZFNtClNVVHZtOWErMGZPYzhVN2k1c1JWM
+ mlnUUp3MHp3eDNRZVNLczdZWkhTVFJ6OWo3V1dGUEVvK20rQmVBODhYN0QKbnVvc0xSRkkrNjZI
+ SENGQWUyeWJyVGFhKzNLakhSYWFQNU9FcE1pcFBrakhLUXJZK0YxUTFIN2phVHF2VGtDRQp2bU5
+ RU1ZDcVV4WUxtTEQ1cDBxR3VZTkFyOEFVRkZJMU9VMlJhemMxdndUck9wZVVZN3hKWHllRUF5Mj
+ N0V2M1CkdTNjA3ejk5OE5YWWE5UWR1blVjRzF1QjYvOTE4RzdNTlloWnV4dm5BaVBjeUl2cjRYU
+ 28wRlVldlhnOGt5OEkKMWdWeVlhbVZ1aFBKa29lazZoYVZWMlorcUVKTkRtUjI2Ui81VTNkWjhq
+ dUxieHIyL1BZSmwwNytrNkpleHZqeAo5N05ydTM3ZDBjd1E5M3hUY3VWaDFTV0Y0NlZFQkZZaXB
+ lMnBLekpkQTkrV0JGV1VEdkZXWFRodkhEMHZCR1BaCjlENWx5UT09Cj14dmViCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,176 +124,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-WIP
-
-Add attribute macro that converts a module definition into trace events.
-
-Currently it allocates a string to pass to
-::qemu_api::log::LogGuard::log_fmt. If you pass format_args! directly
-the arguments are not properly written, might be a bug in the
-qemu_api::log implementation.
-
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- rust/qemu-api-macros/src/lib.rs | 140 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 137 insertions(+), 3 deletions(-)
+ rust/qemu-api/src/bindings.rs | 3 +++
+ rust/qemu-api/wrapper.h       | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index b525d89c09e496a1f7f5582dc6d994e318f62bca..7d13b1c195085f1d153514cc01ec5c389160916a 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -3,10 +3,15 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index b8104dea8bea4348987978d5041cfc58e4d15a8f..d863b8bd7ecd449b5fe5c6f1be3bd7b4251b2883 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -56,3 +56,6 @@ unsafe impl Sync for VMStateField {}
  
- use proc_macro::TokenStream;
--use quote::quote;
-+use quote::{format_ident, quote};
- use syn::{
--    parse_macro_input, parse_quote, punctuated::Punctuated, spanned::Spanned, token::Comma, Data,
--    DeriveInput, Error, Field, Fields, FieldsUnnamed, Ident, Meta, Path, Token, Variant,
-+    parse::{Parse, ParseStream},
-+    parse_macro_input, parse_quote,
-+    punctuated::Punctuated,
-+    spanned::Spanned,
-+    token::Comma,
-+    Data, DeriveInput, Error, Field, Fields, FieldsUnnamed, FnArg, Ident, LitCStr, LitStr, Meta,
-+    Path, Token, Variant,
- };
- mod bits;
- use bits::BitsConstInternal;
-@@ -263,3 +268,132 @@ pub fn bits_const_internal(ts: TokenStream) -> TokenStream {
-         .unwrap_or_else(syn::Error::into_compile_error)
-         .into()
- }
+ unsafe impl Send for VMStateInfo {}
+ unsafe impl Sync for VMStateInfo {}
 +
-+#[derive(Debug)]
-+struct TraceModule {
-+    module_name: syn::Ident,
-+    trace_events: Vec<(proc_macro2::TokenStream, syn::Ident)>,
-+}
-+
-+impl Parse for TraceModule {
-+    fn parse(input: ParseStream) -> syn::Result<Self> {
-+        if input.peek(Token![pub]) {
-+            input.parse::<Token![pub]>()?;
-+        }
-+        input.parse::<Token![mod]>()?;
-+        let module_name: Ident = input.parse()?;
-+        let braced;
-+        _ = syn::braced!(braced in input);
-+        let mut trace_events = vec![];
-+        while !braced.is_empty() {
-+            braced.parse::<Token![fn]>()?;
-+            let name = braced.parse::<Ident>()?;
-+            let name_cstr = LitCStr::new(
-+                &std::ffi::CString::new(name.to_string()).unwrap(),
-+                name.span(),
-+            );
-+            let name_cstr_ident = format_ident!("trace_{name}_name");
-+            let arguments_inner;
-+            _ = syn::parenthesized!(arguments_inner in braced);
-+            let fn_arguments: Punctuated<FnArg, Token![,]> =
-+                Punctuated::parse_terminated(&arguments_inner)?;
-+            let body;
-+            _ = syn::braced!(body in braced);
-+            let trace_event_format_str: LitStr = body.parse()?;
-+            assert!(body.is_empty(), "{body:?}");
-+
-+            let trace_macro_ident = format_ident!("trace_{name}");
-+            let name_ident = format_ident!("trace_{name}_EVENT");
-+            let dstate = format_ident!("TRACE_{name}_DSTATE");
-+            let enabled = format_ident!("TRACE_{name}_ENABLED");
-+            trace_events.push(
-+                (
-+                    quote! {
-+                        static mut #dstate: u16 = 0;
-+                        const #enabled: bool = true;
-+                        const #name_cstr_ident: &::std::ffi::CStr = #name_cstr;
-+
-+                        static mut #name_ident: ::qemu_api::bindings::TraceEvent = ::qemu_api::bindings::TraceEvent {
-+                            id: 0,
-+                            name: #name_cstr_ident.as_ptr(),
-+                            sstate: #enabled,
-+                            dstate: &raw mut #dstate,
-+                        };
-+
-+                        macro_rules! #trace_macro_ident {
-+                            ($($args:tt)*) => {{
-+                                crate::#module_name::#name($($args)*);
-+                            }};
-+                        }
-+                        pub(crate) use #trace_macro_ident;
-+
-+                        pub fn #name(#fn_arguments) {
-+                            if #enabled
-+                                && unsafe { ::qemu_api::bindings::trace_events_enabled_count > 0 }
-+                            && unsafe { #dstate > 0 }
-+                            && unsafe {
-+                                (::qemu_api::bindings::qemu_loglevel & (::qemu_api::log::Log::Trace as std::os::raw::c_int)) != 0
-+                            } {
-+                                _ = ::qemu_api::log::LogGuard::log_fmt(
-+                                    format_args!("{}", format!("{} {}\n", stringify!(#name), format_args!(#trace_event_format_str)))
-+                                );
-+                            }
-+                        }
-+                    },
-+                    name_ident,
-+                )
-+            );
-+        }
-+
-+        Ok(Self {
-+            module_name,
-+            trace_events,
-+        })
-+    }
-+}
-+
-+#[proc_macro_attribute]
-+pub fn trace_events(_attr: TokenStream, item: TokenStream) -> TokenStream {
-+    let input = parse_macro_input!(item as TraceModule);
-+    let TraceModule {
-+        module_name,
-+        trace_events,
-+    } = input;
-+    let mut event_names = quote! {};
-+    let mut trace_event_impl = quote! {};
-+    let tracevents_len = trace_events.len() + 1;
-+    for (body, event_name) in trace_events {
-+        event_names = quote! {
-+            #event_names
-+            &raw mut #event_name,
-+        };
-+        trace_event_impl = quote! {
-+            #trace_event_impl
-+            #body
-+        };
-+    }
-+
-+    quote! {
-+        #[macro_use]
-+        mod #module_name {
-+            #![allow(static_mut_refs)]
-+            #![allow(non_upper_case_globals)]
-+
-+            #trace_event_impl
-+
-+            #[used]
-+            static mut TRACE_EVENTS: [*mut ::qemu_api::bindings::TraceEvent; #tracevents_len] = unsafe {
-+                [
-+                    #event_names
-+                    ::core::ptr::null_mut(),
-+                ]
-+            };
-+
-+            ::qemu_api::module_init!(
-+                MODULE_INIT_TRACE => unsafe {
-+                    ::qemu_api::bindings::trace_event_register_group(TRACE_EVENTS.as_mut_ptr())
-+                }
-+            );
-+        }
-+    }.into()
-+}
++unsafe impl Send for TraceEvent {}
++unsafe impl Sync for TraceEvent {}
+diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
+index 15a1b19847f2f2ab1a1a856621abb64f757070ea..540ef5eeac840deadd2e9a6f0dcd154f8dc1487a 100644
+--- a/rust/qemu-api/wrapper.h
++++ b/rust/qemu-api/wrapper.h
+@@ -69,3 +69,5 @@ typedef enum memory_order {
+ #include "qemu/timer.h"
+ #include "system/address-spaces.h"
+ #include "hw/char/pl011.h"
++#include "trace/event-internal.h"
++#include "trace/control-internal.h"
 
 -- 
 2.47.2
