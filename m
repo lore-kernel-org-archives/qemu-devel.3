@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1622C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 10:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C33C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 10:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uisI7-0005GZ-7f; Mon, 04 Aug 2025 06:19:39 -0400
+	id 1uisM3-0000Hm-Nl; Mon, 04 Aug 2025 06:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uisHx-00059o-2t
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 06:19:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uisLO-00005P-W5
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 06:23:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uisHu-0007N2-9O
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 06:19:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uisLN-00084Y-1x
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 06:23:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754302760;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1754302979;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1roduKq8d3fR89Fan6OUkTDIqiCuLcLEdeoD0kzWYWA=;
- b=BiXb3uiCGY7CZ8n9tclUXEEqcNh8MJryvQDIWGpmX+KtlpUSbrfSKjlw491v+B//ryr/Vl
- fFviLHNAM58y1HhegnsGvXt/dD4xStdWc7PSZWQrYTvHgJSs0GeFi3BtZZ5oifac5FX5h8
- bPYSf0twbgJkU2/pCfWo9MtfHCk5qs0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-taGsmsd4N2GkOsoQ_OU4zA-1; Mon, 04 Aug 2025 06:19:17 -0400
-X-MC-Unique: taGsmsd4N2GkOsoQ_OU4zA-1
-X-Mimecast-MFC-AGG-ID: taGsmsd4N2GkOsoQ_OU4zA_1754302756
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b79629bd88so1679687f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 03:19:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754302756; x=1754907556;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1roduKq8d3fR89Fan6OUkTDIqiCuLcLEdeoD0kzWYWA=;
- b=pfcbdxIWcEbf7UHt3e5d1a4ncMFrFLz4+gORF9bMruFqPZ++GzlScznI4RVzbK3asI
- 9vlaJcdoxscYX2lgou60f7XRZtk/FsTYIMOv8JclreisGuVGW1scvCYSIix4GTX7xuRe
- kE0zJqOsbb2XSINveiBeVuka1RmfVHyOKQ7jIxlFFJKcR2NhrUDg8SHx+LUH8GKKO+Js
- EOV1Tjqrz2b1Be2eFrOXAELsyufeJ7FqAZietbNmLrNHcX2YHXJgXn+10vnrliYs0EAr
- e5q2BhG9wYK8ADL2Kp8tYwI7i73RCNmryhnJ0jtZOCffGOuILyjRF0FSbJ+8UhfXz6lC
- SePw==
-X-Gm-Message-State: AOJu0YxEocnfnsDGt7dGoc0zaPOrgaRCVmA2YEEaGZ77/+zwlkpY7qPy
- 43kxmtPjBv/3XJVCY3fyxU19alvNEGJSq8O528P5lr49uA23trasViX2cfo0cvdp9Ll+fieABXe
- vUT8aYHYiGImoVwRq2j7KJ1v1+ji1qwoC8vs2uBRuiJTZirkn019Rmt3ry2b0uDEWb3neP6alIw
- 8LrYhYzVR+GIzILXceZGDaLSV+p3Bp9c8=
-X-Gm-Gg: ASbGncvntpbnz3WlBLV/0Wp15FW3QAJxA+hm2QCMj5AyBuvFIqDTQkkhp0imke8Bj6b
- OrXv/jS7R4TEk46UsFm6m+AMaYJvCjxoxdX/2zVX2jxGifNxWmYxFWkf+rfEgCM0GkfcAU3t67E
- kO/Z0ettEgcBiMMwHVRwvCwHc=
-X-Received: by 2002:a05:6000:310f:b0:3a5:8934:493a with SMTP id
- ffacd0b85a97d-3b8d94c114emr6412942f8f.44.1754302755954; 
- Mon, 04 Aug 2025 03:19:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGi79g5eNJmk2+zZX/91Ufvi+fPkxwf9rykGoVNEP0VygQtNk9JbhA7TJtpgvfb7ZB5+tQ2nbAiLHfbBMg9Y4k=
-X-Received: by 2002:a05:6000:310f:b0:3a5:8934:493a with SMTP id
- ffacd0b85a97d-3b8d94c114emr6412913f8f.44.1754302755467; Mon, 04 Aug 2025
- 03:19:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250801170212.54409-1-berrange@redhat.com>
- <20250801170212.54409-2-berrange@redhat.com>
-In-Reply-To: <20250801170212.54409-2-berrange@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Aug 2025 15:48:59 +0530
-X-Gm-Features: Ac12FXzO1BYv-T1xUL4bo8G09NmNbUAv5zih3NtBOfpSUGLMMQ5YwGih4bt6sNE
-Message-ID: <CAE8KmOxzskHzPsfUCZP56qmFHC7Rgi8x0HacUuZgzUv4UNiYyQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] migration: simplify error reporting after channel read
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ bh=roKcUYbJ74RWI74EySfiYdVlgpWGgeKrAHO/JSYtdg0=;
+ b=Ow6/gt06UJ4vRQuyjtTXHBuKXno+LnfcOq7xOmqWSIeWS3+aMKH0hBvekbIl+bTGqKPc85
+ QS3cCsvFJ4760YcYyKdCO2ps6QiFrDKCJjGX9HC5BFPOSAOpYucgubN3qkloTYzq4c1V9f
+ MwYk1XMEaEcGgR+OKCVijfIwm0JTLns=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-576-XFuUXBV6N2K061Y6QbnyIA-1; Mon,
+ 04 Aug 2025 06:22:57 -0400
+X-MC-Unique: XFuUXBV6N2K061Y6QbnyIA-1
+X-Mimecast-MFC-AGG-ID: XFuUXBV6N2K061Y6QbnyIA_1754302976
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B3161800165; Mon,  4 Aug 2025 10:22:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.62])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7F1919560AD; Mon,  4 Aug 2025 10:22:53 +0000 (UTC)
+Date: Mon, 4 Aug 2025 11:22:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
 Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Subject: Re: [PATCH 1/2] migration: simplify error reporting after channel read
+Message-ID: <aJCJ-tqqimnrDDgZ@redhat.com>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <20250801170212.54409-2-berrange@redhat.com>
+ <CAE8KmOxzskHzPsfUCZP56qmFHC7Rgi8x0HacUuZgzUv4UNiYyQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE8KmOxzskHzPsfUCZP56qmFHC7Rgi8x0HacUuZgzUv4UNiYyQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -101,41 +87,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2 Aug 2025 at 00:06, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
-> The code handling the return value of qio_channel_read proceses
-> len =3D=3D 0 (EOF) separately from len < 1  (error), but in both
-> cases ends up calling qemu_file_set_error_obj() with -EIO as the
-> errno. This logic can be merged into one codepath to simplify it.
->
->              } else {
->                  qio_channel_wait(f->ioc, G_IO_IN);
->              }
-> -        } else if (len < 0) {
-> -            len =3D -EIO;
->          }
->      } while (len =3D=3D QIO_CHANNEL_ERR_BLOCK);
->
->      if (len > 0) {
->          f->buf_size +=3D len;
-> -    } else if (len =3D=3D 0) {
-> -        qemu_file_set_error_obj(f, -EIO, local_error);
->      } else {
-> -        qemu_file_set_error_obj(f, len, local_error);
-> +        qemu_file_set_error_obj(f, -EIO, local_error);
->      }
+On Mon, Aug 04, 2025 at 03:48:59PM +0530, Prasad Pandit wrote:
+> On Sat, 2 Aug 2025 at 00:06, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > The code handling the return value of qio_channel_read proceses
+> > len == 0 (EOF) separately from len < 1  (error), but in both
+> > cases ends up calling qemu_file_set_error_obj() with -EIO as the
+> > errno. This logic can be merged into one codepath to simplify it.
+> >
+> >              } else {
+> >                  qio_channel_wait(f->ioc, G_IO_IN);
+> >              }
+> > -        } else if (len < 0) {
+> > -            len = -EIO;
+> >          }
+> >      } while (len == QIO_CHANNEL_ERR_BLOCK);
+> >
+> >      if (len > 0) {
+> >          f->buf_size += len;
+> > -    } else if (len == 0) {
+> > -        qemu_file_set_error_obj(f, -EIO, local_error);
+> >      } else {
+> > -        qemu_file_set_error_obj(f, len, local_error);
+> > +        qemu_file_set_error_obj(f, -EIO, local_error);
+> >      }
+> 
+> * But should  _file_set_error_obj(...  -EIO) be called for len == 0
+> (EOF) case? ie. function is trying to read from a file, at some point
+> it is bound to reach EOF.  '-EIO' indicates an I/O error, reaching EOF
+> could not be an error. Maybe we could just return zero(0) ?  (just
+> checking)
 
-* But should  _file_set_error_obj(...  -EIO) be called for len =3D=3D 0
-(EOF) case? ie. function is trying to read from a file, at some point
-it is bound to reach EOF.  '-EIO' indicates an I/O error, reaching EOF
-could not be an error. Maybe we could just return zero(0) ?  (just
-checking)
+The migration protocol knows whether it is expecting more data or not.
 
-Thank you.
----
-  - Prasad
+If we want more data, then a call to qemu_fill_buffer must successfully
+read at least 1 byte.
+
+If we don't want more data, then we would not have triggered any call
+to qemu_fill_buffer.
+
+Thus, a call to qemu_fill_buffer which gets EOF is an error scenario.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
