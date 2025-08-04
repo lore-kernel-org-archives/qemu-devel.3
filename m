@@ -4,94 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5FEC87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 16:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D1CC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 16:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiy8W-0006kF-S3; Mon, 04 Aug 2025 12:34:09 -0400
+	id 1uiyM1-0004QY-Op; Mon, 04 Aug 2025 12:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiwee-0003gM-IX
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:59:12 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uiwec-0005i8-M0
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:59:12 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-458bc3ce3beso12301915e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 07:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754319549; x=1754924349; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=olvZ5FB5VEyJUh+um1+/PFlqrknVlRoIebueFjtPUmo=;
- b=f7NJuXrVQomJ7IrQ26t/ssPZ6mYGtRotpiTcReNm5MJ41zibGaBy4peQOs7dyX8Ckm
- Aj4h+2kOXv413yIwvjF5lPrI/tNALglhL0mwFumDgFycDD3Rz7Gq6TZS1Qj/V4AlsPTa
- jD0C0BpEV9pT97RlSbYvA8F861DYrCZ595rf4ozqJTwSNavu75my6/Xd9x5pbY8wPp49
- TpbWmMGqjL7vcBQgZJyKSv/BqPRcWhLU6gk7hbtApSSWzkbYrpTa2y2Hw3P9qOTF6CQ5
- 1Jkg+7njZF5NOsUxe7xn12sqAK8piUai4kSGFnHIltHDM0zxVeJEQxYQ/BQZ2PML44UJ
- KF9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754319549; x=1754924349;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=olvZ5FB5VEyJUh+um1+/PFlqrknVlRoIebueFjtPUmo=;
- b=SMBhmmgrxGmdSFlW1J/gT+QIoPOUUXukE6O2dpGAZpObIfgrsQirNkflhpli/s7UhT
- kvf1bP8eOA37zhsbEiceZiYWPx+po6v6nnA/kUPs9scv62bMHBOzKtF+tocIDEThEUyc
- FEMVEAqrUYcGcQuynT99gcvTC15F7xbKzi2f93aIlcaQL9/+RxZZoudFLKhtn/FXWkAM
- K8SyXa4k1aXsn2X7fbNIm5cYIFI/8t+hch4TUwafedpA++UGrFiMLnfaW3QXfS9XkqL5
- iqvngwAW0Kn3PY8lrh+BrOwnOirby23V+TpXacXJmqN8rlnUnlncPFQ3T9cpQUOBTyNz
- 6IPw==
-X-Gm-Message-State: AOJu0YwdDKZudCHGg5bYR7ydPT38bnXW5FyO0t6g96Y7Bh/6Td5zQo/n
- 4vKwja2IWvFM4Nz0I7FNTGyROJLhl+f9ENhi81lvyJJUROHtUsrpyt0wonA1SBwYZBY=
-X-Gm-Gg: ASbGncs/1ZrP/5i+KgWP911wsbsQZgKe4hhHjtXGxUXXwLPU6dfbbmX1CQN2msZALvV
- q4H+ELBcATHQOKsWKZUD/Be+An0KzajEoLM7m39DgZ5n+1+FOet+12A6+BT6tam56NCjXVDuL2U
- k2FLBpq7QcQmkF4UTm5Sjeog0DRPfLeVQEcS4eCaDp2Ijt0xdDuSYEqxs9gGjyaC4h8essvMXTA
- fqbwW1h2Yc1gULlnskFQ4ql1t9UvptdzXyu6KqDH+6YT6n0Fn3Q6cR4mBRru8g1LLa/Ec81vISl
- PvPkjdQwtbSAULek3DykzG2Ha9cpEowVvNko3TPqgjHn4Po8+sKwUz7oT/c5opGzSH0afB/Ja5/
- n3NkGSN+8rStqraJXyfZckM4=
-X-Google-Smtp-Source: AGHT+IFB+KlRFh8QNM7P7+36bZBKsTgbF5Ph0CQ8QwY/UhPrItjAU429YfCIhLR5w81mmMCCE/KR4g==
-X-Received: by 2002:a05:600c:3504:b0:456:f00:4b5d with SMTP id
- 5b1f17b1804b1-458b6b34ccdmr67599445e9.22.1754319548972; 
- Mon, 04 Aug 2025 07:59:08 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4589ee5795esm172402005e9.25.2025.08.04.07.59.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 07:59:08 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6F2EA5F88A;
- Mon, 04 Aug 2025 15:59:07 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,  Michael Roth <michael.roth@amd.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH] scripts/make-release: Go back to cloning all the EDK2
- submodules
-In-Reply-To: <20250721153341.2910800-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Mon, 21 Jul 2025 16:33:41 +0100")
-References: <20250721153341.2910800-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 04 Aug 2025 15:59:07 +0100
-Message-ID: <87bjov6slg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uiweF-0001mE-5q
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:58:51 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uiweA-0005cw-Cq
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 10:58:46 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bwfhN571fz6GD5s;
+ Mon,  4 Aug 2025 22:53:56 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5320E140276;
+ Mon,  4 Aug 2025 22:58:24 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 4 Aug
+ 2025 16:58:23 +0200
+Date: Mon, 4 Aug 2025 15:58:22 +0100
+To: peng guo <engguopeng@buaa.edu.cn>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <eduardo@habkost.net>,
+ <qemu-devel@nongnu.org>, <wyguopeng@163.com>
+Subject: Re: [PATCH v2] hw/i386/pc: Avoid overlap between CXL window and PCI
+ 64bit BARs in QEMU
+Message-ID: <20250804155822.000027e2@huawei.com>
+In-Reply-To: <20250804142421.153126-1-engguopeng@buaa.edu.cn>
+References: <20250804142421.153126-1-engguopeng@buaa.edu.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,25 +70,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Mon,  4 Aug 2025 22:24:21 +0800
+peng guo <engguopeng@buaa.edu.cn> wrote:
 
-> In commit bd0da3a3d4f we changed make-release so that instead of
-> cloning every git submodule of EDK2 we only cloned a fixed list.
-> The original motivation for this was that one of the submodules:
->  * was from a non-github repo
->  * that repo had a "SSL certificate expired" failure
->  * wasn't actually needed for the set of EDK2 binaries we build
-> and at the time we were trying to build the EDK2 binaries in one of
-> our CI jobs.
->
-<snip>
+> When using a CXL Type 3 device together with a virtio 9p device in QEMU on a 
+> physical server, the 9p device fails to initialize properly. The kernel reports
+> the following error:
+> 
+>     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
+>     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
+>  
+> Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
+> device was overlapped by the memory window allocated for the CXL devices. As a
+> result, the kernel could not correctly access the BAR region, causing the
+> virtio device to malfunction.
+>  
+> An excerpt from /proc/iomem shows:
+>  
+>     480010000-cffffffff : CXL Window 0
+>       480010000-4bfffffff : PCI Bus 0000:00
+>       4c0000000-4c01fffff : PCI Bus 0000:0c
+>         4c0000000-4c01fffff : PCI Bus 0000:0d
+>       4c0200000-cffffffff : PCI Bus 0000:00
+>         4c0200000-4c0203fff : 0000:00:03.0
+>           4c0200000-4c0203fff : virtio-pci-modern
+> 
+> To address this issue, this patch adds the reserved memory end calculation 
+> for cxl devices to reserve sufficient address space and ensure that CXL memory 
+> windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with 
+> 64-bit BARs regions such as those used by virtio or other pcie devices, 
+> resolving the conflict.
+> 
+> QEMU Build Configuration:
+> 
+>     ./configure --prefix=/home/work/qemu_master/build/ \
+>                 --target-list=x86_64-softmmu \
+>                 --enable-kvm \
+>                 --enable-virtfs
+> 
+> QEMU Boot Command:
+> 
+>     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
+>         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
+>         -hda /home/work/gp_qemu/rootfs.img \
+>         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
+>         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
+>         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
+>         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
+>         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+>         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
+>         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
+>         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
+> 
+> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
+> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+> ---
+>  v1 -> v2: Make the patch clearer and add fixes
+> 
+>  hw/i386/pc.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2f58e73d3347..0f10f6edd23e 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -975,16 +975,16 @@ void pc_memory_init(PCMachineState *pcms,
+>  
+>      rom_set_fw(fw_cfg);
+>  
+> -    if (machine->device_memory) {
+> -        uint64_t *val = g_malloc(sizeof(*val));
+> -        uint64_t res_mem_end;
+> +    uint64_t res_mem_end = 0;
 
-Queued to maintainer/for-10.1-rc2, thanks.
+Looking at local code style, it's declarations at top of scope not
+inline.  That's what the coding style suggests as well:
+https://qemu-project.gitlab.io/qemu/devel/style.html#declarations
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+Given we do want that 0 to be obviously set near here, you could go
+with a final 
+} else {
+	res_mem_end = 0;
+}
+
+And not initialize at declaration (which will be up a long way).
+
+> +    if (pcms->cxl_devices_state.is_enabled) {
+> +        res_mem_end = cxl_resv_end;
+> +    } else if (machine->device_memory) {
+> +        res_mem_end = machine->device_memory->base
+> +                        + memory_region_size(&machine->device_memory->mr);
+> +    }
+>  
+> -        if (pcms->cxl_devices_state.is_enabled) {
+> -            res_mem_end = cxl_resv_end;
+> -        } else {
+> -            res_mem_end = machine->device_memory->base
+> -                          + memory_region_size(&machine->device_memory->mr);
+> -        }
+> +    if (res_mem_end) {
+> +        uint64_t *val = g_malloc(sizeof(*val));
+>          *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
+>          fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
+>      }
+
 
