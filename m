@@ -4,84 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43BF6C87FD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D07C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uitDT-0006pF-74; Mon, 04 Aug 2025 07:19:02 -0400
+	id 1uitET-0000Lp-K9; Mon, 04 Aug 2025 07:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uisyu-0008SW-0i
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:03:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uiswl-0007PN-DN
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:01:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uisys-0000Ye-Bx
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:03:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uiswh-0008Il-Fd
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:01:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754305429;
+ s=mimecast20190719; t=1754305291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1d0CY9GSomb1CkpFeckVYckUZpK69zq9jnU0awIDjPA=;
- b=KWNzxbUDtBMCpbkVeGyurpthGGcVi0vpBjCAs3988UX9KXbmtg22wSnBmDz1UM9qipO29H
- cxV5ygSO0BadW21XWijs0inU66I91XdFH/USJiFrq8/R91GCGu7JcHEeko6soM1McJKBIe
- ZfNEQR6v86e30b2HQg/JocIh9TG68E0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-FWKdA4-gMdeBoanjX583BQ-1; Mon, 04 Aug 2025 07:03:48 -0400
-X-MC-Unique: FWKdA4-gMdeBoanjX583BQ-1
-X-Mimecast-MFC-AGG-ID: FWKdA4-gMdeBoanjX583BQ_1754305425
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-458b9ded499so13442365e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 04:03:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754305425; x=1754910225;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1d0CY9GSomb1CkpFeckVYckUZpK69zq9jnU0awIDjPA=;
- b=H18LnucKfv64s4ZpaOuQlJuqna2rJgNcgSFoITDF7bq2qJPvbie3xaq/iQisLWrKaN
- IILiODb8/7z7sEdj6MfFRe0F9WD2YiirgpkNeHY+4hUyFby8ded2dFNqCEdM7zBf71rx
- Cy+Jg14Ik9w56WgjSWrd1HlVBNYVVRuq/kA8NkJLc2WW01hdjNXTKf86HoVq8h+WHACN
- uS1t7Gwfh0aLbBv/OK4IWMF9NyOp0jdjO1tScIU83Lq62PwuIQ7fzBwQq1rNiBwbDTsm
- P4x9D2zIWQXDpHoD9dDwoxTMifrTBKmN0b99TjntYweBq+Ew4mkekMXft+10+gkPK+nh
- z7Lg==
-X-Gm-Message-State: AOJu0Yx3a1vAeN0TTH7h/oSkgx+K4xGc0GytWhpvhlYZ4BaUQNj1patL
- HOU4bWYgouYwNhOy5ZLjhc1GERPRiDmtVNTcZ7osb6gcKWZAuk2AoHcHGDoj4Rr+lx7guPTTj99
- PoeMLpiACFYcui95q8Ry1ILc9O+G/xM7IpZ/X08b3Q88ZPx/kYnuwpe+tL2u4XXmM2kRGVxL71X
- CRKHXSeTtoPeP6veDlIesvJfabb59I6bU=
-X-Gm-Gg: ASbGncsq8A8w/barv8wjLX9JjmKOSY/LpAUTm6B2rtHPDVXYh6AAFFIsVunuBKJvykx
- pGtgiXhylq54sjCtqiZ2oyDMBQXztWaEbsd3ZBlsizSCNLX8YbW+QQODN2aYefiMHtqEe5XIDEZ
- REPtBHU3Ven/l6aZa7qyXcDHw=
-X-Received: by 2002:a05:600c:5248:b0:459:d4b5:623a with SMTP id
- 5b1f17b1804b1-459d4b56388mr36916015e9.9.1754305425221; 
- Mon, 04 Aug 2025 04:03:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHbyQXPe7QWzJDdxKh+xqR/bkaTvvAezq0RKYJYU8p+ZgTj4MQPEdrhzifgR5lH+Ocd0FGBhO3fBo4odTXmZAo=
-X-Received: by 2002:a05:600c:5248:b0:459:d4b5:623a with SMTP id
- 5b1f17b1804b1-459d4b56388mr36915685e9.9.1754305424730; Mon, 04 Aug 2025
- 04:03:44 -0700 (PDT)
+ bh=Uh4Pu4qORzVpObvVonRmF6kJnPZFMmhhlUmq5DIoVtU=;
+ b=OVpW2hkbjIsQmO7uALIUhcCV2Aluk7Q/KCi1VW9y0hRYkZLOOSwVU2lMaoNwrRGqknlPq5
+ h4ogfLMfFjIanVvxgEg2En/I2xrS2wZUmG//Il9KaMiPT+NYnX5vSVhekXg7rluDx9vX3k
+ cebVDdJFGqcXN2E+RDG7vQjk19zVVG8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-6s_TaA_oMT2cTAeZoUzKGw-1; Mon,
+ 04 Aug 2025 07:01:28 -0400
+X-MC-Unique: 6s_TaA_oMT2cTAeZoUzKGw-1
+X-Mimecast-MFC-AGG-ID: 6s_TaA_oMT2cTAeZoUzKGw_1754305287
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60D2519373DF; Mon,  4 Aug 2025 11:01:27 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.225])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 986EA1800359; Mon,  4 Aug 2025 11:01:25 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 4/4] hw/ssi/aspeed_smc: Fix incorrect FMC_WDT2 register read on
+ AST1030
+Date: Mon,  4 Aug 2025 13:01:08 +0200
+Message-ID: <20250804110108.2414355-5-clg@redhat.com>
+In-Reply-To: <20250804110108.2414355-1-clg@redhat.com>
+References: <20250804110108.2414355-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20250801170212.54409-1-berrange@redhat.com>
- <20250801170212.54409-2-berrange@redhat.com>
- <CAE8KmOxzskHzPsfUCZP56qmFHC7Rgi8x0HacUuZgzUv4UNiYyQ@mail.gmail.com>
- <aJCJ-tqqimnrDDgZ@redhat.com>
-In-Reply-To: <aJCJ-tqqimnrDDgZ@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Aug 2025 16:33:28 +0530
-X-Gm-Features: Ac12FXx3gqerdTokiC_jz6P5duck2uyaIB7L8Xwz5P9eKMbjXkPSo7eAa80on3I
-Message-ID: <CAE8KmOyGVhqQNmF1eZYWVENa6DCW0+m-mdT4ot1xSaBiEVFCiQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] migration: simplify error reporting after channel read
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,21 +85,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Aug 2025 at 15:52, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
-> The migration protocol knows whether it is expecting more data or not.
-> If we want more data, then a call to qemu_fill_buffer must successfully
-> read at least 1 byte.
-> If we don't want more data, then we would not have triggered any call
-> to qemu_fill_buffer.
-> Thus, a call to qemu_fill_buffer which gets EOF is an error scenario.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-* I see. In that case the change looks fine.
+On AST1030, reading the FMC_WDT2 register always returns 0xFFFFFFFF.
+This issue is due to the aspeed_smc_read function, which checks for the
+ASPEED_SMC_FEATURE_WDT_CONTROL feature. Since AST1030 was missing this
+feature flag, the read operation fails and returns -1.
 
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+To resolve this, add the WDT_CONTROL feature to AST1030's feature set
+so that FMC_WDT2 can be correctly accessed by firmware.
 
-Thank you.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 2850df6a81bcdc2e063dfdd56751ee2d11c58030 ("aspeed/smc: Add AST1030 support ")
+Link: https://lore.kernel.org/qemu-devel/20250804014633.512737-1-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
-  - Prasad
+ hw/ssi/aspeed_smc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index 614528b8ef65..e33496f50298 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -1857,7 +1857,8 @@ static void aspeed_1030_fmc_class_init(ObjectClass *klass, const void *data)
+     asc->resets            = aspeed_1030_fmc_resets;
+     asc->flash_window_base = 0x80000000;
+     asc->flash_window_size = 0x10000000;
+-    asc->features          = ASPEED_SMC_FEATURE_DMA;
++    asc->features          = ASPEED_SMC_FEATURE_DMA |
++                             ASPEED_SMC_FEATURE_WDT_CONTROL;
+     asc->dma_flash_mask    = 0x0FFFFFFC;
+     asc->dma_dram_mask     = 0x000BFFFC;
+     asc->dma_start_length  = 1;
+-- 
+2.50.1
 
 
