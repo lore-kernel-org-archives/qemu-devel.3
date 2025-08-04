@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AC8C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 03:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5FCC87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 03:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uili8-0007up-8S; Sun, 03 Aug 2025 23:18:05 -0400
+	id 1uilwn-0007Cn-2T; Sun, 03 Aug 2025 23:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1uilhr-0007rU-BD
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 23:17:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1uilhn-0001bp-OW
- for qemu-devel@nongnu.org; Sun, 03 Aug 2025 23:17:46 -0400
-Received: from loongson.cn (unknown [209.85.128.172])
- by gateway (Coremail) with SMTP id _____8BxnnNOJpBoGRo4AQ--.9728S3;
- Mon, 04 Aug 2025 11:17:35 +0800 (CST)
-Received: from mail-yw1-f172.google.com (unknown [209.85.128.172])
- by front1 (Coremail) with SMTP id qMiowJAxE+RIJpBowPE0AA--.64046S3;
- Mon, 04 Aug 2025 11:17:29 +0800 (CST)
-Received: by mail-yw1-f172.google.com with SMTP id
- 00721157ae682-71b71a8d5f0so27206667b3.3
- for <qemu-devel@nongnu.org>; Sun, 03 Aug 2025 20:17:29 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0eTWnOKPZ6jtVR8NB+tH6KjN4V7/tZN8Eq+X0gS3M5V5oK1KhdKt8dwfkWHTo2q3YEI0yho/gRzwP@nongnu.org
-X-Gm-Message-State: AOJu0YzzqYTPA6iopbvKwJHMai3cMf/PiwkCQcwnNQWlP0kdAc0GlYoN
- GUsSkrESM3ISIJaqIaJqnwW59fYGxSTbzGmNo1cHJA+zFkaJXStiZxerxg0DL47hmSmkRDtDLS9
- r5TWdvAap84AxbDmcpADOnnZ15oLkeQeZcrT7d9jiAQ==
-X-Google-Smtp-Source: AGHT+IHTrFMR7ZDhjyBTmIEcRv0+Y6NNt3wBRmulokuMJc5p5bhLk4iqn5PYhEy1vwY/sZLyyLlMB4VanbhBV1yDTek=
-X-Received: by 2002:a05:690c:6893:b0:71b:9483:56b5 with SMTP id
- 00721157ae682-71b948356e5mr42648647b3.30.1754277447621; Sun, 03 Aug 2025
- 20:17:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uilwk-0007Aq-TO
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 23:33:11 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uilwh-0004NM-M9
+ for qemu-devel@nongnu.org; Sun, 03 Aug 2025 23:33:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754278388; x=1785814388;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=v7YM17EEoPjCgYVxxeC3VS6wY83XauAuJa+XPjEz01s=;
+ b=F8DsElhfDtSYPBZ2EMTi40+qSBmGI2jwJZe8xskiDCzjA+nZvsqZV+Oe
+ 6Qy15C92/yO3agUCtl+MAtGSxRU/OSQB3ER7NCmYTtMcl8CnFhMBRuxEA
+ uKLFbDqPiN/FHP2u0Ru+K6w9dof5+jzP1j3qdLE0csFWiHHBBaR6F8Hnv
+ EImbqXP8xDAGdZaQt6PJ9uigGch/HxULlQfFuj3aAVPX5LiiVFRLiAdlr
+ s6jlA59VxYumPmSMvcOEbCQaAfzA1yQl9NsEx7/N1+AyACoRekGSW+WKe
+ 889qUyi2/CIQPiUNXURYON5Ffg9Ud+qetwW9KuMa0nVYZzNpO7w5H95FW g==;
+X-CSE-ConnectionGUID: heAC4okdQM2qUWZ3TqSjdQ==
+X-CSE-MsgGUID: s65HrmmgThOyMuMvzDjiNw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11511"; a="73988457"
+X-IronPort-AV: E=Sophos;i="6.17,258,1747724400"; d="scan'208";a="73988457"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2025 20:33:00 -0700
+X-CSE-ConnectionGUID: os7HehQUTJ6a0oWTOEyfVw==
+X-CSE-MsgGUID: BYqcN+eCStWfDNDd6q9d0A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,258,1747724400"; d="scan'208";a="169350591"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Aug 2025 20:32:58 -0700
+Message-ID: <6bcf6108-2d0c-44ae-a9f7-2f53ca23af7a@intel.com>
+Date: Mon, 4 Aug 2025 11:32:55 +0800
 MIME-Version: 1.0
-References: <20250804023206.1306413-1-wangrui@loongson.cn>
-In-Reply-To: <20250804023206.1306413-1-wangrui@loongson.cn>
-From: WANG Rui <wangrui@loongson.cn>
-Date: Mon, 4 Aug 2025 11:17:16 +0800
-X-Gmail-Original-Message-ID: <CAHirt9hZ20=UD+e2S0+hHAG+0+qojpu2=3974JTQAzSOf0iEAg@mail.gmail.com>
-X-Gm-Features: Ac12FXyNErktsJIf20PRORqcnYoSeyQE4VmBQSUm5-6HxMBsIF_DPF168VJRUHs
-Message-ID: <CAHirt9hZ20=UD+e2S0+hHAG+0+qojpu2=3974JTQAzSOf0iEAg@mail.gmail.com>
-Subject: Re: [PATCH] target/loongarch: Fix [X]VLDI raising exception
- incorrectly
-To: gaosong <gaosong@loongson.cn>, bibo mao <maobibo@loongson.cn>
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu@hev.cc, Zhou Qiankang <wszqkzqk@qq.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-CM-TRANSID: qMiowJAxE+RIJpBowPE0AA--.64046S3
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zw13JrWkWF4DGw4ftF4rXrc_yoW8WF1rpr
- 1akr1jkrWrtFWfZr9Ivw4UtF13G3yrKa1IgFn3t3WfArZ3Jw1kKF48KFZFyF17AFWUur4j
- 9F4Fy3ZxWa1jvacCm3ZEXasCq-sJn29KB7ZKAUJUUUU7529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
- AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
- JVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
- 8JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r1Y
- 6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
- AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE
- 2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcV
- C2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73
- UjIFyTuYvjxU7QzVUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] i386/kvm: Provide knob to disable hypercall patching
+ quirk
+To: Mathias Krause <minipli@grsecurity.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ Oliver Upton <oliver.upton@linux.dev>,
+ Sean Christopherson <seanjc@google.com>
+References: <20250801131226.2729893-1-minipli@grsecurity.net>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250801131226.2729893-1-minipli@grsecurity.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,71 +89,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
+On 8/1/2025 9:12 PM, Mathias Krause wrote:
+> KVM has a weird behaviour when a guest executes VMCALL on an AMD system
+> or VMMCALL on an Intel CPU. Both naturally generate an invalid opcode
+> exception (#UD) as they are just the wrong instruction for the CPU
+> given. But instead of forwarding the exception to the guest, KVM tries
+> to patch the guest instruction to match the host's actual hypercall
+> instruction. That is doomed to fail for regular operating systems, as
+> read-only code is rather the standard these days. But, instead of
+> letting go the patching attempt and falling back to #UD injection, KVM
+> propagates its failure and injects the page fault instead.
+> 
+> That's wrong on multiple levels. Not only isn't that a valid exception
+> to be generated by these instructions, confusing attempts to handle
+> them. It also destroys guest state by doing so, namely the value of CR2.
+> 
+> Sean attempted to fix that in KVM[1] but the patch was never applied.
+> 
+> Later, Oliver added a quirk bit in [2] so the behaviour can, at least,
+> conceptually be disabled. Paolo even called out to add this very
+> functionality to disable the quirk in QEMU[3]. So lets just do it.
+> 
+> Add a new property 'hypercall-patching=on|off' to the KVM accelerator
+> but keep the default behaviour as-is as there are, unfortunately,
+> systems out there relying on the patching, e.g. KUT[4,5].
+> 
+> For regular operating systems, however, the patching wouldn't be needed,
+> nor work at all. If it would, these systrems would be vulnerable to
+> memory corruption attacks, freely overwriting kernel code as they
+> please.
 
-On Mon, Aug 4, 2025 at 10:31=E2=80=AFAM WANG Rui <wangrui@loongson.cn> wrot=
-e:
->
-> According to the specification, [X]VLDI should trigger an invalid instruc=
-tion
-> exception only when Bit[12] is 1 and Bit[11:8] > 12. This patch fixes an =
-issue
-> where an exception was incorrectly raised even when Bit[12] was 0.
->
-> Test case:
->
-> ```
->     .global main
-> main:
->     vldi    $vr0, 3328
->     ret
-> ```
->
-> Reported-by: Zhou Qiankang <wszqkzqk@qq.com>
-> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+For non-coco VMs, the systems are surely vulnerable to memory corruption 
+attacks that the host VMM is free to modify the guest memory. It's 
+irrelevant to whether hypercall patching is needed or works.
+
+> [1] https://lore.kernel.org/kvm/20211210222903.3417968-1-seanjc@google.com/
+> [2] https://lore.kernel.org/kvm/20220316005538.2282772-2-oupton@google.com/
+> [3] https://lore.kernel.org/kvm/80e1f1d2-2d79-22b7-6665-c00e4fe9cb9c@redhat.com/
+> [4] https://gitlab.com/kvm-unit-tests/kvm-unit-tests/-/blob/f045ea5627a3/x86/apic.c#L644
+> [5] https://gitlab.com/kvm-unit-tests/kvm-unit-tests/-/blob/f045ea5627a3/x86/vmexit.c#L36
+> 
+> Cc: Oliver Upton <oliver.upton@linux.dev>
+> Cc: Sean Christopherson <seanjc@google.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Mathias Krause <minipli@grsecurity.net>
 > ---
->  target/loongarch/tcg/insn_trans/trans_vec.c.inc | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loo=
-ngarch/tcg/insn_trans/trans_vec.c.inc
-> index 78730029cb..ee10a9ebe1 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> @@ -3585,11 +3585,6 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *=
-a, uint32_t oprsz)
->      int sel, vece;
->      uint64_t value;
->
-> -    if (!check_valid_vldi_mode(a)) {
-> -        generate_exception(ctx, EXCCODE_INE);
-> -        return true;
-> -    }
+> Xiaoyao, I left out your Tested-by and Reviewed-by as I changed the code
+> (slightly) and it didn't felt right to pick these up. However, as only
+> the default value changed, the functionality would be the same if you
+> tested both cases explicitly (-accel kvm,hypercall-patching={on,off}).
 
-Should the INE exception be prioritized over the [A]SXD exception in this c=
-ase?
+No problem, I just re-tested it.
 
-- Rui
+Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-> -
->      if (!check_vec(ctx, oprsz)) {
->          return true;
->      }
-> @@ -3597,6 +3592,11 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *=
-a, uint32_t oprsz)
->      sel =3D (a->imm >> 12) & 0x1;
->
->      if (sel) {
-> +        if (!check_valid_vldi_mode(a)) {
-> +            generate_exception(ctx, EXCCODE_INE);
-> +            return true;
-> +        }
+> v3:
+> - switch default to 'on' to not change the default behaviour
+> - reference KUT tests relying on hypercall patching
+> 
+> v2:
+> - rename hypercall_patching_enabled to hypercall_patching (Xiaoyao Li)
+> - make use of error_setg*() (Xiaoyao Li)
+> 
+>   accel/kvm/kvm-all.c      |  1 +
+>   include/system/kvm_int.h |  1 +
+>   qemu-options.hx          | 10 +++++++++
+>   target/i386/kvm/kvm.c    | 45 ++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 57 insertions(+)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 890d5ea9f865..a68f779b6c1c 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3997,6 +3997,7 @@ static void kvm_accel_instance_init(Object *obj)
+>       s->kvm_dirty_ring_size = 0;
+>       s->kvm_dirty_ring_with_bitmap = false;
+>       s->kvm_eager_split_size = 0;
+> +    s->hypercall_patching = true;
+>       s->notify_vmexit = NOTIFY_VMEXIT_OPTION_RUN;
+>       s->notify_window = 0;
+>       s->xen_version = 0;
+> diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+> index 9247493b0299..ec891ca8e302 100644
+> --- a/include/system/kvm_int.h
+> +++ b/include/system/kvm_int.h
+> @@ -160,6 +160,7 @@ struct KVMState
+>       uint64_t kvm_eager_split_size;  /* Eager Page Splitting chunk size */
+>       struct KVMDirtyRingReaper reaper;
+>       struct KVMMsrEnergy msr_energy;
+> +    bool hypercall_patching;
+>       NotifyVmexitOption notify_vmexit;
+>       uint32_t notify_window;
+>       uint32_t xen_version;
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index ab23f14d2178..98af1a91e6e6 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -236,6 +236,7 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+>       "                dirty-ring-size=n (KVM dirty ring GFN count, default 0)\n"
+>       "                eager-split-size=n (KVM Eager Page Split chunk size, default 0, disabled. ARM only)\n"
+>       "                notify-vmexit=run|internal-error|disable,notify-window=n (enable notify VM exit and set notify window, x86 only)\n"
+> +    "                hypercall-patching=on|off (disable KVM's VMCALL/VMMCALL hypercall patching quirk, x86 only)\n"
+
+I would like to say "(configure KVM's VMCALL/VMCALL hypercall patching 
+quirk, x86 only)" instead of "disable"
+
+>       "                thread=single|multi (enable multi-threaded TCG)\n"
+>       "                device=path (KVM device path, default /dev/kvm)\n", QEMU_ARCH_ALL)
+>   SRST
+> @@ -318,6 +319,15 @@ SRST
+>           open up for a specified of time (i.e. notify-window).
+>           Default: notify-vmexit=run,notify-window=0.
+>   
+> +    ``hypercall-patching=on|off``
+> +        KVM tries to recover from the wrong hypercall instruction being used by
+> +        a guest by attempting to rewrite it to the one supported natively by
+> +        the host CPU (VMCALL on Intel, VMMCALL for AMD systems). However, this
+> +        patching may fail if the guest memory is write protected, leading to a
+> +        page fault getting propagated to the guest instead of an illegal
+> +        instruction exception. As this may confuse guests, this option allows
+> +        disabling it (x86 only, enabled by default).
 > +
->          value =3D vldi_get_value(ctx, a->imm);
->          vece =3D MO_64;
->      } else {
-> --
-> 2.50.1
->
+>       ``device=path``
+>           Sets the path to the KVM device node. Defaults to ``/dev/kvm``. This
+>           option can be used to pass the KVM device to use via a file descriptor
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 369626f8c8d7..a841d53c240f 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -3228,6 +3228,26 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+>       return 0;
+>   }
+>   
+> +static int kvm_vm_disable_hypercall_patching(KVMState *s, Error **errp)
+> +{
+> +    int valid_quirks = kvm_vm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
+> +    int ret = -1;
+> +
+> +    if (valid_quirks & KVM_X86_QUIRK_FIX_HYPERCALL_INSN) {
+> +        ret = kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0,
+> +                                KVM_X86_QUIRK_FIX_HYPERCALL_INSN);
+> +        if (ret) {
+> +            error_setg_errno(errp, -ret, "kvm: failed to disable "
+> +                             "hypercall patching quirk: %s",
+> +                             strerror(-ret));
+> +        }
+> +    } else {
+> +        error_setg(errp, "kvm: disabling hypercall patching not supported");
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>   int kvm_arch_init(MachineState *ms, KVMState *s)
+>   {
+>       int ret;
+> @@ -3367,6 +3387,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>           }
+>       }
+>   
+> +    if (!s->hypercall_patching) {
+> +        if (kvm_vm_disable_hypercall_patching(s, &local_err)) {
+> +            error_report_err(local_err);
+> +        }
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> @@ -6478,6 +6504,19 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask)
+>       }
+>   }
+>   
+> +static bool kvm_arch_get_hypercall_patching(Object *obj, Error **errp)
+> +{
+> +    KVMState *s = KVM_STATE(obj);
+> +    return s->hypercall_patching;
+> +}
+> +
+> +static void kvm_arch_set_hypercall_patching(Object *obj, bool value,
+> +                                            Error **errp)
+> +{
+> +    KVMState *s = KVM_STATE(obj);
+> +    s->hypercall_patching = value;
+> +}
+> +
+>   static int kvm_arch_get_notify_vmexit(Object *obj, Error **errp)
+>   {
+>       KVMState *s = KVM_STATE(obj);
+> @@ -6611,6 +6650,12 @@ static void kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
+>   
+>   void kvm_arch_accel_class_init(ObjectClass *oc)
+>   {
+> +    object_class_property_add_bool(oc, "hypercall-patching",
+> +                                   kvm_arch_get_hypercall_patching,
+> +                                   kvm_arch_set_hypercall_patching);
+> +    object_class_property_set_description(oc, "hypercall-patching",
+> +                                          "Disable hypercall patching quirk");
+
+Ditto, Could we use "Configure hypercall patching quirk"? It's not only 
+to disable it.
+
+>       object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
+>                                      &NotifyVmexitOption_lookup,
+>                                      kvm_arch_get_notify_vmexit,
 
 
