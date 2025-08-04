@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA3BBC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6D5C87FD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 14:08:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uivhm-0006qU-AW; Mon, 04 Aug 2025 09:58:22 -0400
+	id 1uivr0-0001if-7W; Mon, 04 Aug 2025 10:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uiulF-0004M7-BE
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:58:04 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uiulD-0000SN-3u
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:57:52 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76be6f0557aso3081785b3a.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 05:57:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754312268; x=1754917068; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VZ95h7fnUozk5YehSRRgXLq/R5cFsoMSexleWIPzr1E=;
- b=ZDYhNuqW+wAlcHHMC3E4CmqogPp14rcTk5dJCqSI7tcki+sACRQ6n4jjhvdE4Hk7xv
- LR/CuR7pDvY3ty1wgK8r+XK9rzjII+vYE8ZZXiOEk5eD/Ju+oFo8i9Tmc9atY5x2eayr
- hy5Am33F3PiVIFWuZq6Q1FykNTcznhmmwA+8Soe7qQmMZ/dtsFnFb4bkiZgQB0WzTrVb
- reflPfV4eOkUO75xfmGM5ogO4VcTk5yJI/2bL7EcqDeQnt7e23ecxlD65a1HYM/FScjB
- 5AiaH+ZvSh7edISl0PFmemVX7zj6WU8Y2Yh0tdnAMi6upITv0fyjEYwMdOvvwHv1leB2
- N/Rw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uiuu0-0006JN-Be
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:06:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uiuty-0002aK-L2
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:06:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754312812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8qOVKdP0WU7nbDCOR5hFiZKMm3eL5U/oVK0sPEPhBdQ=;
+ b=WhINHp58L6B0ENjLXLkulhyXWpYr/GS1vuM67VAgHtyiVN1DW/a/ub0G1nC/u1CPvl/3yi
+ vfON94kISV2ZCqSMbEV+zZiqBzX21kkugjg9LON/Hy4Am7sGJhpSLo5LRZ6LeBTEybHNbM
+ r8xq/qIhaDYcMTHjWMQsRH/MPpX0a18=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-394-3BiHxxZkONGBjBcou9sUYw-1; Mon, 04 Aug 2025 09:06:50 -0400
+X-MC-Unique: 3BiHxxZkONGBjBcou9sUYw-1
+X-Mimecast-MFC-AGG-ID: 3BiHxxZkONGBjBcou9sUYw_1754312810
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-459de0d5fb1so3778745e9.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 06:06:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754312268; x=1754917068;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VZ95h7fnUozk5YehSRRgXLq/R5cFsoMSexleWIPzr1E=;
- b=JvJRIMHY3yG/DmoOF0AV9pmWd4uijQHyEcLec0z1s5Y4qR1e8E6aq9N/RYuRSL1NL3
- pxBKe4dTH5U90zCHJo/5v095f9FrFr1F+3oSGTxyG3thfJHjked7KRpMNt8G9x0ckIVK
- ghJ6cP7nhPDozaatI3ujf/RRMOXbheKG1LFmsKpFaF+jhPr6T6GJaWUCdwJ8VzJNgQaD
- qFLpVHq8M4Hcr7cfn5d/bA+lFrtyGn3jCMrb164kGPHjldRxV4KlbQDzpnsoCqy5XCDr
- MQeYRkOB1pHeGbza/STdE3rR1yNoG6uu7KnmY5TFCGuUSSGr3URw3ZZjQHzS19kSyYqu
- MT0A==
-X-Gm-Message-State: AOJu0YzuJVg3GP/jAZ7Xza0A+xLDk0Ki3RIzxZSQFXibme9UiXNrdyeS
- nUTpULya/3bNhgM/cJaa46tCGrIxua3W3HGe3jUuw3llwivGG8LKSPn28q7oUQ==
-X-Gm-Gg: ASbGncu/RGaCHsA8A6viH0QGKOftP05lH8x1othcG+jFgiv29/Wl7w08vQ4K0tOIyHu
- /1DxQKkBqdqtq3B8r/fuSD3JSUPufbfuPF0xOd36ZAMGao/XRMP0l2uNxn+YCPkZkum6779P481
- V2eVvUxNKWMYpznlf0WQ7rEqerA28HrpQLnhdQXbSyv90pb3ykiKQXqu6aywp5sCDx8aOaDl/aW
- /d2Zkh2aNWtHg1ahZ4FUK8tLMWCD88mOJqwW5nR2oG9PcpROjJ8mpGWm8t5udGWwOLV/AifQoRx
- qxh9tibBSq3ZjQrE3+NQlg9I0p+lvpigaubqBVVPOyq3tqskHGrBEWOoQtIKXKJfSx/Akb3KHBR
- JIOOYaB7DnzeLnLraWhIS/g==
-X-Google-Smtp-Source: AGHT+IHqwalA5mv0sCr7uJw+dRTdaPYl92FZAvh8o2WM2wcsVV7XqEj04qKpFnzQ6Xm6HEVr3Mkwcw==
-X-Received: by 2002:a05:6a21:33a2:b0:21a:b78b:e916 with SMTP id
- adf61e73a8af0-23df9808914mr14177331637.27.1754312268503; 
- Mon, 04 Aug 2025 05:57:48 -0700 (PDT)
-Received: from ktock.. ([240d:1a:3b6:8b00:d117:15e5:e721:f1cd])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce8f800sm10488308b3a.42.2025.08.04.05.57.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 05:57:47 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH 1/4] meson: Add wasm64 support to the --cpu flag
-Date: Mon,  4 Aug 2025 21:57:14 +0900
-Message-ID: <ac10a681d44665df56bf7f35660719b29654119d.1754310749.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1754310749.git.ktokunaga.mail@gmail.com>
-References: <cover.1754310749.git.ktokunaga.mail@gmail.com>
+ d=1e100.net; s=20230601; t=1754312810; x=1754917610;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8qOVKdP0WU7nbDCOR5hFiZKMm3eL5U/oVK0sPEPhBdQ=;
+ b=i2NmUFcsFiuq5D9ik28Qv2BFSsxRc7vlHkV5+37fPf17Flojp6gxLHQySbLTg53BTb
+ sw2yKmMK/WIXSNh8ZbVlBcqWXE69MAJ2m98UcgCVJlfVUruxSCjnCIVl/KWled+eyzPt
+ zG/aUzvWHd+0jYFrhRftlpZVjZwS2OkdEa9eAHCWH4tO2TqCJCmCS7apst5LNT7aQaow
+ y6sV84O/jPCB3hEIQBVj7LbcQ3Xzg5pxGtuYF3gs4APQcSTwM/aD4FQjJALoDegmFbQ3
+ Y2vL7rV+rYPTa/SK0epsq7uSoTtDHKmHoK+VTpBFU2l5eKWOHL8cwLbPr2+t1xY9XIZK
+ PKsw==
+X-Gm-Message-State: AOJu0Yy17+C25a0wov9LvhsoG2Wfx91teiPx5MD0CdxmXZHLVahM5nPL
+ cIATrDVy0Ve2xvZgLNWL0b4fM6hV2O9JY4Hs2jdt4cn/Djwgzjj+m7wlC8TBzOMSZhStctzh7qP
+ M3xuJnyot+kdG25BHU4jQxDC6/sIvh0RabUSqBlYHbFPzp9x8WE619qyjMJ9RW/cmWKby1mzhup
+ Evab4mMSWICu+K+liqGchmuOSYBwNy/Kg=
+X-Gm-Gg: ASbGncteQrYMixk3btJVkoqSxSNGYr/RQvdbDdVgE35kI3dmdEyvteoCJ7Qke8F/wbf
+ 2HAR2WxoR1rO+9nAYzHzNi1X/XX4lqbQyhXqo++gYlTMl0rymATiwSACc4XOM4YQPvZ1EFiuUJx
+ 9DDhgwAX91b8X616Zf62ql
+X-Received: by 2002:a05:600c:3b08:b0:459:dde3:1a56 with SMTP id
+ 5b1f17b1804b1-459dde31ea1mr13015495e9.28.1754312809529; 
+ Mon, 04 Aug 2025 06:06:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7or/ul/1HirebCTMOerrXJwuQ0ZXrhhjELH+9/xSox7yTU+ZWuNhpMvYnmT8gClAj43NK+dJShPA26mCozwI=
+X-Received: by 2002:a05:600c:3b08:b0:459:dde3:1a56 with SMTP id
+ 5b1f17b1804b1-459dde31ea1mr13015145e9.28.1754312809062; Mon, 04 Aug 2025
+ 06:06:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x435.google.com
+References: <cover.1754060086.git.mkletzan@redhat.com>
+ <ad68bd5bdf4148770e3750fca4f14d0ae794538d.1754060086.git.mkletzan@redhat.com>
+ <CABgObfYBVF3aCOBtX-eQcm4M-WNAHxbMcjsUKiY3rLkinGe1qA@mail.gmail.com>
+ <aJB1oeH2eTIeeJne@wheatley.k8r.cz>
+ <CABgObfaivWp1v55KHjBK1Ba8fDgo3Lr+wF5HkHrvOz62Z_gLoQ@mail.gmail.com>
+ <aJChxtjDENrCEk3x@wheatley.k8r.cz>
+In-Reply-To: <aJChxtjDENrCEk3x@wheatley.k8r.cz>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 4 Aug 2025 15:06:36 +0200
+X-Gm-Features: Ac12FXzUl5Fdc4Brn2zspuzViFv-HQT9E__ubvbe1V4TWeryOUcLn7j5M7ERzu0
+Message-ID: <CABgObfYQmpXukS051YAq9NRPGvVWgarp8TTtz2mty988PO=w_g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust: Add antoher variant for impl_vmstate_struct!
+ macro
+To: Martin Kletzander <mkletzan@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org, 
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000cf335c063b89c7fc"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,76 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-wasm64 target enables 64bit pointers using Emscripten's -sMEMORY64=1
-flag[1]. This enables QEMU to run 64bit guests.
+--000000000000cf335c063b89c7fc
+Content-Type: text/plain; charset="UTF-8"
 
-Although the configure script uses "uname -m" as the fallback value when
-"cpu" is empty, this can't be used for Emscripten which targets to Wasm.
-So, in wasm build, this commit fixes configure to require --cpu flag to be
-explicitly specified by the user.
+Il lun 4 ago 2025, 14:04 Martin Kletzander <mkletzan@redhat.com> ha scritto:
 
-[1] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+> But that's nowhere to be found, including git log --walk-reflog and
+> manually searching various history trees.  And I doubted that you
+> rewrote the history of the rust-next branch
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
----
- configure   | 6 +++++-
- meson.build | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/configure b/configure
-index 825057ebf1..7f3893a42f 100755
---- a/configure
-+++ b/configure
-@@ -365,7 +365,6 @@ elif check_define __APPLE__; then
-   host_os=darwin
- elif check_define EMSCRIPTEN ; then
-   host_os=emscripten
--  cpu=wasm32
-   cross_compile="yes"
- else
-   # This is a fatal error, but don't report it yet, because we
-@@ -425,6 +424,8 @@ elif check_define __aarch64__ ; then
-   cpu="aarch64"
- elif check_define __loongarch64 ; then
-   cpu="loongarch64"
-+elif check_define EMSCRIPTEN ; then
-+  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
- else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-@@ -535,6 +536,9 @@ case "$cpu" in
-   wasm32)
-     CPU_CFLAGS="-m32"
-     ;;
-+  wasm64)
-+    CPU_CFLAGS="-m64 -sMEMORY64=1"
-+    ;;
- esac
- 
- if test -n "$host_arch" && {
-diff --git a/meson.build b/meson.build
-index e53cd5b413..291fe3f0d0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -52,7 +52,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
-+  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32', 'wasm64']
- 
- cpu = host_machine.cpu_family()
- 
-@@ -916,7 +916,7 @@ if have_tcg
-     if not get_option('tcg_interpreter')
-       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
-     endif
--  elif host_arch == 'wasm32'
-+  elif host_arch == 'wasm32' or host_arch == 'wasm64'
-     if not get_option('tcg_interpreter')
-       error('WebAssembly host requires --enable-tcg-interpreter')
-     endif
--- 
-2.43.0
+Yes, rust-next has its history rewritten.
+
+By the way the bug was probably related to some compiler changes, because I
+am almost certain it worked a couple months ago.
+
+Paolo
+
+--000000000000cf335c063b89c7fc
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 4 ago 2025, 14:04 Martin =
+Kletzander &lt;<a href=3D"mailto:mkletzan@redhat.com">mkletzan@redhat.com</=
+a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">But that&#39;s nowhere to be found, including git log --walk-reflog and<=
+br>
+manually searching various history trees.=C2=A0 And I doubted that you<br>
+rewrote the history of the rust-next branch</blockquote></div></div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">Yes, rust-next has its history rewri=
+tten.</div><div dir=3D"auto"><br></div><div dir=3D"auto">By the way the bug=
+ was probably related to some compiler changes, because I am almost certain=
+ it worked a couple months ago.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Paolo</div></div>
+
+--000000000000cf335c063b89c7fc--
 
 
