@@ -4,102 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577EBC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DEACC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 19:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj0rO-0006OW-Ip; Mon, 04 Aug 2025 15:28:39 -0400
+	id 1uj0rc-0006r2-Iu; Mon, 04 Aug 2025 15:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj0Hd-0002WO-2d
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:51:46 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uj0Im-0005Nv-R5
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:52:54 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj0Ha-0003M7-Nl
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:51:40 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2401b855980so35498195ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 11:51:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754333496; x=1754938296; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lnvlo+C5+pUp4ktyPBXpxRCxzwgcWN+EUUO9fLqWFL8=;
- b=M33dxmaUgP33Ly4hHi11JZxkUajTX4a0rHxiQzrmaqb2O0IqWztMN+QCKPwPG3VHyI
- Ed3XMGJ5Cc97mOLORwaylea74wcLWYR9TyyaD6eAz43k9uigfzrmGK+fqjS+lhLcjw8x
- VwlsHjcRPgaOJuDB1HfbvpDiUn8C6DWqEVEsOYYtpmLamdhWveA5aQASl3FnlsymbL4Y
- RZHcR8uiYbqFpYHl90Jitz8BeNaC0tAaskyWDIWxfRdMB9/KihsP1g1RKKPZrHTtn8n8
- iB2ZtBFLReHvO36d/8VknljOTtaolDjNpJxGwtP2hd7ubDf5geSUpN/e3ssOf6TNQR94
- rwNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754333496; x=1754938296;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lnvlo+C5+pUp4ktyPBXpxRCxzwgcWN+EUUO9fLqWFL8=;
- b=PTO57dT3rt7fOjjUQ6ZwB10HdaPJQtFBzPP1If5feJkQdEnw2J7ZU3k7BwrS1AxGsJ
- QJMyge9IYeI7RZavI8EG5PMX7E6zccl/YEvLgiVt4HFlrWsWdNujiZdvP8tKq4J0bJ15
- sBY9KKQWTWa9eczEdwoF9ZNnlhyc6BTmBKEdLhGRjS3wvgGRnB5Fhf/F8tokCcZoqI98
- ASWLWNW95eT+n/UghU3ByYV7G50NRoOsmJYS4l7tYng1YdEAgNNo3WLRRqry4elhvwDf
- um/fXWDnBq9Bywj/vUKmvP2CjJEVEJzETqFeBi3YU8/bn3J57mHjxA2GlK6AuRNRQ9Rc
- qyxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWetLN92Z/pHktV8MHrXzeIRUjM2OjoVOoLXbJ9oWuvDSwMKRPk/F6qc5b1Pq3UrgQKJ9J+6iY2rlla@nongnu.org
-X-Gm-Message-State: AOJu0Yy+kFFIdR1lf9+FPyYdLow61qxVBHIUYumO9If996+b0Z+ugETd
- U3UO9hNv3o0jFgZOuaKyAEYnERBkMmshmQvZYykg0b5u22C2Q19rP67CPkMtvu85PWk=
-X-Gm-Gg: ASbGnculwKHaDC8V21n/XMRuTEkm6yRPJUfS4MNjUlniJ5yPZOy6tsiegfunSWq9Q+F
- 6ag02OqjvEwKk8CuSPd8yGGKP7fZRpNmubSUhJhbNYPzUpr+RAfsUnpvzxITN5P5Wig0q0hZ/aQ
- bXwDa8xe8UnYs0EoFeoMA+E0PuQ+4h0XtLGZNun6Abv14oklYRjaaB2VymFrJwuL3yZ2iJWUO8V
- QzVbmYIKFQ/EW3cnc9TooigShmzwU2YjLsUH9h4jQIeU2YxkOtHjd+hKE4PBP//ZOCkPztLVbDg
- gl5x6fUcMaPsEo5qh5yF1dtW7u9DZXPuIPTGfoiVOgWQgdr2oSgFi14XoIyIRD9wTFmdQ8uT0rn
- 6cyt5v2+agDMC2fF71NjjaLz28FEtMxySV1Q=
-X-Google-Smtp-Source: AGHT+IFVoMmcqQGC0lNpv8oIUSfyUw9DV2HNSEfsLMQcpa1E7mbQ2WsRKEGziCIgb452T0J1wXlBtw==
-X-Received: by 2002:a17:902:e54f:b0:240:6766:ac01 with SMTP id
- d9443c01a7336-24246f3e8a3mr169181865ad.2.1754333496481; 
- Mon, 04 Aug 2025 11:51:36 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8aaafefsm116817005ad.160.2025.08.04.11.51.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 11:51:36 -0700 (PDT)
-Message-ID: <5716cbc5-1ed3-407d-a932-aac01f5eb269@linaro.org>
-Date: Mon, 4 Aug 2025 11:51:35 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uj0Il-0003Ux-9z
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 14:52:52 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B53F9219F7;
+ Mon,  4 Aug 2025 18:52:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754333569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G8fvFrJce7GkUrfeJQ/he1NeBLiQt/hMIjqYUITGWoY=;
+ b=HzQ0JPEK6TUTU6DqQdeQ9e+rHqztuMuZpKcnWBTCfs8DlRwjlN6QK8fDMBJaTb5idivLu/
+ U76eKO2Rf7Ra269PEAVyP45Incb9Wy5DJA6MpAvERz4oUyJQpIgGKL1DjqiaZWRtU4RgI0
+ ea3gBS7SGtqNgQOEG2U/2lOKDfABpEc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754333569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G8fvFrJce7GkUrfeJQ/he1NeBLiQt/hMIjqYUITGWoY=;
+ b=6agGksn2mPtuXvVpbkuxODlfyjRxb7slyLEwjAyk5gKApnU8lGCehxLgoZrmAQ4SMR/Me6
+ AOXav+4xegdrjbBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754333569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G8fvFrJce7GkUrfeJQ/he1NeBLiQt/hMIjqYUITGWoY=;
+ b=HzQ0JPEK6TUTU6DqQdeQ9e+rHqztuMuZpKcnWBTCfs8DlRwjlN6QK8fDMBJaTb5idivLu/
+ U76eKO2Rf7Ra269PEAVyP45Incb9Wy5DJA6MpAvERz4oUyJQpIgGKL1DjqiaZWRtU4RgI0
+ ea3gBS7SGtqNgQOEG2U/2lOKDfABpEc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754333569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G8fvFrJce7GkUrfeJQ/he1NeBLiQt/hMIjqYUITGWoY=;
+ b=6agGksn2mPtuXvVpbkuxODlfyjRxb7slyLEwjAyk5gKApnU8lGCehxLgoZrmAQ4SMR/Me6
+ AOXav+4xegdrjbBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 36EAA133D1;
+ Mon,  4 Aug 2025 18:52:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EsCAOoABkWiqMgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 04 Aug 2025 18:52:48 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>, Peter Maydell
+ <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Cedric Le Goater
+ <clg@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>, Alex
+ Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH V2 1/1] hw/intc/arm_gicv3_kvm: preserve pending
+ interrupts during cpr
+In-Reply-To: <4c6c57c6-fe7d-44a4-a875-3ede9e0aba58@oracle.com>
+References: <1752689274-233526-1-git-send-email-steven.sistare@oracle.com>
+ <CAFEAcA8P4H7n=uXe3qredxVMwB4QtDfZtVyuuTWBLwa6enGR3g@mail.gmail.com>
+ <63d52f3e-5d29-45be-986c-3827a5c0cb5c@oracle.com>
+ <CAFEAcA-TsQdFt7S=qyd14gxW095t=Nx2skaxnmxtGUhR9pubtA@mail.gmail.com>
+ <4c6c57c6-fe7d-44a4-a875-3ede9e0aba58@oracle.com>
+Date: Mon, 04 Aug 2025 15:52:46 -0300
+Message-ID: <87ms8e3on5.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/17] WHPX support for Arm
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Roman Bolshakov
- <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250804142326.72947-1-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250804142326.72947-1-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; ARC_NA(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,oracle.com:email];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,135 +124,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
-> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v3)
-> 
-> Missing features:
-> - PSCI state sync with Hyper-V: notably breaks reboots when multiple cores are enabled
-> - Interrupt controller save-restore
-> - Debug register sync
-> - SVE register sync
-> - Adding a migration blocker because of the items above.
-> 
-> Note:
-> 
-> "accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-> as part of this series to make it compilable as a whole.
-> 
-> "hw/arm: virt: add GICv2m for the case when ITS is not available" present in both the HVF
-> vGIC and this series.
-> 
-> Updates since v3:
-> - Disabling SVE on WHPX
-> - Taking into account review comments incl:
-> 
-> - fixing x86 support
-> - reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
-> which can be reduced even further down the road.
-> - generalize get_physical_address_range into something common between hvf and whpx
-> 
-> Updates since v2:
-> - Fixed up a rebase screwup for whpx-internal.h
-> - Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
-> - Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
-> 
-> Updates since v1:
-> - Shutdowns and reboots
-> - MPIDR_EL1 register sync
-> - Fixing GICD_TYPER_LPIS value
-> - IPA size clamping
-> - -cpu host now implemented
-> 
-> Mohamed Mediouni (16):
->    hw/arm: virt: add GICv2m for the case when ITS is not available
->    whpx: Move around files before introducing AArch64 support
->    whpx: reshuffle common code
->    whpx: ifdef out winhvemulation on non-x86_64
->    whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
->    hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
->    whpx: interrupt controller support
->    whpx: add arm64 support
->    whpx: copy over memory management logic from hvf
->    target/arm: cpu: mark WHPX as supporting PSCI 1.1
->    hw/arm: virt: cleanly fail on attempt to use the platform vGIC
->      together with ITS
->    whpx: arm64: clamp down IPA size
->    hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
->      and HVF
->    whpx: arm64: implement -cpu host
->    target/arm: whpx: instantiate GIC early
->    MAINTAINERS: Add myself as a maintainer for WHPX
-> 
-> Philippe Mathieu-Daudé (1):
->    accel/system: Introduce hwaccel_enabled() helper
-> 
->   MAINTAINERS                                   |    9 +-
->   accel/hvf/hvf-all.c                           |    7 +-
->   accel/meson.build                             |    1 +
->   accel/whpx/meson.build                        |    7 +
->   {target/i386 => accel}/whpx/whpx-accel-ops.c  |    6 +-
->   accel/whpx/whpx-common.c                      |  666 +++++++++++
->   hw/arm/virt-acpi-build.c                      |    4 +-
->   hw/arm/virt.c                                 |   34 +-
->   hw/i386/x86-cpu.c                             |    4 +-
->   hw/intc/arm_gicv3_common.c                    |    3 +
->   hw/intc/arm_gicv3_whpx.c                      |  261 +++++
->   hw/intc/meson.build                           |    1 +
->   include/hw/arm/virt.h                         |    2 +
->   include/hw/boards.h                           |    3 +-
->   include/hw/intc/arm_gicv3_common.h            |    3 +
->   include/system/hvf_int.h                      |    2 +
->   include/system/hw_accel.h                     |   13 +
->   .../whpx => include/system}/whpx-accel-ops.h  |    4 +-
->   include/system/whpx-all.h                     |   20 +
->   include/system/whpx-common.h                  |   26 +
->   .../whpx => include/system}/whpx-internal.h   |   14 +-
->   include/system/whpx.h                         |    4 +-
->   meson.build                                   |   21 +-
->   target/arm/cpu.c                              |    3 +-
->   target/arm/cpu64.c                            |   19 +-
->   target/arm/hvf-stub.c                         |   20 -
->   target/arm/hvf/hvf.c                          |    6 +-
->   target/arm/hvf_arm.h                          |    3 -
->   target/arm/meson.build                        |    2 +-
->   target/arm/whpx/meson.build                   |    5 +
->   target/arm/whpx/whpx-all.c                    | 1021 +++++++++++++++++
->   target/arm/whpx/whpx-stub.c                   |   15 +
->   target/arm/whpx_arm.h                         |   17 +
->   target/i386/cpu-apic.c                        |    2 +-
->   target/i386/hvf/hvf.c                         |   10 +
->   target/i386/whpx/meson.build                  |    1 -
->   target/i386/whpx/whpx-all.c                   |  569 +--------
->   target/i386/whpx/whpx-apic.c                  |    2 +-
->   38 files changed, 2191 insertions(+), 619 deletions(-)
->   create mode 100644 accel/whpx/meson.build
->   rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
->   create mode 100644 accel/whpx/whpx-common.c
->   create mode 100644 hw/intc/arm_gicv3_whpx.c
->   rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
->   create mode 100644 include/system/whpx-all.h
->   create mode 100644 include/system/whpx-common.h
->   rename {target/i386/whpx => include/system}/whpx-internal.h (96%)
->   delete mode 100644 target/arm/hvf-stub.c
->   create mode 100644 target/arm/whpx/meson.build
->   create mode 100644 target/arm/whpx/whpx-all.c
->   create mode 100644 target/arm/whpx/whpx-stub.c
->   create mode 100644 target/arm/whpx_arm.h
-> 
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-For the whole series:
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> On 8/4/2025 10:47 AM, Peter Maydell wrote:
+>> On Mon, 4 Aug 2025 at 15:23, Steven Sistare <steven.sistare@oracle.com> wrote:
+>>>
+>>> Fabiano, could you sanity check this patch? Thanks!
+>>>
+>>> Peter, more below:
+>>>
+>>> On 7/21/2025 6:24 AM, Peter Maydell wrote:
+>>>>> @@ -883,13 +895,17 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+>>>>>                                   GICD_CTLR)) {
+>>>>>            error_setg(&s->migration_blocker, "This operating system kernel does "
+>>>>>                                              "not support vGICv3 migration");
+>>>>> -        if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
+>>>>> +        if (migrate_add_blocker_modes(&s->migration_blocker, MIG_MODE_NORMAL,
+>>>>> +                                      MIG_MODE_CPR_TRANSFER, errp) < 0) {
+>>>>
+>>>> Why did you change this? It's the general "if no support, can't
+>>>> migrate at all" check, which seems unrelated to cpr-transfer.
+>>>
+>>> "If no support", then cpr-transfer should also be blocked.
+>> 
+>> But migrate_add_blocker() is a wrapper for
+>> migrate_add_blocker_modes(..., MIG_MODE_ALL). So doesn't
+>> this change go from "block migration for normal, and cpr-transfer,
+>> and everything else" to "block migration for normal and
+>> cpr-transfer but let the rest through"?
+>> 
+>> That doesn't seem like the right thing; if it *is* the right
+>> thing then it should be a separate patch with a commit message
+>> that explains why we do it; and we would probably want to
+>> audit all the other uses of plain migrate_add_blocker() and/or
+>> change that function's name or API...
+>
+> Yup, my bad. I will revert this hunk.
+>
 
-Booting a linux guest (direct kernel boot + edk2):
-./build/qemu-system-aarch64.exe \
--M virt,accel=whpx \
--m 2048 \
--cpu host \
--kernel out/Image.gz \
-./out/host.ext4 \
--nographic \
--append ' root=/dev/vda'
+With that,
 
-Thanks,
-Pierrick
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
