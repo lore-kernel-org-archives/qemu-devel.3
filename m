@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4319C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 09:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05044C87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 09:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uirmy-0007vJ-6d; Mon, 04 Aug 2025 05:47:28 -0400
+	id 1uirwM-0008D5-MV; Mon, 04 Aug 2025 05:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uirjx-0006P6-Rx; Mon, 04 Aug 2025 05:44:24 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uirjv-0007Qh-7h; Mon, 04 Aug 2025 05:44:21 -0400
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal
- [10.202.2.50])
- by mailfhigh.phl.internal (Postfix) with ESMTP id AB2EE140009A;
- Mon,  4 Aug 2025 05:44:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-10.internal (MEProxy); Mon, 04 Aug 2025 05:44:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1754300653; x=
- 1754387053; bh=jpnt22zTHvEUsgW/BSYGgA1OXSj3OtziOPzXW38pL3Y=; b=R
- Cydhr1YRske9XpipiUtJsp4o2BRo/t/kEebMPj5m6Zcah+3VuFKiHXPuHnVq/uQw
- DuaAYC4o8CdoI3On4PY6PyBwtgMJL+6Gy66jj7PmPV+QX0waAJgYkvbKxYq9gYWG
- flmj2aFUsPIJ4dC5aiCE1nTUKR/Rf7vbv3mqW7d5TcWOjq0UNZvU59ga+Ip732s0
- 8j3Bdx1XG3l2/QADkQiQMNfM8NNSocnu3y8l62egSfvnITo444EjfUoM+bAjZ4z3
- 4HTS4jxQq8+N1k8il8WT1JoGa3NkhhdN88UIYb1W7oxAzA5kZo6vaRgGcbaNrCHY
- lm6Gp6R5iyP4IjmNGXqhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1754300653; x=1754387053; bh=jpnt22zTHvEUsgW/BSYGgA1OXSj3OtziOPz
- XW38pL3Y=; b=BiTF2lMO6xnFDvqjq/oSS/s/4te9RX2TBUxpc9YZPf+H9aLPOmg
- 30g1wsnI+EYIBUJV/Akz5HDDZjTWjUDbBRmTbFo75u0BAiUBwT4VGIGlTRhReAXC
- fD37NC+TTG8JGcR1Hh9R5fzV7vh+uuJfidtNurOUQBLfV9pBBjjZv5l9+xWmqKoZ
- TdnYbTLNEBrh3ZXrzsca5y/GaZyzjIxZ3IulgjVcEZAkhwm77TBciJdialKodyNQ
- Tb9im/KaqHKj68OqC7b+iES2aAwSKVbSjj3wPpgjGqw1hXsN7YhwZBjSePzaO/B1
- OI+U9gtnudhhsbrT8Se5ll1JUmkzaOC5L4g==
-X-ME-Sender: <xms:7ICQaNSTcHta_EcbNjlXTjbG-dQn_Oa34HgohlkHyawHgj56oefWwg>
- <xme:7ICQaMJ8Gltfz6r68AHNox_y6--ZQhDIkJBnIK5u1pkLaHPL7zc3VhAR-H4kqt8Xq
- R3u6TAUPCK76ho-gDE>
-X-ME-Received: <xmr:7ICQaDBRYvDb1tI6nMOwe9eVFZMlGIfsjzmNWT-oazzqKzBAoyPKC7Na>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduudduleeiucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepfeeuhfeljedtueetveelvedtkefgkedukeehheettdfggfefveduhfetudfhfeeu
- necuffhomhgrihhnpegumhgrqdhhvghlphgvrhhsrdgtfidptghtrhhlrdgtfienucevlh
- hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhr
- vghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuth
- dprhgtphhtthhopehksghushgthhesmhgvthgrrdgtohhmpdhrtghpthhtohepqhgvmhhu
- qdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqsghlohgtkh
- esnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhr
- ghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:7ICQaFBEIMpM5-0QzElJCrX4KCDcGItPsix4FYYkNae0XwHJn9RAuw>
- <xmx:7ICQaFAgfuxMW1_YBlsuybz5UGPNE53l3IZvQLDU-ek-kkoDc-Rx6Q>
- <xmx:7ICQaApfkWF7KYFKOAnapIYIxYco1YiS-3_Y5MmKbv9iDf2RryXqMw>
- <xmx:7ICQaPnMfHNh5RzsU7AF5lSWtO6zBbs-EpdY5sM657V4_hT76DnG-g>
- <xmx:7YCQaE-AhHOG-ha_te98rYMhLNFGeMtjYPJZmBMQCkQdimTfIfJr4rUD>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Aug 2025 05:44:12 -0400 (EDT)
-Date: Mon, 4 Aug 2025 11:44:10 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Keith Busch <kbusch@meta.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Keith Busch <kbusch@kernel.org>
-Subject: Re: [PATCH] hw/nvme: cap MDTS value for internal limitation
-Message-ID: <aJCA6oB1LZdHbAz9@AALNPWKJENSEN.aal.scsc.local>
-References: <20250801142457.3012213-1-kbusch@meta.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uirvZ-0007uK-A6
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:56:37 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uirvV-00023d-8n
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:56:18 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e8bbb605530so4465828276.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 02:56:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754301374; x=1754906174; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KOqsSEw3G+BuDvoLjcnxIL9b8fBGsvkEUCwqMi3L3Mg=;
+ b=HdWi6O67OBeC72ac/26yUK/j3LQdplnEjoHkxXLja9GrW2325/HXzwevY2A3HCP9MX
+ YKqoiwd2aj/CrC1d/s6P8QH+aYkeaxxuTRvt0HtZYyUmVYS6NNAwIjhyLnCXOMbGt6Md
+ cOZA0ZSzuz2pI9VdZB7aTnKrtvVJHC4v1n84OdkxPsTpqs/ETCQBp/t4tJAaWb9Sgfx3
+ 2M+13MZ4LT9sARPkrUcD4QzcCoNYzW0pDOUHPTPg5dOzXldzoC7nGx/iGWLkCnx1Rulg
+ Q1SmWdk5qiB/JdpAa4TiTp+iNTvmePKr/h3uxAJ8dmnWyZju8LE0Mb7DTycvM2Lv3bPv
+ AeQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754301374; x=1754906174;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KOqsSEw3G+BuDvoLjcnxIL9b8fBGsvkEUCwqMi3L3Mg=;
+ b=Donbqr2QNoU8r4gYEIPZS7ArTxfeqiP78YP/c/bctqkEX4OGpC57/V78gNh4VXjNrs
+ PT6RK0koipsMaaVAfXUJAjF5ZXF3GZ/VaNZGrNjlBBAPfNg4krmbmy1Ukjl/eeEQ/epH
+ mlBbLQPK48w8TNda8sW2pk6WkSw3ba2c0V368lazsGthlrhIDdpSxK7eHIxzKiUVNIal
+ oikKTinU5/rPC9q3sAxR0ZXlHRk6T6P0yQ9Bc+pfJfvF588Xr76vDa3hMf3Wcug6GJmS
+ Wxl9+xM7jkKcpBIY0LwmQe8bVqsz8oQ72guPpgSFcSdxB4ZquBZrmr3RbeVor9LRd1VH
+ BvzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6dhK3jLRVzAKIp+LE/J2+x09qEd7EWQ3lpTH8/qfDF9U0RBPpK0CyNOW4eK8OMzSXho3QQgt3PXH4@nongnu.org
+X-Gm-Message-State: AOJu0YzQpkUYthhFTxnXDgwiYayebr8pq5wrZRSFNpVHBbWfS4Iau/YV
+ wNf3HeqpdgE+nLQpfmSYwtDzW5U+j/Ozqf7a0ngwl7XvXoFe60BsYu5wzalAANZIaqo4n7ET0VH
+ v/rd/5pmrNMMliWJIFHCPEviGVIr+zwF+01r7y0f7IA==
+X-Gm-Gg: ASbGnctn5TEDHhUDv2Vi0W2SU85eH8QAl9zt6AR4QQ3jRWs9AdlcHcFrRC3GmPjG1ZV
+ CCOxfZ2KCP/zc0xs7si41+1sqD3zMLSiT1wF7xd1uxF0MeU1JOHAWUXKgZ0WLlFH83ZYHoIGLLl
+ Ht4lfnM3aEkOo9tOnf0d+LLcj2JkwvnFaCV7W0B3GfUUbKQZFf0PLHu0BHltcONfd+0Z5QF+IC0
+ WD5XkZ6
+X-Google-Smtp-Source: AGHT+IEcQelZBtDfDGT9WcdIGIedsIk6Z9IX1Q0roEbzabDdKOW+v6GXIrhnYN9mxoTbJBEhlWXPdCT5RflKMomRsnw=
+X-Received: by 2002:a05:690c:4b03:b0:719:d8dc:343f with SMTP id
+ 00721157ae682-71b5a860096mr186497437b3.15.1754301374462; Mon, 04 Aug 2025
+ 02:56:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="zq02knK2vAlAjncK"
-Content-Disposition: inline
-In-Reply-To: <20250801142457.3012213-1-kbusch@meta.com>
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=its@irrelevant.dk;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20250801001305.2352554-1-gustavo.romero@linaro.org>
+ <CAFEAcA-6wr+frdc4idVs45POcPVG54FFTbtqPu3x9Jzfa-gwow@mail.gmail.com>
+ <87ms8f76yp.fsf@draig.linaro.org>
+In-Reply-To: <87ms8f76yp.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Aug 2025 10:56:02 +0100
+X-Gm-Features: Ac12FXxW3RZOZAnP-zfOUBCd4-J_z5xO5EzDSix_XZ04Fw3p8ooDZcrMTUNdk1o
+Message-ID: <CAFEAcA9zfqimHofFB-Ch=zaSc9gLuA3MaxhMoeAF-wP+meKDag@mail.gmail.com>
+Subject: Re: [PATCH v2] tests/tcg: Fix run for tests with specific plugin
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org, 
+ pierrick.bouvier@linaro.org, manos.pitsidianakis@linaro.org, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,128 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 4 Aug 2025 at 10:48, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Fri, 1 Aug 2025 at 01:18, Gustavo Romero <gustavo.romero@linaro.org>=
+ wrote:
+> >>
+> >> Commit 25aaf0cb7f (=E2=80=9Ctests/tcg: reduce the number of plugin tes=
+t
+> >> combinations=E2=80=9D) added support for running tests with specific p=
+lugins
+> >> passed via the EXTRA_RUNS variable.
+> >>
+> >> However, due to the optimization, the rules generated as a shuffled
+> >> combination of tests and plugins might not cover the rules required to
+> >> run the tests with a specific plugin passed via EXTRA_RUNS.
+> >>
+> >> This commit fixes it by correctly generating the rules for the tests
+> >> that require a specific plugin to run, which are now passed via the
+> >> EXTRA_RUNS_WITH_PLUGIN instead of via the EXTRA_RUNS variable.
+> >>
+> >> The fix essentially excludes the tests passed via EXTRA_RUNS_WITH_PLUG=
+IN
+> >> from the rules created by the shuffled combination of tests and plugin=
+s,
+> >> to avoid running the tests twice, and generates the rules for the
+> >> test/plugin combinations listed in the EXTRA_RUNS_WITH_PLUGIN variable=
+.
+> >>
+> >
+> > Since Alex is away and I'm doing a target-arm pullreq for rc2
+> > anyway, I'll take this via target-arm.next.
+>
+> Are you sending that today? Otherwise I'm happy to pull it now I'm back.
 
---zq02knK2vAlAjncK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Pullreq went out on Friday, just hasn't been merged yet:
+ https://lore.kernel.org/qemu-devel/20250801155159.400947-1-peter.maydell@l=
+inaro.org/
 
-On Aug  1 07:24, Keith Busch wrote:
-> From: Keith Busch <kbusch@kernel.org>
->=20
-> The emulated device had let the user set whatever max transfers size
-> they wanted, including no limit. However the device does have an
-> internal limit of 1024 segments. NVMe doesn't report max segments,
-> though. This is implicitly inferred based on the MDTS and MPSMIN values.
->=20
-> IOV_MAX is currently 1024 which 4k PRPs can exceed with 2MB transfers.
-> Don't allow MDTS values that can exceed this, otherwise users risk
-> seeing "internal error" status to their otherwise protocol compliant
-> commands.
->=20
-> Signed-off-by: Keith Busch <kbusch@kernel.org>
-> ---
->  hw/nvme/ctrl.c | 5 +++++
->  1 file changed, 5 insertions(+)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index e764ec7683..5bfb773b5a 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -8335,6 +8335,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error *=
-*errp)
->          host_memory_backend_set_mapped(n->pmr.dev, true);
->      }
-> =20
-> +    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
-> +        error_setg(errp, "mdts exceeds IOV_MAX");
-> +        return false;
-> +    }
-> +
->      if (n->params.zasl > n->params.mdts) {
->          error_setg(errp, "zoned.zasl (Zone Append Size Limit) must be le=
-ss "
->                     "than or equal to mdts (Maximum Data Transfer Size)");
-> --=20
-> 2.47.3
->=20
->=20
-
-Hi Keith,
-
-Looks good.
-
-The dma helpers can actually deal with this, given a relatively simple
-patch:
-
-diff --git i/system/dma-helpers.c w/system/dma-helpers.c
-index 6bad75876f11..fd169237efb2 100644
---- i/system/dma-helpers.c
-+++ w/system/dma-helpers.c
-@@ -158,6 +158,11 @@ static void dma_blk_cb(void *opaque, int ret)
-         }
-         if (!mem)
-             break;
-+
-+        if (dbs->iov.niov =3D=3D IOV_MAX) {
-+            break;
-+        }
-+
-         qemu_iovec_add(&dbs->iov, mem, cur_len);
-         dbs->sg_cur_byte +=3D cur_len;
-         if (dbs->sg_cur_byte =3D=3D dbs->sg->sg[dbs->sg_cur_index].len) {
-
-In hw/nvme/ctrl.c the checks can then be dropped:
-
-diff --git i/hw/nvme/ctrl.c w/hw/nvme/ctrl.c
-index 518d02dc6670..4d8f678cfda5 100644
---- i/hw/nvme/ctrl.c
-+++ w/hw/nvme/ctrl.c
-@@ -849,10 +849,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg,=
- hwaddr addr, size_t len)
-             return NVME_INVALID_USE_OF_CMB | NVME_DNR;
-         }
-
--        if (sg->iov.niov + 1 > IOV_MAX) {
--            goto max_mappings_exceeded;
--        }
--
-         if (cmb) {
-             return nvme_map_addr_cmb(n, &sg->iov, addr, len);
-         } else {
-@@ -864,10 +860,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg,=
- hwaddr addr, size_t len)
-         return NVME_INVALID_USE_OF_CMB | NVME_DNR;
-     }
-
--    if (sg->qsg.nsg + 1 > IOV_MAX) {
--        goto max_mappings_exceeded;
--    }
--
-     qemu_sglist_add(&sg->qsg, addr, len);
-
-     return NVME_SUCCESS;
-
-This allows >2MB transfers with PRPs. However, it is not a clean fix
-since it does not deal with the issue that remains for the CMB (which
-uses the blk_aio api directly.
-
-I'll queue up your patch for now. Thanks!
-
---zq02knK2vAlAjncK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmiQgOYACgkQTeGvMW1P
-DemEhAf/Tj4wFi8drWhAtSc39we7beTXJJRZdrG9Wtqb5tEVBdGPSh84dKJ2CxQr
-yoFtdXxJXNtRJPnj1Dy9DzwezvYPuQCZhd0yE35UPBjPixqRibND6BNz2y0ioTkk
-p9V4vmKvLkknPmhE36f/2k0Uz/yJTf3+zSrSg8/PfqenD1hzPJuvfNf1d6tejhcr
-aGK213soWMnGJ0hcgww4UhiaxdVOE8bQH9WaiKTmTu1CtZW0QhzyO21dKCqdY3fr
-k+WpvnWPbuo4zz5EgtxigEd8XBtCweOAnVMLU15a+ZgUlzssYML+ez4ae9yQ8xAn
-7uMm3uyJbk6lQsADXAYf6xYsM9XpQQ==
-=emtF
------END PGP SIGNATURE-----
-
---zq02knK2vAlAjncK--
+thanks
+-- PMM
 
