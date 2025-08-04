@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87751C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC6AC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiveP-0008FI-Tp; Mon, 04 Aug 2025 09:54:53 -0400
+	id 1uivhg-0006Nu-Hm; Mon, 04 Aug 2025 09:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengnici@gmail.com>)
- id 1uirte-0006c9-E4
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:54:22 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uiulC-0004LI-3f
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:58:01 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhengnici@gmail.com>)
- id 1uirtb-0001Xl-S1
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 05:54:22 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-71a3935fa8dso21677297b3.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 02:54:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uiul9-0000Rt-G0
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:57:49 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7698e914cd2so4298679b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 05:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754301258; x=1754906058; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=d35v01zl8S6rDQ3Kca2SzSIHkB/du7cfCRcpcWcGXhM=;
- b=TqfYEaeve0O7mp23yInxUXmlomaBbnlruw+3DRFWveJHTIUV/CT3++jW9g67lCtBNG
- eDW+4NXWlmI9icAR5eTBa6NEMqVce7r0XC69tdQDZ1iHpG2Qo1RlQMhUjMtKKOqiO5p5
- ZEAiLhpHl7KsDKDnU5Sr+wBdvm+oMh/GOpQaCu6wQGMQ9T9W7OnydvNPR3hYcBgxlD6+
- CGj7n9ukkps7DIsz27aBQA5csjfySzP/DdlWUJKmJ+VI33mJlBU+FITc6JnQCXovwlYA
- ZA2VyKH34GIw2vzqJjtTxLHWAjNQXEF58eEdkZeOxFIeGD1w35jkr0B+7pC03hgpwRSg
- qQQA==
+ d=gmail.com; s=20230601; t=1754312265; x=1754917065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Ou1EzKr76Oqq1Kf+6va7jAMq3p8Sa43C28/ENtgZaA=;
+ b=FuX8p6XDZMRZE+8Ep0tBCmgfFE+FedIWfZLI5c0bSB6PW7frZcW0dLsCfTDFjWA9/P
+ gDsCopdPD0GsMpfuyzIEV/+3CJZrJjNECsbxtJrRoGP6Fqo9DKiwb/k/low9EHbFb9h8
+ QPbty3bxp/5DuUO0p2MB0SZRDV3zwrQgoPnBsjqG5HcGtlaOm4HyvtdBM55SVZ2j3P/V
+ HetVihh46PZRETNx54/3ncIdxpVhuccU70EyAr128wWMsTDET9PD9K+E0Q5logg69IxA
+ 998Vafv8J/Ymqrkcu2VBmPBaJmjMywPkpy6kQ4+7vkxiNqCfyRqc2J7lmBAagG8qglm4
+ U4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754301258; x=1754906058;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754312265; x=1754917065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=d35v01zl8S6rDQ3Kca2SzSIHkB/du7cfCRcpcWcGXhM=;
- b=ZTVVKDILAyQMrSfur6cvZAVnU9HTprDiMAf1dPtWtDcGite3Da+rum+89gR2rm2s/S
- k02PUbU0xlgi+JE4X7G/KI2tPxsaMxHruiXqEPXoeILTd+TxQk8CFi2WIntZbOqTaLT3
- e3+9NwNP7o8ooDvw6Giu84OBFBS+ugN0fYg3MDPeeYuUzwfEz1iXIaX7t9SoiPJHjsxm
- OvPD6mV+AW9Vwjtde3QxDtnJefmR4JczRrTJj8pwM1HuIdJySJPWDEHefbmCGcAZoDl7
- tAENJuAgWXdV/f6F4O6+vCLUCHizi1l2suCdiOZXcLMTbVtNqBNt9xF0c/++iiFu88xE
- n8rw==
-X-Gm-Message-State: AOJu0Yx3SZAHTOdSNwn0tZ6DKfPU6perZXN9KDHC2azhbl/nDPvYfV2s
- MOJs9CsioXz020Bi/UivQZQVWq29fIiKo+1gr2vTokiycmAsZSJQYFVTzTcS8DWiBwizu/Bd/s6
- EK4db4WV9xdxzt4BnjhnFxztqAvFGIXI=
-X-Gm-Gg: ASbGncvNqMftJnodYP2WxpTWwC+l8WDJfh+3QzpSby/Y2upde+oC9ijxc3ueRf61hK0
- T2gbPegJiHe1VI6ud/+T6JHZkvGDe4OcWeUs29/zcLiTC5Kog1/jVXxdF7UhQGaO/8N/V4oaHZ4
- 4Ns5PfMqEhjAI39Oer9SA5oOCISS4KBG1khNOLHfYMu+N7zBv8uJNTh7B4pQ8M9iqgzYwjjhkXI
- wDxuUadWJBS57G2IQ==
-X-Google-Smtp-Source: AGHT+IFkHmSmQ70TMQ/FkmuIp8D6E+CLzwOFuNjM/YajXTMtp+/ZbNKgEDu2CMFwYVFD4NTeRsQG/9Mf/ahhow40ZBQ=
-X-Received: by 2002:a05:690c:f91:b0:712:c14a:a388 with SMTP id
- 00721157ae682-71b7ed127abmr100892717b3.7.1754301258458; Mon, 04 Aug 2025
- 02:54:18 -0700 (PDT)
+ bh=4Ou1EzKr76Oqq1Kf+6va7jAMq3p8Sa43C28/ENtgZaA=;
+ b=MzLkZKZqa+S2xSjo9niQgXVs6EVg3sLA3FgcP+HEOxQzeGd5VvP9vwsrNkhRzqtEym
+ duwJKCKwySUUD9WrMkR2LlLl4eLd5jJPz68zNmtlZkHzTMxeK1vhk3+QASortZQJ4oLh
+ INYfvJuvz1GpRml+DX9Ck0hVXcP4ITfoupKwcQ1Ea3TSsbZEO6qvOex3jquuQJks1k2b
+ 4vrf+hyBVz06l3HlHyg5VvHcZnil0dpg6RM1vVkgIj/+fv/MjBFMATJLPJBFJ+Q3qh2Q
+ pHD6iU07YjEle4UeT3sAVesL1Iy8whVU/2eRXcI9yQ+Um+I3/prLC/O33G/i9puIF0l1
+ SQmQ==
+X-Gm-Message-State: AOJu0YzlshW5L9kZtEEQOAA3epismO67ID9c3tMHCLcEHkHRocS7+q3J
+ PwcL28ipDDZVHxSt2sEbWr58r3FO2AjcXE8FTSsMhKwpl5THpeUTUIiCIRi2pg==
+X-Gm-Gg: ASbGncup4RbKG8ErnsuFSQILkci6Ac787jpwZ2Uvq189LuIr4qs9+9OFyXPRRXpGv4m
+ AnFMQVL47ctMDF9D4g5GtpUYbkYtMM3qRdlSkwJDaZbW5AnVAJf7MKoh+p5byw6KAAvrPi+gaHE
+ 5ENGKj/66RpY73UIChXUZrz89r5cjjXJ8Cnq0qRWbtEFPIUs+SQ+saoYlmyVoB9yeyGPd/5lXN/
+ xFHylx2Tyq06wBuLFchgsIgooJMWeQyccLNY3jDxIszrkeJLkoYrDksZDRKk70b0jIVp5OMIvxx
+ FRlIO53TwKuPl4hWjyylT2hs7r40Q226UPiXAkoSYdKSKneluCFtyrOo0seMrxC3PJcB20KeIQ7
+ dO8M1U/cxVplwu/u/T0PIyg==
+X-Google-Smtp-Source: AGHT+IFdsI1752nXQP1dymV9MnBwpvn3AEmBLWYlVYC5WVT9wyU08KI8f1eMGo0Dbe55mgY+lNpiEw==
+X-Received: by 2002:a05:6a00:23c8:b0:748:eedb:902a with SMTP id
+ d2e1a72fcca58-76bec4d2292mr10138988b3a.17.1754312264991; 
+ Mon, 04 Aug 2025 05:57:44 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:d117:15e5:e721:f1cd])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bcce8f800sm10488308b3a.42.2025.08.04.05.57.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 05:57:44 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH 0/4] wasm: Enable 64bit guests on TCI using wasm64
+Date: Mon,  4 Aug 2025 21:57:13 +0900
+Message-ID: <cover.1754310749.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20250804074641.6021-1-zhengnici@gmail.com>
- <CAPMcbCq9d+fRVkZpWRQxOdyHOOTAgBT6dNE1VJdUhfAZTqr6hQ@mail.gmail.com>
-In-Reply-To: <CAPMcbCq9d+fRVkZpWRQxOdyHOOTAgBT6dNE1VJdUhfAZTqr6hQ@mail.gmail.com>
-From: nici zheng <zhengnici@gmail.com>
-Date: Mon, 4 Aug 2025 17:54:07 +0800
-X-Gm-Features: Ac12FXwFpEOpbOoqJzqN6oFji_8cdx1AoyY99Dv_FHfqBAAWN-NoNlF4Q7j5ee0
-Message-ID: <CADAmGD-jPL=yd53oGLGZXV-DRuyfxPScc8E9-ZwaVRN8u7Lxdw@mail.gmail.com>
-Subject: Re: [PATCH] qga: Fix error handling in system suspend mode causing
- libvirt to hold lock indefinitely
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, 
- panzerzheng <panzerzheng@tencent.com>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000056ec36063b87177d"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=zhengnici@gmail.com; helo=mail-yw1-x1134.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 04 Aug 2025 09:13:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,364 +102,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000056ec36063b87177d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This patch series enables the TCI of the Wasm build to run 64bit
+guests. Unlike the previous series[1], this patch series is implemented by
+adding support for WebAssembly's "wasm64" target which enables 64bit
+pointers.
 
-Hi Kostiantyn,
+In the previous discussion[2], the main challenge of using wasm64 was its
+limited adoption, particularly the lack of support in our dependency
+(libffi) and some engines such as Safari.
 
-Thank you again for your valuable feedback. I've conducted further
-tests to address your questions, and here are the details:
+For libffi, I've completed the addition of wasm64 support upstream[3] so it
+can be used.
 
-1. Regarding exit code 1:
-   I performed an experiment with the kernel configuration:
+To support wasm32 engines, this patch uses Emscripten's compatibility
+feature, -sMEMORY64=2 flag[4]. This flag still enables 64bit pointers in the
+C code while Emscripten lowers the output binary to wasm32 and limits the
+maximum memory size to 4GB. As a result, QEMU can run on wasm32 engiens
+while still supporting 64bit guests.
 
-   When CONFIG_HIBERNATION is disabled in the kernel:
-   [root@VM-23-13-opencloudos OpenCloudOS-Kernel]# grep -i HIBERNATION
-/boot/config-6.6.47-12.oc9.x86_64
-   CONFIG_ARCH_HIBERNATION_POSSIBLE=3Dy
-   # CONFIG_HIBERNATION is not set
+# Overview of the build process
 
-   The /sys/power/state shows no "disk" support:
-   [root@VM-0-94-opencloudos patch]# cat /sys/power/state
-   freeze mem
+To compile QEMU with Emscripten, the following dependencies are required.
+The emsdk-wasm-cross.docker environment includes all necessary components
+and can be used as the build environment:
 
-   While "systemctl status systemd-hibernate" returns code 3:
-   [root@VM-0-94-opencloudos patch]# systemctl status systemd-hibernate
-   =E2=97=8B systemd-hibernate.service - Hibernate
-    Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate.service; stat=
-ic)
-        Active: inactive (dead)
-      Docs: man:systemd-hibernate.service(8)
-   [root@VM-0-94-opencloudos patch]# echo $?
-   3
+- Emscripten SDK (emsdk) v4.0.10
+- Libraries cross-compiled with Emscripten (please see also
+  emsdk-wasm-cross.docker for build steps)
+  - GLib v2.84.0
+  - zlib v1.3.1
+  - libffi v3.5.2
+  - Pixman v0.44.2
 
-   The actual hibernation command returns code 1 due to kernel incompatibil=
-ity:
-   [root@VM-0-94-opencloudos patch]# systemctl hibernate
-       Call to Hibernate failed: Sleep verb 'hibernate' is not
-configured or configuration is not supported by kernel
-   [root@VM-0-94-opencloudos patch]# echo $?
-   1
+The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
+pointer support.
 
-   This confirms exit code 1 indicates actual hibernation support
-failure in this scenario.
+emconfigure ./configure --cpu=wasm64 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
 
-2. Regarding mode_supported logic:
-   I understand your confusion about the check in
-systemd_supports_mode(mode, &local_err). Another experiment
-illustrates the issue:
+If the output needs to run on wasm32 engines, use --wasm64-memory64=2
+flag. This flag propagates the value to Emscripten's -sMEMORY64 flag[4].
 
-   On a system with hibernation enabled:
-   [opencloudos@VM-23-13-opencloudos ~]$ grep -i HIBERNATION
-/boot/config-6.6.92+
-   CONFIG_ARCH_HIBERNATION_POSSIBLE=3Dy
-   CONFIG_ARCH_HIBERNATION_HEADER=3Dy
-   CONFIG_HIBERNATION=3Dy
-   CONFIG_HIBERNATION_SNAPSHOT_DEV=3Dy
+emconfigure ./configure --cpu=wasm64 --wasm64-memory64=2 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
 
-   /sys/power/state includes "disk":
-   [opencloudos@VM-23-13-opencloudos ~]$ cat /sys/power/state
-   freeze mem disk
+Either of the above commands generates the following files:
 
-   However, "systemctl status systemd-hibernate" still returns code 3
-regardless of actual support:
-   [opencloudos@VM-23-13-opencloudos ~]$ sudo systemctl status systemd-hibe=
-rnate
-   =E2=97=8B systemd-hibernate.service - Hibernate
-        Loaded: loaded
-(/usr/lib/systemd/system/systemd-hibernate.service; static)
-        Active: inactive (dead)
-          Docs: man:systemd-hibernate.service(8)
+- qemu-system-x86_64.js
+- qemu-system-x86_64.wasm
 
-   [output truncated for brevity]
+Guest images can be packaged using Emscripten's file_packager.py tool.
+For example, if the images are stored in a directory named "pack", the
+following command packages them, allowing QEMU to access them through
+Emscripten's virtual filesystem:
 
-   [opencloudos@VM-23-13-opencloudos ~]$ echo $?
-   3
+/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
 
-   This shows "systemctl status" isn't reliable for determining
-support. The actual execution result of "systemctl hibernate" is
-necessary to accurately verify suspend-to-disk capability.
+This process generates the following files:
 
-Thanks again for your patience and guidance. I'll revise the patch
-accordingly and resubmit as v2.
+- qemu-system-x86_64.data
+- load.js
 
-Best regards,
-panzerzheng
+Emscripten allows passing arguments to the QEMU command via the Module
+object in JavaScript:
 
+Module['arguments'] = [
+    '-nographic', '-m', '512M',
+    '-L', 'pack/',
+    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
+    '-kernel', 'pack/bzImage',
+    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
+];
 
-Kostiantyn Kostiuk <kkostiuk@redhat.com> =E4=BA=8E2025=E5=B9=B48=E6=9C=884=
-=E6=97=A5=E5=91=A8=E4=B8=80 16:18=E5=86=99=E9=81=93=EF=BC=9A
+The sample repository[5] (tcidev64 branch) provides a complete setup,
+including an HTML file that implements a terminal UI.
 
->
->
-> On Mon, Aug 4, 2025 at 10:47=E2=80=AFAM <zhengnici@gmail.com> wrote:
->
->> From: panzerzheng <panzerzheng@tencent.com>
->>
->> When "/sys/power/state" does not contain "disk", the operating system
->> does not support hibernation. Executing "sudo systemctl hibernate" will
->> return an exit code of 1 with the stderr output: "Call to Hibernate
->> failed:
->> Sleep verb 'hibernate' is not configured or configuration is not
->> supported by kernel".
->>
->
->> This patch adds handling for exit code 1 in the systemd_suspend function=
-,
->> setting appropriate error messages when the kernel does not support
->> standby.
->> It also adds local_err handling in the guest_suspend function to set
->> mode_supported to false.
->>
->> Without these fixes, libvirt would hold the lock indefinitely.
->>
->> Signed-off-by: panzerzheng <panzerzheng@tencent.com>
->> ---
->>  qga/commands-linux.c | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
->> index 9e8a934b9a..26229396c3 100644
->> --- a/qga/commands-linux.c
->> +++ b/qga/commands-linux.c
->> @@ -1300,6 +1300,12 @@ static void systemd_suspend(SuspendMode mode,
->> Error **errp)
->>          return;
->>      }
->>
->> +    if ((status =3D=3D 1) && !local_err) {
->>
->
-> Is there any documentation that explains that exit code =3D 1 is an error=
-?
-> If you look into systemd_supports_mode, you can see that exit code =3D 1 =
-is
-> detected
-> as a supported mode.
->
->
->> +        error_setg(errp, "'systemctl %s' not suspend",
->> +                   systemctl_args[mode]);
->> +        return;
->> +    }
->> +
->>      if (local_err) {
->>          error_propagate(errp, local_err);
->>      } else {
->> @@ -1428,6 +1434,8 @@ static void guest_suspend(SuspendMode mode, Error
->> **errp)
->>
->>          if (!local_err) {
->>              return;
->> +        } else {
->> +            mode_supported =3D false;
->>          }
->>
->
-> This is very confusing. We check that the mode is supported, but after
-> running suspend,
-> we find that it is unsupported. I think we should fix
-> systemd_supports_mode instead.
->
-> Also, setting mode_supported =3D false does not change anything.
-> In the next step, we will check pmutils_supports_mode and
-> linux_sys_state_supports_mode,
-> and I think this check will pass, so we set mode_supported =3D true again=
-.
->
-> Best Regards,
-> Kostiantyn Kostiuk.
->
->
->>      }
->>
->> --
->> 2.43.7
->>
->>
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg05376.html
+[2] https://lists.nongnu.org/archive/html/qemu-devel/2025-04/msg01795.html
+[3] https://github.com/libffi/libffi/pull/927
+[4] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+[5] https://github.com/ktock/qemu-wasm-sample/tree/tcidev64
 
---00000000000056ec36063b87177d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Kohei Tokunaga (4):
+  meson: Add wasm64 support to the --cpu flag
+  configure: Enable to propagate -sMEMORY64 flag to Emscripten
+  dockerfiles: Add support for wasm64 to the wasm Dockerfile
+  .gitlab-ci.d: Add build tests for wasm64
 
-<div dir=3D"ltr"><div dir=3D"ltr"><pre class=3D"gmail-container-_HmLba gmai=
-l-language-plaintext" style=3D"outline:none;box-sizing:border-box;font-fami=
-ly:ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,&quot;Lib=
-eration Mono&quot;,monospace;color:rgb(0,0,0);word-break:normal;line-height=
-:1.5;margin:0px;overflow:auto;font-size:13.6px;border-radius:6px;padding:0p=
-x;width:fit-content"><code class=3D"gmail-language-plaintext" style=3D"outl=
-ine:none;box-sizing:border-box;background:transparent;border-radius:4px;col=
-or:var(--code-block-code-color);font-size:13px;font-family:Menlo,Monaco,Con=
-solas,&quot;Courier New&quot;,monospace;word-break:normal;word-spacing:norm=
-al;line-height:1.5">Hi Kostiantyn,
+ .gitlab-ci.d/buildtest.yml                    | 24 +++++++++++++--
+ .gitlab-ci.d/container-cross.yml              | 18 +++++++++++-
+ .gitlab-ci.d/container-template.yml           |  4 ++-
+ MAINTAINERS                                   |  2 +-
+ configure                                     | 14 ++++++++-
+ meson.build                                   |  4 +--
+ ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
+ 7 files changed, 79 insertions(+), 16 deletions(-)
+ rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
 
-Thank you again for your valuable feedback. I&#39;ve conducted further test=
-s to address your questions, and here are the details:
+-- 
+2.43.0
 
-1. Regarding exit code 1:
-   I performed an experiment with the kernel configuration:
-  =20
-   When CONFIG_HIBERNATION is disabled in the kernel:
-   [root@VM-23-13-opencloudos OpenCloudOS-Kernel]# grep -i HIBERNATION /boo=
-t/config-6.6.47-12.oc9.x86_64=20
-   CONFIG_ARCH_HIBERNATION_POSSIBLE=3Dy
-   # CONFIG_HIBERNATION is not set
-  =20
-   The /sys/power/state shows no &quot;disk&quot; support:
-   [root@VM-0-94-opencloudos patch]# cat /sys/power/state
-   freeze mem
-  =20
-   While &quot;systemctl status systemd-hibernate&quot; returns code 3:
-   [root@VM-0-94-opencloudos patch]# systemctl status systemd-hibernate
-   =E2=97=8B systemd-hibernate.service - Hibernate
-    Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate.service; stat=
-ic)
-        Active: inactive (dead)
-      Docs: man:systemd-hibernate.service(8)
-   [root@VM-0-94-opencloudos patch]# echo $?
-   3
-  =20
-   The actual hibernation command returns code 1 due to kernel incompatibil=
-ity:
-   [root@VM-0-94-opencloudos patch]# systemctl hibernate
-       Call to Hibernate failed: Sleep verb &#39;hibernate&#39; is not conf=
-igured or configuration is not supported by kernel
-   [root@VM-0-94-opencloudos patch]# echo $?
-   1
-  =20
-   This confirms exit code 1 indicates actual hibernation support failure i=
-n this scenario.
-
-2. Regarding mode_supported logic:
-   I understand your confusion about the check in systemd_supports_mode(mod=
-e, &amp;local_err). Another experiment illustrates the issue:
-  =20
-   On a system with hibernation enabled:
-   [opencloudos@VM-23-13-opencloudos ~]$ grep -i HIBERNATION /boot/config-6=
-.6.92+=20
-   CONFIG_ARCH_HIBERNATION_POSSIBLE=3Dy
-   CONFIG_ARCH_HIBERNATION_HEADER=3Dy
-   CONFIG_HIBERNATION=3Dy
-   CONFIG_HIBERNATION_SNAPSHOT_DEV=3Dy =20
-  =20
-   /sys/power/state includes &quot;disk&quot;:
-   [opencloudos@VM-23-13-opencloudos ~]$ cat /sys/power/state
-   freeze mem disk
-  =20
-   However, &quot;systemctl status systemd-hibernate&quot; still returns co=
-de 3 regardless of actual support:
-   [opencloudos@VM-23-13-opencloudos ~]$ sudo systemctl status systemd-hibe=
-rnate
-   =E2=97=8B systemd-hibernate.service - Hibernate
-        Loaded: loaded (/usr/lib/systemd/system/systemd-hibernate.service; =
-static)
-        Active: inactive (dead)
-          Docs: man:systemd-hibernate.service(8)
-  =20
-   [output truncated for brevity]
-  =20
-   [opencloudos@VM-23-13-opencloudos ~]$ echo $?
-   3
-  =20
-   This shows &quot;systemctl status&quot; isn&#39;t reliable for determini=
-ng support. The actual execution result of &quot;systemctl hibernate&quot; =
-is necessary to accurately verify suspend-to-disk capability.
-
-Thanks again for your patience and guidance. I&#39;ll revise the patch acco=
-rdingly and resubmit as v2.
-
-Best regards,
-panzerzheng</code></pre></div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">Kostiantyn Kostiuk &lt;<a hre=
-f=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt; =E4=BA=8E2025=
-=E5=B9=B48=E6=9C=884=E6=97=A5=E5=91=A8=E4=B8=80 16:18=E5=86=99=E9=81=93=EF=
-=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
-=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Mon, Aug 4, 2025 at 10:47=E2=80=AFAM &lt;<=
-a href=3D"mailto:zhengnici@gmail.com" target=3D"_blank">zhengnici@gmail.com=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-From: panzerzheng &lt;<a href=3D"mailto:panzerzheng@tencent.com" target=3D"=
-_blank">panzerzheng@tencent.com</a>&gt;<br>
-<br>
-When &quot;/sys/power/state&quot; does not contain &quot;disk&quot;, the op=
-erating system<br>
-does not support hibernation. Executing &quot;sudo systemctl hibernate&quot=
-; will<br>
-return an exit code of 1 with the stderr output: &quot;Call to Hibernate fa=
-iled:<br>
-Sleep verb &#39;hibernate&#39; is not configured or configuration is not su=
-pported by kernel&quot;.<br></blockquote><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-<br>
-This patch adds handling for exit code 1 in the systemd_suspend function,<b=
-r>
-setting appropriate error messages when the kernel does not support standby=
-.<br>
-It also adds local_err handling in the guest_suspend function to set<br>
-mode_supported to false.<br>
-<br>
-Without these fixes, libvirt would hold the lock indefinitely.<br>
-<br>
-Signed-off-by: panzerzheng &lt;<a href=3D"mailto:panzerzheng@tencent.com" t=
-arget=3D"_blank">panzerzheng@tencent.com</a>&gt;<br>
----<br>
-=C2=A0qga/commands-linux.c | 8 ++++++++<br>
-=C2=A01 file changed, 8 insertions(+)<br>
-<br>
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-index 9e8a934b9a..26229396c3 100644<br>
---- a/qga/commands-linux.c<br>
-+++ b/qga/commands-linux.c<br>
-@@ -1300,6 +1300,12 @@ static void systemd_suspend(SuspendMode mode, Error =
-**errp)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 if ((status =3D=3D 1) &amp;&amp; !local_err) {<br></blockquo=
-te><div><br></div><div><div>Is there any documentation that explains that e=
-xit code =3D 1 is an error?</div><div>If you look into systemd_supports_mod=
-e, you can see that exit code =3D 1 is detected <br></div><div>as a support=
-ed mode. </div></div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;&#39;systemctl %s&#39; =
-not suspend&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0syste=
-mctl_args[mode]);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (local_err) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_propagate(errp, local_err);<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-@@ -1428,6 +1434,8 @@ static void guest_suspend(SuspendMode mode, Error **e=
-rrp)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!local_err) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode_supported =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br></blockquote><div><br></div><div>Thi=
-s is very confusing. We check that the mode is supported, but after running=
- suspend,<br> we find that it is unsupported. I think we should fix systemd=
-_supports_mode instead. <br></div><div><br></div><div>Also, setting mode_su=
-pported =3D false does not change anything. <br></div><div>In the next step=
-, we will check pmutils_supports_mode and linux_sys_state_supports_mode,<br=
-></div><div>and I think this check will pass, so we set mode_supported =3D =
-true again. <br></div><div><br>Best Regards,<br>Kostiantyn Kostiuk.<br></di=
-v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.43.7<br>
-<br>
-</blockquote></div></div>
-</blockquote></div></div>
-
---00000000000056ec36063b87177d--
 
