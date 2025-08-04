@@ -4,68 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8ECC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 14:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7477AC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 14:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uivra-0002cY-SZ; Mon, 04 Aug 2025 10:08:30 -0400
+	id 1uivsm-0005QG-OC; Mon, 04 Aug 2025 10:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uiutM-0005e5-LV
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:06:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uiutJ-0002UQ-KR
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:06:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754312771;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=1Io7ICaKXD0t6o23Ob3du1lHWfA5rxyqziAlwCmmSw0=;
- b=ECOxDd0Ik3+Hc4FdtB5Nyg+ZDASd0Pt6nMiSrdGgb2gHu1Cds6gQHz5WULzQhNiUtsJfAh
- Zk2WK0yzLEsQ+Sn0irfITYd+SUQnzY94HCBaTslJRsEmjYS5/5NNNIQpq4be5izTA1HVVI
- CV6/QVubOfHhZ7t/7ipeYzocYibNzKc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-Ydiv7ve9MdS5ftF125UDZg-1; Mon,
- 04 Aug 2025 09:06:07 -0400
-X-MC-Unique: Ydiv7ve9MdS5ftF125UDZg-1
-X-Mimecast-MFC-AGG-ID: Ydiv7ve9MdS5ftF125UDZg_1754312766
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DBDF1800989; Mon,  4 Aug 2025 13:06:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E6F530002C5; Mon,  4 Aug 2025 13:06:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9EAB721E6A27; Mon, 04 Aug 2025 15:06:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uiulO-0004PD-Rf
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:58:04 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uiulN-0000UO-3Q
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:58:02 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7426c44e014so3864824b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 05:57:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754312279; x=1754917079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V/vS2KBui16zTZGJMb9su+mH6/2ju/NTf8jiWbG0wUQ=;
+ b=fp6+nQA1NrprjRPdGwRTdJS3mrA1tVlJpIom9qzVZLkrHESgDTGxZQeKAzsrQ0z6up
+ 65vNq9d3QTvDL4wFhLSpiUoWEqiN5kyvVwVrJ+JNj04z0CIaH2WYZiDEUm9DyvRpsnAx
+ Ukf244JOUmsLbP3z2mvQupvpVmLpCEPnf3XKx2sdxsfyJmwGbAaVUPgqbNyN0CYBOcvZ
+ 9jFk+vzH8qG3JqSJuD8Q9tkPgLgH8/WJc3jMY+ZEnRq4OtyaZ2DbwD7W7/PZKz6PcTaT
+ zgspANgmX9Z91TkWlG3TM+CKez7gdW4tn+Yz5sYmEx1ISF+rQIpUYBVQlcaDL0E8lDcl
+ qUgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754312279; x=1754917079;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V/vS2KBui16zTZGJMb9su+mH6/2ju/NTf8jiWbG0wUQ=;
+ b=J9PElIa3zEdiNIRDXfwN1mlAUFAQt0e7qPO39f7L+Osa9dH0IUt28TN6KluEMKo/xw
+ 68De6vgijl27CfGCknNLxn9XGGCLuHJJHcfIYMfkWP5lQ4X0nNn/MEN8gPGp/3gzGBMq
+ GFMmFVWPiPNGW1E6uyscAA33WNzp/omb5D3dcAtn5Pkla2zB5sL5C6/RhKE3Owx6ZetL
+ 2ogs13YrqWzJWtF96tZp/SKnW9zT+v4YOn2vMxeVHxJoZPxfY3wKlx7dOnJBb+/fDYbF
+ P5+58tUc/d7BM+qxpgeh7GZNBY57T5ZlH23aXtdA4gp3DyLbolp6iDrUgg56Ys6HZBJU
+ YFtA==
+X-Gm-Message-State: AOJu0YxZkHts1not0gp5LYNTSeZfCqd1tI1Cj07U/O9cy1TEiGvzigMr
+ 6TmtMZPthHVi2B5XZbB9RmoYo2kPMjttWKUa0EhFR2CTUlklBlwe58CHwNjwMw==
+X-Gm-Gg: ASbGnct4atwp9GLg9kaaGh7goAZGOvuzMV9uws2an/TP/+n+4vuOQnRVdRN3kHMliUV
+ fhFMcAkF3kRDNkkYLgxS6o/svreN/Z0fCDyJ3nGf0xtLWVWeVo3xD5WXOaCdsO3i5UO+oM+O5U2
+ jQV4X8gXi9HhVQ2qSjKJkJHzTU1NQXeLROn9JGV1qnYQDfMhVVn6jZ67w5J/ojrdN1SI6GnFO0k
+ jLMpsOZr2EwRpC6ZsfIbtev+qMdCBssnQl6VDdrlYSrXfGNJhyleFcyPPE0ClzHgmcSrVXU3bX7
+ hkKhEqMjafH67bUqJ6uJ3YwRaRuqh6upqkq/iXGPJj41BhPQA9CdFN+FT//r0cQjTxdW2mbi8bK
+ ytxSlKuSc0OiTXq2bg00mSQ==
+X-Google-Smtp-Source: AGHT+IFKHK7Sl5Z//6Qxf4XsoIpRfLqO6XcYwfs7ocy2SM/SYJ9jFuu8bxvO4eMHdilzduwifPWpnQ==
+X-Received: by 2002:a05:6a20:2453:b0:232:cc63:45d8 with SMTP id
+ adf61e73a8af0-23df8fef591mr15166968637.20.1754312278668; 
+ Mon, 04 Aug 2025 05:57:58 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:d117:15e5:e721:f1cd])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bcce8f800sm10488308b3a.42.2025.08.04.05.57.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 05:57:58 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com, jsnow@redhat.com, philmd@linaro.org,
- berrange@redhat.com
-Subject: [PATCH] qapi/command: Avoid generating unused qmp_marshal_output_T()
-Date: Mon,  4 Aug 2025 15:06:02 +0200
-Message-ID: <20250804130602.903904-1-armbru@redhat.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH 4/4] .gitlab-ci.d: Add build tests for wasm64
+Date: Mon,  4 Aug 2025 21:57:17 +0900
+Message-ID: <d3a7e2c7d5d8e5257cd7be7da79d135c43cbbc55.1754310749.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1754310749.git.ktokunaga.mail@gmail.com>
+References: <cover.1754310749.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,214 +105,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_marshal_output_T() is only ever called by qmp_marshal_C() for a
-command C that returns type T.
+The wasm builds are tested for 3 targets: wasm32, wasm64(-sMEMORY64=1) and
+wasm64(-sMEMORY64=2). The CI builds the containers using the same Dockerfile
+(emsdk-wasm-cross.docker) with different build args.
 
-We've always generated it as a static function on demand, i.e. when we
-generate a call.
-
-Since we split up monolithic generated code into modules (commit
-252dc3105fc "qapi: Generate separate .h, .c for each module"), we do
-this per module.  As noted in the commit message, this can result in
-identical (static) qmp_marshal_output_T() in several modules.  Was
-deemed not worth avoiding.
-
-A bit later, we added 'if' conditionals to the schema language (merge
-commit 5dafaf4fbce).
-
-When a conditional definition uses a type, then its condition must
-imply the type's condition.  We made this the user's responsibility.
-Hasn't been an issue in practice.
-
-However, the sharing of qmp_marshal_output_T() among commands
-complicates matters.  To avoid both undefined function errors and
-unused function warnings, qmp_marshal_output_T() must be defined
-exactly when it's used.  It is used when any of the qmp_marshal_C()
-calling it is defined, i.e. when any C's condition holds.
-
-The generator uses T's condition instead.  To avoid both error and
-warning, T's condition must be the conjunction of all C's conditions.
-
-Unfortunately, this can be impossible:
-
-* Conditional command returning a builtin type
-
-  A builtin type cannot be conditional.  This is noted in a FIXME
-  comment.
-
-* Commands in multiple modules where the conjunction differs between
-  modules
-
-  An instance of this came up recenrly.  we have unconditional
-  commands returning HumanReadableText.  If we add a conditional one
-  to a module that does not have unconditional ones, compilation fails
-  with "defined but not used".  If we make HumanReadableText
-  conditional to fix this module, we break the others.
-
-Instead of complicating the code to compute the conjunction, simplify
-it: generate the output marshalling code right into qmp_marshal_C().
-
-This duplicates it when multiple commands return the same type.  The
-impact on code size is negligible: qemu-system-x86_64's text segment
-grows by 1448 bytes.
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- docs/devel/qapi-code-gen.rst | 25 ++++++++------------
- scripts/qapi/commands.py     | 44 ++++++++----------------------------
- 2 files changed, 19 insertions(+), 50 deletions(-)
+ .gitlab-ci.d/buildtest.yml          | 24 +++++++++++++++++++++---
+ .gitlab-ci.d/container-cross.yml    | 18 +++++++++++++++++-
+ .gitlab-ci.d/container-template.yml |  4 +++-
+ 3 files changed, 41 insertions(+), 5 deletions(-)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index dfdbeac5a5..091e4f6f4a 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -1804,27 +1804,13 @@ Example::
-     $ cat qapi-generated/example-qapi-commands.c
-     [Uninteresting stuff omitted...]
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index d888a60063..f45efbaae3 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -787,11 +787,29 @@ coverity:
+     # Always manual on forks even if $QEMU_CI == "2"
+     - when: manual
  
--    static void qmp_marshal_output_UserDefOne(UserDefOne *ret_in,
--                                    QObject **ret_out, Error **errp)
--    {
--        Visitor *v;
--
--        v = qobject_output_visitor_new_qmp(ret_out);
--        if (visit_type_UserDefOne(v, "unused", &ret_in, errp)) {
--            visit_complete(v, ret_out);
--        }
--        visit_free(v);
--        v = qapi_dealloc_visitor_new();
--        visit_type_UserDefOne(v, "unused", &ret_in, NULL);
--        visit_free(v);
--    }
--
-     void qmp_marshal_my_command(QDict *args, QObject **ret, Error **errp)
-     {
-         Error *err = NULL;
-         bool ok = false;
-         Visitor *v;
-         UserDefOne *retval;
-+        Visitor *ov;
-         q_obj_my_command_arg arg = {0};
+-build-wasm:
++build-wasm32:
+   extends: .wasm_build_job_template
+   timeout: 2h
+   needs:
+-    job: wasm-emsdk-cross-container
++    job: wasm32-emsdk-cross-container
+   variables:
+     IMAGE: emsdk-wasm32-cross
+-    CONFIGURE_ARGS: --static --disable-tools --enable-debug --enable-tcg-interpreter
++    CONFIGURE_ARGS: --static --cpu=wasm32 --disable-tools --enable-debug --enable-tcg-interpreter
++
++build-wasm-wasm64:
++  extends: .wasm_build_job_template
++  timeout: 2h
++  needs:
++    job: wasm64-emsdk-cross-container
++  variables:
++    IMAGE: emsdk-wasm64-cross
++    CONFIGURE_ARGS: --static --cpu=wasm64 --wasm64-memory64=1 --disable-tools --enable-debug --enable-tcg-interpreter
++
++build-wasm-wasm64l:
++  extends: .wasm_build_job_template
++  timeout: 2h
++  needs:
++    job: wasm64l-emsdk-cross-container
++  variables:
++    IMAGE: emsdk-wasm64l-cross
++    CONFIGURE_ARGS: --static --cpu=wasm64 --wasm64-memory64=2 --disable-tools --enable-debug --enable-tcg-interpreter
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index 8d3be53b75..1bacaff818 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -92,7 +92,23 @@ win64-fedora-cross-container:
+   variables:
+     NAME: fedora-win64-cross
  
-         v = qobject_input_visitor_new_qmp(QOBJECT(args));
-@@ -1852,7 +1838,14 @@ Example::
-             goto out;
-         }
- 
--        qmp_marshal_output_UserDefOne(retval, ret, errp);
-+        ov = qobject_output_visitor_new_qmp(ret);
-+        if (visit_type_UserDefOne(ov, "unused", &retval, errp)) {
-+            visit_complete(ov, ret);
-+        }
-+        visit_free(ov);
-+        ov = qapi_dealloc_visitor_new();
-+        visit_type_UserDefOne(ov, "unused", &retval, NULL);
-+        visit_free(ov);
- 
-         if (trace_event_get_state_backends(TRACE_QMP_EXIT_MY_COMMAND)) {
-             g_autoptr(GString) ret_json = qobject_to_json(*ret);
-diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
-index 7914227382..a82b5a2a5e 100644
---- a/scripts/qapi/commands.py
-+++ b/scripts/qapi/commands.py
-@@ -14,15 +14,12 @@
- """
- 
- from typing import (
--    Dict,
-     List,
-     Optional,
--    Set,
- )
- 
- from .common import c_name, mcgen
- from .gen import (
--    QAPIGenC,
-     QAPISchemaModularCVisitor,
-     build_params,
-     gen_features,
-@@ -112,11 +109,7 @@ def gen_call(name: str,
- ''')
- 
-     if ret_type:
--        ret += mcgen('''
--
--    qmp_marshal_output_%(c_name)s(retval, ret, errp);
--''',
--                     c_name=ret_type.c_name())
-+        ret += gen_marshal_output(ret_type)
- 
-     if gen_tracing:
-         if ret_type:
-@@ -142,22 +135,16 @@ def gen_call(name: str,
- def gen_marshal_output(ret_type: QAPISchemaType) -> str:
-     return mcgen('''
- 
--static void qmp_marshal_output_%(c_name)s(%(c_type)s ret_in,
--                                QObject **ret_out, Error **errp)
--{
--    Visitor *v;
--
--    v = qobject_output_visitor_new_qmp(ret_out);
--    if (visit_type_%(c_name)s(v, "unused", &ret_in, errp)) {
--        visit_complete(v, ret_out);
-+    ov = qobject_output_visitor_new_qmp(ret);
-+    if (visit_type_%(c_name)s(ov, "unused", &retval, errp)) {
-+        visit_complete(ov, ret);
-     }
--    visit_free(v);
--    v = qapi_dealloc_visitor_new();
--    visit_type_%(c_name)s(v, "unused", &ret_in, NULL);
--    visit_free(v);
--}
-+    visit_free(ov);
-+    ov = qapi_dealloc_visitor_new();
-+    visit_type_%(c_name)s(ov, "unused", &retval, NULL);
-+    visit_free(ov);
- ''',
--                 c_type=ret_type.c_type(), c_name=ret_type.c_name())
-+                 c_name=ret_type.c_name())
- 
- 
- def build_marshal_proto(name: str,
-@@ -209,6 +196,7 @@ def gen_marshal(name: str,
-     if ret_type:
-         ret += mcgen('''
-     %(c_type)s retval;
-+    Visitor *ov;
- ''',
-                      c_type=ret_type.c_type())
- 
-@@ -308,11 +296,9 @@ def __init__(self, prefix: str, gen_tracing: bool):
-             prefix, 'qapi-commands',
-             ' * Schema-defined QAPI/QMP commands', None, __doc__,
-             gen_tracing=gen_tracing)
--        self._visited_ret_types: Dict[QAPIGenC, Set[QAPISchemaType]] = {}
-         self._gen_tracing = gen_tracing
- 
-     def _begin_user_module(self, name: str) -> None:
--        self._visited_ret_types[self._genc] = set()
-         commands = self._module_basename('qapi-commands', name)
-         types = self._module_basename('qapi-types', name)
-         visit = self._module_basename('qapi-visit', name)
-@@ -386,16 +372,6 @@ def visit_command(self,
-                       coroutine: bool) -> None:
-         if not gen:
-             return
--        # FIXME: If T is a user-defined type, the user is responsible
--        # for making this work, i.e. to make T's condition the
--        # conjunction of the T-returning commands' conditions.  If T
--        # is a built-in type, this isn't possible: the
--        # qmp_marshal_output_T() will be generated unconditionally.
--        if ret_type and ret_type not in self._visited_ret_types[self._genc]:
--            self._visited_ret_types[self._genc].add(ret_type)
--            with ifcontext(ret_type.ifcond,
--                           self._genh, self._genc):
--                self._genc.add(gen_marshal_output(ret_type))
-         with ifcontext(ifcond, self._genh, self._genc):
-             self._genh.add(gen_command_decl(name, arg_type, boxed,
-                                             ret_type, coroutine))
+-wasm-emsdk-cross-container:
++wasm32-emsdk-cross-container:
+   extends: .container_job_template
+   variables:
+     NAME: emsdk-wasm32-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm32
++    DOCKERFILE: emsdk-wasm-cross
++
++wasm64-emsdk-cross-container:
++  extends: .container_job_template
++  variables:
++    NAME: emsdk-wasm64-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=1
++    DOCKERFILE: emsdk-wasm-cross
++
++wasm64l-emsdk-cross-container:
++  extends: .container_job_template
++  variables:
++    NAME: emsdk-wasm64l-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=2
++    DOCKERFILE: emsdk-wasm-cross
+diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
+index 4eec72f383..01ca840413 100644
+--- a/.gitlab-ci.d/container-template.yml
++++ b/.gitlab-ci.d/container-template.yml
+@@ -10,12 +10,14 @@
+     - export COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
+     - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+     - until docker info; do sleep 1; done
++    - export DOCKERFILE_NAME=${DOCKERFILE:-$NAME}
+   script:
+     - echo "TAG:$TAG"
+     - echo "COMMON_TAG:$COMMON_TAG"
+     - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
+       --build-arg BUILDKIT_INLINE_CACHE=1
+-      -f "tests/docker/dockerfiles/$NAME.docker" "."
++      $BUILD_ARGS
++      -f "tests/docker/dockerfiles/$DOCKERFILE_NAME.docker" "."
+     - docker push "$TAG"
+   after_script:
+     - docker logout
 -- 
-2.49.0
+2.43.0
 
 
