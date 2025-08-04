@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACDBC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0DFC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uitFw-0002k3-Er; Mon, 04 Aug 2025 07:21:28 -0400
+	id 1uitGd-0004Dz-PP; Mon, 04 Aug 2025 07:22:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uitFK-0002Ag-36
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:20:51 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uitFR-0002Oc-Gj
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:21:06 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uitFH-00057H-VB
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:20:49 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2406fe901fcso28398525ad.3
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 04:20:46 -0700 (PDT)
+ id 1uitFP-00059R-EY
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:20:57 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2401b855980so31287545ad.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 04:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754306446; x=1754911246; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=H0+XvFAHaRsjvBfEDEIu48JTCB1Hkd8of5URqlXP/ao=;
- b=XA/qak0C7RZ4C5p7dJE2/q9hE1w0WXURXfbwSToVKUSyJe3SwxFfs4F0KdvR6kdYTM
- mWHm4U3tB1wVKr5nXQHqQ5kZTddXGR4obYb4HNZnxOJ+8Y3N4jdky3gzjNDo1SQbhIdo
- cggQuHbIgx4wN9Xwv/TG6Ad0dK81/O6xm6aGsUiz3dA/PBLbfyPz6voShwzu9kpEfnwq
- ocgwY13RRUczPf4qmjTWr3wKaIQVfRvuRn8fA66PK4i3X8LEfo5x5oHat5JsWfzZ0bep
- QCrAbDeKFou1BcOg3SNEmcdH1n6CS3vxOM3lfEhtjSHduD+sWdr7KYevpJozCwIbLRhm
- vNkA==
+ d=gmail.com; s=20230601; t=1754306452; x=1754911252; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rpmsa2uauy9jtjI3VfCYeYUs5VlkjZKNRdv/ln7sIzQ=;
+ b=i6zk020yB1AIjS+gs/Wso629kfTjw1opH2MJvzQP60ldM09AVk3ZyjN2n8lXwhr6su
+ LskLdakutgwctwO7y95F4RcZ2aVIi2p1GaQun+isjrANOn2jZ7dmCPaGt2K4n2k+SR9m
+ UgOcANVWsfxi3diyYgIQJrDQarSJkjb9HLFonStpy4wHhgyebu+aWuNh65YpNmnR1U00
+ CijulJWkQTZxBXs+3DI7eTrahtS92EzatvYCMUcT4OLUs2HoYw+OWRRb4ZZUtSDA/pSB
+ YMRyq82/zK13aSRWxAmwjuxF780lxV7dI8FuJDiDSObIdMFSKTuIpy5xEOulkPTbQUIf
+ WWzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754306446; x=1754911246;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H0+XvFAHaRsjvBfEDEIu48JTCB1Hkd8of5URqlXP/ao=;
- b=UReet6ty0wEBuAksl1OCw5HcoLOuqvqQ7UKaXB/sxeAySx7C+JomXSelN2TTITg2tv
- vPWolfCq7HLzk3t2g3XhYHwIxQGZhGKtbKnZy4aoxOgGUD+wywqasessZGRtNq1fSz/W
- QBIqrQdtgKG5kUPk/rGI50GzZsYI+MLLnFrSzuhI9UGp4vbC+R+1SBHkP6xlcyE8HJgp
- F+ODM+37v7kdk7seYp6wxbJ/OexLo85KmyXrRhi3k+izd436+Hhtb/COP6LObNEmgUdz
- uFRideUBdr6l+xTJbNJ2z5sWG7CCOzhhUp8v+fSuQ3q56b6fb3sCMijfiTbZICddry98
- vrfw==
+ d=1e100.net; s=20230601; t=1754306452; x=1754911252;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rpmsa2uauy9jtjI3VfCYeYUs5VlkjZKNRdv/ln7sIzQ=;
+ b=S01sxYsoXLWo0TbxsoM0p3j5cKmD1bC8o9W06qnvs3Fimg65EiNap959pjUY9PRqJE
+ bpUBk14zNf//bZkK647bTmVCKIgWApGVXfxbX+91Cw4FlV3wyIT0ah7gAvB7EJphU9Od
+ C8f6wfAHTQ7aRtz/YmB22U+IaWL2Fn94gDBF31EZE9uvWDrZYEeIP63gqfyCBiqRCQ/h
+ DTmsnE4yFzoVYcjYydLmg+VI8jbwy9E2gZ/B4NeDdfTPLzlBkZ/PrSBvBVhwwnRfTWtf
+ klhmpNMYnlnm8x0DueaMvoDgJgUCM8xmS7dpB2o+9HuizQ8ZXY+/GP3eV2NyHz4z/0fa
+ 7Brg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzbRxxtvFwnrPzc9i6gx8kEyWTY+z9vcByHG67jCD91eo/Lwvrn5+/dQ84KpAcjW5csj1+TAZWdQ2a@nongnu.org
-X-Gm-Message-State: AOJu0Yyq6kF2QlCi1DMNxt5AVCs/svejTP2FF3SIRugBx/kXwGqtjaZN
- F4rhpU+Gi57BmNQdB0RH3/rPP79uwbIWAqwoE4TzmwlED3eVmEHE1co0gmfZ0YxOuw0=
-X-Gm-Gg: ASbGncvrbJr9Lrh9gfdfkCSCNWZjB2LHbQn6LxRvXDyCaolOwT+AKaRR4mH5LzewAuB
- YXJfYGqgRxKa+kufQBu62DkR9LnSRF7chxmg/nI0A74G/stObwD1YCeGA/MAAls7RwROlkdLu9A
- +X6yKeC9+Z+VPfVKBqXOH02uJdfilZvdTT0x69GGFMamiTXzSf//ke1hb2iykrC/A1atagOyAoI
- vuQudM34gDIAq2zz71SnaUTnktrr8bajh9gozDYQpJF2qp9yUx/Y0m9HRPTBleU9T8A27HPMevq
- r9bXsm/hgCD74oNX3WMoZkI0o/HLXZqiaAjotcruisVzUXyY2CegL/sFYhfDQdnHZjDH1oCsAR4
- +8PRhy1yzk0lwW5FyXH4Gwih3LaS/HR5dhCwDAXBJx4fBsiDhUAIb
-X-Google-Smtp-Source: AGHT+IFrVpJHt/xeSYRQ1wRES3J55PEBPoX5HPiklXErzwA3jg169mDaX854u/09EDI4VgJ0+6rUUg==
-X-Received: by 2002:a17:903:2351:b0:240:71a5:f30 with SMTP id
- d9443c01a7336-24246f86a58mr133770055ad.22.1754306445530; 
- Mon, 04 Aug 2025 04:20:45 -0700 (PDT)
+ AJvYcCU81o7J5VHKna8GalchTE5G39K0ovqkQmHobtT1TUf/AeJxI84PF8LVYrEtFastjcfAUJDjE77G6UIE@nongnu.org
+X-Gm-Message-State: AOJu0YzZ9jH92VTiftCTomONxuuo5cPRxTapceRuiVsff+KCLu0VthU2
+ 6TQkQqD3S+oPRLAWWFXd3TZ+T+i6j2oWRVBSOBpG1j2GcDsV9/v9Q0jK
+X-Gm-Gg: ASbGncu0Z9MBDQzet3kD+/pFhEOdcq2uS1AxFvxa1y6eRti1N6UooLz4E2ElRkPUXbZ
+ EuzFeCbmUdWyIWWjjzVf77Wagf6VEyvm1kUvabh8DF7ngWxXQ9eJ6cmvmsY0jA+FxvUxmAJD/02
+ AcqQW3D0Y9wRzOtRAipQdLk7oLNINNDnq/bGXEgiaCtJuIbSNnqYnA7xELVZv0VOatffZ8fLVPX
+ 0tofN/uuWABtdHXANK3LTqfukefu3yIaDjBd/XezGw4IP/pzFF2yXsLD1GE09MUKDXJLknXC9Fx
+ DTNHDKlkChDSSE2taFC1xRr0XTUoaC4ZG30bVberPulGh+JNF6ODYCJ3Ymfu8IyuBjFK8pD/w8e
+ PbmVVD0qsnxW1Bwkuc7cvqTeSpsETOhpKYrSity8u6w==
+X-Google-Smtp-Source: AGHT+IHuMOTswYHZPsJmyM7EIIieoItY9XBWLGMscTCF7DjvUV9dv+8bdquksxKDKnXpeixJZDzjvw==
+X-Received: by 2002:a17:903:41c1:b0:234:a139:1206 with SMTP id
+ d9443c01a7336-2424703c119mr148977385ad.40.1754306451655; 
+ Mon, 04 Aug 2025 04:20:51 -0700 (PDT)
 Received: from localhost.localdomain ([106.215.159.222])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1f0e83esm106901675ad.49.2025.08.04.04.20.42
+ d9443c01a7336-241d1f0e83esm106901675ad.49.2025.08.04.04.20.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 04:20:44 -0700 (PDT)
+ Mon, 04 Aug 2025 04:20:51 -0700 (PDT)
 From: Tanish Desai <tanishdesai37@gmail.com>
 To: tanishdesai37@gmail.com,
 	qemu-devel@nongnu.org,
 	pbonzini@redhat.com
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
 	Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 0/2] tracetool: remove no_check_foo() and if(true){..} blocks
-Date: Mon,  4 Aug 2025 11:20:37 +0000
-Message-Id: <20250804112039.16377-1-tanishdesai37@gmail.com>
+Subject: [PATCH 2/2] tracetool/format: remove redundent trace-event checks
+Date: Mon,  4 Aug 2025 11:20:39 +0000
+Message-Id: <20250804112039.16377-3-tanishdesai37@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250804112039.16377-1-tanishdesai37@gmail.com>
+References: <20250804112039.16377-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,37 +105,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series eliminates unnecessary
-if (true) { no_check_foo(...) } blocks and
-integrates the no_check_foo(...) logic directly
-into trace_foo(...). This results in cleaner,
-more maintainable code generation.
+Remove redundent if(check_trace_event) check
+from individual backends.
+Adding CHECK_TRACE_EVENT_GET_STATE in log,syslog,
+dtrace and simple backend.
 
-A new backend attribute, TRACE_EVENT_GET_STATE,
-is introduced. When enabled, it automatically
-generates conditional block :
-if (trace_event_get_state(...)) { ... }. The
-generate() function emits code within this
-conditional structure for that backend.
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+---
+ scripts/tracetool/backend/ftrace.py | 4 +---
+ scripts/tracetool/backend/log.py    | 6 ++----
+ scripts/tracetool/backend/simple.py | 9 ++-------
+ scripts/tracetool/backend/syslog.py | 8 ++------
+ 4 files changed, 7 insertions(+), 20 deletions(-)
 
-Previously, without TRACE_EVENT_GET_STATE,
-each backend was required to manually implement
-out("if (trace_event_get_state(...)) {") in its
-generate() function, leading to code duplication.
-
-Tanish Desai (2):
-  tracetool: add CHECK_TRACE_EVENT_GET_STATE
-  tracetool/format: remove redundent trace-event checks
-
- scripts/tracetool/__init__.py         |  1 -
- scripts/tracetool/backend/__init__.py | 26 ++++++++++++++++-------
- scripts/tracetool/backend/ftrace.py   |  4 +---
- scripts/tracetool/backend/log.py      |  6 ++----
- scripts/tracetool/backend/simple.py   |  9 ++------
- scripts/tracetool/backend/syslog.py   |  8 ++-----
- scripts/tracetool/format/h.py         | 30 ++++++++++-----------------
- 7 files changed, 37 insertions(+), 47 deletions(-)
-
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index 5fa30ccc08..b38f527461 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -16,6 +16,7 @@
+ 
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def generate_h_begin(events, group):
+@@ -32,18 +33,15 @@ def generate_h(event, group):
+         '        char ftrace_buf[MAX_TRACE_STRLEN];',
+         '        int unused __attribute__ ((unused));',
+         '        int trlen;',
+-        '        if (trace_event_get_state(%(event_id)s)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+         '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+         '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+         '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
+         '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
+-        '        }',
+         '    }',
+         name=event.name,
+         args=event.args,
+-        event_id="TRACE_" + event.name.upper(),
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         fmt=event.fmt.rstrip("\n"),
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index eb50ceea34..d8406d226b 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -16,6 +16,7 @@
+ 
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def generate_h_begin(events, group):
+@@ -28,14 +29,11 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+-
+-    out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
++    out('    if (qemu_loglevel_mask(LOG_TRACE)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+         '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+         '    }',
+-        cond=cond,
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         name=event.name,
+diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
+index 7c84c06b20..623ea7d8ed 100644
+--- a/scripts/tracetool/backend/simple.py
++++ b/scripts/tracetool/backend/simple.py
+@@ -16,7 +16,7 @@
+ 
+ 
+ PUBLIC = True
+-
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ def is_string(arg):
+     strtype = ('const char*', 'char*', 'const char *', 'char *')
+@@ -36,13 +36,8 @@ def generate_h_begin(events, group):
+ 
+ 
+ def generate_h(event, group):
+-    event_id = 'TRACE_' + event.name.upper()
+-    cond = "trace_event_get_state(%s)" % event_id
+-    out('    if (%(cond)s) {',
+-        '        _simple_%(api)s(%(args)s);',
+-        '    }',
++    out('        _simple_%(api)s(%(args)s);',
+         api=event.api(),
+-        cond=cond,
+         args=", ".join(event.args.names()))
+ 
+ 
+diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
+index 3f82e54aab..04ec85717a 100644
+--- a/scripts/tracetool/backend/syslog.py
++++ b/scripts/tracetool/backend/syslog.py
+@@ -16,6 +16,7 @@
+ 
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def generate_h_begin(events, group):
+@@ -28,14 +29,9 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+-
+-    out('    if (%(cond)s) {',
+-        '#line %(event_lineno)d "%(event_filename)s"',
++    out('#line %(event_lineno)d "%(event_filename)s"',
+         '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '    }',
+-        cond=cond,
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         name=event.name,
 -- 
 2.34.1
 
