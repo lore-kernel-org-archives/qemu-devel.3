@@ -4,91 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F47C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F935C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiqOz-00076U-4M; Mon, 04 Aug 2025 04:18:37 -0400
+	id 1uiqQX-0000nP-Kc; Mon, 04 Aug 2025 04:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uiqOw-00072a-TN
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:18:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mkletzan@redhat.com>)
+ id 1uiqQU-0000k3-Rj
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:20:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uiqOt-0005V4-5y
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:18:34 -0400
+ (Exim 4.90_1) (envelope-from <mkletzan@redhat.com>)
+ id 1uiqQS-0005wR-FN
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754295507;
+ s=mimecast20190719; t=1754295606;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=G+h23Wtxa7m5hxWlm+AMYVRbu8MjC3W1YURLhVJGKZE=;
- b=BkCILw+xPA6uz+v8msHbk8XyHlnDuWVJUFZZNl9BQuTObVDwdH+z3J/x8n273bh1AHLxSC
- ifJ/f2ZMt2RYRp2o+lkWzaxaabtGIWYImhsLesaWSIDMRKTb10kmTEUM11QyMN3bjnNo7v
- MURLc2LSTr5VSx5fhA2ZM7RlCz/dWOg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0LJ+4iCdHWofk7e13A9vDNRbDzbLrdNTpgHSEHKMAiA=;
+ b=LwM1Tu0ZDPWbaSuRUScxUcSbUCZoyIEX9ozoQhR31AX1dbmUH0M83ddNOvz/2umaqkOlj2
+ XpsxKVdf2pGRUH/XB4kpgZQ8VqI+mLQ0wQXOP/3W40DFEEipuSmc79b3hM3JedDCuU2n7j
+ Z6Tm4g4jtlmL74skDCBS1KL8hOKN1CI=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-1ChsVkAuM3-mxWcQUvRZWA-1; Mon, 04 Aug 2025 04:18:25 -0400
-X-MC-Unique: 1ChsVkAuM3-mxWcQUvRZWA-1
-X-Mimecast-MFC-AGG-ID: 1ChsVkAuM3-mxWcQUvRZWA_1754295505
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70748301f71so68067276d6.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:18:25 -0700 (PDT)
+ us-mta-50-Y30kQzkTMfyyvM0A6_5Glg-1; Mon, 04 Aug 2025 04:20:04 -0400
+X-MC-Unique: Y30kQzkTMfyyvM0A6_5Glg-1
+X-Mimecast-MFC-AGG-ID: Y30kQzkTMfyyvM0A6_5Glg_1754295604
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4b061ad3cc0so27294241cf.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:20:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754295505; x=1754900305;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G+h23Wtxa7m5hxWlm+AMYVRbu8MjC3W1YURLhVJGKZE=;
- b=jwuEQR+6TGeuoH0q5lscA6wD1qg7e7GRj86LcuEgMfD3nWotLxIQy8x3I7O1eQORUC
- /ACz4o5g5BhpnZU1ZF3WzfrVjBLe+mQ/HrUdLFjSiCTOFD7Bh3xuJpl/kVYTTUkEDONn
- uYKwfb/cegYREwaziXZI9kx0RYo7pH3/i/R7RLMkePds7sraEDpnomFaXTaLiIxkTh6h
- VgriVk/4/WN1ltqqglG/iG9YNat3lTKxQ3FxN52sssFzkOB/CQvrYyzPabsAtm/nmGZD
- 0Ok5zZ2zzCo4/tjdXWBfmB/HjNPcEN10i/1U6C69tlPIn+3w5LBpHFIBC1sL0IKZZPK0
- vZmA==
-X-Gm-Message-State: AOJu0YwsgUrtiFyxJ2jRt7/+9FMt8qOt0DmaeD0gKsP5pU3N5dTHfZ3G
- aPQiZumATdls4NH0BH0FKDuyA12lQdW375Yg1m3fXJBYXQg7wTkWfFawue8tYz9bYp6R3gzGXhN
- MWWecun7ZXbus+okFFwD3gkwTJcc2VsBJlXUNILtsIVLkTjuUyPGB0xYkiOJrYtuo7qiULrf/NQ
- 6u6FOp7dLt7BTWCCbJ16iaeOWFE5rav80=
-X-Gm-Gg: ASbGnctzP9QrlNUDLJaETcUYlDxQWCID+BrFzReilsezNa/vUyvrjUuvz6HGJaanoL5
- ikJl7DJWs5XHFk2KFvszINdvCt6dIg7BeuBJAYhlqcNhsWg7F5ory/jRFzbA2M5lAJoZjH61WWX
- 6YOdswjTCHdAgfRMPmEG5GCI8=
-X-Received: by 2002:a05:6214:4015:b0:707:6306:28bf with SMTP id
- 6a1803df08f44-709362daaf2mr120089746d6.36.1754295505103; 
- Mon, 04 Aug 2025 01:18:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPSwEgRRFKP8ixh5hkb/xrLhHqhHnT095GsCbsXv6IUPZIKz8iiDmdjZQQOspQorLU6QbSRMmvjUnqj3vsfoo=
-X-Received: by 2002:a05:6214:4015:b0:707:6306:28bf with SMTP id
- 6a1803df08f44-709362daaf2mr120089446d6.36.1754295504355; Mon, 04 Aug 2025
- 01:18:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754295604; x=1754900404;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0LJ+4iCdHWofk7e13A9vDNRbDzbLrdNTpgHSEHKMAiA=;
+ b=NXJFVyk11u+Q1eWmL+6eWOTwJx69k6EAXjblk8aNsKeIddsMNOTXMqfFwbRhk64tEn
+ oyK/s5DwNL82NJ5sVTjy57spjuZpT34um1ngVC7lZm71jHpjR9hss4s+D5rEbxXmKhSK
+ 3nEHg8gNCqfHTy6J5zAiM1MXFAfYWezSXbNvxxKZMlHK6kCfchOMQ8c/eJ3a+1j3vaQy
+ /D7rKRAi1y4cWyqQEMrCIss3nCOQ2X4wSsYMwlZr4hNzWswjBgFz66/x6DmkFjgiireQ
+ VH/DLYCdf+WNzed7Qj6EMXmsRb8x9luHM0QyQ+ZCbYCwZ3/zGlrdzEfubEdICHFeFcDc
+ TDqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXx9BDC2VEOD+7wprJigDXhTGfUAakvnLK84Gyd/Ak/sBV2Bu5+3aIVc5/vAJ8BCRAZnjX0qaSlsTGU@nongnu.org
+X-Gm-Message-State: AOJu0YzOw3YcD1Vb4B7UiFOr+JErFMktymSQRIvIr4jugDDIZvvIcowz
+ wQ735B5VU8oiMUN+e8IpdD64caQqQy1K+4y5CaPP+0WqWN1yIlCZL1fePNLt4tlMywMscbNBqj5
+ niT4JyAcp93KQTAcPk5hqlzvqdXgXcAsf6sFo6XSluntGjKN5xZTyGjWK
+X-Gm-Gg: ASbGnctoYIUwWFDRZo+o5LPIwpCOifTh+1qEqEf6j0AZ1EnI3lps2dZgpCX9uAWFerz
+ xYzNMOHiGtd6D4ZoF1QelkGVaMajx/BENF9ch+Gk9SDV7dvlgcdpVz6waHmyvWhUUDMTPdZrrxM
+ PH5nPMX5Y5Jqi92iAQtBSaiJQh8N6L5PaS+KT4oQXyBBbzzUm8XQTpyoKVJe8f4HCzAEJ4q69S7
+ tSsfAFY12j4d79m7jWc9bxq6QuvKuvvzh4c8eaVeV0onxa2iKqddwbV7ELGx+MLC8GoXy9fSc7J
+ e2AHNrvDJ30EbbCjxCfRyQ/aQcU1Xvq9s2aIElNaU2aFR7pu
+X-Received: by 2002:a05:622a:28e:b0:4ab:6c5a:1fd2 with SMTP id
+ d75a77b69052e-4af10a4a5f2mr131316191cf.29.1754295603901; 
+ Mon, 04 Aug 2025 01:20:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHimGOMwtJHKpziDDpLElqWhx+NDWZjJoxiswXhwoh8DTIU3sVNDQwGthLcKF/w1GWFIyTylQ==
+X-Received: by 2002:a05:622a:28e:b0:4ab:6c5a:1fd2 with SMTP id
+ d75a77b69052e-4af10a4a5f2mr131315901cf.29.1754295603475; 
+ Mon, 04 Aug 2025 01:20:03 -0700 (PDT)
+Received: from wheatley.localdomain ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077cdf4831sm55092446d6.75.2025.08.04.01.20.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 01:20:02 -0700 (PDT)
+Received: by wheatley.localdomain (Postfix, from userid 1000)
+ id 219E1C5FBE25; Mon, 04 Aug 2025 10:20:01 +0200 (CEST)
+Date: Mon, 4 Aug 2025 10:20:01 +0200
+From: Martin Kletzander <mkletzan@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 2/2] tests/qemu-iotests: Indent expected error messages
+Message-ID: <aJBtMUczl93scBnN@wheatley.k8r.cz>
+References: <cover.1754060086.git.mkletzan@redhat.com>
+ <f5be6d407c105fa199d10867f5de48bbd25c008c.1754060086.git.mkletzan@redhat.com>
+ <aIzhtcg-TNZE0zH8@redhat.com> <87v7n63lld.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250804074641.6021-1-zhengnici@gmail.com>
-In-Reply-To: <20250804074641.6021-1-zhengnici@gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 4 Aug 2025 11:18:13 +0300
-X-Gm-Features: Ac12FXzyCYBxPGYMQF3MIHLK7o9yoTE8sU58tD4fa_-cst1eBGEP-WXm8QLkrp0
-Message-ID: <CAPMcbCq9d+fRVkZpWRQxOdyHOOTAgBT6dNE1VJdUhfAZTqr6hQ@mail.gmail.com>
-Subject: Re: [PATCH] qga: Fix error handling in system suspend mode causing
- libvirt to hold lock indefinitely
-To: zhengnici@gmail.com
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, 
- panzerzheng <panzerzheng@tencent.com>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000005e5f95063b85c0c1"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="h7gRRAnYEI3uFD4v"
+Content-Disposition: inline
+In-Reply-To: <87v7n63lld.fsf@suse.de>
+X-Clacks-Overhead: GNU Terry Pratchett
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mkletzan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,182 +118,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005e5f95063b85c0c1
-Content-Type: text/plain; charset="UTF-8"
+
+--h7gRRAnYEI3uFD4v
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 4, 2025 at 10:47=E2=80=AFAM <zhengnici@gmail.com> wrote:
-
-> From: panzerzheng <panzerzheng@tencent.com>
+On Fri, Aug 01, 2025 at 04:09:34PM -0300, Fabiano Rosas wrote:
+>Daniel P. Berrang=E9 <berrange@redhat.com> writes:
 >
-> When "/sys/power/state" does not contain "disk", the operating system
-> does not support hibernation. Executing "sudo systemctl hibernate" will
-> return an exit code of 1 with the stderr output: "Call to Hibernate faile=
-d:
-> Sleep verb 'hibernate' is not configured or configuration is not supporte=
-d
-> by kernel".
+>> On Fri, Aug 01, 2025 at 04:59:50PM +0200, Martin Kletzander wrote:
+>>> From: Martin Kletzander <mkletzan@redhat.com>
+>>>
+>>> When running all tests the expected "killed" messages are indented
+>>> differently than the actual ones, by three more spaces.  Change it so
+>>> that the messages match and tests pass.
+>>
+>> This would break the tests on my system and CI too.
+>>
+>> What distro are you seeing this on ?
+>>
+>> I'm guessing this is a different in either valgrind or C library ?
+>>
 >
-
-> This patch adds handling for exit code 1 in the systemd_suspend function,
-> setting appropriate error messages when the kernel does not support
-> standby.
-> It also adds local_err handling in the guest_suspend function to set
-> mode_supported to false.
+>It's bash, we have an open issue about it:
 >
-> Without these fixes, libvirt would hold the lock indefinitely.
->
-> Signed-off-by: panzerzheng <panzerzheng@tencent.com>
-> ---
->  qga/commands-linux.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-> index 9e8a934b9a..26229396c3 100644
-> --- a/qga/commands-linux.c
-> +++ b/qga/commands-linux.c
-> @@ -1300,6 +1300,12 @@ static void systemd_suspend(SuspendMode mode, Erro=
-r
-> **errp)
->          return;
->      }
->
-> +    if ((status =3D=3D 1) && !local_err) {
+>https://gitlab.com/qemu-project/qemu/-/issues/3050
 >
 
-Is there any documentation that explains that exit code =3D 1 is an error?
-If you look into systemd_supports_mode, you can see that exit code =3D 1 is
-detected
-as a supported mode.
+Ah, good to know, thanks.  That's what I suspected, but haven't thought of
+checking gitlab issues.  Sorry for the noise.
 
+--h7gRRAnYEI3uFD4v
+Content-Type: application/pgp-signature; name=signature.asc
 
-> +        error_setg(errp, "'systemctl %s' not suspend",
-> +                   systemctl_args[mode]);
-> +        return;
-> +    }
-> +
->      if (local_err) {
->          error_propagate(errp, local_err);
->      } else {
-> @@ -1428,6 +1434,8 @@ static void guest_suspend(SuspendMode mode, Error
-> **errp)
->
->          if (!local_err) {
->              return;
-> +        } else {
-> +            mode_supported =3D false;
->          }
->
+-----BEGIN PGP SIGNATURE-----
 
-This is very confusing. We check that the mode is supported, but after
-running suspend,
-we find that it is unsupported. I think we should fix systemd_supports_mode
-instead.
+iQIzBAABCAAdFiEEiXAnXDYdKAaCyvS1CB/CnyQXht0FAmiQbTEACgkQCB/CnyQX
+ht2aJg/+M8rw+4dfl07LHKdE2QApog5TYVN4xo64ACM3PPc67Q6ELM9nr3PzF58V
+VxY+mAtxZbIvSNcYo4aqy+KcZUZVP5Vh0J7KVxyob70t8uDEKMJ08P67oi+m+W5/
+71iGnYiQD7FVJTH6Fu9Aw8kV/EfTYpajcizTt0ExYPfsz01d9j/qqV7HpMSBLRV/
+xmL0jh2rCHUmmCMkjFw5dVsjDh6cf39YELJBst0IouGihl1VC11ngvrdK1NBohgB
+9t5oxhKfup7hP5hS9vZccrXGNC58AMtnK66cjtdAHh6AUPjdH56CcFAa8NFaiIht
+lBjctjEOJn6dLwXzbSproM75AvN3fXVQJgoFbCGHFmDZY2R1xXeTBWy2aJdyyY3P
+EzzIhhAw0tS5MOmvi9NrucvSsrnHWhphRnfYFG71s4GZ4lHmCyU+OSMjLsaIlnxn
+KS+yI16Be01jDWMdk8wJ8C1xpsIgzs8sLaHmF7S7Rjxwl3lnrrZbcc/LlCcBY3xn
+A8vNz0vimM3I/1UHi67l2V4+MdpM+CDPOIGwryMyzAgHrtBQiJixN2sNMIdTfO3j
+ehuhjE4rp2QaOlDykGgY6T2WA11pprxsA5csNzrLKEP70BLFe2y8Opa/DDdhJHgj
+gdh+JC7wqdAJmEDN+O39zQuSXkH0dblOM/Zb1UGyn3+sB89mASI=
+=ymYO
+-----END PGP SIGNATURE-----
 
-Also, setting mode_supported =3D false does not change anything.
-In the next step, we will check pmutils_supports_mode and
-linux_sys_state_supports_mode,
-and I think this check will pass, so we set mode_supported =3D true again.
-
-Best Regards,
-Kostiantyn Kostiuk.
-
-
->      }
->
-> --
-> 2.43.7
->
->
-
---0000000000005e5f95063b85c0c1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 4, =
-2025 at 10:47=E2=80=AFAM &lt;<a href=3D"mailto:zhengnici@gmail.com">zhengni=
-ci@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">From: panzerzheng &lt;<a href=3D"mailto:panzerzheng@tencent.com=
-" target=3D"_blank">panzerzheng@tencent.com</a>&gt;<br>
-<br>
-When &quot;/sys/power/state&quot; does not contain &quot;disk&quot;, the op=
-erating system<br>
-does not support hibernation. Executing &quot;sudo systemctl hibernate&quot=
-; will<br>
-return an exit code of 1 with the stderr output: &quot;Call to Hibernate fa=
-iled:<br>
-Sleep verb &#39;hibernate&#39; is not configured or configuration is not su=
-pported by kernel&quot;.<br></blockquote><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-<br>
-This patch adds handling for exit code 1 in the systemd_suspend function,<b=
-r>
-setting appropriate error messages when the kernel does not support standby=
-.<br>
-It also adds local_err handling in the guest_suspend function to set<br>
-mode_supported to false.<br>
-<br>
-Without these fixes, libvirt would hold the lock indefinitely.<br>
-<br>
-Signed-off-by: panzerzheng &lt;<a href=3D"mailto:panzerzheng@tencent.com" t=
-arget=3D"_blank">panzerzheng@tencent.com</a>&gt;<br>
----<br>
-=C2=A0qga/commands-linux.c | 8 ++++++++<br>
-=C2=A01 file changed, 8 insertions(+)<br>
-<br>
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c<br>
-index 9e8a934b9a..26229396c3 100644<br>
---- a/qga/commands-linux.c<br>
-+++ b/qga/commands-linux.c<br>
-@@ -1300,6 +1300,12 @@ static void systemd_suspend(SuspendMode mode, Error =
-**errp)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 if ((status =3D=3D 1) &amp;&amp; !local_err) {<br></blockquo=
-te><div><br></div><div><div>Is there any documentation that explains that e=
-xit code =3D 1 is an error?</div><div>If you look into systemd_supports_mod=
-e, you can see that exit code =3D 1 is detected <br></div><div>as a support=
-ed mode. </div></div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;&#39;systemctl %s&#39; =
-not suspend&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0syste=
-mctl_args[mode]);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (local_err) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_propagate(errp, local_err);<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-@@ -1428,6 +1434,8 @@ static void guest_suspend(SuspendMode mode, Error **e=
-rrp)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!local_err) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mode_supported =3D false;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br></blockquote><div><br></div><div>Thi=
-s is very confusing. We check that the mode is supported, but after running=
- suspend,<br> we find that it is unsupported. I think we should fix systemd=
-_supports_mode instead. <br></div><div><br></div><div>Also, setting mode_su=
-pported =3D false does not change anything. <br></div><div>In the next step=
-, we will check pmutils_supports_mode and linux_sys_state_supports_mode,<br=
-></div><div>and I think this check will pass, so we set mode_supported =3D =
-true again. <br></div><div><br>Best Regards,<br>Kostiantyn Kostiuk.<br></di=
-v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.43.7<br>
-<br>
-</blockquote></div></div>
-
---0000000000005e5f95063b85c0c1--
+--h7gRRAnYEI3uFD4v--
 
 
