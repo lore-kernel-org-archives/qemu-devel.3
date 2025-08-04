@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 847C5C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 14:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01732C87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 14:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiwKP-0005Yc-2k; Mon, 04 Aug 2025 10:38:25 -0400
+	id 1uiwXB-0002nP-8x; Mon, 04 Aug 2025 10:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1uiv7M-00069n-Ob
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:20:45 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1uiv7J-000625-7A
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:20:44 -0400
-Received: from loongson.cn (unknown [223.64.120.241])
- by gateway (Coremail) with SMTP id _____8BxJHChs5Bo3Vg4AQ--.4905S3;
- Mon, 04 Aug 2025 21:20:34 +0800 (CST)
-Received: from localhost (unknown [223.64.120.241])
- by front1 (Coremail) with SMTP id qMiowJDxQ+Sbs5BoOZg1AA--.1786S2;
- Mon, 04 Aug 2025 21:20:32 +0800 (CST)
-From: WANG Rui <wangrui@loongson.cn>
-To: gaosong <gaosong@loongson.cn>,
-	bibo mao <maobibo@loongson.cn>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu@hev.cc, WANG Rui <wangrui@loongson.cn>,
- Zhou Qiankang <wszqkzqk@qq.com>
-Subject: [PATCH v2] target/loongarch: Fix [X]VLDI raising exception incorrectly
-Date: Mon,  4 Aug 2025 21:22:12 +0800
-Message-ID: <20250804132212.4816-1-wangrui@loongson.cn>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uivBU-0004Oh-KL
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:25:00 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uivBS-0006id-Ds
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 09:25:00 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b7848df30cso3330529f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 06:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754313896; x=1754918696; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=97dFiWkFWB/i0zL6QqfC8T9NssPBUxEbXa4b51KzaVI=;
+ b=iuOjXDLXCKR86K9D4gon8uEHwTLLlIY9QiBewOZeTaOPcAr2553cezVdH6cVK4T/J1
+ XD0iDi7lPLTxKtjaiTPGrpdDArA+0L4SZAchKiPoSfHcNeUZ0kswJzvY+ElkEDX/1nFO
+ dsfqR2Br+yuSpuviFegYCtYGM726d2VOKxDi4EP+ucvF7urEhouQLDtmfJU4pdYRAwNb
+ PhGtZ0roKbxTfn7i3E6rbAsdJiUTzpZh3j5LAwhAn6aEBMzyMilZ97fvL0IxeLF64kas
+ 9jzgD9Aznvy8IWOrUP+o/h/vI/YLg+A5lwucT/RmyjdJQwbLS35K5Uil2M0SBdkupHor
+ nnbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754313896; x=1754918696;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=97dFiWkFWB/i0zL6QqfC8T9NssPBUxEbXa4b51KzaVI=;
+ b=BIKrLFf34wyOoW7rosQXaRRZzvuyMLB6bbbFvqVkSVzb4cBMeXCHEqndpHXlAemynA
+ 8KwMDlI+lvAmS1sTTfGyC6C81DuUScSN4XNxk81SA7VksjuNrO5M/1+Y6vDCczQ8jr9x
+ 7qR5bhJQOPUvc7HlXeAb032IOmYbKWQucFWPRVukP0NAM2h7AdlO2irxBYKn1tn1Hhn/
+ kr5sbYhCs2/7pkXgfrcF9/DFlHQUgCkToatqZpENVYobJ1uc7tEFSvYWeco4A9+RcNa+
+ YRy1G3uvonEjAUqNkeg7mKI4LUO2nhHX6xNBxkaZ6664od7zdMDi+lbzxImY0uDNtqqg
+ glUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGwy0FxlD5hYScw/gEhazcvS/3bI459WQ1uC9/0vyNisAHG2M1TskJFrvcXzziciVZuXN0r9B0wTFR@nongnu.org
+X-Gm-Message-State: AOJu0YzBy5U7W3qOKkxUgx/ege+Nj43gtlDP9+HEQFpQpECCQ0KfVh1i
+ AwBNTmhIa+CfB2OK8J1ouHv1OMIUUHY9PhdzjxDWNDy+59XB8DH9U7smVAiFsuh6UrI=
+X-Gm-Gg: ASbGnctrU6585zdPJWCHXr1P1DFlKvKo3oe7ovGbKoF3uXbtoyp5mZFvkC2YV5B7LxN
+ WkS3xGKWHP8S92wu4wTW0aqeob0TnH3P43IBABoREOEPLNZSFU5Sl0irBDt94tlheiSOCGI4WUI
+ YKDRoA2KxMStFA2xylhTK6Maf5nN17jnb5I806o5czFf1d3/ly/ZZ7Si6VyFgUj6thPKOKNQgEA
+ ryCM8SWf5KUKSJld/AhvmG38PTX3XUiZwhumj3YC6/t69MokIoIT0Q9Fwj50BPeLknGraydvsa0
+ C3UW2zrVCcJpoP/XKDkFZPz90ReSSMbS27+w5N0O3X3VHAnb6MTSmUiYzDut1pyRjOBOk2nZz4T
+ 6O9qEhMXIo3gvz4gZTVWYaY4ps31/gDEHm8x9erQQmY+cK0MOSn/IYD6ijZ9HBIHcyQ==
+X-Google-Smtp-Source: AGHT+IHXCrZrByL0ogMB3u04EAeRRWQw6uZPVU2k+HY09TlP41owUy96djoWbsOI+7BiGvMrBMncsg==
+X-Received: by 2002:a5d:5f4c:0:b0:3b7:8acf:1887 with SMTP id
+ ffacd0b85a97d-3b79d4e387emr10775962f8f.13.1754313896393; 
+ Mon, 04 Aug 2025 06:24:56 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458f713eb44sm69011535e9.14.2025.08.04.06.24.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Aug 2025 06:24:55 -0700 (PDT)
+Message-ID: <3a0626c4-a2e9-44dc-8437-271adddd0499@linaro.org>
+Date: Mon, 4 Aug 2025 15:24:54 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qapi/command: Avoid generating unused
+ qmp_marshal_output_T()
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: michael.roth@amd.com, jsnow@redhat.com, berrange@redhat.com
+References: <20250804130602.903904-1-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250804130602.903904-1-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxQ+Sbs5BoOZg1AA--.1786S2
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tr18AF17Jw4DuFWUZFyrAFc_yoW8GF15pr
- 4akrWUKrWrJFZ3ZFyYvw4jyr15G395tw4IgFn3t3Z3Aa9xtryvqr40qFW2vFyUCFyDXr1j
- vF4Fvw1Yqa17ZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9jb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
- kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
- AwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
- 8JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v26r1Y
- 6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
- AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE
- 2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcV
- C2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2Kfnx
- nUUI43ZEXa7IU8hiSPUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,53 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the specification, [X]VLDI should trigger an invalid instruction
-exception only when Bit[12] is 1 and Bit[11:8] > 12. This patch fixes an issue
-where an exception was incorrectly raised even when Bit[12] was 0.
+On 4/8/25 15:06, Markus Armbruster wrote:
+> qmp_marshal_output_T() is only ever called by qmp_marshal_C() for a
+> command C that returns type T.
+> 
+> We've always generated it as a static function on demand, i.e. when we
+> generate a call.
+> 
+> Since we split up monolithic generated code into modules (commit
+> 252dc3105fc "qapi: Generate separate .h, .c for each module"), we do
+> this per module.  As noted in the commit message, this can result in
+> identical (static) qmp_marshal_output_T() in several modules.  Was
+> deemed not worth avoiding.
+> 
+> A bit later, we added 'if' conditionals to the schema language (merge
+> commit 5dafaf4fbce).
+> 
+> When a conditional definition uses a type, then its condition must
+> imply the type's condition.  We made this the user's responsibility.
+> Hasn't been an issue in practice.
+> 
+> However, the sharing of qmp_marshal_output_T() among commands
+> complicates matters.  To avoid both undefined function errors and
+> unused function warnings, qmp_marshal_output_T() must be defined
+> exactly when it's used.  It is used when any of the qmp_marshal_C()
+> calling it is defined, i.e. when any C's condition holds.
+> 
+> The generator uses T's condition instead.  To avoid both error and
+> warning, T's condition must be the conjunction of all C's conditions.
+> 
+> Unfortunately, this can be impossible:
+> 
+> * Conditional command returning a builtin type
+> 
+>    A builtin type cannot be conditional.  This is noted in a FIXME
+>    comment.
+> 
+> * Commands in multiple modules where the conjunction differs between
+>    modules
+> 
+>    An instance of this came up recenrly.  we have unconditional
+>    commands returning HumanReadableText.  If we add a conditional one
+>    to a module that does not have unconditional ones, compilation fails
+>    with "defined but not used".  If we make HumanReadableText
+>    conditional to fix this module, we break the others.
+> 
+> Instead of complicating the code to compute the conjunction, simplify
+> it: generate the output marshalling code right into qmp_marshal_C().
+> 
+> This duplicates it when multiple commands return the same type.  The
+> impact on code size is negligible: qemu-system-x86_64's text segment
+> grows by 1448 bytes.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   docs/devel/qapi-code-gen.rst | 25 ++++++++------------
+>   scripts/qapi/commands.py     | 44 ++++++++----------------------------
+>   2 files changed, 19 insertions(+), 50 deletions(-)
 
-Test case:
-
-```
-    .global main
-main:
-    vldi    $vr0, 3328
-    ret
-```
-
-Reported-by: Zhou Qiankang <wszqkzqk@qq.com>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
----
-v1 -> v2:
-- Keep the INE exception prioritized over the [A]SXD.
----
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 78730029cb..38bccf2838 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3585,7 +3585,9 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
-     int sel, vece;
-     uint64_t value;
- 
--    if (!check_valid_vldi_mode(a)) {
-+    sel = (a->imm >> 12) & 0x1;
-+
-+    if (sel && !check_valid_vldi_mode(a)) {
-         generate_exception(ctx, EXCCODE_INE);
-         return true;
-     }
-@@ -3594,8 +3596,6 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
-         return true;
-     }
- 
--    sel = (a->imm >> 12) & 0x1;
--
-     if (sel) {
-         value = vldi_get_value(ctx, a->imm);
-         vece = MO_64;
--- 
-2.50.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
