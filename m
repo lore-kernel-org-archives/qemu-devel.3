@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9A0C87FCB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70112C87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 08:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiqey-0005ju-4x; Mon, 04 Aug 2025 04:35:11 -0400
+	id 1uiqfB-00065L-Rt; Mon, 04 Aug 2025 04:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqec-0005Wm-D9
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:34:50 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqf4-0005su-11
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:35:15 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqea-0000Od-Hu
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:34:46 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-458a84e2917so34040295e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:34:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uiqey-0000eE-Sp
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 04:35:13 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3b7920354f9so3795799f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 01:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754296483; x=1754901283; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754296507; x=1754901307; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=st24j4UZAzvpJb8c8QYj2IQFFM0KpR65CkF9zcZR8hE=;
- b=u0d5BW6u4fQrWf5uXNyY8FLosA0egG+Oe02mbLPiEO0nIafiD7qVAts69jIkRgPnlD
- Pc3ZmAIm4S/pCIlMlokriR2I+pfkrGNnKPhE5ZG8wNhAWNLiOLUdU9pUPzBy7heBi3n4
- tGble9N8GnDlDadxHRmzUcu3dNEzF4nRvoGodxYFVVpHYhrf0XpLEXHFwMABfw+9lfbK
- ZNAtNumawUalz34SGWU74AByh5eKt6ug5s0fNMLM5aECovGB2McZw+xba6vysTQeEFI/
- dQE/lmA0VzQ2E7bNV4ddwZQ0r31+TxMan2JZxSMAH0r8+tOWuvTYazGiyExGKiCSaeJx
- sF3A==
+ bh=O5RVg2SqWk3+B9/9EELchuK9142IIQaNCTOvKtv2SJc=;
+ b=pvpYeliq+xuYwI3m6oS51K/zb2ybI+Gi/BbDOyEZ1g4PM1VGQ/W2xHcsvt7bCu3n9u
+ p55pR5l1/IfZt8o237O6CMF5I5V3SBpmoonNiYrbTBjktbtw7ySSyOH47VdVVFk5bPeW
+ YgtSz102a1gfnXihWV5LjoNwpmvKMIVOeWqWZ2oS0E1oRfQcJx0uD20sQo44217r4RCE
+ GMybZGPmwT8lXmWV4nD6Yry0bmvxdAUntavXpTUlwPBUMaZ6PbxcElaALePFQJlI6mzo
+ 0ect3UlKNx9kdRJkxyyCKNKLgCt8fs/3VJvlDZpXNid4zVMrHWsd4dK99J9HZ5YKSfsL
+ RARA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754296483; x=1754901283;
+ d=1e100.net; s=20230601; t=1754296507; x=1754901307;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=st24j4UZAzvpJb8c8QYj2IQFFM0KpR65CkF9zcZR8hE=;
- b=YLAKGjms9XOTBaaEvpA4f08GyB5ypU+vBTy+EQwXeNmml6t4JAvcU+nElrhtnsG1t5
- ehJpjH8gGiF940Ul36013H+38zgIq1+y+XtkXSE5ZLKtEx6J/xLWrzW8o/Ldi9QQBqvF
- gO2J84nhD6nLeAhWcNksHKReEVsATSfx+V2h+tmfcrNoPMvBKJ2efqRKcMu6n9EF4w52
- QuAgjRgCUitTerg84/6nWHMJSDlA0fuESSYVInShR2VjYAcfXLP1V3oZTtjL8GjDdBtk
- 1wGZ3jJ7hhBB+8n0TbutUPYknyW0mgx0cXaXBCU2HA3uOUbpIMy4QglwuYPZkjKycjqv
- 5AoQ==
+ bh=O5RVg2SqWk3+B9/9EELchuK9142IIQaNCTOvKtv2SJc=;
+ b=A0A/9+jDV9Ua3J+ft7qTdUl8a8xXecOdMvXyIp/FFFkFPVWRoIlh7eWEjgRVyYhhUh
+ rdpodCJ9GjSiL8gnS3DuK2OI4dHvwbw383cbkdr93cLQzXu9LTmoW8BWTvWTv2C4fzdW
+ hNDY/k4hRRiNXVUZg7GtdfSCKeL9VZM2RedaWGaC5GSjB/JhvoPZZG9Mkrc3TdDQh9bI
+ K68DSeiic3RDDKxWzglLgt8f8oSnxdZOJNvLl4pDiW81bcICuwPL+hrBKDaOUlVRT1T4
+ xT0tVFwvkCoUyGDD6edIulFS7hcRryxl3X3boqUcJZ80Cv+59bmuX6NA7PWLYRKTukU2
+ MzSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU701doZFIkubF9WLApTI1Py4M/XOxfsUoP3mDTpwTYQjiJC40x9w0uG10Z8y2Y1i52f6u2eOBv47h3@nongnu.org
-X-Gm-Message-State: AOJu0Yy//jRhD4BDbeBf4BH/0QsosDGY+QFHi+FUAlo6tWts1zI0Dsvb
- zNmj+pgdWRtdvpa01bzyl1peUry8GVfGelNpVb7WoLBMUReNvxT3NUCcYXr0cycHoJI=
-X-Gm-Gg: ASbGnctYmCVtwlcg32T4RVLAguCSVWYOez2NygZqfqcUx1LItjvC89NBR+94nE0iJmC
- VbMJnKuG9LBndhVvRRkiJOkux7z1kJxC/g1f857D1i78+opdOBZLAIicUdKoykrYUNawXiDCz4E
- EsOj5/bDYFNHh4aUuX2p+iJZLlZBFcmWQpsT1kd1rWqKAle1lYcZ6QRU1ncR6cm2QUsfiqrW13f
- V1/hdB8VWYPQxXmXXdARq+J0p58YRY2/D5HMhpaN+CEJYw3EEs95gDy8ipCBGsQvMldP732lybg
- JqDpthbeUSLPuv7+U7NqRrtfPaGhDQIdF9P89KYF9++zlv2Kic4Ll8gKhJIlBZb32o7WWSPzRes
- KJvnpwzvxW8aQm1B1kSWSNp2wC7B3GcDSgmxkMGK+MHqBlopx3DMl7BP3Epzyti1X8bzB/fQ=
-X-Google-Smtp-Source: AGHT+IGTbOjQt90f2TAmcihrwzJsFFesHUzaPmhxjHmSAb3haTsXs8cvcKzOSPoqLPHiYigADTqMxQ==
-X-Received: by 2002:a05:600c:4749:b0:458:b068:777a with SMTP id
- 5b1f17b1804b1-458b6b5460amr71994805e9.30.1754296482866; 
- Mon, 04 Aug 2025 01:34:42 -0700 (PDT)
+ AJvYcCXttyM9U82nq2C/PaZb4MTNzLv7H/fyYN4QVhSABy7bbUxKqr8aH/1WlJMoGxfGbfNh+LwjruByDrhb@nongnu.org
+X-Gm-Message-State: AOJu0YyUv7bUuL9d0faALvcqRMDpjKseByRgp1fNsJ+UPceLL0wPeo8/
+ Tn+w9F3APhn+vbXYXLFwF2vuo0pPDdaiAYYVFIuVX5fT/7QuvcLsTg6mfZbvP0L5qv0=
+X-Gm-Gg: ASbGncte7yMRTEC8fWQR0w0Yqppu88WWhMM5ZddmzEugfNzd9OmnIPdIDAxenP0gL3M
+ Kzmz3xmwp7VNS+v9DqRLg9bnb9k2BrRENK+6e59gUrMT96qdNNQiDFTZMey5ZNOm0s4Xo+Z2OPj
+ bnMQtJ40NgTP8Xn1PWiXCwh8ZNrIBn3On2KBHidEf1PzGb+2j3zA7SlaO9EFPCmDC7U+jN8Mypp
+ jv50wWnvJ+mE2YuNbNaEbYpiWM81E+03s+CmOYyK8cairlOSDGGWFoT3fiVGzjlXYH3YF7Daho5
+ euUV3X6zwIAjZ7RnyNSSxgG96PDE9KgpfOlTs70i2mbWfOl/CcYQ6scC876qJUgAzuywVZ1MQFw
+ XEpF2dH8u0ppRyS04u6n1nvMD7cBjPkzuaATsiQStdCvcGO2p64WXKwDNUMGr3gVY03ZUaZc=
+X-Google-Smtp-Source: AGHT+IFUSn41dEWR2/dcpUC0bp80lf1Ru/KTQ3c0A7pJMDB4ttHN3deN2aro7AS58lNXjIPWCks5Fg==
+X-Received: by 2002:a05:6000:26c8:b0:3b7:95fa:ac4 with SMTP id
+ ffacd0b85a97d-3b8d94ba89amr5809215f8f.32.1754296506870; 
+ Mon, 04 Aug 2025 01:35:06 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c489e81sm14798780f8f.68.2025.08.04.01.34.41
+ 5b1f17b1804b1-459a1c79b0asm31530685e9.3.2025.08.04.01.35.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 01:34:42 -0700 (PDT)
-Message-ID: <ed7ce30a-1741-4674-ba16-54f5b86a7f1e@linaro.org>
-Date: Mon, 4 Aug 2025 10:34:40 +0200
+ Mon, 04 Aug 2025 01:35:06 -0700 (PDT)
+Message-ID: <02e0d811-228d-4e5a-aa93-ca70c354eaa6@linaro.org>
+Date: Mon, 4 Aug 2025 10:35:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/24] tests/functional: Move hppa tests into architecture
- specific folder
+Subject: Re: [PATCH 06/24] tests/functional: Move alpha tests into
+ architecture specific folder
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
- <20250801151251.751368-10-thuth@redhat.com>
+ <20250801151251.751368-7-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801151251.751368-10-thuth@redhat.com>
+In-Reply-To: <20250801151251.751368-7-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,18 +108,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/8/25 17:12, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The tests/functional folder has become quite crowded, thus move the
-> avr tests into a target-specific subfolder.
+> The tests/functional folder has become quite crowded already, some
+> restructuring would be helpful here. Thus move the alpha tests into
+> a target-specific subfolder.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS                                                  | 2 +-
->   tests/functional/hppa/meson.build                            | 5 +++++
->   .../{test_hppa_seabios.py => hppa/test_seabios.py}           | 0
->   tests/functional/meson.build                                 | 5 +----
->   4 files changed, 7 insertions(+), 5 deletions(-)
->   create mode 100644 tests/functional/hppa/meson.build
->   rename tests/functional/{test_hppa_seabios.py => hppa/test_seabios.py} (100%)
+>   MAINTAINERS                                            |  3 ++-
+>   tests/functional/alpha/meson.build                     | 10 ++++++++++
+>   .../{test_alpha_clipper.py => alpha/test_clipper.py}   |  0
+>   .../test_migration.py}                                 |  0
+>   .../{test_alpha_replay.py => alpha/test_replay.py}     |  0
+>   tests/functional/meson.build                           | 10 +---------
+>   6 files changed, 13 insertions(+), 10 deletions(-)
+>   create mode 100644 tests/functional/alpha/meson.build
+>   rename tests/functional/{test_alpha_clipper.py => alpha/test_clipper.py} (100%)
+>   rename tests/functional/{test_alpha_migration.py => alpha/test_migration.py} (100%)
+>   rename tests/functional/{test_alpha_replay.py => alpha/test_replay.py} (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
