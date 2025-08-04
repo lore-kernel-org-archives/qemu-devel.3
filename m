@@ -4,45 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264F5C87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 06:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DC2C87FDA
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 06:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uiojG-0007WU-VH; Mon, 04 Aug 2025 02:31:30 -0400
+	id 1uiomd-0001YT-0m; Mon, 04 Aug 2025 02:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uiohx-00070f-Lc; Mon, 04 Aug 2025 02:30:06 -0400
+ id 1uioir-0007R8-RR; Mon, 04 Aug 2025 02:31:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uiohv-0005xf-3e; Mon, 04 Aug 2025 02:30:05 -0400
+ id 1uioil-0006OF-Ol; Mon, 04 Aug 2025 02:31:01 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8572213E0A3;
- Mon, 04 Aug 2025 09:29:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8C1A913E0F4;
+ Mon, 04 Aug 2025 09:30:34 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F00C2562F8;
- Mon,  4 Aug 2025 09:29:45 +0300 (MSK)
-Message-ID: <32544769-d484-41a5-962b-9cef8445b557@tls.msk.ru>
-Date: Mon, 4 Aug 2025 09:29:45 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id E1B99256302;
+ Mon,  4 Aug 2025 09:30:53 +0300 (MSK)
+Message-ID: <e87a0645-a4ff-41ed-a51f-da8ad750c6d2@tls.msk.ru>
+Date: Mon, 4 Aug 2025 09:30:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 09/36] hw/pci-host/gpex-acpi: Use
- build_pci_host_bridge_osc_method
-To: eric.auger@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, imammedo@redhat.com, Jonathan.Cameron@huawei.com,
- gustavo.romero@linaro.org, anisinha@redhat.com, shannon.zhaosl@gmail.com,
- Gerd Hoffmann <kraxel@redhat.com>, pbonzini@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-References: <20250714080639.2525563-1-eric.auger@redhat.com>
- <20250714080639.2525563-10-eric.auger@redhat.com>
- <ddf6f9e3-daaa-4ea1-a5e6-d402a75524c8@tls.msk.ru>
- <914677f4-07ba-45fe-9dc2-dea40940e789@tls.msk.ru>
- <53971ad6-9f50-45b0-80c4-eeedb24e53db@redhat.com>
- <20250801082904-mutt-send-email-mst@kernel.org>
- <2f2bc1e5-22fd-4cea-82fa-6be6bc82ad2c@redhat.com>
+Subject: Re: [PATCH for v10.1] i386/cpu: Move addressable ID encoding out of
+ compat property in CPUID[0x1]
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>
+References: <20250804053548.1808629-1-zhao1.liu@intel.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <2f2bc1e5-22fd-4cea-82fa-6be6bc82ad2c@redhat.com>
+In-Reply-To: <20250804053548.1808629-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,28 +105,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.08.2025 19:49, Eric Auger wrote:
-...
-> I have not proposed anything ;-) - sorry I am on vacation - I was trying
-> to enumerate the various config settings and to me dependencies should
-> be resolved so I fail to understand. Unfortunately I cannot test because
-> the problem happens with a custom microvm.mak. I would need this latter
-> to reproduce and try to fix.
+On 04.08.2025 08:35, Zhao Liu wrote:
+> Currently, the addressable ID encoding for CPUID[0x1].EBX[bits 16-23]
+> (Maximum number of addressable IDs for logical processors in this
+> physical package) is covered by vendor_cpuid_only_v2 compat property.
+> The previous consideration was to avoid breaking migration and this
+> compat property makes it unfriendly to backport the commit f985a1195ba2
+> ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX
+> [23:16]").
 > 
-> if the microvm.mak selects PCI_EXPRESS_GENERIC_BRIDGE (which selects
-> PCI_EXPRESS which itself selects PCI) and ACPI_HW_REDUCED (which selects
-> ACPI), the imply ACPI_PCI should end up as a selection because PCI and
-> ACPI are resolved. At least that's my understanding. Reading it again,
-> please can you check whether ACPI_HW_REDUCED is selected *before*
-> PCI_EXPRESS_GENERIC_BRIDGE in the custom microvm.mak. Depending on the
-> order of dependency resolution it might make a difference. Otherwise
-> please can you send the full microvm.mak and configure command so that I
-> can try reproducing. Thanks Eric
+> However, NetBSD booting is broken since the commit 88dd4ca06c83
+> ("i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]"),
+> because NetBSD calculates smt information via `lp_max` / `core_max` for
+> legacy Intel CPUs which doesn't support 0xb leaf, where `lp_max` is from
+> CPUID[0x1].EBX.bits[16-23] and `core_max` is from CPUID[0x4].0x0.bits[26
+> -31].
+> 
+> The commit 88dd4ca0 changed the encoding rule of `core_max` but didn't
+> update `lp_max`, so that NetBSD would get the wrong smt information,
+> which leads to the module loading failure.
+> 
+> Luckily, the commit f985a1195ba2 ("i386/cpu: Fix number of addressable
+> IDs field for CPUID.01H.EBX[23:16]") updated the encoding rule for
+> `lp_max` and accidentally fixed the NetBSD issue too. This also shows
+> that using CPUID[0x1] and CPUID[0x4].0x0 to calculate HT/SMT information
+> is a common practice to detect CPU topology on legacy Intel CPUs.
+> 
+> Therefore, it's necessary to backport the commit f985a1195ba2 to
+> previous stable QEMU to help address the similar issues as well. Then
+> the compat property is not needed any more since all stable QEMUs will
+> follow the same encoding way.
+> 
+> So, in CPUID[0x1], move addressable ID encoding out of compat property.
+> 
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Inspired-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> Fixes: commit f985a1195ba2 ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3061
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   target/i386/cpu.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 251d5760a0bd..673f8583c809 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7885,8 +7885,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>                * count, but Intel needs maximum number of addressable IDs for
+>                * logical processors per package.
+>                */
+> -            if (cpu->vendor_cpuid_only_v2 &&
+> -                (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+> +            if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+>                   num = 1 << apicid_pkg_offset(topo_info);
+>               } else {
+>                   num = threads_per_pkg;
 
-All the details were in my very first reply to the original patch:
-https://lore.kernel.org/qemu-devel/ddf6f9e3-daaa-4ea1-a5e6-d402a75524c8@tls.msk.ru/
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Thanks,
+Thank you!
 
 /mjt
 
