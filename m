@@ -4,147 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84406C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009D4C87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 13:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uivUG-0000Ty-Vu; Mon, 04 Aug 2025 09:44:25 -0400
+	id 1uivXG-00050E-Bn; Mon, 04 Aug 2025 09:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uiuWD-00036c-Fx
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:42:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uiuWC-0005rH-1g
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 08:42:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754311335;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hPoSJI5hiSD+BqT4IAyBhmmaLztoLhn2GMvM2DVz7o4=;
- b=KBhG/OFLYGcoklS0KREnBg8Xbna6tuXRtqsFLpteoUIfcRmwM8greSsiTMhOkIBIu3nMR/
- 3xOTvMLnA+ZGrdAx/rlN0hI2DRh0WglajgA2SCZ9JVbO5vQH8ejchRiwbQSOkAYQKQnvYN
- U9GoVZKtsUs58vw5YulK2XOh/3ygKRQ=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608--SZxdX7dPFuyosT3WyOwhA-1; Mon, 04 Aug 2025 08:42:09 -0400
-X-MC-Unique: -SZxdX7dPFuyosT3WyOwhA-1
-X-Mimecast-MFC-AGG-ID: -SZxdX7dPFuyosT3WyOwhA_1754311328
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-70747c020daso65552786d6.0
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 05:42:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhengnici@gmail.com>)
+ id 1uipuM-0005B8-6a
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 03:46:58 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhengnici@gmail.com>)
+ id 1uipuH-0006w3-Ci
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 03:46:57 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-240763b322fso36655845ad.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 00:46:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754293610; x=1754898410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8ETRsH2VJrmaVIIPCd6kg0gglEIjtgLpalOzB+/ZMHs=;
+ b=Le602lBUZCTUNt/UzuhjxeN26HdYsn/v4Kzb9Qd3B2RT6MNatUawcTGloIkCimqRr8
+ eahEOyl7AX6XqCpArlCqUhD2kCWoZ8EooXt7WTe957gymI1IzH9MVqZ7onvpOZ2PqXLo
+ nDCG/gNglJiFDuHVtdm0R3xOK3TXPOq9AEk4dajr2nrjxOXYwVRatTsBH7uXqUEkub2J
+ /OnRZY9ppDc7548YM80p4GOTVcpw02M1Ohd0eK+0/yxU/4nmZXUSP9RKZqeEN/1AXp4b
+ O25ddgRtx9cVD56AeDeLeXNtdZS3Dg9Yqey0a8GFk9KqzOXMPLBvrv0C+uo3UhTmdGlX
+ gLBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754311328; x=1754916128;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754293610; x=1754898410;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hPoSJI5hiSD+BqT4IAyBhmmaLztoLhn2GMvM2DVz7o4=;
- b=pMkhBwl8ftyDGIMpQR34NCnnvwFAX+lrzp1fXEwiquHtIl4B9N763m8rZ6wzZWnZIR
- tY5CR0muGKAjkQsW68vCdOotBBhWG+vVSu4SnGubDGVHRMQWnp6simbtBjya9rLLYzlp
- iGGG5RwVsu8EQIEBTh5En5hLQ4glH4v8suum/GpYfj5q9395lTkrZXwg/86SvrngOQN+
- BArZyPuZeKVAuPFNicanZk4hvkxfWQGBbL9+UzdGgmrQmFPRo118ObSrlCgfuu8KAAie
- mccZWovAzWpZF4zdZ180f+4MXWpH+eNuKCa8Ez9+BkzEIRe7jRG/YrSwCuROIlcRLOxZ
- Qhow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVj6nGfXK08Q8TXhmmxpYxDil8DIPG7cFPnhz3Fm7EfWePRnPNQygDnoIbHOcmv2Boojf5J/biW+nBL@nongnu.org
-X-Gm-Message-State: AOJu0YzFvs4c8UcxdP/c4wFTZ1LUc5vOdv81VgpT5ra6CMLeChVwEl6+
- lt7/aXJCrR1M+N/MOtdpOv1teKhJqOLgO1j5xOvakBlTbLhzD5A2DrBDNpjYuIXId7E5XiVBxkN
- YuJafsv3qA/k9UggOEiN/ijFBKKgEYq7u0JSzSXWfTd/9iWMpyHEsnDef
-X-Gm-Gg: ASbGncshbY6t2QrwHSG1URDEBecYKqC+5eXeUcLgX74gGMGCIhIneT7M+9xMV4DJy21
- lTqjxCbi/Ou3hRrC+gtwUH97MC8IGVyI2h/cIZfSqTlvH9FQctEGpbS1SwvVf3fMPQcMJ2094QL
- x6AasZ0gU1e7Fhh5+rKzpcnlwOS2RP7roUe0C4ffmhkECQmR+61k09xyrcQGxQ5j3k3CebQfyF2
- ca8GjyMSsEnW2WoSXCU8nacO/QRF/WDHgCeDRmiJUHeFFCeSMOpeKbxQ8j/L04+4/KgBpVbfljG
- X3SHW4dYe7Qq50x5ezwIiF3niIc7OSOcZWNPNo7knhk/nJcDE+6WgxAfuUs1kulBy86mjXVjB4F
- ++A==
-X-Received: by 2002:a05:6214:27ec:b0:707:2628:3c9c with SMTP id
- 6a1803df08f44-7077cafd46bmr198944476d6.4.1754311328175; 
- Mon, 04 Aug 2025 05:42:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFislyz+eKvu495xfzC7JZfPEXr75+55uF4a1xdo7tMjSyHdxwktr99fFAeSQzaHiHSdrCZw==
-X-Received: by 2002:a05:6214:27ec:b0:707:2628:3c9c with SMTP id
- 6a1803df08f44-7077cafd46bmr198943906d6.4.1754311327555; 
- Mon, 04 Aug 2025 05:42:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ bh=8ETRsH2VJrmaVIIPCd6kg0gglEIjtgLpalOzB+/ZMHs=;
+ b=P3Er4Vws0+sszdTh7N926NN0h4o854WJgGRJm76YCCf/OtQm/dN/3sqKAzbb4HVh9G
+ P+TqQx6gqkP8J0xndCdPxyYCZdD1Qxmdm5lo2L+Y+ISP7QO/QmN+XlukZGCc8skZ6JSN
+ +INeMt7p2o7QPE/JVpX3aUNM70U0CPohSFxS4yEKHFoh9kIkYyZD7pdOfXrtxFHg6jEU
+ zy58EDNVjSD7xbSt8PPejV6Lf/zA+wYUxmLHXs8zWRQObAQmXL7nclou7nyPVZ1+S9YH
+ nIvrm4a7uG0bcBYa9CWibXvoaCXToIzdXV81gknIrJx5EEINwaAyIN0jfPou2dOxQxEP
+ sPBw==
+X-Gm-Message-State: AOJu0Yw78CHaDppMBJwlj1m+cpkiUW3EIKvp+szi5ERXujkxqid7jR8J
+ fvchANzd8q45eQb1VnOLiOMAxDKs3oEY4FMqBkbUQ76RJw2JD/5I8Sj7hYWHEPBg4b0=
+X-Gm-Gg: ASbGnctGhx4vBcKjYnhEa9e7C9PfJoH36THv/BXvvm5FQw5kC8jIBYOr2zawla0dTZG
+ riTrF4VmkaU4KU/yJBItBG8ii57oad0oDHcgvmDHF68anplP/hztpisrSoMhQDJ39mdjnu5GzsG
+ +o5Vn+g+qwhQkxba6FW7Rwi+r6w8pPFn5O+pY5lE8V/XoJtK8QxO1Fri9j9s/5ARXI4ahpM2Dn8
+ e0UiKj4SeG32Z3biZOWIoYS+NOCM47TxuZKiMa6DVq4qI+O/nuGH+YT7vRz8wdKdPr2qYcY+P7F
+ v6pGlHIN+bVPRvx3raO7gmhAWxWLMcoui8ijdOVFj3kZQnKcbnepU3o4sowSB4IY65yEamQuzIO
+ /91yMXL3NzifbBLY58pFMaksUimIzm8a6
+X-Google-Smtp-Source: AGHT+IHW18zdbcCeVJNqYeNqxfwrLn+tnaIhXa9rJ1Jk3yS+/nOABLzKkMPkq6YGiTvy/Gn1j3qaDg==
+X-Received: by 2002:a17:903:230c:b0:23f:df55:cf7b with SMTP id
+ d9443c01a7336-24246f1fc36mr141885635ad.4.1754293610023; 
+ Mon, 04 Aug 2025 00:46:50 -0700 (PDT)
+Received: from localhost.localdomain ([129.226.77.50])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077cd5b26fsm57748606d6.55.2025.08.04.05.42.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 05:42:07 -0700 (PDT)
-Message-ID: <6a4c722a-c419-4032-93e0-b405aaddb5cb@redhat.com>
-Date: Mon, 4 Aug 2025 14:42:04 +0200
+ d9443c01a7336-241d1ef5fbdsm101871805ad.27.2025.08.04.00.46.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Aug 2025 00:46:49 -0700 (PDT)
+From: zhengnici@gmail.com
+To: qemu-devel@nongnu.org
+Cc: michael.roth@amd.com, kkostiuk@redhat.com,
+ panzerzheng <panzerzheng@tencent.com>
+Subject: [PATCH] qga: Fix error handling in system suspend mode causing
+ libvirt to hold lock indefinitely
+Date: Mon,  4 Aug 2025 15:46:41 +0800
+Message-ID: <20250804074641.6021-1-zhengnici@gmail.com>
+X-Mailer: git-send-email 2.43.7
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
-To: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
- adityag@linux.ibm.com, gautam@linux.ibm.com, philmd@linaro.org
-References: <20250724100623.3071131-1-harshpb@linux.ibm.com>
- <DBTNAC0PCPJN.9XCRXCPTLSC3@gmail.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <DBTNAC0PCPJN.9XCRXCPTLSC3@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=zhengnici@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 04 Aug 2025 09:13:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -159,22 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 14:33, Nicholas Piggin wrote:
-> Hey Harsh,
-> 
-> Sorry I dropped the ball on the merge window. Thanks to you and Cedric
-> and others for picking it up and apologies to those I kept waiting. I
-> let things overwhelm me a bit and got stressed about getting back to it
-> :(
-> 
-> I would like to keep helping out with qemu/ppc as time permits, I'll
-> try not to over promise though. Apologies again.
+From: panzerzheng <panzerzheng@tencent.com>
 
-Your PPC expertise is truly invaluable and will always be highly
-appreciated.
+When "/sys/power/state" does not contain "disk", the operating system
+does not support hibernation. Executing "sudo systemctl hibernate" will
+return an exit code of 1 with the stderr output: "Call to Hibernate failed:
+Sleep verb 'hibernate' is not configured or configuration is not supported by kernel".
 
-Thanks,
+This patch adds handling for exit code 1 in the systemd_suspend function,
+setting appropriate error messages when the kernel does not support standby.
+It also adds local_err handling in the guest_suspend function to set
+mode_supported to false.
 
-C.
+Without these fixes, libvirt would hold the lock indefinitely.
+
+Signed-off-by: panzerzheng <panzerzheng@tencent.com>
+---
+ qga/commands-linux.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 9e8a934b9a..26229396c3 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -1300,6 +1300,12 @@ static void systemd_suspend(SuspendMode mode, Error **errp)
+         return;
+     }
+ 
++    if ((status == 1) && !local_err) {
++        error_setg(errp, "'systemctl %s' not suspend",
++                   systemctl_args[mode]);
++        return;
++    }
++
+     if (local_err) {
+         error_propagate(errp, local_err);
+     } else {
+@@ -1428,6 +1434,8 @@ static void guest_suspend(SuspendMode mode, Error **errp)
+ 
+         if (!local_err) {
+             return;
++        } else {
++            mode_supported = false;
+         }
+     }
+ 
+-- 
+2.43.7
 
 
