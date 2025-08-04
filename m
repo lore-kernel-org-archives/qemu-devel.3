@@ -4,92 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB4AFC87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3332FC87FCF
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 11:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uitG3-0003HJ-Nw; Mon, 04 Aug 2025 07:21:36 -0400
+	id 1uitJv-0007Zy-7S; Mon, 04 Aug 2025 07:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uitFN-0002Fl-9L
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:20:54 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uitFL-00058G-DQ
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 07:20:52 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2401b855980so31287205ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 04:20:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754306449; x=1754911249; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u6hpqzqw2R3IWoM3JpxAXcbvoBCfXv2FXspd/x3eVDg=;
- b=mPrI89L95X0fH4kUuC11/udntf+tL3M6QcHg+QXNpa4cyMd+ipx0jKJMbcjIq8Du/o
- d0XzAMtywcylu9aannXyoWLMnNg+EaQIIiMqyzFmo7Sk9yqrWfVjUu9lYwnib07LC6Rz
- qhhiAyilqH2SdlNCzCZ3fwy/qvjxvc7nTHWVKBBU8+fLY99jo1dFZ9X0DGbWd1P8Dh1+
- p7pOB2OziKU1+rpP6jrNECP3o+izZSD3AXb9sIme6SOKkDu/azJjwu4mY/grFoz0Wu4t
- 41+2vgsVqiQZNHGgoKo4Kq8oEYn4nbAuPdUR6L6vToVmFixbxd6tzyGVCA8+Qcti7lgG
- 5t+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754306449; x=1754911249;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=u6hpqzqw2R3IWoM3JpxAXcbvoBCfXv2FXspd/x3eVDg=;
- b=XfYD9VMHdz4tPFwwe+8DvuPR/tO2ZGyzQepm++q2u/1ghEZ9xFeqNBx6IDYPRQN+P/
- 5KMotPJwWBtOQj/8rRuHCR0R2RYTaDO/4Z6NxYd5PAgN957MRQHq4ALrQWV5FwYNwpVu
- uAmyR2lIawUIzvAKAFK3MOKSqaCz5r2d6Sx5nOaeyICxLIUIGWg0JtgTlCwa9AZr1hBB
- YEsXlmCTnOAeRWmK0xeFbx3Tos1ZFxIZFFw5JrKaPXyLfxfAzj0bfISu1//ADSHg20bZ
- mNGtn1Gx2nlwDKMHz80yG5//nCg3KhhlkuFPnY7ORAL5x6HfzCdTblaAH5QnqhopRb5e
- kXnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmUU+ETvz/gCgTS17mOpdsJtk++WNvRtU3ySeio1s4kO9bgOpnRPj7I7qlEnMbV1vYJkSl/BGwPOc1@nongnu.org
-X-Gm-Message-State: AOJu0YzkAa2npruFSVx/vmUth3OxLn3jzZftsADCPOiYdvSgnLobJ/+x
- mLu+U/AZ92yDklqnV+wPNGWo6/HXjcFYYpzh79Q+NzMQtIySqOcF2/rlsByq4zgzacw=
-X-Gm-Gg: ASbGncu2A7j7VIelLVj1EoURv5b0V/yWdHtf/ZxnHaH+zRkxlcMsvjYIhFLHMS4gPjE
- W2iVK5ogKkjGJ0podEpCZtUbp8MZdgq9BcDhFuefumSFJNC9Ac88enyPQY9sdqEwC1Ts5+ZND2P
- g8MyFbgGP3bfJ/i4O1SRSQSJIHYCB79Q2dDR/k4O4ERy0XyTrb84bRqTzbbQbXQ8OGl8oiONLgY
- 2RJpyDwGfR3a1zAnRZ8r1PaDCR4AELJfYWxFNtysYUh1Bisb7d77ALOvc3QkTOAC0dqev20+Qri
- DCzmx0icZsihJwkalG4Ge6jw05RcgZx6jMsdIbZuFYZoK6+BZYUCfI0sFJOV2aGMkf7FcWwU+an
- mfcTMnO86NOGv0xcT0SKAkHQJYDRm39t8MfXC3unfD0qrmr+aXQ7r
-X-Google-Smtp-Source: AGHT+IFsJDVhhKz+l+fxdZDS4K+ZEwfhITxRdag0uHJMI2ZyiLG1ka/R69HNKHA3kuK65x8YXiBUag==
-X-Received: by 2002:a17:902:c409:b0:234:cf24:3be8 with SMTP id
- d9443c01a7336-24247004a29mr121506175ad.28.1754306448766; 
- Mon, 04 Aug 2025 04:20:48 -0700 (PDT)
-Received: from localhost.localdomain ([106.215.159.222])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1f0e83esm106901675ad.49.2025.08.04.04.20.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Aug 2025 04:20:48 -0700 (PDT)
-From: Tanish Desai <tanishdesai37@gmail.com>
-To: tanishdesai37@gmail.com,
-	qemu-devel@nongnu.org,
-	pbonzini@redhat.com
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
-	Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 1/2] tracetool: add CHECK_TRACE_EVENT_GET_STATE
-Date: Mon,  4 Aug 2025 11:20:38 +0000
-Message-Id: <20250804112039.16377-2-tanishdesai37@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250804112039.16377-1-tanishdesai37@gmail.com>
-References: <20250804112039.16377-1-tanishdesai37@gmail.com>
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uit1u-0002Mk-GJ; Mon, 04 Aug 2025 07:06:58 -0400
+Received: from mail-bn8nam11on2061f.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::61f]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uit1s-0001JY-9n; Mon, 04 Aug 2025 07:06:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Tb5A9M9G4rDYoW30bEaVaq9dtN8T+5D8hLPfAEBTmxKwJ+FEVMRZi+r6n79cP3/txy+QZpGEiOFUH8fcLoKAyqv+Fsp1gPx4ViFOina6vEVAERO1mEu4hG9qh+xa6L98/DXtj6RIZt/aggiyqzJoCPaY/96qNpcybodz1oLcAPAGqD3vO12po6rink2+ddKfd/5DMN7czEzJ8zxMj4hqqWbBcY549+sRjKKNbRYTAk9Iy/i0QqebDoV0y1C70lYvUf7Hex1Te9mlhPFhm6FYMDU7XBvrmfZ1Twjzgwkm/LSDXLpoN8HTmp0Bk3fsf0sRGvsDHVa/BSoZx4ffaT8ixQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pZR2M3eM3SZqIlz9owdBoaNGcRixv/sYqE1UnHWgC1g=;
+ b=ksZJC0eawDPS+RAKDrgIJrnr3zH3eX2SQ4I8fo6uPBL4ctP/OGSIa2uf6camPdPJNfTyC8br2gs+FxxgSa6127RahO6iFdbhyXRxi9GXuk4srLptxaVd+tNBfAa6DDg9Cz/LrmWiseVktwHINxd10KtIgrVs4l0pTMWx3cZyh01/6T0hOSo3vVM5S5+thkfaqG9ogBo+Q9WlhvTqJg6RfX1TPcuW30aH+WZOeR6hoFoxT00peYqMa8XlrBJeNYgUQNlQ9xPmDcGxDVDjZmV0yHCrvOqgChbyHGKcoITqpgueX2k27Mk9CwnFW7FuKXcO9nVfnKHEA6qhk5TJkqKYCQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=tls.msk.ru smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pZR2M3eM3SZqIlz9owdBoaNGcRixv/sYqE1UnHWgC1g=;
+ b=Z+I6udjLmnKv02DidSHgcuWSFEjtUyPmEz50fqyKUyNMjmhrbM2WpYol9godsHnTjxqTnCsmOQjrCzHmlI+LDUs7WyOaP/BdpVPrXxbpoU7K+0h2oqpAzwQuzgxnpQiZ9ahxvVP9JGMTqKGmbj82WzTLSzqgyreqZBydzlhHwXw=
+Received: from SJ0PR05CA0071.namprd05.prod.outlook.com (2603:10b6:a03:332::16)
+ by MW5PR12MB5650.namprd12.prod.outlook.com (2603:10b6:303:19e::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.19; Mon, 4 Aug
+ 2025 11:06:49 +0000
+Received: from MWH0EPF000989EA.namprd02.prod.outlook.com
+ (2603:10b6:a03:332:cafe::fd) by SJ0PR05CA0071.outlook.office365.com
+ (2603:10b6:a03:332::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9009.12 via Frontend Transport; Mon,
+ 4 Aug 2025 11:06:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ MWH0EPF000989EA.mail.protection.outlook.com (10.167.241.137) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.9009.8 via Frontend Transport; Mon, 4 Aug 2025 11:06:47 +0000
+Received: from [10.85.37.138] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 4 Aug
+ 2025 06:06:43 -0500
+Message-ID: <d29ccd29-d4c6-41fa-8158-93f9a21ab3ba@amd.com>
+Date: Mon, 4 Aug 2025 16:36:40 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] hw/i386/amd_iommu: Cleanups and fixes
+To: Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <richard.henderson@linaro.org>,
+ <alejandro.j.jimenez@oracle.com>, <vasant.hegde@amd.com>,
+ <philmd@linaro.org>, <Suravee.Suthikulpanit@amd.com>, qemu-stable
+ <qemu-stable@nongnu.org>
+References: <20250801060507.3382-1-sarunkod@amd.com>
+ <703d1159-7bdc-47b7-be08-64d7b000e45b@tls.msk.ru>
+Content-Language: en-US
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <703d1159-7bdc-47b7-be08-64d7b000e45b@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000989EA:EE_|MW5PR12MB5650:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ce9cce5-7061-44d2-c018-08ddd3470127
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|82310400026|376014|7416014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YVVUOWRIeklFV2VDSGFOZ1hMRzRlY2lIYWlkRmlBVnUxT2tqdWF3SXFCcVlO?=
+ =?utf-8?B?ZitJN2tLNlVaeWJhRnAvd2xmbFdQTy9kR24zRkpWZnlIZWxJNDBrL01xZHRE?=
+ =?utf-8?B?d0dqdVdOaVhPQ0JHTE1oTElORjJsQklxdWprODFTa25QcS80V1NVVms0V2dZ?=
+ =?utf-8?B?bWcxMzJrUEVibHZLbi9sRXY2MzdLdCtUTjFuQ0FwOVlCaFlCdUdiT1lwVDN1?=
+ =?utf-8?B?Q3VKaWVtZGoyaVhOMlA4ZGlvUkJnQms0NlBVN3R3YzdBSWcwZmRqMGFzL1Ji?=
+ =?utf-8?B?Z1NvUXp0UjdJRC82K2FTT0JLYkZiZXh0RmZGcWExdTZOL2NIV1J6WkhsNG5R?=
+ =?utf-8?B?NytMcFdvelNBZVlWaUY2YStVeDNFSXlGZm1LczJvbXo0Q1duMXVibUxHVXUv?=
+ =?utf-8?B?YWw4VnZMVWMwUEYxeUJCMkxwZktTWEloeVhvaWlPV2hhaXV3c21zSUhEZDkx?=
+ =?utf-8?B?Tmh6aWxGbTIwM2xjTEdtNXVJZklHWStxQ0taUW9HdGJBanRTalFMWmFOaEFZ?=
+ =?utf-8?B?UDVWTlpOcmw4blZSYmg4V2x6SU1iemZwM0wyWXJvbTUzdVhKTDVzOG44R09C?=
+ =?utf-8?B?ZHVsU0pzWkJmdUkyRDBqQVE4K2wvSlh6NjREN0kwVFJ0WTkxSXBnbWxjdDI4?=
+ =?utf-8?B?emFTUDFzRUw2Y2RRZFZLL2dhT0JoN252ZnFVemRNMVZtYXRoRERiS1Rzcjlk?=
+ =?utf-8?B?MmpnTVBDbmRLUEZUVUhRQXBmMjhIeU4rM3Rha3lSRFd1WHhUNXFlbHBqbnNC?=
+ =?utf-8?B?VCtFMkN1RGNVYkljN0pyVjBLcnBNd3FQend3MnlaZGovNDI4VzA2am5Cc0o3?=
+ =?utf-8?B?VmVKUHFmWEc4d2M2YXRhb0JqVWQ5N0pxUGs5bml2TktaQVFqeWNaY1A1OW95?=
+ =?utf-8?B?akc3SEZKV1dJZ2VzM2FERUVleHNwQ0hSVEh0dlN4NHp4V2NaVUlxdW5Jd0k0?=
+ =?utf-8?B?UFVHWUowL3hoTkt5OWtVbDVZVFY4cEsyQXZkOVpuQlhVZHU0SjhBVmFpSEpr?=
+ =?utf-8?B?WHozcEtaWHliWS9EK3ZLNm9KcXBwV0JuQ01VUVJzVUt0RWRCaUY5Z0VkQXB5?=
+ =?utf-8?B?SlF1cGFqTXBneU8ySGlDTEtBaENRQUR0V0hVTEhvL3llRkx2am9WM2Z5TnlX?=
+ =?utf-8?B?N3A5Y21EelYrWW1LTVl3YVVQL3RVZmM2N1MzNlhsMTllU0tKNGltTmZxUlNZ?=
+ =?utf-8?B?YkhveXFoOWZaUFIyNlpxU3R4Y1g0WFlxUGFsaGhhS29kUW5DU0g1VUc4UW1o?=
+ =?utf-8?B?MG9nSHhHVGFDZFlSalZwOGxmcWlkcXZ4Q2lvZk4wK29sd1dRUnJCcHRaeG1a?=
+ =?utf-8?B?ODdJSVZ1c3VzYkVUYXhNMndUdmdxMnV4YzkxNmNXbk9TVVk1WVRaNkR6Tkxt?=
+ =?utf-8?B?RkVoRWlDQ0xicmRGY043NEVKYXREVFoxUUR0VUlWTUFqOUJmd2lhbnQ1TlB4?=
+ =?utf-8?B?NHZJeHpSa1NtSmFZOGZzMjlldUhhK1lnNVZTYlJ0TFFiU3dKcjFGYXZyd2ly?=
+ =?utf-8?B?SXRzajIwWkRZTkU0bXE4NGxHb2ZTbXBoMVZmK05zMUlWK0hiVzNFZ21YWmJn?=
+ =?utf-8?B?THp2UW9KcWVyRGFVT2hZYXRpSUdzTlNjYWxzTWZEWitqS0tQOVBJd3B3dStV?=
+ =?utf-8?B?YmdLOVBBVzI5RXYxd0VSWlFhOFRhRGNOcGIyS201U0pDVjI5aDF6UWw1RlBZ?=
+ =?utf-8?B?bDZkcnVrODJOZDdaNVFtcmpKUTI2ZEk4TmswUVhzUjlUc1dEZjBmK1NoRlEw?=
+ =?utf-8?B?NzBrN09WZnM2eVEwYmVGQm9obXBUV0Y3dTB2VGVHNFg0cVJZeklxUE9UaktW?=
+ =?utf-8?B?R0J0Y2pseDB5N3FZVEJxSmdTUWZuSytVZitjdCtnRXp2SHorMXVkaXJBTVFU?=
+ =?utf-8?B?S0xKUng4a2NOOWtwaUdlQTM5QVphTmJXSGxyRzdoK01CUUV1VHM1Y2V4VXBF?=
+ =?utf-8?B?SkVFWkcrQ0ZEL0JIejllaEhUeEhHeFVWUmhWN1lmdk95S1ZhSExCM0JJS1FU?=
+ =?utf-8?B?dnR5eTFEc0YrdEw3UElBdnZ6WWsxM281R3czZjBZcG8vVnF3Nm9HUC84NmZQ?=
+ =?utf-8?B?VFI3d2NBMFhxdE4xZlVld2V1clltZStYcXA2QT09?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014)(7416014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2025 11:06:47.0658 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ce9cce5-7061-44d2-c018-08ddd3470127
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000989EA.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5650
+Received-SPF: permerror client-ip=2a01:111:f403:2414::61f;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,134 +161,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New attributed added in backends
-CHECK_TRACE_EVENT_GET_STATE which when
-present and is True wraps the code generated
-by generate function in check_trace_event_get_state
-check else it is outside the conditional block.
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
----
- scripts/tracetool/__init__.py         |  1 -
- scripts/tracetool/backend/__init__.py | 26 ++++++++++++++++-------
- scripts/tracetool/format/h.py         | 30 ++++++++++-----------------
- 3 files changed, 30 insertions(+), 27 deletions(-)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 2ae2e562d6..d0a02c45d7 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -332,7 +332,6 @@ def formats(self):
-         return self._FMT.findall(self.fmt)
- 
-     QEMU_TRACE               = "trace_%(name)s"
--    QEMU_TRACE_NOCHECK       = "_nocheck__" + QEMU_TRACE
-     QEMU_TRACE_TCG           = QEMU_TRACE + "_tcg"
-     QEMU_DSTATE              = "_TRACE_%(NAME)s_DSTATE"
-     QEMU_BACKEND_DSTATE      = "TRACE_%(NAME)s_BACKEND_DSTATE"
-diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
-index 7bfcc86cc5..3c900f01e9 100644
---- a/scripts/tracetool/backend/__init__.py
-+++ b/scripts/tracetool/backend/__init__.py
-@@ -23,6 +23,8 @@
- Attribute Description
- ========= ====================================================================
- PUBLIC    If exists and is set to 'True', the backend is considered "public".
-+CHECK_TRACE_EVENT_GET_STATE    If exists and is set to 'True', generate function
-+emits code inside check_trace_event_get_state check.
- ========= ====================================================================
- 
- 
-@@ -101,22 +103,32 @@ class Wrapper:
-     def __init__(self, backends, format):
-         self._backends = [backend.replace("-", "_") for backend in backends]
-         self._format = format.replace("-", "_")
-+        self.check_trace_event_get_state = False
-         for backend in self._backends:
-             assert exists(backend)
-         assert tracetool.format.exists(self._format)
-+        for backend in self.backend_modules():
-+            check_trace_event_get_state = getattr(backend, "CHECK_TRACE_EVENT_GET_STATE", False)
-+            self.check_trace_event_get_state = self.check_trace_event_get_state or check_trace_event_get_state
- 
--    def _run_function(self, name, *args, **kwargs):
-+    def backend_modules(self):
-         for backend in self._backends:
--            func = tracetool.try_import("tracetool.backend." + backend,
--                                        name % self._format, None)[1]
--            if func is not None:
--                func(*args, **kwargs)
-+             module = tracetool.try_import("tracetool.backend." + backend)[1]
-+             if module is not None:
-+                 yield module
-+
-+    def _run_function(self, name, *args, check_trace_event_get_state=None, **kwargs):
-+        for backend in self.backend_modules():
-+            func = getattr(backend,name%self._format,None)
-+            if func is not None and (check_trace_event_get_state is None or
-+                    check_trace_event_get_state == getattr(backend, 'CHECK_TRACE_EVENT_GET_STATE', False)):
-+                    func(*args, **kwargs)
- 
-     def generate_begin(self, events, group):
-         self._run_function("generate_%s_begin", events, group)
- 
--    def generate(self, event, group):
--        self._run_function("generate_%s", event, group)
-+    def generate(self, event, group, check_trace_event_get_state=False):
-+        self._run_function("generate_%s", event, group, check_trace_event_get_state=check_trace_event_get_state)
- 
-     def generate_backend_dstate(self, event, group):
-         self._run_function("generate_%s_backend_dstate", event, group)
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index ea126b07ea..0ceb49eef5 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -59,33 +59,25 @@ def generate(events, backend, group):
- 
-         out('    false)')
- 
--        # tracer without checks
-         out('',
-             'static inline void %(api)s(%(args)s)',
-             '{',
--            api=e.api(e.QEMU_TRACE_NOCHECK),
-+            api=e.api(),
-             args=e.args)
- 
-         if "disable" not in e.properties:
--            backend.generate(e, group)
--
-+            backend.generate(e, group, check_trace_event_get_state=False)
-+
-+        if backend.check_trace_event_get_state:
-+            if "disable" not in e.properties:
-+                event_id = 'TRACE_' + e.name.upper()
-+                cond = "trace_event_get_state(%s)" % event_id
-+                out('    if (%(cond)s) {',
-+                        cond=cond)
-+                backend.generate(e, group, check_trace_event_get_state=True)
-+                out('    }')
-         out('}')
- 
--        cond = "true"
--
--        out('',
--            'static inline void %(api)s(%(args)s)',
--            '{',
--            '    if (%(cond)s) {',
--            '        %(api_nocheck)s(%(names)s);',
--            '    }',
--            '}',
--            api=e.api(),
--            api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
--            args=e.args,
--            names=", ".join(e.args.names()),
--            cond=cond)
--
-     backend.generate_end(events, group)
- 
-     out('#endif /* TRACE_%s_GENERATED_TRACERS_H */' % group.upper())
--- 
-2.34.1
+On 8/2/2025 11:11 AM, Michael Tokarev wrote:
+> On 01.08.2025 09:05, Sairaj Kodilkar wrote:
+>> This series provides few cleanups and fixes for the amd iommu
+>>
+>> Changes since v2:
+>> - Used VMSTATE_UNUSED() to maintain migration compatibility when 
+>> ats_enabled
+>>    flag is removed [Phil].
+>> - Simplified the amdvi_writew [Phil].
+>> v2: https://lore.kernel.org/qemu- 
+>> devel/2e8f2b72-8fb5-474f-9844-61f306efeb2b@amd.com/
+>>
+>> Changes since v1:
+>> - Dropped top two patches which depend on the Alejandro's changes and 
+>> rebased
+>>    remaining patches on top of v10.1.0-rc0 [Phil].
+>> - Added a patch to fix amdvi_write*() [Ethon].
+>> - Reset event log head and tail when guest writes to event log base 
+>> register
+>>    [Ethon].
+>> - Considered "evtlog_intr" flag while generating event log interrupt 
+>> [Ethon].
+>> - Fixed comment [Ethon].
+>> v1: https://lore.kernel.org/qemu-devel/20250716073145.915-1- 
+>> sarunkod@amd.com/
+>>
+>> Base commit: 9e601684dc24a521bb1d23215a63e5c6e79ea0bb (v10.1.0-rc0)
+>>
+>> Sairaj Kodilkar (6):
+>>    hw/i386/amd_iommu: Fix MMIO register write tracing
+>>    hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+>>    hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
+>>    hw/i386/amd_iommu: Fix amdvi_write*()
+>>    hw/i386/amd_iommu: Support MMIO writes to the status register
+>>    hw/i386/amd_iommu: Fix event log generation
+>>
+>>   hw/i386/amd_iommu.c | 102 ++++++++++++++++++++++++++++++++++----------
+>>   hw/i386/amd_iommu.h |   2 +-
+>>   2 files changed, 80 insertions(+), 24 deletions(-)
+> 
+> Hi!
+> 
+> Is there anything there worth to pick up for qemu 10.0.x stable series?
+> (the "Move IOAPIC memory init" does not apply to 10.0 already).
+
+Hi MJT,
+
+I will backport the patch manually and send it to qemu stable mailing list
+
+Thanks
+Sairaj
+
 
 
