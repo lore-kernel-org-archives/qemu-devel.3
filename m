@@ -4,79 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B52C87FCF
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 21:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C9FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Aug 2025 21:50:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj33V-0005Di-Vw; Mon, 04 Aug 2025 17:49:18 -0400
+	id 1uj34D-0006i8-7T; Mon, 04 Aug 2025 17:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj33E-00054T-NC
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:49:02 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uj33B-0006Xl-K7
- for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:48:59 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-76bd9d723bfso3007893b3a.1
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 14:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754344136; x=1754948936; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=niT1nxlQEoDOEmdshDe60Tmy2BJfmPeStyXXw9rw3fA=;
- b=Q7YHEaNpI403gPavmOL9uN0/A77he1Eke0fKsVr3JhS08WoakOPEPPwehn2/J6qbcS
- R0k6jFbvMNwTiV67r/w0XiSRN2vjefWhsmRQ/fwAagnBpj6O0Dx6BQAgXMzqap/toVjf
- rDJqlweavUy/2gp7aPGzoUlVFiFi3+7c2JrPA66YZswY7EhQQx9N+0jioT5CewEYu3Os
- 78FSkSr2mFEQ7gJcUVhLsHFO7Pqyjln8wcdt7Vgm4liE0fnTu5NiuDldU7zLhtr8ljtx
- RqzlXvi1llaObI0e/Xqy7nq/S+r6xLWJAAAYe8YMTTt86dAl3gAdi974LIZ46B2IgP6F
- G2nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754344136; x=1754948936;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=niT1nxlQEoDOEmdshDe60Tmy2BJfmPeStyXXw9rw3fA=;
- b=CeSRNsMzzB7sryEwEzLPrsiqYzNhI0gv/4X+ypkJslvPtxNAUJZbJLgOGVsuTiEPDL
- J8FiyjoAP12ycpNN+r4ddznzTz3EjvxWa2aQAl141kl7qhLRRY+9SX9/C3xFlc0MACTi
- eZ4j35sQor2MHWqDODq/8CkutgJT0EpxyivCh9g7prX7FW6qfXL8IMtvWMuy5WaRtp5q
- 0AgMgTaZE6wsI6AYmVgQ/0aY7l733UMwibpRYVJYdOS1Gne/sXEJLFkLcJ96ebod2OCu
- Nc/VccAcndX4BvSEkv73mIbpN8UGQD/Z9x/0Rc7doOy3/EtUc1AporTeb3f6UOWcJUqm
- A6dQ==
-X-Gm-Message-State: AOJu0YxSHpMVUvIDE4hJEomMueiXQBGnWEDqH0QKijjg76eqnNzKDnNu
- dGvXNs3dQUH0kIsgpBBfSwdUiAozJt9dl8Z+JrFDLbqQpur2zUlH8OHXm+6I/2ecAEw=
-X-Gm-Gg: ASbGncuWcJhwByu29Q+8lAj8nbqjEeEP9B5bPzCMES5NGJfGp0syeiUtXv13kWb+aXP
- h8bW8sLmbSK0mR3/LmKsRULIJX2KhV1SSA62tHsFtnO4yOEpta6AWYWBD42AA+wghvAJXWi5mj4
- IN7IfiiAkqRhzInAQr8ZeyPUZDtdKYvJQw4qKXySm9drAPHFQN25MlRPSCHgsYHo5BOeCb3+ELp
- rrhBcZl9fMetbg0CxaILpM1dnwMIoGQVVvb3HDS3YQj5eEWKm8oXm7x5nS11TDQMcL3eJRUpiK6
- Qp52uSLMoFCxv0VOHkviEub4mk+EM99Pv6kitXPvM4rAT6ufp+EFby/tsvfFHzf8BNivFy9evQm
- OYTq69lRe2r65TjC8x6N0yedm66I27S87nXptohwOAZua2g==
-X-Google-Smtp-Source: AGHT+IHoqNlRFhC31s0DR++fw4DkIKCPlGWJe4feuwsNd+UOSvq5ULfvzMcbNfe2xgO5bjiZYPz0Uw==
-X-Received: by 2002:a05:6a00:4f95:b0:74d:3a57:81bc with SMTP id
- d2e1a72fcca58-76bec2f3303mr13171639b3a.2.1754344135703; 
- Mon, 04 Aug 2025 14:48:55 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce93da5sm11244054b3a.50.2025.08.04.14.48.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 14:48:54 -0700 (PDT)
-Message-ID: <7a8d6a2b-357f-4014-acfa-82fc6ed905d3@linaro.org>
-Date: Mon, 4 Aug 2025 14:48:54 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/17] whpx: interrupt controller support
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uj349-0006eW-HU
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:49:58 -0400
+Received: from p-east3-cluster5-host7-snip4-7.eps.apple.com ([57.103.86.198]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uj348-00079F-0s
+ for qemu-devel@nongnu.org; Mon, 04 Aug 2025 17:49:57 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-8 (Postfix) with ESMTPS id
+ 4617418001EB; Mon,  4 Aug 2025 21:49:52 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=D0VcgbntvXmoHBUyQ0HsTLH3GjKUHWCII+4sCV9anAc=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=GQGQ+zoZkbBKAVhfAim8ZBiD9ad6fbvifJjd9v91SNufi+vZIRcVXZfsTwETuQ3iphFpgQmf8jqQg3KkxeEfirNMSJK3Bxga44AGGauxHoaBkOBzzIKRmpyZkSTaTlLMgkK23Wgc6DnCaelbsmdsmverJqgne7cQ7j8TNiyLQtz4xLHQ/stihpDqB9Ygo+7mWffMstOA6Wnp2NoRKlqrP17UlKA8mWx6TiJU7xDChc+WgEaurVsrHtNqev/67QLWol9u95pL8kzwy78nhta+Zx0s4mObM7DfHYVk9b5r651UnQHc2qr/x+6jsr+Oz2Est9SEb86Ka4GLAkr2vajwNA==
+X-Client-IP: 46.189.47.18
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-8 (Postfix) with ESMTPSA id
+ 41ACD18000A8; Mon,  4 Aug 2025 21:49:49 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
+Subject: Re: [PATCH v4 15/17] whpx: arm64: implement -cpu host
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <4182240b-59bf-4bb3-ba73-e5c4216608e4@linaro.org>
+Date: Mon, 4 Aug 2025 23:49:37 +0200
 Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
  Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
  Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -84,24 +54,38 @@ Cc: qemu-devel@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E5B6EDCE-D9C5-4F8F-9D26-86E153F6C6B0@unpredictable.fr>
 References: <20250804142326.72947-1-mohamed@unpredictable.fr>
- <20250804142326.72947-9-mohamed@unpredictable.fr>
- <f8bb5277-bb6b-44be-a5ea-93e7dd55ca18@linaro.org>
- <4E0E2520-3812-451B-876F-5EA54ED23FD2@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <4E0E2520-3812-451B-876F-5EA54ED23FD2@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+ <20250804142326.72947-16-mohamed@unpredictable.fr>
+ <4182240b-59bf-4bb3-ba73-e5c4216608e4@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+X-Mailer: Apple Mail (2.3860.100.5.1.1)
+X-Proofpoint-GUID: Wxaf5J3yKeuTWTUYMrgLJFEA3-45dN2c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA0MDEzMyBTYWx0ZWRfX6yxphPqOeySV
+ 8JJBA1v7iOyzumz1p8uhVsDrZ7yYjoCcxBRknGztzNm+Eka3uc4mBVbPGw2Rx4IBp/1e3LYhMGc
+ VhH5qj7Ok/HLGEn/if/BCT8e/nbe2FTJxkxqoJrdfDjkGw+NOdHWYqbzsjrPjMF/22tzwdDDdPa
+ d7mTYfZXsvdOpgh1pjFfwvdaM+XiRghTURHv/cui+LqXIObSUcJLEQyFph4yWmnhL0iT7zot3c7
+ iv3DHccc5RXtiW78CCYZ85V2hvrPm55uOJKG8OJ9gMNN9mU+892TA1+lM7q591SuN5FkhaCdY=
+X-Proofpoint-ORIG-GUID: Wxaf5J3yKeuTWTUYMrgLJFEA3-45dN2c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-04_09,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ malwarescore=0 spamscore=0 mlxscore=0 adultscore=0
+ phishscore=0 bulkscore=0
+ suspectscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2506270000 definitions=main-2508040133
+Received-SPF: pass client-ip=57.103.86.198;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,24 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/25 2:47 PM, Mohamed Mediouni wrote:
-> 
->> On 4. Aug 2025, at 23:39, Pierrick Bouvier 
->> <pierrick.bouvier@linaro.org> wrote:
->>
->> Probably a stupid question, but since check, get_cpu and put_cpu are 
->> empty functions, why define them and the logic associated?
-> 
-> They are empty today but won’t be once save/restore is implemented for 
-> the GICv3 state, which is still incomplete so that I carved it out of 
-> this patch series.
-> 
-> That’s one of the last remaining blockers before VM save/restore
->
 
-I see thanks.
-Worth adding a comment into them for that.
 
-> -m
+> On 4. Aug 2025, at 23:27, Pierrick Bouvier =
+<pierrick.bouvier@linaro.org> wrote:
+>=20
+> On 8/4/25 7:23 AM, Mohamed Mediouni wrote:
+>> OpenProcessorKey and ReadRegU64 adapted from:
+>> =
+https://github.com/FEX-Emu/FEX/blob/e6de17e72ef03aa88ba14fa0ec13163061608c=
+74/Source/Windows/Common/CPUFeatures.cpp#L62
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> ---
+>>  hw/arm/virt.c              |   2 +-
+>>  target/arm/cpu64.c         |  19 ++++---
+>>  target/arm/whpx/whpx-all.c | 107 =
++++++++++++++++++++++++++++++++++++++
+>>  target/arm/whpx_arm.h      |   1 +
+>>  4 files changed, 122 insertions(+), 7 deletions(-)
+>=20
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>=20
+> Additional question, what is missing for SVE/SME support?
+For SVE it=E2=80=99s mainly about the state save/restore part. And =
+having good hardware for testing it too.
+
+For SME, Hyper-V doesn=E2=80=99t support it yet, but done preventively =
+so that it doesn=E2=80=99t suddenly get enabled once that happens. (and =
+that scenario happened on macOS and promptly broke things)
 
 
