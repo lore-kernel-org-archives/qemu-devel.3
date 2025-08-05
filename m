@@ -4,90 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C0E9C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 07:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C9BC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 07:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujCMO-0002OI-7W; Tue, 05 Aug 2025 03:45:24 -0400
+	id 1ujCUQ-0006bN-2r; Tue, 05 Aug 2025 03:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujCME-0002Io-Cv; Tue, 05 Aug 2025 03:45:22 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1ujCUN-0006WA-Lv; Tue, 05 Aug 2025 03:53:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujCM9-0000ih-Ve; Tue, 05 Aug 2025 03:45:12 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8217913E847;
- Tue, 05 Aug 2025 10:44:33 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B139E256F14;
- Tue,  5 Aug 2025 10:44:54 +0300 (MSK)
-Message-ID: <befab3c0-024c-43ca-8d5f-bddf960e9a21@tls.msk.ru>
-Date: Tue, 5 Aug 2025 10:44:54 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1ujCUL-00064D-G6; Tue, 05 Aug 2025 03:53:39 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5754u4NZ001028;
+ Tue, 5 Aug 2025 07:53:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=L92pbl
+ VFtRU2qFjkoyYmSr3BvE3m43yhzumpvMuwa/s=; b=MQ/hPw4BddDvACZopZgVHM
+ eax0o9+AcBFGhuXcK2zyOrWkjhLQVMKbWKMtbeWUdmvKtZkwJv9GKfF2dKimntWL
+ +AHSreOlyMm27j9dhmv9uF0uqQwOdVUF9fdAU5TL5T2qrKjLq61ISlysGke2toNp
+ qKekN7LCi/KmQm3eNwPOtEoZar846vQV/QrUgnwSGI7h51YjYWh+GVFJZcpz6ail
+ oWn7OEGlbXnJw4EEeVUCSeObtsr0SK+pirTCKnWnBFaC3ZsEuG1GJDFf28a5Ly8I
+ 1eSTzlVldmtHyoiv2TE+aZ2dHxTbnEXtS4LoPCwP/R9mFx9FbX0P+985O0d9fmzg
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bbbq0qcw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 07:53:33 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5757e3VK012411;
+ Tue, 5 Aug 2025 07:53:32 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bbbq0qcu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 07:53:32 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5755eBlQ004549;
+ Tue, 5 Aug 2025 07:53:31 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 489yq2h7px-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 07:53:31 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5757rTCw21168778
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Aug 2025 07:53:30 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF4AA5805A;
+ Tue,  5 Aug 2025 07:53:29 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65F915805C;
+ Tue,  5 Aug 2025 07:53:26 +0000 (GMT)
+Received: from [9.39.26.16] (unknown [9.39.26.16])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Aug 2025 07:53:26 +0000 (GMT)
+Message-ID: <f8412eeb-ee0b-4871-9ff0-e783d50f7de1@linux.ibm.com>
+Date: Tue, 5 Aug 2025 13:23:24 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/arm: add support for 64-bit PMCCNTR in AArch32
- mode
-To: Alex Richardson <alexrichardson@google.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250725170136.145116-1-alexrichardson@google.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250725170136.145116-1-alexrichardson@google.com>
+Subject: Re: [PATCH v2 0/5] MAINTAINERS updates for ppc/spapr/pnv/xive
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, clg@redhat.com
+Cc: danielhb413@gmail.com, fbarrat@linux.ibm.com, rathc@linux.ibm.com,
+ adityag@linux.ibm.com, gautam@linux.ibm.com, philmd@linaro.org
+References: <20250724100623.3071131-1-harshpb@linux.ibm.com>
+ <DBTNAC0PCPJN.9XCRXCPTLSC3@gmail.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <DBTNAC0PCPJN.9XCRXCPTLSC3@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GHpqnZeViwiLH_q0uePCfGJMgTyu34LF
+X-Authority-Analysis: v=2.4 cv=M65NKzws c=1 sm=1 tr=0 ts=6891b87d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=f7IdgyKtn90A:10
+ a=xGINBAbUyfV-7GpS-M8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: UKwNS4h2ZHV7QvGCyPvldmYpEupJFtZq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA1NiBTYWx0ZWRfX8bwU5mPhr/yC
+ FzG0svPJ8tflU+LyCfW/qjz7Sl9t25R8dJvC9Fr4Bb5Fcr25E7sEBVDvFBVjpbGdX9RzXiw6889
+ aYvmaVFpm4XUCqI3wa8CoR1MJit26FvBp0Da6OutdZyrHqGL5F4D1RuGG9OvTIZo/7J/e1PTHif
+ ScOz3qdfZ2H0t8jwnsvXIXv5x2Aahavhqe5806OvY5vSuyLxeQ98u0ba0wlQKv8WULpLNlp3Q6e
+ u1U2gMLqcfHRB3jzux7y3Z4ZaqoZWJZZPDzqlzTJLRWHMdVH+e2byPGTScRZ/PGpAvry/jj1I4H
+ RyiWSgdp6gKqGEz/GeJIDL8cync3DWPNsFbwLtoG8ZA0yo+1pQIN2Z0R56DXkoL4SFNwLT/jLkE
+ Ol1mA052arsNgETkmRCqQfml9SdtSjPgX97aHjRmIXsk9Iy3qdhIH2DQyB1QMVsBRM25xorq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_02,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 phishscore=0 priorityscore=1501
+ mlxlogscore=712 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050056
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,79 +129,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.07.2025 20:01, Alex Richardson wrote:
-> In the PMUv3, a new AArch32 64-bit (MCRR/MRRC) accessor for the
-> PMCCNTR was added. In QEMU we forgot to implement this, so only
-> provide the 32-bit accessor. Since we have a 64-bit PMCCNTR
-> sysreg for AArch64, adding the 64-bit AArch32 version is easy.
+Hi Nick,
+
+On 8/4/25 18:03, Nicholas Piggin wrote:
+> Hey Harsh,
 > 
-> We add the PMCCNTR to the v8_cp_reginfo because PMUv3 was added
-> in the ARMv8 architecture. This is consistent with how we
-> handle the existing PMCCNTR support, where we always implement
-> it for all v7 CPUs. This is arguably something we should
-> clean up so it is gated on ARM_FEATURE_PMU and/or an ID
-> register check for the relevant PMU version, but we should
-> do that as its own tidyup rather than being inconsistent between
-> this PMCCNTR accessor and the others.
+> Sorry I dropped the ball on the merge window. Thanks to you and Cedric
+> and others for picking it up and apologies to those I kept waiting. I
+> let things overwhelm me a bit and got stressed about getting back to it
+> :(
+
+Some situations are inevitable and hope it happened earlier for good.
+Thanks to you and Cedric for enabling us get on board to contribute better.
+
 > 
-> Since the register name is the same as the 32-bit PMCCNTR, we set
-> ARM_CP_NO_GDB on the 32-bit one to avoid generating an invalid GDB XML.
+> I would like to keep helping out with qemu/ppc as time permits, I'll
+> try not to over promise though. Apologies again.
+
+Your guidance on PPC and in general will certainly help us to make 
+better decisions. Thanks very much for all your support!
+
+regards,
+Harsh
+
 > 
-> See https://developer.arm.com/documentation/ddi0601/2024-06/AArch32-Registers/PMCCNTR--Performance-Monitors-Cycle-Count-Register?lang=en
+> Thanks,
+> Nick
+> `
+> On Thu Jul 24, 2025 at 8:06 PM AEST, Harsh Prateek Bora wrote:
+>> Some of us at IBM have been actively working/contributing in
+>> ppc/spapr/pnv/xive and would like to step up to help with
+>> reviews and co-maintainer activities. I have also included proposal
+>> patches from Chinmay and Aditya in this patchset which had already
+>> been posted to list earlier to request for merge.
+>>
+>> Thanks
+>> Harsh
+>>
+>> Changelog:
+>> v2: Added my S-o-b as suggested by Philippe, Cedric
+>> v1: Initial patchset
+>>
+>> Aditya Gupta (1):
+>>    MAINTAINERS: Add myself as a reviewer of PowerNV emulation
+>>
+>> Chinmay Rath (1):
+>>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
+>>
+>> Gautam Menghani (1):
+>>    MAINTAINERS: Add myself as a reviewer for XIVE
+>>
+>> Harsh Prateek Bora (2):
+>>    MAINTAINERS: Adding myself as a co-maintainer for ppc/spapr
+>>    MAINTAINERS: Adding myself as reviewer for PPC KVM cpus.
+>>
+>>   MAINTAINERS | 5 +++++
+>>   1 file changed, 5 insertions(+)
 > 
-> Change v2->v3:
-> - Moved ARM_CP_NO_GDB to the 32-bit register if Armv8 is supported
-> 
-> Changes v1->v2:
-> - Moved to new file
-> - Updated commit message
-> - Added ARM_CP_NO_GDB
-> 
-> Signed-off-by: Alex Richardson <alexrichardson@google.com>
-> ---
->   target/arm/cpregs-pmu.c | 24 +++++++++++++++++++-----
->   1 file changed, 19 insertions(+), 5 deletions(-)
-
-Hi!
-
-This patch is marked as to back-port to stable series, with
-the commit message tweak by Peter:
-
-     Note for potential backporting:
-      * this code in cpregs-pmu.c will be in helper.c on stable
-        branches that don't have commit ae2086426d37
-
-The mentioned commit:
-
-commit ae2086426d3784cf66e5b0b7ac823c08e87b4c57
-Author: Richard Henderson <richard.henderson@linaro.org>
-Date:   Mon Jul 7 09:15:47 2025 -0600
-
-     target/arm: Split out performance monitor regs to cpregs-pmu.c
-
-     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-     Message-id: 20250707151547.196393-4-richard.henderson@linaro.org
-     Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-The thing is that this commit not only split out parts of helper.c
-to cpregs-pmu.c, but it also modified the code quite significantly,
-which is not even mentioned in the commit message.
-
-This makes back-porting of the changes more difficult, which is okay, -
-for this I'm asking for help (provided this fix is really needed for
-10.0.x stable branch).
-
-But this also brings a more general question, or a suggestion.  When
-splitting stuff into a separate file, *and* modifying it in process,
-can't we do it in 2 stages, - first is to modify it, and next is to
-move it without modifications?  I think this makes review process
-significantly easier.  And I wonder how Philippe and Peter reviewed
-this whole thing, as the changes in ae2086426d37 are rather large.
-If it were me, I'd had a difficult time reviewing this change.
-
-Thanks,
-
-/mjt
 
