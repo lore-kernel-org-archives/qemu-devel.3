@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F33C87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 537CAC87FD2
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujNsz-0007X9-GC; Tue, 05 Aug 2025 16:03:49 -0400
+	id 1ujNtM-0007g8-Tk; Tue, 05 Aug 2025 16:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNsx-0007WP-Er
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:03:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ujNtJ-0007em-Ny
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:04:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNsv-0003mD-PV
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:03:47 -0400
+ id 1ujNtF-0003pH-Th
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754424224;
+ s=mimecast20190719; t=1754424244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=gt2yQHgamnXb+IjaNrKYSlJXE32scyT7jq+PtgCgcPg=;
- b=BMwAG1itX6ftw8GnrSHYrKQQ6fht7enNrSgM/6mHakh64J/T0uN1ctZhlXzLTmU5hTSYXX
- 5ebWF221P0jY4OeTsRw9Sl11yFxJrGTbIlt4IXnz4d4eca4uuIVGJya1202VVUtcCHU9TF
- eia7gOWvy+A8Vzeu8Ybcen7LT5w4qYw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TAjctf33dCLVvtgnAf3YxiafYtxQDQERb+hcj4xrCZI=;
+ b=IJsyBygNpfGrMFJk30dR1VzklQxaWFFnP+vuTOLS6Pc8aZG652BLnuf2HAGO0/+KhEh4eE
+ cbXG1jyV9P7PnGgPIOYcpfgsLUqXOf1xhw3/TNyLvuxAAu8ehAyfEgy1YnUclSBAwzyuDl
+ gWMBFGKpUBd317+3shO+UPmZNR3FoaY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-I-GqhPvNNPeYFwPkgdYNtw-1; Tue,
- 05 Aug 2025 16:03:40 -0400
-X-MC-Unique: I-GqhPvNNPeYFwPkgdYNtw-1
-X-Mimecast-MFC-AGG-ID: I-GqhPvNNPeYFwPkgdYNtw_1754424219
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-iPJhp5L_PZilkqwCYDh5oQ-1; Tue,
+ 05 Aug 2025 16:04:01 -0400
+X-MC-Unique: iPJhp5L_PZilkqwCYDh5oQ-1
+X-Mimecast-MFC-AGG-ID: iPJhp5L_PZilkqwCYDh5oQ_1754424239
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B5231955F04; Tue,  5 Aug 2025 20:03:39 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BAF919560B7; Tue,  5 Aug 2025 20:03:59 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.80])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7E9DB3000199; Tue,  5 Aug 2025 20:03:36 +0000 (UTC)
+ id E3BA930001BE; Tue,  5 Aug 2025 20:03:56 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 0/6] tracetool: add test suite to improve reviewability
-Date: Tue,  5 Aug 2025 21:03:28 +0100
-Message-ID: <20250805200334.629493-1-berrange@redhat.com>
+Subject: [PATCH 6/6] tracetool: drop the probe "__nocheck__" wrapping
+Date: Tue,  5 Aug 2025 21:03:34 +0100
+Message-ID: <20250805200334.629493-7-berrange@redhat.com>
+In-Reply-To: <20250805200334.629493-1-berrange@redhat.com>
+References: <20250805200334.629493-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -85,89 +88,376 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To repeat the start of the commit message in patch 5....
+Every generated inline probe function is wrapped with a
+trivial caller that has a hard-coded condition test:
 
-When reviewing tracetool patches it is often very unclear what the
-expected output will be for the generated backends. Compounding
-this is that a default build will only enable the 'log' trace
-backend, so developers won't see generated code for other backends
-without making a special effort. Some backends are also platform
-specific, so can't be enabled in QEMU builds, even though tracetool
-could generate the code.
+  static inline void _nocheck__trace_test_wibble(void * context, int value)
+  {
+      tracepoint(qemu, test_wibble, context, value);
+  }
 
-To address this, introduce a test suite for tracetool which is
-conceptually similar to the qapi-schema test. It is a simple
-python program that runs tracetool and compares the actual output
-to historical reference output kept in git.
+  static inline void trace_test_wibble(void * context, int value)
+  {
+    if (true) {
+        _nocheck__trace_test_wibble(context, value);
+    }
+  }
 
-This was inspired by noticing the now pointless "__nocheck__"
-method wrapping in the inline probe functions.
+This was introduced for TCG probes back in
 
-Daniel P. Berrangé (6):
-  checkpatch: cull trailing '*/' in SPDX check
-  tracetool: eliminate trailing whitespace in C format
-  tracetool: avoid space after "*" in arg types
-  tracetool: include SPDX-License-Identifier in generated files
-  tracetool: add test suite for tracetool with reference output
-  tracetool: drop the probe "__nocheck__" wrapping
+  864a2178: trace: [tcg] Do not generate TCG code to trace dynamically-disabled events
 
- MAINTAINERS                                  |  1 +
- scripts/checkpatch.pl                        |  3 +
- scripts/tracetool/__init__.py                |  9 +-
- scripts/tracetool/format/c.py                |  3 +-
- scripts/tracetool/format/d.py                |  3 +-
- scripts/tracetool/format/h.py                | 17 +---
- scripts/tracetool/format/log_stap.py         |  1 +
- scripts/tracetool/format/simpletrace_stap.py |  1 +
- scripts/tracetool/format/stap.py             |  1 +
- scripts/tracetool/format/ust_events_c.py     |  1 +
- scripts/tracetool/format/ust_events_h.py     |  1 +
- tests/Makefile.include                       |  1 +
- tests/meson.build                            |  1 +
- tests/tracetool/dtrace.c                     | 32 +++++++
- tests/tracetool/dtrace.d                     | 10 +++
- tests/tracetool/dtrace.h                     | 45 ++++++++++
- tests/tracetool/dtrace.log-stap              | 15 ++++
- tests/tracetool/dtrace.simpletrace-stap      | 16 ++++
- tests/tracetool/dtrace.stap                  | 14 +++
- tests/tracetool/ftrace.c                     | 32 +++++++
- tests/tracetool/ftrace.h                     | 59 +++++++++++++
- tests/tracetool/log.c                        | 32 +++++++
- tests/tracetool/log.h                        | 43 +++++++++
- tests/tracetool/meson.build                  | 25 ++++++
- tests/tracetool/simple.c                     | 61 +++++++++++++
- tests/tracetool/simple.h                     | 40 +++++++++
- tests/tracetool/syslog.c                     | 32 +++++++
- tests/tracetool/syslog.h                     | 43 +++++++++
- tests/tracetool/trace-events                 |  5 ++
- tests/tracetool/tracetool-test.py            | 92 ++++++++++++++++++++
- tests/tracetool/ust.c                        | 32 +++++++
- tests/tracetool/ust.h                        | 41 +++++++++
- tests/tracetool/ust.ust-events-c             | 14 +++
- tests/tracetool/ust.ust-events-h             | 56 ++++++++++++
- 34 files changed, 763 insertions(+), 19 deletions(-)
- create mode 100644 tests/tracetool/dtrace.c
- create mode 100644 tests/tracetool/dtrace.d
- create mode 100644 tests/tracetool/dtrace.h
- create mode 100644 tests/tracetool/dtrace.log-stap
- create mode 100644 tests/tracetool/dtrace.simpletrace-stap
- create mode 100644 tests/tracetool/dtrace.stap
- create mode 100644 tests/tracetool/ftrace.c
- create mode 100644 tests/tracetool/ftrace.h
- create mode 100644 tests/tracetool/log.c
- create mode 100644 tests/tracetool/log.h
- create mode 100644 tests/tracetool/meson.build
- create mode 100644 tests/tracetool/simple.c
- create mode 100644 tests/tracetool/simple.h
- create mode 100644 tests/tracetool/syslog.c
- create mode 100644 tests/tracetool/syslog.h
- create mode 100644 tests/tracetool/trace-events
- create mode 100755 tests/tracetool/tracetool-test.py
- create mode 100644 tests/tracetool/ust.c
- create mode 100644 tests/tracetool/ust.h
- create mode 100644 tests/tracetool/ust.ust-events-c
- create mode 100644 tests/tracetool/ust.ust-events-h
+but is obsolete since
 
+  126d4123 tracing: excise the tcg related from tracetool
+
+This commit removes the wrapping such that we have
+
+  static inline void trace_test_wibble(void * context, int value)
+  {
+      tracepoint(qemu, test_wibble, context, value);
+  }
+
+The default build of qemu-system-x86_64 on Fedora with the
+'log' backend, has its size reduced by 1 MB
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/tracetool/__init__.py |  1 -
+ scripts/tracetool/format/h.py | 16 +---------------
+ tests/tracetool/dtrace.h      | 18 ++----------------
+ tests/tracetool/ftrace.h      | 24 +++++-------------------
+ tests/tracetool/log.h         | 24 +++++-------------------
+ tests/tracetool/simple.h      | 18 ++----------------
+ tests/tracetool/syslog.h      | 24 +++++-------------------
+ tests/tracetool/ust.h         | 18 ++----------------
+ 8 files changed, 22 insertions(+), 121 deletions(-)
+
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index 0f33758870..1d5238a084 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -338,7 +338,6 @@ def formats(self):
+         return self._FMT.findall(self.fmt)
+ 
+     QEMU_TRACE               = "trace_%(name)s"
+-    QEMU_TRACE_NOCHECK       = "_nocheck__" + QEMU_TRACE
+     QEMU_TRACE_TCG           = QEMU_TRACE + "_tcg"
+     QEMU_DSTATE              = "_TRACE_%(NAME)s_DSTATE"
+     QEMU_BACKEND_DSTATE      = "TRACE_%(NAME)s_BACKEND_DSTATE"
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index a00ae475f7..b42a8268a8 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -64,7 +64,7 @@ def generate(events, backend, group):
+         out('',
+             'static inline void %(api)s(%(args)s)',
+             '{',
+-            api=e.api(e.QEMU_TRACE_NOCHECK),
++            api=e.api(),
+             args=e.args)
+ 
+         if "disable" not in e.properties:
+@@ -72,20 +72,6 @@ def generate(events, backend, group):
+ 
+         out('}')
+ 
+-        cond = "true"
+-
+-        out('',
+-            'static inline void %(api)s(%(args)s)',
+-            '{',
+-            '    if (%(cond)s) {',
+-            '        %(api_nocheck)s(%(names)s);',
+-            '    }',
+-            '}',
+-            api=e.api(),
+-            api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
+-            args=e.args,
+-            names=", ".join(e.args.names()),
+-            cond=cond)
+ 
+     backend.generate_end(events, group)
+ 
+diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
+index c2e5110672..c8931a8d7b 100644
+--- a/tests/tracetool/dtrace.h
++++ b/tests/tracetool/dtrace.h
+@@ -29,31 +29,17 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     QEMU_TEST_BLAH_ENABLED() || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
+-{
+-    QEMU_TEST_BLAH(context, filename);
+-}
+-
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
++    QEMU_TEST_BLAH(context, filename);
+ }
+ 
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     QEMU_TEST_WIBBLE_ENABLED() || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
+-{
+-    QEMU_TEST_WIBBLE(context, value);
+-}
+-
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
++    QEMU_TEST_WIBBLE(context, value);
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
+index 5ce8209bc1..4c84ebafd9 100644
+--- a/tests/tracetool/ftrace.h
++++ b/tests/tracetool/ftrace.h
+@@ -19,14 +19,14 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     {
+         char ftrace_buf[MAX_TRACE_STRLEN];
+         int unused __attribute__ ((unused));
+         int trlen;
+         if (trace_event_get_state(TRACE_TEST_BLAH)) {
+-#line 3 "trace-events"
++#line 4 "trace-events"
+             trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+                              "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+ #line 33 "../../../../../../../../dev/stdout"
+@@ -36,38 +36,24 @@ static inline void _nocheck__trace_test_blah(void *context, const char *filename
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     {
+         char ftrace_buf[MAX_TRACE_STRLEN];
+         int unused __attribute__ ((unused));
+         int trlen;
+         if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+-#line 4 "trace-events"
++#line 5 "trace-events"
+             trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+                              "test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+-#line 61 "../../../../../../../../dev/stdout"
++#line 54 "../../../../../../../../dev/stdout"
+             trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+             unused = write(trace_marker_fd, ftrace_buf, trlen);
+         }
+     }
+ }
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
+-}
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
+index c45aa0f913..9d764a100e 100644
+--- a/tests/tracetool/log.h
++++ b/tests/tracetool/log.h
+@@ -19,39 +19,25 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH) && qemu_loglevel_mask(LOG_TRACE)) {
+-#line 3 "trace-events"
++#line 4 "trace-events"
+         qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
+ #line 28 "../../../../../../../../dev/stdout"
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE) && qemu_loglevel_mask(LOG_TRACE)) {
+-#line 4 "trace-events"
++#line 5 "trace-events"
+         qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+-#line 48 "../../../../../../../../dev/stdout"
+-    }
+-}
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
++#line 41 "../../../../../../../../dev/stdout"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
+index 3c9de68c43..ec6fcb22c3 100644
+--- a/tests/tracetool/simple.h
++++ b/tests/tracetool/simple.h
+@@ -20,35 +20,21 @@ void _simple_trace_test_wibble(void *context, int value);
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH)) {
+         _simple_trace_test_blah(context, filename);
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+         _simple_trace_test_wibble(context, value);
+     }
+ }
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
+-}
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
+index 8cb73dd15f..469e4e7e1d 100644
+--- a/tests/tracetool/syslog.h
++++ b/tests/tracetool/syslog.h
+@@ -19,39 +19,25 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH)) {
+-#line 3 "trace-events"
++#line 4 "trace-events"
+         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
+ #line 28 "../../../../../../../../dev/stdout"
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+-#line 4 "trace-events"
++#line 5 "trace-events"
+         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
+-#line 48 "../../../../../../../../dev/stdout"
+-    }
+-}
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
++#line 41 "../../../../../../../../dev/stdout"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
+index 1184ddd870..b7acd0c39b 100644
+--- a/tests/tracetool/ust.h
++++ b/tests/tracetool/ust.h
+@@ -25,31 +25,17 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     tracepoint_enabled(qemu, test_blah) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
+-{
+-    tracepoint(qemu, test_blah, context, filename);
+-}
+-
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
++    tracepoint(qemu, test_blah, context, filename);
+ }
+ 
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     tracepoint_enabled(qemu, test_wibble) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
+-{
+-    tracepoint(qemu, test_wibble, context, value);
+-}
+-
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
++    tracepoint(qemu, test_wibble, context, value);
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
 -- 
 2.50.1
 
