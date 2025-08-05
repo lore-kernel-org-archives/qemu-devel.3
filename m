@@ -4,213 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E2CC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 14:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C699AC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 14:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujIga-0001cx-4o; Tue, 05 Aug 2025 10:30:42 -0400
+	id 1ujJ34-0003qE-Js; Tue, 05 Aug 2025 10:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1ujIgJ-0001UO-KI
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 10:30:23 -0400
-Received: from
- mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ujJ2M-0003WN-5r
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 10:53:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1ujIgH-0006as-CL
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 10:30:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Cl7Zb7Hw/XIn9CAlY0TwHfjVa8Cc+Juhp7k4zhEOKUulG4as27yoRd3ZUjl4zYE/C0Tch2z7yLCKmC9Mp3U8J3fmv7x2YF+lVr36JeTK7bSGpkbo/x51MphotBeJpQyHr7sUCCbR7dgigxAkltZF0/vRcyaCrvAnbhaW7YaPXL7UGPaEX/BCYULgFT5/MO8q6ysfwv/lFMCOKQx0W27a08l0eF9MvH39rmx4Tj3Pa+H0CRe/4SEaszG8ktQLeut+GTJwOi56dS85c93Yxn4oSlPKyRC1kZer2OX7pdzd4Wco+I3VlRnQU7k1hmhGSv3ImSFuHNiukhlCLfV3nW447w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=npMvsqDi/2DgqO9Cq7odbY4qPgn7qwVhrOAIWOAq5I8=;
- b=N56e7mVLccl+JN1rnQ2XtOuXVe5S+zXzx1Jdd1JPOlRzRaIdEBD0j1rB3KRZIo/TxIb6ZqDBFyTPZgwjsLeNnxyazsQLmpv+ADpDBk/ODnQC0FAw3b4O8BAfRjwPdrjHw0ruVQ5nXZGQnKDLh3JDr4AHEbUlkT0DFUar9GSBgWbZ/BKfpQJCjhPrnStx4PEx24AZSylXlTxPrSYlH8sUT9PQtfSQShih48CyVWqu8dpdo0MLzEuZbtkAH7Ugd0M+XJ5ydZnT9sdjjTGzPY1YEd56y/Wjxr3ipwOulKaHZIho+5wQGuefnrVj0/XHJrCGPAzifdZDuquFOSrcvy7eJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=npMvsqDi/2DgqO9Cq7odbY4qPgn7qwVhrOAIWOAq5I8=;
- b=oXD2TCyRVM4RVQZ68sHjydFRHdZlnbvDua/2h3Hjqf763xUkuK+HT2GLoUTcqdtLrK+qvj24boBgVVSosxgFDUjIGdHXYk9lnMweu5tlLFW2V/JOdLviP1b/ZgQX/8qhtVkc67TfAcu7Y1f6ZK8GpFgKqKsJOejf1krSg2INxPM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by GVAP278MB0053.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:22::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.13; Tue, 5 Aug
- 2025 14:30:10 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::1461:a808:5787:602f]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::1461:a808:5787:602f%5]) with mapi id 15.20.8989.020; Tue, 5 Aug 2025
- 14:30:10 +0000
-Message-ID: <73d56742-5e6e-4e1f-8d8c-2b9783d0ddea@epfl.ch>
-Date: Tue, 5 Aug 2025 16:30:09 +0200
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: pierrick.bouvier@linaro.org, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, laurent@vivier.eu, imp@bsdimp.com
-References: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
- <87tt2n5az1.fsf@draig.linaro.org>
- <1016eeb7-57d8-4d80-ba25-42cda2d63b0f@epfl.ch>
- <874iul26rp.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
- 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
- 5hMMZIzTI4AtIcgA3xe4Ew==
-Subject: Re: New capabilities for plugins
-In-Reply-To: <874iul26rp.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: GV0P278CA0053.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:29::22) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ujJ2K-0005Lv-0i
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 10:53:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754405585;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xNfIZ9AW2meqZzztIQqpKeIMoQEAemTTfE5dolQvATE=;
+ b=c0jcdK/cKZK8jU4OO1j7Lln5qr2mUMVKxuUGzb0hR6uyB+cuVPF6/4W2D82KPluoTcyKCI
+ u9F8eXpi4CB3LpkMfBki0YYJjw4rCwErcgOiuBqwmxsWhLAu2JFivz3HL6GP0QWdw1d+Eh
+ Ki2p6Fj8t2Mv9p7MzHfKee7JKqnH+uc=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-201-W5KuXMYWNHWotUg_Rn2r-A-1; Tue, 05 Aug 2025 10:53:02 -0400
+X-MC-Unique: W5KuXMYWNHWotUg_Rn2r-A-1
+X-Mimecast-MFC-AGG-ID: W5KuXMYWNHWotUg_Rn2r-A_1754405582
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4af156a27b1so114702001cf.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 07:53:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754405582; x=1755010382;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xNfIZ9AW2meqZzztIQqpKeIMoQEAemTTfE5dolQvATE=;
+ b=wVTB6KuHVUY9lK7/f1D53kEHAz49MQWc7tpIMT1IFWlUi2KKbfK8Ed+chUVeku8b96
+ 3tYu2b0i5sNxYypMQOwPhVQbqHkZ8udMrsQZ3LXUdRBWstGijSfnL/pFEg5GPzUV/zwE
+ f1qU3fzkkL42oKl8zvudb+ZHFwAlwwj45IpRUBraSKl/STa3aFuueb3qSne+LcW/QF1k
+ adP5zQuTrYhpWk9zGlThfJjKY4PgBX5XrKToeS9Q8WDRLP0BFkODMMdkpxTRji8eSXWV
+ PQ0BoDvU0ozha1HJqQsWGGdEIGyGQfh9vsXmYZ0k/STDzop+x4bTt8E24cQ9bTDRQSrm
+ AZlg==
+X-Gm-Message-State: AOJu0YwIoelfLCcoHvxl9MntmwKkYumHFfPoH6wVInVcej72nXJXdlCI
+ OhJs6OGxEVMMd++Q2ZwQguxw+5qo4gLrrLuDCYQNVU9I1hZKm5Z8Hz9Yjysq51gOCZOSaFo8/M1
+ 3xaKPxdfo7jogGzCCgxpP8avCkC1zIyGgC2nU04z6geM92w5BHxtCj/a4
+X-Gm-Gg: ASbGnctPOsiZs0X6WPp1bYS59ZWpgAdx5gcz+l9Equ+kHD/7ooGHtw2Orjpmtcw7Q7F
+ RzOlM1UNfD6lWvp+5VcprpA3opWozO+lnKSRMH5V1R+gHTY8WJm6CMmrm3YeCNk7qKcrhySGRfM
+ OVTZZhAagDUUL9B1A5eMg+cMgNUDvqxgiUzYB0SNtSY32gG9WFXaaixVPgECjszeXUnCkbVNxeT
+ S3vDFmI/sjrU8wYw6hHMcEB52NYGo0B3Aj2lYY5uSicaPJtM79XHGltOXBXJIl+giK4UY83/k1y
+ DxXN3QGtfr7tcXy39Gu18gJ9XalT
+X-Received: by 2002:a05:622a:1a81:b0:4b0:656c:236e with SMTP id
+ d75a77b69052e-4b0656c53e9mr100286151cf.6.1754405582202; 
+ Tue, 05 Aug 2025 07:53:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKnNRkDxIorEhmO2tGG5SBbHCGIlggV7Cp53oCpOb/XtDC/3pOss0IEqSOC27/9WDoTJKf8w==
+X-Received: by 2002:a05:622a:1a81:b0:4b0:656c:236e with SMTP id
+ d75a77b69052e-4b0656c53e9mr100285681cf.6.1754405581520; 
+ Tue, 05 Aug 2025 07:53:01 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b06890e821sm27041761cf.26.2025.08.05.07.53.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Aug 2025 07:53:01 -0700 (PDT)
+Date: Tue, 5 Aug 2025 16:52:58 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
+ functional
+Message-ID: <ekcc4p5uap6g674ljwjpa7q42yybrl5vabxhodgfmo6awcvzq2@s4dmgpfpd4jz>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <d5xctfzcrtbanvkndamonxgqo3tc5nejhyrvh54m3y5bhg4cms@ue7siue2yw7o>
+ <87jz3i3n0u.fsf@suse.de> <aJHYSwGXTOF4o00n@redhat.com>
+ <87h5yl3mt2.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|GVAP278MB0053:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64c9c20a-441a-47c3-5cd2-08ddd42c9523
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|19092799006|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MCtQbVBxbElVbWxWQ29WdW1HNk1icUUyeFRSdVJiendhZXJBMXV2UjVNYUtW?=
- =?utf-8?B?T1Y4elBWdG5BTlppZzNiYlVzL3ZyelU3d2QzaS9KUUkrb01XV2k5OEt5SE1v?=
- =?utf-8?B?dkZON0VoK2xsUDZYWU9lRG1FK1J3d2xsZnBlWFRVOEFOZDFCSGZCaDNEQkpL?=
- =?utf-8?B?OWw1Y0dyd05HWEtHbDVqR2hqMENYOGVNdDZlVGRWcjFIbmRCZlBrMFdyWnR3?=
- =?utf-8?B?UnhvZW4zbXBJTENESTZ6dWhpNnd0MWk0ZVArLzdIWCsxcVpDMEtuVHdkSE0w?=
- =?utf-8?B?VGJEM1JyR0xXR3FubmxrbjhWYU54MkhWZ2ZHcGhTWnJ5Q3o1am4zSXV3cEFo?=
- =?utf-8?B?NEx2YWQ1Q1pNdWp4dkVuMDJYZUttTHdCRmE4amt1YWIwb3JrU1JJMmwyWHow?=
- =?utf-8?B?ejZ5TVFnSWhWQ3JUenNGeHl4MG00VnVwdzh5eDFSWlZkQkNVUzJCTGNHRXI1?=
- =?utf-8?B?QnFETEh2WUM2UkV3QzB3eE5zaS8zRjIrbFk4b3JQazEyR0FDdDdSQ0JBaUdR?=
- =?utf-8?B?dm1nZE9OSmY2RGR2T09BM2JpNnBtS1FnTVpXenF1bEJjRm1DMVVaVzl2SG1j?=
- =?utf-8?B?MmNHbWk3ZUtTb2NQZy9abXJJdzlpMUd4dm5nYmZKWXYwL1hBempsb2xrK3NY?=
- =?utf-8?B?NDdnWFhuNDlhdlRkTHR2VDA3Mk5iNmswYnJwQkJSYkdGdGNVUy9hc0hLYlJM?=
- =?utf-8?B?LzFVaXRBUENpUHl4K3lpMjUyZTQwYUl2ZlpCRkNkeUpwdnpjY2hzVEdHa216?=
- =?utf-8?B?QWxCTVVzWEdTcWl4V1haWEczT0xGWnNmZmZSRlFCWCtlZ0plWWQ2UGx5djQz?=
- =?utf-8?B?Yjc5NjAvd3ZnR3VaRkZhRzZKZWQrRElpMXlxYzg5MFFtcDh3Tnhjemd2amQ3?=
- =?utf-8?B?OGZkTUJCNVVZUkdyNEg0UndsL2RDV0lNY0RZVjR6SzVLL3hmSkxKcjN4VzNL?=
- =?utf-8?B?cWpTZjdUOC9teDlxR0hjMXdGSkp1UHNabjZtOGdKREp1U0plek4wUlh3T2RF?=
- =?utf-8?B?VEx1K0k2Tkpzc014TEFyZEROWE93dm5kb0w3Y3ZmZTdKejlzd3ppTllqVmxv?=
- =?utf-8?B?TkZjT09NN2ZPTkNmMnhvYlRWSXZLWEUwUU9QdC9rTDl4amoveXB1Wm1aYVF0?=
- =?utf-8?B?S1hMWWc2REROSGg5SkFuWlJHVS9ENVRRT21GQkdIT1FrS2dnQ2tFcFNLV0o1?=
- =?utf-8?B?bkZPbVJCZ204Z0JYM1VjeDNreC80TW8vMk9DTDVhV1A4RklBakRJL0JLYlJQ?=
- =?utf-8?B?Yy9pTWNSd2x0NHJWVEJ0YWNrbzFVQkpKQldKSEF3QkV0RHFWV01ZSUQvMjBa?=
- =?utf-8?B?NDNXMFNvMmkyMHBnUnhPWlNpNkRwYTgxMHRSTXlKQ3huUXF5M3JTbHRXTjBH?=
- =?utf-8?B?RzdaR3dQNHFBMXhoNElwMWhCZjBXb1ZzNHBHanpsZVh4WG9LR24zNmt2VTU1?=
- =?utf-8?B?YXlqTzdoSzJFMFRDSDlVWnBzL084RklCREFqNFVsNU1VdEJqbk1xSzZzUWh6?=
- =?utf-8?B?Z2ZSOFhjODV2L0FtVWN0cXM1OXpibEJiQk9jd1kzOWd0VXZIRVQ3VG5KUGdI?=
- =?utf-8?B?eHZYUzdDV2pZOTZrYnBTWjl3Qm8yRkUrbmVRd05GVXErSG9xUWFONWtsclBs?=
- =?utf-8?B?eXgxYkxLNS8vSWp5UUpZZWpCaUpCdDBEaVBtb2xtMDh0OUVCcW1qR2oxZ1g0?=
- =?utf-8?B?NUpDaE1YWlQxbE9HZTNGRE9JNzUzNXpQZSszd1U5LzBzTkV5S1BZMU0yczE2?=
- =?utf-8?B?QVF2cTVFNFl5WlhvOVpCZlRrLzNSK285R3c0c21Xa084TE1vQ0NPWUoycE85?=
- =?utf-8?B?b09jVU0wOEFzNEdROVY4UmhnSTdIZEpNRTkwTjY2Rkl4ZkRUa0s3UmxVQyt0?=
- =?utf-8?B?MkdnYW4rQ1hEeFFpcDJvUHBadVp3S01RV0NiUkdsYmJZUTA0MlFpSGthVXhx?=
- =?utf-8?Q?HhCtle2Cokg=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(19092799006)(376014)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eDNUVTNDaXVVWGJGRWszR0xJRTlPM2hZeFRzWFBHWDlPWk5PY1JoLzFNNFNQ?=
- =?utf-8?B?NTF4d3UvdUs2dTJYamd5VUlUK3c0VXZaQUpqUjl3MW9NOXJDQ0FGK0Q2OTg2?=
- =?utf-8?B?ZUlnZnB3a0wxUXRYK1h6M1c0RzR2NmNSbnVPZkVoaGNTZCtJQkRRbkMxT0pi?=
- =?utf-8?B?L2IvaTdoK2ZWOE95Q2JnTXNMb2NDbTBRS0xKakJ2ZVhPWHUyMUJXU2NjblIx?=
- =?utf-8?B?ek9OMmxtTmE1L3ZsUFYxSmMrVlR5R00yNGhqMWxtQ1pzekduYUJPRWIzSERj?=
- =?utf-8?B?cVJQNUc2dTRoNU5OVmVuRUZNNkVDYnBIay9Ka0EwU3ZMMEZsVXM0U2Q2eHNZ?=
- =?utf-8?B?amsrZVVPNnNWeVRkUjl6NldjUkxOM3N1VXU1OXBxeDZuaEdjU2s0d0dmRytq?=
- =?utf-8?B?d3FJUTZ0UTRZa2hXSTFUczRDRkZHbmc2T3lTYmJ6TUdScVRUbEEvMXhRdkwy?=
- =?utf-8?B?WTFyQk9xTnYzNDhNYXlGQzFORkgyUVBJMGtMdWczVS82UTNFdFpTanp1QTNv?=
- =?utf-8?B?cHd4MjFCb1RtZ29RRFlOZld4WnZSb2I1ZFRXM3RJSU16N25DWUdmWUhIYjJs?=
- =?utf-8?B?dTFtd3ZWZXYzVmtMQ1habWg1MjBuREZpbTRob2c4bERjSVBRcDhoOGRpNStj?=
- =?utf-8?B?N1JrOERzWGcvdmI4dlJKWEJRYS8vWVpHRk8wZldKMkZCR0ZoRDFrbUZMQjJT?=
- =?utf-8?B?K25mQWtONjNmdnpUZ0xPdXQ0MjUzNHNVK1pXVmxxVENMT3Fod1NnejJXMENr?=
- =?utf-8?B?S2hkSFE4VTVMUjVUUys5a0xwemF0d1VpS2hiNTcraG43RjhCRVdKaWk1YkN1?=
- =?utf-8?B?NjByWDFqdVRGYnZocDR4eVNveER5QjlmVkRRMXFNTUdDMXZCZmFBbTdlSi85?=
- =?utf-8?B?Z1dQZ1J5MVhOM0RYK1dPYkdjOVhlWmhPcEJ4WEEwMldHeXN5THFQb05Nc0JZ?=
- =?utf-8?B?S2dBcmE0d2JqblJGbzZqZGdzNGF3ZXpBcjQ5UXg0TGZNYTloZitTeUphbHd1?=
- =?utf-8?B?VEJkMkt4UmZOSFduTFpTOWlFTzVqVnNuSWFaWmRzcC9qSmREU0dzNVdaNVpx?=
- =?utf-8?B?RzRvN2NLSCtHTUF4UE9yZ0w5NTJUU3Y4Z1JkQnZ6NzNQbElIQ0NPQ1M3bS9S?=
- =?utf-8?B?bnpobThBeUhMZEhoUlNHSjFSV0F5VVp3OVN1RFMrVi9LS1A2clpsaUZDMkUv?=
- =?utf-8?B?cTc3QlhlTWUvUWc5dUZqTE9BUnpJV0Qvc0FpcE4ybDVkVHREZ2h1UkNaQ3lp?=
- =?utf-8?B?NTMzY2lLY3VGaGxOWXQ4TE9kRDRvQnpINHQwcWp3TURYajJXOHAzeDUxMUEr?=
- =?utf-8?B?K2J1YWJTNXRZWEt4V3NEaW4rbWg5UzVUTjFtMXAwV1VKMDlLTXk5TExBK2pV?=
- =?utf-8?B?UWxFeklpTlBBejIrTnZWR294czQ3NGlzY1Noa21kOE1XTHFBdFRhYmRhVmc1?=
- =?utf-8?B?U09ucEdMTHFWZnkzaTMvcmJtNVoyMkgxU25wMDE0S0RFSnpZT0QyWGFyYjJF?=
- =?utf-8?B?ZEYxWjhUWWl6aitMUTZabWNjVENKWUQvUnRFdmxoODRDWEl2SEFvZ05KMzNS?=
- =?utf-8?B?QmtPR21zOXQzS0trR3ZxSzJadzU4Nms1NTNHTHVrTm9sN3NtRE9HU0ZZWlZv?=
- =?utf-8?B?UHZhOEpWYzJIMHZDRGcxcjVHNzNickZ0SkRWOUI3NmxHWU5TKzJGK252SEdv?=
- =?utf-8?B?b2IzR2k5RFZ4b2FJMkw1VXY4VmZUL2kvMnhpOFZLZmFMS1dZY21mRE81U3NW?=
- =?utf-8?B?d2lEc0J0ZndBRFhXR21PbWJQK3l5a0pteEhiaTUyQmpCY3U1Ykh4dklEaXJN?=
- =?utf-8?B?aDExbnNOOEUvOWFvNDBJOExwb0J6WFo5by9Lb05nSElTNWFzQmQxUGVvSy9p?=
- =?utf-8?B?bC93ZGdaVEdEb2lrb3FkZ1Q2bXZHRldnVTFJYW43MVUyTGtVbDJaUFJRNDYx?=
- =?utf-8?B?UVFzbFg3WHA0emRWaUNodnFiQ3RBQTJPZzQyZEZjRXZNbDBSZSswRW1MRXpr?=
- =?utf-8?B?YXk1Rk9MZ3ZRYjZkczFwZzA4RmZpZnVScTdhZHNEVitUUUl4b1EwcjNLNDhD?=
- =?utf-8?B?YTlvSjJqSXdJNW13UXR4bjlvM1JyUkl0R2FJL3o3U0dzVFZGejY5NFVnbmlp?=
- =?utf-8?B?TWl6aUJZWjRsZkRZVnorWTFXOGlSUm0xYjJPejE3alZiRmxmc1VIRlBaWlVs?=
- =?utf-8?B?c2c9PQ==?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64c9c20a-441a-47c3-5cd2-08ddd42c9523
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2025 14:30:10.3717 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BQRVm+zVPL/9kXln3DWoPu315ZjO6CwjV55VcmCl7aHVtH+sP+b4mFLkgyTtf/PyIkW/BNLnvJBPdRQFmhj4rN21TSQt+IRyjNf5EE7VViM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVAP278MB0053
-Received-SPF: pass client-ip=2a01:111:f403:c214::1;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=GVAP278CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h5yl3mt2.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -226,37 +113,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/08/2025 16:16, Alex BennÃ©e wrote:
->>> Another option would be to have a set_pc function that would restart
->>> the execution at new PC. Then the vcpu_syscall_cb callback could set
->>> the PC to post the syscall with whatever state it wants to set up.
->>
->> Such a set_pc functionality is already covered with the register write
->> API, as long as I have a handle to the PC register, right? Please do
->> correct me if I'm misunderstanding something here!
-> 
-> Ahh we should make that clear. It requires special handling as the PC
-> isn't automatically updated every instruction. For analysis this isn't a
-> problem as the TB itself knows the vaddr of each instruction so can save
-> it if it wants.
-> 
-> Currently if you write to the PC it won't change flow - and it will
-> likely be reset as we exit the syscall.
-> 
-> c.f. https://gitlab.com/qemu-project/qemu/-/issues/2208
+Hi all!
 
-Thanks for the clarification, I haven't fully thought the implications
-of updating the PC on the jited code through.
-Do I understand correctly that this would likely require hooking into
-the TCG in a way so that the target address of this set_pc function gets
-retranslated? While I've dug into the QEMU code quite a bit already, I'm
-not sure I'm familiar enough with the TCG internals to be able to tell
-whether such a set_pc function could determine the address of an
-(arbitrary) already translated block. I.e., if the target PC is not just
-the next instruction after the syscall, can QEMU determine whether the
-target address has already been translated and if yes, where the
-generated code actually is located?
+On 2025-08-05 10:44, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Mon, Aug 04, 2025 at 04:27:45PM -0300, Fabiano Rosas wrote:
+> >> Juraj Marcin <jmarcin@redhat.com> writes:
+> >> 
+> >> > Hi Daniel,
+> >> >
+> >> > On 2025-08-01 18:02, Daniel P. Berrangé wrote:
+> >> >> This is a followup to previously merged patches that claimed to
+> >> >> workaround the gnutls bug impacting migration, but in fact were
+> >> >> essentially non-functional. Juraj Marcin pointed this out, and
+> >> >> this new patch tweaks the workaround to make it actually do
+> >> >> something useful.
+> >> >> 
+> >> >> Daniel P. Berrangé (2):
+> >> >>   migration: simplify error reporting after channel read
+> >> >>   migration: fix workaround for gnutls thread safety
+> >> >> 
+> >> >>  crypto/tlssession.c   | 16 ----------------
+> >> >>  migration/qemu-file.c | 22 +++++++++++++++++-----
+> >> >>  2 files changed, 17 insertions(+), 21 deletions(-)
+> >> >> 
+> >> >
+> >> > thanks for finding a fix for the workaround. I have tested it and it
+> >> > resolves the issue.
+> >> >
+> >> > However, it significantly slows down migration, even with the workaround
+> >> > disabled (and thus no locking). When benchmarking, I used the fixed
+> >> > version of GNUTLS, VM with 20GB of RAM which were fully written to
+> >> > before starting a normal migration with no workload during the
+> >> > migration.
+> >> >
+> >> > Test cases:
+> >> > [1]: before this patchset
+> >> > [2]: with this patchset applied and GNUTLS workaround enabled
+> >> > [2]: with this patchset applied and GNUTLS workaround disabled
+> >> >
+> >> >   | Total time | Throughput | Transfered bytes |
+> >> > --+------------+------------+------------------+
+> >> > 1 |  31 192 ms |  5450 mpbs |   21 230 973 763 |
+> >> > 2 |  74 147 ms |  2291 mbps |   21 232 849 066 |
+> >> > 3 |  72 426 ms |  2343 mbps |   21 215 009 392 |
+> >> 
+> >> Thanks testing this. I had just managed to convince myself that there
+> >> wouldn't be any performance issues.
+> >> 
+> >> The yield at every buffer fill on the incoming side is probably way more
+> >> impactful than the poll on the RP.
+> >
+> > Yeah, that's an unacceptable penalty on the incoming side for sure.
+> >
+> > How about we simply change the outbound migration channel to be in
+> > non-blocking mode ?   I originally put it in blocking mode way back
+> > in 9e4d2b98ee98f4cee50d671e500eceeefa751ee0, but if I look at the
+> > QEMUFile impl of qemu_fill_buffer and qemu_fflush, but should be
+> > coping with a non-blocking socket. qemu_fill_buffer has explicit
+> > code to wait, and qemu_fflush uses the _all() variant whcih has
+> > built-in support for waiting. So I'm not seeing an obvious need
+> > to run the channel in blocking mode.
+> >
+> 
+> It's definitely simpler and I think it works. It's uncomfortably late
+> though to add a bunch of glib event loop code to the migration
+> thread. Is the suggestion of moving the yield to tlssession.c even
+> feasible?
+> 
+> Juraj, are you able to get some numbers with this?
 
-Thanks,
-Florian
+Yes, I have tested it with this patch and it still works, now without
+any noticeable performance regressions.
+
+Test cases:
+[0]: before this patchset with GNUTLS workaround disabled
+[1]: before this patchset with GNUTLS workaround enabled
+[2]: with this patchset applied and GNUTLS workaround enabled
+[2]: with this patchset applied and GNUTLS workaround disabled
+
+  | Total time | Throughput  | Transfered bytes |
+--+------------+-------------+------------------+
+0 |  32 464 ms |  5 228 mbps |   21 213 283 021 |
+1 |  32 429 ms |  5 236 mpbs |   21 224 062 348 |
+2 |  32 934 ms |  5 150 mbps |   21 200 558 083 |
+3 |  31 547 ms |  5 384 mbps |   21 229 225 792 |
+
+
+Tested-by: Juraj Marcin <jmarcin@redhat.com>
+
+
+Best regards
+
+Juraj Marcin
+
+> 
+> > Using non-blocking will prevent the return path thuread setting
+> > in a read() call, so we won't have mutual exclusion between read
+> > and write which this patch was trying to avoid
+> >
+> > ie, this delta on top of this patch:
+> >
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 10c216d25d..1eaabc1f19 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -4002,7 +4002,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+> >      }
+> >  
+> >      migration_rate_set(rate_limit);
+> > -    qemu_file_set_blocking(s->to_dst_file, true);
+> > +    qemu_file_set_blocking(s->to_dst_file, false);
+> >  
+> >      /*
+> >       * Open the return path. For postcopy, it is used exclusively. For
+> > diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> > index cf6115e699..8ee44c5ac9 100644
+> > --- a/migration/qemu-file.c
+> > +++ b/migration/qemu-file.c
+> > @@ -338,22 +338,6 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+> >          return 0;
+> >      }
+> >  
+> > -    /*
+> > -     * This feature triggers acquisition of mutexes around every
+> > -     * read and write. Thus we must not sit in a blocking read
+> > -     * if this is set, but must instead poll proactively. This
+> > -     * does not work with some channel types, however, so must
+> > -     * only pre-poll when the featre is set.
+> > -     */
+> > -    if (qio_channel_has_feature(f->ioc,
+> > -                                QIO_CHANNEL_FEATURE_CONCURRENT_IO)) {
+> > -        if (qemu_in_coroutine()) {
+> > -            qio_channel_yield(f->ioc, G_IO_IN);
+> > -        } else {
+> > -            qio_channel_wait(f->ioc, G_IO_IN);
+> > -        }
+> > -    }
+> > -
+> >      do {
+> >          struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
+> >          len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
+> >
+> >
+> > With regards,
+> > Daniel
+> 
+
 
