@@ -4,148 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A6CC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 05:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31558C87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 06:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uj9w2-0003Rd-TF; Tue, 05 Aug 2025 01:10:05 -0400
+	id 1ujAnB-0005V9-BV; Tue, 05 Aug 2025 02:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uj9vr-0003Ou-AZ
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 01:09:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1ujAn6-0005RI-Lp
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 02:04:52 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uj9vn-00069u-Lc
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 01:09:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754370585;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=loY19w4tQtc2JSJ9o5IjQUduUtn1Eruq1YAWJw1TDgE=;
- b=eHPmeAr57lInkClg21VDjDvbMDojx8O2vq7EeYXRfljNQr9a6nRWbUXtBB5HJYgA3rqmMK
- 6Jcv6rA3sWf8CQJo1W3wO7frYhY+uXjgavS3utFaYqLy6njw9mvCzsJ0UDHuukQpsOmpXB
- PaxBRbIszKe+ajt3dyrX5SYl8XAJ8Fc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-Lu1RHk5GPima7f4silCDiA-1; Tue, 05 Aug 2025 01:09:44 -0400
-X-MC-Unique: Lu1RHk5GPima7f4silCDiA-1
-X-Mimecast-MFC-AGG-ID: Lu1RHk5GPima7f4silCDiA_1754370584
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-7073cc86450so58701756d6.2
- for <qemu-devel@nongnu.org>; Mon, 04 Aug 2025 22:09:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754370583; x=1754975383;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=loY19w4tQtc2JSJ9o5IjQUduUtn1Eruq1YAWJw1TDgE=;
- b=WOPhKVxqOJxLRqj5FDihsyV8iZURKR2uHMiiazPMEouePex7yPB2NIqQCx4AqCF6Bg
- pahNDM3wpEWe+5iUw8nhaAFbgyFcdenKHL3z3LXEt2E3T2Wy4XdwSNoe7PbviP3fG19i
- q6xqsiDkwmLC6HBvFP3rb3JSo7wkhfAXrmHEaydJrFqJIAWyon1THa+RHNYNP1qOzD5V
- 8cDueK/CJYUm4/25Qxh/7ofrUlA1QqwssOpYSmawVrzFZ5iUgRsRVLjZQj0WKxr6YM6F
- T2WITVBSeezyPRUB+g8f7U0f9PLf7w9hemRbVh6U+MuqAdK37tP4OAXAo4F8Ba8R5O5G
- p3aA==
-X-Gm-Message-State: AOJu0YyfE1gNprYX4OHSMI/8g8zxWqCyruo+wRlhBZNf7PuMER6pit1P
- XErGMOtLrTWbJvmtE1ak0Mhb+JE9bVv2eq4qoj8dMlNB1zSC76XPBCnQvLyrfoxj06P/qS/Bhwn
- q4zn0FBUVwnQQVtdPwc5StQmetObAtNnTDNXsCWQVw6hoSHEJtnykuitB
-X-Gm-Gg: ASbGncs81sbu5AifqPCXyFvIOgbw6/rnZO9KLWWUX29rupMy9ioK4Pe2zVDRHCm7QEM
- vQyFInA+KJjrvCXSTxw5mc2yzXKC0UVDTyx68QaDlDMWBNYHslky05GX55HlHDw+cEDcUTLycrr
- 4Na1g5joDen6zpk/tuy/PehYHlPeldY7mnl2ggBbruV0ZFalmgW6wla0at68BRMFLMYVsCNF2ZC
- 2eEZI/5/vGdkbn+u3j0o32efldZVvi4ReI8UzSnmsNeAeDzfJqglUT7UzxWrotfjHUiB+hd9Uu9
- c5cjBpOSowKiww2AUTYye90uc4aBdxkSYyGhB2dJWgIX06O23yfU1yLdzKPxjIB7XjtD2OuGeO9
- Oog==
-X-Received: by 2002:a05:6214:400b:b0:707:430e:dc00 with SMTP id
- 6a1803df08f44-70936317844mr194800306d6.39.1754370583485; 
- Mon, 04 Aug 2025 22:09:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK+ZN0Gwos6S3pdl7we6GC6y8pR1tU3i6cx3GKLv0tubLy8fZ2egK0aufTb4VyfzJfbGqxHw==
-X-Received: by 2002:a05:6214:400b:b0:707:430e:dc00 with SMTP id
- 6a1803df08f44-70936317844mr194799946d6.39.1754370582535; 
- Mon, 04 Aug 2025 22:09:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077c9d894bsm65399566d6.11.2025.08.04.22.09.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Aug 2025 22:09:42 -0700 (PDT)
-Message-ID: <f3ad6452-eb2e-43a6-abff-a6c407b21523@redhat.com>
-Date: Tue, 5 Aug 2025 07:09:39 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1ujAn2-00011g-R9
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 02:04:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754373889; x=1785909889;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=GdNimUGrVTXm6SmAlIjtT/mzYoviTOuy4ezNTjfhbew=;
+ b=CBkbsyf0otsrOQmepn3+WhDgreDQEZt1JKF0PoBIsW4MOcG3FHuLBCsf
+ WWTW9iw7/SUN9vEyqVutgWAqre+h4F/ufiAp6JtH4WLFHdFlUv+67zseg
+ +zj8uThTr7MZWqORjP5/B8u3jI2vCwmywvfeiRRLxpHPHSv/ysXlDZx9Y
+ 9Jxxbpyi+EeCS+mTBi7GuD0NTzWO0kxzHloRX8d7TlzOF/G9V0vPY8l7i
+ HVHq9dnE3/i0aat8UOQj7jVMil6Vnc75r0lwjZXt+lUon/nf15af3Kmap
+ vt8qVzSpNig0SuM+t6+8MY763ge9XGi3/ZUKomJjdZ86UvAdYtwBU+/n7 g==;
+X-CSE-ConnectionGUID: XI5uoIuySWq8EEbxxti1LQ==
+X-CSE-MsgGUID: LqUePGDvTX2x3tQDIitT3g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11512"; a="56571173"
+X-IronPort-AV: E=Sophos;i="6.17,265,1747724400"; d="scan'208";a="56571173"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Aug 2025 23:04:43 -0700
+X-CSE-ConnectionGUID: FW5uTrxQQoG2CWXP7G0Dpw==
+X-CSE-MsgGUID: uYIRkUAvRRiN9TBYNzrBsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,265,1747724400"; d="scan'208";a="164675822"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Aug 2025 23:04:43 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26; Mon, 4 Aug 2025 23:04:42 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26 via Frontend Transport; Mon, 4 Aug 2025 23:04:42 -0700
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (40.107.95.71) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.26; Mon, 4 Aug 2025 23:04:42 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P3ZVBn/aEtETxKdOJdgv6nEo7GEwffi7BTjCCH62eQSx8ju72b2Qd3muFqMBmM3kvTB3zLlgOLZf/CGa11YQp5/oD2KdsaeYdQVzl6DfY09VXimxzFKbTORQQliMtwXJsh2k5z30jzt3vN2t+7xBv0RXO5qhWIVsqLXj5S8Gd63Aq4rn/mz6+1OaIC9vVXalO0duwuWV2WecqRllxw/a0M642M9TP1rkzp2Je25Kmjtmf7zMSK/RcNnYy5LpoyOaF4CwcNBC/ClgRFOAXuTqyCCyG2eTa7TI5B/CKPk21WDvd1RvSJU0xZLJjSdb9DiABNjSQ2MBT+mn7ZysKzyYiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BgebAZx4kObNCLVEer6yCG+oSzmAZTpn6D74yjw6cr0=;
+ b=bQ/ZNDxqxhidna1/v1U0/CcK4R7HgdzdxOTsOo8y/RRkcgrPomrwzFji9vgfgLoA1zCC7ThvNaRS7TbzK8dKdLMe1eFFFx63mKkR3wzOAYfgWFT3HCH6TuMxVGxwjIqnZq5ugGTEtdIWaCoWxPoa1X+9Y84tDgCq45/gVxaLhl5477bvAZcvSYC7jDYHLulzwNCyzms/dB592N28YRSi6PhCopiB/1cl9ScUBWueOI3cypIte5WH8+ziySkfnKubspHXH8y3PoMnlrBbqHRgOtzUZFBnlUnCmqyVEbJyI/OjMFc4uvvKO/JFdZZZnmEoltHRiehjT9lQ3QgxLwXb8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by IA4PR11MB9011.namprd11.prod.outlook.com (2603:10b6:208:56b::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Tue, 5 Aug
+ 2025 06:04:40 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9009.013; Tue, 5 Aug 2025
+ 06:04:40 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH v4 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
+Thread-Topic: [PATCH v4 02/20] hw/pci: Introduce pci_device_get_viommu_cap()
+Thread-Index: AQHcAGojBHGmrySSMUmmVahA3JzrVrRJFhCAgAFhZeCACGetgIAAmKcw
+Date: Tue, 5 Aug 2025 06:04:40 +0000
+Message-ID: <IA3PR11MB913602B3C31F1C016EF23C579222A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
+ <20250729092043.785836-3-zhenzhong.duan@intel.com>
+ <9989340c-c304-4208-9c33-f54fc5d1e865@redhat.com>
+ <IA3PR11MB9136DEF9919BCB1B4F9662619224A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <aJD/1w/sNcy7C3Uv@Asurada-Nvidia>
+In-Reply-To: <aJD/1w/sNcy7C3Uv@Asurada-Nvidia>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|IA4PR11MB9011:EE_
+x-ms-office365-filtering-correlation-id: fe332257-8fa2-46d3-0ccc-08ddd3e5f748
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|38070700018; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?dz5qpNSPA5xX7fOWHZsPBNi79GXs91bHcH1WEnxuEDYXKkB8rBIFkyOPzo?=
+ =?iso-8859-1?Q?1/jTpX+U2mtlC9f9Rf286i6sYGiS25cABH9rZBgj/6v5LEfucoBxNs3FKM?=
+ =?iso-8859-1?Q?GRX6rRzSnTNERVTl94V9HCr2K3jtFGljsu2CgqQeBrm7NIFwbNiHYeLW2u?=
+ =?iso-8859-1?Q?M3LA2jJA+RltiS/MbxaDULY2wp06A/aLRu5RzkuCrsbsdYybTBcn0++rNn?=
+ =?iso-8859-1?Q?f756KyK3ViFpN7Pwp6/cBUvX2KayItJlkH0MYfClSeE15DzsNqDUWwvZlU?=
+ =?iso-8859-1?Q?uYWTLPME2m4pPQBRdrjUW/7+lkgarSDLfr1Vonktg95TvIioNY/7akMk6D?=
+ =?iso-8859-1?Q?s819F5TWphEJlC1EcFvbkkzKcnzKFnu/BceiWohgQU835UeRCHAjXtk7ET?=
+ =?iso-8859-1?Q?LyNFAobXcsdoqhC3of6jCexQ1MBbUA1FTpHvIygtckl61Dnz3SuIqLulip?=
+ =?iso-8859-1?Q?f+huLy3OPJoeVU8vcIbBO5w3iecDDCceN4rUYjOsHJ1Y2FZjvoU3PRhu/Y?=
+ =?iso-8859-1?Q?JVqGJa0OV0bNSTK3b0nsIC/SNshlT8q8xlWCdT8xfU/OJ2UUqNSU8Q4liP?=
+ =?iso-8859-1?Q?s/6O60lSbnAQQ4UuSTSVXH8TaRO9Oj08mBE5Tbh9ilExkicc9MxepzBDIR?=
+ =?iso-8859-1?Q?d3WpuG8T1Kk/SQ1gikGoNc9J+FGTF2ybvxPD4BlwE0t+AoW6AyGzoUGEF2?=
+ =?iso-8859-1?Q?Moa2RTLZIMHuwUoUx0bbxpKYi34MMt1FkwukAtC2mUpRcY1+3S82qSAwDR?=
+ =?iso-8859-1?Q?hFZ6dlm0HFuwoidyb8q7amluXF8layxq/8d+PXJDE8W7fEzf/SOXMBfLDB?=
+ =?iso-8859-1?Q?yY91Aa82y9ekum9daWi4gcCIxUo2UsAHP8MmAxqjvogKtlpt4F1ZcIyKNq?=
+ =?iso-8859-1?Q?7j91EbSBJQnFkhqZS+EEioGBT8MDX9O81etzL5CNm/s5Tg3Ja5BSP5ste2?=
+ =?iso-8859-1?Q?aIReb8XgRVsc4PLgv4RrRSiDbNevWLSXExR0zXrG+ORvqdHvnzjZek0Ox+?=
+ =?iso-8859-1?Q?imMZK1I7CKoUkADwUA6vZIMTkEg409/7d6+AxacayEg3rWMl8Z5A7WPaS4?=
+ =?iso-8859-1?Q?0XcVr3jiadV4T3LZGdum3X84OAhEZa7Y9cMaRQuZNomZhTYDDGYP7qBPZ5?=
+ =?iso-8859-1?Q?xcHSquDOUqu1PUtT/0zJpaGHTFAZ+QAZ7Jep5xcMNl9iS4hJMCOlZkV32X?=
+ =?iso-8859-1?Q?QcF6wR2+2tmd8UPBCfN2uaxFlPsWOYb96L+9pEaLPh0IdrfLZp3zeAP5Zw?=
+ =?iso-8859-1?Q?dM67zcfcUN5uQTTEwfixKH6HP58VwB4LaytvIfLSQWH7CCfls4wRLQQYmT?=
+ =?iso-8859-1?Q?oYEtsbnE8i1gy5cQaed8GqaI1g2yHyzyAHWWkNj0wrWphkHIEoOv8B4W8D?=
+ =?iso-8859-1?Q?fwv7BGGRR8EStSsDbrST5DO1GdGWDH5oS8Jw25jJeDcRNrbykpj0fq0mQn?=
+ =?iso-8859-1?Q?IiiUEMB6ZucGFWJlqVsAASzKzLVNpnkgFGZA5zmZSmFzbynNZx8e00NyaX?=
+ =?iso-8859-1?Q?gaLnPLdsdsduINsxU2xWG5DK6h0GOMtin+Jjghy8I01LkntNmWzQxkKEY4?=
+ =?iso-8859-1?Q?KWI90mU=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Qi7yQk+W5oldIHkWYj8UfD2hWeWjTQvEd6fyAJRu/pY5XXa4bjl2csrQjo?=
+ =?iso-8859-1?Q?+gxJ8SShB6H05gziudxt/fuzX7Y2WrkFlhtYxhPFyHHjlCIkl2ebyyyOzj?=
+ =?iso-8859-1?Q?wkB0e4b5crGarGIDi6WpLcT5ZdPycpbKpLpTSAIYgErcg9I2XR8f9APMGp?=
+ =?iso-8859-1?Q?wE5BA67douO8pV4Sn/yd2DSTDl9P2BoFMeTW8IMeR3AGnwOlkrvSiaRg1c?=
+ =?iso-8859-1?Q?TP2P0oaSi0NNOUaiVedRf9SKFeQZ935gZFUBZiQ3jYxjbZt7oxR23m3VJ5?=
+ =?iso-8859-1?Q?PJpibHd8stOTOd9f5FiOGR/WdUSwXcosOYjsdJJndtJ7gU08k1JlsAd5Fa?=
+ =?iso-8859-1?Q?8gvEur1eOX+L/qrFCiai804Ih33NcS4j5HwsVe9U/r6MAvrGjYWO/+Zupb?=
+ =?iso-8859-1?Q?KHP5s4nd7/Lu7sOmvVfDmYZOATgruJU1HyWsykWumRyoU6StafDKxrr6iF?=
+ =?iso-8859-1?Q?oNm21U23DfXUgZiE3udsgEUabU1+SEKfw9rtLZHUfPtMTqWpUl1rElhLtT?=
+ =?iso-8859-1?Q?Nf9emgj4AO6LpZohU9tSyYssXWs0UP6xMVFvzdk1ALCXzqP8wwH7lvXxlU?=
+ =?iso-8859-1?Q?6Sg9j6N35F27oR/YuT776vugEy3cjeUw9SBql/ubXuRYZA6smw7BM0Fk9z?=
+ =?iso-8859-1?Q?FemRvzRcVbC9vXOnbbBvZ76g6uByfPvm+qRZNBldqxKcLq4v1YsX57b9wT?=
+ =?iso-8859-1?Q?+4ji/f5n2nmTpbTQGmfK7QqkavArWvL3iNJVn7u8UzpWm952iqNeVPIHDX?=
+ =?iso-8859-1?Q?p7W7OgJIZeVogSxY2BwbpvQBrawRqtT4ipZdf2lwGRZwV8TufAd+PK3Yzu?=
+ =?iso-8859-1?Q?pOkj/RDCPPEF8QlYpEp+7na8r6X5ego14PSAZjpAt4lAJGiQwiC4Gp4A3X?=
+ =?iso-8859-1?Q?6r+cT21yF0Wt/vXrlVjkOlb4VCB9OEI1SBBEI/tqcmfgYMsosbIyV3pNbS?=
+ =?iso-8859-1?Q?TJ16Ev0dN8ChQWsz5mxKVeifHegVd1uO9amzmGSWFgWBn5v+OfMr5hccCR?=
+ =?iso-8859-1?Q?GWug7rr0g87HsORhdwFeQQ0dj1UOen72ZQnn51SCoLbpw9bWeDMqq776CW?=
+ =?iso-8859-1?Q?S/iCCIwk2kKB21zy/eMZ5o20He5aQzTf+RmIx02wtZo6excgK4HUcCuU0d?=
+ =?iso-8859-1?Q?XCWs2n4aGlAOe78h3ByHrAYTzNnCHLd0D0awmL2nlpaezH08ZURgUJqiT6?=
+ =?iso-8859-1?Q?Vikc6aoc5Z6Lu/CVxkFKjDUfK8fb40v2oh4uFm7Ru/AQ4MsrqMM+6BEnsd?=
+ =?iso-8859-1?Q?F3anWFsq4sl4y84y901oGFFUOzHKSJv9zihVHQK9RbZAjvQopIBiNBTh/7?=
+ =?iso-8859-1?Q?ursvH5V+IfpMdVIRm6ZxZ12xSDGmlYCxCR4FtBxfrbd1cNWjDHeAJUrDrL?=
+ =?iso-8859-1?Q?zdTBsiPwISymw7WEGYN7fqRMkpSPMwpVpxCLhIJeUYbug5LJxQobTUO5Oa?=
+ =?iso-8859-1?Q?Qizz2+PlSOW1IPrzhghXzS/cW/m3hCiyhY63ebGJxRTamCPr72Mc3K42bW?=
+ =?iso-8859-1?Q?ET7O5DCeIpQw8bNDepbWPdDSGgcExVhPOeF4QjZ2tH0y23SW4sgcSnF006?=
+ =?iso-8859-1?Q?cMmmarw3c/hhwLW3rDlLIdLIs9IQbRE3/J56deJasnZMVLuziWH/fUzUlv?=
+ =?iso-8859-1?Q?Vm26r2Y7pNyUs/WnJElQW0Ko0oOzRsZ9Z3?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/50] ppc/xive: updates for PowerVM
-To: milesg@linux.ibm.com, Nicholas Piggin <npiggin@gmail.com>,
- qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <b192697a-f936-450d-8e19-6cb364b7e747@redhat.com>
- <D9X71WIPID90.1W1RJIDOU9DID@gmail.com>
- <56c95bf5-45bd-43c0-a6ca-62845b2bdca6@redhat.com>
- <dd46b9656f99b23a52f60b8d4150985e5934384d.camel@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <dd46b9656f99b23a52f60b8d4150985e5934384d.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe332257-8fa2-46d3-0ccc-08ddd3e5f748
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Aug 2025 06:04:40.5678 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: uZIum3RHStFsnNL0fkrBsJs2rQyQT6IiWpsO7u8ltQyTg+jc3QSV8w4DMFIIaFxxV9N9LF5CEZYNj9bzd1TFLE/EX0+l4HMaQmKaVKxRn4g=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB9011
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.17;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,179 +212,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Glenn,
 
-+Harsh
 
-On 8/4/25 19:37, Miles Glenn wrote:
-> On Sun, 2025-07-20 at 23:26 +0200, Cédric Le Goater wrote:
->> On 5/16/25 03:29, Nicholas Piggin wrote:
->>> On Fri May 16, 2025 at 1:36 AM AEST, Cédric Le Goater wrote:
->>>> On 5/12/25 05:10, Nicholas Piggin wrote:
->>>>> These changes gets the powernv xive2 to the point it is able to run
->>>>> PowerVM with good stability.
->>>>>
->>>>> * Various bug fixes around lost interrupts particularly.
->>>>> * Major group interrupt work, in particular around redistributing
->>>>>      interrupts. Upstream group support is not in a complete or usable
->>>>>      state as it is.
->>>>> * Significant context push/pull improvements, particularly pool and
->>>>>      phys context handling was quite incomplete beyond trivial OPAL
->>>>>      case that pushes at boot.
->>>>> * Improved tracing and checking for unimp and guest error situations.
->>>>> * Various other missing feature support.
->>>>>
->>>>> The ordering and grouping of patches in the series is not perfect,
->>>>> because it had been an ongoing development, and PowerVM only started
->>>>> to become stable toward the end. I did try to rearrange and improve
->>>>> things, but some were not worth rebasing cost (e.g., some of the
->>>>> pool/phys pull redistribution patches should have ideally been squashed
->>>>> or moved together), so please bear that in mind.  Suggestions for
->>>>> further rearranging the series are fine, but I might just find they are
->>>>> too much effort to be worthwhile.
->>>>>
->>>>> Thanks,
->>>>> Nick
->>>>>
->>>>> Glenn Miles (12):
->>>>>      ppc/xive2: Fix calculation of END queue sizes
->>>>>      ppc/xive2: Use fair irq target search algorithm
->>>>>      ppc/xive2: Fix irq preempted by lower priority group irq
->>>>>      ppc/xive2: Fix treatment of PIPR in CPPR update
->>>>>      pnv/xive2: Support ESB Escalation
->>>>>      ppc/xive2: add interrupt priority configuration flags
->>>>>      ppc/xive2: Support redistribution of group interrupts
->>>>>      ppc/xive: Add more interrupt notification tracing
->>>>>      ppc/xive2: Improve pool regs variable name
->>>>>      ppc/xive2: Implement "Ack OS IRQ to even report line" TIMA op
->>>>>      ppc/xive2: Redistribute group interrupt precluded by CPPR update
->>>>>      ppc/xive2: redistribute irqs for pool and phys ctx pull
->>>>>
->>>>> Michael Kowal (4):
->>>>>      ppc/xive2: Remote VSDs need to match on forwarding address
->>>>>      ppc/xive2: Reset Generation Flipped bit on END Cache Watch
->>>>>      pnv/xive2: Print value in invalid register write logging
->>>>>      pnv/xive2: Permit valid writes to VC/PC Flush Control registers
->>>>>
->>>>> Nicholas Piggin (34):
->>>>>      ppc/xive: Fix xive trace event output
->>>>>      ppc/xive: Report access size in XIVE TM operation error logs
->>>>>      ppc/xive2: fix context push calculation of IPB priority
->>>>>      ppc/xive: Fix PHYS NSR ring matching
->>>>>      ppc/xive2: Do not present group interrupt on OS-push if precluded by
->>>>>        CPPR
->>>>>      ppc/xive2: Set CPPR delivery should account for group priority
->>>>>      ppc/xive: tctx_notify should clear the precluded interrupt
->>>>>      ppc/xive: Explicitly zero NSR after accepting
->>>>>      ppc/xive: Move NSR decoding into helper functions
->>>>>      ppc/xive: Fix pulling pool and phys contexts
->>>>>      pnv/xive2: VC_ENDC_WATCH_SPEC regs should read back WATCH_FULL
->>>>>      ppc/xive: Change presenter .match_nvt to match not present
->>>>>      ppc/xive2: Redistribute group interrupt preempted by higher priority
->>>>>        interrupt
->>>>>      ppc/xive: Add xive_tctx_pipr_present() to present new interrupt
->>>>>      ppc/xive: Fix high prio group interrupt being preempted by low prio VP
->>>>>      ppc/xive: Split xive recompute from IPB function
->>>>>      ppc/xive: tctx signaling registers rework
->>>>>      ppc/xive: tctx_accept only lower irq line if an interrupt was
->>>>>        presented
->>>>>      ppc/xive: Add xive_tctx_pipr_set() helper function
->>>>>      ppc/xive2: split tctx presentation processing from set CPPR
->>>>>      ppc/xive2: Consolidate presentation processing in context push
->>>>>      ppc/xive2: Avoid needless interrupt re-check on CPPR set
->>>>>      ppc/xive: Assert group interrupts were redistributed
->>>>>      ppc/xive2: implement NVP context save restore for POOL ring
->>>>>      ppc/xive2: Prevent pulling of pool context losing phys interrupt
->>>>>      ppc/xive: Redistribute phys after pulling of pool context
->>>>>      ppc/xive: Check TIMA operations validity
->>>>>      ppc/xive2: Implement pool context push TIMA op
->>>>>      ppc/xive2: redistribute group interrupts on context push
->>>>>      ppc/xive2: Implement set_os_pending TIMA op
->>>>>      ppc/xive2: Implement POOL LGS push TIMA op
->>>>>      ppc/xive2: Implement PHYS ring VP push TIMA op
->>>>>      ppc/xive: Split need_resend into restore_nvp
->>>>>      ppc/xive2: Enable lower level contexts on VP push
->>>>>
->>>>>     hw/intc/pnv_xive.c          |  16 +-
->>>>>     hw/intc/pnv_xive2.c         | 139 +++++--
->>>>>     hw/intc/pnv_xive2_regs.h    |   1 +
->>>>>     hw/intc/spapr_xive.c        |  18 +-
->>>>>     hw/intc/trace-events        |  12 +-
->>>>>     hw/intc/xive.c              | 555 ++++++++++++++++++----------
->>>>>     hw/intc/xive2.c             | 717 +++++++++++++++++++++++++++---------
->>>>>     hw/ppc/pnv.c                |  48 +--
->>>>>     hw/ppc/spapr.c              |  21 +-
->>>>>     include/hw/ppc/xive.h       |  66 +++-
->>>>>     include/hw/ppc/xive2.h      |  22 +-
->>>>>     include/hw/ppc/xive2_regs.h |  22 +-
->>>>>     12 files changed, 1145 insertions(+), 492 deletions(-)
->>>>>
->>>>
->>>> I am impressed :) and glad that you are still taking care of XIVE.
->>>>
->>>> I suggest adding new names under the XIVE entry in the MAINTAINERS file.
->>>
->>> Yeah it's good to see. They are building a lot more cool stuff with
->>> powernv at the moment, hopefully almost all should get upstreamed
->>> eventually.
->>>
->>> I will try to convince them to add MAINTAINER entries :)
->>>
->>> Thanks,
->>> Nick
->>>
+>-----Original Message-----
+>From: Nicolin Chen <nicolinc@nvidia.com>
+>Subject: Re: [PATCH v4 02/20] hw/pci: Introduce
+>pci_device_get_viommu_cap()
+>
+>On Wed, Jul 30, 2025 at 10:51:13AM +0000, Duan, Zhenzhong wrote:
+>> >> 2. there can also be more than one vIOMMUs with different user
+>> >>     configuration, e.g., arm smmuv3.
+>
+>That's correct. But would you please elaborate how different user
+>configurations would benefit from this new op? I don't see a good
+>reasoning behind that.
+
+It is the reason to have get_viommu_cap(), get_viommu_cap()
+returns capabilities of vIOMMU which underlying VFIO device attaches to,
+but indeed, it's not reason for leaving out host capabilities, I'll drop th=
+is line.
+
+>
+>> >> 4. It's too late for VFIO to call get_viommu_cap() after
+>set_iommu_device()
+>> >>     because we need get_viommu_cap() to determine if creating
+>nested
+>> >parent
+>> >>     hwpt or not at attaching stage, meanwhile hiod realize needs
+>> >iommufd,
+>> >
+>> >hiod -> "host IOMMU device"
 >>
->> This is a major update for XIVE and, since I am not sure anyone
->> is going to send a PR for QEMU 10.1, I am volunteering to do
->> it again on monday, once and only for these fixes.
+>> Will do.
 >>
->> We should clarify in the next cycle who is charge of ppc. IMO,
->> If we don't have maintainers, we should orphan all non-pseries
->> PPC components. I can send a maintainer update on this as soon
->> as the QEMU 10.2 cycle opens.
+>> >
+>> >>     devid and hwpt_id which are ready after attach_device().
+>> >
+>> >I find the above sentence difficult to understand.
 >>
+>> This is trying to explain the reason of order between attach_device(),
+>get_viommu_cap() and hiod realizing.
+>> What about:
 >>
->> Thanks,
+>> 4. host IOMMU capabilities are passed to vIOMMU through
+>set_iommu_device()
+>>    interface which have to be after attach_device(), when
+>get_viommu_cap()
+>>    is called in attach_device(), there is no way for vIOMMU to get host
+>>    IOMMU capabilities yet, so only emulated capabilities can be returned=
+.
+>>    See below sequence:
 >>
->> C.
->>
-> 
-> Cédric,
-> 
-> Thanks for doing the PR for these XIVE changes!  It sounds like if we
-> want to continue having our XIVE changes upstreamed we will need
-> someone on our IBM QEMU development team to volunteer as a maintainer.
+>>      attach_device()
+>>        get_viommu_cap()
+>>        create hwpt
+>>      ...
+>>      vfio_device_hiod_create_and_realize()
+>>      set_iommu_device(hiod)
+>
+>I think it should be:
+>
+>    vfio_device_attach():
+>        iommufd_cdev_attach():
+>            pci_device_get_viommu_cap() for HW nesting cap
+>            create a nesting parent hwpt
+>            attach device to the hwpt
+>            vfio_device_hiod_create_and_realize() creating hiod
+>    ...
+>    pci_device_set_iommu_device(hiod)
 
-We did some updates recently :
+Good catch, done, https://github.com/yiliu1765/qemu/commit/34b02bdc0d615c60=
+d1b07bfee842aabf1f7e2b28
 
-   https://lore.kernel.org/qemu-devel/20250724133126.1695824-1-clg@redhat.com/
-
-Given your knowledge of IBM Power servers, your relationships with
-the hardware team, and the quality of your work within QEMU, you
-should add your self as a Reviewer of PowerNV and XIVE (Needs a
-Maintainer also). I can merge that for QEMU 10.1.
-
-> Does becoming a maintainer still require physically attending a key
-> signing party at KVM Forum?
-
-To be able to send PRs, it is strongly recommended to have your
-key signed by the people pulling in your changes. Being physically
-present is always better to verify the identity of a person.
-
-But that's not all, it's a chain of trust and a community involvement
-in all areas. It takes time.
-
-Btw, in series [1], there are several patches tagged as Fixes,
-could you please reply to Michael [2] regarding which could be
-backported to the stable branches ?
-
-
-Thanks,
-
-C.
-
-
-[1] https://lore.kernel.org/qemu-devel/20250512031100.439842-1-npiggin@gmail.com/
-[2] https://lore.kernel.org/qemu-devel/10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru/
-
+Thanks
+Zhenzhong
 
