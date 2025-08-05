@@ -4,123 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A8AC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC53BC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujK65-0000hG-66; Tue, 05 Aug 2025 12:01:05 -0400
+	id 1ujK9L-0003ve-Or; Tue, 05 Aug 2025 12:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ujJxh-0001Sa-6M; Tue, 05 Aug 2025 11:52:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujK57-0008Hn-OC
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:00:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ujJxe-0003Cm-9Z; Tue, 05 Aug 2025 11:52:24 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5757jYTM023088;
- Tue, 5 Aug 2025 15:52:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=77JiRRtsf07IoIivIwgy+Q6OWdP7qGspMbWqnYvrASA=; b=q6JZVxhjApLm
- 1z92SdzGfCweIZdi38pVQOjbrjbvPBZH699ztDUTX5pepSYz5cN7rDHzSwIwGqnD
- uG34Tm9ePVNZXwxD7MV0gISN9ONLQfewPRG+cB01uTOhCdOssTBPP1uY17bKmPZd
- hYzemEVMdo1N909qw+nyL7dO06huYx91RmQnedKhipHrIHYdF2iZrNAgipEsiHoM
- z9/kYyueqvnlzbVaph8DblJUMA/qh0cz0siv2br+QD9TxDW7cmS33RCzOAjvLiyC
- oZuOJZ/zzMQEF9q8LbAmMJBzze+DCVhMuZtWs1CYcgHDf/3U/dC9UYsfbQ+jg14A
- XovAAIPgpQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48a4aa3g8m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 15:52:19 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 575Fl88T014068;
- Tue, 5 Aug 2025 15:52:18 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48a4aa3g8g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 15:52:18 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 575Dc2Go009594;
- Tue, 5 Aug 2025 15:52:17 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 489x0p33qt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 15:52:17 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 575FqGDo28312156
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Aug 2025 15:52:16 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 34CB958056;
- Tue,  5 Aug 2025 15:52:16 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1DB758052;
- Tue,  5 Aug 2025 15:52:15 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Aug 2025 15:52:15 +0000 (GMT)
-Message-ID: <9915bdb68e1b64493003ae7974dab1e7dd3694f8.camel@linux.ibm.com>
-Subject: Re: [PATCH 00/50] ppc/xive: updates for PowerVM
-From: Miles Glenn <milesg@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Nicholas Piggin
- <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Fr=E9d=E9ric?= Barrat
- <fbarrat@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Date: Tue, 05 Aug 2025 10:52:15 -0500
-In-Reply-To: <f3ad6452-eb2e-43a6-abff-a6c407b21523@redhat.com>
-References: <20250512031100.439842-1-npiggin@gmail.com>
- <b192697a-f936-450d-8e19-6cb364b7e747@redhat.com>
- <D9X71WIPID90.1W1RJIDOU9DID@gmail.com>
- <56c95bf5-45bd-43c0-a6ca-62845b2bdca6@redhat.com>
- <dd46b9656f99b23a52f60b8d4150985e5934384d.camel@linux.ibm.com>
- <f3ad6452-eb2e-43a6-abff-a6c407b21523@redhat.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VP4juch07jMgLbNyFY8Q8PUEckZcZU8u
-X-Authority-Analysis: v=2.4 cv=dNummPZb c=1 sm=1 tr=0 ts=689228b3 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=pGLkceISAAAA:8 a=9qUTvQc-AAAA:8 a=GaTi3gVdMJIJcAK-QCgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=axOgMmt4Ejcwn1cqzmsR:22
-X-Proofpoint-ORIG-GUID: 5ihrcmVNNv96ivLOUkOv7fa1k32lBByA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExMyBTYWx0ZWRfX7Bg9G4JYoweH
- ZcfGWsJ0OIsJIC/PDowFTCcovMbxfi4FgdHx2M4waKmQSjD0zmXIOPLN/UEhureqESYHT77/0pb
- qCsXPKEFEAJBkbPYRdVCZ5jTTKR6zjVuQAZwUfcQa5EGOTfkeZ6jXIb15MsxAkSz8CuOhlL4oy4
- zR6GHrFPxYB3LH/XRniBy6HcitNxAmQcogC3G7B9wPDz4x+KUe2JKqJCdd/bqSlXDBN36qqs1T5
- pC9IDTCP519CS37jUF02ODGeDvSbwYuzadrXcuzemkarcFa1yC4GhjjE14ZBEwZOhYxDJQ30HFk
- iQpyFeTUZRrOyEAFPei0NmSHFAy5uPxIGDH9wD+8CUbwy2uJRnl3aGHvVk1L9gckrhyFFxQaDfn
- y/I1PGd13yrXg9Sxka9257iL3IWHlVl1WwaexM/VEDIgBI8D5pd0bgWfHp4b7UK8vp48kHD7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 mlxscore=0 clxscore=1015 mlxlogscore=999
- malwarescore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 spamscore=0
- suspectscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050113
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujK54-0005mh-DD
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:00:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754409600;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=SIscS+7Kcd6vjwYpEERr7sDVUJc7MuIS6841SYw8F+Q=;
+ b=fMcGBN4zvE3x1q4Kcu5YpBDvgYdXCfUxmc79Ihy+FAibkNHkcMV9hun3D8Udgzq406ZIUv
+ mzvf5bTyCypGTL8pttYC9GcyuWFfSmnxRN6o97MA5005/SPBvL5j+SycqEM1EXWTPJORSt
+ qjpiADvGWF3fffzBt+nm1zldpc+T0RE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-8Jf-ENdRNEmtSseZR_zl0A-1; Tue,
+ 05 Aug 2025 11:59:57 -0400
+X-MC-Unique: 8Jf-ENdRNEmtSseZR_zl0A-1
+X-Mimecast-MFC-AGG-ID: 8Jf-ENdRNEmtSseZR_zl0A_1754409596
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 032A51800446; Tue,  5 Aug 2025 15:59:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.80])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B04E1955E88; Tue,  5 Aug 2025 15:59:52 +0000 (UTC)
+Date: Tue, 5 Aug 2025 16:59:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH RFC] util/error.c: Print backtrace on error
+Message-ID: <aJIqdQSYXO4K6lCJ@redhat.com>
+References: <20250805-backtrace-v1-1-d189d09b1e92@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250805-backtrace-v1-1-d189d09b1e92@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,196 +87,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-08-05 at 07:09 +0200, Cédric Le Goater wrote:
-> Hello Glenn,
+On Tue, Aug 05, 2025 at 12:19:26PM +0300, Manos Pitsidianakis wrote:
+> Add a backtrace_on_error meson feature (enabled with
+> --enable-backtrace-on-error) that compiles system binaries with
+> -rdynamic option and prints a function backtrace on error to stderr.
 > 
-> +Harsh
+> Example output by adding an unconditional error_setg on error_abort in hw/arm/boot.c:
 > 
-> On 8/4/25 19:37, Miles Glenn wrote:
-> > On Sun, 2025-07-20 at 23:26 +0200, Cédric Le Goater wrote:
-> > > On 5/16/25 03:29, Nicholas Piggin wrote:
-> > > > On Fri May 16, 2025 at 1:36 AM AEST, Cédric Le Goater wrote:
-> > > > > On 5/12/25 05:10, Nicholas Piggin wrote:
-> > > > > > These changes gets the powernv xive2 to the point it is able to run
-> > > > > > PowerVM with good stability.
-> > > > > > 
-> > > > > > * Various bug fixes around lost interrupts particularly.
-> > > > > > * Major group interrupt work, in particular around redistributing
-> > > > > >      interrupts. Upstream group support is not in a complete or usable
-> > > > > >      state as it is.
-> > > > > > * Significant context push/pull improvements, particularly pool and
-> > > > > >      phys context handling was quite incomplete beyond trivial OPAL
-> > > > > >      case that pushes at boot.
-> > > > > > * Improved tracing and checking for unimp and guest error situations.
-> > > > > > * Various other missing feature support.
-> > > > > > 
-> > > > > > The ordering and grouping of patches in the series is not perfect,
-> > > > > > because it had been an ongoing development, and PowerVM only started
-> > > > > > to become stable toward the end. I did try to rearrange and improve
-> > > > > > things, but some were not worth rebasing cost (e.g., some of the
-> > > > > > pool/phys pull redistribution patches should have ideally been squashed
-> > > > > > or moved together), so please bear that in mind.  Suggestions for
-> > > > > > further rearranging the series are fine, but I might just find they are
-> > > > > > too much effort to be worthwhile.
-> > > > > > 
-> > > > > > Thanks,
-> > > > > > Nick
-> > > > > > 
-> > > > > > Glenn Miles (12):
-> > > > > >      ppc/xive2: Fix calculation of END queue sizes
-> > > > > >      ppc/xive2: Use fair irq target search algorithm
-> > > > > >      ppc/xive2: Fix irq preempted by lower priority group irq
-> > > > > >      ppc/xive2: Fix treatment of PIPR in CPPR update
-> > > > > >      pnv/xive2: Support ESB Escalation
-> > > > > >      ppc/xive2: add interrupt priority configuration flags
-> > > > > >      ppc/xive2: Support redistribution of group interrupts
-> > > > > >      ppc/xive: Add more interrupt notification tracing
-> > > > > >      ppc/xive2: Improve pool regs variable name
-> > > > > >      ppc/xive2: Implement "Ack OS IRQ to even report line" TIMA op
-> > > > > >      ppc/xive2: Redistribute group interrupt precluded by CPPR update
-> > > > > >      ppc/xive2: redistribute irqs for pool and phys ctx pull
-> > > > > > 
-> > > > > > Michael Kowal (4):
-> > > > > >      ppc/xive2: Remote VSDs need to match on forwarding address
-> > > > > >      ppc/xive2: Reset Generation Flipped bit on END Cache Watch
-> > > > > >      pnv/xive2: Print value in invalid register write logging
-> > > > > >      pnv/xive2: Permit valid writes to VC/PC Flush Control registers
-> > > > > > 
-> > > > > > Nicholas Piggin (34):
-> > > > > >      ppc/xive: Fix xive trace event output
-> > > > > >      ppc/xive: Report access size in XIVE TM operation error logs
-> > > > > >      ppc/xive2: fix context push calculation of IPB priority
-> > > > > >      ppc/xive: Fix PHYS NSR ring matching
-> > > > > >      ppc/xive2: Do not present group interrupt on OS-push if precluded by
-> > > > > >        CPPR
-> > > > > >      ppc/xive2: Set CPPR delivery should account for group priority
-> > > > > >      ppc/xive: tctx_notify should clear the precluded interrupt
-> > > > > >      ppc/xive: Explicitly zero NSR after accepting
-> > > > > >      ppc/xive: Move NSR decoding into helper functions
-> > > > > >      ppc/xive: Fix pulling pool and phys contexts
-> > > > > >      pnv/xive2: VC_ENDC_WATCH_SPEC regs should read back WATCH_FULL
-> > > > > >      ppc/xive: Change presenter .match_nvt to match not present
-> > > > > >      ppc/xive2: Redistribute group interrupt preempted by higher priority
-> > > > > >        interrupt
-> > > > > >      ppc/xive: Add xive_tctx_pipr_present() to present new interrupt
-> > > > > >      ppc/xive: Fix high prio group interrupt being preempted by low prio VP
-> > > > > >      ppc/xive: Split xive recompute from IPB function
-> > > > > >      ppc/xive: tctx signaling registers rework
-> > > > > >      ppc/xive: tctx_accept only lower irq line if an interrupt was
-> > > > > >        presented
-> > > > > >      ppc/xive: Add xive_tctx_pipr_set() helper function
-> > > > > >      ppc/xive2: split tctx presentation processing from set CPPR
-> > > > > >      ppc/xive2: Consolidate presentation processing in context push
-> > > > > >      ppc/xive2: Avoid needless interrupt re-check on CPPR set
-> > > > > >      ppc/xive: Assert group interrupts were redistributed
-> > > > > >      ppc/xive2: implement NVP context save restore for POOL ring
-> > > > > >      ppc/xive2: Prevent pulling of pool context losing phys interrupt
-> > > > > >      ppc/xive: Redistribute phys after pulling of pool context
-> > > > > >      ppc/xive: Check TIMA operations validity
-> > > > > >      ppc/xive2: Implement pool context push TIMA op
-> > > > > >      ppc/xive2: redistribute group interrupts on context push
-> > > > > >      ppc/xive2: Implement set_os_pending TIMA op
-> > > > > >      ppc/xive2: Implement POOL LGS push TIMA op
-> > > > > >      ppc/xive2: Implement PHYS ring VP push TIMA op
-> > > > > >      ppc/xive: Split need_resend into restore_nvp
-> > > > > >      ppc/xive2: Enable lower level contexts on VP push
-> > > > > > 
-> > > > > >     hw/intc/pnv_xive.c          |  16 +-
-> > > > > >     hw/intc/pnv_xive2.c         | 139 +++++--
-> > > > > >     hw/intc/pnv_xive2_regs.h    |   1 +
-> > > > > >     hw/intc/spapr_xive.c        |  18 +-
-> > > > > >     hw/intc/trace-events        |  12 +-
-> > > > > >     hw/intc/xive.c              | 555 ++++++++++++++++++----------
-> > > > > >     hw/intc/xive2.c             | 717 +++++++++++++++++++++++++++---------
-> > > > > >     hw/ppc/pnv.c                |  48 +--
-> > > > > >     hw/ppc/spapr.c              |  21 +-
-> > > > > >     include/hw/ppc/xive.h       |  66 +++-
-> > > > > >     include/hw/ppc/xive2.h      |  22 +-
-> > > > > >     include/hw/ppc/xive2_regs.h |  22 +-
-> > > > > >     12 files changed, 1145 insertions(+), 492 deletions(-)
-> > > > > > 
-> > > > > 
-> > > > > I am impressed :) and glad that you are still taking care of XIVE.
-> > > > > 
-> > > > > I suggest adding new names under the XIVE entry in the MAINTAINERS file.
-> > > > 
-> > > > Yeah it's good to see. They are building a lot more cool stuff with
-> > > > powernv at the moment, hopefully almost all should get upstreamed
-> > > > eventually.
-> > > > 
-> > > > I will try to convince them to add MAINTAINER entries :)
-> > > > 
-> > > > Thanks,
-> > > > Nick
-> > > > 
-> > > 
-> > > This is a major update for XIVE and, since I am not sure anyone
-> > > is going to send a PR for QEMU 10.1, I am volunteering to do
-> > > it again on monday, once and only for these fixes.
-> > > 
-> > > We should clarify in the next cycle who is charge of ppc. IMO,
-> > > If we don't have maintainers, we should orphan all non-pseries
-> > > PPC components. I can send a maintainer update on this as soon
-> > > as the QEMU 10.2 cycle opens.
-> > > 
-> > > 
-> > > Thanks,
-> > > 
-> > > C.
-> > > 
-> > 
-> > Cédric,
-> > 
-> > Thanks for doing the PR for these XIVE changes!  It sounds like if we
-> > want to continue having our XIVE changes upstreamed we will need
-> > someone on our IBM QEMU development team to volunteer as a maintainer.
+>   ./qemu-system-aarch64(+0x13b4a2c) [0x55d015406a2c]
+>   ./qemu-system-aarch64(+0x13b4abd) [0x55d015406abd]
+>   ./qemu-system-aarch64(+0x13b4d49) [0x55d015406d49]
+>   ./qemu-system-aarch64(error_setg_internal+0xe7) [0x55d015406f62]
+>   ./qemu-system-aarch64(arm_load_dtb+0xbf) [0x55d014d7686f]
+>   ./qemu-system-aarch64(+0xd2f1d8) [0x55d014d811d8]
+>   ./qemu-system-aarch64(notifier_list_notify+0x44) [0x55d01540a282]
+>   ./qemu-system-aarch64(qdev_machine_creation_done+0xa0) [0x55d01476ae17]
+>   ./qemu-system-aarch64(+0xaa691e) [0x55d014af891e]
+>   ./qemu-system-aarch64(qmp_x_exit_preconfig+0x72) [0x55d014af8a5d]
+>   ./qemu-system-aarch64(qemu_init+0x2a89) [0x55d014afb657]
+>   ./qemu-system-aarch64(main+0x2f) [0x55d01521e836]
+>   /lib/x86_64-linux-gnu/libc.so.6(+0x29ca8) [0x7f3033d67ca8]
+>   /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x85) [0x7f3033d67d65]
+>   ./qemu-system-aarch64(_start+0x21) [0x55d0146814f1]
 > 
-> We did some updates recently :
-> 
->    https://lore.kernel.org/qemu-devel/20250724133126.1695824-1-clg@redhat.com/
-> 
-> Given your knowledge of IBM Power servers, your relationships with
-> the hardware team, and the quality of your work within QEMU, you
-> should add your self as a Reviewer of PowerNV and XIVE (Needs a
-> Maintainer also). I can merge that for QEMU 10.1.
-> 
-> > Does becoming a maintainer still require physically attending a key
-> > signing party at KVM Forum?
-> 
-> To be able to send PRs, it is strongly recommended to have your
-> key signed by the people pulling in your changes. Being physically
-> present is always better to verify the identity of a person.
-> 
-> But that's not all, it's a chain of trust and a community involvement
-> in all areas. It takes time.
-> 
-> Btw, in series [1], there are several patches tagged as Fixes,
-> could you please reply to Michael [2] regarding which could be
-> backported to the stable branches ?
-> 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> [1] https://lore.kernel.org/qemu-devel/20250512031100.439842-1-npiggin@gmail.com/
-> [2] https://lore.kernel.org/qemu-devel/10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru/
-> 
+>   Unexpected error in arm_load_dtb() at ../hw/arm/boot.c:529:
 
-Thanks Cédric,
+From an end-user POV, IMHO the error messages need to be good enough
+that such backtraces aren't needed to understand the problem. For
+developers, GDB can give much better backtraces (file+line numbers,
+plus parameters plus local variables) in the ideally rare cases that
+the error message alone has insufficient info. So I'm not really
+convinced that programs (in general, not just QEMU) should try to
+create backtraces themselves.
 
-I'll go ahead and add my name as a reviewer for powernv and xive.  As
-for a maintainer for the XIVE code, I would like to nominate Mike Kowal
-for that role.  And, yes, I will respond to Michael Tokarev's question
-regarding backporting fixes.
-
-Thanks,
-
-Glenn
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
