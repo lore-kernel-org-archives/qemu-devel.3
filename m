@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92FACC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 18:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C24FC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 18:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujML9-0002cL-9m; Tue, 05 Aug 2025 14:24:47 -0400
+	id 1ujMMh-0003Nc-Ak; Tue, 05 Aug 2025 14:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujML5-0002br-EP
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 14:24:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujMMZ-0003LH-OP; Tue, 05 Aug 2025 14:26:15 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujML2-0003VV-EK
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 14:24:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754418278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=K2C5HNxpTK1ZwGnmlTSnv6GzVbm/PygPvyRzbewSb18=;
- b=KpaFe0IqkMzOLlojQooWNfFv4+bPOmCZzOKvfYpredSJWYRpfhrFHWpVs6klbibHWKFeOT
- sYR9e65AFh/AEwGXkDi3LsjjN1+Mob6KUi270g4CIa8DsebWMocbp9Et0QSOUMj3Bpddsy
- P81pc4fCIFOIuW3BYdhJ8vadc0wgJQM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-Z07dgHveOg2aWICGkIrknw-1; Tue,
- 05 Aug 2025 14:24:37 -0400
-X-MC-Unique: Z07dgHveOg2aWICGkIrknw-1
-X-Mimecast-MFC-AGG-ID: Z07dgHveOg2aWICGkIrknw_1754418276
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C2EB1800873; Tue,  5 Aug 2025 18:24:36 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.80])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8CE0C1955E88; Tue,  5 Aug 2025 18:24:33 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] meson: remove 'gnutls-bug1717-workaround' for migration TLS
- crashes
-Date: Tue,  5 Aug 2025 19:24:31 +0100
-Message-ID: <20250805182431.504158-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujMMX-0003o9-9q; Tue, 05 Aug 2025 14:26:15 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 15EE013EA5E;
+ Tue, 05 Aug 2025 21:25:47 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A1D3257979;
+ Tue,  5 Aug 2025 21:26:09 +0300 (MSK)
+Message-ID: <465b9479-7075-4329-a6ed-6d727feeee3a@tls.msk.ru>
+Date: Tue, 5 Aug 2025 21:26:09 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] qga: Fix ubsan warning
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250730072709.27077-1-thuth@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250730072709.27077-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,74 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The implementation of this workaround does not currently work, so
-remove the option entirely to avoid exposing it to users. The code
-will remain (temporarily dormant) to be fixed in the next release
-cycle.
+On 30.07.2025 10:27, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> When compiling QEMU with --enable-ubsan there is a undefined behavior
+> warning when running "make check":
+> 
+>   .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
+>   #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
+> 
+> Fix it by avoiding the additional pointer variable here and use an
+> "offset" integer variable instead.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- meson.build                   | 6 +++---
- meson_options.txt             | 2 --
- scripts/meson-buildoptions.sh | 5 -----
- 3 files changed, 3 insertions(+), 10 deletions(-)
+It's a nice cleanup too.
 
-diff --git a/meson.build b/meson.build
-index e53cd5b413..a7b3c683ce 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1836,11 +1836,11 @@ if get_option('gnutls').enabled() or (get_option('gnutls').auto() and have_syste
-                         required: get_option('gnutls'))
-   endif
- 
--  if gnutls.found() and not get_option('gnutls-bug1717-workaround').disabled()
-+  #if gnutls.found() and not get_option('gnutls-bug1717-workaround').disabled()
-     # XXX: when bug 1717 is resolved, add logic to probe for
-     # the GNUTLS fixed version number to handle the 'auto' case
--    gnutls_bug1717_workaround = true
--  endif
-+  #  gnutls_bug1717_workaround = true
-+  #endif
- endif
- 
- # We prefer use of gnutls for crypto, unless the options
-diff --git a/meson_options.txt b/meson_options.txt
-index dd33530750..fff1521e58 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -174,8 +174,6 @@ option('libcbor', type : 'feature', value : 'auto',
-        description: 'libcbor support')
- option('gnutls', type : 'feature', value : 'auto',
-        description: 'GNUTLS cryptography support')
--option('gnutls-bug1717-workaround', type: 'feature', value : 'auto',
--       description: 'GNUTLS workaround for https://gitlab.com/gnutls/gnutls/-/issues/1717')
- option('nettle', type : 'feature', value : 'auto',
-        description: 'nettle cryptography support')
- option('gcrypt', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index d559e260ed..0ebe6bc52a 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -123,9 +123,6 @@ meson_options_help() {
-   printf "%s\n" '  gio             use libgio for D-Bus support'
-   printf "%s\n" '  glusterfs       Glusterfs block device driver'
-   printf "%s\n" '  gnutls          GNUTLS cryptography support'
--  printf "%s\n" '  gnutls-bug1717-workaround'
--  printf "%s\n" '                  GNUTLS workaround for'
--  printf "%s\n" '                  https://gitlab.com/gnutls/gnutls/-/issues/1717'
-   printf "%s\n" '  gtk             GTK+ user interface'
-   printf "%s\n" '  gtk-clipboard   clipboard support for the gtk UI (EXPERIMENTAL, MAY HANG)'
-   printf "%s\n" '  guest-agent     Build QEMU Guest Agent'
-@@ -334,8 +331,6 @@ _meson_option_parse() {
-     --disable-glusterfs) printf "%s" -Dglusterfs=disabled ;;
-     --enable-gnutls) printf "%s" -Dgnutls=enabled ;;
-     --disable-gnutls) printf "%s" -Dgnutls=disabled ;;
--    --enable-gnutls-bug1717-workaround) printf "%s" -Dgnutls-bug1717-workaround=enabled ;;
--    --disable-gnutls-bug1717-workaround) printf "%s" -Dgnutls-bug1717-workaround=disabled ;;
-     --enable-gtk) printf "%s" -Dgtk=enabled ;;
-     --disable-gtk) printf "%s" -Dgtk=disabled ;;
-     --enable-gtk-clipboard) printf "%s" -Dgtk_clipboard=enabled ;;
--- 
-2.50.1
+Thanks,  queued.
+
+/mjt
 
 
