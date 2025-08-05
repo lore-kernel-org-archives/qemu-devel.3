@@ -4,84 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA57C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D885C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujKUV-0006WM-2Q; Tue, 05 Aug 2025 12:26:20 -0400
+	id 1ujKVP-0007Zt-ME; Tue, 05 Aug 2025 12:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ujKUL-0006SZ-W6
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:26:11 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ujKUK-0004ZY-CQ
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:26:09 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-615622ed677so7945764a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 09:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754411167; x=1755015967; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ctDD4ojVMW3xLQbxQJExtkZU5MhZUig20HBQ012Ftbc=;
- b=hRXPqPIKQyJ7s6tC6Rw0zpaOrNgVscctjBdb459TF7up2l5V6NrC6o5yu5rizDEeBa
- /9xplrn6CnqWDO5tk+XToqJpp5Kfa7SAuvDZCxPoaYjTDdex6DWnkrFpO/msSQIhXABD
- cRbRn4JgbqzE4ku4IWUsASIL3yNErJI2otHlcBYZmBgNr3HEGcD7RGyb6SVu2ut115NP
- yu700KQTqMdxqbsuIojeSd9weVtPpx7JoxlILFgolLlFvLW2jZaB+27cgtzYbIzmfHO+
- Rrq7eFe9oFh5jDAB8fZbiVGGZu5ZAwRXfQD58pSIHXCnv9izlWWDuJPE4elP3Kg1boUg
- nj1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754411167; x=1755015967;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ctDD4ojVMW3xLQbxQJExtkZU5MhZUig20HBQ012Ftbc=;
- b=LCViSU5G7uliENltcTxTgVd9JoDRjngbjQAZ+VIXQFZXjuzNe6y1nHzwaxTzf+kKji
- le3NfYAifjoPoqfFedeqwbBt6edrVUU79Dde6iJf5YC10ncgpVtmAnNR7XBryrk62v+j
- j4yJghLd1TJ1wlamM21PvBczxeHgzpcRWCdPFZVKObC0jckbTdC0BgNdzU1Mg93jm+se
- c2jj7HmEJvppy1gdUnaL/56pahVs77ZPArLp+t/TkpmCAJ9W5JUUuH56RGvtHDH9rY9W
- sHRLPAVACya9WQkXsw1mXoM5fqdvg1F3WTLiromjs57encWv7uDdnI1vYfQZN2sRuGpo
- akeg==
-X-Gm-Message-State: AOJu0YzB+pdCOoZkqxm9DFjWGGScX3ggzHVBW/8pv3uzN+dpc1AXJaxN
- ojsrCypGWu/+R8Qwyd9To8B8+GfownkmWI8BQ/XZfxI7L/VULUWRIUDzzN1HqksfoCP+iMU8TqY
- +KZKVb5895fpAPAg8PZRUg0Za12c46x+CtwA8GB2kPlWCGcI6IyD1LVo=
-X-Gm-Gg: ASbGncsOBfUYLZPEcPW0cyv89u5gAohYWxK4dVNER/26rtuWcDR1HtZae5NTz/K2Fi6
- dau3UN7lChQdwoOXkyKE1O8QD/KDmlYxfjfi/z+h9N+gQu8vKfY/6bhJoNuProLMy64x/F9QTEp
- fP5mHcYvhoFUJuFucZd9jf3vQLmuxlm9wdozb2rXQ7/VGq9Xf7CUptt72eCV0TP+KH/pTHjKbrT
- VBrE7tI
-X-Google-Smtp-Source: AGHT+IH34Xz+fR1TGDGWy5pZIgdFMck3gAUoadnLBvlwrVMYdNBeZ0JjOGaCkivCWqyfkahbZBOslvqPmoUooGTPdQc=
-X-Received: by 2002:a05:6402:2790:b0:615:cc03:e6a2 with SMTP id
- 4fb4d7f45d1cf-615e6ebec77mr11865486a12.1.1754411166572; Tue, 05 Aug 2025
- 09:26:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250804-rust_trace-v1-0-b20cc16b0c51@linaro.org>
- <aJIrpoEhrl7aLBMg@redhat.com>
-In-Reply-To: <aJIrpoEhrl7aLBMg@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 5 Aug 2025 19:25:39 +0300
-X-Gm-Features: Ac12FXx8E0gmSgkarH0Hjtyobz0jylMHi8y9z6WEMl66GS6SogknlrgbBxBH2BY
-Message-ID: <CAAjaMXa6ManykYJJk--vNZT7oeBW9UR2v6WixaaQ8LUCSjy9Ug@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/5] rust: implement tracing
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- alex.bennee@linaro.org
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujKVF-0007T3-1U; Tue, 05 Aug 2025 12:27:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujKVD-0004db-Ae; Tue, 05 Aug 2025 12:27:04 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575CZRVC029457;
+ Tue, 5 Aug 2025 16:27:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=uJ/wDQRn2lPqPv3H+R7GujvJh3un+uEchlcukuaLbXo=; b=LiTO5+/+P7lA
+ iQuIt97sc6OfcppeY+EHDXElucQ3m3AFRLdfkk7ROeCyw5wPZ9q9h/tb5jzOht5d
+ KdLpKeBU8ln1GMF+fmBhSn1Okinw/+AEvup2TLBSWdRhJhdxsKd9NIYFn10wjjIj
+ n9e+Q8wAXI0dcl/6Fu3lTx7VUMHEMzlLihA/dTawcpTDxFitE0I8YKE+n5CGwAw/
+ SdQFkThIE/mz12aNxBEsW6N6s41orpsPm+ngOXqNBSOYGHe0TTTh3kkmh4I04gSb
+ P0SiF3By81ZQkFVXVPYfGQZ+COXwdTMIQyNBR/L7FDXzQUDORW+YgnKUCKfNAv43
+ OKG126L1cA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 489ab3qmkr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 16:27:01 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 575GLjo9025262;
+ Tue, 5 Aug 2025 16:27:01 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 489ab3qmkq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 16:27:01 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 575E84Ef006905;
+ Tue, 5 Aug 2025 16:27:00 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 489xgmk52r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Aug 2025 16:27:00 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 575GQwGT31130328
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Aug 2025 16:26:59 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B7FD158050;
+ Tue,  5 Aug 2025 16:26:58 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E143158045;
+ Tue,  5 Aug 2025 16:26:57 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Aug 2025 16:26:57 +0000 (GMT)
+Message-ID: <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+Subject: Re: [PULL 00/50] ppc queue
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Michael Tokarev <mjt@tls.msk.ru>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Date: Tue, 05 Aug 2025 11:26:57 -0500
+In-Reply-To: <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+References: <20250721162233.686837-1-clg@redhat.com>
+ <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
+ <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
+ <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Z+jsHGRA c=1 sm=1 tr=0 ts=689230d5 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=ySPgdnKajjii0QiPevkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: cP2qBcW5DNDSlpzeWz86yR6hh35Bn67u
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExMyBTYWx0ZWRfXzwYsnfSwdnwO
+ cAZLleZ1QTUGHEcwVI5qtyIE2NKdvkQt+rt7gTSnPPP2z0pYj0GtIMmMPqGiaGweM2L8SwE2QOc
+ AjQCZfJmH1AGuJSGUFpc1xGRTYjfSBAehS8LnlC8HFnHTS+1GL8rsDNZ0Cx9BlVGi+dwTS8hmFJ
+ tYggxliiriT42Zm+lsyt82nOlAoIq7u/MZo7QootOivaPKpJDIzPKb0oP1S8t/AS/DxL2acXW9k
+ vcCqerciVWL0YmOeA5+Q406CEq7A70Q+5VpI+aEcY47r5V+XD7DIQRi1R3lJXbas4iD3P48k8rk
+ rqJ+LsT4vCaF0tOUIjiQRHPGkQMuHmDqQ6Tg2XfnFMI10hVK8nKzqgjNud3vbvLX8PBgneUsjlN
+ AgEM/DF13f4+aPelJiicAF1FDUKw2boX4DxqhKyZqVemYch9G3As7GMNiz3YsTqTG39wvw2+
+X-Proofpoint-GUID: Maq62WN5wkdqcrUFs3SvrHpPd2K5EN3K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 mlxlogscore=634 adultscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2508050113
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,39 +130,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 5, 2025 at 7:05=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Mon, Aug 04, 2025 at 04:47:13PM +0300, Manos Pitsidianakis wrote:
-> > This RFC series contains some simple patches I've been sitting on for
-> > some months to allow tracing in rust devices in a similar matter to C,
-> > only it's done via a proc-macro codegen instead of using tracetool
-> > script or equivalent.
->
-> IIUC, this series is only emitting the traces events via the
-> qemu_log function, and so feels like it is missing the benefit
-> of tracing, vs the traditional logging framework.
->
-> In our RHEL & Fedora distro builds we disable the log backend
-> and enable dtrace, so that we have fully dynamic tracing and
-> observability across the kernel, qemu, libvirt and other
-> components with dtrace integration.
+On Tue, 2025-07-22 at 17:25 +0300, Michael Tokarev wrote:
+> On 22.07.2025 16:37, Cédric Le Goater wrote:
+> > + Glenn, Michael, Caleb, Gautam
+> > 
+> > On 7/22/25 13:44, Michael Tokarev wrote:
+> > > 21.07.2025 19:21, Cédric Le Goater wrote:
+> > > 
+> > > > ----------------------------------------------------------------
+> > > > ppc/xive queue:
+> > > > 
+> > > > * Various bug fixes around lost interrupts particularly.
+> > > > * Major group interrupt work, in particular around redistributing
+> > > >    interrupts. Upstream group support is not in a complete or usable
+> > > >    state as it is.
+> > > > * Significant context push/pull improvements, particularly pool and
+> > > >    phys context handling was quite incomplete beyond trivial OPAL
+> > > >    case that pushes at boot.
+> > > > * Improved tracing and checking for unimp and guest error situations.
+> > > > * Various other missing feature support.
+> > > 
+> > > Is there anything in there which should be picked up for
+> > > stable qemu branches?
+> > 
+> > May be the IBM simulation team can say ?
+> > I think this would also require some testing before applying.
+> > 
+> > Which stable branch are you targeting ? 7.2 to 10.0 ?
+> 
+> There are currently 2 active stable branches, 7.2 and 10.0.
+> Both are supposed to be long-term maintenance.  I think 7.2
+> can be left behind already.
+> 
+> Thanks,
+> 
+> /mjt
 
-Hi Daniel,
+Michael T.,
 
-Thanks for the insight! Do you have any points where I should look at
-the trace implementation for how the different backends are supported?
+All of the XIVE fixes/changes originating from myself were made in an
+effort to get PowerVM firmware running on PowerNV with minimal testing
+of OPAL firmware.  However, even with those fixes, running PowerVM on
+PowerNV is still pretty unstable.  While backporting these fixes would
+likely increase the stability of running PowerVM on PowerNV, I do think
+it could pose significant risk to the stability of running OPAL on
+PowerNV.  With that in mind, I think it's probably best if we did not
+backport any of my own XIVE changes.
 
-So I think there's already work in progress to support proper tracing
-for Rust, I only sent this as a temporary fixup to provide some kind
-of parity between C and Rust implementations until a proper, better
-solution is available that can replace it.
+Nick, can you respond regarding the changes you made?
+
+Thanks,
+
+Glenn
 
 
---=20
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+
+
+
 
