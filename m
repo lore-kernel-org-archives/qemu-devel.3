@@ -4,84 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A84FDC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 17:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B695CC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 17:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujLO3-0001xG-6C; Tue, 05 Aug 2025 13:23:43 -0400
+	id 1ujLVu-0008Bu-Uh; Tue, 05 Aug 2025 13:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujLNi-0001v3-B8
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 13:23:25 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujLVm-0008Af-CW
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 13:31:43 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujLNg-0002UP-EP
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 13:23:21 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-455b00339c8so37493085e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 10:23:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujLVk-0004qY-7x
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 13:31:41 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b78d337dd9so3060889f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 10:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754414598; x=1755019398; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IZv9bGcWL6z0iBVfwUWSebX5ZqCCCDM9v3eDId9H3OU=;
- b=Cfdgsw2QSNRDkTFPfJsWDQ8djaZ53LU7JybVkFIaMZAMZn5xg7Vu1K7mm83sqlfvzL
- +Q0QQYRZPc5OUNwJh+5j2bowYqpC1NqXMlSRhG8ydUXPnbzAxSvuF6C4GL4MJdQ++Dtb
- sDuzlkZu4bOlIQKy9bb3SRoCPHULo9VqLZXkiktNq/WvQcID6URv1ir6mMcVrLGrOe2j
- gRF9hRD3JUyzpjSLPCB9pTTV/uKp/jqkvrBO9zrCVORCBIox4ShlC38xOdkCybNcDC9C
- kmi6V3PWE2ByK4xfj0mZJSXov3jXGFLHctqU3HMtossq/dlN/I/6wbDw4I62BpBzIxzf
- i30Q==
+ d=linaro.org; s=google; t=1754415097; x=1755019897; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qtVm36dKrnjFartRX0+r1x5lteIAiCuP/BwL/1JFMeo=;
+ b=IMMFs+Esl3UNo50XHbsDfGWJjyXDv3mm2LuhVWJ/afEFhcvoSYG7wSnhG896ymEqQa
+ bQhQg7/zb8xnHYYuGmQ8wklFfYBRt+9OALhCb2EvpZamgaJmqJblxnF7DNPlK0jAtqob
+ 0aGKx4O+lDFtdOdFhdn34y1szrTliJ2qt2C2jrfR4MISVTm8+iKeUvsEaXuwSu8h8a89
+ TbFG6sO1EuXz9/Yr2mTXbQC+pxd5/W4RSmbLlq+rnkOR5EX4Gpj5dV6ac8pWukxO2NN3
+ fJjXEE9ttrnLj14OKE7kNX9k7sTZg6bmzehR4Uvt0KpPVMUWuZHGJPdKEUXOyfJ0JgO4
+ mVbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754414598; x=1755019398;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IZv9bGcWL6z0iBVfwUWSebX5ZqCCCDM9v3eDId9H3OU=;
- b=EMnDXuPWif/9H0oS1lTbof34Cg++kX6Gs7zrwH+Ngi0bkXZSWG8NtYJdmwgqUEU260
- STCF5/HpRhANiRxhpzwTK+Uw4W/bnCO2WcWadCBd090FVfdi831XdDNMj5fjgT6xM+m/
- RcQIaBcdrIZHWsOPNwOpiNh6PZf52PlPZMS2By7/XcsS47vOtThK84cSyK1rdUVPKCHI
- mJJTLGMXwK3TgYPeGkJZCuy6f/YApWi2iLNvewmegCSILMF52tx+vok9SVzJeRi9JXMK
- TFwZGxqxn6YqBCaRLfh5EMJaIKJaLa/AKFtceGxyePw0kPXbh05+ksnDf5pIBrOOcgdh
- AyLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUPJdUSLrFJ2gQJVDCYmdwJJI0k/t2ujJLpjvwFycuWmWZgiLSnic9wqxSdiPTyTpRGSxCwE9FCeuDH@nongnu.org
-X-Gm-Message-State: AOJu0Yxa5koX57LBZHs5qg8ApS/sdS93MgDje7NENQX40mvzik0hdlKU
- lPObVCuD954sMt5Z68NT1aXtLyr1ErmaXyLhV3XBxGRqIOKjuC0WWMqeyTmvjqXAD0Y=
-X-Gm-Gg: ASbGncsyvjX/Zt+bVQD9/ey0iAg0R7juWj755ytmh5L/poBar8t3j7bLUit7dUjzflT
- yXty5FIVCIaWjIN7jzmc5AD22rO5im4rJ4HolEWvAGmsPbhbzp6Oh7bNJ3RAIRJ9ch7y6rcm47X
- tJJ9qH2jubSGQaz0bVJBrKvBEjbDV7hTbp/DcT3ruKIy3SO+m1HB73GlccYUSu5031gs+ni7Z3L
- zHLqpL4b59E2SImXsSj6q7xfTI6VrZDHtFET5nnnbLur2M+XaXC7VXA8bqdkXpjG4/m9klILZ/n
- 6RStKlEHKfpxw7i30svVqyzHTlj78WA2d0kfjhFnPqBF8eyHzG0HCLjc6iUCfd6pD/4L4IOQ1a6
- MLbgWI5OaRkWqHCsq5wEN7TA9JQ9t8i3JQCNIqVrP9EAsC61SRNmBWXJK/TyKEYD2dw==
-X-Google-Smtp-Source: AGHT+IHai8LtRlHPcDbYxa0cYWufwqfOPGunSJuvtV1fAs0J7QAxLeW55yH7q/BSN+OUoLhdZ12jAw==
-X-Received: by 2002:a05:600c:35c8:b0:459:da89:b06 with SMTP id
- 5b1f17b1804b1-459da890c07mr79727205e9.16.1754414598436; 
- Tue, 05 Aug 2025 10:23:18 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1754415097; x=1755019897;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qtVm36dKrnjFartRX0+r1x5lteIAiCuP/BwL/1JFMeo=;
+ b=LWQvtuUjfSEZSYQSZgbJx7iLHSul2Sm0kcspe8knKWRvprtnIQS1+BmHRfOmOSyysJ
+ /Xo8pEzWET0O0m3LjtGqKf/yBWiSIQMOW9SJzxVuCnAjjjrWF9q9o7ptMyRNrqQhLiab
+ OlXVg1LR6bLZCGDYRezLqLdAyudCe/n0j4WaUsbctPyx0ZBevE2chbiVhH77MNrqW+Ck
+ JC5zLqV3r5vZADllPnaOSHTgSmTUBiczBa+kTWV5gOU2rfKNIV+fZEKqH8h+qUX+Hxrw
+ E1CV+U/RAV41BDJsLb9GV2J6xZBDyn7MvOi4gJrqhemV9kKpfmMraNS42bpG5XaITp6F
+ Z8qA==
+X-Gm-Message-State: AOJu0YxAF44RUC6DNVrQ7a/BHikM/oUs1SQ5e6PJe0ryi+UX8YgSyxLw
+ zZhI90LUB62ZE9UKAO3gxRarpHre4P7F0DqLE2R69WD79txioVHzwSDqv5XJS82ePK7dJezN8Lu
+ bPwGh
+X-Gm-Gg: ASbGncvWQlQGTMX4PTCdmuc4gSAiMrwjPV7Ai85t0zHWsTMve68AHPW1jjZhtIkw51W
+ 9Or09ed5qX9gV/pEjq1C+icsskvzsh1Qh3uhLW9akL3m7zd5xwE1ISztj+4W29QVEmHvk5k9jRv
+ 9T9IEQGrv4q6QOrt1wcVo18Z4CxTCmIXHzXQFYwnb6EkHs2QS41JEjCFB1lOJJgzfqPUIvor5CV
+ Oz2QBcVDR+Q3PrwE2P9dIFkNsBY8/AeFHlGc/uL4KgiIJrhqWRRvDPja9KP+S2co1z7GMzgwKwm
+ yvOb8YBxYpI90XXzepKDBDxlE6EEbbvlLNdVTgShlFEuvGyNIx2SeYYDVHTJYMk0v6SnpB4ZIhZ
+ 8WNYLNHN/BA9GB988qN5yreduA0BpfOKln6My3Uof15Ye1GXcjbbqeEGkNM06Z6zI8sPSmENZ
+X-Google-Smtp-Source: AGHT+IG+qhCr+RvwQjhMB1OqLqwhrW5gFplrVLSSX3yhHPlW3vtg2fXXPiJ2rIHL2sMlrhxgbMmR7g==
+X-Received: by 2002:a05:6000:420d:b0:3a4:f6ba:51da with SMTP id
+ ffacd0b85a97d-3b8d9470777mr11559139f8f.15.1754415096773; 
+ Tue, 05 Aug 2025 10:31:36 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458953cfd10sm274257275e9.21.2025.08.05.10.23.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Aug 2025 10:23:17 -0700 (PDT)
-Message-ID: <7893945e-6287-4f32-9e93-f28c39c7bdc8@linaro.org>
-Date: Tue, 5 Aug 2025 19:23:16 +0200
+ ffacd0b85a97d-3b8e009e465sm10683226f8f.43.2025.08.05.10.31.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 05 Aug 2025 10:31:36 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/13] Misc HW patches for 2025-08-05
+Date: Tue,  5 Aug 2025 19:31:21 +0200
+Message-ID: <20250805173135.38045-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1] tests/qemu-iotests/tests/mirror-sparse: skip if
- O_DIRECT is not supported
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-trivial@nongnu.org
-References: <20250801122850.27632-1-mjt@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250801122850.27632-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,53 +96,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/25 14:28, Michael Tokarev wrote:
-> This test uses cache.direct=true, but does not check if O_DIRECT
-> is supported by the underlying filesystem, and fails, for example,
-> on a tmpfs (which is rather common on various auto-builders, in CI,
-> etc).
-> 
-> Fix this by using _require_o_direct.
-> 
-> This example shows where our testing framework is significantly
-> lacking.  In this test, qemu produces an error message on stderr
-> at startup, because it can't use O_DIRECT mode.  But this error
-> message is not shown anywhere at all, even when running this test
-> separately outside of meson framework, - stderr is completely
-> hidden, and the only error we're getting is
-> 
->   +Timeout waiting for capabilities on handle 0
-> 
-> so it's rather painful to find what the actual error is.  I think
-> that besides this change, we should also change the testing framework
-> to show stderr at least in case of test failure, and especially when
-> the failure occurs at the very beginning when we're checking for
-> sanity.
-> 
-> Fixes: c0ddcb2cbc146e "tests: Add iotest mirror-sparse for recent patches"
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   tests/qemu-iotests/tests/mirror-sparse | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
-> index cfcaa600ab..19843a622c 100755
-> --- a/tests/qemu-iotests/tests/mirror-sparse
-> +++ b/tests/qemu-iotests/tests/mirror-sparse
-> @@ -41,6 +41,7 @@ _supported_fmt qcow2 raw  # Format of the source. dst is always raw file
->   _supported_proto file
->   _supported_os Linux
->   _require_disk_usage
-> +_require_o_direct
+The following changes since commit a41280fd5b94c49089f7631c6fa8bb9c308b7962:
 
-Could the correct use be:
+  Merge tag 'pull-aspeed-20250804' of https://github.com/legoater/qemu into staging (2025-08-04 08:57:07 -0400)
 
-   _supported_cache_modes none directsync
+are available in the Git repository at:
 
-?
+  https://github.com/philmd/qemu.git tags/hw-misc-20250805
 
->   
->   echo
->   echo "=== Initial image setup ==="
+for you to fetch changes up to eb013cd6a11951a8d76e737e9f6e89c96b059b48:
+
+  hw/i386/microvm: Explicitly select ACPI_PCI (2025-08-05 17:30:45 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Fix SD cards wired in SPI mode
+- Fix microvm-only build by selecting Kconfig ACPI_PCI
+- Fix legacy Intel SMT info removing 'x-vendor-cpuid-only-v2' property check
+
+----------------------------------------------------------------
+
+Eric Auger (1):
+  hw/i386/microvm: Explicitly select ACPI_PCI
+
+Philippe Mathieu-Daudé (11):
+  hw/sd/sdcard: Do not ignore errors in sd_cmd_to_sendingdata()
+  hw/sd/sdcard: Factor sd_response_size() out
+  hw/sd/sdbus: Provide buffer size to sdbus_do_command()
+  hw/sd/sdcard: Fill SPI response bits in card code
+  hw/sd/sdcard: Implement SPI R2 return value
+  hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode
+  hw/sd/sdcard: Allow using SWITCH_FUNCTION in more SPI states
+  hw/sd/sdcard: Factor spi_cmd_SEND_CxD() out
+  hw/sd/sdcard: Disable checking STBY mode in SPI SEND_CSD/CID
+  hw/sd/sdcard: Remove SDState::mode field
+  tests/functional: Test SD cards in SPI mode (using sifive_u machine)
+
+Zhao Liu (1):
+  target/i386/cpu: Move addressable ID encoding out of compat property
+    in CPUID[0x1]
+
+ MAINTAINERS                               |   1 +
+ include/hw/sd/sd.h                        |  23 ++-
+ hw/sd/allwinner-sdhost.c                  |   7 +-
+ hw/sd/bcm2835_sdhost.c                    |   7 +-
+ hw/sd/core.c                              |   5 +-
+ hw/sd/omap_mmc.c                          |   5 +-
+ hw/sd/pl181.c                             |   6 +-
+ hw/sd/sd.c                                | 198 ++++++++++++++++------
+ hw/sd/sdhci.c                             |   6 +-
+ hw/sd/ssi-sd.c                            | 100 ++---------
+ target/i386/cpu.c                         |   3 +-
+ hw/i386/Kconfig                           |   1 +
+ hw/sd/trace-events                        |   4 +-
+ tests/functional/meson.build              |   1 +
+ tests/functional/test_riscv64_sifive_u.py |  51 ++++++
+ 15 files changed, 251 insertions(+), 167 deletions(-)
+ create mode 100755 tests/functional/test_riscv64_sifive_u.py
+
+-- 
+2.49.0
 
 
