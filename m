@@ -4,123 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB0EC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5807C87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujJks-00038E-Ja; Tue, 05 Aug 2025 11:39:10 -0400
+	id 1ujJl9-0003Yi-2C; Tue, 05 Aug 2025 11:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujJas-000466-Bq
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:28:55 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujJbp-0004Md-6a
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:29:49 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujJao-0000Gu-Hi
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:28:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0F0A81FB91;
- Tue,  5 Aug 2025 15:28:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1754407722; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
- b=RXGcdAzeqTCPpWBZ5nt0fPBZtEDdiiSZvpGKh5pUW6OuM2kLJ1969JF0g1+qXDJKoA8lJ7
- 7y1BkppqzCzHWen06Wl3lIwZjs28FecbzbLk1WOsV54h4fevksdqKS2dakJvhjAIAMmfRL
- byFw+lIPff+LO9zgs7Wtzum/PE23HDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1754407722;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
- b=wUrbd5Qvc3hSa4eNM33XyYrScHazlfeUwe1DOHLlcAA8wK+JffYNqNfnW2SH6Btk5yUT2+
- pGHEw5w+wuuwwqDQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=RXGcdAze;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wUrbd5Qv
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1754407722; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
- b=RXGcdAzeqTCPpWBZ5nt0fPBZtEDdiiSZvpGKh5pUW6OuM2kLJ1969JF0g1+qXDJKoA8lJ7
- 7y1BkppqzCzHWen06Wl3lIwZjs28FecbzbLk1WOsV54h4fevksdqKS2dakJvhjAIAMmfRL
- byFw+lIPff+LO9zgs7Wtzum/PE23HDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1754407722;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
- b=wUrbd5Qvc3hSa4eNM33XyYrScHazlfeUwe1DOHLlcAA8wK+JffYNqNfnW2SH6Btk5yUT2+
- pGHEw5w+wuuwwqDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 860CE13AA8;
- Tue,  5 Aug 2025 15:28:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1NEfEikjkmikawAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 Aug 2025 15:28:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org, Peter Xu
- <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
- functional
-In-Reply-To: <aJISp1UvPCwwXyPf@redhat.com>
-References: <20250801170212.54409-1-berrange@redhat.com>
- <d5xctfzcrtbanvkndamonxgqo3tc5nejhyrvh54m3y5bhg4cms@ue7siue2yw7o>
- <87jz3i3n0u.fsf@suse.de> <aJHYSwGXTOF4o00n@redhat.com>
- <87h5yl3mt2.fsf@suse.de> <aJISp1UvPCwwXyPf@redhat.com>
-Date: Tue, 05 Aug 2025 12:28:38 -0300
-Message-ID: <87a54d3hzt.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujJbn-0000Po-6F
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:29:48 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3b786421e36so3263048f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 08:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754407779; x=1755012579; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b73e4dbI2xnTEbKM50mLEVw9lhz38ZpES+dSUT7bVfA=;
+ b=JQC6x0yIgKvcpzCUT3wSYFvs8TrrAJz/IYx1zrhU4AfsP01yjaoRYiI0KHg8hyGIaA
+ lbCrAho/uOGGloLfEqyX2Sl23FAxUQ5gvD1bnS7BYDVsxVRGPJj67XTLlQ5WnllhTYgw
+ nWJzp5K3dlyh/5Wbe2V/B+0zFccaFBPT3zPnYNZbymOOrqsGpJKy/11hZFJdKaGoaHAR
+ P4LCrRllws7ZdUfdfh/cwrw7EkFfdP77IaTehmR9wIZDPFqLQXbWITxTdRg2qGWlBAlg
+ IVj6xTLq3avqijlyVCrZtGdF+wWrjElJ/utxGUM/m1Wfwnsdi0lH0EgMbJnj2QEC7D6T
+ NX+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754407779; x=1755012579;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b73e4dbI2xnTEbKM50mLEVw9lhz38ZpES+dSUT7bVfA=;
+ b=CTEtwfJ0WojI551Wyz9WML/v5+U8XF5cg7e+Gq+Ey4tRAUHnSUJ7oLAdJNEu1Tth5Q
+ LH7x/TAJkxnUsEy7aLH94GuB0HN0INEauthibMcShT77uqPo9JvZynU3QtmM4DE+jFJK
+ RkYB4FkehDpoQB9eMmBU+ERAWzOqCUghJVXF5IY0Y0fRz7HldLQD1/hRXOvWiHRxzF4n
+ q7vz9hWbyV1MPAohkKupCX6toGc3/StalSrnjd2NEYteLhIOYw/lmp6gg9irZFljeDJD
+ d/bbWR6UP1GhR0/V/DGsVprj2ryoawSo1+wH6QCFDJkofp8SfefXv8O6XQxUHsgQDW1v
+ xknQ==
+X-Gm-Message-State: AOJu0Yzk7MXGtmHhBPR9g7OlPHcjPnulKX/REdQrBYMrGL/GjqGEnoLb
+ 0cfCTojo4yAKlnSaDWMH0ZRRR5iob+KrUIzZvR8Pd724xhP8RdyY+wLT4yVhh5BEjwA=
+X-Gm-Gg: ASbGncsp8BITs5w0Hvta7xAwtA/28oic/rz13rM7mrGmJHA6w/VXheH1N8SZ3EXzKDt
+ B5XGKzRlE4hyW3zMMKw/Jt5oqwCukFzbRi7GehlAoxaaMzDcqXGuurwzocovnswT0Slnn/f8IfE
+ V8PQgtHHQVi7EeQhjJudbiU22/aJBFp2cJdtPASzmxa5pnsa5jrRcJdZuGV7c4T9rOh3Ze6U7eN
+ wAz6JsrRHZ38gzj8L25Opn36drHZPIV6ZaRuF8+AG+G7FS4Ot6rPleF6+uuHWXptMEajIkxR8v/
+ qTyhXvw/jbd1n4xixl0BFzyIL1IYa0rr7mgJ23fMDOJMzEv/N0ZsoZ/kZp1CBLuOpITOKa23wsj
+ wtkeCjEqavx/4V55/vqrNj7/XqaAIkAvb+LumDbYsRKVbGjzOrqVIHsF+/9j0DjQ8OQ==
+X-Google-Smtp-Source: AGHT+IFu3jjObrrdQWT+x9JLMZK50A5OGKOiTrR7xIBUqSLbeygeCBWTdr7pqrMCzVtqhLNrqw7G6Q==
+X-Received: by 2002:a5d:584e:0:b0:3b7:8a28:3e35 with SMTP id
+ ffacd0b85a97d-3b8d9468f10mr10322711f8f.2.1754407778983; 
+ Tue, 05 Aug 2025 08:29:38 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e5d0b1afsm4945935e9.26.2025.08.05.08.29.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Aug 2025 08:29:38 -0700 (PDT)
+Message-ID: <192fddd3-3ca8-4e7c-a258-143b77c963e8@linaro.org>
+Date: Tue, 5 Aug 2025 17:29:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 0F0A81FB91
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for v10.1] i386/cpu: Move addressable ID encoding out of
+ compat property in CPUID[0x1]
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Chuang Xu <xuchuangxclwt@bytedance.com>
+References: <20250804053548.1808629-1-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250804053548.1808629-1-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,88 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 4/8/25 07:35, Zhao Liu wrote:
+> Currently, the addressable ID encoding for CPUID[0x1].EBX[bits 16-23]
+> (Maximum number of addressable IDs for logical processors in this
+> physical package) is covered by vendor_cpuid_only_v2 compat property.
+> The previous consideration was to avoid breaking migration and this
+> compat property makes it unfriendly to backport the commit f985a1195ba2
+> ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX
+> [23:16]").
+> 
+> However, NetBSD booting is broken since the commit 88dd4ca06c83
+> ("i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]"),
+> because NetBSD calculates smt information via `lp_max` / `core_max` for
+> legacy Intel CPUs which doesn't support 0xb leaf, where `lp_max` is from
+> CPUID[0x1].EBX.bits[16-23] and `core_max` is from CPUID[0x4].0x0.bits[26
+> -31].
+> 
+> The commit 88dd4ca0 changed the encoding rule of `core_max` but didn't
+> update `lp_max`, so that NetBSD would get the wrong smt information,
+> which leads to the module loading failure.
+> 
+> Luckily, the commit f985a1195ba2 ("i386/cpu: Fix number of addressable
+> IDs field for CPUID.01H.EBX[23:16]") updated the encoding rule for
+> `lp_max` and accidentally fixed the NetBSD issue too. This also shows
+> that using CPUID[0x1] and CPUID[0x4].0x0 to calculate HT/SMT information
+> is a common practice to detect CPU topology on legacy Intel CPUs.
+> 
+> Therefore, it's necessary to backport the commit f985a1195ba2 to
+> previous stable QEMU to help address the similar issues as well. Then
+> the compat property is not needed any more since all stable QEMUs will
+> follow the same encoding way.
+> 
+> So, in CPUID[0x1], move addressable ID encoding out of compat property.
+> 
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Inspired-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> Fixes: commit f985a1195ba2 ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3061
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   target/i386/cpu.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-> On Tue, Aug 05, 2025 at 10:44:41AM -0300, Fabiano Rosas wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Mon, Aug 04, 2025 at 04:27:45PM -0300, Fabiano Rosas wrote:
->> >> Juraj Marcin <jmarcin@redhat.com> writes:
->> >>=20
->> >> > Hi Daniel,
->> >> >
->> >> > On 2025-08-01 18:02, Daniel P. Berrang=C3=A9 wrote:
->> >> >> This is a followup to previously merged patches that claimed to
->> >> >> workaround the gnutls bug impacting migration, but in fact were
->> >> >> essentially non-functional. Juraj Marcin pointed this out, and
->> >> >> this new patch tweaks the workaround to make it actually do
->> >> >> something useful.
->> >> >>=20
->> >> >> Daniel P. Berrang=C3=A9 (2):
->> >> >>   migration: simplify error reporting after channel read
->> >> >>   migration: fix workaround for gnutls thread safety
->> >> >>=20
->> >> >>  crypto/tlssession.c   | 16 ----------------
->> >> >>  migration/qemu-file.c | 22 +++++++++++++++++-----
->> >> >>  2 files changed, 17 insertions(+), 21 deletions(-)
->> >> >>=20
->> >> >
->> >> > thanks for finding a fix for the workaround. I have tested it and it
->> >> > resolves the issue.
->> >> >
->> >> > However, it significantly slows down migration, even with the worka=
-round
->> >> > disabled (and thus no locking). When benchmarking, I used the fixed
->> >> > version of GNUTLS, VM with 20GB of RAM which were fully written to
->> >> > before starting a normal migration with no workload during the
->> >> > migration.
->> >> >
->> >> > Test cases:
->> >> > [1]: before this patchset
->> >> > [2]: with this patchset applied and GNUTLS workaround enabled
->> >> > [2]: with this patchset applied and GNUTLS workaround disabled
->> >> >
->> >> >   | Total time | Throughput | Transfered bytes |
->> >> > --+------------+------------+------------------+
->> >> > 1 |  31 192 ms |  5450 mpbs |   21 230 973 763 |
->> >> > 2 |  74 147 ms |  2291 mbps |   21 232 849 066 |
->> >> > 3 |  72 426 ms |  2343 mbps |   21 215 009 392 |
->> >>=20
->> >> Thanks testing this. I had just managed to convince myself that there
->> >> wouldn't be any performance issues.
->> >>=20
->> >> The yield at every buffer fill on the incoming side is probably way m=
-ore
->> >> impactful than the poll on the RP.
->> >
->> > Yeah, that's an unacceptable penalty on the incoming side for sure.
->> >
->> > How about we simply change the outbound migration channel to be in
->> > non-blocking mode ?   I originally put it in blocking mode way back
->> > in 9e4d2b98ee98f4cee50d671e500eceeefa751ee0, but if I look at the
->> > QEMUFile impl of qemu_fill_buffer and qemu_fflush, but should be
->> > coping with a non-blocking socket. qemu_fill_buffer has explicit
->> > code to wait, and qemu_fflush uses the _all() variant whcih has
->> > built-in support for waiting. So I'm not seeing an obvious need
->> > to run the channel in blocking mode.
->> >
->>=20
->> It's definitely simpler and I think it works. It's uncomfortably late
->> though to add a bunch of glib event loop code to the migration
->> thread. Is the suggestion of moving the yield to tlssession.c even
->> feasible?
->
-> Well that'll remove the burden for the non-TLS incoming migration,
-> but the incoming TLS migration will still have the redundant
-> yields and so still suffer a hit.
->
-> Given where we are in freeze, I'm thinking we should just hard
-> disable the workaround for this release, and re-attempt it in
-> next cycle and then we can bring it back to stable afterwards.
->
-
-Yes, I agree. Will you send a patch?
-
-> With regards,
-> Daniel
+Patch queued, thanks!
 
