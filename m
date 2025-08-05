@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6528BC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFC3C87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujNtH-0007bc-Gm; Tue, 05 Aug 2025 16:04:07 -0400
+	id 1ujNwP-00045z-Ac; Tue, 05 Aug 2025 16:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNtG-0007ag-3b
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:04:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNt9-0003oj-Ox
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:04:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754424239;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gRnfE5O7Z3n1y90AVxCw4nMOjXLTKuDen5QyZKqLxG8=;
- b=CHQ5WKoZVovSlpGfMrzm/TZAL/cFtKLR74vh33Td4aNh8t6DraxNS8izl1KXYg9/DoeQFr
- LwVQAgzZTKYhsWga9AiYyEQJW5066lTSTE9Eoj9ILEPxi5oqqkkOgFgF1VempJLQVtiQE+
- /Ea0MaWFPmS0wHMYJEwSsNSOnsGP/Tc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-HNdp8IRONV6hobfKk6cojA-1; Tue,
- 05 Aug 2025 16:03:57 -0400
-X-MC-Unique: HNdp8IRONV6hobfKk6cojA-1
-X-Mimecast-MFC-AGG-ID: HNdp8IRONV6hobfKk6cojA_1754424236
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 559AB180036E; Tue,  5 Aug 2025 20:03:56 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.80])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 12C5830001BE; Tue,  5 Aug 2025 20:03:52 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 5/6] tracetool: add test suite for tracetool with reference
- output
-Date: Tue,  5 Aug 2025 21:03:33 +0100
-Message-ID: <20250805200334.629493-6-berrange@redhat.com>
-In-Reply-To: <20250805200334.629493-1-berrange@redhat.com>
-References: <20250805200334.629493-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ujNwH-00043i-Q6
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:07:19 -0400
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ujNwE-0004Hj-5d
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:07:13 -0400
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-4dfa2aeec86so4845147137.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 13:07:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754424428; x=1755029228; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+M5UR3LoHP/3zpg8bb1OP9EoCk8splBA+X4lHdFz1L8=;
+ b=KBUXP+cH71sB9SkRzC79g5XEECy0g3gtSAS5T/uXR3oSPld3ZLdgc9FiR+qEpfNaPh
+ /VfRBDpyqsqhZtDsAUECj220gpxZyYNHWTsUSBeqQ+DvLbZxVOk53TvUfDwe72xw/SPL
+ sBKRUFdqAe9tcnO5LJnoDEVmdX/lpwgOYFs16F1TBDqNt9n5DwrroCdmVeh+9Qi+iE6z
+ zPmaNLvl5oWlwFf6x1suEhRm94BtMwYefNd05CU0c8k4aSikZTLhPcqpmotCWFPYuTGw
+ Igh0ktbs4IDK/I5cQ4iDru6ai8KPmevQXrbMxoUoHD1y/sAD3jT7Uit3RSNf6mUZYEKB
+ Fgbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754424428; x=1755029228;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+M5UR3LoHP/3zpg8bb1OP9EoCk8splBA+X4lHdFz1L8=;
+ b=opY/44cECnxG9AW7VQwfEZOvQl15riewogBCUBrK7VgF2npGoqJLWAyT+3QUxSNdWM
+ QFxXNTErofBHUNUuDUGDOAgGEaJBT+oo8743GPwIY+b3pGeTfY6oAN3vzBMz0gccrbl8
+ 85A5fyOyHwyARZgqUni+Ocl/jUX4vPTpSIChpMe0F+zK09cjV9XKtQ/IBZRv6VnJofyQ
+ yn2wqKh8srobRrz/VkzXOMrwYqN1wBjb4EJ0U4JYrrni0L8bs9dvppRy27DXu8FEl1bo
+ I8kxGxdfL1YEv4pHsfE6B5Ef4pQFbXKNPd5XZAlirpaXe3j/HEr5X4xKURTjy+GXTdrR
+ 6vDA==
+X-Gm-Message-State: AOJu0Yzu8ySQV6EJ/HgllPeYi41W9+8j3NcI96QUekah/WJGmnGyQf6U
+ DNJKc+T252kD8V5pifS/n6tlzak29IsJ+Z3/ISwRNgl40mMTpKv7VGh5+jd8Vmxyu9Dlp6HvbTY
+ WOZ559VPmvN4MKh/+TePoDo6uMPy9MWtgrdcyGwlsEFu0DWNa/c7KWTfBzA==
+X-Gm-Gg: ASbGncuyEQduqbKgHCFBtcNIxPDCjxsY8aVBKHuhbzoIIjnOy18B7GhLoPr7L3ZH3UQ
+ XklLqLFRnKlr4bA0u96Np3Zv51pbra3fJdWAHQBbZg6Z42/NWwDppRNEq3qWBJTuZaW5ZD67wXA
+ nLDI7QJUqJL63w+fEA2hzEO94YfwJflVfMDub94ESMumnY4Uiwt5q6zDpnwDPWPH1yGBid0jTBl
+ 35ZC2M3CJ3me0S7n+o=
+X-Google-Smtp-Source: AGHT+IHT9asMWiRzrcOQViUD675lp+aQQ3OWkuZuyrP+dKlh8J6MfxQtk3H/2eDtYpCdQhz2yzVG6B4caqgpm1GDwjw=
+X-Received: by 2002:a05:6102:c04:b0:4ec:b2cc:de60 with SMTP id
+ ada2fe7eead31-50379034525mr47200137.11.1754424428499; Tue, 05 Aug 2025
+ 13:07:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250804-rust_trace-v1-0-b20cc16b0c51@linaro.org>
+ <aJIrpoEhrl7aLBMg@redhat.com>
+ <CAAjaMXa6ManykYJJk--vNZT7oeBW9UR2v6WixaaQ8LUCSjy9Ug@mail.gmail.com>
+ <aJI0mr5HDgtE9HIc@redhat.com>
+ <CAAjaMXZ0Dho+5FSyc4zkOZXZT6UvHtjgmpj6_0QZQcH_AD9=VQ@mail.gmail.com>
+ <aJJFVgkt7R49ZwIF@redhat.com>
+In-Reply-To: <aJJFVgkt7R49ZwIF@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 5 Aug 2025 23:06:41 +0300
+X-Gm-Features: Ac12FXzHbByIA96QwbkFshFybyVGOGYyWjYhq_coJYazT85NFeQ2fippHTTtFbU
+Message-ID: <CAAjaMXYhWsWPoDdfoNyTGrJSRfiYJDqBkv8fC87+Zi3YCtU06Q@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/5] rust: implement tracing
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-vs1-xe2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,1085 +101,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When reviewing tracetool patches it is often very unclear what the
-expected output will be for the generated backends. Compounding
-this is that a default build will only enable the 'log' trace
-backend, so developers won't see generated code for other backends
-without making a special effort. Some backends are also platform
-specific, so can't be enabled in QEMU builds, even though tracetool
-could generate the code.
+Hello Daniel,
 
-To address this, introduce a test suite for tracetool which is
-conceptually similar to the qapi-schema test. It is a simple
-python program that runs tracetool and compares the actual output
-to historical reference output kept in git. The test directly
-emits TAP format logs for ease of integration with meson.
 
-This can be run with
+Thanks very much for the write up, I think I understand it a lot better now=
+ :)
 
-  make check-tracetool
+On Tue, Aug 5, 2025 at 8:54=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Tue, Aug 05, 2025 at 07:47:39PM +0300, Manos Pitsidianakis wrote:
+> > On Tue, Aug 5, 2025 at 7:43=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
+e@redhat.com> wrote:
+> > >
+> > > On Tue, Aug 05, 2025 at 07:25:39PM +0300, Manos Pitsidianakis wrote:
+> > > > On Tue, Aug 5, 2025 at 7:05=E2=80=AFPM Daniel P. Berrang=C3=A9 <ber=
+range@redhat.com> wrote:
+> > > > >
+> > > > > On Mon, Aug 04, 2025 at 04:47:13PM +0300, Manos Pitsidianakis wro=
+te:
+> > > > > > This RFC series contains some simple patches I've been sitting =
+on for
+> > > > > > some months to allow tracing in rust devices in a similar matte=
+r to C,
+> > > > > > only it's done via a proc-macro codegen instead of using tracet=
+ool
+> > > > > > script or equivalent.
+> > > > >
+> > > > > IIUC, this series is only emitting the traces events via the
+> > > > > qemu_log function, and so feels like it is missing the benefit
+> > > > > of tracing, vs the traditional logging framework.
+> > > > >
+> > > > > In our RHEL & Fedora distro builds we disable the log backend
+> > > > > and enable dtrace, so that we have fully dynamic tracing and
+> > > > > observability across the kernel, qemu, libvirt and other
+> > > > > components with dtrace integration.
+> > > >
+> > > > Hi Daniel,
+> > > >
+> > > > Thanks for the insight! Do you have any points where I should look =
+at
+> > > > the trace implementation for how the different backends are support=
+ed?
+> > > >
+> > > > So I think there's already work in progress to support proper traci=
+ng
+> > > > for Rust, I only sent this as a temporary fixup to provide some kin=
+d
+> > > > of parity between C and Rust implementations until a proper, better
+> > > > solution is available that can replace it.
+> > >
+> > > Can the rust code not easily consume the existing functions in the
+> > > trace.h files generated for the C code as a short-term solution ?
+> > >
+> > > It would not benefit from the code inlining in the same way as C
+> > > would, but it would at least give feature parity for tracing with
+> > > all the trace backends are available.
+> > >
+> > > Then, we can look at optimizing with a pure rust impl of some
+> > > backends at a later date, to regain what we lost from lack of
+> > > inlining ?
+> >
+> > It can, but we'd need to add extra intermediate steps to convert the
+> > trace headers into Rust equivalent code, so it's not ideal.
+> >
+> > I tried to generate code exactly like the generated trace headers
+> > though, so I'm not sure what is missing to be honest (hence my
+> > previous email question). The generated code generates TraceEvents and
+> > registers them with trace_event_register_group. What else is missing
+> > to support e.g. dtrace?
+>
+> 'trace_event_register_group' is essentially irrelevant for the
+> fully dynamic trace backends like dtrace - that's only used for
+> the backends whose output is controlled by QEMU monitor commands
+> / command line arguments.
+>
+> In the dtrace case the binary gets instructions which are a squence
+> of nops normally, and dtrace tool gets the kernel to live patch the
+> binary at runtime to put in a jump for any probes that are being
+> watched.
+>
+> Take a look at the generated files <build-dir>/trace/trace-*.h when
+> using the different '--enable-trace-backends=3D...' options.
+>
+> eg taking the trace-crypto.h header, with 'log' backend we see it
+> emits
+>
+>    if (trace_event_get_state(TRACE_QCRYPTO_TLS_SESSION_CHECK_CREDS) && qe=
+mu_loglevel_mask(LOG_TRACE)) {
+> #line 23 "../crypto/trace-events"
+>         qemu_log("qcrypto_tls_session_check_creds " "TLS session check cr=
+eds session=3D%p status=3D%s" "\n", session, status);
+> #line 372 "trace/trace-crypto.h"
+>     }
+>
+> but with dtrace it emits
+>
+>     QEMU_QCRYPTO_TLS_SESSION_CHECK_CREDS(session, status);
+>
+> which is a referencing a macro created by the external 'dtrace' binary,
+> which in the Linux case ends up looking like
+>
+>   #if defined STAP_SDT_V1
+>   #define QEMU_QCRYPTO_TLS_SESSION_CHECK_CREDS_ENABLED() __builtin_expect=
+ (qcrypto_tls_session_check_creds_semaphore, 0)
+>   #define qemu_qcrypto_tls_session_check_creds_semaphore qcrypto_tls_sess=
+ion_check_creds_semaphore
+>   #else
+>   #define QEMU_QCRYPTO_TLS_SESSION_CHECK_CREDS_ENABLED() __builtin_expect=
+ (qemu_qcrypto_tls_session_check_creds_semaphore, 0)
+>   #endif
+>   __extension__ extern unsigned short qemu_qcrypto_tls_session_check_cred=
+s_semaphore __attribute__ ((unused)) __attribute__ ((section (".probes")));
+>   #define QEMU_QCRYPTO_TLS_SESSION_CHECK_CREDS(arg1, arg2) \
+>   DTRACE_PROBE2 (qemu, qcrypto_tls_session_check_creds, arg1, arg2)
+>
+> you can end up enabling multiple trace backends concurrently too.
+>
+> If you're thinking this is all rather complicated, you'd be right,
+> which is why for initial feature parity I figured the simplest is
+> likely to just wrap the existing QEMU inline probe function, so
+> Rust doesn't need to know about the different backends... yet...
 
-to make it easier for developers changing generated output, the
-sample expected content can be auto-recreated
+Yes, that indeed makes sense.  Generated C trace headers statically
+linked to a standalone trace crate library for each subsystem, that
+rust qemu crates can link to in return is the cleanest solution for
+this approach IMHO, because doing this kind of codegen via macros
+needs interaction with meson to generate the C sources and then run
+bindgen all while compiling this one crate which is a single meson lib
+target.
 
-  QEMU_TEST_REGENERATE=1 make check-tracetool
+It might be possible to generate the equivalent of the C code for each
+backend just like this RFC generates only the log backend code, I'll
+take a look out of curiosity...
 
-and the changes reviewed and added to the commit. This will also
-assist reviewers interpreting the change.
-
-Developers are reminded of this in the test output on failure:
-
-  $ make check-tracetool
-  1/6 qemu:tracetool / dtrace        OK              0.14s
-  2/6 qemu:tracetool / ftrace        FAIL            0.06s   exit status 1
-  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  1..2
-  ok 1 - ftrace.c
-  #
-  not ok 1 - ftrace.h (set QEMU_TEST_REGENERATE=1 to recreate reference output if tracetool generator was intentionally changed)
-  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-
-  3/6 qemu:tracetool / log           OK              0.06s
-  4/6 qemu:tracetool / simple        OK              0.06s
-  5/6 qemu:tracetool / syslog        OK              0.06s
-  6/6 qemu:tracetool / ust           OK              0.11s
-
-  Summary of Failures:
-
-  2/6 qemu:tracetool / ftrace FAIL            0.06s   exit status 1
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- MAINTAINERS                             |  1 +
- tests/Makefile.include                  |  1 +
- tests/meson.build                       |  1 +
- tests/tracetool/dtrace.c                | 32 +++++++++
- tests/tracetool/dtrace.d                | 10 +++
- tests/tracetool/dtrace.h                | 59 ++++++++++++++++
- tests/tracetool/dtrace.log-stap         | 15 ++++
- tests/tracetool/dtrace.simpletrace-stap | 16 +++++
- tests/tracetool/dtrace.stap             | 14 ++++
- tests/tracetool/ftrace.c                | 32 +++++++++
- tests/tracetool/ftrace.h                | 73 ++++++++++++++++++++
- tests/tracetool/log.c                   | 32 +++++++++
- tests/tracetool/log.h                   | 57 +++++++++++++++
- tests/tracetool/meson.build             | 25 +++++++
- tests/tracetool/simple.c                | 61 ++++++++++++++++
- tests/tracetool/simple.h                | 54 +++++++++++++++
- tests/tracetool/syslog.c                | 32 +++++++++
- tests/tracetool/syslog.h                | 57 +++++++++++++++
- tests/tracetool/trace-events            |  5 ++
- tests/tracetool/tracetool-test.py       | 92 +++++++++++++++++++++++++
- tests/tracetool/ust.c                   | 32 +++++++++
- tests/tracetool/ust.h                   | 55 +++++++++++++++
- tests/tracetool/ust.ust-events-c        | 14 ++++
- tests/tracetool/ust.ust-events-h        | 56 +++++++++++++++
- 24 files changed, 826 insertions(+)
- create mode 100644 tests/tracetool/dtrace.c
- create mode 100644 tests/tracetool/dtrace.d
- create mode 100644 tests/tracetool/dtrace.h
- create mode 100644 tests/tracetool/dtrace.log-stap
- create mode 100644 tests/tracetool/dtrace.simpletrace-stap
- create mode 100644 tests/tracetool/dtrace.stap
- create mode 100644 tests/tracetool/ftrace.c
- create mode 100644 tests/tracetool/ftrace.h
- create mode 100644 tests/tracetool/log.c
- create mode 100644 tests/tracetool/log.h
- create mode 100644 tests/tracetool/meson.build
- create mode 100644 tests/tracetool/simple.c
- create mode 100644 tests/tracetool/simple.h
- create mode 100644 tests/tracetool/syslog.c
- create mode 100644 tests/tracetool/syslog.h
- create mode 100644 tests/tracetool/trace-events
- create mode 100755 tests/tracetool/tracetool-test.py
- create mode 100644 tests/tracetool/ust.c
- create mode 100644 tests/tracetool/ust.h
- create mode 100644 tests/tracetool/ust.ust-events-c
- create mode 100644 tests/tracetool/ust.ust-events-h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 28cea34271..c08c51f4c6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3556,6 +3556,7 @@ F: scripts/tracetool/
- F: scripts/qemu-trace-stap*
- F: docs/tools/qemu-trace-stap.rst
- F: docs/devel/tracing.rst
-+F: tests/tracetool/
- T: git https://github.com/stefanha/qemu.git tracing
- 
- Simpletrace
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 23fb722d42..3538c0c740 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -13,6 +13,7 @@ check-help:
- 	@echo " $(MAKE) check-functional-TARGET  Run functional tests for a given target"
- 	@echo " $(MAKE) check-unit               Run qobject tests"
- 	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
-+	@echo " $(MAKE) check-tracetool          Run tracetool generator tests"
- 	@echo " $(MAKE) check-block              Run block tests"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-tcg                Run TCG tests"
-diff --git a/tests/meson.build b/tests/meson.build
-index c59619220f..cbe7916241 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -88,3 +88,4 @@ subdir('qapi-schema')
- subdir('qtest')
- subdir('migration-stress')
- subdir('functional')
-+subdir('tracetool')
-diff --git a/tests/tracetool/dtrace.c b/tests/tracetool/dtrace.c
-new file mode 100644
-index 0000000000..9f862fa14d
---- /dev/null
-+++ b/tests/tracetool/dtrace.c
-@@ -0,0 +1,32 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-diff --git a/tests/tracetool/dtrace.d b/tests/tracetool/dtrace.d
-new file mode 100644
-index 0000000000..5cc06f9f4f
---- /dev/null
-+++ b/tests/tracetool/dtrace.d
-@@ -0,0 +1,10 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+provider qemu {
-+
-+probe test_blah(void * context,const char * filename);
-+
-+probe test_wibble(void * context,int value);
-+
-+};
-diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
-new file mode 100644
-index 0000000000..c2e5110672
---- /dev/null
-+++ b/tests/tracetool/dtrace.h
-@@ -0,0 +1,59 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+#ifndef SDT_USE_VARIADIC
-+#define SDT_USE_VARIADIC 1
-+#endif
-+#include "trace-dtrace-testsuite.h"
-+
-+#undef SDT_USE_VARIADIC
-+#ifndef QEMU_TEST_BLAH_ENABLED
-+#define QEMU_TEST_BLAH_ENABLED() true
-+#endif
-+#ifndef QEMU_TEST_WIBBLE_ENABLED
-+#define QEMU_TEST_WIBBLE_ENABLED() true
-+#endif
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    QEMU_TEST_BLAH_ENABLED() || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    QEMU_TEST_BLAH(context, filename);
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    QEMU_TEST_WIBBLE_ENABLED() || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    QEMU_TEST_WIBBLE(context, value);
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/dtrace.log-stap b/tests/tracetool/dtrace.log-stap
-new file mode 100644
-index 0000000000..092986e0b6
---- /dev/null
-+++ b/tests/tracetool/dtrace.log-stap
-@@ -0,0 +1,15 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+probe qemu.log.test_blah = qemu.test_blah ?
-+{
-+    try {
-+        argfilename_str = filename ? user_string_n(filename, 512) : "<null>"
-+    } catch {}
-+    printf("%d@%d test_blah Blah context=%p filename=%s\n", pid(), gettimeofday_ns(), context, argfilename_str)
-+}
-+probe qemu.log.test_wibble = qemu.test_wibble ?
-+{
-+    printf("%d@%d test_wibble Wibble context=%p value=%d\n", pid(), gettimeofday_ns(), context, value)
-+}
-+
-diff --git a/tests/tracetool/dtrace.simpletrace-stap b/tests/tracetool/dtrace.simpletrace-stap
-new file mode 100644
-index 0000000000..d064e3e286
---- /dev/null
-+++ b/tests/tracetool/dtrace.simpletrace-stap
-@@ -0,0 +1,16 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+probe qemu.simpletrace.test_blah = qemu.test_blah ?
-+{
-+    try {
-+        argfilename_str = filename ? user_string_n(filename, 512) : "<null>"
-+    } catch {}
-+    argfilename_len = strlen(argfilename_str)
-+    printf("%8b%8b%8b%4b%4b%8b%4b%.*s", 1, 0, gettimeofday_ns(), 24 + 8 + 4 + argfilename_len, pid(), context, argfilename_len, argfilename_len, argfilename_str)
-+}
-+probe qemu.simpletrace.test_wibble = qemu.test_wibble ?
-+{
-+    printf("%8b%8b%8b%4b%4b%8b%8b", 1, 1, gettimeofday_ns(), 24 + 8 + 8, pid(), context, value)
-+}
-+
-diff --git a/tests/tracetool/dtrace.stap b/tests/tracetool/dtrace.stap
-new file mode 100644
-index 0000000000..9c5d8a527c
---- /dev/null
-+++ b/tests/tracetool/dtrace.stap
-@@ -0,0 +1,14 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+probe qemu.test_blah = process("qemu").mark("test_blah")
-+{
-+  context = $arg1;
-+  filename = $arg2;
-+}
-+probe qemu.test_wibble = process("qemu").mark("test_wibble")
-+{
-+  context = $arg1;
-+  value = $arg2;
-+}
-+
-diff --git a/tests/tracetool/ftrace.c b/tests/tracetool/ftrace.c
-new file mode 100644
-index 0000000000..9f862fa14d
---- /dev/null
-+++ b/tests/tracetool/ftrace.c
-@@ -0,0 +1,32 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
-new file mode 100644
-index 0000000000..5ce8209bc1
---- /dev/null
-+++ b/tests/tracetool/ftrace.h
-@@ -0,0 +1,73 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+#include "trace/ftrace.h"
-+
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    {
-+        char ftrace_buf[MAX_TRACE_STRLEN];
-+        int unused __attribute__ ((unused));
-+        int trlen;
-+        if (trace_event_get_state(TRACE_TEST_BLAH)) {
-+#line 3 "trace-events"
-+            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
-+                             "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
-+#line 33 "../../../../../../../../dev/stdout"
-+            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
-+            unused = write(trace_marker_fd, ftrace_buf, trlen);
-+        }
-+    }
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    {
-+        char ftrace_buf[MAX_TRACE_STRLEN];
-+        int unused __attribute__ ((unused));
-+        int trlen;
-+        if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
-+#line 4 "trace-events"
-+            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
-+                             "test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
-+#line 61 "../../../../../../../../dev/stdout"
-+            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
-+            unused = write(trace_marker_fd, ftrace_buf, trlen);
-+        }
-+    }
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/log.c b/tests/tracetool/log.c
-new file mode 100644
-index 0000000000..9f862fa14d
---- /dev/null
-+++ b/tests/tracetool/log.c
-@@ -0,0 +1,32 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
-new file mode 100644
-index 0000000000..c45aa0f913
---- /dev/null
-+++ b/tests/tracetool/log.h
-@@ -0,0 +1,57 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+#include "qemu/log-for-trace.h"
-+
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    if (trace_event_get_state(TRACE_TEST_BLAH) && qemu_loglevel_mask(LOG_TRACE)) {
-+#line 3 "trace-events"
-+        qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
-+#line 28 "../../../../../../../../dev/stdout"
-+    }
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    if (trace_event_get_state(TRACE_TEST_WIBBLE) && qemu_loglevel_mask(LOG_TRACE)) {
-+#line 4 "trace-events"
-+        qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
-+#line 48 "../../../../../../../../dev/stdout"
-+    }
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/meson.build b/tests/tracetool/meson.build
-new file mode 100644
-index 0000000000..036cfdff88
---- /dev/null
-+++ b/tests/tracetool/meson.build
-@@ -0,0 +1,25 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_env = environment()
-+test_env.set('PYTHONPATH', meson.project_source_root() / 'scripts')
-+test_env.set('PYTHONIOENCODING', 'utf-8')
-+
-+backends = [
-+    'dtrace',
-+    'ftrace',
-+    'log',
-+    'simple',
-+    'syslog',
-+    'ust'
-+]
-+
-+foreach backend: backends
-+    test(backend,
-+         python,
-+         args: [meson.current_source_dir() / 'tracetool-test.py',
-+                meson.project_source_root() / 'scripts' / 'tracetool.py',
-+                meson.current_source_dir() / 'trace-events',
-+                backend],
-+         workdir: meson.current_source_dir(),
-+         suite: ['tracetool'])
-+endforeach
-diff --git a/tests/tracetool/simple.c b/tests/tracetool/simple.c
-new file mode 100644
-index 0000000000..0484177481
---- /dev/null
-+++ b/tests/tracetool/simple.c
-@@ -0,0 +1,61 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-+#include "qemu/osdep.h"
-+#include "trace/control.h"
-+#include "trace/simple.h"
-+
-+void _simple_trace_test_blah(void *context, const char *filename)
-+{
-+    TraceBufferRecord rec;
-+    size_t argfilename_len = filename ? MIN(strlen(filename), MAX_TRACE_STRLEN) : 0;
-+
-+    if (trace_record_start(&rec, _TRACE_TEST_BLAH_EVENT.id, 8 + 4 + argfilename_len)) {
-+        return; /* Trace Buffer Full, Event Dropped ! */
-+    }
-+    trace_record_write_u64(&rec, (uintptr_t)(uint64_t *)context);
-+    trace_record_write_str(&rec, filename, argfilename_len);
-+    trace_record_finish(&rec);
-+}
-+
-+void _simple_trace_test_wibble(void *context, int value)
-+{
-+    TraceBufferRecord rec;
-+
-+    if (trace_record_start(&rec, _TRACE_TEST_WIBBLE_EVENT.id, 8 + 8)) {
-+        return; /* Trace Buffer Full, Event Dropped ! */
-+    }
-+    trace_record_write_u64(&rec, (uintptr_t)(uint64_t *)context);
-+    trace_record_write_u64(&rec, (uint64_t)value);
-+    trace_record_finish(&rec);
-+}
-+
-diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
-new file mode 100644
-index 0000000000..3c9de68c43
---- /dev/null
-+++ b/tests/tracetool/simple.h
-@@ -0,0 +1,54 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+void _simple_trace_test_blah(void *context, const char *filename);
-+void _simple_trace_test_wibble(void *context, int value);
-+
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    if (trace_event_get_state(TRACE_TEST_BLAH)) {
-+        _simple_trace_test_blah(context, filename);
-+    }
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
-+        _simple_trace_test_wibble(context, value);
-+    }
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/syslog.c b/tests/tracetool/syslog.c
-new file mode 100644
-index 0000000000..9f862fa14d
---- /dev/null
-+++ b/tests/tracetool/syslog.c
-@@ -0,0 +1,32 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
-new file mode 100644
-index 0000000000..8cb73dd15f
---- /dev/null
-+++ b/tests/tracetool/syslog.h
-@@ -0,0 +1,57 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+#include <syslog.h>
-+
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    if (trace_event_get_state(TRACE_TEST_BLAH)) {
-+#line 3 "trace-events"
-+        syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
-+#line 28 "../../../../../../../../dev/stdout"
-+    }
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
-+#line 4 "trace-events"
-+        syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
-+#line 48 "../../../../../../../../dev/stdout"
-+    }
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/trace-events b/tests/tracetool/trace-events
-new file mode 100644
-index 0000000000..72cf4d6f70
---- /dev/null
-+++ b/tests/tracetool/trace-events
-@@ -0,0 +1,5 @@
-+# See docs/devel/tracing.rst for syntax documentation.
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_blah(void *context, const char *filename) "Blah context=%p filename=%s"
-+test_wibble(void *context, int value) "Wibble context=%p value=%d"
-diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
-new file mode 100755
-index 0000000000..0422069855
---- /dev/null
-+++ b/tests/tracetool/tracetool-test.py
-@@ -0,0 +1,92 @@
-+#!/usr/bin/python3
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+from subprocess import check_output
-+import sys
-+
-+
-+def get_backends():
-+    return [
-+    ]
-+
-+def get_formats(backend):
-+    formats = [
-+        "c",
-+        "h",
-+    ]
-+    if backend == "dtrace":
-+        formats += [
-+            "d",
-+            "log-stap",
-+            "simpletrace-stap",
-+            "stap",
-+        ]
-+    if backend == "ust":
-+        formats += [
-+            "ust-events-c",
-+            "ust-events-h",
-+        ]
-+    return formats
-+
-+def test_tracetool_one(tracetool, events, backend, fmt):
-+    filename = backend + "." + fmt
-+
-+    args = [tracetool,
-+            f"--format={fmt}",
-+            f"--backends={backend}",
-+            "--group=testsuite"]
-+
-+    if fmt.find("stap") != -1:
-+        args += ["--binary=qemu",
-+                 "--probe-prefix=qemu"]
-+
-+    args += [events,
-+             "/dev/stdout"]
-+
-+    actual = check_output(args)
-+
-+    if os.getenv("QEMU_TEST_REGENERATE", False):
-+        print(f"# regenerate {filename}")
-+        with open(filename, "wb") as fh:
-+            fh.write(actual)
-+
-+    with open(filename, "rb") as fh:
-+        expect = fh.read()
-+
-+    assert(expect == actual)
-+
-+def test_tracetool(tracetool, events, backend):
-+    fail = False
-+    scenarios = len(get_formats(backend))
-+
-+    print(f"1..{scenarios}")
-+
-+    num = 1
-+    for fmt in get_formats(backend):
-+        status = "not ok"
-+        hint = ""
-+        try:
-+            test_tracetool_one(tracetool, events, backend, fmt)
-+            status = "ok"
-+        except Exception as e:
-+            print(f"# {e}")
-+            fail = True
-+            hint = " (set QEMU_TEST_REGENERATE=1 to recreate reference " + \
-+                "output if tracetool generator was intentionally changed)"
-+        finally:
-+            print(f"{status} {num} - {backend}.{fmt}{hint}")
-+
-+    return fail
-+
-+
-+if __name__ == '__main__':
-+    if len(sys.argv) != 4:
-+        argv0 = sys.argv[0]
-+        print("syntax: {argv0} TRACE-TOOL TRACE-EVENTS BACKEND", file=sys.stderr)
-+        sys.exit(1)
-+
-+    fail = test_tracetool(sys.argv[1], sys.argv[2], sys.argv[3])
-+    if fail:
-+        sys.exit(1)
-+    sys.exit(0)
-diff --git a/tests/tracetool/ust.c b/tests/tracetool/ust.c
-new file mode 100644
-index 0000000000..9f862fa14d
---- /dev/null
-+++ b/tests/tracetool/ust.c
-@@ -0,0 +1,32 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "trace-testsuite.h"
-+
-+uint16_t _TRACE_TEST_BLAH_DSTATE;
-+uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+TraceEvent _TRACE_TEST_BLAH_EVENT = {
-+    .id = 0,
-+    .name = "test_blah",
-+    .sstate = TRACE_TEST_BLAH_ENABLED,
-+    .dstate = &_TRACE_TEST_BLAH_DSTATE
-+};
-+TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-+    .id = 0,
-+    .name = "test_wibble",
-+    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-+    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
-+};
-+TraceEvent *testsuite_trace_events[] = {
-+    &_TRACE_TEST_BLAH_EVENT,
-+    &_TRACE_TEST_WIBBLE_EVENT,
-+  NULL,
-+};
-+
-+static void trace_testsuite_register_events(void)
-+{
-+    trace_event_register_group(testsuite_trace_events);
-+}
-+trace_init(trace_testsuite_register_events)
-diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
-new file mode 100644
-index 0000000000..1184ddd870
---- /dev/null
-+++ b/tests/tracetool/ust.h
-@@ -0,0 +1,55 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
-+#define TRACE_TESTSUITE_GENERATED_TRACERS_H
-+
-+#include "trace/control.h"
-+
-+extern TraceEvent _TRACE_TEST_BLAH_EVENT;
-+extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
-+extern uint16_t _TRACE_TEST_BLAH_DSTATE;
-+extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
-+#define TRACE_TEST_BLAH_ENABLED 1
-+#define TRACE_TEST_WIBBLE_ENABLED 1
-+#include <lttng/tracepoint.h>
-+#include "trace-ust-testsuite.h"
-+
-+/* tracepoint_enabled() was introduced in LTTng UST 2.7 */
-+#ifndef tracepoint_enabled
-+#define tracepoint_enabled(a, b) true
-+#endif
-+
-+
-+#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-+    tracepoint_enabled(qemu, test_blah) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_blah(void *context, const char *filename)
-+{
-+    tracepoint(qemu, test_blah, context, filename);
-+}
-+
-+static inline void trace_test_blah(void *context, const char *filename)
-+{
-+    if (true) {
-+        _nocheck__trace_test_blah(context, filename);
-+    }
-+}
-+
-+#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
-+    tracepoint_enabled(qemu, test_wibble) || \
-+    false)
-+
-+static inline void _nocheck__trace_test_wibble(void *context, int value)
-+{
-+    tracepoint(qemu, test_wibble, context, value);
-+}
-+
-+static inline void trace_test_wibble(void *context, int value)
-+{
-+    if (true) {
-+        _nocheck__trace_test_wibble(context, value);
-+    }
-+}
-+#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/ust.ust-events-c b/tests/tracetool/ust.ust-events-c
-new file mode 100644
-index 0000000000..db23224056
---- /dev/null
-+++ b/tests/tracetool/ust.ust-events-c
-@@ -0,0 +1,14 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+
-+#define TRACEPOINT_DEFINE
-+#define TRACEPOINT_CREATE_PROBES
-+
-+/* If gcc version 4.7 or older is used, LTTng ust gives a warning when compiling with
-+   -Wredundant-decls.
-+ */
-+#pragma GCC diagnostic ignored "-Wredundant-decls"
-+
-+#include "trace-ust-all.h"
-diff --git a/tests/tracetool/ust.ust-events-h b/tests/tracetool/ust.ust-events-h
-new file mode 100644
-index 0000000000..4621a995fc
---- /dev/null
-+++ b/tests/tracetool/ust.ust-events-h
-@@ -0,0 +1,56 @@
-+/* This file is autogenerated by tracetool, do not edit. */
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#undef TRACEPOINT_PROVIDER
-+#define TRACEPOINT_PROVIDER qemu
-+
-+#undef TRACEPOINT_INCLUDE
-+#define TRACEPOINT_INCLUDE "./trace-ust.h"
-+
-+#if !defined (TRACE_TESTSUITE_GENERATED_UST_H) || \
-+     defined(TRACEPOINT_HEADER_MULTI_READ)
-+#define TRACE_TESTSUITE_GENERATED_UST_H
-+
-+#include <lttng/tracepoint.h>
-+
-+/*
-+ * LTTng ust 2.0 does not allow you to use TP_ARGS(void) for tracepoints
-+ * requiring no arguments. We define these macros introduced in more recent * versions of LTTng ust as a workaround
-+ */
-+#ifndef _TP_EXPROTO1
-+#define _TP_EXPROTO1(a)               void
-+#endif
-+#ifndef _TP_EXDATA_PROTO1
-+#define _TP_EXDATA_PROTO1(a)          void *__tp_data
-+#endif
-+#ifndef _TP_EXDATA_VAR1
-+#define _TP_EXDATA_VAR1(a)            __tp_data
-+#endif
-+#ifndef _TP_EXVAR1
-+#define _TP_EXVAR1(a)
-+#endif
-+
-+TRACEPOINT_EVENT(
-+   qemu,
-+   test_blah,
-+   TP_ARGS(void *, context, const char *, filename),
-+   TP_FIELDS(
-+       ctf_integer_hex(void *, context, context)
-+       ctf_string(filename, filename)
-+   )
-+)
-+
-+TRACEPOINT_EVENT(
-+   qemu,
-+   test_wibble,
-+   TP_ARGS(void *, context, int, value),
-+   TP_FIELDS(
-+       ctf_integer_hex(void *, context, context)
-+       ctf_integer(int, value, value)
-+   )
-+)
-+
-+#endif /* TRACE_TESTSUITE_GENERATED_UST_H */
-+
-+/* This part must be outside ifdef protection */
-+#include <lttng/tracepoint-event.h>
--- 
-2.50.1
-
+>
+> FWIW, the original DTrace authors created a Rust crate with native
+> rust integration of dynamic probes.
+>
+>   https://github.com/oxidecomputer/usdt
+>
+> I think that (somehow) we probably want to integrate that with QEMU
+> and its tracetool.
 
