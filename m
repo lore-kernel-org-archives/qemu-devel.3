@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8709DC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 10:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EDBC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 11:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujFJl-0003wC-Hz; Tue, 05 Aug 2025 06:54:53 -0400
+	id 1ujFPa-0004HJ-An; Tue, 05 Aug 2025 07:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ujFJi-0003mg-NE
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:54:50 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1ujFOX-0003u6-Hp
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:59:54 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ujFJg-00010y-V1
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:54:50 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3b786421e36so3071801f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 03:54:47 -0700 (PDT)
+ id 1ujFOV-0002Ls-Mx
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:59:49 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4563cfac2d2so39027685e9.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 03:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754391286; x=1754996086; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754391586; x=1754996386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tCkAnOYJWSybSa+pI3XogF0jakJddG398nCAPcL+Djc=;
- b=zXkHJwpfJ8BsoC3yoN/x+7assDozj+qOe9+5XzWfaceLyezsxvFwElx0PiLeOWAqpR
- MRdUSnwWstgznRh8F+qROPA/NiwjWeLdIrhewyIJxq2LBc3hwtP7h5uPjk5lZmbR3dkz
- vqfGR4P15cvMLJNY4+JyJJ1i5d3hQrJfnSO9B6BhBYao4PHrdvfpdBURUTgYOmVhnuB8
- pHI1Au6v+95PCe8pJPVqHRP2vMpUFWyfRjHGPNHkQF+NhcOKNSsyUdGP2FOWYJQt73ZS
- T/vB1p/iugwc9WSQ9FV+ej28IwkzOJNLvCrTa9Bd1M8xbSVFhSJgy6cVbP/oLv61EHAY
- jhSQ==
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3XkL/9f0INPK+Aoi8p62Is9/NHBrhuVvKvYDk3tDRMs=;
+ b=KXFImeWx10mZSCYxdxOL2PZBkzi+ZTVs6PdU9/sJRmChad6lPvFR+Mg7pKeSXfb63z
+ b2NR0AJ+FpPyG7zBQLv2xH6jbP0gVsoiPnlExuoeZPN1KGxZdABeFilC8QDQucTf572z
+ EyeB+9U4sQvSxB5c0o9kF3ivjfvwe7dx5oee7VVGKoYD3dWrqI4pOxPzczUPE0VTquIQ
+ ctNsmZgUjPAmL6D/HHK4TqOs+zYwpbiu5YCe8PdlN2tkfDvEojtgnL9nNaXL60vBTU1r
+ U1lcskGjdeJVRnHN0wjO4GiNArQt9Aav7E4rHQC9sOtwnYadQb4ZcXWtmrrZp30QKKvx
+ zrwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754391286; x=1754996086;
+ d=1e100.net; s=20230601; t=1754391586; x=1754996386;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tCkAnOYJWSybSa+pI3XogF0jakJddG398nCAPcL+Djc=;
- b=YvgZ6+qhEZer2z+3a/6Ye/M5MV/D3xcgpxUa5t6trQ3LU6ZPEVhSQ/g+KlJzwGqxwz
- PDOyvkj4wB48sq8sqdRRchn5doot1Cj41lzew18Ie+J6n8SwhCsRsCPkmXthRb+ON9DA
- ha49EQCKp0uVp2//rmAw9i1wPjmKx+VwI3AZ+l4+snSxaDjQMSoAYmsMRoPNh0GPGiZk
- /S7+i5O1tecR2TieEhQfGNjO5WITKa0TMK3NS5jUxUp3+QHyJBy1Nx6Kef8pncQR8+qp
- iy9A/XwuW6ptlqSuQtHBE+4Tl2JCKofCMEQPQiSedtwg9eVBY7q8m4cBUWh/+bATsEFM
- +dJw==
-X-Gm-Message-State: AOJu0YyyZoGB9twjt0oamnkik6vuyKwL+l6aAgyeVDGPoCUksO8BAxmT
- pZDiweLFmhiqolPKPPjqUamx/J7LFTOAoflwOopv6sL11y113t/BUIyVG87WwD67Es/SfjRMgyF
- qVwfr
-X-Gm-Gg: ASbGncvShj7CkPlkWDq/AS2AB+yG7M0DLK+SOF3LLGX1lOlB+nRL6KjxDv5CBEdzQ2y
- Cp54ZMLG20kDnzP53zIrV6LxepyKFv6tEkaNo0K/59+ZGH8LBhtfF/rLRs26UAcgUkr7yYb7mxJ
- LD88k4MBN4qrw26tNfpQ1zEBO5QjJXh+85/wB9GwQt3IrdNJlGhzMwhq/z9igNqQeNHn+VyywEP
- zRoeUuc6nCWTcV9IV+bvsZ5qKuY6S+m/Ei2ZY6f894JRy9sdEpEt2PaVhKskBR9GfYXIialys8e
- +nQq9hLtC6yrBMrnKpaNaY+T9v0ZWpjv+hGBEiO2DDqWGYsHcyV9OusT9G/YZlJUkHJxojd2UNM
- BzDbqOTab4r4tolTCyh8gWK4Bf+7HBPQfcw==
-X-Google-Smtp-Source: AGHT+IGEEI3Q7u6ZuatslwKHRrBhua9lWFmukPxURsRrvbqeM+Mg2RL6jvkvVsVf/9P2gNDCtKhSaA==
-X-Received: by 2002:a05:6000:2385:b0:3a4:d9fa:f1ed with SMTP id
- ffacd0b85a97d-3b8d94727e6mr9184917f8f.13.1754391285808; 
- Tue, 05 Aug 2025 03:54:45 -0700 (PDT)
+ :subject:to:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3XkL/9f0INPK+Aoi8p62Is9/NHBrhuVvKvYDk3tDRMs=;
+ b=NcehSoM43VkInBwVeMOf7ngyekgUC3PMc6fhJn7j7sB0+QaVZaFuvLP0VhrPpo6/DY
+ ASm9FXO6uZNU//FWAWpTTDDNJo3r2JJxwmdmmiAL1zrOFZNShevH8cvUzUG77aSrLVV5
+ AduQmtKfFreyzz3QtvJCuwSs0dFkE6xD5Pgqido5bNmjlkX90Pja0ZKFzvJWrMSemb6I
+ ww7oSJTiepK7AgGTR5R8sUoJJHOvy5vZ7BhgMM8N2ly/MDm4ffKiSkh/f2GdVFfoj0tM
+ jn2k6u/Ip1k3lTSCWdmZrNrdadjesm8djILbMMY4wubGJjgWU4mLGXUmZuTU9q1vrPCd
+ LIvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcGISGJlW5C2P4ivpS7e7Ukfmtjd3zi9PDFE4rZjynV0HJrJ9cK6BaqxEf5aiRaHNJ95NNuv56c2dH@nongnu.org
+X-Gm-Message-State: AOJu0YytHa1tiPrjf2L/e3UwCNZ2uYiag9vy+nnXIlT+xbRrgL0+yCz+
+ b5WGhj+YTgvQNoSvynUHnTwzwauVrqP472vQpel71UqUmFozzztP/5BP1mosNHYq5vc=
+X-Gm-Gg: ASbGncsOfqOpKdP1BHsYJ5bf3uK2rkbA79fqMfvK9VkXJT9kYfFsnpGJiEYLC/DlU6X
+ hoKR26RWy06ubXXOfjWiIXX3xSj2NNtri+sKcFEtCRFt9v1yCwN981g4nFLXydVu7e+se3G7vn7
+ KmHTE/Nk5bvos3/e1FhDsa5FesNbFnvAQLgpRe9y1f/kfMlhWicdhGjdrMDOb7GmiCDevnVO3PF
+ oq8D28pZysBUo6Q4C/iciSnBKHzE9a2gnusS0mqs66tvHiAIFHjN7BF2XBUuNYm4EemC01Tv3aq
+ AfIyVosVHYOcXRHBFFsfU1kOg5caDKoMd7gul1uOf5LgA//R1qaMvAWXunL3kjTA30xgCJkwvB/
+ Jq4AzqIRrrUEkb+0q2PgMANk=
+X-Google-Smtp-Source: AGHT+IFAnKX/Z89m3WnnCJhzvXej2+pObVmj/dRkxabJM2V+0nNMWIPuSEP/dAnFcIsWHA+mHk41vg==
+X-Received: by 2002:a05:600c:3113:b0:43c:eeee:b713 with SMTP id
+ 5b1f17b1804b1-458b6b3312emr97719525e9.20.1754391585907; 
+ Tue, 05 Aug 2025 03:59:45 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3c4beasm18384386f8f.30.2025.08.05.03.54.44
+ ffacd0b85a97d-3b79c3b9eddsm18752439f8f.22.2025.08.05.03.59.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Aug 2025 03:54:45 -0700 (PDT)
+ Tue, 05 Aug 2025 03:59:37 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 356575F7E9;
- Tue, 05 Aug 2025 11:54:44 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A74ED5F7E9;
+ Tue, 05 Aug 2025 11:59:36 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH] readthedocs: don't build extra formats
-In-Reply-To: <aJHU0w0gWe8i2uZ3@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 5 Aug 2025 10:54:27 +0100")
-References: <20250804162959.330060-1-alex.bennee@linaro.org>
- <aJGunKewK5aulbLr@redhat.com> <87cy9a5ec5.fsf@draig.linaro.org>
- <aJHU0w0gWe8i2uZ3@redhat.com>
+To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
+ Burton <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
+ <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, wei.w.wang@intel.com, z.huo@139.com, LIU Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call today @ 13:00 UTC
 User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 05 Aug 2025 11:54:44 +0100
-Message-ID: <87jz3i3uob.fsf@draig.linaro.org>
+Date: Tue, 05 Aug 2025 11:59:36 +0100
+Message-ID: <87ectq3ug7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,43 +125,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Tue, Aug 05, 2025 at 10:04:42AM +0100, Alex Benn=C3=A9e wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Mon, Aug 04, 2025 at 05:29:59PM +0100, Alex Benn=C3=A9e wrote:
->> >> We don't build the PDFs ourselves for the hosted docs and it looks
->> >> like rtd can't manage building PDFs now they have gone over a certain
->> >> size. Disable the extra formats so we can at least have the online
->> >> stuff again.
->> >
->> > Regardless of build problems, IMHO, we should not have been building
->> > the PDFs as no effort is being made to validate that the content is
->> > formatting well under the layout constraints of PDFs
->>=20
->> True.
->>=20
->> I will say the one thing I have found PDFs good for is uploading the
->> docs into a LLM context like NotebookLM. Otherwise you end up having to
->> add individual links which a) is a pain and b) is a potential DDoS
->> source if the model keeps hitting the host which as I'm sure everyone is
->> aware is a problem for FLOSS archives at the moment.
->
-> Is there a "single page HTML" option that would service that need ?
+Hi,
 
-There is an htmlzip format but I think that is just a bundle of html
-files in a zip container. I'll see if there is an all one page option in
-the docs.
+Apologies for the late agenda call, I just returned from PTO and was
+busy getting through the email backlog I forgot to send this out ;-)=20
 
->
-> In general PDFs are a pretty awful format for programatically
-> consuming text, because they have no logical content structure
-> like HTML docs, so I'd expect HTML is a better format to feed
-> into any tool either LLM or not.
->
-> With regards,
-> Daniel
+The KVM/QEMU community call is at:
+
+https://meet.jit.si/kvmcallmeeting
+@
+05/08/2025 13:00 UTC
+
+Are there any agenda items for the sync-up?
 
 --=20
 Alex Benn=C3=A9e
