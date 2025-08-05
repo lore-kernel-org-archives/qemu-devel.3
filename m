@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18574C87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18AEC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujKOb-00010a-4Z; Tue, 05 Aug 2025 12:20:13 -0400
+	id 1ujKSW-0004Nk-Pd; Tue, 05 Aug 2025 12:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujKOZ-0000zr-Pb
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:20:12 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ujKR2-0003E6-Ip
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:22:44 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujKOY-0002AK-7Q
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:20:11 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-458bdde7dedso23811815e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 09:20:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ujKR0-0003dR-IZ
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 12:22:44 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6157b5d0cc2so6361579a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 09:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754410807; x=1755015607; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pndJ/oCc9J2sT2To0zaFh5pDewG2/tVhcrCLG/4h3aM=;
- b=RHfiDZYkhlzi5pRPftkCKidpWaL/gkDcckC2p9+GPdeUX4uQ6/V+HfopiqPNjNbeM5
- c2v+TF0WTCHV83RXi3RGP6fEbjsS45ymPHIFrZHPChPuqBMXH4+WCqQ4pa/2Dx5EZ7mv
- Dc2UFVJKIjU8lTL8mvTBLVT0+sV+MIfC8lMLxe94sGEKLUbOQ+5xzoTFirHbmxytq5aF
- +egDiGWBOFOkPt+mkDVm+CPnucGPUW0aGlI2W3EGHy4sA7czy9JljC+9k6R6mewl0xTw
- dWlNFc5zbN/mvll5alCUnPW7Caai1riuXoPxOSATvxGw4MIkV2H1fzNQyzwVdzOG7RXN
- iTQA==
+ d=linaro.org; s=google; t=1754410961; x=1755015761; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=++cEYbaawf2T0DuNz4NFmETE0GCsQEmrbz338e4ahFE=;
+ b=rhaz+3nAFHvawJZkXgknaKe+Iw3GK5XFnXjaXabwyKoCFTaq8AwWl2ouwtrSvYW6IB
+ Ms5AlbC8P8NUXPlB7ARyDkNKSux8k4Vw4IFMOnsYAZiJvcWV3Usn7XBVxuwLalNJ9NX9
+ bbAx+9BE0NzBxQfDIiGsh5EhrVsyGXm14d2b+hOU1tw0gWnJKpvV/3nN0ruAq73G4MB1
+ Lv/a1fhFOGJgM1vqtaWpeOFrQ3NHIa7xPR7fJjhP7z7/GCHnrncTwXzMM4S3YWG+cuDm
+ /hxZeKapDkd8rAL5JUzRUKQQzY+qrBIthlA/0RUX/rz3UbmDe3AUGOnjQMJ42CrHXg2s
+ t0yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754410807; x=1755015607;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pndJ/oCc9J2sT2To0zaFh5pDewG2/tVhcrCLG/4h3aM=;
- b=Qp8v/KLlwFfaDeSUr+U/jo04c2anIQG+glvtW+d39hFkow+tMcf9tOF/TllIjLFT5O
- vqF9zIenpe2H9JP3wjV/7Legft0x6PtSv3X4IMJp7kCW5C0e8HtVHaxl1KaHpe3ubp9i
- 0nvBCy5jBxbYY4xqo4oe/xmLUSU4brApIvvwoE5j0YXcL2SbxOJ2Ige2Q21+Tct87NbS
- J/riFw0yo1NB4Qc2+xXmCpRKGVPe1bmhtSgUt4QZdwtXg+FrSukfRg9tRr8rOr9z9PkV
- Zpadh2K3mIe8Kub8wbtFZsDiSB3fkwYiRiHuO/pE09ZBf+CidcGtkloArzuBWxfrHcz+
- MAjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuj+AUPg0F9tpgvrDtYvs3043kaiobE9edewFnqbhfvajTEr2Gi6yPJMxGlaM6S18Z3hXUosJvFSm0@nongnu.org
-X-Gm-Message-State: AOJu0YztAykQlGvFpuK5HnXCfuuOOxk6lF8lgxyd4Es+VZHz+gXovhlH
- XqrtN5j1K+t2GbHmdaikaKaE3pb0+L1c1m24xPX8Ai1os0B3CsvskOaC0dcTYqzcoFQ=
-X-Gm-Gg: ASbGncuWzjXAvG65T/xNc8XBKGu0I5lFBZBBMeeBLTe+/e+qhLFhA7AiL5Be1oumSdW
- MN7UzJWDr1KMm8SChqA/lcI5PdTgePsvMBJnH0wF8JJsY0TbKQ3j4MquJEsu2AowoTHO/WpdISW
- xHciQF7w9DT8TEl3fhb5Yzu7OQuJFWdrDx7iOIiKKPaBsCYkcYbZRFvEIvU7EuKnCqbErdR/1/i
- 3lYIn/2Hie9SRTpvkzQCtoL9F8oCGGgixps71M+SKs8FN2rndR/P5axY19oQRWoFabqMQTxMrXD
- 1AHk31PpgRZ6yl+fj+tFhz9o8l++I6yG6sZ185IgApPgH7SrRBRjh2Uz/N5I/N7RQYY+8WjXbHC
- al1eyc0A834kHbIPzYrxut6/N9HQcyBSUeVxrC4xJhHkWj8s+F5iw6whmcCbShBJoQS18mpuIE5
- hT
-X-Google-Smtp-Source: AGHT+IFQqnFVR0W3ddeHFq7evp/ZjsGpsqj6Q2CoaggHt7UeHYJruMK77S+DvxlTy+cXjkpKOs//sw==
-X-Received: by 2002:a05:6000:26d0:b0:3b7:886b:fb76 with SMTP id
- ffacd0b85a97d-3b8d946ad32mr9972439f8f.12.1754410807279; 
- Tue, 05 Aug 2025 09:20:07 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3c4d02sm19339182f8f.33.2025.08.05.09.20.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Aug 2025 09:20:06 -0700 (PDT)
-Message-ID: <4a1b080c-e3fb-461f-bb02-50a78a74b0cc@linaro.org>
-Date: Tue, 5 Aug 2025 18:20:05 +0200
+ d=1e100.net; s=20230601; t=1754410961; x=1755015761;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=++cEYbaawf2T0DuNz4NFmETE0GCsQEmrbz338e4ahFE=;
+ b=GMTtDO8CEMj+pvhDWQwmLuDrfx2IwXTp5fWMfabve8qUMsSlgID1C0pM8VYh3I/jnA
+ oH/y1W6bgAnGrwbaYWmzYEi0P5+siJABM3Hinhn1m7Cm5P9RiknYsCTUoMwBumITEthN
+ nAKleorP2nd7OUIp8ugCkDXz9EdQWQ8AFJEk1J0WLc6sobjJZOv+E8vKQ/U//WpRJTvc
+ Ob2c9kcM8N49i7Yr4PeiCyKjCh6ntWsTtuZC4v7u1gc/4xi/VEDV6AJr2O5X+pFs0Njb
+ 52zZHdNT6lJrJp44EbqyfVX1wWYCy8yPFRHwFJAzwMX4GXxAh/7gj5KIUKNBaZEppBNI
+ EaDA==
+X-Gm-Message-State: AOJu0YzOi7TZuux1j8oClbFkYMNJV5OR5IiwhmJP43jCiPxSFwIAhssV
+ S1pzaRgJL9AyPvbFJHz7HzVRLt17ewnRMdohzKha+itajZV2I6PoaJYEzDq4CGBAHZmwLy55OkB
+ TCbY26xaqEaFWglMMTiVsHrZVfrJpAO6G3xLKChRqZw==
+X-Gm-Gg: ASbGncsqiLSJaNzQSRqxeR8U/kgiNJKAvgH2nFfANRegFF+Oh4re5EHpEEnJY9zUh3/
+ 3UBdsvplCerRzZSgsDtuzbvlCNZSEi4IBFqBQn/RbXgnw2R1X0KXGfN7yJhL0nhq7Hhz31zOExv
+ 2vikY+Wouy4nM4qKStbxsQqfLvbo/V+vpvJeM8+DXXNYbuMHubMowqmBPK5iiUMmwt73WoTs1yQ
+ lsGlYFu2wLBt+TQdNQ=
+X-Google-Smtp-Source: AGHT+IH5q5nA9iaKa5Jxz4ryUrE43Wp+xzKDDAUUPB84T0+2YLQo/pX+EjqpqxufmSQZPNcGT4HhjJ+ZS9N9y6yhsuE=
+X-Received: by 2002:a05:6402:26cf:b0:615:920d:4de5 with SMTP id
+ 4fb4d7f45d1cf-615e6ed63a5mr10518670a12.12.1754410960781; Tue, 05 Aug 2025
+ 09:22:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Asking for an account on the Qemu wiki
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-References: <A9FEEF2A-5443-4BB1-8C4B-5B6F974D1D66@unpredictable.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <A9FEEF2A-5443-4BB1-8C4B-5B6F974D1D66@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+References: <20250805-backtrace-v1-1-d189d09b1e92@linaro.org>
+ <aJIqdQSYXO4K6lCJ@redhat.com>
+In-Reply-To: <aJIqdQSYXO4K6lCJ@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 5 Aug 2025 19:22:14 +0300
+X-Gm-Features: Ac12FXwXyL5I_1kHSEpFuRGcJncA-WhGXMVCkdBzUx9u_y6_n9Q8AtPzxazWpKA
+Message-ID: <CAAjaMXY1ytnhp+APdwM39-K=Mu=5p8W=MEUVvLers3M=rLS6Qw@mail.gmail.com>
+Subject: Re: [PATCH RFC] util/error.c: Print backtrace on error
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,11 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 17:18, Mohamed Mediouni wrote:
-> Hello,
-> 
-> Just a random email to ask for an account there :)
+On Tue, Aug 5, 2025 at 7:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Tue, Aug 05, 2025 at 12:19:26PM +0300, Manos Pitsidianakis wrote:
+> > Add a backtrace_on_error meson feature (enabled with
+> > --enable-backtrace-on-error) that compiles system binaries with
+> > -rdynamic option and prints a function backtrace on error to stderr.
+> >
+> > Example output by adding an unconditional error_setg on error_abort in =
+hw/arm/boot.c:
+> >
+> >   ./qemu-system-aarch64(+0x13b4a2c) [0x55d015406a2c]
+> >   ./qemu-system-aarch64(+0x13b4abd) [0x55d015406abd]
+> >   ./qemu-system-aarch64(+0x13b4d49) [0x55d015406d49]
+> >   ./qemu-system-aarch64(error_setg_internal+0xe7) [0x55d015406f62]
+> >   ./qemu-system-aarch64(arm_load_dtb+0xbf) [0x55d014d7686f]
+> >   ./qemu-system-aarch64(+0xd2f1d8) [0x55d014d811d8]
+> >   ./qemu-system-aarch64(notifier_list_notify+0x44) [0x55d01540a282]
+> >   ./qemu-system-aarch64(qdev_machine_creation_done+0xa0) [0x55d01476ae1=
+7]
+> >   ./qemu-system-aarch64(+0xaa691e) [0x55d014af891e]
+> >   ./qemu-system-aarch64(qmp_x_exit_preconfig+0x72) [0x55d014af8a5d]
+> >   ./qemu-system-aarch64(qemu_init+0x2a89) [0x55d014afb657]
+> >   ./qemu-system-aarch64(main+0x2f) [0x55d01521e836]
+> >   /lib/x86_64-linux-gnu/libc.so.6(+0x29ca8) [0x7f3033d67ca8]
+> >   /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x85) [0x7f3033d67d=
+65]
+> >   ./qemu-system-aarch64(_start+0x21) [0x55d0146814f1]
+> >
+> >   Unexpected error in arm_load_dtb() at ../hw/arm/boot.c:529:
+>
+> From an end-user POV, IMHO the error messages need to be good enough
+> that such backtraces aren't needed to understand the problem. For
+> developers, GDB can give much better backtraces (file+line numbers,
+> plus parameters plus local variables) in the ideally rare cases that
+> the error message alone has insufficient info. So I'm not really
+> convinced that programs (in general, not just QEMU) should try to
+> create backtraces themselves.
 
-Done (credentials sent off-list).
+Hi Daniel,
 
+I don't think there's value in replacing gdb debugging with this, I
+agree. I think it has value for "fire and forget" uses, when errors
+happen unexpectedly and are hard to replicate and you only end up with
+log entries and no easy way to debug it.
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
