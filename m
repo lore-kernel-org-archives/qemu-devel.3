@@ -4,51 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E1AC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 13:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B765DC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 13:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujHmL-00087v-K7; Tue, 05 Aug 2025 09:32:33 -0400
+	id 1ujI0r-0004AU-3t; Tue, 05 Aug 2025 09:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <macbookpro@macbookpros-MacBook-Pro.local>)
- id 1ujHmF-00080u-FR
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:32:27 -0400
-Received: from [205.220.128.102] (helo=macbookpros-MacBook-Pro.local)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <macbookpro@macbookpros-MacBook-Pro.local>)
- id 1ujHmA-0007xj-PN
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:32:27 -0400
-Received: by macbookpros-MacBook-Pro.local (Postfix, from userid 501)
- id 16B14B3D8ACF; Thu, 31 Jul 2025 20:42:42 +0300 (EEST)
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- startergo <startergo@protonmail.com>, Kamay Xutax <admin@xutaxkamay.com>
-Subject: [PATCH] ui/sdl2: Add SDL clipboard support
-Date: Thu, 31 Jul 2025 20:42:42 +0300
-Message-ID: <20250731174242.65816-1-startergo@protonmail.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujHyG-0001aN-2i
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:44:59 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujHyB-0003p3-Kg
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:44:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3C1761F38A;
+ Tue,  5 Aug 2025 13:44:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754401484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aW9Iuv5VtQ655HzAUHrz8aKWSDweVA8PO0HuouMK3yE=;
+ b=K4J2RcWBp5hUl7A2ota9XCOFMadSvTI9EpU0V/0t1lU4K0Q3FGlnFMN7o9mH7ARe3eAsfh
+ DY6uFX68NCdTNbZ2InQt0GpsIIbn86VkSHVvY9IfjON0Iol4UZnnnlZuC7/OEHFEl1abZX
+ PUsyLhXRGId0xG3pqXSfP0V2os4WRYY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754401484;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aW9Iuv5VtQ655HzAUHrz8aKWSDweVA8PO0HuouMK3yE=;
+ b=P/07b+5QDAClKwtlaGWvpR9rrlnHFhLbStMQOk7oF8G2BLAH4RPlYaT4BAFUA/xP+PAYJx
+ QqyevV9Oyd9fk6AQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754401484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aW9Iuv5VtQ655HzAUHrz8aKWSDweVA8PO0HuouMK3yE=;
+ b=K4J2RcWBp5hUl7A2ota9XCOFMadSvTI9EpU0V/0t1lU4K0Q3FGlnFMN7o9mH7ARe3eAsfh
+ DY6uFX68NCdTNbZ2InQt0GpsIIbn86VkSHVvY9IfjON0Iol4UZnnnlZuC7/OEHFEl1abZX
+ PUsyLhXRGId0xG3pqXSfP0V2os4WRYY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754401484;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aW9Iuv5VtQ655HzAUHrz8aKWSDweVA8PO0HuouMK3yE=;
+ b=P/07b+5QDAClKwtlaGWvpR9rrlnHFhLbStMQOk7oF8G2BLAH4RPlYaT4BAFUA/xP+PAYJx
+ QqyevV9Oyd9fk6AQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B0FE613A55;
+ Tue,  5 Aug 2025 13:44:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aHuqHMsKkmi6IQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Aug 2025 13:44:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org, Peter Xu
+ <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
+ functional
+In-Reply-To: <aJHYSwGXTOF4o00n@redhat.com>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <d5xctfzcrtbanvkndamonxgqo3tc5nejhyrvh54m3y5bhg4cms@ue7siue2yw7o>
+ <87jz3i3n0u.fsf@suse.de> <aJHYSwGXTOF4o00n@redhat.com>
+Date: Tue, 05 Aug 2025 10:44:41 -0300
+Message-ID: <87h5yl3mt2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 205.220.128.102 (deferred)
-Received-SPF: none client-ip=205.220.128.102;
- envelope-from=macbookpro@macbookpros-MacBook-Pro.local;
- helo=macbookpros-MacBook-Pro.local
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, NO_DNS_FOR_FROM=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_NONE=0.001, SPOOFED_FREEMAIL=0.001,
- SPOOFED_FREEMAIL_NO_RDNS=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,312 +118,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  startergo <startergo@protonmail.com>
-From:  startergo via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement bidirectional clipboard integration between QEMU and host
-system when using the SDL display backend. This allows seamless
-copy-paste operations between the guest and host environments.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Features:
-- Bidirectional clipboard sync (guest ↔ host)
-- Async clipboard request handling to prevent blocking
-- Self-update detection to avoid clipboard manager conflicts
-- Configurable via --enable-sdl-clipboard build option
-- Text-only clipboard support (following existing QEMU patterns)
+> On Mon, Aug 04, 2025 at 04:27:45PM -0300, Fabiano Rosas wrote:
+>> Juraj Marcin <jmarcin@redhat.com> writes:
+>>=20
+>> > Hi Daniel,
+>> >
+>> > On 2025-08-01 18:02, Daniel P. Berrang=C3=A9 wrote:
+>> >> This is a followup to previously merged patches that claimed to
+>> >> workaround the gnutls bug impacting migration, but in fact were
+>> >> essentially non-functional. Juraj Marcin pointed this out, and
+>> >> this new patch tweaks the workaround to make it actually do
+>> >> something useful.
+>> >>=20
+>> >> Daniel P. Berrang=C3=A9 (2):
+>> >>   migration: simplify error reporting after channel read
+>> >>   migration: fix workaround for gnutls thread safety
+>> >>=20
+>> >>  crypto/tlssession.c   | 16 ----------------
+>> >>  migration/qemu-file.c | 22 +++++++++++++++++-----
+>> >>  2 files changed, 17 insertions(+), 21 deletions(-)
+>> >>=20
+>> >
+>> > thanks for finding a fix for the workaround. I have tested it and it
+>> > resolves the issue.
+>> >
+>> > However, it significantly slows down migration, even with the workarou=
+nd
+>> > disabled (and thus no locking). When benchmarking, I used the fixed
+>> > version of GNUTLS, VM with 20GB of RAM which were fully written to
+>> > before starting a normal migration with no workload during the
+>> > migration.
+>> >
+>> > Test cases:
+>> > [1]: before this patchset
+>> > [2]: with this patchset applied and GNUTLS workaround enabled
+>> > [2]: with this patchset applied and GNUTLS workaround disabled
+>> >
+>> >   | Total time | Throughput | Transfered bytes |
+>> > --+------------+------------+------------------+
+>> > 1 |  31 192 ms |  5450 mpbs |   21 230 973 763 |
+>> > 2 |  74 147 ms |  2291 mbps |   21 232 849 066 |
+>> > 3 |  72 426 ms |  2343 mbps |   21 215 009 392 |
+>>=20
+>> Thanks testing this. I had just managed to convince myself that there
+>> wouldn't be any performance issues.
+>>=20
+>> The yield at every buffer fill on the incoming side is probably way more
+>> impactful than the poll on the RP.
+>
+> Yeah, that's an unacceptable penalty on the incoming side for sure.
+>
+> How about we simply change the outbound migration channel to be in
+> non-blocking mode ?   I originally put it in blocking mode way back
+> in 9e4d2b98ee98f4cee50d671e500eceeefa751ee0, but if I look at the
+> QEMUFile impl of qemu_fill_buffer and qemu_fflush, but should be
+> coping with a non-blocking socket. qemu_fill_buffer has explicit
+> code to wait, and qemu_fflush uses the _all() variant whcih has
+> built-in support for waiting. So I'm not seeing an obvious need
+> to run the channel in blocking mode.
+>
 
-The implementation follows the same patterns used by the existing
-GTK and VNC clipboard implementations, integrating with QEMU's
-clipboard subsystem through QemuClipboardPeer.
+It's definitely simpler and I think it works. It's uncomfortably late
+though to add a bunch of glib event loop code to the migration
+thread. Is the suggestion of moving the yield to tlssession.c even
+feasible?
 
-Tested on macOS with successful build and runtime clipboard
-functionality verification.
+Juraj, are you able to get some numbers with this?
 
-Co-authored-by: Kamay Xutax <admin@xutaxkamay.com>
-Signed-off-by: startergo <startergo@protonmail.com>
----
- include/ui/sdl2.h   |  12 ++++
- meson.build         |   3 +
- meson_options.txt   |   2 +
- ui/meson.build      |   3 +
- ui/sdl2-clipboard.c | 154 ++++++++++++++++++++++++++++++++++++++++++++
- ui/sdl2.c           |   9 +++
- 6 files changed, 183 insertions(+)
- create mode 100644 ui/sdl2-clipboard.c
-
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index dbe6e3d973..0cadbe8c1c 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -21,6 +21,10 @@
- # include <SDL_image.h>
- #endif
- 
-+#ifdef CONFIG_SDL_CLIPBOARD
-+#include "ui/clipboard.h"
-+#endif
-+
- #include "ui/kbd-state.h"
- #ifdef CONFIG_OPENGL
- # include "ui/egl-helpers.h"
-@@ -45,6 +49,9 @@ struct sdl2_console {
-     bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
-+#ifdef CONFIG_SDL_CLIPBOARD
-+    QemuClipboardPeer cbpeer;
-+#endif
- #ifdef CONFIG_OPENGL
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -97,4 +104,9 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
- void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
-                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
- 
-+#ifdef CONFIG_SDL_CLIPBOARD
-+void sdl2_clipboard_init(struct sdl2_console *scon);
-+void sdl2_clipboard_handle_request(struct sdl2_console *scon);
-+#endif
-+
- #endif /* SDL2_H */
-diff --git a/meson.build b/meson.build
-index 41f68d3806..4a37df9669 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1596,6 +1596,8 @@ else
-   sdl_image = not_found
- endif
- 
-+have_sdl_clipboard = sdl.found() and get_option('sdl_clipboard')
-+
- rbd = not_found
- if not get_option('rbd').auto() or have_block
-   librados = cc.find_library('rados', required: get_option('rbd'))
-@@ -2511,6 +2513,7 @@ config_host_data.set('CONFIG_RELOCATABLE', get_option('relocatable'))
- config_host_data.set('CONFIG_SAFESTACK', get_option('safe_stack'))
- config_host_data.set('CONFIG_SDL', sdl.found())
- config_host_data.set('CONFIG_SDL_IMAGE', sdl_image.found())
-+config_host_data.set('CONFIG_SDL_CLIPBOARD', have_sdl_clipboard)
- config_host_data.set('CONFIG_SECCOMP', seccomp.found())
- if seccomp.found()
-   config_host_data.set('CONFIG_SECCOMP_SYSRAWRC', seccomp_has_sysrawrc)
-diff --git a/meson_options.txt b/meson_options.txt
-index 59d973bca0..be2cba3a30 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -212,6 +212,8 @@ option('sdl', type : 'feature', value : 'auto',
-        description: 'SDL user interface')
- option('sdl_image', type : 'feature', value : 'auto',
-        description: 'SDL Image support for icons')
-+option('sdl_clipboard', type : 'boolean', value : true,
-+       description: 'SDL clipboard support')
- option('seccomp', type : 'feature', value : 'auto',
-        description: 'seccomp support')
- option('smartcard', type : 'feature', value : 'auto',
-diff --git a/ui/meson.build b/ui/meson.build
-index 35fb04cadf..6d1bf3477e 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -126,6 +126,9 @@ if sdl.found()
-     'sdl2-input.c',
-     'sdl2.c',
-   ))
-+  if have_sdl_clipboard
-+    sdl_ss.add(files('sdl2-clipboard.c'))
-+  endif
-   sdl_ss.add(when: opengl, if_true: files('sdl2-gl.c'))
-   sdl_ss.add(when: x11, if_true: files('x_keymap.c'))
-   ui_modules += {'sdl' : sdl_ss}
-diff --git a/ui/sdl2-clipboard.c b/ui/sdl2-clipboard.c
-new file mode 100644
-index 0000000000..e50ff11d5a
---- /dev/null
-+++ b/ui/sdl2-clipboard.c
-@@ -0,0 +1,154 @@
-+/*
-+ * SDL UI -- clipboard support (improved async version)
-+ *
-+ * Copyright (C) 2023 Kamay Xutax <admin@xutaxkamay.com>
-+ * Copyright (C) 2025 startergo <startergo@protonmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "ui/console.h"
-+#include "ui/clipboard.h"
-+#include "ui/sdl2.h"
-+#include "qemu/log.h"
-+
-+#ifdef CONFIG_SDL_CLIPBOARD
-+
-+/* Track pending clipboard requests to handle async data */
-+typedef struct {
-+    struct sdl2_console *scon;
-+    QemuClipboardInfo *info;
-+    QemuClipboardType type;
-+} SDLClipboardRequest;
-+
-+static SDLClipboardRequest *pending_request = NULL;
-+
-+static void sdl2_clipboard_clear_pending(void)
-+{
-+    if (pending_request) {
-+        if (pending_request->info) {
-+            qemu_clipboard_info_unref(pending_request->info);
-+        }
-+        g_free(pending_request);
-+        pending_request = NULL;
-+    }
-+}
-+
-+static void sdl2_clipboard_notify(Notifier *notifier, void *data)
-+{
-+    QemuClipboardNotify *notify = data;
-+    struct sdl2_console *scon =
-+        container_of(notifier, struct sdl2_console, cbpeer.notifier);
-+    bool self_update = notify->info->owner == &scon->cbpeer;
-+    const char *text_data;
-+    size_t text_size;
-+
-+    switch (notify->type) {
-+    case QEMU_CLIPBOARD_UPDATE_INFO:
-+        {
-+            /* Skip self-updates to avoid clipboard manager conflicts */
-+            if (self_update) {
-+                return;
-+            }
-+
-+            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].available) {
-+                return;
-+            }
-+
-+            /* Check if this is completion of our pending request */
-+            if (pending_request && pending_request->info == notify->info && 
-+                pending_request->type == QEMU_CLIPBOARD_TYPE_TEXT) {
-+                sdl2_clipboard_clear_pending();
-+            }
-+
-+            /* Check if data is available, request asynchronously if not */
-+            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].data) {
-+                if (!pending_request) {
-+                    pending_request = g_new0(SDLClipboardRequest, 1);
-+                    pending_request->scon = scon;
-+                    pending_request->info = qemu_clipboard_info_ref(notify->info);
-+                    pending_request->type = QEMU_CLIPBOARD_TYPE_TEXT;
-+                    qemu_clipboard_request(notify->info, QEMU_CLIPBOARD_TYPE_TEXT);
-+                }
-+                return;
-+            }
-+
-+            /* Process available data */
-+            text_size = notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].size;
-+            if (text_size == 0) {
-+                return;
-+            }
-+
-+            text_data = (const char *)notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].data;
-+            
-+            /* Ensure null termination for SDL clipboard */
-+            g_autofree char *text = g_strndup(text_data, text_size);
-+            if (text && text[0] != '\0') {
-+                SDL_SetClipboardText(text);
-+            } else if (!text) {
-+                qemu_log_mask(LOG_GUEST_ERROR, 
-+                              "SDL clipboard: Failed to allocate memory for clipboard text\n");
-+            }
-+            break;
-+        }
-+    case QEMU_CLIPBOARD_RESET_SERIAL:
-+        sdl2_clipboard_clear_pending();
-+        break;
-+    }
-+}
-+
-+static void sdl2_clipboard_request(QemuClipboardInfo *info,
-+                                   QemuClipboardType type)
-+{
-+    g_autofree char *text = NULL;
-+
-+    if (type != QEMU_CLIPBOARD_TYPE_TEXT) {
-+        return;
-+    }
-+
-+    text = SDL_GetClipboardText();
-+    if (!text) {
-+        qemu_log_mask(LOG_GUEST_ERROR, 
-+                      "SDL clipboard: Failed to get clipboard text: %s\n", 
-+                      SDL_GetError());
-+        return;
-+    }
-+
-+    qemu_clipboard_set_data(info->owner, info, type,
-+                            strlen(text), text, true);
-+}
-+
-+void sdl2_clipboard_init(struct sdl2_console *scon)
-+{
-+    scon->cbpeer.name = "sdl2-clipboard";
-+    scon->cbpeer.notifier.notify = sdl2_clipboard_notify;
-+    scon->cbpeer.request = sdl2_clipboard_request;
-+
-+    qemu_clipboard_peer_register(&scon->cbpeer);
-+}
-+
-+void sdl2_clipboard_handle_request(struct sdl2_console *scon)
-+{
-+    g_autofree char *text = NULL;
-+    QemuClipboardInfo *info;
-+
-+    text = SDL_GetClipboardText();
-+    if (!text) {
-+        qemu_log_mask(LOG_GUEST_ERROR, 
-+                      "SDL clipboard: Failed to get clipboard text: %s\n", 
-+                      SDL_GetError());
-+        return;
-+    }
-+
-+    if (text[0] == '\0') {
-+        return; /* Ignore empty clipboard */
-+    }
-+
-+    info = qemu_clipboard_info_new(&scon->cbpeer, QEMU_CLIPBOARD_SELECTION_CLIPBOARD);
-+    qemu_clipboard_set_data(&scon->cbpeer, info, QEMU_CLIPBOARD_TYPE_TEXT,
-+                            strlen(text), text, true);
-+    qemu_clipboard_info_unref(info);
-+}
-+
-+#endif /* CONFIG_SDL_CLIPBOARD */
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index cda4293a53..00a17b68a7 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -691,6 +691,11 @@ void sdl2_poll_events(struct sdl2_console *scon)
-         case SDL_WINDOWEVENT:
-             handle_windowevent(ev);
-             break;
-+#ifdef CONFIG_SDL_CLIPBOARD
-+        case SDL_CLIPBOARDUPDATE:
-+            sdl2_clipboard_handle_request(scon);
-+            break;
-+#endif
-         default:
-             break;
-         }
-@@ -901,6 +906,10 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         }
-         register_displaychangelistener(&sdl2_console[i].dcl);
- 
-+#ifdef CONFIG_SDL_CLIPBOARD
-+        sdl2_clipboard_init(&sdl2_console[i]);
-+#endif
-+
- #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
-         if (SDL_GetWindowWMInfo(sdl2_console[i].real_window, &info)) {
- #if defined(SDL_VIDEO_DRIVER_WINDOWS)
--- 
-2.50.1
-
+> Using non-blocking will prevent the return path thuread setting
+> in a read() call, so we won't have mutual exclusion between read
+> and write which this patch was trying to avoid
+>
+> ie, this delta on top of this patch:
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 10c216d25d..1eaabc1f19 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -4002,7 +4002,7 @@ void migration_connect(MigrationState *s, Error *er=
+ror_in)
+>      }
+>=20=20
+>      migration_rate_set(rate_limit);
+> -    qemu_file_set_blocking(s->to_dst_file, true);
+> +    qemu_file_set_blocking(s->to_dst_file, false);
+>=20=20
+>      /*
+>       * Open the return path. For postcopy, it is used exclusively. For
+> diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> index cf6115e699..8ee44c5ac9 100644
+> --- a/migration/qemu-file.c
+> +++ b/migration/qemu-file.c
+> @@ -338,22 +338,6 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(Q=
+EMUFile *f)
+>          return 0;
+>      }
+>=20=20
+> -    /*
+> -     * This feature triggers acquisition of mutexes around every
+> -     * read and write. Thus we must not sit in a blocking read
+> -     * if this is set, but must instead poll proactively. This
+> -     * does not work with some channel types, however, so must
+> -     * only pre-poll when the featre is set.
+> -     */
+> -    if (qio_channel_has_feature(f->ioc,
+> -                                QIO_CHANNEL_FEATURE_CONCURRENT_IO)) {
+> -        if (qemu_in_coroutine()) {
+> -            qio_channel_yield(f->ioc, G_IO_IN);
+> -        } else {
+> -            qio_channel_wait(f->ioc, G_IO_IN);
+> -        }
+> -    }
+> -
+>      do {
+>          struct iovec iov =3D { f->buf + pending, IO_BUF_SIZE - pending };
+>          len =3D qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
+>
+>
+> With regards,
+> Daniel
 
