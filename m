@@ -4,112 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EDBC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 11:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F1CC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 11:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujFPa-0004HJ-An; Tue, 05 Aug 2025 07:00:55 -0400
+	id 1ujGBF-0001ge-PD; Tue, 05 Aug 2025 07:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ujFOX-0003u6-Hp
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:59:54 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ujFOV-0002Ls-Mx
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 06:59:49 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4563cfac2d2so39027685e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 03:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754391586; x=1754996386; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3XkL/9f0INPK+Aoi8p62Is9/NHBrhuVvKvYDk3tDRMs=;
- b=KXFImeWx10mZSCYxdxOL2PZBkzi+ZTVs6PdU9/sJRmChad6lPvFR+Mg7pKeSXfb63z
- b2NR0AJ+FpPyG7zBQLv2xH6jbP0gVsoiPnlExuoeZPN1KGxZdABeFilC8QDQucTf572z
- EyeB+9U4sQvSxB5c0o9kF3ivjfvwe7dx5oee7VVGKoYD3dWrqI4pOxPzczUPE0VTquIQ
- ctNsmZgUjPAmL6D/HHK4TqOs+zYwpbiu5YCe8PdlN2tkfDvEojtgnL9nNaXL60vBTU1r
- U1lcskGjdeJVRnHN0wjO4GiNArQt9Aav7E4rHQC9sOtwnYadQb4ZcXWtmrrZp30QKKvx
- zrwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754391586; x=1754996386;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3XkL/9f0INPK+Aoi8p62Is9/NHBrhuVvKvYDk3tDRMs=;
- b=NcehSoM43VkInBwVeMOf7ngyekgUC3PMc6fhJn7j7sB0+QaVZaFuvLP0VhrPpo6/DY
- ASm9FXO6uZNU//FWAWpTTDDNJo3r2JJxwmdmmiAL1zrOFZNShevH8cvUzUG77aSrLVV5
- AduQmtKfFreyzz3QtvJCuwSs0dFkE6xD5Pgqido5bNmjlkX90Pja0ZKFzvJWrMSemb6I
- ww7oSJTiepK7AgGTR5R8sUoJJHOvy5vZ7BhgMM8N2ly/MDm4ffKiSkh/f2GdVFfoj0tM
- jn2k6u/Ip1k3lTSCWdmZrNrdadjesm8djILbMMY4wubGJjgWU4mLGXUmZuTU9q1vrPCd
- LIvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcGISGJlW5C2P4ivpS7e7Ukfmtjd3zi9PDFE4rZjynV0HJrJ9cK6BaqxEf5aiRaHNJ95NNuv56c2dH@nongnu.org
-X-Gm-Message-State: AOJu0YytHa1tiPrjf2L/e3UwCNZ2uYiag9vy+nnXIlT+xbRrgL0+yCz+
- b5WGhj+YTgvQNoSvynUHnTwzwauVrqP472vQpel71UqUmFozzztP/5BP1mosNHYq5vc=
-X-Gm-Gg: ASbGncsOfqOpKdP1BHsYJ5bf3uK2rkbA79fqMfvK9VkXJT9kYfFsnpGJiEYLC/DlU6X
- hoKR26RWy06ubXXOfjWiIXX3xSj2NNtri+sKcFEtCRFt9v1yCwN981g4nFLXydVu7e+se3G7vn7
- KmHTE/Nk5bvos3/e1FhDsa5FesNbFnvAQLgpRe9y1f/kfMlhWicdhGjdrMDOb7GmiCDevnVO3PF
- oq8D28pZysBUo6Q4C/iciSnBKHzE9a2gnusS0mqs66tvHiAIFHjN7BF2XBUuNYm4EemC01Tv3aq
- AfIyVosVHYOcXRHBFFsfU1kOg5caDKoMd7gul1uOf5LgA//R1qaMvAWXunL3kjTA30xgCJkwvB/
- Jq4AzqIRrrUEkb+0q2PgMANk=
-X-Google-Smtp-Source: AGHT+IFAnKX/Z89m3WnnCJhzvXej2+pObVmj/dRkxabJM2V+0nNMWIPuSEP/dAnFcIsWHA+mHk41vg==
-X-Received: by 2002:a05:600c:3113:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-458b6b3312emr97719525e9.20.1754391585907; 
- Tue, 05 Aug 2025 03:59:45 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3b9eddsm18752439f8f.22.2025.08.05.03.59.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Aug 2025 03:59:37 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A74ED5F7E9;
- Tue, 05 Aug 2025 11:59:36 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake
- <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
- <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, wei.w.wang@intel.com, z.huo@139.com, LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call today @ 13:00 UTC
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 05 Aug 2025 11:59:36 +0100
-Message-ID: <87ectq3ug7.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1ujGB0-0001bT-D3
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 07:49:56 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1ujGAy-0000lf-BX
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 07:49:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=DeANdghr6YRWM2F9v24hE93qEKc1fic5Damib2N+vyo=; b=A1tv1D9tPrGz7qIBJoe6bifYk8
+ u+MxrvOblQJlQnJzccmWLXf1AX4xV+nRu+vLqfIFc9tMf1dZIRcx2uOkSUWKhzVCP6fbWIPF6vYnk
+ cnweXLJP9rYqOohLYg+Rxgq1YMmIu/Mo8UoS6aXZS/MmjxnIcJ3UyASoXv/zeMPR+sNUPkCM6/LuE
+ /rnIVyfls1BNvosRqZKnsf5hOrVMDBtq/MZUTGQ4HoZn0XtlBIsClM3zqf54daNtv34hu6PPXC2jf
+ SU/VcT/3stdY2w7/C3EP7woToTMbdvfRoALyuZ2jYoHCtiaxhD3/HaQyxScSslaKjTA4cqTEaJ/KA
+ j3AfMbcYcU6uoA0ZP750ucLk8hrgsl8xAGTvQneovZW4JMtMgIaQaL0S9pvtDenxZBdwg3GiU2VD2
+ iuiDW80yoVIw71VVsN3c57HZ/U/cB8MpDEiliS1XMnF/Rocwh5G5FZK74GWuiUwmcVpVGgsCSYPpH
+ FRI16m210rhUj5T3K15FxdsD9rG/5DJQpUDUZFXAo2fdDVHsVpNe0FTuFYXPXoF/uZIRDxkcwFPwP
+ 1rMayhg7VILYEx7eDsr5f9637gly/RsYpMR5mFjkOY7QXbQQc22eZG5c91QiQAjtlI075cnTnTu/v
+ VhXtIdicaUaeYHH7PBs/52kvENS+6JffuEjjRbY3o=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Mark Johnston <markj@freebsd.org>
+Cc: Greg Kurz <groug@kaod.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Marc=2DAndr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?ISO-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH] 9pfs: Add FreeBSD support
+Date: Tue, 05 Aug 2025 13:49:44 +0200
+Message-ID: <2268148.dRjqHlHdj4@silver>
+In-Reply-To: <aIos9lb1dBuDBq2E@nuc>
+References: <aIEGDjMex-DG-pmr@nuc> <1989897.fkXqvmx5VE@silver>
+ <aIos9lb1dBuDBq2E@nuc>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,21 +73,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wednesday, July 30, 2025 4:32:22 PM CEST Mark Johnston wrote:
+> On Tue, Jul 29, 2025 at 06:09:35PM +0200, Christian Schoenebeck wrote:
+> > On Wednesday, July 23, 2025 5:55:58 PM CEST Mark Johnston wrote:
+[...]
+> Thank you for taking a look.
+> 
+> I'll certainly be around to help deal with issues and patches relating
+> to 9pfs+FreeBSD hosts.  It's hard to prove that, but for what it's worth
+> I use QEMU fairly extensively for FreeBSD development when I can't use
+> the native hypervisor, and that's not likely to change anytime soon.
+> 
+> Would adding myself to MAINTAINERS for virtio-9pfs (or a new
+> virtio-9pfs-freebsd category) be appropriate in that case?
 
-Hi,
+Good to hear that you will be around!
 
-Apologies for the late agenda call, I just returned from PTO and was
-busy getting through the email backlog I forgot to send this out ;-)=20
+I leave it to you whether you want to add yourself as reviewer of patches to
+MAINTAINER's 9pfs section.
 
-The KVM/QEMU community call is at:
+For other things like adding a virtio-9pfs-freebsd subsection or something,
+it's probably a bit too early.
 
-https://meet.jit.si/kvmcallmeeting
-@
-05/08/2025 13:00 UTC
+> > > diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> > > index b9dae8c84c..b85c9934de 100644
+> > > --- a/fsdev/file-op-9p.h
+> > > +++ b/fsdev/file-op-9p.h
+> > > @@ -21,9 +21,11 @@
+> > >  
+> > >  #ifdef CONFIG_LINUX
+> > >  # include <sys/vfs.h>
+> > > -#endif
+> > > -#ifdef CONFIG_DARWIN
+> > > +#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+> > >  # include <sys/param.h>
+> > > +# ifdef CONFIG_FREEBSD
+> > > +#  undef MACHINE /* work around some unfortunate namespace pollution */
+> > > +# endif
+> > 
+> > Details? :)
+> 
+> We need sys/mount.h for struct statfs.  sys/mount.h implicitly includes
+> sys/param.h, which is really sloppy about polluting the namespace with
+> identifiers that only the kernel cares about 99% of the time.  In
+> particular, it includes a platform-specific param.h which defines
+> 
+> #define MACHINE "amd64"
+> #define MACHINE_ARCH "amd64"
+> 
+> among other things.  This conflicts with QEMU's MACHINE macro.
+> 
+> It's a mess.  I have some local FreeBSD patches to avoid including
+> param.h from sys/mount.h, but of course a number of applications have
+> come to rely on the pollution, so they all need to be fixed first.
+> 
+> At some point, I think the block above can become something like
+> 
+>   #elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
+>   # ifndef CONFIG_FREEBSD
+>   #  include <sys/param.h>
+>   # endif
+>   # include <sys/mount.h>
+> 
+> but for now I need this workaround.
 
-Are there any agenda items for the sync-up?
+OK.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> > >  # include <sys/mount.h>
+> > >  #endif
+> > >  
+> > > diff --git a/fsdev/meson.build b/fsdev/meson.build
+> > > index c751d8cb62..95fe816604 100644
+> > > --- a/fsdev/meson.build
+> > > +++ b/fsdev/meson.build
+> > > @@ -5,6 +5,6 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
+> > >    '9p-marshal.c',
+> > >    'qemu-fsdev.c',
+> > >  ), if_false: files('qemu-fsdev-dummy.c'))
+> > > -if host_os in ['linux', 'darwin']
+> > > +if host_os in ['linux', 'darwin', 'freebsd']
+> > >    system_ss.add_all(fsdev_ss)
+> > >  endif
+> > > diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+> > > index 9cd1884224..b3743f6169 100644
+> > > --- a/hw/9pfs/9p-synth.c
+> > > +++ b/hw/9pfs/9p-synth.c
+> > > @@ -451,7 +451,7 @@ static int synth_statfs(FsContext *s, V9fsPath *fs_path,
+> > >      stbuf->f_bsize = 512;
+> > >      stbuf->f_blocks = 0;
+> > >      stbuf->f_files = synth_node_count;
+> > > -#ifndef CONFIG_DARWIN
+> > > +#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
+> > >      stbuf->f_namelen = NAME_MAX;
+> > >  #endif
+> > >      return 0;
+> > > diff --git a/hw/9pfs/9p-util-freebsd.c b/hw/9pfs/9p-util-freebsd.c
+> > > new file mode 100644
+> > > index 0000000000..e649f79d4b
+> > > --- /dev/null
+> > > +++ b/hw/9pfs/9p-util-freebsd.c
+> > > @@ -0,0 +1,124 @@
+> > > +/*
+> > > + * 9p utilities (FreeBSD Implementation)
+> > > + *
+> > > + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> > > + * See the COPYING file in the top-level directory.
+> > > + */
+> > 
+> > I think for new source files in QEMU the policy is to use
+> > SPDX-License-Identifier: ... now?
+> 
+> checkpatch.pl does complain about that, yes, but it also qualifies the
+> warning with, "unless this file was copied from existing code already
+> having such text."  I used 9p-util-darwin.c as a starting point for this
+> file, so kept the existing license text.  I can certainly change it
+> though.
+
+Both ways are fine with me in this case. Do as you find appropriate.
+
+> > Is this source file really specific to exactly FreeBSD? From the name it
+> > suggests that potential future support for other BSD flavours would need their
+> > own source file.
+> 
+> Hmm, not really.  Other BSDs seem to implement a compatible syscall
+> interface when they implement it at all.  (NetBSD's interface seems to
+> be compatible; OpenBSD doesn't appear to implement extattrs at all, and
+> DragonflyBSD is missing the extattr_*_fd() variants.)
+> 
+> FreeBSD appears to be the only one that implements O_PATH, but that
+> seems to be optional if I'm reading correctly.
+> 
+> So, I could preemptively change it to 9p-util-bsd.c, or wait for someone
+> to come along and add support for another BSD.
+
+Yeah, that was on nit level as well. It's fine to leave the name, as FreeBSD
+is currently the only supported one.
+
+> > > diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+> > > index a1924fe3f0..7315b32591 100644
+> > > --- a/hw/9pfs/9p-util.h
+> > > +++ b/hw/9pfs/9p-util.h
+> > > @@ -21,6 +21,14 @@
+> > >  #define O_PATH_9P_UTIL 0
+> > >  #endif
+> > >  
+> > > +#ifdef CONFIG_FREEBSD
+> > > +/*
+> > > + * FreeBSD does not have these flags, so we can only emulate them (racily).
+> > > + */
+> > > +#define XATTR_CREATE    0x1
+> > > +#define XATTR_REPLACE   0x2
+> > > +#endif
+> > > +
+> > 
+> > What do you mean with "racily" here?
+> 
+> FreeBSD cannot atomically check for the existence of and set an extattr,
+> the system call interface simply doesn't support it today.  This means
+> that fsetxattrat_nofollow() needs back-to-back system calls to check for
+> the existence of an attribute and then potentially set it.
+
+Ah, I was misinterpreting your comment as if it were "racily defining" the
+macros. Maybe change the comment to something like "... can only emulate their
+intended behaviour (racily) ...".
+
+Thanks!
+
+/Christian
+
+
 
