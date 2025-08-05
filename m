@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4F8C87FD2
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 08:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C10C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 08:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujClo-00015h-QE; Tue, 05 Aug 2025 04:11:40 -0400
+	id 1ujD9P-0002G0-T6; Tue, 05 Aug 2025 04:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1ujClm-0000sa-JC
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 04:11:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujD9L-0001uZ-B2; Tue, 05 Aug 2025 04:35:59 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1ujClj-0003KC-Bq
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 04:11:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754381492;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=TG+dvuhjObn1I7up7lAk09jZ20tc8t7wneFZXUwWzjM=;
- b=Z7xXwJ9c+Hl0UqhobAvGCHcgPCVLc/qiJQ50Ecp0Ci2aA6y3bjTmNMmCkMOTEM5Wpd/+aT
- 4Spfnd+MimqdwopRewyLm9JFv4aFaANbm/DY49+GMRwBuLeEZhvC5hnlhWvCA4L5JogN41
- d1AxM0scMAAZQ1VrnLtcOQMCfsbFKo0=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-iKw_Gnl_M6-iMzsZxRHhDg-1; Tue,
- 05 Aug 2025 04:11:30 -0400
-X-MC-Unique: iKw_Gnl_M6-iMzsZxRHhDg-1
-X-Mimecast-MFC-AGG-ID: iKw_Gnl_M6-iMzsZxRHhDg_1754381489
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8811D1936D8C; Tue,  5 Aug 2025 08:11:29 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.33.25])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 849281956094; Tue,  5 Aug 2025 08:11:25 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Laurent Vivier <lvivier@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, peterx@redhat.com, pbonzini@redhat.com,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Albert Esteve <aesteve@redhat.com>
-Subject: [RFC v2] memory.c: improve refcounting for RAM vs MMIO regions
-Date: Tue,  5 Aug 2025 10:11:23 +0200
-Message-ID: <20250805081123.137064-1-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujD9D-0000wB-Fi; Tue, 05 Aug 2025 04:35:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7B7C813E88B;
+ Tue, 05 Aug 2025 11:35:23 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9F4F257184;
+ Tue,  5 Aug 2025 11:35:44 +0300 (MSK)
+Message-ID: <8ecda01b-8bbb-4c08-834f-de50d18b41d5@tls.msk.ru>
+Date: Tue, 5 Aug 2025 11:35:44 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/arm: add support for 64-bit PMCCNTR in AArch32
+ mode
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Alex Richardson <alexrichardson@google.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250725170136.145116-1-alexrichardson@google.com>
+ <befab3c0-024c-43ca-8d5f-bddf960e9a21@tls.msk.ru>
+ <a38ce19f-7520-41c4-b6e9-54d4ba8c14cd@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <a38ce19f-7520-41c4-b6e9-54d4ba8c14cd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,234 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1->v2:
-- Added documentation
-- Explained the reasoning in the commit message
+On 05.08.2025 11:04, Richard Henderson wrote:
+> On 8/5/25 17:44, Michael Tokarev wrote:
+>> The mentioned commit:
+>>
+>> commit ae2086426d3784cf66e5b0b7ac823c08e87b4c57
+>> Author: Richard Henderson <richard.henderson@linaro.org>
+>> Date:   Mon Jul 7 09:15:47 2025 -0600
+>>
+>>      target/arm: Split out performance monitor regs to cpregs-pmu.c
+>>
+>>      Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>      Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>      Message-id: 20250707151547.196393-4-richard.henderson@linaro.org
+>>      Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>      Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>
+>> The thing is that this commit not only split out parts of helper.c
+>> to cpregs-pmu.c, but it also modified the code quite significantly,
+>> which is not even mentioned in the commit message.
+> 
+> I most certainly did not modify the code significantly.
+> The code was moved from several discontiguous blocks, but that's it.
 
-In the last version of the SHMEM MAP/UNMAP [1] Stefan
-raised a concern [2] about dynamically creating and
-destroying memory regions and their lifecycle [3].
+Maybe "significantly" is an over-statement, but there are quite some
+additional changes.  Take a look at this commit, and see, for example,
+v7_pm_reginfo definition, - it does not exist in the code deleted from
+helper.c.  Or the code near the usage of v7_pm_reginfo --
 
-After some discussion, David Hildenbrand proposed
-to detect RAM regions and handle refcounting differently.
-I tried to extend the reasoning in the commit message
-below. If I wrote any innacuracies, please keep me
-honest. I hope we can gather some feedback with
-this RFC patch before sending it for inclusion.
+-    define_one_arm_cp_reg(cpu, &pmcr);
+-    define_one_arm_cp_reg(cpu, &pmcr64);
+-    for (i = 0; i < pmcrn; i++) {
+-        char *pmevcntr_name = g_strdup_printf("PMEVCNTR%d", i);
+..
++        define_one_arm_cp_reg(cpu, &pmcr);
++        define_one_arm_cp_reg(cpu, &pmcr64);
++        define_arm_cp_regs(cpu, v7_pm_reginfo);
++
++        for (unsigned i = 0, pmcrn = pmu_num_counters(env); i < pmcrn; 
+i++) {
++            g_autofree char *pmevcntr_name = 
+g_strdup_printf("PMEVCNTR%d", i);
+...
 
-[1] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=460121
-[2] https://patchwork.ozlabs.org/comment/3528600/
-[3] https://www.qemu.org/docs/master/devel/memory.html#region-lifecycle
+To me, this is not just moving code around.  Yes, I understand the
+consolidation (taken a few pieces from various places and put them
+into a single function).  But the above change does more than that.
 
----
+-    for (i = 0; i < pmcrn; i++) {
++    for (unsigned i = 0, pmcrn = pmu_num_counters(env); i < pmcrn; i++)
 
-Memory region lifecycle documentation discourages
-creating or destroying memory regions dynamically
-during a device's lifetime. The main concern here
-is that "it may be in use by a device or CPU".
-This means that a memory region could outlive its
-owner.
+heh. now I see how to back-port this PMCCNTR change to 10.0.  Please see
+https://gitlab.com/mjt0k/qemu/-/commit/8cd2995c1b0cda0a86ffa4e20a49372e5d30dc5d
+for the current backport.  I'm not sure about the order of "define_*_reg"
+function calls here though - does it look sane?
 
-However, this concern seems to revolve around
-the fact that MMIO callbacks will most likely
-access data that belong to the owner. Dynamically
-removing/destroying the owner will result in buggy
-behaviour. On the other hand, RAM regions do not
-have this problematic behaviour as they reference
-themselves. Recognizing non-MMIO MRs and handling
-ref_count appropiately could clear/relax (for RAM
-regions specifically) the initial concern stated
-in the documentation.
+Thanks,
 
-This patch enhances memory_region_ref() and memory_region_unref()
-to handle RAM and MMIO memory regions differently, improving
-reference counting semantics.
-
-RAM regions now reference/unreference the memory region object
-itself, while MMIO continue to reference/unreference the owner
-device as before.
-
-An additional qtest has been added to stress the memory
-lifecycle. All tests pass as these changes keep backward
-compatibility (prior behaviour is kept for MMIO regions).
-
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- docs/devel/memory.rst      | 24 +++++++++++++-----
- system/memory.c            | 28 +++++++++++++++++----
- tests/qtest/ivshmem-test.c | 50 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 91 insertions(+), 11 deletions(-)
-
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 57fb2aec76..9c428e82ff 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -143,11 +143,15 @@ Region lifecycle
- ----------------
- 
- A region is created by one of the memory_region_init*() functions and
--attached to an object, which acts as its owner or parent.  QEMU ensures
--that the owner object remains alive as long as the region is visible to
--the guest, or as long as the region is in use by a virtual CPU or another
--device.  For example, the owner object will not die between an
--address_space_map operation and the corresponding address_space_unmap.
-+attached to an object, which acts as its owner or parent.
-+
-+For MMIO regions, QEMU ensures that the owner object remains alive as
-+long as the region is visible to the guest, or as long as the region is in
-+use by a virtual CPU or another device.  For example, the owner object will
-+not die between an address_space_map operation and the corresponding
-+address_space_unmap. For RAM regions, the region itself is kept alive
-+rather than the owner, since RAM regions are self-contained data objects
-+that manage their own lifecycle.
- 
- After creation, a region can be added to an address space or a
- container with memory_region_add_subregion(), and removed using
-@@ -174,7 +178,8 @@ callback.  The dynamically allocated data structure that contains the
- memory region then should obviously be freed in the instance_finalize
- callback as well.
- 
--If you break this rule, the following situation can happen:
-+If you break this rule, the following situation can happen for MMIO
-+regions:
- 
- - the memory region's owner had a reference taken via memory_region_ref
-   (for example by address_space_map)
-@@ -184,6 +189,13 @@ If you break this rule, the following situation can happen:
- - when address_space_unmap is called, the reference to the memory region's
-   owner is leaked.
- 
-+Note that memory_region_ref() and memory_region_unref() handle different
-+region types appropriately: MMIO regions reference their owner device
-+(since MMIO callbacks access owner data), while RAM regions reference
-+themselves (since they are self-contained). Regions without owners, such
-+as system memory containers and I/O address spaces, skip reference
-+counting entirely as they exist for the machine's lifetime.
-+
- 
- There is an exception to the above rule: it is okay to call
- object_unparent at any time for an alias or a container region.  It is
-diff --git a/system/memory.c b/system/memory.c
-index 5646547940..1592293be7 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1826,6 +1826,17 @@ Object *memory_region_owner(MemoryRegion *mr)
- 
- void memory_region_ref(MemoryRegion *mr)
- {
-+    /* Regions without an owner are considered static. */
-+    if (!mr || !mr->owner) {
-+        return;
-+    }
-+    if (mr->ram) {
-+        /* RAM regions are self-contained data objects, so we ref/unref
-+         * the memory region itself rather than its owner.
-+         */
-+        object_ref(OBJECT(mr));
-+        return;
-+    }
-     /* MMIO callbacks most likely will access data that belongs
-      * to the owner, hence the need to ref/unref the owner whenever
-      * the memory region is in use.
-@@ -1836,16 +1847,23 @@ void memory_region_ref(MemoryRegion *mr)
-      * Memory regions without an owner are supposed to never go away;
-      * we do not ref/unref them because it slows down DMA sensibly.
-      */
--    if (mr && mr->owner) {
--        object_ref(mr->owner);
--    }
-+    object_ref(mr->owner);
- }
- 
- void memory_region_unref(MemoryRegion *mr)
- {
--    if (mr && mr->owner) {
--        object_unref(mr->owner);
-+    /* Regions without an owner are considered static. */
-+    if (!mr || !mr->owner) {
-+        return;
-+    }
-+    if (mr->ram) {
-+        /* RAM regions are self-contained data objects, so we ref/unref
-+         * the memory region itself rather than its owner.
-+         */
-+        object_unref(OBJECT(mr));
-+        return;
-     }
-+    object_unref(mr->owner);
- }
- 
- uint64_t memory_region_size(MemoryRegion *mr)
-diff --git a/tests/qtest/ivshmem-test.c b/tests/qtest/ivshmem-test.c
-index fb45fdeb07..44f712e9ae 100644
---- a/tests/qtest/ivshmem-test.c
-+++ b/tests/qtest/ivshmem-test.c
-@@ -194,6 +194,55 @@ static void test_ivshmem_single(void)
-     cleanup_vm(s);
- }
- 
-+static void test_memory_region_lifecycle(void)
-+{
-+    /* Device creation triggers memory region mapping (calls ref) */
-+    IVState state1, state2;
-+    uint32_t test_data, read_data;
-+    int i;
-+
-+    setup_vm(&state1);
-+
-+    /* Basic verification that device works */
-+    test_data = 0x12345678;
-+    write_mem(&state1, 0, &test_data, sizeof(test_data));
-+    read_mem(&state1, 0, &read_data, sizeof(read_data));
-+    g_assert_cmpuint(read_data, ==, test_data);
-+
-+    /* Multiple devices stress test memory region ref counting */
-+    setup_vm(&state2);
-+
-+    /* Verify both devices work independently */
-+    test_data = 0xDEADBEEF;
-+    write_mem(&state2, 4, &test_data, sizeof(test_data));
-+    read_mem(&state2, 4, &read_data, sizeof(read_data));
-+    g_assert_cmpuint(read_data, ==, test_data);
-+
-+    /* Device destruction triggers memory region unmapping (calls unref) */
-+    cleanup_vm(&state1);
-+
-+    /* Verify remaining device still works after first device cleanup */
-+    read_mem(&state2, 4, &read_data, sizeof(read_data));
-+    g_assert_cmpuint(read_data, ==, test_data);
-+
-+    /* Final cleanup */
-+    cleanup_vm(&state2);
-+
-+    /* Quick lifecycle stress test - multiple create/destroy cycles */
-+    for (i = 0; i < 5; i++) {
-+        IVState temp_state;
-+        setup_vm(&temp_state);
-+
-+        /* Quick test to ensure device works */
-+        test_data = 0x1000 + i;
-+        write_mem(&temp_state, 0, &test_data, sizeof(test_data));
-+        read_mem(&temp_state, 0, &read_data, sizeof(read_data));
-+        g_assert_cmpuint(read_data, ==, test_data);
-+
-+        cleanup_vm(&temp_state);
-+    }
-+}
-+
- static void test_ivshmem_pair(void)
- {
-     IVState state1, state2, *s1, *s2;
-@@ -503,6 +552,7 @@ int main(int argc, char **argv)
-     tmpserver = g_strconcat(tmpdir, "/server", NULL);
- 
-     qtest_add_func("/ivshmem/single", test_ivshmem_single);
-+    qtest_add_func("/ivshmem/memory-lifecycle", test_memory_region_lifecycle);
-     qtest_add_func("/ivshmem/hotplug", test_ivshmem_hotplug);
-     qtest_add_func("/ivshmem/memdev", test_ivshmem_memdev);
-     if (g_test_slow()) {
--- 
-2.49.0
-
+/mjt
 
