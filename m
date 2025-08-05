@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5807C87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B1DC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujJl9-0003Yi-2C; Tue, 05 Aug 2025 11:39:27 -0400
+	id 1ujJlI-0003q9-KJ; Tue, 05 Aug 2025 11:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujJbp-0004Md-6a
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:29:49 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ujJcU-0004qf-17
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:30:35 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujJbn-0000Po-6F
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:29:48 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3b786421e36so3263048f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 08:29:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ujJcR-0000iG-Np
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:30:29 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-61589705b08so12260261a12.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 08:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754407779; x=1755012579; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b73e4dbI2xnTEbKM50mLEVw9lhz38ZpES+dSUT7bVfA=;
- b=JQC6x0yIgKvcpzCUT3wSYFvs8TrrAJz/IYx1zrhU4AfsP01yjaoRYiI0KHg8hyGIaA
- lbCrAho/uOGGloLfEqyX2Sl23FAxUQ5gvD1bnS7BYDVsxVRGPJj67XTLlQ5WnllhTYgw
- nWJzp5K3dlyh/5Wbe2V/B+0zFccaFBPT3zPnYNZbymOOrqsGpJKy/11hZFJdKaGoaHAR
- P4LCrRllws7ZdUfdfh/cwrw7EkFfdP77IaTehmR9wIZDPFqLQXbWITxTdRg2qGWlBAlg
- IVj6xTLq3avqijlyVCrZtGdF+wWrjElJ/utxGUM/m1Wfwnsdi0lH0EgMbJnj2QEC7D6T
- NX+A==
+ d=linaro.org; s=google; t=1754407825; x=1755012625; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GTyv+N2DVqkdxVPEClPIDYuLYuX1aiW7piSBtCyujS0=;
+ b=dnRvE5MjvnyLDUabdoqMwlfG7cRrcE3gDpbNALMbCj+bqKcLZ6ZUEVmalJHcJ9UAsz
+ Y6ZRAQmIMU8NZN0ZeuQFUYJfVqmXQ982Icaq7YZbTJYQF1bfisLaRvkhf88KGs9LP8G+
+ DUO3/wFC2hKEbDEfdXmbrebhD+zTd02lvFr5Yt6PwDLY8kRpX7Wzdv/7XgLyVC2DKfjy
+ nerIFp59pvM9sqZWdMiVe2woelTf25smDEiDtDwA0plcLgKnBfcOJv03gp1gkYlYjjm/
+ wJfqrgXkeEBbZuYrJrCnOtE4c53AJvsLJyWTMnpCNgJv1a0RG9HyDwpKtET7DVFlWdBV
+ QJmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754407779; x=1755012579;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b73e4dbI2xnTEbKM50mLEVw9lhz38ZpES+dSUT7bVfA=;
- b=CTEtwfJ0WojI551Wyz9WML/v5+U8XF5cg7e+Gq+Ey4tRAUHnSUJ7oLAdJNEu1Tth5Q
- LH7x/TAJkxnUsEy7aLH94GuB0HN0INEauthibMcShT77uqPo9JvZynU3QtmM4DE+jFJK
- RkYB4FkehDpoQB9eMmBU+ERAWzOqCUghJVXF5IY0Y0fRz7HldLQD1/hRXOvWiHRxzF4n
- q7vz9hWbyV1MPAohkKupCX6toGc3/StalSrnjd2NEYteLhIOYw/lmp6gg9irZFljeDJD
- d/bbWR6UP1GhR0/V/DGsVprj2ryoawSo1+wH6QCFDJkofp8SfefXv8O6XQxUHsgQDW1v
- xknQ==
-X-Gm-Message-State: AOJu0Yzk7MXGtmHhBPR9g7OlPHcjPnulKX/REdQrBYMrGL/GjqGEnoLb
- 0cfCTojo4yAKlnSaDWMH0ZRRR5iob+KrUIzZvR8Pd724xhP8RdyY+wLT4yVhh5BEjwA=
-X-Gm-Gg: ASbGncsp8BITs5w0Hvta7xAwtA/28oic/rz13rM7mrGmJHA6w/VXheH1N8SZ3EXzKDt
- B5XGKzRlE4hyW3zMMKw/Jt5oqwCukFzbRi7GehlAoxaaMzDcqXGuurwzocovnswT0Slnn/f8IfE
- V8PQgtHHQVi7EeQhjJudbiU22/aJBFp2cJdtPASzmxa5pnsa5jrRcJdZuGV7c4T9rOh3Ze6U7eN
- wAz6JsrRHZ38gzj8L25Opn36drHZPIV6ZaRuF8+AG+G7FS4Ot6rPleF6+uuHWXptMEajIkxR8v/
- qTyhXvw/jbd1n4xixl0BFzyIL1IYa0rr7mgJ23fMDOJMzEv/N0ZsoZ/kZp1CBLuOpITOKa23wsj
- wtkeCjEqavx/4V55/vqrNj7/XqaAIkAvb+LumDbYsRKVbGjzOrqVIHsF+/9j0DjQ8OQ==
-X-Google-Smtp-Source: AGHT+IFu3jjObrrdQWT+x9JLMZK50A5OGKOiTrR7xIBUqSLbeygeCBWTdr7pqrMCzVtqhLNrqw7G6Q==
-X-Received: by 2002:a5d:584e:0:b0:3b7:8a28:3e35 with SMTP id
- ffacd0b85a97d-3b8d9468f10mr10322711f8f.2.1754407778983; 
- Tue, 05 Aug 2025 08:29:38 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e5d0b1afsm4945935e9.26.2025.08.05.08.29.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Aug 2025 08:29:38 -0700 (PDT)
-Message-ID: <192fddd3-3ca8-4e7c-a258-143b77c963e8@linaro.org>
-Date: Tue, 5 Aug 2025 17:29:37 +0200
+ d=1e100.net; s=20230601; t=1754407825; x=1755012625;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GTyv+N2DVqkdxVPEClPIDYuLYuX1aiW7piSBtCyujS0=;
+ b=jHVnWERcD9IOjVOHQUMR/vJALY2zoXlYexhp/VyFmmManbujRR+xTS7OJg3LEW/f6W
+ 3xmzgivCnOph/hfln4ONuUWd7IejoPLoTXDeO7ke+JL00qHKITM+84Ij19m0nDfLUCQM
+ X0vPGkgDJwAaOEDC5Ru4iBqnbaRb9QrjiWqjXLGkoDRPWP3rGszW9Bfysocc62BB+NOb
+ jNrB9uO8nsh4mjlM06+bUJOYoopyAdfFIAbMYcWDL+n2dinne9RPLknDc0iAtG7qiuim
+ 7X+ZxRhCZjblNeXy0vkn8JH9BS1glX5vAbWxgsmfferqwDc8vQ1H03Wigq+Jqioc6kHN
+ gL+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUn84byVGwBSLVmnOsxg79w1LJJ+hvDLGJ+dnE1SLgJOaK1ZgEv31j0qJSuy/PD2soGjrdOQFVG/I50@nongnu.org
+X-Gm-Message-State: AOJu0YwlL5SyRTYIQcGsOeItmFpEBamBixOSrDdpc1nZHrzTW+19CA1s
+ NEz6EJnSDEreqAsjdFhBjn9HuElZ6kPmv4/hHXiL+d2NjcfQLxpOCC5MACcxXxwnlNE=
+X-Gm-Gg: ASbGnct8qAdryN/yHyEkSnXbU2RQVLA/TwB/HRH11FuCopfWNUPCXwKyaX55Nfi2ojC
+ KXgKGDOHaskKXX2z42TY0kwt/7FTdgFifL8CtfYMOxopdnaE7BhZ2QZgfBcfLqCBmpo4cF9Tu19
+ 8Atw08AnPU04mFPSzqnX3mur4Zf69WKO1ubHmVz+PgPC4QSNNAC9VJDlU709xoXB9Jx3hhRRrYO
+ FYkw9VYPreUU+kkE6QIjglusKMdwnmA1cebIb+LK3nkTh0OnxNobhBL4v21CVKQnUGPvd8Oi3nK
+ KAo5M14DS81feoFBTtNtC/bHEw4mBkcDyNhoBWZkuVRzLVT9NiRbZJ4gZ29M4nttXeIlrDfm0d4
+ alYYofZqnGUkYzUZm21My2Sg=
+X-Google-Smtp-Source: AGHT+IG7MlMy5zb25Ieqk9wtJfLU/L/7Eh41D1maOgpY+n4h7o1MxeqfnxqF6LrfzhGVuayAFkBuGA==
+X-Received: by 2002:a05:6402:274e:b0:615:db4:74dd with SMTP id
+ 4fb4d7f45d1cf-615e6ed217dmr12705974a12.13.1754407825319; 
+ Tue, 05 Aug 2025 08:30:25 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-615a8effda1sm8506325a12.1.2025.08.05.08.30.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Aug 2025 08:30:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 651295F7E9;
+ Tue, 05 Aug 2025 16:30:23 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: pierrick.bouvier@linaro.org,  qemu-devel@nongnu.org,
+ richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com
+Subject: Re: New capabilities for plugins
+In-Reply-To: <73d56742-5e6e-4e1f-8d8c-2b9783d0ddea@epfl.ch> (Florian
+ Hofhammer's message of "Tue, 5 Aug 2025 16:30:09 +0200")
+References: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
+ <87tt2n5az1.fsf@draig.linaro.org>
+ <1016eeb7-57d8-4d80-ba25-42cda2d63b0f@epfl.ch>
+ <874iul26rp.fsf@draig.linaro.org>
+ <73d56742-5e6e-4e1f-8d8c-2b9783d0ddea@epfl.ch>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 05 Aug 2025 16:30:23 +0100
+Message-ID: <87y0rxzsz4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for v10.1] i386/cpu: Move addressable ID encoding out of
- compat property in CPUID[0x1]
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Chuang Xu <xuchuangxclwt@bytedance.com>
-References: <20250804053548.1808629-1-zhao1.liu@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250804053548.1808629-1-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/25 07:35, Zhao Liu wrote:
-> Currently, the addressable ID encoding for CPUID[0x1].EBX[bits 16-23]
-> (Maximum number of addressable IDs for logical processors in this
-> physical package) is covered by vendor_cpuid_only_v2 compat property.
-> The previous consideration was to avoid breaking migration and this
-> compat property makes it unfriendly to backport the commit f985a1195ba2
-> ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX
-> [23:16]").
-> 
-> However, NetBSD booting is broken since the commit 88dd4ca06c83
-> ("i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]"),
-> because NetBSD calculates smt information via `lp_max` / `core_max` for
-> legacy Intel CPUs which doesn't support 0xb leaf, where `lp_max` is from
-> CPUID[0x1].EBX.bits[16-23] and `core_max` is from CPUID[0x4].0x0.bits[26
-> -31].
-> 
-> The commit 88dd4ca0 changed the encoding rule of `core_max` but didn't
-> update `lp_max`, so that NetBSD would get the wrong smt information,
-> which leads to the module loading failure.
-> 
-> Luckily, the commit f985a1195ba2 ("i386/cpu: Fix number of addressable
-> IDs field for CPUID.01H.EBX[23:16]") updated the encoding rule for
-> `lp_max` and accidentally fixed the NetBSD issue too. This also shows
-> that using CPUID[0x1] and CPUID[0x4].0x0 to calculate HT/SMT information
-> is a common practice to detect CPU topology on legacy Intel CPUs.
-> 
-> Therefore, it's necessary to backport the commit f985a1195ba2 to
-> previous stable QEMU to help address the similar issues as well. Then
-> the compat property is not needed any more since all stable QEMUs will
-> follow the same encoding way.
-> 
-> So, in CPUID[0x1], move addressable ID encoding out of compat property.
-> 
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Inspired-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> Fixes: commit f985a1195ba2 ("i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3061
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   target/i386/cpu.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 
-Patch queued, thanks!
+> On 05/08/2025 16:16, Alex Benn=C3=A9e wrote:
+>>>> Another option would be to have a set_pc function that would restart
+>>>> the execution at new PC. Then the vcpu_syscall_cb callback could set
+>>>> the PC to post the syscall with whatever state it wants to set up.
+>>>
+>>> Such a set_pc functionality is already covered with the register write
+>>> API, as long as I have a handle to the PC register, right? Please do
+>>> correct me if I'm misunderstanding something here!
+>> Ahh we should make that clear. It requires special handling as the
+>> PC
+>> isn't automatically updated every instruction. For analysis this isn't a
+>> problem as the TB itself knows the vaddr of each instruction so can save
+>> it if it wants.
+>> Currently if you write to the PC it won't change flow - and it will
+>> likely be reset as we exit the syscall.
+>> c.f. https://gitlab.com/qemu-project/qemu/-/issues/2208
+>
+> Thanks for the clarification, I haven't fully thought the implications
+> of updating the PC on the jited code through.
+> Do I understand correctly that this would likely require hooking into
+> the TCG in a way so that the target address of this set_pc function gets
+> retranslated?
+
+I think to read the PC we would just need to make sure we properly
+resolve it - internally QEMU does this for faults with:
+
+    tb =3D tcg_tb_lookup(retaddr);
+    cpu_restore_state_from_tb(cpu, tb, retaddr);
+
+where retaddr is the address of the translated code. We just need to
+special case PC handling in the read path.
+
+> While I've dug into the QEMU code quite a bit already, I'm
+> not sure I'm familiar enough with the TCG internals to be able to tell
+> whether such a set_pc function could determine the address of an
+> (arbitrary) already translated block. I.e., if the target PC is not just
+> the next instruction after the syscall, can QEMU determine whether the
+> target address has already been translated and if yes, where the
+> generated code actually is located?
+
+No need - we just need to exit the loop via cpu_loop_exit_restore() and
+the code will do the right thing. However we probably don't want to
+trigger that via register write as we would surprise the plugin -
+especially if there are other hooks still to run. So we would want an
+explicit helper to do it.
+
+>
+> Thanks,
+> Florian
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
