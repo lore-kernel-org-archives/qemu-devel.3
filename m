@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06439C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9C1C87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 20:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujNzJ-0005s1-HZ; Tue, 05 Aug 2025 16:10:21 -0400
+	id 1ujO1D-0007Tm-Ff; Tue, 05 Aug 2025 16:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNzF-0005qM-FJ
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:10:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ujO17-0007T8-F1
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:12:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujNzC-0004ui-4N
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:10:16 -0400
+ id 1ujO15-0005Ij-AX
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 16:12:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754424612;
+ s=mimecast20190719; t=1754424730;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=EH60BCSGC9dIGMq8o40zZ/MXSCljHF3tRBppo8nQK04=;
- b=YGA2z9/Up7zWHewFGHItIlFgCsEzezTbx2JwjjrB+gRvqF6Auxe+yqlCVK0ErJwiAJ3pns
- n2RS6c8iT2X0VwpxEkE8v2bAQUGvZYFjjCNgs4SorBUHxEgZuMufgwvVdWChzEaZpF8KFs
- n+pdmpQugjdoNIWaGEApqxqvMXnadiw=
+ bh=GjYZtikZNVV8Fb1hSafALyMS467EaVEJ41FxurR4RPs=;
+ b=FkekUesk56abnnydGEeyNL3HYIVdN5Ga9vz0Vm1QYZeS34c2jjsXNrjHJfGQJFmMvMq/uq
+ IpxM+yyqVSzw2hFFPTH9bDThoGcWHzR+7QqAf2GCgc45Ufq1HQESgN86SU93aMqO5PDQej
+ 5i4vvnhJrg54pQl/M07pDwBqzoqP8W4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-3D059NQYPJOd1cGaMPcCqA-1; Tue,
- 05 Aug 2025 16:10:07 -0400
-X-MC-Unique: 3D059NQYPJOd1cGaMPcCqA-1
-X-Mimecast-MFC-AGG-ID: 3D059NQYPJOd1cGaMPcCqA_1754424606
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-nybA_pq1PdiS12tt2s2OUw-1; Tue,
+ 05 Aug 2025 16:12:09 -0400
+X-MC-Unique: nybA_pq1PdiS12tt2s2OUw-1
+X-Mimecast-MFC-AGG-ID: nybA_pq1PdiS12tt2s2OUw_1754424728
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 814AB1800446; Tue,  5 Aug 2025 20:10:06 +0000 (UTC)
+ id 915BC1801A1C; Tue,  5 Aug 2025 20:12:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.80])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BBD11955E88; Tue,  5 Aug 2025 20:10:03 +0000 (UTC)
-Date: Tue, 5 Aug 2025 21:10:00 +0100
+ id 4D6431954B11; Tue,  5 Aug 2025 20:11:58 +0000 (UTC)
+Date: Tue, 5 Aug 2025 21:11:54 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Tanish Desai <tanishdesai37@gmail.com>
 Cc: qemu-devel@nongnu.org, pbonzini@redhat.com,
  Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 2/2] tracetool/format: remove redundent trace-event checks
-Message-ID: <aJJlGOA_jibz5hKZ@redhat.com>
+Subject: Re: [PATCH 1/2] tracetool: add CHECK_TRACE_EVENT_GET_STATE
+Message-ID: <aJJliv-xKgH4piH6@redhat.com>
 References: <20250804112039.16377-1-tanishdesai37@gmail.com>
- <20250804112039.16377-3-tanishdesai37@gmail.com>
+ <20250804112039.16377-2-tanishdesai37@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250804112039.16377-3-tanishdesai37@gmail.com>
+In-Reply-To: <20250804112039.16377-2-tanishdesai37@gmail.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,94 +87,77 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 04, 2025 at 11:20:39AM +0000, Tanish Desai wrote:
-> Remove redundent if(check_trace_event) check
-> from individual backends.
-> Adding CHECK_TRACE_EVENT_GET_STATE in log,syslog,
-> dtrace and simple backend.
+On Mon, Aug 04, 2025 at 11:20:38AM +0000, Tanish Desai wrote:
+> New attributed added in backends
+> CHECK_TRACE_EVENT_GET_STATE which when
+> present and is True wraps the code generated
+> by generate function in check_trace_event_get_state
+> check else it is outside the conditional block.
 > 
 > Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 > ---
->  scripts/tracetool/backend/ftrace.py | 4 +---
->  scripts/tracetool/backend/log.py    | 6 ++----
->  scripts/tracetool/backend/simple.py | 9 ++-------
->  scripts/tracetool/backend/syslog.py | 8 ++------
->  4 files changed, 7 insertions(+), 20 deletions(-)
+>  scripts/tracetool/__init__.py         |  1 -
+>  scripts/tracetool/backend/__init__.py | 26 ++++++++++++++++-------
+>  scripts/tracetool/format/h.py         | 30 ++++++++++-----------------
+>  3 files changed, 30 insertions(+), 27 deletions(-)
 > 
-> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-> index 5fa30ccc08..b38f527461 100644
-> --- a/scripts/tracetool/backend/ftrace.py
-> +++ b/scripts/tracetool/backend/ftrace.py
-> @@ -16,6 +16,7 @@
+> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+> index 2ae2e562d6..d0a02c45d7 100644
+> --- a/scripts/tracetool/__init__.py
+> +++ b/scripts/tracetool/__init__.py
+> @@ -332,7 +332,6 @@ def formats(self):
+>          return self._FMT.findall(self.fmt)
+>  
+>      QEMU_TRACE               = "trace_%(name)s"
+> -    QEMU_TRACE_NOCHECK       = "_nocheck__" + QEMU_TRACE
+>      QEMU_TRACE_TCG           = QEMU_TRACE + "_tcg"
+>      QEMU_DSTATE              = "_TRACE_%(NAME)s_DSTATE"
+>      QEMU_BACKEND_DSTATE      = "TRACE_%(NAME)s_BACKEND_DSTATE"
+> diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+> index 7bfcc86cc5..3c900f01e9 100644
+> --- a/scripts/tracetool/backend/__init__.py
+> +++ b/scripts/tracetool/backend/__init__.py
+> @@ -23,6 +23,8 @@
+>  Attribute Description
+>  ========= ====================================================================
+>  PUBLIC    If exists and is set to 'True', the backend is considered "public".
+> +CHECK_TRACE_EVENT_GET_STATE    If exists and is set to 'True', generate function
+> +emits code inside check_trace_event_get_state check.
+>  ========= ====================================================================
 >  
 >  
->  PUBLIC = True
-> +CHECK_TRACE_EVENT_GET_STATE = True
+> @@ -101,22 +103,32 @@ class Wrapper:
+>      def __init__(self, backends, format):
+>          self._backends = [backend.replace("-", "_") for backend in backends]
+>          self._format = format.replace("-", "_")
+> +        self.check_trace_event_get_state = False
+>          for backend in self._backends:
+>              assert exists(backend)
+>          assert tracetool.format.exists(self._format)
+> +        for backend in self.backend_modules():
+> +            check_trace_event_get_state = getattr(backend, "CHECK_TRACE_EVENT_GET_STATE", False)
+> +            self.check_trace_event_get_state = self.check_trace_event_get_state or check_trace_event_get_state
 >  
->  
->  def generate_h_begin(events, group):
-> @@ -32,18 +33,15 @@ def generate_h(event, group):
->          '        char ftrace_buf[MAX_TRACE_STRLEN];',
->          '        int unused __attribute__ ((unused));',
->          '        int trlen;',
-> -        '        if (trace_event_get_state(%(event_id)s)) {',
->          '#line %(event_lineno)d "%(event_filename)s"',
->          '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
->          '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
->          '#line %(out_next_lineno)d "%(out_filename)s"',
->          '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
->          '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
-> -        '        }',
->          '    }',
->          name=event.name,
->          args=event.args,
-> -        event_id="TRACE_" + event.name.upper(),
->          event_lineno=event.lineno,
->          event_filename=event.filename,
->          fmt=event.fmt.rstrip("\n"),
-> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-> index eb50ceea34..d8406d226b 100644
-> --- a/scripts/tracetool/backend/log.py
-> +++ b/scripts/tracetool/backend/log.py
-> @@ -16,6 +16,7 @@
->  
->  
->  PUBLIC = True
-> +CHECK_TRACE_EVENT_GET_STATE = True
->  
->  
->  def generate_h_begin(events, group):
-> @@ -28,14 +29,11 @@ def generate_h(event, group):
->      if len(event.args) > 0:
->          argnames = ", " + argnames
->  
-> -    cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
-> -
-> -    out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
-> +    out('    if (qemu_loglevel_mask(LOG_TRACE)) {',
->          '#line %(event_lineno)d "%(event_filename)s"',
->          '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
->          '#line %(out_next_lineno)d "%(out_filename)s"',
->          '    }',
-> -        cond=cond,
->          event_lineno=event.lineno,
->          event_filename=event.filename,
->          name=event.name,
+> -    def _run_function(self, name, *args, **kwargs):
+> +    def backend_modules(self):
+>          for backend in self._backends:
+> -            func = tracetool.try_import("tracetool.backend." + backend,
+> -                                        name % self._format, None)[1]
+> -            if func is not None:
+> -                func(*args, **kwargs)
+> +             module = tracetool.try_import("tracetool.backend." + backend)[1]
+> +             if module is not None:
+> +                 yield module
+> +
+> +    def _run_function(self, name, *args, check_trace_event_get_state=None, **kwargs):
+> +        for backend in self.backend_modules():
+> +            func = getattr(backend,name%self._format,None)
+> +            if func is not None and (check_trace_event_get_state is None or
+> +                    check_trace_event_get_state == getattr(backend, 'CHECK_TRACE_EVENT_GET_STATE', False)):
+> +                    func(*args, **kwargs)
 
-This change results in bad indentation of the generated inline function
-nested if conditions. e.g. the result looks like this:
-
-static inline void trace_test_blah(void *context, const char *filename)
-{
-    if (trace_event_get_state(TRACE_TEST_BLAH)) {
-    if (qemu_loglevel_mask(LOG_TRACE)) {
-#line 4 "trace-events"
-        qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
-#line 29 "../../../../../../../../dev/stdout"
-    }
-    }
-}
-
+Something here is broken with the "simple" trace backend, as the entire
+'.c' file content is no longer generated, causing link errors
 
 With regards,
 Daniel
