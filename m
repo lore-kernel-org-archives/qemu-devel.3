@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C24FC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 18:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9788AC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 18:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujMMh-0003Nc-Ak; Tue, 05 Aug 2025 14:26:23 -0400
+	id 1ujMN9-0003gg-1T; Tue, 05 Aug 2025 14:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujMMZ-0003LH-OP; Tue, 05 Aug 2025 14:26:15 -0400
+ id 1ujMN0-0003dY-Ap; Tue, 05 Aug 2025 14:26:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujMMX-0003o9-9q; Tue, 05 Aug 2025 14:26:15 -0400
+ id 1ujMMv-0003ph-JI; Tue, 05 Aug 2025 14:26:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 15EE013EA5E;
- Tue, 05 Aug 2025 21:25:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 65E4013EA5F;
+ Tue, 05 Aug 2025 21:26:12 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1A1D3257979;
- Tue,  5 Aug 2025 21:26:09 +0300 (MSK)
-Message-ID: <465b9479-7075-4329-a6ed-6d727feeee3a@tls.msk.ru>
-Date: Tue, 5 Aug 2025 21:26:09 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 72D5725797A;
+ Tue,  5 Aug 2025 21:26:34 +0300 (MSK)
+Message-ID: <30a23339-5f83-444c-8923-2a02cbee9256@tls.msk.ru>
+Date: Tue, 5 Aug 2025 21:26:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] qga: Fix ubsan warning
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Michael Roth <michael.roth@amd.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250730072709.27077-1-thuth@redhat.com>
+Subject: Re: [PATCH] hw/intc/loongarch_pch_pic: Fix ubsan warning and
+ endianness issue
+To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
+References: <20250801060152.22224-1-thuth@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250730072709.27077-1-thuth@redhat.com>
+In-Reply-To: <20250801060152.22224-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -105,24 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.07.2025 10:27, Thomas Huth wrote:
+On 01.08.2025 09:01, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> When compiling QEMU with --enable-ubsan there is a undefined behavior
-> warning when running "make check":
+> When booting the Linux kernel from tests/functional/test_loongarch64_virt.py
+> with a QEMU that has been compiled with --enable-ubsan, there is
+> a warning like this:
 > 
->   .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
->   #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
+>   .../hw/intc/loongarch_pch_pic.c:171:46: runtime error: index 512 out of
+>    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+>    .../hw/intc/loongarch_pch_pic.c:171:46
+>   .../hw/intc/loongarch_pch_pic.c:175:45: runtime error: index 256 out of
+>    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+>    .../hw/intc/loongarch_pch_pic.c:175:45
 > 
-> Fix it by avoiding the additional pointer variable here and use an
-> "offset" integer variable instead.
+> It happens because "addr" is added first before substracting the base
+> (PCH_PIC_HTMSI_VEC or PCH_PIC_ROUTE_ENTRY).
+> Additionally, this code looks like it is not endianness safe, since
+> it uses a 64-bit pointer to write values into an array of 8-bit values.
+> 
+> Thus rework the code to use the stq_le_p / ldq_le_p helpers here
+> and make sure that we do not create pointers with undefined behavior
+> by accident.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-It's a nice cleanup too.
-
-Thanks,  queued.
+Queued to trivial-patches, thank you!
 
 /mjt
-
 
