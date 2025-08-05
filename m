@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC27FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 14:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9F8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 14:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujIEa-0007Qz-O2; Tue, 05 Aug 2025 10:01:44 -0400
+	id 1ujIGg-0001MZ-Uw; Tue, 05 Aug 2025 10:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ujI9m-00033l-6x
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:56:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ujIBt-00052U-Mn
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:58:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ujI9k-0008Qw-3B
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:56:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ujIBs-0000Z0-8k
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 09:58:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754402201;
+ s=mimecast20190719; t=1754402335;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7yt66P0CtyWAyIak7oD9wtjfIjt/xaFwlpHjSFUdZaU=;
- b=JZYjPv9v62doy2T9XnJBfiWvrWAlnpRtLEx2TMBL307xopDZufBOTCNTxpET/BbN9Z7bI5
- 4NuPW0+YEAVtVEE2QkmiFv2ioJ4+nYV4bJpQA54IkMqAcwf8bJoGB5MR369EndKxlWdRxS
- gYg2PXR7qnYxVJgBw8Dc1qUszv1JOmU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GKyjAF1T0/GAqwDn8LgjZkRRlTpwxzT/SzAVolKSSM4=;
+ b=Kfo+cu5OAoO/kfIXESNEi0tvnQAz4EXRxPxMj+ywP+GOmmBeo1gskekd0scFNYHC9ukQ3s
+ Fb4J85jmu3Aymik5fRN4LFVk4qAgiFCUoykv/AIyu4sqLsX39Ig/W8ypnzl7pW5DXKZE42
+ umiAYC0qx6wAhF/4zO6hxFQLc/mVWqM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-b3eELYIgOVa1mhYzW_W6Iw-1; Tue, 05 Aug 2025 09:56:39 -0400
-X-MC-Unique: b3eELYIgOVa1mhYzW_W6Iw-1
-X-Mimecast-MFC-AGG-ID: b3eELYIgOVa1mhYzW_W6Iw_1754402199
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-7074bad04efso99072156d6.1
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 06:56:39 -0700 (PDT)
+ us-mta-645-uJ_bXDOJO1yKZl-eiyNcGQ-1; Tue, 05 Aug 2025 09:58:54 -0400
+X-MC-Unique: uJ_bXDOJO1yKZl-eiyNcGQ-1
+X-Mimecast-MFC-AGG-ID: uJ_bXDOJO1yKZl-eiyNcGQ_1754402333
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e6a5428a76so603590285a.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 06:58:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754402199; x=1755006999;
+ d=1e100.net; s=20230601; t=1754402333; x=1755007133;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7yt66P0CtyWAyIak7oD9wtjfIjt/xaFwlpHjSFUdZaU=;
- b=Mg+rr7jo7SuILE2cLhUzqYRlf17IQPQcKvJZr+iZwL/JCrCMMTeSq2b3QE6uPYkLDr
- zsl3DgkiSLORehApNDB/n7tkcDCev2fFVQMBABkis48FstGTFArAowg3o54ixVNJD//E
- AuYWlDRpm78+7T5dfoNx9HrKhJGw88m6lp3NkfyJulj1egBHJ9P4ZzCLFeo1x+f4PEzU
- hLIuLFnhcPHEMyjRBMGLd13bCsMuaYTeCmc2lQ18fRque8zkrqctfHl+qb43aRNVhfiN
- jiggqBgsQlDcJWydKgKQ/82SMhp2p6sV++HyM4Fj6n5H6DL+wjm8sPjB1kBTKZCqfz5X
- HY/A==
+ bh=GKyjAF1T0/GAqwDn8LgjZkRRlTpwxzT/SzAVolKSSM4=;
+ b=fioEZr3Cdqob3Wyfv+t8npAHU9+kavkXG/eteIcABYh0wm0z4/87hW8WSNDeWIboYR
+ kCw1esBtHITmAgpT8z92tGn3UJ6ko2m8K6uKcdV4BOT0L2FrKuMkFSVqtRYEMxw8q2mg
+ 9C0b5IPv4GgVpSQWdgQGSFL0UPAulCwheLBtM4CyfEHHJY2fhG5WEcQ30BEeAdm/vE+I
+ EymxZt7W/QQXxOpn6BlBA7xG3xbenvewgMJcxvicKv3a16pHOqE514YFx4FUdNxuXvCZ
+ utts24Y0IrC0E7QcXIuo1aiuJCBcE7ncSNsLOGbcSszSds8EVNH0to+hU4n+fhOtCSjy
+ tIDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCIlx31Jp0mbzmXYCjzHmaWN5ZIpO0UIAijazlEW4q7rxSqPoAOdCyX2C+bku6Mm3/l8TEKVnZ0wbK@nongnu.org
-X-Gm-Message-State: AOJu0Yzu61uQdMt7MRwwtafS2AhsmoSe1WYNfiQ5dwOrrZQQHu2Dt0jE
- TTiEIQ7hHsUE8/Ip4F+bRZhc3IQQ6tAZRP/zVQeGF2k7CtOiLtRTSWDlTOgLIBQUqN5f09JP1kA
- cygMntUyhEgl07AGBPlWQzGdCxX4+FMxilhQQDbinkhQFm5VD8xg1EH/p
-X-Gm-Gg: ASbGncvgcuZdoig5lZXDM2s2zQu6wc1maVRbTAfKkrCEMfDfc0MsZadPV2WC1/R0s67
- Ci5ZCjKrUak9EAvQNsH0dx1sx/yt+SlIAM5tgENKBAVdw4VIpzGY4E/HQp3KPwBTWEnl2qBPTHm
- /LLtC1OVNMnQy7Ga2lwM+Y98FAqsJATBYrIlwH9u3iSRs4/u0dI5sAUssH71MRF9WW0H8uOZdti
- Xan5O2Ny0OT9bPUAJSebXbxwrBji1vpRpXq6SxY0Gsv8yzkSl79NbS7aqgEUvAoEO3KMCuz3YuR
- R4vZkReHYZ4wPJ8YVoq4lZgVUqas18pY+OR5vVHVW24JocD5mm+kg6xA82a8Au+D
-X-Received: by 2002:ad4:5e89:0:b0:707:844:9b with SMTP id
- 6a1803df08f44-7096692a6e8mr47451106d6.5.1754402198721; 
- Tue, 05 Aug 2025 06:56:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnEdHDSVxQpbW5A6VeahJZ3BqZzv7mANhfsn3MHxo0DGUwY6DaEfwLXKx4jBj6A6DGSm3oDg==
-X-Received: by 2002:ad4:5e89:0:b0:707:844:9b with SMTP id
- 6a1803df08f44-7096692a6e8mr47450676d6.5.1754402198255; 
- Tue, 05 Aug 2025 06:56:38 -0700 (PDT)
+ AJvYcCWjgjQurL73Zu7yoilOb6dUsOznbpAcW5Rhnxec4JWhnajB3XreVHhr4+GTWKV89QmpswZXLluj9xq+@nongnu.org
+X-Gm-Message-State: AOJu0Yzr4sfMR5nRTlFMdKPxjFy7KbBQdfXYAa7sFDKkILAusCK8TRnF
+ eWQsAIFkeivm1OcmchobcZiUzuvBTseqKZJkGIFzDFiuYS2IkrPoAZfaE2QkV7TqOO6x1mYqO6e
+ 4VEY7WNa28BQ7DxczhZPBx4U9qriByTUoW/ZtCCsEP8Fc3IceY6VDi+x8
+X-Gm-Gg: ASbGncugG7LKdZBlZpuXt/BnRDGiVxFu9G2a7yvGSxy8O/ZZjwOdTXRk3CU5O3DKIz1
+ sLZ7Wt416Vra3X5SYqpYk4qSblJp1bSJzM/DYlBHbsz9OvVgOC6g2Wqf8ugQj2mWDqwiT14I6Z9
+ NW5eQ/ctx6JZJXPUCWH+Cbj53XbwFXEFCy9kMVXFCRmzIl8HoCI0m++FQNVa42/a9yrCaho1JQr
+ Womzp+wMHSs9gDx55qwq+g6q/uyrHOjMJKQODOOmh9esRx/0wSRLtM6SYYhH8m/AZcGKjg7TYcs
+ 96jVdayiAX92RAEMQxcO5XdWhC70FCIAdwlpwpC3NVGkO8chikDd2+kSMFDFX2KH
+X-Received: by 2002:a05:620a:28d6:b0:7d5:e374:e2bb with SMTP id
+ af79cd13be357-7e80acd2b1bmr568955885a.27.1754402332783; 
+ Tue, 05 Aug 2025 06:58:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2PzJ8GV8MzIreCj9FHP7l9ORpZh2/2yYEO5S68aTU9f23jnYFGHac/9+w+vd/0JH207gwWg==
+X-Received: by 2002:a05:620a:28d6:b0:7d5:e374:e2bb with SMTP id
+ af79cd13be357-7e80acd2b1bmr568951685a.27.1754402332268; 
+ Tue, 05 Aug 2025 06:58:52 -0700 (PDT)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077ca3621asm71463746d6.33.2025.08.05.06.56.37
+ af79cd13be357-7e67f72a5e2sm671050985a.66.2025.08.05.06.58.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Aug 2025 06:56:37 -0700 (PDT)
-Message-ID: <d80ee30f-e5e7-4c6c-aa63-5d13e8ba6d5f@redhat.com>
-Date: Tue, 5 Aug 2025 15:56:35 +0200
+ Tue, 05 Aug 2025 06:58:51 -0700 (PDT)
+Message-ID: <4c25ddac-c83e-4b93-9aca-d2aa0e86cb24@redhat.com>
+Date: Tue, 5 Aug 2025 15:58:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/24] tests/functional: Move mips tests into
- target-specific folders
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Subject: Re: [PATCH 07/24] tests/functional: Move arm tests into architecture
+ specific folder
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250801151251.751368-1-thuth@redhat.com>
- <20250801151251.751368-15-thuth@redhat.com>
- <ca897537-bbfd-47ed-b80e-66f357ef5995@linaro.org>
+ <20250801151251.751368-8-thuth@redhat.com>
+ <2065ee05-8313-469e-bc66-075038ea2904@kaod.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,10 +130,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ca897537-bbfd-47ed-b80e-66f357ef5995@linaro.org>
+In-Reply-To: <2065ee05-8313-469e-bc66-075038ea2904@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -158,84 +158,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/08/2025 10.31, Philippe Mathieu-Daudé wrote:
-> Hi Thomas,
+On 04/08/2025 14.28, Cédric Le Goater wrote:
+> Hello Thomas,
 > 
-> On 1/8/25 17:12, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> The tests/functional folder has become quite crowded, thus move the
->> mips tests into a target-specific subfolder.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   MAINTAINERS                                   |  8 ++--
->>   tests/functional/meson.build                  | 47 ++-----------------
->>   tests/functional/mips/meson.build             | 11 +++++
->>   .../test_malta.py}                            |  0
->>   .../test_replay.py}                           |  0
->>   .../test_tuxrun.py}                           |  0
->>   tests/functional/mips64/meson.build           | 10 ++++
->>   .../test_malta.py}                            |  2 +-
->>   .../test_tuxrun.py}                           |  0
->>   tests/functional/mips64el/meson.build         | 14 ++++++
->>   .../test_fuloong2e.py}                        |  0
->>   .../test_loongson3v.py}                       |  0
->>   .../test_malta.py}                            |  4 +-
->>   .../test_replay.py}                           |  0
->>   .../test_tuxrun.py}                           |  0
->>   tests/functional/mipsel/meson.build           | 12 +++++
->>   .../test_malta.py}                            |  2 +-
->>   .../test_replay.py}                           |  0
->>   .../test_tuxrun.py}                           |  0
->>   19 files changed, 59 insertions(+), 51 deletions(-)
->>   create mode 100644 tests/functional/mips/meson.build
->>   rename tests/functional/{test_mips_malta.py => mips/test_malta.py} (100%)
->>   rename tests/functional/{test_mips_replay.py => mips/test_replay.py} (100%)
->>   rename tests/functional/{test_mips_tuxrun.py => mips/test_tuxrun.py} (100%)
->>   create mode 100644 tests/functional/mips64/meson.build
->>   rename tests/functional/{test_mips64_malta.py => mips64/test_malta.py} 
->> (96%)
->>   rename tests/functional/{test_mips64_tuxrun.py => mips64/test_tuxrun.py} 
->> (100%)
->>   create mode 100644 tests/functional/mips64el/meson.build
->>   rename tests/functional/{test_mips64el_fuloong2e.py => mips64el/ 
->> test_fuloong2e.py} (100%)
->>   rename tests/functional/{test_mips64el_loongson3v.py => mips64el/ 
->> test_loongson3v.py} (100%)
->>   rename tests/functional/{test_mips64el_malta.py => mips64el/ 
->> test_malta.py} (98%)
->>   rename tests/functional/{test_mips64el_replay.py => mips64el/ 
->> test_replay.py} (100%)
->>   rename tests/functional/{test_mips64el_tuxrun.py => mips64el/ 
->> test_tuxrun.py} (100%)
->>   create mode 100644 tests/functional/mipsel/meson.build
->>   rename tests/functional/{test_mipsel_malta.py => mipsel/test_malta.py} 
->> (98%)
->>   rename tests/functional/{test_mipsel_replay.py => mipsel/test_replay.py} 
->> (100%)
->>   mode change 100644 => 100755
->>   rename tests/functional/{test_mipsel_tuxrun.py => mipsel/test_tuxrun.py} 
->> (100%)
+>> @@ -1187,7 +1187,7 @@ L: qemu-arm@nongnu.org
+>>   S: Maintained
+>>   F: hw/arm/msf2-som.c
+>>   F: docs/system/arm/emcraft-sf2.rst
+>> -F: tests/functional/test_arm_emcraft_sf2.py
+>> +F: tests/functional/arm/test_emcraft_sf2.py
+>>   ASPEED BMCs
+>>   M: Cédric Le Goater <clg@kaod.org>
 > 
+> Currently the functional tests are matched with :
 > 
->> +subdir('mips')
->> +subdir('mipsel')
->> +subdir('mips64')
->> +subdir('mips64el')
+>    F: tests/*/*aspeed*
 > 
-> Just one single comment here. I'd rather have a single mips/ directory
-> and keep the variants inside it, i.e.:
+> This needs a fix and I think we should be a little more explicit.
+> How about :
 > 
->    tests/functional/mips/test_mips64el_malta.py
+>    F: tests/functional/*/*aspeed*
+>    F: tests/qtest/*ast2700*
+>    F: tests/qtest/*aspeed*
+> 
+> ?
 
-That would make it very cumbersome to determine which qemu-system-mips* 
-binary we'd need for those tests. Currently the tests for each 
-qemu-system-xyz are simply looked up in the xyz subfolder. If we put all 
-mips targets into one folder, we'd need to add some special case logic which 
-I'd really like to avoid.
-And in case the mips targets get unified later, we still can simply move the 
-tests to one folder again, there is no hurry to do this right now already.
+Yes, sounds good, I'll change it in v2.
 
   Thomas
 
