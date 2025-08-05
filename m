@@ -4,219 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A166AC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 12:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA0CC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 12:21:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujGSw-0001kp-Dy; Tue, 05 Aug 2025 08:08:27 -0400
+	id 1ujGeg-0004Q2-JE; Tue, 05 Aug 2025 08:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ujGSR-0001aL-0N
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 08:07:56 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ujGSO-0007Ao-CK
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 08:07:54 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5759H0Lj026532;
- Tue, 5 Aug 2025 12:07:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=BEA3tBWHlCOADlcapIzGhqpxMAZCIt6ENfKOtFD1u0w=; b=
- CtpFAwnqGavR9u6NwrKMuRZh7e5GEGTYbqDukzCZ2PrGv9F7MYPviJwu1fm2cBHf
- 8LMVdmlKvzDSWBb3GqfuiR1332GFLaL/GDzy1HaKOvweqFbTuyB2MiXfGDIYC0JJ
- MyLSxFjSbl398ZZL7X31JAZDMKqAEOEUh//al13Z+8A6dfISXeqPGM6ZoLJCQCam
- HizzmOzW0u2ctWG0SC0rGPOLTpBcGMLpy3VkOTEQGGGHhi3MARSi47JHe1F+B7d2
- q0r9Q8Xx5nbUjmI//9Luu/bPwka+egtMciT5qPDUuHkqkurrtziErubSZjisBO8y
- EL6+bEgCNGhwPkhwyxG92A==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 489a9vvhw2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 05 Aug 2025 12:07:49 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 575Ag11t025466; Tue, 5 Aug 2025 12:07:49 GMT
-Received: from nam11-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam11on2088.outbound.protection.outlook.com [40.107.223.88])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 48a7jtm9bu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 05 Aug 2025 12:07:48 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xwfrigffi5ZK1DTgReo6IpI3RUbbcW9BW8Hd6j+OZBlvoVRUsQreJwA+mGVtacwMRWnj+DvyxipFrVH+KE90u0e2yw15LB+kV86qEi7Dtj4EqWESkJ08oA8i+3ZkBAL1AsI+zlNrk2F0ArJrNiZRz2dvcPzQwg3T3uA3yvQjTg0Z7ILCiCwbtQOPL/YtTjpRSVdI+smRUGL8XxyAd+ijWnjJHtz0QjZNl8H0XYyGm3tZxSV/jZPxlCbuWqPxOGDWK83qJtV040J4nkvnqSjIs3r1cohglHsT7nd0TaGsZMSAZLGArCPRnfJbLzhw0V7zv9MC8uRCDAKx597/BzfJbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BEA3tBWHlCOADlcapIzGhqpxMAZCIt6ENfKOtFD1u0w=;
- b=PW3kUEK5PDjGlObcrwdIevQi0mK425/1xh5I/fNFA6YBhZ7JtRRgJD91mIyLEdTEZSyOIEZwdu12OCdlcRv5qvJx0Vteb32XmX/6vMsoAEE4q4ElREWxT8usHm4KD9xf1lkSwZbTR3QrnALdFlg8FsrgNdUeuL+Wo4Rsyyvd6e6/mmHQdWlOmueyofYKBeOYEUBPd9I73/115/Ei9Oq5JY3MpQvYwgplvqiJ7bOJ7P9Ih6tEKP1KieodMrlWuRBR3lAeZ+lpy482qtMw/FB9cvfd7C7FeLPtZJpUFeO+jY/FOgqLsB+rxGagqV9o94w4fKwmvJtm8fANUyJdUR4oEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ujGeU-0004LX-KW
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 08:20:26 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1ujGeS-0003lF-Ci
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 08:20:22 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7e29616cc4fso501051285a.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 05:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BEA3tBWHlCOADlcapIzGhqpxMAZCIt6ENfKOtFD1u0w=;
- b=T2SeZO0Eivb82kYf0rU5YL2cPOCQaX6A7FeN8zQYOA2PuTUS9eOG0X1js0lvdy1AjpWG9stiRbpX5ll0SP7om6ZGbRuV5OrZmooYQR1yAgqBrJhRlwemcEqbeuQR9SfSB790opl80va5G5KUVeFIt6V6ndQnRYS3SRmIbHfZG7w=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SA1PR10MB7829.namprd10.prod.outlook.com (2603:10b6:806:3ab::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.20; Tue, 5 Aug
- 2025 12:07:46 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.9009.013; Tue, 5 Aug 2025
- 12:07:45 +0000
-Message-ID: <703ad843-e904-4c8f-80af-4970f863ef6c@oracle.com>
-Date: Tue, 5 Aug 2025 08:07:41 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] qtest/qom-test: Plug memory leak with -p
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com,
- eduardo@habkost.net
-References: <20250725135034.2280477-1-armbru@redhat.com>
- <20250725135034.2280477-2-armbru@redhat.com>
- <a7a3ba56-680a-4256-b6e1-ff78f131fdf0@oracle.com>
- <87h5ymdzrf.fsf@pond.sub.org>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <87h5ymdzrf.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH5P222CA0012.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:34b::8) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=gmail.com; s=20230601; t=1754396418; x=1755001218; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rjwu3X6p10c/nSK6weEvSAS+qWcobjDJV9L/hIgZd7w=;
+ b=HNu0XHlU/CL3RO+rINZPbZuQCAhRvkr30Pnkm4XMaBmG/OUhC3hm7sGOkDRcOOqOcf
+ 6JBm3IxA4N6/6+8RgSgxi0HIbSIUA4M82Zcszsiu8MkiqQ0SEHsic6X16r0A8hS6BAmL
+ pieJ6pyYfq/rSYvkxjl0P4z306yZ+VTzBWS/UIMYBndX7fBGGAe4fYiAj7tH+eQ6elbD
+ 3u9yOvw2e7aAEOBTFDF4pwTZ3pjfZxe0zIYWZWZkp0E5IG50YG0bIvn3BVc4GuGnmn/4
+ fUThXm6tpc3kUkVjhngT6EchWRcbVNdIOBalNq7arDaPFWpyl83Jiag66eOz+dOi491o
+ weaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754396418; x=1755001218;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rjwu3X6p10c/nSK6weEvSAS+qWcobjDJV9L/hIgZd7w=;
+ b=YyqFTEIkJ9EvyM/OlnI8d+seF73Bpyh0IX2fR4dCw7QdJPhO96DPYVRpomROukIjzx
+ quHM1LZ3rZiWiTv43fTII+cAJQd37Q5g9MrzjndOAIDEwZGOjmk3E6lk7c/P7eaQs5JV
+ nAbGqsECuq8oycf7NKhk1MH8nxEDIlUEgaPAIyxbe//eJgPSYcNIryAcBeuEziIJrK79
+ A/wwgwkw6anpaNCpqA8sr7xnBAGuBxIpOoajVcTbasNyaMFT5IKotr5eOfaG43QJpXPA
+ uYIRnpnSF+FWTBGHNM+EfO5AgFV5f3DzV/LX9X4UWb9SgR7YqG/oqzpSql8faIeb52AO
+ 3g3A==
+X-Gm-Message-State: AOJu0YwBdDRQJl0lG3pmoGzobIuWXomGA+61f/xyJub4aRN7zUV4I9Jp
+ bwX7/scinZ1gBvfPDGop0rpXpnuLs2Bw34PDTu+2V6ceUqFmPcVjicwk7jQdazsHhDvm5K2Tl34
+ kFE8tNeKMSL0g1GAOOuAgYpN+G0cE+4Y=
+X-Gm-Gg: ASbGncsAprs9VzZN5exJY5dOn0+YlGxhZ27xxBVdsdLUebkrbYAvUTdBRHowQDYQ1bG
+ F7hbzzd7/bC1+JAgfmuWu1EZBZA8i7VOZvL4GuvMq2wK24sj6tJOTwBZC93L3Htn3+2+KcLjCS0
+ BjD12mhRQ59MsFeNlMnUXTPlv5SLeDu4G2Vlb3+1IfYA53Mmt1ATTE9L9tY4nj32TJWDd3EJH0D
+ 13smlXSlMyztIUiPvJWtt4hQ70hBw==
+X-Google-Smtp-Source: AGHT+IFiKZsqeM61JTngUd/hcXyj1C0eY7UJ1Hq6Tssyo1SE1OCJ8qCYiDuSwMR8W+rDTsPEkAY57jZ6E6UAShQzRjw=
+X-Received: by 2002:a05:620a:45a4:b0:7e6:9746:8acd with SMTP id
+ af79cd13be357-7e697468c42mr1619723285a.49.1754396418040; Tue, 05 Aug 2025
+ 05:20:18 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA1PR10MB7829:EE_
-X-MS-Office365-Filtering-Correlation-Id: 77cefdeb-688a-4afa-bef6-08ddd418b03e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cFFsR0FWRVdROEpTM2pUSVJybUF0akR3L2xJYlYxUnhZT3YwR0VtKzRVL3lE?=
- =?utf-8?B?YngwVGp0L3I5RHhQaGdSV3psT25Ray9KSVZQV2VhY2tOb3BIbTJrZlFNR3I2?=
- =?utf-8?B?bDhLYmhwblhXd1h6eUk3RFdoNkVSTSthS0NhODFqVmwxQ1MxZ243akphRGhl?=
- =?utf-8?B?OC9NbTdBbGRvb1hpNENpVEpPVWRhZWE5dktiUStaT2I0a0tEZ041dlpOTWFM?=
- =?utf-8?B?OFFkWis1WmxZa3hQdlEzV0d6SUFQQmE0Vmt3UmJQZmNyRytQM3ZsdGtXUEd5?=
- =?utf-8?B?VHg3UUJVSmR4KzVYQXRPb1diWThxblByKzVxN0IrT1Z0REExU3NNZUR3bENG?=
- =?utf-8?B?THI0bG9uNjRtTWF1WnhVdGI4OEVkUTFBUXJEa2FuOUFqWnJad3dsRmhITy9t?=
- =?utf-8?B?cWptSStKMVZKMS95THgyQ2NSblFWc3FSb2pndUJQdHltbFo2TUdPMUJKSzlx?=
- =?utf-8?B?bjhrdllPVUJMQ0c3NzQxRERmQU13OFRFUlRIeW1CekdtMVcrZEpLMmlmVzA3?=
- =?utf-8?B?SWs2b0M0ck5sY1owTktrRTZvRm9OdC9EWnV3YXV2NkllOHlHc281QWxMbGc5?=
- =?utf-8?B?NUVJYXc1cFpQZTZxbEs0YWZiaUVxZTV0NE5JWHhJUmd1NHFUbjJqRi82bnpv?=
- =?utf-8?B?NDAzeFdhUk9kQVo2aTBoMU84ZzdtQmFXejJqZk1lZVByZ3dZRjVOOHJRZjVx?=
- =?utf-8?B?VEZEajQwNjZJOFRMQmJXUUV0N1A4ZU43VjRnTXJqcHNHOGYwd2xjdVdlOTlD?=
- =?utf-8?B?UmttM0t2TlFJTHRyTjQ2ZjU5YUlrSnpmc1RZVVh6Y3RhRmNETXZ5VWRsYklQ?=
- =?utf-8?B?aTU2TndTZ3k1VG8wbVJEM3Y2c0dEOEFsNjRvZ25PbkVySll2Vi9Ec0RGdjdi?=
- =?utf-8?B?UEQ0c0x0bzJDY292SytBeFFWNWJaaGRWbFNyV2grZU5HSHVjN1JYSjd2bllM?=
- =?utf-8?B?V2xmZWt0VUU2em9NM3FaajhQSGx6S0x1aFV3aG1WcFZnTWxPanZhYTdwRy9V?=
- =?utf-8?B?MTNEeHJSMHBSNlgxOGVhVE9mVEFzYU1BRklnUWdjVmZNUnZ2QzdrMVk3QWdt?=
- =?utf-8?B?ZkZCMjNkVTlXWGRSbXJxOHlJcHBwd2VvTzR6QVRlY0NLNEJwRDRaTXpNdVgr?=
- =?utf-8?B?SXNLQWY3TG5KcVY4ZHpyNXpUZkZsRzNwWHlrQXlCOVRPQWNza1h6VitjQWJp?=
- =?utf-8?B?azMrUm8xV0c1MjFSZVFsQTh1TW1Ld2UrUlRvYjAxdkprZENzVS81NE45cVNO?=
- =?utf-8?B?ZzdHNTFtZ2h4SWZWbWJqMFROMTRaL2lpUG9qU3hZOC9EZlFQd2RwLzhBUXkw?=
- =?utf-8?B?N0VXSHlpT2t6VUR0VitYeTNnb1MzVnoxY3g4RXBaeHdHUnNOUy9EMVZtNDJ5?=
- =?utf-8?B?UzN0eGZLYlJrbmd3bks3ZUVFSGRtTnN3QmZ3VWZsc2Nyd0lPOS80SEpINHJj?=
- =?utf-8?B?NDhvSUZVdWZNVk5Malc5OW9qK09RV2JPL09yZHMzNXJKNytpZ2t4MUJUY2NI?=
- =?utf-8?B?RlNTM05EMk5UUUdidTNmTUlkY1lCajd0czdKY1k5c05Xck81aWRlMThBL0Ft?=
- =?utf-8?B?WGFqa0pLQVhocXNVZWhkMUdnVTdhUTJJWHVHbkR0eDdFUXF6c251S3R5YlA2?=
- =?utf-8?B?ZGRsejVyZlpoUElXUkpWZ1ZtYlozV1IxQTJ2dm53MTh3Ujh5dDk5dDZpTkh5?=
- =?utf-8?B?cVZYNWdzOGEvdjl5U3pleUZrb1hsUEoycm1hamJWRGZMUVYzWlhaVkEyNjgw?=
- =?utf-8?B?US9DT2hIb01VOE1TY0ZSUnlMZkhxVkJjQmF1bnozY3c4UkM4ejJCNmpTOHdh?=
- =?utf-8?Q?xsU1M26jTvywVIMfcJ0bUtGrbhool9zWGxfFY=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S0FYTURKSmV1TzRjWXRubERnQ3FJQ2VMKy9QT3F6TUx1UmVtWEM5ZnVONGIw?=
- =?utf-8?B?Q2FkQkVRZGkySkg1MmdwUjA4RGY4MTI5Wkovdkxqb2RhTWtmaUVQQ1lZR0li?=
- =?utf-8?B?RmNaMEI5N1lmN2JxUkdYMnZsQklSMnhoN3lDcndWMEdaOGVHYml0NnQybFk3?=
- =?utf-8?B?ZWxCeitxZ1EzTzA4WVgwZjdaMU42YUZHNUJzR1BVQk9NVGxIRGxEb2EzSGxU?=
- =?utf-8?B?MVdBUUk2ems0VmxNYzJzcU9jZG0yR2QrbEZjdmNrcUdZOXBxQWNtbFFwWlll?=
- =?utf-8?B?UEtOQnRqYkdJdzJaYXJ4cG5Ha0tUWll5TGJuRXhyQXkyck4vRzB5ZEhPdjhn?=
- =?utf-8?B?KzRKdGdIL3A4YkNzT1dJK0ZzaXhpRmFpREprRzNCMTBLaEc0blJpRzI4dlVy?=
- =?utf-8?B?QVdwZU9kSnl2L2cyWVdPc2JiZkhCdUdxQldnbDZobmhKUCtWZU5rNHlhZStT?=
- =?utf-8?B?dnFweFRNclhyR0FSWFp0bEs1Rnk1bkdZRGE3RGh5YnkyQ3U0N3M4VXJEZFlS?=
- =?utf-8?B?SG95T2t3NDJnNEkxUjNWTWFNMnQzMDVuN3ZyM2tRbFd4Z3V6V2lxZUZmZHlx?=
- =?utf-8?B?emloSlp1RmRLa3dPeDVMaHpjOFVmNzl2WWRnck0yRk9JZlVYVTJnK1BMUS80?=
- =?utf-8?B?YzloR3JDb29zVXpUblR4eFFVYVc5QVc1TEpiY2U5RUpkYVlIdnlmVEFLOG52?=
- =?utf-8?B?ME1LMG43M2xwS2xuanZhVUEydDZMcmg2REYydGFvbkdNTUtBYS8zM24yYnVl?=
- =?utf-8?B?aGVLUjdsVW9DU1AwN0hFaVdmNEtpRVkzb3k1RWlDeVRiMnFxVFBWMEFhR0Rm?=
- =?utf-8?B?eGRTR2dubWNWZFEzUlN5NC9PUUJyblhsNDU1SmVIQ0ZMM1FPa3NJYUt2SFpJ?=
- =?utf-8?B?ZC8za1JFZDAybFN4SEpJdWNDbEl4MUlNZ1pHWnZuY2RDMEYwOUpGMkpydWN5?=
- =?utf-8?B?SzdmNGUxYTJPei9xeGxxMkdyKy9CQ01HTWE0cEFvSnltMVlGcE5hVjB0QzNB?=
- =?utf-8?B?U1E3KzNrTlFUdFFnRVJqR3hKeE1jR1UyamxnWTErblZoTFgyckxlWTZ4NHd1?=
- =?utf-8?B?cVBQYmRKaHMyU0lldThxcEI5Q2w0bWUyc3pNSjVoQWdIVHk5aW9ZNm9uRmxQ?=
- =?utf-8?B?V3FNN3lCUXM2WUY4L1FJRTdMYUZHaE1lVlFGV2xCbUs2Z2E2anMwY3RqbWZV?=
- =?utf-8?B?MGc4ek15Rll1UFB3WFlQNUhSRUJ5TnYwYUdOKzRkSWhxeVZOY2tHUEJMQW5F?=
- =?utf-8?B?TEZqRDA1emlEcXpxSjE4WUE0ZXBCVlNaOE4zTjl3YkJZK3lMekdDa3p4UU9F?=
- =?utf-8?B?emF2T0RFaEhSRTM3WmFjU0RuYVlXbFU5aENJUkhGeE80WkJPZElFVWgxK2d4?=
- =?utf-8?B?NDZKRHhiTmszQ05mS2VPRUtpL0JDWVZraFBBb1dEc0Fab1VDUjJsNzRwS1lZ?=
- =?utf-8?B?bGJtNE9BM0phRkdZdzloWmN1RlB2N0JnajhmVm9VTW9XZzE3YVlEcGJ5aFJm?=
- =?utf-8?B?MXVJL1RTNnFwZGVnVzNFZDAzTzlLUUgzaEorNTVlZjdvaHNHVFhtRmNoTzJz?=
- =?utf-8?B?ckRabWRJTTl6RmJoMGVKNjRyRGp1RkRRNGZ1dXA2eEhieE9WUk0yZmVtMUNi?=
- =?utf-8?B?RFMvSDRZZ05ET3EvUnlmMjRBOUg4d2VJK20vMGs2TnYrWXhZR1E2aHRmTnRI?=
- =?utf-8?B?eUNqR3dZREdDVldqZi9UKzd6dnNOMUdxejloZ1EvSFV4NTNGQVEvYU5kM21v?=
- =?utf-8?B?WE1xTUliYWoyMUJuSUI1ajhhZmZzaVFDTUJWV2U3UmE4RnNONDlEZTRURDU5?=
- =?utf-8?B?WU1Ucis1ZnhOL2dmYmo2VjR2MlFqSTljUXBUdURhNWJKaUJvMDFsN2crakZu?=
- =?utf-8?B?Rk9nUDZPNXVtNm1BTmFoK3U2NGRrQ1dnTlNVckNQMHhaS0RDQkl6cGF2Ym13?=
- =?utf-8?B?WHlJZWJ0NjVUS1BVOWNZalZwM28rS3NMdmNDYUo1Y2Z6UGVHZC9YK3R4TFlE?=
- =?utf-8?B?ZlIrVC9FS1BoQ0F2bXFtNFp2cmJ5RDdtQnVSS1RQOTZWditieTgxZ2RuWVdx?=
- =?utf-8?B?NHBVcEp4WElvOGVEK1IyUmRRcUtUMko5WDF0SE1kdU1XMjN3Nk4xd29KY1RR?=
- =?utf-8?B?KzdTRWVyY2tuOExPLzkrcklxbVlwa1c4Tmx0NGJaK3lYM1pZWkxOQzZwbjRs?=
- =?utf-8?B?Q3c9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: XlFSqrVXdlY5Lftr3c0WxBUR4pExzR0saFEzPDrjmD6pyeY6NhDiWjVVCt044aTDhxEcpvSWlOAmKumhIHxjmMpuJmbRNH80Vn1Yp4BiDiNEbItG/uJVSV6GDze9qo70RNcN0x7UKxSaFeRzt9Ziwt+vDmV04JxLXdB7BmKyXewO3huZgk7+Pw0RY87cLxfUO5Dp76Z9UbAVCMxGTeL1MxDyCmgRgEcMiAFCiwKAWz6e2w6N1DlpytmtfZ/FiB7jKAYbXKM85rPG4Z3V+URnvvMTEyKgKzmpd3uMisnEZCuRd6A4jUUnm0euVanXWbIh+53doOFxXeQPZcgd+3MMZMLVWhlO2y7C5uK5io7XLDQqs3Bu3uWT5lESd1cINEM4GfIpFiBIOaAx6bGRn0amHjQCVVdtGya15vemX7Ky2scugRpJ2nhHccWvFD/iphV0gNeQU9Q1fkEMxF2XhzbFT4btTHnIAppmGMRwylM2RvVIQx7xV8fhPIyEyGqWm/r3YVbRKjnIuvjm4BX38TCKu/SPtjKraxAZ6nbJgcvQNgoVqoXrVRN7Wze8ZxXxjM/Qb8mhpgCTcYsYtC0gS5q9H9hbDR4+rH7VFDZTWjjCcW4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77cefdeb-688a-4afa-bef6-08ddd418b03e
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2025 12:07:45.8908 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mA33GqgrJoQmn40sIFlqYHH3sWurqlNfVrUgj9Yc/JJqdQ3RA6n3qXXsVdSEzWEKKQKHr7+a7UKgGjz29bssvKDMiZDt/6IfZUl8MHexyCg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB7829
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_03,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 mlxscore=0
- phishscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2508050088
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDA4OCBTYWx0ZWRfX5rAE+uK5aveE
- dVCMJXY265P/M1fc8GC4xDPs4drWp4Bom9QkxRQ5hxrUgFTbCusz5vvIxH4RKahFc43fcvBAxB7
- 5sYQK/HB4gfTDUQl8oZpG6WNABxpbHOIYP0z3N2qmvtB3Pad/IjXw7Uv3Ygow4/CG+9BdayM5kn
- stsogw+W2t0tnIpOl/0Ao/bR9N57mKVN6twIejjaGY9EyGB6LSSeQPwC2erx/qb9FFe3dNWwPJJ
- s3ZS4TDSaYnNyi6xCX0IGJ98STD41LnuQrq7e4nTt/KxAmrDf1hVlf+PAUqxv4SrzttRXALzze8
- 3wgkbLnvYlNc1Km+SaQ5GcxYlj4sYtz2Nk7GPY4+MZkPp235w94U98+vKL4/P7GjpoX/A8DQrOP
- L8WeEjE8/FQaiSTxvlOHc0uCIk8DBtLflFEyN+NrMfevubFoSQTRDEBiRqfDMKqwr9NZqc8I
-X-Authority-Analysis: v=2.4 cv=SIhCVPvH c=1 sm=1 tr=0 ts=6891f416 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=GoEa3M9JfhUA:10 a=A3H8OfN2AAAA:8 a=yPCof4ZbAAAA:8
- a=20KFwNOVAAAA:8 a=v7jy1KifV_lzA3f73CoA:9 a=QEXdDO2ut3YA:10 a=eb6_e5ZlHzUA:10
- a=hKFNpMRl0UUYlmJlzFdh:22
-X-Proofpoint-GUID: mvQCXX0NL5x1KWn3Qvv8Qi8jmvC4Qi0f
-X-Proofpoint-ORIG-GUID: mvQCXX0NL5x1KWn3Qvv8Qi8jmvC4Qi0f
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <P4yQC2DHhjwCsAB9YmHj30-Ybx2BJiE3DZ4t8bxbQcDHNQSE-BctQB15IqJ9A-F-C4rHwSUAXuUiU4CEiqMCsIpS6bWVdft88xOlEArjP94=@protonmail.com>
+In-Reply-To: <P4yQC2DHhjwCsAB9YmHj30-Ybx2BJiE3DZ4t8bxbQcDHNQSE-BctQB15IqJ9A-F-C4rHwSUAXuUiU4CEiqMCsIpS6bWVdft88xOlEArjP94=@protonmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 5 Aug 2025 16:20:05 +0400
+X-Gm-Features: Ac12FXxtopbiNzSMvxYaGzVMzhGO1pW9DT5lI39DPWYuPo-Bx3MlHbg-yOcOPys
+Message-ID: <CAJ+F1C+dCJMyD9MhWTB-JWngyYoGdXAc+aZTjJ+C_y=vfR6ecg@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl2: Add SDL clipboard support
+To: startergo <startergo@protonmail.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x736.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -232,103 +95,357 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/2025 2:54 AM, Markus Armbruster wrote:
-> Steven Sistare <steven.sistare@oracle.com> writes:
->> On 7/25/2025 9:50 AM, Markus Armbruster wrote:
->>> The machine name g_strdup()ed by add_machine_test_case() is freed by
->>> test_machine().  Since the former runs for all machines, whereas the
->>> latter runs only for the selected test case's machines, this leaks the
->>> names of machines not selected, if any.  Harmless, but fix it anyway:
->>> there is no need to dup in the first place, so don't.
->>>
->>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>> ---
->>>   tests/qtest/qom-test.c | 3 +--
->>>   1 file changed, 1 insertion(+), 2 deletions(-)
->>>
->>> diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
->>> index 4ade1c728c..cb5dbfe329 100644
->>> --- a/tests/qtest/qom-test.c
->>> +++ b/tests/qtest/qom-test.c
->>> @@ -220,7 +220,6 @@ static void test_machine(gconstpointer data)
->>>       qobject_unref(response);
->>>       qtest_quit(qts);
->>> -    g_free((void *)machine);
->>>   }
->>>   
->>>   static void add_machine_test_case(const char *mname)
->>> @@ -228,7 +227,7 @@ static void add_machine_test_case(const char *mname)
->>>       char *path;
->>>       path = g_strdup_printf("qom/%s", mname);
->>> -    qtest_add_data_func(path, g_strdup(mname), test_machine);
->>> +    qtest_add_data_func(path, mname, test_machine);
->>>       g_free(path);
->>>   }
->>
->> This will break if qtest_cb_for_every_machine ever composes a machine name on the
->> stack and passes that to add_machine_test_case.  Unlikely, but the strdup makes it
->> future proof.
-> 
-> Hmm.
-> 
-> qtest obtains machine names via QMP on demand.  This is
-> qtest_get_machines().  Once gotten, they live forever.
-> 
-> Used to live forever, actually: commit 41b2eba4e5c (tests/qtest: Allow
-> qtest_get_machines to use an alternate QEMU binary) throws them away
-> when qtest_get_machines() is asked for another QEMU's machine names.
-> migrate_start() does that.  It appears get each one's machine names
-> twice, because it switches back and forth.  Wasteful.
-> 
-> Anyway, you have a point: more stupid shit happens below the hood than I
-> expected, and even more may be added in the future.
-> 
-> Moreover, at least test-hmp has the same leak.  Plugging it here and not
-> there makes no sense.  I'm dropping this patch for now.
-> 
->> Also, mname is not the only leak.  path is also leaked when only a subset of
->> tests are run:
->>
->>    qtest_add_data_func(path, ...)
->>      gchar *path = g_strdup_printf(...)
->>      g_test_add_data_func(path, ...)
->>
->> Leaking seems to be par for this course.  Maybe not worth fixing.
-> 
-> valgrind shows the machine name leak my patch plugs.  It does not show
-> @path leaking.
-> 
-> Let's have a closer look:
-> 
->      static void add_machine_test_case(const char *mname)
->      {
->          char *path;
-> 
->          path = g_strdup_printf("qom/%s", mname);
->          qtest_add_data_func(path, mname, test_machine);
->          g_free(path);
->      }
-> 
-> Always frees @path.
-> 
->      void qtest_add_data_func(const char *str, const void *data,
->                               void (*fn)(const void *))
->      {
->          gchar *path = g_strdup_printf("/%s/%s", qtest_get_arch(), str);
->          g_test_add_data_func(path, data, fn);
->          g_free(path);
->      }
-> 
-> Always frees @path.
-> 
-> g_test_add_data_func()'s contract[*] on its first argument: "The data is
-> owned by the caller of the function."
-> 
-> I can't see a leak.
-> 
-> [*] https://docs.gtk.org/glib/func.test_add_data_func.html
+Hi
 
-Agreed.
+This is still not a correctly formatted git patch:
 
-- Steve
+$ git am \[PATCH\]\ ui_sdl2_\ Add\ SDL\ clipboard\ support.eml
+warning: quoted CRLF detected
+Applying: ui/sdl2: Add SDL clipboard support
+error: corrupt patch at line 16
+Patch failed at 0001 ui/sdl2: Add SDL clipboard support
+
+Please make sure you follow:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+
+thanks
+
+On Tue, Aug 5, 2025 at 3:54=E2=80=AFPM startergo <startergo@protonmail.com>=
+ wrote:
+>
+> From 89affd7e5b1ac9fcf9f10e483d9e4e63328a42fa Mon Sep 17 00:00:00 2001
+> From: startergo <startergo@protonmail.com>
+> Date: Thu, 31 Jul 2025 19:36:07 +0300
+> Subject: [PATCH 1/1] ui/sdl2: Add SDL clipboard support
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=3DUTF-8
+> Content-Transfer-Encoding: 8bit
+> To: qemu-devel@nongnu.org
+> Cc: pbonzini@redhat.com,
+>     marcandre.lureau@redhat.com
+>
+> Implement bidirectional clipboard integration between QEMU and host
+> system when using the SDL display backend. This allows seamless
+> copy-paste operations between the guest and host environments.
+>
+> Features:
+> - Bidirectional clipboard sync (guest =E2=86=94 host)
+> - Async clipboard request handling to prevent blocking
+> - Self-update detection to avoid clipboard manager conflicts
+> - Configurable via --enable-sdl-clipboard build option
+> - Text-only clipboard support (following existing QEMU patterns)
+>
+> The implementation follows the same patterns used by the existing
+> GTK and VNC clipboard implementations, integrating with QEMU's
+> clipboard subsystem through QemuClipboardPeer.
+>
+> Tested on macOS with successful build and runtime clipboard
+> functionality verification.
+>
+> Co-authored-by: Kamay Xutax <admin@xutaxkamay.com>
+> Signed-off-by: startergo <startergo@protonmail.com>
+> ---
+>  include/ui/sdl2.h   |  12 ++++
+>  meson.build         |   3 +
+>  meson_options.txt   |   2 +
+>  ui/meson.build      |   3 +
+>  ui/sdl2-clipboard.c | 154 ++++++++++++++++++++++++++++++++++++++++++++
+>  ui/sdl2.c           |   9 +++
+>  6 files changed, 183 insertions(+)
+>  create mode 100644 ui/sdl2-clipboard.c
+>
+> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+> index dbe6e3d973..0cadbe8c1c 100644
+> --- a/include/ui/sdl2.h
+> +++ b/include/ui/sdl2.h
+> @@ -21,6 +21,10 @@
+>  # include <SDL_image.h>
+>  #endif
+>
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +#include "ui/clipboard.h"
+> +#endif
+> +
+>  #include "ui/kbd-state.h"
+>  #ifdef CONFIG_OPENGL
+>  # include "ui/egl-helpers.h"
+> @@ -45,6 +49,9 @@ struct sdl2_console {
+>      bool gui_keysym;
+>      SDL_GLContext winctx;
+>      QKbdState *kbd;
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +    QemuClipboardPeer cbpeer;
+> +#endif
+>  #ifdef CONFIG_OPENGL
+>      QemuGLShader *gls;
+>      egl_fb guest_fb;
+> @@ -97,4 +104,9 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dc=
+l,
+>  void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>                             uint32_t x, uint32_t y, uint32_t w, uint32_t =
+h);
+>
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +void sdl2_clipboard_init(struct sdl2_console *scon);
+> +void sdl2_clipboard_handle_request(struct sdl2_console *scon);
+> +#endif
+> +
+>  #endif /* SDL2_H */
+> diff --git a/meson.build b/meson.build
+> index 41f68d3806..4a37df9669 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1596,6 +1596,8 @@ else
+>    sdl_image =3D not_found
+>  endif
+>
+> +have_sdl_clipboard =3D sdl.found() and get_option('sdl_clipboard')
+> +
+>  rbd =3D not_found
+>  if not get_option('rbd').auto() or have_block
+>    librados =3D cc.find_library('rados', required: get_option('rbd'))
+> @@ -2511,6 +2513,7 @@ config_host_data.set('CONFIG_RELOCATABLE', get_opti=
+on('relocatable'))
+>  config_host_data.set('CONFIG_SAFESTACK', get_option('safe_stack'))
+>  config_host_data.set('CONFIG_SDL', sdl.found())
+>  config_host_data.set('CONFIG_SDL_IMAGE', sdl_image.found())
+> +config_host_data.set('CONFIG_SDL_CLIPBOARD', have_sdl_clipboard)
+>  config_host_data.set('CONFIG_SECCOMP', seccomp.found())
+>  if seccomp.found()
+>    config_host_data.set('CONFIG_SECCOMP_SYSRAWRC', seccomp_has_sysrawrc)
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 59d973bca0..be2cba3a30 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -212,6 +212,8 @@ option('sdl', type : 'feature', value : 'auto',
+>         description: 'SDL user interface')
+>  option('sdl_image', type : 'feature', value : 'auto',
+>         description: 'SDL Image support for icons')
+> +option('sdl_clipboard', type : 'boolean', value : true,
+> +       description: 'SDL clipboard support')
+>  option('seccomp', type : 'feature', value : 'auto',
+>         description: 'seccomp support')
+>  option('smartcard', type : 'feature', value : 'auto',
+> diff --git a/ui/meson.build b/ui/meson.build
+> index 35fb04cadf..6d1bf3477e 100644
+> --- a/ui/meson.build
+> +++ b/ui/meson.build
+> @@ -126,6 +126,9 @@ if sdl.found()
+>      'sdl2-input.c',
+>      'sdl2.c',
+>    ))
+> +  if have_sdl_clipboard
+> +    sdl_ss.add(files('sdl2-clipboard.c'))
+> +  endif
+>    sdl_ss.add(when: opengl, if_true: files('sdl2-gl.c'))
+>    sdl_ss.add(when: x11, if_true: files('x_keymap.c'))
+>    ui_modules +=3D {'sdl' : sdl_ss}
+> diff --git a/ui/sdl2-clipboard.c b/ui/sdl2-clipboard.c
+> new file mode 100644
+> index 0000000000..e50ff11d5a
+> --- /dev/null
+> +++ b/ui/sdl2-clipboard.c
+> @@ -0,0 +1,154 @@
+> +/*
+> + * SDL UI -- clipboard support (improved async version)
+> + *
+> + * Copyright (C) 2023 Kamay Xutax <admin@xutaxkamay.com>
+> + * Copyright (C) 2025 startergo <startergo@protonmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "ui/console.h"
+> +#include "ui/clipboard.h"
+> +#include "ui/sdl2.h"
+> +#include "qemu/log.h"
+> +
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +
+> +/* Track pending clipboard requests to handle async data */
+> +typedef struct {
+> +    struct sdl2_console *scon;
+> +    QemuClipboardInfo *info;
+> +    QemuClipboardType type;
+> +} SDLClipboardRequest;
+> +
+> +static SDLClipboardRequest *pending_request =3D NULL;
+> +
+> +static void sdl2_clipboard_clear_pending(void)
+> +{
+> +    if (pending_request) {
+> +        if (pending_request->info) {
+> +            qemu_clipboard_info_unref(pending_request->info);
+> +        }
+> +        g_free(pending_request);
+> +        pending_request =3D NULL;
+> +    }
+> +}
+> +
+> +static void sdl2_clipboard_notify(Notifier *notifier, void *data)
+> +{
+> +    QemuClipboardNotify *notify =3D data;
+> +    struct sdl2_console *scon =3D
+> +        container_of(notifier, struct sdl2_console, cbpeer.notifier);
+> +    bool self_update =3D notify->info->owner =3D=3D &scon->cbpeer;
+> +    const char *text_data;
+> +    size_t text_size;
+> +
+> +    switch (notify->type) {
+> +    case QEMU_CLIPBOARD_UPDATE_INFO:
+> +        {
+> +            /* Skip self-updates to avoid clipboard manager conflicts */
+> +            if (self_update) {
+> +                return;
+> +            }
+> +
+> +            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].available=
+) {
+> +                return;
+> +            }
+> +
+> +            /* Check if this is completion of our pending request */
+> +            if (pending_request && pending_request->info =3D=3D notify->=
+info &&
+> +                pending_request->type =3D=3D QEMU_CLIPBOARD_TYPE_TEXT) {
+> +                sdl2_clipboard_clear_pending();
+> +            }
+> +
+> +            /* Check if data is available, request asynchronously if not=
+ */
+> +            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].data) {
+> +                if (!pending_request) {
+> +                    pending_request =3D g_new0(SDLClipboardRequest, 1);
+> +                    pending_request->scon =3D scon;
+> +                    pending_request->info =3D qemu_clipboard_info_ref(no=
+tify->info);
+> +                    pending_request->type =3D QEMU_CLIPBOARD_TYPE_TEXT;
+> +                    qemu_clipboard_request(notify->info, QEMU_CLIPBOARD_=
+TYPE_TEXT);
+> +                }
+> +                return;
+> +            }
+> +
+> +            /* Process available data */
+> +            text_size =3D notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].=
+size;
+> +            if (text_size =3D=3D 0) {
+> +                return;
+> +            }
+> +
+> +            text_data =3D (const char *)notify->info->types[QEMU_CLIPBOA=
+RD_TYPE_TEXT].data;
+> +
+> +            /* Ensure null termination for SDL clipboard */
+> +            g_autofree char *text =3D g_strndup(text_data, text_size);
+> +            if (text && text[0] !=3D '\0') {
+> +                SDL_SetClipboardText(text);
+> +            } else if (!text) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                              "SDL clipboard: Failed to allocate memory =
+for clipboard text\n");
+> +            }
+> +            break;
+> +        }
+> +    case QEMU_CLIPBOARD_RESET_SERIAL:
+> +        sdl2_clipboard_clear_pending();
+> +        break;
+> +    }
+> +}
+> +
+> +static void sdl2_clipboard_request(QemuClipboardInfo *info,
+> +                                   QemuClipboardType type)
+> +{
+> +    g_autofree char *text =3D NULL;
+> +
+> +    if (type !=3D QEMU_CLIPBOARD_TYPE_TEXT) {
+> +        return;
+> +    }
+> +
+> +    text =3D SDL_GetClipboardText();
+> +    if (!text) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "SDL clipboard: Failed to get clipboard text: %s\n=
+",
+> +                      SDL_GetError());
+> +        return;
+> +    }
+> +
+> +    qemu_clipboard_set_data(info->owner, info, type,
+> +                            strlen(text), text, true);
+> +}
+> +
+> +void sdl2_clipboard_init(struct sdl2_console *scon)
+> +{
+> +    scon->cbpeer.name =3D "sdl2-clipboard";
+> +    scon->cbpeer.notifier.notify =3D sdl2_clipboard_notify;
+> +    scon->cbpeer.request =3D sdl2_clipboard_request;
+> +
+> +    qemu_clipboard_peer_register(&scon->cbpeer);
+> +}
+> +
+> +void sdl2_clipboard_handle_request(struct sdl2_console *scon)
+> +{
+> +    g_autofree char *text =3D NULL;
+> +    QemuClipboardInfo *info;
+> +
+> +    text =3D SDL_GetClipboardText();
+> +    if (!text) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "SDL clipboard: Failed to get clipboard text: %s\n=
+",
+> +                      SDL_GetError());
+> +        return;
+> +    }
+> +
+> +    if (text[0] =3D=3D '\0') {
+> +        return; /* Ignore empty clipboard */
+> +    }
+> +
+> +    info =3D qemu_clipboard_info_new(&scon->cbpeer, QEMU_CLIPBOARD_SELEC=
+TION_CLIPBOARD);
+> +    qemu_clipboard_set_data(&scon->cbpeer, info, QEMU_CLIPBOARD_TYPE_TEX=
+T,
+> +                            strlen(text), text, true);
+> +    qemu_clipboard_info_unref(info);
+> +}
+> +
+> +#endif /* CONFIG_SDL_CLIPBOARD */
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index cda4293a53..00a17b68a7 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -691,6 +691,11 @@ void sdl2_poll_events(struct sdl2_console *scon)
+>          case SDL_WINDOWEVENT:
+>              handle_windowevent(ev);
+>              break;
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +        case SDL_CLIPBOARDUPDATE:
+> +            sdl2_clipboard_handle_request(scon);
+> +            break;
+> +#endif
+>          default:
+>              break;
+>          }
+> @@ -901,6 +906,10 @@ static void sdl2_display_init(DisplayState *ds, Disp=
+layOptions *o)
+>          }
+>          register_displaychangelistener(&sdl2_console[i].dcl);
+>
+> +#ifdef CONFIG_SDL_CLIPBOARD
+> +        sdl2_clipboard_init(&sdl2_console[i]);
+> +#endif
+> +
+>  #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
+>          if (SDL_GetWindowWMInfo(sdl2_console[i].real_window, &info)) {
+>  #if defined(SDL_VIDEO_DRIVER_WINDOWS)
+> --
+> 2.50.1
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
