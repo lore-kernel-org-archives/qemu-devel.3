@@ -4,60 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F13E4C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 06:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20532C87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 07:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujBak-0005qP-Bl; Tue, 05 Aug 2025 02:56:11 -0400
+	id 1ujBpk-0003BX-K4; Tue, 05 Aug 2025 03:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ujBaX-0005oQ-Ng
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 02:56:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujBph-00036B-L3
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 03:11:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ujBaU-0000rK-W5
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 02:55:56 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujBpe-0004Zb-IS
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 03:11:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754376953;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=rlgaUCOcEeFNZzl5/bA65JcM2/dSDeJVqV70KEocp2s=;
- b=dEJAy9jm1tLFmJEEC931LJzFKBNaeL17cx623x9N6nKP2R5Vdq099y6xvS+BVgC+vAv2KK
- WZ9R0gIqvrqd10/A41+hRzAMMLkJFza64vna0q/bIUYrJuLsL9Pj5/o4IBLbdabayiEvsW
- /lSahgex/PsOB+s5M+UU5viAJ3gg2KM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1754377892;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vr6//KruYl0NSb9RXb9yd22InPDG/n+OostwoVw922c=;
+ b=KM4o9QPvVHu/dXDirvSjB5TZoTmlGqU4R6kpkBVYQ++C1MJp1TwrriZWuO1Ya9yTqTXSDB
+ n9v9CQXBisFJ6elAMDcnnSFTHqvFUcxvWaDwTVPN1ntweqwNK+lWyTHE2nQ2v7BHGAblVN
+ jopQ5MnYzemLB2r2eEqRyHN042366ZQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-zmNN0J6zOMO9IRRql2AGZg-1; Tue,
- 05 Aug 2025 02:55:52 -0400
-X-MC-Unique: zmNN0J6zOMO9IRRql2AGZg-1
-X-Mimecast-MFC-AGG-ID: zmNN0J6zOMO9IRRql2AGZg_1754376951
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-cqtk8l64NdKF6YgoxSs9Mw-1; Tue,
+ 05 Aug 2025 03:11:30 -0400
+X-MC-Unique: cqtk8l64NdKF6YgoxSs9Mw-1
+X-Mimecast-MFC-AGG-ID: cqtk8l64NdKF6YgoxSs9Mw_1754377889
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADAEA1800349
- for <qemu-devel@nongnu.org>; Tue,  5 Aug 2025 06:55:51 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.23])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 768D230002C6; Tue,  5 Aug 2025 06:55:49 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Shaoqin Huang <shahuang@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] vfio: Document 'use-legacy-x86-rom' property
-Date: Tue,  5 Aug 2025 08:55:43 +0200
-Message-ID: <20250805065543.120091-1-clg@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3FDC1800258; Tue,  5 Aug 2025 07:11:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.80])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9DB281800B6A; Tue,  5 Aug 2025 07:11:28 +0000 (UTC)
+Date: Tue, 5 Aug 2025 08:11:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH] readthedocs: don't build extra formats
+Message-ID: <aJGunKewK5aulbLr@redhat.com>
+References: <20250804162959.330060-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+In-Reply-To: <20250804162959.330060-1-alex.bennee@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -79,34 +84,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 350785d41d8b ("ramfb: Add property to control if load the
-romfile") introduced the `use-legacy-x86-rom` property for the
-`vfio-pci-nohotplug` device. Add documentation for the property.
+On Mon, Aug 04, 2025 at 05:29:59PM +0100, Alex Bennée wrote:
+> We don't build the PDFs ourselves for the hosted docs and it looks
+> like rtd can't manage building PDFs now they have gone over a certain
+> size. Disable the extra formats so we can at least have the online
+> stuff again.
 
-Fixes: d5fcf0d960d8 ("hw/i386: Add the ramfb romfile compatibility")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+Regardless of build problems, IMHO, we should not have been building
+the PDFs as no effort is being made to validate that the content is
+formatting well under the layout constraints of PDFs
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d5ea4a5a8341c10abbcd1d3892b6add01efbd880..07257d0fa049b09fc296ac2279a6fafbdf93d277 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3901,6 +3901,9 @@ static void vfio_pci_nohotplug_dev_class_init(ObjectClass *klass,
-                                           "x-ramfb-migrate",
-                                           "Override default migration support for ramfb support "
-                                           "(DEBUG)");
-+    object_class_property_set_description(klass, /* 10.1 */
-+                                          "use-legacy-x86-rom",
-+                                          "Controls loading of a legacy VGA BIOS ROM");
- }
- 
- static const TypeInfo vfio_pci_nohotplug_dev_info = {
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  .readthedocs.yml | 2 --
+>  1 file changed, 2 deletions(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+With regards,
+Daniel
 -- 
-2.50.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
