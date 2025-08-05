@@ -4,70 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AEAC87FD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB0EC87FD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 15:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujJRc-0004HP-0W; Tue, 05 Aug 2025 11:19:16 -0400
+	id 1ujJks-00038E-Ja; Tue, 05 Aug 2025 11:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ujJRW-0004Fb-Pe
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:19:10 -0400
-Received: from p-east3-cluster3-host3-snip4-6.eps.apple.com ([57.103.86.29]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ujJRS-0005Fl-Jc
- for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:19:10 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPS id
- 393B31800254
- for <qemu-devel@nongnu.org>; Tue,  5 Aug 2025 15:18:59 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=bULGQYdyYFFDevK4scCZ/+wyvz0F9BYAR3ThF7FiuZo=;
- h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme;
- b=K2cLWhWOuN5/n0Rnnnu0WKsB5Hh0H2IigrZS8J1W4AWqgAokpo61gmYAq7avEDs4jHemE0dLFbbzWcJSe03z7D4hnPnjh3eBQlTt474bXBmaCvhD8eVKzbemln4qiftI4yo38kdlguc3Bi1QJIGzotvTUrSnvXFTP7WpvzxWIy/CaAxMpTlL0J8v0wAxq3SFhLAA3iRWL3bWlZgyMowEantA0i//tV1Oj0pHeagfnvVKymB5CmZjPGViVuQ1sPVaevQfSvS2JRTh2aBmh0orDi90uek4NXIjCL3j97ZkTZ81QP1fiWj8o4fykdHw8+b12V8sDQ4uIlHPGJb2U8wi0w==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-10 (Postfix) with ESMTPSA id
- 0F6A8180013C
- for <qemu-devel@nongnu.org>; Tue,  5 Aug 2025 15:18:58 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3860.100.5.1.1\))
-Subject: Asking for an account on the Qemu wiki
-Message-Id: <A9FEEF2A-5443-4BB1-8C4B-5B6F974D1D66@unpredictable.fr>
-Date: Tue, 5 Aug 2025 17:18:47 +0200
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3860.100.5.1.1)
-X-Proofpoint-GUID: ohfLtS5CNtVV5HYpwDVMwZmfCS1TXkHq
-X-Proofpoint-ORIG-GUID: ohfLtS5CNtVV5HYpwDVMwZmfCS1TXkHq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExMCBTYWx0ZWRfX8SbHUHzeuBta
- 9TUBXuJu/AVQ/E1Jn8VsqMGO0pycvatdBkgFMg6hl9z2m9o9p2/AAhdJ8mV8AX9w8uzJ4Lg52Qf
- NnDa7BYJu1sS+rMOG2weQ9Hb07zFBWq5JiL8z+AF0mFg8c3oSsjgMMRNfz3NTYxqiaQohdwiFK7
- AuJvw9ug4FUkNzqnPRNAkVMTrc+D18gYDx/YPbA1o4BORXiuW2s1meIKVe2pUrxIFWLfJIWzgne
- fm2xBwUxm6Yn230Ol2KnUbQKooKhqzu/sYyvMloHzu0pAuKRuyM32xSCe6y+AWvreYxko7/gI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 mlxscore=0 suspectscore=0 adultscore=0 clxscore=1030
- mlxlogscore=425 spamscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.22.0-2506270000 definitions=main-2508050110
-Received-SPF: pass client-ip=57.103.86.29;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujJas-000466-Bq
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:28:55 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ujJao-0000Gu-Hi
+ for qemu-devel@nongnu.org; Tue, 05 Aug 2025 11:28:50 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0F0A81FB91;
+ Tue,  5 Aug 2025 15:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754407722; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
+ b=RXGcdAzeqTCPpWBZ5nt0fPBZtEDdiiSZvpGKh5pUW6OuM2kLJ1969JF0g1+qXDJKoA8lJ7
+ 7y1BkppqzCzHWen06Wl3lIwZjs28FecbzbLk1WOsV54h4fevksdqKS2dakJvhjAIAMmfRL
+ byFw+lIPff+LO9zgs7Wtzum/PE23HDM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754407722;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
+ b=wUrbd5Qvc3hSa4eNM33XyYrScHazlfeUwe1DOHLlcAA8wK+JffYNqNfnW2SH6Btk5yUT2+
+ pGHEw5w+wuuwwqDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=RXGcdAze;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wUrbd5Qv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1754407722; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
+ b=RXGcdAzeqTCPpWBZ5nt0fPBZtEDdiiSZvpGKh5pUW6OuM2kLJ1969JF0g1+qXDJKoA8lJ7
+ 7y1BkppqzCzHWen06Wl3lIwZjs28FecbzbLk1WOsV54h4fevksdqKS2dakJvhjAIAMmfRL
+ byFw+lIPff+LO9zgs7Wtzum/PE23HDM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1754407722;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LCecu7K4tLCqiSNDx4T+nzy09pMieWsdNF0gIpDd5uI=;
+ b=wUrbd5Qvc3hSa4eNM33XyYrScHazlfeUwe1DOHLlcAA8wK+JffYNqNfnW2SH6Btk5yUT2+
+ pGHEw5w+wuuwwqDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 860CE13AA8;
+ Tue,  5 Aug 2025 15:28:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1NEfEikjkmikawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Aug 2025 15:28:41 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org, Peter Xu
+ <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH for-10.1 0/2] migration: actually make gnutls workaround
+ functional
+In-Reply-To: <aJISp1UvPCwwXyPf@redhat.com>
+References: <20250801170212.54409-1-berrange@redhat.com>
+ <d5xctfzcrtbanvkndamonxgqo3tc5nejhyrvh54m3y5bhg4cms@ue7siue2yw7o>
+ <87jz3i3n0u.fsf@suse.de> <aJHYSwGXTOF4o00n@redhat.com>
+ <87h5yl3mt2.fsf@suse.de> <aJISp1UvPCwwXyPf@redhat.com>
+Date: Tue, 05 Aug 2025 12:28:38 -0300
+Message-ID: <87a54d3hzt.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 0F0A81FB91
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,10 +137,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Just a random email to ask for an account there :)
+> On Tue, Aug 05, 2025 at 10:44:41AM -0300, Fabiano Rosas wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Mon, Aug 04, 2025 at 04:27:45PM -0300, Fabiano Rosas wrote:
+>> >> Juraj Marcin <jmarcin@redhat.com> writes:
+>> >>=20
+>> >> > Hi Daniel,
+>> >> >
+>> >> > On 2025-08-01 18:02, Daniel P. Berrang=C3=A9 wrote:
+>> >> >> This is a followup to previously merged patches that claimed to
+>> >> >> workaround the gnutls bug impacting migration, but in fact were
+>> >> >> essentially non-functional. Juraj Marcin pointed this out, and
+>> >> >> this new patch tweaks the workaround to make it actually do
+>> >> >> something useful.
+>> >> >>=20
+>> >> >> Daniel P. Berrang=C3=A9 (2):
+>> >> >>   migration: simplify error reporting after channel read
+>> >> >>   migration: fix workaround for gnutls thread safety
+>> >> >>=20
+>> >> >>  crypto/tlssession.c   | 16 ----------------
+>> >> >>  migration/qemu-file.c | 22 +++++++++++++++++-----
+>> >> >>  2 files changed, 17 insertions(+), 21 deletions(-)
+>> >> >>=20
+>> >> >
+>> >> > thanks for finding a fix for the workaround. I have tested it and it
+>> >> > resolves the issue.
+>> >> >
+>> >> > However, it significantly slows down migration, even with the worka=
+round
+>> >> > disabled (and thus no locking). When benchmarking, I used the fixed
+>> >> > version of GNUTLS, VM with 20GB of RAM which were fully written to
+>> >> > before starting a normal migration with no workload during the
+>> >> > migration.
+>> >> >
+>> >> > Test cases:
+>> >> > [1]: before this patchset
+>> >> > [2]: with this patchset applied and GNUTLS workaround enabled
+>> >> > [2]: with this patchset applied and GNUTLS workaround disabled
+>> >> >
+>> >> >   | Total time | Throughput | Transfered bytes |
+>> >> > --+------------+------------+------------------+
+>> >> > 1 |  31 192 ms |  5450 mpbs |   21 230 973 763 |
+>> >> > 2 |  74 147 ms |  2291 mbps |   21 232 849 066 |
+>> >> > 3 |  72 426 ms |  2343 mbps |   21 215 009 392 |
+>> >>=20
+>> >> Thanks testing this. I had just managed to convince myself that there
+>> >> wouldn't be any performance issues.
+>> >>=20
+>> >> The yield at every buffer fill on the incoming side is probably way m=
+ore
+>> >> impactful than the poll on the RP.
+>> >
+>> > Yeah, that's an unacceptable penalty on the incoming side for sure.
+>> >
+>> > How about we simply change the outbound migration channel to be in
+>> > non-blocking mode ?   I originally put it in blocking mode way back
+>> > in 9e4d2b98ee98f4cee50d671e500eceeefa751ee0, but if I look at the
+>> > QEMUFile impl of qemu_fill_buffer and qemu_fflush, but should be
+>> > coping with a non-blocking socket. qemu_fill_buffer has explicit
+>> > code to wait, and qemu_fflush uses the _all() variant whcih has
+>> > built-in support for waiting. So I'm not seeing an obvious need
+>> > to run the channel in blocking mode.
+>> >
+>>=20
+>> It's definitely simpler and I think it works. It's uncomfortably late
+>> though to add a bunch of glib event loop code to the migration
+>> thread. Is the suggestion of moving the yield to tlssession.c even
+>> feasible?
+>
+> Well that'll remove the burden for the non-TLS incoming migration,
+> but the incoming TLS migration will still have the redundant
+> yields and so still suffer a hit.
+>
+> Given where we are in freeze, I'm thinking we should just hard
+> disable the workaround for this release, and re-attempt it in
+> next cycle and then we can bring it back to stable afterwards.
+>
 
-Thank you,
--m
+Yes, I agree. Will you send a patch?
+
+> With regards,
+> Daniel
 
