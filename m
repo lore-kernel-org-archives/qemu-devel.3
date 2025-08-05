@@ -4,118 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D885C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35475C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Aug 2025 16:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujKVP-0007Zt-ME; Tue, 05 Aug 2025 12:27:16 -0400
+	id 1ujKc3-0004TY-FX; Tue, 05 Aug 2025 12:34:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ujKVF-0007T3-1U; Tue, 05 Aug 2025 12:27:06 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujKby-0004Rc-VP; Tue, 05 Aug 2025 12:34:03 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ujKVD-0004db-Ae; Tue, 05 Aug 2025 12:27:04 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 575CZRVC029457;
- Tue, 5 Aug 2025 16:27:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=uJ/wDQRn2lPqPv3H+R7GujvJh3un+uEchlcukuaLbXo=; b=LiTO5+/+P7lA
- iQuIt97sc6OfcppeY+EHDXElucQ3m3AFRLdfkk7ROeCyw5wPZ9q9h/tb5jzOht5d
- KdLpKeBU8ln1GMF+fmBhSn1Okinw/+AEvup2TLBSWdRhJhdxsKd9NIYFn10wjjIj
- n9e+Q8wAXI0dcl/6Fu3lTx7VUMHEMzlLihA/dTawcpTDxFitE0I8YKE+n5CGwAw/
- SdQFkThIE/mz12aNxBEsW6N6s41orpsPm+ngOXqNBSOYGHe0TTTh3kkmh4I04gSb
- P0SiF3By81ZQkFVXVPYfGQZ+COXwdTMIQyNBR/L7FDXzQUDORW+YgnKUCKfNAv43
- OKG126L1cA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 489ab3qmkr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 16:27:01 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 575GLjo9025262;
- Tue, 5 Aug 2025 16:27:01 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 489ab3qmkq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 16:27:01 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 575E84Ef006905;
- Tue, 5 Aug 2025 16:27:00 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 489xgmk52r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Aug 2025 16:27:00 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 575GQwGT31130328
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Aug 2025 16:26:59 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B7FD158050;
- Tue,  5 Aug 2025 16:26:58 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E143158045;
- Tue,  5 Aug 2025 16:26:57 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Aug 2025 16:26:57 +0000 (GMT)
-Message-ID: <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujKbw-0005Lp-Rb; Tue, 05 Aug 2025 12:34:02 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id EDE0B13EA1D;
+ Tue, 05 Aug 2025 19:33:33 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BEC592578FC;
+ Tue,  5 Aug 2025 19:33:55 +0300 (MSK)
+Message-ID: <6b8af831-71e7-4a37-b3fc-af8e85fb25e6@tls.msk.ru>
+Date: Tue, 5 Aug 2025 19:33:55 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 00/50] ppc queue
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
- <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Date: Tue, 05 Aug 2025 11:26:57 -0500
-In-Reply-To: <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+To: milesg@linux.ibm.com, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Michael Kowal <kowal@linux.ibm.com>, Caleb Schlossin <calebs@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
 References: <20250721162233.686837-1-clg@redhat.com>
  <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
  <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
  <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Z+jsHGRA c=1 sm=1 tr=0 ts=689230d5 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=ySPgdnKajjii0QiPevkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: cP2qBcW5DNDSlpzeWz86yR6hh35Bn67u
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA1MDExMyBTYWx0ZWRfXzwYsnfSwdnwO
- cAZLleZ1QTUGHEcwVI5qtyIE2NKdvkQt+rt7gTSnPPP2z0pYj0GtIMmMPqGiaGweM2L8SwE2QOc
- AjQCZfJmH1AGuJSGUFpc1xGRTYjfSBAehS8LnlC8HFnHTS+1GL8rsDNZ0Cx9BlVGi+dwTS8hmFJ
- tYggxliiriT42Zm+lsyt82nOlAoIq7u/MZo7QootOivaPKpJDIzPKb0oP1S8t/AS/DxL2acXW9k
- vcCqerciVWL0YmOeA5+Q406CEq7A70Q+5VpI+aEcY47r5V+XD7DIQRi1R3lJXbas4iD3P48k8rk
- rqJ+LsT4vCaF0tOUIjiQRHPGkQMuHmDqQ6Tg2XfnFMI10hVK8nKzqgjNud3vbvLX8PBgneUsjlN
- AgEM/DF13f4+aPelJiicAF1FDUKw2boX4DxqhKyZqVemYch9G3As7GMNiz3YsTqTG39wvw2+
-X-Proofpoint-GUID: Maq62WN5wkdqcrUFs3SvrHpPd2K5EN3K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-05_04,2025-08-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 clxscore=1011 suspectscore=0
- priorityscore=1501 mlxlogscore=634 adultscore=0 phishscore=0 mlxscore=0
- bulkscore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2508050113
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -130,65 +108,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-07-22 at 17:25 +0300, Michael Tokarev wrote:
-> On 22.07.2025 16:37, Cédric Le Goater wrote:
-> > + Glenn, Michael, Caleb, Gautam
-> > 
-> > On 7/22/25 13:44, Michael Tokarev wrote:
-> > > 21.07.2025 19:21, Cédric Le Goater wrote:
-> > > 
-> > > > ----------------------------------------------------------------
-> > > > ppc/xive queue:
-> > > > 
-> > > > * Various bug fixes around lost interrupts particularly.
-> > > > * Major group interrupt work, in particular around redistributing
-> > > >    interrupts. Upstream group support is not in a complete or usable
-> > > >    state as it is.
-> > > > * Significant context push/pull improvements, particularly pool and
-> > > >    phys context handling was quite incomplete beyond trivial OPAL
-> > > >    case that pushes at boot.
-> > > > * Improved tracing and checking for unimp and guest error situations.
-> > > > * Various other missing feature support.
-> > > 
-> > > Is there anything in there which should be picked up for
-> > > stable qemu branches?
-> > 
-> > May be the IBM simulation team can say ?
-> > I think this would also require some testing before applying.
-> > 
-> > Which stable branch are you targeting ? 7.2 to 10.0 ?
+On 05.08.2025 19:26, Miles Glenn wrote:
+> On Tue, 2025-07-22 at 17:25 +03..00, Michael Tokarev wrote:
+...
+>> There are currently 2 active stable branches, 7.2 and 10.0.
+>> Both are supposed to be long-term maintenance.  I think 7.2
+>> can be left behind already.
+>>
+>> Thanks,
+>>
+>> /mjt
 > 
-> There are currently 2 active stable branches, 7.2 and 10.0.
-> Both are supposed to be long-term maintenance.  I think 7.2
-> can be left behind already.
+> Michael T.,
 > 
-> Thanks,
-> 
-> /mjt
+> All of the XIVE fixes/changes originating from myself were made in an
+> effort to get PowerVM firmware running on PowerNV with minimal testing
+> of OPAL firmware.  However, even with those fixes, running PowerVM on
+> PowerNV is still pretty unstable.  While backporting these fixes would
+> likely increase the stability of running PowerVM on PowerNV, I do think
+> it could pose significant risk to the stability of running OPAL on
+> PowerNV.  With that in mind, I think it's probably best if we did not
+> backport any of my own XIVE changes.
 
-Michael T.,
+My view on this, - having in mind 10.0 most likely will be a long-term
+support branch - we can pick the PowerVM changes, and if a breakage with
+the case you mentioned is found (which will be the same breakage as with
+master branch, hopefully), we can pick fixes for these too.
 
-All of the XIVE fixes/changes originating from myself were made in an
-effort to get PowerVM firmware running on PowerNV with minimal testing
-of OPAL firmware.  However, even with those fixes, running PowerVM on
-PowerNV is still pretty unstable.  While backporting these fixes would
-likely increase the stability of running PowerVM on PowerNV, I do think
-it could pose significant risk to the stability of running OPAL on
-PowerNV.  With that in mind, I think it's probably best if we did not
-backport any of my own XIVE changes.
+Especially as we have more time now after release of 10.1 and before the
+next stable series.
 
-Nick, can you respond regarding the changes you made?
+So to me, breakage in stable series is not a good thing, but we can as
+well fix it there, - so there might be some balance between known bugs,
+possible breakage and future fixes.
+
+But it's definitely your call, you know this area much better.
 
 Thanks,
 
-Glenn
-
-
-
-
-
+/mjt
 
