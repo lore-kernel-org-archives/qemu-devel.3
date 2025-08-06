@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357D5C87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A578C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujkXj-0001Gm-MD; Wed, 06 Aug 2025 16:15:24 -0400
+	id 1ujkix-00052M-Fj; Wed, 06 Aug 2025 16:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujkXh-00019n-HF
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:15:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujkXf-0007ja-RY
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:15:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754511315;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rcz/079T31rdeb4+1VaCQF7JFL1/wWWBzvXooLm6PPY=;
- b=K6fWzGgf5DTjLGKxG56ym8boca8m+8LQXBdv1eI2NeZIyGY2crzcILxXeEsKX5hDPWzkhx
- Eac32r/iWH4O/SPBfWJnPczuGpe86gxKlNVCKzIAqB4VhQScX/qQiOBp96WRvGSeRINrRw
- Uea7BW+qsKPefvLTBhJfecRVTqXnQb4=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-lQ_O7WKqMJa2_HHddLypXQ-1; Wed, 06 Aug 2025 16:15:12 -0400
-X-MC-Unique: lQ_O7WKqMJa2_HHddLypXQ-1
-X-Mimecast-MFC-AGG-ID: lQ_O7WKqMJa2_HHddLypXQ_1754511312
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-7196c919719so3987747b3.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 13:15:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ujkis-0004sh-F4
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:26:56 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ujkiq-00015M-5f
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:26:54 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-74264d1832eso477511b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 13:26:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754512010; x=1755116810; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aoS1iXqFbikl/ZKjVvQn0U0lExDSvkthfBM0pQOPI1U=;
+ b=mlxzEFIWJ0hw2a8LqUnqaBxTX5fVlAyU1D67UtW1qnvMEhb9OxD/ZVmp2wiW+OwHvh
+ /G2Dhh8wFFFnKLDJF6iec6GtY8lH2rrdWYVnu6XV0Yw3RG5cLhl2GHM3kAPIGHuc161h
+ NNP33s3hTxLxvUPXeq/IqutUsvJhqH7GBWdArQjUHyvqLXk5Rlo2h5joHTa8uxEhgL8k
+ D8+dfdI1zzwsqL8rkGpLKUur9N/Z13kVgt7skc27JE8ff/mf5vKRxBlgcUPIvTXfTECe
+ GkBnWBzrkzDLie1HLDu/hPG1SAp9tuE0tizExoVujd94w88a4wyz0dSRQ3BvVjPknHr6
+ z//g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754511312; x=1755116112;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rcz/079T31rdeb4+1VaCQF7JFL1/wWWBzvXooLm6PPY=;
- b=n6/1dqjEkZakTdixxh+lDYSfqGTLQb1LkOU/2bFQrAW09rpAbFnKzWxLosUlLNcK4w
- 0O7a2AU10FwU7MFWezeO+VmXLNQ9aFPCJXZQ9Sy8T1dw2BBQgMGVKOCcILDeW4Dj23NQ
- 9j5t2c7/QloriUV9v8TF0dsU+xU3ZOiPCYSR078kYGyoQrIZQtG7dZDLd4j1SUX26Zqn
- kBSDC6jfc8BlFt/xKVf0WBIpq3Y7/Ln5h2yDwkoteLJZHGXcfMyiJqvQBzv8yJb3tsi2
- 2kpmw9M7IcUVpNiL0JizkIfHn7AbQp9d3GODSUXpDbmfI4bNsj15FO9bIlePArUHRLKt
- qd8Q==
-X-Gm-Message-State: AOJu0YwpOIkIeJpdD/5xASz+YthnbpYRMpNHmMgdPuAkCP/p5E9wJ3lp
- W3rWPBn2z4jxTpjq8pQIREwZyYHZDh/sqP6wZGajuph5Czn7vw2wYgCIglFEhz0PJNMxIWjfVb/
- XWtuP4+pocycdtTo/J7nKz2BXWMDHwSIgfQdiobnJKm+aONHxDLCvCF84
-X-Gm-Gg: ASbGncun808jQn92kPEANtXmx0j17DrIdL1+L4OW1QTAu8vn9S9i4ut92j5jP1vUidT
- tI3tbUoR5sT4SYdRpyQz4ykiefjppM02TSAOTJDg8736ADPgias8xi77ChKwIKOH8PtpsCNCZFi
- D4mFlaacPdrM4bxnqXIEA6D+KwO05K/CXVxTYXogdyjGSoY3E5HYIfyIA5+9cOk0BnlR8xLGS5q
- wt4cHSe/fmzeaYryHFeRhDDa0ZjleVdt6leGoLUUReewnQThMQJ7vXX18c2BVY3NrQCRO4gTcpE
- Vj0OUeAjUQBElNgkF47+K8mIdg/eUADgc/YOLbZ51wielXQJXh1O1Ra5mhLlQ7HKb7+idf3JWCt
- 8MLt1SzQtK56N4E0/dqbwwg==
-X-Received: by 2002:a05:690c:368f:b0:71a:1234:353b with SMTP id
- 00721157ae682-71bcc8c3f1amr50713037b3.32.1754511311609; 
- Wed, 06 Aug 2025 13:15:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWOuOWQF4CpyS0Il7wYKLVzhqAXlpYStvbgu6gR0L22rJbzkIeLnx/oezOLcbIeVVrn0pJGQ==
-X-Received: by 2002:a05:690c:368f:b0:71a:1234:353b with SMTP id
- 00721157ae682-71bcc8c3f1amr50712557b3.32.1754511310999; 
- Wed, 06 Aug 2025 13:15:10 -0700 (PDT)
-Received: from x1.local
- (bras-base-aurron9134w-grc-11-174-89-135-171.dsl.bell.ca. [174.89.135.171])
+ d=1e100.net; s=20230601; t=1754512010; x=1755116810;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aoS1iXqFbikl/ZKjVvQn0U0lExDSvkthfBM0pQOPI1U=;
+ b=SdS8h5fnBSjZa6houS3V5V5vwyEJXh3fil0xUn12a81cfUcf4ahXAQzFHPVrpP8d+5
+ Py5oyZH6HIqVC+Jho+9zUcv61U5P8IUS3c/WVoHSRaKWRGvG7QBV01IghZGnLZVzOKNy
+ m8o7uAdCtCkHbzcuu33FS8wkXTYipV6RhLMdMspaEp+MF4soQ8e/CAQ5Rr9NmEaR86gX
+ 8t8o391iX430Nv3w6/W2yTMC4u6wgQDo7I3UzJK49OXpdJuLTH5Rpvi9Sj4UeVqXBqIL
+ sZjgfP1Qan5W6hTayaQHAsljod6qvvuPs5/x8dCAzAZ0eB1SiGktYXRLRzpIV+H4hEpT
+ w7Kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgS+PPGEM7ordFMBJj2eZnExZf5iA/bqZ0G6ExQ7wXM6pagCx1E0X1DfS1mo53WUYuz6F0tNV5NHZA@nongnu.org
+X-Gm-Message-State: AOJu0Ywy858t2fWJPM5EVmQEqRTTo5mcvykoceEZo2z71uRgS1YBjtXe
+ +gTtqtUTfnTlJ6cIPUooXraYRXtgnw6/5x2XwKT6kdlSJkgHoDstStxDeltaw1oUquk=
+X-Gm-Gg: ASbGncuNxQHD/66634qh8hWKIZ6mLwnvv6N+QzA9ScK0bjJepV/LTn/3zBXsm65vzrY
+ fcMYrnboemC+itiCxIdlJkuwdAJCVt7WdJ6If6VxF46caEUN5aGNiLv7wPo0x/13CdUNnqfw/uI
+ sI2oWQalGgOGNB1gdsUBh9RKP1jLPpZd+xmpRl7tSg0ANfOCPfVnOQjjxOiueCXub/M7xj+Ew/v
+ dSpLz5KcNKbPXB0tjZMVtAIRsUZB/AfDn+1evtmjpnE6O8JXfxkdAB7gRPPRi+1V5WNOwQTHyKO
+ tyChbTGSIg7F36GY+a6bW2XqZESuQSyA7DyW9yw0Cc+ExKCIABdjspt0uXozEAGllMxnYtsH3+7
+ JrzQZfabV5Dd3I9itVReSKkf5DsIri10AThQ7+Jc6cHg3Vw==
+X-Google-Smtp-Source: AGHT+IH4vbmiPLTx69G4be6rZLwQHJuF+SFfXHfWY0GONOWXq8yf3U0JzrMDFnKvasWiHopOnSj1SQ==
+X-Received: by 2002:a05:6a20:7faa:b0:240:1e97:7a19 with SMTP id
+ adf61e73a8af0-240331091ccmr6246531637.22.1754512010033; 
+ Wed, 06 Aug 2025 13:26:50 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71b5a3f8409sm41304007b3.28.2025.08.06.13.15.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Aug 2025 13:15:10 -0700 (PDT)
-Date: Wed, 6 Aug 2025 16:15:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
- Laurent Vivier <lvivier@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, pbonzini@redhat.com,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [RFC v2] memory.c: improve refcounting for RAM vs MMIO regions
-Message-ID: <aJO3ywz2Ej_kToU_@x1.local>
-References: <20250805081123.137064-1-aesteve@redhat.com>
+ d2e1a72fcca58-76bccfd18c9sm16144642b3a.91.2025.08.06.13.26.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Aug 2025 13:26:49 -0700 (PDT)
+Message-ID: <62284106-30c9-4e30-8b97-ef38f920d237@linaro.org>
+Date: Wed, 6 Aug 2025 13:26:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250805081123.137064-1-aesteve@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] util/error.c: Print backtrace on error
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20250805-backtrace-v1-1-d189d09b1e92@linaro.org>
+ <aJIqdQSYXO4K6lCJ@redhat.com>
+ <CAAjaMXY1ytnhp+APdwM39-K=Mu=5p8W=MEUVvLers3M=rLS6Qw@mail.gmail.com>
+ <aJI18an38eBkVL-Q@redhat.com>
+ <CAAjaMXZhFM7keE1abmhQqehsZn7LaJXwYvUAuOvd-MdNTYtw1Q@mail.gmail.com>
+ <aJJGvL8feHr7Wme7@redhat.com> <87h5ykzout.fsf@draig.linaro.org>
+ <aJM9v0ASQOPWzcQ9@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <aJM9v0ASQOPWzcQ9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,46 +115,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 05, 2025 at 10:11:23AM +0200, Albert Esteve wrote:
-> v1->v2:
-> - Added documentation
-> - Explained the reasoning in the commit message
+On 8/6/25 4:34 AM, Daniel P. Berrangé wrote:
+> On Wed, Aug 06, 2025 at 12:11:38PM +0100, Alex Bennée wrote:
+>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>
+>>> On Tue, Aug 05, 2025 at 07:57:38PM +0300, Manos Pitsidianakis wrote:
+>>>> On Tue, Aug 5, 2025 at 7:49 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>>>>
+>>>>>
+>>>>> Was there a specific place where you found things hard to debug
+>>>>> from the error message alone ?  I'm sure we have plenty of examples
+>>>>> of errors that can be improved, but wondering if there are some
+>>>>> general patterns we're doing badly that would be a good win
+>>>>> to improve ?
+>>>>
+>>>> Some months ago I was debugging a MemoryRegion use-after-free and used
+>>>> this code to figure out that the free was called from RCU context
+>>>> instead of the main thread.
+>>>
+
+I ran into something similar recently [1], and it was a pain to 
+reproduce it. Luckily, I caught it using rr and could debug it, but it 
+would have been much easier to just get a backtrace of the crash.
+
+In this case, it was a segmentation fault, which is not covered by 
+current patch. Which brings me the thought I share at the end of this email.
+
+[1] 
+https://lore.kernel.org/qemu-devel/173c1c78-1432-48a4-8251-65c65568c112@linaro.org/T/#
+
+>>> We give useful names to many (but not neccessarily all) threads that we
+>>> spawn. Perhaps we should call pthread_getname_np() to fetch the current
+>>> thread name, and used that as a prefix on the error message we print
+>>> out, as a bit of extra context ?
+>>
+>> Do we always have sensible names for threads or only if we enable the
+>> option?
 > 
-> In the last version of the SHMEM MAP/UNMAP [1] Stefan
-> raised a concern [2] about dynamically creating and
-> destroying memory regions and their lifecycle [3].
+> I was surprised to discover we don't name threads by default, only if we
+> add '-name debug-threads=yes'.  I'm struggling to understand why we would
+> ever want thread naming disabled, if an OS supports it ?
 > 
-> After some discussion, David Hildenbrand proposed
-> to detect RAM regions and handle refcounting differently.
-> I tried to extend the reasoning in the commit message
-> below. If I wrote any innacuracies, please keep me
-> honest. I hope we can gather some feedback with
-> this RFC patch before sending it for inclusion.
+> I'm inclined to deprecate 'debug-threads' and always set the names when
+> available.
+> 
+>>> Obviously not as much info as a full stack trace, but that is something
+>>> we could likely enable unconditionally without any overheads to worry
+>>> about, so a likely incremental wni.
+>>
+>> The place where it comes in useful is when we get bug reports from users
+>> who have crashed QEMU in a embedded docker container and can't give us a
+>> reasonable reproducer. If we can encourage such users to enable this
+>> option (or maybe make it part of --enable-debug-info) then we could get
+>> a slightly more useful backtrace for those bugs.
+> 
+> The challenge is whether this build option would be enabled widely
+> enough to make a significant difference ?
+>
 
-This seems working.  Looks like so far all RAM MRs are fine with it, but
-I'm not strongly confident it's true or it'll trivially keep true in the
-future too.
+For developers working on crashes/bug fix, it's definitely a good 
+addition (could come with --enable-debug for sure). It's something we 
+could enable in CI by default too. Usually, with sanitizers, the 
+reported stacktrace is enough to get a rough idea of what the problem 
+is, without having to use any debugger.
 
-Besides, this still adds some trivial complexity to memory_region_ref() on
-treating RAM/MMIO MRs differently.
+> I don't think we could really enable this in any distro builds, as
+> this is way too noisy to have turned on unconditionally at build
+> time for all users. Most containers are going to be consuming
+> distro builds, with relatively few building custom QEMU themselves
+> IME.  We might have better luck if this was a runtime option to
+> the -msg arg.
+>
 
-It also sounds like a pure "accident" that the shmem objects to be mapped
-from the vhost-user devices are RAMs.  I wonder what happens if we want to
-also support dynmaic MMIO regions.
+Regarding the outside world and users, I share Daniel's opinion that it 
+would be too verbose if a backtrace is emitted with every fatal error 
+message.
 
-Would this work even without changing QEMU memory core?
+However, I think it could have *incredible* value if we reported this 
+backtrace when QEMU segfaults, which is always something exceptional.
+In this case, we could always enable this.
+It's not covered by the current patch, maybe it could be a great addition?
 
-For example, have you thought about creating a VhostUserShmemObject for
-each of the VHOST_USER_BACKEND_SHMEM_MAP request?
+Regarding binary size increase due to -rdynamic, I already know some 
+people won't like it, so I'm not sure how we can ensure to have useful 
+symbols in distributed binaries, which is a harder debate than enabling 
+backtraces on segfaults or not.
 
-AFAICT, QEMU has complete refcounting support for objects, I thought that
-should be totally fine being dynmaically created or destroyed.  Then MRs
-will be children of those dynamic objects rather than the vhost-user
-device.
-
-Thanks,
-
--- 
-Peter Xu
+> With regards,
+> Daniel
 
 
