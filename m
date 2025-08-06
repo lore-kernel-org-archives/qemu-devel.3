@@ -4,96 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167BFC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4560C87FDA
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhfz-0004Q4-9d; Wed, 06 Aug 2025 13:11:43 -0400
+	id 1ujhgw-0006vo-55; Wed, 06 Aug 2025 13:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujgtU-0005ix-Ly
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:21:37 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujgtS-0006tM-TP
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:21:36 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-458bece40fcso796875e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 09:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754497292; x=1755102092; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZGa1sHVZSagYKWld3bN0hVlGS1xHr54lBXbLOBCh3S4=;
- b=LUe4fBBKzLzJk7zOxE3/IFbJ/5aCdN68ZxovstMSBUqhu6H4of+OvcZhPRdmwMRqKf
- o5Al+pD2dNSWYWIVlWOgzvFZxFk9bYQ2YTHmYLESDwJGm/8WpYYY9b/gR+JRufQrGxPA
- /YzJNXGMJWD5PFWsiSt/LVw7YDR3FpKOH+aeoSHw5cPisKG4dT39+LYAxTlUYOTwuseh
- reBpmRTZ0cRwZu+32pD5/cl0YJ5cFEKJ/0ZufnXxW7mBH70oMJbccRQS7so4wwLm+lsr
- crGkfQx662+H8o5jZmkEGYV39S9xpIFb8VBaXfahP7ydcT76wpnAzLaIl0dqXomlRUcm
- f/LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754497292; x=1755102092;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZGa1sHVZSagYKWld3bN0hVlGS1xHr54lBXbLOBCh3S4=;
- b=ckIQcZLxIK0wbBW/MwGxn2igsxhSG6cTWL5RnoohfftZ6XkdRnaxGllx1myJ7T7M8u
- wBytknX5QSsQgtxdd7WXBWF6dKCAQeNMRszTSk00fnRZAHYDWC3ix+J9egiajM7rwsA5
- aGg3bXOAhkTM2t5wTMjcgSAql5TsA2eIcL6VEEVC9qxxTqvQcU0JxCrnEIxeDBmkWHPl
- WwLw/qjQXq+38EsjHx04fKnI5MkBhnZlb89zKDaZr1K7Ci1dU0Rj9PKVYcE0xgmbEEUq
- TtVPldU5/mn6jcTVioJURGoTkSpLOA5mXlBRScrLAKVZSilba9nLJVsTQn08jtcb7bvS
- 1NXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVb4EjnqOIj7hYiRlYUQCE390SL6WI5g/2BCuZt+EKtVLquZjzjOXDdJl7UXqbswQtOaSqyz0wJZGQh@nongnu.org
-X-Gm-Message-State: AOJu0YxfFiF3PaFhjrriVVoyj+0CwZwNHaChwPwbLSDXjJC2josnOLzZ
- hiZTRH4ObqOUyQOnKWW3u21ICRa9t9KOz22aH0oEqlDbfwIGb2Ak9kvr/95Yy4ZfBEE=
-X-Gm-Gg: ASbGncuuxEScG4EjDCL7+1uaxkY5zAIlj894bGrhohBWqZOWSlO77EPxgYAatOZn8b4
- YdSp9AlAANBYigQSu9eRXXfT8upIIC03/h66zeu064o55tzV0IeZwS2UsXV3htSSZ4JiXPMoQoK
- Oe5Iz8+W9I34lAYV1xMKkyPM6DhlAOtQ7qoTGjNGAjOX4mqbLtC6+QAPts15faLFukfJjDhAGg6
- 7rXPdR9b/y8Ata8Lr1zfScHEDJfhtwlc8tzGrzppjfO4CwejWEzVujq/CBPmmfQv+DPxP9LdUAu
- o0VQe9w7G2DFWvyBwYjFkLvrrurF/cgrO0IOHu3GoPRAAer+pzkePl9zU8Sz+sLsZ0Y24stCq9J
- Xxwsu6tWjUIa0ls04be1ztBzZQT9Kl+KThxnGI7Jo2t8ZZBDScS2SfumhPKdZ89jp9vdhagTHHu
- rx
-X-Google-Smtp-Source: AGHT+IEuvnP1gyT5makkCXLjgOy0S/c8VFGaOaBGbAWLOu53wMrWkeS3TsHhOR/nAh+ePtcx3VS6Gg==
-X-Received: by 2002:a05:600c:8b06:b0:456:13b6:4b18 with SMTP id
- 5b1f17b1804b1-459e79efa95mr34446885e9.31.1754497292129; 
- Wed, 06 Aug 2025 09:21:32 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e58542f3sm54441135e9.10.2025.08.06.09.21.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 09:21:31 -0700 (PDT)
-Message-ID: <0215c941-26b6-44b6-a05c-c1cc2b0551a8@linaro.org>
-Date: Wed, 6 Aug 2025 18:21:30 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujhJm-0004zQ-Hd
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:48:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ujhJj-0002DC-JO
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:48:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754498922;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LihaRzvWyYINKtVeAPQJxNjcbBU1nCTZWEtJADG3C5I=;
+ b=EyPYYn4jRPO6ABlmssrBqBC8k6/UwQSqkjNd+QaGXfZcF+T30MIIqj8eyXuY/u+29/oWyt
+ ekege/YhF5etLRT8y6C+oQRsMxnPxijZwzGdRc1F3ETs6v/z63VS9zKww7eBok9aEezpXm
+ gFo57IYMe03h0CL9s09YgxJxQzFSKQU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-kqBQ_O8aMRGDovNJ6QhpOQ-1; Wed,
+ 06 Aug 2025 12:48:38 -0400
+X-MC-Unique: kqBQ_O8aMRGDovNJ6QhpOQ-1
+X-Mimecast-MFC-AGG-ID: kqBQ_O8aMRGDovNJ6QhpOQ_1754498917
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 998E8195608B; Wed,  6 Aug 2025 16:48:37 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.223])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3AA5F195608F; Wed,  6 Aug 2025 16:48:33 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 0/8] tracetool: add test suite to improve reviewability
+Date: Wed,  6 Aug 2025 17:48:24 +0100
+Message-ID: <20250806164832.1382919-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] configure: Enable to propagate -sMEMORY64 flag to
- Emscripten
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <cover.1754494089.git.ktokunaga.mail@gmail.com>
- <112b6882f9bd370deffb8637116fc44e043c250f.1754494089.git.ktokunaga.mail@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <112b6882f9bd370deffb8637116fc44e043c250f.1754494089.git.ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,23 +88,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/25 17:49, Kohei Tokunaga wrote:
-> Currently there are some engines that don't support wasm64 (e.g. unsupported
-> on Safari[1]). To mitigate this issue, the configure script allows the user
-> to use Emscripten's compatibility feature, "-sMEMORY64=2" flag[2].
-> 
-> Emscripten's "-sMEMORY64=2" flag still enables 64bit pointers in C code. But
-> this flag lowers the output binary into wasm32, with limiting the maximum
-> memory size to 4GB. So QEMU can run on wasm32 engines.
-> 
-> [1] https://webassembly.org/features/
-> [2] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
-> 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   configure | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
+To repeat the start of the commit message in patch 5....
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+When reviewing tracetool patches it is often very unclear what the
+expected output will be for the generated backends. Compounding
+this is that a default build will only enable the 'log' trace
+backend, so developers won't see generated code for other backends
+without making a special effort. Some backends are also platform
+specific, so can't be enabled in QEMU builds, even though tracetool
+could generate the code.
+
+To address this, introduce a test suite for tracetool which is
+conceptually similar to the qapi-schema test. It is a simple
+python program that runs tracetool and compares the actual output
+to historical reference output kept in git.
+
+This was inspired by noticing the now pointless "__nocheck__"
+method wrapping in the inline probe functions.
+
+Changed in v3:
+
+ - Also modify the QAPI schema test to use QEMU_TEST_REGENERATE=1
+   env & document / hint this
+ - Make tracetool accept '-' as shorthand for stdout to
+   avoid relative paths in the reference output
+
+Changed in v2:
+
+ - Add tracetool info to docs/devel/testing.rst
+
+Daniel P. Berrangé (8):
+  checkpatch: cull trailing '*/' in SPDX check
+  tracetool: eliminate trailing whitespace in C format
+  tracetool: avoid space after "*" in arg types
+  tracetool: include SPDX-License-Identifier in generated files
+  tracetool: support "-" as a shorthand for stdout
+  tracetool: add test suite for tracetool with reference output
+  tracetool: drop the probe "__nocheck__" wrapping
+  qapi: switch to use QEMU_TEST_REGENERATE env var
+
+ MAINTAINERS                                  |  1 +
+ docs/devel/testing/main.rst                  | 40 +++++++++
+ scripts/checkpatch.pl                        |  3 +
+ scripts/tracetool/__init__.py                | 17 +++-
+ scripts/tracetool/format/c.py                |  3 +-
+ scripts/tracetool/format/d.py                |  3 +-
+ scripts/tracetool/format/h.py                | 17 +---
+ scripts/tracetool/format/log_stap.py         |  1 +
+ scripts/tracetool/format/simpletrace_stap.py |  1 +
+ scripts/tracetool/format/stap.py             |  1 +
+ scripts/tracetool/format/ust_events_c.py     |  1 +
+ scripts/tracetool/format/ust_events_h.py     |  1 +
+ tests/Makefile.include                       |  1 +
+ tests/meson.build                            |  1 +
+ tests/qapi-schema/test-qapi.py               |  7 +-
+ tests/tracetool/dtrace.c                     | 32 +++++++
+ tests/tracetool/dtrace.d                     | 10 +++
+ tests/tracetool/dtrace.h                     | 45 ++++++++++
+ tests/tracetool/dtrace.log-stap              | 15 ++++
+ tests/tracetool/dtrace.simpletrace-stap      | 16 ++++
+ tests/tracetool/dtrace.stap                  | 14 +++
+ tests/tracetool/ftrace.c                     | 32 +++++++
+ tests/tracetool/ftrace.h                     | 59 +++++++++++++
+ tests/tracetool/log.c                        | 32 +++++++
+ tests/tracetool/log.h                        | 43 +++++++++
+ tests/tracetool/meson.build                  | 25 ++++++
+ tests/tracetool/simple.c                     | 61 +++++++++++++
+ tests/tracetool/simple.h                     | 40 +++++++++
+ tests/tracetool/syslog.c                     | 32 +++++++
+ tests/tracetool/syslog.h                     | 43 +++++++++
+ tests/tracetool/trace-events                 |  5 ++
+ tests/tracetool/tracetool-test.py            | 91 ++++++++++++++++++++
+ tests/tracetool/ust.c                        | 32 +++++++
+ tests/tracetool/ust.h                        | 41 +++++++++
+ tests/tracetool/ust.ust-events-c             | 14 +++
+ tests/tracetool/ust.ust-events-h             | 56 ++++++++++++
+ 36 files changed, 813 insertions(+), 23 deletions(-)
+ create mode 100644 tests/tracetool/dtrace.c
+ create mode 100644 tests/tracetool/dtrace.d
+ create mode 100644 tests/tracetool/dtrace.h
+ create mode 100644 tests/tracetool/dtrace.log-stap
+ create mode 100644 tests/tracetool/dtrace.simpletrace-stap
+ create mode 100644 tests/tracetool/dtrace.stap
+ create mode 100644 tests/tracetool/ftrace.c
+ create mode 100644 tests/tracetool/ftrace.h
+ create mode 100644 tests/tracetool/log.c
+ create mode 100644 tests/tracetool/log.h
+ create mode 100644 tests/tracetool/meson.build
+ create mode 100644 tests/tracetool/simple.c
+ create mode 100644 tests/tracetool/simple.h
+ create mode 100644 tests/tracetool/syslog.c
+ create mode 100644 tests/tracetool/syslog.h
+ create mode 100644 tests/tracetool/trace-events
+ create mode 100755 tests/tracetool/tracetool-test.py
+ create mode 100644 tests/tracetool/ust.c
+ create mode 100644 tests/tracetool/ust.h
+ create mode 100644 tests/tracetool/ust.ust-events-c
+ create mode 100644 tests/tracetool/ust.ust-events-h
+
+-- 
+2.50.1
 
 
