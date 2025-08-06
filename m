@@ -4,96 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F741C87FD1
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 10:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9C5C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 10:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujbWi-0002Pl-9R; Wed, 06 Aug 2025 06:37:44 -0400
+	id 1ujbk4-0004ze-0b; Wed, 06 Aug 2025 06:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujbRw-00074C-8l
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 06:32:48 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujbRt-0005U7-9Y
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 06:32:47 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-459eb4ae596so1735815e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 03:32:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754476363; x=1755081163; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Oq97atyfe17sFbv+TGi9c5SZ9An6vPWxEggaVaOLTNY=;
- b=BZZAcp23YxmrhMHne76UTOg67oD34p9+oIOfjwaLJOKOMpjqsy/QRB6lSjb8nGCMp7
- 1AvhlFUEKmOZI+iafBG86/hx/25KISXE2WVs5QO1BQKWNOFh4YO27JqCOpg/BS3CEi08
- 8X1axXYh5831dWe3/4dlYp76TB5gxUvYXl/7R6C0lZLyf0x7Aw2p58ouCGnmBE40GHGS
- 4iAf8zWdZJ9Xg0o4OEu9ZQG1Wj8+IUjRh4l9WwUWtduBMnSD9ABZfitZxbNppXoNOmQe
- dOqfvtqgYoafUoeGAdqQ3LKT265ooI3Hg5m3LxWs5gwJvmrwFeRwnyqPSA9M2zHraWbw
- MyXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754476363; x=1755081163;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Oq97atyfe17sFbv+TGi9c5SZ9An6vPWxEggaVaOLTNY=;
- b=jAaj6QNU80whD8BQzcZzLdM4b0v13N+5ua4yGu1nFKai8VFbfowjdnVoAe6t4yOxPY
- iPjQQ/+83PMV3moFz5HhY8la7Z83fJEF7S+eeIau35Cev48DXknd0oyuOiA2efq1va6R
- QOnPsYFcbWzbdrdSdyU9LyNxaEJvkTFERBDxk/hSms//wyxO222vdSSTr7szsrqGsFst
- cQZEibb5oIQpj15Xj8GY8c34hBIuf4pVoK03XblIUWXimC8qWu4EVTABXftNnaBnqaAk
- jeYBv0FImb145wgFkgtq7yw49+l/r5D1pyqk93z230sYh1U3iKPxvqKePDlf2UEN1ymq
- FEHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaXdoWJhmLt3dPjxxjrO6TmE031O4Jacb9SpFDb576jNQqpUT7LjkKIC3fut9YTt2JgfhGc9/q5+pu@nongnu.org
-X-Gm-Message-State: AOJu0YxGKythP/mWB/V1hzdjRvtXudIGkKawFETR874qx0nSfieTQlnx
- 8mAt4PMCqLwDlm3/C4Lu68HtGVrxiFtNto3M2DNhM83Gy6DoWGlgkKlqsV7+gc3/2zM=
-X-Gm-Gg: ASbGncuUul5hO5vQWxBcWKaNGOqOxnlsWsXzrAsgGEbK6vNKhn0zlu5TGr1kNkqXc+Z
- 4aWyqV9I+/DYAQU0GTV6QmZ599cP2695lEkiufC33Dlkk3dkwLhhecnbIvydk6AVJKcCD7++gwm
- YofpGPmFG2XmfnzNb5PEjZA2NR8cXuRLwZ5uVB5Edkoy6p8lUCpMJankFloTGkBNrCA7T7WJJuS
- pIeQ+3bOgthLLlHUOJFrzObkU3D87xWXsEilKntRLcUgWurAfsnpQtF1SolOsN3ZLm9p2CxRQ5U
- tO4Ji5h2Js+JskXA1pSfKDQNDtgGfX4gubZg/w00rFqSgPWxfVab507fjTPD+aNIPiO9TcRKv7c
- MQIayZvXcWt6VCDhkAfQ+ywfhPcGwPNCH5KtKmDIwANRb7YCvscJqxIlpJQNrgC7Mjw==
-X-Google-Smtp-Source: AGHT+IHpG72cixa3eZVOvVGmGyThvrLNXesJDdOZeWVVlNxC54s1FK4c12lR8BrtMJrzANgqhTaO6A==
-X-Received: by 2002:a05:600c:1554:b0:459:4441:1c07 with SMTP id
- 5b1f17b1804b1-459e745cf68mr16902525e9.20.1754476363024; 
- Wed, 06 Aug 2025 03:32:43 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e5868fd7sm46814795e9.18.2025.08.06.03.32.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 03:32:42 -0700 (PDT)
-Message-ID: <2a3bc971-828a-4e56-bba9-cc3dbc152b0e@linaro.org>
-Date: Wed, 6 Aug 2025 12:32:41 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ujbaY-00069J-Q7
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 06:41:46 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ujbaV-0007Ce-6M
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 06:41:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bxmxH6sdVz6L54r;
+ Wed,  6 Aug 2025 18:38:59 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 31562140159;
+ Wed,  6 Aug 2025 18:41:18 +0800 (CST)
+Received: from localhost (10.81.207.60) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 6 Aug
+ 2025 12:41:17 +0200
+Date: Wed, 6 Aug 2025 11:41:20 +0100
+To: peng guo <engguopeng@buaa.edu.cn>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <eduardo@habkost.net>,
+ <qemu-devel@nongnu.org>, <wyguopeng@163.com>
+Subject: Re: [PATCH v3] hw/i386/pc: Avoid overlap between CXL window and PCI
+ 64bit BARs in QEMU
+Message-ID: <20250806114120.00000d27@huawei.com>
+In-Reply-To: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
+References: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/13] hw/intc: Add hvf vGIC interrupt controller
- support
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Igor Mammedov
- <imammedo@redhat.com>, qemu-arm@nongnu.org, Alexander Graf
- <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Cameron Esfahani <dirty@apple.com>
-References: <20250728134114.77545-1-mohamed@unpredictable.fr>
- <20250728134114.77545-4-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250728134114.77545-4-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Originating-IP: [10.81.207.60]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,160 +70,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/7/25 15:41, Mohamed Mediouni wrote:
-> This opens up the door to nested virtualisation support.
+On Tue,  5 Aug 2025 22:23:00 +0800
+peng guo <engguopeng@buaa.edu.cn> wrote:
+
+> When using a CXL Type 3 device together with a virtio 9p device in QEMU on a
+> physical server, the 9p device fails to initialize properly. The kernel reports
+> the following error:
 > 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   hw/intc/arm_gicv3_hvf.c | 722 ++++++++++++++++++++++++++++++++++++++++
->   hw/intc/meson.build     |   1 +
->   2 files changed, 723 insertions(+)
->   create mode 100644 hw/intc/arm_gicv3_hvf.c
+>     virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
+>     9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
+> 
+> Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
+> device was overlapped by the memory window allocated for the CXL devices. As a
+> result, the kernel could not correctly access the BAR region, causing the
+> virtio device to malfunction.
+> 
+> An excerpt from /proc/iomem shows:
+> 
+>     480010000-cffffffff : CXL Window 0
+>       480010000-4bfffffff : PCI Bus 0000:00
+>       4c0000000-4c01fffff : PCI Bus 0000:0c
+>         4c0000000-4c01fffff : PCI Bus 0000:0d
+>       4c0200000-cffffffff : PCI Bus 0000:00
+>         4c0200000-4c0203fff : 0000:00:03.0
+>           4c0200000-4c0203fff : virtio-pci-modern
+> 
+> To address this issue, this patch adds the reserved memory end calculation
+> for cxl devices to reserve sufficient address space and ensure that CXL memory
+> windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with
+> 64-bit BARs regions such as those used by virtio or other pcie devices,
+> resolving the conflict.
+> 
+> QEMU Build Configuration:
+> 
+>     ./configure --prefix=/home/work/qemu_master/build/ \
+>                 --target-list=x86_64-softmmu \
+>                 --enable-kvm \
+>                 --enable-virtfs
+> 
+> QEMU Boot Command:
+> 
+>     sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
+>         -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
+>         -hda /home/work/gp_qemu/rootfs.img \
+>         -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
+>         -kernel /home/work/linux_output/arch/x86/boot/bzImage \
+>         --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
+>         -object memory-backend-ram,id=vmem0,share=on,size=4096M \
+>         -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+>         -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
+>         -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
+>         -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
+> 
+> Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
+> Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
+Thanks for fixing this up!
 
-> +static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
-> +{
-> +    uint32_t reg;
-> +    uint64_t reg64;
-> +    int i, num_pri_bits;
-> +
-> +    /* Redistributor state */
-> +    GICv3CPUState *c = arg.host_ptr;
-> +    hv_vcpu_t vcpu = c->cpu->accel->fd;
-> +
-> +    reg = c->gicr_waker;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-> +
-> +    reg = c->gicr_igroupr0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-> +
-> +    reg = ~0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICENABLER0, reg);
-> +    reg = c->gicr_ienabler0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0, reg);
-> +
-> +    /* Restore config before pending so we treat level/edge correctly */
-> +    reg = half_shuffle32(c->edge_trigger >> 16) << 1;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1, reg);
-> +
-> +    reg = ~0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICPENDR0, reg);
-> +    reg = c->gicr_ipendr0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0, reg);
-> +
-> +    reg = ~0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICACTIVER0, reg);
-> +    reg = c->gicr_iactiver0;
-> +    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0, reg);
-> +
-> +    for (i = 0; i < GIC_INTERNAL; i += 4) {
-> +        reg = c->gicr_ipriorityr[i] |
-> +            (c->gicr_ipriorityr[i + 1] << 8) |
-> +            (c->gicr_ipriorityr[i + 2] << 16) |
-> +            (c->gicr_ipriorityr[i + 3] << 24);
-> +        hv_gic_set_redistributor_reg(vcpu,
-> +            HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, reg);
-> +    }
-> +
-> +    /* CPU interface state */
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, c->icc_sre_el1);
-> +
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_CTLR_EL1,
-> +                    c->icc_ctlr_el1[GICV3_NS]);
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN0_EL1,
-> +                    c->icc_igrpen[GICV3_G0]);
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN1_EL1,
-> +                    c->icc_igrpen[GICV3_G1NS]);
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_PMR_EL1, c->icc_pmr_el1);
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR0_EL1, c->icc_bpr[GICV3_G0]);
-> +    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR1_EL1, c->icc_bpr[GICV3_G1NS]);
-> +
-> +    num_pri_bits = ((c->icc_ctlr_el1[GICV3_NS] &
-> +                    ICC_CTLR_EL1_PRIBITS_MASK) >>
-> +                    ICC_CTLR_EL1_PRIBITS_SHIFT) + 1;
-> +
-> +    switch (num_pri_bits) {
-> +    case 7:
-> +           reg64 = c->icc_apr[GICV3_G0][3];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3, reg64);
-> +        reg64 = c->icc_apr[GICV3_G0][2];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2, reg64);
-> +        /* fall through */
-> +    case 6:
-> +        reg64 = c->icc_apr[GICV3_G0][1];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 1, reg64);
-> +        /* fall through */
-> +    default:
-> +        reg64 = c->icc_apr[GICV3_G0][0];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1, reg64);
-> +    }
-> +
-> +    switch (num_pri_bits) {
-> +    case 7:
-> +        reg64 = c->icc_apr[GICV3_G1NS][3];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 3, reg64);
-> +        reg64 = c->icc_apr[GICV3_G1NS][2];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 2, reg64);
-> +        /* fall through */
-> +    case 6:
-> +        reg64 = c->icc_apr[GICV3_G1NS][1];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 1, reg64);
-> +        /* fall through */
-> +    default:
-> +        reg64 = c->icc_apr[GICV3_G1NS][0];
-> +        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1, reg64);
-> +    }
-> +
-> +    if (!hvf_arm_el2_enabled()) {
-
-This method is added in the next patch.
-
-> +        return;
-> +    }
-> +
-> +    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_VMCR_EL2, c->ich_vmcr_el2);
-> +    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_HCR_EL2, c->ich_hcr_el2);
-> +
-> +    for (int i = 0; i < GICV3_LR_MAX; i++) {
-> +        hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_LR0_EL2, c->ich_lr_el2[i]);
-> +    }
-> +
-> +    num_pri_bits = c->vpribits;
-> +
-> +    switch (num_pri_bits) {
-> +    case 7:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 3,
-> +                         c->ich_apr[GICV3_G0][3]);
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 2,
-> +                         c->ich_apr[GICV3_G0][2]);
-> +      /* fall through */
-> +    case 6:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 1,
-> +                         c->ich_apr[GICV3_G0][1]);
-> +      /* fall through */
-> +    default:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2,
-> +                         c->ich_apr[GICV3_G0][0]);
-> +    }
-> +
-> +    switch (num_pri_bits) {
-> +    case 7:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 3,
-> +                         c->ich_apr[GICV3_G1NS][3]);
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 2,
-> +                         c->ich_apr[GICV3_G1NS][2]);
-> +      /* fall through */
-> +    case 6:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 1,
-> +                         c->ich_apr[GICV3_G1NS][1]);
-> +      /* fall through */
-> +    default:
-> +      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2,
-> +                         c->ich_apr[GICV3_G1NS][0]);
-> +    }
-> +}
-
+Jonathan
 
