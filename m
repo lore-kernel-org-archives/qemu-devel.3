@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25411C87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 14:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A76CC87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 14:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujf0Q-0007jl-0U; Wed, 06 Aug 2025 10:20:39 -0400
+	id 1ujfba-0003F3-Q1; Wed, 06 Aug 2025 10:59:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liwei1518@gmail.com>)
- id 1ujezj-0007Ms-7d; Wed, 06 Aug 2025 10:19:56 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liwei1518@gmail.com>)
- id 1ujezf-0005m5-SA; Wed, 06 Aug 2025 10:19:54 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-ae9c2754a00so1595753266b.2; 
- Wed, 06 Aug 2025 07:19:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754489989; x=1755094789; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kiB9/CR9FZaA8vjWm2cyjJCURhQDb1/QrMBZE15e/Sg=;
- b=V8/l34bn9nv0HfNR77EJaPJwfs/GL6munG4aKP3GzBF9FwP0mhPn3vfWJcr/KEpSbH
- pHh0papc87lRtWsCLkwwNnpkxE2npLYOgjq38ZjrVtuxDy2b82HwPwBdgIElLxRDwvI5
- Z/Nde29Jy0vfGB38Q25octOPGGqL3pvcmiCTSWehoSOQewfiTahwHFHPITsvjuLFrtyW
- quoWbMYAJbukhujoYKGFflSYklwGpI2wIGdfFCruknt3AJzrhbHyaNeAmqezaJ3XWsJW
- IdR7QJJJXaZfisFQe2z1W523CyBMKN/FkVejTPmhsGx6Qzaaz1mIXM7ckYLe50OkoZYp
- lY5g==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ujfV7-0000L9-RF
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 10:52:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ujfV2-0003Vh-PQ
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 10:52:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754491934;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z2wK6AiPyKv08FJzPWpurHFIn9wtxmnKmzmwqHY9WTI=;
+ b=AwNSagH/kg65dI9wx9N7tnGpFqyLgSktsWERz96cerS+0B+HkP+GAOHI/NHI1peiI5Vuwf
+ dROVpCZWAK1FiXpBC3sLC4k+xjgzDSrdwSZfjNqw1tlhAHFbzqm+ZyrrcAd1Idp2OyKP8o
+ FEJKLNyKXvVGfFT1E+LCX6NddhfsI8Q=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-237-bJZh6ybwNy6YDFqO9h7RYw-1; Wed, 06 Aug 2025 10:52:12 -0400
+X-MC-Unique: bJZh6ybwNy6YDFqO9h7RYw-1
+X-Mimecast-MFC-AGG-ID: bJZh6ybwNy6YDFqO9h7RYw_1754491932
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-7074bad0561so582056d6.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 07:52:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754489989; x=1755094789;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754491931; x=1755096731;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kiB9/CR9FZaA8vjWm2cyjJCURhQDb1/QrMBZE15e/Sg=;
- b=b/6Y2t//5Rx3+djkx+DZWtBXOfdLFnE23ze2YjquAjnExATn/yMR+X/+R4vIn4QUtC
- eRaCTcGFNZRSwdtQB9OCFTM6Dz9YpG/+KOMrTul4pzulthHxBt4qmO5bRmIDc1RLcQE7
- WlPc5mBSpT/0fmXDdqud0yzKCdtxyuWPfBdVtlvl/5O5z7buwg6C31pyCMumqoaz/Qmv
- P+pCJBNbAn1Nx8Pqme0kmdDoJcyYBnNue4bPqLH4yKi6Osym/rfUVGW/xtHK9EoH4zXK
- hdw6Z6YRZ25FKZaS0l1eqcsekP13P434KAXWBEV93WzP5FgM5ET+EHie7eBG2MNm3dcs
- qg4w==
+ bh=z2wK6AiPyKv08FJzPWpurHFIn9wtxmnKmzmwqHY9WTI=;
+ b=vB19pvraaF1BWINAMT/cphqu3182Q6Exd0x2pSow2M/6HACSBppQsh9GbUGzlk5njB
+ NSwbqcRlPYLVi5bl32vadS7JQUOKZArDAwLcEwr/+wADAJKCsEjr8Iefnuo4RUq8qGLD
+ cHtKvbWLi+hOvYcC2KI8LLjB1eITI/G6l5dU6MxwYmCKMsGdBIAaC7V57rSit04I6JvI
+ j0/iLLbg9TwzRb5nsLg8BeonSx7+7/6FnhzyaPhkLr4FO76i1tCFjA5dHAcP0gfYBbIC
+ 9UMpmjhv/2qoZJ1WZ45EFct8xNyvNlQOa82LGs9LMGM/X1JyDBHqKfxBVag9BJ+uTD8z
+ gTAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURTyQFwPo/rW/9GTEuol9AvAfHhULJKzoopB2h2kkYDSVgZ860yLZa6brMIKVJDVJt+VTcrdK6iPBJ@nongnu.org,
- AJvYcCWD0DERxRVSgqqWnzV3kv3epjUh85zXthAHwBWnA6KeLnsqRQUJwvOEWiB2n5iox5OgZaZQeUBLzUr0ig==@nongnu.org,
- AJvYcCWknHRKEWBOpiLWkRE2MO4ajYXRH1ByGdkQZflLfEc8MrVNAeBTa1jvsLeDPdLx28XVq1Vo0Xtuu9RN7dk=@nongnu.org
-X-Gm-Message-State: AOJu0Yx9aT8H1N2OgoWukAwZ7Fx14J+RDCRN67p1eQuy/uqQ9wdwozLN
- HFT1pHPMZZ3enRl9i6HXeLUwwlEbNV1C0536VdOp924G/ocUzQMJsgrg9Uz+ffuyiT6uVMFSz8Z
- oxgMVJk+jxpvb1FQvim+ndiH2zv+i/wA=
-X-Gm-Gg: ASbGnctdQYLkn1Y+9JuE7ER7gkBSL7Ol2/xzPoTt2wXojA4mQh+SUb8OfhIORg71ceU
- 2AvrAu0p+cIeneY8BCLLqnusBxslLEhDOIs5GvcawOMzZ9jH2y2cJBxZBpwt5yxYpPMc2UY85do
- S9KNW7uGFN6xb76QXbz93USFP/modbbEYBkk/sSZ9lzINvcdrICI0ImKrWG48Tfikm8m8v0YQ9j
- bCMczyHRUI1FFOgXYE=
-X-Google-Smtp-Source: AGHT+IFrDbrpCzcZgHV4pBiyROCV0OAlX7z20UzYmzmjRPPjvGp/4yin59RDH4Y/oKSCXYqVfhe0Thybd3n6+pGPorQ=
-X-Received: by 2002:a17:906:ef0a:b0:ae6:c9b3:57cb with SMTP id
- a640c23a62f3a-af990108b04mr299342866b.5.1754489988865; Wed, 06 Aug 2025
- 07:19:48 -0700 (PDT)
+ AJvYcCWNN6HDqGhDFlKfW6YAqg0Fe+tRXFkoyGTSql/hiLP1SbmzGLFbAWLBRKEg9UfoCMyFbyr9EFqu/RxC@nongnu.org
+X-Gm-Message-State: AOJu0Yz1zXfCQg9YLPezrnAnFXhQihhxYmlbQWG2CtjNBrGa/z65i4+E
+ 9ehguv4RgKSyOP8+oruBcLcdJGOpW0tpQiNB5qC6JZiqD9WAN6+81Ps8VQfbxb01GGWPQ920wWK
+ 93nuzEqCSZBBsFHdWBheBjsFjI1pboQPsip3XVg/Q0N+4naIsKNLioXXRrGxLQA/w
+X-Gm-Gg: ASbGnctZOGsxQ7aFlqv+a3WC64RNvOraN6FNhumc/nboU5kqSpQQJOUHtuIqJ92eoHX
+ zGjviQ4q1itA2jHpwWSOsG5LjAick/WuiHXBEARfr1MlwbN7+Li/cO8dqp93f/eTO1tR5/VeSN2
+ L9ZJhtaQq0bX46w+LcjCPnvha6GFwEjMeyF2ksst6Ra1kF/oHYsoap9a6BBxyMt/u+g7QHC5E31
+ Tzr8D79maDx9m5sDUZZ6SkpP2YB9tO+ju9apSvf/XbMGEeyDLgxuNrii507tOvC99+n5pGhQjwG
+ 5ZeDcvUr+ktt84Dt936CFWL5FVeiuxBJIanfRCBdTU/Q
+X-Received: by 2002:a05:6214:c62:b0:707:885:758e with SMTP id
+ 6a1803df08f44-7097966dad1mr41678336d6.24.1754491931204; 
+ Wed, 06 Aug 2025 07:52:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzZhKmXo8hkAAaC4xMXI17tJcOoa7REt4vCs+MDzh6/SakRnKnix+Rv3o0hrCyurASk1yrbg==
+X-Received: by 2002:a05:6214:c62:b0:707:885:758e with SMTP id
+ 6a1803df08f44-7097966dad1mr41677666d6.24.1754491930358; 
+ Wed, 06 Aug 2025 07:52:10 -0700 (PDT)
+Received: from [192.168.43.95] ([37.166.28.57])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077ce39fb3sm86601196d6.82.2025.08.06.07.52.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Aug 2025 07:52:09 -0700 (PDT)
+Message-ID: <3841525e-eef9-4cf3-a7b5-b7cc11e9d702@redhat.com>
+Date: Wed, 6 Aug 2025 16:52:05 +0200
 MIME-Version: 1.0
-References: <20250804171238.354493-1-guoren@kernel.org>
-In-Reply-To: <20250804171238.354493-1-guoren@kernel.org>
-From: wei li <liwei1518@gmail.com>
-Date: Wed, 6 Aug 2025 22:19:36 +0800
-X-Gm-Features: Ac12FXxS0CCPEx5sYpNjMRzYkwCF6mflO_4ebjR3tz9fdRsfOd4NcxDmTjx1p34
-Message-ID: <CADCiS9+FkT2pQCTOjm-=jbtwGVJqj7Rs-axdLUBg19H_BdgJdw@mail.gmail.com>
-Subject: Re: [PATCH V2] hw/riscv/riscv-iommu: Fixup PDT Nested Walk
-To: guoren@kernel.org
-Cc: zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com, seb@rivosinc.com, 
- tjeznach@rivosinc.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000008c61aa063bb308b1"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=liwei1518@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-10.2 3/4] vfio: Remove 'vfio-platform'
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250731121947.1346927-1-clg@redhat.com>
+ <20250731121947.1346927-4-clg@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250731121947.1346927-4-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,541 +112,987 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008c61aa063bb308b1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<guoren@kernel.org> =E4=BA=8E2025=E5=B9=B48=E6=9C=885=E6=97=A5=E5=91=A8=E4=
-=BA=8C 01:12=E5=86=99=E9=81=93=EF=BC=9A
 
-> From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
+On 7/31/25 2:19 PM, Cédric Le Goater wrote:
+> The VFIO_PLATFORM device type has been deprecated in the QEMU 10.0
+> timeframe. All dependent devices have been removed. Now remove the
+> core vfio platform framework.
 >
-> Current implementation is wrong when iohgatp !=3D bare. The RISC-V
-> IOMMU specification has defined that the PDT is based on GPA, not
-> SPA. So this patch fixes the problem, making PDT walk correctly
-> when the G-stage table walk is enabled.
+> Rename VFIO_DEVICE_TYPE_PLATFORM enum to VFIO_DEVICE_TYPE_UNUSED to
+> maintain the same index for the CCW and AP VFIO device types.
 >
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Cc: qemu-stable@nongnu.org
-> Cc: Sebastien Boeuf <seb@rivosinc.com>
-> Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
-> Changes in V2:
->  - Remove nested param to make patch clearer.
+>  docs/about/deprecated.rst       |  12 -
+>  docs/about/removed-features.rst |   9 +
+>  include/hw/vfio/vfio-device.h   |   2 +-
+>  include/hw/vfio/vfio-platform.h |  78 ----
+>  hw/arm/virt.c                   |   2 -
+>  hw/vfio/platform.c              | 716 --------------------------------
+>  hw/arm/Kconfig                  |   1 -
+>  hw/vfio/Kconfig                 |   6 -
+>  hw/vfio/meson.build             |   1 -
+>  hw/vfio/trace-events            |  11 -
+>  10 files changed, 10 insertions(+), 828 deletions(-)
+>  delete mode 100644 include/hw/vfio/vfio-platform.h
+>  delete mode 100644 hw/vfio/platform.c
 >
->  hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 139 insertions(+), 2 deletions(-)
->
-> LGTM.
-
-*"3.3.2. Process to locate the Process-context*
-
-*
-The device-context provides the PDT root page PPN (pdtp.ppn). When
-DC.iohgatp.mode is not
-*
-
-*
-Bare, pdtp.PPN as well as pdte.PPN are Guest Physical Addresses (GPA)
-which must be translated
-*
-
-*
-into Supervisor Physical Addresses (SPA) using the second-stage page
-table pointed to by
-*
-
-*
-DC.iohgatp. The memory accesses to the PDT are treated as implicit
-read memory accesses by the
-*
-
-* second-stage."*
-
-Reviewed-by: Weiwei Li <liwei1518@gmail.com>
-
-Regards,
-
-Weiwei Li
-
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 96a7fbdefcf3..ded3f7b2fdce 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -866,6 +866,143 @@ static bool
-> riscv_iommu_validate_process_ctx(RISCVIOMMUState *s,
->      return true;
->  }
->
-> +/**
-> + * pdt_memory_read: PDT wrapper of dma_memory_read.
-> + *
-> + * @s: IOMMU Device State
-> + * @ctx: Device Translation Context with devid and pasid set
-> + * @addr: address within that address space
-> + * @buf: buffer with the data transferred
-> + * @len: length of the data transferred
-> + * @attrs: memory transaction attributes
-> + */
-> +static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
-> +                                   RISCVIOMMUContext *ctx,
-> +                                   dma_addr_t addr,
-> +                                   void *buf, dma_addr_t len,
-> +                                   MemTxAttrs attrs)
-> +{
-> +    uint64_t gatp_mode, pte;
-> +    struct {
-> +        unsigned char step;
-> +        unsigned char levels;
-> +        unsigned char ptidxbits;
-> +        unsigned char ptesize;
-> +    } sc;
-> +    MemTxResult ret;
-> +    dma_addr_t base =3D addr;
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 0df97eb2b72cb1e851fc47a0059d49cdbbc0a407..fc422acc3e15e903fe0233eae4cc6830e5e789cd 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -516,18 +516,6 @@ Stream ``reconnect`` (since 9.2)
+>  The ``reconnect`` option only allows specifying second granularity timeouts,
+>  which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+>  
+> -VFIO device options
+> -'''''''''''''''''''
+> -
+> -``-device vfio-platform`` (since 10.0)
+> -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> -The vfio-platform device allows to assign a host platform device
+> -to a guest in a generic manner. Integrating a new device into
+> -the vfio-platform infrastructure requires some adaptation at
+> -both kernel and qemu level. No such attempt has been done for years
+> -and the conclusion is that vfio-platform has not got any traction.
+> -PCIe passthrough shall be the mainline solution.
+> -
+>  CPU device properties
+>  '''''''''''''''''''''
+>  
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index 47e632b4ac1db9267f8ad7fe97e1fc66beeff298..177128812dc71b302b6ac98a638b3d9c86c6955e 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -1278,6 +1278,15 @@ The vfio-amd-xgbe device allows to assign a host AMD 10GbE controller
+>  to a guest ("amd,xgbe-seattle-v1a" compatibility string). AMD "Seattle"
+>  is not supported anymore and there is no point keeping that device.
+>  
+> +``-device vfio-platform`` (since 10.2)
+> +''''''''''''''''''''''''''''''''''''''
+> +The vfio-platform device allows to assign a host platform device
+> +to a guest in a generic manner. Integrating a new device into
+> +the vfio-platform infrastructure requires some adaptation at
+> +both kernel and qemu level. No such attempt has been done for years
+> +and the conclusion is that vfio-platform has not got any traction.
+> +PCIe passthrough shall be the mainline solution.
 > +
-> +    /* G stages translation mode */
-> +    gatp_mode =3D get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-> +    if (gatp_mode =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE)
-> +        goto out;
-> +
-> +    /* G stages translation tables root pointer */
-> +    base =3D PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
-> +
-> +    /* Start at step 0 */
-> +    sc.step =3D 0;
-> +
-> +    if (s->fctl & RISCV_IOMMU_FCTL_GXL) {
-> +        /* 32bit mode for GXL =3D=3D 1 */
-> +        switch (gatp_mode) {
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV32X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 2;
-> +            sc.ptidxbits =3D 10;
-> +            sc.ptesize   =3D 4;
-> +            break;
-> +        default:
-> +            return MEMTX_ACCESS_ERROR;
-> +        }
-> +    } else {
-> +        /* 64bit mode for GXL =3D=3D 0 */
-> +        switch (gatp_mode) {
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV39X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 3;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV48X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 4;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
-> +            if (!(s->cap & RISCV_IOMMU_CAP_SV57X4)) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +            sc.levels    =3D 5;
-> +            sc.ptidxbits =3D 9;
-> +            sc.ptesize   =3D 8;
-> +            break;
-> +        default:
-> +            return MEMTX_ACCESS_ERROR;
-> +        }
-> +    }
-> +
-> +    do {
-> +        const unsigned va_bits =3D (sc.step ? 0 : 2) + sc.ptidxbits;
-> +        const unsigned va_skip =3D TARGET_PAGE_BITS + sc.ptidxbits *
-> +                                 (sc.levels - 1 - sc.step);
-> +        const unsigned idx =3D (addr >> va_skip) & ((1 << va_bits) - 1);
-> +        const dma_addr_t pte_addr =3D base + idx * sc.ptesize;
-> +
-> +        /* Address range check before first level lookup */
-> +        if (!sc.step) {
-> +            const uint64_t va_mask =3D (1ULL << (va_skip + va_bits)) - 1=
-;
-> +            if ((addr & va_mask) !=3D addr) {
-> +                return MEMTX_ACCESS_ERROR;
-> +            }
-> +        }
-> +
-> +        /* Read page table entry */
-> +        if (sc.ptesize =3D=3D 4) {
-> +            uint32_t pte32 =3D 0;
-> +            ret =3D ldl_le_dma(s->target_as, pte_addr, &pte32, attrs);
-> +            pte =3D pte32;
-> +        } else {
-> +            ret =3D ldq_le_dma(s->target_as, pte_addr, &pte, attrs);
-> +        }
-> +        if (ret !=3D MEMTX_OK)
-> +            return ret;
-> +
-> +        sc.step++;
-> +        hwaddr ppn =3D pte >> PTE_PPN_SHIFT;
-> +
-> +        if (!(pte & PTE_V)) {
-> +            return MEMTX_ACCESS_ERROR; /* Invalid PTE */
-> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D PTE_W) {
-> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W
-> */
-> +        } else if ((pte & (PTE_R | PTE_W | PTE_X)) =3D=3D (PTE_W | PTE_X=
-)) {
-> +            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W
-> + PTE_X */
-> +        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-> +            return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
-> +        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-> +            base =3D PPN_PHYS(ppn); /* Inner PTE, continue walking */
-> +        } else {
-> +            /* Leaf PTE, translation completed. */
-> +            base =3D PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            break;
-> +        }
-> +
-> +        if (sc.step =3D=3D sc.levels) {
-> +            return MEMTX_ACCESS_ERROR; /* Can't find leaf PTE */
-> +        }
-> +    } while (1);
-> +
-> +out:
-> +    return dma_memory_read(s->target_as, base, buf, len, attrs);
-> +}
-> +
->  /*
->   * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
->   *
-> @@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
-,
-> RISCVIOMMUContext *ctx)
->           */
->          const int split =3D depth * 9 + 8;
->          addr |=3D ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
-> -        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
-> +        if (pdt_memory_read(s, ctx, addr, &de, sizeof(de),
->                              MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
->              return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
->          }
-> @@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s=
-,
-> RISCVIOMMUContext *ctx)
->
->      /* Leaf entry in PDT */
->      addr |=3D (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
-> -    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2=
-,
-> +    if (pdt_memory_read(s, ctx, addr, &dc.ta, sizeof(uint64_t) * 2,
->                          MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {
->          return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
->      }
-> --
-> 2.40.1
->
->
+>  Tools
+>  -----
+>  
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 00df40d99721d2b45cb71c0e11f4d7e0571fbb3c..17dac903ca5dc2c8066cc5da4176dd24e81f96a5 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -36,7 +36,7 @@
+>  
+>  enum {
+>      VFIO_DEVICE_TYPE_PCI = 0,
+> -    VFIO_DEVICE_TYPE_PLATFORM = 1,
+> +    VFIO_DEVICE_TYPE_UNUSED = 1,
+>      VFIO_DEVICE_TYPE_CCW = 2,
+>      VFIO_DEVICE_TYPE_AP = 3,
+>  };
+> diff --git a/include/hw/vfio/vfio-platform.h b/include/hw/vfio/vfio-platform.h
+> deleted file mode 100644
+> index 256d8500b70a2e985e975b0895e3cfca435ed8ed..0000000000000000000000000000000000000000
+> --- a/include/hw/vfio/vfio-platform.h
+> +++ /dev/null
+> @@ -1,78 +0,0 @@
+> -/*
+> - * vfio based device assignment support - platform devices
+> - *
+> - * Copyright Linaro Limited, 2014
+> - *
+> - * Authors:
+> - *  Kim Phillips <kim.phillips@linaro.org>
+> - *
+> - * This work is licensed under the terms of the GNU GPL, version 2.  See
+> - * the COPYING file in the top-level directory.
+> - *
+> - * Based on vfio based PCI device assignment support:
+> - *  Copyright Red Hat, Inc. 2012
+> - */
+> -
+> -#ifndef HW_VFIO_VFIO_PLATFORM_H
+> -#define HW_VFIO_VFIO_PLATFORM_H
+> -
+> -#include "hw/sysbus.h"
+> -#include "hw/vfio/vfio-device.h"
+> -#include "qemu/event_notifier.h"
+> -#include "qemu/queue.h"
+> -#include "qom/object.h"
+> -
+> -#define TYPE_VFIO_PLATFORM "vfio-platform"
+> -
+> -enum {
+> -    VFIO_IRQ_INACTIVE = 0,
+> -    VFIO_IRQ_PENDING = 1,
+> -    VFIO_IRQ_ACTIVE = 2,
+> -    /* VFIO_IRQ_ACTIVE_AND_PENDING cannot happen with VFIO */
+> -};
+> -
+> -typedef struct VFIOINTp {
+> -    QLIST_ENTRY(VFIOINTp) next; /* entry for IRQ list */
+> -    QSIMPLEQ_ENTRY(VFIOINTp) pqnext; /* entry for pending IRQ queue */
+> -    EventNotifier *interrupt; /* eventfd triggered on interrupt */
+> -    EventNotifier *unmask; /* eventfd for unmask on QEMU bypass */
+> -    qemu_irq qemuirq;
+> -    struct VFIOPlatformDevice *vdev; /* back pointer to device */
+> -    int state; /* inactive, pending, active */
+> -    uint8_t pin; /* index */
+> -    uint32_t flags; /* IRQ info flags */
+> -    bool kvm_accel; /* set when QEMU bypass through KVM enabled */
+> -} VFIOINTp;
+> -
+> -/* function type for user side eventfd handler */
+> -typedef void (*eventfd_user_side_handler_t)(VFIOINTp *intp);
+> -
+> -typedef struct VFIORegion VFIORegion;
+> -
+> -struct VFIOPlatformDevice {
+> -    SysBusDevice sbdev;
+> -    VFIODevice vbasedev; /* not a QOM object */
+> -    VFIORegion **regions;
+> -    QLIST_HEAD(, VFIOINTp) intp_list; /* list of IRQs */
+> -    /* queue of pending IRQs */
+> -    QSIMPLEQ_HEAD(, VFIOINTp) pending_intp_queue;
+> -    char *compat; /* DT compatible values, separated by NUL */
+> -    unsigned int num_compat; /* number of compatible values */
+> -    uint32_t mmap_timeout; /* delay to re-enable mmaps after interrupt */
+> -    QEMUTimer *mmap_timer; /* allows fast-path resume after IRQ hit */
+> -    QemuMutex intp_mutex; /* protect the intp_list IRQ state */
+> -    bool irqfd_allowed; /* debug option to force irqfd on/off */
+> -};
+> -typedef struct VFIOPlatformDevice VFIOPlatformDevice;
+> -
+> -struct VFIOPlatformDeviceClass {
+> -    /*< private >*/
+> -    SysBusDeviceClass parent_class;
+> -    /*< public >*/
+> -};
+> -typedef struct VFIOPlatformDeviceClass VFIOPlatformDeviceClass;
+> -
+> -DECLARE_OBJ_CHECKERS(VFIOPlatformDevice, VFIOPlatformDeviceClass,
+> -                     VFIO_PLATFORM_DEVICE, TYPE_VFIO_PLATFORM)
+> -
+> -#endif /* HW_VFIO_VFIO_PLATFORM_H */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 48a561202d7c9817e8b33491dd6810bc7d51f893..131ac16596c66ed052a99566a59302889c5fe6c4 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -38,7 +38,6 @@
+>  #include "hw/arm/primecell.h"
+>  #include "hw/arm/virt.h"
+>  #include "hw/block/flash.h"
+> -#include "hw/vfio/vfio-platform.h"
+removal of this header causes the compilation to fail.
+#include "system/system.h" needs to be added
 
---0000000000008c61aa063bb308b1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">&lt;<a href=3D"=
-mailto:guoren@kernel.org">guoren@kernel.org</a>&gt; =E4=BA=8E2025=E5=B9=B48=
-=E6=9C=885=E6=97=A5=E5=91=A8=E4=BA=8C 01:12=E5=86=99=E9=81=93=EF=BC=9A<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">From: &quot;Guo Ren =
-(Alibaba DAMO Academy)&quot; &lt;<a href=3D"mailto:guoren@kernel.org" targe=
-t=3D"_blank">guoren@kernel.org</a>&gt;<br>
-<br>
-Current implementation is wrong when iohgatp !=3D bare. The RISC-V<br>
-IOMMU specification has defined that the PDT is based on GPA, not<br>
-SPA. So this patch fixes the problem, making PDT walk correctly<br>
-when the G-stage table walk is enabled.<br>
-<br>
-Fixes: 0c54acb8243d (&quot;hw/riscv: add RISC-V IOMMU base emulation&quot;)=
-<br>
-Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
-@nongnu.org</a><br>
-Cc: Sebastien Boeuf &lt;<a href=3D"mailto:seb@rivosinc.com" target=3D"_blan=
-k">seb@rivosinc.com</a>&gt;<br>
-Cc: Tomasz Jeznach &lt;<a href=3D"mailto:tjeznach@rivosinc.com" target=3D"_=
-blank">tjeznach@rivosinc.com</a>&gt;<br>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) &lt;<a href=3D"mailto:guoren@=
-kernel.org" target=3D"_blank">guoren@kernel.org</a>&gt;<br>
----<br>
-Changes in V2:<br>
-=C2=A0- Remove nested param to make patch clearer.<br>
-<br>
-=C2=A0hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++=
--<br>
-=C2=A01 file changed, 139 insertions(+), 2 deletions(-)<br>
-<br></blockquote><div>LGTM.=C2=A0=C2=A0</div><div><br></div><div><i>&quot;3=
-.3.2.=C2=A0Process=C2=A0to=C2=A0locate=C2=A0the=C2=A0Process-context</i></d=
-iv>
-<p><i>
-The=C2=A0device-context=C2=A0provides=C2=A0the=C2=A0PDT=C2=A0root=C2=A0page=
-=C2=A0PPN=C2=A0(pdtp.ppn).=C2=A0When=C2=A0DC.iohgatp.mode=C2=A0is=C2=A0not
-</i></p><p><i>
-Bare,=C2=A0pdtp.PPN=C2=A0as=C2=A0well=C2=A0as=C2=A0pdte.PPN=C2=A0are=C2=A0G=
-uest=C2=A0Physical=C2=A0Addresses=C2=A0(GPA)=C2=A0which=C2=A0must=C2=A0be=
-=C2=A0translated
-</i></p><p><i>
-into=C2=A0Supervisor=C2=A0Physical=C2=A0Addresses=C2=A0(SPA)=C2=A0using=C2=
-=A0the=C2=A0second-stage=C2=A0page=C2=A0table=C2=A0pointed=C2=A0to=C2=A0by
-</i></p><p><i>
-DC.iohgatp.=C2=A0The=C2=A0memory=C2=A0accesses=C2=A0to=C2=A0the=C2=A0PDT=C2=
-=A0are=C2=A0treated=C2=A0as=C2=A0implicit=C2=A0read=C2=A0memory=C2=A0access=
-es=C2=A0by=C2=A0the
-</i></p><p><i>
-second-stage.&quot;</i></p><p>Reviewed-by:=C2=A0<span style=3D"color:rgb(0,=
-0,0)">Weiwei Li &lt;<a href=3D"mailto:liwei1518@gmail.com">liwei1518@gmail.=
-com</a>&gt;</span></p><p><span style=3D"color:rgb(0,0,0)">Regards,</span></=
-p><p><span style=3D"color:rgb(0,0,0)">Weiwei Li</span></p><p><span style=3D=
-"color:rgb(0,0,0)"><br></span></p><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c<br>
-index 96a7fbdefcf3..ded3f7b2fdce 100644<br>
---- a/hw/riscv/riscv-iommu.c<br>
-+++ b/hw/riscv/riscv-iommu.c<br>
-@@ -866,6 +866,143 @@ static bool riscv_iommu_validate_process_ctx(RISCVIOM=
-MUState *s,<br>
-=C2=A0 =C2=A0 =C2=A0return true;<br>
-=C2=A0}<br>
-<br>
-+/**<br>
-+ * pdt_memory_read: PDT wrapper of dma_memory_read.<br>
-+ *<br>
-+ * @s: IOMMU Device State<br>
-+ * @ctx: Device Translation Context with devid and pasid set<br>
-+ * @addr: address within that address space<br>
-+ * @buf: buffer with the data transferred<br>
-+ * @len: length of the data transferred<br>
-+ * @attrs: memory transaction attributes<br>
-+ */<br>
-+static MemTxResult pdt_memory_read(RISCVIOMMUState *s,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0RISCVIOMMUContext *ctx,=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dma_addr_t addr,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0void *buf, dma_addr_t l=
-en,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MemTxAttrs attrs)<br>
-+{<br>
-+=C2=A0 =C2=A0 uint64_t gatp_mode, pte;<br>
-+=C2=A0 =C2=A0 struct {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned char step;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned char levels;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned char ptidxbits;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsigned char ptesize;<br>
-+=C2=A0 =C2=A0 } sc;<br>
-+=C2=A0 =C2=A0 MemTxResult ret;<br>
-+=C2=A0 =C2=A0 dma_addr_t base =3D addr;<br>
-+<br>
-+=C2=A0 =C2=A0 /* G stages translation mode */<br>
-+=C2=A0 =C2=A0 gatp_mode =3D get_field(ctx-&gt;gatp, RISCV_IOMMU_ATP_MODE_F=
-IELD);<br>
-+=C2=A0 =C2=A0 if (gatp_mode =3D=3D RISCV_IOMMU_DC_IOHGATP_MODE_BARE)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+<br>
-+=C2=A0 =C2=A0 /* G stages translation tables root pointer */<br>
-+=C2=A0 =C2=A0 base =3D PPN_PHYS(get_field(ctx-&gt;gatp, RISCV_IOMMU_ATP_PP=
-N_FIELD));<br>
-+<br>
-+=C2=A0 =C2=A0 /* Start at step 0 */<br>
-+=C2=A0 =C2=A0 sc.step =3D 0;<br>
-+<br>
-+=C2=A0 =C2=A0 if (s-&gt;fctl &amp; RISCV_IOMMU_FCTL_GXL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* 32bit mode for GXL =3D=3D 1 */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (gatp_mode) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(s-&gt;cap &amp; RISCV_IOMM=
-U_CAP_SV32X4)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCES=
-S_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.levels=C2=A0 =C2=A0 =3D 2;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptidxbits =3D 10;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptesize=C2=A0 =C2=A0=3D 4;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* 64bit mode for GXL =3D=3D 0 */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (gatp_mode) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(s-&gt;cap &amp; RISCV_IOMM=
-U_CAP_SV39X4)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCES=
-S_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.levels=C2=A0 =C2=A0 =3D 3;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptidxbits =3D 9;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptesize=C2=A0 =C2=A0=3D 8;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(s-&gt;cap &amp; RISCV_IOMM=
-U_CAP_SV48X4)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCES=
-S_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.levels=C2=A0 =C2=A0 =3D 4;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptidxbits =3D 9;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptesize=C2=A0 =C2=A0=3D 8;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(s-&gt;cap &amp; RISCV_IOMM=
-U_CAP_SV57X4)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCES=
-S_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.levels=C2=A0 =C2=A0 =3D 5;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptidxbits =3D 9;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.ptesize=C2=A0 =C2=A0=3D 8;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 do {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 const unsigned va_bits =3D (sc.step ? 0 : 2) +=
- sc.ptidxbits;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 const unsigned va_skip =3D TARGET_PAGE_BITS + =
-sc.ptidxbits *<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(sc.levels - 1 - sc.step);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 const unsigned idx =3D (addr &gt;&gt; va_skip)=
- &amp; ((1 &lt;&lt; va_bits) - 1);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 const dma_addr_t pte_addr =3D base + idx * sc.=
-ptesize;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Address range check before first level look=
-up */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!sc.step) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const uint64_t va_mask =3D (1ULL=
- &lt;&lt; (va_skip + va_bits)) - 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((addr &amp; va_mask) !=3D ad=
-dr) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCES=
-S_ERROR;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Read page table entry */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sc.ptesize =3D=3D 4) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t pte32 =3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ldl_le_dma(s-&gt;target_=
-as, pte_addr, &amp;pte32, attrs);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pte =3D pte32;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D ldq_le_dma(s-&gt;target_=
-as, pte_addr, &amp;pte, attrs);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret !=3D MEMTX_OK)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 sc.step++;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hwaddr ppn =3D pte &gt;&gt; PTE_PPN_SHIFT;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(pte &amp; PTE_V)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR; /* In=
-valid PTE */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((pte &amp; (PTE_R | PTE_W | PTE_X))=
- =3D=3D PTE_W) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR; /* Re=
-served leaf PTE flags: PTE_W */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((pte &amp; (PTE_R | PTE_W | PTE_X))=
- =3D=3D (PTE_W | PTE_X)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR; /* Re=
-served leaf PTE flags: PTE_W + PTE_X */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (ppn &amp; ((1ULL &lt;&lt; (va_skip =
-- TARGET_PAGE_BITS)) - 1)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR; /* Mi=
-saligned PPN */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!(pte &amp; (PTE_R | PTE_W | PTE_X)=
-)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 base =3D PPN_PHYS(ppn); /* Inner=
- PTE, continue walking */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Leaf PTE, translation complet=
-ed. */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 base =3D PPN_PHYS(ppn) | (addr &=
-amp; ((1ULL &lt;&lt; va_skip) - 1));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sc.step =3D=3D sc.levels) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return MEMTX_ACCESS_ERROR; /* Ca=
-n&#39;t find leaf PTE */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 } while (1);<br>
-+<br>
-+out:<br>
-+=C2=A0 =C2=A0 return dma_memory_read(s-&gt;target_as, base, buf, len, attr=
-s);<br>
-+}<br>
-+<br>
-=C2=A0/*<br>
-=C2=A0 * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk<b=
-r>
-=C2=A0 *<br>
-@@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
-RISCVIOMMUContext *ctx)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const int split =3D depth * 9 + 8;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0addr |=3D ((ctx-&gt;process_id &gt;&gt; s=
-plit) &lt;&lt; 3) &amp; ~TARGET_PAGE_MASK;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (dma_memory_read(s-&gt;target_as, addr, &am=
-p;de, sizeof(de),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (pdt_memory_read(s, ctx, addr, &amp;de, siz=
-eof(de),<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return RISCV_IOMMU_FQ_CAUSE=
-_PDT_LOAD_FAULT;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-@@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, =
-RISCVIOMMUContext *ctx)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Leaf entry in PDT */<br>
-=C2=A0 =C2=A0 =C2=A0addr |=3D (ctx-&gt;process_id &lt;&lt; 4) &amp; ~TARGET=
-_PAGE_MASK;<br>
--=C2=A0 =C2=A0 if (dma_memory_read(s-&gt;target_as, addr, &amp;dc.ta, sizeo=
-f(uint64_t) * 2,<br>
-+=C2=A0 =C2=A0 if (pdt_memory_read(s, ctx, addr, &amp;dc.ta, sizeof(uint64_=
-t) * 2,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAUL=
-T;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
--- <br>
-2.40.1<br>
-<br>
-</blockquote></div></div>
+Eric
 
---0000000000008c61aa063bb308b1--
+>  #include "hw/display/ramfb.h"
+>  #include "net/net.h"
+>  #include "system/device_tree.h"
+> @@ -3216,7 +3215,6 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>       */
+>      mc->max_cpus = 512;
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+> -    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>  #ifdef CONFIG_TPM
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> deleted file mode 100644
+> index 5c1795a26fe79b98a9886e15f365fa7a921409a4..0000000000000000000000000000000000000000
+> --- a/hw/vfio/platform.c
+> +++ /dev/null
+> @@ -1,716 +0,0 @@
+> -/*
+> - * vfio based device assignment support - platform devices
+> - *
+> - * Copyright Linaro Limited, 2014
+> - *
+> - * Authors:
+> - *  Kim Phillips <kim.phillips@linaro.org>
+> - *  Eric Auger <eric.auger@linaro.org>
+> - *
+> - * This work is licensed under the terms of the GNU GPL, version 2.  See
+> - * the COPYING file in the top-level directory.
+> - *
+> - * Based on vfio based PCI device assignment support:
+> - *  Copyright Red Hat, Inc. 2012
+> - */
+> -
+> -#include "qemu/osdep.h"
+> -#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+> -#include "qapi/error.h"
+> -#include <sys/ioctl.h>
+> -#include <linux/vfio.h>
+> -
+> -#include "hw/vfio/vfio-platform.h"
+> -#include "system/iommufd.h"
+> -#include "migration/vmstate.h"
+> -#include "qemu/error-report.h"
+> -#include "qemu/lockable.h"
+> -#include "qemu/main-loop.h"
+> -#include "qemu/module.h"
+> -#include "qemu/range.h"
+> -#include "system/memory.h"
+> -#include "system/address-spaces.h"
+> -#include "qemu/queue.h"
+> -#include "hw/sysbus.h"
+> -#include "trace.h"
+> -#include "hw/irq.h"
+> -#include "hw/platform-bus.h"
+> -#include "hw/qdev-properties.h"
+> -#include "system/kvm.h"
+> -#include "hw/vfio/vfio-region.h"
+> -
+> -/*
+> - * Functions used whatever the injection method
+> - */
+> -
+> -static inline bool vfio_irq_is_automasked(VFIOINTp *intp)
+> -{
+> -    return intp->flags & VFIO_IRQ_INFO_AUTOMASKED;
+> -}
+> -
+> -/**
+> - * vfio_init_intp - allocate, initialize the IRQ struct pointer
+> - * and add it into the list of IRQs
+> - * @vbasedev: the VFIO device handle
+> - * @info: irq info struct retrieved from VFIO driver
+> - * @errp: error object
+> - */
+> -static VFIOINTp *vfio_init_intp(VFIODevice *vbasedev,
+> -                                struct vfio_irq_info info, Error **errp)
+> -{
+> -    int ret;
+> -    VFIOPlatformDevice *vdev =
+> -        container_of(vbasedev, VFIOPlatformDevice, vbasedev);
+> -    SysBusDevice *sbdev = SYS_BUS_DEVICE(vdev);
+> -    VFIOINTp *intp;
+> -
+> -    intp = g_malloc0(sizeof(*intp));
+> -    intp->vdev = vdev;
+> -    intp->pin = info.index;
+> -    intp->flags = info.flags;
+> -    intp->state = VFIO_IRQ_INACTIVE;
+> -    intp->kvm_accel = false;
+> -
+> -    sysbus_init_irq(sbdev, &intp->qemuirq);
+> -
+> -    /* Get an eventfd for trigger */
+> -    intp->interrupt = g_new0(EventNotifier, 1);
+> -    ret = event_notifier_init(intp->interrupt, 0);
+> -    if (ret) {
+> -        g_free(intp->interrupt);
+> -        g_free(intp);
+> -        error_setg_errno(errp, -ret,
+> -                         "failed to initialize trigger eventfd notifier");
+> -        return NULL;
+> -    }
+> -    if (vfio_irq_is_automasked(intp)) {
+> -        /* Get an eventfd for resample/unmask */
+> -        intp->unmask = g_new0(EventNotifier, 1);
+> -        ret = event_notifier_init(intp->unmask, 0);
+> -        if (ret) {
+> -            g_free(intp->interrupt);
+> -            g_free(intp->unmask);
+> -            g_free(intp);
+> -            error_setg_errno(errp, -ret,
+> -                             "failed to initialize resample eventfd notifier");
+> -            return NULL;
+> -        }
+> -    }
+> -
+> -    QLIST_INSERT_HEAD(&vdev->intp_list, intp, next);
+> -    return intp;
+> -}
+> -
+> -/**
+> - * vfio_set_trigger_eventfd - set VFIO eventfd handling
+> - *
+> - * @intp: IRQ struct handle
+> - * @handler: handler to be called on eventfd signaling
+> - *
+> - * Setup VFIO signaling and attach an optional user-side handler
+> - * to the eventfd
+> - */
+> -static int vfio_set_trigger_eventfd(VFIOINTp *intp,
+> -                                    eventfd_user_side_handler_t handler)
+> -{
+> -    VFIODevice *vbasedev = &intp->vdev->vbasedev;
+> -    int32_t fd = event_notifier_get_fd(intp->interrupt);
+> -    Error *err = NULL;
+> -
+> -    qemu_set_fd_handler(fd, (IOHandler *)handler, NULL, intp);
+> -
+> -    if (!vfio_device_irq_set_signaling(vbasedev, intp->pin, 0,
+> -                                       VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
+> -        error_reportf_err(err, VFIO_MSG_PREFIX, vbasedev->name);
+> -        qemu_set_fd_handler(fd, NULL, NULL, NULL);
+> -        return -EINVAL;
+> -    }
+> -
+> -    return 0;
+> -}
+> -
+> -/*
+> - * Functions only used when eventfds are handled on user-side
+> - * ie. without irqfd
+> - */
+> -
+> -/**
+> - * vfio_mmap_set_enabled - enable/disable the fast path mode
+> - * @vdev: the VFIO platform device
+> - * @enabled: the target mmap state
+> - *
+> - * enabled = true ~ fast path = MMIO region is mmaped (no KVM TRAP);
+> - * enabled = false ~ slow path = MMIO region is trapped and region callbacks
+> - * are called; slow path enables to trap the device IRQ status register reset
+> -*/
+> -
+> -static void vfio_mmap_set_enabled(VFIOPlatformDevice *vdev, bool enabled)
+> -{
+> -    int i;
+> -
+> -    for (i = 0; i < vdev->vbasedev.num_regions; i++) {
+> -        vfio_region_mmaps_set_enabled(vdev->regions[i], enabled);
+> -    }
+> -}
+> -
+> -/**
+> - * vfio_intp_mmap_enable - timer function, restores the fast path
+> - * if there is no more active IRQ
+> - * @opaque: actually points to the VFIO platform device
+> - *
+> - * Called on mmap timer timeout, this function checks whether the
+> - * IRQ is still active and if not, restores the fast path.
+> - * by construction a single eventfd is handled at a time.
+> - * if the IRQ is still active, the timer is re-programmed.
+> - */
+> -static void vfio_intp_mmap_enable(void *opaque)
+> -{
+> -    VFIOINTp *tmp;
+> -    VFIOPlatformDevice *vdev = (VFIOPlatformDevice *)opaque;
+> -
+> -    QEMU_LOCK_GUARD(&vdev->intp_mutex);
+> -    QLIST_FOREACH(tmp, &vdev->intp_list, next) {
+> -        if (tmp->state == VFIO_IRQ_ACTIVE) {
+> -            trace_vfio_platform_intp_mmap_enable(tmp->pin);
+> -            /* re-program the timer to check active status later */
+> -            timer_mod(vdev->mmap_timer,
+> -                      qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+> -                          vdev->mmap_timeout);
+> -            return;
+> -        }
+> -    }
+> -    vfio_mmap_set_enabled(vdev, true);
+> -}
+> -
+> -/**
+> - * vfio_intp_inject_pending_lockheld - Injects a pending IRQ
+> - * @opaque: opaque pointer, in practice the VFIOINTp handle
+> - *
+> - * The function is called on a previous IRQ completion, from
+> - * vfio_platform_eoi, while the intp_mutex is locked.
+> - * Also in such situation, the slow path already is set and
+> - * the mmap timer was already programmed.
+> - */
+> -static void vfio_intp_inject_pending_lockheld(VFIOINTp *intp)
+> -{
+> -    trace_vfio_platform_intp_inject_pending_lockheld(intp->pin,
+> -                              event_notifier_get_fd(intp->interrupt));
+> -
+> -    intp->state = VFIO_IRQ_ACTIVE;
+> -
+> -    /* trigger the virtual IRQ */
+> -    qemu_set_irq(intp->qemuirq, 1);
+> -}
+> -
+> -/**
+> - * vfio_intp_interrupt - The user-side eventfd handler
+> - * @opaque: opaque pointer which in practice is the VFIOINTp handle
+> - *
+> - * the function is entered in event handler context:
+> - * the vIRQ is injected into the guest if there is no other active
+> - * or pending IRQ.
+> - */
+> -static void vfio_intp_interrupt(VFIOINTp *intp)
+> -{
+> -    int ret;
+> -    VFIOINTp *tmp;
+> -    VFIOPlatformDevice *vdev = intp->vdev;
+> -    bool delay_handling = false;
+> -
+> -    QEMU_LOCK_GUARD(&vdev->intp_mutex);
+> -    if (intp->state == VFIO_IRQ_INACTIVE) {
+> -        QLIST_FOREACH(tmp, &vdev->intp_list, next) {
+> -            if (tmp->state == VFIO_IRQ_ACTIVE ||
+> -                tmp->state == VFIO_IRQ_PENDING) {
+> -                delay_handling = true;
+> -                break;
+> -            }
+> -        }
+> -    }
+> -    if (delay_handling) {
+> -        /*
+> -         * the new IRQ gets a pending status and is pushed in
+> -         * the pending queue
+> -         */
+> -        intp->state = VFIO_IRQ_PENDING;
+> -        trace_vfio_intp_interrupt_set_pending(intp->pin);
+> -        QSIMPLEQ_INSERT_TAIL(&vdev->pending_intp_queue,
+> -                             intp, pqnext);
+> -        event_notifier_test_and_clear(intp->interrupt);
+> -        return;
+> -    }
+> -
+> -    trace_vfio_platform_intp_interrupt(intp->pin,
+> -                              event_notifier_get_fd(intp->interrupt));
+> -
+> -    ret = event_notifier_test_and_clear(intp->interrupt);
+> -    if (!ret) {
+> -        error_report("Error when clearing fd=%d (ret = %d)",
+> -                     event_notifier_get_fd(intp->interrupt), ret);
+> -    }
+> -
+> -    intp->state = VFIO_IRQ_ACTIVE;
+> -
+> -    /* sets slow path */
+> -    vfio_mmap_set_enabled(vdev, false);
+> -
+> -    /* trigger the virtual IRQ */
+> -    qemu_set_irq(intp->qemuirq, 1);
+> -
+> -    /*
+> -     * Schedule the mmap timer which will restore fastpath when no IRQ
+> -     * is active anymore
+> -     */
+> -    if (vdev->mmap_timeout) {
+> -        timer_mod(vdev->mmap_timer,
+> -                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+> -                      vdev->mmap_timeout);
+> -    }
+> -}
+> -
+> -/**
+> - * vfio_platform_eoi - IRQ completion routine
+> - * @vbasedev: the VFIO device handle
+> - *
+> - * De-asserts the active virtual IRQ and unmasks the physical IRQ
+> - * (effective for level sensitive IRQ auto-masked by the  VFIO driver).
+> - * Then it handles next pending IRQ if any.
+> - * eoi function is called on the first access to any MMIO region
+> - * after an IRQ was triggered, trapped since slow path was set.
+> - * It is assumed this access corresponds to the IRQ status
+> - * register reset. With such a mechanism, a single IRQ can be
+> - * handled at a time since there is no way to know which IRQ
+> - * was completed by the guest (we would need additional details
+> - * about the IRQ status register mask).
+> - */
+> -static void vfio_platform_eoi(VFIODevice *vbasedev)
+> -{
+> -    VFIOINTp *intp;
+> -    VFIOPlatformDevice *vdev =
+> -        container_of(vbasedev, VFIOPlatformDevice, vbasedev);
+> -
+> -    QEMU_LOCK_GUARD(&vdev->intp_mutex);
+> -    QLIST_FOREACH(intp, &vdev->intp_list, next) {
+> -        if (intp->state == VFIO_IRQ_ACTIVE) {
+> -            trace_vfio_platform_eoi(intp->pin,
+> -                                event_notifier_get_fd(intp->interrupt));
+> -            intp->state = VFIO_IRQ_INACTIVE;
+> -
+> -            /* deassert the virtual IRQ */
+> -            qemu_set_irq(intp->qemuirq, 0);
+> -
+> -            if (vfio_irq_is_automasked(intp)) {
+> -                /* unmasks the physical level-sensitive IRQ */
+> -                vfio_device_irq_unmask(vbasedev, intp->pin);
+> -            }
+> -
+> -            /* a single IRQ can be active at a time */
+> -            break;
+> -        }
+> -    }
+> -    /* in case there are pending IRQs, handle the first one */
+> -    if (!QSIMPLEQ_EMPTY(&vdev->pending_intp_queue)) {
+> -        intp = QSIMPLEQ_FIRST(&vdev->pending_intp_queue);
+> -        vfio_intp_inject_pending_lockheld(intp);
+> -        QSIMPLEQ_REMOVE_HEAD(&vdev->pending_intp_queue, pqnext);
+> -    }
+> -}
+> -
+> -/**
+> - * vfio_start_eventfd_injection - starts the virtual IRQ injection using
+> - * user-side handled eventfds
+> - * @sbdev: the sysbus device handle
+> - * @irq: the qemu irq handle
+> - */
+> -
+> -static void vfio_start_eventfd_injection(SysBusDevice *sbdev, qemu_irq irq)
+> -{
+> -    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
+> -    VFIOINTp *intp;
+> -
+> -    QLIST_FOREACH(intp, &vdev->intp_list, next) {
+> -        if (intp->qemuirq == irq) {
+> -            break;
+> -        }
+> -    }
+> -    assert(intp);
+> -
+> -    if (vfio_set_trigger_eventfd(intp, vfio_intp_interrupt)) {
+> -        abort();
+> -    }
+> -}
+> -
+> -/*
+> - * Functions used for irqfd
+> - */
+> -
+> -/**
+> - * vfio_set_resample_eventfd - sets the resamplefd for an IRQ
+> - * @intp: the IRQ struct handle
+> - * programs the VFIO driver to unmask this IRQ when the
+> - * intp->unmask eventfd is triggered
+> - */
+> -static int vfio_set_resample_eventfd(VFIOINTp *intp)
+> -{
+> -    int32_t fd = event_notifier_get_fd(intp->unmask);
+> -    VFIODevice *vbasedev = &intp->vdev->vbasedev;
+> -    Error *err = NULL;
+> -
+> -    qemu_set_fd_handler(fd, NULL, NULL, NULL);
+> -    if (!vfio_device_irq_set_signaling(vbasedev, intp->pin, 0,
+> -                                       VFIO_IRQ_SET_ACTION_UNMASK, fd, &err)) {
+> -        error_reportf_err(err, VFIO_MSG_PREFIX, vbasedev->name);
+> -        return -EINVAL;
+> -    }
+> -    return 0;
+> -}
+> -
+> -/**
+> - * vfio_start_irqfd_injection - starts the virtual IRQ injection using
+> - * irqfd
+> - *
+> - * @sbdev: the sysbus device handle
+> - * @irq: the qemu irq handle
+> - *
+> - * In case the irqfd setup fails, we fallback to userspace handled eventfd
+> - */
+> -static void vfio_start_irqfd_injection(SysBusDevice *sbdev, qemu_irq irq)
+> -{
+> -    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
+> -    VFIOINTp *intp;
+> -
+> -    if (!kvm_irqfds_enabled() || !kvm_resamplefds_enabled() ||
+> -        !vdev->irqfd_allowed) {
+> -        goto fail_irqfd;
+> -    }
+> -
+> -    QLIST_FOREACH(intp, &vdev->intp_list, next) {
+> -        if (intp->qemuirq == irq) {
+> -            break;
+> -        }
+> -    }
+> -    assert(intp);
+> -
+> -    if (kvm_irqchip_add_irqfd_notifier(kvm_state, intp->interrupt,
+> -                                   intp->unmask, irq) < 0) {
+> -        goto fail_irqfd;
+> -    }
+> -
+> -    if (vfio_set_trigger_eventfd(intp, NULL) < 0) {
+> -        goto fail_vfio;
+> -    }
+> -    if (vfio_irq_is_automasked(intp)) {
+> -        if (vfio_set_resample_eventfd(intp) < 0) {
+> -            goto fail_vfio;
+> -        }
+> -        trace_vfio_platform_start_level_irqfd_injection(intp->pin,
+> -                                    event_notifier_get_fd(intp->interrupt),
+> -                                    event_notifier_get_fd(intp->unmask));
+> -    } else {
+> -        trace_vfio_platform_start_edge_irqfd_injection(intp->pin,
+> -                                    event_notifier_get_fd(intp->interrupt));
+> -    }
+> -
+> -    intp->kvm_accel = true;
+> -
+> -    return;
+> -fail_vfio:
+> -    kvm_irqchip_remove_irqfd_notifier(kvm_state, intp->interrupt, irq);
+> -    abort();
+> -fail_irqfd:
+> -    vfio_start_eventfd_injection(sbdev, irq);
+> -}
+> -
+> -/* VFIO skeleton */
+> -
+> -static void vfio_platform_compute_needs_reset(VFIODevice *vbasedev)
+> -{
+> -    vbasedev->needs_reset = true;
+> -}
+> -
+> -/* not implemented yet */
+> -static int vfio_platform_hot_reset_multi(VFIODevice *vbasedev)
+> -{
+> -    return -1;
+> -}
+> -
+> -/**
+> - * vfio_populate_device - Allocate and populate MMIO region
+> - * and IRQ structs according to driver returned information
+> - * @vbasedev: the VFIO device handle
+> - * @errp: error object
+> - *
+> - */
+> -static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+> -{
+> -    VFIOINTp *intp, *tmp;
+> -    int i, ret = -1;
+> -    VFIOPlatformDevice *vdev =
+> -        container_of(vbasedev, VFIOPlatformDevice, vbasedev);
+> -
+> -    if (!(vbasedev->flags & VFIO_DEVICE_FLAGS_PLATFORM)) {
+> -        error_setg(errp, "this isn't a platform device");
+> -        return false;
+> -    }
+> -
+> -    vdev->regions = g_new0(VFIORegion *, vbasedev->num_regions);
+> -
+> -    for (i = 0; i < vbasedev->num_regions; i++) {
+> -        char *name = g_strdup_printf("VFIO %s region %d\n", vbasedev->name, i);
+> -
+> -        vdev->regions[i] = g_new0(VFIORegion, 1);
+> -        ret = vfio_region_setup(OBJECT(vdev), vbasedev,
+> -                                vdev->regions[i], i, name);
+> -        g_free(name);
+> -        if (ret) {
+> -            error_setg_errno(errp, -ret, "failed to get region %d info", i);
+> -            goto reg_error;
+> -        }
+> -    }
+> -
+> -    vdev->mmap_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+> -                                    vfio_intp_mmap_enable, vdev);
+> -
+> -    QSIMPLEQ_INIT(&vdev->pending_intp_queue);
+> -
+> -    for (i = 0; i < vbasedev->num_irqs; i++) {
+> -        struct vfio_irq_info irq;
+> -
+> -        ret = vfio_device_get_irq_info(vbasedev, i, &irq);
+> -
+> -        if (ret) {
+> -            error_setg_errno(errp, -ret, "failed to get device irq info");
+> -            goto irq_err;
+> -        } else {
+> -            trace_vfio_platform_populate_interrupts(irq.index,
+> -                                                    irq.count,
+> -                                                    irq.flags);
+> -            intp = vfio_init_intp(vbasedev, irq, errp);
+> -            if (!intp) {
+> -                goto irq_err;
+> -            }
+> -        }
+> -    }
+> -    return true;
+> -irq_err:
+> -    timer_del(vdev->mmap_timer);
+> -    QLIST_FOREACH_SAFE(intp, &vdev->intp_list, next, tmp) {
+> -        QLIST_REMOVE(intp, next);
+> -        g_free(intp);
+> -    }
+> -reg_error:
+> -    for (i = 0; i < vbasedev->num_regions; i++) {
+> -        if (vdev->regions[i]) {
+> -            vfio_region_finalize(vdev->regions[i]);
+> -        }
+> -        g_free(vdev->regions[i]);
+> -    }
+> -    g_free(vdev->regions);
+> -    return false;
+> -}
+> -
+> -/* specialized functions for VFIO Platform devices */
+> -static VFIODeviceOps vfio_platform_ops = {
+> -    .vfio_compute_needs_reset = vfio_platform_compute_needs_reset,
+> -    .vfio_hot_reset_multi = vfio_platform_hot_reset_multi,
+> -    .vfio_eoi = vfio_platform_eoi,
+> -};
+> -
+> -/**
+> - * vfio_base_device_init - perform preliminary VFIO setup
+> - * @vbasedev: the VFIO device handle
+> - * @errp: error object
+> - *
+> - * Implement the VFIO command sequence that allows to discover
+> - * assigned device resources: group extraction, device
+> - * fd retrieval, resource query.
+> - * Precondition: the device name must be initialized
+> - */
+> -static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+> -{
+> -    /* @fd takes precedence over @sysfsdev which takes precedence over @host */
+> -    if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
+> -        vfio_device_free_name(vbasedev);
+> -        vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
+> -    } else if (vbasedev->fd < 0) {
+> -        if (!vbasedev->name || strchr(vbasedev->name, '/')) {
+> -            error_setg(errp, "wrong host device name");
+> -            return false;
+> -        }
+> -
+> -        vbasedev->sysfsdev = g_strdup_printf("/sys/bus/platform/devices/%s",
+> -                                             vbasedev->name);
+> -    }
+> -
+> -    if (!vfio_device_get_name(vbasedev, errp)) {
+> -        return false;
+> -    }
+> -
+> -    if (!vfio_device_attach(vbasedev->name, vbasedev,
+> -                            &address_space_memory, errp)) {
+> -        return false;
+> -    }
+> -
+> -    if (vfio_populate_device(vbasedev, errp)) {
+> -        return true;
+> -    }
+> -
+> -    vfio_device_detach(vbasedev);
+> -    return false;
+> -}
+> -
+> -/**
+> - * vfio_platform_realize  - the device realize function
+> - * @dev: device state pointer
+> - * @errp: error
+> - *
+> - * initialize the device, its memory regions and IRQ structures
+> - * IRQ are started separately
+> - */
+> -static void vfio_platform_realize(DeviceState *dev, Error **errp)
+> -{
+> -    ERRP_GUARD();
+> -    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
+> -    SysBusDevice *sbdev = SYS_BUS_DEVICE(dev);
+> -    VFIODevice *vbasedev = &vdev->vbasedev;
+> -    int i;
+> -
+> -    warn_report("-device vfio-platform is deprecated");
+> -    qemu_mutex_init(&vdev->intp_mutex);
+> -
+> -    trace_vfio_platform_realize(vbasedev->sysfsdev ?
+> -                                vbasedev->sysfsdev : vbasedev->name,
+> -                                vdev->compat);
+> -
+> -    if (!vfio_base_device_init(vbasedev, errp)) {
+> -        goto init_err;
+> -    }
+> -
+> -    if (!vdev->compat) {
+> -        GError *gerr = NULL;
+> -        gchar *contents;
+> -        gsize length;
+> -        char *path;
+> -
+> -        path = g_strdup_printf("%s/of_node/compatible", vbasedev->sysfsdev);
+> -        if (!g_file_get_contents(path, &contents, &length, &gerr)) {
+> -            error_setg(errp, "%s", gerr->message);
+> -            g_error_free(gerr);
+> -            g_free(path);
+> -            return;
+> -        }
+> -        g_free(path);
+> -        vdev->compat = contents;
+> -        for (vdev->num_compat = 0; length; vdev->num_compat++) {
+> -            size_t skip = strlen(contents) + 1;
+> -            contents += skip;
+> -            length -= skip;
+> -        }
+> -    }
+> -
+> -    for (i = 0; i < vbasedev->num_regions; i++) {
+> -        if (vfio_region_mmap(vdev->regions[i])) {
+> -            warn_report("%s mmap unsupported, performance may be slow",
+> -                        memory_region_name(vdev->regions[i]->mem));
+> -        }
+> -        sysbus_init_mmio(sbdev, vdev->regions[i]->mem);
+> -    }
+> -    return;
+> -
+> -init_err:
+> -    if (vdev->vbasedev.name) {
+> -        error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+> -    } else {
+> -        error_prepend(errp, "vfio error: ");
+> -    }
+> -}
+> -
+> -static const VMStateDescription vfio_platform_vmstate = {
+> -    .name = "vfio-platform",
+> -    .unmigratable = 1,
+> -};
+> -
+> -static const Property vfio_platform_dev_properties[] = {
+> -    DEFINE_PROP_STRING("host", VFIOPlatformDevice, vbasedev.name),
+> -    DEFINE_PROP_STRING("sysfsdev", VFIOPlatformDevice, vbasedev.sysfsdev),
+> -    DEFINE_PROP_BOOL("x-no-mmap", VFIOPlatformDevice, vbasedev.no_mmap, false),
+> -    DEFINE_PROP_UINT32("mmap-timeout-ms", VFIOPlatformDevice,
+> -                       mmap_timeout, 1100),
+> -    DEFINE_PROP_BOOL("x-irqfd", VFIOPlatformDevice, irqfd_allowed, true),
+> -#ifdef CONFIG_IOMMUFD
+> -    DEFINE_PROP_LINK("iommufd", VFIOPlatformDevice, vbasedev.iommufd,
+> -                     TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
+> -#endif
+> -};
+> -
+> -static void vfio_platform_instance_init(Object *obj)
+> -{
+> -    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(obj);
+> -    VFIODevice *vbasedev = &vdev->vbasedev;
+> -
+> -    vfio_device_init(vbasedev, VFIO_DEVICE_TYPE_PLATFORM, &vfio_platform_ops,
+> -                     DEVICE(vdev), false);
+> -}
+> -
+> -#ifdef CONFIG_IOMMUFD
+> -static void vfio_platform_set_fd(Object *obj, const char *str, Error **errp)
+> -{
+> -    vfio_device_set_fd(&VFIO_PLATFORM_DEVICE(obj)->vbasedev, str, errp);
+> -}
+> -#endif
+> -
+> -static void vfio_platform_class_init(ObjectClass *klass, const void *data)
+> -{
+> -    DeviceClass *dc = DEVICE_CLASS(klass);
+> -    SysBusDeviceClass *sbc = SYS_BUS_DEVICE_CLASS(klass);
+> -
+> -    dc->realize = vfio_platform_realize;
+> -    device_class_set_props(dc, vfio_platform_dev_properties);
+> -#ifdef CONFIG_IOMMUFD
+> -    object_class_property_add_str(klass, "fd", NULL, vfio_platform_set_fd);
+> -#endif
+> -    dc->vmsd = &vfio_platform_vmstate;
+> -    dc->desc = "VFIO-based platform device assignment";
+> -    sbc->connect_irq_notifier = vfio_start_irqfd_injection;
+> -    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> -
+> -    object_class_property_set_description(klass, /* 2.4 */
+> -                                          "host",
+> -                                          "Host device name of assigned device");
+> -    object_class_property_set_description(klass, /* 2.4 and 2.5 */
+> -                                          "x-no-mmap",
+> -                                          "Disable MMAP for device. Allows to trace MMIO "
+> -                                          "accesses (DEBUG)");
+> -    object_class_property_set_description(klass, /* 2.4 */
+> -                                          "mmap-timeout-ms",
+> -                                          "When EOI is not provided by KVM/QEMU, wait time "
+> -                                          "(milliseconds) to re-enable device direct access "
+> -                                          "after level interrupt (DEBUG)");
+> -    object_class_property_set_description(klass, /* 2.4 */
+> -                                          "x-irqfd",
+> -                                          "Allow disabling irqfd support (DEBUG)");
+> -    object_class_property_set_description(klass, /* 2.6 */
+> -                                          "sysfsdev",
+> -                                          "Host sysfs path of assigned device");
+> -#ifdef CONFIG_IOMMUFD
+> -    object_class_property_set_description(klass, /* 9.0 */
+> -                                          "iommufd",
+> -                                          "Set host IOMMUFD backend device");
+> -#endif
+> -}
+> -
+> -static const TypeInfo vfio_platform_dev_info = {
+> -    .name = TYPE_VFIO_PLATFORM,
+> -    .parent = TYPE_DYNAMIC_SYS_BUS_DEVICE,
+> -    .instance_size = sizeof(VFIOPlatformDevice),
+> -    .instance_init = vfio_platform_instance_init,
+> -    .class_init = vfio_platform_class_init,
+> -    .class_size = sizeof(VFIOPlatformDeviceClass),
+> -};
+> -
+> -static void register_vfio_platform_dev_type(void)
+> -{
+> -    type_register_static(&vfio_platform_dev_info);
+> -}
+> -
+> -type_init(register_vfio_platform_dev_type)
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 3fca48349ade97002597c866fa6457a784c3219d..3baa6c6c74778683de25ea1349eccace1275cedd 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -5,7 +5,6 @@ config ARM_VIRT
+>      depends on TCG || KVM || HVF
+>      imply PCI_DEVICES
+>      imply TEST_DEVICES
+> -    imply VFIO_PLATFORM
+>      imply TPM_TIS_SYSBUS
+>      imply TPM_TIS_I2C
+>      imply NVDIMM
+> diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
+> index 9a1dbe29267ea61709c3e28e4f8c25be01c3aa33..27de24e4db1f080d94be8d666e56812e1e904f1a 100644
+> --- a/hw/vfio/Kconfig
+> +++ b/hw/vfio/Kconfig
+> @@ -17,12 +17,6 @@ config VFIO_CCW
+>      select VFIO
+>      depends on LINUX && S390_CCW_VIRTIO
+>  
+> -config VFIO_PLATFORM
+> -    bool
+> -    default y
+> -    select VFIO
+> -    depends on LINUX && PLATFORM_BUS
+> -
+>  config VFIO_AP
+>      bool
+>      default y
+> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+> index 06473a078990eab9ec5ce76a6d9897326280dc03..d3ed3cb7ac19931f95f60057c3d9d290bc48c07c 100644
+> --- a/hw/vfio/meson.build
+> +++ b/hw/vfio/meson.build
+> @@ -13,7 +13,6 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>    'pci.c',
+>  ))
+>  vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
+> -vfio_ss.add(when: 'CONFIG_VFIO_PLATFORM', if_true: files('platform.c'))
+>  vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+>  vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+>  
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index fc6ed230d0c89d4b94e5878043bc23d94dcfe737..e3d571f8c845dad85de5738f8ca768bdfc336252 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -127,17 +127,6 @@ vfio_region_unmap(const char *name, unsigned long offset, unsigned long end) "Re
+>  vfio_region_sparse_mmap_header(const char *name, int index, int nr_areas) "Device %s region %d: %d sparse mmap entries"
+>  vfio_region_sparse_mmap_entry(int i, unsigned long start, unsigned long end) "sparse entry %d [0x%lx - 0x%lx]"
+>  
+> -# platform.c
+> -vfio_platform_realize(char *name, char *compat) "vfio device %s, compat = %s"
+> -vfio_platform_eoi(int pin, int fd) "EOI IRQ pin %d (fd=%d)"
+> -vfio_platform_intp_mmap_enable(int pin) "IRQ #%d still active, stay in slow path"
+> -vfio_platform_intp_interrupt(int pin, int fd) "Inject IRQ #%d (fd = %d)"
+> -vfio_platform_intp_inject_pending_lockheld(int pin, int fd) "Inject pending IRQ #%d (fd = %d)"
+> -vfio_platform_populate_interrupts(int pin, int count, int flags) "- IRQ index %d: count %d, flags=0x%x"
+> -vfio_intp_interrupt_set_pending(int index) "irq %d is set PENDING"
+> -vfio_platform_start_level_irqfd_injection(int index, int fd, int resamplefd) "IRQ index=%d, fd = %d, resamplefd = %d"
+> -vfio_platform_start_edge_irqfd_injection(int index, int fd) "IRQ index=%d, fd = %d"
+> -
+>  # spapr.c
+>  vfio_prereg_listener_region_add_skip(uint64_t start, uint64_t end) "0x%"PRIx64" - 0x%"PRIx64
+>  vfio_prereg_listener_region_del_skip(uint64_t start, uint64_t end) "0x%"PRIx64" - 0x%"PRIx64
+
 
