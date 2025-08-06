@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94EEC87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D58AC87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujXvK-0004BI-H1; Wed, 06 Aug 2025 02:46:54 -0400
+	id 1ujY6Y-00049b-Ct; Wed, 06 Aug 2025 02:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujXvI-00049i-Rq
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:46:53 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujXvH-0005Bj-6k
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:46:52 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3b7961cf660so5162814f8f.1
- for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 23:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754462809; x=1755067609; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mSQ/Ql+nyu08nemb0aK0h1Pcxhcrx4e1FVO4xBBr8HY=;
- b=m6S5YD1Xqdv1rSrtECHTx+TR+qGClTUOaUiwaFCbo1Ccwxr1EPa/ydOxZbHKo+tIKh
- NSr4z7MIk6O7BYfMLIWJqNDAtqDK/kFTyRUNtfeb0n711Ro7B+xGlvSRQPg1Ucr6pX8i
- ppmlCv7CysXcBdf8elm+tc/P+e6mqpZmhP8V0JNxjNaviZaX9AuZE1eW9+JgwJP9rcUR
- dmepw3fgsfDhWg9QDawteOF4o325XKnAcfXibBj2yUWaiAlmsU16hd1p0JC2A6CdY50F
- jfP/Aggq1vM1duSCRJBE4h1ekzC6MCt5dnLXCjMLobdt7yUb8P9EwjnDCZf6qHEenBiH
- JfKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754462809; x=1755067609;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mSQ/Ql+nyu08nemb0aK0h1Pcxhcrx4e1FVO4xBBr8HY=;
- b=W1fYyyTARhR67Dy7NRIalYAa/aKFQu1b8tPJVHFrD37mEkgsbqIwtajzVvNtQlu28a
- hErWcbG1FNipUz3cXdcu0PJcIWFX7ZxdryftAeVkrcJkfdlfDC6FutuBqGt3mT4waCVr
- 7lfTZzqnK1bT7GAu6aRSOeaJtW/gGoiMtvMCknN3h4Rf4fhjIvJvHNn4R0g2s438nB88
- b2I+nfx7AVYr/YRgAkXvuUV0ADBjKuh1P5BQbcqjzNTj+mhlPLdk3Qik2hO37PaMylNc
- PlHMTrCbXtAtJfnPuywmbXE8BZF/1JbRLh9GS2nuZCPQaoZar4dvRn8E4HIkZUKeN5j8
- yOHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlUIZbJe/Ck6I4C7SUJ2Ewv2A9TvavMVV8JqIpwfMGEO5ZTy+cYdy/pm757K+vHZbpJpF1JoubDDPE@nongnu.org
-X-Gm-Message-State: AOJu0YyFCA8rq7Kw1BCEuuKVUH/iwF/9BmBQqSlpoDUSFWej0rIKRZHs
- T/IvP7eoLOdG4/HHZNbrqhQWhlq7EqdLCS2W20fr6J7kY1FnscEtLDN+teUngVeMHVM=
-X-Gm-Gg: ASbGnctgQBsPpwxmNA47u4Lrx68EjXux2XLO029BkGE1V04RFNuzJRAY4FRUVRX6z6v
- iuePApm2++6MQPZ7DhvomQeCQ260P3Q8KyhigWFtnIuTvrarMsUbP5r7LijJHmKIKMYXA0aAgtu
- 6jJXODqo47uIxIpOe6P2md0JgbsyyG55bMjsStMloNU+yRGWtnM3chQtWFAfMEX5YAgIGNPIU9a
- NzsSu7y4qC5BVPiN8JlOLKS6oePcOuV6kCxBBH0G5X67BodZ0Vatapf55ZD44J0B8uHJeQoM41w
- sVlKRoZ9KHIEx17qx6sE8Kb2NoyWjlQiiK18oipRtp0zxoBH19t2GnrO/MwgIQcTXGgailyzIEE
- L3GoQ3dYYosZMJgu4vL4EOpvxPsRzG1Ghys7zv0MuzXLpNy5caTxseoe3J7VcyVD/7w==
-X-Google-Smtp-Source: AGHT+IGscfMQAQLSwo3iWN8cAs5OyDhjrCjJvvXT7POG2BG2H4VqiMeXMc7Gvtzwy+eCPUJitw8E+g==
-X-Received: by 2002:a05:6000:22c6:b0:3b7:8832:fde5 with SMTP id
- ffacd0b85a97d-3b8f48ec1d5mr1062821f8f.13.1754462809147; 
- Tue, 05 Aug 2025 23:46:49 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e583f9fcsm33081485e9.4.2025.08.05.23.46.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Aug 2025 23:46:48 -0700 (PDT)
-Message-ID: <6f7a0534-3e78-426a-8c9c-1a8f9ff395b6@linaro.org>
-Date: Wed, 6 Aug 2025 08:46:47 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujY6W-00049H-Tv; Wed, 06 Aug 2025 02:58:28 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujY6E-0006ko-5k; Wed, 06 Aug 2025 02:58:12 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F70D13EC1C;
+ Wed, 06 Aug 2025 09:57:41 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3606B25844B;
+ Wed,  6 Aug 2025 09:58:04 +0300 (MSK)
+Message-ID: <7b278bc0-4752-48fa-b8fa-8a76515069f6@tls.msk.ru>
+Date: Wed, 6 Aug 2025 09:58:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] tracetool: drop the probe "__nocheck__" wrapping
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250805200334.629493-1-berrange@redhat.com>
- <20250805200334.629493-7-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250805200334.629493-7-berrange@redhat.com>
+Subject: Re: [PATCH v3 0/6] hw/i386/amd_iommu: Cleanups and fixes
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ eduardo@habkost.net, richard.henderson@linaro.org,
+ alejandro.j.jimenez@oracle.com, vasant.hegde@amd.com, philmd@linaro.org,
+ Suravee.Suthikulpanit@amd.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20250801060507.3382-1-sarunkod@amd.com>
+ <703d1159-7bdc-47b7-be08-64d7b000e45b@tls.msk.ru>
+ <d29ccd29-d4c6-41fa-8158-93f9a21ab3ba@amd.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <d29ccd29-d4c6-41fa-8158-93f9a21ab3ba@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 22:03, Daniel P. Berrangé wrote:
-> Every generated inline probe function is wrapped with a
-> trivial caller that has a hard-coded condition test:
+On 04.08.2025 14:06, Sairaj Kodilkar wrote:
+...
+>>> Sairaj Kodilkar (6):
+>>>    hw/i386/amd_iommu: Fix MMIO register write tracing
+>>>    hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+>>>    hw/i386/amd_iommu: Move IOAPIC memory region initialization to the 
+>>> end
+>>>    hw/i386/amd_iommu: Fix amdvi_write*()
+>>>    hw/i386/amd_iommu: Support MMIO writes to the status register
+>>>    hw/i386/amd_iommu: Fix event log generation
+>>>
+>>>   hw/i386/amd_iommu.c | 102 ++++++++++++++++++++++++++++++++++----------
+>>>   hw/i386/amd_iommu.h |   2 +-
+>>>   2 files changed, 80 insertions(+), 24 deletions(-)
+>>
+>> Hi!
+>>
+>> Is there anything there worth to pick up for qemu 10.0.x stable series?
+>> (the "Move IOAPIC memory init" does not apply to 10.0 already).
 > 
->    static inline void _nocheck__trace_test_wibble(void * context, int value)
->    {
->        tracepoint(qemu, test_wibble, context, value);
->    }
+> Hi MJT,
 > 
->    static inline void trace_test_wibble(void * context, int value)
->    {
->      if (true) {
->          _nocheck__trace_test_wibble(context, value);
->      }
->    }
-> 
-> This was introduced for TCG probes back in
-> 
->    864a2178: trace: [tcg] Do not generate TCG code to trace dynamically-disabled events
-> 
-> but is obsolete since
-> 
->    126d4123 tracing: excise the tcg related from tracetool
-> 
-> This commit removes the wrapping such that we have
-> 
->    static inline void trace_test_wibble(void * context, int value)
->    {
->        tracepoint(qemu, test_wibble, context, value);
->    }
-> 
-> The default build of qemu-system-x86_64 on Fedora with the
-> 'log' backend, has its size reduced by 1 MB
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   scripts/tracetool/__init__.py |  1 -
->   scripts/tracetool/format/h.py | 16 +---------------
->   tests/tracetool/dtrace.h      | 18 ++----------------
->   tests/tracetool/ftrace.h      | 24 +++++-------------------
->   tests/tracetool/log.h         | 24 +++++-------------------
->   tests/tracetool/simple.h      | 18 ++----------------
->   tests/tracetool/syslog.h      | 24 +++++-------------------
->   tests/tracetool/ust.h         | 18 ++----------------
->   8 files changed, 22 insertions(+), 121 deletions(-)
+> I will backport the patch manually and send it to qemu stable mailing list
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi!
 
+There's no need to back-port it, -- there's just minor context fix
+required, here:
+
++++ b/hw/i386/amd_iommu.c
+@@ -1693,19 +1693,16 @@ static void amdvi_sysbus_realize(DeviceState 
+*dev, Error **errp)
+...
+
+      s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+                                       amdvi_uint64_equal, g_free, g_free);
+
+-    /* Pseudo address space under root PCI bus. */
+-    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
+-
+      /* set up MMIO */
+      memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
+                            "amdvi-mmio", AMDVI_MMIO_SIZE);
+
+the "s->iotlb = g_hash_table_new_full" part were added by commit
+f864a3235ea1d1 "hw/i386/amd_iommu: Isolate AMDVI-PCI from amd-iommu
+device to allow full control over the PCI device creation".  It should
+be okay to just remove the 3 marked lines from here (to be moved to
+the right place).
+
+My question was not about back-porting this commit, but more about
+the set of commits which needs to be picked up for the stable series.
+
+I picked up this commit.  Please let me know if there are other changes
+needed to be picked up.
+
+Thanks,
+
+/mjt
 
