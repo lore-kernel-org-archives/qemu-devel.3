@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4263C87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28427C87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujXks-0001Q5-QM; Wed, 06 Aug 2025 02:36:07 -0400
+	id 1ujXoZ-0005at-W7; Wed, 06 Aug 2025 02:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ujXkq-0001NM-Ey
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:36:04 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujXoV-0005Qb-Sj; Wed, 06 Aug 2025 02:39:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ujXkn-0002EB-MO
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:36:03 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ujXoT-0003PT-8g; Wed, 06 Aug 2025 02:39:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFED813EC03;
- Wed, 06 Aug 2025 09:35:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 02E1713EC08;
+ Wed, 06 Aug 2025 09:39:21 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A7CA02583EC;
- Wed,  6 Aug 2025 09:35:55 +0300 (MSK)
-Message-ID: <7d45cdbb-15ac-4243-b379-ef5607f6fb1b@tls.msk.ru>
-Date: Wed, 6 Aug 2025 09:35:55 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDE5D258405;
+ Wed,  6 Aug 2025 09:39:43 +0300 (MSK)
+Message-ID: <39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru>
+Date: Wed, 6 Aug 2025 09:39:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/1] meson: remove 'gnutls-bug1717-workaround' for
- migration TLS crashes
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250805202946.19644-1-farosas@suse.de>
- <20250805202946.19644-2-farosas@suse.de>
+Subject: Re: [PATCH-for-10.1 v2 00/11] hw/sd: Fix SD cards in SPI mode
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org,
+ Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>
+References: <20250804133406.17456-1-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250805202946.19644-2-farosas@suse.de>
+In-Reply-To: <20250804133406.17456-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -106,22 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.08.2025 23:29, Fabiano Rosas wrote:
-> From: Daniel P. Berrangé <berrange@redhat.com>
+On 04.08.2025 16:33, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - new patch factoring sd_response_size() out (Richard)
 > 
-> The implementation of this workaround does not currently work, so
-> remove the option entirely to avoid exposing it to users. The code
-> will remain (temporarily dormant) to be fixed in the next release
-> cycle.
+> This series fix a pair of issues with SD cards used wired
+> via a SPI link / controller.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Link: https://lore.kernel.org/qemu-devel/20250805182431.504158-1-berrange@redhat.com
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Such mode implementation was minimal. I was testing it with
+> the ARM Gumstix machines, but we remove them in the v9.2.0
+> release (commit a2ccff4d2bc ), so they bit-rotted.
+> 
+> Although the series looks big, I shrinked it a lot to have
+> the minimum amount of meaningful changes. Other changes
+> added during debugging will be shared later, as I believe
+> they will still be useful to debug other future issues.
+> 
+> The last patch add testing coverage, to avoid further bitrot.
+> 
+> Regards,
+> 
+> Phil.
+> 
+> Philippe Mathieu-Daudé (11):
+>    hw/sd/sdcard: Do not ignore errors in sd_cmd_to_sendingdata()
+>    hw/sd/sdcard: Factor sd_response_size() out
+>    hw/sd/sdbus: Provide buffer size to sdbus_do_command()
+>    hw/sd/sdcard: Fill SPI response bits in card code
+>    hw/sd/sdcard: Implement SPI R2 return value
+>    hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode
+>    hw/sd/sdcard: Allow using SWITCH_FUNCTION in more SPI states
+>    hw/sd/sdcard: Factor spi_cmd_SEND_CxD() out
+>    hw/sd/sdcard: Disable checking STBY mode in SPI SEND_CSD/CID
+>    hw/sd/sdcard: Remove SDState::mode field
+>    tests/functional: Test SD cards in SPI mode (using sifive_u machine)
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Hi!
 
-Thank you very much Daniel, everyone else, for working on this one!
+Philippe, do you think this series is something which should
+go to stable-10.0 (LTS) branch?  I'm not sure for the impact if
+it is not applied, though, - what do we miss in this case?
+
+Thanks,
 
 /mjt
 
