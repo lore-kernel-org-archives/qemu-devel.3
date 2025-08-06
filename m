@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EC9C87FD1
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 11:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDFFC87FD1
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 11:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujbwt-0007iN-2P; Wed, 06 Aug 2025 07:04:47 -0400
+	id 1ujc2K-00062h-JQ; Wed, 06 Aug 2025 07:10:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ujbtH-0003H7-Q5
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 07:01:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ujbtD-00038B-K7
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 07:01:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754478056;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CkOBpF8IywWwV+s7lNWGBx58ZPgGgcR2/YxAHFzpJbw=;
- b=T2gnlAvS8dzMbYWBqZ5gXSnuUIJrDFyFStedWn5IYDMZyltxDpLk3My8NUqpbDR5sEvG3i
- 1hqEm8i2p5PzT8ohPMe8k9qRoNJT/IBVGcfu7CaHMdkCp79EByvn6kB7b8v+IgA8RZFbPb
- 7hJRUN9Q3ctumY/X47kQeUF+pktYLrE=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-pY56aP92MYOXu9EZlcUONw-1; Wed, 06 Aug 2025 07:00:55 -0400
-X-MC-Unique: pY56aP92MYOXu9EZlcUONw-1
-X-Mimecast-MFC-AGG-ID: pY56aP92MYOXu9EZlcUONw_1754478054
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-af93cf3fd41so80151966b.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 04:00:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujc2I-000612-PE
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 07:10:22 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujc2E-0004rw-UH
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 07:10:22 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3b7961cf660so5400214f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 04:10:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754478617; x=1755083417; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FaUV9WtCruzm1PZMeMIoKA/+XprDd/r1ebYWtGj0Bmw=;
+ b=AY+tuTP4HaQyub1/C4p1yC86Uo7ku4sdC0+kOux9549ghh720WoEeOOfCT41Q7BxEO
+ IbFrfa7MCvEIoIaeFhc3F4Y/AWKwlpPC3XNtGIE7xtcX//PWUaz9Rj0Tj9WBsDe5ohJp
+ 0n8H7QkfEnxyn21inb91DZ5sbz124KdMPB1AtlYGw2bcH6Tx42K3CJVZJ+t9FqxehRi1
+ 78qTSj5Ji0XhGxn5wlMwrDzoGXX747DgcPQQ9njfa37AEbZxOemKlijKXFDDC8vmAxgV
+ TIRyxCJDD9qgIXkRCmwLPTdeGr81dsdiwzXOp+KAwtwctECau7pBEge/ZM/6n/LjY/xT
+ DU2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754478054; x=1755082854;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CkOBpF8IywWwV+s7lNWGBx58ZPgGgcR2/YxAHFzpJbw=;
- b=Gt0w1q8fBTvaVwZtuxJNiPCgU0X0g2C8HOhDwu6K264fx5NNc9WbRtAkhG7wEEvx5p
- FDPUe1EGV9d6PropRnda2yQH6wn5LLrRQ7bb8uEyKCDZgNdy/aVGZItbvMS0/p+v4jEM
- TJ9X1zhSMpvy+4QlrMpn7Td2Fmo6vSGqqutSs/tC9PDTHzE1QydSifctkiXd88BSspM9
- TsVoJ970+scTpsMsL3RTeoSddZmgzGxnaP3it8Xe31CKNts7bspGP98W0sy7szuTUStl
- vlVO8vWKksIRuZabB9kGyZ4MQn6HaqFiFotSRJSmgB/+BWgImRohqp9kupRJOEEBevkf
- q8dQ==
+ d=1e100.net; s=20230601; t=1754478617; x=1755083417;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FaUV9WtCruzm1PZMeMIoKA/+XprDd/r1ebYWtGj0Bmw=;
+ b=F495lIPJC7/kq5MTv7+lQenfTVBHX52MoZtLrcQleeXBQ9djITyw+LnSuzt8X4cCgG
+ QQPPWMiDVUHoqgIsWZJqH3MPfT2u1J4baGCr3Uj3nqf0FRxvdb/ZVhmSWgNodTozaEXs
+ zVadz5C7RWUtlE6sQ7TxKekGzvUNq1KHUJtZ7ovtMLwcOAzWtPbU01R3cUXZAV8aTa4y
+ yzr76LdYyBpPfB320Y0iUjetTreZw7CfRuUshFYxFoePUkBshw/+0YVJ77sBZxuqdWu9
+ YaExZXdApm2lOCEAQ/dizy+tgyC91uyDsWZGxzusROVFats1LrLqaboUE7PBM5cB3CSM
+ gGRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyyShYr0FymWgZf0vofzcFVZ3Kg/k8XAyZ3/ja7sdHu52GvpllaGVShRUbVEE6+V674xj7vm2252dp@nongnu.org
-X-Gm-Message-State: AOJu0YxzyfbqCErD9WdjJSivpR5RmVDhiETwTnhnRm7ghBUHv0YY4Dll
- ky/ZnG6ICmhrHUpS4C9do8Egw33QlfNXBMRj1rM+mn5QSZum11yykoi4sbCLTjW5KXdmhEhYSOj
- Vwr/NYIHksgTvO7/lpWRfl9Az7iC17op1b1nAYLbNJXU8W6lYCnBrRaHWvzZALCBSag8en0DTlC
- 3TqCVP6KhZEpEgb9RCXBNPKbn2j3pmAP0=
-X-Gm-Gg: ASbGncsHxsh5MGHxo0gBD8yfSaODdtYhSnQrsIc3F/51da7EChTgO4LCvQcd8P7NNCL
- 4/XjdbYOnLqVoACja95g75vfUOgNLNsZ7s6GTrCGlVq4rg4iO5HkIqoLff0B0dRG9sMrE3B2Pwn
- gyuy+szMgkcptNzvw8sght
-X-Received: by 2002:a17:907:6e9f:b0:ae7:f389:c751 with SMTP id
- a640c23a62f3a-af99054a1d4mr234980966b.0.1754478054154; 
- Wed, 06 Aug 2025 04:00:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH76GlLE4opXkR7iOgp7YJrXZIkkn6aI0bRMt8KOUBGg+x90cBx0leB/OQ/YTzjaQ58d7sxJm/NsC1GQYJKdZw=
-X-Received: by 2002:a17:907:6e9f:b0:ae7:f389:c751 with SMTP id
- a640c23a62f3a-af99054a1d4mr234977666b.0.1754478053602; Wed, 06 Aug 2025
- 04:00:53 -0700 (PDT)
+ AJvYcCVDsWvJNzjLuGDoQBvz7gXDz93kiswoV8QCxAS/uYYmgnib7iY0drF+ittNr2wfio3KS3rLjN3wap1E@nongnu.org
+X-Gm-Message-State: AOJu0Yx6ToUtqb9a2Ov4cAneUl0UYEq4xEgXPPURYdyV3i0I02CN2TUx
+ SYkK5IO5V0ZMupHtxwy8AcjLtsD97sjxzTl5rkpkTLZlCpRej2FCKGz/TG89DWKkcfE=
+X-Gm-Gg: ASbGnctu2xAswFYnTyfcDvcqfaxtTTbk1i0ddIoqvQsoyaVo+nQWtLIByeTAB352w81
+ 0x2Sz0sEkiZ0FYCAyOmcC3P624UawbH8MW9jiylRU4jgluSGk2ncXiyFZHFMscK3S384v66ClXl
+ MYIrhz/e1m9qYbLL/29KeHA7X1UQlFPCBh6Rfd8NQ2AOET7ryFzrG8bvc7u7NpzdDxlvdV/EkKV
+ hwOAb/aAGIKqEa/0ccGReSwHY/lD4z3++IqLhihoQ/YTHT3jeAIGoVXXTDZGGSCPqrbQHk3KG+U
+ +SjaL4VTP2ElktUtRSRVeXi052L8U/WQUKzyMRot0ssN2NtLruT2C37FgLGx/DvHUz4g9E0wwMA
+ cXriDVg3ZcrhKm2FkdCm8XBT125nk0ow32Kz9Fc/FClJypc8sVfMHgDHUR30Am76gbw==
+X-Google-Smtp-Source: AGHT+IFHzWF0sfB6N6vK97/zqKubI0KkeI+eb7HWqhDn3/OWNK/1HNqqSdtqCgYKMIQ2xuCtxx0j4Q==
+X-Received: by 2002:a5d:64c3:0:b0:3b4:9721:2b31 with SMTP id
+ ffacd0b85a97d-3b8f48de428mr1968891f8f.5.1754478616579; 
+ Wed, 06 Aug 2025 04:10:16 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e5852e28sm43789195e9.9.2025.08.06.04.10.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Aug 2025 04:10:16 -0700 (PDT)
+Message-ID: <e467a9aa-56a0-4761-adfc-923d13af655d@linaro.org>
+Date: Wed, 6 Aug 2025 13:10:14 +0200
 MIME-Version: 1.0
-References: <20250802142115.41638-1-mjt@tls.msk.ru>
- <20250803085443.318611-1-mjt@tls.msk.ru>
- <7c282155-340e-44a6-9790-0a37f330eb30@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <7c282155-340e-44a6-9790-0a37f330eb30@rsg.ci.i.u-tokyo.ac.jp>
-From: Lei Yang <leiyang@redhat.com>
-Date: Wed, 6 Aug 2025 19:00:16 +0800
-X-Gm-Features: Ac12FXyuAXibZ16WfUlsAfOw_U0qkF5atxOLBSs8T4ESe5f4unt4eQkaI32lzwQ
-Message-ID: <CAPpAL=yXDh44BP+Z5KLXfqvzCos+xQb9PrLCPVtDEE6jYQmh3g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] virtio-net: make VirtIONet.vlans an array instead
- of a pointer
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 10/13] hvf: sync registers used at EL2
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Igor Mammedov
+ <imammedo@redhat.com>, qemu-arm@nongnu.org, Alexander Graf
+ <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>
+References: <20250728134114.77545-1-mohamed@unpredictable.fr>
+ <20250728134114.77545-11-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250728134114.77545-11-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,23 +109,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this patch with virtio-net regression tests, everything works fine.
+On 28/7/25 15:41, Mohamed Mediouni wrote:
+> When starting up the VM at EL2, more sysregs are available. Sync the state of those.
+> 
+> In addition, sync the state of the EL1 physical timer when the vGIC is used, even
+> if running at EL1. However, no OS running at EL1 is expected to use those registers.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   target/arm/hvf/hvf.c | 53 ++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 53 insertions(+)
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 7699669e73..a1e928ddfa 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -406,6 +406,8 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
+>   struct hvf_sreg_match {
+>       int reg;
+>       uint32_t key;
+> +    bool vgic;
+> +    bool el2;
+>       uint32_t cp_idx;
+>   };
+>   
+> @@ -551,6 +553,41 @@ static struct hvf_sreg_match hvf_sreg_match[] = {
+>       { HV_SYS_REG_CNTV_CTL_EL0, HVF_SYSREG(14, 3, 3, 3, 1) },
+>       { HV_SYS_REG_CNTV_CVAL_EL0, HVF_SYSREG(14, 3, 3, 3, 2) },
+>       { HV_SYS_REG_SP_EL1, HVF_SYSREG(4, 1, 3, 4, 0) },
+> +    /* vGIC */
+> +    { HV_SYS_REG_CNTP_CTL_EL0, HVF_SYSREG(14, 2, 3, 3, 1), true },
+> +    { HV_SYS_REG_CNTP_CVAL_EL0, HVF_SYSREG(14, 2, 3, 3, 2), true },
+> +#ifdef SYNC_NO_RAW_REGS
+> +    { HV_SYS_REG_CNTP_TVAL_EL0, HVF_SYSREG(14, 2, 3, 3, 0), true},
+> +#endif
+> +    /* vGIC + EL2 */
+> +    { HV_SYS_REG_CNTHCTL_EL2, HVF_SYSREG(14, 1, 3, 4, 0), true, true },
+> +    { HV_SYS_REG_CNTHP_CVAL_EL2, HVF_SYSREG(14, 2, 3, 4, 2), true, true },
+> +    { HV_SYS_REG_CNTHP_CTL_EL2, HVF_SYSREG(14, 2, 3, 4, 1), true, true },
+> +#ifdef SYNC_NO_RAW_REGS
+> +    { HV_SYS_REG_CNTHP_TVAL_EL2, HVF_SYSREG(14, 2, 3, 4, 0), true, true },
+> +#endif
+> +    { HV_SYS_REG_CNTVOFF_EL2, HVF_SYSREG(14, 0, 3, 4, 3), true, true },
+> +    /* EL2 */
+> +    { HV_SYS_REG_CPTR_EL2, HVF_SYSREG(1, 1, 3, 4, 2), .el2 = true },
+> +    { HV_SYS_REG_ELR_EL2, HVF_SYSREG(4, 0, 3, 4, 1), .el2 = true },
+> +    { HV_SYS_REG_ESR_EL2, HVF_SYSREG(5, 2, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_FAR_EL2, HVF_SYSREG(6, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_HCR_EL2, HVF_SYSREG(1, 1, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_HPFAR_EL2, HVF_SYSREG(6, 0, 3, 4, 4), .el2 = true },
+> +    { HV_SYS_REG_MAIR_EL2, HVF_SYSREG(10, 2, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_MDCR_EL2, HVF_SYSREG(1, 1, 3, 4, 1), .el2 = true },
+> +    { HV_SYS_REG_SCTLR_EL2, HVF_SYSREG(1, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_SPSR_EL2, HVF_SYSREG(4, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_SP_EL2, HVF_SYSREG(4, 1, 3, 6, 0), .el2 = true},
+> +    { HV_SYS_REG_TCR_EL2, HVF_SYSREG(2, 0, 3, 4, 2), .el2 = true },
+> +    { HV_SYS_REG_TPIDR_EL2, HVF_SYSREG(13, 0, 3, 4, 2), .el2 = true },
+> +    { HV_SYS_REG_TTBR0_EL2, HVF_SYSREG(2, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_TTBR1_EL2, HVF_SYSREG(2, 0, 3, 4, 1), .el2 = true },
+> +    { HV_SYS_REG_VBAR_EL2, HVF_SYSREG(12, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_VMPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 5), .el2 = true },
+> +    { HV_SYS_REG_VPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 0), .el2 = true },
+> +    { HV_SYS_REG_VTCR_EL2, HVF_SYSREG(2, 1, 3, 4, 2), .el2 = true },
+> +    { HV_SYS_REG_VTTBR_EL2, HVF_SYSREG(2, 1, 3, 4, 0), .el2 = true },
+>   };
+>   
+>   int hvf_get_registers(CPUState *cpu)
+> @@ -594,6 +631,14 @@ int hvf_get_registers(CPUState *cpu)
+>               continue;
+>           }
+>   
+> +        if (hvf_sreg_match[i].vgic && !hvf_irqchip_in_kernel()) {
+> +            continue;
+> +        }
+> +
+> +        if (hvf_sreg_match[i].el2 && !hvf_arm_el2_enabled()) {
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+FYI this triggers an assertion when testing with my split-accel series
+where we emulate EL2. Not your series issue, I need to distinct between
+EL2 enabled by HW or SW.
 
-On Sun, Aug 3, 2025 at 5:51=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2025/08/03 17:54, Michael Tokarev wrote:
-> > This field is a fixed-size buffer (number of elements is MAX_VLAN,
-> > known at build time).  There's no need to allocate it dynamically,
-> > it can be made an integral part of VirtIONet structure.
-> >
-> > This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
-> >
-> > Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->
+> +            continue;
+> +        }
+> +
+>           if (cpu->accel->guest_debug_enabled) {
+>               /* Handle debug registers */
+>               switch (hvf_sreg_match[i].reg) {
+> @@ -731,6 +776,14 @@ int hvf_put_registers(CPUState *cpu)
+>               continue;
+>           }
+>   
+> +        if (hvf_sreg_match[i].vgic && !hvf_irqchip_in_kernel()) {
+> +            continue;
+> +        }
+> +
+> +        if (hvf_sreg_match[i].el2 && !hvf_arm_el2_enabled()) {
+> +            continue;
+> +        }
+> +
+>           if (cpu->accel->guest_debug_enabled) {
+>               /* Handle debug registers */
+>               switch (hvf_sreg_match[i].reg) {
 
 
