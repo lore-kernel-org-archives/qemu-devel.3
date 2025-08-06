@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60581C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 05:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B292DC87FCA
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 05:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujX9h-0003KK-7N; Wed, 06 Aug 2025 01:57:42 -0400
+	id 1ujX9t-0003Rt-RB; Wed, 06 Aug 2025 01:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujX9W-0003H9-8Z
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 01:57:33 -0400
-Received: from cyan.elm.relay.mailchannels.net ([23.83.212.47])
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujX9V-0003H5-Tn
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 01:57:32 -0400
+Received: from fly.ash.relay.mailchannels.net ([23.83.222.61])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujX9T-00036d-36
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 01:57:30 -0400
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujX9T-00036k-3H
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 01:57:29 -0400
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 7BFD02C48ED;
- Wed,  6 Aug 2025 05:57:23 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id 18920165831;
+ Wed,  6 Aug 2025 05:57:24 +0000 (UTC)
 Received: from pdx1-sub0-mail-a291.dreamhost.com
- (trex-blue-1.trex.outbound.svc.cluster.local [100.96.40.151])
+ (100-96-62-154.trex-nlb.outbound.svc.cluster.local [100.96.62.154])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 1BD5F2C5666;
+ by relay.mailchannels.net (Postfix) with ESMTPA id B17611657E0;
  Wed,  6 Aug 2025 05:57:23 +0000 (UTC)
 ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1754459843; a=rsa-sha256;
  cv=none;
- b=qW/Uahz5Eo9Jzt1zRI6WtqB0smONXEjppP8YRf0fI7Q5L7Nad6U3KwRhcsNUeZWx6nDLik
- dPj69yoSG1IpYU9LB7ypCRrTU+jMmGkGom7aKvldqfWKIk3S8n+j6/S5pdp+99GBJp3SlN
- EUbPY0VFFMNJOddjbr3G4VD8fnhP++IQCOVImQie6np5dTKU66b9rka30DxYKd7nAQGt7B
- avzEN+Xut0x/GhSWIXdE/4vqXcQm544imaeu1Fy+duA6mJFHvOUKcOL2mLS2UrypL/HRqV
- Kjq13C4Qnb8AaKijdBYg71sJaNOkhXi/E/JCUtMWr2KYagihUr76hbQfE8d10A==
+ b=fuTdRo/MCXPJCnAuSQ+gVsiYSFixe3p3cVSKELTuWJvBlUIz3mdqp+xzlllGggo8k+V9ZY
+ vz2EXvNs0S2fSQb0LlGw/j40wU2KLkoJHZ+dB/Ao1ZlZVo2ZzSnLRXIP7cL5/SWD47yOwk
+ rU9lGgGEYt7ZGITAyDX+IhaBAll5zJ0cdjBM70gbAY+nQ1xRG6DhV2ckc/gvbPJYiNoyt/
+ 73KBaFsdVxNM2jfvQDokrxXQRTehTwjwF3ZcQrKefVy6lwZpoRTALAEr26HwKxjJbkDMev
+ WrDEkT5MZy/lkvzmgx+mJ9EDNLfLY2T7RNUrGo6N9jQzlPQyx7q9Q6+VO3oOmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net; s=arc-2022; t=1754459843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=JXxgqZuGbutG28XkrBGlw+oxu1u/Ig8R+KhwSol6kCE=;
- b=Qk8V7QUTOVb4Pmo7w7wA8iBzR29Me95wssbOIp5sVke24Y/rUbLhsBYPC8wOwUHroiTqQE
- RDUNU7j9OphQsWgnId0b5+X2LR55Y60bagms5QhMHO9lMtPI5k68DjurIu0Gi0dsQBKDNA
- ZSD2HAESmrBRVIg6M+jlrQ69dEC4WZC2ol1uGkqjaJWePUHoyq2Ok7yipDGWigAxFh+0Yx
- 0x3/MExKSacwvBsa1tWAxj8qc05uKvShova8HGSCaMrjDxHHrprpp5nvJHt8vWX8NAJS2T
- 9+Lkcu7OAcxpO5j3uFkTtLfORKw89LEWw4Lqj5BhheMlQng7FGNtIOtc9smn0Q==
-ARC-Authentication-Results: i=1; rspamd-648c9d5b94-xdgrc;
+ bh=m3zmudrbJi3rUAWruVPmWJ/JHGSWiiguedxKVAHxwYo=;
+ b=lVAT+UZUWigSGZzsVHyB9EDlYLGhS2iZaz0kvcfNmHu83nDOYvygoMrkQRZ9wXEP9Ybso8
+ d6HuvcwZ6gT61vaRutY2THJ0KFXpJwLuawOhQ+ERtVWWHhiG/G1BGQvASQE8jiGuwI9j7q
+ kOCP/WBnabgWffRqn7WocFDRvs63iVojbjCaAn8paY2f4cBXt5YlrZToy/qB7cidWIeo4I
+ SQniLAYYU6vZf3AFNin/UZ01AAe4mzyd0J5HfsoYrlu9qDnc6k89pm7eghwPQ5F1VlaCxL
+ YOHWViKsBLPrHwem3le9M3nMh64M5KWNQHy0L6TRfjmvGyDdLN7mzob3k1PXag==
+ARC-Authentication-Results: i=1; rspamd-648c9d5b94-9lmmc;
  auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
 X-MailChannels-Auth-Id: dreamhost
-X-Sponge-Little: 5a303bc45940b41d_1754459843386_2902602647
-X-MC-Loop-Signature: 1754459843386:3947028736
-X-MC-Ingress-Time: 1754459843386
+X-Gusty-Fumbling: 77520f7d7f002ed1_1754459843992_1064736097
+X-MC-Loop-Signature: 1754459843992:2749806239
+X-MC-Ingress-Time: 1754459843992
 Received: from pdx1-sub0-mail-a291.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.96.40.151 (trex/7.1.3); Wed, 06 Aug 2025 05:57:23 +0000
+ by 100.96.62.154 (trex/7.1.3); Wed, 06 Aug 2025 05:57:23 +0000
 Received: from localhost.localdomain (syn-076-167-199-067.res.spectrum.com
  [76.167.199.67])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a291.dreamhost.com (Postfix) with ESMTPSA id 4bxfhL3XgMz55; 
- Tue,  5 Aug 2025 22:57:22 -0700 (PDT)
+ by pdx1-sub0-mail-a291.dreamhost.com (Postfix) with ESMTPSA id 4bxfhM0vkJzHr; 
+ Tue,  5 Aug 2025 22:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
  s=dreamhost; t=1754459843;
- bh=JXxgqZuGbutG28XkrBGlw+oxu1u/Ig8R+KhwSol6kCE=;
+ bh=m3zmudrbJi3rUAWruVPmWJ/JHGSWiiguedxKVAHxwYo=;
  h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
- b=VQ4vAMsnMI5/kvg8/6ZnzJJC/kNl6cR2fUFcKqix0yoedRJ1LrBBb7qipREWoIkxz
- /OpLbzgpIJPbc3qadSGxqzzq34wSfejYdF6rXuc+ojx6Ow0bV4+khbTII3M9LN9iAc
- ovTeOHUDl8HQlExv8Lxx0ch9SDiIv5Ter04LFVsEhtbsiyvU/qCQeHpvF9RAa+XEwO
- RTkpF/pP37reSPN6Q7RmUAfkAnQPq/vftlgbjLO3ZGASxK9YioKH9D1oWRcjY+CLav
- P0zpqzeKg5dwtsx9CiIIG2bC2dL6u031J8LP+N14kFNScdAngMl2SeHaaue+HWuY7O
- ANJzLPEW+5QtQ==
+ b=XUxmJwlYIeiF/AsymlWB+SDBYMfpB47+yANca9N+JYA6UiJf6eh8aAIX7ImbmABiy
+ h2o0KJkGCrkGUAAN58OltcBcnGifj6rrsZePE+sWM0ff7nNKbt3hoBS83jhwM4HK3Y
+ 7p7SRYE5uTXuj7jWx732yK8a9Ocdhkc1uAsz8ZmmDRRYoiP5+dmfqgUss73cA6klzZ
+ 1lAdC75uL33rwPKoulLt0GFfQFxY8IvrEUkuvS2Z8lCGkZvibdoK7jsTHNEHq8YI5g
+ KXsrDQiW6lm5cjfgpQvYwocniIY2fX/zIaheeH/+0GmhsL5PodZx43KGyQQU5jnzd0
+ 7SKbW9tfwrSQg==
 From: Davidlohr Bueso <dave@stgolabs.net>
 To: jonathan.cameron@huawei.com
 Cc: ira.weiny@intel.com, alucerop@amd.com, a.manzanares@samsung.com,
  linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- Davidlohr Bueso <dave@stgolabs.net>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 1/4] hw/pcie: Support enabling flit mode
-Date: Tue,  5 Aug 2025 22:57:05 -0700
-Message-Id: <20250806055708.196851-2-dave@stgolabs.net>
+ Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 2/4] hw/cxl: Refactor component register initialization
+Date: Tue,  5 Aug 2025 22:57:06 -0700
+Message-Id: <20250806055708.196851-3-dave@stgolabs.net>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250806055708.196851-1-dave@stgolabs.net>
 References: <20250806055708.196851-1-dave@stgolabs.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.212.47; envelope-from=dave@stgolabs.net;
- helo=cyan.elm.relay.mailchannels.net
+Received-SPF: pass client-ip=23.83.222.61; envelope-from=dave@stgolabs.net;
+ helo=fly.ash.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,275 +114,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As with the link speed and width training, have ad-hoc property for
-setting the flit mode and allow CXL components to make use of it.
+From: Ira Weiny <ira.weiny@intel.com>
 
-For the CXL root port and dsp cases, always report flit mode but
-the actual value after 'training' will depend on the downstream
-device configuration.
+CXL 3.2 8.2.4 Table 8-22 defines which capabilities are mandatory, not
+permitted, or optional for each type of device.
 
-Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+cxl_component_register_init_common() uses a rather odd 'fall through'
+mechanism to define each component register set.  This assumes that any
+device or capability being added builds on the previous devices
+capabilities.  This is not true as there are mutually exclusive
+capabilities defined.  For example, downstream ports can not have snoop
+but it can have Back Invalidate capable decoders.
+
+Refactor this code to make it easier to add individual capabilities as
+defined by a device type.  Any capability which is not specified by the
+type is left NULL'ed out which complies with the packed nature of the
+register array.
+
+Update all spec references to 3.2.
+
+No functional changes should be seen with this patch.
+
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+[rebased, no RAS for HBs, r3.2 references]
 Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 ---
- hw/core/qdev-properties-system.c          | 11 +++++++++++
- hw/mem/cxl_type3.c                        |  4 +++-
- hw/pci-bridge/cxl_downstream.c            |  1 +
- hw/pci-bridge/cxl_root_port.c             |  1 +
- hw/pci-bridge/cxl_upstream.c              |  3 ++-
- hw/pci-bridge/gen_pcie_root_port.c        |  1 +
- hw/pci/pcie.c                             | 13 +++++++++----
- include/hw/cxl/cxl_device.h               |  1 +
- include/hw/pci-bridge/cxl_upstream_port.h |  1 +
- include/hw/pci/pcie.h                     |  2 +-
- include/hw/pci/pcie_port.h                |  1 +
- include/hw/qdev-properties-system.h       |  3 +++
- qapi/common.json                          | 14 ++++++++++++++
- 13 files changed, 49 insertions(+), 7 deletions(-)
+ hw/cxl/cxl-component-utils.c   | 75 +++++++++++-----------------------
+ include/hw/cxl/cxl_component.h | 33 ++++++++++-----
+ 2 files changed, 46 insertions(+), 62 deletions(-)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 24e145d87001..94a1b754ecdc 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -1172,6 +1172,17 @@ const PropertyInfo qdev_prop_pcie_link_width = {
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
-+/* --- Flit mode --- */
-+
-+const PropertyInfo qdev_prop_pcie_link_flit = {
-+    .type = "PCIELinkFlit",
-+    .description = "off/on",
-+    .enum_table = &PCIELinkFlit_lookup,
-+    .get   = qdev_propinfo_get_enum,
-+    .set   = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* --- UUID --- */
- 
- static void get_uuid(Object *obj, Visitor *v, const char *name, void *opaque,
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index c4658e0955d5..324cf62e8141 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1501,7 +1501,8 @@ void ct3d_reset(DeviceState *dev)
-     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
- 
--    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
-+    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-+                              ct3d->flitmode);
-     cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
-     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
- 
-@@ -1540,6 +1541,7 @@ static const Property ct3_props[] = {
-                                 speed, PCIE_LINK_SPEED_32),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
-                                 width, PCIE_LINK_WIDTH_16),
-+    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", CXLType3Dev, flitmode, 0),
-     DEFINE_PROP_UINT16("chmu-port", CXLType3Dev, cxl_dstate.chmu[0].port, 0),
- };
- 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index 6aa8586f0161..82e6618b111c 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -257,6 +257,7 @@ static const Property cxl_dsp_props[] = {
-                                 speed, PCIE_LINK_SPEED_64),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_16),
-+    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 1),
- };
- 
- static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-index f035987b6f1f..721dc3981fd2 100644
---- a/hw/pci-bridge/cxl_root_port.c
-+++ b/hw/pci-bridge/cxl_root_port.c
-@@ -235,6 +235,7 @@ static const Property gen_rp_props[] = {
-                                 speed, PCIE_LINK_SPEED_64),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_32),
-+    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 1),
- };
- 
- static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index c2150afff39b..5e6d559a3215 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -147,7 +147,7 @@ static void cxl_usp_reset(DeviceState *qdev)
- 
-     pci_bridge_reset(qdev);
-     pcie_cap_deverr_reset(d);
--    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed);
-+    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed, usp->flitmode);
-     latch_registers(usp);
- }
- 
-@@ -433,6 +433,7 @@ static const Property cxl_upstream_props[] = {
-                                 speed, PCIE_LINK_SPEED_32),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
-                                 width, PCIE_LINK_WIDTH_16),
-+    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", CXLUpstreamPort, flitmode, 0),
- };
- 
- static void cxl_upstream_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index d9078e783bf0..c00be8147c2a 100644
---- a/hw/pci-bridge/gen_pcie_root_port.c
-+++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -145,6 +145,7 @@ static const Property gen_rp_props[] = {
-                                 speed, PCIE_LINK_SPEED_16),
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
-                                 width, PCIE_LINK_WIDTH_32),
-+    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 0),
- };
- 
- static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index eaeb68894e6e..55e0f7110ae5 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -113,7 +113,7 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
- 
- /* Includes setting the target speed default */
- static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
--                              PCIExpLinkSpeed speed)
-+                              PCIExpLinkSpeed speed, PCIELinkFlit flitmode)
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index ce42fa4a2946..a43d227336ca 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -289,32 +289,6 @@ void cxl_component_register_init_common(uint32_t *reg_state,
  {
-     /* Clear and fill LNKCAP from what was configured above */
-     pci_long_test_and_clear_mask(exp_cap + PCI_EXP_LNKCAP,
-@@ -158,10 +158,15 @@ static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
-                                        PCI_EXP_LNKCAP2_SLS_64_0GB);
-         }
-     }
-+
-+    if (flitmode) {
-+        pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2,
-+                                   PCI_EXP_LNKSTA2_FLIT);
-+    }
- }
+     int caps = 0;
  
- void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
--                               PCIExpLinkSpeed speed)
-+                               PCIExpLinkSpeed speed, PCIELinkFlit flitmode)
- {
-     uint8_t *exp_cap = dev->config + dev->exp.exp_cap;
+-    /*
+-     * In CXL 2.0 the capabilities required for each CXL component are such
+-     * that, with the ordering chosen here, a single number can be used to
+-     * define which capabilities should be provided.
+-     */
+-    switch (type) {
+-    case CXL2_DOWNSTREAM_PORT:
+-    case CXL2_DEVICE:
+-        /* RAS, Link */
+-        caps = 2;
+-        break;
+-    case CXL2_UPSTREAM_PORT:
+-    case CXL2_TYPE3_DEVICE:
+-    case CXL2_LOGICAL_DEVICE:
+-        /* + HDM */
+-        caps = 3;
+-        break;
+-    case CXL2_ROOT_PORT:
+-    case CXL2_RC:
+-        /* + Extended Security, + Snoop */
+-        caps = 5;
+-        break;
+-    default:
+-        abort();
+-    }
+-
+     memset(reg_state, 0, CXL2_COMPONENT_CM_REGION_SIZE);
  
-@@ -175,7 +180,7 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-                                QEMU_PCI_EXP_LNKSTA_NLW(width) |
-                                QEMU_PCI_EXP_LNKSTA_CLS(speed));
+     /* CXL Capability Header Register */
+@@ -322,11 +296,12 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, VERSION,
+         CXL_CAPABILITY_VERSION);
+     ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 1);
+-    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
  
--    pcie_cap_fill_lnk(exp_cap, width, speed);
-+    pcie_cap_fill_lnk(exp_cap, width, speed, flitmode);
- }
+ #define init_cap_reg(reg, id, version)                                        \
+     do {                                                                      \
+-        int which = R_CXL_##reg##_CAPABILITY_HEADER;                          \
++        int which = CXL_##reg##_CAP_HDR_IDX;                                  \
++        if (CXL_##reg##_CAP_HDR_IDX > caps)                                   \
++            caps = CXL_##reg##_CAP_HDR_IDX;                                   \
+         reg_state[which] = FIELD_DP32(reg_state[which],                       \
+                                       CXL_##reg##_CAPABILITY_HEADER, ID, id); \
+         reg_state[which] =                                                    \
+@@ -337,37 +312,35 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+                        CXL_##reg##_REGISTERS_OFFSET);                         \
+     } while (0)
  
- static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
-@@ -212,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
-         /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
++    /* CXL r3.2 8.2.4 Table 8-22 */
+     switch (type) {
+-    case CXL2_DEVICE:
+-    case CXL2_TYPE3_DEVICE:
+-    case CXL2_LOGICAL_DEVICE:
+     case CXL2_ROOT_PORT:
++    case CXL2_RC:
++        /* + Extended Security, + Snoop */
++        init_cap_reg(EXTSEC, 6, 1);
++        init_cap_reg(SNOOP, 8, 1);
++        /* fallthrough */
+     case CXL2_UPSTREAM_PORT:
++    case CXL2_TYPE3_DEVICE:
++    case CXL2_LOGICAL_DEVICE:
++        /* + HDM */
++        init_cap_reg(HDM, 5, 1);
++        hdm_init_common(reg_state, write_msk, type);
++        /* fallthrough */
+     case CXL2_DOWNSTREAM_PORT:
+-    init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
+-        ras_init_common(reg_state, write_msk);
++    case CXL2_DEVICE:
++        /* RAS, Link */
++        if (type != CXL2_RC) {
++            init_cap_reg(RAS, 2, 2);
++            ras_init_common(reg_state, write_msk);
++        }
++        init_cap_reg(LINK, 4, 2);
+         break;
+     default:
+-        break;
+-    }
+-
+-    init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
+-
+-    if (caps < 3) {
+-        return;
+-    }
+-
+-    if (type != CXL2_ROOT_PORT) {
+-        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+-        hdm_init_common(reg_state, write_msk, type);
+-    }
+-    if (caps < 5) {
+-        return;
++        abort();
      }
  
--    pcie_cap_fill_lnk(exp_cap, s->width, s->speed);
-+    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
+-    init_cap_reg(EXTSEC, 6, CXL_EXTSEC_CAP_VERSION);
+-    init_cap_reg(SNOOP, 8, CXL_SNOOP_CAP_VERSION);
+-
++    ARRAY_FIELD_DP32(reg_state, CXL_CAPABILITY_HEADER, ARRAY_SIZE, caps);
+ #undef init_cap_reg
  }
  
- int pcie_cap_init(PCIDevice *dev, uint8_t offset,
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 068c20d61ebc..4c9d2247cf02 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -796,6 +796,7 @@ struct CXLType3Dev {
-     /* PCIe link characteristics */
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
-+    PCIELinkFlit flitmode;
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index b721333cb7aa..cd92cb02532a 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -32,10 +32,20 @@ enum reg_type {
+ };
  
-     /* DOE */
-     DOECap doe_cdat;
-diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
-index db1dfb6afd98..584e43c37291 100644
---- a/include/hw/pci-bridge/cxl_upstream_port.h
-+++ b/include/hw/pci-bridge/cxl_upstream_port.h
-@@ -20,6 +20,7 @@ typedef struct CXLUpstreamPort {
+ /*
+- * Capability registers are defined at the top of the CXL.cache/mem region and
+- * are packed. For our purposes we will always define the caps in the same
+- * order.
+- * CXL r3.1 Table 8-22: CXL_CAPABILITY_ID Assignment for details.
++ * CXL r3.2 - 8.2.4 Table 8-22 and 8-23
++ *
++ * Capability registers are defined at the top of the CXL.cache/mem region.
++ * They are defined to be packed and at variable offsets.  However, NULL
++ * capabilities can be added to the packed array.  To facilitate easier access
++ * within the QEMU code, define these at specified offsets.  Then NULL out any
++ * capabilities for devices which don't (or can't) have a particular capability
++ * (see cxl_component_register_init_common).  NULL capabilities are to be
++ * ignored by software.
++ *
++ * 'offsets' are based on index's which can then be used to report the array
++ * size in CXL Capability Header Register (index/offset 0).
++ *
++ * See CXL r3.2 Table 8-25 for an example of allowing a 'NULL' header.
+  */
  
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
-+    PCIELinkFlit flitmode;
+ /* CXL r3.1 Section 8.2.4.1: CXL Capability Header Register */
+@@ -46,16 +56,17 @@ REG32(CXL_CAPABILITY_HEADER, 0)
+     FIELD(CXL_CAPABILITY_HEADER, CACHE_MEM_VERSION, 20, 4)
+     FIELD(CXL_CAPABILITY_HEADER, ARRAY_SIZE, 24, 8)
  
-     DOECap doe_cdat;
-     uint64_t sn;
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index ff6ce08e135a..82fcbc9f8823 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -142,7 +142,7 @@ void pcie_ari_init(PCIDevice *dev, uint16_t offset);
- void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
- void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned);
- void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
--                               PCIExpLinkSpeed speed);
-+                               PCIExpLinkSpeed speed, PCIELinkFlit flitmode);
+-#define CXLx_CAPABILITY_HEADER(type, offset)                  \
+-    REG32(CXL_##type##_CAPABILITY_HEADER, offset)             \
++#define CXLx_CAPABILITY_HEADER(type, idx)                     \
++    enum { CXL_##type##_CAP_HDR_IDX = idx };                  \
++    REG32(CXL_##type##_CAPABILITY_HEADER, (idx * 0x4))        \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, ID, 0, 16)      \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, VERSION, 16, 4) \
+         FIELD(CXL_##type##_CAPABILITY_HEADER, PTR, 20, 12)
+-CXLx_CAPABILITY_HEADER(RAS, 0x4)
+-CXLx_CAPABILITY_HEADER(LINK, 0x8)
+-CXLx_CAPABILITY_HEADER(HDM, 0xc)
+-CXLx_CAPABILITY_HEADER(EXTSEC, 0x10)
+-CXLx_CAPABILITY_HEADER(SNOOP, 0x14)
++CXLx_CAPABILITY_HEADER(RAS, 1)
++CXLx_CAPABILITY_HEADER(LINK, 2)
++CXLx_CAPABILITY_HEADER(HDM, 3)
++CXLx_CAPABILITY_HEADER(EXTSEC, 4)
++CXLx_CAPABILITY_HEADER(SNOOP, 5)
  
- void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp);
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 7cd7af8cfa4b..2f96fc685729 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -58,6 +58,7 @@ struct PCIESlot {
- 
-     PCIExpLinkSpeed speed;
-     PCIExpLinkWidth width;
-+    PCIELinkFlit flitmode;
- 
-     /* Disable ACS (really for a pcie_root_port) */
-     bool        disable_acs;
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index b921392c5256..dd5dc4515ea7 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -28,6 +28,7 @@ extern const PropertyInfo qdev_prop_audiodev;
- extern const PropertyInfo qdev_prop_off_auto_pcibar;
- extern const PropertyInfo qdev_prop_pcie_link_speed;
- extern const PropertyInfo qdev_prop_pcie_link_width;
-+extern const PropertyInfo qdev_prop_pcie_link_flit;
- extern const PropertyInfo qdev_prop_cpus390entitlement;
- extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
- extern const PropertyInfo qdev_prop_endian_mode;
-@@ -80,6 +81,8 @@ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
- #define DEFINE_PROP_PCIE_LINK_WIDTH(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pcie_link_width, \
-                         PCIExpLinkWidth)
-+#define DEFINE_PROP_PCIE_LINK_FLIT(_n, _s, _f, _d) \
-+    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pcie_link_flit, PCIELinkFlit)
- 
- #define DEFINE_PROP_UUID(_name, _state, _field) \
-     DEFINE_PROP(_name, _state, _field, qdev_prop_uuid, QemuUUID, \
-diff --git a/qapi/common.json b/qapi/common.json
-index 0e3a0bbbfb0b..da047fbf874f 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -140,6 +140,20 @@
- { 'enum': 'PCIELinkWidth',
-   'data': [ '1', '2', '4', '8', '12', '16', '32' ] }
- 
-+##
-+# @PCIELinkFlit:
-+#
-+# An enumeration of PCIe link FLIT mode
-+#
-+# @off: the link is not operating in FLIT mode
-+#
-+# @on: each FLIT is a fixed 256 bytes in size
-+#
-+# Since: 10.0
-+##
-+{ 'enum': 'PCIELinkFlit',
-+  'data': [ 'off', 'on'] }
-+
- ##
- # @HostMemPolicy:
- #
+ /*
+  * Capability structures contain the actual registers that the CXL component
 -- 
 2.39.5
 
