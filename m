@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED35C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F8E5C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujl8C-0007QC-C5; Wed, 06 Aug 2025 16:53:04 -0400
+	id 1ujlBt-0000x2-54; Wed, 06 Aug 2025 16:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ujl89-0007Ox-7s
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:53:01 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ujl87-0004yR-IA
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:53:00 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b427f4a9652so208482a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 13:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754513577; x=1755118377; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eqL2V0LXadgKcNe1lvkmywiAnDzhQh/mHa8qYCBv1WQ=;
- b=OufXVzs4DoDe1f0WMOXHAPxWMMyAorvZWAIKg1afemuYq/Vn1rK56pItL4wPLieF1K
- wkmF73UFOqLE/C9pxFBU14XYKQ6By0Xc5+r8zQn2YD/BO449gtm0g6SxciRYmXdzgr0i
- VLRnAntibWxtIdP50igy1MQ5dOolbrmoh1mUvVSi4jriDWl12X3c0sU3uNbhCfNx0wl4
- +zdCQ7Y8raFeJOFbepjmBL8yNbsI4ZgwVP/puhHl8yGXfKRPwvfT7UO/66Va0zvOUZZK
- /5OMLj+InOTPIjPnYraAB4QNITRAXVCUcxiF+Py5FugdORza4/3lWEhA5toJAoyaYk5X
- j+mQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujlBm-0000re-Rk
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:56:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujlBk-0005Yi-Ls
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:56:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754513803;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2nEiXSALWRmjDKFeKZ40mLZfm59Pn30NroLaEKyj8kQ=;
+ b=fkazLtAZ9ROOsNSgJ7u3Cki8LQcd3qWK+oBK2kvJvAiQmtPdthL0y4bU1MqrcXd/UbthHB
+ ViYB65qF35r5UbOlMn9vsxcYAokGH8NA4eDmdFUD1BzYhgO03DeUw9OPGltRf9ppyecrcS
+ vquyrSS7WEPqLC4wTNj9HI3VzbsdLZA=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-380-weuCsk83MZC9JVdekE9asw-1; Wed, 06 Aug 2025 16:56:41 -0400
+X-MC-Unique: weuCsk83MZC9JVdekE9asw-1
+X-Mimecast-MFC-AGG-ID: weuCsk83MZC9JVdekE9asw_1754513800
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-707453b0307so7850476d6.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 13:56:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754513577; x=1755118377;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eqL2V0LXadgKcNe1lvkmywiAnDzhQh/mHa8qYCBv1WQ=;
- b=O8GXlOzHv3JKdkG6GW22gmFXTFiqjazP9l/PztLssL4efsJBKWUQi9TiO3jOrgO5Kk
- lwS7rxrVRv+m6npteB4uIBxIhzipKYndbkIW3l0AOdZwv2NJqvQ2Luy7IHLjUEajdhJu
- YVI4fgVfBFigxModddR+11pBaenTd2kFBZB357enYOhhOtb3Kc9y195umwpc6uZ3LyQs
- ze41PtvO/aDnq+wigLhJi3h2h9N2e/nNwj0wyArHHPS6adPMzc822ibTyozHkwFmedbw
- fZEBXxH6XFaee4RkgrP3wh0idVQS9LfnKttOW7tzA8O0zfa7aa8qdxw2VLHBSz9deVgZ
- QPFw==
-X-Gm-Message-State: AOJu0YzAhDryYIYP6UJ5OFvfADNmxk11R4PGGOtphve/kM6sYL2PPdgl
- HdZYTWgrPleg9Yk7QPReqxQHcUy9pgw6RPWcg2I4uT4opUyzJkDESrhNQ6XtU12gcHA=
-X-Gm-Gg: ASbGncuw5ZRbGubLmvAVxlkjO6YmyHlVnZbLk243oyT5E/sdIzYRCSRdtRFcnVnb8Ul
- xnJfhs/IEUacxMIJg5BG9KG/qMKhx7SWTw0k4HPRMC4qSHml5M1LoEbyglSF+3ITUdXIFz2etQu
- ulcxhTQ4LHet95bhMFoEuLrhrhgT86R1U/+uMhErdzfRb89vroDJvESAmo6/ARRaHwW1n3uAtWT
- cQm1yexjIOw48UaHw+Y+YEobouunJcoQDasFXctsIEatiZVCJbLjWMlJwnhJfpMGDG8CN3yClU8
- qJRTL2Qzh5KNJfANNDnlgo8LW8vArP2o+TBnJEeGWdWCyBD0EX9nbq1a0OYlK+l5ssAPE/yON4e
- EtaTNrsABpellrlDDDyAhbJQ94/MWR/cVmy8=
-X-Google-Smtp-Source: AGHT+IEvLzeB9SfZOtEQ9JI/BMY85z90kkdy0V8h/dzILobIrZ4zHIUcbN9MYCHv/t2zUS1oGOjgBQ==
-X-Received: by 2002:a17:903:41d2:b0:240:8704:fb9 with SMTP id
- d9443c01a7336-2429f582b30mr58711275ad.53.1754513577539; 
- Wed, 06 Aug 2025 13:52:57 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1754513800; x=1755118600;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2nEiXSALWRmjDKFeKZ40mLZfm59Pn30NroLaEKyj8kQ=;
+ b=C6o9cGwTRDg13pHRilz6CdDj1TDpZ2MUPqjyo46yrszXHtdxDloMxpSl+yPo+7Qydr
+ eJQtn5NT9QmixOaC0GcJKzON23l26nx27mAKDT/SnznCRZo4t/9U74hm14WjWf/TdL+x
+ BDknpCwiLZd6K/BCnLdWgUuyIjeJ2Rbdhl8QYnQsAuDxPFCjhZNXI9XLCzfLgW16xYGG
+ +0nBj32KYKpCV+xgYytxsnKnd70SHhEv3u3OvUt4CPbPpEwMJZj7uc83hyw2PUEQrkQP
+ 0Bk/Xtp6SsglbV1Z3yEuxHyfQlKwtr2+xTo1rRZf3PT7zuIe9WjUfjXObrzCYCug4Qja
+ uIpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQ/1qlv2ynfCpw6hxR+Fq1TuFdL4jmLYEsucdFS8JK4HxAUfeRw4jFMLXMxw4RptPUEbyyUiuaYnv0@nongnu.org
+X-Gm-Message-State: AOJu0YxjEoesfGtSSG3xmshINfViu50hRfryQD5fQSCihX7n9rU8tMEl
+ r8wg9lVy9SgKDFuZkZo5jdKSwfiwXc/Fajpu5Lv1GqhShvQVMKQu6le/ALOKxJ6q9Fu+darTYZR
+ CV53cv0iOr9QLcPqTaQfktaNp2d9Gt57beEk7SwwQbnTQTmnaocBPogel
+X-Gm-Gg: ASbGncsFnp8Jev7t378vgYLhqfRJxqBE0sv1itr0wfVXke4lqgReyCUUL1d9Wh7hTQk
+ JI/k3nhIG9dO3gKeTChPwqvdKjjIMkrs66iwNRHIZrkTO4xt6D5o8bhasXJptudj/Vi8B8lMBO6
+ AI/YLSapLZiH2M9k43A7doljT+NEMNcaW7AaPkZmLGynR9hCQkV9HldzyrYH5ndbJjxtJTITKFo
+ sE3YLTHyN0VdURnmsZKYPsUYupjsNnLFDN5L1auayEUbIbYbwPpGhMjDQzX8GJJj6ATkvhSTMF+
+ bs/VOvLWmyy8CfHCkfLAwOEW0JiJwfWH0aBoo1L0Dhx1cOZH8i5oSxLB55uKPhMKB3zJTseTslh
+ 8DYcw5Lyy1RWMR+1sQ6m+FQ==
+X-Received: by 2002:a05:6214:20ee:b0:707:55f:ea2d with SMTP id
+ 6a1803df08f44-70979661b54mr70997036d6.49.1754513799641; 
+ Wed, 06 Aug 2025 13:56:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs1gtGu8vJphhSWWdWp9dh3hfOfom66EcT9lTtMCHeAcgQMym2BIAxmGGD3DSZrxPSUviaeg==
+X-Received: by 2002:a05:6214:20ee:b0:707:55f:ea2d with SMTP id
+ 6a1803df08f44-70979661b54mr70996786d6.49.1754513799218; 
+ Wed, 06 Aug 2025 13:56:39 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-171.dsl.bell.ca. [174.89.135.171])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e89a3acfsm166673035ad.146.2025.08.06.13.52.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 13:52:57 -0700 (PDT)
-Message-ID: <4ab89a81-0463-492b-86d5-1c7af1e6453a@linaro.org>
-Date: Wed, 6 Aug 2025 13:52:56 -0700
+ 6a1803df08f44-7077c9d8af4sm90108266d6.8.2025.08.06.13.56.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 13:56:38 -0700 (PDT)
+Date: Wed, 6 Aug 2025 16:56:35 -0400
+From: Peter Xu <peterx@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com, Laurent Vivier <lvivier@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, pbonzini@redhat.com,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [RFC v2] memory.c: improve refcounting for RAM vs MMIO regions
+Message-ID: <aJPBg2WBlfU5Rp21@x1.local>
+References: <20250805081123.137064-1-aesteve@redhat.com>
+ <aJO3ywz2Ej_kToU_@x1.local>
+ <6c254144-a5ee-4536-b0a1-844fb5281b7d@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1] meson: Fix brlapi compile test for Windows builds
-Content-Language: en-US
-To: Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20250806204624.510091-1-sw@weilnetz.de>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250806204624.510091-1-sw@weilnetz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6c254144-a5ee-4536-b0a1-844fb5281b7d@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,64 +113,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/25 1:45 PM, Stefan Weil via wrote:
-> brlapi__openConnection returns a brlapi_fileDescriptor which is a pointer
-> for Windows builds.
+On Wed, Aug 06, 2025 at 10:36:33PM +0200, David Hildenbrand wrote:
+> On 06.08.25 22:15, Peter Xu wrote:
+> > On Tue, Aug 05, 2025 at 10:11:23AM +0200, Albert Esteve wrote:
+> > > v1->v2:
+> > > - Added documentation
+> > > - Explained the reasoning in the commit message
+> > > 
+> > > In the last version of the SHMEM MAP/UNMAP [1] Stefan
+> > > raised a concern [2] about dynamically creating and
+> > > destroying memory regions and their lifecycle [3].
+> > > 
+> > > After some discussion, David Hildenbrand proposed
+> > > to detect RAM regions and handle refcounting differently.
+> > > I tried to extend the reasoning in the commit message
+> > > below. If I wrote any innacuracies, please keep me
+> > > honest. I hope we can gather some feedback with
+> > > this RFC patch before sending it for inclusion.
+> > 
+> > This seems working.  Looks like so far all RAM MRs are fine with it, but
+> > I'm not strongly confident it's true or it'll trivially keep true in the
+> > future too.
+> > 
+> > Besides, this still adds some trivial complexity to memory_region_ref() on
+> > treating RAM/MMIO MRs differently.
+> > > It also sounds like a pure "accident" that the shmem objects to be
+> mapped
+> > from the vhost-user devices are RAMs.  I wonder what happens if we want to
+> > also support dynmaic MMIO regions.
 > 
-> The test for brlapi fails with cross builds on Debian trixie
-> (x86_64-w64-mingw32-gcc (GCC) 14-win32):
-> 
-> testfile.c:4:30: error: returning 'brlapi_fileDescriptor' {aka 'void *'} from a function with return type 'int' makes integer from pointer without a cast [-Wint-conversion]
->      4 |      int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }
->        |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> -----------
-> ../../../meson.build:1607: WARNING: could not link brlapi, disabling
-> 
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
-> ---
-> 
-> I think that this patch is trivial because it does not change
-> anything for Linux.
-> 
-> Note that this patch only fixes the configure test and allows builds
-> with the Braille API for Windows.
-> 
-> A similar change can be applied to chardev/baum.c and will be sent
-> separately because it is not required for 10.1.
-> 
-> Note that for 64 bit Windows there is an issue because brlapi_fileDescriptor
-> is a 64 bit pointer while QEMU assumes int for file descriptors. But the
-> good news is that the resulting code seems to work nevertheless – at least
-> the people who asked me for Braille support on Windows are satisfied as
-> far as I know.
-> 
-> Regards,
-> Stefan W.
-> 
-> 
->   meson.build | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index e53cd5b413..d6abe1917e 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1586,9 +1586,11 @@ if not get_option('brlapi').auto() or have_system
->     brlapi = cc.find_library('brlapi', has_headers: ['brlapi.h'],
->                            required: get_option('brlapi'))
->     if brlapi.found() and not cc.links('''
-> -     #include <brlapi.h>
-> -     #include <stddef.h>
-> -     int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }''', dependencies: brlapi)
-> +    #include <brlapi.h>
-> +    #include <stddef.h>
-> +    int main(void) {
-> +      return brlapi__openConnection(NULL, NULL, NULL) == BRLAPI_INVALID_FILE_DESCRIPTOR;
-> +    }''', dependencies: brlapi)
->       brlapi = not_found
->       if get_option('brlapi').enabled()
->         error('could not link brlapi')
+> Is this use case realistic?
 
-Looks good,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Nop. :) It's a sincere wish that if such a feature to be introduced, it
+could work for MMIOs too.  Or better if no need to introduce it.
+
+> 
+> If there is a reasonable way to prepare for such hypothetical use cases them
+> while solving Albert's immediate use case, I'm all for it.
+> 
+> > 
+> > Would this work even without changing QEMU memory core?
+> > 
+> > For example, have you thought about creating a VhostUserShmemObject for
+> > each of the VHOST_USER_BACKEND_SHMEM_MAP request?
+> 
+> You mean, adding an intermediate object that remains the parent of these
+> MemoryRegion?
+> 
+> Could work. To free a MemoryRegion, I guess we would unparent that
+> intermediate object, and that object would then free the memory region --
+> unless something still references that intermediate object. Not sure if the
+> memory region might keep the intermediate object still alive (no idea).
+
+It should, as long as memory_region_ref() will boost the tempobj's refcount
+properly.
+
+Thanks,
+
+> 
+> Certainly something to explore, Albert, can you look into that?
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
+
+-- 
+Peter Xu
+
 
