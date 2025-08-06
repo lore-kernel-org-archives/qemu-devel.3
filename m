@@ -4,68 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 435A2C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:15:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960E8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:15:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhin-0003v2-9B; Wed, 06 Aug 2025 13:14:37 -0400
+	id 1ujhjQ-0005oF-HH; Wed, 06 Aug 2025 13:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujhJo-00050w-DY
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:48:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ujhOW-0003iW-Nk
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:53:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ujhJn-0002DU-2t
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:48:48 -0400
+ id 1ujhOU-0002gv-QK
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:53:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754498926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gTq9lNHivi7j2Ovmik/Mgi62Uey4aAlpi1I4rDsxGZg=;
- b=ENZHX8P1w8vWp2J9Hh1wiVLw3Yx4SUKffrTNYJ1WaSmCXPxR/9QGPwOfavYTSh8Wc8LbQd
- gjNq5EGCsXP3bWdwV3qxSwZDShv8Xl6Z0mA/o1EyDe1otocuxdFeDCAN5K91fd0QEsP43H
- rOV77/7YqrOCr5spkLgUnNtNf3M/J9I=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1754499218;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=+kyxIoUKimsW8GPxAB6mN7itQuSEXTqlyXFmpOsko2k=;
+ b=ffzbxVCLq6ICFtX3ojTgc+fXH8zoL8NreeLMm7w3twLZB2SQJC9qYYlu25AgHRKqLbvJ/7
+ SbtIIsbT6Oe9+Rzt7mLAPSYJGhZiG/1l7GnhuPyZ8AQx2HqFWjMIvD+gR5U7BQxM9wVIoV
+ h179bsqGb8gkpGlxd938umDrslwVjdQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-FArBnrAyOQSFSq7R9s5GIw-1; Wed,
- 06 Aug 2025 12:48:43 -0400
-X-MC-Unique: FArBnrAyOQSFSq7R9s5GIw-1
-X-Mimecast-MFC-AGG-ID: FArBnrAyOQSFSq7R9s5GIw_1754498922
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-W4hghUDiM8CRFo3eOLJPXQ-1; Wed,
+ 06 Aug 2025 12:53:34 -0400
+X-MC-Unique: W4hghUDiM8CRFo3eOLJPXQ-1
+X-Mimecast-MFC-AGG-ID: W4hghUDiM8CRFo3eOLJPXQ_1754499213
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E33581955D4B; Wed,  6 Aug 2025 16:48:41 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.223])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 354DA1956086; Wed,  6 Aug 2025 16:48:37 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 1/8] checkpatch: cull trailing '*/' in SPDX check
-Date: Wed,  6 Aug 2025 17:48:25 +0100
-Message-ID: <20250806164832.1382919-2-berrange@redhat.com>
-In-Reply-To: <20250806164832.1382919-1-berrange@redhat.com>
-References: <20250806164832.1382919-1-berrange@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A346B19560AA; Wed,  6 Aug 2025 16:53:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.223])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90DBE1956086; Wed,  6 Aug 2025 16:53:31 +0000 (UTC)
+Date: Wed, 6 Aug 2025 17:53:27 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tanish Desai <tanishdesai37@gmail.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com,
+ Mads Ynddal <mads@ynddal.dk>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v2 2/2] tracetool/format: remove redundent trace-event
+ checks
+Message-ID: <aJOIhxTD9pxnOBPj@redhat.com>
+References: <20250806150539.2871-1-tanishdesai37@gmail.com>
+ <20250806150539.2871-3-tanishdesai37@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250806150539.2871-3-tanishdesai37@gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -88,33 +85,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sometimes SPDX expressions appear inside C comments, and this
-confuses checkpatch.pl. Drop the closing C comment characters
-to avoid this.
+On Wed, Aug 06, 2025 at 03:05:39PM +0000, Tanish Desai wrote:
+> Remove redundent if(check_trace_event) check
+> from individual backends.
+> Adding CHECK_TRACE_EVENT_GET_STATE in log,syslog,
+> dtrace and simple backend.
+> 
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> ---
+>  scripts/tracetool/backend/ftrace.py | 12 +++++-------
+>  scripts/tracetool/backend/log.py    | 10 ++++------
+>  scripts/tracetool/backend/simple.py |  9 ++-------
+>  scripts/tracetool/backend/syslog.py |  8 ++------
+>  4 files changed, 13 insertions(+), 26 deletions(-)
+> 
+> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+> index 5fa30ccc08..c65d3b89b3 100644
+> --- a/scripts/tracetool/backend/ftrace.py
+> +++ b/scripts/tracetool/backend/ftrace.py
+> @@ -16,6 +16,7 @@
+>  
+>  
+>  PUBLIC = True
+> +CHECK_TRACE_EVENT_GET_STATE = True
+>  
+>  
+>  def generate_h_begin(events, group):
+> @@ -28,11 +29,10 @@ def generate_h(event, group):
+>      if len(event.args) > 0:
+>          argnames = ", " + argnames
+>  
+> -    out('    {',
+> -        '        char ftrace_buf[MAX_TRACE_STRLEN];',
+> -        '        int unused __attribute__ ((unused));',
+> -        '        int trlen;',
+> -        '        if (trace_event_get_state(%(event_id)s)) {',
+> +    out('        {',
+> +        '            char ftrace_buf[MAX_TRACE_STRLEN];',
+> +        '            int unused __attribute__ ((unused));',
+> +        '            int trlen;',
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/checkpatch.pl | 3 +++
- 1 file changed, 3 insertions(+)
+This results in unecessary nested code blocks & indent.
+For example:
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 833f20f555..91616c974f 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1368,6 +1368,9 @@ sub checkspdx {
-     $expr =~ s/^\s*//g;
-     $expr =~ s/\s*$//g;
- 
-+    # Cull C comment end
-+    $expr =~ s/\*\/.*//;
-+
-     my @bits = split / +/, $expr;
- 
-     my $prefer = "GPL-2.0-or-later";
+static inline void trace_test_blah(void *context, const char *filename)
+{
+    if (trace_event_get_state(TRACE_TEST_BLAH)) {
+        {
+            char ftrace_buf[MAX_TRACE_STRLEN];
+            int unused __attribute__ ((unused));
+            int trlen;
+#line 4 "trace-events"
+            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+                             "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+#line 33 "[stdout]"
+            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+            unused = write(trace_marker_fd, ftrace_buf, trlen);
+        }
+    }
+}
+
+Instead of
+
+
+static inline void trace_test_blah(void *context, const char *filename)
+{
+    if (trace_event_get_state(TRACE_TEST_BLAH)) {
+        char ftrace_buf[MAX_TRACE_STRLEN];
+        int unused __attribute__ ((unused));
+        int trlen;
+#line 4 "trace-events"
+        trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+                         "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
+#line 33 "[stdout]"
+        trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+        unused = write(trace_marker_fd, ftrace_buf, trlen);
+    }
+}
+
+
+
+With regards,
+Daniel
 -- 
-2.50.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
