@@ -4,144 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B51BCC87FCB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D79C87FD3
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 09:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujaHX-0003fI-UX; Wed, 06 Aug 2025 05:17:59 -0400
+	id 1ujaH1-0003Uy-Td; Wed, 06 Aug 2025 05:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uja85-0006xK-F1
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 05:08:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1uja8U-00074V-Ea; Wed, 06 Aug 2025 05:08:38 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uja80-0006xN-FP
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 05:08:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754471285;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Up5dalqLXScfFRIAiuOL3YQsUg0zc8EovG/D6gBpj+o=;
- b=Ud7GHV/CeHIwuaMOSbFauS6psBlllNgQ3aTw7csZngoiUfaK857sy/BhkfI8w9AmwqKUZp
- 8qax8GC3K8By8WGuavp0ksutmGR8PWNdVpfMsFl9vVCZtqmkxsXRxzv5IkZC5tdNhgUgyh
- 4ahtysntj6dSy9Bbty+GBXw2TVB0500=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-5fHTMyGLNNiUyb-U12FrUA-1; Wed, 06 Aug 2025 05:08:04 -0400
-X-MC-Unique: 5fHTMyGLNNiUyb-U12FrUA-1
-X-Mimecast-MFC-AGG-ID: 5fHTMyGLNNiUyb-U12FrUA_1754471284
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c790dc38b4so185575785a.0
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 02:08:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754471284; x=1755076084;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Up5dalqLXScfFRIAiuOL3YQsUg0zc8EovG/D6gBpj+o=;
- b=TKspzISwS9V5Wyj6/lz/SpwpOzR6wHGAuOtSBleX/PqJCITIeTZDyaqUzIPt3e5Rt+
- fKP9CMQUEUE3ozN4gDLsRilts0tysBrB7v6wAFApzHS9pMcUrtuepElVx+A+fCKYfsXa
- Y8yx7mFGmEbP82ytjic66BEtGODOkKFAqauvEGWa2XnjfcWHpk4yVnQWDc4Mvltes7Zw
- gs85gf9uKduYH9fMgoHUS9/Ud0WC31b07Di79mfignoxZ1yQ9wrqN1xFjubFEeDkoHHD
- IbfTCyMRlt7JmzYh1Jh7qvRauRelyN+z0w/hAG/AdOlPqOL/c8x/olfqwhHRbLxBuY4I
- 0skw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqmAztWsI4hOJ0K3lpeC6T2/LTnkUlBjZNqmerVngl8MawApjVilwEVnM4ThCs+HIrLga6gpxttlau@nongnu.org
-X-Gm-Message-State: AOJu0YydcSSCnBhEU2x1bW1pMFxpEGiefgJsQHtSKqkx5Mm9mdzAj8wc
- FdcF/KQRJZwWJwweTtt12a8rAfXNwpufi3NQUsUlizC+II8Dh7mIPya9H+ckrXR3dQKLf+GTngw
- QoSbPwg2UQbSOrap12p/cpcI7nz/SHyY5O8t55qMEJvEbfjmLAQM1rK38
-X-Gm-Gg: ASbGncuRt6e4OOZM6AGkwrrrez6TPIZ93WmaHXEhcQBiTTxmbpVjnL14goOg5I+6x0i
- HpWCMvoOlGLNMIynDuXftEIQv8L9zKo/jDKFqsijn8VjgHJy0IUV/pYWRGRnw/W6IYwYCl24Jyn
- 02ioy4QgHaxlCcFt3K74xS1R5t2uSHgngexG2I3ijfrAAdywEUpCdFxp1ClFZtfxEt/+ctjPYcV
- Sr5TR2U8Noa7VGp6BHDCS07gqaojg0o9udGeJ5yGzNSrYAHcpQGCiwmo9x/iZ9AgiMCTxih95JT
- brzHDLUXcGR1tsNheZoeqk0aW9c6861Gb0cVo+6MRZo7Yv/yH5l6KzawKexiJ5e3
-X-Received: by 2002:a05:620a:4410:b0:7e6:3e26:63b6 with SMTP id
- af79cd13be357-7e8157616a9mr231867485a.21.1754471283578; 
- Wed, 06 Aug 2025 02:08:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0IkjOLsofH2HYZyH7fd9TnEGz/R0yO7FYa9MzQzOHysgadTQlI+Xt69JfNh+oiPX1h6Jq/Q==
-X-Received: by 2002:a05:620a:4410:b0:7e6:3e26:63b6 with SMTP id
- af79cd13be357-7e8157616a9mr231864985a.21.1754471283151; 
- Wed, 06 Aug 2025 02:08:03 -0700 (PDT)
-Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e67f72b045sm786293585a.60.2025.08.06.02.08.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 02:08:02 -0700 (PDT)
-Message-ID: <cad6d8f3-ed0b-455c-b74c-884de7e2816b@redhat.com>
-Date: Wed, 6 Aug 2025 11:08:00 +0200
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1uja8Q-000702-7T; Wed, 06 Aug 2025 05:08:38 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:31c9:0:640:6c2e:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4790B8066F;
+ Wed, 06 Aug 2025 12:08:26 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:14a::1:12] (unknown
+ [2a02:6bf:8080:14a::1:12])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id P8dWHm3GwSw0-9bXo8xeP; Wed, 06 Aug 2025 12:08:25 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1754471305;
+ bh=EfLlPwHz7SozzfFT9J+rjewLiZH3woLkAVtClAc2aIs=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=l5DXqVhpFzFh0x1xRuGHyKOa5HSf9TZueAJ5jfHEteAnkr3IioKvy0zGPEmQH4nYY
+ 5+rgu3nKNh0xxa5S5bkeh9QyGPDPzpcxEFO1ez5G4ysgkkLTSZ66mVMs6stmWk9GHM
+ LMQRyc02Mj6DHHAx5vivqFxJmM17gQSiZLpjvjlc=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <da9de51c-3b00-4114-b230-23d26c5c4676@yandex-team.ru>
+Date: Wed, 6 Aug 2025 12:08:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] tracetool: add test suite for tracetool with
- reference output
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20250805200334.629493-1-berrange@redhat.com>
- <20250805200334.629493-6-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 0/3] vhost-user-blk: add an option to skip GET_VRING_BASE
+ for force shutdown
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+References: <20250609212547.2859224-1-d-tatianin@yandex-team.ru>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250805200334.629493-6-berrange@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+In-Reply-To: <20250609212547.2859224-1-d-tatianin@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,37 +78,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/08/2025 22.03, Daniel P. Berrangé wrote:
-> When reviewing tracetool patches it is often very unclear what the
-> expected output will be for the generated backends. Compounding
-> this is that a default build will only enable the 'log' trace
-> backend, so developers won't see generated code for other backends
-> without making a special effort. Some backends are also platform
-> specific, so can't be enabled in QEMU builds, even though tracetool
-> could generate the code.
-> 
-> To address this, introduce a test suite for tracetool which is
-> conceptually similar to the qapi-schema test. It is a simple
-> python program that runs tracetool and compares the actual output
-> to historical reference output kept in git. The test directly
-> emits TAP format logs for ease of integration with meson.
-> 
-> This can be run with
-> 
->    make check-tracetool
-> 
-> to make it easier for developers changing generated output, the
-> sample expected content can be auto-recreated
-> 
->    QEMU_TEST_REGENERATE=1 make check-tracetool
-> 
-> and the changes reviewed and added to the commit. This will also
-> assist reviewers interpreting the change.
+ping :)
 
-Could you please also add a little bit of documentation to 
-docs/devel/testing/ with this information?
-
-  Thanks,
-    Thomas
-
+On 6/10/25 12:25 AM, Daniil Tatianin wrote:
+> This series aims to address SIGTERM/QMP quit() being a bit too graceful in
+> respect to devices. Both of the aforementioned ways to stop QEMU completely
+> bypass the guest OS so in that sense they're basically equal to pulling the
+> power plug on a computer, yet the device shutdown code still tries to do
+> everything as graceful as possible, draining all in-flight requests etc.
+> I explain one of the use problems/use cases below.
+>
+> If we have a server running disk requests that is for whatever reason
+> hanging or not able to process any more IO requests but still has some
+> in-flight requests previously issued by the guest OS, QEMU will still
+> try to drain the vring before shutting down even if it was explicitly
+> asked to do a "force shutdown" via SIGTERM or QMP quit. This is not
+> useful since the guest is no longer running at this point since it was
+> killed by QEMU earlier in the process. At this point, we don't care
+> about whatever in-flight IO it might have pending, we just want QEMU
+> to shut down.
+>
+> Add an option called "skip-get-vring-base-on-force-shutdown" to allow
+> SIGTERM/QMP quit() to actually act like a "force shutdown" at least
+> for vhost-user-blk devices since those require the drain operation
+> to shut down gracefully unlike, for example, network devices.
+>
+> Daniil Tatianin (3):
+>    softmmu/runstate: add a way to detect force shutdowns
+>    vhost: add a helper for force stopping a device
+>    vhost-user-blk: add an option to skip GET_VRING_BASE for force
+>      shutdown
+>
+>   hw/block/vhost-user-blk.c          |  9 +++++-
+>   hw/virtio/vhost.c                  | 52 ++++++++++++++++++++++--------
+>   include/hw/virtio/vhost-user-blk.h |  2 ++
+>   include/hw/virtio/vhost.h          | 15 +++++++++
+>   include/system/runstate.h          |  1 +
+>   system/runstate.c                  | 10 ++++++
+>   6 files changed, 75 insertions(+), 14 deletions(-)
+>
 
