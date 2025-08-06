@@ -4,101 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C77EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 00:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0247BC87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 00:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujo9Y-0007Rk-7F; Wed, 06 Aug 2025 20:06:40 -0400
+	id 1ujor8-0000WW-FF; Wed, 06 Aug 2025 20:51:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujo9V-0007Qy-Ro
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 20:06:38 -0400
-Received: from skyblue.cherry.relay.mailchannels.net ([23.83.223.167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1ujo9U-0004js-2W
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 20:06:37 -0400
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id C65B31A5024;
- Thu,  7 Aug 2025 00:06:33 +0000 (UTC)
-Received: from pdx1-sub0-mail-a238.dreamhost.com
- (100-98-216-71.trex-nlb.outbound.svc.cluster.local [100.98.216.71])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 56BD51A4DD7;
- Thu,  7 Aug 2025 00:06:33 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1754525193; a=rsa-sha256;
- cv=none;
- b=wKe4hBTT/6o7ZdgUirjUChtfmEYLEQOcEeu7tzmTNkONMIFDT3sY6AvgnmPfSOaHKZ9h63
- fyXZl/D0pJMNeev4eKjYRBLV8IH7A/LCFU1uFeE0l0EtJMtcCFJY0J2l15dI87okjHp74X
- zMsjPJZ+K+Ixl2T601yU8Can2IfwJ/bXfTjrvtRXKKVfTNROJJMiQHfeboaFMhXDfBWFvu
- 3WLkFf+zBCzjlKOzpOpX2ZJfluTUZGgrEmGDgVHMgarffFXxd0OoDNz3cSkgpxbiFzqpBo
- DfkAgU/MAYrvr/fQgmXVkFeViiUGCTPOse1By60gsuxuGcE0xJwHHUdpsCoKhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1754525193;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=lC+S+PMJ0IPLx3hpttP4fsD+ikeDBNPckxX0HDz441I=;
- b=m2H4hsz6AFWCYcjBtmk/IPxhqFvkWbkwnwyFLlO85mxSW/7Gb8kINDxzjr3ffIpqCBcrTK
- GLh+6PmR1BJiWRgNSpjcE2QzgN0AtPS7d4BZ8JNp+yIhPz45IJ6+GfAC7WmII0j7+Ql0lu
- HUpVSoy8n8+vRlTP4RITHU6/daKBZdjNLDVqNJjwcaf5/7MfxMfQeTixRw6EeenhDpvLf8
- nFZcw1uTzPw+R4CdqS/a8swqFSjPgBs2+6KD9/SCv5kE2dl+ZEgXvy4FL7XELFFjtFX0oK
- hpFJJUeH2KMAZdGn99HEA918WkS8dqB7QE/68n1CpIAyHuoqa0HsCmdhBXqz3g==
-ARC-Authentication-Results: i=1; rspamd-565df7d78-rkwqc;
- auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Obese-Bottle: 6e5936080bf291ed_1754525193604_1346270259
-X-MC-Loop-Signature: 1754525193603:634501519
-X-MC-Ingress-Time: 1754525193603
-Received: from pdx1-sub0-mail-a238.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.98.216.71 (trex/7.1.3); Thu, 07 Aug 2025 00:06:33 +0000
-Received: from offworld (syn-076-167-199-067.res.spectrum.com [76.167.199.67])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a238.dreamhost.com (Postfix) with ESMTPSA id 4by6s45jSYz4w; 
- Wed,  6 Aug 2025 17:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1754525193;
- bh=lC+S+PMJ0IPLx3hpttP4fsD+ikeDBNPckxX0HDz441I=;
- h=Date:From:To:Cc:Subject:Content-Type;
- b=JyUSpzjkAV8zv1fVt7e+S3xHg5yS4W4UbslmT17xiWzCzqlEVjXsLCgxM2yMhdE1O
- v4P2Do564v90Ndp6iJ+DtY6NEUlvVT5j0GOi+V01vFS9LS3R9BC+SACproz5Jh1hu8
- FXjlavz6CX+fG2JmfdeWxRQI5MRUQ0jXCbpwsaJoTo4Iv3ymM0tWlmDFaIKQZ9jaAs
- MIMjdehoh5iOHXev7DuNTn/hp4QEhxzTkjyVMUnEOr1PuBWD5CElaEKq42KCl3Ak5H
- 1j1hm77ZM+RhJq2+HgC1Qa2hqmVv7Fr/XsKdsBHQdeLOS00LhfQyfGSci9hDtKl5u4
- oEWB6+g7qPeHw==
-Date: Wed, 6 Aug 2025 17:06:30 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: jonathan.cameron@huawei.com
-Cc: ira.weiny@intel.com, alucerop@amd.com, a.manzanares@samsung.com,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/4] hw/cxl: Allow BI by default in Window restrictions
-Message-ID: <20250807000630.w5k6kzc3sahup6vr@offworld>
-References: <20250806055708.196851-1-dave@stgolabs.net>
- <20250806055708.196851-4-dave@stgolabs.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250806055708.196851-4-dave@stgolabs.net>
-User-Agent: NeoMutt/20220429
-Received-SPF: pass client-ip=23.83.223.167; envelope-from=dave@stgolabs.net;
- helo=skyblue.cherry.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <31eiTaAgKCkIflmppmivksskpi.gsquiqy-hiziprsrkry.svk@flex--bhillier.bounces.google.com>)
+ id 1ujno4-0008AH-RU
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 19:44:28 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <31eiTaAgKCkIflmppmivksskpi.gsquiqy-hiziprsrkry.svk@flex--bhillier.bounces.google.com>)
+ id 1ujno2-0002P2-2i
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 19:44:27 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-76bef13c254so463642b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 16:44:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1754523861; x=1755128661; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ONbEKVN/AZlJkSiX9R+Cf20vBrI+oWoGS0g6VeJ0HZ4=;
+ b=tJY8bFRHSc1d25o9BIwp4Eum9H6vNuJQTYlIFtZbf1kEPfZ+WT8YlJLX7ywzoLjhHY
+ xDPdEApFiVq1R5bes70HYLXWqHiMQZ1WhhnSyGr3qbnCVE3P/ky1/lEy5oqCQ3y0Ez7f
+ 3N+K/YJkHJzUbiAR9CVGWHy7iHA+k9FBF/1LXRt2jhhr4G70kqhjlUSqUF5xpe8GFD13
+ aJ4qtIqNluEoJNAOB+ZWX3SAdLKf7HOVQE8LZ3C6nkJRp4FIzA5j9eGAu/C0dhxeNG++
+ P3+oK9GDWmrCC+k4hiCGjlklSpy26Fuy5E4kyBjsutDD28/EAfwmbh0Hy1ahpavNPfvz
+ sLDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754523861; x=1755128661;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ONbEKVN/AZlJkSiX9R+Cf20vBrI+oWoGS0g6VeJ0HZ4=;
+ b=IhNYepxtuYmufP2arTmCVz/37fpdq2uKzRc5I8t6szAxJBWAFLrwu4Zh71+ye1cx/1
+ gz734lBXHQJgLybhz3lob6iyMUPjpZHeXLkeRuKqc7K3BiTVRG8tsqCooxaeybB5b4Fb
+ /VOoa5MUGrWLQ3wkf9py+6R5X0sm6UkfN60nN29x+no3lHCgnuJZUCpauHIckDYvXAEp
+ Sfwt+FoDJcZMPNkQV/2hArX6Gbe1hrlOg/ZRM7f2tozV8+GVB55nz9KcsSS/kKp+C/kU
+ SM6+9peW8bdbbIzde4UugONkVgbzHbCJ8VXTNaZUCkBkwurD32g9C8rpsjJ/LSrXcg8G
+ PMhA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFFOaJAxjSoNQjpb8KzgbP9KlI/JNckvBQMj6pE2GmPqiLrjqtO5GsKR/Jybb5DUqIPI5tEhNoddCe@nongnu.org
+X-Gm-Message-State: AOJu0YzIBKFAdxEZnQ72M6zRnAeAJRFZaCtiKmcdnWgQyB6qitm21bJy
+ M2LNbdTjz6+DGMcHG6wjPbqzl0R0rabuYhnpns+iPctV3meZE6M5uvESjAheGJD8MZFy2Idi/4y
+ MQyYKzgxnVXYZfA==
+X-Google-Smtp-Source: AGHT+IFkXoo7ViXbM9I2Z0jYSlQEa508nrqi89YBurCasSjIKm8bxwaFvam8jkmtBZu4uiC5tIlA2//gLl9Blw==
+X-Received: from pfbfm16.prod.google.com
+ ([2002:a05:6a00:2f90:b0:748:fa5b:4163])
+ (user=bhillier job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:4c8d:b0:76b:ea1e:78b9 with SMTP id
+ d2e1a72fcca58-76c3727388emr1573822b3a.1.1754523861003; 
+ Wed, 06 Aug 2025 16:44:21 -0700 (PDT)
+Date: Wed,  6 Aug 2025 23:43:42 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.50.1.703.g449372360f-goog
+Message-ID: <20250806234342.811926-1-bhillier@google.com>
+Subject: [PATCH 1/1] hw/sensor: add stub for ADM1266 blackbox
+From: Ben Hillier <bhillier@google.com>
+To: wuhaotsh@google.com, kfting@nuvoton.com
+Cc: philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Titus Rwantare <titusr@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=31eiTaAgKCkIflmppmivksskpi.gsquiqy-hiziprsrkry.svk@flex--bhillier.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 06 Aug 2025 20:51:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,65 +95,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 05 Aug 2025, Davidlohr Bueso wrote:
+From: Titus Rwantare <titusr@google.com>
 
->diff --git a/qemu-options.hx b/qemu-options.hx
->index 1f862b19a676..ef6072bd8b59 100644
->--- a/qemu-options.hx
->+++ b/qemu-options.hx
->@@ -142,7 +142,7 @@ SRST
->             -machine memory-backend=pc.ram
->             -m 512M
->
->-    ``cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]``
->+    ``cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity,restrictions=restrictions]``
->         Define a CXL Fixed Memory Window (CFMW).
->
->         Described in the CXL 2.0 ECN: CEDT CFMWS & QTG _DSM.
->@@ -168,6 +168,8 @@ SRST
->         interleave. Default 256 (bytes). Only 256, 512, 1k, 2k,
->         4k, 8k and 16k granularities supported.
->
->+	``restrictions=restrictions`` bitmask of restrictions of the CFMW.
+Signed-off-by: Titus Rwantare <titusr@google.com>
+---
+ hw/sensor/adm1266.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-hmm so there is a doc build error I missed:
+diff --git a/hw/sensor/adm1266.c b/hw/sensor/adm1266.c
+index 9017ce6116..cd11526c2b 100644
+--- a/hw/sensor/adm1266.c
++++ b/hw/sensor/adm1266.c
+@@ -75,6 +75,7 @@ typedef struct ADM1266State {
+ static const uint8_t adm1266_ic_device_id[] = {0x03, 0x41, 0x12, 0x66};
+ static const uint8_t adm1266_ic_device_rev[] = {0x08, 0x01, 0x08, 0x07, 0x0,
+                                                 0x0, 0x07, 0x41, 0x30};
++static const uint8_t adm1266_blackbox_info[] = {0x04, 0x00, 0x00, 0x00, 0x00};
+ 
+ static void adm1266_exit_reset(Object *obj, ResetType type)
+ {
+@@ -125,6 +126,17 @@ static uint8_t adm1266_read_byte(PMBusDevice *pmdev)
+         pmbus_send(pmdev, adm1266_ic_device_rev, sizeof(adm1266_ic_device_rev));
+         break;
+ 
++    case ADM1266_BLACKBOX_CONFIG:
++        return 0;
++
++    case ADM1266_READ_BLACKBOX:
++        return 0;
++
++    case ADM1266_BLACKBOX_INFORMATION:
++        pmbus_send(pmdev, adm1266_blackbox_info,
++                   sizeof(adm1266_blackbox_info));
++        break;
++
+     default:
+         qemu_log_mask(LOG_UNIMP,
+                       "%s: reading from unimplemented register: 0x%02x\n",
+@@ -154,6 +166,9 @@ static int adm1266_write_data(PMBusDevice *pmdev, const uint8_t *buf,
+         pmbus_receive_block(pmdev, (uint8_t *)s->mfr_rev, sizeof(s->mfr_rev));
+         break;
+ 
++    case ADM1266_BLACKBOX_CONFIG:
++    case ADM1266_READ_BLACKBOX:
++    case ADM1266_BLACKBOX_INFORMATION:
+     case ADM1266_SET_RTC:   /* do nothing */
+         break;
+ 
+-- 
+2.50.1.703.g449372360f-goog
 
-qemu-options.hx:212:Block quote ends without a blank line; unexpected unindent.
-
-------
-
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ef6072bd8b59..da642642eafc 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -168,7 +168,7 @@ SRST
-          interleave. Default 256 (bytes). Only 256, 512, 1k, 2k,
-          4k, 8k and 16k granularities supported.
-  
--	``restrictions=restrictions`` bitmask of restrictions of the CFMW.
-+        ``restrictions=restrictions`` bitmask of the restrictions of the CFMW.
-  
-          Example:
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->+
->         Example:
->
->         ::
->-- 
->2.39.5
->
 
