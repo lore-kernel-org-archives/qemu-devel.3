@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78F9C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 16:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF13C87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 16:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujgZR-0001Ou-R9; Wed, 06 Aug 2025 12:00:56 -0400
+	id 1ujgeE-0006nm-0a; Wed, 06 Aug 2025 12:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1ujfpy-0001UP-Oa; Wed, 06 Aug 2025 11:13:56 -0400
+ id 1ujfqW-0002Mn-Ot; Wed, 06 Aug 2025 11:14:28 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1ujfpw-0006Hp-RE; Wed, 06 Aug 2025 11:13:54 -0400
+ id 1ujfqU-0006Ly-U1; Wed, 06 Aug 2025 11:14:28 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXHj4tcZNo2CzWBA--.49S2;
- Wed, 06 Aug 2025 23:13:49 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwB3DWFQcZNoSlVLBA--.45959S2;
+ Wed, 06 Aug 2025 23:14:24 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCXIQnfcJNos_oJAA--.14849S13;
- Wed, 06 Aug 2025 23:13:48 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwC3QgpOcZNo6PoJAA--.18473S3;
+ Wed, 06 Aug 2025 23:14:22 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -31,21 +31,19 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC 10/11] hw/arm/smmuv3: Differentiate secure TLB entries via keying
-Date: Wed,  6 Aug 2025 23:11:33 +0800
-Message-Id: <20250806151134.365755-11-tangtao1634@phytium.com.cn>
+Subject: [RFC 11/11] hw/arm/smmuv3: Use iommu_index to represent SEC_SID
+Date: Wed,  6 Aug 2025 23:14:20 +0800
+Message-Id: <20250806151420.368359-1-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
-References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCXIQnfcJNos_oJAA--.14849S13
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWiSXH8HMAAAsk
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwC3QgpOcZNo6PoJAA--.18473S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWiSXH8HMgAAsm
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXr4UZr45Gr4fCr1xWw1fCrg_yoWrtw1Dpa
- 1IyrWYyr95CF1j9rn3CF42vFnI9w4kWrW7A39xWr90yFyDt348JF4vka1UCF93AryrGrs3
- Z34Ivr4kJr17W3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXry7Ary8Gw4UCFyDAFW8JFb_yoW5urW5pr
+ 4DWr4rKw4xGF13AF4fJa1kuF4Yg397WFW7Ja9rKan5AF18Awn7Zr9akFy5KryDtFW8Za17
+ Xa1j9rZrW3WjyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -73,127 +71,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To prevent aliasing between secure and non-secure translations for the
-same address space, the IOTLB lookup key must incorporate the security
-state of the transaction. Without this, a secure lookup could incorrectly
-hit a non-secure TLB entry and vice versa.
+The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) flag to
+select between two distinct programming interfaces: Secure and
+Non-secure. The QEMU model must reflect this fundamental hardware
+separation for all memory operations, including TLB lookups.
 
-A secure parameter has been added to smmu_get_iotlb_key. This flag
-is now part of the key generation, ensuring that secure and non-secure
-TLB entries are treated as distinct entities within the cache.
+This commit leverages the generic iommu_index to represent this
+security context. The core IOMMU layer now uses the SMMU's .attrs_to_index
+callback to map a transaction's secure attribute to an index (1 for
+secure, 0 for non-secure).
 
-This change is the final major refactoring required to correctly handle
-secure transactions, preventing cache pollution between the two security
-worlds.
+This index is then passed down to smmuv3_translate. Inside the
+translate function, the local is_secure flag is now derived directly
+from the iommu_index. This makes the iommu_index the clear QEMU
+equivalent of the architectural SEC_SID, cleanly separating the
+contexts for all subsequent lookups.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmu-common.c         | 28 ++++++++++++++++++----------
- include/hw/arm/smmu-common.h |  3 ++-
- 2 files changed, 20 insertions(+), 11 deletions(-)
+ hw/arm/smmuv3.c | 34 +++++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 80f94a85e7..5abec77a24 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -66,7 +66,7 @@ static guint smmu_iotlb_key_hash(gconstpointer v)
- 
-     /* Jenkins hash */
-     a = b = c = JHASH_INITVAL + sizeof(*key);
--    a += key->asid + key->vmid + key->level + key->tg;
-+    a += key->asid + key->vmid + key->level + key->tg + key->secure;
-     b += extract64(key->iova, 0, 32);
-     c += extract64(key->iova, 32, 32);
- 
-@@ -82,14 +82,14 @@ static gboolean smmu_iotlb_key_equal(gconstpointer v1, gconstpointer v2)
- 
-     return (k1->asid == k2->asid) && (k1->iova == k2->iova) &&
-            (k1->level == k2->level) && (k1->tg == k2->tg) &&
--           (k1->vmid == k2->vmid);
-+           (k1->vmid == k2->vmid) && (k1->secure == k2->secure);
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 972cbc872f..1a2e795985 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1137,6 +1137,33 @@ static void smmuv3_fixup_event(SMMUEventInfo *event, hwaddr iova)
+     }
  }
  
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
--                                uint8_t tg, uint8_t level)
-+                                uint8_t tg, uint8_t level, bool secure)
- {
-     SMMUIOTLBKey key = {.asid = asid, .vmid = vmid, .iova = iova,
--                        .tg = tg, .level = level};
-+                        .tg = tg, .level = level, .secure = secure};
++/*
++ * ARM SMMU IOMMU index mapping (implements SEC_SID from ARM SMMU):
++ * iommu_idx = 0: Non-secure transactions
++ * iommu_idx = 1: Secure transactions
++ *
++ * The iommu_idx parameter effectively implements the SEC_SID
++ * (Security Stream ID) attribute from the ARM SMMU architecture
++ * specification, which allows the SMMU to differentiate between
++ * secure and non-secure transactions at the hardware level.
++ */
++static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
++{
++    /*
++     * Map transaction attributes to IOMMU index:
++     * - Secure transactions (attrs.secure = 1) -> iommu_idx = 1
++     * - Non-secure transactions (attrs.secure = 0) -> iommu_idx = 0
++     * - Unspecified attributes are treated as non-secure for compat
++     */
++    return attrs.secure ? 1 : 0;
++}
++
++static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
++{
++    /* ARM SMMU supports 2 IOMMU indexes: non-secure (0) and secure (1) */
++    return 2;
++}
++
+ /* Entry point to SMMU, does everything. */
+ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+                                       IOMMUAccessFlags flag, int iommu_idx)
+@@ -1149,16 +1176,15 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+                            .inval_ste_allowed = false};
+     SMMUTranslationStatus status;
+     SMMUTransCfg *cfg = NULL;
++    bool is_secure = (iommu_idx == 1);
+     IOMMUTLBEntry entry = {
+-        .target_as = smmu_get_address_space(false),
++        .target_as = smmu_get_address_space(is_secure),
+         .iova = addr,
+         .translated_addr = addr,
+         .addr_mask = ~(hwaddr)0,
+         .perm = IOMMU_NONE,
+     };
+     SMMUTLBEntry *cached_entry = NULL;
+-    /* We don't support secure translation for now */
+-    bool is_secure = false;
  
-     return key;
+     qemu_mutex_lock(&s->mutex);
+ 
+@@ -2639,6 +2665,8 @@ static void smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+ 
+     imrc->translate = smmuv3_translate;
+     imrc->notify_flag_changed = smmuv3_notify_flag_changed;
++    imrc->attrs_to_index = smmuv3_attrs_to_index;
++    imrc->num_indexes = smmuv3_num_indexes;
  }
-@@ -111,7 +111,7 @@ static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
-         SMMUIOTLBKey key;
  
-         key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid,
--                                 iova & ~mask, tg, level);
-+                                 iova & ~mask, tg, level, cfg->secure);
-         entry = g_hash_table_lookup(bs->iotlb, &key);
-         if (entry) {
-             break;
-@@ -175,7 +175,7 @@ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *new)
-     }
- 
-     *key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
--                              tg, new->level);
-+                              tg, new->level, cfg->secure);
-     trace_smmu_iotlb_insert(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
-                             tg, new->level);
-     g_hash_table_insert(bs->iotlb, key, new);
-@@ -282,9 +282,13 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
-     uint8_t granule = tg ? tg * 2 + 10 : 12;
- 
-     if (ttl && (num_pages == 1) && (asid >= 0)) {
--        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova, tg, ttl);
-+        SMMUIOTLBKey key_nonsecure = smmu_get_iotlb_key(asid, vmid, iova,
-+                                                        tg, ttl, false);
-+        SMMUIOTLBKey key_secure = smmu_get_iotlb_key(asid, vmid, iova,
-+                                                     tg, ttl, true);
- 
--        if (g_hash_table_remove(s->iotlb, &key)) {
-+        if (g_hash_table_remove(s->iotlb, &key_nonsecure) ||
-+            g_hash_table_remove(s->iotlb, &key_secure)) {
-             return;
-         }
-         /*
-@@ -314,9 +318,13 @@ void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
-     int asid = -1;
- 
-    if (ttl && (num_pages == 1)) {
--        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, ipa, tg, ttl);
-+        SMMUIOTLBKey key_nonsecure = smmu_get_iotlb_key(asid, vmid, ipa,
-+                                                        tg, ttl, false);
-+        SMMUIOTLBKey key_secure = smmu_get_iotlb_key(asid, vmid, ipa,
-+                                                     tg, ttl, true);
- 
--        if (g_hash_table_remove(s->iotlb, &key)) {
-+        if (g_hash_table_remove(s->iotlb, &key_nonsecure) ||
-+            g_hash_table_remove(s->iotlb, &key_secure)) {
-             return;
-         }
-     }
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index e07a9c35e7..968c2eecbe 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -154,6 +154,7 @@ typedef struct SMMUIOTLBKey {
-     int vmid;
-     uint8_t tg;
-     uint8_t level;
-+    bool secure;
- } SMMUIOTLBKey;
- 
- typedef struct SMMUConfigKey {
-@@ -234,7 +235,7 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
-                                 SMMUTransTableInfo *tt, hwaddr iova);
- void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
- SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
--                                uint8_t tg, uint8_t level);
-+                                uint8_t tg, uint8_t level, bool secure);
- SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, bool is_secure);
- void smmu_iotlb_inv_all(SMMUState *s);
- void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
+ static const TypeInfo smmuv3_type_info = {
 -- 
 2.34.1
 
