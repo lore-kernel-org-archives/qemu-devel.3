@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDD6C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562B1C87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhjI-0005ct-LS; Wed, 06 Aug 2025 13:15:08 -0400
+	id 1uji53-0003tG-FY; Wed, 06 Aug 2025 13:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujhKQ-0005EZ-JQ
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:49:27 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uji50-0003sM-RH
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:37:34 -0400
+Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujhKO-0002H4-Ra
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 12:49:26 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-454f428038eso1109355e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 09:49:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uji4y-0000bH-SK
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:37:34 -0400
+Received: by mail-qk1-x72d.google.com with SMTP id
+ af79cd13be357-7e050bd078cso10017785a.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 10:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754498962; x=1755103762; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=G/IkzaX4jKGRMA+i2Ktavn4JsZl67/autyTljYzlV2g=;
- b=Tuk/NNPI1koL4pW82q0LwWyjFLb0P4X7hNEiECJZhw0HOFrlHZBjYivoNyPPm5NNmo
- E5uUwAuA+phUvRT7TCEU7jBDs8QrcXhKi4hrw360a5ZZSZgSLu6l9kKRDTZ+zFCS0mZd
- tn9wOi9iHFY92B6jbfX4HLS89DR3dAkDc3Tfs77dxtpOB+An3iIMGtiRVbCk7WaIGAfb
- +xLs22cTT+kipcJ8s91it6cd2BVWxQtxbguEYXvfWI9fPxFufkLmcYU2B7RFuJi7/MdT
- gOQDgJ6ksv2jhTamCEe2hm1PG9XHstuZcVbuoWgd+RHL/ToDET+XFy6rtXVgRHPx3OOk
- VaAQ==
+ d=gmail.com; s=20230601; t=1754501851; x=1755106651; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=W5Gc8j+Yah2WBVa5D5q+f9Gu479kK/ramh6diozHE8o=;
+ b=jPgFTPy4zB8z7iicz1tJUe5s2Ss7Vai9k7bodNG0c3OudX2KhXwih97qTqhi5adVWV
+ Z9BVPO8xcUnTPJ1n8P47745O+5fnsMMs4APgD/dS7fzpM29VKy+oXJzjwJ6YAbmsq0h/
+ KbEkZ2yRJJYLRMmWKg+1XhqynCSUBfCUVQvRcYa2VievHR74yYk7hIF5Ih8g6rmcKtOz
+ 15SjQnhEzsjCi46047/bMXhkU5qcovX3Pci0mlU6bL+c/XSTyvc17Zf775nRqUp4yQZ2
+ 61Xiu+W6KViRg9PtsxcW1C6Ti4M+HXmFV4nLGPlALAE/5tsN7egleZmQFgR1MzQeXL1J
+ 72Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754498962; x=1755103762;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G/IkzaX4jKGRMA+i2Ktavn4JsZl67/autyTljYzlV2g=;
- b=dd7nxlOUdE3XhuXw9kcs6VQbIJ+lUPLFcqAo3iNTsu5mPpRQ13yorpc7b8ixUOrcY0
- iQONWMQ47kwaVb+oOz3rEpbLz1J9fc0j6hyczMK52FPoGcfo992ehJm8quaGa8Lci4Jk
- nmMT4DNYCd2MjfwzNlqKhFbgcRUsZiszzpGFHxNLLA/KLI517vpIEDjFhdWsCKwiV+Rg
- tlDDbLuYBJF08z6mA6Xg+60OYknqXYj6hdiaxJQDhq60pc7Ou57rGjYI0sBRwnI0Uxov
- TS3LHC2BhQDCADSpbxlwmYT0Nw9ziSLKO36kc8cQWEowUWCaqdbw7cHl4JjqUfPeOxZL
- HhMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6xPVnCWqLCnRsi3QPIVzH9O9hTiD18Jm6pmm3t9n8gYsshWerqLXniHQJFSthudh2ixL1M5JMGp2N@nongnu.org
-X-Gm-Message-State: AOJu0YyHkDLqkrh4IWTvcs8i8RwEVe1+p+oq+pp+9Q80sZkkdeFrJ7i4
- tTJoeg6YIJEmVYxYgsGMK66aEYIy9nXzhuv5FZZsjgqfTGQK8fEWGl/u38aPvh+E1Cc=
-X-Gm-Gg: ASbGncuP6Er01yhsL2nFyKbiXVEENwGSoQu1MiRHZRWxwhDQP4YyaKBwpz/Hwip4y+B
- yv53Ak2Wxmrp1M0pIzdQNT+j6wOGs/s3E9VNMxMmKFooADk6TAHW0V1rNwBmfpcxTIEj+SknEuV
- bxWva04VLNHddjXV6ayAbgiRpDlwB+G9wP1DktkeGM78ABtW8/OrFdHeATeaLc2xYcdIuFuhsNQ
- orLzsFifxK0EUWBkF807xyhlSHah+M6cZ6AffM93tQnnMd+78aDCrk0fgsM0hj/u1iDRogCch6I
- 7zVlIeDFU4SkuJ08piJ79vFwH9dHdS3nnd7nvqK993s29J4UnZKcbJO2tywTs7/gOxIFqCBMLJm
- qgrjFDbZ4mRBdu2IotbobzAOy59711otixZU/5vHG+oP/YAVHX5Yq0G/BCZ2BY3sYKf2DC6ZR8k
- Aw
-X-Google-Smtp-Source: AGHT+IG08PgWcvVT3UCfrEUHlpiv9B6nwRDBYC+9mW2NdYr7AnzGFzCzXGYIzFh8gK7WEzK3DY5noQ==
-X-Received: by 2002:a05:600c:840f:b0:459:d709:e5d4 with SMTP id
- 5b1f17b1804b1-459e6fb8315mr38204015e9.0.1754498962260; 
- Wed, 06 Aug 2025 09:49:22 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3abed3sm23467152f8f.10.2025.08.06.09.49.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 09:49:21 -0700 (PDT)
-Message-ID: <51c33c4e-6c19-423c-9c69-9a61302d5a90@linaro.org>
-Date: Wed, 6 Aug 2025 18:49:20 +0200
+ d=1e100.net; s=20230601; t=1754501851; x=1755106651;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W5Gc8j+Yah2WBVa5D5q+f9Gu479kK/ramh6diozHE8o=;
+ b=fYibsW813jKvq3LbE2boeNZughOVeEXaNqhgyjb0xOTGO1xN0O1B04SJ6lY/3w5Ub1
+ ARXx+xmZTV54AdAQPJ7sgMxVhMkLTKfWh7Ht1HfIZQ5oOdw2FXO8O6Ce0zauUyBaQ7RI
+ m0ICyLJoDkeIWKbncBIfEgKcHUtjWvGPFpbBzwS7NBUVJX3sFrKzUez0DyHH8rC/RiFG
+ eGWpzN2HleHxR6DmooD0qIacVo0gcO8NDADY4FovmAeLx8QSmaEtuSq1YssIjtABS4ec
+ 2SD2LoGTcu97MtSKCzrPXC5XFyvtWP6Ihtc7DkM4vIU5q82ciPZDVp0LMSEP834HUst6
+ T6qw==
+X-Gm-Message-State: AOJu0YzpaOTZWFe8eIoUKAzWOENubLwD553b1PFn37vO4KnmPskf3FU0
+ qskHHQfzwwOWI++ewQKuq2LlpxtLU3XwSQc14q+hw7lepFVNCfa42T9P
+X-Gm-Gg: ASbGncvAHmRHpJ+yiAe1f1im6GCLlR3nmRRzSmlZUaoAWHExIkJ19Vfc3fLmsnC/6P8
+ ehHFRgDSyaKJXygh6b7wXmxQgxvkx2NDuEfHUkf4dtz8I0zygYvCNK6pFA5zbSi00eggOuy10dK
+ QfBlJcgblSSRCAxvwyoHRToD0j6RArLeu1NvmDiQn4KtACN/sj++EtAHF4tqJSA1y71mgHiRqDB
+ D8ryvuruCC0BqqpR5RkUSbhx1cxRNb74Fg88k7cxeg6xO3gUi8nCaXcycsEx4n/D9J3S7jVH2WC
+ FW3CpxUxC/W/jPrsAc1RCfG+PDO8zxCezKWvTiO386Aa2HOd3VPqr/iMurJD/8/xnHBMY7ya88/
+ 9xd1yrZV6rjtogKTHXuRSDfy2kQP1hmGktrabUk6Et65c1do=
+X-Google-Smtp-Source: AGHT+IFIuH+2xAoVztu+oI7P+nuvkKuKozPjVAZ23k/qqr9rtYv4sgOsg50lrKNEZenGn5k1FKbklA==
+X-Received: by 2002:a05:622a:1342:b0:4b0:777f:6287 with SMTP id
+ d75a77b69052e-4b09250414dmr36547601cf.3.1754501851042; 
+ Wed, 06 Aug 2025 10:37:31 -0700 (PDT)
+Received: from nuc (192-0-220-237.cpe.teksavvy.com. [192.0.220.237])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b06ac5bd99sm41014781cf.21.2025.08.06.10.37.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 10:37:30 -0700 (PDT)
+Date: Wed, 6 Aug 2025 13:37:28 -0400
+From: Mark Johnston <markj@freebsd.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH] 9pfs: Add FreeBSD support
+Message-ID: <aJOS2A9dRdqks-fp@nuc>
+References: <aIEGDjMex-DG-pmr@nuc> <1989897.fkXqvmx5VE@silver>
+ <aIos9lb1dBuDBq2E@nuc> <2268148.dRjqHlHdj4@silver>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] virtio-net: make VirtIONet.vlans an array instead
- of a pointer
-To: Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-References: <20250802142115.41638-1-mjt@tls.msk.ru>
- <20250803085443.318611-1-mjt@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250803085443.318611-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2268148.dRjqHlHdj4@silver>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
+ envelope-from=markjdb@gmail.com; helo=mail-qk1-x72d.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ HK_RANDOM_ENVFROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,23 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/25 10:54, Michael Tokarev wrote:
-> This field is a fixed-size buffer (number of elements is MAX_VLAN,
-> known at build time).  There's no need to allocate it dynamically,
-> it can be made an integral part of VirtIONet structure.
+On Tue, Aug 05, 2025 at 01:49:44PM +0200, Christian Schoenebeck wrote:
+> On Wednesday, July 30, 2025 4:32:22 PM CEST Mark Johnston wrote:
+> > On Tue, Jul 29, 2025 at 06:09:35PM +0200, Christian Schoenebeck wrote:
+> > > On Wednesday, July 23, 2025 5:55:58 PM CEST Mark Johnston wrote:
+> [...]
+> > Thank you for taking a look.
+> > 
+> > I'll certainly be around to help deal with issues and patches relating
+> > to 9pfs+FreeBSD hosts.  It's hard to prove that, but for what it's worth
+> > I use QEMU fairly extensively for FreeBSD development when I can't use
+> > the native hypervisor, and that's not likely to change anytime soon.
+> > 
+> > Would adding myself to MAINTAINERS for virtio-9pfs (or a new
+> > virtio-9pfs-freebsd category) be appropriate in that case?
 > 
-> This field is the only user of VMSTATE_BUFFER_POINTER_UNSAFE() macro.
+> Good to hear that you will be around!
 > 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
-> v2: use VMSTATE_BUFFER_UNSAFE instead of VMSTATE_BUFFER
->      as suggested by Akihiko Odaki.
->      Only the first patch is resent, patch 2/2 is the same.
-> 
->   hw/net/virtio-net.c            | 9 ++++-----
->   include/hw/virtio/virtio-net.h | 2 +-
->   2 files changed, 5 insertions(+), 6 deletions(-)
+> I leave it to you whether you want to add yourself as reviewer of patches to
+> MAINTAINER's 9pfs section.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Ok.  I'll leave myself off the list for now then.  If the patch is
+applied and any FreeBSD-related problems crop up, please let me know of
+course I'll try to fix them ASAP.  If this turns out to be a regular
+occurrence (hopefully not), I can add myself and be more proactive about
+responding to patches or bug reports.
 
+> > > > diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
+> > > > index a1924fe3f0..7315b32591 100644
+> > > > --- a/hw/9pfs/9p-util.h
+> > > > +++ b/hw/9pfs/9p-util.h
+> > > > @@ -21,6 +21,14 @@
+> > > >  #define O_PATH_9P_UTIL 0
+> > > >  #endif
+> > > >  
+> > > > +#ifdef CONFIG_FREEBSD
+> > > > +/*
+> > > > + * FreeBSD does not have these flags, so we can only emulate them (racily).
+> > > > + */
+> > > > +#define XATTR_CREATE    0x1
+> > > > +#define XATTR_REPLACE   0x2
+> > > > +#endif
+> > > > +
+> > > 
+> > > What do you mean with "racily" here?
+> > 
+> > FreeBSD cannot atomically check for the existence of and set an extattr,
+> > the system call interface simply doesn't support it today.  This means
+> > that fsetxattrat_nofollow() needs back-to-back system calls to check for
+> > the existence of an attribute and then potentially set it.
+> 
+> Ah, I was misinterpreting your comment as if it were "racily defining" the
+> macros. Maybe change the comment to something like "... can only emulate their
+> intended behaviour (racily) ...".
+
+Done.  I'll send out a v2 shortly.
 
