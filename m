@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE4FC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 16:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78F9C87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 16:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujgYE-00075z-6r; Wed, 06 Aug 2025 11:59:38 -0400
+	id 1ujgZR-0001Ou-R9; Wed, 06 Aug 2025 12:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1ujfph-000145-Cm; Wed, 06 Aug 2025 11:13:39 -0400
+ id 1ujfpy-0001UP-Oa; Wed, 06 Aug 2025 11:13:56 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1ujfpd-0006Ee-8G; Wed, 06 Aug 2025 11:13:35 -0400
+ id 1ujfpw-0006Hp-RE; Wed, 06 Aug 2025 11:13:54 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXX7cXcZNoaSrWBA--.36S2;
- Wed, 06 Aug 2025 23:13:27 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXHj4tcZNo2CzWBA--.49S2;
+ Wed, 06 Aug 2025 23:13:49 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCXIQnfcJNos_oJAA--.14849S10;
- Wed, 06 Aug 2025 23:13:26 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwCXIQnfcJNos_oJAA--.14849S13;
+ Wed, 06 Aug 2025 23:13:48 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
@@ -31,22 +31,21 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC 07/11] hw/arm/smmuv3: Add separate address space for secure SMMU
- accesses
-Date: Wed,  6 Aug 2025 23:11:30 +0800
-Message-Id: <20250806151134.365755-8-tangtao1634@phytium.com.cn>
+Subject: [RFC 10/11] hw/arm/smmuv3: Differentiate secure TLB entries via keying
+Date: Wed,  6 Aug 2025 23:11:33 +0800
+Message-Id: <20250806151134.365755-11-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
 References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCXIQnfcJNos_oJAA--.14849S10
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWiSXH8HKgAAs+
+X-CM-TRANSID: AQAAfwCXIQnfcJNos_oJAA--.14849S13
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWiSXH8HMAAAsk
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKr15AF13XFy5Kr4UGw4fuFg_yoWxCFW7pF
- Z3CrZxt3yYka1xArZ3Xr1ku3W8C3s5WFyUGrZ7CwnYkF13Xr13ArsFk345G34kCry8ta1x
- ZF17Zr4fX3WYq3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxXr4UZr45Gr4fCr1xWw1fCrg_yoWrtw1Dpa
+ 1IyrWYyr95CF1j9rn3CF42vFnI9w4kWrW7A39xWr90yFyDt348JF4vka1UCF93AryrGrs3
+ Z34Ivr4kJr17W3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -74,182 +73,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the Arm architecture, SMMU-originated memory accesses,
-such as fetching commands or writing events for a secure stream, must
-target the Secure Physical Address (PA) space. The existing model sends
-all DMA to the global address_space_memory.
+To prevent aliasing between secure and non-secure translations for the
+same address space, the IOTLB lookup key must incorporate the security
+state of the transaction. Without this, a secure lookup could incorrectly
+hit a non-secure TLB entry and vice versa.
 
-This patch introduces the infrastructure to differentiate between secure
-and non-secure memory accesses. A weak global symbol,
-arm_secure_address_space, is added, which can be provided by the
-machine model to represent the Secure PA space.
+A secure parameter has been added to smmu_get_iotlb_key. This flag
+is now part of the key generation, ensuring that secure and non-secure
+TLB entries are treated as distinct entities within the cache.
 
-A new helper, smmu_get_address_space(), selects the target address
-space based on the is_secure context. All internal DMA calls
-(dma_memory_read/write) are updated to use this helper. Additionally,
-the attrs.secure bit is set on transactions targeting the secure
-address space.
+This change is the final major refactoring required to correctly handle
+secure transactions, preventing cache pollution between the two security
+worlds.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmu-common.c         | 10 +++++++++-
- hw/arm/smmuv3.c              | 24 ++++++++++++------------
- hw/arm/virt.c                |  5 +++++
- include/hw/arm/smmu-common.h | 13 +++++++++++++
- 4 files changed, 39 insertions(+), 13 deletions(-)
+ hw/arm/smmu-common.c         | 28 ++++++++++++++++++----------
+ include/hw/arm/smmu-common.h |  3 ++-
+ 2 files changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 28d6d1bc7f..0877248a88 100644
+index 80f94a85e7..5abec77a24 100644
 --- a/hw/arm/smmu-common.c
 +++ b/hw/arm/smmu-common.c
-@@ -29,6 +29,14 @@
- #include "hw/arm/smmu-common.h"
- #include "smmu-internal.h"
+@@ -66,7 +66,7 @@ static guint smmu_iotlb_key_hash(gconstpointer v)
  
-+/* Global state for secure address space availability */
-+bool arm_secure_as_available;
-+
-+void smmu_enable_secure_address_space(void)
-+{
-+    arm_secure_as_available = true;
-+}
-+
- /* IOTLB Management */
+     /* Jenkins hash */
+     a = b = c = JHASH_INITVAL + sizeof(*key);
+-    a += key->asid + key->vmid + key->level + key->tg;
++    a += key->asid + key->vmid + key->level + key->tg + key->secure;
+     b += extract64(key->iova, 0, 32);
+     c += extract64(key->iova, 32, 32);
  
- static guint smmu_iotlb_key_hash(gconstpointer v)
-@@ -341,7 +349,7 @@ static int get_pte(dma_addr_t baseaddr, uint32_t index, uint64_t *pte,
-         (MemTxAttrs) { .unspecified = true };
+@@ -82,14 +82,14 @@ static gboolean smmu_iotlb_key_equal(gconstpointer v1, gconstpointer v2)
  
-     /* TODO: guarantee 64-bit single-copy atomicity */
--    ret = ldq_le_dma(&address_space_memory, addr, pte, attrs);
-+    ret = ldq_le_dma(smmu_get_address_space(is_secure), addr, pte, attrs);
+     return (k1->asid == k2->asid) && (k1->iova == k2->iova) &&
+            (k1->level == k2->level) && (k1->tg == k2->tg) &&
+-           (k1->vmid == k2->vmid);
++           (k1->vmid == k2->vmid) && (k1->secure == k2->secure);
+ }
  
-     if (ret != MEMTX_OK) {
-         info->type = SMMU_PTW_ERR_WALK_EABT;
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index bcf06679e1..69b19754f1 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -128,8 +128,8 @@ static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd, bool is_secure)
-         (MemTxAttrs) { .secure = 1 } :
-         (MemTxAttrs) { .unspecified = true };
+ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
+-                                uint8_t tg, uint8_t level)
++                                uint8_t tg, uint8_t level, bool secure)
+ {
+     SMMUIOTLBKey key = {.asid = asid, .vmid = vmid, .iova = iova,
+-                        .tg = tg, .level = level};
++                        .tg = tg, .level = level, .secure = secure};
  
--    ret = dma_memory_read(&address_space_memory, addr, cmd, sizeof(Cmd),
--                          attrs);
-+    ret = dma_memory_read(smmu_get_address_space(is_secure), addr, cmd,
-+                          sizeof(Cmd), attrs);
-     if (ret != MEMTX_OK) {
-         return ret;
-     }
-@@ -152,8 +152,8 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in, bool is_secure)
-     for (i = 0; i < ARRAY_SIZE(evt.word); i++) {
-         cpu_to_le32s(&evt.word[i]);
-     }
--    ret = dma_memory_write(&address_space_memory, addr, &evt, sizeof(Evt),
--                           attrs);
-+    ret = dma_memory_write(smmu_get_address_space(is_secure), addr, &evt,
-+                           sizeof(Evt), attrs);
-     if (ret != MEMTX_OK) {
-         return ret;
-     }
-@@ -360,8 +360,8 @@ static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
+     return key;
+ }
+@@ -111,7 +111,7 @@ static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
+         SMMUIOTLBKey key;
  
-     trace_smmuv3_get_ste(addr);
-     /* TODO: guarantee 64-bit single-copy atomicity */
--    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
--                          attrs);
-+    ret = dma_memory_read(smmu_get_address_space(attrs.secure), addr, buf,
-+                          sizeof(*buf), attrs);
-     if (ret != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
-@@ -409,8 +409,8 @@ static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
+         key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid,
+-                                 iova & ~mask, tg, level);
++                                 iova & ~mask, tg, level, cfg->secure);
+         entry = g_hash_table_lookup(bs->iotlb, &key);
+         if (entry) {
+             break;
+@@ -175,7 +175,7 @@ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *new)
      }
  
-     /* TODO: guarantee 64-bit single-copy atomicity */
--    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
--                          attrs);
-+    ret = dma_memory_read(smmu_get_address_space(cfg->secure), addr, buf,
-+                          sizeof(*buf), attrs);
-     if (ret != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
-@@ -740,8 +740,8 @@ static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
-         l2_ste_offset = sid & ((1 << sid_split) - 1);
-         l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
-         /* TODO: guarantee 64-bit single-copy atomicity */
--        ret = dma_memory_read(&address_space_memory, l1ptr, &l1std,
--                              sizeof(l1std), attrs);
-+        ret = dma_memory_read(smmu_get_address_space(is_secure), l1ptr,
-+                              &l1std, sizeof(l1std), attrs);
-         if (ret != MEMTX_OK) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "Could not read L1PTR at 0X%"PRIx64"\n", l1ptr);
-@@ -1143,7 +1143,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
-     SMMUTranslationStatus status;
-     SMMUTransCfg *cfg = NULL;
-     IOMMUTLBEntry entry = {
--        .target_as = &address_space_memory,
-+        .target_as = smmu_get_address_space(false),
-         .iova = addr,
-         .translated_addr = addr,
-         .addr_mask = ~(hwaddr)0,
-@@ -1295,7 +1295,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+     *key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
+-                              tg, new->level);
++                              tg, new->level, cfg->secure);
+     trace_smmu_iotlb_insert(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
+                             tg, new->level);
+     g_hash_table_insert(bs->iotlb, key, new);
+@@ -282,9 +282,13 @@ void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
+     uint8_t granule = tg ? tg * 2 + 10 : 12;
+ 
+     if (ttl && (num_pages == 1) && (asid >= 0)) {
+-        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova, tg, ttl);
++        SMMUIOTLBKey key_nonsecure = smmu_get_iotlb_key(asid, vmid, iova,
++                                                        tg, ttl, false);
++        SMMUIOTLBKey key_secure = smmu_get_iotlb_key(asid, vmid, iova,
++                                                     tg, ttl, true);
+ 
+-        if (g_hash_table_remove(s->iotlb, &key)) {
++        if (g_hash_table_remove(s->iotlb, &key_nonsecure) ||
++            g_hash_table_remove(s->iotlb, &key_secure)) {
+             return;
+         }
+         /*
+@@ -314,9 +318,13 @@ void smmu_iotlb_inv_ipa(SMMUState *s, int vmid, dma_addr_t ipa, uint8_t tg,
+     int asid = -1;
+ 
+    if (ttl && (num_pages == 1)) {
+-        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, ipa, tg, ttl);
++        SMMUIOTLBKey key_nonsecure = smmu_get_iotlb_key(asid, vmid, ipa,
++                                                        tg, ttl, false);
++        SMMUIOTLBKey key_secure = smmu_get_iotlb_key(asid, vmid, ipa,
++                                                     tg, ttl, true);
+ 
+-        if (g_hash_table_remove(s->iotlb, &key)) {
++        if (g_hash_table_remove(s->iotlb, &key_nonsecure) ||
++            g_hash_table_remove(s->iotlb, &key_secure)) {
+             return;
+         }
      }
- 
-     event.type = IOMMU_NOTIFIER_UNMAP;
--    event.entry.target_as = &address_space_memory;
-+    event.entry.target_as = smmu_get_address_space(is_secure);
-     event.entry.iova = iova;
-     event.entry.addr_mask = num_pages * (1 << granule) - 1;
-     event.entry.perm = IOMMU_NONE;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ef6be3660f..bb40f133f2 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -92,6 +92,8 @@
- #include "hw/cxl/cxl_host.h"
- #include "qemu/guest-random.h"
- 
-+AddressSpace arm_secure_address_space;
-+
- static GlobalProperty arm_virt_compat[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
- };
-@@ -2212,6 +2214,9 @@ static void machvirt_init(MachineState *machine)
-         memory_region_init(secure_sysmem, OBJECT(machine), "secure-memory",
-                            UINT64_MAX);
-         memory_region_add_subregion_overlap(secure_sysmem, 0, sysmem, -1);
-+        address_space_init(&arm_secure_address_space, secure_sysmem,
-+                           "secure-memory-space");
-+        smmu_enable_secure_address_space();
-     }
- 
-     firmware_loaded = virt_firmware_init(vms, sysmem,
 diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index 5d15a1212b..597c5ef6c9 100644
+index e07a9c35e7..968c2eecbe 100644
 --- a/include/hw/arm/smmu-common.h
 +++ b/include/hw/arm/smmu-common.h
-@@ -23,6 +23,19 @@
- #include "hw/pci/pci.h"
- #include "qom/object.h"
+@@ -154,6 +154,7 @@ typedef struct SMMUIOTLBKey {
+     int vmid;
+     uint8_t tg;
+     uint8_t level;
++    bool secure;
+ } SMMUIOTLBKey;
  
-+extern AddressSpace __attribute__((weak)) arm_secure_address_space;
-+extern bool arm_secure_as_available;
-+
-+void smmu_enable_secure_address_space(void);
-+
-+static inline AddressSpace *smmu_get_address_space(bool is_secure)
-+{
-+    if (is_secure && arm_secure_as_available) {
-+        return &arm_secure_address_space;
-+    }
-+    return &address_space_memory;
-+}
-+
- #define SMMU_PCI_BUS_MAX                    256
- #define SMMU_PCI_DEVFN_MAX                  256
- #define SMMU_PCI_DEVFN(sid)                 (sid & 0xFF)
+ typedef struct SMMUConfigKey {
+@@ -234,7 +235,7 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+                                 SMMUTransTableInfo *tt, hwaddr iova);
+ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *entry);
+ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
+-                                uint8_t tg, uint8_t level);
++                                uint8_t tg, uint8_t level, bool secure);
+ SMMUConfigKey smmu_get_config_key(SMMUDevice *sdev, bool is_secure);
+ void smmu_iotlb_inv_all(SMMUState *s);
+ void smmu_iotlb_inv_asid_vmid(SMMUState *s, int asid, int vmid);
 -- 
 2.34.1
 
