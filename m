@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0EDC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 18:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D328FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 18:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujiRA-0007fv-Hz; Wed, 06 Aug 2025 14:00:28 -0400
+	id 1ujiw3-0005yv-GS; Wed, 06 Aug 2025 14:32:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ujiR7-0007fR-JE
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 14:00:25 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ujiR5-0003w1-Rl
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 14:00:25 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-76bde897110so216330b3a.3
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 11:00:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754503222; x=1755108022; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7A5YXZ4nRQ/Q2Upkjgp6Y8j4O8rizDbl91Jo5OXHnLI=;
- b=tKtk8AsEcroD86L5DG05BYvBUcYaHMthS98FjhrZ3tUpreuw/25jRbKxPHyHXt25/c
- Z0K5Szdg9hxbmIqnuH9Xr66krYjfALTJFBFlBVio4IGh+VEivpKYeWh4+ZSsnb/RMNkj
- u85MpVDtlJfBAiE/QDeihAoZx+BdffNgAKdsLAWOJbM0vd+FCqb+A8eYitDo8QCje/xC
- eb8VlDutExokFx6bdeREzIRq2nz7zoh9aM2O0P1FYnhUbynbapC96XefKtEFy/EKWGZF
- qEvjkhzPgqEGpJFL5oVdABEn8tILfUApDHHh7GLhLkgbYpsb/VikjuekrwhlRHPWD6HH
- o4Mg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujiw2-0005yO-7X
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 14:32:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujiw0-0008L6-ND
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 14:32:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754505138;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=SIQZ6zbrFlLXlLqdwqUISxCqOXDk2B5Htm9ZAs/EVRk=;
+ b=e6MP/fknj9JseOIYpcrBvd6azPLKlN+ppqIckF4wg19+bk6yxfYsJXnjd/5soF7tjA/eB6
+ xmWJUfNGBHug361RjjeJybi0KSQHwvX7QPDsjsYNplkjIHL24Q7Z0A39F/3pDLaji8EdgS
+ mAJl4QMCK2HnRX7nTUfuwpUiPgbF5GU=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-xh_4w43IMlu089FXcOfK6A-1; Wed, 06 Aug 2025 14:32:16 -0400
+X-MC-Unique: xh_4w43IMlu089FXcOfK6A-1
+X-Mimecast-MFC-AGG-ID: xh_4w43IMlu089FXcOfK6A_1754505136
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-71a29bab154so1971927b3.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 11:32:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754503222; x=1755108022;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7A5YXZ4nRQ/Q2Upkjgp6Y8j4O8rizDbl91Jo5OXHnLI=;
- b=KLW8U0n9rMaYzDsCR1igdFBXgi2uZKmk1Iay24sgNjrBTd5cGPVawnXO6OTl/AlkGh
- q8qzgUIYSWGp0/HEpNDCim89hFksUL5w/OOLC5pRtEvoenDYP9WKp1IEhzuU2AJSHR4d
- M257CkTrlNqMKWFsan+SKl9qLJ4AcBQry8Rxel+UsX+0baHvaUEw1BRw8zbOht6FGleD
- qEim+zAGf1B0WwS3zTtvciAU3rTv6lNgy7z9sTZihNSm+/8S2wsxkqJ5mhY+fNs3uODr
- lBAYaGjoBcvmfC8FcmF7Ibr9x5zKPKDvsK5j5pOmW/zsdvJX5Ctlvubed7uKQZohe/8N
- jeyA==
+ d=1e100.net; s=20230601; t=1754505136; x=1755109936;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SIQZ6zbrFlLXlLqdwqUISxCqOXDk2B5Htm9ZAs/EVRk=;
+ b=NwmofNKKJz0RgxD7kJaWeXrcyNltXd6KDzdLZort0D1xLEfjtH49DSlxvtNSGxxggr
+ EMl+p+qJQ0hokuSsEf+s8GOHfutUrNBCnMlloOFEUifkZ7xWTZH49bTet3OPA9RX83xY
+ pah4FZnedRDXfT0Xr31eJFoQYZQO2O6PT6R7kRhkjy1kW1vygKwL8szHr2ijsxk1Ypla
+ azIQ1nvoiYr08Ho9+09+EsZmsFYlv0J6pnsZ8U5tA1o4oF7+8sdKNmAVjA8wYa6OPJ2y
+ zLBCM6UOTZnGeWTwxwSWjoNUrZ2U0BBnl/2+h8rncelnD/84FA4zIyo1pMsBL5Oq/95w
+ 9WiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpl6FUiqfeOwnR/yC6YpgjFGNqVx90VUexRNVI0KdUT7XKEyNfBGCbHMtUxNZwxNSW5Lt+Zz0sBSQ0@nongnu.org
-X-Gm-Message-State: AOJu0Yy4yrHwPvMLHelraU2NUzsPdhayfya+gE9XMk8B57CDX1E+0kxX
- l1CF58I+yil/FZJMmwznZzzx6tLHX2Eso9P0VN/7Mdt+ZFiYbGLg01C0OMfrQkcVTJE=
-X-Gm-Gg: ASbGncs56yztS/tDzBO3bpY6vKsMDnE24sxDu/SGEGfpEoXrSpE4HfI5QqHkKeT8t1D
- 84inB4Jw3YA7S23/Ie9za3QIPMXFDCFk1LO8dlMIYvZ5NH5FjXt4p+5q6c+tZC8yQgjuQDaR2db
- NgT8nLKARyDexNeAONpmC3RYCMxSZTakLyZXU4fP1kdKIbAIPMqCocBoR8ZWh8Vm4my1ZJyB1A4
- 0oNNFYQUcqyO3aOCjVOtoAnLSOEdNLFKfERm0nNtLJmdNDSZ9uPBCN1U1MgN/uuX5imSHROKwF/
- /cG3ZMK7cWIW2dI8NZG/CtUZBBzCTNw9+2OaaGoWJtNE7uC4uOePPWDgbF7NYXfm9u6pMdpi7N0
- 2Cdm7DwTNrEbQE6/BVL9GptGT/P83QGWPVWBBHWS0QUmkWQ==
-X-Google-Smtp-Source: AGHT+IFw+t8vbHRLs84AoI+z/x+v8SYg4xK/hjAKAC8asgu0XTrhj6hkdh7T0W0yTxX7n4uYcU1iFA==
-X-Received: by 2002:aa7:8891:0:b0:748:9d26:bb0a with SMTP id
- d2e1a72fcca58-76c2b0788b5mr5465679b3a.18.1754503221152; 
- Wed, 06 Aug 2025 11:00:21 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXTvzB6s8Ri5pks1vwystfZH9Ko7Iv6AF65v1cqGdvL2+kU/0yv8g/ylargvMOLFK9+xmtUR3N1JkVi@nongnu.org
+X-Gm-Message-State: AOJu0Yw34TrfRpBx1oxD5F7rSkEo2jgGu7bYhwW6doHtsoaUX8LrdRI6
+ lfL0SD1v7N/54PmcM+9FADz18SB/X1gu4E3EbeKNmRwMZhKMi/ZrY8pCOool+6EqsFLetmh6Dah
+ hJ2octMQ/sZhkHvFA3fWAYaFgfU65uQek6R/H3TWZ0NpfqNmDIVIFsw3f/Mv2BAq6
+X-Gm-Gg: ASbGncv+7wisc4EH81IgD6sE8sms/SlfO0bjA3rz0cepIy4yP8K700fJ/AKGHutIDvC
+ 7Kyc+4929HDLPX8a2bgA0kS2cngUHTQRQTglTvZY5qed2/SuIO1fFD/FLJWQmclBb6y2BkznYfw
+ d4M1/FWPbe1n3oNhDmORLDRWvYyZyKqRlJEtSbfVbYvLazpT5FYcvM0WkQgxjwXhhfjZjzbhWaQ
+ LMu4hdRF+PIzTexzO5gNLW2/Vc6Q/h+FkwxmP3M+YP65xGEDZdwdxKiZAcMTADsc1oLbPknJ/ZI
+ kpgl56B1+7XyJdApdTSMXSmqg/wQ+pKew2Jf/CFCGfZbc/nwn+HrTweLMPff3cHNgrUYZkUdmpX
+ jal8SIRcbx8J48c7L31SSRg==
+X-Received: by 2002:a05:6902:2587:b0:e8b:3e67:b90c with SMTP id
+ 3f1490d57ef6-e902abbe120mr3585371276.16.1754505135981; 
+ Wed, 06 Aug 2025 11:32:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEwfONToVoNbHCH0DhBF3JUve0yR7zJ0vSlZGIRisAFAOOU8lTllKnL6AeqJF1X40Cp9B40Xg==
+X-Received: by 2002:a05:6902:2587:b0:e8b:3e67:b90c with SMTP id
+ 3f1490d57ef6-e902abbe120mr3585316276.16.1754505135187; 
+ Wed, 06 Aug 2025 11:32:15 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-171.dsl.bell.ca. [174.89.135.171])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce89125sm16078402b3a.33.2025.08.06.11.00.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 11:00:20 -0700 (PDT)
-Message-ID: <386a93db-ec95-447e-abfc-673c1b417f62@linaro.org>
-Date: Wed, 6 Aug 2025 11:00:19 -0700
+ 3f1490d57ef6-e903936daf8sm93464276.29.2025.08.06.11.32.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 11:32:14 -0700 (PDT)
+Date: Wed, 6 Aug 2025 14:32:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] migration/vmstate: remove
+ VMSTATE_BUFFER_POINTER_UNSAFE macro
+Message-ID: <aJOfq598IAl2hQU_@x1.local>
+References: <20250802142115.41638-1-mjt@tls.msk.ru>
+ <20250802142115.41638-2-mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] configure: Enable to propagate -sMEMORY64 flag to
- Emscripten
-Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <cover.1754494089.git.ktokunaga.mail@gmail.com>
- <112b6882f9bd370deffb8637116fc44e043c250f.1754494089.git.ktokunaga.mail@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <112b6882f9bd370deffb8637116fc44e043c250f.1754494089.git.ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250802142115.41638-2-mjt@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,33 +111,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/25 8:49 AM, Kohei Tokunaga wrote:
-> Currently there are some engines that don't support wasm64 (e.g. unsupported
-> on Safari[1]). To mitigate this issue, the configure script allows the user
-> to use Emscripten's compatibility feature, "-sMEMORY64=2" flag[2].
+On Sat, Aug 02, 2025 at 05:21:09PM +0300, Michael Tokarev wrote:
+> The only user of this macro was VirtIONet.vlans, which has been
+> converted to regular VMSTATE_BUFFER.
 > 
-> Emscripten's "-sMEMORY64=2" flag still enables 64bit pointers in C code. But
-> this flag lowers the output binary into wasm32, with limiting the maximum
-> memory size to 4GB. So QEMU can run on wasm32 engines.
-> 
-> [1] https://webassembly.org/features/
-> [2] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
-> 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   configure | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
-> 
-> V2:
-> - Changed --wasm64-memory64 flag to --wasm64-32bit-address-limit to avoid
->    exposing the -sMEMORY64 value directly to the users. This can be
->    considered as a significant change from the previous version of this patch
->    so the Reviewed-by tag has been removed.
-> - Added a link to the Emscripten documentation about -sMEMORY64 in the
->    configure script.
->
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Thanks for the update,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
 
 
