@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C558AC87FCB
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0384DC87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhZh-0003RI-Tr; Wed, 06 Aug 2025 13:05:14 -0400
+	id 1ujhZQ-0002Yw-Vb; Wed, 06 Aug 2025 13:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujgR1-0003JI-Uy
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:52:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujgR0-0003EB-2O
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:52:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754495527;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oeRoLziABdp8UyojfXFyKy01tmnu0/cdkrdzNSIePiI=;
- b=gtXhwZM+9OuCYGs2KRueJq3DTMaSw3dlaPmZ2waKpM2Higi5NNbzALwc2rE1tL/4o+FpD/
- WU2h4fSp22cJgS+8rQMPypnuRW6syAh9THYQ8s/DfrnHK27CaM6emHf83ViDk4X0j8Gq09
- ehLkrCs/j9agkWMMVxP7DTxYvyzc+Kw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-NAntp79dPSKtC4WoXcicFQ-1; Wed, 06 Aug 2025 11:52:05 -0400
-X-MC-Unique: NAntp79dPSKtC4WoXcicFQ-1
-X-Mimecast-MFC-AGG-ID: NAntp79dPSKtC4WoXcicFQ_1754495525
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-478f78ff9beso1283921cf.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:52:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754495525; x=1755100325;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujgPS-0007Hs-42
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:37 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujgPP-00037Y-EN
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:33 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-769a21bd4d5so126606b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754495430; x=1755100230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oeRoLziABdp8UyojfXFyKy01tmnu0/cdkrdzNSIePiI=;
- b=BgCaTf3OUYnr+wr9EQjqjMQZiBc6b29bkQIekcCDJKmgm/A/4wUlR/7cqZUrhJWvtG
- GWGUmzAbKQiAVYZTJaeuAW3svkPtwAmwRaBV/hpxDvThwuCtvgup0WdxJKRMmZ899H16
- oq2D5szZAUVPH2QfZBdqeXIv+DN4Vduf7hbtETIeR9irJva0t0XIJdSGraSXkooS8HcV
- gTZnqLysBC4R4eQZx3aSLv2eAjHWJE12yOemiRMR+wxzpLfarcEZPlSsweURD63i2E2R
- wzHpUx3gcXViBvruffdFnEYqC/yGO0FKanwsI/HqsF7y0IUVgZvWlmFlUrVQ9B5rNnqz
- r2tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8hqLLLA6OKzlj9VeBmHT/CFKDIho9L5S8AcXeoLBFs/zAVPPfBqss62OxNMsBgmjrC7zA8B6/4c+K@nongnu.org
-X-Gm-Message-State: AOJu0YwxPDvcwuJ+oMjXe0wyTVQl+qm+dsaeO458KcAwhQn4pCAtdqu2
- x/eoCbGcUH2QXIROn/z5CzTAmtDY2slEZvoT+v5ONIwtn0JpHEogz6cQMSenPLCzsECiqiNvKWa
- 4aavjWqrW0cys2ovrADUPh1RbWM9E8+5AQbtW9M5NK01Gc59+99kgiSsK
-X-Gm-Gg: ASbGncvw9wh0jdypN9VRvUHPTa6tyjEcGTgqGWH7n4DtK0aAo2ZCOJevTujD9lJbiJp
- YAYMrFD1cSWoB/jy0SbJDCin0h185paHxo/07X9T6w2w+GFHLMWO74Rj3THHV4NqMiaEYsERyEP
- NKrL7uuvNtZeK5/RZDf3TmMM0g4j1HtHC4Bk2bkfIcHJ8Mw0iUNXh/K4sNT0tLIdodaVHBJzg6p
- J/yItAqzbH5SDb8Nl00nkocfkIIwE0M8pokp+UBmFrfNMvunxu7/xXTAHd+ZrsgRxQFN9AbY3Bi
- ZoYWISJBwkAPf1kkgCQbXNLSpYjRpI7z
-X-Received: by 2002:ac8:7c49:0:b0:4b0:6cfd:bbf2 with SMTP id
- d75a77b69052e-4b0912cb826mr50021951cf.11.1754495524719; 
- Wed, 06 Aug 2025 08:52:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6hVO/ynlTR6J6ukpO8ktBngaVHggbbDgd36wBKIqlUcFfbHrMjvszLjLgmpHABek/OrQSxQ==
-X-Received: by 2002:ac8:7c49:0:b0:4b0:6cfd:bbf2 with SMTP id
- d75a77b69052e-4b0912cb826mr50021491cf.11.1754495524297; 
- Wed, 06 Aug 2025 08:52:04 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4af1bc47cd9sm52400181cf.13.2025.08.06.08.52.03
+ bh=xJlOz+Jg5Eh+vkwIFvbU82F8MEu7BNgLBhpUCzS/X/E=;
+ b=cFUzqpfXdpl5o55S1RU4w5n2yA4UJpWThn2MsUjrNVI597baHaQyizIhfDDc2tzJjq
+ uw8G0sSDk6Tzx32HSfMUvmr5bpnIexRB0TIcCwDiG8tJcVGVSAZa+IJxgPZw/PcZoXfR
+ UbHztSZSXD7eOgD074bMH34f2A806RfDokWUnQu08Fx0fF/AnARiBpiOd4O0C3E/H61l
+ gs+c4LlCkWqhHj6PsqlGGULK3DIG27oVAJaTWnbGgsw+KpJwMu3mifYxvDGIr2Ux37dV
+ s2vIS9DZcYPyp7yQ+mnr2QHaAajzR6yOta9XXeNZ/hRg2aTBdnw6AuXr93r12F7tslTC
+ Qv3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754495430; x=1755100230;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xJlOz+Jg5Eh+vkwIFvbU82F8MEu7BNgLBhpUCzS/X/E=;
+ b=S6UadTRud6dGr7epFf8+XkKuWryDW31JBOzyqZjKKvEZnnNcC4ri5dG3VnW6myQW7w
+ kzbDm75iJDgrym13NrO4uZffU9GV1VZPWOo060M9yYwcjcBaJp/Gk5rBsEPjpzoecynQ
+ L+jPHMFXGpd08BVUiSYJQzYt9i2qTB1K0DGDV/QZPJisstUWqUBgeCrN1h9Cu+vjR36T
+ QR+eUEzSA07mdqrkVybAKyEBSBPfdTSYBm32YK4eLfBL4i+VDgh80zyB3c4/S2QMCy/0
+ oXEQYVot4gHZgcmS064C8rPpKZvc0yxKlLqUBZucyc8HiCxs1Y3Oc/3srBg6Eyx7pYQD
+ fG2A==
+X-Gm-Message-State: AOJu0YyxeGt6q3DOjoe3nhvkPesvK6tW1Fz2MWSUgWBvPXjd8dJwCp4q
+ qnJFhDD2oIYSLCrlef4izOYjl35a9hh84rjg/nEaKMD09acRbVxZmGdQHdVqQg==
+X-Gm-Gg: ASbGncsygZ5AvEpKLcRKTLyzdcd6ojznlCMbrh1eAC12QMnkXs07do7iYGvkORLaWBA
+ iKAvHmOmhpYZpGjfWPv+bsPAulXMd5RmMrkKxn3mx67vdn3ufvhYKUBr22qCU8S9YS8isTkWsFx
+ 8kKW8LNglhsdlwUCtitXFuvADnW9QOEFOAUu0RrjKgBhE2a6vuF2EbBci362I3YcuTdmkZOFe0i
+ dQNCzBNAo/btJJMAWKT/mTgwYUt8eTHhrsON7QwM1mXD6SeysbMX4X6S2KRX8abhPIjYxdBZeJ6
+ 3Mlj3RnO/GFRx5wgba16HQyHrsGbsSmVn1Xl+RVgfZn4BJgMmdqFey+W4WacaTf95OOzmhCHgwv
+ 6GtDolIq2U6ZpKZa1J09jRcmuF/l15+nD
+X-Google-Smtp-Source: AGHT+IHlWUkoAJSlKgoqYOsN42Bumz9b1gBCwHLnV+2jn8B4zHHFrPYtMiYa4wO86b6IVDtCInpARA==
+X-Received: by 2002:a17:902:e54d:b0:242:a0b0:3c1b with SMTP id
+ d9443c01a7336-242a0b03f31mr35484625ad.30.1754495429670; 
+ Wed, 06 Aug 2025 08:50:29 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:4cca:cbdb:3f01:1165])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e8976a3asm163374575ad.87.2025.08.06.08.50.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Aug 2025 08:52:03 -0700 (PDT)
-Date: Wed, 6 Aug 2025 11:51:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Hamza Khan <hamza.khan@nutanix.com>
-Subject: Re: [RFC V2 0/8] Live update: tap and vhost
-Message-ID: <aJN6F29tcWu-Gr8y@x1.local>
-References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
- <87cy993mdi.fsf@suse.de>
- <a01be1bc-8604-4ed1-9c22-9fe4b45de595@oracle.com>
+ Wed, 06 Aug 2025 08:50:29 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH v2 1/4] meson: Add wasm64 support to the --cpu flag
+Date: Thu,  7 Aug 2025 00:49:48 +0900
+Message-ID: <fcfdf0cc933aa46c4c3767bd8f23eadd31ab6865.1754494089.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1754494089.git.ktokunaga.mail@gmail.com>
+References: <cover.1754494089.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a01be1bc-8604-4ed1-9c22-9fe4b45de595@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,62 +105,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 05, 2025 at 03:53:09PM -0400, Steven Sistare wrote:
-> On 8/5/2025 9:54 AM, Fabiano Rosas wrote:
-> > Steve Sistare <steven.sistare@oracle.com> writes:
-> > 
-> > > Tap and vhost devices can be preserved during cpr-transfer using
-> > > traditional live migration methods, wherein the management layer
-> > > creates new interfaces for the target and fiddles with 'ip link'
-> > > to deactivate the old interface and activate the new.
-> > > 
-> > > However, CPR can simply send the file descriptors to new QEMU,
-> > > with no special management actions required.  The user enables
-> > > this behavior by specifing '-netdev tap,cpr=on'.  The default
-> > > is cpr=off.
-> > > 
-> > > Steve Sistare (8):
-> > >    migration: stop vm earlier for cpr
-> > >    migration: cpr setup notifier
-> > >    vhost: reset vhost devices for cpr
-> > >    cpr: delete all fds
-> > >    Revert "vhost-backend: remove vhost_kernel_reset_device()"
-> > >    tap: common return label
-> > >    tap: cpr support
-> > >    tap: postload fix for cpr
-> > > 
-> > >   qapi/net.json             |   5 +-
-> > >   include/hw/virtio/vhost.h |   1 +
-> > >   include/migration/cpr.h   |   3 +-
-> > >   include/net/tap.h         |   1 +
-> > >   hw/net/virtio-net.c       |  20 +++++++
-> > >   hw/vfio/device.c          |   2 +-
-> > >   hw/virtio/vhost-backend.c |   6 ++
-> > >   hw/virtio/vhost.c         |  32 +++++++++++
-> > >   migration/cpr.c           |  24 ++++++--
-> > >   migration/migration.c     |  38 ++++++++-----
-> > >   net/tap-win32.c           |   5 ++
-> > >   net/tap.c                 | 141 +++++++++++++++++++++++++++++++++++-----------
-> > >   12 files changed, 223 insertions(+), 55 deletions(-)
-> > 
-> > Hi Steve,
-> > 
-> > Patches 1-2 seem to potentially interact with your arm pending
-> > interrupts fix. Do we want them together?
-> 
-> Good observation, thanks!.  I may need patches 1-2 to completely close
-> the dropped interrupt race.  I will do more testing to verify that.
+wasm64 target enables 64bit pointers using Emscripten's -sMEMORY64=1
+flag[1]. This enables QEMU to run 64bit guests.
 
-Sorry to respond late.. Could I request (for each of the patches 1 & 2)
-in-code comments explaining the order of events?
+Although the configure script uses "uname -m" as the fallback value when
+"cpu" is empty, this can't be used for Emscripten which targets to Wasm.
+So, in wasm build, this commit fixes configure to require --cpu flag to be
+explicitly specified by the user.
 
-For example, patch 1 moved stop_vm even earlier for CPR.  It used to be
-early because it wants to avoid dirty tracking: this is something I didn't
-realize but remembered after re-read the doc..  Now it further needs to
-avoid the notifiers.  A comment above stop_vm for cpr explaining all these
-order of events would be really helpful (including any necessary doc update).
+[1] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
 
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ configure   | 6 +++++-
+ meson.build | 4 ++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index 825057ebf1..7f3893a42f 100755
+--- a/configure
++++ b/configure
+@@ -365,7 +365,6 @@ elif check_define __APPLE__; then
+   host_os=darwin
+ elif check_define EMSCRIPTEN ; then
+   host_os=emscripten
+-  cpu=wasm32
+   cross_compile="yes"
+ else
+   # This is a fatal error, but don't report it yet, because we
+@@ -425,6 +424,8 @@ elif check_define __aarch64__ ; then
+   cpu="aarch64"
+ elif check_define __loongarch64 ; then
+   cpu="loongarch64"
++elif check_define EMSCRIPTEN ; then
++  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
+ else
+   # Using uname is really broken, but it is just a fallback for architectures
+   # that are going to use TCI anyway
+@@ -535,6 +536,9 @@ case "$cpu" in
+   wasm32)
+     CPU_CFLAGS="-m32"
+     ;;
++  wasm64)
++    CPU_CFLAGS="-m64 -sMEMORY64=1"
++    ;;
+ esac
+ 
+ if test -n "$host_arch" && {
+diff --git a/meson.build b/meson.build
+index e53cd5b413..291fe3f0d0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -52,7 +52,7 @@ qapi_trace_events = []
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
+-  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
++  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32', 'wasm64']
+ 
+ cpu = host_machine.cpu_family()
+ 
+@@ -916,7 +916,7 @@ if have_tcg
+     if not get_option('tcg_interpreter')
+       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
+     endif
+-  elif host_arch == 'wasm32'
++  elif host_arch == 'wasm32' or host_arch == 'wasm64'
+     if not get_option('tcg_interpreter')
+       error('WebAssembly host requires --enable-tcg-interpreter')
+     endif
 -- 
-Peter Xu
+2.43.0
 
 
