@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302BBC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C558AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhZK-0002T7-O0; Wed, 06 Aug 2025 13:04:50 -0400
+	id 1ujhZh-0003RI-Tr; Wed, 06 Aug 2025 13:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ujgPX-0007Ji-Ev
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:42 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ujgPV-00038E-J9
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:39 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76bd9d723bfso100741b3a.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:50:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754495436; x=1755100236; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+x9rJebi4ww0j3yzQwPP8A8E8ND6zxr0JuowMgv1Zjc=;
- b=VX7AE0NV+U/it1jolnK3Pvi43lrmFhk7PKRA+QkhuoeT8Hme+BNbvHs1kfmgqDSjQe
- kkKdn5Lsi5hPHGhrRwhKlp9LMFJJRrlzsAfJC+dFiQYA24RK1rfb4F0ljDwlrrVCmhzW
- Z/dyIN4BYoaOUXZPVFCZdLlrXW5xAHMrYEOTA6YzXEFhKFULBIYB9sM8nCc5RswPNbdI
- /mcv/5S9BHB2Yc4ZRdxj+sgMY7zpMXMXLpsruWx2G9NWKNh/Krml5wctArbLGqbxn0gb
- DBkuu8sLw4TLAQ/lny65yyLq8gQdk9vyuumYCVDZmBBzBcmv2ltrITtEIBUGU7Ov5Xj7
- VJpg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujgR1-0003JI-Uy
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:52:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ujgR0-0003EB-2O
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:52:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754495527;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oeRoLziABdp8UyojfXFyKy01tmnu0/cdkrdzNSIePiI=;
+ b=gtXhwZM+9OuCYGs2KRueJq3DTMaSw3dlaPmZ2waKpM2Higi5NNbzALwc2rE1tL/4o+FpD/
+ WU2h4fSp22cJgS+8rQMPypnuRW6syAh9THYQ8s/DfrnHK27CaM6emHf83ViDk4X0j8Gq09
+ ehLkrCs/j9agkWMMVxP7DTxYvyzc+Kw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-332-NAntp79dPSKtC4WoXcicFQ-1; Wed, 06 Aug 2025 11:52:05 -0400
+X-MC-Unique: NAntp79dPSKtC4WoXcicFQ-1
+X-Mimecast-MFC-AGG-ID: NAntp79dPSKtC4WoXcicFQ_1754495525
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-478f78ff9beso1283921cf.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:52:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754495436; x=1755100236;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+x9rJebi4ww0j3yzQwPP8A8E8ND6zxr0JuowMgv1Zjc=;
- b=ne9ymEzfFoDybmwiOp+anK4f6iOxdZrW/0UjU+1cJPnWUGZaHbRjkBMUhlgROTTHoV
- y/db7Oo4iW3LIJ2ER2vWQgSyTaGnj+cPqc9RxsUHeyQpD1VNGJ7lz0aDnPdVq0J6HCjz
- hhKJ72d407s4Pzr9ZPGY9Q1MQbWv9IP59MhWSK/CAji1vcEPxuKAmp9Qqa7avxYoO50c
- Dtn4/P3GK1y6eyJdgCr739uM57miUhtsMjAnDfdUhmrLJhcpr2rpVDRsbkyOwMdjHn7B
- jTwcp7YsqQd/vrFGxaJBCC55j6xLNTfwc62FHOs45RnCSw02Id4t5geXSAM2TItYYWve
- v91g==
-X-Gm-Message-State: AOJu0YwGCA0vDECbHt12+1j7QW2NkRsVMI30rxQ5sBSiDsTTtoTllXAo
- gBxbl/6izP7MyXu0QOMtL+Jgg0C3N0TOqTJCayRnQ9zms79t+NjoA7QKmOjV9Q==
-X-Gm-Gg: ASbGncvtLaZgKOJZ5LsTs+qBXefuLjZyFNnzp9ni2nktZwehHmWyvHlslMmnqasacOA
- akcPB176j/zl++1GVVi96ZtKN/unpGObuHsVyQHT5K96P2KPn1VcyKiQEk73MQtLDjusooXZ3rR
- Y3k+8mrw/mplsF+Kxh6BlnzmECnLa3sbFwxG6TWXUkqit1rOgMCmUOkvwyk/CexBgc0tC/R9BfJ
- ItwbrAAo3k5sLLymR6DHwHIY3skXV8bF8HRVQxxrza0jbWWtt176WLAQO6lp/PgmxK1OBV+Sf94
- ScwmYOT/9K1RMd53iB6QWkJNMbmT3IVJa7TPMa2K3ZT0k2mcxck/yFE+/WJa5LWRZZgpr967YOG
- 6PzC9DRGpYC+GSLD2PYlxhA==
-X-Google-Smtp-Source: AGHT+IG6xzIN3ultW80XyTJTvNIb7qd2LMqbOS5wuQRpE3mTzy5C5zlTUOeAX42jEvWorZ1dzOFR7w==
-X-Received: by 2002:a17:902:f60c:b0:240:2145:e51d with SMTP id
- d9443c01a7336-2429f625afemr55702845ad.31.1754495436010; 
- Wed, 06 Aug 2025 08:50:36 -0700 (PDT)
-Received: from ktock.. ([240d:1a:3b6:8b00:4cca:cbdb:3f01:1165])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8976a3asm163374575ad.87.2025.08.06.08.50.33
+ d=1e100.net; s=20230601; t=1754495525; x=1755100325;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oeRoLziABdp8UyojfXFyKy01tmnu0/cdkrdzNSIePiI=;
+ b=BgCaTf3OUYnr+wr9EQjqjMQZiBc6b29bkQIekcCDJKmgm/A/4wUlR/7cqZUrhJWvtG
+ GWGUmzAbKQiAVYZTJaeuAW3svkPtwAmwRaBV/hpxDvThwuCtvgup0WdxJKRMmZ899H16
+ oq2D5szZAUVPH2QfZBdqeXIv+DN4Vduf7hbtETIeR9irJva0t0XIJdSGraSXkooS8HcV
+ gTZnqLysBC4R4eQZx3aSLv2eAjHWJE12yOemiRMR+wxzpLfarcEZPlSsweURD63i2E2R
+ wzHpUx3gcXViBvruffdFnEYqC/yGO0FKanwsI/HqsF7y0IUVgZvWlmFlUrVQ9B5rNnqz
+ r2tw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8hqLLLA6OKzlj9VeBmHT/CFKDIho9L5S8AcXeoLBFs/zAVPPfBqss62OxNMsBgmjrC7zA8B6/4c+K@nongnu.org
+X-Gm-Message-State: AOJu0YwxPDvcwuJ+oMjXe0wyTVQl+qm+dsaeO458KcAwhQn4pCAtdqu2
+ x/eoCbGcUH2QXIROn/z5CzTAmtDY2slEZvoT+v5ONIwtn0JpHEogz6cQMSenPLCzsECiqiNvKWa
+ 4aavjWqrW0cys2ovrADUPh1RbWM9E8+5AQbtW9M5NK01Gc59+99kgiSsK
+X-Gm-Gg: ASbGncvw9wh0jdypN9VRvUHPTa6tyjEcGTgqGWH7n4DtK0aAo2ZCOJevTujD9lJbiJp
+ YAYMrFD1cSWoB/jy0SbJDCin0h185paHxo/07X9T6w2w+GFHLMWO74Rj3THHV4NqMiaEYsERyEP
+ NKrL7uuvNtZeK5/RZDf3TmMM0g4j1HtHC4Bk2bkfIcHJ8Mw0iUNXh/K4sNT0tLIdodaVHBJzg6p
+ J/yItAqzbH5SDb8Nl00nkocfkIIwE0M8pokp+UBmFrfNMvunxu7/xXTAHd+ZrsgRxQFN9AbY3Bi
+ ZoYWISJBwkAPf1kkgCQbXNLSpYjRpI7z
+X-Received: by 2002:ac8:7c49:0:b0:4b0:6cfd:bbf2 with SMTP id
+ d75a77b69052e-4b0912cb826mr50021951cf.11.1754495524719; 
+ Wed, 06 Aug 2025 08:52:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6hVO/ynlTR6J6ukpO8ktBngaVHggbbDgd36wBKIqlUcFfbHrMjvszLjLgmpHABek/OrQSxQ==
+X-Received: by 2002:ac8:7c49:0:b0:4b0:6cfd:bbf2 with SMTP id
+ d75a77b69052e-4b0912cb826mr50021491cf.11.1754495524297; 
+ Wed, 06 Aug 2025 08:52:04 -0700 (PDT)
+Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4af1bc47cd9sm52400181cf.13.2025.08.06.08.52.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Aug 2025 08:50:35 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v2 3/4] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
-Date: Thu,  7 Aug 2025 00:49:50 +0900
-Message-ID: <bdaf29b98bd83174ef5246548f516eadae508211.1754494089.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1754494089.git.ktokunaga.mail@gmail.com>
-References: <cover.1754494089.git.ktokunaga.mail@gmail.com>
+ Wed, 06 Aug 2025 08:52:03 -0700 (PDT)
+Date: Wed, 6 Aug 2025 11:51:51 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Hamza Khan <hamza.khan@nutanix.com>
+Subject: Re: [RFC V2 0/8] Live update: tap and vhost
+Message-ID: <aJN6F29tcWu-Gr8y@x1.local>
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+ <87cy993mdi.fsf@suse.de>
+ <a01be1bc-8604-4ed1-9c22-9fe4b45de595@oracle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x435.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a01be1bc-8604-4ed1-9c22-9fe4b45de595@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,113 +110,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit fixes Dockerfile of the wasm build to support both of wasm32 and
-wasm64 build. Dockerfile takes the following build arguments and use these
-values for building dependencies.
+On Tue, Aug 05, 2025 at 03:53:09PM -0400, Steven Sistare wrote:
+> On 8/5/2025 9:54 AM, Fabiano Rosas wrote:
+> > Steve Sistare <steven.sistare@oracle.com> writes:
+> > 
+> > > Tap and vhost devices can be preserved during cpr-transfer using
+> > > traditional live migration methods, wherein the management layer
+> > > creates new interfaces for the target and fiddles with 'ip link'
+> > > to deactivate the old interface and activate the new.
+> > > 
+> > > However, CPR can simply send the file descriptors to new QEMU,
+> > > with no special management actions required.  The user enables
+> > > this behavior by specifing '-netdev tap,cpr=on'.  The default
+> > > is cpr=off.
+> > > 
+> > > Steve Sistare (8):
+> > >    migration: stop vm earlier for cpr
+> > >    migration: cpr setup notifier
+> > >    vhost: reset vhost devices for cpr
+> > >    cpr: delete all fds
+> > >    Revert "vhost-backend: remove vhost_kernel_reset_device()"
+> > >    tap: common return label
+> > >    tap: cpr support
+> > >    tap: postload fix for cpr
+> > > 
+> > >   qapi/net.json             |   5 +-
+> > >   include/hw/virtio/vhost.h |   1 +
+> > >   include/migration/cpr.h   |   3 +-
+> > >   include/net/tap.h         |   1 +
+> > >   hw/net/virtio-net.c       |  20 +++++++
+> > >   hw/vfio/device.c          |   2 +-
+> > >   hw/virtio/vhost-backend.c |   6 ++
+> > >   hw/virtio/vhost.c         |  32 +++++++++++
+> > >   migration/cpr.c           |  24 ++++++--
+> > >   migration/migration.c     |  38 ++++++++-----
+> > >   net/tap-win32.c           |   5 ++
+> > >   net/tap.c                 | 141 +++++++++++++++++++++++++++++++++++-----------
+> > >   12 files changed, 223 insertions(+), 55 deletions(-)
+> > 
+> > Hi Steve,
+> > 
+> > Patches 1-2 seem to potentially interact with your arm pending
+> > interrupts fix. Do we want them together?
+> 
+> Good observation, thanks!.  I may need patches 1-2 to completely close
+> the dropped interrupt race.  I will do more testing to verify that.
 
-- TARGET_CPU: target wasm arch (wasm32 or wasm64)
-- WASM64_MEMORY64: target -sMEMORY64 mode (1 or 2)
+Sorry to respond late.. Could I request (for each of the patches 1 & 2)
+in-code comments explaining the order of events?
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- MAINTAINERS                                   |  2 +-
- ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
- 2 files changed, 23 insertions(+), 8 deletions(-)
- rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+For example, patch 1 moved stop_vm even earlier for CPR.  It used to be
+early because it wants to avoid dirty tracking: this is something I didn't
+realize but remembered after re-read the doc..  Now it further needs to
+avoid the notifiers.  A comment above stop_vm for cpr explaining all these
+order of events would be really helpful (including any necessary doc update).
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed76..433a44118d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -647,7 +647,7 @@ F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
- F: configs/meson/emscripten.txt
--F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+F: tests/docker/dockerfiles/emsdk-wasm-cross.docker
- 
- Alpha Machines
- --------------
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-similarity index 85%
-rename from tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm-cross.docker
-index 60a7d02f56..4b41be62ab 100644
---- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-@@ -1,14 +1,17 @@
- # syntax = docker/dockerfile:1.5
- 
--ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG EMSDK_VERSION_QEMU=4.0.10
- ARG ZLIB_VERSION=1.3.1
- ARG GLIB_MINOR_VERSION=2.84
- ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
- ARG PIXMAN_VERSION=0.44.2
--ARG FFI_VERSION=v3.4.7
-+ARG FFI_VERSION=v3.5.2
- ARG MESON_VERSION=1.5.0
-+ARG TARGET_CPU=wasm32
-+ARG WASM64_MEMORY64=0
- 
--FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
-+ARG TARGET_CPU
- ARG MESON_VERSION
- ENV TARGET=/builddeps/target
- ENV CPATH="$TARGET/include"
-@@ -33,8 +36,8 @@ RUN <<EOF
- cat <<EOT > /cross.meson
- [host_machine]
- system = 'emscripten'
--cpu_family = 'wasm32'
--cpu = 'wasm32'
-+cpu_family = '${TARGET_CPU}'
-+cpu = '${TARGET_CPU}'
- endian = 'little'
- 
- [binaries]
-@@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
- EOT
- EOF
- 
-+FROM build-base-common AS build-base-wasm32
-+
-+FROM build-base-common AS build-base-wasm64
-+ARG WASM64_MEMORY64
-+ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+
-+FROM build-base-${TARGET_CPU} AS build-base
-+
- FROM build-base AS zlib-dev
- ARG ZLIB_VERSION
- RUN mkdir -p /zlib
-@@ -56,17 +69,19 @@ RUN emconfigure ./configure --prefix=$TARGET --static
- RUN emmake make install -j$(nproc)
- 
- FROM build-base AS libffi-dev
-+ARG TARGET_CPU
-+ARG WASM64_MEMORY64
- ARG FFI_VERSION
- RUN mkdir -p /libffi
- RUN git clone https://github.com/libffi/libffi /libffi
- WORKDIR /libffi
- RUN git checkout $FFI_VERSION
- RUN autoreconf -fiv
--RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
-     --prefix=$TARGET --enable-static \
-     --disable-shared --disable-dependency-tracking \
-     --disable-builddir --disable-multi-os-directory \
--    --disable-raw-api --disable-docs
-+    --disable-raw-api --disable-docs WASM64_MEMORY64=${WASM64_MEMORY64}
- RUN emmake make install SUBDIRS='include' -j$(nproc)
- 
- FROM build-base AS pixman-dev
 -- 
-2.43.0
+Peter Xu
 
 
