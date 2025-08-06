@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28427C87FCA
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4183AC87FD1
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 06:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujXoZ-0005at-W7; Wed, 06 Aug 2025 02:39:56 -0400
+	id 1ujXqG-0007HU-U8; Wed, 06 Aug 2025 02:41:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujXoV-0005Qb-Sj; Wed, 06 Aug 2025 02:39:51 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ujXoT-0003PT-8g; Wed, 06 Aug 2025 02:39:51 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 02E1713EC08;
- Wed, 06 Aug 2025 09:39:21 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DDE5D258405;
- Wed,  6 Aug 2025 09:39:43 +0300 (MSK)
-Message-ID: <39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru>
-Date: Wed, 6 Aug 2025 09:39:43 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujXqE-0007GG-Mc
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:41:38 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ujXqB-0003oi-Uw
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 02:41:38 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4538bc52a8dso39383645e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Aug 2025 23:41:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754462494; x=1755067294; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3Qt+eug0h86j0yWuF7BVqKm/dcYHS8LW1wSkDD2sulU=;
+ b=rBU9rwGcFyO6tUv9+1Ic89vfsYCNPwrLsX17TT/ZfvSlM+tpxO2Gv/94HjLbfE0BCx
+ seO9elTLCAkUx64pW/bIg8SPZ6m86PXyD50biJBy4XDMvq8wuFUvxTLXdJr70PkeSBgA
+ QVmXFw52nMo4qvGVHr5waBbijiuBpc6Vbesu6Lh3SbGQfGD4qYli+4kFUmnjVZPobumv
+ scagCt7IBVUfljvgY+Kgwdfrjo5m7BOHQIAVAvwPMrPdldpUkxc7RKkG/ngm/oFyHOnS
+ cQODtE08x/1WTeKv/bSIkzXWWw0UzAdO1mqWeRw/Jzmku1trUq70QGelN3Fngev3zqM7
+ oKWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754462494; x=1755067294;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Qt+eug0h86j0yWuF7BVqKm/dcYHS8LW1wSkDD2sulU=;
+ b=w8UT2VP2qJVmi6eYwRNu9di9MKl1BFjlzUOBHzpvSsn4wH7MyZvON9w/VtA04soVT8
+ b+2fmFDhP3ocZqG2x6VaL+C1rei/CR5ecTCt25flRF+BT6b7l/d1oGgxYQdJqOenmRaj
+ XHHrlANLgvPumsQNacjvKtVU3fFne3Q82zcJp9IQO3DveskxU6rAKct6SEM+/Das9ZMP
+ 7//PP78r0hAjqExNCqNud3k+KnvMEaijEuFAAhqrwoOD7RULwN116QO7qXAuC3ZJGoOS
+ MhTru2xOAIj85lofEp4tR3hoQOMQi2aNq7j/Km8iSuwX5Q6m21UakEjnTObsS+s01pos
+ oVbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtG7lxNG3EJ7jj7Ra7+s3TU3n6VVdjjEhP5OVEFAZ2Iuu6cp7ZAoLoHE+pu5zOWrKe2FJP0C06Ilm/@nongnu.org
+X-Gm-Message-State: AOJu0YySENrfojJ9LTNDZ18JXGgzHeUoOfeBCvaiF2PhzsfW34grfdlw
+ 2u9c6xg7EajEQ5RgWRgCxkAMwon1Q5vOZYisDepvYYz6WJKGesMhW4uNeuRTXUGr9gA=
+X-Gm-Gg: ASbGncttph/4OC7Ugel+PCgfT99xBBvSLjmahLjrb7X4pf2I1tUIm2ijVNHzRk4Q6aY
+ dAFW2/8HCZX/k57z8ubhnziG76+6xSiUViVHx0PTilfCuuZ3fecmeBsf1cAFrm5uFELLj8i+qNf
+ TEMACw9MNUi5dCfYM0o+hl3UHREW9Lp6SlPxfgdDkL+zYi+AAUmE0WOErxBYgziIkwuUAgPvs/B
+ B5/oNCIZC5rs+/WWttSbqEBsWACfaEvcVum0yC2K8fPs1r83PPAVRC+UgmNPhMrIF4uxXxC0fZc
+ RD0zcnEn8yXLyPTG6lg0ordOYyQyJ1OljzOKVrwuTrbMVgwQNlJY5qyPu8NX0P4IjWNHsII5m/k
+ vrURe4ieLdzgHr4x9i56mOQ7CcG13qvRoyRn2nLhOkxb6p4lH/3kPbB8gTIJSk/R1PA==
+X-Google-Smtp-Source: AGHT+IG41H7bClF4Q0juvT9pARqsJwyuwu8sMLVLbqKGhpFtZd7rwv+YMTcL3OAxfxMZaj1cHgtLdw==
+X-Received: by 2002:a05:600c:4f4c:b0:450:d37d:7c with SMTP id
+ 5b1f17b1804b1-459e95af955mr4331695e9.21.1754462493743; 
+ Tue, 05 Aug 2025 23:41:33 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e58400f5sm32839855e9.2.2025.08.05.23.41.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Aug 2025 23:41:33 -0700 (PDT)
+Message-ID: <95cd67ab-fbaf-4720-bda0-25356ea6ba49@linaro.org>
+Date: Wed, 6 Aug 2025 08:41:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v2 00/11] hw/sd: Fix SD cards in SPI mode
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
- qemu-block@nongnu.org, qemu-arm@nongnu.org,
- Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>
-References: <20250804133406.17456-1-philmd@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250804133406.17456-1-philmd@linaro.org>
+Subject: Re: [PATCH] hw/intc/loongarch_pch_pic: Fix ubsan warning and
+ endianness issue
+To: Thomas Huth <thuth@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-trivial@nongnu.org
+References: <20250801060152.22224-1-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250801060152.22224-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,48 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.08.2025 16:33, Philippe Mathieu-Daudé wrote:
-> Since v1:
-> - new patch factoring sd_response_size() out (Richard)
+On 1/8/25 08:01, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> This series fix a pair of issues with SD cards used wired
-> via a SPI link / controller.
+> When booting the Linux kernel from tests/functional/test_loongarch64_virt.py
+> with a QEMU that has been compiled with --enable-ubsan, there is
+> a warning like this:
 > 
-> Such mode implementation was minimal. I was testing it with
-> the ARM Gumstix machines, but we remove them in the v9.2.0
-> release (commit a2ccff4d2bc ), so they bit-rotted.
+>   .../hw/intc/loongarch_pch_pic.c:171:46: runtime error: index 512 out of
+>    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+>    .../hw/intc/loongarch_pch_pic.c:171:46
+>   .../hw/intc/loongarch_pch_pic.c:175:45: runtime error: index 256 out of
+>    bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+>   SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+>    .../hw/intc/loongarch_pch_pic.c:175:45
 > 
-> Although the series looks big, I shrinked it a lot to have
-> the minimum amount of meaningful changes. Other changes
-> added during debugging will be shared later, as I believe
-> they will still be useful to debug other future issues.
+> It happens because "addr" is added first before substracting the base
+> (PCH_PIC_HTMSI_VEC or PCH_PIC_ROUTE_ENTRY).
+> Additionally, this code looks like it is not endianness safe, since
+> it uses a 64-bit pointer to write values into an array of 8-bit values.
 > 
-> The last patch add testing coverage, to avoid further bitrot.
+> Thus rework the code to use the stq_le_p / ldq_le_p helpers here
+> and make sure that we do not create pointers with undefined behavior
+> by accident.
 > 
-> Regards,
-> 
-> Phil.
-> 
-> Philippe Mathieu-Daudé (11):
->    hw/sd/sdcard: Do not ignore errors in sd_cmd_to_sendingdata()
->    hw/sd/sdcard: Factor sd_response_size() out
->    hw/sd/sdbus: Provide buffer size to sdbus_do_command()
->    hw/sd/sdcard: Fill SPI response bits in card code
->    hw/sd/sdcard: Implement SPI R2 return value
->    hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode
->    hw/sd/sdcard: Allow using SWITCH_FUNCTION in more SPI states
->    hw/sd/sdcard: Factor spi_cmd_SEND_CxD() out
->    hw/sd/sdcard: Disable checking STBY mode in SPI SEND_CSD/CID
->    hw/sd/sdcard: Remove SDState::mode field
->    tests/functional: Test SD cards in SPI mode (using sifive_u machine)
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/intc/loongarch_pch_pic.c | 15 ++++++++-------
+>   1 file changed, 8 insertions(+), 7 deletions(-)
 
-Hi!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Philippe, do you think this series is something which should
-go to stable-10.0 (LTS) branch?  I'm not sure for the impact if
-it is not applied, though, - what do we miss in this case?
-
-Thanks,
-
-/mjt
 
