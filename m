@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06344C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A56BBC87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujiOu-0005II-Tg; Wed, 06 Aug 2025 13:58:08 -0400
+	id 1ujiPc-0005uW-9D; Wed, 06 Aug 2025 13:58:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1ujiOs-0005Ho-IL
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:58:06 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1ujiOq-0003J2-6V
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:58:06 -0400
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2B4143F2BA
- for <qemu-devel@nongnu.org>; Wed,  6 Aug 2025 17:58:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1754503082;
- bh=mr5nj7V1KIgHLhN+73jWIruHWFobQDyMxcw/R01uNtA=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=d56oEvHDrtbehpTMC3V6j4u80rcscymY4zBxZ2UQ7jwIyBreTd51ELT+j4Nh47BDV
- ETh/PpIrUJSPdlyAEMa7IuzYNaY7hjEQlZQ0K1BRkoh0CJi2aBTzmSoxQIQvXIGLtb
- +BJ220UHY5OD+SS6+NHCacDD5NhReT5e/uzX6WsyP8R8OZaNeq5LVa7RtOpv24scII
- aRSNBjDHZrWTdr6jSgpeIXoqzaVcpV5AkObh5I6AZLUWYbhnwUj/evbI6nXFLDz3+u
- 23lM34FYODN6jjHYl14ZGxEqlr6k83RNzdP7nx9OLtJqLCwcnxVSWZqxsnQT8VGStd
- k9gzdfzs63aDw==
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-612b6aa7ed2so122937a12.0
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 10:58:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ujiPZ-0005tO-Vp
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:58:50 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ujiPV-0003a1-Ve
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 13:58:49 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7698e914cd2so319783b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 10:58:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754503124; x=1755107924; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KUzhoRa9kWNC+956n2XC5X9V/+aRZPom4rXJNxrCnJc=;
+ b=FH/2ZdqMXoKVul1VRMlEJoSjNfYnB5Kd2zyPQgLBvqy46geprLgn/imWE5dJlojBXr
+ 0VIcOUlzjyZkRu80IBZHWPCqniglsJKVYfw+ajb+qDoja9IvM05AWrlqLJhsgxgw3hbo
+ AgrWZS9ZT8p2NHlBBXBQXxcA0iDgvzmB5tvPW/U9sJo8d+aV51haoGswjQQlqwwl7zWg
+ kA72wt1OvJlauPKyiMJed4+oJ8FpzFNpqs6lFTPXw3FRPjQQ0aa1SsVgr0mGh8uPY8t8
+ YquhJwKOZ1Kd2Gxbgdiqm/YiNYJlZmVESyOUrNNWAxvwipcWsl/qowxfJCZsck75Kz9I
+ gsAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754503081; x=1755107881;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mr5nj7V1KIgHLhN+73jWIruHWFobQDyMxcw/R01uNtA=;
- b=s4C8BLhkfeT5jzVdyHgGi+Lovn3QeFRRxxvEgoVxzYlnOtK2c4eupu3B+Zovnl0djZ
- d8BRmPYZruJv4PzYrIMP06SRH8T55QtUQpV4RK1FqN3EW7P58N6AYt07OkkuXOVZC1mW
- 9+y5EOrAa1rYyqzvWwUZ4xzk8uE4RUlewfvINGSXSdQ6Bc0abkDVyoq0asthOwJY2d/s
- n2UZav6tq8a8fUhKlfUMPyuC1WJCUYgi1VJqRqz5OPElhfSTO80auKmcTHuVqQ13ghKh
- QVocjz8aIy0LdYB4dTkG0Q0Qs1g4h/aK0AR9KRVsYJuIOvIAozoxF1w1P2McOosPkcgm
- OWWg==
-X-Gm-Message-State: AOJu0YxfnJYKulaKsJDFv7AeCwN+1b6vM4RCoUwdzT+xi+FkuDYdaWFv
- g02TX3cjVnGm41ck8LblZ7Pd9Oab2soviO89RZ33qRUj7UXVY+J7Qa9cZZO22TqReBZ9rvmniv8
- Tp4tnW40i3a54dQI6S+WIYSbA3xtn0OV64PPccxAjnZgu1rdXfR/RFXG85wjP+iZROTvhkPCXjB
- CSQboE/RGk/wBwNZ7P/5BtAFRXsRX5QQXB4M7lLo/6uVpmNQgqc2VQYMQqxg==
-X-Gm-Gg: ASbGncsMMEu0yavK/YwGK/BfJmym9K3TvH/Nqg03gDBaBqVxOm7AJhTuLU7vSOR/dJm
- QO8Xf7/9lOOapEEU3s62O1GlGxSRKigre/rZZDpek9+oBIWezEL/T4TFOlf7h8OTCvEzmmrU/1d
- RfkdwGE37JcoDz/uJZltmd
-X-Received: by 2002:a05:6402:274c:b0:60e:23d:43b1 with SMTP id
- 4fb4d7f45d1cf-6179615a422mr3412865a12.16.1754503081138; 
- Wed, 06 Aug 2025 10:58:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZxfw6Qa3Ye1UyJcqtskbVygx1yLoeOfp5rMp6pnD8G0oV3J788DropTF++k9kJ1K+kKhtR2d66UAWN1B4dXU=
-X-Received: by 2002:a05:6402:274c:b0:60e:23d:43b1 with SMTP id
- 4fb4d7f45d1cf-6179615a422mr3412842a12.16.1754503080596; Wed, 06 Aug 2025
- 10:58:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754503124; x=1755107924;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KUzhoRa9kWNC+956n2XC5X9V/+aRZPom4rXJNxrCnJc=;
+ b=aPazgm/yuIFmETX1UkAhITxfQU8joaUkvowsyH8jfvItIUkNcrg8IyUvu/C0xPWeMX
+ V+FbmXoZn55RUNlr3oztyORPdz1mulpPZFs1C6Bbnyje8vJvXVlpcpR55N5bwbY09eAt
+ cr7smB0TrNB9ctGJ0E2xa6480/cfxMqLPRb1PLXPN8tCTdvkject7m/Z+Cgwd4EPlFEs
+ iw/ipK+8/80J8uYH0oPX/TQ8N+NzhIs02ReDj+8UWdoWvvAZ43hdaRhtDxlJkG9ITZuY
+ nCZ2hVZ+jq0ynXsRQ3GDBY4UCzw4aOYuNdGvT1TqR2s0nIFd10c6B5IF/md8XDUUbinS
+ qnnw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6opExooszzo9CcEKoqiDwAgeY+tOARys5cdb1fPcB6oN5U9vJbyh1u2N86qx0Hzz5y8lMUadsN0ak@nongnu.org
+X-Gm-Message-State: AOJu0YzSnSvFnbg+FfpiskCYut8dycRgbBRH7dxSA6/KgIJU7Yk+NeeL
+ b3dvi3cKA7e3NzkqDidc0424+NchbH/6l0HAVZVaVRa/mnTpaHILfen+uTIIiL0a8oQ=
+X-Gm-Gg: ASbGnctMUps95fQg/EdLVEjmCs+BAEv9c3PR+Z2VR1ccn2o7sQYVIH8eu2GsFVlUJiD
+ MqQ9kEa/gqenPYT7ugjODrjYwECLGwGfe8leTJZYW/7cVHgRd6elWLW7FM5ReoyElHr0RWBn4Nl
+ 7/pPIWxaNyOhD9IrG+5XGE+ovx/SIZ0/kfsxHB1S3DcMKYFvu2BtmH/LjzHnZqm7b+34xZEvGma
+ I+pRFi/yizEspadSPQjcM6t5xvwXHTHltfUJFK2FE+7yyVvlx4lqg1gl76OxMv8K1ngQ6QsuAfP
+ 7D6FLA9mMP91+/5bFRpJSM9+kgRllGgt8DkXkQduO2cUh1oiu/h6TFnojLp3e7U+Bw2Wo9xsiU/
+ 0DZmSPAJl5Lp3XUze2NoGneL5Hdko1iPuNbo=
+X-Google-Smtp-Source: AGHT+IFuSrIvv2ahIGq5H2kSoMaEzNPI3bzvD6uYVydV+3Gftmznag6PPCNrrFiNAeRtRVihSAeXOA==
+X-Received: by 2002:a05:6a20:729f:b0:240:7ed:402d with SMTP id
+ adf61e73a8af0-240313ec465mr7740921637.31.1754503124081; 
+ Wed, 06 Aug 2025 10:58:44 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76c0401f3d7sm8451375b3a.96.2025.08.06.10.58.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Aug 2025 10:58:43 -0700 (PDT)
+Message-ID: <cf516dd1-51ae-45fb-a3df-6f7e0056234c@linaro.org>
+Date: Wed, 6 Aug 2025 10:58:42 -0700
 MIME-Version: 1.0
-References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
- <aJNDxxjeqkOLAO2r@redhat.com>
-In-Reply-To: <aJNDxxjeqkOLAO2r@redhat.com>
-From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
-Date: Wed, 6 Aug 2025 19:57:34 +0200
-X-Gm-Features: Ac12FXwzNQaPv4CP1-TlHtIttj99qJlIgo4YL8oWn0UtBTSlxNCefl3MyqD8zhc
-Message-ID: <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
-Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=christian.ehrhardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/13] tests/functional: Test SD cards in SPI mode (using
+ sifive_u machine)
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Guenter Roeck <linux@roeck-us.net>, Ben Dooks
+ <ben.dooks@codethink.co.uk>, Richard Henderson
+ <richard.henderson@linaro.org>, Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+References: <20250805173135.38045-1-philmd@linaro.org>
+ <20250805173135.38045-12-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250805173135.38045-12-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,121 +111,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
->
-> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
-> > Hi,
-> > I was unsure if this would be better sent to libvirt or qemu - the
-> > issue is somewhere between libvirt modelling CPUs and qemu 10.1
-> > behaving differently. I did not want to double post and gladly most of
-> > the people are on both lists - since the switch in/out of the problem
-> > is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not yet
-> > having all the answers, I'm sure I could find more with debugging, but
-> > I also wanted to report early for your awareness while we are still in
-> > the RC phase.
-> >
-> >
-> > # Problem
-> >
-> > What I found when testing migrations in Ubuntu with qemu 10.1-rc1 was:
-> >   error: operation failed: guest CPU doesn't match specification:
-> > missing features: pdcm
-> >
-> > This is behaving the same with libvirt 11.4 or the more recent 11.6.
-> > But switching back to qemu 10.0 confirmed that this behavior is new
-> > with qemu 10.1-rc.
->
->
-> > Without yet having any hard evidence against them I found a few pdcm
-> > related commits between 10.0 and 10.1-rc1:
-> >   7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
-> >   00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not available
-> >   e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
-> > feature_dependencies[] check
-> >   0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-> >
-> >
-> > # Caveat
-> >
-> > My test environment is in LXD system containers, that gives me issues
-> > in the power management detection
-> >   libvirtd[406]: error from service: GDBus.Error:System.Error.EROFS:
-> > Read-only file system
-> >   libvirtd[406]: Failed to get host power management capabilities
->
-> That's harmless.
+Hi,
 
-Yeah, it always was for me - thanks for confirming.
+On 8/5/25 10:31 AM, Philippe Mathieu-Daudé wrote:
+> Add a test which uses the sifive_u machine to boot a Linux
+> kernel from a SD card connected via a SPI interface.
+> 
+> Inspired from the command provided in:
+> - https://lore.kernel.org/qemu-devel/94b2c5bf-53d0-4c74-8264-f3021916f38c@roeck-us.net/
+> - https://lore.kernel.org/qemu-devel/840016d0-0d49-4ef4-8372-b62b3bcd0ac6@codethink.co.uk/
+> 
+> Inspired-by: Guenter Roeck <linux@roeck-us.net>
+> Inspired-by: Ben Dooks <ben.dooks@codethink.co.uk>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-Id: <20250804133406.17456-12-philmd@linaro.org>
+> ---
+>   MAINTAINERS                               |  1 +
+>   tests/functional/meson.build              |  1 +
+>   tests/functional/test_riscv64_sifive_u.py | 51 +++++++++++++++++++++++
+>   3 files changed, 53 insertions(+)
+>   create mode 100755 tests/functional/test_riscv64_sifive_u.py
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 28cea342718..a07086ed762 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1695,6 +1695,7 @@ S: Supported
+>   F: docs/system/riscv/sifive_u.rst
+>   F: hw/*/*sifive*.c
+>   F: include/hw/*/*sifive*.h
+> +F: tests/functional/test_riscv64_sifive_u.py
+>   
+>   AMD Microblaze-V Generic Board
+>   M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index ecf965adc6c..311c6f18065 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -274,6 +274,7 @@ tests_riscv64_system_quick = [
+>   ]
+>   
+>   tests_riscv64_system_thorough = [
+> +  'riscv64_sifive_u',
+>     'riscv64_tuxrun',
+>   ]
+>   
+> diff --git a/tests/functional/test_riscv64_sifive_u.py b/tests/functional/test_riscv64_sifive_u.py
+> new file mode 100755
+> index 00000000000..dc4cb8a4a96
+> --- /dev/null
+> +++ b/tests/functional/test_riscv64_sifive_u.py
+> @@ -0,0 +1,51 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots a Linux kernel on a Sifive U machine
+> +# and checks the console
+> +#
+> +# Copyright (c) Linaro Ltd.
+> +#
+> +# Author:
+> +#  Philippe Mathieu-Daudé
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +
+> +from qemu_test import Asset, LinuxKernelTest
+> +from qemu_test import skipIfMissingCommands
+> +
+> +
+> +class SifiveU(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL = Asset(
+> +        'https://storage.tuxboot.com/buildroot/20241119/riscv64/Image',
+> +        '2bd8132a3bf21570290042324fff48c987f42f2a00c08de979f43f0662ebadba')
+> +    ASSET_ROOTFS = Asset(
+> +        ('https://github.com/groeck/linux-build-test/raw/'
+> +         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
+> +         'rootfs.ext2.gz'),
+> +        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
+> +
+> +    def test_riscv64_sifive_u_mmc_spi(self):
+> +        self.set_machine('sifive_u')
+> +        kernel_path = self.ASSET_KERNEL.fetch()
+> +        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
+> +
+> +        self.vm.set_console()
+> +        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+> +                               'root=/dev/mmcblk0 rootwait '
+> +                               'earlycon=sbi console=ttySIF0 '
+> +                               'panic=-1 noreboot')
+> +        self.vm.add_args('-kernel', kernel_path,
+> +                         '-drive', f'file={rootfs_path},if=sd,format=raw',
+> +                         '-append', kernel_command_line,
+> +                         '-no-reboot')
+> +        self.vm.launch()
+> +        self.wait_for_console_pattern('Boot successful.')
+> +
+> +        os.remove(rootfs_path)
+> +
+> +
+> +if __name__ == '__main__':
+> +    LinuxKernelTest.main()
 
-> > And the resulting host-model on a  rather old test server will therefor=
-e have:
-> >   <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
-> >     <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
-> >     <vendor>Intel</vendor>
-> >     <feature policy=3D'require' name=3D'vmx'/>
-> >     <feature policy=3D'disable' name=3D'pdcm'/>
-> >      ...
-> >
-> > But that was fine in the past, and the behavior started to break
-> > save/restore or migrations just now with the new qemu 10.1-rc.
-> >
-> > # Next steps
-> >
-> > I'm soon overwhelmed by meetings for the rest of the day, but would be
-> > curious if one has a suggestion about what to look at next for
-> > debugging or a theory about what might go wrong. If nothing else comes
-> > up I'll try to set up a bisect run tomorrow.
->
-> Yeah, git bisect is what I'd start with.
+This new test triggers a usban error, which seems unrelated to what is 
+tested.
 
-Bisect complete, identified this commit
+tests/functional/riscv64/test_riscv64_sifive_u.SifiveU.test_riscv64_sifive_u_mmc_spi/default.log
+../net/checksum.c:78:23: runtime error: member access within misaligned 
+address 0x63300000ff71 for type 'struct eth_header', which requires 2 
+byte alignment
+0x63300000ff71: note: pointer points here
+  00 00 00  00 33 33 00 00 00 16 52  54 00 12 34 56 86 dd 60  00 00 00 
+00 24 00 01 00  00 00 00 00 00
+               ^
+     #0 0x56492d505aeb in net_checksum_calculate ../net/checksum.c:78
+     #1 0x56492cde3b75 in gem_transmit ../hw/net/cadence_gem.c:1386
+     #2 0x56492cde3b75 in gem_write ../hw/net/cadence_gem.c:1639
+     #3 0x56492d35ba8d in memory_region_write_accessor 
+../system/memory.c:490
+     #4 0x56492d368449 in access_with_adjusted_size ../system/memory.c:566
+     #5 0x56492d36de3c in memory_region_dispatch_write 
+../system/memory.c:1553
+     #6 0x56492d39fb22 in flatview_write_continue_step 
+../system/physmem.c:2972
+     #7 0x56492d3a007c in flatview_write_continue ../system/physmem.c:3002
+     #8 0x56492d3a007c in flatview_write ../system/physmem.c:3033
+     #9 0x56492d3a0376 in subpage_write ../system/physmem.c:2635
+     #10 0x56492d368449 in access_with_adjusted_size ../system/memory.c:566
+     #11 0x56492d36de3c in memory_region_dispatch_write 
+../system/memory.c:1553
+     #12 0x56492d6b16a4 in int_st_mmio_leN ../accel/tcg/cputlb.c:2503
+     #13 0x56492d6b1a3b in do_st_mmio_leN ../accel/tcg/cputlb.c:2538
+     #14 0x56492d6c80e8 in do_st_4 ../accel/tcg/cputlb.c:2708
+     #15 0x56492d6c80e8 in do_st4_mmu ../accel/tcg/cputlb.c:2784
+     #16 0x7fd5c72bcf7d  (/memfd:tcg-jit (deleted)+0x527ff7d)
 
-commit 00268e00027459abede448662f8794d78eb4b0a4
-Author: Xiaoyao Li <xiaoyao.li@intel.com>
-Date:   Tue Mar 4 00:24:50 2025 -0500
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior 
+../net/checksum.c:78:23
 
-    i386/cpu: Warn about why CPUID_EXT_PDCM is not available
-
-    When user requests PDCM explicitly via "+pdcm" without PMU enabled, emi=
-t
-    a warning to inform the user.
-
-    Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-    Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-    Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao.li@inte=
-l.com
-    Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
- target/i386/cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-
-
-Which is odd as it should only add a warning right?
-But I checked the logs - the build on "e68ec29809 i386/cpu: Move
-adjustment of CPUID_EXT_PDCM before feature_dependencies[] check"
-passed the same use case.
-I'll build both outside of the bisect run tomorrow to ensure this is
-reproducible when I watch it more closely (than submitting a bisect
-script).
-Maybe this already helps to put your eyes and thoughts in the right directi=
-on.
-
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
-
-
---=20
-Christian Ehrhardt
-Director of Engineering, Ubuntu Server
-Canonical Ltd
+Regards,
+Pierrick
 
