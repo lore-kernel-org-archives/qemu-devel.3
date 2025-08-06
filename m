@@ -4,146 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF574C87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 16:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E9CCA0EC1
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 17:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujhSb-0000xw-6Z; Wed, 06 Aug 2025 12:57:53 -0400
+	id 1ujhYf-0001h9-8A; Wed, 06 Aug 2025 13:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ujgCJ-0001Jx-LB
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:37:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ujgCI-0001Mb-0Q
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:36:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754494617;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X1OfTK+xp6uoBKk7dbSzEQQ9dnkclv0FGtzOH68TVpI=;
- b=EHVQTPE8ulacwmyjS+AHfQ/v4OI2LBGK/niAp7s3w1zWJWGFydG7kDoHRMf3mQcRvlDAvt
- zQaLESWupRjDoaq1LRIvmPNTFw5RZyK2Iq91apVuTzADOa+RaKEthU84nHpZYHjEIzKuKR
- ESMu+K+5JbOGmhEgGRAvU7Dy0Gm7z8s=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-xWP6QtfINlK2pt1gg6qqLA-1; Wed, 06 Aug 2025 11:36:55 -0400
-X-MC-Unique: xWP6QtfINlK2pt1gg6qqLA-1
-X-Mimecast-MFC-AGG-ID: xWP6QtfINlK2pt1gg6qqLA_1754494614
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b7889c8d2bso3016152f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:36:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujgP5-0005dI-Uw
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:11 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujgP3-00035q-M4
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 11:50:11 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2403df11a2aso46573465ad.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 08:50:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754495408; x=1755100208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/hhxVpoetzMDkpH+BkDjKcH9xZaCMmxw/1RApGRB4ZM=;
+ b=Mxbp7b/B/kYRFtoS1HrRZNLYzTOGn2grzw4zxRw5EhFtGaQC784gN1sfrDbvKPebxy
+ lHwkyHeN8aCUYP/fcaux6sAw/k3LxD9eoOvWJJkyWwf2MwdCIi3l3ESLw3gwfk8WFjyz
+ IC2f/mbwa9FvYeimDGzd+Utyvog/V8f6MIgIBIjltOyXL26iRBIqrxQqOkzeLMu7SHmE
+ i8FU/DyvYSAy+5oWgTwUXLyuyVdb3DepzlV3ICgDa9PrWB39BcXyDiQVRQRzZNHhBkRz
+ AwF06b08F2bXrZR8Iaf0rTuC8cZF30y5I15VAHrJfHjRcNWIDSDGnU6NgdQXBXHPyV+r
+ MkFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754494614; x=1755099414;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754495408; x=1755100208;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=X1OfTK+xp6uoBKk7dbSzEQQ9dnkclv0FGtzOH68TVpI=;
- b=O7zGlIbHddq06z4d3BtjGn4xnAd6WchU8DbJBinUrSBzWlyBwIqEvSOL2JUJS+suYT
- Z27jEkFjWAqjyA9lnwrR+5Yq86ymK5SOmvtjAcu25dWsknHC6aiR5vSJq+XxZ/6KqNPx
- oYEor2KEigIjV/2aiyI8Ah1Meea2kbm96gCXM3Ln6IAanrYlDF7LU8YA9Xc83PZe5bl1
- C8R4LGhl0A1bwuq7YP960F7aG/lmUhmq8D7XPpHI53djm1aWl0JfCBzW2oDiPdrYLBGU
- vhNOFJ9ITTamEaSa//KVULuc3cYo5j92W1oXF80OJrBXJCsPhYRZDw6XIcPbLhqPJTF5
- ZaVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV68kPFM9JxJw/VliQBerMNjt2/57M5VW+9KYueP/GUob2fS6CVTItVpSr3C/s86+E8wL4O0SGLaQ9w@nongnu.org
-X-Gm-Message-State: AOJu0YxybyJgyFeGOw9QfAQQUQbypgpP0+ygsO0omw5WXflMKCqfqwKZ
- XayTIlsqP39acxkQjlV6kx+fRV/1wrWITNgKuoDXVOXsbcbii/c2BCQ0qs8BrTRY1WR0lBWWrUS
- Ij93l05IyivDxwyXbaX5lzhAAy+QCg4ENrzW0yCJuti7tEcmq1UR538mq5qeYJJJv
-X-Gm-Gg: ASbGncvMqCqUreFFY6RsCvkIg/PQc5hUqKM+I0Klr9s2ChcIZWyvbWa/B8EAtt+dOiL
- NEayUtYd4JVjf13Z3+djssUrdHo8FiuVkUWbSp+0WUTgXT6J7tjFrOwgQzEm8iHwlTLU1JEdUGa
- NNld+LUTmow4AarRbFxLz3a+/jkLeQoD1/9qzHm9afGVuV3K2qbJ/5rkWxxkkJtDRpknb7IHiBP
- mMUeEo86Z3gSWwmoNfE/+4mZgFTpZBwYyuhf962SSxDqScWwV+zDx2R5JxRZe/9igiAygcWZ9fO
- xmtj90xOsh7OrjZA0RlmgFzSPRmRVvYZdWxEPoPgjw4nLezkp17MO6HU1y4owiI6/CQoUSPj8sp
- tpZoGDU0kQAF9PZIhbIUG7+Qj7qJGdYzCCdfVgK2WGGg5ECofIt68pqfoR3tZonxJTw==
-X-Received: by 2002:a05:6000:2003:b0:3b8:d0bb:754d with SMTP id
- ffacd0b85a97d-3b8f41d3e78mr2746080f8f.37.1754494613600; 
- Wed, 06 Aug 2025 08:36:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJBRnmx36yMkuMovK02H/FDLnXVexJSqFOgXqEw/YwAdXAPzWamzYKoKdrUCJKWosaOyMdaw==
-X-Received: by 2002:a05:6000:2003:b0:3b8:d0bb:754d with SMTP id
- ffacd0b85a97d-3b8f41d3e78mr2746060f8f.37.1754494613126; 
- Wed, 06 Aug 2025 08:36:53 -0700 (PDT)
-Received: from ?IPV6:2a01:cb01:833:e4a9:b423:d450:c87f:f1f0?
- (2a01cb010833e4a9b423d450c87ff1f0.ipv6.abo.wanadoo.fr.
- [2a01:cb01:833:e4a9:b423:d450:c87f:f1f0])
+ bh=/hhxVpoetzMDkpH+BkDjKcH9xZaCMmxw/1RApGRB4ZM=;
+ b=voVGj9heClg5K14ccStTaqqj9PFueb8RSoVwmPTe7qPnuTMRSGxt1MvB1bt9Wl6jA0
+ GJvRc/Su0JxjYxWfPlEryQI+jwuQXHvRXxUgRiBgDYqr3A0jQsvHkh+gWGSv7YaCxrC3
+ dap2dUjYj8rClTFbR8xLRQ+j2Uw5/AtvwIE7zSfa6aTGJ9TDfV1SOLtKACso5ZEff2zr
+ Xi82ueZDpuUa0m6xMZ6IySvuQ3siUnPpa+sQye5hLk4g57ZwK+VrSx6oT2aVuyG+8U46
+ XNZcN+Zlk1y7tz1Me7XvpCwtG+k/Lgq2KSqWLFP1RNDFTCd7mchbBNDN6TzAmch5PWw8
+ JaQQ==
+X-Gm-Message-State: AOJu0Yw2olrbMJSWagv7hBc0JpI2AzkCoqnpRhl3dpokKdy27KVHU5oZ
+ f94TbkenHm7QTvDPm7mpeija8NPF3jdE9rpyseKeM3E/7LpvVwBpp0U9dhfUsg==
+X-Gm-Gg: ASbGncso/uPKhZeSqbLWB+lQ1sj/RM1EkT3hECCdHA6sJE5CiOgJYkHsDwuFrukqsW0
+ vHvA5QoOawgYC/2cjNHVIJfl7WW0/YGjH76tXucVKdtAFH9i3qWa3dev5PLVzeQ2M2hTjxUIoUy
+ lY9lZ4lgi+eG8U7Mg8ze4Vi+Cro3qE6g6C4jcJfHROC4xbd8//Gxh1FEEgi/aIohgWkxZxwfsv8
+ CHaeHjpXnhq6IsdV4LjUbYmCTBjAkk2m2RRfjdVbcJqaheu/rnoijkjeCuCer1x7mYVRYPFeNJc
+ dQ2ZdtJKQ8BwNRjrldwmeg1VobyW9wGfcYCShtg1DmdiWXmey9ohdoVn88YLJ61GHfp195N2cMm
+ b9G9Jlhp4M2gdalY4EDo0SzsJYIQOwUB9
+X-Google-Smtp-Source: AGHT+IEeWfulLiFYV1LpG7QpMFoM9epSG7yJvFYj7fX6+WMUnvCtxoTrLnPzCFgOSTlc6iybk/3vlw==
+X-Received: by 2002:a17:903:174e:b0:240:6e54:3cd1 with SMTP id
+ d9443c01a7336-2429f521a22mr47883625ad.1.1754495407962; 
+ Wed, 06 Aug 2025 08:50:07 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:4cca:cbdb:3f01:1165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4530a8sm23462951f8f.38.2025.08.06.08.36.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 08:36:52 -0700 (PDT)
-Message-ID: <e3b520ca-4b67-4880-82f0-c464f9182b67@redhat.com>
-Date: Wed, 6 Aug 2025 17:36:51 +0200
+ d9443c01a7336-241e8976a3asm163374575ad.87.2025.08.06.08.50.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 08:50:07 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH v2 0/4] wasm: Enable 64bit guests on TCI using wasm64
+Date: Thu,  7 Aug 2025 00:49:47 +0900
+Message-ID: <cover.1754494089.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.2 3/4] vfio: Remove 'vfio-platform'
-To: eric.auger@redhat.com, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250731121947.1346927-1-clg@redhat.com>
- <20250731121947.1346927-4-clg@redhat.com>
- <3841525e-eef9-4cf3-a7b5-b7cc11e9d702@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3841525e-eef9-4cf3-a7b5-b7cc11e9d702@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,28 +102,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Eric,
+V2:
 
-On 8/6/25 16:52, Eric Auger wrote:
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -38,7 +38,6 @@
->>   #include "hw/arm/primecell.h"
->>   #include "hw/arm/virt.h"
->>   #include "hw/block/flash.h"
->> -#include "hw/vfio/vfio-platform.h"
-> removal of this header causes the compilation to fail.
-> #include "system/system.h" needs to be added
+- Added a link to the Emscripten documentation about -sMEMORY64 in the
+  configure script.
+- Changed --wasm64-memory64 flag to --wasm64-32bit-address-limit to avoid
+  exposing the -sMEMORY64 value directly to the users.
+- Fixed GitLab CI to use --wasm64-32bit-address-limit instead of
+  --wasm64-memory64.
 
-yes. I sent this patch separately :
+V1:
 
-   https://lore.kernel.org/qemu-devel/20250731144019.1403591-1-clg@redhat.com/
+This patch series enables the TCI of the Wasm build to run 64bit
+guests. Unlike the previous series[1], this patch series is implemented by
+adding support for WebAssembly's "wasm64" target which enables 64bit
+pointers.
 
-but it needs a v2 to address other files which have a similar
-issue. I will resend the whole when the QEMU 10.2 cycle opens.
+In the previous discussion[2], the main challenge of using wasm64 was its
+limited adoption, particularly the lack of support in our dependency
+(libffi) and some engines such as Safari.
 
-Thanks,
+For libffi, I've completed the addition of wasm64 support upstream[3] so it
+can be used.
 
-C.
+To support wasm32 engines, this patch uses Emscripten's compatibility
+feature, -sMEMORY64=2 flag[4]. This flag still enables 64bit pointers in the
+C code while Emscripten lowers the output binary to wasm32 and limits the
+maximum memory size to 4GB. As a result, QEMU can run on wasm32 engiens
+while still supporting 64bit guests.
+
+# Overview of the build process
+
+To compile QEMU with Emscripten, the following dependencies are required.
+The emsdk-wasm-cross.docker environment includes all necessary components
+and can be used as the build environment:
+
+- Emscripten SDK (emsdk) v4.0.10
+- Libraries cross-compiled with Emscripten (please see also
+  emsdk-wasm-cross.docker for build steps)
+  - GLib v2.84.0
+  - zlib v1.3.1
+  - libffi v3.5.2
+  - Pixman v0.44.2
+
+The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
+pointer support.
+
+emconfigure ./configure --cpu=wasm64 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
+
+If the output needs to run on wasm32 engines, use
+--wasm64-32bit-address-limit flag. This flag enables Emscripten's
+-sMEMORY64=2 flag[4]. (Note: --wasm64-memory64=2 flag in the V1 patch has
+been renamed to --wasm64-32bit-address-limit in V2)
+
+emconfigure ./configure --cpu=wasm64 --wasm64-32bit-address-limit \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
+
+Either of the above commands generates the following files:
+
+- qemu-system-x86_64.js
+- qemu-system-x86_64.wasm
+
+Guest images can be packaged using Emscripten's file_packager.py tool.
+For example, if the images are stored in a directory named "pack", the
+following command packages them, allowing QEMU to access them through
+Emscripten's virtual filesystem:
+
+/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
+
+This process generates the following files:
+
+- qemu-system-x86_64.data
+- load.js
+
+Emscripten allows passing arguments to the QEMU command via the Module
+object in JavaScript:
+
+Module['arguments'] = [
+    '-nographic', '-m', '512M',
+    '-L', 'pack/',
+    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
+    '-kernel', 'pack/bzImage',
+    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
+];
+
+The sample repository[5] (tcidev64 branch) provides a complete setup,
+including an HTML file that implements a terminal UI.
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg05376.html
+[2] https://lists.nongnu.org/archive/html/qemu-devel/2025-04/msg01795.html
+[3] https://github.com/libffi/libffi/pull/927
+[4] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+[5] https://github.com/ktock/qemu-wasm-sample/tree/tcidev64
+
+Kohei Tokunaga (4):
+  meson: Add wasm64 support to the --cpu flag
+  configure: Enable to propagate -sMEMORY64 flag to Emscripten
+  dockerfiles: Add support for wasm64 to the wasm Dockerfile
+  .gitlab-ci.d: Add build tests for wasm64
+
+ .gitlab-ci.d/buildtest.yml                    | 24 +++++++++++++--
+ .gitlab-ci.d/container-cross.yml              | 18 +++++++++++-
+ .gitlab-ci.d/container-template.yml           |  4 ++-
+ MAINTAINERS                                   |  2 +-
+ configure                                     | 16 +++++++++-
+ meson.build                                   |  4 +--
+ ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
+ 7 files changed, 81 insertions(+), 16 deletions(-)
+ rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+
+-- 
+2.43.0
 
 
