@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39424C87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A561C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1p4-0001oc-TV; Thu, 07 Aug 2025 10:42:27 -0400
+	id 1uk1v5-0007I6-Ll; Thu, 07 Aug 2025 10:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1on-0000cf-UZ
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:11 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1om-00015c-DE
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:09 -0400
-Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 277A1201BC95;
- Thu,  7 Aug 2025 07:42:02 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 277A1201BC95
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577727;
- bh=mMv86KD3V67oVebba8l5rBp4oHWEZhUH0wYWCzvvwqQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jzeKjY3ZAa9blCel46xnxtS0vElu5Lkuna+BVJQa7VJKmNdfmWs8sPXF1WfmlZHDE
- iHuyaR2zE06lddRKuJKo2Ta7Dpjnl71g3AsruQd3a1sv7gpU1iQENzxaFi01xYmbmF
- p195jNR6lwqakKxoywXhGNaQrPqT2zC9u+3xMGIM=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 21/26] target/i386/mshv: Write MSRs to the hypervisor
-Date: Thu,  7 Aug 2025 16:39:46 +0200
-Message-Id: <20250807143951.1154713-22-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uk1v2-00079P-EC
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:48:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uk1uz-0002ZE-0V
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:48:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754578110;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ysT8MU9AF31vkeEwfQ6HxOO/mP9++JBcUib7zXCTAVo=;
+ b=SF4o/BwPWotVxhjkb72GKnbUCk9003ry+uucQfrxLXSHfs3ROjlKB8qMuo/1ddGfljlc5X
+ 3HnS6teaWosKOwXkcF0C4wzWwDiY3ULt9o7rL2uIDbMPtAiRLOm7RfeXtZ/JLRfAuCi2M9
+ lHoPznw6U15rG7EW4m5Sn2KOQz37SSQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-Aq1QZt8lO_KFqxKI8tgN8g-1; Thu,
+ 07 Aug 2025 10:48:23 -0400
+X-MC-Unique: Aq1QZt8lO_KFqxKI8tgN8g-1
+X-Mimecast-MFC-AGG-ID: Aq1QZt8lO_KFqxKI8tgN8g_1754578089
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CCBC18004D4; Thu,  7 Aug 2025 14:48:08 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.191])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A9D67180035C; Thu,  7 Aug 2025 14:48:06 +0000 (UTC)
+Date: Wed, 6 Aug 2025 12:56:34 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH trivial] tests/qemu-iotests/tests/mirror-sparse: actually
+ require O_DIRECT
+Message-ID: <20250806165634.GC51368@fedora>
+References: <20250806075635.3290-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="b7AolTyeASpm/hW9"
+Content-Disposition: inline
+In-Reply-To: <20250806075635.3290-1-mjt@tls.msk.ru>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,101 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Push current model-specific register (MSR) values to MSHV's vCPUs as
-part of setting state to the hypervisor.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 68 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 66 insertions(+), 2 deletions(-)
+--b7AolTyeASpm/hW9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 673c90f865..431bf83ff9 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -901,6 +901,65 @@ static int put_regs(const CPUState *cpu)
-     return 0;
- }
- 
-+struct MsrPair {
-+    uint32_t index;
-+    uint64_t value;
-+};
-+
-+static int put_msrs(const CPUState *cpu)
-+{
-+    int ret = 0;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    MshvMsrEntries *msrs = g_malloc0(sizeof(MshvMsrEntries));
-+
-+    struct MsrPair pairs[] = {
-+        { MSR_IA32_SYSENTER_CS,    env->sysenter_cs },
-+        { MSR_IA32_SYSENTER_ESP,   env->sysenter_esp },
-+        { MSR_IA32_SYSENTER_EIP,   env->sysenter_eip },
-+        { MSR_EFER,                env->efer },
-+        { MSR_PAT,                 env->pat },
-+        { MSR_STAR,                env->star },
-+        { MSR_CSTAR,               env->cstar },
-+        { MSR_LSTAR,               env->lstar },
-+        { MSR_KERNELGSBASE,        env->kernelgsbase },
-+        { MSR_FMASK,               env->fmask },
-+        { MSR_MTRRdefType,         env->mtrr_deftype },
-+        { MSR_VM_HSAVE_PA,         env->vm_hsave },
-+        { MSR_SMI_COUNT,           env->msr_smi_count },
-+        { MSR_IA32_PKRS,           env->pkrs },
-+        { MSR_IA32_BNDCFGS,        env->msr_bndcfgs },
-+        { MSR_IA32_XSS,            env->xss },
-+        { MSR_IA32_UMWAIT_CONTROL, env->umwait },
-+        { MSR_IA32_TSX_CTRL,       env->tsx_ctrl },
-+        { MSR_AMD64_TSC_RATIO,     env->amd_tsc_scale_msr },
-+        { MSR_TSC_AUX,             env->tsc_aux },
-+        { MSR_TSC_ADJUST,          env->tsc_adjust },
-+        { MSR_IA32_SMBASE,         env->smbase },
-+        { MSR_IA32_SPEC_CTRL,      env->spec_ctrl },
-+        { MSR_VIRT_SSBD,           env->virt_ssbd },
-+    };
-+
-+    if (ARRAY_SIZE(pairs) > MSHV_MSR_ENTRIES_COUNT) {
-+        error_report("MSR entries exceed maximum size");
-+        g_free(msrs);
-+        return -1;
-+    }
-+
-+    for (size_t i = 0; i < ARRAY_SIZE(pairs); i++) {
-+        MshvMsrEntry *entry = &msrs->entries[i];
-+        entry->index = pairs[i].index;
-+        entry->reserved = 0;
-+        entry->data = pairs[i].value;
-+        msrs->nmsrs++;
-+    }
-+
-+    ret = mshv_configure_msr(mshv_vcpufd(cpu), &msrs->entries[0], msrs->nmsrs);
-+    g_free(msrs);
-+    return ret;
-+}
-+
-+
- int mshv_arch_put_registers(const CPUState *cpu)
- {
-     int ret;
-@@ -911,8 +970,13 @@ int mshv_arch_put_registers(const CPUState *cpu)
-         return -1;
-     }
- 
--    error_report("unimplemented");
--    abort();
-+    ret = put_msrs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to put msrs");
-+        return -1;
-+    }
-+
-+    return 0;
- }
- 
- void mshv_arch_amend_proc_features(
--- 
-2.34.1
+On Wed, Aug 06, 2025 at 10:56:31AM +0300, Michael Tokarev wrote:
+> Commit c0ddcb2cbc146e introduced the test which uses cache=3Ddirect
+> mode, without checking if the scratch filesystem supports O_DIRECT.
+> A subsequent commit, afeb002e0ad49d, tried to fix that issue, but
+> instead of checking for o_direct, it checked for
+> `_supported_cache_modes none directsync`, which is not what the
+> original mirror-sparse test uses.  Fix both by actually checking
+> for o_direct.
+>=20
+> Fixes: c0ddcb2cbc146e "tests: Add iotest mirror-sparse for recent patches"
+> Fixes: afeb002e0ad49d "tests/qemu-iotests/tests/mirror-sparse: skip if O_=
+DIRECT is not supported"
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+> This is what happens when rushing for last-minute
+> pre-release fixes..  I'm sorry for this.
+>=20
+>  tests/qemu-iotests/tests/mirror-sparse | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Please include this in a pull request for QEMU v10.1.0-rc3. Thanks!
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--b7AolTyeASpm/hW9
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiTiUIACgkQnKSrs4Gr
+c8j+fgf/a5//Dw5Oo+WWm1NPqUZzkxtzBsrLrVKCy0uyRuDuMQ81gN7XYL+c6uxs
+H/0OIO0r3Chqv8Z7QVVb4Eh4WszWZIuebShi8DN1tqOYkyLDEwBWc+YtZDNUjuPx
+Fsv4gLGKSBLdChNoK4k9lwlQ93maV9QAFhQ+mlbxvQ4W3xqiarGoNOgaE0BkmNFE
+l08HOWDim+xx8yASfeA9uHWhDWDqq1zGSAgNIjIS7+zVNyjS8kdKv1JtIJIGGMM3
+Tbaob8CsJHdnUE/AjAUcjZh5jb6bDjxM0KETrYHG9q25XAGOJ9QqOGP520V/o0aL
+mSDw3Rv/SCtjr8FBRIYsO4b/usQNWA==
+=qtbB
+-----END PGP SIGNATURE-----
+
+--b7AolTyeASpm/hW9--
 
 
