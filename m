@@ -4,83 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66ACBC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 21:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10032C87FD3
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 21:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujlEx-0002fA-DV; Wed, 06 Aug 2025 17:00:03 -0400
+	id 1ujlGU-0005If-MV; Wed, 06 Aug 2025 17:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ujlEw-0002dw-6h
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 17:00:02 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ujlEu-00068L-Ev
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 17:00:01 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-af8fd1b80e5so55544766b.2
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 14:00:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754513999; x=1755118799; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a5WX42//zteNgRuz53SiD9dS8i3OKA3uwg+zySoqgPE=;
- b=CleUokOx/yzdijp4z+k7J8vs/SDmwWSNkA4UWXqruFuwzflwGnR9oz1bRTi+Sao+IB
- f7RfppRFSQjrvxk8oi6MnEsGkHqtbz+GATz20V4QYr5o8tlRHzD3vxDdWK2pJBq4khDO
- VboAEK/ztMTcCDSsN283Lip/7JIlW88yWSaWKW5SrB7P1YB7XyInMhfpX99GhlcTHvMi
- /mSIZK6IiSITmOKKQhWlSaApFYacovhmtnZIC2d9Db8E3tWoCQO9JeAYttL+vNrxkimR
- Aew+hLi2hHA94XufTkFOLgCIAP2Gh2u4p7ILUTQL6XLhQhq3DNasd5mln+/tlT7yDdxk
- Z71g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754513999; x=1755118799;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=a5WX42//zteNgRuz53SiD9dS8i3OKA3uwg+zySoqgPE=;
- b=Rq5L1uzVvcW9zcts/2OG/O/rAIP6n3NWMwDq7+2eRrdcizHzf5ZoiPlp0qS2idvZeR
- Vk7DzUkne1DJA183SbbECn6uc5Jq2Nx5K3fT4y2WaV2j2iX/BigiPM+u5Y8tzsCcJFu1
- 0vteK2UckixdSaedGq07uiVbKR8A/lbJYezZREl1GCH8pQI1EP5y4aVTQhZw8uKzD4Zr
- lFjQlDKRHDDPV3gt2LlQpdYyYN6fdyZrsnW0AV5XsCoQe2e2SzsgB4Y5bf1oZZiWrSiH
- XJzw5QVib08y4uVLl7lz0JNEZzVZ9luyaDFCHENxBpyDp0BMd7hjxD2Z4uD9cy1FuwPr
- M+HQ==
-X-Gm-Message-State: AOJu0YxkBcfHgys3RMVniTHpvTvBdSoxtY1hBn96J2xAgVZGZMa+mNxb
- lYH81OaB6tHrdDhFo68cTaKmf74yWeJmrunaDE2tuP9BuvwOnqwmdgfxXeZZnVO1FuiDqn8QCbA
- 76mmWjoUkTde9nrlJVsqd0J+z2vGXeENE8cvr
-X-Gm-Gg: ASbGncvpngFZoEFUJFg7TBfZ+8fXudMUNBJYyss7nBEVKOIcg7vg5ncdmR5I2/CDI7W
- XNk097WVPuplEvZMwjdvlPCAvrNeGobwUI4ZWavuZRGnjgd7jeO8pfETE4DgmOvQx7fR62sffdG
- 7XNZyilN0QAXiocGbhUzIB0FY1XH/CtStH9xvkBPtcUmsVBxgp1ohSPUQzM+F8evVQNcBBP3l6k
- G2r+g==
-X-Google-Smtp-Source: AGHT+IFtIZKR6s8FUx8UpKdNSVPputNDgXw0Fr4DdJf0KrDM9bFEvifx/HgN38aWDJOe4KG/nqOW3GQ5VXOeuyGu6Jo=
-X-Received: by 2002:a17:907:7241:b0:ad8:9c97:c2e5 with SMTP id
- a640c23a62f3a-af98feff474mr390558166b.0.1754513998579; Wed, 06 Aug 2025
- 13:59:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250806195530.1789560-1-marcandre.lureau@redhat.com>
- <20250806195530.1789560-2-marcandre.lureau@redhat.com>
-In-Reply-To: <20250806195530.1789560-2-marcandre.lureau@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 6 Aug 2025 16:59:46 -0400
-X-Gm-Features: Ac12FXwssgG1c7_DTT_tfFFIgiHSNjeI5_IbzVtcol3H4FMuN4tf52IAU6DeRmo
-Message-ID: <CAJSP0QVb_YCOujyKdjXFhAiYFdaaY7UgabtSoesi6f5M95w5jg@mail.gmail.com>
-Subject: Re: [PULL 1/1] ui/curses: Fix infinite loop on windows
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- William Hu <purplearmadillo77@proton.me>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujlG8-0004vu-CP; Wed, 06 Aug 2025 17:01:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujlG6-0006W9-15; Wed, 06 Aug 2025 17:01:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576HUd4b019637;
+ Wed, 6 Aug 2025 21:01:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=ys7sUiKNbEPXu95PCX1EexSWJcRqK3XEFLXdlke6wXc=; b=EHYfWJBriWwl
+ zPQ9Qlj4iwyVH3IoO9VhMPPoJeejmJJCbQEA7lEoMxEwE6Dc08QEJR6FINiAWHXe
+ fp3uZLpY5c1oa5a2YaVsgHePSXIhAAGQKV7ophxieOOWmt3WBAR2Szd3tsHKsPcF
+ yr8ZqdQXIpZJ++ox22oa5xpIqxRhzFdflBE8mG5jitZAwZXRLFEFeLnjAMOyxVBi
+ vWqSSmxY4xww5wDZlTDtizUjY8iZAeNAjAqF7JSYi6qZzLKc3IYoDlD3woyFPfA4
+ nCXNWK2Xh36TIC3OZ6BykyhcfxnMtpozZl0pvQ7ymYwkRiTXI7pMosraqrKWGSeK
+ K2p6C6FZTw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48c26tuv45-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 21:01:11 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 576KuO6K000371;
+ Wed, 6 Aug 2025 21:01:11 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48c26tuv44-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 21:01:11 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 576K06Os025878;
+ Wed, 6 Aug 2025 21:01:10 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48bpwn5hcj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 21:01:10 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 576L19VL12583526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 6 Aug 2025 21:01:09 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C0E458061;
+ Wed,  6 Aug 2025 21:01:09 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D8D2D5803F;
+ Wed,  6 Aug 2025 21:01:08 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  6 Aug 2025 21:01:08 +0000 (GMT)
+Message-ID: <901dc082099e720001d852ec34943bf4149db759.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/pci-host: PowerNV PCIe Device On Small PHB Seg Faults
+From: Miles Glenn <milesg@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: kowal@linux.ibm.com, saif.abrar@linux.ibm.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com
+Date: Wed, 06 Aug 2025 16:01:08 -0500
+In-Reply-To: <957b82100001831432cd29fc3af5f022c14018c7.camel@linux.ibm.com>
+References: <20250716165017.2770845-1-milesg@linux.ibm.com>
+ <957b82100001831432cd29fc3af5f022c14018c7.camel@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: kE6gl1I-L90EQ9Rxmqq3uxBbrLPPseYV
+X-Authority-Analysis: v=2.4 cv=F/xXdrhN c=1 sm=1 tr=0 ts=6893c297 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=kPGuEAcD5d1l2WuI2AoA:9 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: vIVQCtHrjCA3vDwp_Ywz2s4JZv7tqbdt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDEzOSBTYWx0ZWRfXyt6u4vjyUHhR
+ xiUrwNsoU1NetFldSy4zYAsjTm8Kg+KPLhjKLGDJ3zQ6E4bscuL6nECsXRVNtUmzaan/wK5RhBf
+ 9ExEvOfhpv6mmr4jYj48f7rByIzl3VePqfD0DT/OBcRxJqYhPE1WaGYj9xHiWbPXh9MI1qGnyKs
+ TpkqFGH/5pOwooKjdTgpCseLSJGG+hMDIujDYJysEFG1Rvc9vJqoq5/goVd1GkJMgSKulEAclrO
+ OW6w14JhrP9zyx+pOU6k05eNVha7BkeuObhqjnnK2uJSCEJCGxUmN78M3D8oY9vo/Dwve4o/M2N
+ pBceXWj1tkxFJcoYqqjPVQSnT0E7YATBQkAq3cJNpIaDj9vk++zc1d97tMS0SGmdVLhldMTQWqp
+ /XeSnmjsnPuuINwefM/kFcJXA2W6LMu7AB4hr14Qks6JpVCR49hzjL0R22MwYRemU2ea7/JY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_04,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 spamscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
+ malwarescore=0 phishscore=0 suspectscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508060139
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,87 +125,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 6, 2025 at 3:56=E2=80=AFPM <marcandre.lureau@redhat.com> wrote:
->
-> From: William Hu via <qemu-devel@nongnu.org>
++harsh
 
-The pull request merging script rejects this pull request because the
-author's email address was mangled by the mailing list:
+On Wed, 2025-07-16 at 12:24 -0500, Miles Glenn wrote:
+> +qemu-ppc@nongnu.org
+> 
+> On Wed, 2025-07-16 at 11:50 -0500, Glenn Miles wrote:
+> > The PowerNV PCI Host Bridge (PHB) supports a large and small
+> > configuration where the small configuration supports only
+> > half the number of interrupts supported by the large configuration.
+> > 
+> > Since the PCIe LSIs are allocated at the end of the PHB IRQ list,
+> > when calculating the LSI IRQ number, the code must take into
+> > consideration the number of IRQ's supported by the PHB.  This
+> > was not happening and was resulting in a QEMU segmentation fault
+> > when a PCI device was added to a PHB with the small configuration.
+> > 
+> > Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> > ---
+> >  hw/pci-host/pnv_phb4.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> > index 18992054e8..aeb2a45b4b 100644
+> > --- a/hw/pci-host/pnv_phb4.c
+> > +++ b/hw/pci-host/pnv_phb4.c
+> > @@ -1167,6 +1167,7 @@ static int pnv_phb4_map_irq(PCIDevice *pci_dev, int irq_num)
+> >  static void pnv_phb4_set_irq(void *opaque, int irq_num, int level)
+> >  {
+> >      PnvPHB4 *phb = PNV_PHB4(opaque);
+> > +    XiveSource *xsrc = &phb->xsrc;
+> >      uint32_t lsi_base;
+> >  
+> >      /* LSI only ... */
+> > @@ -1175,6 +1176,7 @@ static void pnv_phb4_set_irq(void *opaque, int irq_num, int level)
+> >      }
+> >      lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+> >      lsi_base <<= 3;
+> > +    lsi_base &= xsrc->nr_irqs - 1;
+> >      qemu_set_irq(phb->qirqs[lsi_base + irq_num], level);
+> >  }
+> >  
 
-ERROR: pull request includes commits attributed to list
-
-Please fix up the commit author's email address in your branch and
-send a v2 pull request. Thank you!
-
-Stefan
-
->
-> Replace -1 comparisons for wint_t with WEOF to fix infinite loop caused b=
-y a
-> 65535 =3D=3D -1 comparison.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2905
-> Signed-off-by: William Hu <purplearmadillo77@proton.me>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> [ Marc-Andr=C3=A9 - Add missing similar code change ]
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Message-ID: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbe=
-NpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=3D@proton.me>
-> ---
->  ui/curses.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/ui/curses.c b/ui/curses.c
-> index a39aee8762..eccb585948 100644
-> --- a/ui/curses.c
-> +++ b/ui/curses.c
-> @@ -265,7 +265,12 @@ static int curses2foo(const int _curses2foo[], const=
- int _curseskey2foo[],
->
->  static void curses_refresh(DisplayChangeListener *dcl)
->  {
-> -    int chr, keysym, keycode, keycode_alt;
-> +    /*
-> +     * DO NOT MAKE chr AN INT:
-> +     * Causes silent conversion errors on Windows where wint_t is unsign=
-ed short.
-> +     */
-> +    wint_t chr =3D 0;
-> +    int keysym, keycode, keycode_alt;
->      enum maybe_keycode maybe_keycode =3D CURSES_KEYCODE;
->
->      curses_winch_check();
-> @@ -284,8 +289,9 @@ static void curses_refresh(DisplayChangeListener *dcl=
-)
->          /* while there are any pending key strokes to process */
->          chr =3D console_getch(&maybe_keycode);
->
-> -        if (chr =3D=3D -1)
-> +        if (chr =3D=3D WEOF) {
->              break;
-> +        }
->
->  #ifdef KEY_RESIZE
->          /* this shouldn't occur when we use a custom SIGWINCH handler */
-> @@ -304,9 +310,9 @@ static void curses_refresh(DisplayChangeListener *dcl=
-)
->          /* alt or esc key */
->          if (keycode =3D=3D 1) {
->              enum maybe_keycode next_maybe_keycode =3D CURSES_KEYCODE;
-> -            int nextchr =3D console_getch(&next_maybe_keycode);
-> +            wint_t nextchr =3D console_getch(&next_maybe_keycode);
->
-> -            if (nextchr !=3D -1) {
-> +            if (nextchr !=3D WEOF) {
->                  chr =3D nextchr;
->                  maybe_keycode =3D next_maybe_keycode;
->                  keycode_alt =3D ALT;
-> --
-> 2.50.1
->
->
 
