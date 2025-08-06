@@ -4,147 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A96CC87FD3
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B5AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Aug 2025 20:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujksS-0001tK-BF; Wed, 06 Aug 2025 16:36:48 -0400
+	id 1ujl1q-0004vv-C1; Wed, 06 Aug 2025 16:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ujksO-0001sk-Kw
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:36:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujl1m-0004tC-6h; Wed, 06 Aug 2025 16:46:26 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ujksM-0002Mz-LJ
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 16:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754512598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=htE1v45noS4uguRMboaRhzxYrbF432bL+pmmCco1OC4=;
- b=QyMUuV2Bi/xIHcvFGWLfAwnZgbWNeQB65mVxEuoQvwCz5PnXfOAgGvBuwMeC9wWqUI62Vr
- 2vwjqXurOqEDvZ1d5hEOb7GTB+2BlUH4gvQMHjlUEGy01NQ9Mr4VvCHGNERJgoBAyAXuPC
- IZfnZFeiTjXDDa3MLDIW6RlW26IRXPM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-328-P8pcHCZnPaesSV5RlBZlmw-1; Wed, 06 Aug 2025 16:36:37 -0400
-X-MC-Unique: P8pcHCZnPaesSV5RlBZlmw-1
-X-Mimecast-MFC-AGG-ID: P8pcHCZnPaesSV5RlBZlmw_1754512596
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-459dbbf43c0so7093205e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 13:36:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754512596; x=1755117396;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=htE1v45noS4uguRMboaRhzxYrbF432bL+pmmCco1OC4=;
- b=Hca/nxejomYYsQU/JGWNeU/lfwn+Do3uWStka1iMPx9njYwZFvxOWo+hpMTLyOxKi5
- 6qg5MeOJJ7Yc1mOIO5ZfmQn9ZlGbYWNy2fU0bgm7EkAVWf3sVRP8J/zSIOFYSeAnsyTf
- bpTBfQq9LOJdXECwdwPUaQw8XWPA69eE52OlUi8tlhC2zlREu2CCGzX8Ofyivpe/5g6T
- GpfP7fqYdS3Z82F3U+snSD95Lf1GnatWm7Mcrrg7Ktrz+MZk9Ynsz290/5xzkcYQVHi6
- agbRMCn2WLTmGdHHWzWwDj3sJwqCQbeXlwiXe5qbZIa5j7+rSDF31ATX5i0/KAFTysKL
- 6xmA==
-X-Gm-Message-State: AOJu0YxEq1O3GNFT37h82MgHZ3pLfxdTFZrx+RHpvJrkg0clQrqOAwbR
- GMnELlobXxzX45LqIj4eZ/9jpNfjg8Zdcu785kHI0aRTkicHKhpyuTj2DUYsZn1TpSjSWEQ45a/
- QvOkYyx2qoroRuv/m5KATAZpMjuw0kenjqDm2I5bRZOYbbzOZwLMtWWzP
-X-Gm-Gg: ASbGncssNPLXBqlWDHZm/nqsz/tFJbGwoq3M9rOhcb7239KqSGgsfy9ZcHSnGM7I06U
- /KgOPGA1E68/Ry3DIGrrBfG2ZFePANTtOkxGZyC3RTW00DpNgLGKX4K18wnfQIh5themOwvaoTl
- Hdm9c0auU2zoJx17VZzHvwVDX4e8vNMyBCrgGzBhFoLWr5w3hDFLJi7WAuv6c5C/RBzJd9j9++d
- PUMZBxJr5y233lOpklxivFd1NLv+Koe6yG/c7MZDe8GBlcFeBor5Xrzb2Yi2N+GP99LVzaJLcGv
- jQM6GDT2nfRTaCYdAamssYJCIlbzde/K73ZqtOxyjR9QabLa+8vC6E2v/+hzwUW3UfztKc9vdhC
- gSXRthalxdvVT2kNybrzZWe0fywz+seje03oRzBFOTM4bJFd0ygi9qIxvG/Ojd7y8Jxs=
-X-Received: by 2002:a05:600c:5295:b0:456:1157:59ac with SMTP id
- 5b1f17b1804b1-459edf95661mr9645095e9.7.1754512595909; 
- Wed, 06 Aug 2025 13:36:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGq030US9ySfZzsR8pHCPXEDsJYPtVzNE1RuEXy+U2gV+7kxw+jkwDJoFU0gDrk2IBoQd85uQ==
-X-Received: by 2002:a05:600c:5295:b0:456:1157:59ac with SMTP id
- 5b1f17b1804b1-459edf95661mr9644875e9.7.1754512595491; 
- Wed, 06 Aug 2025 13:36:35 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f42:da00:badf:cc55:23d5:1679?
- (p200300d82f42da00badfcc5523d51679.dip0.t-ipconnect.de.
- [2003:d8:2f42:da00:badf:cc55:23d5:1679])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459de91ea4csm117129745e9.10.2025.08.06.13.36.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Aug 2025 13:36:34 -0700 (PDT)
-Message-ID: <6c254144-a5ee-4536-b0a1-844fb5281b7d@redhat.com>
-Date: Wed, 6 Aug 2025 22:36:33 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2] memory.c: improve refcounting for RAM vs MMIO regions
-To: Peter Xu <peterx@redhat.com>, Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- pbonzini@redhat.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250805081123.137064-1-aesteve@redhat.com>
- <aJO3ywz2Ej_kToU_@x1.local>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- g3eXuA==
-Organization: Red Hat
-In-Reply-To: <aJO3ywz2Ej_kToU_@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ujl1j-0003wU-Qs; Wed, 06 Aug 2025 16:46:25 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 576Hk5JV012329;
+ Wed, 6 Aug 2025 20:46:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=hFUbnEmKvWsvlEmg+GoBPi41yXcU/wjsef60+KiMBNs=; b=LtIXhkUGcL3B
+ 55qghxxt9vYmlb2kUVV7uHZbpYZq1ccM1Xlg01fEo0AcJqTsYbq6crUBHX8FpAex
+ k8NasxbBdsNAUh+8ti2C6ttcC5E95M9Tip/7Sd9tL3303HscxUguPMuR2EcvVHA9
+ dZFVnPx0TdRy4LQS552QiOwv7XWUASIfQNoC0ACp0Iv8GkU3Q8D/Om7VKtYDoD6w
+ bCVmMYfMhNXVaekVHx7V+fVeUOpWiDdeJ0eLxgEnZFB20Zl541RXuyKxvyLAl9qV
+ ybViPCMCaiMiWcYk8wzQ8TTb6sgheAq80uGpQDifzEFl93/eg2HsEOQ/w8A9J4qE
+ i5tKYFGu+A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq63pexj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 20:46:22 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 576KkLqW029765;
+ Wed, 6 Aug 2025 20:46:21 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq63pexh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 20:46:21 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 576K3GCY031314;
+ Wed, 6 Aug 2025 20:46:20 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwndf5c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 Aug 2025 20:46:20 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 576KkJLM32309908
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 6 Aug 2025 20:46:19 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 54D635804E;
+ Wed,  6 Aug 2025 20:46:19 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 76CA75803F;
+ Wed,  6 Aug 2025 20:46:18 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  6 Aug 2025 20:46:18 +0000 (GMT)
+Message-ID: <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
+Subject: Re: [PULL 00/50] ppc queue
+From: Miles Glenn <milesg@linux.ibm.com>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Michael Tokarev
+ <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Date: Wed, 06 Aug 2025 15:46:18 -0500
+In-Reply-To: <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
+References: <20250721162233.686837-1-clg@redhat.com>
+ <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
+ <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
+ <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+ <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+ <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA2MDEzOCBTYWx0ZWRfX4/tvXDMTWMrs
+ kjXyHQJOo2THShiux7nj1USbcsmYqde+Z17c42A3aWJOJb673vEhUk2dE49LrQ1QmyIN2QFVKWp
+ 3YU31+pkFucjdbKktkuvNpD4tD9V3oNrqw+LEWQAdpKtWrbWuX3GdAPUuevsaPXzA1663xn9kJt
+ A3JsVqy9waS/yjZ/0pWsg0/mb7elTkxVqYfh7WfbkGL0t4ksb/WtDpPyu1GfxpTKFu6H3jYS0Zn
+ FKi1Ikb9Ui9Pw9Ygjn12K/WavBo2yFr4i66kMYPSZqhBFiTegHFy+y00GkelhPAwwYgFDECtN55
+ +fDx745lrXipigLN8L2KsTYTvW0KVLyH01thccV/4565fUEI3jX8oWSlvpYr7GRdsTa7QaazWix
+ 55DuHjOzt6NkX0R2sfIex9cM5LnSiQnk5DhXnZUCXfqWM4jHxe+UoOLJMqrjwqY7DMpQhskr
+X-Proofpoint-ORIG-GUID: I2JIuqLay92Li5KNwFMgu6N1XMy0_Euq
+X-Authority-Analysis: v=2.4 cv=LreSymdc c=1 sm=1 tr=0 ts=6893bf1e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VuoU5WFxUHF8b41vZTMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: g9qmyPAhcOuRN7pFI8q29-gEHl9OhOsF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-06_04,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 mlxlogscore=899 bulkscore=0
+ malwarescore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
+ definitions=main-2508060138
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,62 +132,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.08.25 22:15, Peter Xu wrote:
-> On Tue, Aug 05, 2025 at 10:11:23AM +0200, Albert Esteve wrote:
->> v1->v2:
->> - Added documentation
->> - Explained the reasoning in the commit message
->>
->> In the last version of the SHMEM MAP/UNMAP [1] Stefan
->> raised a concern [2] about dynamically creating and
->> destroying memory regions and their lifecycle [3].
->>
->> After some discussion, David Hildenbrand proposed
->> to detect RAM regions and handle refcounting differently.
->> I tried to extend the reasoning in the commit message
->> below. If I wrote any innacuracies, please keep me
->> honest. I hope we can gather some feedback with
->> this RFC patch before sending it for inclusion.
+On Tue, 2025-08-05 at 22:07 +0200, Cédric Le Goater wrote:
+> On 8/5/25 18:26, Miles Glenn wrote:
+> > On Tue, 2025-07-22 at 17:25 +0300, Michael Tokarev wrote:
+> > > On 22.07.2025 16:37, Cédric Le Goater wrote:
+> > > > + Glenn, Michael, Caleb, Gautam
+> > > > 
+> > > > On 7/22/25 13:44, Michael Tokarev wrote:
+> > > > > 21.07.2025 19:21, Cédric Le Goater wrote:
+> > > > > 
+> > > > > > ----------------------------------------------------------------
+> > > > > > ppc/xive queue:
+> > > > > > 
+> > > > > > * Various bug fixes around lost interrupts particularly.
+> > > > > > * Major group interrupt work, in particular around redistributing
+> > > > > >     interrupts. Upstream group support is not in a complete or usable
+> > > > > >     state as it is.
+> > > > > > * Significant context push/pull improvements, particularly pool and
+> > > > > >     phys context handling was quite incomplete beyond trivial OPAL
+> > > > > >     case that pushes at boot.
+> > > > > > * Improved tracing and checking for unimp and guest error situations.
+> > > > > > * Various other missing feature support.
+> > > > > 
+> > > > > Is there anything in there which should be picked up for
+> > > > > stable qemu branches?
+> > > > 
+> > > > May be the IBM simulation team can say ?
+> > > > I think this would also require some testing before applying.
+> > > > 
+> > > > Which stable branch are you targeting ? 7.2 to 10.0 ?
+> > > 
+> > > There are currently 2 active stable branches, 7.2 and 10.0.
+> > > Both are supposed to be long-term maintenance.  I think 7.2
+> > > can be left behind already.
+> > > 
+> > > Thanks,
+> > > 
+> > > /mjt
+> > 
+> > Michael T.,
+> > 
+> > All of the XIVE fixes/changes originating from myself were made in an
+> > effort to get PowerVM firmware running on PowerNV with minimal testing
+> > of OPAL firmware.  However, even with those fixes, running PowerVM on
+> > PowerNV is still pretty unstable.  While backporting these fixes would
+> > likely increase the stability of running PowerVM on PowerNV, I do think
+> > it could pose significant risk to the stability of running OPAL on
+> > PowerNV.  With that in mind, I think it's probably best if we did not
+> > backport any of my own XIVE changes.
 > 
-> This seems working.  Looks like so far all RAM MRs are fine with it, but
-> I'm not strongly confident it's true or it'll trivially keep true in the
-> future too.
+> These seem to be interesting to have :
 > 
-> Besides, this still adds some trivial complexity to memory_region_ref() on
-> treating RAM/MMIO MRs differently.
- > > It also sounds like a pure "accident" that the shmem objects to be 
-mapped
-> from the vhost-user devices are RAMs.  I wonder what happens if we want to
-> also support dynmaic MMIO regions.
-
-Is this use case realistic?
-
-If there is a reasonable way to prepare for such hypothetical use cases 
-them while solving Albert's immediate use case, I'm all for it.
-
+> ppc/xive2: Fix treatment of PIPR in CPPR update
+> ppc/xive2: Fix irq preempted by lower priority group irq
+> ppc/xive: Fix PHYS NSR ring matching
+> ppc/xive2: fix context push calculation of IPB priority
+> ppc/xive2: Remote VSDs need to match on forwarding address
+> ppc/xive2: Fix calculation of END queue sizes
+> ppc/xive: Report access size in XIVE TM operation error logs
+> ppc/xive: Fix xive trace event output
 > 
-> Would this work even without changing QEMU memory core?
+> ?
 > 
-> For example, have you thought about creating a VhostUserShmemObject for
-> each of the VHOST_USER_BACKEND_SHMEM_MAP request?
+> Thanks,
+> 
+> C.
+> 
 
-You mean, adding an intermediate object that remains the parent of these 
-MemoryRegion?
+I'm still not sure that the benefit is worth the effort, but I
+certainly don't have a problem with them being backported if someone
+has the desire and the time to do it.
 
-Could work. To free a MemoryRegion, I guess we would unparent that 
-intermediate object, and that object would then free the memory region 
--- unless something still references that intermediate object. Not sure 
-if the memory region might keep the intermediate object still alive (no 
-idea).
+Thanks,
 
-Certainly something to explore, Albert, can you look into that?
+Glenn
 
--- 
-Cheers,
 
-David / dhildenb
 
 
