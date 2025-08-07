@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFC3C87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 11:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C749DC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujz8l-0000ny-IY; Thu, 07 Aug 2025 07:50:35 -0400
+	id 1ujzQs-0007XM-Ky; Thu, 07 Aug 2025 08:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1ujz8e-0000NL-9o
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:50:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ujzQm-0007RM-Js; Thu, 07 Aug 2025 08:09:12 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1ujz8c-0002Ak-T9
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:50:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754567426;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZjhKSd2bPXmxFYO8y7Iix8bHBCmgJAtI5MqoyQljSgE=;
- b=JAsEx5v/VbbQaTIognMI7quWI8S1PpGx0p31MhqBHsnYgiFU+wVtsadZe/9AtmHs/gAVmK
- /VJ4KcD8M5qA6wkI2Re1zTGdt8HJBZMjw0R+kphXcMxvROYWaN4o2TitKTq5F9riBjD+xl
- 2V0RErkaIpDWIEeUi5MMlfQK7R27/J4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-_dcsKkmkNPe7B4QakQwn9Q-1; Thu,
- 07 Aug 2025 07:50:22 -0400
-X-MC-Unique: _dcsKkmkNPe7B4QakQwn9Q-1
-X-Mimecast-MFC-AGG-ID: _dcsKkmkNPe7B4QakQwn9Q_1754567422
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7FE71956059; Thu,  7 Aug 2025 11:50:21 +0000 (UTC)
-Received: from fedora (unknown [10.43.3.128])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4468219560AD; Thu,  7 Aug 2025 11:50:18 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [RFC PATCH 2/4] migration: Fix state transition in postcopy_start()
- error handling
-Date: Thu,  7 Aug 2025 13:49:10 +0200
-Message-ID: <20250807114922.1013286-3-jmarcin@redhat.com>
-In-Reply-To: <20250807114922.1013286-1-jmarcin@redhat.com>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ujzQi-000545-PT; Thu, 07 Aug 2025 08:09:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754568549; x=1786104549;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=MnawxUnvOKw6/CZfAUA3YSLAXwZrIDsAEHY4hJuFuGw=;
+ b=jTo3+0XYMh7bCA06sIAQlY5r9RhD7ExsvghWoAkDDnMgdjFVEkzdBrjo
+ Xbc7hizJAlYJtGzkvmpZ6DOHMJmgH4qKhni4y5S6Pg0Eeor3boWgJBl1h
+ p2Cg4YSfFHo3eSHXGZAtzx7KJsjiXL2UDCXGYeZY2SxeQ35vPyFaJYAHP
+ zpkW4rQvqWqlw3HTUO75ah0YgMNgTjJ1yaW6I3z2+HY+YiQ4XlMDQ2UN0
+ JrJMDL/DpsYEr7OKzGs2bYjD1HotZy/tyJ/Ba2mgDJ4hBl1tubmZbghKH
+ +GzEUb7YZTVBaeFu2r2Vacd8HXCOdUvpjdK2pNe4o7IyVIK6hBAflHXTz Q==;
+X-CSE-ConnectionGUID: utDGbuXUTgm90/YUZFgflA==
+X-CSE-MsgGUID: +FSYt2XtTzqBzX8S3gF0bQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036698"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036698"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Aug 2025 05:09:03 -0700
+X-CSE-ConnectionGUID: 7lU+aHq6QSaxtbpbRmePhQ==
+X-CSE-MsgGUID: oqnQXITGS26YA4vElYBHBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701033"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:01 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC 01/26] rust/hpet: Fix the error caused by vm-memory
+Date: Thu,  7 Aug 2025 20:30:02 +0800
+Message-Id: <20250807123027.2910950-2-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250807123027.2910950-1-zhao1.liu@intel.com>
+References: <20250807123027.2910950-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,38 +86,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+error[E0283]: type annotations needed
+   --> hw/timer/hpet/src/device.rs:884:55
+    |
+884 |         self.num_timers == self.num_timers_save.get().into()
+    |                         --                            ^^^^
+    |                         |
+    |                         type must be known at this point
+    |
+    = note: multiple `impl`s satisfying `usize: PartialEq<_>` found in the following crates: `core`, `vm_memory`:
+            - impl PartialEq<vm_memory::endian::BeSize> for usize;
+            - impl PartialEq<vm_memory::endian::LeSize> for usize;
+            - impl<host> PartialEq for usize
+              where the constant `host` has type `bool`;
+help: try using a fully qualified path to specify the expected types
+    |
+884 |         self.num_timers == <u8 as Into<T>>::into(self.num_timers_save.get())
+    |                            ++++++++++++++++++++++                          ~
 
-Depending on where an error during postcopy_start() happens, the state
-can be either "active", "device" or "cancelling", but never
-"postcopy-active". Migration state is transitioned to "postcopy-active"
-only just before a successful return from the function.
+For more information about this error, try `rustc --explain E0283`.
+error: could not compile `hpet` (lib) due to 1 previous error
 
-Accept any state except "cancelling" when transitioning to "failed"
-state.
-
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- migration/migration.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 10c216d25d..e5ce2940d5 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2872,8 +2872,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
- fail_closefb:
-     qemu_fclose(fb);
- fail:
--    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
--                          MIGRATION_STATUS_FAILED);
-+    if ( ms->state != MIGRATION_STATUS_CANCELLING) {
-+        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-+    }
-     migration_block_activate(NULL);
-     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
-     bql_unlock();
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index acf7251029e9..9fd75bf096e4 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -881,7 +881,7 @@ fn is_offset_needed(&self) -> bool {
+     }
+ 
+     fn validate_num_timers(&self, _version_id: u8) -> bool {
+-        self.num_timers == self.num_timers_save.get().into()
++        self.num_timers == Into::<usize>::into(self.num_timers_save.get())
+     }
+ }
+ 
 -- 
-2.50.1
+2.34.1
 
 
