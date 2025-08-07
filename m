@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770ECC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 19:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 705EBC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 19:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk5r9-0006h2-Fm; Thu, 07 Aug 2025 15:00:51 -0400
+	id 1uk6CS-0007KT-21; Thu, 07 Aug 2025 15:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uk5qn-00064C-2j
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 15:00:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uk6CL-0007JC-Tf
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 15:22:47 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uk5qg-00010e-T0
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 15:00:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754593222;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kDrjPdiDZmxJkdLCd4HqHqD2VbGBh633xsWUj8Tf3lw=;
- b=eOQsgphMIyez9T5NBVP5aTaTEJLlXCURZbU/Fo5e0gmd9zQqLnQX+xIIYLhm66ZXotY4Ha
- jWdq2jjeMQS43vYD3YrhcHdrSS7CaWcW5GRbFEK29udfUekaJJVq0mxlWuWOq7UVgouIrr
- l9RTjHOfhH3pKWip8cSAtYfCFowtrm4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-e_MsSWEGNK2kNLwAHWACcw-1; Thu,
- 07 Aug 2025 15:00:19 -0400
-X-MC-Unique: e_MsSWEGNK2kNLwAHWACcw-1
-X-Mimecast-MFC-AGG-ID: e_MsSWEGNK2kNLwAHWACcw_1754593217
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2312D1808888
- for <qemu-devel@nongnu.org>; Thu,  7 Aug 2025 19:00:17 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.155])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 19C3E3001455; Thu,  7 Aug 2025 19:00:15 +0000 (UTC)
-Date: Thu, 7 Aug 2025 15:00:14 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uk6C5-0004Dd-R5
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 15:22:45 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 5A10143D38;
+ Thu,  7 Aug 2025 19:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7EDC4CEEB;
+ Thu,  7 Aug 2025 19:22:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1754594543;
+ bh=SU0lO2oZwrJjfYsB5keclC7ksml1gF5bqMhvLqoo7iU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=KxqIBjIwhVZqCQ7ybR4KY2DxLo2eXGByR5QXjZhKBmsnJfhSV6FCDf3uZLdn/s0KQ
+ 0zAAYCLbUeHNsfbousYLQ6JC2sVsT8eQEa7n2O6968celxxaY3kb69Tp4psauJq4rw
+ yJM6axGqAW0LHwyyHBFLE9lv8wAHIPhqZF5VxDK/SljwsHwp7Tu0M2IDM3iJVzwZcW
+ u7RDJF14ypQ4nUQnrrMSfZot7aBgcbMxJqJbYZ/dAI2Y1gI109XMguWI1qEilsQVpg
+ Hq7qxs9SVD2ioF9/EizL85eoZsJEfSavRpBKeOW06j29XkK86+OdOGmRP9sTO2XkYr
+ SqqlvwIh2LZZQ==
+Date: Thu, 7 Aug 2025 19:22:21 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, prapal@linux.microsoft.com
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Magnus Kulke <magnus.kulke@microsoft.com>,
+ Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
+ Wei Liu <liuwe@microsoft.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- stefanha@redhat.com
-Subject: Re: [PULL v2 0/1] Ui patches
-Message-ID: <20250807190014.GA125663@fedora>
-References: <20250807103131.1912150-1-marcandre.lureau@redhat.com>
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 26/26] qapi/accel: Allow to query mshv capabilities
+Message-ID: <aJT87brzXBy89lfV@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+ <20250807143951.1154713-27-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="MvBEfJz0mAE1+giN"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250807103131.1912150-1-marcandre.lureau@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250807143951.1154713-27-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=wei.liu@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,30 +88,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 07, 2025 at 04:39:51PM +0200, Magnus Kulke wrote:
+> From: Praveen K Paladugu <prapal@microsoft.com>
+> 
+> Allow to query mshv capabilities via query-mshv QMP command.
+> 
+> Signed-off-by: Praveen K Paladugu <prapal@linux.microsoft.com>
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
+>  qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
+>  2 files changed, 43 insertions(+)
+> 
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index 6aca1a626e..024ddb8d2d 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -28,6 +28,20 @@
+>  #include "system/runstate.h"
+>  #include "system/system.h"
+>  #include "hw/s390x/storage-keys.h"
+> +#include <sys/stat.h>
+> +
+> +/*
+> + * QMP query for MSHV
+> + */
+> +MshvInfo *qmp_query_mshv(Error **errp)
+> +{
+> +    MshvInfo *info = g_malloc0(sizeof(*info));
+> +    struct stat st;
+> +
+> +    info->present = accel_find("mshv");
+> +    info->enabled = (stat("/dev/mshv", &st) == 0);
 
---MvBEfJz0mAE1+giN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I don't think this is the right way to check if MSHV is _enabled_. The
+device node being around doesn't necessarily mean that QEMU is using it.
 
-Applied, thanks.
+You can refer to kvm_enabled() to see how it is implemented.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+Some functions that are of interest:
+   do_configure_accelerator
+   accel_init_machine
 
---MvBEfJz0mAE1+giN
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmiU974ACgkQnKSrs4Gr
-c8jfAQf/SI2dpvLF2//wU4O3KD/+d+MFKlq5Zp2lXoqXigmj0RvIo2DxcBFHq8R6
-+VfIph363IofcMYbXxr2yUTVUIV4z1QJSFTJX2US3D54Q8eLFRyEqqy1sy8NAkZ1
-dMEyxoUJPpkLqT6EzTsCDdyFguTumj4mO9X1lGeE5WKbUuH9M6i3W3Vbr4Z5Epwh
-Xvr2evnvJYjthYTe2EvY1qKvFrLoHn3MaVhsscnrHVFRTX9RJuiEKBrV0FbEYndt
-YD6gV3wjxaIE/P/FvehZyN4lQ5gdJTbxo4Q4FPRGtWpu//u8NgRscdV/DogwY7vB
-H+WzOweQ1EE+m5lJc0LXnc+WN0i4zQ==
-=i3N5
------END PGP SIGNATURE-----
-
---MvBEfJz0mAE1+giN--
-
+Thanks,
+Wei
 
