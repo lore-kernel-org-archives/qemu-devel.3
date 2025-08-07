@@ -4,37 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C6CFC87FDA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B143C87FCF
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 19:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk6Xm-0001rN-Ft; Thu, 07 Aug 2025 15:44:54 -0400
+	id 1uk6Xn-0001s0-AI; Thu, 07 Aug 2025 15:44:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uk6Xa-0001oB-Qd; Thu, 07 Aug 2025 15:44:46 -0400
+ id 1uk6Xa-0001oC-Qe; Thu, 07 Aug 2025 15:44:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uk6XE-0006zh-C0; Thu, 07 Aug 2025 15:44:22 -0400
+ id 1uk6XE-0006zg-Aq; Thu, 07 Aug 2025 15:44:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D1F4A13F34A;
+ by isrv.corpit.ru (Postfix) with ESMTP id C005413F349;
  Thu, 07 Aug 2025 22:43:40 +0300 (MSK)
 Received: from localhost.localdomain (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93C97259FCA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7D999259FC9;
  Thu,  7 Aug 2025 22:44:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>,
 	qemu-trivial@nongnu.org
-Subject: [PULL 1/1] tests/qemu-iotests/tests/mirror-sparse: actually require
- O_DIRECT
-Date: Thu,  7 Aug 2025 22:43:55 +0300
-Message-ID: <20250807194358.486021-2-mjt@tls.msk.ru>
+Subject: [PULL for-10.1 0/1] Trivial patches for 2025-08-07
+Date: Thu,  7 Aug 2025 22:43:54 +0300
+Message-ID: <20250807194358.486021-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250807194358.486021-1-mjt@tls.msk.ru>
-References: <20250807194358.486021-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -60,35 +57,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit c0ddcb2cbc146e introduced the test which uses cache=direct
-mode, without checking if the scratch filesystem supports O_DIRECT.
-A subsequent commit, afeb002e0ad49d, tried to fix that issue, but
-instead of checking for o_direct, it checked for
-`_supported_cache_modes none directsync`, which is not what the
-original mirror-sparse test uses.  Fix both by actually checking
-for o_direct.
+The following changes since commit cd21ee5b27b22ae66c103d36516aa5077881aa3d:
 
-Fixes: c0ddcb2cbc146e "tests: Add iotest mirror-sparse for recent patches"
-Fixes: afeb002e0ad49d "tests/qemu-iotests/tests/mirror-sparse: skip if O_DIRECT is not supported"
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
+  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-08-07 11:02:50 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+
+for you to fetch changes up to 6e27ca1b06e5ac9e934e5fd592647d8ec0f95b76:
+
+  tests/qemu-iotests/tests/mirror-sparse: actually require O_DIRECT (2025-08-07 22:43:14 +0300)
+
+----------------------------------------------------------------
+a single bugfix for a bugfix for mirror-sparse test
+
+----------------------------------------------------------------
+Michael Tokarev (1):
+      tests/qemu-iotests/tests/mirror-sparse: actually require O_DIRECT
+
  tests/qemu-iotests/tests/mirror-sparse | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
-index 3b183eea88..ee7101bd50 100755
---- a/tests/qemu-iotests/tests/mirror-sparse
-+++ b/tests/qemu-iotests/tests/mirror-sparse
-@@ -40,7 +40,7 @@ cd ..
- _supported_fmt qcow2 raw  # Format of the source. dst is always raw file
- _supported_proto file
- _supported_os Linux
--_supported_cache_modes none directsync
-+_require_o_direct
- _require_disk_usage
- 
- echo
--- 
-2.47.2
-
 
