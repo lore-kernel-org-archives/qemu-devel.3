@@ -4,75 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358BFC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 16:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B07C87FDA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 16:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk33C-00004r-Em; Thu, 07 Aug 2025 12:01:06 -0400
+	id 1uk39A-0005EZ-FK; Thu, 07 Aug 2025 12:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uk32p-0008Gh-2M
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:00:49 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uk32j-0007sy-CY
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754582438; x=1786118438;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=WUt10lvy3PPEXUjtBFUCvDRZOY3XxNQRtHK5zS1CGK4=;
- b=kcPZQALIYztkBVRmpRm7qNM/K29oBHYTRb3kiFwz3k6NfZPjXPFzTokM
- qalfTqM4g4qZ2kCrEHA0pbXgtJhT36Dewj2Hj6SnzK6Mi2tYIvKN4/UxQ
- E+ZfhQ0DHAW/q0b6wMb77LTiSr4/mAbDWfCVO2dIanNNDF2ZIW+AbqiDM
- EFOaJrSRtkEataxL8iji3RF97Mvun9hDkquXfC2A9cOEiSbHiPGNehlWy
- u2xLBNkinBUad4Eq6aRZCxhfec+US6/7qlEJyDgYxDJpNWfp3jyCbBEhl
- qAJrK8cYwF+z9R5dUQCGQ+zeK0n6PpUgOjKGpT7KsAwDSq1WZH2FJY5Jf w==;
-X-CSE-ConnectionGUID: gYWm0qsETBWV6HdJJ9tqCg==
-X-CSE-MsgGUID: G8IYlr5DSO+rCf9kBtd5MQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="67618698"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="67618698"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 09:00:34 -0700
-X-CSE-ConnectionGUID: vA6ay6/ITgOS3UKHZdJarg==
-X-CSE-MsgGUID: eCnI5OFiSruNpCVFrWpb5Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="165891725"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 09:00:32 -0700
-Message-ID: <0344ef5a-8c6c-4c21-824e-9506bb4c7600@intel.com>
-Date: Fri, 8 Aug 2025 00:00:29 +0800
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1uk394-00057e-Ib; Thu, 07 Aug 2025 12:07:10 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1uk391-00010e-L0; Thu, 07 Aug 2025 12:07:10 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-76bc5e68d96so1132007b3a.3; 
+ Thu, 07 Aug 2025 09:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754582822; x=1755187622; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VZINBPu8sfj/FpGaJNR7o9bp1Y3qwK2h502aZGZ4w9c=;
+ b=VuSralyizhw4nVlQV6gZ2nqnwo1wHEhKJME6VbXLpYRanWP5V/mmFLNVwFpcIkPGuY
+ viWB6DXOBD2DswEp91QfNskbU8ETWpzXZnQ+kTUJRtev0Ub0fV7Ask0El1zpfzRkgvx4
+ 1gCMPUSG1j3G7Bavr2gSutQlkW1+OUklkLP6CRmKGHUmxx43cxSnGldjgStbYQN40nKq
+ cTqlPd+yWAEbYzZ0nkSEcGS+0op8XxNL1583bU26JHWqx1k9XYjH28cCCG+yz8eDLO7s
+ iKwAT9RCj8UoIRrbtlVzD65EPDmZnEPEHxYdPE7+Updb15VSP6nUXS5Eqc55OeWW2oI3
+ RP+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754582822; x=1755187622;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VZINBPu8sfj/FpGaJNR7o9bp1Y3qwK2h502aZGZ4w9c=;
+ b=IOgTzTqpqXibIfQfSsP1MIY2RkYpT6FkTrveP86376hd9zcxKs8mcSLqhsa8JG59Yi
+ 2WEsP/a/D1iHelQ8vfxQHlegAY6F/DTBT8e7FfPSN0DFZMLNUMT0DHM+mUUvI/esvwFN
+ t+JctGPXd2RSAgWw5fmpYGge9T92ZIPI20bw2jrcZtZ9UVkfLGQvXKpH05lPC1SZSbjB
+ e2DP9Cv1gNihon9EddTQ6s9MBYm+rr3oE1sw5JDiCMYCpyZ9TETNr/XtR99rqMVKyhQL
+ Dlt1Q+rOlgOLwiGSA2SOLuskmpDqv4BVHEXg84Sawz8A9rn9SIQWVPp/wO62tVRt5ryZ
+ DwHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIY1iB9ZoPZdPEH5nBRxLZ6Onz09EA8p6hwqgfJ7chpuXvpBonN/IQKJK90TDtc+HdR3ysF8gFxQ==@nongnu.org,
+ AJvYcCVsBE+LaHB9jYE00DxdVbMnaEajbMHjtW8mlB//LDmzoikbHlVbtS15G4gvJbeuVARsMrsPvfdx2gCqWQ==@nongnu.org,
+ AJvYcCWEjFJLyBzKe17O8ARolNx3TB2bAFxa7HaQYJZm4mj2MkIm5W0RCDAjzSsWlK0o2oR787I9Sy939Ax7Bw==@nongnu.org,
+ AJvYcCXpcJikvFFf1So825DaoYgWruIX8DxdINascz5aHKEkRYKyHrT9ymwptrYlzXxCgw3JLdX4cPFqo3x/VQ==@nongnu.org
+X-Gm-Message-State: AOJu0YwbBfBnLGb4909wUwq0JQe7b2GjIWCbCPr6KbpVAaCt4MPEHjtL
+ hjupzES/lRpupPiwwenGBny5YeMKogtamNHd1lt2HpyQ2VKZrTy3Nho3
+X-Gm-Gg: ASbGnct35PcPO18DsKkbILSnUuxIrIoMMmDkst+PAdPF6r5uiaoZeaOVte5/W2x5G3p
+ GyvnDgUbzfiq14sl1BZWgrpDy04vgnNkMH/6+OiG3zhE+rbrt30dytLpjOdFq0RZs9Gkk9MWhXC
+ qNc699EH5l4isASlGyzkR1xT8rktWjRUGV9YW34VVMnjYqOCAdveJbCgcHiv8iAFUtBVs1lFQbN
+ sTHgFt3UWjIgBGv7qNO0SbLSrVThqDZuP/l41ZRoeNA9UcYxuSxixsVa5r5FS1irvPBK4mU03la
+ 5MsVIG53a4wVStn4R/w9aTNu4lJrpsRRcwThdQLEASULZCCsn3LWEr0ZTRbAYeFZRmKlfDOZtbQ
+ ZZ36+5MfZ7B9tFlIP/yHZ023ahYP9iy6z/2U=
+X-Google-Smtp-Source: AGHT+IE+LYY5RUOOkevrxpPtre1Ir+ysH+CHBjSw9JGNCqe+Ddb1dZViDXzUhKgpE9Mwa3POrHFvlg==
+X-Received: by 2002:a05:6a20:7346:b0:23d:7abe:be06 with SMTP id
+ adf61e73a8af0-240314b5535mr11419797637.27.1754582821723; 
+ Thu, 07 Aug 2025 09:07:01 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bccfbd98csm18341505b3a.67.2025.08.07.09.07.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Aug 2025 09:07:01 -0700 (PDT)
+Date: Thu, 7 Aug 2025 09:06:59 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+Subject: Re: [PATCH-for-10.1 v2 00/11] hw/sd: Fix SD cards in SPI mode
+Message-ID: <5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net>
+References: <20250804133406.17456-1-philmd@linaro.org>
+ <39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru>
+ <9dc90489-9e74-4e00-8fc6-f97e3f425495@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: split lock issue in multiboot_dma.bin
-To: =?UTF-8?Q?Marcus_H=C3=A4hnel?= <marcus.haehnel@kernkonzept.com>,
- Adam Lackorzynski <adam@l4re.org>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-References: <eaf7e7bf-9513-49a4-b6a1-fe18f2a1a258@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <eaf7e7bf-9513-49a4-b6a1-fe18f2a1a258@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <9dc90489-9e74-4e00-8fc6-f97e3f425495@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,66 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/2025 8:15 PM, Xiaoyao Li wrote:
-> When running the kvm-unit-tests on Intel platforms with "split lock 
-> disable" feature, every test triggers a kernel warning of
+On Wed, Aug 06, 2025 at 09:22:46AM +0200, Philippe Mathieu-Daud� wrote:
+> On 6/8/25 08:39, Michael Tokarev wrote:
 > 
->      x86/split lock detection: #AC: qemu-system-x86_64/373232 took a 
-> split_lock trap at address: 0x1e3
+> > Philippe, do you think this series is something which should
+> > go to stable-10.0 (LTS) branch?� I'm not sure for the impact if
+> > it is not applied, though, - what do we miss in this case?
 > 
-> After investigation, it turns out the split lock happens from 
-> multiboot_dma.bin:
+> Only 2 machines use a SD card wired over SPI lines:
 > 
-> Hack KVM by exiting to QEMU on split lock #AC, we get
+> $ git grep '"ssi-sd"'
+> hw/arm/stellaris.c:1302:            sddev = ssi_create_peripheral(bus,
+> "ssi-sd");
+> hw/riscv/sifive_u.c:671:    sd_dev = ssi_create_peripheral(s->soc.spi2.spi,
+> "ssi-sd");
+> hw/sd/ssi-sd.c:70:#define TYPE_SSI_SD "ssi-sd"
 > 
-> KVM: exception 17 exit (error code 0x0)
-> EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
-> ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
-> EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
-> ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
-> SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
-> GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
-> LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
-> TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
-> GDT=     000c02b4 00000027
-> IDT=     00000000 000003ff
-> CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
-> DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 
-> DR3=0000000000000000
-> DR6=00000000ffff0ff0 DR7=0000000000000400
-> EFER=0000000000000000
-> Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 
-> ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 
-> ba 10 05 66
-> 
-> And it matches with what disassembled from multiboo_dma.bin:
-> 
-> #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
-> 
->   1d1:   08 00                   or     %al,(%eax)
->   1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
->   1d8:   06                      push   %es
->   1d9:   00 66 b8                add    %ah,-0x48(%esi)
->   1dc:   01 00                   add    %eax,(%eax)
->   1de:   00 00                   add    %al,(%eax)
->   1e0:   0f 22 c0                mov    %eax,%cr0
->  >1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
->   1e7:   00 00                   add    %al,(%eax)
->   1e9:   b8 10 00 00 00          mov    $0x10,%eax
->   1ee:   8e d0                   mov    %eax,%ss
->   1f0:   8e d8                   mov    %eax,%ds
->   1f2:   8e c0                   mov    %eax,%es
->   1f4:   8e e0                   mov    %eax,%fs
->   1f6:   8e e8                   mov    %eax,%gs
->   1f8:   66 b8 08 00             mov    $0x8,%ax
->   1fc:   66 ba 10 05             mov    $0x510,%dx
-> 
-> I don't know where the multiboot_dma.bin are built from so that I cannot 
-> further help resolve the split lock issue.
+> I don't know them enough to tell if they are that important. This
+> isn't a security problem. The emulation of the transport (SPI) to the
+> SD card being broken, guests can not access the emulated card.
 
-stupid me. The src code is just pc-bios/optionrom/multiboot.S
-But I don't know how to build a bin file from it to test my fix.
+With 10.1.0-rc2, trying to boot v6.16-11744-g9c389564fa8e on sifive_u, I get:
+
+[    2.503619] riscv-pmu-sbi: 16 firmware and 18 hardware counters
+[    2.503672] riscv-pmu-sbi: Perf sampling/filtering is not supported as sscof extension is not available
+qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
+
+This is without trying to boot from it. Oddly enough, booting from SD card
+does work.
+
+Guenter
 
