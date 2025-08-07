@@ -4,59 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E472C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 11:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1C2DC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 11:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujyNk-0001mm-41; Thu, 07 Aug 2025 07:02:00 -0400
+	id 1ujyTx-0006Vc-Jw; Thu, 07 Aug 2025 07:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1ujyNh-0001ZT-Ao
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:01:57 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1ujyNf-0001N0-3R
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:01:57 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDHwDgbh5RoZQwRBQ--.94S2;
- Thu, 07 Aug 2025 18:59:39 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDHTwcSh5RoT_kKAA--.12934S3;
- Thu, 07 Aug 2025 18:59:30 +0800 (CST)
-From: wangyuquan <wangyuquan1236@phytium.com.cn>
-To: jonathan.cameron@huawei.com, fan.ni@samsung.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, rad@semihalf.com, peter.maydell@linaro.org,
- leif.lindholm@oss.qualcomm.com, graf@amazon.com,
- claudio.fontana@huawei.com, philmd@linaro.org, richard.henderson@linaro.org
-Cc: chenbaozi@phytium.com.cn, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [RFC QEMU PATCH v4 0/2] cxl: Support creation of a new CXL Host Bridge
-Date: Thu,  7 Aug 2025 18:59:08 +0800
-Message-Id: <20250807105910.240070-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ujyTs-0006U8-AO
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:08:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ujyTq-0002l2-6P
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 07:08:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754564896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OVQuqQkDCrAEtP1NUvF6Ft2auZYGJFgIG9AxiJ93gew=;
+ b=CT1ozapiQDpQEEWVJveC5CHsl60Kw5ZV6ze/rQyDnJyLdQmjltMqfMIiHua+NMJE2eU9f6
+ FCWF+pDBLtD1kYehUVRhQzESpKH/iQgLuQNtf5XTK1+nk0Oyuc7PsiD2KmzqLykCaW+os7
+ 4Ga3Agnmp6WyWCjnYIlXr4yJj5y45lk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-HAB6_nBqPEWDbrfcjGg1PQ-1; Thu,
+ 07 Aug 2025 07:08:12 -0400
+X-MC-Unique: HAB6_nBqPEWDbrfcjGg1PQ-1
+X-Mimecast-MFC-AGG-ID: HAB6_nBqPEWDbrfcjGg1PQ_1754564891
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7656019560AF; Thu,  7 Aug 2025 11:08:11 +0000 (UTC)
+Received: from lenovo-t14s.redhat.com (unknown [10.45.225.81])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A9E0F3001452; Thu,  7 Aug 2025 11:08:08 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing after
+ MSI-X enable
+Date: Thu,  7 Aug 2025 13:08:06 +0200
+Message-ID: <20250807110806.409065-1-lvivier@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDHTwcSh5RoT_kKAA--.12934S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAPAWiTrgAFhgAAsZ
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGF4fuw1UCF4kCry5Xw48Xrb_yoW5Gr15pa
- 1DKrWfCF4DKry3G3yfA3y7GF1rA395Ga15ur1xXw40yr92vF4DZrs7Ca1YvFyUWFWUCr18
- J3W7J3Z5W3W5Z37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,72 +87,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+A race condition between guest driver actions and QEMU timers can lead
+to an assertion failure when the guest switches the e1000e from legacy
+interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+RDTR) is active, but the guest enables MSI-X before the timer fires,
+the pending interrupt cause can trigger an assert in
+e1000e_intmgr_collect_delayed_causes().
 
-v3 -> v4:
-- Simplify variable definitions (Jonathan)
-- Fix some alignment and space problems (Jonathan)
-- Include the header file for MemoryRegion (Jonathan)
-- Rebased on 'Make the CXL fixed memory windows devices'
-- Keep cxl_fixed_memory_window_config() static and remove its declaration in the header file
-v2 -> v3:
-- Update the commit message
-- Fix some alignment and space problems
-- Add a SPDX header for the new file
-- Remove unnecessary comments
-- Add CXL_HOST_BRIDGE config
-v1 -> v2:
-- Move the code of new bridge to hw/pci-host/cxl.c
-- Fix and simplify some logic on handling the different bridge types
+This patch removes the assertion and executes the code that clears the
+pending legacy causes. This change is safe and introduces no unintended
+behavioral side effects, as it only alters a state that previously led
+to termination.
 
-Background
-==========
-Currently the base CXL support for arm platforms is only on Jonathan's
-patches[1]. Some platform like SBSA-REF can be more like a real machine,
-thus the support of CXL could be meaningful. However, the pxb-cxl-host
-realization on this platform seems not satisfying their requirements[2].
+- when core->delayed_causes == 0 the function was already a no-op and
+  remains so.
 
-New CXL HOST design
-===================
-Defines a new CXL host bridge type (TYPE_CXL_HOST). This is an
-independent CXL host bridge which combined GPEX features (ECAM, MMIO
-windows and irq) and CXL Host Bridge Component Registers (CHBCR).
+- when core->delayed_causes != 0 the function would previously
+  crash due to the assertion failure. The patch now defines a safe
+  outcome by clearing the cause and returning. Since behavior after
+  the assertion never existed, this simply corrects the crash.
 
-The root bus path of CXL_HOST is "0001:00", that would not affect the
-original pcie host topology. In the previous, the pxb-cxl-host with
-any CXL root ports and CXL endpoint devices would occupy the BDF
-number of the original pcie domain. This new type provide a solution
-to resolve the problem.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+---
+ hw/net/e1000e_core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Remaining problems
-==================
-I tried to use 'object_resolve_path' but it could not work in
-'cxl_fmws_link', so I used 'TYPE_DEVICE' to match that.
-
-Reviewing
-=========
-Welcome more PCI folks to review this patch, thanks a lot!
-
-Link:
-[1]: https://lore.kernel.org/linux-cxl/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
-[2]: https://lists.nongnu.org/archive/html/qemu-arm/2024-11/msg00522.html
-
-Yuquan Wang (2):
-  pci-host/cxl: Support creation of a new CXL Host Bridge
-  hw/pxb-cxl: Rename the pxb cxl host bridge
-
- hw/cxl/cxl-host.c                     |  56 +++++++---
- hw/pci-bridge/pci_expander_bridge.c   |   8 +-
- hw/pci-host/Kconfig                   |   4 +
- hw/pci-host/cxl.c                     | 146 ++++++++++++++++++++++++++
- hw/pci-host/meson.build               |   1 +
- include/hw/cxl/cxl.h                  |   7 +-
- include/hw/pci-host/cxl_host_bridge.h |  24 +++++
- 7 files changed, 229 insertions(+), 17 deletions(-)
- create mode 100644 hw/pci-host/cxl.c
- create mode 100644 include/hw/pci-host/cxl_host_bridge.h
-
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 24138587905b..06657bb3ac5c 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -341,11 +341,6 @@ e1000e_intmgr_collect_delayed_causes(E1000ECore *core)
+ {
+     uint32_t res;
+ 
+-    if (msix_enabled(core->owner)) {
+-        assert(core->delayed_causes == 0);
+-        return 0;
+-    }
+-
+     res = core->delayed_causes;
+     core->delayed_causes = 0;
+ 
 -- 
-2.34.1
+2.49.0
 
 
