@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024BFC87FD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 01:21:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39DE2C87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 01:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujpJU-0007Hn-T8; Wed, 06 Aug 2025 21:21:00 -0400
+	id 1ujps0-0001zt-3Y; Wed, 06 Aug 2025 21:56:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ujpJL-0007G4-WA
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 21:20:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1ujpJK-0004WG-15
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 21:20:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754529647;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WEWrYjjWGNjohxH9R8UlGTMdvalBWlYjle/WluhTEow=;
- b=EP6jSgcjdNSCI/Lua8wHzgRU9x7NmOqftx1XUtmz/gXWI8PBSIQsgNsRSBVyOjsYD7Nvei
- SOjW8ebNgvnA2FzkHEgvJ7/tCGMaccijZVACDnh2/YBnB0nUVpjVqU5f+JxR6NQ1fnbIeW
- jwCK8m8FCHt0DX+BM6fMXWnfjOacb4o=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-403-nC83IRFuPbadkrXQW_lDTA-1; Wed, 06 Aug 2025 21:20:45 -0400
-X-MC-Unique: nC83IRFuPbadkrXQW_lDTA-1
-X-Mimecast-MFC-AGG-ID: nC83IRFuPbadkrXQW_lDTA_1754529644
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-615a06a4bf4so465188a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 18:20:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujprq-0001xY-Og
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 21:56:31 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujpro-0000wT-00
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 21:56:30 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-b4233f86067so325500a12.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 18:56:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754531786; x=1755136586; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JvD88rAmS3YnWWg9b5BeJcNtybHMRq3u82RqRmWwt7Y=;
+ b=iYPj900rFNfggCLECLl6b1SjQJD9dVHaTaJcRtbLrijwMhDjy9k1zJsSjQksBZO74k
+ KGLshyhWKK0uGwA1lN6N9SgEMU0ElycW7r0fSNhR6UKJ8rkCmmOsInVkktyDDPDuYUvs
+ SkvnzgSvicq+NvMn5mfTCTeTtq8KdN3FPyXxewva9WHYVjMXdOdy7GG73w1f8VpKEyUg
+ Hf512S06qxpX2ydeEka28Yhg1WTbFFiGiScp0j18FLIguiJc2p1dW427HL+Q7Yan1ESD
+ 8reJFdA9Z0mIYCWICKJzv5ahiE8vLaosdqDxEogqjWISE+JDsZbID3eAQvxKc7nlwoIQ
+ pt1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754529644; x=1755134444;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WEWrYjjWGNjohxH9R8UlGTMdvalBWlYjle/WluhTEow=;
- b=Lz+NexNajrM+VFNicuQvxhpvB4hSXziA8voL5+fFtQPupvuOtG+JMGmokjgVSVp+hU
- GhIGahFP2kNJtFzQU4G7p+r12Sx6XYWCQyKnDed1MvXpwYMJM3QuGJZPINMUFOr2cnrd
- gmIb/FKL3MTN02EArJI69KrOfGgdmhkGsHaeI2uT9XITz5Sdp1QlcEHhLgTrQwgnm/MI
- O3BkIhRjPNCGcW7jwUONXVnN4NDOD0WpfBb52DcrfIcQesXtRkscep37hjPZ555BcpI3
- pT/7WSg9skMx/obGGLl0I4P62JZkVQXln691rlG82j5hC9I/xkYLTqC0BsVccJUszc0i
- lHrg==
+ d=1e100.net; s=20230601; t=1754531786; x=1755136586;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JvD88rAmS3YnWWg9b5BeJcNtybHMRq3u82RqRmWwt7Y=;
+ b=sbYIxaA7fEbzG2FXaamDjLDT1xlEKJcTgBoKGEEVKqG5NDizGAtNVlRqIN/k9+KCSC
+ 66DmorKEhJJqW8Z3zby9Ml9/qNU5agmce4NDl07qGnGJm7wyb158/kdVkkiiLecAECgw
+ taaH4eQHbCbqBgNI5S67oe25nL/asvO4Z/Ha8w6UzfCiZhKQLYO/ekJ79qfdjcYypDlW
+ CtttsQxSa8WrPr2HrjMcJuMTDG06rP76tzRGEG0Binek6AVBEc8EtRW8SUkKZEczSWdH
+ /leZJxiqJff/ODwWVUlBrKn434L//cALrqI8FHOQw+0dVn87JWKVskf+ro9umhEFFmtP
+ lpLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiOaNwO12aZkLH192d2h043VIfYV8Zemx0Yhh4od9Yi3IRHYliHw4TBOYgiJkGvC15ns9S5KPMBvo8@nongnu.org
-X-Gm-Message-State: AOJu0Yy2QrfD/fVeyL/sJI/J4IxwdQE0Dt5CkyvW5H1ZFbDQNp3g2Brl
- 0GeC4XgG1MXrY2ix8ceNKMf7FG9svTl7YdPkXLoJj0jJX9xv7PHS5MDO77LNgL7FTQVwiqDE8XT
- DbQSbGBbc29QZYw6dh3GbtIJuJEA9ZcKCnaH3hiZ30DvSImU24jgPSA2u0kIKy4ZOilBiWEjqRd
- CN/ZVPd2fdO/wbHcCDJSzw8eZHCfc4HAA=
-X-Gm-Gg: ASbGnctGj5QnFeFor86Ckpdeg7me7yz3XL9UIO68K3AjhLM2YThTrGr4TOXHi6j8+pc
- 4ReWLNsgx/TBnPQaZ8a1k/aPiKFHjxYSB8zSfjTohVVQeGWQ9II89NNrfDbSJQskoR2AOn9H5sC
- Dcb8zYUloR2kBoLDPiICz1Fg==
-X-Received: by 2002:a17:906:478b:b0:ae1:f1e0:8730 with SMTP id
- a640c23a62f3a-af992c6c33amr362296066b.57.1754529644121; 
- Wed, 06 Aug 2025 18:20:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuVKYcqXyRGEOsTk+t3Ivio5HYohT/1PPb5lwl05ILoEYx6eYSe0xYK8By9jiCL6X1UkZ8aNd9kBreFrsaNRE=
-X-Received: by 2002:a17:906:478b:b0:ae1:f1e0:8730 with SMTP id
- a640c23a62f3a-af992c6c33amr362295166b.57.1754529643803; Wed, 06 Aug 2025
- 18:20:43 -0700 (PDT)
+ AJvYcCUUoudNBQU9LbSPscQOqeg66wfQBdqB23wyd9OJMO4d5QwzFZqgWWyOH3LWz0ziBbKXnkFj5sv9Fo/2@nongnu.org
+X-Gm-Message-State: AOJu0Yxtrsv5cmHaqY7v97AvD4Dx78h5TATDNtzba7W3ACUsDtv+XXJr
+ QbPf8zp74MOuexOr9wpZl5HqX7D/u8PPIkEgUKY6TJ4n4v0NW+kMNPSbAmx8ha5SAvTLl3f9scX
+ qHjoUt39aC/4pSwciloi0CNQ7LQTZX8I=
+X-Gm-Gg: ASbGncsE8UZfGhRZp3Yjd2Yd2PYNMZArZP167mQNbf5rl48c7JFuwHAChKLDmL/LHQC
+ 12GVe8R74n43vlk8Hl8W8dHnoyX9Rb7AZMA8ZPrbuDbfqYMt8dWbykywiqnz4hPSp+VqJbQaXmO
+ t09Pq8CGcSYncx1VNHy128B2uEUVjujBWd3zrHXao1U9kDKeG691R5q1Q93Z8aci9BLevvFGfJ6
+ zhdeZao/pqCOBL+JOoo2YtjDNKrPK8Dna0qNGKKGnFsbIXX
+X-Google-Smtp-Source: AGHT+IEQh0SJsjkopU5/IkJ8aPoUPr3l28Ve0d6i0RQK+3+QrgTO/dxkSmS3vaa+Jnoxx2W854/nA2y4wbquhGkpNUM=
+X-Received: by 2002:a17:903:120a:b0:242:5f6c:6b4e with SMTP id
+ d9443c01a7336-242b064052dmr23829865ad.7.1754531786350; Wed, 06 Aug 2025
+ 18:56:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
- <7b657acb-7186-42bf-9be5-8c1253c6316c@tls.msk.ru>
- <91aec5d7-7647-41d1-ae12-c86020be4537@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <91aec5d7-7647-41d1-ae12-c86020be4537@rsg.ci.i.u-tokyo.ac.jp>
-From: Lei Yang <leiyang@redhat.com>
-Date: Thu, 7 Aug 2025 09:20:07 +0800
-X-Gm-Features: Ac12FXxj7g2hGybmIndLW3D3NWQkijy579ZCYNkErpeCG-tTNz7HqsXyOOt1tgs
-Message-ID: <CAPpAL=xEZ+U4PnOWXP0Dtk1p6TmU4F+NxZZug+-wmYBsb1KvaQ@mail.gmail.com>
-Subject: Re: [PATCH v3] virtio-net: Fix VLAN filter table reset timing
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, Konstantin Shkolnyy <kshk@linux.ibm.com>,
- qemu-devel@nongnu.org, 
- yin31149@gmail.com, eperezma@redhat.com, mst@redhat.com, jasowang@redhat.com, 
- virtualization@lists.linux.dev, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <cover.1754494089.git.ktokunaga.mail@gmail.com>
+ <c10d9f2b85a2791d9f734678fba186e6eacc1b37.1754494089.git.ktokunaga.mail@gmail.com>
+ <9772039a-53c3-4850-82e4-d0efdfa94f2d@linaro.org>
+In-Reply-To: <9772039a-53c3-4850-82e4-d0efdfa94f2d@linaro.org>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Thu, 7 Aug 2025 10:56:14 +0900
+X-Gm-Features: Ac12FXyNxk8ux46gynCc9XEuTbEKqR4IxmbHOOCt4U2tJ2PqFrlyxxmxCpJm34c
+Message-ID: <CAEDrbUaYa9=B7_PeGQFm1prWwX+FgkZ+vqq1RwXZTTMpcP4F4A@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] .gitlab-ci.d: Add build tests for wasm64
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000df66a3063bbcc375"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,46 +102,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested pass this patch with virtio-net regression tests, everything works w=
-ell.
+--000000000000df66a3063bbcc375
+Content-Type: text/plain; charset="UTF-8"
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+> On 6/8/25 17:49, Kohei Tokunaga wrote:
+> > The wasm builds are tested for 3 targets: wasm32, wasm64(-sMEMORY64=1)
+and
+> > wasm64(-sMEMORY64=2). The CI builds the containers using the same
+Dockerfile
+> > (emsdk-wasm-cross.docker) with different build args.
+> >
+> > Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> > ---
+> >   .gitlab-ci.d/buildtest.yml          | 24 +++++++++++++++++++++---
+> >   .gitlab-ci.d/container-cross.yml    | 18 +++++++++++++++++-
+> >   .gitlab-ci.d/container-template.yml |  4 +++-
+> >   3 files changed, 41 insertions(+), 5 deletions(-)
+> >
+> > V2:
+> > - Fixed to use --wasm64-32bit-address-limit instead of the removed
+> >    --wasm64-memory64. This can be considered as a significant change
+from the
+> >    previous version of this patch so the Reviewed-by tag has been
+removed.
+> >
+> > diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> > index d888a60063..0dded04188 100644
+> > --- a/.gitlab-ci.d/buildtest.yml
+> > +++ b/.gitlab-ci.d/buildtest.yml
+> > @@ -787,11 +787,29 @@ coverity:
+> >       # Always manual on forks even if $QEMU_CI == "2"
+> >       - when: manual
+> >
+> > -build-wasm:
+> > +build-wasm32:
+>
+> OK (or following bellow logic, "build-wasm32-32-bit").
+>
+> >     extends: .wasm_build_job_template
+> >     timeout: 2h
+> >     needs:
+> > -    job: wasm-emsdk-cross-container
+> > +    job: wasm32-emsdk-cross-container
+> >     variables:
+> >       IMAGE: emsdk-wasm32-cross
+> > -    CONFIGURE_ARGS: --static --disable-tools --enable-debug
+--enable-tcg-interpreter
+> > +    CONFIGURE_ARGS: --static --cpu=wasm32 --disable-tools
+--enable-debug --enable-tcg-interpreter
+> > +
+> > +build-wasm-wasm64:
+>
+> Maybe build-wasm64-64bit?> +  extends: .wasm_build_job_template
+> > +  timeout: 2h
+> > +  needs:
+> > +    job: wasm64-emsdk-cross-container
+> > +  variables:
+> > +    IMAGE: emsdk-wasm64-cross
+> > +    CONFIGURE_ARGS: --static --cpu=wasm64 --disable-tools
+--enable-debug --enable-tcg-interpreter
+> > +
+> > +build-wasm-wasm64l:
+>
+> So this one becomes build-wasm64-32bit (or better name, "wasm64[l]" is
+> not easy to distinct and figure out this is the 32-bit AS version.
+>
+> > +  extends: .wasm_build_job_template
+> > +  timeout: 2h
+> > +  needs:
+> > +    job: wasm64l-emsdk-cross-container
+> > +  variables:
+> > +    IMAGE: emsdk-wasm64l-cross
+> > +    CONFIGURE_ARGS: --static --cpu=wasm64 --wasm64-32bit-address-limit
+--disable-tools --enable-debug --enable-tcg-interpreter
+> > diff --git a/.gitlab-ci.d/container-cross.yml
+b/.gitlab-ci.d/container-cross.yml
+> > index 8d3be53b75..1bacaff818 100644
+> > --- a/.gitlab-ci.d/container-cross.yml
+> > +++ b/.gitlab-ci.d/container-cross.yml
+> > @@ -92,7 +92,23 @@ win64-fedora-cross-container:
+> >     variables:
+> >       NAME: fedora-win64-cross
+> >
+> > -wasm-emsdk-cross-container:
+> > +wasm32-emsdk-cross-container:
+> >     extends: .container_job_template
+> >     variables:
+> >       NAME: emsdk-wasm32-cross
+> > +    BUILD_ARGS: --build-arg TARGET_CPU=wasm32
+> > +    DOCKERFILE: emsdk-wasm-cross
+> > +
+> > +wasm64-emsdk-cross-container:
+> > +  extends: .container_job_template
+> > +  variables:
+> > +    NAME: emsdk-wasm64-cross
+> > +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg
+WASM64_MEMORY64=1
+> > +    DOCKERFILE: emsdk-wasm-cross
+> > +
+> > +wasm64l-emsdk-cross-container:
+>
+> (same comments)
+>
+> > +  extends: .container_job_template
+> > +  variables:
+> > +    NAME: emsdk-wasm64l-cross
+> > +    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg
+WASM64_MEMORY64=2
+> > +    DOCKERFILE: emsdk-wasm-cross
+> > diff --git a/.gitlab-ci.d/container-template.yml
+b/.gitlab-ci.d/container-template.yml
+> > index 4eec72f383..01ca840413 100644
+> > --- a/.gitlab-ci.d/container-template.yml
+> > +++ b/.gitlab-ci.d/container-template.yml
+> > @@ -10,12 +10,14 @@
+> >       - export
+COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
+> >       - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p
+"$CI_REGISTRY_PASSWORD"
+> >       - until docker info; do sleep 1; done
+> > +    - export DOCKERFILE_NAME=${DOCKERFILE:-$NAME}
+> >     script:
+> >       - echo "TAG:$TAG"
+> >       - echo "COMMON_TAG:$COMMON_TAG"
+> >       - docker build --tag "$TAG" --cache-from "$TAG" --cache-from
+"$COMMON_TAG"
+> >         --build-arg BUILDKIT_INLINE_CACHE=1
+> > -      -f "tests/docker/dockerfiles/$NAME.docker" "."
+> > +      $BUILD_ARGS
+> > +      -f "tests/docker/dockerfiles/$DOCKERFILE_NAME.docker" "."
+> >       - docker push "$TAG"
+> >     after_script:
+> >       - docker logout
+> Nitpicking about names, otherwise LGTM!
 
-On Sat, Aug 2, 2025 at 5:43=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2025/08/02 16:26, Michael Tokarev wrote:
-> > On 27.07.2025 09:22, Akihiko Odaki wrote:
-> > ...
-> >> @@ -3942,6 +3943,7 @@ static void
-> >> virtio_net_device_realize(DeviceState *dev, Error **errp)
-> >>       n->mac_table.macs =3D g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
-> >>       n->vlans =3D g_malloc0(MAX_VLAN >> 3);
-> >> +    memset(n->vlans, 0xff, MAX_VLAN >> 3);
-> >
-> > A nitpick: we don't need to init this memory with 0 before
-> > initing it with 0xff.
-> >
-> > But looking at this, why can't we embed n->vlans directly into
-> > this structure, something like the attached patch?
->
-> VMState also needs a change: VMSTATE_BUFFER_POINTER_UNSAFE() should be
-> replaced with plain VMSTATE_BUFFER(). Actually this is the only user of
-> VMSTATE_BUFFER_POINTER_UNSAFE().
->
-> I appreciate if you submit the patch with this VMState change and patch
-> message.
->
-> >
-> > This, and maybe a few other fields like it?
->
-> There is another candidate: n->mac_table.macs
->
-> But it is not straightforward to embed this array because it uses
-> VMSTATE_VBUFFER_MULTIPLY().
->
-> Regards,
-> Akihiko Odaki
->
+Hi Philippe,
+Thanks for the suggestion. I'll rename them in the next version of the patch
+series.
 
+--000000000000df66a3063bbcc375
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">&gt; On 6/8/25 17:49, Kohei Tokunaga wrot=
+e:<br>&gt; &gt; The wasm builds are tested for 3 targets: wasm32, wasm64(-s=
+MEMORY64=3D1) and<br>&gt; &gt; wasm64(-sMEMORY64=3D2). The CI builds the co=
+ntainers using the same Dockerfile<br>&gt; &gt; (emsdk-wasm-cross.docker) w=
+ith different build args.<br>&gt; &gt;<br>&gt; &gt; Signed-off-by: Kohei To=
+kunaga &lt;<a href=3D"mailto:ktokunaga.mail@gmail.com">ktokunaga.mail@gmail=
+.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &gt; =C2=A0 .gitlab-ci.d/buildtest.ym=
+l =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 24 +++++++++++++++++++++---<br>&gt; &=
+gt; =C2=A0 .gitlab-ci.d/container-cross.yml =C2=A0 =C2=A0| 18 +++++++++++++=
+++++-<br>&gt; &gt; =C2=A0 .gitlab-ci.d/container-template.yml | =C2=A04 +++=
+-<br>&gt; &gt; =C2=A0 3 files changed, 41 insertions(+), 5 deletions(-)<br>=
+&gt; &gt;<br>&gt; &gt; V2:<br>&gt; &gt; - Fixed to use --wasm64-32bit-addre=
+ss-limit instead of the removed<br>&gt; &gt; =C2=A0 =C2=A0--wasm64-memory64=
+. This can be considered as a significant change from the<br>&gt; &gt; =C2=
+=A0 =C2=A0previous version of this patch so the Reviewed-by tag has been re=
+moved.<br>&gt; &gt;<br>&gt; &gt; diff --git a/.gitlab-ci.d/buildtest.yml b/=
+.gitlab-ci.d/buildtest.yml<br>&gt; &gt; index d888a60063..0dded04188 100644=
+<br>&gt; &gt; --- a/.gitlab-ci.d/buildtest.yml<br>&gt; &gt; +++ b/.gitlab-c=
+i.d/buildtest.yml<br>&gt; &gt; @@ -787,11 +787,29 @@ coverity:<br>&gt; &gt;=
+ =C2=A0 =C2=A0 =C2=A0 # Always manual on forks even if $QEMU_CI =3D=3D &quo=
+t;2&quot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - when: manual<br>&gt; &gt; =C2=
+=A0 <br>&gt; &gt; -build-wasm:<br>&gt; &gt; +build-wasm32:<br>&gt; <br>&gt;=
+ OK (or following bellow logic, &quot;build-wasm32-32-bit&quot;).<br>&gt; <=
+br>&gt; &gt; =C2=A0 =C2=A0 extends: .wasm_build_job_template<br>&gt; &gt; =
+=C2=A0 =C2=A0 timeout: 2h<br>&gt; &gt; =C2=A0 =C2=A0 needs:<br>&gt; &gt; - =
+=C2=A0 =C2=A0job: wasm-emsdk-cross-container<br>&gt; &gt; + =C2=A0 =C2=A0jo=
+b: wasm32-emsdk-cross-container<br>&gt; &gt; =C2=A0 =C2=A0 variables:<br>&g=
+t; &gt; =C2=A0 =C2=A0 =C2=A0 IMAGE: emsdk-wasm32-cross<br>&gt; &gt; - =C2=
+=A0 =C2=A0CONFIGURE_ARGS: --static --disable-tools --enable-debug --enable-=
+tcg-interpreter<br>&gt; &gt; + =C2=A0 =C2=A0CONFIGURE_ARGS: --static --cpu=
+=3Dwasm32 --disable-tools --enable-debug --enable-tcg-interpreter<br>&gt; &=
+gt; +<br>&gt; &gt; +build-wasm-wasm64:<br>&gt; <br>&gt; Maybe build-wasm64-=
+64bit?&gt; + =C2=A0extends: .wasm_build_job_template<br>&gt; &gt; + =C2=A0t=
+imeout: 2h<br>&gt; &gt; + =C2=A0needs:<br>&gt; &gt; + =C2=A0 =C2=A0job: was=
+m64-emsdk-cross-container<br>&gt; &gt; + =C2=A0variables:<br>&gt; &gt; + =
+=C2=A0 =C2=A0IMAGE: emsdk-wasm64-cross<br>&gt; &gt; + =C2=A0 =C2=A0CONFIGUR=
+E_ARGS: --static --cpu=3Dwasm64 --disable-tools --enable-debug --enable-tcg=
+-interpreter<br>&gt; &gt; +<br>&gt; &gt; +build-wasm-wasm64l:<br>&gt; <br>&=
+gt; So this one becomes build-wasm64-32bit (or better name, &quot;wasm64[l]=
+&quot; is<br>&gt; not easy to distinct and figure out this is the 32-bit AS=
+ version.<br>&gt; <br>&gt; &gt; + =C2=A0extends: .wasm_build_job_template<b=
+r>&gt; &gt; + =C2=A0timeout: 2h<br>&gt; &gt; + =C2=A0needs:<br>&gt; &gt; + =
+=C2=A0 =C2=A0job: wasm64l-emsdk-cross-container<br>&gt; &gt; + =C2=A0variab=
+les:<br>&gt; &gt; + =C2=A0 =C2=A0IMAGE: emsdk-wasm64l-cross<br>&gt; &gt; + =
+=C2=A0 =C2=A0CONFIGURE_ARGS: --static --cpu=3Dwasm64 --wasm64-32bit-address=
+-limit --disable-tools --enable-debug --enable-tcg-interpreter<br>&gt; &gt;=
+ diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cro=
+ss.yml<br>&gt; &gt; index 8d3be53b75..1bacaff818 100644<br>&gt; &gt; --- a/=
+.gitlab-ci.d/container-cross.yml<br>&gt; &gt; +++ b/.gitlab-ci.d/container-=
+cross.yml<br>&gt; &gt; @@ -92,7 +92,23 @@ win64-fedora-cross-container:<br>=
+&gt; &gt; =C2=A0 =C2=A0 variables:<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 NAME: =
+fedora-win64-cross<br>&gt; &gt; =C2=A0 <br>&gt; &gt; -wasm-emsdk-cross-cont=
+ainer:<br>&gt; &gt; +wasm32-emsdk-cross-container:<br>&gt; &gt; =C2=A0 =C2=
+=A0 extends: .container_job_template<br>&gt; &gt; =C2=A0 =C2=A0 variables:<=
+br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 NAME: emsdk-wasm32-cross<br>&gt; &gt; + =
+=C2=A0 =C2=A0BUILD_ARGS: --build-arg TARGET_CPU=3Dwasm32<br>&gt; &gt; + =C2=
+=A0 =C2=A0DOCKERFILE: emsdk-wasm-cross<br>&gt; &gt; +<br>&gt; &gt; +wasm64-=
+emsdk-cross-container:<br>&gt; &gt; + =C2=A0extends: .container_job_templat=
+e<br>&gt; &gt; + =C2=A0variables:<br>&gt; &gt; + =C2=A0 =C2=A0NAME: emsdk-w=
+asm64-cross<br>&gt; &gt; + =C2=A0 =C2=A0BUILD_ARGS: --build-arg TARGET_CPU=
+=3Dwasm64 --build-arg WASM64_MEMORY64=3D1<br>&gt; &gt; + =C2=A0 =C2=A0DOCKE=
+RFILE: emsdk-wasm-cross<br>&gt; &gt; +<br>&gt; &gt; +wasm64l-emsdk-cross-co=
+ntainer:<br>&gt; <br>&gt; (same comments)<br>&gt; <br>&gt; &gt; + =C2=A0ext=
+ends: .container_job_template<br>&gt; &gt; + =C2=A0variables:<br>&gt; &gt; =
++ =C2=A0 =C2=A0NAME: emsdk-wasm64l-cross<br>&gt; &gt; + =C2=A0 =C2=A0BUILD_=
+ARGS: --build-arg TARGET_CPU=3Dwasm64 --build-arg WASM64_MEMORY64=3D2<br>&g=
+t; &gt; + =C2=A0 =C2=A0DOCKERFILE: emsdk-wasm-cross<br>&gt; &gt; diff --git=
+ a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.ym=
+l<br>&gt; &gt; index 4eec72f383..01ca840413 100644<br>&gt; &gt; --- a/.gitl=
+ab-ci.d/container-template.yml<br>&gt; &gt; +++ b/.gitlab-ci.d/container-te=
+mplate.yml<br>&gt; &gt; @@ -10,12 +10,14 @@<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
+=A0 - export COMMON_TAG=3D&quot;$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:l=
+atest&quot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - docker login $CI_REGISTRY -=
+u &quot;$CI_REGISTRY_USER&quot; -p &quot;$CI_REGISTRY_PASSWORD&quot;<br>&gt=
+; &gt; =C2=A0 =C2=A0 =C2=A0 - until docker info; do sleep 1; done<br>&gt; &=
+gt; + =C2=A0 =C2=A0- export DOCKERFILE_NAME=3D${DOCKERFILE:-$NAME}<br>&gt; =
+&gt; =C2=A0 =C2=A0 script:<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - echo &quot;T=
+AG:$TAG&quot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - echo &quot;COMMON_TAG:$CO=
+MMON_TAG&quot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - docker build --tag &quot=
+;$TAG&quot; --cache-from &quot;$TAG&quot; --cache-from &quot;$COMMON_TAG&qu=
+ot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 --build-arg BUILDKIT_INLINE_CA=
+CHE=3D1<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0-f &quot;tests/docker/dockerfile=
+s/$NAME.docker&quot; &quot;.&quot;<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0$BUIL=
+D_ARGS<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0-f &quot;tests/docker/dockerfiles=
+/$DOCKERFILE_NAME.docker&quot; &quot;.&quot;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
+=A0 - docker push &quot;$TAG&quot;<br>&gt; &gt; =C2=A0 =C2=A0 after_script:=
+<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 - docker logout<br>&gt; Nitpicking about=
+ names, otherwise LGTM!<br><br>Hi Philippe,<br>Thanks for the suggestion. I=
+&#39;ll rename them in the next version of the patch<br>series.</div><br><d=
+iv class=3D"gmail_quote gmail_quote_container"><br></div></div>
+
+--000000000000df66a3063bbcc375--
 
