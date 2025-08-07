@@ -4,57 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913ABC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 15:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358BFC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 16:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk2nd-0005Sl-IQ; Thu, 07 Aug 2025 11:45:02 -0400
+	id 1uk33C-00004r-Em; Thu, 07 Aug 2025 12:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uk2nI-0005FL-DR
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 11:44:41 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uk32p-0008Gh-2M
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:00:49 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uk2n1-0003zO-5U
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 11:44:26 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4byWc73Sm2z6L53R;
- Thu,  7 Aug 2025 23:41:43 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 8CDD0140277;
- Thu,  7 Aug 2025 23:44:05 +0800 (CST)
-Received: from P_UKIT01-A7bmah.china.huawei.com (10.126.170.37) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 7 Aug 2025 17:44:04 +0200
-To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <armbru@redhat.com>, 
- <jonathan.cameron@huawei.com>, <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <shiju.jose@huawei.com>
-Subject: [PATCH v5 0/7] hw/cxl: Update CXL events to rev3.2 and add
- maintenance support for memory repair features
-Date: Thu, 7 Aug 2025 16:43:39 +0100
-Message-ID: <20250807154346.2209-1-shiju.jose@huawei.com>
-X-Mailer: git-send-email 2.43.0.windows.1
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uk32j-0007sy-CY
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:00:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754582438; x=1786118438;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=WUt10lvy3PPEXUjtBFUCvDRZOY3XxNQRtHK5zS1CGK4=;
+ b=kcPZQALIYztkBVRmpRm7qNM/K29oBHYTRb3kiFwz3k6NfZPjXPFzTokM
+ qalfTqM4g4qZ2kCrEHA0pbXgtJhT36Dewj2Hj6SnzK6Mi2tYIvKN4/UxQ
+ E+ZfhQ0DHAW/q0b6wMb77LTiSr4/mAbDWfCVO2dIanNNDF2ZIW+AbqiDM
+ EFOaJrSRtkEataxL8iji3RF97Mvun9hDkquXfC2A9cOEiSbHiPGNehlWy
+ u2xLBNkinBUad4Eq6aRZCxhfec+US6/7qlEJyDgYxDJpNWfp3jyCbBEhl
+ qAJrK8cYwF+z9R5dUQCGQ+zeK0n6PpUgOjKGpT7KsAwDSq1WZH2FJY5Jf w==;
+X-CSE-ConnectionGUID: gYWm0qsETBWV6HdJJ9tqCg==
+X-CSE-MsgGUID: G8IYlr5DSO+rCf9kBtd5MQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="67618698"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="67618698"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Aug 2025 09:00:34 -0700
+X-CSE-ConnectionGUID: vA6ay6/ITgOS3UKHZdJarg==
+X-CSE-MsgGUID: eCnI5OFiSruNpCVFrWpb5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="165891725"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Aug 2025 09:00:32 -0700
+Message-ID: <0344ef5a-8c6c-4c21-824e-9506bb4c7600@intel.com>
+Date: Fri, 8 Aug 2025 00:00:29 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: split lock issue in multiboot_dma.bin
+To: =?UTF-8?Q?Marcus_H=C3=A4hnel?= <marcus.haehnel@kernkonzept.com>,
+ Adam Lackorzynski <adam@l4re.org>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <eaf7e7bf-9513-49a4-b6a1-fe18f2a1a258@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <eaf7e7bf-9513-49a4-b6a1-fe18f2a1a258@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.170.37]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- frapeml500007.china.huawei.com (7.182.85.172)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,110 +85,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  <shiju.jose@huawei.com>
-From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+On 8/7/2025 8:15 PM, Xiaoyao Li wrote:
+> When running the kvm-unit-tests on Intel platforms with "split lock 
+> disable" feature, every test triggers a kernel warning of
+> 
+>      x86/split lock detection: #AC: qemu-system-x86_64/373232 took a 
+> split_lock trap at address: 0x1e3
+> 
+> After investigation, it turns out the split lock happens from 
+> multiboot_dma.bin:
+> 
+> Hack KVM by exiting to QEMU on split lock #AC, we get
+> 
+> KVM: exception 17 exit (error code 0x0)
+> EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
+> ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
+> EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
+> ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
+> CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
+> SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
+> DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
+> FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
+> GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
+> LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
+> TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
+> GDT=     000c02b4 00000027
+> IDT=     00000000 000003ff
+> CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
+> DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 
+> DR3=0000000000000000
+> DR6=00000000ffff0ff0 DR7=0000000000000400
+> EFER=0000000000000000
+> Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 
+> ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 
+> ba 10 05 66
+> 
+> And it matches with what disassembled from multiboo_dma.bin:
+> 
+> #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
+> 
+>   1d1:   08 00                   or     %al,(%eax)
+>   1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
+>   1d8:   06                      push   %es
+>   1d9:   00 66 b8                add    %ah,-0x48(%esi)
+>   1dc:   01 00                   add    %eax,(%eax)
+>   1de:   00 00                   add    %al,(%eax)
+>   1e0:   0f 22 c0                mov    %eax,%cr0
+>  >1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
+>   1e7:   00 00                   add    %al,(%eax)
+>   1e9:   b8 10 00 00 00          mov    $0x10,%eax
+>   1ee:   8e d0                   mov    %eax,%ss
+>   1f0:   8e d8                   mov    %eax,%ds
+>   1f2:   8e c0                   mov    %eax,%es
+>   1f4:   8e e0                   mov    %eax,%fs
+>   1f6:   8e e8                   mov    %eax,%gs
+>   1f8:   66 b8 08 00             mov    $0x8,%ax
+>   1fc:   66 ba 10 05             mov    $0x510,%dx
+> 
+> I don't know where the multiboot_dma.bin are built from so that I cannot 
+> further help resolve the split lock issue.
 
-Add updates for the CXL spec rev3.2 changes, in the CXL events reporting
-and QMP command to inject CXL events.
-
-Add maintenance support and emulation support for memory Post Package
-Repair(PPR) and memory sparing control features.
-
-Add support for reporting the memory sparing event record.
-
-Changes
-=======
-v4 -> v5:
-1. Changes for comments from Markus Armbruster (Thanks)
-1.1. Fixed documentation issues in qapi/cxl.json
-     https://lore.kernel.org/all/87wm7gq4fr.fsf@pond.sub.org/
-     https://lore.kernel.org/all/87ms8cq3ug.fsf@pond.sub.org/
-     https://lore.kernel.org/all/878qjwq3hh.fsf@pond.sub.org/
-     https://lore.kernel.org/all/874iukq3d0.fsf@pond.sub.org/
-
-1.2. https://lore.kernel.org/all/87wm7gq4fr.fsf@pond.sub.org/  
-     Factor out common command arguments for 3 injection events commands
-	 using struct.
-
-2. Changes for comments from Jonathan Cameron (Thanks)
-2.1 Removed tabs in qapi/cxl.json
-   https://lore.kernel.org/all/20250725134535.00007e8b@huawei.com/
-       
-2.2. https://lore.kernel.org/all/20250725142635.000014fa@huawei.com/ 
-    - Rename title of patch [6] to add Post Package Repair
-    - Removed QLIST_REMOVE(ent, node); and g_free(ent);
-      when find the maintenance node in the queue list.
-    - Changes to store the memory geometry details when they were injected
-      for the sparing record.
-2.3. https://lore.kernel.org/all/20250725143120.00000eef@huawei.com/
-   - Removed wrapping for 'bytes_to_copy' variable in memcpy in few places.
-     
-v3 -> v4:
-1. Took patches applied by Jonathan to recent tag 'cxl-2025-07-03'.
-2. Add few more improvements to maintenance PPR[ patch 6] and sparing
-   [patch 7] feature patches.
-
-
-v2 -> v3:
-1. Changes for the feedback from Jonathan on v2.
-   https://lore.kernel.org/all/20250619151619.1695-1-shiju.jose@huawei.com/
-  1.1. https://lore.kernel.org/all/20250620150342.000055aa@huawei.com/
-    - Wrap this is sub 70 and should aim for about 75 for commit descriptions.
-    - hdr->ld_id = ld_id; to stw_le_p(&hdr->ld_id, ld_id); in cxl_assign_event_header()
-    - Make maint_class, maint_subclass, ld_id and head_id as optional parameters in QMP for
-      relevant events
-    - In QMP rename maint-class to maint-op-class, maint_subclass to maint-op-subclass
-      In functions, rename parameters, class to maint_op_class, subclass to maint_op_subclass etc.  
-  1.2. https://lore.kernel.org/all/20250620151314.0000535c@huawei.com/ 
-    - Make cme-ev-flags and cme-count for general media events as optional parameters in the QMP.
-    - Make cme-ev-flags and cvme-count for DRAM event as optional parameters in the QMP.
-  1.3. https://lore.kernel.org/all/20250620151655.00001cea@huawei.com/
-    - Add variable declarations at start of the local scope.
-  1.4. https://lore.kernel.org/all/20250620154052.00002a17@huawei.com/
-    - Adjust indent style  in few places.
-    - Add support for produce a Memory Sparing Event Record and enabled for
-      ppr maintenance request.
-    - Replaced hard coded values in few switch-cases with macro definition in few places.
-    - Replaced CXL_MBOX_UNSUPPORTED with CXL_MBOX_INVALID_INPUT.
-  1.5. https://lore.kernel.org/all/20250620154813.00002bbd@huawei.com/
-    - Add support for memory sparing resource availability.
-    - LOG_UNIMP logs for sparing maint op removed.
-    - Replaced CXL_MBOX_UNSUPPORTED with CXL_MBOX_INVALID_INPUT.
-               
-v1 -> v2:
-1. QMP CXL event injection code has updated for the following
-   change in CXL spec r3.2 Table 8-55. Common Event Record Format,
-   field: Event Record Flags. Length of this field has changed
-   from 2 bytes to 3 bytes. 
-2. Rebase to recent tag 'cxl-2025-06-10'.
-
-Davidlohr Bueso (1):
-  hw/cxl: Add support for Maintenance command and Post Package Repair
-    (PPR)
-
-Shiju Jose (6):
-  hw/cxl/events: Update for rev3.2 common event record format
-  hw/cxl/events: Updates for rev3.2 general media event record
-  hw/cxl/events: Updates for rev3.2 DRAM event record
-  hw/cxl/events: Updates for rev3.2 memory module event record
-  hw/cxl/cxl-mailbox-utils: Move declaration of scrub and ECS feature
-    attributes in cmd_features_set_feature()
-  hw/cxl: Add emulation for memory sparing control feature
-
- hw/cxl/cxl-events.c         |   3 +-
- hw/cxl/cxl-mailbox-utils.c  | 569 +++++++++++++++++++++++++++++++++++-
- hw/mem/cxl_type3.c          | 332 ++++++++++++++++++++-
- hw/mem/cxl_type3_stubs.c    |  41 ++-
- include/hw/cxl/cxl_device.h | 152 +++++++++-
- include/hw/cxl/cxl_events.h |  85 +++++-
- qapi/cxl.json               | 184 ++++++++----
- 7 files changed, 1280 insertions(+), 86 deletions(-)
-
--- 
-2.43.0
-
+stupid me. The src code is just pc-bios/optionrom/multiboot.S
+But I don't know how to build a bin file from it to test my fix.
 
