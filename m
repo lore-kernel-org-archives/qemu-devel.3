@@ -4,99 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AF2C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 22:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577F0C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 23:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk8j8-0001oi-Dd; Thu, 07 Aug 2025 18:04:46 -0400
+	id 1ukATY-0006yU-9t; Thu, 07 Aug 2025 19:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8iw-0001mF-JV
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 18:04:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1ukATT-0006wV-UE
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 19:56:44 -0400
+Received: from fencepost.gnu.org ([2001:470:142:3::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8it-00005H-12
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 18:04:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754604268;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XYMBe/8GXVMRlJZ3uwlOY4weqC/+CjfuFywjDSFUZkc=;
- b=PMezY0e4dTyt6dLvPTyHbStZEzpZLpvV1aP8MmqRGoCP4RDm28w3SQt1JIl73MZtyO0lFp
- TRgqVvfwl7xu8tRddCAsgbI6+whGNXfzoGQjZMPF2OuDE8C1Kw10UoeSkqouZeTa96rc3Z
- +QheGRNLfNZdwiEZEfekD2C2UZMMTew=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-mePacOdvM6GVHdYCwD0nsQ-1; Thu, 07 Aug 2025 18:04:27 -0400
-X-MC-Unique: mePacOdvM6GVHdYCwD0nsQ-1
-X-Mimecast-MFC-AGG-ID: mePacOdvM6GVHdYCwD0nsQ_1754604266
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2425364e0b2so16738945ad.1
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 15:04:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754604266; x=1755209066;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XYMBe/8GXVMRlJZ3uwlOY4weqC/+CjfuFywjDSFUZkc=;
- b=wMmXvDT2usl1v3mdYGlJObVg/WJfAmB/LJlT/BmTZiqrMCppUw5H5j5AH8hdDHZy90
- oLgBQpMLTNBTAcCo/H5XVkPDojH6wgF5NYvhynTHHPzzsGZ1uXT7OWBZOk2xsiLwny92
- yByzLKq9o675vikWBICO14SVkETwVotp4kCrXi4kW69+jh4nWWBHR1SUrzCu3XzAEAHi
- /zcUvxD4tdnbC0jCRphSmNzZVFJg0i7vGU6wzwPPsIlu6kScub33B45fy+pEJ9hnQJjl
- g4dviaXGDIAoG2iHmC3qHmAy/jEmzkPLRMcrd3nwjdZsw75+rfPLCHOsvXXlOU8CSuw3
- e/8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdRCY9UgJ7S1cpIf36q6pV+A5GRyVTZ9D1W9ZAGz8eKNSMmtUCK56R1dZPsnrtZirqiEjPzllO/iJZ@nongnu.org
-X-Gm-Message-State: AOJu0YzovY1UDAohNIJjGC8N4kSV/lsVCe6Tl1iK8aHI9aKvqaPjIGAh
- jtyRpKK0hGxyj+7CwOHw0C6GTkqMk33wCrIZa1JRuODmwHj3y68RT6SGq6JVkDH2n40TZVrWScH
- cFTMBOPlk6/L0UhT0P+fLyVPDddhWdqkghLzyrA07cqxmZHk5VbmUy5Z44HFUuwdWUl2kkfuz94
- I8nqhEFQd/0GzpkkMBXU0BXAqvlxH9+UY=
-X-Gm-Gg: ASbGncu1QF+kWNAoudQKs7vpHOgmqG45gtacXwbiRsQgAI/jaC53vqlbCURQaQuxQfd
- q25zP7fDBZ2Kp8CPwBzLAqTzzn9xW6I6neDx4ahnDKXadhGVsXnNuK8O7DixI5TdLNJldSUnver
- y+XD+uw+773y94yLEKTuRlBvL0+h13DKoDlSEd/B3YkyDzjKAq8pWb
-X-Received: by 2002:a17:903:28d:b0:240:934f:27ac with SMTP id
- d9443c01a7336-242c21e01ebmr8306725ad.33.1754604266392; 
- Thu, 07 Aug 2025 15:04:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtdnMTQ3p9uCyUQkDjoT9YPZTnXYP8CSyIFVsJi6CLt6J4TAy4CvAYsTk4HHvKCIe35tTw+JTXTSd8K1y81wQ=
-X-Received: by 2002:a17:903:28d:b0:240:934f:27ac with SMTP id
- d9443c01a7336-242c21e01ebmr8306475ad.33.1754604265996; Thu, 07 Aug 2025
- 15:04:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
+ id 1ukATS-0001ld-0L; Thu, 07 Aug 2025 19:56:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
+ s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
+ Date; bh=gfFwROyn/FNYt1OAXIrEQXk2DeONnxLrlOkV6mc1DYY=; b=c/l8SFQV9vgcqoh0IkQn
+ Fhw0HemJxsakAxNje8p9jf5YC+0bhHVlRBTlJzDkX3BaocTKcKkHPK3fZLsM8TwTC3MRvFZ2nB0o2
+ F7ZYfuBXXlEIJ3FJ0wlp+Hh8XtNe/RThR0ND81Ie2znAtQ464v/8TzZ4UqzeGhT2yro9YFeV6qivM
+ 3JzBXrjJ8nzJSZNh4mEYYIDS+sh2+aCjq6i2fjAHOPzvpCMiiBCdn1GwIek3jRGtj1dY00AFo1vEx
+ L34ONU0fL9rqiQeHGKNwuSQPCyHIerk7JqGMWCE6F3DSPS46LvmIDVnnaXkHPionRsrTXp26LzerV
+ rXJQ0TBRVvZ8AQ==;
+Date: Fri, 8 Aug 2025 01:56:18 +0200
+From: Samuel Thibault <samuel.thibault@gnu.org>
+To: Viktor Kurilko <murlockkinght@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v4] Add a feature for mapping a host unix socket to a
+ guest tcp socket
+Message-ID: <aJU9IgWHfCpUEoi5@begin>
+References: <20250805145543.580526-1-murlockkinght@gmail.com>
 MIME-Version: 1.0
-References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
- <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
- <871pqmwzqr.fsf@pond.sub.org>
- <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
- <87zfd4v8m5.fsf@pond.sub.org>
-In-Reply-To: <87zfd4v8m5.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 7 Aug 2025 18:04:14 -0400
-X-Gm-Features: Ac12FXyHt8QFluB9Cz4jbZp9csbvKqgBQWDKMZ0N8lPZMAUCCscpcCWSk7VHrAQ
-Message-ID: <CAFn=p-biuic_12kWEj==NmNp54MW6X4wf=2hu0edvqJF+deyaw@mail.gmail.com>
-Subject: Re: [PATCH V4 2/3] python: use qom-list-get
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Philippe Mathieu-Daude <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250805145543.580526-1-murlockkinght@gmail.com>
+Organization: I am not organized
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,75 +55,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 16, 2025 at 4:32=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
->
-> [...]
->
-> >> Exception ignored in: <function QEMUMonitorProtocol.__del__ at
-> >> 0x7fcfcd080d60>
-> >> Traceback (most recent call last):
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
-,
-> >> line 310, in __del__
-> >>     self.close()
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
-,
-> >> line 281, in close
-> >>     self._sync(
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
-,
-> >> line 102, in _sync
-> >>     return self._aloop.run_until_complete(
-> >>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in
-> >> run_until_complete
-> >>     return future.result()
-> >>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
-> >>     return await fut
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
-y",
-> >> line 399, in disconnect
-> >>     await self._wait_disconnect()
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
-y",
-> >> line 719, in _wait_disconnect
-> >>     await all_defined_tasks  # Raise Exceptions from the bottom half.
-> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
-y",
-> >> line 870, in _bh_loop_forever
-> >>     await async_fn()
-> >> RuntimeError: cannot reuse already awaited coroutine
-> >>
-> >
-> > Curious about this backtrace. It looks like something has gone
-> > fundamentally wrong in the internals and the error is being raised by t=
-he
-> > garbage collector which is not ideal.
-> >
-> > Can you help me reproduce this? Even if it's old/bad code, I don't want
-> > python-qemu-qmp faulting like this.
->
-> Reproducer for Fedora 41, current master c079d3a31e4:
->
-> Run
->
->     $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dmon1,path=
-=3Dtest-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,id=3Dqmp,chardev=3Dm=
-on1
->
-> and
->
->     $ scripts/qmp/qom-tree -s test-qmp >/dev/null
->
-> Questions?
->
+We're almost there :)
 
-Doesn't seem to trigger for me on Fedora 42 from the c079d3a31e4
-build. Is this a Python version difference thing rearing its head?
+Viktor Kurilko, le mar. 05 août 2025 21:52:50 +0700, a ecrit:
+> @@ -824,30 +827,81 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
+>          is_udp = 0;
+>      } else if (!strcmp(buf, "udp")) {
+>          is_udp = 1;
+> -    } else {
+> -        fail_reason = "Bad protocol name";
+> -        goto fail_syntax;
+>      }
+> -
+> -    if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
+> -        fail_reason = "Missing : separator";
+> -        goto fail_syntax;
+> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
+> +    else if (!strcmp(buf, "unix")) {
+> +        is_unix = 1;
+>      }
+> -    if (buf[0] != '\0' && !inet_aton(buf, &host_addr.sin_addr)) {
+> -        fail_reason = "Bad host address";
+> +#endif
+> +    else {
+> +        fail_reason = "Bad protocol name";
+>          goto fail_syntax;
+>      }
+>  
+> -    if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
+> -        fail_reason = "Bad host port separator";
+> +    if (get_str_sep(buf, sizeof(buf), &p, is_unix ? '-' : ':') < 0) {
 
+This factorization looks odd. I don't think it's actually more readable
+to try to factorize some separator parsing. I'd say rather have an if
+(unix) part and else (ip) part, which both make their own get_str_sep
+calls, and factorize just the parsing of the guest part.
+
+> +#endif
+> +    {
+> +        if (buf[0] != '\0' && !inet_aton(buf, &host_addr.in.sin_addr)) {
+> +            fail_reason = "Bad host address";
+> +            goto fail_syntax;
+> +        }
+> +
+> +        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
+> +            fail_reason = "Bad host port separator";
+> +            goto fail_syntax;
+> +        }
+> +
+> +        err = qemu_strtoi(buf, &end, 0, &host_port);
+> +        if (err || host_port < 0 || host_port > 65535) {
+> +            fail_reason = "Bad host port";
+> +            goto fail_syntax;
+> +        }
+> +        host_addr.in.sin_family = AF_INET;
+> +        host_addr.in.sin_addr.s_addr = INADDR_ANY;
+
+This is overwriting the inet_aton call above?
+
+> +        host_addr.in.sin_port = htons(host_port);
+> +        host_addr_size = sizeof(host_addr.in);
+>      }
+> -    host_addr.sin_port = htons(host_port);
+>  
+>      if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
+>          fail_reason = "Missing guest address";
+
+Samuel
 
