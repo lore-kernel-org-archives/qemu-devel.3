@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB32C87FD3
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 02:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456D7C87FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 03:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujpz6-0006Df-RE; Wed, 06 Aug 2025 22:04:00 -0400
+	id 1ujqto-0007g2-5a; Wed, 06 Aug 2025 23:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ujpz4-0006Cm-Oa
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 22:03:59 -0400
-Received: from p-east3-cluster7-host11-snip4-7.eps.apple.com ([57.103.84.238]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1ujpz2-0001cY-Sh
- for qemu-devel@nongnu.org; Wed, 06 Aug 2025 22:03:58 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPS id
- EE2B618000AC; Thu,  7 Aug 2025 02:03:49 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=e/mO29Vn1/6qZpVxxklJ5nPaP1FzzlSf1Oy41vIuyzA=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=eCuCWesqRa4C56pptd9dqPlBvlIiCZP+ScabfwX0fXb3OjDd5eqrh6JnVw5edG8RvelC7+Tot1mlYvn8juHZZLfvnbeCYj1d0H0E0CTfcuCSqagAR0s//KODZFB2mih/UbWgU5HH1mOTT3LpGQYFEr81KYIvQqeSoaSN3i2ailrQxEwHWfpSFQu4fMwVmWUHeEf+jOX2y8ZrNP2tx5in0N9oyhahio1HFVLoKoFK5Ctymt64XrzlOv/hnwEKFEd+3KWrObEVPmhe1h+Eoo8o7FJ/oBh83OANt9o+MIr5BWK735sTWRI0J7LQXROYYXOtF+TY0kd6oxDso3wXSs0m8Q==
-X-Client-IP: 46.189.47.18
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPSA id
- 6DB4218000A0; Thu,  7 Aug 2025 02:03:47 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <C4D5D2CF-64BF-400A-831C-903F4730BC9B@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_A7450463-3FF0-435C-9A6E-EE6B63A5FCFA"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3863.100.1\))
-Subject: Re: [PATCH v5 02/13] accel, hw/arm, include/system/hvf:
- infrastructure changes for HVF vGIC
-Date: Thu, 7 Aug 2025 04:03:35 +0200
-In-Reply-To: <32928301-9db8-4003-84fc-82f3129bb8c3@linaro.org>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Cameron Esfahani <dirty@apple.com>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250728134114.77545-1-mohamed@unpredictable.fr>
- <20250728134114.77545-3-mohamed@unpredictable.fr>
- <32928301-9db8-4003-84fc-82f3129bb8c3@linaro.org>
-X-Mailer: Apple Mail (2.3863.100.1)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA3MDAxNCBTYWx0ZWRfX4LBNJvbztwnD
- WuOb7hZ6lpuTebPjKB7HUbdePTZ7qUpzWMmOxHlKpD9X03AJ1hXeEX+vCcaCaeda6jbAqW6ZQtx
- N3TTuLJla8CoU027R4Y8tjI9d1ptutJzHtK0DUf9cBlGnXmxvVjrBxT41FO8t7IPxobfS3N7Icp
- woTJ4Zx1vgm5i/OGUnbdYcI2D0WNsJlwX7P2GcfbdIAOhWBisZu2dlsLqeG0nvsrkUWwPFXCapg
- 1dLW+ftfmbDuWcZdFoOOTFZrA4l00Q7T7CUiMrvNPZXay4j5HB0mso8fVRY+aIBr16SyVQqEw=
-X-Proofpoint-ORIG-GUID: j6AoxJ-ODZ_aYJe1eBDZUHvNsdllyqhb
-X-Proofpoint-GUID: j6AoxJ-ODZ_aYJe1eBDZUHvNsdllyqhb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-06_05,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- malwarescore=0 mlxscore=0 bulkscore=0 suspectscore=0 phishscore=0 spamscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2508070014
-Received-SPF: pass client-ip=57.103.84.238;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujqtd-0007dF-1C
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 23:02:26 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ujqtZ-0001LB-4H
+ for qemu-devel@nongnu.org; Wed, 06 Aug 2025 23:02:23 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-23fd3fe0d81so4884995ad.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 20:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754535739; x=1755140539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VNM/Alx3viiry5FgrdkPI7g05gTkH+/25lDnLA+8uy0=;
+ b=NAN9P7xqjHq1Issym6aINiwmgLK28vnzTt7MObmFvaG1rLYgeVRxmTdZxajClFlEMi
+ /R48AwPfsHYFuj55nUDZ7W3yIyAzZWxBjsu4BludLIJep6ASOM/mshhUKcOXqJMVA0Ox
+ xvXEIGstDhQroBrE5E9WFwfvSuSZGcGPeLno5ck8FZZAOMEl2U9Kp23YUQgwR687Txfz
+ TUyfw8leE84YmYyXDqQsIwqFlrzwix72nr0oz0pt5U/SwtEgcLNnPgRTn7B8z7Jg4wyl
+ RCXp7q6YZsp4pGzdYc/pmxg2XxjGZXB9K4M4QJ81nI7Kb8nr/QmypB81A0Xc2iQMU58b
+ T7JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754535739; x=1755140539;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VNM/Alx3viiry5FgrdkPI7g05gTkH+/25lDnLA+8uy0=;
+ b=icwPVDJ3oWmWyqHkDqK0PjtV7bJyy7NMCJotdalvQn+gEPj2pGsn/14caxgptdU21w
+ gbNPPdtDrYICAJXBeTlN6bfUW8YNSj+ZeWvVBKddTrpZle1nCyN0Wl/P0iApUIoWX1sH
+ UfuXYPwAuQyULVgvx8lmjjswP7wjKZxTq/+Hw4DWFme0ph/cJ5FD7hxkX0zljlCCjFXY
+ z2ec173NHTuq89KbcUBdA49ZDc0LJthPHti+H2SojjaNmsnPfu1GWwQIfc4LmA+VrMIP
+ G7qOv3Af2+QrMEksejJDQbqvmm4QJyoVF5ZzvdqJSCLcmHCpRihO+WDYUoeL9Tev2Ayg
+ ZCbg==
+X-Gm-Message-State: AOJu0Yzi3E/ErZ0SnDf84TVseZ5zMUco0GdSkLXSJF/wMq7fI4RF6aJq
+ zMLU4jq9Tg+kDuPzfOJ1ESCdp8GIaFIDZoMznjv374RtxMpMCFY0Mg5qcB1nrg==
+X-Gm-Gg: ASbGncvH9QDqXq0tH8fBmGflzCt6UP1CFZpawusJU4gI9XNtKfim1JseaqUsFy2GcHU
+ e2XNMI/TKG1fh2TWRN3RMMWJX1EDaMq6Rz6V5CRKWmh1oxX6r+284Aog13a8P+CCWwUJa/2wW6P
+ h57GKNt3U4M5mhQXVbCY5AmjvQ6rqoS6ljJ37SmGqAzvGbxrK9qTuH//RfZuOkm8p3mz9llaIKl
+ VrXzE8hBqFLUAB3hvKk7SOyzSChMbc7IkMjSjIl9AcQDtAm2C2scdvL8ajwXzfxK7+y9ZR2TwDa
+ 2AUPIKpTqYIBDuAuioXNlrZgdd1oBAiNoRVWuoQw0bde7XpJzj/B2YXdM+r0NRganO7L48nIUuG
+ C/7Y6gvZiOAyGxCyRIyutxw==
+X-Google-Smtp-Source: AGHT+IFFKQ+ai/sUPnLfVuLGWVVklfwXuRwtFkM0idYpLdlA3pVwCTWmN/yp4Zz8cjOCXoEAlzOgzw==
+X-Received: by 2002:a17:902:ebd1:b0:234:d679:72e9 with SMTP id
+ d9443c01a7336-2429f1dbd61mr73472175ad.12.1754535739173; 
+ Wed, 06 Aug 2025 20:02:19 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:81e2:9f1d:777a:7b46])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241d1ef6ac6sm173154585ad.1.2025.08.06.20.02.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 20:02:18 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH v3 0/4] wasm: Enable 64bit guests on TCI using wasm64
+Date: Thu,  7 Aug 2025 12:01:59 +0900
+Message-ID: <cover.1754534225.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,69 +103,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+V3:
 
---Apple-Mail=_A7450463-3FF0-435C-9A6E-EE6B63A5FCFA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+- Renamed the build tests on GitLab CI("build-wasm32" ->
+  "build-wasm32-32bit", "build-wasm-wasm64" -> "build-wasm64-64bit",
+  "build-wasm-wasm64l" -> "build-wasm64-32bit"). The same change has also
+  been applied to container-cross.yml.
 
+V2:
 
+- Added a link to the Emscripten documentation about -sMEMORY64 in the
+  configure script.
+- Changed --wasm64-memory64 flag to --wasm64-32bit-address-limit to avoid
+  exposing the -sMEMORY64 value directly to the users.
+- Fixed GitLab CI to use --wasm64-32bit-address-limit instead of
+  --wasm64-memory64.
 
-> On 6. Aug 2025, at 13:32, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> ... better add hvf_arch_register_class_properties(), empty stub
-> on x86 and filled in aarch64.
-Would it be fine to have the setting still without it doing anything =
-right now?
+V1:
 
-(For reference, Apple added APIC APIs in macOS 12 on x86 - which we =
-might possibly want to add later or not=E2=80=A6)
+This patch series enables the TCI of the Wasm build to run 64bit
+guests. Unlike the previous series[1], this patch series is implemented by
+adding support for WebAssembly's "wasm64" target which enables 64bit
+pointers.
 
-Or might as well implement support for the HVF APIC in the same series =
-(?)=
+In the previous discussion[2], the main challenge of using wasm64 was its
+limited adoption, particularly the lack of support in our dependency
+(libffi) and some engines such as Safari.
 
---Apple-Mail=_A7450463-3FF0-435C-9A6E-EE6B63A5FCFA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+For libffi, I've completed the addition of wasm64 support upstream[3] so it
+can be used.
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 6. Aug 2025, at 13:32, Philippe Mathieu-Daud=C3=A9 =
-&lt;philmd@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">... =
-better add hvf_arch_register_class_properties(), empty stub</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">on x86 and filled in aarch64.</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: =
-none;"></div></blockquote></div>Would it be fine to have the setting =
-still without it doing anything right now?<div><br></div><div>(For =
-reference, Apple added APIC APIs in macOS 12 on x86 - which we might =
-possibly want to add later or not=E2=80=A6)</div><div><br></div><div>Or =
-might as well implement support for the HVF APIC in the same series =
-(?)</div></body></html>=
+To support wasm32 engines, this patch uses Emscripten's compatibility
+feature, -sMEMORY64=2 flag[4]. This flag still enables 64bit pointers in the
+C code while Emscripten lowers the output binary to wasm32 and limits the
+maximum memory size to 4GB. As a result, QEMU can run on wasm32 engiens
+while still supporting 64bit guests.
 
---Apple-Mail=_A7450463-3FF0-435C-9A6E-EE6B63A5FCFA--
+# Overview of the build process
+
+To compile QEMU with Emscripten, the following dependencies are required.
+The emsdk-wasm-cross.docker environment includes all necessary components
+and can be used as the build environment:
+
+- Emscripten SDK (emsdk) v4.0.10
+- Libraries cross-compiled with Emscripten (please see also
+  emsdk-wasm-cross.docker for build steps)
+  - GLib v2.84.0
+  - zlib v1.3.1
+  - libffi v3.5.2
+  - Pixman v0.44.2
+
+The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
+pointer support.
+
+emconfigure ./configure --cpu=wasm64 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
+
+If the output needs to run on wasm32 engines, use
+--wasm64-32bit-address-limit flag. This flag enables Emscripten's
+-sMEMORY64=2 flag[4]. (Note: --wasm64-memory64=2 flag in the V1 patch has
+been renamed to --wasm64-32bit-address-limit in V2)
+
+emconfigure ./configure --cpu=wasm64 --wasm64-32bit-address-limit \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu \
+                        --enable-tcg-interpreter
+emmake make -j$(nproc)
+
+Either of the above commands generates the following files:
+
+- qemu-system-x86_64.js
+- qemu-system-x86_64.wasm
+
+Guest images can be packaged using Emscripten's file_packager.py tool.
+For example, if the images are stored in a directory named "pack", the
+following command packages them, allowing QEMU to access them through
+Emscripten's virtual filesystem:
+
+/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
+
+This process generates the following files:
+
+- qemu-system-x86_64.data
+- load.js
+
+Emscripten allows passing arguments to the QEMU command via the Module
+object in JavaScript:
+
+Module['arguments'] = [
+    '-nographic', '-m', '512M',
+    '-L', 'pack/',
+    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
+    '-kernel', 'pack/bzImage',
+    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
+];
+
+The sample repository[5] (tcidev64 branch) provides a complete setup,
+including an HTML file that implements a terminal UI.
+
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg05376.html
+[2] https://lists.nongnu.org/archive/html/qemu-devel/2025-04/msg01795.html
+[3] https://github.com/libffi/libffi/pull/927
+[4] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+[5] https://github.com/ktock/qemu-wasm-sample/tree/tcidev64
+
+Kohei Tokunaga (4):
+  meson: Add wasm64 support to the --cpu flag
+  configure: Enable to propagate -sMEMORY64 flag to Emscripten
+  dockerfiles: Add support for wasm64 to the wasm Dockerfile
+  .gitlab-ci.d: Add build tests for wasm64
+
+ .gitlab-ci.d/buildtest.yml                    | 26 ++++++++++++++---
+ .gitlab-ci.d/container-cross.yml              | 20 +++++++++++--
+ .gitlab-ci.d/container-template.yml           |  4 ++-
+ MAINTAINERS                                   |  2 +-
+ configure                                     | 16 +++++++++-
+ meson.build                                   |  4 +--
+ ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
+ 7 files changed, 83 insertions(+), 18 deletions(-)
+ rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+
+-- 
+2.43.0
+
 
