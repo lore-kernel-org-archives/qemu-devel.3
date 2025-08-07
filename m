@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B07C87FDA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 16:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA0FC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 16:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk39A-0005EZ-FK; Thu, 07 Aug 2025 12:07:16 -0400
+	id 1uk3XS-0007TL-B7; Thu, 07 Aug 2025 12:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uk394-00057e-Ib; Thu, 07 Aug 2025 12:07:10 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uk391-00010e-L0; Thu, 07 Aug 2025 12:07:10 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76bc5e68d96so1132007b3a.3; 
- Thu, 07 Aug 2025 09:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754582822; x=1755187622; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VZINBPu8sfj/FpGaJNR7o9bp1Y3qwK2h502aZGZ4w9c=;
- b=VuSralyizhw4nVlQV6gZ2nqnwo1wHEhKJME6VbXLpYRanWP5V/mmFLNVwFpcIkPGuY
- viWB6DXOBD2DswEp91QfNskbU8ETWpzXZnQ+kTUJRtev0Ub0fV7Ask0El1zpfzRkgvx4
- 1gCMPUSG1j3G7Bavr2gSutQlkW1+OUklkLP6CRmKGHUmxx43cxSnGldjgStbYQN40nKq
- cTqlPd+yWAEbYzZ0nkSEcGS+0op8XxNL1583bU26JHWqx1k9XYjH28cCCG+yz8eDLO7s
- iKwAT9RCj8UoIRrbtlVzD65EPDmZnEPEHxYdPE7+Updb15VSP6nUXS5Eqc55OeWW2oI3
- RP+Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uk3XC-0007KV-1k
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:32:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uk3X5-00072a-Ct
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 12:32:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754584316;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eJRvsKVuPLBGHn3/lXEqVtL/AwjXn28oKLZ5EWB1biA=;
+ b=O9z8dDZI9hXKJinBtSK7OniMRfg17xguEdMesShrLj1AAKeJsnBy8OF+sCOS8PHeEWMz5O
+ 5z0lP/tuKW8q/ka8GeG+l1NpINOknT9Eh43//gADRMlt8hVNN1vOrFDnp7XApoGFI9K+4W
+ viu20nQcmJcN4KmtnVIajy+MrjB7s6k=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-298-K5o7Oxa8Mn6TW28QQxUzqQ-1; Thu, 07 Aug 2025 12:31:54 -0400
+X-MC-Unique: K5o7Oxa8Mn6TW28QQxUzqQ-1
+X-Mimecast-MFC-AGG-ID: K5o7Oxa8Mn6TW28QQxUzqQ_1754584314
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-71b70ee9d3cso18289327b3.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 09:31:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754582822; x=1755187622;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VZINBPu8sfj/FpGaJNR7o9bp1Y3qwK2h502aZGZ4w9c=;
- b=IOgTzTqpqXibIfQfSsP1MIY2RkYpT6FkTrveP86376hd9zcxKs8mcSLqhsa8JG59Yi
- 2WEsP/a/D1iHelQ8vfxQHlegAY6F/DTBT8e7FfPSN0DFZMLNUMT0DHM+mUUvI/esvwFN
- t+JctGPXd2RSAgWw5fmpYGge9T92ZIPI20bw2jrcZtZ9UVkfLGQvXKpH05lPC1SZSbjB
- e2DP9Cv1gNihon9EddTQ6s9MBYm+rr3oE1sw5JDiCMYCpyZ9TETNr/XtR99rqMVKyhQL
- Dlt1Q+rOlgOLwiGSA2SOLuskmpDqv4BVHEXg84Sawz8A9rn9SIQWVPp/wO62tVRt5ryZ
- DwHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIY1iB9ZoPZdPEH5nBRxLZ6Onz09EA8p6hwqgfJ7chpuXvpBonN/IQKJK90TDtc+HdR3ysF8gFxQ==@nongnu.org,
- AJvYcCVsBE+LaHB9jYE00DxdVbMnaEajbMHjtW8mlB//LDmzoikbHlVbtS15G4gvJbeuVARsMrsPvfdx2gCqWQ==@nongnu.org,
- AJvYcCWEjFJLyBzKe17O8ARolNx3TB2bAFxa7HaQYJZm4mj2MkIm5W0RCDAjzSsWlK0o2oR787I9Sy939Ax7Bw==@nongnu.org,
- AJvYcCXpcJikvFFf1So825DaoYgWruIX8DxdINascz5aHKEkRYKyHrT9ymwptrYlzXxCgw3JLdX4cPFqo3x/VQ==@nongnu.org
-X-Gm-Message-State: AOJu0YwbBfBnLGb4909wUwq0JQe7b2GjIWCbCPr6KbpVAaCt4MPEHjtL
- hjupzES/lRpupPiwwenGBny5YeMKogtamNHd1lt2HpyQ2VKZrTy3Nho3
-X-Gm-Gg: ASbGnct35PcPO18DsKkbILSnUuxIrIoMMmDkst+PAdPF6r5uiaoZeaOVte5/W2x5G3p
- GyvnDgUbzfiq14sl1BZWgrpDy04vgnNkMH/6+OiG3zhE+rbrt30dytLpjOdFq0RZs9Gkk9MWhXC
- qNc699EH5l4isASlGyzkR1xT8rktWjRUGV9YW34VVMnjYqOCAdveJbCgcHiv8iAFUtBVs1lFQbN
- sTHgFt3UWjIgBGv7qNO0SbLSrVThqDZuP/l41ZRoeNA9UcYxuSxixsVa5r5FS1irvPBK4mU03la
- 5MsVIG53a4wVStn4R/w9aTNu4lJrpsRRcwThdQLEASULZCCsn3LWEr0ZTRbAYeFZRmKlfDOZtbQ
- ZZ36+5MfZ7B9tFlIP/yHZ023ahYP9iy6z/2U=
-X-Google-Smtp-Source: AGHT+IE+LYY5RUOOkevrxpPtre1Ir+ysH+CHBjSw9JGNCqe+Ddb1dZViDXzUhKgpE9Mwa3POrHFvlg==
-X-Received: by 2002:a05:6a20:7346:b0:23d:7abe:be06 with SMTP id
- adf61e73a8af0-240314b5535mr11419797637.27.1754582821723; 
- Thu, 07 Aug 2025 09:07:01 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bccfbd98csm18341505b3a.67.2025.08.07.09.07.00
+ d=1e100.net; s=20230601; t=1754584314; x=1755189114;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eJRvsKVuPLBGHn3/lXEqVtL/AwjXn28oKLZ5EWB1biA=;
+ b=dCuSOmv+tEQAtGGiyZRiCwgdcbV8V1y54bLkYf/UkDmxauEutdlC6tPnzANK7sZGVs
+ C6cHlhqyL7JMKUjB/BU6qaafcFqndvjsqbeVgUg+M0KYdE/11oL/rOj1gPijAh+ur3Cz
+ +fzNplZWEvxEDpOkijY/k0HftZsVgSDUprSl6mK6eSgNcCbXOh3WYGjYpNHY28ZWTcIv
+ cnArMHuj7hrzE5AJMsRsrBDCiXxFR0PDjn/a5WUe9E3mRohZeyCw6BBCIYQ/bVP96fXu
+ naKl7fa3CYr0eLpHsmL2cFkwzNAdoKJwb+KZikmlYJCcHq/Ybi88cfwTn+MS1au6Ao+W
+ DLgw==
+X-Gm-Message-State: AOJu0Ywh/5XvZxZSQWHNcOx9Zg/nVEj/Esf7VF+erOysLy4CUIYTovJt
+ zPwRslb0rFYYIS3RZ+Pzrx0WALRueKxR38lnwVNHJMIVp6dFV9kM+0/vfHBUEsCsl6D2omuFkJh
+ s3ZYCCSrzq5buAXsGV0umA9rLoxAZuesvMG+aDMr2DTs7HnYrS82ICIsz
+X-Gm-Gg: ASbGncutb6M1lJcwKYL5dorS0bCkwijEeuMAJ3yXyB9iP2ustDAguP13/ropDIEIk9Y
+ dDp7fyniHyrCQIAVqzW1q20u7JmSftyHLdIZZlNg4287zuSXYOqFpvwi3we/XnD6EQs9yJgMIFF
+ j9QrPkbcHeZjOsPscEWGCKGKFHGU3CcL927GSb8wHHo1bAZkLtaCfF944ljRp3+tLGnUGAgq1RL
+ BH5dRBYtfvS1AT2mpuJFse/HZn+OkNS30Je9pwOpVRM8WxiIg/NcJfTZ9MiZ25dLpWsX/jNTgYf
+ u4Jcn9dVjW/Pojv7cojUZDTv5JPfux8c
+X-Received: by 2002:a05:690c:d92:b0:719:a34b:5e50 with SMTP id
+ 00721157ae682-71bee433343mr6058497b3.21.1754584314024; 
+ Thu, 07 Aug 2025 09:31:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGC07pL6pkFowgexzwwiJTQsFey1OIgeI73S5dic5WWSrZbHitgXMTCkKTD/wNrSZKAZMDotQ==
+X-Received: by 2002:a05:690c:d92:b0:719:a34b:5e50 with SMTP id
+ 00721157ae682-71bee433343mr6057897b3.21.1754584313499; 
+ Thu, 07 Aug 2025 09:31:53 -0700 (PDT)
+Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-71b5a3fa654sm46719407b3.34.2025.08.07.09.31.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Aug 2025 09:07:01 -0700 (PDT)
-Date: Thu, 7 Aug 2025 09:06:59 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
-Subject: Re: [PATCH-for-10.1 v2 00/11] hw/sd: Fix SD cards in SPI mode
-Message-ID: <5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net>
-References: <20250804133406.17456-1-philmd@linaro.org>
- <39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru>
- <9dc90489-9e74-4e00-8fc6-f97e3f425495@linaro.org>
+ Thu, 07 Aug 2025 09:31:52 -0700 (PDT)
+Date: Thu, 7 Aug 2025 12:31:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
+ armbru@redhat.com, jasowang@redhat.com, mst@redhat.com,
+ si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com
+Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
+ virtio_load for iterative migration
+Message-ID: <aJTU641465aGKWRU@x1.local>
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-6-jonah.palmer@oracle.com>
+ <aJOCiUPp0dckmgAn@x1.local>
+ <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9dc90489-9e74-4e00-8fc6-f97e3f425495@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,34 +109,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 06, 2025 at 09:22:46AM +0200, Philippe Mathieu-Daudé wrote:
-> On 6/8/25 08:39, Michael Tokarev wrote:
+On Thu, Aug 07, 2025 at 10:18:38AM -0400, Jonah Palmer wrote:
 > 
-> > Philippe, do you think this series is something which should
-> > go to stable-10.0 (LTS) branch?  I'm not sure for the impact if
-> > it is not applied, though, - what do we miss in this case?
 > 
-> Only 2 machines use a SD card wired over SPI lines:
+> On 8/6/25 12:27 PM, Peter Xu wrote:
+> > On Tue, Jul 22, 2025 at 12:41:26PM +0000, Jonah Palmer wrote:
+> > > Iterative live migration for virtio-net sends an initial
+> > > VMStateDescription while the source is still active. Because data
+> > > continues to flow for virtio-net, the guest's avail index continues to
+> > > increment after last_avail_idx had already been sent. This causes the
+> > > destination to often see something like this from virtio_error():
+> > > 
+> > > VQ 0 size 0x100 Guest index 0x0 inconsistent with Host index 0xc: delta 0xfff4
+> > 
+> > This is pretty much understanable, as vmstate_save() / vmstate_load() are,
+> > IMHO, not designed to be used while VM is running.
+> > 
+> > To me, it's still illegal (per previous patch) to use vmstate_save_state()
+> > while VM is running, in a save_setup() phase.
 > 
-> $ git grep '"ssi-sd"'
-> hw/arm/stellaris.c:1302:            sddev = ssi_create_peripheral(bus,
-> "ssi-sd");
-> hw/riscv/sifive_u.c:671:    sd_dev = ssi_create_peripheral(s->soc.spi2.spi,
-> "ssi-sd");
-> hw/sd/ssi-sd.c:70:#define TYPE_SSI_SD "ssi-sd"
+> Yea I understand where you're coming from. It just seemed too good to pass
+> up on as a way to send and receive the entire state of a device.
 > 
-> I don't know them enough to tell if they are that important. This
-> isn't a security problem. The emulation of the transport (SPI) to the
-> SD card being broken, guests can not access the emulated card.
+> I felt that if I were to implement something similar for iterative migration
+> only that I'd, more or less, be duplicating a lot of already existing code
+> or vmstate logic.
+> 
+> > 
+> > Some very high level questions from migration POV:
+> > 
+> > - Have we figured out why the downtime can be shrinked just by sending the
+> >    vmstate twice?
+> > 
+> >    If we suspect it's memory got preheated, have we tried other ways to
+> >    simply heat the memory up on dest side?  For example, some form of
+> >    mlock[all]()?  IMHO it's pretty important we figure out the root of why
+> >    such optimization came from.
+> > 
+> >    I do remember we have downtime issue with number of max_vqueues that may
+> >    cause post_load() to be slow, I wonder there're other ways to improve it
+> >    instead of vmstate_save(), especially in setup phase.
+> > 
+> 
+> Yea I believe that the downtime shrinks on the second vmstate_load_state due
+> to preheated memory. But I'd like to stress that it's not my intention to
+> resend the entire vmstate again during the stop-and-copy phase if iterative
+> migration was used. A future iteration of this series will eventually
+> include a more efficient approach to update the destination with any deltas
+> since the vmstate was sent during the iterative portion (instead of just
+> resending the entire vmstate again).
+> 
+> And yea there is an inefficiency regarding walking through VIRTIO_QUEUE_MAX
+> (1024) VQs (twice with PCI) that I mentioned here in another comment: https://lore.kernel.org/qemu-devel/0f5b804d-3852-4159-b151-308a57f1ec74@oracle.com/
+> 
+> This might be better handled in a separate series though rather than as part
+> of this one.
 
-With 10.1.0-rc2, trying to boot v6.16-11744-g9c389564fa8e on sifive_u, I get:
+One thing to mention is I recall some other developer was trying to
+optimize device load from memory side:
 
-[    2.503619] riscv-pmu-sbi: 16 firmware and 18 hardware counters
-[    2.503672] riscv-pmu-sbi: Perf sampling/filtering is not supported as sscof extension is not available
-qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
+https://lore.kernel.org/all/20230317081904.24389-1-xuchuangxclwt@bytedance.com/
 
-This is without trying to boot from it. Oddly enough, booting from SD card
-does work.
+So maybe there're more than one way of doing this, and I'm not sure which
+way is better, or both.
 
-Guenter
+> 
+> > - Normally devices need iterative phase because:
+> > 
+> >    (a) the device may contain huge amount of data to transfer
+> > 
+> >        E.g. RAM and VFIO are good examples and fall into this category.
+> > 
+> >    (b) the device states are "iterable" from concept
+> > 
+> >        RAM is definitely true.  VFIO somehow mimiced that even though it was
+> >        a streamed binary protocol..
+> > 
+> >    What's the answer for virtio-net here?  How large is the device state?
+> >    Is this relevant to vDPA and real hardware (so virtio-net can look
+> >    similar to VFIO at some point)?
+> 
+> 
+> The main motivation behind implementing iterative migration for virtio-net
+> is really to improve the guest visible downtime seen when migrating a vDPA
+> device.
+> 
+> That is, by implementing iterative migration for virtio-net, we can see the
+> state of the device early on and get a head start on work that's currently
+> being done during the stop-and-copy phase. If we do this work before the
+> stop-and-copy phase, we can further decrease the time spent in this window.
+> 
+> This would include work such as sending down the CVQ commands for queue-pair
+> creation (even more beneficial for multiqueue), RSS, filters, etc.
+> 
+> I'm hoping to show this more explicitly in the next version of this RFC
+> series that I'm working on now.
+
+OK, thanks for the context. I can wait and read the new version.
+
+In all cases, please be noted that since migration thread does not take
+BQL, it means either the setup or iterable phase may happen concurrently
+with any of the vCPU threads.  I think it means maybe it's not wise to try
+to iterate everything: please be ready to see e.g. 64bits MMIO register
+being partially updated when dumping it to the wire, for example.
+
+Do you have a rough estimation of the size of the device states to migrate?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
