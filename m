@@ -4,32 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C70DC87FCA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C39C87FCF
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 20:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk7ZD-0005IS-BA; Thu, 07 Aug 2025 16:50:27 -0400
+	id 1uk7ZB-0005IA-97; Thu, 07 Aug 2025 16:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uk7Z7-0005E6-KA; Thu, 07 Aug 2025 16:50:22 -0400
+ id 1uk7Z4-0005CY-BW; Thu, 07 Aug 2025 16:50:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uk7Z5-0007jD-KY; Thu, 07 Aug 2025 16:50:21 -0400
+ id 1uk7Z0-0007UQ-U3; Thu, 07 Aug 2025 16:50:18 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1512B13F363;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0917213F362;
  Thu, 07 Aug 2025 23:49:25 +0300 (MSK)
 Received: from localhost.localdomain (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E90E425A00B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2A0025A00A;
  Thu,  7 Aug 2025 23:49:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Stefan Weil via <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 2/2] meson: Fix brlapi compile test for Windows builds
-Date: Thu,  7 Aug 2025 23:49:33 +0300
-Message-ID: <20250807204942.490526-3-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 1/2] tests/qemu-iotests/tests/mirror-sparse: actually require
+ O_DIRECT
+Date: Thu,  7 Aug 2025 23:49:32 +0300
+Message-ID: <20250807204942.490526-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250807204942.490526-1-mjt@tls.msk.ru>
 References: <20250807204942.490526-1-mjt@tls.msk.ru>
@@ -58,47 +60,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Weil via <qemu-trivial@nongnu.org>
+Commit c0ddcb2cbc146e introduced the test which uses cache=direct
+mode, without checking if the scratch filesystem supports O_DIRECT.
+A subsequent commit, afeb002e0ad49d, tried to fix that issue, but
+instead of checking for o_direct, it checked for
+`_supported_cache_modes none directsync`, which is not what the
+original mirror-sparse test uses.  Fix both by actually checking
+for o_direct.
 
-brlapi__openConnection returns a brlapi_fileDescriptor which is a pointer
-for Windows builds.
-
-The test for brlapi fails with cross builds on Debian trixie
-(x86_64-w64-mingw32-gcc (GCC) 14-win32):
-
-testfile.c:4:30: error: returning 'brlapi_fileDescriptor' {aka 'void *'} from a function with return type 'int' makes integer from pointer without a cast [-Wint-conversion]
-    4 |      int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }
-      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
------------
-../../../meson.build:1607: WARNING: could not link brlapi, disabling
-
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Fixes: c0ddcb2cbc146e "tests: Add iotest mirror-sparse for recent patches"
+Fixes: afeb002e0ad49d "tests/qemu-iotests/tests/mirror-sparse: skip if O_DIRECT is not supported"
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- meson.build | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tests/qemu-iotests/tests/mirror-sparse | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index a7b3c683ce..50c774a195 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1586,9 +1586,11 @@ if not get_option('brlapi').auto() or have_system
-   brlapi = cc.find_library('brlapi', has_headers: ['brlapi.h'],
-                          required: get_option('brlapi'))
-   if brlapi.found() and not cc.links('''
--     #include <brlapi.h>
--     #include <stddef.h>
--     int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }''', dependencies: brlapi)
-+    #include <brlapi.h>
-+    #include <stddef.h>
-+    int main(void) {
-+      return brlapi__openConnection(NULL, NULL, NULL) == BRLAPI_INVALID_FILE_DESCRIPTOR;
-+    }''', dependencies: brlapi)
-     brlapi = not_found
-     if get_option('brlapi').enabled()
-       error('could not link brlapi')
+diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
+index 3b183eea88..ee7101bd50 100755
+--- a/tests/qemu-iotests/tests/mirror-sparse
++++ b/tests/qemu-iotests/tests/mirror-sparse
+@@ -40,7 +40,7 @@ cd ..
+ _supported_fmt qcow2 raw  # Format of the source. dst is always raw file
+ _supported_proto file
+ _supported_os Linux
+-_supported_cache_modes none directsync
++_require_o_direct
+ _require_disk_usage
+ 
+ echo
 -- 
 2.47.2
 
