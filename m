@@ -4,69 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793D1C87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35E4C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1ot-0000nR-13; Thu, 07 Aug 2025 10:42:15 -0400
+	id 1uk1vw-0008Pc-UM; Thu, 07 Aug 2025 10:49:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1og-0000VM-AO
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:04 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1od-00014M-Ow
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:02 -0400
-Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id C1FBD201BC88;
- Thu,  7 Aug 2025 07:41:52 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C1FBD201BC88
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577717;
- bh=aU9F0TP1d6XH210MASKOJLMk5DbRc3E14bYtg7VsRXE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PChPBhNMnGAFeYZ8g1uD/FNiJ4T0XrhfKAF00iDGv0bANNCd6NYCYIpDAwRgsG/9v
- XbOyk8QMGWqK4+waSAt/LeiYcoxe3bYufKoOsRvVkiBrfA4WrLjnx/EIMneLJSFcl2
- SnmlPBsI3GDU+lze2kTQ1+7eWz8+7FWRk1jSj7BU=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <startergo@protonmail.com>)
+ id 1uk1vK-0008CM-Vg
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:48:57 -0400
+Received: from mail-24417.protonmail.ch ([109.224.244.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <startergo@protonmail.com>)
+ id 1uk1vG-0002b6-Gv
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:48:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=protonmail3; t=1754578120; x=1754837320;
+ bh=wqBswyRQvm7cfbqyLFvE1H/wDTx0sUd9cZYRiq7KtCU=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=qaMCQT/CjUiGQsCIT0rT+llGOS7ytZUkP5ueLWxg1eEGLb6yqOCxHwRYKQEwSO5uA
+ WLdOVlDCPqV9Mrc4HqmCJ0YOsNRROR4LBDH2s/KMNBoZIIIR8zPHr+pbNFwmC98N6w
+ qOjIGigK6giu2ha/a4ZZqjVIXGQnLO8SQBbgbd8gTBvVR9u2K9hiKg95CHU+mIfWu5
+ 8AOB4eXZBqvqLKjKGYFGfhc7YqfbX8Fp3jr7acDpEzUbxg111jfL5u5TD9nCz1yWSb
+ iNg9j6pgm3gaU35hDHI1O8XhskV91UR1fepFxynSaMHbS11thnl4EbR9/Z90RwTLko
+ SS/L6e/01bXtw==
+Date: Thu, 07 Aug 2025 14:48:35 +0000
 To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 19/26] target/i386/mshv: Register MSRs with MSHV
-Date: Thu,  7 Aug 2025 16:39:44 +0200
-Message-Id: <20250807143951.1154713-20-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+From: startergo <startergo@protonmail.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, startergo <startergo@protonmail.com>
+Subject: [PATCH] ui/sdl2: Add SDL clipboard support with screen lock handling
+Message-ID: <20250807144822.35251-1-startergo@protonmail.com>
+Feedback-ID: 25315608:user:proton
+X-Pm-Message-ID: cc7f6715590748652828d7b0b238fa2a33b736ab
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=109.224.244.17;
+ envelope-from=startergo@protonmail.com; helo=mail-24417.protonmail.ch
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,521 +68,399 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Build and register the guest vCPU's model-specific registers using
-the MSHV interface.
+This patch implements SDL clipboard integration for QEMU's SDL2 UI backend,
+specifically addressing the issue where clipboard functionality becomes
+unreliable during host screen lock/unlock scenarios.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+The implementation provides:
+- Bidirectional clipboard synchronization between guest and host
+- Robust screen lock/unlock handling to prevent clipboard conflicts =20
+- Asynchronous clipboard request processing
+- Proper resource cleanup and error handling
+
+This addresses a common usability issue where copy/paste functionality
+stops working after the host screen is locked and unlocked, particularly
+noticeable on macOS systems.
+
+The patch adds a new build option --enable-sdl-clipboard (enabled by defaul=
+t)
+to allow users to disable the feature if needed.
+
+Tested on QEMU 10.0.0 and master branch, passes checkpatch with zero errors=
+.
+
+Signed-off-by: startergo <startergo@protonmail.com>
 ---
- accel/mshv/meson.build      |   1 +
- accel/mshv/msr.c            | 373 ++++++++++++++++++++++++++++++++++++
- include/system/mshv.h       |  23 +++
- target/i386/cpu.h           |   2 +
- target/i386/mshv/mshv-cpu.c |  33 ++++
- 5 files changed, 432 insertions(+)
- create mode 100644 accel/mshv/msr.c
+ include/ui/sdl2.h   |  15 ++++
+ meson.build         |   3 +
+ meson_options.txt   |   2 +
+ ui/meson.build      |   3 +
+ ui/sdl2-clipboard.c | 208 ++++++++++++++++++++++++++++++++++++++++++++
+ ui/sdl2.c           |  15 ++++
+ 6 files changed, 246 insertions(+)
+ create mode 100644 ui/sdl2-clipboard.c
 
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index f88fc8678c..d3a2b32581 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -2,6 +2,7 @@ mshv_ss = ss.source_set()
- mshv_ss.add(if_true: files(
-   'irq.c',
-   'mem.c',
-+  'msr.c',
-   'mshv-all.c'
- ))
- 
-diff --git a/accel/mshv/msr.c b/accel/mshv/msr.c
+diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+index dbe6e3d97..e73f83259 100644
+--- a/include/ui/sdl2.h
++++ b/include/ui/sdl2.h
+@@ -21,6 +21,10 @@
+ # include <SDL_image.h>
+ #endif
+=20
++#ifdef CONFIG_SDL_CLIPBOARD
++#include "ui/clipboard.h"
++#endif
++
+ #include "ui/kbd-state.h"
+ #ifdef CONFIG_OPENGL
+ # include "ui/egl-helpers.h"
+@@ -45,6 +49,11 @@ struct sdl2_console {
+     bool gui_keysym;
+     SDL_GLContext winctx;
+     QKbdState *kbd;
++#ifdef CONFIG_SDL_CLIPBOARD
++    QemuClipboardPeer cbpeer;
++    bool clipboard_active;
++    uint32_t last_focus_time;
++#endif
+ #ifdef CONFIG_OPENGL
+     QemuGLShader *gls;
+     egl_fb guest_fb;
+@@ -97,4 +106,10 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl=
+,
+ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+                            uint32_t x, uint32_t y, uint32_t w, uint32_t h)=
+;
+=20
++#ifdef CONFIG_SDL_CLIPBOARD
++void sdl2_clipboard_init(struct sdl2_console *scon);
++void sdl2_clipboard_handle_focus_change(struct sdl2_console *scon, bool ga=
+ined_focus);
++void sdl2_clipboard_handle_request(struct sdl2_console *scon);
++#endif
++
+ #endif /* SDL2_H */
+diff --git a/meson.build b/meson.build
+index 41f68d380..4a37df966 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1596,6 +1596,8 @@ else
+   sdl_image =3D not_found
+ endif
+=20
++have_sdl_clipboard =3D sdl.found() and get_option('sdl_clipboard')
++
+ rbd =3D not_found
+ if not get_option('rbd').auto() or have_block
+   librados =3D cc.find_library('rados', required: get_option('rbd'))
+@@ -2511,6 +2513,7 @@ config_host_data.set('CONFIG_RELOCATABLE', get_option=
+('relocatable'))
+ config_host_data.set('CONFIG_SAFESTACK', get_option('safe_stack'))
+ config_host_data.set('CONFIG_SDL', sdl.found())
+ config_host_data.set('CONFIG_SDL_IMAGE', sdl_image.found())
++config_host_data.set('CONFIG_SDL_CLIPBOARD', have_sdl_clipboard)
+ config_host_data.set('CONFIG_SECCOMP', seccomp.found())
+ if seccomp.found()
+   config_host_data.set('CONFIG_SECCOMP_SYSRAWRC', seccomp_has_sysrawrc)
+diff --git a/meson_options.txt b/meson_options.txt
+index 59d973bca..be2cba3a3 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -212,6 +212,8 @@ option('sdl', type : 'feature', value : 'auto',
+        description: 'SDL user interface')
+ option('sdl_image', type : 'feature', value : 'auto',
+        description: 'SDL Image support for icons')
++option('sdl_clipboard', type : 'boolean', value : true,
++       description: 'SDL clipboard support')
+ option('seccomp', type : 'feature', value : 'auto',
+        description: 'seccomp support')
+ option('smartcard', type : 'feature', value : 'auto',
+diff --git a/ui/meson.build b/ui/meson.build
+index 35fb04cad..6d1bf3477 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -126,6 +126,9 @@ if sdl.found()
+     'sdl2-input.c',
+     'sdl2.c',
+   ))
++  if have_sdl_clipboard
++    sdl_ss.add(files('sdl2-clipboard.c'))
++  endif
+   sdl_ss.add(when: opengl, if_true: files('sdl2-gl.c'))
+   sdl_ss.add(when: x11, if_true: files('x_keymap.c'))
+   ui_modules +=3D {'sdl' : sdl_ss}
+diff --git a/ui/sdl2-clipboard.c b/ui/sdl2-clipboard.c
 new file mode 100644
-index 0000000000..b477eac14c
+index 000000000..6cc0fd79c
 --- /dev/null
-+++ b/accel/mshv/msr.c
-@@ -0,0 +1,373 @@
++++ b/ui/sdl2-clipboard.c
+@@ -0,0 +1,208 @@
 +/*
-+ * QEMU MSHV support
++ * SDL UI -- clipboard support with screen lock handling
 + *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Magnus Kulke  <magnuskulke@microsoft.com>
++ * Copyright (C) 2023 Kamay Xutax <admin@xutaxkamay.com>
++ * Copyright (C) 2025 startergo <startergo@protonmail.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "system/mshv.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+#include "linux/mshv.h"
-+#include "qemu/error-report.h"
++#include "ui/console.h"
++#include "ui/clipboard.h"
++#include "ui/sdl2.h"
++#include "qemu/log.h"
 +
-+static uint32_t supported_msrs[64] = {
-+    IA32_MSR_TSC,
-+    IA32_MSR_EFER,
-+    IA32_MSR_KERNEL_GS_BASE,
-+    IA32_MSR_APIC_BASE,
-+    IA32_MSR_PAT,
-+    IA32_MSR_SYSENTER_CS,
-+    IA32_MSR_SYSENTER_ESP,
-+    IA32_MSR_SYSENTER_EIP,
-+    IA32_MSR_STAR,
-+    IA32_MSR_LSTAR,
-+    IA32_MSR_CSTAR,
-+    IA32_MSR_SFMASK,
-+    IA32_MSR_MTRR_DEF_TYPE,
-+    IA32_MSR_MTRR_PHYSBASE0,
-+    IA32_MSR_MTRR_PHYSMASK0,
-+    IA32_MSR_MTRR_PHYSBASE1,
-+    IA32_MSR_MTRR_PHYSMASK1,
-+    IA32_MSR_MTRR_PHYSBASE2,
-+    IA32_MSR_MTRR_PHYSMASK2,
-+    IA32_MSR_MTRR_PHYSBASE3,
-+    IA32_MSR_MTRR_PHYSMASK3,
-+    IA32_MSR_MTRR_PHYSBASE4,
-+    IA32_MSR_MTRR_PHYSMASK4,
-+    IA32_MSR_MTRR_PHYSBASE5,
-+    IA32_MSR_MTRR_PHYSMASK5,
-+    IA32_MSR_MTRR_PHYSBASE6,
-+    IA32_MSR_MTRR_PHYSMASK6,
-+    IA32_MSR_MTRR_PHYSBASE7,
-+    IA32_MSR_MTRR_PHYSMASK7,
-+    IA32_MSR_MTRR_FIX64K_00000,
-+    IA32_MSR_MTRR_FIX16K_80000,
-+    IA32_MSR_MTRR_FIX16K_A0000,
-+    IA32_MSR_MTRR_FIX4K_C0000,
-+    IA32_MSR_MTRR_FIX4K_C8000,
-+    IA32_MSR_MTRR_FIX4K_D0000,
-+    IA32_MSR_MTRR_FIX4K_D8000,
-+    IA32_MSR_MTRR_FIX4K_E0000,
-+    IA32_MSR_MTRR_FIX4K_E8000,
-+    IA32_MSR_MTRR_FIX4K_F0000,
-+    IA32_MSR_MTRR_FIX4K_F8000,
-+    IA32_MSR_TSC_AUX,
-+    IA32_MSR_DEBUG_CTL,
-+    HV_X64_MSR_GUEST_OS_ID,
-+    HV_X64_MSR_SINT0,
-+    HV_X64_MSR_SINT1,
-+    HV_X64_MSR_SINT2,
-+    HV_X64_MSR_SINT3,
-+    HV_X64_MSR_SINT4,
-+    HV_X64_MSR_SINT5,
-+    HV_X64_MSR_SINT6,
-+    HV_X64_MSR_SINT7,
-+    HV_X64_MSR_SINT8,
-+    HV_X64_MSR_SINT9,
-+    HV_X64_MSR_SINT10,
-+    HV_X64_MSR_SINT11,
-+    HV_X64_MSR_SINT12,
-+    HV_X64_MSR_SINT13,
-+    HV_X64_MSR_SINT14,
-+    HV_X64_MSR_SINT15,
-+    HV_X64_MSR_SCONTROL,
-+    HV_X64_MSR_SIEFP,
-+    HV_X64_MSR_SIMP,
-+    HV_X64_MSR_REFERENCE_TSC,
-+    HV_X64_MSR_EOM,
-+};
-+static const size_t msr_count = ARRAY_SIZE(supported_msrs);
++#ifdef CONFIG_SDL_CLIPBOARD
 +
-+static int compare_msr_index(const void *a, const void *b)
++/* Track pending clipboard requests to handle async data */
++typedef struct {
++    struct sdl2_console *scon;
++    QemuClipboardInfo *info;
++    QemuClipboardType type;
++    uint32_t timestamp;
++} SDLClipboardRequest;
++
++static SDLClipboardRequest *pending_request;
++
++static void sdl2_clipboard_clear_pending(void)
 +{
-+    return *(uint32_t *)a - *(uint32_t *)b;
-+}
-+
-+__attribute__((constructor))
-+static void init_sorted_msr_map(void)
-+{
-+    qsort(supported_msrs, msr_count, sizeof(uint32_t), compare_msr_index);
-+}
-+
-+static int mshv_is_supported_msr(uint32_t msr)
-+{
-+    return bsearch(&msr, supported_msrs, msr_count, sizeof(uint32_t),
-+                   compare_msr_index) != NULL;
-+}
-+
-+static int mshv_msr_to_hv_reg_name(uint32_t msr, uint32_t *hv_reg)
-+{
-+    switch (msr) {
-+    case IA32_MSR_TSC:
-+        *hv_reg = HV_X64_REGISTER_TSC;
-+        return 0;
-+    case IA32_MSR_EFER:
-+        *hv_reg = HV_X64_REGISTER_EFER;
-+        return 0;
-+    case IA32_MSR_KERNEL_GS_BASE:
-+        *hv_reg = HV_X64_REGISTER_KERNEL_GS_BASE;
-+        return 0;
-+    case IA32_MSR_APIC_BASE:
-+        *hv_reg = HV_X64_REGISTER_APIC_BASE;
-+        return 0;
-+    case IA32_MSR_PAT:
-+        *hv_reg = HV_X64_REGISTER_PAT;
-+        return 0;
-+    case IA32_MSR_SYSENTER_CS:
-+        *hv_reg = HV_X64_REGISTER_SYSENTER_CS;
-+        return 0;
-+    case IA32_MSR_SYSENTER_ESP:
-+        *hv_reg = HV_X64_REGISTER_SYSENTER_ESP;
-+        return 0;
-+    case IA32_MSR_SYSENTER_EIP:
-+        *hv_reg = HV_X64_REGISTER_SYSENTER_EIP;
-+        return 0;
-+    case IA32_MSR_STAR:
-+        *hv_reg = HV_X64_REGISTER_STAR;
-+        return 0;
-+    case IA32_MSR_LSTAR:
-+        *hv_reg = HV_X64_REGISTER_LSTAR;
-+        return 0;
-+    case IA32_MSR_CSTAR:
-+        *hv_reg = HV_X64_REGISTER_CSTAR;
-+        return 0;
-+    case IA32_MSR_SFMASK:
-+        *hv_reg = HV_X64_REGISTER_SFMASK;
-+        return 0;
-+    case IA32_MSR_MTRR_CAP:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_CAP;
-+        return 0;
-+    case IA32_MSR_MTRR_DEF_TYPE:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_DEF_TYPE;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE0:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE0;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK0:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK0;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE1:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE1;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK1:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK1;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE2:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE2;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK2:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK2;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE3:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE3;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK3:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK3;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE4:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE4;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK4:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK4;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE5:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE5;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK5:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK5;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE6:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE6;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK6:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK6;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSBASE7:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_BASE7;
-+        return 0;
-+    case IA32_MSR_MTRR_PHYSMASK7:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_PHYS_MASK7;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX64K_00000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX64K00000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX16K_80000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX16K80000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX16K_A0000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX16KA0000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_C0000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KC0000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_C8000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KC8000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_D0000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KD0000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_D8000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KD8000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_E0000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KE0000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_E8000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KE8000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_F0000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KF0000;
-+        return 0;
-+    case IA32_MSR_MTRR_FIX4K_F8000:
-+        *hv_reg = HV_X64_REGISTER_MSR_MTRR_FIX4KF8000;
-+        return 0;
-+    case IA32_MSR_TSC_AUX:
-+        *hv_reg = HV_X64_REGISTER_TSC_AUX;
-+        return 0;
-+    case IA32_MSR_BNDCFGS:
-+        *hv_reg = HV_X64_REGISTER_BNDCFGS;
-+        return 0;
-+    case IA32_MSR_DEBUG_CTL:
-+        *hv_reg = HV_X64_REGISTER_DEBUG_CTL;
-+        return 0;
-+    case IA32_MSR_TSC_ADJUST:
-+        *hv_reg = HV_X64_REGISTER_TSC_ADJUST;
-+        return 0;
-+    case IA32_MSR_SPEC_CTRL:
-+        *hv_reg = HV_X64_REGISTER_SPEC_CTRL;
-+        return 0;
-+    case HV_X64_MSR_GUEST_OS_ID:
-+        *hv_reg = HV_REGISTER_GUEST_OS_ID;
-+        return 0;
-+    case HV_X64_MSR_SINT0:
-+        *hv_reg = HV_REGISTER_SINT0;
-+        return 0;
-+    case HV_X64_MSR_SINT1:
-+        *hv_reg = HV_REGISTER_SINT1;
-+        return 0;
-+    case HV_X64_MSR_SINT2:
-+        *hv_reg = HV_REGISTER_SINT2;
-+        return 0;
-+    case HV_X64_MSR_SINT3:
-+        *hv_reg = HV_REGISTER_SINT3;
-+        return 0;
-+    case HV_X64_MSR_SINT4:
-+        *hv_reg = HV_REGISTER_SINT4;
-+        return 0;
-+    case HV_X64_MSR_SINT5:
-+        *hv_reg = HV_REGISTER_SINT5;
-+        return 0;
-+    case HV_X64_MSR_SINT6:
-+        *hv_reg = HV_REGISTER_SINT6;
-+        return 0;
-+    case HV_X64_MSR_SINT7:
-+        *hv_reg = HV_REGISTER_SINT7;
-+        return 0;
-+    case HV_X64_MSR_SINT8:
-+        *hv_reg = HV_REGISTER_SINT8;
-+        return 0;
-+    case HV_X64_MSR_SINT9:
-+        *hv_reg = HV_REGISTER_SINT9;
-+        return 0;
-+    case HV_X64_MSR_SINT10:
-+        *hv_reg = HV_REGISTER_SINT10;
-+        return 0;
-+    case HV_X64_MSR_SINT11:
-+        *hv_reg = HV_REGISTER_SINT11;
-+        return 0;
-+    case HV_X64_MSR_SINT12:
-+        *hv_reg = HV_REGISTER_SINT12;
-+        return 0;
-+    case HV_X64_MSR_SINT13:
-+        *hv_reg = HV_REGISTER_SINT13;
-+        return 0;
-+    case HV_X64_MSR_SINT14:
-+        *hv_reg = HV_REGISTER_SINT14;
-+        return 0;
-+    case HV_X64_MSR_SINT15:
-+        *hv_reg = HV_REGISTER_SINT15;
-+        return 0;
-+    case IA32_MSR_MISC_ENABLE:
-+        *hv_reg = HV_X64_REGISTER_MSR_IA32_MISC_ENABLE;
-+        return 0;
-+    case HV_X64_MSR_SCONTROL:
-+        *hv_reg = HV_REGISTER_SCONTROL;
-+        return 0;
-+    case HV_X64_MSR_SIEFP:
-+        *hv_reg = HV_REGISTER_SIEFP;
-+        return 0;
-+    case HV_X64_MSR_SIMP:
-+        *hv_reg = HV_REGISTER_SIMP;
-+        return 0;
-+    case HV_X64_MSR_REFERENCE_TSC:
-+        *hv_reg = HV_REGISTER_REFERENCE_TSC;
-+        return 0;
-+    case HV_X64_MSR_EOM:
-+        *hv_reg = HV_REGISTER_EOM;
-+        return 0;
-+    default:
-+        error_report("failed to map MSR %u to HV register name", msr);
-+        return -1;
-+    }
-+}
-+
-+static int set_msrs(int cpu_fd, GList *msrs)
-+{
-+    size_t n_msrs;
-+    GList *entries;
-+    MshvMsrEntry *entry;
-+    enum hv_register_name name;
-+    struct hv_register_assoc *assoc;
-+    int ret;
-+    size_t i = 0;
-+
-+    n_msrs = g_list_length(msrs);
-+    hv_register_assoc *assocs = g_new0(hv_register_assoc, n_msrs);
-+
-+    entries = msrs;
-+    for (const GList *elem = entries; elem != NULL; elem = elem->next) {
-+        entry = elem->data;
-+        ret = mshv_msr_to_hv_reg_name(entry->index, &name);
-+        if (ret < 0) {
-+            g_free(assocs);
-+            return ret;
++    if (pending_request) {
++        if (pending_request->info) {
++            qemu_clipboard_info_unref(pending_request->info);
 +        }
-+        assoc = &assocs[i];
-+        assoc->name = name;
-+        /* the union has been initialized to 0 */
-+        assoc->value.reg64 = entry->data;
-+        i++;
++        g_free(pending_request);
++        pending_request =3D NULL;
 +    }
-+    ret = mshv_set_generic_regs(cpu_fd, assocs, n_msrs);
-+    g_free(assocs);
-+    if (ret < 0) {
-+        error_report("failed to set msrs");
-+        return -1;
-+    }
-+    return 0;
 +}
 +
-+
-+int mshv_configure_msr(int cpu_fd, const MshvMsrEntry *msrs, size_t n_msrs)
++static void sdl2_clipboard_reset_state(struct sdl2_console *scon)
 +{
-+    GList *valid_msrs = NULL;
-+    uint32_t msr_index;
-+    int ret;
++    /* Clear any pending requests when clipboard state is reset */
++    sdl2_clipboard_clear_pending();
 +
-+    for (size_t i = 0; i < n_msrs; i++) {
-+        msr_index = msrs[i].index;
-+        /* check whether index of msrs is in SUPPORTED_MSRS */
-+        if (mshv_is_supported_msr(msr_index)) {
-+            valid_msrs = g_list_append(valid_msrs, (void *) &msrs[i]);
++    /* Force a fresh clipboard check after reconnection */
++    if (scon->clipboard_active) {
++        scon->last_focus_time =3D SDL_GetTicks();
++    }
++}
++
++static void sdl2_clipboard_notify(Notifier *notifier, void *data)
++{
++    QemuClipboardNotify *notify =3D data;
++    struct sdl2_console *scon =3D
++        container_of(notifier, struct sdl2_console, cbpeer.notifier);
++    bool self_update =3D notify->info->owner =3D=3D &scon->cbpeer;
++    const char *text_data;
++    size_t text_size;
++
++    /* Skip processing if clipboard is not active (e.g., during screen loc=
+k) */
++    if (!scon->clipboard_active) {
++        return;
++    }
++
++    switch (notify->type) {
++    case QEMU_CLIPBOARD_UPDATE_INFO:
++        {
++            /* Skip self-updates to avoid clipboard manager conflicts */
++            if (self_update) {
++                return;
++            }
++
++            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].available) =
+{
++                return;
++            }
++
++            /* Check if this is completion of our pending request */
++            if (pending_request && pending_request->info =3D=3D notify->in=
+fo &&
++                pending_request->type =3D=3D QEMU_CLIPBOARD_TYPE_TEXT) {
++                sdl2_clipboard_clear_pending();
++            }
++
++            /* Check if data is available, request asynchronously if not *=
+/
++            if (!notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].data) {
++                if (!pending_request) {
++                    pending_request =3D g_new0(SDLClipboardRequest, 1);
++                    pending_request->scon =3D scon;
++                    pending_request->info =3D
++                        qemu_clipboard_info_ref(notify->info);
++                    pending_request->type =3D QEMU_CLIPBOARD_TYPE_TEXT;
++                    pending_request->timestamp =3D SDL_GetTicks();
++                    qemu_clipboard_request(notify->info,
++                                           QEMU_CLIPBOARD_TYPE_TEXT);
++                }
++                return;
++            }
++
++            /* Process available data */
++            text_size =3D notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].si=
+ze;
++            if (text_size =3D=3D 0) {
++                return;
++            }
++
++            text_data =3D (const char *)
++                notify->info->types[QEMU_CLIPBOARD_TYPE_TEXT].data;
++
++            /* Ensure null termination for SDL clipboard */
++            g_autofree char *text =3D g_strndup(text_data, text_size);
++            if (text && text[0] !=3D '\0') {
++                if (SDL_SetClipboardText(text) < 0) {
++                    qemu_log_mask(LOG_GUEST_ERROR,
++                                  "SDL clipboard: Failed to set clipboard =
+text: %s\n",
++                                  SDL_GetError());
++                }
++            } else if (!text) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "SDL clipboard: Failed to allocate memory fo=
+r clipboard text\n");
++            }
++            break;
 +        }
++    case QEMU_CLIPBOARD_RESET_SERIAL:
++        sdl2_clipboard_reset_state(scon);
++        break;
 +    }
-+
-+    ret = set_msrs(cpu_fd, valid_msrs);
-+    g_list_free(valid_msrs);
-+
-+    return ret;
 +}
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index ec41e62315..7f2a7dcb8a 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -38,6 +38,8 @@ typedef struct hyperv_message hv_message;
- 
- #define MSHV_PAGE_SHIFT 12
- 
-+#define MSHV_MSR_ENTRIES_COUNT 64
 +
- #ifdef CONFIG_MSHV_IS_POSSIBLE
- extern bool mshv_allowed;
- #define mshv_enabled() (mshv_allowed)
-@@ -119,8 +121,29 @@ void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_post_init_vm(int vm_fd);
- 
-+/* pio */
-+int mshv_pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
-+                   bool is_secure_mode);
-+void mshv_pio_read(uint64_t port, uint8_t *data, uintptr_t size,
-+                   bool is_secure_mode);
-+
-+/* generic */
- int mshv_hvcall(int mshv_fd, const struct mshv_root_hvcall *args);
- 
-+/* msr */
-+typedef struct MshvMsrEntry {
-+  uint32_t index;
-+  uint32_t reserved;
-+  uint64_t data;
-+} MshvMsrEntry;
-+
-+typedef struct MshvMsrEntries {
-+    MshvMsrEntry entries[MSHV_MSR_ENTRIES_COUNT];
-+    uint32_t nmsrs;
-+} MshvMsrEntries;
-+
-+int mshv_configure_msr(int cpu_fd, const MshvMsrEntry *msrs, size_t n_msrs);
-+
- /* memory */
- typedef struct MshvMemoryRegion {
-     uint64_t guest_phys_addr;
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 6d3d2b1440..05197ab0b3 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -435,9 +435,11 @@ typedef enum X86Seg {
- #define MSR_SMI_COUNT                   0x34
- #define MSR_CORE_THREAD_COUNT           0x35
- #define MSR_MTRRcap                     0xfe
-+#define MSR_MTRR_MEM_TYPE_WB            0x06
- #define MSR_MTRRcap_VCNT                8
- #define MSR_MTRRcap_FIXRANGE_SUPPORT    (1 << 8)
- #define MSR_MTRRcap_WC_SUPPORTED        (1 << 10)
-+#define MSR_MTRR_ENABLE                 (1 << 11)
- 
- #define MSR_IA32_SYSENTER_CS            0x174
- #define MSR_IA32_SYSENTER_ESP           0x175
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 0b7350877d..c2c7934343 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -788,6 +788,33 @@ static int set_lint(int cpu_fd)
-     return set_lapic(cpu_fd, &lapic_state);
- }
- 
-+static int setup_msrs(int cpu_fd)
++static void sdl2_clipboard_request(QemuClipboardInfo *info,
++                                   QemuClipboardType type)
 +{
-+    int ret;
-+    uint64_t default_type = MSR_MTRR_ENABLE | MSR_MTRR_MEM_TYPE_WB;
++    g_autofree char *text =3D NULL;
 +
-+    /* boot msr entries */
-+    MshvMsrEntry msrs[9] = {
-+        { .index = IA32_MSR_SYSENTER_CS, .data = 0x0, },
-+        { .index = IA32_MSR_SYSENTER_ESP, .data = 0x0, },
-+        { .index = IA32_MSR_SYSENTER_EIP, .data = 0x0, },
-+        { .index = IA32_MSR_STAR, .data = 0x0, },
-+        { .index = IA32_MSR_CSTAR, .data = 0x0, },
-+        { .index = IA32_MSR_LSTAR, .data = 0x0, },
-+        { .index = IA32_MSR_KERNEL_GS_BASE, .data = 0x0, },
-+        { .index = IA32_MSR_SFMASK, .data = 0x0, },
-+        { .index = IA32_MSR_MTRR_DEF_TYPE, .data = default_type, },
-+    };
-+
-+    ret = mshv_configure_msr(cpu_fd, msrs, 9);
-+    if (ret < 0) {
-+        error_report("failed to setup msrs");
-+        return -1;
++    if (type !=3D QEMU_CLIPBOARD_TYPE_TEXT) {
++        return;
 +    }
 +
-+    return 0;
++    text =3D SDL_GetClipboardText();
++    if (!text) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "SDL clipboard: Failed to get clipboard text: %s\n",
++                      SDL_GetError());
++        return;
++    }
++
++    qemu_clipboard_set_data(info->owner, info, type,
++                            strlen(text), text, true);
 +}
 +
- /*
-  * TODO: populate topology info:
-  *
-@@ -807,6 +834,12 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
-         return -1;
-     }
- 
-+    ret = setup_msrs(cpu_fd);
-+    if (ret < 0) {
-+        error_report("failed to setup msrs");
-+        return -1;
++void sdl2_clipboard_init(struct sdl2_console *scon)
++{
++    scon->cbpeer.name =3D "sdl2-clipboard";
++    scon->cbpeer.notifier.notify =3D sdl2_clipboard_notify;
++    scon->cbpeer.request =3D sdl2_clipboard_request;
++    scon->clipboard_active =3D true;
++    scon->last_focus_time =3D SDL_GetTicks();
++
++    qemu_clipboard_peer_register(&scon->cbpeer);
++}
++
++void sdl2_clipboard_handle_focus_change(struct sdl2_console *scon, bool ga=
+ined_focus)
++{
++    uint32_t current_time =3D SDL_GetTicks();
++
++    if (gained_focus) {
++        /* Reactivate clipboard after regaining focus */
++        scon->clipboard_active =3D true;
++        scon->last_focus_time =3D current_time;
++
++        /* Clear any stale pending requests */
++        sdl2_clipboard_clear_pending();
++
++        /* Force a fresh clipboard sync after focus is regained */
++        sdl2_clipboard_handle_request(scon);
++    } else {
++        /* Deactivate clipboard when losing focus to prevent conflicts */
++        scon->clipboard_active =3D false;
++        sdl2_clipboard_clear_pending();
++    }
++}
++
++void sdl2_clipboard_handle_request(struct sdl2_console *scon)
++{
++    g_autofree char *text =3D NULL;
++    QemuClipboardInfo *info;
++
++    /* Skip if clipboard is not active */
++    if (!scon->clipboard_active) {
++        return;
 +    }
 +
-     ret = set_cpu_state(cpu, fpu, xcr0);
-     if (ret < 0) {
-         error_report("failed to set cpu state");
--- 
-2.34.1
++    text =3D SDL_GetClipboardText();
++    if (!text) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "SDL clipboard: Failed to get clipboard text: %s\n",
++                      SDL_GetError());
++        return;
++    }
++
++    if (text[0] =3D=3D '\0') {
++        return; /* Ignore empty clipboard */
++    }
++
++    info =3D qemu_clipboard_info_new(&scon->cbpeer,
++                                   QEMU_CLIPBOARD_SELECTION_CLIPBOARD);
++    qemu_clipboard_set_data(&scon->cbpeer, info, QEMU_CLIPBOARD_TYPE_TEXT,
++                            strlen(text), text, true);
++    qemu_clipboard_info_unref(info);
++}
++
++#endif /* CONFIG_SDL_CLIPBOARD */
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index cda4293a5..d89ac16dd 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -606,11 +606,17 @@ static void handle_windowevent(SDL_Event *ev)
+          * key is released.
+          */
+         scon->ignore_hotkeys =3D get_mod_state();
++#ifdef CONFIG_SDL_CLIPBOARD
++        sdl2_clipboard_handle_focus_change(scon, true);
++#endif
+         break;
+     case SDL_WINDOWEVENT_FOCUS_LOST:
+         if (gui_grab && !gui_fullscreen) {
+             sdl_grab_end(scon);
+         }
++#ifdef CONFIG_SDL_CLIPBOARD
++        sdl2_clipboard_handle_focus_change(scon, false);
++#endif
+         break;
+     case SDL_WINDOWEVENT_RESTORED:
+         update_displaychangelistener(&scon->dcl, GUI_REFRESH_INTERVAL_DEFA=
+ULT);
+@@ -691,6 +697,11 @@ void sdl2_poll_events(struct sdl2_console *scon)
+         case SDL_WINDOWEVENT:
+             handle_windowevent(ev);
+             break;
++#ifdef CONFIG_SDL_CLIPBOARD
++        case SDL_CLIPBOARDUPDATE:
++            sdl2_clipboard_handle_request(scon);
++            break;
++#endif
+         default:
+             break;
+         }
+@@ -901,6 +912,10 @@ static void sdl2_display_init(DisplayState *ds, Displa=
+yOptions *o)
+         }
+         register_displaychangelistener(&sdl2_console[i].dcl);
+=20
++#ifdef CONFIG_SDL_CLIPBOARD
++        sdl2_clipboard_init(&sdl2_console[i]);
++#endif
++
+ #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
+         if (SDL_GetWindowWMInfo(sdl2_console[i].real_window, &info)) {
+ #if defined(SDL_VIDEO_DRIVER_WINDOWS)
+--=20
+2.50.1
+
 
 
