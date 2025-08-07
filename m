@@ -4,86 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8873BC87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA43EC87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk0R4-0008Vr-6q; Thu, 07 Aug 2025 09:13:34 -0400
+	id 1uk0T7-0001fY-MG; Thu, 07 Aug 2025 09:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uk0R2-0008Uw-PO
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:13:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uk0Sa-0001Av-FU
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:15:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uk0Qz-0001Hw-Io
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:13:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uk0SX-0001oa-W5
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:15:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754572406;
+ s=mimecast20190719; t=1754572503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VLFudbkZiFbI63E5uxV9T6D7dkpmszkegZG0OKRnABQ=;
- b=FQ2jKzwb6jENaBzLOd77Wfs+esfUSPSryX6Kad7KT7rQ+H/tFlwxyia2jdae5IQVSFhBIA
- 03Lrbp898FhcxI7DT1KIAIwrSj6MGJNQos0qqVav4aKZp+bItfNpomL/49XDAZW+H4DJLG
- D33Y2vrvRVoL+4n176B5bO3f1VAErqc=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-0odiTelUOcOlWCN80AuXLQ-1; Thu, 07 Aug 2025 09:13:24 -0400
-X-MC-Unique: 0odiTelUOcOlWCN80AuXLQ-1
-X-Mimecast-MFC-AGG-ID: 0odiTelUOcOlWCN80AuXLQ_1754572404
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-e8db89e6a38so1093675276.0
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 06:13:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754572404; x=1755177204;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VLFudbkZiFbI63E5uxV9T6D7dkpmszkegZG0OKRnABQ=;
- b=dIODeNLwBY8mXHAP3Ieg7Gf+6uv+gmg6xx7AW472+4Y071U6V9do0H1x6ZENOtPRMz
- nJXdxIEb0JpfHvhwLzbu8ySH1htkxerncxjsgi8nfqtEdGWRjltjwato2c3jPrOyHu7P
- hMRXWCDN9XnlztQUaXsoR0doucNqSC+eUpYbEq+xFP26UsM++grTASBr/0TIu3CqnKgx
- h3Hw8lNcVp7XiguLQkivBFYZrlsgtDb+nvDUQrtF78nMOxvqrFDoupP/tpIkBf3EWx0z
- FqAV3fOByznDenZzhLVkkYCfVXLyQBkpsSPhi8kAJV4bLrGI8Aq1pGxTiPECiNhx7bwh
- pMPA==
-X-Gm-Message-State: AOJu0YxYbNprWYqxv9ggngp0NWPjoPU96zVnXGcsGh5lnKwJlpiEA3Aw
- CJEDBw7Yrn24/h+pTHvnOP2Ne3JVsPc7xu1EbDjYK6Isd5ncjxw/ASTlPV383nfgRz3A0rWe9rM
- Ozqi+l8BczypZEW6p2F96GO9/fn5OsaY9dwhGDt5VkZXNGFDw5wF3WGB0
-X-Gm-Gg: ASbGncvNjaD+Tfm0ajMwa9C7gbo8m7DLQjf20eWxViszQhDil/QppDma1Pa4KZqYB7D
- YkNUopUdzmUcR6UkIujtkGa1VZ9PA0d2sEBgSb8ZqJJ4KSDiQOQQge7nYQ4R0I9vrFqMxpGUbkK
- fPsp7iWwXhBoBgabcw2OZdy17iOK/DuqOIopzQ8dI39dJxaBF1rr5zG8IiB/T15DZrh/xQMURgo
- 1OUEJF6oLqVrhrZvtnuXmm5FRtjGB6fpLgxdNwkiVhjJcoA9ZBAUnto+q5068ZGjSikrr3CIo8R
- KIysxJ5flgvdTLxsoZmj7XpezrUJSzTt
-X-Received: by 2002:a05:6902:110e:b0:e90:1055:bcb8 with SMTP id
- 3f1490d57ef6-e90287ac601mr8258618276.20.1754572403614; 
- Thu, 07 Aug 2025 06:13:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4k30Ftt7jPAk1jGvn+AbinuxaM0CAuib2M2byNx8DG4A9lFngboRqKG6/FodjlT5wEKd/Kw==
-X-Received: by 2002:a05:6902:110e:b0:e90:1055:bcb8 with SMTP id
- 3f1490d57ef6-e90287ac601mr8258586276.20.1754572403211; 
- Thu, 07 Aug 2025 06:13:23 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e8fd35a98eesm6364710276.0.2025.08.07.06.13.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Aug 2025 06:13:22 -0700 (PDT)
-Date: Thu, 7 Aug 2025 09:13:11 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
- armbru@redhat.com, jasowang@redhat.com, mst@redhat.com,
- si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com
-Subject: Re: [RFC 1/6] migration: Add virtio-iterative capability
-Message-ID: <aJSmZ2kmOeStv6aY@x1.local>
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-2-jonah.palmer@oracle.com>
- <aJN7uOWSt10U7DMi@x1.local>
- <71a1cb1b-49b9-4a4c-aa6d-429aa3cf8a8a@oracle.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=/e5Ez/mxlrTj7K1AECDhx8DVXsZgxdfzCSAbdH9M2iI=;
+ b=As0nWH1KHl5Egg7ByvnpqJuxQ2PYmbCV5D2Hs9mRfeBbf2TjxF9BqcNgsOIrhtS6Ily6VP
+ JaZcBpByIR7NnyCbj1OJSfMN5E5x5mMHmArDUd4kogXZPqMtP2GA5FUudbUk4UB+o+zaYi
+ Ijpx+FJJQ/wnl/1qQ3nGe43QN8qKWq4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-873HUUSvMBmy3uiXV2X5EQ-1; Thu,
+ 07 Aug 2025 09:15:00 -0400
+X-MC-Unique: 873HUUSvMBmy3uiXV2X5EQ-1
+X-Mimecast-MFC-AGG-ID: 873HUUSvMBmy3uiXV2X5EQ_1754572499
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E5F01800285; Thu,  7 Aug 2025 13:14:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EBF173001452; Thu,  7 Aug 2025 13:14:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2E48121E6A27; Thu, 07 Aug 2025 15:14:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>, Andrew
+ Melnychenko <andrew@daynix.com>, Yuri Benditovich
+ <yuri.benditovich@daynix.com>
+Subject: ebpf functions can fail without setting an error
+Date: Thu, 07 Aug 2025 15:14:56 +0200
+Message-ID: <87ectns27j.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <71a1cb1b-49b9-4a4c-aa6d-429aa3cf8a8a@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,87 +82,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 07, 2025 at 08:50:38AM -0400, Jonah Palmer wrote:
-> 
-> 
-> On 8/6/25 11:58 AM, Peter Xu wrote:
-> > On Tue, Jul 22, 2025 at 12:41:22PM +0000, Jonah Palmer wrote:
-> > > Adds a new migration capability 'virtio-iterative' that will allow
-> > > virtio devices, where supported, to iteratively migrate configuration
-> > > changes that occur during the migration process.
-> > > 
-> > > This capability is added to the validated capabilities list to ensure
-> > > both the source and destination support it before enabling.
-> > > 
-> > > The capability defaults to off to maintain backward compatibility.
-> > > 
-> > > To enable the capability via HMP:
-> > > (qemu) migrate_set_capability virtio-iterative on
-> > > 
-> > > To enable the capability via QMP:
-> > > {"execute": "migrate-set-capabilities", "arguments": {
-> > >       "capabilities": [
-> > >          { "capability": "virtio-iterative", "state": true }
-> > >       ]
-> > >    }
-> > > }
-> > > 
-> > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> > > ---
-> > >   migration/savevm.c  | 1 +
-> > >   qapi/migration.json | 7 ++++++-
-> > >   2 files changed, 7 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/migration/savevm.c b/migration/savevm.c
-> > > index bb04a4520d..40a2189866 100644
-> > > --- a/migration/savevm.c
-> > > +++ b/migration/savevm.c
-> > > @@ -279,6 +279,7 @@ static bool should_validate_capability(int capability)
-> > >       switch (capability) {
-> > >       case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
-> > >       case MIGRATION_CAPABILITY_MAPPED_RAM:
-> > > +    case MIGRATION_CAPABILITY_VIRTIO_ITERATIVE:
-> > >           return true;
-> > >       default:
-> > >           return false;
-> > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > > index 4963f6ca12..8f042c3ba5 100644
-> > > --- a/qapi/migration.json
-> > > +++ b/qapi/migration.json
-> > > @@ -479,6 +479,11 @@
-> > >   #     each RAM page.  Requires a migration URI that supports seeking,
-> > >   #     such as a file.  (since 9.0)
-> > >   #
-> > > +# @virtio-iterative: Enable iterative migration for virtio devices, if
-> > > +#     the device supports it. When enabled, and where supported, virtio
-> > > +#     devices will track and migrate configuration changes that may
-> > > +#     occur during the migration process. (Since 10.1)
-> > > +#
-> > 
-> > Having a migration capability to enable iterative support for a specific
-> > type of device sounds wrong.
-> > 
-> > If virtio will be able to support iterative saves, it could provide the
-> > save_live_iterate() function.  Any explanation why it needs to be a
-> > migration capability?
-> > 
-> 
-> It certainly doesn't have to be a migration capability. Perhaps it's better
-> as a per-device compatibility property? E.g.:
-> 
-> -device virtio-net-pci,x-iterative-migration=on,...
-> 
-> I was just thinking along the lines of not having this feature enabled by
-> default for backwards-compatibility (and something to toggle to compare
-> performance during development).
-> 
-> Totally open to suggestions though. I wasn't really sure how best a
-> feature/capability like this should be introduced.
+Three functions in ebpf_rss.h take an Error ** argument and return bool.
+Good.
 
-Yep, for RFC is fine, if there'll be a formal patch please propose it as a
-device property whenever needed, thanks.
+They can all fail without setting an error.  Not good.
 
--- 
-Peter Xu
+The failures without error are:
+
+* All three stubs in ebpf_rss-stub.c always.  Oversight?
+
+* Non-stub ebpf_rss_load() when ebpf_rss_is_loaded().  Are these
+  reachable?
 
 
