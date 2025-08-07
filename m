@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE15AC87FDA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DFEACA0EC1
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujzRD-0007t1-1M; Thu, 07 Aug 2025 08:09:41 -0400
+	id 1ujzS0-0002LP-0y; Thu, 07 Aug 2025 08:10:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzQn-0007Rn-3b; Thu, 07 Aug 2025 08:09:15 -0400
+ id 1ujzQt-0007cF-1G; Thu, 07 Aug 2025 08:09:20 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzQk-00054a-Bd; Thu, 07 Aug 2025 08:09:12 -0400
+ id 1ujzQp-00056D-J6; Thu, 07 Aug 2025 08:09:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754568550; x=1786104550;
+ t=1754568555; x=1786104555;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=I+BnrSmaOgS4QOTYt1Xg56BqMt16d9NeDnkZ1ZXGGos=;
- b=JTdWse8H1M48Nnjk1vXHS+9JmyxIEAn/oZO6xnuqgw3gqVAqafv2mFJ2
- HorT7mQ5ZzzOtAn5IEb/9KqILAJo16PONO+4oo8WWrcr2mbGMaJ7Mf3Ws
- pahy/0mZ87uZ9zAInrfrXzOB9Qsf7xdWwkLCSnAR0wmeSWfIJmJZEWgZo
- GrihLz9KGd6Xw5J/nwar//AVUhoAHglq3hfGiguYxaekZxHMDoFVYdtHz
- a52KfxDOXnadsAY115OD/XVx23xeBRXX/IWeVjAbeQDupLIxAx/LG68/8
- TBLbSpYMWkHbszIOrP8AMTnzOdC06nYCZdcucHLeIhHoRZWlVRolFdsTd g==;
-X-CSE-ConnectionGUID: my+/uoYAT/S+DA+k04NqAQ==
-X-CSE-MsgGUID: /92FSpEwTWy7xD9+YBNiOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036705"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036705"
+ bh=mZA5SSrz3FphXmaSjbWuWr8Dg8r0OVF1qFpqD5BZOaI=;
+ b=h7HTzKQ0ISSmi7B5QxWgXOGrZW3Qwcceehcujxp4DaA/amXJfL1nOhKo
+ 3d3ymZLByRhAPksZPq0JTT2OV3y3qKhYJkvNS4ebJKJoY/cr+2WSlnedt
+ CaJGOi3rW1XGlLoqKkGqPWQoLLxqZL+UoHxWF2LHXvHYPJ0idwMrOwIE5
+ Y3+maWm5yB5ZcwqADeV+R+x/TEnjr4OFT8mn6BmF2VDVLemniw4i1ucTk
+ lsArWMMU+sHNEwD3G7orWoUM/ITf4IUd2kw+9mdMlwpa12Ur0lfxN+lyS
+ LhYJtd+eABndnzdvkLbdfqkAEJboSRngXKsSx8mtmKux6zM7zENH6kAAn A==;
+X-CSE-ConnectionGUID: nEK8HqWqS56+fLHWDeTpTQ==
+X-CSE-MsgGUID: KRGaXcxoT9uptnhkZpsemw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036716"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036716"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 05:09:07 -0700
-X-CSE-ConnectionGUID: PcNirZzsQiSQjyHfgaY9pQ==
-X-CSE-MsgGUID: CORasR4+QHCEFVLsCCqYew==
+ 07 Aug 2025 05:09:14 -0700
+X-CSE-ConnectionGUID: O1Bsg54tSM+YFD5GR7VkxQ==
+X-CSE-MsgGUID: HrgiLHD/Q/G2lvjrfUWipw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701039"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701053"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:04 -0700
+ by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:11 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
@@ -53,9 +53,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 02/26] rust/cargo: Add the support for vm-memory
-Date: Thu,  7 Aug 2025 20:30:03 +0800
-Message-Id: <20250807123027.2910950-3-zhao1.liu@intel.com>
+Subject: [RFC 04/26] subprojects: Add thiserror crate
+Date: Thu,  7 Aug 2025 20:30:05 +0800
+Message-Id: <20250807123027.2910950-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807123027.2910950-1-zhao1.liu@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
@@ -88,106 +88,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/Cargo.lock          | 52 ++++++++++++++++++++++++++++++++++++++++
- rust/qemu-api/Cargo.toml | 11 +++++++++
- 2 files changed, 63 insertions(+)
+ scripts/archive-source.sh                     |  2 +-
+ scripts/make-release                          |  2 +-
+ subprojects/.gitignore                        |  1 +
+ .../packagefiles/thiserror-1-rs/meson.build   | 23 +++++++++++++++++++
+ subprojects/thiserror-1-rs.wrap               | 10 ++++++++
+ 5 files changed, 36 insertions(+), 2 deletions(-)
+ create mode 100644 subprojects/packagefiles/thiserror-1-rs/meson.build
+ create mode 100644 subprojects/thiserror-1-rs.wrap
 
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index b785c718f315..7aedae239f66 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -133,6 +133,7 @@ dependencies = [
-  "foreign",
-  "libc",
-  "qemu_api_macros",
-+ "vm-memory",
- ]
+diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+index 8d8a0d37ecdc..3ae064f65263 100755
+--- a/scripts/archive-source.sh
++++ b/scripts/archive-source.sh
+@@ -31,7 +31,7 @@ subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
+   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
+   libc-0.2-rs proc-macro2-1-rs
+   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+-  syn-2-rs thiserror-impl-1-rs unicode-ident-1-rs"
++  syn-2-rs thiserror-1-rs thiserror-impl-1-rs unicode-ident-1-rs"
+ sub_deinit=""
  
- [[package]]
-@@ -164,6 +165,26 @@ dependencies = [
-  "unicode-ident",
- ]
+ function cleanup() {
+diff --git a/scripts/make-release b/scripts/make-release
+index 3d3d8d4a51bc..73a14c12bdeb 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -44,7 +44,7 @@ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
+   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
+   libc-0.2-rs proc-macro2-1-rs
+   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+-  syn-2-rs thiserror-impl-1-rs unicode-ident-1-rs"
++  syn-2-rs thiserror-1-rs thiserror-impl-1-rs unicode-ident-1-rs"
  
-+[[package]]
-+name = "thiserror"
-+version = "1.0.65"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "5d11abd9594d9b38965ef50805c5e469ca9cc6f197f883f717e0269a3057b3d5"
-+dependencies = [
-+ "thiserror-impl",
-+]
+ src="$1"
+ version="$2"
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index e6ea570a2286..3b09ab42da08 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -19,5 +19,6 @@
+ /proc-macro2-1.0.84
+ /quote-1.0.36
+ /syn-2.0.66
++/thiserror-1.0.65
+ /thiserror-impl-1.0.65
+ /unicode-ident-1.0.12
+diff --git a/subprojects/packagefiles/thiserror-1-rs/meson.build b/subprojects/packagefiles/thiserror-1-rs/meson.build
+new file mode 100644
+index 000000000000..bfaf2f8d3eb8
+--- /dev/null
++++ b/subprojects/packagefiles/thiserror-1-rs/meson.build
+@@ -0,0 +1,23 @@
++project('thiserror-1-rs', 'rust',
++  meson_version: '>=1.5.0',
++  version: '1.0.65',
++  license: 'MIT OR Apache-2.0',
++  default_options: [])
 +
-+[[package]]
-+name = "thiserror-impl"
-+version = "1.0.65"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ae71770322cbd277e69d762a16c444af02aa0575ac0d174f0b9562d3b37f8602"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "syn",
-+]
++subproject('thiserror-impl-1-rs', required: true)
++thiserror_impl_rs = dependency('thiserror-impl-1-rs')
 +
- [[package]]
- name = "unicode-ident"
- version = "1.0.12"
-@@ -175,3 +196,34 @@ name = "version_check"
- version = "0.9.4"
- source = "registry+https://github.com/rust-lang/crates.io-index"
- checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
++_thiserror_rs = static_library(
++  'thiserror',
++  files('src/lib.rs'),
++  gnu_symbol_visibility: 'hidden',
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_abi: 'rust',
++  dependencies: [thiserror_impl_rs],
++)
 +
-+[[package]]
-+name = "vm-memory"
-+version = "0.16.1"
-+source = "git+https://github.com/rust-vmm/vm-memory.git?rev=5eb996a060d7ca3844cbd2f10b1d048c0c91942f#5eb996a060d7ca3844cbd2f10b1d048c0c91942f"
-+dependencies = [
-+ "thiserror",
-+ "winapi",
-+]
++thiserror_dep = declare_dependency(
++  link_with: _thiserror_rs,
++)
 +
-+[[package]]
-+name = "winapi"
-+version = "0.3.9"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "5c839a674fcd7a98952e593242ea400abe93992746761e38641405d28b00f419"
-+dependencies = [
-+ "winapi-i686-pc-windows-gnu",
-+ "winapi-x86_64-pc-windows-gnu",
-+]
++meson.override_dependency('thiserror-1-rs', thiserror_dep)
+diff --git a/subprojects/thiserror-1-rs.wrap b/subprojects/thiserror-1-rs.wrap
+new file mode 100644
+index 000000000000..0f9303bebf97
+--- /dev/null
++++ b/subprojects/thiserror-1-rs.wrap
+@@ -0,0 +1,10 @@
++[wrap-file]
++directory = thiserror-1.0.65
++source_url = https://crates.io/api/v1/crates/thiserror/1.0.65/download
++source_filename = thiserror-1.0.65.tar.gz
++source_hash = 5d11abd9594d9b38965ef50805c5e469ca9cc6f197f883f717e0269a3057b3d5
++#method = cargo
++patch_directory = thiserror-1-rs
 +
-+[[package]]
-+name = "winapi-i686-pc-windows-gnu"
-+version = "0.4.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6"
-+
-+[[package]]
-+name = "winapi-x86_64-pc-windows-gnu"
-+version = "0.4.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
-diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-index db7000dee441..bbed3d2de514 100644
---- a/rust/qemu-api/Cargo.toml
-+++ b/rust/qemu-api/Cargo.toml
-@@ -19,6 +19,17 @@ anyhow = "~1.0"
- libc = "0.2.162"
- foreign = "~0.3.1"
- 
-+[dependencies.vm-memory]
-+# The latest v0.16.2 didn't contain Paolo's commit 5f59e29c3d30
-+# ("guest_memory: let multiple regions slice one global bitmap").
-+# Once a new release has that change, switch to crates.io.
-+git = "https://github.com/rust-vmm/vm-memory.git"
-+rev = "5eb996a060d7ca3844cbd2f10b1d048c0c91942f"
-+# Note "rawfd" (as the only default feature) is disabled by default in
-+# meson. It cause compilation failure on Windows and fortunately, we
-+# don't need it either.
-+default-features = false
-+
- [features]
- default = ["debug_cell"]
- allocator = []
++# bump this version number on every change to meson.build or the patches:
++# v2
 -- 
 2.34.1
 
