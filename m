@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C44C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5D1C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk11F-0004gK-Ka; Thu, 07 Aug 2025 09:50:57 -0400
+	id 1uk135-0000eI-10; Thu, 07 Aug 2025 09:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uk11D-0004dR-SY
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:50:55 -0400
+ id 1uk12z-0000Zj-IK
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:52:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uk11B-0000Lr-P1
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:50:55 -0400
+ id 1uk12y-0000W4-8P
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:52:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754574650;
+ s=mimecast20190719; t=1754574762;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PvaorgGh5P0tSa23iMIJ9bc8NLt/ryhr9OaKS4s4BuY=;
- b=Tdagdu7mp5bMRye1pS1+19Q26dtzzIYkS0fwmh/Iiqs3PJhJ1h5+fUTnJvbTmIHaJDhhBf
- aqAZxKlUUtdqB/M/byPu1qrdLLmfqtkU0lJUTorqmlRfcYAKcy68ULgki80jaN1iVilDg1
- 5YXSY2sFD7hCxPCT9pUoeR9TaIZ+CTw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Jvula5eCMbUGkLkKPyBhGU5eLiLfuloHOPJZUTCCHYA=;
+ b=ZXvaGEgrgpo1+h7760e9pGBVMEe/9v1XtlgApAc/d4teMr7efbOYQ+gGGS59LpbI3sQbuu
+ BwYSaitT7qL1XJFoiL90NOTszqhEQSeVNY1Wc1JBd8fGIw31kBWbCHJKO5p6isv5x5/YX3
+ 5yhFSJK4KXCSyM67wq0e6h89brSt74g=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-pqY6PfgxMn-rkq25aLgfmg-1; Thu, 07 Aug 2025 09:50:49 -0400
-X-MC-Unique: pqY6PfgxMn-rkq25aLgfmg-1
-X-Mimecast-MFC-AGG-ID: pqY6PfgxMn-rkq25aLgfmg_1754574648
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-459e02731a2so7331055e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 06:50:49 -0700 (PDT)
+ us-mta-655-RPPT2IolOOWvavRj68Vebg-1; Thu, 07 Aug 2025 09:52:40 -0400
+X-MC-Unique: RPPT2IolOOWvavRj68Vebg-1
+X-Mimecast-MFC-AGG-ID: RPPT2IolOOWvavRj68Vebg_1754574760
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-459d6c83e2eso5943665e9.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 06:52:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754574648; x=1755179448;
+ d=1e100.net; s=20230601; t=1754574760; x=1755179560;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PvaorgGh5P0tSa23iMIJ9bc8NLt/ryhr9OaKS4s4BuY=;
- b=VQrQ28ljwX+rVO1bz48+rdsPvWXxBGp7qaTERgOYHK+xVI2fxppFRoLBu1k2PkO86N
- OzuILqeMEPjkRrmEqAtjkJ7XoxT//kw30UWlr5tKxdh7lhX4EdRkO/pTyqexMC5Xtntm
- ENaEdT+wL2OJaO62omFFSdrD2X8B5oCRM1Vo2WjtIyJE1QSundOi/Qdzxa3QjiAcaguy
- OTrsrJB/eKseiukhcNuuAQFm8vycAuuPqophsyUIy+WlwoXju2Q5XfagPPo77gGEK7TZ
- njep/1Mk27uBsW6KcdHj8v5WfKWiPc/2lHAmM6O1XrYce/ngf/JTv7W82rwhk29luzMa
- bM+g==
-X-Gm-Message-State: AOJu0YykxrzlPDzgAWEn7C/rOlTzoNRKDf3Z7HUh3v1Pb6raQMC00kzt
- Q9y33dqoNrNy5Wg2DRpVLeyXMH3kR3H+QKWv1UCAES4wiGOILf/nmCdKGhmbT25jZLtBZyfeLLO
- IYVWzi4XofMQeNlG+Do/ccGKIYzpU1SBzlluwR9ttVlD4i5FtmSdRUPlB
-X-Gm-Gg: ASbGncslkb4c4p8BJO5iOEmKLDNh+Tatd7NVUdP1gF++rB4jaGdpbpwuvUEwlhLiUV/
- Il8WkoqGAuxEa+ERVawzk0WbSXZsVZ0ID/PaXfLHYc9S/+CiAzHT229L+hfdV7aRLDukh6kgNPn
- yVlvicqHvLcvXGEQl5DAwrW0yQod7clgcrunkKNuhN1bpEHmNC5Idt6+VALqzIbPFGeR9ZV7VEq
- 4nutMUKiT0ZoU9CLSepAWv1pTd5nRaC9i8eY9P+Nl9gx8RCZuUvb7bWF4LKTRY59OgrLJBMtPuj
- zp87KDRZ/fomnVgfw1nv6yQ8NxRgA5eek+p44M05kp1Q
-X-Received: by 2002:a05:600c:34ce:b0:43c:e70d:44f0 with SMTP id
- 5b1f17b1804b1-459e78a2d72mr67612745e9.19.1754574648085; 
- Thu, 07 Aug 2025 06:50:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWnCGRUMrYINcgGsMYQVVtZx8JpmqrXEJr4bBJ5kaqWhqrByFa4hggqbjHwXhQjMepngWg+w==
-X-Received: by 2002:a05:600c:34ce:b0:43c:e70d:44f0 with SMTP id
- 5b1f17b1804b1-459e78a2d72mr67612405e9.19.1754574647596; 
- Thu, 07 Aug 2025 06:50:47 -0700 (PDT)
+ bh=Jvula5eCMbUGkLkKPyBhGU5eLiLfuloHOPJZUTCCHYA=;
+ b=hvp31XqHMNVmLJJRJWhQIOMA84KK+ouqhQZxz2FAuYkMIZh1QgQgiH8S6lq7ke0yik
+ wmP2gs+fBJHb7ZKjgCiv5p+Ju9em6Eb9hBDbDE3wLLi/GGdqBi7NP5YlFi2MfoMt3M+t
+ foVAKLeHCTh1GuWNnUvEUMLCTg9C9p2hGVQ8q/Gu3TURcolfm7TolsDP74z2HhxE4oHY
+ TnptNnZqOspmE0mzL9/FSVAOk9+x2tCZRyk7RHsnETrEpjevaCTPToUIKha2astomUbP
+ anHPp+KSTxkjbB7fWD74ostsJnXbK6tfN9G5qksj/lOwky5TXtskRSU3Mzc7OvdvZcgL
+ TAiA==
+X-Gm-Message-State: AOJu0YzD1pc8HK4TT6VaOSCxMFIx1zOsgo5SBKdrYu34jJ2n7ZIbB+4p
+ ZOgDKbrBNrWkm8xx7sJusCQ8Fa+2ZGL9VtthKdLBpA4XkeLohCVSBcsmuff2Jw2SmrYDuHF4+Av
+ BBg1Nr52v92pbz06PXgS/9kW7cWbmmZpO6deMyt/58bQ606sCXhrPCxR0
+X-Gm-Gg: ASbGncvaBHi7JazMuCIL6Yfy8WY9hlyG3cWNjEiZRCMbMj8IqdQ6uTKnBkNIGjsJKOR
+ KIBgv8RgqKxxbySyFVHqcSl0JebRZfIBVEDwEXJj7qWyT9KLY7z9wyUQd9+jpyo4A/p7LZBPoLB
+ GpkX4r+5jCfHI5n8lW3HuZ0Q9gIV6GPkOovRm7HLAcTj4aBZSb5Y0LbbfgfYw/hG+oq+MQaqh/U
+ 6NfYRLC7bmPG29WKNBDtOKbpvD9oVh8/GdFyG3o+Q7etrGaFBPA0FIlAsBHaJy11Na3hTqK1Tzm
+ vQ+jXrBnihJ+f/rIT3qYINdFSwrB80bXLN7J5Tt6NgOP
+X-Received: by 2002:a05:600c:3b22:b0:459:db5a:b097 with SMTP id
+ 5b1f17b1804b1-459e70eeb97mr68530395e9.16.1754574759676; 
+ Thu, 07 Aug 2025 06:52:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtmGLo8uaep6GbSM9+eeuqEBVyQbsJ5sriF+VdjL7eX0xrcwqLIJyJ+Vdar58LStw+f73iYQ==
+X-Received: by 2002:a05:600c:3b22:b0:459:db5a:b097 with SMTP id
+ 5b1f17b1804b1-459e70eeb97mr68530105e9.16.1754574759236; 
+ Thu, 07 Aug 2025 06:52:39 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.253.173])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-459e58554f2sm92269425e9.12.2025.08.07.06.50.46
+ 5b1f17b1804b1-459ee17535bsm43001965e9.16.2025.08.07.06.52.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Aug 2025 06:50:46 -0700 (PDT)
-Message-ID: <3ce35920-919b-4caf-87c5-b92bd603388a@redhat.com>
-Date: Thu, 7 Aug 2025 15:50:45 +0200
+ Thu, 07 Aug 2025 06:52:38 -0700 (PDT)
+Message-ID: <4cc91b3d-ce3a-46fa-80da-fa5039f6a490@redhat.com>
+Date: Thu, 7 Aug 2025 15:52:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 24/26] rust/memory: Provide AddressSpace bindings
+Subject: Re: [RFC 01/26] rust/hpet: Fix the error caused by vm-memory
 To: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -87,7 +87,7 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-25-zhao1.liu@intel.com>
+ <20250807123027.2910950-2-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -125,7 +125,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20250807123027.2910950-25-zhao1.liu@intel.com>
+In-Reply-To: <20250807123027.2910950-2-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -154,118 +154,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/7/25 14:30, Zhao Liu wrote:
-> +impl GuestAddressSpace for AddressSpace {
-> +    type M = FlatView;
-> +    type T = FlatViewRefGuard;
-> +
-> +    /// Get the memory of the [`AddressSpace`].
-> +    ///
-> +    /// This function retrieves the [`FlatView`] for the current
-> +    /// [`AddressSpace`].  And it should be called from an RCU
-> +    /// critical section.  The returned [`FlatView`] is used for
-> +    /// short-term memory access.
-> +    ///
-> +    /// Note, this function method may **panic** if [`FlatView`] is
-> +    /// being distroying.  Fo this case, we should consider to providing
-> +    /// the more stable binding with [`bindings::address_space_get_flatview`].
-> +    fn memory(&self) -> Self::T {
-> +        let flatp = unsafe { address_space_to_flatview(self.0.as_mut_ptr()) };
-> +        FlatViewRefGuard::new(unsafe { Self::M::from_raw(flatp) }).expect(
-> +            "Failed to clone FlatViewRefGuard: the FlatView may have been destroyed concurrently.",
-> +        )
+> error[E0283]: type annotations needed
+>     --> hw/timer/hpet/src/device.rs:884:55
+>      |
+> 884 |         self.num_timers == self.num_timers_save.get().into()
+>      |                         --                            ^^^^
+>      |                         |
+>      |                         type must be known at this point
+>      |
+>      = note: multiple `impl`s satisfying `usize: PartialEq<_>` found in the following crates: `core`, `vm_memory`:
+>              - impl PartialEq<vm_memory::endian::BeSize> for usize;
+>              - impl PartialEq<vm_memory::endian::LeSize> for usize;
+>              - impl<host> PartialEq for usize
+>                where the constant `host` has type `bool`;
+> help: try using a fully qualified path to specify the expected types
+>      |
+> 884 |         self.num_timers == <u8 as Into<T>>::into(self.num_timers_save.get())
+>      |                            ++++++++++++++++++++++                          ~
 
-This is essentially address_space_get_flatview().  You can call it 
-directly, or you need to loop if FlatViewRefGuard finds a zero reference 
-count.
+Oh, interesting.  In this case, you can write:
 
-> +    }
-> +}
-> +
-> +impl AddressSpace {
-> +    /// The write interface of `AddressSpace`.
-> +    ///
-> +    /// This function is similar to `address_space_write` in C side.
-> +    ///
-> +    /// But it assumes the memory attributes is MEMTXATTRS_UNSPECIFIED.
-> +    pub fn write(&self, buf: &[u8], addr: GuestAddress) -> Result<usize> {
-> +        rcu_read_lock();
-> +        let r = self.memory().deref().write(buf, addr);
-> +        rcu_read_unlock();
-
-self.memory() must not need rcu_read_lock/unlock around it, they should 
-be called by the memory() function itself.
-
-> +        r.map_err(guest_mem_err_to_qemu_err)
-> +    }
-
-I think it's ok to return the vm-memory error.  Ultimately, the error 
-will be either ignored or turned into a device error condition, but I 
-don't think it's ever going to become an Error**.
-
-> +    /// The store interface of `AddressSpace`.
-> +    ///
-> +    /// This function is similar to `address_space_st{size}` in C side.
-> +    ///
-> +    /// But it only assumes @val follows target-endian by default. So ensure
-> +    /// the endian of `val` aligned with target, before using this method.
-
-QEMU is trying to get rid of target endianness.  We should use the 
-vm-memory BeNN and LeNN as much as possible.  It would be great if you 
-could write either
-
-     ADDRESS_SPACE_MEMORY.store::<Le32>(addr, 42);
-
-or
-
-     let n = Le32(42);
-     ADDRESS_SPACE_MEMORY.store(addr, n);
-
-but not
-
-     ADDRESS_SPACE_MEMORY.store(addr, 42);
-
-(Also I've not looked at the patches closely enough, but wouldn't 
-store() use *host* endianness? Same in patch 23).
+     usize::from(self.num_timers_save.get())
 
 Paolo
-
-> +    /// And it assumes the memory attributes is MEMTXATTRS_UNSPECIFIED.
-> +    pub fn store<T: AtomicAccess>(&self, addr: GuestAddress, val: T) -> Result<()> {
-> +        rcu_read_lock();
-> +        let r = self.memory().deref().store(val, addr, Ordering::Relaxed);
-> +        rcu_read_unlock();
-> +        r.map_err(guest_mem_err_to_qemu_err)
-> +    }
-> +
-> +    /// The load interface of `AddressSpace`.
-> +    ///
-> +    /// This function is similar to `address_space_ld{size}` in C side.
-> +    ///
-> +    /// But it only support target-endian by default.  The returned value is
-> +    /// with target-endian.
-> +    ///
-> +    /// And it assumes the memory attributes is MEMTXATTRS_UNSPECIFIED.
-> +    pub fn load<T: AtomicAccess>(&self, addr: GuestAddress) -> Result<T> {
-> +        rcu_read_lock();
-> +        let r = self.memory().deref().load(addr, Ordering::Relaxed);
-> +        rcu_read_unlock();
-> +        r.map_err(guest_mem_err_to_qemu_err)
-> +    }
-> +}
-> +
-> +/// The safe binding around [`bindings::address_space_memory`].
-> +///
-> +/// `ADDRESS_SPACE_MEMORY` provides the complete address space
-> +/// abstraction for the whole Guest memory.
-> +pub static ADDRESS_SPACE_MEMORY: &AddressSpace = unsafe {
-> +    let ptr: *const bindings::AddressSpace = addr_of!(address_space_memory);
-> +
-> +    // SAFETY: AddressSpace is #[repr(transparent)].
-> +    let wrapper_ptr: *const AddressSpace = ptr.cast();
-> +
-> +    // SAFETY: `address_space_memory` structure is valid in C side during
-> +    // the whole QEMU life.
-> +    &*wrapper_ptr
-> +};
 
 
