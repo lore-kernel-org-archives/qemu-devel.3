@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B65EC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 775A1CA0EC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:42:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1ou-0000qT-QZ; Thu, 07 Aug 2025 10:42:17 -0400
+	id 1uk1nA-0006N6-Kv; Thu, 07 Aug 2025 10:40:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1o3-0008DW-96
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:30 -0400
+ id 1uk1n8-0006L7-RD
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:26 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1nz-0000z8-60
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:22 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1n7-0000u0-45
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:26 -0400
 Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 8346D201BC7A;
- Thu,  7 Aug 2025 07:41:12 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8346D201BC7A
+ by linux.microsoft.com (Postfix) with ESMTPSA id 61720201BC67;
+ Thu,  7 Aug 2025 07:40:19 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 61720201BC67
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577676;
- bh=DhmZyG4P75oWPVb56TqklPV6+NTQD7S+hBfPcfsjdr4=;
+ s=default; t=1754577623;
+ bh=eiqHqTtQYb4hBWCdUXTzyoddRbEICBU93TfkiFGEmx8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=lmyASoL+NAmNGlH/ZN3u/I8yGyQePuoF+tw8jNlQrBIUx3MUs2NNFaUr/Gb5EF3sW
- 2tUjSb/dqKwQLIcDjHAU13bxfWW4HimFxlxDuivbvusVwS7/HYQRfOZAl4wLKoVjBT
- aYX28rWyhwfywThEzROuTu3vzLRgF+hgRXjrxBMo=
+ b=FqdcpL9cZOhTN8Oq78p8wvOKj6If2Ry9ti/b+byVGq/lSVMShbjcCaT86hP+7jPf/
+ o/YxcOpZVW9mY6KE3SC8rlelcioc6LIWZcZNbc5Z866CQGv/AKBg7ib3y583JAn5rq
+ ZFs6vRERPRtNJ5WKDoMBHEIjo7rZfTeaTvknde60=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -50,9 +50,10 @@ Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 11/26] accel/mshv: Add vCPU signal handling
-Date: Thu,  7 Aug 2025 16:39:36 +0200
-Message-Id: <20250807143951.1154713-12-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 01/26] accel: Add Meson and config support for MSHV
+ accelerator
+Date: Thu,  7 Aug 2025 16:39:26 +0200
+Message-Id: <20250807143951.1154713-2-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
@@ -82,62 +83,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement signal handling for MSHV vCPUs to support asynchronous
-interrupts from the main thread.
+Introduce a Meson feature option and default-config entry to allow
+building QEMU with MSHV (Microsoft Hypervisor) acceleration support.
+
+This is the first step toward implementing an MSHV backend in QEMU.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ accel/Kconfig                 |  3 +++
+ meson.build                   | 10 ++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 4 files changed, 18 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index a4eeaeec76..65166e82b0 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -523,6 +523,35 @@ static int mshv_cpu_exec(CPUState *cpu)
-     return ret;
- }
+diff --git a/accel/Kconfig b/accel/Kconfig
+index 4263cab722..a60f114923 100644
+--- a/accel/Kconfig
++++ b/accel/Kconfig
+@@ -13,6 +13,9 @@ config TCG
+ config KVM
+     bool
  
-+/*
-+ * The signal handler is triggered when QEMU's main thread receives a SIG_IPI
-+ * (SIGUSR1). This signal causes the current CPU thread to be kicked, forcing a
-+ * VM exit on the CPU. The VM exit generates an exit reason that breaks the loop
-+ * (see mshv_cpu_exec). If the exit is due to a Ctrl+A+x command, the system
-+ * will shut down. For other cases, the system will continue running.
-+ */
-+static void sa_ipi_handler(int sig)
-+{
-+    /* TODO: call IOCTL to set_immediate_exit, once implemented. */
++config MSHV
++    bool
 +
-+    qemu_cpu_kick_self();
-+}
-+
-+static void init_signal(CPUState *cpu)
-+{
-+    /* init cpu signals */
-+    struct sigaction sigact;
-+    sigset_t set;
-+
-+    memset(&sigact, 0, sizeof(sigact));
-+    sigact.sa_handler = sa_ipi_handler;
-+    sigaction(SIG_IPI, &sigact, NULL);
-+
-+    pthread_sigmask(SIG_BLOCK, NULL, &set);
-+    sigdelset(&set, SIG_IPI);
-+    pthread_sigmask(SIG_SETMASK, &set, NULL);
-+}
-+
- static void *mshv_vcpu_thread(void *arg)
- {
-     CPUState *cpu = arg;
-@@ -539,6 +568,7 @@ static void *mshv_vcpu_thread(void *arg)
-         error_report("Failed to init vcpu %d", cpu->cpu_index);
-         goto cleanup;
-     }
-+    init_signal(cpu);
+ config XEN
+     bool
+     select FSDEV_9P if VIRTFS
+diff --git a/meson.build b/meson.build
+index e53cd5b413..b6e70714f1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -334,6 +334,7 @@ elif cpu == 'x86_64'
+     'CONFIG_HVF': ['x86_64-softmmu'],
+     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
+     'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
++    'CONFIG_MSHV': ['x86_64-softmmu'],
+   }
+ endif
  
-     /* signal CPU creation */
-     cpu_thread_signal_created(cpu);
+@@ -884,6 +885,14 @@ accelerators = []
+ if get_option('kvm').allowed() and host_os == 'linux'
+   accelerators += 'CONFIG_KVM'
+ endif
++
++if get_option('mshv').allowed() and host_os == 'linux'
++  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
++    error('mshv accelerator requires x64_64 host')
++  endif
++  accelerators += 'CONFIG_MSHV'
++endif
++
+ if get_option('whpx').allowed() and host_os == 'windows'
+   if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
+     error('WHPX requires 64-bit host')
+@@ -4818,6 +4827,7 @@ if have_system
+   summary_info += {'HVF support':       config_all_accel.has_key('CONFIG_HVF')}
+   summary_info += {'WHPX support':      config_all_accel.has_key('CONFIG_WHPX')}
+   summary_info += {'NVMM support':      config_all_accel.has_key('CONFIG_NVMM')}
++  summary_info += {'MSHV support':       config_all_accel.has_key('CONFIG_MSHV')}
+   summary_info += {'Xen support':       xen.found()}
+   if xen.found()
+     summary_info += {'xen ctrl version':  xen.version()}
+diff --git a/meson_options.txt b/meson_options.txt
+index dd33530750..2a6e8dd950 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -71,6 +71,8 @@ option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemalloc'],
+ 
+ option('kvm', type: 'feature', value: 'auto',
+        description: 'KVM acceleration support')
++option('mshv', type: 'feature', value: 'auto',
++       description: 'MSHV acceleration support')
+ option('whpx', type: 'feature', value: 'auto',
+        description: 'WHPX acceleration support')
+ option('hvf', type: 'feature', value: 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index d559e260ed..a3bc3d195e 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -157,6 +157,7 @@ meson_options_help() {
+   printf "%s\n" '  membarrier      membarrier system call (for Linux 4.14+ or Windows'
+   printf "%s\n" '  modules         modules support (non Windows)'
+   printf "%s\n" '  mpath           Multipath persistent reservation passthrough'
++  printf "%s\n" '  mshv            MSHV acceleration support'
+   printf "%s\n" '  multiprocess    Out of process device emulation support'
+   printf "%s\n" '  netmap          netmap network backend support'
+   printf "%s\n" '  nettle          nettle cryptography support'
+@@ -413,6 +414,8 @@ _meson_option_parse() {
+     --disable-modules) printf "%s" -Dmodules=disabled ;;
+     --enable-mpath) printf "%s" -Dmpath=enabled ;;
+     --disable-mpath) printf "%s" -Dmpath=disabled ;;
++    --enable-mshv) printf "%s" -Dmshv=enabled ;;
++    --disable-mshv) printf "%s" -Dmshv=disabled ;;
+     --enable-multiprocess) printf "%s" -Dmultiprocess=enabled ;;
+     --disable-multiprocess) printf "%s" -Dmultiprocess=disabled ;;
+     --enable-netmap) printf "%s" -Dnetmap=enabled ;;
 -- 
 2.34.1
 
