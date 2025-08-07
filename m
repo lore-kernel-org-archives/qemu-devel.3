@@ -4,99 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58773C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 06:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B8FC87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 06:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujuGo-0004Kh-Bm; Thu, 07 Aug 2025 02:38:34 -0400
+	id 1ujuJH-0007Ul-F2; Thu, 07 Aug 2025 02:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1ujuGa-00048a-3n
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:38:24 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1ujuJ0-0007Or-2D; Thu, 07 Aug 2025 02:40:53 -0400
+Received: from mail-mw2nam10on2061f.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::61f]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1ujuGX-0004iB-La
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:38:19 -0400
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C77EF3F674
- for <qemu-devel@nongnu.org>; Thu,  7 Aug 2025 06:38:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1754548694;
- bh=M4pYwtZ55GK+4yd3r1Pe6fHiYh1YmdIqVBrIK6Z31JI=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=tSsDzxi9/OVb73KWTBh7kvG6dlwLS666wajBPBChjTO9avL0UNy9AqdMKR0wZlp/K
- rH5JIEjZ8g3F1me/6o1Se2VcylA7387vgs6nxchLS7viDBmUFhx9t4WQ9dTomYIm1E
- ijaoPSf54vtaVOz8gXgSDpKIiA/ghrEWqr2KAmBOAld4LykIJED++isoxOhlFqE+oI
- UXIzgAd1IBCWvcwnYiV+aAYDJFUEWVptlLd9FmwF28w+ef/jiCQxNVcROVVfOqXaTg
- U+c1s3keoxdi+JR79jjgciklp0sbnjB4VYKB8/X1m0o4kyeZH3Hpdr5Xw9ubani1fy
- rU50sFnXBP5xw==
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-6154cf8c32cso559652a12.1
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 23:38:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754548694; x=1755153494;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M4pYwtZ55GK+4yd3r1Pe6fHiYh1YmdIqVBrIK6Z31JI=;
- b=mteT+uZhAOoZxCEWs8tDz2SmUvtEsqrDH3y4lNHU1rMuLlI6x92gixb4JpePngikOV
- vgzD7j3/22v95VhgiIYr0qseyM4r0HmAs87H391swQCya2JVU8BHcoIEBnSI4MmixWvq
- r+2JkeBDXjK5sFUUa3PR267JTdcn3iF1hLsKvKqMkvptKkGtcfrdHxXVzaZ2NeKQoxm9
- vrwrcr48xXOiG//PK/mSNM3yOZPdliqNPF1Rk1ZOOKHqmXNxz065SWngOgjhJByzS0QL
- sK+tAMMoGx18DXpzf3ib8xlHreQarIvnOV4jsy2XnulaErr4WvXVHvp5dzBOBJ2ZeswT
- qHMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPtStE1w6Gol6EDaMwBtv32xc5yYk0VWswyGJdHXLaXbnEYxkrLOixYTh3eZxDQ63awetKzxqOR70y@nongnu.org
-X-Gm-Message-State: AOJu0YxSq7ZYN+NOdm67m/eyx6tntoeiN1Afz0gvVJQHo+O74CRbTOLK
- 4Kl6Dxdp4S0/DZ6eNOK5SbmMDp6IIpPgNN2EeC4XizOb7uyMj+ft11EECw2cW02F/dE+9bJuUOZ
- ScfEJ8jhlzJKQk8jDw8Hx5eutO4wuPQeq7ipnUspDpAB1jdWzHA7pCi4qH426u5ECpXXvpm2nNx
- YxI2Q+SSlNQnpsKpryBht4VAdL7jJJIRXIlMGFAyf8lOQ2qN4=
-X-Gm-Gg: ASbGncvaGGVZyg9dvO4LVN3ZyXSDxJxiEu1iXxLC9s67W7V/bdvnFu/oeO3YKjRrp4A
- QPEqsWLWTFV1H68C+FeE8Y+bEni8pYFVVddy/HaqbZkZf+9k/L2ot65LH9r8uQDEDH8Y3EAs24n
- 3TZrdiHFOAjp8ZQych/tO6
-X-Received: by 2002:a05:6402:42d0:b0:615:4ce4:3228 with SMTP id
- 4fb4d7f45d1cf-61796096273mr5150775a12.4.1754548694253; 
- Wed, 06 Aug 2025 23:38:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0cMG45LqTO0NDN8EpkEjwQYd+1h8ilc3LAUn/Q1XVsPAFxa4xQSd2klXZ7VG3X+AlH5nabU1XyNzczkG8HyM=
-X-Received: by 2002:a05:6402:42d0:b0:615:4ce4:3228 with SMTP id
- 4fb4d7f45d1cf-61796096273mr5150749a12.4.1754548693704; Wed, 06 Aug 2025
- 23:38:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1ujuIh-0005Cs-Gw; Thu, 07 Aug 2025 02:40:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RoxxEz57EeDHA7Zhus2H9Em2WG4B1rkev3aCUsCqgL0n7KpYO612bRC8dfm7pKNOvLXXm6vviLPVbDdfYWPI27OXoPqFwnrIc6ZCcVUH4HZH3wruPmy/XNT5ZnW3Fh/RKrUYyPL5gNMOwjIJCw8xyiX2KKtHWHRzXLw6hDB/eGKM7vHEzH4p9g0ScvFdjeJgSavC2yMQG6lQq+QZ3B5z4+C52rfgSJB43p2K2gSHIBL4SDqnwcdiJudAxooh88AEddXd5uji080icN8Lewi6G9R36I/LhXbHf3eJIvebiaeeXNYkzkhxeCw8his225Bhm2m+4Yjnsr5s4UCerBSwhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=spVgkhJfjOZKhEpyl9yX32ayOhlRTRlGM/geoufNSN8=;
+ b=Jyb5LrnwXdvyvOmhjKmQDo9+2n99dWMAZuYIgG6rpmz6NVg8tV6YOFMC2FwuG18mqyFuZSNJqYfIe45XITnwBlKFzACmcp5pKld/5OEZti0D9l50NBF703QdhBLSGeGHIbBZQhoj38gxy7qaigvK8y9mGqDsp62xxgUY9HawE7CDwq9sbWoHEO1zqhK+vH+x7Nc05kcgRELHITUTSt9HIub+O5lqbMYxnsDiOJQbp1/RH3aVe9Yd30d1gFWQnHP5yZdK9lkgFdupP7IGOjX77ZcB6vXQgTMxR3my7BtlXD3Xwurkv/XWsRCcsPUKafx3pFbS57pS1q3oYgKogBwWvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=tls.msk.ru smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=spVgkhJfjOZKhEpyl9yX32ayOhlRTRlGM/geoufNSN8=;
+ b=zgH7OA9vxTMcgiLhPhPRSyktMMbLrexOksip18qS8sAtosvdfiKiHIqTcqzK3v3GswY6VGhxsI3nOJu5dqsr64jNQs+I5cC/ot2fGF6D8/XpLZ/v3Dxw6WKXXITuso1lZlKvvv6beFlMat6kQOgFmO58LhFGHnjaRvRZPlvAwxk=
+Received: from SJ0PR03CA0245.namprd03.prod.outlook.com (2603:10b6:a03:3a0::10)
+ by DM4PR12MB8451.namprd12.prod.outlook.com (2603:10b6:8:182::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.17; Thu, 7 Aug
+ 2025 06:40:17 +0000
+Received: from SJ5PEPF000001D2.namprd05.prod.outlook.com
+ (2603:10b6:a03:3a0::4) by SJ0PR03CA0245.outlook.office365.com
+ (2603:10b6:a03:3a0::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9009.15 via Frontend Transport; Thu,
+ 7 Aug 2025 06:40:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SJ5PEPF000001D2.mail.protection.outlook.com (10.167.242.54) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.9009.8 via Frontend Transport; Thu, 7 Aug 2025 06:40:15 +0000
+Received: from [10.85.32.210] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 7 Aug
+ 2025 01:40:12 -0500
+Message-ID: <4cfda863-1c2d-4ecd-a81c-1cac8c26244d@amd.com>
+Date: Thu, 7 Aug 2025 12:10:09 +0530
 MIME-Version: 1.0
-References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
- <aJNDxxjeqkOLAO2r@redhat.com>
- <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
- <aJOqmxTimJ_mFCqp@redhat.com> <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
-In-Reply-To: <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
-From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
-Date: Thu, 7 Aug 2025 08:37:47 +0200
-X-Gm-Features: Ac12FXyNQ614dd7RPyxWtxLvc1lQKL3BorOZoiLiu3UNirzgzhAbbxLuPc2c01g
-Message-ID: <CAATJJ0Jpn8VMRDOFuk7VaV5jC3tj0V1817OiRa6tH3x1OtYFSQ@mail.gmail.com>
-Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=christian.ehrhardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] hw/i386/amd_iommu: Cleanups and fixes
+To: Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <richard.henderson@linaro.org>,
+ <alejandro.j.jimenez@oracle.com>, <vasant.hegde@amd.com>,
+ <philmd@linaro.org>, <Suravee.Suthikulpanit@amd.com>, qemu-stable
+ <qemu-stable@nongnu.org>
+References: <20250801060507.3382-1-sarunkod@amd.com>
+ <703d1159-7bdc-47b7-be08-64d7b000e45b@tls.msk.ru>
+ <d29ccd29-d4c6-41fa-8158-93f9a21ab3ba@amd.com>
+ <7b278bc0-4752-48fa-b8fa-8a76515069f6@tls.msk.ru>
+Content-Language: en-US
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <7b278bc0-4752-48fa-b8fa-8a76515069f6@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D2:EE_|DM4PR12MB8451:EE_
+X-MS-Office365-Filtering-Correlation-Id: 25420c4c-e299-4ca8-41e3-08ddd57d44d7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|36860700013|376014|7416014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QkNNRWFEcndSaEZ2Nk1UakhwRFVRWlY1MGxLL0N2YjZoRmowc1F1NUMyVmVS?=
+ =?utf-8?B?azVSMW9rbjhHY2d1TTR6ckJFREU4N2RubjNLTDVya21vWFlDZHJaMHVSdE5o?=
+ =?utf-8?B?VlI0RTd4Q2k5U1BKQUFQNWM2ZUYxRVNQS0g3L1Zuay9kV2FRcStxSCtMVUZ6?=
+ =?utf-8?B?dlBNL09ERDNCREg4dTh0b1EzcjZxMEdsKzBVM2pZdmlmSFVKbFV3WSszd3Q4?=
+ =?utf-8?B?cHRTYUZzYVl3R3BESXVrRlFySElsd2ZoZGx5ZVpHZkUyT094bE9hTnd0S1BR?=
+ =?utf-8?B?QzRJcjFTbEZDV0FNU3FUQ3hseldicm1NcnoxcDVkV3UrdmgzSHdKMjcwN2wy?=
+ =?utf-8?B?Y3hVenBHN1ZDYU5IZTZyZEROaXlmMVhiR1JwZWJycGZSajk0YTdGTDBmNFpU?=
+ =?utf-8?B?ZUNSN1kvRm1yMVVpeHZ1MGMvRTFQNzdnNWZHcWxTcXgveHYxVVk1dmg0cmdw?=
+ =?utf-8?B?T01SRTBXdTVrNGYrTVhJY3FjZ3hlU1V2RXFoWFhVYkp3OFIwVDlZZmNONGJo?=
+ =?utf-8?B?NDZ5aXRLSEs4OTRmU3NGWGZwWHZsczJ3VUpOWEpPTHVXT25pTjhkVXZwamJ4?=
+ =?utf-8?B?MmJobHp2bjVsNEF4THdqYnA0bytXWi8rSmtCUnhsSlRnTnZiVkNxY1czSlFT?=
+ =?utf-8?B?TGg0VVdhYjJ2bmtUd2FGaCtxNDR2am5xK3B1WllrUWYwNUVLUVB3cnhleWZT?=
+ =?utf-8?B?cmYzVFFrNFF6NUlWUjZPNnZ1WFdLS0JvUEFkLy82WkczaWdleWZkYkZSL2hJ?=
+ =?utf-8?B?MENCYWVqOExUK0Q5dlhnSEVMejRVSGpCYndzNjVaRkdBaXFiUFVzVTBVS0JB?=
+ =?utf-8?B?NS9BL3BrQVE2cnRTZm9YU1I4Yy94Ulpac04vbjRzbkpsWVk2V2QxU2I1Y3Zq?=
+ =?utf-8?B?U01wQlVwNmFuR01oMGg4RnhobWZITWJCSHFTNitHOUVNY3ZiYy9HZ3laQ2FB?=
+ =?utf-8?B?VWJ2NWsySC9ST2MxWjUrU0lkZXBBbWh6QjZ6eHlweTRFQ21DUTcydXlvUmQ3?=
+ =?utf-8?B?QmlFbTdIc0g2QVpWanplSGg1M0ZJc0VSZU9ISVBXVjFtUjJqRmFOVHNxWFJF?=
+ =?utf-8?B?NEZSNnR3VmpCK2tlckFtM245U0RKVnBZRGRDalJCMDlodHJoQjVKLzZ2MGpJ?=
+ =?utf-8?B?V1loMEhKakM0Z1gzNHJBTXhvUVdJZU1oMmZ0anlYNTd6b3pUd1pqQXVkSEFY?=
+ =?utf-8?B?cmxIUkpEYyt6eFN2TzU3cy9RVzlyYnhzanhVN043S2xBQXVMNG9tRWNZV3dq?=
+ =?utf-8?B?ak1XVHJEMVdxQ2ZGdGJsWGRyK0NjWkZsS2xWNytHamEvZzJrRGtLRDVpWEM3?=
+ =?utf-8?B?c1JRTUphbC9mNm8xM2psVTFlOFpyaE03bE5xc24yMFVCTk5FNGpDMFhvbDdx?=
+ =?utf-8?B?UTU3dmhYWjNDR2p5WDF1ZEZsVU1YOWw3cFJ5OEtMejFDZTBZM3Q0K2lnRDV6?=
+ =?utf-8?B?VkN2RUZYcVBnVEoxdFlJeTR5Q0IzTHlzK1ppL1JCa3FYSnJTOTYzeFduZ04v?=
+ =?utf-8?B?amhvUnFzeDg5UjR2Tk9PYXp5VEIrbDc5eCthdEl3Mnp5VHdZOGVVQzJFeFAv?=
+ =?utf-8?B?VW03QUM3S3g2SGx2MTJTYlhMYkZEcTROa21IeVBiUnJRRE94cTIvRGUxOEta?=
+ =?utf-8?B?ZUF5SlREdVU4M3Y5WERQajZYNk80V09vcnBlVnkremg1SS9mTE4xVUM2ckg4?=
+ =?utf-8?B?WkVGWEVpUGlMVVN1QWJDNnR5aXRUa1huTWhsTUNoYW9TZ3hrSXJDUE9XTVRV?=
+ =?utf-8?B?ejJ5TlVuMU00eGxrTkttMFBkNmdBZGZMRjAzOVptMGxITUxPelVKZEZzbzVo?=
+ =?utf-8?B?eTRkY1RQeVlOMEJGZkx3NmVOcGJyckF6R2ZESnZqdExkZDRyYytENWJISjZr?=
+ =?utf-8?B?R3lYMVdXTTJoc1FwVG1LWUo1TTdEVEd1Z3hPT1c0MTlwcFltdSs4L0Y1N25a?=
+ =?utf-8?B?amN5RjR4M3FHbkJNMDNRM3NsU2NCWDZZY1dkbWlBZFJFcVh3b3BzZUhhUWlk?=
+ =?utf-8?B?ZkRmdTVRc0xMVjY2R3NLU3pSaldXcXRGRFBwckE5dkl4QmErUEM5WHNybkNi?=
+ =?utf-8?Q?JyPTy2?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(7416014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2025 06:40:15.7793 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 25420c4c-e299-4ca8-41e3-08ddd57d44d7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D2.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8451
+Received-SPF: permerror client-ip=2a01:111:f403:2412::61f;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,156 +163,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 7, 2025 at 5:38=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> wr=
-ote:
->
-> On 8/7/2025 3:18 AM, Daniel P. Berrang=C3=A9 wrote:
-> > On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
-> >> On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> >>>
-> >>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
-> >>>> Hi,
-> >>>> I was unsure if this would be better sent to libvirt or qemu - the
-> >>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
-> >>>> behaving differently. I did not want to double post and gladly most =
-of
-> >>>> the people are on both lists - since the switch in/out of the proble=
-m
-> >>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not y=
-et
-> >>>> having all the answers, I'm sure I could find more with debugging, b=
-ut
-> >>>> I also wanted to report early for your awareness while we are still =
-in
-> >>>> the RC phase.
-> >>>>
-> >>>>
-> >>>> # Problem
-> >>>>
-> >>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 wa=
-s:
-> >>>>    error: operation failed: guest CPU doesn't match specification:
-> >>>> missing features: pdcm
-> >>>>
-> >>>> This is behaving the same with libvirt 11.4 or the more recent 11.6.
-> >>>> But switching back to qemu 10.0 confirmed that this behavior is new
-> >>>> with qemu 10.1-rc.
-> >>>
-> >>>
-> >>>> Without yet having any hard evidence against them I found a few pdcm
-> >>>> related commits between 10.0 and 10.1-rc1:
-> >>>>    7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
-> >>>>    00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not availabl=
-e
-> >>>>    e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
-> >>>> feature_dependencies[] check
-> >>>>    0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-> >>>>
-> >>>>
-> >>>> # Caveat
-> >>>>
-> >>>> My test environment is in LXD system containers, that gives me issue=
-s
-> >>>> in the power management detection
-> >>>>    libvirtd[406]: error from service: GDBus.Error:System.Error.EROFS=
-:
-> >>>> Read-only file system
-> >>>>    libvirtd[406]: Failed to get host power management capabilities
-> >>>
-> >>> That's harmless.
-> >>
-> >> Yeah, it always was for me - thanks for confirming.
-> >>
-> >>>> And the resulting host-model on a  rather old test server will there=
-fore have:
-> >>>>    <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
-> >>>>      <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
-> >>>>      <vendor>Intel</vendor>
-> >>>>      <feature policy=3D'require' name=3D'vmx'/>
-> >>>>      <feature policy=3D'disable' name=3D'pdcm'/>
-> >>>>       ...
-> >>>>
-> >>>> But that was fine in the past, and the behavior started to break
-> >>>> save/restore or migrations just now with the new qemu 10.1-rc.
-> >>>>
-> >>>> # Next steps
-> >>>>
-> >>>> I'm soon overwhelmed by meetings for the rest of the day, but would =
-be
-> >>>> curious if one has a suggestion about what to look at next for
-> >>>> debugging or a theory about what might go wrong. If nothing else com=
-es
-> >>>> up I'll try to set up a bisect run tomorrow.
-> >>>
-> >>> Yeah, git bisect is what I'd start with.
-> >>
-> >> Bisect complete, identified this commit
-> >>
-> >> commit 00268e00027459abede448662f8794d78eb4b0a4
-> >> Author: Xiaoyao Li <xiaoyao.li@intel.com>
-> >> Date:   Tue Mar 4 00:24:50 2025 -0500
-> >>
-> >>      i386/cpu: Warn about why CPUID_EXT_PDCM is not available
-> >>
-> >>      When user requests PDCM explicitly via "+pdcm" without PMU enable=
-d, emit
-> >>      a warning to inform the user.
-> >>
-> >>      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> >>      Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> >>      Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao.l=
-i@intel.com
-> >>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >>
-> >>   target/i386/cpu.c | 3 +++
-> >>   1 file changed, 3 insertions(+)
-> >>
-> >>
-> >>
-> >> Which is odd as it should only add a warning right?
-> >
-> > No, that commit message is misleading.
-> >
-> > IIUC mark_unavailable_features() actively blocks usage of the feature,
-> > so it is a functional change, not merely a emitting warning.
-> >
-> > It makes me wonder if that commit was actually intended to block the
-> > feature or not, vs merely warning ?  CC'ing those involved in the
-> > commit.
->
-> The intention was to print a warning to tell users PDCM cannot be
-> enabled if pmu is not enabled. While mark_unavailable_features() does
-> has the effect of setting the bit in cpu->filtered_features[].
->
-> But the feature is masked off anyway
-
-Right - it was disabled right from the beginning.
-As I reported libvirt detected it as not available and constructed the
-CPU as with it disabled.
-Which translated it into -cpu ...,pdcm=3Doff,...
-
-The new and bad aspect we need to overcome is that in these conditions
-this now somehow breaks save/restore and migration operations.
-
-As a cross-check I reverted just and only 00268e0002 on top of
-10.1-rc2 and these use cases work again.
-
-> even without the
-> mark_unavailable_features():
->
->      env->features[FEAT_1_ECX] &=3D ~CPUID_EXT_PDCM;
->
-> So is it that PDCM is set in cpu->filtered_features[] causing the problem=
-?
->
-> > With regards,
-> > Daniel
->
 
 
---=20
-Christian Ehrhardt
-Director of Engineering, Ubuntu Server
-Canonical Ltd
+On 8/6/2025 12:28 PM, Michael Tokarev wrote:
+> On 04.08.2025 14:06, Sairaj Kodilkar wrote:
+> ...
+>>>> Sairaj Kodilkar (6):
+>>>>    hw/i386/amd_iommu: Fix MMIO register write tracing
+>>>>    hw/i386/amd_iommu: Remove unused and wrongly set ats_enabled field
+>>>>    hw/i386/amd_iommu: Move IOAPIC memory region initialization to 
+>>>> the end
+>>>>    hw/i386/amd_iommu: Fix amdvi_write*()
+>>>>    hw/i386/amd_iommu: Support MMIO writes to the status register
+>>>>    hw/i386/amd_iommu: Fix event log generation
+>>>>
+>>>>   hw/i386/amd_iommu.c | 102 +++++++++++++++++++++++++++++++++ 
+>>>> +----------
+>>>>   hw/i386/amd_iommu.h |   2 +-
+>>>>   2 files changed, 80 insertions(+), 24 deletions(-)
+>>>
+>>> Hi!
+>>>
+>>> Is there anything there worth to pick up for qemu 10.0.x stable series?
+>>> (the "Move IOAPIC memory init" does not apply to 10.0 already).
+>>
+>> Hi MJT,
+>>
+>> I will backport the patch manually and send it to qemu stable mailing 
+>> list
+> 
+> Hi!
+> 
+> There's no need to back-port it, -- there's just minor context fix
+> required, here:
+> 
+> +++ b/hw/i386/amd_iommu.c
+> @@ -1693,19 +1693,16 @@ static void amdvi_sysbus_realize(DeviceState 
+> *dev, Error **errp)
+> ...
+> 
+>       s->iotlb = g_hash_table_new_full(amdvi_uint64_hash,
+>                                        amdvi_uint64_equal, g_free, g_free);
+> 
+> -    /* Pseudo address space under root PCI bus. */
+> -    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, 
+> AMDVI_IOAPIC_SB_DEVID);
+> -
+>       /* set up MMIO */
+>       memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
+>                             "amdvi-mmio", AMDVI_MMIO_SIZE);
+> 
+> the "s->iotlb = g_hash_table_new_full" part were added by commit
+> f864a3235ea1d1 "hw/i386/amd_iommu: Isolate AMDVI-PCI from amd-iommu
+> device to allow full control over the PCI device creation".  It should
+> be okay to just remove the 3 marked lines from here (to be moved to
+> the right place).
+> 
+> My question was not about back-porting this commit, but more about
+> the set of commits which needs to be picked up for the stable series.
+> 
+> I picked up this commit.  Please let me know if there are other changes
+> needed to be picked up.
+> 
+
+Hi MJT
+
+I think this one is sufficient.
+
+Thanks
+Sairaj
+
 
