@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E3FEC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B597AC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 13:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk17Y-0005ZE-6T; Thu, 07 Aug 2025 09:57:28 -0400
+	id 1uk19g-0001ww-5o; Thu, 07 Aug 2025 09:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uk17W-0005WE-AG
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:57:26 -0400
+ id 1uk19b-0001tr-A1
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:59:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uk17T-0001D7-Gh
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:57:25 -0400
+ id 1uk19Z-0001Uw-KH
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 09:59:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754575042;
+ s=mimecast20190719; t=1754575173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=veE0YXU9ZdxW/BhZLiaGxGzPpaO9gN/is2WgVHdvubc=;
- b=e10SRB2NyHFLvBul33smI4Xv/6c1a5goxzPYnlPzTbd6J6geZcKFWTA3itoUWSMUE2Seo5
- rZYgnuG0tVauxfDsFLe7/IBeJ3h7Ufet4vw6ioNYiVDzyxaKB+EMI5IIU28L4i8B3wFPVy
- x5eObKZF3Of7tSA3ssnp/DemFAcsmmA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w4mC43sdkOYN8DO8xZVfIe3ZNV+4qeNeenNNdIx7M3Q=;
+ b=YB7ESrgwYsO4GFhVl+h7QK1XzYEUzvkta6NlhNhlCVbrXfZGBxgGHlojSzxAXU3jVd4SLp
+ hpFGYZT7KRsIvEkBsjVhPHj1TwVmPP40jTuB7VUgdyKMfOPnWa6EldGpW47KSoGYlFg0Tp
+ E0JDZl3sIAssZUxsBJtoavUY/N7+70Y=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-wLFSNqGQPqSLoK14m9ur9g-1; Thu, 07 Aug 2025 09:57:21 -0400
-X-MC-Unique: wLFSNqGQPqSLoK14m9ur9g-1
-X-Mimecast-MFC-AGG-ID: wLFSNqGQPqSLoK14m9ur9g_1754575040
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b8d612996cso709536f8f.2
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 06:57:20 -0700 (PDT)
+ us-mta-692-A1O9PDMBM3-VWe41wzbWFA-1; Thu, 07 Aug 2025 09:59:30 -0400
+X-MC-Unique: A1O9PDMBM3-VWe41wzbWFA-1
+X-Mimecast-MFC-AGG-ID: A1O9PDMBM3-VWe41wzbWFA_1754575169
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3b7812e887aso416312f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 06:59:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754575040; x=1755179840;
+ d=1e100.net; s=20230601; t=1754575169; x=1755179969;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=veE0YXU9ZdxW/BhZLiaGxGzPpaO9gN/is2WgVHdvubc=;
- b=gjJmoJ2RCO1M4iA4QZRBTn++PmPqHr6T3Zz3RPjdbgxrg78HpYZiHB3HMtDdjWWxu5
- GgEJcb765OOEQ6ZuDnMO2H5oG7oXG/q5gARPV41RC46jPI+F2eZp9WhAMeupxaTo0A50
- KUkSCCx3o5F/XrV84bOI2JkqBJz99jGBwYBAiKPZozkyLQPzryP8Tsb/6y8QJEEMBco2
- 6xHtajeG/f3YZdPNJeMZyJ1Qmm6MQGgsooN1L+FbWp99OyGOuOBQZNKquf3f2OPsHBDu
- 56htWYLR9pY0Fu2Szuz9VEZn/CWNhusPT8hUlaiHrxuL1llzTlmhqEmpqpG8CAy6P+fh
- niFg==
-X-Gm-Message-State: AOJu0YxxeJ9EVUk1sIHUcv8uDIkhpcCR/0Erz6q8hg9Z0h6dsFAB+T9f
- vs+64GxoIQytk4qcKlj6cSn+JXXOAe/kfbFxtmA7uU5Y1ZklV8vEz5c7NMjgB72ocbyILQZ/hvg
- spTwLx374nvVv5n7rYgR+eJ257uEw02Hsq8NBt4MRED7MU/e4GKLHak2h
-X-Gm-Gg: ASbGncugiQ6CG/r5R7c5u2YLlOe/Bzf+/J+WFQdXsgM13ImN+WdICfL60vn9pg/KgWF
- DZYs4QFk+mC7One7nQD9aePRL0vh61Blfe0dzbh1PD7WdYxaDkmT/zrF1Wip6VK6YnCr5Poudto
- qw2cRHMpU53xJuolXHB9yoz10k22j6zhCk0Uf28xmoJD8elIEYGDRcwHbV+ErjY0fIM6/3EJ+nX
- 2eNDs/ulVGudmrvPPedsN8kqjlW0QWTX806T4wdtZArh6mhzn107ewwnLc7T3NnICSTwPt4XiFt
- GDsh4j/srvEbP67iKPYY7uIEx3Y2+uzgPc90W8zCB0mA
-X-Received: by 2002:adf:fac6:0:b0:3b8:ff39:486d with SMTP id
- ffacd0b85a97d-3b8ff394bb9mr931396f8f.8.1754575039880; 
- Thu, 07 Aug 2025 06:57:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHXYwZoGNhakMxRJpYivC+7uq1cW0gVwDnE4VKL/NXOOs4ZMWf4zIuaDjvfzTtVOw3TIhYo9A==
-X-Received: by 2002:adf:fac6:0:b0:3b8:ff39:486d with SMTP id
- ffacd0b85a97d-3b8ff394bb9mr931369f8f.8.1754575039368; 
- Thu, 07 Aug 2025 06:57:19 -0700 (PDT)
+ bh=w4mC43sdkOYN8DO8xZVfIe3ZNV+4qeNeenNNdIx7M3Q=;
+ b=on+vhh62lct6OKbMsU28R6njfbI0xzBwy1iBYZ1aKnGSsX4j2IjvpLiRFdh+18qRTY
+ nzHRRbAQS3ZlHXxxADDGFr47bvd7Wf64xZ8pn2TgxZxcegIKKUxmwjgUNYcX7gnxVzWL
+ ugbzQVZ1OVBAZh7xB29j8LklAJVbywZHkvM9Nqv4BU3aC/9vj//RbJdGNEfJ5Z9sNOIg
+ ttXnq69aYmlbGCJzwYZiYyP6mwVMXPpzvEyujJcKfyk1mmc04ga9UJmOCcSxfy3LrmYA
+ aS0qG0LE13zPqyMdKATPc2PexMT5ppULToeiFw0VGw0BED4q2ifQQBjmCsg92QICAjOW
+ 951A==
+X-Gm-Message-State: AOJu0Yx5NEGPlSSzEePbaKsNqEpDU2oAJnLKNdcDFL9r/XHPb2/v1d85
+ gyZkqdexGQq0/40zImwBlCq/lYSMoLY03FMKuJDvYup12B4he3EBmkxAMBK5FbtrMQmkJp2r8kF
+ LUKYiNUiyqZa9gKXFV04q0z/m00BjueyVvuiXpIV6F7KBPvOe8FyuK4Zb
+X-Gm-Gg: ASbGncv1I3Ks6Ce681gj1/5j/TLLUVFdepTyiM6wZmqFtuLM6wfn4KTGbzax491b3QO
+ /qhwQLcAUoqpTPYdsQw+UvX8jgxJknAE+cTuPFYXPy8RtlqplgoPOjCzd14OkHqKNWDdTu0avtH
+ 9No4nMwcX/mGbpt0yFw539OZSK0UJfsVud4HcCJgSYZ+W+ZgNF7KR8+5H00vPQhziWaETMggYcs
+ jvg/faCE9QkZFeLLNN5Vftq9gRxkNOv/jLba1OVikfs6jshDUJPg8vtKqka+TE1Q8tDQunlZ+n6
+ Wv4lz2yzw2xdtrTIgV+D9VJwZphavFZYdmydVm7zdCkK
+X-Received: by 2002:a05:6000:24ca:b0:3b7:97c8:da97 with SMTP id
+ ffacd0b85a97d-3b8f4924341mr5103683f8f.43.1754575168569; 
+ Thu, 07 Aug 2025 06:59:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4bYybHt6OpehfRrH8E4W3KmHSZkyO01XruguXVMOhUqdH2pZvclXBad/QDtSQsDWetWsHlA==
+X-Received: by 2002:a05:6000:24ca:b0:3b7:97c8:da97 with SMTP id
+ ffacd0b85a97d-3b8f4924341mr5103655f8f.43.1754575168145; 
+ Thu, 07 Aug 2025 06:59:28 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.253.173])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-458bd5a0f9bsm127902595e9.0.2025.08.07.06.57.18
+ 5b1f17b1804b1-459ded356b9sm162899795e9.12.2025.08.07.06.59.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Aug 2025 06:57:18 -0700 (PDT)
-Message-ID: <beab841b-9c69-43d2-b996-879eee9e1120@redhat.com>
-Date: Thu, 7 Aug 2025 15:57:17 +0200
+ Thu, 07 Aug 2025 06:59:27 -0700 (PDT)
+Message-ID: <d144ae17-afe3-4578-a875-79c1d6a4d723@redhat.com>
+Date: Thu, 7 Aug 2025 15:59:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a pointer
- to MemoryRegionSection
+Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+ memory backend
 To: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -88,7 +88,7 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-17-zhao1.liu@intel.com>
+ <20250807123027.2910950-11-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -126,7 +126,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20250807123027.2910950-17-zhao1.liu@intel.com>
+In-Reply-To: <20250807123027.2910950-11-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -138,7 +138,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,22 +155,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/7/25 14:30, Zhao Liu wrote:
-> Rust side will use cell::Opaque<> to hide details of C structure, and
-> this could help avoid the direct operation on C memory from Rust side.
+> Add 2 patches to support QEMU memory backend implementation.
 > 
-> Therefore, it's necessary to wrap a translation binding and make it only
-> return the pointer to MemoryRegionSection, instead of the copy.
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   .../packagefiles/vm-memory-0.16-rs/0001.diff  |  81 +++++++++++++
+>   .../packagefiles/vm-memory-0.16-rs/0002.diff  | 111 ++++++++++++++++++
+>   subprojects/vm-memory-0.16-rs.wrap            |   2 +
+>   3 files changed, 194 insertions(+)
+>   create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+>   create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
 > 
-> As the first step, make flatview_do_translate return a pointer to
-> MemoryRegionSection, so that we can build a wrapper based on it.
+> diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> new file mode 100644
+> index 000000000000..037193108d45
+> --- /dev/null
+> +++ b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> @@ -0,0 +1,81 @@
+> +From 298f8ba019b2fe159fa943e0ae4dfd3c83ee64e0 Mon Sep 17 00:00:00 2001
+> +From: Zhao Liu <zhao1.liu@intel.com>
+> +Date: Wed, 6 Aug 2025 11:31:11 +0800
+> +Subject: [PATCH 1/2] guest_memory: Add a marker tarit to implement
+> + Bytes<GuestAddress> for GuestMemory
 
-Independent of Rust, doing the copy as late as possible is good, but 
-make it return a "const MemoryRegionSection*" so that there's no risk of 
-overwriting data.  Hopefully this does not show a bigger problem!
+This was a bit surprising.  Maybe this is something where GuestMemory 
+needs some extra flexibility.
+
+> @@ -0,0 +1,111 @@
+> +From 2af7ea12a589fde619690e5060c01710cb6f2e0e Mon Sep 17 00:00:00 2001
+> +From: Zhao Liu <zhao1.liu@intel.com>
+> +Date: Wed, 6 Aug 2025 14:27:14 +0800
+> +Subject: [PATCH 2/2] guest_memory: Add is_write argument for
+> + GuestMemory::try_access()
+
+This should be fine.  But Hanna is also working on IOMMU so maybe this 
+won't be needed!
 
 Paolo
-
-> In addtion, add a global variable `unassigned_section` to help get a
-> pointer to an invalid MemoryRegionSection.
 
 
