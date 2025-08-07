@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE3DC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 21:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AF2C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 22:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk8Rc-0008KZ-S2; Thu, 07 Aug 2025 17:46:42 -0400
+	id 1uk8j8-0001oi-Dd; Thu, 07 Aug 2025 18:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8RP-0008I4-M2
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:46:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8iw-0001mF-JV
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 18:04:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8RN-0006uH-Mb
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:46:27 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8it-00005H-12
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 18:04:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754603183;
+ s=mimecast20190719; t=1754604268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=33BiKZoJcHL7UF/G76qB++Xc8DI2mugrDy+Qj4VM8J0=;
- b=cVZlj3NS8OUMm2MIBaKxJEUzItD6AIHMB6POPPYtVVEuw338XKCWPeUCgU3i8sZlumantb
- LRVL/5Df366tyrUzGh66zcoB3gMRUlIOWFTi997C8Rt6kPkkhuw6Nw/UTQQK0Q6G07jdda
- eJelrqaM+i07gIO6UcAZ/134XACxfIk=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XYMBe/8GXVMRlJZ3uwlOY4weqC/+CjfuFywjDSFUZkc=;
+ b=PMezY0e4dTyt6dLvPTyHbStZEzpZLpvV1aP8MmqRGoCP4RDm28w3SQt1JIl73MZtyO0lFp
+ TRgqVvfwl7xu8tRddCAsgbI6+whGNXfzoGQjZMPF2OuDE8C1Kw10UoeSkqouZeTa96rc3Z
+ +QheGRNLfNZdwiEZEfekD2C2UZMMTew=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-110-0CI9St5-PaSva5-qaX7mkg-1; Thu, 07 Aug 2025 17:46:21 -0400
-X-MC-Unique: 0CI9St5-PaSva5-qaX7mkg-1
-X-Mimecast-MFC-AGG-ID: 0CI9St5-PaSva5-qaX7mkg_1754603180
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b4227538a47so1142640a12.1
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 14:46:21 -0700 (PDT)
+ us-mta-516-mePacOdvM6GVHdYCwD0nsQ-1; Thu, 07 Aug 2025 18:04:27 -0400
+X-MC-Unique: mePacOdvM6GVHdYCwD0nsQ-1
+X-Mimecast-MFC-AGG-ID: mePacOdvM6GVHdYCwD0nsQ_1754604266
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2425364e0b2so16738945ad.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 15:04:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754603180; x=1755207980;
+ d=1e100.net; s=20230601; t=1754604266; x=1755209066;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=33BiKZoJcHL7UF/G76qB++Xc8DI2mugrDy+Qj4VM8J0=;
- b=Lf2o2VUpWXdLTprgLPiGHqoTSguZWgFXGL7KK2BcyXif+zUksJBJNcuTLJSEl3kzi1
- VLig15qV4d0M0rPG8ufBnpyT3YvmVGUUb9H5sgZrGveiPwDMze+x33FFoFPRIN9kuCPP
- xtacJxR4JJS1WUQl5QJ5NGb+Z4ZKNOq9RitVQof0vlOaZkFUHc9OnVOpedqu17nXUBJT
- k4vbZOMMpa6RoL7d+l7e2d7QnhzZwfqjDQrDO6hEapPvgmbeFoJPIc+jqszBRqGxJfnX
- Z9q03ogTGr5eS9icYuRGqMp70h6maYpgHstHytkZZKE+Cb683ZSiuf213JdYKis2fg7u
- XO2Q==
+ bh=XYMBe/8GXVMRlJZ3uwlOY4weqC/+CjfuFywjDSFUZkc=;
+ b=wMmXvDT2usl1v3mdYGlJObVg/WJfAmB/LJlT/BmTZiqrMCppUw5H5j5AH8hdDHZy90
+ oLgBQpMLTNBTAcCo/H5XVkPDojH6wgF5NYvhynTHHPzzsGZ1uXT7OWBZOk2xsiLwny92
+ yByzLKq9o675vikWBICO14SVkETwVotp4kCrXi4kW69+jh4nWWBHR1SUrzCu3XzAEAHi
+ /zcUvxD4tdnbC0jCRphSmNzZVFJg0i7vGU6wzwPPsIlu6kScub33B45fy+pEJ9hnQJjl
+ g4dviaXGDIAoG2iHmC3qHmAy/jEmzkPLRMcrd3nwjdZsw75+rfPLCHOsvXXlOU8CSuw3
+ e/8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEV88Ob5ym0HA0zbTRYi59+4RUUOJE+GWljFbby5FlRX9TM1yvZastC0l/KmxwrlC3yWRqEG0xuPmh@nongnu.org
-X-Gm-Message-State: AOJu0YzoA/qxZWztA5MTD353KT6BadSnH0XTMZmNrPPJquKpfsoIaFAA
- EkMlnxNR6A50NVZI+WYioRLk5I8TdlWPqIVG3RI10MNJ6n/rVxNia/VQv0wPJAA3xEKQynvrlwf
- Mf939toPDrPg+TmwcBSIa5+u2OXEinhxhbvMh9IMLlHnsxVNz7mKnFp2Ls65GWcBOwdwOBLkQQy
- Gqld9an4LwzD2QF4JduGDLle0ef6Y7D5g=
-X-Gm-Gg: ASbGncuemImqTuD61N6P2A9rlZjASE9gXKvzHAHlu663OIHti54IGBFAyzK8wbbS6mF
- F3P37grIUaXtlCyiNIItMw0Nbe4P//Hw6Gfa15Ozl8Id5Mh71G0sDXdbD1xSSB+gbv8TnmpdTKi
- Jmejbi2yR6aLyfjb5jRnBgQsC6HLevDe82NgaHoS8cPiAXRCO5JvtP
-X-Received: by 2002:a17:90b:1f84:b0:313:b1a:3939 with SMTP id
- 98e67ed59e1d1-32183a079c3mr859842a91.15.1754603180436; 
- Thu, 07 Aug 2025 14:46:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNXabEPtDpc8phSm60XcxkJGIBHHb2g+USCKP86Y6akOLAARqi8lSxyu+96rVdTDioQEVaddThEWHBo4fQmbg=
-X-Received: by 2002:a17:90b:1f84:b0:313:b1a:3939 with SMTP id
- 98e67ed59e1d1-32183a079c3mr859820a91.15.1754603180086; Thu, 07 Aug 2025
- 14:46:20 -0700 (PDT)
+ AJvYcCUdRCY9UgJ7S1cpIf36q6pV+A5GRyVTZ9D1W9ZAGz8eKNSMmtUCK56R1dZPsnrtZirqiEjPzllO/iJZ@nongnu.org
+X-Gm-Message-State: AOJu0YzovY1UDAohNIJjGC8N4kSV/lsVCe6Tl1iK8aHI9aKvqaPjIGAh
+ jtyRpKK0hGxyj+7CwOHw0C6GTkqMk33wCrIZa1JRuODmwHj3y68RT6SGq6JVkDH2n40TZVrWScH
+ cFTMBOPlk6/L0UhT0P+fLyVPDddhWdqkghLzyrA07cqxmZHk5VbmUy5Z44HFUuwdWUl2kkfuz94
+ I8nqhEFQd/0GzpkkMBXU0BXAqvlxH9+UY=
+X-Gm-Gg: ASbGncu1QF+kWNAoudQKs7vpHOgmqG45gtacXwbiRsQgAI/jaC53vqlbCURQaQuxQfd
+ q25zP7fDBZ2Kp8CPwBzLAqTzzn9xW6I6neDx4ahnDKXadhGVsXnNuK8O7DixI5TdLNJldSUnver
+ y+XD+uw+773y94yLEKTuRlBvL0+h13DKoDlSEd/B3YkyDzjKAq8pWb
+X-Received: by 2002:a17:903:28d:b0:240:934f:27ac with SMTP id
+ d9443c01a7336-242c21e01ebmr8306725ad.33.1754604266392; 
+ Thu, 07 Aug 2025 15:04:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtdnMTQ3p9uCyUQkDjoT9YPZTnXYP8CSyIFVsJi6CLt6J4TAy4CvAYsTk4HHvKCIe35tTw+JTXTSd8K1y81wQ=
+X-Received: by 2002:a17:903:28d:b0:240:934f:27ac with SMTP id
+ d9443c01a7336-242c21e01ebmr8306475ad.33.1754604265996; Thu, 07 Aug 2025
+ 15:04:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <87ms93xl69.fsf@draig.linaro.org>
- <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
- <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
-In-Reply-To: <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
+References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
+ <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
+ <871pqmwzqr.fsf@pond.sub.org>
+ <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
+ <87zfd4v8m5.fsf@pond.sub.org>
+In-Reply-To: <87zfd4v8m5.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 7 Aug 2025 17:46:08 -0400
-X-Gm-Features: Ac12FXxbBCQdRCavY2f_yYs_CRipH4EIwduS9TxYrlf1n5QybBCrF5ho8UhVOMM
-Message-ID: <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+Date: Thu, 7 Aug 2025 18:04:14 -0400
+X-Gm-Features: Ac12FXyHt8QFluB9Cz4jbZp9csbvKqgBQWDKMZ0N8lPZMAUCCscpcCWSk7VHrAQ
+Message-ID: <CAFn=p-biuic_12kWEj==NmNp54MW6X4wf=2hu0edvqJF+deyaw@mail.gmail.com>
+Subject: Re: [PATCH V4 2/3] python: use qom-list-get
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Philippe Mathieu-Daude <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -110,91 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 24, 2025 at 3:47=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
+On Wed, Jul 16, 2025 at 4:32=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> On 21/07/2025 22.38, John Snow wrote:
-> > On Thu, Jul 17, 2025 at 4:44=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@l=
-inaro.org> wrote:
-> ...
-> >> Am I holding it wrong?
+> John Snow <jsnow@redhat.com> writes:
+>
+> > On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>
+> [...]
+>
+> >> Exception ignored in: <function QEMUMonitorProtocol.__del__ at
+> >> 0x7fcfcd080d60>
+> >> Traceback (most recent call last):
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
+,
+> >> line 310, in __del__
+> >>     self.close()
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
+,
+> >> line 281, in close
+> >>     self._sync(
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py"=
+,
+> >> line 102, in _sync
+> >>     return self._aloop.run_until_complete(
+> >>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in
+> >> run_until_complete
+> >>     return future.result()
+> >>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
+> >>     return await fut
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
+y",
+> >> line 399, in disconnect
+> >>     await self._wait_disconnect()
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
+y",
+> >> line 719, in _wait_disconnect
+> >>     await all_defined_tasks  # Raise Exceptions from the bottom half.
+> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.p=
+y",
+> >> line 870, in _bh_loop_forever
+> >>     await async_fn()
+> >> RuntimeError: cannot reuse already awaited coroutine
 > >>
-> >>    =E2=9E=9C  ./pyvenv/bin/python ../../tests/functional/test_aarch64_=
-virt.py --help
-> >>    Traceback (most recent call last):
-> >>      File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/=
-test_aarch64_virt.py", line 16, in <module>
-> >>        from qemu_test import QemuSystemTest, Asset, exec_command_and_w=
-ait_for_pattern
-> >>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init_=
-_.py", line 14, in <module>
-> >>        from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTes=
-t
-> >>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcas=
-e.py", line 26, in <module>
-> >>        from qemu.machine import QEMUMachine
-> >>    ModuleNotFoundError: No module named 'qemu'
-> >>
-> >> I thought the point of the venv is we had all the modules we need
-> >> automatically available to the PYTHONPATH?
 > >
-> > As Thomas points out, "qemu" is special since it's already in the
-> > tree. There has been some dragging-of-feet by yours-truly because
-> > installing the "qemu" module by default when running configure
-> > introduces a considerable startup lag time, and the module is not
-> > actually needed for the simple configuration and building of QEMU -
-> > only testing.
+> > Curious about this backtrace. It looks like something has gone
+> > fundamentally wrong in the internals and the error is being raised by t=
+he
+> > garbage collector which is not ideal.
 > >
-> > It's something I want to fix, but must admit to being a bit stumped as
-> > to how I will bridge that gap long term. Currently, all of the modules
-> > we need are in the tree with no dependencies, so it can be fixed with
-> > a simple PYTHONPATH hack. However, if I actually remove the QMP
-> > library from the tree like I have wanted to, then we need pip to do a
-> > real install and process dependencies, and this creates some
-> > complications and extra startup lag.
+> > Can you help me reproduce this? Even if it's old/bad code, I don't want
+> > python-qemu-qmp faulting like this.
 >
-> Wouldn't it be possible to add the module as a wheel in python/wheels/ ?
-> That's maybe the easiest solution, isn't it?
-
-The qemu.qmp wheel, yes, because it's purepython. The part I am
-worried about is that by removing qemu.qmp from the tree, you cannot
-just use the PYTHONPATH hack anymore to use the remaining in-tree
-goodies, namely the machine module used extensively throughout
-testing, because they will now rely on an external dependency.
-
-Normally, you'd just install the in-tree stuff like any other package
-and pip would take care of the qemu.qmp dependency. As handled through
-mkvenv, it would search our vendored wheels directory in the process
-and use that wheel, it's not a big deal.
-
-The tricky part in my head is that this "pip install" of the in-tree
-goodies takes a few seconds because pip is quite slow - it technically
-has to "build" the package before it installs it, so it adds some lag
-time.
-
-Since qemu.qmp isn't actually needed to configure or build QEMU, I
-thought it'd be inappropriate to add it to those dependencies - and
-inappropriate to enforce a 3-4 second hit on every configure call
-whether or not you intend to run tests afterwards.
-
-I'm sure it's solvable, I just tried once a while back and hit a wall,
-got distracted, and haven't revisited it yet... Maybe a good
-rubber-ducking session would help.
-
+> Reproducer for Fedora 41, current master c079d3a31e4:
 >
-> > Naively, I think adding a "just in time installation of testing
-> > dependencies" when you go to run a testing command from "make XXXX"
-> > might be sufficient for us, possibly in conjunction with a configure
-> > flag that lets you pre-load testing dependencies.
+> Run
 >
-> We could likely re-use "make check-venv" for the functional tests ... it'=
-s
-> already installed in that case. However, you then still have to remember =
-to
-> call it first before you can run a test directly, without the Makefile wr=
-appers.
+>     $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dmon1,path=
+=3Dtest-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,id=3Dqmp,chardev=3Dm=
+on1
 >
->   Thomas
+> and
 >
+>     $ scripts/qmp/qom-tree -s test-qmp >/dev/null
+>
+> Questions?
+>
+
+Doesn't seem to trigger for me on Fedora 42 from the c079d3a31e4
+build. Is this a Python version difference thing rearing its head?
 
 
