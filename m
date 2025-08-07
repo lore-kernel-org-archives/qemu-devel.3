@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45E0C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B65EC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1nm-0007nJ-1m; Thu, 07 Aug 2025 10:41:06 -0400
+	id 1uk1ou-0000qT-QZ; Thu, 07 Aug 2025 10:42:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1nj-0007iA-R6
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:03 -0400
+ id 1uk1o3-0008DW-96
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:30 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1ni-0000y1-2Y
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:03 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1nz-0000z8-60
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:22 -0400
 Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 8CE01201BC73;
- Thu,  7 Aug 2025 07:40:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8CE01201BC73
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8346D201BC7A;
+ Thu,  7 Aug 2025 07:41:12 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8346D201BC7A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577660;
- bh=gI13jGwHxhzOeKPxlYT6kPvxWpB0OnEI3BfrT+GvtiQ=;
+ s=default; t=1754577676;
+ bh=DhmZyG4P75oWPVb56TqklPV6+NTQD7S+hBfPcfsjdr4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o9oUbZSOhTuAF6QQ90xWlMg8p+q62DgZCroHOtm3gpFVjPSHhyqXl50GIY8lR6lWh
- WJbNctziKEgduC3OC6OYZJqmY2BwJ/KllDr1YEEm2v0eBv+OjMpg+V24RyO2pt6r/B
- vnZSFVz0aL3io34siXXB+JR+uH5cPx3H/XMeLBrA=
+ b=lmyASoL+NAmNGlH/ZN3u/I8yGyQePuoF+tw8jNlQrBIUx3MUs2NNFaUr/Gb5EF3sW
+ 2tUjSb/dqKwQLIcDjHAU13bxfWW4HimFxlxDuivbvusVwS7/HYQRfOZAl4wLKoVjBT
+ aYX28rWyhwfywThEzROuTu3vzLRgF+hgRXjrxBMo=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -50,9 +50,9 @@ Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 08/26] accel/mshv: Register memory region listeners
-Date: Thu,  7 Aug 2025 16:39:33 +0200
-Message-Id: <20250807143951.1154713-9-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 11/26] accel/mshv: Add vCPU signal handling
+Date: Thu,  7 Aug 2025 16:39:36 +0200
+Message-Id: <20250807143951.1154713-12-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
@@ -82,159 +82,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add memory listener hooks for the MSHV accelerator to track guest
-memory regions. This enables the backend to respond to region
-additions, removals and will be used to manage guest memory mappings
-inside the hypervisor.
-
-Actually registering physical memory in the hypervisor is still stubbed
-out.
+Implement signal handling for MSHV vCPUs to support asynchronous
+interrupts from the main thread.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mem.c       | 24 +++++++++++++++
- accel/mshv/meson.build |  1 +
- accel/mshv/mshv-all.c  | 67 ++++++++++++++++++++++++++++++++++++++++--
- include/system/mshv.h  |  4 +++
- 4 files changed, 94 insertions(+), 2 deletions(-)
- create mode 100644 accel/mshv/mem.c
+ accel/mshv/mshv-all.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
-new file mode 100644
-index 0000000000..ad5e62c89c
---- /dev/null
-+++ b/accel/mshv/mem.c
-@@ -0,0 +1,24 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors:
-+ *  Magnus Kulke      <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "system/address-spaces.h"
-+#include "system/mshv.h"
-+
-+void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-+                       bool add)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index 4c03ac7921..8a6beb3fb1 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -1,5 +1,6 @@
- mshv_ss = ss.source_set()
- mshv_ss.add(if_true: files(
-+  'mem.c',
-   'mshv-all.c'
- ))
- 
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index f548b1187b..2094966c8c 100644
+index a4eeaeec76..65166e82b0 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -48,10 +48,73 @@ bool mshv_allowed;
- 
- MshvState *mshv_state;
- 
-+static void mem_region_add(MemoryListener *listener,
-+                           MemoryRegionSection *section)
-+{
-+    MshvMemoryListener *mml;
-+    mml = container_of(listener, MshvMemoryListener, listener);
-+    memory_region_ref(section->mr);
-+    mshv_set_phys_mem(mml, section, true);
-+}
-+
-+static void mem_region_del(MemoryListener *listener,
-+                           MemoryRegionSection *section)
-+{
-+    MshvMemoryListener *mml;
-+    mml = container_of(listener, MshvMemoryListener, listener);
-+    mshv_set_phys_mem(mml, section, false);
-+    memory_region_unref(section->mr);
-+}
-+
-+static MemoryListener mshv_memory_listener = {
-+    .name = "mshv",
-+    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-+    .region_add = mem_region_add,
-+    .region_del = mem_region_del,
-+};
-+
-+static MemoryListener mshv_io_listener = {
-+    .name = "mshv", .priority = MEMORY_LISTENER_PRIORITY_DEV_BACKEND,
-+    /* MSHV does not support PIO eventfd */
-+};
-+
-+static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
-+                                          AddressSpace *as, int as_id,
-+                                          const char *name)
-+{
-+    int i;
-+
-+    mml->listener = mshv_memory_listener;
-+    mml->listener.name = name;
-+    memory_listener_register(&mml->listener, as);
-+    for (i = 0; i < s->nr_as; ++i) {
-+        if (!s->as[i].as) {
-+            s->as[i].as = as;
-+            s->as[i].ml = mml;
-+            break;
-+        }
-+    }
-+}
-+
- static int mshv_init(AccelState *as, MachineState *ms)
- {
--    error_report("unimplemented");
--    abort();
-+    MshvState *s;
-+    s = MSHV_STATE(as);
-+
-+    accel_blocker_init();
-+
-+    s->vm = 0;
-+
-+    s->nr_as = 1;
-+    s->as = g_new0(MshvAddressSpace, s->nr_as);
-+
-+    mshv_state = s;
-+
-+    register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
-+                                  0, "mshv-memory");
-+    memory_listener_register(&mshv_io_listener, &address_space_io);
-+
-+    return 0;
+@@ -523,6 +523,35 @@ static int mshv_cpu_exec(CPUState *cpu)
+     return ret;
  }
  
- static void mshv_start_vcpu_thread(CPUState *cpu)
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 45808c5c50..c5d33cd990 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -69,6 +69,10 @@ struct AccelCPUState {
- #define mshv_msi_via_irqfd_enabled() false
- #endif
- 
-+/* memory */
-+void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
-+                       bool add);
++/*
++ * The signal handler is triggered when QEMU's main thread receives a SIG_IPI
++ * (SIGUSR1). This signal causes the current CPU thread to be kicked, forcing a
++ * VM exit on the CPU. The VM exit generates an exit reason that breaks the loop
++ * (see mshv_cpu_exec). If the exit is due to a Ctrl+A+x command, the system
++ * will shut down. For other cases, the system will continue running.
++ */
++static void sa_ipi_handler(int sig)
++{
++    /* TODO: call IOCTL to set_immediate_exit, once implemented. */
 +
- /* interrupt */
- int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
++    qemu_cpu_kick_self();
++}
++
++static void init_signal(CPUState *cpu)
++{
++    /* init cpu signals */
++    struct sigaction sigact;
++    sigset_t set;
++
++    memset(&sigact, 0, sizeof(sigact));
++    sigact.sa_handler = sa_ipi_handler;
++    sigaction(SIG_IPI, &sigact, NULL);
++
++    pthread_sigmask(SIG_BLOCK, NULL, &set);
++    sigdelset(&set, SIG_IPI);
++    pthread_sigmask(SIG_SETMASK, &set, NULL);
++}
++
+ static void *mshv_vcpu_thread(void *arg)
+ {
+     CPUState *cpu = arg;
+@@ -539,6 +568,7 @@ static void *mshv_vcpu_thread(void *arg)
+         error_report("Failed to init vcpu %d", cpu->cpu_index);
+         goto cleanup;
+     }
++    init_signal(cpu);
+ 
+     /* signal CPU creation */
+     cpu_thread_signal_created(cpu);
 -- 
 2.34.1
 
