@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AAAC87FDA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58933C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujzSl-0004ZI-4n; Thu, 07 Aug 2025 08:11:20 -0400
+	id 1ujzSV-0004XC-GJ; Thu, 07 Aug 2025 08:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzSI-0003tn-BI; Thu, 07 Aug 2025 08:10:46 -0400
+ id 1ujzSM-00045N-3F; Thu, 07 Aug 2025 08:10:50 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzSG-0005Cn-1o; Thu, 07 Aug 2025 08:10:46 -0400
+ id 1ujzSI-0005Bt-3m; Thu, 07 Aug 2025 08:10:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754568644; x=1786104644;
+ t=1754568646; x=1786104646;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ICNg+pbeHF8H9llJc/4axDzWq6vSvnR3oi+HF/P7AgQ=;
- b=S4yhd1fKstoBo3hqWgllUKi98kRNAiLlu+qoDHhRofm5k/OcBjKSYudl
- C+Vl9rSQOFLpdAo0aLUxgh7rWlQ8ONRwWMwqaWhauQvE+7W+U1BfVFBsh
- KYbaH/WgQeWsfhT0fQ8cZqtOaJY4G95bvEUsnulEH/ZcGvdKKWLQVCucP
- 8TgXXX3Bc2UYzmpOjEEEUnhHdFcPeV2nrrD7zScJuZ3KG0mOZh9EiAXaD
- TDrJAeZkBqy8EKSD07ITKznPTQqYsGzUqwXPyeDLF4UifJRwyeQhLgHVU
- 3Cv1aOT2c0bqk0C8FMPut46qxxUUKyhbqazxloK+6dbzOoMRGlseMfJq4 g==;
-X-CSE-ConnectionGUID: r4uizmZQScmmECee7Mlj2Q==
-X-CSE-MsgGUID: 4aIVwCjcQnaT9Urz4ujh1g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036861"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036861"
+ bh=L9/7AiV5IeaaNeK7AehXkGkn2BxB38AEIVLuEzucq1A=;
+ b=Cfmp4LFTD9KVyFU7xMN1Rkyoza4ECjrTWS02T8LXk0aKvO1hw7u2KY60
+ gkmmuKzkQPQMCgh4o6Q2uUnltw2p4mugWmZYwgwRYxMREcNIyscFSHcvf
+ N5HLCxZI7bOcC3s6Kw5BZ4otI5mSdq0fxEcXVWtha7ygx31VrfyxE/tg1
+ 7oC7r0iLWf7VhSzAvNK63Du/tEaG0y5UbScpDbolZ36zmsQbXPA2jaSux
+ adSK0VyCj7h4LMynypuHnlmGDNzQBGbAhRAjybBTc5lcVn0uRGnWhb0ks
+ 3/NlJxFiI5v5aqZ9mYFvubwPoNeX4jtHnHcKVXm3ZRjRU1yo1aVjklJs0 Q==;
+X-CSE-ConnectionGUID: Sz959LUfTnmU1lv9P/E6Vw==
+X-CSE-MsgGUID: JS20heUoQRuvmLt6EdvoHg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036870"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036870"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 05:10:09 -0700
-X-CSE-ConnectionGUID: 0hU21DClSCOqIceceX82LQ==
-X-CSE-MsgGUID: wrC6lw8VRGC/QhT8EEJ2kw==
+ 07 Aug 2025 05:10:12 -0700
+X-CSE-ConnectionGUID: P4ljDsr3TpGdx0ODypJrZw==
+X-CSE-MsgGUID: Tlh/sA68TKigewNTOtyX/w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701194"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701226"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:10:06 -0700
+ by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:10:09 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
@@ -53,9 +53,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 20/26] memory: Add wrappers of intermediate steps for read/write
-Date: Thu,  7 Aug 2025 20:30:21 +0800
-Message-Id: <20250807123027.2910950-21-zhao1.liu@intel.com>
+Subject: [RFC 21/26] memory: Add store/load interfaces for Rust side
+Date: Thu,  7 Aug 2025 20:30:22 +0800
+Message-Id: <20250807123027.2910950-22-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807123027.2910950-1-zhao1.liu@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
@@ -86,116 +86,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add these 2 wrappers to allow bindgen to generate the bindings based on
-MemoryRegionSection:
- * section_rust_write_continue_step()
- * section_rust_read_continue_step()
+At present, there're many store/load variants defined in
+memory_ldst.c.inc.
 
-Then Rust side could be able to re-build a full write/read processes as
-address_space_write()/address_space_read_full() did.
+However, the Bytes::store() and Bytes::load() of vm-memory are bound
+with AtomicAccess trait, which makes it (almost) impossible to select
+proper interface (for l, w or q) based on specific type.
+
+So it's necessary to provide such interfaces that hide the type details
+as much as possible. And compared with address_space_st{size} or
+address_space_ld{size}, the differences include:
+
+ * No translation, and only memory access.
+
+ * Only support native endian. Then Rust side must handle the endian
+   format before/after processing store()/load().
+
+ * Use bytes array instead of single uint64_t for the value to be
+   written or read. Then Rust side doesn't need to convert generic type
+   to u64.
+
+   - But the extra cost is that there's the need for conversation
+     between bytes array and uint64_t inside the interfaces.
+
+ * Do not handle the cross-region case via MMIO access. Then Rust side
+   will handle such abnormal cases.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/system/memory.h | 51 +++++++++++++++++++++++++++++++++++++++++
- system/physmem.c        | 16 +++++++++++++
- 2 files changed, 67 insertions(+)
+ include/system/memory.h | 52 +++++++++++++++++++++++++++++++--
+ system/physmem.c        | 65 +++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 112 insertions(+), 5 deletions(-)
 
 diff --git a/include/system/memory.h b/include/system/memory.h
-index 110ad0a3b590..a75c8c348f58 100644
+index a75c8c348f58..f0f51f1c4c89 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -3413,6 +3413,57 @@ uint8_t *section_get_host_addr(const MemoryRegionSection *section,
- void section_fuzz_dma_read(MemoryRegionSection *section,
-                            hwaddr addr, hwaddr len);
+@@ -3440,7 +3440,7 @@ MemTxResult section_rust_write_continue_step(MemoryRegionSection *section,
+     MemTxAttrs attrs, const uint8_t *buf, hwaddr len, hwaddr mr_addr, hwaddr *l);
+ 
+ /**
+- * section_read_continue_step: read from #MemoryRegionSection.
++ * section_rust_read_continue_step: read from #MemoryRegionSection.
+  *
+  * Not: This function should only used by Rust side, and user shouldn't
+  * call it directly!
+@@ -3461,9 +3461,57 @@ MemTxResult section_rust_write_continue_step(MemoryRegionSection *section,
+  * Return a MemTxResult indicating whether the operation succeeded
+  * or failed.
+  */
+-MemTxResult section_read_continue_step(MemoryRegionSection *section,
++MemTxResult section_rust_read_continue_step(MemoryRegionSection *section,
+     MemTxAttrs attrs, uint8_t *buf, hwaddr len, hwaddr mr_addr, hwaddr *l);
  
 +/**
-+ * section_rust_write_continue_step: write to #MemoryRegionSection.
++ * section_rust_store: store data to #MemoryRegionSection.
 + *
 + * Not: This function should only used by Rust side, and user shouldn't
 + * call it directly!
 + *
-+ * This function provides a wrapper of flatview_write_continue_step(),
-+ * and allows Rust side to re-build a full write process as
-+ * address_space_write() did.
++ * This function provides a wrapper for address_space_st{size} without
++ * translation, and only supports native endian by default.
 + *
 + * Should be called from an RCU critical section.
 + *
 + * @section: #MemoryRegionSection to be accessed.
-+ * @attrs: memory transaction attributes.
-+ * @buf: buffer with the data to be written.
-+ * @len: the number of bytes to write.
-+ * @mr_addr: address within that memory region.
-+ * @l: the actual length of the data is written after function returns.
-+ *
-+ * Return a MemTxResult indicating whether the operation succeeded
-+ * or failed (eg unassigned memory, device rejected the transaction,
-+ * IOMMU fault).
-+ */
-+MemTxResult section_rust_write_continue_step(MemoryRegionSection *section,
-+    MemTxAttrs attrs, const uint8_t *buf, hwaddr len, hwaddr mr_addr, hwaddr *l);
-+
-+/**
-+ * section_read_continue_step: read from #MemoryRegionSection.
-+ *
-+ * Not: This function should only used by Rust side, and user shouldn't
-+ * call it directly!
-+ *
-+ * This function provides a wrapper of flatview_read_continue_step(),
-+ * and allows Rust side to re-build a full write process as
-+ * address_space_read_full() did.
-+ *
-+ * Should be called from an RCU critical section.
-+ *
-+ * @section: #MemoryRegionSection to be accessed.
-+ * @attrs: memory transaction attributes.
++ * @mr_offset: address within that memory region.
 + * @buf: buffer to be written.
++ * @attrs: memory transaction attributes.
 + * @len: the number of bytes is expected to read.
-+ * @mr_addr: address within that memory region.
-+ * @l: the actual length of the data is read after function returns.
 + *
 + * Return a MemTxResult indicating whether the operation succeeded
 + * or failed.
 + */
-+MemTxResult section_read_continue_step(MemoryRegionSection *section,
-+    MemTxAttrs attrs, uint8_t *buf, hwaddr len, hwaddr mr_addr, hwaddr *l);
++MemTxResult section_rust_store(MemoryRegionSection *section,
++                               hwaddr mr_offset, const uint8_t *buf,
++                               MemTxAttrs attrs, hwaddr len);
++
++/**
++ * section_rust_load: load data from #MemoryRegionSection.
++ *
++ * Not: This function should only used by Rust side, and user shouldn't
++ * call it directly!
++ *
++ * This function provides a wrapper for address_space_st{size} without
++ * translation, and only supports native endian by default.
++ *
++ * Should be called from an RCU critical section.
++ *
++ * @section: #MemoryRegionSection to be accessed.
++ * @mr_offset: address within that memory region.
++ * @buf: buffer to be written.
++ * @attrs: memory transaction attributes.
++ * @len: the number of bytes is expected to read.
++ *
++ * Return a MemTxResult indicating whether the operation succeeded
++ * or failed.
++ */
++MemTxResult section_rust_load(MemoryRegionSection *section,
++                              hwaddr mr_offset, uint8_t *buf,
++                              MemTxAttrs attrs, hwaddr len);
 +
  /*
   * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
   * to manage the actual amount of memory consumed by the VM (then, the memory
 diff --git a/system/physmem.c b/system/physmem.c
-index e06633f4d8a2..0c30dea775ca 100644
+index 0c30dea775ca..6048d5faac8c 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -3119,6 +3119,14 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
-     }
+@@ -3120,9 +3120,9 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
  }
  
-+MemTxResult
-+section_read_continue_step(MemoryRegionSection *section, MemTxAttrs attrs,
-+                           uint8_t *buf, hwaddr len, hwaddr mr_addr,
-+                           hwaddr *l)
-+{
-+    return flatview_read_continue_step(attrs, buf, len, mr_addr, l, section->mr);
-+}
-+
- /* Called within RCU critical section.  */
- MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-                                    MemTxAttrs attrs, void *ptr,
-@@ -3707,6 +3715,14 @@ static MemTxResult address_space_write_continue_cached(MemTxAttrs attrs,
-     return result;
+ MemTxResult
+-section_read_continue_step(MemoryRegionSection *section, MemTxAttrs attrs,
+-                           uint8_t *buf, hwaddr len, hwaddr mr_addr,
+-                           hwaddr *l)
++section_rust_read_continue_step(MemoryRegionSection *section, MemTxAttrs attrs,
++                                uint8_t *buf, hwaddr len, hwaddr mr_addr,
++                                hwaddr *l)
+ {
+     return flatview_read_continue_step(attrs, buf, len, mr_addr, l, section->mr);
+ }
+@@ -3239,6 +3239,65 @@ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+                      buf, len, is_write);
  }
  
-+MemTxResult
-+section_rust_write_continue_step(MemoryRegionSection *section, MemTxAttrs attrs,
-+                                 const uint8_t *buf, hwaddr len, hwaddr mr_addr,
-+                                 hwaddr *l)
++MemTxResult section_rust_store(MemoryRegionSection *section,
++                               hwaddr mr_offset, const uint8_t *buf,
++                               MemTxAttrs attrs, hwaddr len)
 +{
-+    return flatview_write_continue_step(attrs, buf, len, mr_addr, l, section->mr);
++    MemoryRegion *mr = section->mr;
++    MemTxResult r;
++    uint64_t val;
++
++    val = ldn_he_p(buf, len);
++    if (!memory_access_is_direct(mr, true, attrs)) {
++        bool release_lock = false;
++
++        release_lock |= prepare_mmio_access(mr);
++        r = memory_region_dispatch_write(mr, mr_offset, val,
++                                         size_memop(len) |
++                                         devend_memop(DEVICE_NATIVE_ENDIAN),
++                                         attrs);
++        if (release_lock) {
++            bql_unlock();
++        }
++    } else {
++        uint8_t *ptr = qemu_map_ram_ptr(mr->ram_block, mr_offset);
++        stn_p(ptr, len, val);
++        invalidate_and_set_dirty(mr, mr_offset, len);
++        r = MEMTX_OK;
++    }
++
++    return r;
 +}
 +
- /* Called within RCU critical section.  */
- static MemTxResult address_space_read_continue_cached(MemTxAttrs attrs,
-                                                       void *ptr, hwaddr len,
++MemTxResult section_rust_load(MemoryRegionSection *section,
++                              hwaddr mr_offset, uint8_t *buf,
++                              MemTxAttrs attrs, hwaddr len)
++{
++    MemoryRegion *mr = section->mr;
++    MemTxResult r;
++    uint64_t val;
++
++    if (!memory_access_is_direct(mr, false, attrs)) {
++        bool release_lock = false;
++
++        release_lock |= prepare_mmio_access(mr);
++        r = memory_region_dispatch_read(mr, mr_offset, &val,
++                                        size_memop(len) |
++                                        devend_memop(DEVICE_NATIVE_ENDIAN),
++                                        attrs);
++        if (release_lock) {
++            bql_unlock();
++        }
++    } else {
++        uint8_t *ptr = qemu_map_ram_ptr(mr->ram_block, mr_offset);
++        val = ldn_p(ptr, len);
++        r = MEMTX_OK;
++    }
++
++    stn_he_p(buf, len, val);
++    return r;
++}
++
+ enum write_rom_type {
+     WRITE_DATA,
+     FLUSH_CACHE,
 -- 
 2.34.1
 
