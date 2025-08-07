@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC05C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56339C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujzUj-0006x5-Bx; Thu, 07 Aug 2025 08:13:24 -0400
+	id 1ujzSR-0004J3-Fg; Thu, 07 Aug 2025 08:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzSq-0004yg-4i; Thu, 07 Aug 2025 08:11:29 -0400
+ id 1ujzRw-000248-OQ; Thu, 07 Aug 2025 08:10:24 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzSh-0005Bp-HS; Thu, 07 Aug 2025 08:11:14 -0400
+ id 1ujzRu-0005Bt-Gc; Thu, 07 Aug 2025 08:10:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754568671; x=1786104671;
+ t=1754568622; x=1786104622;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jN3evfjR5JAhw4apUNC93dHaq2BAAIYH0p23ThxZVjo=;
- b=GsKrB7+63/Z4Y7iBz5YCJC/AfVAvJ0cvB0wUxU5etLMKvcXlro5lD7Oh
- nymbZf25JJe67hAZHTfK/adq41x7DSj6X6rUHZS8hutee3B0jlrQOHmD6
- PYx35Z7iqsBoGp3HnL1tl5Csqzjd1Ms69pD9g2g/dtu7nj9YkzD7Xo8bY
- zV8SlaTfl6NneL2u+d5efYdifDodDutzUz5HCp1P9d47oufln5MYyD7HY
- RRG9k9vn2W9+vQCyN+i4dlrm4m0Bzw1oFAgu2hoaYqbwR/6qPoim0B/CW
- KFJ8G17h+Z3naK+LtdGKnwrc3uXY+CvrW3K/S10NrTQm31hkPl5lQfafI w==;
-X-CSE-ConnectionGUID: xemCJoOATNy+jLpf6E7ypg==
-X-CSE-MsgGUID: rFF3pVwNQAaFxZJlcxd4cQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036918"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036918"
+ bh=jlCpSuQ5mesdc7DN+lFSCnjeGwm6BIOjo3EmPFLXWfU=;
+ b=hA61kyzr5o5BNZF3jq6WJW6xX/W8b2K5fnQ6Zeg3v3ablYb4hXOfcsUS
+ AoReDmvfDPcJO/mElCME1lyh+fw2SciLauo8MZe1hQdypXXwY1W15r3LW
+ QQPfTKZgg4SCTqfrVGiTp++xQ/cfP53XNAbrfh/VjRzyHrMtasXZ4iLSV
+ fENATiYpbDYAsDPHZmz+3Y26FpNdhFnQ8sGzj2dPjkXVo5EOlPXcUrsMb
+ V7wZrdgxgyAI/54RmxYjgX7lWa8EjE/0a02dI10adyx8CHtFx3pEo7YpR
+ ya7+/HmmsX1S6GgMYtciJeuk6OHJrfdO3FG8+qllm8te7aLNvJ4QEEYy1 g==;
+X-CSE-ConnectionGUID: ZaMb5jFKShK/twOHL8LGUQ==
+X-CSE-MsgGUID: VLv08JK5QQaJJx+6ZswO5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036840"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036840"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 05:10:30 -0700
-X-CSE-ConnectionGUID: TEg37fmSRGSdceh1NUe7xw==
-X-CSE-MsgGUID: 5bLf66UzTlmtIkV+Jq2tVA==
+ 07 Aug 2025 05:10:01 -0700
+X-CSE-ConnectionGUID: Vs+/5aMoRbmJvyuCzG9nRA==
+X-CSE-MsgGUID: o3hYrEH1SBCKzHJQIf7SGw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701391"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701151"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:10:27 -0700
+ by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:59 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
@@ -53,9 +53,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 26/26] rust/hpet: Use safe binding to access address space
-Date: Thu,  7 Aug 2025 20:30:27 +0800
-Message-Id: <20250807123027.2910950-27-zhao1.liu@intel.com>
+Subject: [RFC 18/26] memory: Rename flatview_access_allowed() to
+ memory_region_access_allowed()
+Date: Thu,  7 Aug 2025 20:30:19 +0800
+Message-Id: <20250807123027.2910950-19-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807123027.2910950-1-zhao1.liu@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
@@ -86,74 +87,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, HPET uses unsafe address_space_stl_le() to store MSI message.
-
-Considerring HPET is used for x86 machines, and they're little endian.
-So address_space_stl_le() equals to address_space_stl(), which makes it
-possible to replace address_space_stl_le() with AddressSpace::store().
-
-Therefore, use the safe binding - AddressSpace::store(), to access
-address space.
-
-Since then, the last unsafe piece of HPET has been filled in.
+flatview_access_allowed() accepts `MemoryRegion *mr` as an argument, so
+it's based on MemoryRegion and should be named as
+memory_region_access_allowed().
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ system/physmem.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 9fd75bf096e4..e7d5b57f2fe2 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -6,19 +6,17 @@
-     ffi::{c_int, c_void, CStr},
-     mem::MaybeUninit,
-     pin::Pin,
--    ptr::{addr_of_mut, null_mut, NonNull},
-+    ptr::NonNull,
-     slice::from_ref,
- };
+diff --git a/system/physmem.c b/system/physmem.c
+index d2106d0ffa87..8aaaab4d3a74 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2921,7 +2921,7 @@ bool prepare_mmio_access(MemoryRegion *mr)
+ }
  
- use qemu_api::{
--    bindings::{
--        address_space_memory, address_space_stl_le, qdev_prop_bit, qdev_prop_bool,
--        qdev_prop_uint32, qdev_prop_usize,
--    },
-+    bindings::{qdev_prop_bit, qdev_prop_bool, qdev_prop_uint32, qdev_prop_usize},
-     cell::{BqlCell, BqlRefCell},
-     irq::InterruptSource,
-     memory::{
--        hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder, MEMTXATTRS_UNSPECIFIED,
-+        hwaddr, GuestAddress, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder,
-+        ADDRESS_SPACE_MEMORY,
-     },
-     prelude::*,
-     qdev::{DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
-@@ -327,17 +325,12 @@ fn set_irq(&mut self, set: bool) {
+ /**
+- * flatview_access_allowed
++ * memory_region_access_allowed
+  * @mr: #MemoryRegion to be accessed
+  * @attrs: memory transaction attributes
+  * @addr: address within that memory region
+@@ -2931,8 +2931,8 @@ bool prepare_mmio_access(MemoryRegion *mr)
+  *
+  * Returns: true if transaction is allowed, false if denied.
+  */
+-static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
+-                                    hwaddr addr, hwaddr len)
++static bool memory_region_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
++                                         hwaddr addr, hwaddr len)
+ {
+     if (likely(!attrs.memory)) {
+         return true;
+@@ -2952,7 +2952,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
+                                                 hwaddr len, hwaddr mr_addr,
+                                                 hwaddr *l, MemoryRegion *mr)
+ {
+-    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
++    if (!memory_region_access_allowed(mr, attrs, mr_addr, *l)) {
+         return MEMTX_ACCESS_ERROR;
+     }
  
-         if set && self.is_int_enabled() && self.get_state().is_hpet_enabled() {
-             if self.is_fsb_route_enabled() {
--                // SAFETY:
--                // the parameters are valid.
--                unsafe {
--                    address_space_stl_le(
--                        addr_of_mut!(address_space_memory),
--                        self.fsb >> 32,  // Timer N FSB int addr
--                        self.fsb as u32, // Timer N FSB int value, truncate!
--                        MEMTXATTRS_UNSPECIFIED,
--                        null_mut(),
--                    );
--                }
-+                ADDRESS_SPACE_MEMORY
-+                    .store(
-+                        GuestAddress(self.fsb >> 32), // Timer N FSB int addr
-+                        self.fsb as u32,              // Timer N FSB int value, truncate!
-+                    )
-+                    .expect("Failed to store into ADDRESS_SPACE_MEMORY.");
-             } else if self.is_int_level_triggered() {
-                 self.get_state().irqs[route].raise();
-             } else {
+@@ -3036,7 +3036,7 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!memory_region_access_allowed(mr, attrs, addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_write_continue(fv, addr, attrs, buf, len,
+@@ -3048,7 +3048,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
+                                                hwaddr *l,
+                                                MemoryRegion *mr)
+ {
+-    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
++    if (!memory_region_access_allowed(mr, attrs, mr_addr, *l)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+ 
+@@ -3127,7 +3127,7 @@ static MemTxResult flatview_read(FlatView *fv, hwaddr addr,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!memory_region_access_allowed(mr, attrs, addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_read_continue(fv, addr, attrs, buf, len,
 -- 
 2.34.1
 
